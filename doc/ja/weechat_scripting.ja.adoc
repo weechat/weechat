@@ -355,7 +355,7 @@ _language/autoload_ ディレクトリ内にリンクを作ってください。
 例えば Python の場合:
 
 ----
-$ cd ~/.weechat/python/autoload
+$ cd ~/.local/share/weechat/python/autoload
 $ ln -s ../script.py
 ----
 
@@ -1399,10 +1399,11 @@ weechat.prnt("", "Version %s" % weechat.info_get("version", ""))
 [[infos_other]]
 ==== その他の情報
 
+// TRANSLATION MISSING
 [source,python]
 ----
-# WeeChat ホームディレクトリ、例えば: "/home/xxxx/.weechat"
-weechat.prnt("", "WeeChat home dir: %s" % weechat.info_get("weechat_dir", ""))
+# WeeChat config directory, for example: "/home/user/.config/weechat"
+weechat.prnt("", "WeeChat config dir: %s" % weechat.info_get("weechat_config_dir", ""))
 
 # キーボードの不使用時間
 weechat.prnt("", "Inactivity since %s seconds" % weechat.info_get("inactivity", ""))

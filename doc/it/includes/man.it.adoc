@@ -19,79 +19,79 @@ example:
 
 // tag::files[]
 // TRANSLATION MISSING
-$HOME/.weechat/weechat.conf::
+$HOME/.config/weechat/weechat.conf::
     main WeeChat configuration file
 
-$HOME/.weechat/plugins.conf::
+$HOME/.config/weechat/plugins.conf::
     plugins configuration file
 
-$HOME/.weechat/sec.conf::
+$HOME/.config/weechat/sec.conf::
     configuration file with secured data
 
-$HOME/.weechat/alias.conf::
+$HOME/.config/weechat/alias.conf::
     configuration file for _alias_ plugin
 
-$HOME/.weechat/buflist.conf::
+$HOME/.config/weechat/buflist.conf::
     configuration file for _buflist_ plugin
 
-$HOME/.weechat/charset.conf::
+$HOME/.config/weechat/charset.conf::
     configuration file for _charset_ plugin
 
-$HOME/.weechat/exec.conf::
+$HOME/.config/weechat/exec.conf::
     configuration file for _exec_ plugin
 
-$HOME/.weechat/fifo.conf::
+$HOME/.config/weechat/fifo.conf::
     configuration file for _fifo_ plugin
 
-$HOME/.weechat/fset.conf::
+$HOME/.config/weechat/fset.conf::
     configuration file for _fset_ plugin
 
-$HOME/.weechat/guile.conf::
+$HOME/.config/weechat/guile.conf::
     configuration file for _guile_ plugin
 
-$HOME/.weechat/irc.conf::
+$HOME/.config/weechat/irc.conf::
     configuration file for _irc_ plugin
 
-$HOME/.weechat/javascript.conf::
+$HOME/.config/weechat/javascript.conf::
     configuration file for _javascript_ plugin
 
-$HOME/.weechat/logger.conf::
+$HOME/.config/weechat/logger.conf::
     configuration file for _logger_ plugin
 
-$HOME/.weechat/lua.conf::
+$HOME/.config/weechat/lua.conf::
     configuration file for _lua_ plugin
 
-$HOME/.weechat/perl.conf::
+$HOME/.config/weechat/perl.conf::
     configuration file for _perl_ plugin
 
-$HOME/.weechat/php.conf::
+$HOME/.config/weechat/php.conf::
     configuration file for _php_ plugin
 
-$HOME/.weechat/python.conf::
+$HOME/.config/weechat/python.conf::
     configuration file for _python_ plugin
 
-$HOME/.weechat/relay.conf::
+$HOME/.config/weechat/relay.conf::
     configuration file for _relay_ plugin
 
-$HOME/.weechat/ruby.conf::
+$HOME/.config/weechat/ruby.conf::
     configuration file for _ruby_ plugin
 
-$HOME/.weechat/script.conf::
+$HOME/.config/weechat/script.conf::
     configuration file for _script_ plugin
 
-$HOME/.weechat/spell.conf::
+$HOME/.config/weechat/spell.conf::
     configuration file for _spell_ plugin
 
-$HOME/.weechat/tcl.conf::
+$HOME/.config/weechat/tcl.conf::
     configuration file for _tcl_ plugin
 
-$HOME/.weechat/trigger.conf::
+$HOME/.config/weechat/trigger.conf::
     configuration file for _trigger_ plugin
 
-$HOME/.weechat/xfer.conf::
+$HOME/.config/weechat/xfer.conf::
     configuration file for _xfer_ plugin
 
-$HOME/.weechat/weechat.log::
+$HOME/.local/share/weechat/weechat.log::
     WeeChat log file
 // end::files[]
 

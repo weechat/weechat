@@ -337,7 +337,7 @@ WeeChat is starting.
 For example with Python:
 
 ----
-$ cd ~/.weechat/python/autoload
+$ cd ~/.local/share/weechat/python/autoload
 $ ln -s ../script.py
 ----
 
@@ -1368,8 +1368,8 @@ weechat.prnt("", "Version %s" % weechat.info_get("version", ""))
 
 [source,python]
 ----
-# WeeChat home directory, for example: "/home/xxxx/.weechat"
-weechat.prnt("", "WeeChat home dir: %s" % weechat.info_get("weechat_dir", ""))
+# WeeChat config directory, for example: "/home/user/.config/weechat"
+weechat.prnt("", "WeeChat config dir: %s" % weechat.info_get("weechat_config_dir", ""))
 
 # keyboard inactivity
 weechat.prnt("", "Inactivity since %s seconds" % weechat.info_get("inactivity", ""))

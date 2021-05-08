@@ -15,10 +15,11 @@
     (works only with the command *weechat-headless*, not compatible with option
     "--daemon").
 
+// TRANSLATION MISSING
 *-d*, *--dir* _<path>_::
-    WeeChat のホームディレクトリを path に設定 (設定ファイル、ログ、
-    ユーザプラグイン、スクリプトに利用される)、初期値は "~/.weechat"。
-    (注意: パスが存在しない場合は WeeChat がディレクトリを作成します)
+    Force a single directory for all WeeChat files (directory is created if not found).
+    Four directories can be given, separated by colons (in this order: config,
+    data, cache, runtime).
     このオプションを指定しなかった場合、環境変数 WEECHAT_HOME を使います
     (空でない限り)。
 

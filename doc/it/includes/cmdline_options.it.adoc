@@ -18,9 +18,9 @@
 
 // TRANSLATION MISSING
 *-d*, *--dir* _<path>_::
-    Imposta una directory come home per WeeChat (utilizzata per i file di
-    configurazione, log, plugin e script dell'utente), il valore predefinito
-    è "~/.weechat" (nota: directory viene creata se non trovata da WeeChat).
+    Force a single directory for all WeeChat files (directory is created if not found).
+    Four directories can be given, separated by colons (in this order: config,
+    data, cache, runtime).
     If this option is not given, the environment variable WEECHAT_HOME is used
     (if not empty).
 

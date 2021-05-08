@@ -198,7 +198,7 @@ $ gcc -shared -fPIC -o tizio.so tizio.o
 
 Copiare il file _tizio.so_ nella cartella plugin di sistema (ad
 esempio _/usr/local/lib/weechat/plugins_) oppure nella cartella
-plugin dell'utente (ad esempio _/home/xxx/.weechat/plugins_).
+plugin dell'utente (ad esempio _/home/user/.local/share/weechat/plugins_).
 
 In WeeChat:
 
@@ -1076,7 +1076,7 @@ Esempio in C:
 [source,C]
 ----
 char *str = weechat_string_expand_home ("~/file.txt");
-/* result: "/home/xxx/file.txt" */
+/* result: "/home/user/file.txt" */
 /* ... */
 free (str);
 ----
@@ -1086,12 +1086,12 @@ Questa funzione non è disponibile nelle API per lo scripting.
 
 ==== string_eval_path_home
 
-_WeeChat ≥ 1.3._
+_WeeChat ≥ 1.3, updated in 3.2._
 
 // TRANSLATION MISSING
 Evaluate a path in 3 steps:
 
-. replace leading `%h` by WeeChat home directory,
+. replace leading `%h` by a WeeChat directory (data by default),
 . replace leading `+~+` by user home directory (call to
   <<_string_expand_home,string_expand_home>>),
 . evaluate variables (see <<_string_eval_expression,string_eval_expression>>).
@@ -1115,7 +1115,13 @@ Argomenti:
 * _extra_vars_: hashtable for call to function
   <<_string_eval_expression,string_eval_expression>>
 * _options_: hashtable for call to function
-  <<_string_eval_expression,string_eval_expression>>
+  <<_string_eval_expression,string_eval_expression>>, with one extra key
+  supported:
+** _directory_: WeeChat directory to use when replacing `%h`, one of:
+*** _config_
+*** _data_ (default)
+*** _cache_
+*** _runtime_
 
 // TRANSLATION MISSING
 Valore restituito:
@@ -1126,8 +1132,8 @@ Esempio in C:
 
 [source,C]
 ----
-char *str = weechat_string_eval_path_home ("%h/test", NULL, NULL, NULL);
-/* result: "/home/xxx/.weechat/test" */
+char *str = weechat_string_eval_path_home ("${weechat_config_dir}/test.conf", NULL, NULL, NULL);
+/* result: "/home/user/.config/weechat/test.conf" */
 /* ... */
 free (str);
 ----
@@ -1140,8 +1146,8 @@ Script (Python):
 path = weechat.string_eval_path_home(path, pointers, extra_vars, options)
 
 # esempio
-path = weechat.string_eval_path_home("%h/test", {}, {}, {})
-# path == "/home/xxx/.weechat/test"
+path = weechat.string_eval_path_home("${weechat_config_dir}/test.conf", {}, {}, {})
+# path == "/home/user/.config/weechat/test.conf"
 ----
 
 ==== string_remove_quotes
@@ -2648,6 +2654,19 @@ expanded to last):
   `+${name}+` |
   `+value+`
 
+// TRANSLATION MISSING
+| `+${weechat_xxx_dir}+` |
+  A WeeChat directory: `+${weechat_config_dir}+`, `+${weechat_data_dir}+`,
+  `+${weechat_cache_dir}+` or `+${weechat_runtime_dir}+`. |
+  `+${weechat_config_dir}+` +
+  `+${weechat_data_dir}+` +
+  `+${weechat_cache_dir}+` +
+  `+${weechat_runtime_dir}+` |
+  `+/home/user/.config/weechat+` +
+  `+/home/user/.local/share/weechat+` +
+  `+/home/user/.cache/weechat+` +
+  `+/run/user/1000/weechat+`
+
 | `+${eval:xxx}+` +
   _(WeeChat ≥ 1.3)_ |
   String to evaluate. |
@@ -2769,9 +2788,9 @@ expanded to last):
   Result of a modifier, see function
   <<_hook_modifier_exec,hook_modifier_exec>>. |
   `+${modifier:eval_path_home,,~}+` +
-  `+${modifier:eval_path_home,,%h/python}+` |
-  `+/home/xxx+` +
-  `+/home/xxx/.weechat/python+`
+  `+${modifier:eval_path_home,directory=config,%h/weechat.conf}+` |
+  `+/home/user+` +
+  `+/home/user/.config/weechat/weechat.conf+`
 
 | `+${info:name}+` +
   `+${info:name,arguments}+` +
@@ -3760,6 +3779,9 @@ Alcune funzioni legate alle cartelle.
 
 ==== mkdir_home
 
+// TRANSLATION MISSING
+_Updated in 3.2._
+
 Crea una cartella nella home di WeeChat.
 
 Prototipo:
@@ -3771,7 +3793,13 @@ int weechat_mkdir_home (char *directory, int mode);
 
 Argomenti:
 
-* _directory_: nome della cartella da creare
+// TRANSLATION MISSING
+* _directory_: name of directory to create; it can start with one of these
+  strings to force a specific WeeChat directory (WeeChat ≥ 3.2):
+** `${weechat_config_dir}`
+** `${weechat_data_dir}` (default)
+** `${weechat_cache_dir}`
+** `${weechat_runtime_dir}`
 * _mode_: modalità per la cartella
 
 Valore restituito:
@@ -3782,7 +3810,7 @@ Esempio in C:
 
 [source,C]
 ----
-if (!weechat_mkdir_home ("temp", 0755))
+if (!weechat_mkdir_home ("${weechat_cache_dir}/temp", 0755))
 {
     /* errore */
 }
@@ -3796,7 +3824,7 @@ Script (Python):
 weechat.mkdir_home(directory, mode)
 
 # esempio
-weechat.mkdir_home("temp", 0755)
+weechat.mkdir_home("${weechat_cache_dir}/temp", 0755)
 ----
 
 ==== mkdir
@@ -11383,10 +11411,10 @@ del linguaggio:
 La callback compirà le seguenti azioni alla ricezione del segnale:
 
 . Scarica e rimuove lo script installato.
-. Sposta il nuovo script nella cartella _~/.weechat/xxx/_ (dove _xxx_ è il
+. Sposta il nuovo script nella cartella _~/.local/share/weechat/xxx/_ (dove _xxx_ è il
   linguaggio).
 // TRANSLATION MISSING
-. Crea un link al nuovo script nella cartella _~/.weechat/xxx/autoload/_
+. Crea un link al nuovo script nella cartella _~/.local/share/weechat/xxx/autoload/_
   (only if the script was already auto-loaded, or if the option
   _script.scripts.autoload_ is enabled for a new script).
 // TRANSLATION MISSING
@@ -11401,16 +11429,14 @@ Esempio in C:
 
 [source,C]
 ----
-weechat_hook_signal_send ("python_script_install", WEECHAT_HOOK_SIGNAL_STRING,
-                          "/home/xxx/.weechat/test.py");
+weechat_hook_signal_send ("python_script_install", WEECHAT_HOOK_SIGNAL_STRING, "/path/to/test.py");
 ----
 
 Script (Python):
 
 [source,python]
 ----
-weechat.hook_signal_send("python_script_install", WEECHAT_HOOK_SIGNAL_STRING,
-                         "/home/xxx/.weechat/test.py")
+weechat.hook_signal_send("python_script_install", WEECHAT_HOOK_SIGNAL_STRING, "/path/to/test.py")
 ----
 
 [[signals_xxx_script_remove]]
@@ -12243,7 +12269,7 @@ List of modifiers defined by WeeChat and plugins that can be used:
 // TRANSLATION MISSING
 | [[hook_modifier_eval_path_home]] eval_path_home +
   _(WeeChat ≥ 2.7)_ |
-  - |
+  Optional: `directory=xxx` where `xxx` can be: `config`, `data`, `cache`, `runtime` |
   Any string. |
   Evaluated path, result of the function
   <<_string_eval_path_home,string_eval_path_home>>.
@@ -16048,10 +16074,10 @@ if (version)
 if (date)
     free (date);
 
-char *weechat_dir = weechat_info_get ("weechat_dir", NULL);
-weechat_printf (NULL, "WeeChat home is: %s", weechat_dir);
-if (weechat_dir)
-    free (weechat_dir);
+char *weechat_config_dir = weechat_info_get ("weechat_config_dir", NULL);
+weechat_printf (NULL, "WeeChat config directory is: %s", weechat_config_dir);
+if (weechat_config_dir)
+    free (weechat_config_dir);
 ----
 
 Script (Python):
@@ -16064,7 +16090,7 @@ value = weechat.info_get(info_name, arguments)
 # esempio
 weechat.prnt("", "Current WeeChat version is: %s (compiled on %s)"
     % (weechat.info_get("version", ""), weechat.info_get("date", ""))
-weechat.prnt("", "WeeChat home is: %s" % weechat.info_get("weechat_dir"))
+weechat.prnt("", "WeeChat config directory is: %s" % weechat.info_get("weechat_config_dir"))
 ----
 
 ==== info_get_hashtable

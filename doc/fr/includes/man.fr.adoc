@@ -19,79 +19,79 @@ après, par exemple :
 // end::plugin_options[]
 
 // tag::files[]
-$HOME/.weechat/weechat.conf::
+$HOME/.config/weechat/weechat.conf::
     fichier de configuration principal de WeeChat
 
-$HOME/.weechat/plugins.conf::
+$HOME/.config/weechat/plugins.conf::
     fichier de configuration des extensions
 
-$HOME/.weechat/sec.conf::
+$HOME/.config/weechat/sec.conf::
     fichier de configuration avec les données sécurisées
 
-$HOME/.weechat/alias.conf::
+$HOME/.config/weechat/alias.conf::
     fichier de configuration pour l'extension _alias_
 
-$HOME/.weechat/buflist.conf::
+$HOME/.config/weechat/buflist.conf::
     fichier de configuration pour l'extension _buflist_
 
-$HOME/.weechat/charset.conf::
+$HOME/.config/weechat/charset.conf::
     fichier de configuration pour l'extension _charset_
 
-$HOME/.weechat/exec.conf::
+$HOME/.config/weechat/exec.conf::
     fichier de configuration pour l'extension _exec_
 
-$HOME/.weechat/fifo.conf::
+$HOME/.config/weechat/fifo.conf::
     fichier de configuration pour l'extension _fifo_
 
-$HOME/.weechat/fset.conf::
+$HOME/.config/weechat/fset.conf::
     fichier de configuration pour l'extension _fset_
 
-$HOME/.weechat/guile.conf::
+$HOME/.config/weechat/guile.conf::
     fichier de configuration pour l'extension _guile_
 
-$HOME/.weechat/irc.conf::
+$HOME/.config/weechat/irc.conf::
     fichier de configuration pour l'extension _irc_
 
-$HOME/.weechat/javascript.conf::
+$HOME/.config/weechat/javascript.conf::
     fichier de configuration pour l'extension _javascript_
 
-$HOME/.weechat/logger.conf::
+$HOME/.config/weechat/logger.conf::
     fichier de configuration pour l'extension _logger_
 
-$HOME/.weechat/lua.conf::
+$HOME/.config/weechat/lua.conf::
     fichier de configuration pour l'extension _lua_
 
-$HOME/.weechat/perl.conf::
+$HOME/.config/weechat/perl.conf::
     fichier de configuration pour l'extension _perl_
 
-$HOME/.weechat/php.conf::
+$HOME/.config/weechat/php.conf::
     fichier de configuration pour l'extension _php_
 
-$HOME/.weechat/python.conf::
+$HOME/.config/weechat/python.conf::
     fichier de configuration pour l'extension _python_
 
-$HOME/.weechat/relay.conf::
+$HOME/.config/weechat/relay.conf::
     fichier de configuration pour l'extension _relay_
 
-$HOME/.weechat/ruby.conf::
+$HOME/.config/weechat/ruby.conf::
     fichier de configuration pour l'extension _ruby_
 
-$HOME/.weechat/script.conf::
+$HOME/.config/weechat/script.conf::
     fichier de configuration pour l'extension _script_
 
-$HOME/.weechat/spell.conf::
+$HOME/.config/weechat/spell.conf::
     fichier de configuration pour l'extension _spell_
 
-$HOME/.weechat/tcl.conf::
+$HOME/.config/weechat/tcl.conf::
     fichier de configuration pour l'extension _tcl_
 
-$HOME/.weechat/trigger.conf::
+$HOME/.config/weechat/trigger.conf::
     fichier de configuration pour l'extension _trigger_
 
-$HOME/.weechat/xfer.conf::
+$HOME/.config/weechat/xfer.conf::
     fichier de configuration pour l'extension _xfer_
 
-$HOME/.weechat/weechat.log::
+$HOME/.local/share/weechat/weechat.log::
     fichier de log de WeeChat
 // end::files[]
 

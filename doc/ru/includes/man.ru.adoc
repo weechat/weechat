@@ -16,79 +16,79 @@ IPv6-адрес можно заключить в квадратные скобк
 // end::plugin_options[]
 
 // tag::files[]
-$HOME/.weechat/weechat.conf::
+$HOME/.config/weechat/weechat.conf::
     главный файл конфигурации WeeChat
 
-$HOME/.weechat/plugins.conf::
+$HOME/.config/weechat/plugins.conf::
     файл конфигурации плагинов
 
-$HOME/.weechat/sec.conf::
+$HOME/.config/weechat/sec.conf::
     файл конфигурации с защищаемыми данными
 
-$HOME/.weechat/alias.conf::
+$HOME/.config/weechat/alias.conf::
     файл конфигурации для плагина _alias_
 
-$HOME/.weechat/buflist.conf::
+$HOME/.config/weechat/buflist.conf::
     файл конфигурации для плагина _buflist_
 
-$HOME/.weechat/charset.conf::
+$HOME/.config/weechat/charset.conf::
     файл конфигурации для плагина _charset_
 
-$HOME/.weechat/exec.conf::
+$HOME/.config/weechat/exec.conf::
     файл конфигурации для плагина _exec_
 
-$HOME/.weechat/fifo.conf::
+$HOME/.config/weechat/fifo.conf::
     файл конфигурации для плагина _fifo_
 
-$HOME/.weechat/fset.conf::
+$HOME/.config/weechat/fset.conf::
     файл конфигурации для плагина _fset_
 
-$HOME/.weechat/guile.conf::
+$HOME/.config/weechat/guile.conf::
     файл конфигурации для плагина _guile_
 
-$HOME/.weechat/irc.conf::
+$HOME/.config/weechat/irc.conf::
     файл конфигурации для плагина _irc_
 
-$HOME/.weechat/javascript.conf::
+$HOME/.config/weechat/javascript.conf::
     файл конфигурации для плагина _javascript_
 
-$HOME/.weechat/logger.conf::
+$HOME/.config/weechat/logger.conf::
     файл конфигурации для плагина _logger_
 
-$HOME/.weechat/lua.conf::
+$HOME/.config/weechat/lua.conf::
     файл конфигурации для плагина _lua_
 
-$HOME/.weechat/perl.conf::
+$HOME/.config/weechat/perl.conf::
     файл конфигурации для плагина _perl_
 
-$HOME/.weechat/php.conf::
+$HOME/.config/weechat/php.conf::
     файл конфигурации для плагина _php_
 
-$HOME/.weechat/python.conf::
+$HOME/.config/weechat/python.conf::
     файл конфигурации для плагина _python_
 
-$HOME/.weechat/relay.conf::
+$HOME/.config/weechat/relay.conf::
     файл конфигурации для плагина _relay_
 
-$HOME/.weechat/ruby.conf::
+$HOME/.config/weechat/ruby.conf::
     файл конфигурации для плагина _ruby_
 
-$HOME/.weechat/script.conf::
+$HOME/.config/weechat/script.conf::
     файл конфигурации для плагина _script_
 
-$HOME/.weechat/spell.conf::
+$HOME/.config/weechat/spell.conf::
     файл конфигурации для плагина _spell_
 
-$HOME/.weechat/tcl.conf::
+$HOME/.config/weechat/tcl.conf::
     файл конфигурации для плагина _tcl_
 
-$HOME/.weechat/trigger.conf::
+$HOME/.config/weechat/trigger.conf::
     файл конфигурации для плагина _trigger_
 
-$HOME/.weechat/xfer.conf::
+$HOME/.config/weechat/xfer.conf::
     файл конфигурации для плагина _xref_
 
-$HOME/.weechat/weechat.log::
+$HOME/.local/share/weechat/weechat.log::
     лог-файл WeeChat
 // end::files[]
 

@@ -1056,8 +1056,12 @@ weeget.py と script.pl を使ってください。
 それでもだめなら、手作業で (シェルから) スクリプトリストファイルを削除してください:
 
 ----
-$ rm ~/.weechat/script/plugins.xml.gz
+$ rm ~/.cache/weechat/script/plugins.xml.gz
 ----
+
+// TRANSLATION MISSING
+[NOTE]
+With WeeChat ≤ 3.1, the path should be: _~/.weechat/script/plugins.xml.gz_.
 
 その後、WeeChat からスクリプトリストを更新してください:
 
@@ -1078,7 +1082,7 @@ $ rm ~/.weechat/script/plugins.xml.gz
 * シェルからスクリプトリストファイルをダウンロードします (必要なら curl をインストールしてください):
 
 ----
-$ cd ~/.weechat/script
+$ cd ~/.cache/weechat/script
 $ curl -O https://weechat.org/files/plugins.xml.gz
 ----
 
@@ -1194,8 +1198,9 @@ link:weechat_user.ja.html#secured_data[ユーザーズガイド / 暗号化デ�
 [[sharing_config_files]]
 === WeeChat の設定を共有したいのですが、公開しても良いファイルと秘密にしておくべきファイルを教えてください。
 
-_~/.weechat/*.conf_ ファイルは公開しても問題ありませんが、
-パスフレーズで暗号化されたパスワードが含まれる _sec.conf_ ファイルは秘密にしてください。
+// TRANSLATION MISSING
+You can share configuration files _*.conf_ except the file _sec.conf_ which
+contains your passwords ciphered with your passphrase.
 
 // TRANSLATION MISSING
 Some other files may contain sensitive info like passwords (if they are not

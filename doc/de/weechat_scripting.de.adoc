@@ -349,7 +349,7 @@ anlegen, der in das Verzeichnis _Skriptsprache/autoload_ zeigt.
 Ein Beispiel für ein Python-Skript:
 
 ----
-$ cd ~/.weechat/python/autoload
+$ cd ~/.local/share/weechat/python/autoload
 $ ln -s ../script.py
 ----
 
@@ -1394,10 +1394,11 @@ weechat.prnt("", "Version %s" % weechat.info_get("version", ""))
 [[infos_other]]
 ==== andere Informationen
 
+// TRANSLATION MISSING
 [source,python]
 ----
-# WeeChat Hauptverzeichnis, zum Beispiel: "/home/xxxx/.weechat"
-weechat.prnt("", "WeeChat Hauptverzeichnis: %s" % weechat.info_get("weechat_dir", ""))
+# WeeChat config directory, for example: "/home/user/.config/weechat"
+weechat.prnt("", "WeeChat config dir: %s" % weechat.info_get("weechat_config_dir", ""))
 
 # Inaktivität der Tastatur
 weechat.prnt("", "Tastatur ist seit %s Sekunden nicht mehr betätigt worden" % weechat.info_get("inactivity", ""))

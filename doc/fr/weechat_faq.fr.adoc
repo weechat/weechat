@@ -1093,8 +1093,11 @@ Si cela ne fonctionne toujours pas, essayez de supprimer manuellement le fichier
 avec les scripts (dans votre shell) :
 
 ----
-$ rm ~/.weechat/script/plugins.xml.gz
+$ rm ~/.cache/weechat/script/plugins.xml.gz
 ----
+
+[NOTE]
+Avec WeeChat ≤ 3.1, le chemin devrait être : _~/.weechat/script/plugins.xml.gz_.
 
 Et mettez à jour les scripts à nouveau dans WeeChat :
 
@@ -1116,7 +1119,7 @@ vous-même pour obtenir les mises à jour) :
 * dans votre shell, avec curl installé :
 
 ----
-$ cd ~/.weechat/script
+$ cd ~/.cache/weechat/script
 $ curl -O https://weechat.org/files/plugins.xml.gz
 ----
 
@@ -1239,7 +1242,7 @@ Par exemple :
 [[sharing_config_files]]
 === Je souhaite partager ma configuration de WeeChat, quels fichiers dois-je partager et que dois-je garder privé ?
 
-Vous pouvez partager les fichiers _~/.weechat/*.conf_ sauf le fichier
+Vous pouvez partager les fichiers de configuration _*.conf_ sauf le fichier
 _sec.conf_ qui contient vos mots de passes chiffrés avec votre phrase
 de chiffrement.
 

@@ -16,11 +16,11 @@
     (works only with the command *weechat-headless*, not compatible with option
     "--daemon").
 
+// TRANSLATION MISSING
 *-d*, *--dir* _<путь>_::
-    Установить <путь> как домашнюю директорию для WeeChat (используется для
-    конфигурационных файлов, логов, пользовательских плагинов и скриптов).
-    Значение по-умолчанию: "~/.weechat" (замечание: директория будет создана,
-    если WeeChat не найдет ее).
+    Force a single directory for all WeeChat files (directory is created if not found).
+    Four directories can be given, separated by colons (in this order: config,
+    data, cache, runtime).
     Если эта опция не задана, будет использована переменная окружения WEECHAT_HOME
     (если такая переменная задана).
 

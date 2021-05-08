@@ -476,10 +476,10 @@ werden um die Datei zu lesen. +
 Weitere Informationen finden Sie auf dieser Wiki-Seite: https://wiki.archlinux.org/index.php/Core_dump
 
 Beispiel: _weechat_ ist in _/usr/bin/_ installiert und die _core_ Datei befindet sich
-in _/home/xxx/_. Nun wird gdb mit folgendem Befehl aufgerufen:
+in _/home/user/_. Nun wird gdb mit folgendem Befehl aufgerufen:
 
 ----
-gdb /usr/bin/weechat /home/xxx/core
+gdb /usr/bin/weechat /home/user/core
 ----
 
 Nun startet man _gdb_ und führt den Befehl `bt full` innerhalb der gdb Umgebung aus, um die
@@ -563,9 +563,10 @@ z.B. um den Kernel zu aktualisieren oder WeeChat auf einen anderen Computer zu v
 /upgrade -quit
 ----
 
-Dies speichert den aktuellen Status in `*.upgrade`-Dateien. Sie können dann entweder das
-gesamte `~/.weechat` Verzeichnis auf einen anderen Computer verschieben oder diesen
-gespeicherten Status neu starten, mit folgendem Befehl:
+// TRANSLATION MISSING
+This saves the current state in `*.upgrade` files. You can then either reboot
+or move the whole WeeChat directories (config, data, cache) to another machine,
+and restart WeeChat later with this command:
 
 ----
 $ weechat --upgrade
@@ -597,7 +598,7 @@ WeeChat hat ein automatisches Upgrade für Konfigurationsdateien (`*.conf`):
 Beispiel für eine Warnung, wenn eine Option entfernt wurde:
 
 ----
-=!= Warnung: /home/xxx/.weechat/sec.conf, Zeile 15: unbekannte Einstellung für Sektion "crypt": passphrase_file = ""
+=!= Warnung: /home/user/.config/weechat/sec.conf, Zeile 15: unbekannte Einstellung für Sektion "crypt": passphrase_file = ""
 ----
 
 Das bedeutet, dass die Option "sec.crypt.passphrase_file" entfernt wurde und der
@@ -617,7 +618,7 @@ $ weechat
 ----
 
 Wird WeeChat das erste mal ausgeführt, wird die Standardkonfiguration und
-die entsprechenden Dateien im Verzeichnis _~/.weechat_ erstellt.
+die entsprechenden Dateien im Verzeichnis _~/.config/weechat_ erstellt.
 (siehe <<files_and_directories,Dateien und Verzeichnisse>>).
 
 ==== Optionen für Befehlszeile
@@ -648,9 +649,28 @@ Einige Umgebungsvariablen werden von WeeChat genutzt, sofern sie definiert wurde
 [[files_and_directories]]
 === Dateien und Verzeichnisse
 
-WeeChat schreibt standardmäßig seine Konfiguration und andere
-Daten in folgendes Verzeichnis: `~/.weechat` +
-Diese Dateien werden, mit Standardwerten, beim ersten Ausführen von WeeChat automatisch erstellt.
+// TRANSLATION MISSING
+[[xdg_directories]]
+==== XDG directories
+
+WeeChat uses XDG directories by default
+(according to the https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html[XDG Base Directory Specification]). +
+A single home directory for all files can be forced by CMake option `WEECHAT_HOME`,
+the environment variable `WEECHAT_HOME` or the command-line option `-d` / `--dir`.
+
+When a single WeeChat home directory is not forced, XDG directories are used
+and set like this:
+
+[width="100%",cols="1,2m,5",options="header"]
+|===
+| Directory | Default value            | Fallback value
+| config    | $XDG_CONFIG_HOME/weechat | `$HOME/.config/weechat` if `$XDG_CONFIG_HOME` is not defined or empty.
+| data      | $XDG_DATA_HOME/weechat   | `$HOME/.local/share/weechat` if `$XDG_DATA_HOME` is not defined or empty.
+| cache     | $XDG_CACHE_HOME/weechat  | `$HOME/.cache/weechat` if `$XDG_CACHE_HOME` is not defined or empty.
+| runtime   | $XDG_RUNTIME_DIR/weechat | Same as _cache_ directory if `$XDG_RUNTIME_DIR` is not defined or empty.
+|===
+
+The configuration files are created with default values the first time you run WeeChat.
 
 [[weechat_directories]]
 ==== WeeChat Verzeichnisse
@@ -659,29 +679,38 @@ Es gibt folgende WeeChat Verzeichnisse:
 
 [width="100%",cols="1m,3",options="header"]
 |===
-| Pfad/Datei        | Beschreibung
-| ~/.weechat/       | WeeChat Heimatverzeichnis (kann angepasst werden, siehe <<running_weechat,Running WeeChat>>).
-|    logs/          | Logdateien (eine Datei pro Buffer).
-|    python/        | Python-Skripten.
-|       autoload/   | Python-Skripten die beim Start automatisch ausgeführt werden ^(1)^.
-|    perl/          | Perl-Skripten.
-|       autoload/   | Perl-Skripten die beim Start automatisch ausgeführt werden ^(1)^.
-|    ruby/          | Ruby-Skripten.
-|       autoload/   | Ruby-Skripten die beim Start automatisch ausgeführt werden ^(1)^.
-|    lua/           | Lua-Skripten.
-|       autoload/   | Lua-Skripten die beim Start automatisch ausgeführt werden ^(1)^.
-|    tcl/           | Tcl-Skripten.
-|       autoload/   | Tcl-Skripten die beim Start automatisch ausgeführt werden ^(1)^.
-|    guile/         | Guile-Skripten.
-|       autoload/   | Guile-Skripten die beim Start automatisch ausgeführt werden ^(1)^.
-|    javascript/    | JavaScript-Skripten.
-|       autoload/   | JavaScript-Skripten die beim Start automatisch ausgeführt werden ^(1)^.
-|    php/           | PHP-Skripten.
-|       autoload/   | PHP-Skripten die beim Start automatisch ausgeführt werden ^(1)^.
+| Pfad ^(1)^             | Beschreibung
+// TRANSLATION MISSING
+| ~/.config/weechat/      | WeeChat configuration files: `*.conf`, certificates, etc.
+// TRANSLATION MISSING
+| ~/.local/share/weechat/ | WeeChat data files: logs, scripts, scripts data, xfer files, etc.
+|    logs/                | Logdateien (eine Datei pro Buffer).
+|    python/              | Python-Skripten.
+|       autoload/         | Python-Skripten die beim Start automatisch ausgeführt werden ^(2)^.
+|    perl/                | Perl-Skripten.
+|       autoload/         | Perl-Skripten die beim Start automatisch ausgeführt werden ^(2)^.
+|    ruby/                | Ruby-Skripten.
+|       autoload/         | Ruby-Skripten die beim Start automatisch ausgeführt werden ^(2)^.
+|    lua/                 | Lua-Skripten.
+|       autoload/         | Lua-Skripten die beim Start automatisch ausgeführt werden ^(2)^.
+|    tcl/                 | Tcl-Skripten.
+|       autoload/         | Tcl-Skripten die beim Start automatisch ausgeführt werden ^(2)^.
+|    guile/               | Guile-Skripten.
+|       autoload/         | Guile-Skripten die beim Start automatisch ausgeführt werden ^(2)^.
+|    javascript/          | JavaScript-Skripten.
+|       autoload/         | JavaScript-Skripten die beim Start automatisch ausgeführt werden ^(2)^.
+|    php/                 | PHP-Skripten.
+|       autoload/         | PHP-Skripten die beim Start automatisch ausgeführt werden ^(2)^.
+// TRANSLATION MISSING
+| ~/.cache/weechat/       | WeeChat cache files: scripts cache.
+// TRANSLATION MISSING
+| /run/user/1000/weechat/ | WeeChat runtime files: FIFO pipe, Relay UNIX sockets.
 |===
 
+// TRANSLATION MISSING
 [NOTE]
-^(1)^ Das Verzeichnis besteht meistens aus symbolischen Links welche auf das eigentliche Skript zeigen.
+^(1)^ XDG directories may be different according to your environment variables `XDG_*`. +
+^(2)^ Das Verzeichnis besteht meistens aus symbolischen Links welche auf das eigentliche Skript zeigen.
 
 [[weechat_files]]
 ==== WeeChat Dateien
@@ -2765,7 +2794,9 @@ Sie können WeeChat fern steuern indem Sie Befehle oder einen Text an die FIFO P
 schicken (dazu muss die Option "fifo.file.enabled" aktiviert sein (standardmäßig
 ist diese Option aktiviert).
 
-Die FIFO-Pipe befindet sich standardmäßig im Pfad _~/.weechat/_ und heißt _weechat_fifo_.
+// TRANSLATION MISSING
+The FIFO pipe is located in WeeChat runtime directory and is called
+_weechat_fifo_ by default.
 
 Die Syntax der FIFO Pipe Befehle/Text sieht wie folgt aus:
 
@@ -2779,26 +2810,26 @@ einige Beispiele:
 * Ändert den eigenen Nick auf dem IRC Server freenode in "newnick":
 
 ----
-$ echo 'irc.server.freenode */nick newnick' >~/.weechat/weechat_fifo
+$ echo 'irc.server.freenode */nick newnick' >/run/user/1000/weechat/weechat_fifo
 ----
 
 * Schickt eine Nachrich in den IRC #weechat Channel:
 
 ----
-$ echo 'irc.freenode.#weechat *hello!' >~/.weechat/weechat_fifo
+$ echo 'irc.freenode.#weechat *hello!' >/run/user/1000/weechat/weechat_fifo
 ----
 
 * Schickt eine Nachricht in den aktuellen Buffer:
 
 ----
-$ echo '*hello!' >~/.weechat/weechat_fifo
+$ echo '*hello!' >/run/user/1000/weechat/weechat_fifo
 ----
 
 * Sendet zwei Befehle um alle Python-Skripten zu entfernen und dann neu zu laden (die beiden Befehle müssen
   mit "\n" getrennt werden):
 
 ----
-$ printf '%b' '*/python unload\n*/python autoload\n' >~/.weechat/weechat_fifo
+$ printf '%b' '*/python unload\n*/python autoload\n' >/run/user/1000/weechat/weechat_fifo
 ----
 
 [[fifo_commands]]
@@ -3451,7 +3482,7 @@ Datumsspezifikationen in der Maske genutzt werden (siehe
 Erstellt eine Struktur in folgender Form:
 
 ....
-~/.weechat
+~/.local/share/weechat
 └── logs
     ├── 2010
     │   ├── 11
@@ -3481,7 +3512,7 @@ einer Protokolldatei für jeden Channel:
 Erstellt eine Struktur in folgender Form:
 
 ....
-~/.weechat
+~/.local/share/weechat
 └── logs
     └── irc
         ├── freenode
@@ -3698,13 +3729,15 @@ man jedes Protokoll zum Lauschen an einem UNIX Domain Socket nutzen, indem
 man einen Pfad angibt. Zum Beispiel:
 
 ----
-/relay add unix.weechat %h/relay_socket
+/relay add unix.weechat ${weechat_runtime_dir}/relay_socket
 ----
 
-Das erlaubt es Clients sich mittels dem weechat Protokoll mit 
-_~/.weechat/relay_socket_ zu verbinden. Dies ist besonders zu
+Das erlaubt es Clients sich mittels dem weechat Protokoll mit
+_/run/user/1000/weechat/relay_socket_ zu verbinden. Dies ist besonders zu
 empfehlen um SSH forwarding für relay Clients zu nutzen, falls
-andere Ports nicht geöffnet werden können. OpenSSH nutzen:
+andere Ports nicht geöffnet werden können.
+
+OpenSSH nutzen:
 
 ----
 $ ssh -L 9000:.weechat/relay_socket user@hostname

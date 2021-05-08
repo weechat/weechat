@@ -484,10 +484,10 @@ _/var/lib/systemd/coredump_ and you must use the command `coredumpctl` to read i
 For more information, see this wiki page: https://wiki.archlinux.org/index.php/Core_dump
 
 例えば、_weechat_ が _/usr/bin/_ にインストールされ、_core_ ファイルが
-_/home/xxx/_ にある場合、以下のコマンドで gdb を起動してください:
+_/home/user/_ にある場合、以下のコマンドで gdb を起動してください:
 
 ----
-gdb /usr/bin/weechat /home/xxx/core
+gdb /usr/bin/weechat /home/user/core
 ----
 
 gdb の中で `bt full`
@@ -573,8 +573,8 @@ to upgrade the kernel or to move your WeeChat to another machine:
 ----
 
 This saves the current state in `*.upgrade` files. You can then either reboot
-or move the whole directory `~/.weechat` to another machine, and restart
-WeeChat later with this command:
+or move the whole WeeChat directories (config, data, cache) to another machine,
+and restart WeeChat later with this command:
 
 ----
 $ weechat --upgrade
@@ -607,7 +607,7 @@ WeeChat has an automatic upgrade of configuration files (`*.conf`):
 Example of warning when an option has been removed:
 
 ----
-=!= 警告: /home/xxx/.weechat/sec.conf, 行 15: セクション "crypt" の無効なオプション: passphrase_file = ""
+=!= 警告: /home/user/.config/weechat/sec.conf, 行 15: セクション "crypt" の無効なオプション: passphrase_file = ""
 ----
 
 That means the option `sec.crypt.passphrase_file` has been removed, and you
@@ -627,7 +627,7 @@ $ weechat
 ----
 
 WeeChat の初回起動時にデフォルトのオプション設定を含む設定ファイルが
-_~/.weechat_ ディレクトリの中に作成されます
+_~/.config/weechat_ ディレクトリの中に作成されます
 (<<files_and_directories,ファイルとディレクトリ>>を参照してください)。
 
 ==== コマンドラインオプション
@@ -658,10 +658,28 @@ include::includes/cmdline_options.ja.adoc[tag=debug]
 [[files_and_directories]]
 === ファイルとディレクトリ
 
-デフォルト状態の WeeChat は `~/.weechat`
-ディレクトリ内に設定ファイルおよびその他のデータを書き込みます。 +
 // TRANSLATION MISSING
-These files are created with default values the first time you run WeeChat.
+[[xdg_directories]]
+==== XDG directories
+
+WeeChat uses XDG directories by default
+(according to the https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html[XDG Base Directory Specification]). +
+A single home directory for all files can be forced by CMake option `WEECHAT_HOME`,
+the environment variable `WEECHAT_HOME` or the command-line option `-d` / `--dir`.
+
+When a single WeeChat home directory is not forced, XDG directories are used
+and set like this:
+
+[width="100%",cols="1,2m,5",options="header"]
+|===
+| Directory | Default value            | Fallback value
+| config    | $XDG_CONFIG_HOME/weechat | `$HOME/.config/weechat` if `$XDG_CONFIG_HOME` is not defined or empty.
+| data      | $XDG_DATA_HOME/weechat   | `$HOME/.local/share/weechat` if `$XDG_DATA_HOME` is not defined or empty.
+| cache     | $XDG_CACHE_HOME/weechat  | `$HOME/.cache/weechat` if `$XDG_CACHE_HOME` is not defined or empty.
+| runtime   | $XDG_RUNTIME_DIR/weechat | Same as _cache_ directory if `$XDG_RUNTIME_DIR` is not defined or empty.
+|===
+
+The configuration files are created with default values the first time you run WeeChat.
 
 // TRANSLATION MISSING
 [[weechat_directories]]
@@ -672,29 +690,38 @@ The WeeChat directories are:
 
 [width="100%",cols="1m,3",options="header"]
 |===
-| パス/ファイル     | 説明
-| ~/.weechat/       | WeeChat ホームディレクトリ (変更するには <<running_weechat,WeeChat の起動>>を参照してください)
-|    logs/          | ログファイル (バッファごとに 1 つのファイル)
-|    python/        | Python スクリプト
-|       autoload/   | 起動時に自動ロードされる Python スクリプト ^(1)^
-|    perl/          | Perl スクリプト
-|       autoload/   | 起動時に自動ロードされる Perl スクリプト ^(1)^
-|    ruby/          | Ruby スクリプト
-|       autoload/   | 起動時に自動ロードされる Ruby スクリプト ^(1)^
-|    lua/           | Lua スクリプト
-|       autoload/   | 起動時に自動ロードされる Lua スクリプト ^(1)^
-|    tcl/           | Tcl スクリプト
-|       autoload/   | 起動時に自動ロードされる Tcl スクリプト ^(1)^
-|    guile/         | Guile スクリプト
-|       autoload/   | 起動時に自動ロードされる Guile スクリプト ^(1)^
-|    javascript/    | JavaScript スクリプト
-|       autoload/   | 起動時に自動ロードされる JavaScript スクリプト ^(1)^
-|    php/           | PHP スクリプト
-|       autoload/   | 起動時に自動ロードされる PHP スクリプト ^(1)^
+// TRANSLATION MISSING
+| Path ^(1)^              | 説明
+// TRANSLATION MISSING
+| ~/.config/weechat/      | WeeChat configuration files: `*.conf`, certificates, etc.
+// TRANSLATION MISSING
+| ~/.local/share/weechat/ | WeeChat data files: logs, scripts, scripts data, xfer files, etc.
+|    logs/                | ログファイル (バッファごとに 1 つのファイル)
+|    python/              | Python スクリプト
+|       autoload/         | 起動時に自動ロードされる Python スクリプト ^(2)^
+|    perl/                | Perl スクリプト
+|       autoload/         | 起動時に自動ロードされる Perl スクリプト ^(2)^
+|    ruby/                | Ruby スクリプト
+|       autoload/         | 起動時に自動ロードされる Ruby スクリプト ^(2)^
+|    lua/                 | Lua スクリプト
+|       autoload/         | 起動時に自動ロードされる Lua スクリプト ^(2)^
+|    tcl/                 | Tcl スクリプト
+|       autoload/         | 起動時に自動ロードされる Tcl スクリプト ^(2)^
+|    guile/               | Guile スクリプト
+|       autoload/         | 起動時に自動ロードされる Guile スクリプト ^(2)^
+|    javascript/          | JavaScript スクリプト
+|       autoload/         | 起動時に自動ロードされる JavaScript スクリプト ^(2)^
+|    php/                 | PHP スクリプト
+|       autoload/         | 起動時に自動ロードされる PHP スクリプト ^(2)^
+// TRANSLATION MISSING
+| ~/.cache/weechat/       | WeeChat cache files: scripts cache.
+// TRANSLATION MISSING
+| /run/user/1000/weechat/ | WeeChat runtime files: FIFO pipe, Relay UNIX sockets.
 |===
 
 [NOTE]
-^(1)^ このディレクトリには親ディレクトリ内にあるスクリプトへのシンボリックリンクのみが含まれることが多いです。
+^(1)^ XDG directories may be different according to your environment variables `XDG_*`. +
+^(2)^ このディレクトリには親ディレクトリ内にあるスクリプトへのシンボリックリンクのみが含まれることが多いです。
 
 // TRANSLATION MISSING
 [[weechat_files]]
@@ -2782,7 +2809,9 @@ include::includes/autogen_user_options.ja.adoc[tag=exec_options]
 外部から WeeChat を操作するには、FIFO パイプにコマンドやテキストを書き込んでください ("fifo.file.enabled"
 オプションが有効化されている必要がありますが、デフォルトで有効化されているはずです)。
 
-FIFO パイプは _~/.weechat/_ の中にあり、デフォルトで _weechat_fifo_ という名前を付けられています。
+// TRANSLATION MISSING
+The FIFO pipe is located in WeeChat runtime directory and is called
+_weechat_fifo_ by default.
 
 FIFO パイプに書き込むコマンド/テキストの文法は以下の例の一つです:
 
@@ -2796,26 +2825,26 @@ FIFO パイプに書き込むコマンド/テキストの文法は以下の例�
 * IRC サーバ freenode で使うニックネームを "newnick" に変更する:
 
 ----
-$ echo 'irc.server.freenode */nick newnick' >~/.weechat/weechat_fifo
+$ echo 'irc.server.freenode */nick newnick' >/run/user/1000/weechat/weechat_fifo
 ----
 
 * IRC チャンネル #weechat に対してテキストを送信:
 
 ----
-$ echo 'irc.freenode.#weechat *hello!' >~/.weechat/weechat_fifo
+$ echo 'irc.freenode.#weechat *hello!' >/run/user/1000/weechat/weechat_fifo
 ----
 
 * 現在のバッファに対してテキストを送信:
 
 ----
-$ echo '*hello!' >~/.weechat/weechat_fifo
+$ echo '*hello!' >/run/user/1000/weechat/weechat_fifo
 ----
 
 * Python スクリプトのアンロードとロードを行う 2 つのコマンドを送信
   (複数のコマンドは "\n" で分割してください):
 
 ----
-$ printf '%b' '*/python unload\n*/python autoload\n' >~/.weechat/weechat_fifo
+$ printf '%b' '*/python unload\n*/python autoload\n' >/run/user/1000/weechat/weechat_fifo
 ----
 
 [[fifo_commands]]
@@ -3454,7 +3483,7 @@ logger.file.mask
 以下のファイルが作成されます:
 
 ....
-~/.weechat
+~/.local/share/weechat
 └── logs
     ├── 2010
     │   ├── 11
@@ -3483,7 +3512,7 @@ IRC サーバ名を使ったディレクトリに、チャンネル名を使っ�
 以下のファイルが作成されます:
 
 ....
-~/.weechat
+~/.local/share/weechat
 └── logs
     └── irc
         ├── freenode
@@ -3693,12 +3722,14 @@ websocket = new WebSocket("ws://server.com:9000/weechat");
 UNIX ドメインソケット上の任意のプロトコルをリッスンできます。例:
 
 ----
-/relay add unix.weechat %h/relay_socket
+/relay add unix.weechat ${weechat_runtime_dir}/relay_socket
 ----
 
-こうすることで、クライアントは weechat プロトコルを使って _~/.weechat/relay_socket_
+こうすることで、クライアントは weechat プロトコルを使って _/run/user/1000/weechat/relay_socket_
 に接続できます。これは、他のポートをオープンが禁止されている状況下で、リレークライアントの
-SSH 転送を許可する際に特に便利です。OpenSSH を使った例:
+SSH 転送を許可する際に特に便利です。
+
+OpenSSH を使った例:
 
 ----
 $ ssh -L 9000:.weechat/relay_socket user@hostname

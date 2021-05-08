@@ -187,7 +187,7 @@ $ gcc -shared -fPIC -o toto.so toto.o
 
 _toto.so_ ファイルをシステムのプラグインディレクトリ (例えば
 _/usr/local/lib/weechat/plugins_) またはユーザのプラグインディレクトリ (例えば
-_/home/xxx/.weechat/plugins_) にコピーしてください。
+_/home/user/.local/share/weechat/plugins_) にコピーしてください。
 
 WeeChat の中で:
 
@@ -1036,7 +1036,7 @@ C 言語での使用例:
 [source,C]
 ----
 char *str = weechat_string_expand_home ("~/file.txt");
-/* result: "/home/xxx/file.txt" */
+/* result: "/home/user/file.txt" */
 /* ... */
 free (str);
 ----
@@ -1046,11 +1046,13 @@ free (str);
 
 ==== string_eval_path_home
 
-_WeeChat バージョン 0.3.3 以上で利用可。_
+// TRANSLATION MISSING
+_WeeChat ≥ 1.3, updated in 3.2._
 
 3 段階でパスを評価します:
 
-. 先頭の `%h` を WeeChat ホームディレクトリで置換し、
+// TRANSLATION MISSING
+. replace leading `%h` by a WeeChat directory (data by default),
 . 先頭の `+~+` をユーザのホームディレクトリで置換し
   (<<_string_expand_home,string_expand_home>> を実行し)、
 . 変数を評価します
@@ -1068,13 +1070,20 @@ char *weechat_string_eval_path_home (const char *path,
 
 引数:
 
+// TRANSLATION MISSING
 * _path_: パス
 * _pointers_: 関数に渡されるハッシュテーブル
   <<_string_eval_expression,string_eval_expression>>
 * _extra_vars_: 関数に渡されるハッシュテーブル
   <<_string_eval_expression,string_eval_expression>>
-* _options_: 関数に渡されるハッシュテーブル
-  <<_string_eval_expression,string_eval_expression>>
+* _options_: hashtable for call to function
+  <<_string_eval_expression,string_eval_expression>>, with one extra key
+  supported:
+** _directory_: WeeChat directory to use when replacing `%h`, one of:
+*** _config_
+*** _data_ (default)
+*** _cache_
+*** _runtime_
 
 戻り値:
 
@@ -1084,8 +1093,8 @@ C 言語での使用例:
 
 [source,C]
 ----
-char *str = weechat_string_eval_path_home ("%h/test", NULL, NULL, NULL);
-/* result: "/home/xxx/.weechat/test" */
+char *str = weechat_string_eval_path_home ("${weechat_config_dir}/test.conf", NULL, NULL, NULL);
+/* result: "/home/user/.config/weechat/test.conf" */
 /* ... */
 free (str);
 ----
@@ -1098,8 +1107,8 @@ free (str);
 path = weechat.string_eval_path_home(path, pointers, extra_vars, options)
 
 # 例
-path = weechat.string_eval_path_home("%h/test", {}, {}, {})
-# path == "/home/xxx/.weechat/test"
+path = weechat.string_eval_path_home("${weechat_config_dir}/test.conf", {}, {}, {})
+# path == "/home/user/.config/weechat/test.conf"
 ----
 
 ==== string_remove_quotes
@@ -2560,6 +2569,19 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
   `+${name}+` |
   `+value+`
 
+// TRANSLATION MISSING
+| `+${weechat_xxx_dir}+` |
+  A WeeChat directory: `+${weechat_config_dir}+`, `+${weechat_data_dir}+`,
+  `+${weechat_cache_dir}+` or `+${weechat_runtime_dir}+`. |
+  `+${weechat_config_dir}+` +
+  `+${weechat_data_dir}+` +
+  `+${weechat_cache_dir}+` +
+  `+${weechat_runtime_dir}+` |
+  `+/home/user/.config/weechat+` +
+  `+/home/user/.local/share/weechat+` +
+  `+/home/user/.cache/weechat+` +
+  `+/run/user/1000/weechat+`
+
 | `+${eval:xxx}+` +
   _(WeeChat バージョン 1.3 以上で利用可)_ |
   評価する文字列 |
@@ -2687,9 +2709,9 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
   Result of a modifier, see function
   <<_hook_modifier_exec,hook_modifier_exec>>. |
   `+${modifier:eval_path_home,,~}+` +
-  `+${modifier:eval_path_home,,%h/python}+` |
-  `+/home/xxx+` +
-  `+/home/xxx/.weechat/python+`
+  `+${modifier:eval_path_home,directory=config,%h/weechat.conf}+` |
+  `+/home/user+` +
+  `+/home/user/.config/weechat/weechat.conf+`
 
 | `+${info:name}+` +
   `+${info:name,arguments}+` +
@@ -3648,6 +3670,8 @@ rc = weechat_crypto_hash_pbkdf2 (data, strlen (data), "sha256", salt, strlen (sa
 
 ==== mkdir_home
 
+_WeeChat バージョン 3.2 で更新。_
+
 WeeChat ホームディレクトリの下にディレクトリを作成。
 
 プロトタイプ:
@@ -3659,7 +3683,13 @@ int weechat_mkdir_home (char *directory, int mode);
 
 引数:
 
-* _directory_: 作成するディレクトリの名前
+// TRANSLATION MISSING
+* _directory_: name of directory to create; it can start with one of these
+  strings to force a specific WeeChat directory (WeeChat ≥ 3.2):
+** `${weechat_config_dir}`
+** `${weechat_data_dir}` (default)
+** `${weechat_cache_dir}`
+** `${weechat_runtime_dir}`
 * _mode_: ディレクトリのモード
 
 戻り値:
@@ -3670,7 +3700,7 @@ C 言語での使用例:
 
 [source,C]
 ----
-if (!weechat_mkdir_home ("temp", 0755))
+if (!weechat_mkdir_home ("${weechat_cache_dir}/temp", 0755))
 {
     /* error */
 }
@@ -3684,7 +3714,7 @@ if (!weechat_mkdir_home ("temp", 0755))
 weechat.mkdir_home(directory, mode)
 
 # 例
-weechat.mkdir_home("temp", 0755)
+weechat.mkdir_home("${weechat_cache_dir}/temp", 0755)
 ----
 
 ==== mkdir
@@ -10959,8 +10989,8 @@ weechat.hook_signal_send("logger_backlog", weechat.WEECHAT_HOOK_SIGNAL_POINTER, 
 シグナルを受け取ったらコールバックは以下のように働きます:
 
 . インストール済みスクリプトをリロードして削除。
-. 新しいスクリプトをディレクトリ _~/.weechat/xxx/_ に移動 (_xxx_ はプログラミング言語)
-. 新しいスクリプトへのリンクをディレクトリ _~/.weechat/xxx/autoload/_ に作成
+. 新しいスクリプトをディレクトリ _~/.local/share/weechat/xxx/_ に移動 (_xxx_ はプログラミング言語)
+. 新しいスクリプトへのリンクをディレクトリ _~/.local/share/weechat/xxx/autoload/_ に作成
   (古いスクリプトがすでに自動ロードされていた場合、もしくは新しいスクリプトに対してオプション
   _script.scripts.autoload_ が有効化されている場合のみ作成されます)
 . 新しいスクリプトを読み込む (古いスクリプトがロードされていた場合のみ)
@@ -10973,16 +11003,14 @@ C 言語での使用例:
 
 [source,C]
 ----
-weechat_hook_signal_send ("python_script_install", WEECHAT_HOOK_SIGNAL_STRING,
-                          "/home/xxx/.weechat/test.py");
+weechat_hook_signal_send ("python_script_install", WEECHAT_HOOK_SIGNAL_STRING, "/path/to/test.py");
 ----
 
 スクリプト (Python) での使用例:
 
 [source,python]
 ----
-weechat.hook_signal_send("python_script_install", WEECHAT_HOOK_SIGNAL_STRING,
-                         "/home/xxx/.weechat/test.py")
+weechat.hook_signal_send("python_script_install", WEECHAT_HOOK_SIGNAL_STRING, "/path/to/test.py")
 ----
 
 [[signals_xxx_script_remove]]
@@ -11776,7 +11804,7 @@ WeeChat とプラグインが定義する修飾子のリスト:
 // TRANSLATION MISSING
 | [[hook_modifier_eval_path_home]] eval_path_home +
   _(WeeChat バージョン 2.7 以上で利用可)_ |
-  - |
+  Optional: `directory=xxx` where `xxx` can be: `config`, `data`, `cache`, `runtime` |
   Any string. |
   Evaluated path, result of the function
   <<_string_eval_path_home,string_eval_path_home>>.
@@ -15436,10 +15464,10 @@ if (version)
 if (date)
     free (date);
 
-char *weechat_dir = weechat_info_get ("weechat_dir", NULL);
-weechat_printf (NULL, "WeeChat home is: %s", weechat_dir);
-if (weechat_dir)
-    free (weechat_dir);
+char *weechat_config_dir = weechat_info_get ("weechat_config_dir", NULL);
+weechat_printf (NULL, "WeeChat config directory is: %s", weechat_config_dir);
+if (weechat_config_dir)
+    free (weechat_config_dir);
 ----
 
 スクリプト (Python) での使用例:
@@ -15452,7 +15480,7 @@ value = weechat.info_get(info_name, arguments)
 # 例
 weechat.prnt("", "Current WeeChat version is: %s (compiled on %s)"
     % (weechat.info_get("version", ""), weechat.info_get("date", ""))
-weechat.prnt("", "WeeChat home is: %s" % weechat.info_get("weechat_dir", ""))
+weechat.prnt("", "WeeChat config directory is: %s" % weechat.info_get("weechat_config_dir", ""))
 ----
 
 ==== info_get_hashtable

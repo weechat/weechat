@@ -18,79 +18,79 @@ numeru potyu po adresie, na przykład:
 // end::plugin_options[]
 
 // tag::files[]
-$HOME/.weechat/weechat.conf::
+$HOME/.config/weechat/weechat.conf::
     główny plik konfiguracyjny WeeChat
 
-$HOME/.weechat/plugins.conf::
+$HOME/.config/weechat/plugins.conf::
     plik konfiguracyjny wtyczek
 
-$HOME/.weechat/sec.conf::
+$HOME/.config/weechat/sec.conf::
     plik konfiguracyjny z zabezpieczonymi danymi
 
-$HOME/.weechat/alias.conf::
+$HOME/.config/weechat/alias.conf::
     plik konfiguracyjny wtyczki _alias_
 
-$HOME/.weechat/buflist.conf::
+$HOME/.config/weechat/buflist.conf::
     plik konfiguracyjny wtyczki _buflist_
 
-$HOME/.weechat/charset.conf::
+$HOME/.config/weechat/charset.conf::
     plik konfiguracyjny wtyczki _charset_
 
-$HOME/.weechat/exec.conf::
+$HOME/.config/weechat/exec.conf::
     plik konfiguracyjny wtyczki _exec_
 
-$HOME/.weechat/fifo.conf::
+$HOME/.config/weechat/fifo.conf::
     plik konfiguracyjny wtyczki _fifo_
 
-$HOME/.weechat/fset.conf::
+$HOME/.config/weechat/fset.conf::
     plik konfiguracyjny wtyczki _fset_
 
-$HOME/.weechat/guile.conf::
+$HOME/.config/weechat/guile.conf::
     plik konfiguracyjny wtyczki _guile_
 
-$HOME/.weechat/irc.conf::
+$HOME/.config/weechat/irc.conf::
     plik konfiguracyjny wtyczki _irc_
 
-$HOME/.weechat/javascript.conf::
+$HOME/.config/weechat/javascript.conf::
     plik konfiguracyjny wtyczki _javascript_
 
-$HOME/.weechat/logger.conf::
+$HOME/.config/weechat/logger.conf::
     plik konfiguracyjny wtyczki _logger_
 
-$HOME/.weechat/lua.conf::
+$HOME/.config/weechat/lua.conf::
     plik konfiguracyjny wtyczki _lua_
 
-$HOME/.weechat/perl.conf::
+$HOME/.config/weechat/perl.conf::
     plik konfiguracyjny wtyczki _perl_
 
-$HOME/.weechat/php.conf::
+$HOME/.config/weechat/php.conf::
     plik konfiguracyjny wtyczki _php_
 
-$HOME/.weechat/python.conf::
+$HOME/.config/weechat/python.conf::
     plik konfiguracyjny wtyczki _python_
 
-$HOME/.weechat/relay.conf::
+$HOME/.config/weechat/relay.conf::
     plik konfiguracyjny wtyczki _relay_
 
-$HOME/.weechat/ruby.conf::
+$HOME/.config/weechat/ruby.conf::
     plik konfiguracyjny wtyczki _ruby_
 
-$HOME/.weechat/script.conf::
+$HOME/.config/weechat/script.conf::
     plik konfiguracyjny wtyczki _script_
 
-$HOME/.weechat/spell.conf::
+$HOME/.config/weechat/spell.conf::
     plik konfiguracyjny wtyczki _spell_
 
-$HOME/.weechat/tcl.conf::
+$HOME/.config/weechat/tcl.conf::
     plik konfiguracyjny wtyczki _tcl_
 
-$HOME/.weechat/trigger.conf::
+$HOME/.config/weechat/trigger.conf::
     plik konfiguracyjny wtyczki _trigger_
 
-$HOME/.weechat/xfer.conf::
+$HOME/.config/weechat/xfer.conf::
     plik konfiguracyjny wtyczki _xfer_
 
-$HOME/.weechat/weechat.log::
+$HOME/.local/share/weechat/weechat.log::
     plik z logami WeeChat
 // end::files[]
 

@@ -1143,8 +1143,12 @@ Wenn das nicht hilft, sollte die Skriptliste von Hand gelöscht werden. Dazu
 folgenden Befehl in der Shell ausführen:
 
 ----
-$ rm ~/.weechat/script/plugins.xml.gz
+$ rm ~/.cache/weechat/script/plugins.xml.gz
 ----
+
+// TRANSLATION MISSING
+[NOTE]
+With WeeChat ≤ 3.1, the path should be: _~/.weechat/script/plugins.xml.gz_.
 
 Danach sollte man noch einmal versuchen die Datei herunter zu laden:
 
@@ -1165,7 +1169,7 @@ Das bedeutet aber auch, dass die Skripten von Hand aktuell gehalten werden müss
 * und in der Shell, mit installiertem curl:
 
 ----
-$ cd ~/.weechat/script
+$ cd ~/.cache/weechat/script
 $ curl -O https://weechat.org/files/plugins.xml.gz
 ----
 
@@ -1287,9 +1291,9 @@ Beispiel:
 [[sharing_config_files]]
 === Ich möchte meine WeeChat Konfiguration teilen. Welche Dateien kann ich weitergeben und welche sollte ich behalten?
 
-Es können alle _~/.weechat/*.conf_ Dateien geteilt werden.
-Hiervon ausgenommen ist die Datei _sec.conf_,
-die durch eine Passphrase verschlüsselte, sensible, Daten enthalten kann.
+// TRANSLATION MISSING
+You can share configuration files _*.conf_ except the file _sec.conf_ which
+contains your passwords ciphered with your passphrase.
 
 Einige andere Dateien enthalten möglicherweise vertrauliche Informationen wie
 Kennwörter (sofern sie nicht mit dem Befehl `/secure` in _sec.conf_ gesichert werden).

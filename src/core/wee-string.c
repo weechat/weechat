@@ -738,7 +738,7 @@ string_match_list (const char *string, const char **masks, int case_sensitive)
 /*
  * Expands home in a path.
  *
- * Example: "~/file.txt" => "/home/xxx/file.txt"
+ * Example: "~/file.txt" => "/home/user/file.txt"
  *
  * Note: result must be freed after use.
  */

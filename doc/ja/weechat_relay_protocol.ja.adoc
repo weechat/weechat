@@ -606,15 +606,15 @@ inf: ('version_number', '34144256')
 * Request WeeChat directory:
 
 ----
-(info_weechat_dir) info weechat_dir
+(info_weechat_config_dir) info weechat_config_dir
 ----
 
 Response:
 
 [source,python]
 ----
-id: 'info_weechat_dir'
-inf: ('weechat_dir', '/home/xxx/.weechat')
+id: 'info_weechat_config_dir'
+inf: ('weechat_config_dir', '/home/user/.config/weechat')
 ----
 
 [[command_infolist]]

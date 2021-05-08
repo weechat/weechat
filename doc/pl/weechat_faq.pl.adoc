@@ -1058,8 +1058,12 @@ w tym dokumencie (zwłaszcza opcji _weechat.network.gnutls_ca_file_).
 Jeśli to nie pomoże spróuj ręcznie usunąć plik z listą skryptów (z poziomu powłoki):
 
 ----
-$ rm ~/.weechat/script/plugins.xml.gz
+$ rm ~/.cache/weechat/script/plugins.xml.gz
 ----
+
+// TRANSLATION MISSING
+[NOTE]
+With WeeChat ≤ 3.1, the path should be: _~/.weechat/script/plugins.xml.gz_.
 
 Następnie ponownie zaktualizuj listę sktyptów w WeeChat:
 
@@ -1080,7 +1084,7 @@ have to update manually the file yourself to get updates):
 * w powłoce, z zainstalowanym programem curl:
 
 ----
-$ cd ~/.weechat/script
+$ cd ~/.cache/weechat/script
 $ curl -O https://weechat.org/files/plugins.xml.gz
 ----
 
@@ -1196,8 +1200,9 @@ Na przykład:
 [[sharing_config_files]]
 === Chcę się podzielić moją konfiguracją WeeChat, które pliki powinienem pokazać, a które nie?
 
-Możesz pokazywać pliki z _~/.weechat/*.conf_ poza plikiem _sec.conf_, który
-zawiera Twoje hasla zaszywrowane Twoim kluczem.
+// TRANSLATION MISSING
+You can share configuration files _*.conf_ except the file _sec.conf_ which
+contains your passwords ciphered with your passphrase.
 
 Niektóre inne pliki mogą zawierać poufne informacje jak hasła (jeśli nie są przetrzymywane
 w _sec.conf_ za pomocą komendy `/secure`).

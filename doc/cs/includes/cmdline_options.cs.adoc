@@ -16,11 +16,11 @@
     (works only with the command *weechat-headless*, not compatible with option
     "--daemon").
 
+// TRANSLATION MISSING
 *-d*, *--dir* _<path>_::
-    Nastav cestu jako dovmský adresář pro WeeChat (použitou pro konfigurační
-    soubory, logy, uživatelské pluginy a skripty), výchozí hodnota je
-    "~/.weechat" (poznámka: složka bude vytvořena pokud nebude nalezena
-    Weechatem)
+    Force a single directory for all WeeChat files (directory is created if not found).
+    Four directories can be given, separated by colons (in this order: config,
+    data, cache, runtime).
     Pokud tato volba není zadána, použije se promněná prostředí WEECHAT_HOME
     (pokud není prázdná)
 

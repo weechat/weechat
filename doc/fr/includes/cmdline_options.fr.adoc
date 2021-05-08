@@ -15,10 +15,10 @@
     *weechat-headless*, non compatible avec l'option "--daemon").
 
 *-d*, *--dir* _<répertoire>_::
-    Définir le répertoire comme étant la base de WeeChat
-    (utilisé pour les fichiers de configuration, logs, extensions
-    et scripts de l'utilisateur), la valeur par défaut est "~/.weechat"
-    (note : le répertoire est créé s'il n'est pas trouvé par WeeChat).
+    Forcer un unique répertoire pour tous les fichiers WeeChat (le répertoire
+    est créé s'il n'est pas trouvé).
+    Quatre répertoires peuvent être donnés, séparés par ":" (dans cet ordre :
+    config, data, cache, runtime).
     Si cette option n'est pas donnée, la variable d'environnement WEECHAT_HOME
     est utilisée (si non vide).
 

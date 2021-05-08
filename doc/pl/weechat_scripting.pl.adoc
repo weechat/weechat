@@ -342,7 +342,7 @@ Możesz zrobić dowiązanie w katalogu _język/autoload_ jeśli chcesz automatyc
 Na przykład dla Pythona:
 
 ----
-$ cd ~/.weechat/python/autoload
+$ cd ~/.local/share/weechat/python/autoload
 $ ln -s ../skrypt.py
 ----
 
@@ -1375,10 +1375,11 @@ weechat.prnt("", "Version %s" % weechat.info_get("version", ""))
 [[infos_other]]
 ==== Inne informacje
 
+// TRANSLATION MISSING
 [source,python]
 ----
-# katalog domowy WeeChat, na przykład: "/home/xxxx/.weechat"
-weechat.prnt("", "Katalog domowy WeeChat: %s" % weechat.info_get("weechat_dir", ""))
+# WeeChat config directory, for example: "/home/user/.config/weechat"
+weechat.prnt("", "WeeChat config dir: %s" % weechat.info_get("weechat_config_dir", ""))
 
 # nieaktywność klawiatury
 weechat.prnt("", "Nieaktywny od %s sekund" % weechat.info_get("inactivity", ""))

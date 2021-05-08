@@ -15,9 +15,9 @@
     "--daemon").
 
 *-d*, *--dir* _<path>_::
-    Set path as home for WeeChat (used for configuration files, logs, user
-    plugins and scripts), default value is "~/.weechat" (note: directory is
-    created if not found by WeeChat).
+    Force a single directory for all WeeChat files (directory is created if not found).
+    Four directories can be given, separated by colons (in this order: config,
+    data, cache, runtime).
     If this option is not given, the environment variable WEECHAT_HOME is used
     (if not empty).
 

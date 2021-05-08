@@ -1053,8 +1053,11 @@ First check questions about SSL connection in this FAQ
 If still not working, try to manually delete the scripts file (in your shell):
 
 ----
-$ rm ~/.weechat/script/plugins.xml.gz
+$ rm ~/.cache/weechat/script/plugins.xml.gz
 ----
+
+[NOTE]
+With WeeChat ≤ 3.1, the path should be: _~/.weechat/script/plugins.xml.gz_.
 
 And update scripts again in WeeChat:
 
@@ -1075,7 +1078,7 @@ have to update manually the file yourself to get updates):
 * in your shell, with curl installed:
 
 ----
-$ cd ~/.weechat/script
+$ cd ~/.cache/weechat/script
 $ curl -O https://weechat.org/files/plugins.xml.gz
 ----
 
@@ -1191,7 +1194,7 @@ For example:
 [[sharing_config_files]]
 === I want to share my WeeChat configuration, what files should I share and what should I keep private?
 
-You can share files _~/.weechat/*.conf_ except the file _sec.conf_ which
+You can share configuration files _*.conf_ except the file _sec.conf_ which
 contains your passwords ciphered with your passphrase.
 
 Some other files may contain sensitive info like passwords (if they are not

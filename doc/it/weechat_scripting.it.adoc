@@ -358,7 +358,7 @@ automaticamente gli script all'avvio di WeeChat.
 Ad esempio con Python:
 
 ----
-$ cd ~/.weechat/python/autoload
+$ cd ~/.local/share/weechat/python/autoload
 $ ln -s ../script.py
 ----
 
@@ -1425,10 +1425,11 @@ weechat.prnt("", "Version %s" % weechat.info_get("version", ""))
 [[infos_other]]
 ==== Altre informazioni
 
+// TRANSLATION MISSING
 [source,python]
 ----
-# la directory home di WeeChat, ad esempio: "/home/xxxx/.weechat"
-weechat.prnt("", "WeeChat home dir: %s" % weechat.info_get("weechat_dir", ""))
+# WeeChat config directory, for example: "/home/user/.config/weechat"
+weechat.prnt("", "WeeChat config dir: %s" % weechat.info_get("weechat_config_dir", ""))
 
 # inattività della tastiera
 weechat.prnt("", "Inactivity since %s seconds" % weechat.info_get("inactivity", ""))

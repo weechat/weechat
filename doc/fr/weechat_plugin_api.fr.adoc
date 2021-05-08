@@ -184,7 +184,7 @@ $ gcc -shared -fPIC -o toto.so toto.o
 
 Copiez le fichier _toto.so_ dans le répertoire système des extensions (par
 exemple _/usr/local/lib/weechat/plugins_) ou dans le répertoire utilisateur des
-extensions (par exemple _/home/xxx/.weechat/plugins_).
+extensions (par exemple _/home/user/.local/share/weechat/plugins_).
 
 Sous WeeChat :
 
@@ -1040,7 +1040,7 @@ Exemple en C :
 [source,C]
 ----
 char *str = weechat_string_expand_home ("~/fichier.txt");
-/* résultat : "/home/xxx/fichier.txt" */
+/* résultat : "/home/user/fichier.txt" */
 /* ... */
 free (str);
 ----
@@ -1050,11 +1050,11 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== string_eval_path_home
 
-_WeeChat ≥ 1.3._
+_WeeChat ≥ 1.3, mis à jour dans la 3.2._
 
 Évaluer un chemin en 3 étapes :
 
-. remplacer le `%h` du début par le répertoire maison de WeeChat,
+. remplacer le `%h` du début par un répertoire WeeChat ("data" par défaut),
 . remplacer le `+~+` du début par le répertoire maison de l'utilisateur (appel à
   <<_string_expand_home,string_expand_home>>),
 . évaluer les variables (voir <<_string_eval_expression,string_eval_expression>>).
@@ -1077,7 +1077,14 @@ Paramètres :
 * _extra_vars_ : table de hachage pour l'appel à la fonction
   <<_string_eval_expression,string_eval_expression>>
 * _options_ : table de hachage pour l'appel à la fonction
-  <<_string_eval_expression,string_eval_expression>>
+  <<_string_eval_expression,string_eval_expression>>, avec une clé supplémentaire
+  supportée :
+** _directory_: répertoire WeeChat à utiliser pour remplacer `%h`, un parmi
+   ceux-ci :
+*** _config_
+*** _data_ (par défaut)
+*** _cache_
+*** _runtime_
 
 Valeur de retour :
 
@@ -1087,8 +1094,8 @@ Exemple en C :
 
 [source,C]
 ----
-char *str = weechat_string_eval_path_home ("%h/test", NULL, NULL, NULL);
-/* résultat : "/home/xxx/.weechat/test" */
+char *str = weechat_string_eval_path_home ("${weechat_config_dir}/test.conf", NULL, NULL, NULL);
+/* résultat : "/home/user/.config/weechat/test.conf" */
 /* ... */
 free (str);
 ----
@@ -1101,8 +1108,8 @@ Script (Python) :
 path = weechat.string_eval_path_home(path, pointers, extra_vars, options)
 
 # exemple
-path = weechat.string_eval_path_home("%h/test", {}, {}, {})
-# path == "/home/xxx/.weechat/test"
+path = weechat.string_eval_path_home("${weechat_config_dir}/test.conf", {}, {}, {})
+# path == "/home/user/.config/weechat/test.conf"
 ----
 
 ==== string_remove_quotes
@@ -2578,6 +2585,18 @@ première étendue à la dernière) :
   `+${nom}+` |
   `+valeur+`
 
+| `+${weechat_xxx_dir}+` |
+  Un répertoire WeeChat : `+${weechat_config_dir}+`, `+${weechat_data_dir}+`,
+  `+${weechat_cache_dir}+` ou `+${weechat_runtime_dir}+`. |
+  `+${weechat_config_dir}+` +
+  `+${weechat_data_dir}+` +
+  `+${weechat_cache_dir}+` +
+  `+${weechat_runtime_dir}+` |
+  `+/home/user/.config/weechat+` +
+  `+/home/user/.local/share/weechat+` +
+  `+/home/user/.cache/weechat+` +
+  `+/run/user/1000/weechat+`
+
 | `+${eval:xxx}+` +
   _(WeeChat ≥ 1.3)_ |
   Chaîne à évaluer. |
@@ -2701,9 +2720,9 @@ première étendue à la dernière) :
   Résultat d'un modificateur, voir la fonction
   <<_hook_modifier_exec,hook_modifier_exec>>. |
   `+${modifier:eval_path_home,,~}+` +
-  `+${modifier:eval_path_home,,%h/python}+` |
-  `+/home/xxx+` +
-  `+/home/xxx/.weechat/python+`
+  `+${modifier:eval_path_home,directory=config,%h/weechat.conf}+` |
+  `+/home/user+` +
+  `+/home/user/.config/weechat/weechat.conf+`
 
 | `+${info:nom}+` +
   `+${info:nom,paramètres}+` +
@@ -3668,6 +3687,8 @@ Fonctions liées aux répertoires.
 
 ==== mkdir_home
 
+_Mis à jour dans la 3.2._
+
 Créer un répertoire dans le répertoire de WeeChat.
 
 Prototype :
@@ -3679,7 +3700,12 @@ int weechat_mkdir_home (char *directory, int mode);
 
 Paramètres :
 
-* _directory_ : nom du répertoire à créer
+* _directory_ : nom du répertoire à créer ; il peut commencer par une de ces
+  chaînes pour forcer un répertoire spécifique de WeeChat (WeeChat ≥ 3.2) :
+** `${weechat_config_dir}`
+** `${weechat_data_dir}` (par défaut)
+** `${weechat_cache_dir}`
+** `${weechat_runtime_dir}`
 * _mode_ : mode pour le répertoire
 
 Valeur de retour :
@@ -3690,7 +3716,7 @@ Exemple en C :
 
 [source,C]
 ----
-if (!weechat_mkdir_home ("temp", 0755))
+if (!weechat_mkdir_home ("${weechat_cache_dir}/temp", 0755))
 {
     /* erreur */
 }
@@ -3704,7 +3730,7 @@ Script (Python) :
 weechat.mkdir_home(directory, mode)
 
 # exemple
-weechat.mkdir_home("temp", 0755)
+weechat.mkdir_home("${weechat_cache_dir}/temp", 0755)
 ----
 
 ==== mkdir
@@ -11163,12 +11189,12 @@ La fonction de rappel effectuera les actions suivantes lorsqu'elle recevra le
 signal :
 
 . Déchargement et suppression du script installé.
-. Déplacement du nouveau script vers le répertoire _~/.weechat/xxx/_ (où _xxx_
-  est le langage).
+. Déplacement du nouveau script vers le répertoire _~/.local/share/weechat/xxx/_
+  (où _xxx_ est le langage).
 . Création d'un lien vers le nouveau script dans le répertoire
-  _~/.weechat/xxx/autoload/_ (seulement si le script était déjà automatiquement
-  chargé ou si l'option _script.scripts.autoload_ est activée pour un nouveau
-  script).
+  _~/.local/share/weechat/xxx/autoload/_ (seulement si le script était déjà
+  automatiquement chargé ou si l'option _script.scripts.autoload_ est activée
+  pour un nouveau script).
 . Chargement du nouveau script (si le script était chargé).
 
 Ces signaux sont utilisés par l'extension _script_ pour installer des scripts.
@@ -11179,16 +11205,14 @@ Exemple en C :
 
 [source,C]
 ----
-weechat_hook_signal_send ("python_script_install", WEECHAT_HOOK_SIGNAL_STRING,
-                          "/home/xxx/.weechat/test.py");
+weechat_hook_signal_send ("python_script_install", WEECHAT_HOOK_SIGNAL_STRING, "/path/to/test.py");
 ----
 
 Script (Python) :
 
 [source,python]
 ----
-weechat.hook_signal_send("python_script_install", WEECHAT_HOOK_SIGNAL_STRING,
-                         "/home/xxx/.weechat/test.py")
+weechat.hook_signal_send("python_script_install", WEECHAT_HOOK_SIGNAL_STRING, "/path/to/test.py")
 ----
 
 [[signals_xxx_script_remove]]
@@ -12004,7 +12028,7 @@ utilisés :
 
 | [[hook_modifier_eval_path_home]] eval_path_home +
   _(WeeChat ≥ 2.7)_ |
-  - |
+  Facultatif : `directory=xxx` où `xxx` peut être : `config`, `data`, `cache`, `runtime` |
   Toute chaîne. |
   Chemin évalué, résultat de la fonction
   <<_string_eval_path_home,string_eval_path_home>>.
@@ -15729,10 +15753,10 @@ if (version)
 if (date)
     free (date);
 
-weechat_dir = weechat_info_get ("weechat_dir", NULL);
-weechat_printf (NULL, "Le répertoire de WeeChat est : %s", weechat_dir);
-if (weechat_dir)
-    free (weechat_dir);
+weechat_config_dir = weechat_info_get ("weechat_config_dir", NULL);
+weechat_printf (NULL, "Le répertoire de config WeeChat est : %s", weechat_config_dir);
+if (weechat_config_dir)
+    free (weechat_config_dir);
 ----
 
 Script (Python) :
@@ -15745,7 +15769,7 @@ value = weechat.info_get(info_name, arguments)
 # exemple
 weechat.prnt("", "La version de WeeChat est : %s (compilée le %s)"
     % (weechat.info_get("version", ""), weechat.info_get("date", ""))
-weechat.prnt("", "Le répertoire de WeeChat est : %s" % weechat.info_get("weechat_dir", ""))
+weechat.prnt("", "Le répertoire de config WeeChat est : %s" % weechat.info_get("weechat_config_dir", ""))
 ----
 
 ==== info_get_hashtable
