@@ -3576,17 +3576,23 @@ Man kann SSL mittels eines selbst erstellten Zertifikates und eines privaten
 Schlüssels nutzen. Um SSL für die Verbindung zu aktivieren stellt man dem
 Protokollnamen ein "ssl" voran.
 
-Die Standarddatei für Zertifikate/Schlüssel ist _~/.weechat/ssl/relay.pem_
-(option <<option_relay.network.ssl_cert_key,relay.network.ssl_cert_key>>).
+// TRANSLATION MISSING
+The default path to certificate/key is defined by option
+<<option_relay.network.ssl_cert_key,relay.network.ssl_cert_key>>.
 
 Ein Zertifikat und einen privaten Schlüssel kann man mit folgenden Befehlen
 erstellen:
 
 ----
-$ mkdir -p ~/.weechat/ssl
-$ cd ~/.weechat/ssl
+$ mkdir -p ~/.config/weechat/ssl
+$ cd ~/.config/weechat/ssl
 $ openssl req -nodes -newkey rsa:2048 -keyout relay.pem -x509 -days 365 -out relay.pem
 ----
+
+// TRANSLATION MISSING
+[NOTE]
+You must replace `~/.config/weechat` by the path to your WeeChat config directory
+which can also be for example `~/.weechat`.
 
 Sollte WeeChat schon gestartet worden sein, kann man das Zertifikat und der private
 Schlüssel mittels folgendem Befehl nachträglich geladen werden:
