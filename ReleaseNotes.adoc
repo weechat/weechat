@@ -17,6 +17,108 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 (file _ChangeLog.adoc_ in sources).
 
 
+[[v3.2]]
+== Version 3.2 (under dev)
+
+[[v3.2_xdg_directories]]
+=== XDG directories
+
+Support of XDG directories has been added. For compatibility, if the directory
+_~/.weechat_ exists, WeeChat will still use it for all files.
+
+If you want to switch to XDG directories, you must create and move manually
+all files in the appropriate directories. +
+See https://specs.weechat.org/specs/001285-follow-xdg-base-dir-spec.html#weechat-home[WeeChat XDG specification]
+for more information.
+
+Some options have new default value: `%h` is replaced by `${weechat_xxx_dir}`. +
+If you didn't change the value, it is recommended to set the new default value,
+by doing `/unset <option>` on each option:
+
+[width="100%",cols="1m,3m",options="header"]
+|===
+| Option                     | New default value
+| fifo.file.path             | ${weechat_runtime_dir}/weechat_fifo_${info:pid}
+| logger.file.path           | ${weechat_data_dir}/logs
+| relay.network.ssl_cert_key | ${weechat_config_dir}/ssl/relay.pem
+| script.scripts.path        | ${weechat_cache_dir}/script
+| weechat.plugin.path        | ${weechat_data_dir}/plugins
+| xfer.file.download_path    | ${weechat_data_dir}/xfer
+|===
+
+The following scripts are updated to take care of XDG directories, be sure
+they are all up-to-date, otherwise files may be saved in wrong directories or
+the script may not find some files:
+
+* https://weechat.org/scripts/source/autoconf.py/[autoconf.py] 0.4
+* https://weechat.org/scripts/source/axolotl.py/[axolotl.py] 0.1.1
+* https://weechat.org/scripts/source/beinc.py/[beinc.py] 4.2
+* https://weechat.org/scripts/source/buddylist.pl/[buddylist.pl] 2.1
+* https://weechat.org/scripts/source/bufsave.py/[bufsave.py] 0.5
+* https://weechat.org/scripts/source/chanop.py/[chanop.py] 0.3.4
+* https://weechat.org/scripts/source/chanstat.py/[chanstat.py] 0.2
+* https://weechat.org/scripts/source/colorize_lines.pl/[colorize_lines.pl] 4.0
+* https://weechat.org/scripts/source/confversion.py/[confversion.py] 0.4
+* https://weechat.org/scripts/source/country.py/[country.py] 0.6.2
+* https://weechat.org/scripts/source/cron.py/[cron.py] 0.5
+* https://weechat.org/scripts/source/crypt.py/[crypt.py] 1.4.5
+* https://weechat.org/scripts/source/grep.py/[grep.py] 0.8.5
+* https://weechat.org/scripts/source/growl.py/[growl.py] 1.0.7
+* https://weechat.org/scripts/source/histman.py/[histman.py] 0.8.2
+* https://weechat.org/scripts/source/hl2file.py/[hl2file.py] 0.3
+* https://weechat.org/scripts/source/hotlist2extern.pl/[hotlist2extern.pl] 1.0
+* https://weechat.org/scripts/source/jnotify.pl/[jnotify.pl] 1.2
+* https://weechat.org/scripts/source/latex_unicode.py/[latex_unicode.py] 1.2
+* https://weechat.org/scripts/source/luanma.pl/[luanma.pl] 0.3
+* https://weechat.org/scripts/source/otr.py/[otr.py] 1.9.3
+* https://weechat.org/scripts/source/pop3_mail.pl/[pop3_mail.pl] 0.4
+* https://weechat.org/scripts/source/purgelogs.py/[purgelogs.py] 0.5
+* https://weechat.org/scripts/source/query_blocker.pl/[query_blocker.pl] 1.3
+* https://weechat.org/scripts/source/queryman.py/[queryman.py] 0.6
+* https://weechat.org/scripts/source/queue.py/[queue.py] 0.4.3
+* https://weechat.org/scripts/source/rslap.pl/[rslap.pl] 1.4
+* https://weechat.org/scripts/source/rssagg.pl/[rssagg.pl] 1.3
+* https://weechat.org/scripts/source/slack.py/[slack.py]
+* https://weechat.org/scripts/source/stalker.pl/[stalker.pl] 1.6.2
+* https://weechat.org/scripts/source/substitution.rb/[substitution.rb] 0.0.2
+* https://weechat.org/scripts/source/triggerreply.py/[triggerreply.py] 0.4.3
+* https://weechat.org/scripts/source/update_notifier.py/[update_notifier.py] 0.6
+* https://weechat.org/scripts/source/url_olde.py/[url_olde.py] 0.8
+* https://weechat.org/scripts/source/urlserver.py/[urlserver.py] 2.6
+* https://weechat.org/scripts/source/weetext.py/[weetext.py] 0.1.3
+* https://weechat.org/scripts/source/zncplayback.py/[zncplayback.py] 0.2.1
+
+To check if XDG directories are used, you can run command `/debug dirs`, which
+should show different directories for config/data/cache/runtime, like this:
+
+----
+Directories:
+  home:
+    config: /home/user/.config/weechat
+    data: /home/user/.local/share/weechat
+    cache: /home/user/.cache/weechat
+    runtime: /run/user/1000/weechat
+  lib: /usr/lib/x86_64-linux-gnu/weechat
+  lib (extra): -
+  share: /usr/share/weechat
+  locale: /usr/share/locale
+----
+
+With the legacy _~/.weechat_ directory, the output would be:
+
+----
+Directories:
+  home:
+    config: /home/user/.weechat
+    data: /home/user/.weechat
+    cache: /home/user/.weechat
+    runtime: /home/user/.weechat
+  lib: /usr/lib/x86_64-linux-gnu/weechat
+  lib (extra): -
+  share: /usr/share/weechat
+  locale: /usr/share/locale
+----
+
 [[v3.1]]
 == Version 3.1 (2021-03-07)
 
@@ -214,7 +316,7 @@ The new format contains buffer pointer + ";" + tags:
 The following scripts are updated consequently to be compatible with all
 WeeChat versions:
 
-* https://weechat.org/scripts/source/colorize_lines.pl.html/[colorize_lines.pl] 3.9
+* https://weechat.org/scripts/source/colorize_lines.pl/[colorize_lines.pl] 3.9
 * https://weechat.org/scripts/source/colorize_nicks.py/[colorize_nicks.py] 27
 * https://weechat.org/scripts/source/colorizer.rb/[colorizer.rb] 0.2
 * https://weechat.org/scripts/source/curiousignore.pl/[curiousignore.pl] 0.4
