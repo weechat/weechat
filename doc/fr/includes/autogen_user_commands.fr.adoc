@@ -1981,7 +1981,7 @@ Avec l'option "-quit", le processus est légèrement différent :
   5. quitter WeeChat
 Et plus tard vous pouvez restaurer la session avec la commande : weechat --upgrade
 IMPORTANT : vous devez restaurer la session avec exactement la même configuration (fichiers *.conf).
-Il est également possible de restaurer la session WeeChat sur une autre machine si vous y copiez le contenu du répertoire "~/.weechat".
+Il est également possible de restaurer la session WeeChat sur une autre machine si vous y copiez le contenu des répertoires personnels de WeeChat (voir /debug dirs).
 ----
 
 [[command_weechat_uptime]]
@@ -2272,14 +2272,14 @@ disable : désactiver le tube FIFO
  toggle : activer/désactiver le tube FIFO
 
 Le tube FIFO est utilisé comme contrôle à distance de WeeChat : vous pouvez envoyer des commandes ou du texte au tube FIFO depuis votre shell.
-Par défaut le tube FIFO est dans ~/.weechat/weechat_fifo
+Par défaut le tube FIFO se nomme ~/.weechat/weechat_fifo_xxx (où xxx est l'id du processus WeeChat) et situé dans le répertoire "runtime" de WeeChat (voir /debug dirs).
 
 Le format attendu est l'un des suivants :
   plugin.buffer *texte ou commande ici
   *texte ou commande ici
 
 Par exemple pour changer votre pseudo sur freenode :
-  echo 'irc.server.freenode */nick autrepseudo' >~/.weechat/weechat_fifo
+  echo 'irc.server.freenode */nick autrepseudo' >~/.weechat/weechat_fifo_12345
 
 Merci de lire le guide utilisateur pour plus d'information et des exemples.
 
@@ -2716,7 +2716,7 @@ Sans paramètre, cette commande liste les scripts chargés.
       stop : fermer le socket serveur (les clients restent connectés)
        nom : nom du relai (voir le format ci-dessous)
       port : port utilisé pour le relai
-    chemin : chemin utilisé pour le relai (pour un socket de domaine UNIX seulement) ; "%h" au début de la chaîne est remplacé par le répertoire de base WeeChat (par défaut : "~/.weechat"), le contenu est évalué (voir /help eval)
+    chemin : chemin utilisé pour le relai (pour un socket de domaine UNIX seulement) ; le chemin est évalué (voir la fonction string_eval_path_home dans la référence API extension)
        raw : ouvrir le tampon avec les données brutes Relay
 sslcertkey : définir le certificat/clé SSL en utilisant le chemin de l'option relay.network.ssl_cert_key
 
@@ -2752,7 +2752,7 @@ Exemples :
   protocole weechat avec SSL, en utilisant IPv4 + IPv6 :
     /relay add ipv4.ipv6.ssl.weechat 9001
   protocole weechat avec un socket de domaine UNIX :
-    /relay add unix.weechat %h/relay_socket
+    /relay add unix.weechat ${weechat_runtime_dir}/relay_socket
 ----
 // end::relay_commands[]
 

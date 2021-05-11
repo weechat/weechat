@@ -1261,7 +1261,7 @@
 ** valeur par défaut: `+60+`
 
 * [[option_weechat.network.gnutls_ca_file]] *weechat.network.gnutls_ca_file*
-** description: pass:none[fichier contenant les autorités de certification ("%h" sera remplacé par le répertoire de base WeeChat, par défaut : "~/.weechat")]
+** description: pass:none[fichier contenant les autorités de certification (le chemin est évalué, voir la fonction string_eval_path_home dans la référence API extension)]
 ** type: chaîne
 ** valeurs: toute chaîne
 ** valeur par défaut: `+"/etc/ssl/certs/ca-certificates.crt"+`
@@ -1297,10 +1297,10 @@
 ** valeur par défaut: `+".so,.dll"+`
 
 * [[option_weechat.plugin.path]] *weechat.plugin.path*
-** description: pass:none[chemin de recherche des extensions ("%h" sera remplacé par le répertoire de base WeeChat, par défaut : "~/.weechat")]
+** description: pass:none[chemin de recherche des extensions (le chemin est évalué, voir la fonction string_eval_path_home dans la référence API extension)]
 ** type: chaîne
 ** valeurs: toute chaîne
-** valeur par défaut: `+"%h/plugins"+`
+** valeur par défaut: `+"${weechat_data_dir}/plugins"+`
 
 * [[option_weechat.plugin.save_config_on_unload]] *weechat.plugin.save_config_on_unload*
 ** description: pass:none[sauvegarder les fichiers de configuration lors du déchargement des extensions]
@@ -1451,10 +1451,10 @@
 ** valeur par défaut: `+""+`
 
 * [[option_logger.file.path]] *logger.file.path*
-** description: pass:none[chemin pour les fichiers de log WeeChat ; "%h" au début de la chaîne est remplacé par le répertoire de base WeeChat (par défaut : "~/.weechat") ; les caractères de formatage de date sont autorisés (voir man strftime) (note : le contenu est évalué, voir /help eval)]
+** description: pass:none[chemin pour les fichiers de log WeeChat ; les caractères de formatage de date sont autorisés (voir man strftime) (le chemin est évalué, voir la fonction string_eval_path_home dans la référence API extension)]
 ** type: chaîne
 ** valeurs: toute chaîne
-** valeur par défaut: `+"%h/logs/"+`
+** valeur par défaut: `+"${weechat_data_dir}/logs"+`
 
 * [[option_logger.file.replacement_char]] *logger.file.replacement_char*
 ** description: pass:none[caractère de remplacement dans le nom de fichier construit avec le masque (comme le délimiteur de répertoire)]
@@ -1827,10 +1827,10 @@
 ** valeur par défaut: `+on+`
 
 * [[option_fifo.file.path]] *fifo.file.path*
-** description: pass:none[chemin pour le tube FIFO ; "%h" au début de la chaîne est remplacé par le répertoire de base WeeChat (par défaut : "~/.weechat") ; le PID de WeeChat peut être utilisé dans le chemin avec ${info:pid} (note : le contenu est évalué, voir /help eval)]
+** description: pass:none[chemin pour le tube FIFO ; le PID de WeeChat peut être utilisé dans le chemin avec ${info:pid} (le chemin est évalué, voir la fonction string_eval_path_home dans la référence API extension)]
 ** type: chaîne
 ** valeurs: toute chaîne
-** valeur par défaut: `+"%h/weechat_fifo"+`
+** valeur par défaut: `+"${weechat_runtime_dir}/weechat_fifo_${info:pid}"+`
 // end::fifo_options[]
 
 // tag::xfer_options[]
@@ -1931,10 +1931,10 @@
 ** valeur par défaut: `+on+`
 
 * [[option_xfer.file.download_path]] *xfer.file.download_path*
-** description: pass:none[chemin où écrire les fichiers reçus : "%h" au début de la chaîne est remplacé par le répertoire de base WeeChat (par défaut : "~/.weechat") (note : le contenu est évalué, voir /help eval)]
+** description: pass:none[chemin où écrire les fichiers reçus (le chemin est évalué, voir la fonction string_eval_path_home dans la référence API extension)]
 ** type: chaîne
 ** valeurs: toute chaîne
-** valeur par défaut: `+"%h/xfer"+`
+** valeur par défaut: `+"${weechat_data_dir}/xfer"+`
 
 * [[option_xfer.file.download_temporary_suffix]] *xfer.file.download_temporary_suffix*
 ** description: pass:none[suffixe de fichier temporaire utilisé pendant le transfert pour un fichier reçu, il est supprimé après un transfert réussi ; si chaîne vide, aucun suffixe de fichier n'est utilisé pendant le transfert]
@@ -1943,7 +1943,7 @@
 ** valeur par défaut: `+".part"+`
 
 * [[option_xfer.file.upload_path]] *xfer.file.upload_path*
-** description: pass:none[chemin pour lire les fichiers envoyés (quand aucun chemin n'est spécifié par l'utilisateur) : "%h" au début de la chaîne est remplacé par le répertoire de base WeeChat (par défaut : "~/.weechat") (note : le contenu est évalué, voir /help eval)]
+** description: pass:none[chemin où lire les fichiers à envoyer (le chemin est évalué, voir la fonction string_eval_path_home dans la référence API extension)]
 ** type: chaîne
 ** valeurs: toute chaîne
 ** valeur par défaut: `+"~"+`
@@ -2743,7 +2743,7 @@
 ** valeur par défaut: `+continue+`
 
 * [[option_irc.server_default.sasl_key]] *irc.server_default.sasl_key*
-** description: pass:none[fichier avec la clé privée ECC pour le mécanisme "ecdsa-nist256p-challenge" ("%h" sera remplacé par le répertoire de base WeeChat, par défaut : "~/.weechat")]
+** description: pass:none[fichier avec la clé privée ECC pour le mécanisme "ecdsa-nist256p-challenge" (le chemin est évalué, voir la fonction string_eval_path_home dans la référence API extension)]
 ** type: chaîne
 ** valeurs: toute chaîne
 ** valeur par défaut: `+""+`
@@ -2785,7 +2785,7 @@
 ** valeur par défaut: `+off+`
 
 * [[option_irc.server_default.ssl_cert]] *irc.server_default.ssl_cert*
-** description: pass:none[fichier de certificat SSL utilisé pour identifier automatiquement votre pseudo ("%h" sera remplacé par le répertoire de base WeeChat, par défaut : "~/.weechat")]
+** description: pass:none[fichier de certificat SSL utilisé pour identifier automatiquement votre pseudo (le chemin est évalué, voir la fonction string_eval_path_home dans la référence API extension)]
 ** type: chaîne
 ** valeurs: toute chaîne
 ** valeur par défaut: `+""+`
@@ -3009,10 +3009,10 @@
 ** valeur par défaut: `+100000+`
 
 * [[option_relay.network.ssl_cert_key]] *relay.network.ssl_cert_key*
-** description: pass:none[fichier avec le certificat et la clé privée SSL (pour servir les clients avec SSL)]
+** description: pass:none[fichier avec le certificat et la clé privée SSL (pour servir les clients avec SSL) (le chemin est évalué, voir la fonction string_eval_path_home dans la référence API extension)]
 ** type: chaîne
 ** valeurs: toute chaîne
-** valeur par défaut: `+"%h/ssl/relay.pem"+`
+** valeur par défaut: `+"${weechat_config_dir}/ssl/relay.pem"+`
 
 * [[option_relay.network.ssl_priorities]] *relay.network.ssl_priorities*
 ** description: pass:none[chaîne avec les priorités pour gnutls (pour la syntaxe, voir la documentation de la fonction gnutls_priority_init du manuel gnutls, les chaînes courantes sont : "PERFORMANCE", "NORMAL", "SECURE128", "SECURE256", "EXPORT", "NONE")]
@@ -3393,10 +3393,10 @@
 ** valeur par défaut: `+""+`
 
 * [[option_script.scripts.path]] *script.scripts.path*
-** description: pass:none[répertoire du cache local pour les scripts ; "%h" au début de la chaîne est remplacé par le répertoire de base WeeChat (par défaut : "~/.weechat") (note : le contenu est évalué, voir /help eval)]
+** description: pass:none[répertoire du cache local pour les scripts (le chemin est évalué, voir la fonction string_eval_path_home dans la référence API extension)]
 ** type: chaîne
 ** valeurs: toute chaîne
-** valeur par défaut: `+"%h/script"+`
+** valeur par défaut: `+"${weechat_cache_dir}/script"+`
 
 * [[option_script.scripts.url]] *script.scripts.url*
 ** description: pass:none[URL pour le fichier avec la liste des scripts]

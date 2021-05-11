@@ -169,6 +169,8 @@ weechat_display_usage ()
           "startup\n"
           "  -c, --colors             display default colors in terminal\n"
           "  -d, --dir <path>         force a single WeeChat home directory\n"
+          "                           or 4 different directories separated "
+          "by colons (in this order: config, data, cache, runtime)\n"
           "                           (environment variable WEECHAT_HOME is "
           "read if this option is not given)\n"
           "  -t, --temp-dir           create a temporary WeeChat home"

@@ -1261,7 +1261,7 @@
 ** valore predefinito: `+60+`
 
 * [[option_weechat.network.gnutls_ca_file]] *weechat.network.gnutls_ca_file*
-** descrizione: pass:none[file contenente le autorità certificative ("%h" sarà sostituito dalla home di WeeChat, predefinita: "~/.weechat)]
+** descrizione: pass:none[file containing the certificate authorities (path is evaluated, see function string_eval_path_home in plugin API reference)]
 ** tipo: stringa
 ** valori: qualsiasi stringa
 ** valore predefinito: `+"/etc/ssl/certs/ca-certificates.crt"+`
@@ -1297,10 +1297,10 @@
 ** valore predefinito: `+".so,.dll"+`
 
 * [[option_weechat.plugin.path]] *weechat.plugin.path*
-** descrizione: pass:none[path per la ricerca dei plugin ("%h" sarà sostituito dalla home di WeeChat, "~/.weechat come predefinita)]
+** descrizione: pass:none[path for searching plugins (path is evaluated, see function string_eval_path_home in plugin API reference)]
 ** tipo: stringa
 ** valori: qualsiasi stringa
-** valore predefinito: `+"%h/plugins"+`
+** valore predefinito: `+"${weechat_data_dir}/plugins"+`
 
 * [[option_weechat.plugin.save_config_on_unload]] *weechat.plugin.save_config_on_unload*
 ** descrizione: pass:none[salva i file di configurazione allo scaricamento dei plugin]
@@ -1451,10 +1451,10 @@
 ** valore predefinito: `+""+`
 
 * [[option_logger.file.path]] *logger.file.path*
-** descrizione: pass:none[path for WeeChat log files; "%h" at beginning of string is replaced by WeeChat home ("~/.weechat" by default); date specifiers are permitted (see man strftime) (note: content is evaluated, see /help eval)]
+** descrizione: pass:none[path for WeeChat log files; date specifiers are permitted (see man strftime) (path is evaluated, see function string_eval_path_home in plugin API reference)]
 ** tipo: stringa
 ** valori: qualsiasi stringa
-** valore predefinito: `+"%h/logs/"+`
+** valore predefinito: `+"${weechat_data_dir}/logs"+`
 
 * [[option_logger.file.replacement_char]] *logger.file.replacement_char*
 ** descrizione: pass:none[carattere di sostituzione per i caratteri speciali nei nomi dei file salvati con la mask (come il delimitatore di directory)]
@@ -1827,10 +1827,10 @@
 ** valore predefinito: `+on+`
 
 * [[option_fifo.file.path]] *fifo.file.path*
-** descrizione: pass:none[path for FIFO file; "%h" at beginning of string is replaced by WeeChat home ("~/.weechat" by default); WeeChat PID can be used in path with ${info:pid} (note: content is evaluated, see /help eval)]
+** descrizione: pass:none[path for FIFO file; WeeChat PID can be used in path with ${info:pid} (path is evaluated, see function string_eval_path_home in plugin API reference)]
 ** tipo: stringa
 ** valori: qualsiasi stringa
-** valore predefinito: `+"%h/weechat_fifo"+`
+** valore predefinito: `+"${weechat_runtime_dir}/weechat_fifo_${info:pid}"+`
 // end::fifo_options[]
 
 // tag::xfer_options[]
@@ -1931,10 +1931,10 @@
 ** valore predefinito: `+on+`
 
 * [[option_xfer.file.download_path]] *xfer.file.download_path*
-** descrizione: pass:none[path for writing incoming files: "%h" at beginning of string is replaced by WeeChat home ("~/.weechat" by default) (note: content is evaluated, see /help eval)]
+** descrizione: pass:none[path for writing incoming files (path is evaluated, see function string_eval_path_home in plugin API reference)]
 ** tipo: stringa
 ** valori: qualsiasi stringa
-** valore predefinito: `+"%h/xfer"+`
+** valore predefinito: `+"${weechat_data_dir}/xfer"+`
 
 * [[option_xfer.file.download_temporary_suffix]] *xfer.file.download_temporary_suffix*
 ** descrizione: pass:none[temporary filename suffix used during the transfer for a file received, it is removed after successful transfer; if empty string, no filename suffix is used during the transfer]
@@ -1943,7 +1943,7 @@
 ** valore predefinito: `+".part"+`
 
 * [[option_xfer.file.upload_path]] *xfer.file.upload_path*
-** descrizione: pass:none[path for reading files when sending (when no path is specified by user): "%h" at beginning of string is replaced by WeeChat home ("~/.weechat" by default) (note: content is evaluated, see /help eval)]
+** descrizione: pass:none[path for reading files when sending (path is evaluated, see function string_eval_path_home in plugin API reference)]
 ** tipo: stringa
 ** valori: qualsiasi stringa
 ** valore predefinito: `+"~"+`
@@ -2743,7 +2743,7 @@
 ** valore predefinito: `+continue+`
 
 * [[option_irc.server_default.sasl_key]] *irc.server_default.sasl_key*
-** descrizione: pass:none[file with ECC private key for mechanism "ecdsa-nist256p-challenge" ("%h" will be replaced by WeeChat home, "~/.weechat" by default)]
+** descrizione: pass:none[file with ECC private key for mechanism "ecdsa-nist256p-challenge" (path is evaluated, see function string_eval_path_home in plugin API reference)]
 ** tipo: stringa
 ** valori: qualsiasi stringa
 ** valore predefinito: `+""+`
@@ -2785,7 +2785,7 @@
 ** valore predefinito: `+off+`
 
 * [[option_irc.server_default.ssl_cert]] *irc.server_default.ssl_cert*
-** descrizione: pass:none[file del certificato SSL usato per identificare automaticamente il proprio nick ("%h" sarà sostituito dalla home di WeeChat, "~/.weechat come predefinita)]
+** descrizione: pass:none[SSL certificate file used to automatically identify your nick (path is evaluated, see function string_eval_path_home in plugin API reference)]
 ** tipo: stringa
 ** valori: qualsiasi stringa
 ** valore predefinito: `+""+`
@@ -3009,10 +3009,10 @@
 ** valore predefinito: `+100000+`
 
 * [[option_relay.network.ssl_cert_key]] *relay.network.ssl_cert_key*
-** descrizione: pass:none[file con il certificato SSL e la chiave privata (per servire i client con SSL)]
+** descrizione: pass:none[file with SSL certificate and private key (for serving clients with SSL) (path is evaluated, see function string_eval_path_home in plugin API reference)]
 ** tipo: stringa
 ** valori: qualsiasi stringa
-** valore predefinito: `+"%h/ssl/relay.pem"+`
+** valore predefinito: `+"${weechat_config_dir}/ssl/relay.pem"+`
 
 * [[option_relay.network.ssl_priorities]] *relay.network.ssl_priorities*
 ** descrizione: pass:none[stringa con le priorità per gnutls (per la sintassi, consultare la documentazione per la funzione gnutls_priority_init nel manuale di gnutls, stringhe comuni sono: "PERFORMANCE", "NORMAL", "SECURE128", "SECURE256", "EXPORT", "NONE")]
@@ -3393,10 +3393,10 @@
 ** valore predefinito: `+""+`
 
 * [[option_script.scripts.path]] *script.scripts.path*
-** descrizione: pass:none[local cache directory for scripts; "%h" at beginning of string is replaced by WeeChat home ("~/.weechat" by default) (note: content is evaluated, see /help eval)]
+** descrizione: pass:none[local cache directory for scripts (path is evaluated, see function string_eval_path_home in plugin API reference)]
 ** tipo: stringa
 ** valori: qualsiasi stringa
-** valore predefinito: `+"%h/script"+`
+** valore predefinito: `+"${weechat_cache_dir}/script"+`
 
 * [[option_script.scripts.url]] *script.scripts.url*
 ** descrizione: pass:none[URL for file with list of scripts]

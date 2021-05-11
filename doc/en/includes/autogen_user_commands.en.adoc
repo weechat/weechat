@@ -1981,7 +1981,7 @@ With option "-quit", the process is slightly different:
   5. quit WeeChat
 Then later you can restore session with command: weechat --upgrade
 IMPORTANT: you must restore the session with exactly same configuration (files *.conf).
-It is possible to restore WeeChat session on another machine if you copy the content of directory "~/.weechat".
+It is possible to restore WeeChat session on another machine if you copy the content of WeeChat home directories (see /debug dirs).
 ----
 
 [[command_weechat_uptime]]
@@ -2272,14 +2272,14 @@ disable: disable FIFO pipe
  toggle: toggle FIFO pipe
 
 FIFO pipe is used as remote control of WeeChat: you can send commands or text to the FIFO pipe from your shell.
-By default the FIFO pipe is in ~/.weechat/weechat_fifo
+By default the FIFO pipe is called weechat_fifo_xxx (where xxx is the WeeChat process id) and located in the WeeChat runtime directory (see /debug dirs).
 
 The expected format is one of:
   plugin.buffer *text or command here
   *text or command here
 
 For example to change your freenode nick:
-  echo 'irc.server.freenode */nick newnick' >~/.weechat/weechat_fifo
+  echo 'irc.server.freenode */nick newnick' >/run/user/1000/weechat/weechat_fifo_12345
 
 Please read the user's guide for more info and examples.
 
@@ -2716,7 +2716,7 @@ Without argument, this command lists all loaded scripts.
          stop: close the server socket (clients remain connected)
          name: relay name (see format below)
          port: port used for relay
-         path: path used for relay (for UNIX domain socket only); "%h" at beginning of string is replaced by WeeChat home ("~/.weechat" by default), content is evaluated (see /help eval)
+         path: path used for relay (for UNIX domain socket only); path is evaluated (see function string_eval_path_home in plugin API reference)
           raw: open buffer with raw Relay data
    sslcertkey: set SSL certificate/key using path in option relay.network.ssl_cert_key
 
@@ -2752,7 +2752,7 @@ Examples:
   weechat protocol with SSL, using IPv4 + IPv6:
     /relay add ipv4.ipv6.ssl.weechat 9001
   weechat protocol over UNIX domain socket:
-    /relay add unix.weechat %h/relay_socket
+    /relay add unix.weechat ${weechat_runtime_dir}/relay_socket
 ----
 // end::relay_commands[]
 

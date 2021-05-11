@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-05-04 20:34+0200\n"
+"POT-Creation-Date: 2021-05-11 21:38+0200\n"
 "PO-Revision-Date: 2021-02-06 15:55+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -166,7 +166,9 @@ msgstr ""
 msgid ""
 "  -a, --no-connect         disable auto-connect to servers at startup\n"
 "  -c, --colors             display default colors in terminal\n"
-"  -d, --dir <path>         set WeeChat home directory (default: ~/.weechat)\n"
+"  -d, --dir <path>         force a single WeeChat home directory\n"
+"                           or 4 different directories separated by colons "
+"(in this order: config, data, cache, runtime)\n"
 "                           (environment variable WEECHAT_HOME is read if "
 "this option is not given)\n"
 "  -t, --temp-dir           create a temporary WeeChat homedirectory and "
@@ -232,30 +234,6 @@ msgstr ""
 #, fuzzy, c-format
 msgid "Error: missing argument for \"%s\" option\n"
 msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
-
-#, fuzzy
-msgid "Error: unable to get HOME directory\n"
-msgstr "%s nem sikerült a HOME könyvtárat beállítani\n"
-
-#, fuzzy
-msgid "Error: not enough memory for home directory\n"
-msgstr "%s nincs elég memória a HOME könyvtárhoz\n"
-
-#, fuzzy, c-format
-msgid ""
-"Error: unable to create a temporary home directory (using template: \"%s\")\n"
-msgstr "%s nem sikerült a szervert létrehozni\n"
-
-msgid "Error: WEECHAT_HOME is undefined, check build options\n"
-msgstr ""
-
-#, c-format
-msgid "Error: home (%s) is not a directory\n"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "Error: cannot create directory \"%s\"\n"
-msgstr "%s nem sikerült a \"%s\" könyvtárat létrehozni\n"
 
 msgid "WeeChat is running in headless mode (Ctrl-C to quit)."
 msgstr ""
@@ -2311,7 +2289,7 @@ msgid ""
 "IMPORTANT: you must restore the session with exactly same configuration "
 "(files *.conf).\n"
 "It is possible to restore WeeChat session on another machine if you copy the "
-"content of directory \"~/.weechat\"."
+"content of WeeChat home directories (see /debug dirs)."
 msgstr ""
 "path_to_binary: a WeeChat bináris útvonala (alapértelmezetten az aktuális "
 "bináris útvonala)\n"
@@ -3704,13 +3682,10 @@ msgid ""
 "process)"
 msgstr "SSL használata a a kapcsolathoz"
 
-#, fuzzy
 msgid ""
-"file containing the certificate authorities (\"%h\" will be replaced by "
-"WeeChat home, \"~/.weechat\" by default)"
+"file containing the certificate authorities (path is evaluated, see function "
+"string_eval_path_home in plugin API reference)"
 msgstr ""
-"modulok elérési útvonala ('%h' helyére automatikusan a WeeChat saját  "
-"könyvtára, alapértelmezésben ~/.weechat, kerül)"
 
 #, fuzzy
 msgid "timeout (in seconds) for gnutls handshake"
@@ -3741,13 +3716,10 @@ msgstr ""
 msgid "comma separated list of file name extensions for plugins"
 msgstr ""
 
-#, fuzzy
 msgid ""
-"path for searching plugins (\"%h\" will be replaced by WeeChat home, \"~/."
-"weechat\" by default)"
+"path for searching plugins (path is evaluated, see function "
+"string_eval_path_home in plugin API reference)"
 msgstr ""
-"modulok elérési útvonala ('%h' helyére automatikusan a WeeChat saját  "
-"könyvtára, alapértelmezésben ~/.weechat, kerül)"
 
 #, fuzzy
 msgid "save configuration files when unloading plugins"
@@ -3826,15 +3798,34 @@ msgstr ""
 msgid "Memory usage not available (function \"mallinfo\" not found)"
 msgstr ""
 
+msgid "TEMPORARY, deleted on exit"
+msgstr ""
+
 msgid "Directories:"
 msgstr ""
 
-msgid "(TEMPORARY, deleted on exit)"
+#, fuzzy
+msgid "Error: not enough memory\n"
+msgstr "Nincs elég memória az új sorhoz\n"
+
+#, c-format
+msgid ""
+"Error: wrong number of paths for home directories (expected: 1 or 4, "
+"received: %d)\n"
 msgstr ""
 
 #, fuzzy, c-format
-msgid "        (default: %s)"
-msgstr "       IRC(%s)\n"
+msgid ""
+"Error: unable to create a temporary home directory (using template: \"%s\")\n"
+msgstr "%s nem sikerült a szervert létrehozni\n"
+
+#, fuzzy, c-format
+msgid "Error: \"%s\" is not a directory\n"
+msgstr "%s nem sikerült a \"%s\" könyvtárat létrehozni\n"
+
+#, fuzzy, c-format
+msgid "Error: cannot create directory \"%s\"\n"
+msgstr "%s nem sikerült a \"%s\" könyvtárat létrehozni\n"
 
 #, c-format
 msgid "%sError sending signal %d to pid %d: %s"
@@ -3871,8 +3862,8 @@ msgstr "%s helytelen érték a \"%s\" paraméternek\n"
 #, fuzzy
 msgid ""
 "Error: unable to create/append to log file (weechat.log)\n"
-"If another WeeChat process is using this file, try to run WeeChat\n"
-"with another home using the \"--dir\" command line option.\n"
+"If another WeeChat process is using this file, try to run WeeChat with a "
+"specific home directory using the \"--dir\" command line option.\n"
 msgstr ""
 "%s nem sikerült létrehozni/hozzáírni a naplófájlhoz (weechat.log)\n"
 "Ha egy másik WeeChat folyamat használja ezt a fájlt, próbálja másik\n"
@@ -5072,14 +5063,17 @@ msgid ""
 "\n"
 "FIFO pipe is used as remote control of WeeChat: you can send commands or "
 "text to the FIFO pipe from your shell.\n"
-"By default the FIFO pipe is in ~/.weechat/weechat_fifo\n"
+"By default the FIFO pipe is called weechat_fifo_xxx (where xxx is the "
+"WeeChat process id) and located in the WeeChat runtime directory (see /debug "
+"dirs).\n"
 "\n"
 "The expected format is one of:\n"
 "  plugin.buffer *text or command here\n"
 "  *text or command here\n"
 "\n"
 "For example to change your freenode nick:\n"
-"  echo 'irc.server.freenode */nick newnick' >~/.weechat/weechat_fifo\n"
+"  echo 'irc.server.freenode */nick newnick' >/run/user/1000/weechat/"
+"weechat_fifo_12345\n"
 "\n"
 "Please read the user's guide for more info and examples.\n"
 "\n"
@@ -5090,14 +5084,10 @@ msgstr ""
 msgid "enable FIFO pipe"
 msgstr ""
 
-#, fuzzy
 msgid ""
-"path for FIFO file; \"%h\" at beginning of string is replaced by WeeChat "
-"home (\"~/.weechat\" by default); WeeChat PID can be used in path with "
-"${info:pid} (note: content is evaluated, see /help eval)"
+"path for FIFO file; WeeChat PID can be used in path with ${info:pid} (path "
+"is evaluated, see function string_eval_path_home in plugin API reference)"
 msgstr ""
-"modulok elérési útvonala ('%h' helyére automatikusan a WeeChat saját  "
-"könyvtára, alapértelmezésben ~/.weechat, kerül)"
 
 msgid "name of FIFO pipe"
 msgstr ""
@@ -7506,8 +7496,8 @@ msgstr "SSL használata a a kapcsolathoz"
 
 #, fuzzy
 msgid ""
-"SSL certificate file used to automatically identify your nick (\"%h\" will "
-"be replaced by WeeChat home, \"~/.weechat\" by default)"
+"SSL certificate file used to automatically identify your nick (path is "
+"evaluated, see function string_eval_path_home in plugin API reference)"
 msgstr ""
 "modulok elérési útvonala ('%h' helyére automatikusan a WeeChat saját  "
 "könyvtára, alapértelmezésben ~/.weechat, kerül)"
@@ -7594,8 +7584,8 @@ msgstr ""
 
 #, fuzzy
 msgid ""
-"file with ECC private key for mechanism \"ecdsa-nist256p-challenge\" (\"%h\" "
-"will be replaced by WeeChat home, \"~/.weechat\" by default)"
+"file with ECC private key for mechanism \"ecdsa-nist256p-challenge\" (path "
+"is evaluated, see function string_eval_path_home in plugin API reference)"
 msgstr ""
 "modulok elérési útvonala ('%h' helyére automatikusan a WeeChat saját  "
 "könyvtára, alapértelmezésben ~/.weechat, kerül)"
@@ -9474,14 +9464,11 @@ msgstr ""
 msgid "text to write after nick in prefix of message, example: \">\""
 msgstr ""
 
-#, fuzzy
 msgid ""
-"path for WeeChat log files; \"%h\" at beginning of string is replaced by "
-"WeeChat home (\"~/.weechat\" by default); date specifiers are permitted (see "
-"man strftime) (note: content is evaluated, see /help eval)"
+"path for WeeChat log files; date specifiers are permitted (see man strftime) "
+"(path is evaluated, see function string_eval_path_home in plugin API "
+"reference)"
 msgstr ""
-"modulok elérési útvonala ('%h' helyére automatikusan a WeeChat saját  "
-"könyvtára, alapértelmezésben ~/.weechat, kerül)"
 
 msgid ""
 "replacement char for special chars in filename built with mask (like "
@@ -9670,8 +9657,26 @@ msgstr ""
 msgid "directory separator"
 msgstr "időelválasztó színe"
 
+msgid ""
+"WeeChat directory (*deprecated* since version 3.2, replaced by "
+"\"weechat_config_dir\", \"weechat_data_dir\", \"weechat_cache_dir\" and "
+"\"weechat_runtime_dir\")"
+msgstr ""
+
 #, fuzzy
-msgid "WeeChat directory"
+msgid "WeeChat config directory"
+msgstr "WeeChat Hiba:"
+
+#, fuzzy
+msgid "WeeChat data directory"
+msgstr "WeeChat Hiba:"
+
+#, fuzzy
+msgid "WeeChat cache directory"
+msgstr "WeeChat Hiba:"
+
+#, fuzzy
+msgid "WeeChat runtime directory"
 msgstr "WeeChat Hiba:"
 
 msgid "WeeChat \"lib\" directory"
@@ -10390,9 +10395,8 @@ msgid ""
 "         stop: close the server socket (clients remain connected)\n"
 "         name: relay name (see format below)\n"
 "         port: port used for relay\n"
-"         path: path used for relay (for UNIX domain socket only); \"%h\" at "
-"beginning of string is replaced by WeeChat home (\"~/.weechat\" by default), "
-"content is evaluated (see /help eval)\n"
+"         path: path used for relay (for UNIX domain socket only); path is "
+"evaluated (see function string_eval_path_home in plugin API reference)\n"
 "          raw: open buffer with raw Relay data\n"
 "   sslcertkey: set SSL certificate/key using path in option relay.network."
 "ssl_cert_key\n"
@@ -10434,7 +10438,7 @@ msgid ""
 "  weechat protocol with SSL, using IPv4 + IPv6:\n"
 "    /relay add ipv4.ipv6.ssl.weechat 9001\n"
 "  weechat protocol over UNIX domain socket:\n"
-"    /relay add unix.weechat %h/relay_socket"
+"    /relay add unix.weechat ${weechat_runtime_dir}/relay_socket"
 msgstr ""
 
 msgid "all possible protocol.name for relay plugin"
@@ -10481,13 +10485,10 @@ msgstr "%s ismeretlen billentyűparancs \"%s\"\n"
 msgid "%s%s: error: relay for \"%s\" already exists"
 msgstr "%s az ignore már létezik\n"
 
-#, fuzzy
 msgid ""
-"path to a socket file; \"%h\" at beginning of string is replaced by WeeChat "
-"home (\"~/.weechat\" by default), content is evaluated (see /help eval)"
+"path to a socket file (path is evaluated, see function string_eval_path_home "
+"in plugin API reference)"
 msgstr ""
-"modulok elérési útvonala ('%h' helyére automatikusan a WeeChat saját  "
-"könyvtára, alapértelmezésben ~/.weechat, kerül)"
 
 #, fuzzy
 msgid "port for relay"
@@ -10608,7 +10609,9 @@ msgid ""
 msgstr ""
 
 msgid ""
-"file with SSL certificate and private key (for serving clients with SSL)"
+"file with SSL certificate and private key (for serving clients with SSL) "
+"(path is evaluated, see function string_eval_path_home in plugin API "
+"reference)"
 msgstr ""
 
 msgid ""
@@ -11322,14 +11325,10 @@ msgid ""
 "upgraded and can not be removed, for example: \"go.py,urlserver.py\""
 msgstr ""
 
-#, fuzzy
 msgid ""
-"local cache directory for scripts; \"%h\" at beginning of string is replaced "
-"by WeeChat home (\"~/.weechat\" by default) (note: content is evaluated, "
-"see /help eval)"
+"local cache directory for scripts (path is evaluated, see function "
+"string_eval_path_home in plugin API reference)"
 msgstr ""
-"modulok elérési útvonala ('%h' helyére automatikusan a WeeChat saját  "
-"könyvtára, alapértelmezésben ~/.weechat, kerül)"
 
 #, fuzzy
 msgid "URL for file with list of scripts"
@@ -12389,14 +12388,10 @@ msgstr ""
 msgid "convert spaces to underscores when sending and receiving files"
 msgstr "szóközök alulvonássá alakítása küldéskor"
 
-#, fuzzy
 msgid ""
-"path for writing incoming files: \"%h\" at beginning of string is replaced "
-"by WeeChat home (\"~/.weechat\" by default) (note: content is evaluated, "
-"see /help eval)"
+"path for writing incoming files (path is evaluated, see function "
+"string_eval_path_home in plugin API reference)"
 msgstr ""
-"modulok elérési útvonala ('%h' helyére automatikusan a WeeChat saját  "
-"könyvtára, alapértelmezésben ~/.weechat, kerül)"
 
 msgid ""
 "temporary filename suffix used during the transfer for a file received, it "
@@ -12404,14 +12399,10 @@ msgid ""
 "used during the transfer"
 msgstr ""
 
-#, fuzzy
 msgid ""
-"path for reading files when sending (when no path is specified by user): \"%h"
-"\" at beginning of string is replaced by WeeChat home (\"~/.weechat\" by "
-"default) (note: content is evaluated, see /help eval)"
+"path for reading files when sending (path is evaluated, see function "
+"string_eval_path_home in plugin API reference)"
 msgstr ""
-"modulok elérési útvonala ('%h' helyére automatikusan a WeeChat saját  "
-"könyvtára, alapértelmezésben ~/.weechat, kerül)"
 
 msgid "use remote nick as prefix in local filename when receiving a file"
 msgstr ""
@@ -12490,6 +12481,88 @@ msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s DCC: nem sikerült kapcsolódni a küldőhöz\n"
+
+#, fuzzy
+#~ msgid "Error: unable to get HOME directory\n"
+#~ msgstr "%s nem sikerült a HOME könyvtárat beállítani\n"
+
+#, fuzzy
+#~ msgid "Error: not enough memory for home directory\n"
+#~ msgstr "%s nincs elég memória a HOME könyvtárhoz\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "file containing the certificate authorities (\"%h\" will be replaced by "
+#~ "WeeChat home, \"~/.weechat\" by default)"
+#~ msgstr ""
+#~ "modulok elérési útvonala ('%h' helyére automatikusan a WeeChat saját  "
+#~ "könyvtára, alapértelmezésben ~/.weechat, kerül)"
+
+#, fuzzy
+#~ msgid ""
+#~ "path for searching plugins (\"%h\" will be replaced by WeeChat home, \"~/."
+#~ "weechat\" by default)"
+#~ msgstr ""
+#~ "modulok elérési útvonala ('%h' helyére automatikusan a WeeChat saját  "
+#~ "könyvtára, alapértelmezésben ~/.weechat, kerül)"
+
+#, fuzzy, c-format
+#~ msgid "        (default: %s)"
+#~ msgstr "       IRC(%s)\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "path for FIFO file; \"%h\" at beginning of string is replaced by WeeChat "
+#~ "home (\"~/.weechat\" by default); WeeChat PID can be used in path with "
+#~ "${info:pid} (note: content is evaluated, see /help eval)"
+#~ msgstr ""
+#~ "modulok elérési útvonala ('%h' helyére automatikusan a WeeChat saját  "
+#~ "könyvtára, alapértelmezésben ~/.weechat, kerül)"
+
+#, fuzzy
+#~ msgid ""
+#~ "path for WeeChat log files; \"%h\" at beginning of string is replaced by "
+#~ "WeeChat home (\"~/.weechat\" by default); date specifiers are permitted "
+#~ "(see man strftime) (note: content is evaluated, see /help eval)"
+#~ msgstr ""
+#~ "modulok elérési útvonala ('%h' helyére automatikusan a WeeChat saját  "
+#~ "könyvtára, alapértelmezésben ~/.weechat, kerül)"
+
+#, fuzzy
+#~ msgid ""
+#~ "path to a socket file; \"%h\" at beginning of string is replaced by "
+#~ "WeeChat home (\"~/.weechat\" by default), content is evaluated (see /help "
+#~ "eval)"
+#~ msgstr ""
+#~ "modulok elérési útvonala ('%h' helyére automatikusan a WeeChat saját  "
+#~ "könyvtára, alapértelmezésben ~/.weechat, kerül)"
+
+#, fuzzy
+#~ msgid ""
+#~ "local cache directory for scripts; \"%h\" at beginning of string is "
+#~ "replaced by WeeChat home (\"~/.weechat\" by default) (note: content is "
+#~ "evaluated, see /help eval)"
+#~ msgstr ""
+#~ "modulok elérési útvonala ('%h' helyére automatikusan a WeeChat saját  "
+#~ "könyvtára, alapértelmezésben ~/.weechat, kerül)"
+
+#, fuzzy
+#~ msgid ""
+#~ "path for writing incoming files: \"%h\" at beginning of string is "
+#~ "replaced by WeeChat home (\"~/.weechat\" by default) (note: content is "
+#~ "evaluated, see /help eval)"
+#~ msgstr ""
+#~ "modulok elérési útvonala ('%h' helyére automatikusan a WeeChat saját  "
+#~ "könyvtára, alapértelmezésben ~/.weechat, kerül)"
+
+#, fuzzy
+#~ msgid ""
+#~ "path for reading files when sending (when no path is specified by user): "
+#~ "\"%h\" at beginning of string is replaced by WeeChat home (\"~/.weechat\" "
+#~ "by default) (note: content is evaluated, see /help eval)"
+#~ msgstr ""
+#~ "modulok elérési útvonala ('%h' helyére automatikusan a WeeChat saját  "
+#~ "könyvtára, alapértelmezésben ~/.weechat, kerül)"
 
 #, fuzzy
 #~ msgid "secured data: names and values"

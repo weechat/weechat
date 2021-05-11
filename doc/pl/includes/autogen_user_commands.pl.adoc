@@ -1957,30 +1957,30 @@ Przykłady:
 ----
 /upgrade  [-yes] [<ścieżka_do_binarki>|-quit]
 
-          -yes: wymagane, jeśli "weechat.look.confirm_upgrade" jest włączona
-ścieżka_do_binarki: ścieżka do pliku binarnego WeeChat (domyślnie jest to obecny plik)
-        -dummy: nic nie rób (opcja użyta w celu zapobiegnięcia przypadkowego dopełnienia za pomocą"-quit")
-         -quit: zamyka *WSZYSTKIE* połączenia, zapisuje sesję i wyłącza WeeChat, umożliwia to późniejsze przywrócenie (zobacz niżej)
+          -yes: required if option "weechat.look.confirm_upgrade" is enabled
+path_to_binary: path to WeeChat binary (default is current binary)
+        -dummy: do nothing (option used to prevent accidental completion with "-quit")
+         -quit: close *ALL* connections, save session and quit WeeChat, which makes possible a delayed restoration (see below)
 
-Ta komenda uaktualnia i przeładowuje działającą sesję WeeChat.  Nowy plik binarny WeeChat powinien zostać skompilowany lub zainstalowany za pomocą managera pakietów przed uruchomieniem tej komendy.
+This command upgrades and reloads a running WeeChat session. The new WeeChat binary must have been compiled or installed with a package manager before running this command.
 
-Uwaga: połączenia SSL są przerywane podczas uaktualniania, ponieważ przeładowanie sesji SSL nie jest obecnie możliwe za pomocą GnuTLS. Po uaktualnieniu nastąpi ponowne ich połączenie.
+Note: SSL connections are lost during upgrade, because reload of SSL sessions is currently not possible with GnuTLS. There is automatic reconnection after upgrade.
 
-Proces uaktualnienia składa się z 4 kroków:
-  1. zapisania sesji do plików dla rdzenia i wtyczek (bufory, historia, ..)
-  2. wyładowanie wszystkich wtyczek (zapisanie plików konfiguracyjnych *.conf)
-  3. zapisanie konfiguracji WeeChat (weechat.conf)
-  4. uruchomienie nowego pliku binarnego WeeChat i przeładowanie sesji.
+Upgrade process has 4 steps:
+  1. save session into files for core and plugins (buffers, history, ..)
+  2. unload all plugins (configuration files (*.conf) are written on disk)
+  3. save WeeChat configuration (weechat.conf)
+  4. execute new WeeChat binary and reload session.
 
-Z opcją "-quit", proces przebiega inaczej:
-  1. zamknięcie *WSZYSTKICH* połączeń (irc, xfer, relay, ...)
-  2. zapisanie sesji do pliku (*.upgrade)
-  3. wyładowanie wszystkich wtyczek
-  4. zapisanie konfiguracji WeeChat
-  5. wyłączenie WeeChat
-Następnie można przywrócić sesję za pomocą komendy: weechat --upgrade
-WAŻNE: należy przywracać sesję z identyczną konfiguracją (pliki *.conf).
-Jest możliwe przywrócenie sesji WeeChat na innej maszynie, jeśli skopiujemy zawartość katalogu "~/.weechat".
+With option "-quit", the process is slightly different:
+  1. close *ALL* connections (irc, xfer, relay, ...)
+  2. save session into files (*.upgrade)
+  3. unload all plugins
+  4. save WeeChat configuration
+  5. quit WeeChat
+Then later you can restore session with command: weechat --upgrade
+IMPORTANT: you must restore the session with exactly same configuration (files *.conf).
+It is possible to restore WeeChat session on another machine if you copy the content of WeeChat home directories (see /debug dirs).
 ----
 
 [[command_weechat_uptime]]
@@ -2266,23 +2266,23 @@ Przykłady:
 ----
 /fifo  enable|disable|toggle
 
- enable: włącza strumień FIFO
-disable: wyłącza strumień FIFO
- toggle: przełącza stan strumienia FIFO
+ enable: enable FIFO pipe
+disable: disable FIFO pipe
+ toggle: toggle FIFO pipe
 
-Strumień FIFO jest używany do zdalnej kontroli nad WeeChat: możesz wysyłać komendy albo tekst do strumienia z konsoli.
-Domyślnie strumień FIFO jest tworzony w ~/.weechat/weechat_fifo
+FIFO pipe is used as remote control of WeeChat: you can send commands or text to the FIFO pipe from your shell.
+By default the FIFO pipe is called weechat_fifo_xxx (where xxx is the WeeChat process id) and located in the WeeChat runtime directory (see /debug dirs).
 
-Spodziewane formaty:
-  plugin.buffer *tekst albo komenda
-  *tekst albo komenda
+The expected format is one of:
+  plugin.buffer *text or command here
+  *text or command here
 
-Na przykład zmiana nicka w sieci freenode:
-  echo 'irc.server.freenode */nick nowynick' >~/.weechat/weechat_fifo
+For example to change your freenode nick:
+  echo 'irc.server.freenode */nick newnick' >/run/user/1000/weechat/weechat_fifo_12345
 
-Więcej informacji i przykładów można znaleźć w poradniku użytkownika.
+Please read the user's guide for more info and examples.
 
-Przykłady:
+Examples:
   /fifo toggle
 ----
 // end::fifo_commands[]
@@ -2705,53 +2705,53 @@ Bez argumentów ta komenda wyświetli wszystkie załadowane wtyczki.
         raw
         sslcertkey
 
-         list: wyświetla klienty pośrednika (tylko aktywne)
-     listfull: wyświetla klienty pośrednika (wszystkie)
-    listrelay: wyświetla pośredników (nazwa i port)
-          add: dodaje relay (nasłuchuje na porcie)
-          del: usuwa relay (klienty zostają połączone)
-        start: nasłuchuje na porcie
-      restart: zamyka porta serwera i otwiera go ponownie nasłuchując na nim (klienty zostają połączone)
-         stop: zamyka gniazdo serwera (klienty zostają połączone)
-        nazwa: nazwa pośrednika (format poniżej)
-         port: port używany przez pośrednika
-         ścieżka: ścieżka używana przez pośrednika (tylko dla socketów UNIXowych); "%h" na początku ciągu jest zastępowane katalogiem domowym WeeChat (domyślnie "~/.weechat"), zawartość jest przetwarzana (zobacz /help eval)
-          raw: otwiera bufor z nieprzetworzonymi danymi pośrednika
-   sslcertkey: ustawia certyfikat SSL/hasło używając ścieżki w opcji relay.network.ssl_cert_key
+         list: list relay clients (only active relays)
+     listfull: list relay clients (verbose, all relays)
+    listrelay: list relays (name and port)
+          add: add a relay (listen on a port/path)
+          del: remove a relay (clients remain connected)
+        start: listen on port
+      restart: close the server socket and listen again on port (clients remain connected)
+         stop: close the server socket (clients remain connected)
+         name: relay name (see format below)
+         port: port used for relay
+         path: path used for relay (for UNIX domain socket only); path is evaluated (see function string_eval_path_home in plugin API reference)
+          raw: open buffer with raw Relay data
+   sslcertkey: set SSL certificate/key using path in option relay.network.ssl_cert_key
 
-Nazwa pośrednika to: [ipv4.][ipv6.][ssl.]<protokół.nazwa> lub unix.[ssl.]<protokół. nazwa>
-         ipv4: wymusza użycie IPv4
-         ipv6: wymusza użycie IPv6
-          ssl: włącza SSL
-         unix: używa socketu UNIXowego
-protokół.nazwa: protokół i nazwa do przekazywania:
-                 - protokół "irc": nazwą jest serwer do współdzielenia (opcjonalne, jeśli nie podane, nazwa serwera musi być wysłana przez klienta w komendzie "PASS", format: "PASS serwer:hasło")
-                 - protokół "weechat" (nazwa nie jest używana)
+Relay name is: [ipv4.][ipv6.][ssl.]<protocol.name> or unix.[ssl.]<protocol.name>
+         ipv4: force use of IPv4
+         ipv6: force use of IPv6
+          ssl: enable SSL
+         unix: use UNIX domain socket
+protocol.name: protocol and name to relay:
+                 - protocol "irc": name is the server to share (optional, if not given, the server name must be sent by client in command "PASS", with format: "PASS server:password")
+                 - protocol "weechat" (name is not used)
 
-Protokół "irc" pozwala dowolnemu klientowi IRC (włączając w to WeeChat) połączyć się na ustawionym porcie.
-Protokół "weechat" pozwala na połączenie się zdalnym interfejsem, lista dostępna pod adresem: https://weechat.org/about/interfaces
+The "irc" protocol allows any IRC client (including WeeChat itself) to connect on the port.
+The "weechat" protocol allows a remote interface to connect on the port, see the list here: https://weechat.org/about/interfaces
 
-Bez argumentu komenda otwiera bufor z listą klientów.
+Without argument, this command opens buffer with list of relay clients.
 
-Przykłady:
-  pośrednik irc dla serwera "freenode":
+Examples:
+  irc proxy, for server "freenode":
     /relay add irc.freenode 8000
-  pośrednik irc dla serwera "freenode", z SSL:
+  irc proxy, for server "freenode", with SSL:
     /relay add ssl.irc.freenode 8001
-  pośrednik irc dla wszystkich serwerów (klient wybiera) z SSL:
+  irc proxy, for all servers (client will choose), with SSL:
     /relay add ssl.irc 8002
-  protokół weechat:
+  weechat protocol:
     /relay add weechat 9000
-  protokół weechat z SSL:
+  weechat protocol with SSL:
     /relay add ssl.weechat 9001
-  protokół weechat z SSL, używający tylko IPv4:
+  weechat protocol with SSL, using only IPv4:
     /relay add ipv4.ssl.weechat 9001
-  protokół weechat z SSL, używający tylko IPv6:
+  weechat protocol with SSL, using only IPv6:
     /relay add ipv6.ssl.weechat 9001
-  protokół weechat z SSL, używający IPv4 + IPv6:
+  weechat protocol with SSL, using IPv4 + IPv6:
     /relay add ipv4.ipv6.ssl.weechat 9001
-  protokół weechat po sockecie UNIXowym:
-    /relay add unix.weechat %h/relay_socket
+  weechat protocol over UNIX domain socket:
+    /relay add unix.weechat ${weechat_runtime_dir}/relay_socket
 ----
 // end::relay_commands[]
 

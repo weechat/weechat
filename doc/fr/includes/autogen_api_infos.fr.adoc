@@ -134,15 +134,23 @@
 
 | weechat | version_number | version de WeeChat (sous forme de nombre) | -
 
+| weechat | weechat_cache_dir | répertoire du cache WeeChat | -
+
+| weechat | weechat_config_dir | répertoire de la configuration WeeChat | -
+
 | weechat | weechat_daemon | 1 si WeeChat tourne en mode démon (sans interface, en tâche de fond) | -
 
-| weechat | weechat_dir | répertoire de WeeChat | -
+| weechat | weechat_data_dir | répertoire des données WeeChat | -
+
+| weechat | weechat_dir | répertoire de WeeChat (*obsolète depuis la version 3.2, remplacé par "weechat_config_dir", "weechat_data_dir", "weechat_cache_dir" et "weechat_runtime_dir") | -
 
 | weechat | weechat_headless | 1 si WeeChat tourne sans interface | -
 
 | weechat | weechat_libdir | répertoire "lib" de WeeChat | -
 
 | weechat | weechat_localedir | répertoire "locale" de WeeChat | -
+
+| weechat | weechat_runtime_dir | répertoire de "runtime" WeeChat | -
 
 | weechat | weechat_sharedir | répertoire "share" de WeeChat | -
 

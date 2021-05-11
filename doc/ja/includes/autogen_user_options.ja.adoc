@@ -1261,7 +1261,7 @@
 ** デフォルト値: `+60+`
 
 * [[option_weechat.network.gnutls_ca_file]] *weechat.network.gnutls_ca_file*
-** 説明: pass:none[認証局を含むファイル ("%h" は WeeChat ホームに置換されます、デフォルトでは "~/.weechat" です)]
+** 説明: pass:none[file containing the certificate authorities (path is evaluated, see function string_eval_path_home in plugin API reference)]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+"/etc/ssl/certs/ca-certificates.crt"+`
@@ -1297,10 +1297,10 @@
 ** デフォルト値: `+".so,.dll"+`
 
 * [[option_weechat.plugin.path]] *weechat.plugin.path*
-** 説明: pass:none[プラグイン検索パス ("%h" は WeeChat ホームに置換されます、デフォルトでは "~/.weechat" です)]
+** 説明: pass:none[path for searching plugins (path is evaluated, see function string_eval_path_home in plugin API reference)]
 ** タイプ: 文字列
 ** 値: 未制約文字列
-** デフォルト値: `+"%h/plugins"+`
+** デフォルト値: `+"${weechat_data_dir}/plugins"+`
 
 * [[option_weechat.plugin.save_config_on_unload]] *weechat.plugin.save_config_on_unload*
 ** 説明: pass:none[プラグインをアンロードする際に設定ファイルをセーブ]
@@ -1451,10 +1451,10 @@
 ** デフォルト値: `+""+`
 
 * [[option_logger.file.path]] *logger.file.path*
-** 説明: pass:none[WeeChat ログファイルのパス; 文字列最初の "%h" は WeeChat ホームに置換 (デフォルトでは "~/.weechat" に置換); 日付指定子を使える (strftime の man を参照してください) (注意: 内容は評価されます、/help eval 参照)]
+** 説明: pass:none[path for WeeChat log files; date specifiers are permitted (see man strftime) (path is evaluated, see function string_eval_path_home in plugin API reference)]
 ** タイプ: 文字列
 ** 値: 未制約文字列
-** デフォルト値: `+"%h/logs/"+`
+** デフォルト値: `+"${weechat_data_dir}/logs"+`
 
 * [[option_logger.file.replacement_char]] *logger.file.replacement_char*
 ** 説明: pass:none[マスクと一緒に使われたときのファイル名に含まれる特殊文字に対応する置換文字 (ディレクトリ区切りのようなもの)]
@@ -1827,10 +1827,10 @@
 ** デフォルト値: `+on+`
 
 * [[option_fifo.file.path]] *fifo.file.path*
-** 説明: pass:none[FIFO ファイルのパス; 文字列最初の "%h" は WeeChat ホーム に置換されます (デフォルトでは "~/.weechat" に置換されます); ${info:pid} を使えば WeeChat の PID を設定することも可能です (注意: 内容は評価されます、/help eval 参照)]
+** 説明: pass:none[path for FIFO file; WeeChat PID can be used in path with ${info:pid} (path is evaluated, see function string_eval_path_home in plugin API reference)]
 ** タイプ: 文字列
 ** 値: 未制約文字列
-** デフォルト値: `+"%h/weechat_fifo"+`
+** デフォルト値: `+"${weechat_runtime_dir}/weechat_fifo_${info:pid}"+`
 // end::fifo_options[]
 
 // tag::xfer_options[]
@@ -1931,10 +1931,10 @@
 ** デフォルト値: `+on+`
 
 * [[option_xfer.file.download_path]] *xfer.file.download_path*
-** 説明: pass:none[受信ファイルのパス: 文字列最初の "%h" は WeeChat ホーム に置換されます (デフォルトでは "~/.weechat" に置換されます) (注意: 内容は評価されます、/help eval 参照)]
+** 説明: pass:none[path for writing incoming files (path is evaluated, see function string_eval_path_home in plugin API reference)]
 ** タイプ: 文字列
 ** 値: 未制約文字列
-** デフォルト値: `+"%h/xfer"+`
+** デフォルト値: `+"${weechat_data_dir}/xfer"+`
 
 * [[option_xfer.file.download_temporary_suffix]] *xfer.file.download_temporary_suffix*
 ** 説明: pass:none[temporary filename suffix used during the transfer for a file received, it is removed after successful transfer; if empty string, no filename suffix is used during the transfer]
@@ -1943,7 +1943,7 @@
 ** デフォルト値: `+".part"+`
 
 * [[option_xfer.file.upload_path]] *xfer.file.upload_path*
-** 説明: pass:none[送信時に読み込むファイルのパス (ユーザがパスを指定しなかった場合に使われます): 文字列最初の "%h" は WeeChat ホームに置換されます (デフォルトでは "~/.weechat" に置換されます) (注意: 内容は評価されます、/help eval 参照)]
+** 説明: pass:none[path for reading files when sending (path is evaluated, see function string_eval_path_home in plugin API reference)]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+"~"+`
@@ -2743,7 +2743,7 @@
 ** デフォルト値: `+continue+`
 
 * [[option_irc.server_default.sasl_key]] *irc.server_default.sasl_key*
-** 説明: pass:none["ecdsa-nist256p-challenge" メカニズム用の ECC 秘密鍵を含むファイル ("%h" は WeeChat ホームに置換されます、デフォルトでは "~/.weechat" です)]
+** 説明: pass:none[file with ECC private key for mechanism "ecdsa-nist256p-challenge" (path is evaluated, see function string_eval_path_home in plugin API reference)]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+""+`
@@ -2785,7 +2785,7 @@
 ** デフォルト値: `+off+`
 
 * [[option_irc.server_default.ssl_cert]] *irc.server_default.ssl_cert*
-** 説明: pass:none[自動的にニックネームの身元確認を行うために使われる SSL 証明書ファイル ("%h" は WeeChat ホームで置換、デフォルトは "~/.weechat" です)]
+** 説明: pass:none[SSL certificate file used to automatically identify your nick (path is evaluated, see function string_eval_path_home in plugin API reference)]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+""+`
@@ -3009,10 +3009,10 @@
 ** デフォルト値: `+100000+`
 
 * [[option_relay.network.ssl_cert_key]] *relay.network.ssl_cert_key*
-** 説明: pass:none[SSL 証明書と秘密鍵のファイル (SSL 接続を利用するクライアント用)]
+** 説明: pass:none[file with SSL certificate and private key (for serving clients with SSL) (path is evaluated, see function string_eval_path_home in plugin API reference)]
 ** タイプ: 文字列
 ** 値: 未制約文字列
-** デフォルト値: `+"%h/ssl/relay.pem"+`
+** デフォルト値: `+"${weechat_config_dir}/ssl/relay.pem"+`
 
 * [[option_relay.network.ssl_priorities]] *relay.network.ssl_priorities*
 ** 説明: pass:none[gnutls の優先度を示した文字列 (構文は、gnutls マニュアルの gnutls_priority_init 関数のドキュメントを参照してください、通例: "PERFORMANCE", "NORMAL", "SECURE128", "SECURE256", "EXPORT", "NONE")]
@@ -3393,10 +3393,10 @@
 ** デフォルト値: `+""+`
 
 * [[option_script.scripts.path]] *script.scripts.path*
-** 説明: pass:none[スクリプト用のローカルキャッシュディレクトリ; 文字列最初の "%h" は WeeChat ホーム に置換されます (デフォルトでは "~/.weechat" に置換されます) (注意: 内容は評価されます、/help eval 参照)]
+** 説明: pass:none[local cache directory for scripts (path is evaluated, see function string_eval_path_home in plugin API reference)]
 ** タイプ: 文字列
 ** 値: 未制約文字列
-** デフォルト値: `+"%h/script"+`
+** デフォルト値: `+"${weechat_cache_dir}/script"+`
 
 * [[option_script.scripts.url]] *script.scripts.url*
 ** 説明: pass:none[スクリプトのリストを含むファイルの URL]
