@@ -78,7 +78,7 @@ the script may not find some files:
 * https://weechat.org/scripts/source/queue.py/[queue.py] 0.4.3
 * https://weechat.org/scripts/source/rslap.pl/[rslap.pl] 1.4
 * https://weechat.org/scripts/source/rssagg.pl/[rssagg.pl] 1.3
-* https://weechat.org/scripts/source/slack.py/[slack.py]
+* https://weechat.org/scripts/source/slack.py/[slack.py] 2.8.0
 * https://weechat.org/scripts/source/stalker.pl/[stalker.pl] 1.6.2
 * https://weechat.org/scripts/source/substitution.rb/[substitution.rb] 0.0.2
 * https://weechat.org/scripts/source/triggerreply.py/[triggerreply.py] 0.4.3
