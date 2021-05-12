@@ -119,6 +119,25 @@ Directories:
   locale: /usr/share/locale
 ----
 
+[[v3.2_gnutls_ca]]
+=== GnuTLS certificate authorities
+
+A new option has been added to load system's default trusted certificate
+authorities on startup: _weechat.network.gnutls_ca_system_ (boolean, enabled
+by default).
+
+The option _weechat.network.gnutls_ca_file_ has been renamed to
+_weechat.network.gnutls_ca_user_ and is now used for extra certificates
+(not the system ones). +
+This option now supports multiple files, separated by colons.
+
+If you have set a user CA file in option _weechat.network.gnutls_ca_file_,
+then you must set this same value in the new option
+_weechat.network.gnutls_ca_user_.
+
+When one of these options are changed, all certificates are purged and reloaded
+from files.
+
 [[v3.1]]
 == Version 3.1 (2021-03-07)
 
