@@ -2952,13 +2952,11 @@ la connexion est entièrement de confiance.
 
 Quelques options sont utilisées pour contrôler la connexion SSL :
 
-// TRANSLATION MISSING
 weechat.network.gnutls_ca_system::
-    load system's default trusted certificate authorities on startup
+    charger les certificats des autorités de certification système au démarrage
 
-// TRANSLATION MISSING
 weechat.network.gnutls_ca_user::
-    extra file(s) with certificate authorities
+    fichier(s) supplémentaire(s) avec des autorités de certification
 
 irc.server.xxx.ssl_cert::
     fichier de certificat SSL utilisé pour authentifier automatiquement votre
