@@ -1260,11 +1260,17 @@
 ** Werte: 1 .. 2147483647
 ** Standardwert: `+60+`
 
-* [[option_weechat.network.gnutls_ca_file]] *weechat.network.gnutls_ca_file*
-** Beschreibung: pass:none[file containing the certificate authorities (path is evaluated, see function string_eval_path_home in plugin API reference)]
+* [[option_weechat.network.gnutls_ca_system]] *weechat.network.gnutls_ca_system*
+** Beschreibung: pass:none[load system's default trusted certificate authorities on startup; this can be turned off to save some memory only if you are not using SSL connections at all]
+** Typ: boolesch
+** Werte: on, off
+** Standardwert: `+on+`
+
+* [[option_weechat.network.gnutls_ca_user]] *weechat.network.gnutls_ca_user*
+** Beschreibung: pass:none[extra file(s) with certificate authorities; multiple files must be separated by colons (each path is evaluated, see function string_eval_path_home in plugin API reference)]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
-** Standardwert: `+"/etc/ssl/certs/ca-certificates.crt"+`
+** Standardwert: `+""+`
 
 * [[option_weechat.network.gnutls_handshake_timeout]] *weechat.network.gnutls_handshake_timeout*
 ** Beschreibung: pass:none[Zeitüberschreitung für gnutls Handshake (in Sekunden)]

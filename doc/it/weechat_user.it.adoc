@@ -236,11 +236,6 @@ List of commonly used options:
   The value can also  be 4 directories separated by colons, in this order:
   config, data, cache, runtime.
 
-| CA_FILE | file | /etc/ssl/certs/ca-certificates.crt |
-  File containing the certificate authorities.
-  This is the default value of option
-  <<option_weechat.network.gnutls_ca_file,weechat.network.gnutls_ca_file>>.
-
 | ENABLE_ALIAS | `ON`, `OFF` | ON |
   Compile <<alias_plugin,Alias plugin>>.
 
@@ -3072,8 +3067,13 @@ maniera predefinita che la connessione sia completamente fidata.
 
 Esistono alcune opzioni per controllare la connessione SSL:
 
-weechat.network.gnutls_ca_file::
-    path del file con il certificato delle autorità
+// TRANSLATION MISSING
+weechat.network.gnutls_ca_system::
+    load system's default trusted certificate authorities on startup
+
+// TRANSLATION MISSING
+weechat.network.gnutls_ca_user::
+    extra file(s) with certificate authorities
 
 irc.server.xxx.ssl_cert::
     file del certificato SSL usato per identificare automaticamente il proprio

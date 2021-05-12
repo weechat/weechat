@@ -730,7 +730,9 @@ WeeChat でマウスが利用可能な場合、kbd:[Shift]
 
 macOS をお使いの場合、必ず Homebrew から `openssl`
 をインストールしてください。こうすることでシステムの鍵束に含まれる証明書を使いつつ、CA
-ファイルを起動時に読み込ませることが可能になります。その後、WeeChat で証明書へのパスを設定してください:
+
+// TRANSLATION MISSING
+With WeeChat ≤ 3.1, you can set the path to system certificates:
 
 ----
 /set weechat.network.gnutls_ca_file "/usr/local/etc/openssl/cert.pem"
@@ -770,7 +772,9 @@ gnutls ハンドシェイクに関するエラーの場合、Diffie-Hellman キ�
 [[irc_ssl_freenode]]
 === どうすれば SSL を使って freenode サーバに接続できますか。
 
-オプション _weechat.network.gnutls_ca_file_ に証明書ファイルへのパスを設定してください。
+// TRANSLATION MISSING
+With WeeChat ≤ 3.1, set option _weechat.network.gnutls_ca_file_ to file with
+certificates:
 
 ----
 /set weechat.network.gnutls_ca_file "/etc/ssl/certs/ca-certificates.crt"
@@ -1050,8 +1054,7 @@ weeget.py と script.pl を使ってください。
 [[scripts_update]]
 === コマンド "/script update" でスクリプトを読み込むことができません。どうすればいいですか。
 
-手始めに、この FAQ の SSL 接続に関する質問を確認してください
-(特にオプション _weechat.network.gnutls_ca_file_ に関する質問)。
+手始めに、この FAQ の SSL 接続に関する質問を確認してください。
 
 それでもだめなら、手作業で (シェルから) スクリプトリストファイルを削除してください:
 
@@ -1132,8 +1135,9 @@ WeeChat バージョン 2.4 以下では "spell" プラグインは "aspell" と
   buflist、fifo、logger、perl、python、ruby、lua、tcl、guile、javascript、php、spell、xfer (DCC で使用)。
   `/help weechat.plugin.autoload` を参照してください。
 * 本当に必要なスクリプトだけをロード
-* SSL を *使わない* なら、証明書を読み込まないでください: オプション
-  _weechat.network.gnutls_ca_file_ に空文字列を設定してください。
+// TRANSLATION MISSING
+* Do not load system certificates if SSL is *NOT* used: turn off this option:
+  _weechat.network.gnutls_ca_system_.
 * _weechat.history.max_buffer_lines_number_
   オプションの値を減らすか、_weechat.history.max_buffer_lines_minutes_ オプションに値を設定してください。
 * _weechat.history.max_commands_ オプションの値を減らしてください。

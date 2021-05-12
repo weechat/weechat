@@ -750,8 +750,9 @@ kbd:[Alt] au lieu de kbd:[Shift]).
 === J'ai des problèmes pour me connecter au serveur avec SSL, que puis-je faire ?
 
 Si vous utilisez macOS, vous devez installer `openssl` depuis Homebrew.
-Un fichier CA sera installé avec le le trousseau système. Vous pouvez alors
-définie le chemin vers les certificats sous WeeChat :
+Un fichier CA sera installé avec le le trousseau système.
+
+Avec WeeChat ≤ 3.1, vous pouvez définir le chemin vers les certificats système :
 
 ----
 /set weechat.network.gnutls_ca_file "/usr/local/etc/openssl/cert.pem"
@@ -792,8 +793,8 @@ seulement), remplacez "xxx" par le nom de votre serveur :
 [[irc_ssl_freenode]]
 === Comment puis-je me connecter à freenode avec SSL ?
 
-Positionnez l'option _weechat.network.gnutls_ca_file_ avec le fichier des
-certificats :
+Avec WeeChat ≤ 3.1, positionnez l'option _weechat.network.gnutls_ca_file_ avec
+le fichier des certificats :
 
 ----
 /set weechat.network.gnutls_ca_file "/etc/ssl/certs/ca-certificates.crt"
@@ -1086,8 +1087,7 @@ Les scripts ne sont pas compatibles avec d'autres clients IRC.
 [[scripts_update]]
 === La commande "/script update" ne peut pas lire les scripts, comment corriger ça ?
 
-Consultez d'abord les questions à propos des connexions SSL dans cette FAQ
-(en particulier l'option _weechat.network.gnutls_ca_file_).
+Consultez d'abord les questions à propos des connexions SSL dans cette FAQ.
 
 Si cela ne fonctionne toujours pas, essayez de supprimer manuellement le fichier
 avec les scripts (dans votre shell) :
@@ -1173,8 +1173,8 @@ Vous pouvez essayer les astuces suivantes pour consommer moins de mémoire :
   spell, xfer (utilisé pour les DCC).
   Voir `/help weechat.plugin.autoload`.
 * Charger uniquement les scripts dont vous avez vraiment besoin.
-* Ne pas charger les certificats si SSL n'est *PAS* utilisé : affecter une
-  chaîne vide pour l'option _weechat.network.gnutls_ca_file_.
+* Ne pas charger les certificats si SSL n'est *PAS* utilisé : désactiver
+  l'option _weechat.network.gnutls_ca_system_.
 * Réduire la valeur de l'option _weechat.history.max_buffer_lines_number_ ou
   affecter une valeur à l'option _weechat.history.max_buffer_lines_minutes_.
 * Réduire la valeur de l'option _weechat.history.max_commands_.

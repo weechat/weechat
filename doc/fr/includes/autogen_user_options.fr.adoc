@@ -1260,11 +1260,17 @@
 ** valeurs: 1 .. 2147483647
 ** valeur par défaut: `+60+`
 
-* [[option_weechat.network.gnutls_ca_file]] *weechat.network.gnutls_ca_file*
-** description: pass:none[fichier contenant les autorités de certification (le chemin est évalué, voir la fonction string_eval_path_home dans la référence API extension)]
+* [[option_weechat.network.gnutls_ca_system]] *weechat.network.gnutls_ca_system*
+** description: pass:none[charger les certificats des autorités de certification système au démarrage ; cela peut être désactivée pour économiser de la mémoire, seulement si vous n'utilisez pas du tout de connexions SSL]
+** type: booléen
+** valeurs: on, off
+** valeur par défaut: `+on+`
+
+* [[option_weechat.network.gnutls_ca_user]] *weechat.network.gnutls_ca_user*
+** description: pass:none[fichier(s) supplémentaire(s) avec des autorités de certification ; plusieurs fichiers doivent être séparés par ":" (chaque chemin est évalué, voir la fonction string_eval_path_home dans la référence API extension)]
 ** type: chaîne
 ** valeurs: toute chaîne
-** valeur par défaut: `+"/etc/ssl/certs/ca-certificates.crt"+`
+** valeur par défaut: `+""+`
 
 * [[option_weechat.network.gnutls_handshake_timeout]] *weechat.network.gnutls_handshake_timeout*
 ** description: pass:none[délai d'attente maximum (en secondes) pour la poignée de main (handshake) gnutls]

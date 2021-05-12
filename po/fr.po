@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-05-11 21:38+0200\n"
-"PO-Revision-Date: 2021-05-11 21:39+0200\n"
+"POT-Creation-Date: 2021-05-12 20:34+0200\n"
+"PO-Revision-Date: 2021-05-12 20:35+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -4908,11 +4908,22 @@ msgstr ""
 "distante (effectuée dans un processus fils)"
 
 msgid ""
-"file containing the certificate authorities (path is evaluated, see function "
-"string_eval_path_home in plugin API reference)"
+"load system's default trusted certificate authorities on startup; this can "
+"be turned off to save some memory only if you are not using SSL connections "
+"at all"
 msgstr ""
-"fichier contenant les autorités de certification (le chemin est évalué, voir "
-"la fonction string_eval_path_home dans la référence API extension)"
+"charger les certificats des autorités de certification système au "
+"démarrage ; cela peut être désactivée pour économiser de la mémoire, "
+"seulement si vous n'utilisez pas du tout de connexions SSL"
+
+msgid ""
+"extra file(s) with certificate authorities; multiple files must be separated "
+"by colons (each path is evaluated, see function string_eval_path_home in "
+"plugin API reference)"
+msgstr ""
+"fichier(s) supplémentaire(s) avec des autorités de certification ; plusieurs "
+"fichiers doivent être séparés par \":\" (chaque chemin est évalué, voir la "
+"fonction string_eval_path_home dans la référence API extension)"
 
 msgid "timeout (in seconds) for gnutls handshake"
 msgstr ""
@@ -5120,16 +5131,41 @@ msgstr ""
 "\"--dir\".\n"
 
 #, c-format
+msgid "%sWarning: failed to load system certificate authorities"
+msgstr ""
+"%sAttention : échec de chargement des autorités de certification système"
+
+#, c-format
+msgid "%d certificate loaded (system)"
+msgid_plural "%d certificates loaded (system)"
+msgstr[0] "%d certificat chargé (système)"
+msgstr[1] "%d certificats chargés (système)"
+
+#, c-format
 msgid "%sWarning: failed to load certificate authorities from file %s"
 msgstr ""
 "%sAttention : échec de chargement des autorités de certification depuis le "
 "fichier %s"
 
 #, c-format
-msgid "%sWarning: no certificate authorities loaded (file not found: %s)"
+msgid "%d certificate loaded (file: %s)"
+msgid_plural "%d certificates loaded (file: %s)"
+msgstr[0] "%d certificat chargé (fichier : %s)"
+msgstr[1] "%d certificats chargés (fichier : %s)"
+
+#, c-format
+msgid ""
+"%sWarning: failed to load certificate authorities from file %s (file not "
+"found)"
 msgstr ""
-"%sAttention : aucune autorité de certification chargée (fichier non trouvé : "
-"%s)"
+"%sAttention : échec de chargement des autorités de certification depuis le "
+"fichier %s (fichier non trouvé)"
+
+#, c-format
+msgid "%d certificate purged"
+msgid_plural "%d certificates purged"
+msgstr[0] "%d certificat supprimé"
+msgstr[1] "%d certificats supprimés"
 
 msgid "set server name indication (SNI) failed"
 msgstr "la définition de l'indication de nom de serveur (SNI) a échoué"
@@ -15277,6 +15313,35 @@ msgstr "%s%s : délai d'attente dépassé pour \"%s\" avec %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s : impossible de se connecter : erreur inattendue (%d)"
+
+#, c-format
+#~ msgid ""
+#~ "%d certificate loaded from system's default trusted certificate "
+#~ "authorities"
+#~ msgid_plural ""
+#~ "%d certificates loaded from system's default trusted certificate "
+#~ "authorities"
+#~ msgstr[0] "%d certificat chargé (système)"
+#~ msgstr[1] "%d certificats chargés (système)"
+
+#, c-format
+#~ msgid ""
+#~ "%d certificate loaded from user's trusted certificate authorities file: %s"
+#~ msgid_plural ""
+#~ "%d certificates loaded from user's trusted certificate authorities file: "
+#~ "file %s"
+#~ msgstr[0] ""
+#~ "%d certificat chargé depuis le fichier des autorités de certification "
+#~ "utilisateur : %s"
+#~ msgstr[1] ""
+#~ "%d certificats chargés depuis le fichier des autorités de certification : "
+#~ "%s"
+
+#, c-format
+#~ msgid "%sWarning: no certificate authorities loaded (file not found: %s)"
+#~ msgstr ""
+#~ "%sAttention : aucune autorité de certification chargée (fichier non "
+#~ "trouvé : %s)"
 
 #~ msgid "Error: unable to get HOME directory\n"
 #~ msgstr "Erreur : impossible de lire le répertoire personnel\n"

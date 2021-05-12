@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-05-11 21:38+0200\n"
+"POT-Creation-Date: 2021-05-12 20:34+0200\n"
 "PO-Revision-Date: 2021-02-06 15:55+0100\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4436,9 +4436,19 @@ msgstr ""
 "processo figlio)"
 
 msgid ""
-"file containing the certificate authorities (path is evaluated, see function "
-"string_eval_path_home in plugin API reference)"
+"load system's default trusted certificate authorities on startup; this can "
+"be turned off to save some memory only if you are not using SSL connections "
+"at all"
 msgstr ""
+
+#, fuzzy
+msgid ""
+"extra file(s) with certificate authorities; multiple files must be separated "
+"by colons (each path is evaluated, see function string_eval_path_home in "
+"plugin API reference)"
+msgstr ""
+"file con il certificato SSL e la chiave privata (per servire i client con "
+"SSL)"
 
 msgid "timeout (in seconds) for gnutls handshake"
 msgstr "timeout (in secondi) per l'handshake di gnutls"
@@ -4629,12 +4639,36 @@ msgstr ""
 "con un'altra home usando l'opzione da riga di comando  \"--dir\".\n"
 
 #, fuzzy, c-format
+msgid "%sWarning: failed to load system certificate authorities"
+msgstr "%sgnutls: impossibile leggere il certificato \"%s\""
+
+#, fuzzy, c-format
+msgid "%d certificate loaded (system)"
+msgid_plural "%d certificates loaded (system)"
+msgstr[0] "%sgnutls: il certificato è scaduto"
+msgstr[1] "%sgnutls: il certificato è scaduto"
+
+#, fuzzy, c-format
 msgid "%sWarning: failed to load certificate authorities from file %s"
 msgstr "%sgnutls: impossibile leggere il certificato \"%s\""
 
-#, c-format
-msgid "%sWarning: no certificate authorities loaded (file not found: %s)"
-msgstr ""
+#, fuzzy, c-format
+msgid "%d certificate loaded (file: %s)"
+msgid_plural "%d certificates loaded (file: %s)"
+msgstr[0] "Mouse abilitato"
+msgstr[1] "Mouse abilitato"
+
+#, fuzzy, c-format
+msgid ""
+"%sWarning: failed to load certificate authorities from file %s (file not "
+"found)"
+msgstr "%sgnutls: impossibile leggere il certificato \"%s\""
+
+#, fuzzy, c-format
+msgid "%d certificate purged"
+msgid_plural "%d certificates purged"
+msgstr[0] "%sgnutls: il certificato è scaduto"
+msgstr[1] "%sgnutls: il certificato è scaduto"
 
 msgid "set server name indication (SNI) failed"
 msgstr ""
@@ -13749,6 +13783,15 @@ msgstr "%s%s: timeout per \"%s\" con %s"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: impossibile connettersi al mittente"
+
+#, fuzzy, c-format
+#~ msgid ""
+#~ "%d certificate loaded from user's trusted certificate authorities file: %s"
+#~ msgid_plural ""
+#~ "%d certificates loaded from user's trusted certificate authorities file: "
+#~ "file %s"
+#~ msgstr[0] "%sgnutls: impossibile leggere il certificato \"%s\""
+#~ msgstr[1] "%sgnutls: impossibile leggere il certificato \"%s\""
 
 #~ msgid "Error: unable to get HOME directory\n"
 #~ msgstr "Errore: impossibile aprire la directory HOME\n"

@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-05-11 21:38+0200\n"
+"POT-Creation-Date: 2021-05-12 20:34+0200\n"
 "PO-Revision-Date: 2021-02-06 15:55+0100\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3712,9 +3712,19 @@ msgid ""
 msgstr "использовать SSL при связи с сервером"
 
 msgid ""
-"file containing the certificate authorities (path is evaluated, see function "
-"string_eval_path_home in plugin API reference)"
+"load system's default trusted certificate authorities on startup; this can "
+"be turned off to save some memory only if you are not using SSL connections "
+"at all"
 msgstr ""
+
+#, fuzzy
+msgid ""
+"extra file(s) with certificate authorities; multiple files must be separated "
+"by colons (each path is evaluated, see function string_eval_path_home in "
+"plugin API reference)"
+msgstr ""
+"путь поиска pluginов ('%h' заменяется на домашний каталог WeeChat, по "
+"умолчанию - ~/.weechat)"
 
 #, fuzzy
 msgid "timeout (in seconds) for gnutls handshake"
@@ -3900,12 +3910,39 @@ msgstr ""
 "с другой домашней директорией используя параметр \"--dir\".\n"
 
 #, fuzzy, c-format
+msgid "%sWarning: failed to load system certificate authorities"
+msgstr "Не могу записать лог-файл \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%d certificate loaded (system)"
+msgid_plural "%d certificates loaded (system)"
+msgstr[0] "Не могу записать лог-файл \"%s\"\n"
+msgstr[1] "Не могу записать лог-файл \"%s\"\n"
+msgstr[2] "Не могу записать лог-файл \"%s\"\n"
+
+#, fuzzy, c-format
 msgid "%sWarning: failed to load certificate authorities from file %s"
 msgstr "Не могу записать лог-файл \"%s\"\n"
 
-#, c-format
-msgid "%sWarning: no certificate authorities loaded (file not found: %s)"
-msgstr ""
+#, fuzzy, c-format
+msgid "%d certificate loaded (file: %s)"
+msgid_plural "%d certificates loaded (file: %s)"
+msgstr[0] "команда users отключена"
+msgstr[1] "команда users отключена"
+msgstr[2] "команда users отключена"
+
+#, fuzzy, c-format
+msgid ""
+"%sWarning: failed to load certificate authorities from file %s (file not "
+"found)"
+msgstr "Не могу записать лог-файл \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%d certificate purged"
+msgid_plural "%d certificates purged"
+msgstr[0] "Не могу записать лог-файл \"%s\"\n"
+msgstr[1] "Не могу записать лог-файл \"%s\"\n"
+msgstr[2] "Не могу записать лог-файл \"%s\"\n"
 
 msgid "set server name indication (SNI) failed"
 msgstr ""
@@ -12512,6 +12549,16 @@ msgstr "%s нет аргумента для параметра \"%s\"\n"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s DCC: не могу соединиться с отправителем\n"
+
+#, fuzzy, c-format
+#~ msgid ""
+#~ "%d certificate loaded from user's trusted certificate authorities file: %s"
+#~ msgid_plural ""
+#~ "%d certificates loaded from user's trusted certificate authorities file: "
+#~ "file %s"
+#~ msgstr[0] "Не могу записать лог-файл \"%s\"\n"
+#~ msgstr[1] "Не могу записать лог-файл \"%s\"\n"
+#~ msgstr[2] "Не могу записать лог-файл \"%s\"\n"
 
 #, fuzzy
 #~ msgid "Error: unable to get HOME directory\n"

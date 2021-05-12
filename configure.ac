@@ -135,7 +135,6 @@ AH_VERBATIM([TESTS], [#undef TESTS])
 AH_VERBATIM([MAN], [#undef MAN])
 AH_VERBATIM([DOC], [#undef DOC])
 AH_VERBATIM([WEECHAT_HOME], [#define WEECHAT_HOME ""])
-AH_VERBATIM([CA_FILE], [#define CA_FILE "/etc/ssl/certs/ca-certificates.crt"])
 
 # Arguments for ./configure
 
@@ -173,14 +172,8 @@ AC_ARG_ENABLE(man,          [  --enable-man            turn on build of man page
 AC_ARG_ENABLE(doc,          [  --enable-doc            turn on build of documentation (default=not built)],enable_doc=$enableval,enable_doc=no)
 
 AC_ARG_VAR(WEECHAT_HOME, [Force a single WeeChat home directory for config, logs, scripts, etc.])
-AC_ARG_VAR(CA_FILE, [File containing the certificate authorities (default is "/etc/ssl/certs/ca-certificates.crt"). This is the default value of option "weechat.network.gnutls_ca_file". It is evaluated with function string_eval_path_home each time it is used.])
 
 AC_DEFINE_UNQUOTED(WEECHAT_HOME, "$WEECHAT_HOME")
-
-if test "x$CA_FILE" = "x" ; then
-    CA_FILE="/etc/ssl/certs/ca-certificates.crt"
-fi
-AC_DEFINE_UNQUOTED(CA_FILE, "$CA_FILE")
 
 not_asked=""
 not_found=""
@@ -1545,7 +1538,6 @@ echo "   Compile with debug..... : $msg_debug"
 echo "   Compile tests.......... : $msg_tests"
 echo "   Man page............... : $msg_man"
 echo "   Documentation.......... : $msg_doc"
-echo "   Certificate authorities : ${CA_FILE}"
 
 if test "x$not_asked" != "x" || test "x$not_found" != "x"; then
     echo ""

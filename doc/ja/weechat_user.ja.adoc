@@ -208,11 +208,6 @@ CMake に対するオプションを指定するには、以下の書式を使�
   The value can also  be 4 directories separated by colons, in this order:
   config, data, cache, runtime.
 
-| CA_FILE | file | /etc/ssl/certs/ca-certificates.crt |
-  認証局を含むファイル。これは
-  <<option_weechat.network.gnutls_ca_file,weechat.network.gnutls_ca_file>>
-  オプションのデフォルト値です。
-
 | ENABLE_ALIAS | `ON`, `OFF` | ON |
   <<alias_plugin,Alias プラグイン>>のコンパイル。
 
@@ -2932,8 +2927,13 @@ SSL を使って IRC サーバに接続する場合、WeeChat
 
 以下のオプションで SSL 接続を設定します:
 
-weechat.network.gnutls_ca_file::
-    認証局ファイルへのパス
+// TRANSLATION MISSING
+weechat.network.gnutls_ca_system::
+    load system's default trusted certificate authorities on startup
+
+// TRANSLATION MISSING
+weechat.network.gnutls_ca_user::
+    extra file(s) with certificate authorities
 
 irc.server.xxx.ssl_cert::
     自動的にニックネームを確認するために利用される SSL 証明書ファイル (例えば

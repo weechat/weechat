@@ -205,11 +205,6 @@ Lista popularnych opcji:
   The value can also  be 4 directories separated by colons, in this order:
   config, data, cache, runtime.
 
-| CA_FILE | plik | /etc/ssl/certs/ca-certificates.crt |
-  Plik zawierający urzędy certyfikacji.
-  Jest to domyślna wartość opcji
-  <<option_weechat.network.gnutls_ca_file,weechat.network.gnutls_ca_file>>.
-
 | ENABLE_ALIAS | `ON`, `OFF` | ON |
   Kompilacja <<alias_plugin,wtyczki alias>>.
 
@@ -2893,8 +2888,13 @@ jest w pełni zaufane.
 
 Niektóre opcje są używane do kontroli połączenia SSL:
 
-weechat.network.gnutls_ca_file::
-    ścieżka do pliku z organami certyfikującymi
+// TRANSLATION MISSING
+weechat.network.gnutls_ca_system::
+    load system's default trusted certificate authorities on startup
+
+// TRANSLATION MISSING
+weechat.network.gnutls_ca_user::
+    extra file(s) with certificate authorities
 
 irc.server.xxx.ssl_cert::
     certyfikat SSL używany do automatycznej identyfikacji twojego nicka (na

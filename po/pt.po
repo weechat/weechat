@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-05-11 21:38+0200\n"
+"POT-Creation-Date: 2021-05-12 20:34+0200\n"
 "PO-Revision-Date: 2021-02-06 15:55+0100\n"
 "Last-Translator: Vasco Almeida <vascomalmeida@sapo.pt>\n"
 "Language-Team: Portuguese <>\n"
@@ -4689,9 +4689,19 @@ msgstr ""
 "processo filho)"
 
 msgid ""
-"file containing the certificate authorities (path is evaluated, see function "
-"string_eval_path_home in plugin API reference)"
+"load system's default trusted certificate authorities on startup; this can "
+"be turned off to save some memory only if you are not using SSL connections "
+"at all"
 msgstr ""
+
+#, fuzzy
+msgid ""
+"extra file(s) with certificate authorities; multiple files must be separated "
+"by colons (each path is evaluated, see function string_eval_path_home in "
+"plugin API reference)"
+msgstr ""
+"ficheiro com o certificado SSL e chave privada (para servir os clientes com "
+"SSL)"
 
 msgid "timeout (in seconds) for gnutls handshake"
 msgstr "tempo limite (em segundos) para o gnutls handshake"
@@ -4890,12 +4900,36 @@ msgstr ""
 "com outro diretório usando a opção \"--dir\" na linha de comandos.\n"
 
 #, fuzzy, c-format
+msgid "%sWarning: failed to load system certificate authorities"
+msgstr "%sgnutls: falha ao calcular impressão digital do certificado (%s)"
+
+#, fuzzy, c-format
+msgid "%d certificate loaded (system)"
+msgid_plural "%d certificates loaded (system)"
+msgstr[0] "%sgnutls: o certificado expirou"
+msgstr[1] "%sgnutls: o certificado expirou"
+
+#, fuzzy, c-format
 msgid "%sWarning: failed to load certificate authorities from file %s"
 msgstr "%sgnutls: falha ao calcular impressão digital do certificado (%s)"
 
-#, c-format
-msgid "%sWarning: no certificate authorities loaded (file not found: %s)"
-msgstr ""
+#, fuzzy, c-format
+msgid "%d certificate loaded (file: %s)"
+msgid_plural "%d certificates loaded (file: %s)"
+msgstr[0] "%s: pipe aberto (ficheiro: %s)"
+msgstr[1] "%s: pipe aberto (ficheiro: %s)"
+
+#, fuzzy, c-format
+msgid ""
+"%sWarning: failed to load certificate authorities from file %s (file not "
+"found)"
+msgstr "%sgnutls: falha ao calcular impressão digital do certificado (%s)"
+
+#, fuzzy, c-format
+msgid "%d certificate purged"
+msgid_plural "%d certificates purged"
+msgstr[0] "%sgnutls: o certificado expirou"
+msgstr[1] "%sgnutls: o certificado expirou"
 
 msgid "set server name indication (SNI) failed"
 msgstr "falha ao definir indicação do nome de servidor (SNI)"
@@ -14409,6 +14443,17 @@ msgstr "%s%s: tempo limite de \"%s\" com %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: não foi possível conectar: erro inesperado (%d)"
+
+#, fuzzy, c-format
+#~ msgid ""
+#~ "%d certificate loaded from user's trusted certificate authorities file: %s"
+#~ msgid_plural ""
+#~ "%d certificates loaded from user's trusted certificate authorities file: "
+#~ "file %s"
+#~ msgstr[0] ""
+#~ "%sgnutls: falha ao calcular impressão digital do certificado (%s)"
+#~ msgstr[1] ""
+#~ "%sgnutls: falha ao calcular impressão digital do certificado (%s)"
 
 #~ msgid "Error: unable to get HOME directory\n"
 #~ msgstr "Erro: não foi possível obter o diretório HOME\n"

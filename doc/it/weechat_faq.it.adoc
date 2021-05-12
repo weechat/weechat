@@ -791,7 +791,9 @@ kbd:[Shift]).
 // TRANSLATION MISSING
 If you are using macOS, you must install `openssl` from Homebrew.
 A CA file will be bootstrapped using certificates from the system keychain.
-You can then set the path to certificates in WeeChat:
+
+// TRANSLATION MISSING
+With WeeChat ≤ 3.1, you can set the path to system certificates:
 
 ----
 /set weechat.network.gnutls_ca_file "/usr/local/etc/openssl/cert.pem"
@@ -832,7 +834,9 @@ Provare una stringa di priorità diversa (solo WeeChat ≥ 0.3.5), sostituendo
 [[irc_ssl_freenode]]
 === Come ci si può connettere al server freenode via SSL?
 
-Impostare l'opzione _weechat.network.gnutls_ca_file_ con il file dei certificati:
+// TRANSLATION MISSING
+With WeeChat ≤ 3.1, set option _weechat.network.gnutls_ca_file_ to file with
+certificates:
 
 ----
 /set weechat.network.gnutls_ca_file "/etc/ssl/certs/ca-certificates.crt"
@@ -1135,8 +1139,7 @@ Gli script non sono compatibili con altri client IRC.
 [[scripts_update]]
 === The command "/script update" can not read scripts, how to fix that?
 
-First check questions about SSL connection in this FAQ
-(especially the option _weechat.network.gnutls_ca_file_).
+First check questions about SSL connection in this FAQ.
 
 If still not working, try to manually delete the scripts file (in your shell):
 
@@ -1222,8 +1225,9 @@ Esistono diversi trucchi per ottimizzare l'uso della memoria:
   fifo, logger, perl, python, ruby, lua, tcl, guile, javascript, php, spell, xfer (usato per DCC).
   See `/help weechat.plugin.autoload`.
 * caricare solo gli script veramente necessari
-* non caricare i certificati se SSL *NON* viene usato: usare una stringa vuota nell'opzione
-  _weechat.network.gnutls_ca_file_
+// TRANSLATION MISSING
+* Do not load system certificates if SSL is *NOT* used: turn off this option:
+  _weechat.network.gnutls_ca_system_.
 * ridurre il valore dell'opzione _weechat.history.max_buffer_lines_number_  oppure
   impostare il valore dell'opzione _weechat.history.max_buffer_lines_minutes_
 * ridurre il valore dell'opzione _weechat.history.max_commands_

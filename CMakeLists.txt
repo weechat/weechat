@@ -139,15 +139,6 @@ set(WEECHAT_HOME "${WEECHAT_HOME}" CACHE
   FORCE)
 mark_as_advanced(CLEAR WEECHAT_HOME)
 
-# option CA_FILE
-if(NOT DEFINED CA_FILE OR "${CA_FILE}" STREQUAL "")
-  set(CA_FILE "/etc/ssl/certs/ca-certificates.crt")
-endif()
-set(CA_FILE "${CA_FILE}" CACHE
-  STRING "File containing the certificate authorities (default is \"/etc/ssl/certs/ca-certificates.crt\"). This is the default value of option \"weechat.network.gnutls_ca_file\". It is evaluated with function string_eval_path_home each time it is used."
-  FORCE)
-mark_as_advanced(CLEAR CA_FILE)
-
 if(COMMAND cmake_policy)
   if(POLICY CMP0003)
     cmake_policy(SET CMP0003 NEW)

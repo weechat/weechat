@@ -56,6 +56,7 @@
 
 #include "weechat.h"
 #include "wee-network.h"
+#include "wee-config.h"
 #include "wee-eval.h"
 #include "wee-hashtable.h"
 #include "wee-hook.h"
@@ -67,6 +68,7 @@
 
 
 int network_init_gnutls_ok = 0;
+int network_num_certs = 0;        /* number of certs loaded (system + user) */
 
 gnutls_certificate_credentials_t gnutls_xcred; /* GnuTLS client credentials */
 
@@ -87,57 +89,171 @@ network_init_gcrypt ()
 }
 
 /*
- * Sets trust file with option "gnutls_ca_file".
+ * Loads system's default trusted certificate authorities.
+ *
+ * Returns the number of certificates loaded.
  */
 
-void
-network_set_gnutls_ca_file ()
+int
+network_load_system_ca_file (int force_display)
 {
-    char *ca_path;
+    int rc;
+
+    if (weechat_no_gnutls)
+        return 0;
+
+    if (!CONFIG_BOOLEAN(config_network_gnutls_ca_system))
+        return 0;
+
+    rc = gnutls_certificate_set_x509_system_trust (gnutls_xcred);
+    if (rc < 0)
+    {
+        gui_chat_printf (
+            NULL,
+            _("%sWarning: failed to load system certificate authorities"),
+            gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+        return 0;
+    }
+
+    if (force_display || (weechat_debug_core >= 1))
+    {
+        gui_chat_printf (
+            NULL,
+            NG_("%d certificate loaded (system)",
+                "%d certificates loaded (system)",
+                rc),
+            rc);
+    }
+
+    return rc;
+}
+
+/*
+ * Loads user's trusted certificate authorities.
+ */
+
+int
+network_load_user_ca_files (int force_display)
+{
+    int i, rc, num_loaded, num_paths;
+    char **paths, *ca_path;
     struct t_hashtable *options;
 
     if (weechat_no_gnutls)
-        return;
+        return 0;
+
+    num_loaded = 0;
+    paths = NULL;
+    options = NULL;
+
+    paths = string_split (CONFIG_STRING(config_network_gnutls_ca_user), ":",
+                          NULL, 0, 0, &num_paths);
+    if (!paths)
+        goto end;
 
     options = hashtable_new (
         32,
         WEECHAT_HASHTABLE_STRING,
         WEECHAT_HASHTABLE_STRING,
         NULL, NULL);
-    if (options)
-        hashtable_set (options, "directory", "config");
-    ca_path = string_eval_path_home (
-        CONFIG_STRING(config_network_gnutls_ca_file),
-        NULL, NULL, options);
-    if (options)
-        hashtable_free (options);
+    if (!options)
+        goto end;
+    hashtable_set (options, "directory", "config");
 
-    if (ca_path)
+    for (i = 0; i < num_paths; i++)
     {
-        if (access (ca_path, R_OK) == 0)
+        ca_path = string_eval_path_home (paths[i], NULL, NULL, options);
+        if (ca_path && ca_path[0])
         {
-            if (gnutls_certificate_set_x509_trust_file (gnutls_xcred, ca_path,
-                                                        GNUTLS_X509_FMT_PEM) < 0)
+            if (access (ca_path, R_OK) == 0)
+            {
+                rc = gnutls_certificate_set_x509_trust_file (
+                    gnutls_xcred, ca_path, GNUTLS_X509_FMT_PEM);
+                if (rc < 0)
+                {
+                    gui_chat_printf (
+                        NULL,
+                        _("%sWarning: failed to load certificate authorities "
+                          "from file %s"),
+                        gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                        ca_path);
+                }
+                else
+                {
+                    num_loaded += rc;
+                    if (force_display || (weechat_debug_core >= 1))
+                    {
+                        gui_chat_printf (
+                            NULL,
+                            NG_("%d certificate loaded (file: %s)",
+                                "%d certificates loaded (file: %s)",
+                                rc),
+                            rc, ca_path);
+                    }
+                }
+            }
+            else
             {
                 gui_chat_printf (
                     NULL,
                     _("%sWarning: failed to load certificate authorities "
-                      "from file %s"),
+                      "from file %s (file not found)"),
                     gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                     ca_path);
             }
         }
-        else
-        {
-            gui_chat_printf (
-                NULL,
-                _("%sWarning: no certificate authorities loaded "
-                  "(file not found: %s)"),
-                gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                ca_path);
-        }
-        free (ca_path);
+        if (ca_path)
+            free (ca_path);
     }
+
+end:
+    if (paths)
+        string_free_split (paths);
+    if (options)
+        hashtable_free (options);
+
+    return num_loaded;
+}
+
+/*
+ * Loads system's default and user's trusted certificate authorities.
+ */
+
+void
+network_load_ca_files (int force_display)
+{
+    if (weechat_no_gnutls)
+        return;
+
+    network_num_certs = 0;
+
+    network_num_certs += network_load_system_ca_file (force_display);
+    network_num_certs += network_load_user_ca_files (force_display);
+}
+
+/*
+ * Reloads system's default and user's trusted certificate authorities.
+ */
+
+void
+network_reload_ca_files (int force_display)
+{
+    if (weechat_no_gnutls)
+        return;
+
+    gnutls_certificate_free_credentials (gnutls_xcred);
+    if (force_display || (weechat_debug_core >= 1))
+    {
+        gui_chat_printf (NULL,
+                         NG_("%d certificate purged",
+                             "%d certificates purged",
+                             network_num_certs),
+                         network_num_certs);
+    }
+
+    gnutls_certificate_allocate_credentials (&gnutls_xcred);
+
+    network_load_ca_files (force_display);
 }
 
 /*
@@ -151,8 +267,7 @@ network_init_gnutls ()
     {
         gnutls_global_init ();
         gnutls_certificate_allocate_credentials (&gnutls_xcred);
-
-        network_set_gnutls_ca_file ();
+        network_load_ca_files (0);
 #if LIBGNUTLS_VERSION_NUMBER >= 0x02090a /* 2.9.10 */
         gnutls_certificate_set_verify_function (gnutls_xcred,
                                                 &hook_connect_gnutls_verify_certificates);

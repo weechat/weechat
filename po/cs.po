@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-05-11 21:38+0200\n"
+"POT-Creation-Date: 2021-05-12 20:34+0200\n"
 "PO-Revision-Date: 2021-02-06 15:55+0100\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4126,9 +4126,17 @@ msgid ""
 msgstr "časový limit (v sekundách) pro gnutls handshake"
 
 msgid ""
-"file containing the certificate authorities (path is evaluated, see function "
-"string_eval_path_home in plugin API reference)"
+"load system's default trusted certificate authorities on startup; this can "
+"be turned off to save some memory only if you are not using SSL connections "
+"at all"
 msgstr ""
+
+#, fuzzy
+msgid ""
+"extra file(s) with certificate authorities; multiple files must be separated "
+"by colons (each path is evaluated, see function string_eval_path_home in "
+"plugin API reference)"
+msgstr "soubor s SSL certifikátem a soukromý klíč (pro obsluhu klientů s SSL)"
 
 msgid "timeout (in seconds) for gnutls handshake"
 msgstr "časový limit (v sekundách) pro gnutls handshake"
@@ -4317,12 +4325,39 @@ msgstr ""
 "s jiným domovským adresářem pomocí \"--dir\" volby příkazové řádky.\n"
 
 #, fuzzy, c-format
+msgid "%sWarning: failed to load system certificate authorities"
+msgstr "%sgnutls: nemůžu číst certifikát \"%s\""
+
+#, fuzzy, c-format
+msgid "%d certificate loaded (system)"
+msgid_plural "%d certificates loaded (system)"
+msgstr[0] "%sgnutls: certifikát vypršel"
+msgstr[1] "%sgnutls: certifikát vypršel"
+msgstr[2] "%sgnutls: certifikát vypršel"
+
+#, fuzzy, c-format
 msgid "%sWarning: failed to load certificate authorities from file %s"
 msgstr "%sgnutls: nemůžu číst certifikát \"%s\""
 
-#, c-format
-msgid "%sWarning: no certificate authorities loaded (file not found: %s)"
-msgstr ""
+#, fuzzy, c-format
+msgid "%d certificate loaded (file: %s)"
+msgid_plural "%d certificates loaded (file: %s)"
+msgstr[0] "Myš je zapnuta"
+msgstr[1] "Myš je zapnuta"
+msgstr[2] "Myš je zapnuta"
+
+#, fuzzy, c-format
+msgid ""
+"%sWarning: failed to load certificate authorities from file %s (file not "
+"found)"
+msgstr "%sgnutls: nemůžu číst certifikát \"%s\""
+
+#, fuzzy, c-format
+msgid "%d certificate purged"
+msgid_plural "%d certificates purged"
+msgstr[0] "%sgnutls: certifikát vypršel"
+msgstr[1] "%sgnutls: certifikát vypršel"
+msgstr[2] "%sgnutls: certifikát vypršel"
 
 msgid "set server name indication (SNI) failed"
 msgstr ""
@@ -13244,6 +13279,16 @@ msgstr "%s%s: vypršel časový limit \"%s\" pro %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: nemohu se připojit\" neočekávaná chyba (%d)"
+
+#, fuzzy, c-format
+#~ msgid ""
+#~ "%d certificate loaded from user's trusted certificate authorities file: %s"
+#~ msgid_plural ""
+#~ "%d certificates loaded from user's trusted certificate authorities file: "
+#~ "file %s"
+#~ msgstr[0] "%sgnutls: nemůžu číst certifikát \"%s\""
+#~ msgstr[1] "%sgnutls: nemůžu číst certifikát \"%s\""
+#~ msgstr[2] "%sgnutls: nemůžu číst certifikát \"%s\""
 
 #~ msgid "Error: unable to get HOME directory\n"
 #~ msgstr "Chyba: nemohu získat HOME adresář\n"

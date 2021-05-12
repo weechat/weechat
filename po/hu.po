@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-05-11 21:38+0200\n"
+"POT-Creation-Date: 2021-05-12 20:34+0200\n"
 "PO-Revision-Date: 2021-02-06 15:55+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3683,9 +3683,19 @@ msgid ""
 msgstr "SSL használata a a kapcsolathoz"
 
 msgid ""
-"file containing the certificate authorities (path is evaluated, see function "
-"string_eval_path_home in plugin API reference)"
+"load system's default trusted certificate authorities on startup; this can "
+"be turned off to save some memory only if you are not using SSL connections "
+"at all"
 msgstr ""
+
+#, fuzzy
+msgid ""
+"extra file(s) with certificate authorities; multiple files must be separated "
+"by colons (each path is evaluated, see function string_eval_path_home in "
+"plugin API reference)"
+msgstr ""
+"modulok elérési útvonala ('%h' helyére automatikusan a WeeChat saját  "
+"könyvtára, alapértelmezésben ~/.weechat, kerül)"
 
 #, fuzzy
 msgid "timeout (in seconds) for gnutls handshake"
@@ -3870,12 +3880,36 @@ msgstr ""
 "saját könyvtárral futtatni a WeeChat-et a \"--dir\" opció segítségével!\n"
 
 #, fuzzy, c-format
+msgid "%sWarning: failed to load system certificate authorities"
+msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
+
+#, fuzzy, c-format
+msgid "%d certificate loaded (system)"
+msgid_plural "%d certificates loaded (system)"
+msgstr[0] "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
+msgstr[1] "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
+
+#, fuzzy, c-format
 msgid "%sWarning: failed to load certificate authorities from file %s"
 msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
 
-#, c-format
-msgid "%sWarning: no certificate authorities loaded (file not found: %s)"
-msgstr ""
+#, fuzzy, c-format
+msgid "%d certificate loaded (file: %s)"
+msgid_plural "%d certificates loaded (file: %s)"
+msgstr[0] "a felhasználók le lettek tiltva"
+msgstr[1] "a felhasználók le lettek tiltva"
+
+#, fuzzy, c-format
+msgid ""
+"%sWarning: failed to load certificate authorities from file %s (file not "
+"found)"
+msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
+
+#, fuzzy, c-format
+msgid "%d certificate purged"
+msgid_plural "%d certificates purged"
+msgstr[0] "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
+msgstr[1] "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
 
 msgid "set server name indication (SNI) failed"
 msgstr ""
@@ -12481,6 +12515,15 @@ msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s DCC: nem sikerült kapcsolódni a küldőhöz\n"
+
+#, fuzzy, c-format
+#~ msgid ""
+#~ "%d certificate loaded from user's trusted certificate authorities file: %s"
+#~ msgid_plural ""
+#~ "%d certificates loaded from user's trusted certificate authorities file: "
+#~ "file %s"
+#~ msgstr[0] "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
+#~ msgstr[1] "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
 
 #, fuzzy
 #~ msgid "Error: unable to get HOME directory\n"

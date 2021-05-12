@@ -291,7 +291,8 @@ struct t_config_option *config_history_max_visited_buffers;
 /* config, network section */
 
 struct t_config_option *config_network_connection_timeout;
-struct t_config_option *config_network_gnutls_ca_file;
+struct t_config_option *config_network_gnutls_ca_system;
+struct t_config_option *config_network_gnutls_ca_user;
 struct t_config_option *config_network_gnutls_handshake_timeout;
 struct t_config_option *config_network_proxy_curl;
 
@@ -1278,12 +1279,13 @@ config_change_completion_partial_completion_templates (const void *pointer,
 }
 
 /*
- * Callback for changes on option "weechat.network.gnutls_ca_file".
+ * Callback for changes on options "weechat.network.gnutls_ca_system"
+ * and "weechat.network.gnutls_ca_user".
  */
 
 void
-config_change_network_gnutls_ca_file (const void *pointer, void *data,
-                                      struct t_config_option *option)
+config_change_network_gnutls_ca (const void *pointer, void *data,
+                                 struct t_config_option *option)
 {
     /* make C compiler happy */
     (void) pointer;
@@ -1291,7 +1293,7 @@ config_change_network_gnutls_ca_file (const void *pointer, void *data,
     (void) option;
 
     if (network_init_gnutls_ok)
-        network_set_gnutls_ca_file ();
+        network_reload_ca_files (1);
 }
 
 /*
@@ -4494,15 +4496,26 @@ config_weechat_init_options ()
            "child process)"),
         NULL, 1, INT_MAX, "60", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-    config_network_gnutls_ca_file = config_file_new_option (
+    config_network_gnutls_ca_system = config_file_new_option (
         weechat_config_file, ptr_section,
-        "gnutls_ca_file", "string",
-        N_("file containing the certificate authorities "
-           "(path is evaluated, see function string_eval_path_home in "
-           "plugin API reference)"),
-        NULL, 0, 0, CA_FILE, NULL, 0,
+        "gnutls_ca_system", "boolean",
+        N_("load system's default trusted certificate authorities on startup; "
+           "this can be turned off to save some memory only if you are not "
+           "using SSL connections at all"),
+        NULL, 0, 0, "on", NULL, 0,
         NULL, NULL, NULL,
-        &config_change_network_gnutls_ca_file, NULL, NULL,
+        &config_change_network_gnutls_ca, NULL, NULL,
+        NULL, NULL, NULL);
+    config_network_gnutls_ca_user = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "gnutls_ca_user", "string",
+        N_("extra file(s) with certificate authorities; multiple files must "
+           "be separated by colons "
+           "(each path is evaluated, see function string_eval_path_home in "
+           "plugin API reference)"),
+        NULL, 0, 0, "", NULL, 0,
+        NULL, NULL, NULL,
+        &config_change_network_gnutls_ca, NULL, NULL,
         NULL, NULL, NULL);
     config_network_gnutls_handshake_timeout = config_file_new_option (
         weechat_config_file, ptr_section,

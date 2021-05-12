@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-05-11 21:38+0200\n"
+"POT-Creation-Date: 2021-05-12 20:34+0200\n"
 "PO-Revision-Date: 2021-03-14 13:37+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
@@ -4804,9 +4804,19 @@ msgstr ""
 "w procesie potomnym)"
 
 msgid ""
-"file containing the certificate authorities (path is evaluated, see function "
-"string_eval_path_home in plugin API reference)"
+"load system's default trusted certificate authorities on startup; this can "
+"be turned off to save some memory only if you are not using SSL connections "
+"at all"
 msgstr ""
+
+#, fuzzy
+msgid ""
+"extra file(s) with certificate authorities; multiple files must be separated "
+"by colons (each path is evaluated, see function string_eval_path_home in "
+"plugin API reference)"
+msgstr ""
+"plik z certyfikatem SSL i kluczem prywatnym (dla obsługi klientów poprzez "
+"SSL)"
 
 msgid "timeout (in seconds) for gnutls handshake"
 msgstr "czas oczekiwania (w sekundach) na uwierzytelnienie gnutls"
@@ -5003,12 +5013,39 @@ msgstr ""
 "w innym katalogu domowym używając w linii komend opcji \"--dir\".\n"
 
 #, fuzzy, c-format
+msgid "%sWarning: failed to load system certificate authorities"
+msgstr "%sgnutls: nie udało się wyliczyć odcisku certyfikatu (%s)"
+
+#, fuzzy, c-format
+msgid "%d certificate loaded (system)"
+msgid_plural "%d certificates loaded (system)"
+msgstr[0] "%sgnutls: certyfikat wygasł"
+msgstr[1] "%sgnutls: certyfikat wygasł"
+msgstr[2] "%sgnutls: certyfikat wygasł"
+
+#, fuzzy, c-format
 msgid "%sWarning: failed to load certificate authorities from file %s"
 msgstr "%sgnutls: nie udało się wyliczyć odcisku certyfikatu (%s)"
 
-#, c-format
-msgid "%sWarning: no certificate authorities loaded (file not found: %s)"
-msgstr ""
+#, fuzzy, c-format
+msgid "%d certificate loaded (file: %s)"
+msgid_plural "%d certificates loaded (file: %s)"
+msgstr[0] "%s: otworzono strumień (plik: %s)"
+msgstr[1] "%s: otworzono strumień (plik: %s)"
+msgstr[2] "%s: otworzono strumień (plik: %s)"
+
+#, fuzzy, c-format
+msgid ""
+"%sWarning: failed to load certificate authorities from file %s (file not "
+"found)"
+msgstr "%sgnutls: nie udało się wyliczyć odcisku certyfikatu (%s)"
+
+#, fuzzy, c-format
+msgid "%d certificate purged"
+msgid_plural "%d certificates purged"
+msgstr[0] "%sgnutls: certyfikat wygasł"
+msgstr[1] "%sgnutls: certyfikat wygasł"
+msgstr[2] "%sgnutls: certyfikat wygasł"
 
 msgid "set server name indication (SNI) failed"
 msgstr "ustawianie wskaźnika nazwy serwera (SNI) się nie powiodło"
@@ -14914,6 +14951,16 @@ msgstr "%s%s: przekroczono czas na \"%s\" z %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: nie można połączyć: niespodziewany błąd (%d)"
+
+#, fuzzy, c-format
+#~ msgid ""
+#~ "%d certificate loaded from user's trusted certificate authorities file: %s"
+#~ msgid_plural ""
+#~ "%d certificates loaded from user's trusted certificate authorities file: "
+#~ "file %s"
+#~ msgstr[0] "%sgnutls: nie udało się wyliczyć odcisku certyfikatu (%s)"
+#~ msgstr[1] "%sgnutls: nie udało się wyliczyć odcisku certyfikatu (%s)"
+#~ msgstr[2] "%sgnutls: nie udało się wyliczyć odcisku certyfikatu (%s)"
 
 #~ msgid "Error: unable to get HOME directory\n"
 #~ msgstr "Błąd: nie można pozyskać katalogu domowego\n"
