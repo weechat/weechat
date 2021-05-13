@@ -217,11 +217,11 @@ Funkcje są wywoływane za pomocą `+weechat_xxx(arg1, arg2, ...);+`.
 Wszystkie skrypty WeeChat muszą się "zarejestrować" w WeeChat, musi to być pierwsza
 z funkcji WeeChat wywołana w skrypcie.
 
-Prototyp:
+Prototyp (Python):
 
 [source,python]
 ----
-weechat.register(nazwa, autor, wersja, licencja, opis, funkcja_wyłączająca, kodowanie)
+def register(nazwa: str, autor: str, wersja: str, licencja: str, opis: str, funkcja_wyłączająca: str, kodowanie: str) -> int: ...
 ----
 
 Argumenty:

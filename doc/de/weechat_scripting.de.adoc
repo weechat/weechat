@@ -222,11 +222,11 @@ Funktionen werden aufgerufen mittels `+weechat_xxx(arg1, arg2, ...);+`.
 Ein WeeChat-Skript muss sich bei WeeChat "registrieren". Dazu muss das Skript
 zuerst die "register" Funktion ausführen.
 
-Prototyp:
+Prototyp (Python):
 
 [source,python]
 ----
-weechat.register(Name, Author, Version, Lizenz, Beschreibung, Shutdown_Funktion, Zeichensatz)
+def register(name: str, author: str, version: str, license: str, description: str, shutdown_function: str, charset: str) -> int: ...
 ----
 
 Argumente:

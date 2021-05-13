@@ -222,11 +222,11 @@ Les fonctions sont appelées par `+weechat_xxx(arg1, arg2, ...);+`.
 Tous les scripts WeeChat doivent s'enregistrer ("register") auprès de WeeChat,
 et cela doit être la première fonction WeeChat appelée dans le script.
 
-Prototype :
+Prototype (Python) :
 
 [source,python]
 ----
-weechat.register(name, author, version, license, description, shutdown_function, charset)
+def register(name: str, author: str, version: str, license: str, description: str, shutdown_function: str, charset: str) -> int: ...
 ----
 
 Paramètres :
