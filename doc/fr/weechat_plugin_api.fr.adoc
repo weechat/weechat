@@ -298,7 +298,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-weechat.register(name, author, version, license, description, shutdown_function, charset)
+def register(name: str, author: str, version: str, license: str, description: str, shutdown_function: str, charset: str) -> int: ...
 ----
 
 [NOTE]
@@ -341,7 +341,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-name = weechat.plugin_get_name(plugin)
+def plugin_get_name(plugin: str) -> str: ...
 
 # exemple
 plugin = weechat.buffer_get_pointer(weechat.current_buffer(), "plugin")
@@ -384,7 +384,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-weechat.charset_set(charset)
+def charset_set(charset: str) -> int: ...
 
 # exemple
 weechat.charset_set("iso-8859-1")
@@ -424,7 +424,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-str = weechat.iconv_to_internal(charset, string)
+def iconv_to_internal(charset: str, string: str) -> str: ...
 
 # exemple
 str = weechat.iconv_to_internal("iso-8859-1", "chaîne iso : é à")
@@ -464,7 +464,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-str = weechat.iconv_from_internal(charset, string)
+def iconv_from_internal(charset: str, string: str) -> str: ...
 
 # exemple
 str = weechat.iconv_from_internal("iso-8859-1", "chaîne utf-8 : é à")
@@ -501,7 +501,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-str = weechat.gettext(string)
+def gettext(string: str) -> str: ...
 
 # exemple
 str = weechat.gettext("hello")
@@ -544,7 +544,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-str = weechat.ngettext(string, plural, count)
+def ngettext(string: str, plural: str, count) -> str: ...
 
 # exemple
 num_files = 2
@@ -899,7 +899,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-length = weechat.strlen_screen(string)
+def strlen_screen(string: str) -> int: ...
 
 # exemple
 length = weechat.strlen_screen("é")  # 1
@@ -950,7 +950,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-match = weechat.string_match(string, mask, case_sensitive)
+def string_match(string: str, mask: str, case_sensitive: int) -> int: ...
 
 # exemples
 match1 = weechat.string_match("abcdef", "abc*", 0)   # == 1
@@ -1004,7 +1004,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-match = weechat.string_match_list(string, masks, case_sensitive)
+def string_match_list(string: str, masks: str, case_sensitive: int) -> int: ...
 
 # exemples
 match1 = weechat.string_match("abc", "*,!abc*", 0)     # == 0
@@ -1105,7 +1105,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-path = weechat.string_eval_path_home(path, pointers, extra_vars, options)
+def string_eval_path_home(path: str, pointers: Dict[str, str], extra_vars: Dict[str, str], options: Dict[str, str]) -> str: ...
 
 # exemple
 path = weechat.string_eval_path_home("${weechat_config_dir}/test.conf", {}, {}, {})
@@ -1272,7 +1272,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-regex = weechat.string_mask_to_regex(mask)
+def string_mask_to_regex(mask: str) -> str: ...
 
 # exemple
 regex = weechat.string_mask_to_regex("test*mask")  # "test.*mask"
@@ -1421,7 +1421,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-highlight = weechat.string_has_highlight(string, highlight_words)
+def string_has_highlight(string: str, highlight_words: str) -> int: ...
 
 # exemple
 highlight = weechat.string_has_highlight("my test string", "test,word2")  # 1
@@ -1464,7 +1464,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-highlight = weechat.string_has_highlight_regex(string, regex)
+def string_has_highlight_regex(string: str, regex: str) -> int: ...
 
 # exemple
 highlight = weechat.string_has_highlight_regex("my test string", "test|word2")  # 1
@@ -1934,7 +1934,7 @@ Script (Python), _WeeChat ≥ 2.2_ :
 [source,python]
 ----
 # prototype
-str = weechat.string_format_size(size)
+def string_format_size(size: int) -> str: ...
 
 # exemple
 str = weechat.string_format_size(15200)  # == "15.2 Ko"
@@ -1979,7 +1979,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-size = weechat.string_color_code_size(string)
+def string_color_code_size(string: str) -> int: ...
 
 # exemples
 size = weechat.string_color_code_size("test")  # size == 0
@@ -2031,7 +2031,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-str = weechat.string_remove_color(string, replacement)
+def string_remove_color(string: str, replacement: str) -> str: ...
 
 # exemple
 str = weechat.string_remove_color(ma_chaine, "?")
@@ -2199,7 +2199,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-is_cmdchar = weechat.string_is_command_char(string)
+def string_is_command_char(string: str) -> int: ...
 
 # exemples
 command_char1 = weechat.string_is_command_char("/test")  # == 1
@@ -2242,7 +2242,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-str = weechat.string_input_for_buffer(string)
+def string_input_for_buffer(string: str) -> str: ...
 
 # exemples
 str1 = weechat.string_input_for_buffer("test")    # "test"
@@ -2356,7 +2356,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-str = weechat.string_eval_expression(expr, pointers, extra_vars, options)
+def string_eval_expression(expr: str, pointers: Dict[str, str], extra_vars: Dict[str, str], options: Dict[str, str]) -> str: ...
 
 # exemples
 
@@ -3727,7 +3727,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-weechat.mkdir_home(directory, mode)
+def mkdir_home(directory: str, mode: int) -> int: ...
 
 # exemple
 weechat.mkdir_home("${weechat_cache_dir}/temp", 0755)
@@ -3768,7 +3768,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-weechat.mkdir(directory, mode)
+def mkdir(directory: str, mode: int) -> int: ...
 
 # exemple
 weechat.mkdir("/tmp/mydir", 0755)
@@ -3809,7 +3809,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-weechat.mkdir_parents(directory, mode)
+def mkdir_parents(directory: str, mode: int) -> int: ...
 
 # exemple
 weechat.mkdir_parents("/tmp/my/dir", 0755)
@@ -4099,7 +4099,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-list = weechat.list_new()
+def list_new() -> str: ...
 
 # exemple
 list = weechat.list_new()
@@ -4146,7 +4146,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-item = weechat.list_add(list, data, where, user_data)
+def list_add(list: str, data: str, where: str, user_data: str) -> str: ...
 
 # exemple
 item = weechat.list_add(list, "ma donnée", weechat.WEECHAT_LIST_POS_SORT, "")
@@ -4185,7 +4185,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-item = weechat.list_search(list, data)
+def list_search(list: str, data: str) -> str: ...
 
 # exemple
 item = weechat.list_search(list, "ma donnée")
@@ -4226,7 +4226,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-pos_item = weechat.list_search_pos(list, data)
+def list_search_pos(list: str, data: str) -> int: ...
 
 # exemple
 pos_item = weechat.list_search_pos(list, "ma donnée")
@@ -4265,7 +4265,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-item = weechat.list_casesearch(list, data)
+def list_casesearch(list: str, data: str) -> str: ...
 
 # exemple
 item = weechat.list_casesearch(list, "ma donnée")
@@ -4307,7 +4307,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-pos_item = weechat.list_casesearch_pos(list, data)
+def list_casesearch_pos(list: str, data: str) -> int: ...
 
 # exemple
 pos_item = weechat.list_casesearch_pos(list, "ma donnée")
@@ -4346,7 +4346,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-item = weechat.list_get(list, position)
+def list_get(list: str, position: int) -> str: ...
 
 # exemple
 item = weechat.list_get(list, 0)
@@ -4380,7 +4380,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-weechat.list_set(item, value)
+def list_set(item: str, value: str) -> int: ...
 
 # exemple
 weechat.list_set(item, "nouvelle donnée")
@@ -4418,7 +4418,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-item = weechat.list_next(item)
+def list_next(item: str) -> str: ...
 
 # exemple
 item = weechat.list_next(item)
@@ -4456,7 +4456,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-item = weechat.list_prev(item)
+def list_prev(item: str) -> str: ...
 
 # exemple
 item = weechat.list_prev(item)
@@ -4493,7 +4493,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-value = weechat.list_string(item)
+def list_string(item: str) -> str: ...
 
 # exemple
 weechat.prnt("", "valeur de l'élément : %s" % weechat.list_string(item))
@@ -4561,7 +4561,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-size = weechat.list_size(list)
+def list_size(list: str) -> int: ...
 
 # exemple
 weechat.prnt("", "taille de la liste : %d" % weechat.list_size(list))
@@ -4596,7 +4596,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-weechat.list_remove(list, item)
+def list_remove(list: str, item: str) -> int: ...
 
 # exemple
 weechat.list_remove(list, item)
@@ -4629,7 +4629,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-weechat.list_remove_all(list)
+def list_remove_all(list: str) -> int: ...
 
 # exemple
 weechat.list_remove_all(list)
@@ -4662,7 +4662,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-weechat.list_free(list)
+def list_free(list: str) -> int: ...
 
 # exemple
 weechat.list_free(list)
@@ -5763,7 +5763,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-config_file = weechat.config_new(name, callback_reload, callback_reload_data)
+def config_new(name: str, callback_reload: str, callback_reload_data: str) -> str: ...
 
 # exemple
 def my_config_reload_cb(data, config_file):
@@ -6028,12 +6028,12 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-section = weechat.config_new_section(config_file, name,
-    user_can_add_options, user_can_delete_options,
-    callback_read, callback_read_data,
-    callback_write, callback_write_data,
-    callback_create_option, callback_create_option_data,
-    callback_delete_option, callback_delete_option_data)
+def config_new_section(config_file: str, name: str,
+                       user_can_add_options: int, user_can_delete_options: int,
+                       callback_read: str, callback_read_data: str,
+                       callback_write: str, callback_write_data: str,
+                       callback_create_option: str, callback_create_option_data: str,
+                       callback_delete_option: str, callback_delete_option_data: str) -> str: ...
 
 # exemple
 def my_section_read_cb(data, config_file, section, option_name, value):
@@ -6102,7 +6102,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-section = weechat.config_search_section(config_file, section_name)
+def config_search_section(config_file: str, section_name: str) -> str: ...
 
 # exemple
 section = weechat.config_search_section(config_file, "section")
@@ -6289,11 +6289,12 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-option = weechat.config_new_option(config_file, section, name, type, description,
-    string_values, min, max, default_value, value, null_value_allowed,
-    callback_check_value, callback_check_value_data,
-    callback_change, callback_change_data,
-    callback_delete, callback_delete_data)
+def config_new_option(config_file: str, section: str, name: str, type: str, description: str,
+                      string_values: str, min: int, max: int,
+                      default_value: str, value: str, null_value_allowed: int,
+                      callback_check_value: str, callback_check_value_data: str,
+                      callback_change: str, callback_change_data: str,
+                      callback_delete: str, callback_delete_data: str) -> str: ...
 
 # exemple
 def option4_check_value_cb(data, option, value):
@@ -6388,7 +6389,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-option = weechat.config_search_option(config_file, section, option_name)
+def config_search_option(config_file: str, section: str, option_name: str) -> str: ...
 
 # exemple
 option = weechat.config_search_option(config_file, section, "option")
@@ -6540,7 +6541,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-value = weechat.config_string_to_boolean(text)
+def config_string_to_boolean(text: str) -> int: ...
 
 # exemple
 if weechat.config_string_to_boolean(text):
@@ -6595,7 +6596,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-rc = weechat.config_option_reset(option, run_callback)
+def config_option_reset(option: str, run_callback: int) -> int: ...
 
 # exemple
 rc = weechat.config_option_reset(option, 1)
@@ -6661,7 +6662,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-rc = weechat.config_option_set(option, value, run_callback)
+def config_option_set(option: str, value: str, run_callback: int) -> int: ...
 
 # exemple
 rc = weechat.config_option_set(option, "nouvelle_valeur", 1)
@@ -6724,7 +6725,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-rc = weechat.config_option_set_null(option, run_callback)
+def config_option_set_null(option: str, run_callback: int) -> int: ...
 
 # exemple
 rc = weechat.config_option_set_null(option, 1)
@@ -6786,7 +6787,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-rc = weechat.config_option_unset(option)
+def config_option_unset(option: str) -> int: ...
 
 # exemple
 rc = weechat.config_option_unset(option)
@@ -6829,7 +6830,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-weechat.config_option_rename(option, new_name)
+def config_option_rename(option: str, new_name: str) -> int: ...
 
 # exemple
 weechat.config_option_rename(option, "nouveau_nom")
@@ -6964,7 +6965,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-is_null = weechat.config_option_is_null(option)
+def config_option_is_null(option: str) -> int: ...
 
 # exemple
 if weechat.config_option_is_null(option):
@@ -7010,7 +7011,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-is_null = weechat.config_option_default_is_null(option)
+def config_option_default_is_null(option: str) -> int: ...
 
 # exemple
 if weechat.config_option_default_is_null(option):
@@ -7059,7 +7060,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-value = weechat.config_boolean(option)
+def config_boolean(option: str) -> int: ...
 
 # exemple
 option = weechat.config_get("plugin.section.option")
@@ -7109,7 +7110,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-value = weechat.config_boolean_default(option)
+def config_boolean_default(option: str) -> int: ...
 
 # exemple
 option = weechat.config_get("plugin.section.option")
@@ -7152,7 +7153,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-value = weechat.config_integer(option)
+def config_integer(option: str) -> int: ...
 
 # exemple
 option = weechat.config_get("plugin.section.option")
@@ -7194,7 +7195,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-value = weechat.config_integer_default(option)
+def config_integer_default(option: str) -> int: ...
 
 # exemple
 option = weechat.config_get("plugin.section.option")
@@ -7237,7 +7238,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-value = weechat.config_string(option)
+def config_string(option: str) -> str: ...
 
 # exemple
 option = weechat.config_get("plugin.section.option")
@@ -7280,7 +7281,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-value = weechat.config_string_default(option)
+def config_string_default(option: str) -> str: ...
 
 # exemple
 option = weechat.config_get("plugin.section.option")
@@ -7322,7 +7323,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-value = weechat.config_color(option)
+def config_color(option: str) -> str: ...
 
 # exemple
 option = weechat.config_get("plugin.section.option")
@@ -7364,7 +7365,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-value = weechat.config_color_default(option)
+def config_color_default(option: str) -> str: ...
 
 # exemple
 option = weechat.config_get("plugin.section.option")
@@ -7412,7 +7413,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-weechat.config_write_option(config_file, option)
+def config_write_option(config_file: str, option: str) -> int: ...
 
 # exemple
 def my_section_write_cb(data, config_file, section_name):
@@ -7466,7 +7467,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-weechat.config_write_line(config_file, option_name, value)
+def config_write_line(config_file: str, option_name: str, value: str) -> int: ...
 
 # exemple
 def my_section_write_cb(data, config_file, section_name):
@@ -7519,7 +7520,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-rc = weechat.config_write(config_file)
+def config_write(config_file: str) -> int: ...
 
 # exemple
 rc = weechat.config_write(config_file)
@@ -7575,7 +7576,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-rc = weechat.config_read(config_file)
+def config_read(config_file: str) -> int: ...
 
 # exemple
 rc = weechat.config_read(config_file)
@@ -7631,7 +7632,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-rc = weechat.config_reload(config_file)
+def config_reload(config_file: str) -> int: ...
 
 # exemple
 rc = weechat.config_reload(config_file)
@@ -7670,7 +7671,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-weechat.config_option_free(option)
+def config_option_free(option: str) -> int: ...
 
 # exemple
 weechat.config_option_free(option)
@@ -7703,7 +7704,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-weechat.config_section_free_options(section)
+def config_section_free_options(section: str) -> int: ...
 
 # exemple
 weechat.config_section_free_options(section)
@@ -7736,7 +7737,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-weechat.config_section_free(section)
+def config_section_free(section: str) -> int: ...
 
 # exemple
 weechat.config_section_free(section)
@@ -7769,7 +7770,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-weechat.config_free(config_file)
+def config_free(config_file: str) -> int: ...
 
 # exemple
 weechat.config_free(config_file)
@@ -7806,7 +7807,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-option = weechat.config_get(option_name)
+def config_get(option_name: str) -> str: ...
 
 # exemple
 option = weechat.config_get("weechat.look.item_time_format")
@@ -7847,7 +7848,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-value = weechat.config_get_plugin(option_name)
+def config_get_plugin(option_name: str) -> str: ...
 
 # exemple
 value = weechat.config_get_plugin("option")
@@ -7893,7 +7894,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-value = weechat.config_is_set_plugin(option_name)
+def config_is_set_plugin(option_name: str) -> int: ...
 
 # exemple
 if weechat.config_is_set_plugin("option"):
@@ -7955,7 +7956,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-rc = weechat.config_set_plugin(option_name, value)
+def config_set_plugin(option_name: str, value: str) -> int: ...
 
 # exemple
 rc = weechat.config_set_plugin("option", "valeur_test")
@@ -8006,7 +8007,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-weechat.config_set_desc_plugin(option_name, description)
+def config_set_desc_plugin(option_name: str, description: str) -> int: ...
 
 # exemple
 version = weechat.info_get("version_number", "") or 0
@@ -8065,7 +8066,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-rc = weechat.config_unset_plugin(option_name)
+def config_unset_plugin(option_name: str) -> int: ...
 
 # exemple
 rc = weechat.config_unset_plugin("option")
@@ -8145,7 +8146,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-num_keys = weechat.key_bind(context, keys)
+def key_bind(context: str, keys: Dict[str, str]) -> int: ...
 
 # exemple
 keys = {"@chat(python.test):button1": "hsignal:test_mouse",
@@ -8199,7 +8200,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-num_keys = weechat.key_unbind(context, key)
+def key_unbind(context: str, key: str) -> int: ...
 
 # exemples
 
@@ -8262,7 +8263,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-value = weechat.prefix(prefix)
+def prefix(prefix: str) -> str: ...
 
 # exemple
 weechat.prnt("", "%sCeci est une erreur..." % weechat.prefix("error"))
@@ -8348,7 +8349,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-value = weechat.color(color_name)
+def color(color_name: str) -> str: ...
 
 # exemple
 weechat.prnt("", "Couleur : %sbleu %scouleur par défaut %sjaune sur rouge"
@@ -8410,7 +8411,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-weechat.prnt(buffer, message)
+def prnt(buffer: str, message: str) -> int: ...
 
 # exemple
 weechat.prnt("", "Bonjour sur le tampon WeeChat")
@@ -8462,7 +8463,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-weechat.prnt_date_tags(buffer, date, tags, message)
+def prnt_date_tags(buffer: str, date: str, tags: str, message: str) -> int: ...
 
 # exemple
 time = int(time.time())
@@ -8508,7 +8509,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-weechat.prnt_y(buffer, y, message)
+def prnt_y(buffer: str, y: int, message: str) -> int: ...
 
 # exemple
 weechat.prnt_y("", 2, "Mon message sur la 3ème ligne")
@@ -8544,7 +8545,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-weechat.log_print(message)
+def log_print(message: str) -> int: ...
 
 # exemple
 weechat.log_print("Mon message dans le fichier log")
@@ -8724,8 +8725,8 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-hook = weechat.hook_command(command, description, args, args_description,
-    completion, callback, callback_data)
+def hook_command(command: str, description: str, args: str, args_description: str,
+                 completion: str, callback: str, callback_data: str) -> str: ...
 
 # exemple
 def my_command_cb(data, buffer, args):
@@ -8835,7 +8836,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-hook = weechat.hook_completion(completion_item, description, callback, callback_data)
+def hook_completion(completion_item: str, description: str, callback: str, callback_data: str) -> str: ...
 
 # exemple
 def my_completion_cb(data, completion_item, buffer, completion):
@@ -8926,7 +8927,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-hook = weechat.hook_command_run(command, callback, callback_data)
+def hook_command_run(command: str, callback: str, callback_data: str) -> str: ...
 
 # exemple
 def my_command_run_cb(data, buffer, command):
@@ -9006,7 +9007,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-hook = weechat.hook_timer(interval, align_second, max_calls, callback, callback_data)
+def hook_timer(interval: int, align_second: int, max_calls: int, callback: str, callback_data: str) -> str: ...
 
 # exemple
 def my_timer_cb(data, remaining_calls):
@@ -9092,7 +9093,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-hook = weechat.hook_fd(fd, flag_read, flag_write, flag_exception, callback, callback_data)
+def hook_fd(fd: int, flag_read: int, flag_write: int, flag_exception: int, callback: str, callback_data: str) -> str: ...
 
 # exemple
 def my_fd_cb(data, fd):
@@ -9303,7 +9304,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-hook = weechat.hook_process(command, timeout, callback, callback_data)
+def hook_process(command: str, timeout: int, callback: str, callback_data: str) -> str: ...
 
 # exemple avec une commande externe
 def my_process_cb(data, command, return_code, out, err):
@@ -9542,7 +9543,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-hook = weechat.hook_process_hashtable(command, options, timeout, callback, callback_data)
+def hook_process_hashtable(command: str, options: Dict[str, str], timeout: int, callback: str, callback_data: str) -> str: ...
 
 # exemple
 def my_process_cb(data, command, return_code, out, err):
@@ -9746,8 +9747,8 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-hook = weechat.hook_connect(proxy, address, port, ipv6, retry, local_hostname,
-    callback, callback_data)
+def hook_connect(proxy: str, address: str, port: int, ipv6: int, retry: int, local_hostname: str,
+                 callback: str, callback_data: str) -> str: ...
 
 # exemple
 def my_connect_cb(data, status, gnutls_rc, sock, error, ip_address):
@@ -10053,7 +10054,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-hook = weechat.hook_line(buffer_type, buffer_name, tags, callback, callback_data)
+def hook_line(buffer_type: str, buffer_name: str, tags: str, callback: str, callback_data: str) -> str: ...
 
 # exemple
 def my_line_cb(data, line):
@@ -10169,7 +10170,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-hook = weechat.hook_print(buffer, tags, message, strip_colors, callback, callback_data)
+def hook_print(buffer: str, tags: str, message: str, strip_colors: int, callback: str, callback_data: str) -> str: ...
 
 # exemple
 def my_print_cb(data, buffer, date, tags, displayed, highlight, prefix, message):
@@ -11090,7 +11091,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-hook = weechat.hook_signal(signal, callback, callback_data)
+def hook_signal(signal: str, callback: str, callback_data: str) -> str: ...
 
 # exemple
 def my_signal_cb(data, signal, signal_data):
@@ -11142,7 +11143,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-rc = weechat.hook_signal_send(signal, type_data, signal_data)
+def hook_signal_send(signal: str, type_data: str, signal_data: str) -> int: ...
 
 # exemple
 rc = weechat.hook_signal_send("mon_signal", weechat.WEECHAT_HOOK_SIGNAL_STRING, ma_chaine)
@@ -11440,7 +11441,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-hook = weechat.hook_hsignal(signal, callback, callback_data)
+def hook_hsignal(signal: str, callback: str, callback_data: str) -> str: ...
 
 # exemple
 def my_hsignal_cb(data, signal, hashtable):
@@ -11499,7 +11500,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-rc = weechat.hook_hsignal_send(signal, hashtable)
+def hook_hsignal_send(signal: str, hashtable: Dict[str, str]) -> int: ...
 
 # exemple
 rc = weechat.hook_hsignal_send("my_hsignal", {"clé": "valeur"})
@@ -11759,7 +11760,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-hook = weechat.hook_config(option, callback, callback_data)
+def hook_config(option: str, callback: str, callback_data: str) -> str: ...
 
 # exemple
 def my_config_cb(data, option, value):
@@ -11932,7 +11933,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-hook = weechat.hook_modifier(modifier, callback, callback_data)
+def hook_modifier(modifier: str, callback: str, callback_data: str) -> str: ...
 
 # exemple
 def my_modifier_cb(data, modifier, modifier_data, string):
@@ -12047,7 +12048,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-weechat.hook_modifier_exec(modifier, modifier_data, string)
+def hook_modifier_exec(modifier: str, modifier_data: str, string: str) -> str: ...
 
 # exemple
 weechat.hook_modifier_exec("mon_modifier", mes_donnees, ma_chaine)
@@ -12127,8 +12128,8 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-hook = weechat.hook_info(info_name, description, args_description,
-                         callback, callback_data)
+def hook_info(info_name: str, description: str, args_description: str,
+              callback: str, callback_data: str) -> str: ...
 
 # exemple
 def my_info_cb(data, info_name, arguments):
@@ -12214,8 +12215,8 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-hook = weechat.hook_info_hashtable(info_name, description, args_description,
-                                   output_description, callback, callback_data)
+def hook_info_hashtable(info_name: str, description: str, args_description: str,
+                        output_description: str, callback: str, callback_data: str) -> str: ...
 
 # exemple
 def my_info_hashtable_cb(data, info_name, hashtable):
@@ -12307,8 +12308,8 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-hook = weechat.hook_infolist(infolist_name, description, pointer_description,
-                             args_description, callback, callback_data)
+def hook_infolist(infolist_name: str, description: str, pointer_description: str,
+                  args_description: str, callback: str, callback_data: str) -> str: ...
 
 # exemple
 def my_infolist_cb(data, infolist_name, pointer, arguments):
@@ -12591,7 +12592,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-hook = weechat.hook_focus(area, callback, callback_data)
+def hook_focus(area: str, callback: str, callback_data: str) -> str: ...
 
 # exemple
 def my_focus_nicklist_cb(data, info):
@@ -12667,7 +12668,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-weechat.hook_set(hook, property, value)
+def hook_set(hook: str, property: str, value: str) -> int: ...
 
 # exemple
 def my_process_cb(data, command, return_code, out, err):
@@ -12709,7 +12710,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-weechat.unhook(hook)
+def unhook(hook: str) -> int: ...
 
 # exemple
 weechat.unhook(my_hook)
@@ -12745,7 +12746,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-weechat.unhook_all()
+def unhook_all() -> int: ...
 
 # exemple
 weechat.unhook_all()
@@ -12847,8 +12848,8 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-buffer = weechat.buffer_new(name, input_callback, input_callback_data,
-    close_callback, close_callback_data)
+def buffer_new(name: str, input_callback: str, input_callback_data: str,
+               close_callback: str, close_callback_data: str) -> str: ...
 
 # exemple
 def my_input_cb(data, buffer, input_data):
@@ -12890,7 +12891,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-buffer = weechat.current_buffer()
+def current_buffer() -> str: ...
 
 # exemple
 weechat.prnt(weechat.current_buffer(), "Texte sur le tampon courant")
@@ -12937,7 +12938,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-buffer = weechat.buffer_search(plugin, name)
+def buffer_search(plugin: str, name: str) -> str: ...
 
 # exemple
 buffer = weechat.buffer_search("mon_extension", "mon_tampon")
@@ -12971,7 +12972,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-buffer = weechat.buffer_search_main()
+def buffer_search_main() -> str: ...
 
 # exemple
 buffer = weechat.buffer_search_main()
@@ -13009,7 +13010,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-weechat.buffer_clear(buffer)
+def buffer_clear(buffer: str) -> int: ...
 
 # exemple
 buffer = weechat.buffer_search("mon_extension", "mon_tampon")
@@ -13048,7 +13049,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-weechat.buffer_close(buffer)
+def buffer_close(buffer: str) -> int: ...
 
 # exemple
 buffer = weechat.buffer_new("mon_tampon", "my_input_cb", "", "my_close_cb", "")
@@ -13089,7 +13090,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-weechat.buffer_merge(buffer, target_buffer)
+def buffer_merge(buffer: str, target_buffer: str) -> int: ...
 
 # exemple
 # mélanger le tampon courant avec le tampon "core"
@@ -13126,7 +13127,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-weechat.buffer_unmerge(buffer, number)
+def buffer_unmerge(buffer: str, number: int) -> int: ...
 
 # exemple
 weechat.buffer_unmerge(weechat.current_buffer(), 1)
@@ -13218,7 +13219,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-value = weechat.buffer_get_integer(buffer, property)
+def buffer_get_integer(buffer: str, property: str) -> int: ...
 
 # exemple
 weechat.prnt("", "mon numéro de tampon est : %d" % weechat.buffer_get_integer(my_buffer, "number"))
@@ -13279,7 +13280,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-value = weechat.buffer_get_string(buffer, property)
+def buffer_get_string(buffer: str, property: str) -> str: ...
 
 # exemple
 weechat.prnt("", "nom / nom court du tampon sont : %s / %s"
@@ -13324,7 +13325,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-value = weechat.buffer_get_pointer(buffer, property)
+def buffer_get_pointer(buffer: str, property: str) -> str: ...
 
 # exemple
 weechat.prnt("", "pointeur vers l'extension de mon tampon : %s" % weechat.buffer_get_pointer(my_buffer, "plugin"))
@@ -13541,7 +13542,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-weechat.buffer_set(buffer, property, value)
+def buffer_set(buffer: str, property: str, value: str) -> int: ...
 
 # exemples
 
@@ -13660,7 +13661,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-value = weechat.buffer_string_replace_local_var(buffer, string)
+def buffer_string_replace_local_var(buffer: str, string: str) -> str: ...
 
 # exemple
 weechat.buffer_set(my_buffer, "localvar_set_toto", "abc")
@@ -13712,7 +13713,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-match = weechat.buffer_match_list(buffer, string)
+def buffer_match_list(buffer: str, string: str) -> int: ...
 
 # exemple
 buffer = weechat.buffer_search("irc", "freenode.#weechat")
@@ -13755,7 +13756,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-window = weechat.current_window()
+def current_window() -> str: ...
 
 # exemple
 current_window = weechat.current_window()
@@ -13797,7 +13798,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-window = weechat.window_search_with_buffer(buffer)
+def window_search_with_buffer(buffer: str) -> str: ...
 
 # exemple
 weechat.prnt("", "fenêtre affichant le tampon core : %s"
@@ -13864,7 +13865,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-value = weechat.window_get_integer(window, property)
+def window_get_integer(window: str, property: str) -> int: ...
 
 # exemple
 weechat.prnt("", "la fenêtre courante est en position (x,y) : (%d,%d)"
@@ -13902,7 +13903,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-value = weechat.window_get_string(buffer, property)
+def window_get_string(window: str, property: str) -> str: ...
 ----
 
 ==== window_get_pointer
@@ -13942,7 +13943,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-value = weechat.window_get_pointer(window, property)
+def window_get_pointer(window: str, property: str) -> str: ...
 
 # exemple
 weechat.prnt("", "tampon affiché dans la fenêtre courante : %s"
@@ -13978,7 +13979,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-weechat.window_set_title(window, title)
+def window_set_title(title: str) -> int: ...
 
 # exemple
 weechat.window_set_title("nouveau titre ici")
@@ -14049,7 +14050,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-group = weechat.nicklist_add_group(buffer, parent_group, name, color, visible)
+def nicklist_add_group(buffer: str, parent_group: str, name: str, color: str, visible: int) -> str: ...
 
 # exemple
 group = weechat.nicklist_add_group(my_buffer, my_parent_group, "groupe_test",
@@ -14093,7 +14094,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-group = weechat.nicklist_search_group(buffer, from_group, name)
+def nicklist_search_group(buffer: str, from_group: str, name: str) -> str: ...
 
 # exemple
 group = weechat.nicklist_search_group(my_buffer, "", "groupe_test")
@@ -14161,7 +14162,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-nick = weechat.nicklist_add_nick(buffer, group, name, color, prefix, prefix_color, visible)
+def nicklist_add_nick(buffer: str, group: str, name: str, color: str, prefix: str, prefix_color: str, visible: int) -> str: ...
 
 # exemple
 if nick_away:
@@ -14208,7 +14209,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-nick = weechat.nicklist_search_nick(buffer, from_group, name)
+def nicklist_search_nick(buffer: str, from_group: str, name: str) -> str: ...
 
 # exemple
 nick = weechat.nicklist_search_nick(my_buffer, "", "test_nick")
@@ -14244,7 +14245,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-weechat.nicklist_remove_group(buffer, group)
+def nicklist_remove_group(buffer: str, group: str) -> int: ...
 
 # exemple
 weechat.nicklist_remove_group(my_buffer, my_group)
@@ -14279,7 +14280,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-weechat.nicklist_remove_nick(buffer, nick)
+def nicklist_remove_nick(buffer: str, nick: str) -> int: ...
 
 # exemple
 weechat.nicklist_remove_nick(my_buffer, my_nick)
@@ -14312,7 +14313,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-weechat.nicklist_remove_all(buffer)
+def nicklist_remove_all(buffer: str) -> int: ...
 
 # exemple
 weechat.nicklist_remove_all(my_buffer)
@@ -14408,7 +14409,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-value = weechat.nicklist_group_get_integer(buffer, group, property)
+def nicklist_group_get_integer(buffer: str, group: str, property: str) -> int: ...
 
 # exemple
 visible = weechat.nicklist_group_get_integer(buffer, group, "visible")
@@ -14453,7 +14454,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-value = weechat.nicklist_group_get_string(buffer, group, property)
+def nicklist_group_get_string(buffer: str, group: str, property: str) -> str: ...
 
 # exemple
 color = weechat.nicklist_group_get_string(buffer, group, "color")
@@ -14497,7 +14498,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-value = weechat.nicklist_group_get_pointer(buffer, group, property)
+def nicklist_group_get_pointer(buffer: str, group: str, property: str) -> str: ...
 
 # exemple
 parent = weechat.nicklist_group_get_pointer(buffer, group, "parent")
@@ -14559,7 +14560,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-weechat.nicklist_group_set(buffer, group, property, value)
+def nicklist_group_set(buffer: str, group: str, property: str, value: str) -> int: ...
 
 # exemples
 
@@ -14611,7 +14612,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-value = weechat.nicklist_nick_get_integer(buffer, nick, property)
+def nicklist_nick_get_integer(buffer: str, nick: str, property: str) -> int: ...
 
 # exemple
 visible = weechat.nicklist_nick_get_integer(buffer, nick, "visible")
@@ -14658,7 +14659,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-value = weechat.nicklist_nick_get_string(buffer, nick, property)
+def nicklist_nick_get_string(buffer: str, nick: str, property: str) -> str: ...
 
 # exemple
 color = weechat.nicklist_nick_get_string(buffer, nick, "color")
@@ -14702,7 +14703,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-value = weechat.nicklist_nick_get_pointer(buffer, nick, property)
+def nicklist_nick_get_pointer(buffer: str, nick: str, property: str) -> str: ...
 
 # exemple
 group = weechat.nicklist_nick_get_pointer(buffer, nick, "group")
@@ -14774,7 +14775,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-weechat.nicklist_nick_set(buffer, nick, property, value)
+def nicklist_nick_set(buffer: str, nick: str, property: str, value: str) -> int: ...
 
 # exemples
 
@@ -14827,7 +14828,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-bar_item = weechat.bar_item_search(name)
+def bar_item_search(name: str) -> str: ...
 
 # exemple
 bar_item = weechat.bar_item_search("myitem")
@@ -14913,7 +14914,7 @@ dans WeeChat ≥ 0.4.2).
 [source,python]
 ----
 # prototype
-bar_item = weechat.bar_item_new(name, build_callback, build_callback_data)
+def bar_item_new(name: str, build_callback: str, build_callback_data: str) -> str: ...
 
 # exemple (fonction de rappel sans "buffer" et "extra_info")
 def my_build_callback(data, item, window):
@@ -14956,7 +14957,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-weechat.bar_item_update(name)
+def bar_item_update(name: str) -> int: ...
 
 # exemple
 weechat.bar_item_update("myitem")
@@ -14989,7 +14990,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-weechat.bar_item_remove(item)
+def bar_item_remove(item: str) -> int: ...
 
 # exemple
 weechat.bar_item_remove(myitem)
@@ -15026,7 +15027,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-bar = weechat.bar_search(name)
+def bar_search(name: str) -> str: ...
 
 # exemple
 bar = weechat.bar_search("mybar")
@@ -15141,9 +15142,10 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-bar = weechat.bar_new(name, hidden, priority, type, condition, position,
-    filling_top_bottom, filling_left_right, size, size_max,
-    color_fg, color_delim, color_bg, color_bg_inactive, separator, items)
+def bar_new(name: str, hidden: str, priority: str, type: str, condition: str, position: str,
+            filling_top_bottom: str, filling_left_right: str, size: str, size_max: str,
+            color_fg: str, color_delim: str, color_bg: str, color_bg_inactive: str,
+            separator: str, items: str) -> str: ...
 
 # exemple
 bar = weechat.bar_new("mybar", "off", "100", "window", "", "top", "horizontal", "vertical",
@@ -15193,7 +15195,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-weechat.bar_set(bar, property, value)
+def bar_set(bar: str, property: str, value: str) -> int: ...
 
 # exemple
 weechat.bar_set(my_bar, "position", "bottom")
@@ -15226,7 +15228,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-weechat.bar_update(name)
+def bar_update(name: str) -> int: ...
 
 # exemple
 weechat.bar_update("mybar")
@@ -15259,7 +15261,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-weechat.bar_remove(bar)
+def bar_remove(bar: str) -> int: ...
 
 # exemple
 weechat.bar_remove(my_bar)
@@ -15309,7 +15311,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-weechat.command(buffer, command)
+def command(buffer: str, command: str) -> int: ...
 
 # exemple
 rc = weechat.command(weechat.buffer_search("irc", "freenode.#weechat"), "/whois FlashCode")
@@ -15368,7 +15370,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-weechat.command_options(buffer, command, options)
+def command_options(buffer: str, command: str, options: Dict[str, str]) -> int: ...
 
 # exemple : autoriser toute commande sauf /exec
 rc = weechat.command("", "/une_commande paramètres", {"commands": "*,!exec"})
@@ -15412,7 +15414,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-completion = weechat.completion_new(buffer)
+def completion_new(buffer: str) -> str: ...
 
 # exemple
 completion = weechat.completion_new(weechat.buffer_search_main())
@@ -15460,7 +15462,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-rc = weechat.completion_search(completion, data, position, direction)
+def completion_search(completion: str, data: str, position: int, direction: int) -> int: ...
 
 # exemple
 completion = weechat.completion_new(weechat.buffer_search_main())
@@ -15514,7 +15516,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-value = weechat.completion_get_string(completion, property)
+def completion_get_string(completion: str, property: str) -> str: ...
 
 # exemple
 def my_completion_cb(data, completion_item, buffer, completion):
@@ -15558,7 +15560,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-weechat.completion_list_add(completion, word, nick_completion, where)
+def completion_list_add(completion: str, word: str, nick_completion: int, where: str) -> int: ...
 
 # exemple : voir la fonction hook_completion
 ----
@@ -15592,7 +15594,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-weechat.completion_free(completion)
+def completion_free(completion: str) -> int: ...
 
 # exemple
 weechat.completion_free(completion)
@@ -15764,7 +15766,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-value = weechat.info_get(info_name, arguments)
+def info_get(info_name: str, arguments: str) -> str: ...
 
 # exemple
 weechat.prnt("", "La version de WeeChat est : %s (compilée le %s)"
@@ -15850,7 +15852,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-dict = weechat.info_get_hashtable(info_name, dict_in)
+def info_get_hashtable(info_name: str, dict_in: Dict[str, str]) -> Dict[str, str]: ...
 
 # exemple
 dict_in = {"message": ":nick!user@host PRIVMSG #weechat :message ici"}
@@ -15904,7 +15906,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-infolist = weechat.infolist_new()
+def infolist_new() -> str: ...
 
 # exemple
 infolist = weechat.infolist_new()
@@ -15941,7 +15943,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-item = weechat.infolist_new_item(infolist)
+def infolist_new_item(infolist: str) -> str: ...
 
 # exemple
 item = weechat.infolist_new_item(infolist)
@@ -15984,7 +15986,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-var = weechat.infolist_new_var_integer(item, name, value)
+def infolist_new_var_integer(item: str, name: str, value: int) -> str: ...
 
 # exemple
 var = weechat.infolist_new_var_integer(item, "mon_entier", 123)
@@ -16027,7 +16029,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-var = weechat.infolist_new_var_string(item, name, value)
+def infolist_new_var_string(item: str, name: str, value: str) -> str: ...
 
 # exemple
 var = weechat.infolist_new_var_string(item, "ma_chaine", "valeur")
@@ -16070,7 +16072,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-var = weechat.infolist_new_var_pointer(item, name, pointer)
+def infolist_new_var_pointer(item: str, name: str, pointer: str) -> str: ...
 
 # exemple
 var = weechat.infolist_new_var_pointer(item, "mon_pointeur", pointer)
@@ -16153,7 +16155,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-var = weechat.infolist_new_var_time(item, name, time)
+def infolist_new_var_time(item: str, name: str, time: int) -> str: ...
 
 # exemple
 var = weechat.infolist_new_var_time(item, "mon_time", int(time.time()))
@@ -16209,7 +16211,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-infolist = weechat.infolist_get(infolist_name, pointer, arguments)
+def infolist_get(infolist_name: str, pointer: str, arguments: str) -> str: ...
 
 # exemple
 infolist = weechat.infolist_get("irc_server", "", "")
@@ -16256,7 +16258,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-rc = weechat.infolist_next(infolist)
+def infolist_next(infolist: str) -> int: ...
 
 # exemple
 rc = weechat.infolist_next(infolist)
@@ -16307,7 +16309,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-rc = weechat.infolist_prev(infolist)
+def infolist_prev(infolist: str) -> int: ...
 
 # exemple
 rc = weechat.infolist_prev(infolist)
@@ -16344,7 +16346,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-weechat.infolist_reset_item_cursor(infolist)
+def infolist_reset_item_cursor(infolist: str) -> int: ...
 
 # exemple
 weechat.infolist_reset_item_cursor(infolist)
@@ -16389,7 +16391,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-var = weechat.infolist_search_var(infolist, name)
+def infolist_search_var(infolist: str, name: str) -> str: ...
 
 # exemple
 if weechat.infolist_search_var(infolist, "name"):
@@ -16433,7 +16435,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-fields = weechat.infolist_fields(infolist)
+def infolist_fields(infolist: str) -> str: ...
 
 # exemple
 fields = weechat.infolist_fields(infolist)
@@ -16475,7 +16477,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-value = weechat.infolist_integer(infolist, var)
+def infolist_integer(infolist: str, var: str) -> int: ...
 
 # exemple
 weechat.prnt("", "entier = %d" % weechat.infolist_integer(infolist, "mon_entier"))
@@ -16515,7 +16517,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-value = weechat.infolist_string(infolist, var)
+def infolist_string(infolist: str, var: str) -> str: ...
 
 # exemple
 weechat.prnt("", "chaîne = %s" % weechat.infolist_string(infolist, "ma_chaine"))
@@ -16555,7 +16557,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-value = weechat.infolist_pointer(infolist, var)
+def infolist_pointer(infolist: str, var: str) -> str: ...
 
 # exemple
 weechat.prnt("", "pointeur = 0x%s" % weechat.infolist_pointer(infolist, "mon_pointeur"))
@@ -16632,7 +16634,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-value = weechat.infolist_time(infolist, var)
+def infolist_time(infolist: str, var: str) -> int: ...
 
 # exemple
 weechat.prnt("", "date/heure = %ld" % weechat.infolist_time(infolist, "mon_time"))
@@ -16665,7 +16667,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-weechat.infolist_free(infolist)
+def infolist_free(infolist: str) -> int: ...
 
 # exemple
 weechat.infolist_free(infolist)
@@ -16944,7 +16946,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-hdata = weechat.hdata_get(hdata_name)
+def hdata_get(hdata_name: str) -> str: ...
 
 # exemple
 hdata = weechat.hdata_get("irc_server")
@@ -16984,7 +16986,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-offset = weechat.hdata_get_var_offset(hdata, name)
+def hdata_get_var_offset(hdata: str, name: str) -> int: ...
 
 # exemple
 offset = weechat.hdata_get_var_offset(hdata, "name")
@@ -17089,7 +17091,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-type = weechat.hdata_get_var_type_string(hdata, name)
+def hdata_get_var_type_string(hdata: str, name: str) -> str: ...
 
 # exemple
 weechat.prnt("", "type = %s" % weechat.hdata_get_var_type_string(hdata, "name"))
@@ -17131,7 +17133,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-array_size = weechat.hdata_get_var_array_size(hdata, pointer, name)
+def hdata_get_var_array_size(hdata: str, pointer: str, name: str) -> int: ...
 
 # exemple
 array_size = weechat.hdata_get_var_array_size(hdata, pointer, "name")
@@ -17175,7 +17177,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-array_size = weechat.hdata_get_var_array_size_string(hdata, pointer, name)
+def hdata_get_var_array_size_string(hdata: str, pointer: str, name: str) -> str: ...
 
 # exemple
 array_size = weechat.hdata_get_var_array_size_string(hdata, pointer, "name")
@@ -17215,7 +17217,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-hdata_name = weechat.hdata_get_var_hdata(hdata, name)
+def hdata_get_var_hdata(hdata: str, name: str) -> str: ...
 
 # exemple
 weechat.prnt("", "hdata = %s" % weechat.hdata_get_var_hdata(hdata, "name"))
@@ -17328,7 +17330,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-list = weechat.hdata_get_list(hdata, name)
+def hdata_get_list(hdata: str, name: str) -> str: ...
 
 # exemple
 hdata = weechat.hdata_get("buffer")
@@ -17385,7 +17387,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-rc = weechat.hdata_check_pointer(hdata, list, pointer)
+def hdata_check_pointer(hdata: str, list: str, pointer: str) -> int: ...
 
 # exemple
 hdata = weechat.hdata_get("buffer")
@@ -17442,7 +17444,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-pointer = weechat.hdata_move(hdata, pointer, count)
+def hdata_move(hdata: str, pointer: str, count: int) -> str: ...
 
 # exemple
 hdata = weechat.hdata_get("buffer")
@@ -17505,7 +17507,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-pointer = weechat.hdata_search(hdata, pointer, search, count)
+def hdata_search(hdata: str, pointer: str, search: str, count: int) -> str: ...
 
 # exemple
 hdata = weechat.hdata_get("irc_server")
@@ -17555,7 +17557,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-value = weechat.hdata_char(hdata, pointer, name)
+def hdata_char(hdata: str, pointer: str, name: str) -> int: ...
 
 # exemple
 weechat.prnt("", "letter = %c" % weechat.hdata_char(hdata, pointer, "letter"))
@@ -17601,7 +17603,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-value = weechat.hdata_integer(hdata, pointer, name)
+def hdata_integer(hdata: str, pointer: str, name: str) -> int: ...
 
 # exemple
 hdata = weechat.hdata_get("buffer")
@@ -17647,7 +17649,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-value = weechat.hdata_long(hdata, pointer, name)
+def hdata_long(hdata: str, pointer: str, name: str) -> int: ...
 
 # exemple
 weechat.prnt("", "longvar = %ld" % weechat.hdata_long(hdata, pointer, "longvar"))
@@ -17693,7 +17695,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-value = weechat.hdata_string(hdata, pointer, name)
+def hdata_string(hdata: str, pointer: str, name: str) -> str: ...
 
 # exemple
 hdata = weechat.hdata_get("buffer")
@@ -17741,7 +17743,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-value = weechat.hdata_pointer(hdata, pointer, name)
+def hdata_pointer(hdata: str, pointer: str, name: str) -> str: ...
 
 # exemple
 hdata = weechat.hdata_get("buffer")
@@ -17805,7 +17807,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-value = weechat.hdata_time(hdata, pointer, name)
+def hdata_time(hdata: str, pointer: str, name: str) -> int: ...
 
 # exemple
 buf = weechat.buffer_search_main()
@@ -17861,7 +17863,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-hashtable = weechat.hdata_hashtable(hdata, pointer, name)
+def hdata_hashtable(hdata: str, pointer: str, name: str) -> Dict[str, str]: ...
 
 # exemple
 hdata = weechat.hdata_get("buffer")
@@ -17916,7 +17918,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-rc = weechat.hdata_compare(hdata, pointer1, pointer2, name, case_sensitive)
+def hdata_compare(hdata: str, pointer1: str, pointer2: str, name: str, case_sensitive: int) -> int: ...
 
 # exemple
 hdata = weechat.hdata_get("buffer")
@@ -18042,7 +18044,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-count = weechat.hdata_update(hdata, pointer, hashtable)
+def hdata_update(hdata: str, pointer: str, hashtable: Dict[str, str]) -> int: ...
 
 # exemple : soustrait une heure sur le dernier message affiché dans le tampon courant
 own_lines = weechat.hdata_pointer(weechat.hdata_get("buffer"), weechat.current_buffer(), "own_lines")
@@ -18105,7 +18107,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-value = weechat.hdata_get_string(hdata, property)
+def hdata_get_string(hdata: str, property: str) -> str: ...
 
 # exemple
 weechat.prnt("", "variables dans le hdata : %s" % weechat.hdata_get_string(hdata, "var_keys"))
@@ -18177,7 +18179,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-upgrade_file = weechat.upgrade_new(filename, callback_read, callback_read_data)
+def upgrade_new(filename: str, callback_read: str, callback_read_data: str) -> str: ...
 
 # exemple
 upgrade_file = weechat.upgrade_new("mon_fichier", "", "")
@@ -18225,7 +18227,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-rc = weechat.upgrade_write_object(upgrade_file, object_id, infolist)
+def upgrade_write_object(upgrade_file: str, object_id: int, infolist: str) -> int: ...
 
 # exemple
 weechat.upgrade_write_object(upgrade_file, 1, infolist)
@@ -18264,7 +18266,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-rc = weechat.upgrade_read(upgrade_file)
+def upgrade_read(upgrade_file: str) -> int: ...
 
 # exemple
 weechat.upgrade_read(upgrade_file)
@@ -18297,7 +18299,7 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-weechat.upgrade_close(upgrade_file)
+def upgrade_close(upgrade_file: str) -> int: ...
 
 # exemple
 weechat.upgrade_close(upgrade_file)
