@@ -311,7 +311,7 @@ Script (Python):
 
 [source,python]
 ----
-# prototype
+# prototipo
 weechat.register(name, author, version, license, description, shutdown_function, charset)
 ----
 
@@ -6984,7 +6984,7 @@ _WeeChat ≥ 1.9._
 // TRANSLATION MISSING
 Return string value of an option property.
 
-Prototype:
+Prototipo:
 
 [source,C]
 ----
@@ -18259,10 +18259,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototype
+# prototipo
 rc = weechat.hdata_compare(hdata, pointer1, pointer2, name, case_sensitive)
 
-# example
+# esempio
 hdata = weechat.hdata_get("buffer")
 buffer1 = weechat.buffer_search("irc", "freenode.#weechat")
 buffer2 = weechat.buffer_search("irc", "freenode.#weechat-fr")

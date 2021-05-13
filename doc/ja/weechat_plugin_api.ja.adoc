@@ -15119,10 +15119,10 @@ struct t_gui_completion *completion = weechat_completion_new (weechat_buffer_sea
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 completion = weechat.completion_new(buffer)
 
-# example
+# 例
 completion = weechat.completion_new(weechat.buffer_search_main())
 ----
 
@@ -15168,10 +15168,10 @@ if (weechat_completion_search (completion, "/help filt", 10, 1))
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 rc = weechat.completion_search(completion, data, position, direction)
 
-# example
+# 例
 completion = weechat.completion_new(weechat.buffer_search_main())
 if weechat.completion_search(completion, "/help filt", 10, 1):
     # ...
@@ -15302,10 +15302,10 @@ weechat_completion_free (completion);
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 weechat.completion_free(completion)
 
-# example
+# 例
 weechat.completion_free(completion)
 ----
 
