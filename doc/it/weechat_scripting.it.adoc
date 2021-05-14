@@ -75,9 +75,11 @@ link:weechat_plugin_api.it.html#_hook_process[WeeChat plugin API reference].
 [[languages_specificities]]
 === Specifiche per i linguaggi
 
+[[language_python]]
 ==== Python
 
 // TRANSLATION MISSING
+[[python_module]]
 ===== Module
 
 WeeChat defines a `weechat` module which must be imported with `import weechat`. +
@@ -85,6 +87,7 @@ A Python stub for WeeChat API is available in the repository:
 https://raw.githubusercontent.com/weechat/weechat/master/src/plugins/python/weechat.pyi[weechat.pyi].
 
 // TRANSLATION MISSING
+[[python_functions]]
 ===== Functions
 
 Functions are called with `+weechat.xxx(arg1, arg2, ...)+`.
@@ -93,6 +96,7 @@ Functions `+print*+` are called `+prnt*+` in python (because `print` was a
 reserved keyword in Python 2).
 
 // TRANSLATION MISSING
+[[python_strings]]
 ===== Strings received in callbacks
 
 In Python 3 and with WeeChat ≥ 2.7, the strings received in callbacks have type
@@ -146,21 +150,26 @@ In Python 2, which is now deprecated and should not be used any more, the
 strings sent to callbacks are always of type `str`, and may contain invalid
 UTF-8 data, in the cases mentioned above.
 
+[[language_perl]]
 ==== Perl
 
 // TRANSLATION MISSING
+[[perl_functions]]
 ===== Functions
 
 Functions are called with `+weechat::xxx(arg1, arg2, ...);+`.
 
+[[language_ruby]]
 ==== Ruby
 
 // TRANSLATION MISSING
+[[ruby_init]]
 ===== Initialization
 
 You have to define _weechat_init_ and call _register_ inside.
 
 // TRANSLATION MISSING
+[[ruby_functions]]
 ===== Functions
 
 Functions are called with `+Weechat.xxx(arg1, arg2, ...)+`.
@@ -186,23 +195,29 @@ Weechat.bar_new("name", "off", "0", "window", "", "left", "vertical", "vertical"
                 ["default", "default", "default", "default"], "0", "items")
 ----
 
+[[language_lua]]
 ==== Lua
 
 // TRANSLATION MISSING
+[[lua_functions]]
 ===== Functions
 
 Functions are called with `+weechat.xxx(arg1, arg2, ...)+`.
 
+[[language_tcl]]
 ==== Tcl
 
 // TRANSLATION MISSING
+[[tcl_functions]]
 ===== Functions
 
 Functions are called with `+weechat::xxx arg1 arg2 ...+`.
 
+[[language_guile]]
 ==== Guile (Scheme)
 
 // TRANSLATION MISSING
+[[guile_functions]]
 ===== Functions
 
 Functions are called with `+(weechat:xxx arg1 arg2 ...)+`.
@@ -215,16 +230,20 @@ arguments in Guile:
 * config_new_option
 * bar_new
 
+[[language_javascript]]
 ==== JavaScript
 
 // TRANSLATION MISSING
+[[javascript_functions]]
 ===== Functions
 
 Functions are called with `+weechat.xxx(arg1, arg2, ...);+`.
 
+[[language_php]]
 ==== PHP
 
 // TRANSLATION MISSING
+[[php_functions]]
 ===== Functions
 
 Functions are called with `+weechat_xxx(arg1, arg2, ...);+`.

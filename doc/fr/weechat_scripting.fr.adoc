@@ -72,14 +72,17 @@ link:weechat_plugin_api.en.html#_hook_process[Référence API extension WeeChat]
 [[languages_specificities]]
 === Spécificités des langages
 
+[[language_python]]
 ==== Python
 
+[[python_module]]
 ===== Module
 
 WeeChat définit un module `weechat` qui doit être importé avec `import weechat`. +
 Un "stub" Python pour l'API WeeChat est disponible dans le dépôt :
 https://raw.githubusercontent.com/weechat/weechat/master/src/plugins/python/weechat.pyi[weechat.pyi].
 
+[[python_functions]]
 ===== Fonctions
 
 Les fonctions sont appelées avec `+weechat.xxx(arg1, arg2, ...)+`.
@@ -87,6 +90,7 @@ Les fonctions sont appelées avec `+weechat.xxx(arg1, arg2, ...)+`.
 Les fonctions `+print*+` se nomment `+prnt*+` en python (car `print` était un
 mot clé réservé en Python 2).
 
+[[python_strings]]
 ===== Chaînes reçues dans les fonctions de rappel
 
 En Python 3 et avec WeeChat ≥ 2.7, les chaînes reçues dans les fonctions de
@@ -143,18 +147,23 @@ En Python 2, qui est déconseillé et ne devrait plus être utilisé, les chaîn
 envoyées aux fonctions de rappel sont toujours de type `str`, et peuvent contenir
 des données invalides UTF-8, dans les cas mentionnés ci-dessus.
 
+[[language_perl]]
 ==== Perl
 
+[[perl_functions]]
 ===== Fonctions
 
 Les fonctions sont appelées par `+weechat::xxx(arg1, arg2, ...);+`.
 
+[[language_ruby]]
 ==== Ruby
 
+[[ruby_init]]
 ===== Initialisation
 
 Vous devez définir _weechat_init_ et appeler _register_ dedans.
 
+[[ruby_functions]]
 ===== Fonctions
 
 Les fonctions sont appelées par `+Weechat.xxx(arg1, arg2, ...)+`.
@@ -180,20 +189,26 @@ Weechat.bar_new("name", "off", "0", "window", "", "left", "vertical", "vertical"
                 ["default", "default", "default", "default"], "0", "items")
 ----
 
+[[language_lua]]
 ==== Lua
 
+[[lua_functions]]
 ===== Fonctions
 
 Les fonctions sont appelées par `+weechat.xxx(arg1, arg2, ...)+`.
 
+[[language_tcl]]
 ==== Tcl
 
+[[tcl_functions]]
 ===== Fonctions
 
 Les fonctions sont appelées par `+weechat::xxx arg1 arg2 ...+`.
 
+[[language_guile]]
 ==== Guile (Scheme)
 
+[[guile_functions]]
 ===== Fonctions
 
 Les fonctions sont appelées par `+(weechat:xxx arg1 arg2 ...)+`.
@@ -206,14 +221,18 @@ excède la limite de Guile :
 * config_new_option
 * bar_new
 
+[[language_javascript]]
 ==== JavaScript
 
+[[javascript_functions]]
 ===== Fonctions
 
 Les fonctions sont appelées par `+weechat.xxx(arg1, arg2, ...);+`.
 
+[[language_php]]
 ==== PHP
 
+[[php_functions]]
 ===== Fonctions
 
 Les fonctions sont appelées par `+weechat_xxx(arg1, arg2, ...);+`.

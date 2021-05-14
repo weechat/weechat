@@ -72,8 +72,10 @@ und die Dokumentation für die Funktion `+hook_process+` in link:weechat_plugin_
 [[languages_specificities]]
 === Besonderheiten der einzelnen Skriptsprachen
 
+[[language_python]]
 ==== Python
 
+[[python_module]]
 ===== Module
 
 WeeChat definiert ein `weechat` Module welches mittels `import weechat`
@@ -82,6 +84,7 @@ importiert werden muss. +
 A Python stub for WeeChat API is available in the repository:
 https://raw.githubusercontent.com/weechat/weechat/master/src/plugins/python/weechat.pyi[weechat.pyi].
 
+[[python_functions]]
 ===== Funktionen
 
 Funktionen werden aufgerufen mittels `+weechat.xxx(arg1, arg2, ...)+`.
@@ -89,6 +92,7 @@ Funktionen werden aufgerufen mittels `+weechat.xxx(arg1, arg2, ...)+`.
 Die Funktionen `+print*+` werden bei python durch `+prnt*+` ersetzt
 (`print` war ein reserviertes Schlüsselwort unter Python 2).
 
+[[python_strings]]
 ===== In Callbacks empfangene Zeichen
 
 Mit Python 3 und WeeChat ≥ 2.7 sind die Zeichenketten in Callbacks
@@ -145,18 +149,23 @@ Mit Python 2, das mittlerweile veraltet ist und nicht mehr verwendet werden soll
 Zeichenkette die an die Callbacks gesendet wird immer vom Typ `str` und kann deshalb bei den
 oben genannten Fällen, ungültige UTF-8 Daten enthalten.
 
+[[language_perl]]
 ==== Perl
 
+[[perl_functions]]
 ===== Funktionen
 
 Funktionen werden aufgerufen mittels `+weechat::xxx(arg1, arg2, ...);+`.
 
+[[language_ruby]]
 ==== Ruby
 
+[[ruby_init]]
 ===== Initialization
 
 Es muss _weechat_init_ definiert werden und darin dann _register_ ausgeführt werden.
 
+[[ruby_functions]]
 ===== Functions
 
 Funktionen werden aufgerufen mittels `+Weechat.xxx(arg1, arg2, ...)+`.
@@ -181,20 +190,26 @@ Weechat.bar_new("name", "off", "0", "window", "", "left", "vertical", "vertical"
                 ["default", "default", "default", "default"], "0", "items")
 ----
 
+[[language_lua]]
 ==== Lua
 
+[[lua_functions]]
 ===== Funktionen
 
 Funktionen werden aufgerufen mittels `+weechat.xxx(arg1, arg2, ...)+`.
 
+[[language_tcl]]
 ==== Tcl
 
+[[tcl_functions]]
 ===== Funktionen
 
 Funktionen werden aufgerufen mittels `+weechat::xxx arg1 arg2 ...+`.
 
+[[language_guile]]
 ==== Guile (Scheme)
 
+[[guile_functions]]
 ===== Funktionen
 
 Funktionen werden aufgerufen mittels `+(weechat:xxx arg1 arg2 ...)+`.
@@ -207,14 +222,18 @@ für andere Funktionen), da die Anzahl der Argumente die zulässige Anzahl in Gu
 * config_new_option
 * bar_new
 
+[[language_javascript]]
 ==== JavaScript
 
+[[javascript_functions]]
 ===== Funktionen
 
 Funktionen werden aufgerufen mittels `+weechat.xxx(arg1, arg2, ...);+`.
 
+[[language_php]]
 ==== PHP
 
+[[php_functions]]
 ===== Functions
 
 Funktionen werden aufgerufen mittels `+weechat_xxx(arg1, arg2, ...);+`.
