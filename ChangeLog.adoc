@@ -35,6 +35,7 @@ New features::
   * fifo: change default value of option fifo.file.path to "${weechat_runtime_dir}/weechat_fifo_${info:pid}"
   * irc: evaluate server options "sasl_key" and "ssl_cert"
   * logger: change default value of option logger.file.path to "${weechat_data_dir}/logs"
+  * python: add stub for WeeChat API (issue #1377)
   * relay: evaluate option relay.network.ssl_cert_key, change default value to "${weechat_config_dir}/ssl/relay.pem"
   * script: change default value of option script.scripts.path to "${weechat_cache_dir}/script"
   * trigger: add variables "${tg_shell_argc}" and "${tg_shell_argvN}" in command trigger evaluated strings (issue #1624)

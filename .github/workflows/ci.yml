@@ -41,6 +41,7 @@ jobs:
     - name: Check Python scripts
       run: |
         pylint --additional-builtins=_ doc/docgen.py
+        pylint doc/python_stub.py
         pylint tests/scripts/python/testapigen.py
         pylint tests/scripts/python/testapi.py
         pylint tests/scripts/python/unparse.py
