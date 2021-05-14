@@ -77,7 +77,9 @@ link:weechat_plugin_api.ja.html#_hook_process[WeeChat プラグイン API リフ
 // TRANSLATION MISSING
 ===== Module
 
-WeeChat defines a `weechat` module which must be imported with `import weechat`.
+WeeChat defines a `weechat` module which must be imported with `import weechat`. +
+A Python stub for WeeChat API is available in the repository:
+https://raw.githubusercontent.com/weechat/weechat/master/src/plugins/python/weechat.pyi[weechat.pyi].
 
 // TRANSLATION MISSING
 ===== Functions

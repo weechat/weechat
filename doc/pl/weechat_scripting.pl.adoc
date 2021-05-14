@@ -76,7 +76,10 @@ link:weechat_plugin_api.en.html#_hook_process[Opisu API wtyczek WeeChat] (Angiel
 
 ===== Moduł
 
-WeeChat definiuje moduł `weechat`, który należy zaimportowac poprzez `import weechat`.
+WeeChat definiuje moduł `weechat`, który należy zaimportowac poprzez `import weechat`. +
+// TRANSLATION MISSING
+A Python stub for WeeChat API is available in the repository:
+https://raw.githubusercontent.com/weechat/weechat/master/src/plugins/python/weechat.pyi[weechat.pyi].
 
 ===== Funkcje
 

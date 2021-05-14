@@ -76,7 +76,9 @@ link:weechat_plugin_api.en.html#_hook_process[Référence API extension WeeChat]
 
 ===== Module
 
-WeeChat définit un module `weechat` qui doit être importé avec `import weechat`.
+WeeChat définit un module `weechat` qui doit être importé avec `import weechat`. +
+Un "stub" Python pour l'API WeeChat est disponible dans le dépôt :
+https://raw.githubusercontent.com/weechat/weechat/master/src/plugins/python/weechat.pyi[weechat.pyi].
 
 ===== Fonctions
 

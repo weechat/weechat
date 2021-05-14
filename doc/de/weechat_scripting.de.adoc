@@ -77,7 +77,10 @@ und die Dokumentation für die Funktion `+hook_process+` in link:weechat_plugin_
 ===== Module
 
 WeeChat definiert ein `weechat` Module welches mittels `import weechat`
-importiert werden muss.
+importiert werden muss. +
+// TRANSLATION MISSING
+A Python stub for WeeChat API is available in the repository:
+https://raw.githubusercontent.com/weechat/weechat/master/src/plugins/python/weechat.pyi[weechat.pyi].
 
 ===== Funktionen
 
