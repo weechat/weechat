@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2021-05-12 20:34+0200\n"
-"PO-Revision-Date: 2021-02-06 15:55+0100\n"
+"PO-Revision-Date: 2021-05-15 16:50+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: hu\n"
@@ -12515,98 +12515,3 @@ msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s DCC: nem sikerült kapcsolódni a küldőhöz\n"
-
-#, fuzzy, c-format
-#~ msgid ""
-#~ "%d certificate loaded from user's trusted certificate authorities file: %s"
-#~ msgid_plural ""
-#~ "%d certificates loaded from user's trusted certificate authorities file: "
-#~ "file %s"
-#~ msgstr[0] "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
-#~ msgstr[1] "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
-
-#, fuzzy
-#~ msgid "Error: unable to get HOME directory\n"
-#~ msgstr "%s nem sikerült a HOME könyvtárat beállítani\n"
-
-#, fuzzy
-#~ msgid "Error: not enough memory for home directory\n"
-#~ msgstr "%s nincs elég memória a HOME könyvtárhoz\n"
-
-#, fuzzy
-#~ msgid ""
-#~ "file containing the certificate authorities (\"%h\" will be replaced by "
-#~ "WeeChat home, \"~/.weechat\" by default)"
-#~ msgstr ""
-#~ "modulok elérési útvonala ('%h' helyére automatikusan a WeeChat saját  "
-#~ "könyvtára, alapértelmezésben ~/.weechat, kerül)"
-
-#, fuzzy
-#~ msgid ""
-#~ "path for searching plugins (\"%h\" will be replaced by WeeChat home, \"~/."
-#~ "weechat\" by default)"
-#~ msgstr ""
-#~ "modulok elérési útvonala ('%h' helyére automatikusan a WeeChat saját  "
-#~ "könyvtára, alapértelmezésben ~/.weechat, kerül)"
-
-#, fuzzy, c-format
-#~ msgid "        (default: %s)"
-#~ msgstr "       IRC(%s)\n"
-
-#, fuzzy
-#~ msgid ""
-#~ "path for FIFO file; \"%h\" at beginning of string is replaced by WeeChat "
-#~ "home (\"~/.weechat\" by default); WeeChat PID can be used in path with "
-#~ "${info:pid} (note: content is evaluated, see /help eval)"
-#~ msgstr ""
-#~ "modulok elérési útvonala ('%h' helyére automatikusan a WeeChat saját  "
-#~ "könyvtára, alapértelmezésben ~/.weechat, kerül)"
-
-#, fuzzy
-#~ msgid ""
-#~ "path for WeeChat log files; \"%h\" at beginning of string is replaced by "
-#~ "WeeChat home (\"~/.weechat\" by default); date specifiers are permitted "
-#~ "(see man strftime) (note: content is evaluated, see /help eval)"
-#~ msgstr ""
-#~ "modulok elérési útvonala ('%h' helyére automatikusan a WeeChat saját  "
-#~ "könyvtára, alapértelmezésben ~/.weechat, kerül)"
-
-#, fuzzy
-#~ msgid ""
-#~ "path to a socket file; \"%h\" at beginning of string is replaced by "
-#~ "WeeChat home (\"~/.weechat\" by default), content is evaluated (see /help "
-#~ "eval)"
-#~ msgstr ""
-#~ "modulok elérési útvonala ('%h' helyére automatikusan a WeeChat saját  "
-#~ "könyvtára, alapértelmezésben ~/.weechat, kerül)"
-
-#, fuzzy
-#~ msgid ""
-#~ "local cache directory for scripts; \"%h\" at beginning of string is "
-#~ "replaced by WeeChat home (\"~/.weechat\" by default) (note: content is "
-#~ "evaluated, see /help eval)"
-#~ msgstr ""
-#~ "modulok elérési útvonala ('%h' helyére automatikusan a WeeChat saját  "
-#~ "könyvtára, alapértelmezésben ~/.weechat, kerül)"
-
-#, fuzzy
-#~ msgid ""
-#~ "path for writing incoming files: \"%h\" at beginning of string is "
-#~ "replaced by WeeChat home (\"~/.weechat\" by default) (note: content is "
-#~ "evaluated, see /help eval)"
-#~ msgstr ""
-#~ "modulok elérési útvonala ('%h' helyére automatikusan a WeeChat saját  "
-#~ "könyvtára, alapértelmezésben ~/.weechat, kerül)"
-
-#, fuzzy
-#~ msgid ""
-#~ "path for reading files when sending (when no path is specified by user): "
-#~ "\"%h\" at beginning of string is replaced by WeeChat home (\"~/.weechat\" "
-#~ "by default) (note: content is evaluated, see /help eval)"
-#~ msgstr ""
-#~ "modulok elérési útvonala ('%h' helyére automatikusan a WeeChat saját  "
-#~ "könyvtára, alapértelmezésben ~/.weechat, kerül)"
-
-#, fuzzy
-#~ msgid "secured data: names and values"
-#~ msgstr "a felhasználók le lettek tiltva"
