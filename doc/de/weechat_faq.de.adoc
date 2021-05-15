@@ -776,8 +776,7 @@ Falls macOS genutzt wird,
 muss mittels Homebrew `openssl` installiert werden.
 Eine CA-Datei wird mittels Zertifikaten vom Systemschlüssel geladen.
 
-// TRANSLATION MISSING
-With WeeChat ≤ 3.1, you can set the path to system certificates:
+Ab WeeChat ≤ 3.1 können Sie den Pfad zu Systemzertifikaten festlegen:
 
 ----
 /set weechat.network.gnutls_ca_file "/usr/local/etc/openssl/cert.pem"
@@ -822,9 +821,8 @@ Im folgenden Beispiel muss "xxx" durch den betroffenen Servernamen ersetzt werde
 [[irc_ssl_freenode]]
 === Wie kann ich eine SSL gesicherte Verbindung zum freenode Server herstellen?
 
-// TRANSLATION MISSING
-With WeeChat ≤ 3.1, set option _weechat.network.gnutls_ca_file_ to file with
-certificates:
+Ab WeeChat ≤ 3.1 kann mit der Option _weechat.network.gnutls_ca_file_ eine Datei mit
+Zertifikaten ausgewählt werden:
 
 ----
 /set weechat.network.gnutls_ca_file "/etc/ssl/certs/ca-certificates.crt"
@@ -1149,9 +1147,8 @@ folgenden Befehl in der Shell ausführen:
 $ rm ~/.cache/weechat/script/plugins.xml.gz
 ----
 
-// TRANSLATION MISSING
 [NOTE]
-With WeeChat ≤ 3.1, the path should be: _~/.weechat/script/plugins.xml.gz_.
+Ab WeeChat ≤ 3.1, sollte der Pfad: _~/.weechat/script/plugins.xml.gz_ lauten.
 
 Danach sollte man noch einmal versuchen die Datei herunter zu laden:
 
@@ -1224,8 +1221,7 @@ Damit WeeChat weniger Speicher benötigt, solltest Du folgende Tipps umsetzen:
   Fifo, Logger, Perl, Python, Ruby, Lua, Tcl, Guile, JavaScript, PHP, Spell, Xfer
   (wird für DCC benötigst), siehe `/help weechat.plugin.autoload`.
 * installiere ausschließlich Skripten die Du auch nutzt
-// TRANSLATION MISSING
-* Do not load system certificates if SSL is *NOT* used: turn off this option:
+* Laden Sie keine Systemzertifikate, wenn SSL *NICHT* verwendet wird: Deaktivieren Sie diese Option:
   _weechat.network.gnutls_ca_system_.
 * der Wert der Option _weechat.history.max_buffer_lines_number_ sollte möglichst
   niedrig eingestellt werden oder die Option _weechat.history.max_buffer_lines_minutes_
@@ -1294,9 +1290,8 @@ Beispiel:
 [[sharing_config_files]]
 === Ich möchte meine WeeChat Konfiguration teilen. Welche Dateien kann ich weitergeben und welche sollte ich behalten?
 
-// TRANSLATION MISSING
-You can share configuration files _*.conf_ except the file _sec.conf_ which
-contains your passwords ciphered with your passphrase.
+Sie können Ihre _*.conf_ Konfigurationsdateien teilen, mit Ausnahme der Datei _sec.conf_, die Ihre mit
+Ihrer Passphrase verschlüsselten Kennwörter enthält.
 
 Einige andere Dateien enthalten möglicherweise vertrauliche Informationen wie
 Kennwörter (sofern sie nicht mit dem Befehl `/secure` in _sec.conf_ gesichert werden).
@@ -1335,9 +1330,8 @@ $ LD_PRELOAD=/lib/libpthread.so.0 gdb /Pfad/zu/weechat
 [[supported_os]]
 === Auf welchen Plattformen läuft WeeChat und wird es noch auf andere Betriebssysteme portiert?
 
-// TRANSLATION MISSING
-WeeChat runs fine on most Linux/BSD distributions, GNU/Hurd, Mac OS and Windows
-(Cygwin and Windows Subsystem for Linux).
+WeeChat läuft auf den meisten Linux/BSD-Distributionen, GNU/Hurd, Mac OS und
+Windows (Cygwin und Windows Subsystem für Linux) einwandfrei.
 
 Wir geben unser Bestes, WeeChat auf möglichst viele Plattformen zu portieren.
 Deshalb ist jede Hilfe gerne gesehen, die es uns ermöglicht,

@@ -15,11 +15,9 @@
     (funktioniert ausschließlich mit *weechat-headless* und ist nicht kompatibel mit Option
     "--daemon").
 
-// TRANSLATION MISSING
 *-d*, *--dir* _<path>_::
-    Force a single directory for all WeeChat files (directory is created if not found).
-    Four directories can be given, separated by colons (in this order: config,
-    data, cache, runtime).
+    Erzwingen Sie ein einzelnes Verzeichnis für alle WeeChat-Dateien (Verzeichnis wird erstellt, wenn es nicht gefunden wird).
+    Es können vier Verzeichnisse angegeben werden, die durch Doppelpunkte getrennt sind (folgende Reihenfolge: Konfiguration, Daten, Cache, Laufzeit).
     Wird diese Option nicht genutzt, wird die Umgebungsvariable WEECHAT_HOME genutzt
     (sofern diese vorhanden ist).
 

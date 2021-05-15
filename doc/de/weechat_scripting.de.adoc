@@ -80,8 +80,7 @@ und die Dokumentation für die Funktion `+hook_process+` in link:weechat_plugin_
 
 WeeChat definiert ein `weechat` Module welches mittels `import weechat`
 importiert werden muss. +
-// TRANSLATION MISSING
-A Python stub for WeeChat API is available in the repository:
+Ein Python-Stub für die WeeChat-API ist im Repository verfügbar:
 https://raw.githubusercontent.com/weechat/weechat/master/src/plugins/python/weechat.pyi[weechat.pyi].
 
 [[python_functions]]
@@ -813,13 +812,11 @@ Liste der Konstanten in Skript API:
 |===
 | Kategorie | Konstanten
 
-// TRANSLATION MISSING
 | return codes |
   `WEECHAT_RC_OK` (integer) +
   `WEECHAT_RC_OK_EAT` (integer) +
   `WEECHAT_RC_ERROR` (integer)
 
-// TRANSLATION MISSING
 | Konfigurationsdatei |
   `WEECHAT_CONFIG_READ_OK` (integer) +
   `WEECHAT_CONFIG_READ_MEMORY_ERROR` (integer) +
@@ -836,25 +833,21 @@ Liste der Konstanten in Skript API:
   `WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED` (integer) +
   `WEECHAT_CONFIG_OPTION_UNSET_ERROR` (integer)
 
-// TRANSLATION MISSING
 | sortierte Listen |
   `WEECHAT_LIST_POS_SORT` (string) +
   `WEECHAT_LIST_POS_BEGINNING` (string) +
   `WEECHAT_LIST_POS_END` (string)
 
-// TRANSLATION MISSING
 | Hotlist |
   `WEECHAT_HOTLIST_LOW` (string) +
   `WEECHAT_HOTLIST_MESSAGE` (string) +
   `WEECHAT_HOTLIST_PRIVATE` (string) +
   `WEECHAT_HOTLIST_HIGHLIGHT` (string)
 
-// TRANSLATION MISSING
 | hook Prozesse |
   `WEECHAT_HOOK_PROCESS_RUNNING` (integer) +
   `WEECHAT_HOOK_PROCESS_ERROR` (integer)
 
-// TRANSLATION MISSING
 | hook Connect |
   `WEECHAT_HOOK_CONNECT_OK` (integer) +
   `WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND` (integer) +
@@ -868,7 +861,6 @@ Liste der Konstanten in Skript API:
   `WEECHAT_HOOK_CONNECT_TIMEOUT` (integer) +
   `WEECHAT_HOOK_CONNECT_SOCKET_ERROR` (integer)
 
-// TRANSLATION MISSING
 | hook Signal |
   `WEECHAT_HOOK_SIGNAL_STRING` (string) +
   `WEECHAT_HOOK_SIGNAL_INT` (string) +
@@ -1423,10 +1415,9 @@ weechat.prnt("", "Version %s" % weechat.info_get("version", ""))
 [[infos_other]]
 ==== andere Informationen
 
-// TRANSLATION MISSING
 [source,python]
 ----
-# WeeChat config directory, for example: "/home/user/.config/weechat"
+# Zum Beispiel, das WeeChat-Konfigurationsverzeichnis: "/home/user/.config/weechat"
 weechat.prnt("", "WeeChat config dir: %s" % weechat.info_get("weechat_config_dir", ""))
 
 # Inaktivität der Tastatur

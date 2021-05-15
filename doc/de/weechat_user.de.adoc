@@ -199,13 +199,12 @@ Liste von häufig verwendeten Optionen:
 | CMAKE_INSTALL_PREFIX | Verzeichnis | /usr/local |
   Verzeichnis in welchem WeeChat installiert wird.
 
-// TRANSLATION MISSING
 | WEECHAT_HOME | Verzeichnis | (empty string) |
   Standard-Verzeichnis in welchem die Daten liegen. +
-  With an empty value (recommended), XDG directories are used by default.
-  If non empty, a single directory for all files is used.
-  The value can also  be 4 directories separated by colons, in this order:
-  config, data, cache, runtime.
+  Bei einem leeren Wert (empfohlen) werden standardmäßig XDG-Verzeichnisse verwendet.
+  Wird ein Verzeichnis angegeben, wird dieses Verzeichnis für alle Dateien verwendet.
+  Man kann auch vier, durch Doppelpunkt, getrennten Verzeichnissen angeben. Die Reihenfolge gibt folgende
+  Ziele an: Konfiguration, Daten, Cache, Laufzeit.
 
 | ENABLE_ALIAS | `ON`, `OFF` | ON |
   kompiliert <<alias_plugin,Alias Erweiterung>>.
@@ -558,10 +557,9 @@ z.B. um den Kernel zu aktualisieren oder WeeChat auf einen anderen Computer zu v
 /upgrade -quit
 ----
 
-// TRANSLATION MISSING
-This saves the current state in `*.upgrade` files. You can then either reboot
-or move the whole WeeChat directories (config, data, cache) to another machine,
-and restart WeeChat later with this command:
+Dies speichert den aktuellen Status in `*.upgrade`-Dateien. Sie können dann entweder
+die gesamten WeeChat-Verzeichnisse (Konfiguration, Daten, Cache) neu starten oder auf
+einen anderen Computer verschieben und WeeChat später mit diesem Befehl neu starten:
 
 ----
 $ weechat --upgrade
@@ -639,8 +637,7 @@ Einige Umgebungsvariablen werden von WeeChat genutzt, sofern sie definiert wurde
 [width="100%",cols="1m,6",options="header"]
 |===
 | Name                 | Beschreibung
-// TRANSLATION MISSING
-| WEECHAT_HOME         | Das WeeChat Verzeichnis (beinhaltet Konfigurationsdateien, Protokolldateien, Skripten, ...). Same behavior as <<compile_with_cmake,CMake option>> `WEECHAT_HOME`.
+| WEECHAT_HOME         | Das WeeChat Verzeichnis (beinhaltet Konfigurationsdateien, Protokolldateien, Skripten, ...). Gleiches Verhalten wie <<compile_with_cmake,CMake option>> `WEECHAT_HOME`.
 | WEECHAT_PASSPHRASE   | Die Passphrase zum Entschlüsseln von schutzwürdigen Daten.
 | WEECHAT_EXTRA_LIBDIR | Ein zusätzliches Verzeichnis um Erweiterungen zu installieren (vom "plugins" Verzeichnis in dieses Verzeichnis).
 |===
@@ -648,28 +645,26 @@ Einige Umgebungsvariablen werden von WeeChat genutzt, sofern sie definiert wurde
 [[files_and_directories]]
 === Dateien und Verzeichnisse
 
-// TRANSLATION MISSING
 [[xdg_directories]]
 ==== XDG directories
 
-WeeChat uses XDG directories by default
-(according to the https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html[XDG Base Directory Specification]). +
-A single home directory for all files can be forced by CMake option `WEECHAT_HOME`,
-the environment variable `WEECHAT_HOME` or the command-line option `-d` / `--dir`.
-
-When a single WeeChat home directory is not forced, XDG directories are used
-and set like this:
+WeeChat verwendet standardmäßig XDG-Verzeichnisse
+(gemäß https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html[XDG Base Directory Specification]). +
+Ein einzelnes Home-Verzeichnis für alle Dateien kann durch die CMake-Option `WEECHAT_HOME`,
+die Umgebungsvariable `WEECHAT_HOME` oder die Befehlszeilenoption `-d` / `--dir` erzwungen werden.
+Wenn ein einzelnes WeeChat-Ausgangsverzeichnis nicht erzwungen wird, werden XDG-Verzeichnisse wie folgt
+verwendet und festgelegt:
 
 [width="100%",cols="1,2m,5",options="header"]
 |===
-| Directory | Default value            | Fallback value
-| config    | $XDG_CONFIG_HOME/weechat | `$HOME/.config/weechat` if `$XDG_CONFIG_HOME` is not defined or empty.
-| data      | $XDG_DATA_HOME/weechat   | `$HOME/.local/share/weechat` if `$XDG_DATA_HOME` is not defined or empty.
-| cache     | $XDG_CACHE_HOME/weechat  | `$HOME/.cache/weechat` if `$XDG_CACHE_HOME` is not defined or empty.
-| runtime   | $XDG_RUNTIME_DIR/weechat | Same as _cache_ directory if `$XDG_RUNTIME_DIR` is not defined or empty.
+| Verzeichnis  | Standardwert             | Fallback-Wert
+| Konfiguration| $XDG_CONFIG_HOME/weechat | `$HOME/.config/weechat` falls `$XDG_CONFIG_HOME` nicht definiert oder leer ist.
+| Daten        | $XDG_DATA_HOME/weechat   | `$HOME/.local/share/weechat` falls `$XDG_DATA_HOME` nicht definiert oder leer ist.
+| Cache        | $XDG_CACHE_HOME/weechat  | `$HOME/.cache/weechat` falls `$XDG_CACHE_HOME` nicht definiert oder leer ist.
+| Laufzeit     | $XDG_RUNTIME_DIR/weechat | Wie beim _Cache_ Verzeichnis, falls `$XDG_RUNTIME_DIR` nicht definiert oder leer ist.
 |===
 
-The configuration files are created with default values the first time you run WeeChat.
+Die Konfigurationsdateien werden beim ersten Ausführen von WeeChat mit Standardwerten erstellt.
 
 [[weechat_directories]]
 ==== WeeChat Verzeichnisse
@@ -679,10 +674,8 @@ Es gibt folgende WeeChat Verzeichnisse:
 [width="100%",cols="1m,3",options="header"]
 |===
 | Pfad ^(1)^             | Beschreibung
-// TRANSLATION MISSING
-| ~/.config/weechat/      | WeeChat configuration files: `*.conf`, certificates, etc.
-// TRANSLATION MISSING
-| ~/.local/share/weechat/ | WeeChat data files: logs, scripts, scripts data, xfer files, etc.
+| ~/.config/weechat/      | WeeChat Konfigurationsdateien: `*.conf`, Zertifikate, etc.
+| ~/.local/share/weechat/ | WeeChat Daten: Protokolldateien, Skripts, Skriptdaten, xfer-Daten, etc.
 |    logs/                | Logdateien (eine Datei pro Buffer).
 |    python/              | Python-Skripten.
 |       autoload/         | Python-Skripten die beim Start automatisch ausgeführt werden ^(2)^.
@@ -700,15 +693,12 @@ Es gibt folgende WeeChat Verzeichnisse:
 |       autoload/         | JavaScript-Skripten die beim Start automatisch ausgeführt werden ^(2)^.
 |    php/                 | PHP-Skripten.
 |       autoload/         | PHP-Skripten die beim Start automatisch ausgeführt werden ^(2)^.
-// TRANSLATION MISSING
-| ~/.cache/weechat/       | WeeChat cache files: scripts cache.
-// TRANSLATION MISSING
-| /run/user/1000/weechat/ | WeeChat runtime files: FIFO pipe, Relay UNIX sockets.
+| ~/.cache/weechat/       | WeeChat Cache-Dateien: Skriptcache.
+| /run/user/1000/weechat/ | WeeChat Laufzeitdateien: FIFO-Pipe, Relay UNIX sockets.
 |===
 
-// TRANSLATION MISSING
 [NOTE]
-^(1)^ XDG directories may be different according to your environment variables `XDG_*`. +
+^(1)^ XDG-Verzeichnisse können je nach Umgebungsvariablen unterschiedlich sein `XDG_*`. +
 ^(2)^ Das Verzeichnis besteht meistens aus symbolischen Links welche auf das eigentliche Skript zeigen.
 
 [[weechat_files]]
@@ -2794,9 +2784,8 @@ Sie können WeeChat fern steuern indem Sie Befehle oder einen Text an die FIFO P
 schicken (dazu muss die Option "fifo.file.enabled" aktiviert sein (standardmäßig
 ist diese Option aktiviert).
 
-// TRANSLATION MISSING
-The FIFO pipe is located in WeeChat runtime directory and is called
-_weechat_fifo_12345_ by default (where _12345_ is the WeeChat process id).
+Die FIFO-Pipe befindet sich im WeeChat-Laufzeitverzeichnis und wird standardmäßig
+_weechat_fifo_12345_ benannt (wobei _12345_ die WeeChat-Prozess-ID ist).
 
 Die Syntax der FIFO Pipe Befehle/Text sieht wie folgt aus:
 
@@ -2912,13 +2901,11 @@ WeeChat immer ob dieser Verbindung sicher ist.
 
 Einige Optionen dienen dazu eine SSL Verbindung zu nutzen:
 
-// TRANSLATION MISSING
 weechat.network.gnutls_ca_system::
-    load system's default trusted certificate authorities on startup
+    lädt beim Start die standardmäßigen vertrauenswürdigen Zertifizierungsstellen des Systems
 
-// TRANSLATION MISSING
 weechat.network.gnutls_ca_user::
-    extra file(s) with certificate authorities
+    zusätzliche Datei (en) von Zertifizierungsstellen
 
 irc.server.xxx.ssl_cert::
     Datei mit den SSL Zertifikaten die genutzt werden um automatisch Ihren Nick
@@ -2946,10 +2933,9 @@ $ mkdir -p ~/.config/weechat/ssl
 $ wget -O ~/.config/weechat/ssl/CAs.pem https://www.spi-inc.org/ca/spi-cacert.crt
 ----
 
-// TRANSLATION MISSING
 [NOTE]
-You must replace `~/.config/weechat` by the path to your WeeChat config directory
-which can also be for example `~/.weechat`.
+Sie müssen `~/.config/weechat` durch den Pfad zu Ihrem WeeChat-Konfigurationsverzeichnis ersetzen,
+das auch beispielsweise `~/.weechat` sein kann.
 
 [NOTE]
 Es ist möglich mehrere Zertifikate in der Datei CAs.pem zu verwenden.
@@ -2971,10 +2957,9 @@ $ cd ~/.config/weechat/ssl
 $ openssl req -nodes -newkey rsa:2048 -keyout nick.pem -x509 -days 365 -out nick.pem
 ----
 
-// TRANSLATION MISSING
 [NOTE]
-You must replace `~/.config/weechat` by the path to your WeeChat config directory
-which can also be for example `~/.weechat`.
+Sie müssen `~/.config/weechat` durch den Pfad zu Ihrem WeeChat-Konfigurationsverzeichnis ersetzen,
+das auch beispielsweise `~/.weechat` sein kann.
 
 * In WeeChat, sofern der Server "oftc" schon hinzufügt wurde:
 
@@ -3022,10 +3007,9 @@ Ein Schlüssel kann mit folgendem Befehl erzeugt werden:
 $ openssl ecparam -genkey -name prime256v1 -out ~/.config/weechat/ecdsa.pem
 ----
 
-// TRANSLATION MISSING
 [NOTE]
-You must replace `~/.config/weechat` by the path to your WeeChat config directory
-which can also be for example `~/.weechat`.
+Sie müssen `~/.config/weechat` durch den Pfad zu Ihrem WeeChat-Konfigurationsverzeichnis ersetzen,
+das auch beispielsweise `~/.weechat` sein kann.
 
 Um den öffentlichen Schlüssel zu erhalten (base64 enkodiert) muss
 folgender Befehl ausgeführt werden:
@@ -3618,8 +3602,7 @@ Man kann SSL mittels eines selbst erstellten Zertifikates und eines privaten
 Schlüssels nutzen. Um SSL für die Verbindung zu aktivieren stellt man dem
 Protokollnamen ein "ssl" voran.
 
-// TRANSLATION MISSING
-The default path to certificate/key is defined by option
+Der Standardpfad zum Zertifikat/Schlüssel wird durch die Option definiert
 <<option_relay.network.ssl_cert_key,relay.network.ssl_cert_key>>.
 
 Ein Zertifikat und einen privaten Schlüssel kann man mit folgenden Befehlen
@@ -3631,10 +3614,9 @@ $ cd ~/.config/weechat/ssl
 $ openssl req -nodes -newkey rsa:2048 -keyout relay.pem -x509 -days 365 -out relay.pem
 ----
 
-// TRANSLATION MISSING
 [NOTE]
-You must replace `~/.config/weechat` by the path to your WeeChat config directory
-which can also be for example `~/.weechat`.
+Sie müssen `~/.config/weechat` durch den Pfad zu Ihrem WeeChat-Konfigurationsverzeichnis ersetzen,
+das auch beispielsweise `~/.weechat` sein kann.
 
 Sollte WeeChat schon gestartet worden sein, kann man das Zertifikat und der private
 Schlüssel mittels folgendem Befehl nachträglich geladen werden:
