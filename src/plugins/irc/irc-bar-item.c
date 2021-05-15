@@ -555,6 +555,7 @@ irc_bar_item_tls_version (const void *pointer, void *data,
             switch (version)
             {
                 case GNUTLS_TLS_VERSION_MAX:
+                case GNUTLS_TLS1_3:
                     color = IRC_COLOR_ITEM_TLS_VERSION_OK;
                     break;
                 case GNUTLS_TLS1_2:
