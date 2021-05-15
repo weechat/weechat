@@ -554,7 +554,6 @@ irc_bar_item_tls_version (const void *pointer, void *data,
             version = gnutls_protocol_get_version (server->gnutls_sess);
             switch (version)
             {
-                case GNUTLS_TLS_VERSION_MAX:
                 case GNUTLS_TLS1_3:
                     color = IRC_COLOR_ITEM_TLS_VERSION_OK;
                     break;
