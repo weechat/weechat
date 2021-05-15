@@ -3265,7 +3265,7 @@ irc_config_init ()
     irc_config_color_item_tls_version_insecure = weechat_config_new_option (
         irc_config_file, ptr_section,
         "item_tls_version_insecure", "color",
-        N_("color for insecure tls versions in bar item \"tls_version\""),
+        N_("color for insecure TLS versions in bar item \"tls_version\""),
         NULL, -1, 0, "red", NULL, 0,
         NULL, NULL, NULL,
         &irc_config_change_color_item_tls_version, NULL, NULL,
