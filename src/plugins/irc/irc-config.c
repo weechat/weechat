@@ -3257,7 +3257,7 @@ irc_config_init ()
     irc_config_color_item_tls_version_deprecated = weechat_config_new_option (
         irc_config_file, ptr_section,
         "item_tls_version_deprecated", "color",
-        N_("color for deprecated tls versions in bar item \"tls_version\""),
+        N_("color for deprecated TLS versions in bar item \"tls_version\""),
         NULL, -1, 0, "yellow", NULL, 0,
         NULL, NULL, NULL,
         &irc_config_change_color_item_tls_version, NULL, NULL,
