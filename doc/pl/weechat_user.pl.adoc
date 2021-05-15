@@ -839,9 +839,9 @@ Inne dostępne elementy (nie używane domyślnie w paskach):
 | mouse_status                 | `M`                      | Status obsługi myszy (pusty jeśli obsługa myszy jest wyłączona).
 | spell_dict                   | `fr,en`                  | Słowniki używane w obecnym buforze.
 | spell_suggest                | `print,prone,prune`      | Sugestie dla słowa pod kursorem (jeśli zawiera błąd).
-| window_number                | `2`                      | Numer obecnego okna.
 // TRANSLATION MISSING
 | tls_version                  | `TLS1.3`                 | TLS version in use for current IRC server.
+| window_number                | `2`                      | Numer obecnego okna.
 |===
 
 [[command_line]]
