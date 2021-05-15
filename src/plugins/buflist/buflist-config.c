@@ -69,6 +69,7 @@ char *buflist_config_format_buffer_eval = NULL;
 char *buflist_config_format_buffer_current_eval = NULL;
 char *buflist_config_format_hotlist_eval = NULL;
 
+
 /*
  * Reloads buflist configuration file.
  */
