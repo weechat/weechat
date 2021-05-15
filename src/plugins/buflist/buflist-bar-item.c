@@ -598,18 +598,11 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
 
         /* tls version */
         ptr_tls_version = weechat_buffer_get_string (ptr_buffer, "localvar_tls_version");
-        if (ptr_tls_version && ptr_tls_version[0])
-        {
-            weechat_hashtable_set (
-                buflist_hashtable_extra_vars,
-                "format_tls_version",
-                weechat_config_string (buflist_config_format_tls_version));
-        }
-        else
-        {
-                weechat_hashtable_set (buflist_hashtable_extra_vars,
-                                       "format_tls_version", "");
-        }
+        weechat_hashtable_set (
+            buflist_hashtable_extra_vars,
+            "format_tls_version",
+            (ptr_tls_version && ptr_tls_version[0]) ?
+            weechat_config_string (buflist_config_format_tls_version) : "");
 
         /* check condition: if false, the buffer is not displayed */
         condition = weechat_string_eval_expression (
