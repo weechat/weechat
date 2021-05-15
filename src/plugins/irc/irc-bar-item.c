@@ -522,7 +522,7 @@ irc_bar_item_lag (const void *pointer, void *data,
 }
 
 /*
- * Returns content of bar item "tls_version": bar item with tls version value.
+ * Returns content of bar item "tls_version": bar item with TLS version value.
  */
 
 char *
