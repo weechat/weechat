@@ -34,6 +34,7 @@
 #include "irc-channel.h"
 #include "irc-ctcp.h"
 #include "irc-ignore.h"
+#include "irc-mode.h"
 #include "irc-msgbuffer.h"
 #include "irc-nick.h"
 #include "irc-notify.h"
@@ -1218,6 +1219,20 @@ irc_config_server_check_value_cb (const void *pointer, void *data,
                     return 0;
                 }
                 break;
+            case IRC_SERVER_OPTION_REGISTERED_MODE:
+                if (!value || !value[0])
+                    break;
+                /* Only one character should be accepted */
+                if (value[1])
+                {
+                    weechat_printf (
+                            NULL,
+                            _("%s%s: invalid registered mode, must be a single "
+                              "character"),
+                            weechat_prefix ("error"), IRC_PLUGIN_NAME);
+                    return 0;
+                }
+                break;
         }
     }
 
@@ -1269,6 +1284,9 @@ irc_config_server_change_cb (const void *pointer, void *data,
                     break;
                 case IRC_SERVER_OPTION_NOTIFY:
                     irc_notify_new_for_server (ptr_server);
+                    break;
+                case IRC_SERVER_OPTION_REGISTERED_MODE:
+                    irc_mode_registered_mode_change (ptr_server);
                     break;
             }
         }

@@ -33,5 +33,6 @@ extern int irc_mode_channel_set (struct t_irc_server *server,
                                  const char *modes_arguments);
 extern void irc_mode_user_set (struct t_irc_server *server, const char *modes,
                                int reset_modes);
+extern void irc_mode_registered_mode_change (struct t_irc_server *server);
 
 #endif /* WEECHAT_PLUGIN_IRC_MODE_H */
