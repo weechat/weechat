@@ -43,6 +43,7 @@ Alphabetically:
 * Elizabeth Myers (Elizacat)
 * Elián Hanisch (m4v)
 * Emanuele Giaquinta
+* Emir Sarı
 * emk
 * Érico Nogueira
 * Esteban I. Ruiz Moreno (Exio)
