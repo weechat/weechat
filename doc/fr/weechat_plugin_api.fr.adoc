@@ -2804,6 +2804,13 @@ première étendue à la dernière) :
   `+0.2+` +
   `+65536+`
 
+| `+${translate:xxx}+` +
+  _(WeeChat ≥ 3.2)_ |
+  Chaîne traduite (dépend de la langue utilisée par WeeChat pour afficher les
+  messages). |
+  `+${translate:Plugin}+` |
+  `+Extension+` (exemple en Français)
+
 | `+${sec.data.nom}+` |
   Valeur de la donnée sécurisée `nom`. |
   `+${sec.data.freenode_pass}+` |

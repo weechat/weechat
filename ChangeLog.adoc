@@ -26,6 +26,7 @@ New features::
   * core: evaluate option weechat.plugin.path, change default value to "${weechat_data_dir}/plugins"
   * core: add options to customize commands executed on system signals received (SIGHUP, SIGQUIT, SIGTERM, SIGUSR1, SIGUSR2) (issue #1595)
   * core: quit WeeChat by default when signal SIGHUP is received in normal run, reload configuration in weechat-headless (issue #1595)
+  * api: add translated string in evaluation of expressions with "translate:xxx"
   * api: add evaluation of WeeChat directories with "${weechat_xxx_dir}" in evaluated strings
   * api: add optional key "directory" in hashtable options of function/modifier string_eval_path_home
   * api: add supported prefixes "${weechat_xxx_dir}" in function mkdir_home

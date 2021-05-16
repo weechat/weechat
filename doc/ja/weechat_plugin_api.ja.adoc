@@ -2796,6 +2796,13 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
   `+0.2+` +
   `+65536+`
 
+// TRANSLATION MISSING
+| `+${translate:xxx}+` +
+  _(WeeChat ≥ 3.2)_ |
+  Translated string (depends on the language used by WeeChat to display messages). |
+  `+${translate:Plugin}+` |
+  `+Extension+` (example in French)
+
 | `+${sec.data.name}+` |
   セキュアデータ `name` の値 |
   `+${sec.data.freenode_pass}+` |

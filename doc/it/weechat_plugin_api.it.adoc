@@ -2308,17 +2308,15 @@ str2 = weechat.string_input_for_buffer("/test")   # ""
 str3 = weechat.string_input_for_buffer("//test")  # "/test"
 ----
 
+// TRANSLATION MISSING
 ==== string_eval_expression
 
-// TRANSLATION MISSING
 _WeeChat ≥ 0.4.0, updated in 0.4.2, 0.4.3, 1.0, 1.1, 1.2, 1.3, 1.6, 1.8, 2.0,
 2.2, 2.3, 2.7, 2.9, 3.1 and 3.2._
 
-// TRANSLATION MISSING
 Evaluate an expression and return result as a string.
 Special variables with format `+${variable}+` are expanded (see table below).
 
-// TRANSLATION MISSING
 [NOTE]
 Since version 1.0, nested variables are supported, for example:
 `+${color:${variable}}+`.
@@ -2335,7 +2333,6 @@ char *weechat_string_eval_expression (const char *expr,
 
 Argomenti:
 
-// TRANSLATION MISSING
 * _expr_: the expression to evaluate (see <<eval_conditions,conditions>> and
   <<eval_variables,variables>>)
 * _pointers_: hashtable with pointers (keys must be string, values must be
@@ -2363,7 +2360,6 @@ Argomenti:
 ** _regex_replace_: the replacement text to use with _regex_, to replace
    text in _expr_ (the _regex_replace_ is evaluated on each match of _regex_
    against _expr_, until no match is found)
-// TRANSLATION MISSING
 ** _debug_: debug level (string with integer number ≥ 1), if enabled, a key
    "debug_output" is added in hashtable _options_:
 *** _1_: enable debug
@@ -2371,7 +2367,6 @@ Argomenti:
 
 Valore restituito:
 
-// TRANSLATION MISSING
 * evaluated expression (must be freed by calling "free" after use), or NULL
   if problem (invalid expression or not enough memory)
 
@@ -2440,15 +2435,12 @@ options = {
 str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, options)  # "password=*** password=***"
 ----
 
-// TRANSLATION MISSING
 [[eval_conditions]]
 ===== Conditions
 
-// TRANSLATION MISSING
 List of logical operators that can be used in conditions (by order of priority,
 from first used to last):
 
-// TRANSLATION MISSING
 [width="100%",cols="2,8,4,4",options="header"]
 |===
 | Operator | Description | Examples | Results
@@ -2468,11 +2460,9 @@ from first used to last):
   `+0+`
 |===
 
-// TRANSLATION MISSING
 List of comparison operators that can be used in conditions (by order of priority,
 from first used to last):
 
-// TRANSLATION MISSING
 [width="100%",cols="2,8,4,4",options="header"]
 |===
 | Operator | Description | Examples | Results
@@ -2614,7 +2604,6 @@ from first used to last):
   `+1+`
 |===
 
-// TRANSLATION MISSING
 The comparison is made using floating point numbers if the two expressions are
 valid numbers, with one of the following formats:
 
@@ -2622,27 +2611,22 @@ valid numbers, with one of the following formats:
 * floating point number (examples: 5.2, -7.5, 2.83e-2) _(WeeChat ≥ 2.0)_
 * hexadecimal number (examples: 0xA3, -0xA3) _(WeeChat ≥ 2.0)_
 
-// TRANSLATION MISSING
 To force a string comparison, you can add double quotes around each expression,
 for example:
 
 * `50 > 100` returns 0 (number comparison)
 * `"50" > "100"` returns 1 (string comparison)
 
-// TRANSLATION MISSING
 [[eval_variables]]
 ===== Variables
 
-// TRANSLATION MISSING
 List of variables expanded in expression (by order of priority, from first
 expanded to last):
 
-// TRANSLATION MISSING
 [width="100%",cols="2,8,4,4",options="header"]
 |===
 | Format | Description | Examples | Results
 
-// TRANSLATION MISSING
 | `+${raw:xxx}+` +
   _(WeeChat ≥ 3.1)_ |
   Raw string (not evaluated). |
@@ -2654,7 +2638,6 @@ expanded to last):
   `+${name}+` |
   `+value+`
 
-// TRANSLATION MISSING
 | `+${weechat_xxx_dir}+` |
   A WeeChat directory: `+${weechat_config_dir}+`, `+${weechat_data_dir}+`,
   `+${weechat_cache_dir}+` or `+${weechat_runtime_dir}+`. |
@@ -2801,7 +2784,6 @@ expanded to last):
   `+1.0+` +
   `+lightblue+`
 
-// TRANSLATION MISSING
 | `+${base_encode:base,xxx}+` +
   _(WeeChat ≥ 2.9)_ |
   String encoded in base 16, 32 or 64. |
@@ -2812,7 +2794,6 @@ expanded to last):
   `+ORSXG5BAON2HE2LOM4======+` +
   `+dGVzdCBzdHJpbmc=+`
 
-// TRANSLATION MISSING
 | `+${base_decode:base,xxx}+` +
   _(WeeChat ≥ 2.9)_ |
   String decoded from base 16, 32 or 64. |
@@ -2872,6 +2853,12 @@ expanded to last):
   `+2+` +
   `+0.2+` +
   `+65536+`
+
+| `+${translate:xxx}+` +
+  _(WeeChat ≥ 3.2)_ |
+  Translated string (depends on the language used by WeeChat to display messages). |
+  `+${translate:Plugin}+` |
+  `+Extension+` (example in French)
 
 | `+${sec.data.name}+` |
   Value of the secured data `name`. |

@@ -726,6 +726,25 @@ eval_string_if (const char *text, struct t_eval_context *eval_context)
 }
 
 /*
+ * Translates text.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+eval_translate (const char *text)
+{
+    const char *ptr_string;
+
+    if (!text || !text[0])
+        return strdup ("");
+
+    ptr_string = gettext (text);
+
+    return strdup ((ptr_string) ? ptr_string : "");
+}
+
+/*
  * Gets value of hdata using "path" to a variable.
  *
  * Note: result must be freed after use.
@@ -1034,10 +1053,11 @@ end:
  *  18. an environment variable (format: env:XXX)
  *  19. a ternary operator (format: if:condition?value_if_true:value_if_false)
  *  20. calculate result of an expression (format: calc:xxx)
- *  21. an option (format: file.section.option)
- *  22. a buffer local variable
- *  23. a pointer name from hashtable "pointers"
- *  24. a hdata variable (format: hdata.var1.var2 or hdata[list].var1.var2
+ *  21. a translated string (format: translate:xxx)
+ *  22. an option (format: file.section.option)
+ *  23. a buffer local variable
+ *  24. a pointer name from hashtable "pointers"
+ *  25. a hdata variable (format: hdata.var1.var2 or hdata[list].var1.var2
  *                        or hdata[ptr].var1.var2 or hdata[ptr_name].var1.var2)
  *
  * See /help in WeeChat for examples.
@@ -1285,7 +1305,16 @@ eval_replace_vars_cb (void *data, const char *text)
         goto end;
     }
 
-    /* 21. option: if found, return this value */
+    /*
+     * 21. translated text
+     */
+    if (strncmp (text, "translate:", 10) == 0)
+    {
+        value = eval_translate (text + 10);
+        goto end;
+    }
+
+    /* 22. option: if found, return this value */
     if (strncmp (text, "sec.data.", 9) == 0)
     {
         ptr_value = hashtable_get (secure_hashtable_data, text + 9);
@@ -1328,7 +1357,7 @@ eval_replace_vars_cb (void *data, const char *text)
         }
     }
 
-    /* 22. local variable in buffer */
+    /* 23. local variable in buffer */
     ptr_buffer = hashtable_get (eval_context->pointers, "buffer");
     if (ptr_buffer)
     {
@@ -1340,7 +1369,7 @@ eval_replace_vars_cb (void *data, const char *text)
         }
     }
 
-    /* 23. hdata */
+    /* 24. hdata */
     value = eval_string_hdata (text, eval_context);
 
 end:
