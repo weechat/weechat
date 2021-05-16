@@ -868,8 +868,7 @@ andere Items die zur Verfügung stehen (die aber nicht standardmäßig in einer 
 | mouse_status                 | `M`                      | Status der Maus (keine Anzeige, falls Maus deaktiviert).
 | spell_dict                   | `de,en`                  | zeigt an welche Wörterbücher für die Rechtschreibung im aktuellen Buffer genutzt werden.
 | spell_suggest                | `Glück,Glocke,Block`     | Vorschläge für ein falsch geschriebenes Wort.
-// TRANSLATION MISSING
-| tls_version                  | `TLS1.3`                 | TLS version in use for current IRC server.
+| tls_version                  | `TLS1.3`                 | TLS Version die für den IRC Server genutzt wird.
 | window_number                | `2`                      | Nummer des aktuellen Fensters.
 |===
 
