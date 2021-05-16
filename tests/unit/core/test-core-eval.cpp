@@ -25,6 +25,7 @@ extern "C"
 {
 #include <stdio.h>
 #include <string.h>
+#include <locale.h>
 #include <regex.h>
 #include "src/core/wee-eval.h"
 #include "src/core/wee-config.h"
