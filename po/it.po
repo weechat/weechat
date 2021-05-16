@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-05-16 09:47+0200\n"
+"POT-Creation-Date: 2021-05-16 13:28+0200\n"
 "PO-Revision-Date: 2021-05-15 16:50+0200\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -9262,12 +9262,6 @@ msgstr ""
 "prefisso)"
 
 #, fuzzy
-msgid "color for higher supported TLS version in bar item \"tls_version\""
-msgstr ""
-"colore per il prefisso del nick (stringa visualizzata dopo il nick nel "
-"prefisso)"
-
-#, fuzzy
 msgid "color for deprecated TLS versions in bar item \"tls_version\""
 msgstr ""
 "colore per il prefisso del nick (stringa visualizzata dopo il nick nel "
@@ -9275,6 +9269,12 @@ msgstr ""
 
 #, fuzzy
 msgid "color for insecure TLS versions in bar item \"tls_version\""
+msgstr ""
+"colore per il prefisso del nick (stringa visualizzata dopo il nick nel "
+"prefisso)"
+
+#, fuzzy
+msgid "color for higher supported TLS version in bar item \"tls_version\""
 msgstr ""
 "colore per il prefisso del nick (stringa visualizzata dopo il nick nel "
 "prefisso)"

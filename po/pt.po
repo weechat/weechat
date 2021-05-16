@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-05-16 09:47+0200\n"
+"POT-Creation-Date: 2021-05-16 13:28+0200\n"
 "PO-Revision-Date: 2021-05-15 16:50+0200\n"
 "Last-Translator: Vasco Almeida <vascomalmeida@sapo.pt>\n"
 "Language-Team: Portuguese <>\n"
@@ -9699,15 +9699,15 @@ msgid "color for nick modes in bar item \"input_prompt\""
 msgstr "cor dos modos de nick no item de barra \"input_prompt\""
 
 #, fuzzy
-msgid "color for higher supported TLS version in bar item \"tls_version\""
-msgstr "cor dos modos de nick no item de barra \"input_prompt\""
-
-#, fuzzy
 msgid "color for deprecated TLS versions in bar item \"tls_version\""
 msgstr "cor dos modos de nick no item de barra \"input_prompt\""
 
 #, fuzzy
 msgid "color for insecure TLS versions in bar item \"tls_version\""
+msgstr "cor dos modos de nick no item de barra \"input_prompt\""
+
+#, fuzzy
+msgid "color for higher supported TLS version in bar item \"tls_version\""
 msgstr "cor dos modos de nick no item de barra \"input_prompt\""
 
 #, fuzzy

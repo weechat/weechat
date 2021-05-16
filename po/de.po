@@ -24,7 +24,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-05-16 09:47+0200\n"
+"POT-Creation-Date: 2021-05-16 13:28+0200\n"
 "PO-Revision-Date: 2021-05-15 23:44+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -10629,12 +10629,6 @@ msgstr ""
 "werden soll"
 
 #, fuzzy
-msgid "color for higher supported TLS version in bar item \"tls_version\""
-msgstr ""
-"Farbe in der der Nick-Modus in dem Bar-Item \"input_prompt\" angezeigt "
-"werden soll"
-
-#, fuzzy
 msgid "color for deprecated TLS versions in bar item \"tls_version\""
 msgstr ""
 "Farbe in der der Nick-Modus in dem Bar-Item \"input_prompt\" angezeigt "
@@ -10642,6 +10636,12 @@ msgstr ""
 
 #, fuzzy
 msgid "color for insecure TLS versions in bar item \"tls_version\""
+msgstr ""
+"Farbe in der der Nick-Modus in dem Bar-Item \"input_prompt\" angezeigt "
+"werden soll"
+
+#, fuzzy
+msgid "color for higher supported TLS version in bar item \"tls_version\""
 msgstr ""
 "Farbe in der der Nick-Modus in dem Bar-Item \"input_prompt\" angezeigt "
 "werden soll"

@@ -1,5 +1,5 @@
-#
 # Copyright (C) 2013 Hasan Kiran <sunder67@hotmail.com>
+# Copyright (C) 2020 Emir SARI <bitigchi@me.com>
 #
 # This file is part of WeeChat, the extensible chat client.
 #
@@ -20,9 +20,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-05-16 09:47+0200\n"
-"PO-Revision-Date: 2021-05-15 16:50+0200\n"
-"Last-Translator: Hasan Kiran <sunder67@hotmail.com>\n"
+"POT-Creation-Date: 2021-05-16 13:28+0200\n"
+"PO-Revision-Date: 2021-05-16 13:39+0200\n"
+"Last-Translator: Emir SARI <bitigchi@me.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
@@ -32,13 +32,13 @@ msgstr ""
 "X-Generator: Lokalize 1.5\n"
 
 msgid "any string"
-msgstr ""
+msgstr "herhangi bir dizi"
 
 msgid "any char"
-msgstr ""
+msgstr "herhangi bir karakter"
 
 msgid "max chars"
-msgstr ""
+msgstr "en çok karakter"
 
 msgid ""
 "a WeeChat color name (default, black, (dark)gray, white, (light)red, "
@@ -47,6 +47,11 @@ msgid ""
 "text color only, not background): \"*\" for bold, \"!\" for reverse, \"/\" "
 "for italic, \"_\" for underline"
 msgstr ""
+"bir WeeChat renk adı (öntanımlı, siyah, (koyu) gri, beyaz, (açık) kırmızı, "
+"(açık) yeşil, kahverengi, yeşil, (açık) mavi, (açık) mor, (açık) turkuaz), "
+"bir uçbirim renk numarası veya arması; özniteliklere renkten önce izin "
+"verilir (yalnızca metin rengi için, arka plan değil): kalın için \"*\", ters "
+"yazı için \"!\", eğik yazı için \"/\", altı çizili için \"_\""
 
 msgid "description"
 msgstr "açıklama"
@@ -58,21 +63,20 @@ msgid "values"
 msgstr "değerler"
 
 msgid "default value"
-msgstr "varsayılan değer"
+msgstr "öntanımlı değer"
 
 #. TRANSLATORS: please do not translate "(null)"
 msgid "undefined value allowed (null)"
-msgstr ""
+msgstr "izin verilen tanımlanmamış değer (null)"
 
 msgid "Alias"
-msgstr ""
+msgstr "Arma"
 
 msgid "Command"
-msgstr ""
+msgstr "Komut"
 
-#, fuzzy
 msgid "Completion"
-msgstr "derlenme"
+msgstr "Tamamlama"
 
 msgid "IRC color"
 msgstr "İRC rengi"
@@ -84,31 +88,31 @@ msgid "Plugin"
 msgstr "Eklenti"
 
 msgid "Name"
-msgstr "İsim"
+msgstr "Ad"
 
 msgid "Description"
-msgstr ""
+msgstr "Açıklama"
 
 msgid "Arguments"
-msgstr ""
+msgstr "Argümanlar"
 
 msgid "Hashtable (input)"
-msgstr ""
+msgstr "Sağlama tablosu (girdi)"
 
 msgid "Hashtable (output)"
-msgstr ""
+msgstr "Sağlama tablosu (çıktı)"
 
 msgid "Pointer"
-msgstr ""
+msgstr "İşaretleyici"
 
 msgid "Lists"
-msgstr ""
+msgstr "Listeler"
 
 msgid "Variables"
-msgstr ""
+msgstr "Değişkenler"
 
 msgid "Update allowed:"
-msgstr ""
+msgstr "İzin verilen güncelleme:"
 
 msgid "Option"
 msgstr "Seçenek"
@@ -117,23 +121,24 @@ msgid "Type"
 msgstr "Tür"
 
 msgid "Constants"
-msgstr ""
+msgstr "Sabitler"
 
 #, c-format
 msgid "%sAnother command \"%s\" already exists for plugin \"%s\""
-msgstr ""
+msgstr "%sŞu eklenti için başka bir komut (\"%s\") halihazırda var: \"%s\""
 
 #, c-format
 msgid "%sBad file descriptor (%d) used in hook_fd"
-msgstr ""
+msgstr "%sHatalı dosya açıklayıcısı (%d) hook_fd içinde kullanılmış"
 
 #, c-format
 msgid "End of command '%s', timeout reached (%.1fs)"
-msgstr ""
+msgstr "'%s' komutu sonu, zaman aşımına ulaşıldı (%.1fs)"
 
 #, c-format
 msgid "System clock skew detected (%+ld seconds), reinitializing all timers"
 msgstr ""
+"Sistem saati hatalı (%+ld saniye), tüm zamanlayıcılar yeniden başlatılıyor"
 
 #. TRANSLATORS: "%s %s" after "compiled on" is date and time
 #, c-format
@@ -141,11 +146,14 @@ msgid ""
 "WeeChat %s Copyright %s, compiled on %s %s\n"
 "Developed by Sébastien Helleu <flashcode@flashtux.org> - %s"
 msgstr ""
+"WeeChat %s Telif hakkı %s, %s %s tarihinde derlendi\n"
+"Geliştirici: Sébastien Helleu <flashcode@flashtux.org> - %s"
 
 #, c-format
 msgid "Usage: %s [option...] [plugin:option...]\n"
 msgstr "Kullanım: %s [seçenek...] [eklenti:seçenek...]\n"
 
+#, fuzzy
 msgid ""
 "  -a, --no-connect         disable auto-connect to servers at startup\n"
 "  -c, --colors             display default colors in terminal\n"
@@ -171,28 +179,56 @@ msgid ""
 "  -v, --version            display WeeChat version\n"
 "  plugin:option            option for plugin (see man weechat)\n"
 msgstr ""
+"  -a, --no-connect         başlangıçta kendiliğinden bağlanmayı kapat\n"
+"  -c, --colors             uçbirimde öntanımlı renkleri görüntüle\n"
+"  -d, --dir <yol>          WeeChat ev dizinini ayarla (öntanımlı: ~/."
+"weechat)\n"
+"                           (bu seçenek ayarlanmamışsa ortam değişkeni\n"
+"                           WEECHAT_HOME okunur\n"
+"  -t, --temp-dir           geçici WeeChat ev dizini oluşturur ve çıkışta "
+"siler\n"
+"                           (\"-d\" seçeneği ile uyumsuz)\n"
+"  -h, --help               bu yardımı görüntüle\n"
+"  -l, --license            WeeChat lisansını görüntüle\n"
+"  -p, --no-plugin          başlangıçta hiçbir eklentiyi yükleme\n"
+"  -P, --plugins <eklenti>  başlangıçta yalnızca bu eklentileri yükle\n"
+"                           (bkz. /help weechat.plugin.autoload)\n"
+"  -r, --run-command <kmt>  başladıktan sonra bu komutları çalıştır;\n"
+"                           çoğu komutlar noktalı virgül ile ayrılabilir,\n"
+"                           bu seçenek çoklu olarak kullanılabilir\n"
+"  -s, --no-script          başlangıçta hiçbir betiği yükleme\n"
+"      --upgrade            WeeChat'i oturum dosyaları kullanarak yükselt\n"
+"                           (bkz. /help upgrade in WeeChat)\n"
+"  -v, --version            WeeChat sürümünü görüntüle\n"
+"  plugin:option            eklentiler için seçenek (bkz. man weechat)\n"
 
 msgid "Extra options in headless mode:\n"
-msgstr ""
+msgstr "Başsız kip için ek seçenekler:\n"
 
 msgid ""
 "      --daemon             run WeeChat as a daemon (fork, new process group, "
 "file descriptors closed);\n"
 msgstr ""
+"      --daemon             WeeChat'i arka plan işlemi olarak çalıştır "
+"(çatal, yeni işlem grubu, açıklayıcılar kapalı);\n"
 
 msgid ""
 "                           (by default in headless mode WeeChat is blocking "
 "and does not run in background)\n"
 msgstr ""
+"                           (öntanımlı olarak başsız kipte WeeChat engeller "
+"ve arka planda çalışmaz)\n"
 
 msgid ""
 "      --stdout             display log messages on standard output instead "
 "of writing them in log file\n"
 msgstr ""
+"      --stdout             günlük iletilerini dosyaya yazmak yerine standart "
+"çıktı'da görüntüle\n"
 
 msgid ""
 "                           (option ignored if option \"--daemon\" is given)\n"
-msgstr ""
+msgstr "                           (\"--daemon\" verilmişse yok sayılır)\n"
 
 msgid ""
 "Debug options (for tools like valgrind, DO NOT USE IN PRODUCTION):\n"
@@ -201,14 +237,21 @@ msgid ""
 "      --no-gnutls          disable init/deinit of gnutls\n"
 "      --no-gcrypt          disable init/deinit of gcrypt\n"
 msgstr ""
+"Hata ayıklama seçenekleri (valgrind vb. araçlar için, NORMALDE "
+"KULLANMAYIN):\n"
+"      --no-dlclose         işlev dlclose'u eklenti yüklemesi bittikten sonra "
+"çağırmayın\n"
+"      --no-gnutls          gnutls başlat/sonlandır devre dışı bırak\n"
+"      --no-gcrypt          gcrypt başlat/sonlandır devre dışı bırak\n"
 
 #, c-format
 msgid "Error: missing argument for \"%s\" option\n"
-msgstr ""
+msgstr "Hata: \"%s\" seçeneği için hatalı argüman\n"
 
 msgid "WeeChat is running in headless mode (Ctrl-C to quit)."
-msgstr ""
+msgstr "WeeChat başsız kipte çalışıyor (çıkmak için Ctrl-C)."
 
+#, fuzzy
 msgid ""
 "Welcome to WeeChat!\n"
 "\n"
@@ -224,26 +267,44 @@ msgid ""
 "You can add and connect to an IRC server with /server and /connect commands "
 "(see /help server)."
 msgstr ""
+"WeeChat'e hoş geldiniz!\n"
+"\n"
+"WeeChat'e yeniyseniz hızlı başlangıç kılavuzunu veya biraz daha vaktiniz\n"
+"varsa kullanıcı kılavuzunu okumanız önerilir; bu belgeler WeeChat'in temel\n"
+"konseptlerini açıklarlar.\n"
+"Tüm WeeChat belgelendirmesi https://weechat.org/doc adresinde mevcuttur.\n"
+"\n"
+"Ek olarak, /help komutu ile doğrudan satır içi yardım alabilirsiniz (komutu\n"
+"tamamlamak için Sekme düğmesini kullanın).\n"
+"/fset komutu WeeChat'i özelleştirmenize yardımcı olur.\n"
+"\n"
+"IRC sunucularına /server ve /connect komutları ile bağlanabilirsiniz (bkz.\n"
+"/help server)."
 
 #. TRANSLATORS: the "under %s" can be "under screen" or "under tmux"
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "%sWarning: WeeChat is running under %s and $TERM is \"%s\", which can cause "
 "display bugs; $TERM should be set to one of these values: %s"
 msgstr ""
+"%sUyarı: WeeChat %s altında çalışıyor ve $TERM \"%s\".\n"
+"Bu görüntü hatalar doğurabilir; $TERM aşağıdaki değerlerden\n"
+"birine ayarlanmalıdır: %s"
 
 #, c-format
 msgid "%sYou should add this line in the file %s:  %s"
-msgstr ""
+msgstr "%s%s dosyasına şu satırı eklemelisiniz: %s"
 
 #, c-format
 msgid ""
 "%sWarning: cannot set the locale; make sure $LANG and $LC_* variables are "
 "correct"
 msgstr ""
+"%sUyarı: Yerel ayarlarda sorun var; $LANG ve $LC_* değişkenlerinin doğru "
+"olduğundan emin olun"
 
 msgid "List of bars:"
-msgstr ""
+msgstr "Çubuklar listesi:"
 
 #. TRANSLATORS: the last thing displayed is "width:" or "height:" with its value
 #, c-format
@@ -251,305 +312,313 @@ msgid ""
 "  %s%s%s: %s%s%s (conditions: %s), %s, filling: %s(top/bottom)/%s(left/"
 "right), %s: %s"
 msgstr ""
+"  %s%s%s: %s%s%s (koşullar: %s), %s, doldurma: %s(üst/alt)/%s(sol/sağ), %s: "
+"%s"
 
 #. TRANSLATORS: "hidden" is displayed in list of buffers
 msgid "(hidden)"
-msgstr ""
+msgstr "(gizli)"
 
 msgid "height"
-msgstr ""
+msgstr "yükseklik"
 
 msgid "width"
-msgstr ""
+msgstr "genişlik"
 
 msgid "auto"
-msgstr ""
+msgstr "kendiliğinden"
 
 #, c-format
 msgid "    priority: %d, fg: %s, bg: %s, bg_inactive: %s, items: %s%s"
-msgstr ""
+msgstr "    öncelik: %d, fg: %s, bg: %s, bg_inactive: %s, ögeler: %s%s"
 
 msgid ", with separator"
-msgstr ""
+msgstr ", ayırıcı ile"
 
 msgid "No bar defined"
-msgstr ""
+msgstr "Çubuk tanımlanmamış"
 
 msgid "List of bar items:"
-msgstr ""
+msgstr "Çubuk ögelerinin listesi:"
 
 #, c-format
 msgid "  %s (plugin: %s)"
 msgstr "  %s (eklenti: %s)"
 
 msgid "No bar item defined"
-msgstr ""
+msgstr "Çubuk ögesi tanımlanmamış"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sNot enough memory (%s)"
-msgstr "%sYeterli bellek yok"
+msgstr "%sBellek yetersiz (%s)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sInvalid type \"%s\" for bar \"%s\""
-msgstr "%s%s:  \"%s\" adresi bulunamadı"
+msgstr "%sŞu çubuk için hatalı tür \"%s\": \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sInvalid position \"%s\" for bar \"%s\""
-msgstr "%sHata: dosya \"%s\" oluşturulamaz"
+msgstr "%sŞu çubuk için hatalı konum \"%s\": \"%s\""
 
 #, c-format
 msgid "Bar \"%s\" created"
-msgstr ""
+msgstr "\"%s\" çubuğu oluşturuldu"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sFailed to create bar \"%s\""
-msgstr "%sHata: dosya \"%s\" oluşturulamaz"
+msgstr "%s\"%s\" çubuğu oluşturulamadı"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sInvalid size \"%s\" for bar \"%s\""
-msgstr "%s%s:  \"%s\" adresi bulunamadı"
+msgstr "%sŞu çubuk için hatalı boyut \"%s\": \"%s\""
 
 msgid "All bars have been deleted"
-msgstr ""
+msgstr "Tüm çubuklar silindi"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sBar \"%s\" not found"
-msgstr "%sTuş \"%s\" bulunamadı"
+msgstr "%s\"%s\" çubuğu bulunamadı"
 
 #, c-format
 msgid "Bar \"%s\" deleted"
-msgstr ""
+msgstr "\"%s\" çubuğu silindi"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sUnable to set option \"%s\" for bar \"%s\""
-msgstr "%sHata: dosya \"%s\" oluşturulamaz"
+msgstr "%sŞu çubuk için \"%s\" seçeneği ayarlanamadı: \"%s\""
 
 #, c-format
 msgid "%sWindow not found for \"%s\" command"
-msgstr ""
+msgstr "%s\"%s\" komutu için pencere bulunamadı"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sUnable to scroll bar \"%s\""
-msgstr "%s%s: sunucuya yeniden bağlanılıyor..."
+msgstr "%s\"%s\" çubuğu kaydırılamıyor"
 
 #, c-format
 msgid "%sBuffer number \"%d\" is out of range (it must be between 1 and %d)"
-msgstr ""
+msgstr "%s%d numaralı arabellek erim dışı (1 ve %d arasında olmalı)"
 
 msgid "Buffers list:"
-msgstr ""
+msgstr "Arabellekler listesi:"
 
-#, fuzzy, c-format
+#, c-format
 msgid "  %s[%s%d%s]%s %s%s.%s%s%s (notify: %s%s%s)%s%s"
-msgstr "  %s[%s%d%s]%s (%s) %s%s%s (notify: %s)"
+msgstr "  %s[%s%d%s]%s %s%s.%s%s%s (bildir: %s%s%s)%s%s"
 
 #, c-format
 msgid "%sBuffer name \"%s\" is reserved for WeeChat"
-msgstr ""
+msgstr "%s\"%s\" adı WeeChat için ayrılmış"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sInvalid buffer number: \"%s\""
-msgstr "%sHata: dosya \"%s\" oluşturulamaz"
+msgstr "%sGeçersiz arabellek numarası: \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sBuffer \"%s\" not found"
-msgstr "%s%s: sunucu \"%s\" bulunamadı"
+msgstr "%s\"%s\" arabelleği bulunamadı"
 
 #, c-format
 msgid ""
 "%sRenumbering is allowed only if option weechat.look.buffer_auto_renumber is "
 "off"
 msgstr ""
+"%sYeniden numaralandırmaya yalnızca weechat.look.buffer_auto_renumber "
+"seçeneği kapalıysa izin verilir"
 
 #, c-format
 msgid "%sWeeChat main buffer can't be closed"
-msgstr ""
+msgstr "%sWeeChat ana arabelleği kapatılamaz"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Notify for \"%s%s%s\": \"%s%s%s\""
-msgstr "%s %s%s%s kanalının konusu \"%s%s\""
+msgstr "\"%s%s%s\" için bildirim: \"%s%s%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sUnable to set notify level \"%s\""
-msgstr "%sHata: dosya \"%s\" oluşturulamaz"
+msgstr "%s\"%s\" bildirim düzeyi ayarlanamıyor"
 
 #, c-format
 msgid "Local variables for buffer \"%s\":"
-msgstr ""
+msgstr "\"%s\" arabelleği için yerel değişkenler:"
 
 #, c-format
 msgid "No local variable defined for buffer \"%s\""
-msgstr ""
+msgstr "\"%s\" arabelleği için bir yerel değişken tanımlanmamış"
 
 #, c-format
 msgid "%sInvalid color number \"%s\" (must be between %d and %d)"
-msgstr ""
+msgstr "%sGeçersiz renk numarası \"%s\" (%d ve %d arasında olmalı)"
 
 #, c-format
 msgid "%sColor \"%s\" is not defined in palette"
-msgstr ""
+msgstr "%s\"%s\" rengi palette tanımlanmamış"
 
 #, c-format
 msgid "%sPlugin \"%s\" not found"
 msgstr "%s\"%s\" eklentisi bulunamadı"
 
 msgid "Raw content of buffers has been written in log file"
-msgstr ""
+msgstr "Arabelleklerin ham içeriği günlük dosyasına yazıldı"
 
 #, c-format
 msgid "Debug disabled for \"%s\""
-msgstr ""
+msgstr "\"%s\" için hata ayıklama devre dışı"
 
 msgid "error"
 msgstr "hata"
 
 #, c-format
 msgid "%sError in expression to evaluate"
-msgstr ""
+msgstr "%sDeğerlendirilecek ifadede hata"
 
 #, c-format
 msgid "  %s[%s%s%s]%s buffer: %s%s%s / tags: %s / regex: %s %s"
 msgstr ""
+"  %s[%s%s%s]%s arabellek: %s%s%s / etiketler: %s / düzenli ifade: %s %s"
 
 msgid "(disabled)"
 msgstr "(devre dışı)"
 
 msgid "Message filtering enabled"
-msgstr "İleti filtreleme etkin"
+msgstr "İleti süzme etkin"
 
 msgid "Message filtering disabled"
-msgstr "İleti filtreleme devre dışı"
+msgstr "İleti süzme devre dışı"
 
 msgid "Message filters:"
-msgstr "İleti filtreleri:"
+msgstr "İleti süzgeçleri:"
 
 msgid "No message filter defined"
-msgstr ""
+msgstr "Herhangi bir ileti süzgeci tanımlanmamış"
 
 #, c-format
 msgid "Filter \"%s\" enabled"
-msgstr "Filtre \"%s\" etkin"
+msgstr "\"%s\" süzgeci etkin"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sFilter \"%s\" not found"
-msgstr "%sTuş \"%s\" bulunamadı"
+msgstr "%s\"%s\" süzgeci bulunamadı"
 
 #, c-format
 msgid "Filter \"%s\" disabled"
-msgstr "Filtre \"%s\" devre dışı"
+msgstr "\"%s\" süzgeci devre dışı"
 
 #, c-format
 msgid "%sYou must specify at least tags or regex for filter"
-msgstr ""
+msgstr "%sSüzgeç için en azından etiketler veya düzenli ifade belirtmelisiniz"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Filter \"%s\" updated:"
-msgstr "Filtre \"%s\" eklendi:"
+msgstr "\"%s\" süzgeci güncellendi:"
 
 #, c-format
 msgid "Filter \"%s\" added:"
-msgstr "Filtre \"%s\" eklendi:"
+msgstr "\"%s\" süzgeci eklendi:"
 
 #, c-format
 msgid "Filter \"%s\" renamed to \"%s\""
-msgstr ""
+msgstr "\"%s\" süzgeci \"%s\" olarak yeniden adlandırıldı"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sUnable to rename filter \"%s\" to \"%s\""
-msgstr "%sHata: dosya \"%s\" oluşturulamaz"
+msgstr "%s\"%s\" süzgeci \"%s\" olarak yeniden adlandırılamıyor"
 
 msgid "All filters have been deleted"
-msgstr ""
+msgstr "Tüm süzgeçler silindi"
 
 #, c-format
 msgid "Filter \"%s\" deleted"
-msgstr "Filtre \"%s\" silindi"
+msgstr "\"%s\" süzgeci silindi"
 
 #, c-format
 msgid "Option \"%s%s%s\":"
-msgstr "Seçenek \"%s%s%s\":"
+msgstr "\"%s%s%s\" seçeneği:"
 
 msgid "boolean"
-msgstr ""
+msgstr "boole"
 
 msgid "(undefined)"
-msgstr ""
+msgstr "(tanımlanmamış)"
 
 msgid "current value"
 msgstr "mevcut değer"
 
 msgid "string"
-msgstr ""
+msgstr "dizi"
 
 msgid "integer"
-msgstr ""
+msgstr "tamsayı"
 
 msgid "color"
 msgstr "renk"
 
 #, c-format
 msgid "%sNo help available, \"%s\" is not a command or an option"
-msgstr ""
+msgstr "%sYardım mevcut değil, \"%s\" bir komut veya seçenek değil"
 
 msgid "Buffer command history:"
-msgstr ""
+msgstr "Arabellek komut geçmişi:"
 
 msgid "default command:"
-msgstr "varsayılan komut:"
+msgstr "öntanımlı komut:"
 
 #. TRANSLATORS: first "%d" is number of keys
 #, c-format
 msgid "%d key bindings added or redefined for context \"%s\":"
 msgstr ""
+"%d düğme bağıntısı şu bağlam için eklendi veya yeniden tanımlandı: \"%s\":"
 
 #. TRANSLATORS: first "%d" is number of keys
 #, c-format
 msgid "%d key bindings deleted for context \"%s\":"
-msgstr ""
+msgstr "%d düğme bağıntısı şu bağlam için silindi: \"%s\":"
 
 #, c-format
 msgid "No key binding added, redefined or removed for context \"%s\""
 msgstr ""
+"Hiçbir düğme bağıntısı şu bağlam için eklenmedi, yeniden tanımlanmadı veya "
+"kaldırılmadı: \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sUnable to bind key \"%s\""
-msgstr "%sHata: dosya \"%s\" oluşturulamaz"
+msgstr "%s\"%s\" düğmesi bağlanamıyor"
 
 #, c-format
 msgid "Key \"%s\" has already default value"
-msgstr ""
+msgstr "\"%s\" düğmesinin halihazırda öntanımlı bir değeri var"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sUnable to unbind key \"%s\""
-msgstr "%sHata: dosya \"%s\" oluşturulamaz"
+msgstr "%s\"%s\" düğmesinin bağıntısı kaldırılamıyor"
 
 #, c-format
 msgid "%sKey \"%s\" not found"
-msgstr "%sTuş \"%s\" bulunamadı"
+msgstr "%s\"%s\" düğmesi bulunamadı"
 
 #, c-format
 msgid "No key binding defined for context \"%s\""
-msgstr ""
+msgstr "\"%s\" bağlamı için bir düğme bağıntısı tanımlanmamış"
 
 #. TRANSLATORS: first "%d" is number of keys
 #, c-format
 msgid "%d key bindings for context \"%s\":"
-msgstr ""
+msgstr "Şu bağlam için %d düğme bağıntısı: \"%s\":"
 
 #, c-format
 msgid "No default key binding for context \"%s\""
-msgstr ""
+msgstr "\"%s\" bağlamı için öntanımlı düğme bağıntısı yok"
 
 #. TRANSLATORS: first "%d" is number of keys
 #, c-format
 msgid "%d default key bindings for context \"%s\":"
-msgstr ""
+msgstr "Şu bağlam için %d düğme bağıntısı: \"%s\":"
 
 msgid "Key:"
-msgstr "Tuş:"
+msgstr "Düğme:"
 
 msgid "No key found"
-msgstr "Tuş bulunamadı"
+msgstr "Düğme bulunamadı"
 
 #, c-format
 msgid ""
@@ -557,93 +626,97 @@ msgid ""
 "meta code (tip: use alt-k to find key codes); if you want to bind this key "
 "anyway, turn off option weechat.look.key_bind_safe"
 msgstr ""
+"%s\"%s\" düğmesini bağıntılamak güvenli değil; çünkü bir CTRL veya Meta "
+"koduyla başlamıyor (ipucu: düğme kodlarını bulmak için Alt+K kullanın); eğer "
+"yine de bağıntılamak isterseniz weechat.look.key_bind_safe seçeneğini kapatın"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sContext \"%s\" not found"
-msgstr "%sTuş \"%s\" bulunamadı"
+msgstr "%s\"%s\" bağlamı bulunamadı"
 
 #, c-format
 msgid "Default key bindings restored for context \"%s\""
-msgstr ""
+msgstr "\"%s\" bağlamı için öntanımlı düğme bağıntıları eski haline getirildi"
 
 #, c-format
 msgid "%sArgument \"-yes\" is required for keys reset (security reason)"
 msgstr ""
+"%s\"-yes\" argümanı düğmelerin sıfırlanması için gerekli (güvenlik gerekçeli)"
 
-#, c-format
+#, fuzzy, c-format
 msgid "%d new key added"
 msgid_plural "%d new keys added (context: \"%s\")"
-msgstr[0] ""
+msgstr[0] "%d yeni düğme eklendi"
 
 msgid "Stored layouts:"
-msgstr ""
+msgstr "Depolanan dizilimler:"
 
 msgid " (current layout)"
-msgstr ""
+msgstr " (geçerli dizilim)"
 
 msgid "No stored layouts"
-msgstr ""
+msgstr "Depolanan dizilim yok"
 
 #. TRANSLATORS: %s%s%s is "buffers" or "windows" or "buffers+windows"
 #, c-format
 msgid "Layout of %s%s%s stored in \"%s\" (current layout: %s)"
-msgstr ""
+msgstr "%s%s%s dizilimi \"%s\" içinde depolandı (geçerli dizilim: %s)"
 
 msgid "buffers"
-msgstr ""
+msgstr "arabellekler"
 
 msgid "windows"
-msgstr ""
+msgstr "pencereler"
 
 msgid "Layout of buffers+windows reset (current layout: -)"
-msgstr ""
+msgstr "Arabellekler+pencereler dizilimi sıfırlandı (geçerli dizilim: -)"
 
 #, c-format
 msgid "Layout \"%s\" deleted (current layout: %s)"
-msgstr ""
+msgstr "\"%s\" dizilimi silindi (geçerli dizilim: %s)"
 
 #. TRANSLATORS: %s%s%s is "buffers" or "windows" or "buffers+windows"
 #, c-format
 msgid "Layout of %s%s%s reset in \"%s\""
-msgstr ""
+msgstr "%s%s%s dizilimi \"%s\" içinde sıfırlandı"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sLayout \"%s\" not found"
-msgstr "%sTuş \"%s\" bulunamadı"
+msgstr "%s\"%s\" dizilimi bulunamadı"
 
 #, c-format
 msgid "%sLayout \"%s\" already exists for \"%s\" command"
-msgstr ""
+msgstr "%s\"%s\" dizilimi \"%s\" komutu için halihazırda var"
 
 #, c-format
 msgid "Layout \"%s\" has been renamed to \"%s\""
-msgstr ""
+msgstr "\"%s\" diziliminin adı \"%s\" olarak değiştirildi"
 
 msgid "Mouse enabled"
 msgstr "Fare etkin"
 
 msgid "Mouse disabled"
-msgstr "Fare devredışı"
+msgstr "Fare devre dışı"
 
 msgid "Plugins loaded:"
 msgstr "Yüklü eklentiler:"
 
 #, c-format
 msgid "  written by \"%s\", license: %s"
-msgstr ""
+msgstr "  \"%s\" tarafından yazıldı, lisans: %s"
 
 msgid "    commands hooked:"
-msgstr ""
+msgstr "    kancalanan komutlar:"
 
 msgid "    command_run hooked:"
-msgstr ""
+msgstr "    kancalanan command_run:"
 
 msgid "    timers hooked:"
-msgstr ""
+msgstr "    kancalanan zamanlayıcılar:"
 
 #, c-format
 msgid "      %d %s (%d calls remaining)"
-msgstr ""
+msgstr "      %d %s (%d kalan çağrı)"
 
 msgid "second"
 msgid_plural "seconds"
@@ -655,14 +728,14 @@ msgstr[0] "milisaniye"
 
 #, c-format
 msgid "      %d %s (no call limit)"
-msgstr ""
+msgstr "      %d %s (çağrı limiti yok)"
 
 msgid "    fd hooked:"
-msgstr ""
+msgstr "    kancalanan fd:"
 
 #, c-format
 msgid "      %d (flags: 0x%x:%s%s%s)"
-msgstr ""
+msgstr "      %d (bayraklar: 0x%x:%s%s%s)"
 
 msgid " read"
 msgstr " oku"
@@ -671,28 +744,28 @@ msgid " write"
 msgstr " yaz"
 
 msgid " exception"
-msgstr ""
+msgstr " istisna"
 
 msgid "    process hooked:"
-msgstr ""
+msgstr "    kancalanan işlem:"
 
 #, c-format
 msgid "      command: '%s', child pid: %d"
-msgstr ""
+msgstr "      komut: '%s', alt pid: %d"
 
 msgid "    connect hooked:"
-msgstr ""
+msgstr "    kancalanan bağlantı:"
 
 #, c-format
 msgid "      socket: %d, address: %s, port: %d, child pid: %d"
-msgstr ""
+msgstr "      soket: %d, adres: %s, kapı: %d, alt pid: %d"
 
 msgid "    prints hooked:"
-msgstr ""
+msgstr "    kancalanan yazdırmalar:"
 
 #, c-format
 msgid "      buffer: %s, message: \"%s\""
-msgstr ""
+msgstr "      arabellek: %s, ileti: \"%s\""
 
 msgid "(none)"
 msgstr "(hiçbiri)"
@@ -702,23 +775,23 @@ msgid "      message: \"%s\""
 msgstr "      ileti: \"%s\""
 
 msgid "    signals hooked:"
-msgstr ""
+msgstr "    kancalanan sinyaller:"
 
 #, c-format
 msgid "      signal: %s"
-msgstr ""
+msgstr "      sinyal: %s"
 
 msgid "(all)"
 msgstr "(tümü)"
 
 msgid "    configuration options hooked:"
-msgstr ""
+msgstr "    kancalanan yapılandırma seçenekleri:"
 
 msgid "    completions hooked:"
-msgstr ""
+msgstr "    kancalanan tamamlamalar:"
 
 msgid "    modifiers hooked:"
-msgstr ""
+msgstr "    kancalanan değiştiriciler:"
 
 msgid "No plugin found"
 msgstr "Eklenti bulunamadı"
@@ -727,110 +800,111 @@ msgid "  (no plugin)"
 msgstr "  (eklenti yok)"
 
 msgid "List of proxies:"
-msgstr ""
+msgstr "Vekiller listesi:"
 
 #, c-format
 msgid "  %s%s%s: %s, %s/%d (%s), username: %s, password: %s"
-msgstr "  %s%s%s: %s, %s/%d (%s), kullanıcıadı: %s, parola: %s"
+msgstr "  %s%s%s: %s, %s/%d (%s), kullanıcı adı: %s, parola: %s"
 
 msgid "No proxy defined"
-msgstr ""
+msgstr "Hiçbir vekil tanımlanmadı"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sInvalid type \"%s\" for proxy \"%s\""
-msgstr "%s%s:  \"%s\" adresi bulunamadı"
+msgstr "%sŞu vekil için yanlış tür \"%s\": \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Proxy \"%s\" added"
-msgstr "Filtre \"%s\" eklendi:"
+msgstr "Vekil \"%s\" eklendi"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sFailed to add proxy \"%s\""
-msgstr "%sHata: dosya \"%s\" oluşturulamaz"
+msgstr "%sVekil \"%s\" eklenemedi"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sInvalid port \"%s\" for proxy \"%s\""
-msgstr "%s%s:  \"%s\" adresi bulunamadı"
+msgstr "%sŞu vekil için yanlış kapı \"%s\": \"%s\""
 
 msgid "All proxies have been deleted"
-msgstr ""
+msgstr "Tüm vekiller silindi"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sProxy \"%s\" not found"
-msgstr "%sTuş \"%s\" bulunamadı"
+msgstr "%s\"%s\" vekili bulunamadı"
 
 msgid "Proxy deleted"
-msgstr ""
+msgstr "Vekil silindi"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sUnable to set option \"%s\" for proxy \"%s\""
-msgstr "%sHata: dosya \"%s\" oluşturulamaz"
+msgstr "%sŞu vekil için \"%s\" seçeneği ayarlanamadı: \"%s\""
 
 #, c-format
 msgid ""
 "%sYou must confirm /%s command with extra argument \"-yes\" (see /help %s)"
 msgstr ""
+"%s/%s komutunu ek \"-yes\" argümanı ile onaylamalısınız (bkz. /help %s)"
 
 #, c-format
 msgid "Options reloaded from %s"
-msgstr ""
+msgstr "Seçenekler, %s konumundan yeniden yüklendi"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sFailed to reload options from %s"
-msgstr "%sHata: dosya \"%s\" oluşturulamaz"
+msgstr "%sSeçenekler, %s konumundan yeniden yüklenemedi"
 
 #, c-format
 msgid "Unknown configuration file \"%s\""
-msgstr ""
+msgstr "Bilinmeyen yapılandırma dosyası \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sInvalid number: \"%s\""
-msgstr "%sHata: dosya \"%s\" oluşturulamaz"
+msgstr "%sGeçersiz numara: \"%s\""
 
 #, c-format
 msgid "Options saved to %s"
-msgstr ""
+msgstr "Seçenekler %s konumuna kaydedildi"
 
 #, c-format
 msgid "%sFailed to save options to %s"
-msgstr ""
+msgstr "%sSeçenekler %s konumuna kaydedilemedi"
 
 msgid "There is no encrypted data"
-msgstr ""
+msgstr "Şifrelenmiş veri yok"
 
-#, fuzzy
 msgid "All encrypted data has been deleted"
-msgstr "Filtre \"%s\" silindi"
+msgstr "Tüm şifrelenmiş veri silindi"
 
 msgid "Encrypted data has been successfully decrypted"
-msgstr ""
+msgstr "Şifrelenmiş verinin şifresi başarıyla açıldı"
 
 #, c-format
 msgid "%sFailed to decrypt data (wrong passphrase?)"
-msgstr ""
+msgstr "%sVeri şifresi açılamadı (hatalı parola?)"
 
 #, c-format
 msgid ""
 "%sYou must decrypt data still encrypted before doing any operation on "
 "secured data or passphrase"
 msgstr ""
+"%sGüvenli veri veya parola üzerinde işlem yapabilmek için öncelikle tüm "
+"verinin şifresi açılmalıdır"
 
 #, c-format
 msgid "%sPassphrase is too long (max: %d chars)"
-msgstr ""
+msgstr "%sParola çok uzun (en çok %d karakter)"
 
 msgid "Passphrase deleted"
-msgstr ""
+msgstr "Parola silindi"
 
 msgid "Passphrase is not set"
-msgstr ""
+msgstr "Parola ayarlanmamış"
 
 msgid "Passphrase changed"
-msgstr ""
+msgstr "Parola değişti"
 
-#, fuzzy
 msgid "Passphrase added"
-msgstr "Tarih eklendi"
+msgstr "Parola eklendi"
 
 msgid ""
 "Important: an external program is configured to read the passphrase on "
@@ -840,19 +914,18 @@ msgstr ""
 
 #, c-format
 msgid "Secured data \"%s\" set"
-msgstr ""
+msgstr "Güvenli veri \"%s\" ayarlandı"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Secured data \"%s\" deleted"
-msgstr "Filtre \"%s\" silindi"
+msgstr "Güvenli veri \"%s\" silindi"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sSecured data \"%s\" not found"
-msgstr "%s: \"%s\" betiği bulunamadı"
+msgstr "%sGüvenli veri \"%s\" bulunamadı"
 
-#, fuzzy
 msgid "default if null: "
-msgstr "öntanımlı: "
+msgstr "eğer boş ise öntanımlı: "
 
 msgid "default: "
 msgstr "öntanımlı: "
@@ -862,53 +935,55 @@ msgid ""
 "%sOption \"%s\" not found (tip: you can use wildcard \"*\" in option to see "
 "a sublist)"
 msgstr ""
+"%s\"%s\" seçeneği bulunamadı (ipucu: bir alt listeyi görmek için \"*\" "
+"jokerini kullanabilirsiniz)"
 
 msgid "No option found"
-msgstr "seçenek bulunamadı"
+msgstr "Seçenek bulunamadı"
 
 #, c-format
 msgid "%s%d%s option with value changed (matching with \"%s\")"
 msgid_plural "%s%d%s options with value changed (matching with \"%s\")"
-msgstr[0] ""
+msgstr[0] "değeri olan %s%d%s seçenek değiştirildi (\"%s\" ile eşleşen)"
 
 #, c-format
 msgid "%s%d%s option (matching with \"%s\")"
 msgid_plural "%s%d%s options (matching with \"%s\")"
-msgstr[0] ""
+msgstr[0] "%s%d%s seçenek (\"%s\" ile eşleşen)"
 
 #, c-format
 msgid "%s%d%s option"
 msgid_plural "%s%d%s options"
-msgstr[0] "%s%d%s seçenekler"
+msgstr[0] "%s%d%s seçenek"
 
 #, c-format
 msgid "Environment variable \"%s\" is not defined"
-msgstr ""
+msgstr "Ortam değişkeni \"%s\" tanımlanmamış"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sFailed to set variable \"%s\": %s"
-msgstr "%sHata: dosya \"%s\" oluşturulamaz"
+msgstr "%s\"%s\" değişkeni ayarlanamadı: %s"
 
 #, c-format
 msgid "Variable \"%s\" unset"
-msgstr ""
+msgstr "\"%s\" değişkeni ayarlanmamış"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sFailed to unset variable \"%s\": %s"
-msgstr "%sHata: dosya \"%s\" oluşturulamaz"
+msgstr "%s\"%s\" değişkeni kaldırılamadı: %s"
 
 #, c-format
 msgid "%s%d%s option with value changed"
 msgid_plural "%s%d%s options with value changed"
-msgstr[0] ""
+msgstr[0] "değeri olan %s%d%s seçenek değiştirildi"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sFailed to set option \"%s\""
-msgstr "%sHata: dosya \"%s\" oluşturulamaz"
+msgstr "%s\"%s\" seçeneği ayarlanamadı"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sOption \"%s\" not found"
-msgstr "%sHatar: seçenek \"%s\" bulunamadı"
+msgstr "%s\"%s\" seçeneği bulunamadı"
 
 msgid "Option changed: "
 msgstr "Seçenek değiştirildi: "
@@ -921,10 +996,10 @@ msgstr "Seçenek değiştirildi"
 
 #, c-format
 msgid "%sFailed to unset option \"%s\""
-msgstr ""
+msgstr "%s\"%s\" seçeneği kaldırılamadı"
 
 msgid "Option reset: "
-msgstr ""
+msgstr "Seçenek sıfırlandı: "
 
 #, c-format
 msgid "Option removed: %s"
@@ -932,47 +1007,51 @@ msgstr "Seçenek kaldırıldı: %s"
 
 #, c-format
 msgid "%sReset of all options is not allowed"
-msgstr ""
+msgstr "%sTüm seçeneklerin sıfırlanmasına izin verilmiyor"
 
 #, c-format
 msgid "%d option(s) reset, %d option(s) removed"
-msgstr ""
+msgstr "%d seçenek sıfırlandı, %d seçenek kaldırıldı"
 
 #, c-format
 msgid ""
 "%sCan't upgrade: there is one or more background process (hook type "
 "'process' or 'connect')"
 msgstr ""
+"%sYükseltilemiyor: Bir veya birden çok arka plan işlemi var (kanca türü "
+"'process' veya 'connect')"
 
 #, c-format
 msgid "%sCan't upgrade: WeeChat binary \"%s\" does not exist"
-msgstr ""
+msgstr "%sYükseltilemiyor: WeeChat ikilisi \"%s\" mevcut değil"
 
 #, c-format
 msgid ""
 "%sCan't upgrade: WeeChat binary \"%s\" does not have execute permissions"
 msgstr ""
+"%sYükseltilemiyor: WeeChat ikilisi \"%s\" çalıştır izinlerine iye değil"
 
 #, c-format
 msgid "%sNo binary specified"
-msgstr ""
+msgstr "%sBir ikili belirtilmemiş"
 
 #, c-format
 msgid "Upgrading WeeChat with binary file: \"%s\"..."
-msgstr ""
+msgstr "WeeChat ikili dosya ile yükseltiliyor: \"%s\"..."
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sUnable to save session in file"
-msgstr "%sHata: dosya \"%s\" oluşturulamaz"
+msgstr "%sOturum dosyaya kaydedilemiyor"
 
 #, c-format
 msgid "***** Error: exec failed (program: \"%s\"), exiting WeeChat"
 msgstr ""
+"***** Hata: Çalıştırma başarısız (program: \"%s\"), WeeChat'ten çıkılıyor"
 
 #. TRANSLATORS: "%s" after "started on" is a date
 #, c-format
 msgid "WeeChat uptime: %d %s %02d:%02d:%02d, started on %s"
-msgstr ""
+msgstr "WeeChat çalışma süresi: %d %s %02d:%02d:%02d, başlatma: %s"
 
 msgid "day"
 msgid_plural "days"
@@ -982,40 +1061,45 @@ msgstr[0] "gün"
 #, c-format
 msgid "WeeChat uptime: %s%d %s%s %s%02d%s:%s%02d%s:%s%02d%s, started on %s%s"
 msgstr ""
+"WeeChat çalışma süresi: %s%d %s%s %s%02d%s:%s%02d%s:%s%02d%s, başlatma: %s%s"
 
 msgid "compiled on"
 msgstr "derlenme"
 
 #, c-format
 msgid "Upgraded %d %s, first start: %s, last start: %s"
-msgstr ""
+msgstr "%d %s yükseltildi: %s, son başlatma: %s"
 
 #. TRANSLATORS: text is: "upgraded xx times"
 msgid "time"
 msgid_plural "times"
-msgstr[0] ""
+msgstr[0] "kez"
 
 msgid "Windows list:"
-msgstr ""
+msgstr "Pencere listesi:"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sInvalid window number: \"%s\""
-msgstr "%sHata: dosya \"%s\" oluşturulamaz"
+msgstr "%sGeçersiz pencere numarası: \"%s\""
 
 #, c-format
 msgid ""
 "%sCan not merge windows, there's no other window with same size near current "
 "one"
 msgstr ""
+"%sPencereler birleştirilemiyor, geçerli pencerenin yakınında aynı boyutlu "
+"başka bir pencere yok"
 
 #, c-format
 msgid ""
 "%sCan not close window, there's no other window with same size near current "
 "one"
 msgstr ""
+"%sPencere kapatılamıyor, geçerli pencerenin yakınında aynı boyutlu başka bir "
+"pencere yok"
 
 msgid "set or remove away status"
-msgstr ""
+msgstr "uzakta durumunu ayarla veya kaldır"
 
 msgid "[-all] [<message>]"
 msgstr "[-all] [<ileti>]"
@@ -1024,9 +1108,11 @@ msgid ""
 "   -all: set or remove away status on all connected servers\n"
 "message: message for away (if no message is given, away status is removed)"
 msgstr ""
+"   -all: Bağlı sunucularda uzakta durumunu ayarla veya kaldır\n"
+"  ileti: Uzakta durumu için ileti"
 
 msgid "manage bars"
-msgstr ""
+msgstr "çubukları yönet"
 
 msgid ""
 "list|listfull|listitems || add <name> <type>[,<conditions>] <position> "
@@ -1034,7 +1120,12 @@ msgid ""
 "nicklist] || del <name>|-all || set <name> <option> <value> || hide|show|"
 "toggle <name> || scroll <name> <window> <scroll_value>"
 msgstr ""
+"list|listfull|listitems || add <ad> <tür>[,<koşul>] <konum> <boyut> "
+"<ayırıcı> <öge1>[,<öge2>...] || default [input|title|status|nicklist] || del "
+"<ad>|-all || set <ad> <seçenek> <değer> || hide|show|toggle <ad> || scroll "
+"<ad> <pencere> <kyd_değeri>"
 
+#, fuzzy
 msgid ""
 "         list: list all bars\n"
 "     listfull: list all bars (verbose)\n"
@@ -1083,9 +1174,57 @@ msgid ""
 "  scroll to end of nicklist on current buffer:\n"
 "    /bar scroll nicklist * ye"
 msgstr ""
+"         list: tüm çubukları listele\n"
+"     listfull: tüm çubukları listele (ayrıntılı)\n"
+"    listitems: tüm çubuk ögelerini listele\n"
+"          add: yeni bir çubuk ekle\n"
+"           ad: çubuğun adı (benzersiz olmalı)\n"
+"          tür:   root: pencerelerin dışında,\n"
+"               window: isteğe bağlı koşullarla pencerelerin içinde "
+"(aşağıda)\n"
+"        koşul: çubuğun görüntüleneceği koşullar:\n"
+"                 active: etkin pencerede\n"
+"               inactive: etkin olmayan pencerelerde\n"
+"               nicklist: takma ad listeli pencerelerde\n"
+"               diğer koşul: bkz. /help weechat.bar.xxx.conditions\n"
+"               ve /help eval\n"
+"               koşul olmadan, çubuk her zaman görüntülenir\n"
+"        konum: alt, üst, sol veya sağ\n"
+"        boyut: çubuk boyutu (karakter olarak)\n"
+"      ayırıcı: ayırıcı kullanmak için 1 (satır), 0 veya boş kullanmaz\n"
+"     öge1,...: bu çubuk için ögeler (ögeler virgül ile (ögeler arasında\n"
+"               boşluk) veya \"+\" ile (yapışkan ögeler) ayrılabilir)\n"
+"      default: öntanımlı bir çubuk oluşturur (eğer bir çubuk adı verilmezse\n"
+"               tüm öntanımlı çubuklar)\n"
+"          del: bir çubuğu sil (veya -all ile tüm çubukları)\n"
+"          set: çubuk özelliği için bir değer ayarla\n"
+"      seçenek: değiştirilecek seçenek\n"
+"               (seçenek listesi için /set weechat.bar.<çubukadı>.*)\n"
+"        değer: seçenek için yeni değer\n"
+"         hide: bir çubuğu gizle\n"
+"         show: gizli bir çubuğu göster\n"
+"       toggle: bir çubuğu gizle/göster\n"
+"       scroll: kaydırma çubuğu\n"
+"      pencere: pencere numarası\n"
+"               (geçerli pencere veya kök çubuklar için kullanın\n"
+"   kyd_değeri: kaydırma için değer: 'x' veya 'y' (isteğe bağlı), ardından\n"
+"'+', '-', 'b' (başlangıç) veya 'e' (son), değer (+/- için), ve isteğe bağlı\n"
+"% (genişlik/yükseklik yüzdesi ile kaydırmak için, yoksa değer karakter\n"
+"sayısıdır)\n"
+"\n"
+"Örnekler:\n"
+"  zaman, arabellek numarası, + ad ve tamamlama ile bir çubuk oluştur:\n"
+"    /bar add mybar root bottom 1 0 [time],buffer_number+:+buffer_name,   "
+"completion\n"
+"  bir çubuğu gizle:\n"
+"    /bar hide mybar\n"
+"  geçerli arabellekte takma ad listesini 10 satır aşağı kaydır:\n"
+"    /bar scroll nicklist * y+10\n"
+"  geçerli arabellekte takma ad listesinin sonuna git:\n"
+"    /bar scroll nicklist * ye"
 
 msgid "manage buffers"
-msgstr ""
+msgstr "arabellekleri yönet"
 
 msgid ""
 "list || add [-free] [-switch] <name> || clear [<number>|<name>|-merged|-all "
@@ -1098,7 +1237,16 @@ msgid ""
 "[<value>] || delvar <name> || set <property> [<value>] || get <property> || "
 "<number>|-|+|<name>"
 msgstr ""
+"list || add [-free] [-switch] <ad> || clear [<numara>|<ad>|-merged|-all "
+"[<numara>|<ad>...]] || move <numara>|-|+ || swap <numara1>|<ad1> [<numara2>|"
+"<ad2>] || cycle <numara>|<ad> [<numara>|<ad>...] || merge <numara>|<ad> || "
+"unmerge [<numara>|-all] || hide [<numara>|<ad>|-all [<numara>|<ad>...]] || "
+"unhide [<numara>|<ad>|-all [<numara>|<ad>...]] || renumber [<numara1> "
+"[<numara2> [<başlangıç>]]] || close [<n1>[-<n2>]|<ad>...] || notify "
+"[<düzey>] || listvar [<numara>|<ad>] || setvar <ad> [<değer>] || delvar <ad> "
+"|| set <özellik> [<değer>] || get <özellik> || <numara>|-|+|<ad>"
 
+#, fuzzy
 msgid ""
 "    list: list buffers (without argument, this list is displayed)\n"
 "     add: add a new buffer (it can be closed with \"/buffer close\" or input "
@@ -1168,16 +1316,89 @@ msgid ""
 "  jump to last buffer number:\n"
 "    /buffer +"
 msgstr ""
+"    list: arabellekleri listele (argüman verilmezse bu liste görüntülenir)\n"
+"     add: yeni arabellek ekle (\"/buffer close\" veya \"q\" ile\n"
+"          kapatılabilir)\n"
+"   clear: arabellek içeriğini temizle (arabellek numarası, birleştirilen\n"
+"          arabellekler için -merged, tüm arabellekler için -all, geçerli\n"
+"          arabellek için hiçbir şey)\n"
+"    move: arabelleği listede taşı (göreceli olabilir, örneğin -1); \"-\" =\n"
+"          ilk arabellek numarasına taşı, \"+\" = son arabellek numarasına\n"
+"          taşı + 1\n"
+"    swap: iki arabelleği takas et (yalnızca bir numara/ad verilmişse "
+"geçerli\n"
+"          arabellekle takas et)\n"
+"   cycle: bir arabellek listesinde dönüp dur\n"
+"   merge: geçerli arabelleği başka bir arabellekle birleştir (sohbet alanı\n"
+"          iki arabelleğin karışımından oluşacaktır)\n"
+"          (öntanımlı alarak ctrl-x birleştirilmiş arabelleklerde dolaşır)\n"
+" unmerge: aynı ada iye arabelleği diğer arabelleklerden ayır\n"
+"    hide: arabelleği gizle\n"
+"  unhide: arabelleği gizleme\n"
+"renumber: arabellekleri yeniden numaralandır\n"
+"          (weechat.look.buffer_auto_renumber seçeneği kapalıysa çalışır)\n"
+"   close: arabelleği kapat (numara/erim veya ad isteğe bağlı)\n"
+"  notify: geçerli arabellek için bildirim düzeyini görüntüle veya ayarla: "
+"bu\n"
+"          düzey arabelleğin acil listeye eklenip eklenmeyeceğini belirler:\n"
+"               none: hiçbir zaman\n"
+"          highlight: yalnızca vurgulamalar için\n"
+"            message: yalnızca kullanıcı iletileri + vurgulamaları için\n"
+"                all: tüm iletiler\n"
+"              reset: öntanımlı değere sıfırla (tümü)\n"
+" listvar: bir arabellekteki yerel değişkenleri listele\n"
+"  setvar: geçerli arabellekte bir yerel değişken ayarla\n"
+"  delvar: geçerli arabellekte bir yerel değişken sil\n"
+"     set: geçerli arabellekte bir özellik ayarla\n"
+"     get: geçerli arabelleğin bir özelliğini görüntüle\n"
+"  number: arabelleğe atla (numara ile), olası önek:\n"
+"          '+': göreli atlama, geçerliye numara ekle\n"
+"          '-': göreli atlama, geçerliden numara çıkar\n"
+"          '*': numaraya atla, \"weechat.look.jump_current_to_previous_buffer"
+"\" seçeneğini kullanarak\n"
+"       -: ilk arabellek numarasına atla\n"
+"       +: son arabellek numarasına atla\n"
+"    name: kısmi ad ile arabelleğe atla\n"
+"\n"
+"Örnekler:\n"
+"  geçerli arabelleği temizle:\n"
+"    /buffer clear\n"
+"  arabelleği 5. numaraya taşı:\n"
+"    /buffer move 5\n"
+"  1 numaralı arabelleği 3. ile takasla:\n"
+"    /buffer swap 1 3\n"
+"  #weechat arabelleğini geçerli arabellekle takasla:\n"
+"    /buffer swap #weechat\n"
+"  #chan1, #chan2, #chan3 arabellekleri arasında dön:\n"
+"    /buffer cycle #chan1 #chan2 #chan3\n"
+"  çekirdek arabellekle birleştir:\n"
+"    /buffer merge 1\n"
+"  #weechat arabelleğiyle birleştir:\n"
+"    /buffer merge #weechat\n"
+"  birleştirmeyi aç:\n"
+"    /buffer unmerge\n"
+"  geçerli arabelleği kapat:\n"
+"    /buffer close\n"
+"  5 ve 7 aralığındaki arabellekleri kapat:\n"
+"    /buffer close 5-7\n"
+"  #weechat kanalına atla:\n"
+"    /buffer #weechat\n"
+"  bir sonraki arabelleğe atla:\n"
+"    /buffer +1\n"
+"  son arabellek numarasına atla:\n"
+"    /buffer +"
 
 msgid "define color aliases and display palette of colors"
-msgstr ""
+msgstr "renk armalarını tanımla ve renk paletini görüntüle"
 
-#, fuzzy
 msgid ""
 "alias <color> <name> || unalias <color> || reset || term2rgb <color> || "
 "rgb2term <rgb> [<limit>] || -o"
-msgstr "alias <renk> <isim> || unalias <renk> || reset"
+msgstr ""
+"alias <renk> <ad> || unalias <renk> || reset || term2rgb <rent> || rgb2term "
+"<rgb> [<limit>] || -o"
 
+#, fuzzy
 msgid ""
 "   alias: add an alias for a color\n"
 " unalias: delete an alias\n"
@@ -1201,14 +1422,36 @@ msgid ""
 "  delete color 214:\n"
 "    /color unalias 214"
 msgstr ""
+"   alias: bir renk için bir arma ekle\n"
+" unalias: bir armayı sil\n"
+"   color: renk numarası (0'dan büyük veya eşit, en büyük değer uçbirime\n"
+"          bağlıdır, genelde 63 veya 255)\n"
+"    name: renk arma adı (örneğin: \"orange\")\n"
+"   reset: tüm renk eşlerini sıfırla (kendiliğinden sıfırlama devre dışıyken\n"
+"          başka bir renk eşi kullanılabilir değilse gereklidir,\n"
+"          \"weechat.look.color_pairs_auto_reset\" seçeneğine bakın)\n"
+"term2rgb: bir uçbirim rengini (0-255) RGB rengine dönüştür\n"
+"rgb2term: bir RGB rengini uçbirim rengine dönüştür (0-255)\n"
+"   limit: uçbirim tablosunda kullanılabilecek renklerin sayısı (0'dan\n"
+"          başlar); öntanımlı 256\n"
+"      -o: uçbirim/renkler bilgisini geçerli arabelleğe girdi olarak "
+"gönderir\n"
+"\n"
+"Bu komut argüman olmadan renkleri yeni bir arabellekte görüntüler.\n"
+"\n"
+"Örnekler:\n"
+"  214 numaralı renk için \"orange\" armasını ekle:\n"
+"    /color alias 214 orange\n"
+"  214 numaralı rengi sil:\n"
+"    /color unalias 214"
 
 msgid "launch explicit WeeChat or plugin command"
-msgstr ""
+msgstr "açık WeeChat veya eklenti komutu çalıştır"
+
+msgid "[-buffer <name>] <plugin> <command>"
+msgstr "[-buffer <ad>] <eklenti> <komut>"
 
 #, fuzzy
-msgid "[-buffer <name>] <plugin> <command>"
-msgstr "<eklenti> <komut>"
-
 msgid ""
 "-buffer: execute the command on this buffer\n"
 " plugin: execute the command from this plugin; 'core' for a WeeChat command, "
@@ -1217,17 +1460,25 @@ msgid ""
 "command: command to execute (a '/' is automatically added if not found at "
 "beginning of command)"
 msgstr ""
+"-buffer: komutu bu arabellekte çalıştır\n"
+" plugin: komutu bu arabellekten çalıştır; bir WeeChat komutu için 'core', "
+"otomatik eklenti için '*' (komutun çalıştırıldığı arabelleğe göre değişiklik "
+"gösterir)"
 
 msgid ""
 "free movement of cursor on screen to execute actions on specific areas of "
 "screen"
 msgstr ""
+"ekranın belirli alanlarındaki eylemleri çalıştırmak için serbest dolaşım"
 
 msgid ""
 "go chat|<bar>|<x>,<y> || move up|down|left|right|area_up|area_down|area_left|"
 "area_right || stop"
 msgstr ""
+"go chat|<çubuk>|<x>,<y> || move up|down|left|right|area_up|area_down|"
+"area_left|area_right || stop"
 
+#, fuzzy
 msgid ""
 "  go: move cursor to chat area, a bar (using bar name) or coordinates \"x,y"
 "\"\n"
@@ -1262,16 +1513,52 @@ msgid ""
 "  go to coordinates x=10, y=5:\n"
 "    /cursor go 10,5"
 msgstr ""
+"  go: imleci sohbet alanına taşı, bir çubuk (çubuk adı kullanarak) veya\n"
+"      \"x,y\"\n"
+"move: imleci bir yöne doğru taşı\n"
+"stop: imleç kipini durdur\n"
+"\n"
+"Bu komut, argüman olmadan imleç kipini açar/kapatır.\n"
+"\n"
+"Fare etkinken (bkz /help mouse), öntanımlı olarak bir orta tık imleç kipini "
+"başlatacaktır.\n"
+"\n"
+"İmleç kipi açıkken sohbet iletilerindeki öntanımlı düğmeler şöyledir:\n"
+"  m  iletiyi alıntıla\n"
+"  q  öneki ve iletiyi alıntıla\n"
+"  Q  zaman + önek + ileti alıntıla\n"
+"\n"
+"İmleç kipinde takma ad listesindeki öntanımlı düğmeler:\n"
+"  b  takma adı yasakla (/ban)\n"
+"  k  takma adı kov (/kick)\n"
+"  K  takma adı kov ve yasakla (/kickban)\n"
+"  q  takma ad ile sorgu aç (/query)\n"
+"  w  kullanıcı bilgisini sorgula (/whois)\n"
+"\n"
+"İmleç kipindeki diğer öntanımlı düğmeler:\n"
+"  arrow      imleci taşı\n"
+"  alt+arrow  imleci sonraki alana taşı\n"
+"  enter      imleç kipinden çık\n"
+"\n"
+"Örnekler:\n"
+"  takma ad listesine git:\n"
+"    /cursor go nicklist\n"
+"  x=10, y=5 koordinatlarına git:\n"
+"    /cursor go 10,5"
 
 msgid "debug functions"
-msgstr ""
+msgstr "hata ayıklama işlevleri"
 
 msgid ""
 "list || set <plugin> <level> || dump [<plugin>] || buffer|color|infolists|"
 "memory|tags|term|windows || mouse|cursor [verbose] || hdata [free] || time "
 "<command>"
 msgstr ""
+"list || set <eklenti> <düzey> || dump [<eklenti>] || buffer|color|infolists|"
+"memory|tags|term|windows || mouse|cursor [verbose] || hdata [free] || time "
+"<komut>"
 
+#, fuzzy
 msgid ""
 "     list: list plugins with debug levels\n"
 "      set: set debug level for plugin\n"
@@ -1296,15 +1583,38 @@ msgid ""
 "     time: measure time to execute a command or to send text to the current "
 "buffer"
 msgstr ""
+"     list: eklentileri hata ayıklama düzeyleriyle listele\n"
+"      set: eklenti için hata ayıklama düzeyi ayarla\n"
+"   plugin: eklenti adı (WeeChat çekirdeği için \"core\")\n"
+"    level: eklenti için hata ayıklama düzeyi (0 = hata ayıklama kapat)\n"
+"     dump: bellek dökümünü WeeChat günlük dosyasına kaydet (WeeChat "
+"çöktüğünde de aynı döküm yazılır)\n"
+"   buffer: onaltılı değer içeren döküm içeriğini günlük dosyasına yaz\n"
+"    color: geçerli renk eşlemleri hakkında bilgi görüntüle\n"
+"   cursor: imleç kipi için hata ayıklamayı aç/kapa\n"
+"     dirs: dizinleri görüntüle\n"
+"    hdata: hdata hakkında bilgi görüntüle\n"
+"           (free ile: bellekteki tüm hdata'yı kaldır\n"
+"    hooks: kancalar hakkında bilgi görüntüle\n"
+"infolists: bilgi listeleri hakkında bilgi görüntüle\n"
+"     libs: kullanılan dış kitaplıklar hakkında bilgi görüntüle\n"
+"   memory: bellek kullanımı hakkında bilgi görüntüle\n"
+"    mouse: fare için hata ayıklamayı aç/kapa\n"
+"     tags: satırlar için etiketleri görüntüle\n"
+"     term: uçbirim hakkında bilgi görüntüle\n"
+"  windows: pencere ağacını görüntüle\n"
+"     time: bir komutu çalıştırma veya geçerli arabelleğe metin gönderme\n"
+"           için geçen zamanı ölç"
 
 msgid "evaluate expression"
-msgstr ""
+msgstr "ifadeyi değerlendir"
 
 msgid ""
 "[-n|-s] [-d] <expression> || [-n] [-d [-d]] -c <expression1> <operator> "
 "<expression2>"
-msgstr ""
+msgstr "[-n|-s] [-d] <ifade> || [-n] [-d] -c <ifade1> <işleç> <expression2>"
 
+#, fuzzy
 msgid ""
 "        -n: display result without sending it to buffer (debug mode)\n"
 "        -s: split expression before evaluating it (many commands can be "
@@ -1440,16 +1750,151 @@ msgid ""
 "  /eval -n -c abcd =* a*d                 ==> 1\n"
 "  /eval -n -c abcd =- bc                  ==> 1"
 msgstr ""
+"        -n: sonucu arabelleğe göndermeden görüntüle (hata ayıklama kipi)\n"
+"        -s: ifadeyi değerlendirmeden önce böl (birçok komut noktalı "
+"virgülle\n"
+"            ayrılabilir)\n"
+"        -d: değerlendirme sonrası hata ayıklama çıktısını görüntüle\n"
+"        -c: koşul olarak değerlendir: işleçler ve parantezler kullan, bir\n"
+"            Boole değeri döndür (\"0\" veya \"1\")\n"
+"expression: değerlendirilecek ifade, $(değişken) biçimindeki değişkenler\n"
+"            değiştirilirler (bkz. aşağı); birçok komut noktalı virgülle\n"
+"            ayrılabilir\n"
+"  operator: bir mantık veya karşılaştırma işleci:\n"
+"            - mantık işleçleri:\n"
+"                &&   Boole \"ve\"\n"
+"                ||   Boole \"veya\"\n"
+"            - karşılaştırma işleçleri:\n"
+"                ==   eşit\n"
+"                !=   eşit değil\n"
+"                <=   küçük veya eşit\n"
+"                <    küçük\n"
+"                >=   büyük veya eşit\n"
+"                >    büyük\n"
+"                =~   POSIX genişletilmiş ifadesi ile eşleşir\n"
+"                !~   POSIX genişletilmiş ifadesi ile eşleşmez\n"
+"                ==*  maske ile eşleşir, BÜYÜK/küçük harf duyarlı (\"*\"\n"
+"                     jokerine izin verilir)\n"
+"                !!*  maske ile eşleşmez, BÜYÜK/küçük harf duyarlı (\"*\"\n"
+"                     jokerine izin verilir)\n"
+"                =*   maske ile eşleşir, BÜYÜK/küçük harf duyarsız (\"*\"\n"
+"                     jokerine izin verilir)\n"
+"                !*   maske ile eşleşmez, BÜYÜK/küçük harf duyarsız (\"*\"\n"
+"                     jokerine izin verilir)\n"
+"                ==-  içerilir, BÜYÜK/küçük harf duyarlı\n"
+"                !!-  içerilMEZ, BÜYÜK/küçük harf duyarlı\n"
+"                =-   içerilir, BÜYÜK/küçük harf duyarsız\n"
+"                !-   içerilMEZ, BÜYÜK/küçük harf duyarsız\n"
+"\n"
+"Bir ifade, NULL/boş değilse ve \"0\"dan farklıysa \"true\" olarak kabul "
+"edilir.\n"
+"İki ifade geçerli bir sayıysa karşılaştırma kayan noktalı sayılar "
+"kullanılarak\n"
+"aşağıdaki biçimlerden biri kullanılarak yapılır:\n"
+"  - tamsayı (örnek: 5, -7)\n"
+"  - kayan noktalı sayı (örnek: 5.2, -7.5, 2.83e-2)\n"
+"  - onaltılı sayı (örnek: 0xA3, -0xA3)\n"
+"Bir dizi karşılaştırması zorlamak için, her ifadenin çevresine tırnak imi\n"
+"koyabilirsiniz; örneğin:\n"
+"  50 > 100      ==> 0\n"
+"  \"50\" > \"100\"  ==> 1\n"
+"\n"
+"Bazı değişkenler ${değişken} biçimi kullanılarak ifadede değiştirilebilir.\n"
+"Bu değişkenler önem sırasına göre şunlar olabilir:\n"
+"  1. değerlendirilmiş bir alt-dizi (biçim: \"eval:xxx\")\n"
+"  2. kaçan karakterli bir dizi (biçim: \"esc:xxx\" or \"\\xxx\")\n"
+"  3. gizlenecek karakterli bir dizi (biçim: \"hide:char,string\")\n"
+"  4. en çok karakterli bir dizi (biçim: \"cut:max,suffix,string\" veya\n"
+"     \"cut:+max,suffix,string\") veya ekranda görüntülenecek en çok "
+"karakter\n"
+"     (biçim: \"cutscr:max,suffix,string\" veya \"cutscr:+max,suffix,string"
+"\")\n"
+"  5. tersine çevrilmiş bir dizi (biçim: \"rev:xxx\" veya \"revscr:xxx\")\n"
+"  6. yinelenmiş bir dizin (biçim: \"repeat:count,string\")\n"
+"  7. bir dizinin uzunluğu (biçim: \"length:xxx\" veya \"lengthscr:xxx\")\n"
+"  8. bir renk\n"
+"     (biçim: \"color:xxx\", bkz. \"Plugin API reference\", \"color\" "
+"işlevi)\n"
+"  9. bir değiştirici (biçim: \"modifier:name,data,string\")\n"
+"  10. bir bilgi (biçim: \"info:name,arguments\", argümanlar isteğe bağlı)\n"
+"  11. 16/32/64'lık tabanda kodlanmış bir dizi\n"
+"      (biçim: \"base_encode:base,xxx\" veya \"base_decode:base,xxx\")\n"
+"  12. geçerli tarih/zaman (biçim: \"date\" veya \"date:format\")\n"
+"  13. bir ortam değişkeni (biçim: \"env:XXX\")\n"
+"  14. bir üç terimli işleç\n"
+"      (biçim: \"if:condition?value_if_true:value_if_false\")\n"
+"  15. şu parantezler ve işleçler içeren bir ifadenin sonucu: + - * / // % "
+"**\n"
+"      (biçim: \"calc:xxx\")\n"
+"  16. bir seçenek (biçim: \"file.section.option\")\n"
+"  17. arabellekteki bir yerel değişken\n"
+"  18. bir hdata adı/değişkeni (değer kendiliğinden diziye çevrilir),\n"
+"      öntanımlı olarak \"window\" ve \"buffer\" geçerli pencere ve "
+"arabelleğe\n"
+"      işaret eder.\n"
+"hdata biçimi aşağıdakilerden biri olabilir:\n"
+"  hdata.var1.var2...: bir hdata ile başla (işaretçi biliniyor olmalıdır) ve\n"
+"değişkenleri birbiri ardına sor (başka hdata'nın arkasından gelebilir)\n"
+"  hdata[list].var1.var2...: hdata ile bir liste kullanarak başla, örneğin:\n"
+"    ${buffer[gui_buffers].full_name}: bağlantı verilmiş arabellek\n"
+"      listesindeki ilk arabelleğin tam adı\n"
+"    ${plugin[weechat_plugins].name}: bağlantı verilmiş eklenti listesindeki\n"
+"      ilk eklenti\n"
+"  hdata[pointer].var1.var2...: hdata ile bir işaretçi kullanarak başla, "
+"örn:\n"
+"    ${buffer[0x1234abcd].full_name}: bu işaretçi ile olan arabelleğin tam\n"
+"      adı (tetiklerde kullanılabilir)\n"
+"hdata ve değişkenlerin adı için lütfen \"Plugin API reference\",\n"
+"  \"weechat_hdata_get\" işlevine bakın.\n"
+"\n"
+"Örnekler (yalın diziler):\n"
+"  /eval -n ${info:version}                       ==> 0.4.3\n"
+"  /eval -n ${env:HOME}                           ==> /home/user\n"
+"  /eval -n ${weechat.look.scroll_amount}         ==> 3\n"
+"  /eval -n ${sec.data.freenode_password}         ==> secret\n"
+"  /eval -n ${window}                             ==> 0x2549aa0\n"
+"  /eval -n ${window.buffer}                      ==> 0x2549320\n"
+"  /eval -n ${window.buffer.full_name}            ==> core.weechat\n"
+"  /eval -n ${window.buffer.number}               ==> 1\n"
+"  /eval -n ${\\t}                                 ==> <sekme>\n"
+"  /eval -n ${hide:-,${relay.network.password}}   ==> --------\n"
+"  /eval -n ${cut:3,+,test}                       ==> tes+\n"
+"  /eval -n ${cut:+3,+,test}                      ==> te+\n"
+"  /eval -n ${date:%H:%M:%S}                      ==> 07:46:40\n"
+"  /eval -n ${if:${info:term_width}>80?big:small} ==> big\n"
+"  /eval -n ${rev:Hello}                          ==> olleH\n"
+"  /eval -n ${repeat:5,-}                         ==> -----\n"
+"  /eval -n ${length:test}                        ==> 4\n"
+"  /eval -n ${calc:(5+2)*3}                       ==> 21\n"
+"  /eval -n ${base_encode:64,test}                ==> dGVzdA==\n"
+"  /eval -n ${base_decode:64,dGVzdA==}            ==> test\n"
+"\n"
+"Örnekler (koşullar):\n"
+"  /eval -n -c ${window.buffer.number} > 2 ==> 0\n"
+"  /eval -n -c ${window.win_width} > 100   ==> 1\n"
+"  /eval -n -c (8 > 12) || (5 > 2)         ==> 1\n"
+"  /eval -n -c (8 > 12) && (5 > 2)         ==> 0\n"
+"  /eval -n -c abcd =~ ^ABC                ==> 1\n"
+"  /eval -n -c abcd =~ (?-i)^ABC           ==> 0\n"
+"  /eval -n -c abcd =~ (?-i)^abc           ==> 1\n"
+"  /eval -n -c abcd !~ abc                 ==> 0\n"
+"  /eval -n -c abcd =* a*d                 ==> 1\n"
+"  /eval -n -c abcd =- bc                  ==> 1"
 
 msgid ""
 "filter messages in buffers, to hide/show them according to tags or regex"
 msgstr ""
+"arabelleklerdeki iletileri etiketlere veya düzenli ifadelere göre gizlemek/"
+"göstermek için süz"
 
 msgid ""
 "list || enable|disable|toggle [<name>|@] || add|addreplace <name> <buffer>[,"
 "<buffer>...] <tags> <regex> || rename <name> <new_name> || recreate <name> "
 "|| del <name>|-all"
 msgstr ""
+"list || enable|disable|toggle [<ad>|@] || add|addreplace <ad> <arabellek>[,"
+"<arabellek>...] <etiketler> <ifade> || rename <ad> <yeni_ad> || recreate "
+"<ad> || del <ad>|-all"
 
 msgid ""
 "      list: list all filters\n"
@@ -1537,7 +1982,7 @@ msgid ""
 msgstr ""
 
 msgid "show buffer command history"
-msgstr ""
+msgstr "arabellek komut geçmişini göster"
 
 msgid "clear || <value>"
 msgstr "clear || <değer>"
@@ -1546,12 +1991,14 @@ msgid ""
 "clear: clear history\n"
 "value: number of history entries to show"
 msgstr ""
+"clear: geçmişi temizle\n"
+"value: gösterilecek geçmiş girdileri sayısı"
 
 msgid "functions for command line"
 msgstr "komut satırı için fonksiyonlar"
 
 msgid "<action> [<arguments>]"
-msgstr ""
+msgstr "<eylem> [<argümanlar>]"
 
 msgid ""
 "list of actions:\n"
@@ -1618,7 +2065,7 @@ msgid ""
 msgstr ""
 
 msgid "bind/unbind keys"
-msgstr ""
+msgstr "düğmeleri bağla/bağı çöz"
 
 msgid ""
 "list|listdefault|listdiff [<context>] || bind <key> [<command> [<args>]] || "
@@ -1626,6 +2073,10 @@ msgid ""
 "<context> <key> || reset <key> || resetctxt <context> <key> || resetall -yes "
 "[<context>] || missing [<context>]"
 msgstr ""
+"list|listdefault|listdiff [<bağlam>] || bind <düğme> [<komut> "
+"[<argümanlar>]] || bindctxt <bağlam> <düğme> [<komut> [<argümanlar>]] || "
+"unbind <düğme> || unbindctxt <bağlam> <düğme> || reset <düğme> || resetctxt "
+"<bağlam> <düğme> || resetall -yes [<bağlam>] || missing [<bağlam>]"
 
 msgid ""
 "       list: list all current keys (without argument, this list is "
@@ -1684,15 +2135,14 @@ msgid ""
 msgstr ""
 
 msgid "manage buffers/windows layouts"
-msgstr ""
+msgstr "arabellekleri/pencere yerleşimini yönet"
 
-#, fuzzy
 msgid ""
 "store [<name>] [buffers|windows] || apply [<name>] [buffers|windows] || "
 "leave || del [<name>] [buffers|windows] || rename <name> <new_name>"
 msgstr ""
-"save [<isim>] [buffers|windows] || apply [<isim>] [buffers|windows] || leave "
-"|| reset [<isim>] [buffers|windows] || rename <isim> <yeni_isim>"
+"store [<ad>] [buffers|windows] || apply [<ad>] [buffers|windows] || leave || "
+"del [<ad>] [buffers|windows] || rename <ad> <yeni_ad>"
 
 msgid ""
 "  store: store current buffers/windows in a layout\n"
@@ -1716,7 +2166,7 @@ msgid "mouse control"
 msgstr "Fare kontrol"
 
 msgid "enable|disable|toggle [<delay>]"
-msgstr ""
+msgstr "enable|disable|toggle [<gecikme>]"
 
 msgid ""
 " enable: enable mouse\n"
@@ -1735,10 +2185,10 @@ msgid ""
 msgstr ""
 
 msgid "execute a command silently"
-msgstr ""
+msgstr "sessizce bir komutu çalıştır"
 
 msgid "[-core | -current | -buffer <name>] <command>"
-msgstr ""
+msgstr "[-core | -current | -buffer <ad>] <komut>"
 
 msgid ""
 "   -core: no output on WeeChat core buffer\n"
@@ -1762,12 +2212,14 @@ msgid ""
 msgstr ""
 
 msgid "list/load/unload plugins"
-msgstr ""
+msgstr "eklentileri listele/yükle/yüklemeyi geri al"
 
 msgid ""
 "list|listfull [<name>] || load <filename> [<arguments>] || autoload "
 "[<arguments>] || reload [<name>|* [<arguments>]] || unload [<name>]"
 msgstr ""
+"list|listfull [<ad>] || load <dosyaadı> [<argümanlar>] || autoload "
+"[<argümanlar>] || reload [<ad>|* [<argümanlar>]] || unload [<ad>]"
 
 msgid ""
 "     list: list loaded plugins\n"
@@ -1785,13 +2237,16 @@ msgid ""
 msgstr ""
 
 msgid "display text on a buffer"
-msgstr ""
+msgstr "metni bir arabellekte görüntüle"
 
 msgid ""
 "[-buffer <number>|<name>] [-newbuffer <name>] [-free] [-switch] [-core|-"
 "current] [-y <line>] [-escape] [-date <date>] [-tags <tags>] [-action|-"
 "error|-join|-network|-quit] [<text>] || -stdout|-stderr [<text>] || -beep"
 msgstr ""
+"[-buffer <sayı>|<ad>] [-newbuffer <ad>] [-free] [-switch] [-core|-current] [-"
+"y <satır>] [-escape] [-date <tarih>] [-tags <etiketler>] [-action|-error|-"
+"join|-network|-quit] [<metin>] || -stdout|-stderr [<metin>] || -beep"
 
 msgid ""
 "   -buffer: display text in this buffer (default: buffer where command is "
@@ -1844,12 +2299,14 @@ msgid ""
 msgstr ""
 
 msgid "manage proxies"
-msgstr ""
+msgstr "vekilleri yönet"
 
 msgid ""
 "list || add <name> <type> <address> <port> [<username> [<password>]] || del "
 "<name>|-all || set <name> <option> <value>"
 msgstr ""
+"list || add <ad> <tür> <adres> <kapı> [<kullanıcıadı> [<parola>]] || del "
+"<ad>|-all || set <tür> <seçenek> <değer>"
 
 msgid ""
 "    list: list all proxies\n"
@@ -1879,10 +2336,10 @@ msgid ""
 msgstr ""
 
 msgid "quit WeeChat"
-msgstr ""
+msgstr "WeeChat'ten çık"
 
 msgid "[-yes] [<arguments>]"
-msgstr ""
+msgstr "[-yes] [<argümanlar>]"
 
 msgid ""
 "     -yes: required if option \"weechat.look.confirm_quit\" is enabled\n"
@@ -1896,7 +2353,7 @@ msgid ""
 msgstr ""
 
 msgid "reload configuration files from disk"
-msgstr ""
+msgstr "yapılandırma dosyalarını dosyadan yeniden yükle"
 
 msgid "[<file> [<file>...]]"
 msgstr "[<dosya> [<dosya>...]]"
@@ -1908,11 +2365,10 @@ msgid ""
 msgstr ""
 
 msgid "execute a command several times"
-msgstr ""
+msgstr "bir komutu birden çok kez çalıştır"
 
-#, fuzzy
 msgid "[-interval <delay>[<unit>]] <count> <command>"
-msgstr "<eklenti> <komut>"
+msgstr "[-interval <gecikme>[<birim>]] <sayım> <komut>"
 
 msgid ""
 "  delay: delay between execution of commands\n"
@@ -1948,11 +2404,15 @@ msgstr ""
 msgid ""
 "manage secured data (passwords or private data encrypted in file sec.conf)"
 msgstr ""
+"güvenli veriyi yönet (sec.conf dosyasındaki şifrelenmiş parolalar veya gizli "
+"veri)"
 
 msgid ""
 "passphrase <passphrase>|-delete || decrypt <passphrase>|-discard || set "
 "<name> <value> || del <name>"
 msgstr ""
+"passphrase <parola>|-delete || decrypt <parola>|-discard || set <ad> <değer> "
+"|| del <ad>"
 
 msgid ""
 "passphrase: change the passphrase (without passphrase, data is stored as "
@@ -2004,13 +2464,14 @@ msgid ""
 msgstr ""
 
 msgid "set config options and environment variables"
-msgstr ""
+msgstr "yapılandırma seçeneklerini ve ortam değişkenlerini ayarla"
 
-#, fuzzy
 msgid ""
 "[<option> [<value>]] || diff [<option> [<option>...]] || env [<variable> "
 "[<value>]]"
-msgstr "[<seçenek> [<değer>]] || diff [<seçenek> [<seçenek>...]]"
+msgstr ""
+"[<seçenek> [<değer>]] || diff [<seçenek> [<seçenek>...]] || env [<değişken> "
+"[<değer>]]"
 
 msgid ""
 "option: name of an option (wildcard \"*\" is allowed to list options, if no "
@@ -2045,10 +2506,10 @@ msgid ""
 msgstr ""
 
 msgid "unset/reset config options"
-msgstr ""
+msgstr "yapılandırma seçeneklerini geri al/sıfırla"
 
 msgid "<option> || -mask <option>"
-msgstr ""
+msgstr "<seçenek> || -mask <seçenek>"
 
 msgid ""
 "option: name of an option\n"
@@ -2066,10 +2527,10 @@ msgid ""
 msgstr ""
 
 msgid "reload the WeeChat binary without disconnecting from servers"
-msgstr ""
+msgstr "sunucu bağlantısını kesmeden WeeChat ikilisini yeniden yükle"
 
 msgid "[-yes] [<path_to_binary>|-quit]"
-msgstr ""
+msgstr "[-yes] [<ikili_yolu>|-quit]"
 
 msgid ""
 "          -yes: required if option \"weechat.look.confirm_upgrade\" is "
@@ -2108,15 +2569,17 @@ msgid ""
 msgstr ""
 
 msgid "show WeeChat uptime"
-msgstr ""
+msgstr "WeeChat açık kalma süresini göster"
 
 msgid ""
 " -o: send uptime to current buffer as input (English string)\n"
 "-ol: send uptime to current buffer as input (translated string)"
 msgstr ""
+" -o: açık kalma süresini geçerli arabelleğe girdi olarak gönder (İngilizce)\n"
+"-ol: açık kalma süresini geçerli arabelleğe girdi olarak gönder (çevrilmiş)"
 
 msgid "show WeeChat version and compilation date"
-msgstr ""
+msgstr "WeeChat sürümünü ve derlenme tarihini göster"
 
 msgid ""
 " -o: send version to current buffer as input (English string)\n"
@@ -2125,12 +2588,17 @@ msgid ""
 "The default alias /v can be used to execute this command on all buffers "
 "(otherwise the irc command /version is used on irc buffers)."
 msgstr ""
+" -o: sürümü geçerli arabelleğe girdi olarak gönder (İngilizce)\n"
+"-ol: sürümü geçerli arabelleğe girdi olarak gönder (çevrilmiş)\n"
+"\n"
+"Öntanımlı /v arması tüm arabelleklerde bu komutu çalıştırmak için "
+"kullanılabilir (diğer türlü irc arabelleklerinde /version komutu kullanılır)."
 
 msgid "schedule a command execution in future"
-msgstr ""
+msgstr "gelecekte çalıştırılmak üzere bir komut zamanla"
 
 msgid "<number>[<unit>] <command>"
-msgstr ""
+msgstr "<sayı>[<birim>] <komut>"
 
 msgid ""
 " number: amount of time to wait (integer number)\n"
@@ -2155,7 +2623,7 @@ msgid ""
 msgstr ""
 
 msgid "manage windows"
-msgstr ""
+msgstr "pencereleri yönet"
 
 #, no-c-format
 msgid ""
@@ -2169,6 +2637,15 @@ msgid ""
 "scroll_unread [-window <number>] || swap [-window <number>] [up|down|left|"
 "right] || zoom [-window <number>] || bare [<delay>]"
 msgstr ""
+"list || -1|+1|b#|up|down|left|right [-window <sayı>] || <sayı> || splith|"
+"splitv [-window <sayı>] [<pct>] || resize [-window <sayı>] [h|v][+|-]<pct> "
+"|| balance || merge [-window <sayı>] [all] || close [-window <sayı>] || "
+"page_up|page_down [-window <sayı>] || refresh || scroll [-window <sayı>] "
+"[+|-]<değer>[s|m|h|d|M|y] || scroll_horiz [-window <sayı>] [+|-]<value>[%] "
+"|| scroll_up|scroll_down|scroll_top|scroll_bottom|scroll_beyond_end|"
+"scroll_previous_highlight|scroll_next_highlight|scroll_unread [-window "
+"<sayı>] || swap [-window <sayı>] [up|down|left|right] || zoom [-window "
+"<sayı>] || bare [<gecikme>]"
 
 #, no-c-format
 msgid ""
@@ -2244,148 +2721,161 @@ msgstr ""
 
 #, c-format
 msgid "%sToo few arguments for command \"%s%s%s\" (help on command: /help %s)"
-msgstr ""
+msgstr "%s\"%s%s%s\" komutu için pek az argüman (yardım için: /help %s)"
 
 #, c-format
 msgid "%sError with command \"%s\" (help on command: /help %s)"
-msgstr ""
+msgstr "%s\"%s\" komutu ile hata (yardım için: /help %s)"
 
 msgid "names of buffers"
-msgstr ""
+msgstr "arabelleklerin adları"
 
 msgid "numbers of buffers"
-msgstr ""
+msgstr "arabelleklerin numaraları"
 
 msgid "names of buffers (including plugins names)"
-msgstr ""
+msgstr "arabelleklerin adları (eklenti adlarıyla birlikte)"
 
 msgid "buffer local variables"
-msgstr ""
+msgstr "arabellek yerel değişkenleri"
 
 msgid "value of a buffer local variable"
-msgstr ""
+msgstr "bir arabellek yerel değişkeninin değeri"
 
 msgid "properties that can be set on a buffer"
-msgstr ""
+msgstr "bir arabellekte ayarlanabilecek özellikler"
 
 msgid "properties that can be read on a buffer"
-msgstr ""
+msgstr "bir arabellekte okunabilecek özellikler"
 
 msgid "numbers of windows"
-msgstr ""
+msgstr "pencere numaraları"
 
-#, fuzzy
 msgid "color names"
-msgstr "rumuz renk ismi al"
+msgstr "renk adları"
 
 msgid "palette colors"
-msgstr ""
+msgstr "palet renkleri"
 
 msgid "configuration files"
 msgstr "yapılandırma dosyaları"
 
 msgid "filename; optional argument: default path (evaluated, see /help eval)"
 msgstr ""
+"dosya adı; isteğe bağlı argüman: öntanımlı yol (değerlendirilmiş, yardım "
+"için /help eval)"
 
 msgid "names of filters"
-msgstr "filtrelerin isimleri"
+msgstr "süzgeçlerin adları"
 
 msgid ""
 "commands (weechat and plugins); optional argument: prefix to add before the "
 "commands"
 msgstr ""
+"komutlar (WeeChat ve eklentiler); isteğe bağlı argüman: komutlardan önce "
+"gelecek önek"
 
 msgid "names of infos hooked"
-msgstr ""
+msgstr "kancalanan bilgilerin adları"
 
 msgid "names of infolists hooked"
-msgstr ""
+msgstr "kancalanan bilgi listelerinin adları"
 
 msgid "nicks in nicklist of current buffer"
-msgstr ""
+msgstr "geçerli arabellekteki takma ad listesindeki takma adlar"
 
 msgid "configuration options"
 msgstr "yapılandırma seçenekleri"
 
 msgid "names of plugins"
-msgstr "eklentilerin isimleri"
+msgstr "eklentilerin adları"
 
-#, fuzzy
 msgid "names of plugins installed"
-msgstr "eklentilerin isimleri"
+msgstr "yüklü eklentilerin adları"
 
 msgid ""
 "commands defined by plugins; optional argument: prefix to add before the "
 "commands"
 msgstr ""
+"eklentilerin tanımladığı komutlar; isteğe bağlı argüman: komutlardan önce "
+"gelecek önek"
 
 msgid "names of bars"
-msgstr "çubukların isimleri"
+msgstr "çubukların adları"
 
 msgid "values for a configuration option"
-msgstr ""
+msgstr "bir yapılandırma seçeneğinin değerleri"
 
 msgid "weechat commands; optional argument: prefix to add before the commands"
-msgstr ""
+msgstr "WeeChat komutları; isteğe bağlı argüman: komutlardan önce gelecek önek"
 
 msgid "names of proxies"
-msgstr ""
+msgstr "vekillerin adları"
 
 msgid "options for proxies"
-msgstr ""
+msgstr "vekiller için seçenekler"
 
 msgid "options for bars"
 msgstr "çubukların seçenekleri"
 
 #. TRANSLATORS: "key" means "key on the keyboard"
 msgid "key contexts"
-msgstr ""
+msgstr "düğme bağlamları"
 
 #. TRANSLATORS: "key" means "key on the keyboard"
 msgid "key codes"
-msgstr ""
+msgstr "düğme kodları"
 
 #. TRANSLATORS: "key" means "key on the keyboard"
 msgid "key codes that can be reset (keys added, redefined or removed)"
 msgstr ""
+"sıfırlanabilecek düğme kodları (eklenen, yeniden tanımlanan veya kaldırılan "
+"düğmeler)"
 
 msgid "areas (\"chat\" or bar name) for free cursor movement"
-msgstr ""
+msgstr "serbest imleç hareketi için alanlar (\"chat\" veya çubuk adı)"
 
 msgid "names of layouts"
-msgstr ""
+msgstr "dizilim adları"
 
 msgid "names of secured data (file sec.conf, section data)"
-msgstr ""
+msgstr "güvenli veri adları (sec.conf dosyası, bölem verisi)"
 
 msgid "environment variables"
-msgstr ""
+msgstr "ortam değişkenleri"
 
 msgid "value of an environment variable"
-msgstr ""
+msgstr "bir ortam değişkeninin değeri"
 
 msgid ""
 "Warning: option weechat.look.save_config_on_exit is disabled, so the option "
 "weechat.look.save_layout_on_exit is ignored"
 msgstr ""
+"Uyarı: weechat.look.save_config_on_exit seçeneği devre dışı, bu yüzden "
+"weechat.look.save_layout_on_exit yok sayılıyor"
 
 msgid ""
 "Warning: you should now issue /save to write option weechat.look."
 "save_config_on_exit in configuration file"
 msgstr ""
+"Uyarı: Yapılandırma dosyasında weechat.look.save_config_on_exit seçeneğini "
+"yazmak için şimdi /save yapmalısınız"
 
 msgid ""
 "WARNING: this option can cause serious display bugs, if you have such "
 "problems, you must turn off this option."
 msgstr ""
+"UYARI: Bu seçenek ciddi hatalara neden olabilir; bu tür sorunlara denk "
+"gelirseniz bu seçeneği kapatın."
 
 #, c-format
 msgid ""
 "%sWarning: proxy \"%s\" does not exist (you can add it with command /proxy)"
 msgstr ""
+"%sUyarı: Vekil \"%s\" mevcut değil (/proxy komutu ile ekleyebilirsiniz)"
 
 msgid "debug level for plugin (\"core\" for WeeChat core)"
-msgstr ""
+msgstr "eklenti hata ayıklama düzeyi (WeeChat çekirdeği için \"core\")"
 
 msgid "alias for color"
 msgstr ""
@@ -3029,9 +3519,8 @@ msgid ""
 "space (see /help print for supported formats)"
 msgstr ""
 
-#, fuzzy
 msgid "text color for \"+\" when scrolling bars"
-msgstr "istemci açıklaması için metin rengi"
+msgstr "kaydırma çubuklarındaki \"+\" metin rengi"
 
 msgid "text color for chat"
 msgstr "sohbet için metin rengi"
@@ -3043,7 +3532,7 @@ msgid "text color for buffer names"
 msgstr ""
 
 msgid "text color for channel names"
-msgstr "kanal isimleri için metin rengi"
+msgstr "kanal adları için metin rengi"
 
 msgid "text color for message displayed when the day has changed"
 msgstr ""
@@ -3103,7 +3592,7 @@ msgid "color for nick prefix (string displayed before nick in prefix)"
 msgstr ""
 
 msgid "text color for local nick in chat window"
-msgstr "sohbet penceresindeki yerel rumuz için metin rengi"
+msgstr "sohbet penceresindeki yerel takma ad için metin rengi"
 
 msgid "color for nick suffix (string displayed after nick in prefix)"
 msgstr ""
@@ -3133,9 +3622,8 @@ msgstr ""
 msgid "text color for quit prefix"
 msgstr ""
 
-#, fuzzy
 msgid "text color for \"+\" when prefix is too long"
-msgstr "istemci açıklaması için metin rengi"
+msgstr "önek çok uzunken \"+\" için metin rengi"
 
 msgid "text color for suffix (after prefix)"
 msgstr ""
@@ -3147,7 +3635,7 @@ msgid "background color for unread data marker"
 msgstr ""
 
 msgid "text color for server names"
-msgstr "sunucu isimleri için metin rengi"
+msgstr "sunucu adları için metin rengi"
 
 msgid "text color for tags after messages (displayed with command /debug tags)"
 msgstr ""
@@ -3167,9 +3655,8 @@ msgstr ""
 msgid "text color for values"
 msgstr "değerler için metin rengi"
 
-#, fuzzy
 msgid "text color for null values (undefined)"
-msgstr "değerler için metin rengi"
+msgstr "null değerler için metin rengi (tanımlanmamış)"
 
 msgid ""
 "text color for emphasized text (for example when searching text); this "
@@ -3189,12 +3676,11 @@ msgstr ""
 msgid "text color for unsuccessful text search in input line"
 msgstr ""
 
-#, fuzzy
 msgid "text color for away item"
-msgstr "uzakta öğesi için renk"
+msgstr "uzakta öğesi için metin rengi"
 
 msgid "text color for away nicknames"
-msgstr "uzaktaki kullanıcı isimleri için metin rengi"
+msgstr "uzaktaki kullanıcı adları için metin rengi"
 
 msgid "text color for groups in nicklist"
 msgstr ""
@@ -3234,9 +3720,8 @@ msgstr ""
 msgid "text color for buffer with new data (status bar)"
 msgstr ""
 
-#, fuzzy
 msgid "text color for mouse indicator in status bar"
-msgstr "zaman için metin rengi (durum çubuğu)"
+msgstr "durum çubuğundaki fare belirteci için metin rengi"
 
 msgid "text color for current buffer name in status bar"
 msgstr ""
@@ -3246,9 +3731,8 @@ msgid ""
 "protocol like SSL"
 msgstr ""
 
-#, fuzzy
 msgid "text color for number of nicks in nicklist (status bar)"
-msgstr "zaman için metin rengi (durum çubuğu)"
+msgstr "takma ad listesindeki takma ad sayısı için metin rengi (durum çubuğu)"
 
 msgid "text color for current buffer number in status bar"
 msgstr ""
@@ -3406,17 +3890,17 @@ msgstr ""
 msgid "(default options)"
 msgstr "(varsayılan seçenekler)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sCannot create file \"%s\""
-msgstr "%sHata: dosya \"%s\" oluşturulamaz"
+msgstr "%s\"%s\" dosyası oluşturulamıyor"
 
 #, c-format
 msgid "%sError writing configuration file \"%s\""
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sWARNING: failed to read configuration file \"%s\" (%s)"
-msgstr "%s yapılandırma dosyası okunuyor"
+msgstr "%sUYARI: \"%s\" yapılandırma dosyası okunamadı (%s)"
 
 #, c-format
 msgid ""
@@ -3469,7 +3953,7 @@ msgstr ""
 
 #, fuzzy
 msgid "Error: not enough memory\n"
-msgstr "%sYeterli bellek yok"
+msgstr "yetersiz bellek"
 
 #, c-format
 msgid ""
@@ -3481,14 +3965,15 @@ msgstr ""
 msgid ""
 "Error: unable to create a temporary home directory (using template: \"%s\")\n"
 msgstr ""
+"Hata: Geçici bir ev dizini oluşturulamıyor (kullanılan şablon: \"%s\")\n"
 
 #, fuzzy, c-format
 msgid "Error: \"%s\" is not a directory\n"
-msgstr "Hata: \"%s\" dizini oluşturulamaz\n"
+msgstr "Hata: Ev (%s) bir dizin değil\n"
 
 #, c-format
 msgid "Error: cannot create directory \"%s\"\n"
-msgstr "Hata: \"%s\" dizini oluşturulamaz\n"
+msgstr "Hata: \"%s\" dizini oluşturulamıyor\n"
 
 #, c-format
 msgid "%sError sending signal %d to pid %d: %s"
@@ -3530,7 +4015,7 @@ msgstr ""
 
 #, fuzzy, c-format
 msgid "%sWarning: failed to load system certificate authorities"
-msgstr "%sHata: dosya \"%s\" oluşturulamaz"
+msgstr "%sgnutls: Sertifika parmak izi hesaplanamadı (%s)"
 
 #, c-format
 msgid "%d certificate loaded (system)"
@@ -3539,18 +4024,18 @@ msgstr[0] ""
 
 #, fuzzy, c-format
 msgid "%sWarning: failed to load certificate authorities from file %s"
-msgstr "%sHata: dosya \"%s\" oluşturulamaz"
+msgstr "%sgnutls: Sertifika parmak izi hesaplanamadı (%s)"
 
 #, fuzzy, c-format
 msgid "%d certificate loaded (file: %s)"
 msgid_plural "%d certificates loaded (file: %s)"
-msgstr[0] "Filtre \"%s\" etkin"
+msgstr[0] "%s: boru açıldı (dosya: %s)"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%sWarning: failed to load certificate authorities from file %s (file not "
 "found)"
-msgstr "%sHata: dosya \"%s\" oluşturulamaz"
+msgstr ""
 
 #, c-format
 msgid "%d certificate purged"
@@ -3581,8 +4066,9 @@ msgstr ""
 msgid "password for proxy server (note: content is evaluated, see /help eval)"
 msgstr ""
 
+#, fuzzy
 msgid "secured data"
-msgstr ""
+msgstr "Güvenli veri \"%s\" ayarlandı"
 
 msgid ""
 "secured data: names and values (be careful: the values are sensitive data: "
@@ -3643,9 +4129,9 @@ msgstr ""
 msgid "*** Wrong passphrase (decrypt error: %s) ***"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sError encrypting data \"%s\" (%d)"
-msgstr "%sHatar: seçenek \"%s\" bulunamadı"
+msgstr "%s\"%s\" verisi şifrelenirken hata (%d)"
 
 msgid ""
 "cipher used to crypt data (the number after algorithm is the size of the key "
@@ -3688,7 +4174,6 @@ msgstr "GB"
 msgid "TB"
 msgstr ""
 
-#, fuzzy
 msgid "byte"
 msgid_plural "bytes"
 msgstr[0] "bayt"
@@ -3775,7 +4260,7 @@ msgstr ""
 
 #, c-format
 msgid "%sInvalid limit for resource \"%s\": %s (must be >= -1)"
-msgstr ""
+msgstr "%s\"%s\" kaynağı için geçersiz limit: %s (>= -1 olmalı)"
 
 #, c-format
 msgid "Limit for resource \"%s\" has been set to %s"
@@ -3856,9 +4341,9 @@ msgstr ""
 msgid "Running WeeChat in background..."
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "fork error"
-msgstr "hata"
+msgstr "çatal hatası"
 
 #, c-format
 msgid "OK"
@@ -3952,9 +4437,9 @@ msgstr ""
 msgid "Notify changed for \"%s%s%s\": \"%s%s%s\" to \"%s%s%s\""
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sA buffer with same name (%s) already exists"
-msgstr "Filtre \"%s\" etkin"
+msgstr "%sAynı adlı başka bir arabellek (%s) halihazırda var"
 
 #, c-format
 msgid "%sMaximum number of buffers is reached (%d)"
@@ -3977,13 +4462,12 @@ msgstr ""
 msgid "Debug disabled for cursor mode"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sUnable to add filter \"%s\": %s"
-msgstr "%sFiltre eklenirken hata"
+msgstr "%s\"%s\" süzgeci eklenemiyor: %s"
 
-#, fuzzy
 msgid "not enough arguments"
-msgstr "%sYeterli bellek yok"
+msgstr "yetersiz argüman"
 
 msgid ""
 "a filter with same name already exists (choose another name or use option "
@@ -3991,13 +4475,12 @@ msgid ""
 msgstr ""
 
 #. TRANSLATORS: %s is the error returned by regerror
-#, fuzzy, c-format
+#, c-format
 msgid "invalid regular expression (%s)"
-msgstr "%sHata: dosya \"%s\" oluşturulamaz"
+msgstr "geçersiz düzenli ifade (%s)"
 
-#, fuzzy
 msgid "not enough memory"
-msgstr "%sYeterli bellek yok"
+msgstr "yetersiz bellek"
 
 #, c-format
 msgid "New key binding (context \"%s\"): %s%s => %s%s"
@@ -4036,9 +4519,9 @@ msgstr ""
 msgid "%s%s: error, circular reference when calling alias \"%s\""
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: invalid alias name: \"%s\""
-msgstr "%sHata: dosya \"%s\" oluşturulamaz"
+msgstr "%s%s: geçersiz arma adı: \"%s\""
 
 #, c-format
 msgid "%s%s: error creating alias \"%s\" => \"%s\""
@@ -4052,13 +4535,11 @@ msgstr ""
 msgid "Aliases with \"%s\":"
 msgstr ""
 
-#, fuzzy
 msgid "All aliases:"
-msgstr "Tüm sunucular:"
+msgstr "Tüm armalar:"
 
-#, fuzzy
 msgid "completion:"
-msgstr "derlenme"
+msgstr "tamamlama:"
 
 #, c-format
 msgid "No alias found matching \"%s\""
@@ -4075,9 +4556,8 @@ msgstr ""
 msgid "Alias \"%s\" removed"
 msgstr ""
 
-#, fuzzy
 msgid "list, add or remove command aliases"
-msgstr "İRC sunucularını listele, ekle veya kaldır"
+msgstr "komut armalarını listele, ekle veya kaldır"
 
 msgid ""
 "list [<alias>] || add <alias> [<command>[;<command>...]] || addcompletion "
@@ -4135,13 +4615,11 @@ msgstr ""
 msgid "alias name (wildcard \"*\" is allowed) (optional)"
 msgstr ""
 
-#, fuzzy
 msgid "list of default aliases"
-msgstr "filtrelerin listesi"
+msgstr "öntanımlı armaların listesi"
 
-#, fuzzy
 msgid "Buffers list"
-msgstr "Xfer listesi:"
+msgstr "Arabellekler listesi"
 
 #, c-format
 msgid ""
@@ -4383,13 +4861,11 @@ msgid ""
 "see /help buflist)"
 msgstr ""
 
-#, fuzzy
 msgid "list of buffers in a buflist bar item"
-msgstr "İRC kanalı için varsayılan ayrılma iletisi"
+msgstr "bir arabellek listesi çubuk ögesindeki arabelleklerin listesi"
 
-#, fuzzy
 msgid "buflist bar item name (optional)"
-msgstr "seçeneklerin listesi"
+msgstr "arabellek listesi çubuk ögesi adı (isteğe bağlı)"
 
 msgid "Charset conversions"
 msgstr ""
@@ -4455,9 +4931,8 @@ msgstr ""
 msgid "%s: unexpected end of command %ld (\"%s\")"
 msgstr ""
 
-#, fuzzy
 msgid "Executed commands"
-msgstr "weechat komutları"
+msgstr "Çalıştırılan komutlar"
 
 msgid "No command is running"
 msgstr ""
@@ -4481,41 +4956,40 @@ msgid "%ds"
 msgstr ""
 
 #. TRANSLATORS: %s before "ago" is elapsed time, for example: "3m59"
-#, fuzzy, c-format
+#, c-format
 msgid "  %s%s%s %ld%s%s%s: %s\"%s%s%s\"%s (pid: %d, started %s ago)"
-msgstr "  %s[%s%d%s]%s (%s) %s%s%s (notify: %s)"
+msgstr "  %s%s%s %ld%s%s%s: %s\"%s%s%s\"%s (pid: %d, %s önce başladı)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: command id \"%s\" not found"
-msgstr "%s%s: \"%s\" komutu bulunamadı:"
+msgstr "%s%s: \"%s\" komut numarası bulunamadı"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: command with id \"%s\" is not running any more"
-msgstr "%s%s: \"%s\" komutu bulunamadı:"
+msgstr "%s%s: \"%s\" numaralı komut artık çalışmıyor"
 
 #, c-format
 msgid "%s%s: invalid options in option exec.command.default_options"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: failed to run command \"%s\""
-msgstr "%sHata: dosya \"%s\" oluşturulamaz"
+msgstr "%s%s: \"%s\" komutu çalıştırılamadı"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%d commands removed"
-msgstr "%s: \"%s\" kaldırıldı"
+msgstr "%d komut kaldırıldı"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: command with id \"%s\" is still running"
-msgstr "%s%s: \"%s\" komutu bulunamadı:"
+msgstr "%s%s: \"%s\" numaralı komut hâlâ çalışıyor"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Command \"%s\" removed"
-msgstr "%s: \"%s\" kaldırıldı"
+msgstr "\"%s\" komutu kaldırıldı"
 
-#, fuzzy
 msgid "execute external commands"
-msgstr "weechat komutları"
+msgstr "dış komutları çalıştır"
 
 msgid ""
 "-list || [-sh|-nosh] [-bg|-nobg] [-stdin|-nostdin] [-buffer <name>] [-l|-o|-"
@@ -4631,24 +5105,22 @@ msgid ""
 "evaluated, see /help eval)"
 msgstr ""
 
-#, fuzzy
 msgid "text color for a finished command flag in list of commands"
-msgstr "kanal isimleri için metin rengi"
+msgstr "bir komutlar listesindeki bitmiş komut bayrağı için metin rengi"
 
-#, fuzzy
 msgid "text color for a running command flag in list of commands"
-msgstr "kanal isimleri için metin rengi"
+msgstr "bir komutlar listesindeki çalışan komut bayrağı için metin rengi"
 
 msgid "FIFO pipe for remote control"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: not enough memory (%s)"
-msgstr "%sYeterli bellek yok"
+msgstr "%s%s: yetersiz bellek (%s)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: pipe opened (file: %s)"
-msgstr "Filtre \"%s\" etkin"
+msgstr "%s: boru açıldı (dosya: %s)"
 
 #, c-format
 msgid "%s%s: unable to open pipe (%s) for reading"
@@ -4662,29 +5134,28 @@ msgstr ""
 msgid "%s: pipe closed"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: invalid text received in pipe"
-msgstr "%sHata: dosya \"%s\" oluşturulamaz"
+msgstr "%s%s: borudan alınan geçersiz metin"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: buffer \"%s\" not found"
-msgstr "%s%s: sunucu \"%s\" bulunamadı"
+msgstr "%s%s: \"%s\" arabelleği bulunamadı"
 
 #, c-format
 msgid "%s%s: error reading pipe (%d %s), closing it"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: pipe is enabled (file: %s)"
-msgstr "Filtre \"%s\" etkin"
+msgstr "%s: boru etkin (dosya: %s)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: pipe is disabled"
-msgstr "Filtre \"%s\" devre dışı"
+msgstr "%s: boru devre dışı"
 
-#, fuzzy
 msgid "fifo plugin configuration"
-msgstr "aspell eklenti yapılandırma"
+msgstr "fifo eklenti yapılandırması"
 
 msgid "enable|disable|toggle"
 msgstr ""
@@ -4725,18 +5196,16 @@ msgstr ""
 msgid "name of FIFO pipe"
 msgstr ""
 
-#, fuzzy
 msgid "values:"
-msgstr "değerler"
+msgstr "değerler:"
 
 #. TRANSLATORS: "%s%s%s:" at beginning of string it the name of option
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s%s: %s %s[%s%s]%s"
-msgstr "%sRumuzlar %s%s%s: %s[%s%s%s]"
+msgstr "%s%s%s: %s %s[%s%s]%s"
 
-#, fuzzy
 msgid "(no description)"
-msgstr "açıklama"
+msgstr "(açıklama yok)"
 
 #, c-format
 msgid ""
@@ -4942,9 +5411,8 @@ msgid ""
 "    /fset c:${file} == irc && ${type_en} == integer"
 msgstr ""
 
-#, fuzzy
 msgid "configuration files, sections, options and words of options"
-msgstr "yapılandırma seçenekleri"
+msgstr "yapılandırma dosyaları, bölümler, seçenekler ve seçenek sözcükleri"
 
 msgid ""
 "comma separated list of options to automatically refresh on the fset buffer "
@@ -5005,9 +5473,8 @@ msgid ""
 "the input is allowed"
 msgstr ""
 
-#, fuzzy
 msgid "use /mute command to set options"
-msgstr "komutlar ve seçenekler hakkında yardım göster"
+msgstr "seçenekleri ayarlamak için /mute komutunu kullanın"
 
 msgid ""
 "format of help line written before each option exported in a file (note: "
@@ -5040,27 +5507,23 @@ msgid ""
 "ctrl+X"
 msgstr ""
 
-#, fuzzy
 msgid "color for default value"
-msgstr "varsayılan değer"
+msgstr "öntanımlı değer rengi"
 
 msgid "color for default value on the selected line"
 msgstr ""
 
-#, fuzzy
 msgid "color for description"
-msgstr "istemci açıklaması için metin rengi"
+msgstr "açıklama rengi"
 
 msgid "color for description on the selected line"
 msgstr ""
 
-#, fuzzy
 msgid "color for file"
-msgstr "değerler için metin rengi"
+msgstr "dosya rengi"
 
-#, fuzzy
 msgid "color for file if value is changed"
-msgstr "değerler için metin rengi"
+msgstr "değerin değiştiği durumda dosya rengi"
 
 msgid "color for file if value is changed on the selected line"
 msgstr ""
@@ -5068,29 +5531,23 @@ msgstr ""
 msgid "color for file on the selected line"
 msgstr ""
 
-#, fuzzy
 msgid "color for default value in help bar"
-msgstr "değerler için metin rengi"
+msgstr "yardım çubuğundaki öntanımlı değer rengi"
 
-#, fuzzy
 msgid "color for description in help bar"
-msgstr "istemci açıklaması için metin rengi"
+msgstr "yardım çubuğundaki açıklama rengi"
 
-#, fuzzy
 msgid "color for name in help bar"
-msgstr "sohbet penceresindeki zaman için metin rengi"
+msgstr "yardım çubuğundaki ad rengi"
 
-#, fuzzy
 msgid "color for quotes around string values"
-msgstr "Bağlanma iletisi metni için renk"
+msgstr "dizi değerlerinin çevresindeki tırnak imi rengi"
 
-#, fuzzy
 msgid "color for allowed values"
-msgstr "değerler için metin rengi"
+msgstr "izin verilen değerler rengi"
 
-#, fuzzy
 msgid "color for index of option"
-msgstr "istemci açıklaması için metin rengi"
+msgstr "bir seçenek indeksi rengi"
 
 msgid "color for index of option on the selected line"
 msgstr ""
@@ -5115,35 +5572,29 @@ msgid ""
 "option fset.format.option2)"
 msgstr ""
 
-#, fuzzy
 msgid "color for mark indicator"
-msgstr "sunucu isimleri için metin rengi"
+msgstr "im belirteci rengi"
 
-#, fuzzy
 msgid "color for mark indicator on the selected line"
-msgstr "Bağlanma iletisi metni için renk"
+msgstr "seçili satırdaki im belirteci rengi"
 
-#, fuzzy
 msgid "color for max value"
-msgstr "değerler için metin rengi"
+msgstr "en çok değer rengi"
 
 msgid "color for max value on the selected line"
 msgstr ""
 
-#, fuzzy
 msgid "color for min value"
-msgstr "değerler için metin rengi"
+msgstr "en az değer rengi"
 
 msgid "color for min value on the selected line"
 msgstr ""
 
-#, fuzzy
 msgid "color for name"
-msgstr "rumuz renk ismi al"
+msgstr "ad rengi"
 
-#, fuzzy
 msgid "color for name if value is changed"
-msgstr "değerler için metin rengi"
+msgstr "değerin değiştiği durumda ad rengi"
 
 msgid "color for name if value is changed on the selected line"
 msgstr ""
@@ -5151,13 +5602,11 @@ msgstr ""
 msgid "color for name on the selected line"
 msgstr ""
 
-#, fuzzy
 msgid "color for option"
-msgstr "seçeneklerin listesi"
+msgstr "seçenek rengi"
 
-#, fuzzy
 msgid "color for option if value is changed"
-msgstr "Bağlanma iletisi metni için renk"
+msgstr "değerin değiştiği durumda seçenek rengi"
 
 msgid "color for option if value is changed on the selected line"
 msgstr ""
@@ -5165,21 +5614,17 @@ msgstr ""
 msgid "color for option on the selected line"
 msgstr ""
 
-#, fuzzy
 msgid "color for name of parent option"
-msgstr "istemci açıklaması için metin rengi"
+msgstr "üst seçenek adı rengi"
 
-#, fuzzy
 msgid "color for name of parent option on the selected line"
-msgstr "Bağlanma iletisi metni için renk"
+msgstr "seçili satırdaki üst seçenek adı rengi"
 
-#, fuzzy
 msgid "color for value of parent option"
-msgstr "istemci açıklaması için metin rengi"
+msgstr "üst seçenek değeri rengi"
 
-#, fuzzy
 msgid "color for value of parent option on the selected line"
-msgstr "Bağlanma iletisi metni için renk"
+msgstr "seçili satırdaki üst seçenek değeri rengi"
 
 msgid "color for quotes around string values which are changed"
 msgstr ""
@@ -5191,24 +5636,20 @@ msgstr ""
 msgid "color for quotes around string values on the selected line"
 msgstr ""
 
-#, fuzzy
 msgid "color for section"
-msgstr "sohbet için metin rengi"
+msgstr "bölüm rengi"
 
-#, fuzzy
 msgid "color for section if value is changed"
-msgstr "Bağlanma iletisi metni için renk"
+msgstr "değerin değiştiği durumda bölüm rengi"
 
 msgid "color for section if value is changed on the selected line"
 msgstr ""
 
-#, fuzzy
 msgid "color for section on the selected line"
-msgstr "Bağlanma iletisi metni için renk"
+msgstr "seçili satırdaki bölüm rengi"
 
-#, fuzzy
 msgid "color for string values"
-msgstr "değerler için metin rengi"
+msgstr "dizi değeri rengi"
 
 msgid "color for string values on the selected line"
 msgstr ""
@@ -5230,25 +5671,21 @@ msgstr ""
 msgid "color for sort in title of buffer"
 msgstr ""
 
-#, fuzzy
 msgid "color for type"
-msgstr "sohbet için metin rengi"
+msgstr "tür rengi"
 
 msgid "color for type on the selected line"
 msgstr ""
 
-#, fuzzy
 msgid "color for mark indicator when the option is not marked"
-msgstr "zaman için metin rengi (durum çubuğu)"
+msgstr "seçenek imli değilken im belirteci rengi"
 
-#, fuzzy
 msgid ""
 "color for mark indicator when the option is not marked on the selected line"
-msgstr "Bağlanma iletisi metni için renk"
+msgstr "seçili satırdaki seçenek imli değilken im belirteci rengi"
 
-#, fuzzy
 msgid "color for value"
-msgstr "değerler için metin rengi"
+msgstr "değer rengi"
 
 msgid "color for value changed (different from default)"
 msgstr ""
@@ -5259,16 +5696,14 @@ msgstr ""
 msgid "color for value on the selected line"
 msgstr ""
 
-#, fuzzy
 msgid "color for undefined value"
-msgstr "değerler için metin rengi"
+msgstr "tanımlanmamış değer rengi"
 
 msgid "color for undefined value on the selected line"
 msgstr ""
 
-#, fuzzy
 msgid "list of fset options"
-msgstr "seçeneklerin listesi"
+msgstr "fset seçenekleri listesi"
 
 msgid "fset option pointer (optional)"
 msgstr ""
@@ -5276,9 +5711,8 @@ msgstr ""
 msgid "option name (wildcard \"*\" is allowed) (optional)"
 msgstr ""
 
-#, fuzzy
 msgid "fset options"
-msgstr "seçeneklerin listesi"
+msgstr "fset seçenekleri"
 
 msgid "Fast set of WeeChat and plugins options"
 msgstr ""
@@ -5300,9 +5734,9 @@ msgstr ""
 msgid "Support of scheme scripts (with Guile)"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: stdout/stderr (%s): %s"
-msgstr "%s%s: hata: %s"
+msgstr "%s: stdout/stderr (%s): %s"
 
 #, c-format
 msgid "%s%s: function \"%s\" must return a valid value"
@@ -5426,13 +5860,13 @@ msgstr ""
 msgid "%s%s: currently connecting to server \"%s\"!"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: server added: %s%s%s%s%s"
-msgstr "%s: sunucu %s%s%s oluşturuldu"
+msgstr "%s: sunucu eklendi: %s%s%s%s%s"
 
 #. TRANSLATORS: "temporary IRC server"
 msgid " (temporary)"
-msgstr ""
+msgstr " (geçici)"
 
 #, c-format
 msgid ""
@@ -5504,9 +5938,9 @@ msgstr ""
 msgid "%s: all ignores deleted"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: ignore \"%s\" deleted"
-msgstr "Filtre \"%s\" silindi"
+msgstr "%s: \"%s\" yok say silindi"
 
 #, c-format
 msgid "%s%s: ignore not found"
@@ -5587,13 +6021,12 @@ msgstr ""
 msgid "%s%s: cannot create new private buffer \"%s\""
 msgstr ""
 
-#, fuzzy
 msgid "nick:"
-msgstr "rumuz"
+msgstr "takma ad:"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Server: %s%s %s[%s%s%s]%s%s%s%s"
-msgstr "Sunucu: %s%s %s[%s%s%s]%s%s"
+msgstr "Sunucu: %s%s %s[%s%s%s]%s%s%s%s"
 
 msgid "connected"
 msgstr "bağlandı"
@@ -5603,7 +6036,7 @@ msgstr "bağlanmadı"
 
 #. TRANSLATORS: "fake IRC server"
 msgid " (fake)"
-msgstr ""
+msgstr " (sahte)"
 
 msgid "minute"
 msgid_plural "minutes"
@@ -5627,13 +6060,13 @@ msgstr ""
 msgid "No server found with \"%s\""
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: server \"%s\" already exists, can't add it!"
-msgstr "Filtre \"%s\" etkin"
+msgstr "%s%s: \"%s\" sunucusu halihazırda mevcut, eklenemiyor!"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unable to add server"
-msgstr "%s%s: sunucuya yeniden bağlanılıyor..."
+msgstr "%s%s: sunucu eklenemiyor"
 
 #, c-format
 msgid "%s%s: server \"%s\" not found for \"%s\" command"
@@ -5651,10 +6084,10 @@ msgstr ""
 msgid "%s: server %s%s%s has been renamed to %s%s%s"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%d server moved"
 msgid_plural "%d servers moved"
-msgstr[0] "%s: \"%s\" kaldırıldı"
+msgstr[0] "%d sunucu taşındı"
 
 #, c-format
 msgid "%s%s: server \"%s\" is not a temporary server"
@@ -5670,9 +6103,9 @@ msgid ""
 "disconnect %s\" before."
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: server %s%s%s has been deleted"
-msgstr "%s: sunucu %s%s%s oluşturuldu"
+msgstr "%s: %s%s%s sunucusu silindi"
 
 #, c-format
 msgid ""
@@ -5691,16 +6124,17 @@ msgid "[<target>]"
 msgstr "[<hedef>]"
 
 msgid "target: server name"
-msgstr "hedef: sunucu ismi"
+msgstr "hedef: sunucu adı"
 
 msgid "execute a command on all channels of all connected servers"
 msgstr ""
 
-#, fuzzy
 msgid ""
 "[-current] [-exclude=<channel>[,<channel>...]] <command> || [-current] -"
 "include=<channel>[,<channel>...] <command>"
-msgstr "[-current] [-exclude=<kanal>[,<kanal>...]] <komut> [<argümanlar>]"
+msgstr ""
+"[-current] [-exclude=<kanal>[,<kanal>...]] <komut> || [-current] -"
+"include=<kanal>[,<kanal>...] <komut>"
 
 msgid ""
 " -current: execute command for channels of current server only\n"
@@ -5732,11 +6166,12 @@ msgstr ""
 msgid "execute a command on all private buffers of all connected servers"
 msgstr ""
 
-#, fuzzy
 msgid ""
 "[-current] [-exclude=<nick>[,<nick>...]] <command> || [-current] -"
 "include=<nick>[,<nick>...] <command>"
-msgstr "[-current] [-exclude=<kanal>[,<kanal>...]] <komut> [<argümanlar>]"
+msgstr ""
+"[-current] [-exclude=<takma_ad>[,<takma_ad>...]] <komut> || [-current] -"
+"include=<takma_ad>[,<takma_ad>...] <komut>"
 
 msgid ""
 " -current: execute command for private buffers of current server only\n"
@@ -5769,11 +6204,12 @@ msgstr ""
 msgid "execute a command on all connected servers"
 msgstr ""
 
-#, fuzzy
 msgid ""
 "[-exclude=<server>[,<server>...]] <command> || -include=<server>[,"
 "<server>...] <command>"
-msgstr "[-exclude=<sunucu>[,<sunucu>...]] <komut> [<argümanlar>]"
+msgstr ""
+"[-exclude=<sunucu>[,<sunucu>...]] <komut> || -include=<sunucu>[,<sunucu>...] "
+"<komut>"
 
 msgid ""
 " -exclude: exclude some servers (wildcard \"*\" is allowed)\n"
@@ -5800,7 +6236,7 @@ msgid "ban nicks or hosts"
 msgstr ""
 
 msgid "[<channel>] [<nick> [<nick>...]]"
-msgstr "[<kanal>] [<rumuz> [<rumuz>...]]"
+msgstr "[<kanal>] [<takma_ad> [<takma_ad>...]]"
 
 msgid ""
 "channel: channel name\n"
@@ -5840,12 +6276,11 @@ msgstr ""
 msgid "connect to IRC server(s)"
 msgstr "İRC sunucu(lara) bağlan"
 
-#, fuzzy
 msgid ""
 "[<server> [<server>...]] [-<option>[=<value>]] [-no<option>] [-nojoin] [-"
 "switch] || -all|-auto|-open [-nojoin] [-switch]"
 msgstr ""
-"<sunucu> [<sunucu>...] [-<seçenek>[=<değer>]] [-no<seçenek>] [-nojoin] [-"
+"[<sunucu> [<sunucu>...]] [-<seçenek>[=<değer>]] [-no<seçenek>] [-nojoin] [-"
 "switch] || -all|-auto|-open [-nojoin] [-switch]"
 
 msgid ""
@@ -5882,9 +6317,8 @@ msgstr ""
 msgid "send a CTCP message (Client-To-Client Protocol)"
 msgstr ""
 
-#, fuzzy
 msgid "[-server <server>] <target>[,<target>...] <type> [<arguments>]"
-msgstr "[-server <sunucu>] <hedef>[,<hedef>...] <metin>"
+msgstr "[-server <sunucu>] <hedef>[,<hedef>...] <tür> [<argümanlar>]"
 
 msgid ""
 "   server: send to this server (internal name)\n"
@@ -5913,7 +6347,7 @@ msgid "start a DCC (file transfer or direct chat)"
 msgstr ""
 
 msgid "chat <nick> || send <nick> <file>"
-msgstr "chat <rumuz> || send <rumuz> <dosya>"
+msgstr "chat <takma_ad> || send <takma_ad> <dosya>"
 
 msgid ""
 "nick: nick\n"
@@ -5929,9 +6363,8 @@ msgstr ""
 msgid "remove channel half-operator status from nick(s)"
 msgstr ""
 
-#, fuzzy
 msgid "<nick> [<nick>...] || * -yes"
-msgstr "<rumuz> [<rumuz>...]"
+msgstr "<takma_ad> [<takma_ad>...] || * -yes"
 
 msgid ""
 "nick: nick or mask (wildcard \"*\" is allowed)\n"
@@ -5984,7 +6417,7 @@ msgid "ignore nicks/hosts from servers or channels"
 msgstr ""
 
 msgid "list || add [re:]<nick> [<server> [<channel>]] || del <number>|-all"
-msgstr "list || add [re:]<rumuz> [<sunucu> [<kanal>]] || del <sayı>|-all"
+msgstr "list || add [re:]<takma_ad> [<sunucu> [<kanal>]] || del <sayı>|-all"
 
 msgid ""
 "     list: list all ignores\n"
@@ -6016,23 +6449,23 @@ msgid "invite a nick on a channel"
 msgstr ""
 
 msgid "<nick> [<nick>...] [<channel>]"
-msgstr "<rumuz> [<rumuz>...] [<kanal>]"
+msgstr "<takma_ad> [<takma_ad>...] [<kanal>]"
 
 msgid ""
 "   nick: nick\n"
 "channel: channel name"
 msgstr ""
-"   nick: rumuz\n"
-"channel: kanal ismi"
+"   nick: takma ad\n"
+"channel: kanal adı"
 
 msgid "check if a nick is currently on IRC"
 msgstr ""
 
 msgid "<nick> [<nick>...]"
-msgstr "<rumuz> [<rumuz>...]"
+msgstr "<takma_ad> [<takma_ad>...]"
 
 msgid "nick: nick"
-msgstr "rumuz: rumuz"
+msgstr "nick: takma ad"
 
 msgid "join a channel"
 msgstr "bir kanala bağlan"
@@ -6041,7 +6474,8 @@ msgid ""
 "[-noswitch] [-server <server>] [<channel1>[,<channel2>...]] [<key1>[,"
 "<key2>...]]"
 msgstr ""
-"[-noswitch] [-server <sunucu>] [<kanal1>[,<kanal2>...]] [<tuş1>[,<tuş2>...]]"
+"[-noswitch] [-server <sunucu>] [<kanal1>[,<kanal2>...]] [<düğme1>[,"
+"<düğme2>...]]"
 
 msgid ""
 "-noswitch: do not switch to new buffer\n"
@@ -6090,9 +6524,8 @@ msgstr ""
 msgid "close client-server connection"
 msgstr ""
 
-#, fuzzy
 msgid "<nick> [<reason>]"
-msgstr "<rumuz> [<rumuz>...]"
+msgstr "<takma_ad> [<neden>]"
 
 msgid ""
 "  nick: nick\n"
@@ -6102,9 +6535,8 @@ msgstr ""
 msgid "list all server names which are known by the server answering the query"
 msgstr ""
 
-#, fuzzy
 msgid "[[<target>] <server_mask>]"
-msgstr "<sunucu1> [<sunucu2>]"
+msgstr "[[<hedef>] <sunucu_maskesi>]"
 
 msgid ""
 "     target: this remote server should answer the query\n"
@@ -6114,10 +6546,8 @@ msgstr ""
 msgid "list channels and their topic"
 msgstr ""
 
-#, fuzzy
 msgid "[-server <server>] [-re <regex>] [<channel>[,<channel>...]] [<target>]"
-msgstr ""
-"[-noswitch] [-server <sunucu>] [<kanal1>[,<kanal2>...]] [<tuş1>[,<tuş2>...]]"
+msgstr "[-server <sunucu>] [-re <ifade>] [<kanal>[,<kanal>...]] [<hedef>]"
 
 msgid ""
 " server: send to this server (internal name)\n"
@@ -6165,7 +6595,8 @@ msgstr ""
 msgid ""
 "[<channel>] [+|-]o|p|s|i|t|n|m|l|b|e|v|k [<arguments>] || <nick> [+|-]i|s|w|o"
 msgstr ""
-"[<kanal>] [+|-]o|p|s|i|t|n|m|l|b|e|v|k [<argümanlar>] || <rumuz> [+|-]i|s|w|o"
+"[<kanal>] [+|-]o|p|s|i|t|n|m|l|b|e|v|k [<argümanlar>] || <takma_ad> [+|-]i|s|"
+"w|o"
 
 msgid ""
 "channel modes:\n"
@@ -6221,20 +6652,20 @@ msgid "[<channel>[,<channel>...]]"
 msgstr "[<kanal>[,<kanal>...]]"
 
 msgid "channel: channel name"
-msgstr "kanal: kanal ismi"
+msgstr "kanal: kanal adı"
 
 msgid "change current nick"
-msgstr "mevcut rumuzu değiştir"
+msgstr "geçerli takma adı değiştir"
 
 msgid "[-all] <nick>"
-msgstr "[-all] <rumuz>"
+msgstr "[-all] <takma_ad>"
 
 msgid ""
 "-all: set new nick for all connected servers\n"
 "nick: new nick"
 msgstr ""
-"-all: tüm bağlı sunucular için yeni bir rumuz ayarla\n"
-"nick: yeni rumuz"
+"-all: tüm bağlı sunucular için yeni bir takma ad ayarla\n"
+"nick: yeni takma ad"
 
 msgid "send notice message to user"
 msgstr ""
@@ -6252,7 +6683,7 @@ msgid "add a notification for presence or away status of nicks on servers"
 msgstr ""
 
 msgid "add <nick> [<server> [-away]] || del <nick>|-all [<server>]"
-msgstr "add <rumuz> [<sunucu> [-away]] || del <rumuz>|-all [<sunucu>]"
+msgstr "add <takma_ad> [<sunucu> [-away]] || del <takma_ad>|-all [<sunucu>]"
 
 msgid ""
 "   add: add a notification\n"
@@ -6306,9 +6737,8 @@ msgstr ""
 msgid "send a ping to server"
 msgstr ""
 
-#, fuzzy
 msgid "<target1> [<target2>]"
-msgstr "[<hedef>]"
+msgstr "<hedef1> [<hedef2>]"
 
 msgid ""
 "target1: server\n"
@@ -6329,9 +6759,8 @@ msgstr ""
 msgid "send a private message to a nick"
 msgstr ""
 
-#, fuzzy
 msgid "[-noswitch] [-server <server>] <nick>[,<nick>...] [<text>]"
-msgstr "[-server <sunucu>] <rumuz>[,<rumuz>...] [<metin>]"
+msgstr "[-noswitch] [-server <sunucu>] <takma_ad>[,<takma_ad>...] [<metin>]"
 
 msgid ""
 "-noswitch: do not switch to new buffer\n"
@@ -6393,14 +6822,13 @@ msgid "force a user to join channel(s)"
 msgstr ""
 
 msgid "<nick> <channel>[,<channel>...]"
-msgstr "<rumuz> <kanal>[,<kanal>...]"
+msgstr "<takma_ad> <kanal>[,<kanal>...]"
 
 msgid "change mode on channel, without having operator status"
 msgstr ""
 
-#, fuzzy
 msgid "[<channel>] <mode>"
-msgstr "<kanal> <kip>"
+msgstr "[<kanal>] <kip>"
 
 msgid ""
 "channel: channel name\n"
@@ -6411,7 +6839,7 @@ msgid "force a user to use another nick"
 msgstr ""
 
 msgid "<nick> <new_nick>"
-msgstr "<rumuz> <yeni_rumuz>"
+msgstr "<takma_ad> <yeni_takma_ad>"
 
 msgid ""
 "    nick: nick\n"
@@ -6441,16 +6869,16 @@ msgstr ""
 msgid "list, add or remove IRC servers"
 msgstr "İRC sunucularını listele, ekle veya kaldır"
 
-#, fuzzy
 msgid ""
 "list|listfull [<name>] || add <name> <hostname>[/<port>] [-temp] [-"
 "<option>[=<value>]] [-no<option>] || copy|rename <name> <new_name> || "
 "reorder <name> [<name>...] || open <name>|-all [<name>...] || del|keep "
 "<name> || deloutq|jump || raw [<filter>]"
 msgstr ""
-"list|listfull [<sunucu>] || add <sunucu> <hostname>[/<port>] [-temp] [-"
-"<seçenek>[=<değer>]] [-no<seçenek>] || copy|rename <sunucu> <yeni_isim> || "
-"del|keep <sunucu> || deloutq|jump|raw"
+"list|listfull [<ad>] || add <ad> <makine>[/<kapı>] [-temp] [-"
+"<seçenek>[=<değer>]] [-no<seçenek>] || copy|rename <ad> <yeni_ad> || reorder "
+"<ad> [<ad>...] || open <ad>|-all [<ad>...] || del|keep <ad> || deloutq|jump "
+"|| raw [<süzgeç>]"
 
 #, fuzzy
 msgid ""
@@ -6507,8 +6935,8 @@ msgstr ""
 "    list: sunucuların listesi (argüman olmadan bu liste görüntülenir)\n"
 "listfull: her sunucu için ayrıntılı bilgi ile sunucu listesi\n"
 "     add: yeni bir sunucu oluştur\n"
-"  server: iç ve ekran kullanımı için sunucu ismi\n"
-"hostname: isteğe bağlı noktası, sunucunun İP adresi veya ismi (varsayılan: "
+"  server: iç ve ekran kullanımı için sunucu adı\n"
+"hostname: isteğe bağlı noktası, sunucunun İP adresi veya adı (varsayılan: "
 "6667), fazla adres virgül ile ayrılabilir\n"
 "   -temp: geçici bir sunucu oluştur (kaydedilmez)\n"
 "  option: sunucu için seçenekleri ayarla (for boolean option, value can be "
@@ -6559,24 +6987,21 @@ msgstr ""
 msgid "disconnect server links"
 msgstr ""
 
-#, fuzzy
 msgid "<target> <comment>"
-msgstr "<sunucu> <açıklama>"
+msgstr "<hedef> <yorum>"
 
-#, fuzzy
 msgid ""
 " target: server name\n"
 "comment: comment"
 msgstr ""
-"server: sunucu ismi\n"
-"  nick: rumuz"
+" target: sunucu adı\n"
+"comment: yorum"
 
 msgid "query statistics about server"
 msgstr ""
 
-#, fuzzy
 msgid "[<query> [<target>]]"
-msgstr "<kullanıcı> [<hedef> [<kanal>]]"
+msgstr "[<sorgu> [<hedef>]]"
 
 msgid ""
 " query: c/h/i/k/l/m/o/y/u (see RFC1459)\n"
@@ -6609,14 +7034,13 @@ msgstr ""
 msgid "[<channel>] [<topic>|-delete]"
 msgstr "[<kanal>] [<konu>|-delete]"
 
-#, fuzzy
 msgid ""
 "channel: channel name\n"
 "  topic: new topic\n"
 "-delete: delete channel topic"
 msgstr ""
-"channel: kanal ismi\n"
-"  topic: kanal için yeni konu\n"
+"channel: kanal adı\n"
+"  topic: yeni konu\n"
 "-delete: kanal konusunu sil"
 
 msgid "find the route to specific server"
@@ -6625,26 +7049,29 @@ msgstr ""
 msgid "unban nicks or hosts"
 msgstr ""
 
-#, fuzzy
 msgid "[<channel>] <nick>|<number> [<nick>|<number>...]"
-msgstr "[<kanal>] <rumuz> [<rumuz>...]"
+msgstr "[<kanal>] <takma_ad>|<sayı> [<takma_ad>|<sayı>...]"
 
-#, fuzzy
 msgid ""
 "channel: channel name\n"
 "   nick: nick or host\n"
 " number: ban number (as displayed by command /ban)"
-msgstr "kanal: kanal ismi"
+msgstr ""
+"channel: kanal adı\n"
+"   nick: takma ad veya makine\n"
+" number: yasak numarası (/ban komutunda görüntülendiği üzere)"
 
 msgid "unquiet nicks or hosts"
 msgstr ""
 
-#, fuzzy
 msgid ""
 "channel: channel name\n"
 "   nick: nick or host\n"
 " number: quiet number (as displayed by command /quiet)"
-msgstr "kanal: kanal ismi"
+msgstr ""
+"channel: kanal adı\n"
+"   nick: takma ad veya makine\n"
+" number: sessiz numarası (/quiet komutunda görüntülendiği üzere)"
 
 msgid "return a list of information about nicks"
 msgstr ""
@@ -6655,17 +7082,15 @@ msgstr ""
 msgid "give the version info of nick or server (current or specified)"
 msgstr ""
 
-#, fuzzy
 msgid "[<target>|<nick>]"
-msgstr "[<sunucu>|<rumuz>]"
+msgstr "[<hedef>|<takma_ad>]"
 
-#, fuzzy
 msgid ""
 "target: server name\n"
 "  nick: nick"
 msgstr ""
-"server: sunucu ismi\n"
-"  nick: rumuz"
+"server: sunucu adı\n"
+"  nick: takma ad"
 
 msgid "give voice to nick(s)"
 msgstr ""
@@ -6711,9 +7136,8 @@ msgstr ""
 msgid "query information about user(s)"
 msgstr ""
 
-#, fuzzy
 msgid "[<target>] [<nick>[,<nick>...]]"
-msgstr "[<sunucu>] [<rumuz>[,<rumuz>...]]"
+msgstr "[<hedef>] [<takma_ad>[,<takma_ad>...]]"
 
 msgid ""
 "target: server name\n"
@@ -6731,7 +7155,7 @@ msgid "ask for information about a nick which no longer exists"
 msgstr ""
 
 msgid "<nick>[,<nick>...] [<count> [<target>]]"
-msgstr "<rumuz>[,<rumuz>...] [<count> [<hedef>]]"
+msgstr "<takma_ad>[,<takma_ad>...] [<sayım> [<hedef>]]"
 
 msgid ""
 "  nick: nick\n"
@@ -6761,7 +7185,7 @@ msgid "nicks on all channels of current IRC server"
 msgstr ""
 
 msgid "IRC servers (internal names)"
-msgstr "İRC sunucuları (dahili isimler)"
+msgstr "İRC sunucuları (dahili adlar)"
 
 msgid "current IRC channel"
 msgstr "mevcut İRC kanalı"
@@ -6788,9 +7212,8 @@ msgstr ""
 msgid "privates on all IRC servers"
 msgstr ""
 
-#, fuzzy
 msgid "default kick message"
-msgstr "varsayılan komut:"
+msgstr "öntanımlı atma iletisi"
 
 msgid "default part message for IRC channel"
 msgstr "İRC kanalı için varsayılan ayrılma iletisi"
@@ -7113,7 +7536,7 @@ msgstr ""
 
 #, fuzzy, c-format
 msgid "%s%s: error adding server \"%s\""
-msgstr "%sFiltre eklenirken hata"
+msgstr "%s%s: \"%s\" sunucusu eklenirken hata"
 
 #, c-format
 msgid "%s%s: error creating server option \"%s\""
@@ -7250,13 +7673,11 @@ msgstr ""
 msgid "name of bar item where IRC server is displayed (for status bar)"
 msgstr ""
 
-#, fuzzy
 msgid "display nick modes in bar item \"input_prompt\""
-msgstr "sohbet penceresindeki rumuzlar için metin rengi"
+msgstr "takma ad kiplerini \"input_prompt\" çubuk ögesinde görüntüle"
 
-#, fuzzy
 msgid "display nick prefix in bar item \"input_prompt\""
-msgstr "sohbet penceresindeki rumuzlar için metin rengi"
+msgstr "takma ad önekini \"input_prompt\" bar ögesinde görüntüle"
 
 msgid ""
 "automatically add channel type in front of channel name on command /join if "
@@ -7421,36 +7842,32 @@ msgstr ""
 msgid "color for lag indicator, when pong has been received from server"
 msgstr ""
 
-#, fuzzy
 msgid "color for nick modes in bar item \"input_prompt\""
-msgstr "sohbet penceresindeki rumuzlar için metin rengi"
-
-#, fuzzy
-msgid "color for higher supported TLS version in bar item \"tls_version\""
-msgstr "sohbet penceresindeki rumuzlar için metin rengi"
+msgstr "\"input_prompt\" bar ögesindeki takma ad kipi rengi"
 
 #, fuzzy
 msgid "color for deprecated TLS versions in bar item \"tls_version\""
-msgstr "sohbet penceresindeki rumuzlar için metin rengi"
+msgstr "\"input_prompt\" bar ögesindeki takma ad kipi rengi"
 
 #, fuzzy
 msgid "color for insecure TLS versions in bar item \"tls_version\""
-msgstr "sohbet penceresindeki rumuzlar için metin rengi"
+msgstr "\"input_prompt\" bar ögesindeki takma ad kipi rengi"
 
 #, fuzzy
+msgid "color for higher supported TLS version in bar item \"tls_version\""
+msgstr "\"input_prompt\" bar ögesindeki takma ad kipi rengi"
+
 msgid "color for text in account messages"
-msgstr "Bağlanma iletisi metni için renk"
+msgstr "hesap iletilerindeki metin rengi"
 
-#, fuzzy
 msgid "color for text in chghost messages"
-msgstr "Bağlanma iletisi metni için renk"
+msgstr "chghost iletilerindeki metin rengi"
 
 msgid "color for text in join messages"
 msgstr "Bağlanma iletisi metni için renk"
 
-#, fuzzy
 msgid "color for text in kick/kill messages"
-msgstr "Bağlanma iletisi metni için renk"
+msgstr "at/öldür iletilerindeki metin rengi"
 
 msgid "color for text in part/quit messages"
 msgstr "ayrılma/çıkış iletisindeki metin için renk"
@@ -7477,9 +7894,8 @@ msgstr ""
 msgid "color for text \"Notice\" in notices"
 msgstr ""
 
-#, fuzzy
 msgid "color for reason in kick/kill messages"
-msgstr "ayrılma/çıkış iletisindeki sebep için renk"
+msgstr "at/öldür iletilerindeki neden rengi"
 
 msgid "color for reason in part/quit messages"
 msgstr "ayrılma/çıkış iletisindeki sebep için renk"
@@ -7573,10 +7989,9 @@ msgid " (blocked)"
 msgstr ""
 
 #. TRANSLATORS: %.3fs is a float number + "s" ("seconds")
-#, fuzzy, c-format
+#, c-format
 msgid "%sCTCP reply from %s%s%s: %s%s%s %.3fs"
-msgstr ""
-"%sKanal %s%s%s: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s%s)"
+msgstr "%s%s%s%s konumundan CTCP yanıtı: %s%s%s %.3fs"
 
 #, c-format
 msgid "%sCTCP reply from %s%s%s: %s%s%s%s%s"
@@ -7618,7 +8033,7 @@ msgid "get current nick on a server"
 msgstr ""
 
 msgid "server name"
-msgstr "sunucu ismi"
+msgstr "sunucu adı"
 
 msgid "get nick from IRC host"
 msgstr ""
@@ -7705,20 +8120,17 @@ msgstr ""
 msgid "server,channel (channel is optional)"
 msgstr ""
 
-#, fuzzy
 msgid "list of channel mode lists for an IRC channel"
-msgstr "İRC kanalı için varsayılan ayrılma iletisi"
+msgstr "Bir IRC kanalı için kanal kipi listeleri listesi"
 
-#, fuzzy
 msgid "mode list pointer (optional)"
-msgstr "seçeneklerin listesi"
+msgstr "kip listesi işaretleyicisi (isteğe bağlı)"
 
 msgid "server,channel,type (type is optional)"
 msgstr ""
 
-#, fuzzy
 msgid "list of items in a channel mode list"
-msgstr "İRC kanalı için varsayılan ayrılma iletisi"
+msgstr "bir kanal kipi listesindeki ögelerin listesi"
 
 msgid "mode list item pointer (optional)"
 msgstr ""
@@ -7751,7 +8163,7 @@ msgid "mapping between IRC color codes and WeeChat color names"
 msgstr ""
 
 msgid "irc nick"
-msgstr "irc rumuz"
+msgstr "irc takma adı"
 
 msgid "irc modelist"
 msgstr ""
@@ -7819,41 +8231,41 @@ msgstr ""
 msgid "Notify list is empty on all servers"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%snotify: %s%s%s%s%s%s%s%s%s is connected"
-msgstr "%s%s%s%s%s%s%s%s%s%s çıktı"
+msgstr "%snotify: %s%s%s%s%s%s%s%s%s çevrimiçi"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%snotify: %s%s%s%s%s%s%s%s%s is offline"
-msgstr "%s%s%s%s%s%s%s%s%s%s çıktı"
+msgstr "%snotify: %s%s%s%s%s%s%s%s%s çevrimdışı"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%snotify: %s%s%s%s%s%s%s%s%s has connected"
-msgstr "%s%s%s%s%s%s%s%s%s%s çıktı"
+msgstr "%snotify: %s%s%s%s%s%s%s%s%s bağlandı"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%snotify: %s%s%s%s%s%s%s%s%s has quit"
-msgstr "%s%s%s%s%s%s%s%s%s%s çıktı"
+msgstr "%snotify: %s%s%s%s%s%s%s%s%s çıkış yaptı"
 
 #, c-format
 msgid "%snotify: %s%s%s is now away: \"%s\""
-msgstr ""
+msgstr "%snotify: %s%s%s şimdi uzakta: \"%s\""
 
 #, c-format
 msgid "%snotify: %s%s%s is back"
-msgstr ""
+msgstr "%snotify: %s%s%s geri döndü"
 
 #, c-format
 msgid "%snotify: %s%s%s is still away: \"%s\""
-msgstr ""
+msgstr "%snotify: %s%s%s hâlâ uzakta: \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s%s%s has identified as %s"
-msgstr "%s%s[%s%s%s]%s uzakta: %s"
+msgstr "%s%s%s%s, %s olarak kimliği tanımlandı"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s%s%s has unidentified"
-msgstr "%s: sunucu %s%s%s oluşturuldu"
+msgstr "%s%s%s%s kimliği belirsiz"
 
 #, c-format
 msgid ""
@@ -7864,29 +8276,29 @@ msgstr ""
 msgid "%s%s: client capability, requesting: %s"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: client capability: SASL not supported"
-msgstr "%s: betik kaldırıldı: %s"
+msgstr "%s%s: istemci yeteneği: SASL desteklenmiyor"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: client capability, server supports: %s"
-msgstr "%s: betik kaldırıldı: %s"
+msgstr "%s%s: istemci yeteneği, sunucu şunu destekliyor: %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: client capability, currently enabled: %s"
-msgstr "%s: betik kaldırıldı: %s"
+msgstr "%s%s: sunucu yeteneği, şu anda etkin: %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: client capability, enabled: %s, disabled: %s"
-msgstr "%s: betik kaldırıldı: %s"
+msgstr "%s%s: sunucu yeteneği, etkin: %s, devre dışı: %s"
 
 #, c-format
 msgid "%s%s: client capability, enabled: %s"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: client capability, disabled: %s"
-msgstr "%s: betik kaldırıldı: %s"
+msgstr "%s%s: sunucu yeteneği, devre dışı: %s"
 
 #, c-format
 msgid "%s%s: client capability, refused: %s"
@@ -7896,13 +8308,13 @@ msgstr ""
 msgid "%s%s: client capability, now available: %s"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: client capability, removed: %s"
-msgstr "%s: betik kaldırıldı: %s"
+msgstr "%s%s: sunucu yeteneği, kaldırıldı: %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s%s%s (%s%s%s)%s has changed host to %s%s"
-msgstr "%s%s%s%s%s%s%s%s%s%s terk etti %s%s%s"
+msgstr "%s%s%s%s (%s%s%s)%s ana makineyi %s%s olarak değiştirdi"
 
 #, c-format
 msgid "%sYou have been invited to %s%s%s by %s%s%s"
@@ -7916,9 +8328,9 @@ msgstr ""
 msgid "%s%s: cannot create new channel \"%s\""
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s%s%s%s%s%s%s%s%s%s%s has joined %s%s%s"
-msgstr "%s%s%s%s%s%s%s%s%s%s katıldı %s%s%s"
+msgstr "%s%s%s%s%s%s%s%s%s%s%s%s, %s%s%s kanalına katıldı"
 
 #, c-format
 msgid "%s%s%s%s has kicked %s%s%s %s(%s%s%s)"
@@ -7992,9 +8404,9 @@ msgstr ""
 msgid "%sWallops from %s: %s"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sServer notice mask for %s%s%s: %s"
-msgstr "%s %s%s%s kanalının konusu \"%s%s\""
+msgstr "%s%s%s%s için sunucu bildirim maskesi: %s"
 
 #, c-format
 msgid "%sUser mode for %s%s%s is %s[%s%s%s]"
@@ -8049,9 +8461,9 @@ msgstr ""
 msgid "%sNo topic set for channel %s%s"
 msgstr "%s %s%s kanalı için ayarlı konu yok"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sTopic for %s%s%s is \"%s%s%s\""
-msgstr "%s %s%s%s kanalının konusu \"%s%s\""
+msgstr "%s%s%s%s konusu \"%s%s%s\""
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, c-format
@@ -8078,30 +8490,30 @@ msgid "%sChannel reop %s%s%s: %s%s"
 msgstr ""
 
 #. TRANSLATORS: "%s" after "on" is a date
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s[%s%s%s] %s%s%s%s invited by %s on %s"
-msgstr "%s%s%s%s%s%s%s%s%s%s katıldı %s%s%s"
+msgstr "%s%s[%s%s%s] %s%s%s%s, %s tarafından %s tarihinde davet edildi"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s[%s%s%s] %s%s%s%s invited by %s"
-msgstr "%s%s[%s%s%s]%s uzakta: %s"
+msgstr "%s%s[%s%s%s] %s%s%s%s, %s tarafından davet edildi"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s[%s%s%s] %s%s%s%s invited"
-msgstr "%s%s[%s%s%s]%s uzakta: %s"
+msgstr "%s%s[%s%s%s] %s%s%s%s davet edildi"
 
 #. TRANSLATORS: "%s" after "on" is a date
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s[%s%s%s]%s%s exception %s%s%s by %s on %s"
-msgstr "%s%s%s%s%s%s%s%s%s%s katıldı %s%s%s"
+msgstr "%s%s[%s%s%s]%s%s, %s%s%s istisna, %s tarafından, %s tarihinde"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s[%s%s%s]%s%s exception %s%s%s by %s"
-msgstr "%s%s[%s%s%s]%s uzakta: %s"
+msgstr "%s%s[%s%s%s]%s%s, %s%s%s istisna, %s tarafından"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s[%s%s%s]%s%s exception %s%s"
-msgstr "%s%s[%s%s%s]%s uzakta: %s"
+msgstr "%s%s[%s%s%s]%s%s, %s%s istisna"
 
 #, c-format
 msgid "%s%s: cannot create nick \"%s\" for channel \"%s\""
@@ -8133,27 +8545,26 @@ msgid "%s%s%d%s normal"
 msgid_plural "%s%s%d%s normals"
 msgstr[0] ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sChannel %s%s%s: %s%d%s %s %s(%s%s)"
-msgstr ""
-"%sKanal %s%s%s: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s%s)"
+msgstr "%sKanal %s%s%s: %s%d%s %s %s(%s%s)"
 
 msgid "nick"
 msgid_plural "nicks"
-msgstr[0] "rumuz"
+msgstr[0] "takma ad"
 
 #. TRANSLATORS: "%s" after "on" is a date
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s[%s%s%s] %s%s%s%s banned by %s on %s"
-msgstr "%s%s%s%s%s%s%s%s%s%s katıldı %s%s%s"
+msgstr "%s%s[%s%s%s] %s%s%s%s, %s tarafından %s tarihinde yasaklandı"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s[%s%s%s] %s%s%s%s banned by %s"
-msgstr "%s%s[%s%s%s]%s uzakta: %s"
+msgstr "%s%s[%s%s%s] %s%s%s%s, %s tarafından yasaklandı"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s[%s%s%s] %s%s%s%s banned"
-msgstr "%s%s%s%s%s%s%s%s%s%s katıldı %s%s%s"
+msgstr "%s%s[%s%s%s] %s%s%s%s yasaklandı"
 
 #, c-format
 msgid ""
@@ -8180,17 +8591,17 @@ msgid "%s%s: nickname \"%s\" is unavailable, trying nickname \"%s\""
 msgstr "%s%s: \"%s\" takma adı kullanılamıyor,  \"%s\" takma adı deneniyor"
 
 #. TRANSLATORS: "%s" after "on" is a date
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s[%s%s%s] %s%s%s%s quieted by %s on %s"
-msgstr "%s%s%s%s%s%s%s%s%s%s çıktı %s(%s%s%s)"
+msgstr "%s%s[%s%s%s] %s%s%s%s, %s tarafından %s tarihinde sessize alındı"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s[%s%s%s] %s%s%s%s quieted by %s"
-msgstr "%s%s[%s%s%s]%s uzakta: %s"
+msgstr "%s%s[%s%s%s] %s%s%s%s, %s tarafından sessize alındı"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s[%s%s%s] %s%s%s%s quieted"
-msgstr "%s%s%s%s%s%s%s%s%s%s çıktı"
+msgstr "%s%s[%s%s%s] %s%s%s%s sessize alındı"
 
 #, c-format
 msgid "%s%s: command \"%s\" not found:"
@@ -8244,13 +8655,13 @@ msgstr ""
 msgid "%s%s: server \"%s\" not found for redirect"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unable to read private key in file \"%s\""
-msgstr "%sHata: dosya \"%s\" oluşturulamaz"
+msgstr "%s%s: \"%s\" dosyasındaki özel anahtar okunamıyor"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sgnutls: invalid private key file: error %d %s"
-msgstr "%s%s:  \"%s\" adresi bulunamadı"
+msgstr "%sgnutls: Geçersiz özel anahtar dosyası: hata %d %s"
 
 #, c-format
 msgid "%s%s: signing the challenge with ECC public key: %s"
@@ -8411,9 +8822,9 @@ msgstr "%s%s: zaman aşımı"
 msgid "%s%s: unable to create socket"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sgnutls: failed to calculate certificate fingerprint (%s)"
-msgstr "%sHata: dosya \"%s\" oluşturulamaz"
+msgstr "%sgnutls: Sertifika parmak izi hesaplanamadı (%s)"
 
 #, c-format
 msgid "%sgnutls: connected using %d-bit Diffie-Hellman shared secret exchange"
@@ -8530,9 +8941,9 @@ msgstr "%s%s: sunucuya yeniden bağlanılıyor..."
 msgid "%s%s: disconnected from server"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: exception: %s"
-msgstr "%s%s: hata: %s"
+msgstr "%s%s: İstisna: %s"
 
 #, c-format
 msgid "%s%s: unable to run function \"%s\""
@@ -8581,13 +8992,13 @@ msgstr ""
 msgid "%s%s: unable to create directory for logs (\"%s\")"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unable to write log file \"%s\": %s"
-msgstr "%sHata: dosya \"%s\" oluşturulamaz"
+msgstr "%s%s: \"%s\" hata dosyası yazılamıyor: %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unable to get file status of log file \"%s\": %s"
-msgstr "%sHata: dosya \"%s\" oluşturulamaz"
+msgstr "%s%s: \"%s\" günlük dosyasının durumu alınamıyor: %s"
 
 #, c-format
 msgid "%s\t****  Beginning of log  ****"
@@ -8612,14 +9023,13 @@ msgstr ""
 
 #, c-format
 msgid "%s: \"%s\" => level %d"
-msgstr "%s: \"%s\" => seviye %d"
+msgstr "%s: \"%s\" => düzey %d"
 
 msgid "logger plugin configuration"
 msgstr ""
 
-#, fuzzy
 msgid "list || set <level> || flush || disable"
-msgstr "list || set <seviye> || disable"
+msgstr "list || set <düzey> || flush || disable"
 
 msgid ""
 "   list: show logging status for opened buffers\n"
@@ -8747,13 +9157,13 @@ msgstr "Lua betik desteği"
 msgid "%s%s: unable to redirect stdout and stderr"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unable to load source code"
-msgstr "%s%s: sunucuya yeniden bağlanılıyor..."
+msgstr "%s%s: kaynak kod yüklenemiyor"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unable to execute source code"
-msgstr "%s%s: sunucuya yeniden bağlanılıyor..."
+msgstr "%s%s: kaynak kodu çalıştırılamıyor"
 
 msgid "Support of perl scripts"
 msgstr "Perl betik desteği"
@@ -8766,9 +9176,9 @@ msgstr ""
 msgid "%s: warning:"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: error:"
-msgstr "%s%s: hata: %s"
+msgstr "%s: hata:"
 
 #, c-format
 msgid "%s%s: unable to parse file \"%s\""
@@ -8778,9 +9188,8 @@ msgstr ""
 msgid "%s%s: unable to initialize %s"
 msgstr ""
 
-#, fuzzy
 msgid "Support of PHP scripts"
-msgstr "Lua betik desteği"
+msgstr "PHP betikleri desteği"
 
 msgid "bar"
 msgstr ""
@@ -8813,7 +9222,7 @@ msgid "config option"
 msgstr ""
 
 msgid "filter"
-msgstr "filtre"
+msgstr "süzgeç"
 
 msgid "history of commands in buffer"
 msgstr ""
@@ -8929,8 +9338,9 @@ msgstr ""
 msgid "1 if WeeChat is running headless"
 msgstr ""
 
+#, fuzzy
 msgid "1 if WeeChat is running in daemon mode (headless, in background)"
-msgstr ""
+msgstr "WeeChat başsız kipte çalışıyor (çıkmak için Ctrl-C)."
 
 msgid ""
 "1 if automatic connection to servers is enabled, 0 if it has been disabled "
@@ -8983,7 +9393,7 @@ msgid "rgb,limit (limit is optional and is set to 256 by default)"
 msgstr ""
 
 msgid "get nick color code"
-msgstr "rumuz renk kodu al"
+msgstr "takma ad renk kodu al"
 
 msgid ""
 "nickname;colors (colors is an optional comma-separated list of colors to "
@@ -8993,7 +9403,7 @@ msgid ""
 msgstr ""
 
 msgid "get nick color name"
-msgstr "rumuz renk ismi al"
+msgstr "takma ad adı al"
 
 msgid "WeeChat uptime (format: \"days:hh:mm:ss\")"
 msgstr ""
@@ -9071,7 +9481,7 @@ msgid "buffer pointer"
 msgstr ""
 
 msgid "list of filters"
-msgstr "filtrelerin listesi"
+msgstr "süzgeçlerin listesi"
 
 msgid "filter name (wildcard \"*\" is allowed) (optional)"
 msgstr ""
@@ -9148,13 +9558,13 @@ msgstr ""
 msgid "Initializing plugin \"%s\" (priority: %d)"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sUnable to initialize plugin \"%s\""
-msgstr "%sHata: dosya \"%s\" oluşturulamaz"
+msgstr "%s\"%s\" eklentisi başlatılamıyor"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sUnable to load plugin \"%s\": %s"
-msgstr "%sHata: dosya \"%s\" oluşturulamaz"
+msgstr "%s\"%s\" eklentisi yüklenemiyor: %s"
 
 #, c-format
 msgid ""
@@ -9184,9 +9594,9 @@ msgstr ""
 msgid "%sFunction \"%s\" not found in plugin \"%s\", failed to load"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sUnable to load plugin \"%s\" (not enough memory)"
-msgstr "%sYeterli bellek yok"
+msgstr "%s\"%s\" eklentisi yüklenemiyor (yetersiz bellek)"
 
 #, c-format
 msgid "Plugin \"%s\" loaded"
@@ -9252,9 +9662,8 @@ msgstr ""
 msgid "script name (wildcard \"*\" is allowed) (optional)"
 msgstr ""
 
-#, fuzzy
 msgid "evaluation of source code"
-msgstr "betiklerin listesi"
+msgstr "kaynak kodun değerlendirmesi"
 
 msgid "source code to execute"
 msgstr ""
@@ -9460,13 +9869,13 @@ msgid ""
 "ssl_cert_key)"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: new client on path %s: %s%s%s (%s)"
-msgstr "%s Artık  %s%s%s olarak biliniyorsunuz"
+msgstr "%s: %s yolunda yeni istemci: %s%s%s (%s)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: new client on port %s: %s%s%s (%s)"
-msgstr "%s    hata: %s%s%s%s"
+msgstr "%s: %s kapısında yeni istemci: %s%s%s (%s)"
 
 #, c-format
 msgid "%s%s: not enough memory for new client"
@@ -9509,9 +9918,9 @@ msgstr ""
 msgid "Listening on:"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "  %s %s%s%s, relay: %s%s%s, %s (not started)"
-msgstr "  %s[%s%d%s]%s (%s) %s%s%s (notify: %s)"
+msgstr "  %s %s%s%s, aktarım: %s%s%s, %s (başlatılmadı)"
 
 msgid "path"
 msgstr ""
@@ -9519,20 +9928,20 @@ msgstr ""
 msgid "port"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "  %s %s%s%s, relay: %s%s%s, %s, started on: %s"
-msgstr "  %s[%s%d%s]%s (%s) %s%s%s (notify: %s)"
+msgstr "  %s %s%s%s, aktarım: %s%s%s, %s, başlatılma: %s"
 
 msgid "No server for relay"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: relay \"%s\" (%s: %s) added"
-msgstr "%s: sunucu %s%s%s oluşturuldu"
+msgstr "%s: \"%s\" aktarıcısı (%s: %s) eklendi"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: relay \"%s\" (%s: %s) removed"
-msgstr "%s: %s, \"%s\": kaldırıldı"
+msgstr "%s: \"%s\" aktarıcısı (%s: %s) kaldırıldı"
 
 #, c-format
 msgid "%s%s: relay \"%s\" not found"
@@ -9623,17 +10032,17 @@ msgstr ""
 msgid "%s%s: error: port \"%d\" is already used"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: error: path is empty"
-msgstr "%s%s: hata: %s"
+msgstr "%s%s: hata: yol boş"
 
 #, c-format
 msgid "%s%s: error: path \"%s\" too long (length: %d; max: %d)"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: error: path \"%s\" is already used"
-msgstr "Filtre \"%s\" etkin"
+msgstr "%s%s: hata: \"%s\" yolu halihazırda kullanılıyor"
 
 #, c-format
 msgid "%s%s: error: unknown protocol \"%s\""
@@ -9845,17 +10254,17 @@ msgstr ""
 msgid "Relay raw messages"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: socket closed for %s (%s: %s)"
-msgstr "%s%s: %s/%d (%s) bağlanıldı"
+msgstr "%s: %s için soket kapalı (%s: %s)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: cannot accept client on path %s (%s): error %d %s"
-msgstr "%s%s:  \"%s\" adresi bulunamadı"
+msgstr "%s%s: %s yolunda istemci kabul edilemiyor (%s): hata %d %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: cannot accept client on port %d (%s): error %d %s"
-msgstr "%s%s:  \"%s\" adresi bulunamadı"
+msgstr "%s%s: %d kapısında istemci kabul edilemiyor (%s): hata %d %s"
 
 #, c-format
 msgid ""
@@ -9888,13 +10297,13 @@ msgstr ""
 msgid "%s%s: invalid bind address \"%s\" for %s"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: socket path \"%s\" is invalid"
-msgstr "%s: \"%s\" betiği yüklenmedi"
+msgstr "%s%s: soket yolu \"%s\" geçersiz"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: socket path \"%s\" already exists and is not a socket"
-msgstr "Filtre \"%s\" etkin"
+msgstr "%s%s: soket yolu \"%s\" halihazırda mevcut ve bir soket değil"
 
 #, c-format
 msgid "%s%s: cannot create socket: error %d %s"
@@ -9904,51 +10313,51 @@ msgstr ""
 msgid "%s%s: try /set relay.network.ipv6 off"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: cannot \"bind\" on path %s (%s): error %d %s"
-msgstr "%s%s:  \"%s\" adresi bulunamadı"
+msgstr "%s%s: %s yolunda \"bağlama\" yapılamıyor (%s): hata %d %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: cannot \"bind\" on port %d (%s): error %d %s"
-msgstr "%s%s:  \"%s\" adresi bulunamadı"
+msgstr "%s%s: %d kapısında \"bağlama\" yapılamıyor (%s): hata %d %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: cannot \"listen\" on path %s (%s): error %d %s"
-msgstr "%s%s:  \"%s\" adresi bulunamadı"
+msgstr "%s%s: %s yolunda \"dinleme\" yapılamıyor (%s): error %d %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: cannot \"listen\" on port %d (%s): error %d %s"
-msgstr "%s%s:  \"%s\" adresi bulunamadı"
+msgstr "%s%s: %d kapısında \"dinleme\" yapılamıyor (%s): hata %d %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: listening on path %s (relay: %s, %s, max %d client)"
 msgid_plural "%s: listening on path %s (relay: %s, %s, max %d clients)"
-msgstr[0] "%sKip %s%s %s[%s%s%s]"
+msgstr[0] "%s: %s yolunda dinleniyor (aktarım: %s, %s, en çok %d istemci)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: listening on port %d (relay: %s, %s, max %d client)"
 msgid_plural "%s: listening on port %d (relay: %s, %s, max %d clients)"
-msgstr[0] "%sKip %s%s %s[%s%s%s]"
+msgstr[0] "%s: %d kapısında dinleniyor (aktarım: %s, %s, en çok %d istemci)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: listening on path %s (relay: %s, %s)"
-msgstr "%sKip %s%s %s[%s%s%s]"
+msgstr "%s: %s yolunda dinleniyor (aktarım: %s, %s)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: listening on port %d (relay: %s, %s)"
-msgstr "%sKip %s%s %s[%s%s%s]"
+msgstr "%s: %d kapısında dinleniyor (aktarım: %s, %s)"
 
 #, c-format
 msgid "%s%s: not enough memory for listening on new port"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: invalid pointer in hdata path: \"%s\""
-msgstr "%sHata: dosya \"%s\" oluşturulamaz"
+msgstr "%s: hdata path yolunda geçersiz işaretleyici: \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: invalid buffer in message: \"%s %s\""
-msgstr "%sHata: dosya \"%s\" oluşturulamaz"
+msgstr "%s: iletide geçersiz arabellek: \"%s %s\""
 
 #, c-format
 msgid "%s%s: failed to execute command \"%s\" for client %s%s%s"
@@ -9986,9 +10395,8 @@ msgstr ""
 msgid "Scripts loaded:"
 msgstr "Yüklü betikler:"
 
-#, fuzzy
 msgid "No scripts loaded"
-msgstr "%s yüklü betikler:"
+msgstr "Hiçbir betik yüklenmedi"
 
 #, c-format
 msgid "%s: unknown language for script \"%s\""
@@ -10061,29 +10469,28 @@ msgstr ""
 msgid "%s: all scripts are up-to-date"
 msgstr "%s: tüm betikler güncel"
 
-#, fuzzy, c-format
+#, c-format
 msgid "configuration file \"%s\" (options %s.*)"
-msgstr "yapılandırma seçenekleri"
+msgstr "\"%s\" yapılandırma dosyası (%s.* seçenekler)"
 
 #, c-format
 msgid "command /%s"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "completion %%(%s)"
-msgstr "Seçenek \"%s%s%s\":"
+msgstr "tamamlama %%(%s)"
 
 #, c-format
 msgid "bar item \"%s\""
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "options %s%s%s"
-msgstr "Seçenek \"%s%s%s\":"
+msgstr "seçenekler %s%s%s"
 
-#, fuzzy
 msgid "(old options?)"
-msgstr "(varsayılan seçenekler)"
+msgstr "(eski seçenekler?)"
 
 msgid "Script"
 msgstr "Betik"
@@ -10127,9 +10534,8 @@ msgstr ""
 msgid "Max WeeChat"
 msgstr ""
 
-#, fuzzy
 msgid "Script has defined:"
-msgstr "Yüklü betikler:"
+msgstr "Betik şunu tanımladı:"
 
 msgid "(nothing)"
 msgstr ""
@@ -10148,7 +10554,6 @@ msgstr ""
 msgid "Scripts"
 msgstr "Betikler"
 
-#, fuzzy
 msgid "Script manager"
 msgstr "Betik yöneticisi"
 
@@ -10158,21 +10563,19 @@ msgid ""
 "download_enabled"
 msgstr ""
 
-#, fuzzy
 msgid "WeeChat script manager"
 msgstr "WeeChat betik yöneticisi"
 
-#, fuzzy
 msgid ""
 "list [-o|-ol|-i|-il] || search <text> || show <script> || load|unload|reload "
 "<script> [<script>...] || autoload|noautoload|toggleautoload <script> "
 "[<script>...] || install|remove|installremove|hold [-q] <script> "
 "[<script>...] || upgrade || update"
 msgstr ""
-"list [-o|-i] || search <metin> || show <betik> || load|unload|reload <betik> "
-"[<betik>...] || autoload|noautoload|toggleautoload <betik> [<betik>...] || "
-"install|remove|installremove|hold [-q] <betik> [<betik>...] || upgrade || "
-"update"
+"list [-o|-ol|-i|-il] || search <metin> || show <betik> || load|unload|reload "
+"<betik> [<betik>...] || autoload|noautoload|toggleautoload <betik> "
+"[<betik>...] || install|remove|installremove|hold [-q] <betik> [<betik>...] "
+"|| upgrade || update"
 
 msgid ""
 "          list: list loaded scripts (all languages)\n"
@@ -10259,13 +10662,11 @@ msgid ""
 "  /script upgrade"
 msgstr ""
 
-#, fuzzy
 msgid "list of script languages"
-msgstr "betiklerin listesi"
+msgstr "betik dillerinin listesi"
 
-#, fuzzy
 msgid "list of script extensions"
-msgstr "betiklerin listesi"
+msgstr "betik uzantılarının listesi"
 
 msgid "list of scripts in repository"
 msgstr "depodaki betiklerin listesi"
@@ -10434,9 +10835,8 @@ msgid ""
 "string_eval_path_home in plugin API reference)"
 msgstr ""
 
-#, fuzzy
 msgid "URL for file with list of scripts"
-msgstr "betiklerin listesi"
+msgstr "Betik listeli dosya URL'si"
 
 msgid "script name with extension (wildcard \"*\" is allowed) (optional)"
 msgstr ""
@@ -10559,9 +10959,8 @@ msgstr ""
 msgid "Spell checker disabled"
 msgstr ""
 
-#, fuzzy
 msgid "spell plugin configuration"
-msgstr "aspell eklenti yapılandırma"
+msgstr "yazım eklentisi yapılandırması"
 
 msgid ""
 "enable|disable|toggle || listdict || setdict <dict>[,<dict>...] || deldict "
@@ -10591,50 +10990,50 @@ msgid ""
 "Default key to toggle spell checker is alt-s."
 msgstr ""
 
-#, fuzzy
 msgid "list of all languages supported"
-msgstr "betiklerin listesi"
+msgstr "desteklenen tüm dillerin listesi"
 
-#, fuzzy
 msgid "list of installed dictionaries"
-msgstr "seçeneklerin listesi"
+msgstr "yüklü sözlüklerin listesi"
 
 msgid "comma separated list of dictionaries to use on this buffer"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: error creating spell dictionary \"%s\" => \"%s\""
-msgstr "%sFiltre eklenirken hata"
+msgstr "%s%s: \"%s\" => \"%s\" yazım sözlüğü oluşturulurken hata"
 
 msgid ""
 "option for aspell (for list of available options and format, run command "
 "\"aspell config\" in a shell)"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: error creating spell option \"%s\" => \"%s\""
-msgstr "%sFiltre eklenirken hata"
+msgstr "%s%s: \"%s\" => \"%s\" yazım seçeneği oluşturulurken hata"
 
-#, fuzzy
 msgid "text color for misspelled words (input bar)"
-msgstr "zaman için metin rengi (durum çubuğu)"
+msgstr "yanlış yazılan sözcükler için metin rengi (girdi çubuğu)"
 
-#, fuzzy
 msgid ""
 "text color for suggestion on a misspelled word in bar item \"spell_suggest\""
-msgstr "zaman için metin rengi (durum çubuğu)"
+msgstr ""
+"\"spell_suggest\" çubuk ögesinde yanlış yazılan sözcük yerine önerilen metin "
+"rengi"
 
-#, fuzzy
 msgid ""
 "text color for delimiters displayed between two dictionaries in bar item "
 "\"spell_suggest\""
-msgstr "zaman için metin rengi (durum çubuğu)"
+msgstr ""
+"\"spell_suggest\" çubuk ögesinde iki sözlük arasında görüntülenen "
+"sınırlandırıcı metin rengi"
 
-#, fuzzy
 msgid ""
 "text color for delimiters displayed between two words in bar item "
 "\"spell_suggest\""
-msgstr "zaman için metin rengi (durum çubuğu)"
+msgstr ""
+"\"spell_suggest\" çubuk ögesinde iki sözcük arasında görüntülenen "
+"sınırlandırıcı metin rengi"
 
 msgid ""
 "comma separated list of commands for which spell checking is enabled (spell "
@@ -10650,9 +11049,8 @@ msgstr ""
 msgid "check words during text search in buffer"
 msgstr ""
 
-#, fuzzy
 msgid "enable spell checker for command line"
-msgstr "komut satırı için fonksiyonlar"
+msgstr "komut satırı için yazım denetleyiciyi etkinleştir"
 
 msgid ""
 "real-time spell checking of words (slower, disabled by default: words are "
@@ -10673,9 +11071,10 @@ msgid ""
 "delimiter displayed between two dictionaries in bar item \"spell_suggest\""
 msgstr ""
 
-#, fuzzy
 msgid "delimiter displayed between two words in bar item \"spell_suggest\""
-msgstr "zaman için metin rengi (durum çubuğu)"
+msgstr ""
+"\"spell_suggest\" çubuk ögesinde iki sözcük arasında görüntülenen "
+"sınırlandırıcı"
 
 msgid "comma-separated list of dictionaries used in buffer"
 msgstr ""
@@ -10712,13 +11111,13 @@ msgid ""
 "Text replacement and command execution on events triggered by WeeChat/plugins"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unable to create hook for trigger \"%s\" (bad arguments)"
-msgstr "%sHata: dosya \"%s\" oluşturulamaz"
+msgstr "%s%s: \"%s\" tetiği için kanca oluşturulamıyor (hatalı argümanlar)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: invalid regular expression in trigger: \"%s\""
-msgstr "%sHata: dosya \"%s\" oluşturulamaz"
+msgstr "%s%s: Tetikte geçersiz düzenli ifade: \"%s\""
 
 #, c-format
 msgid "Trigger monitor (filter: %s) | Input: q=close, words=filter"
@@ -10734,20 +11133,17 @@ msgstr ""
 msgid "%s  running command %s\"%s%s%s\"%s on buffer %s%s%s"
 msgstr ""
 
-#, fuzzy
 msgid "Triggers enabled"
-msgstr "Filtre \"%s\" etkin"
+msgstr "Tetikler etkin"
 
-#, fuzzy
 msgid "Triggers disabled"
-msgstr "Filtre \"%s\" devre dışı"
+msgstr "Tetikler devre dışı"
 
 msgid "No trigger defined"
 msgstr ""
 
-#, fuzzy
 msgid "List of default triggers:"
-msgstr "filtrelerin listesi"
+msgstr "Öntanımlı tetiklerin listesi:"
 
 #, c-format
 msgid ""
@@ -10755,61 +11151,60 @@ msgid ""
 "currently running"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Trigger \"%s\" restarted"
-msgstr "Filtre \"%s\" etkin"
+msgstr "\"%s\" tetiği yeniden başlatıldı"
 
 #, c-format
 msgid "%s%s: a disabled trigger can not be restarted"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Trigger \"%s\" enabled"
-msgstr "Filtre \"%s\" etkin"
+msgstr "\"%s\" tetiği etkin"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Trigger \"%s\" disabled"
-msgstr "Filtre \"%s\" devre dışı"
+msgstr "\"%s\" tetiği devre dışı"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: invalid trigger name: \"%s\""
-msgstr "%sHata: dosya \"%s\" oluşturulamaz"
+msgstr "%s%s: Geçersiz tetik adı: \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: trigger \"%s\" already exists"
-msgstr "Filtre \"%s\" etkin"
+msgstr "%s%s: \"%s\" tetiği halihazırda mevcut"
 
 #, c-format
 msgid "Trigger \"%s\" renamed to \"%s\""
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: failed to rename trigger \"%s\""
-msgstr "%sHata: dosya \"%s\" oluşturulamaz"
+msgstr "%s%s: \"%s\" tetiği yeniden adlandırılamadı"
 
-#, fuzzy
 msgid "List of triggers:"
-msgstr "filtrelerin listesi"
+msgstr "Tetiklerin listesi:"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: invalid hook type: \"%s\""
-msgstr "%sHata: dosya \"%s\" oluşturulamaz"
+msgstr "%s%s: Geçersiz kanca türü: \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: invalid format for regular expression"
-msgstr "sunucu isimleri için metin rengi"
+msgstr "%s%s: Geçersiz düzenli ifade biçimi"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: invalid regular expression (compilation failed)"
-msgstr "%sHata: dosya \"%s\" oluşturulamaz"
+msgstr "%s%s: Geçersiz düzenli ifade (derleme başarısız)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: invalid return code: \"%s\""
-msgstr "%sHata: dosya \"%s\" oluşturulamaz"
+msgstr "%s%s: Geçersiz dönüş kodu: \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: invalid post action \"%s\""
-msgstr "%sHata: dosya \"%s\" oluşturulamaz"
+msgstr "%s%s: Geçersiz gönderme eylemi \"%s\""
 
 #, c-format
 msgid ""
@@ -10817,56 +11212,56 @@ msgid ""
 "\"addreplace\" to overwrite it)"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: failed to create trigger \"%s\""
-msgstr "%sHata: dosya \"%s\" oluşturulamaz"
+msgstr "%s%s: \"%s\" tetiği oluşturulamadı"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Trigger \"%s\" created"
-msgstr "Filtre \"%s\" etkin"
+msgstr "\"%s\" tetiği oluşturuldu"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: trigger \"%s\" not found"
-msgstr "%sTuş \"%s\" bulunamadı"
+msgstr "%s%s: \"%s\" tetiği bulunamadı"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Trigger \"%s\" updated"
-msgstr "Filtre \"%s\" silindi"
+msgstr "\"%s\" tetiği güncellendi"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: trigger option \"%s\" not found"
-msgstr "%sHatar: seçenek \"%s\" bulunamadı"
+msgstr "%s%s: Tetik seçeneği \"%s\" bulunamadı"
 
 #, c-format
 msgid "Trigger \"%s\" copied to \"%s\""
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: failed to copy trigger \"%s\""
-msgstr "%sHata: dosya \"%s\" oluşturulamaz"
+msgstr "%s%s: \"%s\" tetiği kopyalanamadı"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sTrigger \"%s\" not found"
-msgstr "%sTuş \"%s\" bulunamadı"
+msgstr "%s\"%s\" tetiği bulunamadı"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%d triggers removed"
-msgstr "%s: \"%s\" kaldırıldı"
+msgstr "%d tetik kaldırıldı"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Trigger \"%s\" removed"
-msgstr "%s: \"%s\" kaldırıldı"
+msgstr "Tetik \"%s\" kaldırıldı"
 
 msgid "Trigger:"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Trigger \"%s\" restored"
-msgstr "Filtre \"%s\" etkin"
+msgstr "\"%s\" tetiği eski haline döndürüldü"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sDefault trigger \"%s\" not found"
-msgstr "%sTuş \"%s\" bulunamadı"
+msgstr "%sÖntanımlı tetik \"%s\" bulunamadı"
 
 msgid "Default triggers restored:"
 msgstr ""
@@ -10988,17 +11383,14 @@ msgstr ""
 msgid "triggers"
 msgstr ""
 
-#, fuzzy
 msgid "default triggers"
-msgstr "filtrelerin listesi"
+msgstr "öntanımlı tetikler"
 
-#, fuzzy
 msgid "options for triggers"
-msgstr "çubukların seçenekleri"
+msgstr "tetik seçenekleri"
 
-#, fuzzy
 msgid "value of a trigger option"
-msgstr "yapılandırma seçenekleri ayarı"
+msgstr "bir tetik seçeneği değeri"
 
 msgid "hooks for triggers"
 msgstr ""
@@ -11006,24 +11398,20 @@ msgstr ""
 msgid "hooks for triggers (for filter in monitor buffer)"
 msgstr ""
 
-#, fuzzy
 msgid "default arguments for a hook"
-msgstr "İRC kanalı için varsayılan ayrılma iletisi"
+msgstr "bir kanca için öntanımlı argümanlar"
 
-#, fuzzy
 msgid "default conditions for a hook"
-msgstr "çubuk için varsayılan arkaplan rengi"
+msgstr "bir kanca için öntanımlı koşullar"
 
 msgid "default regular expression for a hook"
 msgstr ""
 
-#, fuzzy
 msgid "default command for a hook"
-msgstr "varsayılan komut:"
+msgstr "bir kanca için öntanımlı komut"
 
-#, fuzzy
 msgid "default return codes for hook callback"
-msgstr "çubuk için varsayılan metin rengi"
+msgstr "kanca geri çağrımı için öntanımlı dönüş kodları"
 
 msgid "trigger post actions"
 msgstr ""
@@ -11033,11 +11421,13 @@ msgid ""
 "%s%s: invalid format for option \"regex\", see /help trigger.trigger.%s.regex"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s%s: invalid regular expression in option \"regex\", see /help trigger."
 "trigger.%s.regex"
-msgstr "%sHata: dosya \"%s\" oluşturulamaz"
+msgstr ""
+"%s%s: \"regex\" seçeneğinde geçersiz düzenli ifade, bkz. /help trigger."
+"trigger.%s.regex"
 
 msgid ""
 "if disabled, the hooks are removed from trigger, so it is not called any more"
@@ -11080,16 +11470,14 @@ msgstr ""
 msgid "action to take on the trigger after execution"
 msgstr ""
 
-#, fuzzy
 msgid "enable trigger support"
-msgstr "fare desteğini etkinleştir"
+msgstr "tetik desteğini etkinleştir"
 
 msgid "strip colors in hashtable values displayed on monitor buffer"
 msgstr ""
 
-#, fuzzy
 msgid "text color for command flag (in /trigger list)"
-msgstr "kanal isimleri için metin rengi"
+msgstr "komut bayrağı metin rengi (/trigger list içinde)"
 
 msgid "text color for conditions flag (in /trigger list)"
 msgstr ""
@@ -11100,24 +11488,20 @@ msgstr ""
 msgid "text color for return code flag (in /trigger list)"
 msgstr ""
 
-#, fuzzy
 msgid "text color for post action flag (in /trigger list)"
-msgstr "kanal isimleri için metin rengi"
+msgstr "eylem gönderim bayrağı metin rengi (/trigger list içinde)"
 
-#, fuzzy
 msgid "text color for regular expressions"
-msgstr "sunucu isimleri için metin rengi"
+msgstr "düzenli ifade metin rengi"
 
 msgid "text color for replacement text (for regular expressions)"
 msgstr ""
 
-#, fuzzy
 msgid "text color for trigger name"
-msgstr "sunucu isimleri için metin rengi"
+msgstr "tetik adı metin rengi"
 
-#, fuzzy
 msgid "text color for disabled trigger name"
-msgstr "sunucu isimleri için metin rengi"
+msgstr "devre dışı tetik adı metin rengi"
 
 msgid "  [A] Accept"
 msgstr ""
@@ -11164,13 +11548,12 @@ msgstr ""
 msgid "wrong CRC"
 msgstr ""
 
-#, fuzzy
 msgid "CRC error"
-msgstr "hata"
+msgstr "CRC hatası"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: file %s %s %s (%s): %s"
-msgstr "%sKip %s%s %s[%s%s%s]"
+msgstr "%s%s: dosya %s %s %s (%s): %s"
 
 msgid "sent to"
 msgstr ""
@@ -11181,9 +11564,9 @@ msgstr ""
 msgid "FAILED"
 msgstr "BAŞARISIZ"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: chat closed with %s (%s)"
-msgstr "%s%s: %s/%d (%s) bağlanıldı"
+msgstr "%s%s: sohbet %s ile kapatıldı (%s)"
 
 #, c-format
 msgid "%s%s: aborting active xfer: \"%s\" from %s"
@@ -11197,9 +11580,9 @@ msgstr ""
 msgid "%s%s: unable to interpret address: error %d %s"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: hashing error"
-msgstr "%s%s: hata: %s"
+msgstr "%s%s: Sağlama hatası"
 
 #, c-format
 msgid ""
@@ -11228,9 +11611,9 @@ msgstr ""
 msgid "%s%s: address \"%s\" resolved to a larger sockaddr than expected"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: invalid address \"%s\": error %d %s"
-msgstr "%s%s:  \"%s\" adresi bulunamadı"
+msgstr "%s%s: Geçersiz adres \"%s\": Hata %d %s"
 
 #, c-format
 msgid "%s%s: missing arguments (%s)"
@@ -11280,9 +11663,9 @@ msgstr ""
 msgid "%s%s: error sending data to \"%s\" via xfer chat"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: connected to %s (%s) via xfer chat"
-msgstr "%s%s: %s/%d (%s) bağlanıldı"
+msgstr "%s%s: Xfer sohbet ile %s konumuna bağlanıldı (%s)"
 
 #, c-format
 msgid "%s%s: can't find xfer for buffer \"%s\""
@@ -11394,41 +11777,47 @@ msgstr ""
 
 msgid ""
 "speed limit for receiving files, in kilo-bytes by second (0 means no limit)"
-msgstr ""
+msgstr "dosya alımı için hız limiti, kb/san (0, limit yok demektir)"
 
 msgid ""
 "speed limit for sending files, in kilo-bytes by second (0 means no limit)"
-msgstr ""
+msgstr "dosya gönderimi için hız limiti, kb/san (0, limit yok demektir)"
 
 msgid "timeout for xfer request (in seconds)"
-msgstr ""
+msgstr "xfer isteği için zaman aşımı süresi (saniye olarak)"
 
 msgid "automatically accept chat requests (use carefully!)"
-msgstr ""
+msgstr "sohbet isteklerini kendiliğinden kabul et (dikkatli kullanın!)"
 
 msgid "automatically accept incoming files (use carefully!)"
-msgstr ""
+msgstr "gelen dosyaları kendiliğinden kabul et (dikkatli kullanın!)"
 
 msgid ""
 "comma-separated list of nicks for which the incoming files and chats are "
 "automatically accepted; format is \"server.nick\" (for a specific server) or "
 "\"nick\" (for all servers); example: \"freenode.FlashCode,andrew\""
 msgstr ""
+"gelen dosyaların ve sohbetlerin kendiliğinden kabul edileceği takma adların "
+"virgülle ayrılmış listesi; biçim \"server.nick\" (belirli bir sunucu için) "
+"veya \"nick\" (tüm sunucular için); örn. \"freenode.Flashcode,bilge\""
 
 msgid ""
 "automatically check CRC32 file checksum if it is found in the filename (8 "
 "hexadecimal chars)"
 msgstr ""
+"dosya adında bulunursa CRC32 dosya sağlama toplamını kendiliğinden denetle "
+"(8 onaltılık karakter)"
 
 msgid "rename incoming files if already exists (add \".1\", \".2\", ...)"
 msgstr ""
+"aynısından varsa gelen dosyaları yeniden adlandır (\".1\", \".2\"... ekle)"
 
 msgid ""
 "automatically resume file transfer if connection with remote host is lost"
-msgstr ""
+msgstr "uzak makine bağlantısı kesilirse dosya aktarımını kendiliğinden sürdür"
 
 msgid "convert spaces to underscores when sending and receiving files"
-msgstr ""
+msgstr "dosya gönderirken ve alırken boşlukları alt çizgiye dönüştür"
 
 msgid ""
 "path for writing incoming files (path is evaluated, see function "
@@ -11440,6 +11829,9 @@ msgid ""
 "is removed after successful transfer; if empty string, no filename suffix is "
 "used during the transfer"
 msgstr ""
+"alınan dosyanın aktarımı sırasında kullanılan geçici dosya adı eki, başarılı "
+"bir transfer sonrasında kaldırılır; boş diziyse aktarım sırasında herhangi "
+"bir dosya adı eki kullanılmaz"
 
 msgid ""
 "path for reading files when sending (path is evaluated, see function "
@@ -11447,76 +11839,78 @@ msgid ""
 msgstr ""
 
 msgid "use remote nick as prefix in local filename when receiving a file"
-msgstr ""
+msgstr "Bir dosya alırken uzak takma adı yerel dosya adında önek olarak kullan"
 
 msgid "list of xfer"
-msgstr ""
+msgstr "xfer listesi"
 
 msgid "xfer pointer (optional)"
-msgstr ""
+msgstr "xfer işaretleyicisi (isteğe bağlı)"
 
 #, c-format
 msgid "%s%s: unable to create pipe: error %d %s"
-msgstr ""
+msgstr "%s%s: Boru oluşturulamıyor: Hata %d %s"
 
 #, c-format
 msgid "%s%s: unable to read local file"
-msgstr ""
+msgstr "%s%s: Yerel dosya okunamıyor"
 
 #, c-format
 msgid "%s%s: unable to send block to receiver"
-msgstr ""
+msgstr "%s%s: Alıcıya blok gönderilemiyor"
 
 #, c-format
 msgid "%s%s: unable to read ACK from receiver"
-msgstr ""
+msgstr "%s%s: Alıcıdan ACK okunamıyor"
 
 #, c-format
 msgid "%s%s: unable to connect to sender"
-msgstr ""
+msgstr "%s%s: Göndericiye bağlanılamıyor"
 
 #, c-format
 msgid "%s%s: unable to receive block from sender"
-msgstr ""
+msgstr "%s%s: Göndericiden blok alınamıyor"
 
 #, c-format
 msgid "%s%s: unable to write local file"
-msgstr ""
+msgstr "%s%s: Yerel dosya yazılamıyor"
 
 #, c-format
 msgid "%s%s: unable to send ACK to sender"
-msgstr ""
+msgstr "%s%s: Göndericiye ACK gönderilemiyor"
 
 #, c-format
 msgid "%s%s: wrong CRC32 for file %s"
-msgstr ""
+msgstr "%s%s: %s dosyası için hatalı CRC32"
 
 #, c-format
 msgid "%s%s: CRC32 error while resuming"
-msgstr ""
+msgstr "%s%s: Sürdürme sırasında CRC32 hatası"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unable to fork (%s)"
-msgstr "%s%s: sunucuya yeniden bağlanılıyor..."
+msgstr "%s%s: Çatallanamıyor (%s)"
 
 #, c-format
 msgid ""
 "%s: sending file to %s (%s, %s.%s), name: %s (local filename: %s), %llu "
 "bytes (protocol: %s)"
 msgstr ""
+"%s: Dosya gönderiliyor: %s (%s, %s.%s), ad: %s (yerel dosya adı: %s), %llu "
+"bayt (protokol: %s)"
 
 #, c-format
 msgid "%s%s: unable to create socket for sending file: error %d %s"
-msgstr ""
+msgstr "%s%s: Dosya gönderimi için soket oluşturulamıyor: Hata %d %s"
 
 #, c-format
 msgid "%s%s: unable to set option \"nonblock\" for socket: error %d %s"
-msgstr ""
+msgstr "%s%s Soket için \"nonblock\" seçeneği ayarlanamıyor: Hata %d %s"
 
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
-msgstr ""
+msgstr "%s%s: \"%s\" için %s ile zaman aşımı"
 
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
-msgstr ""
+msgstr "%s%s: Bağlanılamıyor: Beklenmedik hata (%d)"
