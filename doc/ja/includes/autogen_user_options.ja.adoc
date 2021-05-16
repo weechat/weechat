@@ -1752,6 +1752,12 @@
 ** 値: 未制約文字列
 ** デフォルト値: `+"${color:green}${number}${if:${number_displayed}?.: }"+`
 
+* [[option_buflist.format.tls_version]] *buflist.format.tls_version*
+** 説明: pass:none[format for TLS version on an IRC server buffer (note: content is evaluated, see /help buflist)]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+" ${color:default}(${if:${tls_version}==TLS1.3?${color:green}:${if:${tls_version}==TLS1.2?${color:yellow}:${color:red}}}${translate:${tls_version}}${color:default})"+`
+
 * [[option_buflist.look.add_newline]] *buflist.look.add_newline*
 ** 説明: pass:none[バッファリスト内に表示されたバッファ同士の間に改行を追加します。こうすることで、各バッファが 1 行ごとに表示されます (推奨); これを無効化する場合には、表示書式に改行 "${\n}" を追加しなければいけません。さらに、マウス操作はできなくなります]
 ** タイプ: ブール
@@ -2057,6 +2063,24 @@
 ** タイプ: 色
 ** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
 ** デフォルト値: `+default+`
+
+* [[option_irc.color.item_tls_version_deprecated]] *irc.color.item_tls_version_deprecated*
+** 説明: pass:none[color for deprecated TLS versions in bar item "tls_version"]
+** タイプ: 色
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+yellow+`
+
+* [[option_irc.color.item_tls_version_insecure]] *irc.color.item_tls_version_insecure*
+** 説明: pass:none[color for insecure TLS versions in bar item "tls_version"]
+** タイプ: 色
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+red+`
+
+* [[option_irc.color.item_tls_version_ok]] *irc.color.item_tls_version_ok*
+** 説明: pass:none[color for higher supported TLS version in bar item "tls_version"]
+** タイプ: 色
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+green+`
 
 * [[option_irc.color.message_account]] *irc.color.message_account*
 ** 説明: pass:none[color for text in account messages]

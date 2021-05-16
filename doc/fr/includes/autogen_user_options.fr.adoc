@@ -1752,6 +1752,12 @@
 ** valeurs: toute chaîne
 ** valeur par défaut: `+"${color:green}${number}${if:${number_displayed}?.: }"+`
 
+* [[option_buflist.format.tls_version]] *buflist.format.tls_version*
+** description: pass:none[format pour la version de TLS sur un serveur IRC (note : le contenu est évalué, voir /help buflist)]
+** type: chaîne
+** valeurs: toute chaîne
+** valeur par défaut: `+" ${color:default}(${if:${tls_version}==TLS1.3?${color:green}:${if:${tls_version}==TLS1.2?${color:yellow}:${color:red}}}${translate:${tls_version}}${color:default})"+`
+
 * [[option_buflist.look.add_newline]] *buflist.look.add_newline*
 ** description: pass:none[ajouter une nouvelle ligne entre les tampons affichés, de sorte que chaque tampon est affiché sur une ligne séparée (recommandé) ; si désactivé, les nouvelles lignes doivent être ajoutées dans les formats avec "${\n}", et les actions de souris ne sont plus possibles]
 ** type: booléen
@@ -2057,6 +2063,24 @@
 ** type: couleur
 ** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné
 ** valeur par défaut: `+default+`
+
+* [[option_irc.color.item_tls_version_deprecated]] *irc.color.item_tls_version_deprecated*
+** description: pass:none[couleur pour les versions obsolètes de TLS dans l'objet de barre "tls_version"]
+** type: couleur
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné
+** valeur par défaut: `+yellow+`
+
+* [[option_irc.color.item_tls_version_insecure]] *irc.color.item_tls_version_insecure*
+** description: pass:none[couleur pour les versions non sécurisées de TLS dans l'objet de barre "tls_version"]
+** type: couleur
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné
+** valeur par défaut: `+red+`
+
+* [[option_irc.color.item_tls_version_ok]] *irc.color.item_tls_version_ok*
+** description: pass:none[couleur pour la version de TLS la plus haute dans l'objet de barre "tls_version"]
+** type: couleur
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné
+** valeur par défaut: `+green+`
 
 * [[option_irc.color.message_account]] *irc.color.message_account*
 ** description: pass:none[couleur pour le texte dans les messages account]

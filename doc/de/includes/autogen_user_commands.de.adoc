@@ -1304,81 +1304,82 @@ infolists: zeigt Information über die Infolists an
 /eval  [-n|-s] [-d] <expression>
        [-n] [-d [-d]] -c <expression1> <operator> <expression2>
 
-        -n: gibt das Ergebnis aus, ohne dass dieses in den Buffer gesendet wird (debug Modus)
-        -s: teilt Ausdrücke, bevor sie evaluiert werden (mehrere Befehle können durch Semikolon getrennt werden)
-        -d: eine Debug-Ausgabe nach Auswertung anzeigen (Nutzung von zwei -d: ausführliche Debug-Ausgabe)
-        -c: Auswertung als Bedingung: nutzt Operatoren und runde Klammern, Rückgabewert als Boolean-Wert ("0" oder "1")
-expression: Ausdruck welcher verarbeitet werden soll. Variablen im Format ${variable} werden ersetzt (siehe unten); mehrere Befehle werden durch ein Semikolon voneinander getrennt
-  operator: ein logischer oder vergleichender Operand:
-            - logische Operanden:
-                &&  boolean "und"
-                ||  boolean "oder"
-            - vergleichende Operanden:
-                ==  gleich
-                !=  ungleich
-                <=  kleiner oder gleich
-                <   kleiner
-                >=  größer oder gleich
-                >   größer
-                =~  stimmt mit regulärem POSIX Ausdruck überein
-                !~  stimmt NICHT mit regulärem POSIX Ausdruck überein
-                ==*  stimmt mit Maske überein (Platzhalter "*" ist erlaubt)
-                !!*  stimmt mit Maske NICHT überein (Platzhalter "*" ist erlaubt)
-                =*   stimmt mit Maske überein, Groß- und Kleinschreibung wird nicht beachtet (Platzhalter "*" ist erlaubt)
-                !*   stimmt mit Maske NICHT überein, Groß- und Kleinschreibung wird nicht beachtet (Platzhalter "*" ist erlaubt)
-                ==-  ist enthalten, Groß- und Kleinschreibung wird beachtet
-                !!-  ist NICHT enthalten, Groß- und Kleinschreibung wird beachtet
-                =-   ist enthalten, Groß- und Kleinschreibung wird nicht beachtet
-                !-   ist NICHT enthalten, Groß- und Kleinschreibung wird nicht beachtet
+        -n: display result without sending it to buffer (debug mode)
+        -s: split expression before evaluating it (many commands can be separated by semicolons)
+        -d: display debug output after evaluation (with two -d: more verbose debug)
+        -c: evaluate as condition: use operators and parentheses, return a boolean value ("0" or "1")
+expression: expression to evaluate, variables with format ${variable} are replaced (see below); many commands can be separated by semicolons
+  operator: a logical or comparison operator:
+            - logical operators:
+                &&   boolean "and"
+                ||   boolean "or"
+            - comparison operators:
+                ==   equal
+                !=   not equal
+                <=   less or equal
+                <    less
+                >=   greater or equal
+                >    greater
+                =~   is matching POSIX extended regex
+                !~   is NOT matching POSIX extended regex
+                ==*  is matching mask, case sensitive (wildcard "*" is allowed)
+                !!*  is NOT matching mask, case sensitive (wildcard "*" is allowed)
+                =*   is matching mask, case insensitive (wildcard "*" is allowed)
+                !*   is NOT matching mask, case insensitive (wildcard "*" is allowed)
+                ==-  is included, case sensitive
+                !!-  is NOT included, case sensitive
+                =-   is included, case insensitive
+                !-   is NOT included, case insensitive
 
-Ein Ausdruck gilt als "wahr" sofern das Ergebnis weder NULL, nicht leer und von "0" abweichend ist.
-Für einen Vergleich werden Fließkommazahlen genutzt, insofern es sich bei beiden Ausdrücken um gültige Zahlen handelt, folgende Formate werden unterstützt:
-  - Integer (Beispiele: 5, -7)
-  - Fließkommazahl (Beispiele: 5.2, -7.5, 2.83e-2)
-  - hexadezimale Zahl (Beispiele: 0xA3, -0xA3)
-Um einen Vergleich zwischen zwei Zeichenketten zu erzwingen, müssen die Ausdrücke in Anführungszeichen gesetzt werden, zum Beispiel:
+An expression is considered as "true" if it is not NULL, not empty, and different from "0".
+The comparison is made using floating point numbers if the two expressions are valid numbers, with one of the following formats:
+  - integer (examples: 5, -7)
+  - floating point number (examples: 5.2, -7.5, 2.83e-2)
+  - hexadecimal number (examples: 0xA3, -0xA3)
+To force a string comparison, you can add double quotes around each expression, for example:
   50 > 100      ==> 0
   "50" > "100"  ==> 1
 
-Einige Variablen werden im Ausdruck mittels der Formatierung ${variable} ersetzt. Mögliche Variablen sind, nach Reihenfolge ihrer Priorität:
-  1. die Zeichenfolge selbst ohne Auswertung (Format: "raw:xxx")\n
-  2. eine evaluierte Teilzeichenkette (Format: "eval:xxx")
-  3. eine evaluierte Bedingung (Format: "eval_cond:xxx")
-  4. eine Zeichenkette mit Escapesequenzen (Format: "esc:xxx" oder "\xxx")
-  5. Zeichen, die in einer Zeichenkette nicht dargestellt werden sollen (Format: "hide:Zeichen,Zeichenkette")
-  6. eine Zeichenkette mit einer maximalen Anzahl an Zeichen (Format: "cut:max,suffix,string" oder "cut:+max,suffix,string")
-     oder maximale Anzahl an Zeichen die auf dem Bildschirm angezeigt werden sollen (Format: "cutscr:Max,Suffix,Zeichenkette oder "cutscr:+Max,Suffix,Zeichenkette")
-  7. eine Zeichenkette umkehren (Format: "rev:xxx" oder "revscr:xxx")
-  8. eine Zeichenkette wiederholen (Format: "repeat:Anzahl,Zeichenkette")
-  9. Länge einer Zeichenkette (Format: "length:xxx" oder "lengthscr:xxx")
-  10. eine Farbe (Format: "color:xxx", siehe "Anleitung für API Erweiterung", Funktion "color")
-  11. zum modifizieren (Format: "modifier:name,data,string")
-  12. eine Info (Format: "Info:Name,Argumente", Argumente sind optional)
-  13. eine Basis 16/32/64 kodierte / dekodierte Zeichenfolge (Format: "base_encode:base,xxx" oder "base_decode:base,xxx")
-  14. aktuelles Datum/Uhrzeit (Format: "date" oder "date:format")
-  15. eine Umgebungsvariable (Format: "env:XXX")
-  16. ein Dreifachoperand (Format: "if:Bedingung?Wert_falls_wahr:Wert_falls_unwahr")
-  17. Ergebnis eines Ausdrucks mit Klammern und Operatoren + - * / // % ** (Format: "calc:xxx")
-  18. eine Option (Format: "file.section.option")
-  19. eine lokale Variable eines Buffers
-  20. ein(e) hdata - Name/Variable (der Wert wird automatisch in eine Zeichenkette konvertiert), standardmäßig wird für "window" und "buffer" das aktuelle Fenster/Buffer verwendet.
-Das Format für hdata kann wie folgt aufgebaut sein:
-  hdata.var1.var2...: startet mit hdata (der Pointer muss bekannt sein) und fragt eine Variable nach der anderen ab (weitere hdata können folgen)
-  hdata[list].var1.var2...: startet hdata mittels einer Liste, zum Beispiel:
-    ${buffer[gui_buffers].full_name}: der vollständige Name des ersten Buffers, in der verknüpften Liste aller Buffer
-    ${plugin[weechat_plugins].name}: Name der ersten Erweiterung, in der verknüpften Liste aller Erweiterungen
-  hdata[pointer].var1.var2...: startet hdata mittels einem Pointer, zum Beispiel:
-    ${buffer[0x1234abcd].full_name}: vollständiger Name eines Buffers und des dazugehörigen Pointers (kann in triggern benutzt werden)
-    ${buffer[my_pointer].full_name}: vollständiger Name des Buffers mit dem entsprechenden Pointernamen (kann in Triggern verwendet werden)
-Die vorhandenen Namen für hdata und Variablen sind in der "Anleitung für API Erweiterung", Bereich "weechat_hdata_get". beschrieben
+Some variables are replaced in expression, using the format ${variable}, variable can be, by order of priority:
+  1. the string itself without evaluation (format: "raw:xxx")
+  2. an evaluated sub-string (format: "eval:xxx")
+  3. an evaluated condition (format: "eval_cond:xxx")
+  4. a string with escaped chars (format: "esc:xxx" or "\xxx")
+  5. a string with chars to hide (format: "hide:char,string")
+  6. a string with max chars (format: "cut:max,suffix,string" or "cut:+max,suffix,string")
+     or max chars displayed on screen (format: "cutscr:max,suffix,string" or "cutscr:+max,suffix,string")
+  7. a reversed string (format: "rev:xxx" or "revscr:xxx")
+  8. a repeated string (format: "repeat:count,string")
+  9. length of a string (format: "length:xxx" or "lengthscr:xxx")
+  10. a color (format: "color:xxx", see "Plugin API reference", function "color")
+  11. a modifier (format: "modifier:name,data,string")
+  12. an info (format: "info:name,arguments", arguments are optional)
+  13. a base 16/32/64 encoded/decoded string (format: "base_encode:base,xxx" or "base_decode:base,xxx")
+  14. current date/time (format: "date" or "date:format")
+  15. an environment variable (format: "env:XXX")
+  16. a ternary operator (format: "if:condition?value_if_true:value_if_false")
+  17. result of an expression with parentheses and operators + - * / // % ** (format: "calc:xxx")
+  18. a translated string (format: "translate:xxx")
+  19. an option (format: "file.section.option")
+  20. a local variable in buffer
+  21. a hdata name/variable (the value is automatically converted to string), by default "window" and "buffer" point to current window/buffer.
+Format for hdata can be one of following:
+  hdata.var1.var2...: start with a hdata (pointer must be known), and ask variables one after one (other hdata can be followed)
+  hdata[list].var1.var2...: start with a hdata using a list/pointer/pointer name, for example:
+    ${buffer[gui_buffers].full_name}: full name of first buffer in linked list of buffers
+    ${plugin[weechat_plugins].name}: name of first plugin in linked list of plugins
+  hdata[pointer].var1.var2...: start with a hdata using a pointer, for example:
+    ${buffer[0x1234abcd].full_name}: full name of the buffer with this pointer (can be used in triggers)
+    ${buffer[my_pointer].full_name}: full name of the buffer with this pointer name (can be used in triggers)
+For name of hdata and variables, please look at "Plugin API reference", function "weechat_hdata_get".
 
-Beispiele (einfache Zeichenketten):
+Examples (simple strings):
   /eval -n ${raw:${info:version}}                ==> ${info:version}
   /eval -n ${eval_cond:${window.win_width}>100}  ==> 1
   /eval -n ${info:version}                       ==> 0.4.3
   /eval -n ${env:HOME}                           ==> /home/user
   /eval -n ${weechat.look.scroll_amount}         ==> 3
-  /eval -n ${sec.data.freenode_password}         ==> geheim
+  /eval -n ${sec.data.freenode_password}         ==> secret
   /eval -n ${window}                             ==> 0x2549aa0
   /eval -n ${window.buffer}                      ==> 0x2549320
   /eval -n ${window.buffer.full_name}            ==> core.weechat
@@ -1395,18 +1396,19 @@ Beispiele (einfache Zeichenketten):
   /eval -n ${calc:(5+2)*3}                       ==> 21
   /eval -n ${base_encode:64,test}                ==> dGVzdA==
   /eval -n ${base_decode:64,dGVzdA==}            ==> test
+  /eval -n ${translate:Plugin}                   ==> Extension
 
-Beispiele (Bedingungen):
-  /eval -n -c ${window.buffer.number} > 2  ==> 0
-  /eval -n -c ${window.win_width} > 100    ==> 1
-  /eval -n -c (8 > 12) || (5 > 2)          ==> 1
-  /eval -n -c (8 > 12) && (5 > 2)          ==> 0
-  /eval -n -c abcd =~ ^ABC                 ==> 1
-  /eval -n -c abcd =~ (?-i)^ABC            ==> 0
-  /eval -n -c abcd =~ (?-i)^abc            ==> 1
-  /eval -n -c abcd !~ abc                  ==> 0
-  /eval -n -c abcd =* a*d                  ==> 1
-  /eval -n -c abcd =- bc                   ==> 1
+Examples (conditions):
+  /eval -n -c ${window.buffer.number} > 2 ==> 0
+  /eval -n -c ${window.win_width} > 100   ==> 1
+  /eval -n -c (8 > 12) || (5 > 2)         ==> 1
+  /eval -n -c (8 > 12) && (5 > 2)         ==> 0
+  /eval -n -c abcd =~ ^ABC                ==> 1
+  /eval -n -c abcd =~ (?-i)^ABC           ==> 0
+  /eval -n -c abcd =~ (?-i)^abc           ==> 1
+  /eval -n -c abcd !~ abc                 ==> 0
+  /eval -n -c abcd =* a*d                 ==> 1
+  /eval -n -c abcd =- bc                  ==> 1
 ----
 
 [[command_weechat_filter]]
@@ -1958,30 +1960,30 @@ Beispiele:
 ----
 /upgrade  [-yes] [<path_to_binary>|-quit]
 
-          -yes: required if option "weechat.look.confirm_upgrade" is enabled
-path_to_binary: path to WeeChat binary (default is current binary)
-        -dummy: do nothing (option used to prevent accidental completion with "-quit")
-         -quit: close *ALL* connections, save session and quit WeeChat, which makes possible a delayed restoration (see below)
+          -yes: wird benötigt, sobald Option "weechat.look.confirm_upgrade" aktiviert ist
+path_to_binary: Pfad zu einer ausführbaren WeeChat Binärdatei (Standardeinstellung ist die aktuell ausführbare Datei)
+        -dummy: ohne Funktion (dient lediglich dazu, um nicht versehentlich die "-quit" Funktion auszuführen)
+         -quit: trennt *ALLE* Verbindungen, speichert die aktuelle Sitzung und beendet WeeChat, um den aktuellen Zustand später wiederherstellen (siehe unten)
 
-This command upgrades and reloads a running WeeChat session. The new WeeChat binary must have been compiled or installed with a package manager before running this command.
+Dieser Befehl führt ein Upgrade von WeeChat durch und startet die laufende Sitzung neu. Bevor dieser Befehl ausgeführt wird, sollte eine neue Version von WeeChat entweder vorab kompiliert, oder mit einem Paketmanager installiert worden sein.
 
-Note: SSL connections are lost during upgrade, because reload of SSL sessions is currently not possible with GnuTLS. There is automatic reconnection after upgrade.
+Hinweis: SSL Verbindungen werden während eines Upgrades unterbrochen, da diese Verbindungen zur Zeit nicht mit GnuTLS gehalten werden können. Nach einem erfolgten Upgrade findet eine automatische Verbindung zu diesen Servern statt.
 
-Upgrade process has 4 steps:
-  1. save session into files for core and plugins (buffers, history, ..)
-  2. unload all plugins (configuration files (*.conf) are written on disk)
-  3. save WeeChat configuration (weechat.conf)
-  4. execute new WeeChat binary and reload session.
+Der Upgrade Vorgang besteht aus vier Schritten:
+  1. Sicherung der Sitzung, in Dateien für Core und Erweiterungen (buffers, history, ..)
+  2. alle Erweiterungen werden ausgeschaltet (Konfigurationen *.conf werden gesichert)
+  3. Sicherung der WeeChat Konfiguration (weechat.conf)
+  4. ausführen der neuen Version von WeeChat und wiederherstellen der Sitzung.
 
-With option "-quit", the process is slightly different:
-  1. close *ALL* connections (irc, xfer, relay, ...)
-  2. save session into files (*.upgrade)
-  3. unload all plugins
-  4. save WeeChat configuration
-  5. quit WeeChat
-Then later you can restore session with command: weechat --upgrade
-IMPORTANT: you must restore the session with exactly same configuration (files *.conf).
-It is possible to restore WeeChat session on another machine if you copy the content of WeeChat home directories (see /debug dirs).
+Nutzt man die "-quit" Funktion ist die Abfolge geringfügig anders:
+  1. es werden *ALLE* Verbindungen getrennt (irc,xfer,relay, ...)
+  2. die Sitzung wird in Dateien gesichert (*.upgrade)
+  3. alle Erweiterungen werden ausgeschaltet
+  4. die WeeChat Konfiguration wird gesichert
+  5. WeeChat wird beendet
+Die Sitzung kann zu einem späteren Zeitpunkt wiederhergestellt werden: weechat --upgrade
+WICHTIG: Die Sitzung muss mit exakt den selben Konfigurationsdateien wiederhergestellt werden (*.conf)
+Es ist möglich, die WeeChat-Sitzung auf einem anderen Computer wiederherzustellen, wenn Sie den Inhalt der WeeChat Verzeichnisse kopieren (siehe / debug dirs).
 ----
 
 [[command_weechat_uptime]]
@@ -2122,50 +2124,51 @@ Beispiele:
           bar
           refresh
 
- enable: buflist aktivieren
-disable: buflist deaktivieren
- toggle: buflist umschalten
-    bar: fügt eine "buflist" Bar hinzu
-refresh: erzwingt eine Aktualisierung der Bar-Item (buflist, buflist2 und buflist3)
+ enable: enable buflist
+disable: disable buflist
+ toggle: toggle buflist
+    bar: add the "buflist" bar
+refresh: force the refresh of the bar items (buflist, buflist2 and buflist3)
 
-Jede Zeile die einen Buffer anzeigt wird mittels Zeichenketten-Evaluation dargestellt (siehe /help eval für das Format), dazu werden folgende Optionen genutzt:
-  - buflist.look.display_conditions: Bedingungen um einen Buffer in der Liste darzustellen
-  - buflist.format.buffer: Format für den Buffer, der nicht der aktuell dargestellte Buffer ist
-  - buflist.format.buffer_current: Format für den aktuell dargestellten Buffer
+The lines with buffers are displayed using string evaluation (see /help eval for the format), with these options:
+  - buflist.look.display_conditions: conditions to display a buffer in the list
+  - buflist.format.buffer: format for a buffer which is not current buffer
+  - buflist.format.buffer_current: format for the current buffer
 
-Die folgenden Variablen können in den obigen Optionen genutzt werden:
-  - bar item data (siehe hdata "bar_item" in API Dokumentation für eine vollständige Liste), zum Beispiel:
+The following variables can be used in these options:
+  - bar item data (see hdata "bar_item" in API doc for a complete list), for example:
     - ${bar_item.name}
-  - window data, wo das Bar-Item dargestellt werden soll (in "root" Bars existieren keine Fenster, siehe hdata "window" in API Dokumentation für eine vollständige Liste), zum Beispiel:
+  - window data, where the bar item is displayed (there's no window in root bars, see hdata "window" in API doc for a complete list), for example:
     - ${window.number}
     - ${window.buffer.full_name}
-  - buffer data (siehe hdata "buffer" in API Dokumentation für eine vollständige Liste), zum Beispiel:
+  - buffer data (see hdata "buffer" in API doc for a complete list), for example:
     - ${buffer.number}
     - ${buffer.name}
     - ${buffer.full_name}
     - ${buffer.short_name}
     - ${buffer.nicklist_nicks_count}
-  - irc_server: IRC Serverdaten, ausschließlich genutzt bei einem IRC Buffer (siehe hdata "irc_server" in API Dokumentation)
-  - irc_channel: IRC Channeldaten, ausschließlich genutzt bei einem IRC Channel Buffer (siehe hdata "irc_channel" in API Dokumentation)
-  - zusätzliche Variablen die durch buflist bereitgestellt werden:
-    - ${format_buffer}: der evaluierte Wert der Option buflist.format.buffer; dies kann in der Option buflist.format.buffer_current genutzt werden um zum Beispiel die Hintergrundfarbe zu verändern
-    - ${current_buffer}: ein Boolean ("0" oder "1"), "1" falls es sich um den aktuellen Buffer handelt; dies kann in einer Bedingung verwendet werden: ${if:${current_buffer}?...:...}
-    - ${merged}: ein Boolean ("0" oder "1"), "1" wenn der Buffer mit einem anderen zusammengefügt ist; kann innerhalb einer Bedingung genutzt werden: ${if:${merged}?...:...}
-    - ${format_number}: eingerückte Nummer mit Trennzeichen (evaluiert aus Option buflist.format.number)
-    - ${number}: eingerückte Nummer, zum Beispiel " 1", falls die Anzahl der Buffer zwischen 10 und 99 liegt; bei zusammengefügten Buffern enthält die Variable für den ersten Buffer die entsprechende Nummer, die weiteren Buffer enthalten ein Leerzeichen anstelle der Nummer
-    - ${number2}: eingerückte Nummer, zum Beispiel " 1", falls die Anzahl der Buffer zwischen 10 und 99 liegt
-    - ${number_displayed}: "1" falls Nummer angezeigt wird, ansonsten "0"
-    - ${indent}: Einrückung für Name (Channel und private Buffer werden eingerückt) (evaluiert aus Option buflist.format.indent)
-    - ${format_nick_prefix}: Nick-Präfix mit entsprechender Farbe für einen Channel (evaluiert aus Option buflist.format.nick_prefix)
-    - ${color_nick_prefix}: Farbe für den Nick-Präfix von einem Channel (wird nur genutzt wenn die Option buflist.look.nick_prefix aktiviert ist)
-    - ${nick_prefix}: der Nick-Präfix für einen Channel (wird nur genutzt falls die Option buflist.look.nick_prefix aktiviert ist)
-    - ${format_name}: der formatierte Name (evaluiert aus Option buflist.format.name)
-    - ${name}: der Kurzname (falls einer gesetzt ist), ersatzweise wird auf den Originalnamen zurückgegriffen
-    - ${color_hotlist}: die Farbe mit der höchsten Priorität für den entsprechenden Buffer (evaluiert aus Option buflist.format.hotlist_xxx wobei xxx der entsprechende Level ist)
-    - ${format_hotlist}: die formatierte Hotlist (evaluiert aus Option buflist.format.hotlist)
-    - ${hotlist}: die Hotlist in der Rohform
-    - ${hotlist_priority}: "none", "low", "message", "private" oder "highlight"
-    - ${format_lag}: die Verzögerung für einen IRC Server-Buffer, ist leer falls es keine Verzögerung gibt (evaluiert aus Option buflist.format.lag)
+  - irc_server: IRC server data, defined only on an IRC buffer (see hdata "irc_server" in API doc)
+  - irc_channel: IRC channel data, defined only on an IRC channel buffer (see hdata "irc_channel" in API doc)
+  - extra variables added by buflist for convenience:
+    - ${format_buffer}: the evaluated value of option buflist.format.buffer; this can be used in option buflist.format.buffer_current to just change the background color for example
+    - ${current_buffer}: a boolean ("0" or "1"), "1" if this is the current buffer; it can be used in a condition: ${if:${current_buffer}?...:...}
+    - ${merged}: a boolean ("0" or "1"), "1" if the buffer is merged with at least another buffer; it can be used in a condition: ${if:${merged}?...:...}
+    - ${format_number}: indented number with separator (evaluation of option buflist.format.number)
+    - ${number}: indented number, for example " 1" if there are between 10 and 99 buffers; for merged buffers, this variable is set with number for the first buffer and spaces for the next buffers with same number
+    - ${number2}: indented number, for example " 1" if there are between 10 and 99 buffers
+    - ${number_displayed}: "1" if the number is displayed, otherwise "0"
+    - ${indent}: indentation for name (channel and private buffers are indented) (evaluation of option buflist.format.indent)
+    - ${format_nick_prefix}: colored nick prefix for a channel (evaluation of option buflist.format.nick_prefix)
+    - ${color_nick_prefix}: color of nick prefix for a channel (set only if the option buflist.look.nick_prefix is enabled)
+    - ${nick_prefix}: nick prefix for a channel (set only if the option buflist.look.nick_prefix is enabled)
+    - ${format_name}: formatted name (evaluation of option buflist.format.name)
+    - ${name}: the short name (if set), with a fallback on the name
+    - ${color_hotlist}: the color depending on the highest hotlist level for the buffer (evaluation of option buflist.format.hotlist_xxx where xxx is the level)
+    - ${format_hotlist}: the formatted hotlist (evaluation of option buflist.format.hotlist)
+    - ${hotlist}: the raw hotlist
+    - ${hotlist_priority}: "none", "low", "message", "private" or "highlight"
+    - ${format_lag}: the lag for an IRC server buffer, empty if there's no lag (evaluation of option buflist.format.lag)
+    - ${format_tls_version}: indicator of TLS version for a server buffer, empty for channels (evaluation of option buflist.format.tls_version)
 ----
 // end::buflist_commands[]
 
@@ -2267,23 +2270,23 @@ Beispiele:
 ----
 /fifo  enable|disable|toggle
 
- enable: enable FIFO pipe
-disable: disable FIFO pipe
- toggle: toggle FIFO pipe
+ enable: aktivieren der FIFO pipe
+disable: deaktivieren der FIFO pipe
+ toggle: Status der FIFO pipe umschalten
 
-FIFO pipe is used as remote control of WeeChat: you can send commands or text to the FIFO pipe from your shell.
-By default the FIFO pipe is called weechat_fifo_xxx (where xxx is the WeeChat process id) and located in the WeeChat runtime directory (see /debug dirs).
+Die FIFO-Pipe wird als Fernbedienung genutzt, es können Befehle oder Text von der Shell an die FIFO-Pipe geschickt werden
+Standardmäßig heißt die FIFO-Pipe weechat_fifo_xxx (wobei xxx die WeeChat-Prozess-ID ist) und befindet sich im WeeChat-Laufzeitverzeichnis (siehe /debug dirs).
 
-The expected format is one of:
-  plugin.buffer *text or command here
-  *text or command here
+Folgendes Format wird erwartet:
+  plugin.buffer *Text oder Befehl an dieser Stelle
+  *Text oder Befehl an dieser Stelle
 
-For example to change your freenode nick:
+Beispiel um den eigenen Nick auf dem Server freenode zu ändern:
   echo 'irc.server.freenode */nick newnick' >/run/user/1000/weechat/weechat_fifo_12345
 
-Please read the user's guide for more info and examples.
+Bitte lese die Benutzeranleitung für weitere Informationen und Beispiele.
 
-Examples:
+Beispiele:
   /fifo toggle
 ----
 // end::fifo_commands[]
@@ -2706,52 +2709,52 @@ Ohne Angabe eines Argumentes listet dieser Befehl alle geladenen Skripten auf.
         raw
         sslcertkey
 
-         list: list relay clients (only active relays)
-     listfull: list relay clients (verbose, all relays)
-    listrelay: list relays (name and port)
-          add: add a relay (listen on a port/path)
-          del: remove a relay (clients remain connected)
-        start: listen on port
-      restart: close the server socket and listen again on port (clients remain connected)
-         stop: close the server socket (clients remain connected)
-         name: relay name (see format below)
-         port: port used for relay
-         path: path used for relay (for UNIX domain socket only); path is evaluated (see function string_eval_path_home in plugin API reference)
-          raw: open buffer with raw Relay data
-   sslcertkey: set SSL certificate/key using path in option relay.network.ssl_cert_key
+         list: Auflistung der Relay-Clients (nur aktive Relays)
+     listfull: detaillierte Auflistung der Relay-Clients (alle Relays)
+    listrelay: Auflistung der Relays (Name und Port)
+          add: fügt ein Relay, für ein Protokoll + Name, hinzu
+          del: entfernt Relay für ein Protokoll + Name
+        start: lausche am Port
+      restart: beendet den Server Socket und lauscht erneut am Port (Clients bleiben verbunden)
+         stop: schließt den Server Socket (Clients bleiben verbunden)
+         name: Name des Relays (siehe Format weiter unten)
+         port: Port der für Relay genutzt werden soll
+         path: Pfad der für Relay genutzt werden soll (ausschließlich für UNIX Domain Socket); Pfad ist evaluiert (siehe Funktion string_eval_path_home in Erweiterung API Referenz)/n
+          raw: öffnet einen Buffer mit Relay-Rohdaten
+   sslcertkey: setzt SSL Zertifikat/Schlüssel mittels Pfad in Einstellung relay.network.ssl_cert_key
 
-Relay name is: [ipv4.][ipv6.][ssl.]<protocol.name> or unix.[ssl.]<protocol.name>
-         ipv4: force use of IPv4
-         ipv6: force use of IPv6
-          ssl: enable SSL
-         unix: use UNIX domain socket
-protocol.name: protocol and name to relay:
-                 - protocol "irc": name is the server to share (optional, if not given, the server name must be sent by client in command "PASS", with format: "PASS server:password")
-                 - protocol "weechat" (name is not used)
+Aufbau des Relay-Namens: [ipv4.][ipv6.][ssl.]<Protokoll.Name> oder unix.[ssl.]<Protokoll.Name>
+         ipv4: erzwingt die Nutzung von IPv4
+         ipv6: erzwingt die Nutzung von IPv6
+          ssl: aktiviert SSL
+         unix: nutzt UNIX Domain Socket
+protocol.name: Protokoll und Name des Relay:
+                 - Protokoll "irc": Name des Servers welcher geteilt werden soll (optional. Falls kein Name angegeben wird, muss der Client einen Namen mit dem Befehl "PASS" übermitteln, das Format ist wie folgt: "PASS Server:Passwort")
+                 - Protokoll "weechat" (es wird kein Name verwendet)
 
-The "irc" protocol allows any IRC client (including WeeChat itself) to connect on the port.
-The "weechat" protocol allows a remote interface to connect on the port, see the list here: https://weechat.org/about/interfaces
+Das "irc" Protokoll dient dazu eine Verbindung zu einem anderen IRC Client (oder zu einem zweiten WeeChat) herzustellen.
+Das "weechat" Protokoll wird von einem Remote-Interface genutzt um eine Verbindung auf dem Port herzustellen. Siehe https://weechat.org/about/interfaces
 
-Without argument, this command opens buffer with list of relay clients.
+Ohne Angabe von Argumenten werden alle Relay-Clients in einem neuen Buffer dargestellt.
 
-Examples:
-  irc proxy, for server "freenode":
+Beispiele:
+  IRC Proxy für Server "freenode":
     /relay add irc.freenode 8000
-  irc proxy, for server "freenode", with SSL:
+  IRC Proxy, für Server "freenode", mit SSL:
     /relay add ssl.irc.freenode 8001
-  irc proxy, for all servers (client will choose), with SSL:
+  IRC Proxy für alle Server (Client wählt aus), mit SSL:
     /relay add ssl.irc 8002
-  weechat protocol:
+  WeeChat Protokoll:
     /relay add weechat 9000
-  weechat protocol with SSL:
+  WeeChat Protokoll, mit SSL:
     /relay add ssl.weechat 9001
-  weechat protocol with SSL, using only IPv4:
+  WeeChat Protokoll, mit SSL, nur IPv4 nutzen:
     /relay add ipv4.ssl.weechat 9001
-  weechat protocol with SSL, using only IPv6:
+  WeeChat Protokoll, mit SSL, nur IPv6 nutzen:
     /relay add ipv6.ssl.weechat 9001
-  weechat protocol with SSL, using IPv4 + IPv6:
+  WeeChat Protokoll, mit SSL, mit IPv4 + IPv6:
     /relay add ipv4.ipv6.ssl.weechat 9001
-  weechat protocol over UNIX domain socket:
+  Weechat Protokoll über UNIX Domain Socket:
     /relay add unix.weechat ${weechat_runtime_dir}/relay_socket
 ----
 // end::relay_commands[]

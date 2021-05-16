@@ -134,15 +134,15 @@
 
 | weechat | version_number | WeeChat-Version (als Zahl) | -
 
-| weechat | weechat_cache_dir | WeeChat cache directory | -
+| weechat | weechat_cache_dir | WeeChat Cache-Verzeichnis | -
 
-| weechat | weechat_config_dir | WeeChat config directory | -
+| weechat | weechat_config_dir | WeeChat Konfigurationsverzeichnis | -
 
 | weechat | weechat_daemon | 1, falls WeeChat im Daemon-Modus ausgeführt wird (ohne Oberfläche, im Hintergrund) | -
 
-| weechat | weechat_data_dir | WeeChat data directory | -
+| weechat | weechat_data_dir | WeeChat-Datenverzeichnis | -
 
-| weechat | weechat_dir | WeeChat directory (*deprecated* since version 3.2, replaced by "weechat_config_dir", "weechat_data_dir", "weechat_cache_dir" and "weechat_runtime_dir") | -
+| weechat | weechat_dir | WeeChat-Verzeichnis (*veraltet* seit Version 3.2, ersetzt durch "weechat_config_dir", "weechat_data_dir", "weechat_cache_dir" und "weechat_runtime_dir") | -
 
 | weechat | weechat_headless | 1, falls WeeChat im Hintergrundmodus ausgeführt wird | -
 
@@ -150,7 +150,7 @@
 
 | weechat | weechat_localedir | "lokales" Verzeichnis von WeeChat | -
 
-| weechat | weechat_runtime_dir | WeeChat runtime directory | -
+| weechat | weechat_runtime_dir | WeeChat-Laufzeitverzeichnis | -
 
 | weechat | weechat_sharedir | WeeChat "share" Verzeichnis | -
 

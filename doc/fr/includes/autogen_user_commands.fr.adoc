@@ -1359,9 +1359,10 @@ Des variables sont remplacées dans l'expression, en utilisant le format ${varia
   15. une variable d'environnement (format : "env:XXX")
   16. un opérateur ternaire (format : "if:condition?valeur_si_vrai:valeur_si_faux")
   17. le résultat d'une expression avec parenthèses et les opérateurs + - * / // % ** (format: "calc:xxx")
-  18. une option (format : "fichier.section.option")
-  19. une variable locale du tampon
-  20. un hdata/variable (la valeur est automatiquement convertie en chaîne), par défaut "window" et "buffer" pointent vers la fenêtre et le tampon courants.
+  18. une chaîne traduite (format : "translate:xxx")
+  19. une option (format : "fichier.section.option")
+  20. une variable locale du tampon
+  21. un hdata/variable (la valeur est automatiquement convertie en chaîne), par défaut "window" et "buffer" pointent vers la fenêtre et le tampon courants.
 Le format du hdata peut être le suivant :
   hdata.var1.var2... : démarrer avec un hdata (le pointeur doit être connu), et demander les variables l'une après l'autre (d'autres hdata peuvent être suivis)
   hdata[liste].var1.var2... : démarrer avec un hdata en utilisant une liste/pointeur/nom de pointeur, par exemple :
@@ -1395,6 +1396,7 @@ Exemples (chaînes simples) :
   /eval -n ${calc:(5+2)*3}                       ==> 21
   /eval -n ${base_encode:64,test}                ==> dGVzdA==
   /eval -n ${base_decode:64,dGVzdA==}            ==> test
+  /eval -n ${translate:Plugin}                   ==> Extension
 
 Exemples (conditions) :
   /eval -n -c ${window.buffer.number} > 2 ==> 0
@@ -2166,6 +2168,7 @@ Les variables suivantes peuvent être utilisées dans ces options :
     - ${hotlist} : la hotlist brute
     - ${hotlist_priority} : "none", "low", "message", "private" ou "highlight"
     - ${format_lag} : le lag pour un tampon de serveur IRC, vide s'il n'y a pas de lag (évaluation de l'option buflist.format.lag)
+    - ${format_tls_version}: indicateur de la version de TLS pour le serveur courant, vide pour les canaux (évaluation de l'option buflist.format.tls_version)
 ----
 // end::buflist_commands[]
 
@@ -2272,14 +2275,14 @@ disable : désactiver le tube FIFO
  toggle : activer/désactiver le tube FIFO
 
 Le tube FIFO est utilisé comme contrôle à distance de WeeChat : vous pouvez envoyer des commandes ou du texte au tube FIFO depuis votre shell.
-Par défaut le tube FIFO se nomme ~/.weechat/weechat_fifo_xxx (où xxx est l'id du processus WeeChat) et situé dans le répertoire "runtime" de WeeChat (voir /debug dirs).
+Par défaut le tube FIFO se nomme weechat_fifo_xxx (où xxx est l'id du processus WeeChat) et situé dans le répertoire "runtime" de WeeChat (voir /debug dirs).
 
 Le format attendu est l'un des suivants :
   plugin.buffer *texte ou commande ici
   *texte ou commande ici
 
 Par exemple pour changer votre pseudo sur freenode :
-  echo 'irc.server.freenode */nick autrepseudo' >~/.weechat/weechat_fifo_12345
+  echo 'irc.server.freenode */nick autrepseudo' >/run/user/1000/weechat/weechat_fifo_12345
 
 Merci de lire le guide utilisateur pour plus d'information et des exemples.
 

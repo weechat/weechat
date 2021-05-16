@@ -1359,9 +1359,10 @@ Some variables are replaced in expression, using the format ${variable}, variabl
   15. an environment variable (format: "env:XXX")
   16. a ternary operator (format: "if:condition?value_if_true:value_if_false")
   17. result of an expression with parentheses and operators + - * / // % ** (format: "calc:xxx")
-  18. an option (format: "file.section.option")
-  19. a local variable in buffer
-  20. a hdata name/variable (the value is automatically converted to string), by default "window" and "buffer" point to current window/buffer.
+  18. a translated string (format: "translate:xxx")
+  19. an option (format: "file.section.option")
+  20. a local variable in buffer
+  21. a hdata name/variable (the value is automatically converted to string), by default "window" and "buffer" point to current window/buffer.
 Format for hdata can be one of following:
   hdata.var1.var2...: start with a hdata (pointer must be known), and ask variables one after one (other hdata can be followed)
   hdata[list].var1.var2...: start with a hdata using a list/pointer/pointer name, for example:
@@ -1395,6 +1396,7 @@ Examples (simple strings):
   /eval -n ${calc:(5+2)*3}                       ==> 21
   /eval -n ${base_encode:64,test}                ==> dGVzdA==
   /eval -n ${base_decode:64,dGVzdA==}            ==> test
+  /eval -n ${translate:Plugin}                   ==> Extension
 
 Examples (conditions):
   /eval -n -c ${window.buffer.number} > 2 ==> 0
@@ -2166,6 +2168,7 @@ The following variables can be used in these options:
     - ${hotlist}: the raw hotlist
     - ${hotlist_priority}: "none", "low", "message", "private" or "highlight"
     - ${format_lag}: the lag for an IRC server buffer, empty if there's no lag (evaluation of option buflist.format.lag)
+    - ${format_tls_version}: indicator of TLS version for a server buffer, empty for channels (evaluation of option buflist.format.tls_version)
 ----
 // end::buflist_commands[]
 

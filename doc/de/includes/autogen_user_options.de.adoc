@@ -1261,13 +1261,13 @@
 ** Standardwert: `+60+`
 
 * [[option_weechat.network.gnutls_ca_system]] *weechat.network.gnutls_ca_system*
-** Beschreibung: pass:none[load system's default trusted certificate authorities on startup; this can be turned off to save some memory only if you are not using SSL connections at all]
+** Beschreibung: pass:none[lädt die standardmäßigen vertrauenswürdigen Zertifizierungsstellen des Systems beim Start; Dies kann deaktiviert werden, um Speicherplatz zu sparen, falls keine SSL-Verbindungen verwendet werden]
 ** Typ: boolesch
 ** Werte: on, off
 ** Standardwert: `+on+`
 
 * [[option_weechat.network.gnutls_ca_user]] *weechat.network.gnutls_ca_user*
-** Beschreibung: pass:none[extra file(s) with certificate authorities; multiple files must be separated by colons (each path is evaluated, see function string_eval_path_home in plugin API reference)]
+** Beschreibung: pass:none[zusätzliche Datei(en) bei den Zertifizierungsstellen; mehrere Dateien müssen durch Doppelpunkte getrennt werden (jeder Pfad ist evaluiert, siehe Funktion string_eval_path_home in der Plugin-API-Referenz)]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+""+`
@@ -1303,7 +1303,7 @@
 ** Standardwert: `+".so,.dll"+`
 
 * [[option_weechat.plugin.path]] *weechat.plugin.path*
-** Beschreibung: pass:none[path for searching plugins (path is evaluated, see function string_eval_path_home in plugin API reference)]
+** Beschreibung: pass:none[Pfad für die Suche nach Erweiterungen (Pfad ist evaluiert, siehe Funktion string_eval_path_home in der Plugin-API-Referenz)]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+"${weechat_data_dir}/plugins"+`
@@ -1457,7 +1457,7 @@
 ** Standardwert: `+""+`
 
 * [[option_logger.file.path]] *logger.file.path*
-** Beschreibung: pass:none[path for WeeChat log files; date specifiers are permitted (see man strftime) (path is evaluated, see function string_eval_path_home in plugin API reference)]
+** Beschreibung: pass:none[Pfad für WeeChat-Protokolldateien; Datumsangaben sind zulässig (siehe man strftime) (Pfad ist evaluiert, siehe Funktion string_eval_path_home in der Plugin-API-Referenz)]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+"${weechat_data_dir}/logs"+`
@@ -1752,6 +1752,12 @@
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+"${color:green}${number}${if:${number_displayed}?.: }"+`
 
+* [[option_buflist.format.tls_version]] *buflist.format.tls_version*
+** Beschreibung: pass:none[format for TLS version on an IRC server buffer (note: content is evaluated, see /help buflist)]
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette
+** Standardwert: `+" ${color:default}(${if:${tls_version}==TLS1.3?${color:green}:${if:${tls_version}==TLS1.2?${color:yellow}:${color:red}}}${translate:${tls_version}}${color:default})"+`
+
 * [[option_buflist.look.add_newline]] *buflist.look.add_newline*
 ** Beschreibung: pass:none[fügt einen Zeilenumbruch zwischen die einzelnen Buffer hinzu um pro Zeile einen Buffer anzuzeigen (empfohlen); falls deaktiviert muss ein Zeilenumbruch manuell hinzugefügt werden, "${\\n}", des Weiteren ist die Mausunterstützung nicht mehr gegeben]
 ** Typ: boolesch
@@ -1833,7 +1839,7 @@
 ** Standardwert: `+on+`
 
 * [[option_fifo.file.path]] *fifo.file.path*
-** Beschreibung: pass:none[path for FIFO file; WeeChat PID can be used in path with ${info:pid} (path is evaluated, see function string_eval_path_home in plugin API reference)]
+** Beschreibung: pass:none[Pfad für FIFO-Datei; WeeChat PID kann im Pfad mit ${info:pid} verwendet werden (Pfad ist evaluiert, siehe Funktion string_eval_path_home in der Plugin-API-Referenz)]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+"${weechat_runtime_dir}/weechat_fifo_${info:pid}"+`
@@ -1937,7 +1943,7 @@
 ** Standardwert: `+on+`
 
 * [[option_xfer.file.download_path]] *xfer.file.download_path*
-** Beschreibung: pass:none[path for writing incoming files (path is evaluated, see function string_eval_path_home in plugin API reference)]
+** Beschreibung: pass:none[Pfad zum Schreiben eingehender Dateien (Pfad ist evaluiert, siehe Funktion string_eval_path_home in der Plugin-API-Referenz)]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+"${weechat_data_dir}/xfer"+`
@@ -1949,7 +1955,7 @@
 ** Standardwert: `+".part"+`
 
 * [[option_xfer.file.upload_path]] *xfer.file.upload_path*
-** Beschreibung: pass:none[path for reading files when sending (path is evaluated, see function string_eval_path_home in plugin API reference)]
+** Beschreibung: pass:none[Pfad zum Lesen von Dateien beim Senden (Pfad ist evaluiert, siehe Funktion string_eval_path_home in der Plugin-API-Referenz)]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+"~"+`
@@ -2057,6 +2063,24 @@
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
 ** Standardwert: `+default+`
+
+* [[option_irc.color.item_tls_version_deprecated]] *irc.color.item_tls_version_deprecated*
+** Beschreibung: pass:none[color for deprecated TLS versions in bar item "tls_version"]
+** Typ: Farbe
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
+** Standardwert: `+yellow+`
+
+* [[option_irc.color.item_tls_version_insecure]] *irc.color.item_tls_version_insecure*
+** Beschreibung: pass:none[color for insecure TLS versions in bar item "tls_version"]
+** Typ: Farbe
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
+** Standardwert: `+red+`
+
+* [[option_irc.color.item_tls_version_ok]] *irc.color.item_tls_version_ok*
+** Beschreibung: pass:none[color for higher supported TLS version in bar item "tls_version"]
+** Typ: Farbe
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
+** Standardwert: `+green+`
 
 * [[option_irc.color.message_account]] *irc.color.message_account*
 ** Beschreibung: pass:none[Textfarbe für "account" Nachrichten]
@@ -2749,7 +2773,7 @@
 ** Standardwert: `+continue+`
 
 * [[option_irc.server_default.sasl_key]] *irc.server_default.sasl_key*
-** Beschreibung: pass:none[file with ECC private key for mechanism "ecdsa-nist256p-challenge" (path is evaluated, see function string_eval_path_home in plugin API reference)]
+** Beschreibung: pass:none[Datei mit privatem ECC-Schlüssel für den Mechanismus "ecdsa-nist256p-challenge" (Pfad ist evaluiert, siehe Funktion string_eval_path_home in der Plugin-API-Referenz)]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+""+`
@@ -2791,7 +2815,7 @@
 ** Standardwert: `+off+`
 
 * [[option_irc.server_default.ssl_cert]] *irc.server_default.ssl_cert*
-** Beschreibung: pass:none[SSL certificate file used to automatically identify your nick (path is evaluated, see function string_eval_path_home in plugin API reference)]
+** Beschreibung: pass:none[SSL-Zertifikatdatei zur automatischen Identifizierung Ihres Nick (Pfad ist evaluiert, siehe Funktion string_eval_path_home in der Plugin-API-Referenz)]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+""+`
@@ -3015,7 +3039,7 @@
 ** Standardwert: `+100000+`
 
 * [[option_relay.network.ssl_cert_key]] *relay.network.ssl_cert_key*
-** Beschreibung: pass:none[file with SSL certificate and private key (for serving clients with SSL) (path is evaluated, see function string_eval_path_home in plugin API reference)]
+** Beschreibung: pass:none[Datei mit SSL-Zertifikat und privatem Schlüssel (zum Bedienen von Clients mit SSL) (Pfad ist evaluiert, siehe Funktion string_eval_path_home in der Plugin-API-Referenz)]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+"${weechat_config_dir}/ssl/relay.pem"+`
@@ -3399,7 +3423,7 @@
 ** Standardwert: `+""+`
 
 * [[option_script.scripts.path]] *script.scripts.path*
-** Beschreibung: pass:none[local cache directory for scripts (path is evaluated, see function string_eval_path_home in plugin API reference)]
+** Beschreibung: pass:none[lokales Cache-Verzeichnis für Skripten (Pfad ist evaluiert, siehe Funktion string_eval_path_home in der Plugin-API-Referenz)]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+"${weechat_cache_dir}/script"+`
