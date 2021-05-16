@@ -34,6 +34,7 @@ set(LIB_WEECHAT_UNIT_TESTS_CORE_SRC
   unit/core/test-core-hook.cpp
   unit/core/test-core-infolist.cpp
   unit/core/test-core-list.cpp
+  unit/core/test-core-network.cpp
   unit/core/test-core-secure.cpp
   unit/core/test-core-signal.cpp
   unit/core/test-core-string.cpp

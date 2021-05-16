@@ -303,6 +303,35 @@ network_end ()
 }
 
 /*
+ * Checks if a string contains a valid IP address (IPv4 or IPv6).
+ *
+ * Returns:
+ *   1: string is a valid IPv4 or IPv6
+ *   0: string is not a valid IP address
+ */
+
+int
+network_is_ip_address (const char *address)
+{
+    struct sockaddr_in server_addr;
+    struct sockaddr_in6 server_addr6;
+
+    if (!address || !address[0])
+        return 0;
+
+    /* valid IPv4? */
+    if (inet_pton (AF_INET, address, &server_addr.sin_addr))
+        return 1;
+
+    /* valid IPv6? */
+    if (inet_pton (AF_INET6, address, &server_addr6.sin6_addr))
+        return 1;
+
+    /* not a valid IP address */
+    return 0;
+}
+
+/*
  * Sends data on a socket with retry.
  *
  * WARNING: this function is blocking, it must be called only in a forked
@@ -1793,19 +1822,23 @@ network_connect_with_fork (struct t_hook *hook_connect)
             unhook (hook_connect);
             return;
         }
-        rc = gnutls_server_name_set (*HOOK_CONNECT(hook_connect, gnutls_sess),
-                                     GNUTLS_NAME_DNS,
-                                     HOOK_CONNECT(hook_connect, address),
-                                     strlen (HOOK_CONNECT(hook_connect, address)));
-        if (rc != GNUTLS_E_SUCCESS)
+        if (!network_is_ip_address (HOOK_CONNECT(hook_connect, address)))
         {
-            (void) (HOOK_CONNECT(hook_connect, callback))
-                (hook_connect->callback_pointer,
-                 hook_connect->callback_data,
-                 WEECHAT_HOOK_CONNECT_GNUTLS_INIT_ERROR,
-                 0, -1, _("set server name indication (SNI) failed"), NULL);
-            unhook (hook_connect);
-            return;
+            /* set the server name (only if it's NOT an IPv4/IPv6) */
+            rc = gnutls_server_name_set (*HOOK_CONNECT(hook_connect, gnutls_sess),
+                                         GNUTLS_NAME_DNS,
+                                         HOOK_CONNECT(hook_connect, address),
+                                         strlen (HOOK_CONNECT(hook_connect, address)));
+            if (rc != GNUTLS_E_SUCCESS)
+            {
+                (void) (HOOK_CONNECT(hook_connect, callback))
+                    (hook_connect->callback_pointer,
+                     hook_connect->callback_data,
+                     WEECHAT_HOOK_CONNECT_GNUTLS_INIT_ERROR,
+                     0, -1, _("set server name indication (SNI) failed"), NULL);
+                unhook (hook_connect);
+                return;
+            }
         }
         rc = gnutls_priority_set_direct (*HOOK_CONNECT(hook_connect, gnutls_sess),
                                          HOOK_CONNECT(hook_connect, gnutls_priorities),

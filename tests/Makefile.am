@@ -31,6 +31,7 @@ lib_weechat_unit_tests_core_a_SOURCES = unit/core/test-core-arraylist.cpp \
                                         unit/core/test-core-hook.cpp \
                                         unit/core/test-core-infolist.cpp \
                                         unit/core/test-core-list.cpp \
+                                        unit/core/test-core-network.cpp \
                                         unit/core/test-core-secure.cpp \
                                         unit/core/test-core-signal.cpp \
                                         unit/core/test-core-string.cpp \
