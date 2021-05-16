@@ -116,9 +116,9 @@ struct t_config_option *irc_config_color_item_channel_modes;
 struct t_config_option *irc_config_color_item_lag_counting;
 struct t_config_option *irc_config_color_item_lag_finished;
 struct t_config_option *irc_config_color_item_nick_modes;
-struct t_config_option *irc_config_color_item_tls_version_ok;
 struct t_config_option *irc_config_color_item_tls_version_deprecated;
 struct t_config_option *irc_config_color_item_tls_version_insecure;
+struct t_config_option *irc_config_color_item_tls_version_ok;
 struct t_config_option *irc_config_color_message_account;
 struct t_config_option *irc_config_color_message_join;
 struct t_config_option *irc_config_color_message_chghost;
@@ -3247,14 +3247,6 @@ irc_config_init ()
         NULL, NULL, NULL,
         &irc_config_change_color_item_nick_modes, NULL, NULL,
         NULL, NULL, NULL);
-    irc_config_color_item_tls_version_ok = weechat_config_new_option (
-        irc_config_file, ptr_section,
-        "item_tls_version_ok", "color",
-        N_("color for higher supported TLS version in bar item \"tls_version\""),
-        NULL, -1, 0, "green", NULL, 0,
-        NULL, NULL, NULL,
-        &irc_config_change_color_item_tls_version, NULL, NULL,
-        NULL, NULL, NULL);
     irc_config_color_item_tls_version_deprecated = weechat_config_new_option (
         irc_config_file, ptr_section,
         "item_tls_version_deprecated", "color",
@@ -3268,6 +3260,14 @@ irc_config_init ()
         "item_tls_version_insecure", "color",
         N_("color for insecure TLS versions in bar item \"tls_version\""),
         NULL, -1, 0, "red", NULL, 0,
+        NULL, NULL, NULL,
+        &irc_config_change_color_item_tls_version, NULL, NULL,
+        NULL, NULL, NULL);
+    irc_config_color_item_tls_version_ok = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "item_tls_version_ok", "color",
+        N_("color for higher supported TLS version in bar item \"tls_version\""),
+        NULL, -1, 0, "green", NULL, 0,
         NULL, NULL, NULL,
         &irc_config_change_color_item_tls_version, NULL, NULL,
         NULL, NULL, NULL);
