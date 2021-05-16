@@ -25,7 +25,6 @@ extern "C"
 {
 #include <stdio.h>
 #include <string.h>
-#include <locale.h>
 #include <regex.h>
 #include "src/core/wee-eval.h"
 #include "src/core/wee-config.h"
@@ -753,11 +752,8 @@ TEST(CoreEval, EvalExpression)
     WEE_CHECK_EVAL("123129", "${calc:${repeat:2,123}+2*3}");
 
     /* test translation */
-    setlocale (LC_ALL, "fr_FR.UTF-8");
     WEE_CHECK_EVAL("", "${translate:}");
     WEE_CHECK_EVAL("abcdef", "${translate:abcdef}");
-    WEE_CHECK_EVAL("Extension", "${translate:Plugin}");
-    setlocale (LC_ALL, "");
 
     /* test option */
     hashtable_set (secure_hashtable_data, "sec_option", "sec_value");
