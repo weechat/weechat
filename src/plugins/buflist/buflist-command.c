@@ -170,7 +170,7 @@ buflist_command_init ()
            "    - ${format_lag}: the lag for an IRC server buffer, empty if "
            "there's no lag (evaluation of option buflist.format.lag)\n"
            "    - ${format_tls_version}: indicator of TLS version for a server "
-           "buffer, empty for channels. (evaluation of option "
+           "buffer, empty for channels (evaluation of option "
            "buflist.format.tls_version)"),
         "enable|disable|toggle || bar || refresh",
         &buflist_command_buflist, NULL, NULL);

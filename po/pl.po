@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-05-12 20:34+0200\n"
+"POT-Creation-Date: 2021-05-16 08:35+0200\n"
 "PO-Revision-Date: 2021-05-15 16:50+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
@@ -5738,6 +5738,7 @@ msgstr ""
 msgid "bar item with list of buffers"
 msgstr "element paska z listą buforów"
 
+#, fuzzy
 msgid ""
 " enable: enable buflist\n"
 "disable: disable buflist\n"
@@ -5811,7 +5812,9 @@ msgid ""
 "    - ${hotlist_priority}: \"none\", \"low\", \"message\", \"private\" or "
 "\"highlight\"\n"
 "    - ${format_lag}: the lag for an IRC server buffer, empty if there's no "
-"lag (evaluation of option buflist.format.lag)"
+"lag (evaluation of option buflist.format.lag)\n"
+"    - ${format_tls_version}: indicator of TLS version for a server buffer, "
+"empty for channels (evaluation of option buflist.format.tls_version)"
 msgstr ""
 " enable: włącza buflist\n"
 "disable: wyłącza buflist\n"
@@ -6100,6 +6103,14 @@ msgid ""
 "evaluated, see /help buflist)"
 msgstr ""
 "format dla numeru bufora, ${number} to wyrównany numr (uwaga: zawartość jest "
+"przetwarzana, zobacz /help buflist)"
+
+#, fuzzy
+msgid ""
+"format for TLS version on an IRC server buffer (note: content is evaluated, "
+"see /help buflist)"
+msgstr ""
+"format dla opóźnienia dla buforu serwera IRC (uwaga: zawartość jest "
 "przetwarzana, zobacz /help buflist)"
 
 msgid "list of buffers in a buflist bar item"
@@ -7397,6 +7408,10 @@ msgstr "serwer"
 
 msgid "Lag"
 msgstr "Lag"
+
+#. TRANSLATORS: this is displayed in a bar item and must be as short as possible
+msgid "cleartext"
+msgstr ""
 
 msgid "IRC (Internet Relay Chat) protocol"
 msgstr "Protokół IRC (Internet Relay Chat)"
@@ -10136,6 +10151,18 @@ msgid "color for lag indicator, when pong has been received from server"
 msgstr "kolor wskaźnika opóźnienia, kiedy otrzymamy pong od serwera"
 
 msgid "color for nick modes in bar item \"input_prompt\""
+msgstr "kolor dla atrybutów nicka w elemencie paska \"input_prompt\""
+
+#, fuzzy
+msgid "color for higher supported TLS version in bar item \"tls_version\""
+msgstr "kolor dla atrybutów nicka w elemencie paska \"input_prompt\""
+
+#, fuzzy
+msgid "color for deprecated TLS versions in bar item \"tls_version\""
+msgstr "kolor dla atrybutów nicka w elemencie paska \"input_prompt\""
+
+#, fuzzy
+msgid "color for insecure TLS versions in bar item \"tls_version\""
 msgstr "kolor dla atrybutów nicka w elemencie paska \"input_prompt\""
 
 msgid "color for text in account messages"

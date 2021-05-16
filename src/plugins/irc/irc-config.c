@@ -3250,7 +3250,7 @@ irc_config_init ()
     irc_config_color_item_tls_version_ok = weechat_config_new_option (
         irc_config_file, ptr_section,
         "item_tls_version_ok", "color",
-        N_("color for max supported TLS version in bar item \"tls_version\""),
+        N_("color for higher supported TLS version in bar item \"tls_version\""),
         NULL, -1, 0, "green", NULL, 0,
         NULL, NULL, NULL,
         &irc_config_change_color_item_tls_version, NULL, NULL,

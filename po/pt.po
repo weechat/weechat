@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-05-12 20:34+0200\n"
+"POT-Creation-Date: 2021-05-16 08:35+0200\n"
 "PO-Revision-Date: 2021-05-15 16:50+0200\n"
 "Last-Translator: Vasco Almeida <vascomalmeida@sapo.pt>\n"
 "Language-Team: Portuguese <>\n"
@@ -5689,7 +5689,9 @@ msgid ""
 "    - ${hotlist_priority}: \"none\", \"low\", \"message\", \"private\" or "
 "\"highlight\"\n"
 "    - ${format_lag}: the lag for an IRC server buffer, empty if there's no "
-"lag (evaluation of option buflist.format.lag)"
+"lag (evaluation of option buflist.format.lag)\n"
+"    - ${format_tls_version}: indicator of TLS version for a server buffer, "
+"empty for channels (evaluation of option buflist.format.tls_version)"
 msgstr ""
 
 #, fuzzy, c-format
@@ -5869,6 +5871,13 @@ msgid ""
 "evaluated, see /help buflist)"
 msgstr ""
 "nome real a usar no servidor (nota: o conteúdo é avaliado, ver /help eval)"
+
+#, fuzzy
+msgid ""
+"format for TLS version on an IRC server buffer (note: content is evaluated, "
+"see /help buflist)"
+msgstr ""
+"palavra-passe para o servidor (nota: o conteúdo é avaliado, ver /help eval)"
 
 #, fuzzy
 msgid "list of buffers in a buflist bar item"
@@ -6993,6 +7002,10 @@ msgstr "servidor"
 
 msgid "Lag"
 msgstr "Lag"
+
+#. TRANSLATORS: this is displayed in a bar item and must be as short as possible
+msgid "cleartext"
+msgstr ""
 
 msgid "IRC (Internet Relay Chat) protocol"
 msgstr "Protocolo IRC (Internet Relay Chat)"
@@ -9681,6 +9694,18 @@ msgid "color for lag indicator, when pong has been received from server"
 msgstr "cor do indicador de lag, quando se recebeu pong do servidor"
 
 msgid "color for nick modes in bar item \"input_prompt\""
+msgstr "cor dos modos de nick no item de barra \"input_prompt\""
+
+#, fuzzy
+msgid "color for higher supported TLS version in bar item \"tls_version\""
+msgstr "cor dos modos de nick no item de barra \"input_prompt\""
+
+#, fuzzy
+msgid "color for deprecated TLS versions in bar item \"tls_version\""
+msgstr "cor dos modos de nick no item de barra \"input_prompt\""
+
+#, fuzzy
+msgid "color for insecure TLS versions in bar item \"tls_version\""
 msgstr "cor dos modos de nick no item de barra \"input_prompt\""
 
 #, fuzzy

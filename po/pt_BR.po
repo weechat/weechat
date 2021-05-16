@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-05-12 20:34+0200\n"
+"POT-Creation-Date: 2021-05-16 08:35+0200\n"
 "PO-Revision-Date: 2021-05-15 16:50+0200\n"
 "Last-Translator: Érico Nogueira <ericonr@disroot.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5236,7 +5236,9 @@ msgid ""
 "    - ${hotlist_priority}: \"none\", \"low\", \"message\", \"private\" or "
 "\"highlight\"\n"
 "    - ${format_lag}: the lag for an IRC server buffer, empty if there's no "
-"lag (evaluation of option buflist.format.lag)"
+"lag (evaluation of option buflist.format.lag)\n"
+"    - ${format_tls_version}: indicator of TLS version for a server buffer, "
+"empty for channels (evaluation of option buflist.format.tls_version)"
 msgstr ""
 
 #, fuzzy, c-format
@@ -5421,6 +5423,14 @@ msgstr ""
 msgid ""
 "format for buffer number, ${number} is the indented number (note: content is "
 "evaluated, see /help buflist)"
+msgstr ""
+"comando executado quando o WeeChat inicia, antes do carregamento dos plugins "
+"(nota: conteúdo é avaliado, veja /help eval)"
+
+#, fuzzy
+msgid ""
+"format for TLS version on an IRC server buffer (note: content is evaluated, "
+"see /help buflist)"
 msgstr ""
 "comando executado quando o WeeChat inicia, antes do carregamento dos plugins "
 "(nota: conteúdo é avaliado, veja /help eval)"
@@ -6420,6 +6430,10 @@ msgid "server"
 msgstr "servidor"
 
 msgid "Lag"
+msgstr ""
+
+#. TRANSLATORS: this is displayed in a bar item and must be as short as possible
+msgid "cleartext"
 msgstr ""
 
 msgid "IRC (Internet Relay Chat) protocol"
@@ -8589,6 +8603,21 @@ msgstr ""
 
 #, fuzzy
 msgid "color for nick modes in bar item \"input_prompt\""
+msgstr ""
+"cor para o sufixo do apelido (string exibida depois do apelido no prefixo)"
+
+#, fuzzy
+msgid "color for higher supported TLS version in bar item \"tls_version\""
+msgstr ""
+"cor para o sufixo do apelido (string exibida depois do apelido no prefixo)"
+
+#, fuzzy
+msgid "color for deprecated TLS versions in bar item \"tls_version\""
+msgstr ""
+"cor para o sufixo do apelido (string exibida depois do apelido no prefixo)"
+
+#, fuzzy
+msgid "color for insecure TLS versions in bar item \"tls_version\""
 msgstr ""
 "cor para o sufixo do apelido (string exibida depois do apelido no prefixo)"
 

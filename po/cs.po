@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-05-12 20:34+0200\n"
+"POT-Creation-Date: 2021-05-16 08:35+0200\n"
 "PO-Revision-Date: 2021-05-15 16:49+0200\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5086,7 +5086,9 @@ msgid ""
 "    - ${hotlist_priority}: \"none\", \"low\", \"message\", \"private\" or "
 "\"highlight\"\n"
 "    - ${format_lag}: the lag for an IRC server buffer, empty if there's no "
-"lag (evaluation of option buflist.format.lag)"
+"lag (evaluation of option buflist.format.lag)\n"
+"    - ${format_tls_version}: indicator of TLS version for a server buffer, "
+"empty for channels (evaluation of option buflist.format.tls_version)"
 msgstr ""
 
 #, fuzzy, c-format
@@ -5247,6 +5249,12 @@ msgstr "příkaz spuštěný při startu WeeChat, před načtením pluginů"
 msgid ""
 "format for buffer number, ${number} is the indented number (note: content is "
 "evaluated, see /help buflist)"
+msgstr "příkaz spuštěný při startu WeeChat, před načtením pluginů"
+
+#, fuzzy
+msgid ""
+"format for TLS version on an IRC server buffer (note: content is evaluated, "
+"see /help buflist)"
 msgstr "příkaz spuštěný při startu WeeChat, před načtením pluginů"
 
 #, fuzzy
@@ -6242,6 +6250,10 @@ msgstr "server"
 
 msgid "Lag"
 msgstr "Lag"
+
+#. TRANSLATORS: this is displayed in a bar item and must be as short as possible
+msgid "cleartext"
+msgstr ""
 
 msgid "IRC (Internet Relay Chat) protocol"
 msgstr "IRC (Internet Relay Chat) protokol"
@@ -8764,6 +8776,18 @@ msgstr "barva ukazatele lagu, pokud bylo od serveru obdrženo pong"
 
 #, fuzzy
 msgid "color for nick modes in bar item \"input_prompt\""
+msgstr "barva přípony přezdívky (přípona je uživatelský řetězec za přezdívkou)"
+
+#, fuzzy
+msgid "color for higher supported TLS version in bar item \"tls_version\""
+msgstr "barva přípony přezdívky (přípona je uživatelský řetězec za přezdívkou)"
+
+#, fuzzy
+msgid "color for deprecated TLS versions in bar item \"tls_version\""
+msgstr "barva přípony přezdívky (přípona je uživatelský řetězec za přezdívkou)"
+
+#, fuzzy
+msgid "color for insecure TLS versions in bar item \"tls_version\""
 msgstr "barva přípony přezdívky (přípona je uživatelský řetězec za přezdívkou)"
 
 #, fuzzy

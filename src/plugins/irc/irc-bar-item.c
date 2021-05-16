@@ -571,6 +571,7 @@ irc_bar_item_tls_version (const void *pointer, void *data,
         {
             snprintf (buf, sizeof (buf), "%s%s",
                       IRC_COLOR_ITEM_TLS_VERSION_INSECURE,
+                      /* TRANSLATORS: this is displayed in a bar item and must be as short as possible */
                       _("cleartext"));
             return strdup (buf);
         }

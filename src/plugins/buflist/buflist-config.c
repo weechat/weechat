@@ -777,7 +777,7 @@ buflist_config_init ()
     buflist_config_format_tls_version = weechat_config_new_option (
         buflist_config_file, ptr_section,
         "tls_version", "string",
-        N_("format for tls_version on an IRC server buffer "
+        N_("format for TLS version on an IRC server buffer "
            "(note: content is evaluated, see /help buflist)"),
         NULL, 0, 0,
         " ${color:default}(${if:${tls_version}==TLS1.3?${color:green}:"
