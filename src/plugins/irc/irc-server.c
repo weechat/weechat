@@ -1139,7 +1139,7 @@ irc_server_set_tls_version (struct t_irc_server *server)
         else
         {
             weechat_buffer_set (server->buffer, "localvar_set_tls_version",
-                                _("cleartext"));
+                                "cleartext");
         }
     }
     else

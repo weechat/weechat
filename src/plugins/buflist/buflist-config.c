@@ -782,7 +782,7 @@ buflist_config_init ()
         NULL, 0, 0,
         " ${color:default}(${if:${tls_version}==TLS1.3?${color:green}:"
         "${if:${tls_version}==TLS1.2?${color:yellow}:${color:red}}}"
-        "${tls_version}${color:default})",
+        "${translate:${tls_version}}${color:default})",
         NULL, 0,
         NULL, NULL, NULL,
         &buflist_config_change_buflist, NULL, NULL,

@@ -391,7 +391,7 @@ xfer_chat_open_buffer (struct t_xfer *xfer)
         weechat_buffer_set (xfer->buffer, "localvar_set_type", "private");
         weechat_buffer_set (xfer->buffer, "localvar_set_nick", xfer->local_nick);
         weechat_buffer_set (xfer->buffer, "localvar_set_channel", xfer->remote_nick);
-        weechat_buffer_set (xfer->buffer, "localvar_set_tls_version", _("cleartext"));
+        weechat_buffer_set (xfer->buffer, "localvar_set_tls_version", "cleartext");
         weechat_buffer_set (xfer->buffer, "highlight_words_add", "$nick");
     }
 
