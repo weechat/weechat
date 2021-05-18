@@ -20,9 +20,8 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 New features::
 
-  * core: add option weechat.network.gnutls_ca_system, rename option weechat.network.gnutls_ca_file to weechat.network.gnutls_ca_user, delete and reload certificates when options are changed (issue #972)
   * core: use XDG directories by default (config, data, cache, runtime) (issue #1285)
-  * core: evaluate option weechat.network.gnutls_ca_file
+  * core: add option weechat.network.gnutls_ca_system, rename option weechat.network.gnutls_ca_file to weechat.network.gnutls_ca_user (now evaluated), delete and reload certificates when options are changed (issue #972)
   * core: evaluate option weechat.plugin.path, change default value to "${weechat_data_dir}/plugins"
   * core: add options to customize commands executed on system signals received (SIGHUP, SIGQUIT, SIGTERM, SIGUSR1, SIGUSR2) (issue #1595)
   * core: quit WeeChat by default when signal SIGHUP is received in normal run, reload configuration in weechat-headless (issue #1595)
