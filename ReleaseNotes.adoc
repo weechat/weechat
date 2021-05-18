@@ -35,15 +35,15 @@ Some options have new default value: `%h` is replaced by `${weechat_xxx_dir}`. +
 If you didn't change the value, it is recommended to set the new default value,
 by doing `/unset <option>` on each option:
 
-[width="100%",cols="1m,3m",options="header"]
+[width="100%",cols="2m,2m,5m",options="header"]
 |===
-| Option                     | New default value
-| fifo.file.path             | ${weechat_runtime_dir}/weechat_fifo_${info:pid}
-| logger.file.path           | ${weechat_data_dir}/logs
-| relay.network.ssl_cert_key | ${weechat_config_dir}/ssl/relay.pem
-| script.scripts.path        | ${weechat_cache_dir}/script
-| weechat.plugin.path        | ${weechat_data_dir}/plugins
-| xfer.file.download_path    | ${weechat_data_dir}/xfer
+| Option                     | Old default value | New default value
+| fifo.file.path             | %h/weechat_fifo   | ${weechat_runtime_dir}/weechat_fifo_${info:pid}
+| logger.file.path           | %h/logs/          | ${weechat_data_dir}/logs
+| relay.network.ssl_cert_key | %h/ssl/relay.pem  | ${weechat_config_dir}/ssl/relay.pem
+| script.scripts.path        | %h/script         | ${weechat_cache_dir}/script
+| weechat.plugin.path        | %h/plugins        | ${weechat_data_dir}/plugins
+| xfer.file.download_path    | %h/xfer           | ${weechat_data_dir}/xfer
 |===
 
 The following scripts are updated to take care of XDG directories, be sure
