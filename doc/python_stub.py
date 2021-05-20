@@ -28,7 +28,7 @@ from typing import TextIO
 
 import re
 
-DOC_DIR = Path(__file__).resolve().parent / 'en'
+DOC_DIR = Path(__file__).resolve().parent / "en"
 
 STUB_HEADER = """\
 #
@@ -57,11 +57,11 @@ def write_stub_constants(stub_file: TextIO) -> None:
     Write constants in the stub file, extracted from the Scripting guide.
     """
     types = {
-        'integer': 'int',
-        'string': 'str',
+        "integer": "int",
+        "string": "str",
     }
     constant_pattern = re.compile(CONSTANT_RE)
-    with open(DOC_DIR / 'weechat_scripting.en.adoc') as scripting_file:
+    with open(DOC_DIR / "weechat_scripting.en.adoc") as scripting_file:
         scripting = scripting_file.read()
         for match in constant_pattern.finditer(scripting):
             stub_file.write(f'{match["constant"]}: {types[match["type"]]}\n')
@@ -73,24 +73,26 @@ def write_stub_functions(stub_file: TextIO) -> None:
     Plugin API reference.
     """
     function_pattern = re.compile(FUNCTION_RE, re.DOTALL)
-    with open(DOC_DIR / 'weechat_plugin_api.en.adoc') as api_doc_file:
+    with open(DOC_DIR / "weechat_plugin_api.en.adoc") as api_doc_file:
         api_doc = api_doc_file.read()
         for match in function_pattern.finditer(api_doc):
             url = f'https://weechat.org/doc/api#_{match["function"]}'
-            stub_file.write(f"""\n
+            stub_file.write(
+                f"""\n
 def {match["function"]}{match["args"]}{match["return"]}
     \"""`{match["function"]} in WeeChat plugin API reference <{url}>`_\"""
     ...
-""")
+"""
+            )
 
 
 def stub_api() -> None:
     """Write Python stub file."""
-    with open('weechat.pyi', 'w') as stub_file:
+    with open("weechat.pyi", "w") as stub_file:
         stub_file.write(STUB_HEADER)
         write_stub_constants(stub_file)
         write_stub_functions(stub_file)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     stub_api()
