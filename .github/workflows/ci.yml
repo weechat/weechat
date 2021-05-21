@@ -15,6 +15,7 @@ jobs:
       matrix:
         config:
           - { name: "cmake_gcc", cc: "gcc", cxx: "g++", tool: "cmake", args: "" }
+          - { name: "cmake_gcc_no_nls", cc: "gcc", cxx: "g++", tool: "cmake", args: "-DENABLE_NLS=OFF" }
           - { name: "cmake_gcc_py2", cc: "gcc", cxx: "g++", tool: "cmake", args: "-DENABLE_PYTHON2=ON" }
           - { name: "cmake_gcc_coverage", cc: "gcc", cxx: "g++", tool: "cmake", args: "-DENABLE_CODE_COVERAGE=ON" }
           - { name: "cmake_clang", cc: "clang", cxx: "clang++", tool: "cmake", args: "" }
