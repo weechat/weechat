@@ -48,7 +48,7 @@
 #endif /* defined(ENABLE_NLS) && !defined(_) */
 #if !defined(_)
     #define _(string) (string)
-    #define NG_(single,plural,number) (plural)
+    #define NG_(single,plural,number) ((number == 1) ? single : plural)
     #define N_(string) (string)
     #define gettext(string) (string)
 #endif /* !defined(_) */
