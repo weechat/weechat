@@ -50,6 +50,7 @@
     #define _(string) (string)
     #define NG_(single,plural,number) (plural)
     #define N_(string) (string)
+    #define gettext(string) (string)
 #endif /* !defined(_) */
 
 
