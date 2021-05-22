@@ -138,6 +138,45 @@ _weechat.network.gnutls_ca_user_.
 When one of these options are changed, all certificates are purged and reloaded
 from files.
 
+[[v3.2_split_commands_before_eval]]
+=== Split of commands before evaluation
+
+The split of commands is now performed before the evaluation of string, in the
+following cases:
+
+* IRC server option _irc.server_default.command_ or _irc.server.xxx.command_
+* startup option with command line parameter `-r` / `--run-command`
+* options _weechat.startup.command_before_plugins_ and _weechat.startup.command_after_plugins_.
+
+If ever you used here multiple commands that are found by evaluation, then
+you must use multiple commands directly.
+
+For example if you did this:
+
+----
+/secure set commands "/command1 secret1;/command2 secret2"
+/set irc.server.freenode.command "${sec.data.commands}"
+----
+
+This will now execute a single command: `/command1` with two parameters:
+`secret1;/command2` and `secret2`, which is not what you expect.
+
+So you must now do this instead:
+
+----
+/secure set command1 "/command1 secret1"
+/secure set command2 "/command2 secret2"
+/set irc.server.freenode.command "${sec.data.command1};${sec.data.command2}"
+----
+
+You could also do this, but be careful, there are two evaluations of strings
+(the secured data itself is evaluated as well):
+
+----
+/secure set commands "/command1 secret1;/command2 secret2"
+/set irc.server.freenode.command "/eval -s ${sec.data.commands}"
+----
+
 [[v3.1]]
 == Version 3.1 (2021-03-07)
 
