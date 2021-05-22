@@ -8519,28 +8519,26 @@ command_init ()
 void
 command_exec_list (const char *command_list)
 {
-    char *command_list2, **commands, **ptr_cmd;
-    struct t_gui_buffer *weechat_buffer;
+    char **commands, **ptr_command, *command_eval;
 
     if (!command_list || !command_list[0])
         return;
 
-    command_list2 = eval_expression (command_list, NULL, NULL, NULL);
-    if (command_list2 && command_list2[0])
+    commands = string_split_command (command_list, ';');
+    if (commands)
     {
-        commands = string_split_command (command_list2, ';');
-        if (commands)
+        for (ptr_command = commands; *ptr_command; ptr_command++)
         {
-            weechat_buffer = gui_buffer_search_main ();
-            for (ptr_cmd = commands; *ptr_cmd; ptr_cmd++)
+            command_eval = eval_expression (*ptr_command, NULL, NULL, NULL);
+            if (command_eval)
             {
-                (void) input_data (weechat_buffer, *ptr_cmd, NULL);
+                (void) input_data (gui_buffer_search_main (),
+                                   command_eval, NULL);
+                free (command_eval);
             }
-            string_free_split_command (commands);
         }
+        string_free_split_command (commands);
     }
-    if (command_list2)
-        free (command_list2);
 }
 
 /*

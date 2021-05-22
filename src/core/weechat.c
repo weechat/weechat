@@ -183,7 +183,7 @@ weechat_display_usage ()
           "                           (see /help weechat.plugin.autoload)\n"
           "  -r, --run-command <cmd>  run command(s) after startup;\n"
           "                           many commands can be separated by "
-          "semicolons,\n"
+          "semicolons and are evaluated,\n"
           "                           this option can be given multiple "
           "times\n"
           "  -s, --no-script          don't load any script at startup\n"
