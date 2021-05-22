@@ -2977,8 +2977,9 @@ IRC_PROTOCOL_CALLBACK(wallops)
 
 IRC_PROTOCOL_CALLBACK(001)
 {
-    char *server_command, **commands, **ptr_command, *command2, *slash_command;
+    char **commands, **ptr_command, *command2, *command3, *slash_command;
     char *away_msg, *usermode;
+    const char *ptr_server_command;
     int length;
 
     IRC_PROTOCOL_MIN_ARGS(3);
@@ -3035,35 +3036,41 @@ IRC_PROTOCOL_CALLBACK(001)
         free (usermode);
 
     /* execute command when connected */
-    server_command = irc_server_eval_expression (
-        server,
-        IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_COMMAND));
-    if (server_command && server_command[0])
+    ptr_server_command = IRC_SERVER_OPTION_STRING(server,
+                                                  IRC_SERVER_OPTION_COMMAND);
+    if (ptr_server_command && ptr_server_command[0])
     {
         /* split command on ';' which can be escaped with '\;' */
-        commands = weechat_string_split_command (server_command, ';');
+        commands = weechat_string_split_command (ptr_server_command, ';');
         if (commands)
         {
             for (ptr_command = commands; *ptr_command; ptr_command++)
             {
-                command2 = irc_message_replace_vars (server, NULL,
-                                                     *ptr_command);
+                command2 = irc_server_eval_expression (server, *ptr_command);
                 if (command2)
                 {
-                    if (weechat_string_is_command_char (command2))
+                    command3 = irc_message_replace_vars (server, NULL,
+                                                         command2);
+                    if (command3)
                     {
-                        weechat_command (server->buffer, command2);
-                    }
-                    else
-                    {
-                        length = 1 + strlen(command2) + 1;
-                        slash_command = malloc (length);
-                        if (slash_command)
+                        if (weechat_string_is_command_char (command3))
                         {
-                            snprintf (slash_command, length, "/%s", command2);
-                            weechat_command (server->buffer, slash_command);
-                            free (slash_command);
+                            weechat_command (server->buffer, command3);
                         }
+                        else
+                        {
+                            length = 1 + strlen(command3) + 1;
+                            slash_command = malloc (length);
+                            if (slash_command)
+                            {
+                                snprintf (slash_command, length,
+                                          "/%s", command3);
+                                weechat_command (server->buffer,
+                                                 slash_command);
+                                free (slash_command);
+                            }
+                        }
+                        free (command3);
                     }
                     free (command2);
                 }
@@ -3080,8 +3087,6 @@ IRC_PROTOCOL_CALLBACK(001)
     {
         irc_server_autojoin_channels (server);
     }
-    if (server_command)
-        free (server_command);
 
     return WEECHAT_RC_OK;
 }

@@ -2150,7 +2150,7 @@ irc_config_server_new_option (struct t_config_file *config_file,
                    "auto-join of channels (many commands can be separated by "
                    "\";\", use \"\\;\" for a semicolon, special variables "
                    "$nick, $channel and $server are replaced by their value) "
-                   "(note: content is evaluated, see /help eval; server "
+                   "(note: commands are evaluated, see /help eval; server "
                    "options are evaluated with ${irc_server.xxx} and "
                    "${server} is replaced by the server name)"),
                 NULL, 0, 0,
