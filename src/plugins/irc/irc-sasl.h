@@ -28,6 +28,7 @@ enum t_irc_sasl_mechanism
 {
     IRC_SASL_MECHANISM_PLAIN = 0,
     IRC_SASL_MECHANISM_ECDSA_NIST256P_CHALLENGE,
+    IRC_SASL_MECHANISM_ECDSA_NIST256P_CHALLENGE_DELEGATED,
     IRC_SASL_MECHANISM_EXTERNAL,
     IRC_SASL_MECHANISM_DH_BLOWFISH,
     IRC_SASL_MECHANISM_DH_AES,
@@ -43,6 +44,10 @@ extern char *irc_sasl_mechanism_ecdsa_nist256p_challenge (struct t_irc_server *s
                                                           const char *data_base64,
                                                           const char *sasl_username,
                                                           const char *sasl_key);
+extern char *irc_sasl_mechanism_ecdsa_nist256p_challenge_delegated (struct t_irc_server *server,
+                                                                    const char *data_base64,
+                                                                    const char *sasl_username,
+                                                                    const char *sasl_key);
 extern char *irc_sasl_mechanism_dh_blowfish (const char *data_base64,
                                              const char *sasl_username,
                                              const char *sasl_password);
