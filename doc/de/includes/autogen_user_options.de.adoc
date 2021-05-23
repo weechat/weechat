@@ -1315,43 +1315,43 @@
 ** Standardwert: `+on+`
 
 * [[option_weechat.signal.sighup]] *weechat.signal.sighup*
-** Beschreibung: pass:none[command to execute when the signal is received, multiple commands can be separated by semicolons (note: commands are evaluated, see /help eval)]
+** Beschreibung: pass:none[Befehl welcher ausgeführt werden soll, wenn das Signal empfangen wird. Mehrere Befehle können durch Semikolons getrennt werden (Hinweis: Inhalt wird ausgewertet, siehe / help eval)]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+"${if:${info:weechat_headless}?/reload:/quit -yes}"+`
 
 * [[option_weechat.signal.sigquit]] *weechat.signal.sigquit*
-** Beschreibung: pass:none[command to execute when the signal is received, multiple commands can be separated by semicolons (note: commands are evaluated, see /help eval)]
+** Beschreibung: pass:none[Befehl welcher ausgeführt werden soll, wenn das Signal empfangen wird. Mehrere Befehle können durch Semikolons getrennt werden (Hinweis: Inhalt wird ausgewertet, siehe / help eval)]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+"/quit -yes"+`
 
 * [[option_weechat.signal.sigterm]] *weechat.signal.sigterm*
-** Beschreibung: pass:none[command to execute when the signal is received, multiple commands can be separated by semicolons (note: commands are evaluated, see /help eval)]
+** Beschreibung: pass:none[Befehl welcher ausgeführt werden soll, wenn das Signal empfangen wird. Mehrere Befehle können durch Semikolons getrennt werden (Hinweis: Inhalt wird ausgewertet, siehe / help eval)]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+"/quit -yes"+`
 
 * [[option_weechat.signal.sigusr1]] *weechat.signal.sigusr1*
-** Beschreibung: pass:none[command to execute when the signal is received, multiple commands can be separated by semicolons (note: commands are evaluated, see /help eval)]
+** Beschreibung: pass:none[Befehl welcher ausgeführt werden soll, wenn das Signal empfangen wird. Mehrere Befehle können durch Semikolons getrennt werden (Hinweis: Inhalt wird ausgewertet, siehe / help eval)]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+""+`
 
 * [[option_weechat.signal.sigusr2]] *weechat.signal.sigusr2*
-** Beschreibung: pass:none[command to execute when the signal is received, multiple commands can be separated by semicolons (note: commands are evaluated, see /help eval)]
+** Beschreibung: pass:none[Befehl welcher ausgeführt werden soll, wenn das Signal empfangen wird. Mehrere Befehle können durch Semikolons getrennt werden (Hinweis: Inhalt wird ausgewertet, siehe / help eval)]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+""+`
 
 * [[option_weechat.startup.command_after_plugins]] *weechat.startup.command_after_plugins*
-** Beschreibung: pass:none[command executed when WeeChat starts, after loading plugins; multiple commands can be separated by semicolons (note: commands are evaluated, see /help eval)]
+** Beschreibung: pass:none[Befehl wird ausgeführt, wenn WeeChat gestartet wird, nachdem die Erweiterungen geladen wurden. Mehrere Befehle können durch Semikolons getrennt werden (Hinweis: Inhalt wird ausgewertet, siehe / help eval)]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+""+`
 
 * [[option_weechat.startup.command_before_plugins]] *weechat.startup.command_before_plugins*
-** Beschreibung: pass:none[command executed when WeeChat starts, before loading plugins; multiple commands can be separated by semicolons (note: commands are evaluated, see /help eval)]
+** Beschreibung: pass:none[Befehl wird ausgeführt, wenn WeeChat gestartet wird, bevor Erweiterungen geladen werden. Mehrere Befehle können durch Semikolons getrennt werden (Hinweis: Inhalt wird ausgewertet, siehe / help eval)]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+""+`
@@ -2677,7 +2677,7 @@
 ** Standardwert: `+message+`
 
 * [[option_irc.server_default.command]] *irc.server_default.command*
-** Beschreibung: pass:none[command(s) to run after connection to server and before auto-join of channels (many commands can be separated by ";", use "\;" for a semicolon, special variables $nick, $channel and $server are replaced by their value) (note: commands are evaluated, see /help eval; server options are evaluated with ${irc_server.xxx} and ${server} is replaced by the server name)]
+** Beschreibung: pass:none[Befehl(e) welche nach einem Verbindungsaufbau zum Server und vor dem automatischem Betreten von Channels ausgeführt werden sollen (mehrere Befehle können durch ";" getrennt werden, will man ein Semikolon nutzen, schreibt man "\;", die Platzhalter $nick,$channel und $server werden durch den entsprechenden Wert ersetzt) (Hinweis: Inhalt wird evaluiert, siehe /help eval; Serveroptionen sind mittels ${irc_server.xxx} evaluiert und ${server} wird durch den eigentlichen Servernamen ersetzt)]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+""+`
