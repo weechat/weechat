@@ -12,7 +12,7 @@
 
 Tłumaczenie:
 
-* Krzysztof Korościk <soltys1@gmail.com>, 2009-2016
+* Krzysztof Korościk <soltys1@gmail.com>, 2009-2021
 
 
 Ten dokument opisuje klienta rozmów WeeChat, który jest częścią WeeChat.
@@ -79,8 +79,7 @@ link:weechat_plugin_api.en.html#_hook_process[Opisu API wtyczek WeeChat] (Angiel
 ===== Moduł
 
 WeeChat definiuje moduł `weechat`, który należy zaimportowac poprzez `import weechat`. +
-// TRANSLATION MISSING
-A Python stub for WeeChat API is available in the repository:
+Szkielet API WeeChat dla języka Python dostępny jest w repozytorium:
 https://raw.githubusercontent.com/weechat/weechat/master/src/plugins/python/weechat.pyi[weechat.pyi].
 
 [[python_functions]]
@@ -802,66 +801,59 @@ Lista stałych w API skryptów:
 |===
 | Kategoria | Stałe
 
-// TRANSLATION MISSING
 | zwracane kody |
-  `WEECHAT_RC_OK` (integer) +
-  `WEECHAT_RC_OK_EAT` (integer) +
-  `WEECHAT_RC_ERROR` (integer)
+  `WEECHAT_RC_OK` (liczba całkowita) +
+  `WEECHAT_RC_OK_EAT` (liczba całkowita) +
+  `WEECHAT_RC_ERROR` (liczba całkowita)
 
-// TRANSLATION MISSING
 | pliki konfiguracyjne |
-  `WEECHAT_CONFIG_READ_OK` (integer) +
-  `WEECHAT_CONFIG_READ_MEMORY_ERROR` (integer) +
-  `WEECHAT_CONFIG_READ_FILE_NOT_FOUND` (integer) +
-  `WEECHAT_CONFIG_WRITE_OK` (integer) +
-  `WEECHAT_CONFIG_WRITE_ERROR` (integer) +
-  `WEECHAT_CONFIG_WRITE_MEMORY_ERROR` (integer) +
-  `WEECHAT_CONFIG_OPTION_SET_OK_CHANGED` (integer) +
-  `WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE` (integer) +
-  `WEECHAT_CONFIG_OPTION_SET_ERROR` (integer) +
-  `WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND` (integer) +
-  `WEECHAT_CONFIG_OPTION_UNSET_OK_NO_RESET` (integer) +
-  `WEECHAT_CONFIG_OPTION_UNSET_OK_RESET` (integer) +
-  `WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED` (integer) +
-  `WEECHAT_CONFIG_OPTION_UNSET_ERROR` (integer)
+  `WEECHAT_CONFIG_READ_OK` (liczba całkowita) +
+  `WEECHAT_CONFIG_READ_MEMORY_ERROR` (liczba całkowita) +
+  `WEECHAT_CONFIG_READ_FILE_NOT_FOUND` (liczba całkowita) +
+  `WEECHAT_CONFIG_WRITE_OK` (liczba całkowita) +
+  `WEECHAT_CONFIG_WRITE_ERROR` (liczba całkowita) +
+  `WEECHAT_CONFIG_WRITE_MEMORY_ERROR` (liczba całkowita) +
+  `WEECHAT_CONFIG_OPTION_SET_OK_CHANGED` (liczba całkowita) +
+  `WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE` (liczba całkowita) +
+  `WEECHAT_CONFIG_OPTION_SET_ERROR` (liczba całkowita) +
+  `WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND` (liczba całkowita) +
+  `WEECHAT_CONFIG_OPTION_UNSET_OK_NO_RESET` (liczba całkowita) +
+  `WEECHAT_CONFIG_OPTION_UNSET_OK_RESET` (liczba całkowita) +
+  `WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED` (liczba całkowita) +
+  `WEECHAT_CONFIG_OPTION_UNSET_ERROR` (liczba całkowita)
 
-// TRANSLATION MISSING
 | posortowane listy |
-  `WEECHAT_LIST_POS_SORT` (string) +
-  `WEECHAT_LIST_POS_BEGINNING` (string) +
-  `WEECHAT_LIST_POS_END` (string)
+  `WEECHAT_LIST_POS_SORT` (ciąg) +
+  `WEECHAT_LIST_POS_BEGINNING` (ciąg) +
+  `WEECHAT_LIST_POS_END` (ciąg)
 
-// TRANSLATION MISSING
 | hotlisty |
-  `WEECHAT_HOTLIST_LOW` (string) +
-  `WEECHAT_HOTLIST_MESSAGE` (string) +
-  `WEECHAT_HOTLIST_PRIVATE` (string) +
-  `WEECHAT_HOTLIST_HIGHLIGHT` (string)
+  `WEECHAT_HOTLIST_LOW` (ciąg) +
+  `WEECHAT_HOTLIST_MESSAGE` (ciąg) +
+  `WEECHAT_HOTLIST_PRIVATE` (ciąg) +
+  `WEECHAT_HOTLIST_HIGHLIGHT` (ciąg)
 
-// TRANSLATION MISSING
 | hook process |
-  `WEECHAT_HOOK_PROCESS_RUNNING` (integer) +
-  `WEECHAT_HOOK_PROCESS_ERROR` (integer)
+  `WEECHAT_HOOK_PROCESS_RUNNING` (liczba całkowita) +
+  `WEECHAT_HOOK_PROCESS_ERROR` (liczba całkowita)
 
-// TRANSLATION MISSING
 | hook connect |
-  `WEECHAT_HOOK_CONNECT_OK` (integer) +
-  `WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND` (integer) +
-  `WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND` (integer) +
-  `WEECHAT_HOOK_CONNECT_CONNECTION_REFUSED` (integer) +
-  `WEECHAT_HOOK_CONNECT_PROXY_ERROR` (integer) +
-  `WEECHAT_HOOK_CONNECT_LOCAL_HOSTNAME_ERROR` (integer) +
-  `WEECHAT_HOOK_CONNECT_GNUTLS_INIT_ERROR` (integer) +
-  `WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR` (integer) +
-  `WEECHAT_HOOK_CONNECT_MEMORY_ERROR` (integer) +
-  `WEECHAT_HOOK_CONNECT_TIMEOUT` (integer) +
-  `WEECHAT_HOOK_CONNECT_SOCKET_ERROR` (integer)
+  `WEECHAT_HOOK_CONNECT_OK` (liczba całkowita) +
+  `WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND` (liczba całkowita) +
+  `WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND` (liczba całkowita) +
+  `WEECHAT_HOOK_CONNECT_CONNECTION_REFUSED` (liczba całkowita) +
+  `WEECHAT_HOOK_CONNECT_PROXY_ERROR` (liczba całkowita) +
+  `WEECHAT_HOOK_CONNECT_LOCAL_HOSTNAME_ERROR` (liczba całkowita) +
+  `WEECHAT_HOOK_CONNECT_GNUTLS_INIT_ERROR` (liczba całkowita) +
+  `WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR` (liczba całkowita) +
+  `WEECHAT_HOOK_CONNECT_MEMORY_ERROR` (liczba całkowita) +
+  `WEECHAT_HOOK_CONNECT_TIMEOUT` (liczba całkowita) +
+  `WEECHAT_HOOK_CONNECT_SOCKET_ERROR` (liczba całkowita)
 
-// TRANSLATION MISSING
 | hook signal |
-  `WEECHAT_HOOK_SIGNAL_STRING` (string) +
-  `WEECHAT_HOOK_SIGNAL_INT` (string) +
-  `WEECHAT_HOOK_SIGNAL_POINTER` (string)
+  `WEECHAT_HOOK_SIGNAL_STRING` (ciąg) +
+  `WEECHAT_HOOK_SIGNAL_INT` (ciąg) +
+  `WEECHAT_HOOK_SIGNAL_POINTER` (ciąg)
 |===
 
 [[common_tasks]]
@@ -1286,8 +1278,7 @@ Wynik jest tabela hashy z następującymi kluczami
 
 [width="100%",cols="3,^2,10,7",options="header"]
 |===
-// TRANSLATION MISSING
-| Klucz | Since WeeChat ^(1)^ | Opis | Przykład
+| Klucz | Od wersji ^(1)^ | Opis | Przykład
 
 | tags | 0.4.0 |
   Tagi w wiadomości (mogą byc puste). |
@@ -1342,9 +1333,8 @@ Wynik jest tabela hashy z następującymi kluczami
   `+65+`
 |===
 
-// TRANSLATION MISSING
 [NOTE]
-^(1)^ The key has been introduced in this WeeChat version.
+^(1)^ Klucz został wprowadzony w tej wersji WeeChat.
 
 [source,python]
 ----
@@ -1404,11 +1394,10 @@ weechat.prnt("", "Version %s" % weechat.info_get("version", ""))
 [[infos_other]]
 ==== Inne informacje
 
-// TRANSLATION MISSING
 [source,python]
 ----
-# WeeChat config directory, for example: "/home/user/.config/weechat"
-weechat.prnt("", "WeeChat config dir: %s" % weechat.info_get("weechat_config_dir", ""))
+# katalog z konfiguracją WeeChat, na przykład: "/home/user/.config/weechat"
+weechat.prnt("", "Katalog z konfiguracją WeeChat: %s" % weechat.info_get("weechat_config_dir", ""))
 
 # nieaktywność klawiatury
 weechat.prnt("", "Nieaktywny od %s sekund" % weechat.info_get("inactivity", ""))

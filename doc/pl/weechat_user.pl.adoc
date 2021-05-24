@@ -12,7 +12,7 @@
 
 Tłumaczenie:
 
-* Krzysztof Korościk <soltys1@gmail.com>, 2009-2016
+* Krzysztof Korościk <soltys1@gmail.com>, 2009-2021
 
 
 Ten dokument opisuje klienta rozmów WeeChat, będącego częścią WeeChat.
@@ -197,13 +197,12 @@ Lista popularnych opcji:
 | CMAKE_INSTALL_PREFIX | katalog | /usr/local |
   Katalog, do którego zostanie zainstalowany WeeChat.
 
-// TRANSLATION MISSING
-| WEECHAT_HOME | katalog | (empty string) |
+| WEECHAT_HOME | katalog | (pusty ciąg) |
   Domyślny katalog domowy dla WeeChat. +
-  With an empty value (recommended), XDG directories are used by default.
-  If non empty, a single directory for all files is used.
-  The value can also  be 4 directories separated by colons, in this order:
-  config, data, cache, runtime.
+  Bez ustawionej wartości (zalecane) domyślnie zostaną użyte wartości XDG.
+  Jeśli wartość nie jest pusta zostanie użyty jeden katalog dla wszystkich plików.
+  Wartością mogą być również 4 katalogi oddzielone dwukropkami, w takiej
+  kolejności: config, data, cache, runtime.
 
 | ENABLE_ALIAS | `ON`, `OFF` | ON |
   Kompilacja <<alias_plugin,wtyczki alias>>.
@@ -461,11 +460,10 @@ Kiedy WeeChat ulegnie awarii, Twój system stworzy plik _core_ lub _core.12345_
 Plik ten zostanie utworzony w katalogu, z którego uruchomiono WeeChat (*nie*
 jest to katalog, gdzie zainstalowano WeeChat!).
 
-// TRANSLATION MISSING
 [NOTE]
-On some systems like Archlinux, core dumps could be in another directory like
-_/var/lib/systemd/coredump_ and you must use the command `coredumpctl` to read it. +
-For more information, see this wiki page: https://wiki.archlinux.org/index.php/Core_dump
+Na niektórych systemach jak Archlinux pliki te mogą znajdować się w innym katalogu
+jak _/var/lib/systemd/coredump_ i należy użyć komendy `coredumpctl` do ich odczytania. +
+Więcej informacji można znaleźć na tej stronie wiki: https://wiki.archlinux.org/index.php/Core_dump
 
 Na przykład jeśli _weechat_ jest zainstalowany w _/usr/bin/_ i plik _core_
 znajduje się w _/home/user/_, uruchom gdb za pomocą tej komendy:
@@ -527,79 +525,77 @@ Następnie jak w przypadku awarii, użyj polecenia `bt full`:
 (gdb) bt full
 ----
 
-// TRANSLATION MISSING
 [[upgrade]]
-=== Upgrade
+=== Aktualizacja
 
-If a new stable version of WeeChat is released, this is time for you to
-switch to this version.
+Jeśli zostanie wydana nowa stabilna wersja WeeChat należy zaktualizować
+się do tej wersji.
 
-First of all, you must install the new version of WeeChat, either with your
-package manager or by compiling yourself, so that the `weechat` binary and all
-required files are in the same paths. +
-This can be done while WeeChat is running.
+Na samym początku musisz zainstalować nową wersje WeeChat albo za pomocą
+managera pakietów albo kompilując ją samemu, w taki sposób żeby plik
+wykonywalny `weechat` i wszystke wymagane pliki znajdowały się w tych samych
+ścieżkach. +
+Można to zrobić podczas działania WeeChat.
 
-// TRANSLATION MISSING
 [[upgrade_command]]
-==== Upgrade command
+==== Komenda aktualizacji
 
-WeeChat can restart the new binary, in place, using the
-<<command_weechat_upgrade,/upgrade>> command: the buffer contents and non-SSL
-connections are preserved. +
-The SSL connections are lost during upgrade and you are automatically
-reconnected after the upgrade (reload of SSL sessions is currently not possible
-with GnuTLS).
+WeeChat może zostać ponownie uruchomiony z nowego pliku binarnego bez potrzeby
+jego wyłączania za pomocą komendy <<command_weechat_upgrade,/upgrade>>:
+zawartości buforów i połączenia nie SSL zostają zachowane. +
+Połączenia SSL są przerywane podczas aktualizacji i są automatycznie
+wznawiane po aktualizacji (przeładowanie sesji SSL nie jest obecnie wspierane
+przez GnuTLS).
 
-The command can also be used if you have to restart the machine, for example
-to upgrade the kernel or to move your WeeChat to another machine:
+Komenda ta może zostać użyta również w momencie restartu maszyny, na przykład
+w celu aktualizacji kernela albo przeniesienia WeeChat na nową maszynę:
 
 ----
 /upgrade -quit
 ----
 
-This saves the current state in `*.upgrade` files. You can then either reboot
-or move the whole WeeChat directories (config, data, cache) to another machine,
-and restart WeeChat later with this command:
+Zapisuje to obecny stan w plikach `*.upgrade`. Możesz następnie wykonać restart
+lub przenieść cały katalog WeeChat (konfiguracja, dane, cache) na inną maszynę,
+następnie uruchomić WeeChat za pomocą polecenia:
 
 ----
 $ weechat --upgrade
 ----
 
-// TRANSLATION MISSING
 [[restart_after_upgrade]]
-==== Restart after upgrade
+==== Restart po aktualizacji
 
 [[restart_release_notes]]
-===== Release notes
+===== Informacje o wydaniu
 
-After an upgrade, it is *strongly recommended* to read the
-https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
-which contain important information about breaking changes and some
-manual actions that could be required.
+Po aktualizacji *zaleca się* przeczytanie
+https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[informacji o wydaniu],
+które zawierają ważne informacje o przełomowych zmianach i do zrobienia jakie mogą
+być wymagane.
 
-You must read the release notes of all versions between your old (excluded) and
-your new version (included). +
-For example if you switch from version 3.0 to 3.2, you must read release notes
-of versions 3.1 and 3.2.
+Powinieneś przeczytać informacje o zmianach dla wyszystkich wersji pomiędzy obecną
+a tą, do której aktualizujesz. +
+Na przykład aktualizując z wersji 3.0 do 3.2, musisz przeczytać informacje dla wersj
+3.1 i 3.2.
 
 [[restart_configuration_upgrade]]
-===== Configuration upgrade
+===== Aktualizacja konfiguracji
 
-WeeChat has an automatic upgrade of configuration files (`*.conf`):
+WeeChat potrafi automatycznie aktualizować pliki konfiguracyjne (`*.conf`):
 
-* new options are silently added with default value
-* obsolete options are automatically discarded and WeeChat displays a warning
-  with the value read from file.
+* nowe opcje są dodawane z domyślnymi wartościami
+* niepotrzebne już opcje są automatycznie kasowane i WeeChat wyświetla ostrzeżenie
+  z wartościami odczytanymi z pliku.
 
-Example of warning when an option has been removed:
+Przykład ostrzeżenia o usuwanej opcji:
 
 ----
 =!= Ostrzeżenie: /home/user/.config/weechat/sec.conf, linia 15: nieznana opcja dla sekcji "crypt": passphrase_file = ""
 ----
 
-That means the option `sec.crypt.passphrase_file` has been removed, and you
-had value set to empty string, which was the default value in the previous version
-(in this case no manual action is required).
+Oznaza to, że opcja `sec.crypt.passphrase_file` została usunięta i jej wartość była
+ustawiona na pusty ciąg, który był domyślną wartością w poprzednej wersji
+(w tym przypadku żadna dodatkowa akcja nie jest wymagana).
 
 [[usage]]
 == Używanie
@@ -638,8 +634,7 @@ Niektóre zmienne śwodowiskowe są używane przez WeeChat o ile zostały zdefin
 [width="100%",cols="1m,6",options="header"]
 |===
 | Nazwa                | Opis
-// TRANSLATION MISSING
-| WEECHAT_HOME         | Katalog domowy WeeChat (z plikami konfiguracyjnymi, logami, skryptami, ...). Same behavior as <<compile_with_cmake,CMake option>> `WEECHAT_HOME`.
+| WEECHAT_HOME         | Katalog domowy WeeChat (z plikami konfiguracyjnymi, logami, skryptami, ...). Działa tak samo jak <<compile_with_cmake,CMake option>> `WEECHAT_HOME`.
 | WEECHAT_PASSPHRASE   | Hasło używane do odszyfrowania zabezpieczonych danych.
 | WEECHAT_EXTRA_LIBDIR | Dodatkowy katalog do ładowania wtyczek (z katalogu "plugins" znajdującego się pod tą ścieżką).
 |===
@@ -647,27 +642,27 @@ Niektóre zmienne śwodowiskowe są używane przez WeeChat o ile zostały zdefin
 [[files_and_directories]]
 === Pliki i foldery
 
-// TRANSLATION MISSING
 [[xdg_directories]]
-==== XDG directories
+==== Katalogi XDG
 
-WeeChat uses XDG directories by default
-(according to the https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html[XDG Base Directory Specification]). +
-A single home directory for all files can be forced by CMake option `WEECHAT_HOME`,
-the environment variable `WEECHAT_HOME` or the command-line option `-d` / `--dir`.
+WeeChat domyślnie używa katalogów XDG (zgodnie ze specyfikacją:
+https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html[XDG Base Directory Specification]). +
+Pojedynczy katalog może zostać wymuszony przez opcję CMake `WEECHAT_HOME`,
+zmienną środowiskową `WEECHAT_HOME` lub parametr z linii polecań `-d` / `--dir`.
 
-When a single WeeChat home directory is not forced, XDG directories are used
-and set like this:
+Kiedy jeden katalog domowy dla WeeChat nie zostanie wymuszony, używane zostają katalogi
+XDG z takim podziałem:
 
 [width="100%",cols="1,2m,5",options="header"]
 |===
-| Directory | Default value            | Fallback value
-| config    | $XDG_CONFIG_HOME/weechat | `$HOME/.config/weechat` if `$XDG_CONFIG_HOME` is not defined or empty.
-| data      | $XDG_DATA_HOME/weechat   | `$HOME/.local/share/weechat` if `$XDG_DATA_HOME` is not defined or empty.
-| cache     | $XDG_CACHE_HOME/weechat  | `$HOME/.cache/weechat` if `$XDG_CACHE_HOME` is not defined or empty.
-| runtime   | $XDG_RUNTIME_DIR/weechat | Same as _cache_ directory if `$XDG_RUNTIME_DIR` is not defined or empty.
+| Katalog   | Domyślna wartość         | Wartość zapasowa
+| config    | $XDG_CONFIG_HOME/weechat | `$HOME/.config/weechat` jeśli zmienna `$XDG_CONFIG_HOME` nie jest zdefiniowana albo jest pusta.
+| data      | $XDG_DATA_HOME/weechat   | `$HOME/.local/share/weechat` jeśli zmienna `$XDG_DATA_HOME` nie jest zdefiniowana albo jest pusta.
+| cache     | $XDG_CACHE_HOME/weechat  | `$HOME/.cache/weechat` jeśli zmienna `$XDG_CACHE_HOME` nie jest zdefiniowana albo jest pusta.
+| runtime   | $XDG_RUNTIME_DIR/weechat | Taki sam jak katalog _cache_ jeśli zmienna `$XDG_RUNTIME_DIR` nie jest zdefiniowana albo jest pusta.
 |===
 
+Pliki konfiguracyjne z domyślnymi wartościami są tworzone przy pierwszym uruchomieniu WeeChat.
 The configuration files are created with default values the first time you run WeeChat.
 
 [[weechat_directories]]
@@ -677,12 +672,9 @@ Katalogi używane przez WeeChat to:
 
 [width="100%",cols="1m,3",options="header"]
 |===
-// TRANSLATION MISSING
-| Path ^(1)^              | Opis
-// TRANSLATION MISSING
-| ~/.config/weechat/      | WeeChat configuration files: `*.conf`, certificates, etc.
-// TRANSLATION MISSING
-| ~/.local/share/weechat/ | WeeChat data files: logs, scripts, scripts data, xfer files, etc.
+| Ścieżka ^(1)^           | Opis
+| ~/.config/weechat/      | Pliki konfiguracyjne WeeChat: `*.conf`, certifikaty, itp.
+| ~/.local/share/weechat/ | Pliki z danymi WeeChat: logi, skrypty, dane skryptów, pliki xfer, itp.
 |    logs/                | Pliki z logami (jeden na bufor).
 |    python/              | Skrypty pythonowe.
 |       autoload/         | Skrypty pythonowe automatycznie ładowane przy starcie ^(2)^.
@@ -700,15 +692,12 @@ Katalogi używane przez WeeChat to:
 |       autoload/         | Skrypty JavaScript automatycznie ładowane przy starcie ^(2)^.
 |    php/                 | Skrypty PHP.
 |       autoload/         | Skrypty PHP automatycznie ładowane przy starcie ^(2)^.
-// TRANSLATION MISSING
-| ~/.cache/weechat/       | WeeChat cache files: scripts cache.
-// TRANSLATION MISSING
-| /run/user/1000/weechat/ | WeeChat runtime files: FIFO pipe, Relay UNIX sockets.
+| ~/.cache/weechat/       | Pliki pamięci podręcznej WeeChat: pliki pamięci podręcznej skryptów.
+| /run/user/1000/weechat/ | Pliki uruchomieniowe WeeChat: kolejki FIFO, Gniazda UNIX pośrednika.
 |===
 
-// TRANSLATION MISSING
 [NOTE]
-^(1)^ XDG directories may be different according to your environment variables `XDG_*`. +
+^(1)^ Katalogi XDG mogą się różnić w zależności od wartości zmiennych `XDG_*`. +
 ^(2)^ Ten folder zawiera przewazine linki symboliczne do plików w folderze nadrzędnym.
 
 [[weechat_files]]
@@ -880,8 +869,7 @@ Inne dostępne elementy (nie używane domyślnie w paskach):
 | mouse_status                 | `M`                      | Status obsługi myszy (pusty jeśli obsługa myszy jest wyłączona).
 | spell_dict                   | `fr,en`                  | Słowniki używane w obecnym buforze.
 | spell_suggest                | `print,prone,prune`      | Sugestie dla słowa pod kursorem (jeśli zawiera błąd).
-// TRANSLATION MISSING
-| tls_version                  | `TLS1.3`                 | TLS version in use for current IRC server.
+| tls_version                  | `TLS1.3`                 | Wersja TLS używana przez obecny serwer IRC.
 | window_number                | `2`                      | Numer obecnego okna.
 |===
 
@@ -1648,17 +1636,15 @@ Następujące wskaźniki są dostępne:
 * `+${window}+`: okno, dla którego warunek jest sprawdzany
 * `+${buffer}+`: bufor okna, dla którego warunek jest sprawdzany
 
-// TRANSLATION MISSING
-Example to display nicklist bar in all buffers with a nicklist, and only if
-width of terminal is > 100:
+Przykład pokazujący pasek z listą nicków we wszystkich buforach, które mają
+ją włączoną i tylko jeśli szerokość terminala jest > 100:
 
 ----
 /set weechat.bar.nicklist.conditions "${nicklist} && ${info:term_width} > 100"
 ----
 
-// TRANSLATION MISSING
-Same condition, but always display nicklist on buffer _&bitlbee_
-(even if terminal is small):
+Ten sam warunek, ale lista nicków jest zawsze wyświetlana w buforze _&bitlbee_
+(nawet jeśli jest mały):
 
 ----
 /set weechat.bar.nicklist.conditions "${nicklist} && (${info:term_width} > 100 || ${buffer.full_name} == irc.bitlbee.&bitlbee)"
@@ -2472,10 +2458,8 @@ Sekcje w pliku _weechat.conf_:
 | proxy      | <<command_weechat_proxy,/proxy>>          +
                /set weechat.proxy.*                      | Opcje proxy.
 | network    | /set weechat.network.*                    | Opcje sieci/SSL.
-// TRANSLATION MISSING
-| plugin     | /set weechat.plugin.*                     | Options on plugins.
-// TRANSLATION MISSING
-| signal     | /set weechat.signal.*                     | Options on signals.
+| plugin     | /set weechat.plugin.*                     | Opcje wtyczek.
+| signal     | /set weechat.signal.*                     | Opcje sygnałów.
 | bar        | <<command_weechat_bar,/bar>>              +
                /set weechat.bar.*                        | Opcje pasków.
 | layout     | <<command_weechat_layout,/layout>>        | Układy.
@@ -2770,9 +2754,8 @@ Możesz zdalnie kontrolować WeeChat, poprzez wysyłanie komend lub tekstu do
 kolejki FIFO (jeśli opcja "fifo.file.enabled" jest włączona, domyślnie jest
 włączona).
 
-// TRANSLATION MISSING
-The FIFO pipe is located in WeeChat runtime directory and is called
-_weechat_fifo_12345_ by default (where _12345_ is the WeeChat process id).
+Strumień FIFO jest zlokalizowany w katalogu uruchomieniowym WeeChat i ma
+domyślnie nazwę weechat_fifo_12345_ (gdzie _12345_ to numer procesu WeeChat).
 
 Składnia dla komend/tekstu przekazywanego do kolejki FIFO wygląda następująco:
 
@@ -2890,13 +2873,11 @@ jest w pełni zaufane.
 
 Niektóre opcje są używane do kontroli połączenia SSL:
 
-// TRANSLATION MISSING
 weechat.network.gnutls_ca_system::
-    load system's default trusted certificate authorities on startup
+    ładuje domyślne systemowe zaufane urzędy cetyfikujące
 
-// TRANSLATION MISSING
 weechat.network.gnutls_ca_user::
-    extra file(s) with certificate authorities
+    dodatkowy plik(i) urzędów certyfikacyjnych
 
 irc.server.xxx.ssl_cert::
     certyfikat SSL używany do automatycznej identyfikacji twojego nicka (na
@@ -2922,10 +2903,9 @@ $ mkdir -p ~/.config/weechat/ssl
 $ wget -O ~/.config/weechat/ssl/CAs.pem https://www.spi-inc.org/ca/spi-cacert.crt
 ----
 
-// TRANSLATION MISSING
 [NOTE]
-You must replace `~/.config/weechat` by the path to your WeeChat config directory
-which can also be for example `~/.weechat`.
+Musisz zamienić `~/.config/weechat` na ścieżkę do katalogu z konfiguracją WeeChat,
+który może być ustawiony na przykład na `~/.weechat`.
 
 [NOTE]
 Możliwe jest umieszczenie wielu certyfikatów w pliku CAs.pem.
@@ -2947,10 +2927,9 @@ $ cd ~/.config/weechat/ssl
 $ openssl req -nodes -newkey rsa:2048 -keyout nick.pem -x509 -days 365 -out nick.pem
 ----
 
-// TRANSLATION MISSING
 [NOTE]
-You must replace `~/.config/weechat` by the path to your WeeChat config directory
-which can also be for example `~/.weechat`.
+Musisz zamienić `~/.config/weechat` na ścieżkę do katalogu z konfiguracją WeeChat,
+który może być ustawiony na przykład na `~/.weechat`.
 
 * W WeeChat z dodanym wcześniej serwerem "oftc":
 
@@ -2997,10 +2976,9 @@ Klucz można wygenerować za pomocą komendy:
 $ openssl ecparam -genkey -name prime256v1 -out ~/.config/weechat/ecdsa.pem
 ----
 
-// TRANSLATION MISSING
 [NOTE]
-You must replace `~/.config/weechat` by the path to your WeeChat config directory
-which can also be for example `~/.weechat`.
+Musisz zamienić `~/.config/weechat` na ścieżkę do katalogu z konfiguracją WeeChat,
+który może być ustawiony na przykład na `~/.weechat`.
 
 Klucz publiczny (zakodowany za pomocą base64) uzyskujemy wywołując komendę:
 
@@ -3584,8 +3562,7 @@ na przykład:
 Możesz używać SSL poprzez utworzenie certyfikatu i klucza prywatnego, oraz
 użycie prefiksu "ssl." w nazwie protokołu.
 
-// TRANSLATION MISSING
-The default path to certificate/key is defined by option
+Domyślna ścieżka do certyfikatów/kluczy jest zdefiniowana przez opcję
 <<option_relay.network.ssl_cert_key,relay.network.ssl_cert_key>>.
 
 Możesz utworzyć certyfikat i klucz prywatny wykonując poniższe komendy:
@@ -3596,10 +3573,9 @@ $ cd ~/.config/weechat/ssl
 $ openssl req -nodes -newkey rsa:2048 -keyout relay.pem -x509 -days 365 -out relay.pem
 ----
 
-// TRANSLATION MISSING
 [NOTE]
-You must replace `~/.config/weechat` by the path to your WeeChat config directory
-which can also be for example `~/.weechat`.
+Musisz zamienić `~/.config/weechat` na ścieżkę do katalogu z konfiguracją WeeChat,
+który może być ustawiony na przykład na `~/.weechat`.
 
 Jeśli WeeChat jest już uruchomiony, możesz przładować certyfikat i klucz prywatny
 za pomocą polecenia:
@@ -4564,10 +4540,8 @@ Callback "command" ustawia następujące zmienne w tablicy hashy:
 | tg_argc        | ciąg     | Ilość argumentów (komenda liczy się za jeden).
 | tg_argvN       | ciąg     | Argument #N (`+tg_argv0+` to komenda, pozostałe to jej argumenty).
 | tg_argv_eolN   | ciąg     | Od argumentu #N do końca argumentów (`+tg_argv_eol0+` zawiera komendę).
-// TRANSLATION MISSING
-| tg_shell_argc  | ciąg     | The number of arguments with a split like the shell does (the command itself counts for one).
-// TRANSLATION MISSING
-| tg_shell_argvN | ciąg     | Argument #N with a split like the shell does (`+tg_shell_argv0+` is the command itself, the others are command arguments).
+| tg_shell_argc  | ciąg     | Ilość argumentów podzielonych tak jak parametry konsolowe (sama komenda liczy się jako jeden).
+| tg_shell_argvN | ciąg     | Argument #N podzielone tak jak parametry konsolowe (`+tg_shell_argv0+` to nazwa komendy, pozostałe to argumenty).
 |===
 
 [[trigger_data_command_run]]
