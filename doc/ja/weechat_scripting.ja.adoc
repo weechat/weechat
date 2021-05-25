@@ -918,13 +918,13 @@ weechat.prnt("", "%swrong arguments" % weechat.prefix("error"))
 weechat.prnt("", "text %syellow on blue" % weechat.color("yellow,blue"))
 
 # バッファを検索してメッセージを表示
-# (バッファの完全な名前は plugin.name のような形です、例えば: "irc.freenode.#weechat")
-buffer = weechat.buffer_search("irc", "freenode.#weechat")
+# (バッファの完全な名前は plugin.name のような形です、例えば: "irc.libera.#weechat")
+buffer = weechat.buffer_search("irc", "libera.#weechat")
 weechat.prnt(buffer, "message on #weechat channel")
 
 # ある IRC バッファを見つける他の方法 (推奨)
 # (サーバとチャンネルはコンマで区切ってください。)
-buffer = weechat.info_get("irc_buffer", "freenode,#weechat")
+buffer = weechat.info_get("irc_buffer", "libera,#weechat")
 weechat.prnt(buffer, "message on #weechat channel")
 ----
 
@@ -945,7 +945,7 @@ Print 関数は Python では `prnt`、その他の言語では `print` と呼�
 weechat.command("", "/help")
 
 # テキスト "hello" を #weechat IRC チャンネルに送信 (このチャンネルにいるユーザにはメッセージが見えます。)
-buffer = weechat.info_get("irc_buffer", "freenode,#weechat")
+buffer = weechat.info_get("irc_buffer", "libera,#weechat")
 weechat.command(buffer, "hello")
 ----
 
@@ -1251,7 +1251,7 @@ xxx,irc_raw_in2_yyy::
 [source,python]
 ----
 def join_cb(data, signal, signal_data):
-    # シグナル、例えば: "freenode,irc_in2_join"
+    # シグナル、例えば: "libera,irc_in2_join"
     # signal_data は IRC メッセージ、例えば: ":nick!user@host JOIN :#channel"
     server = signal.split(",")[0]
     msg = weechat.info_get_hashtable("irc_message_parse", {"message": signal_data})

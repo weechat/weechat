@@ -910,13 +910,13 @@ weechat.prnt("", "%smauvais paramètres" % weechat.prefix("error"))
 weechat.prnt("", "texte %sjaune sur bleu" % weechat.color("yellow,blue"))
 
 # chercher un tampon et afficher un message
-# (le nom complet d'un tampon est extension.nom, par exemple : "irc.freenode.#weechat")
-buffer = weechat.buffer_search("irc", "freenode.#weechat")
+# (le nom complet d'un tampon est extension.nom, par exemple : "irc.libera.#weechat")
+buffer = weechat.buffer_search("irc", "libera.#weechat")
 weechat.prnt(buffer, "message sur le canal #weechat")
 
 # autre solution pour chercher un tampon IRC (meilleure)
 # (notez que le serveur et le canal sont séparés par une virgule)
-buffer = weechat.info_get("irc_buffer", "freenode,#weechat")
+buffer = weechat.info_get("irc_buffer", "libera,#weechat")
 weechat.prnt(buffer, "message sur le canal #weechat")
 ----
 
@@ -938,7 +938,7 @@ Exemples :
 weechat.command("", "/help")
 
 # envoyer "bonjour" au canal IRC #weechat (les utilisateurs sur le canal verront le message)
-buffer = weechat.info_get("irc_buffer", "freenode,#weechat")
+buffer = weechat.info_get("irc_buffer", "libera,#weechat")
 weechat.command(buffer, "bonjour")
 ----
 
@@ -1251,7 +1251,7 @@ xxx,irc_raw_in2_yyy::
 [source,python]
 ----
 def join_cb(data, signal, signal_data):
-    # signal est par exemple : "freenode,irc_in2_join"
+    # signal est par exemple : "libera,irc_in2_join"
     # signal_data est le message IRC, par exemple : ":nick!user@host JOIN :#canal"
     server = signal.split(",")[0]
     msg = weechat.info_get_hashtable("irc_message_parse", {"message": signal_data})

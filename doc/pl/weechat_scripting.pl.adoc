@@ -894,13 +894,13 @@ weechat.prnt("", "%szłe argumenty" % weechat.prefix("błąd"))
 weechat.prnt("", "text %sżółty na niebieskim" % weechat.color("yellow,blue"))
 
 # przeszuka bufor i wyświetli wiadomość
-# (pełna nazwa bufora to wtyczka.nazwa, na przykład: "irc.freenode.#weechat")
-buffer = weechat.buffer_search("irc", "freenode.#weechat")
+# (pełna nazwa bufora to wtyczka.nazwa, na przykład: "irc.libera.#weechat")
+buffer = weechat.buffer_search("irc", "libera.#weechat")
 weechat.prnt(buffer, "wiadomość na kanale #weechat")
 
 # inne rozwiązanie na znalezienie bufora IRC (lepsze)
 # (zauważ, że serwer i kanał są oddzielone przecinkiem)
-buffer = weechat.info_get("irc_buffer", "freenode,#weechat")
+buffer = weechat.info_get("irc_buffer", "libera,#weechat")
 weechat.prnt(buffer, "wiadomość na kanale #weechat")
 ----
 
@@ -921,7 +921,7 @@ Przykłady:
 weechat.command("", "/help")
 
 # wyśle "witaj" na kanał #weechat (użytkownicy na kanale zobaczą wiadomość)
-buffer = weechat.info_get("irc_buffer", "freenode,#weechat")
+buffer = weechat.info_get("irc_buffer", "libera,#weechat")
 weechat.command(buffer, "witaj")
 ----
 
@@ -1222,7 +1222,7 @@ xxx,irc_raw_in2_yyy::
 [source,python]
 ----
 def join_cb(data, sygnał, signal_data):
-    # sygnał to na przykład: "freenode,irc_in2_join"
+    # sygnał to na przykład: "libera,irc_in2_join"
     # signal_data to wiadomość IRC, na przykład: ":nick!user@host JOIN :#channel"
     server = signal.split(",")[0]
     msg = weechat.info_get_hashtable("irc_message_parse", {"message": signal_data})
