@@ -51,12 +51,12 @@ TEST(IrcIgnore, New)
     STRCMP_EQUAL("*", ignore->channel);
     irc_ignore_free (ignore);
 
-    ignore = irc_ignore_new ("^user@host$", "freenode", "#weechat");
+    ignore = irc_ignore_new ("^user@host$", "libera", "#weechat");
     CHECK(ignore);
     LONGS_EQUAL(1, ignore->number);
     STRCMP_EQUAL("^user@host$", ignore->mask);
     CHECK(ignore->regex_mask);
-    STRCMP_EQUAL("freenode", ignore->server);
+    STRCMP_EQUAL("libera", ignore->server);
     STRCMP_EQUAL("#weechat", ignore->channel);
     irc_ignore_free (ignore);
 }
@@ -135,7 +135,7 @@ TEST(IrcIgnore, Search)
 {
     struct t_irc_ignore *ignore1, *ignore2;
 
-    ignore1 = irc_ignore_new ("^user1@host$", "freenode", "#weechat");
+    ignore1 = irc_ignore_new ("^user1@host$", "libera", "#weechat");
     CHECK(ignore1);
     LONGS_EQUAL(1, ignore1->number);
 
@@ -145,16 +145,16 @@ TEST(IrcIgnore, Search)
 
     POINTERS_EQUAL(NULL, irc_ignore_search ("not_found", NULL, NULL));
     POINTERS_EQUAL(NULL, irc_ignore_search ("not_found",
-                                            "freenode", "#weechat"));
+                                            "libera", "#weechat"));
     POINTERS_EQUAL(NULL, irc_ignore_search ("^user1@host$",
                                             "server1", "#weechat"));
     POINTERS_EQUAL(NULL, irc_ignore_search ("^user1@host$",
-                                            "freenode", "#channel1"));
+                                            "libera", "#channel1"));
     POINTERS_EQUAL(NULL, irc_ignore_search ("^user1@host$", NULL, NULL));
     POINTERS_EQUAL(NULL, irc_ignore_search ("^user2@host$", NULL, NULL));
 
     POINTERS_EQUAL(ignore1, irc_ignore_search ("^user1@host$",
-                                               "freenode", "#weechat"));
+                                               "libera", "#weechat"));
     POINTERS_EQUAL(ignore2, irc_ignore_search ("^user2@host$",
                                                "server2", "#channel2"));
 
@@ -181,7 +181,7 @@ TEST(IrcIgnore, CheckHost)
     server = irc_server_alloc ("test_ignore");
     CHECK(server);
 
-    ignore1 = irc_ignore_new ("^user1@host$", "freenode", "#weechat");
+    ignore1 = irc_ignore_new ("^user1@host$", "libera", "#weechat");
     CHECK(ignore1);
     LONGS_EQUAL(1, ignore1->number);
 
@@ -191,9 +191,9 @@ TEST(IrcIgnore, CheckHost)
 
     /* check server */
     LONGS_EQUAL(0, irc_ignore_check_server (ignore1, "test"));
-    LONGS_EQUAL(1, irc_ignore_check_server (ignore1, "freenode"));
+    LONGS_EQUAL(1, irc_ignore_check_server (ignore1, "libera"));
     LONGS_EQUAL(1, irc_ignore_check_server (ignore2, "test"));
-    LONGS_EQUAL(1, irc_ignore_check_server (ignore2, "freenode"));
+    LONGS_EQUAL(1, irc_ignore_check_server (ignore2, "libera"));
 
     /* check channel */
     LONGS_EQUAL(0, irc_ignore_check_channel (ignore1, server, "#test", "nick"));

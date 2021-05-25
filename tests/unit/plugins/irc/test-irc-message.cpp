@@ -91,21 +91,23 @@ extern "C"
     "nick59,nick60,nick61,nick62,nick63,nick64,nick65,nick66,nick67,nick68,n" \
     "ick69,nick70,nick71,nick72,nick__73"
 
-#define MSG_005 "CHANTYPES=# EXCEPTS INVEX CHANMODES=eIbq,k,flj,CFLMPQScgimn" \
-    "prstz CHANLIMIT=#:120 PREFIX=(ov)@+ MAXLIST=bqeI:100 MODES=4 NETWORK=fr" \
-    "eenode STATUSMSG=@+ CALLERID=g CASEMAPPING=rfc1459 CHARSET=ascii NICKLE" \
-    "N=16 CHANNELLEN=50 TOPICLEN=390 DEAF=D FNC TARGMAX=NAMES:1,LIST:1,KICK:" \
-    "1,WHOIS:1,PRIVMSG:4,NOTICE:4,ACCEPT:,MONITOR: EXTBAN=$,ajrxz CLIENTVER=" \
-    "3.0 SAFELIST ELIST=CTU CPRIVMSG :are supported by this server"
+#define MSG_005 "CHANTYPES=# EXCEPTS INVEX "                                  \
+    "CHANMODES=eIbq,k,flj,CFLMPQScgimnprstz CHANLIMIT=#:120 PREFIX=(ov)@+ "   \
+    "MAXLIST=bqeI:100 MODES=4 NETWORK=libera STATUSMSG=@+ CALLERID=g "        \
+    "CASEMAPPING=rfc1459 CHARSET=ascii NICKLEN=16 CHANNELLEN=50 "             \
+    "TOPICLEN=390 DEAF=D FNC TARGMAX=NAMES:1,LIST:1,KICK:1,WHOIS:1,"          \
+    "PRIVMSG:4,NOTICE:4,ACCEPT:,MONITOR: EXTBAN=$,ajrxz CLIENTVER=3.0 "       \
+    "SAFELIST ELIST=CTU CPRIVMSG :are supported by this server"
 
-#define MSG_LONG_005 "CHANTYPES=# EXCEPTS INVEX CHANMODES=eIbq,k,flj,CFLMPQS" \
-    "cgimnprstz CHANLIMIT=#:120 PREFIX=(ov)@+ MAXLIST=bqeI:100 MODES=4 NETWO" \
-    "RK=freenode STATUSMSG=@+ CALLERID=g CASEMAPPING=rfc1459 CHARSET=ascii N" \
-    "ICKLEN=16 CHANNELLEN=50 TOPICLEN=390 DEAF=D FNC TARGMAX=NAMES:1,LIST:1," \
-    "KICK:1,WHOIS:1,PRIVMSG:4,NOTICE:4,ACCEPT:,MONITOR: EXTBAN=$,ajrxz CLIEN" \
-    "TVER=3.0 SAFELIST ELIST=CTU CPRIVMSG TEST1:abc TEST2:dev TEST3:ghi TEST" \
-    "4:jkl TEST5:mno TEST6:pqr TEST7:stu TEST8:vwx TEST9:yz ABC:1 DEF:2 GHI:" \
-    "3 JKL:4 MNO:5 PQR:6 STU:7 VWX:8 YT:9 :are supported by this server"
+#define MSG_LONG_005 "CHANTYPES=# EXCEPTS INVEX "                             \
+    "CHANMODES=eIbq,k,flj,CFLMPQScgimnprstz CHANLIMIT=#:120 PREFIX=(ov)@+ "   \
+    "MAXLIST=bqeI:100 MODES=4 NETWORK=libera STATUSMSG=@+ CALLERID=g "        \
+    "CASEMAPPING=rfc1459 CHARSET=ascii NICKLEN=16 CHANNELLEN=50 "             \
+    "TOPICLEN=390 DEAF=D FNC TARGMAX=NAMES:1,LIST:1,KICK:1,WHOIS:1,"          \
+    "PRIVMSG:4,NOTICE:4,ACCEPT:,MONITOR: EXTBAN=$,ajrxz CLIENTVER=3.0 "       \
+    "SAFELIST ELIST=CTU CPRIVMSG TEST1:abc TEST2:dev TEST3:ghi TEST4:jkl "    \
+    "TEST5:mno TEST6:pqr TEST7:stu TEST8:vwx TEST9:yz ABC:1 DEF:2 GHI:3 "     \
+    "JKL:4 MNO:5 PQR:6 STU:7 VWX:8 YT:9 :are supported by this server"
 
 #define STRING_200 "ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCD" \
     "EFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVW" \
@@ -1329,21 +1331,23 @@ TEST(IrcMessage, Split)
     LONGS_EQUAL(3, hashtable->items_count);
     STRCMP_EQUAL("1",
                  (const char *)hashtable_get (hashtable, "count"));
-    STRCMP_EQUAL("005 nick CHANTYPES=# EXCEPTS INVEX CHANMODES=eIbq,k,flj,CFL"
-                 "MPQScgimnprstz CHANLIMIT=#:120 PREFIX=(ov)@+ MAXLIST=bqeI:1"
-                 "00 MODES=4 NETWORK=freenode STATUSMSG=@+ CALLERID=g CASEMAP"
-                 "PING=rfc1459 CHARSET=ascii NICKLEN=16 CHANNELLEN=50 TOPICLE"
-                 "N=390 DEAF=D FNC TARGMAX=NAMES:1,LIST:1,KICK:1,WHOIS:1,PRIV"
-                 "MSG:4,NOTICE:4,ACCEPT:,MONITOR: EXTBAN=$,ajrxz CLIENTVER=3."
-                 "0 SAFELIST ELIST=CTU CPRIVMSG :are supported by this server",
+    STRCMP_EQUAL("005 nick CHANTYPES=# EXCEPTS INVEX "
+                 "CHANMODES=eIbq,k,flj,CFLMPQScgimnprstz CHANLIMIT=#:120 "
+                 "PREFIX=(ov)@+ MAXLIST=bqeI:100 MODES=4 NETWORK=libera "
+                 "STATUSMSG=@+ CALLERID=g CASEMAPPING=rfc1459 CHARSET=ascii "
+                 "NICKLEN=16 CHANNELLEN=50 TOPICLEN=390 DEAF=D FNC "
+                 "TARGMAX=NAMES:1,LIST:1,KICK:1,WHOIS:1,PRIVMSG:4,NOTICE:4,"
+                 "ACCEPT:,MONITOR: EXTBAN=$,ajrxz CLIENTVER=3.0 SAFELIST "
+                 "ELIST=CTU CPRIVMSG :are supported by this server",
                  (const char *)hashtable_get (hashtable, "msg1"));
-    STRCMP_EQUAL("CHANTYPES=# EXCEPTS INVEX CHANMODES=eIbq,k,flj,CFLMPQScgimn"
-                 "prstz CHANLIMIT=#:120 PREFIX=(ov)@+ MAXLIST=bqeI:100 MODES="
-                 "4 NETWORK=freenode STATUSMSG=@+ CALLERID=g CASEMAPPING=rfc1"
-                 "459 CHARSET=ascii NICKLEN=16 CHANNELLEN=50 TOPICLEN=390 DEA"
-                 "F=D FNC TARGMAX=NAMES:1,LIST:1,KICK:1,WHOIS:1,PRIVMSG:4,NOT"
-                 "ICE:4,ACCEPT:,MONITOR: EXTBAN=$,ajrxz CLIENTVER=3.0 SAFELIS"
-                 "T ELIST=CTU CPRIVMSG",
+    STRCMP_EQUAL("CHANTYPES=# EXCEPTS INVEX "
+                 "CHANMODES=eIbq,k,flj,CFLMPQScgimnprstz CHANLIMIT=#:120 "
+                 "PREFIX=(ov)@+ MAXLIST=bqeI:100 MODES=4 NETWORK=libera "
+                 "STATUSMSG=@+ CALLERID=g CASEMAPPING=rfc1459 CHARSET=ascii "
+                 "NICKLEN=16 CHANNELLEN=50 TOPICLEN=390 DEAF=D FNC "
+                 "TARGMAX=NAMES:1,LIST:1,KICK:1,WHOIS:1,PRIVMSG:4,NOTICE:4,"
+                 "ACCEPT:,MONITOR: EXTBAN=$,ajrxz CLIENTVER=3.0 SAFELIST "
+                 "ELIST=CTU CPRIVMSG",
                  (const char *)hashtable_get (hashtable, "args1"));
     hashtable_free (hashtable);
 
@@ -1353,24 +1357,26 @@ TEST(IrcMessage, Split)
     LONGS_EQUAL(5, hashtable->items_count);
     STRCMP_EQUAL("2",
                  (const char *)hashtable_get (hashtable, "count"));
-    STRCMP_EQUAL("005 nick CHANTYPES=# EXCEPTS INVEX CHANMODES=eIbq,k,flj,CFL"
-                 "MPQScgimnprstz CHANLIMIT=#:120 PREFIX=(ov)@+ MAXLIST=bqeI:1"
-                 "00 MODES=4 NETWORK=freenode STATUSMSG=@+ CALLERID=g CASEMAP"
-                 "PING=rfc1459 CHARSET=ascii NICKLEN=16 CHANNELLEN=50 TOPICLE"
-                 "N=390 DEAF=D FNC TARGMAX=NAMES:1,LIST:1,KICK:1,WHOIS:1,PRIV"
-                 "MSG:4,NOTICE:4,ACCEPT:,MONITOR: EXTBAN=$,ajrxz CLIENTVER=3."
-                 "0 SAFELIST ELIST=CTU CPRIVMSG TEST1:abc TEST2:dev TEST3:ghi"
-                 " TEST4:jkl TEST5:mno TEST6:pqr TEST7:stu TEST8:vwx TEST9:yz"
-                 " ABC:1 :are supported by this server",
+    STRCMP_EQUAL("005 nick CHANTYPES=# EXCEPTS INVEX "
+                 "CHANMODES=eIbq,k,flj,CFLMPQScgimnprstz CHANLIMIT=#:120 "
+                 "PREFIX=(ov)@+ MAXLIST=bqeI:100 MODES=4 NETWORK=libera "
+                 "STATUSMSG=@+ CALLERID=g CASEMAPPING=rfc1459 CHARSET=ascii "
+                 "NICKLEN=16 CHANNELLEN=50 TOPICLEN=390 DEAF=D FNC "
+                 "TARGMAX=NAMES:1,LIST:1,KICK:1,WHOIS:1,PRIVMSG:4,NOTICE:4,"
+                 "ACCEPT:,MONITOR: EXTBAN=$,ajrxz CLIENTVER=3.0 SAFELIST "
+                 "ELIST=CTU CPRIVMSG TEST1:abc TEST2:dev TEST3:ghi TEST4:jkl "
+                 "TEST5:mno TEST6:pqr TEST7:stu TEST8:vwx TEST9:yz ABC:1 "
+                 ":are supported by this server",
                  (const char *)hashtable_get (hashtable, "msg1"));
-    STRCMP_EQUAL("CHANTYPES=# EXCEPTS INVEX CHANMODES=eIbq,k,flj,CFLMPQScgimn"
-                 "prstz CHANLIMIT=#:120 PREFIX=(ov)@+ MAXLIST=bqeI:100 MODES="
-                 "4 NETWORK=freenode STATUSMSG=@+ CALLERID=g CASEMAPPING=rfc1"
-                 "459 CHARSET=ascii NICKLEN=16 CHANNELLEN=50 TOPICLEN=390 DEA"
-                 "F=D FNC TARGMAX=NAMES:1,LIST:1,KICK:1,WHOIS:1,PRIVMSG:4,NOT"
-                 "ICE:4,ACCEPT:,MONITOR: EXTBAN=$,ajrxz CLIENTVER=3.0 SAFELIS"
-                 "T ELIST=CTU CPRIVMSG TEST1:abc TEST2:dev TEST3:ghi TEST4:jk"
-                 "l TEST5:mno TEST6:pqr TEST7:stu TEST8:vwx TEST9:yz ABC:1",
+    STRCMP_EQUAL("CHANTYPES=# EXCEPTS INVEX "
+                 "CHANMODES=eIbq,k,flj,CFLMPQScgimnprstz CHANLIMIT=#:120 "
+                 "PREFIX=(ov)@+ MAXLIST=bqeI:100 MODES=4 NETWORK=libera "
+                 "STATUSMSG=@+ CALLERID=g CASEMAPPING=rfc1459 CHARSET=ascii "
+                 "NICKLEN=16 CHANNELLEN=50 TOPICLEN=390 DEAF=D FNC "
+                 "TARGMAX=NAMES:1,LIST:1,KICK:1,WHOIS:1,PRIVMSG:4,NOTICE:4,"
+                 "ACCEPT:,MONITOR: EXTBAN=$,ajrxz CLIENTVER=3.0 SAFELIST "
+                 "ELIST=CTU CPRIVMSG TEST1:abc TEST2:dev TEST3:ghi TEST4:jkl "
+                 "TEST5:mno TEST6:pqr TEST7:stu TEST8:vwx TEST9:yz ABC:1",
                  (const char *)hashtable_get (hashtable, "args1"));
     STRCMP_EQUAL("005 nick DEF:2 GHI:3 JKL:4 MNO:5 PQR:6 STU:7 VWX:8 YT:9 :ar"
                  "e supported by this server",
