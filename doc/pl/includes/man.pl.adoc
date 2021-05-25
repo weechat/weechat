@@ -9,7 +9,7 @@ URLi jak:
 
 Aby wejść na kanał IRC poświęcony WeeChat pod nickiem "mójnick":
 
-    irc://mójnick@chat.freenode.net/#weechat
+    irc://mójnick@irc.libera.chat/#weechat
 
 Adresy IPv6 mogą być otoczone nawiasami kwadratowymi, aby możliwe było podanie
 numeru potyu po adresie, na przykład:
