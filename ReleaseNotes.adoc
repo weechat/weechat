@@ -155,7 +155,7 @@ For example if you did this:
 
 ----
 /secure set commands "/command1 secret1;/command2 secret2"
-/set irc.server.freenode.command "${sec.data.commands}"
+/set irc.server.libera.command "${sec.data.commands}"
 ----
 
 This will now execute a single command: `/command1` with two parameters:
@@ -166,7 +166,7 @@ So you must now do this instead:
 ----
 /secure set command1 "/command1 secret1"
 /secure set command2 "/command2 secret2"
-/set irc.server.freenode.command "${sec.data.command1};${sec.data.command2}"
+/set irc.server.libera.command "${sec.data.command1};${sec.data.command2}"
 ----
 
 You could also do this, but be careful, there are two evaluations of strings
@@ -174,7 +174,7 @@ You could also do this, but be careful, there are two evaluations of strings
 
 ----
 /secure set commands "/command1 secret1;/command2 secret2"
-/set irc.server.freenode.command "/eval -s ${sec.data.commands}"
+/set irc.server.libera.command "/eval -s ${sec.data.commands}"
 ----
 
 [[v3.1]]
@@ -362,7 +362,7 @@ using this modifier and the "modifier_data" argument must be updated.
 The old format contained plugin name + ";" + buffer name + ";" + tags:
 
 ----
-irc;freenode.#weechat;tag1,tag2,tag3
+irc;libera.#weechat;tag1,tag2,tag3
 ----
 
 The new format contains buffer pointer + ";" + tags:
@@ -438,8 +438,8 @@ For example you can do that:
 
 ----
 /secure passphrase my_secret_passphrase
-/secure set freenode my_password
-/set irc.server.freenode.sasl_password "${sec.data.freenode}"
+/secure set libera my_password
+/set irc.server.libera.sasl_password "${sec.data.libera}"
 ----
 
 This will be displayed like that in WeeChat, using the new regex value of
@@ -447,8 +447,8 @@ _cmd_pass_ trigger:
 
 ----
 /secure passphrase ********************
-/secure set freenode ***********
-/set irc.server.freenode.sasl_password "${sec.data.freenode}"
+/secure set libera ***********
+/set irc.server.libera.sasl_password "${sec.data.libera}"
 ----
 
 If you want to use the new trigger regex after upgrade, you can do:
@@ -1260,7 +1260,7 @@ Globally (default value for all servers):
 For a specific server:
 
 ----
-/set irc.server.freenode.nicks_alternate off
+/set irc.server.libera.nicks_alternate off
 ----
 
 [[v1.3]]
