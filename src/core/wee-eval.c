@@ -1954,16 +1954,16 @@ end:
  *   >> ${window.buffer.number}
  *   == [2]
  *   >> buffer:${window.buffer.full_name}
- *   == [buffer:irc.freenode.#weechat]
+ *   == [buffer:irc.libera.#weechat]
  *   >> ${window.win_width}
  *   == [112]
  *   >> ${window.win_height}
  *   == [40]
  *
  * Examples of conditions:
- *   >> ${window.buffer.full_name} == irc.freenode.#weechat
+ *   >> ${window.buffer.full_name} == irc.libera.#weechat
  *   == [1]
- *   >> ${window.buffer.full_name} == irc.freenode.#test
+ *   >> ${window.buffer.full_name} == irc.libera.#test
  *   == [0]
  *   >> ${window.win_width} >= 30 && ${window.win_height} >= 20
  *   == [1]

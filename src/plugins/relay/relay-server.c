@@ -53,12 +53,12 @@ struct t_relay_server *last_relay_server = NULL;
  *
  *   string                    ipv4 ipv6 ssl unix protocol protocol_args
  *   ---------------------------------------------------------------
- *   irc.freenode              1    1    0   0    irc      freenode
- *   ssl.irc.freenode          1    1    1   0    irc      freenode
- *   ipv4.irc.freenode         1    0    0   0    irc      freenode
- *   ipv6.irc.freenode         0    1    0   0    irc      freenode
- *   ipv4.ipv6.irc.freenode    1    1    0   0    irc      freenode
- *   ipv6.ssl.irc.freenode     0    1    1   0    irc      freenode
+ *   irc.libera                1    1    0   0    irc      libera
+ *   ssl.irc.libera            1    1    1   0    irc      libera
+ *   ipv4.irc.libera           1    0    0   0    irc      libera
+ *   ipv6.irc.libera           0    1    0   0    irc      libera
+ *   ipv4.ipv6.irc.libera      1    1    0   0    irc      libera
+ *   ipv6.ssl.irc.libera       0    1    1   0    irc      libera
  *   weechat                   1    1    0   0    weechat
  *   ssl.weechat               1    1    1   0    weechat
  *   ipv6.ssl.weechat          0    1    1   0    weechat

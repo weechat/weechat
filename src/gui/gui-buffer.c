@@ -1028,9 +1028,9 @@ gui_buffer_string_replace_local_var (struct t_gui_buffer *buffer,
  * Examples:
  *   "*"
  *   "*,!*#weechat*"
- *   "irc.freenode.*"
- *   "irc.freenode.*,irc.oftc.#channel"
- *   "irc.freenode.#weechat,irc.freenode.#other"
+ *   "irc.libera.*"
+ *   "irc.libera.*,irc.oftc.#channel"
+ *   "irc.libera.#weechat,irc.libera.#other"
  */
 
 int
@@ -2400,7 +2400,7 @@ gui_buffer_search_main ()
 }
 
 /*
- * Searches for a buffer by full name (example: "irc.freenode.#weechat").
+ * Searches for a buffer by full name (example: "irc.libera.#weechat").
  */
 
 struct t_gui_buffer *

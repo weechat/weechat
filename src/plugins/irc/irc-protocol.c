@@ -3576,7 +3576,7 @@ IRC_PROTOCOL_CALLBACK(311)
  * Callback for the IRC message "312": whois, server.
  *
  * Message looks like:
- *   :server 312 mynick nick chat.freenode.net :https://freenode.net/
+ *   :server 312 mynick nick tungsten.libera.chat :Umeå, SE
  */
 
 IRC_PROTOCOL_CALLBACK(312)

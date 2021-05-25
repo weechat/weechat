@@ -146,7 +146,7 @@ buflist_buffer_get_irc_pointers (struct t_gui_buffer *buffer,
  * For example with such list of merged buffers:
  *
  *     weechat
- *     freenode
+ *     libera
  *     oftc      (active)
  *     test
  *     another
@@ -157,7 +157,7 @@ buflist_buffer_get_irc_pointers (struct t_gui_buffer *buffer,
  *     test
  *     another
  *     weechat
- *     freenode
+ *     libera
  *
  * Returns:
  *   -1: buffer1 must be sorted before buffer2
