@@ -112,12 +112,12 @@ IRC 等全てのネットワークプロトコルはそれぞれ異なるプラ�
 IRC サーバを追加するには `/server` コマンドを使ってください、例:
 
 ----
-/server add freenode chat.freenode.net
+/server add libera irc.libera.chat/6697 -ssl
 ----
 
-このコマンドにおいて、`freenode` は WeeChat が使う内部サーバ名です:
-接続時には `/connect freenode` を使うことが可能で、このサーバに関するオプションは
-_irc.server.freenode.xxx_ になります。
+このコマンドにおいて、`libera` は WeeChat が使う内部サーバ名です:
+接続時には `/connect libera` を使うことが可能で、このサーバに関するオプションは
+_irc.server.libera.xxx_ になります。
 
 書式が思い出せない場合はヘルプを利用してください:
 
@@ -136,45 +136,38 @@ _irc.server.freenode.xxx_ になります。
 はデフォルト設定を使用します ("irc.server_default.xxx")。
 
 例えばデフォルトでは (un*x ログイン名をベースにした)
-ニックネームが設定されますが、以下のコマンドで freenode サーバ用の設定として上書きすることが可能です:
+ニックネームが設定されますが、以下のコマンドで libera サーバ用の設定として上書きすることが可能です:
 
 ----
-/set irc.server.freenode.nicks "mynick,mynick2,mynick3,mynick4,mynick5"
+/set irc.server.libera.nicks "mynick,mynick2,mynick3,mynick4,mynick5"
 ----
 
 ユーザ名と実名を設定する場合:
 
 ----
-/set irc.server.freenode.username "My user name"
-/set irc.server.freenode.realname "My real name"
+/set irc.server.libera.username "My user name"
+/set irc.server.libera.realname "My real name"
 ----
 
 サーバへの自動接続を設定する場合:
 
 ----
-/set irc.server.freenode.autoconnect on
-----
-
-SSL を使って接続する場合:
-
-----
-/set irc.server.freenode.addresses "chat.freenode.net/7000"
-/set irc.server.freenode.ssl on
+/set irc.server.libera.autoconnect on
 ----
 
 サーバで SASL を利用可能な場合、SASL を利用してニックネーム認証することができます
 (チャンネル参加前にニックネーム認証が行われるでしょう):
 
 ----
-/set irc.server.freenode.sasl_username "mynick"
-/set irc.server.freenode.sasl_password "xxxxxxx"
+/set irc.server.libera.sasl_username "mynick"
+/set irc.server.libera.sasl_password "xxxxxxx"
 ----
 
 例えば nickserv との認証などを行うためにサーバ接続後にコマンドを実行するには
 (SASL を利用して認証を行わない場合):
 
 ----
-/set irc.server.freenode.command "/msg nickserv identify xxxxxxx"
+/set irc.server.libera.command "/msg nickserv identify xxxxxxx"
 ----
 
 [NOTE]
@@ -188,23 +181,23 @@ _command_ オプションに複数のコマンドを含める場合は `;` (セ�
 /secure passphrase this is my secret passphrase
 ----
 
-その後に freenode のパスワードを含む保護データを追加します:
+その後に libera のパスワードを含む保護データを追加します:
 
 ----
-/secure set freenode_password xxxxxxx
+/secure set libera_password xxxxxxx
 ----
 
 こうすることで前述したようにパスワードを IRC オプションに直接書くのではなく
-`+${sec.data.freenode_password}+` を指定可能になります。例えば以下のように設定します:
+`+${sec.data.libera_password}+` を指定可能になります。例えば以下のように設定します:
 
 ----
-/set irc.server.freenode.sasl_password "${sec.data.freenode_password}"
+/set irc.server.libera.sasl_password "${sec.data.libera_password}"
 ----
 
 チャンネルへの自動参加を設定する場合:
 
 ----
-/set irc.server.freenode.autojoin "#channel1,#channel2"
+/set irc.server.libera.autojoin "#channel1,#channel2"
 ----
 
 [TIP]
@@ -216,14 +209,14 @@ kbd:[Shift+Tab] キーを使えば部分的に補完することも可能です
 (irc.server_default.nicks) を使用する場合:
 
 ----
-/unset irc.server.freenode.nicks
+/unset irc.server.libera.nicks
 ----
 
 その他設定: その他のオプションも以下のコマンドで設定できます
 ("xxx" は設定名です):
 
 ----
-/set irc.server.freenode.xxx value
+/set irc.server.libera.xxx value
 ----
 
 // TRANSLATION MISSING
@@ -231,11 +224,11 @@ kbd:[Shift+Tab] キーを使えば部分的に補完することも可能です
 == Connect to IRC server
 
 ----
-/connect freenode
+/connect libera
 ----
 
 // TRANSLATION MISSING
-With this command, WeeChat connects to the freenode server and auto-joins the
+With this command, WeeChat connects to the libera server and auto-joins the
 channels configured in the "autojoin" server option.
 
 [NOTE]

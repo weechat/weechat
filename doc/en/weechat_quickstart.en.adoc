@@ -105,12 +105,12 @@ other plugins in the list.
 You can add an IRC server with the `/server` command, for example:
 
 ----
-/server add freenode chat.freenode.net
+/server add libera irc.libera.chat/6697 -ssl
 ----
 
-In this command, `freenode` is the internal server name used by WeeChat:
-you'll be able to connect with `/connect freenode` and the server options
-are _irc.server.freenode.xxx_.
+In this command, `libera` is the internal server name used by WeeChat:
+you'll be able to connect with `/connect libera` and the server options
+are _irc.server.libera.xxx_.
 
 As usual, help is available if you're lost:
 
@@ -129,45 +129,38 @@ For each server option, WeeChat uses its value if it is defined (not
 "null"). Otherwise WeeChat uses default value ("irc.server_default.xxx").
 
 For example there are default nicks (based on your un*x login), and you can
-override them for the freenode server with following command:
+override them for the libera server with following command:
 
 ----
-/set irc.server.freenode.nicks "mynick,mynick2,mynick3,mynick4,mynick5"
+/set irc.server.libera.nicks "mynick,mynick2,mynick3,mynick4,mynick5"
 ----
 
 To set the user and real names:
 
 ----
-/set irc.server.freenode.username "My user name"
-/set irc.server.freenode.realname "My real name"
+/set irc.server.libera.username "My user name"
+/set irc.server.libera.realname "My real name"
 ----
 
 To enable auto-connect to server at startup:
 
 ----
-/set irc.server.freenode.autoconnect on
-----
-
-To connect with SSL:
-
-----
-/set irc.server.freenode.addresses "chat.freenode.net/7000"
-/set irc.server.freenode.ssl on
+/set irc.server.libera.autoconnect on
 ----
 
 If SASL is available on the server, you can use it for authentication (you will be
 identified before you join channels):
 
 ----
-/set irc.server.freenode.sasl_username "mynick"
-/set irc.server.freenode.sasl_password "xxxxxxx"
+/set irc.server.libera.sasl_username "mynick"
+/set irc.server.libera.sasl_password "xxxxxxx"
 ----
 
 To run a command after connection to server, for example to authenticate
 with nickserv (only if you don't use SASL for authentication):
 
 ----
-/set irc.server.freenode.command "/msg nickserv identify xxxxxxx"
+/set irc.server.libera.command "/msg nickserv identify xxxxxxx"
 ----
 
 [NOTE]
@@ -182,23 +175,23 @@ First setup a passphrase:
 /secure passphrase this is my secret passphrase
 ----
 
-Then add a secured data with your freenode password:
+Then add a secured data with your libera password:
 
 ----
-/secure set freenode_password xxxxxxx
+/secure set libera_password xxxxxxx
 ----
 
-Then you can use `+${sec.data.freenode_password}+` instead of your password in the
+Then you can use `+${sec.data.libera_password}+` instead of your password in the
 IRC options mentioned above, for example:
 
 ----
-/set irc.server.freenode.sasl_password "${sec.data.freenode_password}"
+/set irc.server.libera.sasl_password "${sec.data.libera_password}"
 ----
 
 To auto-join some channels when connecting to server:
 
 ----
-/set irc.server.freenode.autojoin "#channel1,#channel2"
+/set irc.server.libera.autojoin "#channel1,#channel2"
 ----
 
 [TIP]
@@ -210,24 +203,24 @@ To remove a value of a server option, and use the default value instead,
 for example to use default nicks (irc.server_default.nicks):
 
 ----
-/unset irc.server.freenode.nicks
+/unset irc.server.libera.nicks
 ----
 
 Other options: you can setup other options with the following command ("xxx" is
 option name):
 
 ----
-/set irc.server.freenode.xxx value
+/set irc.server.libera.xxx value
 ----
 
 [[connect_to_irc_server]]
 == Connect to IRC server
 
 ----
-/connect freenode
+/connect libera
 ----
 
-With this command, WeeChat connects to the freenode server and auto-joins the
+With this command, WeeChat connects to the libera server and auto-joins the
 channels configured in the "autojoin" server option.
 
 [NOTE]

@@ -126,13 +126,13 @@ seguramente vera irc y otros.
 You can add an IRC server with `/server` command, for example:
 
 ----
-/server add freenode chat.freenode.net
+/server add libera irc.libera.chat/6697 -ssl
 ----
 
 // TRANSLATION MISSING
-In this command, `freenode` is the internal server name used by WeeChat:
-you'll be able to connect with `/connect freenode` and the server options
-are _irc.server.freenode.xxx_.
+In this command, `libera` is the internal server name used by WeeChat:
+you'll be able to connect with `/connect libera` and the server options
+are _irc.server.libera.xxx_.
 
 La ayuda está disponible; si te pierdes:
 
@@ -153,32 +153,24 @@ asignados siempre y cuando no sean Nulos. Si no hay nada asignado,
 WeeChat usara los valores predeterminados ("irc.server_default.xxx")
 
 Por ejemplo, tenemos el nick por defecto (que se basa en su login) pero
-usted puedes sobreescribirlo para el servidor identificado como freenode
+usted puedes sobreescribirlo para el servidor identificado como libera
 de la siguiente manera:
 
 ----
-/set irc.server.freenode.nicks "nick,nick2,nick3,nick4,nick5"
+/set irc.server.libera.nicks "nick,nick2,nick3,nick4,nick5"
 ----
 
 También para configurar el nombre de usuario y el nombre real:
 
 ----
-/set irc.server.freenode.username "Mi nombre de usuario"
-/set irc.server.freenode.realname "Mi nombre real"
+/set irc.server.libera.username "Mi nombre de usuario"
+/set irc.server.libera.realname "Mi nombre real"
 ----
 
 Para que el servidor se conecte cuando WeeChat inicie:
 
 ----
-/set irc.server.freenode.autoconnect on
-----
-
-// TRANSLATION MISSING
-To connect with SSL:
-
-----
-/set irc.server.freenode.addresses "chat.freenode.net/7000"
-/set irc.server.freenode.ssl on
+/set irc.server.libera.autoconnect on
 ----
 
 // TRANSLATION MISSING
@@ -186,8 +178,8 @@ If SASL is available on server, you can use it for authentication (you will be
 identified before you join channels):
 
 ----
-/set irc.server.freenode.sasl_username "nick"
-/set irc.server.freenode.sasl_password "xxxxxxx"
+/set irc.server.libera.sasl_username "nick"
+/set irc.server.libera.sasl_password "xxxxxxx"
 ----
 
 // TRANSLATION MISSING
@@ -195,7 +187,7 @@ To run a command after connection to server, for example to authenticate
 with nickserv (only if you don't use SASL for authentication):
 
 ----
-/set irc.server.freenode.command "/msg nickserv identify xxxxxxx"
+/set irc.server.libera.command "/msg nickserv identify xxxxxxx"
 ----
 
 // TRANSLATION MISSING
@@ -214,24 +206,24 @@ First setup a passphrase:
 ----
 
 // TRANSLATION MISSING
-Then add a secured data with your freenode password:
+Then add a secured data with your libera password:
 
 ----
-/secure set freenode_password xxxxxxx
+/secure set libera_password xxxxxxx
 ----
 
 // TRANSLATION MISSING
-Then you can use `+${sec.data.freenode_password}+` instead of your password in
+Then you can use `+${sec.data.libera_password}+` instead of your password in
 IRC options mentioned above, for example:
 
 ----
-/set irc.server.freenode.sasl_password "${sec.data.freenode_password}"
+/set irc.server.libera.sasl_password "${sec.data.libera_password}"
 ----
 
 Para unirse automáticamente a canales cuando el servidor se conecte:
 
 ----
-/set irc.server.freenode.autojoin "#uncanal,#otrocanal"
+/set irc.server.libera.autojoin "#uncanal,#otrocanal"
 ----
 
 // TRANSLATION MISSING
@@ -245,25 +237,25 @@ valores por defecto en su lugar, por ejemplo, usar el nick por defecto
 (irc.server_default.nicks):
 
 ----
-/unset irc.server.freenode.nicks
+/unset irc.server.libera.nicks
 ----
 
 Otras opciones: pude configurar otras opciones con el siguiente comando,
 donde "xxx" es el nombre de la opción.
 
 ----
-/set irc.server.freenode.xxx valor
+/set irc.server.libera.xxx valor
 ----
 
 [[connect_to_irc_server]]
 == Conectarse a un servidor IRC
 
 ----
-/connect freenode
+/connect libera
 ----
 
 // TRANSLATION MISSING
-With this command, WeeChat connects to the freenode server and auto-joins the
+With this command, WeeChat connects to the libera server and auto-joins the
 channels configured in the "autojoin" server option.
 
 // TRANSLATION MISSING
