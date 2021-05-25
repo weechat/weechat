@@ -1913,7 +1913,7 @@
 ** domyślna wartość: `+off+`
 
 * [[option_xfer.file.auto_accept_nicks]] *xfer.file.auto_accept_nicks*
-** opis: pass:none[oddzielona przecinkami lista nicków, od których przychodzące pliki i rozmowy są automatycznie akceptowane; format to "serwer.nick" (dla konkretnego serwera) lub "nick" (dla wszystkich serwerów; przykład "freenode.FlashCode,andrew"]
+** opis: pass:none[oddzielona przecinkami lista nicków, od których przychodzące pliki i rozmowy są automatycznie akceptowane; format to "serwer.nick" (dla konkretnego serwera) lub "nick" (dla wszystkich serwerów; przykład "libera.FlashCode,andrew"]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+""+`

@@ -86,6 +86,6 @@ spell_info_init ()
         "spell_dict",
         N_("comma-separated list of dictionaries used in buffer"),
         N_("buffer pointer (\"0x12345678\") or buffer full name "
-           "(\"irc.freenode.#weechat\")"),
+           "(\"irc.libera.#weechat\")"),
         &spell_info_info_spell_dict_cb, NULL, NULL);
 }

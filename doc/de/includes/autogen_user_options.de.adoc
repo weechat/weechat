@@ -1913,7 +1913,7 @@
 ** Standardwert: `+off+`
 
 * [[option_xfer.file.auto_accept_nicks]] *xfer.file.auto_accept_nicks*
-** Beschreibung: pass:none[durch Kommata getrennte Liste von Nicks deren Chat- und Transferanfragen automatisch akzeptiert werden. Format : "server.nick" (für einen speziellen Server) oder "nick" (global, für alle Server); Beispiel: "freenode.FlashCode,andrew"]
+** Beschreibung: pass:none[durch Kommata getrennte Liste von Nicks deren Chat- und Transferanfragen automatisch akzeptiert werden. Format : "server.nick" (für einen speziellen Server) oder "nick" (global, für alle Server); Beispiel: "libera.FlashCode,andrew"]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+""+`

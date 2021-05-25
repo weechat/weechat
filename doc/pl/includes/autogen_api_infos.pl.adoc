@@ -76,7 +76,7 @@
 
 | ruby | ruby_version | wersja użytego interpretera | -
 
-| spell | spell_dict | oddzielona przecinkami lista słowników używanych w buforze | wskaźnik na bufor ("0x12345678") lub jego pełna nazwa ("irc.freenode.#weechat")
+| spell | spell_dict | oddzielona przecinkami lista słowników używanych w buforze | wskaźnik na bufor ("0x12345678") lub jego pełna nazwa ("irc.libera.#weechat")
 
 | tcl | tcl_eval | wykonywanie kodu źródłowego | kod źródłowy do wykonania
 

@@ -1913,7 +1913,7 @@
 ** valeur par défaut: `+off+`
 
 * [[option_xfer.file.auto_accept_nicks]] *xfer.file.auto_accept_nicks*
-** description: pass:none[liste de pseudos (séparés par des virgules) pour lesquels les demandes d'envoi de fichiers et de discussion sont automatiquement acceptées ; le format est "serveur.pseudo" (pour un serveur spécifique) ou "pseudo" (pour tous les serveurs) ; exemple : "freenode.FlashCode,andrew"]
+** description: pass:none[liste de pseudos (séparés par des virgules) pour lesquels les demandes d'envoi de fichiers et de discussion sont automatiquement acceptées ; le format est "serveur.pseudo" (pour un serveur spécifique) ou "pseudo" (pour tous les serveurs) ; exemple : "libera.FlashCode,andrew"]
 ** type: chaîne
 ** valeurs: toute chaîne
 ** valeur par défaut: `+""+`

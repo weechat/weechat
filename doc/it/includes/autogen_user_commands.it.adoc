@@ -161,7 +161,7 @@ Examples:
 To disconnect from a server or stop any connection attempt, use command /disconnect.
 
 Examples:
-  /connect freenode
+  /connect libera
   /connect irc.oftc.net/6667
   /connect irc6.oftc.net/6667 -ipv6
   /connect irc6.oftc.net/6697 -ipv6 -ssl
@@ -301,10 +301,10 @@ Note: the regular expression can start with "(?-i)" to become case sensitive.
 Examples:
   ignore nick "toto" everywhere:
     /ignore add toto
-  ignore host "toto@domain.com" on freenode server:
-    /ignore add toto@domain.com freenode
-  ignore host "toto*@*.domain.com" on freenode/#weechat:
-    /ignore add toto*@*.domain.com freenode #weechat
+  ignore host "toto@domain.com" on libera server:
+    /ignore add toto@domain.com libera
+  ignore host "toto*@*.domain.com" on libera/#weechat:
+    /ignore add toto*@*.domain.com libera #weechat
 ----
 
 [[command_irc_info]]
@@ -341,15 +341,15 @@ nick: nick
 ----
 /join  [-noswitch] [-server <server>] [<canale1>[,<canale2>...]] [<chiave1>[,<chiave2>...]]
 
--noswitch: non passare al nuovo buffer
-   server: invia a questo server (nome interno)
-   canale: nome del canale in cui entrare
-   chiave: chiave per entrare nel canale (i canali con una chiave devono essere primi nella lista)
+-noswitch: do not switch to new buffer
+   server: send to this server (internal name)
+  channel: channel name to join
+      key: key to join the channel (channels with a key must be the first in list)
 
-Esempi:
+Examples:
   /join #weechat
-  /join #canaleprotetto,#weechat chiave
-  /join -server freenode #weechat
+  /join #protectedchan,#weechat key
+  /join -server libera #weechat
   /join -noswitch #weechat
 ----
 
@@ -540,22 +540,22 @@ target: nick or channel name
 /notify  add <nick> [<server> [-away]]
          del <nick>|-all [<server>]
 
-   add: aggiunge una notifica
+   add: add a notification
   nick: nick
-server: nome interno del server (server corrente è il predefinito)
- -away: notifica quando il messaggio di assenza viene cambiato (effettuando il whois sul nick)
-   del: elimina una notifica
-  -all: elimina tutte le notifiche
+server: internal server name (by default current server)
+ -away: notify when away message is changed (by doing whois on nick)
+   del: delete a notification
+  -all: delete all notifications
 
-Senza argomenti, questo comando mostra le notifiche per il server corrente (oppure tutti i server se il comando viene digitato sul buffer core).
+Without argument, this command displays notifications for current server (or all servers if command is issued on core buffer).
 
-Esempi:
-  notifica quando "tizio" entra/esce dal server corrente:
-    /notify add tizio
-  notifica quando "tizio" entra/esce dal server freenode:
-    /notify add toto freenode
-  notifica quando "tizio" è assente o presente sul server freenode:
-    /notify add toto freenode -away
+Examples:
+  notify when "toto" joins/quits current server:
+    /notify add toto
+  notify when "toto" joins/quits libera server:
+    /notify add toto libera
+  notify when "toto" is away or back on libera server:
+    /notify add toto libera -away
 ----
 
 [[command_irc_op]]
@@ -775,16 +775,16 @@ nooption: set boolean option to 'off' (for example: -nossl)
 
 Examples:
   /server listfull
-  /server add freenode chat.freenode.net
-  /server add freenode chat.freenode.net/6697 -ssl -autoconnect
+  /server add libera irc.libera.chat
+  /server add libera irc.libera.chat/6697 -ssl -autoconnect
   /server add chatspike irc.chatspike.net/6667,irc.duckspike.net/6667
-  /server copy freenode freenode-test
-  /server rename freenode-test freenode2
-  /server reorder freenode2 freenode
-  /server del freenode
+  /server copy libera libera-test
+  /server rename libera-test libera2
+  /server reorder libera2 libera
+  /server del libera
   /server deloutq
   /server raw
-  /server raw s:freenode
+  /server raw s:libera
   /server raw c:${recv} && ${command}==PRIVMSG && ${nick}==foo
 ----
 
@@ -1379,7 +1379,7 @@ Examples (simple strings):
   /eval -n ${info:version}                       ==> 0.4.3
   /eval -n ${env:HOME}                           ==> /home/user
   /eval -n ${weechat.look.scroll_amount}         ==> 3
-  /eval -n ${sec.data.freenode_password}         ==> secret
+  /eval -n ${sec.data.password}                  ==> secret
   /eval -n ${window}                             ==> 0x2549aa0
   /eval -n ${window.buffer}                      ==> 0x2549320
   /eval -n ${window.buffer.full_name}            ==> core.weechat
@@ -1434,7 +1434,7 @@ addreplace: add or replace an existing filter
        del: delete a filter
       -all: delete all filters
     buffer: comma separated list of buffers where filter is active:
-            - this is full name including plugin (example: "irc.freenode.#weechat" or "irc.server.freenode")
+            - this is full name including plugin (example: "irc.libera.#weechat" or "irc.server.libera")
             - "*" means all buffers
             - a name starting with '!' is excluded
             - wildcard "*" is allowed
@@ -1469,11 +1469,11 @@ Examples:
   filter nicks displayed when joining channels or with /names:
     /filter add nicks * irc_366 *
   filter nick "toto" on IRC channel #weechat:
-    /filter add toto irc.freenode.#weechat nick_toto *
+    /filter add toto irc.libera.#weechat nick_toto *
   filter IRC join/action messages from nick "toto":
     /filter add toto * nick_toto+irc_join,nick_toto+irc_action *
   filter lines containing "weechat sucks" on IRC channel #weechat:
-    /filter add sucks irc.freenode.#weechat * weechat sucks
+    /filter add sucks irc.libera.#weechat * weechat sucks
   filter lines that are strictly equal to "WeeChat sucks" on all buffers:
     /filter add sucks2 * * (?-i)^WeeChat sucks$
 ----
@@ -1675,7 +1675,7 @@ Esempi:
    -core: no output on WeeChat core buffer
 -current: no output on current buffer
  -buffer: no output on specified buffer
-    name: full buffer name (examples: "irc.server.freenode", "irc.freenode.#weechat")
+    name: full buffer name (examples: "irc.server.libera", "irc.libera.#weechat")
  command: command to execute silently (a '/' is automatically added if not found at beginning of command)
 
 If no target is specified (-core, -current or -buffer), then default is to mute all buffers.
@@ -1686,7 +1686,7 @@ Examples:
   message to current IRC channel:
     /mute -current msg * hi!
   message to #weechat channel:
-    /mute -buffer irc.freenode.#weechat msg #weechat hi!
+    /mute -buffer irc.libera.#weechat msg #weechat hi!
 ----
 
 [[command_weechat_plugin]]
@@ -1754,7 +1754,7 @@ Examples:
   display message on core buffer with prefix "abc":
     /print -core abc\tThe message
   display a message on channel #weechat:
-    /print -buffer irc.freenode.#weechat Message on #weechat
+    /print -buffer irc.libera.#weechat Message on #weechat
   display a snowman (U+2603):
     /print -escape \u2603
   send alert (BEL):
@@ -1889,14 +1889,14 @@ Examples:
     /secure passphrase this is my passphrase
   use program "pass" to read the passphrase on startup:
     /set sec.crypt.passphrase_command "/usr/bin/pass show weechat/passphrase"
-  encrypt freenode SASL password:
-    /secure set freenode mypassword
-    /set irc.server.freenode.sasl_password "${sec.data.freenode}"
+  encrypt libera SASL password:
+    /secure set libera mypassword
+    /set irc.server.libera.sasl_password "${sec.data.libera}"
   encrypt oftc password for nickserv:
     /secure set oftc mypassword
     /set irc.server.oftc.command "/msg nickserv identify ${sec.data.oftc}"
   alias to ghost the nick "mynick":
-    /alias add ghost /eval /msg -server freenode nickserv ghost mynick ${sec.data.freenode}
+    /alias add ghost /eval /msg -server libera nickserv ghost mynick ${sec.data.libera}
 ----
 
 [[command_weechat_set]]
@@ -2281,8 +2281,8 @@ The expected format is one of:
   plugin.buffer *text or command here
   *text or command here
 
-For example to change your freenode nick:
-  echo 'irc.server.freenode */nick newnick' >/run/user/1000/weechat/weechat_fifo_12345
+For example to change your libera nick:
+  echo 'irc.server.libera */nick newnick' >/run/user/1000/weechat/weechat_fifo_12345
 
 Please read the user's guide for more info and examples.
 
@@ -2738,10 +2738,10 @@ The "weechat" protocol allows a remote interface to connect on the port, see the
 Without argument, this command opens buffer with list of relay clients.
 
 Examples:
-  irc proxy, for server "freenode":
-    /relay add irc.freenode 8000
-  irc proxy, for server "freenode", with SSL:
-    /relay add ssl.irc.freenode 8001
+  irc proxy, for server "libera":
+    /relay add irc.libera 8000
+  irc proxy, for server "libera", with SSL:
+    /relay add ssl.irc.libera 8001
   irc proxy, for all servers (client will choose), with SSL:
     /relay add ssl.irc 8002
   weechat protocol:

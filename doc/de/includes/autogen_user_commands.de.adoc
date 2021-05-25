@@ -161,7 +161,7 @@ Beispiele:
 Um eine Verbindung zum Server, oder Verbindungsversuche, zu beenden wird der Befehl /disconnect verwendet.
 
 Beispiele:
-  /connect freenode
+  /connect libera
   /connect irc.oftc.net/6667
   /connect irc6.oftc.net/6667 -ipv6
   /connect irc6.oftc.net/6697 -ipv6 -ssl
@@ -301,10 +301,10 @@ Hinweis: Um zwischen Groß-und Kleinschreibung zu unterscheiden muss am Wortanfa
 Beispiele:
   ignoriert den Nick "toto" global:
     /ignore add toto
-  ignoriert den Host "toto@domain.com" auf dem freenode Server:
-    /ignore add toto@domain.com freenode
-  ignoriert den Host "toto*@*.domain.com" im Chat freenode/#weechat:
-    /ignore add toto*@*.domain.com freenode #weechat
+  ignoriert den Host "toto@domain.com" auf dem libera Server:
+    /ignore add toto@domain.com libera
+  ignoriert den Host "toto*@*.domain.com" im Chat libera/#weechat:
+    /ignore add toto*@*.domain.com libera #weechat
 ----
 
 [[command_irc_info]]
@@ -349,7 +349,7 @@ nick: Nickname
 Beispiele:
   /join #weechat
   /join #geschützter_Channel,#weechat Zugriffsschlüssel
-  /join -server freenode #weechat
+  /join -server libera #weechat
   /join -noswitch #weechat
 ----
 
@@ -552,10 +552,10 @@ Ohne Angabe von Argumenten werden alle Benachrichtigungen für den aktuellen Ser
 Beispiele:
   Benachrichtigung falls sich "toto" am aktuellen Server an- oder abmeldet:
     /notify add toto
-  Benachrichtigung falls sich "toto" am freenode Server an- oder abmeldet:
-    /notify add toto freenode
-  Benachrichtigung falls "toto" den Befehl away am freenode Server nutzt:
-    /notify add toto freenode -away
+  Benachrichtigung falls sich "toto" am libera Server an- oder abmeldet:
+    /notify add toto libera
+  Benachrichtigung falls "toto" den Befehl away am libera Server nutzt:
+    /notify add toto libera -away
 ----
 
 [[command_irc_op]]
@@ -775,16 +775,16 @@ nooption: stellt die Boolean Einstellung auf 'off' (Beispiel: -nossl)
 
 Beispiele:
   /server listfull
-  /server add freenode chat.freenode.net
-  /server add freenode chat.freenode.net/6697 -ssl -autoconnect
+  /server add libera irc.libera.chat
+  /server add libera irc.libera.chat/6697 -ssl -autoconnect
   /server add chatspike irc.chatspike.net/6667,irc.duckspike.net/6667
-  /server copy freenode freenode-test
-  /server rename freenode-test freenode2
-  /server reorder freenode2 freenode
-  /server del freenode
+  /server copy libera libera-test
+  /server rename libera-test libera2
+  /server reorder libera2 libera
+  /server del libera
   /server deloutq
   /server raw
-  /server raw s:freenode
+  /server raw s:libera
   /server raw c:${recv} && ${command}==PRIVMSG && ${nick}==foo
 ----
 
@@ -1379,7 +1379,7 @@ Beispiele (einfache Zeichenketten):
   /eval -n ${info:version}                       ==> 0.4.3
   /eval -n ${env:HOME}                           ==> /home/user
   /eval -n ${weechat.look.scroll_amount}         ==> 3
-  /eval -n ${sec.data.freenode_password}         ==> geheim
+  /eval -n ${sec.data.password}                  ==> geheim
   /eval -n ${window}                             ==> 0x2549aa0
   /eval -n ${window.buffer}                      ==> 0x2549320
   /eval -n ${window.buffer.full_name}            ==> core.weechat
@@ -1434,7 +1434,7 @@ addreplace: erzeugt neuen Filter oder ersetzt einen schon existierenden Filter
        del: Filter entfernen
       -all: entfernt alle Filter
     buffer: durch Kommata getrennte Liste von Buffer in denen der Filter aktiv sein soll:
-            - ist der vollständige Name eines Buffer inklusive seiner Erweiterung (Beispiel: "irc.freenode.#weechat" oder "irc.server.freenode")
+            - ist der vollständige Name eines Buffer inklusive seiner Erweiterung (Beispiel: "irc.libera.#weechat" oder "irc.server.libera")
             - "*" bedeutet, alle Buffer
             - beginnt ein Name mit '!' wird für diesen Buffer kein Filter genutzt
             - Platzhalter "*" kann verwendet werden
@@ -1469,11 +1469,11 @@ Beispiele:
   filtert Nicks wenn diese den Channel betreten oder durch den Befehl "/names" angezeigt werden:
     /filter add nicks * irc_366 *
   filtert Nick "toto" im IRC Channel #weechat:
-    /filter add toto irc.freenode.#weechat nick_toto *
+    /filter add toto irc.libera.#weechat nick_toto *
   filtert IRC join/action Nachrichten von Nick "toto":
     /filter add toto * nick_toto+irc_join,nick_toto+irc_action *
   filtert Zeilen die "weechat sucks" im IRC Channel #weechat enthalten:
-    /filter add sucks irc.freenode.#weechat * weechat sucks
+    /filter add sucks irc.libera.#weechat * weechat sucks
   filter Zeilen die exakt "WeeChat sucks" lauten und das in allen Buffern:
     /filter add sucks2 * * (?-i)^WeeChat sucks$
 ----
@@ -1675,7 +1675,7 @@ Beispiele:
    -core: keine Ausgabe im WeeChat Core Buffer
 -current: Ausgabe im aktuellen Buffer wird unterdrückt
  -buffer: Ausgabe im ausgewählten Buffer wird unterdrückt
-    name: vollständiger Buffername (Beispiel: "irc.server.freenode", "irc.freenode.#weechat")
+    name: vollständiger Buffername (Beispiel: "irc.server.libera", "irc.libera.#weechat")
  command: Befehl der ohne Textausgabe ausgeführt werden soll (das Präfix, '/', wird automatisch hinzugefügt, falls es dem Befehl nicht vorangestellt wurde)
 
 Wird kein Buffer ausgewählt (-core, -current oder -buffer), dann wird die Textausgabe generell unterdrückt.
@@ -1686,7 +1686,7 @@ Beispiele:
   Nachricht in den aktuellen Channel senden:
   /mute -current msg * hi!
   Nachricht an den #weechat Channel senden:
-  /mute -buffer irc.freenode.#weechat msg #weechat hi!
+  /mute -buffer irc.libera.#weechat msg #weechat hi!
 ----
 
 [[command_weechat_plugin]]
@@ -1754,7 +1754,7 @@ Beispiele:
   zeigt eine Nachricht im Core-Buffer mit dem Präfix "abc" an:
     /print -core abc\tmeine Nachricht
   es wird eine Nachricht im Channel #weechat ausgegeben:
-    /print -buffer irc.freenode.#weechat Nachricht an #weechat
+    /print -buffer irc.libera.#weechat Nachricht an #weechat
   gibt einen Schneemann aus (U+2603):
     /print -escape \u2603
   verschickt Alarm (BEL):
@@ -1889,14 +1889,14 @@ Beispiele:
     /secure passphrase Dies ist meine Passphrase
   nutze Programm "pass" um die Passphrase beim Start auszulesen:
     /set sec.crypt.passphrase_command "/usr/bin/pass show weechat/passphrase"
-  verschlüsselt freenode SASL Passwort:
-    /secure set freenode meinPasswort
-    /set irc.server.freenode.sasl_password "${sec.data.freenode}"
+  verschlüsselt libera SASL Passwort:
+    /secure set libera meinPasswort
+    /set irc.server.libera.sasl_password "${sec.data.libera}"
   verschlüsselt oftc Passwort für nickserv:
     /secure set oftc meinPasswort
     /set irc.server.oftc.command "/msg nickserv identify ${sec.data.oftc}"
   Alternativbefehl um den eigenen Nick zu ghosten:
-    /alias add ghost /eval /msg -server freenode nickserv ghost meinNick ${sec.data.freenode}
+    /alias add ghost /eval /msg -server libera nickserv ghost meinNick ${sec.data.libera}
 ----
 
 [[command_weechat_set]]
@@ -2281,8 +2281,8 @@ Folgendes Format wird erwartet:
   plugin.buffer *Text oder Befehl an dieser Stelle
   *Text oder Befehl an dieser Stelle
 
-Beispiel um den eigenen Nick auf dem Server freenode zu ändern:
-  echo 'irc.server.freenode */nick newnick' >/run/user/1000/weechat/weechat_fifo_12345
+Beispiel um den eigenen Nick auf dem Server libera zu ändern:
+  echo 'irc.server.libera */nick newnick' >/run/user/1000/weechat/weechat_fifo_12345
 
 Bitte lese die Benutzeranleitung für weitere Informationen und Beispiele.
 
@@ -2738,10 +2738,10 @@ Das "weechat" Protokoll wird von einem Remote-Interface genutzt um eine Verbindu
 Ohne Angabe von Argumenten werden alle Relay-Clients in einem neuen Buffer dargestellt.
 
 Beispiele:
-  IRC Proxy für Server "freenode":
-    /relay add irc.freenode 8000
-  IRC Proxy, für Server "freenode", mit SSL:
-    /relay add ssl.irc.freenode 8001
+  IRC Proxy für Server "libera":
+    /relay add irc.libera 8000
+  IRC Proxy, für Server "libera", mit SSL:
+    /relay add ssl.irc.libera 8001
   IRC Proxy für alle Server (Client wählt aus), mit SSL:
     /relay add ssl.irc 8002
   WeeChat Protokoll:

@@ -6522,7 +6522,7 @@ irc_command_init ()
            "command /disconnect.\n"
            "\n"
            "Examples:\n"
-           "  /connect freenode\n"
+           "  /connect libera\n"
            "  /connect irc.oftc.net/6667\n"
            "  /connect irc6.oftc.net/6667 -ipv6\n"
            "  /connect irc6.oftc.net/6697 -ipv6 -ssl\n"
@@ -6643,10 +6643,10 @@ irc_command_init ()
            "Examples:\n"
            "  ignore nick \"toto\" everywhere:\n"
            "    /ignore add toto\n"
-           "  ignore host \"toto@domain.com\" on freenode server:\n"
-           "    /ignore add toto@domain.com freenode\n"
-           "  ignore host \"toto*@*.domain.com\" on freenode/#weechat:\n"
-           "    /ignore add toto*@*.domain.com freenode #weechat"),
+           "  ignore host \"toto@domain.com\" on libera server:\n"
+           "    /ignore add toto@domain.com libera\n"
+           "  ignore host \"toto*@*.domain.com\" on libera/#weechat:\n"
+           "    /ignore add toto*@*.domain.com libera #weechat"),
         "list"
         " || add %(irc_channel_nicks_hosts) %(irc_servers) %(irc_channels) %-"
         " || del -all|%(irc_ignores_numbers) %-",
@@ -6684,7 +6684,7 @@ irc_command_init ()
            "Examples:\n"
            "  /join #weechat\n"
            "  /join #protectedchan,#weechat key\n"
-           "  /join -server freenode #weechat\n"
+           "  /join -server libera #weechat\n"
            "  /join -noswitch #weechat"),
         "%(irc_channels)|-noswitch|-server|%(irc_servers)|%*",
         &irc_command_join, NULL, NULL);
@@ -6866,10 +6866,10 @@ irc_command_init ()
            "Examples:\n"
            "  notify when \"toto\" joins/quits current server:\n"
            "    /notify add toto\n"
-           "  notify when \"toto\" joins/quits freenode server:\n"
-           "    /notify add toto freenode\n"
-           "  notify when \"toto\" is away or back on freenode server:\n"
-           "    /notify add toto freenode -away"),
+           "  notify when \"toto\" joins/quits libera server:\n"
+           "    /notify add toto libera\n"
+           "  notify when \"toto\" is away or back on libera server:\n"
+           "    /notify add toto libera -away"),
         "add %(irc_channel_nicks) %(irc_servers) -away %-"
         " || del -all|%(irc_notify_nicks) %(irc_servers) %-",
         &irc_command_notify, NULL, NULL);
@@ -7064,17 +7064,17 @@ irc_command_init ()
            "\n"
            "Examples:\n"
            "  /server listfull\n"
-           "  /server add freenode chat.freenode.net\n"
-           "  /server add freenode chat.freenode.net/6697 -ssl -autoconnect\n"
+           "  /server add libera irc.libera.chat\n"
+           "  /server add libera irc.libera.chat/6697 -ssl -autoconnect\n"
            "  /server add chatspike irc.chatspike.net/6667,"
            "irc.duckspike.net/6667\n"
-           "  /server copy freenode freenode-test\n"
-           "  /server rename freenode-test freenode2\n"
-           "  /server reorder freenode2 freenode\n"
-           "  /server del freenode\n"
+           "  /server copy libera libera-test\n"
+           "  /server rename libera-test libera2\n"
+           "  /server reorder libera2 libera\n"
+           "  /server del libera\n"
            "  /server deloutq\n"
            "  /server raw\n"
-           "  /server raw s:freenode\n"
+           "  /server raw s:libera\n"
            "  /server raw c:${recv} && ${command}==PRIVMSG && ${nick}==foo"),
         "list %(irc_servers)"
         " || listfull %(irc_servers)"

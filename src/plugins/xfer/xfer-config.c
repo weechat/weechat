@@ -349,7 +349,7 @@ xfer_config_init ()
         N_("comma-separated list of nicks for which the incoming files and "
            "chats are automatically accepted; format is \"server.nick\" (for a "
            "specific server) or \"nick\" (for all servers); example: "
-           "\"freenode.FlashCode,andrew\""),
+           "\"libera.FlashCode,andrew\""),
         NULL, 0, 0, "", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     xfer_config_file_auto_check_crc32 = weechat_config_new_option (

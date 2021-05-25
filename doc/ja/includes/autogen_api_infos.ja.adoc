@@ -76,7 +76,7 @@
 
 | ruby | ruby_version | 使用中のインタプリタのバージョン | -
 
-| spell | spell_dict | バッファで使用中の辞書のコンマ区切りリスト | バッファポインタ ("0x12345678") またはバッファのフルネーム ("irc.freenode.#weechat")
+| spell | spell_dict | バッファで使用中の辞書のコンマ区切りリスト | buffer pointer ("0x12345678") or buffer full name ("irc.libera.#weechat")
 
 | tcl | tcl_eval | ソースコードの評価 | 実行するソースコード
 
