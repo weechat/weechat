@@ -744,29 +744,29 @@ Example of terminal with WeeChat:
 ....
  ▼ bar "buflist"   ▼ bar "title"
 ┌──────────────────────────────────────────────────────────────────────────────────────┐
-│1.freenode│Welcome to #test, this is a test channel                                   │
-│  weechat │12:52:27   --> | Flashy (flashcode@weechat.org) has joined #test   │@Flashy│
-│2.  #test │12:52:27    -- | Nicks #test: [@Flashy @joe +weebot peter]         │@joe   │
-│3.  #abc  │12:52:27    -- | Channel #test: 4 nicks (2 ops, 1 voice, 1 normal) │+weebot│
-│4.  #def  │12:52:27    -- | Channel created on Tue Jan 27 06:30:17 2009       │peter  │
-│5.  #ghi  │12:54:15 peter | hey!                                              │       │
-│          │12:55:01  @joe | hello                                             │       │
-│          │                                                                   │       │
-│          │                                                                   │       │
-│          │                                                                   │       │
-│          │                                                                   │       │
-│          │                                                                   │       │
-│          │                                                                   │       │
-│          │                                                                   │       │
-│          │                                                                   │       │
-│          │                                                                   │       │
-│          │                                                                   │       │
-│          │                                                                   │       │
-│          │                                                                   │       │
-│          │                                                                   │       │
-│          │                                                                   │       │
-│          │[12:55] [5] [irc/freenode] 2:#test(+n){4}* [H: 3:#abc(2,5), 5]             │
-│          │[@Flashy(i)] hi peter!█                                                    │
+│1.libera │Welcome to #test, this is a test channel                                    │
+│  weechat│12:52:27   --> | Flashy (flashcode@weechat.org) has joined #test    │@Flashy│
+│2.  #test│12:52:27    -- | Nicks #test: [@Flashy @joe +weebot peter]          │@joe   │
+│3.  #abc │12:52:27    -- | Channel #test: 4 nicks (2 ops, 1 voice, 1 normal)  │+weebot│
+│4.  #def │12:52:27    -- | Channel created on Tue Jan 27 06:30:17 2009        │peter  │
+│5.  #ghi │12:54:15 peter | hey!                                               │       │
+│         │12:55:01  @joe | hello                                              │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │[12:55] [5] [irc/libera] 2:#test(+n){4}* [H: 3:#abc(2,5), 5]                │
+│         │[@Flashy(i)] hi peter!█                                                     │
 └──────────────────────────────────────────────────────────────────────────────────────┘
             ▲ bars "status" and "input"                               bar "nicklist" ▲
 ....
@@ -804,20 +804,20 @@ Bar _status_ has following default items:
 
 [width="100%",cols="^3,^3,9",options="header"]
 |===
-| Item                  | Example                 | Description
-| time                  | `[12:55]`               | Time.
-| buffer_last_number    | `[5]`                   | Number of last buffer in list.
-| buffer_plugin         | `[irc/freenode]`        | Plugin of current buffer (irc plugin can add IRC server name used by buffer).
-| buffer_number         | `2`                     | Current buffer number.
-| buffer_name           | `#test`                 | Current buffer name.
-| buffer_modes          | `+n`                    | IRC channel modes.
-| buffer_nicklist_count | `{4}`                   | Number of nicks displayed in nicklist.
-| buffer_zoom           | !                       | `!` means the merged buffer is zoomed (only this one is displayed), empty value means all merged buffers are displayed.
-| buffer_filter         | `+*+`                   | Filtering indicator: `+*+` means some lines are filtered (hidden), empty value means all lines are displayed.
-| scroll                | `-MORE(50)-`            | Scroll indicator, with number of lines below last line displayed.
-| lag                   | `[Lag: 2.5]`            | Lag indicator, in seconds (hidden if lag is low).
-| hotlist               | `[H: 3:#abc(2,5), 5]`   | List of buffers with activity (unread messages) (in example, 2 highlights and 5 unread messages on _#abc_, one unread message on buffer #5).
-| completion            | `abc(2) def(5)`         | List of words for completion, with number of possible completions for each word.
+| Item                  | Example               | Description
+| time                  | `[12:55]`             | Time.
+| buffer_last_number    | `[5]`                 | Number of last buffer in list.
+| buffer_plugin         | `[irc/libera]`        | Plugin of current buffer (irc plugin can add IRC server name used by buffer).
+| buffer_number         | `2`                   | Current buffer number.
+| buffer_name           | `#test`               | Current buffer name.
+| buffer_modes          | `+n`                  | IRC channel modes.
+| buffer_nicklist_count | `{4}`                 | Number of nicks displayed in nicklist.
+| buffer_zoom           | !                     | `!` means the merged buffer is zoomed (only this one is displayed), empty value means all merged buffers are displayed.
+| buffer_filter         | `+*+`                 | Filtering indicator: `+*+` means some lines are filtered (hidden), empty value means all lines are displayed.
+| scroll                | `-MORE(50)-`          | Scroll indicator, with number of lines below last line displayed.
+| lag                   | `[Lag: 2.5]`          | Lag indicator, in seconds (hidden if lag is low).
+| hotlist               | `[H: 3:#abc(2,5), 5]` | List of buffers with activity (unread messages) (in example, 2 highlights and 5 unread messages on _#abc_, one unread message on buffer #5).
+| completion            | `abc(2) def(5)`       | List of words for completion, with number of possible completions for each word.
 |===
 
 Bar _input_ has following default items:
@@ -825,7 +825,7 @@ Bar _input_ has following default items:
 [width="100%",cols="^3,^3,9",options="header"]
 |===
 | Item         | Example                                      | Description
-| input_prompt | `[@Flashy(i)]`                               | Input prompt, for irc: nick and modes (mode "+i" means invisible on freenode).
+| input_prompt | `[@Flashy(i)]`                               | Input prompt, for irc: nick and modes (mode "+i" means invisible on libera).
 | away         | `(away)`                                     | Away indicator.
 | input_search | `[Search (~ str,msg)]`                       | Search indicator ("`~`": case insensitive, "`==`": case sensitive, "`str`": search string, "`regex`": search regular expression, "`msg`": search in messages, "`pre`": search in prefixes, "`pre\|msg`": search in prefixes and messages).
 | input_paste  | `[Paste 7 lines ? [ctrl-Y] Yes [ctrl-N] No]` | Question to user for pasting lines.
@@ -1118,29 +1118,29 @@ Example of horizontal split (`/window splith`):
 ....
                                ▼ window #2 (buffer #4)
 ┌──────────────────────────────────────────────────────────────────────────────────────┐
-│1.freenode│Welcome to #def                                                            │
-│  weechat │12:55:12     Max | hi                                              │@Flashy│
-│2.  #test │12:55:20 @Flashy | hi Max!                                         │Max    │
-│3.  #abc  │                                                                   │       │
-│4.  #def  │                                                                   │       │
-│5.  #ghi  │                                                                   │       │
-│          │                                                                   │       │
-│          │                                                                   │       │
-│          │                                                                   │       │
-│          │[12:55] [5] [irc/freenode] 4:#def(+n){2}                                   │
-│          │[@Flashy]                                                                  │
-│          │───────────────────────────────────────────────────────────────────────────│
-│          │Welcome to #abc                                                            │
-│          │12:54:15 peter | hey!                                              │@Flashy│
-│          │12:55:01  @joe | hello                                             │@joe   │
-│          │                                                                   │+weebot│
-│          │                                                                   │peter  │
-│          │                                                                   │       │
-│          │                                                                   │       │
-│          │                                                                   │       │
-│          │                                                                   │       │
-│          │[12:55] [5] [irc/freenode] 3:#abc(+n){4}                                   │
-│          │[@Flashy] hi peter!█                                                       │
+│1.libera │Welcome to #def                                                             │
+│  weechat│12:55:12     Max | hi                                               │@Flashy│
+│2.  #test│12:55:20 @Flashy | hi Max!                                          │Max    │
+│3.  #abc │                                                                    │       │
+│4.  #def │                                                                    │       │
+│5.  #ghi │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │[12:55] [5] [irc/libera] 4:#def(+n){2}                                      │
+│         │[@Flashy]                                                                   │
+│         │────────────────────────────────────────────────────────────────────────────│
+│         │Welcome to #abc                                                             │
+│         │12:54:15 peter | hey!                                               │@Flashy│
+│         │12:55:01  @joe | hello                                              │@joe   │
+│         │                                                                    │+weebot│
+│         │                                                                    │peter  │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │[12:55] [5] [irc/libera] 3:#abc(+n){4}                                      │
+│         │[@Flashy] hi peter!█                                                        │
 └──────────────────────────────────────────────────────────────────────────────────────┘
                                ▲ window #1 (buffer #3)
 ....
@@ -1149,28 +1149,28 @@ Example of vertical split (`/window splitv`):
 
 ....
 ┌──────────────────────────────────────────────────────────────────────────────────────┐
-│1.freenode│Welcome to #abc                      │Welcome to #def                      │
-│  weechat │12:54:15 peter | hey!        │@Flashy│12:55:12     Max | hi        │@Flashy│
-│2.  #test │12:55:01  @joe | hello       │@joe   │12:55:20 @Flashy | hi Max!   │Max    │
-│3.  #abc  │                             │+weebot│                             │       │
-│4.  #def  │                             │peter  │                             │       │
-│5.  #ghi  │                             │       │                             │       │
-│          │                             │       │                             │       │
-│          │                             │       │                             │       │
-│          │                             │       │                             │       │
-│          │                             │       │                             │       │
-│          │                             │       │                             │       │
-│          │                             │       │                             │       │
-│          │                             │       │                             │       │
-│          │                             │       │                             │       │
-│          │                             │       │                             │       │
-│          │                             │       │                             │       │
-│          │                             │       │                             │       │
-│          │                             │       │                             │       │
-│          │                             │       │                             │       │
-│          │                             │       │                             │       │
-│          │[12:55] [5] [irc/freenode] 3:#abc(+n)│[12:55] [5] [irc/freenode] 4:#def(+n)│
-│          │[@Flashy] hi peter!█                 │[@Flashy]                            │
+│1.libera │Welcome to #abc                      │Welcome to #def                       │
+│  weechat│12:54:15 peter | hey!        │@Flashy│12:55:12     Max | hi         │@Flashy│
+│2.  #test│12:55:01  @joe | hello       │@joe   │12:55:20 @Flashy | hi Max!    │Max    │
+│3.  #abc │                             │+weebot│                              │       │
+│4.  #def │                             │peter  │                              │       │
+│5.  #ghi │                             │       │                              │       │
+│         │                             │       │                              │       │
+│         │                             │       │                              │       │
+│         │                             │       │                              │       │
+│         │                             │       │                              │       │
+│         │                             │       │                              │       │
+│         │                             │       │                              │       │
+│         │                             │       │                              │       │
+│         │                             │       │                              │       │
+│         │                             │       │                              │       │
+│         │                             │       │                              │       │
+│         │                             │       │                              │       │
+│         │                             │       │                              │       │
+│         │                             │       │                              │       │
+│         │                             │       │                              │       │
+│         │[12:55] [5] [irc/libera] 3:#abc(+n)  │[12:55] [5] [irc/libera] 4:#def(+n)   │
+│         │[@Flashy] hi peter!█                 │[@Flashy]                             │
 └──────────────────────────────────────────────────────────────────────────────────────┘
                  ▲ window #1 (buffer #3)               ▲ window #2 (buffer #4)
 ....
@@ -1180,28 +1180,28 @@ Example of vertical + horizontal splits:
 ....
                                                        ▼ window #3 (buffer #5)
 ┌──────────────────────────────────────────────────────────────────────────────────────┐
-│1.freenode│Welcome to #abc                      │Welcome to #ghi                      │
-│  weechat │12:54:15 peter | hey!        │@Flashy│12:55:42 @Flashy | hi        │@Flashy│
-│2.  #test │12:55:01  @joe | hello       │@joe   │12:55:56    alex | hi Flashy │alex   │
-│3.  #abc  │                             │+weebot│                             │       │
-│4.  #def  │                             │peter  │                             │       │
-│5.  #ghi  │                             │       │                             │       │
-│          │                             │       │                             │       │
-│          │                             │       │                             │       │
-│          │                             │       │                             │       │
-│          │                             │       │[12:55] [5] [irc/freenode] 5:#ghi(+n)│
-│          │                             │       │[@Flashy]                            │
-│          │                             │       │─────────────────────────────────────│
-│          │                             │       │Welcome to #def                      │
-│          │                             │       │12:55:12     Max | hi        │@Flashy│
-│          │                             │       │12:55:20 @Flashy | hi Max!   │Max    │
-│          │                             │       │                             │       │
-│          │                             │       │                             │       │
-│          │                             │       │                             │       │
-│          │                             │       │                             │       │
-│          │                             │       │                             │       │
-│          │[12:55] [5] [irc/freenode] 3:#abc(+n)│[12:55] [5] [irc/freenode] 4:#def(+n)│
-│          │[@Flashy] hi peter!█                 │[@Flashy]                            │
+│1.libera │Welcome to #abc                      │Welcome to #ghi                       │
+│  weechat│12:54:15 peter | hey!        │@Flashy│12:55:42 @Flashy | hi         │@Flashy│
+│2.  #test│12:55:01  @joe | hello       │@joe   │12:55:56    alex | hi Flashy  │alex   │
+│3.  #abc │                             │+weebot│                              │       │
+│4.  #def │                             │peter  │                              │       │
+│5.  #ghi │                             │       │                              │       │
+│         │                             │       │                              │       │
+│         │                             │       │                              │       │
+│         │                             │       │                              │       │
+│         │                             │       │[12:55] [5] [irc/libera] 5:#ghi(+n)   │
+│         │                             │       │[@Flashy]                             │
+│         │                             │       │──────────────────────────────────────│
+│         │                             │       │Welcome to #def                       │
+│         │                             │       │12:55:12     Max | hi         │@Flashy│
+│         │                             │       │12:55:20 @Flashy | hi Max!    │Max    │
+│         │                             │       │                              │       │
+│         │                             │       │                              │       │
+│         │                             │       │                              │       │
+│         │                             │       │                              │       │
+│         │                             │       │                              │       │
+│         │[12:55] [5] [irc/libera] 3:#abc(+n)  │[12:55] [5] [irc/libera] 4:#def(+n)   │
+│         │[@Flashy] hi peter!█                 │[@Flashy]                             │
 └──────────────────────────────────────────────────────────────────────────────────────┘
                  ▲ window #1 (buffer #3)               ▲ window #2 (buffer #4)
 ....
@@ -1501,7 +1501,7 @@ Example of bar with items "[time],buffer_number+:+buffer_plugin+.+buffer_name":
 
 ....
 ┌───────────────────────────────────────────────────────────────────────────┐
-│[12:55] 3:irc/freenode.#weechat                                            │
+│[12:55] 3:irc/libera.#weechat                                              │
 └───────────────────────────────────────────────────────────────────────────┘
 ....
 
@@ -1555,7 +1555,7 @@ Some examples of filling for bar _nicklist_:
 │                                                              │ henry4 │
 │                                                              │ jimmy17│
 │                                                              │ jodie ▼│
-│[12:55] [6] [irc/freenode] 3:#test(+n){24}                             │
+│[12:55] [6] [irc/libera] 3:#test(+n){24}                               │
 │[@carl] █                                                              │
 └───────────────────────────────────────────────────────────────────────┘
                                      filling_left_right = vertical ▲
@@ -1575,7 +1575,7 @@ Some examples of filling for bar _nicklist_:
 │                                                     │ henry4   zack   │
 │                                                     │ jimmy17         │
 │                                                     │ jodie           │
-│[12:55] [6] [irc/freenode] 3:#test(+n){24}                             │
+│[12:55] [6] [irc/libera] 3:#test(+n){24}                               │
 │[@carl] █                                                              │
 └───────────────────────────────────────────────────────────────────────┘
                              filling_left_right = columns_vertical ▲
@@ -1664,29 +1664,29 @@ If WeeChat looks like that:
 
 ....
 ┌──────────────────────────────────────────────────────────────────────────────────────┐
-│1.freenode│Welcome to #abc                                                            │
-│  weechat │12:52:27   --> | Flashy (flashcode@weechat.org) has joined #abc    │@Flashy│
-│2.  #test │12:52:27    -- | Nicks #abc: [@Flashy @joe +weebot peter]          │@joe   │
-│3.  #abc  │12:52:27    -- | Channel #abc: 4 nicks (2 ops, 1 voice, 1 normal)  │+weebot│
-│4.  #def  │12:52:27    -- | Channel created on Tue Jan 27 06:30:17 2009       │peter  │
-│5.  #ghi  │12:54:15 peter | hey!                                              │       │
-│          │12:55:01  @joe | peter: hook_process: https://weechat.org/files/do │       │
-│          │               | c/devel/weechat_plugin_api.en.html#_weechat_hook_ │       │
-│          │               | process                                           │       │
-│          │                                                                   │       │
-│          │                                                                   │       │
-│          │                                                                   │       │
-│          │                                                                   │       │
-│          │                                                                   │       │
-│          │                                                                   │       │
-│          │                                                                   │       │
-│          │                                                                   │       │
-│          │                                                                   │       │
-│          │                                                                   │       │
-│          │                                                                   │       │
-│          │                                                                   │       │
-│          │[12:55] [5] [irc/freenode] 3:#abc(+n){4}                                   │
-│          │[@Flashy(i)] hi peter!█                                                    │
+│1.libera │Welcome to #abc                                                             │
+│  weechat│12:52:27   --> | Flashy (flashcode@weechat.org) has joined #abc     │@Flashy│
+│2.  #test│12:52:27    -- | Nicks #abc: [@Flashy @joe +weebot peter]           │@joe   │
+│3.  #abc │12:52:27    -- | Channel #abc: 4 nicks (2 ops, 1 voice, 1 normal)   │+weebot│
+│4.  #def │12:52:27    -- | Channel created on Tue Jan 27 06:30:17 2009        │peter  │
+│5.  #ghi │12:54:15 peter | hey!                                               │       │
+│         │12:55:01  @joe | peter: hook_process: https://weechat.org/files/doc │       │
+│         │               | /devel/weechat_plugin_api.en.html#_weechat_hook_pr │       │
+│         │               | ocess                                              │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │[12:55] [5] [irc/libera] 3:#abc(+n){4}                                      │
+│         │[@Flashy(i)] hi peter!█                                                     │
 └──────────────────────────────────────────────────────────────────────────────────────┘
 ....
 
@@ -1753,16 +1753,16 @@ default is _all_.
 |===
 
 Notify level can be defined for a set of buffers, for example all buffers of
-irc server "freenode":
+irc server "libera":
 
 ----
-/set weechat.notify.irc.freenode message
+/set weechat.notify.irc.libera message
 ----
 
 Set notify level _highlight_ on channel "#weechat" only:
 
 ----
-/set weechat.notify.irc.freenode.#weechat highlight
+/set weechat.notify.irc.libera.#weechat highlight
 ----
 
 The notify level for a buffer can be set with command `/buffer`:
@@ -2357,7 +2357,7 @@ The result is put as hexadecimal string in file _sec.conf_, for example:
 ----
 [data]
 __passphrase__ = on
-freenode = "53B1C86FCDA28FC122A95B0456ABD79B5AB74654F21C3D099A6CCA8173239EEA59533A1D83011251F96778AC3F5166A394"
+libera = "53B1C86FCDA28FC122A95B0456ABD79B5AB74654F21C3D099A6CCA8173239EEA59533A1D83011251F96778AC3F5166A394"
 ----
 
 [[secured_data_decryption]]
@@ -2372,11 +2372,11 @@ The decryption of data is made in 3 steps:
 [[secured_data_manage]]
 ==== Manage secured data
 
-To add secured data, use `/secure set`, for example a password for _freenode_
+To add secured data, use `/secure set`, for example a password for _libera_
 IRC server:
 
 ----
-/secure set freenode mypassword
+/secure set libera mypassword
 ----
 
 For comfort, secured data can be displayed in a dedicated buffer (kbd:[Alt+v] on
@@ -2391,11 +2391,11 @@ password, using this format: "${sec.data.xxx}" where "xxx" is the name of
 secured data (used with `/secure set xxx ...`). +
 For a complete list of supported options, see `/help secure`.
 
-To use the _freenode_ password, for example with
+To use the _libera_ password, for example with
 <<irc_sasl_authentication,SASL authentication>>:
 
 ----
-/set irc.server.freenode.sasl_password "${sec.data.freenode}"
+/set irc.server.libera.sasl_password "${sec.data.libera}"
 ----
 
 [[commands_and_options]]
@@ -2664,7 +2664,7 @@ but on channel (or private) buffer.
 To set charset for all channels/privates of an IRC server:
 
 ----
-/set charset.encode.irc.freenode ISO-8859-15
+/set charset.encode.irc.libera ISO-8859-15
 ----
 
 To see all charsets used, use following command:
@@ -2748,16 +2748,16 @@ Syntax for the FIFO pipe commands/text is one of following:
 
 Some examples:
 
-* Change nick on IRC server freenode to "newnick":
+* Change nick on IRC server libera to "newnick":
 
 ----
-$ echo 'irc.server.freenode */nick newnick' >/run/user/1000/weechat/weechat_fifo_12345
+$ echo 'irc.server.libera */nick newnick' >/run/user/1000/weechat/weechat_fifo_12345
 ----
 
 * Send a message on IRC #weechat channel:
 
 ----
-$ echo 'irc.freenode.#weechat *hello!' >/run/user/1000/weechat/weechat_fifo_12345
+$ echo 'irc.libera.#weechat *hello!' >/run/user/1000/weechat/weechat_fifo_12345
 ----
 
 * Send a message on current buffer:
@@ -2838,11 +2838,11 @@ It is possible to give URL for one or many IRC servers, as follow:
 irc[6][s]://[nick[:password]@]irc.example.org[:port][/channel][,channel[...]]
 ----
 
-Example to join _#weechat_ and _#toto_ on server _chat.freenode.net_ server,
+Example to join _#weechat_ and _#toto_ on server _irc.libera.chat_ server,
 default port (6667), with nick _nono_:
 
 ----
-$ weechat irc://nono@chat.freenode.net/#weechat,#toto
+$ weechat irc://nono@irc.libera.chat/#weechat,#toto
 ----
 
 [[irc_ssl_certificates]]
@@ -2970,7 +2970,7 @@ your public key in your account, using nickserv (replace the base64 value with
 your public key):
 
 ----
-/connect freenode
+/connect libera
 /msg nickserv identify your_password
 /msg nickserv set pubkey Av8k1FOGetUDq7sPMBfufSIZ5c2I/QYWgiwHtNXkVe/q
 ----
@@ -2978,15 +2978,15 @@ your public key):
 Configure the SASL options in the server:
 
 ----
-/set irc.server.freenode.sasl_mechanism ecdsa-nist256p-challenge
-/set irc.server.freenode.sasl_username "your_nickname"
-/set irc.server.freenode.sasl_key "${weechat_config_dir}/ecdsa.pem"
+/set irc.server.libera.sasl_mechanism ecdsa-nist256p-challenge
+/set irc.server.libera.sasl_username "your_nickname"
+/set irc.server.libera.sasl_key "${weechat_config_dir}/ecdsa.pem"
 ----
 
 Reconnect to the server:
 
 ----
-/reconnect freenode
+/reconnect libera
 ----
 
 [[irc_tor_freenode]]
@@ -3061,8 +3061,8 @@ It is possible to create filter for one channel only or channels beginning with
 same name (see `/help filter`):
 
 ----
-/filter add irc_smart_weechat irc.freenode.#weechat irc_smart_filter *
-/filter add irc_smart_weechats irc.freenode.#weechat* irc_smart_filter *
+/filter add irc_smart_weechat irc.libera.#weechat irc_smart_filter *
+/filter add irc_smart_weechats irc.libera.#weechat* irc_smart_filter *
 ----
 
 You can hide only join or part/quit with following options:
@@ -3111,7 +3111,7 @@ It is possible to customize CTCP for one server only, using its internal name
 before CTCP name:
 
 ----
-/set irc.ctcp.freenode.version "WeeChat $version (for freenode)"
+/set irc.ctcp.libera.version "WeeChat $version (for libera)"
 ----
 
 If you want to restore standard CTCP reply, then remove option:
@@ -3260,7 +3260,7 @@ Non-comprehensive list of IRC messages or alias that you can customize:
 Other numeric commands can be customized as well.
 
 Message can be prefixed by server name to be specific to an irc server
-(for example: `freenode.whois`).
+(for example: `libera.whois`).
 
 Some examples:
 
@@ -3276,10 +3276,10 @@ Some examples:
 /unset irc.msgbuffer.whois
 ----
 
-* Display invitation on current buffer, only for "freenode" server:
+* Display invitation on current buffer, only for "libera" server:
 
 ----
-/set irc.msgbuffer.freenode.invite current
+/set irc.msgbuffer.libera.invite current
 ----
 
 * Display message "303" (ison) on WeeChat "core" buffer:
@@ -3348,19 +3348,19 @@ Some examples:
 * Set level 3 for IRC channel #weechat:
 
 ----
-/set logger.level.irc.freenode.#weechat 3
+/set logger.level.irc.libera.#weechat 3
 ----
 
-* Set level 3 for freenode server buffer:
+* Set level 3 for libera server buffer:
 
 ----
-/set logger.level.irc.server.freenode 3
+/set logger.level.irc.server.libera 3
 ----
 
-* Set level 3 for all channels on server freenode:
+* Set level 3 for all channels on server libera:
 
 ----
-/set logger.level.irc.freenode 3
+/set logger.level.irc.libera 3
 ----
 
 * Set level 2 for all IRC buffers:
@@ -3382,18 +3382,18 @@ variables to build filename. To see available local variables for current buffer
 Masks will be matched on options in descending order of specificity on
 `logger.mask.$plugin.*`, with `logger.file.mask` as fallback option.
 
-For example, on buffer "irc.freenode.#weechat", WeeChat will search a mask with
+For example, on buffer "irc.libera.#weechat", WeeChat will search a mask with
 option name, in this order:
 
 ----
-logger.mask.irc.freenode.#weechat
-logger.mask.irc.freenode
+logger.mask.irc.libera.#weechat
+logger.mask.irc.libera
 logger.mask.irc
 logger.file.mask
 ----
 
 That means you can have masks specific for some IRC servers
-("logger.mask.irc.freenode") or for a plugin ("logger.mask.irc").
+("logger.mask.irc.libera") or for a plugin ("logger.mask.irc").
 
 [[logger_files_by_date]]
 ===== Log files by date
@@ -3412,15 +3412,15 @@ You'll have following files:
 └── logs
     ├── 2010
     │   ├── 11
-    │   │   ├── irc.server.freenode.weechatlog
-    │   │   └── irc.freenode.#weechat.weechatlog
+    │   │   ├── irc.server.libera.weechatlog
+    │   │   └── irc.libera.#weechat.weechatlog
     │   └── 12
-    │       ├── irc.server.freenode.weechatlog
-    │       └── irc.freenode.#weechat.weechatlog
+    │       ├── irc.server.libera.weechatlog
+    │       └── irc.libera.#weechat.weechatlog
     ├── 2011
     │   ├── 01
-    │   │   ├── irc.server.freenode.weechatlog
-    │   │   └── irc.freenode.#weechat.weechatlog
+    │   │   ├── irc.server.libera.weechatlog
+    │   │   └── irc.libera.#weechat.weechatlog
     │   ├── 02
     ...
 ....
@@ -3440,8 +3440,8 @@ You'll have following files:
 ~/.local/share/weechat
 └── logs
     └── irc
-        ├── freenode
-        │   ├── freenode.weechatlog
+        ├── libera
+        │   ├── libera.weechatlog
         │   ├── #weechat.weechatlog
         │   └── #mychan.weechatlog
         ├── oftc
@@ -3578,21 +3578,21 @@ Example: IRC proxy with SSL for any server (client will choose):
 /relay add ssl.irc 8000
 ----
 
-Example: IRC proxy without SSL only for server "freenode":
+Example: IRC proxy without SSL only for server "libera":
 
 ----
-/relay add irc.freenode 8000
+/relay add irc.libera 8000
 ----
 
 Now you can connect on port 8000 with any IRC client using server password
-"mypassword" (or "freenode:mypassword" if no server was specified in the relay).
+"mypassword" (or "libera:mypassword" if no server was specified in the relay).
 
 For example if you use WeeChat as IRC client of the relay, with a server called
 "relay" and the relay password "secret", you can setup the password with this
 command:
 
 ----
-/set irc.server.relay.password "freenode:secret"
+/set irc.server.relay.password "libera:secret"
 ----
 
 [[relay_weechat_protocol]]
@@ -3910,10 +3910,10 @@ on a German channel:
 ----
 
 You can also specify a dictionary for a group of buffers, for example English
-for all channels on freenode IRC server:
+for all channels on libera IRC server:
 
 ----
-/set spell.dict.irc.freenode en
+/set spell.dict.irc.libera en
 ----
 
 For more information, see the command <<command_spell_spell,/spell>>.
@@ -3949,7 +3949,7 @@ integer ≥ 0 and add the bar item "spell_suggest" to a bar, like _status_.
 Example of suggestions with English dictionary (`en`):
 
 ....
-│[12:55] [6] [irc/freenode] 3:#test(+n){4} [print,prone,prune]                    │
+│[12:55] [6] [irc/libera] 3:#test(+n){4} [print,prone,prune]                      │
 │[@Flashy] prinr █                                                                │
 └─────────────────────────────────────────────────────────────────────────────────┘
 ....
@@ -3957,7 +3957,7 @@ Example of suggestions with English dictionary (`en`):
 Example of suggestions with English and French dictionaries (`en,fr`):
 
 ....
-│[12:55] [6] [irc/freenode] 3:#test(+n){4} [print,prone,prune/prime,primer,primé] │
+│[12:55] [6] [irc/libera] 3:#test(+n){4} [print,prone,prune/prime,primer,primé]   │
 │[@Flashy] prinr █                                                                │
 └─────────────────────────────────────────────────────────────────────────────────┘
 ....
@@ -4144,9 +4144,9 @@ The arguments depend on the hook used. They are separated by semicolons.
   3. tags |
   `+formatted+` +
   `+free+` +
-  `+*;irc.freenode.*+` +
-  `+*;irc.freenode.#weechat+` +
-  `+formatted;irc.freenode.#weechat;irc_notice+` |
+  `+*;irc.libera.*+` +
+  `+*;irc.libera.#weechat+` +
+  `+formatted;irc.libera.#weechat;irc_notice+` |
   link:weechat_plugin_api.en.html#_hook_line[hook_line]
 
 | print |
@@ -4154,9 +4154,9 @@ The arguments depend on the hook used. They are separated by semicolons.
   2. tags +
   3. message +
   4. strip colors (0/1) |
-  `+irc.freenode.*+` +
-  `+irc.freenode.#weechat+` +
-  `+irc.freenode.#weechat;irc_notice+` +
+  `+irc.libera.*+` +
+  `+irc.libera.#weechat+` +
+  `+irc.libera.#weechat;irc_notice+` +
   `+*;;;1+` |
   link:weechat_plugin_api.en.html#_hook_print[hook_print]
 
@@ -4360,7 +4360,7 @@ is added in hashtable:
 | Variable             | Type    | Description
 | irc_server           | pointer | Pointer to IRC server (variables in hdata of type "irc_server" can be used, like `+${irc_server.name}+`).
 | irc_channel          | pointer | Pointer to IRC channel (variables in hdata of type "irc_channel" can be used, like `+${irc_channel.name}+`).
-| server               | string  | Name of server (example: "freenode").
+| server               | string  | Name of server (example: "libera").
 | tags                 | string  | Tags in message (rarely used).
 | message_without_tags | string  | Message without tags.
 | nick                 | string  | Nick.
@@ -4721,7 +4721,7 @@ include::includes/autogen_user_options.en.adoc[tag=xfer_options]
 Before asking for support, be sure you've read documentation and FAQ provided
 with WeeChat.
 
-For support with IRC, on server _chat.freenode.net_:
+For support with IRC, on server _irc.libera.chat_:
 
 * official channels (with developers):
 ** _#weechat_ (English)
