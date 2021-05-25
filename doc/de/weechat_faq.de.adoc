@@ -818,8 +818,8 @@ Im folgenden Beispiel muss "xxx" durch den betroffenen Servernamen ersetzt werde
 /set irc.server.xxx.ssl_priorities "NORMAL:-VERS-TLS-ALL:+VERS-TLS1.0:+VERS-SSL3.0:%COMPAT"
 ----
 
-[[irc_ssl_freenode]]
-=== Wie kann ich eine SSL gesicherte Verbindung zum freenode Server herstellen?
+[[irc_ssl_libera]]
+=== Wie kann ich eine SSL gesicherte Verbindung zum libera Server herstellen?
 
 Ab WeeChat ≤ 3.1 kann mit der Option _weechat.network.gnutls_ca_file_ eine Datei mit
 Zertifikaten ausgewählt werden:
@@ -842,9 +842,9 @@ dass die Zertifikate in einer anderen Datei bereitgestellt werden:
 Konfiguration des Servers, Port angeben, SSL aktivieren und Verbindung herstellen:
 
 ----
-/set irc.server.freenode.addresses "chat.freenode.net/7000"
-/set irc.server.freenode.ssl on
-/connect freenode
+/set irc.server.libera.addresses "irc.libera.chat/6697"
+/set irc.server.libera.ssl on
+/connect libera
 ----
 
 [[irc_oauth]]
@@ -871,8 +871,8 @@ ist es ratsam auf diese Funktion zurückzugreifen
 und sich nicht mittels "nickserv" zu authentifizieren:
 
 ----
-/set irc.server.freenode.sasl_username "meinNick"
-/set irc.server.freenode.sasl_password "xxxxxxx"
+/set irc.server.libera.sasl_username "meinNick"
+/set irc.server.libera.sasl_password "xxxxxxx"
 ----
 
 Unterstützt der Server keine SASL Authentifizierung,
@@ -880,7 +880,7 @@ kann eine Verzögerung aktiviert werden,
 um sich vor dem Betreten von Channels bei "nickserv" zu identifizieren:
 
 ----
-/set irc.server.freenode.command_delay 5
+/set irc.server.libera.command_delay 5
 ----
 
 [[edit_autojoin]]
@@ -888,10 +888,10 @@ um sich vor dem Betreten von Channels bei "nickserv" zu identifizieren:
 
 Um die Liste der autojoin Channels zu editieren,
 kann der Befehl `/set` genutzt werden.
-In folgendem Beispiel wird der "freenode"-Server angepasst:
+In folgendem Beispiel wird der "libera"-Server angepasst:
 
 ----
-/set irc.server.freenode.autojoin [TAB]
+/set irc.server.libera.autojoin [TAB]
 ----
 
 [NOTE]
@@ -1091,16 +1091,16 @@ das Skript _buffer_autoset.py_ nutzen:
 ----
 
 Um zum Beispiel Highlights (Hervorhebungen) von Nick "mike" im Channel
-#weechat auf dem IRC Server freenode zu deaktivieren:
+#weechat auf dem IRC Server libera zu deaktivieren:
 
 ----
-/buffer_autoset add irc.freenode.#weechat hotlist_max_level_nicks_add mike:2
+/buffer_autoset add irc.libera.#weechat hotlist_max_level_nicks_add mike:2
 ----
 
-Um dies auf den kompletten freenode Server anzuwenden:
+Um dies auf den kompletten libera Server anzuwenden:
 
 ----
-/buffer_autoset add irc.freenode hotlist_max_level_nicks_add mike:2
+/buffer_autoset add irc.libera hotlist_max_level_nicks_add mike:2
 ----
 
 Für weitere Beispiele, siehe `+/help buffer_autoset+`.
@@ -1281,10 +1281,10 @@ Beispiel:
 
 ----
 /secure passphrase xxxxxxxxxx
-/secure set freenode_username username
-/secure set freenode_password xxxxxxxx
-/set irc.server.freenode.sasl_username "${sec.data.freenode_username}"
-/set irc.server.freenode.sasl_password "${sec.data.freenode_password}"
+/secure set libera_username username
+/secure set libera_password xxxxxxxx
+/set irc.server.libera.sasl_username "${sec.data.libera_username}"
+/set irc.server.libera.sasl_password "${sec.data.libera_password}"
 ----
 
 [[sharing_config_files]]

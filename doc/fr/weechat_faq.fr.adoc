@@ -790,8 +790,8 @@ seulement), remplacez "xxx" par le nom de votre serveur :
 /set irc.server.xxx.ssl_priorities "NORMAL:-VERS-TLS-ALL:+VERS-TLS1.0:+VERS-SSL3.0:%COMPAT"
 ----
 
-[[irc_ssl_freenode]]
-=== Comment puis-je me connecter à freenode avec SSL ?
+[[irc_ssl_libera]]
+=== Comment puis-je me connecter à libera avec SSL ?
 
 Avec WeeChat ≤ 3.1, positionnez l'option _weechat.network.gnutls_ca_file_ avec
 le fichier des certificats :
@@ -814,9 +814,9 @@ Vérifiez que vous avez bien ce fichier (fourni généralement par le paquet
 Configurez le port du serveur, SSL, puis connectez-vous :
 
 ----
-/set irc.server.freenode.addresses "chat.freenode.net/7000"
-/set irc.server.freenode.ssl on
-/connect freenode
+/set irc.server.libera.addresses "irc.libera.chat/6697"
+/set irc.server.libera.ssl on
+/connect libera
 ----
 
 [[irc_oauth]]
@@ -841,25 +841,25 @@ Si le serveur supporte SASL, vous devriez l'utiliser au lieu d'envoyer une
 commande pour l'authentification avec nickserv, par exemple :
 
 ----
-/set irc.server.freenode.sasl_username "mynick"
-/set irc.server.freenode.sasl_password "xxxxxxx"
+/set irc.server.libera.sasl_username "mynick"
+/set irc.server.libera.sasl_password "xxxxxxx"
 ----
 
 Si le serveur ne supporte pas SASL, vous pouvez ajouter un délai (entre la
 commande et le join des canaux) :
 
 ----
-/set irc.server.freenode.command_delay 5
+/set irc.server.libera.command_delay 5
 ----
 
 [[edit_autojoin]]
 === Comment puis-je ajouter/supprimer des canaux de l'option autojoin ?
 
 Vous pouvez utiliser la commande `/set` pour éditer la liste des canaux de
-l'autojoin, par exemple pour le serveur freenode :
+l'autojoin, par exemple pour le serveur libera :
 
 ----
-/set irc.server.freenode.autojoin [TAB]
+/set irc.server.libera.autojoin [TAB]
 ----
 
 [NOTE]
@@ -1039,16 +1039,16 @@ du script _buffer_autoset.py_ :
 ----
 
 Par exemple, pour désactiver de manière permanente les highlights de "mike" sur
-#weechat sur le serveur IRC freenode :
+#weechat sur le serveur IRC libera :
 
 ----
-/buffer_autoset add irc.freenode.#weechat hotlist_max_level_nicks_add mike:2
+/buffer_autoset add irc.libera.#weechat hotlist_max_level_nicks_add mike:2
 ----
 
-Pour l'appliquer à l'ensemble du serveur freenode :
+Pour l'appliquer à l'ensemble du serveur libera :
 
 ----
-/buffer_autoset add irc.freenode hotlist_max_level_nicks_add mike:2
+/buffer_autoset add irc.libera hotlist_max_level_nicks_add mike:2
 ----
 
 Pour plus d'exemples, voir `+/help buffer_autoset+`.
@@ -1233,10 +1233,10 @@ Par exemple :
 
 ----
 /secure passphrase xxxxxxxxxx
-/secure set freenode_username username
-/secure set freenode_password xxxxxxxx
-/set irc.server.freenode.sasl_username "${sec.data.freenode_username}"
-/set irc.server.freenode.sasl_password "${sec.data.freenode_password}"
+/secure set libera_username username
+/secure set libera_password xxxxxxxx
+/set irc.server.libera.sasl_username "${sec.data.libera_username}"
+/set irc.server.libera.sasl_password "${sec.data.libera_password}"
 ----
 
 [[sharing_config_files]]
