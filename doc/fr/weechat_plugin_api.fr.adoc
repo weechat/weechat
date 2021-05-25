@@ -2813,7 +2813,7 @@ première étendue à la dernière) :
 
 | `+${sec.data.nom}+` |
   Valeur de la donnée sécurisée `nom`. |
-  `+${sec.data.freenode_pass}+` |
+  `+${sec.data.libera_pass}+` |
   `+mon_mot_de_passe+`
 
 | `+${fichier.section.option}+` |
@@ -9873,8 +9873,8 @@ de hachage, avec les valeurs suivantes (les clés et valeurs sont des chaînes)�
   Nom du tampon. |
   Nom du tampon. |
   `+core.weechat+` +
-  `+irc.server.freenode+` +
-  `+irc.freenode.#weechat+`
+  `+irc.server.libera+` +
+  `+irc.libera.#weechat+`
 
 | buffer_type |
   "formatted" |
@@ -11294,26 +11294,26 @@ Exemples en C :
 
 [source,C]
 ----
-/* dis "Bonjour !" sur le serveur freenode, canal #weechat */
+/* dis "Bonjour !" sur le serveur libera, canal #weechat */
 weechat_hook_signal_send ("irc_input_send", WEECHAT_HOOK_SIGNAL_STRING,
-                          "freenode;#weechat;priority_high,user_message;;Bonjour !");
+                          "libera;#weechat;priority_high,user_message;;Bonjour !");
 
-/* envoie la commande "/whois FlashCode" sur le canal freenode, en basse priorité */
+/* envoie la commande "/whois FlashCode" sur le canal libera, en basse priorité */
 weechat_hook_signal_send ("irc_input_send", WEECHAT_HOOK_SIGNAL_STRING,
-                          "freenode;;priority_low;;/whois FlashCode");
+                          "libera;;priority_low;;/whois FlashCode");
 ----
 
 Script (Python) :
 
 [source,python]
 ----
-# dis "Bonjour !" sur le serveur freenode, canal #weechat
+# dis "Bonjour !" sur le serveur libera, canal #weechat
 weechat.hook_signal_send("irc_input_send", weechat.WEECHAT_HOOK_SIGNAL_STRING,
-                         "freenode;#weechat;priority_high,user_message;;Bonjour !")
+                         "libera;#weechat;priority_high,user_message;;Bonjour !")
 
-# envoie la commande "/whois FlashCode" sur le canal freenode, en basse priorité
+# envoie la commande "/whois FlashCode" sur le canal libera, en basse priorité
 weechat.hook_signal_send("irc_input_send", weechat.WEECHAT_HOOK_SIGNAL_STRING,
-                         "freenode;;priority_low;;/whois FlashCode")
+                         "libera;;priority_low;;/whois FlashCode")
 ----
 
 ==== hook_hsignal
@@ -11595,13 +11595,13 @@ struct t_hashtable *hashtable = weechat_hashtable_new (8,
                                                        NULL);
 if (hashtable)
 {
-    weechat_hashtable_set (hashtable, "server", "freenode");
+    weechat_hashtable_set (hashtable, "server", "libera");
     weechat_hashtable_set (hashtable, "pattern", "whois");
     weechat_hashtable_set (hashtable, "signal", "test");
     weechat_hashtable_set (hashtable, "string", "FlashCode");
     weechat_hook_hsignal_send ("irc_redirect_command", hashtable);
     weechat_hook_signal_send ("irc_input_send", WEECHAT_HOOK_SIGNAL_STRING,
-                              "freenode;;2;;/whois FlashCode");
+                              "libera;;2;;/whois FlashCode");
     weechat_hashtable_free (hashtable);
 }
 ----
@@ -11617,10 +11617,10 @@ def test_whois_cb(data, signal, hashtable):
 
 weechat.hook_hsignal("irc_redirection_test_whois", "test_whois_cb", "")
 weechat.hook_hsignal_send("irc_redirect_command",
-                          {"server": "freenode", "pattern": "whois", "signal": "test",
+                          {"server": "libera", "pattern": "whois", "signal": "test",
                            "string": "FlashCode"})
 weechat.hook_signal_send("irc_input_send", weechat.WEECHAT_HOOK_SIGNAL_STRING,
-                         "freenode;;2;;/whois FlashCode")
+                         "libera;;2;;/whois FlashCode")
 ----
 
 [[hsignal_irc_redirect_pattern]]
@@ -12476,10 +12476,10 @@ valeurs sont de type "string") :
   "core", "irc", ... | ""
 
 | _buffer_name | Nom du tampon. |
-  "weechat", "freenode.#weechat", ... | ""
+  "weechat", "libera.#weechat", ... | ""
 
 | _buffer_full_name | Nom complet du tampon. |
-  "core.weechat", "irc.freenode.#weechat", ... | ""
+  "core.weechat", "irc.libera.#weechat", ... | ""
 
 | _buffer_localvar_XXX ^(2)^ | Variables locales du tampon. |
   toute chaîne | non défini
@@ -12922,7 +12922,7 @@ Paramètres :
 
 * _plugin_ : nom de l'extension, la valeur spéciale suivante est autorisée :
 ** `+==+` : le nom utilisé est le nom complet du tampon (par exemple :
-   `irc.freenode.#weechat` au lieu de `freenode.#weechat`)
+   `irc.libera.#weechat` au lieu de `libera.#weechat`)
    _(WeeChat ≥ 1.0)_
 * _name_ : nom du tampon, si c'est NULL ou une chaîne vide, le tampon courant
   est retourné (tampon affiché par la fenêtre courante); si le nom commence par
@@ -12936,8 +12936,8 @@ Exemples en C :
 
 [source,C]
 ----
-struct t_gui_buffer *buffer1 = weechat_buffer_search ("irc", "freenode.#weechat");
-struct t_gui_buffer *buffer2 = weechat_buffer_search ("==", "irc.freenode.#test");  /* WeeChat ≥ 1.0 */
+struct t_gui_buffer *buffer1 = weechat_buffer_search ("irc", "libera.#weechat");
+struct t_gui_buffer *buffer2 = weechat_buffer_search ("==", "irc.libera.#test");  /* WeeChat ≥ 1.0 */
 ----
 
 Script (Python) :
@@ -13705,12 +13705,12 @@ Exemple en C :
 
 [source,C]
 ----
-struct t_gui_buffer *buffer = weechat_buffer_search ("irc", "freenode.#weechat");
+struct t_gui_buffer *buffer = weechat_buffer_search ("irc", "libera.#weechat");
 if (buffer)
 {
     weechat_printf (NULL, "%d", weechat_buffer_match_list (buffer, "*"));                    /* 1 */
     weechat_printf (NULL, "%d", weechat_buffer_match_list (buffer, "*,!*#weechat*"));        /* 0 */
-    weechat_printf (NULL, "%d", weechat_buffer_match_list (buffer, "irc.freenode.*"));       /* 1 */
+    weechat_printf (NULL, "%d", weechat_buffer_match_list (buffer, "irc.libera.*"));       /* 1 */
     weechat_printf (NULL, "%d", weechat_buffer_match_list (buffer, "irc.oftc.*,python.*"));  /* 0 */
 }
 ----
@@ -13723,11 +13723,11 @@ Script (Python) :
 def buffer_match_list(buffer: str, string: str) -> int: ...
 
 # exemple
-buffer = weechat.buffer_search("irc", "freenode.#weechat")
+buffer = weechat.buffer_search("irc", "libera.#weechat")
 if buffer:
     weechat.prnt("", "%d" % weechat.buffer_match_list(buffer, "*"))                    # 1
     weechat.prnt("", "%d" % weechat.buffer_match_list(buffer, "*,!*#weechat*"))        # 0
-    weechat.prnt("", "%d" % weechat.buffer_match_list(buffer, "irc.freenode.*"))       # 1
+    weechat.prnt("", "%d" % weechat.buffer_match_list(buffer, "irc.libera.*"))       # 1
     weechat.prnt("", "%d" % weechat.buffer_match_list(buffer, "irc.oftc.*,python.*"))  # 0
 ----
 
@@ -15309,7 +15309,7 @@ Exemple en C :
 [source,C]
 ----
 int rc;
-rc = weechat_command (weechat_buffer_search ("irc", "freenode.#weechat"),
+rc = weechat_command (weechat_buffer_search ("irc", "libera.#weechat"),
                       "/whois FlashCode");
 ----
 
@@ -15321,7 +15321,7 @@ Script (Python) :
 def command(buffer: str, command: str) -> int: ...
 
 # exemple
-rc = weechat.command(weechat.buffer_search("irc", "freenode.#weechat"), "/whois FlashCode")
+rc = weechat.command(weechat.buffer_search("irc", "libera.#weechat"), "/whois FlashCode")
 ----
 
 ==== command_options
@@ -15645,7 +15645,7 @@ Exemple en C :
 
 [source,C]
 ----
-if (weechat_network_pass_proxy ("mon_proxy", sock, "chat.freenode.net", 6667))
+if (weechat_network_pass_proxy ("mon_proxy", sock, "irc.libera.chat", 6667))
 {
     /* OK */
 }
@@ -17501,8 +17501,8 @@ Exemple en C :
 struct t_hdata *hdata = weechat_hdata_get ("irc_server");
 void *servers = weechat_hdata_get_list (hdata, "irc_servers");
 
-/* cherche un serveur irc avec le nom "freenode" */
-void *server = weechat_hdata_search (hdata, servers, "${irc_server.name} == freenode", 1);
+/* cherche un serveur irc avec le nom "libera" */
+void *server = weechat_hdata_search (hdata, servers, "${irc_server.name} == libera", 1);
 if (server)
 {
     /* ... */
@@ -17520,8 +17520,8 @@ def hdata_search(hdata: str, pointer: str, search: str, count: int) -> str: ...
 hdata = weechat.hdata_get("irc_server")
 servers = weechat.hdata_get_list(hdata, "irc_servers")
 
-# cherche un serveur irc avec le nom "freenode"
-server = weechat.hdata_search(hdata, servers, "${irc_server.name} == freenode", 1)
+# cherche un serveur irc avec le nom "libera"
+server = weechat.hdata_search(hdata, servers, "${irc_server.name} == libera", 1)
 if server:
     # ...
 ----
@@ -17915,8 +17915,8 @@ Exemple en C :
 [source,C]
 ----
 struct t_hdata *hdata = weechat_hdata_get ("buffer");
-struct t_gui_buffer *buffer1 = weechat_buffer_search ("irc", "freenode.#weechat");
-struct t_gui_buffer *buffer2 = weechat_buffer_search ("irc", "freenode.#weechat-fr");
+struct t_gui_buffer *buffer1 = weechat_buffer_search ("irc", "libera.#weechat");
+struct t_gui_buffer *buffer2 = weechat_buffer_search ("irc", "libera.#weechat-fr");
 weechat_printf (NULL, "comparaison de numéro = %d", weechat_hdata_compare (hdata, buffer1, buffer2, "number", 0));
 ----
 
@@ -17929,8 +17929,8 @@ def hdata_compare(hdata: str, pointer1: str, pointer2: str, name: str, case_sens
 
 # exemple
 hdata = weechat.hdata_get("buffer")
-buffer1 = weechat.buffer_search("irc", "freenode.#weechat")
-buffer2 = weechat.buffer_search("irc", "freenode.#weechat-fr")
+buffer1 = weechat.buffer_search("irc", "libera.#weechat")
+buffer2 = weechat.buffer_search("irc", "libera.#weechat-fr")
 weechat.prnt("", "comparaison de numéro = %d" % weechat.hdata_compare(hdata, buffer1, buffer2, "number", 0))
 ----
 
