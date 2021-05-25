@@ -141,7 +141,7 @@ prahle vor Anderen, dass Du die neueste WeeChat-Version verwendest :)
 
 Solltest Du nun ein merkwürdiges Verhalten bemerken (es können diverse Probleme
 oder Abstürze auftreten oder einfach Dein Bier überkochen) zögere nicht, komme
-in den Channel _#weechat_ auf _chat.freenode.net_ (A.d.Ü.: englischsprachig) und
+in den Channel _#weechat_ auf _irc.libera.chat_ (A.d.Ü.: englischsprachig) und
 berichte uns darüber.
 
 Auch falls alles korrekt funktionieren sollte gib uns trotzdem Bescheid, wir

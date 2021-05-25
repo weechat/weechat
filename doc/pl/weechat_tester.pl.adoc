@@ -134,6 +134,6 @@ z posiadania najnowszej możliwej wersji WeeChat. ;)
 
 Teraz jeśli zaobserwujesz dziwne zachowanie (może sprawiać problemy, ulec awarii
 lub zagotować Twoje piwo) nie wahaj się wejść na kanał _#weechat_ na serwerze
-_chat.freenode.net_ i nam o tym opowiedzieć.
+_irc.libera.chat_ i nam o tym opowiedzieć.
 
 Jeśli wszystko będzie w porządku - też nam o tym powiedz, potrzebujemy Twojej opinii!
