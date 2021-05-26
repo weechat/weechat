@@ -3070,12 +3070,14 @@ $ openssl ec -noout -text -conv_form compressed -in ~/.config/weechat/ecdsa.pem 
 /reconnect libera
 ----
 
-[[irc_tor_freenode]]
-==== TOR/SASL を使って Freenode に接続する場合
+// TRANSLATION MISSING
+[[irc_tor_sasl]]
+==== Connect with TOR and SASL
 
-SSL に加えて、Freenode サーバは TOR (https://www.torproject.org/)
-経由の接続をサポートしています。TOR
-とはバーチャルトンネルのネットワークで、これを使うことで個人やグループがインターネット利用に伴うプライバシーとセキュリティを向上させることができます。
+// TRANSLATION MISSING
+Some servers support connections with TOR (https://www.torproject.org/),
+a network of virtual tunnels that allows people and groups to improve their
+privacy and security on the Internet.
 
 最初に、TOR をインストールしてください。Debian (とその派生ディストリビューション) の場合:
 
@@ -3090,40 +3092,34 @@ WeeChat で TOR サービスを使った socks5 プロキシを作成してく�
 /proxy add tor socks5 127.0.0.1 9050
 ----
 
-そして、新しいサーバを追加します。例えば:
-
-----
-/server add freenode-tor ajnvpgl6prmkb7yktvue6im5wiedlz2w32uhcwaamdiecdrfpwwgnlqd.onion
-----
-
 // TRANSLATION MISSING
-[NOTE]
-If you are using an old version of TOR (before 0.3.5) you should use the address
-`freenodeok2gncmy.onion` instead.
+Now, add a new server (replace server name "irc-tor" and the address by a valid one):
+
+----
+/server add irc-tor this.is.the.address.onion
+----
 
 TOR プロキシを設定:
 
 ----
-/set irc.server.freenode-tor.proxy "tor"
+/set irc.server.irc-tor.proxy "tor"
 ----
 
 ECDSA-NIST256P-CHALLENGE メカニズムで SASL 認証を設定 (秘密鍵を作成するには
 <<irc_sasl_ecdsa_nist256p_challenge,SASL ECDSA-NIST256P-CHALLENGE 認証>>を参照してください):
 
 ----
-/set irc.server.freenode-tor.sasl_mechanism ecdsa-nist256p-challenge
-/set irc.server.freenode-tor.sasl_username "your_nickname"
-/set irc.server.freenode-tor.sasl_key "${weechat_config_dir}/ecdsa.pem"
+/set irc.server.irc-tor.sasl_mechanism ecdsa-nist256p-challenge
+/set irc.server.irc-tor.sasl_username "your_nickname"
+/set irc.server.irc-tor.sasl_key "${weechat_config_dir}/ecdsa.pem"
 ----
 
-最後に、サーバに接続してください:
+// TRANSLATION MISSING
+And finally, connect to the server:
 
 ----
-/connect freenode-tor
+/connect irc-tor
 ----
-
-Freenode と TOR に関するより詳しい情報:
-https://freenode.net/kb/answer/chat#accessing-freenode-via-tor
 
 [[irc_smart_filter_join_part_quit]]
 ==== 参加/退出/終了メッセージに対するスマートフィルタ

@@ -3043,12 +3043,14 @@ Erneut mit dem Server verbinden:
 /reconnect libera
 ----
 
-[[irc_tor_freenode]]
-==== Verbindung zu Freenode mittels TOR/SASL herstellen
+// TRANSLATION MISSING
+[[irc_tor_sasl]]
+==== Connect with TOR and SASL
 
-Neben der Möglichkeit eine Verbindung zum Freenode Server mittels SSL aufzubauen,
-kann man außerdem eine Verbindung via TOR (https://www.torproject.org/) herstellen.
-Dies dient dazu die eigene Privatsphäre und Sicherheit im Internet zu erhöhen.
+// TRANSLATION MISSING
+Some servers support connections with TOR (https://www.torproject.org/),
+a network of virtual tunnels that allows people and groups to improve their
+privacy and security on the Internet.
 
 Im ersten Schritt muss TOR installiert werden. Für Debian (und Derivate):
 
@@ -3063,20 +3065,17 @@ und Port müssen dabei an die eigene TOR Konfiguration angepasst werden):
 /proxy add tor socks5 127.0.0.1 9050
 ----
 
-Jetzt muss der neue Server hinzufügt werden, zum Beispiel:
+// TRANSLATION MISSING
+Now, add a new server (replace server name "irc-tor" and the address by a valid one):
 
 ----
-/server add freenode-tor ajnvpgl6prmkb7yktvue6im5wiedlz2w32uhcwaamdiecdrfpwwgnlqd.onion
+/server add irc-tor this.is.the.address.onion
 ----
-
-[NOTE]
-Sollte eine alte Version (vor 0.3.5) von TOR verwendet werden, muss diese
-Adresse, `freenodeok2gncmy.onion`, genutzt werden.
 
 Einen Proxy für TOR anlegen:
 
 ----
-/set irc.server.freenode-tor.proxy "tor"
+/set irc.server.irc-tor.proxy "tor"
 ----
 
 SASL Authentifikation mit ECDSA-NIST256P-CHALLENGE nutzen (siehe Kapitel
@@ -3084,19 +3083,17 @@ SASL Authentifikation mit ECDSA-NIST256P-CHALLENGE nutzen (siehe Kapitel
 privaten Schlüssel zu generieren):
 
 ----
-/set irc.server.freenode-tor.sasl_mechanism ecdsa-nist256p-challenge
-/set irc.server.freenode-tor.sasl_username "your_nickname"
-/set irc.server.freenode-tor.sasl_key "${weechat_config_dir}/ecdsa.pem"
+/set irc.server.irc-tor.sasl_mechanism ecdsa-nist256p-challenge
+/set irc.server.irc-tor.sasl_username "your_nickname"
+/set irc.server.irc-tor.sasl_key "${weechat_config_dir}/ecdsa.pem"
 ----
 
-Zum Abschluss stellt man eine Verbindung zum Server her:
+// TRANSLATION MISSING
+And finally, connect to the server:
 
 ----
-/connect freenode-tor
+/connect irc-tor
 ----
-
-Um mehr über Freenode und TOR zu erfahren:
-https://freenode.net/kb/answer/chat#accessing-freenode-via-tor
 
 [[irc_smart_filter_join_part_quit]]
 ==== einfacher Filter für join/part/quit Nachrichten

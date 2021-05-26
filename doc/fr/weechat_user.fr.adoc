@@ -3093,12 +3093,12 @@ Reconnectez-vous au serveur :
 /reconnect libera
 ----
 
-[[irc_tor_freenode]]
-==== Connexion à Freenode avec TOR/SASL
+[[irc_tor_sasl]]
+==== Connexion avec TOR et SASL
 
-En plus du SSL, les serveurs Freenode supportent les connexions avec TOR
-(https://www.torproject.org/), un réseau de tunnels virtuels qui permet aux
-personnes et groupes d'améliorer leur vie privée et sécurité sur Internet.
+Quelques serveurs acceptent les connexions avec TOR (https://www.torproject.org/),
+un réseau de tunnels virtuels qui permet aux personnes et groupes d'améliorer
+leur vie privée et sécurité sur Internet.
 
 En premier lieu, installez TOR. Pour Debian (et dérivés) :
 
@@ -3113,20 +3113,17 @@ et port dépend de votre configuration de TOR) :
 /proxy add tor socks5 127.0.0.1 9050
 ----
 
-Maintenant, ajoutez un nouveau serveur, par exemple :
+Maintenant, ajouter un nouveau serveur (remplacez le nom du serveur "irc-tor" et
+l'adresse par une valide) :
 
 ----
-/server add freenode-tor ajnvpgl6prmkb7yktvue6im5wiedlz2w32uhcwaamdiecdrfpwwgnlqd.onion
+/server add irc-tor this.is.the.address.onion
 ----
-
-[NOTE]
-Si vous utilisez une ancienne version de TOR (avant 0.3.5) vous devriez plutôt
-utiliser l'adresse `freenodeok2gncmy.onion`.
 
 Définissez le proxy pour TOR :
 
 ----
-/set irc.server.freenode-tor.proxy "tor"
+/set irc.server.irc-tor.proxy "tor"
 ----
 
 Définissez l'authentification SASL avec ECDSA-NIST256P-CHALLENGE (voir le
@@ -3134,19 +3131,16 @@ chapitre <<irc_sasl_ecdsa_nist256p_challenge,SASL ECDSA-NIST256P-CHALLENGE>>
 pour générer une clé privée) :
 
 ----
-/set irc.server.freenode-tor.sasl_mechanism ecdsa-nist256p-challenge
-/set irc.server.freenode-tor.sasl_username "votre_pseudo"
-/set irc.server.freenode-tor.sasl_key "${weechat_config_dir}/ecdsa.pem"
+/set irc.server.irc-tor.sasl_mechanism ecdsa-nist256p-challenge
+/set irc.server.irc-tor.sasl_username "your_nickname"
+/set irc.server.irc-tor.sasl_key "${weechat_config_dir}/ecdsa.pem"
 ----
 
-Et enfin, la connexion au serveur :
+Et enfin, connectez-vous au serveur :
 
 ----
-/connect freenode-tor
+/connect irc-tor
 ----
-
-Pour plus d'informations à propos de Freenode et TOR :
-https://freenode.net/kb/answer/chat#accessing-freenode-via-tor
 
 [[irc_smart_filter_join_part_quit]]
 ==== Filtre intelligent pour les messages join/part/quit
