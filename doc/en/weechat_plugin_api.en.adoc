@@ -10823,7 +10823,7 @@ List of signals sent by WeeChat and plugins:
 | weechat |
   [[hook_signal_window_zoom]] window_zoom |
   Pointer: current window. |
-  Zomming window.
+  Zooming window.
 
 | weechat |
   [[hook_signal_window_zoomed]] window_zoomed |
