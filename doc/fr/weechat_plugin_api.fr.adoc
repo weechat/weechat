@@ -10762,6 +10762,18 @@ Liste des signaux envoyés par WeeChat et les extensions :
   Fin du zoom sur un tampon mélangé.
 
 | weechat |
+  [[hook_signal_cursor_start]] cursor_start +
+  _(WeeChat ≥ 3.2)_ |
+  - |
+  Début du mode curseur.
+
+| weechat |
+  [[hook_signal_cursor_end]] cursor_end +
+  _(WeeChat ≥ 3.2)_ |
+  - |
+  Fin du mode curseur.
+
+| weechat |
   [[hook_signal_day_changed]] day_changed +
   _(WeeChat ≥ 0.3.2)_ |
   Chaîne : nouvelle date, format : "2010-01-31". |

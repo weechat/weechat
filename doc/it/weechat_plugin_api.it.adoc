@@ -10932,6 +10932,20 @@ List of signals sent by WeeChat and plugins:
   Puntatore: buffer. |
   Merged buffer unzoomed.
 
+// TRANSLATION MISSING
+| weechat |
+  [[hook_signal_cursor_start]] cursor_start +
+  _(WeeChat ≥ 3.2)_ |
+  - |
+  Start cursor mode.
+
+// TRANSLATION MISSING
+| weechat |
+  [[hook_signal_cursor_end]] cursor_end +
+  _(WeeChat ≥ 3.2)_ |
+  - |
+  End cursor mode.
+
 | weechat |
   [[hook_signal_day_changed]] day_changed +
   _(WeeChat ≥ 0.3.2)_ |
