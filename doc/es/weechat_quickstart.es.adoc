@@ -7,57 +7,53 @@
 :docinfo1:
 
 
-// TRANSLATION MISSING
-Translators:
+Traductores:
 
 * Lázaro A. <uranio-235@myopera.com>, 2012
-
+* Victorhck <victorhck@mailbox.org>, 2021
 
 [[start]]
 == Iniciar WeeChat
 
-Es recomendable una terminal emulada para X (pero no indispensable)
+Es recomendable un emulador de terminal para X (pero no indispensable)
 rxvt-unicode: tiene un buen soporte para UTF-8, y no da problemas con
-los atajas de teclados predeterminados.
+los atajos de teclado predeterminados.
 
-// TRANSLATION MISSING
-Run from your shell:
+Ejecuta desde una consola:
 
 ----
 $ weechat
 ----
 
 [[help]]
-== Ayuda en linea
+== Ayuda en línea
 
-WeeChat tiene ayuda para todos los comandos, solo teclee:
+WeeChat tiene ayuda para todos los comandos, simplemente escriba:
 
 ----
 /help
 ----
 
-Para obtener ayuda específicamente de un comando, teclee:
+Para obtener ayuda específica de un comando, escriba:
 
 ----
 /help comando
 ----
 
-// TRANSLATION MISSING
-Help is available for options as well:
+También hay ayuda disponible para las opciones:
 
 ----
 /help config.section.option
 ----
 
 (donde `config` es el nombre de la configuración del núcleo o del
-plugin que desea configurar,  `section`, la sección de esa configuración
+complemento que desea configurar,  `section`, la sección de esa configuración
 y `option` el nombre de la opción).
 
-// TRANSLATION MISSING
 [[options]]
-== Set options
+== Configurar las opciones
 
-Para configurar una opción, use:
+Para configurar una opción, utilice:
 
 ----
 /set config.section.option valor
@@ -66,46 +62,41 @@ Para configurar una opción, use:
 WeeChat usará inmediatamente el nuevo valor asignado (*no* es necesario
 reiniciar WeeChat después de aplicar cambios a la configuración).
 
-Todas las opciones se salvarán de manera automática cuando cierre
-WeeChat o usando el comando `/save` para forzar la forzar a WeeChat a
+Todas las opciones se guardarán de manera automática cuando cierre
+WeeChat o usando el comando `/save` para forzar a WeeChat a
 guardar todos los archivos de configuración.
 
 // TRANSLATION MISSING
 [IMPORTANT]
-It is *not recommended* to edit configuration files by hand because WeeChat
-may write them at any time (for example on `/quit`) and after any change
-you must run the command `/reload` (with the risk of losing other changes
-that were not yet saved with `/save`). +
-You can use the command `/set`, which checks the value and applies immediately
-the changes.
+*No se recomienda* editar los archivos de configuración a mano porque WeeChat
+puede escribirlos en cualquier momento (por ejemplo al ejecutar `/quit`) y después de cualquier cambio
+debería ejecutar el comando `/reload` (con el riesgo de perder otros cambios
+que todavía no fueron guardados con `/save`). +
+Puede utilizar el comando `/set`, que comprueba el valor y aplica inmediatamente
+los cambios.
 
-// TRANSLATION MISSING
-The plugin _fset_ allows you to easily browse options and change them.
+El complemento _fset_ le permite navegar fácilmente por las opciones y cambiarlas.
 
-// TRANSLATION MISSING
-For example to display WeeChat options:
+Por ejemplo para mostrar las opciones de WeeChat:
 
 ----
 /fset weechat.*
 ----
 
-// TRANSLATION MISSING
-IRC options:
+Opciones de IRC:
 
 ----
 /fset irc.*
 ----
 
-// TRANSLATION MISSING
-The `/fset` command has completion on part of option names, so for example if
-you type `/fset hot` and press kbd:[Tab] this is completed as `/fset hotlist`.
-If you press kbd:[Enter], options about the hotlist are displayed.
+El comando `/fset` dispone de autocompletado de parte de los nombres de opciones, así por ejemplo si
+escribe `/fset hot` y presiona kbd:[Tab] el resto del comando será autocompletado como `/fset hotlist`.
+Si pulsa kbd:[Enter], se mostrarán las opciones sobre los atajos de teclado.
 
-// TRANSLATION MISSING
-For more information about `/fset` command and keys, see `/help fset`.
+Para más información sobre el comando `/fset` y las teclas, vea `/help fset`.
 
 [[core_vs_plugins]]
-== Núcleo vs Plugins
+== Núcleo vs Complementos
 
 Llamaremos "Núcleo de WeeChat" a la aplicación que solo se usa para
 mostrar información en pantalla e interactuar con el usuario, eso es lo
