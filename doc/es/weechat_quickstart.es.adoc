@@ -100,32 +100,29 @@ Para más información sobre el comando `/fset` y las teclas, vea `/help fset`.
 
 Llamaremos "Núcleo de WeeChat" a la aplicación que solo se usa para
 mostrar información en pantalla e interactuar con el usuario, eso es lo
-único que hace el núcleo de WeeChat sin no tiene plugins. (para los
+único que hace el núcleo de WeeChat sin no tiene complementos. (para los
 fieles seguidores: IRC fue parte del núcleo para las versiones ≤
 0.2.6).
 
-Todos los protocolos de red como IRC, provienen en plugins separados.
+Todos los protocolos de red como IRC, provienen de complementos separados.
 
-Use el comando `/plugin` para ver una lista de los plugins cargados,
+Use el comando `/plugin` para ver una lista de los complementos cargados,
 seguramente vera irc y otros.
 
-// TRANSLATION MISSING
 [[add_irc_server]]
-== Add an IRC server
+== Añadir un servidor IRC
 
-// TRANSLATION MISSING
-You can add an IRC server with `/server` command, for example:
+Puede añadir un servidor IRC mediante el comando `/server`, por ejemplo:
 
 ----
 /server add libera irc.libera.chat/6697 -ssl
 ----
 
-// TRANSLATION MISSING
-In this command, `libera` is the internal server name used by WeeChat:
-you'll be able to connect with `/connect libera` and the server options
-are _irc.server.libera.xxx_.
+En este comando, `libera` es el nombre interno del servidor utilizado por WeeChat:
+más tarde podrá conectar con ese servidor mediante `/connect libera` y las opciones del servidor
+serán _irc.server.libera.xxx_.
 
-La ayuda está disponible; si te pierdes:
+Si se encuentra perdido, puede consultar la ayuda disponible:
 
 ----
 /help server
@@ -134,9 +131,9 @@ La ayuda está disponible; si te pierdes:
 [[irc_server_options]]
 == Personalizar las opciones de un servidor IRC
 
-WeeChat usa las opciones por defecto para todos los servidores
+WeeChat usa las opciones predeterminadas para todos los servidores
 ("predeterminado") si no le especifica un valor individual a un servidor
-en específico. Esas opciones por defectos son las que se muestran en
+en específico. Esas opciones predeterminadas son las que se muestran en
 "irc.server_default.*"
 
 Para cada opción de "server", WeeChat usa estos valores previamente
@@ -164,30 +161,26 @@ Para que el servidor se conecte cuando WeeChat inicie:
 /set irc.server.libera.autoconnect on
 ----
 
-// TRANSLATION MISSING
-If SASL is available on server, you can use it for authentication (you will be
-identified before you join channels):
+Si la opción SASL está disponible en el servidor, puede utilizarla para autentificarse (será
+identificado o identificada antes de unirse a los canales):
 
 ----
 /set irc.server.libera.sasl_username "nick"
 /set irc.server.libera.sasl_password "xxxxxxx"
 ----
 
-// TRANSLATION MISSING
-To run a command after connection to server, for example to authenticate
-with nickserv (only if you don't use SASL for authentication):
+Para ejecutar un comando después de conectarse al servidor, por ejemplo autentificarse
+con el servicio de identificación de nicks nickserv (solo si no utiliza SASL para autentificarse):
 
 ----
 /set irc.server.libera.command "/msg nickserv identify xxxxxxx"
 ----
 
-// TRANSLATION MISSING
 [NOTE]
-Many commands in option _command_ can be separated by `;` (semi-colon).
+Muchos comandos en la opción _command_ pueden ser separados por `;` (punto y coma).
 
-// TRANSLATION MISSING
-If you want to protect your password in configuration files, you can use
-secured data.
+Si quiere proteger su contraseña en los archivos de configuración, puede utilizar
+una securización de los datos.
 
 // TRANSLATION MISSING
 First setup a passphrase:
