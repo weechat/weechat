@@ -122,15 +122,15 @@ por favor, compruebe que *todos* sus ajustes (terminal, screen, ..) también est
 y *no* en UTF-8.
 
 [[unicode_chars]]
-=== Some unicode chars are displayed in terminal but not in WeeChat, why?
+=== Algunos caracteres unicode se muestran en la terminal pero no en WeeChat, ¿por qué?
 
-This may be caused by a libc bug in function _wcwidth_, which should be fixed
-in glibc 2.22 (maybe not yet available in your distribution).
+Esto puede estar causado por un error en libc en la función _wcwidth_, que debería estar solucionado
+en glibc 2.22 (quizás todavía no está disponible en su distribución).
 
-There is a workaround to use the fixed _wcwidth_ function:
+Hay una solución temporal que es utilizar una función de _wcwidth_ sin ese error:
 https://blog.nytsoi.net/2015/05/04/emoji-support-for-weechat
 
-See this bug report for more information:
+Vea este reporte de error para más información:
 https://github.com/weechat/weechat/issues/79
 
 [[bars_background]]
