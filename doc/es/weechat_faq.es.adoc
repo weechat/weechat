@@ -88,38 +88,38 @@ Se recomienda a las personas recién llegadas leer la
 link:weechat_quickstart.es.html[guía rápida].
 
 [[display]]
-== Display
+== Visualización
 
 [[charset]]
-=== I don't see some chars with accents, what can I do?
+=== No veo algunos caracteres con acentos ¿qué puedo hacer?
 
-It's a common issue with a variety of causes, please read carefully and check
-*ALL* solutions below:
+Es un problema común con una variedad de causas, por favor lea detenidamente y compruebe
+*TODAS* las soluciones que se muestran a continuación:
 
-* Check that weechat is linked to libncursesw (warning: needed on most
-  distributions but not all): `ldd /path/to/weechat`.
-* Check that the "charset" plugin is loaded with `/plugin` command (if it is
-  not, then you probably need the "weechat-plugins" package).
-* Check the output of command `/charset` (on core buffer). You should see
-  _ISO-XXXXXX_ or _UTF-8_ for terminal charset. If you see _ANSI_X3.4-1968_ or
-  other values, your locale is probably wrong. +
-  To fix your locale, check the installed locales with `locale -a` and set
-  an appropriate value in $LANG, for example: `+export LANG=en_US.UTF-8+`.
-* Setup global decode value, for example:
+* Compruebe que weechat está enlazado a libncursesw (atención: es necesario en la mayoría
+  de distribuciones, pero no en todas): `ldd /ruta/a/weechat`.
+* Compruebe que el complemento "charset" está cargado mediante el comando `/plugin` (si no lo está,
+  entonces probablemente necesite el paquete "weechat-plugins").
+* Compruebe la salida del comando `/charset` (en el buffer principal). Debería ver
+  _ISO-XXXXXX_ o _UTF-8_ para los caracteres de la terminal. Si ve _ANSI_X3.4-1968_ u
+  otros valores, su idioma probablemente sea erróneo. +
+  Para solucionarlo, compruebe que tiene los idiomas instalados mediante `locale -a` y establezca
+  un valor apropiado en $LANG, por ejemplo: `+export LANG=es_ES.UTF-8+`.
+* Estableza un valor global, por ejemplo:
   `/set charset.default.decode "ISO-8859-15"`.
-* If you are using UTF-8 locale:
-** Check that your terminal is UTF-8 ready (terminal recommended for UTF-8 is
+* Si está utilizando UTF-8:
+** Compruebe que su terminal está preparado para UTF-8 (la terminal recomendada para UTF-8 es
    rxvt-unicode).
-** If you are using screen, check that it is run with UTF-8 mode
-   ("`defutf8 on`" in ~/.screenrc or `screen -U` to run screen).
-* Check that option
+** Si está utilizando el multiplexador screen, compruebe que lo está ejecuando con el modo UTF-8 
+   ("`defutf8 on`" en ~/.screenrc o `screen -U` al ejecutar screen).
+* Compruebe si la opción
   link:weechat_user.en.html#option_weechat.look.eat_newline_glitch[_weechat.look.eat_newline_glitch_]
-  is off (this option may cause display bugs).
+  está en off (esta opción puede causar errores a la hora de mostrar el texto).
 
 [NOTE]
-UTF-8 locale is recommended for WeeChat. If you're using ISO or other
-locale, please check that *all* your settings (terminal, screen, ..) are ISO
-and *not* UTF-8.
+Se recomienda utilizar UTF-8 para WeeChat. Si está utilizando ISO u otras opciones,
+por favor, compruebe que *todos* sus ajustes (terminal, screen, ..) también están en ISO
+y *no* en UTF-8.
 
 [[unicode_chars]]
 === Some unicode chars are displayed in terminal but not in WeeChat, why?
