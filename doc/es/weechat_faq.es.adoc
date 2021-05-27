@@ -1,7 +1,7 @@
-= WeeChat FAQ (Frequently Asked Questions)
+= WeeChat Preguntas frecuentes (FAQ)
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
-:lang: en
+:lang: es
 :toc: left
 :toclevels: 2
 :sectnums:
@@ -9,8 +9,8 @@
 :docinfo1:
 
 
-This document is written for WeeChat versions ≥ 0.3.0 but should preferably be
-used with latest stable version of WeeChat.
+Este documento está escrito para WeeChat versiones ≥ 0.3.0 pero preferiblemente
+usar mejor la última versión estable de WeeChat.
 
 toc::[]
 
