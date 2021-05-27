@@ -39,38 +39,38 @@ Porque WeeChat es muy ligero y ofrece funcionalidades innovadoras.
 Más información de las funcionalidades de WeeChat en la página: https://weechat.org/about/features
 
 [[compilation_install]]
-== Compilation / install
+== Compilación / instalación
 
 [[gui]]
-=== I've heard about many GUIs for WeeChat. How can I compile/use them?
+=== ¿He oido que hay muchas interfaces gráficas de susuario (GUI) para WeeChat. ¿Cómo puedo compilarlas o usarlas?
 
-Some remote GUIs are available, see the remote interfaces page:
+Hay disponibles algunas GUIs, eche un vistazo a la página de interfaces remotas:
 https://weechat.org/about/interfaces
 
 [[compile_git]]
-=== I can't compile WeeChat after cloning git repository, why?
+=== No puedo compilar WeeChat después de haber clonado el repositorio git, ¿por qué?
 
-The recommended way to compile WeeChat is with
+La manera recomendada para compilar WeeChat es con
 link:weechat_user.en.html#compile_with_cmake[CMake].
 
-If you're compiling with link:weechat_user.en.html#compile_with_autotools[autotools]
-(and not CMake), check that you have latest version of autoconf and automake.
+Si lo está compilando con link:weechat_user.en.html#compile_with_autotools[autotools]
+(y no con CMake), compruebe que tiene la versión más reciente de autoconf y automake.
 
-The other way is to install the "devel package", which needs less dependencies.
-This package is built almost every day using git repository. Note that this
-package may not correspond exactly to git base and that it's less convenient
-than git cloning for installing updates.
+Otra forma es instalar "devel package", que necesita menos dependencias.
+Este paquete está compilado casi cada día utilizando el repositorio git. Tenga en cuenta que este
+paquete puede no corresponder exactamente con la base de git y es menos conveniente
+que la opción de clonar el repositorio de git a la hora de instalar actualizaciones.
 
 [[compile_macos]]
-=== How can I install WeeChat on macOS?
+=== ¿Cómo puedo instalar WeeChat en macOS?
 
-It is recommended to use https://brew.sh/[Homebrew], you can get help with:
+Se recomienda utilizar https://brew.sh/[Homebrew], puede obtener ayuda con el comando:
 
 ----
 brew info weechat
 ----
 
-You can install WeeChat with this command:
+Puede instalar WeeChat con este comando:
 
 ----
 brew install weechat
