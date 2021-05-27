@@ -134,21 +134,21 @@ Vea este reporte de error para más información:
 https://github.com/weechat/weechat/issues/79
 
 [[bars_background]]
-=== Bars like title and status are not filled, background color stops after text, why?
+=== Las barras del título y de estado no aparecen rellenadas, el color de fondo desaparece después del texto, ¿por qué
 
-This may be caused by a bad value of the TERM variable in your shell (look at
-the output of `echo $TERM` in your terminal).
+Esto puede estar causado por un valor erróneo en la variable TERM en su sheel (eche un vistazo a 
+la salida del comando `echo $TERM` en su terminal).
 
-Depending on where you launch WeeChat, you should have:
+Dependiendo de donde ejecute WeeChat, debería tener:
 
-* If WeeChat runs locally or on a remote machine without screen nor tmux, it
-  depends on the terminal used: _xterm_, _xterm-256color_, _rxvt-unicode_,
+* Si WeeChat se ejecuta de manera local o en una máquina remota sin el multiplexador de terminal screen ni tmux, esto
+  depende de la terminal utilizada: _xterm_, _xterm-256color_, _rxvt-unicode_,
   _rxvt-256color_, etc.
-* If WeeChat runs under screen, you should have _screen_ or _screen-256color_.
-* If WeeChat runs under tmux, you should have _tmux_, _tmux-256color_,
-  _screen_ or _screen-256color_.
+* Si WeeChat se ejecuta en el multiplexador de terminal screen, debería tener _screen_ o _screen-256color_.
+* Si WeeChat se ejecuta en el multiplexador de la terminal tmux, debería tener _tmux_, _tmux-256color_,
+  _screen_ o _screen-256color_.
 
-If needed, fix your TERM variable: `export TERM="xxx"`.
+Si es necesario, modifique su variable TERM: `export TERM="xxx"`.
 
 [[screen_weird_chars]]
 === When I'm using weechat under screen/tmux, I have weird random chars, how do I fix that?
