@@ -151,17 +151,17 @@ Dependiendo de donde ejecute WeeChat, debería tener:
 Si es necesario, modifique su variable TERM: `export TERM="xxx"`.
 
 [[screen_weird_chars]]
-=== When I'm using weechat under screen/tmux, I have weird random chars, how do I fix that?
+=== Cuando estoy utilizando Weechat con screen o tmux, veo de manera aleatoria caracteres extraños, ¿cómo puedo solucionar eso?
 
-This may be caused by bad value of the TERM variable in your shell (look at
-output of `echo $TERM` in your terminal, *outside screen/tmux*). +
-For example, _xterm-color_ may display such weird chars, you can use _xterm_
-which is OK (like many other values). +
-If needed, fix your TERM variable: `export TERM="xxx"`.
+Esto puede ser causado por un valor erróneo de la variable TERM en su shell (eche un vistazo
+a la salida del comando `echo $TERM` en su terminal, *fuera de una sesión de screen o tmux*). +
+Por ejemplo, _xterm-color_ puede mostrar caracteres extraños, puede utilizar _xterm_
+que es mejor (como muchos otros valores). +
+Si es necesario, cambie el valor se su variable TERM mediante: `export TERM="xxx"`.
 
-If you are using gnome-terminal, check that the option
-"Ambiguous-width characters" in menu Preferences/Profile/Compatibility
-is set to `narrow`.
+Si está utilizando gnome-terminal, compruebe que la opción
+"Ambiguous-width characters" en el menú Preferencias/Perfil/Compatibilidad
+está establecida a `narrow` o `estrecho`.
 
 [[macos_display_broken]]
 === I compiled WeeChat under macOS, and I see "(null)" everywhere on screen, what's wrong?
