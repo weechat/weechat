@@ -1,4 +1,4 @@
-= WeeChat Preguntas frecuentes (FAQ)
+= WeeChat preguntas frecuentes (FAQ)
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: es
@@ -7,6 +7,10 @@
 :sectnums:
 :sectnumlevels: 2
 :docinfo1:
+
+Traductores
+
+* Victorhck <victorhck.mailbox.org>, 2021
 
 
 Este documento está escrito para WeeChat versiones ≥ 0.3.0 pero preferiblemente
@@ -19,20 +23,20 @@ toc::[]
 == General
 
 [[weechat_name]]
-=== Where does the name "WeeChat" come from?
+=== ¿De dónde proviene el nombre de "WeeChat"?
 
-"Wee" is a recursive acronym and stands for "Wee Enhanced Environment".
-So complete name is "Wee Enhanced Environment for Chat".
+"Wee" es un acrónimo recursivo que proviene de "Wee Enhanced Environment" (Entorno Mejorado Wee).
+Así que el nombre completo sería "Wee Enhanced Environment for Chat" (Entorno Mejorado Wee para Chat).
 
-"Wee" also means "very small" (and yes, there is other meaning, but it does not
-apply to WeeChat!).
+"Wee" también significa "muy pequeño" (y sí, hay otros significados, pero estos
+no se aplican a WeeChat!).
 
 [[why_choose_weechat]]
-=== Why choose WeeChat? X-Chat and Irssi are so good...
+=== ¿Por qué escoger WeeChat? X-Chat o Irssi son buenos...
 
-Because WeeChat is very light and brings innovating features.
+Porque WeeChat es muy ligero y ofrece funcionalidades innovadoras.
 
-More info on the WeeChat features page: https://weechat.org/about/features
+Más información de las funcionalidades de WeeChat en la página: https://weechat.org/about/features
 
 [[compilation_install]]
 == Compilation / install
