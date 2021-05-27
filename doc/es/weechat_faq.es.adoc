@@ -77,15 +77,15 @@ brew install weechat
 ----
 
 [[lost]]
-=== I've launched WeeChat, but I'm lost, what can I do?
+=== He lanzado WeeChat, pero estoy perdido, ¿qué puedo hacer?
 
-For help you can type `/help`. For help about a command, type `/help command`.
-link:weechat_user.en.html#key_bindings[Keys] and
-link:weechat_user.en.html#commands_and_options[commands] are listed
-in documentation.
+Para consultar la ayuda, escriba `/help`. Para buscar ayuda con un comando, escriba `/help command`.
+link:weechat_user.en.html#key_bindings[La teclas] y
+link:weechat_user.en.html#commands_and_options[comandos] aparecen listados
+en la documentación.
 
-It's recommended for new users to read the
-link:weechat_quickstart.en.html[Quickstart guide].
+Se recomienda a las personas recién llegadas leer la
+link:weechat_quickstart.es.html[guía rápida].
 
 [[display]]
 == Display
