@@ -3516,10 +3516,12 @@ protokołów:
 [[relay_password]]
 ==== Hasło
 
-Zalecane jest ustawienie hasła dla pośrednika, za pomocą komendy:
+// TRANSLATION MISSING
+It is highly recommended to set a password for relay, with these commands:
 
 ----
-/set relay.network.password "moje_hasło"
+/secure set relay moje_hasło
+/set relay.network.password "${sec.data.relay}"
 ----
 
 Hasło to używane jest przez protokoły _irc_ i _weechat_.
@@ -3549,7 +3551,8 @@ Musi to być ciąg zakodowany za pomocą base32, zawierajcy tylko litery i liczb
 na przykład:
 
 ----
-/set relay.network.totp_secret "secretpasswordbase32"
+/secure set relay_totp secretpasswordbase32
+/set relay.network.totp_secret "${sec.data.relay_totp}"
 ----
 
 [[relay_ssl]]
@@ -3612,11 +3615,14 @@ Teraz możesz się połączyć na porcie 8000 za pomocą dowolnego klienta IRC
 używając hasła serwera "moje_hasło" (lub "libera:moje_hasło" jeśli żaden
 serwer nie został podany w przekaźniku).
 
-Na przykład jeśli używasz WeeChat jako klienta porednika IRC, z serwerem nazwanym
-"relay" i hasłem "secret", możesz ustawić hasło za pomocą tej komendy:
+// TRANSLATION MISSING
+For example if you use WeeChat as IRC client of the relay, with a server called
+"relay" and the relay password "secret", you can setup the password with these
+commands:
 
 ----
-/set irc.server.relay.password "libera:secret"
+/secure set relay_libera libera:secret
+/set irc.server.relay.password "{sec.data.relay_libera}"
 ----
 
 [[relay_weechat_protocol]]

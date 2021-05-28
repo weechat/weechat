@@ -3597,11 +3597,12 @@ utilisant divers protocoles :
 [[relay_password]]
 ==== Mot de passe
 
-Il est fortement recommandé de définir un mot de passe pour le relai, avec la
-commande :
+Il est fortement recommandé de définir un mot de passe pour le relai, avec ces
+commandes :
 
 ----
-/set relay.network.password "motdepasse"
+/secure set relay motdepasse
+/set relay.network.password "${sec.data.relay}"
 ----
 
 Ce mot de passe sera utilisé pour les protocoles _irc_ et _weechat_.
@@ -3633,7 +3634,8 @@ Il doit être une chaîne encodée en base32, avec seulement des lettres et des
 chiffres de 2 à 7, par exemple :
 
 ----
-/set relay.network.totp_secret "secretpasswordbase32"
+/secure set relay_totp secretpasswordbase32
+/set relay.network.totp_secret "${sec.data.relay_totp}"
 ----
 
 [[relay_ssl]]
@@ -3700,10 +3702,11 @@ si aucun serveur n'a été spécifié dans le relai).
 
 Par exemple si vous utilisez WeeChat comme client IRC du relai, avec un serveur
 "relay" et un mot de passe relay "secret", vous pouvez configurer le mot de passe
-avec cette commande :
+avec ces commandes :
 
 ----
-/set irc.server.relay.password "libera:secret"
+/secure set relay_libera libera:secret
+/set irc.server.relay.password "${sec.data.relay_libera}"
 ----
 
 [[relay_weechat_protocol]]

@@ -3571,10 +3571,12 @@ Relay プラグインはネットワークを介して異なるプロトコル�
 [[relay_password]]
 ==== パスワード
 
-以下のコマンドを利用して、リレー用のパスワードを設定することを強くお勧めします:
+// TRANSLATION MISSING
+It is highly recommended to set a password for relay, with these commands:
 
 ----
-/set relay.network.password "mypass"
+secure set relay mypassword
+/set relay.network.password "${sec.data.relay}"
 ----
 
 このパスワードは _irc_ と _weechat_ プロトコルで利用されます。
@@ -3604,7 +3606,8 @@ TOTP の secret は base32 でエンコードされた文字列
 (文字および 2 から 7 までの数字) でなければいけません。以下はその例です:
 
 ----
-/set relay.network.totp_secret "secretpasswordbase32"
+/secure set relay_totp secretpasswordbase32
+/set relay.network.totp_secret "${sec.data.relay_totp}"
 ----
 
 [[relay_ssl]]
@@ -3671,11 +3674,12 @@ IRC プロキシを設定した場合には "libera:mypass") で 8000 番ポー�
 
 // TRANSLATION MISSING
 For example if you use WeeChat as IRC client of the relay, with a server called
-"relay" and the relay password "secret", you can setup the password with this
-command:
+"relay" and the relay password "secret", you can setup the password with these
+commands:
 
 ----
-/set irc.server.relay.password "libera:secret"
+/secure set relay_libera libera:secret
+/set irc.server.relay.password "${sec.data.relay_libera}"
 ----
 
 [[relay_weechat_protocol]]

@@ -3753,10 +3753,11 @@ protocolli differenti:
 [[relay_password]]
 ==== Password
 
-It is highly recommended to set a password for relay, with command:
+It is highly recommended to set a password for relay, with these commands:
 
 ----
-/set relay.network.password "miapass"
+/secure set relay miapass
+/set relay.network.password "${sec.data.relay}"
 ----
 
 This password is used for _irc_ and _weechat_ protocols.
@@ -3787,7 +3788,8 @@ It must be a string encoded in base32, with only letters and digits from 2 to 7,
 for example:
 
 ----
-/set relay.network.totp_secret "secretpasswordbase32"
+/secure set relay_totp secretpasswordbase32
+/set relay.network.totp_secret "${sec.data.relay_totp}"
 ----
 
 [[relay_ssl]]
@@ -3852,11 +3854,12 @@ Now you can connect on port 8000 with any IRC client using server password
 "miapass" (or "libera:miapass" if no server was specified in the relay).
 
 For example if you use WeeChat as IRC client of the relay, with a server called
-"relay" and the relay password "secret", you can setup the password with this
-command:
+"relay" and the relay password "secret", you can setup the password with these
+commands:
 
 ----
-/set irc.server.relay.password "libera:secret"
+/secure set relay_libera libera:secret
+/set irc.server.relay.password "${sec.data.relay_libera}"
 ----
 
 [[relay_weechat_protocol]]

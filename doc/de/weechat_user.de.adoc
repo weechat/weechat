@@ -3553,10 +3553,12 @@ Die Relay-Erweiterung wird genutzt um Daten, mittels unterschiedlicher Protokoll
 [[relay_password]]
 ==== Passwort
 
-Es wird nachdrücklich Empfohlen ein Passwort für die Relay-Verbindung zu nutzen:
+// TRANSLATION MISSING
+It is highly recommended to set a password for relay, with these commands:
 
 ----
-/set relay.network.password "meinPasswort"
+/secure set relay meinPasswort
+/set relay.network.password "${sec.data.relay}"
 ----
 
 Dieses Passwort wird sowohl für das _irc_ als auch für das _weechat_ Protokoll
@@ -3587,7 +3589,8 @@ Die Zeichenkette muss base32 enkodiert sein, ausschließlich Buchstaben und Zahl
 sind erlaubt, zum Beispiel:
 
 ----
-/set relay.network.totp_secret "secretpasswordbase32"
+/secure set relay_totp secretpasswordbase32
+/set relay.network.totp_secret "${sec.data.relay_totp}"
 ----
 
 [[relay_ssl]]
@@ -3653,12 +3656,14 @@ Nun kann man eine Verbindung zum Port 8000 mit jedem beliebigen IRC Client
 herstellen, indem man das Server Passwort "meinPasswort" nutzt (oder
 "libera:meinPasswort" sofern kein Server angegeben wurde).
 
-Wenn man Beispielsweise WeeChat als IRC Client über das Relay nutzen möchte
-und der genutzte Server heisst "relay" und das entsprechende Passwort "geheim",
-kann man das Passwort mit folgendem Befehl setzen:
+// TRANSLATION MISSING
+For example if you use WeeChat as IRC client of the relay, with a server called
+"relay" and the relay password "secret", you can setup the password with these
+commands:
 
 ----
-/set irc.server.relay.password "libera:secret"
+/secure set relay_libera libera:secret
+/set irc.server.relay.password "${sec.data.relay_libera}"
 ----
 
 [[relay_weechat_protocol]]
