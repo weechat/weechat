@@ -3043,14 +3043,12 @@ Erneut mit dem Server verbinden:
 /reconnect libera
 ----
 
-// TRANSLATION MISSING
 [[irc_tor_sasl]]
 ==== Connect with TOR and SASL
 
-// TRANSLATION MISSING
-Some servers support connections with TOR (https://www.torproject.org/),
-a network of virtual tunnels that allows people and groups to improve their
-privacy and security on the Internet.
+Einige Server unterstützen eine Verbindungen mittels TOR (https://www.torproject.org/),
+dies ist ein Netzwerk mit virtueller Tunneln, durch welchen Personen und Gruppen ihre
+Privatsphäre und Sicherheit im Internet verbessern können.
 
 Im ersten Schritt muss TOR installiert werden. Für Debian (und Derivate):
 
@@ -3058,21 +3056,21 @@ Im ersten Schritt muss TOR installiert werden. Für Debian (und Derivate):
 $ sudo apt-get install tor
 ----
 
-In WeeChat muss nun ein socks5 Proxy für den TOR Service erstellt werden (Hostname/IP
+In WeeChat muss nun ein socks5-Proxy für den TOR Service erstellt werden (Hostname/IP
 und Port müssen dabei an die eigene TOR Konfiguration angepasst werden):
 
 ----
 /proxy add tor socks5 127.0.0.1 9050
 ----
 
-// TRANSLATION MISSING
-Now, add a new server (replace server name "irc-tor" and the address by a valid one):
+Fügen Sie nun einen neuen Server hinzu (ersetzen Sie dabei den Servernamen "irc-tor"
+und die Adresse durch gültige Werte):
 
 ----
-/server add irc-tor this.is.the.address.onion
+/server add irc-tor hier.ist.die.addresse.onion
 ----
 
-Einen Proxy für TOR anlegen:
+Nun einen Proxy für TOR anlegen:
 
 ----
 /set irc.server.irc-tor.proxy "tor"
@@ -3084,12 +3082,11 @@ privaten Schlüssel zu generieren):
 
 ----
 /set irc.server.irc-tor.sasl_mechanism ecdsa-nist256p-challenge
-/set irc.server.irc-tor.sasl_username "your_nickname"
+/set irc.server.irc-tor.sasl_username "dein_nickname"
 /set irc.server.irc-tor.sasl_key "${weechat_config_dir}/ecdsa.pem"
 ----
 
-// TRANSLATION MISSING
-And finally, connect to the server:
+Abschließend, stellen Sie eine Verbindung zum Server her:
 
 ----
 /connect irc-tor
