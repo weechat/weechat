@@ -164,26 +164,26 @@ Si está utilizando gnome-terminal, compruebe que la opción
 está establecida a `narrow` o `estrecho`.
 
 [[macos_display_broken]]
-=== I compiled WeeChat under macOS, and I see "(null)" everywhere on screen, what's wrong?
+=== He compilado WeeChat en macOS, y veo "(null)" por todas partes en screen, ¿qué está mal?
 
-If you compiled ncursesw yourself, try to use standard ncurses (that comes with
-system).
+Si ha compilado ncursesw usted mismo, trate de utilizar el ncurses estándar (el que viene
+con el sistema).
 
-Moreover, under macOS, it is recommended to install WeeChat with Homebrew
-package manager.
+Es más, en macOS, se recomienda instalar WeeChat mediante el gesto de paquetes
+Homebrew.
 
 [[buffer_vs_window]]
-=== I've heard about "buffers" and "windows", what's the difference?
+=== He escuchado cosas sobre "buffers" y "ventanas", ¿cual es la diferencia?
 
-A _buffer_ is composed by a number, a name, lines displayed (and some other
-data).
+Un _buffer_ está compuesto por un número, un nombre, y unas líneas mostradas (y algunos otros
+datos).
 
-A _window_ is a screen area which displays a buffer. It is possible to split
-your screen into many windows.
+Una _ventana_ es un área de la pantalla en la que se muestra un _buffer_. Es posible dividir
+su pantalla en muchas ventanas.
 
-Each window displays one buffer, or a set of merged buffers.
-A buffer can be hidden (not displayed by a window) or displayed by one or more
-windows.
+Cada ventana muestra un buffer, o un grupo de buffers unidos.
+Un buffer puede ser ocultado (no mostrado en una ventana) o mostrado por una o más
+ventanas.
 
 [[buffers_list]]
 === How to display the buffers list on the left side?
