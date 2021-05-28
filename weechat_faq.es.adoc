@@ -186,39 +186,39 @@ Un buffer puede ser ocultado (no mostrado en una ventana) o mostrado por una o m
 ventanas.
 
 [[buffers_list]]
-=== How to display the buffers list on the left side?
+=== ¿Cómo mostrar un listado de los buffers en la parte izquierda?
 
-With WeeChat ≥ 1.8, the plugin link:weechat_user.en.html#buflist_plugin[buflist]
-is loaded and enabled by default.
+Con WeeChat ≥ 1.8, el complemento link:weechat_user.en.html#buflist_plugin[buflist]
+está cargado y habilitado de manera predeterminada.
 
-With an older version, you can install script _buffers.pl_:
+Con versiones anteriores, puede instalar el script _buffers.pl_:
 
 ----
 /script install buffers.pl
 ----
 
-To limit size of bar (replace "buflist" by "buffers" if you're using the script
+Para limitar el tamaño de la barra (reemplace "buflist" por "buffers" si está utilizando el script
 _buffers.pl_):
 
 ----
 /set weechat.bar.buflist.size_max 15
 ----
 
-To move bar to bottom:
+Para mover la barra a la parte inferior:
 
 ----
 /set weechat.bar.buflist.position bottom
 ----
 
-To scroll the bar: if mouse is enabled (key: kbd:[Alt+m]), you can scroll the
-bar with your mouse wheel.
+Para desplazar la barra (hacer _scroll_): si el ratón está habilitado (key: kbd:[Alt+m]), puede hacerlo
+con la rueda del ratón.
 
-Default keys to scroll _buflist_ bar are kbd:[F1] (or kbd:[Ctrl+F1]), kbd:[F2]
-(or kbd:[Ctrl+F2]), kbd:[Alt+F1] and kbd:[Alt+F2].
+Las teclas predeterminadas para _hacer scroll_ en la barra son kbd:[F1] (o kbd:[Ctrl+F1]), kbd:[F2]
+(o kbd:[Ctrl+F2]), kbd:[Alt+F1] y kbd:[Alt+F2].
 
-For script _buffers.pl_, you can define keys, similar to the existing keys to
-scroll nicklist. +
-For example to use kbd:[F1], kbd:[F2], kbd:[Alt+F1] and kbd:[Alt+F2]:
+Para el script _buffers.pl_, puede definir las teclas, similares a las teclas existentes para
+hacer _scroll_ en la lista de apodos. +
+Por ejemplo para utilizar kbd:[F1], kbd:[F2], kbd:[Alt+F1] y kbd:[Alt+F2]:
 
 ----
 /key bind meta-OP /bar scroll buffers * -100%
@@ -228,35 +228,35 @@ For example to use kbd:[F1], kbd:[F2], kbd:[Alt+F1] and kbd:[Alt+F2]:
 ----
 
 [NOTE]
-Keys "meta-OP" and "meta-OQ" may be different in your terminal. To find key
-code press kbd:[Alt+k] then key.
+Las teclas "meta-OP" y "meta-OQ" pueden ser diferentes en su terminal. Para encontrar el código
+de la tecla, pulse kbd:[Alt+k] y después la tecla.
 
 [[customize_buflist]]
-=== How can I customize the list of buffers list, like the color of the active buffer?
+=== ¿Cómo puedo personalizar la lista de lista de buffers, como el color, del buffer activo?
 
-You can browse all buflist options with the command:
+Puede navegar por las opciones del listado de buffers con el comando:
 
 ----
 /fset buflist
 ----
 
-The background of the active buffer is blue by default, you can change it
-like this, for example to `red`:
+El fondo del buffer activo es azul de manera predeterminada, puede cambiarlo
+así, por ejemplo a rojo `red`:
 
 ----
 /set buflist.format.buffer_current "${color:,red}${format_buffer}"
 ----
 
 [NOTE]
-There's a comma before the color name "red" because it is used as the background,
-not the text color. +
-You can also use any numeric color instead of `red`,
-like `237` for dark gray.
+Hay una coma antes del nombre color "red" porque es utilizado como fondo,
+no el color del texto. +
+También se puede utilizar cualquier color numérico en vez del nombre `red`,
+como `237` para gris oscuro.
 
-The buflist plugin provides lot of options that you can customize, please read
-the help on each option.
+El complemento del listado de buffers _buflist_ ofrece múltiples opciones que puede configurar, por favor lea 
+la ayuda de cada opción.
 
-There's also a wiki page with examples of advanced buflist configuration:
+También hay una página wiki con ejemplos de configuraciones más completas:
 https://github.com/weechat/weechat/wiki/buflist
 
 [[customize_prefix]]
