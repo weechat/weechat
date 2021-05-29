@@ -260,101 +260,101 @@ También hay una página wiki con ejemplos de configuraciones más completas:
 https://github.com/weechat/weechat/wiki/buflist
 
 [[customize_prefix]]
-=== How can I reduce length of nicks or remove nick alignment in chat area?
+=== ¿Cómo puedo reducir la longitud de los apodos o eliminar la alineación de los apodos en el área del chat?
 
-To reduce max length of nicks in chat area:
+Para reducir la longitud máxima de los apodos en el área del chat:
 
 ----
 /set weechat.look.prefix_align_max 15
 ----
 
-To remove nick alignment:
+Para eliminar la alineación de los apodos:
 
 ----
 /set weechat.look.prefix_align none
 ----
 
 [[status_hotlist]]
-=== What does the [H: 3(1,8), 2(4)] in status bar mean?
+=== ¿Qué significa el texto What does the [H: 3(1,8), 2(4)] que aparece en la barra de estado?
 
-This is called the "hotlist", a list of buffers with the number of unread
-messages, by order: highlights, private messages, messages, other messages
-(like join/part). +
-The number of "unread message" is the number of new messages displayed/received
-since you visited the buffer.
+Esto es lo que se llama "hotlist", una lista de _buffers_ con el número de mensajes
+sin leer, por orden: resaltados, mensajes privados, mensajes, otros mensajes
+(como mensajes de unión o abandono de la sala). +
+El número de "mensajes sin leer" es el número de mensajes mostrados/recibidos
+desde que sisitaste el buffer.
 
-In the example `[H: 3(1,8), 2(4)]`, there are:
+En este ejemplo `[H: 3(1,8), 2(4)]`, son:
 
-* 1 highlight and 8 unread messages on buffer #3,
-* 4 unread messages on buffer #2.
+* 1 mensaje resaltado y 8 mensajes sin leer en el buffer #3,
+* 4 mensajes sin leer en el buffer #2.
 
-The color of the buffer/counter depends on the type of message, default colors
-are:
+El color del buffer/contador depende del tipo de mensaje, los colores predeterminados
+son:
 
-* highlight: `lightmagenta` / `magenta`
-* private message: `lightgreen` / `green`
-* message: `yellow` / `brown`
-* other message: `default` / `default` (color of text in terminal)
+* resaltado: `lightmagenta` / `magenta`
+* mensaje privado: `lightgreen` / `green`
+* mensaje: `yellow` / `brown`
+* otros mensajes: `default` / `default` (color del texto de la terminal)
 
-These colors can be changed with the options __weechat.color.status_data_*__
-(buffers) and __weechat.color.status_count_*__ (counters). +
-Other hotlist options can be changed with the options __weechat.look.hotlist_*__.
+Estos colores pueden ser cambiados con las opciones __weechat.color.status_data_*__
+(buffers) y __weechat.color.status_count_*__ (contadores). +
+Otras opciones de la lista rápida o _hotlist_ pueden ser cambiadas con las opciones __weechat.look.hotlist_*__.
 
-See link:weechat_user.en.html#screen_layout[User's guide / Screen layout] for
-more info about the hotlist.
+Vea link:weechat_user.en.html#screen_layout[Guía de usuario / diseño de la pantalla] para
+más información sobre este tema.
 
 [[input_bar_size]]
-=== How to use command line with more than one line?
+=== ¿Cómo utilizar la línea de comandos con más de una línea?
 
-The option _size_ in input bar can be set to a value higher than 1 (for fixed
-size, default size is 1) or 0 for dynamic size, and then option _size_max_ will
-set the max size (0 = no limit).
+La opción _size_ en la barra de entrada puede ser ajustada a un valor mayor que 1 (para un tamaño
+fijo, el tamaño predeterminado es 1) o 0 para un tamaño dinámico, y después la opción _size_max_ establecerá
+el tamaño máximo (0 = sin límite).
 
-Example with dynamic size:
+Ejemplo con tamaño dinámico:
 
 ----
 /set weechat.bar.input.size 0
 ----
 
-Max size of 2:
+Máximo tamano de 2:
 
 ----
 /set weechat.bar.input.size_max 2
 ----
 
 [[one_input_root_bar]]
-=== Is it possible to display only one input bar for all windows (after split)?
+=== ¿Es posible mostrar solo una barra de entrada para todas las ventanas (después de haberla dividido)?
 
-Yes, you will have to create a bar with type "root" (with an item to know in
-which window you are), then delete current input bar.
+Sí, deberás crear una barra con el tipo "root" (con un elemento conocido en 
+qué ventana estás), después eliminar la barra de entrada.
 
-For example:
+Por ejemplo:
 
 ----
 /bar add rootinput root bottom 1 0 [buffer_name]+[input_prompt]+(away),[input_search],[input_paste],input_text
 /bar del input
 ----
 
-If ever you are not satisfied with that, just delete new bar, WeeChat will
-automatically create default bar "input" if item "input_text" is not used in
-any bar:
+Si alguna vez no te safisface este, simplemente elimina la nueva barra, WeeChat automáticamente
+creará la barra predeterminada "input" si el elemento "input_text" no está utilizado
+en ninguna barra:
 
 ----
 /bar del rootinput
 ----
 
 [[terminal_copy_paste]]
-=== How can I copy/paste text without pasting nicklist?
+=== ¿Cómo puedo copiar/pegar texto sin pegar la lista de apodos?
 
-With WeeChat ≥ 1.0, you can use the bare display (default key: kbd:[Alt+l] (`L`)),
-which will show just the contents of the currently selected window,
-without any formatting.
+Con WeeChat ≥ 1.0, puedes utilizar una visualización simple (la tecla predeterminada: kbd:[Alt+l] (`L`)),
+que mostrará solo el contenido de la ventana actual seleccionada,
+sin ningún tipo de formato de texto.
 
-You can use a terminal with rectangular selection (like rxvt-unicode,
-konsole, gnome-terminal, etc.). Key is usually kbd:[Ctrl] + kbd:[Alt] + mouse
-selection.
+Puede utilizar una terminal con selección rectangualr (como rxvt-unicode,
+konsole, gnome-terminal, etc.). La tecla normalmente es kbd:[Ctrl] + kbd:[Alt] + la selección
+con el ratón.
 
-Another solution is to move nicklist to top or bottom, for example:
+Otra solución es mover la lista de apodos a la parte superior o inferior, por ejemplo:
 
 ----
 /set weechat.bar.nicklist.position top
