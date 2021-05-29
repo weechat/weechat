@@ -1361,7 +1361,8 @@ irc_server_get_max_modes (struct t_irc_server *server)
 char *
 irc_server_get_default_msg (const char *default_msg,
                             struct t_irc_server *server,
-                            const char *channel_name)
+                            const char *channel_name,
+                            const char *target_nick)
 {
     char *version;
     struct t_hashtable *extra_vars;
@@ -1393,6 +1394,8 @@ irc_server_get_default_msg (const char *default_msg,
         weechat_hashtable_set (extra_vars, "channel",
                                (channel_name) ? channel_name : "");
         weechat_hashtable_set (extra_vars, "nick", server->nick);
+        if (target_nick)
+            weechat_hashtable_set (extra_vars, "target", target_nick);
     }
 
     msg = weechat_string_eval_expression (default_msg, NULL, extra_vars, NULL);

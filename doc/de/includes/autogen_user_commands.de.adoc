@@ -359,9 +359,9 @@ Beispiele:
 ----
 /kick  [<channel>] <nick> [<reason>]
 
-channel: Channelname
-   nick: Nick der rausgeworfen werden soll
- reason: Begründung für den Rauswurf (Variablen die genutzt werden können: $nick, $channel und $server)
+channel: channel name
+   nick: nick
+ reason: reason (evaluated, see /help eval; special variables ${nick} (self nick), ${target} (target nick), ${channel} and ${server} are replaced by their values)
 ----
 
 [[command_irc_kickban]]
@@ -370,14 +370,14 @@ channel: Channelname
 ----
 /kickban  [<channel>] <nick> [<reason>]
 
-channel: Channelname
-   nick: Nickname der rausgeworfen und gebannt werden soll
- reason: Begründung weshalb der User rausgeworfen wurde (Variablen die genutzt werden können: $nick, $channel und $server)
+channel: channel name
+   nick: nick
+ reason: reason (evaluated, see /help eval; special variables ${nick} (self nick), ${target} (target nick), ${channel} and ${server} are replaced by their values)
 
-Es ist möglich kick/ban mittels einer Maske auszuführen. Der Nick wird aus der Maske heraus gefiltert und durch "*" ersetzt.
+It is possible to kick/ban with a mask, nick will be extracted from mask and replaced by "*".
 
-Beispiel:
-  sperre "*!*@host.com" und kicke dann "toto":
+Example:
+  ban "*!*@host.com" and then kick "toto":
     /kickban toto!*@host.com
 ----
 

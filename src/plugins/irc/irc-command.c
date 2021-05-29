@@ -1755,7 +1755,8 @@ IRC_COMMAND_CALLBACK(cycle)
                                             IRC_SERVER_OPTION_MSG_PART);
     if (ptr_arg && ptr_arg[0])
     {
-        msg = irc_server_get_default_msg (ptr_arg, ptr_server, channel_name);
+        msg = irc_server_get_default_msg (ptr_arg, ptr_server, channel_name,
+                                          NULL);
         irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
                           "PART %s :%s", channel_name, msg);
     }
@@ -2033,7 +2034,7 @@ irc_command_quit_server (struct t_irc_server *server, const char *arguments)
                                              IRC_SERVER_OPTION_MSG_QUIT);
     if (ptr_arg && ptr_arg[0])
     {
-        msg = irc_server_get_default_msg (ptr_arg, server, NULL);
+        msg = irc_server_get_default_msg (ptr_arg, server, NULL, NULL);
         irc_server_sendf (server, 0, NULL, "QUIT :%s", msg);
     }
     else
@@ -2775,7 +2776,8 @@ irc_command_kick_channel (struct t_irc_server *server,
                                            IRC_SERVER_OPTION_MSG_KICK);
     if (ptr_msg && ptr_msg[0])
     {
-        msg = irc_server_get_default_msg (ptr_msg, server, channel_name);
+        msg = irc_server_get_default_msg (ptr_msg, server, channel_name,
+                                          nick_name);
         irc_server_sendf (server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
                           "KICK %s %s :%s",
                           channel_name, nick_name, msg);
@@ -3942,7 +3944,7 @@ irc_command_part_channel (struct t_irc_server *server, const char *channel_name,
                                                 IRC_SERVER_OPTION_MSG_PART);
     if (ptr_arg && ptr_arg[0])
     {
-        msg = irc_server_get_default_msg (ptr_arg, server, channel_name);
+        msg = irc_server_get_default_msg (ptr_arg, server, channel_name, NULL);
         irc_server_sendf (server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
                           "PART %s :%s", channel_name, msg);
     }
@@ -6694,8 +6696,9 @@ irc_command_init ()
         N_("[<channel>] <nick> [<reason>]"),
         N_("channel: channel name\n"
            "   nick: nick\n"
-           " reason: reason (special variables $nick, $channel and $server are "
-           "replaced by their value)"),
+           " reason: reason (evaluated, see /help eval; special variables "
+           "${nick} (self nick), ${target} (target nick), ${channel} and "
+           "${server} are replaced by their values)"),
         "%(nicks) %(irc_msg_kick) %-", &irc_command_kick, NULL, NULL);
     weechat_hook_command (
         "kickban",
@@ -6703,8 +6706,9 @@ irc_command_init ()
         N_("[<channel>] <nick> [<reason>]"),
         N_("channel: channel name\n"
            "   nick: nick\n"
-           " reason: reason (special variables $nick, $channel and $server are "
-           "replaced by their value)\n"
+           " reason: reason (evaluated, see /help eval; special variables "
+           "${nick} (self nick), ${target} (target nick), ${channel} and "
+           "${server} are replaced by their values)\n"
            "\n"
            "It is possible to kick/ban with a mask, nick will be extracted from "
            "mask and replaced by \"*\".\n"

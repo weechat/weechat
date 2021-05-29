@@ -340,7 +340,8 @@ extern int irc_server_prefix_char_statusmsg (struct t_irc_server *server,
 extern int irc_server_get_max_modes (struct t_irc_server *server);
 extern char *irc_server_get_default_msg (const char *default_msg,
                                          struct t_irc_server *server,
-                                         const char *channel_name);
+                                         const char *channel_name,
+                                         const char *target_nick);
 extern struct t_irc_server *irc_server_alloc (const char *name);
 extern struct t_irc_server *irc_server_alloc_with_url (const char *irc_url);
 extern void irc_server_apply_command_line_options (struct t_irc_server *server,

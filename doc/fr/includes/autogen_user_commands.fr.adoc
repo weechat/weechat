@@ -361,7 +361,7 @@ Exemples :
 
  canal : nom du canal
 pseudo : pseudo
-raison : raison (les variables spéciales $nick, $channel et $server sont remplacées par leur valeur)
+raison : raison (évaluée, voir /help eval ; les variables spéciales ${nick} (propre pseudo), ${target} (pseudo cible), ${channel} et ${server} sont remplacées par leur valeurs)
 ----
 
 [[command_irc_kickban]]
@@ -372,7 +372,7 @@ raison : raison (les variables spéciales $nick, $channel et $server sont rempl
 
  canal : nom du canal
 pseudo : pseudo
-raison : raison (les variables spéciales $nick, $channel et $server sont remplacées par leur valeur)
+raison : raison (évaluée, voir /help eval ; les variables spéciales ${nick} (propre pseudo), ${target} (pseudo cible), ${channel} et ${server} sont remplacées par leur valeurs)
 
 Il est possible d'éjecter/bannir avec un masque, le pseudo sera extrait du masque et remplacé par "*".
 
