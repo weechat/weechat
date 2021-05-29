@@ -361,52 +361,52 @@ Otra solución es mover la lista de apodos a la parte superior o inferior, por e
 ----
 
 [[urls]]
-=== How can I click on long URLs (more than one line)?
+=== ¿Cómo puedo hacer clic sobre direcciones URL largas (de más de una línea)?
 
-With WeeChat ≥ 1.0, you can use the bare display (default key: kbd:[Alt+l] (`L`)).
+Con WeeChat ≥ 1.0, puede utilizar la visualización simple (la tecla predeterminada: kbd:[Alt+l] (`L`)).
 
-To make opening URLs easier, you can:
+Para abrir direcciones URL más fácilmente, puede:
 
-* move nicklist to top:
+* mover la lista de apodos a la parte superior con este comando:
 
 ----
 /set weechat.bar.nicklist.position top
 ----
 
-* disable alignment for multiline words (WeeChat ≥ 1.7):
+* inhabilitar la alineación de palabras multilínea (WeeChat ≥ 1.7):
 
 ----
 /set weechat.look.align_multiline_words off
 ----
 
-* or for all wrapped lines:
+* o para todas las líneas unidas:
 
 ----
 /set weechat.look.align_end_of_lines time
 ----
 
-With WeeChat ≥ 0.3.6, you can enable option "eat_newline_glitch", so that
-new line char is not added at the end of each line displayed (it will not break
-URL selection):
+Con WeeChat ≥ 0.3.6, puede habilitar la opción "eat_newline_glitch", así
+el caractere de la nueva línea no es añadido al final de cada línea mostrada (esto no romperá
+la selección de la dirección URL):
 
 ----
 /set weechat.look.eat_newline_glitch on
 ----
 
-[IMPORTANT]
-This option may cause display bugs. If you experience such problem, you must
-turn off this option.
+[IMPORTANTE]
+Esta opción puede causar errores almostrar el contenido. Si experimenta algún problema de estos, deberá 
+eliminar esa opción.
 
-Other solution is to use a script:
+Otra solución es utilizar un script:
 
 ----
 /script search url
 ----
 
 [[change_locale_without_quit]]
-=== I want to change the language used by WeeChat for messages, but without exiting WeeChat, is it possible?
+=== Quiero cambiar el lenguaje utilizado por WeeChat para los mensajes, pero sin salir de WeeChat, ¿es esto posible?
 
-Sure it is possible:
+Por supuesto que es posible:
 
 ----
 /set env LANG en_US.UTF-8
@@ -414,60 +414,59 @@ Sure it is possible:
 ----
 
 [[timezone]]
-=== How can I change the timezone?
+=== ¿Cómo puedo cambiar la zona horaria?
 
-There is no option in WeeChat to change the timezone, the environment variable
-`TZ` must be set to the appropriate value.
+No hay razón en WeeChat para cambiar la zona horaria, la variable de entorno
+`TZ` deberá estar ajustada al valor apropiado.
 
-In your shell initialization file or on command line, before starting WeeChat:
+En el archivo de inicialización de su shell o en la línea de comando, antes de ejecutar WeeChat:
 
 ----
 export TZ=America/New_York
 ----
 
-In WeeChat, the new value is immediately used:
+En WeeChat, el nuevo valor es inmediatamente utilizado:
 
 ----
 /set env TZ America/New_York
 ----
 
 [[use_256_colors]]
-=== How can I use 256 colors in WeeChat?
+=== ¿Cómo puedo utilizar 256 colors en WeeChat?
 
-256 colors are supported with WeeChat ≥ 0.3.4.
+256 colors están admitidos con WeeChat ≥ 0.3.4.
 
-First check that your _TERM_ environment variable is correct, recommended values
-are:
+Priemro compruebe que su variable de entorno _TERM_ es correcta, los valores recomendados
+son:
 
-* under screen: _screen-256color_
-* under tmux: _screen-256color_ or _tmux-256color_
-* outside screen/tmux: _xterm-256color_, _rxvt-256color_, _putty-256color_, ...
+* en screen: _screen-256color_
+* en tmux: _screen-256color_ or _tmux-256color_
+* fuera de screen/tmux: _xterm-256color_, _rxvt-256color_, _putty-256color_, ...
 
 [NOTE]
-You may have to install package "ncurses-term" to use these values in _TERM_
-variable.
+Puede tener que instalar el paquete "ncurses-term" para utilizar estos valores en la variable _TERM_.
 
-If you are using screen, you can add this line to your _~/.screenrc_:
+Si está utilizando el multiplexador screen, puede añadir esta línea en su archivo de configuración _~/.screenrc_:
 
 ----
 term screen-256color
 ----
 
-If your _TERM_ variable has a wrong value and that WeeChat is already running,
-you can change it with these two commands (with WeeChat ≥ 1.0):
+Si su variable _TERM_ tiene un valor erróneo y ya WeeChat está ejecutándose,
+puede cambiarlo con estos dos comandos (en WeeChat ≥ 1.0):
 
 ----
 /set env TERM screen-256color
 /upgrade
 ----
 
-For version 0.3.4, you must use command `/color` to add new colors.
+Para la versión 0.3.4, deberá utilizar el comando `/color` para añadir nuevos colores.
 
-For versions ≥ 0.3.5, you can use any color number in options (optional: you
-can add color aliases with command `/color`).
+Para versiones ≥ 0.3.5, puede utilizar cualquier número de color en las opciones (opcional: puede
+añadir alias al color con el comando `/color`).
 
-Please read the link:weechat_user.en.html#colors[User's guide / Colors] for more
-information about colors management.
+Por favor lea la link:weechat_user.en.html#colors[Guía del usuario / Colores] para más
+información sobre la gestión de los colores.
 
 [[search_text]]
 === How can I search text in buffer (like /lastlog in irssi)?
