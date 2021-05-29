@@ -469,43 +469,43 @@ Por favor lea la link:weechat_user.en.html#colors[Guía del usuario / Colores] p
 información sobre la gestión de los colores.
 
 [[search_text]]
-=== How can I search text in buffer (like /lastlog in irssi)?
+=== ¿Cómo busco texto en un buffer (como /lastlog en irssi)?
 
-The default key is kbd:[Ctrl+r] (command is: `+/input search_text_here+`).
-And jump to highlights: kbd:[Alt+p] / kbd:[Alt+n].
+La tecla predeterminada es kbd:[Ctrl+r] (el comando es: `+/input texto_a_buscar_aquí+`).
+Y para saltar a los textos resaltados: kbd:[Alt+p] / kbd:[Alt+n].
 
-See link:weechat_user.en.html#key_bindings[User's guide / Key bindings] for more
-info about this feature.
+Vea la link:weechat_user.en.html#key_bindings[Guía del usuario / Atajos de teclado] para más
+información sobre esta funcionalidad.
 
 [[terminal_focus]]
-=== How can I execute commands when terminal gets/loses focus?
+=== ¿Cómo puedo ejecutar comandos cuando la terminal tiene o pierde el foco?
 
-You must enable the focus events with a special code sent to terminal.
+Puede habilitar el foco de los eventos con un código enviado a la terminal.
 
-*Important*:
+*Importante*:
 
-* You must use a modern xterm-compatible terminal.
-* Additionally, it seems to be important that your value of the TERM variable
-  equals to _xterm_ or _xterm-256color_.
-* If you use tmux, you must additionally enable focus events by adding
-  `set -g focus-events on` to your _.tmux.conf_ file.
-* This does *not* work under screen.
+* Deberá utilizar una terminal moderna compatible con xterm.
+* De manera adicionar, parece importante que su valor de la variable TERM 
+  sea igual a _xterm_ o _xterm-256color_.
+* Si está utilizando tmux, deberá de manera adiciona habilitar los eventos del foco añadiendo
+  `set -g focus-events on` en su fichero de configuración _.tmux.conf_.
+* Esto *no* funciona bajo el multiplexado screen.
 
-To send the code when WeeChat is starting:
+Para enviar el código cuando WeeChat es arrancado:
 
 ----
 /set weechat.startup.command_after_plugins "/print -stdout \033[?1004h\n"
 ----
 
-And then you bind two keys for the focus (replace the `/print` commands by the
-commands of your choice):
+Y después enlazar dos teclas para el foco (reemplazar los comandos `/print` por los
+comandos que prefiera):
 
 ----
 /key bind meta2-I /print -core focus
 /key bind meta2-O /print -core unfocus
 ----
 
-For example to mark buffers as read when the terminal loses the focus:
+Por ejemplo, para marcar buffers como leidos cuando una terminal pierde el foco:
 
 ----
 /key bind meta2-O /input set_unread
