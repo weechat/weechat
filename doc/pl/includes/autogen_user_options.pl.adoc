@@ -2287,19 +2287,19 @@
 ** domyślna wartość: `+off+`
 
 * [[option_irc.look.highlight_channel]] *irc.look.highlight_channel*
-** opis: pass:none[oddzielona przecinkami lista słów do podświetleń w buforach kanałów (wielkość liter nie ma znaczenia, użyj "(?-i)" na początku słów, dla których wielkość liter ma znaczenie; zmienne specjalne $nick, $channel i $server są zastępowane odpowiednimi wartościami), słowa te są dodawane do zmiennej lokalnej bufora  "highlight_words" tylko kiedy bufor jest tworzony (nie ma wpływu na obecne bufory), pusty ciąg wyłącza domyślne podświetlenia nicka, przykłady: "$nick", "(?-i)$nick"]
+** opis: pass:none[comma separated list of words to highlight in channel buffers (case insensitive, use "(?-i)" at beginning of words to make them case sensitive; special variables $nick, $channel and $server are replaced by their values), these words are added to buffer property "highlight_words" only when buffer is created (it does not affect current buffers), an empty string disables default highlight on nick, examples: "$nick", "(?-i)$nick"]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+"$nick"+`
 
 * [[option_irc.look.highlight_pv]] *irc.look.highlight_pv*
-** opis: pass:none[oddzielona przecinkami lista słów do podświetleń w prywatnych buforach (wielkość liter nie ma znaczenia, użyj "(?-i)" na początku słów, dla których wielkość liter ma znaczenie; zmienne specjalne $nick, $channel i $server są zastępowane odpowiednimi wartościami), słowa te są dodawane do zmiennej lokalnej bufora  "highlight_words" tylko kiedy bufor jest tworzony (nie ma wpływu na obecne bufory), pusty ciąg wyłącza domyślne podświetlenia nicka, przykłady: "$nick", "(?-i)$nick"]
+** opis: pass:none[comma separated list of words to highlight in private buffers (case insensitive, use "(?-i)" at beginning of words to make them case sensitive; special variables $nick, $channel and $server are replaced by their values), these words are added to buffer property "highlight_words" only when buffer is created (it does not affect current buffers), an empty string disables default highlight on nick, examples: "$nick", "(?-i)$nick"]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+"$nick"+`
 
 * [[option_irc.look.highlight_server]] *irc.look.highlight_server*
-** opis: pass:none[oddzielona przecinkami lista słów do podświetleń w buforach serwera (wielkość liter nie ma znaczenia, użyj "(?-i)" na początku słów, dla których wielkość liter ma znaczenie; zmienne specjalne $nick, $channel i $server są zastępowane odpowiednimi wartościami), słowa te są dodawane do zmiennej lokalnej bufora  "highlight_words" tylko kiedy bufor jest tworzony (nie ma wpływu na obecne bufory), pusty ciąg wyłącza domyślne podświetlenia nicka, przykłady: "$nick", "(?-i)$nick"]
+** opis: pass:none[comma separated list of words to highlight in server buffers (case insensitive, use "(?-i)" at beginning of words to make them case sensitive; special variables $nick, $channel and $server are replaced by their values), these words are added to buffer property "highlight_words" only when buffer is created (it does not affect current buffers), an empty string disables default highlight on nick, examples: "$nick", "(?-i)$nick"]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+"$nick"+`
@@ -2677,7 +2677,7 @@
 ** domyślna wartość: `+message+`
 
 * [[option_irc.server_default.command]] *irc.server_default.command*
-** opis: pass:none[komenda(y) do wykonania po połączeniu z serwerem przed automatycznym wejściem na kanały (wiele komend powinno zostać oddzielone ";", użyj "\;" dla średnika, specjalne zmienne $nick, $channel oraz $server są zastępowane ich wartościami) (uwaga: zawartość jest przetwarzana, zobacz /help eval; opcje serwera mogą zostać użytego w postaci ${irc_server.xxx} oraz ${server} jest zastępowany nazwą serwera)]
+** opis: pass:none[command(s) to run after connection to server and before auto-join of channels (many commands can be separated by ";", use "\;" for a semicolon, special variables $nick, $channel and $server are replaced by their values) (note: commands are evaluated, see /help eval; server options are evaluated with ${irc_server.xxx} and ${server} is replaced by the server name)]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+""+`
@@ -2713,19 +2713,19 @@
 ** domyślna wartość: `+""+`
 
 * [[option_irc.server_default.msg_kick]] *irc.server_default.msg_kick*
-** opis: pass:none[domyślna wiadomość dla wykopania z kanału używana przez komendy "/kick" i "/kickban" (uwaga: zawartość jest przetwarzana zobacz /help eval; specjalne zmienne jak ${nick}, ${channel} i ${server} są zamieniane na odpowiednie wartości)]
+** opis: pass:none[default kick message used by commands "/kick" and "/kickban" (note: content is evaluated, see /help eval; special variables ${nick}, ${channel} and ${server} are replaced by their values)]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+""+`
 
 * [[option_irc.server_default.msg_part]] *irc.server_default.msg_part*
-** opis: pass:none[domyślna wiadomość przy wyjściu z kanału (uwaga: zawartość jest przetwarzana zobacz /help eval; specjalne zmienne jak ${nick}, ${channel} i ${server} są zamieniane na odpowiednie wartości); "%v" jest zamieniane na wersję WeeChat jeśli w ciągu nie ma ${...})]
+** opis: pass:none[default part message (leaving channel) (note: content is evaluated, see /help eval; special variables ${nick}, ${channel} and ${server} are replaced by their values; "%v" is replaced by WeeChat version if there is no ${...} in string)]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+"WeeChat ${info:version}"+`
 
 * [[option_irc.server_default.msg_quit]] *irc.server_default.msg_quit*
-** opis: pass:none[domyślna wiadomość przy odłączeniu od serwera (uwaga: zawartość jest przetwarzana zobacz /help eval; specjalne zmienne jak ${nick}, ${channel} i ${server} są zamieniane na odpowiednie wartości); "%v" jest zamieniane na wersję WeeChat jeśli w ciągu nie ma ${...})]
+** opis: pass:none[default quit message (disconnecting from server) (note: content is evaluated, see /help eval; special variables ${nick}, ${channel} and ${server} are replaced by their values; "%v" is replaced by WeeChat version if there is no ${...} in string)]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+"WeeChat ${info:version}"+`
@@ -3345,7 +3345,7 @@
 ** domyślna wartość: `+lightmagenta+`
 
 * [[option_script.look.columns]] *script.look.columns*
-** opis: pass:none[format kolumn wyświetlanych w buforze skryptów: następujące identyfikatory kolumn są zastępowane przez ich wartość: %a=autor, %d=opis, %D=data dodania, %e=rozszerzenie, %l=język, %L=licencja, %n=nazwa z rozszerzeniem, %N=nazwa, %r=wymagania, %s=status, %t=tagi, %u=data wgrania, %v=wersja, %V=załadowana wersja, %w=min_weechat, %W=max_weechat)]
+** opis: pass:none[format of columns displayed in script buffer: following column identifiers are replaced by their values: %a=author, %d=description, %D=date added, %e=extension, %l=language, %L=license, %n=name with extension, %N=name, %r=requirements, %s=status, %t=tags, %u=date updated, %v=version, %V=version loaded, %w=min_weechat, %W=max_weechat)]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+"%s %n %V %v %u | %d | %t"+`

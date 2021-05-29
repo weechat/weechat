@@ -933,7 +933,7 @@ string_strip (const char *string, int left, int right, const char *chars)
 }
 
 /*
- * Converts escaped chars to their value.
+ * Converts escaped chars to their values.
  *
  * Following escaped chars are supported:
  *   \"         double quote

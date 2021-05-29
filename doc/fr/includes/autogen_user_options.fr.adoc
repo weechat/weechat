@@ -2677,7 +2677,7 @@
 ** valeur par défaut: `+message+`
 
 * [[option_irc.server_default.command]] *irc.server_default.command*
-** description: pass:none[commande(s) à exécuter après la connexion au serveur et avant le "join" automatique des canaux (plusieurs commandes peuvent être séparées par ";", utilisez "\;" pour un point-virgule, les variables spéciales $nick, $channel et $server sont remplacées par leur valeur) (note : les commandes sont évaluées, voir /help eval ; les options de serveur sont évaluées avec ${irc_server.xxx} et ${server} est remplacé par le nom du serveur)]
+** description: pass:none[commande(s) à exécuter après la connexion au serveur et avant le "join" automatique des canaux (plusieurs commandes peuvent être séparées par ";", utilisez "\;" pour un point-virgule, les variables spéciales $nick, $channel et $server sont remplacées par leurs valeurs) (note : les commandes sont évaluées, voir /help eval ; les options de serveur sont évaluées avec ${irc_server.xxx} et ${server} est remplacé par le nom du serveur)]
 ** type: chaîne
 ** valeurs: toute chaîne
 ** valeur par défaut: `+""+`
@@ -2713,19 +2713,19 @@
 ** valeur par défaut: `+""+`
 
 * [[option_irc.server_default.msg_kick]] *irc.server_default.msg_kick*
-** description: pass:none[message par défaut pour l'éjection utilisé par les commandes "/kick" et "/kickban" (note : le contenu est évalué, voir /help eval ; les variables spéciales ${nick}, ${channel} et ${server} sont remplacées par leur valeur)]
+** description: pass:none[message par défaut pour l'éjection utilisé par les commandes "/kick" et "/kickban" (note : le contenu est évalué, voir /help eval ; les variables spéciales ${nick}, ${channel} et ${server} sont remplacées par leur valeurs)]
 ** type: chaîne
 ** valeurs: toute chaîne
 ** valeur par défaut: `+""+`
 
 * [[option_irc.server_default.msg_part]] *irc.server_default.msg_part*
-** description: pass:none[message par défaut pour le part (en quittant un canal) (note : le contenu est évalué, voir /help eval ; les variables spéciales ${nick}, ${channel} et ${server} sont remplacées par leur valeur ; "%v" est remplacé par la version de WeeChat s'il n'y a pas de ${...} dans la chaîne)]
+** description: pass:none[message par défaut pour le part (en quittant un canal) (note : le contenu est évalué, voir /help eval ; les variables spéciales ${nick}, ${channel} et ${server} sont remplacées par leur valeurs ; "%v" est remplacé par la version de WeeChat s'il n'y a pas de ${...} dans la chaîne)]
 ** type: chaîne
 ** valeurs: toute chaîne
 ** valeur par défaut: `+"WeeChat ${info:version}"+`
 
 * [[option_irc.server_default.msg_quit]] *irc.server_default.msg_quit*
-** description: pass:none[message de fin par défaut (lors de la déconnexion du serveur) (note : le contenu est évalué, voir /help eval ; les variables spéciales ${nick}, ${channel} et ${server} sont remplacées par leur valeur ; "%v" est remplacé par la version de WeeChat s'il n'y a pas de ${...} dans la chaîne)]
+** description: pass:none[message de fin par défaut (lors de la déconnexion du serveur) (note : le contenu est évalué, voir /help eval ; les variables spéciales ${nick}, ${channel} et ${server} sont remplacées par leurs valeurs ; "%v" est remplacé par la version de WeeChat s'il n'y a pas de ${...} dans la chaîne)]
 ** type: chaîne
 ** valeurs: toute chaîne
 ** valeur par défaut: `+"WeeChat ${info:version}"+`
@@ -3345,7 +3345,7 @@
 ** valeur par défaut: `+lightmagenta+`
 
 * [[option_script.look.columns]] *script.look.columns*
-** description: pass:none[format des colonnes affichées dans le tampon des scripts : les identifiants de colonne suivants sont remplacés par leur valeur : %a=auteur, %d=description, %D=date d'ajout, %e=extension, %l=langage, %L=licence, %n=nom avec extension, %N=nom, %r=dépendances, %s=statuts, %t=étiquettes, %u=date de mise à jour, %v=version, %V=version chargée, %w=min_weechat, %W=max_weechat]
+** description: pass:none[format des colonnes affichées dans le tampon des scripts : les identifiants de colonne suivants sont remplacés par leurs valeurs : %a=auteur, %d=description, %D=date d'ajout, %e=extension, %l=langage, %L=licence, %n=nom avec extension, %N=nom, %r=dépendances, %s=statuts, %t=étiquettes, %u=date de mise à jour, %v=version, %V=version chargée, %w=min_weechat, %W=max_weechat]
 ** type: chaîne
 ** valeurs: toute chaîne
 ** valeur par défaut: `+"%s %n %V %v %u | %d | %t"+`

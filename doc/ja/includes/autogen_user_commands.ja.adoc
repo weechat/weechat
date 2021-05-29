@@ -402,7 +402,7 @@ server_mask: このマスクにマッチするサーバのリスト
 ----
 
 [[command_irc_list]]
-* `+list+`: チャンネルとトピックをリストアップ
+* `+list+`: list channels and their topics
 
 ----
 /list  [-server <server>] [-re <regex>] [<channel>[,<channel>...]] [<target>]
@@ -671,9 +671,9 @@ option: 追加オプション、いくつかのサーバ用
 ----
 /remove  [<channel>] <nick> [<reason>]
 
-channel: チャンネル名
-   nick: ニックネーム
- reason: 理由 (特殊変数 $nick、$channel、$server はそれぞれの値に置換されます)
+channel: channel name
+   nick: nick
+ reason: reason (special variables $nick, $channel and $server are replaced by their values)
 ----
 
 [[command_irc_restart]]

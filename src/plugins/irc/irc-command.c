@@ -2993,7 +2993,7 @@ IRC_COMMAND_CALLBACK(links)
 }
 
 /*
- * Callback for command "/list": lists channels and their topic.
+ * Callback for command "/list": lists channels and their topics.
  */
 
 IRC_COMMAND_CALLBACK(list)
@@ -6735,7 +6735,7 @@ irc_command_init ()
         NULL, &irc_command_links, NULL, NULL);
     weechat_hook_command (
         "list",
-        N_("list channels and their topic"),
+        N_("list channels and their topics"),
         N_("[-server <server>] [-re <regex>] [<channel>[,<channel>...]] "
            "[<target>]"),
         N_(" server: send to this server (internal name)\n"
@@ -6965,7 +6965,7 @@ irc_command_init ()
         N_("channel: channel name\n"
            "   nick: nick\n"
            " reason: reason (special variables $nick, $channel and $server are "
-           "replaced by their value)"),
+           "replaced by their values)"),
         "%(irc_channel)|%(nicks) %(nicks)", &irc_command_remove, NULL, NULL);
     weechat_hook_command (
         "restart",

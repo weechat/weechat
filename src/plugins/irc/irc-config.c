@@ -2149,7 +2149,7 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 N_("command(s) to run after connection to server and before "
                    "auto-join of channels (many commands can be separated by "
                    "\";\", use \"\\;\" for a semicolon, special variables "
-                   "$nick, $channel and $server are replaced by their value) "
+                   "$nick, $channel and $server are replaced by their values) "
                    "(note: commands are evaluated, see /help eval; server "
                    "options are evaluated with ${irc_server.xxx} and "
                    "${server} is replaced by the server name)"),
@@ -2339,7 +2339,7 @@ irc_config_server_new_option (struct t_config_file *config_file,
                    "\"/kickban\" "
                    "(note: content is evaluated, see /help eval; special "
                    "variables ${nick}, ${channel} and ${server} are replaced "
-                   "by their value)"),
+                   "by their values)"),
                 NULL, 0, 0,
                 default_value, value,
                 null_value_allowed,
@@ -2358,7 +2358,7 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 N_("default part message (leaving channel) "
                    "(note: content is evaluated, see /help eval; special "
                    "variables ${nick}, ${channel} and ${server} are replaced "
-                   "by their value; \"%v\" is replaced by WeeChat version if "
+                   "by their values; \"%v\" is replaced by WeeChat version if "
                    "there is no ${...} in string)"),
                 NULL, 0, 0,
                 default_value, value,
@@ -2378,7 +2378,7 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 N_("default quit message (disconnecting from server) "
                    "(note: content is evaluated, see /help eval; special "
                    "variables ${nick}, ${channel} and ${server} are replaced "
-                   "by their value; \"%v\" is replaced by WeeChat version if "
+                   "by their values; \"%v\" is replaced by WeeChat version if "
                    "there is no ${...} in string)"),
                 NULL, 0, 0,
                 default_value, value,
@@ -2876,7 +2876,7 @@ irc_config_init ()
         N_("comma separated list of words to highlight in channel buffers "
            "(case insensitive, use \"(?-i)\" at beginning of words to "
            "make them case sensitive; special variables $nick, $channel and "
-           "$server are replaced by their value), these words are added to "
+           "$server are replaced by their values), these words are added to "
            "buffer property \"highlight_words\" only when buffer is created "
            "(it does not affect current buffers), an empty string disables "
             "default highlight on nick, examples: \"$nick\", \"(?-i)$nick\""),
@@ -2888,7 +2888,7 @@ irc_config_init ()
         N_("comma separated list of words to highlight in private buffers "
            "(case insensitive, use \"(?-i)\" at beginning of words to "
            "make them case sensitive; special variables $nick, $channel and "
-           "$server are replaced by their value), these words are added to "
+           "$server are replaced by their values), these words are added to "
            "buffer property \"highlight_words\" only when buffer is created "
            "(it does not affect current buffers), an empty string disables "
             "default highlight on nick, examples: \"$nick\", \"(?-i)$nick\""),
@@ -2900,7 +2900,7 @@ irc_config_init ()
         N_("comma separated list of words to highlight in server buffers "
            "(case insensitive, use \"(?-i)\" at beginning of words to "
            "make them case sensitive; special variables $nick, $channel and "
-           "$server are replaced by their value), these words are added to "
+           "$server are replaced by their values), these words are added to "
            "buffer property \"highlight_words\" only when buffer is created "
            "(it does not affect current buffers), an empty string disables "
            "default highlight on nick, examples: \"$nick\", \"(?-i)$nick\""),

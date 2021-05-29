@@ -402,7 +402,7 @@ server_mask: list of servers must match this mask
 ----
 
 [[command_irc_list]]
-* `+list+`: list channels and their topic
+* `+list+`: list channels and their topics
 
 ----
 /list  [-server <server>] [-re <regex>] [<channel>[,<channel>...]] [<target>]
@@ -673,7 +673,7 @@ option: extra option, for some servers
 
 channel: channel name
    nick: nick
- reason: reason (special variables $nick, $channel and $server are replaced by their value)
+ reason: reason (special variables $nick, $channel and $server are replaced by their values)
 ----
 
 [[command_irc_restart]]

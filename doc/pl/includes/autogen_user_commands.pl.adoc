@@ -402,7 +402,7 @@ maska: lista serwerów musi pasować do maski
 ----
 
 [[command_irc_list]]
-* `+list+`: wyświetla kanały i ich tematy
+* `+list+`: list channels and their topics
 
 ----
 /list  [-server <serwer>] [-re <wyrażenie>] [<kanał>[,<kanał>...]] [<cel>]
@@ -671,9 +671,9 @@ opcje: dodatkowe opcje, dla niektórych serwerów
 ----
 /remove  [<kanał>] <nick> [<powód>]
 
-kanał: nazwa kanału
+channel: channel name
    nick: nick
- powód: powód(specjalne zmienne jak $nick, $channel i $server są podmieniane na odpowiednie wartości)
+ reason: reason (special variables $nick, $channel and $server are replaced by their values)
 ----
 
 [[command_irc_restart]]

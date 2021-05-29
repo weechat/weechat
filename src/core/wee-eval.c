@@ -1721,7 +1721,7 @@ eval_expression_condition (const char *expr,
 
     /*
      * evaluate sub-expressions between parentheses and replace them with their
-     * value
+     * values
      */
     while (expr2[0] == '(')
     {

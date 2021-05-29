@@ -402,7 +402,7 @@ server_mask: die aufzulistenden Server sollen diesem Muster entsprechen
 ----
 
 [[command_irc_list]]
-* `+list+`: Channels mit ihrem Thema auflisten
+* `+list+`: list channels and their topics
 
 ----
 /list  [-server <server>] [-re <regex>] [<channel>[,<channel>...]] [<target>]
@@ -671,9 +671,9 @@ option: zusätzliche Einstellung, die von manchen Servern berücksichtigt wird
 ----
 /remove  [<channel>] <nick> [<reason>]
 
-channel: Channelname
-   nick: Nick der rausgeworfen werden soll
- reason: Begründung für den Rauswurf (Variablen die genutzt werden können: $nick, $channel und $server)
+channel: channel name
+   nick: nick
+ reason: reason (special variables $nick, $channel and $server are replaced by their values)
 ----
 
 [[command_irc_restart]]

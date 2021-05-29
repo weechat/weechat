@@ -402,7 +402,7 @@ masque_serveur : liste des serveurs correspondant au masque
 ----
 
 [[command_irc_list]]
-* `+list+`: lister les canaux et leur titre
+* `+list+`: lister les canaux et leurs titres
 
 ----
 /list  [-server <serveur>] [-re <regex>] [<canal>[,<canal>...]] [<cible>]
@@ -673,7 +673,7 @@ option : option supplémentaire, pour certains serveurs
 
  canal : nom du canal
 pseudo : pseudo
-raison : raison (les variables spéciales $nick, $channel et $server sont remplacées par leur valeur)
+raison : raison (les variables spéciales $nick, $channel et $server sont remplacées par leurs valeurs)
 ----
 
 [[command_irc_restart]]
