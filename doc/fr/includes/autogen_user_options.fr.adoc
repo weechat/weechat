@@ -2713,7 +2713,7 @@
 ** valeur par défaut: `+""+`
 
 * [[option_irc.server_default.msg_kick]] *irc.server_default.msg_kick*
-** description: pass:none[message par défaut pour l'éjection utilisé par les commandes "/kick" et "/kickban" (note : le contenu est évalué, voir /help eval ; les variables spéciales ${nick}, ${channel} et ${server} sont remplacées par leur valeurs)]
+** description: pass:none[message par défaut pour l'éjection utilisé par les commandes "/kick" et "/kickban" (note : le contenu est évalué, voir /help eval ; les variables spéciales ${nick} (propre pseudo), ${target} (pseudo cible), ${channel} et ${server} sont remplacées par leur valeurs)]
 ** type: chaîne
 ** valeurs: toute chaîne
 ** valeur par défaut: `+""+`

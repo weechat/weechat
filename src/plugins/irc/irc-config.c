@@ -2338,8 +2338,8 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 N_("default kick message used by commands \"/kick\" and "
                    "\"/kickban\" "
                    "(note: content is evaluated, see /help eval; special "
-                   "variables ${nick}, ${channel} and ${server} are replaced "
-                   "by their values)"),
+                   "variables ${nick} (self nick), ${target} (target nick), "
+                   "${channel} and ${server} are replaced by their values)"),
                 NULL, 0, 0,
                 default_value, value,
                 null_value_allowed,
