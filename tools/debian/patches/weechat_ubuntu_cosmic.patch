@@ -1,1 +1,40 @@
-weechat_ubuntu_disco.patch
+diff --git a/debian-devel/compat b/debian-devel/compat
+index 48082f72f..b4de39476 100644
+--- a/debian-devel/compat
++++ b/debian-devel/compat
+@@ -1 +1 @@
+-12
++11
+diff --git a/debian-devel/control b/debian-devel/control
+index a6cc3c91c..d078d35b7 100644
+--- a/debian-devel/control
++++ b/debian-devel/control
+@@ -4,7 +4,7 @@ Priority: optional
+ Maintainer: Sébastien Helleu <flashcode@flashtux.org>
+ Build-Depends:
+     asciidoctor (>= 1.5.4),
+-    debhelper (>= 12),
++    debhelper (>= 11),
+     cmake, pkg-config,
+     libncursesw5-dev,
+     gem2deb,
+diff --git a/debian-stable/compat b/debian-stable/compat
+index 48082f72f..b4de39476 100644
+--- a/debian-stable/compat
++++ b/debian-stable/compat
+@@ -1 +1 @@
+-12
++11
+diff --git a/debian-stable/control b/debian-stable/control
+index 1b0a27009..7880ce7bd 100644
+--- a/debian-stable/control
++++ b/debian-stable/control
+@@ -4,7 +4,7 @@ Priority: optional
+ Maintainer: Emmanuel Bouthenot <kolter@debian.org>
+ Build-Depends:
+     asciidoctor (>= 1.5.4),
+-    debhelper (>= 12),
++    debhelper (>= 11),
+     cmake, pkg-config,
+     libncursesw5-dev,
+     gem2deb,

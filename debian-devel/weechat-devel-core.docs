@@ -1,1 +1,4 @@
-../debian-stable/weechat-core.docs
+AUTHORS.adoc
+Contributing.adoc
+README.adoc
+ReleaseNotes.adoc

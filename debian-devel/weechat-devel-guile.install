@@ -1,1 +1,1 @@
-../debian-stable/weechat-guile.install
+usr/lib/*/weechat/plugins/guile.so

@@ -512,23 +512,23 @@ Por ejemplo, para marcar buffers como leidos cuando una terminal pierde el foco:
 ----
 
 [[screen_paste]]
-=== When WeeChat is running in screen, pasting text in another screen window adds ~0 and ~1 around text, why?
+=== Cuando WeeChat se está ejecutando en el multiplexador screen, al pegar texto en otra ventana de screen añade ~0 y ~1 alrededor del texto, ¿por qué?
 
-This is caused by the bracketed paste option which is enabled by default, and
-not properly handled by screen in other windows.
+Esto es causado por la opción de pegado de corchetes que está habilitado de manera predeterminada, y
+no está adecuadamente gestionada por screen en otras ventanas.
 
-You can just disable bracketed paste mode:
+Puede inhabilitar este modo de pegado con este comando:
 
 ----
 /set weechat.look.paste_bracketed off
 ----
 
 [[small_terminal]]
-=== How can I customize display for very small terminal size (like 80x25), to not waste space?
+=== ¿Cómo puedo personalizar cómo se muestra para tamaños de terminales pequeñas (como 80x25), para no malgastar espacio?
 
-You can remove side bars (buflist and nicklist), change time format to display
-only hours and seconds, disable alignment of messages and set a char for nick
-prefix/suffix:
+Puede eliminar las barras laterales (lista de buffers y lista de apodos), cambie el formato en que se muestra la hora
+para mostrar solo horas y segundos, inhabilite la alineación de mensajes y un juego de caracteres para
+prefijos/sufijos de apodos:
 
 ----
 /set buflist.look.enabled off
@@ -540,7 +540,7 @@ prefix/suffix:
 /set weechat.look.nick_prefix "<"
 ----
 
-Terminal 80x25, with default configuration:
+Terminal 80x25, con configuración predeterminada:
 
 ....
 ┌────────────────────────────────────────────────────────────────────────────────┐
@@ -572,7 +572,7 @@ Terminal 80x25, with default configuration:
 └────────────────────────────────────────────────────────────────────────────────┘
 ....
 
-Terminal 80x25, after changes:
+Terminal 80x25, después de los cambios:
 
 ....
 ┌────────────────────────────────────────────────────────────────────────────────┐
@@ -608,50 +608,50 @@ Terminal 80x25, after changes:
 == Key bindings
 
 [[meta_keys]]
-=== Some meta keys (alt + key) are not working, why?
+=== Algunas teclas (alt + tecla) no funcionan, ¿por qué?
 
-If you're using some terminals like xterm or uxterm, some meta keys do not
-work by default. You can add a line in file _~/.Xresources_:
+Si está utilizando algunas terminales como xterm o uxterm, algunas teclas no
+funcionan de manera predeterminada. Puede añadir una línea en el archivo _~/.Xresources_:
 
-* For xterm:
+* Para xterm:
 ----
 XTerm*metaSendsEscape: true
 ----
-* For uxterm:
+* Para uxterm:
 ----
 UXTerm*metaSendsEscape: true
 ----
 
-And then reload resources (`xrdb -override ~/.Xresources`) or restart X.
+Y después recargar el archivo (`xrdb -override ~/.Xresources`) o reiniciar el servidor gráfico X.
 
-If you are using the macOS Terminal app, enable the option
-"Use option as meta key" in menu Settings/Keyboard after which you can use the
-kbd:[Option] key as meta key.
+Si está utilizando aplicación Terminal de macOS, habilite la opción
+"Use option as meta key" en el menú Settings/Keyboard después de la cual puede utilizar la tecla 
+kbd:[Option] como tecla meta.
 
 [[customize_key_bindings]]
-=== How can I customize key bindings?
+=== ¿Cómo puedo personalizar los atajos de teclado?
 
-Key bindings are customizable with `/key` command.
+Los atajos de teclado son personalizables con el comando `/key`.
 
-Default key kbd:[Alt+k] lets you grab key code and insert it in command line.
+La combinación predeterminadad kbd:[Alt+k] le permite guardar el código de la tecla e insertarlo en la línea de comando.
 
 [[jump_to_buffer_11_or_higher]]
-=== What is the key to jump to buffer 11 (or higher number)?
+=== ¿Cual es la tecla para saltar al buffer 11 (o un número mayor)?
 
-The key is kbd:[Alt+j] and then 2 digits, for example kbd:[Alt+j], kbd:[1],
-kbd:[1] to jump to buffer 11.
+La tecla es kbd:[Alt+j] y después introducir 2 dígitos, por ejemplo kbd:[Alt+j], kbd:[1],
+kbd:[1] para saltar al buffer 11.
 
-You can bind a key, for example:
+Puede crear un atajo de teclado, por ejemplo:
 
 ----
 /key bind meta-q /buffer *11
 ----
 
-List of default keys is in
-link:weechat_user.en.html#key_bindings[User's guide / Key bindings].
+Tiene una lista de las teclas predeterminadas en la
+link:weechat_user.en.html#key_bindings[Guía del usuario / Atajos de teclado].
 
-To jump to buffers with number ≥ 100, you could define a trigger and then use
-commands like `/123` to jump to buffer #123:
+Para saltar a un buffer mayor de 100, podría definir un disparador y después utilizar
+comandos como `/123` para saltar al buffer #123:
 
 ----
 /trigger add numberjump modifier "2000|input_text_for_buffer" "${tg_string} =~ ^/[0-9]+$" "=\/([0-9]+)=/buffer *${re:1}=" "" "" "none"

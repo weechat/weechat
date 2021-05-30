@@ -1,1 +1,2 @@
-../debian-stable/weechat-curses.dirs
+usr/bin
+usr/share/pixmaps

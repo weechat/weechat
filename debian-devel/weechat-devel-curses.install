@@ -1,1 +1,4 @@
-../debian-stable/weechat-curses.install
+usr/bin/weechat
+debian/weechat.xpm usr/share/pixmaps
+usr/share/man/man1/weechat.1
+usr/share/man/*/man1/weechat.1

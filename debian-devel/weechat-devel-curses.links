@@ -1,1 +1,9 @@
-../debian-stable/weechat-curses.links
+usr/bin/weechat usr/bin/weechat-curses
+usr/share/man/man1/weechat.1.gz usr/share/man/man1/weechat-curses.1.gz
+usr/share/man/cs/man1/weechat.1.gz usr/share/man/cs/man1/weechat-curses.1.gz
+usr/share/man/de/man1/weechat.1.gz usr/share/man/de/man1/weechat-curses.1.gz
+usr/share/man/fr/man1/weechat.1.gz usr/share/man/fr/man1/weechat-curses.1.gz
+usr/share/man/it/man1/weechat.1.gz usr/share/man/it/man1/weechat-curses.1.gz
+usr/share/man/ja/man1/weechat.1.gz usr/share/man/ja/man1/weechat-curses.1.gz
+usr/share/man/pl/man1/weechat.1.gz usr/share/man/pl/man1/weechat-curses.1.gz
+usr/share/man/ru/man1/weechat.1.gz usr/share/man/ru/man1/weechat-curses.1.gz

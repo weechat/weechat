@@ -1,1 +1,4 @@
-../debian-stable/weechat-curses.menu
+?package(weechat-curses):needs="text" section="Applications/Network/Communication" \
+		title="weechat" \
+		icon="/usr/share/pixmaps/weechat.xpm" \
+		command="/usr/bin/weechat"

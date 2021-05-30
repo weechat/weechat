@@ -1,1 +1,3 @@
-../debian-stable/weechat-headless.install
+usr/bin/weechat-headless
+usr/share/man/man1/weechat-headless.1
+usr/share/man/*/man1/weechat-headless.1

@@ -1,1 +1,1 @@
-../debian-stable/weechat-lua.install
+usr/lib/*/weechat/plugins/lua.so

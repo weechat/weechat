@@ -1,1 +1,2 @@
-../debian-stable/watch
+version=4
+opts=pgpsigurlmangle=s/$/.asc/  https://weechat.org/download/ /files/src/weechat-(\d.*)\.tar\.xz

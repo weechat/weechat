@@ -1,1 +1,1 @@
-../debian-stable/weechat-tcl.install
+usr/lib/*/weechat/plugins/tcl.so

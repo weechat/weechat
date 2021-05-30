@@ -1,1 +1,2 @@
-../debian-stable/weechat-dev.install
+usr/include/weechat/*
+usr/lib/*/pkgconfig/*
