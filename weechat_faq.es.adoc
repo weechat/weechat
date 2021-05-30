@@ -658,12 +658,12 @@ comandos como `/123` para saltar al buffer #123:
 ----
 
 [[global_history]]
-=== How to use global history (instead of buffer history) with up and down keys?
+=== ¿Cómo utilizar el historial globale (en vez del historial del buffer) con las teclas de las flechas arriba y abajo?
 
-You can bind the up and down keys on global history (default keys for global
-history are kbd:[Ctrl+↑] and kbd:[Ctrl+↓]).
+Puede asociar las teclas de las flechas arriba y abajo en el historial global (las teclas predeterminadas para el historial
+global son kbd:[Ctrl+↑] y kbd:[Ctrl+↓]).
 
-Example:
+Ejemplo:
 
 ----
 /key bind meta2-A /input history_global_previous
@@ -671,48 +671,48 @@ Example:
 ----
 
 [NOTE]
-Keys "meta2-A" and "meta2-B" may be different in your terminal. To find key
-code press kbd:[Alt+k] then key.
+Las telcas "meta2-A" y "meta2-B" pueden ser diferentes en su terminal. Para encontrar el código
+de la tecla pulse kbd:[Alt+k] y después la tecla.
 
 [[mouse]]
-== Mouse
+== Ratón
 
 [[mouse_not_working]]
-=== Mouse is not working at all, what can I do?
+=== El ratón no funciona en absoluto, ¿qué puedo hacer?
 
-Mouse is supported with WeeChat ≥ 0.3.6.
+El ratón tiene soporte desde WeeChat ≥ 0.3.6.
 
-First try to enable mouse:
+Primero trate de habilitar el ratón:
 
 ----
 /mouse enable
 ----
 
-If mouse is still not working, check the TERM variable in your shell (look at
-output of `echo $TERM` in your terminal).
-According to terminfo used, mouse may not be supported.
+Si el ratón sigue sin funcionar, compruebe la variable TERM en su shell (eche un vistazo
+a la salida de `echo $TERM` en su terminal).
+De acuerdo a la información usada, el ratón podrá o no estar soportado.
 
-You can test mouse support in terminal:
+Puede comprobar el soporte del ratón en la terminal:
 
 ----
 $ printf '\033[?1002h'
 ----
 
-And then click on first char of terminal (upper left). You should see " !!#!!".
+Y después haga clic en el primer caracter de la terminal (superior izquierdo). Debería ver " !!#!!".
 
-To disable mouse in terminal:
+Para inhabilitar el ratón en la terminal:
 
 ----
 $ printf '\033[?1002l'
 ----
 
 [[mouse_coords]]
-=== Mouse does nothing for X or Y greater than 94 (or 222), why?
+=== El ratón no hace nada para coordenadas X o Y mayores de 94 (o 222), ¿por qué?
 
-Some terminals are sending only ISO chars for mouse coordinates, so it does not
-work for X/Y greater than 94 (or 222).
+Algunas terminales solo envían caracteres ISO para las coordenadas del ratón, así que esto no
+funciona para X/Y mayores de 94 (o 222).
 
-You should use a terminal that supports UTF-8 coordinates for mouse, like
+Debería utilizar una terminal que admitiera coordenadas UTF-8 para el ratón, como
 rxvt-unicode.
 
 [[mouse_select_paste]]
