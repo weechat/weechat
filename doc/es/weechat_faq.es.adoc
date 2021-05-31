@@ -716,11 +716,11 @@ Debería utilizar una terminal que admitiera coordenadas UTF-8 para el ratón, c
 rxvt-unicode.
 
 [[mouse_select_paste]]
-=== How can I select or paste text in terminal when mouse is enabled in WeeChat?
+=== ¿Cómo puedo seleccionar o pegar texto en la terminal cuando el ratón está habilitado en WeeChat?
 
-When mouse is enabled in WeeChat, you can use kbd:[Shift] modifier to select or
-click in terminal, as if the mouse was disabled (on some terminals like iTerm,
-you have to use kbd:[Alt] instead of kbd:[Shift]).
+Cuando el ratón está habilitado en WeeChat, puede utilizar el modificador kbd:[Shift] para seleccionar o
+hacer clik en la terminal, como si el ratón estuviera inhabilitado (en algunos terminales como iTerm,
+tiene que utilizar kbd:[Alt] en vez de kbd:[Shift]).
 
 [[irc]]
 == IRC
