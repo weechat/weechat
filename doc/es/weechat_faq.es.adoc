@@ -797,14 +797,14 @@ Establezca el puerto del servidor, SSL, después conecte:
 ----
 
 [[irc_oauth]]
-=== How to connect to a server that requires "oauth"?
+=== ¿Cómo conectar con un servidor que pide "oauth"?
 
-Some servers like _twitch_ require oauth to connect.
+Algunos servidores como _twitch_ requiere oauth para conectarse.
 
-The oauth is simply a password with the value "oauth:XXXX".
+oauth es simplemente una contraseña con el valor "oauth:XXXX".
 
-You can add such server and connect with following commands (replace name
-and address by appropriate values):
+Puede añadir cualquier servidor y conectar con los siguientes comandos (reemplace el nombre
+y dirección con los valores apropiados en su caso):
 
 ----
 /server add name irc.server.org -password=oauth:XXXX
@@ -812,96 +812,96 @@ and address by appropriate values):
 ----
 
 [[irc_sasl]]
-=== How can I be identified before joining channels?
+=== ¿Cómo puedo ser identificado antes de unirme a los canales?
 
-If the server supports SASL, you should use that instead of sending the
-command for nickserv authentication, for example:
+Si el servidor soporta SASL, debería usar esto en vez de enviar el
+comando para la autenticación del apodo mediante nickserv, por ejemplo:
 
 ----
-/set irc.server.libera.sasl_username "mynick"
+/set irc.server.libera.sasl_username "miapodo"
 /set irc.server.libera.sasl_password "xxxxxxx"
 ----
 
-If the server does not support SASL, you can add a delay (between command and
-join of channels):
+Si el servidor no soporta SASL, puede añadir un retraso (entre el comando y
+unirse a los canales):
 
 ----
 /set irc.server.libera.command_delay 5
 ----
 
 [[edit_autojoin]]
-=== How can I add/remove channels from autojoin option?
+=== ¿Cómo puedo añadir/eliminar canales de la opción autojoin?
 
-You can use the `/set` command to edit the list of autojoin channels,
-for example for the "libera" server:
+Puede utilizar el comando `/set` para editar la lista de canales con autojoin,
+por ejemplo, para el servidor "libera":
 
 ----
 /set irc.server.libera.autojoin [TAB]
 ----
 
 [NOTE]
-You can complete the name and value of option with the kbd:[Tab] key
-(or kbd:[Shift+Tab] for partial completion, useful for the name). +
-This way you don't have to type the whole list of channels.
+Puede completar el nombre y el valor de la opción con la tecla kbd:[Tab] 
+(o kbd:[Shift+Tab] para completar el comando de manera parcial, útil para el nombre). +
+De esta manera no tendrá que escribir la lista completa de canales.
 
-You can also use the `/fset` command to edit the list of channels:
+También puede utilizar el comando `/fset` para editar la lista de canales:
 
 ----
 /fset autojoin
 ----
 
-Another solution is to use a script:
+Otra solución es utilizar un script:
 
 ----
 /script search autojoin
 ----
 
 [[ignore_vs_filter]]
-=== What is the difference between the /ignore and /filter commands?
+=== ¿Cual es la diferencia entre los comando /ignore y /filter?
 
-The `/ignore` command is an IRC command, so it applies only for IRC buffers
-(servers and channels).
-It lets you ignore some nicks or hostnames of users for a server or channel
-(command will not apply on content of messages).
-Matching messages are deleted by IRC plugin before display (so you'll
-never see them, and can't be recovered by removing the ignore).
+El comando `/ignore` es un comando de IRC, así que solo se aplica en los búfers de IRC
+(servidores y canales).
+Le permite ignorar algunos apodos o nombres de host de usuarios de un servidor o cana
+(el comando no se aplicará al contenido de mensajes).
+Los mensajes que coincidan son eliminado por el complemento IRC antes de mostrarse (así que nunca
+los verá, y no podrá recuperarlos eliminado la opción ignore).
 
-The `/filter` command is a WeeChat core command, so it applies to any buffer.
-It lets you filter some lines in buffers with tags or regular expression for
-prefix and content of line.
-Filtered lines are only hidden, not deleted, and you can see them if you
-disable filters (by default, the key kbd:[Alt+=] toggles filters).
+El comando `/filter` es un comando del núcleo de WeeChat, así que se aplica a cualquier búfer.
+Le permite filtar algunas líneas de los búfers con etiquetas o expresiones regulares para
+prefijar el contenido de la línea.
+Las líneas flitradas solo son ocultadas, no eliminadas, y podrá verlas si 
+inhabilita los filtros (de manera predeteminada, la tecla kbd:[Alt+=] alterna esos filtros).
 
 [[filter_irc_join_part_quit]]
-=== How can I filter join/part/quit messages on IRC channels?
+=== ¿Cómo puedo filtrar los mensajes join/part/quit en los canales IRC?
 
-With smart filter (keep join/part/quit from users who spoke recently):
+Con el filtro inteligente (mantiene los mensajes join/part/quit de usuarios que hayan hablado recientemente):
 
 ----
 /set irc.look.smart_filter on
 /filter add irc_smart * irc_smart_filter *
 ----
 
-With a global filter (hide *all* join/part/quit):
+Con un filtro global (oculta *todos* los mensajes join/part/quit):
 
 ----
 /filter add joinquit * irc_join,irc_part,irc_quit *
 ----
 
 [NOTE]
-For help: `/help filter`, `+/help irc.look.smart_filter+` and see
-link:weechat_user.en.html#irc_smart_filter_join_part_quit[User's guide / Smart filter for join/part/quit messages].
+Para más ayuda: `/help filter`, `+/help irc.look.smart_filter+` y vea la
+link:weechat_user.en.html#irc_smart_filter_join_part_quit[Guía del usuario / Filtros inteligente para mensajes join/part/quit].
 
 [[filter_irc_join_channel_messages]]
-=== How can I filter some messages displayed when I join an IRC channel?
+=== ¿Cómo puedo filtrar algunos mensajes mostrados cuando me uno a un canal IRC?
 
-With WeeChat ≥ 0.4.1, you can choose which messages are displayed when
-joining a channel with the option _irc.look.display_join_message_ (see
-`+/help irc.look.display_join_message+` for more info).
+Con WeeChat ≥ 0.4.1, puede escoger qué mensajes son mostrados cuando
+se une a un canal mediante la opción _irc.look.display_join_message_ (vea
+`+/help irc.look.display_join_message+` para más información).
 
-To hide messages (but keep them in buffer), you can filter them using the tag
-(for example _irc_329_ for channel creation date). See `/help filter` for help
-with filters.
+Para ocultar mensajes (pero mantenerlos en el búfer), puede filtrarlos utilizando la etiqueta propia del mensaje
+(por ejemplo _irc_329_ para la fecha de creación del canal). Vea `/help filter` para más información
+con los filtros.
 
 [[filter_voice_messages]]
 === How can I filter voice messages (eg on Bitlbee server)?
