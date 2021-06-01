@@ -108,7 +108,7 @@ WeeChat *erforderlich* sind:
 | libncursesw5-dev ^(2)^ |               | Ncurses Oberfläche.
 | libcurl4-gnutls-dev    |               | URL Transfer.
 | zlib1g-dev             |               | Kompression für Pakete, die mittels Relay- (WeeChat Protokoll), Script-Erweiterung übertragen werden.
-| libgcrypt20-dev        |               | Geschützte Daten, IRC SASL Authentifikation (DH-BLOWFISH/DH-AES).
+| libgcrypt20-dev        |               | Geschützte Daten, IRC SASL Authentifikation.
 | libgnutls28-dev        | ≥ 2.2.0 ^(3)^ | SSL Verbindung zu einem IRC Server, Unterstützung von SSL in der Relay-Erweiterung, IRC SASL Authentifikation (ECDSA-NIST256P-CHALLENGE).
 |===
 
@@ -2978,6 +2978,12 @@ Für weiterreichende Informationen lesen Sie bitte: https://www.oftc.net/NickSer
 WeeChat unterstützt eine SASL Authentifikation, mittels verschiedener Mechanismen:
 
 * _plain_: Passwort liegt in Klarschrift vor (Standard)
+// TRANSLATION MISSING
+* _scram-sha-1_: SCRAM with SHA-1 digest algorithm
+// TRANSLATION MISSING
+* _scram-sha-256_: SCRAM with SHA-256 digest algorithm
+// TRANSLATION MISSING
+* _scram-sha-512_: SCRAM with SHA-512 digest algorithm
 * _ecdsa-nist256p-challenge_: Abgleich von öffentlichem/privatem Schlüssel
 * _external_: SSL Zertifikat welches auf Client Seite vorliegt
 * _dh-blowfish_: Passwort wird mittels blowfish verschlüsselt

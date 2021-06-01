@@ -2779,7 +2779,7 @@
 ** valeur par défaut: `+""+`
 
 * [[option_irc.server_default.sasl_mechanism]] *irc.server_default.sasl_mechanism*
-** description: pass:none[mécanisme pour l'authentification SASL : "plain" pour un mot de passe en clair, "scram-sha-1" pour une authentification SCRAM avec algorithme SHA-1, "scram-sha-256" pour une authentification SCRAM avec algorithme SHA-256, "scram-sha-512" pour une authentification SCRAM avec algorithme SHA-512, "ecdsa-nist256p-challenge" pour une authentification par challenge avec clé, "external" pour une authentification en utilisant un certificat SSL côté client, "dh-blowfish" pour un mot de passe chiffré avec blowfish (non sûr, non recommandé), "dh-aes" pour un mot de passe chiffré avec AES (non sûr, non recommandé)]
+** description: pass:none[mécanisme pour l'authentification SASL : "plain" pour un mot de passe en clair, "scram-sha-1" pour une authentification SCRAM avec algorithme de hachage SHA-1, "scram-sha-256" pour une authentification SCRAM avec algorithme de hachage SHA-256, "scram-sha-512" pour une authentification SCRAM avec algorithme de hachage SHA-512, "ecdsa-nist256p-challenge" pour une authentification par challenge avec clé, "external" pour une authentification en utilisant un certificat SSL côté client, "dh-blowfish" pour un mot de passe chiffré avec blowfish (non sûr, non recommandé), "dh-aes" pour un mot de passe chiffré avec AES (non sûr, non recommandé)]
 ** type: entier
 ** valeurs: plain, scram-sha-1, scram-sha-256, scram-sha-512, ecdsa-nist256p-challenge, external, dh-blowfish, dh-aes
 ** valeur par défaut: `+plain+`

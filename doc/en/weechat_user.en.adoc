@@ -102,7 +102,7 @@ WeeChat:
 | libncursesw5-dev ^(2)^ |               | Ncurses interface.
 | libcurl4-gnutls-dev    |               | URL transfer.
 | zlib1g-dev             |               | Compression of packets in relay plugin (weechat protocol), script plugin.
-| libgcrypt20-dev        |               | Secured data, IRC SASL authentication (DH-BLOWFISH/DH-AES).
+| libgcrypt20-dev        |               | Secured data, IRC SASL authentication.
 | libgnutls28-dev        | ≥ 2.2.0 ^(3)^ | SSL connection to IRC server, support of SSL in relay plugin, IRC SASL authentication (ECDSA-NIST256P-CHALLENGE).
 |===
 
@@ -2928,6 +2928,9 @@ For more information, look at https://www.oftc.net/NickServ/CertFP
 WeeChat supports SASL authentication, using different mechanisms:
 
 * _plain_: plain text password (default)
+* _scram-sha-1_: SCRAM with SHA-1 digest algorithm
+* _scram-sha-256_: SCRAM with SHA-256 digest algorithm
+* _scram-sha-512_: SCRAM with SHA-512 digest algorithm
 * _ecdsa-nist256p-challenge_: challenge with public/private key
 * _external_: client side SSL cert
 * _dh-blowfish_: blowfish encrypted password (*insecure*, not recommended)

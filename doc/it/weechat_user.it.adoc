@@ -124,7 +124,7 @@ WeeChat:
 // TRANSLATION MISSING
 | zlib1g-dev             |               | Compression of packets in relay plugin (weechat protocol), script plugin.
 // TRANSLATION MISSING
-| libgcrypt20-dev        |               | Secured data, IRC SASL authentication (DH-BLOWFISH/DH-AES).
+| libgcrypt20-dev        |               | Secured data, IRC SASL authentication.
 // TRANSLATION MISSING
 | libgnutls28-dev        | ≥ 2.2.0 ^(3)^ | Connessione SSL al server IRC, support of SSL in relay plugin, IRC SASL authentication (ECDSA-NIST256P-CHALLENGE).
 |===
@@ -3154,6 +3154,12 @@ WeeChat supports SASL authentication, using different mechanisms:
 
 // TRANSLATION MISSING
 * _plain_: password in chiaro (default)
+// TRANSLATION MISSING
+* _scram-sha-1_: SCRAM with SHA-1 digest algorithm
+// TRANSLATION MISSING
+* _scram-sha-256_: SCRAM with SHA-256 digest algorithm
+// TRANSLATION MISSING
+* _scram-sha-512_: SCRAM with SHA-512 digest algorithm
 // TRANSLATION MISSING
 * _ecdsa-nist256p-challenge_: challenge with public/private key
 * _external_: certificato SSL da lato client
