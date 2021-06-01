@@ -53,7 +53,7 @@ _next_script_   (pointer, hdata: "guile_script") +
 
 | irc
 | [[hdata_irc_channel]]<<hdata_irc_channel,irc_channel>>
-| IRC-Channel
+| IRC-Kanal
 | -
 | _type_   (integer) +
 _name_   (string) +
@@ -87,7 +87,7 @@ _next_channel_   (pointer, hdata: "irc_channel") +
 
 | irc
 | [[hdata_irc_channel_speaking]]<<hdata_irc_channel_speaking,irc_channel_speaking>>
-| IRC channel_speaking
+| irc channel_speaking
 | -
 | _nick_   (string) +
 _time_last_message_   (time) +

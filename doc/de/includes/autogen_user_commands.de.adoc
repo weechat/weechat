@@ -14,32 +14,32 @@ target: Servername
 ----
 
 [[command_irc_allchan]]
-* `+allchan+`: führt einen Befehl aus der an alle Channels gesendet wird, die mit einem Server verbunden sind
+* `+allchan+`: führt einen Befehl aus der an alle Kanäle gesendet wird, die mit einem Server verbunden sind
 
 ----
 /allchan  [-current] [-exclude=<channel>[,<channel>...]] <command>
           [-current] -include=<channel>[,<channel>...] <command>
 
- -current: führt einen Befehl aus der an alle Channels des aktuellen Servers gesendet wird
- -exclude: dient zum Ausschluss ausgewählter Channels (Platzhalter "*" kann verwendet werden)
- -include: findet Anwendung für ausgewählte Channels (Platzhalter "*" kann verwendet werden)\n
+ -current: führt einen Befehl aus der an alle Kanäle des aktuellen Servers gesendet wird
+ -exclude: dient zum Ausschluss ausgewählter Kanäle (Platzhalter "*" kann verwendet werden)
+ -include: findet Anwendung für ausgewählte Kanäle (Platzhalter "*" kann verwendet werden)\n
   command: Befehl der ausgeführt werden soll
 
 Argumente und Befehl werden evaluiert (siehe /help eval), folgende Variablen können genutzt werden:
   $server             Name des Servers
-  $channel            Name des Channel
+  $channel            Name des Kanals
   $nick               Nickname der auf dem Server genutzt wird
   ${irc_server.xxx}   Variable xxx von Server
-  ${irc_channel.xxx}  Variable xxx von Channel
+  ${irc_channel.xxx}  Variable xxx von Kanal
 
 Beispiele:
-  führe den Befehl '/me Ich teste gerade etwas...' für alle Channels aus:
+  führe den Befehl '/me Ich teste gerade etwas...' für alle Kanäle aus:
     /allchan /me Ich teste gerade etwas...
-  schicke 'Hallo Welt' an jeden Channel, ausgenommen an den #weechat Channel:
+  schicke 'Hallo Welt' an jeden Kanal, ausgenommen an den #weechat Kanal:
     /allchan -exclude=#weechat Hallo Welt
-  schicke 'Hallo Welt' an jeden Channel, ausgenommen an den #weechat Channel und Channels die mit #linux beginnen:
+  schicke 'Hallo Welt' an jeden Kanal, ausgenommen an den #weechat Kanal und Kanäle die mit #linux beginnen:
     /allchan -exclude=#weechat,#linux* Hallo Welt
-  schickt den Text 'Hallo' an alle Channels die mit #linux beginnen:
+  schickt den Text 'Hallo' an alle Kanäle die mit #linux beginnen:
     /allchan -include=#linux* Hallo
 ----
 
@@ -57,10 +57,10 @@ Beispiele:
 
 Argumente und Befehl werden evaluiert (siehe /help eval), folgende Variablen können genutzt werden:
   $server             Name des Servers
-  $channel            Name des Channel
+  $channel            Name des Kanals
   $nick               Nickname der auf dem Server genutzt wird
   ${irc_server.xxx}   Variable xxx von Server
-  ${irc_channel.xxx}  Variable xxx von Channel
+  ${irc_channel.xxx}  Variable xxx von Kanal
 
 Beispiele:
   führe den Befehl '/me Ich teste gerade etwas...' für alle privaten Buffer aus:
@@ -106,10 +106,10 @@ Beispiele:
 ----
 /ban  [<channel>] [<nick> [<nick>...]]
 
-channel: Name des Channel
+channel: Name des Kanals
    nick: Nick oder Host
 
-Ohne Angabe von Argumenten wird die Ban-Liste für den aktuellen Channel angezeigt.
+Ohne Angabe von Argumenten wird die Ban-Liste für den aktuellen Kanal angezeigt.
 ----
 
 [[command_irc_cap]]
@@ -177,7 +177,7 @@ Beispiele:
 /ctcp  [-server <server>] <target>[,<target>...] <type> [<arguments>]
 
    server: an diesen Server senden (interner Servername)
-   target: Nick- oder Channelname an welchen eine CTCP-Nachricht geschickt werden soll ('*' = aktuellen Channel)
+   target: Nick- oder Kanalname an welchen eine CTCP-Nachricht geschickt werden soll ('*' = aktueller Kanal)
      type: CTCP-Nachricht (Beispiele: "version", "ping", usw.)
 arguments: Argumente für CTCP
 
@@ -188,12 +188,12 @@ Beispiele:
 ----
 
 [[command_irc_cycle]]
-* `+cycle+`: Einen Channel verlassen und wieder betreten
+* `+cycle+`: Einen Kanal verlassen und wieder betreten
 
 ----
 /cycle  [<channel>[,<channel>...]] [<message>]
 
-channel: Name des Channels
+channel: Name des Kanals
 message: Abschiedsnachricht (wird anderen Usern angezeigt)
 ----
 
@@ -222,7 +222,7 @@ Beispiel:
            * -yes
 
 nick: Nick oder Maske (Platzhalter "*" kann verwendet werden)
-   *: entzieht allen Nicks im Channel den half-operator-Status, ausgenommen sich selber
+   *: entzieht allen Nicks im Kanal den half-operator-Status, ausgenommen sich selber
 ----
 
 [[command_irc_deop]]
@@ -233,7 +233,7 @@ nick: Nick oder Maske (Platzhalter "*" kann verwendet werden)
        * -yes
 
 nick: Nick oder Maske (Platzhalter "*" kann verwendet werden)
-   *: entzieht allen Nicks im Channel den Operator-Status, ausgenommen sich selber
+   *: entzieht allen Nicks im Kanal den Operator-Status, ausgenommen sich selber
 ----
 
 [[command_irc_devoice]]
@@ -244,7 +244,7 @@ nick: Nick oder Maske (Platzhalter "*" kann verwendet werden)
           * -yes
 
 nick: Nick oder Maske (Platzhalter "*" kann verwendet werden)
-   *: entzieht allen Nicks im Channel den voice-Status
+   *: entzieht allen Nicks im Kanal den voice-Status
 ----
 
 [[command_irc_die]]
@@ -276,11 +276,11 @@ target: Servername
          * -yes
 
 nick: Nick oder Maske (Platzhalter "*" kann verwendet werden)
-   *: vergibt an alle Nicks im Channel den half-operator-Status
+   *: vergibt an alle Nicks im Kanal den half-operator-Status
 ----
 
 [[command_irc_ignore]]
-* `+ignore+`: Ignoriert Nicks/Hosts von Channels oder Servern
+* `+ignore+`: Ignoriert Nicks/Hosts von Kanälen oder Servern
 
 ----
 /ignore  list
@@ -294,7 +294,7 @@ nick: Nick oder Maske (Platzhalter "*" kann verwendet werden)
    number: Nummer der Ignorierung die entfernt werden soll (nutze "list" um den entsprechenden Eintrag zu finden)
      -all: entfernt alle Einträge
    server: interner Name des Server auf welchem die Ignorierung statt finden soll
-  channel: Name des Channel, in dem die Ignorierung statt finden soll
+  channel: Name des Kanals, in dem die Ignorierung statt finden soll
 
 Hinweis: Um zwischen Groß-und Kleinschreibung zu unterscheiden muss am Wortanfang "(?-i)" genutzt werden.
 
@@ -317,13 +317,13 @@ target: Servername
 ----
 
 [[command_irc_invite]]
-* `+invite+`: Eine Person in einen Channel einladen
+* `+invite+`: Eine Person in einen Kanal einladen
 
 ----
 /invite  <nick> [<nick>...] [<channel>]
 
    nick: Nickname
-channel: Name des Channels
+channel: Name des Kanals
 ----
 
 [[command_irc_ison]]
@@ -336,48 +336,48 @@ nick: Nickname
 ----
 
 [[command_irc_join]]
-* `+join+`: einen Channel betreten
+* `+join+`: einen Kanal betreten
 
 ----
 /join  [-noswitch] [-server <server>] [<channel1>[,<channel2>...]] [<key1>[,<key2>...]]
 
--noswitch: es wird nicht zu dem angegebenen Channel gewechselt
+-noswitch: es wird nicht zu dem angegebenen Kanal gewechselt
    server: an angegebenen Server (interner Name) senden
-  channel: Name des Channels, der betreten werden soll
-      key: Zugriffsschlüssel für einen Channel (Channel, die einen Zugriffsschlüssel benötigen, müssen zuerst aufgeführt werden)
+  channel: Name des Kanals, der betreten werden soll
+      key: Zugriffsschlüssel für einen Kanal (Kanäle, die einen Zugriffsschlüssel benötigen, müssen zuerst aufgeführt werden)
 
 Beispiele:
   /join #weechat
-  /join #geschützter_Channel,#weechat Zugriffsschlüssel
+  /join #geschützter_Kanal,#weechat Zugriffsschlüssel
   /join -server libera #weechat
   /join -noswitch #weechat
 ----
 
 [[command_irc_kick]]
-* `+kick+`: wirft einen User aus einem Channel
+* `+kick+`: wirft einen User aus einem Kanal
 
 ----
 /kick  [<channel>] <nick> [<reason>]
 
-channel: channel name
-   nick: nick
- reason: reason (evaluated, see /help eval; special variables ${nick} (self nick), ${target} (target nick), ${channel} and ${server} are replaced by their values)
+channel: Kanalname
+   nick: Nick der rausgeworfen werden soll
+ reason: Begründung für den Rauswurf (evaluiert, siehe /help eval; besondere Variablen ${nick} (eigener Nick), ${target} (betroffener Nick), ${channel} und ${server}, werden durch den entsprechenden Wert ersetzt)
 ----
 
 [[command_irc_kickban]]
-* `+kickban+`: wirft einen User aus einem Channel und sein Host kommt auf die Bannliste
+* `+kickban+`: wirft einen User aus einem Kanal und sein Host kommt auf die Bannliste
 
 ----
 /kickban  [<channel>] <nick> [<reason>]
 
-channel: channel name
-   nick: nick
- reason: reason (evaluated, see /help eval; special variables ${nick} (self nick), ${target} (target nick), ${channel} and ${server} are replaced by their values)
+channel: Kanalname
+   nick: Nickname der rausgeworfen und gebannt werden soll
+ reason: Begründung für den Rauswurf (evaluiert, siehe /help eval; besondere Variablen ${nick} (eigener Nick), ${target} (betroffener Nick), ${channel} und ${server}, werden durch den entsprechenden Wert ersetzt)
 
-It is possible to kick/ban with a mask, nick will be extracted from mask and replaced by "*".
+Es ist möglich kick/ban mittels einer Maske auszuführen. Der Nick wird aus der Maske heraus gefiltert und durch "*" ersetzt.
 
-Example:
-  ban "*!*@host.com" and then kick "toto":
+Beispiel:
+  sperre "*!*@host.com" und kicke dann "toto":
     /kickban toto!*@host.com
 ----
 
@@ -402,22 +402,22 @@ server_mask: die aufzulistenden Server sollen diesem Muster entsprechen
 ----
 
 [[command_irc_list]]
-* `+list+`: list channels and their topics
+* `+list+`: Kanäle und deren Themen auflisten
 
 ----
 /list  [-server <server>] [-re <regex>] [<channel>[,<channel>...]] [<target>]
 
  server: an diesen Server senden (interner Name)
  regexp: erweiterter regulärer POSIX Ausdruck, der auf die Ausgabe angewendet werden soll (zwischen Groß- und Kleinschreibung wird nicht unterschieden. Um zwischen Groß- und Kleinschreibung zu unterscheiden muss zu Beginn "(?-i)" genutzt werden)
-channel: aufzulistender Channel
+channel: aufzulistender Kanal
  target: Servername
 
 Beispiele:
-  listet alle Channels des Servers auf (dies kann bei großen Netzwerken sehr lange dauern):
+  listet alle Kanäle des Servers auf (dies kann bei großen Netzwerken sehr lange dauern):
     /list
-  listet den Channel #weechat auf:
+  listet den Kanal #weechat auf:
     /list #weechat
-  listet alle Channels auf die mit "#weechat" beginnen (dies kann bei großen Netzwerken sehr lange dauern):
+  listet alle Kanäle auf die mit "#weechat" beginnen (dies kann bei großen Netzwerken sehr lange dauern):
     /list -re #weechat.*
 ----
 
@@ -438,7 +438,7 @@ target: Server, der die Anfrage weiterleiten soll
 ----
 
 [[command_irc_me]]
-* `+me+`: eine CTCP ACTION an den aktuellen Channel senden
+* `+me+`: eine CTCP ACTION an den aktuellen Kanal senden
 
 ----
 /me  <message>
@@ -447,26 +447,26 @@ message: zu sendende Nachricht
 ----
 
 [[command_irc_mode]]
-* `+mode+`: Eigenschaften eines Channel oder von einem User ändern
+* `+mode+`: Eigenschaften eines Kanals oder von einem User ändern
 
 ----
 /mode  [<channel>] [+|-]o|p|s|i|t|n|m|l|b|e|v|k [<arguments>]
        <nick> [+|-]i|s|w|o
 
-Channel-Eigenschaften:
-  channel: zu ändernder Channel (standardmäßig der erste Channel)
+Kanal-Eigenschaften:
+  channel: zu ändernder Kanal (standardmäßig der erste Kanal)
   o: vergibt/entzieht Operator Privilegien
-  p: privater Channel
-  s: geheimer Channel
-  i: geschlossener Channel (Zutritt nur mit Einladung)
+  p: privater Kanal
+  s: geheimer Kanal
+  i: geschlossener Kanal (Zutritt nur mit Einladung)
   t: nur Operatoren dürfen das Thema setzen
-  n: keine Nachrichten von außerhalb des Channels zulassen
-  m: moderierter Channel (schreiben nur mit Voice)
-  l: maximale Anzahl an Usern im Channel festlegen
+  n: keine Nachrichten von außerhalb des Kanals zulassen
+  m: moderierter Kanal (schreiben nur mit Voice)
+  l: maximale Anzahl an Usern im Kanal festlegen
   b: Bannmaske für zu sperrende User (in nick!ident@host-Form)
   e: legt Ausnahmemaske fest
-  v: vergibt/entzieht Schreibrechte (voice) in moderierten Channels
-  k: legt ein Passwort für den Channel fest
+  v: vergibt/entzieht Schreibrechte (voice) in moderierten Kanälen
+  k: legt ein Passwort für den Kanal fest
 User-Eigenschaften:
   nick: zu ändernder Nickname
   i: User als unsichtbar kennzeichnen
@@ -493,23 +493,23 @@ target: Servername
 ----
 
 [[command_irc_msg]]
-* `+msg+`: Nachricht an Nick/Channel verschicken
+* `+msg+`: Nachricht an Nick/Kanal verschicken
 
 ----
 /msg  [-server <server>] <target>[,<target>...] <text>
 
 server: schicke an diesen Server (interner Servername)
-target: Nick oder Channel (darf eine Maske sein, '*' = aktueller Channel)
+target: Nick oder Kanal (darf eine Maske sein, '*' = aktueller c)
   text: zu sendender Text
 ----
 
 [[command_irc_names]]
-* `+names+`: Nicknamen in Channels auflisten
+* `+names+`: Nicknamen des Kanals auflisten
 
 ----
 /names  [<channel>[,<channel>...]]
 
-channel: Name des Channels
+channel: Name des Kanals
 ----
 
 [[command_irc_nick]]
@@ -529,7 +529,7 @@ nick: neuer Nickname
 /notice  [-server <server>] <target> <text>
 
 server: an diesen Server senden (interner Name)
-target: Nick- oder Channelname
+target: Nick- oder Kanalname
   text: zu sendender Text
 ----
 
@@ -559,14 +559,14 @@ Beispiele:
 ----
 
 [[command_irc_op]]
-* `+op+`: Channel-Operator Status an Nicknamen vergeben
+* `+op+`: Status des Kanal-Operator an Nicknamen vergeben
 
 ----
 /op  <nick> [<nick>...]
      * -yes
 
 nick: Nick oder Maske (Platzhalter "*" kann verwendet werden)
-   *: vergibt an alle Nicks im Channel den Operator-Status
+   *: vergibt an alle Nicks im Kanal den Operator-Status
 ----
 
 [[command_irc_oper]]
@@ -580,12 +580,12 @@ password: Passwort
 ----
 
 [[command_irc_part]]
-* `+part+`: Einen Channel verlassen
+* `+part+`: Einen Kanal verlassen
 
 ----
 /part  [<channel>[,<channel>...]] [<message>]
 
-channel: Name des Channels welcher verlassen werden soll
+channel: Name des Kanals welcher verlassen werden soll
 message: Abschiedsnachricht (wird anderen Usern angezeigt)
 ----
 
@@ -622,15 +622,15 @@ target: Nickname
 ----
 
 [[command_irc_quiet]]
-* `+quiet+`: Nicks oder Hosts das Wort entziehen (User können im Channel erst schreiben, wenn sie "+v" oder höher besitzen)
+* `+quiet+`: Nicks oder Hosts das Wort entziehen (User können im Kanal erst schreiben, wenn sie "+v" oder höher besitzen)
 
 ----
 /quiet  [<channel>] [<nick> [<nick>...]]
 
-channel: Name des Channel
+channel: Name des Kanals
    nick: Nick oder Host
 
-Ohne Angabe von Argumenten wird die Quiet-Liste für den aktuellen Channel angezeigt.
+Ohne Angabe von Argumenten wird die Quiet-Liste für den aktuellen Kanal angezeigt.
 ----
 
 [[command_irc_quote]]
@@ -652,7 +652,7 @@ data: unbearbeitete (RAW) Daten die gesendet werden sollen
 
  server: Servername zu welchem neu verbunden werden soll (interner Name)
    -all: mit allen Servern neu verbinden
--nojoin: Channels werden nicht betreten (auch falls autojoin für diesen Server aktiviert ist)
+-nojoin: Kanäle werden nicht betreten (auch falls autojoin für diesen Server aktiviert ist)
 -switch: wechselt zur nächsten Server-Adresse
 ----
 
@@ -666,14 +666,14 @@ option: zusätzliche Einstellung, die von manchen Servern berücksichtigt wird
 ----
 
 [[command_irc_remove]]
-* `+remove+`: zwingt einen User einen Channel zu verlassen
+* `+remove+`: zwingt einen User einen Kanal zu verlassen
 
 ----
 /remove  [<channel>] <nick> [<reason>]
 
-channel: channel name
-   nick: nick
- reason: reason (special variables $nick, $channel and $server are replaced by their values)
+channel: Kanalname
+   nick: Nick der rausgeworfen werden soll
+ reason: Begründung für den Rauswurf (Variablen die genutzt werden können: $nick, $channel und $server)
 ----
 
 [[command_irc_restart]]
@@ -686,23 +686,23 @@ target: Servername
 ----
 
 [[command_irc_sajoin]]
-* `+sajoin+`: fordert einen User auf einen oder mehrere Channel zu betreten
+* `+sajoin+`: fordert einen User auf einen oder mehrere Kanäle zu betreten
 
 ----
 /sajoin  <nick> <channel>[,<channel>...]
 
    nick: Nickname
-channel: Name des Channels
+channel: Name des Kanals
 ----
 
 [[command_irc_samode]]
-* `+samode+`: ändert den Modus des Channels ohne das Operator-Privilegien vorliegen
+* `+samode+`: ändert den Modus des Kanals ohne das Operator-Privilegien vorliegen
 
 ----
 /samode  [<channel>] <mode>
 
-Channel: Name des Channel
-   Mode: neuer Modus für Channel
+Channel: Name des Kanals
+   Mode: neuer Modus für Kanal
 ----
 
 [[command_irc_sanick]]
@@ -716,13 +716,13 @@ new_nick: neuer Nickname
 ----
 
 [[command_irc_sapart]]
-* `+sapart+`: zwingt einen User den oder die Channel(s) zu verlassen
+* `+sapart+`: zwingt einen User den oder die Kanäle zu verlassen
 
 ----
 /sapart  <nick> <channel>[,<channel>...]
 
    nick: Nickname
-channel: Name des Channels
+channel: Name des Kanals
 ----
 
 [[command_irc_saquit]]
@@ -846,7 +846,7 @@ target: Name des Servers
 
    user: Benutzername
  target: Servername
-channel: Channelname
+channel: Kanalname
 ----
 
 [[command_irc_time]]
@@ -859,14 +859,14 @@ target: Zeit des angegebenen Servers abfragen
 ----
 
 [[command_irc_topic]]
-* `+topic+`: Thema des Channels abfragen/setzen
+* `+topic+`: Thema des Kanals abfragen/setzen
 
 ----
 /topic  [<channel>] [<topic>|-delete]
 
-channel: Name des Channels
-  topic: neues Thema für den Channel
--delete: entfernt das Thema des Channels
+channel: Name des Kanals
+  topic: neues Thema für den Kanal
+-delete: entfernt das Thema des Kanals
 ----
 
 [[command_irc_trace]]
@@ -884,7 +884,7 @@ target: Servername
 ----
 /unban  [<channel>] <nick>|<number> [<nick>|<number>...]
 
-channel: Name des Channel
+channel: Name des Kanals
    nick: Nick oder Host
  number: ban Nummer (wird beim Befehl /ban angezeigt)
 ----
@@ -895,7 +895,7 @@ channel: Name des Channel
 ----
 /unquiet  [<channel>] <nick>|<number> [<nick>|<number>...]
 
-channel: Name des Channel
+channel: Name des Kanals
    nick: Nick oder Host
  number: Quiet-Nummer (wird beim Befehl /quiet angezeigt)
 ----
@@ -936,16 +936,16 @@ target: Servername
         * -yes
 
 nick: Nick oder Maske (Platzhalter "*" kann verwendet werden)
-   *: vergibt an alle Nicks im Channel den voice-Status
+   *: vergibt an alle Nicks im Kanal den voice-Status
 ----
 
 [[command_irc_wallchops]]
-* `+wallchops+`: Nachricht an Channel-Operator verschicken
+* `+wallchops+`: Nachricht an Kanal-Operator verschicken
 
 ----
 /wallchops  [<channel>] <text>
 
-channel: Name des Channel
+channel: Name des Kanals
    text: Text der versendet werden soll
 ----
 
@@ -978,7 +978,7 @@ target: Name des Servers (interner Servername)
   nick: Nick, welcher abgefragt werden soll (es kann auch eine Maske genutzt werden)
 
 Ohne Angabe von Argumenten, nutzt /whois folgende Regel:
-- den eigenen Nick, falls es sich um einen Server/Channel Buffer handelt
+- den eigenen Nick, falls es sich um einen Server/Kanal-Buffer handelt
 - den Nick des Gesprächspartners, falls es sich um einen privaten Buffer handelt.
 
 Sollte die Einstellung irc.network.whois_double_nick aktiviert sein dann wird ein Nick zweimal verwendet (sofern der Nick nur einmal angegeben wurde), um die Idle-Zeit zu erhalten.
@@ -1683,9 +1683,9 @@ Wird kein Buffer ausgewählt (-core, -current oder -buffer), dann wird die Texta
 Beispiele:
   Speichern der Konfiguration:
   /mute save
-  Nachricht in den aktuellen Channel senden:
+  Nachricht in den aktuellen Kanal senden:
   /mute -current msg * hi!
-  Nachricht an den #weechat Channel senden:
+  Nachricht an den #weechat Kanal senden:
   /mute -buffer irc.libera.#weechat msg #weechat hi!
 ----
 
@@ -2025,7 +2025,7 @@ command: Befehl welcher ausgeführt werden soll (oder ein Text der an einen Buff
 Hinweis: Der Befehl wird in dem Buffer ausgeführt, in welchem der /wait Befehl ausgeführt wurde (sollte der Buffer nicht mehr existieren, wird der Befehl nicht ausgeführt).
 
 Beispiele:
-  Betritt nach 10 Sekunden den Channel #test:
+  Betritt nach 10 Sekunden den Kanal #test:
   /wait 10 /join #test
   Setzt nach 15 Minuten eine globale Abwesenheit:
   /wait 15m /away -all Bin dann mal eben weg
@@ -2148,7 +2148,7 @@ Die folgenden Variablen können in den obigen Optionen genutzt werden:
     - ${buffer.short_name}
     - ${buffer.nicklist_nicks_count}
   - irc_server: IRC Serverdaten, ausschließlich genutzt bei einem IRC Buffer (siehe hdata "irc_server" in API Dokumentation)
-  - irc_channel: IRC Channeldaten, ausschließlich genutzt bei einem IRC Channel Buffer (siehe hdata "irc_channel" in API Dokumentation)
+  - irc_channel: IRC Kanaldaten, ausschließlich genutzt bei einem IRC Kanal-Buffer (siehe hdata "irc_channel" in API Dokumentation)
   - zusätzliche Variablen die durch buflist bereitgestellt werden:
     - ${format_buffer}: der evaluierte Wert der Option buflist.format.buffer; dies kann in der Option buflist.format.buffer_current genutzt werden um zum Beispiel die Hintergrundfarbe zu verändern
     - ${current_buffer}: ein Boolean ("0" oder "1"), "1" falls es sich um den aktuellen Buffer handelt; dies kann in einer Bedingung verwendet werden: ${if:${current_buffer}?...:...}
@@ -2531,7 +2531,7 @@ disable: die Protokollierung wird für den aktuellen Buffer deaktiviert (der Lev
 Die Einstellungen "logger.level.*" und "logger.mask.*" können genutzt werden um den Level der Protokollierung festzulegen und um eine Maske für einen oder mehrere Buffer zu definieren.
 
 Level der Protokollierung, die die IRC Erweiterung unterstützt:
-  1: Nachrichten von Usern (private und öffentliche Nachrichten) , notice (Server und Channel)
+  1: Nachrichten von Usern (private und öffentliche Nachrichten) , notice (Server und Kanal)
   2: Wechsel von Nicks (/nick)
   3: Nachrichten vom Server
   4: join/part/quit Nachrichten
@@ -2546,7 +2546,7 @@ Beispiele:
     /set logger.level.irc 3
   Die Protokollierung, für den WeeChat Haupt-Buffer, wird deaktiviert:
     /set logger.level.core.weechat 0
-  Für jeden IRC-Server wird ein separates Verzeichnis erstellt und darin eine eigene Protokoll-Datei, für jeden Channel:
+  Für jeden IRC-Server wird ein separates Verzeichnis erstellt und darin eine eigene Protokoll-Datei, für jeden Kanal:
     /set logger.mask.irc "$server/$channel.weechatlog"
 ----
 // end::logger_commands[]
