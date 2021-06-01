@@ -233,6 +233,10 @@ _hook_connect_   (pointer, hdata: "hook") +
 _hook_fd_   (pointer, hdata: "hook") +
 _hook_timer_connection_   (pointer, hdata: "hook") +
 _hook_timer_sasl_   (pointer, hdata: "hook") +
+_sasl_scram_client_first_   (string) +
+_sasl_scram_salted_pwd_   (other) +
+_sasl_scram_salted_pwd_size_   (integer) +
+_sasl_scram_auth_message_   (string) +
 _is_connected_   (integer) +
 _ssl_connected_   (integer) +
 _disconnected_   (integer) +

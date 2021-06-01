@@ -36,6 +36,7 @@ New features::
   * api: add info "weechat_daemon"
   * buflist: add option buflist.format.tls_version
   * fifo: change default value of option fifo.file.path to "${weechat_runtime_dir}/weechat_fifo_${info:pid}"
+  * irc: add support of SASL mechanisms SCRAM-SHA-1, SCRAM-SHA-256 and SCRAM-SHA-512 (issue #1628)
   * irc: add variable "${target}" (target nick) in commands /kick and /kickban
   * irc: add bar item "tls_version", add options irc.color.item_tls_version_ok, irc.color.item_tls_version_deprecated and irc.color.item_tls_version_insecure (issue #1622)
   * irc: evaluate server options "sasl_key" and "ssl_cert"

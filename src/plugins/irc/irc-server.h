@@ -193,6 +193,10 @@ struct t_irc_server
     struct t_hook *hook_fd;         /* hook for server socket                */
     struct t_hook *hook_timer_connection; /* timer for connection            */
     struct t_hook *hook_timer_sasl; /* timer for SASL authentication         */
+    char *sasl_scram_client_first;  /* first message sent for SASL SCRAM     */
+    char *sasl_scram_salted_pwd;    /* salted password for SASL SCRAM        */
+    int sasl_scram_salted_pwd_size; /* size of salted password for SASL SCRAM*/
+    char *sasl_scram_auth_message;  /* auth message for SASL SCRAM           */
     int is_connected;               /* 1 if WeeChat is connected to server   */
     int ssl_connected;              /* = 1 if connected with SSL             */
     int disconnected;               /* 1 if server has been disconnected     */
@@ -388,6 +392,7 @@ extern void irc_server_switch_address (struct t_irc_server *server,
 extern void irc_server_disconnect (struct t_irc_server *server,
                                    int switch_address, int reconnect);
 extern void irc_server_disconnect_all ();
+extern void irc_server_free_sasl_data (struct t_irc_server *server);
 extern void irc_server_free (struct t_irc_server *server);
 extern int irc_server_xfer_send_ready_cb (const void *pointer, void *data,
                                           const char *signal,

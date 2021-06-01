@@ -1859,6 +1859,12 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 option_name, "integer",
                 N_("mechanism for SASL authentication: "
                    "\"plain\" for plain text password, "
+                   "\"scram-sha-1\" for SCRAM authentication with SHA-1 "
+                   "algorithm, "
+                   "\"scram-sha-256\" for SCRAM authentication with SHA-256 "
+                   "algorithm, "
+                   "\"scram-sha-512\" for SCRAM authentication with SHA-512 "
+                   "algorithm, "
                    "\"ecdsa-nist256p-challenge\" for key-based "
                    "challenge authentication, "
                    "\"external\" for authentication using client side SSL "
@@ -1867,7 +1873,8 @@ irc_config_server_new_option (struct t_config_file *config_file,
                    "(insecure, not recommended), "
                    "\"dh-aes\" for AES crypted password "
                    "(insecure, not recommended)"),
-                "plain|ecdsa-nist256p-challenge|external|dh-blowfish|dh-aes",
+                "plain|scram-sha-1|scram-sha-256|scram-sha-512|"
+                "ecdsa-nist256p-challenge|external|dh-blowfish|dh-aes",
                 0, 0,
                 default_value, value,
                 null_value_allowed,

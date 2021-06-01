@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-05-30 15:18+0200\n"
+"POT-Creation-Date: 2021-06-01 20:39+0200\n"
 "PO-Revision-Date: 2021-05-25 18:28+0200\n"
 "Last-Translator: Vasco Almeida <vascomalmeida@sapo.pt>\n"
 "Language-Team: Portuguese <>\n"
@@ -9020,12 +9020,16 @@ msgstr ""
 "servidor se estiverem disponíveis (ver /help cap para obter uma lista de "
 "capacidades suportadas pelo WeeChat) (exemplo: \"away-notify,multi-prefix\")"
 
+#, fuzzy
 msgid ""
 "mechanism for SASL authentication: \"plain\" for plain text password, "
-"\"ecdsa-nist256p-challenge\" for key-based challenge authentication, "
-"\"external\" for authentication using client side SSL cert, \"dh-blowfish\" "
-"for blowfish crypted password (insecure, not recommended), \"dh-aes\" for "
-"AES crypted password (insecure, not recommended)"
+"\"scram-sha-1\" for SCRAM authentication with SHA-1 algorithm, \"scram-"
+"sha-256\" for SCRAM authentication with SHA-256 algorithm, \"scram-sha-512\" "
+"for SCRAM authentication with SHA-512 algorithm, \"ecdsa-nist256p-challenge"
+"\" for key-based challenge authentication, \"external\" for authentication "
+"using client side SSL cert, \"dh-blowfish\" for blowfish crypted password "
+"(insecure, not recommended), \"dh-aes\" for AES crypted password (insecure, "
+"not recommended)"
 msgstr ""
 "mecanismo de autenticação SASL: \"plain\" para palavra-passe em texto "
 "simples, \"ecdsa-nist256p-challenge\" para autenticação por desafio com "
@@ -10237,12 +10241,12 @@ msgstr "%s%s%s%s expulsou %s%s%s"
 msgid "%s%s%s%s has unidentified"
 msgstr "%s: o servidor %s%s%s foi eliminado"
 
-#, c-format
-msgid ""
-"%s%s: error building answer for SASL authentication, using mechanism \"%s\""
+#, fuzzy, c-format
+msgid "%s%s: SASL error: %s"
+msgstr "%s%s: erro: %s"
+
+msgid "internal error"
 msgstr ""
-"%s%s: erro ao construir resposta para a autenticação SASL, usando o "
-"mecanismo \"%s\""
 
 #, c-format
 msgid "%s%s: client capability, requesting: %s"
@@ -10647,25 +10651,29 @@ msgstr ""
 msgid "%s%s: server \"%s\" not found for redirect"
 msgstr "%s%s: servidor \"%s\" não encontrado para redirecionar"
 
-#, c-format
-msgid "%s%s: unable to read private key in file \"%s\""
-msgstr "%s%s: não foi possível ler a chave privada no ficheiro \"%s\""
+#, fuzzy
+msgid "unable to validate server signature"
+msgstr "%s%s: não é possível adicionar servidor"
 
-#, c-format
-msgid "%sgnutls: invalid private key file: error %d %s"
-msgstr "%sgnutls: ficheiro de chave privada inválido: erro %d %s"
+#, fuzzy
+msgid "memory error"
+msgstr "erro"
+
+msgid "base64 decode error"
+msgstr ""
+
+msgid "base64 encode error"
+msgstr ""
+
+msgid "cryptography error"
+msgstr ""
+
+msgid "protocol error"
+msgstr ""
 
 #, c-format
 msgid "%s%s: signing the challenge with ECC public key: %s"
 msgstr "%s%s: a assinar o desafio com a chave ECC pública: %s"
-
-#, c-format
-msgid "%sgnutls: unable to import the private key: error %d %s"
-msgstr "%sgnutls: não foi possível importar a chave privada: erro %d %s"
-
-#, c-format
-msgid "%sgnutls: unable to sign the hashed data: error %d %s"
-msgstr "%sgnutls: não foi possível assinar o resumo dos dados: erro %d %s"
 
 #, c-format
 msgid ""
@@ -14511,6 +14519,30 @@ msgstr "%s%s: tempo limite de \"%s\" com %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: não foi possível conectar: erro inesperado (%d)"
+
+#, c-format
+#~ msgid ""
+#~ "%s%s: error building answer for SASL authentication, using mechanism \"%s"
+#~ "\""
+#~ msgstr ""
+#~ "%s%s: erro ao construir resposta para a autenticação SASL, usando o "
+#~ "mecanismo \"%s\""
+
+#, c-format
+#~ msgid "%s%s: unable to read private key in file \"%s\""
+#~ msgstr "%s%s: não foi possível ler a chave privada no ficheiro \"%s\""
+
+#, c-format
+#~ msgid "%sgnutls: invalid private key file: error %d %s"
+#~ msgstr "%sgnutls: ficheiro de chave privada inválido: erro %d %s"
+
+#, c-format
+#~ msgid "%sgnutls: unable to import the private key: error %d %s"
+#~ msgstr "%sgnutls: não foi possível importar a chave privada: erro %d %s"
+
+#, c-format
+#~ msgid "%sgnutls: unable to sign the hashed data: error %d %s"
+#~ msgstr "%sgnutls: não foi possível assinar o resumo dos dados: erro %d %s"
 
 #~ msgid "bar size in chars (0 = auto size)"
 #~ msgstr "tamanho da barra em carateres (0 = tamanho automático)"

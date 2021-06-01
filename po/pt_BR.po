@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-05-30 15:18+0200\n"
+"POT-Creation-Date: 2021-06-01 20:39+0200\n"
 "PO-Revision-Date: 2021-05-25 18:28+0200\n"
 "Last-Translator: Érico Nogueira <ericonr@disroot.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8067,10 +8067,13 @@ msgstr ""
 
 msgid ""
 "mechanism for SASL authentication: \"plain\" for plain text password, "
-"\"ecdsa-nist256p-challenge\" for key-based challenge authentication, "
-"\"external\" for authentication using client side SSL cert, \"dh-blowfish\" "
-"for blowfish crypted password (insecure, not recommended), \"dh-aes\" for "
-"AES crypted password (insecure, not recommended)"
+"\"scram-sha-1\" for SCRAM authentication with SHA-1 algorithm, \"scram-"
+"sha-256\" for SCRAM authentication with SHA-256 algorithm, \"scram-sha-512\" "
+"for SCRAM authentication with SHA-512 algorithm, \"ecdsa-nist256p-challenge"
+"\" for key-based challenge authentication, \"external\" for authentication "
+"using client side SSL cert, \"dh-blowfish\" for blowfish crypted password "
+"(insecure, not recommended), \"dh-aes\" for AES crypted password (insecure, "
+"not recommended)"
 msgstr ""
 
 #, fuzzy
@@ -9099,12 +9102,12 @@ msgstr "%s%s%s%s se identificou como %s"
 msgid "%s%s%s%s has unidentified"
 msgstr "%s%s%s%s removeu sua identificação"
 
-#, c-format
-msgid ""
-"%s%s: error building answer for SASL authentication, using mechanism \"%s\""
+#, fuzzy, c-format
+msgid "%s%s: SASL error: %s"
+msgstr "%s%s: erro: %s"
+
+msgid "internal error"
 msgstr ""
-"%s%s: erro ao construir resposta para autenticação SASL, utilizando "
-"mecanismo \"%s\""
 
 #, c-format
 msgid "%s%s: client capability, requesting: %s"
@@ -9505,25 +9508,29 @@ msgstr ""
 msgid "%s%s: server \"%s\" not found for redirect"
 msgstr "%s%s: servidor \"%s\" não encontrado para redirecionamento"
 
-#, c-format
-msgid "%s%s: unable to read private key in file \"%s\""
-msgstr "%s%s: não foi possível ler a chave privada no arquivo \"%s\""
+#, fuzzy
+msgid "unable to validate server signature"
+msgstr "%s%s: não foi possível redirecionar saída de erro (stderr)"
 
-#, c-format
-msgid "%sgnutls: invalid private key file: error %d %s"
-msgstr "%sgnutls: arquivo de chave privada inválido: erro %d %s"
+#, fuzzy
+msgid "memory error"
+msgstr "%s%s: erro: %s"
+
+msgid "base64 decode error"
+msgstr ""
+
+msgid "base64 encode error"
+msgstr ""
+
+msgid "cryptography error"
+msgstr ""
+
+msgid "protocol error"
+msgstr ""
 
 #, c-format
 msgid "%s%s: signing the challenge with ECC public key: %s"
 msgstr ""
-
-#, fuzzy, c-format
-msgid "%sgnutls: unable to import the private key: error %d %s"
-msgstr "%s%s: não foi possível criar pipe"
-
-#, fuzzy, c-format
-msgid "%sgnutls: unable to sign the hashed data: error %d %s"
-msgstr "%s%s: não foi possível criar pipe"
 
 #, c-format
 msgid ""
@@ -13054,6 +13061,30 @@ msgstr "%s%s: tempo esgotado para \"%s\" com %s"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: não foi possível conectar ao remetente"
+
+#, c-format
+#~ msgid ""
+#~ "%s%s: error building answer for SASL authentication, using mechanism \"%s"
+#~ "\""
+#~ msgstr ""
+#~ "%s%s: erro ao construir resposta para autenticação SASL, utilizando "
+#~ "mecanismo \"%s\""
+
+#, c-format
+#~ msgid "%s%s: unable to read private key in file \"%s\""
+#~ msgstr "%s%s: não foi possível ler a chave privada no arquivo \"%s\""
+
+#, c-format
+#~ msgid "%sgnutls: invalid private key file: error %d %s"
+#~ msgstr "%sgnutls: arquivo de chave privada inválido: erro %d %s"
+
+#, fuzzy, c-format
+#~ msgid "%sgnutls: unable to import the private key: error %d %s"
+#~ msgstr "%s%s: não foi possível criar pipe"
+
+#, fuzzy, c-format
+#~ msgid "%sgnutls: unable to sign the hashed data: error %d %s"
+#~ msgstr "%s%s: não foi possível criar pipe"
 
 #~ msgid "bar size in chars (0 = auto size)"
 #~ msgstr "tamanho da barra em caracteres (0 = tamanho automático)"
