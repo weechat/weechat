@@ -1911,6 +1911,9 @@ TEST(CoreString, Base64)
                                                   str));
         STRCMP_EQUAL(str_base64[i][1], str);
     }
+    /* test with a \0 in string */
+    LONGS_EQUAL(20, string_base64_encode ("This is\0a test.", 15, str));
+    STRCMP_EQUAL("VGhpcyBpcwBhIHRlc3Qu", str);
 
     /* string_base64_decode */
     LONGS_EQUAL(-1, string_base64_decode (NULL, NULL));
@@ -1923,6 +1926,10 @@ TEST(CoreString, Base64)
         LONGS_EQUAL(length, string_base64_decode (str_base64[i][1], str));
         STRCMP_EQUAL(str_base64[i][0], str);
     }
+    /* test with a \0 in string */
+    LONGS_EQUAL(15, string_base64_decode ("VGhpcyBpcwBhIHRlc3Qu", str));
+    MEMCMP_EQUAL("This is\0a test.", str, 15);
+
     /* invalid base64 string, missing two "=" at the end */
     LONGS_EQUAL(4, string_base64_decode ("dGVzdA", str));
     STRCMP_EQUAL("test", str);
