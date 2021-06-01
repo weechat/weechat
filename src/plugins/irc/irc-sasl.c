@@ -90,8 +90,8 @@ irc_sasl_mechanism_plain (const char *sasl_username, const char *sasl_password)
  * Builds answer for SASL authentication, using mechanism
  * "SCRAM-SHA-1", "SCRAM-SHA-256" or "SCRAM-SHA-512".
  *
- * If an error is received from the server and sasl_error is not NULL,
- * *sasl_error is set to the error and must be freed after use.
+ * If an error occurs or is received from the server, and if sasl_error is
+ * not NULL, *sasl_error is set to the error and must be freed after use.
  *
  * Note: result must be freed after use.
  */
@@ -456,6 +456,9 @@ end:
 /*
  * Returns the content of file with SASL key.
  *
+ * If the file is not found and sasl_error is not NULL, *sasl_error is set to
+ * the error and must be freed after use.
+ *
  * Note: result must be freed after use.
  */
 
@@ -501,6 +504,9 @@ irc_sasl_get_key_content (const char *sasl_key, char **sasl_error)
 /*
  * Builds answer for SASL authentication, using mechanism
  * "ECDSA-NIST256P-CHALLENGE".
+ *
+ * If an error occurs and if sasl_error is not NULL, *sasl_error is set to the
+ * error and must be freed after use.
  *
  * Note: result must be freed after use.
  */
@@ -709,6 +715,9 @@ irc_sasl_mechanism_ecdsa_nist256p_challenge (struct t_irc_server *server,
 /*
  * Reads key sent by server (Diffie-Hellman key exchange).
  *
+ * If an error occurs and if sasl_error is not NULL, *sasl_error is set to the
+ * error and must be freed after use.
+ *
  * Returns:
  *   1: OK
  *   0: error
@@ -839,6 +848,9 @@ end:
  *   2. a generator number
  *   3. server-generated public key
  *
+ * If an error occurs and if sasl_error is not NULL, *sasl_error is set to the
+ * error and must be freed after use.
+ *
  * Note: result must be freed after use.
  */
 
@@ -948,6 +960,9 @@ end:
  *   1. a prime number
  *   2. a generator number
  *   3. server-generated public key
+ *
+ * If an error occurs and if sasl_error is not NULL, *sasl_error is set to the
+ * error and must be freed after use.
  *
  * Note: result must be freed after use.
  */
