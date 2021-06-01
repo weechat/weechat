@@ -3687,6 +3687,56 @@ rc = weechat_crypto_hash_pbkdf2 (data, strlen (data), "sha256", salt, strlen (sa
 [NOTE]
 Cette fonction n'est pas disponible dans l'API script.
 
+==== crypto_hmac
+
+_WeeChat ≥ 3.2._
+
+Calculer le code d'authentification d'une empreinte cryptographique de message
+avec clé (HMAC).
+
+Prototype :
+
+[source,C]
+----
+int weechat_crypto_hmac (const void *key, int key_size, const void *message, int message_size,
+                         int hash_algo, void *hash, int *hash_size);
+----
+
+Paramètres :
+
+* _key_ : la clé
+* _key_size_ : nombre d'octets dans _key_
+* _message_ : le message
+* _message_size_ : nombre d'octets dans _message_
+* _hash_algo_ : l'algorithme de hachage, voir le tableau dans la fonction
+  <<crypto_hash_algorithms,crypto_hash>>
+* _hash_ : pointeur vers la variable de hachage, qui est utilisée pour stocker
+  le résultat du hachage (le tampon doit être suffisamment grand, selon
+  l'algorithme, voir le tableau dans la fonction
+  <<crypto_hash_algorithms,crypto_hash>>)
+* _hash_size_ : pointeur vers une variable utiliser pour stocker la longueur
+  du résultat du hachage (en octets) (peut être NULL)
+
+Valeur de retour :
+
+* 1 si OK, 0 si erreur
+
+Exemple en C :
+
+[source,C]
+----
+const char *key = "the key";
+const char *message = "the message";
+char hash[256 / 8];
+int rc, hash_size;
+rc = weechat_crypto_hmac (key, strlen (key), message, strlen (message), "sha256", hash, &hash_size);
+/* rc == 1, hash_size == 32 et hash est un tampon avec :
+   47 36 67 02 fc bc b1 97 a4 25 e6 7a b9 52 92 bd 15 9a 66 91 9c fb 94 b0 b4 9a 39 cb c0 24 2d 7b */
+----
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
 [[directories]]
 === Répertoires
 

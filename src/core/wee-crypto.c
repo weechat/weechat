@@ -80,7 +80,7 @@ weecrypto_get_hash_algo (const char *hash_algo)
 }
 
 /*
- * Computes hash of data using the given algorithm.
+ * Computes hash of data using the given hash algorithm.
  *
  * The hash size depends on the algorithm, common ones are:
  *
@@ -137,6 +137,7 @@ weecrypto_hash (const void *data, int data_size, int hash_algo,
     hd_md_opened = 1;
 
     gcry_md_write (*hd_md, data, data_size);
+
     ptr_hash = gcry_md_read (*hd_md, hash_algo);
     if (!ptr_hash)
         goto hash_end;
@@ -217,6 +218,91 @@ hash_pbkdf2_end:
 }
 
 /*
+ * Computes keyed-hash message authentication code (HMAC).
+ *
+ * The hash size depends on the algorithm, common ones are:
+ *
+ *   GCRY_MD_CRC32      32 bits ==  4 bytes
+ *   GCRY_MD_MD5       128 bits == 16 bytes
+ *   GCRY_MD_SHA1      160 bits == 20 bytes
+ *   GCRY_MD_SHA224    224 bits == 28 bytes
+ *   GCRY_MD_SHA256    256 bits == 32 bytes
+ *   GCRY_MD_SHA384    384 bits == 48 bytes
+ *   GCRY_MD_SHA512    512 bits == 64 bytes
+ *   GCRY_MD_SHA3_224  224 bits == 28 bytes (libgcrypt ≥ 1.7.0)
+ *   GCRY_MD_SHA3_256  256 bits == 32 bytes (libgcrypt ≥ 1.7.0)
+ *   GCRY_MD_SHA3_384  384 bits == 48 bytes (libgcrypt ≥ 1.7.0)
+ *   GCRY_MD_SHA3_512  512 bits == 64 bytes (libgcrypt ≥ 1.7.0)
+ *
+ * The result hash is stored in "hash" (the buffer must be large enough).
+ *
+ * If hash_size is not NULL, the length of hash is stored in *hash_size
+ * (in bytes).
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
+ */
+
+int
+weecrypto_hmac (const void *key, int key_size,
+                const void *message, int message_size,
+                int hash_algo,
+                void *hash, int *hash_size)
+{
+    gcry_md_hd_t *hd_md;
+    int rc, hd_md_opened, algo_size;
+    unsigned char *ptr_hash;
+
+    rc = 0;
+    hd_md = NULL;
+    hd_md_opened = 0;
+
+    if (!hash)
+        goto hmac_end;
+
+    if (hash_size)
+        *hash_size = 0;
+
+    if (!key || (key_size < 1) || !message || (message_size < 1))
+        goto hmac_end;
+
+    hd_md = malloc (sizeof (gcry_md_hd_t));
+    if (!hd_md)
+        goto hmac_end;
+
+    if (gcry_md_open (hd_md, hash_algo, GCRY_MD_FLAG_HMAC) != 0)
+        goto hmac_end;
+
+    hd_md_opened = 1;
+
+    if (gcry_md_setkey (*hd_md, key, key_size) != 0)
+        goto hmac_end;
+
+    gcry_md_write (*hd_md, message, message_size);
+
+    ptr_hash = gcry_md_read (*hd_md, hash_algo);
+    if (!ptr_hash)
+        goto hmac_end;
+
+    algo_size = gcry_md_get_algo_dlen (hash_algo);
+    memcpy (hash, ptr_hash, algo_size);
+    if (hash_size)
+        *hash_size = algo_size;
+
+    rc = 1;
+
+hmac_end:
+    if (hd_md)
+    {
+        if (hd_md_opened)
+            gcry_md_close (*hd_md);
+        free (hd_md);
+    }
+    return rc;
+}
+
+/*
  * Generates a Time-based One-Time Password (TOTP), as described
  * in the RFC 6238.
  *
@@ -230,21 +316,10 @@ weecrypto_totp_generate_internal (const char *secret, int length_secret,
                                   uint64_t moving_factor, int digits,
                                   char *result)
 {
-    gcry_md_hd_t hd_md;
     uint64_t moving_factor_swapped;
-    unsigned char *ptr_hash;
     char hash[20];
     int offset, length;
     unsigned long bin_code;
-
-    if (gcry_md_open (&hd_md, GCRY_MD_SHA1, GCRY_MD_FLAG_HMAC) != 0)
-        return 0;
-
-    if (gcry_md_setkey (hd_md, secret, length_secret) != 0)
-    {
-        gcry_md_close (hd_md);
-        return 0;
-    }
 
     moving_factor_swapped = (moving_factor >> 56)
         | ((moving_factor << 40) & 0x00FF000000000000)
@@ -255,19 +330,10 @@ weecrypto_totp_generate_internal (const char *secret, int length_secret,
         | ((moving_factor >> 40) & 0x000000000000FF00)
         | (moving_factor << 56);
 
-    gcry_md_write (hd_md,
-                   &moving_factor_swapped, sizeof (moving_factor_swapped));
-
-    ptr_hash = gcry_md_read (hd_md, GCRY_MD_SHA1);
-    if (!ptr_hash)
-    {
-        gcry_md_close (hd_md);
-        return 0;
-    }
-
-    memcpy (hash, ptr_hash, sizeof (hash));
-
-    gcry_md_close (hd_md);
+    weecrypto_hmac (secret, length_secret,
+                    &moving_factor_swapped, sizeof (moving_factor_swapped),
+                    GCRY_MD_SHA1,
+                    hash, NULL);
 
     offset = hash[19] & 0xf;
     bin_code = (hash[offset] & 0x7f) << 24

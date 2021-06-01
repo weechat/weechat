@@ -68,7 +68,7 @@ struct timeval;
  * please change the date with current one; for a second change at same
  * date, increment the 01, otherwise please keep 01.
  */
-#define WEECHAT_PLUGIN_API_VERSION "20201004-01"
+#define WEECHAT_PLUGIN_API_VERSION "20210601-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -382,6 +382,9 @@ struct t_weechat_plugin
                                const void *salt, int salt_size,
                                int iterations,
                                void *hash, int *hash_size);
+    int (*crypto_hmac) (const void *key, int key_size,
+                        const void *message, int message_size,
+                        const char *hash_algo, void *hash, int *hash_size);
 
     /* directories/files */
     int (*mkdir_home) (const char *directory, int mode);
@@ -1347,6 +1350,14 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
                                          __salt, __salt_size,           \
                                          __iterations,                  \
                                          __hash, __hash_size)
+#define weechat_crypto_hmac(__key, __key_size,                          \
+                            __message, __message_size,                  \
+                            __hash_algo,                                \
+                            __hash, __hash_size)                        \
+    (weechat_plugin->crypto_hmac)(__key, __key_size,                    \
+                                  __message, __message_size,            \
+                                  __hash_algo,                          \
+                                  __hash, __hash_size)
 
 /* directories */
 #define weechat_mkdir_home(__directory, __mode)                         \

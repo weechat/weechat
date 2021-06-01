@@ -38,6 +38,10 @@ extern int plugin_api_crypto_hash_pbkdf2 (const void *data, int data_size,
                                           const void *salt, int salt_size,
                                           int iterations,
                                           void *hash, int *hash_size);
+extern int plugin_api_crypto_hmac (const void *key, int key_size,
+                                   const void *message, int message_size,
+                                   const char *hash_algo,
+                                   void *hash, int *hash_size);
 
 /* config */
 extern void plugin_api_config_file_option_free (struct t_config_option *option);

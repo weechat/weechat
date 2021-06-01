@@ -26,6 +26,7 @@ New features::
   * core: add options to customize commands executed on system signals received (SIGHUP, SIGQUIT, SIGTERM, SIGUSR1, SIGUSR2) (issue #1595)
   * core: quit WeeChat by default when signal SIGHUP is received in normal run, reload configuration in weechat-headless (issue #1595)
   * core: add signals "cursor_start" and "cursor_end"
+  * api: add function crypto_hmac (issue #1628)
   * api: add translated string in evaluation of expressions with "translate:xxx"
   * api: add evaluation of WeeChat directories with "${weechat_xxx_dir}" in evaluated strings
   * api: add optional key "directory" in hashtable options of function/modifier string_eval_path_home

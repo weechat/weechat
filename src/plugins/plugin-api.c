@@ -163,6 +163,39 @@ plugin_api_crypto_hash_pbkdf2 (const void *data, int data_size,
 }
 
 /*
+ * Computes HMAC of key + message using the given algorithm.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
+ */
+
+int
+plugin_api_crypto_hmac (const void *key, int key_size,
+                        const void *message, int message_size,
+                        const char *hash_algo,
+                        void *hash, int *hash_size)
+{
+    int algo;
+
+    if (!hash)
+        return 0;
+
+    if (hash_size)
+        *hash_size = 0;
+
+    if (!key || (key_size < 1) || !message || (message_size < 1) || !hash_algo)
+        return 0;
+
+    algo = weecrypto_get_hash_algo (hash_algo);
+    if (algo == GCRY_MD_NONE)
+        return 0;
+
+    return weecrypto_hmac (key, key_size, message, message_size,
+                           algo, hash, hash_size);
+}
+
+/*
  * Frees an option.
  */
 

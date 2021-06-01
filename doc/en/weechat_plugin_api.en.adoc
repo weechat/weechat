@@ -3626,6 +3626,54 @@ rc = weechat_crypto_hash_pbkdf2 (data, strlen (data), "sha256", salt, strlen (sa
 [NOTE]
 This function is not available in scripting API.
 
+==== crypto_hmac
+
+_WeeChat ≥ 3.2._
+
+Compute keyed-hash message authentication code (HMAC).
+
+Prototype:
+
+[source,C]
+----
+int weechat_crypto_hmac (const void *key, int key_size, const void *message, int message_size,
+                         int hash_algo, void *hash, int *hash_size);
+----
+
+Arguments:
+
+* _key_: the key
+* _key_size_: number of bytes in _key_
+* _message_: the message
+* _message_size_: number of bytes in _message_
+* _hash_algo_: the hash algorithm, see table in function
+  <<crypto_hash_algorithms,crypto_hash>>
+* _hash_: pointer to the hash variable, which is used to store the resulting hash
+  (the buffer must be large enough, according to the algorithm, see table
+  in function <<crypto_hash_algorithms,crypto_hash>>)
+* _hash_size_: pointer to a variable used to store the size of the hash computed
+  (in bytes) (can be NULL)
+
+Return value:
+
+* 1 if OK, 0 if error
+
+C example:
+
+[source,C]
+----
+const char *key = "the key";
+const char *message = "the message";
+char hash[256 / 8];
+int rc, hash_size;
+rc = weechat_crypto_hmac (key, strlen (key), message, strlen (message), "sha256", hash, &hash_size);
+/* rc == 1, hash_size == 32 and hash is a buffer with:
+   47 36 67 02 fc bc b1 97 a4 25 e6 7a b9 52 92 bd 15 9a 66 91 9c fb 94 b0 b4 9a 39 cb c0 24 2d 7b */
+----
+
+[NOTE]
+This function is not available in scripting API.
+
 [[directories]]
 === Directories
 
