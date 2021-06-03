@@ -81,6 +81,7 @@ LOCALE_LIST = (
     'it_IT',
     'ja_JP',
     'pl_PL',
+    'sr_RS',
 )
 
 # all commands/options/.. of following plugins will produce a file

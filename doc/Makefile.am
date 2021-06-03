@@ -18,7 +18,7 @@
 # along with WeeChat.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-SUBDIRS = . cs de en es fr it ja pl ru
+SUBDIRS = . cs de en es fr it ja pl ru sr
 
 EXTRA_DIST = docgen.py \
              docinfo.html \

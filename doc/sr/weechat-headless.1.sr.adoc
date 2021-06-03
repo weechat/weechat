@@ -1,0 +1,60 @@
+= weechat-headless(1)
+:doctype: manpage
+:author: Sébastien Helleu
+:email: flashcode@flashtux.org
+:lang: sr
+:man manual: WeeChat упутство
+:man source: WeeChat {revnumber}
+
+== ИМЕ
+
+weechat-headless - прошириви чет клијен (верзија без интерфејса)
+
+== СИПОПСИС
+
+[verse]
+*weechat-headless* [-a|--no-connect] [--daemon] [--stdout] [-d|--dir <путања>] [-t|--temp-dir] [-p|--no-plugin] [-P|--plugins <додаци>] [-r|--run-command <команда>] [-s|--no-script] [--upgrade] [дибаг-опција...] [додатак:опција...]
+*weechat-headless* [-c|--colors]
+*weechat-headless* [-h|--help]
+*weechat-headless* [-l|--license]
+*weechat-headless* [-v|--version]
+
+== ОПИС
+
+WeeChat (Wee Enhanced Environment for Chat) је бесплатни чет клијент, једноставан и брз, дизајниран за многе оперативне системе. Поседује могућност детаљног прилагођавања и проширивања скриптама.
+
+Команда *weechat-headless* покреће програм WeeChat у режиму без интерфејса. Може да се користи за тестове или за даемонизовање програма WeeChat опцијом „--daemon”.
+
+== ОПЦИЈЕ
+
+include::includes/cmdline_options.sr.adoc[tag=standard]
+
+== ДИБАГ ОПЦИЈЕ
+
+*УПОЗОРЕЊЕ:* ове опције служе за потребе дибагинга, *НЕ КОРИСТИТЕ У ПРОДУКЦИЈИ!*
+
+include::includes/cmdline_options.sr.adoc[tag=debug]
+
+== ОПЦИЈЕ ДОДАТАКА
+
+include::includes/man.sr.adoc[tag=plugin_options]
+
+== ФАЈЛОВИ
+
+include::includes/man.sr.adoc[tag=files]
+
+== ПОГЛЕДАЈТЕ И
+
+*weechat*(1)
+
+== АУТОРИ
+
+Ову man страницу је написао {author}.
+
+== АУТОРСКА ПРАВА
+
+include::includes/man.sr.adoc[tag=copyright]
+
+== ПОДРШКА / ПРИЈАВА БАГОВА
+
+За помоћ или пријаву бага: https://weechat.org/about/support
