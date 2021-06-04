@@ -2338,13 +2338,14 @@ irc_server_reorder (const char **servers, int num_servers)
  * Sends a signal for an IRC message (received or sent).
  */
 
-void
+int
 irc_server_send_signal (struct t_irc_server *server, const char *signal,
                         const char *command, const char *full_message,
                         const char *tags)
 {
     int length;
     char *str_signal, *full_message_tags;
+    int rc = WEECHAT_RC_OK;
 
     length = strlen (server->name) + 1 + strlen (signal) + 1 + strlen (command) + 1;
     str_signal = malloc (length);
@@ -2360,20 +2361,22 @@ irc_server_send_signal (struct t_irc_server *server, const char *signal,
             {
                 snprintf (full_message_tags, length,
                           "%s;%s", tags, full_message);
-                (void) weechat_hook_signal_send (str_signal,
-                                                 WEECHAT_HOOK_SIGNAL_STRING,
-                                                 (void *)full_message_tags);
+                rc = weechat_hook_signal_send (str_signal,
+                                               WEECHAT_HOOK_SIGNAL_STRING,
+                                               (void *)full_message_tags);
                 free (full_message_tags);
             }
         }
         else
         {
-            (void) weechat_hook_signal_send (str_signal,
-                                             WEECHAT_HOOK_SIGNAL_STRING,
-                                             (void *)full_message);
+            rc = weechat_hook_signal_send (str_signal,
+                                           WEECHAT_HOOK_SIGNAL_STRING,
+                                           (void *)full_message);
         }
         free (str_signal);
     }
+
+    return rc;
 }
 
 /*
