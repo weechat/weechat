@@ -25,7 +25,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2021-06-01 21:27+0200\n"
-"PO-Revision-Date: 2021-05-30 19:02+0200\n"
+"PO-Revision-Date: 2021-06-05 23:02+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
@@ -9874,7 +9874,6 @@ msgstr ""
 "(siehe /help cap um eine Liste von Fähigkeiten zu erhalten die von WeeChat "
 "unterstützt werden) (Beispiel: \"away-notify,multi-prefix\")"
 
-#, fuzzy
 msgid ""
 "mechanism for SASL authentication: \"plain\" for plain text password, "
 "\"scram-sha-1\" for SCRAM authentication with SHA-1 digest algorithm, "
@@ -9886,11 +9885,15 @@ msgid ""
 "AES crypted password (insecure, not recommended)"
 msgstr ""
 "Verfahren welches bei einer SASL Authentifizierung angewandt werden soll: "
-"\"plain\" Passwort wird im Klartext gesendet, \"ecdsa-nist256p-challenge\" "
-"für öffentlich/private Schlüsselmethode, \"external\" SSL Zertifikat welches "
-"auf Client Seite vorliegt wird verwendet, \"dh-blowfish\" Passwort wird "
-"mittels blowfish verschlüsselt (unsicher, wird nicht empfohlen), \"dh-aes\" "
-"Passwort wird mittels AES verschlüsselt (unsicher, wird nicht empfohlen)"
+"\"plain\" Passwort wird im Klartext gesendet, \"scram-sha-1\" für SCRAM-"
+"Authentifizierung mit SHA-1-Digest-Algorithmus, \"scram-sha-256\" für SCRAM-"
+"Authenrifizierung mit SHA-256 Digest-Algorithmus, \"scram-sha-512\" für "
+"SCRAM-Authentifizierung mit SHA-512 Digest-Algorithmus, \"ecdsa-nist256p-"
+"challenge\" für öffentlich/private Schlüsselmethode, \"external\" SSL "
+"Zertifikat welches auf Client Seite vorliegt wird verwendet, \"dh-blowfish\" "
+"Passwort wird mittels blowfish verschlüsselt (unsicher, wird nicht "
+"empfohlen), \"dh-aes\" Passwort wird mittels AES verschlüsselt (unsicher, "
+"wird nicht empfohlen)"
 
 msgid ""
 "username for SASL authentication; this option is not used for mechanism "
@@ -11170,12 +11173,12 @@ msgstr "%s%s%s%s wurde identifiziert als %s"
 msgid "%s%s%s%s has unidentified"
 msgstr "%s%s%s%s hat sich nicht identifiziert"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: SASL error: %s"
-msgstr "%s%s: Fehler: %s"
+msgstr "%s%s: SASL Fehler: %s"
 
 msgid "internal error"
-msgstr ""
+msgstr "interner Fehler"
 
 #, c-format
 msgid "%s%s: client capability, requesting: %s"
@@ -11591,25 +11594,23 @@ msgstr ""
 msgid "%s%s: server \"%s\" not found for redirect"
 msgstr "%s%s: Server \"%s\" für eine Weiterleitung wurde nicht gefunden"
 
-#, fuzzy
 msgid "unable to validate server signature"
-msgstr "%s%s: Server kann nicht anlegt werden"
+msgstr "Serversignatur kann nicht validiert werden"
 
-#, fuzzy
 msgid "memory error"
-msgstr "Fork-Fehler"
+msgstr "Speicherfehler"
 
 msgid "base64 decode error"
-msgstr ""
+msgstr "base64-Dekodierungsfehler"
 
 msgid "base64 encode error"
-msgstr ""
+msgstr "base64-Kodierungsfehler"
 
 msgid "cryptography error"
-msgstr ""
+msgstr "Kryptographiefehler"
 
 msgid "protocol error"
-msgstr ""
+msgstr "Protokollfehler"
 
 #, c-format
 msgid "%s%s: signing the challenge with ECC public key: %s"
