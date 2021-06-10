@@ -142,7 +142,7 @@
 
 | weechat | weechat_data_dir | Katalog danych WeeChat | -
 
-| weechat | weechat_dir | katalog WeeChat (*przestarzałe* od wersji 3.2, zastąpione przez "weechat_config_dir", "weechat_data_dir", "weechat_cache_dir" i "weechat_runtime_dir") | -
+| weechat | weechat_dir | Katalog WeeChat (*przestarzałe* od wersji 3.2, zastąpione przez "weechat_config_dir", "weechat_data_dir", "weechat_cache_dir" i "weechat_runtime_dir") | -
 
 | weechat | weechat_headless | 1 jeśli WeeChat działa w trybie bez interfejsu | -
 
