@@ -319,6 +319,54 @@ irc_protocol_parse_time (const char *time)
 }
 
 /*
+ * Prints a FAIL/WARN/NOTE message.
+ *
+ * Called by callbacks for messages: FAIL, WARN, NOTE.
+ */
+
+void
+irc_protocol_print_error_warning_msg (struct t_irc_server *server,
+                                      time_t date,
+                                      const char *command,
+                                      const char *prefix,
+                                      const char *label,
+                                      char *error_command,
+                                      char *args)
+{
+    const char *ptr_command;
+    char *pos_desc;
+
+    ptr_command = (error_command && (strcmp (error_command, "*") != 0)) ?
+        error_command : NULL;
+
+    pos_desc = (args) ? strstr (args, " :") : NULL;
+    if (pos_desc)
+        pos_desc[0] = '\0';
+
+    weechat_printf_date_tags (
+        irc_msgbuffer_get_target_buffer (server, NULL, command, NULL, NULL),
+        date,
+        irc_protocol_tags (command, NULL, NULL, NULL),
+        "%s%s%s%s%s%s[%s%s%s]%s%s%s",
+        (prefix) ? prefix : "",
+        (label) ? label : "",
+        (label) ? " " : "",
+        (ptr_command) ? ptr_command : "",
+        (ptr_command) ? " " : "",
+        IRC_COLOR_CHAT_DELIMITERS,
+        IRC_COLOR_RESET,
+        (args) ? args : "",
+        IRC_COLOR_CHAT_DELIMITERS,
+        IRC_COLOR_RESET,
+        (pos_desc) ? ": " : "",
+        (pos_desc) ? pos_desc + 2 : "");
+
+    if (pos_desc)
+        pos_desc[0] = ' ';
+
+}
+
+/*
  * Callback for the IRC message "ACCOUNT": account info about a nick
  * (with capability "account-notify").
  *
@@ -1210,6 +1258,31 @@ IRC_PROTOCOL_CALLBACK(generic_error)
 }
 
 /*
+ * Callback for the IRC message "FAIL".
+ *
+ * Message looks like:
+ *   :server FAIL * NEED_REGISTRATION :You need to be registered to continue
+ *   :server FAIL ACC REG_INVALID_CALLBACK REGISTER :Email address is not valid
+ *   :server FAIL BOX BOXES_INVALID STACK CLOCKWISE :Given boxes are not supported
+ */
+
+IRC_PROTOCOL_CALLBACK(fail)
+{
+    IRC_PROTOCOL_MIN_ARGS(4);
+
+    irc_protocol_print_error_warning_msg (
+        server,
+        date,
+        command,
+        weechat_prefix ("error"),
+        _("Failure:"),
+        argv[2],
+        argv_eol[3]);
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Callback for the IRC message "INVITE".
  *
  * Message looks like:
@@ -1916,6 +1989,29 @@ IRC_PROTOCOL_CALLBACK(nick)
         irc_channel_set_topic_private_buffers (server, ptr_nick_found,
                                                new_nick, address);
     }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * Callback for the IRC message "NOTE".
+ *
+ * Message looks like:
+ *   :server NOTE * OPER_MESSAGE :The message
+ */
+
+IRC_PROTOCOL_CALLBACK(note)
+{
+    IRC_PROTOCOL_MIN_ARGS(4);
+
+    irc_protocol_print_error_warning_msg (
+        server,
+        date,
+        command,
+        weechat_prefix ("network"),
+        _("Note:"),
+        argv[2],
+        argv_eol[3]);
 
     return WEECHAT_RC_OK;
 }
@@ -2988,6 +3084,29 @@ IRC_PROTOCOL_CALLBACK(wallops)
         weechat_prefix ("network"),
         (nick_address[0]) ? nick_address : "?",
         (argv_eol[2][0] == ':') ? argv_eol[2] + 1 : argv_eol[2]);
+
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * Callback for the IRC message "WARN".
+ *
+ * Message looks like:
+ *   :server WARN REHASH CERTS_EXPIRED :Certificate [xxx] has expired
+ */
+
+IRC_PROTOCOL_CALLBACK(warn)
+{
+    IRC_PROTOCOL_MIN_ARGS(4);
+
+    irc_protocol_print_error_warning_msg (
+        server,
+        date,
+        command,
+        weechat_prefix ("error"),
+        _("Warning:"),
+        argv[2],
+        argv_eol[3]);
 
     return WEECHAT_RC_OK;
 }
@@ -6484,159 +6603,162 @@ irc_protocol_recv_command (struct t_irc_server *server,
     char *nick, *address, *address_color, *host, *host_no_color, *host_color;
     char **argv, **argv_eol;
     struct t_hashtable *hash_tags;
-    struct t_irc_protocol_msg irc_protocol_messages[] =
-        { { "account", /* account (cap account-notify) */ 1, 0, &irc_protocol_cb_account },
-          { "authenticate", /* authenticate */ 1, 0, &irc_protocol_cb_authenticate },
-          { "away", /* away (cap away-notify) */ 1, 0, &irc_protocol_cb_away },
-          { "cap", /* client capability */ 1, 0, &irc_protocol_cb_cap },
-          { "chghost", /* user/host change (cap chghost) */ 1, 0, &irc_protocol_cb_chghost },
-          { "error", /* error received from IRC server */ 1, 0, &irc_protocol_cb_error },
-          { "invite", /* invite a nick on a channel */ 1, 0, &irc_protocol_cb_invite },
-          { "join", /* join a channel */ 1, 0, &irc_protocol_cb_join },
-          { "kick", /* forcibly remove a user from a channel */ 1, 1, &irc_protocol_cb_kick },
-          { "kill", /* close client-server connection */ 1, 1, &irc_protocol_cb_kill },
-          { "mode", /* change channel or user mode */ 1, 0, &irc_protocol_cb_mode },
-          { "nick", /* change current nickname */ 1, 0, &irc_protocol_cb_nick },
-          { "notice", /* send notice message to user */ 1, 1, &irc_protocol_cb_notice },
-          { "part", /* leave a channel */ 1, 1, &irc_protocol_cb_part },
-          { "ping", /* ping server */ 1, 0, &irc_protocol_cb_ping },
-          { "pong", /* answer to a ping message */ 1, 0, &irc_protocol_cb_pong },
-          { "privmsg", /* message received */ 1, 1, &irc_protocol_cb_privmsg },
-          { "quit", /* close all connections and quit */ 1, 1, &irc_protocol_cb_quit },
-          { "topic", /* get/set channel topic */ 0, 1, &irc_protocol_cb_topic },
-          { "wallops", /* send a message to all currently connected users who have "
-                          "set the 'w' user mode "
-                          "for themselves */ 1, 1, &irc_protocol_cb_wallops },
-          { "001", /* a server message */ 1, 0, &irc_protocol_cb_001 },
-          { "005", /* a server message */ 1, 0, &irc_protocol_cb_005 },
-          { "008", /* server notice mask */ 1, 0, &irc_protocol_cb_008 },
-          { "221", /* user mode string */ 1, 0, &irc_protocol_cb_221 },
-          { "223", /* whois (charset is) */ 1, 0, &irc_protocol_cb_whois_nick_msg },
-          { "264", /* whois (is using encrypted connection) */ 1, 0, &irc_protocol_cb_whois_nick_msg },
-          { "275", /* whois (secure connection) */ 1, 0, &irc_protocol_cb_whois_nick_msg },
-          { "276", /* whois (has client certificate fingerprint) */ 1, 0, &irc_protocol_cb_whois_nick_msg },
-          { "301", /* away message */ 1, 1, &irc_protocol_cb_301 },
-          { "303", /* ison */ 1, 0, &irc_protocol_cb_303 },
-          { "305", /* unaway */ 1, 0, &irc_protocol_cb_305 },
-          { "306", /* now away */ 1, 0, &irc_protocol_cb_306 },
-          { "307", /* whois (registered nick) */ 1, 0, &irc_protocol_cb_whois_nick_msg },
-          { "310", /* whois (help mode) */ 1, 0, &irc_protocol_cb_whois_nick_msg },
-          { "311", /* whois (user) */ 1, 0, &irc_protocol_cb_311 },
-          { "312", /* whois (server) */ 1, 0, &irc_protocol_cb_312 },
-          { "313", /* whois (operator) */ 1, 0, &irc_protocol_cb_whois_nick_msg },
-          { "314", /* whowas */ 1, 0, &irc_protocol_cb_314 },
-          { "315", /* end of /who list */ 1, 0, &irc_protocol_cb_315 },
-          { "317", /* whois (idle) */ 1, 0, &irc_protocol_cb_317 },
-          { "318", /* whois (end) */ 1, 0, &irc_protocol_cb_whois_nick_msg },
-          { "319", /* whois (channels) */ 1, 0, &irc_protocol_cb_whois_nick_msg },
-          { "320", /* whois (identified user) */ 1, 0, &irc_protocol_cb_whois_nick_msg },
-          { "321", /* /list start */ 1, 0, &irc_protocol_cb_321 },
-          { "322", /* channel (for /list) */ 1, 0, &irc_protocol_cb_322 },
-          { "323", /* end of /list */ 1, 0, &irc_protocol_cb_323 },
-          { "324", /* channel mode */ 1, 0, &irc_protocol_cb_324 },
-          { "326", /* whois (has oper privs) */ 1, 0, &irc_protocol_cb_whois_nick_msg },
-          { "327", /* whois (host) */ 1, 0, &irc_protocol_cb_327 },
-          { "328", /* channel url */ 1, 0, &irc_protocol_cb_328 },
-          { "329", /* channel creation date */ 1, 0, &irc_protocol_cb_329 },
-          { "330", /* is logged in as */ 1, 0, &irc_protocol_cb_330_343 },
-          { "331", /* no topic for channel */ 1, 0, &irc_protocol_cb_331 },
-          { "332", /* topic of channel */ 0, 1, &irc_protocol_cb_332 },
-          { "333", /* infos about topic (nick and date changed) */ 1, 0, &irc_protocol_cb_333 },
-          { "335", /* is a bot on */ 1, 0, &irc_protocol_cb_whois_nick_msg },
-          { "338", /* whois (host) */ 1, 0, &irc_protocol_cb_338 },
-          { "341", /* inviting */ 1, 0, &irc_protocol_cb_341 },
-          { "343", /* is opered as */ 1, 0, &irc_protocol_cb_330_343 },
-          { "344", /* channel reop */ 1, 0, &irc_protocol_cb_344 },
-          { "345", /* end of channel reop list */ 1, 0, &irc_protocol_cb_345 },
-          { "346", /* invite list */ 1, 0, &irc_protocol_cb_346 },
-          { "347", /* end of invite list */ 1, 0, &irc_protocol_cb_347 },
-          { "348", /* channel exception list */ 1, 0, &irc_protocol_cb_348 },
-          { "349", /* end of channel exception list */ 1, 0, &irc_protocol_cb_349 },
-          { "351", /* server version */ 1, 0, &irc_protocol_cb_351 },
-          { "352", /* who */ 1, 0, &irc_protocol_cb_352 },
-          { "353", /* list of nicks on channel */ 1, 0, &irc_protocol_cb_353 },
-          { "354", /* whox */ 1, 0, &irc_protocol_cb_354 },
-          { "366", /* end of /names list */ 1, 0, &irc_protocol_cb_366 },
-          { "367", /* banlist */ 1, 0, &irc_protocol_cb_367 },
-          { "368", /* end of banlist */ 1, 0, &irc_protocol_cb_368 },
-          { "369", /* whowas (end) */ 1, 0, &irc_protocol_cb_whowas_nick_msg },
-          { "378", /* whois (connecting from) */ 1, 0, &irc_protocol_cb_whois_nick_msg },
-          { "379", /* whois (using modes) */ 1, 0, &irc_protocol_cb_whois_nick_msg },
-          { "401", /* no such nick/channel */ 1, 0, &irc_protocol_cb_generic_error },
-          { "402", /* no such server */ 1, 0, &irc_protocol_cb_generic_error },
-          { "403", /* no such channel */ 1, 0, &irc_protocol_cb_generic_error },
-          { "404", /* cannot send to channel */ 1, 0, &irc_protocol_cb_generic_error },
-          { "405", /* too many channels */ 1, 0, &irc_protocol_cb_generic_error },
-          { "406", /* was no such nick */ 1, 0, &irc_protocol_cb_generic_error },
-          { "407", /* was no such nick */ 1, 0, &irc_protocol_cb_generic_error },
-          { "409", /* no origin */ 1, 0, &irc_protocol_cb_generic_error },
-          { "410", /* no services */ 1, 0, &irc_protocol_cb_generic_error },
-          { "411", /* no recipient */ 1, 0, &irc_protocol_cb_generic_error },
-          { "412", /* no text to send */ 1, 0, &irc_protocol_cb_generic_error },
-          { "413", /* no toplevel */ 1, 0, &irc_protocol_cb_generic_error },
-          { "414", /* wilcard in toplevel domain */ 1, 0, &irc_protocol_cb_generic_error },
-          { "421", /* unknown command */ 1, 0, &irc_protocol_cb_generic_error },
-          { "422", /* MOTD is missing */ 1, 0, &irc_protocol_cb_generic_error },
-          { "423", /* no administrative info */ 1, 0, &irc_protocol_cb_generic_error },
-          { "424", /* file error */ 1, 0, &irc_protocol_cb_generic_error },
-          { "431", /* no nickname given */ 1, 0, &irc_protocol_cb_generic_error },
-          { "432", /* erroneous nickname */ 1, 0, &irc_protocol_cb_432 },
-          { "433", /* nickname already in use */ 1, 0, &irc_protocol_cb_433 },
-          { "436", /* nickname collision */ 1, 0, &irc_protocol_cb_generic_error },
-          { "437", /* nick/channel unavailable */ 1, 0, &irc_protocol_cb_437 },
-          { "438", /* not authorized to change nickname */ 1, 0, &irc_protocol_cb_438 },
-          { "441", /* user not in channel */ 1, 0, &irc_protocol_cb_generic_error },
-          { "442", /* not on channel */ 1, 0, &irc_protocol_cb_generic_error },
-          { "443", /* user already on channel */ 1, 0, &irc_protocol_cb_generic_error },
-          { "444", /* user not logged in */ 1, 0, &irc_protocol_cb_generic_error },
-          { "445", /* summon has been disabled */ 1, 0, &irc_protocol_cb_generic_error },
-          { "446", /* users has been disabled */ 1, 0, &irc_protocol_cb_generic_error },
-          { "451", /* you are not registered */ 1, 0, &irc_protocol_cb_generic_error },
-          { "461", /* not enough parameters */ 1, 0, &irc_protocol_cb_generic_error },
-          { "462", /* you may not register */ 1, 0, &irc_protocol_cb_generic_error },
-          { "463", /* your host isn't among the privileged */ 1, 0, &irc_protocol_cb_generic_error },
-          { "464", /* password incorrect */ 1, 0, &irc_protocol_cb_generic_error },
-          { "465", /* you are banned from this server */ 1, 0, &irc_protocol_cb_generic_error },
-          { "467", /* channel key already set */ 1, 0, &irc_protocol_cb_generic_error },
-          { "470", /* forwarding to another channel */ 1, 0, &irc_protocol_cb_470 },
-          { "471", /* channel is already full */ 1, 0, &irc_protocol_cb_generic_error },
-          { "472", /* unknown mode char to me */ 1, 0, &irc_protocol_cb_generic_error },
-          { "473", /* cannot join channel (invite only) */ 1, 0, &irc_protocol_cb_generic_error },
-          { "474", /* cannot join channel (banned from channel) */ 1, 0, &irc_protocol_cb_generic_error },
-          { "475", /* cannot join channel (bad channel key) */ 1, 0, &irc_protocol_cb_generic_error },
-          { "476", /* bad channel mask */ 1, 0, &irc_protocol_cb_generic_error },
-          { "477", /* channel doesn't support modes */ 1, 0, &irc_protocol_cb_generic_error },
-          { "481", /* you're not an IRC operator */ 1, 0, &irc_protocol_cb_generic_error },
-          { "482", /* you're not channel operator */ 1, 0, &irc_protocol_cb_generic_error },
-          { "483", /* you can't kill a server! */ 1, 0, &irc_protocol_cb_generic_error },
-          { "484", /* your connection is restricted! */ 1, 0, &irc_protocol_cb_generic_error },
-          { "485", /* user is immune from kick/deop */ 1, 0, &irc_protocol_cb_generic_error },
-          { "487", /* network split */ 1, 0, &irc_protocol_cb_generic_error },
-          { "491", /* no O-lines for your host */ 1, 0, &irc_protocol_cb_generic_error },
-          { "501", /* unknown mode flag */ 1, 0, &irc_protocol_cb_generic_error },
-          { "502", /* can't change mode for other users */ 1, 0, &irc_protocol_cb_generic_error },
-          { "671", /* whois (secure connection) */ 1, 0, &irc_protocol_cb_whois_nick_msg },
-          { "728", /* quietlist */ 1, 0, &irc_protocol_cb_728 },
-          { "729", /* end of quietlist */ 1, 0, &irc_protocol_cb_729 },
-          { "730", /* monitored nicks online */ 1, 0, &irc_protocol_cb_730 },
-          { "731", /* monitored nicks offline */ 1, 0, &irc_protocol_cb_731 },
-          { "732", /* list of monitored nicks */ 1, 0, &irc_protocol_cb_732 },
-          { "733", /* end of monitor list */ 1, 0, &irc_protocol_cb_733 },
-          { "734", /* monitor list is full */ 1, 0, &irc_protocol_cb_734 },
-          { "900", /* logged in as (SASL) */ 1, 0, &irc_protocol_cb_900 },
-          { "901", /* you are now logged in */ 1, 0, &irc_protocol_cb_901 },
-          { "902", /* SASL authentication failed (account locked/held) */ 1, 0, &irc_protocol_cb_sasl_end_fail },
-          { "903", /* SASL authentication successful */ 1, 0, &irc_protocol_cb_sasl_end_ok },
-          { "904", /* SASL authentication failed */ 1, 0, &irc_protocol_cb_sasl_end_fail },
-          { "905", /* SASL message too long */ 1, 0, &irc_protocol_cb_sasl_end_fail },
-          { "906", /* SASL authentication aborted */ 1, 0, &irc_protocol_cb_sasl_end_fail },
-          { "907", /* You have already completed SASL authentication */ 1, 0, &irc_protocol_cb_sasl_end_ok },
-          { "936", /* censored word */ 1, 0, &irc_protocol_cb_generic_error },
-          { "973", /* whois (secure connection) */ 1, 0, &irc_protocol_cb_server_mode_reason },
-          { "974", /* whois (secure connection) */ 1, 0, &irc_protocol_cb_server_mode_reason },
-          { "975", /* whois (secure connection) */ 1, 0, &irc_protocol_cb_server_mode_reason },
-          { NULL, 0, 0, NULL }
-        };
+
+    struct t_irc_protocol_msg irc_protocol_messages[] = {
+        /* format: "command", decode_color, keep_trailing_spaces, func_cb   */
+        IRCB(account, 1, 0, account),    /* account (cap account-notify)    */
+        IRCB(authenticate, 1, 0, authenticate), /* authenticate             */
+        IRCB(away, 1, 0, away),          /* away (cap away-notify)          */
+        IRCB(cap, 1, 0, cap),            /* client capability               */
+        IRCB(chghost, 1, 0, chghost),    /* user/host change (cap chghost)  */
+        IRCB(error, 1, 0, error),        /* error received from server      */
+        IRCB(fail, 1, 0, fail),          /* error received from server      */
+        IRCB(invite, 1, 0, invite),      /* invite a nick on a channel      */
+        IRCB(join, 1, 0, join),          /* join a channel                  */
+        IRCB(kick, 1, 1, kick),          /* kick a user                     */
+        IRCB(kill, 1, 1, kill),          /* close client-server connection  */
+        IRCB(mode, 1, 0, mode),          /* change channel or user mode     */
+        IRCB(nick, 1, 0, nick),          /* change current nickname         */
+        IRCB(note, 1, 0, note),          /* note received from server       */
+        IRCB(notice, 1, 1, notice),      /* send notice message to user     */
+        IRCB(part, 1, 1, part),          /* leave a channel                 */
+        IRCB(ping, 1, 0, ping),          /* ping server                     */
+        IRCB(pong, 1, 0, pong),          /* answer to a ping message        */
+        IRCB(privmsg, 1, 1, privmsg),    /* message received                */
+        IRCB(quit, 1, 1, quit),          /* close all connections and quit  */
+        IRCB(topic, 0, 1, topic),        /* get/set channel topic           */
+        IRCB(wallops, 1, 1, wallops),    /* wallops                         */
+        IRCB(warn, 1, 0, warn),          /* warning received from server    */
+        IRCB(001, 1, 0, 001),            /* a server message                */
+        IRCB(005, 1, 0, 005),            /* a server message                */
+        IRCB(008, 1, 0, 008),            /* server notice mask              */
+        IRCB(221, 1, 0, 221),            /* user mode string                */
+        IRCB(223, 1, 0, whois_nick_msg), /* whois (charset is)              */
+        IRCB(264, 1, 0, whois_nick_msg), /* whois (encrypted connection)    */
+        IRCB(275, 1, 0, whois_nick_msg), /* whois (secure connection)       */
+        IRCB(276, 1, 0, whois_nick_msg), /* whois (client cert. fingerprint)*/
+        IRCB(301, 1, 1, 301),            /* away message                    */
+        IRCB(303, 1, 0, 303),            /* ison                            */
+        IRCB(305, 1, 0, 305),            /* unaway                          */
+        IRCB(306, 1, 0, 306),            /* now away                        */
+        IRCB(307, 1, 0, whois_nick_msg), /* whois (registered nick)         */
+        IRCB(310, 1, 0, whois_nick_msg), /* whois (help mode)               */
+        IRCB(311, 1, 0, 311),            /* whois (user)                    */
+        IRCB(312, 1, 0, 312),            /* whois (server)                  */
+        IRCB(313, 1, 0, whois_nick_msg), /* whois (operator)                */
+        IRCB(314, 1, 0, 314),            /* whowas                          */
+        IRCB(315, 1, 0, 315),            /* end of /who list                */
+        IRCB(317, 1, 0, 317),            /* whois (idle)                    */
+        IRCB(318, 1, 0, whois_nick_msg), /* whois (end)                     */
+        IRCB(319, 1, 0, whois_nick_msg), /* whois (channels)                */
+        IRCB(320, 1, 0, whois_nick_msg), /* whois (identified user)         */
+        IRCB(321, 1, 0, 321),            /* /list start                     */
+        IRCB(322, 1, 0, 322),            /* channel (for /list)             */
+        IRCB(323, 1, 0, 323),            /* end of /list                    */
+        IRCB(324, 1, 0, 324),            /* channel mode                    */
+        IRCB(326, 1, 0, whois_nick_msg), /* whois (has oper privs)          */
+        IRCB(327, 1, 0, 327),            /* whois (host)                    */
+        IRCB(328, 1, 0, 328),            /* channel URL                     */
+        IRCB(329, 1, 0, 329),            /* channel creation date           */
+        IRCB(330, 1, 0, 330_343),        /* is logged in as                 */
+        IRCB(331, 1, 0, 331),            /* no topic for channel            */
+        IRCB(332, 0, 1, 332),            /* topic of channel                */
+        IRCB(333, 1, 0, 333),            /* topic info (nick/date)          */
+        IRCB(335, 1, 0, whois_nick_msg), /* is a bot on                     */
+        IRCB(338, 1, 0, 338),            /* whois (host)                    */
+        IRCB(341, 1, 0, 341),            /* inviting                        */
+        IRCB(343, 1, 0, 330_343),        /* is opered as                    */
+        IRCB(344, 1, 0, 344),            /* channel reop                    */
+        IRCB(345, 1, 0, 345),            /* end of channel reop list        */
+        IRCB(346, 1, 0, 346),            /* invite list                     */
+        IRCB(347, 1, 0, 347),            /* end of invite list              */
+        IRCB(348, 1, 0, 348),            /* channel exception list          */
+        IRCB(349, 1, 0, 349),            /* end of channel exception list   */
+        IRCB(351, 1, 0, 351),            /* server version                  */
+        IRCB(352, 1, 0, 352),            /* who                             */
+        IRCB(353, 1, 0, 353),            /* list of nicks on channel        */
+        IRCB(354, 1, 0, 354),            /* whox                            */
+        IRCB(366, 1, 0, 366),            /* end of /names list              */
+        IRCB(367, 1, 0, 367),            /* banlist                         */
+        IRCB(368, 1, 0, 368),            /* end of banlist                  */
+        IRCB(369, 1, 0, whowas_nick_msg), /* whowas (end)                   */
+        IRCB(378, 1, 0, whois_nick_msg), /* whois (connecting from)         */
+        IRCB(379, 1, 0, whois_nick_msg), /* whois (using modes)             */
+        IRCB(401, 1, 0, generic_error),  /* no such nick/channel            */
+        IRCB(402, 1, 0, generic_error),  /* no such server                  */
+        IRCB(403, 1, 0, generic_error),  /* no such channel                 */
+        IRCB(404, 1, 0, generic_error),  /* cannot send to channel          */
+        IRCB(405, 1, 0, generic_error),  /* too many channels               */
+        IRCB(406, 1, 0, generic_error),  /* was no such nick                */
+        IRCB(407, 1, 0, generic_error),  /* was no such nick                */
+        IRCB(409, 1, 0, generic_error),  /* no origin                       */
+        IRCB(410, 1, 0, generic_error),  /* no services                     */
+        IRCB(411, 1, 0, generic_error),  /* no recipient                    */
+        IRCB(412, 1, 0, generic_error),  /* no text to send                 */
+        IRCB(413, 1, 0, generic_error),  /* no toplevel                     */
+        IRCB(414, 1, 0, generic_error),  /* wilcard in toplevel domain      */
+        IRCB(421, 1, 0, generic_error),  /* unknown command                 */
+        IRCB(422, 1, 0, generic_error),  /* MOTD is missing                 */
+        IRCB(423, 1, 0, generic_error),  /* no administrative info          */
+        IRCB(424, 1, 0, generic_error),  /* file error                      */
+        IRCB(431, 1, 0, generic_error),  /* no nickname given               */
+        IRCB(432, 1, 0, 432),            /* erroneous nickname              */
+        IRCB(433, 1, 0, 433),            /* nickname already in use         */
+        IRCB(436, 1, 0, generic_error),  /* nickname collision              */
+        IRCB(437, 1, 0, 437),            /* nick/channel unavailable        */
+        IRCB(438, 1, 0, 438),            /* not auth. to change nickname    */
+        IRCB(441, 1, 0, generic_error),  /* user not in channel             */
+        IRCB(442, 1, 0, generic_error),  /* not on channel                  */
+        IRCB(443, 1, 0, generic_error),  /* user already on channel         */
+        IRCB(444, 1, 0, generic_error),  /* user not logged in              */
+        IRCB(445, 1, 0, generic_error),  /* summon has been disabled        */
+        IRCB(446, 1, 0, generic_error),  /* users has been disabled         */
+        IRCB(451, 1, 0, generic_error),  /* you are not registered          */
+        IRCB(461, 1, 0, generic_error),  /* not enough parameters           */
+        IRCB(462, 1, 0, generic_error),  /* you may not register            */
+        IRCB(463, 1, 0, generic_error),  /* host not privileged             */
+        IRCB(464, 1, 0, generic_error),  /* password incorrect              */
+        IRCB(465, 1, 0, generic_error),  /* banned from this server         */
+        IRCB(467, 1, 0, generic_error),  /* channel key already set         */
+        IRCB(470, 1, 0, 470),            /* forwarding to another channel   */
+        IRCB(471, 1, 0, generic_error),  /* channel is already full         */
+        IRCB(472, 1, 0, generic_error),  /* unknown mode char to me         */
+        IRCB(473, 1, 0, generic_error),  /* cannot join (invite only)       */
+        IRCB(474, 1, 0, generic_error),  /* cannot join (banned)            */
+        IRCB(475, 1, 0, generic_error),  /* cannot join (bad key)           */
+        IRCB(476, 1, 0, generic_error),  /* bad channel mask                */
+        IRCB(477, 1, 0, generic_error),  /* channel doesn't support modes   */
+        IRCB(481, 1, 0, generic_error),  /* you're not an IRC operator      */
+        IRCB(482, 1, 0, generic_error),  /* you're not channel operator     */
+        IRCB(483, 1, 0, generic_error),  /* you can't kill a server!        */
+        IRCB(484, 1, 0, generic_error),  /* your connection is restricted!  */
+        IRCB(485, 1, 0, generic_error),  /* user immune from kick/deop      */
+        IRCB(487, 1, 0, generic_error),  /* network split                   */
+        IRCB(491, 1, 0, generic_error),  /* no O-lines for your host        */
+        IRCB(501, 1, 0, generic_error),  /* unknown mode flag               */
+        IRCB(502, 1, 0, generic_error),  /* can't chg mode for other users  */
+        IRCB(671, 1, 0, whois_nick_msg), /* whois (secure connection)       */
+        IRCB(728, 1, 0, 728),            /* quietlist                       */
+        IRCB(729, 1, 0, 729),            /* end of quietlist                */
+        IRCB(730, 1, 0, 730),            /* monitored nicks online          */
+        IRCB(731, 1, 0, 731),            /* monitored nicks offline         */
+        IRCB(732, 1, 0, 732),            /* list of monitored nicks         */
+        IRCB(733, 1, 0, 733),            /* end of monitor list             */
+        IRCB(734, 1, 0, 734),            /* monitor list is full            */
+        IRCB(900, 1, 0, 900),            /* logged in as (SASL)             */
+        IRCB(901, 1, 0, 901),            /* you are now logged in           */
+        IRCB(902, 1, 0, sasl_end_fail),  /* SASL auth failed (acc. locked)  */
+        IRCB(903, 1, 0, sasl_end_ok),    /* SASL auth successful            */
+        IRCB(904, 1, 0, sasl_end_fail),  /* SASL auth failed                */
+        IRCB(905, 1, 0, sasl_end_fail),  /* SASL message too long           */
+        IRCB(906, 1, 0, sasl_end_fail),  /* SASL authentication aborted     */
+        IRCB(907, 1, 0, sasl_end_ok),    /* already completed SASL auth     */
+        IRCB(936, 1, 0, generic_error),  /* censored word                   */
+        IRCB(973, 1, 0, server_mode_reason), /* whois (secure conn.)        */
+        IRCB(974, 1, 0, server_mode_reason), /* whois (secure conn.)        */
+        IRCB(975, 1, 0, server_mode_reason), /* whois (secure conn.)        */
+        { NULL, 0, 0, NULL },
+    };
 
     if (!msg_command)
         return;

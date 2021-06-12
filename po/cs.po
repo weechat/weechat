@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-06-13 09:14+0200\n"
+"POT-Creation-Date: 2021-06-15 18:48+0200\n"
 "PO-Revision-Date: 2021-05-25 18:28+0200\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -9148,6 +9148,9 @@ msgstr "%s%s: schopnost klienta: sasl není podporován"
 msgid "%s%s%s%s (%s%s%s)%s has changed host to %s%s"
 msgstr "%s%s%s%s%s%s%s%s%s%s opustil %s%s%s"
 
+msgid "Failure:"
+msgstr ""
+
 #, c-format
 msgid "%sYou have been invited to %s%s%s by %s%s%s"
 msgstr "%sByl jsi pozván na %s%s%s od %s%s%s"
@@ -9196,6 +9199,9 @@ msgstr "%sJste nyní známý jako %s%s%s"
 msgid "%s%s%s%s is now known as %s%s%s"
 msgstr "%s%s%s%s je nyní známý jako %s%s%s"
 
+msgid "Note:"
+msgstr ""
+
 #, c-format
 msgid "%s%s%s%s%s%s%s%s%s%s has left %s%s%s %s(%s%s%s)"
 msgstr "%s%s%s%s%s%s%s%s%s%s opustil %s%s%s %s(%s%s%s)"
@@ -9235,6 +9241,10 @@ msgstr "%s%s%s%s zrušil téma pro %s%s%s"
 #, c-format
 msgid "%sWallops from %s: %s"
 msgstr "%sWallops od %s: %s"
+
+#, fuzzy
+msgid "Warning:"
+msgstr "běžící"
 
 #, fuzzy, c-format
 msgid "%sServer notice mask for %s%s%s: %s"

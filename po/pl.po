@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-06-13 09:14+0200\n"
+"POT-Creation-Date: 2021-06-15 18:48+0200\n"
 "PO-Revision-Date: 2021-06-13 14:40+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
@@ -10737,6 +10737,9 @@ msgstr "%s%s: możliwości klienta, usunięte: %s"
 msgid "%s%s%s%s (%s%s%s)%s has changed host to %s%s"
 msgstr "%s%s%s%s (%s%s%s)%s zmienił hosta na %s%s"
 
+msgid "Failure:"
+msgstr ""
+
 #, c-format
 msgid "%sYou have been invited to %s%s%s by %s%s%s"
 msgstr "%sZostałeś zaproszony na %s%s%s przez %s%s%s"
@@ -10785,6 +10788,9 @@ msgstr "%sTwój nowy nick to %s%s%s"
 msgid "%s%s%s%s is now known as %s%s%s"
 msgstr "%s%s%s%s zmienił nick na %s%s%s"
 
+msgid "Note:"
+msgstr ""
+
 #, c-format
 msgid "%s%s%s%s%s%s%s%s%s%s has left %s%s%s %s(%s%s%s)"
 msgstr "%s%s%s%s%s%s%s%s%s%s opuścił %s%s%s %s(%s%s%s)"
@@ -10824,6 +10830,10 @@ msgstr "%s%s%s%s usunął temat %s%s%s"
 #, c-format
 msgid "%sWallops from %s: %s"
 msgstr "%sWallopy od %s: %s"
+
+#, fuzzy
+msgid "Warning:"
+msgstr "%s: ostrzeżenie:"
 
 #, c-format
 msgid "%sServer notice mask for %s%s%s: %s"

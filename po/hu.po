@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-06-13 09:14+0200\n"
+"POT-Creation-Date: 2021-06-15 18:48+0200\n"
 "PO-Revision-Date: 2021-05-25 18:28+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8721,6 +8721,9 @@ msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
 msgid "%s%s%s%s (%s%s%s)%s has changed host to %s%s"
 msgstr "%s%s %s(%s%s%s)%s elhagyta a(z) %s%s szobát"
 
+msgid "Failure:"
+msgstr ""
+
 #, fuzzy, c-format
 msgid "%sYou have been invited to %s%s%s by %s%s%s"
 msgstr "Meghívást kapott a %s%s%s szobába %s%s felhasználótól\n"
@@ -8769,6 +8772,9 @@ msgstr "Az új neved: %s%s\n"
 msgid "%s%s%s%s is now known as %s%s%s"
 msgstr "%s%s%s mostantól: %s%s\n"
 
+msgid "Note:"
+msgstr ""
+
 #, fuzzy, c-format
 msgid "%s%s%s%s%s%s%s%s%s%s has left %s%s%s %s(%s%s%s)"
 msgstr "%s%s %s(%s%s%s)%s elhagyta a(z) %s%s szobát"
@@ -8808,6 +8814,9 @@ msgstr "%s%s%s törölte a %s%s szoba témáját\n"
 #, fuzzy, c-format
 msgid "%sWallops from %s: %s"
 msgstr "%s%s %s(%s%s@%s%s)%s neve %s volt\n"
+
+msgid "Warning:"
+msgstr ""
 
 #, fuzzy, c-format
 msgid "%sServer notice mask for %s%s%s: %s"

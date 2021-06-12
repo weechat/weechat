@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-06-13 09:14+0200\n"
+"POT-Creation-Date: 2021-06-15 18:48+0200\n"
 "PO-Revision-Date: 2021-05-25 18:28+0200\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -9451,6 +9451,9 @@ msgstr "%s%s: capabilidad del cliente, rechazada: %s"
 msgid "%s%s%s%s (%s%s%s)%s has changed host to %s%s"
 msgstr "%s%s%s%s%s%s%s%s%s%s ha abandonado %s%s%s"
 
+msgid "Failure:"
+msgstr ""
+
 #, c-format
 msgid "%sYou have been invited to %s%s%s by %s%s%s"
 msgstr "%sUsted ha sido invitado a %s%s%s por %s%s%s"
@@ -9499,6 +9502,9 @@ msgstr "%sEres conocido ahora como %s%s%s"
 msgid "%s%s%s%s is now known as %s%s%s"
 msgstr "%s%s%s%s es conocido ahora como %s%s%s"
 
+msgid "Note:"
+msgstr ""
+
 #, c-format
 msgid "%s%s%s%s%s%s%s%s%s%s has left %s%s%s %s(%s%s%s)"
 msgstr "%s%s%s%s%s%s%s%s%s%s ha abandonado %s%s%s %s(%s%s%s)"
@@ -9538,6 +9544,10 @@ msgstr "%s%s%s%s ha borrado el tema para %s%s%s"
 #, c-format
 msgid "%sWallops from %s: %s"
 msgstr "%sWallops de %s: %s"
+
+#, fuzzy
+msgid "Warning:"
+msgstr "corriendo"
 
 #, fuzzy, c-format
 msgid "%sServer notice mask for %s%s%s: %s"

@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-06-13 09:14+0200\n"
+"POT-Creation-Date: 2021-06-15 18:48+0200\n"
 "PO-Revision-Date: 2021-05-25 18:28+0200\n"
 "Last-Translator: Érico Nogueira <ericonr@disroot.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -9153,6 +9153,9 @@ msgstr "%s: script removido: %s"
 msgid "%s%s%s%s (%s%s%s)%s has changed host to %s%s"
 msgstr "%s%s%s%s%s%s%s%s%s%s entrou %s%s%s"
 
+msgid "Failure:"
+msgstr ""
+
 #, c-format
 msgid "%sYou have been invited to %s%s%s by %s%s%s"
 msgstr "%sVocê foi convidado para %s%s%s por %s%s%s"
@@ -9201,6 +9204,9 @@ msgstr "%sVocê agora é conhecido como %s%s%s"
 msgid "%s%s%s%s is now known as %s%s%s"
 msgstr "%s%s%s%s agora é conhecido como %s%s%s"
 
+msgid "Note:"
+msgstr ""
+
 #, c-format
 msgid "%s%s%s%s%s%s%s%s%s%s has left %s%s%s %s(%s%s%s)"
 msgstr ""
@@ -9239,6 +9245,9 @@ msgstr "%s%s%s%s limpou o tópico do canal %s%s%s"
 
 #, c-format
 msgid "%sWallops from %s: %s"
+msgstr ""
+
+msgid "Warning:"
 msgstr ""
 
 #, c-format

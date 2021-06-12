@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-06-13 09:14+0200\n"
+"POT-Creation-Date: 2021-06-15 18:48+0200\n"
 "PO-Revision-Date: 2021-05-25 18:28+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8758,6 +8758,9 @@ msgstr "Не могу записать лог-файл \"%s\"\n"
 msgid "%s%s%s%s (%s%s%s)%s has changed host to %s%s"
 msgstr "%s%s %s(%s%s%s)%s покинул %s%s"
 
+msgid "Failure:"
+msgstr ""
+
 #, fuzzy, c-format
 msgid "%sYou have been invited to %s%s%s by %s%s%s"
 msgstr "Вас пригласил на %s%s%s пользователь %s%s\n"
@@ -8806,6 +8809,9 @@ msgstr "Теперь вы известны как %s%s\n"
 msgid "%s%s%s%s is now known as %s%s%s"
 msgstr "%s%s%s теперь известен как %s%s\n"
 
+msgid "Note:"
+msgstr ""
+
 #, fuzzy, c-format
 msgid "%s%s%s%s%s%s%s%s%s%s has left %s%s%s %s(%s%s%s)"
 msgstr "%s%s %s(%s%s%s)%s покинул %s%s"
@@ -8845,6 +8851,9 @@ msgstr "%s%s%s удалил тему канала для %s%s\n"
 #, fuzzy, c-format
 msgid "%sWallops from %s: %s"
 msgstr "%s%s %s(%s%s@%s%s)%s был %s\n"
+
+msgid "Warning:"
+msgstr ""
 
 #, fuzzy, c-format
 msgid "%sServer notice mask for %s%s%s: %s"

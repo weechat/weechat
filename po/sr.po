@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-06-13 14:41+0200\n"
+"POT-Creation-Date: 2021-06-15 18:48+0200\n"
 "PO-Revision-Date: 2021-06-03 15:15+0400\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -10710,6 +10710,9 @@ msgstr "%s%s: могућност клијента, уклоњено: %s"
 msgid "%s%s%s%s (%s%s%s)%s has changed host to %s%s"
 msgstr "%s%s%s%s (%s%s%s)%s је променио свој хост на %s%s"
 
+msgid "Failure:"
+msgstr ""
+
 #, c-format
 msgid "%sYou have been invited to %s%s%s by %s%s%s"
 msgstr "%sНа канал %s%s%s вас је позвао %s%s%s"
@@ -10758,6 +10761,9 @@ msgstr "%sОд сада сте познати као %s%s%s"
 msgid "%s%s%s%s is now known as %s%s%s"
 msgstr "%s%s%s%s је сада познат као %s%s%s"
 
+msgid "Note:"
+msgstr ""
+
 #, c-format
 msgid "%s%s%s%s%s%s%s%s%s%s has left %s%s%s %s(%s%s%s)"
 msgstr "%s%s%s%s%s%s%s%s%s%s је напустио %s%s%s %s(%s%s%s)"
@@ -10797,6 +10803,10 @@ msgstr "%s%s%s%s је обрисао тему за канал %s%s%s"
 #, c-format
 msgid "%sWallops from %s: %s"
 msgstr "%sWallops од %s: %s"
+
+#, fuzzy
+msgid "Warning:"
+msgstr "%s: упозорење:"
 
 #, c-format
 msgid "%sServer notice mask for %s%s%s: %s"
