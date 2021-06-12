@@ -1259,6 +1259,56 @@ TEST(IrcProtocolWithServer, quit)
 
 /*
  * Tests functions:
+ *   irc_protocol_cb_setname (without setname capability)
+ */
+
+TEST(IrcProtocolWithServer, setname_without_setname_cap)
+{
+    struct t_irc_nick *ptr_nick;
+
+    server_recv (":server 001 alice");
+    server_recv (":alice!user@host JOIN #test");
+
+    ptr_nick = ptr_server->channels->nicks;
+
+    POINTERS_EQUAL(NULL, ptr_nick->realname);
+
+    /* not enough arguments */
+    server_recv (":alice!user@host SETNAME");
+    POINTERS_EQUAL(NULL, ptr_nick->realname);
+
+    server_recv (":alice!user@host SETNAME :new realname");
+    POINTERS_EQUAL(NULL, ptr_nick->realname);
+}
+
+/*
+ * Tests functions:
+ *   irc_protocol_cb_setname (with setname capability)
+ */
+
+TEST(IrcProtocolWithServer, setname_with_setname_cap)
+{
+    struct t_irc_nick *ptr_nick;
+
+    /* assume "setname" capability is enabled in server */
+    hashtable_set (ptr_server->cap_list, "setname", NULL);
+
+    server_recv (":server 001 alice");
+    server_recv (":alice!user@host JOIN #test");
+
+    ptr_nick = ptr_server->channels->nicks;
+
+    POINTERS_EQUAL(NULL, ptr_nick->realname);
+
+    server_recv (":alice!user@host SETNAME :new realname");
+    STRCMP_EQUAL("new realname", ptr_nick->realname);
+
+    server_recv (":alice!user@host SETNAME :new realname2");
+    STRCMP_EQUAL("new realname2", ptr_nick->realname);
+}
+
+/*
+ * Tests functions:
  *   irc_protocol_cb_topic
  */
 

@@ -24,7 +24,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-06-15 18:48+0200\n"
+"POT-Creation-Date: 2021-06-15 18:50+0200\n"
 "PO-Revision-Date: 2021-06-05 23:02+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -8386,6 +8386,7 @@ msgstr "Aushandlung der Clientfähigkeit"
 msgid "ls || list || req|ack [<capability> [<capability>...]] || end"
 msgstr "ls || list || req|ack [<capability> [<capability>...]] || end"
 
+#, fuzzy
 msgid ""
 "   ls: list the capabilities supported by the server\n"
 " list: list the capabilities currently enabled\n"
@@ -8397,7 +8398,7 @@ msgid ""
 "\n"
 "Capabilities supported by WeeChat are: account-notify, away-notify, cap-"
 "notify, chghost, extended-join, invite-notify, multi-prefix, server-time, "
-"userhost-in-names.\n"
+"setname, userhost-in-names.\n"
 "\n"
 "The capabilities to automatically enable on servers can be set in option irc."
 "server_default.capabilities (or by server in option irc.server.xxx."
@@ -9417,6 +9418,17 @@ msgid ""
 msgstr ""
 "service: Name des Service\n"
 "   text: zu sendender Text"
+
+#, fuzzy
+msgid "set real name"
+msgstr "Servername"
+
+msgid "<realname>"
+msgstr ""
+
+#, fuzzy
+msgid "realname: new real name"
+msgstr "lese - Variablenname"
 
 msgid "disconnect server links"
 msgstr "Verbindung zum Server trennen"
@@ -11293,6 +11305,10 @@ msgstr "%s%s%s%s%s%s%s%s%s%s hat den IRC verlassen %s(%s%s%s)"
 #, c-format
 msgid "%s%s%s%s%s%s%s%s%s%s has quit"
 msgstr "%s%s%s%s%s%s%s%s%s%s hat den IRC verlassen"
+
+#, fuzzy, c-format
+msgid "%sReal name set to: %s"
+msgstr "%sEinstellung \"%s\" konnte nicht gesetzt werden"
 
 #, c-format
 msgid "%s%s: \"%s\" command received without channel"

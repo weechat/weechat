@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-06-15 18:48+0200\n"
+"POT-Creation-Date: 2021-06-15 18:50+0200\n"
 "PO-Revision-Date: 2021-06-03 15:15+0400\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8009,6 +8009,7 @@ msgstr "преговарање могућности клијента"
 msgid "ls || list || req|ack [<capability> [<capability>...]] || end"
 msgstr "ls || list || req|ack [<могућност> [<могућност>...]] || end"
 
+#, fuzzy
 msgid ""
 "   ls: list the capabilities supported by the server\n"
 " list: list the capabilities currently enabled\n"
@@ -8020,7 +8021,7 @@ msgid ""
 "\n"
 "Capabilities supported by WeeChat are: account-notify, away-notify, cap-"
 "notify, chghost, extended-join, invite-notify, multi-prefix, server-time, "
-"userhost-in-names.\n"
+"setname, userhost-in-names.\n"
 "\n"
 "The capabilities to automatically enable on servers can be set in option irc."
 "server_default.capabilities (or by server in option irc.server.xxx."
@@ -9016,6 +9017,17 @@ msgid ""
 msgstr ""
 "сервис: име сервиса\n"
 " текст: текст који се шаље"
+
+#, fuzzy
+msgid "set real name"
+msgstr "име сервера"
+
+msgid "<realname>"
+msgstr ""
+
+#, fuzzy
+msgid "realname: new real name"
+msgstr "читање - име променљиве"
 
 msgid "disconnect server links"
 msgstr "прекид серверских веза"
@@ -10779,6 +10791,10 @@ msgstr "%s%s%s%s%s%s%s%s%s%s је прекинуо %s(%s%s%s)"
 #, c-format
 msgid "%s%s%s%s%s%s%s%s%s%s has quit"
 msgstr "%s%s%s%s%s%s%s%s%s%s је прекинуо"
+
+#, fuzzy, c-format
+msgid "%sReal name set to: %s"
+msgstr "%sНије успело постављање опције „%s”"
 
 #, c-format
 msgid "%s%s: \"%s\" command received without channel"

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-06-15 18:48+0200\n"
+"POT-Creation-Date: 2021-06-15 18:50+0200\n"
 "PO-Revision-Date: 2021-05-25 18:28+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -7805,6 +7805,7 @@ msgstr "クライアント機能情報の交換"
 msgid "ls || list || req|ack [<capability> [<capability>...]] || end"
 msgstr "ls || list || req|ack [<capability> [<capability>...]] || end"
 
+#, fuzzy
 msgid ""
 "   ls: list the capabilities supported by the server\n"
 " list: list the capabilities currently enabled\n"
@@ -7816,7 +7817,7 @@ msgid ""
 "\n"
 "Capabilities supported by WeeChat are: account-notify, away-notify, cap-"
 "notify, chghost, extended-join, invite-notify, multi-prefix, server-time, "
-"userhost-in-names.\n"
+"setname, userhost-in-names.\n"
 "\n"
 "The capabilities to automatically enable on servers can be set in option irc."
 "server_default.capabilities (or by server in option irc.server.xxx."
@@ -8793,6 +8794,17 @@ msgid ""
 msgstr ""
 "service: サービス名\n"
 "   text: 送信テキスト"
+
+#, fuzzy
+msgid "set real name"
+msgstr "サーバ名"
+
+msgid "<realname>"
+msgstr ""
+
+#, fuzzy
+msgid "realname: new real name"
+msgstr "読み込み - 変数名"
 
 msgid "disconnect server links"
 msgstr "サーバリンクを切断"
@@ -10540,6 +10552,10 @@ msgstr "%s%s%s%s%s%s%s%s%s%s が終了 %s(%s%s%s)"
 #, c-format
 msgid "%s%s%s%s%s%s%s%s%s%s has quit"
 msgstr "%s%s%s%s%s%s%s%s%s%s が終了"
+
+#, fuzzy, c-format
+msgid "%sReal name set to: %s"
+msgstr "%sオプション \"%s\" の無効化に失敗しました"
 
 #, c-format
 msgid "%s%s: \"%s\" command received without channel"

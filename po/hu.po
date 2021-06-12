@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-06-15 18:48+0200\n"
+"POT-Creation-Date: 2021-06-15 18:50+0200\n"
 "PO-Revision-Date: 2021-05-25 18:28+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6294,7 +6294,7 @@ msgid ""
 "\n"
 "Capabilities supported by WeeChat are: account-notify, away-notify, cap-"
 "notify, chghost, extended-join, invite-notify, multi-prefix, server-time, "
-"userhost-in-names.\n"
+"setname, userhost-in-names.\n"
 "\n"
 "The capabilities to automatically enable on servers can be set in option irc."
 "server_default.capabilities (or by server in option irc.server.xxx."
@@ -7189,6 +7189,16 @@ msgid ""
 msgstr ""
 "szolgáltatás: szolgáltatás neve\n"
 "      szöveg: küldendő üzenet"
+
+#, fuzzy
+msgid "set real name"
+msgstr "cél: szerver neve"
+
+msgid "<realname>"
+msgstr ""
+
+msgid "realname: new real name"
+msgstr ""
 
 msgid "disconnect server links"
 msgstr "szerver linkek lecsatlakoztatása"
@@ -8790,6 +8800,10 @@ msgstr "%s%s %s(%s%s%s)%s kilépett"
 #, fuzzy, c-format
 msgid "%s%s%s%s%s%s%s%s%s%s has quit"
 msgstr "%s%s %s(%s%s%s)%s kilépett"
+
+#, fuzzy, c-format
+msgid "%sReal name set to: %s"
+msgstr "%s nem sikerült a modul opciókat elmenteni\n"
 
 #, fuzzy, c-format
 msgid "%s%s: \"%s\" command received without channel"

@@ -2847,6 +2847,58 @@ IRC_PROTOCOL_CALLBACK(quit)
 }
 
 /*
+ * Callback for the IRC message "SETNAME": set real name
+ * (with capability "setname").
+ *
+ * Message looks like:
+ *   :nick!user@host SETNAME :the realname
+ */
+
+IRC_PROTOCOL_CALLBACK(setname)
+{
+    struct t_irc_channel *ptr_channel;
+    struct t_irc_nick *ptr_nick;
+    char *pos_realname, *realname_color;
+
+    IRC_PROTOCOL_MIN_ARGS(3);
+
+    pos_realname = (argv_eol[2][0] == ':') ? argv_eol[2] + 1 : argv_eol[2];
+
+    if (weechat_hashtable_has_key (server->cap_list, "setname"))
+    {
+        for (ptr_channel = server->channels; ptr_channel;
+             ptr_channel = ptr_channel->next_channel)
+        {
+            ptr_nick = irc_nick_search (server, ptr_channel, nick);
+            if (ptr_nick)
+            {
+                if (ptr_nick->realname)
+                    free (ptr_nick->realname);
+                ptr_nick->realname = strdup (pos_realname);
+            }
+        }
+    }
+
+    if (!ignored)
+    {
+        realname_color = irc_color_decode (
+            pos_realname,
+            weechat_config_boolean (irc_config_network_colors_receive));
+        weechat_printf_date_tags (
+            irc_msgbuffer_get_target_buffer (server, NULL, command, NULL, NULL),
+            date,
+            irc_protocol_tags (command, NULL, NULL, NULL),
+            _("%sReal name set to: %s"),
+            weechat_prefix ("network"),
+            (realname_color) ? realname_color : "");
+        if (realname_color)
+            free (realname_color);
+    }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Callback for an IRC message with mode and reason (numeric).
  */
 
@@ -6611,6 +6663,7 @@ irc_protocol_recv_command (struct t_irc_server *server,
         IRCB(pong, 1, 0, pong),          /* answer to a ping message        */
         IRCB(privmsg, 1, 1, privmsg),    /* message received                */
         IRCB(quit, 1, 1, quit),          /* close all connections and quit  */
+        IRCB(setname, 0, 1, setname),    /* set realname                    */
         IRCB(topic, 0, 1, topic),        /* get/set channel topic           */
         IRCB(wallops, 1, 1, wallops),    /* wallops                         */
         IRCB(warn, 1, 0, warn),          /* warning received from server    */

@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-06-15 18:48+0200\n"
+"POT-Creation-Date: 2021-06-15 18:50+0200\n"
 "PO-Revision-Date: 2021-05-25 18:28+0200\n"
 "Last-Translator: Érico Nogueira <ericonr@disroot.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6936,7 +6936,7 @@ msgid ""
 "\n"
 "Capabilities supported by WeeChat are: account-notify, away-notify, cap-"
 "notify, chghost, extended-join, invite-notify, multi-prefix, server-time, "
-"userhost-in-names.\n"
+"setname, userhost-in-names.\n"
 "\n"
 "The capabilities to automatically enable on servers can be set in option irc."
 "server_default.capabilities (or by server in option irc.server.xxx."
@@ -7667,6 +7667,16 @@ msgstr ""
 msgid ""
 "service: name of service\n"
 "   text: text to send"
+msgstr ""
+
+#, fuzzy
+msgid "set real name"
+msgstr "nome do servidor"
+
+msgid "<realname>"
+msgstr ""
+
+msgid "realname: new real name"
 msgstr ""
 
 msgid "disconnect server links"
@@ -9222,6 +9232,10 @@ msgstr ""
 #, c-format
 msgid "%s%s%s%s%s%s%s%s%s%s has quit"
 msgstr ""
+
+#, fuzzy, c-format
+msgid "%sReal name set to: %s"
+msgstr "%sFalhou ao desabilitar a opção \"%s\""
 
 #, c-format
 msgid "%s%s: \"%s\" command received without channel"
