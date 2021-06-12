@@ -5065,15 +5065,7 @@ IRC_PROTOCOL_CALLBACK(352)
     {
         if (ptr_nick->realname)
             free (ptr_nick->realname);
-        if (pos_realname &&
-            weechat_hashtable_has_key (server->cap_list, "extended-join"))
-        {
-            ptr_nick->realname = strdup (pos_realname);
-        }
-        else
-        {
-            ptr_nick->realname = NULL;
-        }
+        ptr_nick->realname = (pos_realname) ? strdup (pos_realname) : NULL;
     }
 
     /* display output of who (manual who from user) */
@@ -5353,15 +5345,8 @@ IRC_PROTOCOL_CALLBACK(354)
     {
         if (ptr_nick->realname)
             free (ptr_nick->realname);
-        if (ptr_channel && pos_realname
-            && weechat_hashtable_has_key (server->cap_list, "extended-join"))
-        {
-            ptr_nick->realname = strdup (pos_realname);
-        }
-        else
-        {
-            ptr_nick->realname = NULL;
-        }
+        ptr_nick->realname = (ptr_channel && pos_realname) ?
+            strdup (pos_realname) : NULL;
     }
 
     /* display output of who (manual who from user) */
