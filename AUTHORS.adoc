@@ -56,6 +56,7 @@ Alphabetically:
 * Guido Berhoerster
 * Gwenn
 * Hasan Kiran (turgay)
+* Ivan Pešić
 * Ivan Sichmann Freitas
 * Jakub Jirutka
 * Jan Palus
