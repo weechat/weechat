@@ -24,7 +24,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-06-01 21:27+0200\n"
+"POT-Creation-Date: 2021-06-13 09:14+0200\n"
 "PO-Revision-Date: 2021-06-05 23:02+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -11612,9 +11612,27 @@ msgstr "Kryptographiefehler"
 msgid "protocol error"
 msgstr "Protokollfehler"
 
+#, fuzzy, c-format
+msgid "unable to read private key in file \"%s\""
+msgstr "%s%s: privater Schlüssel kann nicht aus Datei gelesen werden \"%s\""
+
+#, fuzzy, c-format
+msgid "invalid private key file: error %d %s"
+msgstr "%sgnutls: ungültige private Schlüsseldatei: Fehler %d %s"
+
 #, c-format
 msgid "%s%s: signing the challenge with ECC public key: %s"
 msgstr "%s%s: signiere mittels ECC öffentlichem Schlüssel: %s"
+
+#, fuzzy, c-format
+msgid "unable to import the private key: error %d %s"
+msgstr ""
+"%sgnutls: privater Schlüssel kann nicht importiert werden: Fehler %d %s"
+
+#, fuzzy, c-format
+msgid "unable to sign the hashed data: error %d %s"
+msgstr ""
+"%sgnutls: die gehashten Daten können nicht signiert werden : Fehler %d %s"
 
 #, c-format
 msgid ""
@@ -15698,24 +15716,6 @@ msgstr ""
 #~ msgstr ""
 #~ "%s%s: Fehler beim Erstellen der Antwort für die SASL-Authentifizierung. "
 #~ "\"%s\" Mechanismus wurde verwendet"
-
-#, c-format
-#~ msgid "%s%s: unable to read private key in file \"%s\""
-#~ msgstr "%s%s: privater Schlüssel kann nicht aus Datei gelesen werden \"%s\""
-
-#, c-format
-#~ msgid "%sgnutls: invalid private key file: error %d %s"
-#~ msgstr "%sgnutls: ungültige private Schlüsseldatei: Fehler %d %s"
-
-#, c-format
-#~ msgid "%sgnutls: unable to import the private key: error %d %s"
-#~ msgstr ""
-#~ "%sgnutls: privater Schlüssel kann nicht importiert werden: Fehler %d %s"
-
-#, c-format
-#~ msgid "%sgnutls: unable to sign the hashed data: error %d %s"
-#~ msgstr ""
-#~ "%sgnutls: die gehashten Daten können nicht signiert werden : Fehler %d %s"
 
 #~ msgid "bar size in chars (0 = auto size)"
 #~ msgstr "Größe der Infobar, in Zeichen (0 = automatische Anpassung)"

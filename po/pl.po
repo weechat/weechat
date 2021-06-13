@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-06-01 21:27+0200\n"
+"POT-Creation-Date: 2021-06-13 09:14+0200\n"
 "PO-Revision-Date: 2021-06-10 00:02+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
@@ -9486,13 +9486,14 @@ msgid ""
 "AES crypted password (insecure, not recommended)"
 msgstr ""
 "mechanizm autentykacji SASL: \"plain\" dla hasła w czystym tekście, \"scram-"
-"sha-1\" dla uwierzytelnienia SCRAM za pomocą algorytmu SHA-1, \"scram-sha-256\" "
-"dla uwierzytelnienia SCRAM za pomocą algorytmu SHA-256, \"scram-sha-512\" dla "
-"uwierzytelnienia SCRAM za pomocą algorytmu SHA-512, \"ecdsa-nist256p-"
-"challenge\" uwierzytelnianie na podstawie pary kluczy, \"external\" dla "
-"uwierzytelnienia za pomocą certyfikatu SSL po stronie klienta, \"dh-blowfish\" "
-"dla hasła szyfrowanego za pomocą blowfish (mało bezpieczne, niepolecane), "
-"\"dh-aes\" dla hasła szyfrowanego za pomocą AES (mało bezpieczne, niepolecane)"
+"sha-1\" dla uwierzytelnienia SCRAM za pomocą algorytmu SHA-1, \"scram-"
+"sha-256\" dla uwierzytelnienia SCRAM za pomocą algorytmu SHA-256, \"scram-"
+"sha-512\" dla uwierzytelnienia SCRAM za pomocą algorytmu SHA-512, \"ecdsa-"
+"nist256p-challenge\" uwierzytelnianie na podstawie pary kluczy, \"external\" "
+"dla uwierzytelnienia za pomocą certyfikatu SSL po stronie klienta, \"dh-"
+"blowfish\" dla hasła szyfrowanego za pomocą blowfish (mało bezpieczne, "
+"niepolecane), \"dh-aes\" dla hasła szyfrowanego za pomocą AES (mało "
+"bezpieczne, niepolecane)"
 
 msgid ""
 "username for SASL authentication; this option is not used for mechanism "
@@ -11117,9 +11118,25 @@ msgstr "błąd kryptograficzny"
 msgid "protocol error"
 msgstr "błąd protokołu"
 
+#, fuzzy, c-format
+msgid "unable to read private key in file \"%s\""
+msgstr "%s%s: nie można odczytać klucza prywatnego z pliku \"%s\""
+
+#, fuzzy, c-format
+msgid "invalid private key file: error %d %s"
+msgstr "%sgnutls: niepoprawny plik klucza prywatnego: błąd %d %s"
+
 #, c-format
 msgid "%s%s: signing the challenge with ECC public key: %s"
 msgstr "%s%s: podpisuje wyzwanie za pomocą klucza publicnzego ECC: %s"
+
+#, fuzzy, c-format
+msgid "unable to import the private key: error %d %s"
+msgstr "%sgnutls: nie można zaimportować klucza prywatnego: błąd %d %s"
+
+#, fuzzy, c-format
+msgid "unable to sign the hashed data: error %d %s"
+msgstr "%sgnutls: nie można podpisać zakodowanych danych: błąd %d %s"
 
 #, c-format
 msgid ""
@@ -15042,18 +15059,6 @@ msgstr "%s%s: nie można połączyć: niespodziewany błąd (%d)"
 #~ msgstr ""
 #~ "%s%s: błąd podczas tworzenia odpowiedzi dla uwierzytelniania SASL, "
 #~ "używając mechanizmu \"%s\""
-
-#~ msgid "%s%s: unable to read private key in file \"%s\""
-#~ msgstr "%s%s: nie można odczytać klucza prywatnego z pliku \"%s\""
-
-#~ msgid "%sgnutls: invalid private key file: error %d %s"
-#~ msgstr "%sgnutls: niepoprawny plik klucza prywatnego: błąd %d %s"
-
-#~ msgid "%sgnutls: unable to import the private key: error %d %s"
-#~ msgstr "%sgnutls: nie można zaimportować klucza prywatnego: błąd %d %s"
-
-#~ msgid "%sgnutls: unable to sign the hashed data: error %d %s"
-#~ msgstr "%sgnutls: nie można podpisać zakodowanych danych: błąd %d %s"
 
 #~ msgid "bar size in chars (0 = auto size)"
 #~ msgstr "rozmiar paska w znakach (0 = automatyczny rozmiar)"

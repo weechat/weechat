@@ -487,10 +487,10 @@ irc_sasl_get_key_content (const char *sasl_key, char **sasl_error)
     if (key_path)
         content = weechat_file_get_content (key_path);
 
-    if (!content && sasl_error)
+    if (key_path && !content && sasl_error)
     {
         snprintf (str_error, sizeof (str_error),
-                  "unable to read private key in file \"%s\"",
+                  _("unable to read private key in file \"%s\""),
                   key_path);
         *sasl_error = strdup (str_error);
     }
@@ -578,7 +578,7 @@ irc_sasl_mechanism_ecdsa_nist256p_challenge (struct t_irc_server *server,
             if (sasl_error)
             {
                 snprintf (str_error, sizeof (str_error),
-                          "invalid private key file: error %d %s",
+                          _("invalid private key file: error %d %s"),
                           ret,
                           gnutls_strerror (ret));
                 *sasl_error = strdup (str_error);
@@ -631,7 +631,7 @@ irc_sasl_mechanism_ecdsa_nist256p_challenge (struct t_irc_server *server,
             if (sasl_error)
             {
                 snprintf (str_error, sizeof (str_error),
-                          "unable to import the private key: error %d %s",
+                          _("unable to import the private key: error %d %s"),
                           ret,
                           gnutls_strerror (ret));
                 *sasl_error = strdup (str_error);
@@ -651,7 +651,7 @@ irc_sasl_mechanism_ecdsa_nist256p_challenge (struct t_irc_server *server,
             if (sasl_error)
             {
                 snprintf (str_error, sizeof (str_error),
-                          "unable to sign the hashed data: error %d %s",
+                          _("unable to sign the hashed data: error %d %s"),
                           ret,
                           gnutls_strerror (ret));
                 *sasl_error = strdup (str_error);

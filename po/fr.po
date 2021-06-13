@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-06-01 21:27+0200\n"
-"PO-Revision-Date: 2021-06-01 21:28+0200\n"
+"POT-Creation-Date: 2021-06-13 09:14+0200\n"
+"PO-Revision-Date: 2021-06-13 09:15+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -11367,8 +11367,24 @@ msgid "protocol error"
 msgstr "erreur de protocole"
 
 #, c-format
+msgid "unable to read private key in file \"%s\""
+msgstr "impossible de lire la clé privée dans le fichier \"%s\""
+
+#, c-format
+msgid "invalid private key file: error %d %s"
+msgstr "fichier de clé privée invalide : erreur %d %s"
+
+#, c-format
 msgid "%s%s: signing the challenge with ECC public key: %s"
 msgstr "%s%s : signature du challenge avec la clé publique ECC : %s"
+
+#, c-format
+msgid "unable to import the private key: error %d %s"
+msgstr "impossible d'importer la clé privée : erreur %d %s"
+
+#, c-format
+msgid "unable to sign the hashed data: error %d %s"
+msgstr "impossible de signer les données hachées : erreur %d %s"
 
 #, c-format
 msgid ""
@@ -15393,22 +15409,6 @@ msgstr "%s%s : impossible de se connecter : erreur inattendue (%d)"
 #~ msgstr ""
 #~ "%s%s : erreur de construction de la réponse pour l'authentification SASL, "
 #~ "en utilisant le mécanisme \"%s\""
-
-#, c-format
-#~ msgid "%s%s: unable to read private key in file \"%s\""
-#~ msgstr "%s%s : impossible de lire la clé privée dans le fichier \"%s\""
-
-#, c-format
-#~ msgid "%sgnutls: invalid private key file: error %d %s"
-#~ msgstr "%sgnutls : fichier de clé privée invalide : erreur %d %s"
-
-#, c-format
-#~ msgid "%sgnutls: unable to import the private key: error %d %s"
-#~ msgstr "%sgnutls : impossible d'importer la clé privée : erreur %d %s"
-
-#, c-format
-#~ msgid "%sgnutls: unable to sign the hashed data: error %d %s"
-#~ msgstr "%sgnutls : impossible de signer les données hachées : erreur %d %s"
 
 #~ msgid "bar size in chars (0 = auto size)"
 #~ msgstr "taille de la barre en caractères (0 = taille automatique)"

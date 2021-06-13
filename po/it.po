@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-06-01 21:27+0200\n"
+"POT-Creation-Date: 2021-06-13 09:14+0200\n"
 "PO-Revision-Date: 2021-05-25 18:28+0200\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -9992,9 +9992,25 @@ msgstr ""
 msgid "protocol error"
 msgstr ""
 
+#, fuzzy, c-format
+msgid "unable to read private key in file \"%s\""
+msgstr "%s%s: impossibile leggere il file \"%s\""
+
+#, fuzzy, c-format
+msgid "invalid private key file: error %d %s"
+msgstr "%sgnutls: certificato \"%s\" non valido, errore: %s"
+
 #, c-format
 msgid "%s%s: signing the challenge with ECC public key: %s"
 msgstr ""
+
+#, fuzzy, c-format
+msgid "unable to import the private key: error %d %s"
+msgstr "%s%s: impossibile creare la pipe: errore %d %s"
+
+#, fuzzy, c-format
+msgid "unable to sign the hashed data: error %d %s"
+msgstr "%s%s: impossibile creare la pipe: errore %d %s"
 
 #, c-format
 msgid ""
@@ -13600,22 +13616,6 @@ msgstr "%s%s: impossibile connettersi al mittente"
 #~ msgstr ""
 #~ "%s%s: errore nella costruzione della risposta per l'autenticazione SASL, "
 #~ "usando il meccanismo \"%s\""
-
-#, fuzzy, c-format
-#~ msgid "%s%s: unable to read private key in file \"%s\""
-#~ msgstr "%s%s: impossibile leggere il file \"%s\""
-
-#, fuzzy, c-format
-#~ msgid "%sgnutls: invalid private key file: error %d %s"
-#~ msgstr "%sgnutls: certificato \"%s\" non valido, errore: %s"
-
-#, fuzzy, c-format
-#~ msgid "%sgnutls: unable to import the private key: error %d %s"
-#~ msgstr "%s%s: impossibile creare la pipe: errore %d %s"
-
-#, fuzzy, c-format
-#~ msgid "%sgnutls: unable to sign the hashed data: error %d %s"
-#~ msgstr "%s%s: impossibile creare la pipe: errore %d %s"
 
 #~ msgid "bar size in chars (0 = auto size)"
 #~ msgstr "dimensione barra in caratteri (0 = dimensione automatica)"

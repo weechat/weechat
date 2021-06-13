@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-06-01 21:27+0200\n"
+"POT-Creation-Date: 2021-06-13 09:14+0200\n"
 "PO-Revision-Date: 2021-05-25 18:28+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -10857,9 +10857,25 @@ msgstr ""
 msgid "protocol error"
 msgstr ""
 
+#, fuzzy, c-format
+msgid "unable to read private key in file \"%s\""
+msgstr "%s%s: ファイル \"%s\" の秘密鍵を読み込めません"
+
+#, fuzzy, c-format
+msgid "invalid private key file: error %d %s"
+msgstr "%sgnutls: 無効な秘密鍵ファイルです: エラー %d %s"
+
 #, c-format
 msgid "%s%s: signing the challenge with ECC public key: %s"
 msgstr "%s%s: ECC 公開鍵を使ってチャンレンジに署名しています: %s"
+
+#, fuzzy, c-format
+msgid "unable to import the private key: error %d %s"
+msgstr "%sgnutls: 秘密鍵をインポートできません: エラー %d %s"
+
+#, fuzzy, c-format
+msgid "unable to sign the hashed data: error %d %s"
+msgstr "%sgnutls: ハッシュ化されたデータを署名できません: エラー %d %s"
 
 #, c-format
 msgid ""
@@ -14674,22 +14690,6 @@ msgstr "%s%s: 接続できません: 未定義のエラー (%d)"
 #~ "%s%s: error building answer for SASL authentication, using mechanism \"%s"
 #~ "\""
 #~ msgstr "%s%s: SASL 認証の応答を作成中にエラー、\"%s\" メカニズムを使用"
-
-#, c-format
-#~ msgid "%s%s: unable to read private key in file \"%s\""
-#~ msgstr "%s%s: ファイル \"%s\" の秘密鍵を読み込めません"
-
-#, c-format
-#~ msgid "%sgnutls: invalid private key file: error %d %s"
-#~ msgstr "%sgnutls: 無効な秘密鍵ファイルです: エラー %d %s"
-
-#, c-format
-#~ msgid "%sgnutls: unable to import the private key: error %d %s"
-#~ msgstr "%sgnutls: 秘密鍵をインポートできません: エラー %d %s"
-
-#, c-format
-#~ msgid "%sgnutls: unable to sign the hashed data: error %d %s"
-#~ msgstr "%sgnutls: ハッシュ化されたデータを署名できません: エラー %d %s"
 
 #~ msgid "bar size in chars (0 = auto size)"
 #~ msgstr "文字数単位のバーのサイズ (0 = 自動サイズ)"

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-06-01 21:27+0200\n"
+"POT-Creation-Date: 2021-06-13 09:14+0200\n"
 "PO-Revision-Date: 2021-05-25 18:28+0200\n"
 "Last-Translator: Vasco Almeida <vascomalmeida@sapo.pt>\n"
 "Language-Team: Portuguese <>\n"
@@ -10671,9 +10671,25 @@ msgstr ""
 msgid "protocol error"
 msgstr ""
 
+#, fuzzy, c-format
+msgid "unable to read private key in file \"%s\""
+msgstr "%s%s: não foi possível ler a chave privada no ficheiro \"%s\""
+
+#, fuzzy, c-format
+msgid "invalid private key file: error %d %s"
+msgstr "%sgnutls: ficheiro de chave privada inválido: erro %d %s"
+
 #, c-format
 msgid "%s%s: signing the challenge with ECC public key: %s"
 msgstr "%s%s: a assinar o desafio com a chave ECC pública: %s"
+
+#, fuzzy, c-format
+msgid "unable to import the private key: error %d %s"
+msgstr "%sgnutls: não foi possível importar a chave privada: erro %d %s"
+
+#, fuzzy, c-format
+msgid "unable to sign the hashed data: error %d %s"
+msgstr "%sgnutls: não foi possível assinar o resumo dos dados: erro %d %s"
 
 #, c-format
 msgid ""
@@ -14527,22 +14543,6 @@ msgstr "%s%s: não foi possível conectar: erro inesperado (%d)"
 #~ msgstr ""
 #~ "%s%s: erro ao construir resposta para a autenticação SASL, usando o "
 #~ "mecanismo \"%s\""
-
-#, c-format
-#~ msgid "%s%s: unable to read private key in file \"%s\""
-#~ msgstr "%s%s: não foi possível ler a chave privada no ficheiro \"%s\""
-
-#, c-format
-#~ msgid "%sgnutls: invalid private key file: error %d %s"
-#~ msgstr "%sgnutls: ficheiro de chave privada inválido: erro %d %s"
-
-#, c-format
-#~ msgid "%sgnutls: unable to import the private key: error %d %s"
-#~ msgstr "%sgnutls: não foi possível importar a chave privada: erro %d %s"
-
-#, c-format
-#~ msgid "%sgnutls: unable to sign the hashed data: error %d %s"
-#~ msgstr "%sgnutls: não foi possível assinar o resumo dos dados: erro %d %s"
 
 #~ msgid "bar size in chars (0 = auto size)"
 #~ msgstr "tamanho da barra em carateres (0 = tamanho automático)"

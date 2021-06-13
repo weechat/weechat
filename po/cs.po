@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-06-01 21:27+0200\n"
+"POT-Creation-Date: 2021-06-13 09:14+0200\n"
 "PO-Revision-Date: 2021-05-25 18:28+0200\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -9534,9 +9534,25 @@ msgstr ""
 msgid "protocol error"
 msgstr ""
 
+#, fuzzy, c-format
+msgid "unable to read private key in file \"%s\""
+msgstr "%s%s: nemohu číst lokální soubor"
+
+#, fuzzy, c-format
+msgid "invalid private key file: error %d %s"
+msgstr "%sgnutls: nevalidní certifikát \"%s\", chyba: %s"
+
 #, c-format
 msgid "%s%s: signing the challenge with ECC public key: %s"
 msgstr ""
+
+#, fuzzy, c-format
+msgid "unable to import the private key: error %d %s"
+msgstr "%s%s: nemohu vytvořit rouru"
+
+#, fuzzy, c-format
+msgid "unable to sign the hashed data: error %d %s"
+msgstr "%s%s: nemohu vytvořit rouru"
 
 #, c-format
 msgid ""
@@ -13157,22 +13173,6 @@ msgstr "%s%s: nemohu se připojit\" neočekávaná chyba (%d)"
 #~ msgstr ""
 #~ "%s%s: chyba vytváření odpovědi pro SASL autentizaci, použitý mechanismus "
 #~ "\"%s\""
-
-#, fuzzy, c-format
-#~ msgid "%s%s: unable to read private key in file \"%s\""
-#~ msgstr "%s%s: nemohu číst lokální soubor"
-
-#, fuzzy, c-format
-#~ msgid "%sgnutls: invalid private key file: error %d %s"
-#~ msgstr "%sgnutls: nevalidní certifikát \"%s\", chyba: %s"
-
-#, fuzzy, c-format
-#~ msgid "%sgnutls: unable to import the private key: error %d %s"
-#~ msgstr "%s%s: nemohu vytvořit rouru"
-
-#, fuzzy, c-format
-#~ msgid "%sgnutls: unable to sign the hashed data: error %d %s"
-#~ msgstr "%s%s: nemohu vytvořit rouru"
 
 #~ msgid "bar size in chars (0 = auto size)"
 #~ msgstr "velikost pole ve znacích (0 = automatická velikost)"

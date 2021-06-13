@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-06-01 21:27+0200\n"
+"POT-Creation-Date: 2021-06-13 09:14+0200\n"
 "PO-Revision-Date: 2021-05-25 18:28+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -9093,9 +9093,25 @@ msgstr ""
 msgid "protocol error"
 msgstr ""
 
+#, fuzzy, c-format
+msgid "unable to read private key in file \"%s\""
+msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
+
+#, fuzzy, c-format
+msgid "invalid private key file: error %d %s"
+msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
+
 #, c-format
 msgid "%s%s: signing the challenge with ECC public key: %s"
 msgstr ""
+
+#, fuzzy, c-format
+msgid "unable to import the private key: error %d %s"
+msgstr "%s DCC: nem sikerült a csövet létrehozni\n"
+
+#, fuzzy, c-format
+msgid "unable to sign the hashed data: error %d %s"
+msgstr "%s DCC: nem sikerült a csövet létrehozni\n"
 
 #, c-format
 msgid ""
@@ -12581,19 +12597,3 @@ msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s DCC: nem sikerült kapcsolódni a küldőhöz\n"
-
-#, fuzzy, c-format
-#~ msgid "%s%s: unable to read private key in file \"%s\""
-#~ msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
-
-#, fuzzy, c-format
-#~ msgid "%sgnutls: invalid private key file: error %d %s"
-#~ msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
-
-#, fuzzy, c-format
-#~ msgid "%sgnutls: unable to import the private key: error %d %s"
-#~ msgstr "%s DCC: nem sikerült a csövet létrehozni\n"
-
-#, fuzzy, c-format
-#~ msgid "%sgnutls: unable to sign the hashed data: error %d %s"
-#~ msgstr "%s DCC: nem sikerült a csövet létrehozni\n"
