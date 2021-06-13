@@ -18,7 +18,7 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 
 
 [[v3.2]]
-== Version 3.2 (under dev)
+== Version 3.2 (2021-06-13)
 
 [[v3.2_xdg_directories]]
 === XDG directories

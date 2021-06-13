@@ -16,7 +16,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 
 [[v3.2]]
-== Version 3.2 (under dev)
+== Version 3.2 (2021-06-13)
 
 New features::
 
