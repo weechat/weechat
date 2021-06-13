@@ -64,7 +64,7 @@ darwin*)
 esac
 
 # Gettext
-ALL_LINGUAS="cs de es fr hu it ja pl pt pt_BR ru tr"
+ALL_LINGUAS="cs de es fr hu it ja pl pt pt_BR ru sr tr"
 AM_GNU_GETTEXT
 AM_GNU_GETTEXT_VERSION([0.18])
 
@@ -1373,15 +1373,16 @@ AM_CONDITIONAL(DOC,                     test "$enable_doc" = "yes")
 AC_OUTPUT([Makefile
            icons/Makefile
            doc/Makefile
+           doc/cs/Makefile
+           doc/de/Makefile
            doc/en/Makefile
+           doc/es/Makefile
            doc/fr/Makefile
            doc/it/Makefile
-           doc/de/Makefile
-           doc/pl/Makefile
-           doc/es/Makefile
-           doc/ru/Makefile
            doc/ja/Makefile
-           doc/cs/Makefile
+           doc/pl/Makefile
+           doc/ru/Makefile
+           doc/sr/Makefile
            src/Makefile
            src/core/Makefile
            src/plugins/Makefile

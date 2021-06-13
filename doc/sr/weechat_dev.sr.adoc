@@ -1,0 +1,1164 @@
+= WeeChat водич за програмере
+:author: Sébastien Helleu
+:email: flashcode@flashtux.org
+:lang: sr
+:toc: left
+:toclevels: 3
+:toc-title: Садржај
+:sectnums:
+:docinfo1:
+
+
+Ово упутство описује WeeChat чет клијент и део је програма WeeChat.
+
+Последња верзија овог документа може да се нађе на следећој страници: https://weechat.org/doc
+
+
+[[introduction]]
+== Увод
+
+WeeChat (Wee Enhanced Environment for Chat) је бесплатни чет клијент, једноставан и брз, дизајниран за многе оперативне системе.
+
+Ово упутство описује интерно функционисање програма WeeChat:
+
+* репозиторијуми
+* правила за писање кода
+* интерне ствари језгра
+* интерне ствари додатака
+* како дати допринос програму WeeChat.
+
+[[repositories]]
+== Репозиторијуми
+
+WeeChat репозиторијуми се налазе на GitHub организацији „weechat”: https://github.com/weechat
+
+Листа репозиторијума:
+
+weechat::
+    репозиторијум језгра са изворним кодом и документацијом
+
+scripts::
+    _званичне_ скрипте које су предате на weechat.org
+
+weechat.org::
+    извор WeeChat веб сајта: https://weechat.org/
+
+weercd::
+    IRC сервер за тестирање
+
+qweechat::
+    Qt даљински ГКИ за WeeChat.
+
+Ово упутство документује само _weechat_ репозиторијум.
+
+[[overview]]
+=== Преглед
+
+Ово су главни WeeChat директоријуми:
+
+[width="100%", cols="2m,3", options="header"]
+|===
+| Директоријум       | Опис
+| src/               | Корен извора.
+|    core/           | Функције језгра: улазна тачка, интерне структуре.
+|       hook/        | Функције кука.
+|    gui/            | Функције за бафере, прозоре, ... (користе их сви интерфејси).
+|       curses/      | Curses интерфејс.
+|          headless/ | Режим без интерфејса.
+|          normal/   | Curses интерфејс.
+|    plugins/        | API за додатке и скриптовање.
+|       alias/       | Alias додатак.
+|       buflist/     | Buflist додатак.
+|       charset/     | Charset додатак.
+|       exec/        | Exec додатак.
+|       fifo/        | Fifo додатак (FIFO пајп се користи за удаљено слање команди програму WeeChat).
+|       fset/        | Fset (Fast Set) додатак.
+|       guile/       | API за Guile (scheme) скриптовање.
+|       irc/         | IRC (Internet Relay Chat) додатак.
+|       javascript/  | API за JavaScript скриптовање.
+|       logger/      | Logger додатак (уписивање порука које се приказују у фајл).
+|       lua/         | API за Lua скриптовање.
+|       perl/        | API за Perl скриптовање.
+|       php/         | API за PHP скриптовање.
+|       python/      | API за Python скриптовање.
+|       relay/       | Relay plugin (irc прокси + релеј за удаљене интерфејсе).
+|       ruby/        | API за Ruby скриптовање.
+|       script/      | Скрипт менаџер.
+|       spell/       | Spell додатак.
+|       tcl/         | API за Tcl скриптовање.
+|       trigger/     | Trigger додатак.
+|       xfer/        | Xfer додатак (IRC DCC фајл/разговор).
+| tests/             | Тестови.
+|    scripts/        | Тестови за API скриптовања.
+|       python/      | Python скрипте за генерисање и покретање тестова за API скриптовања.
+|    unit/           | Unit тестови.
+|       core/        | Unit тестови за функције језгра.
+|       gui/         | Unit тестови за функције интерфејса.
+|       plugins/     | Unit тестови за додатке.
+|          irc/      | Unit тестови за IRC додатак.
+| doc/               | Документација.
+| po/                | Фајлови превода (gettext).
+| debian/            | Debian паковање.
+|===
+
+[[sources]]
+=== Извори
+
+[[sources_core]]
+==== Језгро
+
+WeeChat „језгро” се налази у следећим директоријумима:
+
+* _src/core/_: функције језгра (за манипулацију подацима)
+* _src/gui/_: функције у вези интерфејса (бафери, прозори, ...)
+
+[width="100%", cols="2m,3", options="header"]
+|===
+| Путања/фајл                     | Опис
+| core/                           | Функције језгра: тачка улаза, интерне структуре.
+|    wee-arraylist.c              | Листе низова.
+|    wee-backtrace.c              | Испис трага након краха.
+|    wee-calc.c                   | Израчунавање резултата израза.
+|    wee-command.c                | WeeChat команде језгра.
+|    wee-completion.c             | Подразумевана довршавања.
+|    wee-config-file.c            | Управљање конфигурационим фајловима.
+|    wee-config.c                 | Конфигурационе опције за WeeChat језгро (фајл weechat.conf).
+|    wee-crypto.c                 | Криптографске функције.
+|    wee-debug.c                  | Неке дибаг функције.
+|    wee-dir.c                    | Функције директоријума/фајла.
+|    wee-eval.c                   | Израчунавање израза са референцама на интерне променљиве.
+|    wee-hashtable.c              | Хеш табеле.
+|    wee-hdata.c                  | Hdata (директни приступ подацима употребом хеш табела).
+|    wee-hook.c                   | Куке.
+|    wee-infolist.c               | Инфолисте (листе са подацима објеката).
+|    wee-input.c                  | Унос команди/текста.
+|    wee-list.c                   | Сортиране листе.
+|    wee-log.c                    | Упис у WeeChat лог фајл (weechat.log).
+|    wee-network.c                | Мрежне функције (повезивање са серверима/проксијима).
+|    wee-proxy.c                  | Управљање проксијима.
+|    wee-secure.c                 | Функције обезбеђених података.
+|    wee-secure-buffer.c          | Бафер обезбеђених података.
+|    wee-secure-config.c          | Опције обезбеђених података (фајл sec.conf).
+|    wee-string.c                 | Функције над стринговима.
+|    wee-upgrade-file.c           | Интерни систем ажурирања.
+|    wee-upgrade.c                | Ажурирање за WeeChat језгро (бафери, линије, историја, ...).
+|    wee-url.c                    | URL трансфер (помоћу libcurl).
+|    wee-utf8.c                   | UTF-8 фунцкије.
+|    wee-util.c                   | Неке друге функције.
+|    wee-version.c                | Функције за WeeChat верзију.
+|    weechat.c                    | Основне функције: опције командне линије, покретање.
+|    hook/                        | Функције кука.
+|       wee-hook-command-run.c    | Кука "command_run".
+|       wee-hook-command.c        | Кука "command".
+|       wee-hook-completion.c     | Кука "completion".
+|       wee-hook-config.c         | Кука "config".
+|       wee-hook-connect.c        | Кука "connect".
+|       wee-hook-fd.c             | Кука "fd".
+|       wee-hook-focus.c          | Кука "focus".
+|       wee-hook-hdata.c          | Кука "hdata".
+|       wee-hook-hsignal.c        | Кука "hsignal".
+|       wee-hook-info-hashtable.c | Кука "info_hashtable".
+|       wee-hook-info.c           | Кука "info".
+|       wee-hook-infolist.c       | Кука "infolist".
+|       wee-hook-line.c           | Кука "line".
+|       wee-hook-modifier.c       | Кука "modifier".
+|       wee-hook-print.c          | Кука "print".
+|       wee-hook-process.c        | Кука "process".
+|       wee-hook-signal.c         | Кука "signal".
+|       wee-hook-timer.c          | Кука "timer".
+| gui/                            | Функције за бафере, прозоре, ... (користе их сви интерфејси).
+|    gui-bar-item.c               | Ставке трака.
+|    gui-bar-window.c             | Прозори трака.
+|    gui-bar.c                    | Траке.
+|    gui-buffer.c                 | Бафери.
+|    gui-chat.c                   | Функције разговора (призаз поруке, ...).
+|    gui-color.c                  | Функције боја.
+|    gui-completion.c             | Довршавање у комадној линији.
+|    gui-cursor.c                 | Курсорски режим (слобосно померање курсора).
+|    gui-filter.c                 | Филтери.
+|    gui-focus.c                  | Функције у вези фокуса (за курсорски режими миша).
+|    gui-history.c                | Команде/текст сачуван у баферима.
+|    gui-hotlist.c                | Управљање врућом листом (листа бафера у којима има активности).
+|    gui-input.c                  | Функције уноса (трака уноса).
+|    gui-key.c                    | Функције тастатуре.
+|    gui-layout.c                 | Распоред.
+|    gui-line.c                   | Линије у баферуLines in buffers.
+|    gui-mouse.c                  | Миш.
+|    gui-nick.c                   | Функције надимака.
+|    gui-nicklist.c               | Листа надимака у баферима.
+|    gui-window.c                 | Прозори.
+|    curses/                      | Curses интерфејс.
+|       gui-curses-bar-window.c   | Приказ у прозорима трака.
+|       gui-curses-chat.c         | Приказ у простору разговора (поруке).
+|       gui-curses-color.c        | Функције боја.
+|       gui-curses-key.c          | Функције тастатуре (подраз. тастери, читање уноса).
+|       gui-curses-main.c         | WeeChat главна петља (чекање на догађаје тастатуре/мреже).
+|       gui-curses-mouse.c        | Миш.
+|       gui-curses-term.c         | Функције у вези терминала.
+|       gui-curses-window.c       | Прозори.
+|       headless/                 | Режим без интерфејса.
+|          main.c                 | Тачка улаза за режим без интерфејса.
+|          ncurses-fake.c         | Лажна ncurses библиотека.
+|       normal/                   | Curses интерфејс.
+|          main.c                 | Тачка улаза за Curses интерфејс.
+|===
+
+[[sources_plugins]]
+==== Додаци
+
+[width="100%", cols="2m,3", options="header"]
+|===
+| Путања/фајл                       | Опис
+| plugins/                          | Корен додатака.
+|    plugin.c                       | Управљање додацима (учитавање/уклањање динамичких C библиотека).
+|    plugin-api.c                   | Додатне функције за API додатака (омотач око WeeChat функција језгра).
+|    plugin-api-info.c              | Додатне info/infolist фунцкије за API додатака.
+|    plugin-config.c                | Опције конфигурације додатака (фајл plugins.conf).
+|    plugin-script.c                | Опште функције које користе скрипт додаци.
+|    plugin-script-api.c            | Скрипт API функције: омотачи око неких функција API додатака.
+|    plugin-script-config.c         | Опције конфигурације скрипт додатака (фајлови python.conf, perl.conf, ...).
+|    weechat-plugin.h               | Заглавље које треба да се дистрибуира уз WeeChat додатке, како би могли да се компајлирају.
+|    alias/                         | Alias додатак.
+|       alias.c                     | Главне алијас функције.
+|       alias-command.c             | Алијас команде.
+|       alias-completion.c          | Алијас довршавање.
+|       alias-config.c              | Алијас опције конфигурације (фајл alias.conf).
+|       alias-info.c                | Алијас info/infolists/hdata.
+|    spell/                         | Додатак за проверу правописа.
+|       spell.c                     | Главне функције провере правописа.
+|       spell-bar-item.c            | Провера правописа ставке траке.
+|       spell-command.c             | Провера правописа команде.
+|       spell-completion.c          | Провера правописа довршавања.
+|       spell-config.c              | Провера правописа опције конфиг (фајл spell.conf).
+|       spell-info.c                | Провера правописа info/infolists/hdata.
+|       spell-speller.c             | Управљање библиотекама за проверу правописа.
+|    buflist/                       | Buflist додатак.
+|       buflist.c                   | Главне buflist функције.
+|       buflist-bar-item.c          | Buflist ставке траке.
+|       buflist-command.c           | Buflist команде.
+|       buflist-config.c            | Buflist опције кофиг (фајл buflist.conf).
+|       buflist-info.c              | Buflist info/infolists/hdata.
+|       buflist-mouse.c             | Buflist акције мишем.
+|    charset/                       | Charset додатак.
+|       charset.c                   | Charset функције.
+|    exec/                          | Exec додатак.
+|       exec.c                      | Флавне exec функције.
+|       exec-buffer.c               | Exec бафер.
+|       exec-command.c              | Exec команде.
+|       exec-completion.c           | Exec довршавања.
+|       exec-config.c               | Exec опције конфиг (фајл exec.conf).
+|    fifo/                          | Fifo додатак.
+|       fifo.c                      | Главне fifo функције.
+|       fifo-command.c              | Fifo команде.
+|       fifo-config.c               | Fifo опције конфиг (фајл fifo.conf).
+|       fifo-info.c                 | Fifo info/infolists/hdata.
+|    fset/                          | Fset додатак.
+|       fset.c                      | Главне fset функције.
+|       fset-bar-item.c             | Fset ставке траке.
+|       fset-buffer.c               | Fset бафер.
+|       fset-command.c              | Fset команде.
+|       fset-completion.c           | Fset довршавања.
+|       fset-config.c               | Fset опције конфиг (фајл fset.conf).
+|       fset-info.c                 | Fset info/infolists/hdata.
+|       fset-mouse.c                | Fset акције мишем.
+|       fset-option.c               | Fset управљање опцијама.
+|    guile/                         | Guile (scheme) додатак.
+|       weechat-guile.c             | Главне guile функције (учитавањ/уклањање скрипти, извршавање guile кода).
+|       weechat-guile-api.c         | API функције guile скриптовања.
+|    irc/                           | IRC (Internet Relay Chat) додатак.
+|       irc.c                       | Основне IRC функције.
+|       irc-bar-item.c              | IRC ставке траке.
+|       irc-buffer.c                | IRC бафери.
+|       irc-channel.c               | IRC канали.
+|       irc-color.c                 | IRC боје.
+|       irc-command.c               | IRC команде.
+|       irc-completion.c            | IRC довршавања.
+|       irc-config.c                | IRC опције конфиг (фајл irc.conf).
+|       irc-ctcp.c                  | IRC CTCP.
+|       irc-debug.c                 | IRC дибаг функције.
+|       irc-ignore.c                | IRC Ignore.
+|       irc-info.c                  | IRC info/infolists/hdata.
+|       irc-input.c                 | Унос команди/текста.
+|       irc-message.c               | Функције за манипулисање IRC порукама.
+|       irc-mode.c                  | Функције у вези режима канала/надимка.
+|       irc-modelist.c              | Листе режима IRC канала (+b, +e, +I, ...).
+|       irc-msgbuffer.c             | Циљни бафер за IRC поруке.
+|       irc-nick.c                  | IRC надимци.
+|       irc-notify.c                | IRC листе за обавештавање.
+|       irc-protocol.c              | IRC протокол (RFCs 1459/2810/2811/2812/2813).
+|       irc-raw.c                   | IRC сирови бафер.
+|       irc-redirect.c              | Преусмеравање излаза IRC команде.
+|       irc-sasl.c                  | SASL аутентификација са IRC сервером.
+|       irc-server.c                | У/И комуникација са IRC сервером.
+|       irc-upgrade.c               | Чување/обнављање IRC података када се ажурира програм WeeChat.
+|    javascript/                    | JavaScript додатак.
+|       weechat-js.cpp              | Главне JavaScript функције (учитавање/уклањање скрипти, извршавање JavaScript кода).
+|       weechat-js-api.cpp          | API функције JavaScript скриптовања.
+|       weechat-js-v8.cpp           | JavaScript v8 функције.
+|    logger/                        | Logger додатак.
+|       logger.c                    | Главне logger функције.
+|       logger-backlog.c            | Logger backlog функције.
+|       logger-buffer.c             | Logger управљање листом бафера.
+|       logger-command.c            | Logger команде.
+|       logger-config.c             | Logger опције конфиг (фајл logger.conf).
+|       logger-info.c               | Logger info/infolists/hdata.
+|       logger-tail.c               | Функције за враћање последњих линија фајла.
+|    lua/                           | Lua додатак.
+|       weechat-lua.c               | Главне lua функције (учитавање/уклањање скрипти, извршавање lua кода).
+|       weechat-lua-api.c           | API функције Lua скриптовања.
+|    perl/                          | Perl додатак.
+|       weechat-perl.c              | Главне perl функције (учитавање/уклањање скрипти, извршавање perl кода).
+|       weechat-perl-api.c          | API функције Perl скриптовања.
+|    php/                           | PHP додатак.
+|       weechat-php.c               | Главне PHP функције (учитавање/уклањање скрипти, извршавање PHP кода).
+|       weechat-php-api.c           | API функције PHP скриптовања.
+|    python/                        | Python додатак.
+|       weechat-python.c            | Главне python функције (учитавање/уклањање скрипти,извршавање python кода).
+|       weechat-python-api.c        | API функције Python скриптовања.
+|    relay/                         | Релеј додатак (IRC прокси и релеј за удаљене интерфејсе).
+|       relay.c                     | Главне релеј функције.
+|       relay-auth.c                | Аутентификација клијената.
+|       relay-buffer.c              | Релеј бафер.
+|       relay-client.c              | Клијенти релеја.
+|       relay-command.c             | Релеј команде.
+|       relay-completion.c          | Релеј довршавања.
+|       relay-config.c              | Релеј опције конфиг (фајл relay.conf).
+|       relay-info.c                | Релеј info/infolists/hdata.
+|       relay-network.c             | Мрежне функције за релеј.
+|       relay-raw.c                 | Релеј сирови бафер.
+|       relay-server.c              | Релеј сервер.
+|       relay-upgrade.c             | Save/restore of relay data when upgrading WeeChat.
+|       relay-websocket.c           | WebSocket сервер функције (RFC 6455).
+|       irc/                        | IRC прокси.
+|          relay-irc.c              | Главне IRC прокси функције.
+|       weechat/                    | Релеј за удаљене интерфејсе.
+|          relay-weechat.c          | Релеј за удаљене интерфејсе (главне функције).
+|          relay-weechat-msg.c      | Слање бинарних порука клијентима.
+|          relay-weechat-nicklist.c | Функције листе надимака.
+|          relay-weechat-protocol.c | Читање команди од клијената.
+|    ruby/                          | Ruby додатак.
+|       weechat-ruby.c              | Главне ruby функције (учитавање/уклањање скрипти, извршавање ruby кода).
+|       weechat-ruby-api.c          | API функције Ruby скриптовања.
+|    script/                        | Управљач скриптама.
+|       script.c                    | Главне функције за управљача скриптама.
+|       script-action.c             | Акције над скриптама (учитавање/уклањање, инсталација/деинсталација, ...).
+|       script-buffer.c             | Бафер за управљача скриптама.
+|       script-command.c            | Команде за управљача скриптама.
+|       script-completion.c         | Довршавања за управљача скриптама.
+|       script-config.c             | Опције конфигурације за управљача скриптама (фајл script.conf).
+|       script-info.c               | Управљач скриптама info/infolists/hdata.
+|       script-mouse.c              | Скрипт акције мишем.
+|       script-repo.c               | Преузимање и читање фајла репозиторијума.
+|    tcl/                           | Tcl додатак.
+|       weechat-tcl.c               | Главне tcl функције (учитавање/уклањање скрипти, извршавање tcl кода).
+|       weechat-tcl-api.c           | API функције Tcl скриптовања.
+|    trigger/                       | Окидач додатак.
+|       trigger.c                   | Главне функције окидача.
+|       trigger-buffer.c            | Окидач бафер.
+|       trigger-callback.c          | Окидач функције повратног позива.
+|       trigger-command.c           | Окидач команде.
+|       trigger-completion.c        | Окидач довршавања.
+|       trigger-config.c            | Окидач опције конфиг (фајл trigger.conf).
+|    xfer/                          | Xfer додатак (IRC DCC фајл/разговор).
+|       xfer.c                      | Главне xfer функције.
+|       xfer-buffer.c               | Xfer бафер.
+|       xfer-chat.c                 | DCC разговор.
+|       xfer-command.c              | Xfer команде.
+|       xfer-completion.c           | Xfer довршавања.
+|       xfer-config.c               | Xfer опције конфиг (фајлxfer.conf).
+|       xfer-dcc.c                  | DCC пренос фајла.
+|       xfer-file.c                 | Фајл функције за xfer.
+|       xfer-info.c                 | Xfer info/infolists/hdata.
+|       xfer-network.c              | Мрежне функције за xfer.
+|       xfer-upgrade.c              | Чување/обнављање xfer података када се програм WeeChat ажурира.
+|===
+
+[[sources_tests]]
+==== Тестови
+
+[width="100%", cols="2m,3", options="header"]
+|===
+| Путања/фајл                       | Опис
+| tests/                            | Корен тестова.
+|    tests.cpp                      | Програм који се користи за извршавање свих тестова.
+|    scripts/                       | Корен тестова за API скриптовања.
+|       test-scripts.cpp            | Програм који се користи за извршавање тестова API скриптовања.
+|       python/                     | Python скрипте које генеришу и покрећу тестове API скриптовања.
+|          testapigen.py            | Python скрипта која генерише скрипте на свим језицима за тестирање API скриптовања.
+|          testapi.py               | Python скрипта са тестовима API скриптовања, користи је скрипта testapigen.py.
+|          unparse.py               | Конверзија Python кода у остале језике, користи је скрипта testapigen.py.
+|    unit/                          | Корен unit тестова.
+|       test-plugins.cpp            | Тестови: plugins.
+|       core/                       | Корен unit тестова језгра.
+|          test-core-arraylist.cpp  | Тестови: arraylists.
+|          test-core-calc.cpp       | Тестови: калкулација израза.
+|          test-core-crypto.cpp     | Тестови: криптографске функције.
+|          test-core-dir.cpp        | Тестови: функције директоријума/фајла.
+|          test-core-eval.cpp       | Тестови: израчунавање израза.
+|          test-core-hashtble.cpp   | Тестови: hashtables.
+|          test-core-hdata.cpp      | Тестови: hdata.
+|          test-core-hook.cpp       | Тестови: куке.
+|          test-core-infolist.cpp   | Тестови: infolists.
+|          test-core-list.cpp       | Тестови: листе.
+|          test-core-network.cpp    | Тестови: мрежне функције.
+|          test-core-secure.cpp     | Тестови: обезбеђени подаци.
+|          test-core-signal.cpp     | Тестови: сигнали.
+|          test-core-string.cpp     | Тестови: стрингови.
+|          test-core-url.cpp        | Тестови: URL адресе.
+|          test-core-utf8.cpp       | Тестови: UTF-8.
+|          test-core-util.cpp       | Тестови: помоћне функције.
+|       gui/                        | Корен unit тестова интерфејса.
+|          test-gui-color.cpp       | Тестови: боје.
+|          test-gui-line.cpp        | Тестови: линије.
+|          test-gui-nick.cpp        | Тестови: надимци.
+|       plugins/                    | Корен unit тестова додатака.
+|          irc/                     | Корен unit тестова IRC додатка.
+|             test-irc-channel.cpp  | Тестови: IRC канали.
+|             test-irc-color.cpp    | Тестови: IRC боје.
+|             test-irc-config.cpp   | Тестови: IRC конфигурација.
+|             test-irc-ignore.cpp   | Тестови: IRC игнорисања.
+|             test-irc-message.cpp  | Тестови: IRC поруке.
+|             test-irc-mode.cpp     | Тестови: IRC режими.
+|             test-irc-nick.cpp     | Тестови: IRC надимци.
+|             test-irc-protocol.cpp | Тестови: IRC протокол.
+|             test-irc-server.cpp   | Тестови: IRC сервер.
+|          trigger/                 | Корен unit тестова за окидач додатак.
+|             test-trigger.cpp      | Тестови: окидачи.
+|          relay/                   | Корен unit тестова за Релеј додатак.
+|             test-relay-auth.cpp   | Тестови: аутентификација клијената.
+
+|===
+
+[[documentation_translations]]
+=== Документација / преводи
+
+Фајлови документације:
+
+[width="100%", cols="2m,3", options="header"]
+|===
+| Путања/фајл                                   | Опис
+| doc/                                          | Документација.
+|    docinfo.html                               | Asciidoctor стил.
+|    docgen.py                                  | Python скрипта која изграђује ауто-генерисане фајлу у директоријуму _includes/_ (погледајте ниже).
+|    XX/                                        | Документација за језик XX (језици: en, fr, de, it, ...).
+|       weechat.1.XX.adoc                       | Man страница(`man weechat`).
+|       weechat_dev.XX.adoc                     | link:weechat_dev.sr.html[Водич за програмере] (овај документ).
+|       weechat_faq.XX.adoc                     | link:weechat_faq.sr.html[ЧПП].
+|       weechat_plugin_api.XX.adoc              | link:weechat_plugin_api.sr.html[Референца за API додатака].
+|       weechat_quickstart.XX.adoc              | link:weechat_quickstart.sr.html[Водич за брзи почетак].
+|       weechat_relay_protocol.XX.adoc          | link:weechat_relay_protocol.sr.html[Релеј протокол] (за удаљене интерфејсе).
+|       weechat_scripting.XX.adoc               | link:weechat_scripting.sr.html[Водич за скриптовање].
+|       weechat_tester.XX.adoc                  | link:weechat_tester.sr.html[Водич за тестере].
+|       weechat_user.XX.adoc                    | link:weechat_user.sr.html[Корисничко упутство].
+|       includes/                               | Фајлови укључени у документацију.
+|          autogen_api_completions.XX.adoc      | Ауто-генерисани фајл за Референцу API додатака: довршавања (*НИКАДА* не ажурирајте ручно!).
+|          autogen_api_hdata.XX.adoc            | Ауто-генерисани фајл за Референцу API додатака: hdata (*НИКАДА* не ажурирајте ручно!).
+|          autogen_api_infolists.XX.adoc        | Ауто-генерисани фајл за Референцу API додатака: infolists (*НИКАДА* не ажурирајте ручно!).
+|          autogen_api_infos.XX.adoc            | Ауто-генерисани фајл за Референцу API додатака: infos (*НИКАДА* не ажурирајте ручно!).
+|          autogen_api_infos_hashtable.XX.adoc  | Ауто-генерисани фајл за Референцу API додатака: infos hashtable (*НИКАДА* не ажурирајте ручно!).
+|          autogen_api_plugins_priority.XX.adoc | Ауто-генерисани фајл за Референцу API додатака: приоритет додатака (*НИКАДА* не ажурирајте ручно!).
+|          autogen_api_url_options.XX.adoc      | Ауто-генерисани фајл за Референцу API додатака: URL опције (*НИКАДА* не ажурирајте ручно!).
+|          autogen_user_commands.XX.adoc        | Ауто-генерисани фајл за Корисничко упутство: команде (*НИКАДА* не ажурирајте ручно!).
+|          autogen_user_default_aliases.XX.adoc | Ауто-генерисани фајл за Корисничко упутство: подразумевани алијаси (*НИКАДА* не ажурирајте ручно!).
+|          autogen_user_irc_colors.XX.adoc      | Ауто-генерисани фајл за Корисничко упутство: IRC боје (*НИКАДА* не ажурирајте ручно!).
+|          autogen_user_options.XX.adoc         | Ауто-генерисани фајл за Корисничко упутство: опције конфигурације (*НИКАДА* не ажурирајте ручно!).
+|          cmdline_options.XX.adoc              | Опције командне линије (фајл се укључује у man странице и корисничко упутство).
+|          man.XX.adoc                          | Део man страница: опције додатака, фајлови и ауторска права.
+|===
+
+Преводи програма WeeChat и додатака се раде помоћу програма gettext, фајлови се налазе у _po/_ директоријуму:
+
+[width="100%", cols="2m,3", options="header"]
+|===
+| Путања/фајл    | Опис
+| po/            | Фајлови превода (gettext).
+|    XX.po       | Преводи за језик XX (fr, de, it, ...), базни језик је енглески.
+|    weechat.pot | Шаблон за преводе (аутоматски изграђен).
+|===
+
+[[coding_rules]]
+== Правила за писање кода
+
+[[coding_general_rules]]
+=== Општа правила
+
+* Ваши коментари, имена променљивих, ... у изворном коду морају бити написани *само* на енглеском језику (није дозвољена употреба ниједног другог језика).
+* Употребите заглавље ауторских права у сваком новом изворном фајлу са:
+** кратким описом фајла (једна линија)
+** датумом,
+** именом,
+** имејл адресом,
+** лиценцом.
+
+Пример у језику C:
+
+[source, C]
+----
+/*
+ * weechat.c - core functions for WeeChat
+ *
+ * Copyright (C) 2021 Your Name <your@email.com>
+ *
+ * This file is part of WeeChat, the extensible chat client.
+ *
+ * WeeChat is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * WeeChat is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with WeeChat.  If not, see <https://www.gnu.org/licenses/>.
+ */
+----
+
+[[coding_c_style]]
+=== C стил
+
+Када пишете C кôд, *морате* да се придржавате неких основних правила:
+
+* Користите 4 размака за увлачење редова. Не употребљавајте табове, они су зло.
+* Покушајте да не прекорачите 80 карактера по линији, осим ако је то неопходно за читљивост.
+* Користите коментаре `+/* коментар */+` (а не коментаре у C99 стилу као што је `+// коментар+`).
+* Испред сваке функције додајте коментар који објашњава шта она ради (увек користите вишелинијски коментар, чак и ако је опис кратак).
+
+Пример:
+
+[source, C]
+----
+/*
+ * Checks if a string with boolean value is valid.
+ *
+ * Returns:
+ *   1: boolean value is valid
+ *   0: boolean value is NOT valid
+ */
+
+int
+foo ()
+{
+    int i;
+
+    /* one line comment */
+    i = 1;
+
+    /*
+     * multi-line comment: this is a very long description about next block
+     * of code
+     */
+    i = 2;
+    printf ("%d\n", i);
+}
+----
+
+* Користите експлицитна имена променљивих, на пример „nicks_count” уместо „n” или „nc”. Изузетак: у `for` петљама су променљиве као што су „i” или „n” ОК.
+* Након декларације, у телу функције иницијализујте локалне променљиве, пример:
+
+[source, C]
+----
+void
+foo ()
+{
+    int nick_count, buffer_count;
+
+    nick_count = 0;
+    buffer_count = 1;
+    /* ... */
+}
+----
+
+* Употребите заграде да експлицитно покажете како се израз израчунава, чак и када нису неопходне, на пример: write `+x + (y * z)+` уместо `+x + y * z+`.
+* Постављајте витичасте заграде `+{ }+` саме у линије, и увуците их за број размака који се користио у линији изнад отворене витичасте заграде (`if` у примеру):
+
+[source, C]
+----
+if (nicks_count == 1)
+{
+    /* нешто */
+}
+----
+
+* За раздвајање више различитих блокова унутар функција, употребите празне линије, а ако је могуће, додајте и коментар за сваку. Овако:
+
+[source, C]
+----
+/*
+ * Sends a message from out queue.
+ */
+
+void
+irc_server_outqueue_send (struct t_irc_server *server)
+{
+    /* ... */
+
+    /* send signal with command that will be sent to server */
+    irc_server_send_signal (server, "irc_out",
+                            server->outqueue[priority]->command,
+                            server->outqueue[priority]->message_after_mod,
+                            NULL);
+    tags_to_send = irc_server_get_tags_to_send (server->outqueue[priority]->tags);
+    irc_server_send_signal (server, "irc_outtags",
+                            server->outqueue[priority]->command,
+                            server->outqueue[priority]->message_after_mod,
+                            (tags_to_send) ? tags_to_send : "");
+    if (tags_to_send)
+        free (tags_to_send);
+
+    /* send command */
+    irc_server_send (server, server->outqueue[priority]->message_after_mod,
+                     strlen (server->outqueue[priority]->message_after_mod));
+    server->last_user_message = time_now;
+
+    /* start redirection if redirect is set */
+    if (server->outqueue[priority]->redirect)
+    {
+        irc_redirect_init_command (server->outqueue[priority]->redirect,
+                                   server->outqueue[priority]->message_after_mod);
+    }
+
+    /* ... */
+}
+----
+
+* Увлачите `if` услове у употребљавајте заграде око услова са оператором (није потребно само за једну логичку вредност). Овако:
+
+[source, C]
+----
+if (нешто)
+{
+    /* нешто */
+}
+else
+{
+    /* нешто друго */
+}
+
+if (my_boolean1 && my_boolean2 && (i == 10)
+    && ((buffer1 != buffer2) || (window1 != window2)))
+{
+    /* нешто */
+}
+else
+{
+    /* нешто друго */
+}
+----
+
+* Увлачите `switch` наредбе на следећи начин:
+
+[source, C]
+----
+switch (string[0])
+{
+    case 'A':  /* first case */
+        foo ("abc", "def");
+        break;
+    case 'B':  /* second case */
+        bar (1, 2, 3);
+        break;
+    default:  /* other cases */
+        baz ();
+        break;
+}
+----
+
+* Користите `typedef` за прототипе функција, али не и за структуре:
+
+[source, C]
+----
+typedef int (t_hook_callback_fd)(void *data, int fd);
+
+struct t_hook_fd
+{
+    t_hook_callback_fd *callback;      /* fd callback                       */
+    int fd;                            /* socket or file descriptor         */
+    int flags;                         /* fd flags (read,write,..)          */
+    int error;                         /* contains errno if error occurred  */
+                                       /* with fd                           */
+};
+
+/* ... */
+
+struct t_hook_fd *new_hook_fd;
+
+new_hook_fd = malloc (sizeof (*new_hook_fd));
+----
+
+* Ако користите Emacs као текст едитор, за исправно увлачење можете у свом _~/.emacs.el_ употребити Lisp кôд који следи:
+
+[source, lisp]
+----
+(add-hook 'c-mode-common-hook
+          '(lambda ()
+             (c-toggle-hungry-state t)
+             (c-set-style "k&r")
+             (setq c-basic-offset 4)
+             (c-tab-always-indent t)
+             (c-set-offset 'case-label '+)))
+----
+
+[[coding_python_style]]
+=== Python стил
+
+Погледајте https://www.python.org/dev/peps/pep-0008/
+
+[[core_internals]]
+== Интерне ствари језгра
+
+[[naming_convention]]
+=== Конвенција именовања
+
+[[naming_convention_files]]
+==== Фајлови
+
+Имена фајлова се састоје од слова и цртица, у формату: _xxx-yyyyy.[ch]_, где је _xxx_ директоријум/компонента (може бити и скраћеница), а _yyyyy_ је име за фајл.
+
+Главни фајл директоријума може имати исто име као и директоријум, на пример _irc.c_ у irc додатку.
+
+Примери:
+
+[width="100%", cols="2m,3", options="header"]
+|===
+| Директоријум        | Фајлови
+| src/core/           | weechat.c, wee-backtrace.c, wee-command.c, ...
+| src/gui/            | gui-bar.c, gui-bar-item.c, gui-bar-window.c, ...
+| src/gui/curses/     | gui-curses-bar.c, gui-curses-bar-window.c, gui-curses-chat.c, ...
+| src/plugins/        | plugin.c, plugin-api.c, plugin-api-info.c, plugin-config.c, plugin-script.c, ...
+| src/plugins/irc/    | irc.c, irc-bar-item.c, irc-buffer.c, ...
+| src/plugins/python/ | weechat-python.c, weechat-python-api.c, ...
+|===
+
+Заглавља C фајлова имају сито име као и фајл, на пример _wee-command.h_ за фајл _wee-command.c_.
+
+[[naming_convention_structures]]
+==== Структуре
+
+Структуре имају име _t_X_Y_ или _t_X_Y_Z_:
+
+* _X_: директоријум/компонента (може бити и скраћеница)
+* _Y_: крај имена фајла
+* _Z_: име за структуру (није обавезно)
+
+Пример: IRC надимак (из _src/plugins/irc/irc-nick.h_):
+
+[source, C]
+----
+struct t_irc_nick
+{
+    char *name;                     /* nickname                              */
+    char *host;                     /* full hostname                         */
+    char *prefixes;                 /* string with prefixes enabled for nick */
+    char prefix[2];                 /* current prefix (higher prefix set in  */
+                                    /* prefixes)                             */
+    int away;                       /* 1 if nick is away                     */
+    char *color;                    /* color for nickname in chat window     */
+    struct t_irc_nick *prev_nick;   /* link to previous nick on channel      */
+    struct t_irc_nick *next_nick;   /* link to next nick on channel          */
+};
+----
+
+[[naming_convention_variables]]
+==== Променљиве
+
+Глобалне променљиве (ван функција) имају име _X_Y_Z_:
+
+* _X_: директоријум/компонента (може бити и скраћеница)
+* _Y_: крај имена фајла
+* _Z_: име за променљиву
+
+Изузетак су променљиве за „последњи” чвор листе, име је _last_X_ (где је _X_ име променљиве, користећи облик једнине).
+
+Пример: прозори (from _src/gui/gui-window.c_):
+
+[source, C]
+----
+struct t_gui_window *gui_windows = NULL;        /* first window             */
+struct t_gui_window *last_gui_window = NULL;    /* last window              */
+struct t_gui_window *gui_current_window = NULL; /* current window           */
+----
+
+За локалне променљиве (у функцијама) нема конвенције давања имена. Једина препорука је да име буде експлицитно (не сувише кратко). + Ипак, показивачи на структуре се често именују са _ptr_xxxx_, на пример показивач на структуру _struct t_gui_buffer *_ ће бити: _*ptr_buffer_.
+
+[[naming_convention_functions]]
+==== Функције
+
+Конвенција именовања функција је иста као за <<naming_convention_variables,променљиве>>.
+
+Пример: креирање новог прозора (из _src/gui/gui-window.c_):
+
+[source, C]
+----
+/*
+ * Creates a new window.
+ *
+ * Returns pointer to new window, NULL if error.
+ */
+
+struct t_gui_window *
+gui_window_new (struct t_gui_window *parent_window, struct t_gui_buffer *buffer,
+                int x, int y, int width, int height,
+                int width_pct, int height_pct)
+{
+    /* ... */
+
+    return new_window;
+}
+----
+
+[[single_thread]]
+=== Једна нит извршавања
+
+Програм WeeChat се извршава у једној нити. То значи да би сваки део кода требало да се извршава веома брзо и да су позиви функција као што је `sleep` *стриктно забрањени* (то је тачно за WeeChat језгро, али и за C додатке и скрипте).
+
+Ако из неког разлога морате да одспавате накратко, употребите `hook_timer` са функцијом повратног позива.
+
+[[doubly_linked_lists]]
+=== Двоструко уланчане листе
+
+Већина листи у програму WeeChat су двоструко уланчане листе: сваки чвор има показивач на претходни и на следећи чвор.
+
+Пример: листа бафера (из _src/gui/gui-buffer.h_):
+
+[source, C]
+----
+struct t_gui_buffer
+{
+    /* data */
+
+    /* ... */
+
+    struct t_gui_buffer *prev_buffer;  /* link to previous buffer           */
+    struct t_gui_buffer *next_buffer;  /* link to next buffer               */
+};
+----
+
+Затим, сва показивача листе, на чело и на реп листе:
+
+[source, C]
+----
+struct t_gui_buffer *gui_buffers = NULL;           /* first buffer          */
+struct t_gui_buffer *last_gui_buffer = NULL;       /* last buffer           */
+----
+
+[[color_codes_in_strings]]
+=== Кодови боја у стринговима
+
+Програм WeeChat користи сопствене кодове боја у стринговима за приказ атрибута (подебљано, подвучено, ...) и боја на екрану.
+
+Испред свих атрибута/боја се налази карактер у стрингу који може бити:
+
+* _0x19_: кôд боје (иза кога следи кôд (или више њих) боје))
+* _0x1A_: постави атрибут (иза кога следи атрибут као један карактер)
+* _0x1B_: уклони атрибут (иза кога следи атрибут као један карактер)
+* _0x1C_: ресет (нема ништа иза)
+
+Дозвољени су атрибути (један или више карактера):
+
+* `+*+`: подебљано
+* `+!+`: обрнуто
+* `+/+`: курзив
+* `+_+`: подвучено
+* `+|+`: задржавају се постојећи атрибути
+
+Могуће су следеће боје:
+
+* стандардна боја: необавезни атрибути + двоцифрени број
+* проширена боја: `+@+` + необавезни атрибути + петоцифрени број
+
+У следећој табели се подразумева следеће:
+
+* `СТД`: стандардна боја (2 цифре)
+* `(А)СТД`: стандардна боја са необавезним атрибутима (атрибути + 2 цифре)
+* `ПРО`: проширена боја (`+@+` + 5 цифара)
+* `(A)ПРО`: проширена боја са необавезним атрибутима (`+@+` + атрибути + 5 цифара)
+* `АТР`: један карактер атрибута (`+*+`, `+!+`, `+/+`, `+_+` или `+|+`)
+
+У следећој табели су сажете све комбинације:
+
+[width="100%", cols="4,2,2,8", options="header"]
+|===
+| Кôд                                        | Пример                       | Површине    | Опис
+| [hex]#19# + СТД                            | [hex]#19# `+01+`             | чет + траке | Постављање атрибута и боје опцијама, погледајте табелу испод.
+| [hex]#19# + ПРО                            | [hex]#19# `+@00001+`         | chat        | Постављање боје са ncurses паром (користи се само у `/color` баферу).
+| [hex]#19# + "F" + (A)СТД                   | [hex]#19# `+F*05+`           | чет + траке | Постављање предњег плана (WeeChat боја).
+| [hex]#19# + "F" + (A)ПРО                   | [hex]#19# `+F@00214+`        | чет + траке | Постављање предњег плана (проширена боја).
+| [hex]#19# + "B" + СТД                      | [hex]#19# `+B05+`            | чет + траке | Постављање предњег плана (WeeChat боја).
+| [hex]#19# + "B" + ПРО                      | [hex]#19# `+B@00124+`        | чет + траке | Постављање предњег плана (проширена боја).
+| [hex]#19# + "*" + (A)СТД                   | [hex]#19# `+*05+`            | чет + траке | Постављање предњег плана (WeeChat боја).
+| [hex]#19# + "*" + (A)ПРО                   | [hex]#19# `+*@00214+`        | чет + траке | Постављање предњег плана (проширена боја).
+| [hex]#19# + "*" + (A)СТД + "," + СТД ^(1)^ | [hex]#19# `+*08,05+`         | чет + траке | Постављање предњег плана/позадине (WeeChat боје).
+| [hex]#19# + "*" + (A)СТД + "," + ПРО ^(1)^ | [hex]#19# `+*01,@00214+`     | чет + траке | Постављање предњег плана (WeeChat боје) у позадине (проширена боја).
+| [hex]#19# + "*" + (A)ПРО + "," + СТД ^(1)^ | [hex]#19# `+*@00214,05+`     | чет + траке | Постављање предњег плана (extended color) и позадине (WeeChat color).
+| [hex]#19# + "*" + (A)ПРО + "," + ПРО ^(1)^ | [hex]#19# `+*@00214,@00017+` | чет + траке | Постављање предњег плана/позадине (проширене боје).
+| [hex]#19# + "*" + (A)СТД + "~" + СТД       | [hex]#19# `+*08~05+`         | чет + траке | Постављање предњег плана/позадине (WeeChat боје).
+| [hex]#19# + "*" + (A)СТД + "~" + ПРО       | [hex]#19# `+*01~@00214+`     | чет + траке | Постављање предњег плана (WeeChat color) и позадине (проширена боја).
+| [hex]#19# + "*" + (A)ПРО + "~" + СТД       | [hex]#19# `+*@00214~05+`     | чет + траке | Постављање предњег плана (проширена боја) и позадине (WeeChat color).
+| [hex]#19# + "*" + (A)ПРО + "~" + ПРО       | [hex]#19# `+*@00214~@00017+` | чет + траке | Постављање предњег плана/позадине (проширене боје).
+| [hex]#19# + "b" + "F"                      | [hex]#19# `+bF+`             | траке       | Постављање боје предњег плана траке.
+| [hex]#19# + "b" + "D"                      | [hex]#19# `+bD+`             | траке       | Постављање боје граничника траке.
+| [hex]#19# + "b" + "B"                      | [hex]#19# `+bB+`             | траке       | Постављање боје позадине траке.
+| [hex]#19# + „b” + „_”                      | [hex]#19# `+b_+`             | трака уноса | Почетак уноса карактера (користи се само у ставки „input_text”).
+| [hex]#19# + „b” + „-”                      | [hex]#19# `+b-+`             | трака уноса | Почетак уноса скривеног карактера (користи се само у ставки „input_text”).
+| [hex]#19# + „b” + „#”                      | [hex]#19# `+b#+`             | трака уноса | Померање курсор карактера (користи се само у ставки „input_text”).
+| [hex]#19# + „b” + „i”                      | [hex]#19# `+bi+`             | траке       | Почетак ставке.
+| [hex]#19# + „b” + „l” (мало L)             | [hex]#19# `+bl+`             | траке       | Почетак линије ставке.
+| [hex]#19# + „E”                            | [hex]#19# `+E+`              | чет + траке | Наглашавање текста _(WeeChat ≥ 0.4.2)_.
+| [hex]#19# + [hex]#1C#                      | [hex]#19# [hex]#1C#          | чет + траке | Ресет боје (уз задржавање атрибута).
+| [hex]#1A# + АТР                            | [hex]#1A# `+*+`              | чет + траке | Постављање атрибута.
+| [hex]#1B# + АТР                            | [hex]#1B# `+*+`              | чет + траке | Уклањање атрибута.
+| [hex]#1C#                                  | [hex]#1C#                    | чет + траке | Ресет атрибута и боје.
+|===
+
+[NOTE]
+^(1)^ Као граничник се користила запета све до верзије WeeChat 2.5. + У верзијама WeeChat ≥ 2.6, користи се тилда за раздвајање боје предњег плана од боје позадине. Ако развијате WeeChat релеј клијент и желите да буде компатибилан са свим WeeChat верзијама, требало би да подржава оба граничника (на пример, корисник са WeeChat ≤ 2.5 изврши `/upgrade` на верзију ≥ 2.6, па би у баферима оба граничника могла да се користе у исто време).
+
+Кодови боја употребом опција (погледајте _t_gui_color_enum_, у фајлу _src/gui/gui-color.h_):
+
+[width="80%", cols="^1m,10", options="header"]
+|===
+| Кôд  | Опција
+| 00   | weechat.color.separator
+| 01   | weechat.color.chat
+| 02   | weechat.color.chat_time
+| 03   | weechat.color.chat_time_delimiters
+| 04   | weechat.color.chat_prefix_error
+| 05   | weechat.color.chat_prefix_network
+| 06   | weechat.color.chat_prefix_action
+| 07   | weechat.color.chat_prefix_join
+| 08   | weechat.color.chat_prefix_quit
+| 09   | weechat.color.chat_prefix_more
+| 10   | weechat.color.chat_prefix_suffix
+| 11   | weechat.color.chat_buffer
+| 12   | weechat.color.chat_server
+| 13   | weechat.color.chat_channel
+| 14   | weechat.color.chat_nick
+| 15   | weechat.color.chat_nick_self
+| 16   | weechat.color.chat_nick_other
+| 17   | _(од WeeChat верзије 0.3.4 се више не користи)_
+| 18   | _(од WeeChat верзије 0.3.4 се више не користи)_
+| 19   | _(од WeeChat верзије 0.3.4 се више не користи)_
+| 20   | _(од WeeChat верзије 0.3.4 се више не користи)_
+| 21   | _(од WeeChat верзије 0.3.4 се више не користи)_
+| 22   | _(од WeeChat верзије 0.3.4 се више не користи)_
+| 23   | _(од WeeChat верзије 0.3.4 се више не користи)_
+| 24   | _(од WeeChat верзије 0.3.4 се више не користи)_
+| 25   | _(од WeeChat верзије 0.3.4 се више не користи)_
+| 26   | _(од WeeChat верзије 0.3.4 се више не користи)_
+| 27   | weechat.color.chat_host
+| 28   | weechat.color.chat_delimiters
+| 29   | weechat.color.chat_highlight
+| 30   | weechat.color.chat_read_marker
+| 31   | weechat.color.chat_text_found
+| 32   | weechat.color.chat_value
+| 33   | weechat.color.chat_prefix_buffer
+| 34   | weechat.color.chat_tags _(WeeChat ≥ 0.3.6)_
+| 35   | weechat.color.chat_inactive_window _(WeeChat ≥ 0.3.6)_
+| 36   | weechat.color.chat_inactive_buffer _(WeeChat ≥ 0.3.6)_
+| 37   | weechat.color.chat_prefix_buffer_inactive_buffer _(WeeChat ≥ 0.3.6)_
+| 38   | weechat.color.chat_nick_offline _(WeeChat ≥ 0.3.9)_
+| 39   | weechat.color.chat_nick_offline_highlight _(WeeChat ≥ 0.3.9)_
+| 40   | weechat.color.chat_nick_prefix _(WeeChat ≥ 0.4.1)_
+| 41   | weechat.color.chat_nick_suffix _(WeeChat ≥ 0.4.1)_
+| 42   | weechat.color.emphasized _(WeeChat ≥ 0.4.2)_
+| 43   | weechat.color.chat_day_change _(WeeChat ≥ 0.4.2)_
+| 44   | weechat.color.chat_value_null _(WeeChat ≥ 1.4)_
+|===
+
+Ово су WeeChat боје:
+
+[width="80%", cols="^1m,10", options="header"]
+|===
+| Кôд  | Боја
+| 00   | Подразумевана (боја предњег плана/позадине у терминалу)
+| 01   | Црна
+| 02   | Тамносива
+| 03   | Тамноцрвена
+| 04   | Светлоцрвена
+| 05   | Тамнозелена
+| 06   | Светлозелена
+| 07   | Браон
+| 08   | Жута
+| 09   | Тамноплава
+| 10   | Светлоплава
+| 11   | Тамномагента
+| 12   | Светломагента
+| 13   | Тамнотиркизна
+| 14   | Светлотиркизна
+| 15   | Сива
+| 16   | Бела
+|===
+
+Примери кодова боја:
+
+[width="100%", cols="1,2", options="header"]
+|===
+| Кôд                            | Опис
+| [hex]#19# `+01+`               | Боја опције "01" (текст разговора)
+| [hex]#19# `+*08,03+`           | Жута на црвеном
+| [hex]#19# `+*@00214+`          | Наранџаста (проширена боја 214)
+| [hex]#19# `+*@*_00214,@00017+` | Подебљана подвучена наранџаста (214) на тамноплавој (17)
+| [hex]#1A# `+_+`                | Поставља подвлачење
+| [hex]#1B# `+_+`                | Уклања подвлачење
+| [hex]#1C#                      | Ресетује атрибуте и боје
+|===
+
+[[plugin_internals]]
+== Интерне ствари додатака
+
+Фајл _src/plugins/weechat-plugin.h_ дефинише и извози све функције које су доступне у API.
+
+За чување информација о додатку се користи структура под именом _t_weechat_plugin_ (име фајла, име, аутор, опис, ...) и све API функције, као показивачи на WeeChat функције.
+
+Дефинисани су и неки макрои за позивање ових функција.
+
+На пример, функција _hook_timer_ је дефинисана у структури _t_weechat_plugin_ на следећи начин:
+
+[source, C]
+----
+struct t_hook *(*hook_timer) (struct t_weechat_plugin *plugin,
+                              long interval,
+                              int align_second,
+                              int max_calls,
+                              int (*callback)(void *data,
+                                              int remaining_calls),
+                              void *callback_data);
+----
+
+А макро који се користи за позивање ове функције је:
+
+[source, C]
+----
+#define weechat_hook_timer(__interval, __align_second, __max_calls,     \
+                           __callback, __data)                          \
+    weechat_plugin->hook_timer(weechat_plugin, __interval,              \
+                               __align_second, __max_calls,             \
+                               __callback, __data)
+----
+
+Тако да ће у додатку позив функције изгледати овако:
+
+[source, C]
+----
+server->hook_timer_sasl = weechat_hook_timer (timeout * 1000,
+                                              0, 1,
+                                              &irc_server_timer_sasl_cb,
+                                              server);
+----
+
+[[contribute]]
+== Давање доприноса програму WeeChat
+
+[[git_repository]]
+=== Git репозиторијум
+
+Git репозиторијум се налази на следећој URL адреси: https://github.com/weechat/weechat
+
+Било каква закрпа бага или нова могућност мора да да се уради над мастер граном, пожељно је преко GitHub pull захтева. Закрпа такође може да се пошаље и имејлом (направљена са `git diff` или `git format-patch`).
+
+Формат комит поруке је следећи (са аутоматским затварањем GitHub проблема):
+
+----
+компонента: исправка проблема (затвара #123)
+----
+
+Где је _компонента_ једно од следећег:
+
+* WeeChat језгро: _core_ (фајлови у кореном директоријуму, _po/_ и _src/_, осим _src/plugins/_)
+* фајлови документације: _doc_ (фајлови у директоријуму _doc/_)
+* име додатка: _irc_, _python_, _relay_, ... (фајлови у директоријуму _src/plugins/_)
+
+Нека правила која треба да поштујете:
+
+* Користите само енглески језик.
+* Користите глагол у инфинитиву.
+* Ако је комит у вези са GitHub проблемом, напишите га у заградама након поруке, у формату: `(issue #123)` или `(closes #123)` да га затворите.
+
+Примери комит порука:
+
+----
+core: add callback "nickcmp" for nick comparison in buffers
+core: update Japanese translations
+irc: add command /unquiet (closes #36)
+python: fix crash when unloading a script without pointer to interpreter
+ruby: add detection of ruby version 1.9.3 in CMake
+----
+
+[[translations]]
+=== Преводи
+
+[[gettext]]
+==== Gettext
+
+Gettext фајлови се налазе у _po/_ директоријуму.
+
+Ако желите да иницијализујете нови језик, употребите команду `msginit`. На пример, да бисте креирали нови фајл који је спреман за превод на холандски:
+
+----
+$ cd po
+$ msginit -i weechat.pot -l nl_NL -o nl.po
+----
+
+Базни језик за програм WeeChat је енглески, тако да се подразумева да перфектно разумете енглески како бисте могли да урадите превод на свој језик.
+
+Након измена у изворним фајловима, можете да регенеришете све фајлове превода следећом командом у CMake „build” директоријуму:
+
+----
+$ make translations && make update-po
+----
+
+Затим можете да уређујте .po фајлове (ако можете да преводите на језик).
+
+Када завршите, *морате* да проверите свој фајл скриптом _msgcheck.py_ (https://github.com/flashcode/msgcheck):
+
+----
+$ msgcheck.py xx.po
+----
+
+И након тога можете да рекомпајлирате програм WeeChat тако да користи нове преводе.
+
+[[build_autogen_files]]
+===== Изградња ауто-генерисаних фајлова
+
+Фајлове са именом `+autogen_*+` у директоријуму _doc/XX/includes/_ аутоматски генерише скрипта _doc/docgen.py_.
+
+Ауто-генерисане фајлове можете поново да изградите директни у својим WeeChat изворима покретањем програма WeeChat у привременом директоријуму и учитавањем скрипте:
+
+----
+weechat -t -r "/python load /путања/до/weechat/doc/docgen.py;/docgen;/quit"
+----
+
+[[asciidoc]]
+==== Asciidoc
+
+Asciidoc фајлови се налазе у директоријуму _doc/XX/_ где је _XX_ језик (en, fr, de, it, ...).
+
+Најпре направите копију енглеског asciidoc фајла (у директоријуму _doc/en/_), па затим радите на њој.
+
+Преводи који недостају у фајловима су назначени следећим стрингом:
+
+----
+// TRANSLATION MISSING
+----
+
+Морате да преведете комплетан фајл осим линкова и специјалних кључних речи за напомене, упозорења, ... Ове речи морате оставити непреведене:
+
+----
+[[име_линка]]
+<<име_линка>>
+
+[NOTE]
+[TIP]
+[IMPORTANT]
+[WARNING]
+[CAUTION]
+----
+
+Када након `<<име_линка>>` постоји име, онда морате да га преведете:
+
+----
+<<име_линка,овај текст мора да се преведе>>
+----

@@ -29,6 +29,7 @@ set(PO_FILES
   pt.po
   pt_BR.po
   ru.po
+  sr.po
   tr.po
 )
 
