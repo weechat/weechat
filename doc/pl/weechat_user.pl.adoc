@@ -2947,12 +2947,9 @@ Więcej informacji można znaleźć pod adresem: https://www.oftc.net/NickServ/C
 WeeChat wspiera uwierzytelnianie SASL, używając różnych mechanizmów:
 
 * _plain_: hasło w czystym tekście (domyślne)
-// TRANSLATION MISSING
-* _scram-sha-1_: SCRAM with SHA-1 digest algorithm
-// TRANSLATION MISSING
-* _scram-sha-256_: SCRAM with SHA-256 digest algorithm
-// TRANSLATION MISSING
-* _scram-sha-512_: SCRAM with SHA-512 digest algorithm
+* _scram-sha-1_: SCRAM z użyciem algorytmu SHA-1
+* _scram-sha-256_: SCRAM z użyciem algorytmu SHA-256
+* _scram-sha-512_: SCRAM z użyciem algorytmu SHA-512
 * _ecdsa-nist256p-challenge_: klucz prywatny/publiczny
 * _external_: certyfikat SSL po stronie klienta
 * _dh-blowfish_: hasło zaszyfrowane algorytmem blowfish
@@ -3016,14 +3013,12 @@ Ponowne połączenie z serwerem:
 /reconnect libera
 ----
 
-// TRANSLATION MISSING
 [[irc_tor_sasl]]
-==== Connect with TOR and SASL
+==== Połączenie za pomocą TORa i SASL
 
-// TRANSLATION MISSING
-Some servers support connections with TOR (https://www.torproject.org/),
-a network of virtual tunnels that allows people and groups to improve their
-privacy and security on the Internet.
+Niekróre serwery wspierają połączenia z sieci TOR (https://www.torproject.org/),
+sieci wirtualnych tuneli, które umożliwają poprawienie swojej prywatności
+i bezpieczeństwa w Internecie.
 
 Pierwszym krokiem jest instalacja TORa. Dla Debiana (i pochodnych):
 
@@ -3038,11 +3033,11 @@ zależą od twojej konfiguracji TORa):
 /proxy add tor socks5 127.0.0.1 9050
 ----
 
-// TRANSLATION MISSING
-Now, add a new server (replace server name "irc-tor" and the address by a valid one):
+Teraz należy dodać nowy serwer (zastąp nazwę serwera "irc-tor" i andres właściwymi
+wartościami):
 
 ----
-/server add irc-tor this.is.the.address.onion
+/server add irc-tor adres.serwera.onion
 ----
 
 Ustaw proxy dla TOR:
@@ -3061,8 +3056,7 @@ się jak wygenerować klucz prywatny):
 /set irc.server.irc-tor.sasl_key "${weechat_config_dir}/ecdsa.pem"
 ----
 
-// TRANSLATION MISSING
-And finally, connect to the server:
+Teraz pozostaje już się tylko połączyć z serwerem:
 
 ----
 /connect irc-tor
@@ -3522,8 +3516,7 @@ protokołów:
 [[relay_password]]
 ==== Hasło
 
-// TRANSLATION MISSING
-It is highly recommended to set a password for relay, with these commands:
+Zaleca się ustawenia hasła dla pośrednika za pomocą poniższych komend:
 
 ----
 /secure set relay moje_hasło
@@ -3621,13 +3614,12 @@ Teraz możesz się połączyć na porcie 8000 za pomocą dowolnego klienta IRC
 używając hasła serwera "moje_hasło" (lub "libera:moje_hasło" jeśli żaden
 serwer nie został podany w przekaźniku).
 
-// TRANSLATION MISSING
-For example if you use WeeChat as IRC client of the relay, with a server called
-"relay" and the relay password "secret", you can setup the password with these
-commands:
+Na przydład jeśli używasz WeeChat jako klienta pośrednika IRC, z serwerem
+nazwanym "relay" i hasłem pośrednika "moje_hasło", możesz ustawić hasło
+za pomocą tych komend:
 
 ----
-/secure set relay_libera libera:secret
+/secure set relay_libera libera:moje_hasło
 /set irc.server.relay.password "{sec.data.relay_libera}"
 ----
 
