@@ -777,7 +777,8 @@ Beispiel des WeeChat-Terminals:
             ▲ Bars "status" und "input"                               Bar "nicklist" ▲
 ....
 
-Der Bildschirm setzt sich aus folgenden Bereichen zusammen:
+// TRANSLATION MISSING
+By default, the screen is divided up into the following areas:
 
 * Chat-Bereich (in der Mitte des Bildschirms). Dieser enthält den Text und zusätzlich für jede Zeile:
 ** die Uhrzeit
@@ -871,6 +872,14 @@ andere Items die zur Verfügung stehen (die aber nicht standardmäßig in einer 
 | tls_version                  | `TLS1.3`                 | TLS Version die für den IRC Server genutzt wird.
 | window_number                | `2`                      | Nummer des aktuellen Fensters.
 |===
+
+// TRANSLATION MISSING
+Each aspect of the layout can be customized with the appropriate <<command_line,command>>:
+<<command_weechat_bar,`/bar`>> to customize the bars,
+<<command_weechat_buffer,/buffer>> and <<command_weechat_window,`/window`>>
+to customize <<buffers_and_windows,buffers and windows>>,
+and <<command_weechat_layot,/layout>> to name, save and restore the screen layout
+and the association between windows and buffers.
 
 [[command_line]]
 === Befehlszeile
@@ -1122,12 +1131,23 @@ Beispiele von Buffern:
 * IRC Channel
 * IRC Privat  (wird auch Query-Buffer genannt)
 
+// TRANSLATION MISSING
 Ein _Fenster_ ist ein Bildschirmbereich der Buffer darstellt. Es ist möglich
-den Bildschirm in mehrere Fenster aufzuteilen.
+den Bildschirm in mehrere Fenster aufzuteilen (examples
+<<window_split_examples,below>>, see the <<command_weechat_window,/window command>>
+for details).
 
 Jedes Fenster stellt einen Buffer dar. Ein Buffer kann unsichtbar sein (er wird
 in einem Fenster nicht angezeigt) oder ein Buffer wird durch ein oder mehrere Fenster
 angezeigt.
+
+// TRANSLATION MISSING
+Screen layouts and the association between windows and buffers can be
+<<command_weechat_layout,saved and restored>>.
+
+// TRANSLATION MISSING
+[[window_split_examples]]
+==== Examples
 
 Beispiele für eine horizontal Fensteraufteilung (`/window splith`):
 

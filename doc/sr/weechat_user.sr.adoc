@@ -695,7 +695,8 @@ WeeChat подразумевано користи XDG директоријуме
             ▲ траке „status” и „input”                             трака „nicklist” ▲
 ....
 
-Екран је подељен на следеће области
+// TRANSLATION MISSING
+By default, the screen is divided up into the following areas:
 
 * простор за разговор (чет) (средина екрана) са линијама разговора и за сваку линију:
 ** време
@@ -789,6 +790,14 @@ _nicklist_ трака садржи следеће подразумеване с�
 | tls_version                  | `TLS1.3`                 | TLS верзија која се користи за текући IRC сервер.
 | window_number                | `2`                      | Број текућег прозора.
 |===
+
+// TRANSLATION MISSING
+Each aspect of the layout can be customized with the appropriate <<command_line,command>>:
+<<command_weechat_bar,`/bar`>> to customize the bars,
+<<command_weechat_buffer,/buffer>> and <<command_weechat_window,`/window`>>
+to customize <<buffers_and_windows,buffers and windows>>,
+and <<command_weechat_layot,/layout>> to name, save and restore the screen layout
+and the association between windows and buffers.
 
 [[command_line]]
 === Командна линија
@@ -1004,9 +1013,20 @@ _бафер_ се састоји из броја, имена, приказани
 * irc канал
 * irc приватне поруке
 
-_прозор_ је површина екрана која приказује бафер. Свој екран можете да изделите на више прозора.
+// TRANSLATION MISSING
+_прозор_ је површина екрана која приказује бафер. Свој екран можете да изделите
+на више прозора (examples <<window_split_examples,below>>, see the
+<<command_weechat_window,/window command>> for details).
 
 Сваки прозор приказује један бафер. Бафер може да буде скривен (не приказује се у прозору) или да се приказује у једном или у више прозора.
+
+// TRANSLATION MISSING
+Screen layouts and the association between windows and buffers can be
+<<command_weechat_layout,saved and restored>>.
+
+// TRANSLATION MISSING
+[[window_split_examples]]
+==== Examples
 
 Пример хоризонталне поделе (`/window splith`):
 

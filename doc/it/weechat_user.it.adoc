@@ -838,7 +838,8 @@ Esempio di terminale con WeeChat:
             ▲ bars "status" and "input"                               bar "nicklist" ▲
 ....
 
-Lo schermo è composto dalle seguenti aree:
+// TRANSLATION MISSING
+By default, the screen is divided up into the following areas:
 
 * area di chat (centro dello schermo) con le righe di chat, e per ogni riga:
 ** ora
@@ -943,6 +944,14 @@ Other items available (not used in bars by default):
 | tls_version                  | `TLS1.3`                 | TLS version in use for current IRC server.
 | window_number                | `2`                      | Current window number.
 |===
+
+// TRANSLATION MISSING
+Each aspect of the layout can be customized with the appropriate <<command_line,command>>:
+<<command_weechat_bar,`/bar`>> to customize the bars,
+<<command_weechat_buffer,/buffer>> and <<command_weechat_window,`/window`>>
+to customize <<buffers_and_windows,buffers and windows>>,
+and <<command_weechat_layot,/layout>> to name, save and restore the screen layout
+and the association between windows and buffers.
 
 [[command_line]]
 === Riga di comando
@@ -1197,11 +1206,22 @@ Esempi di buffer:
 * canale irc
 * query irc
 
+// TRANSLATION MISSING
 Una _finestra_ (o window) è un'area dello schermo in cui viene visualizzato
-un buffer. È possibile dividere lo schermo in più finestre.
+un buffer. È possibile dividere lo schermo in più finestre (examples
+<<window_split_examples,below>>, see the <<command_weechat_window,/window command>>
+for details).
 
 Ogni finestra visualizza un buffer. Un buffer può essere nascosto (non visualizzato
 da una finestra) o visualizzato da una o più finestre.
+
+// TRANSLATION MISSING
+Screen layouts and the association between windows and buffers can be
+<<command_weechat_layout,saved and restored>>.
+
+// TRANSLATION MISSING
+[[window_split_examples]]
+==== Examples
 
 Esempio di split orizzontale (`/window splith`):
 
