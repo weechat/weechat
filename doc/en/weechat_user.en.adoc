@@ -771,7 +771,7 @@ Example of terminal with WeeChat:
             ▲ bars "status" and "input"                               bar "nicklist" ▲
 ....
 
-The screen is divided up into the following areas:
+By default, the screen is divided up into the following areas:
 
 * chat area (middle of screen) with chat lines, and for each line:
 ** time
@@ -865,6 +865,13 @@ Other items available (not used in bars by default):
 | tls_version                  | `TLS1.3`                 | TLS version in use for current IRC server.
 | window_number                | `2`                      | Current window number.
 |===
+
+Each aspect of the layout can be customized with the appropriate <<command_line,command>>:
+<<command_weechat_bar,`/bar`>> to customize the bars,
+<<command_weechat_buffer,/buffer>> and <<command_weechat_window,`/window`>>
+to customize <<buffers_and_windows,buffers and windows>>,
+and <<command_weechat_layot,/layout>> to name, save and restore the screen layout
+and the association between windows and buffers.
 
 [[command_line]]
 === Command line
@@ -1108,10 +1115,17 @@ Examples of buffers:
 * irc private messages
 
 A _window_ is a screen area which displays a buffer. It is possible to split
-your screen into many windows.
+your screen into many windows (examples <<window_split_examples,below>>,
+see the <<command_weechat_window,/window command>> for details).
 
 Each window displays one buffer. A buffer can be hidden (not displayed by a
 window) or displayed by one or more windows.
+
+Screen layouts and the association between windows and buffers can be
+<<command_weechat_layout,saved and restored>>.
+
+[[window_split_examples]]
+==== Examples
 
 Example of horizontal split (`/window splith`):
 
