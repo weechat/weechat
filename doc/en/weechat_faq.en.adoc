@@ -524,7 +524,7 @@ You can just disable bracketed paste mode:
 === How can I customize display for very small terminal size (like 80x25), to not waste space?
 
 You can remove side bars (buflist and nicklist), change time format to display
-only hours and seconds, disable alignment of messages and set a char for nick
+only hours and minutes, disable alignment of messages and set a char for nick
 prefix/suffix:
 
 ----

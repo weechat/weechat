@@ -1,0 +1,1259 @@
+= WeeChat preguntas frecuentes (FAQ)
+:author: Sébastien Helleu
+:email: flashcode@flashtux.org
+:lang: es
+:toc: left
+:toclevels: 2
+:sectnums:
+:sectnumlevels: 2
+:docinfo1:
+
+Traductores
+
+* Victorhck <victorhck.mailbox.org>, 2021
+
+
+Este documento está escrito para versiones de WeeChat ≥ 0.3.0 pero siempre es preferible
+usar la última versión estable de WeeChat.
+
+toc::[]
+
+
+[[general]]
+== General
+
+[[weechat_name]]
+=== ¿De dónde proviene el nombre de "WeeChat"?
+
+"Wee" es un acrónimo recursivo que proviene de "Wee Enhanced Environment" (Entorno Mejorado Wee).
+Así que el nombre completo sería "Wee Enhanced Environment for Chat" (Entorno Mejorado Wee para Chat).
+
+"Wee" también significa "muy pequeño" (y sí, hay otros significados, pero estos
+no se aplican a WeeChat!).
+
+[[why_choose_weechat]]
+=== ¿Por qué escoger WeeChat? X-Chat o Irssi son buenos...
+
+Porque WeeChat es muy ligero y ofrece funcionalidades innovadoras.
+
+Más información de las funcionalidades de WeeChat en la página: https://weechat.org/about/features
+
+[[compilation_install]]
+== Compilación / instalación
+
+[[gui]]
+=== ¿He oido que hay muchas interfaces gráficas de susuario (GUI) para WeeChat. ¿Cómo puedo compilarlas o usarlas?
+
+Hay disponibles algunas GUIs, eche un vistazo a la página de interfaces remotas:
+https://weechat.org/about/interfaces
+
+[[compile_git]]
+=== No puedo compilar WeeChat después de haber clonado el repositorio git, ¿por qué?
+
+La manera recomendada para compilar WeeChat es con
+link:weechat_user.en.html#compile_with_cmake[CMake].
+
+Si lo está compilando con link:weechat_user.en.html#compile_with_autotools[autotools]
+(y no con CMake), compruebe que tiene la versión más reciente de autoconf y automake.
+
+Otra forma es instalar "devel package", que necesita menos dependencias.
+Este paquete está compilado casi cada día utilizando el repositorio git. Tenga en cuenta que este
+paquete puede no corresponder exactamente con la base de git y es menos conveniente
+que la opción de clonar el repositorio de git a la hora de instalar actualizaciones.
+
+[[compile_macos]]
+=== ¿Cómo puedo instalar WeeChat en macOS?
+
+Se recomienda utilizar https://brew.sh/[Homebrew], puede obtener ayuda con el comando:
+
+----
+brew info weechat
+----
+
+Puede instalar WeeChat con este comando:
+
+----
+brew install weechat
+----
+
+[[lost]]
+=== He lanzado WeeChat, pero estoy perdido, ¿qué puedo hacer?
+
+Para consultar la ayuda, escriba `/help`. Para buscar ayuda con un comando, escriba `/help comando`.
+link:weechat_user.en.html#key_bindings[Las teclas] y
+link:weechat_user.en.html#commands_and_options[comandos] aparecen listados
+en la documentación.
+
+Se recomienda a las personas recién llegadas leer la
+link:weechat_quickstart.es.html[guía rápida].
+
+[[display]]
+== Visualización
+
+[[charset]]
+=== No veo algunos caracteres con acentos ¿qué puedo hacer?
+
+Es un problema común con una variedad de causas, por favor lea detenidamente y compruebe
+*TODAS* las soluciones que se muestran a continuación:
+
+* Compruebe que weechat está enlazado a libncursesw (atención: es necesario en la mayoría
+  de distribuciones, pero no en todas): `ldd /ruta/a/weechat`.
+* Compruebe que el complemento "charset" está cargado mediante el comando `/plugin` (si no lo está,
+  entonces probablemente necesite el paquete "weechat-plugins").
+* Compruebe la salida del comando `/charset` (en el buffer principal). Debería ver
+  _ISO-XXXXXX_ o _UTF-8_ para los caracteres de la terminal. Si ve _ANSI_X3.4-1968_ u
+  otros valores, su idioma probablemente sea erróneo. +
+  Para solucionarlo, compruebe que tiene los idiomas instalados mediante `locale -a` y establezca
+  un valor apropiado en $LANG, por ejemplo: `+export LANG=es_ES.UTF-8+`.
+* Estableza un valor global, por ejemplo:
+  `/set charset.default.decode "ISO-8859-15"`.
+* Si está utilizando UTF-8:
+** Compruebe que su terminal está preparado para UTF-8 (la terminal recomendada para UTF-8 es
+   rxvt-unicode).
+** Si está utilizando el multiplexador screen, compruebe que lo está ejecuando con el modo UTF-8 
+   ("`defutf8 on`" en ~/.screenrc o `screen -U` al ejecutar screen).
+* Compruebe si la opción
+  link:weechat_user.en.html#option_weechat.look.eat_newline_glitch[_weechat.look.eat_newline_glitch_]
+  está en off (esta opción puede causar errores a la hora de mostrar el texto).
+
+[NOTE]
+Se recomienda utilizar UTF-8 para WeeChat. Si está utilizando ISO u otras opciones,
+por favor, compruebe que *todos* sus ajustes (terminal, screen, ..) también están en ISO
+y *no* en UTF-8.
+
+[[unicode_chars]]
+=== Algunos caracteres unicode se muestran en la terminal pero no en WeeChat, ¿por qué?
+
+Esto puede estar causado por un error en libc en la función _wcwidth_, que debería estar solucionado
+en glibc 2.22 (quizás todavía no está disponible en su distribución).
+
+Hay una solución temporal que es utilizar una función de _wcwidth_ sin ese error:
+https://blog.nytsoi.net/2015/05/04/emoji-support-for-weechat
+
+Vea este reporte de error para más información:
+https://github.com/weechat/weechat/issues/79
+
+[[bars_background]]
+=== Las barras del título y de estado no aparecen rellenadas, el color de fondo desaparece después del texto, ¿por qué?
+
+Esto puede estar causado por un valor erróneo en la variable TERM en su shell (eche un vistazo a 
+la salida del comando `echo $TERM` en su terminal).
+
+Dependiendo de donde ejecute WeeChat, debería tener:
+
+* Si WeeChat se ejecuta de manera local o en una máquina remota sin el multiplexador de terminal screen ni tmux, esto
+  depende de la terminal utilizada: _xterm_, _xterm-256color_, _rxvt-unicode_,
+  _rxvt-256color_, etc.
+* Si WeeChat se ejecuta en el multiplexador de terminal screen, debería tener _screen_ o _screen-256color_.
+* Si WeeChat se ejecuta en el multiplexador de la terminal tmux, debería tener _tmux_, _tmux-256color_,
+  _screen_ o _screen-256color_.
+
+Si es necesario, modifique su variable TERM: `export TERM="xxx"`.
+
+[[screen_weird_chars]]
+=== Cuando estoy utilizando WeeChat con screen o tmux, veo de manera aleatoria caracteres extraños, ¿cómo puedo solucionar eso?
+
+Esto puede ser causado por un valor erróneo de la variable TERM en su shell (eche un vistazo
+a la salida del comando `echo $TERM` en su terminal, *fuera de una sesión de screen o tmux*). +
+Por ejemplo, _xterm-color_ puede mostrar caracteres extraños, puede utilizar _xterm_
+que es mejor (como muchos otros valores). +
+Si es necesario, cambie el valor se su variable TERM mediante: `export TERM="xxx"`.
+
+Si está utilizando gnome-terminal, compruebe que la opción
+"Ambiguous-width characters" en el menú Preferencias/Perfil/Compatibilidad
+está establecida a `narrow` o `estrecho`.
+
+[[macos_display_broken]]
+=== He compilado WeeChat en macOS, y veo "(null)" por todas partes en screen, ¿qué está mal?
+
+Si ha compilado ncursesw usted mismo, trate de utilizar el ncurses estándar (el que viene
+con el sistema).
+
+Es más, en macOS, se recomienda instalar WeeChat mediante el gesto de paquetes
+Homebrew.
+
+[[buffer_vs_window]]
+=== He escuchado cosas sobre "buffers" y "ventanas", ¿cual es la diferencia?
+
+Un _buffer_ está compuesto por un número, un nombre, y unas líneas mostradas (y algunos otros
+datos).
+
+Una _ventana_ es un área de la pantalla en la que se muestra un _buffer_. Es posible dividir
+su pantalla en muchas ventanas.
+
+Cada ventana muestra un buffer, o un grupo de buffers unidos.
+Un buffer puede ser ocultado (no mostrado en una ventana) o mostrado por una o más
+ventanas.
+
+[[buffers_list]]
+=== ¿Cómo mostrar un listado de los buffers en la parte izquierda?
+
+Con WeeChat ≥ 1.8, el complemento link:weechat_user.en.html#buflist_plugin[buflist]
+está cargado y habilitado de manera predeterminada.
+
+Con versiones anteriores, puede instalar el script _buffers.pl_:
+
+----
+/script install buffers.pl
+----
+
+Para limitar el tamaño de la barra (reemplace "buflist" por "buffers" si está utilizando el script
+_buffers.pl_):
+
+----
+/set weechat.bar.buflist.size_max 15
+----
+
+Para mover la barra a la parte inferior:
+
+----
+/set weechat.bar.buflist.position bottom
+----
+
+Para desplazar la barra (hacer _scroll_): si el ratón está habilitado (key: kbd:[Alt+m]), puede hacerlo
+con la rueda del ratón.
+
+Las teclas predeterminadas para _hacer scroll_ en la barra son kbd:[F1] (o kbd:[Ctrl+F1]), kbd:[F2]
+(o kbd:[Ctrl+F2]), kbd:[Alt+F1] y kbd:[Alt+F2].
+
+Para el script _buffers.pl_, puede definir las teclas, similares a las teclas existentes para
+hacer _scroll_ en la lista de apodos. +
+Por ejemplo para utilizar kbd:[F1], kbd:[F2], kbd:[Alt+F1] y kbd:[Alt+F2]:
+
+----
+/key bind meta-OP /bar scroll buffers * -100%
+/key bind meta-OQ /bar scroll buffers * +100%
+/key bind meta-meta-OP /bar scroll buffers * b
+/key bind meta-meta-OQ /bar scroll buffers * e
+----
+
+[NOTE]
+Las teclas "meta-OP" y "meta-OQ" pueden ser diferentes en su terminal. Para encontrar el código
+de la tecla, pulse kbd:[Alt+k] y después la tecla.
+
+[[customize_buflist]]
+=== ¿Cómo puedo personalizar la lista de lista de buffers, como el color del buffer activo?
+
+Puede navegar por las opciones del listado de buffers con el comando:
+
+----
+/fset buflist
+----
+
+El fondo del buffer activo es azul de manera predeterminada, puede cambiarlo
+así, por ejemplo a rojo `red`:
+
+----
+/set buflist.format.buffer_current "${color:,red}${format_buffer}"
+----
+
+[NOTE]
+Hay una coma antes del nombre color "red" porque es utilizado como fondo,
+no el color del texto. +
+También se puede utilizar cualquier color numérico en vez del nombre `red`,
+como `237` para gris oscuro.
+
+El complemento del listado de buffers _buflist_ ofrece múltiples opciones que puede configurar, por favor lea 
+la ayuda de cada opción.
+
+También hay una página wiki con ejemplos de configuraciones más completas:
+https://github.com/weechat/weechat/wiki/buflist
+
+[[customize_prefix]]
+=== ¿Cómo puedo reducir la longitud de los apodos o eliminar la alineación de los apodos en el área del chat?
+
+Para reducir la longitud máxima de los apodos en el área del chat:
+
+----
+/set weechat.look.prefix_align_max 15
+----
+
+Para eliminar la alineación de los apodos:
+
+----
+/set weechat.look.prefix_align none
+----
+
+[[status_hotlist]]
+=== ¿Qué significa el texto [H: 3(1,8), 2(4)] que aparece en la barra de estado?
+
+Esto es lo que se llama "hotlist", una lista de _buffers_ con el número de mensajes
+sin leer, por orden: resaltados, mensajes privados, mensajes, otros mensajes
+(como mensajes de unión o abandono de la sala). +
+El número de "mensajes sin leer" es el número de mensajes mostrados/recibidos
+desde que iniciaste el buffer.
+
+En este ejemplo `[H: 3(1,8), 2(4)]`, son:
+
+* En el buffer #3 hay 1 mensaje resaltado y 8 mensajes sin leer.
+* En el buffer #2 hay 4 mensajes sin leer.
+
+El color del buffer/contador depende del tipo de mensaje, los colores predeterminados
+son:
+
+* resaltado: `lightmagenta` / `magenta`
+* mensaje privado: `lightgreen` / `green`
+* mensaje: `yellow` / `brown`
+* otros mensajes: `default` / `default` (color del texto de la terminal)
+
+Estos colores pueden ser cambiados con las opciones __weechat.color.status_data_*__
+(buffers) y __weechat.color.status_count_*__ (contadores). +
+Otras opciones de la lista rápida o _hotlist_ pueden ser cambiadas con las opciones __weechat.look.hotlist_*__.
+
+Vea la link:weechat_user.en.html#screen_layout[Guía de usuario / diseño de la pantalla] para
+más información sobre este tema.
+
+[[input_bar_size]]
+=== ¿Cómo utilizar la línea de comandos con más de una línea?
+
+La opción _size_ en la barra de entrada puede ser ajustada a un valor mayor que 1 (para un tamaño
+fijo, el tamaño predeterminado es 1) o 0 para un tamaño dinámico, y después la opción _size_max_ establecerá
+el tamaño máximo (0 = sin límite).
+
+Ejemplo con tamaño dinámico:
+
+----
+/set weechat.bar.input.size 0
+----
+
+Máximo tamano de 2:
+
+----
+/set weechat.bar.input.size_max 2
+----
+
+[[one_input_root_bar]]
+=== ¿Es posible mostrar solo una barra de entrada para todas las ventanas (después de haberla dividido)?
+
+Sí, deberá crear una barra con el tipo "root" (con un elemento conocido en 
+qué ventana está), después eliminar la barra de entrada.
+
+Por ejemplo:
+
+----
+/bar add rootinput root bottom 1 0 [buffer_name]+[input_prompt]+(away),[input_search],[input_paste],input_text
+/bar del input
+----
+
+Si alguna vez no le safisface esto, simplemente elimine la nueva barra, WeeChat automáticamente
+creará la barra predeterminada "input" si el elemento "input_text" no está utilizado
+en ninguna barra:
+
+----
+/bar del rootinput
+----
+
+[[terminal_copy_paste]]
+=== ¿Cómo puedo copiar/pegar texto sin pegar la lista de apodos?
+
+Con WeeChat ≥ 1.0, puedes utilizar una visualización simple (la tecla predeterminada: kbd:[Alt+l] (`L`)),
+que mostrará solo el contenido de la ventana actual seleccionada,
+sin ningún tipo de formato de texto.
+
+Puede utilizar una terminal con selección rectangualr (como rxvt-unicode,
+konsole, gnome-terminal, etc.). La tecla normalmente es kbd:[Ctrl] + kbd:[Alt] + la selección
+con el ratón.
+
+Otra solución es mover la lista de apodos a la parte superior o inferior, por ejemplo:
+
+----
+/set weechat.bar.nicklist.position top
+----
+
+[[urls]]
+=== ¿Cómo puedo hacer clic sobre direcciones URL largas (de más de una línea)?
+
+Con WeeChat ≥ 1.0, puede utilizar la visualización simple (la tecla predeterminada: kbd:[Alt+l] (`L`)).
+
+Para abrir direcciones URL más fácilmente, puede:
+
+* mover la lista de apodos a la parte superior con este comando:
+
+----
+/set weechat.bar.nicklist.position top
+----
+
+* inhabilitar la alineación de palabras multilínea (WeeChat ≥ 1.7):
+
+----
+/set weechat.look.align_multiline_words off
+----
+
+* o para todas las líneas unidas:
+
+----
+/set weechat.look.align_end_of_lines time
+----
+
+Con WeeChat ≥ 0.3.6, puede habilitar la opción "eat_newline_glitch", así
+el caracter de la nueva línea no es añadido al final de cada línea mostrada (esto no romperá
+la selección de la dirección URL):
+
+----
+/set weechat.look.eat_newline_glitch on
+----
+
+[IMPORTANTE]
+Esta opción puede causar errores al mostrar el contenido. Si experimenta algún problema de estos, deberá 
+eliminar esa opción.
+
+Otra solución es utilizar un script:
+
+----
+/script search url
+----
+
+[[change_locale_without_quit]]
+=== Quiero cambiar el lenguaje utilizado por WeeChat para los mensajes, pero sin salir de WeeChat, ¿es esto posible?
+
+Por supuesto que es posible:
+
+----
+/set env LANG en_US.UTF-8
+/upgrade
+----
+
+[[timezone]]
+=== ¿Cómo puedo cambiar la zona horaria?
+
+No hay razón en WeeChat para cambiar la zona horaria, la variable de entorno
+`TZ` deberá estar ajustada al valor apropiado.
+
+En el archivo de inicialización de su shell o en la línea de comando, antes de ejecutar WeeChat:
+
+----
+export TZ=America/New_York
+----
+
+En WeeChat, el nuevo valor es inmediatamente utilizado:
+
+----
+/set env TZ America/New_York
+----
+
+[[use_256_colors]]
+=== ¿Cómo puedo utilizar 256 colors en WeeChat?
+
+256 colors están admitidos con WeeChat ≥ 0.3.4.
+
+Primero compruebe que su variable de entorno _TERM_ es correcta, los valores recomendados
+son:
+
+* en screen: _screen-256color_
+* en tmux: _screen-256color_ or _tmux-256color_
+* fuera de screen/tmux: _xterm-256color_, _rxvt-256color_, _putty-256color_, ...
+
+[NOTE]
+Puede tener que instalar el paquete "ncurses-term" para utilizar estos valores en la variable _TERM_.
+
+Si está utilizando el multiplexador screen, puede añadir esta línea en su archivo de configuración _~/.screenrc_:
+
+----
+term screen-256color
+----
+
+Si su variable _TERM_ tiene un valor erróneo y ya WeeChat está ejecutándose,
+puede cambiarlo con estos dos comandos (en WeeChat ≥ 1.0):
+
+----
+/set env TERM screen-256color
+/upgrade
+----
+
+Para la versión 0.3.4, deberá utilizar el comando `/color` para añadir nuevos colores.
+
+Para versiones ≥ 0.3.5, puede utilizar cualquier número de color en las opciones (opcional: puede
+añadir alias al color con el comando `/color`).
+
+Por favor lea la link:weechat_user.en.html#colors[Guía del usuario / Colores] para más
+información sobre la gestión de los colores.
+
+[[search_text]]
+=== ¿Cómo busco texto en un buffer (como /lastlog en irssi)?
+
+La tecla predeterminada es kbd:[Ctrl+r] (el comando es: `+/input texto_a_buscar_aquí+`).
+Y para saltar a los textos resaltados: kbd:[Alt+p] / kbd:[Alt+n].
+
+Vea la link:weechat_user.en.html#key_bindings[Guía del usuario / Atajos de teclado] para más
+información sobre esta funcionalidad.
+
+[[terminal_focus]]
+=== ¿Cómo puedo ejecutar comandos cuando la terminal tiene o pierde el foco?
+
+Puede habilitar el foco de los eventos con un código enviado a la terminal.
+
+*Importante*:
+
+* Deberá utilizar una terminal moderna compatible con xterm.
+* De manera adicional, parece importante que su valor de la variable TERM 
+  sea igual a _xterm_ o _xterm-256color_.
+* Si está utilizando tmux, deberá de manera adiciona habilitar los eventos del foco añadiendo
+  `set -g focus-events on` en su fichero de configuración _.tmux.conf_.
+* Esto *no* funciona bajo el multiplexado screen.
+
+Para enviar el código cuando WeeChat es arrancado:
+
+----
+/set weechat.startup.command_after_plugins "/print -stdout \033[?1004h\n"
+----
+
+Y después enlazar dos teclas para el foco (reemplazar los comandos `/print` por los
+comandos que prefiera):
+
+----
+/key bind meta2-I /print -core focus
+/key bind meta2-O /print -core unfocus
+----
+
+Por ejemplo, para marcar buffers como leidos cuando una terminal pierde el foco:
+
+----
+/key bind meta2-O /input set_unread
+----
+
+[[screen_paste]]
+=== Cuando WeeChat se está ejecutando en el multiplexador screen, al pegar texto en otra ventana de screen añade ~0 y ~1 alrededor del texto, ¿por qué?
+
+Esto es causado por la opción de pegado de corchetes que está habilitado de manera predeterminada, y
+no está adecuadamente gestionada por screen en otras ventanas.
+
+Puede inhabilitar este modo de pegado con este comando:
+
+----
+/set weechat.look.paste_bracketed off
+----
+
+[[small_terminal]]
+=== ¿Cómo puedo personalizar cómo se muestra para tamaños de terminales pequeñas (como 80x25), para no malgastar espacio?
+
+Puede eliminar las barras laterales (lista de buffers y lista de apodos), cambie el formato en que se muestra la hora
+para mostrar solo horas y minutos, inhabilite la alineación de mensajes y un juego de caracteres para
+prefijos/sufijos de apodos:
+
+----
+/set buflist.look.enabled off
+/bar hide nicklist
+/set weechat.look.buffer_time_format "%H:%M"
+/set weechat.look.prefix_align none
+/set weechat.look.align_end_of_lines prefix
+/set weechat.look.nick_suffix ">"
+/set weechat.look.nick_prefix "<"
+----
+
+Terminal 80x25, con configuración predeterminada:
+
+....
+┌────────────────────────────────────────────────────────────────────────────────┐
+│1.local     │Welcome on WeeChat channel!                                        │
+│  weechat   │16:27:16        --> | FlashCode (~flashcode@localhost)  │@FlashCode│
+│2.  #weechat│                    | has joined #weechat               │ bob      │
+│            │16:27:16         -- | Mode #weechat [+nt] by hades.arpa │          │
+│            │16:27:16         -- | Channel #weechat: 1 nick (1 op, 0 │          │
+│            │                    | voices, 0 normals)                │          │
+│            │16:27:18         -- | Channel created on Sun, 22 Mar    │          │
+│            │                    | 2020 16:27:16                     │          │
+│            │17:02:28        --> | bob (~bob_user@localhost) has     │          │
+│            │                    | joined #weechat                   │          │
+│            │17:03:12 @FlashCode | hi bob, you're the first user     │          │
+│            │                    | here, welcome on the WeeChat      │          │
+│            │                    | support channel!                  │          │
+│            │17:03:33        bob | hi FlashCode                      │          │
+│            │                                                        │          │
+│            │                                                        │          │
+│            │                                                        │          │
+│            │                                                        │          │
+│            │                                                        │          │
+│            │                                                        │          │
+│            │                                                        │          │
+│            │                                                        │          │
+│            │                                                        │          │
+│            │[17:04] [2] [irc/local] 2:#weechat(+nt){2}                         │
+│            │[@FlashCode(i)] █                                                  │
+└────────────────────────────────────────────────────────────────────────────────┘
+....
+
+Terminal 80x25, después de los cambios:
+
+....
+┌────────────────────────────────────────────────────────────────────────────────┐
+│Welcome on WeeChat channel!                                                     │
+│16:27 --> FlashCode (~flashcode@localhost) has joined #weechat                  │
+│16:27 -- Mode #weechat [+nt] by hades.arpa                                      │
+│16:27 -- Channel #weechat: 1 nick (1 op, 0 voices, 0 normals)                   │
+│16:27 -- Channel created on Sun, 22 Mar 2020 16:27:16                           │
+│17:02 --> bob (~bob_user@localhost) has joined #weechat                         │
+│17:03 <@FlashCode> hi bob, you're the first user here, welcome on the WeeChat   │
+│      support channel!                                                          │
+│17:03 <bob> hi FlashCode                                                        │
+│                                                                                │
+│                                                                                │
+│                                                                                │
+│                                                                                │
+│                                                                                │
+│                                                                                │
+│                                                                                │
+│                                                                                │
+│                                                                                │
+│                                                                                │
+│                                                                                │
+│                                                                                │
+│                                                                                │
+│                                                                                │
+│[17:04] [2] [irc/local] 2:#weechat(+nt){2}                                      │
+│[@FlashCode(i)] █                                                               │
+└────────────────────────────────────────────────────────────────────────────────┘
+....
+
+[[key_bindings]]
+== Atajos de teclado
+
+[[meta_keys]]
+=== Algunas teclas (alt + tecla) no funcionan, ¿por qué?
+
+Si está utilizando algunas terminales como xterm o uxterm, algunas teclas no
+funcionan de manera predeterminada. Puede añadir una línea en el archivo _~/.Xresources_:
+
+* Para xterm:
+----
+XTerm*metaSendsEscape: true
+----
+* Para uxterm:
+----
+UXTerm*metaSendsEscape: true
+----
+
+Y después recargar el archivo (`xrdb -override ~/.Xresources`) o reiniciar el servidor gráfico X.
+
+Si está utilizando aplicación Terminal de macOS, habilite la opción
+"Use option as meta key" en el menú Settings/Keyboard después de la cual puede utilizar la tecla 
+kbd:[Option] como tecla meta.
+
+[[customize_key_bindings]]
+=== ¿Cómo puedo personalizar los atajos de teclado?
+
+Los atajos de teclado son personalizables con el comando `/key`.
+
+La combinación predeterminadad kbd:[Alt+k] le permite guardar el código de la tecla e insertarlo en la línea de comando.
+
+[[jump_to_buffer_11_or_higher]]
+=== ¿Cual es la tecla para saltar al buffer 11 (o un número mayor)?
+
+La tecla es kbd:[Alt+j] y después introducir 2 dígitos, por ejemplo kbd:[Alt+j], kbd:[1],
+kbd:[1] para saltar al buffer 11.
+
+Puede crear un atajo de teclado, por ejemplo:
+
+----
+/key bind meta-q /buffer *11
+----
+
+Tiene una lista de las teclas predeterminadas en la
+link:weechat_user.en.html#key_bindings[Guía del usuario / Atajos de teclado].
+
+Para saltar a un buffer mayor de 100, podría definir un disparador y después utilizar
+comandos como `/123` para saltar al buffer #123:
+
+----
+/trigger add numberjump modifier "2000|input_text_for_buffer" "${tg_string} =~ ^/[0-9]+$" "=\/([0-9]+)=/buffer *${re:1}=" "" "" "none"
+----
+
+[[global_history]]
+=== ¿Cómo utilizar el historial global (en vez del historial del buffer) con las teclas de las flechas arriba y abajo?
+
+Puede asociar las teclas de las flechas arriba y abajo en el historial global (las teclas predeterminadas para el historial
+global son kbd:[Ctrl+↑] y kbd:[Ctrl+↓]).
+
+Ejemplo:
+
+----
+/key bind meta2-A /input history_global_previous
+/key bind meta2-B /input history_global_next
+----
+
+[NOTE]
+Las telcas "meta2-A" y "meta2-B" pueden ser diferentes en su terminal. Para encontrar el código
+de la tecla pulse kbd:[Alt+k] y después la tecla.
+
+[[mouse]]
+== Ratón
+
+[[mouse_not_working]]
+=== El ratón no funciona en absoluto, ¿qué puedo hacer?
+
+El ratón tiene soporte desde WeeChat ≥ 0.3.6.
+
+Primero trate de habilitar el ratón:
+
+----
+/mouse enable
+----
+
+Si el ratón sigue sin funcionar, compruebe la variable TERM en su shell (eche un vistazo
+a la salida de `echo $TERM` en su terminal).
+De acuerdo a la información usada, el ratón podrá o no estar soportado.
+
+Puede comprobar el soporte del ratón en la terminal:
+
+----
+$ printf '\033[?1002h'
+----
+
+Y después haga clic en el primer caracter de la terminal (superior izquierdo). Debería ver " !!#!!".
+
+Para inhabilitar el ratón en la terminal:
+
+----
+$ printf '\033[?1002l'
+----
+
+[[mouse_coords]]
+=== El ratón no hace nada para coordenadas X o Y mayores de 94 (o 222), ¿por qué?
+
+Algunas terminales solo envían caracteres ISO para las coordenadas del ratón, así que esto no
+funciona para X/Y mayores de 94 (o 222).
+
+Debería utilizar una terminal que admitiera coordenadas UTF-8 para el ratón, como
+rxvt-unicode.
+
+[[mouse_select_paste]]
+=== ¿Cómo puedo seleccionar o pegar texto en la terminal cuando el ratón está habilitado en WeeChat?
+
+Cuando el ratón está habilitado en WeeChat, puede utilizar el modificador kbd:[Shift] para seleccionar o
+hacer clic en la terminal, como si el ratón estuviera inhabilitado (en algunos terminales como iTerm,
+tiene que utilizar kbd:[Alt] en vez de kbd:[Shift]).
+
+[[irc]]
+== IRC
+
+[[irc_ssl_connection]]
+=== Tengo algunos problemas al conectarme a un servidor utilizando SSL, ¿qué puedo hacer?
+
+Si está utilizando macOS, deberá instalar `openssl` desde Homebrew.
+Se añadirá un archivo CA que utiliza los certificados del sistema.
+
+Con WeeChat ≤ 3.1, puede establecer la ruta de los certificados del sistema:
+
+----
+/set weechat.network.gnutls_ca_file "/usr/local/etc/openssl/cert.pem"
+----
+
+Si ve errores en gnutls handshake, puede intentar utilizar una clave de cifrado menor
+Diffie-Hellman (la predeterminada es 2048):
+
+----
+/set irc.server.example.ssl_dhkey_size 1024
+----
+
+Si ve errores sobre el certificado, puede inhabilitar "ssl_verify" (tenga cuidado,
+la conexión será menos segura haciendo esto):
+
+----
+/set irc.server.example.ssl_verify off
+----
+
+Si el servidor tiene un certificado inválido y usted conoce qué certificado
+debería ser, puede especificar la huella (fingerprint) (SHA-512, SHA-256 or SHA-1):
+
+----
+/set irc.server.example.ssl_fingerprint 0c06e399d3c3597511dc8550848bfd2a502f0ce19883b728b73f6b7e8604243b
+----
+
+[[irc_ssl_handshake_error]]
+=== Al conectar a un servidor con SSL, solo veo el error "TLS handshake failed", ¿qué puedo hacer?
+
+Puede intentar una cadena de prioridad diferente (WeeChat ≥ 0.3.5 únicamente), reemplace "xxx"
+por el nombre de su servidor:
+
+----
+/set irc.server.xxx.ssl_priorities "NORMAL:-VERS-TLS-ALL:+VERS-TLS1.0:+VERS-SSL3.0:%COMPAT"
+----
+
+[[irc_ssl_libera]]
+=== ¿Cómo puedo conectarme al servidor libera utilizando SSL?
+
+Con WeeChat ≤ 3.1, establezca la opción _weechat.network.gnutls_ca_file_ en el archivo con
+los certificados:
+
+----
+/set weechat.network.gnutls_ca_file "/etc/ssl/certs/ca-certificates.crt"
+----
+
+Nota: Si está ejecutando macOS con Homebrew openssl instalado, puede ejecutar:
+
+----
+/set weechat.network.gnutls_ca_file "/usr/local/etc/openssl/cert.pem"
+----
+
+[NOTE]
+Compruebe que tiene este archivo en su sistema (normalmente viene ofrecido por el paquete
+"ca-certificates").
+
+Establezca el puerto del servidor, SSL, después conecte:
+
+----
+/set irc.server.libera.addresses "irc.libera.chat/6697"
+/set irc.server.libera.ssl on
+/connect libera
+----
+
+[[irc_oauth]]
+=== ¿Cómo conectar con un servidor que pide "oauth"?
+
+Algunos servidores como _twitch_ requiere oauth para conectarse.
+
+oauth es simplemente una contraseña con el valor "oauth:XXXX".
+
+Puede añadir cualquier servidor y conectar con los siguientes comandos (reemplace el nombre
+y dirección con los valores apropiados en su caso):
+
+----
+/server add name irc.server.org -password=oauth:XXXX
+/connect name
+----
+
+[[irc_sasl]]
+=== ¿Cómo puedo ser identificado antes de unirme a los canales?
+
+Si el servidor admite SASL, debería usar esto en vez de enviar el
+comando para la autenticación del apodo mediante nickserv, por ejemplo:
+
+----
+/set irc.server.libera.sasl_username "miapodo"
+/set irc.server.libera.sasl_password "xxxxxxx"
+----
+
+Si el servidor no admite SASL, puede añadir un retraso (entre el comando y
+unirse a los canales):
+
+----
+/set irc.server.libera.command_delay 5
+----
+
+[[edit_autojoin]]
+=== ¿Cómo puedo añadir/eliminar canales de la opción autojoin?
+
+Puede utilizar el comando `/set` para editar la lista de canales con autojoin,
+por ejemplo, para el servidor "libera":
+
+----
+/set irc.server.libera.autojoin [TAB]
+----
+
+[NOTE]
+Puede completar el nombre y el valor de la opción con la tecla kbd:[Tab] 
+(o kbd:[Shift+Tab] para completar el comando de manera parcial, útil para el nombre). +
+De esta manera no tendrá que escribir la lista completa de canales.
+
+También puede utilizar el comando `/fset` para editar la lista de canales:
+
+----
+/fset autojoin
+----
+
+Otra solución es utilizar un script:
+
+----
+/script search autojoin
+----
+
+[[ignore_vs_filter]]
+=== ¿Cual es la diferencia entre los comando /ignore y /filter?
+
+El comando `/ignore` es un comando de IRC, así que solo se aplica en los buffers de IRC
+(servidores y canales).
+Le permite ignorar algunos apodos o nombres de host de usuarios de un servidor o cana
+(el comando no se aplicará al contenido de mensajes).
+Los mensajes que coincidan son eliminado por el complemento IRC antes de mostrarse (así que nunca
+los verá, y no podrá recuperarlos eliminado la opción ignore).
+
+El comando `/filter` es un comando del núcleo de WeeChat, así que se aplica a cualquier buffer.
+Le permite filtar algunas líneas de los buffers con etiquetas o expresiones regulares para
+prefijar el contenido de la línea.
+Las líneas flitradas solo son ocultadas, no eliminadas, y podrá verlas si 
+inhabilita los filtros (de manera predeteminada, la tecla kbd:[Alt+=] alterna esos filtros).
+
+[[filter_irc_join_part_quit]]
+=== ¿Cómo puedo filtrar los mensajes join/part/quit en los canales IRC?
+
+Con el filtro inteligente (mantiene los mensajes join/part/quit de usuarios que hayan hablado recientemente):
+
+----
+/set irc.look.smart_filter on
+/filter add irc_smart * irc_smart_filter *
+----
+
+Con un filtro global (oculta *todos* los mensajes join/part/quit):
+
+----
+/filter add joinquit * irc_join,irc_part,irc_quit *
+----
+
+[NOTE]
+Para más ayuda: `/help filter`, `+/help irc.look.smart_filter+` y vea la
+link:weechat_user.en.html#irc_smart_filter_join_part_quit[Guía del usuario / Filtros inteligente para mensajes join/part/quit].
+
+[[filter_irc_join_channel_messages]]
+=== ¿Cómo puedo filtrar algunos mensajes mostrados cuando me uno a un canal IRC?
+
+Con WeeChat ≥ 0.4.1, puede escoger qué mensajes son mostrados cuando
+se une a un canal mediante la opción _irc.look.display_join_message_ (vea
+`+/help irc.look.display_join_message+` para más información).
+
+Para ocultar mensajes (pero mantenerlos en el buffer), puede filtrarlos utilizando la etiqueta propia del mensaje
+(por ejemplo _irc_329_ para la fecha de creación del canal). Vea `/help filter` para más información
+con los filtros.
+
+[[filter_voice_messages]]
+=== ¿Cómo puedo filtrar mensajes de voz (por ejemplo en el servidor Bitlbee)?
+
+No es sencillo filtrar mensajes de voz, debido a que el modo de voz no puede ser establecido con otros
+modos en el mismo mensaje IRC.
+
+Si quiere hacer eso, es probablemente porque Bitlbee utiliza la voz para mostrar
+cuando se van los usuarios y se ve abrumado por la cantidad de mensajes de voz. Además, puede cambiar
+que WeeChat utilice un color especial para los apodos en la lista de apodos para aquellos que se retiran.
+
+Para Bitlbee ≥ 3, utilice esto en el canal de control _&bitlbee_:
+
+----
+channel set show_users online,away
+----
+
+Para versiones más antiguas de Bitlbee, utilice esto en el canal de control _&bitlbee_:
+
+----
+set away_devoice false
+----
+
+Para comprobar los apodos que se retiran en WeeChat, vea las preguntas sobre
+<<color_away_nicks,apodos que están fuera>>.
+
+Si realmente quiere filtrar los mensajes de voz, puede utilizar este comando pero este
+no es perfecto (solo funcionará si primer modo cambiado es voz):
+
+----
+/filter add hidevoices * irc_mode (\+|\-)v
+----
+
+[[color_away_nicks]]
+=== ¿Cómo puedo ver los apodos que están fuera en la lista de apodos?
+
+Debe establecer la opción _irc.server_default.away_check_ a un valor positivo
+(son los minutos entre cada comprobación de apodos que están fuera).
+
+Puede establecer la opción _irc.server_default.away_check_max_nicks_ para limitar la comprobación
+solo en canales pequeños.
+
+Por ejemplo, para comprobar cada 5 minutos los apodos que están fuera, para canales con un máximo de 25
+apodos:
+
+----
+/set irc.server_default.away_check 5
+/set irc.server_default.away_check_max_nicks 25
+----
+
+[NOTE]
+Para WeeChat ≤ 0.3.3, las opciones son _irc.network.away_check_ y
+_irc.network.away_check_max_nicks_.
+
+[[highlight_notification]]
+=== ¿Cómo puedo ser advertido cuando alguien me menciona en un canal?
+
+Con WeeChat ≥ 1.0, hay un disparador "beep" que envía un _BEL_ a
+a la terminal cuando alguien le menciona o le manda un privado. Además puede configurar su
+terminal (o multiplexador como screen/tmux) para ejecutar un comando o reproducir un sonido
+cuando suceda un evento _BEL_.
+
+O puede añadir un comando al disparador "beep":
+
+----
+/set trigger.trigger.beep.command "/print -beep;/exec -bg /ruta/al/comando argumentos"
+----
+
+Con versiones anteriores de WeeChat, puede utilizar un script como _beep.pl_ o _launcher.pl_.
+
+Para _launcher.pl_, debe configurar un comando:
+
+----
+/set plugins.var.perl.launcher.signal.weechat_highlight "/path/to/command arguments"
+----
+
+Otros scripts para este tema:
+
+----
+/script search notify
+----
+
+[[disable_highlights_for_specific_nicks]]
+=== ¿Cómo puedo inhabilitar las menciones de unos apodos específicos?
+
+Con WeeChat ≥ 0.3.4 puede utilizar
+link:weechat_user.en.html#max_hotlist_level_nicks[hotlist_max_level_nicks_add]
+esta propiedad del buffer para configurar el nivel máximo de la hotlist para algunos apodos, por buffer,
+o por grupo de buffers (como servidores IRC).
+
+Para únicamente inhabilitar las notificaciones, debería establecerlo a 2:
+
+----
+/buffer set hotlist_max_level_nicks_add joe:2,mike:2
+----
+
+Esta propiedad del buffer no es almacenada en la configuración.
+Para volver a aplicar automáticamente estas propiedades del buffer, necesitaría el script
+_buffer_autoset.py_:
+
+----
+/script install buffer_autoset.py
+----
+
+Por ejemplo, para inhabilitar automáticamente las menciones de "mike" en #weechat
+en el servidor IRC de libera:
+
+----
+/buffer_autoset add irc.libera.#weechat hotlist_max_level_nicks_add mike:2
+----
+
+Para aplicarlo al servidor completo de libera:
+
+----
+/buffer_autoset add irc.libera hotlist_max_level_nicks_add mike:2
+----
+
+Para más ejemplos, vea `+/help buffer_autoset+`.
+
+[[irc_target_buffer]]
+=== ¿Cómo puedo cambiar el objetivo del buffer para comandos en buffers unidos (como en un buffer con servidores)?
+
+La tecla predeterminada es kbd:[Ctrl+x] (el comando es: `+/input switch_active_buffer+`).
+
+[[plugins_scripts]]
+== Complementos / scripts
+
+[[openbsd_plugins]]
+=== Estoy utiizando OpenBSD y WeeChat no carga ningún complemento, ¿qué está pasando?
+
+Bajo OpenBSD, los nombres de los archivos de complementos acaban con ".so.0.0" (".so" para Linux).
+
+Deberá configurar lo siguiente:
+
+----
+/set weechat.plugin.extension ".so.0.0"
+/plugin autoload
+----
+
+[[install_scripts]]
+=== ¿Cómo puedo instalar scripts? ¿Son los scripts compatibles con otros clientes IRC?
+
+Con WeeChat ≥ 0.3.9 puede utilizar el comando `/script` para instalar y gestionar los scripts
+(vea `/help script` para obtener más ayuda). Para versiones anteriores existe weeget.py y script.pl.
+
+Los scripts no son compatibles con otros clientes IRC.
+
+[[scripts_update]]
+=== El comando "/script update" no puede leer los scripts, ¿Cómo puedo solucionar eso?
+
+Primero compruebe las preguntas sobre la conexión SSL en este documento.
+
+Si todavía no funciona, trate de manera manual eliminar los archivos de scripts (escriba en su terminal):
+
+----
+$ rm ~/.cache/weechat/script/plugins.xml.gz
+----
+
+[NOTE]
+Con WeeChat ≤ 3.1, la ruta debería ser: _~/.weechat/script/plugins.xml.gz_.
+
+Y vuelva a actualitar los scripts de nuevo en WeeChat:
+
+----
+/script update
+----
+
+Si todavía persiste un error, entonces debe inhabilitar la actualización automática del archivo
+en WeeChat y descargue el archivo manualmente fuera de WeeChat (esto significa que tendrá
+que actualizar manualmente el archivo usted mismo para obtener las actualizaciones del script):
+
+* en WeeChat:
+
+----
+/set script.scripts.cache_expire -1
+----
+
+* en su terminal, con el software curl instalado:
+
+----
+$ cd ~/.cache/weechat/script
+$ curl -O https://weechat.org/files/plugins.xml.gz
+----
+
+[[spell_dictionaries]]
+=== Instalé los diccionarios aspell en mi sistema, ¿cómo puedo utilizarlos sin necesidad de reiniciar WeeChat?
+
+Deberá recargar el complemento spell:
+
+----
+/plugin reload spell
+----
+
+[NOTE]
+Con WeeChat ≤ 2.4, el complemento "spell" fue renombrado a "aspell", así que el comando sería:
+`/plugin reload aspell`.
+
+[[settings]]
+== Ajustes
+
+[[editing_config_files]]
+=== ¿Puedo editar de manera manual los archivos de configuración (*.conf)?
+
+Puede, pero *NO* es recomendable.
+
+El comando `/set` en WeeChat es lo recomendado:
+
+* Puede completar el nombre y valor de la opción con la tecla kbd:[Tab]
+  (o kbd:[Shift+Tab] para un autocompletado parcial, útil para el nombre).
+* El valor es comprobado y se muestra un mensaje en caso de error.
+* El valor es utilizado inmediatamente, no necesita reiniciar nada.
+
+Si todavía quiere editar los archivos a mano, debería tener mucho cuidado:
+
+* Si pone un valor inválido en una opción, WeeChat mostrará un error
+  en la carga y descartará el valor (se utilizará el valor de la opción predeterminado).
+* Cuando WeeChat está ejecutándose, tendrá que ejecutar el comando `/reload`, y si
+  algún ajuste ha sido cambiado y no fue guardado con `/save`, lo perderá.
+
+[[memory_usage]]
+=== ¿Cómo puede hacer que WeeChat consuma menos memoria?
+
+Puede intentar estos trucos para consumir menos memoria:
+
+* Utilice la última versión estable (ya que se supone que tendrá menos problemas de memoria
+  que las versiones anteriores).
+* No cargue los complementos que no vaya a utilizar, por ejemplo: buflist,
+  fifo, logger, perl, python, ruby, lua, tcl, guile, javascript, php, spell,
+  xfer (usado para DCC). Vea `/help weechat.plugin.autoload`.
+* Cargue solo los scripts que realmente necesite.
+* No cargue los certificados del sistema si SSL *NO* es utilizado: inhabilite esta opción mediante:
+  _weechat.network.gnutls_ca_system_.
+* Reduzca el valor de la opción _weechat.history.max_buffer_lines_number_ o establezca
+  el valor de la opción _weechat.history.max_buffer_lines_minutes_.
+* Reduzca el valor de la opción _weechat.history.max_commands_.
+
+[[cpu_usage]]
+=== Cómo puedo hacer que WeeChat utilice menos CPU?
+
+Puede seguir los mismos consejo que para la <<memory_usage,memoria>> y estos otros:
+
+* Oculte la barra de la lista de apodos: `/bar hide nicklist`.
+* Elimine que se muestren los segundos en la hora de la barra de estado:
+  `+/set weechat.look.item_time_format "%H:%M"+` (este es el valor predeterminado).
+* Inhabilite la comprobación en tiempo real de palabras erróneas en la línea de comandos (si lo había habilitado previamente):
+  `+/set spell.check.real_time off+`.
+* Establezca la variable _TZ_ (por ejemplo: `export TZ="Europe/Paris"`), para prevenir
+  el acceso frecuente al archivo _/etc/localtime_.
+
+[[security]]
+=== Soy un paranoico con la seguridad, ¿qué ajustes podría cambiar para conseguir aún más seguridad?
+
+Inhabilite los mensajes de abandono y salida de IRC:
+
+----
+/set irc.server_default.msg_part ""
+/set irc.server_default.msg_quit ""
+----
+
+Inhabilite las respuestas a todas las peticiones CTCP:
+
+----
+/set irc.ctcp.clientinfo ""
+/set irc.ctcp.finger ""
+/set irc.ctcp.source ""
+/set irc.ctcp.time ""
+/set irc.ctcp.userinfo ""
+/set irc.ctcp.version ""
+/set irc.ctcp.ping ""
+----
+
+Elimine de la memoria e inhabilite la carga automática del complemento "xfer" (utilizdo para IRC DCC):
+
+----
+/plugin unload xfer
+/set weechat.plugin.autoload "*,!xfer"
+----
+
+Defina una frase de paso y utilice datos seguros cada vez que pueda para datos sensibles
+como contraseñas: vea `/help secure` y `/help` en las opciones
+(si puede utilice datos seguros, está escrito en la ayuda).
+Ver también link:weechat_user.en.html#secured_data[Guía del usuario / Datos seguros].
+
+Por ejemplo:
+
+----
+/secure passphrase xxxxxxxxxx
+/secure set libera_username username
+/secure set libera_password xxxxxxxx
+/set irc.server.libera.sasl_username "${sec.data.libera_username}"
+/set irc.server.libera.sasl_password "${sec.data.libera_password}"
+----
+
+[[sharing_config_files]]
+=== Quiero compartir mi configuración de WeeChat, ¿qué archivos debería compartir y cuales mantener en privado?
+
+Puede compartir los archivos de configuración _*.conf_ excepto el archivo _sec.conf_ que
+contiene sus contraseñas cifradas con su frase de paso.
+
+Algunos otros archivos pueden contener información sensible como contraseñas (si no están
+almacenadas en _sec.conf_ con el comando `/secure`).
+
+Vea la link:weechat_user.en.html#files_and_directories[Guía del usuario / Archivos y directorios]
+para más información relacionada con los archivos de configuración.
+
+[[development]]
+== Desarrollo
+
+[[bug_task_patch]]
+=== ¿Cómo podría informar de errores, pedir nuevas funcionalidades o enviar parches?
+
+Vea: https://weechat.org/about/support
+
+[[gdb_error_threads]]
+=== Cuando ejecuto WeeChat bajo gdb, hay un error con la muestra de las conversaciones, ¿qué puedo hacer?
+
+Cuando ejecuta WeeChat bajo gdb, puede tener este error:
+
+----
+$ gdb /ruta/a/weechat
+(gdb) run
+[Thread debugging using libthread_db enabled]
+Cannot find new threads: generic error
+----
+
+Para solucionar esto, puede ejecutar gdb con este comando (reemplace la ruta a libpthread y
+WeeChat con las rutas de su sistema):
+
+----
+$ LD_PRELOAD=/lib/libpthread.so.0 gdb /ruta/a/weechat
+(gdb) run
+----
+
+[[supported_os]]
+=== ¿Cual es la lista de plataformas para las que está disponible WeeChat? ¿Será portado a otros sistemas operativos?
+
+WeeChat se ejecuta sin problemas en la mayoría de distribuciones Linux/BSD, GNU/Hurd, Mac OS y Windows
+(Cygwin y Windows Subsystem para Linux).
+
+Hacemos todo lo posible para que pueda ser ejecutado en cuantas plataformas sea posible. La ayuda es bienvenida para
+algunos sistemas operativos en los que no podemos probar WeeChat.
+
+[[help_developers]]
+=== Quiero ayudar a quienes desarrollan WeeChat. ¿Qué puedo hacer?
+
+Hay muchas tareas que hacer (probar, escribir código, documentación, etc.)
+
+Por favor, contacte con nosotros mediante IRC o correo electrónico, eche un vistazo a la página de soporte:
+https://weechat.org/about/support
+
+[[donate]]
+=== ¿Puedo donar dinero u otras cosas a las personas que desarrollan WeeChat?
+
+Puede donar dinero para ayudar en el desarrollo.
+Más detalles en https://weechat.org/donate
