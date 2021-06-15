@@ -15,6 +15,19 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 (file _ReleaseNotes.adoc_ in sources).
 
 
+[[v3.3]]
+== Version 3.3 (under dev)
+
+New features::
+
+  * irc: add command /setname, add support of message and capability "setname" (issue #1653)
+  * irc: always set realname in nicks even when extended-join capability is not enabled (issue #1653)
+  * irc: add support of FAIL/WARN/NOTE messages (issue #1653)
+
+Documentation::
+
+  * add Serbian translations (issue #1655)
+
 [[v3.2]]
 == Version 3.2 (2021-06-13)
 
