@@ -3183,10 +3183,6 @@ WeeChat supports SASL authentication, using different mechanisms:
 // TRANSLATION MISSING
 * _ecdsa-nist256p-challenge_: challenge with public/private key
 * _external_: certificato SSL da lato client
-// TRANSLATION MISSING
-* _dh-blowfish_: blowfish encrypted password (*insecure*, not recommended)
-// TRANSLATION MISSING
-* _dh-aes_: AES encrypted password (*insecure*, not recommended)
 
 Le opzioni nel server sono:
 

@@ -2779,9 +2779,9 @@
 ** подразумевана вредност: `+""+`
 
 * [[option_irc.server_default.sasl_mechanism]] *irc.server_default.sasl_mechanism*
-** опис: pass:none[механизам SASL аутентификације: „plain” за просту текст лозинку, „scram-sha-1” за SCRAM аутентификацију са SHA-1 digest алгоритмом, „scram-sha-256” за SCRAM аутентификацију са SHA-256 digest алгоритмом, „scram-sha-512” за SCRAM аутентификацију са SHA-512 digest алгоритмом, „ecdsa-nist256p-challenge” за аутентификацију са изазовом базираним на кључу, „external” за аутентификацију употребом SSL сертификата са клијентске стране, „dh-blowfish” за blowfish шифровану лозинку (није безбедно, не препоручује се), „dh-aes” за AES шифровану лозинку (није безбедно, не препоручује се)]
+** опис: pass:none[mechanism for SASL authentication: "plain" for plain text password, "scram-sha-1" for SCRAM authentication with SHA-1 digest algorithm, "scram-sha-256" for SCRAM authentication with SHA-256 digest algorithm, "scram-sha-512" for SCRAM authentication with SHA-512 digest algorithm, "ecdsa-nist256p-challenge" for key-based challenge authentication, "external" for authentication using client side SSL certificate]
 ** тип: целобројна
-** вредности: plain, scram-sha-1, scram-sha-256, scram-sha-512, ecdsa-nist256p-challenge, external, dh-blowfish, dh-aes
+** вредности: plain, scram-sha-1, scram-sha-256, scram-sha-512, ecdsa-nist256p-challenge, external
 ** подразумевана вредност: `+plain+`
 
 * [[option_irc.server_default.sasl_password]] *irc.server_default.sasl_password*

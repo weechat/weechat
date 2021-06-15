@@ -3036,8 +3036,6 @@ WeeChat は SASL 認証をサポートします、以下の認証メカニズム
 * _scram-sha-512_: SCRAM with SHA-512 digest algorithm
 * _ecdsa-nist256p-challenge_: 公開鍵/秘密鍵を使うチャレンジ認証
 * _external_: クライアント側 SSL 証明書
-* _dh-blowfish_: blowfish 暗号パスワード (*危険*、非推奨)
-* _dh-aes_: AES 暗号パスワード (*危険*、非推奨)
 
 サーバオプション:
 

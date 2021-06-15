@@ -502,14 +502,6 @@ IRC_PROTOCOL_CALLBACK(authenticate)
         case IRC_SASL_MECHANISM_EXTERNAL:
             answer = strdup ("+");
             break;
-        case IRC_SASL_MECHANISM_DH_BLOWFISH:
-            answer = irc_sasl_mechanism_dh_blowfish (
-                argv[1], sasl_username, sasl_password, &sasl_error);
-            break;
-        case IRC_SASL_MECHANISM_DH_AES:
-            answer = irc_sasl_mechanism_dh_aes (
-                argv[1], sasl_username, sasl_password, &sasl_error);
-            break;
     }
     if (answer)
     {

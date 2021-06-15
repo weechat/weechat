@@ -2971,10 +2971,6 @@ WeeChat wspiera uwierzytelnianie SASL, używając różnych mechanizmów:
 * _scram-sha-512_: SCRAM z użyciem algorytmu SHA-512
 * _ecdsa-nist256p-challenge_: klucz prywatny/publiczny
 * _external_: certyfikat SSL po stronie klienta
-* _dh-blowfish_: hasło zaszyfrowane algorytmem blowfish
-  (*niebezpieczne*, nie zalecane)
-* _dh-aes_: hasło zaszyfrowane algorytmem AES
-  (*niebezpieczne*, nie zalecane)
 
 Opcje dla serwerów to:
 

@@ -2722,8 +2722,6 @@ $ openssl req -nodes -newkey rsa:2048 -keyout nick.pem -x509 -days 365 -out nick
 * _scram-sha-512_: SCRAM са SHA-512 digest алгоритмом
 * _ecdsa-nist256p-challenge_: изазов са јавним/приватним кључем
 * _external_: SSL сертификат са клијентске стране
-* _dh-blowfish_: blowfish шифрована лозинка (*небезбедно*, не препоручује се)
-* _dh-aes_: AES шифрована лозинка (*небезбедно*, не препоручује се)
 
 Опције за сервере су следеће:
 

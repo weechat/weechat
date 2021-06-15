@@ -2779,9 +2779,9 @@
 ** Standardwert: `+""+`
 
 * [[option_irc.server_default.sasl_mechanism]] *irc.server_default.sasl_mechanism*
-** Beschreibung: pass:none[Verfahren welches bei einer SASL Authentifizierung angewandt werden soll: "plain" Passwort wird im Klartext gesendet, "scram-sha-1" für SCRAM-Authentifizierung mit SHA-1-Digest-Algorithmus, "scram-sha-256" für SCRAM-Authenrifizierung mit SHA-256 Digest-Algorithmus, "scram-sha-512" für SCRAM-Authentifizierung mit SHA-512 Digest-Algorithmus, "ecdsa-nist256p-challenge" für öffentlich/private Schlüsselmethode, "external" SSL Zertifikat welches auf Client Seite vorliegt wird verwendet, "dh-blowfish" Passwort wird mittels blowfish verschlüsselt (unsicher, wird nicht empfohlen), "dh-aes" Passwort wird mittels AES verschlüsselt (unsicher, wird nicht empfohlen)]
+** Beschreibung: pass:none[mechanism for SASL authentication: "plain" for plain text password, "scram-sha-1" for SCRAM authentication with SHA-1 digest algorithm, "scram-sha-256" for SCRAM authentication with SHA-256 digest algorithm, "scram-sha-512" for SCRAM authentication with SHA-512 digest algorithm, "ecdsa-nist256p-challenge" for key-based challenge authentication, "external" for authentication using client side SSL certificate]
 ** Typ: integer
-** Werte: plain, scram-sha-1, scram-sha-256, scram-sha-512, ecdsa-nist256p-challenge, external, dh-blowfish, dh-aes
+** Werte: plain, scram-sha-1, scram-sha-256, scram-sha-512, ecdsa-nist256p-challenge, external
 ** Standardwert: `+plain+`
 
 * [[option_irc.server_default.sasl_password]] *irc.server_default.sasl_password*

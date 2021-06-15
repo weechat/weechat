@@ -3051,8 +3051,6 @@ mécanismes :
 * _scram-sha-512_ : SCRAM avec algorithme de hachage SHA-512
 * _ecdsa-nist256p-challenge_ : challenge avec clé publique/privée
 * _external_ : certificat SSL côté client
-* _dh-blowfish_ : mot de passe chiffré avec blowfish (*non sûr*, non recommandé)
-* _dh-aes_ : mot de passe chiffré avec AES (*non sûr*, non recommandé)
 
 Les options dans le serveur sont :
 
