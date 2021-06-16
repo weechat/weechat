@@ -50,8 +50,8 @@ TEST(CoreSignal, SearchNumber)
     }
     LONGS_EQUAL(7, count);
 
-    POINTERS_EQUAL(-1, signal_search_number (-1));
-    POINTERS_EQUAL(-1, signal_search_number (999999999));
+    LONGS_EQUAL(-1, signal_search_number (-1));
+    LONGS_EQUAL(-1, signal_search_number (999999999));
 
     index = signal_search_number (SIGHUP);
     LONGS_EQUAL(SIGHUP, signal_list[index].signal);

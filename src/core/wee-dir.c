@@ -26,6 +26,9 @@
 
 /* for nftw() */
 #define _XOPEN_SOURCE 700
+#if defined(__APPLE__)
+#define _DARWIN_C_SOURCE
+#endif
 
 #ifdef HAVE_CONFIG_H
 #include "config.h"
