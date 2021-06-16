@@ -803,7 +803,8 @@ WeeChat を起動した端末の例:
             ▲ "status" と "input" バー                               "nicklist" バー ▲
 ....
 
-画面は以下のエリアから構成されます:
+// TRANSLATION MISSING
+By default, the screen is divided up into the following areas:
 
 * チャットログが表示されるチャットエリア (画面の真ん中)、それぞれの行は:
 ** 時刻
@@ -909,6 +910,14 @@ WeeChat を起動した端末の例:
 | tls_version                  | `TLS1.3`                 | TLS version in use for current IRC server.
 | window_number                | `2`                      | 現在のウィンドウ番号
 |===
+
+// TRANSLATION MISSING
+Each aspect of the layout can be customized with the appropriate <<command_line,command>>:
+<<command_weechat_bar,`/bar`>> to customize the bars,
+<<command_weechat_buffer,/buffer>> and <<command_weechat_window,`/window`>>
+to customize <<buffers_and_windows,buffers and windows>>,
+and <<command_weechat_layot,/layout>> to name, save and restore the screen layout
+and the association between windows and buffers.
 
 [[command_line]]
 === コマンドライン
@@ -1155,11 +1164,22 @@ _バッファ_ は番号、名前、表示された行
 * irc チャンネル
 * irc プライベートメッセージ
 
+// TRANSLATION MISSING
 _window_
-はバッファを表示する画面エリアのことです。画面を複数のウィンドウに分割することができます。
+はバッファを表示する画面エリアのことです。画面を複数のウィンドウに分割することができます
+(examples <<window_split_examples,below>>, see the
+<<command_weechat_window,/window command>> for details).
 
 それぞれのウィンドウは 1 つのバッファを表示します。バッファは隠したり
 (ウィンドウに表示しない)、複数のウィンドウに表示することできます。
+
+// TRANSLATION MISSING
+Screen layouts and the association between windows and buffers can be
+<<command_weechat_layout,saved and restored>>.
+
+// TRANSLATION MISSING
+[[window_split_examples]]
+==== Examples
 
 水平方向分割の例 (`/window splith`):
 
@@ -3016,8 +3036,6 @@ WeeChat は SASL 認証をサポートします、以下の認証メカニズム
 * _scram-sha-512_: SCRAM with SHA-512 digest algorithm
 * _ecdsa-nist256p-challenge_: 公開鍵/秘密鍵を使うチャレンジ認証
 * _external_: クライアント側 SSL 証明書
-* _dh-blowfish_: blowfish 暗号パスワード (*危険*、非推奨)
-* _dh-aes_: AES 暗号パスワード (*危険*、非推奨)
 
 サーバオプション:
 

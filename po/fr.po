@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-06-01 21:27+0200\n"
-"PO-Revision-Date: 2021-06-01 21:28+0200\n"
+"POT-Creation-Date: 2021-06-15 20:40+0200\n"
+"PO-Revision-Date: 2021-06-15 20:43+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -8234,7 +8234,7 @@ msgid ""
 "\n"
 "Capabilities supported by WeeChat are: account-notify, away-notify, cap-"
 "notify, chghost, extended-join, invite-notify, multi-prefix, server-time, "
-"userhost-in-names.\n"
+"setname, userhost-in-names.\n"
 "\n"
 "The capabilities to automatically enable on servers can be set in option irc."
 "server_default.capabilities (or by server in option irc.server.xxx."
@@ -8255,7 +8255,7 @@ msgstr ""
 "\n"
 "Les capacités supportées par WeeChat sont : account-notify, away-notify, cap-"
 "notify, chghost, extended-join, invite-notify, multi-prefix, server-time, "
-"userhost-in-names.\n"
+"setname, userhost-in-names.\n"
 "\n"
 "Les capacités à activer automatiquement sur les serveurs peuvent être "
 "définies dans l'option irc.server_default.capabilities (ou par serveur dans "
@@ -9244,6 +9244,15 @@ msgstr ""
 "service : nom du service\n"
 "  texte : texte à envoyer"
 
+msgid "set real name"
+msgstr "définir le nom réel"
+
+msgid "<realname>"
+msgstr "<nom_réel>"
+
+msgid "realname: new real name"
+msgstr "nom_réel : nouveau nom réel"
+
 msgid "disconnect server links"
 msgstr "déconnecter les liens vers un serveur"
 
@@ -9701,9 +9710,7 @@ msgid ""
 "\"scram-sha-256\" for SCRAM authentication with SHA-256 digest algorithm, "
 "\"scram-sha-512\" for SCRAM authentication with SHA-512 digest algorithm, "
 "\"ecdsa-nist256p-challenge\" for key-based challenge authentication, "
-"\"external\" for authentication using client side SSL cert, \"dh-blowfish\" "
-"for blowfish crypted password (insecure, not recommended), \"dh-aes\" for "
-"AES crypted password (insecure, not recommended)"
+"\"external\" for authentication using client side SSL certificate"
 msgstr ""
 "mécanisme pour l'authentification SASL : \"plain\" pour un mot de passe en "
 "clair, \"scram-sha-1\" pour une authentification SCRAM avec algorithme de "
@@ -9711,9 +9718,7 @@ msgstr ""
 "algorithme de hachage SHA-256, \"scram-sha-512\" pour une authentification "
 "SCRAM avec algorithme de hachage SHA-512, \"ecdsa-nist256p-challenge\" pour "
 "une authentification par challenge avec clé, \"external\" pour une "
-"authentification en utilisant un certificat SSL côté client, \"dh-blowfish\" "
-"pour un mot de passe chiffré avec blowfish (non sûr, non recommandé), \"dh-"
-"aes\" pour un mot de passe chiffré avec AES (non sûr, non recommandé)"
+"authentification en utilisant un certificat SSL côté client"
 
 msgid ""
 "username for SASL authentication; this option is not used for mechanism "
@@ -10986,6 +10991,9 @@ msgstr "%s%s : client capability, supprimé : %s"
 msgid "%s%s%s%s (%s%s%s)%s has changed host to %s%s"
 msgstr "%s%s%s%s (%s%s%s)%s a changé d'hôte pour %s%s"
 
+msgid "Failure:"
+msgstr "Échec :"
+
 #, c-format
 msgid "%sYou have been invited to %s%s%s by %s%s%s"
 msgstr "%sVous avez été invité sur %s%s%s par %s%s%s"
@@ -11034,6 +11042,9 @@ msgstr "%sVous êtes maintenant connu sous le nom %s%s%s"
 msgid "%s%s%s%s is now known as %s%s%s"
 msgstr "%s%s%s%s est maintenant connu sous le nom %s%s%s"
 
+msgid "Note:"
+msgstr "Note :"
+
 #, c-format
 msgid "%s%s%s%s%s%s%s%s%s%s has left %s%s%s %s(%s%s%s)"
 msgstr "%s%s%s%s%s%s%s%s%s%s a quitté %s%s%s %s(%s%s%s)"
@@ -11049,6 +11060,10 @@ msgstr "%s%s%s%s%s%s%s%s%s%s a quitté %s(%s%s%s)"
 #, c-format
 msgid "%s%s%s%s%s%s%s%s%s%s has quit"
 msgstr "%s%s%s%s%s%s%s%s%s%s a quitté"
+
+#, c-format
+msgid "%sReal name set to: %s"
+msgstr "%sNom réel défini à : %s"
 
 #, c-format
 msgid "%s%s: \"%s\" command received without channel"
@@ -11073,6 +11088,9 @@ msgstr "%s%s%s%s a retiré le titre pour %s%s%s"
 #, c-format
 msgid "%sWallops from %s: %s"
 msgstr "%sWallops de %s : %s"
+
+msgid "Warning:"
+msgstr "Attention :"
 
 #, c-format
 msgid "%sServer notice mask for %s%s%s: %s"
@@ -11367,8 +11385,24 @@ msgid "protocol error"
 msgstr "erreur de protocole"
 
 #, c-format
+msgid "unable to read private key in file \"%s\""
+msgstr "impossible de lire la clé privée dans le fichier \"%s\""
+
+#, c-format
+msgid "invalid private key file: error %d %s"
+msgstr "fichier de clé privée invalide : erreur %d %s"
+
+#, c-format
 msgid "%s%s: signing the challenge with ECC public key: %s"
 msgstr "%s%s : signature du challenge avec la clé publique ECC : %s"
+
+#, c-format
+msgid "unable to import the private key: error %d %s"
+msgstr "impossible d'importer la clé privée : erreur %d %s"
+
+#, c-format
+msgid "unable to sign the hashed data: error %d %s"
+msgstr "impossible de signer les données hachées : erreur %d %s"
 
 #, c-format
 msgid ""
@@ -15393,22 +15427,6 @@ msgstr "%s%s : impossible de se connecter : erreur inattendue (%d)"
 #~ msgstr ""
 #~ "%s%s : erreur de construction de la réponse pour l'authentification SASL, "
 #~ "en utilisant le mécanisme \"%s\""
-
-#, c-format
-#~ msgid "%s%s: unable to read private key in file \"%s\""
-#~ msgstr "%s%s : impossible de lire la clé privée dans le fichier \"%s\""
-
-#, c-format
-#~ msgid "%sgnutls: invalid private key file: error %d %s"
-#~ msgstr "%sgnutls : fichier de clé privée invalide : erreur %d %s"
-
-#, c-format
-#~ msgid "%sgnutls: unable to import the private key: error %d %s"
-#~ msgstr "%sgnutls : impossible d'importer la clé privée : erreur %d %s"
-
-#, c-format
-#~ msgid "%sgnutls: unable to sign the hashed data: error %d %s"
-#~ msgstr "%sgnutls : impossible de signer les données hachées : erreur %d %s"
 
 #~ msgid "bar size in chars (0 = auto size)"
 #~ msgstr "taille de la barre en caractères (0 = taille automatique)"

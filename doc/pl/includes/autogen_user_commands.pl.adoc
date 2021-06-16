@@ -121,19 +121,19 @@ Bez podania argumentu komenda wyświetla listę banów na obecnym kanale.
       req|ack [<opcja> [<opcja>...]]
       end
 
-   ls: wyświetla opcje wspierane przez serwer
- list: wyświetla obecnie włączone opcje
-  req: żądanie opcji
-  ack: potwierdzenie opcji wymagających potwierdzenia po stronie klienta
-  end: kończy negocjacje opcji
+   ls: list the capabilities supported by the server
+ list: list the capabilities currently enabled
+  req: request a capability
+  ack: acknowledge capabilities which require client-side acknowledgement
+  end: end the capability negotiation
 
-Bez argumentu, wysyłane są "ls" i "list".
+Without argument, "ls" and "list" are sent.
 
-Opcje wspierane przez WeeChat to: account-notify, away-notify, cap-notify, chghost, extended-join, invite-notify, multi-prefix, server-time,  userhost-in-names.
+Capabilities supported by WeeChat are: account-notify, away-notify, cap-notify, chghost, extended-join, invite-notify, multi-prefix, server-time, setname, userhost-in-names.
 
-Opcje automatycznie włączane na serwerach można ustawić za pomocą opcji irc.server_default.capabilities (albo dla konkretnego serwera, opcja irc.server.xxx.capabilities).
+The capabilities to automatically enable on servers can be set in option irc.server_default.capabilities (or by server in option irc.server.xxx.capabilities).
 
-Przykłady:
+Examples:
    /cap
    /cap req multi-prefix away-notify
 ----
@@ -359,9 +359,9 @@ Przykłady:
 ----
 /kick  [<kanał>] <nick> [<powód>]
 
-channel: channel name
+kanał: nazwa kanału
    nick: nick
- reason: reason (evaluated, see /help eval; special variables ${nick} (self nick), ${target} (target nick), ${channel} and ${server} are replaced by their values)
+ powód: powód (przetwarzane, zobacz /help eval; specjalne zmienne jak ${nick} (własny nick), ${target} (docelowy nick), ${channel} i ${server} są podmieniane na odpowiednie wartości)
 ----
 
 [[command_irc_kickban]]
@@ -370,14 +370,14 @@ channel: channel name
 ----
 /kickban  [<kanał>] <nick> [<powód>]
 
-channel: channel name
+kanał: nazwa kanału
    nick: nick
- reason: reason (evaluated, see /help eval; special variables ${nick} (self nick), ${target} (target nick), ${channel} and ${server} are replaced by their values)
+ powód: powód (przetwarzane, zobacz /help eval; specjalne zmienne jak ${nick} (własny nick), ${target} (docelowy nick), ${channel} i ${server} są podmieniane na odpowiednie wartości)
 
-It is possible to kick/ban with a mask, nick will be extracted from mask and replaced by "*".
+Możliwe jest kopanie/banowanie za pomocą maski, nick zostanie wyciągnięty z maski i zastąpiony "*".
 
-Example:
-  ban "*!*@host.com" and then kick "toto":
+Przykład:
+  zbanuje "*!*@host.com", następnie wykopie "toto":
     /kickban toto!*@host.com
 ----
 
@@ -402,7 +402,7 @@ maska: lista serwerów musi pasować do maski
 ----
 
 [[command_irc_list]]
-* `+list+`: list channels and their topics
+* `+list+`: wyświetla kanały i ich tematy
 
 ----
 /list  [-server <serwer>] [-re <wyrażenie>] [<kanał>[,<kanał>...]] [<cel>]
@@ -671,9 +671,9 @@ opcje: dodatkowe opcje, dla niektórych serwerów
 ----
 /remove  [<kanał>] <nick> [<powód>]
 
-channel: channel name
+kanał: nazwa kanału
    nick: nick
- reason: reason (special variables $nick, $channel and $server are replaced by their values)
+ powód: powód (przetwarzane, zobacz /help eval; specjalne zmienne jak ${nick} (własny nick), ${target} (docelowy nick), ${channel} i ${server} są podmieniane na odpowiednie wartości)
 ----
 
 [[command_irc_restart]]
@@ -805,6 +805,15 @@ distribution: widoczność serwisu
 
 maska: wyświetl tylko serwisy pasujące do maski
 typ: wyświetl tylko serwisy tego typu
+----
+
+[[command_irc_setname]]
+* `+setname+`: set real name
+
+----
+/setname  <realname>
+
+realname: new real name
 ----
 
 [[command_irc_squery]]

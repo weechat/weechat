@@ -790,7 +790,7 @@ Exemple de terminal avec WeeChat :
             ▲ barres "status" et "input"                            barre "nicklist" ▲
 ....
 
-L'écran est composé des zones suivantes :
+Par défaut, l'écran est composé des zones suivantes :
 
 * zone de discussion (milieu de l'écran) avec les lignes de discussion, et
   pour chaque ligne :
@@ -885,6 +885,14 @@ Autres objets (non utilisés dans des barres par défaut) :
 | tls_version                  | `TLS1.3`                 | Version de TLS utilisée sur le serveur IRC courant.
 | window_number                | `2`                      | Numéro de la fenêtre courante.
 |===
+
+// TRANSLATION MISSING
+Chaque aspect de la disposition peut être configuré par la <<command_line,command>> appropriée :
+<<command_weechat_bar,`/bar`>> pour configurer les barres,
+<<command_weechat_buffer,/buffer>> et <<command_weechat_window,`/window`>>
+pour configurer les <<buffers_and_windows,tampons et fenêtres>>,
+et <<command_weechat_layot,/layout>> pour nommer, sauver et restaurer la disposition
+de l'écran et l'association entre les fenêtres et les tampons.
 
 [[command_line]]
 === Ligne de commande
@@ -1137,10 +1145,17 @@ Exemples de tampons :
 
 Une fenêtre (_window_) est une zone de l'écran affichant un tampon. Il est
 possible de découper l'écran horizontalement ou verticalement en plusieurs
-fenêtres.
+fenêtres (exemples <<window_split_examples,ci-dessous>>, voir la
+<<command_weechat_window,commande /window>> pour plus d'informations).
 
 Chaque fenêtre affiche un tampon. Un tampon peut être caché (affiché par
 aucune fenêtre) ou affiché par une ou plusieurs fenêtres.
+
+Les dispositions d'écran et l'association entre les fenêtres et les tampons
+peuvent être <<command_weechat_layout,sauvées et restaurées>>.
+
+[[window_split_examples]]
+==== Exemples
 
 Exemple de découpage horizontal (`/window splith`) :
 
@@ -3036,8 +3051,6 @@ mécanismes :
 * _scram-sha-512_ : SCRAM avec algorithme de hachage SHA-512
 * _ecdsa-nist256p-challenge_ : challenge avec clé publique/privée
 * _external_ : certificat SSL côté client
-* _dh-blowfish_ : mot de passe chiffré avec blowfish (*non sûr*, non recommandé)
-* _dh-aes_ : mot de passe chiffré avec AES (*non sûr*, non recommandé)
 
 Les options dans le serveur sont :
 

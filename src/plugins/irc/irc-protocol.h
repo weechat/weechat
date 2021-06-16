@@ -34,6 +34,12 @@
                                  int argc,                              \
                                  char **argv,                           \
                                  char **argv_eol)
+#define IRCB(__message, __decode_color, __keep_trailing_spaces,         \
+             __func_cb)                                                 \
+    { #__message,                                                       \
+      __decode_color,                                                   \
+      __keep_trailing_spaces,                                           \
+      &irc_protocol_cb_##__func_cb }
 
 #define IRC_PROTOCOL_MIN_ARGS(__min_args)                               \
     (void) date;                                                        \

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-06-01 21:27+0200\n"
+"POT-Creation-Date: 2021-06-15 20:40+0200\n"
 "PO-Revision-Date: 2021-05-25 18:28+0200\n"
 "Last-Translator: Emir SARI <bitigchi@me.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6269,7 +6269,7 @@ msgid ""
 "\n"
 "Capabilities supported by WeeChat are: account-notify, away-notify, cap-"
 "notify, chghost, extended-join, invite-notify, multi-prefix, server-time, "
-"userhost-in-names.\n"
+"setname, userhost-in-names.\n"
 "\n"
 "The capabilities to automatically enable on servers can be set in option irc."
 "server_default.capabilities (or by server in option irc.server.xxx."
@@ -6970,6 +6970,16 @@ msgid ""
 "   text: text to send"
 msgstr ""
 
+#, fuzzy
+msgid "set real name"
+msgstr "sunucu adı"
+
+msgid "<realname>"
+msgstr ""
+
+msgid "realname: new real name"
+msgstr ""
+
 msgid "disconnect server links"
 msgstr ""
 
@@ -7338,9 +7348,7 @@ msgid ""
 "\"scram-sha-256\" for SCRAM authentication with SHA-256 digest algorithm, "
 "\"scram-sha-512\" for SCRAM authentication with SHA-512 digest algorithm, "
 "\"ecdsa-nist256p-challenge\" for key-based challenge authentication, "
-"\"external\" for authentication using client side SSL cert, \"dh-blowfish\" "
-"for blowfish crypted password (insecure, not recommended), \"dh-aes\" for "
-"AES crypted password (insecure, not recommended)"
+"\"external\" for authentication using client side SSL certificate"
 msgstr ""
 
 msgid ""
@@ -8308,6 +8316,9 @@ msgstr "%s%s: sunucu yeteneği, kaldırıldı: %s"
 msgid "%s%s%s%s (%s%s%s)%s has changed host to %s%s"
 msgstr "%s%s%s%s (%s%s%s)%s ana makineyi %s%s olarak değiştirdi"
 
+msgid "Failure:"
+msgstr ""
+
 #, c-format
 msgid "%sYou have been invited to %s%s%s by %s%s%s"
 msgstr ""
@@ -8356,6 +8367,9 @@ msgstr "%s Artık  %s%s%s olarak biliniyorsunuz"
 msgid "%s%s%s%s is now known as %s%s%s"
 msgstr "%s%s%s şimdi %s%s%s%s  olarak biliniyor"
 
+msgid "Note:"
+msgstr ""
+
 #, c-format
 msgid "%s%s%s%s%s%s%s%s%s%s has left %s%s%s %s(%s%s%s)"
 msgstr "%s%s%s%s%s%s%s%s%s%s terk etti %s%s%s %s(%s%s%s)"
@@ -8371,6 +8385,10 @@ msgstr "%s%s%s%s%s%s%s%s%s%s çıktı %s(%s%s%s)"
 #, c-format
 msgid "%s%s%s%s%s%s%s%s%s%s has quit"
 msgstr "%s%s%s%s%s%s%s%s%s%s çıktı"
+
+#, fuzzy, c-format
+msgid "%sReal name set to: %s"
+msgstr "%s\"%s\" seçeneği ayarlanamadı"
 
 #, c-format
 msgid "%s%s: \"%s\" command received without channel"
@@ -8394,6 +8412,9 @@ msgstr ""
 
 #, c-format
 msgid "%sWallops from %s: %s"
+msgstr ""
+
+msgid "Warning:"
 msgstr ""
 
 #, c-format
@@ -8667,9 +8688,25 @@ msgstr ""
 msgid "protocol error"
 msgstr ""
 
+#, fuzzy, c-format
+msgid "unable to read private key in file \"%s\""
+msgstr "%s%s: \"%s\" dosyasındaki özel anahtar okunamıyor"
+
+#, fuzzy, c-format
+msgid "invalid private key file: error %d %s"
+msgstr "%sgnutls: Geçersiz özel anahtar dosyası: hata %d %s"
+
 #, c-format
 msgid "%s%s: signing the challenge with ECC public key: %s"
 msgstr ""
+
+#, fuzzy, c-format
+msgid "unable to import the private key: error %d %s"
+msgstr "%s%s: Boru oluşturulamıyor: Hata %d %s"
+
+#, fuzzy, c-format
+msgid "unable to sign the hashed data: error %d %s"
+msgstr "%s%s: Boru oluşturulamıyor: Hata %d %s"
 
 #, c-format
 msgid ""
@@ -11906,11 +11943,3 @@ msgstr "%s%s: \"%s\" için %s ile zaman aşımı"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: Bağlanılamıyor: Beklenmedik hata (%d)"
-
-#, c-format
-#~ msgid "%s%s: unable to read private key in file \"%s\""
-#~ msgstr "%s%s: \"%s\" dosyasındaki özel anahtar okunamıyor"
-
-#, c-format
-#~ msgid "%sgnutls: invalid private key file: error %d %s"
-#~ msgstr "%sgnutls: Geçersiz özel anahtar dosyası: hata %d %s"

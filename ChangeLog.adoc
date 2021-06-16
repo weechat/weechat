@@ -15,8 +15,22 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 (file _ReleaseNotes.adoc_ in sources).
 
 
+[[v3.3]]
+== Version 3.3 (under dev)
+
+New features::
+
+  * irc: add command /setname, add support of message and capability "setname" (issue #1653)
+  * irc: always set realname in nicks even when extended-join capability is not enabled (issue #1653)
+  * irc: add support of FAIL/WARN/NOTE messages (issue #1653)
+  * irc: drop support of DH-BLOWFISH and DH-AES SASL mechanisms (issue #175)
+
+Documentation::
+
+  * add Serbian translations (issue #1655)
+
 [[v3.2]]
-== Version 3.2 (under dev)
+== Version 3.2 (2021-06-13)
 
 New features::
 
@@ -753,7 +767,7 @@ Bug fixes::
   * core: fix command /cursor stop (do not toggle cursor mode) (issue #964)
   * core: fix delayed refresh when the signal SIGWINCH is received (terminal resized), send signal "signal_sigwinch" after refreshes (issue #902)
   * irc: fix update of server addresses on reconnection when the evaluated content has changed (issue #925)
-  * irc: fix crash in case of invalid server reply during SASL authentication with dh-blowfish or dh-aes mechanism
+  * irc: fix crash in case of invalid server reply during SASL authentication with DH-BLOWFISH or DH-AES mechanism
   * irc: fix double decoding of IRC colors in messages sent/displayed by commands /msg and /query (issue #943)
   * irc: fix parsing of message 324 (modes) when there is a colon before the modes (issue #913)
   * relay: check buffer pointer received in "sync" and "desync" commands (weechat protocol) (issue #936)
@@ -1540,7 +1554,7 @@ New features::
   * aspell: add completion "aspell_dicts" (list of aspell installed dictionaries)
   * aspell: add info "aspell_dict" (dictionaries used on a buffer)
   * aspell: optimization on spellers to improve speed (save state by buffer)
-  * irc: add support of "dh-aes" SASL mechanism (patch #8020)
+  * irc: add support of DH-AES SASL mechanism (patch #8020)
   * irc: add support of UHNAMES (capability "userhost-in-names") (task #9353)
   * irc: add tag "irc_nick_back" for messages displayed in private buffer when a nick is back on server (task #12576)
   * irc: add option irc.look.display_join_message (task #10895)
@@ -1920,7 +1934,7 @@ Bug fixes::
   * core: fix help on plugin option when config_set_desc_plugin is called to set help on newly created option
   * core: enable background process under Cygwin to connect to servers, fix reconnection problem (bug #34626)
   * aspell: fix URL detection (do not check spelling of URLs) (bug #34040)
-  * irc: fix memory leak in SASL/blowfish authentication
+  * irc: fix memory leak in SASL DH-BLOWFISH authentication
   * irc: fix memory leak when a server is deleted
   * irc: fix self-highlight when using /me with an IRC bouncer like znc (bug #35123)
   * irc: use low priority for MODE sent automatically by WeeChat (when joining channel)

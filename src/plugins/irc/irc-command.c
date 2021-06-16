@@ -5670,6 +5670,27 @@ IRC_COMMAND_CALLBACK(squery)
 }
 
 /*
+ * Callback for command "/setname": set real name.
+ */
+
+IRC_COMMAND_CALLBACK(setname)
+{
+    IRC_BUFFER_GET_SERVER(buffer);
+    IRC_COMMAND_CHECK_SERVER("setname", 1, 1);
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+
+    WEECHAT_COMMAND_MIN_ARGS(2, "");
+
+    irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
+                      "SETNAME :%s", argv_eol[1]);
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Callback for command "/squit": disconnects server links.
  */
 
@@ -6480,7 +6501,8 @@ irc_command_init ()
            "\n"
            "Capabilities supported by WeeChat are: "
            "account-notify, away-notify, cap-notify, chghost, extended-join, "
-           "invite-notify, multi-prefix, server-time, userhost-in-names.\n"
+           "invite-notify, multi-prefix, server-time, setname, "
+           "userhost-in-names.\n"
            "\n"
            "The capabilities to automatically enable on servers can be set "
            "in option irc.server_default.capabilities (or by server in "
@@ -7107,6 +7129,12 @@ irc_command_init ()
         N_("service: name of service\n"
            "   text: text to send"),
         NULL, &irc_command_squery, NULL, NULL);
+    weechat_hook_command (
+        "setname",
+        N_("set real name"),
+        N_("<realname>"),
+        N_("realname: new real name"),
+        NULL, &irc_command_setname, NULL, NULL);
     weechat_hook_command (
         "squit",
         N_("disconnect server links"),

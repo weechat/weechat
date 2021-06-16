@@ -1868,13 +1868,9 @@ irc_config_server_new_option (struct t_config_file *config_file,
                    "\"ecdsa-nist256p-challenge\" for key-based "
                    "challenge authentication, "
                    "\"external\" for authentication using client side SSL "
-                   "cert, "
-                   "\"dh-blowfish\" for blowfish crypted password "
-                   "(insecure, not recommended), "
-                   "\"dh-aes\" for AES crypted password "
-                   "(insecure, not recommended)"),
+                   "certificate"),
                 "plain|scram-sha-1|scram-sha-256|scram-sha-512|"
-                "ecdsa-nist256p-challenge|external|dh-blowfish|dh-aes",
+                "ecdsa-nist256p-challenge|external",
                 0, 0,
                 default_value, value,
                 null_value_allowed,

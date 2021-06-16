@@ -129,7 +129,7 @@ Sans paramètre, cette commande affiche la liste des bannissements pour le canal
 
 Sans paramètre, "ls" et "list" sont envoyés.
 
-Les capacités supportées par WeeChat sont : account-notify, away-notify, cap-notify, chghost, extended-join, invite-notify, multi-prefix, server-time, userhost-in-names.
+Les capacités supportées par WeeChat sont : account-notify, away-notify, cap-notify, chghost, extended-join, invite-notify, multi-prefix, server-time, setname, userhost-in-names.
 
 Les capacités à activer automatiquement sur les serveurs peuvent être définies dans l'option irc.server_default.capabilities (ou par serveur dans l'option irc.server.xxx.capabilities).
 
@@ -806,6 +806,15 @@ distribution : visibilité du service
 
 masque : lister seulement les services qui correspondent à ce masque
   type : lister seulement les services de ce type
+----
+
+[[command_irc_setname]]
+* `+setname+`: définir le nom réel
+
+----
+/setname  <nom_réel>
+
+nom_réel : nouveau nom réel
 ----
 
 [[command_irc_squery]]
