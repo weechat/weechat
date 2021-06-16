@@ -777,14 +777,13 @@ Beispiel des WeeChat-Terminals:
             ▲ Bars "status" und "input"                               Bar "nicklist" ▲
 ....
 
-// TRANSLATION MISSING
-By default, the screen is divided up into the following areas:
+Standardmäßig ist der Bildschirm in folgende Bereiche unterteilt:
 
 * Chat-Bereich (in der Mitte des Bildschirms). Dieser enthält den Text und zusätzlich für jede Zeile:
 ** die Uhrzeit
 ** Prefix (links von dem "|")
 ** Nachricht (rechts von dem "|")
-* Die Bars können um den Chat-Bereich angeordnet werden. Standard-Bars sind:
+* Die Bars können um den Chat-Bereich angeordnet werden. Bars, welche standardmäßig genutzt werden sind:
 ** _buflist_ Bar, auf der linken Seite
 ** _title_ Bar, über dem Chat-Bereich
 ** _status_ Bar, unter dem Chat-Bereich
@@ -873,13 +872,14 @@ andere Items die zur Verfügung stehen (die aber nicht standardmäßig in einer 
 | window_number                | `2`                      | Nummer des aktuellen Fensters.
 |===
 
-// TRANSLATION MISSING
-Each aspect of the layout can be customized with the appropriate <<command_line,command>>:
-<<command_weechat_bar,`/bar`>> to customize the bars,
-<<command_weechat_buffer,/buffer>> and <<command_weechat_window,`/window`>>
-to customize <<buffers_and_windows,buffers and windows>>,
-and <<command_weechat_layot,/layout>> to name, save and restore the screen layout
-and the association between windows and buffers.
+Jeder Aspekt des Layouts kann mit den entsprechenden <<command_line,Befehlen>>
+angepasst werden:
+<<command_weechat_bar,`/bar`>> um die Bars anzupassen,
+<<command_weechat_buffer,/buffer>> und <<command_weechat_window,`/window`>>
+um <<buffers_and_windows,Buffer und Fenster>> anzupassen,
+und <<command_weechat_layot,/layout>> um das Bildschirmlayout zu benennen,
+zu speichern und wiederherzustellen sowie die Zuordnung zwischen Fenstern
+und Buffern zu behalten.
 
 [[command_line]]
 === Befehlszeile
@@ -1131,23 +1131,20 @@ Beispiele von Buffern:
 * IRC Channel
 * IRC Privat  (wird auch Query-Buffer genannt)
 
-// TRANSLATION MISSING
 Ein _Fenster_ ist ein Bildschirmbereich der Buffer darstellt. Es ist möglich
-den Bildschirm in mehrere Fenster aufzuteilen (examples
-<<window_split_examples,below>>, see the <<command_weechat_window,/window command>>
-for details).
+den Bildschirm in mehrere Fenster aufzuteilen (Beispiele:
+<<window_split_examples,below>>, siehe den Befehl <<command_weechat_window,/window command>>
+für weitere Details).
 
 Jedes Fenster stellt einen Buffer dar. Ein Buffer kann unsichtbar sein (er wird
 in einem Fenster nicht angezeigt) oder ein Buffer wird durch ein oder mehrere Fenster
 angezeigt.
 
-// TRANSLATION MISSING
-Screen layouts and the association between windows and buffers can be
-<<command_weechat_layout,saved and restored>>.
+Bildschirmlayouts und die Zuordnung zwischen Fenstern und Buffern können
+<<command_weechat_layout,gespeichert und wiederhergestellt>> werden.
 
-// TRANSLATION MISSING
 [[window_split_examples]]
-==== Examples
+==== Beispiele
 
 Beispiele für eine horizontal Fensteraufteilung (`/window splith`):
 
