@@ -777,13 +777,13 @@ Beispiel des WeeChat-Terminals:
             ▲ Bars "status" und "input"                               Bar "nicklist" ▲
 ....
 
-Der Bildschirm setzt sich aus folgenden Bereichen zusammen:
+Standardmäßig ist der Bildschirm in folgende Bereiche unterteilt:
 
 * Chat-Bereich (in der Mitte des Bildschirms). Dieser enthält den Text und zusätzlich für jede Zeile:
 ** die Uhrzeit
 ** Prefix (links von dem "|")
 ** Nachricht (rechts von dem "|")
-* Die Bars können um den Chat-Bereich angeordnet werden. Standard-Bars sind:
+* Die Bars können um den Chat-Bereich angeordnet werden. Bars, welche standardmäßig genutzt werden sind:
 ** _buflist_ Bar, auf der linken Seite
 ** _title_ Bar, über dem Chat-Bereich
 ** _status_ Bar, unter dem Chat-Bereich
@@ -871,6 +871,15 @@ andere Items die zur Verfügung stehen (die aber nicht standardmäßig in einer 
 | tls_version                  | `TLS1.3`                 | TLS Version die für den IRC Server genutzt wird.
 | window_number                | `2`                      | Nummer des aktuellen Fensters.
 |===
+
+Jeder Aspekt des Layouts kann mit den entsprechenden <<command_line,Befehlen>>
+angepasst werden:
+<<command_weechat_bar,`/bar`>> um die Bars anzupassen,
+<<command_weechat_buffer,/buffer>> und <<command_weechat_window,`/window`>>
+um <<buffers_and_windows,Buffer und Fenster>> anzupassen,
+und <<command_weechat_layot,/layout>> um das Bildschirmlayout zu benennen,
+zu speichern und wiederherzustellen sowie die Zuordnung zwischen Fenstern
+und Buffern zu behalten.
 
 [[command_line]]
 === Befehlszeile
@@ -1123,11 +1132,19 @@ Beispiele von Buffern:
 * IRC Privat  (wird auch Query-Buffer genannt)
 
 Ein _Fenster_ ist ein Bildschirmbereich der Buffer darstellt. Es ist möglich
-den Bildschirm in mehrere Fenster aufzuteilen.
+den Bildschirm in mehrere Fenster aufzuteilen (Beispiele:
+<<window_split_examples,below>>, siehe den Befehl <<command_weechat_window,/window command>>
+für weitere Details).
 
 Jedes Fenster stellt einen Buffer dar. Ein Buffer kann unsichtbar sein (er wird
 in einem Fenster nicht angezeigt) oder ein Buffer wird durch ein oder mehrere Fenster
 angezeigt.
+
+Bildschirmlayouts und die Zuordnung zwischen Fenstern und Buffern können
+<<command_weechat_layout,gespeichert und wiederhergestellt>> werden.
+
+[[window_split_examples]]
+==== Beispiele
 
 Beispiele für eine horizontal Fensteraufteilung (`/window splith`):
 
@@ -2978,18 +2995,11 @@ Für weiterreichende Informationen lesen Sie bitte: https://www.oftc.net/NickSer
 WeeChat unterstützt eine SASL Authentifikation, mittels verschiedener Mechanismen:
 
 * _plain_: Passwort liegt in Klarschrift vor (Standard)
-// TRANSLATION MISSING
-* _scram-sha-1_: SCRAM with SHA-1 digest algorithm
-// TRANSLATION MISSING
-* _scram-sha-256_: SCRAM with SHA-256 digest algorithm
-// TRANSLATION MISSING
-* _scram-sha-512_: SCRAM with SHA-512 digest algorithm
+* _scram-sha-1_: SCRAM mit SHA-1 Digest-Algorithmus
+* _scram-sha-256_: SCRAM mit SHA-256 Digest-Algorithmus
+* _scram-sha-512_: SCRAM mit SHA-512 Digest-Algorithmus
 * _ecdsa-nist256p-challenge_: Abgleich von öffentlichem/privatem Schlüssel
 * _external_: SSL Zertifikat welches auf Client Seite vorliegt
-* _dh-blowfish_: Passwort wird mittels blowfish verschlüsselt
-  (*unsicher*, wird nicht empfohlen)
-* _dh-aes_: Passwort wird mittels AES verschlüsselt
-  (*unsicher*, wird nicht empfohlen)
 
 Optionen für Server sind:
 

@@ -56,6 +56,8 @@
 
 | irc | nick | надимци текућег IRC канала
 
+| javascript | javascript_script | листа скрипти
+
 | lua | lua_script | листа скрипти
 
 | perl | perl_script | листа скрипти

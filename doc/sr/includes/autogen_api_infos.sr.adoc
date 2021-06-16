@@ -36,6 +36,12 @@
 
 | irc | irc_server_isupport_value | вредност могућности, ако је сервер подржава (из IRC поруке 005) | сервер,могућност
 
+| javascript | javascript_eval | израчунавање изворног кода | изворни кôд који треба да се изврши
+
+| javascript | javascript_interpreter | име интерпретера који се користи | -
+
+| javascript | javascript_version | верзија интерпретера која се користи | -
+
 | lua | lua_eval | израчунавање изворног кода | изворни кôд који треба да се изврши
 
 | lua | lua_interpreter | име интерпретера који се користи | -

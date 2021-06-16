@@ -302,6 +302,26 @@ _prev_server_   (pointer, hdata: "irc_server") +
 _next_server_   (pointer, hdata: "irc_server") +
 
 
+| javascript
+| [[hdata_javascript_script]]<<hdata_javascript_script,javascript_script>>
+| листа скрипти
+| _scripts_ +
+_last_script_ +
+
+| _filename_   (string) +
+_interpreter_   (pointer) +
+_name_   (string) +
+_author_   (string) +
+_version_   (string) +
+_license_   (string) +
+_description_   (string) +
+_shutdown_func_   (string) +
+_charset_   (string) +
+_unloading_   (integer) +
+_prev_script_   (pointer, hdata: "javascript_script") +
+_next_script_   (pointer, hdata: "javascript_script") +
+
+
 | lua
 | [[hdata_lua_script]]<<hdata_lua_script,lua_script>>
 | листа скрипти
