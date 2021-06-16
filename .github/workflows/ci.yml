@@ -6,13 +6,13 @@ on:
 
 jobs:
 
-  build:
+  build_linux:
 
-    name: ${{ matrix.config.name }}
-    runs-on: ubuntu-20.04
     strategy:
       fail-fast: false
       matrix:
+        os:
+          - ubuntu-20.04
         config:
           - { name: "cmake_gcc", cc: "gcc", cxx: "g++", tool: "cmake", args: "" }
           - { name: "cmake_gcc_no_nls", cc: "gcc", cxx: "g++", tool: "cmake", args: "-DENABLE_NLS=OFF" }
@@ -21,6 +21,9 @@ jobs:
           - { name: "cmake_clang", cc: "clang", cxx: "clang++", tool: "cmake", args: "" }
           - { name: "autotools_gcc", cc: "gcc", cxx: "g++", tool: "autotools", args: "" }
           - { name: "autotools_clang", cc: "clang", cxx: "clang++", tool: "autotools", args: "" }
+
+    name: ${{ matrix.config.name }} on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
 
     steps:
 
@@ -76,3 +79,47 @@ jobs:
         lcov --remove coverage.info '/usr/*' --output-file coverage.info
         lcov --list coverage.info
         bash <(curl -s https://codecov.io/bash) -f coverage.info || echo 'Codecov error'
+
+  build_macos:
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - macos-latest
+        config:
+          - { name: "cmake_gcc", cc: "gcc", cxx: "g++" }
+          - { name: "cmake_clang", cc: "clang", cxx: "clang++" }
+
+    name: ${{ matrix.config.name }} on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+
+    steps:
+
+    - uses: actions/checkout@v2
+
+    - name: Install dependencies
+      run: |
+        brew update
+        brew install asciidoctor lua ruby
+
+    - name: Build
+      env:
+        CC: ${{ matrix.config.cc }}
+        CXX: ${{ matrix.config.cxx }}
+      run: |
+        mkdir build-tmp && cd build-tmp
+        cmake .. -DENABLE_MAN=ON -DENABLE_DOC=ON -DENABLE_PHP=OFF
+        make VERBOSE=1 -j2
+        sudo make install
+
+    - name: Run WeeChat
+      env:
+        TERM: xterm-256color
+      run: |
+        weechat --help
+        weechat-curses --help
+        weechat --colors
+        weechat --license
+        weechat --version
+        weechat --temp-dir --run-command "/debug dirs;/debug libs" --run-command "/quit"
