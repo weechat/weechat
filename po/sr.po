@@ -15053,3 +15053,10 @@ msgstr "%s%s: тајмаут за „%s” са %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: повезивање није успело: неочекивана грешка (%d)"
+
+#~ msgid ""
+#~ "%s%s: error building answer for SASL authentication, using mechanism \"%s"
+#~ "\""
+#~ msgstr ""
+#~ "%s%s: грешка при грађењу одговора за SASL аутентификацију, користећи "
+#~ "механизам „%s”"
