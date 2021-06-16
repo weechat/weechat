@@ -33,6 +33,10 @@ Tests::
 
   * core: add build on macOS in CI
 
+Build::
+
+  * core: fix build on macOS (issue #1662)
+
 [[v3.2]]
 == Version 3.2 (2021-06-13)
 
