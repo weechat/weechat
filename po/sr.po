@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2021-06-15 20:40+0200\n"
-"PO-Revision-Date: 2021-06-03 15:15+0400\n"
+"PO-Revision-Date: 2021-06-16 15:13+0400\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: sr\n"
@@ -8009,7 +8009,6 @@ msgstr "преговарање могућности клијента"
 msgid "ls || list || req|ack [<capability> [<capability>...]] || end"
 msgstr "ls || list || req|ack [<могућност> [<могућност>...]] || end"
 
-#, fuzzy
 msgid ""
 "   ls: list the capabilities supported by the server\n"
 " list: list the capabilities currently enabled\n"
@@ -9018,16 +9017,14 @@ msgstr ""
 "сервис: име сервиса\n"
 " текст: текст који се шаље"
 
-#, fuzzy
 msgid "set real name"
-msgstr "име сервера"
+msgstr "постављање реалног имена"
 
 msgid "<realname>"
-msgstr ""
+msgstr "<реално_име>"
 
-#, fuzzy
 msgid "realname: new real name"
-msgstr "читање - име променљиве"
+msgstr "реално_име: ново реално име"
 
 msgid "disconnect server links"
 msgstr "прекид серверских веза"
@@ -9469,16 +9466,6 @@ msgstr ""
 "за листу могућности које подржава програм WeeChat) (пример: „away-notify,"
 "multi-prefix”)"
 
-#, fuzzy
-#| msgid ""
-#| "mechanism for SASL authentication: \"plain\" for plain text password, "
-#| "\"scram-sha-1\" for SCRAM authentication with SHA-1 digest algorithm, "
-#| "\"scram-sha-256\" for SCRAM authentication with SHA-256 digest algorithm, "
-#| "\"scram-sha-512\" for SCRAM authentication with SHA-512 digest algorithm, "
-#| "\"ecdsa-nist256p-challenge\" for key-based challenge authentication, "
-#| "\"external\" for authentication using client side SSL cert, \"dh-blowfish"
-#| "\" for blowfish crypted password (insecure, not recommended), \"dh-aes\" "
-#| "for AES crypted password (insecure, not recommended)"
 msgid ""
 "mechanism for SASL authentication: \"plain\" for plain text password, "
 "\"scram-sha-1\" for SCRAM authentication with SHA-1 digest algorithm, "
@@ -9492,9 +9479,7 @@ msgstr ""
 "за SCRAM аутентификацију са SHA-256 digest алгоритмом, „scram-sha-512” за "
 "SCRAM аутентификацију са SHA-512 digest алгоритмом, „ecdsa-nist256p-"
 "challenge” за аутентификацију са изазовом базираним на кључу, „external” за "
-"аутентификацију употребом SSL сертификата са клијентске стране, „dh-"
-"blowfish” за blowfish шифровану лозинку (није безбедно, не препоручује се), "
-"„dh-aes” за AES шифровану лозинку (није безбедно, не препоручује се)"
+"аутентификацију употребом SSL сертификата са клијентске стране"
 
 msgid ""
 "username for SASL authentication; this option is not used for mechanism "
@@ -10731,7 +10716,7 @@ msgid "%s%s%s%s (%s%s%s)%s has changed host to %s%s"
 msgstr "%s%s%s%s (%s%s%s)%s је променио свој хост на %s%s"
 
 msgid "Failure:"
-msgstr ""
+msgstr "Грешка:"
 
 #, c-format
 msgid "%sYou have been invited to %s%s%s by %s%s%s"
@@ -10782,7 +10767,7 @@ msgid "%s%s%s%s is now known as %s%s%s"
 msgstr "%s%s%s%s је сада познат као %s%s%s"
 
 msgid "Note:"
-msgstr ""
+msgstr "Напомена:"
 
 #, c-format
 msgid "%s%s%s%s%s%s%s%s%s%s has left %s%s%s %s(%s%s%s)"
@@ -10800,9 +10785,9 @@ msgstr "%s%s%s%s%s%s%s%s%s%s је прекинуо %s(%s%s%s)"
 msgid "%s%s%s%s%s%s%s%s%s%s has quit"
 msgstr "%s%s%s%s%s%s%s%s%s%s је прекинуо"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sReal name set to: %s"
-msgstr "%sНије успело постављање опције „%s”"
+msgstr "%sРеално име је постављено на: %s"
 
 #, c-format
 msgid "%s%s: \"%s\" command received without channel"
@@ -10828,9 +10813,8 @@ msgstr "%s%s%s%s је обрисао тему за канал %s%s%s"
 msgid "%sWallops from %s: %s"
 msgstr "%sWallops од %s: %s"
 
-#, fuzzy
 msgid "Warning:"
-msgstr "%s: упозорење:"
+msgstr "Упозорење:"
 
 #, c-format
 msgid "%sServer notice mask for %s%s%s: %s"
@@ -11125,25 +11109,25 @@ msgstr "криптографска грешка"
 msgid "protocol error"
 msgstr "грешка протокола"
 
-#, fuzzy, c-format
+#, c-format
 msgid "unable to read private key in file \"%s\""
-msgstr "%s%s: није могуће читање приватног кључа из фајла „%s”"
+msgstr "није могуће читање приватног кључа из фајла „%s”"
 
-#, fuzzy, c-format
+#, c-format
 msgid "invalid private key file: error %d %s"
-msgstr "%sgnutls: неважећи фајл приватног кључа: грешка %d %s"
+msgstr "неважећи фајл приватног кључа: грешка %d %s"
 
 #, c-format
 msgid "%s%s: signing the challenge with ECC public key: %s"
 msgstr "%s%s: потписивање изазова са ECC јавним кључем: %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "unable to import the private key: error %d %s"
-msgstr "%sgnutls: није могућ увоз повратног кључа: грешка %d %s"
+msgstr "није могућ увоз повратног кључа: грешка %d %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "unable to sign the hashed data: error %d %s"
-msgstr "%sgnutls: Није могуће потписивање хешираних података: грешка %d %s"
+msgstr "није могуће потписивање хешираних података: грешка %d %s"
 
 #, c-format
 msgid ""
