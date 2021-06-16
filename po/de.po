@@ -25,7 +25,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2021-06-15 20:40+0200\n"
-"PO-Revision-Date: 2021-06-05 23:02+0200\n"
+"PO-Revision-Date: 2021-06-16 10:41+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
@@ -8386,7 +8386,6 @@ msgstr "Aushandlung der Clientfähigkeit"
 msgid "ls || list || req|ack [<capability> [<capability>...]] || end"
 msgstr "ls || list || req|ack [<capability> [<capability>...]] || end"
 
-#, fuzzy
 msgid ""
 "   ls: list the capabilities supported by the server\n"
 " list: list the capabilities currently enabled\n"
@@ -8419,9 +8418,9 @@ msgstr ""
 "\n"
 "Fähigkeiten die von WeeChat unterstützt werden: account-notify, away-notify, "
 "cap-notify, chghost, extended-join, invite-notify, multi-prefix, server-"
-"time, userhost-in-names.\n"
+"time, setname, userhost-in-names..\n"
 "\n"
-"Fähigkeiten die standardmäßig genutzt werden sollen, können mit der Option  "
+"Fähigkeiten die standardmäßig genutzt werden sollen, können mit der Option "
 "irc.server_default.capabilities gesetzt werden (oder individuell für jeden "
 "Server mit der Option irc.server.xxx.capabilities).\n"
 "\n"
@@ -9419,16 +9418,14 @@ msgstr ""
 "service: Name des Service\n"
 "   text: zu sendender Text"
 
-#, fuzzy
 msgid "set real name"
-msgstr "Servername"
+msgstr "setze Realnamen"
 
 msgid "<realname>"
-msgstr ""
+msgstr "<Realname>"
 
-#, fuzzy
 msgid "realname: new real name"
-msgstr "lese - Variablenname"
+msgstr "realname: neuer Realname"
 
 msgid "disconnect server links"
 msgstr "Verbindung zum Server trennen"
@@ -9886,16 +9883,6 @@ msgstr ""
 "(siehe /help cap um eine Liste von Fähigkeiten zu erhalten die von WeeChat "
 "unterstützt werden) (Beispiel: \"away-notify,multi-prefix\")"
 
-#, fuzzy
-#| msgid ""
-#| "mechanism for SASL authentication: \"plain\" for plain text password, "
-#| "\"scram-sha-1\" for SCRAM authentication with SHA-1 digest algorithm, "
-#| "\"scram-sha-256\" for SCRAM authentication with SHA-256 digest algorithm, "
-#| "\"scram-sha-512\" for SCRAM authentication with SHA-512 digest algorithm, "
-#| "\"ecdsa-nist256p-challenge\" for key-based challenge authentication, "
-#| "\"external\" for authentication using client side SSL cert, \"dh-blowfish"
-#| "\" for blowfish crypted password (insecure, not recommended), \"dh-aes\" "
-#| "for AES crypted password (insecure, not recommended)"
 msgid ""
 "mechanism for SASL authentication: \"plain\" for plain text password, "
 "\"scram-sha-1\" for SCRAM authentication with SHA-1 digest algorithm, "
@@ -9909,11 +9896,8 @@ msgstr ""
 "Authentifizierung mit SHA-1-Digest-Algorithmus, \"scram-sha-256\" für SCRAM-"
 "Authenrifizierung mit SHA-256 Digest-Algorithmus, \"scram-sha-512\" für "
 "SCRAM-Authentifizierung mit SHA-512 Digest-Algorithmus, \"ecdsa-nist256p-"
-"challenge\" für öffentlich/private Schlüsselmethode, \"external\" SSL "
-"Zertifikat welches auf Client Seite vorliegt wird verwendet, \"dh-blowfish\" "
-"Passwort wird mittels blowfish verschlüsselt (unsicher, wird nicht "
-"empfohlen), \"dh-aes\" Passwort wird mittels AES verschlüsselt (unsicher, "
-"wird nicht empfohlen)"
+"challenge\" für öffentlich/private Schlüsselmethode, \"external\" ein SSL "
+"Zertifikat welches auf Client Seite vorliegt wird verwendet"
 
 msgid ""
 "username for SASL authentication; this option is not used for mechanism "
@@ -11245,7 +11229,7 @@ msgid "%s%s%s%s (%s%s%s)%s has changed host to %s%s"
 msgstr "%s%s%s%s (%s%s%s)%s hat den Host nach %s%s geändert"
 
 msgid "Failure:"
-msgstr ""
+msgstr "Fehler:"
 
 #, c-format
 msgid "%sYou have been invited to %s%s%s by %s%s%s"
@@ -11296,7 +11280,7 @@ msgid "%s%s%s%s is now known as %s%s%s"
 msgstr "%s%s%s%s ist nun als %s%s%s bekannt"
 
 msgid "Note:"
-msgstr ""
+msgstr "Hinweis:"
 
 #, c-format
 msgid "%s%s%s%s%s%s%s%s%s%s has left %s%s%s %s(%s%s%s)"
@@ -11314,9 +11298,9 @@ msgstr "%s%s%s%s%s%s%s%s%s%s hat den IRC verlassen %s(%s%s%s)"
 msgid "%s%s%s%s%s%s%s%s%s%s has quit"
 msgstr "%s%s%s%s%s%s%s%s%s%s hat den IRC verlassen"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sReal name set to: %s"
-msgstr "%sEinstellung \"%s\" konnte nicht gesetzt werden"
+msgstr "%sRealname eingstellt auf: %s"
 
 #, c-format
 msgid "%s%s: \"%s\" command received without channel"
@@ -11345,9 +11329,8 @@ msgstr "%s%s%s%s hat das Thema von %s%s%s entfernt"
 msgid "%sWallops from %s: %s"
 msgstr "%sWallops von %s: %s"
 
-#, fuzzy
 msgid "Warning:"
-msgstr "%s: Warnung:"
+msgstr "Warnung:"
 
 #, c-format
 msgid "%sServer notice mask for %s%s%s: %s"
@@ -11646,27 +11629,25 @@ msgstr "Kryptographiefehler"
 msgid "protocol error"
 msgstr "Protokollfehler"
 
-#, fuzzy, c-format
+#, c-format
 msgid "unable to read private key in file \"%s\""
-msgstr "%s%s: privater Schlüssel kann nicht aus Datei gelesen werden \"%s\""
+msgstr "Kann privaten Schlüssel aus Datei \"%s\" nicht lesen"
 
-#, fuzzy, c-format
+#, c-format
 msgid "invalid private key file: error %d %s"
-msgstr "%sgnutls: ungültige private Schlüsseldatei: Fehler %d %s"
+msgstr "ungültige private Schlüsseldatei: Fehler %d %s"
 
 #, c-format
 msgid "%s%s: signing the challenge with ECC public key: %s"
 msgstr "%s%s: signiere mittels ECC öffentlichem Schlüssel: %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "unable to import the private key: error %d %s"
-msgstr ""
-"%sgnutls: privater Schlüssel kann nicht importiert werden: Fehler %d %s"
+msgstr "Der private Schlüssel kann nicht importiert werden: Fehler %d %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "unable to sign the hashed data: error %d %s"
-msgstr ""
-"%sgnutls: die gehashten Daten können nicht signiert werden : Fehler %d %s"
+msgstr "Hash-Daten können nicht signiert werden: Fehler %d %s"
 
 #, c-format
 msgid ""
