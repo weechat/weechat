@@ -68,6 +68,9 @@
 
 
 int network_init_gnutls_ok = 0;
+
+int network_num_certs_system = 0; /* number of system certs loaded          */
+int network_num_certs_user = 0;   /* number of user certs loaded            */
 int network_num_certs = 0;        /* number of certs loaded (system + user) */
 
 gnutls_certificate_credentials_t gnutls_xcred; /* GnuTLS client credentials */
@@ -124,6 +127,8 @@ network_load_system_ca_file (int force_display)
                 rc),
             rc);
     }
+
+    network_num_certs_system = rc;
 
     return rc;
 }
@@ -212,6 +217,8 @@ end:
     if (options)
         hashtable_free (options);
 
+    network_num_certs_user = num_loaded;
+
     return num_loaded;
 }
 
@@ -225,6 +232,8 @@ network_load_ca_files (int force_display)
     if (weechat_no_gnutls)
         return;
 
+    network_num_certs_system = 0;
+    network_num_certs_user = 0;
     network_num_certs = 0;
 
     network_num_certs += network_load_system_ca_file (force_display);

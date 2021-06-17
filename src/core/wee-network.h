@@ -44,6 +44,9 @@ struct t_network_socks5
 };
 
 extern int network_init_gnutls_ok;
+extern int network_num_certs_system;
+extern int network_num_certs_user;
+extern int network_num_certs;
 
 extern void network_init_gcrypt ();
 extern void network_load_ca_files (int force_display);

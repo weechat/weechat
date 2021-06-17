@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-06-15 20:40+0200\n"
+"POT-Creation-Date: 2021-06-17 21:45+0200\n"
 "PO-Revision-Date: 2021-05-25 18:28+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -441,6 +441,13 @@ msgstr "%s адрес \"%s\" не найден\n"
 
 msgid "Raw content of buffers has been written in log file"
 msgstr "Содержимое буфера записано в файл журнала"
+
+#, fuzzy, c-format
+msgid "%d certificate loaded (system: %d, user: %d)"
+msgid_plural "%d certificates loaded (system: %d, user: %d)"
+msgstr[0] "Не могу записать лог-файл \"%s\"\n"
+msgstr[1] "Не могу записать лог-файл \"%s\"\n"
+msgstr[2] "Не могу записать лог-файл \"%s\"\n"
 
 #, c-format
 msgid "Debug disabled for \"%s\""
@@ -1430,8 +1437,8 @@ msgstr ""
 #, fuzzy
 msgid ""
 "list || set <plugin> <level> || dump [<plugin>] || buffer|color|infolists|"
-"memory|tags|term|windows || mouse|cursor [verbose] || hdata [free] || time "
-"<command>"
+"libs|certs|memory|tags|term|windows || mouse|cursor [verbose] || hdata "
+"[free] || time <command>"
 msgstr "dump | buffer | windows"
 
 #, fuzzy
@@ -1451,6 +1458,7 @@ msgid ""
 "    hooks: display infos about hooks\n"
 "infolists: display infos about infolists\n"
 "     libs: display infos about external libraries used\n"
+"    certs: display number of loaded trusted certificate authorities\n"
 "   memory: display infos about memory usage\n"
 "    mouse: toggle debug for mouse\n"
 "     tags: display tags for lines\n"
