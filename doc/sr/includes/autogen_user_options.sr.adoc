@@ -2677,10 +2677,10 @@
 ** подразумевана вредност: `+25+`
 
 * [[option_irc.server_default.capabilities]] *irc.server_default.capabilities*
-** опис: pass:none[листа могућности клијента (client capabilities) раздвојених запетама које треба да се укључе за сервер у случају да су доступне (погледајте /help cap за листу могућности које подржава програм WeeChat) (пример: „away-notify,multi-prefix”)]
+** опис: pass:none[comma-separated list of client capabilities to enable for server if they are available (see /help cap for a list of capabilities supported by WeeChat); "*" enables all capabilities by default (supported by both server and WeeChat); wildcard "*" is allowed; a capability beginning with "!" is excluded (example: "*,!account-*,!extended-join")]
 ** тип: стринг
 ** вредности: било који стринг
-** подразумевана вредност: `+""+`
+** подразумевана вредност: `+"*"+`
 
 * [[option_irc.server_default.charset_message]] *irc.server_default.charset_message*
 ** опис: pass:none[део IRC поруке (примљене или послате) који се декодира/кодира у циљни скуп карактера; порука = комплетна IRC порука (подразумевано), канал = почевши само од имена канала (ако се пронађе, ако не онда се узима текст), текст = почевши само од текста (требало би да пробате ову вредност ако имате проблеме са кодирањем имена канала)]

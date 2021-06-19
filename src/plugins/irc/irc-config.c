@@ -1842,8 +1842,11 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 /* TRANSLATORS: please keep words "client capabilities" between brackets if translation is different (see fr.po) */
                 N_("comma-separated list of client capabilities to enable for "
                    "server if they are available (see /help cap for a list of "
-                   "capabilities supported by WeeChat) "
-                   "(example: \"away-notify,multi-prefix\")"),
+                   "capabilities supported by WeeChat); \"*\" enables all "
+                   "capabilities by default (supported by both server and "
+                   "WeeChat); wildcard \"*\" is allowed; a capability "
+                   "beginning with \"!\" is excluded "
+                   "(example: \"*,!account-*,!extended-join\")"),
                 NULL, 0, 0,
                 default_value, value,
                 null_value_allowed,

@@ -2677,10 +2677,10 @@
 ** domyślna wartość: `+25+`
 
 * [[option_irc.server_default.capabilities]] *irc.server_default.capabilities*
-** opis: pass:none[oddzielona przecinkami lista opcji klienta do włączenia dla serwera, jeśli są dostępne  (zobacz /help cap żeby poznać listę opcji wspieranych przez WeeChat) (przykład: "away-notify,multi-prefix")]
+** opis: pass:none[comma-separated list of client capabilities to enable for server if they are available (see /help cap for a list of capabilities supported by WeeChat); "*" enables all capabilities by default (supported by both server and WeeChat); wildcard "*" is allowed; a capability beginning with "!" is excluded (example: "*,!account-*,!extended-join")]
 ** typ: ciąg
 ** wartości: dowolny ciąg
-** domyślna wartość: `+""+`
+** domyślna wartość: `+"*"+`
 
 * [[option_irc.server_default.charset_message]] *irc.server_default.charset_message*
 ** opis: pass:none[część wiadomości IRC (otrzymanej lub wysłanej), która jest kodowana na ustawione kodowanie; message = cała wiadomość IRC (domyślne), channel = zaczynając od nazwy kanału (jeśli znaleziona, w przeciwnym wypadku text), text = zaczynając od samego tekstu (powinieneś spróbować tej wartości, jeśli masz problem z kodowaniem nazwy kanału)]
