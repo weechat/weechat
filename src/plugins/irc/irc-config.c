@@ -63,6 +63,7 @@ struct t_config_option *irc_config_look_display_away;
 struct t_config_option *irc_config_look_display_ctcp_blocked;
 struct t_config_option *irc_config_look_display_ctcp_reply;
 struct t_config_option *irc_config_look_display_ctcp_unknown;
+struct t_config_option *irc_config_look_display_extended_join;
 struct t_config_option *irc_config_look_display_host_join;
 struct t_config_option *irc_config_look_display_host_join_local;
 struct t_config_option *irc_config_look_display_host_quit;
@@ -2813,6 +2814,13 @@ irc_config_init ()
         irc_config_file, ptr_section,
         "display_ctcp_unknown", "boolean",
         N_("display CTCP message even if it is unknown CTCP"),
+        NULL, 0, 0, "on", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    irc_config_look_display_extended_join = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "display_extended_join", "boolean",
+        N_("display extra information in the JOIN messages: account name "
+           "and real name (capability extended-join must be enabled)"),
         NULL, 0, 0, "on", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_look_display_host_join = weechat_config_new_option (

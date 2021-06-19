@@ -2238,6 +2238,12 @@
 ** 値: on, off
 ** デフォルト値: `+on+`
 
+* [[option_irc.look.display_extended_join]] *irc.look.display_extended_join*
+** 説明: pass:none[display extra information in the JOIN messages: account name and real name (capability extended-join must be enabled)]
+** タイプ: ブール
+** 値: on, off
+** デフォルト値: `+on+`
+
 * [[option_irc.look.display_host_join]] *irc.look.display_host_join*
 ** 説明: pass:none[参加メッセージにホスト名を表示]
 ** タイプ: ブール

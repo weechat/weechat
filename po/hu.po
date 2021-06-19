@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-06-17 21:45+0200\n"
+"POT-Creation-Date: 2021-06-19 18:07+0200\n"
 "PO-Revision-Date: 2021-05-25 18:28+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7945,6 +7945,11 @@ msgid "display CTCP reply sent by WeeChat"
 msgstr ""
 
 msgid "display CTCP message even if it is unknown CTCP"
+msgstr ""
+
+msgid ""
+"display extra information in the JOIN messages: account name and real name "
+"(capability extended-join must be enabled)"
 msgstr ""
 
 #, fuzzy

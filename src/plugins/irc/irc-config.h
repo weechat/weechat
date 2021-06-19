@@ -103,6 +103,7 @@ extern struct t_config_option *irc_config_look_display_away;
 extern struct t_config_option *irc_config_look_display_ctcp_blocked;
 extern struct t_config_option *irc_config_look_display_ctcp_reply;
 extern struct t_config_option *irc_config_look_display_ctcp_unknown;
+extern struct t_config_option *irc_config_look_display_extended_join;
 extern struct t_config_option *irc_config_look_display_host_join;
 extern struct t_config_option *irc_config_look_display_host_join_local;
 extern struct t_config_option *irc_config_look_display_host_quit;

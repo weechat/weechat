@@ -2238,6 +2238,12 @@
 ** вредности: on, off
 ** подразумевана вредност: `+on+`
 
+* [[option_irc.look.display_extended_join]] *irc.look.display_extended_join*
+** опис: pass:none[display extra information in the JOIN messages: account name and real name (capability extended-join must be enabled)]
+** тип: логичка
+** вредности: on, off
+** подразумевана вредност: `+on+`
+
 * [[option_irc.look.display_host_join]] *irc.look.display_host_join*
 ** опис: pass:none[приказ хоста у порукама приступа]
 ** тип: логичка

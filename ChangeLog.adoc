@@ -21,6 +21,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 New features::
 
   * core: add option "certs" in command /debug
+  * irc: add option irc.look.display_extended_join (issue #320)
   * irc: add command /setname, add support of message and capability "setname" (issue #1653)
   * irc: always set realname in nicks even when extended-join capability is not enabled (issue #1653)
   * irc: add support of FAIL/WARN/NOTE messages (issue #1653)

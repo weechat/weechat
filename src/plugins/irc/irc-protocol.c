@@ -1365,7 +1365,8 @@ IRC_PROTOCOL_CALLBACK(join)
         ((argv_eol[4][0] == ':') ? argv_eol[4] + 1 : argv_eol[4]) : NULL;
 
     str_account[0] = '\0';
-    if (pos_account)
+    if (pos_account
+        && weechat_config_boolean (irc_config_look_display_extended_join))
     {
         snprintf (str_account, sizeof (str_account),
                   "%s [%s%s%s]",
@@ -1376,7 +1377,8 @@ IRC_PROTOCOL_CALLBACK(join)
     }
 
     str_realname[0] = '\0';
-    if (pos_realname)
+    if (pos_realname
+        && weechat_config_boolean (irc_config_look_display_extended_join))
     {
         snprintf (str_realname, sizeof (str_realname),
                   "%s (%s%s%s)",

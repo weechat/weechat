@@ -2238,6 +2238,12 @@
 ** Werte: on, off
 ** Standardwert: `+on+`
 
+* [[option_irc.look.display_extended_join]] *irc.look.display_extended_join*
+** Beschreibung: pass:none[display extra information in the JOIN messages: account name and real name (capability extended-join must be enabled)]
+** Typ: boolesch
+** Werte: on, off
+** Standardwert: `+on+`
+
 * [[option_irc.look.display_host_join]] *irc.look.display_host_join*
 ** Beschreibung: pass:none[zeigt den Host innerhalb einer join Nachricht an]
 ** Typ: boolesch

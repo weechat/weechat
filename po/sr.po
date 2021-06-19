@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-06-17 21:45+0200\n"
+"POT-Creation-Date: 2021-06-19 18:07+0200\n"
 "PO-Revision-Date: 2021-06-03 15:15+0400\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -9889,6 +9889,11 @@ msgstr "приказ CTCP одговора који шаље програм WeeC
 
 msgid "display CTCP message even if it is unknown CTCP"
 msgstr "приказ CTCP поруке чак и ако је непознат CTCP"
+
+msgid ""
+"display extra information in the JOIN messages: account name and real name "
+"(capability extended-join must be enabled)"
+msgstr ""
 
 msgid "display host in join messages"
 msgstr "приказ хоста у порукама приступа"
