@@ -2215,7 +2215,7 @@
 ** Standardwert: `+"%a, %d %b %Y %T %z"+`
 
 * [[option_irc.look.display_account_message]] *irc.look.display_account_message*
-** Beschreibung: pass:none[display ACCOUNT messages received when capability account-notify is enabled]
+** Beschreibung: pass:none[ACCOUNT Nachrichten anzeigen, die empfangen wurden, wenn die Funktion account-notify aktiviert ist]
 ** Typ: boolesch
 ** Werte: on, off
 ** Standardwert: `+on+`
@@ -2245,7 +2245,7 @@
 ** Standardwert: `+on+`
 
 * [[option_irc.look.display_extended_join]] *irc.look.display_extended_join*
-** Beschreibung: pass:none[display extra information in the JOIN messages: account name and real name (capability extended-join must be enabled)]
+** Beschreibung: pass:none[zusätzliche Informationen in den JOIN-Nachrichten anzeigen: Kontoname und richtiger Name (Funktion extended-join muss aktiviert sein)]
 ** Typ: boolesch
 ** Werte: on, off
 ** Standardwert: `+on+`
@@ -2677,7 +2677,7 @@
 ** Standardwert: `+25+`
 
 * [[option_irc.server_default.capabilities]] *irc.server_default.capabilities*
-** Beschreibung: pass:none[comma-separated list of client capabilities to enable for server if they are available (see /help cap for a list of capabilities supported by WeeChat); "*" enables all capabilities by default (supported by both server and WeeChat); wildcard "*" is allowed; a capability beginning with "!" is excluded (example: "*,!account-*,!extended-join")]
+** Beschreibung: pass:none[durch Kommata getrennte Liste von erweiterten Client-Fähigkeiten ("client capabilities"), welche vom Server angeboten und genutzt werden sollen (siehe /help cap um eine Liste von Fähigkeiten zu erhalten die von WeeChat unterstützt werden); "*" aktiviert standardmäßig alle Funktionen (die sowohl vom Server als auch von WeeChat unterstützt werden); Platzhalter "*" ist erlaubt; eine Fähigkeit, die mit "!" beginnt, wird ignoriert (Beispiel: "*,!account-*,!extended-join")]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+"*"+`
