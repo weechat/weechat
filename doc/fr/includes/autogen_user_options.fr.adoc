@@ -2214,6 +2214,12 @@
 ** valeurs: toute chaîne
 ** valeur par défaut: `+"%a, %d %b %Y %T %z"+`
 
+* [[option_irc.look.display_account_message]] *irc.look.display_account_message*
+** description: pass:none[afficher les messages ACCOUNT reçus quand la capacité account-notify est activée]
+** type: booléen
+** valeurs: on, off
+** valeur par défaut: `+on+`
+
 * [[option_irc.look.display_away]] *irc.look.display_away*
 ** description: pass:none[afficher un message pour l'absence/retour (off : ne rien afficher/envoyer, local : afficher en local, channel : envoyer l'action aux canaux)]
 ** type: entier

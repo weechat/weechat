@@ -2214,6 +2214,12 @@
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+"%a, %d %b %Y %T %z"+`
 
+* [[option_irc.look.display_account_message]] *irc.look.display_account_message*
+** opis: pass:none[display ACCOUNT messages received when capability account-notify is enabled]
+** typ: bool
+** wartości: on, off
+** domyślna wartość: `+on+`
+
 * [[option_irc.look.display_away]] *irc.look.display_away*
 ** opis: pass:none[wyświetl wiadomość, kiedy w(y)łączamy tryb oddalenia (off: nie wyświetlaj/wysyłaj nic, local: wyświetl lokalnie, channel: wyślij akcję na kanały)]
 ** typ: liczba

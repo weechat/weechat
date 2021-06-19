@@ -59,6 +59,7 @@ struct t_config_option *irc_config_look_color_nicks_in_nicklist;
 struct t_config_option *irc_config_look_color_nicks_in_server_messages;
 struct t_config_option *irc_config_look_color_pv_nick_like_channel;
 struct t_config_option *irc_config_look_ctcp_time_format;
+struct t_config_option *irc_config_look_display_account_message;
 struct t_config_option *irc_config_look_display_away;
 struct t_config_option *irc_config_look_display_ctcp_blocked;
 struct t_config_option *irc_config_look_display_ctcp_reply;
@@ -2788,6 +2789,13 @@ irc_config_init ()
         N_("time format used in answer to message CTCP TIME (see man strftime "
            "for date/time specifiers)"),
         NULL, 0, 0, "%a, %d %b %Y %T %z", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    irc_config_look_display_account_message = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "display_account_message", "boolean",
+        N_("display ACCOUNT messages received when capability account-notify "
+           "is enabled"),
+        NULL, 0, 0, "on", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_look_display_away = weechat_config_new_option (
         irc_config_file, ptr_section,

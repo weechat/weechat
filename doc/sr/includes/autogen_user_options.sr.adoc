@@ -2214,6 +2214,12 @@
 ** вредности: било који стринг
 ** подразумевана вредност: `+"%a, %d %b %Y %T %z"+`
 
+* [[option_irc.look.display_account_message]] *irc.look.display_account_message*
+** опис: pass:none[display ACCOUNT messages received when capability account-notify is enabled]
+** тип: логичка
+** вредности: on, off
+** подразумевана вредност: `+on+`
+
 * [[option_irc.look.display_away]] *irc.look.display_away*
 ** опис: pass:none[приказ поруке када се (де)маркира као одсутан (off: не приказује/шаље се ништа, local: приказује се локално, channel: слање акције каналу)]
 ** тип: целобројна

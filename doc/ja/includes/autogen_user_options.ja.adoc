@@ -2214,6 +2214,12 @@
 ** 値: 未制約文字列
 ** デフォルト値: `+"%a, %d %b %Y %T %z"+`
 
+* [[option_irc.look.display_account_message]] *irc.look.display_account_message*
+** 説明: pass:none[display ACCOUNT messages received when capability account-notify is enabled]
+** タイプ: ブール
+** 値: on, off
+** デフォルト値: `+on+`
+
 * [[option_irc.look.display_away]] *irc.look.display_away*
 ** 説明: pass:none[離席状態が変更されたらメッセージを表示 (off: 何も表示/送信しない、local: ローカルに表示、channel: チャンネルにアクションを送信)]
 ** タイプ: 整数

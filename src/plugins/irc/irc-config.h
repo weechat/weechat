@@ -99,6 +99,7 @@ extern struct t_config_option *irc_config_look_color_nicks_in_nicklist;
 extern struct t_config_option *irc_config_look_color_nicks_in_server_messages;
 extern struct t_config_option *irc_config_look_color_pv_nick_like_channel;
 extern struct t_config_option *irc_config_look_ctcp_time_format;
+extern struct t_config_option *irc_config_look_display_account_message;
 extern struct t_config_option *irc_config_look_display_away;
 extern struct t_config_option *irc_config_look_display_ctcp_blocked;
 extern struct t_config_option *irc_config_look_display_ctcp_reply;

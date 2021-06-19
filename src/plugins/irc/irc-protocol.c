@@ -409,7 +409,8 @@ IRC_PROTOCOL_CALLBACK(account)
         ptr_nick = irc_nick_search (server, ptr_channel, nick);
         if (ptr_nick)
         {
-            if (!ignored)
+            if (!ignored
+                && weechat_config_boolean (irc_config_look_display_account_message))
             {
                 ptr_nick_speaking = ((weechat_config_boolean (irc_config_look_smart_filter))
                                      && (weechat_config_boolean (irc_config_look_smart_filter_account))) ?

@@ -2214,6 +2214,12 @@
 ** valori: qualsiasi stringa
 ** valore predefinito: `+"%a, %d %b %Y %T %z"+`
 
+* [[option_irc.look.display_account_message]] *irc.look.display_account_message*
+** descrizione: pass:none[display ACCOUNT messages received when capability account-notify is enabled]
+** tipo: bool
+** valori: on, off
+** valore predefinito: `+on+`
+
 * [[option_irc.look.display_away]] *irc.look.display_away*
 ** descrizione: pass:none[mostra messaggio quando (non) si risulta assenti (off: non mostra/invia nulla, local: mostra localmente, channel: invia azioni ai canali)]
 ** tipo: intero

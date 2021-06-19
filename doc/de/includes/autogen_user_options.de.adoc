@@ -2214,6 +2214,12 @@
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+"%a, %d %b %Y %T %z"+`
 
+* [[option_irc.look.display_account_message]] *irc.look.display_account_message*
+** Beschreibung: pass:none[display ACCOUNT messages received when capability account-notify is enabled]
+** Typ: boolesch
+** Werte: on, off
+** Standardwert: `+on+`
+
 * [[option_irc.look.display_away]] *irc.look.display_away*
 ** Beschreibung: pass:none[zeigt eine Nachricht an, sobald der Abwesenheitsstatus ein- bzw. ausgeschaltet wird (off: zeigt/sendet keine Nachricht, local: eine Nachricht wird lokal angezeigt, channel: sendet eine Nachricht an die Kanäle)]
 ** Typ: integer
