@@ -2214,6 +2214,12 @@
 ** values: any string
 ** default value: `+"%a, %d %b %Y %T %z"+`
 
+* [[option_irc.look.display_account_message]] *irc.look.display_account_message*
+** description: pass:none[display ACCOUNT messages received when capability account-notify is enabled]
+** type: boolean
+** values: on, off
+** default value: `+on+`
+
 * [[option_irc.look.display_away]] *irc.look.display_away*
 ** description: pass:none[display message when (un)marking as away (off: do not display/send anything, local: display locally, channel: send action to channels)]
 ** type: integer
@@ -2234,6 +2240,12 @@
 
 * [[option_irc.look.display_ctcp_unknown]] *irc.look.display_ctcp_unknown*
 ** description: pass:none[display CTCP message even if it is unknown CTCP]
+** type: boolean
+** values: on, off
+** default value: `+on+`
+
+* [[option_irc.look.display_extended_join]] *irc.look.display_extended_join*
+** description: pass:none[display extra information in the JOIN messages: account name and real name (capability extended-join must be enabled)]
 ** type: boolean
 ** values: on, off
 ** default value: `+on+`
@@ -2665,10 +2677,10 @@
 ** default value: `+25+`
 
 * [[option_irc.server_default.capabilities]] *irc.server_default.capabilities*
-** description: pass:none[comma-separated list of client capabilities to enable for server if they are available (see /help cap for a list of capabilities supported by WeeChat) (example: "away-notify,multi-prefix")]
+** description: pass:none[comma-separated list of client capabilities to enable for server if they are available (see /help cap for a list of capabilities supported by WeeChat); "*" enables all capabilities by default (supported by both server and WeeChat); wildcard "*" is allowed; a capability beginning with "!" is excluded (example: "*,!account-*,!extended-join")]
 ** type: string
 ** values: any string
-** default value: `+""+`
+** default value: `+"*"+`
 
 * [[option_irc.server_default.charset_message]] *irc.server_default.charset_message*
 ** description: pass:none[part of the IRC message (received or sent) which is decoded/encoded to the target charset; message = the whole IRC message (default), channel = starting from the channel name only (if found, with fallback on text), text = starting from the text only (you should try this value if you have issues with the channel name encoding)]

@@ -2214,6 +2214,12 @@
 ** вредности: било који стринг
 ** подразумевана вредност: `+"%a, %d %b %Y %T %z"+`
 
+* [[option_irc.look.display_account_message]] *irc.look.display_account_message*
+** опис: pass:none[display ACCOUNT messages received when capability account-notify is enabled]
+** тип: логичка
+** вредности: on, off
+** подразумевана вредност: `+on+`
+
 * [[option_irc.look.display_away]] *irc.look.display_away*
 ** опис: pass:none[приказ поруке када се (де)маркира као одсутан (off: не приказује/шаље се ништа, local: приказује се локално, channel: слање акције каналу)]
 ** тип: целобројна
@@ -2234,6 +2240,12 @@
 
 * [[option_irc.look.display_ctcp_unknown]] *irc.look.display_ctcp_unknown*
 ** опис: pass:none[приказ CTCP поруке чак и ако је непознат CTCP]
+** тип: логичка
+** вредности: on, off
+** подразумевана вредност: `+on+`
+
+* [[option_irc.look.display_extended_join]] *irc.look.display_extended_join*
+** опис: pass:none[display extra information in the JOIN messages: account name and real name (capability extended-join must be enabled)]
 ** тип: логичка
 ** вредности: on, off
 ** подразумевана вредност: `+on+`
@@ -2665,10 +2677,10 @@
 ** подразумевана вредност: `+25+`
 
 * [[option_irc.server_default.capabilities]] *irc.server_default.capabilities*
-** опис: pass:none[листа могућности клијента (client capabilities) раздвојених запетама које треба да се укључе за сервер у случају да су доступне (погледајте /help cap за листу могућности које подржава програм WeeChat) (пример: „away-notify,multi-prefix”)]
+** опис: pass:none[comma-separated list of client capabilities to enable for server if they are available (see /help cap for a list of capabilities supported by WeeChat); "*" enables all capabilities by default (supported by both server and WeeChat); wildcard "*" is allowed; a capability beginning with "!" is excluded (example: "*,!account-*,!extended-join")]
 ** тип: стринг
 ** вредности: било који стринг
-** подразумевана вредност: `+""+`
+** подразумевана вредност: `+"*"+`
 
 * [[option_irc.server_default.charset_message]] *irc.server_default.charset_message*
 ** опис: pass:none[део IRC поруке (примљене или послате) који се декодира/кодира у циљни скуп карактера; порука = комплетна IRC порука (подразумевано), канал = почевши само од имена канала (ако се пронађе, ако не онда се узима текст), текст = почевши само од текста (требало би да пробате ову вредност ако имате проблеме са кодирањем имена канала)]

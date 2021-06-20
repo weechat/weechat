@@ -87,7 +87,7 @@ char *irc_server_options[IRC_SERVER_NUM_OPTIONS][2] =
   { "ssl_fingerprint",      ""                        },
   { "ssl_verify",           "on"                      },
   { "password",             ""                        },
-  { "capabilities",         ""                        },
+  { "capabilities",         "*"                       },
   { "sasl_mechanism",       "plain"                   },
   { "sasl_username",        ""                        },
   { "sasl_password",        ""                        },

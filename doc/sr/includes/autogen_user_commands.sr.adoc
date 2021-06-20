@@ -1278,32 +1278,33 @@ stop: зауставља режим померања курсора
 
 ----
 /debug  list
-        set <додатак> <ниво>
-        dump [<додатак>]
-        buffer|color|infolists|memory|tags|term|windows
+        set <plugin> <level>
+        dump [<plugin>]
+        buffer|color|infolists|libs|certs|memory|tags|term|windows
         mouse|cursor [verbose]
         hdata [free]
-        time <команда>
+        time <command>
 
-     list: исписује додатке са дибаг нивоима
-      set: поставља дибаг ниво за додатак
-  додатак: име додатка („core” за WeeChat језгро)
-     ниво: дибаг ниво за додатак (0 = искључује дибаг)
-     dump: чува садржај меморије у WeeChat лог фајл (исти садржај се записује када се програм WeeChat сруши)
-   buffer: уписује у лог фајл садржај бафера као хексадецималне вредности
-    color: приказује инфо о тренутним паровима боја
-   cursor: пребацује дибаг за режим померања курсора
-     dirs: исписује директоријуме
-    hdata: исписује инфо о hdata (са free: уклања све hdata из меморије)
-    hooks: исписује инфо о кукама
-infolists: исписује инфо о инфолистама
-     libs: исписује инфо о коришћеним спољним библиотекама
-   memory: исписује инфо о употреби меморије
-    mouse: пребацује дибаг за миша
-     tags: исписује ознаке за линије
-     term: исписује инфо о терминалу
-  windows: исписује стабло прозора
-     time: мери време извршавања команде или слања текста текућем баферу
+     list: list plugins with debug levels
+      set: set debug level for plugin
+   plugin: name of plugin ("core" for WeeChat core)
+    level: debug level for plugin (0 = disable debug)
+     dump: save memory dump in WeeChat log file (same dump is written when WeeChat crashes)
+   buffer: dump buffer content with hexadecimal values in log file
+    color: display infos about current color pairs
+   cursor: toggle debug for cursor mode
+     dirs: display directories
+    hdata: display infos about hdata (with free: remove all hdata in memory)
+    hooks: display infos about hooks
+infolists: display infos about infolists
+     libs: display infos about external libraries used
+    certs: display number of loaded trusted certificate authorities
+   memory: display infos about memory usage
+    mouse: toggle debug for mouse
+     tags: display tags for lines
+     term: display infos about terminal
+  windows: display windows tree
+     time: measure time to execute a command or to send text to the current buffer
 ----
 
 [[command_weechat_eval]]

@@ -6513,8 +6513,8 @@ irc_command_init ()
            "   /cap req multi-prefix away-notify"),
         "ls"
         " || list"
-        " || req " IRC_COMMAND_CAP_SUPPORTED_COMPLETION
-        " || ack " IRC_COMMAND_CAP_SUPPORTED_COMPLETION
+        " || req " IRC_COMMAND_CAP_SUPPORTED_COMPLETION "|%*"
+        " || ack " IRC_COMMAND_CAP_SUPPORTED_COMPLETION "|%*"
         " || end",
         &irc_command_cap, NULL, NULL);
     weechat_hook_command (

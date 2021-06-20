@@ -59,10 +59,12 @@ struct t_config_option *irc_config_look_color_nicks_in_nicklist;
 struct t_config_option *irc_config_look_color_nicks_in_server_messages;
 struct t_config_option *irc_config_look_color_pv_nick_like_channel;
 struct t_config_option *irc_config_look_ctcp_time_format;
+struct t_config_option *irc_config_look_display_account_message;
 struct t_config_option *irc_config_look_display_away;
 struct t_config_option *irc_config_look_display_ctcp_blocked;
 struct t_config_option *irc_config_look_display_ctcp_reply;
 struct t_config_option *irc_config_look_display_ctcp_unknown;
+struct t_config_option *irc_config_look_display_extended_join;
 struct t_config_option *irc_config_look_display_host_join;
 struct t_config_option *irc_config_look_display_host_join_local;
 struct t_config_option *irc_config_look_display_host_quit;
@@ -1840,8 +1842,11 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 /* TRANSLATORS: please keep words "client capabilities" between brackets if translation is different (see fr.po) */
                 N_("comma-separated list of client capabilities to enable for "
                    "server if they are available (see /help cap for a list of "
-                   "capabilities supported by WeeChat) "
-                   "(example: \"away-notify,multi-prefix\")"),
+                   "capabilities supported by WeeChat); \"*\" enables all "
+                   "capabilities by default (supported by both server and "
+                   "WeeChat); wildcard \"*\" is allowed; a capability "
+                   "beginning with \"!\" is excluded "
+                   "(example: \"*,!account-*,!extended-join\")"),
                 NULL, 0, 0,
                 default_value, value,
                 null_value_allowed,
@@ -2788,6 +2793,13 @@ irc_config_init ()
            "for date/time specifiers)"),
         NULL, 0, 0, "%a, %d %b %Y %T %z", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    irc_config_look_display_account_message = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "display_account_message", "boolean",
+        N_("display ACCOUNT messages received when capability account-notify "
+           "is enabled"),
+        NULL, 0, 0, "on", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_look_display_away = weechat_config_new_option (
         irc_config_file, ptr_section,
         "display_away", "integer",
@@ -2813,6 +2825,13 @@ irc_config_init ()
         irc_config_file, ptr_section,
         "display_ctcp_unknown", "boolean",
         N_("display CTCP message even if it is unknown CTCP"),
+        NULL, 0, 0, "on", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    irc_config_look_display_extended_join = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "display_extended_join", "boolean",
+        N_("display extra information in the JOIN messages: account name "
+           "and real name (capability extended-join must be enabled)"),
         NULL, 0, 0, "on", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_look_display_host_join = weechat_config_new_option (

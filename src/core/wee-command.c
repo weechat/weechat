@@ -54,6 +54,7 @@
 #include "wee-input.h"
 #include "wee-list.h"
 #include "wee-log.h"
+#include "wee-network.h"
 #include "wee-proxy.h"
 #include "wee-secure.h"
 #include "wee-secure-buffer.h"
@@ -1924,6 +1925,18 @@ COMMAND_CALLBACK(debug)
         gui_chat_printf (NULL, "");
         gui_chat_printf (NULL, "Libs:");
         (void) hook_signal_send ("debug_libs", WEECHAT_HOOK_SIGNAL_STRING, NULL);
+        return WEECHAT_RC_OK;
+    }
+
+    if (string_strcasecmp (argv[1], "certs") == 0)
+    {
+        gui_chat_printf (NULL,
+                         NG_("%d certificate loaded (system: %d, user: %d)",
+                             "%d certificates loaded (system: %d, user: %d)",
+                             network_num_certs),
+                         network_num_certs,
+                         network_num_certs_system,
+                         network_num_certs_user);
         return WEECHAT_RC_OK;
     }
 
@@ -7444,7 +7457,7 @@ command_init ()
         N_("list"
            " || set <plugin> <level>"
            " || dump [<plugin>]"
-           " || buffer|color|infolists|memory|tags|term|windows"
+           " || buffer|color|infolists|libs|certs|memory|tags|term|windows"
            " || mouse|cursor [verbose]"
            " || hdata [free]"
            " || time <command>"),
@@ -7463,6 +7476,7 @@ command_init ()
            "    hooks: display infos about hooks\n"
            "infolists: display infos about infolists\n"
            "     libs: display infos about external libraries used\n"
+           "    certs: display number of loaded trusted certificate authorities\n"
            "   memory: display infos about memory usage\n"
            "    mouse: toggle debug for mouse\n"
            "     tags: display tags for lines\n"
@@ -7481,6 +7495,7 @@ command_init ()
         " || hooks"
         " || infolists"
         " || libs"
+        " || certs"
         " || memory"
         " || mouse verbose"
         " || tags"

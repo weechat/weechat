@@ -2214,6 +2214,12 @@
 ** valeurs: toute chaîne
 ** valeur par défaut: `+"%a, %d %b %Y %T %z"+`
 
+* [[option_irc.look.display_account_message]] *irc.look.display_account_message*
+** description: pass:none[afficher les messages ACCOUNT reçus quand la capacité account-notify est activée]
+** type: booléen
+** valeurs: on, off
+** valeur par défaut: `+on+`
+
 * [[option_irc.look.display_away]] *irc.look.display_away*
 ** description: pass:none[afficher un message pour l'absence/retour (off : ne rien afficher/envoyer, local : afficher en local, channel : envoyer l'action aux canaux)]
 ** type: entier
@@ -2234,6 +2240,12 @@
 
 * [[option_irc.look.display_ctcp_unknown]] *irc.look.display_ctcp_unknown*
 ** description: pass:none[afficher le message CTCP même si le CTCP est inconnu]
+** type: booléen
+** valeurs: on, off
+** valeur par défaut: `+on+`
+
+* [[option_irc.look.display_extended_join]] *irc.look.display_extended_join*
+** description: pass:none[afficher les informations supplémentaires sur les messages JOIN : nom de compte et nom réel (la capacité extended-join doit être activée)]
 ** type: booléen
 ** valeurs: on, off
 ** valeur par défaut: `+on+`
@@ -2665,10 +2677,10 @@
 ** valeur par défaut: `+25+`
 
 * [[option_irc.server_default.capabilities]] *irc.server_default.capabilities*
-** description: pass:none[liste séparée par des virgules de capacités client ("client capabilities") à activer sur le serveur si elles sont disponibles (voir /help cap pour la liste des capacités supportées par WeeChat) (exemple : "away-notify,multi-prefix")]
+** description: pass:none[liste séparée par des virgules de capacités client ("client capabilities") à activer sur le serveur si elles sont disponibles (voir /help cap pour la liste des capacités supportées par WeeChat) ; "*" active toutes les capacités par défaut (supportées par le serveur et WeeChat) ; le caractère joker "*" est autorisé ; une capacité commençant par "!" est exclue (exemple : "*,!account-*,!extended-join")]
 ** type: chaîne
 ** valeurs: toute chaîne
-** valeur par défaut: `+""+`
+** valeur par défaut: `+"*"+`
 
 * [[option_irc.server_default.charset_message]] *irc.server_default.charset_message*
 ** description: pass:none[partie du message IRC (reçu ou envoyé) qui est décodé/encode vers le jeu de caractères cible ; message = le message IRC entier (par défaut), channel = à partir du nom du canal seulement (si trouvé, sinon à partir du texte), text = à partir du texte seulement (vous devriez essayer cette valeur si vous avec des problèmes d'encodage avec le nom du canal)]

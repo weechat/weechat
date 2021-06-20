@@ -20,7 +20,50 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 [[v3.3]]
 == Version 3.3 (under dev)
 
-[[v3.2_irc_sasl_blowfish_aes]]
+[[v3.3_irc_default_capabilities]]
+=== IRC default capabilities
+
+All supported capabilities are now enabled by default if the server support
+them:
+
+* account-notify
+* away-notify
+* cap-notify
+* chghost
+* extended-join
+* invite-notify
+* multi-prefix
+* server-time
+* setname
+* userhost-in-names
+
+Two new options have been added and enabled by default to customize the behavior
+of capabilities "account-notify" and "extended-join":
+
+* _irc.look.display_account_message_: display ACCOUNT messages received
+* _irc.look.display_extended_join_: display extended join info in the JOIN
+  messages: account name and real name
+
+The default value of option _irc.server_default.capabilities_ is now `*` which
+means that all capabilities supported by both WeeChat and the server are enabled
+by default.
+
+After upgrade, to enable all capabilities and remove custom capabilities you
+have set, you can do:
+
+----
+/set irc.server_default.capabilities "*"
+/unset irc.server.example.capabilities
+----
+
+You can also explicitly disable some capabilities with this syntax
+(see `/help irc.server_default.capabilities`):
+
+----
+/set irc.server_default.capabilities "*,!away-notify,!extended-join"
+----
+
+[[v3.3_irc_sasl_blowfish_aes]]
 === Drop support of SASL DH-BLOWFISH and DH-AES mechanisms
 
 The SASL mechanisms DH-BLOWFISH and DH-AES have been removed, because they

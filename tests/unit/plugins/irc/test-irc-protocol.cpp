@@ -43,6 +43,8 @@ extern const char *irc_protocol_nick_address (struct t_irc_server *server,
                                               const char *nickname,
                                               const char *address);
 extern struct t_hashtable *irc_protocol_get_message_tags (const char *tags);
+extern char *irc_protocol_cap_to_enable (const char *capabilities,
+                                         int sasl_requested);
 }
 
 #include "tests/tests.h"
@@ -54,6 +56,15 @@ extern struct t_hashtable *irc_protocol_get_message_tags (const char *tags);
     "USERLEN=16 HOSTLEN=32 CHANNELLEN=50 TOPICLEN=390 DEAF=D "          \
     "CHANTYPES=# CHANMODES=eIbq,k,flj,CFLMPQScgimnprstuz "              \
     "MONITOR=100"
+#define IRC_ALL_CAPS "account-notify,away-notify,cap-notify,chghost,"   \
+    "extended-join,invite-notify,multi-prefix,server-time,setname,"     \
+    "userhost-in-names"
+
+#define WEE_CHECK_CAP_TO_ENABLE(__result, __string, __sasl_requested)   \
+    str = irc_protocol_cap_to_enable (__string, __sasl_requested);      \
+    STRCMP_EQUAL(__result, str);                                        \
+    free (str);
+
 
 struct t_irc_server *ptr_server;
 
@@ -528,6 +539,25 @@ TEST(IrcProtocolWithServer, away)
 
     server_recv (":alice!user@host AWAY");
     LONGS_EQUAL(0, ptr_nick->away);
+}
+
+/*
+ * Tests functions:
+ *   irc_protocol_cap_to_enable
+ */
+
+TEST(IrcProtocol, cap_to_enable)
+{
+    char *str;
+
+    WEE_CHECK_CAP_TO_ENABLE("", NULL, 0);
+    WEE_CHECK_CAP_TO_ENABLE("", "", 0);
+    WEE_CHECK_CAP_TO_ENABLE("extended-join", "extended-join", 0);
+    WEE_CHECK_CAP_TO_ENABLE("extended-join,sasl", "extended-join", 1);
+    WEE_CHECK_CAP_TO_ENABLE(IRC_ALL_CAPS, "*", 0);
+    WEE_CHECK_CAP_TO_ENABLE(IRC_ALL_CAPS ",sasl", "*", 1);
+    WEE_CHECK_CAP_TO_ENABLE(IRC_ALL_CAPS ",!away-notify,!extended-join,sasl",
+                            "*,!away-notify,!extended-join", 1);
 }
 
 /*

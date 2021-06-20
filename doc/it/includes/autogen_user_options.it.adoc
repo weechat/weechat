@@ -2214,6 +2214,12 @@
 ** valori: qualsiasi stringa
 ** valore predefinito: `+"%a, %d %b %Y %T %z"+`
 
+* [[option_irc.look.display_account_message]] *irc.look.display_account_message*
+** descrizione: pass:none[display ACCOUNT messages received when capability account-notify is enabled]
+** tipo: bool
+** valori: on, off
+** valore predefinito: `+on+`
+
 * [[option_irc.look.display_away]] *irc.look.display_away*
 ** descrizione: pass:none[mostra messaggio quando (non) si risulta assenti (off: non mostra/invia nulla, local: mostra localmente, channel: invia azioni ai canali)]
 ** tipo: intero
@@ -2234,6 +2240,12 @@
 
 * [[option_irc.look.display_ctcp_unknown]] *irc.look.display_ctcp_unknown*
 ** descrizione: pass:none[visualizza messaggio CTCP anche se è CTCP sconosciuto]
+** tipo: bool
+** valori: on, off
+** valore predefinito: `+on+`
+
+* [[option_irc.look.display_extended_join]] *irc.look.display_extended_join*
+** descrizione: pass:none[display extra information in the JOIN messages: account name and real name (capability extended-join must be enabled)]
 ** tipo: bool
 ** valori: on, off
 ** valore predefinito: `+on+`
@@ -2665,10 +2677,10 @@
 ** valore predefinito: `+25+`
 
 * [[option_irc.server_default.capabilities]] *irc.server_default.capabilities*
-** descrizione: pass:none[comma-separated list of client capabilities to enable for server if they are available (see /help cap for a list of capabilities supported by WeeChat) (example: "away-notify,multi-prefix")]
+** descrizione: pass:none[comma-separated list of client capabilities to enable for server if they are available (see /help cap for a list of capabilities supported by WeeChat); "*" enables all capabilities by default (supported by both server and WeeChat); wildcard "*" is allowed; a capability beginning with "!" is excluded (example: "*,!account-*,!extended-join")]
 ** tipo: stringa
 ** valori: qualsiasi stringa
-** valore predefinito: `+""+`
+** valore predefinito: `+"*"+`
 
 * [[option_irc.server_default.charset_message]] *irc.server_default.charset_message*
 ** descrizione: pass:none[part of the IRC message (received or sent) which is decoded/encoded to the target charset; message = the whole IRC message (default), channel = starting from the channel name only (if found, with fallback on text), text = starting from the text only (you should try this value if you have issues with the channel name encoding)]
