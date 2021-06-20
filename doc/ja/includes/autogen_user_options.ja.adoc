@@ -2214,6 +2214,12 @@
 ** 値: 未制約文字列
 ** デフォルト値: `+"%a, %d %b %Y %T %z"+`
 
+* [[option_irc.look.display_account_message]] *irc.look.display_account_message*
+** 説明: pass:none[display ACCOUNT messages received when capability account-notify is enabled]
+** タイプ: ブール
+** 値: on, off
+** デフォルト値: `+on+`
+
 * [[option_irc.look.display_away]] *irc.look.display_away*
 ** 説明: pass:none[離席状態が変更されたらメッセージを表示 (off: 何も表示/送信しない、local: ローカルに表示、channel: チャンネルにアクションを送信)]
 ** タイプ: 整数
@@ -2234,6 +2240,12 @@
 
 * [[option_irc.look.display_ctcp_unknown]] *irc.look.display_ctcp_unknown*
 ** 説明: pass:none[解釈できない CTCP の場合も CTCP メッセージを表示]
+** タイプ: ブール
+** 値: on, off
+** デフォルト値: `+on+`
+
+* [[option_irc.look.display_extended_join]] *irc.look.display_extended_join*
+** 説明: pass:none[display extra information in the JOIN messages: account name and real name (capability extended-join must be enabled)]
 ** タイプ: ブール
 ** 値: on, off
 ** デフォルト値: `+on+`
@@ -2665,10 +2677,10 @@
 ** デフォルト値: `+25+`
 
 * [[option_irc.server_default.capabilities]] *irc.server_default.capabilities*
-** 説明: pass:none[サーバで利用可能ならば有効化する "client capabilities" のコンマ区切りリスト (WeeChat がサポートする機能のリストは /help cap を参照してください) (例: "away-notify,multi-prefix")]
+** 説明: pass:none[comma-separated list of client capabilities to enable for server if they are available (see /help cap for a list of capabilities supported by WeeChat); "*" enables all capabilities by default (supported by both server and WeeChat); wildcard "*" is allowed; a capability beginning with "!" is excluded (example: "*,!account-*,!extended-join")]
 ** タイプ: 文字列
 ** 値: 未制約文字列
-** デフォルト値: `+""+`
+** デフォルト値: `+"*"+`
 
 * [[option_irc.server_default.charset_message]] *irc.server_default.charset_message*
 ** 説明: pass:none[part of the IRC message (received or sent) which is decoded/encoded to the target charset; message = the whole IRC message (default), channel = starting from the channel name only (if found, with fallback on text), text = starting from the text only (you should try this value if you have issues with the channel name encoding)]

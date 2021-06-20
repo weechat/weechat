@@ -1280,7 +1280,7 @@ Examples:
 /debug  list
         set <plugin> <level>
         dump [<plugin>]
-        buffer|color|infolists|memory|tags|term|windows
+        buffer|color|infolists|libs|certs|memory|tags|term|windows
         mouse|cursor [verbose]
         hdata [free]
         time <command>
@@ -1298,6 +1298,7 @@ Examples:
     hooks: display infos about hooks
 infolists: display infos about infolists
      libs: display infos about external libraries used
+    certs: display number of loaded trusted certificate authorities
    memory: display infos about memory usage
     mouse: toggle debug for mouse
      tags: display tags for lines

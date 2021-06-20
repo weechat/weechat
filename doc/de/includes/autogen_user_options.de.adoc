@@ -2214,6 +2214,12 @@
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+"%a, %d %b %Y %T %z"+`
 
+* [[option_irc.look.display_account_message]] *irc.look.display_account_message*
+** Beschreibung: pass:none[ACCOUNT Nachrichten anzeigen, die empfangen wurden, wenn die Funktion account-notify aktiviert ist]
+** Typ: boolesch
+** Werte: on, off
+** Standardwert: `+on+`
+
 * [[option_irc.look.display_away]] *irc.look.display_away*
 ** Beschreibung: pass:none[zeigt eine Nachricht an, sobald der Abwesenheitsstatus ein- bzw. ausgeschaltet wird (off: zeigt/sendet keine Nachricht, local: eine Nachricht wird lokal angezeigt, channel: sendet eine Nachricht an die Kanäle)]
 ** Typ: integer
@@ -2234,6 +2240,12 @@
 
 * [[option_irc.look.display_ctcp_unknown]] *irc.look.display_ctcp_unknown*
 ** Beschreibung: pass:none[unbekannte CTCP Nachrichten werden angezeigt]
+** Typ: boolesch
+** Werte: on, off
+** Standardwert: `+on+`
+
+* [[option_irc.look.display_extended_join]] *irc.look.display_extended_join*
+** Beschreibung: pass:none[zusätzliche Informationen in den JOIN-Nachrichten anzeigen: Kontoname und richtiger Name (Funktion extended-join muss aktiviert sein)]
 ** Typ: boolesch
 ** Werte: on, off
 ** Standardwert: `+on+`
@@ -2665,10 +2677,10 @@
 ** Standardwert: `+25+`
 
 * [[option_irc.server_default.capabilities]] *irc.server_default.capabilities*
-** Beschreibung: pass:none[durch Kommata getrennte Liste von erweiterten Client-Fähigkeiten ("client capabilities"), welche vom Server angeboten und genutzt werden sollen (siehe /help cap um eine Liste von Fähigkeiten zu erhalten die von WeeChat unterstützt werden) (Beispiel: "away-notify,multi-prefix")]
+** Beschreibung: pass:none[durch Kommata getrennte Liste von erweiterten Client-Fähigkeiten ("client capabilities"), welche vom Server angeboten und genutzt werden sollen (siehe /help cap um eine Liste von Fähigkeiten zu erhalten die von WeeChat unterstützt werden); "*" aktiviert standardmäßig alle Funktionen (die sowohl vom Server als auch von WeeChat unterstützt werden); Platzhalter "*" ist erlaubt; eine Fähigkeit, die mit "!" beginnt, wird ignoriert (Beispiel: "*,!account-*,!extended-join")]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
-** Standardwert: `+""+`
+** Standardwert: `+"*"+`
 
 * [[option_irc.server_default.charset_message]] *irc.server_default.charset_message*
 ** Beschreibung: pass:none[Teil der IRC Nachricht (empfangen oder gesendet) die zum Zielzeichensatz dekodiert/kodiert werden soll; message = die komplette IRC Nachricht (Standard), channel = beginnend mit dem Kanalnamen (sofern dieser gefunden wird, ansonsten Fallback auf text), text = beginnend mit dem Nachrichtentext (dieser Wert sollte ausprobiert werden, falls es Probleme bei der Kodierung des Kanalnamens geben sollte)]
@@ -2779,7 +2791,7 @@
 ** Standardwert: `+""+`
 
 * [[option_irc.server_default.sasl_mechanism]] *irc.server_default.sasl_mechanism*
-** Beschreibung: pass:none[mechanism for SASL authentication: "plain" for plain text password, "scram-sha-1" for SCRAM authentication with SHA-1 digest algorithm, "scram-sha-256" for SCRAM authentication with SHA-256 digest algorithm, "scram-sha-512" for SCRAM authentication with SHA-512 digest algorithm, "ecdsa-nist256p-challenge" for key-based challenge authentication, "external" for authentication using client side SSL certificate]
+** Beschreibung: pass:none[Verfahren welches bei einer SASL Authentifizierung angewandt werden soll: "plain" Passwort wird im Klartext gesendet, "scram-sha-1" für SCRAM-Authentifizierung mit SHA-1-Digest-Algorithmus, "scram-sha-256" für SCRAM-Authenrifizierung mit SHA-256 Digest-Algorithmus, "scram-sha-512" für SCRAM-Authentifizierung mit SHA-512 Digest-Algorithmus, "ecdsa-nist256p-challenge" für öffentlich/private Schlüsselmethode, "external" ein SSL Zertifikat welches auf Client Seite vorliegt wird verwendet]
 ** Typ: integer
 ** Werte: plain, scram-sha-1, scram-sha-256, scram-sha-512, ecdsa-nist256p-challenge, external
 ** Standardwert: `+plain+`
