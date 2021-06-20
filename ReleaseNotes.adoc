@@ -64,7 +64,7 @@ You can also explicitly disable some capabilities with this syntax
 ----
 
 [[v3.3_irc_sasl_blowfish_aes]]
-=== Drop support of SASL DH-BLOWFISH and DH-AES mechanisms
+=== IRC SASL DH-BLOWFISH and DH-AES mechanisms removed
 
 The SASL mechanisms DH-BLOWFISH and DH-AES have been removed, because they
 are insecure and already removed from most IRC servers. +
