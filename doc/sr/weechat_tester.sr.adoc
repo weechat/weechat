@@ -7,6 +7,10 @@
 :sectnums:
 :docinfo1:
 
+Превод:
+
+* Иван Пешић (<ivan.pesic@gmail.com>), 2021.
+
 
 [[purpose]]
 == Намена
