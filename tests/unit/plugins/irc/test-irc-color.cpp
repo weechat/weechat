@@ -600,7 +600,7 @@ TEST(IrcColor, ModifierCallback)
     STRCMP_EQUAL(string, result);
     free (result);
 
-    /* modifier "irc_color_encode" */
+    /* modifier "irc_color_decode_ansi" */
     snprintf (string, sizeof (string),
               "test_%sbold1%s_normal_%sbold2%s_normal_%sbold3%s_normal",
               IRC_COLOR_BOLD_STR,
