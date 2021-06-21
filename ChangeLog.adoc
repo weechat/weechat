@@ -31,6 +31,7 @@ New features::
 Bug fixes::
 
   * api: fix function string_match with joker in the string if multiple words matched in input string
+  * irc: escape/unescape IRC message tags values (issue #1654)
   * irc: set notify level to "private" for received WALLOPS
 
 Documentation::

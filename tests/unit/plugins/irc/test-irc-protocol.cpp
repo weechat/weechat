@@ -42,7 +42,6 @@ extern const char *irc_protocol_nick_address (struct t_irc_server *server,
                                               struct t_irc_nick *nick,
                                               const char *nickname,
                                               const char *address);
-extern struct t_hashtable *irc_protocol_get_message_tags (const char *tags);
 extern char *irc_protocol_cap_to_enable (const char *capabilities,
                                          int sasl_requested);
 }
@@ -167,39 +166,6 @@ TEST(IrcProtocol, Tags)
     STRCMP_EQUAL("irc_join,tag1,tag2,nick_bob,host_example.com,log4",
                  irc_protocol_tags ("join", "tag1,tag2", "bob",
                                     "example.com"));
-}
-
-/*
- * Tests functions:
- *   irc_protocol_get_message_tags
- */
-
-TEST(IrcProtocol, GetMessageTags)
-{
-    struct t_hashtable *hashtable;
-
-    POINTERS_EQUAL(NULL, irc_protocol_get_message_tags (NULL));
-    POINTERS_EQUAL(NULL, irc_protocol_get_message_tags (""));
-
-    hashtable = irc_protocol_get_message_tags ("abc");
-    CHECK(hashtable);
-    LONGS_EQUAL(1, hashtable->items_count);
-    POINTERS_EQUAL(NULL, (const char *)hashtable_get (hashtable, "abc"));
-    hashtable_free (hashtable);
-
-    hashtable = irc_protocol_get_message_tags ("abc=def");
-    CHECK(hashtable);
-    LONGS_EQUAL(1, hashtable->items_count);
-    STRCMP_EQUAL("def", (const char *)hashtable_get (hashtable, "abc"));
-    hashtable_free (hashtable);
-
-    hashtable = irc_protocol_get_message_tags ("aaa=bbb;ccc;example.com/ddd=eee");
-    CHECK(hashtable);
-    LONGS_EQUAL(3, hashtable->items_count);
-    STRCMP_EQUAL("bbb", (const char *)hashtable_get (hashtable, "aaa"));
-    POINTERS_EQUAL(NULL, (const char *)hashtable_get (hashtable, "ccc"));
-    STRCMP_EQUAL("eee", (const char *)hashtable_get (hashtable, "example.com/ddd"));
-    hashtable_free (hashtable);
 }
 
 /*

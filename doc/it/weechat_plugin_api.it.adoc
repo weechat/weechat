@@ -12304,6 +12304,22 @@ List of modifiers defined by WeeChat and plugins that can be used:
   Message with hidden password.
 
 // TRANSLATION MISSING
+| [[hook_modifier_irc_tag_escape_value]] irc_tag_escape_value +
+  _(WeeChat ≥ 3.3)_ |
+  - |
+  Any string. |
+  String with IRC tag value escaped,
+  see: https://ircv3.net/specs/extensions/message-tags#escaping-values.
+
+// TRANSLATION MISSING
+| [[hook_modifier_irc_tag_unescape_value]] irc_tag_unescape_value +
+  _(WeeChat ≥ 3.3)_ |
+  - |
+  Any string. |
+  String with IRC tag value unescaped,
+  see: https://ircv3.net/specs/extensions/message-tags#escaping-values.
+
+// TRANSLATION MISSING
 | [[hook_modifier_color_decode_ansi]] color_decode_ansi +
   _(WeeChat ≥ 1.0)_ |
   "1" per mantenere i colori, "0" per rimuovere i colori |

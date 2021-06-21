@@ -11405,6 +11405,22 @@ char *weechat_hook_modifier_exec (const char *modifier,
   Порука која се приказује након што се `/msg` пошаље nickserv боту. |
   Порука са скривеном лозинком.
 
+// TRANSLATION MISSING
+| [[hook_modifier_irc_tag_escape_value]] irc_tag_escape_value +
+  _(WeeChat ≥ 3.3)_ |
+  - |
+  Any string. |
+  String with IRC tag value escaped,
+  see: https://ircv3.net/specs/extensions/message-tags#escaping-values.
+
+// TRANSLATION MISSING
+| [[hook_modifier_irc_tag_unescape_value]] irc_tag_unescape_value +
+  _(WeeChat ≥ 3.3)_ |
+  - |
+  Any string. |
+  String with IRC tag value unescaped,
+  see: https://ircv3.net/specs/extensions/message-tags#escaping-values.
+
 | [[hook_modifier_color_decode_ansi]] color_decode_ansi +
   _(WeeChat ≥ 1.0)_ |
   "1" да се боје задрже, "0" да се боје уклоне |

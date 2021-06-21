@@ -12083,6 +12083,20 @@ utilisés :
   Message affiché après `msg` envoyé à nickserv. |
   Message avec le mot de passe caché.
 
+| [[hook_modifier_irc_tag_escape_value]] irc_tag_escape_value +
+  _(WeeChat ≥ 3.3)_ |
+  - |
+  Toute chaîne. |
+  Chaîne avec la valeur de l'étiquette IRC échappée,
+  voir : https://ircv3.net/specs/extensions/message-tags#escaping-values.
+
+| [[hook_modifier_irc_tag_unescape_value]] irc_tag_unescape_value +
+  _(WeeChat ≥ 3.3)_ |
+  - |
+  Toute chaîne. |
+  Chaîne avec la valeur de l'étiquette IRC sans échappements,
+  voir : https://ircv3.net/specs/extensions/message-tags#escaping-values.
+
 | [[hook_modifier_color_decode_ansi]] color_decode_ansi +
   _(WeeChat ≥ 1.0)_ |
   "1" pour garder les couleurs, "0" pour les supprimer |

@@ -11859,6 +11859,22 @@ WeeChat とプラグインが定義する修飾子のリスト:
   `/msg` をサーバに送信した後に表示されるメッセージ |
   パスワードを隠したメッセージ
 
+// TRANSLATION MISSING
+| [[hook_modifier_irc_tag_escape_value]] irc_tag_escape_value +
+  _(WeeChat ≥ 3.3)_ |
+  - |
+  Any string. |
+  String with IRC tag value escaped,
+  see: https://ircv3.net/specs/extensions/message-tags#escaping-values.
+
+// TRANSLATION MISSING
+| [[hook_modifier_irc_tag_unescape_value]] irc_tag_unescape_value +
+  _(WeeChat ≥ 3.3)_ |
+  - |
+  Any string. |
+  String with IRC tag value unescaped,
+  see: https://ircv3.net/specs/extensions/message-tags#escaping-values.
+
 | [[hook_modifier_color_decode_ansi]] color_decode_ansi +
   _(WeeChat バージョン 1.0 以上で利用可)_ |
   色を保持する場合は "1"、削除する場合は "0" |

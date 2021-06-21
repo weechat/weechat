@@ -258,6 +258,10 @@ SET(WEECHAT_SOURCES
 ./src/plugins/irc/irc-sasl.h
 ./src/plugins/irc/irc-server.c
 ./src/plugins/irc/irc-server.h
+./src/plugins/irc/irc-tag.c
+./src/plugins/irc/irc-tag.h
+./src/plugins/irc/irc-upgrade.c
+./src/plugins/irc/irc-upgrade.h
 ./src/plugins/javascript/weechat-js-api.cpp
 ./src/plugins/javascript/weechat-js-api.h
 ./src/plugins/javascript/weechat-js-v8.cpp

@@ -53,9 +53,10 @@
 #include "irc-modelist.h"
 #include "irc-msgbuffer.h"
 #include "irc-nick.h"
+#include "irc-notify.h"
 #include "irc-sasl.h"
 #include "irc-server.h"
-#include "irc-notify.h"
+#include "irc-tag.h"
 
 
 /*
@@ -197,66 +198,6 @@ irc_protocol_nick_address (struct t_irc_server *server,
     }
 
     return string;
-}
-
-/*
- * Returns hashtable with tags for an IRC message.
- *
- * Example:
- *   if tags == "aaa=bbb;ccc;example.com/ddd=eee",
- *   hashtable will have following keys/values:
- *     "aaa" => "bbb"
- *     "ccc" => NULL
- *     "example.com/ddd" => "eee"
- */
-
-struct t_hashtable *
-irc_protocol_get_message_tags (const char *tags)
-{
-    struct t_hashtable *hashtable;
-    char **items, *pos, *key;
-    int num_items, i;
-
-    if (!tags || !tags[0])
-        return NULL;
-
-    hashtable = weechat_hashtable_new (32,
-                                       WEECHAT_HASHTABLE_STRING,
-                                       WEECHAT_HASHTABLE_STRING,
-                                       NULL, NULL);
-    if (!hashtable)
-        return NULL;
-
-    items = weechat_string_split (tags, ";", NULL,
-                                  WEECHAT_STRING_SPLIT_STRIP_LEFT
-                                  | WEECHAT_STRING_SPLIT_STRIP_RIGHT
-                                  | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
-                                  0, &num_items);
-    if (items)
-    {
-        for (i = 0; i < num_items; i++)
-        {
-            pos = strchr (items[i], '=');
-            if (pos)
-            {
-                /* format: "tag=value" */
-                key = weechat_strndup (items[i], pos - items[i]);
-                if (key)
-                {
-                    weechat_hashtable_set (hashtable, key, pos + 1);
-                    free (key);
-                }
-            }
-            else
-            {
-                /* format: "tag" */
-                weechat_hashtable_set (hashtable, items[i], NULL);
-            }
-        }
-        weechat_string_free_split (items);
-    }
-
-    return hashtable;
 }
 
 /*
@@ -6883,7 +6824,7 @@ irc_protocol_recv_command (struct t_irc_server *server,
                                     pos_space - (irc_message + 1));
             if (tags)
             {
-                hash_tags = irc_protocol_get_message_tags (tags);
+                hash_tags = irc_tag_parse (tags);
                 if (hash_tags)
                 {
                     date = irc_protocol_parse_time (

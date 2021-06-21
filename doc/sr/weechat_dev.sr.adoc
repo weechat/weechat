@@ -290,6 +290,8 @@ WeeChat „језгро” се налази у следећим директо�
 |       irc-redirect.c              | Преусмеравање излаза IRC команде.
 |       irc-sasl.c                  | SASL аутентификација са IRC сервером.
 |       irc-server.c                | У/И комуникација са IRC сервером.
+// TRANSLATION MISSING
+|       irc-tag.c                   | Functions to manipulate IRC message tags.
 |       irc-upgrade.c               | Чување/обнављање IRC података када се ажурира програм WeeChat.
 |    javascript/                    | JavaScript додатак.
 |       weechat-js.cpp              | Главне JavaScript функције (учитавање/уклањање скрипти, извршавање JavaScript кода).
