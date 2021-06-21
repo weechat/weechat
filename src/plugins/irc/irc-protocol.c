@@ -3195,7 +3195,7 @@ IRC_PROTOCOL_CALLBACK(wallops)
     weechat_printf_date_tags (
         irc_msgbuffer_get_target_buffer (server, nick, command, NULL, NULL),
         date,
-        irc_protocol_tags (command, NULL, nick, address),
+        irc_protocol_tags (command, "notify_private", nick, address),
         _("%sWallops from %s: %s"),
         weechat_prefix ("network"),
         (nick_address[0]) ? nick_address : "?",

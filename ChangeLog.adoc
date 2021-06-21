@@ -28,6 +28,10 @@ New features::
   * irc: add support of FAIL/WARN/NOTE messages (issue #1653)
   * irc: drop support of DH-BLOWFISH and DH-AES SASL mechanisms (issue #175)
 
+Bug fixes::
+
+  * irc: set notify level to "private" for received WALLOPS
+
 Documentation::
 
   * add Serbian translations (issue #1655)
