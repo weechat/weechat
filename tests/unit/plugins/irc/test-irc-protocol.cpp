@@ -1305,6 +1305,28 @@ TEST(IrcProtocolWithServer, setname_with_setname_cap)
 
 /*
  * Tests functions:
+ *   irc_protocol_cb_tagmsg
+ */
+
+TEST(IrcProtocolWithServer, tagmsg)
+{
+    server_recv (":server 001 alice");
+
+    server_recv (":alice!user@host JOIN #test");
+    server_recv (":bob!user@host JOIN #test");
+
+    /* not enough arguments */
+    server_recv (":bob!user@host TAGMSG");
+
+    /* no tags */
+    server_recv (":bob!user@host TAGMSG #test");
+
+    /* with tags */
+    server_recv ("@tag1=123;tag2=456 :bob!user@host TAGMSG #test");
+}
+
+/*
+ * Tests functions:
  *   irc_protocol_cb_topic
  */
 

@@ -2904,6 +2904,22 @@ IRC_PROTOCOL_CALLBACK(setname)
 }
 
 /*
+ * Callback for the IRC message "SETNAME": set real name
+ * (with capability "setname").
+ *
+ * Message looks like:
+ *   @msgid=6gqz7dxd22v7r3x9pvukkp8nni;+tag1 :nick!user@host TAGMSG #channel
+ */
+
+IRC_PROTOCOL_CALLBACK(tagmsg)
+{
+    IRC_PROTOCOL_MIN_ARGS(3);
+
+    /* no action by default */
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Callback for an IRC message with mode and reason (numeric).
  */
 
@@ -6669,6 +6685,7 @@ irc_protocol_recv_command (struct t_irc_server *server,
         IRCB(privmsg, 1, 1, privmsg),    /* message received                */
         IRCB(quit, 1, 1, quit),          /* close all connections and quit  */
         IRCB(setname, 0, 1, setname),    /* set realname                    */
+        IRCB(tagmsg, 0, 1, tagmsg),      /* tag message                     */
         IRCB(topic, 0, 1, topic),        /* get/set channel topic           */
         IRCB(wallops, 1, 1, wallops),    /* wallops                         */
         IRCB(warn, 1, 0, warn),          /* warning received from server    */
