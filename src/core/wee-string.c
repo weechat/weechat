@@ -654,6 +654,13 @@ string_match (const char *string, const char *mask, int case_sensitive)
                 free (word);
                 return 0;
             }
+            if ((!pos_word[length_word] && !pos_end[0])
+                || string_match (pos_word + length_word, pos_end,
+                                 case_sensitive))
+            {
+                free (word);
+                return 1;
+            }
             while (1)
             {
                 pos_word2 = (case_sensitive) ?
@@ -662,8 +669,16 @@ string_match (const char *string, const char *mask, int case_sensitive)
                 if (!pos_word2)
                     break;
                 pos_word = pos_word2;
+                if ((!pos_word[length_word] && !pos_end[0])
+                    || string_match (pos_word + length_word, pos_end,
+                                     case_sensitive))
+                {
+                    free (word);
+                    return 1;
+                }
             }
-            ptr_string = pos_word + length_word;
+            free (word);
+            return 0;
         }
         else
         {

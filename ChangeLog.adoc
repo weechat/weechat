@@ -30,6 +30,7 @@ New features::
 
 Bug fixes::
 
+  * api: fix function string_match with joker in the string if multiple words matched in input string
   * irc: set notify level to "private" for received WALLOPS
 
 Documentation::
