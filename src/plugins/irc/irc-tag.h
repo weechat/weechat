@@ -27,6 +27,8 @@ extern char *irc_tag_modifier_cb (const void *pointer,
                                   const char *modifier,
                                   const char *modifier_data,
                                   const char *string);
-extern struct t_hashtable *irc_tag_parse (const char *tags);
+extern int irc_tag_parse (const char *tags,
+                          struct t_hashtable *hashtable,
+                          const char *prefix_key);
 
 #endif /* WEECHAT_PLUGIN_IRC_TAG_H */

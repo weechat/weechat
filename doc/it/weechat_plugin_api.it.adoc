@@ -16208,12 +16208,14 @@ if (hashtable_in)
     weechat_hashtable_set (
         hashtable_in,
         "message",
-        "@time=2015-06-27T16:40:35.000Z :nick!user@host PRIVMSG #weechat :hello!");
+        "@time=2015-06-27T16:40:35.000Z;tag2=value\\sspace :nick!user@host PRIVMSG #weechat :hello!");
     hashtable_out = weechat_info_get_hashtable ("irc_message_parse",
                                                 hashtable_in);
     /*
      * now hashtable_out has following keys/values:
-     *   "tags"                : "time=2015-06-27T16:40:35.000Z"
+     *   "tags"                : "time=2015-06-27T16:40:35.000Z;tag2=value\\sspace"
+     *   "tag_time"            : "2015-06-27T16:40:35.000Z"
+     *   "tag_tag2"            : "value space"
      *   "message_without_tags": ":nick!user@host PRIVMSG #weechat :hello!"
      *   "nick"                : "nick"
      *   "user"                : "user"
@@ -16222,10 +16224,10 @@ if (hashtable_in)
      *   "channel"             : "#weechat"
      *   "arguments"           : "#weechat :hello!"
      *   "text"                : "hello!"
-     *   "pos_command"         : "47"
-     *   "pos_arguments"       : "55"
-     *   "pos_channel"         : "55"
-     *   "pos_text"            : "65"
+     *   "pos_command"         : "65"
+     *   "pos_arguments"       : "73"
+     *   "pos_channel"         : "73"
+     *   "pos_text"            : "83"
      */
     weechat_hashtable_free (hashtable_in);
     weechat_hashtable_free (hashtable_out);

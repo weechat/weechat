@@ -216,33 +216,34 @@ irc_tag_modifier_cb (const void *pointer, void *data,
 }
 
 /*
- * Parses tags received in an IRC message.
- * Returns a hashtable with tags and their unescaped values.
+ * Parses tags received in an IRC message and returns the number of tags
+ * set in the hasbtable "hashtable" (values are unescaped tag values).
+ *
+ * If prefix_key is not NULL, it is used as prefix before the name of keys.
  *
  * Example:
- *   if tags == "aaa=bbb;ccc;example.com/ddd=eee",
- *   hashtable will have following keys/values:
- *     "aaa" => "bbb"
- *     "ccc" => NULL
- *     "example.com/ddd" => "eee"
+ *
+ *   input:
+ *     tags == "aaa=bbb;ccc;example.com/ddd=value\swith\sspaces"
+ *     prefix_key == "tag_"
+ *   output:
+ *     hashtable is completed with the following keys/values:
+ *       "tag_aaa" => "bbb"
+ *       "tag_ccc" => NULL
+ *       "tag_example.com/ddd" => "value with spaces"
  */
 
-struct t_hashtable *
-irc_tag_parse (const char *tags)
+int
+irc_tag_parse (const char *tags,
+               struct t_hashtable *hashtable, const char *prefix_key)
 {
-    struct t_hashtable *hashtable;
-    char **items, *pos, *key, *unescaped;
-    int num_items, i;
+    char **items, *pos, *key, str_key[4096], *unescaped;
+    int num_items, i, num_tags;
 
-    if (!tags || !tags[0])
-        return NULL;
+    if (!tags || !tags[0] || !hashtable)
+        return 0;
 
-    hashtable = weechat_hashtable_new (32,
-                                       WEECHAT_HASHTABLE_STRING,
-                                       WEECHAT_HASHTABLE_STRING,
-                                       NULL, NULL);
-    if (!hashtable)
-        return NULL;
+    num_tags = 0;
 
     items = weechat_string_split (tags, ";", NULL,
                                   WEECHAT_STRING_SPLIT_STRIP_LEFT
@@ -260,21 +261,31 @@ irc_tag_parse (const char *tags)
                 key = weechat_strndup (items[i], pos - items[i]);
                 if (key)
                 {
+                    snprintf (str_key, sizeof (str_key),
+                              "%s%s",
+                              (prefix_key) ? prefix_key : "",
+                              key);
                     unescaped = irc_tag_unescape_value (pos + 1);
-                    weechat_hashtable_set (hashtable, key, unescaped);
+                    weechat_hashtable_set (hashtable, str_key, unescaped);
                     if (unescaped)
                         free (unescaped);
                     free (key);
+                    num_tags++;
                 }
             }
             else
             {
                 /* format: "tag" */
-                weechat_hashtable_set (hashtable, items[i], NULL);
+                snprintf (str_key, sizeof (str_key),
+                          "%s%s",
+                          (prefix_key) ? prefix_key : "",
+                          items[i]);
+                weechat_hashtable_set (hashtable, str_key, NULL);
+                num_tags++;
             }
         }
         weechat_string_free_split (items);
     }
 
-    return hashtable;
+    return num_tags;
 }

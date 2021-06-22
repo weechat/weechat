@@ -27,6 +27,7 @@ extern "C"
 #include "src/core/wee-hashtable.h"
 #include "src/core/wee-hook.h"
 #include "src/plugins/irc/irc-tag.h"
+#include "src/plugins/plugin.h"
 }
 
 #define WEE_CHECK_ESCAPE_VALUE(__result, __string)                      \
@@ -122,26 +123,41 @@ TEST(IrcTag, Parse)
 {
     struct t_hashtable *hashtable;
 
-    POINTERS_EQUAL(NULL, irc_tag_parse (NULL));
-    POINTERS_EQUAL(NULL, irc_tag_parse (""));
+    hashtable = hashtable_new (32,
+                               WEECHAT_HASHTABLE_STRING,
+                               WEECHAT_HASHTABLE_STRING,
+                               NULL, NULL);
 
-    hashtable = irc_tag_parse ("abc");
-    CHECK(hashtable);
+    LONGS_EQUAL(0, irc_tag_parse (NULL, hashtable, NULL));
+    LONGS_EQUAL(0, irc_tag_parse ("", hashtable, NULL));
+
+    hashtable_remove_all (hashtable);
+    LONGS_EQUAL(1, irc_tag_parse ("abc", hashtable, NULL));
     LONGS_EQUAL(1, hashtable->items_count);
     POINTERS_EQUAL(NULL, (const char *)hashtable_get (hashtable, "abc"));
-    hashtable_free (hashtable);
 
-    hashtable = irc_tag_parse ("abc=def");
-    CHECK(hashtable);
+    hashtable_remove_all (hashtable);
+    LONGS_EQUAL(1, irc_tag_parse ("abc=def", hashtable, NULL));
     LONGS_EQUAL(1, hashtable->items_count);
     STRCMP_EQUAL("def", (const char *)hashtable_get (hashtable, "abc"));
-    hashtable_free (hashtable);
 
-    hashtable = irc_tag_parse ("aaa=bbb;ccc;example.com/ddd=eee");
-    CHECK(hashtable);
+    hashtable_remove_all (hashtable);
+    LONGS_EQUAL(3, irc_tag_parse ("aaa=bbb;ccc;example.com/ddd=value\\sspace",
+                                  hashtable, NULL));
     LONGS_EQUAL(3, hashtable->items_count);
     STRCMP_EQUAL("bbb", (const char *)hashtable_get (hashtable, "aaa"));
     POINTERS_EQUAL(NULL, (const char *)hashtable_get (hashtable, "ccc"));
-    STRCMP_EQUAL("eee", (const char *)hashtable_get (hashtable, "example.com/ddd"));
+    STRCMP_EQUAL("value space",
+                 (const char *)hashtable_get (hashtable, "example.com/ddd"));
+
+    hashtable_remove_all (hashtable);
+    LONGS_EQUAL(3, irc_tag_parse ("aaa=bbb;ccc;example.com/ddd=value\\sspace",
+                                  hashtable, "tag_"));
+    LONGS_EQUAL(3, hashtable->items_count);
+    STRCMP_EQUAL("bbb", (const char *)hashtable_get (hashtable, "tag_aaa"));
+    POINTERS_EQUAL(NULL, (const char *)hashtable_get (hashtable, "tag_ccc"));
+    STRCMP_EQUAL("value space",
+                 (const char *)hashtable_get (hashtable, "tag_example.com/ddd"));
+
     hashtable_free (hashtable);
 }

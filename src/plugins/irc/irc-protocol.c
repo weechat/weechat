@@ -6826,7 +6826,6 @@ irc_protocol_recv_command (struct t_irc_server *server,
     message_colors_decoded = NULL;
     argv = NULL;
     argv_eol = NULL;
-    hash_tags = NULL;
     date = 0;
 
     ptr_msg_after_tags = irc_message;
@@ -6841,11 +6840,16 @@ irc_protocol_recv_command (struct t_irc_server *server,
                                     pos_space - (irc_message + 1));
             if (tags)
             {
-                hash_tags = irc_tag_parse (tags);
+                hash_tags = weechat_hashtable_new (32,
+                                                   WEECHAT_HASHTABLE_STRING,
+                                                   WEECHAT_HASHTABLE_STRING,
+                                                   NULL, NULL);
                 if (hash_tags)
                 {
+                    irc_tag_parse (tags, hash_tags, NULL);
                     date = irc_protocol_parse_time (
                         weechat_hashtable_get (hash_tags, "time"));
+                    weechat_hashtable_free (hash_tags);
                 }
                 free (tags);
             }
@@ -7033,6 +7037,4 @@ end:
         weechat_string_free_split (argv);
     if (argv_eol)
         weechat_string_free_split (argv_eol);
-    if (hash_tags)
-        weechat_hashtable_free (hash_tags);
 }

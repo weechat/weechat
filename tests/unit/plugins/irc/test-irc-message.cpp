@@ -521,12 +521,16 @@ TEST(IrcMessage, ParseToHashtable)
 
     hashtable = irc_message_parse_to_hashtable (
         NULL,
-        "@time=2019-08-03T12:13:00.000Z :nick!user@host PRIVMSG #channel "
-        ":the message");
+        "@time=2019-08-03T12:13:00.000Z;tag2=value\\sspace "
+        ":nick!user@host PRIVMSG #channel :the message");
     CHECK(hashtable);
 
-    STRCMP_EQUAL("time=2019-08-03T12:13:00.000Z",
+    STRCMP_EQUAL("time=2019-08-03T12:13:00.000Z;tag2=value\\sspace",
                  (const char *)hashtable_get (hashtable, "tags"));
+    STRCMP_EQUAL("2019-08-03T12:13:00.000Z",
+                 (const char *)hashtable_get (hashtable, "tag_time"));
+    STRCMP_EQUAL("value space",
+                 (const char *)hashtable_get (hashtable, "tag_tag2"));
     STRCMP_EQUAL(":nick!user@host PRIVMSG #channel :the message",
                  (const char *)hashtable_get (hashtable, "message_without_tags"));
     STRCMP_EQUAL("nick",
@@ -541,13 +545,13 @@ TEST(IrcMessage, ParseToHashtable)
                  (const char *)hashtable_get (hashtable, "arguments"));
     STRCMP_EQUAL("the message",
                  (const char *)hashtable_get (hashtable, "text"));
-    STRCMP_EQUAL("47",
-                 (const char *)hashtable_get (hashtable, "pos_command"));
-    STRCMP_EQUAL("55",
-                 (const char *)hashtable_get (hashtable, "pos_arguments"));
-    STRCMP_EQUAL("55",
-                 (const char *)hashtable_get (hashtable, "pos_channel"));
     STRCMP_EQUAL("65",
+                 (const char *)hashtable_get (hashtable, "pos_command"));
+    STRCMP_EQUAL("73",
+                 (const char *)hashtable_get (hashtable, "pos_arguments"));
+    STRCMP_EQUAL("73",
+                 (const char *)hashtable_get (hashtable, "pos_channel"));
+    STRCMP_EQUAL("83",
                  (const char *)hashtable_get (hashtable, "pos_text"));
 
     hashtable_free (hashtable);
