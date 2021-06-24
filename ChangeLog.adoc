@@ -22,7 +22,7 @@ New features::
 
   * core: add option "certs" in command /debug
   * api: add keys/values with tags in output of irc_message_parse_to_hashtable (issue #1654)
-  * irc: add support of TAGMSG messages (issue #1654)
+  * irc: add support of capability "message-tags" and TAGMSG messages (issue #1654)
   * irc: enable all capabilities by default (if supported by server and WeeChat), change default value of option irc.server_default.capabilities to "*" (issue #320)
   * irc: add options irc.look.display_account_message and irc.look.display_extended_join (issue #320)
   * irc: add command /setname, add support of message and capability "setname" (issue #1653)

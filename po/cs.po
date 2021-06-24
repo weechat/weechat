@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-06-19 18:14+0200\n"
+"POT-Creation-Date: 2021-06-24 21:03+0200\n"
 "PO-Revision-Date: 2021-05-25 18:28+0200\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4324,15 +4324,6 @@ msgstr ""
 msgid "password for proxy server (note: content is evaluated, see /help eval)"
 msgstr "heslo pro proxy server(pozn.: obsah je vykonán, viz /help eval)"
 
-#, fuzzy
-msgid "secured data"
-msgstr "Chráněná data:"
-
-msgid ""
-"secured data: names and values (be careful: the values are sensitive data: "
-"do NOT print/log them anywhere)"
-msgstr ""
-
 msgid "WeeChat secured data (sec.conf) | Keys: [alt-v] Toggle values"
 msgstr "Chráněná data WeeChatu (sec.conf) | Klávesy: [alt-v] Přepnou hodnoty"
 
@@ -4354,6 +4345,15 @@ msgstr ""
 
 msgid "No secured data set"
 msgstr "Nenastavena chráněná data"
+
+#, fuzzy
+msgid "secured data"
+msgstr "Chráněná data:"
+
+msgid ""
+"secured data: names and values (be careful: the values are sensitive data: "
+"do NOT print/log them anywhere)"
+msgstr ""
 
 msgid "Please enter your passphrase to decrypt the data secured by WeeChat:"
 msgstr "Prosím vložte heslo k dešifrování dat chráněných WeeChatem:"
@@ -5267,6 +5267,9 @@ msgstr ""
 "charset: nová znaková sada pro aktuální buffer\n"
 "  reset: resetovat znakové sady aktuálního bufferu"
 
+msgid "Executed commands"
+msgstr "Vykonané příkazy"
+
 msgid "Execution of external commands in WeeChat"
 msgstr "Spouštění externích příkazů v WeeChatu"
 
@@ -5277,9 +5280,6 @@ msgstr "%s: konec příkazu %d (\"%s\"), návratový kód: %d"
 #, fuzzy, c-format
 msgid "%s: unexpected end of command %ld (\"%s\")"
 msgstr "%s: neočekávaný konec příkazu %d (\"%s\")"
-
-msgid "Executed commands"
-msgstr "Vykonané příkazy"
 
 msgid "No command is running"
 msgstr "Neběží žádný příkaz"
@@ -5572,6 +5572,9 @@ msgid ""
 "$)=unmark/refresh, (m)=mark matching options, (u)=unmark matching options, "
 "alt+p(p)=toggle plugins desc, alt+v(v)=toggle help bar, ctrl+X(x)=switch "
 "format, (q)=close buffer"
+msgstr ""
+
+msgid "Fast set of WeeChat and plugins options"
 msgstr ""
 
 #, c-format
@@ -6129,9 +6132,6 @@ msgstr "jméno serveru (zástupný znak \"*\" je povolen) (volitelný)"
 #, fuzzy
 msgid "fset options"
 msgstr "seznam konfiguračních možností"
-
-msgid "Fast set of WeeChat and plugins options"
-msgstr ""
 
 #, fuzzy, c-format
 msgid "%s%s: script \"%s\" already registered (register ignored)"
@@ -6754,8 +6754,8 @@ msgid ""
 "Without argument, \"ls\" and \"list\" are sent.\n"
 "\n"
 "Capabilities supported by WeeChat are: account-notify, away-notify, cap-"
-"notify, chghost, extended-join, invite-notify, multi-prefix, server-time, "
-"setname, userhost-in-names.\n"
+"notify, chghost, extended-join, invite-notify, message-tags, multi-prefix, "
+"server-time, setname, userhost-in-names.\n"
 "\n"
 "The capabilities to automatically enable on servers can be set in option irc."
 "server_default.capabilities (or by server in option irc.server.xxx."
@@ -8933,11 +8933,12 @@ msgstr "\"message\": IRC zpráva, \"server\": jméno serveru (volitelné)"
 
 #. TRANSLATORS: please do not translate key names (enclosed by quotes)
 msgid ""
-"\"tags\": tags, \"message_without_tags\": message without the tags, \"nick"
-"\": nick, \"user\": user, \"host\": host, \"command\": command, \"channel\": "
-"channel, \"arguments\": arguments (includes channel), \"text\": text (for "
-"example user message), \"pos_command\": index of \"command\" message (\"-1\" "
-"if \"command\" was not found), \"pos_arguments\": index of \"arguments\" "
+"\"tags\": tags, \"tag_xxx\": unescaped value of tag \"xxx\" (one key per "
+"tag), \"message_without_tags\": message without the tags, \"nick\": nick, "
+"\"user\": user, \"host\": host, \"command\": command, \"channel\": channel, "
+"\"arguments\": arguments (includes channel), \"text\": text (for example "
+"user message), \"pos_command\": index of \"command\" message (\"-1\" if "
+"\"command\" was not found), \"pos_arguments\": index of \"arguments\" "
 "message (\"-1\" if \"arguments\" was not found), \"pos_channel\": index of "
 "\"channel\" message (\"-1\" if \"channel\" was not found), \"pos_text\": "
 "index of \"text\" message (\"-1\" if \"text\" was not found)"
@@ -9880,30 +9881,6 @@ msgid "%s%s: disconnected from server"
 msgstr "%s%s: odpojen od serveru"
 
 #, c-format
-msgid "%s%s: exception: %s"
-msgstr "%s%s: vyjímka: %s"
-
-#, c-format
-msgid "%s%s: unable to run function \"%s\""
-msgstr "%s%s: nemůžu spustit funkci \"%s\""
-
-#, c-format
-msgid "%s%s: unable to create new sub-interpreter"
-msgstr "%s%s: nemohu vytvořit nový pod-interpreter"
-
-#, c-format
-msgid "%s%s: unable to load file \"%s\""
-msgstr "%s%s: nemůžu načíst soubor \"%s\""
-
-#, c-format
-msgid "%s%s: unable to execute file \"%s\""
-msgstr "%s%s: nemůžu spustit soubor \"%s\""
-
-#, fuzzy, c-format
-msgid "%sCommand \"/%s eval\" is not yet implemented"
-msgstr "%sBarva \"%s\" není definovávána v paletě"
-
-#, c-format
 msgid "%s===\t%s========== End of backlog (%d lines) =========="
 msgstr "%s===\t%s========== konec backlogu (%d řádků) =========="
 
@@ -10144,6 +10121,14 @@ msgid "Support of lua scripts"
 msgstr "podpora skriptů v lua"
 
 #, c-format
+msgid "%s%s: unable to run function \"%s\""
+msgstr "%s%s: nemůžu spustit funkci \"%s\""
+
+#, c-format
+msgid "%s%s: unable to create new sub-interpreter"
+msgstr "%s%s: nemohu vytvořit nový pod-interpreter"
+
+#, c-format
 msgid "%s%s: unable to redirect stdout and stderr"
 msgstr "%s%s: nemohu přesměrovat stdout a stderr"
 
@@ -10151,8 +10136,16 @@ msgstr "%s%s: nemohu přesměrovat stdout a stderr"
 msgid "%s%s: unable to load source code"
 msgstr "%s%s: nemůžu načíst soubor \"%s\""
 
+#, c-format
+msgid "%s%s: unable to load file \"%s\""
+msgstr "%s%s: nemůžu načíst soubor \"%s\""
+
 #, fuzzy, c-format
 msgid "%s%s: unable to execute source code"
+msgstr "%s%s: nemůžu spustit soubor \"%s\""
+
+#, c-format
+msgid "%s%s: unable to execute file \"%s\""
 msgstr "%s%s: nemůžu spustit soubor \"%s\""
 
 msgid "Support of perl scripts"
@@ -10181,6 +10174,10 @@ msgstr "%s%s: nemohu inicializovat %s"
 #, fuzzy
 msgid "Support of PHP scripts"
 msgstr "podpora skriptů v lua"
+
+#, fuzzy, c-format
+msgid "%sCommand \"/%s eval\" is not yet implemented"
+msgstr "%sBarva \"%s\" není definovávána v paletě"
 
 msgid "bar"
 msgstr "bar"
@@ -10640,19 +10637,6 @@ msgstr "Pluginy odebrány"
 msgid "description of plugin option"
 msgstr "popis volby pluginu"
 
-msgid ""
-"check the license of scripts when they are loaded: if the license is "
-"different from the plugin license, a warning is displayed"
-msgstr ""
-
-#, c-format
-msgid ""
-"keep context between two calls to the source code evaluation (option \"eval"
-"\" of script command or info \"%s_eval\"); a hidden script is used to eval "
-"script code; if this option is disabled, this hidden script is unloaded "
-"after each eval: this uses less memory, but is slower"
-msgstr ""
-
 msgid "list/load/unload scripts"
 msgstr "seznam/načíst/odebrat skirpty"
 
@@ -10777,6 +10761,19 @@ msgstr "  (žádný)"
 #, c-format
 msgid "%s: scripts unloaded"
 msgstr "%s: skripty odebrány"
+
+msgid ""
+"check the license of scripts when they are loaded: if the license is "
+"different from the plugin license, a warning is displayed"
+msgstr ""
+
+#, c-format
+msgid ""
+"keep context between two calls to the source code evaluation (option \"eval"
+"\" of script command or info \"%s_eval\"); a hidden script is used to eval "
+"script code; if this option is disabled, this hidden script is unloaded "
+"after each eval: this uses less memory, but is slower"
+msgstr ""
 
 #, c-format
 msgid ""
@@ -12341,6 +12338,10 @@ msgstr "%s%s: nemohu vytvořit nový interpretr"
 msgid "%s%s: error occurred while parsing file \"%s\": %s"
 msgstr "%s%s: nastala chyba během parsováni souboru \"%s\": %s"
 
+#, c-format
+msgid "Trigger monitor (filter: %s) | Input: q=close, words=filter"
+msgstr ""
+
 msgid ""
 "Text replacement and command execution on events triggered by WeeChat/plugins"
 msgstr ""
@@ -12352,10 +12353,6 @@ msgstr "%sChyba: nemohu přejmenovat filter \"%s\" na \"%s\""
 #, fuzzy, c-format
 msgid "%s%s: invalid regular expression in trigger: \"%s\""
 msgstr "%s%s: \"%s\" není validní regulární výraz (%s)"
-
-#, c-format
-msgid "Trigger monitor (filter: %s) | Input: q=close, words=filter"
-msgstr ""
 
 msgid "no variable"
 msgstr "není proměnná"
@@ -13207,6 +13204,10 @@ msgstr "%s%s: vypršel časový limit \"%s\" pro %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: nemohu se připojit\" neočekávaná chyba (%d)"
+
+#, c-format
+#~ msgid "%s%s: exception: %s"
+#~ msgstr "%s%s: vyjímka: %s"
 
 #, c-format
 #~ msgid ""

@@ -6501,7 +6501,7 @@ irc_command_init ()
            "\n"
            "Capabilities supported by WeeChat are: "
            "account-notify, away-notify, cap-notify, chghost, extended-join, "
-           "invite-notify, multi-prefix, server-time, setname, "
+           "invite-notify, message-tags, multi-prefix, server-time, setname, "
            "userhost-in-names.\n"
            "\n"
            "The capabilities to automatically enable on servers can be set "
