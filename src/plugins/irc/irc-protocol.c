@@ -2853,7 +2853,7 @@ IRC_PROTOCOL_CALLBACK(quit)
 
 /*
  * Callback for the IRC message "SETNAME": set real name
- * (with capability "setname").
+ * (received when capability "setname" is enabled).
  *
  * Message looks like:
  *   :nick!user@host SETNAME :the realname
@@ -2904,8 +2904,8 @@ IRC_PROTOCOL_CALLBACK(setname)
 }
 
 /*
- * Callback for the IRC message "SETNAME": set real name
- * (with capability "setname").
+ * Callback for the IRC message "TAGMSG": message with tags but no text content
+ * (received when capability "message-tags" is enabled).
  *
  * Message looks like:
  *   @msgid=6gqz7dxd22v7r3x9pvukkp8nni;+tag1 :nick!user@host TAGMSG #channel
