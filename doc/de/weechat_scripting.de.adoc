@@ -1304,9 +1304,8 @@ Das Ergebnis ist eine Hashtabelle mit folgenden Schlüsseln
   Tags in der Nachricht (kann leer sein). |
   `+time=2015-06-27T16:40:35.000Z+`
 
-// TRANSLATION MISSING
 | tag_xxx | 3.3 |
-  Unescaped value of tag "xxx" (one key per tag). |
+  Wert des Tags "xxx" ohne Escapezeichen (ein Schlüssel pro Tag). |
   `+2015-06-27T16:40:35.000Z+`
 
 | message_without_tags | 0.4.0 |
