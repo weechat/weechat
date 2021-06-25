@@ -328,11 +328,14 @@ int
 buflist_mouse_init ()
 {
     int i;
+    char name[128];
 
     for (i = 0; i < BUFLIST_BAR_NUM_ITEMS; i++)
     {
-        weechat_hook_focus (buflist_bar_item_get_name (i),
-                            &buflist_focus_cb, NULL, NULL);
+        /* priority 2000 to run before irc plugin */
+        snprintf (name, sizeof (name), "2000|%s",
+                  buflist_bar_item_get_name (i));
+        weechat_hook_focus (name, &buflist_focus_cb, NULL, NULL);
     }
 
     weechat_hook_hsignal (BUFLIST_MOUSE_HSIGNAL,
