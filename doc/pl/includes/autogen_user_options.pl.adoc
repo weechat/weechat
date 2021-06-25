@@ -2782,7 +2782,7 @@
 ** opis: pass:none[akcja do wykonania jeśli uwierzytelnianie SASL się nie powiedzie: "continue" dla zignorowania problemu, "reconnect" ponownie połącz się z serwerem, "disconnect" odłącz od serwera (zobacz też opcję irc.network.sasl_fail_unavailable)]
 ** typ: liczba
 ** wartości: continue, reconnect, disconnect
-** domyślna wartość: `+continue+`
+** domyślna wartość: `+reconnect+`
 
 * [[option_irc.server_default.sasl_key]] *irc.server_default.sasl_key*
 ** opis: pass:none[plik z kluczem prywatnym ECC dla mechanizmu "ecdsa-nist256p-challenge" (ścieżka jest przetwarzana, zobacz funkcję string_eval_path_home w opisie API wtyczek)]

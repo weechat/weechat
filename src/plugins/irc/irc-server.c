@@ -93,7 +93,7 @@ char *irc_server_options[IRC_SERVER_NUM_OPTIONS][2] =
   { "sasl_password",        ""                        },
   { "sasl_key",             "",                       },
   { "sasl_timeout",         "15"                      },
-  { "sasl_fail",            "continue"                },
+  { "sasl_fail",            "reconnect"               },
   { "autoconnect",          "off"                     },
   { "autoreconnect",        "on"                      },
   { "autoreconnect_delay",  "10"                      },
@@ -509,6 +509,33 @@ irc_server_eval_fingerprint (struct t_irc_server *server)
 }
 
 /*
+ * Gets SASL credentials on server (uses temporary SASL username/password if
+ * set by the command /auth <user> <pass>).
+ */
+
+void
+irc_server_sasl_get_creds (struct t_irc_server *server,
+                           char **username, char **password, char **key)
+{
+    const char *ptr_username, *ptr_password, *ptr_key;
+
+    ptr_username = (server->sasl_temp_username) ?
+        server->sasl_temp_username :
+        IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_SASL_USERNAME);
+    ptr_password = (server->sasl_temp_password) ?
+        server->sasl_temp_password :
+        IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_SASL_PASSWORD);
+    /* temporary password can also be a path to file with private key */
+    ptr_key = (server->sasl_temp_password) ?
+        server->sasl_temp_password :
+        IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_SASL_KEY);
+
+    *username = irc_server_eval_expression (server, ptr_username);
+    *password = irc_server_eval_expression (server, ptr_password);
+    *key = irc_server_eval_expression (server, ptr_key);
+}
+
+/*
  * Checks if SASL is enabled on server.
  *
  * Returns:
@@ -520,18 +547,13 @@ int
 irc_server_sasl_enabled (struct t_irc_server *server)
 {
     int sasl_mechanism, rc;
-    char *sasl_username, *sasl_password;
-    const char *sasl_key;
+    char *sasl_username, *sasl_password, *sasl_key;
+
+    irc_server_sasl_get_creds (server,
+                               &sasl_username, &sasl_password, &sasl_key);
 
     sasl_mechanism = IRC_SERVER_OPTION_INTEGER(
         server, IRC_SERVER_OPTION_SASL_MECHANISM);
-    sasl_username = irc_server_eval_expression (
-        server,
-        IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_SASL_USERNAME));
-    sasl_password = irc_server_eval_expression (
-        server,
-        IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_SASL_PASSWORD));
-    sasl_key = IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_SASL_KEY);
 
     /*
      * SASL is enabled if one of these conditions is true:
@@ -550,6 +572,8 @@ irc_server_sasl_enabled (struct t_irc_server *server)
         free (sasl_username);
     if (sasl_password)
         free (sasl_password);
+    if (sasl_key)
+        free (sasl_key);
 
     return rc;
 }
@@ -1468,6 +1492,8 @@ irc_server_alloc (const char *name)
     new_server->sasl_scram_salted_pwd = NULL;
     new_server->sasl_scram_salted_pwd_size = 0;
     new_server->sasl_scram_auth_message = NULL;
+    new_server->sasl_temp_username = NULL;
+    new_server->sasl_temp_password = NULL;
     new_server->is_connected = 0;
     new_server->ssl_connected = 0;
     new_server->disconnected = 0;
@@ -1969,6 +1995,16 @@ irc_server_free_sasl_data (struct t_irc_server *server)
     {
         free (server->sasl_scram_auth_message);
         server->sasl_scram_auth_message = NULL;
+    }
+    if (server->sasl_temp_username)
+    {
+        free (server->sasl_temp_username);
+        server->sasl_temp_username = NULL;
+    }
+    if (server->sasl_temp_password)
+    {
+        free (server->sasl_temp_password);
+        server->sasl_temp_password = NULL;
     }
 }
 
@@ -5914,6 +5950,8 @@ irc_server_hdata_server_cb (const void *pointer, void *data,
         WEECHAT_HDATA_VAR(struct t_irc_server, sasl_scram_salted_pwd, OTHER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, sasl_scram_salted_pwd_size, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, sasl_scram_auth_message, STRING, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_server, sasl_temp_username, STRING, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_server, sasl_temp_password, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, is_connected, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, ssl_connected, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, disconnected, INTEGER, 0, NULL, NULL);
@@ -6554,6 +6592,8 @@ irc_server_print_log ()
         weechat_log_printf ("  sasl_scram_salted_pwd . . : (hidden)");
         weechat_log_printf ("  sasl_scram_salted_pwd_size: %d",    ptr_server->sasl_scram_salted_pwd_size);
         weechat_log_printf ("  sasl_scram_auth_message . : (hidden)");
+        weechat_log_printf ("  sasl_temp_username. . . . : '%s'",  ptr_server->sasl_temp_username);
+        weechat_log_printf ("  sasl_temp_password. . . . : (hidden)");
         weechat_log_printf ("  is_connected. . . . . . . : %d",    ptr_server->is_connected);
         weechat_log_printf ("  ssl_connected . . . . . . : %d",    ptr_server->ssl_connected);
         weechat_log_printf ("  disconnected. . . . . . . : %d",    ptr_server->disconnected);

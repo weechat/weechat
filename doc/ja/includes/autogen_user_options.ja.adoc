@@ -2782,7 +2782,7 @@
 ** 説明: pass:none[SASL 認証が失敗した場合の挙動: 認証の問題を無視する場合は "continue"、サーバへの再接続を予定する場合は "reconnect"、サーバから切断する場合は "disconnect" (irc.network.sasl_fail_unavailable も参照してください)]
 ** タイプ: 整数
 ** 値: continue, reconnect, disconnect
-** デフォルト値: `+continue+`
+** デフォルト値: `+reconnect+`
 
 * [[option_irc.server_default.sasl_key]] *irc.server_default.sasl_key*
 ** 説明: pass:none[file with ECC private key for mechanism "ecdsa-nist256p-challenge" (path is evaluated, see function string_eval_path_home in plugin API reference)]

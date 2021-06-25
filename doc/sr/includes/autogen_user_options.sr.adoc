@@ -2782,7 +2782,7 @@
 ** опис: pass:none[радња која се преузима у случају да SASL аутентификација не успе: „continue” да се игнорише проблем аутентификације, „reconnect” да се закаже поновно повезивање са сервером, „disconnect” да се прекине веза са сервером (погледајте и опцију irc.network.sasl_fail_unavailable)]
 ** тип: целобројна
 ** вредности: continue, reconnect, disconnect
-** подразумевана вредност: `+continue+`
+** подразумевана вредност: `+reconnect+`
 
 * [[option_irc.server_default.sasl_key]] *irc.server_default.sasl_key*
 ** опис: pass:none[фајл са ECC приватним кључем за механизам „ecdsa-nist256p-challenge” (путања се израчунава, погледајте функцију string_eval_path_home у референтном приручнику API додатака)]

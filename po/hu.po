@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-06-24 21:03+0200\n"
+"POT-Creation-Date: 2021-06-25 11:14+0200\n"
 "PO-Revision-Date: 2021-05-25 18:28+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5861,6 +5861,16 @@ msgid ""
 "(server, channel or private)"
 msgstr "%s \"%s\" parancs nem futtatható a szerverablakban\n"
 
+#, c-format
+msgid ""
+"%s%s: \"%s\" command can only be executed if SASL is enabled via server "
+"options \"sasl_*\" (or you must give username and password)"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: SASL is not supported by the server"
+msgstr "%s nincs csatlakozva szerverhez!\n"
+
 #, fuzzy, c-format
 msgid "%s: future away: %s"
 msgstr "CTCP %sVERSION%s válasz %s%s%s felhasználótól: %s\n"
@@ -6263,6 +6273,33 @@ msgid ""
 "    /allserv /away I'm away\n"
 "  do a whois on my nick on all servers:\n"
 "    /allserv /whois $nick"
+msgstr ""
+
+msgid "authenticate with SASL"
+msgstr ""
+
+#, fuzzy
+msgid "[<username> <password>]"
+msgstr "felhasználó jelszó"
+
+msgid ""
+"username: SASL username (content is evaluated, see /help eval; server "
+"options are evaluated with ${irc_server.xxx} and ${server} is replaced by "
+"the server name)\n"
+"password: SASL password or path to file with private key (content is "
+"evaluated, see /help eval; server options are evaluated with ${irc_server."
+"xxx} and ${server} is replaced by the server name)\n"
+"\n"
+"If username and password are not provided, the values from server options "
+"\"sasl_username\" and \"sasl_password\" (or \"sasl_key\") are used.\n"
+"\n"
+"Examples:\n"
+"  authenticate with username/password defined in the server:\n"
+"    /auth\n"
+"  authenticate as a different user:\n"
+"    /auth user2 password2\n"
+"  authenticate as a different user with mechanism ecdsa-nist256p-challenge:\n"
+"    /auth user2 ${weechat_config_dir}/ecdsa2.pem"
 msgstr ""
 
 #, fuzzy

@@ -398,23 +398,19 @@ IRC_PROTOCOL_CALLBACK(account)
 IRC_PROTOCOL_CALLBACK(authenticate)
 {
     int sasl_mechanism;
-    char *sasl_username, *sasl_password, *answer, *sasl_error;
-    const char *sasl_key;
+    char *sasl_username, *sasl_password, *sasl_key, *answer, *sasl_error;
 
     IRC_PROTOCOL_MIN_ARGS(2);
 
     if (!irc_server_sasl_enabled (server))
         return WEECHAT_RC_OK;
 
+    irc_server_sasl_get_creds (server, &sasl_username, &sasl_password,
+                               &sasl_key);
+
     sasl_mechanism = IRC_SERVER_OPTION_INTEGER(
         server, IRC_SERVER_OPTION_SASL_MECHANISM);
-    sasl_username = irc_server_eval_expression (
-        server,
-        IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_SASL_USERNAME));
-    sasl_password = irc_server_eval_expression (
-        server,
-        IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_SASL_PASSWORD));
-    sasl_key = IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_SASL_KEY);
+
     answer = NULL;
     sasl_error = NULL;
     switch (sasl_mechanism)
@@ -471,6 +467,8 @@ IRC_PROTOCOL_CALLBACK(authenticate)
         free (sasl_username);
     if (sasl_password)
         free (sasl_password);
+    if (sasl_key)
+        free (sasl_key);
     if (sasl_error)
         free (sasl_error);
 
@@ -6621,8 +6619,9 @@ IRC_PROTOCOL_CALLBACK(sasl_end_fail)
                              ignored, argc, argv, argv_eol);
 
     sasl_fail = IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_SASL_FAIL);
-    if ((sasl_fail == IRC_SERVER_SASL_FAIL_RECONNECT)
-        || (sasl_fail == IRC_SERVER_SASL_FAIL_DISCONNECT))
+    if (!server->is_connected
+        && ((sasl_fail == IRC_SERVER_SASL_FAIL_RECONNECT)
+            || (sasl_fail == IRC_SERVER_SASL_FAIL_DISCONNECT)))
     {
         irc_server_disconnect (
             server, 0,

@@ -197,6 +197,8 @@ struct t_irc_server
     char *sasl_scram_salted_pwd;    /* salted password for SASL SCRAM        */
     int sasl_scram_salted_pwd_size; /* size of salted password for SASL SCRAM*/
     char *sasl_scram_auth_message;  /* auth message for SASL SCRAM           */
+    char *sasl_temp_username;       /* temp SASL username (set by /auth cmd) */
+    char *sasl_temp_password;       /* temp SASL password (set by /auth cmd) */
     int is_connected;               /* 1 if WeeChat is connected to server   */
     int ssl_connected;              /* = 1 if connected with SSL             */
     int disconnected;               /* 1 if server has been disconnected     */
@@ -310,6 +312,10 @@ extern int irc_server_strncasecmp (struct t_irc_server *server,
                                    int max);
 extern char *irc_server_eval_expression (struct t_irc_server *server,
                                          const char *string);
+extern void irc_server_sasl_get_creds (struct t_irc_server *server,
+                                       char **username,
+                                       char **password,
+                                       char **key);
 extern int irc_server_sasl_enabled (struct t_irc_server *server);
 extern char *irc_server_get_name_without_port (const char *name);
 extern int irc_server_set_addresses (struct t_irc_server *server,

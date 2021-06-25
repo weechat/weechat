@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-06-24 21:03+0200\n"
+"POT-Creation-Date: 2021-06-25 11:14+0200\n"
 "PO-Revision-Date: 2021-06-13 14:40+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
@@ -7557,6 +7557,17 @@ msgstr ""
 "(serwer, kanał lub prywatne)"
 
 #, c-format
+msgid ""
+"%s%s: \"%s\" command can only be executed if SASL is enabled via server "
+"options \"sasl_*\" (or you must give username and password)"
+msgstr ""
+
+#, fuzzy, c-format
+#| msgid "%s%s: you are not connected to server"
+msgid "%s%s: SASL is not supported by the server"
+msgstr "%s%s: nie jesteś połączony z serwerem"
+
+#, c-format
 msgid "%s: future away: %s"
 msgstr "%s: przyszła nieobecność: %s"
 
@@ -8039,6 +8050,34 @@ msgstr ""
 "    /allserv /away Jestem nieobecny\n"
 "  wykonuje whois na własnym nicku na wszystkich serwerach:\n"
 "    /allserv /whois $nick"
+
+msgid "authenticate with SASL"
+msgstr ""
+
+#, fuzzy
+#| msgid "<user> <password>"
+msgid "[<username> <password>]"
+msgstr "<użytkownik> <hasło>"
+
+msgid ""
+"username: SASL username (content is evaluated, see /help eval; server "
+"options are evaluated with ${irc_server.xxx} and ${server} is replaced by "
+"the server name)\n"
+"password: SASL password or path to file with private key (content is "
+"evaluated, see /help eval; server options are evaluated with ${irc_server."
+"xxx} and ${server} is replaced by the server name)\n"
+"\n"
+"If username and password are not provided, the values from server options "
+"\"sasl_username\" and \"sasl_password\" (or \"sasl_key\") are used.\n"
+"\n"
+"Examples:\n"
+"  authenticate with username/password defined in the server:\n"
+"    /auth\n"
+"  authenticate as a different user:\n"
+"    /auth user2 password2\n"
+"  authenticate as a different user with mechanism ecdsa-nist256p-challenge:\n"
+"    /auth user2 ${weechat_config_dir}/ecdsa2.pem"
+msgstr ""
 
 msgid "ban nicks or hosts"
 msgstr "banuje nick albo host"
