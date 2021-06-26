@@ -117,6 +117,10 @@ struct t_hashtable_item
     int value_size;                     /* size of value (in bytes)         */
     struct t_hashtable_item *prev_item; /* link to previous item            */
     struct t_hashtable_item *next_item; /* link to next item                */
+    /* previous/next item by order of creation in the hashtable */
+    struct t_hashtable_item *prev_created_item;
+    struct t_hashtable_item *next_created_item;
+
 };
 
 struct t_hashtable
@@ -125,6 +129,8 @@ struct t_hashtable
     struct t_hashtable_item **htable;  /* table to map hashes with linked   */
                                        /* lists                             */
     int items_count;                   /* number of items in hashtable      */
+    struct t_hashtable_item *oldest_item; /* oldest item in hashtable       */
+    struct t_hashtable_item *newest_item; /* newest item in hashtable       */
 
     /* type for keys and values */
     enum t_hashtable_type type_keys;   /* type for keys: int/str/pointer    */

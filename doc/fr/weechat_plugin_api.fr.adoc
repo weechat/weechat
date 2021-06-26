@@ -5298,7 +5298,8 @@ Cette fonction n'est pas disponible dans l'API script.
 
 _WeeChat ≥ 0.3.3._
 
-Appeller une fonction pour chaque entrée d'une table de hachage.
+Appeller une fonction pour chaque entrée d'une table de hachage, par ordre
+d'insertion dans la table de hachage (de la plus ancienne à la plus récente).
 
 Prototype :
 
@@ -5343,8 +5344,9 @@ Cette fonction n'est pas disponible dans l'API script.
 
 _WeeChat ≥ 0.3.7._
 
-Appeller une fonction pour chaque entrée d'une table de hachage, en envoyant les
-clés et valeurs sous forme de chaînes.
+Appeller une fonction pour chaque entrée d'une table de hachage, par ordre
+d'insertion dans la table de hachage (de la plus ancienne à la plus récente),
+en envoyant les clés et valeurs sous forme de chaînes.
 
 Prototype :
 
@@ -5563,7 +5565,8 @@ Cette fonction n'est pas disponible dans l'API script.
 
 _WeeChat ≥ 0.3.3._
 
-Ajouter les éléments d'une table de hachage dans un objet infolist.
+Ajouter les éléments d'une table de hachage dans un objet infolist, par ordre
+d'insertion dans la table de hachage (de la plus ancienne à la plus récente).
 
 Prototype :
 

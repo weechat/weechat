@@ -5410,7 +5410,9 @@ Questa funzione non è disponibile nelle API per lo scripting.
 
 _WeeChat ≥ 0.3.3._
 
-Chiama una funzione su tutte le voci della tabella hash.
+// TRANSLATION MISSING
+Chiama una funzione su tutte le voci della tabella hash, by insertion order
+in the hashtable (from oldest to newest one).
 
 Prototipo:
 
@@ -5454,8 +5456,9 @@ Questa funzione non è disponibile nelle API per lo scripting.
 
 _WeeChat ≥ 0.3.7._
 
-Chiama una funzione su tutte le voci della tabella hash, inviando chiavi e
-valori come stringhe.
+// TRANSLATION MISSING
+Chiama una funzione su tutte le voci della tabella hash, by insertion order
+in the hashtable (from oldest to newest one), inviando chiavi e valori come stringhe.
 
 Prototipo:
 
@@ -5674,7 +5677,9 @@ Questa funzione non è disponibile nelle API per lo scripting.
 
 _WeeChat ≥ 0.3.3._
 
-Aggiunge elementi della tabella hash ad un elemento della lista info.
+// TRANSLATION MISSING
+Aggiunge elementi della tabella hash ad un elemento della lista info, by insertion
+order in the hashtable (from oldest to newest one).
 
 Prototipo:
 

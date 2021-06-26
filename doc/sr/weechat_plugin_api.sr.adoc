@@ -5057,7 +5057,9 @@ if (weechat_hashtable_has_key (hashtable, "my_key"))
 
 _WeeChat ≥ 0.3.3._
 
-Позива функцију над свим ставкама хеш табеле.
+// TRANSLATION MISSING
+Позива функцију над свим ставкама хеш табеле, by insertion order in the hashtable
+(from oldest to newest one).
 
 Прототип:
 
@@ -5101,7 +5103,9 @@ weechat_hashtable_map (hashtable, &map_cb, NULL);
 
 _WeeChat ≥ 0.3.7._
 
-Позива функцију над свим ставкама хеш табеле и шаље јој кључеве и вредности као стрингове.
+// TRANSLATION MISSING
+Call a function on all hashtable entries, by insertion order in the hashtable
+(from oldest to newest one), sending keys and values as strings.
 
 Прототип:
 
@@ -5311,7 +5315,9 @@ weechat_hashtable_set_pointer (hashtable, "callback_free_key", &my_free_key_cb);
 
 _WeeChat ≥ 0.3.3._
 
-Додаје ставе хеш табеле у ставку инфо листе.
+// TRANSLATION MISSING
+Додаје ставе хеш табеле у ставку инфо листе, by insertion order in the hashtable
+(from oldest to newest one).
 
 Прототип:
 

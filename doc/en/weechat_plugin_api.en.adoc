@@ -5220,7 +5220,8 @@ This function is not available in scripting API.
 
 _WeeChat ≥ 0.3.3._
 
-Call a function on all hashtable entries.
+Call a function on all hashtable entries, by insertion order in the hashtable
+(from oldest to newest one).
 
 Prototype:
 
@@ -5264,7 +5265,8 @@ This function is not available in scripting API.
 
 _WeeChat ≥ 0.3.7._
 
-Call a function on all hashtable entries, sending keys and values as strings.
+Call a function on all hashtable entries, by insertion order in the hashtable
+(from oldest to newest one), sending keys and values as strings.
 
 Prototype:
 
@@ -5478,7 +5480,8 @@ This function is not available in scripting API.
 
 _WeeChat ≥ 0.3.3._
 
-Add hashtable items to an infolist item.
+Add hashtable items to an infolist item, by insertion order in the hashtable
+(from oldest to newest one).
 
 Prototype:
 

@@ -20,6 +20,17 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 [[v3.3]]
 == Version 3.3 (under dev)
 
+[[v3.3_ordered_hashtables]]
+=== Ordered hashtables
+
+Hashtables entries are now ordered by creation date, the following functions
+are now returning entries sorted by insertion order:
+
+* hashtable_map
+* hashtable_map_string
+* hashtable_get_string (all properties except "keys_sorted" and "keys_values_sorted")
+* hashtable_add_to_infolist
+
 [[v3.3_irc_default_capabilities]]
 === IRC default capabilities
 

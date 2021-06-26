@@ -5269,7 +5269,9 @@ if (weechat_hashtable_has_key (hashtable, "my_key"))
 
 _WeeChat バージョン 0.3.3 以上で利用可。_
 
-ハッシュテーブルのすべてのエントリに対して関数を呼び出す。
+// TRANSLATION MISSING
+ハッシュテーブルのすべてのエントリに対して関数を呼び出す,
+by insertion order in the hashtable (from oldest to newest one).
 
 プロトタイプ:
 
@@ -5313,7 +5315,9 @@ weechat_hashtable_map (hashtable, &map_cb, NULL);
 
 _WeeChat バージョン 0.3.7 以上で利用可。_
 
-ハッシュテーブルのすべてのエントリに対して関数を呼び出す、キーと値を文字列として関数に渡す。
+// TRANSLATION MISSING
+Call a function on all hashtable entries, by insertion order in the hashtable
+(from oldest to newest one), sending keys and values as strings.
 
 プロトタイプ:
 
@@ -5527,7 +5531,9 @@ weechat_hashtable_set_pointer (hashtable, "callback_free_key", &my_free_key_cb);
 
 _WeeChat バージョン 0.3.3 以上で利用可。_
 
-ハッシュテーブルの要素をインフォリスト要素に追加
+// TRANSLATION MISSING
+ハッシュテーブルの要素をインフォリスト要素に追加, by insertion order in the hashtable
+(from oldest to newest one).
 
 プロトタイプ:
 

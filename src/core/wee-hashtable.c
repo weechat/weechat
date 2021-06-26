@@ -228,6 +228,8 @@ hashtable_new (int size,
             new_hashtable->htable[i] = NULL;
         }
         new_hashtable->items_count = 0;
+        new_hashtable->oldest_item = NULL;
+        new_hashtable->newest_item = NULL;
 
         new_hashtable->callback_hash_key = (callback_hash_key) ?
             callback_hash_key : &hashtable_hash_key_default_cb;
@@ -439,6 +441,15 @@ hashtable_set_with_size (struct t_hashtable *hashtable,
         hashtable->htable[hash] = new_item;
     }
 
+    /* keep items ordered by date of creation */
+    if (hashtable->newest_item)
+        (hashtable->newest_item)->next_created_item = new_item;
+    else
+        hashtable->oldest_item = new_item;
+    new_item->prev_created_item = hashtable->newest_item;
+    new_item->next_created_item = NULL;
+    hashtable->newest_item = new_item;
+
     hashtable->items_count++;
 
     return new_item;
@@ -574,26 +585,22 @@ hashtable_map (struct t_hashtable *hashtable,
                t_hashtable_map *callback_map,
                void *callback_map_data)
 {
-    int i;
-    struct t_hashtable_item *ptr_item, *ptr_next_item;
+    struct t_hashtable_item *ptr_item, *ptr_next_created_item;
 
     if (!hashtable)
         return;
 
-    for (i = 0; i < hashtable->size; i++)
+    ptr_item = hashtable->oldest_item;
+    while (ptr_item)
     {
-        ptr_item = hashtable->htable[i];
-        while (ptr_item)
-        {
-            ptr_next_item = ptr_item->next_item;
+        ptr_next_created_item = ptr_item->next_created_item;
 
-            (void) (callback_map) (callback_map_data,
-                                   hashtable,
-                                   ptr_item->key,
-                                   ptr_item->value);
+        (void) (callback_map) (callback_map_data,
+                               hashtable,
+                               ptr_item->key,
+                               ptr_item->value);
 
-            ptr_item = ptr_next_item;
-        }
+        ptr_item = ptr_next_created_item;
     }
 }
 
@@ -606,41 +613,37 @@ hashtable_map_string (struct t_hashtable *hashtable,
                       t_hashtable_map_string *callback_map,
                       void *callback_map_data)
 {
-    int i;
-    struct t_hashtable_item *ptr_item, *ptr_next_item;
+    struct t_hashtable_item *ptr_item, *ptr_next_created_item;
     const char *str_key, *str_value;
     char *key, *value;
 
     if (!hashtable)
         return;
 
-    for (i = 0; i < hashtable->size; i++)
+    ptr_item = hashtable->oldest_item;
+    while (ptr_item)
     {
-        ptr_item = hashtable->htable[i];
-        while (ptr_item)
-        {
-            ptr_next_item = ptr_item->next_item;
+        ptr_next_created_item = ptr_item->next_created_item;
 
-            str_key = hashtable_to_string (hashtable->type_keys,
-                                           ptr_item->key);
-            key = (str_key) ? strdup (str_key) : NULL;
+        str_key = hashtable_to_string (hashtable->type_keys,
+                                       ptr_item->key);
+        key = (str_key) ? strdup (str_key) : NULL;
 
-            str_value = hashtable_to_string (hashtable->type_values,
-                                             ptr_item->value);
-            value = (str_value) ? strdup (str_value) : NULL;
+        str_value = hashtable_to_string (hashtable->type_values,
+                                         ptr_item->value);
+        value = (str_value) ? strdup (str_value) : NULL;
 
-            (void) (callback_map) (callback_map_data,
-                                   hashtable,
-                                   key,
-                                   value);
+        (void) (callback_map) (callback_map_data,
+                               hashtable,
+                               key,
+                               value);
 
-            if (key)
-                free (key);
-            if (value)
-                free (value);
+        if (key)
+            free (key);
+        if (value)
+            free (value);
 
-            ptr_item = ptr_next_item;
-        }
+        ptr_item = ptr_next_created_item;
     }
 }
 
@@ -674,6 +677,9 @@ struct t_hashtable *
 hashtable_dup (struct t_hashtable *hashtable)
 {
     struct t_hashtable *new_hashtable;
+
+    if (!hashtable)
+        return NULL;
 
     new_hashtable = hashtable_new (hashtable->size,
                                    hashtable_type_string[hashtable->type_keys],
@@ -723,6 +729,9 @@ struct t_weelist *
 hashtable_get_list_keys (struct t_hashtable *hashtable)
 {
     struct t_weelist *weelist;
+
+    if (!hashtable)
+        return NULL;
 
     weelist = weelist_new ();
     if (weelist)
@@ -1044,7 +1053,7 @@ hashtable_add_to_infolist (struct t_hashtable *hashtable,
                            struct t_infolist_item *infolist_item,
                            const char *prefix)
 {
-    int i, item_number;
+    int item_number;
     struct t_hashtable_item *ptr_item;
     char option_name[128];
 
@@ -1052,52 +1061,50 @@ hashtable_add_to_infolist (struct t_hashtable *hashtable,
         return 0;
 
     item_number = 0;
-    for (i = 0; i < hashtable->size; i++)
+    ptr_item = hashtable->oldest_item;
+    while (ptr_item)
     {
-        for (ptr_item = hashtable->htable[i]; ptr_item;
-             ptr_item = ptr_item->next_item)
+        snprintf (option_name, sizeof (option_name),
+                  "%s_name_%05d", prefix, item_number);
+        if (!infolist_new_var_string (infolist_item, option_name,
+                                      hashtable_to_string (hashtable->type_keys,
+                                                           ptr_item->key)))
+            return 0;
+        snprintf (option_name, sizeof (option_name),
+                  "%s_value_%05d", prefix, item_number);
+        switch (hashtable->type_values)
         {
-            snprintf (option_name, sizeof (option_name),
-                      "%s_name_%05d", prefix, item_number);
-            if (!infolist_new_var_string (infolist_item, option_name,
-                                          hashtable_to_string (hashtable->type_keys,
-                                                               ptr_item->key)))
-                return 0;
-            snprintf (option_name, sizeof (option_name),
-                      "%s_value_%05d", prefix, item_number);
-            switch (hashtable->type_values)
-            {
-                case HASHTABLE_INTEGER:
-                    if (!infolist_new_var_integer (infolist_item, option_name,
-                                                   *((int *)ptr_item->value)))
-                        return 0;
-                    break;
-                case HASHTABLE_STRING:
-                    if (!infolist_new_var_string (infolist_item, option_name,
-                                                  (const char *)ptr_item->value))
-                        return 0;
-                    break;
-                case HASHTABLE_POINTER:
-                    if (!infolist_new_var_pointer (infolist_item, option_name,
-                                                   ptr_item->value))
-                        return 0;
-                    break;
-                case HASHTABLE_BUFFER:
-                    if (!infolist_new_var_buffer (infolist_item, option_name,
-                                                  ptr_item->value,
-                                                  ptr_item->value_size))
-                        return 0;
-                    break;
-                case HASHTABLE_TIME:
-                    if (!infolist_new_var_time (infolist_item, option_name,
-                                                *((time_t *)ptr_item->value)))
-                        return 0;
-                    break;
-                case HASHTABLE_NUM_TYPES:
-                    break;
-            }
-            item_number++;
+            case HASHTABLE_INTEGER:
+                if (!infolist_new_var_integer (infolist_item, option_name,
+                                               *((int *)ptr_item->value)))
+                    return 0;
+                break;
+            case HASHTABLE_STRING:
+                if (!infolist_new_var_string (infolist_item, option_name,
+                                              (const char *)ptr_item->value))
+                    return 0;
+                break;
+            case HASHTABLE_POINTER:
+                if (!infolist_new_var_pointer (infolist_item, option_name,
+                                               ptr_item->value))
+                    return 0;
+                break;
+            case HASHTABLE_BUFFER:
+                if (!infolist_new_var_buffer (infolist_item, option_name,
+                                              ptr_item->value,
+                                              ptr_item->value_size))
+                    return 0;
+                break;
+            case HASHTABLE_TIME:
+                if (!infolist_new_var_time (infolist_item, option_name,
+                                            *((time_t *)ptr_item->value)))
+                    return 0;
+                break;
+            case HASHTABLE_NUM_TYPES:
+                break;
         }
+        item_number++;
+        ptr_item = ptr_item->next_created_item;
     }
     return 1;
 }
@@ -1203,6 +1210,16 @@ hashtable_remove_item (struct t_hashtable *hashtable,
     hashtable_free_value (hashtable, item);
     hashtable_free_key (hashtable, item);
 
+    /* remove item from ordered list (by date of creation) */
+    if (item->prev_created_item)
+        (item->prev_created_item)->next_created_item = item->next_created_item;
+    if (item->next_created_item)
+        (item->next_created_item)->prev_created_item = item->prev_created_item;
+    if (hashtable->oldest_item == item)
+        hashtable->oldest_item = item->next_created_item;
+    if (hashtable->newest_item == item)
+        hashtable->newest_item = item->prev_created_item;
+
     /* remove item from list */
     if (item->prev_item)
         (item->prev_item)->next_item = item->next_item;
@@ -1287,6 +1304,8 @@ hashtable_print_log (struct t_hashtable *hashtable, const char *name)
     log_printf ("  size . . . . . . . . . : %d",    hashtable->size);
     log_printf ("  htable . . . . . . . . : 0x%lx", hashtable->htable);
     log_printf ("  items_count. . . . . . : %d",    hashtable->items_count);
+    log_printf ("  oldest_item. . . . . . : 0x%lx", hashtable->oldest_item);
+    log_printf ("  newest_item. . . . . . : 0x%lx", hashtable->newest_item);
     log_printf ("  type_keys. . . . . . . : %d (%s)",
                 hashtable->type_keys,
                 hashtable_type_string[hashtable->type_keys]);
@@ -1350,6 +1369,8 @@ hashtable_print_log (struct t_hashtable *hashtable, const char *name)
             log_printf ("      value_size . . . . : %d",    ptr_item->value_size);
             log_printf ("      prev_item. . . . . : 0x%lx", ptr_item->prev_item);
             log_printf ("      next_item. . . . . : 0x%lx", ptr_item->next_item);
+            log_printf ("      prev_created_item. : 0x%lx", ptr_item->prev_created_item);
+            log_printf ("      next_created_item. : 0x%lx", ptr_item->next_created_item);
         }
     }
 }
