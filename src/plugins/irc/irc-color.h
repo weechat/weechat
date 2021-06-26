@@ -41,7 +41,7 @@
 #define IRC_COLOR_BOLD_CHAR      '\x02'  /* bold text                       */
 #define IRC_COLOR_BOLD_STR       "\x02"  /*   [02]...[02]                   */
 
-#define IRC_COLOR_COLOR_CHAR     '\x03'  /* text color: fg / fg,bg / ,bg    */
+#define IRC_COLOR_COLOR_CHAR     '\x03'  /* text color: fg / fg,bg          */
 #define IRC_COLOR_COLOR_STR      "\x03"  /*   [03]15,05...[03]              */
 
 #define IRC_COLOR_RESET_CHAR     '\x0F'  /* reset color/attributes          */
