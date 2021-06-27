@@ -9,6 +9,10 @@
 :sectnumlevels: 3
 :docinfo1:
 
+Превод:
+
+* Иван Пешић (<ivan.pesic@gmail.com>), 2021.
+
 
 Ово упутство описује WeeChat чет клијент и део је програма WeeChat.
 
@@ -50,7 +54,8 @@ Almost all examples in this doc are written in Python, but API is the same for o
 Док се кôд скрипте извршава, програм WeeChat чека на крај извршавања пре него што настави. Тако да скрипте *НЕ СМЕЈУ* да извршавају блокирајуће операције као што су мрежни позиви без употребе одређених API функција као што је `+hook_process+`.
 
 [IMPORTANT]
-Скрипта *НИКАДА* не сме да се рачва или да креира нити без употребе одговарајуће API функције, то може да сруши програм WeeChat. + Ако нешто мора да се извршава у позадини, употребите функцију `+hook_process+`. Погледајте пример у поглављу <<hook_process,Покретање процеса у позадини>> као и документацију функције `+hook_process+` у link:weechat_plugin_api.sr.html#_hook_process[WeeChat референтном приручнику API додатака].
+Скрипта *НИКАДА* не сме да се рачва или да креира нити без употребе одговарајуће API функције, то може да сруши програм WeeChat. +
+Ако нешто мора да се извршава у позадини, употребите функцију `+hook_process+`. Погледајте пример у поглављу <<hook_process,Покретање процеса у позадини>> као и документацију функције `+hook_process+` у link:weechat_plugin_api.sr.html#_hook_process[WeeChat референтном приручнику API додатака].
 
 [[languages_specificities]]
 === Језичке специфичности
@@ -61,7 +66,8 @@ Almost all examples in this doc are written in Python, but API is the same for o
 [[python_module]]
 ===== Модул
 
-Програм WeeChat дефинише `weechat` модул који мора да се увезе командом `import weechat`. + Python стаб за WeeChat API је соступан у репозиторијуму: https://raw.githubusercontent.com/weechat/weechat/master/src/plugins/python/weechat.pyi[weechat.pyi].
+Програм WeeChat дефинише `weechat` модул који мора да се увезе командом `import weechat`. +
+Python стаб за WeeChat API је соступан у репозиторијуму: https://raw.githubusercontent.com/weechat/weechat/master/src/plugins/python/weechat.pyi[weechat.pyi].
 
 [[python_functions]]
 ===== Функције

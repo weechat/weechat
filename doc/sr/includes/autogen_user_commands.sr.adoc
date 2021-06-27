@@ -141,19 +141,19 @@ Examples:
       req|ack [<могућност> [<могућност>...]]
       end
 
-   ls: list the capabilities supported by the server
- list: list the capabilities currently enabled
-  req: request a capability
-  ack: acknowledge capabilities which require client-side acknowledgement
-  end: end the capability negotiation
+   ls: исписује могућности које подржава сервер
+ list: исписује могућности које су тренутно укључене
+  req: захтева могућност
+  ack: прихвата могућности које захтевају потврду са клијентске стране
+  end: завршава преговарање о могућностима
 
-Without argument, "ls" and "list" are sent.
+Без аргумента се шаљу „ls” и „list”.
 
-Capabilities supported by WeeChat are: account-notify, away-notify, cap-notify, chghost, extended-join, invite-notify, message-tags, multi-prefix, server-time, setname, userhost-in-names.
+Програм WeeChat подржава следеће могућности: account-notify, away-notify, cap-notify, chghost, extended-join, invite-notify, multi-prefix, server-time, setname, userhost-in-names.
 
-The capabilities to automatically enable on servers can be set in option irc.server_default.capabilities (or by server in option irc.server.xxx.capabilities).
+Могућности које се аутоматски укључују на серверима могу да се поставе у опцији irc.server_default.capabilities (или посебно за сваки сервер у опцији irc.server.xxx.capabilities).
 
-Examples:
+Примери:
    /cap
    /cap req multi-prefix away-notify
 ----
@@ -829,12 +829,12 @@ noопција: постављање логичке опције на ’off’ 
 ----
 
 [[command_irc_setname]]
-* `+setname+`: set real name
+* `+setname+`: постављање реалног имена
 
 ----
-/setname  <realname>
+/setname  <реално_име>
 
-realname: new real name
+реално_име: ново реално име
 ----
 
 [[command_irc_squery]]
@@ -1298,33 +1298,33 @@ stop: зауставља режим померања курсора
 
 ----
 /debug  list
-        set <plugin> <level>
-        dump [<plugin>]
+        set <додатак> <ниво>
+        dump [<додатак>]
         buffer|color|infolists|libs|certs|memory|tags|term|windows
         mouse|cursor [verbose]
         hdata [free]
-        time <command>
+        time <команда>
 
-     list: list plugins with debug levels
-      set: set debug level for plugin
-   plugin: name of plugin ("core" for WeeChat core)
-    level: debug level for plugin (0 = disable debug)
-     dump: save memory dump in WeeChat log file (same dump is written when WeeChat crashes)
-   buffer: dump buffer content with hexadecimal values in log file
-    color: display infos about current color pairs
-   cursor: toggle debug for cursor mode
-     dirs: display directories
-    hdata: display infos about hdata (with free: remove all hdata in memory)
-    hooks: display infos about hooks
-infolists: display infos about infolists
-     libs: display infos about external libraries used
-    certs: display number of loaded trusted certificate authorities
-   memory: display infos about memory usage
-    mouse: toggle debug for mouse
-     tags: display tags for lines
-     term: display infos about terminal
-  windows: display windows tree
-     time: measure time to execute a command or to send text to the current buffer
+     list: исписује додатке са дибаг нивоима
+      set: поставља дибаг ниво за додатак
+  додатак: име додатка („core” за WeeChat језгро)
+     ниво: дибаг ниво за додатак (0 = искључује дибаг)
+     dump: чува садржај меморије у WeeChat лог фајл (исти садржај се записује када се програм WeeChat сруши)
+   buffer: уписује у лог фајл садржај бафера као хексадецималне вредности
+    color: приказује инфо о тренутним паровима боја
+   cursor: пребацује дибаг за режим померања курсора
+     dirs: исписује директоријуме
+    hdata: исписује инфо о hdata (са free: уклања све hdata из меморије)
+    hooks: исписује инфо о кукама
+infolists: исписује инфо о инфолистама
+     libs: исписује инфо о коришћеним спољним библиотекама
+    certs: приказује број учитаних ауторитета сертификата којима се верује
+   memory: исписује инфо о употреби меморије
+    mouse: пребацује дибаг за миша
+     tags: исписује ознаке за линије
+     term: исписује инфо о терминалу
+  windows: исписује стабло прозора
+     time: мери време извршавања команде или слања текста текућем баферу
 ----
 
 [[command_weechat_eval]]

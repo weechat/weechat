@@ -2215,7 +2215,7 @@
 ** подразумевана вредност: `+"%a, %d %b %Y %T %z"+`
 
 * [[option_irc.look.display_account_message]] *irc.look.display_account_message*
-** опис: pass:none[display ACCOUNT messages received when capability account-notify is enabled]
+** опис: pass:none[приказ ACCOUNT порука које се примају када је укључена могућност account-notify]
 ** тип: логичка
 ** вредности: on, off
 ** подразумевана вредност: `+on+`
@@ -2245,7 +2245,7 @@
 ** подразумевана вредност: `+on+`
 
 * [[option_irc.look.display_extended_join]] *irc.look.display_extended_join*
-** опис: pass:none[display extra information in the JOIN messages: account name and real name (capability extended-join must be enabled)]
+** опис: pass:none[приказ додатних информација у JOIN порукама: име налога и реално име (мора бити укључена могућност extended-join)]
 ** тип: логичка
 ** вредности: on, off
 ** подразумевана вредност: `+on+`
@@ -2677,7 +2677,7 @@
 ** подразумевана вредност: `+25+`
 
 * [[option_irc.server_default.capabilities]] *irc.server_default.capabilities*
-** опис: pass:none[comma-separated list of client capabilities to enable for server if they are available (see /help cap for a list of capabilities supported by WeeChat); "*" enables all capabilities by default (supported by both server and WeeChat); wildcard "*" is allowed; a capability beginning with "!" is excluded (example: "*,!account-*,!extended-join")]
+** опис: pass:none[листа могућности клијента (client capabilities) раздвојених запетама које треба да се укључе за сервер у случају да су доступне (погледајте /help cap за листу могућности које подржава програм WeeChat); дозвољен је џокер „*”; могућност која почиње са „!” није укључена (пример: „*,!account-*,!extended-join”)]
 ** тип: стринг
 ** вредности: било који стринг
 ** подразумевана вредност: `+"*"+`
@@ -2791,7 +2791,7 @@
 ** подразумевана вредност: `+""+`
 
 * [[option_irc.server_default.sasl_mechanism]] *irc.server_default.sasl_mechanism*
-** опис: pass:none[mechanism for SASL authentication: "plain" for plain text password, "scram-sha-1" for SCRAM authentication with SHA-1 digest algorithm, "scram-sha-256" for SCRAM authentication with SHA-256 digest algorithm, "scram-sha-512" for SCRAM authentication with SHA-512 digest algorithm, "ecdsa-nist256p-challenge" for key-based challenge authentication, "external" for authentication using client side SSL certificate]
+** опис: pass:none[механизам SASL аутентификације: „plain” за просту текст лозинку, „scram-sha-1” за SCRAM аутентификацију са SHA-1 digest алгоритмом, „scram-sha-256” за SCRAM аутентификацију са SHA-256 digest алгоритмом, „scram-sha-512” за SCRAM аутентификацију са SHA-512 digest алгоритмом, „ecdsa-nist256p-challenge” за аутентификацију са изазовом базираним на кључу, „external” за аутентификацију употребом SSL сертификата са клијентске стране]
 ** тип: целобројна
 ** вредности: plain, scram-sha-1, scram-sha-256, scram-sha-512, ecdsa-nist256p-challenge, external
 ** подразумевана вредност: `+plain+`
