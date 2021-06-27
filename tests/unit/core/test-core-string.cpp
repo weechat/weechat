@@ -571,6 +571,18 @@ TEST(CoreString, Match)
     LONGS_EQUAL(1, string_match ("aabaa", "aa*", 1));
     LONGS_EQUAL(1, string_match ("aabaabaabaa", "aa*", 0));
     LONGS_EQUAL(1, string_match ("aabaabaabaa", "aa*", 1));
+    LONGS_EQUAL(1, string_match ("script.color.description", "*script.color*", 0));
+    LONGS_EQUAL(1, string_match ("script.color.description", "*script.color*", 1));
+    LONGS_EQUAL(1, string_match ("script.color.description", "*script.COLOR*", 0));
+    LONGS_EQUAL(0, string_match ("script.color.description", "*script.COLOR*", 1));
+    LONGS_EQUAL(1, string_match ("script.color.description", "*script*color*", 0));
+    LONGS_EQUAL(1, string_match ("script.color.description", "*script*color*", 1));
+    LONGS_EQUAL(1, string_match ("script.color.description", "*script*COLOR*", 0));
+    LONGS_EQUAL(0, string_match ("script.color.description", "*script*COLOR*", 1));
+    LONGS_EQUAL(1, string_match ("script.script.script", "scr*scr*scr*", 0));
+    LONGS_EQUAL(1, string_match ("script.script.script", "SCR*SCR*SCR*", 0));
+    LONGS_EQUAL(0, string_match ("script.script.script", "SCR*SCR*SCR*", 1));
+    LONGS_EQUAL(0, string_match ("script.script.script", "scr*scr*scr*scr*", 0));
 }
 
 /*

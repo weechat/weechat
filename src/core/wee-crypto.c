@@ -318,7 +318,7 @@ weecrypto_totp_generate_internal (const char *secret, int length_secret,
 {
     uint64_t moving_factor_swapped;
     char hash[20];
-    int offset, length;
+    int rc, offset, length;
     unsigned long bin_code;
 
     moving_factor_swapped = (moving_factor >> 56)
@@ -330,10 +330,12 @@ weecrypto_totp_generate_internal (const char *secret, int length_secret,
         | ((moving_factor >> 40) & 0x000000000000FF00)
         | (moving_factor << 56);
 
-    weecrypto_hmac (secret, length_secret,
-                    &moving_factor_swapped, sizeof (moving_factor_swapped),
-                    GCRY_MD_SHA1,
-                    hash, NULL);
+    rc = weecrypto_hmac (secret, length_secret,
+                         &moving_factor_swapped, sizeof (moving_factor_swapped),
+                         GCRY_MD_SHA1,
+                         hash, NULL);
+    if (!rc)
+        return 0;
 
     offset = hash[19] & 0xf;
     bin_code = (hash[offset] & 0x7f) << 24

@@ -2782,7 +2782,7 @@
 ** Beschreibung: pass:none[auszuführende Aktion falls die SASL Authentifizierung fehlschlägt: "continue" ignoriert das Problem welches bei der Authentifizierung aufgetreten ist, "reconnect" versucht erneut eine Verbindung herzustellen, "disconnect" trennt die Verbindung zum Server (siehe Option irc.network.sasl_fail_unavailable)]
 ** Typ: integer
 ** Werte: continue, reconnect, disconnect
-** Standardwert: `+continue+`
+** Standardwert: `+reconnect+`
 
 * [[option_irc.server_default.sasl_key]] *irc.server_default.sasl_key*
 ** Beschreibung: pass:none[Datei mit privatem ECC-Schlüssel für den Mechanismus "ecdsa-nist256p-challenge" (Pfad ist evaluiert, siehe Funktion string_eval_path_home in der Plugin-API-Referenz)]

@@ -294,6 +294,7 @@ WeeChat "core" is located in following directories:
 |       irc-redirect.c              | Redirection of IRC command output.
 |       irc-sasl.c                  | SASL authentication with IRC server.
 |       irc-server.c                | I/O communication with IRC server.
+|       irc-tag.c                   | Functions to manipulate IRC message tags.
 |       irc-upgrade.c               | Save/restore of IRC data when upgrading WeeChat.
 |    javascript/                    | JavaScript plugin.
 |       weechat-js.cpp              | Main JavaScript functions (load/unload scripts, execute JavaScript code).

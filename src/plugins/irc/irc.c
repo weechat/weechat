@@ -42,6 +42,7 @@
 #include "irc-raw.h"
 #include "irc-redirect.h"
 #include "irc-server.h"
+#include "irc-tag.h"
 #include "irc-upgrade.h"
 
 
@@ -213,6 +214,10 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
                            &irc_color_modifier_cb, NULL, NULL);
     weechat_hook_modifier ("irc_color_decode_ansi",
                            &irc_color_modifier_cb, NULL, NULL);
+    weechat_hook_modifier ("irc_tag_escape_value",
+                           &irc_tag_modifier_cb, NULL, NULL);
+    weechat_hook_modifier ("irc_tag_unescape_value",
+                           &irc_tag_modifier_cb, NULL, NULL);
 
     /* hook completions */
     irc_completion_init ();

@@ -1212,6 +1212,11 @@ IRC поруку можете да парсирате са info_hashtable под
   Ознаке у поруци (може бити празно). |
   `+time=2015-06-27T16:40:35.000Z+`
 
+// TRANSLATION MISSING
+| tag_xxx | 3.3 |
+  Unescaped value of tag "xxx" (one key per tag). |
+  `+2015-06-27T16:40:35.000Z+`
+
 | message_without_tags | 0.4.0 |
   Порука без ознака (иста као оригинална ако нема ознака у њој). |
   `+:nick!user@host PRIVMSG #weechat :здраво!+`
@@ -1268,10 +1273,12 @@ IRC поруку можете да парсирате са info_hashtable под
 ----
 dict = weechat.info_get_hashtable(
     "irc_message_parse",
-    {"message": "@time=2015-06-27T16:40:35.000Z :nick!user@host PRIVMSG #weechat :здраво!"})
+    {"message": "@time=2015-06-27T16:40:35.000Z;tag2=value\\sspace :nick!user@host PRIVMSG #weechat :здраво!"})
 
 # dict == {
-#     "tags": "time=2015-06-27T16:40:35.000Z",
+#     "tags": "time=2015-06-27T16:40:35.000Z;tag2=value\\sspace",
+#     "tag_time": "2015-06-27T16:40:35.000Z",
+#     "tag_tag2": "value space",
 #     "message_without_tags": ":nick!user@host PRIVMSG #weechat :здраво!",
 #     "nick": "nick",
 #     "user": "user",
@@ -1280,10 +1287,10 @@ dict = weechat.info_get_hashtable(
 #     "channel": "#weechat",
 #     "arguments": "#weechat :здраво!",
 #     "text": "hello!",
-#     "pos_command": "47",
-#     "pos_arguments": "55",
-#     "pos_channel": "55",
-#     "pos_text": "65",
+#     "pos_command": "65",
+#     "pos_arguments": "73",
+#     "pos_channel": "73",
+#     "pos_text": "83",
 # }
 ----
 

@@ -31,6 +31,7 @@
 #include "irc-config.h"
 #include "irc-ignore.h"
 #include "irc-server.h"
+#include "irc-tag.h"
 
 
 /*
@@ -327,6 +328,7 @@ irc_message_parse (struct t_irc_server *server, const char *message,
 /*
  * Parses an IRC message and returns hashtable with keys:
  *   - tags
+ *   - tag_xxx (one key per tag, with unescaped value)
  *   - message_without_tags
  *   - nick
  *   - host
@@ -365,6 +367,7 @@ irc_message_parse_to_hashtable (struct t_irc_server *server,
 
     weechat_hashtable_set (hashtable, "tags",
                            (tags) ? tags : empty_str);
+    irc_tag_parse (tags, hashtable, "tag_");
     weechat_hashtable_set (hashtable, "message_without_tags",
                            (message_without_tags) ? message_without_tags : empty_str);
     weechat_hashtable_set (hashtable, "nick",

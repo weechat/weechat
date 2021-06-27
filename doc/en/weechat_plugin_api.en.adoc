@@ -5220,7 +5220,8 @@ This function is not available in scripting API.
 
 _WeeChat ≥ 0.3.3._
 
-Call a function on all hashtable entries.
+Call a function on all hashtable entries, by insertion order in the hashtable
+(from oldest to newest one).
 
 Prototype:
 
@@ -5264,7 +5265,8 @@ This function is not available in scripting API.
 
 _WeeChat ≥ 0.3.7._
 
-Call a function on all hashtable entries, sending keys and values as strings.
+Call a function on all hashtable entries, by insertion order in the hashtable
+(from oldest to newest one), sending keys and values as strings.
 
 Prototype:
 
@@ -5478,7 +5480,8 @@ This function is not available in scripting API.
 
 _WeeChat ≥ 0.3.3._
 
-Add hashtable items to an infolist item.
+Add hashtable items to an infolist item, by insertion order in the hashtable
+(from oldest to newest one).
 
 Prototype:
 
@@ -11837,6 +11840,20 @@ List of modifiers defined by WeeChat and plugins that can be used:
   Message displayed after `/msg` sent to nickserv. |
   Message with hidden password.
 
+| [[hook_modifier_irc_tag_escape_value]] irc_tag_escape_value +
+  _(WeeChat ≥ 3.3)_ |
+  - |
+  Any string. |
+  String with IRC tag value escaped,
+  see: https://ircv3.net/specs/extensions/message-tags#escaping-values.
+
+| [[hook_modifier_irc_tag_unescape_value]] irc_tag_unescape_value +
+  _(WeeChat ≥ 3.3)_ |
+  - |
+  Any string. |
+  String with IRC tag value unescaped,
+  see: https://ircv3.net/specs/extensions/message-tags#escaping-values.
+
 | [[hook_modifier_color_decode_ansi]] color_decode_ansi +
   _(WeeChat ≥ 1.0)_ |
   "1" to keep colors, "0" to remove colors |
@@ -15567,12 +15584,14 @@ if (hashtable_in)
     weechat_hashtable_set (
         hashtable_in,
         "message",
-        "@time=2015-06-27T16:40:35.000Z :nick!user@host PRIVMSG #weechat :hello!");
+        "@time=2015-06-27T16:40:35.000Z;tag2=value\\sspace :nick!user@host PRIVMSG #weechat :hello!");
     hashtable_out = weechat_info_get_hashtable ("irc_message_parse",
                                                 hashtable_in);
     /*
      * now hashtable_out has following keys/values:
-     *   "tags"                : "time=2015-06-27T16:40:35.000Z"
+     *   "tags"                : "time=2015-06-27T16:40:35.000Z;tag2=value\\sspace"
+     *   "tag_time"            : "2015-06-27T16:40:35.000Z"
+     *   "tag_tag2"            : "value space"
      *   "message_without_tags": ":nick!user@host PRIVMSG #weechat :hello!"
      *   "nick"                : "nick"
      *   "user"                : "user"
@@ -15581,10 +15600,10 @@ if (hashtable_in)
      *   "channel"             : "#weechat"
      *   "arguments"           : "#weechat :hello!"
      *   "text"                : "hello!"
-     *   "pos_command"         : "47"
-     *   "pos_arguments"       : "55"
-     *   "pos_channel"         : "55"
-     *   "pos_text"            : "65"
+     *   "pos_command"         : "65"
+     *   "pos_arguments"       : "73"
+     *   "pos_channel"         : "73"
+     *   "pos_text"            : "83"
      */
     weechat_hashtable_free (hashtable_in);
     weechat_hashtable_free (hashtable_out);

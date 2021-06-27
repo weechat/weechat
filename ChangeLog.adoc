@@ -21,12 +21,22 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 New features::
 
   * core: add option "certs" in command /debug
+  * api: remember insertion order in hashtables
+  * api: add keys/values with tags in output of irc_message_parse_to_hashtable (issue #1654)
+  * irc: implement IRCv3.2 SASL authentication, add command /auth, reconnect by default to the server in case of SASL authentication failure (issue #413)
+  * irc: add support of capability "message-tags" and TAGMSG messages (issue #1654)
   * irc: enable all capabilities by default (if supported by server and WeeChat), change default value of option irc.server_default.capabilities to "*" (issue #320)
   * irc: add options irc.look.display_account_message and irc.look.display_extended_join (issue #320)
   * irc: add command /setname, add support of message and capability "setname" (issue #1653)
   * irc: always set realname in nicks even when extended-join capability is not enabled (issue #1653)
   * irc: add support of FAIL/WARN/NOTE messages (issue #1653)
   * irc: drop support of DH-BLOWFISH and DH-AES SASL mechanisms (issue #175)
+
+Bug fixes::
+
+  * api: fix function string_match with joker in the string if multiple words matched in input string
+  * irc: escape/unescape IRC message tags values (issue #1654)
+  * irc: set notify level to "private" for received WALLOPS
 
 Documentation::
 

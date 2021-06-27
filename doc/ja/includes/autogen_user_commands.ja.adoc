@@ -100,6 +100,26 @@ Examples:
     /allserv /whois $nick
 ----
 
+[[command_irc_auth]]
+* `+auth+`: authenticate with SASL
+
+----
+/auth  [<username> <password>]
+
+username: SASL username (content is evaluated, see /help eval; server options are evaluated with ${irc_server.xxx} and ${server} is replaced by the server name)
+password: SASL password or path to file with private key (content is evaluated, see /help eval; server options are evaluated with ${irc_server.xxx} and ${server} is replaced by the server name)
+
+If username and password are not provided, the values from server options "sasl_username" and "sasl_password" (or "sasl_key") are used.
+
+Examples:
+  authenticate with username/password defined in the server:
+    /auth
+  authenticate as a different user:
+    /auth user2 password2
+  authenticate as a different user with mechanism ecdsa-nist256p-challenge:
+    /auth user2 ${weechat_config_dir}/ecdsa2.pem
+----
+
 [[command_irc_ban]]
 * `+ban+`: ニックネームかホスト名を指定してバン
 
@@ -129,7 +149,7 @@ channel: チャンネル名
 
 Without argument, "ls" and "list" are sent.
 
-Capabilities supported by WeeChat are: account-notify, away-notify, cap-notify, chghost, extended-join, invite-notify, multi-prefix, server-time, setname, userhost-in-names.
+Capabilities supported by WeeChat are: account-notify, away-notify, cap-notify, chghost, extended-join, invite-notify, message-tags, multi-prefix, server-time, setname, userhost-in-names.
 
 The capabilities to automatically enable on servers can be set in option irc.server_default.capabilities (or by server in option irc.server.xxx.capabilities).
 

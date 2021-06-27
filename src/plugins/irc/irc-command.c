@@ -793,6 +793,95 @@ IRC_COMMAND_CALLBACK(allserv)
 }
 
 /*
+ * Callback for command "/auth": authenticates with SASL.
+ */
+
+IRC_COMMAND_CALLBACK(auth)
+{
+    char str_msg_auth[512];
+    int sasl_mechanism;
+
+    IRC_BUFFER_GET_SERVER(buffer);
+    IRC_COMMAND_CHECK_SERVER("auth", 1, 1);
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+
+    if (ptr_server->sasl_temp_username)
+    {
+        free (ptr_server->sasl_temp_username);
+        ptr_server->sasl_temp_username = NULL;
+    }
+    if (ptr_server->sasl_temp_password)
+    {
+        free (ptr_server->sasl_temp_password);
+        ptr_server->sasl_temp_password = NULL;
+    }
+
+    if ((argc < 3) && !irc_server_sasl_enabled (ptr_server))
+    {
+        weechat_printf (
+            ptr_server->buffer,
+            _("%s%s: \"%s\" command can only be executed if SASL is enabled "
+              "via server options \"sasl_*\" (or you must give username and "
+              "password)"),
+            weechat_prefix ("error"), IRC_PLUGIN_NAME, "auth");
+        return WEECHAT_RC_OK;
+    }
+
+    if (weechat_hashtable_has_key (ptr_server->cap_list, "sasl"))
+    {
+        /* SASL capability already enabled, authenticate */
+        sasl_mechanism = IRC_SERVER_OPTION_INTEGER(
+            ptr_server, IRC_SERVER_OPTION_SASL_MECHANISM);
+        if ((sasl_mechanism >= 0)
+            && (sasl_mechanism < IRC_NUM_SASL_MECHANISMS))
+        {
+            if (argc > 2)
+            {
+                ptr_server->sasl_temp_username = strdup (argv[1]);
+                ptr_server->sasl_temp_password = strdup (argv_eol[2]);
+            }
+            snprintf (str_msg_auth, sizeof (str_msg_auth),
+                      "AUTHENTICATE %s",
+                      irc_sasl_mechanism_string[sasl_mechanism]);
+            weechat_string_toupper (str_msg_auth);
+            irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
+                              str_msg_auth);
+        }
+    }
+    else
+    {
+        /* "sasl" capability supported by the server? */
+        if (weechat_hashtable_has_key (ptr_server->cap_ls, "sasl"))
+        {
+            /*
+             * request "sasl" capability, then the server should ask
+             * immediately to authenticate by sending a message
+             * "AUTHENTICATE +"
+             */
+            if (argc > 2)
+            {
+                ptr_server->sasl_temp_username = strdup (argv[1]);
+                ptr_server->sasl_temp_password = strdup (argv_eol[2]);
+            }
+            irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
+                              "CAP REQ sasl");
+        }
+        else
+        {
+            weechat_printf (
+                ptr_server->buffer,
+                _("%s%s: SASL is not supported by the server"),
+                weechat_prefix ("error"), IRC_PLUGIN_NAME);
+        }
+    }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Displays a ctcp action on a channel.
  */
 
@@ -6474,6 +6563,31 @@ irc_command_init ()
            "  do a whois on my nick on all servers:\n"
            "    /allserv /whois $nick"),
         NULL, &irc_command_allserv, NULL, NULL);
+    weechat_hook_command (
+        "auth",
+        N_("authenticate with SASL"),
+        N_("[<username> <password>]"),
+        N_("username: SASL username (content is evaluated, see /help eval; "
+           "server options are evaluated with ${irc_server.xxx} and ${server} "
+           "is replaced by the server name)\n"
+           "password: SASL password or path to file with private key "
+           "(content is evaluated, see /help eval; server options are "
+           "evaluated with ${irc_server.xxx} and ${server} is replaced by the "
+           "server name)\n"
+           "\n"
+           "If username and password are not provided, the values from server "
+           "options \"sasl_username\" and \"sasl_password\" (or \"sasl_key\") "
+           "are used.\n"
+           "\n"
+           "Examples:\n"
+           "  authenticate with username/password defined in the server:\n"
+           "    /auth\n"
+           "  authenticate as a different user:\n"
+           "    /auth user2 password2\n"
+           "  authenticate as a different user with mechanism "
+           "ecdsa-nist256p-challenge:\n"
+           "    /auth user2 ${weechat_config_dir}/ecdsa2.pem"),
+        NULL, &irc_command_auth, NULL, NULL);
     weechat_hook_command_run ("/away", &irc_command_run_away, NULL, NULL);
     weechat_hook_command (
         "ban",
@@ -6501,7 +6615,7 @@ irc_command_init ()
            "\n"
            "Capabilities supported by WeeChat are: "
            "account-notify, away-notify, cap-notify, chghost, extended-join, "
-           "invite-notify, multi-prefix, server-time, setname, "
+           "invite-notify, message-tags, multi-prefix, server-time, setname, "
            "userhost-in-names.\n"
            "\n"
            "The capabilities to automatically enable on servers can be set "

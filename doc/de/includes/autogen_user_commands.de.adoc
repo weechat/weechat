@@ -100,6 +100,26 @@ Beispiele:
     /allserv /whois $nick
 ----
 
+[[command_irc_auth]]
+* `+auth+`: authentifizieren mit SASL
+
+----
+/auth  [<username> <password>]
+
+username: SASL Username (Inhalt ist evaluiert, siehe /help eval; Serveroptionen werden mit ${irc_server.xxx} evaluiert und ${server} wird durch den Servernamen ersetzt)
+password: SASL-Passwort oder Pfad zur Datei mit privatem Schlüssel (Inhalt ist evaluiert, siehe /help eval; Serveroptionen werden mit ${irc_server.xxx} evaluiert und ${server} wird durch den Servernamen ersetzt)
+
+Wenn Benutzername und Kennwort nicht angegeben wurden, werden die Werte aus den Serveroptionen "sasl_username" und "sasl_password" (oder "sasl_key") verwendet.
+
+Beispiele:
+  authentifizieren Sie sich mit dem im Server definierten Benutzernamen/Passwort:
+    /auth
+  authentifizieren Sie sich mit einem anderen Benutzer:
+    /auth user2 password2
+  authentifizieren als anderer Benutzer mit Mechanismus ecdsa-nist256p-challenge:
+    /auth user2 ${weechat_config_dir}/ecdsa2.pem
+----
+
 [[command_irc_ban]]
 * `+ban+`: Nicknamen oder Hosts sperren/verbannen
 
@@ -129,7 +149,7 @@ Ohne Angabe von Argumenten wird die Ban-Liste für den aktuellen Kanal angezeigt
 
 Ohne Angaben von Argumenten werden "ls" und "list" gesendet.
 
-Fähigkeiten die von WeeChat unterstützt werden: account-notify, away-notify, cap-notify, chghost, extended-join, invite-notify, multi-prefix, server-time, setname, userhost-in-names..
+Fähigkeiten die von WeeChat unterstützt werden: account-notify, away-notify, cap-notify, chghost, extended-join, invite-notify, message-tags, multi-prefix, server-time, setname, userhost-in-names..
 
 Fähigkeiten die standardmäßig genutzt werden sollen, können mit der Option irc.server_default.capabilities gesetzt werden (oder individuell für jeden Server mit der Option irc.server.xxx.capabilities).
 

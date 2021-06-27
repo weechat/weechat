@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-06-19 18:14+0200\n"
-"PO-Revision-Date: 2021-06-20 11:42+0400\n"
+"POT-Creation-Date: 2021-06-25 11:14+0200\n"
+"PO-Revision-Date: 2021-06-03 15:15+0400\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: sr\n"
@@ -5085,16 +5085,6 @@ msgstr ""
 "лозинка за прокси сервер (напомена: садржај се израчунава, погледајте /help "
 "eval)"
 
-msgid "secured data"
-msgstr "обезбеђени подаци"
-
-msgid ""
-"secured data: names and values (be careful: the values are sensitive data: "
-"do NOT print/log them anywhere)"
-msgstr ""
-"обезбеђени подаци: имена и вредности (будите пажљиви: вредности су осетљиви "
-"подаци: НЕМОЈТЕ да их штампате/логујете било где)"
-
 msgid "WeeChat secured data (sec.conf) | Keys: [alt-v] Toggle values"
 msgstr ""
 "WeeChat обезбеђени подаци (sec.conf) | Тастери: [alt-v] Пребацивање вредности"
@@ -5118,6 +5108,16 @@ msgstr ""
 
 msgid "No secured data set"
 msgstr "Нису постављени никакви обезбеђени подаци"
+
+msgid "secured data"
+msgstr "обезбеђени подаци"
+
+msgid ""
+"secured data: names and values (be careful: the values are sensitive data: "
+"do NOT print/log them anywhere)"
+msgstr ""
+"обезбеђени подаци: имена и вредности (будите пажљиви: вредности су осетљиви "
+"подаци: НЕМОЈТЕ да их штампате/логујете било где)"
 
 msgid "Please enter your passphrase to decrypt the data secured by WeeChat:"
 msgstr ""
@@ -6203,6 +6203,9 @@ msgstr ""
 "скуп_кар: нови скуп карактера за текући бафер\n"
 "   reset: ресетовање скупова карактера за текући бафер"
 
+msgid "Executed commands"
+msgstr "Извршене команде"
+
 msgid "Execution of external commands in WeeChat"
 msgstr "Извршавање спољних команди у програму WeeChat"
 
@@ -6213,9 +6216,6 @@ msgstr "%s: крај команде %ld („%s”), враћени кôд: %d"
 #, c-format
 msgid "%s: unexpected end of command %ld (\"%s\")"
 msgstr "%s: неочекивани крај команде %ld („%s”)"
-
-msgid "Executed commands"
-msgstr "Извршене команде"
 
 msgid "No command is running"
 msgstr "Не извршава се ниједна команда"
@@ -6641,6 +6641,9 @@ msgstr ""
 "опција које се подударају, alt+p(p)=пребацивање видљивости описа додатака, "
 "alt+v(v)=пребацивање видљивости траке помоћи, ctrl+X(x)=измена формата, "
 "(q)=затвара бафер"
+
+msgid "Fast set of WeeChat and plugins options"
+msgstr "Брзо постављање WeeChat и опција додатака"
 
 #, c-format
 msgid "%s%s: there are no options displayed, unable to export."
@@ -7378,9 +7381,6 @@ msgstr "име опције (дозвољен је џокер „*”) (необ
 msgid "fset options"
 msgstr "fset опције"
 
-msgid "Fast set of WeeChat and plugins options"
-msgstr "Брзо постављање WeeChat и опција додатака"
-
 #, c-format
 msgid "%s%s: script \"%s\" already registered (register ignored)"
 msgstr "%s%s: скрипта „%s” је већ регистрована (регистрација се игнорише)"
@@ -7518,6 +7518,17 @@ msgid ""
 msgstr ""
 "%s%s: команда „%s” са опцијом „%s” мора да се изврши у irc баферу (серверу, "
 "каналу или приватном разговору)"
+
+#, c-format
+msgid ""
+"%s%s: \"%s\" command can only be executed if SASL is enabled via server "
+"options \"sasl_*\" (or you must give username and password)"
+msgstr ""
+
+#, fuzzy, c-format
+#| msgid "%s%s: you are not connected to server"
+msgid "%s%s: SASL is not supported by the server"
+msgstr "%s%s: нисте повезани са сервером"
 
 #, c-format
 msgid "%s: future away: %s"
@@ -7995,6 +8006,34 @@ msgstr ""
 "  обавља whois на сопственом надимку на свим серверима:\n"
 "    /allserv /whois $nick"
 
+msgid "authenticate with SASL"
+msgstr ""
+
+#, fuzzy
+#| msgid "<user> <password>"
+msgid "[<username> <password>]"
+msgstr "<корисник> <лозинка>"
+
+msgid ""
+"username: SASL username (content is evaluated, see /help eval; server "
+"options are evaluated with ${irc_server.xxx} and ${server} is replaced by "
+"the server name)\n"
+"password: SASL password or path to file with private key (content is "
+"evaluated, see /help eval; server options are evaluated with ${irc_server."
+"xxx} and ${server} is replaced by the server name)\n"
+"\n"
+"If username and password are not provided, the values from server options "
+"\"sasl_username\" and \"sasl_password\" (or \"sasl_key\") are used.\n"
+"\n"
+"Examples:\n"
+"  authenticate with username/password defined in the server:\n"
+"    /auth\n"
+"  authenticate as a different user:\n"
+"    /auth user2 password2\n"
+"  authenticate as a different user with mechanism ecdsa-nist256p-challenge:\n"
+"    /auth user2 ${weechat_config_dir}/ecdsa2.pem"
+msgstr ""
+
 msgid "ban nicks or hosts"
 msgstr "забрана надимака или хостова"
 
@@ -8028,8 +8067,8 @@ msgid ""
 "Without argument, \"ls\" and \"list\" are sent.\n"
 "\n"
 "Capabilities supported by WeeChat are: account-notify, away-notify, cap-"
-"notify, chghost, extended-join, invite-notify, multi-prefix, server-time, "
-"setname, userhost-in-names.\n"
+"notify, chghost, extended-join, invite-notify, message-tags, multi-prefix, "
+"server-time, setname, userhost-in-names.\n"
 "\n"
 "The capabilities to automatically enable on servers can be set in option irc."
 "server_default.capabilities (or by server in option irc.server.xxx."
@@ -10493,12 +10532,24 @@ msgid "\"message\": IRC message, \"server\": server name (optional)"
 msgstr "„message”: IRC порука, „server”: име сервера (није обавезно)"
 
 #. TRANSLATORS: please do not translate key names (enclosed by quotes)
+#, fuzzy
+#| msgid ""
+#| "\"tags\": tags, \"message_without_tags\": message without the tags, \"nick"
+#| "\": nick, \"user\": user, \"host\": host, \"command\": command, \"channel"
+#| "\": channel, \"arguments\": arguments (includes channel), \"text\": text "
+#| "(for example user message), \"pos_command\": index of \"command\" message "
+#| "(\"-1\" if \"command\" was not found), \"pos_arguments\": index of "
+#| "\"arguments\" message (\"-1\" if \"arguments\" was not found), "
+#| "\"pos_channel\": index of \"channel\" message (\"-1\" if \"channel\" was "
+#| "not found), \"pos_text\": index of \"text\" message (\"-1\" if \"text\" "
+#| "was not found)"
 msgid ""
-"\"tags\": tags, \"message_without_tags\": message without the tags, \"nick"
-"\": nick, \"user\": user, \"host\": host, \"command\": command, \"channel\": "
-"channel, \"arguments\": arguments (includes channel), \"text\": text (for "
-"example user message), \"pos_command\": index of \"command\" message (\"-1\" "
-"if \"command\" was not found), \"pos_arguments\": index of \"arguments\" "
+"\"tags\": tags, \"tag_xxx\": unescaped value of tag \"xxx\" (one key per "
+"tag), \"message_without_tags\": message without the tags, \"nick\": nick, "
+"\"user\": user, \"host\": host, \"command\": command, \"channel\": channel, "
+"\"arguments\": arguments (includes channel), \"text\": text (for example "
+"user message), \"pos_command\": index of \"command\" message (\"-1\" if "
+"\"command\" was not found), \"pos_arguments\": index of \"arguments\" "
 "message (\"-1\" if \"arguments\" was not found), \"pos_channel\": index of "
 "\"channel\" message (\"-1\" if \"channel\" was not found), \"pos_text\": "
 "index of \"text\" message (\"-1\" if \"text\" was not found)"
@@ -11444,30 +11495,6 @@ msgid "%s%s: disconnected from server"
 msgstr "%s%s: прекинута је веза са сервером"
 
 #, c-format
-msgid "%s%s: exception: %s"
-msgstr "%s%s: изузетак: %s"
-
-#, c-format
-msgid "%s%s: unable to run function \"%s\""
-msgstr "%s%s: функција „%s” не може да се покрене"
-
-#, c-format
-msgid "%s%s: unable to create new sub-interpreter"
-msgstr "%s%s: не може да се креира нови под-интерпретер"
-
-#, c-format
-msgid "%s%s: unable to load file \"%s\""
-msgstr "%s%s: фајл „%s” не може да се учита"
-
-#, c-format
-msgid "%s%s: unable to execute file \"%s\""
-msgstr "%s%s: фајл „%s” не може да се изврши"
-
-#, c-format
-msgid "%sCommand \"/%s eval\" is not yet implemented"
-msgstr "%sКоманда „/%s eval” још увек није имплеметирана"
-
-#, c-format
 msgid "%s===\t%s========== End of backlog (%d lines) =========="
 msgstr "%s===\t%s========== Крај старијих уноса (%d линија) =========="
 
@@ -11725,6 +11752,14 @@ msgid "Support of lua scripts"
 msgstr "Подршка за lua скрипте"
 
 #, c-format
+msgid "%s%s: unable to run function \"%s\""
+msgstr "%s%s: функција „%s” не може да се покрене"
+
+#, c-format
+msgid "%s%s: unable to create new sub-interpreter"
+msgstr "%s%s: не може да се креира нови под-интерпретер"
+
+#, c-format
 msgid "%s%s: unable to redirect stdout and stderr"
 msgstr "%s%s: није могуће преусмеравање stdout и stderr"
 
@@ -11733,8 +11768,16 @@ msgid "%s%s: unable to load source code"
 msgstr "%s%s: није успело учитавање изворног кода"
 
 #, c-format
+msgid "%s%s: unable to load file \"%s\""
+msgstr "%s%s: фајл „%s” не може да се учита"
+
+#, c-format
 msgid "%s%s: unable to execute source code"
 msgstr "%s%s: није успело извршавање изворног кода"
+
+#, c-format
+msgid "%s%s: unable to execute file \"%s\""
+msgstr "%s%s: фајл „%s” не може да се изврши"
 
 msgid "Support of perl scripts"
 msgstr "Подршка за perl скрипте"
@@ -11761,6 +11804,10 @@ msgstr "%s%s: не може да се иницијализује %s"
 
 msgid "Support of PHP scripts"
 msgstr "Подршка за PHP скрипте"
+
+#, c-format
+msgid "%sCommand \"/%s eval\" is not yet implemented"
+msgstr "%sКоманда „/%s eval” још увек није имплеметирана"
 
 msgid "bar"
 msgstr "трака"
@@ -12215,26 +12262,6 @@ msgstr "Додаци су уклоњени из меморије"
 msgid "description of plugin option"
 msgstr "опис опција додатка"
 
-msgid ""
-"check the license of scripts when they are loaded: if the license is "
-"different from the plugin license, a warning is displayed"
-msgstr ""
-"провера лиценце скрипти када се учитавају: ако се лиценца разликује од "
-"лиценце додатка, исписује се упозорење"
-
-#, c-format
-msgid ""
-"keep context between two calls to the source code evaluation (option \"eval"
-"\" of script command or info \"%s_eval\"); a hidden script is used to eval "
-"script code; if this option is disabled, this hidden script is unloaded "
-"after each eval: this uses less memory, but is slower"
-msgstr ""
-"задржава се контекст између два позива израчунавања изворног кода (опција "
-"„eval” команде script или info „%s_eval”); за израчунавање кода скрипте се "
-"користи скривена скрипта; ако је ова опција искључена, ова скривена скрипта "
-"се уклања из меморије након сваког израчунавања: ово троши мање меморије, "
-"али је спорије"
-
 msgid "list/load/unload scripts"
 msgstr "испис/учитавање/уклањање скрипти"
 
@@ -12363,6 +12390,26 @@ msgstr "  (ништа)"
 #, c-format
 msgid "%s: scripts unloaded"
 msgstr "%s: скрипти уклоњено из меморије"
+
+msgid ""
+"check the license of scripts when they are loaded: if the license is "
+"different from the plugin license, a warning is displayed"
+msgstr ""
+"провера лиценце скрипти када се учитавају: ако се лиценца разликује од "
+"лиценце додатка, исписује се упозорење"
+
+#, c-format
+msgid ""
+"keep context between two calls to the source code evaluation (option \"eval"
+"\" of script command or info \"%s_eval\"); a hidden script is used to eval "
+"script code; if this option is disabled, this hidden script is unloaded "
+"after each eval: this uses less memory, but is slower"
+msgstr ""
+"задржава се контекст између два позива израчунавања изворног кода (опција "
+"„eval” команде script или info „%s_eval”); за израчунавање кода скрипте се "
+"користи скривена скрипта; ако је ова опција искључена, ова скривена скрипта "
+"се уклања из меморије након сваког израчунавања: ово троши мање меморије, "
+"али је спорије"
 
 #, c-format
 msgid ""
@@ -14084,6 +14131,10 @@ msgstr "%s%s: није успело креирање новог интерпре
 msgid "%s%s: error occurred while parsing file \"%s\": %s"
 msgstr "%s%s: дошло је до грешке током парсирања фајла „%s”: %s"
 
+#, c-format
+msgid "Trigger monitor (filter: %s) | Input: q=close, words=filter"
+msgstr "Монитор окидача (филтер: %s) | Унос: q=затварање, речи=филтер"
+
 msgid ""
 "Text replacement and command execution on events triggered by WeeChat/plugins"
 msgstr ""
@@ -14096,10 +14147,6 @@ msgstr "%s%s: није успело креирање куке за окидач 
 #, c-format
 msgid "%s%s: invalid regular expression in trigger: \"%s\""
 msgstr "%s%s: неважећи регуларни израз у окидачу: „%s”"
-
-#, c-format
-msgid "Trigger monitor (filter: %s) | Input: q=close, words=filter"
-msgstr "Монитор окидача (филтер: %s) | Унос: q=затварање, речи=филтер"
 
 msgid "no variable"
 msgstr "нема променљиве"
@@ -15061,6 +15108,10 @@ msgstr "%s%s: тајмаут за „%s” са %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: повезивање није успело: неочекивана грешка (%d)"
+
+#, c-format
+#~ msgid "%s%s: exception: %s"
+#~ msgstr "%s%s: изузетак: %s"
 
 #~ msgid ""
 #~ "%s%s: error building answer for SASL authentication, using mechanism \"%s"

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-06-19 18:14+0200\n"
+"POT-Creation-Date: 2021-06-25 11:14+0200\n"
 "PO-Revision-Date: 2021-05-25 18:28+0200\n"
 "Last-Translator: Vasco Almeida <vascomalmeida@sapo.pt>\n"
 "Language-Team: Portuguese <>\n"
@@ -5002,15 +5002,6 @@ msgid "password for proxy server (note: content is evaluated, see /help eval)"
 msgstr ""
 "palavra-passe do servidor proxy (nota:o conteúdo é avaliado, ver /help eval)"
 
-#, fuzzy
-msgid "secured data"
-msgstr "Dados protegidos:"
-
-msgid ""
-"secured data: names and values (be careful: the values are sensitive data: "
-"do NOT print/log them anywhere)"
-msgstr ""
-
 msgid "WeeChat secured data (sec.conf) | Keys: [alt-v] Toggle values"
 msgstr ""
 "Dados protegidos do WeeChat (sec.conf) | Teclas: [alt-v] Mostrar/ocultar os "
@@ -5034,6 +5025,15 @@ msgstr ""
 
 msgid "No secured data set"
 msgstr "Nenhum dado protegido definido"
+
+#, fuzzy
+msgid "secured data"
+msgstr "Dados protegidos:"
+
+msgid ""
+"secured data: names and values (be careful: the values are sensitive data: "
+"do NOT print/log them anywhere)"
+msgstr ""
 
 msgid "Please enter your passphrase to decrypt the data secured by WeeChat:"
 msgstr ""
@@ -6000,6 +6000,9 @@ msgstr ""
 "charset: novo conjunto de carateres para o buffer atual\n"
 "  reset: repor charsets do buffer atual"
 
+msgid "Executed commands"
+msgstr "Comandos executados"
+
 msgid "Execution of external commands in WeeChat"
 msgstr "Execução de comandos externos no WeeChat"
 
@@ -6010,9 +6013,6 @@ msgstr "%s: fim do comando %d (\"%s\"), código de retorno: %d"
 #, fuzzy, c-format
 msgid "%s: unexpected end of command %ld (\"%s\")"
 msgstr "%s: fim de comando inesperado %d (\"%s\")"
-
-msgid "Executed commands"
-msgstr "Comandos executados"
 
 msgid "No command is running"
 msgstr "Nenhum comando a executar"
@@ -6417,6 +6417,9 @@ msgid ""
 "$)=unmark/refresh, (m)=mark matching options, (u)=unmark matching options, "
 "alt+p(p)=toggle plugins desc, alt+v(v)=toggle help bar, ctrl+X(x)=switch "
 "format, (q)=close buffer"
+msgstr ""
+
+msgid "Fast set of WeeChat and plugins options"
 msgstr ""
 
 #, c-format
@@ -6986,9 +6989,6 @@ msgstr "nome da opção (o caráter universal \"*\" é permitido) (opcional)"
 msgid "fset options"
 msgstr "lista de opções"
 
-msgid "Fast set of WeeChat and plugins options"
-msgstr ""
-
 #, c-format
 msgid "%s%s: script \"%s\" already registered (register ignored)"
 msgstr "%s%s: script \"%s\" já registado (registo ignorado)"
@@ -7126,6 +7126,17 @@ msgid ""
 "(server, channel or private)"
 msgstr ""
 "%s%s: o comando \"%s\" deve ser executado num buffer irc (servidor ou canal)"
+
+#, c-format
+msgid ""
+"%s%s: \"%s\" command can only be executed if SASL is enabled via server "
+"options \"sasl_*\" (or you must give username and password)"
+msgstr ""
+
+#, fuzzy, c-format
+#| msgid "%s%s: you are not connected to server"
+msgid "%s%s: SASL is not supported by the server"
+msgstr "%s%s: não está conectado ao servidor"
 
 #, c-format
 msgid "%s: future away: %s"
@@ -7584,6 +7595,34 @@ msgstr ""
 "  efetuar whois sobre o meu nick em todos os servidores:\n"
 "    /allserv whois $nick"
 
+msgid "authenticate with SASL"
+msgstr ""
+
+#, fuzzy
+#| msgid "<user> <password>"
+msgid "[<username> <password>]"
+msgstr "<utilizador> <palavra-passe>"
+
+msgid ""
+"username: SASL username (content is evaluated, see /help eval; server "
+"options are evaluated with ${irc_server.xxx} and ${server} is replaced by "
+"the server name)\n"
+"password: SASL password or path to file with private key (content is "
+"evaluated, see /help eval; server options are evaluated with ${irc_server."
+"xxx} and ${server} is replaced by the server name)\n"
+"\n"
+"If username and password are not provided, the values from server options "
+"\"sasl_username\" and \"sasl_password\" (or \"sasl_key\") are used.\n"
+"\n"
+"Examples:\n"
+"  authenticate with username/password defined in the server:\n"
+"    /auth\n"
+"  authenticate as a different user:\n"
+"    /auth user2 password2\n"
+"  authenticate as a different user with mechanism ecdsa-nist256p-challenge:\n"
+"    /auth user2 ${weechat_config_dir}/ecdsa2.pem"
+msgstr ""
+
 msgid "ban nicks or hosts"
 msgstr "banir nicks ou hosts"
 
@@ -7618,8 +7657,8 @@ msgid ""
 "Without argument, \"ls\" and \"list\" are sent.\n"
 "\n"
 "Capabilities supported by WeeChat are: account-notify, away-notify, cap-"
-"notify, chghost, extended-join, invite-notify, multi-prefix, server-time, "
-"setname, userhost-in-names.\n"
+"notify, chghost, extended-join, invite-notify, message-tags, multi-prefix, "
+"server-time, setname, userhost-in-names.\n"
 "\n"
 "The capabilities to automatically enable on servers can be set in option irc."
 "server_default.capabilities (or by server in option irc.server.xxx."
@@ -10099,11 +10138,12 @@ msgstr "\"message\": mensagem de IRC, \"server\": nome do servidor (opcional)"
 #. TRANSLATORS: please do not translate key names (enclosed by quotes)
 #, fuzzy
 msgid ""
-"\"tags\": tags, \"message_without_tags\": message without the tags, \"nick"
-"\": nick, \"user\": user, \"host\": host, \"command\": command, \"channel\": "
-"channel, \"arguments\": arguments (includes channel), \"text\": text (for "
-"example user message), \"pos_command\": index of \"command\" message (\"-1\" "
-"if \"command\" was not found), \"pos_arguments\": index of \"arguments\" "
+"\"tags\": tags, \"tag_xxx\": unescaped value of tag \"xxx\" (one key per "
+"tag), \"message_without_tags\": message without the tags, \"nick\": nick, "
+"\"user\": user, \"host\": host, \"command\": command, \"channel\": channel, "
+"\"arguments\": arguments (includes channel), \"text\": text (for example "
+"user message), \"pos_command\": index of \"command\" message (\"-1\" if "
+"\"command\" was not found), \"pos_arguments\": index of \"arguments\" "
 "message (\"-1\" if \"arguments\" was not found), \"pos_channel\": index of "
 "\"channel\" message (\"-1\" if \"channel\" was not found), \"pos_text\": "
 "index of \"text\" message (\"-1\" if \"text\" was not found)"
@@ -11059,30 +11099,6 @@ msgid "%s%s: disconnected from server"
 msgstr "%s%s: desconectado do servidor"
 
 #, c-format
-msgid "%s%s: exception: %s"
-msgstr "%s%s: exceção: %s"
-
-#, c-format
-msgid "%s%s: unable to run function \"%s\""
-msgstr "%s%s: não foi possível executar a função \"%s\""
-
-#, c-format
-msgid "%s%s: unable to create new sub-interpreter"
-msgstr "%s%s: não foi possível criar novo subinterpretador"
-
-#, c-format
-msgid "%s%s: unable to load file \"%s\""
-msgstr "%s%s: não foi possível carregar o ficheiro \"%s\""
-
-#, c-format
-msgid "%s%s: unable to execute file \"%s\""
-msgstr "%s%s: não foi possível executar o ficheiro \"%s\""
-
-#, fuzzy, c-format
-msgid "%sCommand \"/%s eval\" is not yet implemented"
-msgstr "%sA cor \"%s\" não está definida na paleta"
-
-#, c-format
 msgid "%s===\t%s========== End of backlog (%d lines) =========="
 msgstr "%s===\t%s====== Fim do registo recente (%d linhas) ====="
 
@@ -11325,6 +11341,14 @@ msgid "Support of lua scripts"
 msgstr "Suporte de scripts lua"
 
 #, c-format
+msgid "%s%s: unable to run function \"%s\""
+msgstr "%s%s: não foi possível executar a função \"%s\""
+
+#, c-format
+msgid "%s%s: unable to create new sub-interpreter"
+msgstr "%s%s: não foi possível criar novo subinterpretador"
+
+#, c-format
 msgid "%s%s: unable to redirect stdout and stderr"
 msgstr "%s%s: não foi possível redirecionar stdout nem stderr"
 
@@ -11332,8 +11356,16 @@ msgstr "%s%s: não foi possível redirecionar stdout nem stderr"
 msgid "%s%s: unable to load source code"
 msgstr "%s%s: não foi possível carregar o ficheiro \"%s\""
 
+#, c-format
+msgid "%s%s: unable to load file \"%s\""
+msgstr "%s%s: não foi possível carregar o ficheiro \"%s\""
+
 #, fuzzy, c-format
 msgid "%s%s: unable to execute source code"
+msgstr "%s%s: não foi possível executar o ficheiro \"%s\""
+
+#, c-format
+msgid "%s%s: unable to execute file \"%s\""
 msgstr "%s%s: não foi possível executar o ficheiro \"%s\""
 
 msgid "Support of perl scripts"
@@ -11362,6 +11394,10 @@ msgstr "%s%s: não foi possível inicializar %s"
 #, fuzzy
 msgid "Support of PHP scripts"
 msgstr "Suporte de scripts lua"
+
+#, fuzzy, c-format
+msgid "%sCommand \"/%s eval\" is not yet implemented"
+msgstr "%sA cor \"%s\" não está definida na paleta"
 
 msgid "bar"
 msgstr "barra"
@@ -11808,19 +11844,6 @@ msgstr "Plugins descarregados"
 msgid "description of plugin option"
 msgstr "descrição das opções do plugin"
 
-msgid ""
-"check the license of scripts when they are loaded: if the license is "
-"different from the plugin license, a warning is displayed"
-msgstr ""
-
-#, c-format
-msgid ""
-"keep context between two calls to the source code evaluation (option \"eval"
-"\" of script command or info \"%s_eval\"); a hidden script is used to eval "
-"script code; if this option is disabled, this hidden script is unloaded "
-"after each eval: this uses less memory, but is slower"
-msgstr ""
-
 msgid "list/load/unload scripts"
 msgstr "listar/carregar/descarregar scripts"
 
@@ -11947,6 +11970,19 @@ msgstr "  (nenhum)"
 #, c-format
 msgid "%s: scripts unloaded"
 msgstr "%s: scripts descarregados"
+
+msgid ""
+"check the license of scripts when they are loaded: if the license is "
+"different from the plugin license, a warning is displayed"
+msgstr ""
+
+#, c-format
+msgid ""
+"keep context between two calls to the source code evaluation (option \"eval"
+"\" of script command or info \"%s_eval\"); a hidden script is used to eval "
+"script code; if this option is disabled, this hidden script is unloaded "
+"after each eval: this uses less memory, but is slower"
+msgstr ""
 
 #, c-format
 msgid ""
@@ -13635,6 +13671,10 @@ msgstr "%s%s: não foi possível criar novo interpretador"
 msgid "%s%s: error occurred while parsing file \"%s\": %s"
 msgstr "%s%s: erro ao analisar o ficheiro \"%s\": %s"
 
+#, c-format
+msgid "Trigger monitor (filter: %s) | Input: q=close, words=filter"
+msgstr "Monitor de acionador (filtro: %s) | Entrada: q=fechar, palavras=filtro"
+
 msgid ""
 "Text replacement and command execution on events triggered by WeeChat/plugins"
 msgstr ""
@@ -13649,10 +13689,6 @@ msgstr ""
 #, c-format
 msgid "%s%s: invalid regular expression in trigger: \"%s\""
 msgstr "%s%s: expressão regular inválida no acionador: \"%s\""
-
-#, c-format
-msgid "Trigger monitor (filter: %s) | Input: q=close, words=filter"
-msgstr "Monitor de acionador (filtro: %s) | Entrada: q=fechar, palavras=filtro"
 
 msgid "no variable"
 msgstr "nenhum variável"
@@ -14610,6 +14646,10 @@ msgstr "%s%s: tempo limite de \"%s\" com %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: não foi possível conectar: erro inesperado (%d)"
+
+#, c-format
+#~ msgid "%s%s: exception: %s"
+#~ msgstr "%s%s: exceção: %s"
 
 #, c-format
 #~ msgid ""

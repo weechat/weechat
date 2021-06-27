@@ -5063,7 +5063,9 @@ if (weechat_hashtable_has_key (hashtable, "my_key"))
 
 _WeeChat ≥ 0.3.3._
 
-Позива функцију над свим ставкама хеш табеле.
+// TRANSLATION MISSING
+Позива функцију над свим ставкама хеш табеле, by insertion order in the hashtable
+(from oldest to newest one).
 
 Прототип:
 
@@ -5107,7 +5109,9 @@ weechat_hashtable_map (hashtable, &map_cb, NULL);
 
 _WeeChat ≥ 0.3.7._
 
-Позива функцију над свим ставкама хеш табеле и шаље јој кључеве и вредности као стрингове.
+// TRANSLATION MISSING
+Call a function on all hashtable entries, by insertion order in the hashtable
+(from oldest to newest one), sending keys and values as strings.
 
 Прототип:
 
@@ -5317,7 +5321,9 @@ weechat_hashtable_set_pointer (hashtable, "callback_free_key", &my_free_key_cb);
 
 _WeeChat ≥ 0.3.3._
 
-Додаје ставе хеш табеле у ставку инфо листе.
+// TRANSLATION MISSING
+Додаје ставе хеш табеле у ставку инфо листе, by insertion order in the hashtable
+(from oldest to newest one).
 
 Прототип:
 
@@ -11423,6 +11429,22 @@ char *weechat_hook_modifier_exec (const char *modifier,
   Порука која се приказује након што се `/msg` пошаље nickserv боту. |
   Порука са скривеном лозинком.
 
+// TRANSLATION MISSING
+| [[hook_modifier_irc_tag_escape_value]] irc_tag_escape_value +
+  _(WeeChat ≥ 3.3)_ |
+  - |
+  Any string. |
+  String with IRC tag value escaped,
+  see: https://ircv3.net/specs/extensions/message-tags#escaping-values.
+
+// TRANSLATION MISSING
+| [[hook_modifier_irc_tag_unescape_value]] irc_tag_unescape_value +
+  _(WeeChat ≥ 3.3)_ |
+  - |
+  Any string. |
+  String with IRC tag value unescaped,
+  see: https://ircv3.net/specs/extensions/message-tags#escaping-values.
+
 | [[hook_modifier_color_decode_ansi]] color_decode_ansi +
   _(WeeChat ≥ 1.0)_ |
   "1" да се боје задрже, "0" да се боје уклоне |
@@ -15040,12 +15062,14 @@ if (hashtable_in)
     weechat_hashtable_set (
         hashtable_in,
         "message",
-        "@time=2015-06-27T16:40:35.000Z :nick!user@host PRIVMSG #weechat :hello!");
+        "@time=2015-06-27T16:40:35.000Z;tag2=value\\sspace :nick!user@host PRIVMSG #weechat :hello!");
     hashtable_out = weechat_info_get_hashtable ("irc_message_parse",
                                                 hashtable_in);
     /*
      * сада hashtable_out има следеће кључеве/вредности:
-     *   "tags"                : "time=2015-06-27T16:40:35.000Z"
+     *   "tags"                : "time=2015-06-27T16:40:35.000Z;tag2=value\\sspace"
+     *   "tag_time"            : "2015-06-27T16:40:35.000Z"
+     *   "tag_tag2"            : "value space"
      *   "message_without_tags": ":nick!user@host PRIVMSG #weechat :hello!"
      *   "nick"                : "nick"
      *   "user"                : "user"
@@ -15054,10 +15078,10 @@ if (hashtable_in)
      *   "channel"             : "#weechat"
      *   "arguments"           : "#weechat :hello!"
      *   "text"                : "hello!"
-     *   "pos_command"         : "47"
-     *   "pos_arguments"       : "55"
-     *   "pos_channel"         : "55"
-     *   "pos_text"            : "65"
+     *   "pos_command"         : "65"
+     *   "pos_arguments"       : "73"
+     *   "pos_channel"         : "73"
+     *   "pos_text"            : "83"
      */
     weechat_hashtable_free (hashtable_in);
     weechat_hashtable_free (hashtable_out);

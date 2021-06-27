@@ -71,6 +71,8 @@ irc_la_SOURCES = irc.c \
                  irc-sasl.h \
                  irc-server.c \
                  irc-server.h \
+                 irc-tag.c \
+                 irc-tag.h \
                  irc-upgrade.c \
                  irc-upgrade.h
 

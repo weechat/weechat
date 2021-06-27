@@ -53,9 +53,10 @@
 #include "irc-modelist.h"
 #include "irc-msgbuffer.h"
 #include "irc-nick.h"
+#include "irc-notify.h"
 #include "irc-sasl.h"
 #include "irc-server.h"
-#include "irc-notify.h"
+#include "irc-tag.h"
 
 
 /*
@@ -197,66 +198,6 @@ irc_protocol_nick_address (struct t_irc_server *server,
     }
 
     return string;
-}
-
-/*
- * Returns hashtable with tags for an IRC message.
- *
- * Example:
- *   if tags == "aaa=bbb;ccc;example.com/ddd=eee",
- *   hashtable will have following keys/values:
- *     "aaa" => "bbb"
- *     "ccc" => NULL
- *     "example.com/ddd" => "eee"
- */
-
-struct t_hashtable *
-irc_protocol_get_message_tags (const char *tags)
-{
-    struct t_hashtable *hashtable;
-    char **items, *pos, *key;
-    int num_items, i;
-
-    if (!tags || !tags[0])
-        return NULL;
-
-    hashtable = weechat_hashtable_new (32,
-                                       WEECHAT_HASHTABLE_STRING,
-                                       WEECHAT_HASHTABLE_STRING,
-                                       NULL, NULL);
-    if (!hashtable)
-        return NULL;
-
-    items = weechat_string_split (tags, ";", NULL,
-                                  WEECHAT_STRING_SPLIT_STRIP_LEFT
-                                  | WEECHAT_STRING_SPLIT_STRIP_RIGHT
-                                  | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
-                                  0, &num_items);
-    if (items)
-    {
-        for (i = 0; i < num_items; i++)
-        {
-            pos = strchr (items[i], '=');
-            if (pos)
-            {
-                /* format: "tag=value" */
-                key = weechat_strndup (items[i], pos - items[i]);
-                if (key)
-                {
-                    weechat_hashtable_set (hashtable, key, pos + 1);
-                    free (key);
-                }
-            }
-            else
-            {
-                /* format: "tag" */
-                weechat_hashtable_set (hashtable, items[i], NULL);
-            }
-        }
-        weechat_string_free_split (items);
-    }
-
-    return hashtable;
 }
 
 /*
@@ -457,23 +398,19 @@ IRC_PROTOCOL_CALLBACK(account)
 IRC_PROTOCOL_CALLBACK(authenticate)
 {
     int sasl_mechanism;
-    char *sasl_username, *sasl_password, *answer, *sasl_error;
-    const char *sasl_key;
+    char *sasl_username, *sasl_password, *sasl_key, *answer, *sasl_error;
 
     IRC_PROTOCOL_MIN_ARGS(2);
 
     if (!irc_server_sasl_enabled (server))
         return WEECHAT_RC_OK;
 
+    irc_server_sasl_get_creds (server, &sasl_username, &sasl_password,
+                               &sasl_key);
+
     sasl_mechanism = IRC_SERVER_OPTION_INTEGER(
         server, IRC_SERVER_OPTION_SASL_MECHANISM);
-    sasl_username = irc_server_eval_expression (
-        server,
-        IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_SASL_USERNAME));
-    sasl_password = irc_server_eval_expression (
-        server,
-        IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_SASL_PASSWORD));
-    sasl_key = IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_SASL_KEY);
+
     answer = NULL;
     sasl_error = NULL;
     switch (sasl_mechanism)
@@ -530,6 +467,8 @@ IRC_PROTOCOL_CALLBACK(authenticate)
         free (sasl_username);
     if (sasl_password)
         free (sasl_password);
+    if (sasl_key)
+        free (sasl_key);
     if (sasl_error)
         free (sasl_error);
 
@@ -2912,7 +2851,7 @@ IRC_PROTOCOL_CALLBACK(quit)
 
 /*
  * Callback for the IRC message "SETNAME": set real name
- * (with capability "setname").
+ * (received when capability "setname" is enabled).
  *
  * Message looks like:
  *   :nick!user@host SETNAME :the realname
@@ -2959,6 +2898,22 @@ IRC_PROTOCOL_CALLBACK(setname)
             free (realname_color);
     }
 
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * Callback for the IRC message "TAGMSG": message with tags but no text content
+ * (received when capability "message-tags" is enabled).
+ *
+ * Message looks like:
+ *   @msgid=6gqz7dxd22v7r3x9pvukkp8nni;+tag1 :nick!user@host TAGMSG #channel
+ */
+
+IRC_PROTOCOL_CALLBACK(tagmsg)
+{
+    IRC_PROTOCOL_MIN_ARGS(3);
+
+    /* no action by default */
     return WEECHAT_RC_OK;
 }
 
@@ -3195,7 +3150,7 @@ IRC_PROTOCOL_CALLBACK(wallops)
     weechat_printf_date_tags (
         irc_msgbuffer_get_target_buffer (server, nick, command, NULL, NULL),
         date,
-        irc_protocol_tags (command, NULL, nick, address),
+        irc_protocol_tags (command, "notify_private", nick, address),
         _("%sWallops from %s: %s"),
         weechat_prefix ("network"),
         (nick_address[0]) ? nick_address : "?",
@@ -6664,8 +6619,9 @@ IRC_PROTOCOL_CALLBACK(sasl_end_fail)
                              ignored, argc, argv, argv_eol);
 
     sasl_fail = IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_SASL_FAIL);
-    if ((sasl_fail == IRC_SERVER_SASL_FAIL_RECONNECT)
-        || (sasl_fail == IRC_SERVER_SASL_FAIL_DISCONNECT))
+    if (!server->is_connected
+        && ((sasl_fail == IRC_SERVER_SASL_FAIL_RECONNECT)
+            || (sasl_fail == IRC_SERVER_SASL_FAIL_DISCONNECT)))
     {
         irc_server_disconnect (
             server, 0,
@@ -6728,6 +6684,7 @@ irc_protocol_recv_command (struct t_irc_server *server,
         IRCB(privmsg, 1, 1, privmsg),    /* message received                */
         IRCB(quit, 1, 1, quit),          /* close all connections and quit  */
         IRCB(setname, 0, 1, setname),    /* set realname                    */
+        IRCB(tagmsg, 0, 1, tagmsg),      /* tag message                     */
         IRCB(topic, 0, 1, topic),        /* get/set channel topic           */
         IRCB(wallops, 1, 1, wallops),    /* wallops                         */
         IRCB(warn, 1, 0, warn),          /* warning received from server    */
@@ -6868,7 +6825,6 @@ irc_protocol_recv_command (struct t_irc_server *server,
     message_colors_decoded = NULL;
     argv = NULL;
     argv_eol = NULL;
-    hash_tags = NULL;
     date = 0;
 
     ptr_msg_after_tags = irc_message;
@@ -6883,11 +6839,16 @@ irc_protocol_recv_command (struct t_irc_server *server,
                                     pos_space - (irc_message + 1));
             if (tags)
             {
-                hash_tags = irc_protocol_get_message_tags (tags);
+                hash_tags = weechat_hashtable_new (32,
+                                                   WEECHAT_HASHTABLE_STRING,
+                                                   WEECHAT_HASHTABLE_STRING,
+                                                   NULL, NULL);
                 if (hash_tags)
                 {
+                    irc_tag_parse (tags, hash_tags, NULL);
                     date = irc_protocol_parse_time (
                         weechat_hashtable_get (hash_tags, "time"));
+                    weechat_hashtable_free (hash_tags);
                 }
                 free (tags);
             }
@@ -7075,6 +7036,4 @@ end:
         weechat_string_free_split (argv);
     if (argv_eol)
         weechat_string_free_split (argv_eol);
-    if (hash_tags)
-        weechat_hashtable_free (hash_tags);
 }

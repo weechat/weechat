@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-06-19 18:14+0200\n"
-"PO-Revision-Date: 2021-06-19 18:42+0200\n"
+"POT-Creation-Date: 2021-06-25 11:14+0200\n"
+"PO-Revision-Date: 2021-06-25 13:26+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
@@ -5335,16 +5335,6 @@ msgid "password for proxy server (note: content is evaluated, see /help eval)"
 msgstr ""
 "Passwort für Proxy Server (Hinweis: Inhalt wird evaluiert, siehe /help eval)"
 
-msgid "secured data"
-msgstr "schutzwürdige Daten"
-
-msgid ""
-"secured data: names and values (be careful: the values are sensitive data: "
-"do NOT print/log them anywhere)"
-msgstr ""
-"schutzwürdige Daten: Namen und Werte (Vorsicht: Dies sind vertrauliche "
-"Daten: drucken oder protokollieren Sie diese NICHT)"
-
 msgid "WeeChat secured data (sec.conf) | Keys: [alt-v] Toggle values"
 msgstr ""
 "WeeChat schutzwürdigen Daten (sec.conf) | Tastenbefehle: [alt-v] Werte "
@@ -5369,6 +5359,16 @@ msgstr ""
 
 msgid "No secured data set"
 msgstr "Keine schutzwürdigen Daten definiert"
+
+msgid "secured data"
+msgstr "schutzwürdige Daten"
+
+msgid ""
+"secured data: names and values (be careful: the values are sensitive data: "
+"do NOT print/log them anywhere)"
+msgstr ""
+"schutzwürdige Daten: Namen und Werte (Vorsicht: Dies sind vertrauliche "
+"Daten: drucken oder protokollieren Sie diese NICHT)"
 
 msgid "Please enter your passphrase to decrypt the data secured by WeeChat:"
 msgstr ""
@@ -6497,6 +6497,9 @@ msgstr ""
 "charset: wähle neuen Zeichensatz für aktuellen Buffer\n"
 "  reset: setze im aktuellen Buffer den Zeichensatz zurück"
 
+msgid "Executed commands"
+msgstr "Ausgeführte Befehle"
+
 msgid "Execution of external commands in WeeChat"
 msgstr "Ausführung externer Befehle in WeeChat"
 
@@ -6507,9 +6510,6 @@ msgstr "%s: Befehl %ld (\"%s\") wurde beendet, Rückgabewert: %d"
 #, c-format
 msgid "%s: unexpected end of command %ld (\"%s\")"
 msgstr "%s: unerwartetes Ende des Befehls %ld (\"%s\")"
-
-msgid "Executed commands"
-msgstr "Ausgeführte Befehle"
 
 msgid "No command is running"
 msgstr "Es wird im Moment kein Befehl ausgeführt"
@@ -6950,6 +6950,9 @@ msgstr ""
 "Optionen, (u)=unmarkiere zutreffende Optionen, alt+p(p)=an/ausschalten der "
 "Beschreibung für Erweiterungen , alt+v(v)=Hilfe-Bar aus/ausschalten, ctrl"
 "+X(x)=Format umschalten, (q)=Buffer schließen"
+
+msgid "Fast set of WeeChat and plugins options"
+msgstr "Optionen von WeeChat und Erweiterungen schnell anpassen"
 
 #, c-format
 msgid "%s%s: there are no options displayed, unable to export."
@@ -7723,9 +7726,6 @@ msgstr ""
 msgid "fset options"
 msgstr "fset Optionen"
 
-msgid "Fast set of WeeChat and plugins options"
-msgstr "Optionen von WeeChat und Erweiterungen schnell anpassen"
-
 #, c-format
 msgid "%s%s: script \"%s\" already registered (register ignored)"
 msgstr ""
@@ -7870,6 +7870,19 @@ msgid ""
 msgstr ""
 "%s%s: Der Befehl \"%s\" mit dem Parameter \"%s\" kann nur in einem IRC-"
 "Buffer ausgeführt werden (Server, Kanal oder privatem Buffer)"
+
+#, c-format
+msgid ""
+"%s%s: \"%s\" command can only be executed if SASL is enabled via server "
+"options \"sasl_*\" (or you must give username and password)"
+msgstr ""
+"%s%s: \"%s\" Befehl kann nur ausgeführt werden, wenn SASL über die "
+"Serveroptionen \"sasl_*\" aktiviert ist (oder Sie müssen Benutzername und "
+"Passwort angeben)"
+
+#, c-format
+msgid "%s%s: SASL is not supported by the server"
+msgstr "%s%s: SASL wird vom Server nicht unterstützt"
 
 #, c-format
 msgid "%s: future away: %s"
@@ -8371,6 +8384,53 @@ msgstr ""
 "  führt ein whois mit meinem nick auf allen Servern aus:\n"
 "    /allserv /whois $nick"
 
+msgid "authenticate with SASL"
+msgstr "authentifizieren mit SASL"
+
+#| msgid "<user> <password>"
+msgid "[<username> <password>]"
+msgstr "[<username> <password>]"
+
+msgid ""
+"username: SASL username (content is evaluated, see /help eval; server "
+"options are evaluated with ${irc_server.xxx} and ${server} is replaced by "
+"the server name)\n"
+"password: SASL password or path to file with private key (content is "
+"evaluated, see /help eval; server options are evaluated with ${irc_server."
+"xxx} and ${server} is replaced by the server name)\n"
+"\n"
+"If username and password are not provided, the values from server options "
+"\"sasl_username\" and \"sasl_password\" (or \"sasl_key\") are used.\n"
+"\n"
+"Examples:\n"
+"  authenticate with username/password defined in the server:\n"
+"    /auth\n"
+"  authenticate as a different user:\n"
+"    /auth user2 password2\n"
+"  authenticate as a different user with mechanism ecdsa-nist256p-challenge:\n"
+"    /auth user2 ${weechat_config_dir}/ecdsa2.pem"
+msgstr ""
+"username: SASL Username (Inhalt ist evaluiert, siehe /help eval; "
+"Serveroptionen werden mit ${irc_server.xxx} evaluiert und ${server} wird "
+"durch den Servernamen ersetzt)\n"
+"password: SASL-Passwort oder Pfad zur Datei mit privatem Schlüssel (Inhalt "
+"ist evaluiert, siehe /help eval; Serveroptionen werden mit ${irc_server.xxx} "
+"evaluiert und ${server} wird durch den Servernamen ersetzt)\n"
+"\n"
+"Wenn Benutzername und Kennwort nicht angegeben wurden, werden die Werte aus "
+"den Serveroptionen \"sasl_username\" und \"sasl_password\" (oder \"sasl_key"
+"\") verwendet.\n"
+"\n"
+"Beispiele:\n"
+"  authentifizieren Sie sich mit dem im Server definierten Benutzernamen/"
+"Passwort:\n"
+"    /auth\n"
+"  authentifizieren Sie sich mit einem anderen Benutzer:\n"
+"    /auth user2 password2\n"
+"  authentifizieren als anderer Benutzer mit Mechanismus ecdsa-nist256p-"
+"challenge:\n"
+"    /auth user2 ${weechat_config_dir}/ecdsa2.pem"
+
 msgid "ban nicks or hosts"
 msgstr "Nicknamen oder Hosts sperren/verbannen"
 
@@ -8405,8 +8465,8 @@ msgid ""
 "Without argument, \"ls\" and \"list\" are sent.\n"
 "\n"
 "Capabilities supported by WeeChat are: account-notify, away-notify, cap-"
-"notify, chghost, extended-join, invite-notify, multi-prefix, server-time, "
-"setname, userhost-in-names.\n"
+"notify, chghost, extended-join, invite-notify, message-tags, multi-prefix, "
+"server-time, setname, userhost-in-names.\n"
 "\n"
 "The capabilities to automatically enable on servers can be set in option irc."
 "server_default.capabilities (or by server in option irc.server.xxx."
@@ -8426,8 +8486,8 @@ msgstr ""
 "Ohne Angaben von Argumenten werden \"ls\" und \"list\" gesendet.\n"
 "\n"
 "Fähigkeiten die von WeeChat unterstützt werden: account-notify, away-notify, "
-"cap-notify, chghost, extended-join, invite-notify, multi-prefix, server-"
-"time, setname, userhost-in-names..\n"
+"cap-notify, chghost, extended-join, invite-notify, message-tags, multi-"
+"prefix, server-time, setname, userhost-in-names..\n"
 "\n"
 "Fähigkeiten die standardmäßig genutzt werden sollen, können mit der Option "
 "irc.server_default.capabilities gesetzt werden (oder individuell für jeden "
@@ -11007,17 +11067,19 @@ msgstr "\"message\": IRC Nachricht, \"server\": Servername (optional)"
 
 #. TRANSLATORS: please do not translate key names (enclosed by quotes)
 msgid ""
-"\"tags\": tags, \"message_without_tags\": message without the tags, \"nick"
-"\": nick, \"user\": user, \"host\": host, \"command\": command, \"channel\": "
-"channel, \"arguments\": arguments (includes channel), \"text\": text (for "
-"example user message), \"pos_command\": index of \"command\" message (\"-1\" "
-"if \"command\" was not found), \"pos_arguments\": index of \"arguments\" "
+"\"tags\": tags, \"tag_xxx\": unescaped value of tag \"xxx\" (one key per "
+"tag), \"message_without_tags\": message without the tags, \"nick\": nick, "
+"\"user\": user, \"host\": host, \"command\": command, \"channel\": channel, "
+"\"arguments\": arguments (includes channel), \"text\": text (for example "
+"user message), \"pos_command\": index of \"command\" message (\"-1\" if "
+"\"command\" was not found), \"pos_arguments\": index of \"arguments\" "
 "message (\"-1\" if \"arguments\" was not found), \"pos_channel\": index of "
 "\"channel\" message (\"-1\" if \"channel\" was not found), \"pos_text\": "
 "index of \"text\" message (\"-1\" if \"text\" was not found)"
 msgstr ""
-"\"tags\": Tags, \"message_without_tags\": Nachrichten ohne Tags, \"nick\": "
-"Nick, \"user\": Benutzername, \"host\": Host, \"command\": Befehl, \"channel"
+"\"tags\": Tags, \"tag_xxx\": Wert des Tags \"xxx\" ohne Escapezeichen (ein "
+"Schlüssel pro Tag), \"message_without_tags\": Nachrichten ohne Tags, \"nick"
+"\": Nick, \"user\": Benutzer, \"host\": Host, \"command\": Befehl, \"channel"
 "\": Kanal, \"arguments\": Argumente (schließt Kanal ein), \"text\": Text "
 "(zum Beispiel eine Nachricht von einem User), \"pos_command\": Index der "
 "\"command\" Nachricht (\"-1\" falls \"command\" nicht gefunden wird), "
@@ -11976,30 +12038,6 @@ msgid "%s%s: disconnected from server"
 msgstr "%s%s: vom Server getrennt"
 
 #, c-format
-msgid "%s%s: exception: %s"
-msgstr "%s%s: Ausnahmefehler: %s"
-
-#, c-format
-msgid "%s%s: unable to run function \"%s\""
-msgstr "%s%s: Kann die Funktion \"%s\" nicht ausführen"
-
-#, c-format
-msgid "%s%s: unable to create new sub-interpreter"
-msgstr "%s%s: Kann sub-Interpreter nicht erstellen"
-
-#, c-format
-msgid "%s%s: unable to load file \"%s\""
-msgstr "%s%s: Kann die Datei \"%s\" nicht laden"
-
-#, c-format
-msgid "%s%s: unable to execute file \"%s\""
-msgstr "%s%s: Die Datei \"%s\" kann nicht ausgeführt werden"
-
-#, c-format
-msgid "%sCommand \"/%s eval\" is not yet implemented"
-msgstr "%sBefehl \"/%s eval\" ist zur Zeit noch nicht implementiert"
-
-#, c-format
 msgid "%s===\t%s========== End of backlog (%d lines) =========="
 msgstr "%s===\t%s========== Ende des Verlaufspeichers (%d Zeilen) =========="
 
@@ -12271,6 +12309,14 @@ msgid "Support of lua scripts"
 msgstr "Unterstützung von Lua-Skripten"
 
 #, c-format
+msgid "%s%s: unable to run function \"%s\""
+msgstr "%s%s: Kann die Funktion \"%s\" nicht ausführen"
+
+#, c-format
+msgid "%s%s: unable to create new sub-interpreter"
+msgstr "%s%s: Kann sub-Interpreter nicht erstellen"
+
+#, c-format
 msgid "%s%s: unable to redirect stdout and stderr"
 msgstr "%s%s: Weiterleitung von stdout und stderr nicht möglich"
 
@@ -12279,8 +12325,16 @@ msgid "%s%s: unable to load source code"
 msgstr "%s%s: Quelltext kann nicht geladen werden"
 
 #, c-format
+msgid "%s%s: unable to load file \"%s\""
+msgstr "%s%s: Kann die Datei \"%s\" nicht laden"
+
+#, c-format
 msgid "%s%s: unable to execute source code"
 msgstr "%s%s: Quelltext kann nicht ausgeführt werden"
+
+#, c-format
+msgid "%s%s: unable to execute file \"%s\""
+msgstr "%s%s: Die Datei \"%s\" kann nicht ausgeführt werden"
 
 msgid "Support of perl scripts"
 msgstr "Unterstützung von Perl-Skripten"
@@ -12307,6 +12361,10 @@ msgstr "%s%s: %s kann nicht initialisiert werden"
 
 msgid "Support of PHP scripts"
 msgstr "Unterstützung von PHP-Skripten"
+
+#, c-format
+msgid "%sCommand \"/%s eval\" is not yet implemented"
+msgstr "%sBefehl \"/%s eval\" ist zur Zeit noch nicht implementiert"
 
 msgid "bar"
 msgstr "Bar"
@@ -12773,27 +12831,6 @@ msgstr "Erweiterungen wurden beendet"
 msgid "description of plugin option"
 msgstr "Beschreibung der Erweiterungsoption"
 
-msgid ""
-"check the license of scripts when they are loaded: if the license is "
-"different from the plugin license, a warning is displayed"
-msgstr ""
-"Überprüft die Lizenz von Skripten, wenn sie geladen werden: Sollte die "
-"Lizenz abweichend von der Erweiterungslizenz sein, wird eine Warnung "
-"ausgegeben"
-
-#, c-format
-msgid ""
-"keep context between two calls to the source code evaluation (option \"eval"
-"\" of script command or info \"%s_eval\"); a hidden script is used to eval "
-"script code; if this option is disabled, this hidden script is unloaded "
-"after each eval: this uses less memory, but is slower"
-msgstr ""
-"behält den Inhalt zwischen zwei Aufrufen bei Quellcode Evaluierung (Option "
-"\"eval\" des Skript-Befehls oder Info \"%s_eval\"); ein Hintergrundskript "
-"wird für die Evaluierung verwendet; wird diese Option deaktiviert, dann wird "
-"das Hintergrundskript nach jeder Evaluierung entfernt: das bedeutet weniger "
-"Speicherbedarf, ist aber langsamer"
-
 msgid "list/load/unload scripts"
 msgstr "auflisten/installieren/beenden von Skripten"
 
@@ -12928,6 +12965,27 @@ msgstr "  (keine)"
 #, c-format
 msgid "%s: scripts unloaded"
 msgstr "%s: Skripten beendet"
+
+msgid ""
+"check the license of scripts when they are loaded: if the license is "
+"different from the plugin license, a warning is displayed"
+msgstr ""
+"Überprüft die Lizenz von Skripten, wenn sie geladen werden: Sollte die "
+"Lizenz abweichend von der Erweiterungslizenz sein, wird eine Warnung "
+"ausgegeben"
+
+#, c-format
+msgid ""
+"keep context between two calls to the source code evaluation (option \"eval"
+"\" of script command or info \"%s_eval\"); a hidden script is used to eval "
+"script code; if this option is disabled, this hidden script is unloaded "
+"after each eval: this uses less memory, but is slower"
+msgstr ""
+"behält den Inhalt zwischen zwei Aufrufen bei Quellcode Evaluierung (Option "
+"\"eval\" des Skript-Befehls oder Info \"%s_eval\"); ein Hintergrundskript "
+"wird für die Evaluierung verwendet; wird diese Option deaktiviert, dann wird "
+"das Hintergrundskript nach jeder Evaluierung entfernt: das bedeutet weniger "
+"Speicherbedarf, ist aber langsamer"
 
 #, c-format
 msgid ""
@@ -14735,6 +14793,10 @@ msgstr "%s%s: Neuer Interpreter kann nicht anlegt werden"
 msgid "%s%s: error occurred while parsing file \"%s\": %s"
 msgstr "%s%s: Beim parsen der Datei \"%s\" ist ein Fehler aufgetreten: %s"
 
+#, c-format
+msgid "Trigger monitor (filter: %s) | Input: q=close, words=filter"
+msgstr "Trigger Monitor (Filter: %s) | Eingabe: q=beenden, Wort=Filter"
+
 msgid ""
 "Text replacement and command execution on events triggered by WeeChat/plugins"
 msgstr ""
@@ -14750,10 +14812,6 @@ msgstr ""
 #, c-format
 msgid "%s%s: invalid regular expression in trigger: \"%s\""
 msgstr "%s%s: ungültiger regulärer Ausdruck in Trigger: \"%s\""
-
-#, c-format
-msgid "Trigger monitor (filter: %s) | Input: q=close, words=filter"
-msgstr "Trigger Monitor (Filter: %s) | Eingabe: q=beenden, Wort=Filter"
 
 msgid "no variable"
 msgstr "keine Variable"
@@ -15750,6 +15808,10 @@ msgstr "%s%s: Zeitüberschreitung für \"%s\" mit %s"
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr ""
 "%s%s: Verbindung konnte nicht hergestellt werden: unerwarteter Fehler (%d)"
+
+#, c-format
+#~ msgid "%s%s: exception: %s"
+#~ msgstr "%s%s: Ausnahmefehler: %s"
 
 #, c-format
 #~ msgid ""
