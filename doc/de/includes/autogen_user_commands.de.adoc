@@ -1661,19 +1661,21 @@ Beispiele:
          del [<name>] [buffers|windows]
          rename <name> <new_name>
 
-  store: erstellt ein Layout der zur Zeit verwendeten Buffer/Fenster
-  apply: erstelltes Layout verwenden
-  leave: belässt das aktuelle Layout (es wird kein Layout aktualisiert)
-    del: entfernt Buffer und/oder Fenster eines erstellten Layouts
-         (falls weder "buffers" noch "windows" angegeben wird, dann wird das Layout entfernt)
- rename: ein Layout umbenennen
-   name: Name unter welchem das Layout erstellt werden soll (Standardlayout heisst "default")
-buffers: erstellt bzw. verwendet nur Buffer (Reihenfolge der Buffer)
-windows: erstellt bzw. verwendet nur Fenster (Buffer welche im jeweiligen Fenster dargestellt werden)
+  store: store current buffers/windows in a layout
+  apply: apply stored layout
+  leave: leave current layout (does not update any layout)
+    del: delete buffers and/or windows in a stored layout
+         (if neither "buffers" nor "windows" is given after the name, the layout is deleted)
+ rename: rename a layout
+   name: name for stored layout (default is "default")
+buffers: store/apply only buffers (order of buffers)
+windows: store/apply only windows (buffer displayed by each window)
 
-Wird der Befehl ohne Argumente aufgerufen, werden die erstellten Layout dargestellt.
+Without argument, this command displays stored layouts.
 
-Das aktuelle Layout kann beim Ausführen des /quit Befehls mit der Option "weechat.look.save_layout_on_exit" gesichert werden.
+The current layout can be saved on /quit command with the option "weechat.look.save_layout_on_exit".
+
+Note: the layout only remembers windows split and buffers numbers. It does not open buffers. That means for example you must still auto-join IRC channels to open the buffers, the saved layout only applies once the buffers are opened.
 ----
 
 [[command_weechat_mouse]]

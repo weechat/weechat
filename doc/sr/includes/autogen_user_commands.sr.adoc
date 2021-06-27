@@ -1661,19 +1661,21 @@ listdefault: исписује подразумеване тастере
          del [<име>] [buffers|windows]
          rename <име> <ново_име>
 
-  store: чува текуће бафере/прозоре у распореду
-  apply: примењује сачувани распоред
-  leave: напушта текући распоред (не ажурира ниједан распоред)
-    del: брише бафере и/или прозоре из сачуваног распореда
-          (ако након имена није наведено ни „buffers” ни „windows”, онда се брише распоред)
- rename: измена имена распореда
-    име: име распореда који се чува (подразумевано је „default”)
-buffers: чува/обнавља само бафере (редослед бафера)
-windows: чува/обнавља само прозоре (бафер који приказује сваки прозор)
+  store: store current buffers/windows in a layout
+  apply: apply stored layout
+  leave: leave current layout (does not update any layout)
+    del: delete buffers and/or windows in a stored layout
+         (if neither "buffers" nor "windows" is given after the name, the layout is deleted)
+ rename: rename a layout
+   name: name for stored layout (default is "default")
+buffers: store/apply only buffers (order of buffers)
+windows: store/apply only windows (buffer displayed by each window)
 
-Без аргумента, ова команда приказује сачуване распореде.
+Without argument, this command displays stored layouts.
 
-Текући распоред може да се сачува приликом /quit команде опцијом „weechat.look.save_layout_on_exit”.
+The current layout can be saved on /quit command with the option "weechat.look.save_layout_on_exit".
+
+Note: the layout only remembers windows split and buffers numbers. It does not open buffers. That means for example you must still auto-join IRC channels to open the buffers, the saved layout only applies once the buffers are opened.
 ----
 
 [[command_weechat_mouse]]

@@ -7950,7 +7950,12 @@ command_init ()
            "Without argument, this command displays stored layouts.\n"
            "\n"
            "The current layout can be saved on /quit command with the option "
-           "\"weechat.look.save_layout_on_exit\"."),
+           "\"weechat.look.save_layout_on_exit\".\n"
+           "\n"
+           "Note: the layout only remembers windows split and buffers numbers. "
+           "It does not open buffers. That means for example you must still "
+           "auto-join IRC channels to open the buffers, the saved layout only "
+           "applies once the buffers are opened."),
         "store %(layouts_names)|buffers|windows buffers|windows"
         " || apply %(layouts_names)|buffers|windows buffers|windows"
         " || leave"

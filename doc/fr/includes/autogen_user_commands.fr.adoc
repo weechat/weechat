@@ -1674,6 +1674,8 @@ windows : stocker/appliquer seulement pour les fenêtres (le tampon affiché pa
 Sans paramètre, cette commande affiche les dispositions stockées.
 
 La disposition courante peut être sauvegardée sur la commande /quit avec l'option "weechat.look.save_layout_on_exit".
+
+Note : la disposition se souvient seulement de la division des fenêtres et des numéros de tampons. Elle n'ouvre pas les tampons. Cela signifie par exemple que vous devez toujours automatiquement rejoindre les canaux IRC pour ouvrir les tampons, la disposition sauvée ne s'applique qu'une fois les tampons ouverts.
 ----
 
 [[command_weechat_mouse]]
