@@ -10126,7 +10126,7 @@ List of signals sent by WeeChat and plugins:
   signal sent only if message is *not* ignored). +
   Since version 2.2, the whole IRC message is sent, including tags. +
   If the return code of a callback is _WEECHAT_RC_OK_EAT_, then the IRC message
-  is immediately destroyed and not processed by WeeChat.
+  is immediately destroyed and not processed _(WeeChat ≥ 3.3)_.
 
 | irc |
   [[hook_signal_xxx_irc_in2_yyy]] xxx,irc_in2_yyy ^(1)^ |
@@ -10143,7 +10143,7 @@ List of signals sent by WeeChat and plugins:
   signal sent even if message is ignored). +
   Since version 2.2, the whole IRC message is sent, including tags. +
   If the return code of a callback is _WEECHAT_RC_OK_EAT_, then the IRC message
-  is immediately destroyed and not processed by WeeChat.
+  is immediately destroyed and not processed _(WeeChat ≥ 3.3)_.
 
 | irc |
   [[hook_signal_xxx_irc_raw_in2_yyy]] xxx,irc_raw_in2_yyy ^(1)^ +

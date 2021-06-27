@@ -10139,7 +10139,7 @@ WeeChat とプラグインが送信するシグナルのリスト:
   プラグインがメッセージを処理する前に、シグナルが送信される) +
   バージョン 2.2 以上ではタグを含めたすべての IRC メッセージが送信されます。 +
   If the return code of a callback is _WEECHAT_RC_OK_EAT_, then the IRC message
-  is immediately destroyed and not processed by WeeChat.
+  is immediately destroyed and not processed _(WeeChat ≥ 3.3)_.
 
 | irc |
   [[hook_signal_xxx_irc_in2_yyy]] xxx,irc_in2_yyy ^(1)^ |
@@ -10157,7 +10157,7 @@ WeeChat とプラグインが送信するシグナルのリスト:
   プラグインがメッセージを処理する前に、シグナルが送信される) +
   バージョン 2.2 以上ではタグを含めたすべての IRC メッセージが送信されます。 +
   If the return code of a callback is _WEECHAT_RC_OK_EAT_, then the IRC message
-  is immediately destroyed and not processed by WeeChat.
+  is immediately destroyed and not processed _(WeeChat ≥ 3.3)_.
 
 | irc |
   [[hook_signal_xxx_irc_raw_in2_yyy]] xxx,irc_raw_in2_yyy ^(1)^ +

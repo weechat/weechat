@@ -9755,7 +9755,7 @@ struct t_hook *weechat_hook_signal (const char *signal,
   сигнал се шаље само ако се порука *не* игнорише). +
   Почевши од верзије 2.2, шаље се комплетна IRC порука, заједно са ознакама. +
   If the return code of a callback is _WEECHAT_RC_OK_EAT_, then the IRC message
-  is immediately destroyed and not processed by WeeChat.
+  is immediately destroyed and not processed _(WeeChat ≥ 3.3)_.
 
 | irc |
   [[hook_signal_xxx_irc_in2_yyy]] xxx,irc_in2_yyy ^(1)^ |
@@ -9773,7 +9773,7 @@ struct t_hook *weechat_hook_signal (const char *signal,
   сигнал се шаље чак и када се порука игнорише). +
   Почевши од верзије 2.2, шаље се комплетна IRC порука, заједно са ознакама. +
   If the return code of a callback is _WEECHAT_RC_OK_EAT_, then the IRC message
-  is immediately destroyed and not processed by WeeChat.
+  is immediately destroyed and not processed _(WeeChat ≥ 3.3)_.
 
 | irc |
   [[hook_signal_xxx_irc_raw_in2_yyy]] xxx,irc_raw_in2_yyy ^(1)^ +

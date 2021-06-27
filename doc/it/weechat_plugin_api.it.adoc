@@ -10454,7 +10454,7 @@ List of signals sent by WeeChat and plugins:
   messaggio *non* viene ignorato). +
   Since version 2.2, the whole IRC message is sent, including tags. +
   If the return code of a callback is _WEECHAT_RC_OK_EAT_, then the IRC message
-  is immediately destroyed and not processed by WeeChat.
+  is immediately destroyed and not processed _(WeeChat ≥ 3.3)_.
 
 // TRANSLATION MISSING
 | irc |
@@ -10475,7 +10475,7 @@ List of signals sent by WeeChat and plugins:
   messaggio è stato ignorato). +
   Since version 2.2, the whole IRC message is sent, including tags. +
   If the return code of a callback is _WEECHAT_RC_OK_EAT_, then the IRC message
-  is immediately destroyed and not processed by WeeChat.
+  is immediately destroyed and not processed _(WeeChat ≥ 3.3)_.
 
 // TRANSLATION MISSING
 | irc |

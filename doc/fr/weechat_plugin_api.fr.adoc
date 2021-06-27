@@ -10331,7 +10331,7 @@ Liste des signaux envoyés par WeeChat et les extensions :
   Depuis la version 2.2, le message IRC entier est envoyé, en incluant
   les étiquettes. +
   Si le code retour d'une fonction de rappel est _WEECHAT_RC_OK_EAT_, alors
-  le message IRC est immédiatement détruit et non traité par WeeChat.
+  le message IRC est immédiatement détruit et non traité _(WeeChat ≥ 3.3)_.
 
 | irc |
   [[hook_signal_xxx_irc_in2_yyy]] xxx,irc_in2_yyy ^(1)^ |
@@ -10350,7 +10350,7 @@ Liste des signaux envoyés par WeeChat et les extensions :
   Depuis la version 2.2, le message IRC entier est envoyé, en incluant
   les étiquettes. +
   Si le code retour d'une fonction de rappel est _WEECHAT_RC_OK_EAT_, alors
-  le message IRC est immédiatement détruit et non traité par WeeChat.
+  le message IRC est immédiatement détruit et non traité _(WeeChat ≥ 3.3)_.
 
 | irc |
   [[hook_signal_xxx_irc_raw_in2_yyy]] xxx,irc_raw_in2_yyy ^(1)^ +
