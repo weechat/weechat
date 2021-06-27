@@ -886,7 +886,6 @@ Autres objets (non utilisés dans des barres par défaut) :
 | window_number                | `2`                      | Numéro de la fenêtre courante.
 |===
 
-// TRANSLATION MISSING
 Chaque aspect de la disposition peut être configuré par la <<command_line,command>> appropriée :
 <<command_weechat_bar,`/bar`>> pour configurer les barres,
 <<command_weechat_buffer,/buffer>> et <<command_weechat_window,`/window`>>
