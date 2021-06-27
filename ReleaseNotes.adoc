@@ -43,6 +43,7 @@ them:
 * chghost
 * extended-join
 * invite-notify
+* message-tags
 * multi-prefix
 * server-time
 * setname
