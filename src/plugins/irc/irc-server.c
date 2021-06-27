@@ -2374,15 +2374,18 @@ irc_server_reorder (const char **servers, int num_servers)
  * Sends a signal for an IRC message (received or sent).
  */
 
-void
+int
 irc_server_send_signal (struct t_irc_server *server, const char *signal,
                         const char *command, const char *full_message,
                         const char *tags)
 {
-    int length;
+    int rc, length;
     char *str_signal, *full_message_tags;
 
-    length = strlen (server->name) + 1 + strlen (signal) + 1 + strlen (command) + 1;
+    rc = WEECHAT_RC_OK;
+
+    length = strlen (server->name) + 1 + strlen (signal) + 1
+        + strlen (command) + 1;
     str_signal = malloc (length);
     if (str_signal)
     {
@@ -2396,20 +2399,22 @@ irc_server_send_signal (struct t_irc_server *server, const char *signal,
             {
                 snprintf (full_message_tags, length,
                           "%s;%s", tags, full_message);
-                (void) weechat_hook_signal_send (str_signal,
-                                                 WEECHAT_HOOK_SIGNAL_STRING,
-                                                 (void *)full_message_tags);
+                rc = weechat_hook_signal_send (str_signal,
+                                               WEECHAT_HOOK_SIGNAL_STRING,
+                                               (void *)full_message_tags);
                 free (full_message_tags);
             }
         }
         else
         {
-            (void) weechat_hook_signal_send (str_signal,
-                                             WEECHAT_HOOK_SIGNAL_STRING,
-                                             (void *)full_message);
+            rc = weechat_hook_signal_send (str_signal,
+                                           WEECHAT_HOOK_SIGNAL_STRING,
+                                           (void *)full_message);
         }
         free (str_signal);
     }
+
+    return rc;
 }
 
 /*
@@ -2571,14 +2576,14 @@ irc_server_outqueue_send (struct t_irc_server *server)
                     pos[0] = '\r';
 
                 /* send signal with command that will be sent to server */
-                irc_server_send_signal (
+                (void) irc_server_send_signal (
                     server, "irc_out",
                     server->outqueue[priority]->command,
                     server->outqueue[priority]->message_after_mod,
                     NULL);
                 tags_to_send = irc_server_get_tags_to_send (
                     server->outqueue[priority]->tags);
-                irc_server_send_signal (
+                (void) irc_server_send_signal (
                     server, "irc_outtags",
                     server->outqueue[priority]->command,
                     server->outqueue[priority]->message_after_mod,
@@ -2779,14 +2784,16 @@ irc_server_send_one_msg (struct t_irc_server *server, int flags,
                 }
 
                 /* send signal with command that will be sent to server */
-                irc_server_send_signal (server, "irc_out",
-                                        (command) ? command : "unknown",
-                                        ptr_msg,
-                                        NULL);
-                irc_server_send_signal (server, "irc_outtags",
-                                        (command) ? command : "unknown",
-                                        ptr_msg,
-                                        (tags_to_send) ? tags_to_send : "");
+                (void) irc_server_send_signal (
+                    server, "irc_out",
+                    (command) ? command : "unknown",
+                    ptr_msg,
+                    NULL);
+                (void) irc_server_send_signal (
+                    server, "irc_outtags",
+                    (command) ? command : "unknown",
+                    ptr_msg,
+                    (tags_to_send) ? tags_to_send : "");
 
                 if (irc_server_send (server, buffer, strlen (buffer)) <= 0)
                     rc = 0;
@@ -2896,10 +2903,10 @@ irc_server_sendf (struct t_irc_server *server, int flags, const char *tags,
         if (!new_msg || new_msg[0])
         {
             /* send signal with command that will be sent to server (before split) */
-            irc_server_send_signal (server, "irc_out1",
-                                    (command) ? command : "unknown",
-                                    (new_msg) ? new_msg : items[i],
-                                    NULL);
+            (void) irc_server_send_signal (server, "irc_out1",
+                                           (command) ? command : "unknown",
+                                           (new_msg) ? new_msg : items[i],
+                                           NULL);
 
             /*
              * split message if needed (max is 512 bytes by default,

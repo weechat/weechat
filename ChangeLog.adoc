@@ -23,6 +23,7 @@ New features::
   * core: add option "certs" in command /debug
   * api: remember insertion order in hashtables
   * api: add keys/values with tags in output of irc_message_parse_to_hashtable (issue #1654)
+  * irc: allow signals "irc_raw_in" and "irc_in" to eat messages (issue #1657)
   * irc: implement IRCv3.2 SASL authentication, add command /auth, reconnect by default to the server in case of SASL authentication failure (issue #413)
   * irc: add support of capability "message-tags" and TAGMSG messages (issue #1654)
   * irc: enable all capabilities by default (if supported by server and WeeChat), change default value of option irc.server_default.capabilities to "*" (issue #320)

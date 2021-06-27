@@ -10131,12 +10131,15 @@ WeeChat とプラグインが送信するシグナルのリスト:
   String: 削除されたスクリプトへのパスのコンマ区切りリスト |
   Scheme スクリプトを削除
 
+// TRANSLATION MISSING
 | irc |
   [[hook_signal_xxx_irc_in_yyy]] xxx,irc_in_yyy ^(1)^ |
   String: メッセージ |
   サーバから IRC メッセージを受信 (メッセージを *無視しない* 場合のみ irc
   プラグインがメッセージを処理する前に、シグナルが送信される) +
-  バージョン 2.2 以上ではタグを含めたすべての IRC メッセージが送信されます。
+  バージョン 2.2 以上ではタグを含めたすべての IRC メッセージが送信されます。 +
+  If the return code of a callback is _WEECHAT_RC_OK_EAT_, then the IRC message
+  is immediately destroyed and not processed by WeeChat.
 
 | irc |
   [[hook_signal_xxx_irc_in2_yyy]] xxx,irc_in2_yyy ^(1)^ |
@@ -10145,13 +10148,16 @@ WeeChat とプラグインが送信するシグナルのリスト:
   プラグインがメッセージを処理した後に、シグナルが送信される) +
   バージョン 2.2 以上ではタグを含めたすべての IRC メッセージが送信されます。
 
+// TRANSLATION MISSING
 | irc |
   [[hook_signal_xxx_irc_raw_in_yyy]] xxx,irc_raw_in_yyy ^(1)^ +
   _(WeeChat バージョン 0.3.2 以上で利用可)_ |
   String: メッセージ |
   サーバから IRC メッセージを受信 (メッセージを無視する場合でも irc
   プラグインがメッセージを処理する前に、シグナルが送信される) +
-  バージョン 2.2 以上ではタグを含めたすべての IRC メッセージが送信されます。
+  バージョン 2.2 以上ではタグを含めたすべての IRC メッセージが送信されます。 +
+  If the return code of a callback is _WEECHAT_RC_OK_EAT_, then the IRC message
+  is immediately destroyed and not processed by WeeChat.
 
 | irc |
   [[hook_signal_xxx_irc_raw_in2_yyy]] xxx,irc_raw_in2_yyy ^(1)^ +

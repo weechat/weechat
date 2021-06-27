@@ -361,10 +361,10 @@ extern struct t_irc_server *irc_server_copy (struct t_irc_server *server,
                                              const char *new_name);
 extern int irc_server_rename (struct t_irc_server *server, const char *new_name);
 extern int irc_server_reorder (const char **servers, int num_servers);
-extern void irc_server_send_signal (struct t_irc_server *server,
-                                    const char *signal, const char *command,
-                                    const char *full_message,
-                                    const char *tags);
+extern int irc_server_send_signal (struct t_irc_server *server,
+                                   const char *signal, const char *command,
+                                   const char *full_message,
+                                   const char *tags);
 extern void irc_server_set_send_default_tags (const char *tags);
 extern struct t_hashtable *irc_server_sendf (struct t_irc_server *server,
                                              int flags,

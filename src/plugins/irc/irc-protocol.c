@@ -6904,14 +6904,18 @@ irc_protocol_recv_command (struct t_irc_server *server,
         host_no_color);
 
     /* send signal with received command, even if command is ignored */
-    irc_server_send_signal (server, "irc_raw_in", msg_command,
-                            irc_message, NULL);
+    return_code = irc_server_send_signal (server, "irc_raw_in", msg_command,
+                                          irc_message, NULL);
+    if (return_code == WEECHAT_RC_OK_EAT)
+        goto end;
 
     /* send signal with received command, only if message is not ignored */
     if (!message_ignored)
     {
-        irc_server_send_signal (server, "irc_in", msg_command,
-                                irc_message, NULL);
+        return_code = irc_server_send_signal (server, "irc_in", msg_command,
+                                              irc_message, NULL);
+        if (return_code == WEECHAT_RC_OK_EAT)
+            goto end;
     }
 
     /* look for IRC command */
@@ -7008,14 +7012,14 @@ irc_protocol_recv_command (struct t_irc_server *server,
         /* send signal with received command (if message is not ignored) */
         if (!message_ignored)
         {
-            irc_server_send_signal (server, "irc_in2", msg_command,
-                                    irc_message, NULL);
+            (void) irc_server_send_signal (server, "irc_in2", msg_command,
+                                           irc_message, NULL);
         }
     }
 
     /* send signal with received command, even if command is ignored */
-    irc_server_send_signal (server, "irc_raw_in2", msg_command,
-                            irc_message, NULL);
+    (void) irc_server_send_signal (server, "irc_raw_in2", msg_command,
+                                   irc_message, NULL);
 
 end:
     if (nick)

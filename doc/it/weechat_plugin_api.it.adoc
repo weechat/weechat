@@ -10452,7 +10452,9 @@ List of signals sent by WeeChat and plugins:
   Messaggio IRC dal server (prima di essere utilizzato
   dal plugin irc, il segnale viene inviato solo se il
   messaggio *non* viene ignorato). +
-  Since version 2.2, the whole IRC message is sent, including tags.
+  Since version 2.2, the whole IRC message is sent, including tags. +
+  If the return code of a callback is _WEECHAT_RC_OK_EAT_, then the IRC message
+  is immediately destroyed and not processed by WeeChat.
 
 // TRANSLATION MISSING
 | irc |
@@ -10471,7 +10473,9 @@ List of signals sent by WeeChat and plugins:
   Messaggio IRC dal server (prima di essere utilizzato
   dal plugin irc, il segnale viene inviato anche se il
   messaggio è stato ignorato). +
-  Since version 2.2, the whole IRC message is sent, including tags.
+  Since version 2.2, the whole IRC message is sent, including tags. +
+  If the return code of a callback is _WEECHAT_RC_OK_EAT_, then the IRC message
+  is immediately destroyed and not processed by WeeChat.
 
 // TRANSLATION MISSING
 | irc |
