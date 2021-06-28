@@ -3538,10 +3538,6 @@ string_input_for_buffer (const char *string)
     if (!string)
         return NULL;
 
-    /* a single "/" is not a command */
-    if (strcmp (string, "/") == 0)
-        return string;
-
     /* "/ " is not a command */
     if (strncmp (string, "/ ", 2) == 0)
         return string;
@@ -3574,10 +3570,6 @@ string_input_for_buffer (const char *string)
         return string;
 
     next_char = utf8_next_char (string);
-
-    /* there's no next char, then it's a not command */
-    if (!next_char || !next_char[0])
-        return string;
 
     /* next char is a space, then it's not a command */
     if (next_char[0] == ' ')

@@ -46,7 +46,7 @@ extern struct t_logger_buffer *logger_buffers;
 extern struct t_logger_buffer *last_logger_buffer;
 
 extern int logger_buffer_valid (struct t_logger_buffer *logger_buffer);
-extern struct t_logger_buffer *logger_buffer_add (struct t_gui_buffer *,
+extern struct t_logger_buffer *logger_buffer_add (struct t_gui_buffer *buffer,
                                                   int log_level);
 extern struct t_logger_buffer *logger_buffer_search_buffer (struct t_gui_buffer *buffer);
 extern struct t_logger_buffer *logger_buffer_search_log_filename (const char *log_filename);

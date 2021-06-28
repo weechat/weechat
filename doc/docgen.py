@@ -115,6 +115,7 @@ PLUGIN_LIST = {
     'spell': 'o',
     'trigger': 'o',
     'xfer': 'co',
+    'typing': 'o',
 }
 
 # options to ignore

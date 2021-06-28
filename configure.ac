@@ -130,6 +130,7 @@ AH_VERBATIM([PLUGIN_GUILE], [#undef PLUGIN_GUILE])
 AH_VERBATIM([PLUGIN_JAVASCRIPT], [#undef PLUGIN_JAVASCRIPT])
 AH_VERBATIM([PLUGIN_SPELL], [#undef PLUGIN_SPELL])
 AH_VERBATIM([PLUGIN_TRIGGER], [#undef PLUGIN_TRIGGER])
+AH_VERBATIM([PLUGIN_TYPING], [#undef PLUGIN_TYPING])
 AH_VERBATIM([PLUGIN_XFER], [#undef PLUGIN_XFER])
 AH_VERBATIM([TESTS], [#undef TESTS])
 AH_VERBATIM([MAN], [#undef MAN])
@@ -164,6 +165,7 @@ AC_ARG_ENABLE(php,          [  --disable-php           turn off PHP script plugi
 AC_ARG_ENABLE(spell,        [  --disable-spell         turn off Spell checker plugin (default=compiled)],enable_spell=$enableval,enable_spell=yes)
 AC_ARG_ENABLE(enchant,      [  --enable-enchant        turn on Enchant lib for Spell checker plugin (default=off)],enable_enchant=$enableval,enable_enchant=no)
 AC_ARG_ENABLE(trigger,      [  --disable-trigger       turn off Trigger plugin (default=compiled)],enable_trigger=$enableval,enable_trigger=yes)
+AC_ARG_ENABLE(typing,       [  --disable-typing        turn off Typing plugin (default=compiled)],enable_trigger=$enableval,enable_typing=yes)
 AC_ARG_ENABLE(xfer,         [  --disable-xfer          turn off Xfer (file transfer) plugin (default=compiled)],enable_xfer=$enableval,enable_xfer=yes)
 AC_ARG_WITH(tclconfig,      [  --with-tclconfig=DIR    directory containing tcl configuration (tclConfig.sh)],tclconfig=$withval,tclconfig='')
 AC_ARG_WITH(debug,          [  --with-debug            debugging: 0=no debug, 1=debug compilation (default=0)],debug=$withval,debug=0)
@@ -1013,6 +1015,18 @@ else
     not_asked="$not_asked trigger"
 fi
 
+# ---------------------------------- typing ------------------------------------
+
+if test "x$enable_typing" = "xyes" ; then
+    TYPING_CFLAGS=""
+    TYPING_LFLAGS=""
+    AC_SUBST(TYPING_CFLAGS)
+    AC_SUBST(TYPING_LFLAGS)
+    AC_DEFINE(PLUGIN_TYPING)
+else
+    not_asked="$not_asked typing"
+fi
+
 # ---------------------------------- xfer --------------------------------------
 
 if test "x$enable_xfer" = "xyes" ; then
@@ -1365,6 +1379,7 @@ AM_CONDITIONAL(PLUGIN_JAVASCRIPT,       test "$enable_javascript" = "yes")
 AM_CONDITIONAL(PLUGIN_PHP,              test "$enable_php" = "yes")
 AM_CONDITIONAL(PLUGIN_SPELL,            test "$enable_spell" = "yes")
 AM_CONDITIONAL(PLUGIN_TRIGGER,          test "$enable_trigger" = "yes")
+AM_CONDITIONAL(PLUGIN_TYPING,           test "$enable_typing" = "yes")
 AM_CONDITIONAL(PLUGIN_XFER,             test "$enable_xfer" = "yes")
 AM_CONDITIONAL(TESTS,                   test "$enable_tests" = "yes")
 AM_CONDITIONAL(MAN,                     test "$enable_man" = "yes")
@@ -1406,6 +1421,7 @@ AC_OUTPUT([Makefile
            src/plugins/php/Makefile
            src/plugins/spell/Makefile
            src/plugins/trigger/Makefile
+           src/plugins/typing/Makefile
            src/plugins/xfer/Makefile
            src/gui/Makefile
            src/gui/curses/Makefile
@@ -1493,6 +1509,9 @@ if test "x$enable_spell" = "xyes"; then
 fi
 if test "x$enable_trigger" = "xyes"; then
     listplugins="$listplugins trigger"
+fi
+if test "x$enable_typing" = "xyes"; then
+    listplugins="$listplugins typing"
 fi
 if test "x$enable_xfer" = "xyes"; then
     listplugins="$listplugins xfer"
