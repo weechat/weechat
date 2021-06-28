@@ -2215,7 +2215,7 @@
 ** domyślna wartość: `+"%a, %d %b %Y %T %z"+`
 
 * [[option_irc.look.display_account_message]] *irc.look.display_account_message*
-** opis: pass:none[display ACCOUNT messages received when capability account-notify is enabled]
+** opis: pass:none[wyświetl wiadomość ACCOUNT otrzymaną, kiedy opcja account-notify jest włączona]
 ** typ: bool
 ** wartości: on, off
 ** domyślna wartość: `+on+`
@@ -2245,7 +2245,7 @@
 ** domyślna wartość: `+on+`
 
 * [[option_irc.look.display_extended_join]] *irc.look.display_extended_join*
-** opis: pass:none[display extra information in the JOIN messages: account name and real name (capability extended-join must be enabled)]
+** opis: pass:none[wyświetl dodatkowe informacje w wiadomości JOIN: nazwa konta i real name (opcja extended-join musi być włączona)]
 ** typ: bool
 ** wartości: on, off
 ** domyślna wartość: `+on+`
@@ -2677,7 +2677,7 @@
 ** domyślna wartość: `+25+`
 
 * [[option_irc.server_default.capabilities]] *irc.server_default.capabilities*
-** opis: pass:none[comma-separated list of client capabilities to enable for server if they are available (see /help cap for a list of capabilities supported by WeeChat); "*" enables all capabilities by default (supported by both server and WeeChat); wildcard "*" is allowed; a capability beginning with "!" is excluded (example: "*,!account-*,!extended-join")]
+** opis: pass:none[oddzielona przecinkami lista opcji klienta do włączenia dla serwera, jeśli są dostępne (zobacz /help cap żeby poznać listę opcji wspieranych przez WeeChat); "*" włącza domyślnie wszystkie opcje (wspierane zarówno przez serwer i WeeChat); wildcard "*" jest dozwolony; opcje zaczynające się od "!" są pomijane (przykład: "*,!account-*,!extended-join")]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+"*"+`
@@ -2791,7 +2791,7 @@
 ** domyślna wartość: `+""+`
 
 * [[option_irc.server_default.sasl_mechanism]] *irc.server_default.sasl_mechanism*
-** opis: pass:none[mechanism for SASL authentication: "plain" for plain text password, "scram-sha-1" for SCRAM authentication with SHA-1 digest algorithm, "scram-sha-256" for SCRAM authentication with SHA-256 digest algorithm, "scram-sha-512" for SCRAM authentication with SHA-512 digest algorithm, "ecdsa-nist256p-challenge" for key-based challenge authentication, "external" for authentication using client side SSL certificate]
+** opis: pass:none[mechanizm autentykacji SASL: "plain" dla hasła w czystym tekście, "scram-sha-1" dla uwierzytelnienia SCRAM za pomocą algorytmu SHA-1, "scram-sha-256" dla uwierzytelnienia SCRAM za pomocą algorytmu SHA-256, "scram-sha-512" dla uwierzytelnienia SCRAM za pomocą algorytmu SHA-512, "ecdsa-nist256p-challenge" uwierzytelnianie na podstawie pary kluczy, "external" dla uwierzytelnienia za pomocą certyfikatu SSL po stronie klienta]
 ** typ: liczba
 ** wartości: plain, scram-sha-1, scram-sha-256, scram-sha-512, ecdsa-nist256p-challenge, external
 ** domyślna wartość: `+plain+`

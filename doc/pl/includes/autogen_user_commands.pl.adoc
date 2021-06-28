@@ -101,22 +101,22 @@ Przykłady:
 ----
 
 [[command_irc_auth]]
-* `+auth+`: authenticate with SASL
+* `+auth+`: uwuerzytelnienie za pomocą SASL
 
 ----
-/auth  [<username> <password>]
+/auth  [<użytkownik> <hasło>]
 
-username: SASL username (content is evaluated, see /help eval; server options are evaluated with ${irc_server.xxx} and ${server} is replaced by the server name)
-password: SASL password or path to file with private key (content is evaluated, see /help eval; server options are evaluated with ${irc_server.xxx} and ${server} is replaced by the server name)
+użytkownik: nazwa użytkownika SASL (zawartość jest przetwarzana, zobacz /help eval; opcje serwera są dostępne przez ${irc_server.xxx} i ${server} jest zastępowane nazwą serwera)
+hasło: hasło SASL albo ścieżka do pliku z kluczem prywatnym (zawartość jest przetwarzana, zobacz /help eval; opcje serwera są dostępne przez ${irc_server.xxx} i ${server} jest zastępowane nazwą serwera)
 
-If username and password are not provided, the values from server options "sasl_username" and "sasl_password" (or "sasl_key") are used.
+Jeśli nazwa użytkownika i hasło nie zostaną podane, wtedy będą użyte wartości opcji serwera "sasl_username" i "sasl_password" (lub "sasl_key").
 
-Examples:
-  authenticate with username/password defined in the server:
+Przykłady:
+  uwierzytelnienie z nazwą użytkownika/hasłem zdefiniowanymi dla serwera:
     /auth
-  authenticate as a different user:
+  uwierzytelnienie jako inny użytkownik:
     /auth user2 password2
-  authenticate as a different user with mechanism ecdsa-nist256p-challenge:
+  uwierzytelnienie jako inny użytkownik za pomocą mechanizmu ecdsa-nist256p-challenge:
     /auth user2 ${weechat_config_dir}/ecdsa2.pem
 ----
 
@@ -141,19 +141,19 @@ Bez podania argumentu komenda wyświetla listę banów na obecnym kanale.
       req|ack [<opcja> [<opcja>...]]
       end
 
-   ls: list the capabilities supported by the server
- list: list the capabilities currently enabled
-  req: request a capability
-  ack: acknowledge capabilities which require client-side acknowledgement
-  end: end the capability negotiation
+   ls: wyświetla opcje wspierane przez serwer
+ list: wyświetla obecnie włączone opcje
+  req: żądanie opcji
+  ack: potwierdzenie opcji wymagających potwierdzenia po stronie klienta
+  end: kończy negocjacje opcji
 
-Without argument, "ls" and "list" are sent.
+Bez argumentu, wysyłane są "ls" i "list".
 
-Capabilities supported by WeeChat are: account-notify, away-notify, cap-notify, chghost, extended-join, invite-notify, message-tags, multi-prefix, server-time, setname, userhost-in-names.
+Opcje wspierane przez WeeChat to: account-notify, away-notify, cap-notify, chghost, extended-join, invite-notify, message-tags, multi-prefix, server-time, setname, userhost-in-names.
 
-The capabilities to automatically enable on servers can be set in option irc.server_default.capabilities (or by server in option irc.server.xxx.capabilities).
+Opcje automatycznie włączane na serwerach można ustawić za pomocą opcji irc.server_default.capabilities (albo dla konkretnego serwera, opcja irc.server.xxx.capabilities).
 
-Examples:
+Przykłady:
    /cap
    /cap req multi-prefix away-notify
 ----
@@ -828,12 +828,12 @@ typ: wyświetl tylko serwisy tego typu
 ----
 
 [[command_irc_setname]]
-* `+setname+`: set real name
+* `+setname+`: ustaw real name
 
 ----
 /setname  <realname>
 
-realname: new real name
+realname: nowy real name
 ----
 
 [[command_irc_squery]]
@@ -1297,33 +1297,33 @@ Przykłady:
 
 ----
 /debug  list
-        set <plugin> <level>
-        dump [<plugin>]
+        set <wtyczka> <poziom>
+        dump [<wtyczka>]
         buffer|color|infolists|libs|certs|memory|tags|term|windows
         mouse|cursor [verbose]
         hdata [free]
-        time <command>
+        time <komenda>
 
-     list: list plugins with debug levels
-      set: set debug level for plugin
-   plugin: name of plugin ("core" for WeeChat core)
-    level: debug level for plugin (0 = disable debug)
-     dump: save memory dump in WeeChat log file (same dump is written when WeeChat crashes)
-   buffer: dump buffer content with hexadecimal values in log file
-    color: display infos about current color pairs
-   cursor: toggle debug for cursor mode
-     dirs: display directories
-    hdata: display infos about hdata (with free: remove all hdata in memory)
-    hooks: display infos about hooks
-infolists: display infos about infolists
-     libs: display infos about external libraries used
-    certs: display number of loaded trusted certificate authorities
-   memory: display infos about memory usage
-    mouse: toggle debug for mouse
-     tags: display tags for lines
-     term: display infos about terminal
-  windows: display windows tree
-     time: measure time to execute a command or to send text to the current buffer
+     list: wyświetla wtyczki z poziomem debugowania
+      set: ustawia poziom debugowania dla wtyczki
+   plugin: nazwa wtyczki ("core" dla rdzenia WeeChat)
+    poziom: poziom debugowania wtyczki (0 = wyłączony)
+     dump: zachowuje zrzut pamięci w pliku z logiem WeeChat (taki sam zrzut jest zapisywany podczas awarii WeeChat)
+   buffer: zrzuca zawartość bufora z wartościami heksadecymalnymi do pliku z logiem
+    color: wyświetla informacje na temat obecnych par kolorów
+   cursor: przełącza debugowanie dla trybu kursora
+     dirs: wyświetla katalogi
+    hdata: wyświetla informacje o hdata (z free: usuwa wszystkie hdata z pamięci)
+    hooks: wyświetla informacje o hooks
+infolists: wyświetla informacje o infolistach
+     libs: wyświetla informacje o użytych zewnętrznych bibliotekach
+    certs: wyświetla ilość załadowanych zaufanych centrów certyfikacyjnych
+   memory: wyświetla informacje o zużyciu pamięci
+    mouse: przełącza debugowanie myszy
+     tags: wyświetla tagi dla linii
+     term: wyświetla informacje o terminalu
+  windows: wyświetla drzewo okien
+     time: mierzy czas do wykonania komendy lub wysłania tekstu do obecnego bufora
 ----
 
 [[command_weechat_eval]]
@@ -1660,21 +1660,21 @@ Przykłady:
          del [<nazwa>] [buffers|windows]
          rename <nazwa> <nowa nazwa>
 
-  store: store current buffers/windows in a layout
-  apply: apply stored layout
-  leave: leave current layout (does not update any layout)
-    del: delete buffers and/or windows in a stored layout
-         (if neither "buffers" nor "windows" is given after the name, the layout is deleted)
- rename: rename a layout
-   name: name for stored layout (default is "default")
-buffers: store/apply only buffers (order of buffers)
-windows: store/apply only windows (buffer displayed by each window)
+  store: zachowuje układ używając obecnych buforów/okien
+  apply: stosuje zapisany układ
+  leave: opuszcza obecny układ (nie aktualizuje żadnego układu)
+    del: usuwa bufory i/lub okna w zapisanym układzie
+         (jeśli zarówno "buffers" jak i "windows" nie zostaną podane po nazwie, układ jest kasowany)
+ rename: zmienia nazwę układu
+   nazwa: nazwa zapisanego układu (domyślnie "default")
+buffers: zapisuje/stosuje tylko bufory (kolejność buforów)
+windows: zapisuje/stosuje tylko okna (bufory wyświetlane w każdym oknie)
 
-Without argument, this command displays stored layouts.
+Komenda wywołana bez argumentów wyświetli zapisane układy.
 
-The current layout can be saved on /quit command with the option "weechat.look.save_layout_on_exit".
+Obecny układ można zapisać podczas wykonywania komendy /quit za pomocą opcji "weechat.look.save_layout_on_exit".
 
-Note: the layout only remembers windows split and buffers numbers. It does not open buffers. That means for example you must still auto-join IRC channels to open the buffers, the saved layout only applies once the buffers are opened.
+Uwaga: zapamiętywany jest tylko podział okien i numery buforów. Bufory nie są otwierane. Oznacza to, że musisz na przykład samemu wejść na kanały IRC w celu otwarcia buforów, zapisany układ zostanie zastosowany po otwarciu buforów.
 ----
 
 [[command_weechat_mouse]]
