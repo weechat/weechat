@@ -160,6 +160,53 @@ irc_signal_upgrade_cb (const void *pointer, void *data,
 }
 
 /*
+ * Callback for signals "typing_*".
+ */
+
+int
+irc_signal_typing_cb (const void *pointer, void *data,
+                      const char *signal, const char *type_data,
+                      void *signal_data)
+{
+    struct t_irc_server *ptr_server;
+    struct t_irc_channel *ptr_channel;
+    int new_status;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) signal;
+    (void) type_data;
+
+    /* search server/channel with buffer */
+    irc_buffer_get_server_and_channel (signal_data, &ptr_server, &ptr_channel);
+    if (!ptr_server || !ptr_channel)
+        return WEECHAT_RC_OK;
+
+    /* typing works only if capability "message-tags" is enabled */
+    if (!weechat_hashtable_has_key (ptr_server->cap_list, "message-tags"))
+        return WEECHAT_RC_OK;
+
+    new_status = -1;
+    if (strcmp (signal, "typing_active") == 0)
+        new_status = IRC_CHANNEL_TYPING_STATUS_TYPING;
+    else if (strcmp (signal, "typing_paused") == 0)
+        new_status = IRC_CHANNEL_TYPING_STATUS_PAUSED;
+    else if (strcmp (signal, "typing_cleared") == 0)
+        new_status = IRC_CHANNEL_TYPING_STATUS_DONE;
+    else if (strcmp (signal, "typing_sent") == 0)
+        new_status = IRC_CHANNEL_TYPING_STATUS_OFF;
+
+    if ((new_status >= 0) && (new_status != ptr_channel->typing_status))
+    {
+        ptr_channel->typing_status = new_status;
+        ptr_channel->typing_status_sent = 0;
+    }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Initializes IRC plugin.
  */
 
@@ -200,6 +247,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
                          &irc_server_xfer_send_accept_resume_cb, NULL, NULL);
     weechat_hook_signal ("irc_input_send",
                          &irc_input_send_cb, NULL, NULL);
+    weechat_hook_signal ("typing_*",
+                         &irc_signal_typing_cb, NULL, NULL);
 
     /* hook hsignals for redirection */
     weechat_hook_hsignal ("irc_redirect_pattern",

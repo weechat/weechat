@@ -98,6 +98,7 @@ struct t_config_option *irc_config_look_part_closes_buffer;
 struct t_config_option *irc_config_look_pv_buffer;
 struct t_config_option *irc_config_look_pv_tags;
 struct t_config_option *irc_config_look_raw_messages;
+struct t_config_option *irc_config_look_send_typing_status;
 struct t_config_option *irc_config_look_server_buffer;
 struct t_config_option *irc_config_look_smart_filter;
 struct t_config_option *irc_config_look_smart_filter_account;
@@ -3114,6 +3115,13 @@ irc_config_init ()
         N_("number of raw messages to save in memory when raw data buffer is "
            "closed (messages will be displayed when opening raw data buffer)"),
         NULL, 0, 65535, "256", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    irc_config_look_send_typing_status = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "send_typing_status", "boolean",
+        N_("send typing status to channels (capability \"message-tags\" must "
+           "be enabled)"),
+        NULL, 0, 0, "off", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_look_server_buffer = weechat_config_new_option (
         irc_config_file, ptr_section,
