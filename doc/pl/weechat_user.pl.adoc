@@ -634,7 +634,7 @@ Niektóre zmienne śwodowiskowe są używane przez WeeChat o ile zostały zdefin
 [width="100%",cols="1m,6",options="header"]
 |===
 | Nazwa                | Opis
-| WEECHAT_HOME         | Katalog domowy WeeChat (z plikami konfiguracyjnymi, logami, skryptami, ...). Działa tak samo jak <<compile_with_cmake,CMake option>> `WEECHAT_HOME`.
+| WEECHAT_HOME         | Katalog domowy WeeChat (z plikami konfiguracyjnymi, logami, skryptami, ...). Działa tak samo jak <<compile_with_cmake,opcja CMake>> `WEECHAT_HOME`.
 | WEECHAT_PASSPHRASE   | Hasło używane do odszyfrowania zabezpieczonych danych.
 | WEECHAT_EXTRA_LIBDIR | Dodatkowy katalog do ładowania wtyczek (z katalogu "plugins" znajdującego się pod tą ścieżką).
 |===
@@ -778,8 +778,7 @@ Przykład terminala z WeeChat:
             ▲ bars "status" and "input"                               bar "nicklist" ▲
 ....
 
-// TRANSLATION MISSING
-By default, the screen is divided up into the following areas:
+Domyślnie ekran jest podzielony na następujące obszary:
 
 * obszar rozmowy (środek ekranu) z liniami rozmowy, zawierającymi:
 ** czas
@@ -874,13 +873,12 @@ Inne dostępne elementy (nie używane domyślnie w paskach):
 | window_number                | `2`                      | Numer obecnego okna.
 |===
 
-// TRANSLATION MISSING
-Each aspect of the layout can be customized with the appropriate <<command_line,command>>:
-<<command_weechat_bar,`/bar`>> to customize the bars,
-<<command_weechat_buffer,/buffer>> and <<command_weechat_window,`/window`>>
-to customize <<buffers_and_windows,buffers and windows>>,
-and <<command_weechat_layot,/layout>> to name, save and restore the screen layout
-and the association between windows and buffers.
+Każdy aspekt układu może zostać spersonalizowany za pomocą <<command_line,komend>>:
+<<command_weechat_bar,`/bar`>> do dostosowania pasków,
+<<command_weechat_buffer,/buffer>> i <<command_weechat_window,`/window`>>
+do dostosowania <<buffers_and_windows,budorów i okien>>,
+i <<command_weechat_layot,/layout>> żeby nazwać, zapisać i przywrócić układ ekranu
+i powiązania między oknami i buforami.
 
 [[command_line]]
 === Linia poleceń
@@ -1124,21 +1122,18 @@ Przykłady buforów:
 * kanał irc
 * prywatna rozmowa irc
 
-// TRANSLATION MISSING
 _Okno_ to obszar ekranu, w którym wyświetlane są bufory. Nie jest możliwe
-podzielenie ekranu na kilka okien (examples <<window_split_examples,below>>,
-see the <<command_weechat_window,/window command>> for details).
+podzielenie ekranu na kilka okien (przykłady <<window_split_examples,poniżej>>,
+szczegóły <<command_weechat_window,komenda /window>>).
 
 Każde okno wyświetla jeden bufor. Bufor może zostać ukryty (nie wyświetlany w
 oknie) lub wyświetlany w jednym lub więcej oknach.
 
-// TRANSLATION MISSING
-Screen layouts and the association between windows and buffers can be
-<<command_weechat_layout,saved and restored>>.
+Układy ekranu i powiązania między oknami i buforami mogą być
+<<command_weechat_layout,zapisywane i przywracane>>.
 
-// TRANSLATION MISSING
 [[window_split_examples]]
-==== Examples
+==== Przykłady
 
 Przykład podziału poziomego (`/window splith`):
 
@@ -1250,7 +1245,7 @@ Linie wyświetlane w formatowanych buforach maja następujące pola:
 | wiadomość               | Tak                 | Wiadomość.
 | wyświetlone             | Nie                 | Boolean: true jeśli linia została wyświetlona, false jeśli linia została odfiltrowana komendą <<command_weechat_filter,/filter>>.
 | podświetlenie           | Nie                 | Boolean: true jeśli linia ma podświetlenie, false w przeciwnym wypadku.
-| tagi                    | Przez `/debug tags` | Tagi powiązane z linią (zobacz <<lines_tags,lines tags>>).
+| tagi                    | Przez `/debug tags` | Tagi powiązane z linią (zobacz <<lines_tags,tagi linii>>).
 |===
 
 Wyświetlanie linni może być zmienione za pomoćą wielu opcji wyglądu
@@ -2427,7 +2422,7 @@ danych (utworzone za pomocą `/secure set xxx ...`). +
 Pełną listę dostępnych opcji można uzyskać wykonując `/help secure`.
 
 W celu użycia hasła _libera_, na przykład z
-<<irc_sasl_authentication,SASL authentication>>:
+<<irc_sasl_authentication,uwierzytelnianiem SASL>>:
 
 ----
 /set irc.server.libera.sasl_password "${sec.data.libera}"
@@ -4108,7 +4103,7 @@ Trigger posiada następujące opcje (nazwy to `trigger.trigger.<nazwa>.<opcja>`)
 | regex | string |
   Jedno lub więcej rozszerzonych wyrażeń regularnych POSIX, do zamiany danych
   otrzymanych w odpowiedzi od podpiętego zdarzenia (i trochę rzeczy dodanych
-  przez wtyczkę trigger) zobacz <<trigger_regex,regular expression>>.
+  przez wtyczkę trigger) zobacz <<trigger_regex,wyrażenia regularne>>.
 
 | command | string |
   Komenda do wykonania (wiele komend należy oddzielić średnikiem); jest to
