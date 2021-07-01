@@ -404,6 +404,12 @@ SET(WEECHAT_SOURCES
 ./src/plugins/trigger/trigger-config.c
 ./src/plugins/trigger/trigger-config.h
 ./src/plugins/trigger/trigger.h
+./src/plugins/typing/typing.c
+./src/plugins/typing/typing-config.c
+./src/plugins/typing/typing-config.h
+./src/plugins/typing/typing.h
+./src/plugins/typing/typing-status.c
+./src/plugins/typing/typing-status.h
 ./src/plugins/weechat-plugin.h
 ./src/plugins/xfer/xfer-buffer.c
 ./src/plugins/xfer/xfer-buffer.h
