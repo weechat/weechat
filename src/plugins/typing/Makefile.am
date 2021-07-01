@@ -25,10 +25,10 @@ lib_LTLIBRARIES = typing.la
 
 typing_la_SOURCES = typing.c \
                     typing.h \
-                    typing-buffer.c \
-                    typing-buffer.h \
                     typing-config.c \
-                    typing-config.h
+                    typing-config.h \
+                    typing-status.c \
+                    typing-status.h
 typing_la_LDFLAGS = -module -no-undefined
 typing_la_LIBADD  = $(TYPING_LFLAGS)
 

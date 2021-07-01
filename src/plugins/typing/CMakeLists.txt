@@ -19,8 +19,8 @@
 
 add_library(typing MODULE
   typing.c typing.h
-  typing-buffer.c typing-buffer.h
   typing-config.c typing-config.h
+  typing-status.c typing-status.h
 )
 set_target_properties(typing PROPERTIES PREFIX "")
 
