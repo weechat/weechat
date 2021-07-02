@@ -127,11 +127,9 @@ irc_sasl_mechanism_scram (struct t_irc_server *server,
     nonce_server = NULL;
     salt_base64 = NULL;
     salt = NULL;
-    salt_size = 0;
     iterations = 0;
     verifier_base64 = NULL;
     verifier = NULL;
-    verifier_size = 0;
     attr_error = NULL;
     auth_no_proof = NULL;
     auth_message = NULL;
@@ -533,7 +531,6 @@ irc_sasl_mechanism_ecdsa_nist256p_challenge (struct t_irc_server *server,
 
     answer_base64 = NULL;
     string = NULL;
-    length = 0;
 
     if (strcmp (data_base64, "+") == 0)
     {
