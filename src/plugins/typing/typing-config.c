@@ -26,6 +26,7 @@
 #include "../weechat-plugin.h"
 #include "typing.h"
 #include "typing-config.h"
+#include "typing-bar-item.h"
 
 
 struct t_config_file *typing_config_file = NULL;
@@ -34,8 +35,11 @@ struct t_config_section *typing_config_section_completion = NULL;
 
 /* typing config, look section */
 
-struct t_config_option *typing_config_look_enabled;
-struct t_config_option *typing_config_look_delay_pause;
+struct t_config_option *typing_config_look_delay_purge_paused;
+struct t_config_option *typing_config_look_delay_purge_typing;
+struct t_config_option *typing_config_look_delay_set_paused;
+struct t_config_option *typing_config_look_enabled_nicks;
+struct t_config_option *typing_config_look_enabled_self;
 
 
 /*
@@ -73,6 +77,7 @@ typing_config_change_enabled (const void *pointer, void *data,
     (void) option;
 
     typing_setup_hooks ();
+    weechat_bar_item_update (TYPING_BAR_ITEM_NAME);
 }
 
 /*
@@ -109,21 +114,44 @@ typing_config_init ()
         return 0;
     }
 
-    typing_config_look_enabled = weechat_config_new_option (
+    typing_config_look_delay_purge_paused = weechat_config_new_option (
         typing_config_file, ptr_section,
-        "enabled", "boolean",
-        N_("typing enabled"),
-        NULL, 0, 0, "on", NULL, 0,
-        NULL, NULL, NULL,
-        &typing_config_change_enabled, NULL, NULL,
-        NULL, NULL, NULL);
-    typing_config_look_delay_pause = weechat_config_new_option (
+        "delay_purge_paused", "integer",
+        N_("number of seconds after paused status has been set: if reached, "
+           "the typing status is removed"),
+        NULL, 1, 3600, "30", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    typing_config_look_delay_purge_typing = weechat_config_new_option (
         typing_config_file, ptr_section,
-        "delay_pause", "integer",
+        "delay_purge_typing", "integer",
+        N_("number of seconds after typing status has been set: if reached, "
+           "the typing status is removed"),
+        NULL, 1, 3600, "6", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    typing_config_look_delay_set_paused = weechat_config_new_option (
+        typing_config_file, ptr_section,
+        "delay_set_paused", "integer",
         N_("number of seconds after typing last char: if reached, the typing "
            "status becomes \"paused\" and no more typing signals are sent"),
         NULL, 1, 3600, "10", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    typing_config_look_enabled_nicks = weechat_config_new_option (
+        typing_config_file, ptr_section,
+        "enabled_nicks", "boolean",
+        N_("typing enabled for other nicks (display typing info for nicks "
+           "typing in the current buffer)"),
+        NULL, 0, 0, "off", NULL, 0,
+        NULL, NULL, NULL,
+        &typing_config_change_enabled, NULL, NULL,
+        NULL, NULL, NULL);
+    typing_config_look_enabled_self = weechat_config_new_option (
+        typing_config_file, ptr_section,
+        "enabled_self", "boolean",
+        N_("typing enabled for self messages (send typing info to other users)"),
+        NULL, 0, 0, "off", NULL, 0,
+        NULL, NULL, NULL,
+        &typing_config_change_enabled, NULL, NULL,
+        NULL, NULL, NULL);
 
     return 1;
 }

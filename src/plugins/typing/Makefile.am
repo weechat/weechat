@@ -25,6 +25,8 @@ lib_LTLIBRARIES = typing.la
 
 typing_la_SOURCES = typing.c \
                     typing.h \
+                    typing-bar-item.c \
+                    typing-bar-item.h \
                     typing-config.c \
                     typing-config.h \
                     typing-status.c \

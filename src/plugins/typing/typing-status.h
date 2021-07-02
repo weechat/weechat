@@ -20,33 +20,42 @@
 #ifndef WEECHAT_PLUGIN_TYPING_STATUS_H
 #define WEECHAT_PLUGIN_TYPING_STATUS_H
 
-#include <stdio.h>
 #include <time.h>
 
-struct t_infolist;
-
-enum t_typing_status_status
+enum t_typing_status_state
 {
-    TYPING_STATUS_STATUS_OFF = 0,
-    TYPING_STATUS_STATUS_TYPING,
-    TYPING_STATUS_STATUS_PAUSED,
-    TYPING_STATUS_STATUS_CLEARED,
+    TYPING_STATUS_STATE_OFF = 0,
+    TYPING_STATUS_STATE_TYPING,
+    TYPING_STATUS_STATE_PAUSED,
+    TYPING_STATUS_STATE_CLEARED,
     /* number of typing status statuses */
-    TYPING_STATUS_NUM_STATUSES,
+    TYPING_STATUS_NUM_STATES,
 };
 
-/* self typing status */
+/* typing status */
 
 struct t_typing_status
 {
-    int status;                           /* status                         */
-    time_t last_typed;                    /* last char typed                */
-    time_t last_signal_sent;              /* last signal sent               */
+    int state;                            /* current state                  */
+    time_t last_typed;                    /* when was last char typed       */
 };
 
 extern struct t_hashtable *typing_status_self;
+extern struct t_hashtable *typing_status_nicks;
 
-extern struct t_typing_status *typing_status_add (struct t_gui_buffer *buffer);
+extern int typing_status_search_state (const char *state);
+extern struct t_typing_status *typing_status_self_add (struct t_gui_buffer *buffer,
+                                                       int state,
+                                                       int last_typed);
+extern struct t_typing_status *typing_status_self_search (struct t_gui_buffer *buffer);
+extern struct t_typing_status *typing_status_nick_add (struct t_gui_buffer *buffer,
+                                                       const char *nick,
+                                                       int state,
+                                                       int last_typed);
+extern void typing_status_nick_remove (struct t_gui_buffer *buffer,
+                                       const char *nick);
+extern struct t_typing_status *typing_status_nick_search (struct t_gui_buffer *buffer,
+                                                          const char *nick);
 extern void typing_status_end ();
 
 #endif /* WEECHAT_PLUGIN_TYPING_STATUS_H */

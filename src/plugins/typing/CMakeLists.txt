@@ -19,6 +19,7 @@
 
 add_library(typing MODULE
   typing.c typing.h
+  typing-bar-item.c typing-bar-item.h
   typing-config.c typing-config.h
   typing-status.c typing-status.h
 )

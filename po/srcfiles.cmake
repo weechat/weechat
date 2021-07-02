@@ -267,6 +267,8 @@ SET(WEECHAT_SOURCES
 ./src/plugins/irc/irc-server.h
 ./src/plugins/irc/irc-tag.c
 ./src/plugins/irc/irc-tag.h
+./src/plugins/irc/irc-typing.c
+./src/plugins/irc/irc-typing.h
 ./src/plugins/irc/irc-upgrade.c
 ./src/plugins/irc/irc-upgrade.h
 ./src/plugins/javascript/weechat-js-api.h
@@ -405,6 +407,8 @@ SET(WEECHAT_SOURCES
 ./src/plugins/trigger/trigger-config.h
 ./src/plugins/trigger/trigger.h
 ./src/plugins/typing/typing.c
+./src/plugins/typing/typing-bar-item.c
+./src/plugins/typing/typing-bar-item.h
 ./src/plugins/typing/typing-config.c
 ./src/plugins/typing/typing-config.h
 ./src/plugins/typing/typing.h

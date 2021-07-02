@@ -17,20 +17,19 @@
  * along with WeeChat.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef WEECHAT_PLUGIN_TYPING_CONFIG_H
-#define WEECHAT_PLUGIN_TYPING_CONFIG_H
+#ifndef WEECHAT_PLUGIN_IRC_TYPING_H
+#define WEECHAT_PLUGIN_IRC_TYPING_H
 
-#define TYPING_CONFIG_NAME "typing"
+struct t_irc_server;
 
-extern struct t_config_option *typing_config_look_delay_purge_paused;
-extern struct t_config_option *typing_config_look_delay_purge_typing;
-extern struct t_config_option *typing_config_look_delay_set_paused;
-extern struct t_config_option *typing_config_look_enabled_nicks;
-extern struct t_config_option *typing_config_look_enabled_self;
+extern int irc_typing_signal_typing_self_cb (const void *pointer, void *data,
+                                             const char *signal,
+                                             const char *type_data,
+                                             void *signal_data);
+extern void irc_typing_send_to_targets (struct t_irc_server *server);
+extern void irc_typing_channel_set_nick (struct t_irc_channel *channel,
+                                         const char *nick,
+                                         int state);
+extern void irc_typing_channel_reset (struct t_irc_channel *channel);
 
-extern int typing_config_init ();
-extern int typing_config_read ();
-extern int typing_config_write ();
-extern void typing_config_free ();
-
-#endif /* WEECHAT_PLUGIN_TYPING_CONFIG_H */
+#endif /* WEECHAT_PLUGIN_IRC_TYPING_H */

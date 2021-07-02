@@ -40,8 +40,8 @@
 #include "irc-input.h"
 
 
-char *irc_channel_typing_status_string[IRC_CHANNEL_NUM_TYPING_STATUSES] =
-{ "off", "typing", "paused", "done" };
+char *irc_channel_typing_state_string[IRC_CHANNEL_NUM_TYPING_STATES] =
+{ "off", "active", "paused", "done" };
 
 /* default CHANTYPES */
 char *irc_channel_default_chantypes = "#&";
@@ -511,7 +511,7 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
             irc_modelist_new (new_channel, ptr_chanmode[0]);
     }
     new_channel->join_smart_filtered = NULL;
-    new_channel->typing_status = IRC_CHANNEL_TYPING_STATUS_OFF;
+    new_channel->typing_state = IRC_CHANNEL_TYPING_STATE_OFF;
     new_channel->typing_status_sent = 0;
     new_channel->buffer = ptr_buffer;
     new_channel->buffer_as_string = NULL;
@@ -1589,7 +1589,7 @@ irc_channel_hdata_channel_cb (const void *pointer, void *data,
         WEECHAT_HDATA_VAR(struct t_irc_channel, modelists, POINTER, 0, NULL, "irc_modelist");
         WEECHAT_HDATA_VAR(struct t_irc_channel, last_modelist, POINTER, 0, NULL, "irc_modelist");
         WEECHAT_HDATA_VAR(struct t_irc_channel, join_smart_filtered, HASHTABLE, 0, NULL, NULL);
-        WEECHAT_HDATA_VAR(struct t_irc_channel, typing_status, INTEGER, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_channel, typing_state, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_channel, typing_status_sent, TIME, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_channel, buffer, POINTER, 0, NULL, "buffer");
         WEECHAT_HDATA_VAR(struct t_irc_channel, buffer_as_string, STRING, 0, NULL, NULL);
@@ -1781,7 +1781,7 @@ irc_channel_print_log (struct t_irc_channel *channel)
                         channel->join_smart_filtered,
                         weechat_hashtable_get_string (channel->join_smart_filtered,
                                                       "keys_values"));
-    weechat_log_printf ("       typing_status. . . . . . : %d",    channel->typing_status);
+    weechat_log_printf ("       typing_state . . . . . . : %d",    channel->typing_state);
     weechat_log_printf ("       typing_status_sent . . . : %lld",  (long long)channel->typing_status_sent);
     weechat_log_printf ("       buffer . . . . . . . . . : 0x%lx", channel->buffer);
     weechat_log_printf ("       buffer_as_string . . . . : '%s'",  channel->buffer_as_string);

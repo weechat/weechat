@@ -57,6 +57,7 @@
 #include "irc-sasl.h"
 #include "irc-server.h"
 #include "irc-tag.h"
+#include "irc-typing.h"
 
 
 /*
@@ -2139,6 +2140,13 @@ IRC_PROTOCOL_CALLBACK(notice)
             if (ptr_channel)
                 irc_channel_join_smart_filtered_unmask (ptr_channel, nick);
 
+            if (ptr_channel
+                && weechat_config_boolean (irc_config_look_typing_status_nicks))
+            {
+                irc_typing_channel_set_nick (ptr_channel, nick,
+                                             IRC_CHANNEL_TYPING_STATE_OFF);
+            }
+
             ptr_nick = irc_nick_search (server, ptr_channel, nick);
             weechat_printf_date_tags (
                 (ptr_channel) ? ptr_channel->buffer : server->buffer,
@@ -2207,6 +2215,12 @@ IRC_PROTOCOL_CALLBACK(notice)
 
             if (ptr_channel)
             {
+                if (weechat_config_boolean (irc_config_look_typing_status_nicks))
+                {
+                    irc_typing_channel_set_nick (ptr_channel, nick,
+                                                 IRC_CHANNEL_TYPING_STATE_OFF);
+                }
+
                 if (!ptr_channel->topic)
                     irc_channel_set_topic (ptr_channel, address);
 
@@ -2392,6 +2406,9 @@ IRC_PROTOCOL_CALLBACK(part)
     /* part request was issued by local client ? */
     if (local_part)
     {
+        if (weechat_config_boolean (irc_config_look_typing_status_nicks))
+            irc_typing_channel_reset (ptr_channel);
+
         irc_nick_free_all (server, ptr_channel);
 
         irc_channel_modelist_set_state (ptr_channel,
@@ -2431,12 +2448,20 @@ IRC_PROTOCOL_CALLBACK(part)
         }
         irc_bar_item_update_channel ();
     }
-    else if (ptr_nick)
+    else
     {
         /* part from another user */
-        irc_channel_join_smart_filtered_remove (ptr_channel,
-                                                ptr_nick->name);
-        irc_nick_free (server, ptr_channel, ptr_nick);
+        if (weechat_config_boolean (irc_config_look_typing_status_nicks))
+        {
+            irc_typing_channel_set_nick (ptr_channel, nick,
+                                         IRC_CHANNEL_TYPING_STATE_OFF);
+        }
+        if (ptr_nick)
+        {
+            irc_channel_join_smart_filtered_remove (ptr_channel,
+                                                    ptr_nick->name);
+            irc_nick_free (server, ptr_channel, ptr_nick);
+        }
     }
 
     return WEECHAT_RC_OK;
@@ -2574,6 +2599,12 @@ IRC_PROTOCOL_CALLBACK(privmsg)
             }
 
             /* other message */
+            if (weechat_config_boolean (irc_config_look_typing_status_nicks))
+            {
+                irc_typing_channel_set_nick (ptr_channel, nick,
+                                             IRC_CHANNEL_TYPING_STATE_OFF);
+            }
+
             ptr_nick = irc_nick_search (server, ptr_channel, nick);
 
             if (ptr_nick)
@@ -2664,6 +2695,13 @@ IRC_PROTOCOL_CALLBACK(privmsg)
                 return WEECHAT_RC_ERROR;
             }
         }
+
+        if (weechat_config_boolean (irc_config_look_typing_status_nicks))
+        {
+            irc_typing_channel_set_nick (ptr_channel, nick,
+                                         IRC_CHANNEL_TYPING_STATE_OFF);
+        }
+
         irc_channel_set_topic (ptr_channel, address);
 
         if (nick_is_me)
@@ -2751,6 +2789,12 @@ IRC_PROTOCOL_CALLBACK(quit)
     for (ptr_channel = server->channels; ptr_channel;
          ptr_channel = ptr_channel->next_channel)
     {
+        if (weechat_config_boolean (irc_config_look_typing_status_nicks))
+        {
+            irc_typing_channel_set_nick (ptr_channel, nick,
+                                         IRC_CHANNEL_TYPING_STATE_OFF);
+        }
+
         if (ptr_channel->type == IRC_CHANNEL_TYPE_PRIVATE)
             ptr_nick = NULL;
         else
@@ -2906,14 +2950,46 @@ IRC_PROTOCOL_CALLBACK(setname)
  * (received when capability "message-tags" is enabled).
  *
  * Message looks like:
- *   @msgid=6gqz7dxd22v7r3x9pvukkp8nni;+tag1 :nick!user@host TAGMSG #channel
+ *   @msgid=6gqz7dxd22v7r3x9pvu;+typing=active :nick!user@host TAGMSG #channel
  */
 
 IRC_PROTOCOL_CALLBACK(tagmsg)
 {
+    struct t_irc_channel *ptr_channel;
+    const char *ptr_typing_value;
+    int state;
+
     IRC_PROTOCOL_MIN_ARGS(3);
 
-    /* no action by default */
+    if (ignored)
+        return WEECHAT_RC_OK;
+
+    if (!tags)
+        return WEECHAT_RC_OK;
+
+    ptr_channel = NULL;
+    if (irc_channel_is_channel (server, argv[2]))
+        ptr_channel = irc_channel_search (server, argv[2]);
+    else if (irc_server_strcasecmp (server, argv[2], server->nick) == 0)
+        ptr_channel = irc_channel_search (server, nick);
+    if (!ptr_channel)
+        return WEECHAT_RC_OK;
+
+    if (weechat_config_boolean (irc_config_look_typing_status_nicks))
+    {
+        ptr_typing_value = weechat_hashtable_get (tags, "+typing");
+        if (ptr_typing_value && ptr_typing_value[0])
+        {
+            if (strcmp (ptr_typing_value, "active") == 0)
+                state = IRC_CHANNEL_TYPING_STATE_ACTIVE;
+            else if (strcmp (ptr_typing_value, "paused") == 0)
+                state = IRC_CHANNEL_TYPING_STATE_PAUSED;
+            else
+                state = IRC_CHANNEL_TYPING_STATE_OFF;
+            irc_typing_channel_set_nick (ptr_channel, nick, state);
+        }
+    }
+
     return WEECHAT_RC_OK;
 }
 
@@ -3202,7 +3278,7 @@ IRC_PROTOCOL_CALLBACK(001)
         irc_server_set_nick (server, argv[2]);
 
     irc_protocol_cb_numeric (server,
-                             date, nick, address, host, command,
+                             date, tags, nick, address, host, command,
                              ignored, argc, argv, argv_eol);
 
     /* connection to IRC server is OK! */
@@ -3324,7 +3400,7 @@ IRC_PROTOCOL_CALLBACK(005)
     IRC_PROTOCOL_MIN_ARGS(4);
 
     irc_protocol_cb_numeric (server,
-                             date, nick, address, host, command,
+                             date, tags, nick, address, host, command,
                              ignored, argc, argv, argv_eol);
 
     /* save prefix */
@@ -5868,7 +5944,7 @@ IRC_PROTOCOL_CALLBACK(432)
     struct t_gui_buffer *ptr_buffer;
 
     irc_protocol_cb_generic_error (server,
-                                   date, nick, address, host, command,
+                                   date, tags, nick, address, host, command,
                                    ignored, argc, argv, argv_eol);
 
     if (!server->is_connected)
@@ -5953,7 +6029,7 @@ IRC_PROTOCOL_CALLBACK(433)
     else
     {
         return irc_protocol_cb_generic_error (server,
-                                              date, nick, address, host,
+                                              date, tags, nick, address, host,
                                               command, ignored, argc, argv,
                                               argv_eol);
     }
@@ -5974,7 +6050,7 @@ IRC_PROTOCOL_CALLBACK(437)
     struct t_gui_buffer *ptr_buffer;
 
     irc_protocol_cb_generic_error (server,
-                                   date, nick, address, host, command,
+                                   date, tags, nick, address, host, command,
                                    ignored, argc, argv, argv_eol);
 
     if (!server->is_connected)
@@ -6076,7 +6152,7 @@ IRC_PROTOCOL_CALLBACK(470)
     int lines_count;
 
     irc_protocol_cb_generic_error (server,
-                                   date, nick, address, host, command,
+                                   date, tags, nick, address, host, command,
                                    ignored, argc, argv, argv_eol);
 
     if ((argc >= 5) && !irc_channel_search (server, argv[3]))
@@ -6563,7 +6639,7 @@ IRC_PROTOCOL_CALLBACK(901)
     else
     {
         irc_protocol_cb_numeric (server,
-                                 date, nick, address, host, command,
+                                 date, tags, nick, address, host, command,
                                  ignored, argc, argv, argv_eol);
     }
 
@@ -6586,7 +6662,7 @@ IRC_PROTOCOL_CALLBACK(sasl_end_ok)
     }
 
     irc_protocol_cb_numeric (server,
-                             date, nick, address, host, command,
+                             date, tags, nick, address, host, command,
                              ignored, argc, argv, argv_eol);
 
     if (!server->is_connected)
@@ -6615,7 +6691,7 @@ IRC_PROTOCOL_CALLBACK(sasl_end_fail)
     }
 
     irc_protocol_cb_numeric (server,
-                             date, nick, address, host, command,
+                             date, tags, nick, address, host, command,
                              ignored, argc, argv, argv_eol);
 
     sasl_fail = IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_SASL_FAIL);
@@ -6826,6 +6902,7 @@ irc_protocol_recv_command (struct t_irc_server *server,
     argv = NULL;
     argv_eol = NULL;
     date = 0;
+    hash_tags = NULL;
 
     ptr_msg_after_tags = irc_message;
 
@@ -6848,7 +6925,6 @@ irc_protocol_recv_command (struct t_irc_server *server,
                     irc_tag_parse (tags, hash_tags, NULL);
                     date = irc_protocol_parse_time (
                         weechat_hashtable_get (hash_tags, "time"));
-                    weechat_hashtable_free (hash_tags);
                 }
                 free (tags);
             }
@@ -6991,11 +7067,10 @@ irc_protocol_recv_command (struct t_irc_server *server,
         argv_eol = weechat_string_split (message_colors_decoded, " ", NULL,
                                          flags, 0, NULL);
 
-        return_code = (int) (cmd_recv_func) (server,
-                                             date, nick, address_color,
-                                             host_color, cmd_name,
-                                             message_ignored, argc, argv,
-                                             argv_eol);
+        return_code = (int) (cmd_recv_func) (server, date, hash_tags, nick,
+                                             address_color, host_color,
+                                             cmd_name, message_ignored,
+                                             argc, argv, argv_eol);
 
         if (return_code == WEECHAT_RC_ERROR)
         {
@@ -7040,4 +7115,6 @@ end:
         weechat_string_free_split (argv);
     if (argv_eol)
         weechat_string_free_split (argv_eol);
+    if (hash_tags)
+        weechat_hashtable_free (hash_tags);
 }

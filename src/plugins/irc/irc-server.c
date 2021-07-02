@@ -64,6 +64,7 @@
 #include "irc-raw.h"
 #include "irc-redirect.h"
 #include "irc-sasl.h"
+#include "irc-typing.h"
 
 
 struct t_irc_server *irc_servers = NULL;
@@ -3734,33 +3735,8 @@ irc_server_timer_cb (const void *pointer, void *data, int remaining_calls)
                 ptr_redirect = ptr_next_redirect;
             }
 
-            /* send typing status on channels */
-            if (weechat_config_boolean (irc_config_look_send_typing_status))
-            {
-                for (ptr_channel = ptr_server->channels; ptr_channel;
-                     ptr_channel = ptr_channel->next_channel)
-                {
-                    if ((ptr_channel->typing_status != IRC_CHANNEL_TYPING_STATUS_OFF)
-                        && (ptr_channel->typing_status_sent + 3 < current_time))
-                    {
-                        irc_server_sendf (
-                            ptr_server,
-                            IRC_SERVER_SEND_OUTQ_PRIO_LOW, NULL,
-                            "@+typing=%s TAGMSG %s",
-                            irc_channel_typing_status_string[ptr_channel->typing_status],
-                            ptr_channel->name);
-                        if (ptr_channel->typing_status == IRC_CHANNEL_TYPING_STATUS_TYPING)
-                        {
-                            ptr_channel->typing_status_sent = current_time;
-                        }
-                        else
-                        {
-                            ptr_channel->typing_status = IRC_CHANNEL_TYPING_STATUS_OFF;
-                            ptr_channel->typing_status_sent = 0;
-                        }
-                    }
-                }
-            }
+            /* send typing status on channels/privates */
+            irc_typing_send_to_targets (ptr_server);
 
             /* purge some data (every 10 minutes) */
             if (current_time > ptr_server->last_data_purge + (60 * 10))
