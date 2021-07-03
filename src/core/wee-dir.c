@@ -592,7 +592,7 @@ dir_file_copy (const char *from, const char *to)
 
     while (!feof (src))
     {
-        count = fread (buffer, 1, 65535, src);
+        count = fread (buffer, 1, 65536, src);
         if (count <= 0)
             goto end;
         if (fwrite (buffer, 1, count, dst) <= 0)
