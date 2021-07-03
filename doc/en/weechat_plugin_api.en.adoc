@@ -11461,11 +11461,11 @@ Return value:
 
 List of modifiers used by WeeChat and plugins:
 
-[width="100%",cols="^2,3,4,4",options="header"]
+[width="100%",cols="^2,^1,3,4,4",options="header"]
 |===
-| Modifier | Modifier data | String | Output
+| Modifier | Min WeeChat | Modifier data | String | Output
 
-| [[hook_modifier_irc_in_xxx]] irc_in_xxx ^(1)^ |
+| [[hook_modifier_irc_in_xxx]] irc_in_xxx ^(1)^ | |
   Server name |
   Content of message received from IRC server (before charset decoding). +
   *Warning:* the string may contain invalid UTF-8 data; use only for raw
@@ -11473,58 +11473,54 @@ List of modifiers used by WeeChat and plugins:
   Modifier <<hook_modifier_irc_in2_xxx,irc_in2_xxx>> is recommended instead. |
   New content of message.
 
-| [[hook_modifier_irc_in2_xxx]] irc_in2_xxx ^(1)^ +
-  _(WeeChat ≥ 0.3.5)_ |
+| [[hook_modifier_irc_in2_xxx]] irc_in2_xxx ^(1)^ | 0.3.5 |
   Server name |
   Content of message received from IRC server (after charset decoding). |
   New content of message.
 
-| [[hook_modifier_irc_out1_xxx]] irc_out1_xxx ^(1)^ +
-  _(WeeChat ≥ 0.3.7)_ |
+| [[hook_modifier_irc_out1_xxx]] irc_out1_xxx ^(1)^ | 0.3.7 |
   Server name |
   Content of message about to be sent to IRC server before automatic split
   (to fit in 512 bytes by default). |
   New content of message.
 
-| [[hook_modifier_irc_out_xxx]] irc_out_xxx ^(1)^ |
+| [[hook_modifier_irc_out_xxx]] irc_out_xxx ^(1)^ | |
   Server name |
   Content of message about to be sent to IRC server after automatic split
   (to fit in 512 bytes by default). |
   New content of message.
 
-| [[hook_modifier_bar_condition_yyy]] bar_condition_yyy ^(2)^ |
+| [[hook_modifier_bar_condition_yyy]] bar_condition_yyy ^(2)^ | |
   String with window pointer (eg: "0x1234abcd") |
   Empty string. |
   "1" to display bar, "0" to hide it.
 
-| [[hook_modifier_history_add]] history_add +
-  _(WeeChat ≥ 0.3.2)_ |
+| [[hook_modifier_history_add]] history_add | 0.3.2 |
   String with buffer pointer (eg: "0x1234abcd") |
   Content of command line to add in command history (buffer and global). |
   String added to command history.
 
-| [[hook_modifier_input_text_content]] input_text_content |
+| [[hook_modifier_input_text_content]] input_text_content | |
   String with buffer pointer (eg: "0x1234abcd") |
   Content of command line. |
   New content of command line.
 
-| [[hook_modifier_input_text_display]] input_text_display |
+| [[hook_modifier_input_text_display]] input_text_display | |
   String with buffer pointer (eg: "0x1234abcd") |
   Content of command line, without cursor tag. |
   New string, for display only (command line is not changed).
 
-| [[hook_modifier_input_text_display_with_cursor]] input_text_display_with_cursor |
+| [[hook_modifier_input_text_display_with_cursor]] input_text_display_with_cursor | |
   String with buffer pointer (eg: "0x1234abcd") |
   Content of command line, with cursor tag. |
   New string, for display only (command line is not changed).
 
-| [[hook_modifier_input_text_for_buffer]] input_text_for_buffer +
-  _(WeeChat ≥ 0.3.7)_ |
+| [[hook_modifier_input_text_for_buffer]] input_text_for_buffer | 0.3.7 |
   String with buffer pointer (eg: "0x1234abcd") |
   Content of command line sent to buffer (text or command). |
   New content of command line sent to buffer.
 
-| [[hook_modifier_weechat_print]] weechat_print |
+| [[hook_modifier_weechat_print]] weechat_print | |
   buffer pointer (eg: "0x1234abcd") + ";" + tags ^(3)^ |
   Message printed. |
   New message printed. +

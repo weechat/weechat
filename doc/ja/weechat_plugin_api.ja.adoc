@@ -11489,12 +11489,13 @@ struct t_hook *weechat_hook_modifier (const char *modifier,
 
 WeeChat とプラグインが使う修飾子のリスト:
 
-[width="100%",cols="^2,3,4,4",options="header"]
+[width="100%",cols="^2,^1,3,4,4",options="header"]
 |===
-| 修飾子 | 修飾子データ | 文字列 | 出力
+// TRANSLATION MISSING
+| 修飾子 | Min WeeChat | 修飾子データ | 文字列 | 出力
 
 // TRANSLATION MISSING
-| [[hook_modifier_irc_in_xxx]] irc_in_xxx ^(1)^ |
+| [[hook_modifier_irc_in_xxx]] irc_in_xxx ^(1)^ | |
   サーバ名 |
   IRC サーバから受信したメッセージの内容 (文字セットをデコードする前) +
   *Warning:* the string may contain invalid UTF-8 data; use only for raw
@@ -11502,65 +11503,61 @@ WeeChat とプラグインが使う修飾子のリスト:
   Modifier <<hook_modifier_irc_in2_xxx,irc_in2_xxx>> is recommended instead. |
   メッセージの新しい内容
 
-| [[hook_modifier_irc_in2_xxx]] irc_in2_xxx ^(1)^ +
-  _(WeeChat バージョン 0.3.5 以上で利用可)_ |
+| [[hook_modifier_irc_in2_xxx]] irc_in2_xxx ^(1)^ | 0.3.5 |
   サーバ名 |
   IRC サーバから受信したメッセージの内容 (文字セットをデコードした後) |
   メッセージの新しい内容
 
-| [[hook_modifier_irc_out1_xxx]] irc_out1_xxx ^(1)^ +
-  _(WeeChat バージョン 0.3.7 以上で利用可)_ |
+| [[hook_modifier_irc_out1_xxx]] irc_out1_xxx ^(1)^ | 0.3.7 |
   サーバ名 |
   IRC サーバに送信するメッセージの内容
   (自動分割前、自動分割はデフォルトでメッセージを 512 バイト内に収まるように分割します)。|
   メッセージの新しい内容
 
-| [[hook_modifier_irc_out_xxx]] irc_out_xxx ^(1)^ |
+| [[hook_modifier_irc_out_xxx]] irc_out_xxx ^(1)^ | |
   サーバ名 |
   IRC サーバに送信するメッセージの内容
   (自動分割後、自動分割はデフォルトでメッセージを 512 バイト内に収まるように分割します)。|
   メッセージの新しい内容
 
 // TRANSLATION MISSING
-| [[hook_modifier_bar_condition_yyy]] bar_condition_yyy ^(2)^ |
+| [[hook_modifier_bar_condition_yyy]] bar_condition_yyy ^(2)^ | |
   ウィンドウへのポインタの文字列 (eg: "0x1234abcd") |
   空文字列 |
   バーを表示する場合は "1"、隠す場合は "0"
 
 // TRANSLATION MISSING
-| [[hook_modifier_history_add]] history_add +
-  _(WeeChat バージョン 0.3.2 以上で利用可)_ |
+| [[hook_modifier_history_add]] history_add | 0.3.2 |
   バッファへのポインタの文字列 (eg: "0x1234abcd") |
   コマンド履歴に追加するコマンドラインの内容 (バッファとグローバル履歴) |
   コマンド履歴に追加した文字列
 
 // TRANSLATION MISSING
-| [[hook_modifier_input_text_content]] input_text_content |
+| [[hook_modifier_input_text_content]] input_text_content | |
   バッファへのポインタの文字列 (eg: "0x1234abcd") |
   コマンドラインの内容 |
   コマンドラインの新しい内容
 
 // TRANSLATION MISSING
-| [[hook_modifier_input_text_display]] input_text_display |
+| [[hook_modifier_input_text_display]] input_text_display | |
   バッファへのポインタの文字列 (eg: "0x1234abcd") |
   カーソルタグを含まないコマンドラインの内容 |
   新しい文字列、表示のみ (コマンドラインは変化しない)
 
 // TRANSLATION MISSING
-| [[hook_modifier_input_text_display_with_cursor]] input_text_display_with_cursor |
+| [[hook_modifier_input_text_display_with_cursor]] input_text_display_with_cursor | |
   バッファへのポインタの文字列 (eg: "0x1234abcd") |
   カーソルタグを含むコマンドラインの内容 |
   新しい文字列、表示のみ (コマンドラインは変化しない)
 
 // TRANSLATION MISSING
-| [[hook_modifier_input_text_for_buffer]] input_text_for_buffer +
-  _(WeeChat バージョン 0.3.7 以上で利用可)_ |
+| [[hook_modifier_input_text_for_buffer]] input_text_for_buffer | 0.3.7 |
   バッファへのポインタの文字列 (eg: "0x1234abcd") |
   バッファに送信するコマンドラインの内容 (テキストまたはコマンド) |
   バッファに送信するコマンドラインの新しい内容
 
 // TRANSLATION MISSING
-| [[hook_modifier_weechat_print]] weechat_print |
+| [[hook_modifier_weechat_print]] weechat_print | |
   buffer pointer (eg: "0x1234abcd") + ";" + tags ^(3)^ |
   表示されたメッセージ |
   表示される新しいメッセージ +

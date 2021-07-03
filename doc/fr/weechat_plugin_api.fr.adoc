@@ -11704,11 +11704,11 @@ Valeur de retour :
 
 Liste des modificateurs utilisés par WeeChat et les extensions :
 
-[width="100%",cols="^2,3,4,4",options="header"]
+[width="100%",cols="^2,^1,3,4,4",options="header"]
 |===
-| Modificateur | Données du modificateur | Chaîne | Sortie
+| Modificateur | WeeChat mini | Données du modificateur | Chaîne | Sortie
 
-| [[hook_modifier_irc_in_xxx]] irc_in_xxx ^(1)^ |
+| [[hook_modifier_irc_in_xxx]] irc_in_xxx ^(1)^ | |
   Nom de serveur |
   Contenu du message reçu du serveur IRC (avant décodage du jeu de caractères). +
   *Attention :* la chaîne peut contenir des données invalides UTF-8 ; à utiliser
@@ -11717,61 +11717,57 @@ Liste des modificateurs utilisés par WeeChat et les extensions :
   place de celui-ci. |
   Nouveau contenu du message.
 
-| [[hook_modifier_irc_in2_xxx]] irc_in2_xxx ^(1)^ +
-  _(WeeChat ≥ 0.3.5)_ |
+| [[hook_modifier_irc_in2_xxx]] irc_in2_xxx ^(1)^ | 0.3.5 |
   Nom de serveur |
   Contenu du message reçu du serveur IRC (après décodage du jeu de caractères). |
   Nouveau contenu du message.
 
-| [[hook_modifier_irc_out1_xxx]] irc_out1_xxx ^(1)^ +
-  _(WeeChat ≥ 0.3.7)_ |
+| [[hook_modifier_irc_out1_xxx]] irc_out1_xxx ^(1)^ | 0.3.7 |
   Nom de serveur |
   Contenu du message qui va être envoyé au serveur IRC avant découpage automatique
   (pour tenir dans les 512 octets par défaut). |
   Nouveau contenu du message.
 
-| [[hook_modifier_irc_out_xxx]] irc_out_xxx ^(1)^ |
+| [[hook_modifier_irc_out_xxx]] irc_out_xxx ^(1)^ | |
   Nom de serveur |
   Contenu du message qui va être envoyé au serveur IRC après découpage automatique
   (pour tenir dans les 512 octets par défaut). |
   Nouveau contenu du message.
 
-| [[hook_modifier_bar_condition_yyy]] bar_condition_yyy ^(2)^ |
+| [[hook_modifier_bar_condition_yyy]] bar_condition_yyy ^(2)^ | |
   Chaîne avec un pointeur vers la fenêtre (par exemple : "0x1234abcd") |
   Chaîne vide. |
   "1" pour afficher la barre, "0" pour la cacher.
 
-| [[hook_modifier_history_add]] history_add +
-  _(WeeChat ≥ 0.3.2)_ |
+| [[hook_modifier_history_add]] history_add | 0.3.2 |
   Chaîne avec un pointeur vers le tampon (par exemple : "0x1234abcd") |
   Contenu de la ligne de commande à ajouter à l'historique des commandes
   (tampon et global). |
   Chaîne ajoutée à l'historique des commandes.
 
-| [[hook_modifier_input_text_content]] input_text_content |
+| [[hook_modifier_input_text_content]] input_text_content | |
   Chaîne avec un pointeur vers le tampon (par exemple : "0x1234abcd") |
   Contenu de la ligne de commande. |
   Nouvelle chaîne pour la ligne de commande.
 
-| [[hook_modifier_input_text_display]] input_text_display |
+| [[hook_modifier_input_text_display]] input_text_display | |
   Chaîne avec un pointeur vers le tampon (par exemple : "0x1234abcd") |
   Contenu de la ligne de commande, sans le code du curseur dedans. |
   Nouvelle chaîne, pour affichage seulement (la ligne de commande n'est pas
   modifiée).
 
-| [[hook_modifier_input_text_display_with_cursor]] input_text_display_with_cursor |
+| [[hook_modifier_input_text_display_with_cursor]] input_text_display_with_cursor | |
   Chaîne avec un pointeur vers le tampon (par exemple : "0x1234abcd") |
   Contenu de la ligne de commande, avec le code du curseur dedans. |
   Nouvelle chaîne, pour affichage seulement (la ligne de commande n'est pas
   modifiée).
 
-| [[hook_modifier_input_text_for_buffer]] input_text_for_buffer +
-  _(WeeChat ≥ 0.3.7)_ |
+| [[hook_modifier_input_text_for_buffer]] input_text_for_buffer | 0.3.7 |
   Chaîne avec un pointeur vers le tampon (par exemple : "0x1234abcd") |
   Contenu de la ligne de commande envoyée au tampon (texte ou commande). |
   Nouveau contenu de la ligne de commande envoyée au tampon.
 
-| [[hook_modifier_weechat_print]] weechat_print |
+| [[hook_modifier_weechat_print]] weechat_print | |
   pointeur vers le tampon (par exemple : "0x1234abcd") + ";" + étiquettes ^(3)^ |
   Message affiché. |
   Nouveau message affiché. +

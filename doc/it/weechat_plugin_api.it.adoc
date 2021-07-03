@@ -11922,12 +11922,13 @@ Valore restituito:
 
 List of modifiers used by WeeChat and plugins:
 
-[width="100%",cols="^2,3,4,4",options="header"]
+[width="100%",cols="^2,^1,3,4,4",options="header"]
 |===
-| Modificatore | Dati modificatore | Stringa | Output
+// TRANSLATION MISSING
+| Modificatore | Min WeeChat | Dati modificatore | Stringa | Output
 
 // TRANSLATION MISSING
-| [[hook_modifier_irc_in_xxx]] irc_in_xxx ^(1)^ |
+| [[hook_modifier_irc_in_xxx]] irc_in_xxx ^(1)^ | |
   Nome server |
   Contenuto del messaggio ricevuto dal server IRC (prima della codifica del set caratteri). +
   *Warning:* the string may contain invalid UTF-8 data; use only for raw
@@ -11935,67 +11936,63 @@ List of modifiers used by WeeChat and plugins:
   Modifier <<hook_modifier_irc_in2_xxx,irc_in2_xxx>> is recommended instead. |
   Nuovo contenuto del messaggio.
 
-| [[hook_modifier_irc_in2_xxx]] irc_in2_xxx ^(1)^ +
-  _(WeeChat ≥ 0.3.5)_ |
+| [[hook_modifier_irc_in2_xxx]] irc_in2_xxx ^(1)^ | 0.3.5 |
   Nome server |
   Contenuto del messaggio ricevuto dal server IRC (dopo la codifica del set caratteri). |
   Nuovo contenuto del messaggio.
 
 // TRANSLATION MISSING
-| [[hook_modifier_irc_out1_xxx]] irc_out1_xxx ^(1)^ +
-  _(WeeChat ≥ 0.3.7)_ |
+| [[hook_modifier_irc_out1_xxx]] irc_out1_xxx ^(1)^ | 0.3.7 |
   Nome server |
   Content of message about to be sent to IRC server before automatic split
   (to fit in 512 bytes by default). |
   Nuovo contenuto del messaggio.
 
 // TRANSLATION MISSING
-| [[hook_modifier_irc_out_xxx]] irc_out_xxx ^(1)^ |
+| [[hook_modifier_irc_out_xxx]] irc_out_xxx ^(1)^ | |
   Nome server |
   Content of message about to be sent to IRC server after automatic split
   (to fit in 512 bytes by default). |
   Nuovo contenuto del messaggio.
 
 // TRANSLATION MISSING
-| [[hook_modifier_bar_condition_yyy]] bar_condition_yyy ^(2)^ |
+| [[hook_modifier_bar_condition_yyy]] bar_condition_yyy ^(2)^ | |
   Stringa con puntatore alla finestra (eg: "0x1234abcd") |
   Stringa vuota. |
   "1" per visualizzare la barra, "0" per nasconderla.
 
 // TRANSLATION MISSING
-| [[hook_modifier_history_add]] history_add +
-  _(WeeChat ≥ 0.3.2)_ |
+| [[hook_modifier_history_add]] history_add | 0.3.2 |
   Stringa con puntatore al buffer (eg: "0x1234abcd") |
   Contenuto della riga di comando da aggiungere nella cronologia comandi (buffer e globale). |
   Stringa aggiunta alla cronologia comandi.
 
 // TRANSLATION MISSING
-| [[hook_modifier_input_text_content]] input_text_content |
+| [[hook_modifier_input_text_content]] input_text_content | |
   Stringa con puntatore al buffer (eg: "0x1234abcd") |
   Contenuto della riga di comando. |
   Nuovo contenuto della riga di comando.
 
 // TRANSLATION MISSING
-| [[hook_modifier_input_text_display]] input_text_display |
+| [[hook_modifier_input_text_display]] input_text_display | |
   Stringa con puntatore al buffer (eg: "0x1234abcd") |
   Contenuto della riga di comando, senza tag al cursore. |
   Nuova stringa, solo da mostrare (la riga di comando non viene modificata).
 
 // TRANSLATION MISSING
-| [[hook_modifier_input_text_display_with_cursor]] input_text_display_with_cursor |
+| [[hook_modifier_input_text_display_with_cursor]] input_text_display_with_cursor | |
   Stringa con puntatore al buffer (eg: "0x1234abcd") |
   Contenuto della riga di comando, con tag al cursore. |
   Nuova stringa, solo da mostrare (la riga di comando non viene modificata).
 
 // TRANSLATION MISSING
-| [[hook_modifier_input_text_for_buffer]] input_text_for_buffer +
-  _(WeeChat ≥ 0.3.7)_ |
+| [[hook_modifier_input_text_for_buffer]] input_text_for_buffer | 0.3.7 |
   Stringa con puntatore al buffer (eg: "0x1234abcd") |
   Contenuto della riga di comando inviata al buffer (testo o comando). |
   Nuovo contenuto della riga di comando inviata al buffer.
 
 // TRANSLATION MISSING
-| [[hook_modifier_weechat_print]] weechat_print |
+| [[hook_modifier_weechat_print]] weechat_print | |
   buffer pointer (eg: "0x1234abcd") + ";" + tags ^(3)^ |
   Messaggio stampato. |
   Nuovo messaggio stampato. +

@@ -11062,11 +11062,12 @@ struct t_hook *weechat_hook_modifier (const char *modifier,
 
 Листа модификатора које користе програм WeeChat и додаци:
 
-[width="100%", cols="^2,3,4,4", options="header"]
+[width="100%", cols="^2,^1,3,4,4", options="header"]
 |===
-| Модификатор | Подаци модификатора | Стринг | Излаз
+// TRANSLATION MISSING
+| Модификатор | Min WeeChat | Подаци модификатора | Стринг | Излаз
 
-| [[hook_modifier_irc_in_xxx]] irc_in_xxx ^(1)^ |
+| [[hook_modifier_irc_in_xxx]] irc_in_xxx ^(1)^ | |
   Име сервера |
   Садржај поруке примљене са IRC сервера (пре декодирања скупа карактера). +
   *Упозорење:* стринг може да садржи неважеће UTF-8 податке; користите га само
@@ -11074,58 +11075,54 @@ struct t_hook *weechat_hook_modifier (const char *modifier,
   Уместо њега се препоручује употреба <<hook_modifier_irc_in2_xxx,irc_in2_xxx>>. |
   Нови садржај поруке.
 
-| [[hook_modifier_irc_in2_xxx]] irc_in2_xxx ^(1)^ +
-  _(WeeChat ≥ 0.3.5)_ |
+| [[hook_modifier_irc_in2_xxx]] irc_in2_xxx ^(1)^ | 0.3.5 |
   Име сервера |
   Садржај поруке примљене са IRC сервера (након декодирања скупа карактера). |
   Нови садржај поруке.
 
-| [[hook_modifier_irc_out1_xxx]] irc_out1_xxx ^(1)^ +
-  _(WeeChat ≥ 0.3.7)_ |
+| [[hook_modifier_irc_out1_xxx]] irc_out1_xxx ^(1)^ | 0.3.7 |
   Име сервера |
   Садржај поруке које треба да се пошаље IRC серверу пре аутоматске поделе
   (да стане у 512 подразумевано). |
   Нови садржај поруке.
 
-| [[hook_modifier_irc_out_xxx]] irc_out_xxx ^(1)^ |
+| [[hook_modifier_irc_out_xxx]] irc_out_xxx ^(1)^ | |
   Име сервера |
   Садржај поруке које треба да се пошаље IRC серверу након аутоматске поделе
   (да стане у 512 подразумевано). |
   Нови садржај поруке.
 
-| [[hook_modifier_bar_condition_yyy]] bar_condition_yyy ^(2)^ |
+| [[hook_modifier_bar_condition_yyy]] bar_condition_yyy ^(2)^ | |
   Стринг са показивачем на прозор (нпр: "0x1234abcd") |
   Празан стринг. |
   "1" да се прикаже трака, "0" да се сакрије.
 
-| [[hook_modifier_history_add]] history_add +
-  _(WeeChat ≥ 0.3.2)_ |
+| [[hook_modifier_history_add]] history_add | 0.3.2 |
   Стринг са показивачем на бафер (нпр: "0x1234abcd") |
   Садржај командне линије која треба да се дода у историју команди (бафера и глобалну). |
   Стринг који се додаје у историју команди.
 
-| [[hook_modifier_input_text_content]] input_text_content |
+| [[hook_modifier_input_text_content]] input_text_content | |
   Стринг са показивачем на бафер (нпр: "0x1234abcd") |
   Садржај командне линије. |
   Нови садржај командне линије.
 
-| [[hook_modifier_input_text_display]] input_text_display |
+| [[hook_modifier_input_text_display]] input_text_display | |
   Стринг са показивачем на бафер (нпр: "0x1234abcd") |
   Садржај командне линије, без ознаке курсора. |
   Нови стринг, само за приказ (командна линија се не мења).
 
-| [[hook_modifier_input_text_display_with_cursor]] input_text_display_with_cursor |
+| [[hook_modifier_input_text_display_with_cursor]] input_text_display_with_cursor | |
   Стринг са показивачем на бафер (нпр: "0x1234abcd") |
   Садржај командне линије, са ознаком курсора. |
   Нови стринг, само за приказ (командна линија се не мења).
 
-| [[hook_modifier_input_text_for_buffer]] input_text_for_buffer +
-  _(WeeChat ≥ 0.3.7)_ |
+| [[hook_modifier_input_text_for_buffer]] input_text_for_buffer | 0.3.7 |
   Стринг са показивачем на бафер (нпр: "0x1234abcd") |
   Садржај командне линије која се шаље у бафер (текст или команда). |
   Нови садржај командне линије који се шаље у бафер.
 
-| [[hook_modifier_weechat_print]] weechat_print |
+| [[hook_modifier_weechat_print]] weechat_print | |
   показивач на бафер (нпр: "0x1234abcd") + ";" + ознаке ^(3)^ |
   Порука која се исписује. |
   Нова порука која се исписује. +
