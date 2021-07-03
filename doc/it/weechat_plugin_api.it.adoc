@@ -9591,41 +9591,29 @@ For a standard command (not beginning with "url:"), following options are
 available:
 
 // TRANSLATION MISSING
-[width="100%",cols="^1,1,1,4",options="header"]
+[width="100%",cols="^1,^1,1,1,5",options="header"]
 |===
-| Option | Value | Default | Description
+| Option | Min WeeChat | Value | Default | Description
 
 // TRANSLATION MISSING
-| argN (N ≥ 1) +
-  _(WeeChat ≥ 0.4.0)_ |
-  any string |
-  no arguments |
+| argN (N ≥ 1) | 0.4.0 | any string | no arguments |
   Arguments for command; if no argument is given with these options,
   the command is automatically split like the shell does (and then command
   arguments are read in the _command_ argument).
 
 // TRANSLATION MISSING
-| stdin +
-  _(WeeChat ≥ 0.4.3)_ |
-  (not used) |
-  no stdin |
+| stdin | 0.4.3 | (not used) | no stdin |
   Create a pipe for writing data on standard input (stdin) of child process
   (see function <<_hook_set,hook_set>>).
 
 // TRANSLATION MISSING
-| buffer_flush +
-  _(WeeChat ≥ 1.0)_ |
-  number of bytes |
-  65536 |
+| buffer_flush | 1.0 | number of bytes | 65536 |
   Minimum number of bytes to flush stdout/stderr (to send output to callback),
   between 1 and 65536. With the value 1, the output is sent immediately to the
   callback.
 
 // TRANSLATION MISSING
-| detached +
-  _(WeeChat ≥ 1.0)_ |
-  (not used) |
-  not detached |
+| detached | 1.0 | (not used) | not detached |
   Run the process in a detached mode: stdout and stderr are redirected to
   _/dev/null_.
 |===
