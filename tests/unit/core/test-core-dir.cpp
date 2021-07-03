@@ -90,33 +90,41 @@ TEST(CoreDir, SearchFullLibName)
 /*
  * Tests functions:
  *   dir_file_get_content
+ *   dir_file_copy
  */
 
-TEST(CoreDir, FileGetContent)
+TEST(CoreDir, FileGetContentCopy)
 {
-    char *path, *content, *content_read;
+    char *path1, *path2, *content, *content_read1, *content_read2;
     const char *content_small = "line 1\nline 2\nend";
     int length, i;
     FILE *f;
 
     /* file not found */
-    POINTERS_EQUAL(NULL, dir_file_get_content (NULL));
-    POINTERS_EQUAL(NULL, dir_file_get_content (""));
-    POINTERS_EQUAL(NULL, dir_file_get_content ("/tmp/does/not/exist.xyz"));
+    LONGS_EQUAL(0, dir_file_copy (NULL, NULL));
+    LONGS_EQUAL(0, dir_file_copy ("", ""));
+    LONGS_EQUAL(0, dir_file_copy ("/tmp/does/not/exist.xyz", "/tmp/test.txt"));
 
-    path = string_eval_path_home ("${weechat_data_dir}/test_file.txt",
-                                  NULL, NULL, NULL);
+    path1 = string_eval_path_home ("${weechat_data_dir}/test_file.txt",
+                                   NULL, NULL, NULL);
+    path2 = string_eval_path_home ("${weechat_data_dir}/test_file2.txt",
+                                   NULL, NULL, NULL);
 
     /* small file */
     length = strlen (content_small);
-    f = fopen (path, "wb");
+    f = fopen (path1, "wb");
     CHECK(f);
     LONGS_EQUAL(length, fwrite (content_small, 1, length, f));
     fclose (f);
-    content_read = dir_file_get_content (path);
-    STRCMP_EQUAL(content_small, content_read);
-    free (content_read);
-    unlink (path);
+    LONGS_EQUAL(1, dir_file_copy (path1, path2));
+    content_read1 = dir_file_get_content (path1);
+    content_read2 = dir_file_get_content (path2);
+    STRCMP_EQUAL(content_small, content_read1);
+    MEMCMP_EQUAL(content_read1, content_read2, length);
+    free (content_read1);
+    free (content_read2);
+    unlink (path1);
+    unlink (path2);
 
     /* bigger file: 26 lines of 5000 bytes */
     length = 26 * 5001;
@@ -128,14 +136,19 @@ TEST(CoreDir, FileGetContent)
         content[(i * 5001) + 5000] = '\n';
     }
     content[26 * 5001] = '\0';
-    f = fopen (path, "wb");
+    f = fopen (path1, "wb");
     CHECK(f);
     LONGS_EQUAL(length, fwrite (content, 1, length, f));
     fclose (f);
-    content_read = dir_file_get_content (path);
-    STRCMP_EQUAL(content, content_read);
-    free (content_read);
-    unlink (path);
+    LONGS_EQUAL(1, dir_file_copy (path1, path2));
+    content_read1 = dir_file_get_content (path1);
+    content_read2 = dir_file_get_content (path2);
+    STRCMP_EQUAL(content, content_read1);
+    MEMCMP_EQUAL(content_read1, content_read2, length);
+    free (content_read1);
+    free (content_read2);
+    unlink (path1);
+    unlink (path2);
     free (content);
 }
 

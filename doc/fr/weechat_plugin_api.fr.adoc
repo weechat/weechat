@@ -3953,6 +3953,41 @@ free (contenu);
 [NOTE]
 Cette fonction n'est pas disponible dans l'API script.
 
+==== file_copy
+
+_WeeChat ≥ 3.3._
+
+Copier un fichier vers une autre destination.
+
+Prototype :
+
+[source,C]
+----
+int weechat_file_copy (const char *from, const char *to);
+----
+
+Paramètres :
+
+* _from_ : fichier source
+* _to_ : fichier cible
+
+Valeur de retour :
+
+* 1 si OK, 0 si erreur
+
+Exemple en C :
+
+[source,C]
+----
+if (weechat_file_copy ("/tmp/test.txt", "/path/to/test2.txt"))
+{
+    /* OK */
+}
+----
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
 [[util]]
 === Util
 

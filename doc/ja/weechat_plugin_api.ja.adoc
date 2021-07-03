@@ -3933,6 +3933,42 @@ free (content);
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
+// TRANSLATION MISSING
+==== file_copy
+
+_WeeChat ≥ 3.3._
+
+Copy a file to another location.
+
+プロトタイプ:
+
+[source,C]
+----
+int weechat_file_copy (const char *from, const char *to);
+----
+
+引数:
+
+* _from_: source file
+* _to_: destination file
+
+戻り値:
+
+* 1 if OK, 0 if error
+
+C 言語での使用例:
+
+[source,C]
+----
+if (weechat_file_copy ("/tmp/test.txt", "/path/to/test2.txt"))
+{
+    /* OK */
+}
+----
+
+[NOTE]
+スクリプト API ではこの関数を利用できません。
+
 [[util]]
 === ユーティリティ
 

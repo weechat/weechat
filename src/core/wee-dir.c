@@ -556,6 +556,62 @@ error:
 }
 
 /*
+ * Copies a file to another location.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
+ */
+
+int
+dir_file_copy (const char *from, const char *to)
+{
+    FILE *src, *dst;
+    char *buffer;
+    int rc;
+    size_t count;
+
+    rc = 0;
+    buffer = NULL;
+    src = NULL;
+    dst = NULL;
+
+    if (!from || !from[0] || !to || !to[0])
+        goto end;
+
+    buffer = malloc (65536);
+    if (!buffer)
+        goto end;
+
+    src = fopen (from, "rb");
+    if (!src)
+        goto end;
+    dst = fopen (to, "wb");
+    if (!dst)
+        goto end;
+
+    while (!feof (src))
+    {
+        count = fread (buffer, 1, 65535, src);
+        if (count <= 0)
+            goto end;
+        if (fwrite (buffer, 1, count, dst) <= 0)
+            goto end;
+    }
+
+    rc = 1;
+
+end:
+    if (buffer)
+	free (buffer);
+    if (src)
+        fclose (src);
+    if (dst)
+        fclose (dst);
+    return rc;
+}
+
+/*
  * Uses one or four different paths for WeeChat home directories.
  *
  * If 4 paths are given, they must be separated by colons and given in this

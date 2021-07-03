@@ -3745,6 +3745,42 @@ free (content);
 [NOTE]
 Ова функција није доступна у API скриптовања.
 
+// TRANSLATION MISSING
+==== file_copy
+
+_WeeChat ≥ 3.3._
+
+Copy a file to another location.
+
+Прототип:
+
+[source,C]
+----
+int weechat_file_copy (const char *from, const char *to);
+----
+
+Аргументи:
+
+* _from_: source file
+* _to_: destination file
+
+Повратна вредност:
+
+* 1 if OK, 0 if error
+
+C пример:
+
+[source,C]
+----
+if (weechat_file_copy ("/tmp/test.txt", "/path/to/test2.txt"))
+{
+    /* OK */
+}
+----
+
+[NOTE]
+Ова функција није доступна у API скриптовања.
+
 [[util]]
 === Алати
 
