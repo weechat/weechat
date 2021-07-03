@@ -10139,37 +10139,29 @@ struct t_hook *weechat_hook_signal (const char *signal,
 
 WeeChat とプラグインが送信するシグナルのリスト:
 
-[width="100%",cols="^1,^3,4,5",options="header"]
+[width="100%",cols="^2,^4,^1,6,9",options="header"]
 |===
-| プラグイン | シグナル | 引数 | 説明
+// TRANSLATION MISSING
+| プラグイン | シグナル | Min WeeChat | 引数 | 説明
 
-| guile |
-  [[hook_signal_guile_script_loaded]] guile_script_loaded +
-  _(WeeChat バージョン 0.3.9 以上で利用可)_ |
+| guile | [[hook_signal_guile_script_loaded]] guile_script_loaded | 0.3.9 |
   String: スクリプトへのパス |
   Scheme スクリプトをロード
 
-| guile |
-  [[hook_signal_guile_script_unloaded]] guile_script_unloaded +
-  _(WeeChat バージョン 0.3.9 以上で利用可)_ |
+| guile | [[hook_signal_guile_script_unloaded]] guile_script_unloaded | 0.3.9 |
   String: スクリプトへのパス |
   Scheme スクリプトをリロード
 
-| guile |
-  [[hook_signal_guile_script_installed]] guile_script_installed +
-  _(WeeChat バージョン 0.3.9 以上で利用可)_ |
+| guile | [[hook_signal_guile_script_installed]] guile_script_installed | 0.3.9 |
   String: インストールされたスクリプトへのパスのコンマ区切りリスト |
   Scheme スクリプトをインストール
 
-| guile |
-  [[hook_signal_guile_script_removed]] guile_script_removed +
-  _(WeeChat バージョン 0.3.9 以上で利用可)_ |
+| guile | [[hook_signal_guile_script_removed]] guile_script_removed | 0.3.9 |
   String: 削除されたスクリプトへのパスのコンマ区切りリスト |
   Scheme スクリプトを削除
 
 // TRANSLATION MISSING
-| irc |
-  [[hook_signal_xxx_irc_in_yyy]] xxx,irc_in_yyy ^(1)^ |
+| irc | [[hook_signal_xxx_irc_in_yyy]] xxx,irc_in_yyy ^(1)^ | |
   String: メッセージ |
   サーバから IRC メッセージを受信 (メッセージを *無視しない* 場合のみ irc
   プラグインがメッセージを処理する前に、シグナルが送信される) +
@@ -10177,17 +10169,14 @@ WeeChat とプラグインが送信するシグナルのリスト:
   If the return code of a callback is _WEECHAT_RC_OK_EAT_, then the IRC message
   is immediately destroyed and not processed _(WeeChat ≥ 3.3)_.
 
-| irc |
-  [[hook_signal_xxx_irc_in2_yyy]] xxx,irc_in2_yyy ^(1)^ |
+| irc | [[hook_signal_xxx_irc_in2_yyy]] xxx,irc_in2_yyy ^(1)^ | |
   String: メッセージ |
   サーバから IRC メッセージを受信 (メッセージを *無視しない* 場合のみ irc
   プラグインがメッセージを処理した後に、シグナルが送信される) +
   バージョン 2.2 以上ではタグを含めたすべての IRC メッセージが送信されます。
 
 // TRANSLATION MISSING
-| irc |
-  [[hook_signal_xxx_irc_raw_in_yyy]] xxx,irc_raw_in_yyy ^(1)^ +
-  _(WeeChat バージョン 0.3.2 以上で利用可)_ |
+| irc | [[hook_signal_xxx_irc_raw_in_yyy]] xxx,irc_raw_in_yyy ^(1)^ | 0.3.2 |
   String: メッセージ |
   サーバから IRC メッセージを受信 (メッセージを無視する場合でも irc
   プラグインがメッセージを処理する前に、シグナルが送信される) +
@@ -10195,24 +10184,19 @@ WeeChat とプラグインが送信するシグナルのリスト:
   If the return code of a callback is _WEECHAT_RC_OK_EAT_, then the IRC message
   is immediately destroyed and not processed _(WeeChat ≥ 3.3)_.
 
-| irc |
-  [[hook_signal_xxx_irc_raw_in2_yyy]] xxx,irc_raw_in2_yyy ^(1)^ +
-  _(WeeChat バージョン 0.3.2 以上で利用可)_ |
+| irc | [[hook_signal_xxx_irc_raw_in2_yyy]] xxx,irc_raw_in2_yyy ^(1)^ | 0.3.2 |
   String: メッセージ |
   サーバから IRC メッセージを受信 (メッセージを無視する場合でも irc
   プラグインがメッセージを処理した後に、シグナルが送信される) +
   バージョン 2.2 以上ではタグを含めたすべての IRC メッセージが送信されます。
 
-| irc |
-  [[hook_signal_xxx_irc_out1_yyy]] xxx,irc_out1_yyy ^(1)^ +
-  _(WeeChat バージョン 0.3.7 以上で利用可)_ |
+| irc | [[hook_signal_xxx_irc_out1_yyy]] xxx,irc_out1_yyy ^(1)^ | 0.3.7 |
   String: メッセージ |
   サーバに送信する IRC メッセージ
   (自動分割前、自動分割はデフォルトでメッセージを 512 バイト内に収まるように分割します)。
 
 // TRANSLATION MISSING
-| irc |
-  [[hook_signal_xxx_irc_out_yyy]] xxx,irc_out_yyy ^(1)^ |
+| irc | [[hook_signal_xxx_irc_out_yyy]] xxx,irc_out_yyy ^(1)^ | |
   String: メッセージ |
   サーバに送信する IRC メッセージ
   (自動分割後、自動分割はデフォルトでメッセージを 512 バイト内に収まるように分割します)。 +
@@ -10220,768 +10204,586 @@ WeeChat とプラグインが送信するシグナルのリスト:
   Signal "xxx,irc_out1_yyy" is recommended instead.
 
 // TRANSLATION MISSING
-| irc |
-  [[hook_signal_xxx_irc_outtags_yyy]] xxx,irc_outtags_yyy ^(1)^ +
-  _(WeeChat バージョン 0.3.4 以上で利用可)_ |
+| irc | [[hook_signal_xxx_irc_outtags_yyy]] xxx,irc_outtags_yyy ^(1)^ | 0.3.4 |
   String: タグ  + ";" + メッセージ |
   タグ + サーバに送信する IRC メッセージ +
   *Warning:* the string may contain invalid UTF-8 data.
   Signal "xxx,irc_out1_yyy" is recommended instead.
 
-| irc |
-  [[hook_signal_irc_ctcp]] irc_ctcp |
+| irc | [[hook_signal_irc_ctcp]] irc_ctcp | |
   String: メッセージ |
   CTCP を受信
 
-| irc |
-  [[hook_signal_irc_dcc]] irc_dcc |
+| irc | [[hook_signal_irc_dcc]] irc_dcc | |
   String: メッセージ |
   新しい DCC
 
-| irc |
-  [[hook_signal_irc_pv]] irc_pv |
+| irc | [[hook_signal_irc_pv]] irc_pv | |
   String: メッセージ |
   プライベートメッセージを受信
 
-| irc |
-  [[hook_signal_irc_channel_opened]] irc_channel_opened |
+| irc | [[hook_signal_irc_channel_opened]] irc_channel_opened | |
   Pointer: バッファ |
   チャンネルを開いた
 
-| irc |
-  [[hook_signal_irc_pv_opened]] irc_pv_opened |
+| irc | [[hook_signal_irc_pv_opened]] irc_pv_opened | |
   Pointer: バッファ |
   プライベートメッセージを開いた
 
-| irc |
-  [[hook_signal_irc_server_opened]] irc_server_opened +
-  _(WeeChat バージョン 0.3.7 以上で利用可)_ |
+| irc | [[hook_signal_irc_server_opened]] irc_server_opened | 0.3.7 |
   Pointer: バッファ |
   サーババッファを開いた
 
-| irc |
-  [[hook_signal_irc_server_connecting]] irc_server_connecting |
+| irc | [[hook_signal_irc_server_connecting]] irc_server_connecting | |
   String: サーバ名 |
   サーバに接続中
 
-| irc |
-  [[hook_signal_irc_server_connected]] irc_server_connected |
+| irc | [[hook_signal_irc_server_connected]] irc_server_connected | |
   String: サーバ名 |
   サーバとの接続を確立
 
-| irc |
-  [[hook_signal_irc_server_disconnected]] irc_server_disconnected |
+| irc | [[hook_signal_irc_server_disconnected]] irc_server_disconnected | |
   String: サーバ名 |
   サーバから切断された
 
-| irc |
-  [[hook_signal_irc_server_lag_changed]] irc_server_lag_changed +
-  _(WeeChat バージョン 1.8 以上で利用可)_ |
+| irc | [[hook_signal_irc_server_lag_changed]] irc_server_lag_changed | 1.8 |
   String: サーバ名 |
   指定したサーバの遅延時間が変化
 
-| irc |
-  [[hook_signal_irc_ignore_removing]] irc_ignore_removing |
+| irc | [[hook_signal_irc_ignore_removing]] irc_ignore_removing | |
   Pointer: 無視 |
   無視条件を削除中
 
-| irc |
-  [[hook_signal_irc_ignore_removed]] irc_ignore_removed |
+| irc | [[hook_signal_irc_ignore_removed]] irc_ignore_removed | |
   - |
   無視条件を削除した
 
-| irc |
-  [[hook_signal_irc_notify_join]] irc_notify_join +
-  _(WeeChat バージョン 0.3.8 以上で利用可)_ |
+| irc | [[hook_signal_irc_notify_join]] irc_notify_join | 0.3.8 |
   String: サーバ名 + "," + ニックネーム |
   通知リストに入っているニックネームがサーバに参加
 
-| irc |
-  [[hook_signal_irc_notify_quit]] irc_notify_quit +
-  _(WeeChat バージョン 0.3.8 以上で利用可)_ |
+| irc | [[hook_signal_irc_notify_quit]] irc_notify_quit | 0.3.8 |
   String: サーバ名 + "," + ニックネーム |
   通知リストに入っているニックネームがサーバから切断
 
-| irc |
-  [[hook_signal_irc_notify_away]] irc_notify_away +
-  _(WeeChat バージョン 0.3.8 以上で利用可)_ |
+| irc | [[hook_signal_irc_notify_away]] irc_notify_away | 0.3.8 |
   String: サーバ名 + "," + ニックネーム + "," + 離席メッセージ |
   通知リストに入っているニックネームが離席状態に
 
-| irc |
-  [[hook_signal_irc_notify_still_away]] irc_notify_still_away +
-  _(WeeChat バージョン 0.3.8 以上で利用可)_ |
+| irc | [[hook_signal_irc_notify_still_away]] irc_notify_still_away | 0.3.8 |
   String: サーバ名 + "," + ニックネーム + "," + 離席メッセージ |
   通知リストに入っているニックネームはまだ離席状態 (離席メッセージを変更)
 
-| irc |
-  [[hook_signal_irc_notify_back]] irc_notify_back +
-  _(WeeChat バージョン 0.3.8 以上で利用可)_ |
+| irc | [[hook_signal_irc_notify_back]] irc_notify_back | 0.3.8 |
   String: サーバ名 + "," + ニックネーム |
   通知リストに入っているニックネームが着席状態に (離席状態を解除)
 
-| javascript |
-  [[hook_signal_javascript_script_loaded]] javascript_script_loaded +
-  _(WeeChat バージョン 1.2 以上で利用可)_ |
+| javascript | [[hook_signal_javascript_script_loaded]] javascript_script_loaded | 1.2 |
   String: スクリプトへのパス |
   JavaScript スクリプトをロード
 
-| javascript |
-  [[hook_signal_javascript_script_unloaded]] javascript_script_unloaded +
-  _(WeeChat バージョン 1.2 以上で利用可)_ |
+| javascript | [[hook_signal_javascript_script_unloaded]] javascript_script_unloaded | 1.2 |
   String: スクリプトへのパス |
   JavaScript スクリプトをリロード
 
-| javascript |
-  [[hook_signal_javascript_script_installed]] javascript_script_installed +
-  _(WeeChat バージョン 1.2 以上で利用可)_ |
+| javascript | [[hook_signal_javascript_script_installed]] javascript_script_installed | 1.2 |
   String: インストールされたスクリプトへのパスのコンマ区切りリスト |
   JavaScript スクリプトをインストール
 
-| javascript |
-  [[hook_signal_javascript_script_removed]] javascript_script_removed +
-  _(WeeChat バージョン 1.2 以上で利用可)_ |
+| javascript | [[hook_signal_javascript_script_removed]] javascript_script_removed | 1.2 |
   String: 削除されたスクリプトへのパスのコンマ区切りリスト |
   JavaScript スクリプトを削除
 
-| logger |
-  [[hook_signal_logger_start]] logger_start |
+| logger | [[hook_signal_logger_start]] logger_start | |
   Pointer: バッファ |
   バッファのログ保存を開始
 
-| logger |
-  [[hook_signal_logger_stop]] logger_stop |
+| logger | [[hook_signal_logger_stop]] logger_stop | |
   Pointer: バッファ |
   バッファのログ保存を中止
 
-| logger |
-  [[hook_signal_logger_backlog]] logger_backlog |
+| logger | [[hook_signal_logger_backlog]] logger_backlog | |
   Pointer: バッファ |
   バッファのバックログを表示
 
-| lua |
-  [[hook_signal_lua_script_loaded]] lua_script_loaded +
-  _(WeeChat バージョン 0.3.9 以上で利用可)_ |
+| lua | [[hook_signal_lua_script_loaded]] lua_script_loaded | 0.3.9 |
   String: スクリプトへのパス |
   Lua スクリプトをロード
 
-| lua |
-  [[hook_signal_lua_script_unloaded]] lua_script_unloaded +
-  _(WeeChat バージョン 0.3.9 以上で利用可)_ |
+| lua | [[hook_signal_lua_script_unloaded]] lua_script_unloaded | 0.3.9 |
   String: スクリプトへのパス |
   Lua スクリプトをリロード
 
-| lua |
-  [[hook_signal_lua_script_installed]] lua_script_installed +
-  _(WeeChat バージョン 0.3.9 以上で利用可)_ |
+| lua | [[hook_signal_lua_script_installed]] lua_script_installed | 0.3.9 |
   String: インストールされたスクリプトへのパスのコンマ区切りリスト |
   Lua スクリプトをインストール
 
-| lua |
-  [[hook_signal_lua_script_removed]] lua_script_removed +
-  _(WeeChat バージョン 0.3.9 以上で利用可)_ |
+| lua | [[hook_signal_lua_script_removed]] lua_script_removed | 0.3.9 |
   String: 削除されたスクリプトへのパスのコンマ区切りリスト |
   Lua スクリプトを削除
 
-| perl |
-  [[hook_signal_perl_script_loaded]] perl_script_loaded +
-  _(WeeChat バージョン 0.3.9 以上で利用可)_ |
+| perl | [[hook_signal_perl_script_loaded]] perl_script_loaded | 0.3.9 |
   String: スクリプトへのパス |
   Perl スクリプトをロード
 
-| perl |
-  [[hook_signal_perl_script_unloaded]] perl_script_unloaded +
-  _(WeeChat バージョン 0.3.9 以上で利用可)_ |
+| perl | [[hook_signal_perl_script_unloaded]] perl_script_unloaded | 0.3.9 |
   String: スクリプトへのパス |
   Perl スクリプトをリロード
 
-| perl |
-  [[hook_signal_perl_script_installed]] perl_script_installed +
-  _(WeeChat バージョン 0.3.9 以上で利用可)_ |
+| perl | [[hook_signal_perl_script_installed]] perl_script_installed | 0.3.9 |
   String: インストールされたスクリプトへのパスのコンマ区切りリスト |
   Perl スクリプトをインストール
 
-| perl |
-  [[hook_signal_perl_script_removed]] perl_script_removed +
-  _(WeeChat バージョン 0.3.9 以上で利用可)_ |
+| perl | [[hook_signal_perl_script_removed]] perl_script_removed | 0.3.9 |
   String: 削除されたスクリプトへのパスのコンマ区切りリスト |
   Perl スクリプトを削除
 
-| php |
-  [[hook_signal_php_script_loaded]] php_script_loaded +
-  _(WeeChat バージョン 2.0 以上で利用可)_ |
+| php | [[hook_signal_php_script_loaded]] php_script_loaded | 2.0 |
   String: スクリプトへのパス |
   PHP スクリプトをロード
 
-| php |
-  [[hook_signal_php_script_unloaded]] php_script_unloaded +
-  _(WeeChat バージョン 2.0 以上で利用可)_ |
+| php | [[hook_signal_php_script_unloaded]] php_script_unloaded | 2.0 |
   String: スクリプトへのパス |
   PHP スクリプトをリロード
 
-| php |
-  [[hook_signal_php_script_installed]] php_script_installed +
-  _(WeeChat バージョン 2.0 以上で利用可)_ |
+| php | [[hook_signal_php_script_installed]] php_script_installed | 2.0 |
   String: インストールされたスクリプトへのパスのコンマ区切りリスト |
   PHP スクリプトをインストール
 
-| php |
-  [[hook_signal_php_script_removed]] php_script_removed +
-  _(WeeChat バージョン 2.0 以上で利用可)_ |
+| php | [[hook_signal_php_script_removed]] php_script_removed | 2.0 |
   String: 削除されたスクリプトへのパスのコンマ区切りリスト |
   PHP スクリプトを削除
 
-| python |
-  [[hook_signal_python_script_loaded]] python_script_loaded +
-  _(WeeChat バージョン 0.3.9 以上で利用可)_ |
+| python | [[hook_signal_python_script_loaded]] python_script_loaded | 0.3.9 |
   String: スクリプトへのパス |
   Python スクリプトをロード
 
-| python |
-  [[hook_signal_python_script_unloaded]] python_script_unloaded +
-  _(WeeChat バージョン 0.3.9 以上で利用可)_ |
+| python | [[hook_signal_python_script_unloaded]] python_script_unloaded | 0.3.9 |
   String: スクリプトへのパス |
   Python スクリプトをリロード
 
-| python |
-  [[hook_signal_python_script_installed]] python_script_installed +
-  _(WeeChat バージョン 0.3.9 以上で利用可)_ |
+| python | [[hook_signal_python_script_installed]] python_script_installed | 0.3.9 |
   String: インストールされたスクリプトへのパスのコンマ区切りリスト |
   Python スクリプトをインストール
 
-| python |
-  [[hook_signal_python_script_removed]] python_script_removed +
-  _(WeeChat バージョン 0.3.9 以上で利用可)_ |
+| python | [[hook_signal_python_script_removed]] python_script_removed | 0.3.9 |
   String: 削除されたスクリプトへのパスのコンマ区切りリスト |
   Python スクリプトを削除
 
-| relay |
-  [[hook_signal_relay_client_connecting]] relay_client_connecting +
-  _(WeeChat バージョン 1.0 以上で利用可)_ |
+| relay | [[hook_signal_relay_client_connecting]] relay_client_connecting | 1.0 |
   Pointer: リレークライアント |
   リレークライアントが接続中
 
-| relay |
-  [[hook_signal_relay_client_waiting_auth]] relay_client_waiting_auth +
-  _(WeeChat バージョン 1.0 以上で利用可)_ |
+| relay | [[hook_signal_relay_client_waiting_auth]] relay_client_waiting_auth | 1.0 |
   Pointer: リレークライアント |
   リレークライアントからの認証待ち
 
-| relay |
-  [[hook_signal_relay_client_auth_ok]] relay_client_auth_ok +
-  _(WeeChat バージョン 1.0 以上で利用可)_ |
+| relay | [[hook_signal_relay_client_auth_ok]] relay_client_auth_ok | 1.0 |
   Pointer: リレークライアント |
   リレークライアントからの認証に成功
 
-| relay |
-  [[hook_signal_relay_client_connected]] relay_client_connected +
-  _(WeeChat バージョン 1.0 以上で利用可)_ |
+| relay | [[hook_signal_relay_client_connected]] relay_client_connected | 1.0 |
   Pointer: リレークライアント |
   リレークライアントが接続
 
-| relay |
-  [[hook_signal_relay_client_auth_failed]] relay_client_auth_failed +
-  _(WeeChat バージョン 1.0 以上で利用可)_ |
+| relay | [[hook_signal_relay_client_auth_failed]] relay_client_auth_failed | 1.0 |
   Pointer: リレークライアント |
   リレークライアントの認証に失敗
 
-| relay |
-  [[hook_signal_relay_client_disconnected]] relay_client_disconnected +
-  _(WeeChat バージョン 1.0 以上で利用可)_ |
+| relay | [[hook_signal_relay_client_disconnected]] relay_client_disconnected | 1.0 |
   Pointer: リレークライアント |
   リレークライアントが切断
 
-| ruby |
-  [[hook_signal_ruby_script_loaded]] ruby_script_loaded +
-  _(WeeChat バージョン 0.3.9 以上で利用可)_ |
+| ruby | [[hook_signal_ruby_script_loaded]] ruby_script_loaded | 0.3.9 |
   String: スクリプトへのパス |
   Ruby スクリプトをロード
 
-| ruby |
-  [[hook_signal_ruby_script_unloaded]] ruby_script_unloaded +
-  _(WeeChat バージョン 0.3.9 以上で利用可)_ |
+| ruby | [[hook_signal_ruby_script_unloaded]] ruby_script_unloaded | 0.3.9 |
   String: スクリプトへのパス |
   Ruby スクリプトをリロード
 
-| ruby |
-  [[hook_signal_ruby_script_installed]] ruby_script_installed +
-  _(WeeChat バージョン 0.3.9 以上で利用可)_ |
+| ruby | [[hook_signal_ruby_script_installed]] ruby_script_installed | 0.3.9 |
   String: インストールされたスクリプトへのパスのコンマ区切りリスト |
   Ruby スクリプトをインストール
 
-| ruby |
-  [[hook_signal_ruby_script_removed]] ruby_script_removed +
-  _(WeeChat バージョン 0.3.9 以上で利用可)_ |
+| ruby | [[hook_signal_ruby_script_removed]] ruby_script_removed | 0.3.9 |
   String: 削除されたスクリプトへのパスのコンマ区切りリスト |
   Ruby スクリプトを削除
 
-| spell |
-  [[hook_signal_spell_suggest]] spell_suggest +
-  _(WeeChat バージョン 2.4 以上で利用可)_ |
+| spell | [[hook_signal_spell_suggest]] spell_suggest | 2.4 |
   Pointer: バッファ |
   スペルの間違っている単語に対する新しい修正候補
 
-| tcl |
-  [[hook_signal_tcl_script_loaded]] tcl_script_loaded +
-  _(WeeChat バージョン 0.3.9 以上で利用可)_ |
+| tcl | [[hook_signal_tcl_script_loaded]] tcl_script_loaded | 0.3.9 |
   String: スクリプトへのパス |
   Tcl スクリプトをロード
 
-| tcl |
-  [[hook_signal_tcl_script_unloaded]] tcl_script_unloaded +
-  _(WeeChat バージョン 0.3.9 以上で利用可)_ |
+| tcl | [[hook_signal_tcl_script_unloaded]] tcl_script_unloaded | 0.3.9 |
   String: スクリプトへのパス |
   Tcl スクリプトをリロード
 
-| tcl |
-  [[hook_signal_tcl_script_installed]] tcl_script_installed +
-  _(WeeChat バージョン 0.3.9 以上で利用可)_ |
+| tcl | [[hook_signal_tcl_script_installed]] tcl_script_installed | 0.3.9 |
   String: インストールされたスクリプトへのパスのコンマ区切りリスト |
   Tcl スクリプトをインストール
 
-| tcl |
-  [[hook_signal_tcl_script_removed]] tcl_script_removed +
-  _(WeeChat バージョン 0.3.9 以上で利用可)_ |
+| tcl | [[hook_signal_tcl_script_removed]] tcl_script_removed | 0.3.9 |
   String: 削除されたスクリプトへのパスのコンマ区切りリスト |
   Tcl スクリプトを削除
 
-| weechat |
-  [[hook_signal_buffer_opened]] buffer_opened |
+// TRANSLATION MISSING
+| typing | [[hook_signal_typing_self_typing]] typing_self_typing | 3.3 |
+  Pointer: buffer. |
+  User is typing a message (sent by typing plugin, used by irc plugin).
+
+// TRANSLATION MISSING
+| typing | [[hook_signal_typing_self_paused]] typing_self_paused | 3.3 |
+  Pointer: buffer. |
+  User paused during typing (sent by typing plugin, used by irc plugin).
+
+// TRANSLATION MISSING
+| typing | [[hook_signal_typing_self_cleared]] typing_self_cleared | 3.3 |
+  Pointer: buffer. |
+  User cleared the input without sending the message (sent by typing plugin, used by irc plugin).
+
+// TRANSLATION MISSING
+| typing | [[hook_signal_typing_self_sent]] typing_self_sent | 3.3 |
+  Pointer: buffer. |
+  Message (not a command) sent to the buffer (sent by typing plugin, used by irc plugin).
+
+// TRANSLATION MISSING
+| typing | [[hook_signal_typing_set_nick]] typing_set_nick | 3.3 |
+  String: buffer pointer + ";" + state (one of: "off", "typing", "paused",
+  "cleared") + ";" + nick. |
+  Set typing state for a nick on a buffer (sent by irc plugin, handled by typing plugin).
+
+// TRANSLATION MISSING
+| typing | [[hook_signal_typing_reset_buffer]] typing_reset_buffer | 3.3 |
+  Pointer: buffer. |
+  Remove typing state for all nicks on a buffer (sent by irc plugin, handled by typing plugin).
+
+| weechat | [[hook_signal_buffer_opened]] buffer_opened | |
   Pointer: バッファ |
   バッファを開いた
 
-| weechat |
-  [[hook_signal_buffer_closing]] buffer_closing |
+| weechat | [[hook_signal_buffer_closing]] buffer_closing | |
   Pointer: バッファ |
   バッファを閉じている
 
-| weechat |
-  [[hook_signal_buffer_closed]] buffer_closed |
+| weechat | [[hook_signal_buffer_closed]] buffer_closed | |
   Pointer: バッファ |
   バッファを閉じた
 
-| weechat |
-  [[hook_signal_buffer_cleared]] buffer_cleared |
+| weechat | [[hook_signal_buffer_cleared]] buffer_cleared | |
   Pointer: バッファ |
   バッファをクリア
 
-| weechat |
-  [[hook_signal_buffer_filters_enabled]] buffer_filters_enabled +
-  _(WeeChat バージョン 2.0 以上で利用可)_ |
+| weechat | [[hook_signal_buffer_filters_enabled]] buffer_filters_enabled | 2.0 |
   Pointer: バッファ |
   バッファでフィルタが有効化されています。
 
-| weechat |
-  [[hook_signal_buffer_filters_disabled]] buffer_filters_disabled +
-  _(WeeChat バージョン 2.0 以上で利用可)_ |
+| weechat | [[hook_signal_buffer_filters_disabled]] buffer_filters_disabled | 2.0 |
   Pointer: バッファ |
   バッファでフィルタが無効化されています。
 
-| weechat |
-  [[hook_signal_buffer_hidden]] buffer_hidden |
+| weechat | [[hook_signal_buffer_hidden]] buffer_hidden | |
   Pointer: バッファ |
   バッファを隠す
 
-| weechat |
-  [[hook_signal_buffer_unhidden]] buffer_unhidden |
+| weechat | [[hook_signal_buffer_unhidden]] buffer_unhidden | |
   Pointer: バッファ |
   バッファを隠すことを止める
 
-| weechat |
-  [[hook_signal_buffer_line_added]] buffer_line_added +
-  _(WeeChat バージョン 0.3.7 以上で利用可)_ |
+| weechat | [[hook_signal_buffer_line_added]] buffer_line_added | 0.3.7 |
   Pointer: 行 |
   バッファに行を追加
 
-| weechat |
-  [[hook_signal_buffer_lines_hidden]] buffer_lines_hidden |
+| weechat | [[hook_signal_buffer_lines_hidden]] buffer_lines_hidden | |
   Pointer: バッファ |
   バッファから行を隠す
 
-| weechat |
-  [[hook_signal_buffer_localvar_added]] buffer_localvar_added |
+| weechat | [[hook_signal_buffer_localvar_added]] buffer_localvar_added | |
   Pointer: バッファ |
   ローカル変数を追加
 
-| weechat |
-  [[hook_signal_buffer_localvar_changed]] buffer_localvar_changed |
+| weechat | [[hook_signal_buffer_localvar_changed]] buffer_localvar_changed | |
   Pointer: バッファ |
   ローカル変数を変更
 
-| weechat |
-  [[hook_signal_buffer_localvar_removed]] buffer_localvar_removed |
+| weechat | [[hook_signal_buffer_localvar_removed]] buffer_localvar_removed | |
   Pointer: バッファ |
   ローカル変数を削除
 
-| weechat |
-  [[hook_signal_buffer_merged]] buffer_merged |
+| weechat | [[hook_signal_buffer_merged]] buffer_merged | |
   Pointer: バッファ |
   バッファをマージ
 
-| weechat |
-  [[hook_signal_buffer_unmerged]] buffer_unmerged |
+| weechat | [[hook_signal_buffer_unmerged]] buffer_unmerged | |
   Pointer: バッファ |
   バッファのマージを解除
 
-| weechat |
-  [[hook_signal_buffer_moved]] buffer_moved |
+| weechat | [[hook_signal_buffer_moved]] buffer_moved | |
   Pointer: バッファ |
   バッファを移動
 
-| weechat |
-  [[hook_signal_buffer_renamed]] buffer_renamed |
+| weechat | [[hook_signal_buffer_renamed]] buffer_renamed | |
   Pointer: バッファ |
   バッファの名前を変更
 
-| weechat |
-  [[hook_signal_buffer_switch]] buffer_switch |
+| weechat | [[hook_signal_buffer_switch]] buffer_switch | |
   Pointer: バッファ |
   バッファを切り替え
 
-| weechat |
-  [[hook_signal_buffer_title_changed]] buffer_title_changed |
+| weechat | [[hook_signal_buffer_title_changed]] buffer_title_changed | |
   Pointer: バッファ |
   バッファのタイトルを変更
 
-| weechat |
-  [[hook_signal_buffer_type_changed]] buffer_type_changed |
+| weechat | [[hook_signal_buffer_type_changed]] buffer_type_changed | |
   Pointer: バッファ |
   バッファのタイプを変更
 
-| weechat |
-  [[hook_signal_buffer_zoomed]] buffer_zoomed +
-  _(WeeChat バージョン 0.4.3 以上で利用可)_ |
+| weechat | [[hook_signal_buffer_zoomed]] buffer_zoomed | 0.4.3 |
   Pointer: バッファ |
   マージされたバッファをズーム
 
-| weechat |
-  [[hook_signal_buffer_unzoomed]] buffer_unzoomed +
-  _(WeeChat バージョン 0.4.3 以上で利用可)_ |
+| weechat | [[hook_signal_buffer_unzoomed]] buffer_unzoomed | 0.4.3 |
   Pointer: バッファ |
   マージされたバッファをアンズーム
 
 // TRANSLATION MISSING
-| weechat |
-  [[hook_signal_cursor_start]] cursor_start +
-  _(WeeChat ≥ 3.2)_ |
+| weechat | [[hook_signal_cursor_start]] cursor_start | 3.2 |
   - |
   Start cursor mode.
 
 // TRANSLATION MISSING
-| weechat |
-  [[hook_signal_cursor_end]] cursor_end +
-  _(WeeChat ≥ 3.2)_ |
+| weechat | [[hook_signal_cursor_end]] cursor_end | 3.2 |
   - |
   End cursor mode.
 
-| weechat |
-  [[hook_signal_day_changed]] day_changed +
-  _(WeeChat バージョン 0.3.2 以上で利用可)_ |
+| weechat | [[hook_signal_day_changed]] day_changed | 0.3.2 |
   String: 新しい日付、書式: "2010-01-31" |
   システムの日付が変更された
 
-| weechat |
-  [[hook_signal_debug_dump]] debug_dump |
+| weechat | [[hook_signal_debug_dump]] debug_dump | |
   String: プラグイン名 |
   リクエストをダンプ
 
-| weechat |
-  [[hook_signal_debug_libs]] debug_libs |
+| weechat | [[hook_signal_debug_libs]] debug_libs | |
   - |
   使用中の外部ライブラリを表示
 
-| weechat |
-  [[hook_signal_filter_added]] filter_added |
+| weechat | [[hook_signal_filter_added]] filter_added | |
   Pointer: フィルタ |
   フィルタを追加
 
-| weechat |
-  [[hook_signal_filter_removing]] filter_removing |
+| weechat | [[hook_signal_filter_removing]] filter_removing | |
   Pointer: フィルタ |
   フィルタを削除中
 
-| weechat |
-  [[hook_signal_filter_removed]] filter_removed |
+| weechat | [[hook_signal_filter_removed]] filter_removed | |
   - |
   フィルタを削除
 
-| weechat |
-  [[hook_signal_filters_enabled]] filters_enabled |
+| weechat | [[hook_signal_filters_enabled]] filters_enabled | |
   - |
   フィルタを有効化
 
-| weechat |
-  [[hook_signal_filters_disabled]] filters_disabled |
+| weechat | [[hook_signal_filters_disabled]] filters_disabled | |
   - |
   フィルタを無効化
 
-| weechat |
-  [[hook_signal_hotlist_changed]] hotlist_changed |
+| weechat | [[hook_signal_hotlist_changed]] hotlist_changed | |
   Pointer: バッファ (NULL も可) |
   ホットリストが変更された
 
-| weechat |
-  [[hook_signal_input_paste_pending]] input_paste_pending |
+| weechat | [[hook_signal_input_paste_pending]] input_paste_pending | |
   - |
   ペーストを保留中
 
-| weechat |
-  [[hook_signal_input_search]] input_search |
+| weechat | [[hook_signal_input_search]] input_search | |
   Pointer: バッファ |
   バッファテキストの検索
 
-| weechat |
-  [[hook_signal_input_text_changed]] input_text_changed |
+| weechat | [[hook_signal_input_text_changed]] input_text_changed | |
   Pointer: バッファ |
   入力テキストが変更された
 
-| weechat |
-  [[hook_signal_input_text_cursor_moved]] input_text_cursor_moved |
+| weechat | [[hook_signal_input_text_cursor_moved]] input_text_cursor_moved | |
   Pointer: バッファ |
   入力テキストカーソルを移動
 
-| weechat |
-  [[hook_signal_key_bind]] key_bind |
+| weechat | [[hook_signal_key_bind]] key_bind | |
   String: キー |
   キー割り当てを追加
 
-| weechat |
-  [[hook_signal_key_unbind]] key_unbind |
+| weechat | [[hook_signal_key_unbind]] key_unbind | |
   String: キー |
   キー割り当てを削除
 
-| weechat |
-  [[hook_signal_key_pressed]] key_pressed |
+| weechat | [[hook_signal_key_pressed]] key_pressed | |
   String: 押されたキー |
   キーが押された
 
-| weechat |
-  [[hook_signal_key_combo_default]] key_combo_default +
-  _(WeeChat バージョン 1.0 以上で利用可)_ |
+| weechat | [[hook_signal_key_combo_default]] key_combo_default | 1.0 |
   String: キーの組み合わせ |
   _default_ コンテキスト内のキーの組み合わせ
 
-| weechat |
-  [[hook_signal_key_combo_search]] key_combo_search +
-  _(WeeChat バージョン 1.0 以上で利用可)_ |
+| weechat | [[hook_signal_key_combo_search]] key_combo_search | 1.0 |
   String: キーの組み合わせ |
   _search_ コンテキスト内のキーの組み合わせ
 
-| weechat |
-  [[hook_signal_key_combo_cursor]] key_combo_cursor +
-  _(WeeChat バージョン 1.0 以上で利用可)_ |
+| weechat | [[hook_signal_key_combo_cursor]] key_combo_cursor | 1.0 |
   String: キーの組み合わせ |
   _cursor_ コンテキスト内のキーの組み合わせ
 
-| weechat |
-  [[hook_signal_mouse_enabled]] mouse_enabled +
-  _(WeeChat バージョン 1.1 以上で利用可)_ |
+| weechat | [[hook_signal_mouse_enabled]] mouse_enabled | 1.1 |
   - |
   マウスが有効化された
 
-| weechat |
-  [[hook_signal_mouse_disabled]] mouse_disabled +
-  _(WeeChat バージョン 1.1 以上で利用可)_ |
+| weechat | [[hook_signal_mouse_disabled]] mouse_disabled | 1.1 |
   - |
   マウスが無効化された
 
-| weechat |
-  [[hook_signal_nicklist_group_added]] nicklist_group_added +
-  _(WeeChat バージョン 0.3.2 以上で利用可)_ |
+| weechat | [[hook_signal_nicklist_group_added]] nicklist_group_added | 0.3.2 |
   String: バッファポインタ + "," + グループ名 |
   ニックネームリストにグループを追加
 
-| weechat |
-  [[hook_signal_nicklist_group_changed]] nicklist_group_changed +
-  _(WeeChat バージョン 0.3.4 以上で利用可)_ |
+| weechat | [[hook_signal_nicklist_group_changed]] nicklist_group_changed | 0.3.4 |
   String: バッファポインタ + "," + グループ名 |
   ニックネームリストのグループを変更
 
-| weechat |
-  [[hook_signal_nicklist_group_removing]] nicklist_group_removing +
-  _(WeeChat バージョン 0.4.1 以上で利用可)_ |
+| weechat | [[hook_signal_nicklist_group_removing]] nicklist_group_removing | 0.4.1 |
   String: バッファポインタ + "," + グループ名 |
   ニックネームリストからグループを削除中
 
-| weechat |
-  [[hook_signal_nicklist_group_removed]] nicklist_group_removed +
-  _(WeeChat バージョン 0.3.2 以上で利用可)_ |
+| weechat | [[hook_signal_nicklist_group_removed]] nicklist_group_removed | 0.3.2 |
   String: バッファポインタ + "," + グループ名 |
   ニックネームリストからグループを削除
 
-| weechat |
-  [[hook_signal_nicklist_nick_added]] nicklist_nick_added +
-  _(WeeChat バージョン 0.3.2 以上で利用可)_ |
+| weechat | [[hook_signal_nicklist_nick_added]] nicklist_nick_added | 0.3.2 |
   String: バッファポインタ + "," + ニックネーム |
   ニックネームリストにニックネームを追加
 
-| weechat |
-  [[hook_signal_nicklist_nick_changed]] nicklist_nick_changed +
-  _(WeeChat バージョン 0.3.4 以上で利用可)_ |
+| weechat | [[hook_signal_nicklist_nick_changed]] nicklist_nick_changed | 0.3.4 |
   String: バッファポインタ + "," + ニックネーム |
   ニックネームリストのニックネームを変更
 
-| weechat |
-  [[hook_signal_nicklist_nick_removing]] nicklist_nick_removing +
-  _(WeeChat バージョン 0.4.1 以上で利用可)_ |
+| weechat | [[hook_signal_nicklist_nick_removing]] nicklist_nick_removing | 0.4.1 |
   String: バッファポインタ + "," + ニックネーム |
   ニックネームリストからニックネームを削除中
 
-| weechat |
-  [[hook_signal_nicklist_nick_removed]] nicklist_nick_removed +
-  _(WeeChat バージョン 0.3.2 以上で利用可)_ |
+| weechat | [[hook_signal_nicklist_nick_removed]] nicklist_nick_removed | 0.3.2 |
   String: バッファポインタ + "," + ニックネーム |
   ニックネームリストからニックネームを削除
 
-| weechat |
-  [[hook_signal_partial_completion]] partial_completion |
+| weechat | [[hook_signal_partial_completion]] partial_completion | |
   - |
   部分補完を実行
 
-| weechat |
-  [[hook_signal_plugin_loaded]] plugin_loaded +
-  _(WeeChat バージョン 0.3.9 以上で利用可)_ |
+| weechat | [[hook_signal_plugin_loaded]] plugin_loaded | 0.3.9 |
   String: 読み込んだプラグインへのパス |
   プラグインをロード
 
-| weechat |
-  [[hook_signal_plugin_unloaded]] plugin_unloaded +
-  _(WeeChat バージョン 0.3.9 以上で利用可)_ |
+| weechat | [[hook_signal_plugin_unloaded]] plugin_unloaded | 0.3.9 |
   String: リロードしたプラグインの名前 (例: "irc") |
   プラグインをリロード
 
-| weechat |
-  [[hook_signal_quit]] quit |
+| weechat | [[hook_signal_quit]] quit | |
   String: /quit の引数 |
   ユーザがコマンド `/quit` を実行
 
-| weechat |
-  [[hook_signal_signal_sighup]] signal_sighup +
-  _(WeeChat バージョン 1.3 以上で利用可)_ |
+| weechat | [[hook_signal_signal_sighup]] signal_sighup | 1.3 |
   - |
   SIGHUP シグナルを受信
 
-| weechat |
-  [[hook_signal_signal_sigquit]] signal_sigquit +
-  _(WeeChat バージョン 1.2 以上で利用可)_ |
+| weechat | [[hook_signal_signal_sigquit]] signal_sigquit | 1.2 |
   - |
   SIGQUIT シグナルを受信 (コアダンプ付きで終了要求)
 
-| weechat |
-  [[hook_signal_signal_sigterm]] signal_sigterm +
-  _(WeeChat バージョン 1.2 以上で利用可)_ |
+| weechat | [[hook_signal_signal_sigterm]] signal_sigterm | 1.2 |
   - |
   SIGTERM シグナルを受信 (WeeChat プロセスを正常に終了させる)
 
-| weechat |
-  [[hook_signal_signal_sigwinch]] signal_sigwinch +
-  _(WeeChat バージョン 0.4.3 以上で利用可)_ |
+| weechat | [[hook_signal_signal_sigwinch]] signal_sigwinch | 0.4.3 |
   - |
   SIGWINCH シグナルを受信しました (端末サイズが変更されました)
 
-| weechat |
-  [[hook_signal_upgrade]] upgrade |
+| weechat | [[hook_signal_upgrade]] upgrade | |
   String: /upgrade に "-quit" 引数が与えられた場合は "quit"、それ以外は NULL |
   ユーザがコマンド `/upgrade` を実行
 
-| weechat |
-  [[hook_signal_upgrade_ended]] upgrade_ended +
-  _(WeeChat バージョン 0.3.4 以上で利用可)_ |
+| weechat | [[hook_signal_upgrade_ended]] upgrade_ended | 0.3.4 |
   - |
   アップグレード作業 (コマンド `/upgrade`) が終了
 
-| weechat |
-  [[hook_signal_weechat_highlight]] weechat_highlight |
+| weechat | [[hook_signal_weechat_highlight]] weechat_highlight | |
   String: プレフィックス付のメッセージ |
   メッセージがハイライトされました
 
-| weechat |
-  [[hook_signal_weechat_pv]] weechat_pv |
+| weechat | [[hook_signal_weechat_pv]] weechat_pv | |
   String: プレフィックス付のメッセージ |
   プライベートメッセージの表示
 
-| weechat |
-  [[hook_signal_window_closing]] window_closing +
-  _(WeeChat バージョン 0.3.6 以上で利用可)_ |
+| weechat | [[hook_signal_window_closing]] window_closing | 0.3.6 |
   Pointer: ウィンドウ |
   ウィンドウを閉じています
 
-| weechat |
-  [[hook_signal_window_closed]] window_closed +
-  _(WeeChat バージョン 0.3.6 以上で利用可)_ |
+| weechat | [[hook_signal_window_closed]] window_closed | 0.3.6 |
   Pointer: ウィンドウ |
   ウィンドウを閉じた
 
-| weechat |
-  [[hook_signal_window_opened]] window_opened +
-  _(WeeChat バージョン 0.4.1 以上で利用可)_ |
+| weechat | [[hook_signal_window_opened]] window_opened | 0.4.1 |
   Pointer: ウィンドウ |
   ウィンドウを開いた
 
-| weechat |
-  [[hook_signal_window_scrolled]] window_scrolled |
+| weechat | [[hook_signal_window_scrolled]] window_scrolled | |
   Pointer: ウィンドウ |
   ウィンドウをスクロール
 
-| weechat |
-  [[hook_signal_window_switch]] window_switch +
-  _(WeeChat バージョン 0.3.7 以上で利用可)_ |
+| weechat | [[hook_signal_window_switch]] window_switch | 0.3.7 |
   Pointer: ウィンドウ |
   ウィンドウを切り替え
 
-| weechat |
-  [[hook_signal_window_zoom]] window_zoom |
+| weechat | [[hook_signal_window_zoom]] window_zoom | |
   Pointer: 現在のウィンドウ |
   ウィンドウをズーム中
 
-| weechat |
-  [[hook_signal_window_zoomed]] window_zoomed |
+| weechat | [[hook_signal_window_zoomed]] window_zoomed | |
   Pointer: 現在のウィンドウ |
   ウィンドウをズーム
 
-| weechat |
-  [[hook_signal_window_unzoom]] window_unzoom |
+| weechat | [[hook_signal_window_unzoom]] window_unzoom | |
   Pointer: 現在のウィンドウ |
   ウィンドウのズームを元に戻している
 
-| weechat |
-  [[hook_signal_window_unzoomed]] window_unzoomed |
+| weechat | [[hook_signal_window_unzoomed]] window_unzoomed | |
   Pointer: 現在のウィンドウ |
   ウィンドウのズームを元に戻す
 
-| xfer |
-  [[hook_signal_xfer_add]] xfer_add |
+| xfer | [[hook_signal_xfer_add]] xfer_add | |
   Pointer: xfer インフォを含むインフォリスト |
   新しい xfer
 
-| xfer |
-  [[hook_signal_xfer_send_ready]] xfer_send_ready |
+| xfer | [[hook_signal_xfer_send_ready]] xfer_send_ready | |
   Pointer: xfer インフォを含むインフォリスト |
   Xfer の準備完了
 
-| xfer |
-  [[hook_signal_xfer_accept_resume]] xfer_accept_resume |
+| xfer | [[hook_signal_xfer_accept_resume]] xfer_accept_resume | |
   Pointer: xfer インフォを含むインフォリスト |
   Xfer のレジュームを受け入れる
 
-| xfer |
-  [[hook_signal_xfer_send_accept_resume]] xfer_send_accept_resume |
+| xfer | [[hook_signal_xfer_send_accept_resume]] xfer_send_accept_resume | |
   Pointer: xfer インフォを含むインフォリスト |
   Xfer のレジュームの受け入れを完了
 
-| xfer |
-  [[hook_signal_xfer_start_resume]] xfer_start_resume |
+| xfer | [[hook_signal_xfer_start_resume]] xfer_start_resume | |
   Pointer: xfer インフォを含むインフォリスト |
   レジュームの開始
 
-| xfer |
-  [[hook_signal_xfer_resume_ready]] xfer_resume_ready |
+| xfer | [[hook_signal_xfer_resume_ready]] xfer_resume_ready | |
   Pointer: xfer インフォを含むインフォリスト |
   Xfer レジュームの準備完了
 
-| xfer |
-  [[hook_signal_xfer_ended]] xfer_ended +
-  _(WeeChat バージョン 0.3.2 以上で利用可)_ |
+| xfer | [[hook_signal_xfer_ended]] xfer_ended | 0.3.2 |
   Pointer: xfer インフォを含むインフォリスト |
   Xfer を終了
 |===
