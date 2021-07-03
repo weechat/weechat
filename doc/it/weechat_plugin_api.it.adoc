@@ -12750,32 +12750,28 @@ Argomenti:
 Properties:
 
 // TRANSLATION MISSING
-[width="100%",cols="^2,2,2,5",options="header"]
+[width="100%",cols="^1,^1,2,2,5",options="header"]
 |===
-| Nome | Hook type | Valore | Descrizione
+// TRANSLATION MISSING
+| Nome | Min WeeChat | Hook type | Valore | Descrizione
 
 // TRANSLATION MISSING
-| subplugin | any type | qualsiasi stringa |
+| subplugin | | any type |
+  qualsiasi stringa |
 // TRANSLATION MISSING
   Name of sub plugin (commonly script name, which is displayed in
   `/help command` for a hook of type _command_).
 
-| stdin +
-  _(WeeChat ≥ 0.4.3)_ |
-  _process_, _process_hashtable_ | qualsiasi stringa |
+| stdin | 0.4.3 | _process_, _process_hashtable_ | qualsiasi stringa |
 // TRANSLATION MISSING
   Send data on standard input (_stdin_) of child process.
 
-| stdin_close +
-  _(WeeChat ≥ 0.4.3)_ |
 // TRANSLATION MISSING
-  _process_, _process_hashtable_ | (not used) |
+| stdin_close | 0.4.3 | _process_, _process_hashtable_ | (not used) |
 // TRANSLATION MISSING
   Close pipe used to send data on standard input (_stdin_) of child process.
 
-| signal +
-  _(WeeChat ≥ 1.0)_ |
-  _process_, _process_hashtable_ |
+| signal | 1.0 | _process_, _process_hashtable_ |
 // TRANSLATION MISSING
   signal number or one of these names: `hup`, `int`, `quit`, `kill`, `term`,
   `usr1`, `usr2` |

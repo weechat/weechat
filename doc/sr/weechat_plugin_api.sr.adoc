@@ -11808,27 +11808,23 @@ void weechat_hook_set (struct t_hook *hook, const char *property,
 
 Особине:
 
-[width="100%", cols="^2,2,2,5", options="header"]
+[width="100%", cols="^1,^1,2,2,5", options="header"]
 |===
-| Име | Тип куке | Вредност | Опис
+// TRANSLATION MISSING
+| Име | Min WeeChat | Тип куке | Вредност | Опис
 
-| subplugin | било који тип | било који стринг |
+| subplugin | | било који тип |
+  било који стринг |
   Име под додатка (обично је то име скрипте које се приказује у
   `/help команда` за куку типа _command_).
 
-| stdin +
-  _(WeeChat ≥ 0.4.3)_ |
-  _process_, _process_hashtable_ | било који стринг |
+| stdin | 0.4.3 | _process_, _process_hashtable_ | било који стринг |
   Шаље податке на стандардни улаз (_stdin_) дете процеса.
 
-| stdin_close +
-  _(WeeChat ≥ 0.4.3)_ |
-  _process_, _process_hashtable_ | (не користи се) |
+| stdin_close | 0.4.3 | _process_, _process_hashtable_ | (не користи се) |
   Затвара пајп који се користи за слање података на стандардни улаз (_stdin_) дете процеса.
 
-| signal +
-  _(WeeChat ≥ 1.0)_ |
-  _process_, _process_hashtable_ |
+| signal | 1.0 | _process_, _process_hashtable_ |
   број сигнала или једно од следећих имена: `hup`, `int`, `quit`, `kill`, `term`,
   `usr1`, `usr2` |
   Шаље сигнал дете процесу.

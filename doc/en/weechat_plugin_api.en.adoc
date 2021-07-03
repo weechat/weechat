@@ -12238,27 +12238,24 @@ Arguments:
 
 Properties:
 
-[width="100%",cols="^2,2,2,5",options="header"]
+[width="100%",cols="^1,^1,2,2,5",options="header"]
 |===
-| Name | Hook type | Value | Description
+| Name | Min WeeChat | Hook type | Value | Description
 
-| subplugin | any type | any string |
+| subplugin | | any type |
+  any string |
   Name of sub plugin (commonly script name, which is displayed in
   `/help command` for a hook of type _command_).
 
-| stdin +
-  _(WeeChat ≥ 0.4.3)_ |
-  _process_, _process_hashtable_ | any string |
+| stdin | 0.4.3 | _process_, _process_hashtable_ |
+  any string |
   Send data on standard input (_stdin_) of child process.
 
-| stdin_close +
-  _(WeeChat ≥ 0.4.3)_ |
-  _process_, _process_hashtable_ | (not used) |
+| stdin_close | 0.4.3 | _process_, _process_hashtable_ |
+  (not used) |
   Close pipe used to send data on standard input (_stdin_) of child process.
 
-| signal +
-  _(WeeChat ≥ 1.0)_ |
-  _process_, _process_hashtable_ |
+| signal | 1.0 | _process_, _process_hashtable_ |
   signal number or one of these names: `hup`, `int`, `quit`, `kill`, `term`,
   `usr1`, `usr2` |
   Send a signal to the child process.

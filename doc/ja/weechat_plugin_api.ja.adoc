@@ -12285,27 +12285,23 @@ void weechat_hook_set (struct t_hook *hook, const char *property,
 
 プロパティ:
 
-[width="100%",cols="^2,2,2,5",options="header"]
+[width="100%",cols="^1,^1,2,2,5",options="header"]
 |===
-| 名前 | フック型 | 値 | 説明
+// TRANSLATION MISSING
+| 名前 | Min WeeChat | フック型 | 値 | 説明
 
-| subplugin | 任意の型 | 任意の文字列 |
+| subplugin | | 任意の型 |
+  任意の文字列 |
   サブプラグインの名前 (通常は `/help command` で _command_
   をタイプした時のフックで表示されるスクリプト名)
 
-| stdin +
-  _(WeeChat バージョン 0.4.3 以上で利用可)_ |
-  _process_、_process_hashtable_ | 任意の文字列 |
+| stdin | 0.4.3 | _process_、_process_hashtable_ | 任意の文字列 |
   子プロセスの標準入力 (_stdin_) にデータを送信
 
-| stdin_close +
-  _(WeeChat バージョン 0.4.3 以上で利用可)_ |
-  _process_、_process_hashtable_ | (非使用) |
+| stdin_close | 0.4.3 | _process_、_process_hashtable_ | (非使用) |
   子プロセスの標準入力 (_stdin_) にデータを送信するパイプを閉じる
 
-| signal +
-  _(WeeChat バージョン 1.0 以上で利用可)_ |
-  _process_、_process_hashtable_ |
+| signal | 1.0 | _process_、_process_hashtable_ |
   シグナル番号または以下の名前から 1 つ:
   `hup`、`int`、`quit`、`kill`、`term`、`usr1`、`usr2` |
   子プロセスにシグナルを送信

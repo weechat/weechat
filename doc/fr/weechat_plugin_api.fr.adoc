@@ -12513,28 +12513,23 @@ Paramètres :
 
 Propriétés :
 
-[width="100%",cols="^2,2,2,5",options="header"]
+[width="100%",cols="^1,^1,2,2,5",options="header"]
 |===
-| Nom | Type de hook | Valeur | Description
+| Nom | WeeChat mini | Type de hook | Valeur | Description
 
-| subplugin | tout type | toute chaîne |
+| subplugin | | tout type |
+  toute chaîne |
   Nom de la sous-extension (couramment un nom de script, qui est affiché dans
   `/help commande` pour un hook de type _command_).
 
-| stdin +
-  _(WeeChat ≥ 0.4.3)_ |
-  _process_, _process_hashtable_ | toute chaîne |
+| stdin | 0.4.3 | _process_, _process_hashtable_ | toute chaîne |
   Envoyer les données sur l'entrée standard (_stdin_) du processus fils.
 
-| stdin_close +
-  _(WeeChat ≥ 0.4.3)_ |
-  _process_, _process_hashtable_ | (non utilisée) |
+| stdin_close | 0.4.3 | _process_, _process_hashtable_ | (non utilisée) |
   Fermer le tuyau utilisé pour envoyer les données sur l'entrée standard
   (_stdin_) du processus fils.
 
-| signal +
-  _(WeeChat ≥ 1.0)_ |
-  _process_, _process_hashtable_ |
+| signal | 1.0 | _process_, _process_hashtable_ |
   numéro de signal ou un de ces noms : `hup`, `int`, `quit`, `kill`, `term`,
   `usr1`, `usr2` |
   Envoyer un signal au proces.sus fils
