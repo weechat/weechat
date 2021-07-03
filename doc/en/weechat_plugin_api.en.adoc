@@ -12954,158 +12954,154 @@ Arguments:
 
 Properties:
 
-[width="100%",cols="^2,4,8",options="header"]
+[width="100%",cols="^2,^1,4,8",options="header"]
 |===
-| Name | Value | Description
+| Name | Min WeeChat | Value | Description
 
-| hotlist | "+", "-", WEECHAT_HOTLIST_LOW, WEECHAT_HOTLIST_MESSAGE,
+| hotlist | | "+", "-", WEECHAT_HOTLIST_LOW, WEECHAT_HOTLIST_MESSAGE,
   WEECHAT_HOTLIST_PRIVATE, WEECHAT_HOTLIST_HIGHLIGHT, "-1" |
   "+": enable hotlist (global setting, buffer pointer is not used) +
   "-": disable hotlist (global setting, buffer pointer is not used) +
   priority: add buffer to hotlist with this priority +
   "-1": remove buffer from hotlist _(WeeChat ≥ 1.0)_.
 
-| completion_freeze | "0" or "1" |
+| completion_freeze | | "0" or "1" |
   "0": no freeze of completion (default value)
   (global setting, buffer pointer is not used) +
   "1": do not stop completion when command line is updated
   (global setting, buffer pointer is not used).
 
-| unread | - |
+| unread | | - |
   Set unread marker after last line of buffer.
 
-| display | "1" or "auto" |
+| display | | "1" or "auto" |
   "1": switch to this buffer in current window +
   "auto": switch to this buffer in current window, read marker is not reset.
 
-| hidden +
-  _(WeeChat ≥ 1.0)_ | "0" or "1" |
+| hidden | 1.0 | "0" or "1" |
   "0": unhide the buffer +
   "1": hide the buffer.
 
-| number | number |
+| number | | number |
   Move buffer to this number.
 
-| name | any string |
+| name | | any string |
   Set new name for buffer.
 
-| short_name | any string |
+| short_name | | any string |
   Set new short name for buffer.
 
-| type | "formatted" or "free" |
+| type | | "formatted" or "free" |
   Set type for buffer: "formatted" (for printing chat messages), or "free" (for
   free content); when the value is "free", the property _clear_ is forced to "0"
   _(WeeChat ≥ 1.0)_.
 
-| notify | "0", "1", "2", "3" |
+| notify | | "0", "1", "2", "3" |
   Set notify level for buffer: "0" = never add to hotlist, "1" = add for
   highlights only, "2" = add for highlights and messages, "3" = add for all
   messages.
 
-| print_hooks_enabled | "0" or "1" |
+| print_hooks_enabled | | "0" or "1" |
   "0" to disable print hooks, "1" to enable them (default for a new buffer).
 
-| day_change +
-  _(WeeChat ≥ 0.4.3)_ | "0" or "1" |
+| day_change | 0.4.3 | "0" or "1" |
   "0" to hide messages for the day change, "1" to see them
   (default for a new buffer).
 
-| clear +
-  _(WeeChat ≥ 1.0)_ | "0" or "1" |
+| clear | 1.0 | "0" or "1" |
   "0" to prevent user from clearing buffer with the command `/buffer clear`,
   "1" to let user clear the buffer (default for a new buffer)
    (note: even when it is set to "0", the buffer can still be cleared with
    the function <<_buffer_clear,buffer_clear>>).
 
-| filter +
-  _(WeeChat ≥ 1.0)_ | "0" or "1" |
+| filter | 1.0 | "0" or "1" |
   "0": disable filters on buffer +
   "1": enable filters on buffer.
 
-| title | any string |
+| title | | any string |
   Set new title for buffer.
 
-| time_for_each_line | "0" or "1" |
+| time_for_each_line | | "0" or "1" |
   "0" to hide time for all lines in buffer, "1" to see time for all lines
   (default for a new buffer).
 
-| nicklist | "0" or "1" |
+| nicklist | | "0" or "1" |
   "0" to remove nicklist for buffer, "1" to add nicklist for buffer.
 
-| nicklist_case_sensitive | "0" or "1" |
+| nicklist_case_sensitive | | "0" or "1" |
   "0" to have case insensitive nicklist, "1" to have case sensitive nicklist.
 
-| nicklist_display_groups | "0" or "1" |
+| nicklist_display_groups | | "0" or "1" |
   "0" to hide nicklist groups, "1" to display nicklist groups.
 
-| highlight_words | "-" or comma separated list of words |
+| highlight_words | | "-" or comma separated list of words |
   "-" is a special value to disable any highlight on this buffer, or comma
   separated list of words to highlight in this buffer, for example:
   "abc,def,ghi".
 
-| highlight_words_add | comma separated list of words |
+| highlight_words_add | | comma separated list of words |
   Comma separated list of words to highlight in this buffer, these words are
   added to existing highlighted words in buffer.
 
-| highlight_words_del | comma separated list of words |
+| highlight_words_del | | comma separated list of words |
   Comma separated list of words to remove from highlighted words on buffer.
 
-| highlight_regex | any string |
+| highlight_regex | | any string |
   POSIX extended regular expression for highlight.
 
-| highlight_tags_restrict | comma separated list of tags |
+| highlight_tags_restrict | | comma separated list of tags |
   Restrict highlights to messages with these tags in this buffer
   (it is possible to combine many tags as a logical "and" with separator "+",
    for example: "nick_toto+irc_action").
 
-| highlight_tags | comma separated list of tags |
+| highlight_tags | | comma separated list of tags |
   Force highlight on messages with these tags in this buffer
   (it is possible to combine many tags as a logical "and" with separator "+",
    for example: "nick_toto+irc_action").
 
-| hotlist_max_level_nicks | comma separated list of "nick:level" |
+| hotlist_max_level_nicks | | comma separated list of "nick:level" |
   Comma separated list of nicks with max level for hotlist on this buffer
   (level can be: -1: never in hotlist, 0: low, 1: message, 2: private,
   3: highlight), for example: "joe:2,mike:-1,robert:-1" (joe will never produce
   highlight on buffer, mike and robert will never change hotlist).
 
-| hotlist_max_level_nicks_add | comma separated list of "nick:level" |
+| hotlist_max_level_nicks_add | | comma separated list of "nick:level" |
   Comma separated list of nicks with level for hotlist, these nicks are
   added to existing nicks in buffer.
 
-| hotlist_max_level_nicks_del | comma separated list of nicks |
+| hotlist_max_level_nicks_del | | comma separated list of nicks |
   Comma separated list of nicks to remove from hotlist max levels.
 
-| key_bind_xxx | any string |
+| key_bind_xxx | | any string |
   Bind a new key _xxx_, specific to this buffer, value is command to execute
   for this key.
 
-| key_unbind_xxx | - |
+| key_unbind_xxx | | - |
   Unbind key _xxx_ for this buffer.
 
-| input | any string |
+| input | | any string |
   Set new value for buffer input.
 
-| input_pos | position |
+| input_pos | | position |
   Set cursor position in buffer input.
 
-| input_get_unknown_commands | "0" or "1" |
+| input_get_unknown_commands | | "0" or "1" |
   "0" to disable unknown commands on this buffer (default behavior), "1" to
   get unknown commands, for example if user type "/unknowncmd", buffer will
   receive it (no error about unknown command).
 
-| input_get_empty | "0" or "1" |
+| input_get_empty | | "0" or "1" |
   "0" to disable empty input on this buffer (default behavior), "1" to get empty input.
 
-| input_multiline | "0" or "1" |
+| input_multiline | | "0" or "1" |
   "0" to send each line separately to this buffer (default behavior), "1" to
   send multiple lines as a single message.
 
-| localvar_set_xxx | any string |
+| localvar_set_xxx | | any string |
   Set new value for local variable _xxx_ (variable is created if it does not
   exist).
 
-| localvar_del_xxx | - |
+| localvar_del_xxx | | - |
   Remove local variable _xxx_.
 |===
 

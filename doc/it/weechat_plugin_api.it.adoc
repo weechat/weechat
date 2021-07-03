@@ -13501,12 +13501,13 @@ Argomenti:
 // TRANSLATION MISSING
 Properties:
 
-[width="100%",cols="^2,4,8",options="header"]
+[width="100%",cols="^2,^1,4,8",options="header"]
 |===
-| Nome | Valore | Descrizione
+// TRANSLATION MISSING
+| Nome | Min WeeChat | Valore | Descrizione
 
 // TRANSLATION MISSING
-| hotlist | "+", "-", WEECHAT_HOTLIST_LOW, WEECHAT_HOTLIST_MESSAGE,
+| hotlist | | "+", "-", WEECHAT_HOTLIST_LOW, WEECHAT_HOTLIST_MESSAGE,
   WEECHAT_HOTLIST_PRIVATE, WEECHAT_HOTLIST_HIGHLIGHT, "-1" |
   "+": abilita hotlist (impostazione globale , il puntatore al buffer pointer non
   è utilizzato) +
@@ -13516,166 +13517,162 @@ Properties:
   "-1": remove buffer from hotlist _(WeeChat ≥ 1.0)_.
 
 // TRANSLATION MISSING
-| completion_freeze | "0" oppure "1" |
+| completion_freeze | | "0" oppure "1" |
   "0": no freeze of completion (default value)
   (impostazione globale, il puntatore al buffer non è utilizzato) +
   "1": do not stop completion when command line is updated
   (impostazione globale, il puntatore al buffer non è utilizzato).
 
-| unread | - |
+| unread | | - |
   Imposta l'evidenziatore di lettura dopo l'ultima riga del buffer.
 
-| display | "1" oppure "auto" |
+| display | | "1" oppure "auto" |
   "1": passa a questo buffer nella finestra corrente +
   "auto": passa a questo buffer nella finestra corrente, l'evidenziatore di
   lettura non viene resettato.
 
 // TRANSLATION MISSING
-| hidden +
-  _(WeeChat ≥ 1.0)_ | "0" oppure "1" |
+| hidden | 1.0 | "0" oppure "1" |
   "0": unhide the buffer +
   "1": hide the buffer.
 
-| number | numero |
+| number | | numero |
   Sposta buffer a questo numero.
 
-| name | qualsiasi stringa |
+| name | | qualsiasi stringa |
   Imposta nuovo nome per il buffer.
 
-| short_name | qualsiasi stringa |
+| short_name | | qualsiasi stringa |
   Imposta nuovo nome breve per il buffer.
 
 // TRANSLATION MISSING
-| type | "formatted" oppure "free" |
+| type | | "formatted" oppure "free" |
   Imposta tipo per il: "formatted" (per stampare i messaggi di chat),
   oppure "free" (per contenuto libero); when the value is "free", the property
   _clear_ is forced to "0" _(WeeChat ≥ 1.0)_.
 
-| notify | "0", "1", "2", "3" |
+| notify | | "0", "1", "2", "3" |
   Imposta il livello di notifica per il buffer: "0" = non aggiungere alla hotlist,
   "1" = aggiungere solo per gli eventi, "2" = aggiungere per eventi e
   messaggi, "3" = aggiungere per tutti i messaggi.
 
 // TRANSLATION MISSING
-| print_hooks_enabled | "0" oppure "1" |
+| print_hooks_enabled | | "0" oppure "1" |
   "0" to disable print hooks, "1" to enable them (default for a new buffer).
 
 // TRANSLATION MISSING
-| day_change +
-  _(WeeChat ≥ 0.4.3)_ | "0" oppure "1" |
+| day_change | 0.4.3 | "0" oppure "1" |
   "0" to hide messages for the day change, "1" to see them
   (default for a new buffer).
 
 // TRANSLATION MISSING
-| clear +
-  _(WeeChat ≥ 1.0)_ | "0" or "1" |
+| clear | 1.0 | "0" or "1" |
   "0" to prevent user from clearing buffer with the command `/buffer clear`,
   "1" to let user clear the buffer (default for a new buffer)
    (note: even when it is set to "0", the buffer can still be cleared with
    the function <<_buffer_clear,buffer_clear>>).
 
 // TRANSLATION MISSING
-| filter +
-  _(WeeChat ≥ 1.0)_ | "0" or "1" |
+| filter | 1.0 | "0" or "1" |
   "0": disable filters on buffer +
   "1": enable filters on buffer.
 
-| title | qualsiasi stringa |
+| title | | qualsiasi stringa |
   Imposta nuovo titolo per il buffer.
 
-| time_for_each_line | "0" oppure "1" |
+| time_for_each_line | | "0" oppure "1" |
   "0" per nascondere l'orario in tutte le righe del buffer, "1" per
   visualizzarlo su tutte le righe (predefinito per un nuovo buffer).
 
-| nicklist | "0" oppure "1" |
+| nicklist | | "0" oppure "1" |
   "0" per rimuovere la lista nick per il buffer, "1" per aggiungere
   la lista nick per il buffer.
 
-| nicklist_case_sensitive | "0" oppure "1" |
+| nicklist_case_sensitive | | "0" oppure "1" |
   "0" per avere una lista nick non sensibile alle maiuscole, "1" per
   una lista nick sensibile alle maiuscole.
 
-| nicklist_display_groups | "0" oppure "1" |
+| nicklist_display_groups | | "0" oppure "1" |
   "0" per nascondere i gruppi nella lista nick, "1" per visualizzare
   i gruppi della lista nick.
 
-| highlight_words | "-" oppure elenco di parole separato da virgole |
+| highlight_words | | "-" oppure elenco di parole separato da virgole |
   "-" è un valore speciale per disabilitare qualsiasi evento su questo
   buffer, o un elenco di parole separate da virgole da evidenziare in
   questo buffer, ad esempio: "abc,def,ghi".
 
-| highlight_words_add | elenco di parole separate da virgole |
+| highlight_words_add | | elenco di parole separate da virgole |
   Elenco di parole separate da virgole da evidenziare in questo buffer,
   queste parole vengono aggiunte alle parole evidenziate esistenti nel
   buffer.
 
-| highlight_words_del | elenco di parole separate da virgole |
+| highlight_words_del | | elenco di parole separate da virgole |
   Elenco di parole separate da virgole da rimuovere dalle
   parole evidenziate nel buffer.
 
 // TRANSLATION MISSING
-| highlight_regex | qualsiasi stringa |
+| highlight_regex | | qualsiasi stringa |
   POSIX extended regular expression for highlight.
 
 // TRANSLATION MISSING
-| highlight_tags_restrict | elenco separato da virgole di tag |
+| highlight_tags_restrict | | elenco separato da virgole di tag |
   Restrict highlights to messages with these tags in this buffer
   (it is possible to combine many tags as a logical "and" with separator "+",
   for example: "nick_toto+irc_action").
 
 // TRANSLATION MISSING
-| highlight_tags | elenco separato da virgole di tag |
+| highlight_tags | | elenco separato da virgole di tag |
   Force highlight on messages with these tags in this buffer
   (it is possible to combine many tags as a logical "and" with separator "+",
   for example: "nick_toto+irc_action").
 
-| hotlist_max_level_nicks | elenco separado da virgole di "nick:livello" |
+| hotlist_max_level_nicks | | elenco separado da virgole di "nick:livello" |
   Elenco separato da virgole di nick con il livello massimo per la hotlist
   su questo buffer (il livello può essere: -1: mai nella hotlist, 0: basso,
   1: messaggio, 2: privato, 3: evento), ad esempio: "joe:2,mike:-1,robert:-1"
   (joe non produce eventi sul buffer, mike e robert non modificano la hotlist).
 
-| hotlist_max_level_nicks_add | elenco separato da virgole di "nick:livello" |
+| hotlist_max_level_nicks_add | | elenco separato da virgole di "nick:livello" |
   Elenco separato da virgole di nick con il livello per la hotlist, questi
   nick vengono aggiunti a quelli esistenti nel buffer.
 
-| hotlist_max_level_nicks_del | elenco separato da virgole di nick |
+| hotlist_max_level_nicks_del | | elenco separato da virgole di nick |
   Elenco separato da virgole di nick da rimuovere dai livelli massimi della
   hotlist.
 
-| key_bind_xxx | qualsiasi stringa |
+| key_bind_xxx | | qualsiasi stringa |
   Assegna un nuovo tasto _xxx_, specifico per questo buffer, il valore è il
   comando da eseguire per questo tasto.
 
-| key_unbind_xxx | - |
+| key_unbind_xxx | | - |
   Rimuove l'assegnazione del tasto _xxx_ per questo buffer.
 
-| input | qualsiasi stringa |
+| input | | qualsiasi stringa |
   Imposta un nuovo valore per l'input del buffer.
 
-| input_pos | posizione |
+| input_pos | | posizione |
   Imposta la posizione del cursore per l'input del buffer.
 
-| input_get_unknown_commands | "0" oppure "1" |
+| input_get_unknown_commands | | "0" oppure "1" |
   "0" per disabilitare i comandi sconosciuti per questo buffer (comportamento
   predefinito), "1" per ricevere i comandi sconosciuti, ad esempio se l'utente
   digita "/unknowncmd", verrà ricevuto dal buffer (nessun errore riguardo il
   comando sconosciuto).
 
 // TRANSLATION MISSING
-| input_get_empty | "0" oppure "1" |
+| input_get_empty | | "0" oppure "1" |
   "0" to disable empty input on this buffer (default behavior), "1" to get empty input.
 
 // TRANSLATION MISSING
-| input_multiline | "0" or "1" |
+| input_multiline | | "0" or "1" |
   "0" to send each line separately to this buffer (default behavior), "1" to
   send multiple lines as a single message.
 
-| localvar_set_xxx | qualsiasi stringa |
+| localvar_set_xxx | | qualsiasi stringa |
   Imposta il nuovo valore per la variabile locale _xxx_ (la variabile verrà
   creata se non esiste).
 
-| localvar_del_xxx | - |
+| localvar_del_xxx | | - |
   Rimuove la variabile locale _xxx_.
 |===
 

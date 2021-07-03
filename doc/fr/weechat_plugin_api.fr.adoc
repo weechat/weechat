@@ -13234,11 +13234,11 @@ Paramètres :
 
 Propriétés :
 
-[width="100%",cols="^2,4,8",options="header"]
+[width="100%",cols="^2,^1,4,8",options="header"]
 |===
-| Nom | Valeur | Description.
+| Nom | WeeChat mini | Valeur | Description.
 
-| hotlist | "+", "-", WEECHAT_HOTLIST_LOW, WEECHAT_HOTLIST_MESSAGE,
+| hotlist | | "+", "-", WEECHAT_HOTLIST_LOW, WEECHAT_HOTLIST_MESSAGE,
   WEECHAT_HOTLIST_PRIVATE, WEECHAT_HOTLIST_HIGHLIGHT, "-1" |
   "+" : active la hotlist (option globale, le pointeur vers le tampon n'est pas
   utilisé) +
@@ -13247,156 +13247,152 @@ Propriétés :
   priorité : ajouter ce tampon dans la hotlist avec cette priorité +
   "-1" : supprimer ce tampon de la hotlist _(WeeChat ≥ 1.0)_.
 
-| completion_freeze | "0" ou "1" |
+| completion_freeze | | "0" ou "1" |
   "0" : pas de gel de la complétion (valeur par défaut)
   (option globale, le pointeur vers le tampon n'est pas utilisé) +
   "1" : ne pas arrêter la complétion lorsque la ligne de commande est mise à
   jour (option globale, le pointeur vers le tampon n'est pas utilisé).
 
-| unread | - |
+| unread | | - |
   Définit le marqueur de données non lues après la dernière ligne du tampon.
 
-| display | "1" ou "auto" |
+| display | | "1" ou "auto" |
   "1" : basculer vers ce tampon dans la fenêtre active +
   "auto" : basculer vers ce tampon dans la fenêtre active, le marqueur de
   données non lues n'est pas réinitialisé.
 
-| hidden +
-  _(WeeChat ≥ 1.0)_ | "0" ou "1" |
+| hidden | 1.0 | "0" ou "1" |
   "0" : démasquer le tampon +
   "1" : masquer le tampon.
 
-| number | numéro |
+| number | | numéro |
   Déplace le tampon vers ce numéro.
 
-| name | toute chaîne |
+| name | | toute chaîne |
   Change le nom du tampon.
 
-| short_name | toute chaîne |
+| short_name | | toute chaîne |
   Change le nom court du tampon.
 
-| type | "formatted" ou "free" |
+| type | | "formatted" ou "free" |
   Définit le type de tampon : "formatted" (pour afficher les messages d'une
   discussion), ou "free" (pour du contenu libre); lorsque la valeur est "free",
   la propriété _clear_ est forcée à "0" _(WeeChat ≥ 1.0)_.
 
-| notify | "0", "1", "2", "3" |
+| notify | | "0", "1", "2", "3" |
   Définit le niveau de notification du tampon : "0" = ne jamais ajouter à la
   hotlist, "1" = ajouter pour les highlights seulement, "2" = ajouter pour les
   highlights et les messages, "3" = ajouter pour tous les messages.
 
-| print_hooks_enabled | "0" ou "1" |
+| print_hooks_enabled | | "0" ou "1" |
   "0" pour désactiver les hooks "print", "1" pour les activer
   (par défaut pour un nouveau tampon).
 
-| day_change +
-  _(WeeChat ≥ 0.4.3)_ | "0" ou "1" |
+| day_change | 0.4.3 | "0" ou "1" |
   "0" pour cacher les messages de changement de jour, "1" pour les voir
   (par défaut pour un nouveau tampon).
 
-| clear +
-  _(WeeChat ≥ 1.0)_ | "0" ou "1" |
+| clear | 1.0 | "0" ou "1" |
   "0" pour empêcher l'utilisateur d'effacer le tampon avec la commande
   `/buffer clear`, "1" pour autoriser l'utilisateur à effacer le tampon (par
    défaut pour un nouveau tampon) (note : même lorsque la valeur est "0", le
    tampon peut toujours être effacé avec la fonction <<_buffer_clear,buffer_clear>>).
 
-| filter +
-  _(WeeChat ≥ 1.0)_ | "0" or "1" |
+| filter | 1.0 | "0" or "1" |
   "0" : désactiver les filtres sur le tampon +
   "1" : activer les filtres sur le tampon.
 
-| title | toute chaîne |
+| title | | toute chaîne |
   Change le titre du tampon.
 
-| time_for_each_line | "0" ou "1" |
+| time_for_each_line | | "0" ou "1" |
   "0" pour cacher l'heure sur toutes les lignes du tampon, "1" pour afficher
   l'heure sur toutes les lignes (par défaut pour un nouveau tampon).
 
-| nicklist | "0" ou "1" |
+| nicklist | | "0" ou "1" |
   "0" pour supprimer la liste des pseudos du tampon, "1" pour ajouter la liste
   des pseudos du tampon.
 
-| nicklist_case_sensitive | "0" ou "1" |
+| nicklist_case_sensitive | | "0" ou "1" |
   "0" pour avoir la liste des pseudos insensible à la casse, "1" pour avoir
   la liste des pseudos sensible à la casse.
 
-| nicklist_display_groups | "0" ou "1" |
+| nicklist_display_groups | | "0" ou "1" |
   "0" pour cacher les groupes de la liste des pseudos, "1" pour afficher les
   groupes de la liste des pseudos.
 
-| highlight_words | "-" ou une liste de mots séparés par des virgules |
+| highlight_words | | "-" ou une liste de mots séparés par des virgules |
   "-" est une valeur spéciale pour désactiver tout highlight sur ce tampon, ou
   une liste de mots à mettre en valeur dans ce tampon, par exemple :
   "abc,def,ghi".
 
-| highlight_words_add | liste de mots séparés par des virgules |
+| highlight_words_add | | liste de mots séparés par des virgules |
   Liste de mots à mettre en valeur dans ce tampon, ces mots sont ajoutés aux
   mots existants pour le tampon.
 
-| highlight_words_del | liste de mots séparés par des virgules |
+| highlight_words_del | | liste de mots séparés par des virgules |
   Liste de mots à supprimer de la liste des mots à mettre en valeur dans ce
   tampon.
 
-| highlight_regex | toute chaîne |
+| highlight_regex | | toute chaîne |
   Expression régulière POSIX étendue pour le highlight.
 
-| highlight_tags_restrict | liste d'étiquettes séparées par des virgules |
+| highlight_tags_restrict | | liste d'étiquettes séparées par des virgules |
   Restreindre les highlights aux messages avec ces étiquettes dans ce tampon
   (il est possible de combiner plusieurs étiquettes sous forme d'un "et" logique
   avec le séparateur "+", par exemple : "nick_toto+irc_action").
 
-| highlight_tags | liste d'étiquettes séparées par des virgules |
+| highlight_tags | | liste d'étiquettes séparées par des virgules |
   Forcer le highlight pour les messages avec ces étiquettes dans ce tampon
   (il est possible de combiner plusieurs étiquettes sous forme d'un "et" logique
   avec le séparateur "+", par exemple : "nick_toto+irc_action").
 
-| hotlist_max_level_nicks | liste de "pseudo:niveau" séparés par des virgules |
+| hotlist_max_level_nicks | | liste de "pseudo:niveau" séparés par des virgules |
   Liste de pseudos avec niveau max pour la hotlist sur ce tampon (le niveau peut
   être : -1 : jamais dans la hotlist, 0 : faible, 1 : message, 2 : privé,
   3 : highlight), par exemple : "joe:2,mike:-1,robert:-1" (joe ne produira
   jamais de highlight sur le tampon, mike et robert ne changeront jamais la
   hotlist).
 
-| hotlist_max_level_nicks_add | liste de "pseudo:niveau" séparés par des virgules" |
+| hotlist_max_level_nicks_add | | liste de "pseudo:niveau" séparés par des virgules" |
   Liste de pseudos avec niveau pour la hotlist, ces pseudos sont ajoutés aux
   pseudos existant dans le tampon.
 
-| hotlist_max_level_nicks_del | liste de pseudos séparés par des virgules |
+| hotlist_max_level_nicks_del | | liste de pseudos séparés par des virgules |
   Liste de pseudos à supprimer des niveaux max de hotlist.
 
-| key_bind_xxx | toute chaîne |
+| key_bind_xxx | | toute chaîne |
   Associe la nouvelle touche _xxx_, spécifique à ce tampon, la valeur est la
   commande à exécuter pour cette touche.
 
-| key_unbind_xxx | - |
+| key_unbind_xxx | | - |
   Supprime la touche _xxx_ pour ce tampon.
 
-| input | toute chaîne |
+| input | | toute chaîne |
   Change le contenu de la zone de saisie.
 
-| input_pos | position |
+| input_pos | | position |
   Change la position du curseur dans la zone de saisie.
 
-| input_get_unknown_commands | "0" ou "1" |
+| input_get_unknown_commands | | "0" ou "1" |
   "0" pour désactiver les commandes inconnues sur ce tampon (comportement par
   défaut), "1" pour recevoir les commandes inconnues, par exemple si
   l'utilisateur tape "/commandeinconnue", le tampon le recevra (pas d'erreur
   sur la commande inconnue).
 
-| input_get_empty | "0" ou "1" |
+| input_get_empty | | "0" ou "1" |
   "0" pour désactiver l'entrée vide sur ce tampon (comportement par défaut),
   "1" pour recevoir l'entrée vide.
 
-| input_multiline | "0" ou "1" |
+| input_multiline | | "0" ou "1" |
   "0" pour envoyer chaque ligne séparément au tampon (comportement par défaut),
   "1" pour envoyer plusieurs lignes comme un seul message.
 
-| localvar_set_xxx | toute chaîne |
+| localvar_set_xxx | | toute chaîne |
   Change la valeur de la variable locale _xxx_ (la variable est créée si elle
   n'existe pas).
 
-| localvar_del_xxx | - |
+| localvar_del_xxx | | - |
   Supprime la variable locale _xxx_.
 |===
 

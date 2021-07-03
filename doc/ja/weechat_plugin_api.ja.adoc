@@ -12998,157 +12998,154 @@ void weechat_buffer_set (struct t_gui_buffer *buffer, const char *property,
 
 プロパティ:
 
-[width="100%",cols="^2,4,8",options="header"]
+[width="100%",cols="^2,^1,4,8",options="header"]
 |===
-| 名前 | 値 | 説明
+// TRANSLATION MISSING
+| 名前 | Min WeeChat | 値 | 説明
 
-| hotlist | "+", "-", WEECHAT_HOTLIST_LOW, WEECHAT_HOTLIST_MESSAGE,
+| hotlist | | "+", "-", WEECHAT_HOTLIST_LOW, WEECHAT_HOTLIST_MESSAGE,
   WEECHAT_HOTLIST_PRIVATE, WEECHAT_HOTLIST_HIGHLIGHT, "-1" |
   "+": ホットリストを有効化 (グローバル設定、バッファへのポインタは使われない) +
   "-": ホットリストを無効化 (グローバル設定、バッファへのポインタは使われない) +
   優先度: この優先度でホットリストにバッファを追加 +
   "-1": ホットリストからバッファを削除 _(WeeChat バージョン 1.0 以上で利用可)_
 
-| completion_freeze | "0" または "1" |
+| completion_freeze | | "0" または "1" |
   "0": 補完を止める (デフォルト)
   (グローバル設定、バッファへのポインタは使われない) +
   "1": コマンドラインが更新された際に補完を継続する
   (グローバル設定、バッファへのポインタは使われない)
 
-| unread | - |
+| unread | | - |
   バッファの最後の行の後に未読マーカーを設定
 
-| display | "1" または "auto" |
+| display | | "1" または "auto" |
   "1": 指定したバッファを現在のウィンドウに表示 +
   "auto": 指定したバッファを現在のウィンドウに表示、読了マーカーをリセットしない
 
-| hidden +
-  _(WeeChat バージョン 1.0 以上で利用可)_ | "0" または "1" |
+| hidden | 1.0 | "0" または "1" |
   "0": バッファを隠すことを止める +
   "1": バッファを隠す
 
-| number | 番号 |
+| number | | 番号 |
   指定したバッファをこの番号に移動
 
-| name | 任意の文字列 |
+| name | | 任意の文字列 |
   指定したバッファの新しい名前を設定
 
-| short_name | 任意の文字列 |
+| short_name | | 任意の文字列 |
   指定したバッファの新しい短縮名を設定
 
-| type | "formatted" または "free" |
+| type | | "formatted" または "free" |
   バッファのタイプを設定: "formatted" (チャットメッセージ用)、または
   "free" (自由内容用); 値が "free" の場合、_clear_ プロパティは強制的に
   "0" に設定されます _(WeeChat バージョン 1.0 以上で利用可)_
 
-| notify | "0", "1", "2", "3" |
+| notify | | "0", "1", "2", "3" |
   バッファの通知レベルを設定: "0" = ホットリストに追加しない、"1" =
   ハイライトされた場合のみ追加、"2" = ハイライトされた場合とメッセージを受信した場合に追加、"3" =
   任意のメッセージを受信した場合に追加
 
-| print_hooks_enabled | "0" or "1" |
+| print_hooks_enabled | | "0" or "1" |
   プリントフックを無効化する場合は "0"、有効化する場合は "1" (新規バッファに対するデフォルト)
 
-| day_change +
-  _(WeeChat バージョン 0.4.3 以上で利用可)_ | "0" または "1" |
+| day_change | 0.4.3 | "0" または "1" |
   日付変更メッセージを隠す場合は "0"、表示する場合は
   "1" (新規バッファに対するデフォルト)
 
-| clear +
-  _(WeeChat バージョン 1.0 以上で利用可)_ | "0" または "1" |
+| clear | 1.0 | "0" または "1" |
   ユーザからのコマンド `/buffer clear` でバッファのクリアを禁止する場合は
   "0"、バッファのクリアを許可する場合は "1" (新規バッファに対するデフォルト)
    (注意: この値が "0" に設定されていたとしても、関数
    <<_buffer_clear,buffer_clear>> を使えばバッファをクリアすることが可能です)
 
-| filter +
-  _(WeeChat バージョン 1.0 以上で利用可)_ | "0" または "1" |
+| filter | 1.0 | "0" または "1" |
   "0": バッファでフィルタを無効化 +
   "1": バッファでフィルタを有効化
 
-| title | 任意の文字列 |
+| title | | 任意の文字列 |
   指定したバッファの新しいタイトルを設定
 
-| time_for_each_line | "0" または "1" |
+| time_for_each_line | | "0" または "1" |
   バッファのすべての行に時間を表示しない場合は "0"、表示する場合は
   "1" (新規バッファに対するデフォルト)
 
-| nicklist | "0" または "1" |
+| nicklist | | "0" または "1" |
   バッファのニックネームリストを表示しない場合は "0"、表示する場合は "1"
 
-| nicklist_case_sensitive | "0" または "1" |
+| nicklist_case_sensitive | | "0" または "1" |
   ニックネームリストで大文字小文字を区別しない場合は "0"、区別する場合は "1"
 
-| nicklist_display_groups | "0" または "1" |
+| nicklist_display_groups | | "0" または "1" |
   ニックネームリストグループを隠す場合は "0"、表示する場合は "1"
 
-| highlight_words | "-" または単語のコンマ区切りリスト |
+| highlight_words | | "-" または単語のコンマ区切りリスト |
   任意のハイライトを無効化する場合は特殊値
   "-"、または指定したバッファ内でハイライトする単語のコンマ区切りリスト、例:
   "abc,def,ghi"
 
-| highlight_words_add | 単語のコンマ区切りリスト |
+| highlight_words_add | | 単語のコンマ区切りリスト |
   指定したバッファ内でハイライトする単語のコンマ区切りリスト、これらの単語を指定したバッファ内でハイライトする単語に追加します
 
-| highlight_words_del | 単語のコンマ区切りリスト |
+| highlight_words_del | | 単語のコンマ区切りリスト |
   指定したバッファ内でハイライトする単語から削除する単語のコンマ区切りリスト
 
-| highlight_regex | 任意の文字列 |
+| highlight_regex | | 任意の文字列 |
   ハイライトする POSIX 拡張正規表現
 
-| highlight_tags_restrict | タグのコンマ区切りリスト |
+| highlight_tags_restrict | | タグのコンマ区切りリスト |
   指定したバッファ内でこれらのタグをつけられたメッセージだけを対象にハイライトする
   (区切り文字 "+" で論理 "and" を表現することにより複数のタグを組み合わせて使うことができます、例:
   "nick_toto+irc_action")
 
-| highlight_tags | タグのコンマ区切りリスト |
+| highlight_tags | | タグのコンマ区切りリスト |
   指定したバッファ内でこれらのタグをつけられたメッセージを強制的にハイライトする
   (区切り文字 "+" で論理 "and" を表現することにより複数のタグを組み合わせて使うことができます、例:
   "nick_toto+irc_action")
 
-| hotlist_max_level_nicks | "nick:level" のコンマ区切りリスト |
+| hotlist_max_level_nicks | | "nick:level" のコンマ区切りリスト |
   指定したバッファに対するホットリストの最大レベルを付けたニックネームのコンマ区切りリスト
   (レベル: -1: ホットリストに追加しない、0: 低い、1: メッセージ、2:
   プライベート、3: ハイライト)、例: "joe:2,mike:-1,robert:-1" (joe
   さんのメッセージはハイライトされない、mike さんと robert さんはホットリストを変更しない)
 
-| hotlist_max_level_nicks_add | "nick:level" のコンマ区切りリスト |
+| hotlist_max_level_nicks_add | | "nick:level" のコンマ区切りリスト |
   ホットリストの最大レベルを付けたニックネームのコンマ区切りリスト、これらのニックネームを指定したバッファ内のニックネームに追加します
 
-| hotlist_max_level_nicks_del | ニックネームのコンマ区切りリスト |
+| hotlist_max_level_nicks_del | | ニックネームのコンマ区切りリスト |
   ホットリストの最大レベルから削除するニックネームのコンマ区切りリスト
 
-| key_bind_xxx | 任意の文字列 |
+| key_bind_xxx | | 任意の文字列 |
   指定したバッファに対して新しいキー _xxx_
   を割り当てる、値はキーを押して実行するコマンド
 
-| key_unbind_xxx | - |
+| key_unbind_xxx | | - |
   指定したバッファに対してキー _xxx_ の割り当てを解除する
 
-| input | 任意の文字列 |
+| input | | 任意の文字列 |
   バッファ入力に新しい値を設定
 
-| input_pos | 位置 |
+| input_pos | | 位置 |
   バッファ入力のカーソル位置を設定
 
-| input_get_unknown_commands | "0" または "1" |
+| input_get_unknown_commands | | "0" または "1" |
   指定したバッファに対する未定義のコマンドを無効にする場合は "0"
   (デフォルト)、未定義のコマンドを受け入れる場合は "1"、例えばユーザが "/unknowncmd"
   を入力した場合、バッファはこれを受け入れる (未定義のコマンドに対するエラーを出さない)
 
-| input_get_empty | "0" または "1" |
+| input_get_empty | | "0" または "1" |
   バッファに対する空入力を受け取らない場合は "0" (デフォルト)、空入力を受け取る場合は "1"
 
 // TRANSLATION MISSING
-| input_multiline | "0" または "1" |
+| input_multiline | | "0" または "1" |
   "0" to send each line separately to this buffer (default behavior), "1" to
   send multiple lines as a single message.
 
-| localvar_set_xxx | 任意の文字列 |
+| localvar_set_xxx | | 任意の文字列 |
   ローカル変数 _xxx_ の新しい値を設定
   (存在しない変数の場合は変数を作成する)
 
-| localvar_del_xxx | - |
+| localvar_del_xxx | | - |
   ローカル変数 _xxx_ を削除
 |===
 
