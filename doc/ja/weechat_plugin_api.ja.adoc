@@ -11059,59 +11059,46 @@ struct t_hook *weechat_hook_hsignal (const char *signal,
 
 hsignal のリスト:
 
-[width="100%",cols="^1,^3,5,5",options="header"]
+[width="100%",cols="^1,^3,^1,5,5",options="header"]
 |===
-| プラグイン | シグナル | 引数 | 説明
+// TRANSLATION MISSING
+| プラグイン | シグナル | Min WeeChat | 引数 | 説明
 
-| irc |
-  [[hook_hsignal_irc_redirection_xxx_yyy]] irc_redirection_xxx_yyy ^(1)^ +
-  _(WeeChat バージョン 0.3.4 以上で利用可)_ |
+| irc | [[hook_hsignal_irc_redirection_xxx_yyy]] irc_redirection_xxx_yyy ^(1)^ | 0.3.4 |
   <<hsignal_irc_redirect_command,hsignal_irc_redirect_command>> を参照 |
   出力の転送
 
-| weechat |
-  [[hook_hsignal_nicklist_group_added]] nicklist_group_added +
-  _(WeeChat バージョン 0.4.1 以上で利用可)_ |
+| weechat | [[hook_hsignal_nicklist_group_added]] nicklist_group_added | 0.4.1 |
   _buffer_ (_struct t_gui_buffer *_): バッファ +
   _parent_group_ (_struct t_gui_nick_group *_): 親グループ +
   _group_ (_struct t_gui_nick_group *_): グループ |
   ニックネームリストにグループを追加
 
-| weechat |
-  [[hook_hsignal_nicklist_nick_added]] nicklist_nick_added +
-  _(WeeChat バージョン 0.4.1 以上で利用可)_ |
+| weechat | [[hook_hsignal_nicklist_nick_added]] nicklist_nick_added | 0.4.1 |
   _buffer_ (_struct t_gui_buffer *_): バッファ +
   _parent_group_ (_struct t_gui_nick_group *_): 親グループ +
   _nick_ (_struct t_gui_nick *_): ニックネーム |
   ニックネームリストにニックネームを追加
 
-| weechat |
-  [[hook_hsignal_nicklist_group_removing]] nicklist_group_removing +
-  _(WeeChat バージョン 0.4.1 以上で利用可)_ |
+| weechat | [[hook_hsignal_nicklist_group_removing]] nicklist_group_removing | 0.4.1 |
   _buffer_ (_struct t_gui_buffer *_): バッファ +
   _parent_group_ (_struct t_gui_nick_group *_): 親グループ +
   _group_ (_struct t_gui_nick_group *_): グループ |
   ニックネームリストからグループを削除
 
-| weechat |
-  [[hook_hsignal_nicklist_nick_removing]] nicklist_nick_removing +
-  _(WeeChat バージョン 0.4.1 以上で利用可)_ |
+| weechat | [[hook_hsignal_nicklist_nick_removing]] nicklist_nick_removing | 0.4.1 |
   _buffer_ (_struct t_gui_buffer *_): バッファ +
   _parent_group_ (_struct t_gui_nick_group *_): 親グループ +
   _nick_ (_struct t_gui_nick *_): ニックネーム |
   ニックネームリストからニックネームを削除
 
-| weechat |
-  [[hook_hsignal_nicklist_group_changed]] nicklist_group_changed +
-  _(WeeChat バージョン 0.4.1 以上で利用可)_ |
+| weechat | [[hook_hsignal_nicklist_group_changed]] nicklist_group_changed | 0.4.1 |
   _buffer_ (_struct t_gui_buffer *_): バッファ +
   _parent_group_ (_struct t_gui_nick_group *_): 親グループ +
   _group_ (_struct t_gui_nick_group *_): グループ |
   ニックネームリストに含まれるグループを変更
 
-| weechat |
-  [[hook_hsignal_nicklist_nick_changed]] nicklist_nick_changed +
-  _(WeeChat バージョン 0.4.1 以上で利用可)_ |
+| weechat | [[hook_hsignal_nicklist_nick_changed]] nicklist_nick_changed | 0.4.1 |
   _buffer_ (_struct t_gui_buffer *_): バッファ +
   _parent_group_ (_struct t_gui_nick_group *_): 親グループ +
   _nick_ (_struct t_gui_nick *_): ニックネーム |

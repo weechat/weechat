@@ -11470,65 +11470,52 @@ Valore restituito:
 // TRANSLATION MISSING
 List of hsignals sent by WeeChat and plugins:
 
-[width="100%",cols="^1,^3,5,5",options="header"]
+[width="100%",cols="^1,^3,^1,5,5",options="header"]
 |===
-| Plugin | Segnale | Argomenti | Descrizione
+// TRANSLATION MISSING
+| Plugin | Segnale | Min WeeChat | Argomenti | Descrizione
 
-| irc |
-  [[hook_hsignal_irc_redirection_xxx_yyy]] irc_redirection_xxx_yyy ^(1)^ +
-  _(WeeChat ≥ 0.3.4)_ |
+| irc | [[hook_hsignal_irc_redirection_xxx_yyy]] irc_redirection_xxx_yyy ^(1)^ | 0.3.4 |
   Consultare <<hsignal_irc_redirect_command,hsignal_irc_redirect_command>> |
   Redirection output.
 
 // TRANSLATION MISSING
-| weechat |
-  [[hook_hsignal_nicklist_group_added]] nicklist_group_added +
-  _(WeeChat ≥ 0.4.1)_ |
+| weechat | [[hook_hsignal_nicklist_group_added]] nicklist_group_added | 0.4.1 |
   _buffer_ (_struct t_gui_buffer *_): buffer +
   _parent_group_ (_struct t_gui_nick_group *_): parent group +
   _group_ (_struct t_gui_nick_group *_): group |
   Group added in nicklist.
 
 // TRANSLATION MISSING
-| weechat |
-  [[hook_hsignal_nicklist_nick_added]] nicklist_nick_added +
-  _(WeeChat ≥ 0.4.1)_ |
+| weechat | [[hook_hsignal_nicklist_nick_added]] nicklist_nick_added | 0.4.1 |
   _buffer_ (_struct t_gui_buffer *_): buffer +
   _parent_group_ (_struct t_gui_nick_group *_): parent group +
   _nick_ (_struct t_gui_nick *_): nick |
   Nick added in nicklist.
 
 // TRANSLATION MISSING
-| weechat |
-  [[hook_hsignal_nicklist_group_removing]] nicklist_group_removing +
-  _(WeeChat ≥ 0.4.1)_ |
+| weechat | [[hook_hsignal_nicklist_group_removing]] nicklist_group_removing | 0.4.1 |
   _buffer_ (_struct t_gui_buffer *_): buffer +
   _parent_group_ (_struct t_gui_nick_group *_): parent group +
   _group_ (_struct t_gui_nick_group *_): group |
   Removing group from nicklist.
 
 // TRANSLATION MISSING
-| weechat |
-  [[hook_hsignal_nicklist_nick_removing]] nicklist_nick_removing +
-  _(WeeChat ≥ 0.4.1)_ |
+| weechat | [[hook_hsignal_nicklist_nick_removing]] nicklist_nick_removing | 0.4.1 |
   _buffer_ (_struct t_gui_buffer *_): buffer +
   _parent_group_ (_struct t_gui_nick_group *_): parent group +
   _nick_ (_struct t_gui_nick *_): nick |
   Removing nick from nicklist.
 
 // TRANSLATION MISSING
-| weechat |
-  [[hook_hsignal_nicklist_group_changed]] nicklist_group_changed +
-  _(WeeChat ≥ 0.4.1)_ |
+| weechat | [[hook_hsignal_nicklist_group_changed]] nicklist_group_changed | 0.4.1 |
   _buffer_ (_struct t_gui_buffer *_): buffer +
   _parent_group_ (_struct t_gui_nick_group *_): parent group +
   _group_ (_struct t_gui_nick_group *_): group |
   Group changed in nicklist.
 
 // TRANSLATION MISSING
-| weechat |
-  [[hook_hsignal_nicklist_nick_changed]] nicklist_nick_changed +
-  _(WeeChat ≥ 0.4.1)_ |
+| weechat | [[hook_hsignal_nicklist_nick_changed]] nicklist_nick_changed | 0.4.1 |
   _buffer_ (_struct t_gui_buffer *_): buffer +
   _parent_group_ (_struct t_gui_nick_group *_): parent group +
   _nick_ (_struct t_gui_nick *_): nick |

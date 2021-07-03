@@ -10656,59 +10656,46 @@ struct t_hook *weechat_hook_hsignal (const char *signal,
 
 Листа hsignalа:
 
-[width="100%", cols="^1,^3,5,5", options="header"]
+[width="100%", cols="^1,^3,^1,5,5", options="header"]
 |===
-| Додатак | Сигнал | Аргументи | Опис
+// TRANSLATION MISSING
+| Додатак | Сигнал | Min WeeChat | Аргументи | Опис
 
-| irc |
-  [[hook_hsignal_irc_redirection_xxx_yyy]] irc_redirection_xxx_yyy ^(1)^ +
-  _(WeeChat ≥ 0.3.4)_ |
+| irc | [[hook_hsignal_irc_redirection_xxx_yyy]] irc_redirection_xxx_yyy ^(1)^ | 0.3.4 |
   Погледајте <<hsignal_irc_redirect_command,hsignal_irc_redirect_command>> |
   Преусмеравање излаза.
 
-| weechat |
-  [[hook_hsignal_nicklist_group_added]] nicklist_group_added +
-  _(WeeChat ≥ 0.4.1)_ |
+| weechat | [[hook_hsignal_nicklist_group_added]] nicklist_group_added | 0.4.1 |
   _buffer_ (_struct t_gui_buffer *_): бафер +
   _parent_group_ (_struct t_gui_nick_group *_): родитељ група +
   _group_ (_struct t_gui_nick_group *_): група |
   У листу надимака је додата група.
 
-| weechat |
-  [[hook_hsignal_nicklist_nick_added]] nicklist_nick_added +
-  _(WeeChat ≥ 0.4.1)_ |
+| weechat | [[hook_hsignal_nicklist_nick_added]] nicklist_nick_added | 0.4.1 |
   _buffer_ (_struct t_gui_buffer *_): бафер +
   _parent_group_ (_struct t_gui_nick_group *_): родитељ група +
   _nick_ (_struct t_gui_nick *_): надимак |
   Надимак је додат у листу надимака.
 
-| weechat |
-  [[hook_hsignal_nicklist_group_removing]] nicklist_group_removing +
-  _(WeeChat ≥ 0.4.1)_ |
+| weechat | [[hook_hsignal_nicklist_group_removing]] nicklist_group_removing | 0.4.1 |
   _buffer_ (_struct t_gui_buffer *_): бафер +
   _parent_group_ (_struct t_gui_nick_group *_): родитељ група +
   _group_ (_struct t_gui_nick_group *_): група |
   Уклањање групе из листе надимака.
 
-| weechat |
-  [[hook_hsignal_nicklist_nick_removing]] nicklist_nick_removing +
-  _(WeeChat ≥ 0.4.1)_ |
+| weechat | [[hook_hsignal_nicklist_nick_removing]] nicklist_nick_removing | 0.4.1 |
   _buffer_ (_struct t_gui_buffer *_): бафер +
   _parent_group_ (_struct t_gui_nick_group *_): родитељ група +
   _nick_ (_struct t_gui_nick *_): надимак |
   Уклањање надимка из листе надимака.
 
-| weechat |
-  [[hook_hsignal_nicklist_group_changed]] nicklist_group_changed +
-  _(WeeChat ≥ 0.4.1)_ |
+| weechat | [[hook_hsignal_nicklist_group_changed]] nicklist_group_changed | 0.4.1 |
   _buffer_ (_struct t_gui_buffer *_): бафер +
   _parent_group_ (_struct t_gui_nick_group *_): родитељ група +
   _group_ (_struct t_gui_nick_group *_): група |
   У листи надимака је измењена група.
 
-| weechat |
-  [[hook_hsignal_nicklist_nick_changed]] nicklist_nick_changed +
-  _(WeeChat ≥ 0.4.1)_ |
+| weechat | [[hook_hsignal_nicklist_nick_changed]] nicklist_nick_changed | 0.4.1 |
   _buffer_ (_struct t_gui_buffer *_): бафер +
   _parent_group_ (_struct t_gui_nick_group *_): родитељ група +
   _nick_ (_struct t_gui_nick *_): надимак |
