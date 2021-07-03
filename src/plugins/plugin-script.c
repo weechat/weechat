@@ -1287,8 +1287,11 @@ plugin_script_action_install (struct t_weechat_plugin *weechat_plugin,
                     {
                         snprintf (new_path, length, "%s/%s/%s",
                                   weechat_data_dir, weechat_plugin->name, base_name);
-                        if (rename (name, new_path) == 0)
+                        if (weechat_file_copy (name, new_path))
                         {
+                            /* remove old file */
+                            (void) remove (name);
+
                             /* make link in autoload dir */
                             if (autoload)
                             {
