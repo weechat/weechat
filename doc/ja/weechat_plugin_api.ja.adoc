@@ -11640,80 +11640,73 @@ char *weechat_hook_modifier_exec (const char *modifier,
 
 WeeChat とプラグインが定義する修飾子のリスト:
 
-[width="100%",cols="^2,3,4,4",options="header"]
+[width="100%",cols="^2,^1,3,4,4",options="header"]
 |===
-| 修飾子 | 修飾子データ | 文字列 | 出力
+// TRANSLATION MISSING
+| 修飾子 | Min WeeChat | 修飾子データ | 文字列 | 出力
 
-| [[hook_modifier_charset_decode]] charset_decode |
+| [[hook_modifier_charset_decode]] charset_decode | |
   plugin.buffer_name |
   任意の文字列 |
   プラグインおよびバッファの文字セットから UTF-8 にデコードされた文字列
 
-| [[hook_modifier_charset_encode]] charset_encode |
+| [[hook_modifier_charset_encode]] charset_encode | |
   plugin.buffer_name |
   任意の文字列 |
   UTF-8 からプラグインおよびバッファの文字セットにエンコードされた文字列
 
-| [[hook_modifier_irc_color_decode]] irc_color_decode |
+| [[hook_modifier_irc_color_decode]] irc_color_decode | |
   色を保持する場合は "1"、削除する場合は "0" |
   任意の文字列 |
   WeeChat 色コードに変換された IRC 色コードを含む (または IRC 色コードを削除された) 文字列
 
-| [[hook_modifier_irc_color_encode]] irc_color_encode |
+| [[hook_modifier_irc_color_encode]] irc_color_encode | |
   色を保持する場合は "1"、削除する場合は "0" |
   任意の文字列 |
   IRC 色コードを含む (または IRC 色コードを削除された) 文字列
 
-| [[hook_modifier_irc_color_decode_ansi]] irc_color_decode_ansi +
-  _(WeeChat バージョン 1.0 以上で利用可)_ |
+| [[hook_modifier_irc_color_decode_ansi]] irc_color_decode_ansi | 1.0 |
   色を保持する場合は "1"、削除する場合は "0" |
   任意の文字列 |
   IRC 色コードに変換された ANSI 色コードを含む (または ANSI 色コードを削除された) 文字列
 
-| [[hook_modifier_irc_command_auth]] irc_command_auth +
-  _(WeeChat バージョン 0.4.1 以上で利用可)_ |
+| [[hook_modifier_irc_command_auth]] irc_command_auth | 0.4.1 |
   サーバ名 |
   認証コマンド (例: `+/msg nickserv identify password+`) |
   パスワードを隠したコマンド (例: `+/msg nickserv identify ********+`)
 
-| [[hook_modifier_irc_message_auth]] irc_message_auth +
-  _(WeeChat バージョン 0.4.1 以上で利用可)_ |
+| [[hook_modifier_irc_message_auth]] irc_message_auth | 0.4.1 |
   サーバ名 |
   `/msg` をサーバに送信した後に表示されるメッセージ |
   パスワードを隠したメッセージ
 
 // TRANSLATION MISSING
-| [[hook_modifier_irc_tag_escape_value]] irc_tag_escape_value +
-  _(WeeChat ≥ 3.3)_ |
+| [[hook_modifier_irc_tag_escape_value]] irc_tag_escape_value | 3.3 |
   - |
   Any string. |
   String with IRC tag value escaped,
   see: https://ircv3.net/specs/extensions/message-tags#escaping-values.
 
 // TRANSLATION MISSING
-| [[hook_modifier_irc_tag_unescape_value]] irc_tag_unescape_value +
-  _(WeeChat ≥ 3.3)_ |
+| [[hook_modifier_irc_tag_unescape_value]] irc_tag_unescape_value | 3.3 |
   - |
   Any string. |
   String with IRC tag value unescaped,
   see: https://ircv3.net/specs/extensions/message-tags#escaping-values.
 
-| [[hook_modifier_color_decode_ansi]] color_decode_ansi +
-  _(WeeChat バージョン 1.0 以上で利用可)_ |
+| [[hook_modifier_color_decode_ansi]] color_decode_ansi | 1.0 |
   色を保持する場合は "1"、削除する場合は "0" |
   任意の文字列 |
   WeeChat 色コードに変換された ANSI 色コードを含む (または ANSI 色コードを削除された) 文字列
 
 // TRANSLATION MISSING
-| [[hook_modifier_color_encode_ansi]] color_encode_ansi +
-  _(WeeChat バージョン 2.7 以上で利用可)_ |
+| [[hook_modifier_color_encode_ansi]] color_encode_ansi | 2.7 |
   - |
   任意の文字列 |
   String with WeeChat colors converted to ANSI colors.
 
 // TRANSLATION MISSING
-| [[hook_modifier_eval_path_home]] eval_path_home +
-  _(WeeChat バージョン 2.7 以上で利用可)_ |
+| [[hook_modifier_eval_path_home]] eval_path_home | 2.7 |
   Optional: `directory=xxx` where `xxx` can be: `config`, `data`, `cache`, `runtime` |
   Any string. |
   Evaluated path, result of the function

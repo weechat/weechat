@@ -11850,81 +11850,73 @@ Valeur de retour :
 Liste des modificateurs définis par WeeChat et les extensions qui peuvent être
 utilisés :
 
-[width="100%",cols="^2,3,4,4",options="header"]
+[width="100%",cols="^2,^1,3,4,4",options="header"]
 |===
-| Modificateur | Données du modificateur | Chaîne | Sortie
+| Modificateur | WeeChat mini | Données du modificateur | Chaîne | Sortie
 
-| [[hook_modifier_charset_decode]] charset_decode |
+| [[hook_modifier_charset_decode]] charset_decode | |
   extension.nom_tampon |
   Toute chaîne. |
   Chaîne décodée depuis le jeu de caractères trouvé pour l'extension/tampon
   vers UTF-8.
 
-| [[hook_modifier_charset_encode]] charset_encode |
+| [[hook_modifier_charset_encode]] charset_encode | |
   extension.nom_tampon |
   Toute chaîne. |
   Chaîne encodée depuis UTF-8 vers le jeu de caractères trouvé pour
   l'extension/tampon.
 
-| [[hook_modifier_irc_color_decode]] irc_color_decode |
+| [[hook_modifier_irc_color_decode]] irc_color_decode | |
   "1" pour garder les couleurs, "0" pour les supprimer |
   Toute chaîne. |
   Chaîne avec les couleurs IRC converties en couleurs WeeChat (ou avec les
   couleurs IRC supprimées).
 
-| [[hook_modifier_irc_color_encode]] irc_color_encode |
+| [[hook_modifier_irc_color_encode]] irc_color_encode | |
   "1" pour garder les couleurs, "0" pour les supprimer |
   Toute chaîne. |
   Chaîne avec les couleurs IRC (ou avec les couleurs IRC supprimées).
 
-| [[hook_modifier_irc_color_decode_ansi]] irc_color_decode_ansi +
-  _(WeeChat ≥ 1.0)_ |
+| [[hook_modifier_irc_color_decode_ansi]] irc_color_decode_ansi | 1.0 |
   "1" pour garder les couleurs, "0" pour les supprimer |
   Toute chaîne. |
   Chaîne avec les couleurs ANSI converties en couleurs IRC (ou avec les couleurs
   ANSI supprimées).
 
-| [[hook_modifier_irc_command_auth]] irc_command_auth +
-  _(WeeChat ≥ 0.4.1)_ |
+| [[hook_modifier_irc_command_auth]] irc_command_auth | 0.4.1 |
   Nom du serveur |
   Commande d'authentification (par exemple : `+/msg nickserv identify password+`). |
   Commande avec le mot de passe caché (par exemple : `+/msg nickserv identify ********+`).
 
-| [[hook_modifier_irc_message_auth]] irc_message_auth +
-  _(WeeChat ≥ 0.4.1)_ |
+| [[hook_modifier_irc_message_auth]] irc_message_auth | 0.4.1 |
   Nom du serveur |
   Message affiché après `msg` envoyé à nickserv. |
   Message avec le mot de passe caché.
 
-| [[hook_modifier_irc_tag_escape_value]] irc_tag_escape_value +
-  _(WeeChat ≥ 3.3)_ |
+| [[hook_modifier_irc_tag_escape_value]] irc_tag_escape_value | 3.3 |
   - |
   Toute chaîne. |
   Chaîne avec la valeur de l'étiquette IRC échappée,
   voir : https://ircv3.net/specs/extensions/message-tags#escaping-values.
 
-| [[hook_modifier_irc_tag_unescape_value]] irc_tag_unescape_value +
-  _(WeeChat ≥ 3.3)_ |
+| [[hook_modifier_irc_tag_unescape_value]] irc_tag_unescape_value | 3.3 |
   - |
   Toute chaîne. |
   Chaîne avec la valeur de l'étiquette IRC sans échappements,
   voir : https://ircv3.net/specs/extensions/message-tags#escaping-values.
 
-| [[hook_modifier_color_decode_ansi]] color_decode_ansi +
-  _(WeeChat ≥ 1.0)_ |
+| [[hook_modifier_color_decode_ansi]] color_decode_ansi | 1.0 |
   "1" pour garder les couleurs, "0" pour les supprimer |
   Toute chaîne. |
   Chaîne avec les couleurs ANSI converties en couleurs WeeChat (ou avec les
   couleurs ANSI supprimées).
 
-| [[hook_modifier_color_encode_ansi]] color_encode_ansi +
-  _(WeeChat ≥ 2.7)_ |
+| [[hook_modifier_color_encode_ansi]] color_encode_ansi | 2.7 |
   - |
   Toute chaîne. |
   Chaîne avec les couleurs WeeChat converties en couleurs ANSI.
 
-| [[hook_modifier_eval_path_home]] eval_path_home +
-  _(WeeChat ≥ 2.7)_ |
+| [[hook_modifier_eval_path_home]] eval_path_home | 2.7 |
   Facultatif : `directory=xxx` où `xxx` peut être : `config`, `data`, `cache`, `runtime` |
   Toute chaîne. |
   Chemin évalué, résultat de la fonction

@@ -11204,78 +11204,71 @@ char *weechat_hook_modifier_exec (const char *modifier,
 
 Листа модификатора за употребу које дефинишу програм WeeChat и додаци:
 
-[width="100%", cols="^2,3,4,4", options="header"]
+[width="100%", cols="^2,^1,3,4,4", options="header"]
 |===
-| Модификатор | Подаци модификатора | Стринг | Излаз
+// TRANSLATION MISSING
+| Модификатор | Min WeeChat | Подаци модификатора | Стринг | Излаз
 
-| [[hook_modifier_charset_decode]] charset_decode |
+| [[hook_modifier_charset_decode]] charset_decode | |
   plugin.buffer_name |
   Било који стринг. |
   Стринг декодиран из скупа карактера пронађеног за додатак/бафер у UTF-8.
 
-| [[hook_modifier_charset_encode]] charset_encode |
+| [[hook_modifier_charset_encode]] charset_encode | |
   plugin.buffer_name |
   Било који стринг. |
   Стринг кодиран из UTF-8 у скуп карактера пронађен за додатак/бафер.
 
-| [[hook_modifier_irc_color_decode]] irc_color_decode |
+| [[hook_modifier_irc_color_decode]] irc_color_decode | |
   "1" да се боје задрже, "0" да се боје уклоне |
   Било који стринг. |
   Стринг у којем су IRC боје конвертоване у WeeChat боје (или су уклоњене IRC боје).
 
-| [[hook_modifier_irc_color_encode]] irc_color_encode |
+| [[hook_modifier_irc_color_encode]] irc_color_encode | |
   "1" да се боје задрже, "0" да се боје уклоне |
   Било који стринг. |
   Стринг са IRC бојама (или са уклоњеним IRC бојама).
 
-| [[hook_modifier_irc_color_decode_ansi]] irc_color_decode_ansi +
-  _(WeeChat ≥ 1.0)_ |
+| [[hook_modifier_irc_color_decode_ansi]] irc_color_decode_ansi | 1.0 |
   "1" да се боје задрже, "0" да се боје уклоне |
   Било који стринг. |
   Стринг у којем су ANSI боје конвертоване у IRC боје (или су уклоњене ANSI боје).
 
-| [[hook_modifier_irc_command_auth]] irc_command_auth +
-  _(WeeChat ≥ 0.4.1)_ |
+| [[hook_modifier_irc_command_auth]] irc_command_auth | 0.4.1 |
   Име сервера |
   Команда аутентификације (на пример: `+/msg nickserv identify лозинка+`). |
   Команда са скривеном лозинком (на пример: `+/msg nickserv identify ********+`).
 
-| [[hook_modifier_irc_message_auth]] irc_message_auth +
-  _(WeeChat ≥ 0.4.1)_ |
+| [[hook_modifier_irc_message_auth]] irc_message_auth | 0.4.1 |
   Име сервера |
   Порука која се приказује након што се `/msg` пошаље nickserv боту. |
   Порука са скривеном лозинком.
 
 // TRANSLATION MISSING
-| [[hook_modifier_irc_tag_escape_value]] irc_tag_escape_value +
-  _(WeeChat ≥ 3.3)_ |
+| [[hook_modifier_irc_tag_escape_value]] irc_tag_escape_value | 3.3 |
   - |
   Any string. |
   String with IRC tag value escaped,
   see: https://ircv3.net/specs/extensions/message-tags#escaping-values.
 
 // TRANSLATION MISSING
-| [[hook_modifier_irc_tag_unescape_value]] irc_tag_unescape_value +
-  _(WeeChat ≥ 3.3)_ |
+| [[hook_modifier_irc_tag_unescape_value]] irc_tag_unescape_value | 3.3 |
   - |
   Any string. |
   String with IRC tag value unescaped,
   see: https://ircv3.net/specs/extensions/message-tags#escaping-values.
 
-| [[hook_modifier_color_decode_ansi]] color_decode_ansi +
-  _(WeeChat ≥ 1.0)_ |
+| [[hook_modifier_color_decode_ansi]] color_decode_ansi | 1.0 |
   "1" да се боје задрже, "0" да се боје уклоне |
   Било који стринг. |
   Стринг у којем су ANSI боје конвертоване у WeeChat боје (или су уклоњене WeeChat боје).
 
-| [[hook_modifier_color_encode_ansi]] color_encode_ansi +
-  _(WeeChat ≥ 2.7)_ |
+| [[hook_modifier_color_encode_ansi]] color_encode_ansi | 2.7 |
   - |
 Било који стринг. |
 Стринг са WeeChat бојама конвертованим у ANSI боје.
 
-| [[hook_modifier_eval_path_home]] eval_path_home +
-  _(WeeChat ≥ 2.7)_ |
+| [[hook_modifier_eval_path_home]] eval_path_home | 2.7 |
   Није обавезно: `directory=xxx` где `xxx` може бити: `config`, `data`, `cache`, `runtime` |
   Било који стринг. |
   Израчуната путања, резултат функције
