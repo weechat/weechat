@@ -76,7 +76,8 @@ typing_bar_item_typing (const void *pointer, void *data,
                         struct t_hashtable *extra_info)
 {
     struct t_hashtable *ptr_nicks;
-    char **str_nicks_typing, **str_typing;
+    char **str_nicks_typing, **str_typing, *str_typing_cut;
+    int max_length;
 
     /* make C compiler happy */
     (void) pointer;
@@ -106,7 +107,15 @@ typing_bar_item_typing (const void *pointer, void *data,
 
     weechat_string_dyn_free (str_nicks_typing, 1);
 
-    return weechat_string_dyn_free (str_typing, 0);
+    max_length = weechat_config_integer (typing_config_look_item_max_length);
+    if (max_length == 0)
+        return weechat_string_dyn_free (str_typing, 0);
+
+    str_typing_cut = weechat_string_cut (*str_typing, max_length, 1, 1, "…");
+
+    weechat_string_dyn_free (str_typing, 1);
+
+    return str_typing_cut;
 }
 
 /*

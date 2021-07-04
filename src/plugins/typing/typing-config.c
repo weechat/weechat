@@ -22,6 +22,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <limits.h>
 
 #include "../weechat-plugin.h"
 #include "typing.h"
@@ -40,6 +41,7 @@ struct t_config_option *typing_config_look_delay_purge_typing;
 struct t_config_option *typing_config_look_delay_set_paused;
 struct t_config_option *typing_config_look_enabled_nicks;
 struct t_config_option *typing_config_look_enabled_self;
+struct t_config_option *typing_config_look_item_max_length;
 
 
 /*
@@ -77,6 +79,22 @@ typing_config_change_enabled (const void *pointer, void *data,
     (void) option;
 
     typing_setup_hooks ();
+    weechat_bar_item_update (TYPING_BAR_ITEM_NAME);
+}
+
+/*
+ * Callback for changes on options "typing.look.item_max_length".
+ */
+
+void
+typing_config_change_item_max_length (const void *pointer, void *data,
+                                      struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) option;
+
     weechat_bar_item_update (TYPING_BAR_ITEM_NAME);
 }
 
@@ -119,21 +137,21 @@ typing_config_init ()
         "delay_purge_paused", "integer",
         N_("number of seconds after paused status has been set: if reached, "
            "the typing status is removed"),
-        NULL, 1, 3600, "30", NULL, 0,
+        NULL, 1, INT_MAX, "30", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     typing_config_look_delay_purge_typing = weechat_config_new_option (
         typing_config_file, ptr_section,
         "delay_purge_typing", "integer",
         N_("number of seconds after typing status has been set: if reached, "
            "the typing status is removed"),
-        NULL, 1, 3600, "6", NULL, 0,
+        NULL, 1, INT_MAX, "6", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     typing_config_look_delay_set_paused = weechat_config_new_option (
         typing_config_file, ptr_section,
         "delay_set_paused", "integer",
         N_("number of seconds after typing last char: if reached, the typing "
            "status becomes \"paused\" and no more typing signals are sent"),
-        NULL, 1, 3600, "10", NULL, 0,
+        NULL, 1, INT_MAX, "10", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     typing_config_look_enabled_nicks = weechat_config_new_option (
         typing_config_file, ptr_section,
@@ -151,6 +169,15 @@ typing_config_init ()
         NULL, 0, 0, "off", NULL, 0,
         NULL, NULL, NULL,
         &typing_config_change_enabled, NULL, NULL,
+        NULL, NULL, NULL);
+    typing_config_look_item_max_length = weechat_config_new_option (
+        typing_config_file, ptr_section,
+        "item_max_length", "integer",
+        N_("max number of chars displayed in the bar item \"typing\" "
+           "(0 = do not truncate content)"),
+        NULL, 0, INT_MAX, "0", NULL, 0,
+        NULL, NULL, NULL,
+        &typing_config_change_item_max_length, NULL, NULL,
         NULL, NULL, NULL);
 
     return 1;
