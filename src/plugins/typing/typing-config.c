@@ -64,7 +64,7 @@ typing_config_reload (const void *pointer, void *data,
 }
 
 /*
- * Callback for changes on option "typing.look.enabled".
+ * Callback for changes on options "typing.look.enabled_*".
  */
 
 void

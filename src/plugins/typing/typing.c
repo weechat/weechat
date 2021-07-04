@@ -518,6 +518,11 @@ typing_setup_hooks ()
             typing_modifier_input_text_for_buffer = NULL;
             weechat_unhook (typing_timer);
             typing_timer = NULL;
+            if (typing_status_self)
+            {
+                weechat_hashtable_free (typing_status_self);
+                typing_status_self = NULL;
+            }
         }
     }
 
@@ -551,6 +556,11 @@ typing_setup_hooks ()
             typing_signal_typing_set_nick = NULL;
             weechat_unhook (typing_signal_typing_reset_buffer);
             typing_signal_typing_reset_buffer = NULL;
+            if (typing_status_nicks)
+            {
+                weechat_hashtable_free (typing_status_nicks);
+                typing_status_nicks = NULL;
+            }
         }
     }
 }
