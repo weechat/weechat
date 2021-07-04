@@ -29,13 +29,16 @@ endif()
 
 if(NOT PHP_FOUND)
   find_program(PHP_CONFIG_EXECUTABLE NAMES
+    php-config8.1 php-config81
     php-config8.0 php-config80
+    php-config8
     php-config7.4 php-config74
     php-config7.3 php-config73
     php-config7.2 php-config72
     php-config7.1 php-config71
     php-config7.0 php-config70
-    php-config php-config7
+    php-config7
+    php-config
   )
   if (PHP_CONFIG_EXECUTABLE)
     execute_process(COMMAND ${PHP_CONFIG_EXECUTABLE} --prefix OUTPUT_VARIABLE PHP_LIB_PREFIX OUTPUT_STRIP_TRAILING_WHITESPACE)
@@ -44,7 +47,7 @@ if(NOT PHP_FOUND)
     execute_process(COMMAND ${PHP_CONFIG_EXECUTABLE} --version OUTPUT_VARIABLE PHP_VERSION OUTPUT_STRIP_TRAILING_WHITESPACE)
     if(${PHP_VERSION} MATCHES "^[78]")
       find_library(PHP_LIB
-        NAMES php8.0 php7.4 php7.3 php7.2 php7.1 php7.0 php7
+        NAMES php8.1 php8.0 php8 php7.4 php7.3 php7.2 php7.1 php7.0 php7 php
         HINTS ${PHP_LIB_PREFIX} ${PHP_LIB_PREFIX}/lib ${PHP_LIB_PREFIX}/lib64
       )
       if(PHP_LIB)
@@ -59,9 +62,9 @@ if(NOT PHP_FOUND)
 endif()
 
 if(NOT PHP_FOUND)
-  message(WARNING "Could not find libphp7. "
+  message(WARNING "Could not find libphp. "
     "Ensure PHP >=7.0.0 development libraries are installed and compiled with `--enable-embed`. "
     "Ensure `php-config` is in `PATH`. "
-    "You may set `-DCMAKE_LIBRARY_PATH=...` to the directory containing libphp7."
+    "You may set `-DCMAKE_LIBRARY_PATH=...` to the directory containing libphp."
   )
 endif()
