@@ -21,6 +21,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 New features::
 
   * core: add option "certs" in command /debug
+  * api: add function string_cut
   * api: add function file_copy (issue #1667)
   * api: remember insertion order in hashtables
   * api: add keys/values with tags in output of irc_message_parse_to_hashtable (issue #1654)
@@ -33,6 +34,7 @@ New features::
   * irc: always set realname in nicks even when extended-join capability is not enabled (issue #1653)
   * irc: add support of FAIL/WARN/NOTE messages (issue #1653)
   * irc: drop support of DH-BLOWFISH and DH-AES SASL mechanisms (issue #175)
+  * typing: new plugin "typing": display users currently writing messages on IRC channel/private buffers
 
 Bug fixes::
 
