@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-07-04 14:01+0200\n"
+"POT-Creation-Date: 2021-07-04 19:40+0200\n"
 "PO-Revision-Date: 2021-06-03 15:15+0400\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -14696,7 +14696,7 @@ msgid "Typing status of users"
 msgstr ""
 
 #. TRANSLATORS: this text is displayed before the list of nicks typing in the bar item "typing", it must be as short as possible
-msgid "Typing: "
+msgid "Typing:"
 msgstr ""
 
 msgid ""

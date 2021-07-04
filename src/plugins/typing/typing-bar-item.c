@@ -102,7 +102,8 @@ typing_bar_item_typing (const void *pointer, void *data,
 
     str_typing = weechat_string_dyn_alloc (256);
     /* TRANSLATORS: this text is displayed before the list of nicks typing in the bar item "typing", it must be as short as possible */
-    weechat_string_dyn_concat (str_typing, _("Typing: "), -1);
+    weechat_string_dyn_concat (str_typing, _("Typing:"), -1);
+    weechat_string_dyn_concat (str_typing, " ", -1);
     weechat_string_dyn_concat (str_typing, *str_nicks_typing, -1);
 
     weechat_string_dyn_free (str_nicks_typing, 1);
