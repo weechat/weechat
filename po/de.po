@@ -24,7 +24,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-06-27 10:33+0200\n"
+"POT-Creation-Date: 2021-07-04 13:35+0200\n"
 "PO-Revision-Date: 2021-06-28 08:57+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -10650,6 +10650,18 @@ msgstr ""
 "angezeigt sobald der RAW-Daten-Buffer geöffnet wird)"
 
 msgid ""
+"display nicks typing on the channel in bar item \"typing\" (option typing."
+"look.enabled_nicks must be enabled and capability \"message-tags\" must be "
+"enabled on the server)"
+msgstr ""
+
+msgid ""
+"send self typing status to channels so that other users see when you are "
+"typing a message (option typing.look.enabled_self must be enabled and "
+"capability \"message-tags\" must be enabled on the server)"
+msgstr ""
+
+msgid ""
 "merge server buffers; this option has no effect if a layout is saved and is "
 "conflicting with this value (see /help layout)"
 msgstr ""
@@ -15347,6 +15359,41 @@ msgstr "Textfarbe für den Namen des Triggers"
 
 msgid "text color for disabled trigger name"
 msgstr "Textfarbe für den Namen des Triggers, wenn dieser deaktiviert ist"
+
+msgid "Typing status of users"
+msgstr ""
+
+#. TRANSLATORS: this text is displayed before the list of nicks typing in the bar item "typing", it must be as short as possible
+msgid "Typing: "
+msgstr ""
+
+msgid ""
+"number of seconds after paused status has been set: if reached, the typing "
+"status is removed"
+msgstr ""
+
+msgid ""
+"number of seconds after typing status has been set: if reached, the typing "
+"status is removed"
+msgstr ""
+
+msgid ""
+"number of seconds after typing last char: if reached, the typing status "
+"becomes \"paused\" and no more typing signals are sent"
+msgstr ""
+
+msgid ""
+"typing enabled for other nicks (display typing info for nicks typing in the "
+"current buffer)"
+msgstr ""
+
+msgid "typing enabled for self messages (send typing info to other users)"
+msgstr ""
+
+msgid ""
+"max number of chars displayed in the bar item \"typing\" (0 = do not "
+"truncate content)"
+msgstr ""
 
 msgid "  [A] Accept"
 msgstr "  [A] annehmen"

@@ -1847,34 +1847,40 @@
 
 // tag::typing_options[]
 * [[option_typing.look.delay_purge_paused]] *typing.look.delay_purge_paused*
-** description: pass:none[number of seconds after paused status has been set: if reached, the typing status is removed]
+** description: pass:none[nombre de secondes après que le statut "paused" ait été défini : si atteint, le statut d'écriture est supprimé]
 ** type: entier
-** valeurs: 1 .. 3600
+** valeurs: 1 .. 2147483647
 ** valeur par défaut: `+30+`
 
 * [[option_typing.look.delay_purge_typing]] *typing.look.delay_purge_typing*
-** description: pass:none[number of seconds after typing status has been set: if reached, the typing status is removed]
+** description: pass:none[nombre de secondes après que le statut "typing" ait été défini : si atteint, le statut d'écriture est supprimé]
 ** type: entier
-** valeurs: 1 .. 3600
+** valeurs: 1 .. 2147483647
 ** valeur par défaut: `+6+`
 
 * [[option_typing.look.delay_set_paused]] *typing.look.delay_set_paused*
-** description: pass:none[number of seconds after typing last char: if reached, the typing status becomes "paused" and no more typing signals are sent]
+** description: pass:none[nombre de secondes après avoir tapé le dernier caractère : si atteint, le statut d'écriture devient "paused" et il n'y a plus de signaux typing envoyés]
 ** type: entier
-** valeurs: 1 .. 3600
+** valeurs: 1 .. 2147483647
 ** valeur par défaut: `+10+`
 
 * [[option_typing.look.enabled_nicks]] *typing.look.enabled_nicks*
-** description: pass:none[typing enabled for other nicks (display typing info for nicks typing in the current buffer)]
+** description: pass:none[activer le statut d'écriture pour les autres pseudos (afficher le statut d'écriture pour les autres pseudos écrivant un message dans le tampon courant)]
 ** type: booléen
 ** valeurs: on, off
 ** valeur par défaut: `+off+`
 
 * [[option_typing.look.enabled_self]] *typing.look.enabled_self*
-** description: pass:none[typing enabled for self messages (send typing info to other users)]
+** description: pass:none[activer le statut d'écriture pour ses propres messages (envoyer l'information aux autres utilisateurs)]
 ** type: booléen
 ** valeurs: on, off
 ** valeur par défaut: `+off+`
+
+* [[option_typing.look.item_max_length]] *typing.look.item_max_length*
+** description: pass:none[nombre maximum de caractères affichés dans l'objet de barre "typing" (0 = ne pas tronquer le contenu)]
+** type: entier
+** valeurs: 0 .. 2147483647
+** valeur par défaut: `+0+`
 // end::typing_options[]
 
 // tag::xfer_options[]
@@ -2553,13 +2559,13 @@
 ** valeur par défaut: `+off+`
 
 * [[option_irc.look.typing_status_nicks]] *irc.look.typing_status_nicks*
-** description: pass:none[display nicks typing on the channel in bar item "typing" (option typing.look.enabled must be enabled and capability "message-tags" must be enabled on the server)]
+** description: pass:none[afficher les pseudos qui écrivent sur le canal dans l'objet de barre "typing" (l'option typing.look.enabled_nicks doit être activée et la capacité "message-tags" doit être activée sur le serveur)]
 ** type: booléen
 ** valeurs: on, off
 ** valeur par défaut: `+off+`
 
 * [[option_irc.look.typing_status_self]] *irc.look.typing_status_self*
-** description: pass:none[send self typing status to channels so that other users see when you are typing a message (option typing.look.enabled must be enabled and capability "message-tags" must be enabled on the server)]
+** description: pass:none[envoyer le statut d'écriture de message aux canaux de sorte que les autres utilisateurs voient quand vous écrivez un message (l'option typing.look.enabled_self doit être activée et la capacité "message-tags" doit être activée sur le serveur)]
 ** type: booléen
 ** valeurs: on, off
 ** valeur par défaut: `+off+`

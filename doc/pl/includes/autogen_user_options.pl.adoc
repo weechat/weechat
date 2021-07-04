@@ -1849,19 +1849,19 @@
 * [[option_typing.look.delay_purge_paused]] *typing.look.delay_purge_paused*
 ** opis: pass:none[number of seconds after paused status has been set: if reached, the typing status is removed]
 ** typ: liczba
-** wartości: 1 .. 3600
+** wartości: 1 .. 2147483647
 ** domyślna wartość: `+30+`
 
 * [[option_typing.look.delay_purge_typing]] *typing.look.delay_purge_typing*
 ** opis: pass:none[number of seconds after typing status has been set: if reached, the typing status is removed]
 ** typ: liczba
-** wartości: 1 .. 3600
+** wartości: 1 .. 2147483647
 ** domyślna wartość: `+6+`
 
 * [[option_typing.look.delay_set_paused]] *typing.look.delay_set_paused*
 ** opis: pass:none[number of seconds after typing last char: if reached, the typing status becomes "paused" and no more typing signals are sent]
 ** typ: liczba
-** wartości: 1 .. 3600
+** wartości: 1 .. 2147483647
 ** domyślna wartość: `+10+`
 
 * [[option_typing.look.enabled_nicks]] *typing.look.enabled_nicks*
@@ -1875,6 +1875,12 @@
 ** typ: bool
 ** wartości: on, off
 ** domyślna wartość: `+off+`
+
+* [[option_typing.look.item_max_length]] *typing.look.item_max_length*
+** opis: pass:none[max number of chars displayed in the bar item "typing" (0 = do not truncate content)]
+** typ: liczba
+** wartości: 0 .. 2147483647
+** domyślna wartość: `+0+`
 // end::typing_options[]
 
 // tag::xfer_options[]
@@ -2553,13 +2559,13 @@
 ** domyślna wartość: `+off+`
 
 * [[option_irc.look.typing_status_nicks]] *irc.look.typing_status_nicks*
-** opis: pass:none[display nicks typing on the channel in bar item "typing" (option typing.look.enabled must be enabled and capability "message-tags" must be enabled on the server)]
+** opis: pass:none[display nicks typing on the channel in bar item "typing" (option typing.look.enabled_nicks must be enabled and capability "message-tags" must be enabled on the server)]
 ** typ: bool
 ** wartości: on, off
 ** domyślna wartość: `+off+`
 
 * [[option_irc.look.typing_status_self]] *irc.look.typing_status_self*
-** opis: pass:none[send self typing status to channels so that other users see when you are typing a message (option typing.look.enabled must be enabled and capability "message-tags" must be enabled on the server)]
+** opis: pass:none[send self typing status to channels so that other users see when you are typing a message (option typing.look.enabled_self must be enabled and capability "message-tags" must be enabled on the server)]
 ** typ: bool
 ** wartości: on, off
 ** domyślna wartość: `+off+`

@@ -3121,7 +3121,7 @@ irc_config_init ()
         irc_config_file, ptr_section,
         "typing_status_nicks", "boolean",
         N_("display nicks typing on the channel in bar item \"typing\" "
-           "(option typing.look.enabled must be enabled and capability "
+           "(option typing.look.enabled_nicks must be enabled and capability "
            "\"message-tags\" must be enabled on the server)"),
         NULL, 0, 0, "off", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
@@ -3130,7 +3130,7 @@ irc_config_init ()
         "typing_status_self", "boolean",
         N_("send self typing status to channels so that other users see when "
            "you are typing a message "
-           "(option typing.look.enabled must be enabled and capability "
+           "(option typing.look.enabled_self must be enabled and capability "
            "\"message-tags\" must be enabled on the server)"),
         NULL, 0, 0, "off", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);

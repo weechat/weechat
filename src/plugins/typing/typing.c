@@ -472,7 +472,7 @@ typing_typing_reset_buffer_signal_cb (const void *pointer, void *data,
 }
 
 /*
- * Creates or removes hooks, according to option typing.look.enabled.
+ * Creates or removes hooks, according to options "typing.look.enabled_*".
  */
 
 void

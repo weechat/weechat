@@ -79,6 +79,8 @@ _last_nick_speaking_time_   (pointer, hdata: "irc_channel_speaking") +
 _modelists_   (pointer, hdata: "irc_modelist") +
 _last_modelist_   (pointer, hdata: "irc_modelist") +
 _join_smart_filtered_   (hashtable) +
+_typing_state_   (integer) +
+_typing_status_sent_   (time) +
 _buffer_   (pointer, hdata: "buffer") +
 _buffer_as_string_   (string) +
 _prev_channel_   (pointer, hdata: "irc_channel") +
