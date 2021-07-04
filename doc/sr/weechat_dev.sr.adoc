@@ -91,6 +91,7 @@ qweechat::
 |       spell/       | Spell додатак.
 |       tcl/         | API за Tcl скриптовање.
 |       trigger/     | Trigger додатак.
+|       typing/      | Typing додатак.
 |       xfer/        | Xfer додатак (IRC DCC фајл/разговор).
 | tests/             | Тестови.
 |    scripts/        | Тестови за API скриптовања.
@@ -365,6 +366,16 @@ WeeChat „језгро” се налази у следећим директо�
 |       trigger-command.c           | Окидач команде.
 |       trigger-completion.c        | Окидач довршавања.
 |       trigger-config.c            | Окидач опције конфиг (фајл trigger.conf).
+// TRANSLATION MISSING
+|    typing/                        | Typing plugin.
+// TRANSLATION MISSING
+|       typing.c                    | Main typing functions.
+// TRANSLATION MISSING
+|       typing-bar-item.c           | Typing bar items.
+// TRANSLATION MISSING
+|       typing-config.c             | Typing config options (file typing.conf).
+// TRANSLATION MISSING
+|       typing-status.c             | Messages typing status on buffers.
 |    xfer/                          | Xfer додатак (IRC DCC фајл/разговор).
 |       xfer.c                      | Главне xfer функције.
 |       xfer-buffer.c               | Xfer бафер.

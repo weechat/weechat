@@ -89,6 +89,7 @@ The main WeeChat directories are:
 |       spell/       | Spell plugin.
 |       tcl/         | Tcl scripting API.
 |       trigger/     | Trigger plugin.
+|       typing/      | Typing plugin.
 |       xfer/        | Xfer plugin (IRC DCC file/chat).
 | tests/             | Tests.
 |    scripts/        | Scripting API tests.
@@ -364,6 +365,11 @@ WeeChat "core" is located in following directories:
 |       trigger-command.c           | Trigger commands.
 |       trigger-completion.c        | Trigger completions.
 |       trigger-config.c            | Trigger config options (file trigger.conf).
+|    typing/                        | Typing plugin.
+|       typing.c                    | Main typing functions.
+|       typing-bar-item.c           | Typing bar items.
+|       typing-config.c             | Typing config options (file typing.conf).
+|       typing-status.c             | Messages typing status on buffers.
 |    xfer/                          | Xfer plugin (IRC DCC file/chat).
 |       xfer.c                      | Main xfer functions.
 |       xfer-buffer.c               | Xfer buffer.

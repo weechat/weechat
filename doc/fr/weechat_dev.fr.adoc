@@ -91,6 +91,7 @@ Les répertoires principaux de WeeChat sont :
 |       spell/       | Extension Spell.
 |       tcl/         | API script Tcl.
 |       trigger/     | Extension Trigger.
+|       typing/      | Extension Typing.
 |       xfer/        | Extension Xfer (IRC DCC fichier/discussion).
 | tests/             | Tests.
 |    scripts/        | Tests de l'API script.
@@ -366,6 +367,11 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |       trigger-command.c           | Commandes pour Trigger.
 |       trigger-completion.c        | Complétions pour Trigger.
 |       trigger-config.c            | Options de configuration pour Trigger (fichier trigger.conf).
+|    typing/                        | Extension Typing.
+|       typing.c                    | Fonctions principales de Typing.
+|       typing-bar-item.c           | Objets de barre Typing.
+|       typing-config.c             | Options de configuration pour Typing (fichier typing.conf).
+|       typing-status.c             | Statut d'écriture de messages sur les tampons.
 |    xfer/                          | Extension Xfer (IRC DCC fichier/discussion).
 |       xfer.c                      | Fonctions principales de Xfer.
 |       xfer-buffer.c               | Tampon Xfer.

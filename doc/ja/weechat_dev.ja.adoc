@@ -95,6 +95,7 @@ qweechat::
 |       spell/       | spell プラグイン
 |       tcl/         | tcl スクリプト用 API
 |       trigger/     | trigger プラグイン
+|       typing/      | typing プラグイン
 |       xfer/        | xfer (IRC DCC ファイル/チャット)
 | tests/             | テスト
 |    scripts/        | スクリプト API テスト
@@ -378,6 +379,16 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |       trigger-command.c           | trigger コマンド
 |       trigger-completion.c        | trigger 補完
 |       trigger-config.c            | trigger 設定オプション (trigger.conf ファイル)
+// TRANSLATION MISSING
+|    typing/                        | Typing plugin.
+// TRANSLATION MISSING
+|       typing.c                    | Main typing functions.
+// TRANSLATION MISSING
+|       typing-bar-item.c           | Typing bar items.
+// TRANSLATION MISSING
+|       typing-config.c             | Typing config options (file typing.conf).
+// TRANSLATION MISSING
+|       typing-status.c             | Messages typing status on buffers.
 |    xfer/                          | xfer プラグイン (IRC DCC ファイル/チャット)
 |       xfer.c                      | xfer の主要関数
 |       xfer-buffer.c               | xfer バッファ
