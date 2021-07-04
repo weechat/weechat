@@ -840,6 +840,7 @@ if test "x$enable_php" = "xyes" ; then
 
     PHP_CFLAGS=""
     PHP_LFLAGS=""
+    PHP_VERSIONS="8.1 81 8.0 80 8 7.4 74 7.3 73 7.2 72 7.1 71 7.0 70 7 $php_suffix"
 
     if test -n "$php_inc"; then
        CFLAGS="$CFLAGS -I$php_inc"
@@ -852,7 +853,7 @@ if test "x$enable_php" = "xyes" ; then
     if test "x$PHP_CFLAGS" = "x" -o "x$PHP_LFLAGS" = "x" ; then
         AC_MSG_CHECKING(for PHP headers and libraries with pkg-config)
         echo
-        for l in "7.4" "74" "7.3" "73" "7.2" "72" "7.1" "71" "7.0" "70" "7" "$php_suffix" "" ; do
+        for l in $PHP_VERSIONS "" ; do
             pkgconfig_php_found=`$PKGCONFIG --exists php$l 2>/dev/null`
             if test "x$?" = "x0" ; then
                 pkgconfig_php_found=`$PKGCONFIG --atleast-version=7 php$l 2>/dev/null`
@@ -869,11 +870,12 @@ if test "x$enable_php" = "xyes" ; then
     if test "x$PHP_CFLAGS" = "x" -o "x$PHP_LFLAGS" = "x" ; then
         PHPCONFIG=""
         AC_MSG_CHECKING(for PHP headers and libraries with php-config)
-        for l in "7.4" "74" "7.3" "73" "7.2" "72" "7.1" "71" "7.0" "70" "7" "$php_suffix" "" ; do
+        echo
+        for l in $PHP_VERSIONS "" ; do
             AC_CHECK_PROG(PHPCONFIG, "php-config$l", "php-config$l")
             if test "x$PHPCONFIG" != "x" ; then
                 php_config_version=`$PHPCONFIG --version`
-                if test "x${php_config_version#7}" != "x${php_config_version}" ; then
+                if echo "x$php_config_version" | grep -e "^x7" -e "^x8" 1>/dev/null 2>&1 ; then
                     PHP_VERSION=$php_config_version
                     PHP_CFLAGS=`$PHPCONFIG --includes`
                     PHP_LFLAGS="-L$($PHPCONFIG --prefix)/lib/ $($PHPCONFIG --libs) -lphp$l"
@@ -890,23 +892,25 @@ if test "x$enable_php" = "xyes" ; then
         if test "x$ac_found_php_header" = "xyes" ; then
             PHP_CFLAGS="$CFLAGS"
         fi
-        for l in "7.4" "74" "7.3" "73" "7.2" "72" "7.1" "71" "7.0" "70" "7" "$php_suffix" "" ; do
-            AC_CHECK_LIB(php$l,php_execute_script,ac_found_php_lib="yes",ac_found_php_lib="no")
-            if test "x$ac_found_php_lib" = "xyes" ; then
-                PHP_VERSION=">=7.0.0"
+        for l in $PHP_VERSIONS "" ; do
+            for PHP_LIB_SUFFIX in "$l" "$(echo $l | cut -c1)" "" ; do
+                AC_CHECK_LIB(php$PHP_LIB_SUFFIX,php_execute_script,ac_found_php_lib="yes",ac_found_php_lib="no")
+                if test "x$ac_found_php_lib" = "xyes" ; then
+                    PHP_VERSION=">=7.0.0"
 
-                PHP_LFLAGS="$LDFLAGS -lphp7 -lm"
+                    PHP_LFLAGS="$LDFLAGS -lphp$PHP_LIB_SUFFIX -lm"
 
-                ac2_save_LDFLAGS="$LDFLAGS"
-                LDFLAGS="$LDFLAGS -lphp7 -lm"
+                    ac2_save_LDFLAGS="$LDFLAGS"
+                    LDFLAGS="$LDFLAGS -lphp$PHP_LIB_SUFFIX -lm"
 
-                if echo "$host_os" | grep "^linux" 1>/dev/null 2>&1 ; then
-                    LDFLAGS="$LDFLAGS -ldl"
+                    if echo "$host_os" | grep "^linux" 1>/dev/null 2>&1 ; then
+                        LDFLAGS="$LDFLAGS -ldl"
+                    fi
+
+                    LDFLAGS="$ac2_save_LDFLAGS"
+                    break 2
                 fi
-
-                LDFLAGS="$ac2_save_LDFLAGS"
-                break
-            fi
+            done
         done
     fi
 

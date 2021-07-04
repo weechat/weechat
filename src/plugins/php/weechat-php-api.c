@@ -43,7 +43,6 @@
 #include "../plugin-script-api.h"
 #include "weechat-php.h"
 
-
 #define API_FUNC(__name)                                                \
     PHP_FUNCTION(weechat_##__name)
 #define API_INIT_FUNC(__init, __name, __ret)                            \
