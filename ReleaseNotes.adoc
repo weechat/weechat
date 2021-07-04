@@ -20,6 +20,16 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 [[v3.3]]
 == Version 3.3 (under dev)
 
+[[v3.3_typing_bar_item]]
+=== Bar item "typing"
+
+A bar item called "typing" has been added to status bar by default. It is used
+to display users that are currently typing a message on the current IRC channel
+or private buffer.
+
+If you want to display typing notifications in the status bar, add ",[typing]"
+in your option _weechat.bar.status.items_.
+
 [[v3.3_ordered_hashtables]]
 === Ordered hashtables
 

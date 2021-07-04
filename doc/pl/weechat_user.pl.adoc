@@ -4752,8 +4752,7 @@ If you want to use it, you must enable options in both typing and irc plugins:
 /set irc.look.typing_status_self on
 ----
 
-Then you must add the "typing" bar item in a bar, for example in option
-_weechat.bar.status.items_.
+The typing notifications are displayed at the end of the status bar.
 
 Example of status bar with the "typing" item: "bob" is typing a message and
 "alice" was typing a message but made a pause:

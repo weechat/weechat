@@ -4819,8 +4819,8 @@ auch für die IRC-Erweiterung aktivieren:
 /set irc.look.typing_status_self on
 ----
 
-Dann müssen Sie das Bar-Item "typing" in eine Bar einfügen, zum Beispiel in
-Option _weechat.bar.status.items_.
+// TRANSLATION MISSING
+The typing notifications are displayed at the end of the status bar.
 
 Beispiel für die Statusleiste mit dem "typing" Item: "bob" tippt gerade eine
 Nachricht und "alice" hat eine Nachricht getippt, machte aber eine Pause:

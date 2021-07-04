@@ -4889,8 +4889,7 @@ typing et irc :
 /set irc.look.typing_status_self on
 ----
 
-Puis vous devez ajouter l'objet de barre "typing" dans une barre, par exemple
-dans l'option _weechat.bar.status.items_.
+Les notifications "typing" sont affichées à la fin de la barre de statut.
 
 Exemple de barre de statut avec l'objet "typing" : "bob" écrit un message et
 "alice" était en train d'en écrire un mais a fait une pause :
