@@ -40,6 +40,7 @@ struct t_typing_status
     time_t last_typed;                    /* when was last char typed       */
 };
 
+extern char *typing_status_state_string[];
 extern struct t_hashtable *typing_status_self;
 extern struct t_hashtable *typing_status_nicks;
 
@@ -52,10 +53,10 @@ extern struct t_typing_status *typing_status_nick_add (struct t_gui_buffer *buff
                                                        const char *nick,
                                                        int state,
                                                        int last_typed);
-extern void typing_status_nick_remove (struct t_gui_buffer *buffer,
-                                       const char *nick);
 extern struct t_typing_status *typing_status_nick_search (struct t_gui_buffer *buffer,
                                                           const char *nick);
+extern void typing_status_nick_remove (struct t_gui_buffer *buffer,
+                                       const char *nick);
 extern void typing_status_end ();
 
 #endif /* WEECHAT_PLUGIN_TYPING_STATUS_H */

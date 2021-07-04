@@ -53,6 +53,9 @@ typing_status_search_state (const char *state)
 {
     int i;
 
+    if (!state)
+        return -1;
+
     for (i = 0; i < TYPING_STATUS_NUM_STATES; i++)
     {
         if (strcmp (typing_status_state_string[i], state) == 0)
@@ -298,6 +301,27 @@ typing_status_nick_add (struct t_gui_buffer *buffer, const char *nick,
 }
 
 /*
+ * Searches a nick typing status for a buffer.
+ *
+ * Returns pointer to t_typing_status found, NULL if not found.
+ */
+
+struct t_typing_status *
+typing_status_nick_search (struct t_gui_buffer *buffer, const char *nick)
+{
+    struct t_hashtable *ptr_nicks;
+
+    if (!typing_status_nicks || !buffer || !nick)
+        return NULL;
+
+    ptr_nicks = weechat_hashtable_get (typing_status_nicks, buffer);
+    if (!ptr_nicks)
+        return NULL;
+
+    return weechat_hashtable_get (ptr_nicks, nick);
+}
+
+/*
  * Removes a nick typing status from a buffer.
  *
  * Returns:
@@ -318,27 +342,6 @@ typing_status_nick_remove (struct t_gui_buffer *buffer, const char *nick)
         return;
 
     weechat_hashtable_remove (ptr_nicks, nick);
-}
-
-/*
- * Searches a nick typing status for a buffer.
- *
- * Returns pointer to t_typing_status found, NULL if not found.
- */
-
-struct t_typing_status *
-typing_status_nick_search (struct t_gui_buffer *buffer, const char *nick)
-{
-    struct t_hashtable *ptr_nicks;
-
-    if (!typing_status_nicks)
-        return NULL;
-
-    ptr_nicks = weechat_hashtable_get (typing_status_nicks, buffer);
-    if (!ptr_nicks)
-        return NULL;
-
-    return weechat_hashtable_get (ptr_nicks, nick);
 }
 
 /*
