@@ -602,6 +602,7 @@ plugin_load (const char *filename, int init_plugin, int argc, char **argv)
         new_plugin->gettext = &plugin_api_gettext;
         new_plugin->ngettext = &plugin_api_ngettext;
         new_plugin->strndup = &string_strndup;
+        new_plugin->string_cut = &string_cut;
         new_plugin->string_tolower = &string_tolower;
         new_plugin->string_toupper = &string_toupper;
         new_plugin->strcasecmp = &string_strcasecmp;

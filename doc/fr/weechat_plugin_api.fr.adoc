@@ -583,6 +583,44 @@ free (str);
 [NOTE]
 Cette fonction n'est pas disponible dans l'API script.
 
+==== string_cut
+
+_WeeChat ≥ 3.3._
+
+Couper une chaîne après un nombre donné de caractères, ajouter un suffixe
+facultatif après la chaîne si elle est coupée.
+
+Prototype :
+
+[source,C]
+----
+char *weechat_string_cut (const char *string, int length, int count_suffix, int screen, const char *cut_suffix);
+----
+
+Paramètres :
+
+* _string_ : chaîne à couper
+* _length_ : nombre maximum de caractères
+* _count_suffix_ : si 1, la longueur du suffixe est comptée dans la longueur maximale
+* _screen_ : si 1, le découpage est basé sur la largeur des caractères affichés
+* _cut_suffix_ : le suffixe ajouté à la fin de la chaîne si elle est découpée
+
+Valeur de retour :
+
+* chaîne coupée (doit être supprimée par un appel à "free" après utilisation)
+
+Exemple en C :
+
+[source,C]
+----
+char *str = weechat_string_cut ("ceci est un test", 5, 1, 1, "…");  /* résultat : "ceci…" */
+/* ... */
+free (str);
+----
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
 ==== string_tolower
 
 Convertir une chaîne UTF-8 en minuscules.

@@ -547,6 +547,45 @@ free (str);
 [NOTE]
 Ова функција није доступна у API скриптовања.
 
+// TRANSLATION MISSING
+==== string_cut
+
+_WeeChat ≥ 3.3._
+
+Cut a string after a given number of chars, add an optional suffix after the
+string if it is cut.
+
+Прототип:
+
+[source,C]
+----
+char *weechat_string_cut (const char *string, int length, int count_suffix, int screen, const char *cut_suffix);
+----
+
+Аргументи:
+
+* _string_: string to cut
+* _length_: max chars
+* _count_suffix_: if 1, the length of suffix is counter in the max length
+* _screen_: if 1, the cut is based on width of chars displayed
+* _cut_suffix_: the suffix added after the string if it is cut
+
+Повратна вредност:
+
+* cut string (must be freed by calling "free" after use)
+
+C пример:
+
+[source,C]
+----
+char *str = weechat_string_cut ("this is a test", 5, 1, 1, "…");  /* result: "this…" */
+/* ... */
+free (str);
+----
+
+[NOTE]
+Ова функција није доступна у API скриптовања.
+
 ==== string_tolower
 
 Конвертује UTF-8 стринг у мала слова.
