@@ -2584,8 +2584,7 @@ Standarderweiterungen:
 | php         | PHP-Skript API.
 | spell       | Rechtschreibprüfung für Befehlszeile.
 | trigger     | Veränderung von Text und Ausführen von Befehlen bei einem Ereignis, welche durch WeeChat oder eine Erweiterung ausgelöst werden.
-// TRANSLATION MISSING
-| typing      | Display users currently writing messages.
+| typing      | Benutzer anzeigen, die gerade Nachrichten schreiben.
 | xfer        | Datentransfer und Direktchat.
 |===
 
@@ -4792,23 +4791,26 @@ Optionen:
 
 include::includes/autogen_user_options.de.adoc[tag=trigger_options]
 
-// TRANSLATION MISSING
 [[typing_plugin]]
-=== Typing
+=== Schreibstatus
 
-The typing plugin is used to inform other users you are typing messages and
-show a list of users currently typing a message on the buffer.
+Die typing-Erweitertung wird verwendet, um andere Benutzer darüber zu informieren,
+dass Sie Nachrichten schreiben, und zeigt eine Liste der Benutzer an, die derzeit
+eine Nachricht in dem Buffer eingeben.
 
-It is used by IRC plugin on channel and private buffers, when the "message-tags"
-capability is enabled (you can check with <<command_irc_cap,/cap>> command). +
-Under the hood, typing client tag is used, following this specification:
+Es wird von der IRC-Erweiterung für Kanäle- und private Buffern verwendet, sofern
+die "message-tags"-Fähigkeit aktiviert ist (dies kann mit folgendenen Befehl,
+wie folgt überprüfen werden <<command_irc_cap,/cap>>). +
+
+Unter der Haube wird die Eingabe des Client-Tags gemäß dieser Spezifikation verwendet:
 https://ircv3.net/specs/client-tags/typing.html.
 
 [[typing_activation]]
-==== Activation
+==== Aktivierung
 
-For privacy considerations, the typing feature is disabled by default. +
-If you want to use it, you must enable options in both typing and irc plugins:
+Aus Datenschutzgründen ist diese Tippfunktion standardmäßig deaktiviert. +
+Wenn Sie es verwenden möchten, müssen Sie Optionen sowohl in den typing- als
+auch für die IRC-Erweiterung aktivieren:
 
 ----
 /set typing.look.enabled_nicks on
@@ -4817,11 +4819,11 @@ If you want to use it, you must enable options in both typing and irc plugins:
 /set irc.look.typing_status_self on
 ----
 
-Then you must add the "typing" bar item in a bar, for example in option
-_weechat.bar.status.items_.
+Dann müssen Sie das Bar-Item "typing" in eine Bar einfügen, zum Beispiel in
+Option _weechat.bar.status.items_.
 
-Example of status bar with the "typing" item: "bob" is typing a message and
-"alice" was typing a message but made a pause:
+Beispiel für die Statusleiste mit dem "typing" Item: "bob" tippt gerade eine
+Nachricht und "alice" hat eine Nachricht getippt, machte aber eine Pause:
 
 ....
 │[12:55] [6] [irc/libera] 3:#test(+n){4} [Typing: bob, (alice)]                   │
@@ -4830,46 +4832,47 @@ Example of status bar with the "typing" item: "bob" is typing a message and
 ....
 
 [[typing_signals_sent]]
-==== Signals sent
+==== Signale gesendet
 
-When you are typing a message (not a command starting with `/`), the typing
-plugin sends signals to inform other plugins (like IRC) that you are typing,
-and these plugins can then send typing notifications to other users.
+Wenn Sie eine Nachricht eingeben (Befehle, die mit `/` beginnen, werden ignoriert),
+sendet die typing-Erweitertung Signale, um andere Erweiterungen (wie z.B. IRC) darüber
+zu informieren, dass Sie eine Nachricht eingeben. Diese Erweiterungen können dann
+Tippbenachrichtigungen an andere Benutzer senden.
 
-The following signals are sent when you are typing messages:
+Die folgenden Signale werden gesendet, wenn Sie eine Nachricht schreiben:
 
 [width="100%",cols="1,1,5",options="header"]
 |===
-| Signal              | Arguments        | Description
-| typing_self_typing  | Pointer: buffer. | You are typing a message.
-| typing_self_paused  | Pointer: buffer. | You made a pause while typing a message.
-| typing_self_cleared | Pointer: buffer. | You cleared the command line without sending the message.
-| typing_self_sent    | Pointer: buffer. | You sent the message to the buffer.
+| Signal              | Argumente        | Beschreibung
+| typing_self_typing  | Pointer: buffer. | Du schreibst eine Nachricht.
+| typing_self_paused  | Pointer: buffer. | Du machst beim Schrieben einer Nachricht, eine Pause.
+| typing_self_cleared | Pointer: buffer. | Du hast die Eingabezeile gelöscht, ohne die Nachricht zu senden.
+| typing_self_sent    | Pointer: buffer. | Du hast die Nachricht in den Buffer geschickt.
 |===
 
 [[typing_signals_caught]]
-==== Signals caught
+==== Signale empfangen
 
-The typing plugin is catching some signals that can be sent by other plugins
-(like IRC), to update internal hashtables used to store the typing state of
-nicks on buffers. These hashtables are used to build the content of "typing"
-bar item.
+Die typing-Erweiterung fängt einige Signale ab, die von anderen Erweiterungen (wie IRC)
+gesendet werden können, um interne Hashtables zu aktualisieren, die verwendet werden,
+um den Schreibstatus von Nicks in Buffern zu sichern. Diese Hashtabellen werden verwendet,
+um den Inhalt des "typing"-Items zu erstellen.
 
-The following signals are caught by the typing plugin:
+Die folgenden Signale werden von der typing-Erweiterung empfangen:
 
 [width="100%",cols="1,4,3",options="header"]
 |===
-| Signal | Arguments | Description
+| Signal | Argumente | Beschreibung
 
 | typing_set_nick |
-  String: buffer pointer + ";" + state (one of: "off", "typing", "paused",
-  "cleared") + ";" + nick. +
-  Example: "0x1234abcd;typing;alice". |
-  Set typing state for a nick on a buffer.
+  Zeichenkette: Bufferpointer + ";" + Status (möglich: "off", "typing", "paused",
+  "cleared") + ";" + Nick. +
+  Beispiele: "0x1234abcd;typing;alice". |
+  Schreibstatus für einen Nick in einem Buffer festlegen.
 
 | typing_reset_buffer |
-  Pointer: buffer. |
-  Remove typing state for all nicks on a buffer.
+  Pointer: Buffer. |
+  Schreibstatus für alle Nicks in einem Buffer entfernen.
 |===
 
 [[typing_options]]
