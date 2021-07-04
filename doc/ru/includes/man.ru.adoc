@@ -85,6 +85,9 @@ $HOME/.config/weechat/tcl.conf::
 $HOME/.config/weechat/trigger.conf::
     файл конфигурации для плагина _trigger_
 
+$HOME/.config/weechat/typing.conf::
+    файл конфигурации для плагина _typing_
+
 $HOME/.config/weechat/xfer.conf::
     файл конфигурации для плагина _xref_
 
