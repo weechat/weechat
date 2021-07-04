@@ -41,6 +41,7 @@ struct t_config_option *typing_config_look_delay_purge_typing;
 struct t_config_option *typing_config_look_delay_set_paused;
 struct t_config_option *typing_config_look_enabled_nicks;
 struct t_config_option *typing_config_look_enabled_self;
+struct t_config_option *typing_config_look_input_min_chars;
 struct t_config_option *typing_config_look_item_max_length;
 
 
@@ -170,6 +171,12 @@ typing_config_init ()
         NULL, NULL, NULL,
         &typing_config_change_enabled, NULL, NULL,
         NULL, NULL, NULL);
+    typing_config_look_input_min_chars = weechat_config_new_option (
+        typing_config_file, ptr_section,
+        "input_min_chars", "integer",
+        N_("min number of chars in message to trigger send of typing signals"),
+        NULL, 1, INT_MAX, "4", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     typing_config_look_item_max_length = weechat_config_new_option (
         typing_config_file, ptr_section,
         "item_max_length", "integer",

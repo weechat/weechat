@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-07-04 13:35+0200\n"
+"POT-Creation-Date: 2021-07-04 14:01+0200\n"
 "PO-Revision-Date: 2021-05-25 18:28+0200\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -12846,6 +12846,9 @@ msgid ""
 msgstr ""
 
 msgid "typing enabled for self messages (send typing info to other users)"
+msgstr ""
+
+msgid "min number of chars in message to trigger send of typing signals"
 msgstr ""
 
 msgid ""

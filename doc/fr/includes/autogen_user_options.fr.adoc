@@ -1876,6 +1876,12 @@
 ** valeurs: on, off
 ** valeur par défaut: `+off+`
 
+* [[option_typing.look.input_min_chars]] *typing.look.input_min_chars*
+** description: pass:none[nombre minimum de caractères dans le message pour déclencher l'envoi des signaux typing]
+** type: entier
+** valeurs: 1 .. 2147483647
+** valeur par défaut: `+4+`
+
 * [[option_typing.look.item_max_length]] *typing.look.item_max_length*
 ** description: pass:none[nombre maximum de caractères affichés dans l'objet de barre "typing" (0 = ne pas tronquer le contenu)]
 ** type: entier

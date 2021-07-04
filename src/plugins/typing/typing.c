@@ -102,7 +102,7 @@ typing_input_text_changed_signal_cb (const void *pointer, void *data,
                                      const char *signal,
                                      const char *type_data, void *signal_data)
 {
-    int text_search;
+    int text_search, input_valid;
     const char *ptr_input, *ptr_input_for_buffer;
     struct t_gui_buffer *ptr_buffer;
     struct t_typing_status *ptr_typing_status;
@@ -121,8 +121,10 @@ typing_input_text_changed_signal_cb (const void *pointer, void *data,
         return WEECHAT_RC_OK;
 
     ptr_input = weechat_buffer_get_string (ptr_buffer, "input");
+    input_valid = (ptr_input && ptr_input[0]) ?
+        weechat_utf8_strlen (ptr_input) >= weechat_config_integer (typing_config_look_input_min_chars) : 0;
 
-    if (ptr_input && ptr_input[0])
+    if (input_valid)
     {
         /* input is a command? ignore it */
         ptr_input_for_buffer = weechat_string_input_for_buffer (ptr_input);

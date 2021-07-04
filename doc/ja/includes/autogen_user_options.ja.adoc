@@ -1876,6 +1876,12 @@
 ** 値: on, off
 ** デフォルト値: `+off+`
 
+* [[option_typing.look.input_min_chars]] *typing.look.input_min_chars*
+** 説明: pass:none[min number of chars in message to trigger send of typing signals]
+** タイプ: 整数
+** 値: 1 .. 2147483647
+** デフォルト値: `+4+`
+
 * [[option_typing.look.item_max_length]] *typing.look.item_max_length*
 ** 説明: pass:none[max number of chars displayed in the bar item "typing" (0 = do not truncate content)]
 ** タイプ: 整数

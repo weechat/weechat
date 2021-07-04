@@ -1876,6 +1876,12 @@
 ** Werte: on, off
 ** Standardwert: `+off+`
 
+* [[option_typing.look.input_min_chars]] *typing.look.input_min_chars*
+** Beschreibung: pass:none[min number of chars in message to trigger send of typing signals]
+** Typ: integer
+** Werte: 1 .. 2147483647
+** Standardwert: `+4+`
+
 * [[option_typing.look.item_max_length]] *typing.look.item_max_length*
 ** Beschreibung: pass:none[max number of chars displayed in the bar item "typing" (0 = do not truncate content)]
 ** Typ: integer
