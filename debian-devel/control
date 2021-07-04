@@ -153,6 +153,7 @@ Description: Fast, light and extensible chat client - plugins
   - FIFO pipe for remote control
   - Relay (IRC proxy and WeeChat protocol)
   - Trigger
+  - Typing
 
 Package: weechat-devel-python
 Architecture: any
