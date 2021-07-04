@@ -267,6 +267,9 @@ $ make install
 | ENABLE_TRIGGER | `ON`, `OFF` | ON |
   Компајлира <<trigger_plugin,Trigger додатак>>.
 
+| ENABLE_TYPING | `ON`, `OFF` | ON |
+  Компајлира <<typing_plugin,Typing додатак>>.
+
 | ENABLE_XFER | `ON`, `OFF` | ON |
   Компајлира <<xfer_plugin,Xfer додатак>>.
 
@@ -667,6 +670,7 @@ WeeChat подразумевано користи XDG директоријуме
 | tcl.conf        | Конфигурациони фајл за _tcl_ додатак        | Не.
 | spell.conf      | Конфигурациони фајл за _spell_ додатак      | Не.
 | trigger.conf    | Конфигурациони фајл за _окидач_ додатак     | Могуће, зависно од окидача.
+| typing.conf     | Конфигурациони фајл за _typing_ додатак     | Не.
 | xfer.conf       | Конфигурациони фајл за _xfer_ додатак       | Не.
 | weechat.log     | WeeChat лог фајл                            | Не.
 |===
@@ -2332,7 +2336,7 @@ include::includes/autogen_user_options.sr.adoc[tag=weechat_options]
 [width="100%", cols="1,5", options="header"]
 |===
 | Додатак    | Опис
-| алијас     | Дефиниција алијаса за команде.
+| alias      | Дефиниција алијаса за команде.
 | buflist    | Ставка траке са листом бафера.
 | charset    | Декодирање/кодирање у скуп карактера за бафере.
 | exec       | Извршавање спољних команди из програма WeeChat.
@@ -2340,7 +2344,7 @@ include::includes/autogen_user_options.sr.adoc[tag=weechat_options]
 | fset       | Брзо постављање опција програма WeeChat и опција додатака.
 | irc        | IRC чет протокол.
 | logger     | Логовање бафера у фајлове.
-| релеј      | Релеј података преко мреже.
+| relay      | Релеј података преко мреже.
 | script     | Управљач скриптама.
 | python     | Python API .
 | perl       | Perl API скриптовања.
@@ -2351,7 +2355,9 @@ include::includes/autogen_user_options.sr.adoc[tag=weechat_options]
 | javascript | JavaScript API скриптовања.
 | php        | PHP API скриптовања.
 | spell      | Провера правописа за командну линију.
-| окидач     | Замена текста и извршавање команди приликом догађаја које окида програм WeeChat/додаци.
+| trigger    | Замена текста и извршавање команди приликом догађаја које окида програм WeeChat/додаци.
+// TRANSLATION MISSING
+| typing     | Display users currently writing messages.
 | xfer       | Пренос фајлова и директни разговор.
 |===
 
@@ -4361,6 +4367,101 @@ include::includes/autogen_user_commands.sr.adoc[tag=trigger_commands]
 Опције:
 
 include::includes/autogen_user_options.sr.adoc[tag=trigger_options]
+
+// TRANSLATION MISSING
+[[typing_plugin]]
+=== Typing
+
+The typing plugin is used to inform other users you are typing messages and
+show a list of users currently typing a message on the buffer.
+
+It is used by IRC plugin on channel and private buffers, when the "message-tags"
+capability is enabled (you can check with <<command_irc_cap,/cap>> command). +
+Under the hood, typing client tag is used, following this specification:
+https://ircv3.net/specs/client-tags/typing.html.
+
+[[typing_activation]]
+==== Activation
+
+For privacy considerations, the typing feature is disabled by default. +
+If you want to use it, you must enable options in both typing and irc plugins:
+
+----
+/set typing.look.enabled_nicks on
+/set typing.look.enabled_self on
+/set irc.look.typing_status_nicks on
+/set irc.look.typing_status_self on
+----
+
+Then you must add the "typing" bar item in a bar, for example in option
+_weechat.bar.status.items_.
+
+Example of status bar with the "typing" item: "bob" is typing a message and
+"alice" was typing a message but made a pause:
+
+....
+│[12:55] [6] [irc/libera] 3:#test(+n){4} [Typing: bob, (alice)]                   │
+│[@Flashy] █                                                                      │
+└─────────────────────────────────────────────────────────────────────────────────┘
+....
+
+[[typing_signals_sent]]
+==== Signals sent
+
+When you are typing a message (not a command starting with `/`), the typing
+plugin sends signals to inform other plugins (like IRC) that you are typing,
+and these plugins can then send typing notifications to other users.
+
+The following signals are sent when you are typing messages:
+
+[width="100%",cols="1,1,5",options="header"]
+|===
+| Signal              | Arguments        | Description
+| typing_self_typing  | Pointer: buffer. | You are typing a message.
+| typing_self_paused  | Pointer: buffer. | You made a pause while typing a message.
+| typing_self_cleared | Pointer: buffer. | You cleared the command line without sending the message.
+| typing_self_sent    | Pointer: buffer. | You sent the message to the buffer.
+|===
+
+[[typing_signals_caught]]
+==== Signals caught
+
+The typing plugin is catching some signals that can be sent by other plugins
+(like IRC), to update internal hashtables used to store the typing state of
+nicks on buffers. These hashtables are used to build the content of "typing"
+bar item.
+
+The following signals are caught by the typing plugin:
+
+[width="100%",cols="1,4,3",options="header"]
+|===
+| Signal | Arguments | Description
+
+| typing_set_nick |
+  String: buffer pointer + ";" + state (one of: "off", "typing", "paused",
+  "cleared") + ";" + nick. +
+  Example: "0x1234abcd;typing;alice". |
+  Set typing state for a nick on a buffer.
+
+| typing_reset_buffer |
+  Pointer: buffer. |
+  Remove typing state for all nicks on a buffer.
+|===
+
+[[typing_options]]
+==== Опције
+
+Одељци у фајлу _typing.conf_:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Одељак | Команда за контролу | Опис
+| look   | /set typing.look.*  | Изглед и осећај.
+|===
+
+Опције:
+
+include::includes/autogen_user_options.sr.adoc[tag=typing_options]
 
 [[xfer_plugin]]
 === Xfer

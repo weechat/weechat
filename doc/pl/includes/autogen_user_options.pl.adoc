@@ -1845,6 +1845,38 @@
 ** domyślna wartość: `+"${weechat_runtime_dir}/weechat_fifo_${info:pid}"+`
 // end::fifo_options[]
 
+// tag::typing_options[]
+* [[option_typing.look.delay_purge_paused]] *typing.look.delay_purge_paused*
+** opis: pass:none[number of seconds after paused status has been set: if reached, the typing status is removed]
+** typ: liczba
+** wartości: 1 .. 3600
+** domyślna wartość: `+30+`
+
+* [[option_typing.look.delay_purge_typing]] *typing.look.delay_purge_typing*
+** opis: pass:none[number of seconds after typing status has been set: if reached, the typing status is removed]
+** typ: liczba
+** wartości: 1 .. 3600
+** domyślna wartość: `+6+`
+
+* [[option_typing.look.delay_set_paused]] *typing.look.delay_set_paused*
+** opis: pass:none[number of seconds after typing last char: if reached, the typing status becomes "paused" and no more typing signals are sent]
+** typ: liczba
+** wartości: 1 .. 3600
+** domyślna wartość: `+10+`
+
+* [[option_typing.look.enabled_nicks]] *typing.look.enabled_nicks*
+** opis: pass:none[typing enabled for other nicks (display typing info for nicks typing in the current buffer)]
+** typ: bool
+** wartości: on, off
+** domyślna wartość: `+off+`
+
+* [[option_typing.look.enabled_self]] *typing.look.enabled_self*
+** opis: pass:none[typing enabled for self messages (send typing info to other users)]
+** typ: bool
+** wartości: on, off
+** domyślna wartość: `+off+`
+// end::typing_options[]
+
 // tag::xfer_options[]
 * [[option_xfer.color.status_aborted]] *xfer.color.status_aborted*
 ** opis: pass:none[kolor statusu "aborted"]
@@ -2516,6 +2548,18 @@
 
 * [[option_irc.look.topic_strip_colors]] *irc.look.topic_strip_colors*
 ** opis: pass:none[usuń kolory w tematach (używane przy wyświetlaniu tytułu bufora)]
+** typ: bool
+** wartości: on, off
+** domyślna wartość: `+off+`
+
+* [[option_irc.look.typing_status_nicks]] *irc.look.typing_status_nicks*
+** opis: pass:none[display nicks typing on the channel in bar item "typing" (option typing.look.enabled must be enabled and capability "message-tags" must be enabled on the server)]
+** typ: bool
+** wartości: on, off
+** domyślna wartość: `+off+`
+
+* [[option_irc.look.typing_status_self]] *irc.look.typing_status_self*
+** opis: pass:none[send self typing status to channels so that other users see when you are typing a message (option typing.look.enabled must be enabled and capability "message-tags" must be enabled on the server)]
 ** typ: bool
 ** wartości: on, off
 ** domyślna wartość: `+off+`

@@ -289,6 +289,9 @@ Lista popularnych opcji:
 | ENABLE_TRIGGER | `ON`, `OFF` | ON |
   Kompilacja <<trigger_plugin,wtyczki trigger>>.
 
+| ENABLE_TYPING | `ON`, `OFF` | ON |
+  Kompilacja <<typing_plugin,wtyczki typing>>.
+
 | ENABLE_XFER | `ON`, `OFF` | ON |
   Kompilacja <<xfer_plugin,wtyczki xfer>>.
 
@@ -731,6 +734,7 @@ Pliki tworzone w katalogu domowym WeeChat:
 | spell.conf      | Plik konfiguracyjny wtyczki _spell_          | Nie.
 | tcl.conf        | Plik konfiguracyjny wtyczki _tcl_            | Nie.
 | trigger.conf    | Plik konfiguracyjny wtyczki _trigger_        | Możliwe, zależy od triggerów.
+| typing.conf     | Plik konfiguracyjny wtyczki _typing_         | Nie.
 | xfer.conf       | Plik konfiguracyjny wtyczki _xfer_           | Nie.
 | weechat.log     | Plik z logami WeeChat                        | Nie.
 |===
@@ -2549,6 +2553,8 @@ Domyślne wtyczki:
 | php        | Wsparcie dla skryptów napisanych w PHP.
 | spell      | Sprawdzanie pisowni w linii poleceń.
 | trigger    | Zamiana tekstu i wykonywanie komend dla zdarzeń wywołanych przez WeeChat/wtyczki.
+// TRANSLATION MISSING
+| typing     | Display users currently writing messages.
 | xfer       | Przesyłanie plików i bezpośredni chat.
 |===
 
@@ -4720,6 +4726,101 @@ Sekcje w pliku _trigger.conf_:
 Opcje:
 
 include::includes/autogen_user_options.pl.adoc[tag=trigger_options]
+
+// TRANSLATION MISSING
+[[typing_plugin]]
+=== Typing
+
+The typing plugin is used to inform other users you are typing messages and
+show a list of users currently typing a message on the buffer.
+
+It is used by IRC plugin on channel and private buffers, when the "message-tags"
+capability is enabled (you can check with <<command_irc_cap,/cap>> command). +
+Under the hood, typing client tag is used, following this specification:
+https://ircv3.net/specs/client-tags/typing.html.
+
+[[typing_activation]]
+==== Activation
+
+For privacy considerations, the typing feature is disabled by default. +
+If you want to use it, you must enable options in both typing and irc plugins:
+
+----
+/set typing.look.enabled_nicks on
+/set typing.look.enabled_self on
+/set irc.look.typing_status_nicks on
+/set irc.look.typing_status_self on
+----
+
+Then you must add the "typing" bar item in a bar, for example in option
+_weechat.bar.status.items_.
+
+Example of status bar with the "typing" item: "bob" is typing a message and
+"alice" was typing a message but made a pause:
+
+....
+│[12:55] [6] [irc/libera] 3:#test(+n){4} [Typing: bob, (alice)]                   │
+│[@Flashy] █                                                                      │
+└─────────────────────────────────────────────────────────────────────────────────┘
+....
+
+[[typing_signals_sent]]
+==== Signals sent
+
+When you are typing a message (not a command starting with `/`), the typing
+plugin sends signals to inform other plugins (like IRC) that you are typing,
+and these plugins can then send typing notifications to other users.
+
+The following signals are sent when you are typing messages:
+
+[width="100%",cols="1,1,5",options="header"]
+|===
+| Signal              | Arguments        | Description
+| typing_self_typing  | Pointer: buffer. | You are typing a message.
+| typing_self_paused  | Pointer: buffer. | You made a pause while typing a message.
+| typing_self_cleared | Pointer: buffer. | You cleared the command line without sending the message.
+| typing_self_sent    | Pointer: buffer. | You sent the message to the buffer.
+|===
+
+[[typing_signals_caught]]
+==== Signals caught
+
+The typing plugin is catching some signals that can be sent by other plugins
+(like IRC), to update internal hashtables used to store the typing state of
+nicks on buffers. These hashtables are used to build the content of "typing"
+bar item.
+
+The following signals are caught by the typing plugin:
+
+[width="100%",cols="1,4,3",options="header"]
+|===
+| Signal | Arguments | Description
+
+| typing_set_nick |
+  String: buffer pointer + ";" + state (one of: "off", "typing", "paused",
+  "cleared") + ";" + nick. +
+  Example: "0x1234abcd;typing;alice". |
+  Set typing state for a nick on a buffer.
+
+| typing_reset_buffer |
+  Pointer: buffer. |
+  Remove typing state for all nicks on a buffer.
+|===
+
+[[typing_options]]
+==== Opcje
+
+Sekcje w pliku _typing.conf_:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Sekcja | Komenda            | Opis
+| look   | /set typing.look.* | Wygląd.
+|===
+
+Opcje:
+
+include::includes/autogen_user_options.pl.adoc[tag=typing_options]
 
 [[xfer_plugin]]
 === Xfer
