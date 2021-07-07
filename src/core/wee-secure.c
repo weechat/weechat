@@ -39,6 +39,7 @@
 
 /* the passphrase used to encrypt/decrypt data */
 char *secure_passphrase = NULL;
+char *temp_secure_passphrase = NULL;
 
 /* decrypted data */
 struct t_hashtable *secure_hashtable_data = NULL;
