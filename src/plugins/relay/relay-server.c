@@ -276,7 +276,6 @@ relay_server_sock_cb (const void *pointer, void *data, int fd)
     (void) data;
     (void) fd;
 
-    client_fd = -1;
     relay_password = NULL;
     relay_totp_secret = NULL;
 
