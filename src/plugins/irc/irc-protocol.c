@@ -1620,7 +1620,7 @@ IRC_PROTOCOL_CALLBACK(kick)
                                           IRC_SERVER_OPTION_AUTOREJOIN_DELAY) == 0)
             {
                 /* immediately rejoin if delay is 0 */
-                irc_channel_rejoin (server, ptr_channel);
+                irc_channel_rejoin (server, ptr_channel, 0, 1);
             }
             else
             {
@@ -2418,26 +2418,7 @@ IRC_PROTOCOL_CALLBACK(part)
         if (ptr_channel->cycle)
         {
             ptr_channel->cycle = 0;
-            if (ptr_channel->key)
-            {
-                join_length = strlen (ptr_channel->name) + 1 +
-                    strlen (ptr_channel->key) + 1;
-                join_string = malloc (join_length);
-                if (join_string)
-                {
-                    snprintf (join_string, join_length, "%s %s",
-                              ptr_channel->name,
-                              ptr_channel->key);
-                    irc_command_join_server (server, join_string, 1, 1);
-                    free (join_string);
-                }
-                else
-                    irc_command_join_server (server, ptr_channel->name,
-                                             1, 1);
-            }
-            else
-                irc_command_join_server (server, ptr_channel->name,
-                                         1, 1);
+            irc_channel_rejoin (server, ptr_channel, 1, 1);
         }
         else
         {

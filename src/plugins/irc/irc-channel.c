@@ -1356,16 +1356,32 @@ irc_channel_join_smart_filtered_unmask (struct t_irc_channel *channel,
  */
 
 void
-irc_channel_rejoin (struct t_irc_server *server, struct t_irc_channel *channel)
+irc_channel_rejoin (struct t_irc_server *server, struct t_irc_channel *channel,
+                    int manual_join, int noswitch)
 {
-    char join_args[256];
+    char *join_string;
+    int join_length;
 
-    snprintf (join_args, sizeof (join_args), "%s%s%s",
-              channel->name,
-              (channel->key) ? " " : "",
-              (channel->key) ? channel->key : "");
-
-    irc_command_join_server (server, join_args, 0, 1);
+    if (channel->key)
+    {
+        join_length = strlen (channel->name) + 1 + strlen (channel->key) + 1;
+        join_string = malloc (join_length);
+        if (join_string)
+        {
+            snprintf (join_string, join_length, "%s %s",
+                      channel->name,
+                      channel->key);
+            irc_command_join_server (server, join_string,
+                                     manual_join, noswitch);
+            free (join_string);
+        }
+        else
+            irc_command_join_server (server, channel->name,
+                                     manual_join, noswitch);
+    }
+    else
+        irc_command_join_server (server, channel->name,
+                                 manual_join, noswitch);
 }
 
 /*
@@ -1402,7 +1418,7 @@ irc_channel_autorejoin_cb (const void *pointer, void *data,
 
     if (ptr_server_found && (ptr_channel_arg->hook_autorejoin))
     {
-        irc_channel_rejoin (ptr_server_found, ptr_channel_arg);
+        irc_channel_rejoin (ptr_server_found, ptr_channel_arg, 0, 1);
         ptr_channel_arg->hook_autorejoin = NULL;
     }
 
