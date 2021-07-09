@@ -205,6 +205,7 @@ gui_layout_buffer_reset ()
          ptr_buffer = ptr_buffer->next_buffer)
     {
         ptr_buffer->layout_number = 0;
+        ptr_buffer->layout_hidden = 0;
     }
 }
 
@@ -217,7 +218,7 @@ gui_layout_buffer_reset ()
 struct t_gui_layout_buffer *
 gui_layout_buffer_add (struct t_gui_layout *layout,
                        const char *plugin_name, const char *buffer_name,
-                       int number)
+                       int number, int hidden)
 {
     struct t_gui_layout_buffer *new_layout_buffer;
 
@@ -231,6 +232,7 @@ gui_layout_buffer_add (struct t_gui_layout *layout,
         new_layout_buffer->plugin_name = strdup (plugin_name);
         new_layout_buffer->buffer_name = strdup (buffer_name);
         new_layout_buffer->number = number;
+        new_layout_buffer->hidden = hidden;
 
         /* add layout buffer to list */
         new_layout_buffer->prev_layout = layout->last_layout_buffer;
@@ -253,13 +255,15 @@ void
 gui_layout_buffer_get_number (struct t_gui_layout *layout,
                               const char *plugin_name, const char *buffer_name,
                               int *layout_number,
-                              int *layout_number_merge_order)
+                              int *layout_number_merge_order,
+                              int *layout_hidden)
 {
     struct t_gui_layout_buffer *ptr_layout_buffer;
     int old_number, merge_order;
 
     *layout_number = 0;
     *layout_number_merge_order = 0;
+    *layout_hidden = 0;
 
     if (!layout)
         return;
@@ -283,6 +287,7 @@ gui_layout_buffer_get_number (struct t_gui_layout *layout,
         {
             *layout_number = ptr_layout_buffer->number;
             *layout_number_merge_order = merge_order;
+            *layout_hidden = ptr_layout_buffer->hidden;
             return;
         }
     }
@@ -304,7 +309,8 @@ gui_layout_buffer_get_number_all (struct t_gui_layout *layout)
                                       gui_buffer_get_plugin_name (ptr_buffer),
                                       ptr_buffer->name,
                                       &(ptr_buffer->layout_number),
-                                      &(ptr_buffer->layout_number_merge_order));
+                                      &(ptr_buffer->layout_number_merge_order),
+                                      &(ptr_buffer->layout_hidden));
     }
 }
 
@@ -328,7 +334,8 @@ gui_layout_buffer_store (struct t_gui_layout *layout)
         gui_layout_buffer_add (layout,
                                gui_buffer_get_plugin_name (ptr_buffer),
                                ptr_buffer->name,
-                               ptr_buffer->number);
+                               ptr_buffer->number,
+                               ptr_buffer->hidden);
     }
 
     /* get layout number for all buffers */
@@ -366,6 +373,11 @@ gui_layout_buffer_apply (struct t_gui_layout *layout)
         {
             gui_buffer_set_active_buffer (ptr_buffer);
         }
+
+        if (ptr_buffer->layout_hidden == 1 && ptr_buffer->hidden == 0)
+          gui_buffer_hide(ptr_buffer);
+        else if (ptr_buffer->layout_hidden == 0 && ptr_buffer->hidden == 1)
+          gui_buffer_unhide(ptr_buffer);
     }
 }
 
@@ -899,6 +911,7 @@ gui_layout_hdata_layout_buffer_cb (const void *pointer, void *data,
         HDATA_VAR(struct t_gui_layout_buffer, plugin_name, STRING, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_layout_buffer, buffer_name, STRING, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_layout_buffer, number, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_layout_buffer, hidden, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_layout_buffer, prev_layout, POINTER, 0, NULL, hdata_name);
         HDATA_VAR(struct t_gui_layout_buffer, next_layout, POINTER, 0, NULL, hdata_name);
     }
@@ -993,6 +1006,8 @@ gui_layout_buffer_add_to_infolist (struct t_infolist *infolist,
     if (!infolist_new_var_string (ptr_item, "buffer_name", layout_buffer->buffer_name))
         return 0;
     if (!infolist_new_var_integer (ptr_item, "number", layout_buffer->number))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "hidden", layout_buffer->hidden))
         return 0;
 
     return 1;
@@ -1140,6 +1155,7 @@ gui_layout_print_log ()
             log_printf ("    plugin_name. . . . . : '%s'",  ptr_layout_buffer->plugin_name);
             log_printf ("    buffer_name. . . . . : '%s'",  ptr_layout_buffer->buffer_name);
             log_printf ("    number . . . . . . . : %d",    ptr_layout_buffer->number);
+            log_printf ("    hidden . . . . . . . : %d",    ptr_layout_buffer->hidden);
             log_printf ("    prev_layout. . . . . : 0x%lx", ptr_layout_buffer->prev_layout);
             log_printf ("    next_layout. . . . . : 0x%lx", ptr_layout_buffer->next_layout);
         }

@@ -408,13 +408,20 @@ upgrade_weechat_read_buffer (struct t_infolist *infolist)
     const char *key, *var_name, *name, *plugin_name;
     const char *str;
     char option_name[64], *option_key, *option_var;
-    int index, length, main_buffer;
+    int index, length, main_buffer, hidden;
+
+    /* "hidden" is new in WeeChat 1.0 */
+    if (infolist_search_var (infolist, "hidden"))
+        hidden = infolist_integer (infolist, "hidden");
+    else
+        hidden = 0;
 
     plugin_name = infolist_string (infolist, "plugin_name");
     name = infolist_string (infolist, "name");
     gui_layout_buffer_add (upgrade_layout,
                            plugin_name, name,
-                           infolist_integer (infolist, "number"));
+                           infolist_integer (infolist, "number"),
+                           hidden);
     main_buffer = gui_buffer_is_main (plugin_name, name);
     if (main_buffer)
     {
@@ -465,11 +472,7 @@ upgrade_weechat_read_buffer (struct t_infolist *infolist)
     /* notify level */
     ptr_buffer->notify = infolist_integer (infolist, "notify");
 
-    /* "hidden" is new in WeeChat 1.0 */
-    if (infolist_search_var (infolist, "hidden"))
-        ptr_buffer->hidden = infolist_integer (infolist, "hidden");
-    else
-        ptr_buffer->hidden = 0;
+    ptr_buffer->hidden = hidden;
 
     /* day change */
     if (infolist_search_var (infolist, "day_change"))

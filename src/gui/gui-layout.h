@@ -33,6 +33,7 @@ struct t_gui_layout_buffer
     char *plugin_name;
     char *buffer_name;
     int number;
+    int hidden;
     struct t_gui_layout_buffer *prev_layout; /* link to previous layout     */
     struct t_gui_layout_buffer *next_layout; /* link to next layout         */
 };
@@ -83,12 +84,14 @@ extern void gui_layout_buffer_reset ();
 extern struct t_gui_layout_buffer *gui_layout_buffer_add (struct t_gui_layout *layout,
                                                           const char *plugin_name,
                                                           const char *buffer_name,
-                                                          int number);
+                                                          int number,
+                                                          int hidden);
 extern void gui_layout_buffer_get_number (struct t_gui_layout *layout,
                                           const char *plugin_name,
                                           const char *buffer_name,
                                           int *layout_number,
-                                          int *layout_number_merge_order);
+                                          int *layout_number_merge_order,
+                                          int *layout_hidden);
 extern void gui_layout_buffer_get_number_all (struct t_gui_layout *layout);
 extern void gui_layout_buffer_store (struct t_gui_layout *layout);
 extern void gui_layout_buffer_apply (struct t_gui_layout *layout);
