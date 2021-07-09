@@ -33,7 +33,7 @@ jobs:
       run: |
         sudo apt-add-repository --yes ppa:ondrej/php
         sudo apt-get update -qq
-        sudo apt-get --yes --no-install-recommends install devscripts equivs python3-pip libenchant-dev autopoint cmake lcov pkg-config libncursesw5-dev gem2deb libperl-dev python2-dev python3-dev libaspell-dev liblua5.3-dev tcl8.6-dev guile-2.0-dev libv8-dev libcurl4-gnutls-dev libgcrypt20-dev libgnutls28-dev zlib1g-dev curl libcpputest-dev php7.4-dev libphp7.4-embed libargon2-0-dev libsodium-dev pylint asciidoctor
+        sudo apt-get --yes --no-install-recommends install devscripts equivs python3-pip libenchant-dev autopoint cmake lcov pkg-config libncursesw5-dev gem2deb libperl-dev python2-dev python3-dev libaspell-dev liblua5.3-dev tcl8.6-dev guile-2.0-dev libv8-dev libcurl4-gnutls-dev libgcrypt20-dev libgnutls28-dev zlib1g-dev curl libcpputest-dev php7.4-dev libphp7.4-embed libargon2-0-dev libsodium-dev pylint python3-bandit asciidoctor
         sudo -H pip3 install --ignore-installed msgcheck
 
     - name: Test patches
@@ -46,9 +46,9 @@ jobs:
       run: |
         pylint --additional-builtins=_ doc/docgen.py
         pylint doc/python_stub.py
-        pylint tests/scripts/python/testapigen.py
-        pylint tests/scripts/python/testapi.py
-        pylint tests/scripts/python/unparse.py
+        pylint tests/scripts/python/testapigen.py tests/scripts/python/testapi.py tests/scripts/python/unparse.py
+        bandit doc/docgen.py doc/python_stub.py
+        bandit tests/scripts/python/testapigen.py tests/scripts/python/testapi.py tests/scripts/python/unparse.py
 
     - name: Build and run tests
       env:
