@@ -19,7 +19,7 @@
 # along with WeeChat.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.12)
 
 project(weechat C)
 
@@ -242,14 +242,12 @@ endif()
 # Check for CURL
 find_package(CURL REQUIRED)
 
-# weechat_gui_common MUST be the first lib in the list
-set(STATIC_LIBS weechat_gui_common)
+set(STATIC_LIBS weechat_plugins)
 
 find_library(DL_LIBRARY
   NAMES dl
   PATHS /lib /usr/lib /usr/libexec /usr/local/lib /usr/local/libexec
 )
-list(APPEND STATIC_LIBS weechat_plugins)
 if(DL_LIBRARY)
   string(REGEX REPLACE "/[^/]*$" "" DL_LIBRARY_PATH "${DL_LIBRARY}")
   set(CMAKE_C_LINK_FLAGS "${CMAKE_C_LINK_FLAGS} -L${DL_LIBRARY_PATH}")

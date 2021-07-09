@@ -226,8 +226,6 @@ target_link_libraries(tests
   weechat_gui_headless
   weechat_ncurses_fake
   weechat_unit_tests_core
-  # due to circular references, we must link two times with libweechat_core.a
-  weechat_core
   ${EXTRA_LIBS}
   ${CURL_LIBRARIES}
   ${ZLIB_LIBRARY}
