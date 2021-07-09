@@ -55,9 +55,7 @@ add_dependencies(${EXECUTABLE}
   weechat_ncurses_fake
 )
 
-# Due to circular references, we must link two times with libweechat_core.a and libweechat_gui_common.a
 target_link_libraries(${EXECUTABLE}
-  ${STATIC_LIBS}
   weechat_gui_headless
   weechat_ncurses_fake
   ${EXTRA_LIBS}
