@@ -2940,15 +2940,131 @@ IRC プラグインは IRC プロトコルに従って他の人と会話を行�
 irc[6][s]://[nick[:password]@]irc.example.org[:port][/channel][,channel[...]]
 ----
 
-_nono_ というニックネームを使って _irc.libera.chat_ ホストのデフォルトポート (6667)
-で稼働中の IRC サーバ上の _#weechat_ と _#toto_ チャンネルに参加する例:
+_alice_ というニックネームを使って _irc.libera.chat_ ホストのデフォルトポート (6667)
+で稼働中の IRC サーバ上の _#weechat_ と _#weechat-fr_ チャンネルに参加する例:
 
 ----
-$ weechat irc://nono@irc.libera.chat/#weechat,#toto
+$ weechat irc://alice@irc.libera.chat/#weechat,#weechat-fr
+----
+
+// TRANSLATION MISSING
+[[irc_servers]]
+==== Servers
+
+[[irc_servers_add]]
+===== Add a server
+
+By default no servers are defined. You can add as many servers as you want with
+the <<command_irc_server,/server>> command.
+
+For example to connect to https://libera.chat/[libera.chat] with SSL (encrypted trafic):
+
+----
+/server add libera irc.libera.chat/6697 -ssl
+----
+
+You can tell WeeChat to auto-connect to this server on startup:
+
+----
+/set irc.server.libera.autoconnect on
+----
+
+To authenticate, it is recommended to use SASL (if supported on the server),
+with the password stored as secured data (see also chapter on
+<<irc_sasl_authentication,SASL authentication>>):
+
+----
+/set irc.server.libera.sasl_username "alice"
+/secure set libera_password xxxxxxx
+/set irc.server.libera.sasl_password "${sec.data.libera_password}"
+----
+
+If SASL is not supported, you can use a command to send a message to nickserv:
+
+----
+/set irc.server.libera.command "/msg nickserv identify ${sec.data.libera_password}"
+----
+
+[NOTE]
+By sending a message to nickserv, you may authenticate after joining channels
+which could be a problem on some channels requiring you to be authenticated
+to join. In this case, you can set a command delay:
+`/set irc.server.libera.command_delay 5`.
+
+[[irc_servers_options]]
+===== Server options
+
+Server options are named `irc.server.<server>.<option>` where `<server>` is the
+internal name of the server and `<option>` the name of an option. +
+The value of a server option is inherited from `irc.server_default.xxx`
+if the server option has the special value `null`.
+
+For example if you created the _libera_ server with the commands above, you'll
+see this with the command `/fset libera`:
+
+....
+irc.server.libera.addresses             string   "irc.libera.chat/6697"
+irc.server.libera.anti_flood_prio_high  integer  null -> 2
+irc.server.libera.anti_flood_prio_low   integer  null -> 2
+irc.server.libera.autoconnect           boolean  on
+irc.server.libera.autojoin              string   null -> ""
+irc.server.libera.autoreconnect         boolean  null -> on
+irc.server.libera.autoreconnect_delay   integer  null -> 10
+irc.server.libera.autorejoin            boolean  null -> off
+irc.server.libera.autorejoin_delay      integer  null -> 30
+irc.server.libera.away_check            integer  null -> 0
+irc.server.libera.away_check_max_nicks  integer  null -> 25
+irc.server.libera.capabilities          string   null -> "*"
+irc.server.libera.charset_message       integer  null -> message
+irc.server.libera.command               string   null -> ""
+irc.server.libera.command_delay         integer  null -> 0
+irc.server.libera.connection_timeout    integer  null -> 60
+irc.server.libera.default_chantypes     string   null -> "#&"
+irc.server.libera.ipv6                  boolean  null -> on
+irc.server.libera.local_hostname        string   null -> ""
+irc.server.libera.msg_kick              string   null -> ""
+irc.server.libera.msg_part              string   null -> "WeeChat ${info:version}"
+irc.server.libera.msg_quit              string   null -> "WeeChat ${info:version}"
+irc.server.libera.nicks                 string   null -> "alice,alice1,alice2,alice3,alice4"
+irc.server.libera.nicks_alternate       boolean  null -> on
+irc.server.libera.notify                string   null -> ""
+irc.server.libera.password              string   null -> ""
+irc.server.libera.proxy                 string   null -> ""
+irc.server.libera.realname              string   null -> ""
+irc.server.libera.sasl_fail             integer  null -> reconnect
+irc.server.libera.sasl_key              string   null -> ""
+irc.server.libera.sasl_mechanism        integer  null -> plain
+irc.server.libera.sasl_password         string   "${sec.data.libera_password}"
+irc.server.libera.sasl_timeout          integer  null -> 15
+irc.server.libera.sasl_username         string   "alice"
+irc.server.libera.split_msg_max_length  integer  null -> 512
+irc.server.libera.ssl                   boolean  on
+irc.server.libera.ssl_cert              string   null -> ""
+irc.server.libera.ssl_dhkey_size        integer  null -> 2048
+irc.server.libera.ssl_fingerprint       string   null -> ""
+irc.server.libera.ssl_password          string   null -> ""
+irc.server.libera.ssl_priorities        string   null -> "NORMAL:-VERS-SSL3.0"
+irc.server.libera.ssl_verify            boolean  null -> on
+irc.server.libera.usermode              string   null -> ""
+irc.server.libera.username              string   null -> "alice"
+....
+
+For example if you want to automatically connect to all servers you define
+without having to do it on each server, you can do:
+
+----
+/set irc.server_default.autoconnect on
+----
+
+And then you can reset the server option so that it uses the default inherited
+value, which is now `on` instead of the default value `off`:
+
+----
+/unset irc.server.libera.autoconnect
 ----
 
 [[irc_ssl_certificates]]
-==== SSL 証明書
+===== SSL 証明書
 
 SSL を使って IRC サーバに接続する場合、WeeChat
 はデフォルトで接続が完全に信頼できるものかどうかを確認します。
@@ -2979,7 +3095,7 @@ irc.server.xxx.ssl_verify::
 より前のバージョンでは信頼性の確認に成功していたものが失敗する場合もあります。
 
 [[irc_connect_oftc_with_certificate]]
-===== 最初の例: oftc に接続して、証明書を確認
+====== 最初の例: oftc に接続して、証明書を確認
 
 * シェルを使って証明書をインポート:
 
@@ -3003,7 +3119,7 @@ CAs.pem ファイル中で複数の証明書を連結することもできます
 ----
 
 [[irc_connect_oftc_with_certfp]]
-===== 2 番目の例: CertFP を使って oftc に接続
+====== 2 番目の例: CertFP を使って oftc に接続
 
 * シェルで証明書を作成:
 
@@ -3029,7 +3145,7 @@ which can also be for example `~/.weechat`.
 より詳しい情報は https://www.oftc.net/NickServ/CertFP を確認してください。
 
 [[irc_sasl_authentication]]
-==== SASL 認証
+===== SASL 認証
 
 WeeChat は SASL 認証をサポートします、以下の認証メカニズムを利用できます:
 
@@ -3054,7 +3170,7 @@ WeeChat は SASL 認証をサポートします、以下の認証メカニズム
   (_ecdsa-nist256p-challenge_ 用)
 
 [[irc_sasl_ecdsa_nist256p_challenge]]
-===== SASL ECDSA-NIST256P-CHALLENGE 認証
+====== SASL ECDSA-NIST256P-CHALLENGE 認証
 
 ECDSA-NIST256P-CHALLENGE を使って認証を行うためには、秘密鍵を作成してください
 (接続の際にパスワードは不要です)。
@@ -3101,8 +3217,40 @@ $ openssl ec -noout -text -conv_form compressed -in ~/.config/weechat/ecdsa.pem 
 ----
 
 // TRANSLATION MISSING
+[[irc_servers_connection]]
+===== Connection
+
+You can connect to server with the <<command_irc_connect,/connect>> command:
+
+----
+/connect libera
+----
+
+To disconnect:
+
+----
+/disconnect libera
+----
+
+Or just this if you are on any buffer belonging to _libera_ server (server,
+channel, private):
+
+----
+/disconnect
+----
+
+When you connect to multiple servers at same time, server buffers are merged
+by default and you can switch between them with the kbd:[Ctrl+x] key. +
+It is possible to disable auto merge of server buffers to have independent
+server buffers:
+
+----
+/set irc.look.server_buffer independent
+----
+
+// TRANSLATION MISSING
 [[irc_tor_sasl]]
-==== Connect with TOR and SASL
+===== Connect with TOR and SASL
 
 // TRANSLATION MISSING
 Some servers support connections with TOR (https://www.torproject.org/),
@@ -3149,6 +3297,64 @@ And finally, connect to the server:
 
 ----
 /connect irc-tor
+----
+
+// TRANSLATION MISSING
+[[irc_channels]]
+==== Channels
+
+You can join channels with the <<command_irc_join,/join>> command:
+
+----
+/join #channel
+----
+
+Part a channel (keeping the buffer open):
+
+----
+/part [quit message]
+----
+
+The channels you joined are not saved. If you want to join them automatically
+when connecting to the server, you must set the server `autojoin` option:
+
+----
+/set irc.server.libera.autojoin "#weechat,#weechat-fr"
+----
+
+[NOTE]
+Some scripts can help to automatically set this option,
+see `/script search autojoin`.
+
+Be careful, spaces can be used only to separate list of channels from keys,
+for example if `#channel1` requires a key but not `#channel2`:
+
+----
+/set irc.server.libera.autojoin "#channel1,#channel2 key1"
+----
+
+For help on the format, see `/help irc.server.libera.autojoin`.
+
+[[irc_private_messages]]
+==== Private messages
+
+You can send a private message with the <<command_irc_query,/query>> command,
+which opens a separate buffer:
+
+----
+/query bob hi, how are you?
+----
+
+Without arguments the command just opens the buffer (or selects it if already open):
+
+----
+/query bob
+----
+
+To close the private buffer, you can do this command on the private buffer:
+
+----
+/close
 ----
 
 [[irc_smart_filter_join_part_quit]]
@@ -3554,8 +3760,8 @@ IRC サーバ名を使ったディレクトリに、チャンネル名を使っ�
         │   └── #mychan.weechatlog
         ├── oftc
         │   ├── oftc.weechatlog
-        │   ├── #chan1.weechatlog
-        │   └── #chan2.weechatlog
+        │   ├── #channel1.weechatlog
+        │   └── #channel2.weechatlog
         ...
 ....
 
