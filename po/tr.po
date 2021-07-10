@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-07-04 19:40+0200\n"
-"PO-Revision-Date: 2021-05-25 18:28+0200\n"
+"POT-Creation-Date: 2021-07-10 15:57+0200\n"
+"PO-Revision-Date: 2021-07-10 16:01+0200\n"
 "Last-Translator: Emir SARI <bitigchi@me.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: tr\n"
@@ -8938,10 +8938,6 @@ msgid "%sgnutls: failed to calculate certificate fingerprint (%s)"
 msgstr "%sgnutls: Sertifika parmak izi hesaplanamadı (%s)"
 
 #, c-format
-msgid "%sgnutls: connected using %d-bit Diffie-Hellman shared secret exchange"
-msgstr ""
-
-#, c-format
 msgid "%sgnutls: failed to initialize certificate structure"
 msgstr ""
 
@@ -12055,7 +12051,3 @@ msgstr "%s%s: \"%s\" için %s ile zaman aşımı"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: Bağlanılamıyor: Beklenmedik hata (%d)"
-
-#, c-format
-#~ msgid "%s%s: exception: %s"
-#~ msgstr "%s%s: İstisna: %s"

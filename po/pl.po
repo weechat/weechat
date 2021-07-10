@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-07-04 19:40+0200\n"
-"PO-Revision-Date: 2021-06-28 21:11+0200\n"
+"POT-Creation-Date: 2021-07-10 15:57+0200\n"
+"PO-Revision-Date: 2021-07-10 16:01+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
 "Language: pl\n"
@@ -11425,10 +11425,6 @@ msgid "%sgnutls: failed to calculate certificate fingerprint (%s)"
 msgstr "%sgnutls: nie udało się wyliczyć odcisku certyfikatu (%s)"
 
 #, c-format
-msgid "%sgnutls: connected using %d-bit Diffie-Hellman shared secret exchange"
-msgstr "%sgnutls: połączono używając %d-bitowego klucza Diffie-Hellmana"
-
-#, c-format
 msgid "%sgnutls: failed to initialize certificate structure"
 msgstr "%sgnutls: nie udało się zainicjować struktury certyfikatu"
 
@@ -15210,16 +15206,3 @@ msgstr "%s%s: przekroczono czas na \"%s\" z %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: nie można połączyć: niespodziewany błąd (%d)"
-
-#~ msgid "%s%s: exception: %s"
-#~ msgstr "%s%s: wyjątek %s"
-
-#~ msgid ""
-#~ "%s%s: error building answer for SASL authentication, using mechanism \"%s"
-#~ "\""
-#~ msgstr ""
-#~ "%s%s: błąd podczas tworzenia odpowiedzi dla uwierzytelniania SASL, "
-#~ "używając mechanizmu \"%s\""
-
-#~ msgid "bar size in chars (0 = auto size)"
-#~ msgstr "rozmiar paska w znakach (0 = automatyczny rozmiar)"

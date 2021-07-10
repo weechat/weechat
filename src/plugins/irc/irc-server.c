@@ -4621,14 +4621,6 @@ irc_server_gnutls_callback (const void *pointer, void *data,
 
     if (action == WEECHAT_HOOK_CONNECT_GNUTLS_CB_VERIFY_CERT)
     {
-        weechat_printf (
-            server->buffer,
-            _("%sgnutls: connected using %d-bit Diffie-Hellman shared secret "
-              "exchange"),
-            weechat_prefix ("network"),
-            IRC_SERVER_OPTION_INTEGER (server,
-                                       IRC_SERVER_OPTION_SSL_DHKEY_SIZE));
-
         /* initialize the certificate structure */
         if (gnutls_x509_crt_init (&cert_temp) != GNUTLS_E_SUCCESS)
         {

@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-07-04 19:40+0200\n"
-"PO-Revision-Date: 2021-05-25 18:28+0200\n"
+"POT-Creation-Date: 2021-07-10 15:57+0200\n"
+"PO-Revision-Date: 2021-07-10 16:01+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: ru\n"
@@ -9403,10 +9403,6 @@ msgstr "%s не могу создать сервер\n"
 msgid "%sgnutls: failed to calculate certificate fingerprint (%s)"
 msgstr "Не могу записать лог-файл \"%s\"\n"
 
-#, c-format
-msgid "%sgnutls: connected using %d-bit Diffie-Hellman shared secret exchange"
-msgstr ""
-
 #, fuzzy, c-format
 msgid "%sgnutls: failed to initialize certificate structure"
 msgstr "Не могу записать лог-файл \"%s\"\n"
@@ -12760,7 +12756,3 @@ msgstr "%s нет аргумента для параметра \"%s\"\n"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s DCC: не могу соединиться с отправителем\n"
-
-#, fuzzy, c-format
-#~ msgid "%s%s: exception: %s"
-#~ msgstr "%s[%s%s%s] %s%s%s забанен\n"

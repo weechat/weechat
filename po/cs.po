@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-07-04 19:40+0200\n"
-"PO-Revision-Date: 2021-05-25 18:28+0200\n"
+"POT-Creation-Date: 2021-07-10 15:57+0200\n"
+"PO-Revision-Date: 2021-07-10 16:01+0200\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: cs\n"
@@ -9817,11 +9817,6 @@ msgid "%sgnutls: failed to calculate certificate fingerprint (%s)"
 msgstr "%sgnutls: nemůžu číst certifikát \"%s\""
 
 #, fuzzy, c-format
-msgid "%sgnutls: connected using %d-bit Diffie-Hellman shared secret exchange"
-msgstr ""
-"gnutls: připojují se pomocí %d-bit Diffie-Hellman zdílenéhé výměny tajemství"
-
-#, fuzzy, c-format
 msgid "%sgnutls: failed to initialize certificate structure"
 msgstr "gnutls: certifikát protějška je důvěryhodný"
 
@@ -13298,18 +13293,3 @@ msgstr "%s%s: vypršel časový limit \"%s\" pro %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: nemohu se připojit\" neočekávaná chyba (%d)"
-
-#, c-format
-#~ msgid "%s%s: exception: %s"
-#~ msgstr "%s%s: vyjímka: %s"
-
-#, c-format
-#~ msgid ""
-#~ "%s%s: error building answer for SASL authentication, using mechanism \"%s"
-#~ "\""
-#~ msgstr ""
-#~ "%s%s: chyba vytváření odpovědi pro SASL autentizaci, použitý mechanismus "
-#~ "\"%s\""
-
-#~ msgid "bar size in chars (0 = auto size)"
-#~ msgstr "velikost pole ve znacích (0 = automatická velikost)"

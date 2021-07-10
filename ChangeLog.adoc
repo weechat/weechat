@@ -39,6 +39,7 @@ New features::
 Bug fixes::
 
   * api: fix function string_match with joker in the string if multiple words matched in input string
+  * irc: remove unneeded message about Diffie-Hellman shared secret exchange during SSL connection to server (issue #857)
   * irc: escape/unescape IRC message tags values (issue #1654)
   * irc: set notify level to "private" for received WALLOPS
   * script: fix move of installed script on another filesystem (issue #1667)

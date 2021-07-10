@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-07-04 19:40+0200\n"
-"PO-Revision-Date: 2021-06-03 15:15+0400\n"
+"POT-Creation-Date: 2021-07-10 15:57+0200\n"
+"PO-Revision-Date: 2021-07-10 16:01+0200\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: sr\n"
@@ -11405,12 +11405,6 @@ msgid "%sgnutls: failed to calculate certificate fingerprint (%s)"
 msgstr "%sgnutls: није успело израчунавање отиска сертификата (%s)"
 
 #, c-format
-msgid "%sgnutls: connected using %d-bit Diffie-Hellman shared secret exchange"
-msgstr ""
-"%sgnutls: веза је успостављена употребом %d-битне Дифи-Хелман размене дељене "
-"тајне"
-
-#, c-format
 msgid "%sgnutls: failed to initialize certificate structure"
 msgstr "%sgnutls: није успела иницијализација структуре сертификата"
 
@@ -15181,14 +15175,3 @@ msgstr "%s%s: тајмаут за „%s” са %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: повезивање није успело: неочекивана грешка (%d)"
-
-#, c-format
-#~ msgid "%s%s: exception: %s"
-#~ msgstr "%s%s: изузетак: %s"
-
-#~ msgid ""
-#~ "%s%s: error building answer for SASL authentication, using mechanism \"%s"
-#~ "\""
-#~ msgstr ""
-#~ "%s%s: грешка при грађењу одговора за SASL аутентификацију, користећи "
-#~ "механизам „%s”"

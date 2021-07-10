@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-07-04 19:40+0200\n"
-"PO-Revision-Date: 2021-05-25 18:28+0200\n"
+"POT-Creation-Date: 2021-07-10 15:57+0200\n"
+"PO-Revision-Date: 2021-07-10 16:01+0200\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: es\n"
@@ -10110,11 +10110,6 @@ msgstr "%s%s: no es posible crear el socket"
 msgid "%sgnutls: failed to calculate certificate fingerprint (%s)"
 msgstr "%sgnutls: no es posible leer el certificado \"%s\""
 
-#, c-format
-msgid "%sgnutls: connected using %d-bit Diffie-Hellman shared secret exchange"
-msgstr ""
-"%sgnutls: conectado usando intercambio de claves Diffie-Hellman de %d-bits"
-
 #, fuzzy, c-format
 msgid "%sgnutls: failed to initialize certificate structure"
 msgstr "%sgnutls: el certificado del par es confiable"
@@ -13557,18 +13552,3 @@ msgstr "%s%s: tiempo de espera máximo para \"%s\" con %s"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: no es posible conectarse al transmisor"
-
-#, fuzzy, c-format
-#~ msgid "%s%s: exception: %s"
-#~ msgstr "%s%s[%s%s%s]%s excepción %s%s"
-
-#, c-format
-#~ msgid ""
-#~ "%s%s: error building answer for SASL authentication, using mechanism \"%s"
-#~ "\""
-#~ msgstr ""
-#~ "%s%s: error al construir la respuesta para la autenticación SASL, usando "
-#~ "el mecanismo \"%s\""
-
-#~ msgid "bar size in chars (0 = auto size)"
-#~ msgstr "tamaño de la barra en caracteres (0 = tamaño automático)"
