@@ -185,11 +185,11 @@ $ make
 $ make install
 ----
 
-CMake に対するオプションを指定するには、以下の書式を使ってください: "-DOPTION=VALUE"。
+CMake に対するオプションを指定するには、以下の書式を使ってください: `-DOPTION=VALUE`。
 
 よく利用されるオプションのリスト:
 
-[width="100%",cols="2m,2,5m,12",options="header"]
+[width="100%",cols="3m,3,3m,10",options="header"]
 |===
 | オプション | 値 | デフォルト値 | 説明
 
@@ -2329,7 +2329,7 @@ WeeChat はデフォルトマウスイベントの多くを定義しています
 
 修飾キーリスト:
 
-[width="100%",cols="2m,3",options="header"]
+[width="100%",cols="1m,4",options="header"]
 |===
 | 修飾キー | 説明
 | ctrl     | kbd:[Ctrl] キー
@@ -2339,7 +2339,7 @@ WeeChat はデフォルトマウスイベントの多くを定義しています
 
 ボタン/ホイールのリスト:
 
-[width="100%",cols="2m,3",options="header"]
+[width="100%",cols="1m,4",options="header"]
 |===
 | ボタン/ホイール     | 説明
 | button1             | 左ボタンクリック
@@ -2352,7 +2352,7 @@ WeeChat はデフォルトマウスイベントの多くを定義しています
 
 ジェスチャーのリスト (ボタンのみ対応、ホイール未対応):
 
-[width="100%",cols="2m,3",options="header"]
+[width="100%",cols="1m,4",options="header"]
 |===
 | ジェスチャー       | 距離
 | gesture-up         | 3 から 19
@@ -2367,7 +2367,7 @@ WeeChat はデフォルトマウスイベントの多くを定義しています
 
 未完了イベントのリスト (ボタンのみ、プラグイン/スクリプトで便利):
 
-[width="100%",cols="2m,3",options="header"]
+[width="100%",cols="1m,4",options="header"]
 |===
 | イベント   | 説明
 | event-down | マウスボタンが押され、離されていない状態
@@ -3494,7 +3494,7 @@ weechat::
 
 カスタマイズできる一部の IRC メッセージ、別名のリストは以下です:
 
-[width="100%",cols="^1m,^3m,8",options="header"]
+[width="100%",cols="^2m,^3m,15",options="header"]
 |===
 | メッセージ | 別名       | 説明
 | error   |               | エラー

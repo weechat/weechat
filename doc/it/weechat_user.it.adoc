@@ -211,13 +211,13 @@ $ make install
 ----
 
 // TRANSLATION MISSING
-Options can be used for CMake, with format: "-DOPTION=VALUE".
+Options can be used for CMake, with format: `-DOPTION=VALUE`.
 
 // TRANSLATION MISSING
 List of commonly used options:
 
 // TRANSLATION MISSING
-[width="100%",cols="2m,2,5m,12",options="header"]
+[width="100%",cols="3m,3,3m,10",options="header"]
 |===
 | Option | Values | Default value | Description
 
@@ -2424,7 +2424,7 @@ pulsante/rotellina e un'azione (opzionale). Elementi diversi sono separati da `+
 
 Elenco di modificatori
 
-[width="100%",cols="2m,3",options="header"]
+[width="100%",cols="1m,4",options="header"]
 |===
 | Modificatore | Descrizione
 | ctrl         | Tasto kbd:[Ctrl]
@@ -2434,7 +2434,7 @@ Elenco di modificatori
 
 Elenco di pulsanti/rotellina:
 
-[width="100%",cols="2m,3",options="header"]
+[width="100%",cols="1m,4",options="header"]
 |===
 | Pulsante/rotellina  | Descrizione
 | button1             | Click sul tasto sinistro
@@ -2447,7 +2447,7 @@ Elenco di pulsanti/rotellina:
 
 Elenco di azioni (solo per i pulsanti, non la rotellina):
 
-[width="100%",cols="2m,3",options="header"]
+[width="100%",cols="1m,4",options="header"]
 |===
 | Azione             | Distanza
 | gesture-up         | 3 ... 19
@@ -2463,7 +2463,7 @@ Elenco di azioni (solo per i pulsanti, non la rotellina):
 // TRANSLATION MISSING
 List of incomplete events (only for buttons, useful for plugins/scripts):
 
-[width="100%",cols="2m,3",options="header"]
+[width="100%",cols="1m,4",options="header"]
 |===
 | Event      | Description
 | event-down | Button was pressed but not released yet
@@ -3658,7 +3658,7 @@ appropriato, di solito quello del server o del canale.
 Ecco una lista incompleta dei messaggi IRC o degli alias che è possibile
 personalizzare:
 
-[width="100%",cols="^1m,^3m,8",options="header"]
+[width="100%",cols="^2m,^3m,15",options="header"]
 |===
 | messaggio | alias         | descrizione
 | error     |               | errore

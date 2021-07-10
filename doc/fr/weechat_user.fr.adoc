@@ -180,11 +180,11 @@ $ make
 $ make install
 ----
 
-Des options peuvent être utilisées pour CMake, avec le format : "-DOPTION=VALUE".
+Des options peuvent être utilisées pour CMake, avec le format : `-DOPTION=VALUE`.
 
 Liste des options couramment utilisées :
 
-[width="100%",cols="2m,2,5m,12",options="header"]
+[width="100%",cols="3m,3,3m,10",options="header"]
 |===
 | Option | Valeurs | Valeur par défaut | Description
 
@@ -2326,7 +2326,7 @@ et un geste (facultatif). Les différents éléments sont séparés par `+-+`.
 
 Liste des modificateurs :
 
-[width="100%",cols="2m,3",options="header"]
+[width="100%",cols="1m,4",options="header"]
 |===
 | Modificateur | Description
 | ctrl         | Touche kbd:[Ctrl]
@@ -2336,7 +2336,7 @@ Liste des modificateurs :
 
 Liste des boutons/roulette :
 
-[width="100%",cols="2m,3",options="header"]
+[width="100%",cols="1m,4",options="header"]
 |===
 | Bouton/roulette     | Description
 | button1             | Clic sur le bouton gauche
@@ -2349,7 +2349,7 @@ Liste des boutons/roulette :
 
 Liste des gestes (seulement pour les boutons, pas la roulette) :
 
-[width="100%",cols="2m,3",options="header"]
+[width="100%",cols="1m,4",options="header"]
 |===
 | Geste              | Distance
 | gesture-up         | 3 ... 19
@@ -2365,7 +2365,7 @@ Liste des gestes (seulement pour les boutons, pas la roulette) :
 Liste des évènements incomplets (seulement pour les boutons, pratique pour les
 extensions/scripts) :
 
-[width="100%",cols="2m,3",options="header"]
+[width="100%",cols="1m,4",options="header"]
 |===
 | Évènement  | Description
 | event-down | Le bouton a été pressé mais pas encore relâché
@@ -3514,7 +3514,7 @@ le tampon approprié, généralement le tampon du serveur ou du canal.
 
 Liste non exhaustive des messages ou alias que vous pouvez paramétrer :
 
-[width="100%",cols="^1m,^3m,8",options="header"]
+[width="100%",cols="^2m,^3m,15",options="header"]
 |===
 | message | alias         | description
 | error   |               | erreur

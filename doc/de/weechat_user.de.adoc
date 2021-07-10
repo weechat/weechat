@@ -184,11 +184,11 @@ $ make
 $ make install
 ----
 
-Optionen für CMake können mit dem Format, "-DOPTION=VALUE", genutzt werden.
+Optionen für CMake können mit dem Format, `-DOPTION=VALUE`, genutzt werden.
 
 Liste von häufig verwendeten Optionen:
 
-[width="100%",cols="2m,2,5m,12",options="header"]
+[width="100%",cols="3m,3,3m,10",options="header"]
 |===
 | Option | Wert | Standardwert | Beschreibung
 
@@ -2291,7 +2291,7 @@ und der Mausgeste (optional). Die unterschiedlichen Elemente werden durch ein `+
 
 Liste der Modifiers:
 
-[width="100%",cols="2m,3",options="header"]
+[width="100%",cols="1m,4",options="header"]
 |===
 | Modifier | Beschreibung
 | ctrl     | Taste kbd:[Ctrl]
@@ -2301,7 +2301,7 @@ Liste der Modifiers:
 
 Liste der Maustasten/Mausrad:
 
-[width="100%",cols="2m,3",options="header"]
+[width="100%",cols="1m,4",options="header"]
 |===
 | Maustaste/-rad      | Beschreibung
 | button1             | Linker Mausknopf wird gedrückt
@@ -2314,7 +2314,7 @@ Liste der Maustasten/Mausrad:
 
 Liste der Mausgesten (nur für Maustasten, nicht für das Mausrad, anwendbar):
 
-[width="100%",cols="2m,3",options="header"]
+[width="100%",cols="1m,4",options="header"]
 |===
 | Mausgeste          | Distanz
 | gesture-up         | 3 ... 19
@@ -2329,7 +2329,7 @@ Liste der Mausgesten (nur für Maustasten, nicht für das Mausrad, anwendbar):
 
 Liste von unvollständigen Ereignissen (nur für Mausknopf, nützlich für Erweiterungen/Skripten):
 
-[width="100%",cols="2m,3",options="header"]
+[width="100%",cols="1m,4",options="header"]
 |===
 | Ereignis   | Beschreibung
 | event-down | Mausknopf ist gedrückt
@@ -3461,7 +3461,7 @@ Falls die Option nicht gesetzt ist (Standard) wählt WeeChat einen geeigneten Bu
 
 Unvollständige Liste der IRC Nachrichten bzw. Alias die angepasst werden können:
 
-[width="100%",cols="^1m,^3m,8",options="header"]
+[width="100%",cols="^2m,^3m,15",options="header"]
 |===
 | Nachricht | Alias         | Beschreibung
 | error     |               | Fehler

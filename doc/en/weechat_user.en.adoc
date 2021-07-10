@@ -176,11 +176,11 @@ $ make
 $ make install
 ----
 
-Options can be used for CMake, with format: "-DOPTION=VALUE".
+Options can be used for CMake, with format: `-DOPTION=VALUE`.
 
 List of commonly used options:
 
-[width="100%",cols="2m,2,5m,12",options="header"]
+[width="100%",cols="3m,3,3m,10",options="header"]
 |===
 | Option | Values | Default value | Description
 
@@ -2252,7 +2252,7 @@ Event name consists of a modifier (optional), a button/wheel name and a gesture
 
 List of modifiers:
 
-[width="100%",cols="2m,3",options="header"]
+[width="100%",cols="1m,4",options="header"]
 |===
 | Modifier | Description
 | ctrl     | Key kbd:[Ctrl]
@@ -2262,7 +2262,7 @@ List of modifiers:
 
 List of buttons/wheel:
 
-[width="100%",cols="2m,3",options="header"]
+[width="100%",cols="1m,4",options="header"]
 |===
 | Button/wheel        | Description
 | button1             | Click on left button
@@ -2275,7 +2275,7 @@ List of buttons/wheel:
 
 List of gestures (only for buttons, not wheel):
 
-[width="100%",cols="2m,3",options="header"]
+[width="100%",cols="1m,4",options="header"]
 |===
 | Gesture            | Distance
 | gesture-up         | 3 ... 19
@@ -2290,7 +2290,7 @@ List of gestures (only for buttons, not wheel):
 
 List of incomplete events (only for buttons, useful for plugins/scripts):
 
-[width="100%",cols="2m,3",options="header"]
+[width="100%",cols="1m,4",options="header"]
 |===
 | Event      | Description
 | event-down | Button was pressed but not released yet
@@ -3398,7 +3398,7 @@ server or channel buffer.
 
 Non-comprehensive list of IRC messages or alias that you can customize:
 
-[width="100%",cols="^1m,^3m,8",options="header"]
+[width="100%",cols="^2m,^3m,15",options="header"]
 |===
 | message | alias         | description
 | error   |               | error

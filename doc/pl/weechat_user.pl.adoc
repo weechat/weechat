@@ -182,11 +182,11 @@ $ make
 $ make install
 ----
 
-Opcje mogą zostać przekazane do CMake, format "-DOPCJA=WARTOŚĆ".
+Opcje mogą zostać przekazane do CMake, format `-DOPCJA=WARTOŚĆ`.
 
 Lista popularnych opcji:
 
-[width="100%",cols="2m,2,5m,12",options="header"]
+[width="100%",cols="3m,3,3m,10",options="header"]
 |===
 | Opcja  | Wartość | Wartość domyślna | Opis
 
@@ -2267,7 +2267,7 @@ Nazwa zdarzenia zawiera modyfikator (opcjonalny), nazwę klawisza/rolki i gest
 
 Lista modyfikatorów:
 
-[width="100%",cols="2m,3",options="header"]
+[width="100%",cols="1m,4",options="header"]
 |===
 | Modyfikator | Opis
 | ctrl        | Klawisz kbd:[Ctrl]
@@ -2277,7 +2277,7 @@ Lista modyfikatorów:
 
 Lista klawiszy/rolek:
 
-[width="100%",cols="2m,3",options="header"]
+[width="100%",cols="1m,4",options="header"]
 |===
 | Klawisz/rolka       | Opis
 | button1             | Lewy klawisz myszy
@@ -2290,7 +2290,7 @@ Lista klawiszy/rolek:
 
 Lista gestów (tylko dla klawiszy, nie rolki):
 
-[width="100%",cols="2m,3",options="header"]
+[width="100%",cols="1m,4",options="header"]
 |===
 | Gest               | Odległość
 | gesture-up         | 3 ... 19
@@ -2305,7 +2305,7 @@ Lista gestów (tylko dla klawiszy, nie rolki):
 
 Lista niedkończonych zdarzeń (tylko dla przycisków, użyteczne dla wtyczek/skryptów):
 
-[width="100%",cols="2m,3",options="header"]
+[width="100%",cols="1m,4",options="header"]
 |===
 | Zdarzenie  | Opis
 | event-down | Klawisz został wciśnięty ale jeszcze nie puszczony
@@ -3423,7 +3423,7 @@ zazwyczaj bufor serwera albo kanału.
 
 Niepełna lista wiadomości IRC lub aliasów jakie można dostosować:
 
-[width="100%",cols="^1m,^3m,8",options="header"]
+[width="100%",cols="^2m,^3m,15",options="header"]
 |===
 | wiadomość | alias         | opis
 | error     |               | błąd
