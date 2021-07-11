@@ -3114,14 +3114,14 @@ with the password stored as secured data (see also chapter on
 
 ----
 /set irc.server.libera.sasl_username "alice"
-/secure set libera_password xxxxxxx
-/set irc.server.libera.sasl_password "${sec.data.libera_password}"
+/secure set libera xxxxxxx
+/set irc.server.libera.sasl_password "${sec.data.libera}"
 ----
 
 If SASL is not supported, you can use a command to send a message to nickserv:
 
 ----
-/set irc.server.libera.command "/msg nickserv identify ${sec.data.libera_password}"
+/set irc.server.libera.command "/msg nickserv identify ${sec.data.libera}"
 ----
 
 [NOTE]
@@ -3173,7 +3173,7 @@ irc.server.libera.realname              string   null -> ""
 irc.server.libera.sasl_fail             integer  null -> reconnect
 irc.server.libera.sasl_key              string   null -> ""
 irc.server.libera.sasl_mechanism        integer  null -> plain
-irc.server.libera.sasl_password         string   "${sec.data.libera_password}"
+irc.server.libera.sasl_password         string   "${sec.data.libera}"
 irc.server.libera.sasl_timeout          integer  null -> 15
 irc.server.libera.sasl_username         string   "alice"
 irc.server.libera.split_msg_max_length  integer  null -> 512

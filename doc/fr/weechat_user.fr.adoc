@@ -2993,15 +2993,15 @@ le chapitre sur <<irc_sasl_authentication,l'authentification avec SASL>>) :
 
 ----
 /set irc.server.libera.sasl_username "alice"
-/secure set libera_password xxxxxxx
-/set irc.server.libera.sasl_password "${sec.data.libera_password}"
+/secure set libera xxxxxxx
+/set irc.server.libera.sasl_password "${sec.data.libera}"
 ----
 
 Si SASL n'est pas supporté, vous pouvez utiliser une commande pour envoyer
 un message à nickserv :
 
 ----
-/set irc.server.libera.command "/msg nickserv identify ${sec.data.libera_password}"
+/set irc.server.libera.command "/msg nickserv identify ${sec.data.libera}"
 ----
 
 [NOTE]
@@ -3053,7 +3053,7 @@ irc.server.libera.realname              string   null -> ""
 irc.server.libera.sasl_fail             integer  null -> reconnect
 irc.server.libera.sasl_key              string   null -> ""
 irc.server.libera.sasl_mechanism        integer  null -> plain
-irc.server.libera.sasl_password         string   "${sec.data.libera_password}"
+irc.server.libera.sasl_password         string   "${sec.data.libera}"
 irc.server.libera.sasl_timeout          integer  null -> 15
 irc.server.libera.sasl_username         string   "alice"
 irc.server.libera.split_msg_max_length  integer  null -> 512
