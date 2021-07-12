@@ -3292,10 +3292,20 @@ COMMAND_CALLBACK(input)
         gui_input_delete_beginning_of_line (buffer);
     else if (string_strcasecmp (argv[1], "delete_end_of_line") == 0)
         gui_input_delete_end_of_line (buffer);
+    else if (string_strcasecmp (argv[1], "delete_beginning_of_input") == 0)
+        gui_input_delete_beginning_of_input (buffer);
+    else if (string_strcasecmp (argv[1], "delete_end_of_input") == 0)
+        gui_input_delete_end_of_input (buffer);
     else if (string_strcasecmp (argv[1], "delete_line") == 0)
         gui_input_delete_line (buffer);
+    else if (string_strcasecmp (argv[1], "delete_input") == 0)
+        gui_input_delete_input (buffer);
     else if (string_strcasecmp (argv[1], "transpose_chars") == 0)
         gui_input_transpose_chars (buffer);
+    else if (string_strcasecmp (argv[1], "move_beginning_of_input") == 0)
+        gui_input_move_beginning_of_input (buffer);
+    else if (string_strcasecmp (argv[1], "move_end_of_input") == 0)
+        gui_input_move_end_of_input (buffer);
     else if (string_strcasecmp (argv[1], "move_beginning_of_line") == 0)
         gui_input_move_beginning_of_line (buffer);
     else if (string_strcasecmp (argv[1], "move_end_of_line") == 0)
@@ -3308,6 +3318,10 @@ COMMAND_CALLBACK(input)
         gui_input_move_previous_word (buffer);
     else if (string_strcasecmp (argv[1], "move_next_word") == 0)
         gui_input_move_next_word (buffer);
+    else if (string_strcasecmp (argv[1], "move_previous_line") == 0)
+        gui_input_move_previous_line (buffer);
+    else if (string_strcasecmp (argv[1], "move_next_line") == 0)
+        gui_input_move_next_line (buffer);
     else if (string_strcasecmp (argv[1], "history_previous") == 0)
         gui_input_history_local_previous (buffer);
     else if (string_strcasecmp (argv[1], "history_next") == 0)
@@ -7788,17 +7802,25 @@ command_init ()
            "  delete_beginning_of_line: delete from beginning of line until "
            "cursor\n"
            "  delete_end_of_line: delete from cursor until end of line\n"
+           "  delete_beginning_of_input: delete from beginning of input until "
+           "cursor\n"
+           "  delete_end_of_input: delete from cursor until end of input\n"
            "  delete_line: delete entire line\n"
+           "  delete_input: delete entire input\n"
            "  clipboard_paste: paste from the internal clipboard\n"
            "  transpose_chars: transpose two chars\n"
            "  undo: undo last command line action\n"
            "  redo: redo last command line action\n"
+           "  move_beginning_of_input: move cursor to beginning of input\n"
+           "  move_end_of_input: move cursor to end of input\n"
            "  move_beginning_of_line: move cursor to beginning of line\n"
            "  move_end_of_line: move cursor to end of line\n"
            "  move_previous_char: move cursor to previous char\n"
            "  move_next_char: move cursor to next char\n"
            "  move_previous_word: move cursor to previous word\n"
            "  move_next_word: move cursor to next word\n"
+           "  move_previous_line: move cursor to previous line\n"
+           "  move_next_line: move cursor to next line\n"
            "  history_previous: recall previous command in current buffer "
            "history\n"
            "  history_next: recall next command in current buffer history\n"
@@ -7836,12 +7858,15 @@ command_init ()
         "search_switch_where || search_previous || search_next || "
         "search_stop_here || search_stop || delete_previous_char || "
         "delete_next_char || delete_previous_word || delete_next_word || "
-        "delete_beginning_of_line || delete_end_of_line || delete_line || "
-        "clipboard_paste || transpose_chars || undo || redo || "
+        "delete_beginning_of_line || delete_end_of_line || "
+        "delete_beginning_of_input || delete_end_of_input || delete_line || "
+        "delete_input || clipboard_paste || transpose_chars || undo || redo || "
+        "move_beginning_of_input || move_end_of_input || "
         "move_beginning_of_line || move_end_of_line || move_previous_char || "
         "move_next_char || move_previous_word || move_next_word || "
-        "history_previous || history_next || history_global_previous || "
-        "history_global_next || jump_smart || jump_last_buffer_displayed || "
+        "move_previous_line || move_next_line || history_previous || "
+        "history_next || history_global_previous || history_global_next || "
+        "jump_smart || jump_last_buffer_displayed || "
         "jump_previously_visited_buffer || jump_next_visited_buffer || "
         "hotlist_clear 1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|lowest|highest || "
         "grab_key || grab_key_command || grab_mouse || grab_mouse_area || "

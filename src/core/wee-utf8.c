@@ -267,6 +267,48 @@ utf8_next_char (const char *string)
 }
 
 /*
+ * Gets pointer to the beginning of the UTF-8 line in a string.
+ *
+ * Returns pointer to the beginning of the UTF-8 line, NULL if string was NULL.
+ */
+
+const char *
+utf8_beginning_of_line (const char *string_start, const char *string)
+{
+    if (string && string[0] == '\n')
+        string = (char *)utf8_prev_char (string_start, string);
+
+    while (string && string[0] != '\n')
+    {
+        string = (char *)utf8_prev_char (string_start, string);
+    }
+
+    if (string)
+        return (char *)utf8_next_char (string);
+
+    return string_start;
+}
+
+/*
+ * Gets pointer to the end of the UTF-8 line in a string.
+ *
+ * Returns pointer to the end of the UTF-8 line, NULL if string was NULL.
+ */
+
+const char *
+utf8_end_of_line (const char *string)
+{
+    if (!string)
+        return NULL;
+
+    while (string[0] && string[0] != '\n')
+    {
+        string = (char *)utf8_next_char (string);
+    }
+    return string;
+}
+
+/*
  * Gets UTF-8 char as an integer.
  *
  * Returns the UTF-8 char as integer number.

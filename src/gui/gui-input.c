@@ -944,10 +944,103 @@ gui_input_delete_next_word (struct t_gui_buffer *buffer)
 
 /*
  * Deletes all from cursor pos to beginning of line (default key: ctrl-U).
+ *
+ * If cursor is at beginning of line, deletes to beginning of previous line.
  */
 
 void
 gui_input_delete_beginning_of_line (struct t_gui_buffer *buffer)
+{
+    int length_deleted, size_deleted;
+    char *start, *beginning_of_line;
+
+    if (buffer->input && (buffer->input_buffer_pos > 0))
+    {
+        gui_buffer_undo_snap (buffer);
+        start = (char *)utf8_add_offset (buffer->input_buffer,
+                                         buffer->input_buffer_pos);
+
+        beginning_of_line = (char *)utf8_beginning_of_line (buffer->input_buffer, start);
+        if (beginning_of_line == start) {
+            beginning_of_line = (char *)utf8_prev_char (buffer->input_buffer,
+                                                        beginning_of_line);
+            beginning_of_line = (char *)utf8_beginning_of_line (buffer->input_buffer,
+                                                                beginning_of_line);
+        }
+
+        size_deleted = start - beginning_of_line;
+        length_deleted = utf8_strnlen (beginning_of_line, size_deleted);
+        gui_input_clipboard_copy (beginning_of_line, size_deleted);
+
+        memmove (beginning_of_line, start, strlen (start));
+
+        if (gui_input_optimize_size (
+                buffer,
+                buffer->input_buffer_size - size_deleted,
+                buffer->input_buffer_length - length_deleted))
+        {
+            buffer->input_buffer[buffer->input_buffer_size] = '\0';
+            buffer->input_buffer_pos = utf8_pos (buffer->input_buffer,
+                                                 beginning_of_line - buffer->input_buffer);
+        }
+        gui_input_text_changed_modifier_and_signal (buffer,
+                                                    1, /* save undo */
+                                                    1); /* stop completion */
+    }
+}
+
+/*
+ * Deletes all from cursor pos to end of line (default key: ctrl-K).
+ *
+ * If cursor is at end of line, deletes to end of next line.
+ */
+
+void
+gui_input_delete_end_of_line (struct t_gui_buffer *buffer)
+{
+    int length_deleted, size_deleted;
+    char *start, *end_of_line;
+
+    if (buffer->input)
+    {
+        gui_buffer_undo_snap (buffer);
+        start = (char *)utf8_add_offset (buffer->input_buffer,
+                                         buffer->input_buffer_pos);
+
+        if (start[0] && start[0] == '\n')
+            end_of_line = (char *)utf8_next_char (start);
+        else
+            end_of_line = start;
+        end_of_line = (char *)utf8_end_of_line (end_of_line);
+
+        size_deleted = end_of_line - start;
+        length_deleted = utf8_strnlen (start, size_deleted);
+        gui_input_clipboard_copy (start, size_deleted);
+
+        memmove (start, end_of_line, strlen (end_of_line));
+
+        if (gui_input_optimize_size (
+                buffer,
+                buffer->input_buffer_size - size_deleted,
+                buffer->input_buffer_length - length_deleted))
+        {
+            buffer->input_buffer[buffer->input_buffer_size] = '\0';
+            buffer->input_buffer_pos = utf8_pos (buffer->input_buffer,
+                                                 start - buffer->input_buffer);
+        }
+
+        gui_input_text_changed_modifier_and_signal (buffer,
+                                                    1, /* save undo */
+                                                    1); /* stop completion */
+    }
+}
+
+/*
+ * Deletes all from cursor pos to beginning of input (default key: meta-ctrl-U).
+ */
+
+void
+gui_input_delete_beginning_of_input (struct t_gui_buffer *buffer)
 {
     int length_deleted, size_deleted;
     char *start;
@@ -979,11 +1072,11 @@ gui_input_delete_beginning_of_line (struct t_gui_buffer *buffer)
 }
 
 /*
- * Deletes all from cursor pos to end of line (default key: ctrl-K).
+ * Deletes all from cursor pos to end of input (default key: meta-ctrl-K).
  */
 
 void
-gui_input_delete_end_of_line (struct t_gui_buffer *buffer)
+gui_input_delete_end_of_input (struct t_gui_buffer *buffer)
 {
     char *start;
     int size_deleted;
@@ -1006,11 +1099,51 @@ gui_input_delete_end_of_line (struct t_gui_buffer *buffer)
 }
 
 /*
- * Deletes entire line (default key: meta-r).
+ * Deletes entire line (default key: meta-R).
  */
 
 void
 gui_input_delete_line (struct t_gui_buffer *buffer)
+{
+    int length_deleted, size_deleted;
+    char *start, *beginning_of_line, *end_of_line;
+
+    if (buffer->input)
+    {
+        gui_buffer_undo_snap (buffer);
+        start = (char *)utf8_add_offset (buffer->input_buffer,
+                                         buffer->input_buffer_pos);
+
+        beginning_of_line = (char *)utf8_beginning_of_line (buffer->input_buffer, start);
+        end_of_line = (char *)utf8_end_of_line (start);
+
+        size_deleted = end_of_line - beginning_of_line;
+        length_deleted = utf8_strnlen (start, size_deleted);
+
+        memmove (beginning_of_line, end_of_line, strlen (end_of_line));
+
+        if (gui_input_optimize_size (
+                buffer,
+                buffer->input_buffer_size - size_deleted,
+                buffer->input_buffer_length - length_deleted))
+        {
+            buffer->input_buffer[buffer->input_buffer_size] = '\0';
+            buffer->input_buffer_pos = utf8_pos (buffer->input_buffer,
+                                                 beginning_of_line - buffer->input_buffer);
+        }
+
+        gui_input_text_changed_modifier_and_signal (buffer,
+                                                    1, /* save undo */
+                                                    1); /* stop completion */
+    }
+}
+
+/*
+ * Deletes entire input (default key: meta-r).
+ */
+
+void
+gui_input_delete_input (struct t_gui_buffer *buffer)
 {
     if (buffer->input)
     {
@@ -1063,11 +1196,11 @@ gui_input_transpose_chars (struct t_gui_buffer *buffer)
 }
 
 /*
- * Moves cursor to beginning of line (default key: home).
+ * Moves cursor to beginning of input (default key: shift-home).
  */
 
 void
-gui_input_move_beginning_of_line (struct t_gui_buffer *buffer)
+gui_input_move_beginning_of_input (struct t_gui_buffer *buffer)
 {
     if (buffer->input && (buffer->input_buffer_pos > 0))
     {
@@ -1077,16 +1210,80 @@ gui_input_move_beginning_of_line (struct t_gui_buffer *buffer)
 }
 
 /*
- * Moves cursor to end of line (default key: end).
+ * Moves cursor to end of input (default key: shift-end).
  */
 
 void
-gui_input_move_end_of_line (struct t_gui_buffer *buffer)
+gui_input_move_end_of_input (struct t_gui_buffer *buffer)
 {
     if (buffer->input
         && (buffer->input_buffer_pos < buffer->input_buffer_length))
     {
         buffer->input_buffer_pos = buffer->input_buffer_length;
+        gui_input_text_cursor_moved_signal (buffer);
+    }
+}
+
+/*
+ * Moves cursor to beginning of line (default key: home).
+ *
+ * If cursor is at beginning of line, moves to beginning of previous line.
+ */
+
+void
+gui_input_move_beginning_of_line (struct t_gui_buffer *buffer)
+{
+    char *pos, *original_pos;
+
+    if (buffer->input && (buffer->input_buffer_pos > 0))
+    {
+        pos = (char *)utf8_add_offset (buffer->input_buffer,
+                                       buffer->input_buffer_pos);
+        original_pos = pos;
+        pos = (char *)utf8_beginning_of_line (buffer->input_buffer, pos);
+
+        if (pos == original_pos)
+        {
+            pos = (char *)utf8_prev_char (buffer->input_buffer, pos);
+            pos = (char *)utf8_beginning_of_line (buffer->input_buffer, pos);
+        }
+
+        buffer->input_buffer_pos = utf8_pos (buffer->input_buffer,
+                                             pos - buffer->input_buffer);
+
+        gui_input_text_cursor_moved_signal (buffer);
+    }
+}
+
+/*
+ * Moves cursor to end of line (default key: end).
+ *
+ * If cursor is at end of line, moves to end of next line.
+ */
+
+void
+gui_input_move_end_of_line (struct t_gui_buffer *buffer)
+{
+    char *pos;
+
+    if (buffer->input
+        && (buffer->input_buffer_pos < buffer->input_buffer_length))
+    {
+        pos = (char *)utf8_add_offset (buffer->input_buffer,
+                                       buffer->input_buffer_pos);
+        if (pos[0] && pos[0] == '\n') {
+            pos = (char *)utf8_next_char (pos);
+        }
+        pos = (char *)utf8_end_of_line (pos);
+        if (pos[0])
+        {
+            buffer->input_buffer_pos =
+                utf8_pos (buffer->input_buffer,
+                          pos - buffer->input_buffer);
+        }
+        else
+            buffer->input_buffer_pos = buffer->input_buffer_length;
+
         gui_input_text_cursor_moved_signal (buffer);
     }
 }
@@ -1201,6 +1398,81 @@ gui_input_move_next_word (struct t_gui_buffer *buffer)
         }
 
         gui_input_text_cursor_moved_signal (buffer);
+    }
+}
+
+/*
+ * Moves cursor to previous line (default key: shift-up).
+ */
+
+void
+gui_input_move_previous_line (struct t_gui_buffer *buffer)
+{
+    int beginning_of_line_pos, length_from_beginning, i;
+    char *pos;
+
+    if (buffer->input && (buffer->input_buffer_pos > 0))
+    {
+        pos = (char *)utf8_add_offset (buffer->input_buffer,
+                                       buffer->input_buffer_pos);
+        pos = (char *)utf8_beginning_of_line (buffer->input_buffer, pos);
+
+        if (pos != buffer->input_buffer) {
+            beginning_of_line_pos = utf8_pos (buffer->input_buffer,
+                                              pos - buffer->input_buffer);
+            length_from_beginning = buffer->input_buffer_pos - beginning_of_line_pos;
+
+            pos = (char *)utf8_prev_char (buffer->input_buffer, pos);
+            pos = (char *)utf8_beginning_of_line (buffer->input_buffer, pos);
+
+            for (i = 0; pos[0] && pos[0] != '\n' && i < length_from_beginning; i++)
+            {
+                pos = (char *)utf8_next_char (pos);
+            }
+
+            buffer->input_buffer_pos = utf8_pos (buffer->input_buffer,
+                                                 pos - buffer->input_buffer);
+
+            gui_input_text_cursor_moved_signal (buffer);
+        }
+    }
+}
+
+/*
+ * Moves cursor to next line (default key: shift-down).
+ */
+
+void
+gui_input_move_next_line (struct t_gui_buffer *buffer)
+{
+    int beginning_of_line_pos, length_from_beginning, i;
+    char *pos;
+
+    if (buffer->input
+        && (buffer->input_buffer_pos < buffer->input_buffer_length))
+    {
+        pos = (char *)utf8_add_offset (buffer->input_buffer,
+                                       buffer->input_buffer_pos);
+        pos = (char *)utf8_beginning_of_line (buffer->input_buffer, pos);
+
+        beginning_of_line_pos = utf8_pos (buffer->input_buffer,
+                                          pos - buffer->input_buffer);
+        length_from_beginning = buffer->input_buffer_pos - beginning_of_line_pos;
+
+        pos = (char *)utf8_end_of_line (pos);
+        if (pos[0]) {
+            pos = (char *)utf8_next_char (pos);
+
+            for (i = 0; pos[0] && pos[0] != '\n' && i < length_from_beginning; i++)
+            {
+                pos = (char *)utf8_next_char (pos);
+            }
+
+            buffer->input_buffer_pos = utf8_pos (buffer->input_buffer,
+                                                 pos - buffer->input_buffer);
+
+            gui_input_text_cursor_moved_signal (buffer);
+        }
     }
 }
 

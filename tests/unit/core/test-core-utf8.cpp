@@ -30,13 +30,14 @@ extern "C"
 #include "src/core/wee-utf8.h"
 }
 
-const char *noel_valid = "no\xc3\xabl";        /* noël */
+const char *noel_valid = "no\xc3\xabl";                         /* noël */
+const char *noel_valid_multiline = "no\xc3\xabl\np\xc3\xa5ske"; /* noël\npåske */
 const char *noel_invalid = "no\xc3l";
 const char *noel_invalid2 = "no\xff\xffl";
 const char *noel_invalid_norm = "no?l";
 const char *noel_invalid2_norm = "no??l";
-const char *cjk_yellow = "\xe2\xbb\xa9";       /* U+2EE9 */
-const char *han_char = "\xf0\xa4\xad\xa2";     /* U+24B62 */
+const char *cjk_yellow = "\xe2\xbb\xa9";                        /* U+2EE9 */
+const char *han_char = "\xf0\xa4\xad\xa2";                      /* U+24B62 */
 const char *han_char_z = "\xf0\xa4\xad\xa2Z";
 
 TEST_GROUP(CoreUtf8)
@@ -227,6 +228,8 @@ TEST(CoreUtf8, Normalize)
  * Tests functions:
  *   utf8_prev_char
  *   utf8_next_char
+ *   utf8_beginning_of_line
+ *   utf8_end_of_line
  *   utf8_add_offset
  *   utf8_real_pos
  *   utf8_pos
@@ -250,6 +253,28 @@ TEST(CoreUtf8, Move)
     ptr = utf8_prev_char (noel_valid, ptr);
     STRCMP_EQUAL("noël", ptr);
     POINTERS_EQUAL(noel_valid, ptr);
+
+    /* beginning/end of line */
+    POINTERS_EQUAL(NULL, utf8_beginning_of_line (NULL, NULL));
+    POINTERS_EQUAL(NULL, utf8_end_of_line (NULL));
+    ptr = utf8_end_of_line (noel_valid_multiline);
+    STRCMP_EQUAL("\npåske", ptr);
+    ptr = utf8_end_of_line (ptr);
+    STRCMP_EQUAL("\npåske", ptr);
+    ptr = utf8_next_char (ptr);
+    ptr = utf8_end_of_line (ptr);
+    STRCMP_EQUAL("", ptr);
+    ptr = utf8_end_of_line (ptr);
+    STRCMP_EQUAL("", ptr);
+    ptr = utf8_beginning_of_line (noel_valid_multiline, ptr);
+    STRCMP_EQUAL("påske", ptr);
+    ptr = utf8_beginning_of_line (noel_valid_multiline, ptr);
+    STRCMP_EQUAL("påske", ptr);
+    ptr = utf8_prev_char (noel_valid_multiline, ptr);
+    ptr = utf8_beginning_of_line (noel_valid_multiline, ptr);
+    STRCMP_EQUAL(noel_valid_multiline, ptr);
+    ptr = utf8_beginning_of_line (noel_valid_multiline, ptr);
+    STRCMP_EQUAL(noel_valid_multiline, ptr);
 
     /* add offset */
     ptr = utf8_add_offset (noel_valid, 0);
