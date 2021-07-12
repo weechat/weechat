@@ -1568,9 +1568,7 @@ gui_key_buffer_add (unsigned char key)
     {
         gui_key_buffer[gui_key_buffer_size - 1] = key;
         if (((key == '\r') || (key == '\n'))
-            && (gui_key_buffer_size > 1)
-            && (gui_key_buffer[gui_key_buffer_size - 2] != '\r')
-            && (gui_key_buffer[gui_key_buffer_size - 2] != '\n'))
+            && (gui_key_buffer_size > 1))
         {
             gui_key_paste_lines++;
         }
@@ -1647,19 +1645,18 @@ gui_key_buffer_remove (int index, int number)
 }
 
 /*
- * Removes final newline at end of paste if there is only one line to paste.
+ * Removes final newline at end of paste.
  */
 
 void
 gui_key_paste_remove_newline ()
 {
-    if ((gui_key_paste_lines <= 1)
-        && (gui_key_buffer_size > 0)
+    if ((gui_key_buffer_size > 0)
         && ((gui_key_buffer[gui_key_buffer_size - 1] == '\r')
             || (gui_key_buffer[gui_key_buffer_size - 1] == '\n')))
     {
         gui_key_buffer_size--;
-        gui_key_paste_lines = 0;
+        gui_key_paste_lines--;
     }
 }
 
@@ -1686,10 +1683,19 @@ gui_key_paste_replace_tabs ()
 void
 gui_key_paste_start ()
 {
-    gui_key_paste_remove_newline ();
-    gui_key_paste_replace_tabs ();
     gui_key_paste_pending = 1;
     gui_input_paste_pending_signal ();
+}
+
+/*
+ * Finishes paste of text. Does necessary modifications before flush of text.
+ */
+
+void
+gui_key_paste_finish ()
+{
+    gui_key_paste_remove_newline ();
+    gui_key_paste_replace_tabs ();
 }
 
 /*
@@ -1838,21 +1844,9 @@ gui_key_paste_bracketed_stop ()
 void
 gui_key_paste_accept ()
 {
-    /*
-     * add final newline if there is not in pasted text
-     * (for at least 2 lines pasted)
-     */
-    if (CONFIG_BOOLEAN(config_look_paste_auto_add_newline)
-        && (gui_key_get_paste_lines () > 1)
-        && (gui_key_buffer_size > 0)
-        && (gui_key_buffer[gui_key_buffer_size - 1] != '\r')
-        && (gui_key_buffer[gui_key_buffer_size - 1] != '\n'))
-    {
-        gui_key_buffer_add ('\n');
-    }
-
     gui_key_paste_pending = 0;
     gui_input_paste_pending_signal ();
+    gui_key_paste_finish ();
 }
 
 /*

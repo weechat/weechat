@@ -336,10 +336,19 @@ gui_key_flush (int paste)
     for (i = 0; i < gui_key_buffer_size; i++)
     {
         key = gui_key_buffer[i];
+
+        /*
+         * Many terminal emulators sends \n as \r when pasting, so replace them
+         * back
+         */
+        if (paste && key == '\r') {
+            key = '\n';
+        }
+
         insert_ok = 1;
         utf_partial_char[0] = '\0';
 
-        if (gui_mouse_event_pending || (key < 32) || (key == 127))
+        if (!paste && (gui_mouse_event_pending || (key < 32) || (key == 127)))
         {
             if (gui_mouse_event_pending)
             {
@@ -419,7 +428,7 @@ gui_key_flush (int paste)
              * or if the mouse code is valid UTF-8 (do not send partial mouse
              * code which is not UTF-8 valid)
              */
-            if (!gui_mouse_event_pending || utf8_is_valid (key_str, -1, NULL))
+            if (!paste && (!gui_mouse_event_pending || utf8_is_valid (key_str, -1, NULL)))
             {
                 (void) hook_signal_send ("key_pressed",
                                          WEECHAT_HOOK_SIGNAL_STRING, key_str);
@@ -432,7 +441,7 @@ gui_key_flush (int paste)
                 input_old = NULL;
             old_buffer = gui_current_window->buffer;
 
-            if ((gui_key_pressed (key_str) != 0) && (insert_ok)
+            if ((paste || gui_key_pressed (key_str) != 0) && (insert_ok)
                 && (!gui_cursor_mode))
             {
                 if (!paste || !undo_done)
@@ -565,37 +574,37 @@ gui_key_read_cb (const void *pointer, void *data, int fd)
         }
     }
 
-    if (gui_key_paste_pending)
+    if (!gui_key_paste_bracketed)
     {
-        if (accept_paste)
+        pos = gui_key_buffer_search (0, -1, GUI_KEY_BRACKETED_PASTE_START);
+        if (pos >= 0)
         {
-            /* user is OK for pasting text, let's paste! */
-            gui_key_paste_accept ();
-        }
-        else if (cancel_paste)
-        {
-            /* user doesn't want to paste text: clear whole buffer! */
-            gui_key_paste_cancel ();
-        }
-        else if (text_added_to_buffer)
-        {
-            /* new text received while asking for paste, update message */
-            gui_input_paste_pending_signal ();
+            gui_key_buffer_remove (pos, GUI_KEY_BRACKETED_PASTE_LENGTH);
+            gui_key_paste_bracketed_start ();
         }
     }
-    else
+
+    if (!gui_key_paste_bracketed)
     {
-        if (!gui_key_paste_bracketed)
+        if (gui_key_paste_pending)
         {
-            pos = gui_key_buffer_search (0, -1, GUI_KEY_BRACKETED_PASTE_START);
-            if (pos >= 0)
+            if (accept_paste)
             {
-                gui_key_buffer_remove (pos, GUI_KEY_BRACKETED_PASTE_LENGTH);
-                gui_key_paste_bracketed_start ();
+                /* user is OK for pasting text, let's paste! */
+                gui_key_paste_accept ();
+            }
+            else if (cancel_paste)
+            {
+                /* user doesn't want to paste text: clear whole buffer! */
+                gui_key_paste_cancel ();
+            }
+            else if (text_added_to_buffer)
+            {
+                /* new text received while asking for paste, update message */
+                gui_input_paste_pending_signal ();
             }
         }
-
-        if (!gui_key_paste_bracketed)
+        else
             gui_key_paste_check (0);
     }
 
@@ -609,19 +618,16 @@ gui_key_read_cb (const void *pointer, void *data, int fd)
             /* remove the code for end of bracketed paste (ESC[201~) */
             gui_key_buffer_remove (pos, GUI_KEY_BRACKETED_PASTE_LENGTH);
 
-            /* remove final newline (if needed) */
-            gui_key_paste_remove_newline ();
-
-            /* replace tabs by spaces */
-            gui_key_paste_replace_tabs ();
-
             /* stop bracketed mode */
             gui_key_paste_bracketed_timer_remove ();
             gui_key_paste_bracketed_stop ();
 
             /* if paste confirmation not displayed, flush buffer now */
             if (!gui_key_paste_pending)
+            {
+                gui_key_paste_finish ();
                 gui_key_flush (1);
+            }
         }
     }
 

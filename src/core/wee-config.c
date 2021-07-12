@@ -158,7 +158,6 @@ struct t_config_option *config_look_nick_color_hash_salt;
 struct t_config_option *config_look_nick_color_stop_chars;
 struct t_config_option *config_look_nick_prefix;
 struct t_config_option *config_look_nick_suffix;
-struct t_config_option *config_look_paste_auto_add_newline;
 struct t_config_option *config_look_paste_bracketed;
 struct t_config_option *config_look_paste_bracketed_timer_delay;
 struct t_config_option *config_look_paste_max_lines;
@@ -3304,13 +3303,6 @@ config_weechat_init_options ()
         NULL, NULL, NULL,
         &config_change_nick_prefix_suffix, NULL, NULL,
         NULL, NULL, NULL);
-    config_look_paste_auto_add_newline = config_file_new_option (
-        weechat_config_file, ptr_section,
-        "paste_auto_add_newline", "boolean",
-        N_("automatically add a newline at the end of pasted text if there "
-           "are at least two lines and if a confirmation is asked"),
-           NULL, 0, 0, "on", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_paste_bracketed = config_file_new_option (
         weechat_config_file, ptr_section,
         "paste_bracketed", "boolean",
@@ -3338,7 +3330,7 @@ config_weechat_init_options ()
            "(-1 = disable this feature); this option is used only if the bar "
            "item \"input_paste\" is used in at least one bar (by default it "
            "is used in \"input\" bar)"),
-        NULL, -1, INT_MAX, "1", NULL, 0,
+        NULL, -1, INT_MAX, "100", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_prefix[GUI_CHAT_PREFIX_ERROR] = config_file_new_option (
         weechat_config_file, ptr_section,
