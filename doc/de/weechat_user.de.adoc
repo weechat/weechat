@@ -2916,31 +2916,32 @@ der Channels _#weechat_ und _#weechat-fr_ (Standardport (6667) wird genutzt):
 $ weechat irc://alice@irc.libera.chat/#weechat,#weechat-fr
 ----
 
-// TRANSLATION MISSING
 [[irc_servers]]
-==== Servers
+==== Server
 
 [[irc_servers_add]]
-===== Add a server
+===== Server hinzufügen
 
-By default no servers are defined. You can add as many servers as you want with
-the <<command_irc_server,/server>> command.
+Standardmäßig sind keine Server angelegt. Es gibt keine Begrenzung für die
+Anzahl von Servern. Server können mit dem Befehl <<command_irc_server,/server>>
+angelegt werden.
 
-For example to connect to https://libera.chat/[libera.chat] with SSL (encrypted trafic):
+Um zum Beispiel eine SSL verschlüsselte Verbindung zu https://libera.chat/[libera.chat]
+herzustellen:
 
 ----
 /server add libera irc.libera.chat/6697 -ssl
 ----
 
-You can tell WeeChat to auto-connect to this server on startup:
+Um WeeChat beim Start direkt mit dem Server zu verbinden:
 
 ----
 /set irc.server.libera.autoconnect on
 ----
 
-To authenticate, it is recommended to use SASL (if supported on the server),
-with the password stored as secured data (see also chapter on
-<<irc_sasl_authentication,SASL authentication>>):
+Zur Authentifizierung wird empfohlen, SASL (sofern dies von dem Server unterstützt wird)
+zu verwenden, wobei das Passwort als gesicherte Daten gespeichert wird (siehe auch das
+Kapitel über <<irc_sasl_authentication,SASL authentication>>):
 
 ----
 /set irc.server.libera.sasl_username "alice"
@@ -2948,28 +2949,29 @@ with the password stored as secured data (see also chapter on
 /set irc.server.libera.sasl_password "${sec.data.libera}"
 ----
 
-If SASL is not supported, you can use a command to send a message to nickserv:
+Wenn SASL nicht unterstützt wird, können Sie einen Befehl verwenden, um eine
+Nachricht an nickserv zu senden, um sich zu Authentifizieren:
 
 ----
 /set irc.server.libera.command "/msg nickserv identify ${sec.data.libera}"
 ----
 
 [NOTE]
-By sending a message to nickserv, you may authenticate after joining channels
-which could be a problem on some channels requiring you to be authenticated
-to join. In this case, you can set a command delay:
+Indem Sie eine Nachricht an nickserv senden, können Sie sich erst nach dem Beitritt
+zu Kanälen authentifizieren. Dies kann bei Kanälen, die eine Authentifizierung benötigen,
+zu Problemen führen. In diesem Fall können Sie eine Befehlsverzögerung einstellen:
 `/set irc.server.libera.command_delay 5`.
 
 [[irc_servers_options]]
-===== Server options
+===== Server-Optionen
 
-Server options are named `irc.server.<server>.<option>` where `<server>` is the
-internal name of the server and `<option>` the name of an option. +
-The value of a server option is inherited from `irc.server_default.xxx`
-if the server option has the special value `null`.
+Serveroptinen haben folgenden Aufbau `irc.server.<server>.<option>` hierbei ist `<server>`
+der interne Name des Server und `<option>` ist der Name der Option. +
+Der Wert einer Serveroption wird von `irc.server_default.xxx` geerbt
+wenn die Serveroption den Sonderwert `null` hat.
 
-For example if you created the _libera_ server with the commands above, you'll
-see this with the command `/fset libera`:
+Wenn Sie beispielsweise den _libera_-Server mit den obigen Befehlen erstellt haben,
+sehen Sie dies mit dem Befehl `/fset libera`:
 
 ....
 irc.server.libera.addresses             string   "irc.libera.chat/6697"
@@ -3018,15 +3020,16 @@ irc.server.libera.usermode              string   null -> ""
 irc.server.libera.username              string   null -> "alice"
 ....
 
-For example if you want to automatically connect to all servers you define
-without having to do it on each server, you can do:
+Wenn Sie beispielsweise automatisch eine Verbindung zu allen von Ihnen
+erstellten Servern herstellen möchten, ohne dies für jeden Server einzeln einstellen
+zu müssen, können Sie Folgendes tun:
 
 ----
 /set irc.server_default.autoconnect on
 ----
 
-And then you can reset the server option so that it uses the default inherited
-value, which is now `on` instead of the default value `off`:
+Und dann können Sie die Serveroption zurücksetzen, sodass sie den standardmäßig
+geerbten Wert verwendet, der jetzt `on` anstelle des Standardwerts `off` ist:
 
 ----
 /unset irc.server.libera.autoconnect
@@ -3180,33 +3183,35 @@ Erneut mit dem Server verbinden:
 /reconnect libera
 ----
 
-// TRANSLATION MISSING
 [[irc_servers_connection]]
-===== Connection
+===== Verbindung zum Server
 
-You can connect to server with the <<command_irc_connect,/connect>> command:
+Um sich mit einem Server zu Verbinden, nutzt man den
+<<command_irc_connect,/connect>> Befehl:
 
 ----
 /connect libera
 ----
 
-To disconnect:
+Um die Verbindung zu trennen:
 
 ----
 /disconnect libera
 ----
 
-Or just this if you are on any buffer belonging to _libera_ server (server,
-channel, private):
+Oder nur folgenden Befehl, wenn Sie sich in einem Buffer befinden, der zu
+einem _libera_ Server gehört (Server, Kanal, privat):
 
 ----
 /disconnect
 ----
 
-When you connect to multiple servers at same time, server buffers are merged
-by default and you can switch between them with the kbd:[Ctrl+x] key. +
-It is possible to disable auto merge of server buffers to have independent
-server buffers:
+Wenn Sie gleichzeitig mit mehreren Servern verbunden sind, werden die Serverbuffer
+standardmäßig zusammengeführt. Sie können zwischen zusammengefügten Buffern mit
+der kbd:[Ctrl+x] Taste wechseln.
+
+Es ist möglich, die automatische Zusammenführung von Serverbuffern zu deaktivieren,
+um unabhängige Serverbuffer zu haben:
 
 ----
 /set irc.look.server_buffer independent
@@ -3261,59 +3266,63 @@ Abschließend, stellen Sie eine Verbindung zum Server her:
 /connect irc-tor
 ----
 
-// TRANSLATION MISSING
 [[irc_channels]]
-==== Channels
+==== Kanäle
 
-You can join channels with the <<command_irc_join,/join>> command:
+Kanäle können mit dem Befehl <<command_irc_join,/join>> betreten
+werden:
 
 ----
 /join #channel
 ----
 
-Part a channel (keeping the buffer open):
+Verbindung zum Kanal trennen (der Buffer bleibt geöffnet):
 
 ----
 /part [quit message]
 ----
 
-The channels you joined are not saved. If you want to join them automatically
-when connecting to the server, you must set the server `autojoin` option:
+Kanäle die man betreten hat, werden nicht gesichert. Um diese Kanäle
+automatisch bei einer Verbindung zum Server zu betreten, müssen diese
+Kanäle in der `autojoin` Option des Servers eingetragen werden:
 
 ----
-/set irc.server.libera.autojoin "#weechat,#weechat-fr"
+/set irc.server.libera.autojoin "#weechat,#weechat-de"
 ----
 
 [NOTE]
-Some scripts can help to automatically set this option,
-see `/script search autojoin`.
+Es gibt Skripte, die dabei helfen das zu automatisieren,
+siehe `/script search autojoin`.
 
-Be careful, spaces can be used only to separate list of channels from keys,
-for example if `#channel1` requires a key but not `#channel2`:
+Geben Sie acht, Leerzeichen werden verwendet um die Liste der Kanäle
+von den Schlüsseln zu trennen. Ein Beispiel, wenn `#channel1` einen
+Schlüssel erfordert, aber nicht `#channel2`:
 
 ----
 /set irc.server.libera.autojoin "#channel1,#channel2 key1"
 ----
 
-For help on the format, see `/help irc.server.libera.autojoin`.
+Um eine Hilfe über das Format zu erhalten, siehe `/help irc.server.libera.autojoin`.
 
 [[irc_private_messages]]
-==== Private messages
+==== private Nachrichten
 
-You can send a private message with the <<command_irc_query,/query>> command,
-which opens a separate buffer:
+Sie können eine private Nachricht mit dem Befehl <<command_irc_query,/query>> senden,
+was einen separaten Buffer, für die Konversation, öffnet:
 
 ----
-/query bob hi, how are you?
+/query bob hallo, wie geht es Dir?
 ----
 
-Without arguments the command just opens the buffer (or selects it if already open):
+Ohne Angabe von Argumenten öffnet der Befehl nur den Buffer
+(oder wählt ihn aus, wenn er bereits geöffnet ist):
 
 ----
 /query bob
 ----
 
-To close the private buffer, you can do this command on the private buffer:
+Um einen privaten Buffer zu schließen, führt man diesen Befehl in dem
+privaten Buffer aus:
 
 ----
 /close
@@ -5025,8 +5034,7 @@ auch für die IRC-Erweiterung aktivieren:
 /set irc.look.typing_status_self on
 ----
 
-// TRANSLATION MISSING
-The typing notifications are displayed at the end of the status bar.
+Die Tippbenachrichtigungen werden am Ende der Statusleiste angezeigt.
 
 Beispiel für die Statusleiste mit dem "typing" Item: "bob" tippt gerade eine
 Nachricht und "alice" hat eine Nachricht getippt, machte aber eine Pause:
