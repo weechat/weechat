@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-07-10 15:57+0200\n"
+"POT-Creation-Date: 2021-08-01 10:24+0200\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7930,7 +7930,11 @@ msgid "%s%s%s%s%s%s%s%s%s%s has quit"
 msgstr ""
 
 #, c-format
-msgid "%sReal name set to: %s"
+msgid "%sYour real name has been set to \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%sReal name of %s%s%s has been set to \"%s\""
 msgstr ""
 
 #, c-format

@@ -24,7 +24,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-07-10 15:57+0200\n"
+"POT-Creation-Date: 2021-08-01 10:24+0200\n"
 "PO-Revision-Date: 2021-07-10 16:01+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -11415,8 +11415,14 @@ msgstr "%s%s%s%s%s%s%s%s%s%s hat den IRC verlassen %s(%s%s%s)"
 msgid "%s%s%s%s%s%s%s%s%s%s has quit"
 msgstr "%s%s%s%s%s%s%s%s%s%s hat den IRC verlassen"
 
-#, c-format
-msgid "%sReal name set to: %s"
+#, fuzzy, c-format
+#| msgid "%sReal name set to: %s"
+msgid "%sYour real name has been set to \"%s\""
+msgstr "%sRealname eingstellt auf: %s"
+
+#, fuzzy, c-format
+#| msgid "%sReal name set to: %s"
+msgid "%sReal name of %s%s%s has been set to \"%s\""
 msgstr "%sRealname eingstellt auf: %s"
 
 #, c-format

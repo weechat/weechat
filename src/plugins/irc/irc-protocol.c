@@ -2903,11 +2903,14 @@ IRC_PROTOCOL_CALLBACK(quit)
 
 IRC_PROTOCOL_CALLBACK(setname)
 {
+    int local_setname;
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
     char *pos_realname, *realname_color;
 
     IRC_PROTOCOL_MIN_ARGS(3);
+
+    local_setname = (irc_server_strcasecmp (server, nick, server->nick) == 0);
 
     pos_realname = (argv_eol[2][0] == ':') ? argv_eol[2] + 1 : argv_eol[2];
 
@@ -2931,13 +2934,29 @@ IRC_PROTOCOL_CALLBACK(setname)
         realname_color = irc_color_decode (
             pos_realname,
             weechat_config_boolean (irc_config_network_colors_receive));
-        weechat_printf_date_tags (
-            irc_msgbuffer_get_target_buffer (server, NULL, command, NULL, NULL),
-            date,
-            irc_protocol_tags (command, NULL, NULL, NULL),
-            _("%sReal name set to: %s"),
-            weechat_prefix ("network"),
-            (realname_color) ? realname_color : "");
+        if (local_setname)
+        {
+            weechat_printf_date_tags (
+                irc_msgbuffer_get_target_buffer (server, NULL, command, NULL, NULL),
+                date,
+                irc_protocol_tags (command, NULL, NULL, NULL),
+                _("%sYour real name has been set to \"%s\""),
+                weechat_prefix ("network"),
+                (realname_color) ? realname_color : "");
+        }
+        else
+        {
+            weechat_printf_date_tags (
+                irc_msgbuffer_get_target_buffer (server, NULL, command, NULL, NULL),
+                date,
+                irc_protocol_tags (command, NULL, NULL, NULL),
+                _("%sReal name of %s%s%s has been set to \"%s\""),
+                weechat_prefix ("network"),
+                irc_nick_color_for_msg (server, 1, NULL, nick),
+                nick,
+                IRC_COLOR_RESET,
+                (realname_color) ? realname_color : "");
+        }
         if (realname_color)
             free (realname_color);
     }
