@@ -453,7 +453,7 @@ TEST(CoreEval, EvalExpression)
 {
     struct t_hashtable *pointers, *extra_vars, *options;
     struct t_config_option *ptr_option;
-    char *value, str_value[256];
+    char *value, str_value[256], str_expr[256];
     const char *ptr_debug_output;
 
     pointers = hashtable_new (32,
@@ -750,6 +750,25 @@ TEST(CoreEval, EvalExpression)
     WEE_CHECK_EVAL("8", "${calc:5+1*3}");
     WEE_CHECK_EVAL("18", "${calc:(5+1)*3}");
     WEE_CHECK_EVAL("123129", "${calc:${repeat:2,123}+2*3}");
+
+    /* test random */
+    WEE_CHECK_EVAL("0", "${random:}");
+    WEE_CHECK_EVAL("0", "${random:1}");
+    WEE_CHECK_EVAL("0", "${random:1,}");
+    WEE_CHECK_EVAL("0", "${random:5,1}");
+    WEE_CHECK_EVAL("2", "${random:2,2}");
+    snprintf (str_expr, sizeof (str_expr),
+              "${random:-1,%ld}",
+              (long)RAND_MAX);
+    WEE_CHECK_EVAL("0", str_expr);
+    snprintf (str_expr, sizeof (str_expr),
+              "${random:%ld,%ld}",
+              (long)RAND_MAX,
+              (long)RAND_MAX);
+    snprintf (str_value, sizeof (str_value),
+              "%ld",
+              (long)RAND_MAX);
+    WEE_CHECK_EVAL(str_value, str_expr);
 
     /* test translation */
     WEE_CHECK_EVAL("", "${translate:}");

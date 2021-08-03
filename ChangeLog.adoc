@@ -21,6 +21,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 New features::
 
   * core: add option "certs" in command /debug
+  * api: add random integer number in evaluation of expressions with "random:min,max"
   * api: add function string_cut
   * api: add function file_copy (issue #1667)
   * api: remember insertion order in hashtables

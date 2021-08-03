@@ -2274,7 +2274,7 @@ str3 = weechat.string_input_for_buffer("//test")  # "/test"
 
 // TRANSLATION MISSING
 _WeeChat ≥ 0.4.0, updated in 0.4.2, 0.4.3, 1.0, 1.1, 1.2, 1.3, 1.6, 1.8, 2.0,
-2.2, 2.3, 2.7, 2.9, 3.1 and 3.2._
+2.2, 2.3, 2.7, 2.9, 3.1, 3.2 and 3.3._
 
 式を評価して文字列として返す。`+${variable}+`
 という書式で書かれた特殊変数は展開されます (以下の表を参照)。
@@ -2834,6 +2834,13 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
   `+2+` +
   `+0.2+` +
   `+65536+`
+
+// TRANSLATION MISSING
+| `+${random:min,max}+` +
+  _(WeeChat ≥ 3.3)_ |
+  Random integer number in the range from `min` to `max` (inclusive). |
+  `+${random:0,10}+` |
+  `+3+`
 
 // TRANSLATION MISSING
 | `+${translate:xxx}+` +
