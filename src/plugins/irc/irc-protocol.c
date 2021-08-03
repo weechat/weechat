@@ -408,6 +408,8 @@ IRC_PROTOCOL_CALLBACK(authenticate)
         return WEECHAT_RC_OK;
 
     arg_data = (argv[0][0] == ':') ? 2 : 1;
+    if (arg_data >= argc)
+        return WEECHAT_RC_OK;
     ptr_data = (argv_eol[arg_data][0] == ':') ?
         argv_eol[arg_data] + 1 : argv_eol[arg_data];
 
