@@ -479,6 +479,8 @@ TEST(IrcProtocolWithServer, authenticate)
 
     server_recv ("AUTHENTICATE "
                  "QQDaUzXAmVffxuzFy77XWBGwABBQAgdinelBrKZaR3wE7nsIETuTVY=");
+    server_recv (":server.address AUTHENTICATE "
+                 "QQDaUzXAmVffxuzFy77XWBGwABBQAgdinelBrKZaR3wE7nsIETuTVY=");
 }
 
 /*

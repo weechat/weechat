@@ -398,13 +398,18 @@ IRC_PROTOCOL_CALLBACK(account)
 
 IRC_PROTOCOL_CALLBACK(authenticate)
 {
-    int sasl_mechanism;
-    char *sasl_username, *sasl_password, *sasl_key, *answer, *sasl_error;
+    int arg_data, sasl_mechanism;
+    char *ptr_data, *sasl_username, *sasl_password, *sasl_key, *answer;
+    char *sasl_error;
 
     IRC_PROTOCOL_MIN_ARGS(2);
 
     if (!irc_server_sasl_enabled (server))
         return WEECHAT_RC_OK;
+
+    arg_data = (argv[0][0] == ':') ? 2 : 1;
+    ptr_data = (argv_eol[arg_data][0] == ':') ?
+        argv_eol[arg_data] + 1 : argv_eol[arg_data];
 
     irc_server_sasl_get_creds (server, &sasl_username, &sasl_password,
                                &sasl_key);
@@ -421,22 +426,23 @@ IRC_PROTOCOL_CALLBACK(authenticate)
             break;
         case IRC_SASL_MECHANISM_SCRAM_SHA_1:
             answer = irc_sasl_mechanism_scram (
-                server, "sha1", argv[1], sasl_username, sasl_password,
-                &sasl_error);
+                server, "sha1", ptr_data,
+                sasl_username, sasl_password, &sasl_error);
             break;
         case IRC_SASL_MECHANISM_SCRAM_SHA_256:
             answer = irc_sasl_mechanism_scram (
-                server, "sha256", argv[1], sasl_username, sasl_password,
-                &sasl_error);
+                server, "sha256", ptr_data,
+                sasl_username, sasl_password, &sasl_error);
             break;
         case IRC_SASL_MECHANISM_SCRAM_SHA_512:
             answer = irc_sasl_mechanism_scram (
-                server, "sha512", argv[1], sasl_username, sasl_password,
-                &sasl_error);
+                server, "sha512", ptr_data,
+                sasl_username, sasl_password, &sasl_error);
             break;
         case IRC_SASL_MECHANISM_ECDSA_NIST256P_CHALLENGE:
             answer = irc_sasl_mechanism_ecdsa_nist256p_challenge (
-                server, argv[1], sasl_username, sasl_key, &sasl_error);
+                server, ptr_data,
+                sasl_username, sasl_key, &sasl_error);
             break;
         case IRC_SASL_MECHANISM_EXTERNAL:
             answer = strdup ("+");
