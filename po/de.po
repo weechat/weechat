@@ -25,7 +25,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2021-08-01 10:24+0200\n"
-"PO-Revision-Date: 2021-07-10 16:01+0200\n"
+"PO-Revision-Date: 2021-08-03 18:29+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
@@ -11415,15 +11415,13 @@ msgstr "%s%s%s%s%s%s%s%s%s%s hat den IRC verlassen %s(%s%s%s)"
 msgid "%s%s%s%s%s%s%s%s%s%s has quit"
 msgstr "%s%s%s%s%s%s%s%s%s%s hat den IRC verlassen"
 
-#, fuzzy, c-format
-#| msgid "%sReal name set to: %s"
+#, c-format
 msgid "%sYour real name has been set to \"%s\""
-msgstr "%sRealname eingstellt auf: %s"
+msgstr "%sRealname wurde gesetzt auf: %s"
 
-#, fuzzy, c-format
-#| msgid "%sReal name set to: %s"
+#, c-format
 msgid "%sReal name of %s%s%s has been set to \"%s\""
-msgstr "%sRealname eingstellt auf: %s"
+msgstr "%sRealname von %s%s%s wurde auf \"%s\" gesetzt"
 
 #, c-format
 msgid "%s%s: \"%s\" command received without channel"
