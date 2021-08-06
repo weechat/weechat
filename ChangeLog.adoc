@@ -39,6 +39,7 @@ New features::
 
 Bug fixes::
 
+  * core: fix decoding of attributes in basic ANSI colors (issue #1678)
   * api: fix function string_match with joker in the string if multiple words matched in input string
   * irc: fix SASL authentication when AUTHENTICATE message is received with a server name (issue #1679)
   * irc: remove unneeded message about Diffie-Hellman shared secret exchange during SSL connection to server (issue #857)

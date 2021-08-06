@@ -677,7 +677,7 @@ TEST(CoreEval, EvalExpression)
                    "${modifier:color_decode_ansi,0,test_\x1B[92mno_color}");
     snprintf (str_value, sizeof (str_value),
               "test_%slightgreen",
-              gui_color_get_custom ("lightgreen"));
+              gui_color_get_custom ("|lightgreen"));
     WEE_CHECK_EVAL(str_value,
                    "${modifier:color_decode_ansi,1,test_\x1B[92mlightgreen}");
     snprintf (str_value, sizeof (str_value),
