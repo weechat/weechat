@@ -145,6 +145,7 @@ Alphabetically:
 * Trevor Bergeron
 * Valentin Lorentz (progval)
 * Vasco Almeida
+* Victorhck
 * Voroskoi
 * Wojciech Kwolek
 * W. Trevor King
