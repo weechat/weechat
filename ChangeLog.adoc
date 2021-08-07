@@ -49,6 +49,7 @@ Bug fixes::
 
 Documentation::
 
+  * add Spanish FAQ (issue #1656)
   * add Serbian translations (issue #1655)
 
 Tests::
