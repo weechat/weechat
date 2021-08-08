@@ -58,6 +58,7 @@ Tests::
 
 Build::
 
+  * php: add support of PHP 8.0 and 8.1 (issue #1668)
   * core: fix build on macOS (issue #1662)
 
 [[v3.2]]
