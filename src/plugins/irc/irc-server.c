@@ -1116,6 +1116,72 @@ irc_server_set_prefix_modes_chars (struct t_irc_server *server,
 }
 
 /*
+ * Sets "clienttagdeny", "clienttagdeny_count", "clienttagdeny_array" and
+ * "typing_allowed" in server using value of CLIENTTAGDENY in IRC message 005.
+ * The masks in array start with "!" for a tag that is allowed (not denied).
+ *
+ * For example, if clienttagdeny is "*,-foo,-example/bar":
+ *   clienttagdeny is set to "*,-foo,-example/bar"
+ *   clienttagdeny_count is set to 3
+ *   clienttagdeny_array is set to ["*", "!foo", "!example/bar"]
+ *   typing_allowed is set to 0
+ *
+ * For example, if clienttagdeny is "*,-typing":
+ *   clienttagdeny is set to "*,-typing"
+ *   clienttagdeny_count is set to 2
+ *   clienttagdeny_array is set to ["*", "!typing"]
+ *   typing_allowed is set to 1
+ */
+
+void
+irc_server_set_clienttagdeny (struct t_irc_server *server,
+                              const char *clienttagdeny)
+{
+    int i, typing_denied;
+
+    if (!server)
+        return;
+
+    /* free previous values */
+    if (server->clienttagdeny)
+    {
+        free (server->clienttagdeny);
+        server->clienttagdeny = NULL;
+    }
+    if (server->clienttagdeny_array)
+    {
+        weechat_string_free_split (server->clienttagdeny_array);
+        server->clienttagdeny_array = NULL;
+    }
+    server->clienttagdeny_count = 0;
+    server->typing_allowed = 1;
+
+    /* assign new values */
+    if (!clienttagdeny || !clienttagdeny[0])
+        return;
+    server->clienttagdeny = strdup (clienttagdeny);
+    server->clienttagdeny_array = weechat_string_split (
+        clienttagdeny, ",", NULL,
+        WEECHAT_STRING_SPLIT_STRIP_LEFT
+        | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+        | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+        0, &server->clienttagdeny_count);
+    if (server->clienttagdeny_array)
+    {
+        for (i = 0; i < server->clienttagdeny_count; i++)
+        {
+            if (server->clienttagdeny_array[i][0] == '-')
+                server->clienttagdeny_array[i][0] = '!';
+        }
+    }
+    typing_denied = weechat_string_match_list (
+        "typing",
+        (const char **)server->clienttagdeny_array,
+        1);
+    server->typing_allowed = (typing_denied) ? 0 : 1;
+}
+
+/*
  * Sets lag in server buffer (local variable), update bar item "lag"
  * and send signal "irc_server_lag_changed" for the server.
  */
@@ -1530,6 +1596,10 @@ irc_server_alloc (const char *name)
     new_server->chanmodes = NULL;
     new_server->monitor = 0;
     new_server->monitor_time = 0;
+    new_server->clienttagdeny = NULL;
+    new_server->clienttagdeny_count = 0;
+    new_server->clienttagdeny_array = NULL;
+    new_server->typing_allowed = 1;
     new_server->reconnect_delay = 0;
     new_server->reconnect_start = 0;
     new_server->command_time = 0;
@@ -2088,6 +2158,10 @@ irc_server_free_data (struct t_irc_server *server)
         free (server->chantypes);
     if (server->chanmodes)
         free (server->chanmodes);
+    if (server->clienttagdeny)
+        free (server->clienttagdeny);
+    if (server->clienttagdeny_array)
+        weechat_string_free_split (server->clienttagdeny_array);
     if (server->away_message)
         free (server->away_message);
     if (server->cmd_list_regexp)
@@ -5985,6 +6059,10 @@ irc_server_hdata_server_cb (const void *pointer, void *data,
         WEECHAT_HDATA_VAR(struct t_irc_server, chanmodes, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, monitor, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, monitor_time, TIME, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_server, clienttagdeny, STRING, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_server, clienttagdeny_count, INTEGER, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_server, clienttagdeny_array, STRING, 0, "clienttagdeny_count", NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_server, typing_allowed, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, reconnect_delay, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, reconnect_start, TIME, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, command_time, TIME, 0, NULL, NULL);
@@ -6239,6 +6317,10 @@ irc_server_add_to_infolist (struct t_infolist *infolist,
     if (!weechat_infolist_new_var_integer (ptr_item, "monitor", server->monitor))
         return 0;
     if (!weechat_infolist_new_var_time (ptr_item, "monitor_time", server->monitor_time))
+        return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "clienttagdeny", server->clienttagdeny))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "typing_allowed", server->typing_allowed))
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "reconnect_delay", server->reconnect_delay))
         return 0;
@@ -6633,6 +6715,10 @@ irc_server_print_log ()
         weechat_log_printf ("  chanmodes . . . . . . . . : '%s'",  ptr_server->chanmodes);
         weechat_log_printf ("  monitor . . . . . . . . . : %d",    ptr_server->monitor);
         weechat_log_printf ("  monitor_time. . . . . . . : %lld",  (long long)ptr_server->monitor_time);
+        weechat_log_printf ("  clienttagdeny . . . . . . : '%s'",  ptr_server->clienttagdeny);
+        weechat_log_printf ("  clienttagdeny_count . . . : %d",    ptr_server->clienttagdeny_count);
+        weechat_log_printf ("  clienttagdeny_array . . . : 0x%lx", ptr_server->clienttagdeny_array);
+        weechat_log_printf ("  typing_allowed . .  . . . : %d",    ptr_server->typing_allowed);
         weechat_log_printf ("  reconnect_delay . . . . . : %d",    ptr_server->reconnect_delay);
         weechat_log_printf ("  reconnect_start . . . . . : %lld",  (long long)ptr_server->reconnect_start);
         weechat_log_printf ("  command_time. . . . . . . : %lld",  (long long)ptr_server->command_time);

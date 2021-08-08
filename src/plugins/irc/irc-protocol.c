@@ -3567,6 +3567,19 @@ IRC_PROTOCOL_CALLBACK(005)
             pos2[0] = ' ';
     }
 
+    /* save client tag deny */
+    pos = strstr (argv_eol[3], "CLIENTTAGDENY=");
+    if (pos)
+    {
+        pos += 14;
+        pos2 = strchr (pos, ' ');
+        if (pos2)
+            pos2[0] = '\0';
+        irc_server_set_clienttagdeny (server, pos);
+        if (pos2)
+            pos2[0] = ' ';
+    }
+
     /* save whole message (concatenate to existing isupport, if any) */
     pos_start = NULL;
     pos = strstr (argv_eol[3], " :");

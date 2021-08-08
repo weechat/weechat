@@ -232,6 +232,10 @@ struct t_irc_server
                                     /* (eg "beI,k,l,imnpstaqr")              */
     int monitor;                    /* monitor limit from msg 005 (eg 100)   */
     time_t monitor_time;            /* time for monitoring nicks (on connect)*/
+    char *clienttagdeny;            /* list of blocked client-only tags      */
+    int clienttagdeny_count;        /* number of masks in clienttagdeny      */
+    char **clienttagdeny_array;     /* masks expanded from clienttagdeny     */
+    int typing_allowed;             /* typing not excluded by clienttagdeny? */
     int reconnect_delay;            /* current reconnect delay (growing)     */
     time_t reconnect_start;         /* this time + delay = reconnect time    */
     time_t command_time;            /* this time + command_delay = time to   */
@@ -332,6 +336,8 @@ extern const char *irc_server_get_isupport_value (struct t_irc_server *server,
 extern const char *irc_server_get_chantypes (struct t_irc_server *server);
 extern void irc_server_set_prefix_modes_chars (struct t_irc_server *server,
                                                const char *prefix);
+extern void irc_server_set_clienttagdeny (struct t_irc_server *server,
+                                          const char *clienttagdeny);
 extern void irc_server_set_lag (struct t_irc_server *server);
 extern void irc_server_set_tls_version (struct t_irc_server *server);
 extern const char *irc_server_get_prefix_modes (struct t_irc_server *server);

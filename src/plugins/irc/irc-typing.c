@@ -60,6 +60,10 @@ irc_typing_signal_typing_self_cb (const void *pointer, void *data,
     if (!ptr_server || !ptr_channel)
         return WEECHAT_RC_OK;
 
+    /* typing not allowed on server? */
+    if (!ptr_server->typing_allowed)
+        return WEECHAT_RC_OK;
+
     /* typing works only if capability "message-tags" is enabled */
     if (!weechat_hashtable_has_key (ptr_server->cap_list, "message-tags"))
         return WEECHAT_RC_OK;
@@ -94,8 +98,11 @@ irc_typing_send_to_targets (struct t_irc_server *server)
     struct t_irc_channel *ptr_channel;
     time_t current_time;
 
-    if (!weechat_config_boolean (irc_config_look_typing_status_self))
+    if (!weechat_config_boolean (irc_config_look_typing_status_self)
+        || !server->typing_allowed)
+    {
         return;
+    }
 
     current_time = time (NULL);
 
