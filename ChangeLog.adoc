@@ -54,6 +54,7 @@ Documentation::
 
 Tests::
 
+  * core: switch to PHP 8.0 in CI
   * core: add build on macOS in CI
 
 Build::
