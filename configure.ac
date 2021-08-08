@@ -871,8 +871,16 @@ if test "x$enable_php" = "xyes" ; then
                 if echo "x$php_config_version" | grep -e "^x7" -e "^x8" 1>/dev/null 2>&1 ; then
                     PHP_VERSION=$php_config_version
                     PHP_CFLAGS=`$PHPCONFIG --includes`
-                    PHP_LFLAGS="-L$($PHPCONFIG --prefix)/lib/ $($PHPCONFIG --libs) -lphp$l"
-                    break
+                    for PHP_LIB_SUFFIX in "$(echo $PHP_VERSION | cut -d. -f1)" "" ; do
+                        ac2_save_LDFLAGS=$LDFLAGS
+                        LDFLAGS="-L$($PHPCONFIG --prefix)/lib/ $($PHPCONFIG --libs) -lphp$PHP_LIB_SUFFIX"
+                        AC_CHECK_LIB(php$PHP_LIB_SUFFIX,php_execute_script,ac_found_php_lib="yes",ac_found_php_lib="no")
+                        LDFLAGS=$ac2_save_LDFLAGS
+                        if test "x$ac_found_php_lib" = "xyes" ; then
+                            PHP_LFLAGS="-L$($PHPCONFIG --prefix)/lib/ $($PHPCONFIG --libs) -lphp$PHP_LIB_SUFFIX"
+                            break 2
+                        fi
+                    done
                 fi
             fi
         done
