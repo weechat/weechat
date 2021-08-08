@@ -271,6 +271,10 @@ _chantypes_   (string) +
 _chanmodes_   (string) +
 _monitor_   (integer) +
 _monitor_time_   (time) +
+_clienttagdeny_   (string) +
+_clienttagdeny_count_   (integer) +
+_clienttagdeny_array_   (string, array_size: "clienttagdeny_count") +
+_typing_allowed_   (integer) +
 _reconnect_delay_   (integer) +
 _reconnect_start_   (time) +
 _command_time_   (time) +
