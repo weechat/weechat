@@ -559,10 +559,10 @@ Der bracketed paste Modus kann wie folgt deaktiviert werden:
 [[small_terminal]]
 === Wie kann ich die Anzeige bei sehr kleinen Terminalgrößen (wie 80 x 25) optimieren, um keinen Platz zu verschwenden?
 
-// TRANSLATION MISSING
-You can remove side bars (buflist and nicklist), change time format to display
-only hours and minutes, disable alignment of messages and set a char for nick
-prefix/suffix:
+Die seitlichen Bars (buflist und nicklist) können deaktiviert werden, die Datums-
+anzeige sollte nur Stunden und Minuten darstellen, die Ausrichtung von Nach-
+richten sollte ebenfalls deaktiviert werden und es sollte der Nick mit einen
+Präfix und Suffix vesehen werden:
 
 ----
 /set buflist.look.enabled off
