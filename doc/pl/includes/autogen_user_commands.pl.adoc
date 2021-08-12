@@ -17,30 +17,33 @@ cel: nazwa serwera
 * `+allchan+`: wykonuje komendę na wszystkich kanałach na połączonych serwerach
 
 ----
-/allchan  [-current] [-exclude=<kanał>[,<kanał>...]] <komenda>
-          [-current] -include=<kanał>[,<kanał>...] <komenda>
+/allchan  [-current] [-parted] [-exclude=<channel>[,<channel>...]] <command>
+          [-current] [-parted] -include=<channel>[,<channel>...] <command>
 
- -current: wykonuje komendę tylko na kanałach obecnego serwera
- -exclude: wyklucza niektóre kanały (wildcard "*" jest dozwolony)
- -include: uwzględnia tylko niektóre znaki (wildcard "*" est dozwolony)
-  komenda: komenda do wykonania (albo tekst do wysłania do bufora jeśli komenda nie zaczyna się od '/')
+ -current: execute command for channels of current server only
+  -parted: execute on parted channels only
+ -exclude: exclude some channels (wildcard "*" is allowed)
+ -include: include only some channels (wildcard "*" is allowed)
+  command: command to execute (or text to send to buffer if command does not start with '/')
 
-Komenda i argumenty są przetwarzane (zobacz /help eval), następujące zmienne są podmieniane:
-  $server             nazwa serwera
-  $channel            nazwa kanału
-  $nick               nick na serwerze
-  ${irc_server.xxx}   zmienna xxx na serwerze
-  ${irc_channel.xxx}  zmienna xxx w kanalel
+Command and arguments are evaluated (see /help eval), the following variables are replaced:
+  $server             server name
+  $channel            channel name
+  $nick               nick on server
+  ${irc_server.xxx}   variable xxx in server
+  ${irc_channel.xxx}  variable xxx in channel
 
-Przykłady:
-  wykonuje '/me testuje' na wszystkich kanałach:
-    /allchan /me testuje
-  wysyła 'witam' wszędzie tylko nie na #weechat:
-    /allchan -exclude=#weechat witam
-  wysyła 'witam' wszędzie poza #weechat oraz kanałami zaczynającymi się od #linux:
-    /allchan -exclude=#weechat,#linux* witam
-  wysyła 'witam' na wszytkich kanałach zaczynających się od #linux:
-    /allchan -include=#linux* witam
+Examples:
+  execute '/me is testing' on all channels:
+    /allchan /me is testing
+  say 'hello' everywhere but not on #weechat:
+    /allchan -exclude=#weechat hello
+  say 'hello' everywhere but not on #weechat and channels beginning with #linux:
+    /allchan -exclude=#weechat,#linux* hello
+  say 'hello' on all channels beginning with #linux:
+    /allchan -include=#linux* hello
+  close all buffers with parted channels:
+    /allchan -parted /close
 ----
 
 [[command_irc_allpv]]

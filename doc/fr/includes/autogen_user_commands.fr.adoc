@@ -17,10 +17,11 @@ cible : nom du serveur
 * `+allchan+`: exécuter une commande sur tous les canaux de tous les serveurs connectés
 
 ----
-/allchan  [-current] [-exclude=<canal>[,<canal>...]] <commande>
-          [-current] [-include=<canal>[,<canal>...]] <commande>
+/allchan  [-current] [-parted] [-exclude=<canal>[,<canal>...]] <commande>
+          [-current] [-parted] -include=<canal>[,<canal>...] <commande>
 
   -current : exécuter la commande pour les canaux du serveur courant seulement
+   -parted : exécuter la commande sur les canaux quittés seulement
   -exclude : exclure certains canaux (le caractère joker "*" est autorisé)
   -include : inclure seulement certains canaux (le caractère joker "*" est autorisé)
   commande : commande à exécuter (ou texte à envoyer au tampon si la commande ne commence pas par '/')
@@ -41,6 +42,8 @@ Exemples :
     /allchan -exclude=#weechat,#linux* bonjour
   dire 'bonjour' sur tous les canaux commençant par #linux :
     /allchan -include=#linux* bonjour
+  fermer tous les tampons avec des canaux quittés :
+    /allchan -parted /close
 ----
 
 [[command_irc_allpv]]

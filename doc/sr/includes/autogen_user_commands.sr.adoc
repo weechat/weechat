@@ -17,30 +17,33 @@
 * `+allchan+`: извршавање команде на свим каналима свих повезаних сервера
 
 ----
-/allchan  [-current] [-exclude=<канал>[,<канал>...]] <команда>
-          [-current] -include=<канал>[,<канал>...] <команда>
+/allchan  [-current] [-parted] [-exclude=<channel>[,<channel>...]] <command>
+          [-current] [-parted] -include=<channel>[,<channel>...] <command>
 
- -current: извршава се команда само за канале текућег сервера
- -exclude: неки канали се изузимају (дозвољен је џокер „*”)
- -include: узимају се у обзир само неки канали (дозвољен је џокер „*”)
-  command: команда која треба да се изврши (или текст који се шаље баферу ако команда не почиње са ’/’)
+ -current: execute command for channels of current server only
+  -parted: execute on parted channels only
+ -exclude: exclude some channels (wildcard "*" is allowed)
+ -include: include only some channels (wildcard "*" is allowed)
+  command: command to execute (or text to send to buffer if command does not start with '/')
 
-Команде и аргументи се израчунавају (погледајте /help eval), замењују се следеће променљиве:
-  $server             име сервера
-  $channel            име канала
-  $nick               надимак на серверу
-  ${irc_server.xxx}   променљива xxx на серверу
-  ${irc_channel.xxx}  променљива xxx на каналу
+Command and arguments are evaluated (see /help eval), the following variables are replaced:
+  $server             server name
+  $channel            channel name
+  $nick               nick on server
+  ${irc_server.xxx}   variable xxx in server
+  ${irc_channel.xxx}  variable xxx in channel
 
-Примери:
-  извршава ’/me is testing’ на свим каналима:
+Examples:
+  execute '/me is testing' on all channels:
     /allchan /me is testing
-  каже ’здраво’ свуда осим на #weechat:
-    /allchan -exclude=#weechat здраво
-  каже ’здраво’ свуда осим на #weechat и каналима који почињу са #linux:
-    /allchan -exclude=#weechat,#linux* здраво
-  каже ’здраво’ на свим каналима који почињу на #linux:
-    /allchan -include=#linux* здраво
+  say 'hello' everywhere but not on #weechat:
+    /allchan -exclude=#weechat hello
+  say 'hello' everywhere but not on #weechat and channels beginning with #linux:
+    /allchan -exclude=#weechat,#linux* hello
+  say 'hello' on all channels beginning with #linux:
+    /allchan -include=#linux* hello
+  close all buffers with parted channels:
+    /allchan -parted /close
 ----
 
 [[command_irc_allpv]]
