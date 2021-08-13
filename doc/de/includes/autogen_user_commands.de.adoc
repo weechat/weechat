@@ -20,29 +20,29 @@ target: Servername
 /allchan  [-current] [-parted] [-exclude=<channel>[,<channel>...]] <command>
           [-current] [-parted] -include=<channel>[,<channel>...] <command>
 
- -current: execute command for channels of current server only
-  -parted: execute on parted channels only
- -exclude: exclude some channels (wildcard "*" is allowed)
- -include: include only some channels (wildcard "*" is allowed)
-  command: command to execute (or text to send to buffer if command does not start with '/')
+ -current: führt einen Befehl aus der an alle Kanäle des aktuellen Servers gesendet wird
+  -parted: wird nur bei vom Server getrennten Kanälen ausgeführt
+ -exclude: dient zum Ausschluss ausgewählter Kanäle (Platzhalter "*" kann verwendet werden)
+ -include: findet Anwendung für ausgewählte Kanäle (Platzhalter "*" kann verwendet werden)\n
+  command: Befehl der ausgeführt werden soll
 
-Command and arguments are evaluated (see /help eval), the following variables are replaced:
-  $server             server name
-  $channel            channel name
-  $nick               nick on server
-  ${irc_server.xxx}   variable xxx in server
-  ${irc_channel.xxx}  variable xxx in channel
+Argumente und Befehl werden evaluiert (siehe /help eval), folgende Variablen können genutzt werden:
+  $server             Name des Servers
+  $channel            Name des Kanals
+  $nick               Nickname der auf dem Server genutzt wird
+  ${irc_server.xxx}   Variable xxx von Server
+  ${irc_channel.xxx}  Variable xxx von Kanal
 
-Examples:
-  execute '/me is testing' on all channels:
-    /allchan /me is testing
-  say 'hello' everywhere but not on #weechat:
-    /allchan -exclude=#weechat hello
-  say 'hello' everywhere but not on #weechat and channels beginning with #linux:
-    /allchan -exclude=#weechat,#linux* hello
-  say 'hello' on all channels beginning with #linux:
-    /allchan -include=#linux* hello
-  close all buffers with parted channels:
+Beispiele:
+  führe den Befehl '/me Ich teste gerade etwas...' für alle Kanäle aus:
+    /allchan /me Ich teste gerade etwas...
+  schicke 'Hallo Welt' an jeden Kanal, ausgenommen an den #weechat Kanal:
+    /allchan -exclude=#weechat Hallo Welt
+  schicke 'Hallo Welt' an jeden Kanal, ausgenommen an den #weechat Kanal und Kanäle die mit #linux beginnen:
+    /allchan -exclude=#weechat,#linux* Hallo Welt
+  schickt den Text 'Hallo' an alle Kanäle die mit #linux beginnen:
+    /allchan -include=#linux* Hallo
+  schließt alle, vom Server getrennte, Kanäle.:
     /allchan -parted /close
 ----
 
@@ -2568,7 +2568,7 @@ disable: die Protokollierung wird für den aktuellen Buffer deaktiviert (der Lev
 Die Einstellungen "logger.level.*" und "logger.mask.*" können genutzt werden um den Level der Protokollierung festzulegen und um eine Maske für einen oder mehrere Buffer zu definieren.
 
 Level der Protokollierung, die die IRC Erweiterung unterstützt:
-  1: Nachrichten von Usern (private und öffentliche Nachrichten) , notice (Server und Kanal)
+  1: Nachrichten von Usern (private und öffentliche Nachrichten), notice (Server und Kanal)
   2: Wechsel von Nicks (/nick)
   3: Nachrichten vom Server
   4: join/part/quit Nachrichten
