@@ -50,6 +50,9 @@ jobs:
         bandit doc/docgen.py doc/python_stub.py
         bandit tests/scripts/python/testapigen.py tests/scripts/python/testapi.py tests/scripts/python/unparse.py
 
+    - name: Check Python stub file
+      run: ./doc/python_stub.py | diff - src/plugins/python/weechat.pyi
+
     - name: Build and run tests
       env:
         CC: ${{ matrix.config.cc }}
