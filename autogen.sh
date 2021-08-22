@@ -34,7 +34,7 @@ err ()
     echo "-------"
     echo "Error :"
     echo "---8<-----------------------------------"
-    cat $AUTOGEN_LOG
+    cat "$AUTOGEN_LOG"
     echo "----------------------------------->8---"
     exit 1
 }
@@ -42,7 +42,7 @@ err ()
 run ()
 {
     printf "Running \"%s\"..." "$@"
-    if eval "$@" >$AUTOGEN_LOG 2>&1 ; then
+    if eval "$@" >"$AUTOGEN_LOG" 2>&1 ; then
         echo " OK"
     else
         echo " FAILED"
@@ -66,4 +66,4 @@ run "rm -rf intl"
 run "autoreconf -vi"
 
 # ending
-rm -f $AUTOGEN_LOG
+rm -f "$AUTOGEN_LOG"
