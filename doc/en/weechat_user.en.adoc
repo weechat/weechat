@@ -195,7 +195,7 @@ List of commonly used options:
   The default home directory when running WeeChat. +
   With an empty value (recommended), XDG directories are used by default.
   If non empty, a single directory for all files is used.
-  The value can also  be 4 directories separated by colons, in this order:
+  The value can also be 4 directories separated by colons, in this order:
   config, data, cache, runtime.
 
 | ENABLE_ALIAS | `ON`, `OFF` | ON |
