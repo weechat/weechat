@@ -1204,7 +1204,7 @@ weechat.prnt("", "wartość opcji weechat.color.chat_delimiters to: %s"
 [[irc_catch_messages]]
 ==== Przechwytywanie wiadomości
 
-Wtyczka IRC wysyła cztery sygnały dla otrzymanych wiadomości (`xxx` to wewnętrzna 
+Wtyczka IRC wysyła cztery sygnały dla otrzymanych wiadomości (`xxx` to wewnętrzna
 nazwa serwera IRC, `yyy` to komenda IRC jak JOIN, QUIT, PRIVMSG, 301, ..):
 
 xxx,irc_in_yyy::
