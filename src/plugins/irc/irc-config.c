@@ -98,6 +98,8 @@ struct t_config_option *irc_config_look_part_closes_buffer;
 struct t_config_option *irc_config_look_pv_buffer;
 struct t_config_option *irc_config_look_pv_tags;
 struct t_config_option *irc_config_look_raw_messages;
+struct t_config_option *irc_config_look_typing_status_nicks;
+struct t_config_option *irc_config_look_typing_status_self;
 struct t_config_option *irc_config_look_server_buffer;
 struct t_config_option *irc_config_look_smart_filter;
 struct t_config_option *irc_config_look_smart_filter_account;
@@ -3114,6 +3116,23 @@ irc_config_init ()
         N_("number of raw messages to save in memory when raw data buffer is "
            "closed (messages will be displayed when opening raw data buffer)"),
         NULL, 0, 65535, "256", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    irc_config_look_typing_status_nicks = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "typing_status_nicks", "boolean",
+        N_("display nicks typing on the channel in bar item \"typing\" "
+           "(option typing.look.enabled_nicks must be enabled and capability "
+           "\"message-tags\" must be enabled on the server)"),
+        NULL, 0, 0, "off", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    irc_config_look_typing_status_self = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "typing_status_self", "boolean",
+        N_("send self typing status to channels so that other users see when "
+           "you are typing a message "
+           "(option typing.look.enabled_self must be enabled and capability "
+           "\"message-tags\" must be enabled on the server)"),
+        NULL, 0, 0, "off", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_look_server_buffer = weechat_config_new_option (
         irc_config_file, ptr_section,

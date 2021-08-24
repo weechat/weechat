@@ -1845,6 +1845,50 @@
 ** valeur par défaut: `+"${weechat_runtime_dir}/weechat_fifo_${info:pid}"+`
 // end::fifo_options[]
 
+// tag::typing_options[]
+* [[option_typing.look.delay_purge_paused]] *typing.look.delay_purge_paused*
+** description: pass:none[nombre de secondes après que le statut "paused" ait été défini : si atteint, le statut d'écriture est supprimé]
+** type: entier
+** valeurs: 1 .. 2147483647
+** valeur par défaut: `+30+`
+
+* [[option_typing.look.delay_purge_typing]] *typing.look.delay_purge_typing*
+** description: pass:none[nombre de secondes après que le statut "typing" ait été défini : si atteint, le statut d'écriture est supprimé]
+** type: entier
+** valeurs: 1 .. 2147483647
+** valeur par défaut: `+6+`
+
+* [[option_typing.look.delay_set_paused]] *typing.look.delay_set_paused*
+** description: pass:none[nombre de secondes après avoir tapé le dernier caractère : si atteint, le statut d'écriture devient "paused" et il n'y a plus de signaux typing envoyés]
+** type: entier
+** valeurs: 1 .. 2147483647
+** valeur par défaut: `+10+`
+
+* [[option_typing.look.enabled_nicks]] *typing.look.enabled_nicks*
+** description: pass:none[activer le statut d'écriture pour les autres pseudos (afficher le statut d'écriture pour les autres pseudos écrivant un message dans le tampon courant)]
+** type: booléen
+** valeurs: on, off
+** valeur par défaut: `+off+`
+
+* [[option_typing.look.enabled_self]] *typing.look.enabled_self*
+** description: pass:none[activer le statut d'écriture pour ses propres messages (envoyer l'information aux autres utilisateurs)]
+** type: booléen
+** valeurs: on, off
+** valeur par défaut: `+off+`
+
+* [[option_typing.look.input_min_chars]] *typing.look.input_min_chars*
+** description: pass:none[nombre minimum de caractères dans le message pour déclencher l'envoi des signaux typing]
+** type: entier
+** valeurs: 1 .. 2147483647
+** valeur par défaut: `+4+`
+
+* [[option_typing.look.item_max_length]] *typing.look.item_max_length*
+** description: pass:none[nombre maximum de caractères affichés dans l'objet de barre "typing" (0 = ne pas tronquer le contenu)]
+** type: entier
+** valeurs: 0 .. 2147483647
+** valeur par défaut: `+0+`
+// end::typing_options[]
+
 // tag::xfer_options[]
 * [[option_xfer.color.status_aborted]] *xfer.color.status_aborted*
 ** description: pass:none[couleur du texte pour le statut "interrompu"]
@@ -2516,6 +2560,18 @@
 
 * [[option_irc.look.topic_strip_colors]] *irc.look.topic_strip_colors*
 ** description: pass:none[supprimer les couleurs dans le titre (utilisé seulement lors de l'affichage du titre du tampon)]
+** type: booléen
+** valeurs: on, off
+** valeur par défaut: `+off+`
+
+* [[option_irc.look.typing_status_nicks]] *irc.look.typing_status_nicks*
+** description: pass:none[afficher les pseudos qui écrivent sur le canal dans l'objet de barre "typing" (l'option typing.look.enabled_nicks doit être activée et la capacité "message-tags" doit être activée sur le serveur)]
+** type: booléen
+** valeurs: on, off
+** valeur par défaut: `+off+`
+
+* [[option_irc.look.typing_status_self]] *irc.look.typing_status_self*
+** description: pass:none[envoyer le statut d'écriture de message aux canaux de sorte que les autres utilisateurs voient quand vous écrivez un message (l'option typing.look.enabled_self doit être activée et la capacité "message-tags" doit être activée sur le serveur)]
 ** type: booléen
 ** valeurs: on, off
 ** valeur par défaut: `+off+`

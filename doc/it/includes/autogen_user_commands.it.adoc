@@ -17,10 +17,11 @@ destinazione: nome server
 * `+allchan+`: esegue un comando su tutti i canali di tutti i server connessi
 
 ----
-/allchan  [-current] [-exclude=<channel>[,<channel>...]] <command>
-          [-current] -include=<channel>[,<channel>...] <command>
+/allchan  [-current] [-parted] [-exclude=<channel>[,<channel>...]] <command>
+          [-current] [-parted] -include=<channel>[,<channel>...] <command>
 
  -current: execute command for channels of current server only
+  -parted: execute on parted channels only
  -exclude: exclude some channels (wildcard "*" is allowed)
  -include: include only some channels (wildcard "*" is allowed)
   command: command to execute (or text to send to buffer if command does not start with '/')
@@ -41,6 +42,8 @@ Examples:
     /allchan -exclude=#weechat,#linux* hello
   say 'hello' on all channels beginning with #linux:
     /allchan -include=#linux* hello
+  close all buffers with parted channels:
+    /allchan -parted /close
 ----
 
 [[command_irc_allpv]]
@@ -1389,10 +1392,11 @@ Some variables are replaced in expression, using the format ${variable}, variabl
   15. an environment variable (format: "env:XXX")
   16. a ternary operator (format: "if:condition?value_if_true:value_if_false")
   17. result of an expression with parentheses and operators + - * / // % ** (format: "calc:xxx")
-  18. a translated string (format: "translate:xxx")
-  19. an option (format: "file.section.option")
-  20. a local variable in buffer
-  21. a hdata name/variable (the value is automatically converted to string), by default "window" and "buffer" point to current window/buffer.
+  18. a random integer number (format: "random:min,max")
+  19. a translated string (format: "translate:xxx")
+  20. an option (format: "file.section.option")
+  21. a local variable in buffer
+  22. a hdata name/variable (the value is automatically converted to string), by default "window" and "buffer" point to current window/buffer.
 Format for hdata can be one of following:
   hdata.var1.var2...: start with a hdata (pointer must be known), and ask variables one after one (other hdata can be followed)
   hdata[list].var1.var2...: start with a hdata using a list/pointer/pointer name, for example:
@@ -1424,6 +1428,7 @@ Examples (simple strings):
   /eval -n ${repeat:5,-}                         ==> -----
   /eval -n ${length:test}                        ==> 4
   /eval -n ${calc:(5+2)*3}                       ==> 21
+  /eval -n ${random:0,10}                        ==> 3
   /eval -n ${base_encode:64,test}                ==> dGVzdA==
   /eval -n ${base_decode:64,dGVzdA==}            ==> test
   /eval -n ${translate:Plugin}                   ==> Extension
@@ -1674,6 +1679,8 @@ windows: store/apply only windows (buffer displayed by each window)
 Without argument, this command displays stored layouts.
 
 The current layout can be saved on /quit command with the option "weechat.look.save_layout_on_exit".
+
+Note: the layout only remembers windows split and buffers numbers. It does not open buffers. That means for example you must still auto-join IRC channels to open the buffers, the saved layout only applies once the buffers are opened.
 ----
 
 [[command_weechat_mouse]]

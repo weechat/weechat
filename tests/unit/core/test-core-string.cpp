@@ -2093,11 +2093,10 @@ TEST(CoreString, InputForBuffer)
     char *str;
 
     POINTERS_EQUAL(NULL, string_input_for_buffer (NULL));
+    POINTERS_EQUAL(NULL, string_input_for_buffer ("/"));
     POINTERS_EQUAL(NULL, string_input_for_buffer ("/abc"));
+
     str = strdup ("");
-    STRCMP_EQUAL(str, string_input_for_buffer (str));
-    free (str);
-    str = strdup ("/");
     STRCMP_EQUAL(str, string_input_for_buffer (str));
     free (str);
     str = strdup ("/ ");

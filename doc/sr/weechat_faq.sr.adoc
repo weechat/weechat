@@ -444,7 +444,10 @@ term screen-256color
 [[small_terminal]]
 === Како могу да прилагодим приказ на веома малој величини терминала (као што је 80x25), како се не би траћио простор?
 
-Можете да уклоните бочне траке (листу бафера и листу надимака), промените формат времена тако да се приказују само сати и секунде, искључите поравнање порука и поставите карактер за префикс/суфикс надимка:
+// TRANSLATION MISSING
+You can remove side bars (buflist and nicklist), change time format to display
+only hours and minutes, disable alignment of messages and set a char for nick
+prefix/suffix:
 
 ----
 /set buflist.look.enabled off

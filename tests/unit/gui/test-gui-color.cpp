@@ -585,14 +585,14 @@ TEST(GuiColor, DecodeAnsi)
     WEE_CHECK_DECODE_ANSI("test_blue", "test_\x1B[34mblue", 0);
     snprintf (string, sizeof (string),
               "test_%sblue",
-              gui_color_get_custom ("blue"));
+              gui_color_get_custom ("|blue"));
     WEE_CHECK_DECODE_ANSI(string, "test_\x1B[34mblue", 1);
 
     /* bright text color */
     WEE_CHECK_DECODE_ANSI("test_lightgreen", "test_\x1B[92mlightgreen", 0);
     snprintf (string, sizeof (string),
               "test_%slightgreen",
-              gui_color_get_custom ("lightgreen"));
+              gui_color_get_custom ("|lightgreen"));
     WEE_CHECK_DECODE_ANSI(string, "test_\x1B[92mlightgreen", 1);
 
     /* text terminal color */

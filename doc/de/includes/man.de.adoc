@@ -86,6 +86,9 @@ $HOME/.config/weechat/tcl.conf::
 $HOME/.config/weechat/trigger.conf::
     Konfigurationsdatei für _trigger_ Erweiterung
 
+$HOME/.config/weechat/typing.conf::
+    Konfigurationsdatei für _typing_ Erweiterung
+
 $HOME/.config/weechat/xfer.conf::
     Konfigurationsdatei für _xfer_ Erweiterung
 

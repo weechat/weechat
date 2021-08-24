@@ -64,6 +64,7 @@
 #include "irc-raw.h"
 #include "irc-redirect.h"
 #include "irc-sasl.h"
+#include "irc-typing.h"
 
 
 struct t_irc_server *irc_servers = NULL;
@@ -1115,6 +1116,72 @@ irc_server_set_prefix_modes_chars (struct t_irc_server *server,
 }
 
 /*
+ * Sets "clienttagdeny", "clienttagdeny_count", "clienttagdeny_array" and
+ * "typing_allowed" in server using value of CLIENTTAGDENY in IRC message 005.
+ * The masks in array start with "!" for a tag that is allowed (not denied).
+ *
+ * For example, if clienttagdeny is "*,-foo,-example/bar":
+ *   clienttagdeny is set to "*,-foo,-example/bar"
+ *   clienttagdeny_count is set to 3
+ *   clienttagdeny_array is set to ["*", "!foo", "!example/bar"]
+ *   typing_allowed is set to 0
+ *
+ * For example, if clienttagdeny is "*,-typing":
+ *   clienttagdeny is set to "*,-typing"
+ *   clienttagdeny_count is set to 2
+ *   clienttagdeny_array is set to ["*", "!typing"]
+ *   typing_allowed is set to 1
+ */
+
+void
+irc_server_set_clienttagdeny (struct t_irc_server *server,
+                              const char *clienttagdeny)
+{
+    int i, typing_denied;
+
+    if (!server)
+        return;
+
+    /* free previous values */
+    if (server->clienttagdeny)
+    {
+        free (server->clienttagdeny);
+        server->clienttagdeny = NULL;
+    }
+    if (server->clienttagdeny_array)
+    {
+        weechat_string_free_split (server->clienttagdeny_array);
+        server->clienttagdeny_array = NULL;
+    }
+    server->clienttagdeny_count = 0;
+    server->typing_allowed = 1;
+
+    /* assign new values */
+    if (!clienttagdeny || !clienttagdeny[0])
+        return;
+    server->clienttagdeny = strdup (clienttagdeny);
+    server->clienttagdeny_array = weechat_string_split (
+        clienttagdeny, ",", NULL,
+        WEECHAT_STRING_SPLIT_STRIP_LEFT
+        | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+        | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+        0, &server->clienttagdeny_count);
+    if (server->clienttagdeny_array)
+    {
+        for (i = 0; i < server->clienttagdeny_count; i++)
+        {
+            if (server->clienttagdeny_array[i][0] == '-')
+                server->clienttagdeny_array[i][0] = '!';
+        }
+    }
+    typing_denied = weechat_string_match_list (
+        "typing",
+        (const char **)server->clienttagdeny_array,
+        1);
+    server->typing_allowed = (typing_denied) ? 0 : 1;
+}
+
+/*
  * Sets lag in server buffer (local variable), update bar item "lag"
  * and send signal "irc_server_lag_changed" for the server.
  */
@@ -1529,6 +1596,10 @@ irc_server_alloc (const char *name)
     new_server->chanmodes = NULL;
     new_server->monitor = 0;
     new_server->monitor_time = 0;
+    new_server->clienttagdeny = NULL;
+    new_server->clienttagdeny_count = 0;
+    new_server->clienttagdeny_array = NULL;
+    new_server->typing_allowed = 1;
     new_server->reconnect_delay = 0;
     new_server->reconnect_start = 0;
     new_server->command_time = 0;
@@ -2087,6 +2158,10 @@ irc_server_free_data (struct t_irc_server *server)
         free (server->chantypes);
     if (server->chanmodes)
         free (server->chanmodes);
+    if (server->clienttagdeny)
+        free (server->clienttagdeny);
+    if (server->clienttagdeny_array)
+        weechat_string_free_split (server->clienttagdeny_array);
     if (server->away_message)
         free (server->away_message);
     if (server->cmd_list_regexp)
@@ -2374,15 +2449,18 @@ irc_server_reorder (const char **servers, int num_servers)
  * Sends a signal for an IRC message (received or sent).
  */
 
-void
+int
 irc_server_send_signal (struct t_irc_server *server, const char *signal,
                         const char *command, const char *full_message,
                         const char *tags)
 {
-    int length;
+    int rc, length;
     char *str_signal, *full_message_tags;
 
-    length = strlen (server->name) + 1 + strlen (signal) + 1 + strlen (command) + 1;
+    rc = WEECHAT_RC_OK;
+
+    length = strlen (server->name) + 1 + strlen (signal) + 1
+        + strlen (command) + 1;
     str_signal = malloc (length);
     if (str_signal)
     {
@@ -2396,20 +2474,22 @@ irc_server_send_signal (struct t_irc_server *server, const char *signal,
             {
                 snprintf (full_message_tags, length,
                           "%s;%s", tags, full_message);
-                (void) weechat_hook_signal_send (str_signal,
-                                                 WEECHAT_HOOK_SIGNAL_STRING,
-                                                 (void *)full_message_tags);
+                rc = weechat_hook_signal_send (str_signal,
+                                               WEECHAT_HOOK_SIGNAL_STRING,
+                                               (void *)full_message_tags);
                 free (full_message_tags);
             }
         }
         else
         {
-            (void) weechat_hook_signal_send (str_signal,
-                                             WEECHAT_HOOK_SIGNAL_STRING,
-                                             (void *)full_message);
+            rc = weechat_hook_signal_send (str_signal,
+                                           WEECHAT_HOOK_SIGNAL_STRING,
+                                           (void *)full_message);
         }
         free (str_signal);
     }
+
+    return rc;
 }
 
 /*
@@ -2571,14 +2651,14 @@ irc_server_outqueue_send (struct t_irc_server *server)
                     pos[0] = '\r';
 
                 /* send signal with command that will be sent to server */
-                irc_server_send_signal (
+                (void) irc_server_send_signal (
                     server, "irc_out",
                     server->outqueue[priority]->command,
                     server->outqueue[priority]->message_after_mod,
                     NULL);
                 tags_to_send = irc_server_get_tags_to_send (
                     server->outqueue[priority]->tags);
-                irc_server_send_signal (
+                (void) irc_server_send_signal (
                     server, "irc_outtags",
                     server->outqueue[priority]->command,
                     server->outqueue[priority]->message_after_mod,
@@ -2779,14 +2859,16 @@ irc_server_send_one_msg (struct t_irc_server *server, int flags,
                 }
 
                 /* send signal with command that will be sent to server */
-                irc_server_send_signal (server, "irc_out",
-                                        (command) ? command : "unknown",
-                                        ptr_msg,
-                                        NULL);
-                irc_server_send_signal (server, "irc_outtags",
-                                        (command) ? command : "unknown",
-                                        ptr_msg,
-                                        (tags_to_send) ? tags_to_send : "");
+                (void) irc_server_send_signal (
+                    server, "irc_out",
+                    (command) ? command : "unknown",
+                    ptr_msg,
+                    NULL);
+                (void) irc_server_send_signal (
+                    server, "irc_outtags",
+                    (command) ? command : "unknown",
+                    ptr_msg,
+                    (tags_to_send) ? tags_to_send : "");
 
                 if (irc_server_send (server, buffer, strlen (buffer)) <= 0)
                     rc = 0;
@@ -2896,10 +2978,10 @@ irc_server_sendf (struct t_irc_server *server, int flags, const char *tags,
         if (!new_msg || new_msg[0])
         {
             /* send signal with command that will be sent to server (before split) */
-            irc_server_send_signal (server, "irc_out1",
-                                    (command) ? command : "unknown",
-                                    (new_msg) ? new_msg : items[i],
-                                    NULL);
+            (void) irc_server_send_signal (server, "irc_out1",
+                                           (command) ? command : "unknown",
+                                           (new_msg) ? new_msg : items[i],
+                                           NULL);
 
             /*
              * split message if needed (max is 512 bytes by default,
@@ -3726,6 +3808,9 @@ irc_server_timer_cb (const void *pointer, void *data, int remaining_calls)
 
                 ptr_redirect = ptr_next_redirect;
             }
+
+            /* send typing status on channels/privates */
+            irc_typing_send_to_targets (ptr_server);
 
             /* purge some data (every 10 minutes) */
             if (current_time > ptr_server->last_data_purge + (60 * 10))
@@ -4610,14 +4695,6 @@ irc_server_gnutls_callback (const void *pointer, void *data,
 
     if (action == WEECHAT_HOOK_CONNECT_GNUTLS_CB_VERIFY_CERT)
     {
-        weechat_printf (
-            server->buffer,
-            _("%sgnutls: connected using %d-bit Diffie-Hellman shared secret "
-              "exchange"),
-            weechat_prefix ("network"),
-            IRC_SERVER_OPTION_INTEGER (server,
-                                       IRC_SERVER_OPTION_SSL_DHKEY_SIZE));
-
         /* initialize the certificate structure */
         if (gnutls_x509_crt_init (&cert_temp) != GNUTLS_E_SUCCESS)
         {
@@ -5982,6 +6059,10 @@ irc_server_hdata_server_cb (const void *pointer, void *data,
         WEECHAT_HDATA_VAR(struct t_irc_server, chanmodes, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, monitor, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, monitor_time, TIME, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_server, clienttagdeny, STRING, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_server, clienttagdeny_count, INTEGER, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_server, clienttagdeny_array, STRING, 0, "clienttagdeny_count", NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_server, typing_allowed, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, reconnect_delay, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, reconnect_start, TIME, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, command_time, TIME, 0, NULL, NULL);
@@ -6236,6 +6317,10 @@ irc_server_add_to_infolist (struct t_infolist *infolist,
     if (!weechat_infolist_new_var_integer (ptr_item, "monitor", server->monitor))
         return 0;
     if (!weechat_infolist_new_var_time (ptr_item, "monitor_time", server->monitor_time))
+        return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "clienttagdeny", server->clienttagdeny))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "typing_allowed", server->typing_allowed))
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "reconnect_delay", server->reconnect_delay))
         return 0;
@@ -6630,6 +6715,10 @@ irc_server_print_log ()
         weechat_log_printf ("  chanmodes . . . . . . . . : '%s'",  ptr_server->chanmodes);
         weechat_log_printf ("  monitor . . . . . . . . . : %d",    ptr_server->monitor);
         weechat_log_printf ("  monitor_time. . . . . . . : %lld",  (long long)ptr_server->monitor_time);
+        weechat_log_printf ("  clienttagdeny . . . . . . : '%s'",  ptr_server->clienttagdeny);
+        weechat_log_printf ("  clienttagdeny_count . . . : %d",    ptr_server->clienttagdeny_count);
+        weechat_log_printf ("  clienttagdeny_array . . . : 0x%lx", ptr_server->clienttagdeny_array);
+        weechat_log_printf ("  typing_allowed . .  . . . : %d",    ptr_server->typing_allowed);
         weechat_log_printf ("  reconnect_delay . . . . . : %d",    ptr_server->reconnect_delay);
         weechat_log_printf ("  reconnect_start . . . . . : %lld",  (long long)ptr_server->reconnect_start);
         weechat_log_printf ("  command_time. . . . . . . : %lld",  (long long)ptr_server->command_time);

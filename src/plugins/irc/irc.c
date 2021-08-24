@@ -43,6 +43,7 @@
 #include "irc-redirect.h"
 #include "irc-server.h"
 #include "irc-tag.h"
+#include "irc-typing.h"
 #include "irc-upgrade.h"
 
 
@@ -200,6 +201,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
                          &irc_server_xfer_send_accept_resume_cb, NULL, NULL);
     weechat_hook_signal ("irc_input_send",
                          &irc_input_send_cb, NULL, NULL);
+    weechat_hook_signal ("typing_self_*",
+                         &irc_typing_signal_typing_self_cb, NULL, NULL);
 
     /* hook hsignals for redirection */
     weechat_hook_hsignal ("irc_redirect_pattern",

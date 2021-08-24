@@ -547,6 +547,45 @@ free (str);
 [NOTE]
 Ова функција није доступна у API скриптовања.
 
+// TRANSLATION MISSING
+==== string_cut
+
+_WeeChat ≥ 3.3._
+
+Cut a string after a given number of chars, add an optional suffix after the
+string if it is cut.
+
+Прототип:
+
+[source,C]
+----
+char *weechat_string_cut (const char *string, int length, int count_suffix, int screen, const char *cut_suffix);
+----
+
+Аргументи:
+
+* _string_: string to cut
+* _length_: max chars
+* _count_suffix_: if 1, the length of suffix is counter in the max length
+* _screen_: if 1, the cut is based on width of chars displayed
+* _cut_suffix_: the suffix added after the string if it is cut
+
+Повратна вредност:
+
+* cut string (must be freed by calling "free" after use)
+
+C пример:
+
+[source,C]
+----
+char *str = weechat_string_cut ("this is a test", 5, 1, 1, "…");  /* result: "this…" */
+/* ... */
+free (str);
+----
+
+[NOTE]
+Ова функција није доступна у API скриптовања.
+
 ==== string_tolower
 
 Конвертује UTF-8 стринг у мала слова.
@@ -2121,7 +2160,7 @@ str3 = weechat.string_input_for_buffer("//test")  # "/test"
 
 ==== string_eval_expression
 
-_WeeChat ≥ 0.4.0, ажурирано у верзијама 0.4.2, 0.4.3, 1.0, 1.1, 1.2, 1.3, 1.6, 1.8, 2.0, 2.2, 2.3, 2.7, 2.9, 3.1 и 3.2._
+_WeeChat ≥ 0.4.0, ажурирано у верзијама 0.4.2, 0.4.3, 1.0, 1.1, 1.2, 1.3, 1.6, 1.8, 2.0, 2.2, 2.3, 2.7, 2.9, 3.1, 3.2 и 3.3._
 
 Израчунава израз и враћа вредност као стринг. Специјалне променљиве у формату `+${променљива}+` се развијају (погледајте табелу испод).
 
@@ -2640,6 +2679,13 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
   `+2+` +
   `+0.2+` +
   `+65536+`
+
+// TRANSLATION MISSING
+| `+${random:min,max}+` +
+  _(WeeChat ≥ 3.3)_ |
+  Random integer number in the range from `min` to `max` (inclusive). |
+  `+${random:0,10}+` |
+  `+3+`
 
 | `+${translate:xxx}+` +
   _(WeeChat ≥ 3.2)_ |
@@ -3740,6 +3786,42 @@ char *content;
 content = weechat_file_get_content ("/tmp/test.txt");
 /* ... */
 free (content);
+----
+
+[NOTE]
+Ова функција није доступна у API скриптовања.
+
+// TRANSLATION MISSING
+==== file_copy
+
+_WeeChat ≥ 3.3._
+
+Copy a file to another location.
+
+Прототип:
+
+[source,C]
+----
+int weechat_file_copy (const char *from, const char *to);
+----
+
+Аргументи:
+
+* _from_: source file
+* _to_: destination file
+
+Повратна вредност:
+
+* 1 if OK, 0 if error
+
+C пример:
+
+[source,C]
+----
+if (weechat_file_copy ("/tmp/test.txt", "/path/to/test2.txt"))
+{
+    /* OK */
+}
 ----
 
 [NOTE]
@@ -8937,37 +9019,26 @@ struct t_hook *weechat_hook_process_hashtable (const char *command,
 
 За стандардну команду (која не почиње са „url:”), можете користите следеће опције:
 
-[width="100%", cols="^1,1,1,4", options="header"]
+[width="100%", cols="^1,^1,1,1,5", options="header"]
 |===
-| Опција | Вредност | Подразумевана | Опис
+// TRANSLATION MISSING
+| Опција | Min WeeChat | Вредност | Подразумевана | Опис
 
-| argN (N ≥ 1) +
-  _(WeeChat ≥ 0.4.0)_ |
-  било који стринг |
-  без аргумената |
+| argN (N ≥ 1) | 0.4.0 | било који стринг | без аргумената |
   Аргументи команде; ако се овим опцијама не наведе ниједан аргумент,
   команда се аутоматски дели на начин на који то ради командно окружење
   (па се онда аргументи команде учитавају у _command_ аргумент).
 
-| stdin +
-  _(WeeChat ≥ 0.4.3)_ |
-  (не користи се) |
-  без stdin |
+| stdin | 0.4.3 | (не користи се) | без stdin |
   Креира пајп за упис података на стандардни улаз (stdin) дете процеса
   (погледајте функцију <<_hook_set,hook_set>>).
 
-| buffer_flush +
-  _(WeeChat ≥ 1.0)_ |
-  број бајтова |
-  65536 |
+| buffer_flush | 1.0 | број бајтова | 65536 |
   Минимални број бајтова након којег се испира stdout/stderr (да се излаз
   пошаље функцији повратног позива), између 1 и 65536. Ако је вредност 1, 
   излаз се тренутно шаље функцији повратног позива.
 
-| detached +
-  _(WeeChat ≥ 1.0)_ |
-  (не користи се) |
-  нема одвајања |
+| detached | 1.0 | (не користи се) | нема одвајања |
   Процес се покреће у одвојеном режиму: stdout и stderr се преусмеравају на
   _/dev/null_.
 |===
@@ -9719,839 +9790,647 @@ struct t_hook *weechat_hook_signal (const char *signal,
 
 Листа сигнала који шаљу програм WeeChat и додаци:
 
-[width="100%", cols="^1,^3,4,5", options="header"]
+[width="100%", cols="^2,^4,^1,6,9", options="header"]
 |===
-| Додатак | Сигнал | Аргументи | Опис
+// TRANSLATION MISSING
+| Додатак | Сигнал | Min WeeChat | Аргументи | Опис
 
-| guile |
-  [[hook_signal_guile_script_loaded]] guile_script_loaded +
-  _(WeeChat ≥ 0.3.9)_ |
+| guile | [[hook_signal_guile_script_loaded]] guile_script_loaded | 0.3.9 |
   Стринг: путања до скрипте. |
   Учитана је Scheme скрипта.
 
-| guile |
-  [[hook_signal_guile_script_unloaded]] guile_script_unloaded +
-  _(WeeChat ≥ 0.3.9)_ |
+| guile | [[hook_signal_guile_script_unloaded]] guile_script_unloaded | 0.3.9 |
   Стринг: путања до скрипте. |
   Scheme скрипта је уклоњена из меморије.
 
-| guile |
-  [[hook_signal_guile_script_installed]] guile_script_installed +
-  _(WeeChat ≥ 0.3.9)_ |
+| guile | [[hook_signal_guile_script_installed]] guile_script_installed | 0.3.9 |
   Стринг: листа путања инсталираних скрипти раздвојених запетама. |
   Инсталиран(а/е) Scheme скрипт(а/е).
 
-| guile |
-  [[hook_signal_guile_script_removed]] guile_script_removed +
-  _(WeeChat ≥ 0.3.9)_ |
+| guile | [[hook_signal_guile_script_removed]] guile_script_removed | 0.3.9 |
   Стринг: листа уклоњених скрипти раздвојених запетама. |
   Уклоњен(а/е) Scheme скрипт(а/е).
 
-| irc |
-  [[hook_signal_xxx_irc_in_yyy]] xxx,irc_in_yyy ^(1)^ |
+// TRANSLATION MISSING
+| irc | [[hook_signal_xxx_irc_in_yyy]] xxx,irc_in_yyy ^(1)^ | |
   Стринг: порука. |
   IRC порука од сервера (пре него што је употреби irc додатак,
   сигнал се шаље само ако се порука *не* игнорише). +
-  Почевши од верзије 2.2, шаље се комплетна IRC порука, заједно са ознакама.
+  Почевши од верзије 2.2, шаље се комплетна IRC порука, заједно са ознакама. +
+  If the return code of a callback is _WEECHAT_RC_OK_EAT_, then the IRC message
+  is immediately destroyed and not processed _(WeeChat ≥ 3.3)_.
 
-| irc |
-  [[hook_signal_xxx_irc_in2_yyy]] xxx,irc_in2_yyy ^(1)^ |
+| irc | [[hook_signal_xxx_irc_in2_yyy]] xxx,irc_in2_yyy ^(1)^ | |
   Стринг: порука. |
   IRC порука од сервера (након што је употреби irc додатак,
   сигнал се шаље само ако се порука *не* игнорише). +
   Почевши од верзије 2.2, шаље се комплетна IRC порука, заједно са ознакама.
 
-| irc |
-  [[hook_signal_xxx_irc_raw_in_yyy]] xxx,irc_raw_in_yyy ^(1)^ +
-  _(WeeChat ≥ 0.3.2)_ |
+// TRANSLATION MISSING
+| irc | [[hook_signal_xxx_irc_raw_in_yyy]] xxx,irc_raw_in_yyy ^(1)^ | 0.3.2 |
   Стринг: порука. |
   IRC порука од сервера (пре него што је употреби irc додатак,
   сигнал се шаље чак и када се порука игнорише). +
-  Почевши од верзије 2.2, шаље се комплетна IRC порука, заједно са ознакама.
+  Почевши од верзије 2.2, шаље се комплетна IRC порука, заједно са ознакама. +
+  If the return code of a callback is _WEECHAT_RC_OK_EAT_, then the IRC message
+  is immediately destroyed and not processed _(WeeChat ≥ 3.3)_.
 
-| irc |
-  [[hook_signal_xxx_irc_raw_in2_yyy]] xxx,irc_raw_in2_yyy ^(1)^ +
-  _(WeeChat ≥ 0.3.2)_ |
+| irc | [[hook_signal_xxx_irc_raw_in2_yyy]] xxx,irc_raw_in2_yyy ^(1)^ | 0.3.2 |
   Стринг: порука. |
   IRC порука од сервера (након што је употреби irc додатак,
   сигнал се шаље чак и када се порука игнорише). +
   Почевши од верзије 2.2, шаље се комплетна IRC порука, заједно са ознакама.
 
-| irc |
-  [[hook_signal_xxx_irc_out1_yyy]] xxx,irc_out1_yyy ^(1)^ +
-  _(WeeChat ≥ 0.3.7)_ |
+| irc | [[hook_signal_xxx_irc_out1_yyy]] xxx,irc_out1_yyy ^(1)^ | 0.3.7 |
   Стринг: порука. |
   IRC порука која се шаље серверу пре аутоматске поделе
   (да стане у 512 бајтова, подразумевано).
 
-| irc |
-  [[hook_signal_xxx_irc_out_yyy]] xxx,irc_out_yyy ^(1)^ |
+| irc | [[hook_signal_xxx_irc_out_yyy]] xxx,irc_out_yyy ^(1)^ | |
   Стринг: порука. |
   IRC порука која се шаље серверу након аутоматске поделе
   (да стане у 512 бајтова, подразумевано).
   *Упозорење:* стринг може да садржи неважеће UTF-8 податке.
   Уместо овог, препоручује се употреба сигнала „xxx,irc_out1_yyy”.
 
-| irc |
-  [[hook_signal_xxx_irc_outtags_yyy]] xxx,irc_outtags_yyy ^(1)^ +
-  _(WeeChat ≥ 0.3.4)_ |
+| irc | [[hook_signal_xxx_irc_outtags_yyy]] xxx,irc_outtags_yyy ^(1)^ | 0.3.4 |
   Стринг: ознаке + „;” + порука. |
   Ознаке + IRC порука која се шаље серверу. +
   *Упозорење:* стринг може да садржи неважеће UTF-8 податке.
   Уместо овог, препоручује се употреба сигнала „xxx,irc_out1_yyy”.
 
-| irc |
-  [[hook_signal_irc_ctcp]] irc_ctcp |
+| irc | [[hook_signal_irc_ctcp]] irc_ctcp | |
   Стринг: порука. |
   Примљена је CTCP.
 
-| irc |
-  [[hook_signal_irc_dcc]] irc_dcc |
+| irc | [[hook_signal_irc_dcc]] irc_dcc | |
   Стринг: порука. |
   Нови DCC.
 
-| irc |
-  [[hook_signal_irc_pv]] irc_pv |
+| irc | [[hook_signal_irc_pv]] irc_pv | |
   Стринг: порука. |
   Примљена је приватна порука.
 
-| irc |
-  [[hook_signal_irc_channel_opened]] irc_channel_opened |
+| irc | [[hook_signal_irc_channel_opened]] irc_channel_opened | |
   Показивач: бафер. |
   Отворен је канал.
 
-| irc |
-  [[hook_signal_irc_pv_opened]] irc_pv_opened |
+| irc | [[hook_signal_irc_pv_opened]] irc_pv_opened | |
   Показивач: бафер. |
   Отворен је приватни бафер.
 
-| irc |
-  [[hook_signal_irc_server_opened]] irc_server_opened +
-  _(WeeChat ≥ 0.3.7)_ |
+| irc | [[hook_signal_irc_server_opened]] irc_server_opened | 0.3.7 |
   Показивач: бафер. |
   Отворен је серверски бафер.
 
-| irc |
-  [[hook_signal_irc_server_connecting]] irc_server_connecting |
+| irc | [[hook_signal_irc_server_connecting]] irc_server_connecting | |
   Стринг: име сервера. |
   Повезивање са сервером.
 
-| irc |
-  [[hook_signal_irc_server_connected]] irc_server_connected |
+| irc | [[hook_signal_irc_server_connected]] irc_server_connected | |
   Стринг: име сервера. |
   Успостављена је веза са сервером.
 
-| irc |
-  [[hook_signal_irc_server_disconnected]] irc_server_disconnected |
+| irc | [[hook_signal_irc_server_disconnected]] irc_server_disconnected | |
   Стринг: име сервера. |
   Прекинута је веза са сервером.
 
-| irc |
-  [[hook_signal_irc_server_lag_changed]] irc_server_lag_changed +
-  _(WeeChat ≥ 1.8)_ |
+| irc | [[hook_signal_irc_server_lag_changed]] irc_server_lag_changed | 1.8 |
   Стринг: име сервера. |
   Променило се кашњење у комуникацији са сервером.
 
-| irc |
-  [[hook_signal_irc_ignore_removing]] irc_ignore_removing |
+| irc | [[hook_signal_irc_ignore_removing]] irc_ignore_removing | |
   Показивач: игнорисање. |
   Уклања се игнорисање.
 
-| irc |
-  [[hook_signal_irc_ignore_removed]] irc_ignore_removed |
+| irc | [[hook_signal_irc_ignore_removed]] irc_ignore_removed | |
   - |
 Уклоњено је игнорисање.
 
-| irc |
-  [[hook_signal_irc_notify_join]] irc_notify_join +
-  _(WeeChat ≥ 0.3.8)_ |
+| irc | [[hook_signal_irc_notify_join]] irc_notify_join | 0.3.8 |
   Стринг: име сервера + „,” + надимак. |
   Надимак из листе обавештавања се прикључио серверу.
 
-| irc |
-  [[hook_signal_irc_notify_quit]] irc_notify_quit +
-  _(WeeChat ≥ 0.3.8)_ |
+| irc | [[hook_signal_irc_notify_quit]] irc_notify_quit | 0.3.8 |
   Стринг: име сервера + „,” + надимак. |
   Надимак из листе обавештавања је напустио сервер.
 
-| irc |
-  [[hook_signal_irc_notify_away]] irc_notify_away +
-  _(WeeChat ≥ 0.3.8)_ |
+| irc | [[hook_signal_irc_notify_away]] irc_notify_away | 0.3.8 |
   Стринг: име сервера + „,” + надимак + „,” + порука о одсутности. |
   Надимак из листе обавештавања је сада одсутан са сервера.
 
-| irc |
-  [[hook_signal_irc_notify_still_away]] irc_notify_still_away +
-  _(WeeChat ≥ 0.3.8)_ |
+| irc | [[hook_signal_irc_notify_still_away]] irc_notify_still_away | 0.3.8 |
   Стринг: име сервера + „,” + надимак + „,” + порука о одсутности. |
   Надимак из листе обавештавања је још увек одсутан са сервера (промењена је порука о одсутности).
 
-| irc |
-  [[hook_signal_irc_notify_back]] irc_notify_back +
-  _(WeeChat ≥ 0.3.8)_ |
+| irc | [[hook_signal_irc_notify_back]] irc_notify_back | 0.3.8 |
   Стринг: име сервера + „,” + надимак. |
   Надимак из листе обавештавања се вратио (уклоњен је статус одсутности).
 
-| javascript |
-  [[hook_signal_javascript_script_loaded]] javascript_script_loaded +
-  _(WeeChat ≥ 1.2)_ |
+| javascript | [[hook_signal_javascript_script_loaded]] javascript_script_loaded | 1.2 |
   Стринг: путања до скрипте. |
   Учитана је JavaScript скрипта.
 
-| javascript |
-  [[hook_signal_javascript_script_unloaded]] javascript_script_unloaded +
-  _(WeeChat ≥ 1.2)_ |
+| javascript | [[hook_signal_javascript_script_unloaded]] javascript_script_unloaded | 1.2 |
   String: path to script. |
   JavaScript скрипта је уклоњена из меморије.
 
-| javascript |
-  [[hook_signal_javascript_script_installed]] javascript_script_installed +
-  _(WeeChat ≥ 1.2)_ |
+| javascript | [[hook_signal_javascript_script_installed]] javascript_script_installed | 1.2 |
   Стринг: листа путања до инсталираних скрипти раздвојених запетама. |
   Инсталиран(а/е) JavaScript скрипт(а/е).
 
-| javascript |
-  [[hook_signal_javascript_script_removed]] javascript_script_removed +
-  _(WeeChat ≥ 1.2)_ |
+| javascript | [[hook_signal_javascript_script_removed]] javascript_script_removed | 1.2 |
   Стринг: листа уклоњених скрипти раздвојених запетама. |
   Уклоњен(а/е) JavaScript скрипт(а/е).
 
-| logger |
-  [[hook_signal_logger_start]] logger_start |
+| logger | [[hook_signal_logger_start]] logger_start | |
   Показивач: бафер. |
   Почиње логовање бафера.
 
-| logger |
-  [[hook_signal_logger_stop]] logger_stop |
+| logger | [[hook_signal_logger_stop]] logger_stop | |
   Показивач: бафер. |
   Престаје логовање бафера.
 
-| logger |
-  [[hook_signal_logger_backlog]] logger_backlog |
+| logger | [[hook_signal_logger_backlog]] logger_backlog | |
   Показивач: бафер. |
   Приказивање ранијих линија из бафера.
 
-| lua |
-  [[hook_signal_lua_script_loaded]] lua_script_loaded +
-  _(WeeChat ≥ 0.3.9)_ |
+| lua | [[hook_signal_lua_script_loaded]] lua_script_loaded | 0.3.9 |
   Стринг: путања до скрипте. |
   Учитана је Lua скрипта.
 
-| lua |
-  [[hook_signal_lua_script_unloaded]] lua_script_unloaded +
-  _(WeeChat ≥ 0.3.9)_ |
+| lua | [[hook_signal_lua_script_unloaded]] lua_script_unloaded | 0.3.9 |
   Стринг: путања до скрипте. |
   Lua скрипта је уклоњена из меморије.
 
-| lua |
-  [[hook_signal_lua_script_installed]] lua_script_installed +
-  _(WeeChat ≥ 0.3.9)_ |
+| lua | [[hook_signal_lua_script_installed]] lua_script_installed | 0.3.9 |
   Стринг: листа путања до инсталираних скрипти раздвојених запетама. |
   Инсталиран(а/е) Lua скрипт(а/е).
 
-| lua |
-  [[hook_signal_lua_script_removed]] lua_script_removed +
-  _(WeeChat ≥ 0.3.9)_ |
+| lua | [[hook_signal_lua_script_removed]] lua_script_removed | 0.3.9 |
   Стринг: листа уклоњених скрипти раздвојених запетама. |
   Уклоњен(а/е) Lua скрипт(а/е).
 
-| perl |
-  [[hook_signal_perl_script_loaded]] perl_script_loaded +
-  _(WeeChat ≥ 0.3.9)_ |
+| perl | [[hook_signal_perl_script_loaded]] perl_script_loaded | 0.3.9 |
   Стринг: путања до скрипте. |
   Учитана је Perl скрипта.
 
-| perl |
-  [[hook_signal_perl_script_unloaded]] perl_script_unloaded +
-  _(WeeChat ≥ 0.3.9)_ |
+| perl | [[hook_signal_perl_script_unloaded]] perl_script_unloaded | 0.3.9 |
   Стринг: путања до скрипте. |
   Perl скрипта је уклоњена из меморије.
 
-| perl |
-  [[hook_signal_perl_script_installed]] perl_script_installed +
-  _(WeeChat ≥ 0.3.9)_ |
+| perl | [[hook_signal_perl_script_installed]] perl_script_installed | 0.3.9 |
   Стринг: листа путања до инсталираних скрипти раздвојених запетама. |
   Инсталиран(а/е) Perl скрипт(а/е).
 
-| perl |
-  [[hook_signal_perl_script_removed]] perl_script_removed +
-  _(WeeChat ≥ 0.3.9)_ |
+| perl | [[hook_signal_perl_script_removed]] perl_script_removed | 0.3.9 |
   Стринг: листа уклоњених скрипти раздвојених запетама. |
   Уклоњен(а/е) Perl скрипт(а/е).
 
-| php |
-  [[hook_signal_php_script_loaded]] php_script_loaded +
-  _(WeeChat ≥ 2.0)_ |
+| php | [[hook_signal_php_script_loaded]] php_script_loaded | 2.0 |
   Стринг: путања до скрипте. |
   Учитана је PHP скрипта.
 
-| php |
-  [[hook_signal_php_script_unloaded]] php_script_unloaded +
-  _(WeeChat ≥ 2.0)_ |
+| php | [[hook_signal_php_script_unloaded]] php_script_unloaded | 2.0 |
   Стринг: путања до скрипте. |
   PHP скрипта је уклоњена из меморије.
 
-| php |
-  [[hook_signal_php_script_installed]] php_script_installed +
-  _(WeeChat ≥ 2.0)_ |
+| php | [[hook_signal_php_script_installed]] php_script_installed | 2.0 |
   Стринг: листа путања до инсталираних скрипти раздвојених запетама. |
   Инсталиран(а/е) PHP скрипт(а/е).
 
-| php |
-  [[hook_signal_php_script_removed]] php_script_removed +
-  _(WeeChat ≥ 2.0)_ |
+| php | [[hook_signal_php_script_removed]] php_script_removed | 2.0 |
   Стринг: листа уклоњених скрипти раздвојених запетама. |
   Уклоњен(а/е) PHP скрипт(а/е).
 
-| python |
-  [[hook_signal_python_script_loaded]] python_script_loaded +
-  _(WeeChat ≥ 0.3.9)_ |
+| python | [[hook_signal_python_script_loaded]] python_script_loaded | 0.3.9 |
   Стринг: путања до скрипте. |
   Учитана је Python скрипта.
 
-| python |
-  [[hook_signal_python_script_unloaded]] python_script_unloaded +
-  _(WeeChat ≥ 0.3.9)_ |
+| python | [[hook_signal_python_script_unloaded]] python_script_unloaded | 0.3.9 |
   Стринг: путања до скрипте. |
   Python скрипта је уклоњена из меморије.
 
-| python |
-  [[hook_signal_python_script_installed]] python_script_installed +
-  _(WeeChat ≥ 0.3.9)_ |
+| python | [[hook_signal_python_script_installed]] python_script_installed | 0.3.9 |
   Стринг: листа путања до инсталираних скрипти раздвојених запетама. |
   Инсталиран(а/е) Python скрипт(а/е).
 
-| python |
-  [[hook_signal_python_script_removed]] python_script_removed +
-  _(WeeChat ≥ 0.3.9)_ |
+| python | [[hook_signal_python_script_removed]] python_script_removed | 0.3.9 |
   Стринг: листа уклоњених скрипти раздвојених запетама. |
   Уклоњен(а/е) Python скрипт(а/е).
 
-| relay |
-  [[hook_signal_relay_client_connecting]] relay_client_connecting +
-  _(WeeChat ≥ 1.0)_ |
+| relay | [[hook_signal_relay_client_connecting]] relay_client_connecting | 1.0 |
   Показивач: релеј клијент. |
   Релеј клијент се повезује.
 
-| relay |
-  [[hook_signal_relay_client_waiting_auth]] relay_client_waiting_auth +
-  _(WeeChat ≥ 1.0)_ |
+| relay | [[hook_signal_relay_client_waiting_auth]] relay_client_waiting_auth | 1.0 |
   Показивач: релеј клијент. |
   Чека се на аутентификацију релеј клијента.
 
-| relay |
-  [[hook_signal_relay_client_auth_ok]] relay_client_auth_ok +
-  _(WeeChat ≥ 1.0)_ |
+| relay | [[hook_signal_relay_client_auth_ok]] relay_client_auth_ok | 1.0 |
   Показивач: релеј клијент. |
   Успешна аутентификација релеј клијента.
 
-| relay |
-  [[hook_signal_relay_client_connected]] relay_client_connected +
-  _(WeeChat ≥ 1.0)_ |
+| relay | [[hook_signal_relay_client_connected]] relay_client_connected | 1.0 |
   Показивач: релеј клијент. |
   Релеј клијент се повезао.
 
-| relay |
-  [[hook_signal_relay_client_auth_failed]] relay_client_auth_failed +
-  _(WeeChat ≥ 1.0)_ |
+| relay | [[hook_signal_relay_client_auth_failed]] relay_client_auth_failed | 1.0 |
   Показивач: релеј клијент. |
   Аутентификација релеј клијента није успела.
 
-| relay |
-  [[hook_signal_relay_client_disconnected]] relay_client_disconnected +
-  _(WeeChat ≥ 1.0)_ |
+| relay | [[hook_signal_relay_client_disconnected]] relay_client_disconnected | 1.0 |
   Показивач: релеј клијент. |
   Прекинута је веза релеј клијентом.
 
-| ruby |
-  [[hook_signal_ruby_script_loaded]] ruby_script_loaded +
-  _(WeeChat ≥ 0.3.9)_ |
+| ruby | [[hook_signal_ruby_script_loaded]] ruby_script_loaded | 0.3.9 |
   Стринг: путања до скрипте. |
   Учитана је Ruby скрипта.
 
-| ruby |
-  [[hook_signal_ruby_script_unloaded]] ruby_script_unloaded +
-  _(WeeChat ≥ 0.3.9)_ |
+| ruby | [[hook_signal_ruby_script_unloaded]] ruby_script_unloaded | 0.3.9 |
   Стринг: путања до скрипте. |
   Ruby скрипта је уклоњена из меморије.
 
-| ruby |
-  [[hook_signal_ruby_script_installed]] ruby_script_installed +
-  _(WeeChat ≥ 0.3.9)_ |
+| ruby | [[hook_signal_ruby_script_installed]] ruby_script_installed | 0.3.9 |
   Стринг: листа путања до инсталираних скрипти раздвојених запетама. |
   Инсталиран(а/е) Ruby скрипт(а/е).
 
-| ruby |
-  [[hook_signal_ruby_script_removed]] ruby_script_removed +
-  _(WeeChat ≥ 0.3.9)_ |
+| ruby | [[hook_signal_ruby_script_removed]] ruby_script_removed | 0.3.9 |
   Стринг: листа уклоњених скрипти раздвојених запетама. |
   Уклоњен(а/е) Ruby скрипт(а/е).
 
-| spell |
-  [[hook_signal_spell_suggest]] spell_suggest +
-  _(WeeChat ≥ 2.4)_ |
+| spell | [[hook_signal_spell_suggest]] spell_suggest | 2.4 |
   Показивач: бафер. |
   Нови предлог за погрешно написану реч.
 
-| tcl |
-  [[hook_signal_tcl_script_loaded]] tcl_script_loaded +
-  _(WeeChat ≥ 0.3.9)_ |
+| tcl | [[hook_signal_tcl_script_loaded]] tcl_script_loaded | 0.3.9 |
   Стринг: путања до скрипте. |
   Учитана је Tcl скрипта.
 
-| tcl |
-  [[hook_signal_tcl_script_unloaded]] tcl_script_unloaded +
-  _(WeeChat ≥ 0.3.9)_ |
+| tcl | [[hook_signal_tcl_script_unloaded]] tcl_script_unloaded | 0.3.9 |
   Стринг: путања до скрипте. |
   Tcl скрипта је уклоњена из меморије.
 
-| tcl |
-  [[hook_signal_tcl_script_installed]] tcl_script_installed +
-  _(WeeChat ≥ 0.3.9)_ |
+| tcl | [[hook_signal_tcl_script_installed]] tcl_script_installed | 0.3.9 |
   Стринг: листа путања до инсталираних скрипти раздвојених запетама. |
   Инсталран(а/е) Tcl скрипт(а/е).
 
-| tcl |
-  [[hook_signal_tcl_script_removed]] tcl_script_removed +
-  _(WeeChat ≥ 0.3.9)_ |
+| tcl | [[hook_signal_tcl_script_removed]] tcl_script_removed | 0.3.9 |
   Стринг: листа уклоњених скрипти раздвојених запетама. |
   Уклоњен(а/е) Tcl скрипт(а/е).
 
-| weechat |
-  [[hook_signal_buffer_opened]] buffer_opened |
+// TRANSLATION MISSING
+| typing | [[hook_signal_typing_self_typing]] typing_self_typing | 3.3 |
+  Pointer: buffer. |
+  User is typing a message (sent by typing plugin, used by irc plugin).
+
+// TRANSLATION MISSING
+| typing | [[hook_signal_typing_self_paused]] typing_self_paused | 3.3 |
+  Pointer: buffer. |
+  User paused during typing (sent by typing plugin, used by irc plugin).
+
+// TRANSLATION MISSING
+| typing | [[hook_signal_typing_self_cleared]] typing_self_cleared | 3.3 |
+  Pointer: buffer. |
+  User cleared the input without sending the message (sent by typing plugin, used by irc plugin).
+
+// TRANSLATION MISSING
+| typing | [[hook_signal_typing_self_sent]] typing_self_sent | 3.3 |
+  Pointer: buffer. |
+  Message (not a command) sent to the buffer (sent by typing plugin, used by irc plugin).
+
+// TRANSLATION MISSING
+| typing | [[hook_signal_typing_set_nick]] typing_set_nick | 3.3 |
+  String: buffer pointer + ";" + state (one of: "off", "typing", "paused",
+  "cleared") + ";" + nick. |
+  Set typing state for a nick on a buffer (sent by irc plugin, handled by typing plugin).
+
+// TRANSLATION MISSING
+| typing | [[hook_signal_typing_reset_buffer]] typing_reset_buffer | 3.3 |
+  Pointer: buffer. |
+  Remove typing state for all nicks on a buffer (sent by irc plugin, handled by typing plugin).
+
+| weechat | [[hook_signal_buffer_opened]] buffer_opened | |
   Показивач: бафер. |
   Отворен је бафер.
 
-| weechat |
-  [[hook_signal_buffer_closing]] buffer_closing |
+| weechat | [[hook_signal_buffer_closing]] buffer_closing | |
   Показивач: бафер. |
   Бафер се затвара.
 
-| weechat |
-  [[hook_signal_buffer_closed]] buffer_closed |
+| weechat | [[hook_signal_buffer_closed]] buffer_closed | |
   Показивач: бафер. |
   Бафер је затворен.
 
-| weechat |
-  [[hook_signal_buffer_cleared]] buffer_cleared |
+| weechat | [[hook_signal_buffer_cleared]] buffer_cleared | |
   Показивач: бафер. |
   Бафер је очишћен.
 
-| weechat |
-  [[hook_signal_buffer_filters_enabled]] buffer_filters_enabled +
-  _(WeeChat ≥ 2.0)_ |
+| weechat | [[hook_signal_buffer_filters_enabled]] buffer_filters_enabled | 2.0 |
   Показивач: бафер. |
   У баферу су укључени филтери.
 
-| weechat |
-  [[hook_signal_buffer_filters_disabled]] buffer_filters_disabled +
-  _(WeeChat ≥ 2.0)_ |
+| weechat | [[hook_signal_buffer_filters_disabled]] buffer_filters_disabled | 2.0 |
   Показивач: бафер. |
   У баферу су искључени филтери.
 
-| weechat |
-  [[hook_signal_buffer_hidden]] buffer_hidden |
+| weechat | [[hook_signal_buffer_hidden]] buffer_hidden | |
   Показивач: бафер. |
   Бафер је скривен.
 
-| weechat |
-  [[hook_signal_buffer_unhidden]] buffer_unhidden |
+| weechat | [[hook_signal_buffer_unhidden]] buffer_unhidden | |
   Показивач: бафер. |
   Бафер је откривен.
 
-| weechat |
-  [[hook_signal_buffer_line_added]] buffer_line_added +
-  _(WeeChat ≥ 0.3.7)_ |
+| weechat | [[hook_signal_buffer_line_added]] buffer_line_added | 0.3.7 |
   Показивач: линија. |
   У бафер је додата линија.
 
-| weechat |
-  [[hook_signal_buffer_lines_hidden]] buffer_lines_hidden |
+| weechat | [[hook_signal_buffer_lines_hidden]] buffer_lines_hidden | |
   Показивач: бафер. |
   У баферу су сакривене линије.
 
-| weechat |
-  [[hook_signal_buffer_localvar_added]] buffer_localvar_added |
+| weechat | [[hook_signal_buffer_localvar_added]] buffer_localvar_added | |
   Показивач: бафер. |
   Додата је локална променљива.
 
-| weechat |
-  [[hook_signal_buffer_localvar_changed]] buffer_localvar_changed |
+| weechat | [[hook_signal_buffer_localvar_changed]] buffer_localvar_changed | |
   Показивач: бафер. |
   Измењена је локална променљива.
 
-| weechat |
-  [[hook_signal_buffer_localvar_removed]] buffer_localvar_removed |
+| weechat | [[hook_signal_buffer_localvar_removed]] buffer_localvar_removed | |
   Показивач: бафер. |
   Уклоњена је локална променљива.
 
-| weechat |
-  [[hook_signal_buffer_merged]] buffer_merged |
+| weechat | [[hook_signal_buffer_merged]] buffer_merged | |
   Показивач: бафер. |
   Бафер је спојен.
 
-| weechat |
-  [[hook_signal_buffer_unmerged]] buffer_unmerged |
+| weechat | [[hook_signal_buffer_unmerged]] buffer_unmerged | |
   Показивач: бафер. |
   Бафер је раздвојен.
 
-| weechat |
-  [[hook_signal_buffer_moved]] buffer_moved |
+| weechat | [[hook_signal_buffer_moved]] buffer_moved | |
   Показивач: бафер. |
   Бафер је померен.
 
-| weechat |
-  [[hook_signal_buffer_renamed]] buffer_renamed |
+| weechat | [[hook_signal_buffer_renamed]] buffer_renamed | |
   Показивач: бафер. |
   Баферу је промењено име.
 
-| weechat |
-  [[hook_signal_buffer_switch]] buffer_switch |
+| weechat | [[hook_signal_buffer_switch]] buffer_switch | |
   Показивач: бафер. |
   Прелази се на други бафер.
 
-| weechat |
-  [[hook_signal_buffer_title_changed]] buffer_title_changed |
+| weechat | [[hook_signal_buffer_title_changed]] buffer_title_changed | |
   Показивач: бафер. |
   Промењен је наслов бафера.
 
-| weechat |
-  [[hook_signal_buffer_type_changed]] buffer_type_changed |
+| weechat | [[hook_signal_buffer_type_changed]] buffer_type_changed | |
   Показивач: бафер. |
   Промењен је тип бафера.
 
-| weechat |
-  [[hook_signal_buffer_zoomed]] buffer_zoomed +
-  _(WeeChat ≥ 0.4.3)_ |
+| weechat | [[hook_signal_buffer_zoomed]] buffer_zoomed | 0.4.3 |
   Показивач: бафер. |
   Зумиран је спојени бафер.
 
-| weechat |
-  [[hook_signal_buffer_unzoomed]] buffer_unzoomed +
-  _(WeeChat ≥ 0.4.3)_ |
+| weechat | [[hook_signal_buffer_unzoomed]] buffer_unzoomed | 0.4.3 |
   Показивач: бафер. |
   Одзумиран је спојени бафер.
 
-| weechat |
-  [[hook_signal_cursor_start]] cursor_start +
-  _(WeeChat ≥ 3.2)_ |
+| weechat | [[hook_signal_cursor_start]] cursor_start | 3.2 |
   - |
 Почетак режима померања курсора.
 
-| weechat |
-  [[hook_signal_cursor_end]] cursor_end +
-  _(WeeChat ≥ 3.2)_ |
+| weechat | [[hook_signal_cursor_end]] cursor_end | 3.2 |
   - |
 Крај режима померања курсора.
 
-| weechat |
-  [[hook_signal_day_changed]] day_changed +
-  _(WeeChat ≥ 0.3.2)_ |
+| weechat | [[hook_signal_day_changed]] day_changed | 0.3.2 |
   Стринг: нови датум, формат је: "2010-01-31". |
   Променио се системски датум.
 
-| weechat |
-  [[hook_signal_debug_dump]] debug_dump |
+| weechat | [[hook_signal_debug_dump]] debug_dump | |
   Стринг: име додатка. |
   Захтев за испис.
 
-| weechat |
-  [[hook_signal_debug_libs]] debug_libs |
+| weechat | [[hook_signal_debug_libs]] debug_libs | |
   - |
 Приказује спољне библиотеке које се користе.
 
-| weechat |
-  [[hook_signal_filter_added]] filter_added |
+| weechat | [[hook_signal_filter_added]] filter_added | |
   Показивач: филтер. |
   Додат је филтер.
 
-| weechat |
-  [[hook_signal_filter_removing]] filter_removing |
+| weechat | [[hook_signal_filter_removing]] filter_removing | |
   Показивач: филтер. |
   Уклањање филтера.
 
-| weechat |
-  [[hook_signal_filter_removed]] filter_removed |
+| weechat | [[hook_signal_filter_removed]] filter_removed | |
   - |
 Филтер је уклоњен.
 
-| weechat |
-  [[hook_signal_filters_enabled]] filters_enabled |
+| weechat | [[hook_signal_filters_enabled]] filters_enabled | |
   - |
 Укључени су филтери.
 
-| weechat |
-  [[hook_signal_filters_disabled]] filters_disabled |
+| weechat | [[hook_signal_filters_disabled]] filters_disabled | |
   - |
 Искључени су филтери.
 
-| weechat |
-  [[hook_signal_hotlist_changed]] hotlist_changed |
+| weechat | [[hook_signal_hotlist_changed]] hotlist_changed | |
   Показивач: бафер (може да буде NULL). |
   Променила се врућа листа.
 
-| weechat |
-  [[hook_signal_input_paste_pending]] input_paste_pending |
+| weechat | [[hook_signal_input_paste_pending]] input_paste_pending | |
   - |
 Чека се на налепљивање.
 
-| weechat |
-  [[hook_signal_input_search]] input_search |
+| weechat | [[hook_signal_input_search]] input_search | |
   Показивач: бафер. |
   Претрага текста у баферу.
 
-| weechat |
-  [[hook_signal_input_text_changed]] input_text_changed |
+| weechat | [[hook_signal_input_text_changed]] input_text_changed | |
   Показивач: бафер. |
   Променио се текст уноса.
 
-| weechat |
-  [[hook_signal_input_text_cursor_moved]] input_text_cursor_moved |
+| weechat | [[hook_signal_input_text_cursor_moved]] input_text_cursor_moved | |
   Показивач: бафер. |
   Померио се курсор текста уноса.
 
-| weechat |
-  [[hook_signal_key_bind]] key_bind |
+| weechat | [[hook_signal_key_bind]] key_bind | |
   Стринг: тастер. |
   Додата је пречица.
 
-| weechat |
-  [[hook_signal_key_unbind]] key_unbind |
+| weechat | [[hook_signal_key_unbind]] key_unbind | |
   Стринг: тастер. |
   Уклоњена је пречица.
 
-| weechat |
-  [[hook_signal_key_pressed]] key_pressed |
+| weechat | [[hook_signal_key_pressed]] key_pressed | |
   Стринг: притиснути тастер. |
   Притиснут је тастер.
 
-| weechat |
-  [[hook_signal_key_combo_default]] key_combo_default +
-  _(WeeChat ≥ 1.0)_ |
+| weechat | [[hook_signal_key_combo_default]] key_combo_default | 1.0 |
   Стринг: комбинација тастера. |
   Комбинација тастера у _default_ контексту.
 
-| weechat |
-  [[hook_signal_key_combo_search]] key_combo_search +
-  _(WeeChat ≥ 1.0)_ |
+| weechat | [[hook_signal_key_combo_search]] key_combo_search | 1.0 |
   Стринг: комбинација тастера. |
   Комбинација тастера у _search_ контексту.
 
-| weechat |
-  [[hook_signal_key_combo_cursor]] key_combo_cursor +
-  _(WeeChat ≥ 1.0)_ |
+| weechat | [[hook_signal_key_combo_cursor]] key_combo_cursor | 1.0 |
   Стринг: комбинација тастера. |
   Комбинација тастера у _cursor_ контексту.
 
-| weechat |
-  [[hook_signal_mouse_enabled]] mouse_enabled +
-  _(WeeChat ≥ 1.1)_ |
+| weechat | [[hook_signal_mouse_enabled]] mouse_enabled | 1.1 |
   - |
 Укључен је миш.
 
-| weechat |
-  [[hook_signal_mouse_disabled]] mouse_disabled +
-  _(WeeChat ≥ 1.1)_ |
+| weechat | [[hook_signal_mouse_disabled]] mouse_disabled | 1.1 |
   - |
 Искључен је миш.
 
-| weechat |
-  [[hook_signal_nicklist_group_added]] nicklist_group_added +
-  _(WeeChat ≥ 0.3.2)_ |
+| weechat | [[hook_signal_nicklist_group_added]] nicklist_group_added | 0.3.2 |
   Стринг: показивач на бафер + „,” + име групе. |
   У листу надимака је додата група.
 
-| weechat |
-  [[hook_signal_nicklist_group_changed]] nicklist_group_changed +
-  _(WeeChat ≥ 0.3.4)_ |
+| weechat | [[hook_signal_nicklist_group_changed]] nicklist_group_changed | 0.3.4 |
   Стринг: показивач на бафер + „,” + име групе. |
   У листи надимака је измењена група.
 
-| weechat |
-  [[hook_signal_nicklist_group_removing]] nicklist_group_removing +
-  _(WeeChat ≥ 0.4.1)_ |
+| weechat | [[hook_signal_nicklist_group_removing]] nicklist_group_removing | 0.4.1 |
   Стринг: показивач на бафер + „,” + име надимка. |
   Уклања се група из листе надимака.
 
-| weechat |
-  [[hook_signal_nicklist_group_removed]] nicklist_group_removed +
-  _(WeeChat ≥ 0.3.2)_ |
+| weechat | [[hook_signal_nicklist_group_removed]] nicklist_group_removed | 0.3.2 |
   Стринг: показивач на бафер + „,” + име надимка. |
   Група је уклоњена из листе надимака.
 
-| weechat |
-  [[hook_signal_nicklist_nick_added]] nicklist_nick_added +
-  _(WeeChat ≥ 0.3.2)_ |
+| weechat | [[hook_signal_nicklist_nick_added]] nicklist_nick_added | 0.3.2 |
   Стринг: показивач на бафер + „,” + име надимка. |
   Додат је надимак у листу надимака.
 
-| weechat |
-  [[hook_signal_nicklist_nick_changed]] nicklist_nick_changed +
-  _(WeeChat ≥ 0.3.4)_ |
+| weechat | [[hook_signal_nicklist_nick_changed]] nicklist_nick_changed | 0.3.4 |
   Стринг: показивач на бафер + „,” + име надимка. |
   У листи надимака је промењен надимак.
 
-| weechat |
-  [[hook_signal_nicklist_nick_removing]] nicklist_nick_removing +
-  _(WeeChat ≥ 0.4.1)_ |
+| weechat | [[hook_signal_nicklist_nick_removing]] nicklist_nick_removing | 0.4.1 |
   Стринг: показивач на бафер + „,” + име надимка. |
   Уклањање надимка из листе надимака.
 
-| weechat |
-  [[hook_signal_nicklist_nick_removed]] nicklist_nick_removed +
-  _(WeeChat ≥ 0.3.2)_ |
+| weechat | [[hook_signal_nicklist_nick_removed]] nicklist_nick_removed | 0.3.2 |
   Стринг: показивач на бафер + „,” + име надимка. |
   Надимак је уклоњен из листе надимака.
 
-| weechat |
-  [[hook_signal_partial_completion]] partial_completion |
+| weechat | [[hook_signal_partial_completion]] partial_completion | |
   - |
 Догодило се делимично довршавање.
 
-| weechat |
-  [[hook_signal_plugin_loaded]] plugin_loaded +
-  _(WeeChat ≥ 0.3.9)_ |
+| weechat | [[hook_signal_plugin_loaded]] plugin_loaded | 0.3.9 |
   Стринг: путања до учитаног додатка. |
   Учитан је додатак.
 
-| weechat |
-  [[hook_signal_plugin_unloaded]] plugin_unloaded +
-  _(WeeChat ≥ 0.3.9)_ |
+| weechat | [[hook_signal_plugin_unloaded]] plugin_unloaded | 0.3.9 |
   Стринг: име додатка који се уклања из меморије (пример: „irc”). |
   Додатак је уклоњен из меморије.
 
-| weechat |
-  [[hook_signal_quit]] quit |
+| weechat | [[hook_signal_quit]] quit | |
   Стринг: аргументи за /quit. |
   Корисник је задао команду `/quit`.
 
-| weechat |
-  [[hook_signal_signal_sighup]] signal_sighup +
-  _(WeeChat ≥ 1.3)_ |
+| weechat | [[hook_signal_signal_sighup]] signal_sighup | 1.3 |
   - |
 Примљен је сигнал SIGHUP.
 
-| weechat |
-  [[hook_signal_signal_sigquit]] signal_sigquit +
-  _(WeeChat ≥ 1.2)_ |
+| weechat | [[hook_signal_signal_sigquit]] signal_sigquit | 1.2 |
   - |
 Примљен је сигнал SIGQUIT (захтев за излаз са core исписом).
 
-| weechat |
-  [[hook_signal_signal_sigterm]] signal_sigterm +
-  _(WeeChat ≥ 1.2)_ |
+| weechat | [[hook_signal_signal_sigterm]] signal_sigterm | 1.2 |
   - |
 Примљен је сигнал SIGTERM (складно прекидање WeeChat процеса).
 
-| weechat |
-  [[hook_signal_signal_sigwinch]] signal_sigwinch +
-  _(WeeChat ≥ 0.4.3)_ |
+| weechat | [[hook_signal_signal_sigwinch]] signal_sigwinch | 0.4.3 |
   - |
 Примљен је сигнал SIGWINCH (промењена је величина терминала).
 
-| weechat |
-  [[hook_signal_upgrade]] upgrade |
+| weechat | [[hook_signal_upgrade]] upgrade | |
   Стринг: "quit" ако је за /upgrade наведен аргумент „-quit”, у супротном NULL. |
   Корисник је задао команду `/upgrade`.
 
-| weechat |
-  [[hook_signal_upgrade_ended]] upgrade_ended +
-  _(WeeChat ≥ 0.3.4)_ |
+| weechat | [[hook_signal_upgrade_ended]] upgrade_ended | 0.3.4 |
   - |
 Завршетак процеса ажурирања (команда `/upgrade`).
 
-| weechat |
-  [[hook_signal_weechat_highlight]] weechat_highlight |
+| weechat | [[hook_signal_weechat_highlight]] weechat_highlight | |
   Стринг: порука са префиксом. |
   Догодило се истицање.
 
-| weechat |
-  [[hook_signal_weechat_pv]] weechat_pv |
+| weechat | [[hook_signal_weechat_pv]] weechat_pv | |
   Стринг: порука са префиксом. |
   Приказана је приватна порука.
 
-| weechat |
-  [[hook_signal_window_closing]] window_closing +
-  _(WeeChat ≥ 0.3.6)_ |
+| weechat | [[hook_signal_window_closing]] window_closing | 0.3.6 |
   Показивач: прозор. |
   Затварање прозора.
 
-| weechat |
-  [[hook_signal_window_closed]] window_closed +
-  _(WeeChat ≥ 0.3.6)_ |
+| weechat | [[hook_signal_window_closed]] window_closed | 0.3.6 |
   Показивач: прозор. |
   Прозор је затворен.
 
-| weechat |
-  [[hook_signal_window_opened]] window_opened +
-  _(WeeChat ≥ 0.4.1)_ |
+| weechat | [[hook_signal_window_opened]] window_opened | 0.4.1 |
   Показивач: прозор. |
   Прозор је отворен.
 
-| weechat |
-  [[hook_signal_window_scrolled]] window_scrolled |
+| weechat | [[hook_signal_window_scrolled]] window_scrolled | |
   Показивач: прозор. |
   Скроловање у прозору.
 
-| weechat |
-  [[hook_signal_window_switch]] window_switch +
-  _(WeeChat ≥ 0.3.7)_ |
+| weechat | [[hook_signal_window_switch]] window_switch | 0.3.7 |
   Показивач: прозор. |
   Прелазак на други прозор.
 
-| weechat |
-  [[hook_signal_window_zoom]] window_zoom |
+| weechat | [[hook_signal_window_zoom]] window_zoom | |
   Показивач: текући прозор. |
   Зумирање прозора.
 
-| weechat |
-  [[hook_signal_window_zoomed]] window_zoomed |
+| weechat | [[hook_signal_window_zoomed]] window_zoomed | |
   Показивач: текући прозор. |
   Прозор је зумиран.
 
-| weechat |
-  [[hook_signal_window_unzoom]] window_unzoom |
+| weechat | [[hook_signal_window_unzoom]] window_unzoom | |
   Показивач: текући прозор. |
   Одзумирање прозора.
 
-| weechat |
-  [[hook_signal_window_unzoomed]] window_unzoomed |
+| weechat | [[hook_signal_window_unzoomed]] window_unzoomed | |
   Показивач: текући прозор. |
   Прозор је одзумиран.
 
-| xfer |
-  [[hook_signal_xfer_add]] xfer_add |
+| xfer | [[hook_signal_xfer_add]] xfer_add | |
   Показивач: инфолиста са xfer информацијама. |
   Нови xfer.
 
-| xfer |
-  [[hook_signal_xfer_send_ready]] xfer_send_ready |
+| xfer | [[hook_signal_xfer_send_ready]] xfer_send_ready | |
   Показивач: инфолиста са xfer информацијама. |
   Xfer је спреман.
 
-| xfer |
-  [[hook_signal_xfer_accept_resume]] xfer_accept_resume |
+| xfer | [[hook_signal_xfer_accept_resume]] xfer_accept_resume | |
   Показивач: инфолиста са xfer информацијама. |
   Прихватање наставка xfer.
 
-| xfer |
-  [[hook_signal_xfer_send_accept_resume]] xfer_send_accept_resume |
+| xfer | [[hook_signal_xfer_send_accept_resume]] xfer_send_accept_resume | |
   Показивач: инфолиста са xfer информацијама. |
   Xfer је настављен.
 
-| xfer |
-  [[hook_signal_xfer_start_resume]] xfer_start_resume |
+| xfer | [[hook_signal_xfer_start_resume]] xfer_start_resume | |
   Показивач: инфолиста са xfer информацијама. |
   Почетак наставка.
 
-| xfer |
-  [[hook_signal_xfer_resume_ready]] xfer_resume_ready |
+| xfer | [[hook_signal_xfer_resume_ready]] xfer_resume_ready | |
   Показивач: инфолиста са xfer информацијама. |
   Xfer наставак је спреман.
 
-| xfer |
-  [[hook_signal_xfer_ended]] xfer_ended +
-  _(WeeChat ≥ 0.3.2)_ |
+| xfer | [[hook_signal_xfer_ended]] xfer_ended | 0.3.2 |
   Показивач: инфолиста са xfer информацијама. |
   Xfer се завршио.
 |===
@@ -10823,59 +10702,46 @@ struct t_hook *weechat_hook_hsignal (const char *signal,
 
 Листа hsignalа:
 
-[width="100%", cols="^1,^3,5,5", options="header"]
+[width="100%", cols="^1,^3,^1,5,5", options="header"]
 |===
-| Додатак | Сигнал | Аргументи | Опис
+// TRANSLATION MISSING
+| Додатак | Сигнал | Min WeeChat | Аргументи | Опис
 
-| irc |
-  [[hook_hsignal_irc_redirection_xxx_yyy]] irc_redirection_xxx_yyy ^(1)^ +
-  _(WeeChat ≥ 0.3.4)_ |
+| irc | [[hook_hsignal_irc_redirection_xxx_yyy]] irc_redirection_xxx_yyy ^(1)^ | 0.3.4 |
   Погледајте <<hsignal_irc_redirect_command,hsignal_irc_redirect_command>> |
   Преусмеравање излаза.
 
-| weechat |
-  [[hook_hsignal_nicklist_group_added]] nicklist_group_added +
-  _(WeeChat ≥ 0.4.1)_ |
+| weechat | [[hook_hsignal_nicklist_group_added]] nicklist_group_added | 0.4.1 |
   _buffer_ (_struct t_gui_buffer *_): бафер +
   _parent_group_ (_struct t_gui_nick_group *_): родитељ група +
   _group_ (_struct t_gui_nick_group *_): група |
   У листу надимака је додата група.
 
-| weechat |
-  [[hook_hsignal_nicklist_nick_added]] nicklist_nick_added +
-  _(WeeChat ≥ 0.4.1)_ |
+| weechat | [[hook_hsignal_nicklist_nick_added]] nicklist_nick_added | 0.4.1 |
   _buffer_ (_struct t_gui_buffer *_): бафер +
   _parent_group_ (_struct t_gui_nick_group *_): родитељ група +
   _nick_ (_struct t_gui_nick *_): надимак |
   Надимак је додат у листу надимака.
 
-| weechat |
-  [[hook_hsignal_nicklist_group_removing]] nicklist_group_removing +
-  _(WeeChat ≥ 0.4.1)_ |
+| weechat | [[hook_hsignal_nicklist_group_removing]] nicklist_group_removing | 0.4.1 |
   _buffer_ (_struct t_gui_buffer *_): бафер +
   _parent_group_ (_struct t_gui_nick_group *_): родитељ група +
   _group_ (_struct t_gui_nick_group *_): група |
   Уклањање групе из листе надимака.
 
-| weechat |
-  [[hook_hsignal_nicklist_nick_removing]] nicklist_nick_removing +
-  _(WeeChat ≥ 0.4.1)_ |
+| weechat | [[hook_hsignal_nicklist_nick_removing]] nicklist_nick_removing | 0.4.1 |
   _buffer_ (_struct t_gui_buffer *_): бафер +
   _parent_group_ (_struct t_gui_nick_group *_): родитељ група +
   _nick_ (_struct t_gui_nick *_): надимак |
   Уклањање надимка из листе надимака.
 
-| weechat |
-  [[hook_hsignal_nicklist_group_changed]] nicklist_group_changed +
-  _(WeeChat ≥ 0.4.1)_ |
+| weechat | [[hook_hsignal_nicklist_group_changed]] nicklist_group_changed | 0.4.1 |
   _buffer_ (_struct t_gui_buffer *_): бафер +
   _parent_group_ (_struct t_gui_nick_group *_): родитељ група +
   _group_ (_struct t_gui_nick_group *_): група |
   У листи надимака је измењена група.
 
-| weechat |
-  [[hook_hsignal_nicklist_nick_changed]] nicklist_nick_changed +
-  _(WeeChat ≥ 0.4.1)_ |
+| weechat | [[hook_hsignal_nicklist_nick_changed]] nicklist_nick_changed | 0.4.1 |
   _buffer_ (_struct t_gui_buffer *_): бафер +
   _parent_group_ (_struct t_gui_nick_group *_): родитељ група +
   _nick_ (_struct t_gui_nick *_): надимак |
@@ -11242,11 +11108,12 @@ struct t_hook *weechat_hook_modifier (const char *modifier,
 
 Листа модификатора које користе програм WeeChat и додаци:
 
-[width="100%", cols="^2,3,4,4", options="header"]
+[width="100%", cols="^2,^1,3,4,4", options="header"]
 |===
-| Модификатор | Подаци модификатора | Стринг | Излаз
+// TRANSLATION MISSING
+| Модификатор | Min WeeChat | Подаци модификатора | Стринг | Излаз
 
-| [[hook_modifier_irc_in_xxx]] irc_in_xxx ^(1)^ |
+| [[hook_modifier_irc_in_xxx]] irc_in_xxx ^(1)^ | |
   Име сервера |
   Садржај поруке примљене са IRC сервера (пре декодирања скупа карактера). +
   *Упозорење:* стринг може да садржи неважеће UTF-8 податке; користите га само
@@ -11254,58 +11121,54 @@ struct t_hook *weechat_hook_modifier (const char *modifier,
   Уместо њега се препоручује употреба <<hook_modifier_irc_in2_xxx,irc_in2_xxx>>. |
   Нови садржај поруке.
 
-| [[hook_modifier_irc_in2_xxx]] irc_in2_xxx ^(1)^ +
-  _(WeeChat ≥ 0.3.5)_ |
+| [[hook_modifier_irc_in2_xxx]] irc_in2_xxx ^(1)^ | 0.3.5 |
   Име сервера |
   Садржај поруке примљене са IRC сервера (након декодирања скупа карактера). |
   Нови садржај поруке.
 
-| [[hook_modifier_irc_out1_xxx]] irc_out1_xxx ^(1)^ +
-  _(WeeChat ≥ 0.3.7)_ |
+| [[hook_modifier_irc_out1_xxx]] irc_out1_xxx ^(1)^ | 0.3.7 |
   Име сервера |
   Садржај поруке које треба да се пошаље IRC серверу пре аутоматске поделе
   (да стане у 512 подразумевано). |
   Нови садржај поруке.
 
-| [[hook_modifier_irc_out_xxx]] irc_out_xxx ^(1)^ |
+| [[hook_modifier_irc_out_xxx]] irc_out_xxx ^(1)^ | |
   Име сервера |
   Садржај поруке које треба да се пошаље IRC серверу након аутоматске поделе
   (да стане у 512 подразумевано). |
   Нови садржај поруке.
 
-| [[hook_modifier_bar_condition_yyy]] bar_condition_yyy ^(2)^ |
+| [[hook_modifier_bar_condition_yyy]] bar_condition_yyy ^(2)^ | |
   Стринг са показивачем на прозор (нпр: "0x1234abcd") |
   Празан стринг. |
   "1" да се прикаже трака, "0" да се сакрије.
 
-| [[hook_modifier_history_add]] history_add +
-  _(WeeChat ≥ 0.3.2)_ |
+| [[hook_modifier_history_add]] history_add | 0.3.2 |
   Стринг са показивачем на бафер (нпр: "0x1234abcd") |
   Садржај командне линије која треба да се дода у историју команди (бафера и глобалну). |
   Стринг који се додаје у историју команди.
 
-| [[hook_modifier_input_text_content]] input_text_content |
+| [[hook_modifier_input_text_content]] input_text_content | |
   Стринг са показивачем на бафер (нпр: "0x1234abcd") |
   Садржај командне линије. |
   Нови садржај командне линије.
 
-| [[hook_modifier_input_text_display]] input_text_display |
+| [[hook_modifier_input_text_display]] input_text_display | |
   Стринг са показивачем на бафер (нпр: "0x1234abcd") |
   Садржај командне линије, без ознаке курсора. |
   Нови стринг, само за приказ (командна линија се не мења).
 
-| [[hook_modifier_input_text_display_with_cursor]] input_text_display_with_cursor |
+| [[hook_modifier_input_text_display_with_cursor]] input_text_display_with_cursor | |
   Стринг са показивачем на бафер (нпр: "0x1234abcd") |
   Садржај командне линије, са ознаком курсора. |
   Нови стринг, само за приказ (командна линија се не мења).
 
-| [[hook_modifier_input_text_for_buffer]] input_text_for_buffer +
-  _(WeeChat ≥ 0.3.7)_ |
+| [[hook_modifier_input_text_for_buffer]] input_text_for_buffer | 0.3.7 |
   Стринг са показивачем на бафер (нпр: "0x1234abcd") |
   Садржај командне линије која се шаље у бафер (текст или команда). |
   Нови садржај командне линије који се шаље у бафер.
 
-| [[hook_modifier_weechat_print]] weechat_print |
+| [[hook_modifier_weechat_print]] weechat_print | |
   показивач на бафер (нпр: "0x1234abcd") + ";" + ознаке ^(3)^ |
   Порука која се исписује. |
   Нова порука која се исписује. +
@@ -11387,78 +11250,71 @@ char *weechat_hook_modifier_exec (const char *modifier,
 
 Листа модификатора за употребу које дефинишу програм WeeChat и додаци:
 
-[width="100%", cols="^2,3,4,4", options="header"]
+[width="100%", cols="^2,^1,3,4,4", options="header"]
 |===
-| Модификатор | Подаци модификатора | Стринг | Излаз
+// TRANSLATION MISSING
+| Модификатор | Min WeeChat | Подаци модификатора | Стринг | Излаз
 
-| [[hook_modifier_charset_decode]] charset_decode |
+| [[hook_modifier_charset_decode]] charset_decode | |
   plugin.buffer_name |
   Било који стринг. |
   Стринг декодиран из скупа карактера пронађеног за додатак/бафер у UTF-8.
 
-| [[hook_modifier_charset_encode]] charset_encode |
+| [[hook_modifier_charset_encode]] charset_encode | |
   plugin.buffer_name |
   Било који стринг. |
   Стринг кодиран из UTF-8 у скуп карактера пронађен за додатак/бафер.
 
-| [[hook_modifier_irc_color_decode]] irc_color_decode |
+| [[hook_modifier_irc_color_decode]] irc_color_decode | |
   "1" да се боје задрже, "0" да се боје уклоне |
   Било који стринг. |
   Стринг у којем су IRC боје конвертоване у WeeChat боје (или су уклоњене IRC боје).
 
-| [[hook_modifier_irc_color_encode]] irc_color_encode |
+| [[hook_modifier_irc_color_encode]] irc_color_encode | |
   "1" да се боје задрже, "0" да се боје уклоне |
   Било који стринг. |
   Стринг са IRC бојама (или са уклоњеним IRC бојама).
 
-| [[hook_modifier_irc_color_decode_ansi]] irc_color_decode_ansi +
-  _(WeeChat ≥ 1.0)_ |
+| [[hook_modifier_irc_color_decode_ansi]] irc_color_decode_ansi | 1.0 |
   "1" да се боје задрже, "0" да се боје уклоне |
   Било који стринг. |
   Стринг у којем су ANSI боје конвертоване у IRC боје (или су уклоњене ANSI боје).
 
-| [[hook_modifier_irc_command_auth]] irc_command_auth +
-  _(WeeChat ≥ 0.4.1)_ |
+| [[hook_modifier_irc_command_auth]] irc_command_auth | 0.4.1 |
   Име сервера |
   Команда аутентификације (на пример: `+/msg nickserv identify лозинка+`). |
   Команда са скривеном лозинком (на пример: `+/msg nickserv identify ********+`).
 
-| [[hook_modifier_irc_message_auth]] irc_message_auth +
-  _(WeeChat ≥ 0.4.1)_ |
+| [[hook_modifier_irc_message_auth]] irc_message_auth | 0.4.1 |
   Име сервера |
   Порука која се приказује након што се `/msg` пошаље nickserv боту. |
   Порука са скривеном лозинком.
 
 // TRANSLATION MISSING
-| [[hook_modifier_irc_tag_escape_value]] irc_tag_escape_value +
-  _(WeeChat ≥ 3.3)_ |
+| [[hook_modifier_irc_tag_escape_value]] irc_tag_escape_value | 3.3 |
   - |
   Any string. |
   String with IRC tag value escaped,
   see: https://ircv3.net/specs/extensions/message-tags#escaping-values.
 
 // TRANSLATION MISSING
-| [[hook_modifier_irc_tag_unescape_value]] irc_tag_unescape_value +
-  _(WeeChat ≥ 3.3)_ |
+| [[hook_modifier_irc_tag_unescape_value]] irc_tag_unescape_value | 3.3 |
   - |
   Any string. |
   String with IRC tag value unescaped,
   see: https://ircv3.net/specs/extensions/message-tags#escaping-values.
 
-| [[hook_modifier_color_decode_ansi]] color_decode_ansi +
-  _(WeeChat ≥ 1.0)_ |
+| [[hook_modifier_color_decode_ansi]] color_decode_ansi | 1.0 |
   "1" да се боје задрже, "0" да се боје уклоне |
   Било који стринг. |
   Стринг у којем су ANSI боје конвертоване у WeeChat боје (или су уклоњене WeeChat боје).
 
-| [[hook_modifier_color_encode_ansi]] color_encode_ansi +
-  _(WeeChat ≥ 2.7)_ |
+| [[hook_modifier_color_encode_ansi]] color_encode_ansi | 2.7 |
   - |
 Било који стринг. |
 Стринг са WeeChat бојама конвертованим у ANSI боје.
 
-| [[hook_modifier_eval_path_home]] eval_path_home +
-  _(WeeChat ≥ 2.7)_ |
+| [[hook_modifier_eval_path_home]] eval_path_home | 2.7 |
   Није обавезно: `directory=xxx` где `xxx` може бити: `config`, `data`, `cache`, `runtime` |
   Било који стринг. |
   Израчуната путања, резултат функције
@@ -11998,27 +11854,23 @@ void weechat_hook_set (struct t_hook *hook, const char *property,
 
 Особине:
 
-[width="100%", cols="^2,2,2,5", options="header"]
+[width="100%", cols="^1,^1,2,2,5", options="header"]
 |===
-| Име | Тип куке | Вредност | Опис
+// TRANSLATION MISSING
+| Име | Min WeeChat | Тип куке | Вредност | Опис
 
-| subplugin | било који тип | било који стринг |
+| subplugin | | било који тип |
+  било који стринг |
   Име под додатка (обично је то име скрипте које се приказује у
   `/help команда` за куку типа _command_).
 
-| stdin +
-  _(WeeChat ≥ 0.4.3)_ |
-  _process_, _process_hashtable_ | било који стринг |
+| stdin | 0.4.3 | _process_, _process_hashtable_ | било који стринг |
   Шаље податке на стандардни улаз (_stdin_) дете процеса.
 
-| stdin_close +
-  _(WeeChat ≥ 0.4.3)_ |
-  _process_, _process_hashtable_ | (не користи се) |
+| stdin_close | 0.4.3 | _process_, _process_hashtable_ | (не користи се) |
   Затвара пајп који се користи за слање података на стандардни улаз (_stdin_) дете процеса.
 
-| signal +
-  _(WeeChat ≥ 1.0)_ |
-  _process_, _process_hashtable_ |
+| signal | 1.0 | _process_, _process_hashtable_ |
   број сигнала или једно од следећих имена: `hup`, `int`, `quit`, `kill`, `term`,
   `usr1`, `usr2` |
   Шаље сигнал дете процесу.
@@ -12685,159 +12537,156 @@ void weechat_buffer_set (struct t_gui_buffer *buffer, const char *property,
 
 Особине:
 
-[width="100%", cols="^2,4,8", options="header"]
+[width="100%", cols="^2,^1,4,8", options="header"]
 |===
-| Име | Вредност | Опис
+// TRANSLATION MISSING
+| Име | Min WeeChat | Вредност | Опис
 
-| hotlist | "+", "-", WEECHAT_HOTLIST_LOW, WEECHAT_HOTLIST_MESSAGE,
+| hotlist | | "+", "-", WEECHAT_HOTLIST_LOW, WEECHAT_HOTLIST_MESSAGE,
   WEECHAT_HOTLIST_PRIVATE, WEECHAT_HOTLIST_HIGHLIGHT, "-1" |
   "+": укључује врућу листу (глобално подешавање, не користи се показивач на бафер) +
   "-": искључује врућу листу (глобално подешавање, не користи се показивач на бафер) +
   приоритет: бафер се на врућу листу додаје са овим приоритетом +
   "-1": уклања бафер из вруће листе _(WeeChat ≥ 1.0)_.
 
-| completion_freeze | "0" или "1" |
+| completion_freeze | | "0" или "1" |
   "0": нема замрзавања довршавања (подразумевана вредност)
   (глобално подешавање, не користи се показивач на бафер) +
   "1": довршавање се не зауставља када се ажурира командна линија
   (глобално подешавање, не користи се показивач на бафер).
 
-| unread | - |
+| unread | | - |
   Поставља маркер непрочитаних линија након последње линије бафера.
 
-| display | "1" или "auto" |
+| display | | "1" или "auto" |
   "1": прелазак на овај бафер у текућем прозору +
   "auto": прелазак на овај бафер у текућем прозору, не ресетује се маркер прочитаних линија.
 
-| hidden +
-  _(WeeChat ≥ 1.0)_ | "0" или "1" |
+| hidden | 1.0 | "0" или "1" |
   "0": бафер се открива +
   "1": бафер се скрива.
 
-| number | број |
+| number | | број |
   Помера бафер на наведени број.
 
-| name | било који стринг |
+| name | | било који стринг |
   Поставља ново име бафера.
 
-| short_name | било који стринг |
+| short_name | | било који стринг |
   Поставља ново кратко име бафера.
 
-| type | "formatted" или "free" |
+| type | | "formatted" или "free" |
   Поставља тип бафера: "formatted" (за приказ порука разговора), или "free" (за
   слободни садржај); када је вредност "free", особина _clear_ се форсира на "0"
   _(WeeChat ≥ 1.0)_.
 
-| notify | "0", "1", "2", "3" |
+| notify | | "0", "1", "2", "3" |
   Поставља ниво обавештавања за овај бафер: "0" = никада се не додаје на врућу листу,
   "1" = додаје само за истицања, "2" = додаје за истицања и поруке, "3" = додаје
   за све поруке.
 
-| print_hooks_enabled | "0" или "1" |
+| print_hooks_enabled | | "0" или "1" |
   "0" да се искључе print куке, "1" да се укључе (подразумевано за нови бафер).
 
-| day_change +
-  _(WeeChat ≥ 0.4.3)_ | "0" или "1" |
+| day_change | 0.4.3 | "0" или "1" |
   "0" да се скривају поруке о измени дана, "1" да се приказују
   (подразумевано за нови бафер).
 
-| clear +
-  _(WeeChat ≥ 1.0)_ | "0" или "1" |
+| clear | 1.0 | "0" или "1" |
   "0" да се спречи могућност да корисник очисти бафер командом `/buffer clear`,
   "1" да се дозволи кориснику да очисти бафер (подразумевано за нови бафер)
    (напомена: чак и када се постави на "0", бафер још увек може да се очисти
    функцијом <<_buffer_clear,buffer_clear>>).
 
-| filter +
-  _(WeeChat ≥ 1.0)_ | "0" или "1" |
+| filter | 1.0 | "0" или "1" |
   "0": искључује филтере у баферу +
   "1": укључује филтере у баферу.
 
-| title | било који стринг |
+| title | | било који стринг |
   Поставља нови наслов бафера.
 
-| time_for_each_line | "0" или "1" |
+| time_for_each_line | | "0" или "1" |
   "0" да се скрива време у свим линијама бафера, "1" да се приказује у свим
   линијама (подразумевано за нови бафер).
 
-| nicklist | "0" или "1" |
+| nicklist | | "0" или "1" |
   "0" да се листа надимака уклони из бафера, "1" да се у бафер дода листа надимака.
 
-| nicklist_case_sensitive | "0" или "1" |
+| nicklist_case_sensitive | | "0" или "1" |
   "0" да листа надимака не прави разлику у величини слова, "1" да листа надимака
   прави разлику у величини слова.
 
-| nicklist_display_groups | "0" или "1" |
+| nicklist_display_groups | | "0" или "1" |
   "0" да се сакрију групе у листи надимака, "1" да се приказују групе у листи надимака.
 
-| highlight_words | "-" или листа речи раздвојених запетама |
+| highlight_words | | "-" или листа речи раздвојених запетама |
   "-" је специјална вредност која искључује било какво истицање у овом баферу, или
   листа речи за истицање у баферу раздвојених запетама, на пример:
   "abc,def,ghi".
 
-| highlight_words_add | листа речи раздвојених запетама |
+| highlight_words_add | | листа речи раздвојених запетама |
   Лист речи раздвојених запетама које се истичу у овом баферу, ове речи се
   додају на постојеће речи које се истичу у баферу.
 
-| highlight_words_del | листа речи раздвојених запетама |
+| highlight_words_del | | листа речи раздвојених запетама |
   Лист речи раздвојених запетама које треба да се уклоне из речи које се истичу у овом баферу.
 
-| highlight_regex | било који стринг |
+| highlight_regex | | било који стринг |
   POSIX проширени регуларни израз за истицање.
 
-| highlight_tags_restrict | листа речи или ознака раздвојених запетама |
+| highlight_tags_restrict | | листа речи или ознака раздвојених запетама |
   Ограничава истицање порука у овом баферу само на поруке са наведеним ознакама
   (граничником „+” је могуће комбиновање више ознака у релацији логичко „и”, на
    пример: "nick_toto+irc_action").
 
-| highlight_tags | листа речи или ознака раздвојених запетама |
+| highlight_tags | | листа речи или ознака раздвојених запетама |
   Форсира истицање порука са наведеним ознакама у овом баферу (
   (граничником „+” је могуће комбиновање више ознака у релацији логичко „и”, на
    пример: "nick_toto+irc_action").
 
-| hotlist_max_level_nicks | листа „надимак:ниво” раздвојена запетама |
+| hotlist_max_level_nicks | | листа „надимак:ниво” раздвојена запетама |
   Листа надимака са максималним нивоом вруће листе раздвојених запетама за овај бафер
   (ниво може бити: -1: никада у врућој листи, 0: низак, 1: порука, 2: приватна,
   3: истицање), на пример: „joe:2,mike:-1,robert:-1” (joe никада неће изазвати
   истицање у баферу, mike и robert никада неће изменити врућу листу).
 
-| hotlist_max_level_nicks_add | листа „надимак:ниво” раздвојена запетама |
+| hotlist_max_level_nicks_add | | листа „надимак:ниво” раздвојена запетама |
   Листа надимака са максималним нивоом вруће листе раздвојених запетама, ови
   надимци се додају на постојеће надимке у баферу.
 
-| hotlist_max_level_nicks_del | листа надимака раздвојених запетама |
+| hotlist_max_level_nicks_del | | листа надимака раздвојених запетама |
   Листа надимака раздвојених запетама који треба да се уклоне из максималних нивоа вруће листе.
 
-| key_bind_xxx | било који стринг |
+| key_bind_xxx | | било који стринг |
   Прави нову тастерску пречицу _xxx_, специфичну за овај бафер, вредност је команда
   која се извршава за тај тастер.
 
-| key_unbind_xxx | - |
+| key_unbind_xxx | | - |
   Уклања тастерску пречицу _xxx_ за овај бафер.
 
-| input | било који стринг |
+| input | | било који стринг |
   Поставља нову вредност за унос у бафер.
 
-| input_pos | позиција |
+| input_pos | | позиција |
   Поставља позицију курсора у уносу бафера.
 
-| input_get_unknown_commands | "0" или "1" |
+| input_get_unknown_commands | | "0" или "1" |
   "0" да се за овај бафер искључе непознате команде (подразумевано понашање), "1" да
   се прихвате непознате команде, на пример ако корисник откуца „/unknowncmd”, бафер ће
   то да прихвати (без исписа грешке о непознатој команди).
 
-| input_get_empty | "0" или "1" |
+| input_get_empty | | "0" или "1" |
   "0" да се искључи празан унос у овај бафер (подразумевано понашање), "1" да се
   прихвати празан унос.
 
-| input_multiline | "0" или "1" |
+| input_multiline | | "0" или "1" |
   "0" да се овом баферу свака линија шаље одвојено (подразумевано понашање), "1" да
   се више линија пошаље као једна порука.
 
-| localvar_set_xxx | било који стринг |
+| localvar_set_xxx | | било који стринг |
   Поставља нову вредност локалне променљиве _xxx_ (променљива се креира ако не постоји).
 
-| localvar_del_xxx | - |
+| localvar_del_xxx | | - |
   Уклања локалну променљиву _xxx_.
 |===
 

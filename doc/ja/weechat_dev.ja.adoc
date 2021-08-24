@@ -95,6 +95,7 @@ qweechat::
 |       spell/       | spell プラグイン
 |       tcl/         | tcl スクリプト用 API
 |       trigger/     | trigger プラグイン
+|       typing/      | typing プラグイン
 |       xfer/        | xfer (IRC DCC ファイル/チャット)
 | tests/             | テスト
 |    scripts/        | スクリプト API テスト
@@ -378,6 +379,16 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |       trigger-command.c           | trigger コマンド
 |       trigger-completion.c        | trigger 補完
 |       trigger-config.c            | trigger 設定オプション (trigger.conf ファイル)
+// TRANSLATION MISSING
+|    typing/                        | Typing plugin.
+// TRANSLATION MISSING
+|       typing.c                    | Main typing functions.
+// TRANSLATION MISSING
+|       typing-bar-item.c           | Typing bar items.
+// TRANSLATION MISSING
+|       typing-config.c             | Typing config options (file typing.conf).
+// TRANSLATION MISSING
+|       typing-status.c             | Messages typing status on buffers.
 |    xfer/                          | xfer プラグイン (IRC DCC ファイル/チャット)
 |       xfer.c                      | xfer の主要関数
 |       xfer-buffer.c               | xfer バッファ
@@ -397,71 +408,77 @@ WeeChat "core" は以下のディレクトリに配置されています:
 
 [width="100%",cols="2m,3",options="header"]
 |===
-| パス/ファイル名                   | 説明
-| tests/                            | テスト用のルートディレクトリ
-|    tests.cpp                      | 全テストの実行時に使われるプログラム
-|    scripts/                       | スクリプト API テスト用のルートディレクトリ
-|       test-scripts.cpp            | スクリプト API テストの実行時に使われるプログラム
-|       python/                     | スクリプト API テストを生成、実行する Python スクリプト
-|          testapigen.py            | スクリプト API のテスト時にすべての言語に関するスクリプトを生成する Python スクリプト
-|          testapi.py               | スクリプト API テスト時に使われる Python スクリプト (スクリプト testapigen.py から使われます)
-|          unparse.py               | Python コードを別の言語に変換 (スクリプト testapigen.py から使われます)
-|    unit/                          | 単体テスト用のルートディレクトリ
-|       test-plugins.cpp            | テスト: プラグイン
-|       core/                       | core 向け単体テスト用のルートディレクトリ
-|          test-core-arraylist.cpp  | テスト: 配列リスト
+| パス/ファイル名                    | 説明
+| tests/                             | テスト用のルートディレクトリ
+|    tests.cpp                       | 全テストの実行時に使われるプログラム
+|    scripts/                        | スクリプト API テスト用のルートディレクトリ
+|       test-scripts.cpp             | スクリプト API テストの実行時に使われるプログラム
+|       python/                      | スクリプト API テストを生成、実行する Python スクリプト
+|          testapigen.py             | スクリプト API のテスト時にすべての言語に関するスクリプトを生成する Python スクリプト
+|          testapi.py                | スクリプト API テスト時に使われる Python スクリプト (スクリプト testapigen.py から使われます)
+|          unparse.py                | Python コードを別の言語に変換 (スクリプト testapigen.py から使われます)
+|    unit/                           | 単体テスト用のルートディレクトリ
+|       test-plugins.cpp             | テスト: プラグイン
+|       core/                        | core 向け単体テスト用のルートディレクトリ
+|          test-core-arraylist.cpp   | テスト: 配列リスト
 // TRANSLATION MISSING
-|          test-core-calc.cpp       | Tests: calculation of expressions.
+|          test-core-calc.cpp        | Tests: calculation of expressions.
 // TRANSLATION MISSING
-|          test-core-crypto.cpp     | Tests: cryptographic functions.
+|          test-core-crypto.cpp      | Tests: cryptographic functions.
 // TRANSLATION MISSING
-|          test-core-dir.cpp        | Tests: directory/file functions.
-|          test-core-eval.cpp       | テスト: 式の評価
-|          test-core-hashtble.cpp   | テスト: ハッシュテーブル
-|          test-core-hdata.cpp      | テスト: hdata
-|          test-core-hook.cpp       | テスト: フック
-|          test-core-infolist.cpp   | テスト: インフォリスト
-|          test-core-list.cpp       | テスト: リスト
+|          test-core-dir.cpp         | Tests: directory/file functions.
+|          test-core-eval.cpp        | テスト: 式の評価
+|          test-core-hashtble.cpp    | テスト: ハッシュテーブル
+|          test-core-hdata.cpp       | テスト: hdata
+|          test-core-hook.cpp        | テスト: フック
+|          test-core-infolist.cpp    | テスト: インフォリスト
+|          test-core-list.cpp        | テスト: リスト
 // TRANSLATION MISSING
-|          test-core-network.cpp    | Tests: network functions.
-|          test-core-secure.cpp     | テスト: データ保護
+|          test-core-network.cpp     | Tests: network functions.
+|          test-core-secure.cpp      | テスト: データ保護
 // TRANSLATION MISSING
-|          test-core-signal.cpp     | テスト: signals.
-|          test-core-string.cpp     | テスト: 文字列
-|          test-core-url.cpp        | テスト: URL
-|          test-core-utf8.cpp       | テスト: UTF-8
-|          test-core-util.cpp       | テスト: ユーティリティ関数
-|       gui/                        | インターフェースの単体テストを収める最上位ディレクトリ
+|          test-core-signal.cpp      | テスト: signals.
+|          test-core-string.cpp      | テスト: 文字列
+|          test-core-url.cpp         | テスト: URL
+|          test-core-utf8.cpp        | テスト: UTF-8
+|          test-core-util.cpp        | テスト: ユーティリティ関数
+|       gui/                         | インターフェースの単体テストを収める最上位ディレクトリ
 // TRANSLATION MISSING
-|          test-gui-color.cpp       | Tests: colors.
-|          test-gui-line.cpp        | テスト: 行
+|          test-gui-color.cpp        | Tests: colors.
+|          test-gui-line.cpp         | テスト: 行
 // TRANSLATION MISSING
-|          test-gui-nick.cpp        | テスト: nicks
-|       plugins/                    | プラグインの単体テストを収める最上位ディレクトリ
-|          irc/                     | IRC プラグインの単体テストを収める最上位ディレクトリ
+|          test-gui-nick.cpp         | テスト: nicks
+|       plugins/                     | プラグインの単体テストを収める最上位ディレクトリ
+|          irc/                      | IRC プラグインの単体テストを収める最上位ディレクトリ
 // TRANSLATION MISSING
-|             test-irc-channel.cpp  | Tests: IRC channels.
-|             test-irc-color.cpp    | Tests: IRC colors.
-|             test-irc-config.cpp   | テスト: IRC 設定
+|             test-irc-channel.cpp   | Tests: IRC channels.
+|             test-irc-color.cpp     | Tests: IRC colors.
+|             test-irc-config.cpp    | テスト: IRC 設定
 // TRANSLATION MISSING
-|             test-irc-ignore.cpp   | Tests: IRC ignores.
+|             test-irc-ignore.cpp    | Tests: IRC ignores.
 // TRANSLATION MISSING
-|             test-irc-message.cpp  | Tests: IRC messages.
+|             test-irc-message.cpp   | Tests: IRC messages.
 // TRANSLATION MISSING
-|             test-irc-mode.cpp     | Tests: IRC modes.
+|             test-irc-mode.cpp      | Tests: IRC modes.
 // TRANSLATION MISSING
-|             test-irc-nick.cpp     | Tests: IRC nicks.
-|             test-irc-protocol.cpp | テスト: IRC プロトコル
+|             test-irc-nick.cpp      | Tests: IRC nicks.
+|             test-irc-protocol.cpp  | テスト: IRC プロトコル
 // TRANSLATION MISSING
-|             test-irc-server.cpp   | Tests: IRC server.
+|             test-irc-server.cpp    | Tests: IRC server.
 // TRANSLATION MISSING
-|          trigger/                 | Root of unit tests for trigger plugin.
+|          trigger/                  | Root of unit tests for trigger plugin.
 // TRANSLATION MISSING
-|             test-trigger.cpp      | Tests: triggers.
+|             test-trigger.cpp       | Tests: triggers.
 // TRANSLATION MISSING
-|          relay/                   | Root of unit tests for Relay plugin.
+|          typing/                   | Root of unit tests for typing plugin.
 // TRANSLATION MISSING
-|             test-relay-auth.cpp   | Tests: clients authentication.
+|             test-typing.cpp        | Tests: typing.
+// TRANSLATION MISSING
+|             test-typing-status.cpp | Tests: typing status.
+// TRANSLATION MISSING
+|          relay/                    | Root of unit tests for Relay plugin.
+// TRANSLATION MISSING
+|             test-relay-auth.cpp    | Tests: clients authentication.
 |===
 
 [[documentation_translations]]

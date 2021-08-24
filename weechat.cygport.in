@@ -106,6 +106,7 @@ weechat_CONTENTS="
     usr/lib/weechat/plugins/script.dll
     usr/lib/weechat/plugins/spell.dll
     usr/lib/weechat/plugins/trigger.dll
+    usr/lib/weechat/plugins/typing.dll
     usr/lib/weechat/plugins/xfer.dll
     usr/share/icons/
     usr/share/locale/

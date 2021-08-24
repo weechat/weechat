@@ -21,8 +21,13 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 New features::
 
   * core: add option "certs" in command /debug
+  * api: add random integer number in evaluation of expressions with "random:min,max"
+  * api: add function string_cut
+  * api: add function file_copy (issue #1667)
   * api: remember insertion order in hashtables
   * api: add keys/values with tags in output of irc_message_parse_to_hashtable (issue #1654)
+  * irc: add option "-parted" in command /allchan (issue #1685)
+  * irc: allow signals "irc_raw_in" and "irc_in" to eat messages (issue #1657)
   * irc: implement IRCv3.2 SASL authentication, add command /auth, reconnect by default to the server in case of SASL authentication failure (issue #413)
   * irc: add support of capability "message-tags" and TAGMSG messages (issue #1654)
   * irc: enable all capabilities by default (if supported by server and WeeChat), change default value of option irc.server_default.capabilities to "*" (issue #320)
@@ -31,23 +36,31 @@ New features::
   * irc: always set realname in nicks even when extended-join capability is not enabled (issue #1653)
   * irc: add support of FAIL/WARN/NOTE messages (issue #1653)
   * irc: drop support of DH-BLOWFISH and DH-AES SASL mechanisms (issue #175)
+  * typing: new plugin "typing": display users currently writing messages on IRC channel/private buffers
 
 Bug fixes::
 
+  * core: fix decoding of attributes in basic ANSI colors (issue #1678)
   * api: fix function string_match with joker in the string if multiple words matched in input string
+  * irc: fix SASL authentication when AUTHENTICATE message is received with a server name (issue #1679)
+  * irc: remove unneeded message about Diffie-Hellman shared secret exchange during SSL connection to server (issue #857)
   * irc: escape/unescape IRC message tags values (issue #1654)
   * irc: set notify level to "private" for received WALLOPS
+  * script: fix move of installed script on another filesystem (issue #1667)
 
 Documentation::
 
+  * add Spanish FAQ (issue #1656)
   * add Serbian translations (issue #1655)
 
 Tests::
 
+  * core: switch to PHP 8.0 in CI
   * core: add build on macOS in CI
 
 Build::
 
+  * php: add support of PHP 8.0 and 8.1 (issue #1668)
   * core: fix build on macOS (issue #1662)
 
 [[v3.2]]

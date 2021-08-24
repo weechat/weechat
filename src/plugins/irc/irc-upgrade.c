@@ -564,6 +564,23 @@ irc_upgrade_read_cb (const void *pointer, void *data,
                                 irc_upgrade_current_server->monitor = (int)number;
                         }
                     }
+                    /* "clienttagdeny" is new in WeeChat 3.3 */
+                    if (weechat_infolist_search_var (infolist, "clienttagdeny"))
+                    {
+                        irc_server_set_clienttagdeny (irc_upgrade_current_server,
+                                                      weechat_infolist_string (infolist, "clienttagdeny"));
+                    }
+                    else
+                    {
+                        /* WeeChat <= 3.2 */
+                        str = irc_server_get_isupport_value (irc_upgrade_current_server,
+                                                             "CLIENTTAGDENY");
+                        if (str)
+                        {
+                            irc_server_set_clienttagdeny (irc_upgrade_current_server,
+                                                          str);
+                        }
+                    }
                     irc_upgrade_current_server->reconnect_delay = weechat_infolist_integer (infolist, "reconnect_delay");
                     irc_upgrade_current_server->reconnect_start = weechat_infolist_time (infolist, "reconnect_start");
                     irc_upgrade_current_server->command_time = weechat_infolist_time (infolist, "command_time");

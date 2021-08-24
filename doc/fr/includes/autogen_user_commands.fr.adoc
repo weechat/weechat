@@ -17,10 +17,11 @@ cible : nom du serveur
 * `+allchan+`: exécuter une commande sur tous les canaux de tous les serveurs connectés
 
 ----
-/allchan  [-current] [-exclude=<canal>[,<canal>...]] <commande>
-          [-current] [-include=<canal>[,<canal>...]] <commande>
+/allchan  [-current] [-parted] [-exclude=<canal>[,<canal>...]] <commande>
+          [-current] [-parted] -include=<canal>[,<canal>...] <commande>
 
   -current : exécuter la commande pour les canaux du serveur courant seulement
+   -parted : exécuter la commande sur les canaux quittés seulement
   -exclude : exclure certains canaux (le caractère joker "*" est autorisé)
   -include : inclure seulement certains canaux (le caractère joker "*" est autorisé)
   commande : commande à exécuter (ou texte à envoyer au tampon si la commande ne commence pas par '/')
@@ -41,6 +42,8 @@ Exemples :
     /allchan -exclude=#weechat,#linux* bonjour
   dire 'bonjour' sur tous les canaux commençant par #linux :
     /allchan -include=#linux* bonjour
+  fermer tous les tampons avec des canaux quittés :
+    /allchan -parted /close
 ----
 
 [[command_irc_allpv]]
@@ -1389,10 +1392,11 @@ Des variables sont remplacées dans l'expression, en utilisant le format ${varia
   15. une variable d'environnement (format : "env:XXX")
   16. un opérateur ternaire (format : "if:condition?valeur_si_vrai:valeur_si_faux")
   17. le résultat d'une expression avec parenthèses et les opérateurs + - * / // % ** (format: "calc:xxx")
-  18. une chaîne traduite (format : "translate:xxx")
-  19. une option (format : "fichier.section.option")
-  20. une variable locale du tampon
-  21. un hdata/variable (la valeur est automatiquement convertie en chaîne), par défaut "window" et "buffer" pointent vers la fenêtre et le tampon courants.
+  18. un nombre entier aléatoire (format : "random:min,max")
+  19. une chaîne traduite (format : "translate:xxx")
+  20. une option (format : "fichier.section.option")
+  21. une variable locale du tampon
+  22. un hdata/variable (la valeur est automatiquement convertie en chaîne), par défaut "window" et "buffer" pointent vers la fenêtre et le tampon courants.
 Le format du hdata peut être le suivant :
   hdata.var1.var2... : démarrer avec un hdata (le pointeur doit être connu), et demander les variables l'une après l'autre (d'autres hdata peuvent être suivis)
   hdata[liste].var1.var2... : démarrer avec un hdata en utilisant une liste/pointeur/nom de pointeur, par exemple :
@@ -1424,6 +1428,7 @@ Exemples (chaînes simples) :
   /eval -n ${repeat:5,-}                         ==> -----
   /eval -n ${length:test}                        ==> 4
   /eval -n ${calc:(5+2)*3}                       ==> 21
+  /eval -n ${random:0,10}                        ==> 3
   /eval -n ${base_encode:64,test}                ==> dGVzdA==
   /eval -n ${base_decode:64,dGVzdA==}            ==> test
   /eval -n ${translate:Plugin}                   ==> Extension
@@ -1674,6 +1679,8 @@ windows : stocker/appliquer seulement pour les fenêtres (le tampon affiché pa
 Sans paramètre, cette commande affiche les dispositions stockées.
 
 La disposition courante peut être sauvegardée sur la commande /quit avec l'option "weechat.look.save_layout_on_exit".
+
+Note : la disposition se souvient seulement de la division des fenêtres et des numéros de tampons. Elle n'ouvre pas les tampons. Cela signifie par exemple que vous devez toujours automatiquement rejoindre les canaux IRC pour ouvrir les tampons, la disposition sauvée ne s'applique qu'une fois les tampons ouverts.
 ----
 
 [[command_weechat_mouse]]

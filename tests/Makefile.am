@@ -88,10 +88,16 @@ if PLUGIN_TRIGGER
 tests_trigger = unit/plugins/trigger/test-trigger.cpp
 endif
 
+if PLUGIN_TYPING
+tests_typing = unit/plugins/typing/test-typing.cpp \
+               unit/plugins/typing/test-typing-status.cpp
+endif
+
 lib_weechat_unit_tests_plugins_la_SOURCES = unit/plugins/test-plugins.cpp \
                                             $(tests_irc) \
                                             $(tests_relay) \
-                                            $(tests_trigger)
+                                            $(tests_trigger) \
+                                            $(tests_typing)
 
 lib_weechat_unit_tests_plugins_la_LDFLAGS = -module -no-undefined
 

@@ -17,30 +17,33 @@
 * `+allchan+`: извршавање команде на свим каналима свих повезаних сервера
 
 ----
-/allchan  [-current] [-exclude=<канал>[,<канал>...]] <команда>
-          [-current] -include=<канал>[,<канал>...] <команда>
+/allchan  [-current] [-parted] [-exclude=<channel>[,<channel>...]] <command>
+          [-current] [-parted] -include=<channel>[,<channel>...] <command>
 
- -current: извршава се команда само за канале текућег сервера
- -exclude: неки канали се изузимају (дозвољен је џокер „*”)
- -include: узимају се у обзир само неки канали (дозвољен је џокер „*”)
-  command: команда која треба да се изврши (или текст који се шаље баферу ако команда не почиње са ’/’)
+ -current: execute command for channels of current server only
+  -parted: execute on parted channels only
+ -exclude: exclude some channels (wildcard "*" is allowed)
+ -include: include only some channels (wildcard "*" is allowed)
+  command: command to execute (or text to send to buffer if command does not start with '/')
 
-Команде и аргументи се израчунавају (погледајте /help eval), замењују се следеће променљиве:
-  $server             име сервера
-  $channel            име канала
-  $nick               надимак на серверу
-  ${irc_server.xxx}   променљива xxx на серверу
-  ${irc_channel.xxx}  променљива xxx на каналу
+Command and arguments are evaluated (see /help eval), the following variables are replaced:
+  $server             server name
+  $channel            channel name
+  $nick               nick on server
+  ${irc_server.xxx}   variable xxx in server
+  ${irc_channel.xxx}  variable xxx in channel
 
-Примери:
-  извршава ’/me is testing’ на свим каналима:
+Examples:
+  execute '/me is testing' on all channels:
     /allchan /me is testing
-  каже ’здраво’ свуда осим на #weechat:
-    /allchan -exclude=#weechat здраво
-  каже ’здраво’ свуда осим на #weechat и каналима који почињу са #linux:
-    /allchan -exclude=#weechat,#linux* здраво
-  каже ’здраво’ на свим каналима који почињу на #linux:
-    /allchan -include=#linux* здраво
+  say 'hello' everywhere but not on #weechat:
+    /allchan -exclude=#weechat hello
+  say 'hello' everywhere but not on #weechat and channels beginning with #linux:
+    /allchan -exclude=#weechat,#linux* hello
+  say 'hello' on all channels beginning with #linux:
+    /allchan -include=#linux* hello
+  close all buffers with parted channels:
+    /allchan -parted /close
 ----
 
 [[command_irc_allpv]]
@@ -141,19 +144,19 @@ Examples:
       req|ack [<могућност> [<могућност>...]]
       end
 
-   ls: list the capabilities supported by the server
- list: list the capabilities currently enabled
-  req: request a capability
-  ack: acknowledge capabilities which require client-side acknowledgement
-  end: end the capability negotiation
+   ls: исписује могућности које подржава сервер
+ list: исписује могућности које су тренутно укључене
+  req: захтева могућност
+  ack: прихвата могућности које захтевају потврду са клијентске стране
+  end: завршава преговарање о могућностима
 
-Without argument, "ls" and "list" are sent.
+Без аргумента се шаљу „ls” и „list”.
 
-Capabilities supported by WeeChat are: account-notify, away-notify, cap-notify, chghost, extended-join, invite-notify, message-tags, multi-prefix, server-time, setname, userhost-in-names.
+Програм WeeChat подржава следеће могућности: account-notify, away-notify, cap-notify, chghost, extended-join, invite-notify, multi-prefix, server-time, setname, userhost-in-names.
 
-The capabilities to automatically enable on servers can be set in option irc.server_default.capabilities (or by server in option irc.server.xxx.capabilities).
+Могућности које се аутоматски укључују на серверима могу да се поставе у опцији irc.server_default.capabilities (или посебно за сваки сервер у опцији irc.server.xxx.capabilities).
 
-Examples:
+Примери:
    /cap
    /cap req multi-prefix away-notify
 ----
@@ -829,12 +832,12 @@ noопција: постављање логичке опције на ’off’ 
 ----
 
 [[command_irc_setname]]
-* `+setname+`: set real name
+* `+setname+`: постављање реалног имена
 
 ----
-/setname  <realname>
+/setname  <реално_име>
 
-realname: new real name
+реално_име: ново реално име
 ----
 
 [[command_irc_squery]]
@@ -1298,33 +1301,33 @@ stop: зауставља режим померања курсора
 
 ----
 /debug  list
-        set <plugin> <level>
-        dump [<plugin>]
+        set <додатак> <ниво>
+        dump [<додатак>]
         buffer|color|infolists|libs|certs|memory|tags|term|windows
         mouse|cursor [verbose]
         hdata [free]
-        time <command>
+        time <команда>
 
-     list: list plugins with debug levels
-      set: set debug level for plugin
-   plugin: name of plugin ("core" for WeeChat core)
-    level: debug level for plugin (0 = disable debug)
-     dump: save memory dump in WeeChat log file (same dump is written when WeeChat crashes)
-   buffer: dump buffer content with hexadecimal values in log file
-    color: display infos about current color pairs
-   cursor: toggle debug for cursor mode
-     dirs: display directories
-    hdata: display infos about hdata (with free: remove all hdata in memory)
-    hooks: display infos about hooks
-infolists: display infos about infolists
-     libs: display infos about external libraries used
-    certs: display number of loaded trusted certificate authorities
-   memory: display infos about memory usage
-    mouse: toggle debug for mouse
-     tags: display tags for lines
-     term: display infos about terminal
-  windows: display windows tree
-     time: measure time to execute a command or to send text to the current buffer
+     list: исписује додатке са дибаг нивоима
+      set: поставља дибаг ниво за додатак
+  додатак: име додатка („core” за WeeChat језгро)
+     ниво: дибаг ниво за додатак (0 = искључује дибаг)
+     dump: чува садржај меморије у WeeChat лог фајл (исти садржај се записује када се програм WeeChat сруши)
+   buffer: уписује у лог фајл садржај бафера као хексадецималне вредности
+    color: приказује инфо о тренутним паровима боја
+   cursor: пребацује дибаг за режим померања курсора
+     dirs: исписује директоријуме
+    hdata: исписује инфо о hdata (са free: уклања све hdata из меморије)
+    hooks: исписује инфо о кукама
+infolists: исписује инфо о инфолистама
+     libs: исписује инфо о коришћеним спољним библиотекама
+    certs: приказује број учитаних ауторитета сертификата којима се верује
+   memory: исписује инфо о употреби меморије
+    mouse: пребацује дибаг за миша
+     tags: исписује ознаке за линије
+     term: исписује инфо о терминалу
+  windows: исписује стабло прозора
+     time: мери време извршавања команде или слања текста текућем баферу
 ----
 
 [[command_weechat_eval]]
@@ -1334,82 +1337,83 @@ infolists: display infos about infolists
 /eval  [-n|-s] [-d] <израз>
        [-n] [-d [-d]] -c <израз1> <оператор> <израз2>
 
-        -n: приказује резултат и не шаље га у бафер (дибаг режим)
-        -s: дели израз пре израчунавања (многе команде могу да се раздвоје са тачка зарезима)
-        -d: приказује дибаг излаз након израчунавања (са два -d: детаљнији дибаг)
-        -c: израчунава као услов: користе се оператори и заграде, враћа логичку вредност („0” или „1”)
-     израз: израз који се израчунава, променљиве у формату ${променљива} се замењују (погледајте испод); више команди може да се раздвоји са тачка зарезима
-  оператор: логички или оператор поређења:
-            - логички оператори:
-                &&   логичко „и”
-                ||   логичко „или”
-            - оператори поређења:
-                ==   једнако
-                !=   није једнако
-                <=   мање или једнако
-                <    мање
-                >=   веће или једнако
-                >    веће
-                =~   подудара се са POSIX проширеним регуларним изразом
-                !~   НЕ подудара се са POSIX проширеним регуларним изразом
-                ==*  је маска подударања, разликује величину слова (дозвољен је џокер „*”)
-                !!*  НИЈЕ маска подударања, разликује величину слова (дозвољен је џокер „*”)
-                =*   је маска подударања, не разликује величину слова (дозвољен је џокер „*”)
-                !*   НИЈЕ маска подударања, не разликује величину слова (дозвољен је џокер „*”)
-                ==-  је укључено, разликује величину слова
-                !!-  НИЈЕ укључено, разликује величину слова
-                =-   је укључено, не разликује величину слова
-                !-   НИЈЕ укључено, не разликује величину слова
+        -n: display result without sending it to buffer (debug mode)
+        -s: split expression before evaluating it (many commands can be separated by semicolons)
+        -d: display debug output after evaluation (with two -d: more verbose debug)
+        -c: evaluate as condition: use operators and parentheses, return a boolean value ("0" or "1")
+expression: expression to evaluate, variables with format ${variable} are replaced (see below); many commands can be separated by semicolons
+  operator: a logical or comparison operator:
+            - logical operators:
+                &&   boolean "and"
+                ||   boolean "or"
+            - comparison operators:
+                ==   equal
+                !=   not equal
+                <=   less or equal
+                <    less
+                >=   greater or equal
+                >    greater
+                =~   is matching POSIX extended regex
+                !~   is NOT matching POSIX extended regex
+                ==*  is matching mask, case sensitive (wildcard "*" is allowed)
+                !!*  is NOT matching mask, case sensitive (wildcard "*" is allowed)
+                =*   is matching mask, case insensitive (wildcard "*" is allowed)
+                !*   is NOT matching mask, case insensitive (wildcard "*" is allowed)
+                ==-  is included, case sensitive
+                !!-  is NOT included, case sensitive
+                =-   is included, case insensitive
+                !-   is NOT included, case insensitive
 
-Сматра се да је израз „true” ако није NULL, није празан и различит је од „0”.
-Поређење се врши употребом бројева у покретном зарезу ако су два израза важећи бројеви, у једном од следећих формата:
-  - целобројни (примери: 5, -7)
-  - број у покретном зарезу (примери: 5.2, -7.5, 2.83e-2)
-  - хексадецимални број (примери: 0xA3, -0xA3)
-Ако желите да форсирате поређење стрингова, можете да додате знаке навода око сваког израза, на пример:
+An expression is considered as "true" if it is not NULL, not empty, and different from "0".
+The comparison is made using floating point numbers if the two expressions are valid numbers, with one of the following formats:
+  - integer (examples: 5, -7)
+  - floating point number (examples: 5.2, -7.5, 2.83e-2)
+  - hexadecimal number (examples: 0xA3, -0xA3)
+To force a string comparison, you can add double quotes around each expression, for example:
   50 > 100      ==> 0
   "50" > "100"  ==> 1
 
-У изразима се замењују неке променљиве, користећи формат ${променљива}, променљива може да буде, према редоследу приоритета:
-  1. сам стринг без израчунавања (формат: „raw:xxx”)
-  2. израчунати под-стринг (формат: „eval:xxx”)
-  3. израчунати услов (формат: „eval_cond:xxx”)
-  4. стринг са означеним карактерима (формат: „esc:xxx” или „\xxx”)
-  5. стринг са карактерима за сакривање (формат: „hide:кар,стринг”)
-  6. стринг са највише карактера (формат: „cut:макс,суфикс,стринг” или „cut:+макс,суфикс,стринг")
-     или макс број карактера који се приказује на екрану (формат: „cutscr:макс,суфикс,стринг” или „cutscr:+макс,суфикс,стринг”)
-  7. обрнути стринг (формат: „rev:xxx” или „revscr:xxx”)
-  8. поновљени стринг (формат: „repeat:број,стринг”)
-  9. дужина стринга (формат: „length:xxx” или „lengthscr:xxx”)
-  10. боја (формат: „color:xxx”, погледајте „Референтни приручник API додатака”, функција „color”)
-  11. модификатор (формат: „modifier:име,подаци,стринг”)
-  12. инфо (формат: „info:име,аргументи”, аргументи нису обавезни)
-  13. base 16/32/64 шифриран/дешифрован стринг (формат: „base_encode:основа,xxx” или „base_decode:основа,xxx”)
-  14. текући датум/време (формат: „date” или „date:формат”)
-  15. променљива окружења (формат: „env:XXX”)
-  16. тернарни оператор (формат: „if:услов?вредност_ако_је_тачно:вредност_ако_је_нетачно”)
-  17. резултат израза са заградама и операторима + - * / // % ** (формат: „calc:xxx”)
-  18. преведени стринг (формат: „translate:xxx”)
-  19. опција (формат: „фајл.секција.опција”)
-  20. локална променљива у баферу
-  21. hdata име/променљива (вредност се аутоматски конвертује у стринг), „window” и „buffer” подразумевано показују на текући прозор/бафер.
-Формат за hdata може да буде једно од следећег:
-  hdata.пром1.пром2...: почиње са hdata (показивач мора да буде познат), и пита променљиве једну за другом (могу да следе и остала hdata)
-  hdata[листа].пром1.пром2...: почиње са hdata користећи листу, на пример:
-    ${buffer[gui_buffers].full_name}: пуно име првог бафера у увезаној листи бафера
-    ${plugin[weechat_plugins].name}: име првог бафера у увезаној листи додатака
-  hdata[показивач].пром1.пром2...: почиње са hdata користећи показивач, на пример:
-    ${buffer[0x1234abcd].full_name}: пуно име бафера са овим показивачем (може да се користи у окидачима)
-    ${buffer[my_pointer].full_name}: пуно име бафера са овим именом показивача (може да се користи у окидачима)
-У вези имена hdata и променљивих, молим вас да погледате „Референтни приручник API додатака”, функцију „weechat_hdata_get”.
+Some variables are replaced in expression, using the format ${variable}, variable can be, by order of priority:
+  1. the string itself without evaluation (format: "raw:xxx")
+  2. an evaluated sub-string (format: "eval:xxx")
+  3. an evaluated condition (format: "eval_cond:xxx")
+  4. a string with escaped chars (format: "esc:xxx" or "\xxx")
+  5. a string with chars to hide (format: "hide:char,string")
+  6. a string with max chars (format: "cut:max,suffix,string" or "cut:+max,suffix,string")
+     or max chars displayed on screen (format: "cutscr:max,suffix,string" or "cutscr:+max,suffix,string")
+  7. a reversed string (format: "rev:xxx" or "revscr:xxx")
+  8. a repeated string (format: "repeat:count,string")
+  9. length of a string (format: "length:xxx" or "lengthscr:xxx")
+  10. a color (format: "color:xxx", see "Plugin API reference", function "color")
+  11. a modifier (format: "modifier:name,data,string")
+  12. an info (format: "info:name,arguments", arguments are optional)
+  13. a base 16/32/64 encoded/decoded string (format: "base_encode:base,xxx" or "base_decode:base,xxx")
+  14. current date/time (format: "date" or "date:format")
+  15. an environment variable (format: "env:XXX")
+  16. a ternary operator (format: "if:condition?value_if_true:value_if_false")
+  17. result of an expression with parentheses and operators + - * / // % ** (format: "calc:xxx")
+  18. a random integer number (format: "random:min,max")
+  19. a translated string (format: "translate:xxx")
+  20. an option (format: "file.section.option")
+  21. a local variable in buffer
+  22. a hdata name/variable (the value is automatically converted to string), by default "window" and "buffer" point to current window/buffer.
+Format for hdata can be one of following:
+  hdata.var1.var2...: start with a hdata (pointer must be known), and ask variables one after one (other hdata can be followed)
+  hdata[list].var1.var2...: start with a hdata using a list/pointer/pointer name, for example:
+    ${buffer[gui_buffers].full_name}: full name of first buffer in linked list of buffers
+    ${plugin[weechat_plugins].name}: name of first plugin in linked list of plugins
+  hdata[pointer].var1.var2...: start with a hdata using a pointer, for example:
+    ${buffer[0x1234abcd].full_name}: full name of the buffer with this pointer (can be used in triggers)
+    ${buffer[my_pointer].full_name}: full name of the buffer with this pointer name (can be used in triggers)
+For name of hdata and variables, please look at "Plugin API reference", function "weechat_hdata_get".
 
-Примери (једноставни стрингови):
+Examples (simple strings):
   /eval -n ${raw:${info:version}}                ==> ${info:version}
   /eval -n ${eval_cond:${window.win_width}>100}  ==> 1
   /eval -n ${info:version}                       ==> 0.4.3
   /eval -n ${env:HOME}                           ==> /home/user
   /eval -n ${weechat.look.scroll_amount}         ==> 3
-  /eval -n ${sec.data.freenode_password}         ==> secret
+  /eval -n ${sec.data.password}                  ==> secret
   /eval -n ${window}                             ==> 0x2549aa0
   /eval -n ${window.buffer}                      ==> 0x2549320
   /eval -n ${window.buffer.full_name}            ==> core.weechat
@@ -1424,11 +1428,12 @@ infolists: display infos about infolists
   /eval -n ${repeat:5,-}                         ==> -----
   /eval -n ${length:test}                        ==> 4
   /eval -n ${calc:(5+2)*3}                       ==> 21
+  /eval -n ${random:0,10}                        ==> 3
   /eval -n ${base_encode:64,test}                ==> dGVzdA==
   /eval -n ${base_decode:64,dGVzdA==}            ==> test
   /eval -n ${translate:Plugin}                   ==> Extension
 
-Примери (услови):
+Examples (conditions):
   /eval -n -c ${window.buffer.number} > 2 ==> 0
   /eval -n -c ${window.win_width} > 100   ==> 1
   /eval -n -c (8 > 12) || (5 > 2)         ==> 1
@@ -1661,19 +1666,21 @@ listdefault: исписује подразумеване тастере
          del [<име>] [buffers|windows]
          rename <име> <ново_име>
 
-  store: чува текуће бафере/прозоре у распореду
-  apply: примењује сачувани распоред
-  leave: напушта текући распоред (не ажурира ниједан распоред)
-    del: брише бафере и/или прозоре из сачуваног распореда
-          (ако након имена није наведено ни „buffers” ни „windows”, онда се брише распоред)
- rename: измена имена распореда
-    име: име распореда који се чува (подразумевано је „default”)
-buffers: чува/обнавља само бафере (редослед бафера)
-windows: чува/обнавља само прозоре (бафер који приказује сваки прозор)
+  store: store current buffers/windows in a layout
+  apply: apply stored layout
+  leave: leave current layout (does not update any layout)
+    del: delete buffers and/or windows in a stored layout
+         (if neither "buffers" nor "windows" is given after the name, the layout is deleted)
+ rename: rename a layout
+   name: name for stored layout (default is "default")
+buffers: store/apply only buffers (order of buffers)
+windows: store/apply only windows (buffer displayed by each window)
 
-Без аргумента, ова команда приказује сачуване распореде.
+Without argument, this command displays stored layouts.
 
-Текући распоред може да се сачува приликом /quit команде опцијом „weechat.look.save_layout_on_exit”.
+The current layout can be saved on /quit command with the option "weechat.look.save_layout_on_exit".
+
+Note: the layout only remembers windows split and buffers numbers. It does not open buffers. That means for example you must still auto-join IRC channels to open the buffers, the saved layout only applies once the buffers are opened.
 ----
 
 [[command_weechat_mouse]]

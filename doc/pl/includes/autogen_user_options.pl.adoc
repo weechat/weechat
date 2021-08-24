@@ -1845,6 +1845,50 @@
 ** domyślna wartość: `+"${weechat_runtime_dir}/weechat_fifo_${info:pid}"+`
 // end::fifo_options[]
 
+// tag::typing_options[]
+* [[option_typing.look.delay_purge_paused]] *typing.look.delay_purge_paused*
+** opis: pass:none[number of seconds after paused status has been set: if reached, the typing status is removed]
+** typ: liczba
+** wartości: 1 .. 2147483647
+** domyślna wartość: `+30+`
+
+* [[option_typing.look.delay_purge_typing]] *typing.look.delay_purge_typing*
+** opis: pass:none[number of seconds after typing status has been set: if reached, the typing status is removed]
+** typ: liczba
+** wartości: 1 .. 2147483647
+** domyślna wartość: `+6+`
+
+* [[option_typing.look.delay_set_paused]] *typing.look.delay_set_paused*
+** opis: pass:none[number of seconds after typing last char: if reached, the typing status becomes "paused" and no more typing signals are sent]
+** typ: liczba
+** wartości: 1 .. 2147483647
+** domyślna wartość: `+10+`
+
+* [[option_typing.look.enabled_nicks]] *typing.look.enabled_nicks*
+** opis: pass:none[typing enabled for other nicks (display typing info for nicks typing in the current buffer)]
+** typ: bool
+** wartości: on, off
+** domyślna wartość: `+off+`
+
+* [[option_typing.look.enabled_self]] *typing.look.enabled_self*
+** opis: pass:none[typing enabled for self messages (send typing info to other users)]
+** typ: bool
+** wartości: on, off
+** domyślna wartość: `+off+`
+
+* [[option_typing.look.input_min_chars]] *typing.look.input_min_chars*
+** opis: pass:none[min number of chars in message to trigger send of typing signals]
+** typ: liczba
+** wartości: 1 .. 2147483647
+** domyślna wartość: `+4+`
+
+* [[option_typing.look.item_max_length]] *typing.look.item_max_length*
+** opis: pass:none[max number of chars displayed in the bar item "typing" (0 = do not truncate content)]
+** typ: liczba
+** wartości: 0 .. 2147483647
+** domyślna wartość: `+0+`
+// end::typing_options[]
+
 // tag::xfer_options[]
 * [[option_xfer.color.status_aborted]] *xfer.color.status_aborted*
 ** opis: pass:none[kolor statusu "aborted"]
@@ -2215,7 +2259,7 @@
 ** domyślna wartość: `+"%a, %d %b %Y %T %z"+`
 
 * [[option_irc.look.display_account_message]] *irc.look.display_account_message*
-** opis: pass:none[display ACCOUNT messages received when capability account-notify is enabled]
+** opis: pass:none[wyświetl wiadomość ACCOUNT otrzymaną, kiedy opcja account-notify jest włączona]
 ** typ: bool
 ** wartości: on, off
 ** domyślna wartość: `+on+`
@@ -2245,7 +2289,7 @@
 ** domyślna wartość: `+on+`
 
 * [[option_irc.look.display_extended_join]] *irc.look.display_extended_join*
-** opis: pass:none[display extra information in the JOIN messages: account name and real name (capability extended-join must be enabled)]
+** opis: pass:none[wyświetl dodatkowe informacje w wiadomości JOIN: nazwa konta i real name (opcja extended-join musi być włączona)]
 ** typ: bool
 ** wartości: on, off
 ** domyślna wartość: `+on+`
@@ -2520,6 +2564,18 @@
 ** wartości: on, off
 ** domyślna wartość: `+off+`
 
+* [[option_irc.look.typing_status_nicks]] *irc.look.typing_status_nicks*
+** opis: pass:none[display nicks typing on the channel in bar item "typing" (option typing.look.enabled_nicks must be enabled and capability "message-tags" must be enabled on the server)]
+** typ: bool
+** wartości: on, off
+** domyślna wartość: `+off+`
+
+* [[option_irc.look.typing_status_self]] *irc.look.typing_status_self*
+** opis: pass:none[send self typing status to channels so that other users see when you are typing a message (option typing.look.enabled_self must be enabled and capability "message-tags" must be enabled on the server)]
+** typ: bool
+** wartości: on, off
+** domyślna wartość: `+off+`
+
 * [[option_irc.network.autoreconnect_delay_growing]] *irc.network.autoreconnect_delay_growing*
 ** opis: pass:none[rosnący współczynnik opóźnienia ponownego połączenia z serwerem (1 = stała wartość, 2 = opóźnienie*2 dla każdej próby, etc.)]
 ** typ: liczba
@@ -2677,7 +2733,7 @@
 ** domyślna wartość: `+25+`
 
 * [[option_irc.server_default.capabilities]] *irc.server_default.capabilities*
-** opis: pass:none[comma-separated list of client capabilities to enable for server if they are available (see /help cap for a list of capabilities supported by WeeChat); "*" enables all capabilities by default (supported by both server and WeeChat); wildcard "*" is allowed; a capability beginning with "!" is excluded (example: "*,!account-*,!extended-join")]
+** opis: pass:none[oddzielona przecinkami lista opcji klienta do włączenia dla serwera, jeśli są dostępne (zobacz /help cap żeby poznać listę opcji wspieranych przez WeeChat); "*" włącza domyślnie wszystkie opcje (wspierane zarówno przez serwer i WeeChat); wildcard "*" jest dozwolony; opcje zaczynające się od "!" są pomijane (przykład: "*,!account-*,!extended-join")]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+"*"+`
@@ -2791,7 +2847,7 @@
 ** domyślna wartość: `+""+`
 
 * [[option_irc.server_default.sasl_mechanism]] *irc.server_default.sasl_mechanism*
-** opis: pass:none[mechanism for SASL authentication: "plain" for plain text password, "scram-sha-1" for SCRAM authentication with SHA-1 digest algorithm, "scram-sha-256" for SCRAM authentication with SHA-256 digest algorithm, "scram-sha-512" for SCRAM authentication with SHA-512 digest algorithm, "ecdsa-nist256p-challenge" for key-based challenge authentication, "external" for authentication using client side SSL certificate]
+** opis: pass:none[mechanizm autentykacji SASL: "plain" dla hasła w czystym tekście, "scram-sha-1" dla uwierzytelnienia SCRAM za pomocą algorytmu SHA-1, "scram-sha-256" dla uwierzytelnienia SCRAM za pomocą algorytmu SHA-256, "scram-sha-512" dla uwierzytelnienia SCRAM za pomocą algorytmu SHA-512, "ecdsa-nist256p-challenge" uwierzytelnianie na podstawie pary kluczy, "external" dla uwierzytelnienia za pomocą certyfikatu SSL po stronie klienta]
 ** typ: liczba
 ** wartości: plain, scram-sha-1, scram-sha-256, scram-sha-512, ecdsa-nist256p-challenge, external
 ** domyślna wartość: `+plain+`

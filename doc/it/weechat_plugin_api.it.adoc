@@ -605,6 +605,45 @@ free (str);
 [NOTE]
 Questa funzione non è disponibile nelle API per lo scripting.
 
+// TRANSLATION MISSING
+==== string_cut
+
+_WeeChat ≥ 3.3._
+
+Cut a string after a given number of chars, add an optional suffix after the
+string if it is cut.
+
+Prototipo:
+
+[source,C]
+----
+char *weechat_string_cut (const char *string, int length, int count_suffix, int screen, const char *cut_suffix);
+----
+
+Argomenti:
+
+* _string_: string to cut
+* _length_: max chars
+* _count_suffix_: if 1, the length of suffix is counter in the max length
+* _screen_: if 1, the cut is based on width of chars displayed
+* _cut_suffix_: the suffix added after the string if it is cut
+
+Valore restituito:
+
+* cut string (must be freed by calling "free" after use)
+
+Esempio in C:
+
+[source,C]
+----
+char *str = weechat_string_cut ("this is a test", 5, 1, 1, "…");  /* result: "this…" */
+/* ... */
+free (str);
+----
+
+[NOTE]
+Questa funzione non è disponibile nelle API per lo scripting.
+
 ==== string_tolower
 
 Converte una stringa UTF-8 in minuscolo.
@@ -2312,7 +2351,7 @@ str3 = weechat.string_input_for_buffer("//test")  # "/test"
 ==== string_eval_expression
 
 _WeeChat ≥ 0.4.0, updated in 0.4.2, 0.4.3, 1.0, 1.1, 1.2, 1.3, 1.6, 1.8, 2.0,
-2.2, 2.3, 2.7, 2.9, 3.1 and 3.2._
+2.2, 2.3, 2.7, 2.9, 3.1, 3.2 and 3.3._
 
 Evaluate an expression and return result as a string.
 Special variables with format `+${variable}+` are expanded (see table below).
@@ -2853,6 +2892,12 @@ expanded to last):
   `+2+` +
   `+0.2+` +
   `+65536+`
+
+| `+${random:min,max}+` +
+  _(WeeChat ≥ 3.3)_ |
+  Random integer number in the range from `min` to `max` (inclusive). |
+  `+${random:0,10}+` |
+  `+3+`
 
 | `+${translate:xxx}+` +
   _(WeeChat ≥ 3.2)_ |
@@ -4021,6 +4066,42 @@ char *content;
 content = weechat_file_get_content ("/tmp/test.txt");
 /* ... */
 free (content);
+----
+
+[NOTE]
+Questa funzione non è disponibile nelle API per lo scripting.
+
+// TRANSLATION MISSING
+==== file_copy
+
+_WeeChat ≥ 3.3._
+
+Copy a file to another location.
+
+Prototipo:
+
+[source,C]
+----
+int weechat_file_copy (const char *from, const char *to);
+----
+
+Argomenti:
+
+* _from_: source file
+* _to_: destination file
+
+Valore restituito:
+
+* 1 if OK, 0 if error
+
+Esempio in C:
+
+[source,C]
+----
+if (weechat_file_copy ("/tmp/test.txt", "/path/to/test2.txt"))
+{
+    /* OK */
+}
 ----
 
 [NOTE]
@@ -9555,41 +9636,29 @@ For a standard command (not beginning with "url:"), following options are
 available:
 
 // TRANSLATION MISSING
-[width="100%",cols="^1,1,1,4",options="header"]
+[width="100%",cols="^1,^1,1,1,5",options="header"]
 |===
-| Option | Value | Default | Description
+| Option | Min WeeChat | Value | Default | Description
 
 // TRANSLATION MISSING
-| argN (N ≥ 1) +
-  _(WeeChat ≥ 0.4.0)_ |
-  any string |
-  no arguments |
+| argN (N ≥ 1) | 0.4.0 | any string | no arguments |
   Arguments for command; if no argument is given with these options,
   the command is automatically split like the shell does (and then command
   arguments are read in the _command_ argument).
 
 // TRANSLATION MISSING
-| stdin +
-  _(WeeChat ≥ 0.4.3)_ |
-  (not used) |
-  no stdin |
+| stdin | 0.4.3 | (not used) | no stdin |
   Create a pipe for writing data on standard input (stdin) of child process
   (see function <<_hook_set,hook_set>>).
 
 // TRANSLATION MISSING
-| buffer_flush +
-  _(WeeChat ≥ 1.0)_ |
-  number of bytes |
-  65536 |
+| buffer_flush | 1.0 | number of bytes | 65536 |
   Minimum number of bytes to flush stdout/stderr (to send output to callback),
   between 1 and 65536. With the value 1, the output is sent immediately to the
   callback.
 
 // TRANSLATION MISSING
-| detached +
-  _(WeeChat ≥ 1.0)_ |
-  (not used) |
-  not detached |
+| detached | 1.0 | (not used) | not detached |
   Run the process in a detached mode: stdout and stderr are redirected to
   _/dev/null_.
 |===
@@ -10413,50 +10482,43 @@ Valore restituito:
 // TRANSLATION MISSING
 List of signals sent by WeeChat and plugins:
 
-[width="100%",cols="^1,^3,^4,5",options="header"]
+[width="100%",cols="^2,^4,^1,6,9",options="header"]
 |===
-| Plugin | Segnale | Argomenti | Descrizione
+// TRANSLATION MISSING
+| Plugin | Segnale | Min WeeChat | Argomenti | Descrizione
 
 // TRANSLATION MISSING
-| guile |
-  [[hook_signal_guile_script_loaded]] guile_script_loaded +
-  _(WeeChat ≥ 0.3.9)_ |
+| guile | [[hook_signal_guile_script_loaded]] guile_script_loaded | 0.3.9 |
   String: path to script. |
   Scheme script loaded.
 
 // TRANSLATION MISSING
-| guile |
-  [[hook_signal_guile_script_unloaded]] guile_script_unloaded +
-  _(WeeChat ≥ 0.3.9)_ |
+| guile | [[hook_signal_guile_script_unloaded]] guile_script_unloaded | 0.3.9 |
   String: path to script. |
   Scheme script unloaded.
 
 // TRANSLATION MISSING
-| guile |
-  [[hook_signal_guile_script_installed]] guile_script_installed +
-  _(WeeChat ≥ 0.3.9)_ |
+| guile | [[hook_signal_guile_script_installed]] guile_script_installed | 0.3.9 |
   String: comma-separated list of paths to scripts installed. |
   Scheme script(s) installed.
 
 // TRANSLATION MISSING
-| guile |
-  [[hook_signal_guile_script_removed]] guile_script_removed +
-  _(WeeChat ≥ 0.3.9)_ |
+| guile | [[hook_signal_guile_script_removed]] guile_script_removed | 0.3.9 |
   String: comma-separated list of scripts removed. |
   Scheme script(s) removed.
 
 // TRANSLATION MISSING
-| irc |
-  [[hook_signal_xxx_irc_in_yyy]] xxx,irc_in_yyy ^(1)^ |
+| irc | [[hook_signal_xxx_irc_in_yyy]] xxx,irc_in_yyy ^(1)^ | |
   String: messaggio. |
   Messaggio IRC dal server (prima di essere utilizzato
   dal plugin irc, il segnale viene inviato solo se il
   messaggio *non* viene ignorato). +
-  Since version 2.2, the whole IRC message is sent, including tags.
+  Since version 2.2, the whole IRC message is sent, including tags. +
+  If the return code of a callback is _WEECHAT_RC_OK_EAT_, then the IRC message
+  is immediately destroyed and not processed _(WeeChat ≥ 3.3)_.
 
 // TRANSLATION MISSING
-| irc |
-  [[hook_signal_xxx_irc_in2_yyy]] xxx,irc_in2_yyy ^(1)^ |
+| irc | [[hook_signal_xxx_irc_in2_yyy]] xxx,irc_in2_yyy ^(1)^ | |
   String: messaggio. |
   Messaggio IRC dal server (dopo essere stato
   utilizzato dal plugin irc, il segnale viene inviato
@@ -10464,19 +10526,17 @@ List of signals sent by WeeChat and plugins:
   Since version 2.2, the whole IRC message is sent, including tags.
 
 // TRANSLATION MISSING
-| irc |
-  [[hook_signal_xxx_irc_raw_in_yyy]] xxx,irc_raw_in_yyy ^(1)^ +
-  _(WeeChat ≥ 0.3.2)_ |
+| irc | [[hook_signal_xxx_irc_raw_in_yyy]] xxx,irc_raw_in_yyy ^(1)^ | 0.3.2 |
   String: messaggio. |
   Messaggio IRC dal server (prima di essere utilizzato
   dal plugin irc, il segnale viene inviato anche se il
   messaggio è stato ignorato). +
-  Since version 2.2, the whole IRC message is sent, including tags.
+  Since version 2.2, the whole IRC message is sent, including tags. +
+  If the return code of a callback is _WEECHAT_RC_OK_EAT_, then the IRC message
+  is immediately destroyed and not processed _(WeeChat ≥ 3.3)_.
 
 // TRANSLATION MISSING
-| irc |
-  [[hook_signal_xxx_irc_raw_in2_yyy]] xxx,irc_raw_in2_yyy ^(1)^ +
-  _(WeeChat ≥ 0.3.2)_ |
+| irc | [[hook_signal_xxx_irc_raw_in2_yyy]] xxx,irc_raw_in2_yyy ^(1)^ | 0.3.2 |
   String: messaggio. |
   Messaggio IRC dal server (dopo essere stato
   utilizzato dal plugin irc, il segnale viene inviato
@@ -10484,16 +10544,13 @@ List of signals sent by WeeChat and plugins:
   Since version 2.2, the whole IRC message is sent, including tags.
 
 // TRANSLATION MISSING
-| irc |
-  [[hook_signal_xxx_irc_out1_yyy]] xxx,irc_out1_yyy ^(1)^ +
-  _(WeeChat ≥ 0.3.7)_ |
+| irc | [[hook_signal_xxx_irc_out1_yyy]] xxx,irc_out1_yyy ^(1)^ | 0.3.7 |
   String: messaggio. |
   IRC message sent to server before automatic split
   (to fit in 512 bytes by default).
 
 // TRANSLATION MISSING
-| irc |
-  [[hook_signal_xxx_irc_out_yyy]] xxx,irc_out_yyy ^(1)^ |
+| irc | [[hook_signal_xxx_irc_out_yyy]] xxx,irc_out_yyy ^(1)^ | |
   String: messaggio. |
   IRC message sent to server after automatic split
   (to fit in 512 bytes by default). +
@@ -10501,842 +10558,660 @@ List of signals sent by WeeChat and plugins:
   Signal "xxx,irc_out1_yyy" is recommended instead.
 
 // TRANSLATION MISSING
-| irc |
-  [[hook_signal_xxx_irc_outtags_yyy]] xxx,irc_outtags_yyy ^(1)^ +
-  _(WeeChat ≥ 0.3.4)_ |
+| irc | [[hook_signal_xxx_irc_outtags_yyy]] xxx,irc_outtags_yyy ^(1)^ | 0.3.4 |
   Stringa: tag + ";" + messaggio. |
   Tag + messaggio IRC inviato al server. +
   *Warning:* the string may contain invalid UTF-8 data.
   Signal "xxx,irc_out1_yyy" is recommended instead.
 
-| irc |
-  [[hook_signal_irc_ctcp]] irc_ctcp |
+| irc | [[hook_signal_irc_ctcp]] irc_ctcp | |
   String: messaggio. |
   CTCP ricevuto.
 
-| irc |
-  [[hook_signal_irc_dcc]] irc_dcc |
+| irc | [[hook_signal_irc_dcc]] irc_dcc | |
   String: messaggio. |
   Nuova DCC.
 
-| irc |
-  [[hook_signal_irc_pv]] irc_pv |
+| irc | [[hook_signal_irc_pv]] irc_pv | |
   String: messaggio. |
   Messaggio privato ricevuto.
 
-| irc |
-  [[hook_signal_irc_channel_opened]] irc_channel_opened |
+| irc | [[hook_signal_irc_channel_opened]] irc_channel_opened | |
   Puntatore: buffer. |
   Canale aperto.
 
-| irc |
-  [[hook_signal_irc_pv_opened]] irc_pv_opened |
+| irc | [[hook_signal_irc_pv_opened]] irc_pv_opened | |
   Puntatore: buffer. |
   Chat privata aperta.
 
-| irc |
-  [[hook_signal_irc_server_opened]] irc_server_opened +
-  _(WeeChat ≥ 0.3.7)_ |
+| irc | [[hook_signal_irc_server_opened]] irc_server_opened | 0.3.7 |
   Puntatore: buffer. |
   Server del buffer aperto.
 
-| irc |
-  [[hook_signal_irc_server_connecting]] irc_server_connecting |
+| irc | [[hook_signal_irc_server_connecting]] irc_server_connecting | |
   String: nome server. |
   Connessione al server.
 
-| irc |
-  [[hook_signal_irc_server_connected]] irc_server_connected |
+| irc | [[hook_signal_irc_server_connected]] irc_server_connected | |
   String: nome server. |
   Connesso al server.
 
-| irc |
-  [[hook_signal_irc_server_disconnected]] irc_server_disconnected |
+| irc | [[hook_signal_irc_server_disconnected]] irc_server_disconnected | |
   String: nome server. |
   Disconnesso dal server.
 
 // TRANSLATION MISSING
-| irc |
-  [[hook_signal_irc_server_lag_changed]] irc_server_lag_changed +
-  _(WeeChat ≥ 1.8)_ |
+| irc | [[hook_signal_irc_server_lag_changed]] irc_server_lag_changed | 1.8 |
   String: server name. |
   Lag changed on the server.
 
-| irc |
-  [[hook_signal_irc_ignore_removing]] irc_ignore_removing |
+| irc | [[hook_signal_irc_ignore_removing]] irc_ignore_removing | |
   Puntatore: ignore. |
   Rimozione dell'ignore.
 
-| irc |
-  [[hook_signal_irc_ignore_removed]] irc_ignore_removed |
+| irc | [[hook_signal_irc_ignore_removed]] irc_ignore_removed | |
   - |
   Ignore rimosso.
 
-| irc |
-  [[hook_signal_irc_notify_join]] irc_notify_join +
-  _(WeeChat ≥ 0.3.8)_ |
+| irc | [[hook_signal_irc_notify_join]] irc_notify_join | 0.3.8 |
   String: nome server + "," + nick. |
   Un nick nella lista notifiche è entrato sul server.
 
-| irc |
-  [[hook_signal_irc_notify_quit]] irc_notify_quit +
-  _(WeeChat ≥ 0.3.8)_ |
+| irc | [[hook_signal_irc_notify_quit]] irc_notify_quit | 0.3.8 |
   String: nome server + "," + nick. |
   Un nick nella lista notifiche è uscito dal server.
 
-| irc |
-  [[hook_signal_irc_notify_away]] irc_notify_away +
-  _(WeeChat ≥ 0.3.8)_ |
+| irc | [[hook_signal_irc_notify_away]] irc_notify_away | 0.3.8 |
   String: nome server + "," + nick + "," + messaggio di assenza. |
   Un nick nella lista notifiche è ora assente sul server.
 
-| irc |
-  [[hook_signal_irc_notify_still_away]] irc_notify_still_away +
-  _(WeeChat ≥ 0.3.8)_ |
+| irc | [[hook_signal_irc_notify_still_away]] irc_notify_still_away | 0.3.8 |
   String: nome server + "," + nick + "," + messaggio di assenza. |
   Un nick nella lista notifiche è ancora assente sul server (messaggio di assenza cambiato).
 
-| irc |
-  [[hook_signal_irc_notify_back]] irc_notify_back +
-  _(WeeChat ≥ 0.3.8)_ |
+| irc | [[hook_signal_irc_notify_back]] irc_notify_back | 0.3.8 |
   String: nome server + "," + nick. |
   Un nick nella lista notifiche è tornato (messaggio di assenza rimosso).
 
 // TRANSLATION MISSING
-| javascript |
-  [[hook_signal_javascript_script_loaded]] javascript_script_loaded +
-  _(WeeChat ≥ 1.2)_ |
+| javascript | [[hook_signal_javascript_script_loaded]] javascript_script_loaded | 1.2 |
   String: path to script. |
   JavaScript script loaded.
 
 // TRANSLATION MISSING
-| javascript |
-  [[hook_signal_javascript_script_unloaded]] javascript_script_unloaded +
-  _(WeeChat ≥ 1.2)_ |
+| javascript | [[hook_signal_javascript_script_unloaded]] javascript_script_unloaded | 1.2 |
   String: path to script. |
   JavaScript script unloaded.
 
 // TRANSLATION MISSING
-| javascript |
-  [[hook_signal_javascript_script_installed]] javascript_script_installed +
-  _(WeeChat ≥ 1.2)_ |
+| javascript | [[hook_signal_javascript_script_installed]] javascript_script_installed | 1.2 |
   String: comma-separated list of paths to scripts installed. |
   JavaScript script(s) installed.
 
 // TRANSLATION MISSING
-| javascript |
-  [[hook_signal_javascript_script_removed]] javascript_script_removed +
-  _(WeeChat ≥ 1.2)_ |
+| javascript | [[hook_signal_javascript_script_removed]] javascript_script_removed | 1.2 |
   String: comma-separated list of scripts removed. |
   JavaScript script(s) removed.
 
-| logger |
-  [[hook_signal_logger_start]] logger_start |
+| logger | [[hook_signal_logger_start]] logger_start | |
   Puntatore: buffer. |
   Avvia il logging per il buffer.
 
-| logger |
-  [[hook_signal_logger_stop]] logger_stop |
+| logger | [[hook_signal_logger_stop]] logger_stop | |
   Puntatore: buffer. |
   Ferma il logging per il buffer.
 
-| logger |
-  [[hook_signal_logger_backlog]] logger_backlog |
+| logger | [[hook_signal_logger_backlog]] logger_backlog | |
   Puntatore: buffer. |
   Visualizza log precedenti per il buffer.
 
 // TRANSLATION MISSING
-| lua |
-  [[hook_signal_lua_script_loaded]] lua_script_loaded +
-  _(WeeChat ≥ 0.3.9)_ |
+| lua | [[hook_signal_lua_script_loaded]] lua_script_loaded | 0.3.9 |
   String: path to script. |
   Lua script loaded.
 
 // TRANSLATION MISSING
-| lua |
-  [[hook_signal_lua_script_unloaded]] lua_script_unloaded +
-  _(WeeChat ≥ 0.3.9)_ |
+| lua | [[hook_signal_lua_script_unloaded]] lua_script_unloaded | 0.3.9 |
   String: path to script. |
   Lua script unloaded.
 
 // TRANSLATION MISSING
-| lua |
-  [[hook_signal_lua_script_installed]] lua_script_installed +
-  _(WeeChat ≥ 0.3.9)_ |
+| lua | [[hook_signal_lua_script_installed]] lua_script_installed | 0.3.9 |
   String: comma-separated list of paths to scripts installed. |
   Lua script(s) installed.
 
 // TRANSLATION MISSING
-| lua |
-  [[hook_signal_lua_script_removed]] lua_script_removed +
-  _(WeeChat ≥ 0.3.9)_ |
+| lua | [[hook_signal_lua_script_removed]] lua_script_removed | 0.3.9 |
   String: comma-separated list of scripts removed. |
   Lua script(s) removed.
 
 // TRANSLATION MISSING
-| perl |
-  [[hook_signal_perl_script_loaded]] perl_script_loaded +
-  _(WeeChat ≥ 0.3.9)_ |
+| perl | [[hook_signal_perl_script_loaded]] perl_script_loaded | 0.3.9 |
   String: path to script. |
   Perl script loaded.
 
 // TRANSLATION MISSING
-| perl |
-  [[hook_signal_perl_script_unloaded]] perl_script_unloaded +
-  _(WeeChat ≥ 0.3.9)_ |
+| perl | [[hook_signal_perl_script_unloaded]] perl_script_unloaded | 0.3.9 |
   String: path to script. |
   Perl script unloaded.
 
 // TRANSLATION MISSING
-| perl |
-  [[hook_signal_perl_script_installed]] perl_script_installed +
-  _(WeeChat ≥ 0.3.9)_ |
+| perl | [[hook_signal_perl_script_installed]] perl_script_installed | 0.3.9 |
   String: comma-separated list of paths to scripts installed. |
   Perl script(s) installed.
 
 // TRANSLATION MISSING
-| perl |
-  [[hook_signal_perl_script_removed]] perl_script_removed +
-  _(WeeChat ≥ 0.3.9)_ |
+| perl | [[hook_signal_perl_script_removed]] perl_script_removed | 0.3.9 |
   String: comma-separated list of scripts removed. |
   Perl script(s) removed.
 
 // TRANSLATION MISSING
-| php |
-  [[hook_signal_php_script_loaded]] php_script_loaded +
-  _(WeeChat ≥ 2.0)_ |
+| php | [[hook_signal_php_script_loaded]] php_script_loaded | 2.0 |
   String: path to script. |
   PHP script loaded.
 
 // TRANSLATION MISSING
-| php |
-  [[hook_signal_php_script_unloaded]] php_script_unloaded +
-  _(WeeChat ≥ 2.0)_ |
+| php | [[hook_signal_php_script_unloaded]] php_script_unloaded | 2.0 |
   String: path to script. |
   PHP script unloaded.
 
 // TRANSLATION MISSING
-| php |
-  [[hook_signal_php_script_installed]] php_script_installed +
-  _(WeeChat ≥ 2.0)_ |
+| php | [[hook_signal_php_script_installed]] php_script_installed | 2.0 |
   String: comma-separated list of paths to scripts installed. |
   PHP script(s) installed.
 
 // TRANSLATION MISSING
-| php |
-  [[hook_signal_php_script_removed]] php_script_removed +
-  _(WeeChat ≥ 2.0)_ |
+| php | [[hook_signal_php_script_removed]] php_script_removed | 2.0 |
   String: comma-separated list of scripts removed. |
   PHP script(s) removed.
 
 // TRANSLATION MISSING
-| python |
-  [[hook_signal_python_script_loaded]] python_script_loaded +
-  _(WeeChat ≥ 0.3.9)_ |
+| python | [[hook_signal_python_script_loaded]] python_script_loaded | 0.3.9 |
   String: path to script. |
   Python script loaded.
 
 // TRANSLATION MISSING
-| python |
-  [[hook_signal_python_script_unloaded]] python_script_unloaded +
-  _(WeeChat ≥ 0.3.9)_ |
+| python | [[hook_signal_python_script_unloaded]] python_script_unloaded | 0.3.9 |
   String: path to script. |
   Python script unloaded.
 
 // TRANSLATION MISSING
-| python |
-  [[hook_signal_python_script_installed]] python_script_installed +
-  _(WeeChat ≥ 0.3.9)_ |
+| python | [[hook_signal_python_script_installed]] python_script_installed | 0.3.9 |
   String: comma-separated list of paths to scripts installed. |
   Python script(s) installed.
 
 // TRANSLATION MISSING
-| python |
-  [[hook_signal_python_script_removed]] python_script_removed +
-  _(WeeChat ≥ 0.3.9)_ |
+| python | [[hook_signal_python_script_removed]] python_script_removed | 0.3.9 |
   String: comma-separated list of scripts removed. |
   Python script(s) removed.
 
 // TRANSLATION MISSING
-| relay |
-  [[hook_signal_relay_client_connecting]] relay_client_connecting +
-  _(WeeChat ≥ 1.0)_ |
+| relay | [[hook_signal_relay_client_connecting]] relay_client_connecting | 1.0 |
   Pointer: relay client. |
   A relay client is connecting.
 
 // TRANSLATION MISSING
-| relay |
-  [[hook_signal_relay_client_waiting_auth]] relay_client_waiting_auth +
-  _(WeeChat ≥ 1.0)_ |
+| relay | [[hook_signal_relay_client_waiting_auth]] relay_client_waiting_auth | 1.0 |
   Pointer: relay client. |
   Waiting for authentication from a relay client.
 
 // TRANSLATION MISSING
-| relay |
-  [[hook_signal_relay_client_auth_ok]] relay_client_auth_ok +
-  _(WeeChat ≥ 1.0)_ |
+| relay | [[hook_signal_relay_client_auth_ok]] relay_client_auth_ok | 1.0 |
   Pointer: relay client. |
   Successful authentication from a relay client.
 
 // TRANSLATION MISSING
-| relay |
-  [[hook_signal_relay_client_connected]] relay_client_connected +
-  _(WeeChat ≥ 1.0)_ |
+| relay | [[hook_signal_relay_client_connected]] relay_client_connected | 1.0 |
   Pointer: relay client. |
   A relay client is connected.
 
 // TRANSLATION MISSING
-| relay |
-  [[hook_signal_relay_client_auth_failed]] relay_client_auth_failed +
-  _(WeeChat ≥ 1.0)_ |
+| relay | [[hook_signal_relay_client_auth_failed]] relay_client_auth_failed | 1.0 |
   Pointer: relay client. |
   Authentication of a relay client has failed.
 
 // TRANSLATION MISSING
-| relay |
-  [[hook_signal_relay_client_disconnected]] relay_client_disconnected +
-  _(WeeChat ≥ 1.0)_ |
+| relay | [[hook_signal_relay_client_disconnected]] relay_client_disconnected | 1.0 |
   Pointer: relay client. |
   A relay client is disconnected.
 
 // TRANSLATION MISSING
-| ruby |
-  [[hook_signal_ruby_script_loaded]] ruby_script_loaded +
-  _(WeeChat ≥ 0.3.9)_ |
+| ruby | [[hook_signal_ruby_script_loaded]] ruby_script_loaded | 0.3.9 |
   String: path to script. |
   Ruby script loaded.
 
 // TRANSLATION MISSING
-| ruby |
-  [[hook_signal_ruby_script_unloaded]] ruby_script_unloaded +
-  _(WeeChat ≥ 0.3.9)_ |
+| ruby | [[hook_signal_ruby_script_unloaded]] ruby_script_unloaded | 0.3.9 |
   String: path to script. |
   Ruby script unloaded.
 
 // TRANSLATION MISSING
-| ruby |
-  [[hook_signal_ruby_script_installed]] ruby_script_installed +
-  _(WeeChat ≥ 0.3.9)_ |
+| ruby | [[hook_signal_ruby_script_installed]] ruby_script_installed | 0.3.9 |
   String: comma-separated list of paths to scripts installed. |
   Ruby script(s) installed.
 
 // TRANSLATION MISSING
-| ruby |
-  [[hook_signal_ruby_script_removed]] ruby_script_removed +
-  _(WeeChat ≥ 0.3.9)_ |
+| ruby | [[hook_signal_ruby_script_removed]] ruby_script_removed | 0.3.9 |
   String: comma-separated list of scripts removed. |
   Ruby script(s) removed.
 
 // TRANSLATION MISSING
-| spell |
-  [[hook_signal_spell_suggest]] spell_suggest +
-  _(WeeChat ≥ 2.4)_ |
+| spell | [[hook_signal_spell_suggest]] spell_suggest | 2.4 |
   Pointer: buffer. |
   New suggestions for a misspelled word.
 
 // TRANSLATION MISSING
-| tcl |
-  [[hook_signal_tcl_script_loaded]] tcl_script_loaded +
-  _(WeeChat ≥ 0.3.9)_ |
+| tcl | [[hook_signal_tcl_script_loaded]] tcl_script_loaded | 0.3.9 |
   String: path to script. |
   Tcl script loaded.
 
 // TRANSLATION MISSING
-| tcl |
-  [[hook_signal_tcl_script_unloaded]] tcl_script_unloaded +
-  _(WeeChat ≥ 0.3.9)_ |
+| tcl | [[hook_signal_tcl_script_unloaded]] tcl_script_unloaded | 0.3.9 |
   String: path to script. |
   Tcl script unloaded.
 
 // TRANSLATION MISSING
-| tcl |
-  [[hook_signal_tcl_script_installed]] tcl_script_installed +
-  _(WeeChat ≥ 0.3.9)_ |
+| tcl | [[hook_signal_tcl_script_installed]] tcl_script_installed | 0.3.9 |
   String: comma-separated list of paths to scripts installed. |
   Tcl script(s) installed.
 
 // TRANSLATION MISSING
-| tcl |
-  [[hook_signal_tcl_script_removed]] tcl_script_removed +
-  _(WeeChat ≥ 0.3.9)_ |
+| tcl | [[hook_signal_tcl_script_removed]] tcl_script_removed | 0.3.9 |
   String: comma-separated list of scripts removed. |
   Tcl script(s) removed.
 
-| weechat |
-  [[hook_signal_buffer_opened]] buffer_opened |
+// TRANSLATION MISSING
+| typing | [[hook_signal_typing_self_typing]] typing_self_typing | 3.3 |
+  Pointer: buffer. |
+  User is typing a message (sent by typing plugin, used by irc plugin).
+
+// TRANSLATION MISSING
+| typing | [[hook_signal_typing_self_paused]] typing_self_paused | 3.3 |
+  Pointer: buffer. |
+  User paused during typing (sent by typing plugin, used by irc plugin).
+
+// TRANSLATION MISSING
+| typing | [[hook_signal_typing_self_cleared]] typing_self_cleared | 3.3 |
+  Pointer: buffer. |
+  User cleared the input without sending the message (sent by typing plugin, used by irc plugin).
+
+// TRANSLATION MISSING
+| typing | [[hook_signal_typing_self_sent]] typing_self_sent | 3.3 |
+  Pointer: buffer. |
+  Message (not a command) sent to the buffer (sent by typing plugin, used by irc plugin).
+
+// TRANSLATION MISSING
+| typing | [[hook_signal_typing_set_nick]] typing_set_nick | 3.3 |
+  String: buffer pointer + ";" + state (one of: "off", "typing", "paused",
+  "cleared") + ";" + nick. |
+  Set typing state for a nick on a buffer (sent by irc plugin, handled by typing plugin).
+
+// TRANSLATION MISSING
+| typing | [[hook_signal_typing_reset_buffer]] typing_reset_buffer | 3.3 |
+  Pointer: buffer. |
+  Remove typing state for all nicks on a buffer (sent by irc plugin, handled by typing plugin).
+
+| weechat | [[hook_signal_buffer_opened]] buffer_opened | |
   Puntatore: buffer. |
   Buffer aperto.
 
-| weechat |
-  [[hook_signal_buffer_closing]] buffer_closing |
+| weechat | [[hook_signal_buffer_closing]] buffer_closing | |
   Puntatore: buffer. |
   Chiusura del buffer.
 
-| weechat |
-  [[hook_signal_buffer_closed]] buffer_closed |
+| weechat | [[hook_signal_buffer_closed]] buffer_closed | |
   Puntatore: buffer. |
   Buffer chiuso.
 
 // TRANSLATION MISSING
-| weechat |
-  [[hook_signal_buffer_cleared]] buffer_cleared |
+| weechat | [[hook_signal_buffer_cleared]] buffer_cleared | |
   Puntatore: buffer. |
   Buffer cleared.
 
 // TRANSLATION MISSING
-| weechat |
-  [[hook_signal_buffer_filters_enabled]] buffer_filters_enabled +
-  _(WeeChat ≥ 2.0)_ |
+| weechat | [[hook_signal_buffer_filters_enabled]] buffer_filters_enabled | 2.0 |
   Pointer: buffer. |
   Filters enabled in buffer.
 
 // TRANSLATION MISSING
-| weechat |
-  [[hook_signal_buffer_filters_disabled]] buffer_filters_disabled +
-  _(WeeChat ≥ 2.0)_ |
+| weechat | [[hook_signal_buffer_filters_disabled]] buffer_filters_disabled | 2.0 |
   Pointer: buffer. |
   Filters disabled in buffer.
 
 // TRANSLATION MISSING
-| weechat |
-  [[hook_signal_buffer_hidden]] buffer_hidden |
+| weechat | [[hook_signal_buffer_hidden]] buffer_hidden | |
   Pointer: buffer. |
   Buffer hidden.
 
 // TRANSLATION MISSING
-| weechat |
-  [[hook_signal_buffer_unhidden]] buffer_unhidden |
+| weechat | [[hook_signal_buffer_unhidden]] buffer_unhidden | |
   Pointer: buffer. |
   Buffer unhidden.
 
-| weechat |
-  [[hook_signal_buffer_line_added]] buffer_line_added +
-  _(WeeChat ≥ 0.3.7)_ |
+| weechat | [[hook_signal_buffer_line_added]] buffer_line_added | 0.3.7 |
   Puntatore: riga. |
   Riga aggiunta in un buffer.
 
-| weechat |
-  [[hook_signal_buffer_lines_hidden]] buffer_lines_hidden |
+| weechat | [[hook_signal_buffer_lines_hidden]] buffer_lines_hidden | |
   Puntatore: buffer. |
   Righe nascoste nel buffer.
 
-| weechat |
-  [[hook_signal_buffer_localvar_added]] buffer_localvar_added |
+| weechat | [[hook_signal_buffer_localvar_added]] buffer_localvar_added | |
   Puntatore: buffer. |
   Variabili locali aggiunte.
 
-| weechat |
-  [[hook_signal_buffer_localvar_changed]] buffer_localvar_changed |
+| weechat | [[hook_signal_buffer_localvar_changed]] buffer_localvar_changed | |
   Puntatore: buffer. |
   Variabili locali modificate.
 
-| weechat |
-  [[hook_signal_buffer_localvar_removed]] buffer_localvar_removed |
+| weechat | [[hook_signal_buffer_localvar_removed]] buffer_localvar_removed | |
   Puntatore: buffer. |
   Variabili locali rimosse.
 
 // TRANSLATION MISSING
-| weechat |
-  [[hook_signal_buffer_merged]] buffer_merged |
+| weechat | [[hook_signal_buffer_merged]] buffer_merged | |
   Puntatore: buffer. |
   Buffer merged.
 
 // TRANSLATION MISSING
-| weechat |
-  [[hook_signal_buffer_unmerged]] buffer_unmerged |
+| weechat | [[hook_signal_buffer_unmerged]] buffer_unmerged | |
   Puntatore: buffer. |
   Buffer unmerged.
 
-| weechat |
-  [[hook_signal_buffer_moved]] buffer_moved |
+| weechat | [[hook_signal_buffer_moved]] buffer_moved | |
   Puntatore: buffer. |
   Buffer spostato.
 
-| weechat |
-  [[hook_signal_buffer_renamed]] buffer_renamed |
+| weechat | [[hook_signal_buffer_renamed]] buffer_renamed | |
   Puntatore: buffer. |
   Buffer rinominato.
 
-| weechat |
-  [[hook_signal_buffer_switch]] buffer_switch |
+| weechat | [[hook_signal_buffer_switch]] buffer_switch | |
   Puntatore: buffer. |
   Passaggio tra buffer.
 
-| weechat |
-  [[hook_signal_buffer_title_changed]] buffer_title_changed |
+| weechat | [[hook_signal_buffer_title_changed]] buffer_title_changed | |
   Puntatore: buffer. |
   Titolo del buffer modificato.
 
-| weechat |
-  [[hook_signal_buffer_type_changed]] buffer_type_changed |
+| weechat | [[hook_signal_buffer_type_changed]] buffer_type_changed | |
   Puntatore: buffer. |
   Tipo di buffer modificato.
 
 // TRANSLATION MISSING
-| weechat |
-  [[hook_signal_buffer_zoomed]] buffer_zoomed +
-  _(WeeChat ≥ 0.4.3)_ |
+| weechat | [[hook_signal_buffer_zoomed]] buffer_zoomed | 0.4.3 |
   Puntatore: buffer. |
   Merged buffer zoomed.
 
 // TRANSLATION MISSING
-| weechat |
-  [[hook_signal_buffer_unzoomed]] buffer_unzoomed +
-  _(WeeChat ≥ 0.4.3)_ |
+| weechat | [[hook_signal_buffer_unzoomed]] buffer_unzoomed | 0.4.3 |
   Puntatore: buffer. |
   Merged buffer unzoomed.
 
 // TRANSLATION MISSING
-| weechat |
-  [[hook_signal_cursor_start]] cursor_start +
-  _(WeeChat ≥ 3.2)_ |
+| weechat | [[hook_signal_cursor_start]] cursor_start | 3.2 |
   - |
   Start cursor mode.
 
 // TRANSLATION MISSING
-| weechat |
-  [[hook_signal_cursor_end]] cursor_end +
-  _(WeeChat ≥ 3.2)_ |
+| weechat | [[hook_signal_cursor_end]] cursor_end | 3.2 |
   - |
   End cursor mode.
 
-| weechat |
-  [[hook_signal_day_changed]] day_changed +
-  _(WeeChat ≥ 0.3.2)_ |
+| weechat | [[hook_signal_day_changed]] day_changed | 0.3.2 |
   String: nuova data, formato: "2010-01-31". |
   Data di sistema modificata.
 
-| weechat |
-  [[hook_signal_debug_dump]] debug_dump |
+| weechat | [[hook_signal_debug_dump]] debug_dump | |
   Stringa: nome plugin. |
   Richiesta di dump.
 
 // TRANSLATION MISSING
-| weechat |
-  [[hook_signal_debug_libs]] debug_libs |
+| weechat | [[hook_signal_debug_libs]] debug_libs | |
   - |
   Display external libraries used.
 
-| weechat |
-  [[hook_signal_filter_added]] filter_added |
+| weechat | [[hook_signal_filter_added]] filter_added | |
   Puntatore: filtro. |
   Filtro aggiunto.
 
-| weechat |
-  [[hook_signal_filter_removing]] filter_removing |
+| weechat | [[hook_signal_filter_removing]] filter_removing | |
   Puntatore: filtro. |
   Rimozione del filtro.
 
-| weechat |
-  [[hook_signal_filter_removed]] filter_removed |
+| weechat | [[hook_signal_filter_removed]] filter_removed | |
   - |
   Filtro rimosso.
 
-| weechat |
-  [[hook_signal_filters_enabled]] filters_enabled |
+| weechat | [[hook_signal_filters_enabled]] filters_enabled | |
   - |
   Filtri abilitati.
 
-| weechat |
-  [[hook_signal_filters_disabled]] filters_disabled |
+| weechat | [[hook_signal_filters_disabled]] filters_disabled | |
   - |
   Filtri disabilitati.
 
 // TRANSLATION MISSING
-| weechat |
-  [[hook_signal_hotlist_changed]] hotlist_changed |
+| weechat | [[hook_signal_hotlist_changed]] hotlist_changed | |
   Pointer: buffer (can be NULL). |
   Hotlist modificata.
 
-| weechat |
-  [[hook_signal_input_paste_pending]] input_paste_pending |
+| weechat | [[hook_signal_input_paste_pending]] input_paste_pending | |
   - |
   Incolla testo in attesa.
 
-| weechat |
-  [[hook_signal_input_search]] input_search |
+| weechat | [[hook_signal_input_search]] input_search | |
   Puntatore: buffer. |
   Ricerca testo nel buffer.
 
-| weechat |
-  [[hook_signal_input_text_changed]] input_text_changed |
+| weechat | [[hook_signal_input_text_changed]] input_text_changed | |
   Puntatore: buffer. |
   Testo in input modificato.
 
-| weechat |
-  [[hook_signal_input_text_cursor_moved]] input_text_cursor_moved |
+| weechat | [[hook_signal_input_text_cursor_moved]] input_text_cursor_moved | |
   Puntatore: buffer. |
   Cursore del testo di input spostato.
 
 // TRANSLATION MISSING
-| weechat |
-  [[hook_signal_key_bind]] key_bind |
+| weechat | [[hook_signal_key_bind]] key_bind | |
   String: key. |
   Key added.
 
 // TRANSLATION MISSING
-| weechat |
-  [[hook_signal_key_unbind]] key_unbind |
+| weechat | [[hook_signal_key_unbind]] key_unbind | |
   String: key. |
   Key removed.
 
-| weechat |
-  [[hook_signal_key_pressed]] key_pressed |
+| weechat | [[hook_signal_key_pressed]] key_pressed | |
   String: tasto digitato. |
   Tasto digitato.
 
 // TRANSLATION MISSING
-| weechat |
-  [[hook_signal_key_combo_default]] key_combo_default +
-  _(WeeChat ≥ 1.0)_ |
+| weechat | [[hook_signal_key_combo_default]] key_combo_default | 1.0 |
   String: key combo. |
   Key combo in _default_ context.
 
 // TRANSLATION MISSING
-| weechat |
-  [[hook_signal_key_combo_search]] key_combo_search +
-  _(WeeChat ≥ 1.0)_ |
+| weechat | [[hook_signal_key_combo_search]] key_combo_search | 1.0 |
   String: key combo. |
   Key combo in _search_ context.
 
 // TRANSLATION MISSING
-| weechat |
-  [[hook_signal_key_combo_cursor]] key_combo_cursor +
-  _(WeeChat ≥ 1.0)_ |
+| weechat | [[hook_signal_key_combo_cursor]] key_combo_cursor | 1.0 |
   String: key combo. |
   Key combo in _cursor_ context.
 
 // TRANSLATION MISSING
-| weechat |
-  [[hook_signal_mouse_enabled]] mouse_enabled +
-  _(WeeChat ≥ 1.1)_ |
+| weechat | [[hook_signal_mouse_enabled]] mouse_enabled | 1.1 |
   - |
   Mouse enabled.
 
 // TRANSLATION MISSING
-| weechat |
-  [[hook_signal_mouse_disabled]] mouse_disabled +
-  _(WeeChat ≥ 1.1)_ |
+| weechat | [[hook_signal_mouse_disabled]] mouse_disabled | 1.1 |
   - |
   Mouse disabled.
 
 // TRANSLATION MISSING
-| weechat |
-  [[hook_signal_nicklist_group_added]] nicklist_group_added +
-  _(WeeChat ≥ 0.3.2)_ |
+| weechat | [[hook_signal_nicklist_group_added]] nicklist_group_added | 0.3.2 |
   String: buffer pointer + "," + group name. |
   Group added in nicklist.
 
 // TRANSLATION MISSING
-| weechat |
-  [[hook_signal_nicklist_group_changed]] nicklist_group_changed +
-  _(WeeChat ≥ 0.3.4)_ |
+| weechat | [[hook_signal_nicklist_group_changed]] nicklist_group_changed | 0.3.4 |
   String: buffer pointer + "," + group name. |
   Group changed in nicklist.
 
 // TRANSLATION MISSING
-| weechat |
-  [[hook_signal_nicklist_group_removing]] nicklist_group_removing +
-  _(WeeChat ≥ 0.4.1)_ |
+| weechat | [[hook_signal_nicklist_group_removing]] nicklist_group_removing | 0.4.1 |
   String: buffer pointer + "," + group name. |
   Removing group from nicklist.
 
 // TRANSLATION MISSING
-| weechat |
-  [[hook_signal_nicklist_group_removed]] nicklist_group_removed +
-  _(WeeChat ≥ 0.3.2)_ |
+| weechat | [[hook_signal_nicklist_group_removed]] nicklist_group_removed | 0.3.2 |
   String: buffer pointer + "," + group name. |
   Group removed from nicklist.
 
 // TRANSLATION MISSING
-| weechat |
-  [[hook_signal_nicklist_nick_added]] nicklist_nick_added +
-  _(WeeChat ≥ 0.3.2)_ |
+| weechat | [[hook_signal_nicklist_nick_added]] nicklist_nick_added | 0.3.2 |
   String: buffer pointer + "," + nick name. |
   Nick added in nicklist.
 
 // TRANSLATION MISSING
-| weechat |
-  [[hook_signal_nicklist_nick_changed]] nicklist_nick_changed +
-  _(WeeChat ≥ 0.3.4)_ |
+| weechat | [[hook_signal_nicklist_nick_changed]] nicklist_nick_changed | 0.3.4 |
   String: buffer pointer + "," + nick name. |
   Nick changed in nicklist.
 
 // TRANSLATION MISSING
-| weechat |
-  [[hook_signal_nicklist_nick_removing]] nicklist_nick_removing +
-  _(WeeChat ≥ 0.4.1)_ |
+| weechat | [[hook_signal_nicklist_nick_removing]] nicklist_nick_removing | 0.4.1 |
   String: buffer pointer + "," + nick name. |
   Removing nick from nicklist.
 
 // TRANSLATION MISSING
-| weechat |
-  [[hook_signal_nicklist_nick_removed]] nicklist_nick_removed +
-  _(WeeChat ≥ 0.3.2)_ |
+| weechat | [[hook_signal_nicklist_nick_removed]] nicklist_nick_removed | 0.3.2 |
   String: buffer pointer + "," + nick name. |
   Nick removed from nicklist.
 
-| weechat |
-  [[hook_signal_partial_completion]] partial_completion |
+| weechat | [[hook_signal_partial_completion]] partial_completion | |
   - |
   Completamento parziale avvenuto.
 
 // TRANSLATION MISSING
-| weechat |
-  [[hook_signal_plugin_loaded]] plugin_loaded +
-  _(WeeChat ≥ 0.3.9)_ |
+| weechat | [[hook_signal_plugin_loaded]] plugin_loaded | 0.3.9 |
   String: path to plugin loaded. |
   Plugin loaded.
 
 // TRANSLATION MISSING
-| weechat |
-  [[hook_signal_plugin_unloaded]] plugin_unloaded +
-  _(WeeChat ≥ 0.3.9)_ |
+| weechat | [[hook_signal_plugin_unloaded]] plugin_unloaded | 0.3.9 |
   String: name of plugin unloaded (example: "irc"). |
   Plugin unloaded.
 
-| weechat |
-  [[hook_signal_quit]] quit |
+| weechat | [[hook_signal_quit]] quit | |
   String: argomenti per /quit. |
   Comando `/quit` digitato dall'utente.
 
 // TRANSLATION MISSING
-| weechat |
-  [[hook_signal_signal_sighup]] signal_sighup +
-  _(WeeChat ≥ 1.3)_ |
+| weechat | [[hook_signal_signal_sighup]] signal_sighup | 1.3 |
   - |
   Signal SIGHUP received.
 
 // TRANSLATION MISSING
-| weechat |
-  [[hook_signal_signal_sigquit]] signal_sigquit +
-  _(WeeChat ≥ 1.2)_ |
+| weechat | [[hook_signal_signal_sigquit]] signal_sigquit | 1.2 |
   - |
   Signal SIGQUIT received (quit request with core dump).
 
 // TRANSLATION MISSING
-| weechat |
-  [[hook_signal_signal_sigterm]] signal_sigterm +
-  _(WeeChat ≥ 1.2)_ |
+| weechat | [[hook_signal_signal_sigterm]] signal_sigterm | 1.2 |
   - |
   Signal SIGTERM received (graceful termination of WeeChat process).
 
 // TRANSLATION MISSING
-| weechat |
-  [[hook_signal_signal_sigwinch]] signal_sigwinch +
-  _(WeeChat ≥ 0.4.3)_ |
+| weechat | [[hook_signal_signal_sigwinch]] signal_sigwinch | 0.4.3 |
   - |
   Signal SIGWINCH received (terminal was resized).
 
 // TRANSLATION MISSING
-| weechat |
-  [[hook_signal_upgrade]] upgrade |
+| weechat | [[hook_signal_upgrade]] upgrade | |
   String: "quit" if "-quit" argument was given for /upgrade, otherwise NULL. |
   Comando `/upgrade` digitato dall'utente.
 
-| weechat |
-  [[hook_signal_upgrade_ended]] upgrade_ended +
-  _(WeeChat ≥ 0.3.4)_ |
+| weechat | [[hook_signal_upgrade_ended]] upgrade_ended | 0.3.4 |
   - |
   Fine del processo di aggiornamento (comando `/upgrade`).
 
-| weechat |
-  [[hook_signal_weechat_highlight]] weechat_highlight |
+| weechat | [[hook_signal_weechat_highlight]] weechat_highlight | |
   String: messaggio con prefisso. |
   Evento accaduto.
 
-| weechat |
-  [[hook_signal_weechat_pv]] weechat_pv |
+| weechat | [[hook_signal_weechat_pv]] weechat_pv | |
   String: messaggio con prefisso. |
   Messaggio privato visualizzato.
 
 // TRANSLATION MISSING
-| weechat |
-  [[hook_signal_window_closing]] window_closing +
-  _(WeeChat ≥ 0.3.6)_ |
+| weechat | [[hook_signal_window_closing]] window_closing | 0.3.6 |
   Puntatore: finestra. |
   Closing window.
 
 // TRANSLATION MISSING
-| weechat |
-  [[hook_signal_window_closed]] window_closed +
-  _(WeeChat ≥ 0.3.6)_ |
+| weechat | [[hook_signal_window_closed]] window_closed | 0.3.6 |
   Puntatore: finestra. |
   Window closed.
 
 // TRANSLATION MISSING
-| weechat |
-  [[hook_signal_window_opened]] window_opened +
-  _(WeeChat ≥ 0.4.1)_ |
+| weechat | [[hook_signal_window_opened]] window_opened | 0.4.1 |
   Puntatore: finestra. |
   Window opened.
 
-| weechat |
-  [[hook_signal_window_scrolled]] window_scrolled |
+| weechat | [[hook_signal_window_scrolled]] window_scrolled | |
   Puntatore: finestra. |
   Scroll nella finestra.
 
-| weechat |
-  [[hook_signal_window_switch]] window_switch +
-  _(WeeChat ≥ 0.3.7)_ |
+| weechat | [[hook_signal_window_switch]] window_switch | 0.3.7 |
   Puntatore: finestra. |
   Passaggio alla finestra.
 
-| weechat |
-  [[hook_signal_window_zoom]] window_zoom |
+| weechat | [[hook_signal_window_zoom]] window_zoom | |
   Puntatore: finestra corrente. |
   Massimizzazione della finestra.
 
-| weechat |
-  [[hook_signal_window_zoomed]] window_zoomed |
+| weechat | [[hook_signal_window_zoomed]] window_zoomed | |
   Puntatore: finestra corrente. |
   Finestra massimizzata.
 
-| weechat |
-  [[hook_signal_window_unzoom]] window_unzoom |
+| weechat | [[hook_signal_window_unzoom]] window_unzoom | |
   Puntatore: finestra corrente. |
   Minimizzazione della finestra.
 
-| weechat |
-  [[hook_signal_window_unzoomed]] window_unzoomed |
+| weechat | [[hook_signal_window_unzoomed]] window_unzoomed | |
   Puntatore: finestra corrente. |
   Finestra minimizzata.
 
-| xfer |
-  [[hook_signal_xfer_add]] xfer_add |
+| xfer | [[hook_signal_xfer_add]] xfer_add | |
   Puntatore: lista info con info per xfe.r|
   Nuovo xfer.
 
-| xfer |
-  [[hook_signal_xfer_send_ready]] xfer_send_ready |
+| xfer | [[hook_signal_xfer_send_ready]] xfer_send_ready | |
   Puntatore: lista info xon info per xfer. |
   Xfer pronto.
 
 // TRANSLATION MISSING
-| xfer |
-  [[hook_signal_xfer_accept_resume]] xfer_accept_resume |
+| xfer | [[hook_signal_xfer_accept_resume]] xfer_accept_resume | |
   Puntatore: lista info con info per xfer. |
   Accept xfer resume.
 
 // TRANSLATION MISSING
-| xfer |
-  [[hook_signal_xfer_send_accept_resume]] xfer_send_accept_resume |
+| xfer | [[hook_signal_xfer_send_accept_resume]] xfer_send_accept_resume | |
   Puntatore: lista info con info per xfer. |
   Xfer resumed.
 
-| xfer |
-  [[hook_signal_xfer_start_resume]] xfer_start_resume |
+| xfer | [[hook_signal_xfer_start_resume]] xfer_start_resume | |
   Puntatore: lista info con info per xfer. |
   Avvia ripresa.
 
-| xfer |
-  [[hook_signal_xfer_resume_ready]] xfer_resume_ready |
+| xfer | [[hook_signal_xfer_resume_ready]] xfer_resume_ready | |
   Puntatore: lista info con info per xfer. |
   Ripresa xfer pronta.
 
-| xfer |
-  [[hook_signal_xfer_ended]] xfer_ended +
-  _(WeeChat ≥ 0.3.2)_ |
+| xfer | [[hook_signal_xfer_ended]] xfer_ended | 0.3.2 |
   Puntatore: lista info con info per xfer. |
   Xfer terminato.
 |===
@@ -11640,65 +11515,52 @@ Valore restituito:
 // TRANSLATION MISSING
 List of hsignals sent by WeeChat and plugins:
 
-[width="100%",cols="^1,^3,5,5",options="header"]
+[width="100%",cols="^1,^3,^1,5,5",options="header"]
 |===
-| Plugin | Segnale | Argomenti | Descrizione
+// TRANSLATION MISSING
+| Plugin | Segnale | Min WeeChat | Argomenti | Descrizione
 
-| irc |
-  [[hook_hsignal_irc_redirection_xxx_yyy]] irc_redirection_xxx_yyy ^(1)^ +
-  _(WeeChat ≥ 0.3.4)_ |
+| irc | [[hook_hsignal_irc_redirection_xxx_yyy]] irc_redirection_xxx_yyy ^(1)^ | 0.3.4 |
   Consultare <<hsignal_irc_redirect_command,hsignal_irc_redirect_command>> |
   Redirection output.
 
 // TRANSLATION MISSING
-| weechat |
-  [[hook_hsignal_nicklist_group_added]] nicklist_group_added +
-  _(WeeChat ≥ 0.4.1)_ |
+| weechat | [[hook_hsignal_nicklist_group_added]] nicklist_group_added | 0.4.1 |
   _buffer_ (_struct t_gui_buffer *_): buffer +
   _parent_group_ (_struct t_gui_nick_group *_): parent group +
   _group_ (_struct t_gui_nick_group *_): group |
   Group added in nicklist.
 
 // TRANSLATION MISSING
-| weechat |
-  [[hook_hsignal_nicklist_nick_added]] nicklist_nick_added +
-  _(WeeChat ≥ 0.4.1)_ |
+| weechat | [[hook_hsignal_nicklist_nick_added]] nicklist_nick_added | 0.4.1 |
   _buffer_ (_struct t_gui_buffer *_): buffer +
   _parent_group_ (_struct t_gui_nick_group *_): parent group +
   _nick_ (_struct t_gui_nick *_): nick |
   Nick added in nicklist.
 
 // TRANSLATION MISSING
-| weechat |
-  [[hook_hsignal_nicklist_group_removing]] nicklist_group_removing +
-  _(WeeChat ≥ 0.4.1)_ |
+| weechat | [[hook_hsignal_nicklist_group_removing]] nicklist_group_removing | 0.4.1 |
   _buffer_ (_struct t_gui_buffer *_): buffer +
   _parent_group_ (_struct t_gui_nick_group *_): parent group +
   _group_ (_struct t_gui_nick_group *_): group |
   Removing group from nicklist.
 
 // TRANSLATION MISSING
-| weechat |
-  [[hook_hsignal_nicklist_nick_removing]] nicklist_nick_removing +
-  _(WeeChat ≥ 0.4.1)_ |
+| weechat | [[hook_hsignal_nicklist_nick_removing]] nicklist_nick_removing | 0.4.1 |
   _buffer_ (_struct t_gui_buffer *_): buffer +
   _parent_group_ (_struct t_gui_nick_group *_): parent group +
   _nick_ (_struct t_gui_nick *_): nick |
   Removing nick from nicklist.
 
 // TRANSLATION MISSING
-| weechat |
-  [[hook_hsignal_nicklist_group_changed]] nicklist_group_changed +
-  _(WeeChat ≥ 0.4.1)_ |
+| weechat | [[hook_hsignal_nicklist_group_changed]] nicklist_group_changed | 0.4.1 |
   _buffer_ (_struct t_gui_buffer *_): buffer +
   _parent_group_ (_struct t_gui_nick_group *_): parent group +
   _group_ (_struct t_gui_nick_group *_): group |
   Group changed in nicklist.
 
 // TRANSLATION MISSING
-| weechat |
-  [[hook_hsignal_nicklist_nick_changed]] nicklist_nick_changed +
-  _(WeeChat ≥ 0.4.1)_ |
+| weechat | [[hook_hsignal_nicklist_nick_changed]] nicklist_nick_changed | 0.4.1 |
   _buffer_ (_struct t_gui_buffer *_): buffer +
   _parent_group_ (_struct t_gui_nick_group *_): parent group +
   _nick_ (_struct t_gui_nick *_): nick |
@@ -12105,12 +11967,13 @@ Valore restituito:
 
 List of modifiers used by WeeChat and plugins:
 
-[width="100%",cols="^2,3,4,4",options="header"]
+[width="100%",cols="^2,^1,3,4,4",options="header"]
 |===
-| Modificatore | Dati modificatore | Stringa | Output
+// TRANSLATION MISSING
+| Modificatore | Min WeeChat | Dati modificatore | Stringa | Output
 
 // TRANSLATION MISSING
-| [[hook_modifier_irc_in_xxx]] irc_in_xxx ^(1)^ |
+| [[hook_modifier_irc_in_xxx]] irc_in_xxx ^(1)^ | |
   Nome server |
   Contenuto del messaggio ricevuto dal server IRC (prima della codifica del set caratteri). +
   *Warning:* the string may contain invalid UTF-8 data; use only for raw
@@ -12118,67 +11981,63 @@ List of modifiers used by WeeChat and plugins:
   Modifier <<hook_modifier_irc_in2_xxx,irc_in2_xxx>> is recommended instead. |
   Nuovo contenuto del messaggio.
 
-| [[hook_modifier_irc_in2_xxx]] irc_in2_xxx ^(1)^ +
-  _(WeeChat ≥ 0.3.5)_ |
+| [[hook_modifier_irc_in2_xxx]] irc_in2_xxx ^(1)^ | 0.3.5 |
   Nome server |
   Contenuto del messaggio ricevuto dal server IRC (dopo la codifica del set caratteri). |
   Nuovo contenuto del messaggio.
 
 // TRANSLATION MISSING
-| [[hook_modifier_irc_out1_xxx]] irc_out1_xxx ^(1)^ +
-  _(WeeChat ≥ 0.3.7)_ |
+| [[hook_modifier_irc_out1_xxx]] irc_out1_xxx ^(1)^ | 0.3.7 |
   Nome server |
   Content of message about to be sent to IRC server before automatic split
   (to fit in 512 bytes by default). |
   Nuovo contenuto del messaggio.
 
 // TRANSLATION MISSING
-| [[hook_modifier_irc_out_xxx]] irc_out_xxx ^(1)^ |
+| [[hook_modifier_irc_out_xxx]] irc_out_xxx ^(1)^ | |
   Nome server |
   Content of message about to be sent to IRC server after automatic split
   (to fit in 512 bytes by default). |
   Nuovo contenuto del messaggio.
 
 // TRANSLATION MISSING
-| [[hook_modifier_bar_condition_yyy]] bar_condition_yyy ^(2)^ |
+| [[hook_modifier_bar_condition_yyy]] bar_condition_yyy ^(2)^ | |
   Stringa con puntatore alla finestra (eg: "0x1234abcd") |
   Stringa vuota. |
   "1" per visualizzare la barra, "0" per nasconderla.
 
 // TRANSLATION MISSING
-| [[hook_modifier_history_add]] history_add +
-  _(WeeChat ≥ 0.3.2)_ |
+| [[hook_modifier_history_add]] history_add | 0.3.2 |
   Stringa con puntatore al buffer (eg: "0x1234abcd") |
   Contenuto della riga di comando da aggiungere nella cronologia comandi (buffer e globale). |
   Stringa aggiunta alla cronologia comandi.
 
 // TRANSLATION MISSING
-| [[hook_modifier_input_text_content]] input_text_content |
+| [[hook_modifier_input_text_content]] input_text_content | |
   Stringa con puntatore al buffer (eg: "0x1234abcd") |
   Contenuto della riga di comando. |
   Nuovo contenuto della riga di comando.
 
 // TRANSLATION MISSING
-| [[hook_modifier_input_text_display]] input_text_display |
+| [[hook_modifier_input_text_display]] input_text_display | |
   Stringa con puntatore al buffer (eg: "0x1234abcd") |
   Contenuto della riga di comando, senza tag al cursore. |
   Nuova stringa, solo da mostrare (la riga di comando non viene modificata).
 
 // TRANSLATION MISSING
-| [[hook_modifier_input_text_display_with_cursor]] input_text_display_with_cursor |
+| [[hook_modifier_input_text_display_with_cursor]] input_text_display_with_cursor | |
   Stringa con puntatore al buffer (eg: "0x1234abcd") |
   Contenuto della riga di comando, con tag al cursore. |
   Nuova stringa, solo da mostrare (la riga di comando non viene modificata).
 
 // TRANSLATION MISSING
-| [[hook_modifier_input_text_for_buffer]] input_text_for_buffer +
-  _(WeeChat ≥ 0.3.7)_ |
+| [[hook_modifier_input_text_for_buffer]] input_text_for_buffer | 0.3.7 |
   Stringa con puntatore al buffer (eg: "0x1234abcd") |
   Contenuto della riga di comando inviata al buffer (testo o comando). |
   Nuovo contenuto della riga di comando inviata al buffer.
 
 // TRANSLATION MISSING
-| [[hook_modifier_weechat_print]] weechat_print |
+| [[hook_modifier_weechat_print]] weechat_print | |
   buffer pointer (eg: "0x1234abcd") + ";" + tags ^(3)^ |
   Messaggio stampato. |
   Nuovo messaggio stampato. +
@@ -12261,86 +12120,79 @@ Valore restituito:
 // TRANSLATION MISSING
 List of modifiers defined by WeeChat and plugins that can be used:
 
-[width="100%",cols="^2,3,4,4",options="header"]
+[width="100%",cols="^2,^1,3,4,4",options="header"]
 |===
-| Modificatore | Dati modificatore | Stringa | Output
+// TRANSLATION MISSING
+| Modificatore | Min WeeChat | Dati modificatore | Stringa | Output
 
-| [[hook_modifier_charset_decode]] charset_decode |
+| [[hook_modifier_charset_decode]] charset_decode | |
   plugin.buffer_name |
   Qualsiasi stringa. |
   Stringa codificata dal set caratteri trovato per plugin/buffer in UTF-8.
 
-| [[hook_modifier_charset_encode]] charset_encode |
+| [[hook_modifier_charset_encode]] charset_encode | |
   plugin.buffer_name |
   Qualsiasi stringa. |
   Stringa codificata da UTF-8 al set caratteri trovato per il plugin/buffer.
 
 // TRANSLATION MISSING
-| [[hook_modifier_irc_color_decode]] irc_color_decode |
+| [[hook_modifier_irc_color_decode]] irc_color_decode | |
   "1" per mantenere i colori, "0" per rimuovere i colori |
   Qualsiasi stringa. |
   String with IRC colors converted to WeeChat colors (or IRC colors removed).
 
 // TRANSLATION MISSING
-| [[hook_modifier_irc_color_encode]] irc_color_encode |
+| [[hook_modifier_irc_color_encode]] irc_color_encode | |
   "1" per mantenere i colori, "0" per rimuovere i colori |
   Qualsiasi stringa. |
   String with IRC colors (or IRC colors removed).
 
 // TRANSLATION MISSING
-| [[hook_modifier_irc_color_decode_ansi]] irc_color_decode_ansi +
-  _(WeeChat ≥ 1.0)_ |
+| [[hook_modifier_irc_color_decode_ansi]] irc_color_decode_ansi | 1.0 |
   "1" per mantenere i colori, "0" per rimuovere i colori |
   Qualsiasi stringa. |
   String with ANSI colors converted to IRC colors (or ANSI colors removed).
 
 // TRANSLATION MISSING
-| [[hook_modifier_irc_command_auth]] irc_command_auth +
-  _(WeeChat ≥ 0.4.1)_ |
+| [[hook_modifier_irc_command_auth]] irc_command_auth | 0.4.1 |
   Nome server |
   Authentication command (for example: `+/msg nickserv identify password+`). |
   Command with hidden password (for example: `+/msg nickserv identify ********+`).
 
 // TRANSLATION MISSING
-| [[hook_modifier_irc_message_auth]] irc_message_auth +
-  _(WeeChat ≥ 0.4.1)_ |
+| [[hook_modifier_irc_message_auth]] irc_message_auth | 0.4.1 |
   Nome server |
   Message displayed after `/msg` sent to nickserv. |
   Message with hidden password.
 
 // TRANSLATION MISSING
-| [[hook_modifier_irc_tag_escape_value]] irc_tag_escape_value +
-  _(WeeChat ≥ 3.3)_ |
+| [[hook_modifier_irc_tag_escape_value]] irc_tag_escape_value | 3.3 |
   - |
   Any string. |
   String with IRC tag value escaped,
   see: https://ircv3.net/specs/extensions/message-tags#escaping-values.
 
 // TRANSLATION MISSING
-| [[hook_modifier_irc_tag_unescape_value]] irc_tag_unescape_value +
-  _(WeeChat ≥ 3.3)_ |
+| [[hook_modifier_irc_tag_unescape_value]] irc_tag_unescape_value | 3.3 |
   - |
   Any string. |
   String with IRC tag value unescaped,
   see: https://ircv3.net/specs/extensions/message-tags#escaping-values.
 
 // TRANSLATION MISSING
-| [[hook_modifier_color_decode_ansi]] color_decode_ansi +
-  _(WeeChat ≥ 1.0)_ |
+| [[hook_modifier_color_decode_ansi]] color_decode_ansi | 1.0 |
   "1" per mantenere i colori, "0" per rimuovere i colori |
   Qualsiasi stringa. |
   String with ANSI colors converted to WeeChat colors (or ANSI colors removed).
 
 // TRANSLATION MISSING
-| [[hook_modifier_color_encode_ansi]] color_encode_ansi +
-  _(WeeChat ≥ 2.7)_ |
+| [[hook_modifier_color_encode_ansi]] color_encode_ansi | 2.7 |
   - |
   Any string. |
   String with WeeChat colors converted to ANSI colors.
 
 // TRANSLATION MISSING
-| [[hook_modifier_eval_path_home]] eval_path_home +
-  _(WeeChat ≥ 2.7)_ |
+| [[hook_modifier_eval_path_home]] eval_path_home | 2.7 |
   Optional: `directory=xxx` where `xxx` can be: `config`, `data`, `cache`, `runtime` |
   Any string. |
   Evaluated path, result of the function
@@ -12943,32 +12795,28 @@ Argomenti:
 Properties:
 
 // TRANSLATION MISSING
-[width="100%",cols="^2,2,2,5",options="header"]
+[width="100%",cols="^1,^1,2,2,5",options="header"]
 |===
-| Nome | Hook type | Valore | Descrizione
+// TRANSLATION MISSING
+| Nome | Min WeeChat | Hook type | Valore | Descrizione
 
 // TRANSLATION MISSING
-| subplugin | any type | qualsiasi stringa |
+| subplugin | | any type |
+  qualsiasi stringa |
 // TRANSLATION MISSING
   Name of sub plugin (commonly script name, which is displayed in
   `/help command` for a hook of type _command_).
 
-| stdin +
-  _(WeeChat ≥ 0.4.3)_ |
-  _process_, _process_hashtable_ | qualsiasi stringa |
+| stdin | 0.4.3 | _process_, _process_hashtable_ | qualsiasi stringa |
 // TRANSLATION MISSING
   Send data on standard input (_stdin_) of child process.
 
-| stdin_close +
-  _(WeeChat ≥ 0.4.3)_ |
 // TRANSLATION MISSING
-  _process_, _process_hashtable_ | (not used) |
+| stdin_close | 0.4.3 | _process_, _process_hashtable_ | (not used) |
 // TRANSLATION MISSING
   Close pipe used to send data on standard input (_stdin_) of child process.
 
-| signal +
-  _(WeeChat ≥ 1.0)_ |
-  _process_, _process_hashtable_ |
+| signal | 1.0 | _process_, _process_hashtable_ |
 // TRANSLATION MISSING
   signal number or one of these names: `hup`, `int`, `quit`, `kill`, `term`,
   `usr1`, `usr2` |
@@ -13698,12 +13546,13 @@ Argomenti:
 // TRANSLATION MISSING
 Properties:
 
-[width="100%",cols="^2,4,8",options="header"]
+[width="100%",cols="^2,^1,4,8",options="header"]
 |===
-| Nome | Valore | Descrizione
+// TRANSLATION MISSING
+| Nome | Min WeeChat | Valore | Descrizione
 
 // TRANSLATION MISSING
-| hotlist | "+", "-", WEECHAT_HOTLIST_LOW, WEECHAT_HOTLIST_MESSAGE,
+| hotlist | | "+", "-", WEECHAT_HOTLIST_LOW, WEECHAT_HOTLIST_MESSAGE,
   WEECHAT_HOTLIST_PRIVATE, WEECHAT_HOTLIST_HIGHLIGHT, "-1" |
   "+": abilita hotlist (impostazione globale , il puntatore al buffer pointer non
   è utilizzato) +
@@ -13713,166 +13562,162 @@ Properties:
   "-1": remove buffer from hotlist _(WeeChat ≥ 1.0)_.
 
 // TRANSLATION MISSING
-| completion_freeze | "0" oppure "1" |
+| completion_freeze | | "0" oppure "1" |
   "0": no freeze of completion (default value)
   (impostazione globale, il puntatore al buffer non è utilizzato) +
   "1": do not stop completion when command line is updated
   (impostazione globale, il puntatore al buffer non è utilizzato).
 
-| unread | - |
+| unread | | - |
   Imposta l'evidenziatore di lettura dopo l'ultima riga del buffer.
 
-| display | "1" oppure "auto" |
+| display | | "1" oppure "auto" |
   "1": passa a questo buffer nella finestra corrente +
   "auto": passa a questo buffer nella finestra corrente, l'evidenziatore di
   lettura non viene resettato.
 
 // TRANSLATION MISSING
-| hidden +
-  _(WeeChat ≥ 1.0)_ | "0" oppure "1" |
+| hidden | 1.0 | "0" oppure "1" |
   "0": unhide the buffer +
   "1": hide the buffer.
 
-| number | numero |
+| number | | numero |
   Sposta buffer a questo numero.
 
-| name | qualsiasi stringa |
+| name | | qualsiasi stringa |
   Imposta nuovo nome per il buffer.
 
-| short_name | qualsiasi stringa |
+| short_name | | qualsiasi stringa |
   Imposta nuovo nome breve per il buffer.
 
 // TRANSLATION MISSING
-| type | "formatted" oppure "free" |
+| type | | "formatted" oppure "free" |
   Imposta tipo per il: "formatted" (per stampare i messaggi di chat),
   oppure "free" (per contenuto libero); when the value is "free", the property
   _clear_ is forced to "0" _(WeeChat ≥ 1.0)_.
 
-| notify | "0", "1", "2", "3" |
+| notify | | "0", "1", "2", "3" |
   Imposta il livello di notifica per il buffer: "0" = non aggiungere alla hotlist,
   "1" = aggiungere solo per gli eventi, "2" = aggiungere per eventi e
   messaggi, "3" = aggiungere per tutti i messaggi.
 
 // TRANSLATION MISSING
-| print_hooks_enabled | "0" oppure "1" |
+| print_hooks_enabled | | "0" oppure "1" |
   "0" to disable print hooks, "1" to enable them (default for a new buffer).
 
 // TRANSLATION MISSING
-| day_change +
-  _(WeeChat ≥ 0.4.3)_ | "0" oppure "1" |
+| day_change | 0.4.3 | "0" oppure "1" |
   "0" to hide messages for the day change, "1" to see them
   (default for a new buffer).
 
 // TRANSLATION MISSING
-| clear +
-  _(WeeChat ≥ 1.0)_ | "0" or "1" |
+| clear | 1.0 | "0" or "1" |
   "0" to prevent user from clearing buffer with the command `/buffer clear`,
   "1" to let user clear the buffer (default for a new buffer)
    (note: even when it is set to "0", the buffer can still be cleared with
    the function <<_buffer_clear,buffer_clear>>).
 
 // TRANSLATION MISSING
-| filter +
-  _(WeeChat ≥ 1.0)_ | "0" or "1" |
+| filter | 1.0 | "0" or "1" |
   "0": disable filters on buffer +
   "1": enable filters on buffer.
 
-| title | qualsiasi stringa |
+| title | | qualsiasi stringa |
   Imposta nuovo titolo per il buffer.
 
-| time_for_each_line | "0" oppure "1" |
+| time_for_each_line | | "0" oppure "1" |
   "0" per nascondere l'orario in tutte le righe del buffer, "1" per
   visualizzarlo su tutte le righe (predefinito per un nuovo buffer).
 
-| nicklist | "0" oppure "1" |
+| nicklist | | "0" oppure "1" |
   "0" per rimuovere la lista nick per il buffer, "1" per aggiungere
   la lista nick per il buffer.
 
-| nicklist_case_sensitive | "0" oppure "1" |
+| nicklist_case_sensitive | | "0" oppure "1" |
   "0" per avere una lista nick non sensibile alle maiuscole, "1" per
   una lista nick sensibile alle maiuscole.
 
-| nicklist_display_groups | "0" oppure "1" |
+| nicklist_display_groups | | "0" oppure "1" |
   "0" per nascondere i gruppi nella lista nick, "1" per visualizzare
   i gruppi della lista nick.
 
-| highlight_words | "-" oppure elenco di parole separato da virgole |
+| highlight_words | | "-" oppure elenco di parole separato da virgole |
   "-" è un valore speciale per disabilitare qualsiasi evento su questo
   buffer, o un elenco di parole separate da virgole da evidenziare in
   questo buffer, ad esempio: "abc,def,ghi".
 
-| highlight_words_add | elenco di parole separate da virgole |
+| highlight_words_add | | elenco di parole separate da virgole |
   Elenco di parole separate da virgole da evidenziare in questo buffer,
   queste parole vengono aggiunte alle parole evidenziate esistenti nel
   buffer.
 
-| highlight_words_del | elenco di parole separate da virgole |
+| highlight_words_del | | elenco di parole separate da virgole |
   Elenco di parole separate da virgole da rimuovere dalle
   parole evidenziate nel buffer.
 
 // TRANSLATION MISSING
-| highlight_regex | qualsiasi stringa |
+| highlight_regex | | qualsiasi stringa |
   POSIX extended regular expression for highlight.
 
 // TRANSLATION MISSING
-| highlight_tags_restrict | elenco separato da virgole di tag |
+| highlight_tags_restrict | | elenco separato da virgole di tag |
   Restrict highlights to messages with these tags in this buffer
   (it is possible to combine many tags as a logical "and" with separator "+",
   for example: "nick_toto+irc_action").
 
 // TRANSLATION MISSING
-| highlight_tags | elenco separato da virgole di tag |
+| highlight_tags | | elenco separato da virgole di tag |
   Force highlight on messages with these tags in this buffer
   (it is possible to combine many tags as a logical "and" with separator "+",
   for example: "nick_toto+irc_action").
 
-| hotlist_max_level_nicks | elenco separado da virgole di "nick:livello" |
+| hotlist_max_level_nicks | | elenco separado da virgole di "nick:livello" |
   Elenco separato da virgole di nick con il livello massimo per la hotlist
   su questo buffer (il livello può essere: -1: mai nella hotlist, 0: basso,
   1: messaggio, 2: privato, 3: evento), ad esempio: "joe:2,mike:-1,robert:-1"
   (joe non produce eventi sul buffer, mike e robert non modificano la hotlist).
 
-| hotlist_max_level_nicks_add | elenco separato da virgole di "nick:livello" |
+| hotlist_max_level_nicks_add | | elenco separato da virgole di "nick:livello" |
   Elenco separato da virgole di nick con il livello per la hotlist, questi
   nick vengono aggiunti a quelli esistenti nel buffer.
 
-| hotlist_max_level_nicks_del | elenco separato da virgole di nick |
+| hotlist_max_level_nicks_del | | elenco separato da virgole di nick |
   Elenco separato da virgole di nick da rimuovere dai livelli massimi della
   hotlist.
 
-| key_bind_xxx | qualsiasi stringa |
+| key_bind_xxx | | qualsiasi stringa |
   Assegna un nuovo tasto _xxx_, specifico per questo buffer, il valore è il
   comando da eseguire per questo tasto.
 
-| key_unbind_xxx | - |
+| key_unbind_xxx | | - |
   Rimuove l'assegnazione del tasto _xxx_ per questo buffer.
 
-| input | qualsiasi stringa |
+| input | | qualsiasi stringa |
   Imposta un nuovo valore per l'input del buffer.
 
-| input_pos | posizione |
+| input_pos | | posizione |
   Imposta la posizione del cursore per l'input del buffer.
 
-| input_get_unknown_commands | "0" oppure "1" |
+| input_get_unknown_commands | | "0" oppure "1" |
   "0" per disabilitare i comandi sconosciuti per questo buffer (comportamento
   predefinito), "1" per ricevere i comandi sconosciuti, ad esempio se l'utente
   digita "/unknowncmd", verrà ricevuto dal buffer (nessun errore riguardo il
   comando sconosciuto).
 
 // TRANSLATION MISSING
-| input_get_empty | "0" oppure "1" |
+| input_get_empty | | "0" oppure "1" |
   "0" to disable empty input on this buffer (default behavior), "1" to get empty input.
 
 // TRANSLATION MISSING
-| input_multiline | "0" or "1" |
+| input_multiline | | "0" or "1" |
   "0" to send each line separately to this buffer (default behavior), "1" to
   send multiple lines as a single message.
 
-| localvar_set_xxx | qualsiasi stringa |
+| localvar_set_xxx | | qualsiasi stringa |
   Imposta il nuovo valore per la variabile locale _xxx_ (la variabile verrà
   creata se non esiste).
 
-| localvar_del_xxx | - |
+| localvar_del_xxx | | - |
   Rimuove la variabile locale _xxx_.
 |===
 

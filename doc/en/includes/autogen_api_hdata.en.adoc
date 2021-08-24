@@ -79,6 +79,8 @@ _last_nick_speaking_time_   (pointer, hdata: "irc_channel_speaking") +
 _modelists_   (pointer, hdata: "irc_modelist") +
 _last_modelist_   (pointer, hdata: "irc_modelist") +
 _join_smart_filtered_   (hashtable) +
+_typing_state_   (integer) +
+_typing_status_sent_   (time) +
 _buffer_   (pointer, hdata: "buffer") +
 _buffer_as_string_   (string) +
 _prev_channel_   (pointer, hdata: "irc_channel") +
@@ -269,6 +271,10 @@ _chantypes_   (string) +
 _chanmodes_   (string) +
 _monitor_   (integer) +
 _monitor_time_   (time) +
+_clienttagdeny_   (string) +
+_clienttagdeny_count_   (integer) +
+_clienttagdeny_array_   (string, array_size: "clienttagdeny_count") +
+_typing_allowed_   (integer) +
 _reconnect_delay_   (integer) +
 _reconnect_start_   (time) +
 _command_time_   (time) +

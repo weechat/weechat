@@ -1284,9 +1284,8 @@ Wynik jest tabela hashy z następującymi kluczami
   Tagi w wiadomości (mogą byc puste). |
   `+time=2015-06-27T16:40:35.000Z+`
 
-// TRANSLATION MISSING
 | tag_xxx | 3.3 |
-  Unescaped value of tag "xxx" (one key per tag). |
+  Niewyescapowana wartość tagu "xxx" (jeden klucz per tag). |
   `+2015-06-27T16:40:35.000Z+`
 
 | message_without_tags | 0.4.0 |

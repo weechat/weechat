@@ -1845,6 +1845,50 @@
 ** подразумевана вредност: `+"${weechat_runtime_dir}/weechat_fifo_${info:pid}"+`
 // end::fifo_options[]
 
+// tag::typing_options[]
+* [[option_typing.look.delay_purge_paused]] *typing.look.delay_purge_paused*
+** опис: pass:none[number of seconds after paused status has been set: if reached, the typing status is removed]
+** тип: целобројна
+** вредности: 1 .. 2147483647
+** подразумевана вредност: `+30+`
+
+* [[option_typing.look.delay_purge_typing]] *typing.look.delay_purge_typing*
+** опис: pass:none[number of seconds after typing status has been set: if reached, the typing status is removed]
+** тип: целобројна
+** вредности: 1 .. 2147483647
+** подразумевана вредност: `+6+`
+
+* [[option_typing.look.delay_set_paused]] *typing.look.delay_set_paused*
+** опис: pass:none[number of seconds after typing last char: if reached, the typing status becomes "paused" and no more typing signals are sent]
+** тип: целобројна
+** вредности: 1 .. 2147483647
+** подразумевана вредност: `+10+`
+
+* [[option_typing.look.enabled_nicks]] *typing.look.enabled_nicks*
+** опис: pass:none[typing enabled for other nicks (display typing info for nicks typing in the current buffer)]
+** тип: логичка
+** вредности: on, off
+** подразумевана вредност: `+off+`
+
+* [[option_typing.look.enabled_self]] *typing.look.enabled_self*
+** опис: pass:none[typing enabled for self messages (send typing info to other users)]
+** тип: логичка
+** вредности: on, off
+** подразумевана вредност: `+off+`
+
+* [[option_typing.look.input_min_chars]] *typing.look.input_min_chars*
+** опис: pass:none[min number of chars in message to trigger send of typing signals]
+** тип: целобројна
+** вредности: 1 .. 2147483647
+** подразумевана вредност: `+4+`
+
+* [[option_typing.look.item_max_length]] *typing.look.item_max_length*
+** опис: pass:none[max number of chars displayed in the bar item "typing" (0 = do not truncate content)]
+** тип: целобројна
+** вредности: 0 .. 2147483647
+** подразумевана вредност: `+0+`
+// end::typing_options[]
+
 // tag::xfer_options[]
 * [[option_xfer.color.status_aborted]] *xfer.color.status_aborted*
 ** опис: pass:none[боја текста за „прекинут” статус]
@@ -2215,7 +2259,7 @@
 ** подразумевана вредност: `+"%a, %d %b %Y %T %z"+`
 
 * [[option_irc.look.display_account_message]] *irc.look.display_account_message*
-** опис: pass:none[display ACCOUNT messages received when capability account-notify is enabled]
+** опис: pass:none[приказ ACCOUNT порука које се примају када је укључена могућност account-notify]
 ** тип: логичка
 ** вредности: on, off
 ** подразумевана вредност: `+on+`
@@ -2245,7 +2289,7 @@
 ** подразумевана вредност: `+on+`
 
 * [[option_irc.look.display_extended_join]] *irc.look.display_extended_join*
-** опис: pass:none[display extra information in the JOIN messages: account name and real name (capability extended-join must be enabled)]
+** опис: pass:none[приказ додатних информација у JOIN порукама: име налога и реално име (мора бити укључена могућност extended-join)]
 ** тип: логичка
 ** вредности: on, off
 ** подразумевана вредност: `+on+`
@@ -2520,6 +2564,18 @@
 ** вредности: on, off
 ** подразумевана вредност: `+off+`
 
+* [[option_irc.look.typing_status_nicks]] *irc.look.typing_status_nicks*
+** опис: pass:none[display nicks typing on the channel in bar item "typing" (option typing.look.enabled_nicks must be enabled and capability "message-tags" must be enabled on the server)]
+** тип: логичка
+** вредности: on, off
+** подразумевана вредност: `+off+`
+
+* [[option_irc.look.typing_status_self]] *irc.look.typing_status_self*
+** опис: pass:none[send self typing status to channels so that other users see when you are typing a message (option typing.look.enabled_self must be enabled and capability "message-tags" must be enabled on the server)]
+** тип: логичка
+** вредности: on, off
+** подразумевана вредност: `+off+`
+
 * [[option_irc.network.autoreconnect_delay_growing]] *irc.network.autoreconnect_delay_growing*
 ** опис: pass:none[фактор увећавања паузе пре аутоматског поновног повезивања са сервером (1 = увек иста пауза, 2 = пауза*2 за сваки наредни покушај, итд.)]
 ** тип: целобројна
@@ -2677,7 +2733,7 @@
 ** подразумевана вредност: `+25+`
 
 * [[option_irc.server_default.capabilities]] *irc.server_default.capabilities*
-** опис: pass:none[comma-separated list of client capabilities to enable for server if they are available (see /help cap for a list of capabilities supported by WeeChat); "*" enables all capabilities by default (supported by both server and WeeChat); wildcard "*" is allowed; a capability beginning with "!" is excluded (example: "*,!account-*,!extended-join")]
+** опис: pass:none[листа могућности клијента (client capabilities) раздвојених запетама које треба да се укључе за сервер у случају да су доступне (погледајте /help cap за листу могућности које подржава програм WeeChat); дозвољен је џокер „*”; могућност која почиње са „!” није укључена (пример: „*,!account-*,!extended-join”)]
 ** тип: стринг
 ** вредности: било који стринг
 ** подразумевана вредност: `+"*"+`
@@ -2791,7 +2847,7 @@
 ** подразумевана вредност: `+""+`
 
 * [[option_irc.server_default.sasl_mechanism]] *irc.server_default.sasl_mechanism*
-** опис: pass:none[mechanism for SASL authentication: "plain" for plain text password, "scram-sha-1" for SCRAM authentication with SHA-1 digest algorithm, "scram-sha-256" for SCRAM authentication with SHA-256 digest algorithm, "scram-sha-512" for SCRAM authentication with SHA-512 digest algorithm, "ecdsa-nist256p-challenge" for key-based challenge authentication, "external" for authentication using client side SSL certificate]
+** опис: pass:none[механизам SASL аутентификације: „plain” за просту текст лозинку, „scram-sha-1” за SCRAM аутентификацију са SHA-1 digest алгоритмом, „scram-sha-256” за SCRAM аутентификацију са SHA-256 digest алгоритмом, „scram-sha-512” за SCRAM аутентификацију са SHA-512 digest алгоритмом, „ecdsa-nist256p-challenge” за аутентификацију са изазовом базираним на кључу, „external” за аутентификацију употребом SSL сертификата са клијентске стране]
 ** тип: целобројна
 ** вредности: plain, scram-sha-1, scram-sha-256, scram-sha-512, ecdsa-nist256p-challenge, external
 ** подразумевана вредност: `+plain+`

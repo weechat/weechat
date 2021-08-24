@@ -184,11 +184,11 @@ $ make
 $ make install
 ----
 
-Optionen für CMake können mit dem Format, "-DOPTION=VALUE", genutzt werden.
+Optionen für CMake können mit dem Format, `-DOPTION=VALUE`, genutzt werden.
 
 Liste von häufig verwendeten Optionen:
 
-[width="100%",cols="2m,2,5m,12",options="header"]
+[width="100%",cols="3m,3,3m,10",options="header"]
 |===
 | Option | Wert | Standardwert | Beschreibung
 
@@ -290,6 +290,9 @@ Liste von häufig verwendeten Optionen:
 
 | ENABLE_TRIGGER | `ON`, `OFF` | ON |
   kompiliert <<trigger_plugin,Trigger Erweiterung>>.
+
+| ENABLE_TYPING | `ON`, `OFF` | ON |
+  kompiliert <<typing_plugin,Typing Erweiterung>>.
 
 | ENABLE_XFER | `ON`, `OFF` | ON |
   kompiliert <<xfer_plugin,Xfer Erweiterung>>.
@@ -732,6 +735,7 @@ Folgende Dateien befinden sich im WeeChat-Heimatverzeichnis:
 | spell.conf      | Konfiguration für _spell_-Erweiterung      | Nein.
 | tcl.conf        | Konfiguration für _tcl_-Erweiterung        | Nein.
 | trigger.conf    | Konfiguration für _trigger_-Erweiterung    | möglich, hängt von den Triggern ab.
+| typing.conf     | Konfiguration für _typing_-Erweiterung     | Nein.
 | xfer.conf       | Konfiguration für _xfer_-Erweiterung       | Nein.
 | weechat.log     | WeeChat Logdateien                         | Nein.
 |===
@@ -2287,7 +2291,7 @@ und der Mausgeste (optional). Die unterschiedlichen Elemente werden durch ein `+
 
 Liste der Modifiers:
 
-[width="100%",cols="2m,3",options="header"]
+[width="100%",cols="1m,4",options="header"]
 |===
 | Modifier | Beschreibung
 | ctrl     | Taste kbd:[Ctrl]
@@ -2297,7 +2301,7 @@ Liste der Modifiers:
 
 Liste der Maustasten/Mausrad:
 
-[width="100%",cols="2m,3",options="header"]
+[width="100%",cols="1m,4",options="header"]
 |===
 | Maustaste/-rad      | Beschreibung
 | button1             | Linker Mausknopf wird gedrückt
@@ -2310,7 +2314,7 @@ Liste der Maustasten/Mausrad:
 
 Liste der Mausgesten (nur für Maustasten, nicht für das Mausrad, anwendbar):
 
-[width="100%",cols="2m,3",options="header"]
+[width="100%",cols="1m,4",options="header"]
 |===
 | Mausgeste          | Distanz
 | gesture-up         | 3 ... 19
@@ -2325,7 +2329,7 @@ Liste der Mausgesten (nur für Maustasten, nicht für das Mausrad, anwendbar):
 
 Liste von unvollständigen Ereignissen (nur für Mausknopf, nützlich für Erweiterungen/Skripten):
 
-[width="100%",cols="2m,3",options="header"]
+[width="100%",cols="1m,4",options="header"]
 |===
 | Ereignis   | Beschreibung
 | event-down | Mausknopf ist gedrückt
@@ -2580,6 +2584,7 @@ Standarderweiterungen:
 | php         | PHP-Skript API.
 | spell       | Rechtschreibprüfung für Befehlszeile.
 | trigger     | Veränderung von Text und Ausführen von Befehlen bei einem Ereignis, welche durch WeeChat oder eine Erweiterung ausgelöst werden.
+| typing      | Benutzer anzeigen, die gerade Nachrichten schreiben.
 | xfer        | Datentransfer und Direktchat.
 |===
 
@@ -2904,15 +2909,134 @@ Es ist möglich eine oder mehrere URL von IRC Servern zu übergeben:
 irc[6][s]://[nick[:password]@]irc.example.org[:port][/channel][,channel[...]]
 ----
 
-Beispiel: Anmelden beim Server _irc.libera.chat_ mit dem Nick _nono_ und betreten
-der Channels _#weechat_ und _#toto_ (Standardport (6667) wird genutzt):
+Beispiel: Anmelden beim Server _irc.libera.chat_ mit dem Nick _alice_ und betreten
+der Channels _#weechat_ und _#weechat-fr_ (Standardport (6667) wird genutzt):
 
 ----
-$ weechat irc://nono@irc.libera.chat/#weechat,#toto
+$ weechat irc://alice@irc.libera.chat/#weechat,#weechat-fr
+----
+
+[[irc_servers]]
+==== Server
+
+[[irc_servers_add]]
+===== Server hinzufügen
+
+Standardmäßig sind keine Server angelegt. Es gibt keine Begrenzung für die
+Anzahl von Servern. Server können mit dem Befehl <<command_irc_server,/server>>
+angelegt werden.
+
+Um zum Beispiel eine SSL verschlüsselte Verbindung zu https://libera.chat/[libera.chat]
+herzustellen:
+
+----
+/server add libera irc.libera.chat/6697 -ssl
+----
+
+Um WeeChat beim Start direkt mit dem Server zu verbinden:
+
+----
+/set irc.server.libera.autoconnect on
+----
+
+Zur Authentifizierung wird empfohlen, SASL (sofern dies von dem Server unterstützt wird)
+zu verwenden, wobei das Passwort als gesicherte Daten gespeichert wird (siehe auch das
+Kapitel über <<irc_sasl_authentication,SASL authentication>>):
+
+----
+/set irc.server.libera.sasl_username "alice"
+/secure set libera xxxxxxx
+/set irc.server.libera.sasl_password "${sec.data.libera}"
+----
+
+Wenn SASL nicht unterstützt wird, können Sie einen Befehl verwenden, um eine
+Nachricht an nickserv zu senden, um sich zu Authentifizieren:
+
+----
+/set irc.server.libera.command "/msg nickserv identify ${sec.data.libera}"
+----
+
+[NOTE]
+Indem Sie eine Nachricht an nickserv senden, können Sie sich erst nach dem Beitritt
+zu Kanälen authentifizieren. Dies kann bei Kanälen, die eine Authentifizierung benötigen,
+zu Problemen führen. In diesem Fall können Sie eine Befehlsverzögerung einstellen:
+`/set irc.server.libera.command_delay 5`.
+
+[[irc_servers_options]]
+===== Server-Optionen
+
+Serveroptinen haben folgenden Aufbau `irc.server.<server>.<option>` hierbei ist `<server>`
+der interne Name des Server und `<option>` ist der Name der Option. +
+Der Wert einer Serveroption wird von `irc.server_default.xxx` geerbt
+wenn die Serveroption den Sonderwert `null` hat.
+
+Wenn Sie beispielsweise den _libera_-Server mit den obigen Befehlen erstellt haben,
+sehen Sie dies mit dem Befehl `/fset libera`:
+
+....
+irc.server.libera.addresses             string   "irc.libera.chat/6697"
+irc.server.libera.anti_flood_prio_high  integer  null -> 2
+irc.server.libera.anti_flood_prio_low   integer  null -> 2
+irc.server.libera.autoconnect           boolean  on
+irc.server.libera.autojoin              string   null -> ""
+irc.server.libera.autoreconnect         boolean  null -> on
+irc.server.libera.autoreconnect_delay   integer  null -> 10
+irc.server.libera.autorejoin            boolean  null -> off
+irc.server.libera.autorejoin_delay      integer  null -> 30
+irc.server.libera.away_check            integer  null -> 0
+irc.server.libera.away_check_max_nicks  integer  null -> 25
+irc.server.libera.capabilities          string   null -> "*"
+irc.server.libera.charset_message       integer  null -> message
+irc.server.libera.command               string   null -> ""
+irc.server.libera.command_delay         integer  null -> 0
+irc.server.libera.connection_timeout    integer  null -> 60
+irc.server.libera.default_chantypes     string   null -> "#&"
+irc.server.libera.ipv6                  boolean  null -> on
+irc.server.libera.local_hostname        string   null -> ""
+irc.server.libera.msg_kick              string   null -> ""
+irc.server.libera.msg_part              string   null -> "WeeChat ${info:version}"
+irc.server.libera.msg_quit              string   null -> "WeeChat ${info:version}"
+irc.server.libera.nicks                 string   null -> "alice,alice1,alice2,alice3,alice4"
+irc.server.libera.nicks_alternate       boolean  null -> on
+irc.server.libera.notify                string   null -> ""
+irc.server.libera.password              string   null -> ""
+irc.server.libera.proxy                 string   null -> ""
+irc.server.libera.realname              string   null -> ""
+irc.server.libera.sasl_fail             integer  null -> reconnect
+irc.server.libera.sasl_key              string   null -> ""
+irc.server.libera.sasl_mechanism        integer  null -> plain
+irc.server.libera.sasl_password         string   "${sec.data.libera}"
+irc.server.libera.sasl_timeout          integer  null -> 15
+irc.server.libera.sasl_username         string   "alice"
+irc.server.libera.split_msg_max_length  integer  null -> 512
+irc.server.libera.ssl                   boolean  on
+irc.server.libera.ssl_cert              string   null -> ""
+irc.server.libera.ssl_dhkey_size        integer  null -> 2048
+irc.server.libera.ssl_fingerprint       string   null -> ""
+irc.server.libera.ssl_password          string   null -> ""
+irc.server.libera.ssl_priorities        string   null -> "NORMAL:-VERS-SSL3.0"
+irc.server.libera.ssl_verify            boolean  null -> on
+irc.server.libera.usermode              string   null -> ""
+irc.server.libera.username              string   null -> "alice"
+....
+
+Wenn Sie beispielsweise automatisch eine Verbindung zu allen von Ihnen
+erstellten Servern herstellen möchten, ohne dies für jeden Server einzeln einstellen
+zu müssen, können Sie Folgendes tun:
+
+----
+/set irc.server_default.autoconnect on
+----
+
+Und dann können Sie die Serveroption zurücksetzen, sodass sie den standardmäßig
+geerbten Wert verwendet, der jetzt `on` anstelle des Standardwerts `off` ist:
+
+----
+/unset irc.server.libera.autoconnect
 ----
 
 [[irc_ssl_certificates]]
-==== SSL Zertifikate
+===== SSL Zertifikate
 
 Wenn eine Verbindung mittels SSL zu einem IRC Server hergestellt wird dann überprüft
 WeeChat immer ob dieser Verbindung sicher ist.
@@ -2942,7 +3066,7 @@ die Verifizierung sehr streng genommen wird und dadurch vielleicht versagt. Auch
 die Verbindung mit einer vorherigen Version (<0.3.1) funktioniert hat.
 
 [[irc_connect_oftc_with_certificate]]
-===== erstes Beispiel: Verbindung zu oftc und Überprüfung der Zertifikate
+====== erstes Beispiel: Verbindung zu oftc und Überprüfung der Zertifikate
 
 * Importieren Sie die Zertifikate in einer Shell:
 
@@ -2965,7 +3089,7 @@ Es ist möglich mehrere Zertifikate in der Datei CAs.pem zu verwenden.
 ----
 
 [[irc_connect_oftc_with_certfp]]
-===== zweites Beispiel: Verbindung zu oftc mittels CertFP
+====== zweites Beispiel: Verbindung zu oftc mittels CertFP
 
 * Erstellen Sie ein Zertifikat in der Shell:
 
@@ -2990,7 +3114,7 @@ das auch beispielsweise `~/.weechat` sein kann.
 Für weiterreichende Informationen lesen Sie bitte: https://www.oftc.net/NickServ/CertFP
 
 [[irc_sasl_authentication]]
-==== SASL Authentifizierung
+===== SASL Authentifizierung
 
 WeeChat unterstützt eine SASL Authentifikation, mittels verschiedener Mechanismen:
 
@@ -3012,7 +3136,7 @@ Optionen für Server sind:
   _ecdsa-nist256p-challenge_ Mechanismus)
 
 [[irc_sasl_ecdsa_nist256p_challenge]]
-===== SASL ECDSA-NIST256P-CHALLENGE
+====== SASL ECDSA-NIST256P-CHALLENGE
 
 Es muss ein privater Schlüssel erstellt werden um sich mittels des
 ECDSA-NIST256P-CHALLENGE Mechanismus authentifizieren zu können (es wird
@@ -3059,8 +3183,42 @@ Erneut mit dem Server verbinden:
 /reconnect libera
 ----
 
+[[irc_servers_connection]]
+===== Verbindung zum Server
+
+Um sich mit einem Server zu Verbinden, nutzt man den
+<<command_irc_connect,/connect>> Befehl:
+
+----
+/connect libera
+----
+
+Um die Verbindung zu trennen:
+
+----
+/disconnect libera
+----
+
+Oder nur folgenden Befehl, wenn Sie sich in einem Buffer befinden, der zu
+einem _libera_ Server gehört (Server, Kanal, privat):
+
+----
+/disconnect
+----
+
+Wenn Sie gleichzeitig mit mehreren Servern verbunden sind, werden die Serverbuffer
+standardmäßig zusammengeführt. Sie können zwischen zusammengefügten Buffern mit
+der kbd:[Ctrl+x] Taste wechseln.
+
+Es ist möglich, die automatische Zusammenführung von Serverbuffern zu deaktivieren,
+um unabhängige Serverbuffer zu haben:
+
+----
+/set irc.look.server_buffer independent
+----
+
 [[irc_tor_sasl]]
-==== Connect with TOR and SASL
+===== Connect with TOR and SASL
 
 Einige Server unterstützen eine Verbindungen mittels TOR (https://www.torproject.org/),
 dies ist ein Netzwerk mit virtueller Tunneln, durch welchen Personen und Gruppen ihre
@@ -3106,6 +3264,68 @@ Abschließend, stellen Sie eine Verbindung zum Server her:
 
 ----
 /connect irc-tor
+----
+
+[[irc_channels]]
+==== Kanäle
+
+Kanäle können mit dem Befehl <<command_irc_join,/join>> betreten
+werden:
+
+----
+/join #channel
+----
+
+Verbindung zum Kanal trennen (der Buffer bleibt geöffnet):
+
+----
+/part [quit message]
+----
+
+Kanäle die man betreten hat, werden nicht gesichert. Um diese Kanäle
+automatisch bei einer Verbindung zum Server zu betreten, müssen diese
+Kanäle in der `autojoin` Option des Servers eingetragen werden:
+
+----
+/set irc.server.libera.autojoin "#weechat,#weechat-de"
+----
+
+[NOTE]
+Es gibt Skripte, die dabei helfen das zu automatisieren,
+siehe `/script search autojoin`.
+
+Geben Sie acht, Leerzeichen werden verwendet um die Liste der Kanäle
+von den Schlüsseln zu trennen. Ein Beispiel, wenn `#channel1` einen
+Schlüssel erfordert, aber nicht `#channel2`:
+
+----
+/set irc.server.libera.autojoin "#channel1,#channel2 key1"
+----
+
+Um eine Hilfe über das Format zu erhalten, siehe `/help irc.server.libera.autojoin`.
+
+[[irc_private_messages]]
+==== private Nachrichten
+
+Sie können eine private Nachricht mit dem Befehl <<command_irc_query,/query>> senden,
+was einen separaten Buffer, für die Konversation, öffnet:
+
+----
+/query bob hallo, wie geht es Dir?
+----
+
+Ohne Angabe von Argumenten öffnet der Befehl nur den Buffer
+(oder wählt ihn aus, wenn er bereits geöffnet ist):
+
+----
+/query bob
+----
+
+Um einen privaten Buffer zu schließen, führt man diesen Befehl in dem
+privaten Buffer aus:
+
+----
+/close
 ----
 
 [[irc_smart_filter_join_part_quit]]
@@ -3250,7 +3470,7 @@ Falls die Option nicht gesetzt ist (Standard) wählt WeeChat einen geeigneten Bu
 
 Unvollständige Liste der IRC Nachrichten bzw. Alias die angepasst werden können:
 
-[width="100%",cols="^1m,^3m,8",options="header"]
+[width="100%",cols="^2m,^3m,15",options="header"]
 |===
 | Nachricht | Alias         | Beschreibung
 | error     |               | Fehler
@@ -3521,8 +3741,8 @@ Erstellt eine Struktur in folgender Form:
         │   └── #mychan.weechatlog
         ├── oftc
         │   ├── oftc.weechatlog
-        │   ├── #chan1.weechatlog
-        │   └── #chan2.weechatlog
+        │   ├── #channel1.weechatlog
+        │   └── #channel2.weechatlog
         ...
 ....
 
@@ -4785,6 +5005,104 @@ Sektionen in Datei _trigger.conf_:
 Optionen:
 
 include::includes/autogen_user_options.de.adoc[tag=trigger_options]
+
+[[typing_plugin]]
+=== Schreibstatus
+
+Die typing-Erweitertung wird verwendet, um andere Benutzer darüber zu informieren,
+dass Sie Nachrichten schreiben, und zeigt eine Liste der Benutzer an, die derzeit
+eine Nachricht in dem Buffer eingeben.
+
+Es wird von der IRC-Erweiterung für Kanäle- und private Buffern verwendet, sofern
+die "message-tags"-Fähigkeit aktiviert ist (dies kann mit folgendenen Befehl,
+wie folgt überprüfen werden <<command_irc_cap,/cap>>). +
+
+Unter der Haube wird die Eingabe des Client-Tags gemäß dieser Spezifikation verwendet:
+https://ircv3.net/specs/client-tags/typing.html.
+
+[[typing_activation]]
+==== Aktivierung
+
+Aus Datenschutzgründen ist diese Tippfunktion standardmäßig deaktiviert. +
+Wenn Sie es verwenden möchten, müssen Sie Optionen sowohl in den typing- als
+auch für die IRC-Erweiterung aktivieren:
+
+----
+/set typing.look.enabled_nicks on
+/set typing.look.enabled_self on
+/set irc.look.typing_status_nicks on
+/set irc.look.typing_status_self on
+----
+
+Die Tippbenachrichtigungen werden am Ende der Statusleiste angezeigt.
+
+Beispiel für die Statusleiste mit dem "typing" Item: "bob" tippt gerade eine
+Nachricht und "alice" hat eine Nachricht getippt, machte aber eine Pause:
+
+....
+│[12:55] [6] [irc/libera] 3:#test(+n){4} [Typing: bob, (alice)]                   │
+│[@Flashy] █                                                                      │
+└─────────────────────────────────────────────────────────────────────────────────┘
+....
+
+[[typing_signals_sent]]
+==== Signale gesendet
+
+Wenn Sie eine Nachricht eingeben (Befehle, die mit `/` beginnen, werden ignoriert),
+sendet die typing-Erweitertung Signale, um andere Erweiterungen (wie z.B. IRC) darüber
+zu informieren, dass Sie eine Nachricht eingeben. Diese Erweiterungen können dann
+Tippbenachrichtigungen an andere Benutzer senden.
+
+Die folgenden Signale werden gesendet, wenn Sie eine Nachricht schreiben:
+
+[width="100%",cols="1,1,5",options="header"]
+|===
+| Signal              | Argumente        | Beschreibung
+| typing_self_typing  | Pointer: buffer. | Du schreibst eine Nachricht.
+| typing_self_paused  | Pointer: buffer. | Du machst beim Schrieben einer Nachricht, eine Pause.
+| typing_self_cleared | Pointer: buffer. | Du hast die Eingabezeile gelöscht, ohne die Nachricht zu senden.
+| typing_self_sent    | Pointer: buffer. | Du hast die Nachricht in den Buffer geschickt.
+|===
+
+[[typing_signals_caught]]
+==== Signale empfangen
+
+Die typing-Erweiterung fängt einige Signale ab, die von anderen Erweiterungen (wie IRC)
+gesendet werden können, um interne Hashtables zu aktualisieren, die verwendet werden,
+um den Schreibstatus von Nicks in Buffern zu sichern. Diese Hashtabellen werden verwendet,
+um den Inhalt des "typing"-Items zu erstellen.
+
+Die folgenden Signale werden von der typing-Erweiterung empfangen:
+
+[width="100%",cols="1,4,3",options="header"]
+|===
+| Signal | Argumente | Beschreibung
+
+| typing_set_nick |
+  Zeichenkette: Bufferpointer + ";" + Status (möglich: "off", "typing", "paused",
+  "cleared") + ";" + Nick. +
+  Beispiele: "0x1234abcd;typing;alice". |
+  Schreibstatus für einen Nick in einem Buffer festlegen.
+
+| typing_reset_buffer |
+  Pointer: Buffer. |
+  Schreibstatus für alle Nicks in einem Buffer entfernen.
+|===
+
+[[typing_options]]
+==== Optionen
+
+Sektionen in Datei _typing.conf_:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Sektion | Steuerbefehl       | Beschreibung
+| look    | /set typing.look.* | Erscheinungsbild.
+|===
+
+Optionen:
+
+include::includes/autogen_user_options.de.adoc[tag=typing_options]
 
 [[xfer_plugin]]
 === Xfer

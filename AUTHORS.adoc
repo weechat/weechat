@@ -131,6 +131,7 @@ Alphabetically:
 * Simmo Saan (sim642)
 * Simon Arlott
 * Simon Kuhnle
+* Simon Ser
 * Stefano Pigozzi
 * Stfn
 * Sven Knurr (Cthulhux)
@@ -144,6 +145,7 @@ Alphabetically:
 * Trevor Bergeron
 * Valentin Lorentz (progval)
 * Vasco Almeida
+* Victorhck
 * Voroskoi
 * Wojciech Kwolek
 * W. Trevor King

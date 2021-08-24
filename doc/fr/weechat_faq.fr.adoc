@@ -544,7 +544,7 @@ Vous pouvez simplement désactiver le mode "bracketed paste" :
 === Comment puis-je personnaliser l'affichage pour un tout petit terminal (comme 80x25), pour ne pas perdre de place ?
 
 Vous pouvez retirer les barres latérales (buflist et nicklist), changer le format
-de l'heure pour n'afficher que les heures et les secondes, désactiver l'alignement
+de l'heure pour n'afficher que les heures et les minutes, désactiver l'alignement
 des messages et définir un caractère de préfixe/suffixe pour les pseudos :
 
 ----

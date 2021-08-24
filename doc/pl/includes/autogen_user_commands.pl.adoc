@@ -17,30 +17,33 @@ cel: nazwa serwera
 * `+allchan+`: wykonuje komendę na wszystkich kanałach na połączonych serwerach
 
 ----
-/allchan  [-current] [-exclude=<kanał>[,<kanał>...]] <komenda>
-          [-current] -include=<kanał>[,<kanał>...] <komenda>
+/allchan  [-current] [-parted] [-exclude=<channel>[,<channel>...]] <command>
+          [-current] [-parted] -include=<channel>[,<channel>...] <command>
 
- -current: wykonuje komendę tylko na kanałach obecnego serwera
- -exclude: wyklucza niektóre kanały (wildcard "*" jest dozwolony)
- -include: uwzględnia tylko niektóre znaki (wildcard "*" est dozwolony)
-  komenda: komenda do wykonania (albo tekst do wysłania do bufora jeśli komenda nie zaczyna się od '/')
+ -current: execute command for channels of current server only
+  -parted: execute on parted channels only
+ -exclude: exclude some channels (wildcard "*" is allowed)
+ -include: include only some channels (wildcard "*" is allowed)
+  command: command to execute (or text to send to buffer if command does not start with '/')
 
-Komenda i argumenty są przetwarzane (zobacz /help eval), następujące zmienne są podmieniane:
-  $server             nazwa serwera
-  $channel            nazwa kanału
-  $nick               nick na serwerze
-  ${irc_server.xxx}   zmienna xxx na serwerze
-  ${irc_channel.xxx}  zmienna xxx w kanalel
+Command and arguments are evaluated (see /help eval), the following variables are replaced:
+  $server             server name
+  $channel            channel name
+  $nick               nick on server
+  ${irc_server.xxx}   variable xxx in server
+  ${irc_channel.xxx}  variable xxx in channel
 
-Przykłady:
-  wykonuje '/me testuje' na wszystkich kanałach:
-    /allchan /me testuje
-  wysyła 'witam' wszędzie tylko nie na #weechat:
-    /allchan -exclude=#weechat witam
-  wysyła 'witam' wszędzie poza #weechat oraz kanałami zaczynającymi się od #linux:
-    /allchan -exclude=#weechat,#linux* witam
-  wysyła 'witam' na wszytkich kanałach zaczynających się od #linux:
-    /allchan -include=#linux* witam
+Examples:
+  execute '/me is testing' on all channels:
+    /allchan /me is testing
+  say 'hello' everywhere but not on #weechat:
+    /allchan -exclude=#weechat hello
+  say 'hello' everywhere but not on #weechat and channels beginning with #linux:
+    /allchan -exclude=#weechat,#linux* hello
+  say 'hello' on all channels beginning with #linux:
+    /allchan -include=#linux* hello
+  close all buffers with parted channels:
+    /allchan -parted /close
 ----
 
 [[command_irc_allpv]]
@@ -101,22 +104,22 @@ Przykłady:
 ----
 
 [[command_irc_auth]]
-* `+auth+`: authenticate with SASL
+* `+auth+`: uwuerzytelnienie za pomocą SASL
 
 ----
-/auth  [<username> <password>]
+/auth  [<użytkownik> <hasło>]
 
-username: SASL username (content is evaluated, see /help eval; server options are evaluated with ${irc_server.xxx} and ${server} is replaced by the server name)
-password: SASL password or path to file with private key (content is evaluated, see /help eval; server options are evaluated with ${irc_server.xxx} and ${server} is replaced by the server name)
+użytkownik: nazwa użytkownika SASL (zawartość jest przetwarzana, zobacz /help eval; opcje serwera są dostępne przez ${irc_server.xxx} i ${server} jest zastępowane nazwą serwera)
+hasło: hasło SASL albo ścieżka do pliku z kluczem prywatnym (zawartość jest przetwarzana, zobacz /help eval; opcje serwera są dostępne przez ${irc_server.xxx} i ${server} jest zastępowane nazwą serwera)
 
-If username and password are not provided, the values from server options "sasl_username" and "sasl_password" (or "sasl_key") are used.
+Jeśli nazwa użytkownika i hasło nie zostaną podane, wtedy będą użyte wartości opcji serwera "sasl_username" i "sasl_password" (lub "sasl_key").
 
-Examples:
-  authenticate with username/password defined in the server:
+Przykłady:
+  uwierzytelnienie z nazwą użytkownika/hasłem zdefiniowanymi dla serwera:
     /auth
-  authenticate as a different user:
+  uwierzytelnienie jako inny użytkownik:
     /auth user2 password2
-  authenticate as a different user with mechanism ecdsa-nist256p-challenge:
+  uwierzytelnienie jako inny użytkownik za pomocą mechanizmu ecdsa-nist256p-challenge:
     /auth user2 ${weechat_config_dir}/ecdsa2.pem
 ----
 
@@ -141,19 +144,19 @@ Bez podania argumentu komenda wyświetla listę banów na obecnym kanale.
       req|ack [<opcja> [<opcja>...]]
       end
 
-   ls: list the capabilities supported by the server
- list: list the capabilities currently enabled
-  req: request a capability
-  ack: acknowledge capabilities which require client-side acknowledgement
-  end: end the capability negotiation
+   ls: wyświetla opcje wspierane przez serwer
+ list: wyświetla obecnie włączone opcje
+  req: żądanie opcji
+  ack: potwierdzenie opcji wymagających potwierdzenia po stronie klienta
+  end: kończy negocjacje opcji
 
-Without argument, "ls" and "list" are sent.
+Bez argumentu, wysyłane są "ls" i "list".
 
-Capabilities supported by WeeChat are: account-notify, away-notify, cap-notify, chghost, extended-join, invite-notify, message-tags, multi-prefix, server-time, setname, userhost-in-names.
+Opcje wspierane przez WeeChat to: account-notify, away-notify, cap-notify, chghost, extended-join, invite-notify, message-tags, multi-prefix, server-time, setname, userhost-in-names.
 
-The capabilities to automatically enable on servers can be set in option irc.server_default.capabilities (or by server in option irc.server.xxx.capabilities).
+Opcje automatycznie włączane na serwerach można ustawić za pomocą opcji irc.server_default.capabilities (albo dla konkretnego serwera, opcja irc.server.xxx.capabilities).
 
-Examples:
+Przykłady:
    /cap
    /cap req multi-prefix away-notify
 ----
@@ -828,12 +831,12 @@ typ: wyświetl tylko serwisy tego typu
 ----
 
 [[command_irc_setname]]
-* `+setname+`: set real name
+* `+setname+`: ustaw real name
 
 ----
 /setname  <realname>
 
-realname: new real name
+realname: nowy real name
 ----
 
 [[command_irc_squery]]
@@ -1297,33 +1300,33 @@ Przykłady:
 
 ----
 /debug  list
-        set <plugin> <level>
-        dump [<plugin>]
+        set <wtyczka> <poziom>
+        dump [<wtyczka>]
         buffer|color|infolists|libs|certs|memory|tags|term|windows
         mouse|cursor [verbose]
         hdata [free]
-        time <command>
+        time <komenda>
 
-     list: list plugins with debug levels
-      set: set debug level for plugin
-   plugin: name of plugin ("core" for WeeChat core)
-    level: debug level for plugin (0 = disable debug)
-     dump: save memory dump in WeeChat log file (same dump is written when WeeChat crashes)
-   buffer: dump buffer content with hexadecimal values in log file
-    color: display infos about current color pairs
-   cursor: toggle debug for cursor mode
-     dirs: display directories
-    hdata: display infos about hdata (with free: remove all hdata in memory)
-    hooks: display infos about hooks
-infolists: display infos about infolists
-     libs: display infos about external libraries used
-    certs: display number of loaded trusted certificate authorities
-   memory: display infos about memory usage
-    mouse: toggle debug for mouse
-     tags: display tags for lines
-     term: display infos about terminal
-  windows: display windows tree
-     time: measure time to execute a command or to send text to the current buffer
+     list: wyświetla wtyczki z poziomem debugowania
+      set: ustawia poziom debugowania dla wtyczki
+   plugin: nazwa wtyczki ("core" dla rdzenia WeeChat)
+    poziom: poziom debugowania wtyczki (0 = wyłączony)
+     dump: zachowuje zrzut pamięci w pliku z logiem WeeChat (taki sam zrzut jest zapisywany podczas awarii WeeChat)
+   buffer: zrzuca zawartość bufora z wartościami heksadecymalnymi do pliku z logiem
+    color: wyświetla informacje na temat obecnych par kolorów
+   cursor: przełącza debugowanie dla trybu kursora
+     dirs: wyświetla katalogi
+    hdata: wyświetla informacje o hdata (z free: usuwa wszystkie hdata z pamięci)
+    hooks: wyświetla informacje o hooks
+infolists: wyświetla informacje o infolistach
+     libs: wyświetla informacje o użytych zewnętrznych bibliotekach
+    certs: wyświetla ilość załadowanych zaufanych centrów certyfikacyjnych
+   memory: wyświetla informacje o zużyciu pamięci
+    mouse: przełącza debugowanie myszy
+     tags: wyświetla tagi dla linii
+     term: wyświetla informacje o terminalu
+  windows: wyświetla drzewo okien
+     time: mierzy czas do wykonania komendy lub wysłania tekstu do obecnego bufora
 ----
 
 [[command_weechat_eval]]
@@ -1333,76 +1336,77 @@ infolists: display infos about infolists
 /eval  [-n|-s] [-d] <wyrażenie>
        [-n] [-d [-d]] -c <wyrażenie1> <operator> <wyrażenie2>
 
-        -n: wyświetla wynik bez wysyłania go do buforu (tryb debugowania)
-        -s: podziel wyrażenie przed przetworzeniem go (wiele komend może być oddzielonych średnikami)
-        -d: wyświetl wyjście debugowe po ewaluacji (drugie -d wyświetli więcej informacji)
-        -c: przetwarza jako warunek: użyj operatorów i nawiasów, zwraca wartość logiczną ("0" lub "1")
-wyrażenie: wyrażenie do przetworzenia, zmienne o formacie ${zmienna} są zastępowane (zobacz niżej); wiele komend można oddzielić średnikami
-  operator: operator logiczny lub porównania:
-            - operatory logiczne:
-                &&  logiczne „i”
-                ||  logiczne „lub”
-            - operatory porównania:
-                ==  równy
-                !=  różny
-                <=  mniejszy lub równy
-                <   mniejszy
-                >=  większy lub równy
-                >   większy
-                =~  pasuje do rozszerzonego wyrażenia regularnego POSIX
-                !~  NIE pasuje do rozszerzonego wyrażenia regularnego POSIX
-                ==*  pasuje do maski, rozróżnia wielkość znaków (dzika karta „*” dozwolona)
-                !!*  NIE pasuje do maski, rozróżnia wielkość znaków (dzika karta „*” dozwolona)
-                =*  pasuje do maski, nie rozróżnia wielkość znaków (dzika karta „*” dozwolona)
-                !*  NIE pasuje do maski, nie rozróżnia wielkość znaków (dzika karta „*” dozwolona)
-                ==-  jest zawarte, rozróżnia wielkość znaków
-                !!-  NIE jest zawarte,rozróżnia wielkość znaków
-                =-   jest zawarte, nie rozróżnia wielkość znaków
-                !-   NIE jest zawarte, nie rozróżnia wielkość znaków
+        -n: display result without sending it to buffer (debug mode)
+        -s: split expression before evaluating it (many commands can be separated by semicolons)
+        -d: display debug output after evaluation (with two -d: more verbose debug)
+        -c: evaluate as condition: use operators and parentheses, return a boolean value ("0" or "1")
+expression: expression to evaluate, variables with format ${variable} are replaced (see below); many commands can be separated by semicolons
+  operator: a logical or comparison operator:
+            - logical operators:
+                &&   boolean "and"
+                ||   boolean "or"
+            - comparison operators:
+                ==   equal
+                !=   not equal
+                <=   less or equal
+                <    less
+                >=   greater or equal
+                >    greater
+                =~   is matching POSIX extended regex
+                !~   is NOT matching POSIX extended regex
+                ==*  is matching mask, case sensitive (wildcard "*" is allowed)
+                !!*  is NOT matching mask, case sensitive (wildcard "*" is allowed)
+                =*   is matching mask, case insensitive (wildcard "*" is allowed)
+                !*   is NOT matching mask, case insensitive (wildcard "*" is allowed)
+                ==-  is included, case sensitive
+                !!-  is NOT included, case sensitive
+                =-   is included, case insensitive
+                !-   is NOT included, case insensitive
 
-Wyrażenie jest uznawane za „prawdziwe” jeśli nie jest NULL, nie jest puste, oraz różni się od „0”.
-Porównania dokonuje się z użyciem liczb całkowitych jeśli oba wyrażenia są liczbami całkowitymi, w jednym z następujących formatów:
-  - liczby całkowite (przykłady: 5, -7)
-  - liczby zmiennoprzecinkowe (przykłady: 5.2, -7.5, 2.83e-2)
-  - liczby szesnastkowe (przykłady: 0xA3, -0xA3)
-W celu wymuszenia porównywania ciągów, należy umieścić każde wyrażenie w cudzysłowie, na przykład:
+An expression is considered as "true" if it is not NULL, not empty, and different from "0".
+The comparison is made using floating point numbers if the two expressions are valid numbers, with one of the following formats:
+  - integer (examples: 5, -7)
+  - floating point number (examples: 5.2, -7.5, 2.83e-2)
+  - hexadecimal number (examples: 0xA3, -0xA3)
+To force a string comparison, you can add double quotes around each expression, for example:
   50 > 100      ==> 0
   "50" > "100"  ==> 1
 
-Niektóre zmienne w wyrażeniach są zamieniane, poprzez zastosowanie formatu ${zmienna}, według priorytetu zmienną może być:
-  1. nieprzetworzony ciąg (format: "raw:xxx")
-  2. przetworzony ciąg (format: "eval:xxx")
-  3. przetworzony warunek (format: "eval_cond:xxx")
-  4. ciąg z wyescapowanymi znakami (format: "esc:xxx" lub "\xxx")
-  5. ciąg ze znakami do ukrycia (format: "hide:char,string")
-  6. ciąg o maksymalnej długości (format: "cut:max,suffix,string" lub "cut:+max,suffix,string")
-     lub maksymalna ilość znaków wyświetlanych na ekranie (format: "cutscr:max,suffix,string" lub "cutscr:+max,suffix,string")
-  7. odwrócony ciąg (format: "rev:xxx")
-  8. powtórzony ciąg (format: "repeat:ilość,ciąg")
-  9. długość ciągu (format: "length:xxx" or "lengthscr:xxx")
-  10. kolor (format "color:xxx", zobacz „Opis API wtyczek”, funkcja "color")
-  11. modyfikator (format: "modifier:name,data,string")
-  12. informacja (format: "info:nazwa,argumenty", argumenty są opcjonalne)
-  13. ciąg zakodowany/zdekodowany z base 16/32/64 (format: "base_encode:base,xxx" lub "base_decode:base,xxx")
-  14. obecna data/czas (format: "date" lub "date:format")
-  15. zmienna środowiskowa (format: "env:XXX")
-  16. wyrażenie warunkowe (format: "if:condition?value_if_true:value_if_false")
-  17. wynik wyrażenia z nawiasami i operatorami + - * / // % ** (format: "calc:xxx")
-  18. przetłumaczony ciąg (format: "translate:xxx")
-  19. opcja (format: plik.sekcja.opcja)
-  20. zmienna lokalna w buforze
-  21. nazwa hdatay/zmiennej (wartość jest automatycznie konwertowana na ciąg znaków), domyślnie „window” i „buffer” wskazują na aktualne okno/bufor.
-Format dla hdata może być jednym z poniższych:
-  hdata.zmienna1.zmienna2...: inicjuje hdata (wskaźnik musi być znany), następnie wypytuje zmienne jedna po drugiej (inne hdata mogą być następne)
-  hdata[list].zmienna1.zmienna2...: inicjuje hdata z wykorzystaniem listy, na przykład:
-    ${buffer[gui_buffers].full_name}: pełna nazwa buforu w połączonej liście buforów
-    ${plugin[weechat_plugins].name}: nazwa pierwszej wtyczki w połączonej liście wtyczek
-  hdata[wskaźnik].zmienna1.zmienna2...: zacznij z hdata używając wskaźnika, na przykład:
-    ${buffer[0x1234abcd].full_name}: pełna nazwa buforu z tym wskaźnikiem (może zostać użyte w triggerach)
-    ${buffer[my_pointer].full_name}: pełna nazwa buforu z jego wskaźnikiem (może zostać użyte w triggerach)
-Nazwy hdata i zmiennych, można znaleźć w „Opisie API wtyczek”, funkcja "weechat_hdata_get".
+Some variables are replaced in expression, using the format ${variable}, variable can be, by order of priority:
+  1. the string itself without evaluation (format: "raw:xxx")
+  2. an evaluated sub-string (format: "eval:xxx")
+  3. an evaluated condition (format: "eval_cond:xxx")
+  4. a string with escaped chars (format: "esc:xxx" or "\xxx")
+  5. a string with chars to hide (format: "hide:char,string")
+  6. a string with max chars (format: "cut:max,suffix,string" or "cut:+max,suffix,string")
+     or max chars displayed on screen (format: "cutscr:max,suffix,string" or "cutscr:+max,suffix,string")
+  7. a reversed string (format: "rev:xxx" or "revscr:xxx")
+  8. a repeated string (format: "repeat:count,string")
+  9. length of a string (format: "length:xxx" or "lengthscr:xxx")
+  10. a color (format: "color:xxx", see "Plugin API reference", function "color")
+  11. a modifier (format: "modifier:name,data,string")
+  12. an info (format: "info:name,arguments", arguments are optional)
+  13. a base 16/32/64 encoded/decoded string (format: "base_encode:base,xxx" or "base_decode:base,xxx")
+  14. current date/time (format: "date" or "date:format")
+  15. an environment variable (format: "env:XXX")
+  16. a ternary operator (format: "if:condition?value_if_true:value_if_false")
+  17. result of an expression with parentheses and operators + - * / // % ** (format: "calc:xxx")
+  18. a random integer number (format: "random:min,max")
+  19. a translated string (format: "translate:xxx")
+  20. an option (format: "file.section.option")
+  21. a local variable in buffer
+  22. a hdata name/variable (the value is automatically converted to string), by default "window" and "buffer" point to current window/buffer.
+Format for hdata can be one of following:
+  hdata.var1.var2...: start with a hdata (pointer must be known), and ask variables one after one (other hdata can be followed)
+  hdata[list].var1.var2...: start with a hdata using a list/pointer/pointer name, for example:
+    ${buffer[gui_buffers].full_name}: full name of first buffer in linked list of buffers
+    ${plugin[weechat_plugins].name}: name of first plugin in linked list of plugins
+  hdata[pointer].var1.var2...: start with a hdata using a pointer, for example:
+    ${buffer[0x1234abcd].full_name}: full name of the buffer with this pointer (can be used in triggers)
+    ${buffer[my_pointer].full_name}: full name of the buffer with this pointer name (can be used in triggers)
+For name of hdata and variables, please look at "Plugin API reference", function "weechat_hdata_get".
 
-Przykłady (proste ciągi):
+Examples (simple strings):
   /eval -n ${raw:${info:version}}                ==> ${info:version}
   /eval -n ${eval_cond:${window.win_width}>100}  ==> 1
   /eval -n ${info:version}                       ==> 0.4.3
@@ -1423,11 +1427,12 @@ Przykłady (proste ciągi):
   /eval -n ${repeat:5,-}                         ==> -----
   /eval -n ${length:test}                        ==> 4
   /eval -n ${calc:(5+2)*3}                       ==> 21
+  /eval -n ${random:0,10}                        ==> 3
   /eval -n ${base_encode:64,test}                ==> dGVzdA==
   /eval -n ${base_decode:64,dGVzdA==}            ==> test
-  /eval -n ${translate:Plugin}                   ==> Wtyczka
+  /eval -n ${translate:Plugin}                   ==> Extension
 
-Przykłady (warunki):
+Examples (conditions):
   /eval -n -c ${window.buffer.number} > 2 ==> 0
   /eval -n -c ${window.win_width} > 100   ==> 1
   /eval -n -c (8 > 12) || (5 > 2)         ==> 1
@@ -1673,6 +1678,8 @@ windows: zapisuje/stosuje tylko okna (bufory wyświetlane w każdym oknie)
 Komenda wywołana bez argumentów wyświetli zapisane układy.
 
 Obecny układ można zapisać podczas wykonywania komendy /quit za pomocą opcji "weechat.look.save_layout_on_exit".
+
+Uwaga: zapamiętywany jest tylko podział okien i numery buforów. Bufory nie są otwierane. Oznacza to, że musisz na przykład samemu wejść na kanały IRC w celu otwarcia buforów, zapisany układ zostanie zastosowany po otwarciu buforów.
 ----
 
 [[command_weechat_mouse]]

@@ -17,10 +17,11 @@ target: Servername
 * `+allchan+`: führt einen Befehl aus der an alle Kanäle gesendet wird, die mit einem Server verbunden sind
 
 ----
-/allchan  [-current] [-exclude=<channel>[,<channel>...]] <command>
-          [-current] -include=<channel>[,<channel>...] <command>
+/allchan  [-current] [-parted] [-exclude=<channel>[,<channel>...]] <command>
+          [-current] [-parted] -include=<channel>[,<channel>...] <command>
 
  -current: führt einen Befehl aus der an alle Kanäle des aktuellen Servers gesendet wird
+  -parted: wird nur bei vom Server getrennten Kanälen ausgeführt
  -exclude: dient zum Ausschluss ausgewählter Kanäle (Platzhalter "*" kann verwendet werden)
  -include: findet Anwendung für ausgewählte Kanäle (Platzhalter "*" kann verwendet werden)\n
   command: Befehl der ausgeführt werden soll
@@ -41,6 +42,8 @@ Beispiele:
     /allchan -exclude=#weechat,#linux* Hallo Welt
   schickt den Text 'Hallo' an alle Kanäle die mit #linux beginnen:
     /allchan -include=#linux* Hallo
+  schließt alle, vom Server getrennte, Kanäle.:
+    /allchan -parted /close
 ----
 
 [[command_irc_allpv]]
@@ -1389,10 +1392,11 @@ Einige Variablen werden im Ausdruck mittels der Formatierung ${variable} ersetzt
   15. eine Umgebungsvariable (Format: "env:XXX")
   16. ein Dreifachoperand (Format: "if:Bedingung?Wert_falls_wahr:Wert_falls_unwahr")
   17. Ergebnis eines Ausdrucks mit Klammern und Operatoren + - * / // % ** (Format: "calc:xxx")
-  18. eine übersetzte Zeichenkette (Format: "translate:xxx")
-  19. eine Option (Format: "file.section.option")
-  20. eine lokale Variable eines Buffers
-  21. ein(e) hdata - Name/Variable (der Wert wird automatisch in eine Zeichenkette konvertiert), standardmäßig wird für "window" und "buffer" das aktuelle Fenster/Buffer verwendet.
+  19. eine übersetzte Zeichenkette (Format: "translate:xxx")
+  18. eine zufällige ganze Zahl (Format: "random:min,max")
+  20. eine Option (Format: "file.section.option")
+  21. eine lokale Variable eines Buffers
+  22. ein(e) hdata - Name/Variable (der Wert wird automatisch in eine Zeichenkette konvertiert), standardmäßig wird für "window" und "buffer" das aktuelle Fenster/Buffer verwendet.
 Das Format für hdata kann wie folgt aufgebaut sein:
   hdata.var1.var2...: startet mit hdata (der Pointer muss bekannt sein) und fragt eine Variable nach der anderen ab (weitere hdata können folgen)
   hdata[list].var1.var2...: startet hdata mittels einer Liste, zum Beispiel:
@@ -1424,6 +1428,7 @@ Beispiele (einfache Zeichenketten):
   /eval -n ${repeat:5,-}                         ==> -----
   /eval -n ${length:test}                        ==> 4
   /eval -n ${calc:(5+2)*3}                       ==> 21
+  /eval -n ${random:0,10}                        ==> 3
   /eval -n ${base_encode:64,test}                ==> dGVzdA==
   /eval -n ${base_decode:64,dGVzdA==}            ==> test
   /eval -n ${translate:Plugin}                   ==> Erweiterung
@@ -1674,6 +1679,8 @@ windows: erstellt bzw. verwendet nur Fenster (Buffer welche im jeweiligen Fenste
 Wird der Befehl ohne Argumente aufgerufen, werden die erstellten Layout dargestellt.
 
 Das aktuelle Layout kann beim Ausführen des /quit Befehls mit der Option "weechat.look.save_layout_on_exit" gesichert werden.
+
+Hinweis: Das Layout merkt sich nur Fenstereinteilungen und die Positionsnummern von Buffern. Layout öffnet keine Buffer. Das bedeutet zum Beispiel, dass Sie IRC-Kanäle immer noch automatisch betreten müssen, um die Buffer zu öffnen. Das gespeicherte Layout wird erst verwendet, wenn die Buffer geöffnet sind.
 ----
 
 [[command_weechat_mouse]]
@@ -2561,7 +2568,7 @@ disable: die Protokollierung wird für den aktuellen Buffer deaktiviert (der Lev
 Die Einstellungen "logger.level.*" und "logger.mask.*" können genutzt werden um den Level der Protokollierung festzulegen und um eine Maske für einen oder mehrere Buffer zu definieren.
 
 Level der Protokollierung, die die IRC Erweiterung unterstützt:
-  1: Nachrichten von Usern (private und öffentliche Nachrichten) , notice (Server und Kanal)
+  1: Nachrichten von Usern (private und öffentliche Nachrichten), notice (Server und Kanal)
   2: Wechsel von Nicks (/nick)
   3: Nachrichten vom Server
   4: join/part/quit Nachrichten

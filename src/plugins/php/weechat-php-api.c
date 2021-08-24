@@ -43,7 +43,6 @@
 #include "../plugin-script-api.h"
 #include "weechat-php.h"
 
-
 #define API_FUNC(__name)                                                \
     PHP_FUNCTION(weechat_##__name)
 #define API_INIT_FUNC(__init, __name, __ret)                            \
@@ -119,7 +118,7 @@ API_FUNC(register)
                         php_registered_script->name);
         API_RETURN_ERROR;
     }
-    if (zend_parse_parameters (ZEND_NUM_ARGS() TSRMLS_CC, "SSSSSzS",
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SSSSSzS",
                                &name, &author, &version, &license, &description,
                                &shutdown_func, &charset) == FAILURE)
     {

@@ -1845,6 +1845,50 @@
 ** Standardwert: `+"${weechat_runtime_dir}/weechat_fifo_${info:pid}"+`
 // end::fifo_options[]
 
+// tag::typing_options[]
+* [[option_typing.look.delay_purge_paused]] *typing.look.delay_purge_paused*
+** Beschreibung: pass:none[Anzahl der Sekunden, nachdem der Pausenstatus gesetzt wurde: wenn erreicht, wird der Tippstatus entfernt]
+** Typ: integer
+** Werte: 1 .. 2147483647
+** Standardwert: `+30+`
+
+* [[option_typing.look.delay_purge_typing]] *typing.look.delay_purge_typing*
+** Beschreibung: pass:none[Anzahl der Sekunden nach Setzen des Tippstatuses: wenn erreicht, wird der Tipptatus entfernt]
+** Typ: integer
+** Werte: 1 .. 2147483647
+** Standardwert: `+6+`
+
+* [[option_typing.look.delay_set_paused]] *typing.look.delay_set_paused*
+** Beschreibung: pass:none[Anzahl der Sekunden nach Eingabe des letzten Zeichens: wenn erreicht, wird der Schreibstatus "pausiert" und es werden keine Schreibsignale mehr gesendet]
+** Typ: integer
+** Werte: 1 .. 2147483647
+** Standardwert: `+10+`
+
+* [[option_typing.look.enabled_nicks]] *typing.look.enabled_nicks*
+** Beschreibung: pass:none[Tippfunktion für andere Nicks aktiviert (Anzeige von Tippinfos für Nicks, die im aktuellen Buffer schreiben)]
+** Typ: boolesch
+** Werte: on, off
+** Standardwert: `+off+`
+
+* [[option_typing.look.enabled_self]] *typing.look.enabled_self*
+** Beschreibung: pass:none[Tippfunktion für eigene Nachrichten aktiviert (Schreibinformationen an andere Benutzer senden)]
+** Typ: boolesch
+** Werte: on, off
+** Standardwert: `+off+`
+
+* [[option_typing.look.input_min_chars]] *typing.look.input_min_chars*
+** Beschreibung: pass:none[Mindestanzahl von Zeichen in der Nachricht, um das Senden von Tippsignalen auszulösen]
+** Typ: integer
+** Werte: 1 .. 2147483647
+** Standardwert: `+4+`
+
+* [[option_typing.look.item_max_length]] *typing.look.item_max_length*
+** Beschreibung: pass:none[maximale Anzahl von Zeichen, die im Bar-Item "typing" angezeigt werden (0 = Inhalt nicht abschneiden)]
+** Typ: integer
+** Werte: 0 .. 2147483647
+** Standardwert: `+0+`
+// end::typing_options[]
+
 // tag::xfer_options[]
 * [[option_xfer.color.status_aborted]] *xfer.color.status_aborted*
 ** Beschreibung: pass:none[Textfarbe für Status: "abgebrochen"]
@@ -2516,6 +2560,18 @@
 
 * [[option_irc.look.topic_strip_colors]] *irc.look.topic_strip_colors*
 ** Beschreibung: pass:none[Farben werden im Kanalthema entfernt (wird nur genutzt wenn der Buffer-Titel angezeigt wird)]
+** Typ: boolesch
+** Werte: on, off
+** Standardwert: `+off+`
+
+* [[option_irc.look.typing_status_nicks]] *irc.look.typing_status_nicks*
+** Beschreibung: pass:none[Nicks in der Bar-Item "typing" anzeigen, die in dem Kanal tippen (Option typing.look.enabled_nicks muss aktiviert sein und die Fähigkeit "message-tags" muss auf dem Server aktiviert sein)]
+** Typ: boolesch
+** Werte: on, off
+** Standardwert: `+off+`
+
+* [[option_irc.look.typing_status_self]] *irc.look.typing_status_self*
+** Beschreibung: pass:none[sendet den eigenen Tippstatus an Kanäle, damit andere Benutzer sehen, wenn Sie eine Nachricht schreiben (Option typing.look.enabled_self muss aktiviert sein und die Fähigkeit "message-tags" muss auf dem Server aktiviert sein)]
 ** Typ: boolesch
 ** Werte: on, off
 ** Standardwert: `+off+`

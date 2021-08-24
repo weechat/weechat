@@ -559,9 +559,10 @@ Der bracketed paste Modus kann wie folgt deaktiviert werden:
 [[small_terminal]]
 === Wie kann ich die Anzeige bei sehr kleinen Terminalgrößen (wie 80 x 25) optimieren, um keinen Platz zu verschwenden?
 
-Sie können die seitlichen Bars (Buflist und Nicklist) entfernen und das Zeitformat im Buffer anpassen,
-sodass nur Stunden und Sekunden angezeigt werden. Die Ausrichtung von Nachrichten sollte deaktiviert
-und der Präfix/Suffix für Nicks gesetzt werden:
+Die seitlichen Bars (buflist und nicklist) können deaktiviert werden, die Datums-
+anzeige sollte nur Stunden und Minuten darstellen, die Ausrichtung von Nach-
+richten sollte ebenfalls deaktiviert werden und es sollte der Nick mit einen
+Präfix und Suffix vesehen werden:
 
 ----
 /set buflist.look.enabled off

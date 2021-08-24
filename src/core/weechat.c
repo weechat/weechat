@@ -47,6 +47,7 @@
 #include <getopt.h>
 #include <sys/stat.h>
 #include <sys/time.h>
+#include <sys/types.h>
 #include <time.h>
 #include <signal.h>
 
@@ -609,6 +610,11 @@ weechat_init (int argc, char *argv[], void (*gui_init_cb)())
 {
     weechat_first_start_time = time (NULL); /* initialize start time        */
     gettimeofday (&weechat_current_start_timeval, NULL);
+
+    /* set the seed for the pseudo-random integer generator */
+    srand ((weechat_current_start_timeval.tv_sec
+            * weechat_current_start_timeval.tv_usec)
+           ^ getpid ());
 
     signal_init ();                     /* initialize signals               */
     hdata_init ();                      /* initialize hdata                 */

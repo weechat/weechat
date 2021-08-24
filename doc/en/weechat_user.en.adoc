@@ -176,11 +176,11 @@ $ make
 $ make install
 ----
 
-Options can be used for CMake, with format: "-DOPTION=VALUE".
+Options can be used for CMake, with format: `-DOPTION=VALUE`.
 
 List of commonly used options:
 
-[width="100%",cols="2m,2,5m,12",options="header"]
+[width="100%",cols="3m,3,3m,10",options="header"]
 |===
 | Option | Values | Default value | Description
 
@@ -282,6 +282,9 @@ List of commonly used options:
 
 | ENABLE_TRIGGER | `ON`, `OFF` | ON |
   Compile <<trigger_plugin,Trigger plugin>>.
+
+| ENABLE_TYPING | `ON`, `OFF` | ON |
+  Compile <<typing_plugin,Typing plugin>>.
 
 | ENABLE_XFER | `ON`, `OFF` | ON |
   Compile <<xfer_plugin,Xfer plugin>>.
@@ -723,6 +726,7 @@ The files in the WeeChat home directory are:
 | tcl.conf        | Configuration file for _tcl_ plugin        | No.
 | spell.conf      | Configuration file for _spell_ plugin      | No.
 | trigger.conf    | Configuration file for _trigger_ plugin    | Possible, depends on triggers.
+| typing.conf     | Configuration file for _typing_ plugin     | No.
 | xfer.conf       | Configuration file for _xfer_ plugin       | No.
 | weechat.log     | WeeChat log file                           | No.
 |===
@@ -2248,7 +2252,7 @@ Event name consists of a modifier (optional), a button/wheel name and a gesture
 
 List of modifiers:
 
-[width="100%",cols="2m,3",options="header"]
+[width="100%",cols="1m,4",options="header"]
 |===
 | Modifier | Description
 | ctrl     | Key kbd:[Ctrl]
@@ -2258,7 +2262,7 @@ List of modifiers:
 
 List of buttons/wheel:
 
-[width="100%",cols="2m,3",options="header"]
+[width="100%",cols="1m,4",options="header"]
 |===
 | Button/wheel        | Description
 | button1             | Click on left button
@@ -2271,7 +2275,7 @@ List of buttons/wheel:
 
 List of gestures (only for buttons, not wheel):
 
-[width="100%",cols="2m,3",options="header"]
+[width="100%",cols="1m,4",options="header"]
 |===
 | Gesture            | Distance
 | gesture-up         | 3 ... 19
@@ -2286,7 +2290,7 @@ List of gestures (only for buttons, not wheel):
 
 List of incomplete events (only for buttons, useful for plugins/scripts):
 
-[width="100%",cols="2m,3",options="header"]
+[width="100%",cols="1m,4",options="header"]
 |===
 | Event      | Description
 | event-down | Button was pressed but not released yet
@@ -2533,6 +2537,7 @@ Default plugins are:
 | php        | PHP scripting API.
 | spell      | Spell checking for command line.
 | trigger    | Text replacement and command execution on events triggered by WeeChat/plugins.
+| typing     | Display users currently writing messages.
 | xfer       | File transfer and direct chat.
 |===
 
@@ -2852,15 +2857,130 @@ It is possible to give URL for one or many IRC servers, as follow:
 irc[6][s]://[nick[:password]@]irc.example.org[:port][/channel][,channel[...]]
 ----
 
-Example to join _#weechat_ and _#toto_ on server _irc.libera.chat_ server,
-default port (6667), with nick _nono_:
+Example to join _#weechat_ and _#weechat-fr_ on server _irc.libera.chat_ server,
+default port (6667), with nick _alice_:
 
 ----
-$ weechat irc://nono@irc.libera.chat/#weechat,#toto
+$ weechat irc://alice@irc.libera.chat/#weechat,#weechat-fr
+----
+
+[[irc_servers]]
+==== Servers
+
+[[irc_servers_add]]
+===== Add a server
+
+By default no servers are defined. You can add as many servers as you want with
+the <<command_irc_server,/server>> command.
+
+For example to connect to https://libera.chat/[libera.chat] with SSL (encrypted trafic):
+
+----
+/server add libera irc.libera.chat/6697 -ssl
+----
+
+You can tell WeeChat to auto-connect to this server on startup:
+
+----
+/set irc.server.libera.autoconnect on
+----
+
+To authenticate, it is recommended to use SASL (if supported on the server),
+with the password stored as secured data (see also chapter on
+<<irc_sasl_authentication,SASL authentication>>):
+
+----
+/set irc.server.libera.sasl_username "alice"
+/secure set libera xxxxxxx
+/set irc.server.libera.sasl_password "${sec.data.libera}"
+----
+
+If SASL is not supported, you can use a command to send a message to nickserv:
+
+----
+/set irc.server.libera.command "/msg nickserv identify ${sec.data.libera}"
+----
+
+[NOTE]
+By sending a message to nickserv, you may authenticate after joining channels
+which could be a problem on some channels requiring you to be authenticated
+to join. In this case, you can set a command delay:
+`/set irc.server.libera.command_delay 5`.
+
+[[irc_servers_options]]
+===== Server options
+
+Server options are named `irc.server.<server>.<option>` where `<server>` is the
+internal name of the server and `<option>` the name of an option. +
+The value of a server option is inherited from `irc.server_default.xxx`
+if the server option has the special value `null`.
+
+For example if you created the _libera_ server with the commands above, you'll
+see this with the command `/fset libera`:
+
+....
+irc.server.libera.addresses             string   "irc.libera.chat/6697"
+irc.server.libera.anti_flood_prio_high  integer  null -> 2
+irc.server.libera.anti_flood_prio_low   integer  null -> 2
+irc.server.libera.autoconnect           boolean  on
+irc.server.libera.autojoin              string   null -> ""
+irc.server.libera.autoreconnect         boolean  null -> on
+irc.server.libera.autoreconnect_delay   integer  null -> 10
+irc.server.libera.autorejoin            boolean  null -> off
+irc.server.libera.autorejoin_delay      integer  null -> 30
+irc.server.libera.away_check            integer  null -> 0
+irc.server.libera.away_check_max_nicks  integer  null -> 25
+irc.server.libera.capabilities          string   null -> "*"
+irc.server.libera.charset_message       integer  null -> message
+irc.server.libera.command               string   null -> ""
+irc.server.libera.command_delay         integer  null -> 0
+irc.server.libera.connection_timeout    integer  null -> 60
+irc.server.libera.default_chantypes     string   null -> "#&"
+irc.server.libera.ipv6                  boolean  null -> on
+irc.server.libera.local_hostname        string   null -> ""
+irc.server.libera.msg_kick              string   null -> ""
+irc.server.libera.msg_part              string   null -> "WeeChat ${info:version}"
+irc.server.libera.msg_quit              string   null -> "WeeChat ${info:version}"
+irc.server.libera.nicks                 string   null -> "alice,alice1,alice2,alice3,alice4"
+irc.server.libera.nicks_alternate       boolean  null -> on
+irc.server.libera.notify                string   null -> ""
+irc.server.libera.password              string   null -> ""
+irc.server.libera.proxy                 string   null -> ""
+irc.server.libera.realname              string   null -> ""
+irc.server.libera.sasl_fail             integer  null -> reconnect
+irc.server.libera.sasl_key              string   null -> ""
+irc.server.libera.sasl_mechanism        integer  null -> plain
+irc.server.libera.sasl_password         string   "${sec.data.libera}"
+irc.server.libera.sasl_timeout          integer  null -> 15
+irc.server.libera.sasl_username         string   "alice"
+irc.server.libera.split_msg_max_length  integer  null -> 512
+irc.server.libera.ssl                   boolean  on
+irc.server.libera.ssl_cert              string   null -> ""
+irc.server.libera.ssl_dhkey_size        integer  null -> 2048
+irc.server.libera.ssl_fingerprint       string   null -> ""
+irc.server.libera.ssl_password          string   null -> ""
+irc.server.libera.ssl_priorities        string   null -> "NORMAL:-VERS-SSL3.0"
+irc.server.libera.ssl_verify            boolean  null -> on
+irc.server.libera.usermode              string   null -> ""
+irc.server.libera.username              string   null -> "alice"
+....
+
+For example if you want to automatically connect to all servers you define
+without having to do it on each server, you can do:
+
+----
+/set irc.server_default.autoconnect on
+----
+
+And then you can reset the server option so that it uses the default inherited
+value, which is now `on` instead of the default value `off`:
+
+----
+/unset irc.server.libera.autoconnect
 ----
 
 [[irc_ssl_certificates]]
-==== SSL certificates
+===== SSL certificates
 
 When connecting to IRC server with SSL, WeeChat checks by default that the
 connection is fully trusted.
@@ -2889,7 +3009,7 @@ Option "ssl_verify" is on by default, so verification is strict and may fail,
 even if it was OK with versions prior to 0.3.1.
 
 [[irc_connect_oftc_with_certificate]]
-===== First example: connect to oftc and check certificate
+====== First example: connect to oftc and check certificate
 
 * Import certificate in shell:
 
@@ -2912,7 +3032,7 @@ It is possible to concatenate many certificates in file CAs.pem.
 ----
 
 [[irc_connect_oftc_with_certfp]]
-===== Second example: connect to oftc using CertFP
+====== Second example: connect to oftc using CertFP
 
 * Create certificate in shell:
 
@@ -2937,7 +3057,7 @@ which can also be for example `~/.weechat`.
 For more information, look at https://www.oftc.net/NickServ/CertFP
 
 [[irc_sasl_authentication]]
-==== SASL authentication
+===== SASL authentication
 
 WeeChat supports SASL authentication, using different mechanisms:
 
@@ -2959,7 +3079,7 @@ Options in servers are:
   _ecdsa-nist256p-challenge_)
 
 [[irc_sasl_ecdsa_nist256p_challenge]]
-===== SASL ECDSA-NIST256P-CHALLENGE
+====== SASL ECDSA-NIST256P-CHALLENGE
 
 You must generate a private key in order to authentify with the
 ECDSA-NIST256P-CHALLENGE mechanism (no password is required on connection).
@@ -3004,8 +3124,39 @@ Reconnect to the server:
 /reconnect libera
 ----
 
+[[irc_servers_connection]]
+===== Connection
+
+You can connect to server with the <<command_irc_connect,/connect>> command:
+
+----
+/connect libera
+----
+
+To disconnect:
+
+----
+/disconnect libera
+----
+
+Or just this if you are on any buffer belonging to _libera_ server (server,
+channel, private):
+
+----
+/disconnect
+----
+
+When you connect to multiple servers at same time, server buffers are merged
+by default and you can switch between them with the kbd:[Ctrl+x] key. +
+It is possible to disable auto merge of server buffers to have independent
+server buffers:
+
+----
+/set irc.look.server_buffer independent
+----
+
 [[irc_tor_sasl]]
-==== Connect with TOR and SASL
+===== Connect with TOR and SASL
 
 Some servers support connections with TOR (https://www.torproject.org/),
 a network of virtual tunnels that allows people and groups to improve their
@@ -3050,6 +3201,63 @@ And finally, connect to the server:
 
 ----
 /connect irc-tor
+----
+
+[[irc_channels]]
+==== Channels
+
+You can join channels with the <<command_irc_join,/join>> command:
+
+----
+/join #channel
+----
+
+Part a channel (keeping the buffer open):
+
+----
+/part [quit message]
+----
+
+The channels you joined are not saved. If you want to join them automatically
+when connecting to the server, you must set the server `autojoin` option:
+
+----
+/set irc.server.libera.autojoin "#weechat,#weechat-fr"
+----
+
+[NOTE]
+Some scripts can help to automatically set this option,
+see `/script search autojoin`.
+
+Be careful, spaces can be used only to separate list of channels from keys,
+for example if `#channel1` requires a key but not `#channel2`:
+
+----
+/set irc.server.libera.autojoin "#channel1,#channel2 key1"
+----
+
+For help on the format, see `/help irc.server.libera.autojoin`.
+
+[[irc_private_messages]]
+==== Private messages
+
+You can send a private message with the <<command_irc_query,/query>> command,
+which opens a separate buffer:
+
+----
+/query bob hi, how are you?
+----
+
+Without arguments the command just opens the buffer (or selects it if already open):
+
+----
+/query bob
+----
+
+To close the private buffer, you can do this command on the private buffer:
+
+----
+/close
 ----
 
 [[irc_smart_filter_join_part_quit]]
@@ -3190,7 +3398,7 @@ server or channel buffer.
 
 Non-comprehensive list of IRC messages or alias that you can customize:
 
-[width="100%",cols="^1m,^3m,8",options="header"]
+[width="100%",cols="^2m,^3m,15",options="header"]
 |===
 | message | alias         | description
 | error   |               | error
@@ -3454,8 +3662,8 @@ You'll have following files:
         │   └── #mychan.weechatlog
         ├── oftc
         │   ├── oftc.weechatlog
-        │   ├── #chan1.weechatlog
-        │   └── #chan2.weechatlog
+        │   ├── #channel1.weechatlog
+        │   └── #channel2.weechatlog
         ...
 ....
 
@@ -4693,6 +4901,99 @@ Sections in file _trigger.conf_:
 Options:
 
 include::includes/autogen_user_options.en.adoc[tag=trigger_options]
+
+[[typing_plugin]]
+=== Typing
+
+The typing plugin is used to inform other users you are typing messages and
+show a list of users currently typing a message on the buffer.
+
+It is used by IRC plugin on channel and private buffers, when the "message-tags"
+capability is enabled (you can check with <<command_irc_cap,/cap>> command). +
+Under the hood, typing client tag is used, following this specification:
+https://ircv3.net/specs/client-tags/typing.html.
+
+[[typing_activation]]
+==== Activation
+
+For privacy considerations, the typing feature is disabled by default. +
+If you want to use it, you must enable options in both typing and irc plugins:
+
+----
+/set typing.look.enabled_nicks on
+/set typing.look.enabled_self on
+/set irc.look.typing_status_nicks on
+/set irc.look.typing_status_self on
+----
+
+The typing notifications are displayed at the end of the status bar.
+
+Example of status bar with the "typing" item: "bob" is typing a message and
+"alice" was typing a message but made a pause:
+
+....
+│[12:55] [6] [irc/libera] 3:#test(+n){4} [Typing: bob, (alice)]                   │
+│[@Flashy] █                                                                      │
+└─────────────────────────────────────────────────────────────────────────────────┘
+....
+
+[[typing_signals_sent]]
+==== Signals sent
+
+When you are typing a message (not a command starting with `/`), the typing
+plugin sends signals to inform other plugins (like IRC) that you are typing,
+and these plugins can then send typing notifications to other users.
+
+The following signals are sent when you are typing messages:
+
+[width="100%",cols="1,1,5",options="header"]
+|===
+| Signal              | Arguments        | Description
+| typing_self_typing  | Pointer: buffer. | You are typing a message.
+| typing_self_paused  | Pointer: buffer. | You made a pause while typing a message.
+| typing_self_cleared | Pointer: buffer. | You cleared the command line without sending the message.
+| typing_self_sent    | Pointer: buffer. | You sent the message to the buffer.
+|===
+
+[[typing_signals_caught]]
+==== Signals caught
+
+The typing plugin is catching some signals that can be sent by other plugins
+(like IRC), to update internal hashtables used to store the typing state of
+nicks on buffers. These hashtables are used to build the content of "typing"
+bar item.
+
+The following signals are caught by the typing plugin:
+
+[width="100%",cols="1,4,3",options="header"]
+|===
+| Signal | Arguments | Description
+
+| typing_set_nick |
+  String: buffer pointer + ";" + state (one of: "off", "typing", "paused",
+  "cleared") + ";" + nick. +
+  Example: "0x1234abcd;typing;alice". |
+  Set typing state for a nick on a buffer.
+
+| typing_reset_buffer |
+  Pointer: buffer. |
+  Remove typing state for all nicks on a buffer.
+|===
+
+[[typing_options]]
+==== Options
+
+Sections in file _typing.conf_:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section | Control command    | Description
+| look    | /set typing.look.* | Look and feel.
+|===
+
+Options:
+
+include::includes/autogen_user_options.en.adoc[tag=typing_options]
 
 [[xfer_plugin]]
 === Xfer

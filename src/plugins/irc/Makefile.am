@@ -73,6 +73,8 @@ irc_la_SOURCES = irc.c \
                  irc-server.h \
                  irc-tag.c \
                  irc-tag.h \
+                 irc-typing.c \
+                 irc-typing.h \
                  irc-upgrade.c \
                  irc-upgrade.h
 

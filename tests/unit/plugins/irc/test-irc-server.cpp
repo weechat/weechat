@@ -251,6 +251,74 @@ TEST(IrcServer, SetPrefixModesChars)
 
 /*
  * Tests functions:
+ *   irc_server_set_clienttagdeny
+ */
+
+TEST(IrcServer, SetClienttagdeny)
+{
+    struct t_irc_server *server;
+
+    server = irc_server_alloc ("test_clienttagdeny");
+    CHECK(server);
+
+    POINTERS_EQUAL(NULL, server->clienttagdeny);
+    LONGS_EQUAL(0, server->clienttagdeny_count);
+    POINTERS_EQUAL(NULL, server->clienttagdeny_array);
+    LONGS_EQUAL(1, server->typing_allowed);
+
+    irc_server_set_clienttagdeny (server, "*");
+    irc_server_set_clienttagdeny (server, NULL);
+    POINTERS_EQUAL(NULL, server->clienttagdeny);
+    LONGS_EQUAL(0, server->clienttagdeny_count);
+    POINTERS_EQUAL(NULL, server->clienttagdeny_array);
+    LONGS_EQUAL(1, server->typing_allowed);
+
+    irc_server_set_clienttagdeny (server, "*");
+    irc_server_set_clienttagdeny (server, "");
+    POINTERS_EQUAL(NULL, server->clienttagdeny);
+    LONGS_EQUAL(0, server->clienttagdeny_count);
+    POINTERS_EQUAL(NULL, server->clienttagdeny_array);
+    LONGS_EQUAL(1, server->typing_allowed);
+
+    irc_server_set_clienttagdeny (server, "*");
+    STRCMP_EQUAL("*", server->clienttagdeny);
+    LONGS_EQUAL(1, server->clienttagdeny_count);
+    STRCMP_EQUAL("*", server->clienttagdeny_array[0]);
+    POINTERS_EQUAL(NULL, server->clienttagdeny_array[1]);
+    LONGS_EQUAL(0, server->typing_allowed);
+
+    irc_server_set_clienttagdeny (server, "*,-foo");
+    STRCMP_EQUAL("*,-foo", server->clienttagdeny);
+    LONGS_EQUAL(2, server->clienttagdeny_count);
+    STRCMP_EQUAL("*", server->clienttagdeny_array[0]);
+    STRCMP_EQUAL("!foo", server->clienttagdeny_array[1]);
+    POINTERS_EQUAL(NULL, server->clienttagdeny_array[2]);
+    LONGS_EQUAL(0, server->typing_allowed);
+
+    irc_server_set_clienttagdeny (server, "*,-foo,-example/bar");
+    STRCMP_EQUAL("*,-foo,-example/bar", server->clienttagdeny);
+    LONGS_EQUAL(3, server->clienttagdeny_count);
+    STRCMP_EQUAL("*", server->clienttagdeny_array[0]);
+    STRCMP_EQUAL("!foo", server->clienttagdeny_array[1]);
+    STRCMP_EQUAL("!example/bar", server->clienttagdeny_array[2]);
+    POINTERS_EQUAL(NULL, server->clienttagdeny_array[3]);
+    LONGS_EQUAL(0, server->typing_allowed);
+
+    irc_server_set_clienttagdeny (server, "*,-foo,-example/bar,-typing");
+    STRCMP_EQUAL("*,-foo,-example/bar,-typing", server->clienttagdeny);
+    LONGS_EQUAL(4, server->clienttagdeny_count);
+    STRCMP_EQUAL("*", server->clienttagdeny_array[0]);
+    STRCMP_EQUAL("!foo", server->clienttagdeny_array[1]);
+    STRCMP_EQUAL("!example/bar", server->clienttagdeny_array[2]);
+    STRCMP_EQUAL("!typing", server->clienttagdeny_array[3]);
+    POINTERS_EQUAL(NULL, server->clienttagdeny_array[4]);
+    LONGS_EQUAL(1, server->typing_allowed);
+
+    irc_server_free (server);
+}
+
+/*
+ * Tests functions:
  *   irc_server_set_lag
  */
 
