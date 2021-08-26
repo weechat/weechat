@@ -42,6 +42,8 @@ add_library(irc MODULE
   irc-redirect.c irc-redirect.h
   irc-sasl.c irc-sasl.h
   irc-server.c irc-server.h
+  irc-tag.c irc-tag.h
+  irc-typing.c irc-typing.h
   irc-upgrade.c irc-upgrade.h
 )
 set_target_properties(irc PROPERTIES PREFIX "")

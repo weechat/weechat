@@ -82,7 +82,7 @@ https://github.com/weechat/weechat/milestones[milestones] on GitHub.
 Pull requests on GitHub are welcome for minor new features.
 
 For major new features, it's better to discuss about it in IRC
-(server: _chat.freenode.net_, channel _#weechat_).
+(server: _irc.libera.chat_, channel _#weechat_).
 
 Before submitting any pull request, be sure you have read the
 https://weechat.org/files/doc/devel/weechat_dev.en.html#coding_rules[coding rules]

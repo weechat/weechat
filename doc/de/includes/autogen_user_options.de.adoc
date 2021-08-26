@@ -55,7 +55,7 @@
 ** Standardwert: `+white+`
 
 * [[option_weechat.color.chat_channel]] *weechat.color.chat_channel*
-** Beschreibung: pass:none[Farbe für den Channel-Namen]
+** Beschreibung: pass:none[Farbe für den Kanalnamen]
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
 ** Standardwert: `+white+`
@@ -403,7 +403,7 @@
 ** Standardwert: `+default+`
 
 * [[option_weechat.color.status_number]] *weechat.color.status_number*
-** Beschreibung: pass:none[Farbe des aktuellen Channels in der Statuszeile]
+** Beschreibung: pass:none[Farbe des aktuellen Kanals in der Statuszeile]
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
 ** Standardwert: `+yellow+`
@@ -1315,43 +1315,43 @@
 ** Standardwert: `+on+`
 
 * [[option_weechat.signal.sighup]] *weechat.signal.sighup*
-** Beschreibung: pass:none[Befehl zum Ausführen, wenn das Signal empfangen wird. Mehrere Befehle können durch Semikolons getrennt werden (Hinweis: Inhalt wird ausgewertet, siehe / help eval)]
+** Beschreibung: pass:none[Befehl welcher ausgeführt werden soll, wenn das Signal empfangen wird. Mehrere Befehle können durch Semikolons getrennt werden (Hinweis: Inhalt wird ausgewertet, siehe / help eval)]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+"${if:${info:weechat_headless}?/reload:/quit -yes}"+`
 
 * [[option_weechat.signal.sigquit]] *weechat.signal.sigquit*
-** Beschreibung: pass:none[Befehl zum Ausführen, wenn das Signal empfangen wird. Mehrere Befehle können durch Semikolons getrennt werden (Hinweis: Inhalt wird ausgewertet, siehe / help eval)]
+** Beschreibung: pass:none[Befehl welcher ausgeführt werden soll, wenn das Signal empfangen wird. Mehrere Befehle können durch Semikolons getrennt werden (Hinweis: Inhalt wird ausgewertet, siehe / help eval)]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+"/quit -yes"+`
 
 * [[option_weechat.signal.sigterm]] *weechat.signal.sigterm*
-** Beschreibung: pass:none[Befehl zum Ausführen, wenn das Signal empfangen wird. Mehrere Befehle können durch Semikolons getrennt werden (Hinweis: Inhalt wird ausgewertet, siehe / help eval)]
+** Beschreibung: pass:none[Befehl welcher ausgeführt werden soll, wenn das Signal empfangen wird. Mehrere Befehle können durch Semikolons getrennt werden (Hinweis: Inhalt wird ausgewertet, siehe / help eval)]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+"/quit -yes"+`
 
 * [[option_weechat.signal.sigusr1]] *weechat.signal.sigusr1*
-** Beschreibung: pass:none[Befehl zum Ausführen, wenn das Signal empfangen wird. Mehrere Befehle können durch Semikolons getrennt werden (Hinweis: Inhalt wird ausgewertet, siehe / help eval)]
+** Beschreibung: pass:none[Befehl welcher ausgeführt werden soll, wenn das Signal empfangen wird. Mehrere Befehle können durch Semikolons getrennt werden (Hinweis: Inhalt wird ausgewertet, siehe / help eval)]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+""+`
 
 * [[option_weechat.signal.sigusr2]] *weechat.signal.sigusr2*
-** Beschreibung: pass:none[Befehl zum Ausführen, wenn das Signal empfangen wird. Mehrere Befehle können durch Semikolons getrennt werden (Hinweis: Inhalt wird ausgewertet, siehe / help eval)]
+** Beschreibung: pass:none[Befehl welcher ausgeführt werden soll, wenn das Signal empfangen wird. Mehrere Befehle können durch Semikolons getrennt werden (Hinweis: Inhalt wird ausgewertet, siehe / help eval)]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+""+`
 
 * [[option_weechat.startup.command_after_plugins]] *weechat.startup.command_after_plugins*
-** Beschreibung: pass:none[Nach dem Start von WeeChat wird dieser Befehl aufgerufen. Dies geschieht nachdem die Erweiterungen geladen worden sind (mehrere Befehle sind durch ";" zu trennen) (Hinweis: Inhalt wird evaluiert, siehe /help eval)]
+** Beschreibung: pass:none[Befehl wird ausgeführt, wenn WeeChat gestartet wird, nachdem die Erweiterungen geladen wurden. Mehrere Befehle können durch Semikolons getrennt werden (Hinweis: Inhalt wird ausgewertet, siehe / help eval)]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+""+`
 
 * [[option_weechat.startup.command_before_plugins]] *weechat.startup.command_before_plugins*
-** Beschreibung: pass:none[Nach dem Start von WeeChat wird dieser Befehl aufgerufen. Dies geschieht bevor die Erweiterungen geladen werden (mehrere Befehle sind durch ";" zu trennen) (Hinweis: Inhalt wird evaluiert, siehe /help eval)]
+** Beschreibung: pass:none[Befehl wird ausgeführt, wenn WeeChat gestartet wird, bevor Erweiterungen geladen werden. Mehrere Befehle können durch Semikolons getrennt werden (Hinweis: Inhalt wird ausgewertet, siehe / help eval)]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+""+`
@@ -1723,7 +1723,7 @@
 ** Standardwert: `+"${color:default},"+`
 
 * [[option_buflist.format.indent]] *buflist.format.indent*
-** Beschreibung: pass:none[Zeichenkette die beim Einrücken von Channel und privaten Buffern angezeigt wird (Hinweis: Inhalt wird evaluiert, siehe /help buflist)]
+** Beschreibung: pass:none[Zeichenkette die beim Einrücken von Kanal und privaten Buffern angezeigt wird (Hinweis: Inhalt wird evaluiert, siehe /help buflist)]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+"  "+`
@@ -1741,7 +1741,7 @@
 ** Standardwert: `+"${name}"+`
 
 * [[option_buflist.format.nick_prefix]] *buflist.format.nick_prefix*
-** Beschreibung: pass:none[Format des Nick-Präfix für einen Channel (Hinweis: Inhalt wird evaluiert, siehe /help buflist)]
+** Beschreibung: pass:none[Format des Nick-Präfix für einen Kanal (Hinweis: Inhalt wird evaluiert, siehe /help buflist)]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+"${color_nick_prefix}${nick_prefix}"+`
@@ -1753,7 +1753,7 @@
 ** Standardwert: `+"${color:green}${number}${if:${number_displayed}?.: }"+`
 
 * [[option_buflist.format.tls_version]] *buflist.format.tls_version*
-** Beschreibung: pass:none[format for TLS version on an IRC server buffer (note: content is evaluated, see /help buflist)]
+** Beschreibung: pass:none[Format für die TLS-Version für einen  IRC-Serverbuffer (Hinweis: Inhalt wird evaluiert, siehe /help buflist)]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+" ${color:default}(${if:${tls_version}==TLS1.3?${color:green}:${if:${tls_version}==TLS1.2?${color:yellow}:${color:red}}}${translate:${tls_version}}${color:default})"+`
@@ -1819,7 +1819,7 @@
 ** Standardwert: `+""+`
 
 * [[option_buflist.look.sort]] *buflist.look.sort*
-** Beschreibung: pass:none[durch Kommata getrennte Liste von Feldern um die Buffer zu sortieren; jedes Feld ist entweder eine hdata Variable von Buffer ("var"), eine hdata Variable vom Typ IRC Server ("irc_server.var") oder eine hdata Variable vom Typ IRC Channel ("irc_channel.var"); wird das "-" Zeichen vor einem Feld angewendet, wird die Ausgabe umgekehrt, um bei einem Vergleich nicht zwischen Groß- und Kleinschreibung zu unterscheiden wird das Zeichen "~" verwendet; Beispiel: "-~short_name" sortiert die Buffer nach ihren Kurznamen, wobei dies invertiert passiert und nicht zwischen Groß-oder Kleinschreibung unterschieden wird (Hinweis: der Inhalt ist evaluiert, vor dem Aufteilen in Felder, kann nur die Variable "bar_item" genutzt werden, um zwischen verschiedenen Buffer-Items zu unterscheiden, zum Beispiel "${bar_item.name}")]
+** Beschreibung: pass:none[durch Kommata getrennte Liste von Feldern um die Buffer zu sortieren; jedes Feld ist entweder eine hdata Variable von Buffer ("var"), eine hdata Variable vom Typ IRC Server ("irc_server.var") oder eine hdata Variable vom Typ IRC Kanal ("irc_channel.var"); wird das "-" Zeichen vor einem Feld angewendet, wird die Ausgabe umgekehrt, um bei einem Vergleich nicht zwischen Groß- und Kleinschreibung zu unterscheiden wird das Zeichen "~" verwendet; Beispiel: "-~short_name" sortiert die Buffer nach ihren Kurznamen, wobei dies invertiert passiert und nicht zwischen Groß-oder Kleinschreibung unterschieden wird (Hinweis: der Inhalt ist evaluiert, vor dem Aufteilen in Felder, kann nur die Variable "bar_item" genutzt werden, um zwischen verschiedenen Buffer-Items zu unterscheiden, zum Beispiel "${bar_item.name}")]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+"number,-active"+`
@@ -1844,6 +1844,50 @@
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+"${weechat_runtime_dir}/weechat_fifo_${info:pid}"+`
 // end::fifo_options[]
+
+// tag::typing_options[]
+* [[option_typing.look.delay_purge_paused]] *typing.look.delay_purge_paused*
+** Beschreibung: pass:none[Anzahl der Sekunden, nachdem der Pausenstatus gesetzt wurde: wenn erreicht, wird der Tippstatus entfernt]
+** Typ: integer
+** Werte: 1 .. 2147483647
+** Standardwert: `+30+`
+
+* [[option_typing.look.delay_purge_typing]] *typing.look.delay_purge_typing*
+** Beschreibung: pass:none[Anzahl der Sekunden nach Setzen des Tippstatuses: wenn erreicht, wird der Tipptatus entfernt]
+** Typ: integer
+** Werte: 1 .. 2147483647
+** Standardwert: `+6+`
+
+* [[option_typing.look.delay_set_paused]] *typing.look.delay_set_paused*
+** Beschreibung: pass:none[Anzahl der Sekunden nach Eingabe des letzten Zeichens: wenn erreicht, wird der Schreibstatus "pausiert" und es werden keine Schreibsignale mehr gesendet]
+** Typ: integer
+** Werte: 1 .. 2147483647
+** Standardwert: `+10+`
+
+* [[option_typing.look.enabled_nicks]] *typing.look.enabled_nicks*
+** Beschreibung: pass:none[Tippfunktion für andere Nicks aktiviert (Anzeige von Tippinfos für Nicks, die im aktuellen Buffer schreiben)]
+** Typ: boolesch
+** Werte: on, off
+** Standardwert: `+off+`
+
+* [[option_typing.look.enabled_self]] *typing.look.enabled_self*
+** Beschreibung: pass:none[Tippfunktion für eigene Nachrichten aktiviert (Schreibinformationen an andere Benutzer senden)]
+** Typ: boolesch
+** Werte: on, off
+** Standardwert: `+off+`
+
+* [[option_typing.look.input_min_chars]] *typing.look.input_min_chars*
+** Beschreibung: pass:none[Mindestanzahl von Zeichen in der Nachricht, um das Senden von Tippsignalen auszulösen]
+** Typ: integer
+** Werte: 1 .. 2147483647
+** Standardwert: `+4+`
+
+* [[option_typing.look.item_max_length]] *typing.look.item_max_length*
+** Beschreibung: pass:none[maximale Anzahl von Zeichen, die im Bar-Item "typing" angezeigt werden (0 = Inhalt nicht abschneiden)]
+** Typ: integer
+** Werte: 0 .. 2147483647
+** Standardwert: `+0+`
+// end::typing_options[]
 
 // tag::xfer_options[]
 * [[option_xfer.color.status_aborted]] *xfer.color.status_aborted*
@@ -1913,7 +1957,7 @@
 ** Standardwert: `+off+`
 
 * [[option_xfer.file.auto_accept_nicks]] *xfer.file.auto_accept_nicks*
-** Beschreibung: pass:none[durch Kommata getrennte Liste von Nicks deren Chat- und Transferanfragen automatisch akzeptiert werden. Format : "server.nick" (für einen speziellen Server) oder "nick" (global, für alle Server); Beispiel: "freenode.FlashCode,andrew"]
+** Beschreibung: pass:none[durch Kommata getrennte Liste von Nicks deren Chat- und Transferanfragen automatisch akzeptiert werden. Format : "server.nick" (für einen speziellen Server) oder "nick" (global, für alle Server); Beispiel: "libera.FlashCode,andrew"]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+""+`
@@ -2041,7 +2085,7 @@
 ** Standardwert: `+lightcyan+`
 
 * [[option_irc.color.item_channel_modes]] *irc.color.item_channel_modes*
-** Beschreibung: pass:none[Farbe der Channel-Modes (neben dem Channelnamen)]
+** Beschreibung: pass:none[Farbe der Kanal-Modes (neben des Kanalnamens)]
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
 ** Standardwert: `+default+`
@@ -2065,19 +2109,19 @@
 ** Standardwert: `+default+`
 
 * [[option_irc.color.item_tls_version_deprecated]] *irc.color.item_tls_version_deprecated*
-** Beschreibung: pass:none[color for deprecated TLS versions in bar item "tls_version"]
+** Beschreibung: pass:none[Farbe die für eine unsicherere TLS-Version im Bar-Item "tls_version" genutzt wird]
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
 ** Standardwert: `+yellow+`
 
 * [[option_irc.color.item_tls_version_insecure]] *irc.color.item_tls_version_insecure*
-** Beschreibung: pass:none[color for insecure TLS versions in bar item "tls_version"]
+** Beschreibung: pass:none[Farbe die für eine unsichere TLS-Versionen im Bar-Item "tls_version" genutzt wirdFarbe für unsichere TLS-Versionen im Balkenelement "tls_version"]
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
 ** Standardwert: `+red+`
 
 * [[option_irc.color.item_tls_version_ok]] *irc.color.item_tls_version_ok*
-** Beschreibung: pass:none[color for higher supported TLS version in bar item "tls_version"]
+** Beschreibung: pass:none[Farbe die für eine sicherere TLS-Version im Bar-Item "tls_version" genutzt wird]
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
 ** Standardwert: `+green+`
@@ -2095,7 +2139,7 @@
 ** Standardwert: `+brown+`
 
 * [[option_irc.color.message_join]] *irc.color.message_join*
-** Beschreibung: pass:none[Textfarbe in der die Meldungen für das Betreten eines Channels angezeigt werden soll]
+** Beschreibung: pass:none[Textfarbe in der die Meldungen für das Betreten eines Kanals angezeigt werden soll]
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
 ** Standardwert: `+green+`
@@ -2107,7 +2151,7 @@
 ** Standardwert: `+red+`
 
 * [[option_irc.color.message_quit]] *irc.color.message_quit*
-** Beschreibung: pass:none[Textfarbe in der die Meldungen für das Verlassen/Beenden eines Channels angezeigt werden soll]
+** Beschreibung: pass:none[Textfarbe in der die Meldungen für das Verlassen/Beenden eines Kanals angezeigt werden soll]
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
 ** Standardwert: `+red+`
@@ -2143,49 +2187,49 @@
 ** Standardwert: `+default+`
 
 * [[option_irc.color.topic_current]] *irc.color.topic_current*
-** Beschreibung: pass:none[Farbe in dem das aktuelle Thema des Channels dargestellt werden soll (wenn ein Channel betreten oder der Befehl /topic genutzt wird)]
+** Beschreibung: pass:none[Farbe in dem das aktuelle Thema des Kanals dargestellt werden soll (wenn ein Kanal betreten oder der Befehl /topic genutzt wird)]
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
 ** Standardwert: `+default+`
 
 * [[option_irc.color.topic_new]] *irc.color.topic_new*
-** Beschreibung: pass:none[Farbe in dem das neue Thema des Channels dargestellt werden soll, falls das Thema des Channels geändert wurde]
+** Beschreibung: pass:none[Farbe in dem das neue Thema des Kanals dargestellt werden soll, falls das Thema des Kanals geändert wurde]
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
 ** Standardwert: `+white+`
 
 * [[option_irc.color.topic_old]] *irc.color.topic_old*
-** Beschreibung: pass:none[Farbe in dem das alte Thema des Channels dargestellt werden soll, falls das Thema des Channels geändert wurde]
+** Beschreibung: pass:none[Farbe in dem das alte Thema des Kanals dargestellt werden soll, falls das Thema des Kanals geändert wurde]
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
 ** Standardwert: `+default+`
 
 * [[option_irc.look.buffer_open_before_autojoin]] *irc.look.buffer_open_before_autojoin*
-** Beschreibung: pass:none[betritt man automatisch einen Channel-Buffer (mittels autojoin Option) wird dieser direkt geöffnet, ohne auf die JOIN Nachricht des Servers zu warten; dies ist sinnvoll um die Channels immer an der selben Position bei einem Neustart zu öffnen]
+** Beschreibung: pass:none[betritt man automatisch einen Kanal-Buffer (mittels autojoin Option) wird dieser direkt geöffnet, ohne auf die JOIN Nachricht des Servers zu warten; dies ist sinnvoll um die Kanäle immer an der selben Position bei einem Neustart zu öffnen]
 ** Typ: boolesch
 ** Werte: on, off
 ** Standardwert: `+on+`
 
 * [[option_irc.look.buffer_open_before_join]] *irc.look.buffer_open_before_join*
-** Beschreibung: pass:none[betritt man mittels dem /join Befehl einen Channel wird der Buffer direkt geöffnet, ohne auf die JOIN Nachricht des Servers zu warten]
+** Beschreibung: pass:none[betritt man mittels dem /join Befehl einen Kanal wird der Buffer direkt geöffnet, ohne auf die JOIN Nachricht des Servers zu warten]
 ** Typ: boolesch
 ** Werte: on, off
 ** Standardwert: `+off+`
 
 * [[option_irc.look.buffer_switch_autojoin]] *irc.look.buffer_switch_autojoin*
-** Beschreibung: pass:none[wechselt automatisch zum Channel-Buffer falls dieser automatisch betreten wurde (mittels der Serveroption "autojoin")]
+** Beschreibung: pass:none[wechselt automatisch zum Kanal-Buffer falls dieser automatisch betreten wurde (mittels der Serveroption "autojoin")]
 ** Typ: boolesch
 ** Werte: on, off
 ** Standardwert: `+on+`
 
 * [[option_irc.look.buffer_switch_join]] *irc.look.buffer_switch_join*
-** Beschreibung: pass:none[wechselt automatisch zum Channel-Buffer falls dieser manuell betreten wurde (mittels dem /join Befehl)]
+** Beschreibung: pass:none[wechselt automatisch zum Kanal-Buffer falls dieser manuell betreten wurde (mittels dem /join Befehl)]
 ** Typ: boolesch
 ** Werte: on, off
 ** Standardwert: `+on+`
 
 * [[option_irc.look.color_nicks_in_names]] *irc.look.color_nicks_in_names*
-** Beschreibung: pass:none[nutzt in der Ausgabe von /names die jeweiligen Farbe des Nick (oder bei der Auflistung der Nicks wenn man einen Channel betritt)]
+** Beschreibung: pass:none[nutzt in der Ausgabe von /names die jeweiligen Farbe des Nick (oder bei der Auflistung der Nicks wenn man einen Kanal betritt)]
 ** Typ: boolesch
 ** Werte: on, off
 ** Standardwert: `+off+`
@@ -2203,7 +2247,7 @@
 ** Standardwert: `+on+`
 
 * [[option_irc.look.color_pv_nick_like_channel]] *irc.look.color_pv_nick_like_channel*
-** Beschreibung: pass:none[nutzt die selbe Farbe für die Darstellung des Nicks im Channel wie auch im privaten Buffer]
+** Beschreibung: pass:none[nutzt die selbe Farbe für die Darstellung des Nicks im Kanal wie auch im privaten Buffer]
 ** Typ: boolesch
 ** Werte: on, off
 ** Standardwert: `+on+`
@@ -2214,8 +2258,14 @@
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+"%a, %d %b %Y %T %z"+`
 
+* [[option_irc.look.display_account_message]] *irc.look.display_account_message*
+** Beschreibung: pass:none[ACCOUNT Nachrichten anzeigen, die empfangen wurden, wenn die Funktion account-notify aktiviert ist]
+** Typ: boolesch
+** Werte: on, off
+** Standardwert: `+on+`
+
 * [[option_irc.look.display_away]] *irc.look.display_away*
-** Beschreibung: pass:none[zeigt eine Nachricht an, sobald der Abwesenheitsstatus ein- bzw. ausgeschaltet wird (off: zeigt/sendet keine Nachricht, local: eine Nachricht wird lokal angezeigt, channel: sendet eine Nachricht an die Channels)]
+** Beschreibung: pass:none[zeigt eine Nachricht an, sobald der Abwesenheitsstatus ein- bzw. ausgeschaltet wird (off: zeigt/sendet keine Nachricht, local: eine Nachricht wird lokal angezeigt, channel: sendet eine Nachricht an die Kanäle)]
 ** Typ: integer
 ** Werte: off, local, channel
 ** Standardwert: `+local+`
@@ -2234,6 +2284,12 @@
 
 * [[option_irc.look.display_ctcp_unknown]] *irc.look.display_ctcp_unknown*
 ** Beschreibung: pass:none[unbekannte CTCP Nachrichten werden angezeigt]
+** Typ: boolesch
+** Werte: on, off
+** Standardwert: `+on+`
+
+* [[option_irc.look.display_extended_join]] *irc.look.display_extended_join*
+** Beschreibung: pass:none[zusätzliche Informationen in den JOIN-Nachrichten anzeigen: Kontoname und richtiger Name (Funktion extended-join muss aktiviert sein)]
 ** Typ: boolesch
 ** Werte: on, off
 ** Standardwert: `+on+`
@@ -2257,13 +2313,13 @@
 ** Standardwert: `+on+`
 
 * [[option_irc.look.display_join_message]] *irc.look.display_join_message*
-** Beschreibung: pass:none[durch Kommata getrennte Liste von Nachrichten die beim Betreten eines Channels angezeigt werden sollen: 324 = Channel-Modi, 329 = Erstellungsdatum des Channels, 332 = Topic, 333 = Nick/Datum für Topic, 353 = genutzte Namen im Channel, 366 = Anzahl der Nicks im Channel]
+** Beschreibung: pass:none[durch Kommata getrennte Liste von Nachrichten die beim Betreten eines Kanals angezeigt werden sollen: 324 = Channel-Modi, 329 = Erstellungsdatum des Kanals, 332 = Topic, 333 = Nick/Datum für Topic, 353 = genutzte Namen im Kanal, 366 = Anzahl der Nicks im Kanal]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+"329,332,333,366"+`
 
 * [[option_irc.look.display_old_topic]] *irc.look.display_old_topic*
-** Beschreibung: pass:none[zeige das alte Thema an, falls das Thema des Channels geändert wurde]
+** Beschreibung: pass:none[zeige das alte Thema an, falls das Thema des Kanals geändert wurde]
 ** Typ: boolesch
 ** Werte: on, off
 ** Standardwert: `+on+`
@@ -2287,7 +2343,7 @@
 ** Standardwert: `+off+`
 
 * [[option_irc.look.highlight_channel]] *irc.look.highlight_channel*
-** Beschreibung: pass:none[durch Kommata getrennte Liste von Wörtern die in Channel-Buffern als Highlight erscheinen sollen (zwischen Groß- und Kleinschreibung wird nicht unterschieden. Um zwischen Groß- und Kleinschreibung zu unterscheiden muss zu Beginn "(?-i)" genutzt werden; des Weiteren können folgende Variablen genutzt werden: $nick, $channel und $server). Wird ein Buffer geöffnet, dann werden die angegeben Wörter dem Buffer-Merkmal "highlight_words" hinzugefügt. Dies bedeutet, dass diese Einstellung keinen direkten Einfluss auf schon geöffnete Buffer hat. Eine leere Zeichenkette deaktiviert ein Highlight für den Nick. Beispiel: "$nick", "(?-i)$nick"]
+** Beschreibung: pass:none[durch Kommata getrennte Liste von Wörtern die im Kanal-Buffern als Highlight erscheinen sollen (zwischen Groß- und Kleinschreibung wird nicht unterschieden. Um zwischen Groß- und Kleinschreibung zu unterscheiden muss zu Beginn "(?-i)" genutzt werden; des Weiteren können folgende Variablen genutzt werden: $nick, $channel und $server). Wird ein Buffer geöffnet, dann werden die angegeben Wörter dem Buffer-Merkmal "highlight_words" hinzugefügt. Dies bedeutet, dass diese Einstellung keinen direkten Einfluss auf schon geöffnete Buffer hat. Eine leere Zeichenkette deaktiviert ein Highlight für den Nick. Beispiel: "$nick", "(?-i)$nick"]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+"$nick"+`
@@ -2311,7 +2367,7 @@
 ** Standardwert: `+"irc_privmsg,irc_notice"+`
 
 * [[option_irc.look.item_channel_modes_hide_args]] *irc.look.item_channel_modes_hide_args*
-** Beschreibung: pass:none[unterdrückt die Ausgabe von Argumenten die die Channel-Modi betreffen, sofern der entsprechende Modus für den Channel gesetzt ist ("*" unterdrückt jedwede Ausgabe von Argumenten; wird kein Wert angegeben, dann werden alle Argumente angezeigt); Beispiele: "kf" unterdrückt die Argumente, falls "k" oder "f" für den Channel gesetzt sind]
+** Beschreibung: pass:none[unterdrückt die Ausgabe von Argumenten die die Kanalmodi betreffen, sofern der entsprechende Modus für den Kanal gesetzt ist ("*" unterdrückt jedwede Ausgabe von Argumenten; wird kein Wert angegeben, dann werden alle Argumente angezeigt); Beispiele: "kf" unterdrückt die Argumente, falls "k" oder "f" für den Kanal gesetzt sind]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+"k"+`
@@ -2335,7 +2391,7 @@
 ** Standardwert: `+on+`
 
 * [[option_irc.look.join_auto_add_chantype]] *irc.look.join_auto_add_chantype*
-** Beschreibung: pass:none[es wird dem Channelnamen automatisch der Channel-Typ vorangestellt, falls bei der Benutzung des /join Befehls der angegebene Channel-Name keinen gültigen Typ besitzt; Beispiel: "/join weechat" wird als: "/join #weechat" versendet]
+** Beschreibung: pass:none[es wird dem Kanalnamen automatisch der Kanal-Typ vorangestellt, falls bei der Benutzung des /join Befehls der angegebene Kanalname keinen gültigen Typ besitzt; Beispiel: "/join weechat" wird als: "/join #weechat" versendet]
 ** Typ: boolesch
 ** Werte: on, off
 ** Standardwert: `+off+`
@@ -2347,13 +2403,13 @@
 ** Standardwert: `+current+`
 
 * [[option_irc.look.new_channel_position]] *irc.look.new_channel_position*
-** Beschreibung: pass:none[ein neu geöffneter Channel wird auf eine Position gezwungen (none = standardmäßige Position (sollte der letzte Buffer in der Liste sein), next = aktueller Buffer + 1, near_server = nach dem letztem Channel/privaten Buffer des jeweiligen Servers)]
+** Beschreibung: pass:none[ein neu geöffneter Kanal wird auf eine Position gezwungen (none = standardmäßige Position (sollte der letzte Buffer in der Liste sein), next = aktueller Buffer + 1, near_server = nach dem letztem Kanal/privaten Buffer des jeweiligen Servers)]
 ** Typ: integer
 ** Werte: none, next, near_server
 ** Standardwert: `+none+`
 
 * [[option_irc.look.new_pv_position]] *irc.look.new_pv_position*
-** Beschreibung: pass:none[ein neuer privater Buffer wird auf eine Position gezwungen (none = standardmäßige Position (sollte der letzte Buffer in der Liste sein), next = aktueller Buffer + 1, near_server = nach dem letztem Channel/privaten Buffer des jeweiligen Servers)]
+** Beschreibung: pass:none[ein neuer privater Buffer wird auf eine Position gezwungen (none = standardmäßige Position (sollte der letzte Buffer in der Liste sein), next = aktueller Buffer + 1, near_server = nach dem letztem Kanal/privaten Buffer des jeweiligen Servers)]
 ** Typ: integer
 ** Werte: none, next, near_server
 ** Standardwert: `+none+`
@@ -2389,13 +2445,13 @@
 ** Standardwert: `+auto+`
 
 * [[option_irc.look.notice_welcome_redirect]] *irc.look.notice_welcome_redirect*
-** Beschreibung: pass:none[automatische Weiterleitung von Willkommen Nachrichten in den entsprechenden Channel-Buffer. Solche Nachrichten haben als Empfänger den entsprechenden Nick. Der Channelname wird aber der Nachricht vorangestellt. Eine solche ENTRYMSG Nachricht sieht auf dem Atheme IRC Server wie folgt aus: "[#channel\] Herzlich Willkommen in diesem Channel ..."]
+** Beschreibung: pass:none[automatische Weiterleitung von Willkommen Nachrichten in den entsprechenden Kanal-Buffer. Solche Nachrichten haben als Empfänger den entsprechenden Nick. Der Kanalname wird aber der Nachricht vorangestellt. Eine solche ENTRYMSG Nachricht sieht auf dem Atheme IRC Server wie folgt aus: "[#channel\] Herzlich Willkommen in diesem Kanal ..."]
 ** Typ: boolesch
 ** Werte: on, off
 ** Standardwert: `+on+`
 
 * [[option_irc.look.notice_welcome_tags]] *irc.look.notice_welcome_tags*
-** Beschreibung: pass:none[durch Kommata getrennte Liste von Schlagwörtern für Willkommen-Nachrichten die in einen Channel umgeleitet werden. Zum Beispiel: "notify_private"]
+** Beschreibung: pass:none[durch Kommata getrennte Liste von Schlagwörtern für Willkommen-Nachrichten die in einen Kanal umgeleitet werden. Zum Beispiel: "notify_private"]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+""+`
@@ -2413,7 +2469,7 @@
 ** Standardwert: `+"notify_message"+`
 
 * [[option_irc.look.part_closes_buffer]] *irc.look.part_closes_buffer*
-** Beschreibung: pass:none[schließt den Buffer wenn "/part" im Channel ausgeführt wird]
+** Beschreibung: pass:none[schließt den Buffer wenn "/part" im Kanal ausgeführt wird]
 ** Typ: boolesch
 ** Werte: on, off
 ** Standardwert: `+off+`
@@ -2443,7 +2499,7 @@
 ** Standardwert: `+merge_with_core+`
 
 * [[option_irc.look.smart_filter]] *irc.look.smart_filter*
-** Beschreibung: pass:none[filtert join/part/quit/nick Nachrichten für einen Nick der einige Minuten im Channel inaktiv gewesen ist (dazu muss ein Filter mit dem Schlagwort "irc_smart_filter" erstellt werden, siehe /help filter)]
+** Beschreibung: pass:none[filtert join/part/quit/nick Nachrichten für einen Nick der einige Minuten im Kanal inaktiv gewesen ist (dazu muss ein Filter mit dem Schlagwort "irc_smart_filter" erstellt werden, siehe /help filter)]
 ** Typ: boolesch
 ** Werte: on, off
 ** Standardwert: `+on+`
@@ -2473,7 +2529,7 @@
 ** Standardwert: `+on+`
 
 * [[option_irc.look.smart_filter_join_unmask]] *irc.look.smart_filter_join_unmask*
-** Beschreibung: pass:none[Verzögerung (in Minuten) um Join Mitteilungen rückwirkend anzuzeigen, falls diese mittels "irc_smart_filter" unterdrückt wurden. Sollte ein Nick während der vorgegeben Zeit etwas im Channel schreiben, dann wird seine Join Mitteilung angezeigt. Dies bezieht sich auf Nachrichten, eine Notice, Änderungen am Topic oder falls der Nick gewechselt wird (0 = deaktiviert: join-Mitteilungen bleiben verborgen)]
+** Beschreibung: pass:none[Verzögerung (in Minuten) um Join Mitteilungen rückwirkend anzuzeigen, falls diese mittels "irc_smart_filter" unterdrückt wurden. Sollte ein Nick während der vorgegeben Zeit etwas im Kanal schreiben, dann wird seine Join Mitteilung angezeigt. Dies bezieht sich auf Nachrichten, eine Notice, Änderungen am Topic oder falls der Nick gewechselt wird (0 = deaktiviert: join-Mitteilungen bleiben verborgen)]
 ** Typ: integer
 ** Werte: 0 .. 10080
 ** Standardwert: `+30+`
@@ -2503,7 +2559,19 @@
 ** Standardwert: `+off+`
 
 * [[option_irc.look.topic_strip_colors]] *irc.look.topic_strip_colors*
-** Beschreibung: pass:none[Farben werden im Channel-Thema entfernt (wird nur genutzt wenn der Buffer-Titel angezeigt wird)]
+** Beschreibung: pass:none[Farben werden im Kanalthema entfernt (wird nur genutzt wenn der Buffer-Titel angezeigt wird)]
+** Typ: boolesch
+** Werte: on, off
+** Standardwert: `+off+`
+
+* [[option_irc.look.typing_status_nicks]] *irc.look.typing_status_nicks*
+** Beschreibung: pass:none[Nicks in der Bar-Item "typing" anzeigen, die in dem Kanal tippen (Option typing.look.enabled_nicks muss aktiviert sein und die Fähigkeit "message-tags" muss auf dem Server aktiviert sein)]
+** Typ: boolesch
+** Werte: on, off
+** Standardwert: `+off+`
+
+* [[option_irc.look.typing_status_self]] *irc.look.typing_status_self*
+** Beschreibung: pass:none[sendet den eigenen Tippstatus an Kanäle, damit andere Benutzer sehen, wenn Sie eine Nachricht schreiben (Option typing.look.enabled_self muss aktiviert sein und die Fähigkeit "message-tags" muss auf dem Server aktiviert sein)]
 ** Typ: boolesch
 ** Werte: on, off
 ** Standardwert: `+off+`
@@ -2623,7 +2691,7 @@
 ** Standardwert: `+off+`
 
 * [[option_irc.server_default.autojoin]] *irc.server_default.autojoin*
-** Beschreibung: pass:none[durch Kommata getrennte Liste von Channels, die beim Verbinden mit dem Server automatisch betreten werden (nachdem die Einstellungen command + delay ausgeführt wurden). Channels die einen Schlüssel benötigen müssen in der Auflistung als erstes aufgeführt werden. Die Schlüssel, zu den jeweiligen Channels, werden nach den Channels aufgeführt (eine Trennung von Channels und Schlüssel erfolgt mittels einem Leerzeichen. Schlüssel werden untereinander auch durch Kommata voneinander getrennt) (Beispiel: "#channel1,#channel2,#channnel3 key1,key2", #channel1 und #channel2 sind durch jeweils einen Schlüssel, key1 und key2, geschützt) (Hinweis: Inhalt wird evaluiert, siehe /help eval; Serveroptionen sind mittels ${irc_server.xxx} evaluiert und ${server} wird durch den eigentlichen Servernamen ersetzt)]
+** Beschreibung: pass:none[durch Kommata getrennte Liste von Kanälen, die beim Verbinden mit dem Server automatisch betreten werden (nachdem die Einstellungen command + delay ausgeführt wurden). Kanäle, die einen Schlüssel benötigen, müssen in der Auflistung als erstes aufgeführt werden. Die Schlüssel, zu den jeweiligen Kanälen, werden nach den Kanälen aufgeführt (eine Trennung von Kanälen und Schlüssel erfolgt mittels eines Leerzeichens. Schlüssel werden hintereinander auch durch Kommata voneinander getrennt) (Beispiel: "#channel1,#channel2,#channnel3 key1,key2", #channel1 und #channel2 sind durch jeweils einen Schlüssel, key1 und key2, geschützt) (Hinweis: Inhalt wird evaluiert, siehe /help eval; Serveroptionen sind mittels ${irc_server.xxx} evaluiert und ${server} wird durch den eigentlichen Servernamen ersetzt)]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+""+`
@@ -2641,13 +2709,13 @@
 ** Standardwert: `+10+`
 
 * [[option_irc.server_default.autorejoin]] *irc.server_default.autorejoin*
-** Beschreibung: pass:none[Channels automatisch betreten, falls man rausgeworfen wurde. Es kann eine lokale Buffer Variable für einen Channel erstellt werden, diese lokale Variable wird vorrangig behandelt (Name der lokalen Variable: "autorejoin", Wert: "on" oder "off")]
+** Beschreibung: pass:none[Kanäle automatisch betreten, falls man rausgeworfen wurde. Es kann eine lokale Buffer Variable für einen Kanal erstellt werden, diese lokale Variable wird vorrangig behandelt (Name der lokalen Variable: "autorejoin", Wert: "on" oder "off")]
 ** Typ: boolesch
 ** Werte: on, off
 ** Standardwert: `+off+`
 
 * [[option_irc.server_default.autorejoin_delay]] *irc.server_default.autorejoin_delay*
-** Beschreibung: pass:none[Wartezeit, in Sekunden, die verstreichen soll bevor man den Channel automatisch erneut betritt (nachdem man rausgeworfen wurde)]
+** Beschreibung: pass:none[Wartezeit, in Sekunden, die verstreichen soll bevor man den Kanal automatisch erneut betritt (nachdem man rausgeworfen wurde)]
 ** Typ: integer
 ** Werte: 0 .. 86400
 ** Standardwert: `+30+`
@@ -2659,31 +2727,31 @@
 ** Standardwert: `+0+`
 
 * [[option_irc.server_default.away_check_max_nicks]] *irc.server_default.away_check_max_nicks*
-** Beschreibung: pass:none[Die Abwesenheit von Nutzern in Channels wird nicht überprüft wenn die Anzahl der Nutzer höher ist, als der angegebene Wert (0 = unbegrenzte Anzahl an Nutzern im Channel)]
+** Beschreibung: pass:none[Die Abwesenheit von Nutzern in Kanälen wird nicht überprüft wenn die Anzahl der Nutzer höher ist, als der angegebene Wert (0 = unbegrenzte Anzahl an Nutzern im Kanal)]
 ** Typ: integer
 ** Werte: 0 .. 1000000
 ** Standardwert: `+25+`
 
 * [[option_irc.server_default.capabilities]] *irc.server_default.capabilities*
-** Beschreibung: pass:none[durch Kommata getrennte Liste von erweiterten Client-Fähigkeiten ("client capabilities"), welche vom Server angeboten und genutzt werden sollen (siehe /help cap um eine Liste von Fähigkeiten zu erhalten die von WeeChat unterstützt werden) (Beispiel: "away-notify,multi-prefix")]
+** Beschreibung: pass:none[durch Kommata getrennte Liste von erweiterten Client-Fähigkeiten ("client capabilities"), welche vom Server angeboten und genutzt werden sollen (siehe /help cap um eine Liste von Fähigkeiten zu erhalten die von WeeChat unterstützt werden); "*" aktiviert standardmäßig alle Funktionen (die sowohl vom Server als auch von WeeChat unterstützt werden); Platzhalter "*" ist erlaubt; eine Fähigkeit, die mit "!" beginnt, wird ignoriert (Beispiel: "*,!account-*,!extended-join")]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
-** Standardwert: `+""+`
+** Standardwert: `+"*"+`
 
 * [[option_irc.server_default.charset_message]] *irc.server_default.charset_message*
-** Beschreibung: pass:none[Teil der IRC Nachricht (empfangen oder gesendet) die zum Zielzeichensatz dekodiert/kodiert werden soll; message = die komplette IRC Nachricht (Standard), channel = beginnend mit dem Channel-Namen (sofern dieser gefunden wird, ansonsten Fallback auf text), text = beginnend mit dem Nachrichtentext (dieser Wert sollte ausprobiert werden, falls es Probleme bei der Kodierung des Channel-Namen geben sollte)]
+** Beschreibung: pass:none[Teil der IRC Nachricht (empfangen oder gesendet) die zum Zielzeichensatz dekodiert/kodiert werden soll; message = die komplette IRC Nachricht (Standard), channel = beginnend mit dem Kanalnamen (sofern dieser gefunden wird, ansonsten Fallback auf text), text = beginnend mit dem Nachrichtentext (dieser Wert sollte ausprobiert werden, falls es Probleme bei der Kodierung des Kanalnamens geben sollte)]
 ** Typ: integer
 ** Werte: message, channel, text
 ** Standardwert: `+message+`
 
 * [[option_irc.server_default.command]] *irc.server_default.command*
-** Beschreibung: pass:none[Befehl(e) welche nach einem Verbindungsaufbau zum Server und vor dem automatischem Betreten von Channels ausgeführt werden sollen (mehrere Befehle müssen durch ";" getrennt werden, soll ein Semikolon genutzt werden, schreibt man "\;", die Platzhalter $nick,$channel und $server werden durch den entsprechenden Wert ersetzt) (Hinweis: Inhalt wird evaluiert, siehe /help eval; Serveroptionen sind mittels ${irc_server.xxx} evaluiert und ${server} wird durch den eigentlichen Servernamen ersetzt)]
+** Beschreibung: pass:none[Befehl(e) welche nach einem Verbindungsaufbau zum Server und vor dem automatischem Betreten von Kanälen ausgeführt werden sollen (mehrere Befehle können durch ";" getrennt werden, will man ein Semikolon nutzen, schreibt man "\;", die Platzhalter $nick,$channel und $server werden durch den entsprechenden Wert ersetzt) (Hinweis: Inhalt wird evaluiert, siehe /help eval; Serveroptionen sind mittels ${irc_server.xxx} evaluiert und ${server} wird durch den eigentlichen Servernamen ersetzt)]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+""+`
 
 * [[option_irc.server_default.command_delay]] *irc.server_default.command_delay*
-** Beschreibung: pass:none[Wartezeit (in Sekunden) nach Ausführung des Befehls und bevor Channels automatisch betreten werden (Beispiel: es wird eine gewisse Zeit gewartet, um eine Authentifizierung zu ermöglichen)]
+** Beschreibung: pass:none[Wartezeit (in Sekunden) nach Ausführung des Befehls und bevor Kanäle automatisch betreten werden (Beispiel: es wird eine gewisse Zeit gewartet, um eine Authentifizierung zu ermöglichen)]
 ** Typ: integer
 ** Werte: 0 .. 3600
 ** Standardwert: `+0+`
@@ -2695,7 +2763,7 @@
 ** Standardwert: `+60+`
 
 * [[option_irc.server_default.default_chantypes]] *irc.server_default.default_chantypes*
-** Beschreibung: pass:none[Channel-Typ-Präfix, die verwendet werden sollen, wenn der Server diese nicht in Nachricht 005 sendet (Standard ist "#&")]
+** Beschreibung: pass:none[Kanal-Typ-Präfix, die verwendet werden sollen, wenn der Server diese nicht in Nachricht 005 sendet (Standard ist "#&")]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+"#&"+`
@@ -2713,7 +2781,7 @@
 ** Standardwert: `+""+`
 
 * [[option_irc.server_default.msg_kick]] *irc.server_default.msg_kick*
-** Beschreibung: pass:none[Standardmitteilung einer kick-Nachricht, für die Befehle "/kick" und "/kickban" (Hinweis: Inhalt wird evaluiert, siehe /help eval; Variablen die genutzt werden können: ${nick}, ${channel} und ${server})]
+** Beschreibung: pass:none[Standardmitteilung einer kick-Nachricht, für die Befehle "/kick" und "/kickban" (Hinweis: Inhalt wird evaluiert, siehe /help eval; besondere Variablen ${nick} (eigener Nick), ${target} (betroffener Nick), ${channel} und ${server}, werden durch den entsprechenden Wert ersetzt)]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+""+`
@@ -2770,7 +2838,7 @@
 ** Beschreibung: pass:none[auszuführende Aktion falls die SASL Authentifizierung fehlschlägt: "continue" ignoriert das Problem welches bei der Authentifizierung aufgetreten ist, "reconnect" versucht erneut eine Verbindung herzustellen, "disconnect" trennt die Verbindung zum Server (siehe Option irc.network.sasl_fail_unavailable)]
 ** Typ: integer
 ** Werte: continue, reconnect, disconnect
-** Standardwert: `+continue+`
+** Standardwert: `+reconnect+`
 
 * [[option_irc.server_default.sasl_key]] *irc.server_default.sasl_key*
 ** Beschreibung: pass:none[Datei mit privatem ECC-Schlüssel für den Mechanismus "ecdsa-nist256p-challenge" (Pfad ist evaluiert, siehe Funktion string_eval_path_home in der Plugin-API-Referenz)]
@@ -2779,9 +2847,9 @@
 ** Standardwert: `+""+`
 
 * [[option_irc.server_default.sasl_mechanism]] *irc.server_default.sasl_mechanism*
-** Beschreibung: pass:none[Verfahren welches bei einer SASL Authentifizierung angewandt werden soll: "plain" Passwort wird im Klartext gesendet, "ecdsa-nist256p-challenge" für öffentlich/private Schlüsselmethode, "external" SSL Zertifikat welches auf Client Seite vorliegt wird verwendet, "dh-blowfish" Passwort wird mittels blowfish verschlüsselt (unsicher, wird nicht empfohlen), "dh-aes" Passwort wird mittels AES verschlüsselt (unsicher, wird nicht empfohlen)]
+** Beschreibung: pass:none[Verfahren welches bei einer SASL Authentifizierung angewandt werden soll: "plain" Passwort wird im Klartext gesendet, "scram-sha-1" für SCRAM-Authentifizierung mit SHA-1-Digest-Algorithmus, "scram-sha-256" für SCRAM-Authenrifizierung mit SHA-256 Digest-Algorithmus, "scram-sha-512" für SCRAM-Authentifizierung mit SHA-512 Digest-Algorithmus, "ecdsa-nist256p-challenge" für öffentlich/private Schlüsselmethode, "external" ein SSL Zertifikat welches auf Client Seite vorliegt wird verwendet]
 ** Typ: integer
-** Werte: plain, ecdsa-nist256p-challenge, external, dh-blowfish, dh-aes
+** Werte: plain, scram-sha-1, scram-sha-256, scram-sha-512, ecdsa-nist256p-challenge, external
 ** Standardwert: `+plain+`
 
 * [[option_irc.server_default.sasl_password]] *irc.server_default.sasl_password*
@@ -2851,7 +2919,7 @@
 ** Standardwert: `+on+`
 
 * [[option_irc.server_default.usermode]] *irc.server_default.usermode*
-** Beschreibung: pass:none[Usermode(s) der direkt nach der Verbindung zum Server gesetzt werden soll. Dies geschieht bevor Befehle für den Server ausgeführt und bevor Channels automatisch betreten werden; Beispiele: "+R" (um den Modus "R" zu setzen), "+R-i" (setzt den Modus "R" und entfernt den Modus "i"); siehe /help mode um den Befehlssatz angezeigt zu bekommen (Hinweis: Inhalt wird evaluiert, siehe /help eval; Serveroptionen sind mittels ${irc_server.xxx} evaluiert und ${server} wird durch den eigentlichen Servernamen ersetzt)]
+** Beschreibung: pass:none[Usermode(s) der direkt nach der Verbindung zum Server gesetzt werden soll. Dies geschieht bevor Befehle für den Server ausgeführt und bevor Kanäle automatisch betreten werden; Beispiele: "+R" (um den Modus "R" zu setzen), "+R-i" (setzt den Modus "R" und entfernt den Modus "i"); siehe /help mode um den Befehlssatz angezeigt zu bekommen (Hinweis: Inhalt wird evaluiert, siehe /help eval; Serveroptionen sind mittels ${irc_server.xxx} evaluiert und ${server} wird durch den eigentlichen Servernamen ersetzt)]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+""+`
@@ -2919,13 +2987,13 @@
 ** Standardwert: `+white+`
 
 * [[option_relay.irc.backlog_max_minutes]] *relay.irc.backlog_max_minutes*
-** Beschreibung: pass:none[Zeitangabe, in Minuten, wie lange die Zeilen im Verlaufsspeicher für jeden IRC Channel gehalten werden sollen (0 = unbegrenzt, Beispiele: 1440 = einen Tag, 10080 = eine Woche, 43200 = einen Monat, 525600 = ein Jahr)]
+** Beschreibung: pass:none[Zeitangabe, in Minuten, wie lange die Zeilen im Verlaufsspeicher für jeden IRC Kanal gehalten werden sollen (0 = unbegrenzt, Beispiele: 1440 = einen Tag, 10080 = eine Woche, 43200 = einen Monat, 525600 = ein Jahr)]
 ** Typ: integer
 ** Werte: 0 .. 2147483647
 ** Standardwert: `+0+`
 
 * [[option_relay.irc.backlog_max_number]] *relay.irc.backlog_max_number*
-** Beschreibung: pass:none[maximale Anzahl an Zeilen im Verlaufsspeicher. Dies gilt für jeden IRC Channel (0: keine Zeilenbegrenzung)]
+** Beschreibung: pass:none[maximale Anzahl an Zeilen im Verlaufsspeicher. Dies gilt für jeden IRC Kanal (0: keine Zeilenbegrenzung)]
 ** Typ: integer
 ** Werte: 0 .. 2147483647
 ** Standardwert: `+1024+`
@@ -2943,7 +3011,7 @@
 ** Standardwert: `+off+`
 
 * [[option_relay.irc.backlog_tags]] *relay.irc.backlog_tags*
-** Beschreibung: pass:none[durch Kommata getrennte Liste von Nachrichten-Tags welche im Verlaufsspeicher von IRC Channels angezeigt werden (unterstützte Tags: "irc_join", "irc_part", "irc_quit", "irc_nick", "irc_privmsg"), "*" = alle unterstützten Tags]
+** Beschreibung: pass:none[durch Kommata getrennte Liste von Nachrichten-Tags welche im Verlaufsspeicher von IRC Kanälen angezeigt werden (unterstützte Tags: "irc_join", "irc_part", "irc_quit", "irc_nick", "irc_privmsg"), "*" = alle unterstützten Tags]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+"irc_privmsg"+`
@@ -3345,7 +3413,7 @@
 ** Standardwert: `+lightmagenta+`
 
 * [[option_script.look.columns]] *script.look.columns*
-** Beschreibung: pass:none[Format in welchem die Spalten im Skript Buffer dargestellt werden sollen. Es können folgende Spaltenbezeichnungen genutzt werden: %a=Autor, %d=Beschreibung, %D=hinzugefügt, %e=Dateierweiterung, %l=Programmiersprache, %L=Lizenz, %n=Skriptname, mit Dateierweiterung, %N=Skriptname, %r=Voraussetzungen, %s=Status, %t=Schlagwörter, %u=Datum der letzten Überarbeitung, %v=Version, %V=installierte Version, %w=min_WeeChat_Version, %W=max_WeeChat_Version)]
+** Beschreibung: pass:none[Format in welchem die Spalten im Skript-Buffer dargestellt werden sollen. Es können folgende Spaltenbezeichnungen genutzt werden: %a=Autor, %d=Beschreibung, %D=Skript hinzugefügt, %e=Dateierweiterung, %l=Programmiersprache, %L=Lizenz, %n=Skriptname, mit Dateierweiterung, %N=Skriptname, %r=Voraussetzungen, %s=Status, %t=Schlagwörter, %u=Datum der letzten Überarbeitung, %v=Version, %V=installierte Version, %w=min_WeeChat_Version, %W=max_WeeChat_Version)]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+"%s %n %V %v %u | %d | %t"+`

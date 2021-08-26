@@ -193,6 +193,12 @@ struct t_irc_server
     struct t_hook *hook_fd;         /* hook for server socket                */
     struct t_hook *hook_timer_connection; /* timer for connection            */
     struct t_hook *hook_timer_sasl; /* timer for SASL authentication         */
+    char *sasl_scram_client_first;  /* first message sent for SASL SCRAM     */
+    char *sasl_scram_salted_pwd;    /* salted password for SASL SCRAM        */
+    int sasl_scram_salted_pwd_size; /* size of salted password for SASL SCRAM*/
+    char *sasl_scram_auth_message;  /* auth message for SASL SCRAM           */
+    char *sasl_temp_username;       /* temp SASL username (set by /auth cmd) */
+    char *sasl_temp_password;       /* temp SASL password (set by /auth cmd) */
     int is_connected;               /* 1 if WeeChat is connected to server   */
     int ssl_connected;              /* = 1 if connected with SSL             */
     int disconnected;               /* 1 if server has been disconnected     */
@@ -226,6 +232,10 @@ struct t_irc_server
                                     /* (eg "beI,k,l,imnpstaqr")              */
     int monitor;                    /* monitor limit from msg 005 (eg 100)   */
     time_t monitor_time;            /* time for monitoring nicks (on connect)*/
+    char *clienttagdeny;            /* list of blocked client-only tags      */
+    int clienttagdeny_count;        /* number of masks in clienttagdeny      */
+    char **clienttagdeny_array;     /* masks expanded from clienttagdeny     */
+    int typing_allowed;             /* typing not excluded by clienttagdeny? */
     int reconnect_delay;            /* current reconnect delay (growing)     */
     time_t reconnect_start;         /* this time + delay = reconnect time    */
     time_t command_time;            /* this time + command_delay = time to   */
@@ -306,6 +316,10 @@ extern int irc_server_strncasecmp (struct t_irc_server *server,
                                    int max);
 extern char *irc_server_eval_expression (struct t_irc_server *server,
                                          const char *string);
+extern void irc_server_sasl_get_creds (struct t_irc_server *server,
+                                       char **username,
+                                       char **password,
+                                       char **key);
 extern int irc_server_sasl_enabled (struct t_irc_server *server);
 extern char *irc_server_get_name_without_port (const char *name);
 extern int irc_server_set_addresses (struct t_irc_server *server,
@@ -322,6 +336,8 @@ extern const char *irc_server_get_isupport_value (struct t_irc_server *server,
 extern const char *irc_server_get_chantypes (struct t_irc_server *server);
 extern void irc_server_set_prefix_modes_chars (struct t_irc_server *server,
                                                const char *prefix);
+extern void irc_server_set_clienttagdeny (struct t_irc_server *server,
+                                          const char *clienttagdeny);
 extern void irc_server_set_lag (struct t_irc_server *server);
 extern void irc_server_set_tls_version (struct t_irc_server *server);
 extern const char *irc_server_get_prefix_modes (struct t_irc_server *server);
@@ -340,7 +356,8 @@ extern int irc_server_prefix_char_statusmsg (struct t_irc_server *server,
 extern int irc_server_get_max_modes (struct t_irc_server *server);
 extern char *irc_server_get_default_msg (const char *default_msg,
                                          struct t_irc_server *server,
-                                         const char *channel_name);
+                                         const char *channel_name,
+                                         const char *target_nick);
 extern struct t_irc_server *irc_server_alloc (const char *name);
 extern struct t_irc_server *irc_server_alloc_with_url (const char *irc_url);
 extern void irc_server_apply_command_line_options (struct t_irc_server *server,
@@ -350,10 +367,10 @@ extern struct t_irc_server *irc_server_copy (struct t_irc_server *server,
                                              const char *new_name);
 extern int irc_server_rename (struct t_irc_server *server, const char *new_name);
 extern int irc_server_reorder (const char **servers, int num_servers);
-extern void irc_server_send_signal (struct t_irc_server *server,
-                                    const char *signal, const char *command,
-                                    const char *full_message,
-                                    const char *tags);
+extern int irc_server_send_signal (struct t_irc_server *server,
+                                   const char *signal, const char *command,
+                                   const char *full_message,
+                                   const char *tags);
 extern void irc_server_set_send_default_tags (const char *tags);
 extern struct t_hashtable *irc_server_sendf (struct t_irc_server *server,
                                              int flags,
@@ -387,6 +404,7 @@ extern void irc_server_switch_address (struct t_irc_server *server,
 extern void irc_server_disconnect (struct t_irc_server *server,
                                    int switch_address, int reconnect);
 extern void irc_server_disconnect_all ();
+extern void irc_server_free_sasl_data (struct t_irc_server *server);
 extern void irc_server_free (struct t_irc_server *server);
 extern int irc_server_xfer_send_ready_cb (const void *pointer, void *data,
                                           const char *signal,

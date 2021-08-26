@@ -18,23 +18,23 @@
 
 | guile | guile_script | Liste der Skripten
 
-| irc | irc_channel | aktueller IRC-Channel
+| irc | irc_channel | aktueller IRC-Kanal
 
-| irc | irc_channel_nicks_hosts | Liste der Nicks und Hostnamen des aktuellen Channels
+| irc | irc_channel_nicks_hosts | Liste der Nicks und Hostnamen des aktuellen Kanals
 
-| irc | irc_channel_topic | Thema des aktuellen IRC-Channels
+| irc | irc_channel_topic | Thema des aktuellen IRC-Kanals
 
-| irc | irc_channels | Channels auf allen IRC Servern
+| irc | irc_channels | Kanäle auf allen IRC Servern
 
 | irc | irc_ignores_numbers | Anzahl für festgelegte Ignorierungen
 
-| irc | irc_modelist_masks | Modelist Maske für aktuellen IRC Channel; benötigtes Argument: modelist mode
+| irc | irc_modelist_masks | Modelist Maske für aktuellen IRC Kanal; benötigtes Argument: modelist mode
 
-| irc | irc_modelist_numbers | Modelist Nummern für aktuellen IRC Channel; benötigtes Argument: modelist mode
+| irc | irc_modelist_numbers | Modelist Nummern für aktuellen IRC Kanal; benötigtes Argument: modelist mode
 
-| irc | irc_msg_kick | Standardmitteilung wenn man jemanden aus einem Channel wirft
+| irc | irc_msg_kick | Standardmitteilung wenn man jemanden aus einem Kanal wirftchannel
 
-| irc | irc_msg_part | Standardmitteilung beim Verlassen (/part) eines IRC-Channels
+| irc | irc_msg_part | Standardmitteilung beim Verlassen (/part) eines IRC-Kanals
 
 | irc | irc_notify_nicks | Nicks für die eine Benachrichtigung existiert
 
@@ -44,17 +44,17 @@
 
 | irc | irc_server | aktueller IRC-Server
 
-| irc | irc_server_channels | Channels des derzeitigen IRC-Server
+| irc | irc_server_channels | Kanäle des derzeitigen IRC-Server
 
 | irc | irc_server_nick | Nick beim derzeitigen IRC-Server
 
-| irc | irc_server_nicks | Nicks für alle Channels auf dem aktuellen IRC-Server
+| irc | irc_server_nicks | Nicks für alle Kanäle auf dem aktuellen IRC-Server
 
 | irc | irc_server_privates | Privat auf aktuellem IRC Server
 
 | irc | irc_servers | IRC-Server (interne Namen)
 
-| irc | nick | Liste der Nicks im aktuellen Channel
+| irc | nick | Liste der Nicks im aktuellen Kanal
 
 | javascript | javascript_script | Liste der Skripten
 

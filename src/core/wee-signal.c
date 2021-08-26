@@ -202,35 +202,32 @@ signal_send_to_weechat (int signal_index)
 void
 signal_exec_command (int signal_index, const char *command)
 {
-    char *command_eval, **commands, **ptr_cmd, str_signal[32];
-    struct t_gui_buffer *weechat_buffer;
+    char str_signal[32], **commands, **ptr_command, *command_eval;
 
     if (!command || !command[0])
         return;
 
-    command_eval = eval_expression (command, NULL, NULL, NULL);
-    if (!command_eval)
-        return;
+    snprintf (str_signal, sizeof (str_signal),
+              "sig%s", signal_list[signal_index].name);
+    string_toupper (str_signal);
 
-    if (command_eval[0])
+    commands = string_split_command (command, ';');
+    if (commands)
     {
-        snprintf (str_signal, sizeof (str_signal),
-                  "sig%s", signal_list[signal_index].name);
-        string_toupper (str_signal);
-        log_printf ("Signal %s received, executing command: %s",
-                    str_signal, command_eval);
-        commands = string_split_command (command_eval, ';');
-        if (commands)
+        for (ptr_command = commands; *ptr_command; ptr_command++)
         {
-            weechat_buffer = gui_buffer_search_main ();
-            for (ptr_cmd = commands; *ptr_cmd; ptr_cmd++)
+            command_eval = eval_expression (*ptr_command, NULL, NULL, NULL);
+            if (command_eval)
             {
-                (void) input_data (weechat_buffer, *ptr_cmd, NULL);
+                log_printf ("Signal %s received, executing command: \"%s\"",
+                            str_signal, command_eval);
+                (void) input_data (gui_buffer_search_main (),
+                                   command_eval, NULL);
+                free (command_eval);
             }
-            string_free_split_command (commands);
         }
+        string_free_split_command (commands);
     }
-    free (command_eval);
 }
 
 /*

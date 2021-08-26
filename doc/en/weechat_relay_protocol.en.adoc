@@ -436,11 +436,11 @@ hda:
     item 2:
         __path: ['0x558d62840ea0']
         number: 1
-        full_name: 'irc.server.freenode'
+        full_name: 'irc.server.libera'
     item 3:
         __path: ['0x558d62a9cea0']
         number: 2
-        full_name: 'irc.freenode.#weechat'
+        full_name: 'irc.libera.#weechat'
 ----
 
 * Request all lines of first buffer:
@@ -747,7 +747,7 @@ Syntax:
 Arguments:
 
 * _buffer_: pointer (eg: "0x1234abcd") or full name of buffer (for example:
-  _core.weechat_ or _irc.freenode.#weechat_)
+  _core.weechat_ or _irc.libera.#weechat_)
 
 Examples:
 
@@ -856,10 +856,10 @@ hda:
         prefix_color: None
 ----
 
-* Request nicklist for buffer "irc.freenode.#weechat":
+* Request nicklist for buffer "irc.libera.#weechat":
 
 ----
-(nicklist_weechat) nicklist irc.freenode.#weechat
+(nicklist_weechat) nicklist irc.libera.#weechat
 ----
 
 Response:
@@ -948,7 +948,7 @@ Syntax:
 Arguments:
 
 * _buffer_: pointer (eg: "0x1234abcd") or full name of buffer (for example:
-  _core.weechat_ or _irc.freenode.#weechat_)
+  _core.weechat_ or _irc.libera.#weechat_)
 * _data_: data to send to buffer: if beginning by `/`, this will be executed as
    a command on buffer, otherwise text is sent as input of buffer
 
@@ -963,7 +963,7 @@ input core.weechat /help filter
 * Send message "hello!" to #weechat channel:
 
 ----
-input irc.freenode.#weechat hello!
+input irc.libera.#weechat hello!
 ----
 
 [[command_completion]]
@@ -983,7 +983,7 @@ Syntax:
 Arguments:
 
 * _buffer_: pointer (eg: "0x1234abcd") or full name of buffer (for example:
-  _core.weechat_ or _irc.freenode.#weechat_)
+  _core.weechat_ or _irc.libera.#weechat_)
 * _position_: position for completion in string (starts to 0);
   if the value is -1, the position is the length of _data_ (so the completion
   is made at the end of _data_)
@@ -1144,7 +1144,7 @@ Syntax:
 Arguments:
 
 * _buffer_: pointer (eg: "0x1234abcd") or full name of buffer (for example:
-  _core.weechat_ or _irc.freenode.#weechat_); name "*" can be used to
+  _core.weechat_ or _irc.libera.#weechat_); name "*" can be used to
   specify all buffers
 * _options_: one of following keywords, separated by commas (default is
   _buffers,upgrade,buffer,nicklist_ for "*" and _buffer,nicklist_ for a buffer):
@@ -1179,14 +1179,14 @@ sync core.buffer
 * Synchronize #weechat channel, without nicklist:
 
 ----
-sync irc.freenode.#weechat buffer
+sync irc.libera.#weechat buffer
 ----
 
 * Get general signals + all signals for #weechat channel:
 
 ----
 sync * buffers,upgrade
-sync irc.freenode.#weechat
+sync irc.libera.#weechat
 ----
 
 [[command_desync]]
@@ -1209,7 +1209,7 @@ Syntax:
 Arguments:
 
 * _buffer_: pointer (eg: "0x1234abcd") or full name of buffer (for example:
-  _core.weechat_ or _irc.freenode.#weechat_); name "*" can be used to
+  _core.weechat_ or _irc.libera.#weechat_); name "*" can be used to
   specify all buffers
 * _options_: one of following keywords, separated by commas (default is
   _buffers,upgrade,buffer,nicklist_ for "*" and _buffer,nicklist_ for a buffer);
@@ -1217,7 +1217,7 @@ Arguments:
 
 [NOTE]
 When using buffer "*", the other buffers synchronized (using a name) are kept. +
-So if you send: "sync *", then "sync irc.freenode.#weechat", then "desync *",
+So if you send: "sync *", then "sync irc.libera.#weechat", then "desync *",
 the updates on #weechat channel will still be sent by WeeChat (you must remove
 it explicitly to stop updates).
 
@@ -1235,13 +1235,13 @@ desync * buffers,upgrade,buffer,nicklist
 * Desynchronize nicklist for #weechat channel (keep buffer updates):
 
 ----
-desync irc.freenode.#weechat nicklist
+desync irc.libera.#weechat nicklist
 ----
 
 * Desynchronize #weechat channel:
 
 ----
-desync irc.freenode.#weechat
+desync irc.libera.#weechat
 ----
 
 [[command_test]]
@@ -1481,7 +1481,7 @@ Data sent as hdata:
 |===
 | Name            | Type      | Description
 | number          | integer   | Buffer number (≥ 1).
-| full_name       | string    | Full name (example: _irc.freenode.#weechat_).
+| full_name       | string    | Full name (example: _irc.libera.#weechat_).
 | short_name      | string    | Short name (example: _#weechat_).
 | nicklist        | integer   | 1 if buffer has a nicklist, otherwise 0.
 | title           | string    | Buffer title.
@@ -1490,8 +1490,8 @@ Data sent as hdata:
 | next_buffer     | pointer   | Pointer to next buffer.
 |===
 
-Example: channel _#weechat_ joined on freenode, new buffer
-_irc.freenode.#weechat_:
+Example: channel _#weechat_ joined on libera, new buffer
+_irc.libera.#weechat_:
 
 [source,python]
 ----
@@ -1511,13 +1511,13 @@ hda:
     item 1:
         __path: ['0x35a8a60']
         number: 3
-        full_name: 'irc.freenode.#weechat'
+        full_name: 'irc.libera.#weechat'
         short_name: None
         nicklist: 0
         title: None
         local_variables: {
             'plugin': 'irc',
-            'name': 'freenode.#weechat',
+            'name': 'libera.#weechat',
         }
         prev_buffer: '0x34e7400'
         next_buffer: '0x0'
@@ -1535,12 +1535,12 @@ Data sent as hdata:
 |===
 | Name        | Type    | Description
 | number      | integer | Buffer number (≥ 1).
-| full_name   | string  | Full name (example: _irc.freenode.#weechat_).
+| full_name   | string  | Full name (example: _irc.libera.#weechat_).
 | prev_buffer | pointer | Pointer to previous buffer.
 | next_buffer | pointer | Pointer to next buffer.
 |===
 
-Example: buffer _irc.freenode.#weechat_ moved to number 2:
+Example: buffer _irc.libera.#weechat_ moved to number 2:
 
 [source,python]
 ----
@@ -1556,7 +1556,7 @@ hda:
     item 1:
         __path: ['0x34588c0']
         number: 2
-        full_name: 'irc.freenode.#weechat'
+        full_name: 'irc.libera.#weechat'
         prev_buffer: '0x347b9f0'
         next_buffer: '0x3471bc0'
 ----
@@ -1573,12 +1573,12 @@ Data sent as hdata:
 |===
 | Name        | Type    | Description
 | number      | integer | Buffer number (≥ 1).
-| full_name   | string  | Full name (example: _irc.freenode.#weechat_).
+| full_name   | string  | Full name (example: _irc.libera.#weechat_).
 | prev_buffer | pointer | Pointer to previous buffer.
 | next_buffer | pointer | Pointer to next buffer.
 |===
 
-Example: buffer _irc.freenode.#weechat_ merged with buffer #2:
+Example: buffer _irc.libera.#weechat_ merged with buffer #2:
 
 [source,python]
 ----
@@ -1594,7 +1594,7 @@ hda:
     item 1:
         __path: ['0x4db4c00']
         number: 2
-        full_name: 'irc.freenode.#weechat'
+        full_name: 'irc.libera.#weechat'
         prev_buffer: '0x4cef9b0'
         next_buffer: '0x0'
 ----
@@ -1611,12 +1611,12 @@ Data sent as hdata:
 |===
 | Name        | Type    | Description
 | number      | integer | Buffer number (≥ 1).
-| full_name   | string  | Full name (example: _irc.freenode.#weechat_).
+| full_name   | string  | Full name (example: _irc.libera.#weechat_).
 | prev_buffer | pointer | Pointer to previous buffer.
 | next_buffer | pointer | Pointer to next buffer.
 |===
 
-Example: buffer _irc.freenode.#weechat_ unmerged:
+Example: buffer _irc.libera.#weechat_ unmerged:
 
 [source,python]
 ----
@@ -1632,7 +1632,7 @@ hda:
     item 1:
         __path: ['0x4db4c00']
         number: 3
-        full_name: 'irc.freenode.#weechat'
+        full_name: 'irc.libera.#weechat'
         prev_buffer: '0x4cef9b0'
         next_buffer: '0x0'
 ----
@@ -1651,12 +1651,12 @@ Data sent as hdata:
 |===
 | Name        | Type    | Description
 | number      | integer | Buffer number (≥ 1).
-| full_name   | string  | Full name (example: _irc.freenode.#weechat_).
+| full_name   | string  | Full name (example: _irc.libera.#weechat_).
 | prev_buffer | pointer | Pointer to previous buffer.
 | next_buffer | pointer | Pointer to next buffer.
 |===
 
-Example: buffer _irc.freenode.#weechat_ hidden:
+Example: buffer _irc.libera.#weechat_ hidden:
 
 [source,python]
 ----
@@ -1672,7 +1672,7 @@ hda:
     item 1:
         __path: ['0x4db4c00']
         number: 2
-        full_name: 'irc.freenode.#weechat'
+        full_name: 'irc.libera.#weechat'
         prev_buffer: '0x4cef9b0'
         next_buffer: '0x0'
 ----
@@ -1691,12 +1691,12 @@ Data sent as hdata:
 |===
 | Name        | Type    | Description
 | number      | integer | Buffer number (≥ 1).
-| full_name   | string  | Full name (example: _irc.freenode.#weechat_).
+| full_name   | string  | Full name (example: _irc.libera.#weechat_).
 | prev_buffer | pointer | Pointer to previous buffer.
 | next_buffer | pointer | Pointer to next buffer.
 |===
 
-Example: buffer _irc.freenode.#weechat_ unhidden:
+Example: buffer _irc.libera.#weechat_ unhidden:
 
 [source,python]
 ----
@@ -1712,7 +1712,7 @@ hda:
     item 1:
         __path: ['0x4db4c00']
         number: 3
-        full_name: 'irc.freenode.#weechat'
+        full_name: 'irc.libera.#weechat'
         prev_buffer: '0x4cef9b0'
         next_buffer: '0x0'
 ----
@@ -1729,7 +1729,7 @@ Data sent as hdata:
 |===
 | Name            | Type      | Description
 | number          | integer   | Buffer number (≥ 1).
-| full_name       | string    | Full name (example: _irc.freenode.#weechat_).
+| full_name       | string    | Full name (example: _irc.libera.#weechat_).
 | short_name      | string    | Short name (example: _#weechat_).
 | local_variables | hashtable | Local variables.
 |===
@@ -1750,15 +1750,15 @@ hda:
     item 1:
         __path: ['0x4df7b80']
         number: 5
-        full_name: 'irc.freenode.Flash2'
+        full_name: 'irc.libera.Flash2'
         short_name: 'Flash2'
         local_variables: {
-            'server': 'freenode',
+            'server': 'libera',
             'plugin': 'irc',
             'type': 'private',
             'channel': 'FlashCode',
             'nick': 'test',
-            'name': 'freenode.Flash2',
+            'name': 'libera.Flash2',
         }
 ----
 
@@ -1774,7 +1774,7 @@ Data sent as hdata:
 |===
 | Name      | Type    | Description
 | number    | integer | Buffer number (≥ 1).
-| full_name | string  | Full name (example: _irc.freenode.#weechat_).
+| full_name | string  | Full name (example: _irc.libera.#weechat_).
 | title     | string  | Buffer title.
 |===
 
@@ -1793,7 +1793,7 @@ hda:
     item 1:
         __path: ['0x4a715d0']
         number: 3
-        full_name: 'irc.freenode.#weechat'
+        full_name: 'irc.libera.#weechat'
         title: 'Welcome on #weechat!  https://weechat.org/'
 ----
 
@@ -1811,10 +1811,10 @@ Data sent as hdata:
 |===
 | Name      | Type    | Description
 | number    | integer | Buffer number (≥ 1).
-| full_name | string  | Full name (example: _irc.freenode.#weechat_).
+| full_name | string  | Full name (example: _irc.libera.#weechat_).
 |===
 
-Example: buffer _irc.freenode.#weechat_ has been cleared:
+Example: buffer _irc.libera.#weechat_ has been cleared:
 
 [source,python]
 ----
@@ -1828,7 +1828,7 @@ hda:
     item 1:
         __path: ['0x4a715d0']
         number: 3
-        full_name: 'irc.freenode.#weechat'
+        full_name: 'irc.libera.#weechat'
 ----
 
 [[message_buffer_type_changed]]
@@ -1843,7 +1843,7 @@ Data sent as hdata:
 |===
 | Name      | Type    | Description
 | number    | integer | Buffer number (≥ 1).
-| full_name | string  | Full name (example: _irc.freenode.#weechat_).
+| full_name | string  | Full name (example: _irc.libera.#weechat_).
 | type      | integer | Buffer type: 0 = formatted (default), 1 = free content.
 |===
 
@@ -1879,11 +1879,11 @@ Data sent as hdata:
 |===
 | Name            | Type      | Description
 | number          | integer   | Buffer number (≥ 1).
-| full_name       | string    | Full name (example: _irc.freenode.#weechat_).
+| full_name       | string    | Full name (example: _irc.libera.#weechat_).
 | local_variables | hashtable | Local variables.
 |===
 
-Example: local variable _test_ added in buffer _irc.freenode.#weechat_:
+Example: local variable _test_ added in buffer _irc.libera.#weechat_:
 
 [source,python]
 ----
@@ -1898,15 +1898,15 @@ hda:
     item 1:
         __path: ['0x4a73de0']
         number: 3
-        full_name: 'irc.freenode.#weechat'
+        full_name: 'irc.libera.#weechat'
         local_variables: {
-            'server': 'freenode',
+            'server': 'libera',
             'test': 'value',
             'plugin': 'irc',
             'type': 'channel',
             'channel': '#weechat',
             'nick': 'test',
-            'name': 'freenode.#weechat',
+            'name': 'libera.#weechat',
         }
 ----
 
@@ -1922,11 +1922,11 @@ Data sent as hdata:
 |===
 | Name            | Type      | Description
 | number          | integer   | Buffer number (≥ 1).
-| full_name       | string    | Full name (example: _irc.freenode.#weechat_).
+| full_name       | string    | Full name (example: _irc.libera.#weechat_).
 | local_variables | hashtable | Local variables.
 |===
 
-Example: local variable _test_ updated in buffer _irc.freenode.#weechat_:
+Example: local variable _test_ updated in buffer _irc.libera.#weechat_:
 
 [source,python]
 ----
@@ -1941,7 +1941,7 @@ hda:
     item 1:
         __path: ['0x4a73de0']
         number: 3
-        full_name: 'irc.freenode.#weechat'
+        full_name: 'irc.libera.#weechat'
         local_variables: {
             'server': 'local',
             'test': 'value2',
@@ -1949,7 +1949,7 @@ hda:
             'type': 'channel',
             'channel': '#weechat',
             'nick': 'test',
-            'name': 'freenode.#weechat',
+            'name': 'libera.#weechat',
         }
 ----
 
@@ -1965,11 +1965,11 @@ Data sent as hdata:
 |===
 | Name            | Type      | Description
 | number          | integer   | Buffer number (≥ 1).
-| full_name       | string    | Full name (example: _irc.freenode.#weechat_).
+| full_name       | string    | Full name (example: _irc.libera.#weechat_).
 | local_variables | hashtable | Local variables.
 |===
 
-Example: local variable _test_ removed from buffer _irc.freenode.#weechat_:
+Example: local variable _test_ removed from buffer _irc.libera.#weechat_:
 
 [source,python]
 ----
@@ -1984,14 +1984,14 @@ hda:
     item 1:
         __path: ['0x4a73de0']
         number: 3
-        full_name: 'irc.freenode.#prout'
+        full_name: 'irc.libera.#prout'
         local_variables: {
             'server': 'local',
             'plugin': 'irc',
             'type': 'channel',
             'channel': '#weechat',
             'nick': 'test',
-            'name': 'freenode.#weechat',
+            'name': 'libera.#weechat',
         }
 ----
 
@@ -2017,7 +2017,7 @@ Data sent as hdata:
 | message      | string           | Message.
 |===
 
-Example: new message _hello!_ from nick _FlashCode_ on buffer _irc.freenode.#weechat_:
+Example: new message _hello!_ from nick _FlashCode_ on buffer _irc.libera.#weechat_:
 
 [source,python]
 ----
@@ -2066,10 +2066,10 @@ Data sent as hdata:
 |===
 | Name      | Type    | Description
 | number    | integer | Buffer number (≥ 1).
-| full_name | string  | Full name (example: _irc.freenode.#weechat_).
+| full_name | string  | Full name (example: _irc.libera.#weechat_).
 |===
 
-Example: buffer _irc.freenode.#weechat_ is being closed by WeeChat:
+Example: buffer _irc.libera.#weechat_ is being closed by WeeChat:
 
 [source,python]
 ----
@@ -2083,7 +2083,7 @@ hda:
     item 1:
         __path: ['0x4a715d0']
         number: 3
-        full_name: 'irc.freenode.#weechat'
+        full_name: 'irc.libera.#weechat'
 ----
 
 [[message_nicklist]]
@@ -2109,7 +2109,7 @@ Data sent as hdata:
 | prefix_color | string  | Prefix color (only for a nick).
 |===
 
-Example: nicklist for buffer _irc.freenode.#weechat_:
+Example: nicklist for buffer _irc.libera.#weechat_:
 
 [source,python]
 ----
@@ -2529,7 +2529,7 @@ objects, and then set of objects (path with pointers, then objects).
 * _values_: list of values (number of values is number of keys returned for
   hdata)
 
-Example of hdata with two buffers (weechat core and freenode server) and two
+Example of hdata with two buffers (weechat core and libera server) and two
 keys (_number_ and _full_name_):
 
 ....
@@ -2537,10 +2537,10 @@ keys (_number_ and _full_name_):
 hdata buffer:gui_buffers(*) number,full_name
 
 # response
-┌────────┬──────────────────────────┬───╥─────────┬───┬──────────────╥─────────┬───┬─────────────────────┐
-│ buffer │ number:int,full_name:str │ 2 ║ 0x12345 │ 1 │ core.weechat ║ 0x6789a │ 2 │ irc.server.freenode │
-└────────┴──────────────────────────┴───╨─────────┴───┴──────────────╨─────────┴───┴─────────────────────┘
- └──────┘ └────────────────────────┘ └─┘ └──────────────────────────┘ └─────────────────────────────────┘
+┌────────┬──────────────────────────┬───╥─────────┬───┬──────────────╥─────────┬───┬───────────────────┐
+│ buffer │ number:int,full_name:str │ 2 ║ 0x12345 │ 1 │ core.weechat ║ 0x6789a │ 2 │ irc.server.libera │
+└────────┴──────────────────────────┴───╨─────────┴───┴──────────────╨─────────┴───┴───────────────────┘
+ └──────┘ └────────────────────────┘ └─┘ └──────────────────────────┘ └───────────────────────────────┘
   h-path          keys              count          buffer 1                        buffer 2
 ....
 
@@ -2682,7 +2682,7 @@ An item is:
 ** _type_: type of variable (_int_, _str_, ...)
 ** _value_: value of variable
 
-Example of infolist with two buffers (weechat core and freenode server):
+Example of infolist with two buffers (weechat core and libera server):
 
 ....
 # command

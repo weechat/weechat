@@ -21,6 +21,7 @@ docdir = $(datadir)/doc/$(PACKAGE)
 
 EXTRA_DIST = CMakeLists.txt \
              docinfo.html \
+             weechat_faq.es.adoc \
              weechat_quickstart.es.adoc
 
 if MAN
@@ -29,11 +30,16 @@ if MAN
   man_uninstall =
 endif
 if DOC
-  doc_targets = weechat_quickstart.es.html
+  doc_targets = weechat_faq.es.html \
+		weechat_quickstart.es.html
   doc_install = install-doc
   doc_uninstall = uninstall-doc
 endif
 all-local: $(man_targets) $(doc_targets)
+
+# FAQ
+weechat_faq.es.html: weechat_faq.es.adoc $(abs_top_srcdir)/doc/docinfo.html
+	$(ASCIIDOCTOR) $(ASCIIDOCTOR_ARGS) -a revnumber="$(VERSION)" -o weechat_faq.es.html $(abs_top_srcdir)/doc/es/weechat_faq.es.adoc
 
 # quickstart
 weechat_quickstart.es.html: weechat_quickstart.es.adoc $(abs_top_srcdir)/doc/docinfo.html

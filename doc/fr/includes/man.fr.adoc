@@ -10,7 +10,7 @@ temporaire avec une URL, comme ceci :
 
 Pour rejoindre le canal IRC de support WeeChat avec le pseudo "monpseudo" :
 
-    irc://monpseudo@chat.freenode.net/#weechat
+    irc://monpseudo@irc.libera.chat/#weechat
 
 Les adresses IPv6 peuvent être entourées par des crochets pour ajouter un port
 après, par exemple :
@@ -87,6 +87,9 @@ $HOME/.config/weechat/tcl.conf::
 
 $HOME/.config/weechat/trigger.conf::
     fichier de configuration pour l'extension _trigger_
+
+$HOME/.config/weechat/typing.conf::
+    fichier de configuration pour l'extension _typing_
 
 $HOME/.config/weechat/xfer.conf::
     fichier de configuration pour l'extension _xfer_

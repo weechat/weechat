@@ -12,7 +12,7 @@
 
 Tłumaczenie:
 
-* Krzysztof Korościk <soltys1@gmail.com>, 2009-2016
+* Krzysztof Korościk <soltys1@gmail.com>, 2009-2021
 
 
 Ten dokument opisuje klienta rozmów WeeChat, będącego częścią WeeChat.
@@ -108,7 +108,7 @@ WeeChat:
 | libncursesw5-dev ^(2)^ |               | Interfejs ncurses.
 | libcurl4-gnutls-dev    |               | Transfer URL.
 | zlib1g-dev             |               | Kompresja pakietów we wtyczce relay (protokół weechat), wtyczka script.
-| libgcrypt20-dev        |               | Zabezpieczone dane, uwierzytelnianie IRC SASL (DH-BLOWFISH/DH-AES).
+| libgcrypt20-dev        |               | Zabezpieczone dane, uwierzytelnianie IRC SASL.
 | libgnutls28-dev        | ≥ 2.2.0 ^(3)^ | Połączenia SSL z serwerami IRC, wsparcie dla SSL we wtyczce relay, uwierzytelnianie IRC SASL (ECDSA-NIST256P-CHALLENGE).
 |===
 
@@ -182,11 +182,11 @@ $ make
 $ make install
 ----
 
-Opcje mogą zostać przekazane do CMake, format "-DOPCJA=WARTOŚĆ".
+Opcje mogą zostać przekazane do CMake, format `-DOPCJA=WARTOŚĆ`.
 
 Lista popularnych opcji:
 
-[width="100%",cols="2m,2,5m,12",options="header"]
+[width="100%",cols="3m,3,3m,10",options="header"]
 |===
 | Opcja  | Wartość | Wartość domyślna | Opis
 
@@ -197,13 +197,12 @@ Lista popularnych opcji:
 | CMAKE_INSTALL_PREFIX | katalog | /usr/local |
   Katalog, do którego zostanie zainstalowany WeeChat.
 
-// TRANSLATION MISSING
-| WEECHAT_HOME | katalog | (empty string) |
+| WEECHAT_HOME | katalog | (pusty ciąg) |
   Domyślny katalog domowy dla WeeChat. +
-  With an empty value (recommended), XDG directories are used by default.
-  If non empty, a single directory for all files is used.
-  The value can also  be 4 directories separated by colons, in this order:
-  config, data, cache, runtime.
+  Bez ustawionej wartości (zalecane) domyślnie zostaną użyte wartości XDG.
+  Jeśli wartość nie jest pusta zostanie użyty jeden katalog dla wszystkich plików.
+  Wartością mogą być również 4 katalogi oddzielone dwukropkami, w takiej
+  kolejności: config, data, cache, runtime.
 
 | ENABLE_ALIAS | `ON`, `OFF` | ON |
   Kompilacja <<alias_plugin,wtyczki alias>>.
@@ -289,6 +288,9 @@ Lista popularnych opcji:
 
 | ENABLE_TRIGGER | `ON`, `OFF` | ON |
   Kompilacja <<trigger_plugin,wtyczki trigger>>.
+
+| ENABLE_TYPING | `ON`, `OFF` | ON |
+  Kompilacja <<typing_plugin,wtyczki typing>>.
 
 | ENABLE_XFER | `ON`, `OFF` | ON |
   Kompilacja <<xfer_plugin,wtyczki xfer>>.
@@ -461,11 +463,10 @@ Kiedy WeeChat ulegnie awarii, Twój system stworzy plik _core_ lub _core.12345_
 Plik ten zostanie utworzony w katalogu, z którego uruchomiono WeeChat (*nie*
 jest to katalog, gdzie zainstalowano WeeChat!).
 
-// TRANSLATION MISSING
 [NOTE]
-On some systems like Archlinux, core dumps could be in another directory like
-_/var/lib/systemd/coredump_ and you must use the command `coredumpctl` to read it. +
-For more information, see this wiki page: https://wiki.archlinux.org/index.php/Core_dump
+Na niektórych systemach jak Archlinux pliki te mogą znajdować się w innym katalogu
+jak _/var/lib/systemd/coredump_ i należy użyć komendy `coredumpctl` do ich odczytania. +
+Więcej informacji można znaleźć na tej stronie wiki: https://wiki.archlinux.org/index.php/Core_dump
 
 Na przykład jeśli _weechat_ jest zainstalowany w _/usr/bin/_ i plik _core_
 znajduje się w _/home/user/_, uruchom gdb za pomocą tej komendy:
@@ -527,79 +528,77 @@ Następnie jak w przypadku awarii, użyj polecenia `bt full`:
 (gdb) bt full
 ----
 
-// TRANSLATION MISSING
 [[upgrade]]
-=== Upgrade
+=== Aktualizacja
 
-If a new stable version of WeeChat is released, this is time for you to
-switch to this version.
+Jeśli zostanie wydana nowa stabilna wersja WeeChat należy zaktualizować
+się do tej wersji.
 
-First of all, you must install the new version of WeeChat, either with your
-package manager or by compiling yourself, so that the `weechat` binary and all
-required files are in the same paths. +
-This can be done while WeeChat is running.
+Na samym początku musisz zainstalować nową wersje WeeChat albo za pomocą
+managera pakietów albo kompilując ją samemu, w taki sposób żeby plik
+wykonywalny `weechat` i wszystke wymagane pliki znajdowały się w tych samych
+ścieżkach. +
+Można to zrobić podczas działania WeeChat.
 
-// TRANSLATION MISSING
 [[upgrade_command]]
-==== Upgrade command
+==== Komenda aktualizacji
 
-WeeChat can restart the new binary, in place, using the
-<<command_weechat_upgrade,/upgrade>> command: the buffer contents and non-SSL
-connections are preserved. +
-The SSL connections are lost during upgrade and you are automatically
-reconnected after the upgrade (reload of SSL sessions is currently not possible
-with GnuTLS).
+WeeChat może zostać ponownie uruchomiony z nowego pliku binarnego bez potrzeby
+jego wyłączania za pomocą komendy <<command_weechat_upgrade,/upgrade>>:
+zawartości buforów i połączenia nie SSL zostają zachowane. +
+Połączenia SSL są przerywane podczas aktualizacji i są automatycznie
+wznawiane po aktualizacji (przeładowanie sesji SSL nie jest obecnie wspierane
+przez GnuTLS).
 
-The command can also be used if you have to restart the machine, for example
-to upgrade the kernel or to move your WeeChat to another machine:
+Komenda ta może zostać użyta również w momencie restartu maszyny, na przykład
+w celu aktualizacji kernela albo przeniesienia WeeChat na nową maszynę:
 
 ----
 /upgrade -quit
 ----
 
-This saves the current state in `*.upgrade` files. You can then either reboot
-or move the whole WeeChat directories (config, data, cache) to another machine,
-and restart WeeChat later with this command:
+Zapisuje to obecny stan w plikach `*.upgrade`. Możesz następnie wykonać restart
+lub przenieść cały katalog WeeChat (konfiguracja, dane, cache) na inną maszynę,
+następnie uruchomić WeeChat za pomocą polecenia:
 
 ----
 $ weechat --upgrade
 ----
 
-// TRANSLATION MISSING
 [[restart_after_upgrade]]
-==== Restart after upgrade
+==== Restart po aktualizacji
 
 [[restart_release_notes]]
-===== Release notes
+===== Informacje o wydaniu
 
-After an upgrade, it is *strongly recommended* to read the
-https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
-which contain important information about breaking changes and some
-manual actions that could be required.
+Po aktualizacji *zaleca się* przeczytanie
+https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[informacji o wydaniu],
+które zawierają ważne informacje o przełomowych zmianach i do zrobienia jakie mogą
+być wymagane.
 
-You must read the release notes of all versions between your old (excluded) and
-your new version (included). +
-For example if you switch from version 3.0 to 3.2, you must read release notes
-of versions 3.1 and 3.2.
+Powinieneś przeczytać informacje o zmianach dla wyszystkich wersji pomiędzy obecną
+a tą, do której aktualizujesz. +
+Na przykład aktualizując z wersji 3.0 do 3.2, musisz przeczytać informacje dla wersj
+3.1 i 3.2.
 
 [[restart_configuration_upgrade]]
-===== Configuration upgrade
+===== Aktualizacja konfiguracji
 
-WeeChat has an automatic upgrade of configuration files (`*.conf`):
+WeeChat potrafi automatycznie aktualizować pliki konfiguracyjne (`*.conf`):
 
-* new options are silently added with default value
-* obsolete options are automatically discarded and WeeChat displays a warning
-  with the value read from file.
+* nowe opcje są dodawane z domyślnymi wartościami
+* niepotrzebne już opcje są automatycznie kasowane i WeeChat wyświetla ostrzeżenie
+  z wartościami odczytanymi z pliku.
 
-Example of warning when an option has been removed:
+Przykład ostrzeżenia o usuwanej opcji:
 
 ----
 =!= Ostrzeżenie: /home/user/.config/weechat/sec.conf, linia 15: nieznana opcja dla sekcji "crypt": passphrase_file = ""
 ----
 
-That means the option `sec.crypt.passphrase_file` has been removed, and you
-had value set to empty string, which was the default value in the previous version
-(in this case no manual action is required).
+Oznaza to, że opcja `sec.crypt.passphrase_file` została usunięta i jej wartość była
+ustawiona na pusty ciąg, który był domyślną wartością w poprzednej wersji
+(w tym przypadku żadna dodatkowa akcja nie jest wymagana).
 
 [[usage]]
 == Używanie
@@ -638,8 +637,7 @@ Niektóre zmienne śwodowiskowe są używane przez WeeChat o ile zostały zdefin
 [width="100%",cols="1m,6",options="header"]
 |===
 | Nazwa                | Opis
-// TRANSLATION MISSING
-| WEECHAT_HOME         | Katalog domowy WeeChat (z plikami konfiguracyjnymi, logami, skryptami, ...). Same behavior as <<compile_with_cmake,CMake option>> `WEECHAT_HOME`.
+| WEECHAT_HOME         | Katalog domowy WeeChat (z plikami konfiguracyjnymi, logami, skryptami, ...). Działa tak samo jak <<compile_with_cmake,opcja CMake>> `WEECHAT_HOME`.
 | WEECHAT_PASSPHRASE   | Hasło używane do odszyfrowania zabezpieczonych danych.
 | WEECHAT_EXTRA_LIBDIR | Dodatkowy katalog do ładowania wtyczek (z katalogu "plugins" znajdującego się pod tą ścieżką).
 |===
@@ -647,27 +645,27 @@ Niektóre zmienne śwodowiskowe są używane przez WeeChat o ile zostały zdefin
 [[files_and_directories]]
 === Pliki i foldery
 
-// TRANSLATION MISSING
 [[xdg_directories]]
-==== XDG directories
+==== Katalogi XDG
 
-WeeChat uses XDG directories by default
-(according to the https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html[XDG Base Directory Specification]). +
-A single home directory for all files can be forced by CMake option `WEECHAT_HOME`,
-the environment variable `WEECHAT_HOME` or the command-line option `-d` / `--dir`.
+WeeChat domyślnie używa katalogów XDG (zgodnie ze specyfikacją:
+https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html[XDG Base Directory Specification]). +
+Pojedynczy katalog może zostać wymuszony przez opcję CMake `WEECHAT_HOME`,
+zmienną środowiskową `WEECHAT_HOME` lub parametr z linii polecań `-d` / `--dir`.
 
-When a single WeeChat home directory is not forced, XDG directories are used
-and set like this:
+Kiedy jeden katalog domowy dla WeeChat nie zostanie wymuszony, używane zostają katalogi
+XDG z takim podziałem:
 
 [width="100%",cols="1,2m,5",options="header"]
 |===
-| Directory | Default value            | Fallback value
-| config    | $XDG_CONFIG_HOME/weechat | `$HOME/.config/weechat` if `$XDG_CONFIG_HOME` is not defined or empty.
-| data      | $XDG_DATA_HOME/weechat   | `$HOME/.local/share/weechat` if `$XDG_DATA_HOME` is not defined or empty.
-| cache     | $XDG_CACHE_HOME/weechat  | `$HOME/.cache/weechat` if `$XDG_CACHE_HOME` is not defined or empty.
-| runtime   | $XDG_RUNTIME_DIR/weechat | Same as _cache_ directory if `$XDG_RUNTIME_DIR` is not defined or empty.
+| Katalog   | Domyślna wartość         | Wartość zapasowa
+| config    | $XDG_CONFIG_HOME/weechat | `$HOME/.config/weechat` jeśli zmienna `$XDG_CONFIG_HOME` nie jest zdefiniowana albo jest pusta.
+| data      | $XDG_DATA_HOME/weechat   | `$HOME/.local/share/weechat` jeśli zmienna `$XDG_DATA_HOME` nie jest zdefiniowana albo jest pusta.
+| cache     | $XDG_CACHE_HOME/weechat  | `$HOME/.cache/weechat` jeśli zmienna `$XDG_CACHE_HOME` nie jest zdefiniowana albo jest pusta.
+| runtime   | $XDG_RUNTIME_DIR/weechat | Taki sam jak katalog _cache_ jeśli zmienna `$XDG_RUNTIME_DIR` nie jest zdefiniowana albo jest pusta.
 |===
 
+Pliki konfiguracyjne z domyślnymi wartościami są tworzone przy pierwszym uruchomieniu WeeChat.
 The configuration files are created with default values the first time you run WeeChat.
 
 [[weechat_directories]]
@@ -677,12 +675,9 @@ Katalogi używane przez WeeChat to:
 
 [width="100%",cols="1m,3",options="header"]
 |===
-// TRANSLATION MISSING
-| Path ^(1)^              | Opis
-// TRANSLATION MISSING
-| ~/.config/weechat/      | WeeChat configuration files: `*.conf`, certificates, etc.
-// TRANSLATION MISSING
-| ~/.local/share/weechat/ | WeeChat data files: logs, scripts, scripts data, xfer files, etc.
+| Ścieżka ^(1)^           | Opis
+| ~/.config/weechat/      | Pliki konfiguracyjne WeeChat: `*.conf`, certifikaty, itp.
+| ~/.local/share/weechat/ | Pliki z danymi WeeChat: logi, skrypty, dane skryptów, pliki xfer, itp.
 |    logs/                | Pliki z logami (jeden na bufor).
 |    python/              | Skrypty pythonowe.
 |       autoload/         | Skrypty pythonowe automatycznie ładowane przy starcie ^(2)^.
@@ -700,15 +695,12 @@ Katalogi używane przez WeeChat to:
 |       autoload/         | Skrypty JavaScript automatycznie ładowane przy starcie ^(2)^.
 |    php/                 | Skrypty PHP.
 |       autoload/         | Skrypty PHP automatycznie ładowane przy starcie ^(2)^.
-// TRANSLATION MISSING
-| ~/.cache/weechat/       | WeeChat cache files: scripts cache.
-// TRANSLATION MISSING
-| /run/user/1000/weechat/ | WeeChat runtime files: FIFO pipe, Relay UNIX sockets.
+| ~/.cache/weechat/       | Pliki pamięci podręcznej WeeChat: pliki pamięci podręcznej skryptów.
+| /run/user/1000/weechat/ | Pliki uruchomieniowe WeeChat: kolejki FIFO, Gniazda UNIX pośrednika.
 |===
 
-// TRANSLATION MISSING
 [NOTE]
-^(1)^ XDG directories may be different according to your environment variables `XDG_*`. +
+^(1)^ Katalogi XDG mogą się różnić w zależności od wartości zmiennych `XDG_*`. +
 ^(2)^ Ten folder zawiera przewazine linki symboliczne do plików w folderze nadrzędnym.
 
 [[weechat_files]]
@@ -742,6 +734,7 @@ Pliki tworzone w katalogu domowym WeeChat:
 | spell.conf      | Plik konfiguracyjny wtyczki _spell_          | Nie.
 | tcl.conf        | Plik konfiguracyjny wtyczki _tcl_            | Nie.
 | trigger.conf    | Plik konfiguracyjny wtyczki _trigger_        | Możliwe, zależy od triggerów.
+| typing.conf     | Plik konfiguracyjny wtyczki _typing_         | Nie.
 | xfer.conf       | Plik konfiguracyjny wtyczki _xfer_           | Nie.
 | weechat.log     | Plik z logami WeeChat                        | Nie.
 |===
@@ -762,34 +755,34 @@ Przykład terminala z WeeChat:
 ....
  ▼ bar "buflist"   ▼ bar "title"
 ┌──────────────────────────────────────────────────────────────────────────────────────┐
-│1.freenode│Welcome to #test, this is a test channel                                   │
-│  weechat │12:52:27   --> | Flashy (flashcode@weechat.org) has joined #test   │@Flashy│
-│2.  #test │12:52:27    -- | Nicks #test: [@Flashy @joe +weebot peter]         │@joe   │
-│3.  #abc  │12:52:27    -- | Channel #test: 4 nicks (2 ops, 1 voice, 1 normal) │+weebot│
-│4.  #def  │12:52:27    -- | Channel created on Tue Jan 27 06:30:17 2009       │peter  │
-│5.  #ghi  │12:54:15 peter | hey!                                              │       │
-│          │12:55:01  @joe | hello                                             │       │
-│          │                                                                   │       │
-│          │                                                                   │       │
-│          │                                                                   │       │
-│          │                                                                   │       │
-│          │                                                                   │       │
-│          │                                                                   │       │
-│          │                                                                   │       │
-│          │                                                                   │       │
-│          │                                                                   │       │
-│          │                                                                   │       │
-│          │                                                                   │       │
-│          │                                                                   │       │
-│          │                                                                   │       │
-│          │                                                                   │       │
-│          │[12:55] [5] [irc/freenode] 2:#test(+n){4}* [H: 3:#abc(2,5), 5]             │
-│          │[@Flashy(i)] hi peter!█                                                    │
+│1.libera │Welcome to #test, this is a test channel                                    │
+│  weechat│12:52:27   --> | Flashy (flashcode@weechat.org) has joined #test    │@Flashy│
+│2.  #test│12:52:27    -- | Nicks #test: [@Flashy @joe +weebot peter]          │@joe   │
+│3.  #abc │12:52:27    -- | Channel #test: 4 nicks (2 ops, 1 voice, 1 normal)  │+weebot│
+│4.  #def │12:52:27    -- | Channel created on Tue Jan 27 06:30:17 2009        │peter  │
+│5.  #ghi │12:54:15 peter | hey!                                               │       │
+│         │12:55:01  @joe | hello                                              │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │[12:55] [5] [irc/libera] 2:#test(+n){4}* [H: 3:#abc(2,5), 5]                │
+│         │[@Flashy(i)] hi peter!█                                                     │
 └──────────────────────────────────────────────────────────────────────────────────────┘
             ▲ bars "status" and "input"                               bar "nicklist" ▲
 ....
 
-Ekran składa się z następujących obszarów:
+Domyślnie ekran jest podzielony na następujące obszary:
 
 * obszar rozmowy (środek ekranu) z liniami rozmowy, zawierającymi:
 ** czas
@@ -822,20 +815,20 @@ Pasek _status_ posiada następujące domyślne elementy:
 
 [width="100%",cols="^3,^3,9",options="header"]
 |===
-| Element               | Przykład                | Opis
-| time                  | `[12:55]`               | Czas.
-| buffer_last_number    | `[5]`                   | Numer ostatniego buforu na liście.
-| buffer_plugin         | `[irc/freenode]`        | Wtyczka dla obecnego bufora (wtyczka irc może dodać nazwę serwera IRC używanego przez bufor).
-| buffer_number         | `2`                     | Numer obecnego buforu.
-| buffer_name           | `#test`                 | Nazwa obecnego buforu.
-| buffer_modes          | `+n`                    | Tryby kanału IRC.
-| buffer_nicklist_count | `{4}`                   | Ilość nicków wyświetlanych na liście nicków.
-| buffer_zoom           | !                       | `!` oznacza, że połączony bufor jest przybliżony (tylko ten jest wyświetlany), pusta wartość oznacza, że wszystkie połączone bufory są wyświetlane.
-| buffer_filter         | `+*+`                   | Wskaźnik filtrowania: `+*+` oznacza, że niektóre linie zostały odfiltrowywane (ukryte), pusta wartość oznacza, że wszystkie linie są wyświetlane.
-| scroll                | `-Więcej(50)-`          | Wskaźnik przewijania, z numerem linii poniżej ostatniej wyświetlanej.
-| lag                   | `[Lag: 2.5]`            | Wskaźnik opóźnienia, w sekundach (ukryty dla niskich opóźnień).
-| hotlist               | `[H: 3:#abc(2,5), 5]`   | Lista buforów z aktywnością (nieprzeczytane wiadomości) (w przykładzie, 2 podświetlenia i 5 nieprzeczytanych wiadomości w _#abc_, jedna wiadomość w buforze #5).
-| completion            | `abc(2) def(5)`         | Lista słów do dopełnienia, z ilością możliwych dopełnień dla każdego słowa.
+| Element               | Przykład              | Opis
+| time                  | `[12:55]`             | Czas.
+| buffer_last_number    | `[5]`                 | Numer ostatniego buforu na liście.
+| buffer_plugin         | `[irc/libera]`        | Wtyczka dla obecnego bufora (wtyczka irc może dodać nazwę serwera IRC używanego przez bufor).
+| buffer_number         | `2`                   | Numer obecnego buforu.
+| buffer_name           | `#test`               | Nazwa obecnego buforu.
+| buffer_modes          | `+n`                  | Tryby kanału IRC.
+| buffer_nicklist_count | `{4}`                 | Ilość nicków wyświetlanych na liście nicków.
+| buffer_zoom           | !                     | `!` oznacza, że połączony bufor jest przybliżony (tylko ten jest wyświetlany), pusta wartość oznacza, że wszystkie połączone bufory są wyświetlane.
+| buffer_filter         | `+*+`                 | Wskaźnik filtrowania: `+*+` oznacza, że niektóre linie zostały odfiltrowywane (ukryte), pusta wartość oznacza, że wszystkie linie są wyświetlane.
+| scroll                | `-Więcej(50)-`        | Wskaźnik przewijania, z numerem linii poniżej ostatniej wyświetlanej.
+| lag                   | `[Lag: 2.5]`          | Wskaźnik opóźnienia, w sekundach (ukryty dla niskich opóźnień).
+| hotlist               | `[H: 3:#abc(2,5), 5]` | Lista buforów z aktywnością (nieprzeczytane wiadomości) (w przykładzie, 2 podświetlenia i 5 nieprzeczytanych wiadomości w _#abc_, jedna wiadomość w buforze #5).
+| completion            | `abc(2) def(5)`       | Lista słów do dopełnienia, z ilością możliwych dopełnień dla każdego słowa.
 |===
 
 Pasek _input_ posiada następujące domyślne elementy:
@@ -843,7 +836,7 @@ Pasek _input_ posiada następujące domyślne elementy:
 [width="100%",cols="^3,^3,9",options="header"]
 |===
 | Element      | Przykład                                       | Opis
-| input_prompt | `[@Flashy(i)]`                                 | Input prompt, dla irc: nick i tryby (tryb "+i" oznacza niewidzialny na freenode).
+| input_prompt | `[@Flashy(i)]`                                 | Input prompt, dla irc: nick i tryby (tryb "+i" oznacza niewidzialny na libera).
 | away         | `(away)`                                       | Wskaźnik nieobecności.
 | input_search | `[Szukam (~ str,msg)]`                         | Wskaźnik wyszukiwania ("`~`": wielkość liter ma znaczenie, "`==`": wielkość liter nie ma znaczenia, "`str`": wyszukiwanie ciągu, "`regex`": wyszukiwanie wyrażenia regularnego, "`msg`": wyszukiwanie w wiadomościach, "`pre`": wyszukiwanie w prefiksach, "`pre\|msg`": wyszukiwanie w prefiksach i wiadomościach).
 | input_paste  | `[Wkleić 7 linii ? [ctrl-Y] Tak [ctrl-N] Nie]` | Pyta użytkownika podczas wklejania kilku linii tekstu.
@@ -880,10 +873,16 @@ Inne dostępne elementy (nie używane domyślnie w paskach):
 | mouse_status                 | `M`                      | Status obsługi myszy (pusty jeśli obsługa myszy jest wyłączona).
 | spell_dict                   | `fr,en`                  | Słowniki używane w obecnym buforze.
 | spell_suggest                | `print,prone,prune`      | Sugestie dla słowa pod kursorem (jeśli zawiera błąd).
-// TRANSLATION MISSING
-| tls_version                  | `TLS1.3`                 | TLS version in use for current IRC server.
+| tls_version                  | `TLS1.3`                 | Wersja TLS używana przez obecny serwer IRC.
 | window_number                | `2`                      | Numer obecnego okna.
 |===
+
+Każdy aspekt układu może zostać spersonalizowany za pomocą <<command_line,komend>>:
+<<command_weechat_bar,`/bar`>> do dostosowania pasków,
+<<command_weechat_buffer,/buffer>> i <<command_weechat_window,`/window`>>
+do dostosowania <<buffers_and_windows,budorów i okien>>,
+i <<command_weechat_layot,/layout>> żeby nazwać, zapisać i przywrócić układ ekranu
+i powiązania między oknami i buforami.
 
 [[command_line]]
 === Linia poleceń
@@ -1128,39 +1127,46 @@ Przykłady buforów:
 * prywatna rozmowa irc
 
 _Okno_ to obszar ekranu, w którym wyświetlane są bufory. Nie jest możliwe
-podzielenie ekranu na kilka okien.
+podzielenie ekranu na kilka okien (przykłady <<window_split_examples,poniżej>>,
+szczegóły <<command_weechat_window,komenda /window>>).
 
 Każde okno wyświetla jeden bufor. Bufor może zostać ukryty (nie wyświetlany w
 oknie) lub wyświetlany w jednym lub więcej oknach.
+
+Układy ekranu i powiązania między oknami i buforami mogą być
+<<command_weechat_layout,zapisywane i przywracane>>.
+
+[[window_split_examples]]
+==== Przykłady
 
 Przykład podziału poziomego (`/window splith`):
 
 ....
                                ▼ window #2 (buffer #4)
 ┌──────────────────────────────────────────────────────────────────────────────────────┐
-│1.freenode│Welcome to #def                                                            │
-│  weechat │12:55:12     Max | hi                                              │@Flashy│
-│2.  #test │12:55:20 @Flashy | hi Max!                                         │Max    │
-│3.  #abc  │                                                                   │       │
-│4.  #def  │                                                                   │       │
-│5.  #ghi  │                                                                   │       │
-│          │                                                                   │       │
-│          │                                                                   │       │
-│          │                                                                   │       │
-│          │[12:55] [5] [irc/freenode] 4:#def(+n){2}                                   │
-│          │[@Flashy]                                                                  │
-│          │───────────────────────────────────────────────────────────────────────────│
-│          │Welcome to #abc                                                            │
-│          │12:54:15 peter | hey!                                              │@Flashy│
-│          │12:55:01  @joe | hello                                             │@joe   │
-│          │                                                                   │+weebot│
-│          │                                                                   │peter  │
-│          │                                                                   │       │
-│          │                                                                   │       │
-│          │                                                                   │       │
-│          │                                                                   │       │
-│          │[12:55] [5] [irc/freenode] 3:#abc(+n){4}                                   │
-│          │[@Flashy] hi peter!█                                                       │
+│1.libera │Welcome to #def                                                             │
+│  weechat│12:55:12     Max | hi                                               │@Flashy│
+│2.  #test│12:55:20 @Flashy | hi Max!                                          │Max    │
+│3.  #abc │                                                                    │       │
+│4.  #def │                                                                    │       │
+│5.  #ghi │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │[12:55] [5] [irc/libera] 4:#def(+n){2}                                      │
+│         │[@Flashy]                                                                   │
+│         │────────────────────────────────────────────────────────────────────────────│
+│         │Welcome to #abc                                                             │
+│         │12:54:15 peter | hey!                                               │@Flashy│
+│         │12:55:01  @joe | hello                                              │@joe   │
+│         │                                                                    │+weebot│
+│         │                                                                    │peter  │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │[12:55] [5] [irc/libera] 3:#abc(+n){4}                                      │
+│         │[@Flashy] hi peter!█                                                        │
 └──────────────────────────────────────────────────────────────────────────────────────┘
                                ▲ window #1 (buffer #3)
 ....
@@ -1169,28 +1175,28 @@ Przykład podziału pionowego (`/window splitv`):
 
 ....
 ┌──────────────────────────────────────────────────────────────────────────────────────┐
-│1.freenode│Welcome to #abc                      │Welcome to #def                      │
-│  weechat │12:54:15 peter | hey!        │@Flashy│12:55:12     Max | hi        │@Flashy│
-│2.  #test │12:55:01  @joe | hello       │@joe   │12:55:20 @Flashy | hi Max!   │Max    │
-│3.  #abc  │                             │+weebot│                             │       │
-│4.  #def  │                             │peter  │                             │       │
-│5.  #ghi  │                             │       │                             │       │
-│          │                             │       │                             │       │
-│          │                             │       │                             │       │
-│          │                             │       │                             │       │
-│          │                             │       │                             │       │
-│          │                             │       │                             │       │
-│          │                             │       │                             │       │
-│          │                             │       │                             │       │
-│          │                             │       │                             │       │
-│          │                             │       │                             │       │
-│          │                             │       │                             │       │
-│          │                             │       │                             │       │
-│          │                             │       │                             │       │
-│          │                             │       │                             │       │
-│          │                             │       │                             │       │
-│          │[12:55] [5] [irc/freenode] 3:#abc(+n)│[12:55] [5] [irc/freenode] 4:#def(+n)│
-│          │[@Flashy] hi peter!█                 │[@Flashy]                            │
+│1.libera │Welcome to #abc                      │Welcome to #def                       │
+│  weechat│12:54:15 peter | hey!        │@Flashy│12:55:12     Max | hi         │@Flashy│
+│2.  #test│12:55:01  @joe | hello       │@joe   │12:55:20 @Flashy | hi Max!    │Max    │
+│3.  #abc │                             │+weebot│                              │       │
+│4.  #def │                             │peter  │                              │       │
+│5.  #ghi │                             │       │                              │       │
+│         │                             │       │                              │       │
+│         │                             │       │                              │       │
+│         │                             │       │                              │       │
+│         │                             │       │                              │       │
+│         │                             │       │                              │       │
+│         │                             │       │                              │       │
+│         │                             │       │                              │       │
+│         │                             │       │                              │       │
+│         │                             │       │                              │       │
+│         │                             │       │                              │       │
+│         │                             │       │                              │       │
+│         │                             │       │                              │       │
+│         │                             │       │                              │       │
+│         │                             │       │                              │       │
+│         │[12:55] [5] [irc/libera] 3:#abc(+n)  │[12:55] [5] [irc/libera] 4:#def(+n)   │
+│         │[@Flashy] hi peter!█                 │[@Flashy]                             │
 └──────────────────────────────────────────────────────────────────────────────────────┘
                  ▲ window #1 (buffer #3)               ▲ window #2 (buffer #4)
 ....
@@ -1200,28 +1206,28 @@ Przykład podziałów pionowego i poziomego:
 ....
                                                        ▼ window #3 (buffer #5)
 ┌──────────────────────────────────────────────────────────────────────────────────────┐
-│1.freenode│Welcome to #abc                      │Welcome to #ghi                      │
-│  weechat │12:54:15 peter | hey!        │@Flashy│12:55:42 @Flashy | hi        │@Flashy│
-│2.  #test │12:55:01  @joe | hello       │@joe   │12:55:56    alex | hi Flashy │alex   │
-│3.  #abc  │                             │+weebot│                             │       │
-│4.  #def  │                             │peter  │                             │       │
-│5.  #ghi  │                             │       │                             │       │
-│          │                             │       │                             │       │
-│          │                             │       │                             │       │
-│          │                             │       │                             │       │
-│          │                             │       │[12:55] [5] [irc/freenode] 5:#ghi(+n)│
-│          │                             │       │[@Flashy]                            │
-│          │                             │       │─────────────────────────────────────│
-│          │                             │       │Welcome to #def                      │
-│          │                             │       │12:55:12     Max | hi        │@Flashy│
-│          │                             │       │12:55:20 @Flashy | hi Max!   │Max    │
-│          │                             │       │                             │       │
-│          │                             │       │                             │       │
-│          │                             │       │                             │       │
-│          │                             │       │                             │       │
-│          │                             │       │                             │       │
-│          │[12:55] [5] [irc/freenode] 3:#abc(+n)│[12:55] [5] [irc/freenode] 4:#def(+n)│
-│          │[@Flashy] hi peter!█                 │[@Flashy]                            │
+│1.libera │Welcome to #abc                      │Welcome to #ghi                       │
+│  weechat│12:54:15 peter | hey!        │@Flashy│12:55:42 @Flashy | hi         │@Flashy│
+│2.  #test│12:55:01  @joe | hello       │@joe   │12:55:56    alex | hi Flashy  │alex   │
+│3.  #abc │                             │+weebot│                              │       │
+│4.  #def │                             │peter  │                              │       │
+│5.  #ghi │                             │       │                              │       │
+│         │                             │       │                              │       │
+│         │                             │       │                              │       │
+│         │                             │       │                              │       │
+│         │                             │       │[12:55] [5] [irc/libera] 5:#ghi(+n)   │
+│         │                             │       │[@Flashy]                             │
+│         │                             │       │──────────────────────────────────────│
+│         │                             │       │Welcome to #def                       │
+│         │                             │       │12:55:12     Max | hi         │@Flashy│
+│         │                             │       │12:55:20 @Flashy | hi Max!    │Max    │
+│         │                             │       │                              │       │
+│         │                             │       │                              │       │
+│         │                             │       │                              │       │
+│         │                             │       │                              │       │
+│         │                             │       │                              │       │
+│         │[12:55] [5] [irc/libera] 3:#abc(+n)  │[12:55] [5] [irc/libera] 4:#def(+n)   │
+│         │[@Flashy] hi peter!█                 │[@Flashy]                             │
 └──────────────────────────────────────────────────────────────────────────────────────┘
                  ▲ window #1 (buffer #3)               ▲ window #2 (buffer #4)
 ....
@@ -1243,7 +1249,7 @@ Linie wyświetlane w formatowanych buforach maja następujące pola:
 | wiadomość               | Tak                 | Wiadomość.
 | wyświetlone             | Nie                 | Boolean: true jeśli linia została wyświetlona, false jeśli linia została odfiltrowana komendą <<command_weechat_filter,/filter>>.
 | podświetlenie           | Nie                 | Boolean: true jeśli linia ma podświetlenie, false w przeciwnym wypadku.
-| tagi                    | Przez `/debug tags` | Tagi powiązane z linią (zobacz <<lines_tags,lines tags>>).
+| tagi                    | Przez `/debug tags` | Tagi powiązane z linią (zobacz <<lines_tags,tagi linii>>).
 |===
 
 Wyświetlanie linni może być zmienione za pomoćą wielu opcji wyglądu
@@ -1525,7 +1531,7 @@ Przykład paska z elementami "[time],buffer_number+:+buffer_plugin+.+buffer_name
 
 ....
 ┌───────────────────────────────────────────────────────────────────────────┐
-│[12:55] 3:irc/freenode.#weechat                                            │
+│[12:55] 3:irc/libera.#weechat                                              │
 └───────────────────────────────────────────────────────────────────────────┘
 ....
 
@@ -1581,7 +1587,7 @@ Przykłady wypełnień paska _nicklist_:
 │                                                              │ henry4 │
 │                                                              │ jimmy17│
 │                                                              │ jodie ▼│
-│[12:55] [6] [irc/freenode] 3:#test(+n){24}                             │
+│[12:55] [6] [irc/libera] 3:#test(+n){24}                               │
 │[@carl] █                                                              │
 └───────────────────────────────────────────────────────────────────────┘
                                      filling_left_right = vertical ▲
@@ -1601,7 +1607,7 @@ Przykłady wypełnień paska _nicklist_:
 │                                                     │ henry4   zack   │
 │                                                     │ jimmy17         │
 │                                                     │ jodie           │
-│[12:55] [6] [irc/freenode] 3:#test(+n){24}                             │
+│[12:55] [6] [irc/libera] 3:#test(+n){24}                               │
 │[@carl] █                                                              │
 └───────────────────────────────────────────────────────────────────────┘
                              filling_left_right = columns_vertical ▲
@@ -1648,17 +1654,15 @@ Następujące wskaźniki są dostępne:
 * `+${window}+`: okno, dla którego warunek jest sprawdzany
 * `+${buffer}+`: bufor okna, dla którego warunek jest sprawdzany
 
-// TRANSLATION MISSING
-Example to display nicklist bar in all buffers with a nicklist, and only if
-width of terminal is > 100:
+Przykład pokazujący pasek z listą nicków we wszystkich buforach, które mają
+ją włączoną i tylko jeśli szerokość terminala jest > 100:
 
 ----
 /set weechat.bar.nicklist.conditions "${nicklist} && ${info:term_width} > 100"
 ----
 
-// TRANSLATION MISSING
-Same condition, but always display nicklist on buffer _&bitlbee_
-(even if terminal is small):
+Ten sam warunek, ale lista nicków jest zawsze wyświetlana w buforze _&bitlbee_
+(nawet jeśli jest mały):
 
 ----
 /set weechat.bar.nicklist.conditions "${nicklist} && (${info:term_width} > 100 || ${buffer.full_name} == irc.bitlbee.&bitlbee)"
@@ -1693,29 +1697,29 @@ Jeśłi WeeChat wygląda następująco:
 
 ....
 ┌──────────────────────────────────────────────────────────────────────────────────────┐
-│1.freenode│Welcome to #abc                                                            │
-│  weechat │12:52:27   --> | Flashy (flashcode@weechat.org) has joined #abc    │@Flashy│
-│2.  #test │12:52:27    -- | Nicks #abc: [@Flashy @joe +weebot peter]          │@joe   │
-│3.  #abc  │12:52:27    -- | Channel #abc: 4 nicks (2 ops, 1 voice, 1 normal)  │+weebot│
-│4.  #def  │12:52:27    -- | Channel created on Tue Jan 27 06:30:17 2009       │peter  │
-│5.  #ghi  │12:54:15 peter | hey!                                              │       │
-│          │12:55:01  @joe | peter: hook_process: https://weechat.org/files/do │       │
-│          │               | c/devel/weechat_plugin_api.en.html#_weechat_hook_ │       │
-│          │               | process                                           │       │
-│          │                                                                   │       │
-│          │                                                                   │       │
-│          │                                                                   │       │
-│          │                                                                   │       │
-│          │                                                                   │       │
-│          │                                                                   │       │
-│          │                                                                   │       │
-│          │                                                                   │       │
-│          │                                                                   │       │
-│          │                                                                   │       │
-│          │                                                                   │       │
-│          │                                                                   │       │
-│          │[12:55] [5] [irc/freenode] 3:#abc(+n){4}                                   │
-│          │[@Flashy(i)] hi peter!█                                                    │
+│1.libera │Welcome to #abc                                                             │
+│  weechat│12:52:27   --> | Flashy (flashcode@weechat.org) has joined #abc     │@Flashy│
+│2.  #test│12:52:27    -- | Nicks #abc: [@Flashy @joe +weebot peter]           │@joe   │
+│3.  #abc │12:52:27    -- | Channel #abc: 4 nicks (2 ops, 1 voice, 1 normal)   │+weebot│
+│4.  #def │12:52:27    -- | Channel created on Tue Jan 27 06:30:17 2009        │peter  │
+│5.  #ghi │12:54:15 peter | hey!                                               │       │
+│         │12:55:01  @joe | peter: hook_process: https://weechat.org/files/doc │       │
+│         │               | /devel/weechat_plugin_api.en.html#_weechat_hook_pr │       │
+│         │               | ocess                                              │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │[12:55] [5] [irc/libera] 3:#abc(+n){4}                                      │
+│         │[@Flashy(i)] hi peter!█                                                     │
 └──────────────────────────────────────────────────────────────────────────────────────┘
 ....
 
@@ -1783,16 +1787,16 @@ domyślna wartość to _all_.
 |===
 
 Poziom powiadomień może być definiowany dla zestawu buforów, na przykład dla
-wszystkich buforów serwera irc "freenode":
+wszystkich buforów serwera irc "libera":
 
 ----
-/set weechat.notify.irc.freenode message
+/set weechat.notify.irc.libera message
 ----
 
 Ustawienie poziomu powiadomień na _highlight_ tylko dla kanału "#weechat":
 
 ----
-/set weechat.notify.irc.freenode.#weechat highlight
+/set weechat.notify.irc.libera.#weechat highlight
 ----
 
 Poziom powiadomień dla bufora może zostać ustawiony za pomocą komendy `/buffer`:
@@ -2263,7 +2267,7 @@ Nazwa zdarzenia zawiera modyfikator (opcjonalny), nazwę klawisza/rolki i gest
 
 Lista modyfikatorów:
 
-[width="100%",cols="2m,3",options="header"]
+[width="100%",cols="1m,4",options="header"]
 |===
 | Modyfikator | Opis
 | ctrl        | Klawisz kbd:[Ctrl]
@@ -2273,7 +2277,7 @@ Lista modyfikatorów:
 
 Lista klawiszy/rolek:
 
-[width="100%",cols="2m,3",options="header"]
+[width="100%",cols="1m,4",options="header"]
 |===
 | Klawisz/rolka       | Opis
 | button1             | Lewy klawisz myszy
@@ -2286,7 +2290,7 @@ Lista klawiszy/rolek:
 
 Lista gestów (tylko dla klawiszy, nie rolki):
 
-[width="100%",cols="2m,3",options="header"]
+[width="100%",cols="1m,4",options="header"]
 |===
 | Gest               | Odległość
 | gesture-up         | 3 ... 19
@@ -2301,7 +2305,7 @@ Lista gestów (tylko dla klawiszy, nie rolki):
 
 Lista niedkończonych zdarzeń (tylko dla przycisków, użyteczne dla wtyczek/skryptów):
 
-[width="100%",cols="2m,3",options="header"]
+[width="100%",cols="1m,4",options="header"]
 |===
 | Zdarzenie  | Opis
 | event-down | Klawisz został wciśnięty ale jeszcze nie puszczony
@@ -2387,7 +2391,7 @@ Wynik jest zapisywany jako ciąg heksadecymalny w pliku _sec.conf_, na przykład
 ----
 [data]
 __passphrase__ = on
-freenode = "53B1C86FCDA28FC122A95B0456ABD79B5AB74654F21C3D099A6CCA8173239EEA59533A1D83011251F96778AC3F5166A394"
+libera = "53B1C86FCDA28FC122A95B0456ABD79B5AB74654F21C3D099A6CCA8173239EEA59533A1D83011251F96778AC3F5166A394"
 ----
 
 [[secured_data_decryption]]
@@ -2403,10 +2407,10 @@ Deszyfrowanie danych odbywa się w 3 krokach:
 ==== Zarządzanie zabezpieczonymi danymi
 
 W celu dodania bezpiecznych danych użyj `/secure set`, na przykład hasło dla
-serwera IRC _freenode_:
+serwera IRC _libera_:
 
 ----
-/secure set freenode mojehasło
+/secure set libera mojehasło
 ----
 
 Dla wygody, zabezpieczone dane mogą być wyświetlone w dedykowanym buforze (kbd:[Alt+v]
@@ -2421,11 +2425,11 @@ hasła, za pomocą formatu: "${sec.data.xxx}", gdzie "xxx" to nazwa zabezpieczon
 danych (utworzone za pomocą `/secure set xxx ...`). +
 Pełną listę dostępnych opcji można uzyskać wykonując `/help secure`.
 
-W celu użycia hasła _freenode_, na przykład z
-<<irc_sasl_authentication,SASL authentication>>:
+W celu użycia hasła _libera_, na przykład z
+<<irc_sasl_authentication,uwierzytelnianiem SASL>>:
 
 ----
-/set irc.server.freenode.sasl_password "${sec.data.freenode}"
+/set irc.server.libera.sasl_password "${sec.data.libera}"
 ----
 
 [[commands_and_options]]
@@ -2472,10 +2476,8 @@ Sekcje w pliku _weechat.conf_:
 | proxy      | <<command_weechat_proxy,/proxy>>          +
                /set weechat.proxy.*                      | Opcje proxy.
 | network    | /set weechat.network.*                    | Opcje sieci/SSL.
-// TRANSLATION MISSING
-| plugin     | /set weechat.plugin.*                     | Options on plugins.
-// TRANSLATION MISSING
-| signal     | /set weechat.signal.*                     | Options on signals.
+| plugin     | /set weechat.plugin.*                     | Opcje wtyczek.
+| signal     | /set weechat.signal.*                     | Opcje sygnałów.
 | bar        | <<command_weechat_bar,/bar>>              +
                /set weechat.bar.*                        | Opcje pasków.
 | layout     | <<command_weechat_layout,/layout>>        | Układy.
@@ -2551,6 +2553,8 @@ Domyślne wtyczki:
 | php        | Wsparcie dla skryptów napisanych w PHP.
 | spell      | Sprawdzanie pisowni w linii poleceń.
 | trigger    | Zamiana tekstu i wykonywanie komend dla zdarzeń wywołanych przez WeeChat/wtyczki.
+// TRANSLATION MISSING
+| typing     | Display users currently writing messages.
 | xfer       | Przesyłanie plików i bezpośredni chat.
 |===
 
@@ -2698,7 +2702,7 @@ co w przypadku serwera, tylko w buforze kanału (lub prywatnej rozmowy).
 Aby ustawić kodowanie dla wszystkich kanałów/rozmów prywatnych na danym serwerze:
 
 ----
-/set charset.encode.irc.freenode ISO-8859-15
+/set charset.encode.irc.libera ISO-8859-15
 ----
 
 W celu wyświetlenia wszystkich ustawionych kodowań, wykonaj:
@@ -2770,9 +2774,8 @@ Możesz zdalnie kontrolować WeeChat, poprzez wysyłanie komend lub tekstu do
 kolejki FIFO (jeśli opcja "fifo.file.enabled" jest włączona, domyślnie jest
 włączona).
 
-// TRANSLATION MISSING
-The FIFO pipe is located in WeeChat runtime directory and is called
-_weechat_fifo_12345_ by default (where _12345_ is the WeeChat process id).
+Strumień FIFO jest zlokalizowany w katalogu uruchomieniowym WeeChat i ma
+domyślnie nazwę weechat_fifo_12345_ (gdzie _12345_ to numer procesu WeeChat).
 
 Składnia dla komend/tekstu przekazywanego do kolejki FIFO wygląda następująco:
 
@@ -2783,16 +2786,16 @@ Składnia dla komend/tekstu przekazywanego do kolejki FIFO wygląda następując
 
 Kilka przykładów:
 
-* Zmiana nicka na serwerze IRC freenode na "newnick":
+* Zmiana nicka na serwerze IRC libera na "newnick":
 
 ----
-$ echo 'irc.server.freenode */nick newnick' >/run/user/1000/weechat/weechat_fifo_12345
+$ echo 'irc.server.libera */nick newnick' >/run/user/1000/weechat/weechat_fifo_12345
 ----
 
 * Wysłanie wiadomości na kanał IRC #weechat:
 
 ----
-$ echo 'irc.freenode.#weechat *hello!' >/run/user/1000/weechat/weechat_fifo_12345
+$ echo 'irc.libera.#weechat *hello!' >/run/user/1000/weechat/weechat_fifo_12345
 ----
 
 * Wysłanie wiadomości do obecnego bufora:
@@ -2875,28 +2878,142 @@ Możliwe jest podanie adresu URL do jednego lub wielu serwerów IRC:
 irc[6][s]://[nick[:hasło]@]adres.serwera.irc[:port][/kanał][,kanał[...]]
 ----
 
-Przykład wejścia na kanały _#weechat_ i _#toto_ na serwerze _chat.freenode.net_,
-na domyślnym porcie (6667), z nickiem _nono_:
+Przykład wejścia na kanały _#weechat_ i _#weechat-fr_ na serwerze
+_irc.libera.chat_, na domyślnym porcie (6667), z nickiem _alice_:
 
 ----
-$ weechat irc://nono@chat.freenode.net/#weechat,#toto
+$ weechat irc://alice@irc.libera.chat/#weechat,#weechat-fr
+----
+
+// TRANSLATION MISSING
+[[irc_servers]]
+==== Servers
+
+[[irc_servers_add]]
+===== Add a server
+
+By default no servers are defined. You can add as many servers as you want with
+the <<command_irc_server,/server>> command.
+
+For example to connect to https://libera.chat/[libera.chat] with SSL (encrypted trafic):
+
+----
+/server add libera irc.libera.chat/6697 -ssl
+----
+
+You can tell WeeChat to auto-connect to this server on startup:
+
+----
+/set irc.server.libera.autoconnect on
+----
+
+To authenticate, it is recommended to use SASL (if supported on the server),
+with the password stored as secured data (see also chapter on
+<<irc_sasl_authentication,SASL authentication>>):
+
+----
+/set irc.server.libera.sasl_username "alice"
+/secure set libera xxxxxxx
+/set irc.server.libera.sasl_password "${sec.data.libera}"
+----
+
+If SASL is not supported, you can use a command to send a message to nickserv:
+
+----
+/set irc.server.libera.command "/msg nickserv identify ${sec.data.libera}"
+----
+
+[NOTE]
+By sending a message to nickserv, you may authenticate after joining channels
+which could be a problem on some channels requiring you to be authenticated
+to join. In this case, you can set a command delay:
+`/set irc.server.libera.command_delay 5`.
+
+[[irc_servers_options]]
+===== Server options
+
+Server options are named `irc.server.<server>.<option>` where `<server>` is the
+internal name of the server and `<option>` the name of an option. +
+The value of a server option is inherited from `irc.server_default.xxx`
+if the server option has the special value `null`.
+
+For example if you created the _libera_ server with the commands above, you'll
+see this with the command `/fset libera`:
+
+....
+irc.server.libera.addresses             string   "irc.libera.chat/6697"
+irc.server.libera.anti_flood_prio_high  integer  null -> 2
+irc.server.libera.anti_flood_prio_low   integer  null -> 2
+irc.server.libera.autoconnect           boolean  on
+irc.server.libera.autojoin              string   null -> ""
+irc.server.libera.autoreconnect         boolean  null -> on
+irc.server.libera.autoreconnect_delay   integer  null -> 10
+irc.server.libera.autorejoin            boolean  null -> off
+irc.server.libera.autorejoin_delay      integer  null -> 30
+irc.server.libera.away_check            integer  null -> 0
+irc.server.libera.away_check_max_nicks  integer  null -> 25
+irc.server.libera.capabilities          string   null -> "*"
+irc.server.libera.charset_message       integer  null -> message
+irc.server.libera.command               string   null -> ""
+irc.server.libera.command_delay         integer  null -> 0
+irc.server.libera.connection_timeout    integer  null -> 60
+irc.server.libera.default_chantypes     string   null -> "#&"
+irc.server.libera.ipv6                  boolean  null -> on
+irc.server.libera.local_hostname        string   null -> ""
+irc.server.libera.msg_kick              string   null -> ""
+irc.server.libera.msg_part              string   null -> "WeeChat ${info:version}"
+irc.server.libera.msg_quit              string   null -> "WeeChat ${info:version}"
+irc.server.libera.nicks                 string   null -> "alice,alice1,alice2,alice3,alice4"
+irc.server.libera.nicks_alternate       boolean  null -> on
+irc.server.libera.notify                string   null -> ""
+irc.server.libera.password              string   null -> ""
+irc.server.libera.proxy                 string   null -> ""
+irc.server.libera.realname              string   null -> ""
+irc.server.libera.sasl_fail             integer  null -> reconnect
+irc.server.libera.sasl_key              string   null -> ""
+irc.server.libera.sasl_mechanism        integer  null -> plain
+irc.server.libera.sasl_password         string   "${sec.data.libera}"
+irc.server.libera.sasl_timeout          integer  null -> 15
+irc.server.libera.sasl_username         string   "alice"
+irc.server.libera.split_msg_max_length  integer  null -> 512
+irc.server.libera.ssl                   boolean  on
+irc.server.libera.ssl_cert              string   null -> ""
+irc.server.libera.ssl_dhkey_size        integer  null -> 2048
+irc.server.libera.ssl_fingerprint       string   null -> ""
+irc.server.libera.ssl_password          string   null -> ""
+irc.server.libera.ssl_priorities        string   null -> "NORMAL:-VERS-SSL3.0"
+irc.server.libera.ssl_verify            boolean  null -> on
+irc.server.libera.usermode              string   null -> ""
+irc.server.libera.username              string   null -> "alice"
+....
+
+For example if you want to automatically connect to all servers you define
+without having to do it on each server, you can do:
+
+----
+/set irc.server_default.autoconnect on
+----
+
+And then you can reset the server option so that it uses the default inherited
+value, which is now `on` instead of the default value `off`:
+
+----
+/unset irc.server.libera.autoconnect
 ----
 
 [[irc_ssl_certificates]]
-==== Certyfikaty SSL
+===== Certyfikaty SSL
 
 Podczas łączenia się z serwerem IRC, WeeChat domyślnie sprawdza czy połączenie
 jest w pełni zaufane.
 
 Niektóre opcje są używane do kontroli połączenia SSL:
 
-// TRANSLATION MISSING
 weechat.network.gnutls_ca_system::
-    load system's default trusted certificate authorities on startup
+    ładuje domyślne systemowe zaufane urzędy cetyfikujące
 
-// TRANSLATION MISSING
 weechat.network.gnutls_ca_user::
-    extra file(s) with certificate authorities
+    dodatkowy plik(i) urzędów certyfikacyjnych
 
 irc.server.xxx.ssl_cert::
     certyfikat SSL używany do automatycznej identyfikacji twojego nicka (na
@@ -2913,7 +3030,7 @@ Opcja "ssl_verify" jest domyślnie włączona, weryfikacja jest restrykcyjna i m
 się nie powieść, nawet jeśli wszystko było OK w wersjach przed 0.3.1.
 
 [[irc_connect_oftc_with_certificate]]
-===== Pierwszy przykład: połączenie z oftc i sprawdzenie certyfikatu
+====== Pierwszy przykład: połączenie z oftc i sprawdzenie certyfikatu
 
 * Import certyfikatu w kosoli:
 
@@ -2922,10 +3039,9 @@ $ mkdir -p ~/.config/weechat/ssl
 $ wget -O ~/.config/weechat/ssl/CAs.pem https://www.spi-inc.org/ca/spi-cacert.crt
 ----
 
-// TRANSLATION MISSING
 [NOTE]
-You must replace `~/.config/weechat` by the path to your WeeChat config directory
-which can also be for example `~/.weechat`.
+Musisz zamienić `~/.config/weechat` na ścieżkę do katalogu z konfiguracją WeeChat,
+który może być ustawiony na przykład na `~/.weechat`.
 
 [NOTE]
 Możliwe jest umieszczenie wielu certyfikatów w pliku CAs.pem.
@@ -2937,7 +3053,7 @@ Możliwe jest umieszczenie wielu certyfikatów w pliku CAs.pem.
 ----
 
 [[irc_connect_oftc_with_certfp]]
-===== Drugi przykład: połączenie z oftc używając CertFP
+====== Drugi przykład: połączenie z oftc używając CertFP
 
 * Tworzenie certyfikatu w konsoli:
 
@@ -2947,10 +3063,9 @@ $ cd ~/.config/weechat/ssl
 $ openssl req -nodes -newkey rsa:2048 -keyout nick.pem -x509 -days 365 -out nick.pem
 ----
 
-// TRANSLATION MISSING
 [NOTE]
-You must replace `~/.config/weechat` by the path to your WeeChat config directory
-which can also be for example `~/.weechat`.
+Musisz zamienić `~/.config/weechat` na ścieżkę do katalogu z konfiguracją WeeChat,
+który może być ustawiony na przykład na `~/.weechat`.
 
 * W WeeChat z dodanym wcześniej serwerem "oftc":
 
@@ -2963,17 +3078,16 @@ which can also be for example `~/.weechat`.
 Więcej informacji można znaleźć pod adresem: https://www.oftc.net/NickServ/CertFP
 
 [[irc_sasl_authentication]]
-==== Uwierzytelnianie SASL
+===== Uwierzytelnianie SASL
 
 WeeChat wspiera uwierzytelnianie SASL, używając różnych mechanizmów:
 
 * _plain_: hasło w czystym tekście (domyślne)
+* _scram-sha-1_: SCRAM z użyciem algorytmu SHA-1
+* _scram-sha-256_: SCRAM z użyciem algorytmu SHA-256
+* _scram-sha-512_: SCRAM z użyciem algorytmu SHA-512
 * _ecdsa-nist256p-challenge_: klucz prywatny/publiczny
 * _external_: certyfikat SSL po stronie klienta
-* _dh-blowfish_: hasło zaszyfrowane algorytmem blowfish
-  (*niebezpieczne*, nie zalecane)
-* _dh-aes_: hasło zaszyfrowane algorytmem AES
-  (*niebezpieczne*, nie zalecane)
 
 Opcje dla serwerów to:
 
@@ -2986,7 +3100,7 @@ Opcje dla serwerów to:
   _ecdsa-nist256p-challenge_)
 
 [[irc_sasl_ecdsa_nist256p_challenge]]
-===== SASL ECDSA-NIST256P-CHALLENGE
+====== SASL ECDSA-NIST256P-CHALLENGE
 
 Musisz wygenerować klucz prywatny w celu uwierzytelnienia za pomocą mechanizmu
 ECDSA-NIST256P-CHALLENGE (hasło nie potrzebne do połączenia).
@@ -2997,10 +3111,9 @@ Klucz można wygenerować za pomocą komendy:
 $ openssl ecparam -genkey -name prime256v1 -out ~/.config/weechat/ecdsa.pem
 ----
 
-// TRANSLATION MISSING
 [NOTE]
-You must replace `~/.config/weechat` by the path to your WeeChat config directory
-which can also be for example `~/.weechat`.
+Musisz zamienić `~/.config/weechat` na ścieżkę do katalogu z konfiguracją WeeChat,
+który może być ustawiony na przykład na `~/.weechat`.
 
 Klucz publiczny (zakodowany za pomocą base64) uzyskujemy wywołując komendę:
 
@@ -3013,7 +3126,7 @@ i ustaw swój klucz publiczny dla swojego konta, za pomocą nickserva (zamień
 wartość base64 wartościa dla swojego klucza):
 
 ----
-/connect freenode
+/connect libera
 /msg nickserv identify your_password
 /msg nickserv set pubkey Av8k1FOGetUDq7sPMBfufSIZ5c2I/QYWgiwHtNXkVe/q
 ----
@@ -3021,23 +3134,55 @@ wartość base64 wartościa dla swojego klucza):
 Konfiguracja opcji SASL dla serwera:
 
 ----
-/set irc.server.freenode.sasl_mechanism ecdsa-nist256p-challenge
-/set irc.server.freenode.sasl_username "twój_nick"
-/set irc.server.freenode.sasl_key "${weechat_config_dir}/ecdsa.pem"
+/set irc.server.libera.sasl_mechanism ecdsa-nist256p-challenge
+/set irc.server.libera.sasl_username "twój_nick"
+/set irc.server.libera.sasl_key "${weechat_config_dir}/ecdsa.pem"
 ----
 
 Ponowne połączenie z serwerem:
 
 ----
-/reconnect freenode
+/reconnect libera
 ----
 
-[[irc_tor_freenode]]
-==== Połączenie z siecią Freenode za pomocą TOR/SASL
+// TRANSLATION MISSING
+[[irc_servers_connection]]
+===== Connection
 
-Jako dodatek do SSL, serwery Freenode wspierają połączenia za pomocą sieci TOR
-(https://www.torproject.org/), sieci wirtualnych tuneli umożliwiających ludziom
-oraz grupom polepszyć swoją prywatność i bezpieczeństwo w Internecie.
+You can connect to server with the <<command_irc_connect,/connect>> command:
+
+----
+/connect libera
+----
+
+To disconnect:
+
+----
+/disconnect libera
+----
+
+Or just this if you are on any buffer belonging to _libera_ server (server,
+channel, private):
+
+----
+/disconnect
+----
+
+When you connect to multiple servers at same time, server buffers are merged
+by default and you can switch between them with the kbd:[Ctrl+x] key. +
+It is possible to disable auto merge of server buffers to have independent
+server buffers:
+
+----
+/set irc.look.server_buffer independent
+----
+
+[[irc_tor_sasl]]
+===== Połączenie za pomocą TORa i SASL
+
+Niekróre serwery wspierają połączenia z sieci TOR (https://www.torproject.org/),
+sieci wirtualnych tuneli, które umożliwają poprawienie swojej prywatności
+i bezpieczeństwa w Internecie.
 
 Pierwszym krokiem jest instalacja TORa. Dla Debiana (i pochodnych):
 
@@ -3052,20 +3197,17 @@ zależą od twojej konfiguracji TORa):
 /proxy add tor socks5 127.0.0.1 9050
 ----
 
-Teraz dodaj nowy serwer na przykład:
+Teraz należy dodać nowy serwer (zastąp nazwę serwera "irc-tor" i andres właściwymi
+wartościami):
 
 ----
-/server add freenode-tor ajnvpgl6prmkb7yktvue6im5wiedlz2w32uhcwaamdiecdrfpwwgnlqd.onion
+/server add irc-tor adres.serwera.onion
 ----
-
-[NOTE]
-Jeśli używasz starszej wersji TORa (przed 0.3.5) powinieneś użyć adresu
-`freenodeok2gncmy.onion`.
 
 Ustaw proxy dla TOR:
 
 ----
-/set irc.server.freenode-tor.proxy "tor"
+/set irc.server.irc-tor.proxy "tor"
 ----
 
 Ustaw uwierzytelnianie SASL z użyciem ECDSA-NIST256P-CHALLENGE (zobacz rozdział
@@ -3073,20 +3215,74 @@ Ustaw uwierzytelnianie SASL z użyciem ECDSA-NIST256P-CHALLENGE (zobacz rozdzia�
 się jak wygenerować klucz prywatny):
 
 ----
-/set irc.server.freenode-tor.sasl_mechanism ecdsa-nist256p-challenge
-/set irc.server.freenode-tor.sasl_username "twój_użytkownik"
-/set irc.server.freenode-tor.sasl_key "${weechat_config_dir}/ecdsa.pem"
+/set irc.server.irc-tor.sasl_mechanism ecdsa-nist256p-challenge
+/set irc.server.irc-tor.sasl_username "twój_użytkownik"
+/set irc.server.irc-tor.sasl_key "${weechat_config_dir}/ecdsa.pem"
 ----
 
-Na koniec połącz się z serwerem:
+Teraz pozostaje już się tylko połączyć z serwerem:
 
 ----
-/connect freenode-tor
+/connect irc-tor
 ----
 
-Więcej informacji o Freenode i TOR:
-https://freenode.net/kb/answer/chat#accessing-freenode-via-tor
+// TRANSLATION MISSING
+[[irc_channels]]
+==== Channels
 
+You can join channels with the <<command_irc_join,/join>> command:
+
+----
+/join #channel
+----
+
+Part a channel (keeping the buffer open):
+
+----
+/part [quit message]
+----
+
+The channels you joined are not saved. If you want to join them automatically
+when connecting to the server, you must set the server `autojoin` option:
+
+----
+/set irc.server.libera.autojoin "#weechat,#weechat-fr"
+----
+
+[NOTE]
+Some scripts can help to automatically set this option,
+see `/script search autojoin`.
+
+Be careful, spaces can be used only to separate list of channels from keys,
+for example if `#channel1` requires a key but not `#channel2`:
+
+----
+/set irc.server.libera.autojoin "#channel1,#channel2 key1"
+----
+
+For help on the format, see `/help irc.server.libera.autojoin`.
+
+[[irc_private_messages]]
+==== Private messages
+
+You can send a private message with the <<command_irc_query,/query>> command,
+which opens a separate buffer:
+
+----
+/query bob hi, how are you?
+----
+
+Without arguments the command just opens the buffer (or selects it if already open):
+
+----
+/query bob
+----
+
+To close the private buffer, you can do this command on the private buffer:
+
+----
+/close
+----
 
 [[irc_smart_filter_join_part_quit]]
 ==== Inteligentne filtry dla wiadomości
@@ -3105,8 +3301,8 @@ Możliwe jest tworzenie filtru tylko dla jednego kanału lub kanałów zaczynaj�
 się od tej samej nazwy (zobacz `/help filter`):
 
 ----
-/filter add irc_smart_weechat irc.freenode.#weechat irc_smart_filter *
-/filter add irc_smart_weechats irc.freenode.#weechat* irc_smart_filter *
+/filter add irc_smart_weechat irc.libera.#weechat irc_smart_filter *
+/filter add irc_smart_weechats irc.libera.#weechat* irc_smart_filter *
 ----
 
 Można ukrywac tylko wejściu lub opuszczenia/wyjścia z kanału za pomocą tych opcji:
@@ -3156,7 +3352,7 @@ Możliwe jest dostosowywanie odpowiedzi na CTCP tylko w obrębie serwera, używa
 jego wewnętrznej nazwy przed nazwą zapytania CTCP:
 
 ----
-/set irc.ctcp.freenode.version "WeeChat $version (for freenode)"
+/set irc.ctcp.libera.version "WeeChat $version (for libera)"
 ----
 
 Jeśli chcesz przywrócić standardowe odpowiedzi dla CTCP usuń opcję:
@@ -3227,7 +3423,7 @@ zazwyczaj bufor serwera albo kanału.
 
 Niepełna lista wiadomości IRC lub aliasów jakie można dostosować:
 
-[width="100%",cols="^1m,^3m,8",options="header"]
+[width="100%",cols="^2m,^3m,15",options="header"]
 |===
 | wiadomość | alias         | opis
 | error     |               | błąd
@@ -3305,7 +3501,7 @@ Niepełna lista wiadomości IRC lub aliasów jakie można dostosować:
 Inne numeryczne komendy mogą również zostać spersonalizowane.
 
 Wiadomość może być poprzedzona nazwą serwera, żeby być specyficzna dla danego
-serwera irc (na przykład: `freenode.whois`).
+serwera irc (na przykład: `libera.whois`).
 
 Kilka przykładów:
 
@@ -3321,10 +3517,10 @@ Kilka przykładów:
 /unset irc.msgbuffer.whois
 ----
 
-* wyświetlaj zaproszenia w obecnym buforze, tylko na serwerze "freenode":
+* wyświetlaj zaproszenia w obecnym buforze, tylko na serwerze "libera":
 
 ----
-/set irc.msgbuffer.freenode.invite current
+/set irc.msgbuffer.libera.invite current
 ----
 
 * wyświetlaj wiadomość "303" (ison) w buforze "core" WeeChat:
@@ -3393,19 +3589,19 @@ Kilka przykładów:
 * ustawienie poziomu 3 dla kanału IRC #weechat:
 
 ----
-/set logger.level.irc.freenode.#weechat 3
+/set logger.level.irc.libera.#weechat 3
 ----
 
-* ustawienie poziomu 3 dla buforu serwera freenode:
+* ustawienie poziomu 3 dla buforu serwera libera:
 
 ----
-/set logger.level.irc.server.freenode 3
+/set logger.level.irc.server.libera 3
 ----
 
-* ustawienie poziomu 3 dla wszystkich kanałów na serwerze freenode:
+* ustawienie poziomu 3 dla wszystkich kanałów na serwerze libera:
 
 ----
-/set logger.level.irc.freenode 3
+/set logger.level.irc.libera 3
 ----
 
 * ustawienie poziomu 2 dla wszystkich buforów IRC:
@@ -3428,18 +3624,18 @@ zmiennych dla bufora wykonaj:
 Maski zostaną dopasowane do opcji w kolejności malejącej specyficznie dla
 `logger.mask.$plugin.*`, z `logger.file.mask` jako opcją zapasową.
 
-Na przykład, w buforze "irc.freenode.#weechat", WeeChat będzie szukał maski dla
+Na przykład, w buforze "irc.libera.#weechat", WeeChat będzie szukał maski dla
 nazwy w takiej kolejności:
 
 ----
-logger.mask.irc.freenode.#weechat
-logger.mask.irc.freenode
+logger.mask.irc.libera.#weechat
+logger.mask.irc.libera
 logger.mask.irc
 logger.file.mask
 ----
 
 Oznacza to, że można mieć maski specyficzne tylko dla niektórych serwerów IRC
-("logger.mask.irc.freenode") lub dla wtyczek ("logger.mask.irc").
+("logger.mask.irc.libera") lub dla wtyczek ("logger.mask.irc").
 
 [[logger_files_by_date]]
 ===== Pliki z logami uporządkowane według daty
@@ -3459,15 +3655,15 @@ Spowoduje powstanie następującej struktury:
 └── logs
     ├── 2010
     │   ├── 11
-    │   │   ├── irc.server.freenode.weechatlog
-    │   │   └── irc.freenode.#weechat.weechatlog
+    │   │   ├── irc.server.libera.weechatlog
+    │   │   └── irc.libera.#weechat.weechatlog
     │   └── 12
-    │       ├── irc.server.freenode.weechatlog
-    │       └── irc.freenode.#weechat.weechatlog
+    │       ├── irc.server.libera.weechatlog
+    │       └── irc.libera.#weechat.weechatlog
     ├── 2011
     │   ├── 01
-    │   │   ├── irc.server.freenode.weechatlog
-    │   │   └── irc.freenode.#weechat.weechatlog
+    │   │   ├── irc.server.libera.weechatlog
+    │   │   └── irc.libera.#weechat.weechatlog
     │   ├── 02
     ...
 ....
@@ -3488,14 +3684,14 @@ Spowoduje powstanie następującej struktury:
 ~/.local/share/weechat
 └── logs
     └── irc
-        ├── freenode
-        │   ├── freenode.weechatlog
+        ├── libera
+        │   ├── libera.weechatlog
         │   ├── #weechat.weechatlog
         │   └── #mychan.weechatlog
         ├── oftc
         │   ├── oftc.weechatlog
-        │   ├── #chan1.weechatlog
-        │   └── #chan2.weechatlog
+        │   ├── #channel1.weechatlog
+        │   └── #channel2.weechatlog
         ...
 ....
 
@@ -3542,10 +3738,11 @@ protokołów:
 [[relay_password]]
 ==== Hasło
 
-Zalecane jest ustawienie hasła dla pośrednika, za pomocą komendy:
+Zaleca się ustawenia hasła dla pośrednika za pomocą poniższych komend:
 
 ----
-/set relay.network.password "moje_hasło"
+/secure set relay moje_hasło
+/set relay.network.password "${sec.data.relay}"
 ----
 
 Hasło to używane jest przez protokoły _irc_ i _weechat_.
@@ -3575,7 +3772,8 @@ Musi to być ciąg zakodowany za pomocą base32, zawierajcy tylko litery i liczb
 na przykład:
 
 ----
-/set relay.network.totp_secret "secretpasswordbase32"
+/secure set relay_totp secretpasswordbase32
+/set relay.network.totp_secret "${sec.data.relay_totp}"
 ----
 
 [[relay_ssl]]
@@ -3584,8 +3782,7 @@ na przykład:
 Możesz używać SSL poprzez utworzenie certyfikatu i klucza prywatnego, oraz
 użycie prefiksu "ssl." w nazwie protokołu.
 
-// TRANSLATION MISSING
-The default path to certificate/key is defined by option
+Domyślna ścieżka do certyfikatów/kluczy jest zdefiniowana przez opcję
 <<option_relay.network.ssl_cert_key,relay.network.ssl_cert_key>>.
 
 Możesz utworzyć certyfikat i klucz prywatny wykonując poniższe komendy:
@@ -3596,10 +3793,9 @@ $ cd ~/.config/weechat/ssl
 $ openssl req -nodes -newkey rsa:2048 -keyout relay.pem -x509 -days 365 -out relay.pem
 ----
 
-// TRANSLATION MISSING
 [NOTE]
-You must replace `~/.config/weechat` by the path to your WeeChat config directory
-which can also be for example `~/.weechat`.
+Musisz zamienić `~/.config/weechat` na ścieżkę do katalogu z konfiguracją WeeChat,
+który może być ustawiony na przykład na `~/.weechat`.
 
 Jeśli WeeChat jest już uruchomiony, możesz przładować certyfikat i klucz prywatny
 za pomocą polecenia:
@@ -3630,21 +3826,23 @@ Przykład: proxy IRC z SSL dla dowolnego serwera (klient wybiera):
 /relay add ssl.irc 8000
 ----
 
-Przykład: proxy IRC bez SSL tylko dla serwera "freenode":
+Przykład: proxy IRC bez SSL tylko dla serwera "libera":
 
 ----
-/relay add irc.freenode 8000
+/relay add irc.libera 8000
 ----
 
 Teraz możesz się połączyć na porcie 8000 za pomocą dowolnego klienta IRC
-używając hasła serwera "moje_hasło" (lub "freenode:moje_hasło" jeśli żaden
+używając hasła serwera "moje_hasło" (lub "libera:moje_hasło" jeśli żaden
 serwer nie został podany w przekaźniku).
 
-Na przykład jeśli używasz WeeChat jako klienta porednika IRC, z serwerem nazwanym
-"relay" i hasłem "secret", możesz ustawić hasło za pomocą tej komendy:
+Na przydład jeśli używasz WeeChat jako klienta pośrednika IRC, z serwerem
+nazwanym "relay" i hasłem pośrednika "moje_hasło", możesz ustawić hasło
+za pomocą tych komend:
 
 ----
-/set irc.server.relay.password "freenode:secret"
+/secure set relay_libera libera:moje_hasło
+/set irc.server.relay.password "{sec.data.relay_libera}"
 ----
 
 [[relay_weechat_protocol]]
@@ -3964,10 +4162,10 @@ niemieckojęzycnzym:
 ----
 
 Możesz również ustawić słownik dla grupy buforów, na przykład angielski dla
-wsystkich kanałów na serwerze IRC freenode:
+wsystkich kanałów na serwerze IRC libera:
 
 ----
-/set spell.dict.irc.freenode en
+/set spell.dict.irc.libera en
 ----
 
 Więcej informacji można znaleźć w opisie komendy <<command_spell_spell,/spell>>.
@@ -4003,7 +4201,7 @@ Aby włączyć sugestie trzeba ustawić opcję _spell.check.suggestions_ na licz
 Przykład sugestii z angielskim słownikiem (`en`):
 
 ....
-│[12:55] [6] [irc/freenode] 3:#test(+n){4} [print,prone,prune]                    │
+│[12:55] [6] [irc/libera] 3:#test(+n){4} [print,prone,prune]                      │
 │[@Flashy] prinr █                                                                │
 └─────────────────────────────────────────────────────────────────────────────────┘
 ....
@@ -4011,7 +4209,7 @@ Przykład sugestii z angielskim słownikiem (`en`):
 Przykład sugestii ze słownikami angielskim i francuskim (`en,fr`):
 
 ....
-│[12:55] [6] [irc/freenode] 3:#test(+n){4} [print,prone,prune/prime,primer,primé] │
+│[12:55] [6] [irc/libera] 3:#test(+n){4} [print,prone,prune/prime,primer,primé]   │
 │[@Flashy] prinr █                                                                │
 └─────────────────────────────────────────────────────────────────────────────────┘
 ....
@@ -4117,7 +4315,7 @@ Trigger posiada następujące opcje (nazwy to `trigger.trigger.<nazwa>.<opcja>`)
 | regex | string |
   Jedno lub więcej rozszerzonych wyrażeń regularnych POSIX, do zamiany danych
   otrzymanych w odpowiedzi od podpiętego zdarzenia (i trochę rzeczy dodanych
-  przez wtyczkę trigger) zobacz <<trigger_regex,regular expression>>.
+  przez wtyczkę trigger) zobacz <<trigger_regex,wyrażenia regularne>>.
 
 | command | string |
   Komenda do wykonania (wiele komend należy oddzielić średnikiem); jest to
@@ -4197,9 +4395,9 @@ Argumenty zależą od rodzaju uchwytu. Są oddzielane średnikami.
   3. tagi |
   `+formatted+` +
   `+free+` +
-  `+*;irc.freenode.*+` +
-  `+*;irc.freenode.#weechat+` +
-  `+formatted;irc.freenode.#weechat;irc_notice+` |
+  `+*;irc.libera.*+` +
+  `+*;irc.libera.#weechat+` +
+  `+formatted;irc.libera.#weechat;irc_notice+` |
   link:weechat_plugin_api.en.html#_hook_line[hook_line]
 
 | print |
@@ -4207,9 +4405,9 @@ Argumenty zależą od rodzaju uchwytu. Są oddzielane średnikami.
   2. tagi +
   3. wiadomość +
   4. odrzucić kolory (0/1) |
-  `+irc.freenode.*+` +
-  `+irc.freenode.#weechat+` +
-  `+irc.freenode.#weechat;irc_notice+` +
+  `+irc.libera.*+` +
+  `+irc.libera.#weechat+` +
+  `+irc.libera.#weechat;irc_notice+` +
   `+*;;;1+` |
   link:weechat_plugin_api.en.html#_hook_print[hook_print] (Angielski)
 
@@ -4412,7 +4610,7 @@ są dodawane do tablicy hashy:
 | Zmienna              | Typ     | Opis
 | irc_server           | wskaźnik | Wskaźnik na serwer IRC (można użyć zmiennych hdata typu "irc_server" jak `+${irc_server.name}+`).
 | irc_channel          | wskaźnik | Wskaźnik na kanał IRC (można użyć zmiennych hdata typu "irc_channel" jak `+${irc_channel.name}+`).
-| server               | ciąg    | Nazwa serwera (przykład: "freenode").
+| server               | ciąg    | Nazwa serwera (przykład: "libera").
 | tags                 | ciąg    | Tagi w wiadomości (rzadko używane).
 | message_without_tags | ciąg    | Wiadomość bez tagów.
 | nick                 | ciąg    | Nick.
@@ -4564,10 +4762,8 @@ Callback "command" ustawia następujące zmienne w tablicy hashy:
 | tg_argc        | ciąg     | Ilość argumentów (komenda liczy się za jeden).
 | tg_argvN       | ciąg     | Argument #N (`+tg_argv0+` to komenda, pozostałe to jej argumenty).
 | tg_argv_eolN   | ciąg     | Od argumentu #N do końca argumentów (`+tg_argv_eol0+` zawiera komendę).
-// TRANSLATION MISSING
-| tg_shell_argc  | ciąg     | The number of arguments with a split like the shell does (the command itself counts for one).
-// TRANSLATION MISSING
-| tg_shell_argvN | ciąg     | Argument #N with a split like the shell does (`+tg_shell_argv0+` is the command itself, the others are command arguments).
+| tg_shell_argc  | ciąg     | Ilość argumentów podzielonych tak jak parametry konsolowe (sama komenda liczy się jako jeden).
+| tg_shell_argvN | ciąg     | Argument #N podzielone tak jak parametry konsolowe (`+tg_shell_argv0+` to nazwa komendy, pozostałe to argumenty).
 |===
 
 [[trigger_data_command_run]]
@@ -4737,6 +4933,100 @@ Opcje:
 
 include::includes/autogen_user_options.pl.adoc[tag=trigger_options]
 
+// TRANSLATION MISSING
+[[typing_plugin]]
+=== Typing
+
+The typing plugin is used to inform other users you are typing messages and
+show a list of users currently typing a message on the buffer.
+
+It is used by IRC plugin on channel and private buffers, when the "message-tags"
+capability is enabled (you can check with <<command_irc_cap,/cap>> command). +
+Under the hood, typing client tag is used, following this specification:
+https://ircv3.net/specs/client-tags/typing.html.
+
+[[typing_activation]]
+==== Activation
+
+For privacy considerations, the typing feature is disabled by default. +
+If you want to use it, you must enable options in both typing and irc plugins:
+
+----
+/set typing.look.enabled_nicks on
+/set typing.look.enabled_self on
+/set irc.look.typing_status_nicks on
+/set irc.look.typing_status_self on
+----
+
+The typing notifications are displayed at the end of the status bar.
+
+Example of status bar with the "typing" item: "bob" is typing a message and
+"alice" was typing a message but made a pause:
+
+....
+│[12:55] [6] [irc/libera] 3:#test(+n){4} [Typing: bob, (alice)]                   │
+│[@Flashy] █                                                                      │
+└─────────────────────────────────────────────────────────────────────────────────┘
+....
+
+[[typing_signals_sent]]
+==== Signals sent
+
+When you are typing a message (not a command starting with `/`), the typing
+plugin sends signals to inform other plugins (like IRC) that you are typing,
+and these plugins can then send typing notifications to other users.
+
+The following signals are sent when you are typing messages:
+
+[width="100%",cols="1,1,5",options="header"]
+|===
+| Signal              | Arguments        | Description
+| typing_self_typing  | Pointer: buffer. | You are typing a message.
+| typing_self_paused  | Pointer: buffer. | You made a pause while typing a message.
+| typing_self_cleared | Pointer: buffer. | You cleared the command line without sending the message.
+| typing_self_sent    | Pointer: buffer. | You sent the message to the buffer.
+|===
+
+[[typing_signals_caught]]
+==== Signals caught
+
+The typing plugin is catching some signals that can be sent by other plugins
+(like IRC), to update internal hashtables used to store the typing state of
+nicks on buffers. These hashtables are used to build the content of "typing"
+bar item.
+
+The following signals are caught by the typing plugin:
+
+[width="100%",cols="1,4,3",options="header"]
+|===
+| Signal | Arguments | Description
+
+| typing_set_nick |
+  String: buffer pointer + ";" + state (one of: "off", "typing", "paused",
+  "cleared") + ";" + nick. +
+  Example: "0x1234abcd;typing;alice". |
+  Set typing state for a nick on a buffer.
+
+| typing_reset_buffer |
+  Pointer: buffer. |
+  Remove typing state for all nicks on a buffer.
+|===
+
+[[typing_options]]
+==== Opcje
+
+Sekcje w pliku _typing.conf_:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Sekcja | Komenda            | Opis
+| look   | /set typing.look.* | Wygląd.
+|===
+
+Opcje:
+
+include::includes/autogen_user_options.pl.adoc[tag=typing_options]
+
 [[xfer_plugin]]
 === Xfer
 
@@ -4775,7 +5065,7 @@ include::includes/autogen_user_options.pl.adoc[tag=xfer_options]
 Przed pytaniem o pomoc upewnij się, że przeczytałeś dokumentację i FAQ
 dostarczone z WeeChat.
 
-Wsparcie w sieci IRC na serwerze _chat.freenode.net_:
+Wsparcie w sieci IRC na serwerze _irc.libera.chat_:
 
 * oficjalne kanały (z developerami):
 ** _#weechat_ (Angielski)

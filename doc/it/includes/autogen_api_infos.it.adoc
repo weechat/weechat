@@ -76,7 +76,7 @@
 
 | ruby | ruby_version | version of the interpreter used | -
 
-| spell | spell_dict | elenco separato da virgole di dizionari usati nel buffer | puntatore al buffer ("0x12345678") o buffer con il nome completo ("irc.freenode.weechat")
+| spell | spell_dict | elenco separato da virgole di dizionari usati nel buffer | buffer pointer ("0x12345678") or buffer full name ("irc.libera.#weechat")
 
 | tcl | tcl_eval | evaluation of source code | source code to execute
 

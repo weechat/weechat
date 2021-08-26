@@ -654,6 +654,13 @@ string_match (const char *string, const char *mask, int case_sensitive)
                 free (word);
                 return 0;
             }
+            if ((!pos_word[length_word] && !pos_end[0])
+                || string_match (pos_word + length_word, pos_end,
+                                 case_sensitive))
+            {
+                free (word);
+                return 1;
+            }
             while (1)
             {
                 pos_word2 = (case_sensitive) ?
@@ -662,8 +669,16 @@ string_match (const char *string, const char *mask, int case_sensitive)
                 if (!pos_word2)
                     break;
                 pos_word = pos_word2;
+                if ((!pos_word[length_word] && !pos_end[0])
+                    || string_match (pos_word + length_word, pos_end,
+                                     case_sensitive))
+                {
+                    free (word);
+                    return 1;
+                }
             }
-            ptr_string = pos_word + length_word;
+            free (word);
+            return 0;
         }
         else
         {
@@ -933,7 +948,7 @@ string_strip (const char *string, int left, int right, const char *chars)
 }
 
 /*
- * Converts escaped chars to their value.
+ * Converts escaped chars to their values.
  *
  * Following escaped chars are supported:
  *   \"         double quote
@@ -3523,10 +3538,6 @@ string_input_for_buffer (const char *string)
     if (!string)
         return NULL;
 
-    /* a single "/" is not a command */
-    if (strcmp (string, "/") == 0)
-        return string;
-
     /* "/ " is not a command */
     if (strncmp (string, "/ ", 2) == 0)
         return string;
@@ -3559,10 +3570,6 @@ string_input_for_buffer (const char *string)
         return string;
 
     next_char = utf8_next_char (string);
-
-    /* there's no next char, then it's a not command */
-    if (!next_char || !next_char[0])
-        return string;
 
     /* next char is a space, then it's not a command */
     if (next_char[0] == ' ')

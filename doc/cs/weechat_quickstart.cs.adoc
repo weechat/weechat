@@ -113,13 +113,13 @@ Použijte příkaz `/plugin` k zobrazení nahraných pluginů, pravděpodobně u
 Můžete přidat irc server příkazem `/server`, například:
 
 ----
-/server add freenode chat.freenode.net
+/server add libera irc.libera.chat/6697 -ssl
 ----
 
 // TRANSLATION MISSING
-In this command, `freenode` is the internal server name used by WeeChat:
-you'll be able to connect with `/connect freenode` and the server options
-are _irc.server.freenode.xxx_.
+In this command, `libera` is the internal server name used by WeeChat:
+you'll be able to connect with `/connect libera` and the server options
+are _irc.server.libera.xxx_.
 
 Jako obvykle je poskytována nápověda pokud se ztratíte:
 
@@ -138,45 +138,38 @@ Pro každou serverovou volbu WeeChat použije její hodnotu pokud je definována
 (není "prázdná"). Jinak WeeChat použije výchozí hodnotu ("irc.server_default.xxx).
 
 Například, je zde výchozí přezdívka (založena na vašem un*x loginu), můžete
-ji přepsat pro freenode s následujícím příkazem:
+ji přepsat pro libera s následujícím příkazem:
 
 ----
-/set irc.server.freenode.nicks "mynick,mynick2,mynick3,mynick4,mynick5"
+/set irc.server.libera.nicks "mynick,mynick2,mynick3,mynick4,mynick5"
 ----
 
 Nastavení username a realname:
 
 ----
-/set irc.server.freenode.username "Mé uživatelské jméno"
-/set irc.server.freenode.realname "Mé skutečné jméno"
+/set irc.server.libera.username "Mé uživatelské jméno"
+/set irc.server.libera.realname "Mé skutečné jméno"
 ----
 
 K zapnutí automatického připojení při spuštění:
 
 ----
-/set irc.server.freenode.autoconnect on
-----
-
-K připojení s SSL:
-
-----
-/set irc.server.freenode.addresses "chat.freenode.net/7000"
-/set irc.server.freenode.ssl on
+/set irc.server.libera.autoconnect on
 ----
 
 Pokud je na serveru podporován SASL, můžete jej použít pro autentizaci (mužete
 být identifikován před připojením kanálů):
 
 ----
-/set irc.server.freenode.sasl_username "mynick"
-/set irc.server.freenode.sasl_password "xxxxxxx"
+/set irc.server.libera.sasl_username "mynick"
+/set irc.server.libera.sasl_password "xxxxxxx"
 ----
 
 K spuštění příkazů po připojení k serveru, například k autentizaci s nickserv
 (pouze pokud nepoužíváte autentizaci přes SASL):
 
 ----
-/set irc.server.freenode.command "/msg nickserv identify xxxxxxx"
+/set irc.server.libera.command "/msg nickserv identify xxxxxxx"
 ----
 
 [NOTE]
@@ -194,24 +187,24 @@ First setup a passphrase:
 ----
 
 // TRANSLATION MISSING
-Then add a secured data with your freenode password:
+Then add a secured data with your libera password:
 
 ----
-/secure set freenode_password xxxxxxx
+/secure set libera_password xxxxxxx
 ----
 
 // TRANSLATION MISSING
-Then you can use `+${sec.data.freenode_password}+` instead of your password in
+Then you can use `+${sec.data.libera_password}+` instead of your password in
 IRC options mentioned above, for example:
 
 ----
-/set irc.server.freenode.sasl_password "${sec.data.freenode_password}"
+/set irc.server.libera.sasl_password "${sec.data.libera_password}"
 ----
 
 K automatickému připojení některých kanálů při připojování k serveru:
 
 ----
-/set irc.server.freenode.autojoin "#channel1,#channel2"
+/set irc.server.libera.autojoin "#channel1,#channel2"
 ----
 
 // TRANSLATION MISSING
@@ -224,25 +217,25 @@ K smazání hodnoty serverové volby a k použití výchozí hodnoty místo ní,
 například k požití výchozích přezdívek (irc.server_default.nicks):
 
 ----
-/unset irc.server.freenode.nicks
+/unset irc.server.libera.nicks
 ----
 
 Ostatní volby: můžete nastavit ostatní volby s následujícím příkazem ("xxx" je
 název volby):
 
 ----
-/set irc.server.freenode.xxx value
+/set irc.server.libera.xxx value
 ----
 
 [[connect_to_irc_server]]
 == Připojení k IRC serveru
 
 ----
-/connect freenode
+/connect libera
 ----
 
 // TRANSLATION MISSING
-With this command, WeeChat connects to the freenode server and auto-joins the
+With this command, WeeChat connects to the libera server and auto-joins the
 channels configured in the "autojoin" server option.
 
 // TRANSLATION MISSING

@@ -123,13 +123,13 @@ Um eine Verbindung zu einem IRC Server herzustellen, wird der
 `/server` Befehl verwendet. Beispiel:
 
 ----
-/server add freenode chat.freenode.net
+/server add libera irc.libera.chat/6697 -ssl
 ----
 
-In diesem Beispiel ist `freenode` der interne, von Weechat genutzte Servername.
-Mit dem Befehl `/connect freenode` kann jetzt die Verbindung
-zu diesem Freenode-IRC-Server aufgebaut werden.
-Alle für den Server relevanten Optionen sind unter _irc.server.freenode.xxx_ zu finden.
+In diesem Beispiel ist `libera` der interne, von Weechat genutzte Servername.
+Mit dem Befehl `/connect libera` kann jetzt die Verbindung
+zu diesem Libera-IRC-Server aufgebaut werden.
+Alle für den Server relevanten Optionen sind unter _irc.server.libera.xxx_ zu finden.
 
 Verwende die Hilfe, falls noch Fragen offen sind:
 
@@ -149,31 +149,24 @@ definiert ist (nicht "null"). Andernfalls verwendet WeeChat die Vorgabewerte
 (_irc.server_default.xxx_).
 
 Beispielsweise werden Standard Nicks verwendet (basierend auf dem  Un*x Login).
-Sollen speziell für den freenode-Server andere Nicks genutzt werden,
+Sollen speziell für den libera-Server andere Nicks genutzt werden,
 können diese mit folgendem Befehl angepasst werden:
 
 ----
-/set irc.server.freenode.nicks "meinNick,meinNick2,meinNick3,meinNick4,meinNick5"
+/set irc.server.libera.nicks "meinNick,meinNick2,meinNick3,meinNick4,meinNick5"
 ----
 
 Benutzernamen und wirklichen Namen (realname) anpassen:
 
 ----
-/set irc.server.freenode.username "Mein Benutzername"
-/set irc.server.freenode.realname "Mein wirklicher Name"
+/set irc.server.libera.username "Mein Benutzername"
+/set irc.server.libera.realname "Mein wirklicher Name"
 ----
 
 Beim Start von WeeChat automatisch die Verbindung zu einem Server herstellen:
 
 ----
-/set irc.server.freenode.autoconnect on
-----
-
-Beim Verbindungsaufbau SSL (sichere Verbindung) nutzen:
-
-----
-/set irc.server.freenode.addresses "chat.freenode.net/7000"
-/set irc.server.freenode.ssl on
+/set irc.server.libera.autoconnect on
 ----
 
 Wenn der Server SASL unterstützt,
@@ -182,8 +175,8 @@ Der Benutzer wird auf diese Weise gegenüber dem IRC-Server identifiziert,
 noch bevor Server-Befehle übermittelt oder Cannels (Chaträume) betreten werden können.
 
 ----
-/set irc.server.freenode.sasl_username "mynick"
-/set irc.server.freenode.sasl_password "xxxxxxx"
+/set irc.server.libera.sasl_username "mynick"
+/set irc.server.libera.sasl_password "xxxxxxx"
 ----
 
 Wenn der Server keine SASL-Authentifizierung unterstützt,
@@ -191,7 +184,7 @@ muss der Benutzer sich nach dem Verbindungsaufbau bei "nickserv" identifizieren.
 Der dafür notwendige IRC-Server-Befehl kann auch automatisch übermittelt werden:
 
 ----
-/set irc.server.freenode.command "/msg nickserv identify xxxxxxx"
+/set irc.server.libera.command "/msg nickserv identify xxxxxxx"
 ----
 
 [NOTE]
@@ -207,19 +200,19 @@ Zuerst sollte die Passphrase gesetzt werden:
 ----
 
 Jetzt wird das Passwort (`xxxxxx`)
-für den Zugang zum Freenode-Server verschlüsselt
-und mit dem Bezeichner `freenode_password` verknüpft:
+für den Zugang zum Libera-Server verschlüsselt
+und mit dem Bezeichner `libera_password` verknüpft:
 
 ----
-/secure set freenode_password xxxxxx
+/secure set libera_password xxxxxx
 ----
 
-Das geschützte Freenode-Passwort kann nun in anderen Optionen genutzt werden.
+Das geschützte Libera-Passwort kann nun in anderen Optionen genutzt werden.
 Dazu wird anstelle des Klartext-Passwortes die Variable
-`+${sec.data.freenode_password}+` eingesetzt:
+`+${sec.data.libera_password}+` eingesetzt:
 
 ----
-/set irc.server.freenode.sasl_password "${sec.data.freenode_password}"
+/set irc.server.libera.sasl_password "${sec.data.libera_password}"
 ----
 
 Das automatische Betreten (auto-join) von Channels (Chaträume) direkt nach dem
@@ -227,7 +220,7 @@ Verbindungsaufbau zum IRC-Server kann durch den Eintrag der gewünschten Channel
 in folgender Option erreicht werden:
 
 ----
-/set irc.server.freenode.autojoin "#channel1,#channel2"
+/set irc.server.libera.autojoin "#channel1,#channel2"
 ----
 
 [TIP]
@@ -239,28 +232,28 @@ sein kann).
 Mit dem Befehl `/unset` können Server-Optionen zurückgesetzt werden.
 Ist eine Server-Option zurückgesetzt, _wirkt_ der entsprechende Vorgabewert
 aus dem fall-back-Bereich `irc.server_default.xxx`. So nimmt, beispielsweise
-nach dem Rücksetzen der Freenode-Nicks, diese Server-Option _automatisch_ den Wert
+nach dem Rücksetzen der Libera-Nicks, diese Server-Option _automatisch_ den Wert
 der entsprechenden fall-back-Option `irc.server_default.nicks` an:
 
 ----
-/unset irc.server.freenode.nicks
+/unset irc.server.libera.nicks
 ----
 
 *Andere Optionen:*
 Werte anderer Server-Optionen (`xxx`) können festgelegt werden mit:
 
 ----
-/set irc.server.freenode.xxx Wert
+/set irc.server.libera.xxx Wert
 ----
 
 [[connect_to_irc_server]]
 == Verbinden mit dem IRC-Server
 
 ----
-/connect freenode
+/connect libera
 ----
 
-Mittels obigem Befehl stellt WeeChat eine Verbindung zum freenode Server
+Mittels obigem Befehl stellt WeeChat eine Verbindung zum libera Server
 her und betritt automatisch die Kanäle die in der "autojoin" Server-Option
 aufgeführt sind.
 

@@ -1315,43 +1315,43 @@
 ** valore predefinito: `+on+`
 
 * [[option_weechat.signal.sighup]] *weechat.signal.sighup*
-** descrizione: pass:none[command to execute when the signal is received, multiple commands can be separated by semicolons (note: content is evaluated, see /help eval)]
+** descrizione: pass:none[command to execute when the signal is received, multiple commands can be separated by semicolons (note: commands are evaluated, see /help eval)]
 ** tipo: stringa
 ** valori: qualsiasi stringa
 ** valore predefinito: `+"${if:${info:weechat_headless}?/reload:/quit -yes}"+`
 
 * [[option_weechat.signal.sigquit]] *weechat.signal.sigquit*
-** descrizione: pass:none[command to execute when the signal is received, multiple commands can be separated by semicolons (note: content is evaluated, see /help eval)]
+** descrizione: pass:none[command to execute when the signal is received, multiple commands can be separated by semicolons (note: commands are evaluated, see /help eval)]
 ** tipo: stringa
 ** valori: qualsiasi stringa
 ** valore predefinito: `+"/quit -yes"+`
 
 * [[option_weechat.signal.sigterm]] *weechat.signal.sigterm*
-** descrizione: pass:none[command to execute when the signal is received, multiple commands can be separated by semicolons (note: content is evaluated, see /help eval)]
+** descrizione: pass:none[command to execute when the signal is received, multiple commands can be separated by semicolons (note: commands are evaluated, see /help eval)]
 ** tipo: stringa
 ** valori: qualsiasi stringa
 ** valore predefinito: `+"/quit -yes"+`
 
 * [[option_weechat.signal.sigusr1]] *weechat.signal.sigusr1*
-** descrizione: pass:none[command to execute when the signal is received, multiple commands can be separated by semicolons (note: content is evaluated, see /help eval)]
+** descrizione: pass:none[command to execute when the signal is received, multiple commands can be separated by semicolons (note: commands are evaluated, see /help eval)]
 ** tipo: stringa
 ** valori: qualsiasi stringa
 ** valore predefinito: `+""+`
 
 * [[option_weechat.signal.sigusr2]] *weechat.signal.sigusr2*
-** descrizione: pass:none[command to execute when the signal is received, multiple commands can be separated by semicolons (note: content is evaluated, see /help eval)]
+** descrizione: pass:none[command to execute when the signal is received, multiple commands can be separated by semicolons (note: commands are evaluated, see /help eval)]
 ** tipo: stringa
 ** valori: qualsiasi stringa
 ** valore predefinito: `+""+`
 
 * [[option_weechat.startup.command_after_plugins]] *weechat.startup.command_after_plugins*
-** descrizione: pass:none[comando eseguito all'avvio di WeeChat, dopo il caricamento dei plugin (nota: il contenuto viene valutato, consultare /help eval)]
+** descrizione: pass:none[command executed when WeeChat starts, after loading plugins; multiple commands can be separated by semicolons (note: commands are evaluated, see /help eval)]
 ** tipo: stringa
 ** valori: qualsiasi stringa
 ** valore predefinito: `+""+`
 
 * [[option_weechat.startup.command_before_plugins]] *weechat.startup.command_before_plugins*
-** descrizione: pass:none[comando eseguito all'avvio di WeeChat, prima del caricamento dei plugin (nota: il contenuto viene valutato, consultare /help eval)]
+** descrizione: pass:none[command executed when WeeChat starts, before loading plugins; multiple commands can be separated by semicolons (note: commands are evaluated, see /help eval)]
 ** tipo: stringa
 ** valori: qualsiasi stringa
 ** valore predefinito: `+""+`
@@ -1845,6 +1845,50 @@
 ** valore predefinito: `+"${weechat_runtime_dir}/weechat_fifo_${info:pid}"+`
 // end::fifo_options[]
 
+// tag::typing_options[]
+* [[option_typing.look.delay_purge_paused]] *typing.look.delay_purge_paused*
+** descrizione: pass:none[number of seconds after paused status has been set: if reached, the typing status is removed]
+** tipo: intero
+** valori: 1 .. 2147483647
+** valore predefinito: `+30+`
+
+* [[option_typing.look.delay_purge_typing]] *typing.look.delay_purge_typing*
+** descrizione: pass:none[number of seconds after typing status has been set: if reached, the typing status is removed]
+** tipo: intero
+** valori: 1 .. 2147483647
+** valore predefinito: `+6+`
+
+* [[option_typing.look.delay_set_paused]] *typing.look.delay_set_paused*
+** descrizione: pass:none[number of seconds after typing last char: if reached, the typing status becomes "paused" and no more typing signals are sent]
+** tipo: intero
+** valori: 1 .. 2147483647
+** valore predefinito: `+10+`
+
+* [[option_typing.look.enabled_nicks]] *typing.look.enabled_nicks*
+** descrizione: pass:none[typing enabled for other nicks (display typing info for nicks typing in the current buffer)]
+** tipo: bool
+** valori: on, off
+** valore predefinito: `+off+`
+
+* [[option_typing.look.enabled_self]] *typing.look.enabled_self*
+** descrizione: pass:none[typing enabled for self messages (send typing info to other users)]
+** tipo: bool
+** valori: on, off
+** valore predefinito: `+off+`
+
+* [[option_typing.look.input_min_chars]] *typing.look.input_min_chars*
+** descrizione: pass:none[min number of chars in message to trigger send of typing signals]
+** tipo: intero
+** valori: 1 .. 2147483647
+** valore predefinito: `+4+`
+
+* [[option_typing.look.item_max_length]] *typing.look.item_max_length*
+** descrizione: pass:none[max number of chars displayed in the bar item "typing" (0 = do not truncate content)]
+** tipo: intero
+** valori: 0 .. 2147483647
+** valore predefinito: `+0+`
+// end::typing_options[]
+
 // tag::xfer_options[]
 * [[option_xfer.color.status_aborted]] *xfer.color.status_aborted*
 ** descrizione: pass:none[colore del testo per lo status "annullato"]
@@ -1913,7 +1957,7 @@
 ** valore predefinito: `+off+`
 
 * [[option_xfer.file.auto_accept_nicks]] *xfer.file.auto_accept_nicks*
-** descrizione: pass:none[comma-separated list of nicks for which the incoming files and chats are automatically accepted; format is "server.nick" (for a specific server) or "nick" (for all servers); example: "freenode.FlashCode,andrew"]
+** descrizione: pass:none[comma-separated list of nicks for which the incoming files and chats are automatically accepted; format is "server.nick" (for a specific server) or "nick" (for all servers); example: "libera.FlashCode,andrew"]
 ** tipo: stringa
 ** valori: qualsiasi stringa
 ** valore predefinito: `+""+`
@@ -2214,6 +2258,12 @@
 ** valori: qualsiasi stringa
 ** valore predefinito: `+"%a, %d %b %Y %T %z"+`
 
+* [[option_irc.look.display_account_message]] *irc.look.display_account_message*
+** descrizione: pass:none[display ACCOUNT messages received when capability account-notify is enabled]
+** tipo: bool
+** valori: on, off
+** valore predefinito: `+on+`
+
 * [[option_irc.look.display_away]] *irc.look.display_away*
 ** descrizione: pass:none[mostra messaggio quando (non) si risulta assenti (off: non mostra/invia nulla, local: mostra localmente, channel: invia azioni ai canali)]
 ** tipo: intero
@@ -2234,6 +2284,12 @@
 
 * [[option_irc.look.display_ctcp_unknown]] *irc.look.display_ctcp_unknown*
 ** descrizione: pass:none[visualizza messaggio CTCP anche se è CTCP sconosciuto]
+** tipo: bool
+** valori: on, off
+** valore predefinito: `+on+`
+
+* [[option_irc.look.display_extended_join]] *irc.look.display_extended_join*
+** descrizione: pass:none[display extra information in the JOIN messages: account name and real name (capability extended-join must be enabled)]
 ** tipo: bool
 ** valori: on, off
 ** valore predefinito: `+on+`
@@ -2287,19 +2343,19 @@
 ** valore predefinito: `+off+`
 
 * [[option_irc.look.highlight_channel]] *irc.look.highlight_channel*
-** descrizione: pass:none[comma separated list of words to highlight in channel buffers (case insensitive, use "(?-i)" at beginning of words to make them case sensitive; special variables $nick, $channel and $server are replaced by their value), these words are added to buffer property "highlight_words" only when buffer is created (it does not affect current buffers), an empty string disables default highlight on nick, examples: "$nick", "(?-i)$nick"]
+** descrizione: pass:none[comma separated list of words to highlight in channel buffers (case insensitive, use "(?-i)" at beginning of words to make them case sensitive; special variables $nick, $channel and $server are replaced by their values), these words are added to buffer property "highlight_words" only when buffer is created (it does not affect current buffers), an empty string disables default highlight on nick, examples: "$nick", "(?-i)$nick"]
 ** tipo: stringa
 ** valori: qualsiasi stringa
 ** valore predefinito: `+"$nick"+`
 
 * [[option_irc.look.highlight_pv]] *irc.look.highlight_pv*
-** descrizione: pass:none[comma separated list of words to highlight in private buffers (case insensitive, use "(?-i)" at beginning of words to make them case sensitive; special variables $nick, $channel and $server are replaced by their value), these words are added to buffer property "highlight_words" only when buffer is created (it does not affect current buffers), an empty string disables default highlight on nick, examples: "$nick", "(?-i)$nick"]
+** descrizione: pass:none[comma separated list of words to highlight in private buffers (case insensitive, use "(?-i)" at beginning of words to make them case sensitive; special variables $nick, $channel and $server are replaced by their values), these words are added to buffer property "highlight_words" only when buffer is created (it does not affect current buffers), an empty string disables default highlight on nick, examples: "$nick", "(?-i)$nick"]
 ** tipo: stringa
 ** valori: qualsiasi stringa
 ** valore predefinito: `+"$nick"+`
 
 * [[option_irc.look.highlight_server]] *irc.look.highlight_server*
-** descrizione: pass:none[comma separated list of words to highlight in server buffers (case insensitive, use "(?-i)" at beginning of words to make them case sensitive; special variables $nick, $channel and $server are replaced by their value), these words are added to buffer property "highlight_words" only when buffer is created (it does not affect current buffers), an empty string disables default highlight on nick, examples: "$nick", "(?-i)$nick"]
+** descrizione: pass:none[comma separated list of words to highlight in server buffers (case insensitive, use "(?-i)" at beginning of words to make them case sensitive; special variables $nick, $channel and $server are replaced by their values), these words are added to buffer property "highlight_words" only when buffer is created (it does not affect current buffers), an empty string disables default highlight on nick, examples: "$nick", "(?-i)$nick"]
 ** tipo: stringa
 ** valori: qualsiasi stringa
 ** valore predefinito: `+"$nick"+`
@@ -2508,6 +2564,18 @@
 ** valori: on, off
 ** valore predefinito: `+off+`
 
+* [[option_irc.look.typing_status_nicks]] *irc.look.typing_status_nicks*
+** descrizione: pass:none[display nicks typing on the channel in bar item "typing" (option typing.look.enabled_nicks must be enabled and capability "message-tags" must be enabled on the server)]
+** tipo: bool
+** valori: on, off
+** valore predefinito: `+off+`
+
+* [[option_irc.look.typing_status_self]] *irc.look.typing_status_self*
+** descrizione: pass:none[send self typing status to channels so that other users see when you are typing a message (option typing.look.enabled_self must be enabled and capability "message-tags" must be enabled on the server)]
+** tipo: bool
+** valori: on, off
+** valore predefinito: `+off+`
+
 * [[option_irc.network.autoreconnect_delay_growing]] *irc.network.autoreconnect_delay_growing*
 ** descrizione: pass:none[growing factor for autoreconnect delay to server (1 = always same delay, 2 = delay*2 for each retry, etc.)]
 ** tipo: intero
@@ -2665,10 +2733,10 @@
 ** valore predefinito: `+25+`
 
 * [[option_irc.server_default.capabilities]] *irc.server_default.capabilities*
-** descrizione: pass:none[comma-separated list of client capabilities to enable for server if they are available (see /help cap for a list of capabilities supported by WeeChat) (example: "away-notify,multi-prefix")]
+** descrizione: pass:none[comma-separated list of client capabilities to enable for server if they are available (see /help cap for a list of capabilities supported by WeeChat); "*" enables all capabilities by default (supported by both server and WeeChat); wildcard "*" is allowed; a capability beginning with "!" is excluded (example: "*,!account-*,!extended-join")]
 ** tipo: stringa
 ** valori: qualsiasi stringa
-** valore predefinito: `+""+`
+** valore predefinito: `+"*"+`
 
 * [[option_irc.server_default.charset_message]] *irc.server_default.charset_message*
 ** descrizione: pass:none[part of the IRC message (received or sent) which is decoded/encoded to the target charset; message = the whole IRC message (default), channel = starting from the channel name only (if found, with fallback on text), text = starting from the text only (you should try this value if you have issues with the channel name encoding)]
@@ -2677,7 +2745,7 @@
 ** valore predefinito: `+message+`
 
 * [[option_irc.server_default.command]] *irc.server_default.command*
-** descrizione: pass:none[command(s) to run after connection to server and before auto-join of channels (many commands can be separated by ";", use "\;" for a semicolon, special variables $nick, $channel and $server are replaced by their value) (note: content is evaluated, see /help eval; server options are evaluated with ${irc_server.xxx} and ${server} is replaced by the server name)]
+** descrizione: pass:none[command(s) to run after connection to server and before auto-join of channels (many commands can be separated by ";", use "\;" for a semicolon, special variables $nick, $channel and $server are replaced by their values) (note: commands are evaluated, see /help eval; server options are evaluated with ${irc_server.xxx} and ${server} is replaced by the server name)]
 ** tipo: stringa
 ** valori: qualsiasi stringa
 ** valore predefinito: `+""+`
@@ -2713,19 +2781,19 @@
 ** valore predefinito: `+""+`
 
 * [[option_irc.server_default.msg_kick]] *irc.server_default.msg_kick*
-** descrizione: pass:none[default kick message used by commands "/kick" and "/kickban" (note: content is evaluated, see /help eval; special variables ${nick}, ${channel} and ${server} are replaced by their value)]
+** descrizione: pass:none[default kick message used by commands "/kick" and "/kickban" (note: content is evaluated, see /help eval; special variables ${nick} (self nick), ${target} (target nick), ${channel} and ${server} are replaced by their values)]
 ** tipo: stringa
 ** valori: qualsiasi stringa
 ** valore predefinito: `+""+`
 
 * [[option_irc.server_default.msg_part]] *irc.server_default.msg_part*
-** descrizione: pass:none[default part message (leaving channel) (note: content is evaluated, see /help eval; special variables ${nick}, ${channel} and ${server} are replaced by their value; "%v" is replaced by WeeChat version if there is no ${...} in string)]
+** descrizione: pass:none[default part message (leaving channel) (note: content is evaluated, see /help eval; special variables ${nick}, ${channel} and ${server} are replaced by their values; "%v" is replaced by WeeChat version if there is no ${...} in string)]
 ** tipo: stringa
 ** valori: qualsiasi stringa
 ** valore predefinito: `+"WeeChat ${info:version}"+`
 
 * [[option_irc.server_default.msg_quit]] *irc.server_default.msg_quit*
-** descrizione: pass:none[default quit message (disconnecting from server) (note: content is evaluated, see /help eval; special variables ${nick}, ${channel} and ${server} are replaced by their value; "%v" is replaced by WeeChat version if there is no ${...} in string)]
+** descrizione: pass:none[default quit message (disconnecting from server) (note: content is evaluated, see /help eval; special variables ${nick}, ${channel} and ${server} are replaced by their values; "%v" is replaced by WeeChat version if there is no ${...} in string)]
 ** tipo: stringa
 ** valori: qualsiasi stringa
 ** valore predefinito: `+"WeeChat ${info:version}"+`
@@ -2770,7 +2838,7 @@
 ** descrizione: pass:none[action to perform if SASL authentication fails: "continue" to ignore the authentication problem, "reconnect" to schedule a reconnection to the server, "disconnect" to disconnect from server (see also option irc.network.sasl_fail_unavailable)]
 ** tipo: intero
 ** valori: continue, reconnect, disconnect
-** valore predefinito: `+continue+`
+** valore predefinito: `+reconnect+`
 
 * [[option_irc.server_default.sasl_key]] *irc.server_default.sasl_key*
 ** descrizione: pass:none[file with ECC private key for mechanism "ecdsa-nist256p-challenge" (path is evaluated, see function string_eval_path_home in plugin API reference)]
@@ -2779,9 +2847,9 @@
 ** valore predefinito: `+""+`
 
 * [[option_irc.server_default.sasl_mechanism]] *irc.server_default.sasl_mechanism*
-** descrizione: pass:none[mechanism for SASL authentication: "plain" for plain text password, "ecdsa-nist256p-challenge" for key-based challenge authentication, "external" for authentication using client side SSL cert, "dh-blowfish" for blowfish crypted password (insecure, not recommended), "dh-aes" for AES crypted password (insecure, not recommended)]
+** descrizione: pass:none[mechanism for SASL authentication: "plain" for plain text password, "scram-sha-1" for SCRAM authentication with SHA-1 digest algorithm, "scram-sha-256" for SCRAM authentication with SHA-256 digest algorithm, "scram-sha-512" for SCRAM authentication with SHA-512 digest algorithm, "ecdsa-nist256p-challenge" for key-based challenge authentication, "external" for authentication using client side SSL certificate]
 ** tipo: intero
-** valori: plain, ecdsa-nist256p-challenge, external, dh-blowfish, dh-aes
+** valori: plain, scram-sha-1, scram-sha-256, scram-sha-512, ecdsa-nist256p-challenge, external
 ** valore predefinito: `+plain+`
 
 * [[option_irc.server_default.sasl_password]] *irc.server_default.sasl_password*
@@ -3345,7 +3413,7 @@
 ** valore predefinito: `+lightmagenta+`
 
 * [[option_script.look.columns]] *script.look.columns*
-** descrizione: pass:none[format of columns displayed in script buffer: following column identifiers are replaced by their value: %a=author, %d=description, %D=date added, %e=extension, %l=language, %L=license, %n=name with extension, %N=name, %r=requirements, %s=status, %t=tags, %u=date updated, %v=version, %V=version loaded, %w=min_weechat, %W=max_weechat)]
+** descrizione: pass:none[format of columns displayed in script buffer: following column identifiers are replaced by their values: %a=author, %d=description, %D=date added, %e=extension, %l=language, %L=license, %n=name with extension, %N=name, %r=requirements, %s=status, %t=tags, %u=date updated, %v=version, %V=version loaded, %w=min_weechat, %W=max_weechat)]
 ** tipo: stringa
 ** valori: qualsiasi stringa
 ** valore predefinito: `+"%s %n %V %v %u | %d | %t"+`

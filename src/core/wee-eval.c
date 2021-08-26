@@ -726,13 +726,64 @@ eval_string_if (const char *text, struct t_eval_context *eval_context)
 }
 
 /*
+ * Returns a random integer number.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+eval_string_random (const char *text)
+{
+    char *pos, *error, *tmp, result[128];
+    long min_number, max_number;
+
+    if (!text || !text[0])
+        goto error;
+
+    pos = strchr (text, ',');
+    if (!pos)
+        goto error;
+
+    tmp = strndup (text, pos - text);
+    if (!tmp)
+        goto error;
+    min_number = strtol (tmp, &error, 10);
+    if (!error || error[0])
+    {
+        free (tmp);
+        goto error;
+    }
+    free (tmp);
+
+    max_number = strtol (pos + 1, &error, 10);
+    if (!error || error[0])
+        goto error;
+
+    if (min_number > max_number)
+        goto error;
+    if (max_number - min_number > RAND_MAX)
+        goto error;
+
+    /*
+     * using modulo division on the random() value produces a biased result,
+     * but this is enough for our usage here
+     */
+    snprintf (result, sizeof (result),
+              "%ld", min_number + (random () % (max_number - min_number + 1)));
+    return strdup (result);
+
+error:
+    return strdup ("0");
+}
+
+/*
  * Translates text.
  *
  * Note: result must be freed after use.
  */
 
 char *
-eval_translate (const char *text)
+eval_string_translate (const char *text)
 {
     const char *ptr_string;
 
@@ -1053,11 +1104,13 @@ end:
  *  18. an environment variable (format: env:XXX)
  *  19. a ternary operator (format: if:condition?value_if_true:value_if_false)
  *  20. calculate result of an expression (format: calc:xxx)
- *  21. a translated string (format: translate:xxx)
- *  22. an option (format: file.section.option)
- *  23. a buffer local variable
- *  24. a pointer name from hashtable "pointers"
- *  25. a hdata variable (format: hdata.var1.var2 or hdata[list].var1.var2
+ *  21. a random integer number in the range from "min" to "max"
+ *      (format: random:min,max)
+ *  22. a translated string (format: translate:xxx)
+ *  23. an option (format: file.section.option)
+ *  24. a buffer local variable
+ *  25. a pointer name from hashtable "pointers"
+ *  26. a hdata variable (format: hdata.var1.var2 or hdata[list].var1.var2
  *                        or hdata[ptr].var1.var2 or hdata[ptr_name].var1.var2)
  *
  * See /help in WeeChat for examples.
@@ -1306,11 +1359,20 @@ eval_replace_vars_cb (void *data, const char *text)
     }
 
     /*
-     * 21. translated text
+     * 21. random number
+     */
+    if (strncmp (text, "random:", 7) == 0)
+    {
+        value = eval_string_random (text + 7);
+        goto end;
+    }
+
+    /*
+     * 22. translated text
      */
     if (strncmp (text, "translate:", 10) == 0)
     {
-        value = eval_translate (text + 10);
+        value = eval_string_translate (text + 10);
         goto end;
     }
 
@@ -1721,7 +1783,7 @@ eval_expression_condition (const char *expr,
 
     /*
      * evaluate sub-expressions between parentheses and replace them with their
-     * value
+     * values
      */
     while (expr2[0] == '(')
     {
@@ -1954,16 +2016,16 @@ end:
  *   >> ${window.buffer.number}
  *   == [2]
  *   >> buffer:${window.buffer.full_name}
- *   == [buffer:irc.freenode.#weechat]
+ *   == [buffer:irc.libera.#weechat]
  *   >> ${window.win_width}
  *   == [112]
  *   >> ${window.win_height}
  *   == [40]
  *
  * Examples of conditions:
- *   >> ${window.buffer.full_name} == irc.freenode.#weechat
+ *   >> ${window.buffer.full_name} == irc.libera.#weechat
  *   == [1]
- *   >> ${window.buffer.full_name} == irc.freenode.#test
+ *   >> ${window.buffer.full_name} == irc.libera.#test
  *   == [0]
  *   >> ${window.win_width} >= 30 && ${window.win_height} >= 20
  *   == [1]

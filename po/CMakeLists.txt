@@ -29,6 +29,7 @@ set(PO_FILES
   pt.po
   pt_BR.po
   ru.po
+  sr.po
   tr.po
 )
 
@@ -81,7 +82,7 @@ if(XGETTEXT_EXECUTABLE AND MSGMERGE_EXECUTABLE AND MSGFMT_EXECUTABLE)
     # Update .po files in source directory (if needed)
     add_custom_target(
       update-${pofile}
-      COMMAND ${MSGMERGE_EXECUTABLE} --quiet --update --backup=none ${CMAKE_CURRENT_SOURCE_DIR}/${pofile} ${POT_FILE_PATH}
+      COMMAND ${MSGMERGE_EXECUTABLE} --quiet --update --previous --backup=none ${CMAKE_CURRENT_SOURCE_DIR}/${pofile} ${POT_FILE_PATH}
       COMMENT "Updating ${polang}.po"
     )
     set(UPDATE_PO_TARGETS ${UPDATE_PO_TARGETS} update-${pofile})

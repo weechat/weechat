@@ -184,6 +184,10 @@ if(ENABLE_TRIGGER)
   add_subdirectory(trigger)
 endif()
 
+if(ENABLE_TYPING)
+  add_subdirectory(typing)
+endif()
+
 if(ENABLE_XFER)
   add_subdirectory(xfer)
 endif()

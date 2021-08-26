@@ -579,7 +579,7 @@ You can just disable bracketed paste mode:
 
 // TRANSLATION MISSING
 You can remove side bars (buflist and nicklist), change time format to display
-only hours and seconds, disable alignment of messages and set a char for nick
+only hours and minutes, disable alignment of messages and set a char for nick
 prefix/suffix:
 
 ----
@@ -831,8 +831,8 @@ Provare una stringa di priorità diversa (solo WeeChat ≥ 0.3.5), sostituendo
 /set irc.server.xxx.ssl_priorities "NORMAL:-VERS-TLS-ALL:+VERS-TLS1.0:+VERS-SSL3.0:%COMPAT"
 ----
 
-[[irc_ssl_freenode]]
-=== Come ci si può connettere al server freenode via SSL?
+[[irc_ssl_libera]]
+=== Come ci si può connettere al server libera via SSL?
 
 // TRANSLATION MISSING
 With WeeChat ≤ 3.1, set option _weechat.network.gnutls_ca_file_ to file with
@@ -856,9 +856,9 @@ pacchetto "ca-certificates").
 Impostare la porta del server, SSL, poi riconnettersi:
 
 ----
-/set irc.server.freenode.addresses "chat.freenode.net/7000"
-/set irc.server.freenode.ssl on
-/connect freenode
+/set irc.server.libera.addresses "irc.libera.chat/6697"
+/set irc.server.libera.ssl on
+/connect libera
 ----
 
 // TRANSLATION MISSING
@@ -884,15 +884,15 @@ Se il server supporta SASL, dovrebbe essere utilizzato invece di inviare il
 comando di autenticazione con nickserv, ad esempio:
 
 ----
-/set irc.server.freenode.sasl_username "mynick"
-/set irc.server.freenode.sasl_password "xxxxxxx"
+/set irc.server.libera.sasl_username "mynick"
+/set irc.server.libera.sasl_password "xxxxxxx"
 ----
 
 Se il server non supporta SASL, è possibile aggiungere un ritardo (tra il
 comando e l'ingresso nei canali):
 
 ----
-/set irc.server.freenode.command_delay 5
+/set irc.server.libera.command_delay 5
 ----
 
 // TRANSLATION MISSING
@@ -901,10 +901,10 @@ comando e l'ingresso nei canali):
 
 // TRANSLATION MISSING
 You can use the `/set` command to edit the list of autojoin channels,
-for example for the "freenode" server:
+for example for the "libera" server:
 
 ----
-/set irc.server.freenode.autojoin [TAB]
+/set irc.server.libera.autojoin [TAB]
 ----
 
 // TRANSLATION MISSING
@@ -1091,16 +1091,16 @@ _buffer_autoset.py_ script:
 ----
 
 For example, to permanently disable highlights from "mike" on #weechat
-on the IRC server freenode:
+on the IRC server libera:
 
 ----
-/buffer_autoset add irc.freenode.#weechat hotlist_max_level_nicks_add mike:2
+/buffer_autoset add irc.libera.#weechat hotlist_max_level_nicks_add mike:2
 ----
 
-To apply it to the entire freenode server instead:
+To apply it to the entire libera server instead:
 
 ----
-/buffer_autoset add irc.freenode hotlist_max_level_nicks_add mike:2
+/buffer_autoset add irc.libera hotlist_max_level_nicks_add mike:2
 ----
 
 For more examples, see `+/help buffer_autoset+`.
@@ -1291,10 +1291,10 @@ For example:
 
 ----
 /secure passphrase xxxxxxxxxx
-/secure set freenode_username username
-/secure set freenode_password xxxxxxxx
-/set irc.server.freenode.sasl_username "${sec.data.freenode_username}"
-/set irc.server.freenode.sasl_password "${sec.data.freenode_password}"
+/secure set libera_username username
+/secure set libera_password xxxxxxxx
+/set irc.server.libera.sasl_username "${sec.data.libera_username}"
+/set irc.server.libera.sasl_password "${sec.data.libera_password}"
 ----
 
 // TRANSLATION MISSING

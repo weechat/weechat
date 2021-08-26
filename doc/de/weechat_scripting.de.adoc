@@ -907,13 +907,13 @@ weechat.prnt("", "%sfalsche Anzahl an Argumenten" % weechat.prefix("error"))
 weechat.prnt("", "Text %sGeld auf Blau" % weechat.color("yellow,blue"))
 
 # sucht einen bestimmten Buffer und gibt dort einen Text aus
-# (der Name des Buffers muss folgendes Format besitzen Erweiterung.Name, Beispiel: "irc.freenode.#weechat")
-buffer = weechat.buffer_search("irc", "freenode.#weechat")
+# (der Name des Buffers muss folgendes Format besitzen Erweiterung.Name, Beispiel: "irc.libera.#weechat")
+buffer = weechat.buffer_search("irc", "libera.#weechat")
 weechat.prnt(buffer, "Nachricht im #weechat Channel")
 
 # die zweite Möglichkeit einen Buffer zu suchen (empfohlen!)
 # (bitte beachten Sie dass der Server- und Channelname durch ein Komma zu trennen sind)
-buffer = weechat.info_get("irc_buffer", "freenode,#weechat")
+buffer = weechat.info_get("irc_buffer", "libera,#weechat")
 weechat.prnt(buffer, "Nachricht im #weechat Channel")
 ----
 
@@ -935,7 +935,7 @@ Beispiele:
 weechat.command("", "/help")
 
 # sendet den Text "Hallo" in den IRC Channel #weechat (die Teilnehmer des Channels sehen diese Nachricht)
-buffer = weechat.info_get("irc_buffer", "freenode,#weechat")
+buffer = weechat.info_get("irc_buffer", "libera,#weechat")
 weechat.command(buffer, "Hallo")
 ----
 
@@ -1242,7 +1242,7 @@ xxx,irc_raw_in2_yyy::
 [source,python]
 ----
 def join_cb(data, signal, signal_data):
-    # Das Signal lautet: "freenode,irc_in2_join"
+    # Das Signal lautet: "libera,irc_in2_join"
     # signal_data enthält die IRC Nachricht, zum Beispiel: ":nick!user@host JOIN :#channel"
     server = signal.split(",")[0]
     msg = weechat.info_get_hashtable("irc_message_parse", {"message": signal_data})
@@ -1304,6 +1304,10 @@ Das Ergebnis ist eine Hashtabelle mit folgenden Schlüsseln
   Tags in der Nachricht (kann leer sein). |
   `+time=2015-06-27T16:40:35.000Z+`
 
+| tag_xxx | 3.3 |
+  Wert des Tags "xxx" ohne Escapezeichen (ein Schlüssel pro Tag). |
+  `+2015-06-27T16:40:35.000Z+`
+
 | message_without_tags | 0.4.0 |
   Die IRC Nachricht ohne Tags (wie eine Nachricht ohne Tags). |
   `+:nick!user@host PRIVMSG #weechat :hello!+`
@@ -1360,10 +1364,12 @@ Das Ergebnis ist eine Hashtabelle mit folgenden Schlüsseln
 ----
 dict = weechat.info_get_hashtable(
     "irc_message_parse",
-    {"message": "@time=2015-06-27T16:40:35.000Z :nick!user@host PRIVMSG #weechat :hello!"})
+    {"message": "@time=2015-06-27T16:40:35.000Z;tag2=value\\sspace :nick!user@host PRIVMSG #weechat :hello!"})
 
 # dict == {
-#     "tags": "time=2015-06-27T16:40:35.000Z",
+#     "tags": "time=2015-06-27T16:40:35.000Z;tag2=value\\sspace",
+#     "tag_time": "2015-06-27T16:40:35.000Z",
+#     "tag_tag2": "value space",
 #     "message_without_tags": ":nick!user@host PRIVMSG #weechat :hello!",
 #     "nick": "nick",
 #     "user": "user",
@@ -1372,10 +1378,10 @@ dict = weechat.info_get_hashtable(
 #     "channel": "#weechat",
 #     "arguments": "#weechat :hello!",
 #     "text": "hello!",
-#     "pos_command": "47",
-#     "pos_arguments": "55",
-#     "pos_channel": "55",
-#     "pos_text": "65",
+#     "pos_command": "65",
+#     "pos_arguments": "73",
+#     "pos_channel": "73",
+#     "pos_text": "83",
 # }
 ----
 

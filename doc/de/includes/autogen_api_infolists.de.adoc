@@ -18,17 +18,17 @@
 
 | guile | guile_script | Liste der Skripten | Skript Pointer (optional) | Name des Skriptes (Platzhalter "*" kann verwendet werden) (optional)
 
-| irc | irc_channel | Liste der Channels eines IRC-Servers | Channel Pointer (optional) | Server,Channel (Channel ist optional)
+| irc | irc_channel | Liste der Kanäle eines IRC-Servers | Pointer vom Kanal (optional) | Server,Kanal (Kanal ist optional)
 
 | irc | irc_color_weechat | Zuordnung der IRC Farbkodierung und der WeeChat Farbnamen | - | -
 
 | irc | irc_ignore | Liste von ignorierten IRCs | Ignore Pointer (optional) | -
 
-| irc | irc_modelist | Liste der Channel-Mode-Liste für einen IRC-Channel | Modelist Pointer (optional) | Server,Channel,Type (Type ist optional)
+| irc | irc_modelist | Liste der Kanalmoduslisten für einen IRC-Kanal | Modelist Pointer (optional) | Server,Channel,Type (Type ist optional)
 
-| irc | irc_modelist_item | Liste der Items in der Channel-Modeliste | Modelist Item Pointer (optional) | Server,Channel,Type,Nummer (Nummer ist optional)
+| irc | irc_modelist_item | Liste der Items in der Kanal-Modeliste | Modelist Item Pointer (optional) | Server,Channel,Type,Nummer (Nummer ist optional)
 
-| irc | irc_nick | Liste der Nicks im IRC-Channel | Nick Pointer (optional) | server,channel,nick (nick ist optional)
+| irc | irc_nick | Liste der Nicks im IRC-Kanal | Nick Pointer (optional) | server,channel,nick (nick ist optional)
 
 | irc | irc_notify | Liste mit Benachrichtigungen | Benachrichtigungspointer (optional) | Servername (Platzhalter "*" kann verwendet werden) (optional)
 

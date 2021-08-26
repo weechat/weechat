@@ -14,33 +14,36 @@ target: Servername
 ----
 
 [[command_irc_allchan]]
-* `+allchan+`: führt einen Befehl aus der an alle Channels gesendet wird, die mit einem Server verbunden sind
+* `+allchan+`: führt einen Befehl aus der an alle Kanäle gesendet wird, die mit einem Server verbunden sind
 
 ----
-/allchan  [-current] [-exclude=<channel>[,<channel>...]] <command>
-          [-current] -include=<channel>[,<channel>...] <command>
+/allchan  [-current] [-parted] [-exclude=<channel>[,<channel>...]] <command>
+          [-current] [-parted] -include=<channel>[,<channel>...] <command>
 
- -current: führt einen Befehl aus der an alle Channels des aktuellen Servers gesendet wird
- -exclude: dient zum Ausschluss ausgewählter Channels (Platzhalter "*" kann verwendet werden)
- -include: findet Anwendung für ausgewählte Channels (Platzhalter "*" kann verwendet werden)\n
+ -current: führt einen Befehl aus der an alle Kanäle des aktuellen Servers gesendet wird
+  -parted: wird nur bei vom Server getrennten Kanälen ausgeführt
+ -exclude: dient zum Ausschluss ausgewählter Kanäle (Platzhalter "*" kann verwendet werden)
+ -include: findet Anwendung für ausgewählte Kanäle (Platzhalter "*" kann verwendet werden)\n
   command: Befehl der ausgeführt werden soll
 
 Argumente und Befehl werden evaluiert (siehe /help eval), folgende Variablen können genutzt werden:
   $server             Name des Servers
-  $channel            Name des Channel
+  $channel            Name des Kanals
   $nick               Nickname der auf dem Server genutzt wird
   ${irc_server.xxx}   Variable xxx von Server
-  ${irc_channel.xxx}  Variable xxx von Channel
+  ${irc_channel.xxx}  Variable xxx von Kanal
 
 Beispiele:
-  führe den Befehl '/me Ich teste gerade etwas...' für alle Channels aus:
+  führe den Befehl '/me Ich teste gerade etwas...' für alle Kanäle aus:
     /allchan /me Ich teste gerade etwas...
-  schicke 'Hallo Welt' an jeden Channel, ausgenommen an den #weechat Channel:
+  schicke 'Hallo Welt' an jeden Kanal, ausgenommen an den #weechat Kanal:
     /allchan -exclude=#weechat Hallo Welt
-  schicke 'Hallo Welt' an jeden Channel, ausgenommen an den #weechat Channel und Channels die mit #linux beginnen:
+  schicke 'Hallo Welt' an jeden Kanal, ausgenommen an den #weechat Kanal und Kanäle die mit #linux beginnen:
     /allchan -exclude=#weechat,#linux* Hallo Welt
-  schickt den Text 'Hallo' an alle Channels die mit #linux beginnen:
+  schickt den Text 'Hallo' an alle Kanäle die mit #linux beginnen:
     /allchan -include=#linux* Hallo
+  schließt alle, vom Server getrennte, Kanäle.:
+    /allchan -parted /close
 ----
 
 [[command_irc_allpv]]
@@ -57,10 +60,10 @@ Beispiele:
 
 Argumente und Befehl werden evaluiert (siehe /help eval), folgende Variablen können genutzt werden:
   $server             Name des Servers
-  $channel            Name des Channel
+  $channel            Name des Kanals
   $nick               Nickname der auf dem Server genutzt wird
   ${irc_server.xxx}   Variable xxx von Server
-  ${irc_channel.xxx}  Variable xxx von Channel
+  ${irc_channel.xxx}  Variable xxx von Kanal
 
 Beispiele:
   führe den Befehl '/me Ich teste gerade etwas...' für alle privaten Buffer aus:
@@ -100,16 +103,36 @@ Beispiele:
     /allserv /whois $nick
 ----
 
+[[command_irc_auth]]
+* `+auth+`: authentifizieren mit SASL
+
+----
+/auth  [<username> <password>]
+
+username: SASL Username (Inhalt ist evaluiert, siehe /help eval; Serveroptionen werden mit ${irc_server.xxx} evaluiert und ${server} wird durch den Servernamen ersetzt)
+password: SASL-Passwort oder Pfad zur Datei mit privatem Schlüssel (Inhalt ist evaluiert, siehe /help eval; Serveroptionen werden mit ${irc_server.xxx} evaluiert und ${server} wird durch den Servernamen ersetzt)
+
+Wenn Benutzername und Kennwort nicht angegeben wurden, werden die Werte aus den Serveroptionen "sasl_username" und "sasl_password" (oder "sasl_key") verwendet.
+
+Beispiele:
+  authentifizieren Sie sich mit dem im Server definierten Benutzernamen/Passwort:
+    /auth
+  authentifizieren Sie sich mit einem anderen Benutzer:
+    /auth user2 password2
+  authentifizieren als anderer Benutzer mit Mechanismus ecdsa-nist256p-challenge:
+    /auth user2 ${weechat_config_dir}/ecdsa2.pem
+----
+
 [[command_irc_ban]]
 * `+ban+`: Nicknamen oder Hosts sperren/verbannen
 
 ----
 /ban  [<channel>] [<nick> [<nick>...]]
 
-channel: Name des Channel
+channel: Name des Kanals
    nick: Nick oder Host
 
-Ohne Angabe von Argumenten wird die Ban-Liste für den aktuellen Channel angezeigt.
+Ohne Angabe von Argumenten wird die Ban-Liste für den aktuellen Kanal angezeigt.
 ----
 
 [[command_irc_cap]]
@@ -129,9 +152,9 @@ Ohne Angabe von Argumenten wird die Ban-Liste für den aktuellen Channel angezei
 
 Ohne Angaben von Argumenten werden "ls" und "list" gesendet.
 
-Fähigkeiten die von WeeChat unterstützt werden: account-notify, away-notify, cap-notify, chghost, extended-join, invite-notify, multi-prefix, server-time, userhost-in-names.
+Fähigkeiten die von WeeChat unterstützt werden: account-notify, away-notify, cap-notify, chghost, extended-join, invite-notify, message-tags, multi-prefix, server-time, setname, userhost-in-names..
 
-Fähigkeiten die standardmäßig genutzt werden sollen, können mit der Option  irc.server_default.capabilities gesetzt werden (oder individuell für jeden Server mit der Option irc.server.xxx.capabilities).
+Fähigkeiten die standardmäßig genutzt werden sollen, können mit der Option irc.server_default.capabilities gesetzt werden (oder individuell für jeden Server mit der Option irc.server.xxx.capabilities).
 
 Beispiele:
    /cap
@@ -161,7 +184,7 @@ Beispiele:
 Um eine Verbindung zum Server, oder Verbindungsversuche, zu beenden wird der Befehl /disconnect verwendet.
 
 Beispiele:
-  /connect freenode
+  /connect libera
   /connect irc.oftc.net/6667
   /connect irc6.oftc.net/6667 -ipv6
   /connect irc6.oftc.net/6697 -ipv6 -ssl
@@ -177,7 +200,7 @@ Beispiele:
 /ctcp  [-server <server>] <target>[,<target>...] <type> [<arguments>]
 
    server: an diesen Server senden (interner Servername)
-   target: Nick- oder Channelname an welchen eine CTCP-Nachricht geschickt werden soll ('*' = aktuellen Channel)
+   target: Nick- oder Kanalname an welchen eine CTCP-Nachricht geschickt werden soll ('*' = aktueller Kanal)
      type: CTCP-Nachricht (Beispiele: "version", "ping", usw.)
 arguments: Argumente für CTCP
 
@@ -188,12 +211,12 @@ Beispiele:
 ----
 
 [[command_irc_cycle]]
-* `+cycle+`: Einen Channel verlassen und wieder betreten
+* `+cycle+`: Einen Kanal verlassen und wieder betreten
 
 ----
 /cycle  [<channel>[,<channel>...]] [<message>]
 
-channel: Name des Channels
+channel: Name des Kanals
 message: Abschiedsnachricht (wird anderen Usern angezeigt)
 ----
 
@@ -222,7 +245,7 @@ Beispiel:
            * -yes
 
 nick: Nick oder Maske (Platzhalter "*" kann verwendet werden)
-   *: entzieht allen Nicks im Channel den half-operator-Status, ausgenommen sich selber
+   *: entzieht allen Nicks im Kanal den half-operator-Status, ausgenommen sich selber
 ----
 
 [[command_irc_deop]]
@@ -233,7 +256,7 @@ nick: Nick oder Maske (Platzhalter "*" kann verwendet werden)
        * -yes
 
 nick: Nick oder Maske (Platzhalter "*" kann verwendet werden)
-   *: entzieht allen Nicks im Channel den Operator-Status, ausgenommen sich selber
+   *: entzieht allen Nicks im Kanal den Operator-Status, ausgenommen sich selber
 ----
 
 [[command_irc_devoice]]
@@ -244,7 +267,7 @@ nick: Nick oder Maske (Platzhalter "*" kann verwendet werden)
           * -yes
 
 nick: Nick oder Maske (Platzhalter "*" kann verwendet werden)
-   *: entzieht allen Nicks im Channel den voice-Status
+   *: entzieht allen Nicks im Kanal den voice-Status
 ----
 
 [[command_irc_die]]
@@ -276,11 +299,11 @@ target: Servername
          * -yes
 
 nick: Nick oder Maske (Platzhalter "*" kann verwendet werden)
-   *: vergibt an alle Nicks im Channel den half-operator-Status
+   *: vergibt an alle Nicks im Kanal den half-operator-Status
 ----
 
 [[command_irc_ignore]]
-* `+ignore+`: Ignoriert Nicks/Hosts von Channels oder Servern
+* `+ignore+`: Ignoriert Nicks/Hosts von Kanälen oder Servern
 
 ----
 /ignore  list
@@ -294,17 +317,17 @@ nick: Nick oder Maske (Platzhalter "*" kann verwendet werden)
    number: Nummer der Ignorierung die entfernt werden soll (nutze "list" um den entsprechenden Eintrag zu finden)
      -all: entfernt alle Einträge
    server: interner Name des Server auf welchem die Ignorierung statt finden soll
-  channel: Name des Channel, in dem die Ignorierung statt finden soll
+  channel: Name des Kanals, in dem die Ignorierung statt finden soll
 
 Hinweis: Um zwischen Groß-und Kleinschreibung zu unterscheiden muss am Wortanfang "(?-i)" genutzt werden.
 
 Beispiele:
   ignoriert den Nick "toto" global:
     /ignore add toto
-  ignoriert den Host "toto@domain.com" auf dem freenode Server:
-    /ignore add toto@domain.com freenode
-  ignoriert den Host "toto*@*.domain.com" im Chat freenode/#weechat:
-    /ignore add toto*@*.domain.com freenode #weechat
+  ignoriert den Host "toto@domain.com" auf dem libera Server:
+    /ignore add toto@domain.com libera
+  ignoriert den Host "toto*@*.domain.com" im Chat libera/#weechat:
+    /ignore add toto*@*.domain.com libera #weechat
 ----
 
 [[command_irc_info]]
@@ -317,13 +340,13 @@ target: Servername
 ----
 
 [[command_irc_invite]]
-* `+invite+`: Eine Person in einen Channel einladen
+* `+invite+`: Eine Person in einen Kanal einladen
 
 ----
 /invite  <nick> [<nick>...] [<channel>]
 
    nick: Nickname
-channel: Name des Channels
+channel: Name des Kanals
 ----
 
 [[command_irc_ison]]
@@ -336,43 +359,43 @@ nick: Nickname
 ----
 
 [[command_irc_join]]
-* `+join+`: einen Channel betreten
+* `+join+`: einen Kanal betreten
 
 ----
 /join  [-noswitch] [-server <server>] [<channel1>[,<channel2>...]] [<key1>[,<key2>...]]
 
--noswitch: es wird nicht zu dem angegebenen Channel gewechselt
+-noswitch: es wird nicht zu dem angegebenen Kanal gewechselt
    server: an angegebenen Server (interner Name) senden
-  channel: Name des Channels, der betreten werden soll
-      key: Zugriffsschlüssel für einen Channel (Channel, die einen Zugriffsschlüssel benötigen, müssen zuerst aufgeführt werden)
+  channel: Name des Kanals, der betreten werden soll
+      key: Zugriffsschlüssel für einen Kanal (Kanäle, die einen Zugriffsschlüssel benötigen, müssen zuerst aufgeführt werden)
 
 Beispiele:
   /join #weechat
-  /join #geschützter_Channel,#weechat Zugriffsschlüssel
-  /join -server freenode #weechat
+  /join #geschützter_Kanal,#weechat Zugriffsschlüssel
+  /join -server libera #weechat
   /join -noswitch #weechat
 ----
 
 [[command_irc_kick]]
-* `+kick+`: wirft einen User aus einem Channel
+* `+kick+`: wirft einen User aus einem Kanal
 
 ----
 /kick  [<channel>] <nick> [<reason>]
 
-channel: Channelname
+channel: Kanalname
    nick: Nick der rausgeworfen werden soll
- reason: Begründung für den Rauswurf (Variablen die genutzt werden können: $nick, $channel und $server)
+ reason: Begründung für den Rauswurf (evaluiert, siehe /help eval; besondere Variablen ${nick} (eigener Nick), ${target} (betroffener Nick), ${channel} und ${server}, werden durch den entsprechenden Wert ersetzt)
 ----
 
 [[command_irc_kickban]]
-* `+kickban+`: wirft einen User aus einem Channel und sein Host kommt auf die Bannliste
+* `+kickban+`: wirft einen User aus einem Kanal und sein Host kommt auf die Bannliste
 
 ----
 /kickban  [<channel>] <nick> [<reason>]
 
-channel: Channelname
+channel: Kanalname
    nick: Nickname der rausgeworfen und gebannt werden soll
- reason: Begründung weshalb der User rausgeworfen wurde (Variablen die genutzt werden können: $nick, $channel und $server)
+ reason: Begründung für den Rauswurf (evaluiert, siehe /help eval; besondere Variablen ${nick} (eigener Nick), ${target} (betroffener Nick), ${channel} und ${server}, werden durch den entsprechenden Wert ersetzt)
 
 Es ist möglich kick/ban mittels einer Maske auszuführen. Der Nick wird aus der Maske heraus gefiltert und durch "*" ersetzt.
 
@@ -402,22 +425,22 @@ server_mask: die aufzulistenden Server sollen diesem Muster entsprechen
 ----
 
 [[command_irc_list]]
-* `+list+`: Channels mit ihrem Thema auflisten
+* `+list+`: Kanäle und deren Themen auflisten
 
 ----
 /list  [-server <server>] [-re <regex>] [<channel>[,<channel>...]] [<target>]
 
  server: an diesen Server senden (interner Name)
  regexp: erweiterter regulärer POSIX Ausdruck, der auf die Ausgabe angewendet werden soll (zwischen Groß- und Kleinschreibung wird nicht unterschieden. Um zwischen Groß- und Kleinschreibung zu unterscheiden muss zu Beginn "(?-i)" genutzt werden)
-channel: aufzulistender Channel
+channel: aufzulistender Kanal
  target: Servername
 
 Beispiele:
-  listet alle Channels des Servers auf (dies kann bei großen Netzwerken sehr lange dauern):
+  listet alle Kanäle des Servers auf (dies kann bei großen Netzwerken sehr lange dauern):
     /list
-  listet den Channel #weechat auf:
+  listet den Kanal #weechat auf:
     /list #weechat
-  listet alle Channels auf die mit "#weechat" beginnen (dies kann bei großen Netzwerken sehr lange dauern):
+  listet alle Kanäle auf die mit "#weechat" beginnen (dies kann bei großen Netzwerken sehr lange dauern):
     /list -re #weechat.*
 ----
 
@@ -438,7 +461,7 @@ target: Server, der die Anfrage weiterleiten soll
 ----
 
 [[command_irc_me]]
-* `+me+`: eine CTCP ACTION an den aktuellen Channel senden
+* `+me+`: eine CTCP ACTION an den aktuellen Kanal senden
 
 ----
 /me  <message>
@@ -447,26 +470,26 @@ message: zu sendende Nachricht
 ----
 
 [[command_irc_mode]]
-* `+mode+`: Eigenschaften eines Channel oder von einem User ändern
+* `+mode+`: Eigenschaften eines Kanals oder von einem User ändern
 
 ----
 /mode  [<channel>] [+|-]o|p|s|i|t|n|m|l|b|e|v|k [<arguments>]
        <nick> [+|-]i|s|w|o
 
-Channel-Eigenschaften:
-  channel: zu ändernder Channel (standardmäßig der erste Channel)
+Kanal-Eigenschaften:
+  channel: zu ändernder Kanal (standardmäßig der erste Kanal)
   o: vergibt/entzieht Operator Privilegien
-  p: privater Channel
-  s: geheimer Channel
-  i: geschlossener Channel (Zutritt nur mit Einladung)
+  p: privater Kanal
+  s: geheimer Kanal
+  i: geschlossener Kanal (Zutritt nur mit Einladung)
   t: nur Operatoren dürfen das Thema setzen
-  n: keine Nachrichten von außerhalb des Channels zulassen
-  m: moderierter Channel (schreiben nur mit Voice)
-  l: maximale Anzahl an Usern im Channel festlegen
+  n: keine Nachrichten von außerhalb des Kanals zulassen
+  m: moderierter Kanal (schreiben nur mit Voice)
+  l: maximale Anzahl an Usern im Kanal festlegen
   b: Bannmaske für zu sperrende User (in nick!ident@host-Form)
   e: legt Ausnahmemaske fest
-  v: vergibt/entzieht Schreibrechte (voice) in moderierten Channels
-  k: legt ein Passwort für den Channel fest
+  v: vergibt/entzieht Schreibrechte (voice) in moderierten Kanälen
+  k: legt ein Passwort für den Kanal fest
 User-Eigenschaften:
   nick: zu ändernder Nickname
   i: User als unsichtbar kennzeichnen
@@ -493,23 +516,23 @@ target: Servername
 ----
 
 [[command_irc_msg]]
-* `+msg+`: Nachricht an Nick/Channel verschicken
+* `+msg+`: Nachricht an Nick/Kanal verschicken
 
 ----
 /msg  [-server <server>] <target>[,<target>...] <text>
 
 server: schicke an diesen Server (interner Servername)
-target: Nick oder Channel (darf eine Maske sein, '*' = aktueller Channel)
+target: Nick oder Kanal (darf eine Maske sein, '*' = aktueller c)
   text: zu sendender Text
 ----
 
 [[command_irc_names]]
-* `+names+`: Nicknamen in Channels auflisten
+* `+names+`: Nicknamen des Kanals auflisten
 
 ----
 /names  [<channel>[,<channel>...]]
 
-channel: Name des Channels
+channel: Name des Kanals
 ----
 
 [[command_irc_nick]]
@@ -529,7 +552,7 @@ nick: neuer Nickname
 /notice  [-server <server>] <target> <text>
 
 server: an diesen Server senden (interner Name)
-target: Nick- oder Channelname
+target: Nick- oder Kanalname
   text: zu sendender Text
 ----
 
@@ -552,21 +575,21 @@ Ohne Angabe von Argumenten werden alle Benachrichtigungen für den aktuellen Ser
 Beispiele:
   Benachrichtigung falls sich "toto" am aktuellen Server an- oder abmeldet:
     /notify add toto
-  Benachrichtigung falls sich "toto" am freenode Server an- oder abmeldet:
-    /notify add toto freenode
-  Benachrichtigung falls "toto" den Befehl away am freenode Server nutzt:
-    /notify add toto freenode -away
+  Benachrichtigung falls sich "toto" am libera Server an- oder abmeldet:
+    /notify add toto libera
+  Benachrichtigung falls "toto" den Befehl away am libera Server nutzt:
+    /notify add toto libera -away
 ----
 
 [[command_irc_op]]
-* `+op+`: Channel-Operator Status an Nicknamen vergeben
+* `+op+`: Status des Kanal-Operator an Nicknamen vergeben
 
 ----
 /op  <nick> [<nick>...]
      * -yes
 
 nick: Nick oder Maske (Platzhalter "*" kann verwendet werden)
-   *: vergibt an alle Nicks im Channel den Operator-Status
+   *: vergibt an alle Nicks im Kanal den Operator-Status
 ----
 
 [[command_irc_oper]]
@@ -580,12 +603,12 @@ password: Passwort
 ----
 
 [[command_irc_part]]
-* `+part+`: Einen Channel verlassen
+* `+part+`: Einen Kanal verlassen
 
 ----
 /part  [<channel>[,<channel>...]] [<message>]
 
-channel: Name des Channels welcher verlassen werden soll
+channel: Name des Kanals welcher verlassen werden soll
 message: Abschiedsnachricht (wird anderen Usern angezeigt)
 ----
 
@@ -622,15 +645,15 @@ target: Nickname
 ----
 
 [[command_irc_quiet]]
-* `+quiet+`: Nicks oder Hosts das Wort entziehen (User können im Channel erst schreiben, wenn sie "+v" oder höher besitzen)
+* `+quiet+`: Nicks oder Hosts das Wort entziehen (User können im Kanal erst schreiben, wenn sie "+v" oder höher besitzen)
 
 ----
 /quiet  [<channel>] [<nick> [<nick>...]]
 
-channel: Name des Channel
+channel: Name des Kanals
    nick: Nick oder Host
 
-Ohne Angabe von Argumenten wird die Quiet-Liste für den aktuellen Channel angezeigt.
+Ohne Angabe von Argumenten wird die Quiet-Liste für den aktuellen Kanal angezeigt.
 ----
 
 [[command_irc_quote]]
@@ -652,7 +675,7 @@ data: unbearbeitete (RAW) Daten die gesendet werden sollen
 
  server: Servername zu welchem neu verbunden werden soll (interner Name)
    -all: mit allen Servern neu verbinden
--nojoin: Channels werden nicht betreten (auch falls autojoin für diesen Server aktiviert ist)
+-nojoin: Kanäle werden nicht betreten (auch falls autojoin für diesen Server aktiviert ist)
 -switch: wechselt zur nächsten Server-Adresse
 ----
 
@@ -666,12 +689,12 @@ option: zusätzliche Einstellung, die von manchen Servern berücksichtigt wird
 ----
 
 [[command_irc_remove]]
-* `+remove+`: zwingt einen User einen Channel zu verlassen
+* `+remove+`: zwingt einen User einen Kanal zu verlassen
 
 ----
 /remove  [<channel>] <nick> [<reason>]
 
-channel: Channelname
+channel: Kanalname
    nick: Nick der rausgeworfen werden soll
  reason: Begründung für den Rauswurf (Variablen die genutzt werden können: $nick, $channel und $server)
 ----
@@ -686,23 +709,23 @@ target: Servername
 ----
 
 [[command_irc_sajoin]]
-* `+sajoin+`: fordert einen User auf einen oder mehrere Channel zu betreten
+* `+sajoin+`: fordert einen User auf einen oder mehrere Kanäle zu betreten
 
 ----
 /sajoin  <nick> <channel>[,<channel>...]
 
    nick: Nickname
-channel: Name des Channels
+channel: Name des Kanals
 ----
 
 [[command_irc_samode]]
-* `+samode+`: ändert den Modus des Channels ohne das Operator-Privilegien vorliegen
+* `+samode+`: ändert den Modus des Kanals ohne das Operator-Privilegien vorliegen
 
 ----
 /samode  [<channel>] <mode>
 
-Channel: Name des Channel
-   Mode: neuer Modus für Channel
+Channel: Name des Kanals
+   Mode: neuer Modus für Kanal
 ----
 
 [[command_irc_sanick]]
@@ -716,13 +739,13 @@ new_nick: neuer Nickname
 ----
 
 [[command_irc_sapart]]
-* `+sapart+`: zwingt einen User den oder die Channel(s) zu verlassen
+* `+sapart+`: zwingt einen User den oder die Kanäle zu verlassen
 
 ----
 /sapart  <nick> <channel>[,<channel>...]
 
    nick: Nickname
-channel: Name des Channels
+channel: Name des Kanals
 ----
 
 [[command_irc_saquit]]
@@ -775,16 +798,16 @@ nooption: stellt die Boolean Einstellung auf 'off' (Beispiel: -nossl)
 
 Beispiele:
   /server listfull
-  /server add freenode chat.freenode.net
-  /server add freenode chat.freenode.net/6697 -ssl -autoconnect
+  /server add libera irc.libera.chat
+  /server add libera irc.libera.chat/6697 -ssl -autoconnect
   /server add chatspike irc.chatspike.net/6667,irc.duckspike.net/6667
-  /server copy freenode freenode-test
-  /server rename freenode-test freenode2
-  /server reorder freenode2 freenode
-  /server del freenode
+  /server copy libera libera-test
+  /server rename libera-test libera2
+  /server reorder libera2 libera
+  /server del libera
   /server deloutq
   /server raw
-  /server raw s:freenode
+  /server raw s:libera
   /server raw c:${recv} && ${command}==PRIVMSG && ${nick}==foo
 ----
 
@@ -806,6 +829,15 @@ distribution: Sichtbarkeit des Services
 
 mask: nur zutreffende Services auflisten
 type: nur Services von diesem Typ auflisten
+----
+
+[[command_irc_setname]]
+* `+setname+`: setze Realnamen
+
+----
+/setname  <Realname>
+
+realname: neuer Realname
 ----
 
 [[command_irc_squery]]
@@ -846,7 +878,7 @@ target: Name des Servers
 
    user: Benutzername
  target: Servername
-channel: Channelname
+channel: Kanalname
 ----
 
 [[command_irc_time]]
@@ -859,14 +891,14 @@ target: Zeit des angegebenen Servers abfragen
 ----
 
 [[command_irc_topic]]
-* `+topic+`: Thema des Channels abfragen/setzen
+* `+topic+`: Thema des Kanals abfragen/setzen
 
 ----
 /topic  [<channel>] [<topic>|-delete]
 
-channel: Name des Channels
-  topic: neues Thema für den Channel
--delete: entfernt das Thema des Channels
+channel: Name des Kanals
+  topic: neues Thema für den Kanal
+-delete: entfernt das Thema des Kanals
 ----
 
 [[command_irc_trace]]
@@ -884,7 +916,7 @@ target: Servername
 ----
 /unban  [<channel>] <nick>|<number> [<nick>|<number>...]
 
-channel: Name des Channel
+channel: Name des Kanals
    nick: Nick oder Host
  number: ban Nummer (wird beim Befehl /ban angezeigt)
 ----
@@ -895,7 +927,7 @@ channel: Name des Channel
 ----
 /unquiet  [<channel>] <nick>|<number> [<nick>|<number>...]
 
-channel: Name des Channel
+channel: Name des Kanals
    nick: Nick oder Host
  number: Quiet-Nummer (wird beim Befehl /quiet angezeigt)
 ----
@@ -936,16 +968,16 @@ target: Servername
         * -yes
 
 nick: Nick oder Maske (Platzhalter "*" kann verwendet werden)
-   *: vergibt an alle Nicks im Channel den voice-Status
+   *: vergibt an alle Nicks im Kanal den voice-Status
 ----
 
 [[command_irc_wallchops]]
-* `+wallchops+`: Nachricht an Channel-Operator verschicken
+* `+wallchops+`: Nachricht an Kanal-Operator verschicken
 
 ----
 /wallchops  [<channel>] <text>
 
-channel: Name des Channel
+channel: Name des Kanals
    text: Text der versendet werden soll
 ----
 
@@ -978,7 +1010,7 @@ target: Name des Servers (interner Servername)
   nick: Nick, welcher abgefragt werden soll (es kann auch eine Maske genutzt werden)
 
 Ohne Angabe von Argumenten, nutzt /whois folgende Regel:
-- den eigenen Nick, falls es sich um einen Server/Channel Buffer handelt
+- den eigenen Nick, falls es sich um einen Server/Kanal-Buffer handelt
 - den Nick des Gesprächspartners, falls es sich um einen privaten Buffer handelt.
 
 Sollte die Einstellung irc.network.whois_double_nick aktiviert sein dann wird ein Nick zweimal verwendet (sofern der Nick nur einmal angegeben wurde), um die Idle-Zeit zu erhalten.
@@ -1271,7 +1303,7 @@ Beispiele:
 /debug  list
         set <plugin> <level>
         dump [<plugin>]
-        buffer|color|infolists|memory|tags|term|windows
+        buffer|color|infolists|libs|certs|memory|tags|term|windows
         mouse|cursor [verbose]
         hdata [free]
         time <command>
@@ -1289,10 +1321,11 @@ Beispiele:
     hooks: zeigt die aktiven Hooks an
 infolists: zeigt Information über die Infolists an
      libs: zeigt an welche externen Bibliotheken verwendet werden
+    certs: gibt die Anzahl geladener vertrauenswürdiger Zertifizierungsstellen aus
    memory: gibt Informationen über den genutzten Speicher aus
     mouse: schaltet den debug-Modus für den Maus-Modus ein/aus
      tags: zeigt für jede einzelne Zeile die dazugehörigen Schlagwörter an
-     term: gibt Informationen über das Terminal und verfügbare Farben aus
+     term: zeigt Informationen über das Terminal an
   windows: zeigt die Fensterstruktur an
      time: misst die Zeit um einen Befehl auszuführen oder um einen Text in den aktuellen Buffer zu senden
 ----
@@ -1304,82 +1337,83 @@ infolists: zeigt Information über die Infolists an
 /eval  [-n|-s] [-d] <expression>
        [-n] [-d [-d]] -c <expression1> <operator> <expression2>
 
-        -n: display result without sending it to buffer (debug mode)
-        -s: split expression before evaluating it (many commands can be separated by semicolons)
-        -d: display debug output after evaluation (with two -d: more verbose debug)
-        -c: evaluate as condition: use operators and parentheses, return a boolean value ("0" or "1")
-expression: expression to evaluate, variables with format ${variable} are replaced (see below); many commands can be separated by semicolons
-  operator: a logical or comparison operator:
-            - logical operators:
-                &&   boolean "and"
-                ||   boolean "or"
-            - comparison operators:
-                ==   equal
-                !=   not equal
-                <=   less or equal
-                <    less
-                >=   greater or equal
-                >    greater
-                =~   is matching POSIX extended regex
-                !~   is NOT matching POSIX extended regex
-                ==*  is matching mask, case sensitive (wildcard "*" is allowed)
-                !!*  is NOT matching mask, case sensitive (wildcard "*" is allowed)
-                =*   is matching mask, case insensitive (wildcard "*" is allowed)
-                !*   is NOT matching mask, case insensitive (wildcard "*" is allowed)
-                ==-  is included, case sensitive
-                !!-  is NOT included, case sensitive
-                =-   is included, case insensitive
-                !-   is NOT included, case insensitive
+        -n: gibt das Ergebnis aus, ohne dass dieses in den Buffer gesendet wird (debug Modus)
+        -s: teilt Ausdrücke, bevor sie evaluiert werden (mehrere Befehle können durch Semikolon getrennt werden)
+        -d: eine Debug-Ausgabe nach Auswertung anzeigen (Nutzung von zwei -d: ausführliche Debug-Ausgabe)
+        -c: Auswertung als Bedingung: nutzt Operatoren und runde Klammern, Rückgabewert als Boolean-Wert ("0" oder "1")
+expression: Ausdruck welcher verarbeitet werden soll. Variablen im Format ${variable} werden ersetzt (siehe unten); mehrere Befehle werden durch ein Semikolon voneinander getrennt
+  operator: ein logischer oder vergleichender Operand:
+            - logische Operanden:
+                &&  boolean "und"
+                ||  boolean "oder"
+            - vergleichende Operanden:
+                ==  gleich
+                !=  ungleich
+                <=  kleiner oder gleich
+                <   kleiner
+                >=  größer oder gleich
+                >   größer
+                =~  stimmt mit regulärem POSIX Ausdruck überein
+                !~  stimmt NICHT mit regulärem POSIX Ausdruck überein
+                ==*  stimmt mit Maske überein (Platzhalter "*" ist erlaubt)
+                !!*  stimmt mit Maske NICHT überein (Platzhalter "*" ist erlaubt)
+                =*   stimmt mit Maske überein, Groß- und Kleinschreibung wird nicht beachtet (Platzhalter "*" ist erlaubt)
+                !*   stimmt mit Maske NICHT überein, Groß- und Kleinschreibung wird nicht beachtet (Platzhalter "*" ist erlaubt)
+                ==-  ist enthalten, Groß- und Kleinschreibung wird beachtet
+                !!-  ist NICHT enthalten, Groß- und Kleinschreibung wird beachtet
+                =-   ist enthalten, Groß- und Kleinschreibung wird nicht beachtet
+                !-   ist NICHT enthalten, Groß- und Kleinschreibung wird nicht beachtet
 
-An expression is considered as "true" if it is not NULL, not empty, and different from "0".
-The comparison is made using floating point numbers if the two expressions are valid numbers, with one of the following formats:
-  - integer (examples: 5, -7)
-  - floating point number (examples: 5.2, -7.5, 2.83e-2)
-  - hexadecimal number (examples: 0xA3, -0xA3)
-To force a string comparison, you can add double quotes around each expression, for example:
+Ein Ausdruck gilt als "wahr" sofern das Ergebnis weder NULL, nicht leer und von "0" abweichend ist.
+Für einen Vergleich werden Fließkommazahlen genutzt, insofern es sich bei beiden Ausdrücken um gültige Zahlen handelt, folgende Formate werden unterstützt:
+  - Integer (Beispiele: 5, -7)
+  - Fließkommazahl (Beispiele: 5.2, -7.5, 2.83e-2)
+  - hexadezimale Zahl (Beispiele: 0xA3, -0xA3)
+Um einen Vergleich zwischen zwei Zeichenketten zu erzwingen, müssen die Ausdrücke in Anführungszeichen gesetzt werden, zum Beispiel:
   50 > 100      ==> 0
   "50" > "100"  ==> 1
 
-Some variables are replaced in expression, using the format ${variable}, variable can be, by order of priority:
-  1. the string itself without evaluation (format: "raw:xxx")
-  2. an evaluated sub-string (format: "eval:xxx")
-  3. an evaluated condition (format: "eval_cond:xxx")
-  4. a string with escaped chars (format: "esc:xxx" or "\xxx")
-  5. a string with chars to hide (format: "hide:char,string")
-  6. a string with max chars (format: "cut:max,suffix,string" or "cut:+max,suffix,string")
-     or max chars displayed on screen (format: "cutscr:max,suffix,string" or "cutscr:+max,suffix,string")
-  7. a reversed string (format: "rev:xxx" or "revscr:xxx")
-  8. a repeated string (format: "repeat:count,string")
-  9. length of a string (format: "length:xxx" or "lengthscr:xxx")
-  10. a color (format: "color:xxx", see "Plugin API reference", function "color")
-  11. a modifier (format: "modifier:name,data,string")
-  12. an info (format: "info:name,arguments", arguments are optional)
-  13. a base 16/32/64 encoded/decoded string (format: "base_encode:base,xxx" or "base_decode:base,xxx")
-  14. current date/time (format: "date" or "date:format")
-  15. an environment variable (format: "env:XXX")
-  16. a ternary operator (format: "if:condition?value_if_true:value_if_false")
-  17. result of an expression with parentheses and operators + - * / // % ** (format: "calc:xxx")
-  18. a translated string (format: "translate:xxx")
-  19. an option (format: "file.section.option")
-  20. a local variable in buffer
-  21. a hdata name/variable (the value is automatically converted to string), by default "window" and "buffer" point to current window/buffer.
-Format for hdata can be one of following:
-  hdata.var1.var2...: start with a hdata (pointer must be known), and ask variables one after one (other hdata can be followed)
-  hdata[list].var1.var2...: start with a hdata using a list/pointer/pointer name, for example:
-    ${buffer[gui_buffers].full_name}: full name of first buffer in linked list of buffers
-    ${plugin[weechat_plugins].name}: name of first plugin in linked list of plugins
-  hdata[pointer].var1.var2...: start with a hdata using a pointer, for example:
-    ${buffer[0x1234abcd].full_name}: full name of the buffer with this pointer (can be used in triggers)
-    ${buffer[my_pointer].full_name}: full name of the buffer with this pointer name (can be used in triggers)
-For name of hdata and variables, please look at "Plugin API reference", function "weechat_hdata_get".
+Einige Variablen werden im Ausdruck mittels der Formatierung ${variable} ersetzt. Mögliche Variablen sind, nach Reihenfolge ihrer Priorität:
+  1. die Zeichenfolge selbst ohne Auswertung (Format: "raw:xxx")\n
+  2. eine evaluierte Teilzeichenkette (Format: "eval:xxx")
+  3. eine evaluierte Bedingung (Format: "eval_cond:xxx")
+  4. eine Zeichenkette mit Escapesequenzen (Format: "esc:xxx" oder "\xxx")
+  5. Zeichen, die in einer Zeichenkette nicht dargestellt werden sollen (Format: "hide:Zeichen,Zeichenkette")
+  6. eine Zeichenkette mit einer maximalen Anzahl an Zeichen (Format: "cut:max,suffix,string" oder "cut:+max,suffix,string")
+     oder maximale Anzahl an Zeichen die auf dem Bildschirm angezeigt werden sollen (Format: "cutscr:Max,Suffix,Zeichenkette oder "cutscr:+Max,Suffix,Zeichenkette")
+  7. eine Zeichenkette umkehren (Format: "rev:xxx" oder "revscr:xxx")
+  8. eine Zeichenkette wiederholen (Format: "repeat:Anzahl,Zeichenkette")
+  9. Länge einer Zeichenkette (Format: "length:xxx" oder "lengthscr:xxx")
+  10. eine Farbe (Format: "color:xxx", siehe "Anleitung für API Erweiterung", Funktion "color")
+  11. zum modifizieren (Format: "modifier:name,data,string")
+  12. eine Info (Format: "Info:Name,Argumente", Argumente sind optional)
+  13. eine Basis 16/32/64 kodierte / dekodierte Zeichenfolge (Format: "base_encode:base,xxx" oder "base_decode:base,xxx")
+  14. aktuelles Datum/Uhrzeit (Format: "date" oder "date:format")
+  15. eine Umgebungsvariable (Format: "env:XXX")
+  16. ein Dreifachoperand (Format: "if:Bedingung?Wert_falls_wahr:Wert_falls_unwahr")
+  17. Ergebnis eines Ausdrucks mit Klammern und Operatoren + - * / // % ** (Format: "calc:xxx")
+  19. eine übersetzte Zeichenkette (Format: "translate:xxx")
+  18. eine zufällige ganze Zahl (Format: "random:min,max")
+  20. eine Option (Format: "file.section.option")
+  21. eine lokale Variable eines Buffers
+  22. ein(e) hdata - Name/Variable (der Wert wird automatisch in eine Zeichenkette konvertiert), standardmäßig wird für "window" und "buffer" das aktuelle Fenster/Buffer verwendet.
+Das Format für hdata kann wie folgt aufgebaut sein:
+  hdata.var1.var2...: startet mit hdata (der Pointer muss bekannt sein) und fragt eine Variable nach der anderen ab (weitere hdata können folgen)
+  hdata[list].var1.var2...: startet hdata mittels einer Liste, zum Beispiel:
+    ${buffer[gui_buffers].full_name}: der vollständige Name des ersten Buffers, in der verknüpften Liste aller Buffer
+    ${plugin[weechat_plugins].name}: Name der ersten Erweiterung, in der verknüpften Liste aller Erweiterungen
+  hdata[pointer].var1.var2...: startet hdata mittels einem Pointer, zum Beispiel:
+    ${buffer[0x1234abcd].full_name}: vollständiger Name eines Buffers und des dazugehörigen Pointers (kann in triggern benutzt werden)
+    ${buffer[my_pointer].full_name}: vollständiger Name des Buffers mit dem entsprechenden Pointernamen (kann in Triggern verwendet werden)
+Die vorhandenen Namen für hdata und Variablen sind in der "Anleitung für API Erweiterung", Bereich "weechat_hdata_get". beschrieben
 
-Examples (simple strings):
+Beispiele (einfache Zeichenketten):
   /eval -n ${raw:${info:version}}                ==> ${info:version}
   /eval -n ${eval_cond:${window.win_width}>100}  ==> 1
   /eval -n ${info:version}                       ==> 0.4.3
   /eval -n ${env:HOME}                           ==> /home/user
   /eval -n ${weechat.look.scroll_amount}         ==> 3
-  /eval -n ${sec.data.freenode_password}         ==> secret
+  /eval -n ${sec.data.password}                  ==> geheim
   /eval -n ${window}                             ==> 0x2549aa0
   /eval -n ${window.buffer}                      ==> 0x2549320
   /eval -n ${window.buffer.full_name}            ==> core.weechat
@@ -1394,21 +1428,22 @@ Examples (simple strings):
   /eval -n ${repeat:5,-}                         ==> -----
   /eval -n ${length:test}                        ==> 4
   /eval -n ${calc:(5+2)*3}                       ==> 21
+  /eval -n ${random:0,10}                        ==> 3
   /eval -n ${base_encode:64,test}                ==> dGVzdA==
   /eval -n ${base_decode:64,dGVzdA==}            ==> test
-  /eval -n ${translate:Plugin}                   ==> Extension
+  /eval -n ${translate:Plugin}                   ==> Erweiterung
 
-Examples (conditions):
-  /eval -n -c ${window.buffer.number} > 2 ==> 0
-  /eval -n -c ${window.win_width} > 100   ==> 1
-  /eval -n -c (8 > 12) || (5 > 2)         ==> 1
-  /eval -n -c (8 > 12) && (5 > 2)         ==> 0
-  /eval -n -c abcd =~ ^ABC                ==> 1
-  /eval -n -c abcd =~ (?-i)^ABC           ==> 0
-  /eval -n -c abcd =~ (?-i)^abc           ==> 1
-  /eval -n -c abcd !~ abc                 ==> 0
-  /eval -n -c abcd =* a*d                 ==> 1
-  /eval -n -c abcd =- bc                  ==> 1
+Beispiele (Bedingungen):
+  /eval -n -c ${window.buffer.number} > 2  ==> 0
+  /eval -n -c ${window.win_width} > 100    ==> 1
+  /eval -n -c (8 > 12) || (5 > 2)          ==> 1
+  /eval -n -c (8 > 12) && (5 > 2)          ==> 0
+  /eval -n -c abcd =~ ^ABC                 ==> 1
+  /eval -n -c abcd =~ (?-i)^ABC            ==> 0
+  /eval -n -c abcd =~ (?-i)^abc            ==> 1
+  /eval -n -c abcd !~ abc                  ==> 0
+  /eval -n -c abcd =* a*d                  ==> 1
+  /eval -n -c abcd =- bc                   ==> 1
 ----
 
 [[command_weechat_filter]]
@@ -1434,7 +1469,7 @@ addreplace: erzeugt neuen Filter oder ersetzt einen schon existierenden Filter
        del: Filter entfernen
       -all: entfernt alle Filter
     buffer: durch Kommata getrennte Liste von Buffer in denen der Filter aktiv sein soll:
-            - ist der vollständige Name eines Buffer inklusive seiner Erweiterung (Beispiel: "irc.freenode.#weechat" oder "irc.server.freenode")
+            - ist der vollständige Name eines Buffer inklusive seiner Erweiterung (Beispiel: "irc.libera.#weechat" oder "irc.server.libera")
             - "*" bedeutet, alle Buffer
             - beginnt ein Name mit '!' wird für diesen Buffer kein Filter genutzt
             - Platzhalter "*" kann verwendet werden
@@ -1469,11 +1504,11 @@ Beispiele:
   filtert Nicks wenn diese den Channel betreten oder durch den Befehl "/names" angezeigt werden:
     /filter add nicks * irc_366 *
   filtert Nick "toto" im IRC Channel #weechat:
-    /filter add toto irc.freenode.#weechat nick_toto *
+    /filter add toto irc.libera.#weechat nick_toto *
   filtert IRC join/action Nachrichten von Nick "toto":
     /filter add toto * nick_toto+irc_join,nick_toto+irc_action *
   filtert Zeilen die "weechat sucks" im IRC Channel #weechat enthalten:
-    /filter add sucks irc.freenode.#weechat * weechat sucks
+    /filter add sucks irc.libera.#weechat * weechat sucks
   filter Zeilen die exakt "WeeChat sucks" lauten und das in allen Buffern:
     /filter add sucks2 * * (?-i)^WeeChat sucks$
 ----
@@ -1644,6 +1679,8 @@ windows: erstellt bzw. verwendet nur Fenster (Buffer welche im jeweiligen Fenste
 Wird der Befehl ohne Argumente aufgerufen, werden die erstellten Layout dargestellt.
 
 Das aktuelle Layout kann beim Ausführen des /quit Befehls mit der Option "weechat.look.save_layout_on_exit" gesichert werden.
+
+Hinweis: Das Layout merkt sich nur Fenstereinteilungen und die Positionsnummern von Buffern. Layout öffnet keine Buffer. Das bedeutet zum Beispiel, dass Sie IRC-Kanäle immer noch automatisch betreten müssen, um die Buffer zu öffnen. Das gespeicherte Layout wird erst verwendet, wenn die Buffer geöffnet sind.
 ----
 
 [[command_weechat_mouse]]
@@ -1675,7 +1712,7 @@ Beispiele:
    -core: keine Ausgabe im WeeChat Core Buffer
 -current: Ausgabe im aktuellen Buffer wird unterdrückt
  -buffer: Ausgabe im ausgewählten Buffer wird unterdrückt
-    name: vollständiger Buffername (Beispiel: "irc.server.freenode", "irc.freenode.#weechat")
+    name: vollständiger Buffername (Beispiel: "irc.server.libera", "irc.libera.#weechat")
  command: Befehl der ohne Textausgabe ausgeführt werden soll (das Präfix, '/', wird automatisch hinzugefügt, falls es dem Befehl nicht vorangestellt wurde)
 
 Wird kein Buffer ausgewählt (-core, -current oder -buffer), dann wird die Textausgabe generell unterdrückt.
@@ -1683,10 +1720,10 @@ Wird kein Buffer ausgewählt (-core, -current oder -buffer), dann wird die Texta
 Beispiele:
   Speichern der Konfiguration:
   /mute save
-  Nachricht in den aktuellen Channel senden:
+  Nachricht in den aktuellen Kanal senden:
   /mute -current msg * hi!
-  Nachricht an den #weechat Channel senden:
-  /mute -buffer irc.freenode.#weechat msg #weechat hi!
+  Nachricht an den #weechat Kanal senden:
+  /mute -buffer irc.libera.#weechat msg #weechat hi!
 ----
 
 [[command_weechat_plugin]]
@@ -1754,7 +1791,7 @@ Beispiele:
   zeigt eine Nachricht im Core-Buffer mit dem Präfix "abc" an:
     /print -core abc\tmeine Nachricht
   es wird eine Nachricht im Channel #weechat ausgegeben:
-    /print -buffer irc.freenode.#weechat Nachricht an #weechat
+    /print -buffer irc.libera.#weechat Nachricht an #weechat
   gibt einen Schneemann aus (U+2603):
     /print -escape \u2603
   verschickt Alarm (BEL):
@@ -1889,14 +1926,14 @@ Beispiele:
     /secure passphrase Dies ist meine Passphrase
   nutze Programm "pass" um die Passphrase beim Start auszulesen:
     /set sec.crypt.passphrase_command "/usr/bin/pass show weechat/passphrase"
-  verschlüsselt freenode SASL Passwort:
-    /secure set freenode meinPasswort
-    /set irc.server.freenode.sasl_password "${sec.data.freenode}"
+  verschlüsselt libera SASL Passwort:
+    /secure set libera meinPasswort
+    /set irc.server.libera.sasl_password "${sec.data.libera}"
   verschlüsselt oftc Passwort für nickserv:
     /secure set oftc meinPasswort
     /set irc.server.oftc.command "/msg nickserv identify ${sec.data.oftc}"
   Alternativbefehl um den eigenen Nick zu ghosten:
-    /alias add ghost /eval /msg -server freenode nickserv ghost meinNick ${sec.data.freenode}
+    /alias add ghost /eval /msg -server libera nickserv ghost meinNick ${sec.data.libera}
 ----
 
 [[command_weechat_set]]
@@ -2025,7 +2062,7 @@ command: Befehl welcher ausgeführt werden soll (oder ein Text der an einen Buff
 Hinweis: Der Befehl wird in dem Buffer ausgeführt, in welchem der /wait Befehl ausgeführt wurde (sollte der Buffer nicht mehr existieren, wird der Befehl nicht ausgeführt).
 
 Beispiele:
-  Betritt nach 10 Sekunden den Channel #test:
+  Betritt nach 10 Sekunden den Kanal #test:
   /wait 10 /join #test
   Setzt nach 15 Minuten eine globale Abwesenheit:
   /wait 15m /away -all Bin dann mal eben weg
@@ -2124,51 +2161,51 @@ Beispiele:
           bar
           refresh
 
- enable: enable buflist
-disable: disable buflist
- toggle: toggle buflist
-    bar: add the "buflist" bar
-refresh: force the refresh of the bar items (buflist, buflist2 and buflist3)
+ enable: buflist aktivieren
+disable: buflist deaktivieren
+ toggle: buflist umschalten
+    bar: fügt eine "buflist" Bar hinzu
+refresh: erzwingt eine Aktualisierung der Bar-Item (buflist, buflist2 und buflist3)
 
-The lines with buffers are displayed using string evaluation (see /help eval for the format), with these options:
-  - buflist.look.display_conditions: conditions to display a buffer in the list
-  - buflist.format.buffer: format for a buffer which is not current buffer
-  - buflist.format.buffer_current: format for the current buffer
+Jede Zeile die einen Buffer anzeigt wird mittels Zeichenketten-Evaluation dargestellt (siehe /help eval für das Format), dazu werden folgende Optionen genutzt:
+  - buflist.look.display_conditions: Bedingungen um einen Buffer in der Liste darzustellen
+  - buflist.format.buffer: Format für den Buffer, der nicht der aktuell dargestellte Buffer ist
+  - buflist.format.buffer_current: Format für den aktuell dargestellten Buffer
 
-The following variables can be used in these options:
-  - bar item data (see hdata "bar_item" in API doc for a complete list), for example:
+Die folgenden Variablen können in den obigen Optionen genutzt werden:
+  - bar item data (siehe hdata "bar_item" in API Dokumentation für eine vollständige Liste), zum Beispiel:
     - ${bar_item.name}
-  - window data, where the bar item is displayed (there's no window in root bars, see hdata "window" in API doc for a complete list), for example:
+  - window data, wo das Bar-Item dargestellt werden soll (in "root" Bars existieren keine Fenster, siehe hdata "window" in API Dokumentation für eine vollständige Liste), zum Beispiel:
     - ${window.number}
     - ${window.buffer.full_name}
-  - buffer data (see hdata "buffer" in API doc for a complete list), for example:
+  - buffer data (siehe hdata "buffer" in API Dokumentation für eine vollständige Liste), zum Beispiel:
     - ${buffer.number}
     - ${buffer.name}
     - ${buffer.full_name}
     - ${buffer.short_name}
     - ${buffer.nicklist_nicks_count}
-  - irc_server: IRC server data, defined only on an IRC buffer (see hdata "irc_server" in API doc)
-  - irc_channel: IRC channel data, defined only on an IRC channel buffer (see hdata "irc_channel" in API doc)
-  - extra variables added by buflist for convenience:
-    - ${format_buffer}: the evaluated value of option buflist.format.buffer; this can be used in option buflist.format.buffer_current to just change the background color for example
-    - ${current_buffer}: a boolean ("0" or "1"), "1" if this is the current buffer; it can be used in a condition: ${if:${current_buffer}?...:...}
-    - ${merged}: a boolean ("0" or "1"), "1" if the buffer is merged with at least another buffer; it can be used in a condition: ${if:${merged}?...:...}
-    - ${format_number}: indented number with separator (evaluation of option buflist.format.number)
-    - ${number}: indented number, for example " 1" if there are between 10 and 99 buffers; for merged buffers, this variable is set with number for the first buffer and spaces for the next buffers with same number
-    - ${number2}: indented number, for example " 1" if there are between 10 and 99 buffers
-    - ${number_displayed}: "1" if the number is displayed, otherwise "0"
-    - ${indent}: indentation for name (channel and private buffers are indented) (evaluation of option buflist.format.indent)
-    - ${format_nick_prefix}: colored nick prefix for a channel (evaluation of option buflist.format.nick_prefix)
-    - ${color_nick_prefix}: color of nick prefix for a channel (set only if the option buflist.look.nick_prefix is enabled)
-    - ${nick_prefix}: nick prefix for a channel (set only if the option buflist.look.nick_prefix is enabled)
-    - ${format_name}: formatted name (evaluation of option buflist.format.name)
-    - ${name}: the short name (if set), with a fallback on the name
-    - ${color_hotlist}: the color depending on the highest hotlist level for the buffer (evaluation of option buflist.format.hotlist_xxx where xxx is the level)
-    - ${format_hotlist}: the formatted hotlist (evaluation of option buflist.format.hotlist)
-    - ${hotlist}: the raw hotlist
-    - ${hotlist_priority}: "none", "low", "message", "private" or "highlight"
-    - ${format_lag}: the lag for an IRC server buffer, empty if there's no lag (evaluation of option buflist.format.lag)
-    - ${format_tls_version}: indicator of TLS version for a server buffer, empty for channels (evaluation of option buflist.format.tls_version)
+  - irc_server: IRC Serverdaten, ausschließlich genutzt bei einem IRC Buffer (siehe hdata "irc_server" in API Dokumentation)
+  - irc_channel: IRC Kanaldaten, ausschließlich genutzt bei einem IRC Kanal-Buffer (siehe hdata "irc_channel" in API Dokumentation)
+  - zusätzliche Variablen die durch buflist bereitgestellt werden:
+    - ${format_buffer}: der evaluierte Wert der Option buflist.format.buffer; dies kann in der Option buflist.format.buffer_current genutzt werden um zum Beispiel die Hintergrundfarbe zu verändern
+    - ${current_buffer}: ein Boolean ("0" oder "1"), "1" falls es sich um den aktuellen Buffer handelt; dies kann in einer Bedingung verwendet werden: ${if:${current_buffer}?...:...}
+    - ${merged}: ein Boolean ("0" oder "1"), "1" wenn der Buffer mit einem anderen zusammengefügt ist; kann innerhalb einer Bedingung genutzt werden: ${if:${merged}?...:...}
+    - ${format_number}: eingerückte Nummer mit Trennzeichen (evaluiert aus Option buflist.format.number)
+    - ${number}: eingerückte Nummer, zum Beispiel " 1", falls die Anzahl der Buffer zwischen 10 und 99 liegt; bei zusammengefügten Buffern enthält die Variable für den ersten Buffer die entsprechende Nummer, die weiteren Buffer enthalten ein Leerzeichen anstelle der Nummer
+    - ${number2}: eingerückte Nummer, zum Beispiel " 1", falls die Anzahl der Buffer zwischen 10 und 99 liegt
+    - ${number_displayed}: "1" falls Nummer angezeigt wird, ansonsten "0"
+    - ${indent}: Einrückung für Name (Channel und private Buffer werden eingerückt) (evaluiert aus Option buflist.format.indent)
+    - ${format_nick_prefix}: Nick-Präfix mit entsprechender Farbe für einen Channel (evaluiert aus Option buflist.format.nick_prefix)
+    - ${color_nick_prefix}: Farbe für den Nick-Präfix von einem Channel (wird nur genutzt wenn die Option buflist.look.nick_prefix aktiviert ist)
+    - ${nick_prefix}: der Nick-Präfix für einen Channel (wird nur genutzt falls die Option buflist.look.nick_prefix aktiviert ist)
+    - ${format_name}: der formatierte Name (evaluiert aus Option buflist.format.name)
+    - ${name}: der Kurzname (falls einer gesetzt ist), ersatzweise wird auf den Originalnamen zurückgegriffen
+    - ${color_hotlist}: die Farbe mit der höchsten Priorität für den entsprechenden Buffer (evaluiert aus Option buflist.format.hotlist_xxx wobei xxx der entsprechende Level ist)
+    - ${format_hotlist}: die formatierte Hotlist (evaluiert aus Option buflist.format.hotlist)
+    - ${hotlist}: die Hotlist in der Rohform
+    - ${hotlist_priority}: "none", "low", "message", "private" oder "highlight"
+    - ${format_lag}: die Verzögerung für einen IRC Server-Buffer, ist leer falls es keine Verzögerung gibt (evaluiert aus Option buflist.format.lag)
+    - ${format_tls_version}: Indikator der TLS Version für den Serverbuffer, Channels bleiben unberührt (evaluiert aus Option buflist.format.tls_version)
 ----
 // end::buflist_commands[]
 
@@ -2281,8 +2318,8 @@ Folgendes Format wird erwartet:
   plugin.buffer *Text oder Befehl an dieser Stelle
   *Text oder Befehl an dieser Stelle
 
-Beispiel um den eigenen Nick auf dem Server freenode zu ändern:
-  echo 'irc.server.freenode */nick newnick' >/run/user/1000/weechat/weechat_fifo_12345
+Beispiel um den eigenen Nick auf dem Server libera zu ändern:
+  echo 'irc.server.libera */nick newnick' >/run/user/1000/weechat/weechat_fifo_12345
 
 Bitte lese die Benutzeranleitung für weitere Informationen und Beispiele.
 
@@ -2531,7 +2568,7 @@ disable: die Protokollierung wird für den aktuellen Buffer deaktiviert (der Lev
 Die Einstellungen "logger.level.*" und "logger.mask.*" können genutzt werden um den Level der Protokollierung festzulegen und um eine Maske für einen oder mehrere Buffer zu definieren.
 
 Level der Protokollierung, die die IRC Erweiterung unterstützt:
-  1: Nachrichten von Usern (private und öffentliche Nachrichten) , notice (Server und Channel)
+  1: Nachrichten von Usern (private und öffentliche Nachrichten), notice (Server und Kanal)
   2: Wechsel von Nicks (/nick)
   3: Nachrichten vom Server
   4: join/part/quit Nachrichten
@@ -2546,7 +2583,7 @@ Beispiele:
     /set logger.level.irc 3
   Die Protokollierung, für den WeeChat Haupt-Buffer, wird deaktiviert:
     /set logger.level.core.weechat 0
-  Für jeden IRC-Server wird ein separates Verzeichnis erstellt und darin eine eigene Protokoll-Datei, für jeden Channel:
+  Für jeden IRC-Server wird ein separates Verzeichnis erstellt und darin eine eigene Protokoll-Datei, für jeden Kanal:
     /set logger.mask.irc "$server/$channel.weechatlog"
 ----
 // end::logger_commands[]
@@ -2738,10 +2775,10 @@ Das "weechat" Protokoll wird von einem Remote-Interface genutzt um eine Verbindu
 Ohne Angabe von Argumenten werden alle Relay-Clients in einem neuen Buffer dargestellt.
 
 Beispiele:
-  IRC Proxy für Server "freenode":
-    /relay add irc.freenode 8000
-  IRC Proxy, für Server "freenode", mit SSL:
-    /relay add ssl.irc.freenode 8001
+  IRC Proxy für Server "libera":
+    /relay add irc.libera 8000
+  IRC Proxy, für Server "libera", mit SSL:
+    /relay add ssl.irc.libera 8001
   IRC Proxy für alle Server (Client wählt aus), mit SSL:
     /relay add ssl.irc 8002
   WeeChat Protokoll:

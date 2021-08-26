@@ -54,6 +54,7 @@
 #include "wee-input.h"
 #include "wee-list.h"
 #include "wee-log.h"
+#include "wee-network.h"
 #include "wee-proxy.h"
 #include "wee-secure.h"
 #include "wee-secure-buffer.h"
@@ -1924,6 +1925,18 @@ COMMAND_CALLBACK(debug)
         gui_chat_printf (NULL, "");
         gui_chat_printf (NULL, "Libs:");
         (void) hook_signal_send ("debug_libs", WEECHAT_HOOK_SIGNAL_STRING, NULL);
+        return WEECHAT_RC_OK;
+    }
+
+    if (string_strcasecmp (argv[1], "certs") == 0)
+    {
+        gui_chat_printf (NULL,
+                         NG_("%d certificate loaded (system: %d, user: %d)",
+                             "%d certificates loaded (system: %d, user: %d)",
+                             network_num_certs),
+                         network_num_certs,
+                         network_num_certs_system,
+                         network_num_certs_user);
         return WEECHAT_RC_OK;
     }
 
@@ -7444,7 +7457,7 @@ command_init ()
         N_("list"
            " || set <plugin> <level>"
            " || dump [<plugin>]"
-           " || buffer|color|infolists|memory|tags|term|windows"
+           " || buffer|color|infolists|libs|certs|memory|tags|term|windows"
            " || mouse|cursor [verbose]"
            " || hdata [free]"
            " || time <command>"),
@@ -7463,6 +7476,7 @@ command_init ()
            "    hooks: display infos about hooks\n"
            "infolists: display infos about infolists\n"
            "     libs: display infos about external libraries used\n"
+           "    certs: display number of loaded trusted certificate authorities\n"
            "   memory: display infos about memory usage\n"
            "    mouse: toggle debug for mouse\n"
            "     tags: display tags for lines\n"
@@ -7481,6 +7495,7 @@ command_init ()
         " || hooks"
         " || infolists"
         " || libs"
+        " || certs"
         " || memory"
         " || mouse verbose"
         " || tags"
@@ -7571,10 +7586,11 @@ command_init ()
            "\"if:condition?value_if_true:value_if_false\")\n"
            "  17. result of an expression with parentheses and operators "
            "+ - * / // % ** (format: \"calc:xxx\")\n"
-           "  18. a translated string (format: \"translate:xxx\")\n"
-           "  19. an option (format: \"file.section.option\")\n"
-           "  20. a local variable in buffer\n"
-           "  21. a hdata name/variable (the value is automatically converted "
+           "  18. a random integer number (format: \"random:min,max\")\n"
+           "  19. a translated string (format: \"translate:xxx\")\n"
+           "  20. an option (format: \"file.section.option\")\n"
+           "  21. a local variable in buffer\n"
+           "  22. a hdata name/variable (the value is automatically converted "
            "to string), by default \"window\" and \"buffer\" point to current "
            "window/buffer.\n"
            "Format for hdata can be one of following:\n"
@@ -7601,7 +7617,7 @@ command_init ()
            "  /eval -n ${info:version}                       ==> 0.4.3\n"
            "  /eval -n ${env:HOME}                           ==> /home/user\n"
            "  /eval -n ${weechat.look.scroll_amount}         ==> 3\n"
-           "  /eval -n ${sec.data.freenode_password}         ==> secret\n"
+           "  /eval -n ${sec.data.password}                  ==> secret\n"
            "  /eval -n ${window}                             ==> 0x2549aa0\n"
            "  /eval -n ${window.buffer}                      ==> 0x2549320\n"
            "  /eval -n ${window.buffer.full_name}            ==> core.weechat\n"
@@ -7616,6 +7632,7 @@ command_init ()
            "  /eval -n ${repeat:5,-}                         ==> -----\n"
            "  /eval -n ${length:test}                        ==> 4\n"
            "  /eval -n ${calc:(5+2)*3}                       ==> 21\n"
+           "  /eval -n ${random:0,10}                        ==> 3\n"
            "  /eval -n ${base_encode:64,test}                ==> dGVzdA==\n"
            "  /eval -n ${base_decode:64,dGVzdA==}            ==> test\n"
            "  /eval -n ${translate:Plugin}                   ==> Extension\n"
@@ -7658,7 +7675,7 @@ command_init ()
            "    buffer: comma separated list of buffers where filter "
            "is active:\n"
            "            - this is full name including plugin (example: \"irc."
-           "freenode.#weechat\" or \"irc.server.freenode\")\n"
+           "libera.#weechat\" or \"irc.server.libera\")\n"
            "            - \"*\" means all buffers\n"
            "            - a name starting with '!' is excluded\n"
            "            - wildcard \"*\" is allowed\n"
@@ -7705,12 +7722,12 @@ command_init ()
            "  filter nicks displayed when joining channels or with /names:\n"
            "    /filter add nicks * irc_366 *\n"
            "  filter nick \"toto\" on IRC channel #weechat:\n"
-           "    /filter add toto irc.freenode.#weechat nick_toto *\n"
+           "    /filter add toto irc.libera.#weechat nick_toto *\n"
            "  filter IRC join/action messages from nick \"toto\":\n"
            "    /filter add toto * nick_toto+irc_join,nick_toto+irc_action *\n"
            "  filter lines containing \"weechat sucks\" on IRC channel "
            "#weechat:\n"
-           "    /filter add sucks irc.freenode.#weechat * weechat sucks\n"
+           "    /filter add sucks irc.libera.#weechat * weechat sucks\n"
            "  filter lines that are strictly equal to \"WeeChat sucks\" on "
            "all buffers:\n"
            "    /filter add sucks2 * * (?-i)^WeeChat sucks$"),
@@ -7935,7 +7952,12 @@ command_init ()
            "Without argument, this command displays stored layouts.\n"
            "\n"
            "The current layout can be saved on /quit command with the option "
-           "\"weechat.look.save_layout_on_exit\"."),
+           "\"weechat.look.save_layout_on_exit\".\n"
+           "\n"
+           "Note: the layout only remembers windows split and buffers numbers. "
+           "It does not open buffers. That means for example you must still "
+           "auto-join IRC channels to open the buffers, the saved layout only "
+           "applies once the buffers are opened."),
         "store %(layouts_names)|buffers|windows buffers|windows"
         " || apply %(layouts_names)|buffers|windows buffers|windows"
         " || leave"
@@ -7968,8 +7990,8 @@ command_init ()
         N_("   -core: no output on WeeChat core buffer\n"
            "-current: no output on current buffer\n"
            " -buffer: no output on specified buffer\n"
-           "    name: full buffer name (examples: \"irc.server.freenode\", "
-           "\"irc.freenode.#weechat\")\n"
+           "    name: full buffer name (examples: \"irc.server.libera\", "
+           "\"irc.libera.#weechat\")\n"
            " command: command to execute silently (a '/' is automatically added "
            "if not found at beginning of command)\n"
            "\n"
@@ -7982,7 +8004,7 @@ command_init ()
            "  message to current IRC channel:\n"
            "    /mute -current msg * hi!\n"
            "  message to #weechat channel:\n"
-           "    /mute -buffer irc.freenode.#weechat msg #weechat hi!"),
+           "    /mute -buffer irc.libera.#weechat msg #weechat hi!"),
         "-core|-current %(commands:/)|%*"
         " || -buffer %(buffers_plugins_names) %(commands:/)|%*"
         " || %(commands:/)|%*",
@@ -8066,7 +8088,7 @@ command_init ()
            "  display message on core buffer with prefix \"abc\":\n"
            "    /print -core abc\\tThe message\n"
            "  display a message on channel #weechat:\n"
-           "    /print -buffer irc.freenode.#weechat Message on #weechat\n"
+           "    /print -buffer irc.libera.#weechat Message on #weechat\n"
            "  display a snowman (U+2603):\n"
            "    /print -escape \\u2603\n"
            "  send alert (BEL):\n"
@@ -8221,16 +8243,16 @@ command_init ()
            "  use program \"pass\" to read the passphrase on startup:\n"
            "    /set sec.crypt.passphrase_command "
            "\"/usr/bin/pass show weechat/passphrase\"\n"
-           "  encrypt freenode SASL password:\n"
-           "    /secure set freenode mypassword\n"
-           "    /set irc.server.freenode.sasl_password \"${sec.data.freenode}\"\n"
+           "  encrypt libera SASL password:\n"
+           "    /secure set libera mypassword\n"
+           "    /set irc.server.libera.sasl_password \"${sec.data.libera}\"\n"
            "  encrypt oftc password for nickserv:\n"
            "    /secure set oftc mypassword\n"
            "    /set irc.server.oftc.command \"/msg nickserv identify "
            "${sec.data.oftc}\"\n"
            "  alias to ghost the nick \"mynick\":\n"
-           "    /alias add ghost /eval /msg -server freenode nickserv ghost mynick "
-           "${sec.data.freenode}"),
+           "    /alias add ghost /eval /msg -server libera nickserv ghost mynick "
+           "${sec.data.libera}"),
         "passphrase -delete"
         " || decrypt -discard"
         " || set %(secured_data)"
@@ -8519,28 +8541,26 @@ command_init ()
 void
 command_exec_list (const char *command_list)
 {
-    char *command_list2, **commands, **ptr_cmd;
-    struct t_gui_buffer *weechat_buffer;
+    char **commands, **ptr_command, *command_eval;
 
     if (!command_list || !command_list[0])
         return;
 
-    command_list2 = eval_expression (command_list, NULL, NULL, NULL);
-    if (command_list2 && command_list2[0])
+    commands = string_split_command (command_list, ';');
+    if (commands)
     {
-        commands = string_split_command (command_list2, ';');
-        if (commands)
+        for (ptr_command = commands; *ptr_command; ptr_command++)
         {
-            weechat_buffer = gui_buffer_search_main ();
-            for (ptr_cmd = commands; *ptr_cmd; ptr_cmd++)
+            command_eval = eval_expression (*ptr_command, NULL, NULL, NULL);
+            if (command_eval)
             {
-                (void) input_data (weechat_buffer, *ptr_cmd, NULL);
+                (void) input_data (gui_buffer_search_main (),
+                                   command_eval, NULL);
+                free (command_eval);
             }
-            string_free_split_command (commands);
         }
+        string_free_split_command (commands);
     }
-    if (command_list2)
-        free (command_list2);
 }
 
 /*

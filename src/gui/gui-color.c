@@ -1036,8 +1036,10 @@ gui_color_decode_ansi_cb (void *data, const char *text)
             case 35:
             case 36:
             case 37:
-                strcat (output,
-                        gui_color_get_custom (gui_color_ansi[value - 30]));
+                snprintf (str_color, sizeof (str_color),
+                          "|%s",
+                          gui_color_ansi[value - 30]);
+                strcat (output, gui_color_get_custom (str_color));
                 break;
             case 38: /* text color */
                 if (i + 1 < num_items)
@@ -1128,8 +1130,10 @@ gui_color_decode_ansi_cb (void *data, const char *text)
             case 95:
             case 96:
             case 97:
-                strcat (output,
-                        gui_color_get_custom (gui_color_ansi[value - 90 + 8]));
+                snprintf (str_color, sizeof (str_color),
+                          "|%s",
+                          gui_color_ansi[value - 90 + 8]);
+                strcat (output, gui_color_get_custom (str_color));
                 break;
             case 100: /* background color (bright) */
             case 101:

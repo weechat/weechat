@@ -121,6 +121,10 @@ if PLUGIN_TRIGGER
 trigger_dir = trigger
 endif
 
+if PLUGIN_TYPING
+typing_dir = typing
+endif
+
 if PLUGIN_XFER
 xfer_dir = xfer
 endif
@@ -146,6 +150,7 @@ SUBDIRS = . \
           $(php_dir) \
           $(spell_dir) \
           $(trigger_dir) \
+          $(typing_dir) \
           $(xfer_dir)
 
 EXTRA_DIST = CMakeLists.txt

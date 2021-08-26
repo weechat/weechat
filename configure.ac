@@ -64,7 +64,7 @@ darwin*)
 esac
 
 # Gettext
-ALL_LINGUAS="cs de es fr hu it ja pl pt pt_BR ru tr"
+ALL_LINGUAS="cs de es fr hu it ja pl pt pt_BR ru sr tr"
 AM_GNU_GETTEXT
 AM_GNU_GETTEXT_VERSION([0.18])
 
@@ -130,6 +130,7 @@ AH_VERBATIM([PLUGIN_GUILE], [#undef PLUGIN_GUILE])
 AH_VERBATIM([PLUGIN_JAVASCRIPT], [#undef PLUGIN_JAVASCRIPT])
 AH_VERBATIM([PLUGIN_SPELL], [#undef PLUGIN_SPELL])
 AH_VERBATIM([PLUGIN_TRIGGER], [#undef PLUGIN_TRIGGER])
+AH_VERBATIM([PLUGIN_TYPING], [#undef PLUGIN_TYPING])
 AH_VERBATIM([PLUGIN_XFER], [#undef PLUGIN_XFER])
 AH_VERBATIM([TESTS], [#undef TESTS])
 AH_VERBATIM([MAN], [#undef MAN])
@@ -164,6 +165,7 @@ AC_ARG_ENABLE(php,          [  --disable-php           turn off PHP script plugi
 AC_ARG_ENABLE(spell,        [  --disable-spell         turn off Spell checker plugin (default=compiled)],enable_spell=$enableval,enable_spell=yes)
 AC_ARG_ENABLE(enchant,      [  --enable-enchant        turn on Enchant lib for Spell checker plugin (default=off)],enable_enchant=$enableval,enable_enchant=no)
 AC_ARG_ENABLE(trigger,      [  --disable-trigger       turn off Trigger plugin (default=compiled)],enable_trigger=$enableval,enable_trigger=yes)
+AC_ARG_ENABLE(typing,       [  --disable-typing        turn off Typing plugin (default=compiled)],enable_trigger=$enableval,enable_typing=yes)
 AC_ARG_ENABLE(xfer,         [  --disable-xfer          turn off Xfer (file transfer) plugin (default=compiled)],enable_xfer=$enableval,enable_xfer=yes)
 AC_ARG_WITH(tclconfig,      [  --with-tclconfig=DIR    directory containing tcl configuration (tclConfig.sh)],tclconfig=$withval,tclconfig='')
 AC_ARG_WITH(debug,          [  --with-debug            debugging: 0=no debug, 1=debug compilation (default=0)],debug=$withval,debug=0)
@@ -831,6 +833,7 @@ if test "x$enable_php" = "xyes" ; then
 
     PHP_CFLAGS=""
     PHP_LFLAGS=""
+    PHP_VERSIONS="8.1 81 8.0 80 8 7.4 74 7.3 73 7.2 72 7.1 71 7.0 70 7 $php_suffix"
 
     if test -n "$php_inc"; then
        CFLAGS="$CFLAGS -I$php_inc"
@@ -843,7 +846,7 @@ if test "x$enable_php" = "xyes" ; then
     if test "x$PHP_CFLAGS" = "x" -o "x$PHP_LFLAGS" = "x" ; then
         AC_MSG_CHECKING(for PHP headers and libraries with pkg-config)
         echo
-        for l in "7.4" "74" "7.3" "73" "7.2" "72" "7.1" "71" "7.0" "70" "7" "$php_suffix" "" ; do
+        for l in $PHP_VERSIONS "" ; do
             pkgconfig_php_found=`$PKGCONFIG --exists php$l 2>/dev/null`
             if test "x$?" = "x0" ; then
                 pkgconfig_php_found=`$PKGCONFIG --atleast-version=7 php$l 2>/dev/null`
@@ -860,11 +863,12 @@ if test "x$enable_php" = "xyes" ; then
     if test "x$PHP_CFLAGS" = "x" -o "x$PHP_LFLAGS" = "x" ; then
         PHPCONFIG=""
         AC_MSG_CHECKING(for PHP headers and libraries with php-config)
-        for l in "7.4" "74" "7.3" "73" "7.2" "72" "7.1" "71" "7.0" "70" "7" "$php_suffix" "" ; do
+        echo
+        for l in $PHP_VERSIONS "" ; do
             AC_CHECK_PROG(PHPCONFIG, "php-config$l", "php-config$l")
             if test "x$PHPCONFIG" != "x" ; then
                 php_config_version=`$PHPCONFIG --version`
-                if test "x${php_config_version#7}" != "x${php_config_version}" ; then
+                if echo "x$php_config_version" | grep -e "^x7" -e "^x8" 1>/dev/null 2>&1 ; then
                     PHP_VERSION=$php_config_version
                     PHP_CFLAGS=`$PHPCONFIG --includes`
                     PHP_LFLAGS="-L$($PHPCONFIG --prefix)/lib/ $($PHPCONFIG --libs) -lphp$l"
@@ -881,23 +885,25 @@ if test "x$enable_php" = "xyes" ; then
         if test "x$ac_found_php_header" = "xyes" ; then
             PHP_CFLAGS="$CFLAGS"
         fi
-        for l in "7.4" "74" "7.3" "73" "7.2" "72" "7.1" "71" "7.0" "70" "7" "$php_suffix" "" ; do
-            AC_CHECK_LIB(php$l,php_execute_script,ac_found_php_lib="yes",ac_found_php_lib="no")
-            if test "x$ac_found_php_lib" = "xyes" ; then
-                PHP_VERSION=">=7.0.0"
+        for l in $PHP_VERSIONS "" ; do
+            for PHP_LIB_SUFFIX in "$l" "$(echo $l | cut -c1)" "" ; do
+                AC_CHECK_LIB(php$PHP_LIB_SUFFIX,php_execute_script,ac_found_php_lib="yes",ac_found_php_lib="no")
+                if test "x$ac_found_php_lib" = "xyes" ; then
+                    PHP_VERSION=">=7.0.0"
 
-                PHP_LFLAGS="$LDFLAGS -lphp7 -lm"
+                    PHP_LFLAGS="$LDFLAGS -lphp$PHP_LIB_SUFFIX -lm"
 
-                ac2_save_LDFLAGS="$LDFLAGS"
-                LDFLAGS="$LDFLAGS -lphp7 -lm"
+                    ac2_save_LDFLAGS="$LDFLAGS"
+                    LDFLAGS="$LDFLAGS -lphp$PHP_LIB_SUFFIX -lm"
 
-                if echo "$host_os" | grep "^linux" 1>/dev/null 2>&1 ; then
-                    LDFLAGS="$LDFLAGS -ldl"
+                    if echo "$host_os" | grep "^linux" 1>/dev/null 2>&1 ; then
+                        LDFLAGS="$LDFLAGS -ldl"
+                    fi
+
+                    LDFLAGS="$ac2_save_LDFLAGS"
+                    break 2
                 fi
-
-                LDFLAGS="$ac2_save_LDFLAGS"
-                break
-            fi
+            done
         done
     fi
 
@@ -1011,6 +1017,18 @@ if test "x$enable_trigger" = "xyes" ; then
     AC_DEFINE(PLUGIN_TRIGGER)
 else
     not_asked="$not_asked trigger"
+fi
+
+# ---------------------------------- typing ------------------------------------
+
+if test "x$enable_typing" = "xyes" ; then
+    TYPING_CFLAGS=""
+    TYPING_LFLAGS=""
+    AC_SUBST(TYPING_CFLAGS)
+    AC_SUBST(TYPING_LFLAGS)
+    AC_DEFINE(PLUGIN_TYPING)
+else
+    not_asked="$not_asked typing"
 fi
 
 # ---------------------------------- xfer --------------------------------------
@@ -1365,6 +1383,7 @@ AM_CONDITIONAL(PLUGIN_JAVASCRIPT,       test "$enable_javascript" = "yes")
 AM_CONDITIONAL(PLUGIN_PHP,              test "$enable_php" = "yes")
 AM_CONDITIONAL(PLUGIN_SPELL,            test "$enable_spell" = "yes")
 AM_CONDITIONAL(PLUGIN_TRIGGER,          test "$enable_trigger" = "yes")
+AM_CONDITIONAL(PLUGIN_TYPING,           test "$enable_typing" = "yes")
 AM_CONDITIONAL(PLUGIN_XFER,             test "$enable_xfer" = "yes")
 AM_CONDITIONAL(TESTS,                   test "$enable_tests" = "yes")
 AM_CONDITIONAL(MAN,                     test "$enable_man" = "yes")
@@ -1373,15 +1392,16 @@ AM_CONDITIONAL(DOC,                     test "$enable_doc" = "yes")
 AC_OUTPUT([Makefile
            icons/Makefile
            doc/Makefile
+           doc/cs/Makefile
+           doc/de/Makefile
            doc/en/Makefile
+           doc/es/Makefile
            doc/fr/Makefile
            doc/it/Makefile
-           doc/de/Makefile
-           doc/pl/Makefile
-           doc/es/Makefile
-           doc/ru/Makefile
            doc/ja/Makefile
-           doc/cs/Makefile
+           doc/pl/Makefile
+           doc/ru/Makefile
+           doc/sr/Makefile
            src/Makefile
            src/core/Makefile
            src/plugins/Makefile
@@ -1405,6 +1425,7 @@ AC_OUTPUT([Makefile
            src/plugins/php/Makefile
            src/plugins/spell/Makefile
            src/plugins/trigger/Makefile
+           src/plugins/typing/Makefile
            src/plugins/xfer/Makefile
            src/gui/Makefile
            src/gui/curses/Makefile
@@ -1492,6 +1513,9 @@ if test "x$enable_spell" = "xyes"; then
 fi
 if test "x$enable_trigger" = "xyes"; then
     listplugins="$listplugins trigger"
+fi
+if test "x$enable_typing" = "xyes"; then
+    listplugins="$listplugins typing"
 fi
 if test "x$enable_xfer" = "xyes"; then
     listplugins="$listplugins xfer"

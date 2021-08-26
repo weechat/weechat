@@ -1,0 +1,2657 @@
+= WeeChat Релеј протокол
+:author: Sébastien Helleu
+:email: flashcode@flashtux.org
+:lang: sr
+:toc: left
+:toclevels: 3
+:toc-title: Садржај
+:sectnums:
+:docinfo1:
+
+Превод:
+
+* Иван Пешић (<ivan.pesic@gmail.com>), 2021.
+
+
+[[introduction]]
+== Увод
+
+Овај документ је спецификација WeeChat Релеј протокола: протокола који се користи за прослеђивање WeeChat података клојентима, који су углавном удаљени интерфејси.
+
+[[terminology]]
+=== Терминологија
+
+У документу се користе следећи изрази:
+
+* _релеј_: то је програм WeeChat са релеј додатком, који се понаша као „сервер” и дозвољава _клијентима_ да успоставе везу са њим
+* _клијент_: оно је неки други софтвер, повезан са _релејем_ преком мрежне везе; у већини случајева, овај _клијент_ је удаљени интерфејс.
+
+[[network_diagram]]
+=== Мрежни дијаграм
+
+_клијенти_ су повезани са _релејем_ као што је приказано на следећем дијаграму:
+
+....
+                                              ┌───────────┐ Радна станица
+ ┌────────┐                               ┌───┤ клијент 1 │ (Linux, Windows,
+ │  irc   │◄──┐  ╔═══════════╤═══════╗    │   └───────────┘ BSD, macOS...)
+ └────────┘   └──╢           │       ║◄───┘   ┌───────────┐
+   ......        ║  WeeChat  │ Релеј ║◄───────┤ клијент 2 │ Мобилни уређај
+ ┌────────┐   ┌──╢           │       ║◄───┐   └───────────┘ (Android, iPhone...)
+ │ jabber │◄──┘  ╚═══════════╧═══════╝    │      ......
+ └────────┘                               │   ┌───────────┐
+   ......                                 └───┤ клијент N │ Остали уређаји
+                                              └───────────┘
+
+
+└────────────┘   └───────────────────┘╘══════╛└────────────────────────────────┘
+мрежни сервери     ncurses интерфејс    релеј         удаљени интерфејси
+                                      протокол
+....
+
+[NOTE]
+Сви клијенти овде су клијенти који користе _weechat_ протокол у _релеј_ додатку. _релеј_ додатак такође дозвољава IRC клијенте, па се онда _релеј_ додатак понаша као _IRC прокси_ (није описан у овом документу).
+
+[[protocol_generalities]]
+== Уопштено о протоколу
+
+* Везе од _клијента_ ка _релеју_ се успостављају преко TCP сокета на IP/порту који користи _релеј_ додатак који ослушкује нове везе.
+* Број _клијената_ је ограничен опцијом _relay.network.max_clients_.
+* Сваки _клијент_ је независан у односу на остале клијенте.
+* Поруке од _клијента_ ка _релеју_ се називају _команде_, а шаљу се као текст (то јест стринг).
+* Поруке од _релеја_ ка _клијенту_ се називају _поруке_, а шаљу се као бинарни подаци.
+
+[[commands]]
+== Команде (клијент → релеј)
+
+Команде имају следећи формат:
+
+----
+(id) команда аргументи\n
+----
+
+Поља су следећа:
+
+* _id_: необавезни идентификатор поруке који ће се послати уз одговор _релеја_; мора да се постави унутар заграда и не сме да почне доњом цртом (идентификатори који почињу доњом цртом су резервисани за WeeChat _event_ поруке)
+* _команда_: команда (погледајте табелу испод)
+* _аргументи_: необавезни аргументи команде (више аргумената може да се раздвоји размацима).
+
+Листа доступних команди (детаљи су у наредним поглављима):
+
+[width="100%", cols="^3m,14", options="header"]
+|===
+| Команда    | Опис
+| handshake  | Руковање: припрема за аутентификацију клијента и постављање опција, пре _init_ команде.
+| init       | Аутентификација са _релејем_.
+| hdata      | Захтев за _hdata_.
+| info       | Захтев за _инфо_.
+| infolist   | Захтев за _инфолисту_.
+| nicklist   | Захтев за _листу надимака_.
+| input      | Слање података у бафер (текст или команда).
+| completion | Захтев за довршавање стринга.
+| sync       | Синхронизација бафера: преузимање ажурирања бафера.
+| desync     | Десинхронизација бафера: прекид ажурирања бафера.
+| quit       | Раскидање везе са _релејем_.
+|===
+
+[[command_handshake]]
+=== handshake
+
+_WeeChat ≥ 2.9._
+
+Извршава руковање између клијента и програма WeeChat: ово је у већини случајева неопходно како би се сазнале поставке сесије и припремила аутентификација командом _init_.
+
+Пре _init_ команде је дозвољено само једно руковање.
+
+Синтакса:
+
+----
+(id) handshake [<опција>=<вредност>,[<опција>=<вредност>,...]]
+----
+
+Аргументи:
+
+* _опција_: једна од следећих опција:
+** _password_hash_algo_: листа хеш алгоритама које подржава клијент (раздвојене са две тачке), дозвољене су следеће вредности:
+*** _plain_: чиста текст лозинка (без хеша)
+*** _sha256_: лозинка засољена и хеширана SHA256 алгоритмом
+*** _sha512_: лозинка засољена и хеширана SHA512 алгоритмом
+*** _pbkdf2+sha256_: лозинка засољена и хеширана PBKDF2 алгоритмом (користећи SHA256 хеш)
+*** _pbkdf2+sha512_: лозинка засољена и хеширана PBKDF2 алгоритмом (користећи SHA512 хеш)
+** _compression_: тип компресије:
+*** _zlib_: укључује _zlib_ компресију порука које шаље _релеј_ (подразумевано је укључено ако _релеј_ подржава _zlib_ компресију)
+*** _off_: искључује компресију
+
+Напомене у вези опције _password_hash_algo_:
+
+* Ако се опција не наведе (или ако клијент није послао _handshake_ команду), _релеј_ аутоматски користи _plain_ аутентификацију (ако је дозвољена на _релеј_ страни).
+* _Релеј_ бира најсигурнији алгоритам који је доступан и на _клијенту_ и на _релеју_, према редоследу приоритета од првог (најсигурнијег) до последње коришћеног:
+  . _pbkdf2+sha512_
+  . _pbkdf2+sha256_
+  . _sha512_
+  . _sha256_
+  . _plain_
+
+Програм WeeChat одговара са хеш табелом која садржи следеће кључеве и вредности:
+
+* _password_hash_algo_: договорена аутентификација лозинком: подржавају је и _клијент_both и _релеј_:
+** (празна вредност): договор није успео, *НИЈЕ* могућа аутентификација лозинком; у овом случају се веза са клијентом тренутно прекида.
+** _plain_
+** _sha256_
+** _sha512_
+** _pbkdf2+sha256_
+** _pbkdf2+sha512_
+* _password_hash_iterations_: број итерација за (само за PBKDF2 алгоритам)
+* _totp_:
+** _on_: Time-based One-Time Password (TOTP) је конфигурисана и очекује се у _init_ команди
+** _off_: Time-based One-Time Password (TOTP) је искључена и није потребна у _init_ команди
+* _nonce_: бафер бајтова који не могу да се предвиде, послат као хексадецимална вредност, којом се спречавају replay напади; ако је _password_hash_algo_ хеш алгоритам, клијент мора да израчуна хеш лозинке над овим нонсом, спојено са клијентовим нонсом и корисничком лозинком (_релеј_ нонс + _клијент_ нонс је со која се користи у алгоритму хеширања лозинке)
+* _compression_: тип компресије:
+** _zlib_: поруке су компресоване са _zlib_
+** _off_: поруке се не компресују
+
+[TIP]
+У програму WeeChat верзије ≤ 2.8, команда _handshake_ није имплементирана, програм WeeChat једноставно игнорише ову команду, чак и ако се пошаље пре _init_ команде. +
+Тако да је безбедно послати ову поруку програму WeeChat било које верзије.
+
+Примери:
+
+* Клијент није ништа понудио, користиће се "plain" аутентификација лозинком ако је то дозвољено на релеј страни:
+
+----
+(handshake) handshake
+----
+
+Одговор:
+
+[source, python]
+----
+id: 'handshake'
+htb: {
+    'password_hash_algo': 'plain',
+    'password_hash_iterations': '100000',
+    'totp': 'on',
+    'nonce': '85B1EE00695A5B254E14F4885538DF0D',
+    'compression': 'zlib',
+}
+----
+
+* Клијент подржава само „plain”:
+
+----
+(handshake) handshake password_hash_algo=plain
+----
+
+Одговор:
+
+[source, python]
+----
+id: 'handshake'
+htb: {
+    'password_hash_algo': 'plain',
+    'password_hash_iterations': '100000',
+    'totp': 'on',
+    'nonce': '85B1EE00695A5B254E14F4885538DF0D',
+    'compression': 'zlib',
+}
+----
+
+* Клијент подржава само „plain”, „sha256” и „pbkdf2+sha256”:
+
+----
+(handshake) handshake password_hash_algo=plain:sha256:pbkdf2+sha256
+----
+
+Одговор:
+
+[source, python]
+----
+id: 'handshake'
+htb: {
+    'password_hash_algo': 'pbkdf2+sha256',
+    'password_hash_iterations': '100000',
+    'totp': 'on',
+    'nonce': '85B1EE00695A5B254E14F4885538DF0D',
+    'compression': 'zlib',
+}
+----
+
+Клијент може да се аутентификује следећом командом (погледајте <<command_init,init команду>>), со је _relay_ нонс + _client_ нонс („A4B73207F5AAE4” хексадецимално), лозинка је „test” у овом примеру:
+
+----
+init password_hash=pbkdf2+sha256:85b1ee00695a5b254e14f4885538df0da4b73207f5aae4:100000:ba7facc3edb89cd06ae810e29ced85980ff36de2bb596fcf513aaab626876440
+----
+
+* Клијент подржава само „sha256” и „sha512”, компресије се искључује:
+
+----
+(handshake) handshake password_hash_algo=sha256:sha512,compression=off
+----
+
+Одговор:
+
+[source, python]
+----
+id: 'handshake'
+htb: {
+    'password_hash_algo': 'sha512',
+    'password_hash_iterations': '100000',
+    'totp': 'on',
+    'nonce': '85B1EE00695A5B254E14F4885538DF0D',
+    'compression': 'off',
+}
+----
+
+[[command_init]]
+=== init
+
+_Ажурирано у верзијама 2.4, 2.8, 2.9._
+
+Аутентификација са _релејем_.
+
+Ово мора бити прва команда која се шаље _релеју_ (пре _init_ сме да се пошаље једино команда _handshake_). +
+Ако се не пошаље, _релеј_ ће без упозорења да раскине везу чим прими прву следећу команду (осим _handshake_).
+
+Синтакса:
+
+----
+(id) init [<опција>=<вредност>,[<опција>=<вредност>,...]]
+----
+
+Аргументи:
+
+* _опција_: једна од следећих опција:
+** _password_: лозинка која се користи за аутентификацију са _релејем_ (опција _relay.network.password_ у програму WeeChat)
+** _password_hash_: хеш лозинке која се користи за аутентификацију са _релејем_ (опција _relay.network.password_ у програму WeeChat), погледајте испод за формат _(WeeChat ≥ 2.8)_
+** _totp_: Time-based One-Time Password (TOTP) која се користи као секундарни фактор аутентификације, уз лозинку (опција _relay.network.totp_secret_ у програму WeeChat) _(WeeChat ≥ 2.4)_
+** _compression_: тип компресије (*превазиђено* почевши од верзије 2.9, остало је из разлога компатибилности, али ви требало да се пошаље у <<command_handshake,handshake команди>>):
+*** _zlib_: укључује _zlib_ компресију порука које шаље _релеј_ (подразумевано је укључено ако _релеј_ подржава _zlib_ компресију)
+*** _off_: искључује компресију
+
+[NOTE]
+У програму WeeChat верзије ≥ 1.6, у вредности могу да се означе запете, на пример `+init password=foo\,bar+` када желите да пошаљете лозинку „foo,bar”.
+
+Формат хеширане лозинке је једно од следећег, где је _хеш_ хеширана лозинка као хексадецимална вредност:
+
+* `+sha256:со:хеш+` где је :
+** _со_: со (хексадецимално), која мора да почиње са северовим нонсом, на који је надовезан клијентов нонс
+** _хеш_: хеширана со + лозинка (хексадецимално)
+* `+sha512:со:хеш+` где је:
+** _со_: со (хексадецимално), која мора да почиње са северовим нонсом, на који је надовезан клијентов нонс
+** _хеш_: хеширана со + лозинка (хексадецимално)
+* `+pbkdf2+sha256:со:итерација:хеш+` где је:
+** _со_: со (хексадецимално), која мора да почиње са северовим нонсом, на који је надовезан клијентов нонс
+** _iterations_: број итерација
+** _хеш_: со + лозинка хеширана SHA256 алгоритмом (хексадецимално)
+* `+pbkdf2+sha512:со:итерација:хеш+` где је:
+** _со_: со (хексадецимално), која мора да почиње са северовим нонсом, на који је надовезан клијентов нонс
+** _iterations_: број итерација
+** _хеш_: со + лозинка хеширана SHA512 алгоритмом (хексадецимално)
+
+[NOTE]
+Хексадецимални стрингови могу бити исписани малим или великим словима, _релеј_ може да декодира оба.
+
+Примери:
+
+* Иницијализација лозинком:
+
+----
+init password=мојалозинка
+----
+
+* Иницијализација са запетама у лозинки _(WeeChat ≥ 1.6)_:
+
+----
+init password=мојалозинка\,са\,запетама
+----
+
+* Иницијализација са лозинком и TOTP _(WeeChat ≥ 2.4)_:
+
+----
+init password=мојалозинка,totp=123456
+----
+
+* Иницијализација са хешираном лозинком „test” (SHA256: со=релеј нонс + клијент нонс) _(WeeChat ≥ 2.9)_:
+
+----
+init password_hash=sha256:85b1ee00695a5b254e14f4885538df0da4b73207f5aae4:2c6ed12eb0109fca3aedc03bf03d9b6e804cd60a23e1731fd17794da423e21db
+----
+
+* Иницијализација са хешираном лозинком „test” (SHA512: со=релеј нонс + клијент нонс) _(WeeChat ≥ 2.9)_:
+
+----
+init password_hash=sha512:85b1ee00695a5b254e14f4885538df0da4b73207f5aae4:0a1f0172a542916bd86e0cbceebc1c38ed791f6be246120452825f0d74ef1078c79e9812de8b0ab3dfaf598b6ca14522374ec6a8653a46df3f96a6b54ac1f0f8
+----
+
+* Иницијализација са хешираном лозинком „test” (PBKDF2: SHA256, со=релеј нонс + клијент нонс, 100000 итерација) _(WeeChat ≥ 2.9)_:
+
+----
+init password_hash=pbkdf2+sha256:85b1ee00695a5b254e14f4885538df0da4b73207f5aae4:100000:ba7facc3edb89cd06ae810e29ced85980ff36de2bb596fcf513aaab626876440
+----
+
+[[command_hdata]]
+=== hdata
+
+Захтев за _hdata_.
+
+Синтакса:
+
+----
+(id) hdata <путања> [<кључеви>]
+----
+
+Аргументи:
+
+* _путања_: путања до hdata, у формату: „hdata:показивач/пром/пром/.../пром”, последња пром је враћени hdata:
+** _hdata_: име hdata
+** _показивач_: показивач (нпр.: „0x1234abcd”) или име листе (на пример: „gui_buffers”) (дозвољен је број понављања, погледајте испод)
+** _пром_: име променљиве у родитељском hdata (претходно име на путањи) (дозвољен је број понављања, погледајте испод)
+* _кључеви_: листа кључева раздвојених запетама у које се враћају hdata (ако се не наведе, враћају се сви кључеви, што се не препоручује код великих hdata структура)
+
+Број понављања се дозвољава након показивача и променљивих, у формату „(N)”. Могуће су следеће вредности:
+
+* позитивни број: итерира се користећи следећи елемент, N пута
+* негативни број: итерира се користећи претходни елемент, N пута
+* _*_: итерира се користећи наредни елемент, све до краја листе
+
+[NOTE]
+У програму WeeChat верзије ≥ 1.6, у случају да је hdata путања неисправна или ако се наиђе на NULL показивач, враћа се празан hdata (погледајте пример у <<object_hdata,hdata објекат>>). +
+У старијим верзијама, не враћа се ништа.
+
+Примери:
+
+* Захтев за „number” и „full_name” свих бафера:
+
+----
+(hdata_buffers) hdata buffer:gui_buffers(*) number,full_name
+----
+
+Одговор:
+
+[source, python]
+----
+id: 'hdata_buffers'
+hda:
+    keys: {
+        'number': 'int',
+        'full_name': 'str',
+    }
+    path: ['buffer']
+    item 1:
+        __path: ['0x558d61ea3e60']
+        number: 1
+        full_name: 'core.weechat'
+    item 2:
+        __path: ['0x558d62840ea0']
+        number: 1
+        full_name: 'irc.server.libera'
+    item 3:
+        __path: ['0x558d62a9cea0']
+        number: 2
+        full_name: 'irc.libera.#weechat'
+----
+
+* Захтев за свим линијама првог бафера:
+
+----
+(hdata_lines) hdata buffer:gui_buffers/own_lines/first_line(*)/data
+----
+
+Одговор:
+
+[source, python]
+----
+id: 'hdata_lines'
+hda:
+    keys: {
+        'buffer': 'ptr',
+        'y': 'int',
+        'date': 'tim',
+        'date_printed': 'tim',
+        'str_time': 'str',
+        'tags_count': 'int',
+        'tags_array': 'arr',
+        'displayed': 'chr',
+        'notify_level': 'chr',
+        'highlight': 'chr',
+        'refresh_needed': 'chr',
+        'prefix': 'str',
+        'prefix_length': 'int',
+        'message': 'str',
+    }
+    path: ['buffer', 'lines', 'line', 'line_data']
+    item 1:
+        __path: ['0x558d61ea3e60', '0x558d61ea40e0', '0x558d62920d80', '0x558d62abf040']
+        buffer: '0x558d61ea3e60'
+        y: -1
+        date: 1588404926
+        date_printed: 1588404926
+        str_time: 'F@0025209F@0024535F@0024026'
+        tags_count: 0
+        tags_array: []
+        displayed: 1
+        notify_level: 0
+        highlight: 0
+        refresh_needed: 0
+        prefix: ''
+        prefix_length: 0
+        message: 'ово је прва линија'
+    item 2:
+        __path: ['0x558d61ea3e60', '0x558d61ea40e0', '0x558d626779f0', '0x558d62af9700']
+        buffer: '0x558d61ea3e60'
+        y: -1
+        date: 1588404930
+        date_printed: 1588404930
+        str_time: 'F@0025209F@0024535F@0024030'
+        tags_count: 0
+        tags_array: []
+        displayed: 1
+        notify_level: 0
+        highlight: 0
+        refresh_needed: 0
+        prefix: ''
+        prefix_length: 0
+        message: 'ово је друга линија'
+----
+
+* Захтев за садржај вруће листе:
+
+----
+(hdata_hotlist) hdata hotlist:gui_hotlist(*)
+----
+
+Одговор:
+
+[source, python]
+----
+id: 'hdata_hotlist'
+hda:
+    keys: {
+        'priority': 'int',
+        'creation_time.tv_sec': 'tim',
+        'creation_time.tv_usec': 'lon',
+        'buffer': 'ptr',
+        'count': 'arr',
+        'prev_hotlist': 'ptr',
+        'next_hotlist': 'ptr',
+    }
+    path: ['hotlist']
+    item 1:
+        __path: ['0x558d629601b0']
+        priority: 3
+        creation_time.tv_sec: 1588405398
+        creation_time.tv_usec: 355383
+        buffer: '0x558d62a9cea0'
+        count: [1, 1, 0, 1]
+        prev_hotlist: '0x0'
+        next_hotlist: '0x0'
+----
+
+[[command_info]]
+=== info
+
+Захтев за _инфо_.
+
+Синтакса:
+
+----
+(id) info <име> [<аргументи>]
+----
+
+Аргументи:
+
+* _име_: име информације која се захтева
+* _аргументи_: аргументи (није обавезно)
+
+Примери:
+
+* Захтев за верзију програма WeeChat:
+
+----
+(info_version) info version
+----
+
+Одговор:
+
+[source, python]
+----
+id: 'info_version'
+inf: ('version', '2.9-dev')
+----
+
+* Захтев за верзију програма WeeChat као број:
+
+----
+(info_version_number) info version_number
+----
+
+Одговор:
+
+[source, python]
+----
+id: 'info_version_number'
+inf: ('version_number', '34144256')
+----
+
+* Захтев за WeeChat директоријум:
+
+----
+(info_weechat_config_dir) info weechat_config_dir
+----
+
+Одговор:
+
+[source, python]
+----
+id: 'info_weechat_config_dir'
+inf: ('weechat_config_dir', '/home/user/.config/weechat')
+----
+
+[[command_infolist]]
+=== infolist
+
+Захтев _инфолисте_.
+
+[IMPORTANT]
+Садржај инфолисте је дупликат стварних података. Кадгод је то могуће, употребите команду <<command_hdata,hdata>>, која обезбеђује директан приступ подацима (бржа је, користи мање меморије и враћа мање објекте у поруци).
+
+Синтакса:
+
+----
+(id) infolist <име> [<показивач> [<аргументи>]]
+----
+
+Аргументи:
+
+* _име_: име жељене инфолисте
+* _показивач_: показивач (није обавезан)
+* _аргументи_: аргументи (није обавезно)
+
+Примери:
+
+* Захтев за „buffer” инфолисту:
+
+----
+(infolist_buffer) infolist buffer
+----
+
+Одговор:
+
+[source, python]
+----
+id: 'infolist_buffer'
+inl:
+    name: buffer
+    item 1:
+        pointer: '0x558d61ea3e60'
+        current_buffer: 1
+        plugin: '0x0'
+        plugin_name: 'core'
+        number: 1
+        layout_number: 1
+        layout_number_merge_order: 0
+        name: 'weechat'
+        full_name: 'core.weechat'
+        old_full_name: None
+        short_name: 'weechat'
+        type: 0
+        notify: 3
+        num_displayed: 1
+        active: 1
+        hidden: 0
+        zoomed: 0
+        print_hooks_enabled: 1
+        day_change: 1
+        clear: 1
+        filter: 1
+        closing: 0
+        first_line_not_read: 0
+        lines_hidden: 0
+        prefix_max_length: 0
+        time_for_each_line: 1
+        nicklist_case_sensitive: 0
+        nicklist_display_groups: 1
+        nicklist_max_length: 0
+        nicklist_count: 0
+        nicklist_groups_count: 0
+        nicklist_nicks_count: 0
+        nicklist_visible_count: 0
+        title: 'WeeChat 2.9-dev (C) 2003-2020 - https://weechat.org/'
+        input: 1
+        input_get_unknown_commands: 0
+        input_get_empty: 0
+        input_multiline: 0
+        input_buffer: ''
+        input_buffer_alloc: 256
+        input_buffer_size: 0
+        input_buffer_length: 0
+        input_buffer_pos: 0
+        input_buffer_1st_display: 0
+        num_history: 0
+        text_search: 0
+        text_search_exact: 0
+        text_search_regex: 0
+        text_search_regex_compiled: '0x0'
+        text_search_where: 0
+        text_search_found: 0
+        text_search_input: None
+        highlight_words: None
+        highlight_regex: None
+        highlight_regex_compiled: '0x0'
+        highlight_tags_restrict: None
+        highlight_tags: None
+        hotlist_max_level_nicks: None
+        keys_count: 0
+        localvar_name_00000: 'plugin'
+        localvar_value_00000: 'core'
+        localvar_name_00001: 'name'
+        localvar_value_00001: 'weechat'
+----
+
+* Захтев за „window” инфолисту:
+
+----
+(infolist_window) infolist window
+----
+
+Одговор:
+
+[source, python]
+----
+id: 'infolist_window'
+inl:
+    name: window
+    item 1:
+        pointer: '0x558d61ddc800'
+        current_window: 1
+        number: 1
+        x: 14
+        y: 0
+        width: 259
+        height: 71
+        width_pct: 100
+        height_pct: 100
+        chat_x: 14
+        chat_y: 1
+        chat_width: 259
+        chat_height: 68
+        buffer: '0x558d61ea3e60'
+        start_line_y: 0
+----
+
+[[command_nicklist]]
+=== nicklist
+
+Захтев _листе надимака_, за један или за све бафере.
+
+Синтакса:
+
+----
+(id) nicklist [<бафер>]
+----
+
+Аргументи:
+
+* _бафер_: показивач (нпр.: „0x1234abcd”) или пуно име бафера (на пример: _core.weechat_ или _irc.libera.#weechat_)
+
+Примери:
+
+* Захтев листе бафера за све бафере:
+
+----
+(nicklist_all) nicklist
+----
+
+Одговор:
+
+[source, python]
+----
+id: 'nicklist_all'
+hda:
+    keys: {
+        'group': 'chr',
+        'visible': 'chr',
+        'level': 'int',
+        'name': 'str',
+        'color': 'str',
+        'prefix': 'str',
+        'prefix_color': 'str',
+    }
+    path: ['buffer', 'nicklist_item']
+    item 1:
+        __path: ['0x558d61ea3e60', '0x558d61ea4120']
+        group: 1
+        visible: 0
+        level: 0
+        name: 'root'
+        color: None
+        prefix: None
+        prefix_color: None
+    item 2:
+        __path: ['0x558d62840ea0', '0x558d61e75f90']
+        group: 1
+        visible: 0
+        level: 0
+        name: 'root'
+        color: None
+        prefix: None
+        prefix_color: None
+    item 3:
+        __path: ['0x558d62a9cea0', '0x558d62abf2e0']
+        group: 1
+        visible: 0
+        level: 0
+        name: 'root'
+        color: None
+        prefix: None
+        prefix_color: None
+    item 4:
+        __path: ['0x558d62a9cea0', '0x558d62afb9d0']
+        group: 1
+        visible: 1
+        level: 1
+        name: '000|o'
+        color: 'weechat.color.nicklist_group'
+        prefix: None
+        prefix_color: None
+    item 5:
+        __path: ['0x558d62a9cea0', '0x558d62aff930']
+        group: 0
+        visible: 1
+        level: 0
+        name: 'FlashCode'
+        color: 'weechat.color.chat_nick_self'
+        prefix: '@'
+        prefix_color: 'lightgreen'
+    item 6:
+        __path: ['0x558d62a9cea0', '0x558d62af9930']
+        group: 1
+        visible: 1
+        level: 1
+        name: '001|v'
+        color: 'weechat.color.nicklist_group'
+        prefix: None
+        prefix_color: None
+    item 7:
+        __path: ['0x558d62a9cea0', '0x558d62afc510']
+        group: 1
+        visible: 1
+        level: 1
+        name: '999|...'
+        color: 'weechat.color.nicklist_group'
+        prefix: None
+        prefix_color: None
+    item 8:
+        __path: ['0x558d62a9cea0', '0x558d6292c290']
+        group: 0
+        visible: 1
+        level: 0
+        name: 'flashy'
+        color: '142'
+        prefix: ' '
+        prefix_color: 'lightblue'
+    item 9:
+        __path: ['0x558d62914680', '0x558d62afc4b0']
+        group: 1
+        visible: 0
+        level: 0
+        name: 'root'
+        color: None
+        prefix: None
+        prefix_color: None
+----
+
+* Захтев листе надимака за бафер „irc.libera.#weechat”:
+
+----
+(nicklist_weechat) nicklist irc.libera.#weechat
+----
+
+Одговор:
+
+[source, python]
+----
+id: 'nicklist_weechat'
+hda:
+    keys: {
+        'group': 'chr',
+        'visible': 'chr',
+        'level': 'int',
+        'name': 'str',
+        'color': 'str',
+        'prefix': 'str',
+        'prefix_color': 'str',
+    }
+    path: ['buffer', 'nicklist_item']
+    item 1:
+        __path: ['0x558d62a9cea0', '0x558d62abf2e0']
+        group: 1
+        visible: 0
+        level: 0
+        name: 'root'
+        color: None
+        prefix: None
+        prefix_color: None
+    item 2:
+        __path: ['0x558d62a9cea0', '0x558d62afb9d0']
+        group: 1
+        visible: 1
+        level: 1
+        name: '000|o'
+        color: 'weechat.color.nicklist_group'
+        prefix: None
+        prefix_color: None
+    item 3:
+        __path: ['0x558d62a9cea0', '0x558d62aff930']
+        group: 0
+        visible: 1
+        level: 0
+        name: 'FlashCode'
+        color: 'weechat.color.chat_nick_self'
+        prefix: '@'
+        prefix_color: 'lightgreen'
+    item 4:
+        __path: ['0x558d62a9cea0', '0x558d62af9930']
+        group: 1
+        visible: 1
+        level: 1
+        name: '001|v'
+        color: 'weechat.color.nicklist_group'
+        prefix: None
+        prefix_color: None
+    item 5:
+        __path: ['0x558d62a9cea0', '0x558d62afc510']
+        group: 1
+        visible: 1
+        level: 1
+        name: '999|...'
+        color: 'weechat.color.nicklist_group'
+        prefix: None
+        prefix_color: None
+    item 6:
+        __path: ['0x558d62a9cea0', '0x558d6292c290']
+        group: 0
+        visible: 1
+        level: 0
+        name: 'flashy'
+        color: '142'
+        prefix: ' '
+        prefix_color: 'lightblue'
+----
+
+[[command_input]]
+=== input
+
+Слање података у бафер.
+
+Синтакса:
+
+----
+(id) input <бафер> <подаци>
+----
+
+Аргументи:
+
+* _бафер_: показивач (нпр.: „0x1234abcd”) или пуно име бафера (на пример: _core.weechat_ или _irc.libera.#weechat_)
+* _подаци_: подаци који се шаљу у бафер: ако почињу са `/`, онда ће се извршити као
+   команда у баферу, у супротном се текст шаље као унос у бафер
+
+Примери:
+
+* Слање команде „/help filter” у WeeChat бафер језгра:
+
+----
+input core.weechat /help filter
+----
+
+* Слање поруке „здраво!” на #weechat канал:
+
+----
+input irc.libera.#weechat здраво!
+----
+
+[[command_completion]]
+=== completion
+
+_WeeChat ≥ 2.9._
+
+Захтев за довршавање стринга: листа могућих речи на датој позицији у стрингу за дати бафер.
+
+Синтакса:
+
+----
+(id) completion <бафер> <позиција> [<подаци>]
+----
+
+Аргументи:
+
+* _бафер_: показивач (нпр.: „0x1234abcd”) или пуно име бафера (на пример: _core.weechat_ или _irc.libera.#weechat_)
+* _позиција_: позиција за довршавање у стрингу (почиње од 0); ако је вредност -1, позиција представља дужину _подаци_ (тако да се довршавање ради на крају _подаци_)
+* _подаци_: улазни стринг; ако се не наведе, довршавање се ради за празан стринг
+
+Програм WeeChat одговара са hdata:
+
+[width="100%", cols="3m,2,10", options="header"]
+|===
+| Име       | Тип              | Опис
+| context   | стринг           | Контекст довршавања: „null” (без довршавања), „command”, „command_arg”, „auto”.
+| base_word | стринг           | Базна реч која се користи за довршавање.
+| pos_start | цео број         | Индекс првог карактера који се замењује (почиње од 0).
+| pos_end   | цео број         | Индекс последњег карактера који се замењује (почиње од 0).
+| add_space | цео број         | 1 ако након речи треба додати размак, 0 у супротном.
+| list      | низ стрингова    | Листа речи; празна ако ништа није пронађено за довршавање на траженој позицији.
+|===
+
+[NOTE]
+У случају грешке, на пример за неважећи бафер или интерну грешку на страни програма WeeChat, враћа се празан hdata.
+
+Примери:
+
+* Довршавање аргумента команде:
+
+----
+(completion_help) completion core.weechat -1 /help fi
+----
+
+Одговор:
+
+[source, python]
+----
+id: 'completion_help'
+hda:
+    keys: {
+        'context': 'str',
+        'base_word': 'str',
+        'pos_start': 'int',
+        'pos_end': 'int',
+        'add_space': 'int',
+        'list': 'arr',
+    }
+    path: ['completion']
+    item 1:
+      __path: ['0x55d0ccc842c0']
+      context: 'command_arg'
+      base_word: 'fi'
+      pos_start: 6
+      pos_end: 7
+      add_space: 0
+      list: [
+          'fifo',
+          'fifo.file.enabled',
+          'fifo.file.path',
+          'filter',
+      ]
+----
+
+* Довршавање команде у средини речи:
+
+----
+(completion_query) completion core.weechat 5 /quernick
+----
+
+Одговор:
+
+[source, python]
+----
+id: 'completion_query'
+hda:
+    keys: {
+        'context': 'str',
+        'base_word': 'str',
+        'pos_start': 'int',
+        'pos_end': 'int',
+        'add_space': 'int',
+        'list': 'arr',
+    }
+    path: ['completion']
+    item 1:
+        __path: ['0x55d0ccc88470']
+        context: 'command'
+        base_word: 'quer'
+        pos_start: 1
+        pos_end: 4
+        add_space: 1
+        list: ['query']
+----
+
+* Ништа за довршавање:
+
+----
+(completion_abcdefghijkl) completion core.weechat -1 abcdefghijkl
+----
+
+Одговор:
+
+[source, python]
+----
+id: 'completion_abcdefghijkl'
+hda:
+    keys: {
+        'context': 'str',
+        'base_word': 'str',
+        'pos_start': 'int',
+        'pos_end': 'int',
+        'add_space': 'int',
+        'list': 'arr',
+    }
+    path: ['completion']
+    item 1:
+        __path: ['0x55d0ccc88470']
+        context: 'auto'
+        base_word: 'abcdefghijkl'
+        pos_start: 0
+        pos_end: 11
+        add_space: 1
+        list: []
+----
+
+* Довршавање у неважећем баферу:
+
+----
+(completion_help) completion buffer.does.not.exist -1 /help fi
+----
+
+Одговор:
+
+[source, python]
+----
+id: 'completion_help'
+hda:
+    keys: {}
+    path: ['completion']
+----
+
+[[command_sync]]
+=== sync
+
+_Ажурирано у верзији 0.4.1._
+
+Синхронизација једног или више бафера, да би се примиле измене у баферу.
+
+[IMPORTANT]
+Препоручује се да се ова команда пошаље непосредно након што потражите податке из бафера (линије, ...). Може да се пошаље и у истој поруци (након карактера за прелом реда: „\n”).
+
+Синтакса:
+
+----
+(id) sync [<бафер>[,<бафер>...] <опција>[,<опција>...]]
+----
+
+Аргументи:
+
+* _бафер_: показивач (нпр: „0x1234abcd”) или пуно име бафера (на пример: _core.weechat_ или _irc.libera.#weechat_); за навођење свих бафера може да се употреби име „*”
+* _опције_: једна од следећих кључних речи, раздвојених запетама (подразумевано је _buffers,upgrade,buffer,nicklist_ за „*” и _buffer,nicklist_ за бафер):
+** _buffers_: пријем сигнала о баферима (отворен/затворен, премештен, преименован, спојен/раздвојен, скривен/откривен); ово може да се користи само уз име „*” _(WeeChat ≥ 0.4.1)_
+** _upgrade_: пријем сигнала о ажурирању програма WeeChat (ажурирање, ажурирање завршено); ово може да се користи само уз име „*” _(WeeChat ≥ 0.4.1)_
+** _buffer_: пријем сигнала о баферу (нове линије, промењен тип, промењен наслов, додата/уклоњена локална променљива и исти сигнали као код _buffers_ за бафер) _(ажурирано у верзији 0.4.1)_
+** _nicklist_: пријем листе надимака након промена
+
+Примери:
+
+* Синхронизација свих бафера са листом надимака (3 команде су еквивалентне, али се препоручује употреба прве из разлога компатибилности са будућим верзијама):
+
+----
+sync
+sync *
+sync * buffers,upgrade,buffer,nicklist
+----
+
+* Синхронизација WeeChat бафера језгра:
+
+----
+sync core.buffer
+----
+
+* Синхронизација #weechat канала, без листе надимака:
+
+----
+sync irc.libera.#weechat buffer
+----
+
+* Пријем општих сигнала + свих сигнала за канал #weechat:
+
+----
+sync * buffers,upgrade
+sync irc.libera.#weechat
+----
+
+[[command_desync]]
+=== desync
+
+_Ажурирано у верзији 0.4.1._
+
+Десинхронизација једног или више бафера, како би се прекинуло праћење измена.
+
+[NOTE]
+Ово ће уклонити _опције_ за бафере. Ако су неке опције још увек активне за бафере, клијент ће за те бафере наставити да прима ажурирања.
+
+Синтакса:
+
+----
+(id) desync [<бафер>[,<бафер>...] <опција>[,<опција>...]]
+----
+
+Аргументи:
+
+* _бафер_: показивач (нпр: „0x1234abcd”) или пуно име бафера (на пример: _core.weechat_ или _irc.libera.#weechat_); за навођење свих бафера може да се употреби име „*”
+* _опције_: једна од следећих кључних речи, раздвојене запетама (подразумевано је _buffers,upgrade,buffer,nicklist_ за „*” и _buffer,nicklist_ за бафер); погледајте <<command_sync,команду sync>> за вредности
+
+[NOTE]
+Када се користи бафер „*”, остали синхронизовани бафери се задржавају (употребом имена). +
+Тако да ако пошаљете: „sync *”, па затим „sync irc.libera.#weechat”, па затим „desync *”, програм WeeChat ће наставити да шаље измене канала #weechat (морате експлицитно да га уклоните ако желите да зауставите слања ажурирања).
+
+Примери:
+
+* Десинхронизација свих бафера (3 команде су еквивалентне, али се препоручује употреба прве из разлога компатибилности са будућим верзијама):
+
+----
+desync
+desync *
+desync * buffers,upgrade,buffer,nicklist
+----
+
+* Десинхронизација листе надимака за канал #weechat (остају ажурирања бафера):
+
+----
+desync irc.freenode.#weechat nicklist
+----
+
+* Десинхронизација #weechat канала:
+
+----
+desync irc.libera.#weechat
+----
+
+[[command_test]]
+=== test
+
+Тест команда: програм WeeChat ће вратити одговор са различитим објектима.
+
+Ова команда је корисна за тестирање декодирања бинарних објеката које враћа програм WeeChat.
+
+Синтакса:
+
+----
+(id) test
+----
+
+Враћају се следећи објекти (у наведеном редоследу):
+
+[width="100%", cols="^3,3m,5m", options="header"]
+|===
+| Тип               | Тип (у поруци)    | Вредност
+| char              | chr               | 65 ("A")
+| integer           | int               | 123456
+| integer           | int               | -123456
+| long              | lon               | 1234567890
+| long              | lon               | -1234567890
+| string            | str               | "a string"
+| string            | str               | ""
+| string            | str               | NULL
+| buffer            | buf               | "buffer"
+| buffer            | buf               | NULL
+| pointer           | ptr               | 0x1234abcd
+| pointer           | ptr               | NULL
+| time              | tim               | 1321993456
+| array of strings  | arr str           | [ "abc", "de" ]
+| array of integers | arr int           | [ 123, 456, 789 ]
+|===
+
+[IMPORTANT]
+Не смете да користите вредности показивача које врати ова команда, оне нису исправне. Ова команда сме да се користи само за тестирање декодирања поруке коју шаље програм WeeChat.
+
+Пример:
+
+----
+(test) test
+----
+
+Одговор:
+
+----
+id: 'test'
+chr: 65
+int: 123456
+int: -123456
+lon: 1234567890
+lon: -1234567890
+str: 'a string'
+str: ''
+str: None
+buf: 'buffer'
+buf: None
+ptr: '0x1234abcd'
+ptr: '0x0'
+tim: 1321993456
+arr: ['abc', 'de']
+arr: [123, 456, 789]
+----
+
+[[command_ping]]
+=== ping
+
+_WeeChat ≥ 0.4.2._
+
+Шаље пинг програму WeeChat који ће одговорити поруком „_pong” и истим аргументима.
+
+Ова команда је корисна за проверу да ли је веза са програмом WeeChat и даље успостављена и за мерење времена одговора.
+
+Синтакса:
+
+----
+(id) ping [<аргументи>]
+----
+
+Пример:
+
+----
+ping 1370802127000
+----
+
+Одговор:
+
+----
+id:'_pong'
+str: '1370802127000'
+----
+
+[[command_quit]]
+=== quit
+
+Прекид везе са _релејем_.
+
+Синтакса:
+
+----
+(id) quit
+----
+
+Пример:
+
+----
+quit
+----
+
+[[messages]]
+== Поруке (релеј → клијент)
+
+Поруке се шаљу као бинарни подаци, употребом следећег формата (са величином у бајтовима):
+
+....
+┌────────╥─────────────╥─────────╥────────┬──────────╥───────╥────────┬──────────┐
+│ дужина ║ компресија  ║   id    ║  тип 1 │ објект 1 ║  ...  ║  тип N │ објект N │
+└────────╨─────────────╨─────────╨────────┴──────────╨───────╨────────┴──────────┘
+ └──────┘ └───────────┘ └───────┘ └──────┘ └────────┘         └──────┘ └────────┘
+     4          1        4 + str      3        ??                 3        ??
+ └────────────────────┘ └───────────────────────────────────────────────────────┘
+     заглавље (5)                       компесовани подаци (??)
+ └──────────────────────────────────────────────────────────────────────────────┘
+                               'length' bytes
+....
+
+* _дужина_ (неозначени цео број, 4 бајта): број бајтова у целој поруци (заједно са овим пољем)
+* _компресија_ (бајт): заставица:
+** _0x00_: подаци који следе нису компресовани
+** _0x01_: подаци који следе су компресовани са _zlib_
+* _id_ (стринг, 4 бајта + садржај): идентификатор који послао клијент (пре имена команде); може бити и празан (стринг дужине нула и без садржаја) ако у команди није био наведен идентификатор
+* _тип_ (3 карактера): тип: 3 слова (погледајте табелу испод)
+* _објект_: објекат (погледајте табелу испод)
+
+[[message_compression]]
+=== Компресија
+
+Ако је вредност заставице _компресија_ 0x01, онда су *сви* подаци компресовани _zlib_ алгоритмом, тако да пре обраде морају да се декомпресују.
+
+[[message_identifier]]
+=== Идентификатор
+
+Постоје два типа идентификатора (_id_):
+
+* _id_ који је послао _клијент_: _релеј_ ће у свој одговор поставити овај исти _id_
+* _id_ догађаја: приликом неких догађаја, _релеј_ ће _клијенту_ послати поруку користећи одређени _id_ који почиње са доњом цртом (погледајте табелу испод)
+
+WeeChat резервисани идентификатори:
+
+[width="100%", cols="5m,5,3,4,7", options="header"]
+|===
+| Идентификатор | Примљен са _sync_ | Послати подаци |
+  Опис | Препоручена акција у клијенту
+
+| _buffer_opened | buffers / buffer | hdata: buffer |
+  Бафер је отворен. | Отварање бафера.
+
+| _buffer_type_changed | buffers / buffer | hdata: buffer |
+  Промењен је тип бафера. | Измена типа бафера.
+
+| _buffer_moved | buffers / buffer | hdata: buffer |
+  Buffer је премештен. | Премештање бафера.
+
+| _buffer_merged | buffers / buffer | hdata: buffer |
+  Buffer је спојен. | Спајање бафера.
+
+| _buffer_unmerged | buffers / buffer | hdata: buffer |
+  Бафер је раздвојен. | Раздвајање бафера.
+
+| _buffer_hidden | buffers / buffer | hdata: buffer |
+  Бафер је сакривен. | Скривање бафера.
+
+| _buffer_unhidden | buffers / buffer | hdata: buffer |
+  Бафер је откривен. | Откривање бафера.
+
+| _buffer_renamed | buffers / buffer | hdata: buffer |
+  Баферу је промењено име. | Промена имена бафера.
+
+| _buffer_title_changed | buffers / buffer | hdata: buffer |
+  Промењен је наслов бафера. | Промена наслова бафера.
+
+| _buffer_localvar_added | buffers / buffer | hdata: buffer |
+  Додата је локална променљива. | Додавање локалне променљиве.
+
+| _buffer_localvar_changed | buffers / buffer | hdata: buffer |
+  Локална променљива је измењена. | Измена локалне променљиве у баферу.
+
+| _buffer_localvar_removed | buffers / buffer | hdata: buffer |
+  Уклоњена је локална променљива. | Уклањање локалне променљиве из бафера.
+
+| _buffer_closing | buffers / buffer | hdata: buffer |
+  Бафер је затворен. | Затварање бафера.
+
+| _buffer_cleared | buffer | hdata: buffer |
+  Бафер је очишћен. | Чишћење бафера.
+
+| _buffer_line_added | buffer | hdata: line |
+  У бафер је додата линија. | Приказ линије у баферу.
+
+| _nicklist | nicklist | hdata: nicklist_item |
+  Листа надимака за бафер. | Замена листе надимака.
+
+| _nicklist_diff | nicklist | hdata: nicklist_item |
+  Разлике листе надимака за бафер. | Ажурирање листе надимака.
+
+| _pong | (always) | стринг: ping аргументи |
+  Одговор на „ping”. | Мерење времена одговора.
+
+| _upgrade | upgrade | (празно) |
+  Програм WeeChat се ажурира. | Десинхронизација са програмом WeeChat (или прекид везе).
+
+| _upgrade_ended | upgrade | (празно) |
+  Завршено је ажурирање програма WeeChat. | Синхро/ресинхро са програмом WeeChat.
+|===
+
+[[message_buffer_opened]]
+==== _buffer_opened
+
+Ова порука се шаље клијенту када програм WeeChat пошаље сигнал „buffer_opened”.
+
+Подаци се шаљу као hdata:
+
+[width="100%", cols="3m,2,10", options="header"]
+|===
+| Име             | Тип        | Опис
+| number          | целобројни | Број бафера (≥ 1).
+| full_name       | стринг     | Пуно име (пример: _irc.libera.#weechat_).
+| short_name      | стринг     | Кратко име (пример: _#weechat_).
+| nicklist        | целобројни | 1 ако бафер има листу надимака, у супротном 0.
+| title           | стринг     | Наслов бафера.
+| local_variables | хештабела  | Локалне променљиве.
+| prev_buffer     | показивач  | Показивач на претходни бафер.
+| next_buffer     | показивач  | Показивач на наредни бафер.
+|===
+
+Пример: приступљено каналу _#weechat_ на libera, нови бафер _irc.libera.#weechat_:
+
+[source, python]
+----
+id: '_buffer_opened'
+hda:
+    keys: {
+        'number': 'int',
+        'full_name': 'str',
+        'short_name': 'str',
+        'nicklist': 'int',
+        'title': 'str',
+        'local_variables': 'htb',
+        'prev_buffer': 'ptr',
+        'next_buffer': 'ptr',
+    }
+    path: ['buffer']
+    item 1:
+        __path: ['0x35a8a60']
+        number: 3
+        full_name: 'irc.libera.#weechat'
+        short_name: None
+        nicklist: 0
+        title: None
+        local_variables: {
+            'plugin': 'irc',
+            'name': 'libera.#weechat',
+        }
+        prev_buffer: '0x34e7400'
+        next_buffer: '0x0'
+----
+
+[[message_buffer_moved]]
+==== _buffer_moved
+
+Ова порука се шаље клијенту када програм WeeChat пошаље сигнал „buffer_moved”.
+
+Подаци се шаљу као hdata:
+
+[width="100%", cols="3m,2,10", options="header"]
+|===
+| Име         | Тип        | Опис
+| number      | целобројни | Број бафера (≥ 1).
+| full_name   | стринг     | Пуно име (пример: _irc.libera.#weechat_).
+| prev_buffer | показивач  | Показивач на претходни бафер.
+| next_buffer | показивач  | Показивач на наредни бафер.
+|===
+
+Пример: бафер _irc.libera.#weechat_ је померен на број 2:
+
+[source, python]
+----
+id: '_buffer_moved'
+hda:
+    keys: {
+        'number': 'int',
+        'full_name': 'str',
+        'prev_buffer': 'ptr',
+        'next_buffer': 'ptr',
+    }
+    path: ['buffer']
+    item 1:
+        __path: ['0x34588c0']
+        number: 2
+        full_name: 'irc.libera.#weechat'
+        prev_buffer: '0x347b9f0'
+        next_buffer: '0x3471bc0'
+----
+
+[[message_buffer_merged]]
+==== _buffer_merged
+
+Ова порука се шаље клијенту када програм WeeChat пошаље сигнал „buffer_merged”.
+
+Подаци се шаљу као hdata:
+
+[width="100%", cols="3m,2,10", options="header"]
+|===
+| Име         | Тип        | Опис
+| number      | целобројни | Број бафера (≥ 1).
+| full_name   | стринг     | Пуно име (пример: _irc.libera.#weechat_).
+| prev_buffer | показивач  | Показивач на претходни бафер.
+| next_buffer | показивач  | Показивач на наредни бафер.
+|===
+
+Пример: бафер _irc.libera.#weechat_ је спојен са бафером #2:
+
+[source, python]
+----
+id: '_buffer_merged'
+hda:
+    keys: {
+        'number': 'int',
+        'full_name': 'str',
+        'prev_buffer': 'ptr',
+        'next_buffer': 'ptr',
+    }
+    path: ['buffer']
+    item 1:
+        __path: ['0x4db4c00']
+        number: 2
+        full_name: 'irc.libera.#weechat'
+        prev_buffer: '0x4cef9b0'
+        next_buffer: '0x0'
+----
+
+[[message_buffer_unmerged]]
+==== _buffer_unmerged
+
+Ова порука се шаље клијенту када програм WeeChat пошаље сигнал „buffer_unmerged”.
+
+Подаци се шаљу као hdata:
+
+[width="100%", cols="3m,2,10", options="header"]
+|===
+| Име         | Тип        | Опис
+| number      | целобројни | Број бафера (≥ 1).
+| full_name   | стринг     | Пуно име (пример: _irc.libera.#weechat_).
+| prev_buffer | показивач  | Показивач на претходни бафер.
+| next_buffer | показивач  | Показивач на наредни бафер.
+|===
+
+Пример: бафер _irc.libera.#weechat_ је раздвојен:
+
+[source, python]
+----
+id: '_buffer_unmerged'
+hda:
+    keys: {
+        'number': 'int',
+        'full_name': 'str',
+        'prev_buffer': 'ptr',
+        'next_buffer': 'ptr',
+    }
+    path: ['buffer']
+    item 1:
+        __path: ['0x4db4c00']
+        number: 3
+        full_name: 'irc.libera.#weechat'
+        prev_buffer: '0x4cef9b0'
+        next_buffer: '0x0'
+----
+
+[[message_buffer_hidden]]
+==== _buffer_hidden
+
+_WeeChat ≥ 1.0._
+
+Ова порука се шаље клијенту када програм WeeChat пошаље сигнал „buffer_hidden”.
+
+Подаци се шаљу као hdata:
+
+[width="100%", cols="3m,2,10", options="header"]
+|===
+| Име         | Тип        | Опис
+| number      | целобројни | Број бафера (≥ 1).
+| full_name   | стринг     | Пуно име (пример: _irc.libera.#weechat_).
+| prev_buffer | показивач  | Показивач на претходни бафер.
+| next_buffer | показивач  | Показивач на наредни бафер.
+|===
+
+Пример: бафер _irc.libera.#weechat_ је скривен:
+
+[source, python]
+----
+id: '_buffer_hidden'
+hda:
+    keys: {
+        'number': 'int',
+        'full_name': 'str',
+        'prev_buffer': 'ptr',
+        'next_buffer': 'ptr',
+    }
+    path: ['buffer']
+    item 1:
+        __path: ['0x4db4c00']
+        number: 2
+        full_name: 'irc.libera.#weechat'
+        prev_buffer: '0x4cef9b0'
+        next_buffer: '0x0'
+----
+
+[[message_buffer_unhidden]]
+==== _buffer_unhidden
+
+_WeeChat ≥ 1.0._
+
+Ова порука се шаље клијенту када програм WeeChat пошаље сигнал „buffer_unhidden”.
+
+Подаци се шаљу као hdata:
+
+[width="100%", cols="3m,2,10", options="header"]
+|===
+| Име         | Тип        | Опис
+| number      | целобројни | Број бафера (≥ 1).
+| full_name   | стринг     | Пуно име (пример: _irc.libera.#weechat_).
+| prev_buffer | показивач  | Показивач на претходни бафер.
+| next_buffer | показивач  | Показивач на наредни бафер.
+|===
+
+Пример: бафер _irc.libera.#weechat_ је откривен:
+
+[source, python]
+----
+id: '_buffer_unhidden'
+hda:
+    keys: {
+        'number': 'int',
+        'full_name': 'str',
+        'prev_buffer': 'ptr',
+        'next_buffer': 'ptr',
+    }
+    path: ['buffer']
+    item 1:
+        __path: ['0x4db4c00']
+        number: 3
+        full_name: 'irc.libera.#weechat'
+        prev_buffer: '0x4cef9b0'
+        next_buffer: '0x0'
+----
+
+[[message_buffer_renamed]]
+==== _buffer_renamed
+
+Ова порука се шаље клијенту када програм WeeChat пошаље сигнал „buffer_renamed”.
+
+Подаци се шаљу као hdata:
+
+[width="100%", cols="3m,2,10", options="header"]
+|===
+| Име             | Тип        | Опис
+| number          | целобројни | Број бафера(≥ 1).
+| full_name       | стринг     | Пуно име (пример: _irc.libera.#weechat_).
+| short_name      | стринг     | Кратко име (пример: _#weechat_).
+| local_variables | хештабела  | Локалне променљиве.
+|===
+
+Пример: име приватног бафера је промењено са _FlashCode_ у _Flash2_:
+
+[source, python]
+----
+id: '_buffer_renamed'
+hda:
+    keys: {
+        'number': 'int',
+        'full_name': 'str',
+        'short_name': 'str',
+        'local_variables': 'htb',
+    }
+    path: ['buffer']
+    item 1:
+        __path: ['0x4df7b80']
+        number: 5
+        full_name: 'irc.libera.Flash2'
+        short_name: 'Flash2'
+        local_variables: {
+            'server': 'libera',
+            'plugin': 'irc',
+            'type': 'private',
+            'channel': 'FlashCode',
+            'nick': 'test',
+            'name': 'libera.Flash2',
+        }
+----
+
+[[message_buffer_title_changed]]
+==== _buffer_title_changed
+
+Ова порука се шаље клијенту када програм WeeChat пошаље сигнал „buffer_title_changed”.
+
+Подаци се шаљу као hdata:
+
+[width="100%", cols="3m,2,10", options="header"]
+|===
+| Име       | Тип        | Опис
+| number    | целобројни | Број бафера (≥ 1).
+| full_name | стринг     | Пуно име (пример: _irc.libera.#weechat_).
+| title     | стринг     | Наслов бафера.
+|===
+
+Пример: измењена је тема на каналу _#weechat_:
+
+[source, python]
+----
+id: '_buffer_title_changed'
+hda:
+    keys: {
+        'number': 'int',
+        'full_name': 'str',
+        'title': 'str',
+    }
+    path: ['buffer']
+    item 1:
+        __path: ['0x4a715d0']
+        number: 3
+        full_name: 'irc.libera.#weechat'
+        title: 'Welcome on #weechat!  https://weechat.org/'
+----
+
+[[message_buffer_cleared]]
+==== _buffer_cleared
+
+_WeeChat ≥ 1.0._
+
+Ова порука се шаље клијенту када програм WeeChat пошаље сигнал „buffer_cleared”.
+
+Подаци се шаљу као hdata:
+
+[width="100%", cols="3m,2,10", options="header"]
+|===
+| Име       | Тип        | Опис
+| number    | целобројни | Број бафера (≥ 1).
+| full_name | стринг     | Пуно име (пример: _irc.libera.#weechat_).
+|===
+
+Пример: очишћен је бафер _irc.libera.#weechat_:
+
+[source, python]
+----
+id: '_buffer_cleared'
+hda:
+    keys: {
+        'number': 'int',
+        'full_name': 'str',
+    }
+    path: ['buffer']
+    item 1:
+        __path: ['0x4a715d0']
+        number: 3
+        full_name: 'irc.libera.#weechat'
+----
+
+[[message_buffer_type_changed]]
+==== _buffer_type_changed
+
+Ова порука се шаље клијенту када програм WeeChat пошаље сигнал „buffer_type_changed”.
+
+Подаци се шаљу као hdata:
+
+[width="100%", cols="3m,2,10", options="header"]
+|===
+| Име       | Тип        | Опис
+| number    | целобројни | Број бафера (≥ 1).
+| full_name | стринг     | Пуно име (пример: _irc.libera.#weechat_).
+| type      | целобројни | Тип бафера: 0 = форматирани (подраз.), 1 = слободни садржај.
+|===
+
+Пример: промењен је тип бафера _script.scripts_ са форматирани (0) на слободни садржај (1):
+
+[source, python]
+----
+id: '_buffer_type_changed'
+hda:
+    keys: {
+        'number': 'int',
+        'full_name': 'str',
+        'type': 'int',
+    }
+    path: ['buffer']
+    item 1:
+        __path: ['0x27c9a70']
+        number: 4
+        full_name: 'script.scripts'
+        type: 1
+----
+
+[[message_buffer_localvar_added]]
+==== _buffer_localvar_added
+
+Ова порука се шаље клијенту када програм WeeChat пошаље сигнал „buffer_localvar_added”.
+
+Подаци се шаљу као hdata:
+
+[width="100%", cols="3m,2,10", options="header"]
+|===
+| Име             | Тип        | Опис
+| number          | целобројни | Број бафера (≥ 1).
+| full_name       | стринг     | Пуно име (пример: _irc.libera.#weechat_).
+| local_variables | хештабела  | Локалне променљиве.
+|===
+
+Пример: локална променљива _test_ је додата у бафер _irc.libera.#weechat_:
+
+[source, python]
+----
+id='_buffer_localvar_added', objects:
+hda:
+    keys: {
+        'number': 'int',
+        'full_name': 'str',
+        'local_variables': 'htb',
+    }
+    path: ['buffer']
+    item 1:
+        __path: ['0x4a73de0']
+        number: 3
+        full_name: 'irc.libera.#weechat'
+        local_variables: {
+            'server': 'libera',
+            'test': 'value',
+            'plugin': 'irc',
+            'type': 'channel',
+            'channel': '#weechat',
+            'nick': 'test',
+            'name': 'libera.#weechat',
+        }
+----
+
+[[message_buffer_localvar_changed]]
+==== _buffer_localvar_changed
+
+Ова порука се шаље клијенту када програм WeeChat пошаље сигнал „buffer_localvar_changed”.
+
+Подаци се шаљу као hdata:
+
+[width="100%", cols="3m,2,10", options="header"]
+|===
+| Име             | Тип        | Опис
+| number          | целобројни | Број бафера (≥ 1).
+| full_name       | стринг     | Пуно име (пример: _irc.libera.#weechat_).
+| local_variables | хештабела  | Локалне променљиве.
+|===
+
+Пример: ажурирана је локална променљива _test_ у баферу _irc.libera.#weechat_:
+
+[source, python]
+----
+id='_buffer_localvar_changed', objects:
+hda:
+    keys: {
+        'number': 'int',
+        'full_name': 'str',
+        'local_variables': 'htb',
+    }
+    path: ['buffer']
+    item 1:
+        __path: ['0x4a73de0']
+        number: 3
+        full_name: 'irc.libera.#weechat'
+        local_variables: {
+            'server': 'local',
+            'test': 'value2',
+            'plugin': 'irc',
+            'type': 'channel',
+            'channel': '#weechat',
+            'nick': 'test',
+            'name': 'libera.#weechat',
+        }
+----
+
+[[message_buffer_localvar_removed]]
+==== _buffer_localvar_removed
+
+Ова порука се шаље клијенту када програм WeeChat пошаље сигнал „buffer_localvar_removed”.
+
+Подаци се шаљу као hdata:
+
+[width="100%", cols="3m,2,10", options="header"]
+|===
+| Име             | Тип        | Опис
+| number          | целобројни | Број бафера (≥ 1).
+| full_name       | стринг     | Пуно име (пример: _irc.libera.#weechat_).
+| local_variables | хештабела  | Локалне променљиве.
+|===
+
+Пример: локална променљива _test_ је уклоњена из бафера _irc.libera.#weechat_:
+
+[source, python]
+----
+id: '_buffer_localvar_removed'
+hda:
+    keys: {
+        'number': 'int',
+        'full_name': 'str',
+        'local_variables': 'htb',
+    }
+    path: ['buffer']
+    item 1:
+        __path: ['0x4a73de0']
+        number: 3
+        full_name: 'irc.libera.#prout'
+        local_variables: {
+            'server': 'local',
+            'plugin': 'irc',
+            'type': 'channel',
+            'channel': '#weechat',
+            'nick': 'test',
+            'name': 'libera.#weechat',
+        }
+----
+
+[[message_buffer_line_added]]
+==== _buffer_line_added
+
+Ова порука се шаље клијенту када програм WeeChat пошаље сигнал „buffer_line_added”.
+
+Подаци се шаљу као hdata:
+
+[width="100%", cols="3m,2,10", options="header"]
+|===
+| Име          | Тип              | Опис
+| buffer       | показивач        | Показивач на бафер.
+| date         | време            | Датум поруке.
+| date_printed | време            | Датум када је програм WeeChat приказао поруку.
+| displayed    | карактер         | 1 ако је порука приказана, 0 ако је порука филтрирана (скривена).
+| notify_level | карактер         | Ниво обавештења: -1 = обавештење искључено, 0 = ниски, 1 = порука, 2 = приватно, 3 = истицање.
+| highlight    | карактер         | 1 ако се у линији налази истицање, у супротном 0.
+| tags_array   | низ стрингова    | Листа ознака за линију.
+| prefix       | стринг           | Префикс.
+| message      | стринг           | Порука.
+|===
+
+Пример: нова порука _здраво!_ од надимка _FlashCode_ у баферу _irc.libera.#weechat_:
+
+[source, python]
+----
+id: '_buffer_line_added'
+hda:
+    keys: {
+        'buffer': 'ptr',
+        'date': 'tim',
+        'date_printed': 'tim',
+        'displayed': 'chr',
+        'notify_level': 'chr',
+        'highlight': 'chr',
+        'tags_array': 'arr',
+        'prefix': 'str',
+        'message': 'str',
+    }
+    path: ['line_data']
+    item 1:
+        __path: ['0x4a49600']
+        buffer: '0x4a715d0'
+        date: 1362728993
+        date_printed: 1362728993
+        displayed: 1
+        notify_level: 1
+        highlight: 0
+        tags_array: [
+            'irc_privmsg',
+            'notify_message',
+            'prefix_nick_142',
+            'nick_FlashCode',
+            'log1',
+        ]
+        prefix: 'F06@F@00142FlashCode'
+        message: 'здраво!'
+----
+
+[[message_buffer_closing]]
+==== _buffer_closing
+
+Ова порука се шаље клијенту када програм WeeChat пошаље сигнал „buffer_closing”.
+
+Подаци се шаљу као hdata:
+
+[width="100%", cols="3m,2,10", options="header"]
+|===
+| Име       | Тип        | Опис
+| number    | целобројни | Број бафера (≥ 1).
+| full_name | стринг     | Пуно име (пример: _irc.libera.#weechat_).
+|===
+
+Пример: програм WeeChat затвара бафер _irc.libera.#weechat_:
+
+[source, python]
+----
+id: '_buffer_closing'
+hda:
+    keys: {
+        'number': 'int',
+        'full_name': 'str',
+    }
+    path: ['buffer']
+    item 1:
+        __path: ['0x4a715d0']
+        number: 3
+        full_name: 'irc.libera.#weechat'
+----
+
+[[message_nicklist]]
+==== _nicklist
+
+Ова порука се шаље клијенту када се над листом надимака догађају велика ажурирања (групе/надимци се додају/уклањају/мењају). Порука садржи комплетну листу надимака.
+
+Када се над листом надимака обављају мала ажурирања (додаје се, на пример, само један нови надимак), шаље се још једна порука са идентификатором __nicklist_diff_ (погледајте испод).
+
+Подаци се шаљу као hdata:
+
+[width="100%", cols="3m,2,10", options="header"]
+|===
+| Име          | Тип        | Опис
+| group        | карактер   | 1 за групу, 0 за надимак.
+| visible      | карактер   | 1 ако се група/надимак приказује, у супротном 0.
+| level        | целобројни | Ниво групе (0 за надимак).
+| name         | стринг     | Име групе/надимка.
+| color        | стринг     | Боја имена.
+| prefix       | стринг     | Префикс (само за надимак).
+| prefix_color | стринг     | Боја префикса (само за надимак).
+|===
+
+Пример: листа надимака за бафер _irc.libera.#weechat_:
+
+[source, python]
+----
+id: '_nicklist'
+hda:
+    keys: {
+        'group': 'chr',
+        'visible': 'chr',
+        'level': 'int',
+        'name': 'str',
+        'color': 'str',
+        'prefix': 'str',
+        'prefix_color': 'str',
+    }
+    path: ['buffer', 'nicklist_item']
+    item 1:
+        __path: ['0x4a75cd0', '0x31e95d0']
+        group: 1
+        visible: 0
+        level: 0
+        name: 'root'
+        color: None
+        prefix: None
+        prefix_color: None
+    item 2:
+        __path: ['0x4a75cd0', '0x41247b0']
+        group: 1
+        visible: 1
+        level: 1
+        name: '000|o'
+        color: 'weechat.color.nicklist_group'
+        prefix: None
+        prefix_color: None
+    item 3:
+        __path: ['0x4a75cd0', '0x4a60d20']
+        group: 0
+        visible: 1
+        level: 0
+        name: 'FlashCode'
+        color: '142'
+        prefix: '@'
+        prefix_color: 'lightgreen'
+    item 4:
+        __path: ['0x4a75cd0', '0x4aafaf0']
+        group: 1
+        visible: 1
+        level: 1
+        name: '001|v'
+        color: 'weechat.color.nicklist_group'
+        prefix: None
+        prefix_color: None
+    item 5:
+        __path: ['0x4a75cd0', '0x4a48d80']
+        group: 1
+        visible: 1
+        level: 1
+        name: '999|...'
+        color: 'weechat.color.nicklist_group'
+        prefix: None
+        prefix_color: None
+    item 6:
+        __path: ['0x4a75cd0', '0x4a5f560']
+        group: 0
+        visible: 1
+        level: 0
+        name: 'test'
+        color: 'weechat.color.chat_nick_self'
+        prefix: ' '
+        prefix_color: ''
+----
+
+[[message_nicklist_diff]]
+==== _nicklist_diff
+
+_WeeChat ≥ 0.4.1._
+
+Ова порука се шаље клијенту када се над листом надимака врши мало ажурирање (групе/надимци се додају/уклањају/мењају). Порука садржи разлику листе надимака (између старе и текуће листе надимака).
+
+Подаци се шаљу као hdata:
+
+[width="100%", cols="3m,2,10", options="header"]
+|===
+| Име          | Тип        | Опис
+| _diff        | карактер   | Тип diff-а (погледајте испод).
+| group        | карактер   | 1 за групу, 0 за надимак.
+| visible      | карактер   | 1 ако се група/надимак приказује, у супротном 0.
+| level        | целобројни | Ниво групе (0 за надимак).
+| name         | стринг     | Име групе/надимка.
+| color        | стринг     | Боја имена.
+| prefix       | стринг     | Префикс (само за надимак).
+| prefix_color | стринг     | Боја префикса (само за надимак).
+|===
+
+Вредност __diff_ може бити:
+
+* `+^+`: родитељска група: груп(а/е) или надим(ак/ци) након овог су у вези са овом групом
+* `+++`: група/надимак се додаје у родитељску групу
+* `+-+`: група/надимак се уклања из родитељске групе
+* `+*+`: група/надимак је ажуриран у родитељској групи
+
+Примр: надимак _master_ је додат у групу _000|o_ (опови неког IRC канала) надимци _nick1_ и _nick2_ су додати у групу _999|..._ (стандардни корисници IRC канала):
+
+[source, python]
+----
+id: '_nicklist_diff'
+hda:
+    keys: {
+        '_diff': 'chr',
+        'group': 'chr',
+        'visible': 'chr',
+        'level': 'int',
+        'name': 'str',
+        'color': 'str',
+        'prefix': 'str',
+        'prefix_color': 'str',
+    }
+    path: ['buffer', 'nicklist_item']
+    item 1:
+        __path: ['0x46f2ee0', '0x343c9b0']
+        _diff: 94 ('^')
+        group: 1
+        visible: 1
+        level: 1
+        name: '000|o'
+        color: 'weechat.color.nicklist_group'
+        prefix: None
+        prefix_color: None
+    item 2:
+        __path: ['0x46f2ee0', '0x47e7f60']
+        _diff: 43 ('+')
+        group: 0
+        visible: 1
+        level: 0
+        name: 'master'
+        color: 'magenta'
+        prefix: '@'
+        prefix_color: 'lightgreen'
+    item 3:
+        __path: ['0x46f2ee0', '0x46b8e70']
+        _diff: 94 ('^')
+        group: 1
+        visible: 1
+        level: 1
+        name: '999|...'
+        color: 'weechat.color.nicklist_group'
+        prefix: None
+        prefix_color: None
+    item 4:
+        __path: ['0x46f2ee0', '0x3dba240']
+        _diff: 43 ('+')
+        group: 0
+        visible: 1
+        level: 0
+        name: 'nick1'
+        color: 'green'
+        prefix: ' '
+        prefix_color: ''
+    item 5:
+        __path: ['0x46f2ee0', '0x3c379d0']
+        _diff: 43 ('+')
+        group: 0
+        visible: 1
+        level: 0
+        name: 'nick2'
+        color: 'lightblue'
+        prefix: ' '
+        prefix_color: ''
+----
+
+[[message_pong]]
+==== _pong
+
+_WeeChat ≥ 0.4.2._
+
+Ова порука се шаље клијенту када _релеј_ прими „ping” поруку.
+
+Подаци који се шаљу као стринг: аргументи примљени у „ping” поруци.
+
+Препоручена акција у клијенту је да измери време одговора и да прекине везу ако је оно сувише велико.
+
+[[message_upgrade]]
+==== _upgrade
+
+_WeeChat ≥ 0.3.8._
+
+Ова порука се шаље клијенту када програм WeeChat покрене процес ажурирања.
+
+У овој поруци нема података.
+
+Препоручена акција у клијенту је да се десинхронизује са програмом WeeChat (да пошаље команду _desync_), или да прекине везу са програмом WeeChat (јер ће се након ажурирања променити вредности свих показивача).
+
+[NOTE]
+Током ажурирања програма WeeChat, сокет остаје отворен (осим у случају када веза користи SSL).
+
+[[message_upgrade_ended]]
+==== _upgrade_ended
+
+_WeeChat ≥ 0.3.8._
+
+Ова порука се шаље клијенту када програм WeeChat заврши процес ажурирања.
+
+У овој поруци нема података.
+
+Препоручена акција у клијенту је да се ресинхронизује са програмом WeeChat: тј. да поново пошаље све команде које шаље током покретања након _init_.
+
+[[objects]]
+=== Објекти
+
+Објекти се идентификују са 3 слова, која се зову _тип_. Користе се следећи типови:
+
+[width="100%", cols="^2m,5,10", options="header"]
+|===
+| Тип  | Вредност                     | Дужина
+| chr  | Означени карактер            | 1 бајт
+| int  | Означени целобројни          | 4 бајта
+| lon  | Означени дугачки целобројни  | 1 бајт + дужина целобројног као стринг
+| str  | Стринг                       | 4 бајта + дужина стринга (без завршног `\0`)
+| buf  | Бафер бајтова                | 4 бајта + дужина података
+| ptr  | Показивач                    | 1 бајт + дужина показивача као стринг
+| tim  | Време                        | 1 бајт + дужина времена као стринг
+| htb  | Хештабела                    | Променљива
+| hda  | Садржај Hdata                | Променљива
+| inf  | Инфо: име + садржај          | Променљива
+| inl  | Садржај Инфолисте            | Променљива
+| arr  | Низ објеката                 | 3 бајта (тип) + број објеката + подаци
+|===
+
+[[object_char]]
+==== Карактер
+
+Означени карактер се чува као 1 бајт.
+
+Пример:
+
+....
+┌────┐
+│ 41 │ ────► 65 (0x41: „A”)
+└────┘
+....
+
+[[object_integer]]
+==== Целобројни
+
+Означена целобројна вредност се чува као 4 бајта, кодираних у big-endian формату (најпре долази бајт највеће тежине).
+
+Опсег: -2147483648 до 2147483647.
+
+Примери:
+
+....
+┌────┬────┬────┬────┐
+│ 00 │ 01 │ E2 │ 40 │ ────► 123456
+└────┴────┴────┴────┘
+
+┌────┬────┬────┬────┐
+│ FF │ FE │ 1D │ C0 │ ────► -123456
+└────┴────┴────┴────┘
+....
+
+[[object_long_integer]]
+==== Дугачки целобројни
+
+Означена дугачка целобројна вредност се кодира као стринг, са дужином у једном бајту.
+
+Опсег: -9223372036854775808 до 9223372036854775807.
+
+Примери:
+
+....
+┌────╥────┬────┬────┬────┬────┬────┬────┬────┬────┬────┐
+│ 0A ║ 31 │ 32 │ 33 │ 34 │ 35 │ 36 │ 37 │ 38 │ 39 │ 30 │ ────► 1234567890
+└────╨────┴────┴────┴────┴────┴────┴────┴────┴────┴────┘
+ └──┘ └───────────────────────────────────────────────┘
+дужина '1'  '2'  '3'  '4'  '5'  '6'  '7'  '8'  '9'  '0'
+
+┌────╥────┬────┬────┬────┬────┬────┬────┬────┬────┬────┬────┐
+│ 0B ║ 2D │ 31 │ 32 │ 33 │ 34 │ 35 │ 36 │ 37 │ 38 │ 39 │ 30 │ ────► -1234567890
+└────╨────┴────┴────┴────┴────┴────┴────┴────┴────┴────┴────┘
+ └──┘ └────────────────────────────────────────────────────┘
+дужина '-'  '1'  '2'  '3'  '4'  '5'  '6'  '7'  '8'  '9'  '0'
+....
+
+[[object_string]]
+==== Стринг
+
+Стринг је дужина (цео број дужине 4 бајтова) + садржај стринга (без завршног `\0`).
+
+Пример:
+
+....
+┌────┬────┬────┬────╥────┬────┬────┬────┬────┐
+│ 00 │ 00 │ 00 │ 05 ║ 68 │ 65 │ 6C │ 6C │ 6F │ ────► "hello"
+└────┴────┴────┴────╨────┴────┴────┴────┴────┘
+ └─────────────────┘ └──────────────────────┘
+       дужина         'h'  'e'  'l'  'l'  'o'
+....
+
+Празан стринг има дужину нула:
+
+....
+┌────┬────┬────┬────┐
+│ 00 │ 00 │ 00 │ 00 │ ────► ""
+└────┴────┴────┴────┘
+ └─────────────────┘
+       дужина
+....
+
+_NULL_ стринг (NULL показивач у C) има дужину -1:
+
+....
+┌────┬────┬────┬────┐
+│ FF │ FF │ FF │ FF │ ────► NULL
+└────┴────┴────┴────┘
+ └─────────────────┘
+       дужина
+....
+
+[[object_buffer]]
+==== Бафер
+
+Исти формат као и <<object_string,стринг>>; садржај је прости низ бајтова.
+
+[[object_pointer]]
+==== Показивач
+
+Показивач је кодиран као стринг (хекс), са дужином у једном бајту.
+
+Пример:
+
+....
+┌────╥────┬────┬────┬────┬────┬────┬────┬────┬────┐
+│ 09 ║ 31 │ 61 │ 32 │ 62 │ 33 │ 63 │ 34 │ 64 │ 35 │ ────► 0x1a2b3c4d5
+└────╨────┴────┴────┴────┴────┴────┴────┴────┴────┘
+ └──┘ └──────────────────────────────────────────┘
+дужина '1'  'a'  '2'  'b'  '3'  'c'  '4'  'd'  '5'
+....
+
+_NULL_ показивач има дужину 1 и вредност 0:
+
+....
+┌────╥────┐
+│ 01 ║ 30 │ ────► NULL (0x0)
+└────╨────┘
+ └──┘ └──┘
+дужина '0'
+....
+
+[[object_time]]
+==== Време
+
+Време (број секунди) се кодира као стринг, са дужином у једном бајту.
+
+Пример:
+
+....
+┌────╥────┬────┬────┬────┬────┬────┬────┬────┬────┬────┐
+│ 0A ║ 31 │ 33 │ 32 │ 31 │ 39 │ 39 │ 33 │ 34 │ 35 │ 36 │ ────► 1321993456
+└────╨────┴────┴────┴────┴────┴────┴────┴────┴────┴────┘
+ └──┘ └───────────────────────────────────────────────┘
+дужина '1'  '3'  '2'  '1'  '9'  '9'  '3'  '4'  '5'  '6'
+....
+
+[[object_hashtable]]
+==== Хештабела
+
+Хештабела садржи тип кључева, вип вредности, број ставки у хеш табели ( целобројна вредност дужине 4 бајта), па затим ставке кључева и вредности.
+
+....
+┌───────────┬───────────────┬───────╥───────┬────────╥─────╥───────┬────────┐
+│ тип_кључа │ тип_вредности │ број  ║ кључ1 │ вредн1 ║ ... ║ кључN │ вреднN │
+└───────────┴───────────────┴───────╨───────┴────────╨─────╨───────┴────────┘
+....
+
+Пример:
+
+....
+┌─────┬─────┬───╥──────┬─────╥──────┬─────┐
+│ str │ str │ 2 ║ key1 │ abc ║ key2 │ def │ ────► { 'key1' => 'abc',
+└─────┴─────┴───╨──────┴─────╨──────┴─────┘         'key2' => 'def' }
+ └───┘ └───┘ └─┘ └──────────┘ └──────────┘
+  тип   тип  број  ставка 1     ставка 2
+кључа вредн
+....
+
+[[object_hdata]]
+==== Hdata
+
+_hdata_ садржи путању са hdata именима, листу кључева, број скупа објеката, па затим скуп објеката (путања са показивачима, затим објекти).
+
+....
+┌────────┬──────┬───────╥────────┬─────────────────────╥─────╥────────┬─────────────────────╥─────┐
+│ h-пут  │ кључ │ број  ║ p-пут  │ вредн 1 ... вредн N ║ ... ║ p-пут  │ вредн 1 ... вредн N ║ ... │
+└────────┴──────┴───────╨────────┴─────────────────────╨─────╨────────┴─────────────────────╨─────┘
+....
+
+* _h-пут_ (стринг): путања која се користи за приступ подацима (пример: _buffer/lines/line/line_data_); враћа се hdata последњег елемента у путањи
+* _кључ_ (стринг): стринг са листом _кључ:тип_ (раздвојених запетама), пример: _number:int,name:str_
+* _број_ (целобројни): број скупа објеката
+* _p-пут_: путања са показивачима на објекте (овде је број показивача број елемената у путањи)
+* _вредн_: листа вредности (број вредности је број кључева који се врати за hdata)
+
+Пример за hdata са два бафера (weechat бафер језгра и libera серверски бафер) и два кључа (_number_ и _full_name_):
+
+....
+# команда
+hdata buffer:gui_buffers(*) number,full_name
+
+# одговор
+┌────────┬──────────────────────────┬───╥─────────┬───┬──────────────╥─────────┬───┬─────────────────────┐
+│ buffer │ number:int,full_name:str │ 2 ║ 0x12345 │ 1 │ core.weechat ║ 0x6789a │ 2 │ irc.server.libera │
+└────────┴──────────────────────────┴───╨─────────┴───┴──────────────╨─────────┴───┴─────────────────────┘
+ └──────┘ └────────────────────────┘ └─┘ └──────────────────────────┘ └─────────────────────────────────┘
+  h-пут           кључеви            број           бафер 1                         бафер 2
+....
+
+Пример за hdata са линијама бафера језгра:
+
+....
+# команда
+hdata buffer:gui_buffers(*)/lines/first_line(*)/data
+
+# одговор
+┌─────────────────────────────┬─────┬────╥──
+│ buffer/lines/line/line_data │ ... │ 50 ║ ...
+└─────────────────────────────┴─────┴────╨──
+ └───────────────────────────┘ └───┘ └──┘
+      h-пут (hdata имена)      кључ  број
+
+   ──╥───────────┬───────────┬───────────┬───────────┬───────╥──
+ ... ║ 0x23cf970 │ 0x23cfb60 │ 0x23d5f40 │ 0x23d8a10 │ ..... ║ ...
+   ──╨───────────┴───────────┴───────────┴───────────┴───────╨──
+      └─────────────────────────────────────────────┘ └─────┘
+                    p-пут (показивачи)                објекти
+      └─────────────────────────────────────────────────────┘
+                            линија 1
+
+   ──╥───────────┬───────────┬───────────┬───────────┬───────╥──────────────┐
+ ... ║ 0x23cf970 │ 0x23cfb60 │ 0x23d6110 │ 0x23d9420 │ ..... ║ ............ │
+   ──╨───────────┴───────────┴───────────┴───────────┴───────╨──────────────┘
+      └─────────────────────────────────────────────┘ └─────┘
+                    p-пут (показивачи)                објекти
+      └─────────────────────────────────────────────────────┘ └────────────┘
+                            линија 2                            линије 3-50
+....
+
+Пример за hdata са листом надимака:
+
+....
+# команда
+nicklist
+
+# одговор
+┌───────────────────┬──
+│ buffer/nick_group │ ...
+└───────────────────┴──
+ └─────────────────┘
+        h-пут
+
+   ──╥───────────────────────────────────────────────────────────┬────╥──
+ ... ║ group:chr,visible:chr,name:str,color:str,prefix:str,(...) │ 12 ║ ...
+   ──╨───────────────────────────────────────────────────────────┴────╨──
+      └─────────────────────────────────────────────────────────┘ └──┘
+                                кључеви                           број
+
+   ──╥─────────┬─────────┬───┬───┬──────┬─┬─┬─┬───╥──
+ ... ║ 0x12345 │ 0x6789a │ 1 │ 0 │ root │ │ │ │ 0 ║ ...
+   ──╨─────────┴─────────┴───┴───┴──────┴─┴─┴─┴───╨──
+      └─────────────────┘ └──────────────────────┘
+              p-пут              објекти
+      └──────────────────────────────────────────┘
+               група (корен листе надимака)
+
+   ──╥─────────┬─────────┬───┬───┬───────┬─┬─┬─┬───╥──
+ ... ║ 0x123cf │ 0x678d4 │ 1 │ 0 │ 000|o │ │ │ │ 1 ║ ...
+   ──╨─────────┴─────────┴───┴───┴───────┴─┴─┴─┴───╨──
+      └─────────────────┘ └───────────────────────┘
+              p-пут                објекти
+      └───────────────────────────────────────────┘
+                    група (опови канала)
+
+   ──╥─────────┬─────────┬───┬───┬──────────┬──────┬───┬────────────┬───╥──
+ ... ║ 0x128a7 │ 0x67ab2 │ 0 │ 1 │ ChanServ │ blue │ @ │ lightgreen │ 0 ║ ...
+   ──╨─────────┴─────────┴───┴───┴──────────┴──────┴───┴────────────┴───╨──
+      └─────────────────┘ └────────────────────────────────────────────┘
+              p-пут                          објекти
+      └────────────────────────────────────────────────────────────────┘
+                               надимак (@ChanServ)
+....
+
+Пример за празан hdata (врућа листа у програму WeeChat је празна):
+
+....
+# команда
+hdata hotlist:gui_hotlist(*)
+
+# одговор
+┌────────┬────────┬───┐
+│ (NULL) │ (NULL) │ 0 │
+└────────┴────────┴───┘
+ └──────┘ └──────┘ └─┘
+   h-пут  кључеви број
+....
+
+[[object_info]]
+==== Инфо
+
+_инфо_ садржи име и вредност (оба су стрингови).
+
+....
+┌─────┬──────────┐
+│ име │ вредност │
+└─────┴──────────┘
+....
+
+* _име_ (стринг): име инфо
+* _вредност_ (стринг): вредност
+
+Пример за _version_ инфо:
+
+....
+┌─────────┬───────────────────┐
+│ верзија │ WeeChat 0.3.7-dev │
+└─────────┴───────────────────┘
+....
+
+[[object_infolist]]
+==== Инфолиста
+
+_инфолиста_ садржи име, број ставки, па затим ставке (скуп променљивих).
+
+....
+┌─────┬──────╥──────────╥─────╥──────────┐
+│ име │ број ║ ставка 1 ║ ... ║ ставка N │
+└─────┴──────╨──────────╨─────╨──────────┘
+....
+
+Ставка је:
+
+....
+┌──────╥───────┬───────┬────────────╥─────╥───────┬───────┬────────────┐
+│ број ║ име 1 │ тип 1 │ вредност 1 ║ ... ║ име N │ тип N │ вредност N │
+└──────╨───────┴───────┴────────────╨─────╨───────┴───────┴────────────┘
+....
+
+* _име_ (стринг): име инфолисте (_buffer_, _window_, _bar_, ...)
+* _број_ (целобројни): број ставки
+* _ставка_:
+** _број_: број променљивих у ставки
+** _име_: име променљиве
+** _тип_: тип променљиве (_int_, _str_, ...)
+** _вредност_: вредност променљиве
+
+Пример инфолисте са два бафера (weechat бафер језгра и libera серверски бафер):
+
+....
+# команда
+infolist buffer
+
+# одговор
+┌────────┬───╥────┬─────────┬─────┬─────────┬─────╥────┬─────────┬─────┬─────────┬─────┐
+│ buffer │ 2 ║ 42 │ pointer │ ptr │ 0x12345 │ ... ║ 42 │ pointer │ ptr │ 0x6789a │ ... │
+└────────┴───╨────┴─────────┴─────┴─────────┴─────╨────┴─────────┴─────┴─────────┴─────┘
+ └──────┘ └─┘ └──────────────────────────────────┘ └──────────────────────────────────┘
+    име   број             ставка 1                              ставка 2
+....
+
+[[object_array]]
+==== Низ
+
+Низ је тип (3 бајта) + број објеката (целобројна вредност дужине 4 бајта) + подаци.
+
+Пример низа са сва стринга:
+
+....
+┌─────╥────┬────┬────┬────╥────┬────┬────┬────╥────┬────┬────╥────┬────┬────┬────╥────┬────┐
+│ str ║ 00 │ 00 │ 00 │ 02 ║ 00 │ 00 │ 00 │ 03 ║ 61 │ 62 │ 63 ║ 00 │ 00 │ 00 │ 02 ║ 64 │ 65 │ ────► [ "abc", "de" ]
+└─────╨────┴────┴────┴────╨────┴────┴────┴────╨────┴────┴────╨────┴────┴────┴────╨────┴────┘
+ └───┘ └─────────────────┘ └─────────────────┘ └────────────┘ └─────────────────┘ └───────┘
+  тип     број стрингова         дужина         'a'  'b'  'c'       дужина         'd'  'e'
+....
+
+Пример низа са три целобројне вредности:
+
+....
+┌─────╥────┬────┬────┬────╥────┬────┬────┬────╥────┬────┬────┬────╥────┬────┬────┬────┐
+│ int ║ 00 │ 00 │ 00 │ 03 ║ 00 │ 00 │ 00 │ 7B ║ 00 │ 00 │ 01 │ C8 ║ 00 │ 00 │ 03 │ 15 │ ────► [ 123, 456, 789 ]
+└─────╨────┴────┴────┴────╨────┴────┴────┴────╨────┴────┴────┴────╨────┴────┴────┴────┘
+ └───┘ └─────────────────┘ └─────────────────┘ └─────────────────┘ └─────────────────┘
+  тип   број целобројних        123 (0x7B)         456 (0x1C8)         789 (0x315)
+....
+
+_NULL_ низ:
+
+....
+┌─────╥────┬────┬────┬────┐
+│ str ║ 00 │ 00 │ 00 │ 00 │ ────► NULL
+└─────╨────┴────┴────┴────┘
+ └───┘ └─────────────────┘
+  тип    број стрингова
+....
+
+[[typical_session]]
+== Типична сесија
+
+....
+    ┌─────────┐                        ┌───────┐                ┌─────────┐
+    │ Клијент ├ ─ ─ ─ ─ (мрежа) ─ ─ ─ ─┤ Релеј ├────────────────┤ WeeChat │
+    └─────────┘                        └───────┘                └─────────┘
+         ║                                 ║                         ║
+         ╟───────────────────────────────► ║                         ║
+         ║ отварање сокета                 ║ додавање клијента       ║
+         ║                                 ║                         ║
+         ╟───────────────────────────────► ║                         ║
+         ║ ком: handshake ...              ║ договор алгоритама      ║
+         ║                                 ║ и опција                ║
+         ║ ◄───────────────────────────────╢                         ║
+         ║        пор: id: "handshake" ... ║                         ║
+         ║                                 ║                         ║
+         ╟───────────────────────────────► ║                         ║
+         ║ ком: init password=xxx,...      ║ аутентификација клијента║
+         ║                                 ║                         ║
+         ╟───────────────────────────────► ║                         ║
+         ║ ком: hdata buffer ...           ╟───────────────────────► ║
+         ║      sync ...                   ║ захтев за hdata         ║ читање hdata
+         ║                                 ║                         ║ вредности
+         ║                                 ║ ◄───────────────────────╢
+         ║ ◄───────────────────────────────╢                   hdata ║
+креирање ║                 пор: hda buffer ║                         ║
+  бафера ║                                 ║                         ║
+         ║            ........             ║         ........        ║
+         ║                                 ║                         ║
+         ╟───────────────────────────────► ║                         ║
+         ║ ком: input ...                  ╟───────────────────────► ║
+         ║                                 ║ слање података у бафер  ║ слање података
+         ║                                 ║                         ║ у бафер
+         ║            ........             ║         ........        ║
+         ║                                 ║                         ║ примљен је
+         ║                                 ║ ◄───────────────────────╢ сигнал
+         ║ ◄───────────────────────────────╢              signal XXX ║ (закачио
+ ажурир. ║          пор: id: "_buffer_..." ║                         ║ релеј)
+ бафера  ║                                 ║                         ║
+         ║            ........             ║         ........        ║
+         ║                                 ║                         ║
+         ╟───────────────────────────────► ║                         ║
+         ║ ком: ping ...                   ║                         ║
+         ║                                 ║                         ║
+         ║ ◄───────────────────────────────╢                         ║
+  мерење ║            пор: id: "_pong" ... ║                         ║
+ времена ║                                 ║                         ║
+одговора ║            ........             ║         ........        ║
+         ║                                 ║                         ║
+         ╟───────────────────────────────► ║                         ║
+         ║ ком: quit                       ║ прекид везе са клијентом║
+         ║                                 ║                         ║
+....

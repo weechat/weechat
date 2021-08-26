@@ -68,7 +68,7 @@ struct timeval;
  * please change the date with current one; for a second change at same
  * date, increment the 01, otherwise please keep 01.
  */
-#define WEECHAT_PLUGIN_API_VERSION "20201004-01"
+#define WEECHAT_PLUGIN_API_VERSION "20210704-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -285,6 +285,8 @@ struct t_weechat_plugin
     const char *(*gettext) (const char *string);
     const char *(*ngettext) (const char *single, const char *plural, int count);
     char *(*strndup) (const char *string, int length);
+    char *(*string_cut) (const char *string, int length, int count_suffix,
+                         int screen, const char *cut_suffix);
     void (*string_tolower) (char *string);
     void (*string_toupper) (char *string);
     int (*strcasecmp) (const char *string1, const char *string2);
@@ -382,6 +384,9 @@ struct t_weechat_plugin
                                const void *salt, int salt_size,
                                int iterations,
                                void *hash, int *hash_size);
+    int (*crypto_hmac) (const void *key, int key_size,
+                        const void *message, int message_size,
+                        const char *hash_algo, void *hash, int *hash_size);
 
     /* directories/files */
     int (*mkdir_home) (const char *directory, int mode);
@@ -392,6 +397,7 @@ struct t_weechat_plugin
                            void (*callback)(void *data, const char *filename),
                            void *callback_data);
     char *(*file_get_content) (const char *filename);
+    int (*file_copy) (const char *from, const char *to);
 
     /* util */
     int (*util_timeval_cmp) (struct timeval *tv1, struct timeval *tv2);
@@ -1188,6 +1194,10 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     (weechat_plugin->ngettext)(single, plural, number)
 #define weechat_strndup(__string, __length)                             \
     (weechat_plugin->strndup)(__string, __length)
+#define weechat_string_cut(__string, __length, __count_suffix,          \
+                           __screen, __cut_suffix)                      \
+    (weechat_plugin->string_cut)(__string, __length, __count_suffix,    \
+                                 __screen, __cut_suffix)
 #define weechat_string_tolower(__string)                                \
     (weechat_plugin->string_tolower)(__string)
 #define weechat_string_toupper(__string)                                \
@@ -1347,6 +1357,14 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
                                          __salt, __salt_size,           \
                                          __iterations,                  \
                                          __hash, __hash_size)
+#define weechat_crypto_hmac(__key, __key_size,                          \
+                            __message, __message_size,                  \
+                            __hash_algo,                                \
+                            __hash, __hash_size)                        \
+    (weechat_plugin->crypto_hmac)(__key, __key_size,                    \
+                                  __message, __message_size,            \
+                                  __hash_algo,                          \
+                                  __hash, __hash_size)
 
 /* directories */
 #define weechat_mkdir_home(__directory, __mode)                         \
@@ -1363,6 +1381,8 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
                                     __callback, __callback_data)
 #define weechat_file_get_content(__filename)                            \
     (weechat_plugin->file_get_content)(__filename)
+#define weechat_file_copy(__from, __to)                                 \
+    (weechat_plugin->file_copy)(__from, __to)
 
 /* util */
 #define weechat_util_timeval_cmp(__time1, __time2)                      \

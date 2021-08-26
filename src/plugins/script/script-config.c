@@ -444,7 +444,7 @@ script_config_init ()
         script_config_file, ptr_section,
         "columns", "string",
         N_("format of columns displayed in script buffer: following column "
-           "identifiers are replaced by their value: %a=author, %d=description, "
+           "identifiers are replaced by their values: %a=author, %d=description, "
            "%D=date added, %e=extension, %l=language, %L=license, %n=name with "
            "extension, %N=name, %r=requirements, %s=status, %t=tags, "
            "%u=date updated, %v=version, %V=version loaded, %w=min_weechat, "

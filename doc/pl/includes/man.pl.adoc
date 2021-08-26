@@ -9,7 +9,7 @@ URLi jak:
 
 Aby wejść na kanał IRC poświęcony WeeChat pod nickiem "mójnick":
 
-    irc://mójnick@chat.freenode.net/#weechat
+    irc://mójnick@irc.libera.chat/#weechat
 
 Adresy IPv6 mogą być otoczone nawiasami kwadratowymi, aby możliwe było podanie
 numeru potyu po adresie, na przykład:
@@ -86,6 +86,9 @@ $HOME/.config/weechat/tcl.conf::
 
 $HOME/.config/weechat/trigger.conf::
     plik konfiguracyjny wtyczki _trigger_
+
+$HOME/.config/weechat/typing.conf::
+    plik konfiguracyjny wtyczki _typing_
 
 $HOME/.config/weechat/xfer.conf::
     plik konfiguracyjny wtyczki _xfer_

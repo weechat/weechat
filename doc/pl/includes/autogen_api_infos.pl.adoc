@@ -60,7 +60,7 @@
 
 | php | php_version | wersja użytego interpretera | -
 
-| python | python2_bin | path to Python 2.x interpreter (*deprecated* since version 2.6, scripts must use Python 3 only) | -
+| python | python2_bin | ścieżka do interpretera Pythona 2.x (*przestarzałe* od wersji 2.6 skrypty muszą używać tylko Pythona 3) | -
 
 | python | python_eval | wykonywanie kodu źródłowego | kod źródłowy do wykonania
 
@@ -76,7 +76,7 @@
 
 | ruby | ruby_version | wersja użytego interpretera | -
 
-| spell | spell_dict | oddzielona przecinkami lista słowników używanych w buforze | wskaźnik na bufor ("0x12345678") lub jego pełna nazwa ("irc.freenode.#weechat")
+| spell | spell_dict | oddzielona przecinkami lista słowników używanych w buforze | wskaźnik na bufor ("0x12345678") lub jego pełna nazwa ("irc.libera.#weechat")
 
 | tcl | tcl_eval | wykonywanie kodu źródłowego | kod źródłowy do wykonania
 
@@ -134,15 +134,15 @@
 
 | weechat | version_number | Wersja WeeChat (jako liczba) | -
 
-| weechat | weechat_cache_dir | WeeChat cache directory | -
+| weechat | weechat_cache_dir | Katalog z cache WeeChata | -
 
-| weechat | weechat_config_dir | WeeChat config directory | -
+| weechat | weechat_config_dir | Katalog z konfiguracją WeeChat | -
 
-| weechat | weechat_daemon | 1 if WeeChat is running in daemon mode (headless, in background) | -
+| weechat | weechat_daemon | 1 jeśli WeeChat działa w trybie daemona (bez GUI, w tle) | -
 
-| weechat | weechat_data_dir | WeeChat data directory | -
+| weechat | weechat_data_dir | Katalog danych WeeChat | -
 
-| weechat | weechat_dir | WeeChat directory (*deprecated* since version 3.2, replaced by "weechat_config_dir", "weechat_data_dir", "weechat_cache_dir" and "weechat_runtime_dir") | -
+| weechat | weechat_dir | Katalog WeeChat (*przestarzałe* od wersji 3.2, zastąpione przez "weechat_config_dir", "weechat_data_dir", "weechat_cache_dir" i "weechat_runtime_dir") | -
 
 | weechat | weechat_headless | 1 jeśli WeeChat działa w trybie bez interfejsu | -
 
@@ -150,7 +150,7 @@
 
 | weechat | weechat_localedir | Katalog "locale" WeeChata | -
 
-| weechat | weechat_runtime_dir | WeeChat runtime directory | -
+| weechat | weechat_runtime_dir | Katalog uruchomieniowy WeeChat | -
 
 | weechat | weechat_sharedir | Katalog "share" WeeChata | -
 

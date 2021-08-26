@@ -138,7 +138,7 @@ fatto di avere la versione più nuova possibile di WeeChat. ;)
 
 Se si dovessero verificare strani comportamenti (potrebbe andare in crash
 o far bollire la vostra birra) non esitate ad entrare in _#weechat_ su
-_chat.freenode.net_ e farcelo sapere.
+_irc.libera.chat_ e farcelo sapere.
 
 Se non dovesse andare in crash - ditelo comunque, abbiamo bisogno dei vostri
 commenti!

@@ -2552,15 +2552,17 @@ config_weechat_init_options ()
     config_startup_command_after_plugins = config_file_new_option (
         weechat_config_file, ptr_section,
         "command_after_plugins", "string",
-        N_("command executed when WeeChat starts, after loading plugins "
-           "(note: content is evaluated, see /help eval)"),
+        N_("command executed when WeeChat starts, after loading plugins; "
+           "multiple commands can be separated by semicolons "
+           "(note: commands are evaluated, see /help eval)"),
         NULL, 0, 0, "", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_startup_command_before_plugins = config_file_new_option (
         weechat_config_file, ptr_section,
         "command_before_plugins", "string",
-        N_("command executed when WeeChat starts, before loading plugins "
-           "(note: content is evaluated, see /help eval)"),
+        N_("command executed when WeeChat starts, before loading plugins; "
+           "multiple commands can be separated by semicolons "
+           "(note: commands are evaluated, see /help eval)"),
         NULL, 0, 0, "", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_startup_display_logo = config_file_new_option (
@@ -4609,7 +4611,7 @@ config_weechat_init_options ()
         "sighup", "string",
         N_("command to execute when the signal is received, "
            "multiple commands can be separated by semicolons "
-           "(note: content is evaluated, see /help eval)"),
+           "(note: commands are evaluated, see /help eval)"),
         NULL, 0, 0,
         "${if:${info:weechat_headless}?/reload:/quit -yes}", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
@@ -4618,7 +4620,7 @@ config_weechat_init_options ()
         "sigquit", "string",
         N_("command to execute when the signal is received, "
            "multiple commands can be separated by semicolons "
-           "(note: content is evaluated, see /help eval)"),
+           "(note: commands are evaluated, see /help eval)"),
         NULL, 0, 0, "/quit -yes", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_signal_sigterm = config_file_new_option (
@@ -4626,7 +4628,7 @@ config_weechat_init_options ()
         "sigterm", "string",
         N_("command to execute when the signal is received, "
            "multiple commands can be separated by semicolons "
-           "(note: content is evaluated, see /help eval)"),
+           "(note: commands are evaluated, see /help eval)"),
         NULL, 0, 0, "/quit -yes", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_signal_sigusr1 = config_file_new_option (
@@ -4634,7 +4636,7 @@ config_weechat_init_options ()
         "sigusr1", "string",
         N_("command to execute when the signal is received, "
            "multiple commands can be separated by semicolons "
-           "(note: content is evaluated, see /help eval)"),
+           "(note: commands are evaluated, see /help eval)"),
         NULL, 0, 0, "", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_signal_sigusr2 = config_file_new_option (
@@ -4642,7 +4644,7 @@ config_weechat_init_options ()
         "sigusr2", "string",
         N_("command to execute when the signal is received, "
            "multiple commands can be separated by semicolons "
-           "(note: content is evaluated, see /help eval)"),
+           "(note: commands are evaluated, see /help eval)"),
         NULL, 0, 0, "", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 

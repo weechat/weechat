@@ -1261,13 +1261,13 @@
 ** domyślna wartość: `+60+`
 
 * [[option_weechat.network.gnutls_ca_system]] *weechat.network.gnutls_ca_system*
-** opis: pass:none[load system's default trusted certificate authorities on startup; this can be turned off to save some memory only if you are not using SSL connections at all]
+** opis: pass:none[ładuje zaufane, systemowe urzędy certyfikacyjne podczas uruchomienia; można to wyłączyć w celu oszczędzenia pamięci tylko jeśli połączenia SSL nie są używane]
 ** typ: bool
 ** wartości: on, off
 ** domyślna wartość: `+on+`
 
 * [[option_weechat.network.gnutls_ca_user]] *weechat.network.gnutls_ca_user*
-** opis: pass:none[extra file(s) with certificate authorities; multiple files must be separated by colons (each path is evaluated, see function string_eval_path_home in plugin API reference)]
+** opis: pass:none[dodatkowy plik(i) z urzędami certyfikacji; wiele plików można oddzielić dwukropkiem (każda ścieżka jest przetwarzana, zobacz funkcję string_eval_path_home w opisie API wtyczek)]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+""+`
@@ -1303,7 +1303,7 @@
 ** domyślna wartość: `+".so,.dll"+`
 
 * [[option_weechat.plugin.path]] *weechat.plugin.path*
-** opis: pass:none[path for searching plugins (path is evaluated, see function string_eval_path_home in plugin API reference)]
+** opis: pass:none[ścieżka do wtyczek (ścieżka jest przetwarzana, zobacz funkcje string_eval_path_home w opisie API wtyczek)]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+"${weechat_data_dir}/plugins"+`
@@ -1315,43 +1315,43 @@
 ** domyślna wartość: `+on+`
 
 * [[option_weechat.signal.sighup]] *weechat.signal.sighup*
-** opis: pass:none[command to execute when the signal is received, multiple commands can be separated by semicolons (note: content is evaluated, see /help eval)]
+** opis: pass:none[komenda wykonana po otrzymaniu sygnału, wiele komend można oddzielić średnikiem (uwaga: zawartość jest przetwarzana, zobacz /help eval)]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+"${if:${info:weechat_headless}?/reload:/quit -yes}"+`
 
 * [[option_weechat.signal.sigquit]] *weechat.signal.sigquit*
-** opis: pass:none[command to execute when the signal is received, multiple commands can be separated by semicolons (note: content is evaluated, see /help eval)]
+** opis: pass:none[komenda wykonana po otrzymaniu sygnału, wiele komend można oddzielić średnikiem (uwaga: zawartość jest przetwarzana, zobacz /help eval)]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+"/quit -yes"+`
 
 * [[option_weechat.signal.sigterm]] *weechat.signal.sigterm*
-** opis: pass:none[command to execute when the signal is received, multiple commands can be separated by semicolons (note: content is evaluated, see /help eval)]
+** opis: pass:none[komenda wykonana po otrzymaniu sygnału, wiele komend można oddzielić średnikiem (uwaga: zawartość jest przetwarzana, zobacz /help eval)]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+"/quit -yes"+`
 
 * [[option_weechat.signal.sigusr1]] *weechat.signal.sigusr1*
-** opis: pass:none[command to execute when the signal is received, multiple commands can be separated by semicolons (note: content is evaluated, see /help eval)]
+** opis: pass:none[komenda wykonana po otrzymaniu sygnału, wiele komend można oddzielić średnikiem (uwaga: zawartość jest przetwarzana, zobacz /help eval)]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+""+`
 
 * [[option_weechat.signal.sigusr2]] *weechat.signal.sigusr2*
-** opis: pass:none[command to execute when the signal is received, multiple commands can be separated by semicolons (note: content is evaluated, see /help eval)]
+** opis: pass:none[komenda wykonana po otrzymaniu sygnału, wiele komend można oddzielić średnikiem (uwaga: zawartość jest przetwarzana, zobacz /help eval)]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+""+`
 
 * [[option_weechat.startup.command_after_plugins]] *weechat.startup.command_after_plugins*
-** opis: pass:none[komenda wykonana kiedy WeeChat jest uruchamiany, po załadowaniu wtyczek (uwaga: zawartość jest przetwarzana, zobacz /help eval)]
+** opis: pass:none[komenda wykonana kiedy WeeChat jest uruchamiany, po załadowaniu wtyczek; wiele komend można oddzielić średnikami (uwaga: zawartość jest przetwarzana, zobacz /help eval)]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+""+`
 
 * [[option_weechat.startup.command_before_plugins]] *weechat.startup.command_before_plugins*
-** opis: pass:none[komenda wykonana kiedy WeeChat jest uruchamiany, przed załadowaniem wtyczek (uwaga: zawartość jest przetwarzana, zobacz /help eval)]
+** opis: pass:none[komenda wykonana kiedy WeeChat jest uruchamiany, przed załadowaniem wtyczek; wiele komend można oddzielić średnikami (uwaga: zawartość jest przetwarzana, zobacz /help eval)]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+""+`
@@ -1457,7 +1457,7 @@
 ** domyślna wartość: `+""+`
 
 * [[option_logger.file.path]] *logger.file.path*
-** opis: pass:none[path for WeeChat log files; date specifiers are permitted (see man strftime) (path is evaluated, see function string_eval_path_home in plugin API reference)]
+** opis: pass:none[ścieżka do plików z logami WeeChat; specyfikatory daty są dozwolone (zobacz man strftime) (ścieżka jest przetwarzana, zobacz funkcje string_eval_path_home w opisie API wtyczek)]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+"${weechat_data_dir}/logs"+`
@@ -1753,7 +1753,7 @@
 ** domyślna wartość: `+"${color:green}${number}${if:${number_displayed}?.: }"+`
 
 * [[option_buflist.format.tls_version]] *buflist.format.tls_version*
-** opis: pass:none[format for TLS version on an IRC server buffer (note: content is evaluated, see /help buflist)]
+** opis: pass:none[format dla wersji TLS w buforze serwera IRC (uwaga: zawartość jest przetwarzana, zobacz /help buflist)]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+" ${color:default}(${if:${tls_version}==TLS1.3?${color:green}:${if:${tls_version}==TLS1.2?${color:yellow}:${color:red}}}${translate:${tls_version}}${color:default})"+`
@@ -1819,7 +1819,7 @@
 ** domyślna wartość: `+""+`
 
 * [[option_buflist.look.sort]] *buflist.look.sort*
-** opis: pass:none[comma-separated list of fields to sort buffers; each field is a hdata variable of buffer ("var"), a hdata variable of IRC server ("irc_server.var") or a hdata variable of IRC channel ("irc_channel.var"); char "-" can be used before field to reverse order, char "~" can be used to do a case insensitive comparison; example: "-~short_name" for case insensitive and reverse sort on buffer short name (note: the content is evaluated, before being split into fields, but at that time "bar_item" is the only variable that can be used, to distinguish between different buflist items, for example "${bar_item.name}")]
+** opis: pass:none[oddzielona przecinkami lista pól do sortowania buforów; każde pole to zmienna hdata bufora ("var"), zmienna hdata serwera IRC ("irc_server.var") lub zmienna hdata kanału IRC ("irc_channel.var"); znak "-" użyty przed nazwą pola odwraca kolejność, znak "~" może zostać użyty do porównań niewrażliwych na wielkość liter; przykład: "-~short_name" dla sortowania odwrotnego, niewrażliwego na wielkość liter po skróconej nazwie bufora (uwaga: zawartość jest przetwarzana zanim zostanie podzielona na pola, "bar_item" to jedyna zmienna, jaka może zostać użyta w celu rozróżnienia buforów, na przykład "${bar_item.name}")]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+"number,-active"+`
@@ -1839,11 +1839,55 @@
 ** domyślna wartość: `+on+`
 
 * [[option_fifo.file.path]] *fifo.file.path*
-** opis: pass:none[path for FIFO file; WeeChat PID can be used in path with ${info:pid} (path is evaluated, see function string_eval_path_home in plugin API reference)]
+** opis: pass:none[ścieżka do pliku FIFO; PID WeeChat może zostać w ścieżce za pomocą ${info:pid} (ścieżka jest przetwarzana, zobacz funkcje string_eval_path_home w opisie API wtyczek)]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+"${weechat_runtime_dir}/weechat_fifo_${info:pid}"+`
 // end::fifo_options[]
+
+// tag::typing_options[]
+* [[option_typing.look.delay_purge_paused]] *typing.look.delay_purge_paused*
+** opis: pass:none[number of seconds after paused status has been set: if reached, the typing status is removed]
+** typ: liczba
+** wartości: 1 .. 2147483647
+** domyślna wartość: `+30+`
+
+* [[option_typing.look.delay_purge_typing]] *typing.look.delay_purge_typing*
+** opis: pass:none[number of seconds after typing status has been set: if reached, the typing status is removed]
+** typ: liczba
+** wartości: 1 .. 2147483647
+** domyślna wartość: `+6+`
+
+* [[option_typing.look.delay_set_paused]] *typing.look.delay_set_paused*
+** opis: pass:none[number of seconds after typing last char: if reached, the typing status becomes "paused" and no more typing signals are sent]
+** typ: liczba
+** wartości: 1 .. 2147483647
+** domyślna wartość: `+10+`
+
+* [[option_typing.look.enabled_nicks]] *typing.look.enabled_nicks*
+** opis: pass:none[typing enabled for other nicks (display typing info for nicks typing in the current buffer)]
+** typ: bool
+** wartości: on, off
+** domyślna wartość: `+off+`
+
+* [[option_typing.look.enabled_self]] *typing.look.enabled_self*
+** opis: pass:none[typing enabled for self messages (send typing info to other users)]
+** typ: bool
+** wartości: on, off
+** domyślna wartość: `+off+`
+
+* [[option_typing.look.input_min_chars]] *typing.look.input_min_chars*
+** opis: pass:none[min number of chars in message to trigger send of typing signals]
+** typ: liczba
+** wartości: 1 .. 2147483647
+** domyślna wartość: `+4+`
+
+* [[option_typing.look.item_max_length]] *typing.look.item_max_length*
+** opis: pass:none[max number of chars displayed in the bar item "typing" (0 = do not truncate content)]
+** typ: liczba
+** wartości: 0 .. 2147483647
+** domyślna wartość: `+0+`
+// end::typing_options[]
 
 // tag::xfer_options[]
 * [[option_xfer.color.status_aborted]] *xfer.color.status_aborted*
@@ -1913,7 +1957,7 @@
 ** domyślna wartość: `+off+`
 
 * [[option_xfer.file.auto_accept_nicks]] *xfer.file.auto_accept_nicks*
-** opis: pass:none[oddzielona przecinkami lista nicków, od których przychodzące pliki i rozmowy są automatycznie akceptowane; format to "serwer.nick" (dla konkretnego serwera) lub "nick" (dla wszystkich serwerów; przykład "freenode.FlashCode,andrew"]
+** opis: pass:none[oddzielona przecinkami lista nicków, od których przychodzące pliki i rozmowy są automatycznie akceptowane; format to "serwer.nick" (dla konkretnego serwera) lub "nick" (dla wszystkich serwerów; przykład "libera.FlashCode,andrew"]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+""+`
@@ -1943,7 +1987,7 @@
 ** domyślna wartość: `+on+`
 
 * [[option_xfer.file.download_path]] *xfer.file.download_path*
-** opis: pass:none[path for writing incoming files (path is evaluated, see function string_eval_path_home in plugin API reference)]
+** opis: pass:none[ścieżka do zapisania przychodzących plików (ścieżka jest przetwarzana, zobacz funkcje string_eval_path_home w opisie API wtyczek)]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+"${weechat_data_dir}/xfer"+`
@@ -1955,7 +1999,7 @@
 ** domyślna wartość: `+".part"+`
 
 * [[option_xfer.file.upload_path]] *xfer.file.upload_path*
-** opis: pass:none[path for reading files when sending (path is evaluated, see function string_eval_path_home in plugin API reference)]
+** opis: pass:none[ścieżka do wczytywania plików podczas wysyłania (ścieżka jest przetwarzana, zobacz funkcje string_eval_path_home zobacz w opisie API wtyczek)]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+"~"+`
@@ -2065,19 +2109,19 @@
 ** domyślna wartość: `+default+`
 
 * [[option_irc.color.item_tls_version_deprecated]] *irc.color.item_tls_version_deprecated*
-** opis: pass:none[color for deprecated TLS versions in bar item "tls_version"]
+** opis: pass:none[kolor dla przestarzałych wersji TLS w lemencie paska "tls_version"]
 ** typ: kolor
 ** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie
 ** domyślna wartość: `+yellow+`
 
 * [[option_irc.color.item_tls_version_insecure]] *irc.color.item_tls_version_insecure*
-** opis: pass:none[color for insecure TLS versions in bar item "tls_version"]
+** opis: pass:none[kolor dla niebezpiecznej wersji TLS w elemencie paska "tls_version"]
 ** typ: kolor
 ** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie
 ** domyślna wartość: `+red+`
 
 * [[option_irc.color.item_tls_version_ok]] *irc.color.item_tls_version_ok*
-** opis: pass:none[color for higher supported TLS version in bar item "tls_version"]
+** opis: pass:none[kolor dla wyższej wspieranej wersji TLS w elemencie paska "tls_version"]
 ** typ: kolor
 ** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie
 ** domyślna wartość: `+green+`
@@ -2214,6 +2258,12 @@
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+"%a, %d %b %Y %T %z"+`
 
+* [[option_irc.look.display_account_message]] *irc.look.display_account_message*
+** opis: pass:none[wyświetl wiadomość ACCOUNT otrzymaną, kiedy opcja account-notify jest włączona]
+** typ: bool
+** wartości: on, off
+** domyślna wartość: `+on+`
+
 * [[option_irc.look.display_away]] *irc.look.display_away*
 ** opis: pass:none[wyświetl wiadomość, kiedy w(y)łączamy tryb oddalenia (off: nie wyświetlaj/wysyłaj nic, local: wyświetl lokalnie, channel: wyślij akcję na kanały)]
 ** typ: liczba
@@ -2234,6 +2284,12 @@
 
 * [[option_irc.look.display_ctcp_unknown]] *irc.look.display_ctcp_unknown*
 ** opis: pass:none[wyświetl wiadomość CTCP nawet jeśli jest to nieznana CTCP]
+** typ: bool
+** wartości: on, off
+** domyślna wartość: `+on+`
+
+* [[option_irc.look.display_extended_join]] *irc.look.display_extended_join*
+** opis: pass:none[wyświetl dodatkowe informacje w wiadomości JOIN: nazwa konta i real name (opcja extended-join musi być włączona)]
 ** typ: bool
 ** wartości: on, off
 ** domyślna wartość: `+on+`
@@ -2287,19 +2343,19 @@
 ** domyślna wartość: `+off+`
 
 * [[option_irc.look.highlight_channel]] *irc.look.highlight_channel*
-** opis: pass:none[oddzielona przecinkami lista słów do podświetleń w buforach kanałów (wielkość liter nie ma znaczenia, użyj "(?-i)" na początku słów, dla których wielkość liter ma znaczenie; zmienne specjalne $nick, $channel i $server są zastępowane odpowiednimi wartościami), słowa te są dodawane do zmiennej lokalnej bufora  "highlight_words" tylko kiedy bufor jest tworzony (nie ma wpływu na obecne bufory), pusty ciąg wyłącza domyślne podświetlenia nicka, przykłady: "$nick", "(?-i)$nick"]
+** opis: pass:none[oddzielona przecinkami lista słów do podświetleń w buforach kanałów (wielkość liter nie ma znaczenia, użyj "(?-i)" na początku słów, dla których wielkość liter ma znaczenie; zmienne specjalne $nick, $channel i $server są zastępowane odpowiednimi wartościami), słowa te są dodawane do zmiennej lokalnej bufora "highlight_words" tylko kiedy bufor jest tworzony (nie ma wpływu na obecne bufory), pusty ciąg wyłącza domyślne podświetlenia nicka, przykłady: "$nick", "(?-i)$nick"]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+"$nick"+`
 
 * [[option_irc.look.highlight_pv]] *irc.look.highlight_pv*
-** opis: pass:none[oddzielona przecinkami lista słów do podświetleń w prywatnych buforach (wielkość liter nie ma znaczenia, użyj "(?-i)" na początku słów, dla których wielkość liter ma znaczenie; zmienne specjalne $nick, $channel i $server są zastępowane odpowiednimi wartościami), słowa te są dodawane do zmiennej lokalnej bufora  "highlight_words" tylko kiedy bufor jest tworzony (nie ma wpływu na obecne bufory), pusty ciąg wyłącza domyślne podświetlenia nicka, przykłady: "$nick", "(?-i)$nick"]
+** opis: pass:none[oddzielona przecinkami lista słów do podświetleń w prywatnych buforach (wielkość liter nie ma znaczenia, użyj "(?-i)" na początku słów, dla których wielkość liter ma znaczenie; zmienne specjalne $nick, $channel i $server są zastępowane odpowiednimi wartościami), słowa te są dodawane do zmiennej lokalnej bufora "highlight_words" tylko kiedy bufor jest tworzony (nie ma wpływu na obecne bufory), pusty ciąg wyłącza domyślne podświetlenia nicka, przykłady: "$nick", "(?-i)$nick"]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+"$nick"+`
 
 * [[option_irc.look.highlight_server]] *irc.look.highlight_server*
-** opis: pass:none[oddzielona przecinkami lista słów do podświetleń w buforach serwera (wielkość liter nie ma znaczenia, użyj "(?-i)" na początku słów, dla których wielkość liter ma znaczenie; zmienne specjalne $nick, $channel i $server są zastępowane odpowiednimi wartościami), słowa te są dodawane do zmiennej lokalnej bufora  "highlight_words" tylko kiedy bufor jest tworzony (nie ma wpływu na obecne bufory), pusty ciąg wyłącza domyślne podświetlenia nicka, przykłady: "$nick", "(?-i)$nick"]
+** opis: pass:none[oddzielona przecinkami lista słów do podświetleń w buforach serwera (wielkość liter nie ma znaczenia, użyj "(?-i)" na początku słów, dla których wielkość liter ma znaczenie; zmienne specjalne $nick, $channel i $server są zastępowane odpowiednimi wartościami), słowa te są dodawane do zmiennej lokalnej bufora "highlight_words" tylko kiedy bufor jest tworzony (nie ma wpływu na obecne bufory), pusty ciąg wyłącza domyślne podświetlenia nicka, przykłady: "$nick", "(?-i)$nick"]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+"$nick"+`
@@ -2508,6 +2564,18 @@
 ** wartości: on, off
 ** domyślna wartość: `+off+`
 
+* [[option_irc.look.typing_status_nicks]] *irc.look.typing_status_nicks*
+** opis: pass:none[display nicks typing on the channel in bar item "typing" (option typing.look.enabled_nicks must be enabled and capability "message-tags" must be enabled on the server)]
+** typ: bool
+** wartości: on, off
+** domyślna wartość: `+off+`
+
+* [[option_irc.look.typing_status_self]] *irc.look.typing_status_self*
+** opis: pass:none[send self typing status to channels so that other users see when you are typing a message (option typing.look.enabled_self must be enabled and capability "message-tags" must be enabled on the server)]
+** typ: bool
+** wartości: on, off
+** domyślna wartość: `+off+`
+
 * [[option_irc.network.autoreconnect_delay_growing]] *irc.network.autoreconnect_delay_growing*
 ** opis: pass:none[rosnący współczynnik opóźnienia ponownego połączenia z serwerem (1 = stała wartość, 2 = opóźnienie*2 dla każdej próby, etc.)]
 ** typ: liczba
@@ -2665,10 +2733,10 @@
 ** domyślna wartość: `+25+`
 
 * [[option_irc.server_default.capabilities]] *irc.server_default.capabilities*
-** opis: pass:none[oddzielona przecinkami lista opcji klienta do włączenia dla serwera, jeśli są dostępne  (zobacz /help cap żeby poznać listę opcji wspieranych przez WeeChat) (przykład: "away-notify,multi-prefix")]
+** opis: pass:none[oddzielona przecinkami lista opcji klienta do włączenia dla serwera, jeśli są dostępne (zobacz /help cap żeby poznać listę opcji wspieranych przez WeeChat); "*" włącza domyślnie wszystkie opcje (wspierane zarówno przez serwer i WeeChat); wildcard "*" jest dozwolony; opcje zaczynające się od "!" są pomijane (przykład: "*,!account-*,!extended-join")]
 ** typ: ciąg
 ** wartości: dowolny ciąg
-** domyślna wartość: `+""+`
+** domyślna wartość: `+"*"+`
 
 * [[option_irc.server_default.charset_message]] *irc.server_default.charset_message*
 ** opis: pass:none[część wiadomości IRC (otrzymanej lub wysłanej), która jest kodowana na ustawione kodowanie; message = cała wiadomość IRC (domyślne), channel = zaczynając od nazwy kanału (jeśli znaleziona, w przeciwnym wypadku text), text = zaczynając od samego tekstu (powinieneś spróbować tej wartości, jeśli masz problem z kodowaniem nazwy kanału)]
@@ -2713,19 +2781,19 @@
 ** domyślna wartość: `+""+`
 
 * [[option_irc.server_default.msg_kick]] *irc.server_default.msg_kick*
-** opis: pass:none[domyślna wiadomość dla wykopania z kanału używana przez komendy "/kick" i "/kickban" (uwaga: zawartość jest przetwarzana zobacz /help eval; specjalne zmienne jak ${nick}, ${channel} i ${server} są zamieniane na odpowiednie wartości)]
+** opis: pass:none[domyślna wiadomość dla wykopania z kanału używana przez komendy "/kick" i "/kickban" (uwaga: zawartość jest przetwarzana zobacz /help eval; specjalne zmienne jak ${nick} (własny nick), ${target} (docelowy nick), ${channel} i ${server} są zamieniane na odpowiednie wartości)]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+""+`
 
 * [[option_irc.server_default.msg_part]] *irc.server_default.msg_part*
-** opis: pass:none[domyślna wiadomość przy wyjściu z kanału (uwaga: zawartość jest przetwarzana zobacz /help eval; specjalne zmienne jak ${nick}, ${channel} i ${server} są zamieniane na odpowiednie wartości); "%v" jest zamieniane na wersję WeeChat jeśli w ciągu nie ma ${...})]
+** opis: pass:none[domyślna wiadomość przy wyjściu z kanału (uwaga: zawartość jest przetwarzana zobacz /help eval; specjalne zmienne jak ${nick}, ${channel} i ${server} są zamieniane na odpowiednie wartości; "%v" jest zamieniane na wersję WeeChat jeśli w ciągu nie ma ${...})]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+"WeeChat ${info:version}"+`
 
 * [[option_irc.server_default.msg_quit]] *irc.server_default.msg_quit*
-** opis: pass:none[domyślna wiadomość przy odłączeniu od serwera (uwaga: zawartość jest przetwarzana zobacz /help eval; specjalne zmienne jak ${nick}, ${channel} i ${server} są zamieniane na odpowiednie wartości); "%v" jest zamieniane na wersję WeeChat jeśli w ciągu nie ma ${...})]
+** opis: pass:none[domyślna wiadomość przy odłączeniu od serwera (uwaga: zawartość jest przetwarzana zobacz /help eval; specjalne zmienne jak ${nick}, ${channel} i ${server} są zamieniane na odpowiednie wartości; "%v" jest zamieniane na wersję WeeChat jeśli w ciągu nie ma ${...})]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+"WeeChat ${info:version}"+`
@@ -2770,18 +2838,18 @@
 ** opis: pass:none[akcja do wykonania jeśli uwierzytelnianie SASL się nie powiedzie: "continue" dla zignorowania problemu, "reconnect" ponownie połącz się z serwerem, "disconnect" odłącz od serwera (zobacz też opcję irc.network.sasl_fail_unavailable)]
 ** typ: liczba
 ** wartości: continue, reconnect, disconnect
-** domyślna wartość: `+continue+`
+** domyślna wartość: `+reconnect+`
 
 * [[option_irc.server_default.sasl_key]] *irc.server_default.sasl_key*
-** opis: pass:none[file with ECC private key for mechanism "ecdsa-nist256p-challenge" (path is evaluated, see function string_eval_path_home in plugin API reference)]
+** opis: pass:none[plik z kluczem prywatnym ECC dla mechanizmu "ecdsa-nist256p-challenge" (ścieżka jest przetwarzana, zobacz funkcję string_eval_path_home w opisie API wtyczek)]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+""+`
 
 * [[option_irc.server_default.sasl_mechanism]] *irc.server_default.sasl_mechanism*
-** opis: pass:none[mechanizm autentykacji SASL: "plain" dla hasła w czystym tekście, "ecdsa-nist256p-challenge" uwierzytelnianie na podstawie pary kluczy, "external" dla uwierzytelnienia za pomocą certyfikatu SSL po stronie klienta",  "dh-blowfish" dla hasła szyfrowanego za pomocą blowfish (mało bezpieczne, niepolecane), "dh-aes" dla hasła szyfrowanego za pomocą AES (mało bezpieczne, niepolecane)]
+** opis: pass:none[mechanizm autentykacji SASL: "plain" dla hasła w czystym tekście, "scram-sha-1" dla uwierzytelnienia SCRAM za pomocą algorytmu SHA-1, "scram-sha-256" dla uwierzytelnienia SCRAM za pomocą algorytmu SHA-256, "scram-sha-512" dla uwierzytelnienia SCRAM za pomocą algorytmu SHA-512, "ecdsa-nist256p-challenge" uwierzytelnianie na podstawie pary kluczy, "external" dla uwierzytelnienia za pomocą certyfikatu SSL po stronie klienta]
 ** typ: liczba
-** wartości: plain, ecdsa-nist256p-challenge, external, dh-blowfish, dh-aes
+** wartości: plain, scram-sha-1, scram-sha-256, scram-sha-512, ecdsa-nist256p-challenge, external
 ** domyślna wartość: `+plain+`
 
 * [[option_irc.server_default.sasl_password]] *irc.server_default.sasl_password*
@@ -2815,7 +2883,7 @@
 ** domyślna wartość: `+off+`
 
 * [[option_irc.server_default.ssl_cert]] *irc.server_default.ssl_cert*
-** opis: pass:none[SSL certificate file used to automatically identify your nick (path is evaluated, see function string_eval_path_home in plugin API reference)]
+** opis: pass:none[Plik certyfikatu SSL używany do automatycznego uwierzytelnienia nicka (ścieżka jest przetwarzana, zobacz funkcję string_eval_path_home w opisie API wtyczek)]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+""+`
@@ -3039,7 +3107,7 @@
 ** domyślna wartość: `+100000+`
 
 * [[option_relay.network.ssl_cert_key]] *relay.network.ssl_cert_key*
-** opis: pass:none[file with SSL certificate and private key (for serving clients with SSL) (path is evaluated, see function string_eval_path_home in plugin API reference)]
+** opis: pass:none[plik z certyfikatem SSL i kluczem prywatnym (dla obsługi klientów poprzez SSL) (ścieżka jest przetwarzana, zobacz funkcję string_eval_path_home w opisie API wtyczek)]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+"${weechat_config_dir}/ssl/relay.pem"+`
@@ -3345,7 +3413,7 @@
 ** domyślna wartość: `+lightmagenta+`
 
 * [[option_script.look.columns]] *script.look.columns*
-** opis: pass:none[format kolumn wyświetlanych w buforze skryptów: następujące identyfikatory kolumn są zastępowane przez ich wartość: %a=autor, %d=opis, %D=data dodania, %e=rozszerzenie, %l=język, %L=licencja, %n=nazwa z rozszerzeniem, %N=nazwa, %r=wymagania, %s=status, %t=tagi, %u=data wgrania, %v=wersja, %V=załadowana wersja, %w=min_weechat, %W=max_weechat)]
+** opis: pass:none[format kolumn wyświetlanych w buforze skryptów: następujące identyfikatory kolumn są zastępowane przez ich wartość: %a=autor, %d=opis, %D=data dodania, %e=rozszerzenie, %l=język, %L=licencja, %n=nazwa z rozszerzeniem, %N=nazwa, %r=wymagania, %s=status, %t=tagi, %u=data aktualizacji, %v=wersja, %V=załadowana wersja, %w=min_weechat, %W=max_weechat)]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+"%s %n %V %v %u | %d | %t"+`
@@ -3423,7 +3491,7 @@
 ** domyślna wartość: `+""+`
 
 * [[option_script.scripts.path]] *script.scripts.path*
-** opis: pass:none[local cache directory for scripts (path is evaluated, see function string_eval_path_home in plugin API reference)]
+** opis: pass:none[katalog z lokalnym cache dla skryptów (ścieżka jest przetwarzana, zobacz funkcje string_eval_path_home w opisie API wtyczek)]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+"${weechat_cache_dir}/script"+`

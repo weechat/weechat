@@ -26,7 +26,7 @@
 
 struct t_relay_server
 {
-    char *protocol_string;             /* example: "ipv6.ssl.irc.freenode"  */
+    char *protocol_string;             /* example: "ipv6.ssl.irc.libera"    */
     enum t_relay_protocol protocol;    /* protocol (irc/weechat)            */
     char *protocol_args;               /* arguments used for protocol       */
                                        /* example: server for irc protocol  */

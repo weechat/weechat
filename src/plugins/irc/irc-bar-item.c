@@ -554,9 +554,11 @@ irc_bar_item_tls_version (const void *pointer, void *data,
             version = gnutls_protocol_get_version (server->gnutls_sess);
             switch (version)
             {
+#if LIBGNUTLS_VERSION_NUMBER >= 0x030603 /* 3.6.3 */
                 case GNUTLS_TLS1_3:
                     color = IRC_COLOR_ITEM_TLS_VERSION_OK;
                     break;
+#endif
                 case GNUTLS_TLS1_2:
                     color = IRC_COLOR_ITEM_TLS_VERSION_DEPRECATED;
                     break;

@@ -55,7 +55,7 @@ relay_weechat_is_relay_buffer (struct t_gui_buffer *buffer)
  * Gets buffer pointer with argument from a command.
  *
  * The argument "arg" can be a pointer ("0x12345678") or a full name
- * ("irc.freenode.#weechat").
+ * ("irc.libera.#weechat").
  *
  * Returns pointer to buffer found, NULL if not found.
  */
@@ -554,7 +554,7 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(infolist)
  * Callback for command "nicklist" (from client).
  *
  * Message looks like:
- *   nicklist irc.freenode.#weechat
+ *   nicklist irc.libera.#weechat
  *   nicklist 0x12345678
  */
 
@@ -600,7 +600,7 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(nicklist)
  *
  * Message looks like:
  *   input core.weechat /help filter
- *   input irc.freenode.#weechat hello guys!
+ *   input irc.libera.#weechat hello guys!
  *   input 0x12345678 hello guys!
  */
 
@@ -673,7 +673,7 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(input)
  *
  * Message looks like:
  *   completion core.weechat -1 /help fi
- *   input irc.freenode.#weechat 5 /quernick
+ *   input irc.libera.#weechat 5 /quernick
  *   input 0x12345678 -1 nick
  */
 
@@ -1413,7 +1413,7 @@ relay_weechat_protocol_signal_upgrade_cb (const void *pointer, void *data,
  * Message looks like:
  *   sync
  *   sync * buffer
- *   sync irc.freenode.#weechat buffer,nicklist
+ *   sync irc.libera.#weechat buffer,nicklist
  */
 
 RELAY_WEECHAT_PROTOCOL_CALLBACK(sync)
@@ -1502,7 +1502,7 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(sync)
  * Message looks like:
  *   desync
  *   desync * nicklist
- *   desync irc.freenode.#weechat buffer,nicklist
+ *   desync irc.libera.#weechat buffer,nicklist
  */
 
 RELAY_WEECHAT_PROTOCOL_CALLBACK(desync)

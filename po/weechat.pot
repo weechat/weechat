@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-05-16 13:28+0200\n"
+"POT-Creation-Date: 2021-08-12 18:13+0200\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -161,7 +161,8 @@ msgid ""
 "  -P, --plugins <plugins>  load only these plugins at startup\n"
 "                           (see /help weechat.plugin.autoload)\n"
 "  -r, --run-command <cmd>  run command(s) after startup;\n"
-"                           many commands can be separated by semicolons,\n"
+"                           many commands can be separated by semicolons and "
+"are evaluated,\n"
 "                           this option can be given multiple times\n"
 "  -s, --no-script          don't load any script at startup\n"
 "      --upgrade            upgrade WeeChat using session files (see /help "
@@ -393,6 +394,12 @@ msgstr ""
 
 msgid "Raw content of buffers has been written in log file"
 msgstr ""
+
+#, c-format
+msgid "%d certificate loaded (system: %d, user: %d)"
+msgid_plural "%d certificates loaded (system: %d, user: %d)"
+msgstr[0] ""
+msgstr[1] ""
 
 #, c-format
 msgid "Debug disabled for \"%s\""
@@ -1270,8 +1277,8 @@ msgstr ""
 
 msgid ""
 "list || set <plugin> <level> || dump [<plugin>] || buffer|color|infolists|"
-"memory|tags|term|windows || mouse|cursor [verbose] || hdata [free] || time "
-"<command>"
+"libs|certs|memory|tags|term|windows || mouse|cursor [verbose] || hdata "
+"[free] || time <command>"
 msgstr ""
 
 msgid ""
@@ -1290,6 +1297,7 @@ msgid ""
 "    hooks: display infos about hooks\n"
 "infolists: display infos about infolists\n"
 "     libs: display infos about external libraries used\n"
+"    certs: display number of loaded trusted certificate authorities\n"
 "   memory: display infos about memory usage\n"
 "    mouse: toggle debug for mouse\n"
 "     tags: display tags for lines\n"
@@ -1381,10 +1389,11 @@ msgid ""
 "\")\n"
 "  17. result of an expression with parentheses and operators + - * / // % ** "
 "(format: \"calc:xxx\")\n"
-"  18. a translated string (format: \"translate:xxx\")\n"
-"  19. an option (format: \"file.section.option\")\n"
-"  20. a local variable in buffer\n"
-"  21. a hdata name/variable (the value is automatically converted to "
+"  18. a random integer number (format: \"random:min,max\")\n"
+"  19. a translated string (format: \"translate:xxx\")\n"
+"  20. an option (format: \"file.section.option\")\n"
+"  21. a local variable in buffer\n"
+"  22. a hdata name/variable (the value is automatically converted to "
 "string), by default \"window\" and \"buffer\" point to current window/"
 "buffer.\n"
 "Format for hdata can be one of following:\n"
@@ -1411,7 +1420,7 @@ msgid ""
 "  /eval -n ${info:version}                       ==> 0.4.3\n"
 "  /eval -n ${env:HOME}                           ==> /home/user\n"
 "  /eval -n ${weechat.look.scroll_amount}         ==> 3\n"
-"  /eval -n ${sec.data.freenode_password}         ==> secret\n"
+"  /eval -n ${sec.data.password}                  ==> secret\n"
 "  /eval -n ${window}                             ==> 0x2549aa0\n"
 "  /eval -n ${window.buffer}                      ==> 0x2549320\n"
 "  /eval -n ${window.buffer.full_name}            ==> core.weechat\n"
@@ -1426,6 +1435,7 @@ msgid ""
 "  /eval -n ${repeat:5,-}                         ==> -----\n"
 "  /eval -n ${length:test}                        ==> 4\n"
 "  /eval -n ${calc:(5+2)*3}                       ==> 21\n"
+"  /eval -n ${random:0,10}                        ==> 3\n"
 "  /eval -n ${base_encode:64,test}                ==> dGVzdA==\n"
 "  /eval -n ${base_decode:64,dGVzdA==}            ==> test\n"
 "  /eval -n ${translate:Plugin}                   ==> Extension\n"
@@ -1467,8 +1477,8 @@ msgid ""
 "       del: delete a filter\n"
 "      -all: delete all filters\n"
 "    buffer: comma separated list of buffers where filter is active:\n"
-"            - this is full name including plugin (example: \"irc.freenode."
-"#weechat\" or \"irc.server.freenode\")\n"
+"            - this is full name including plugin (example: \"irc.libera."
+"#weechat\" or \"irc.server.libera\")\n"
 "            - \"*\" means all buffers\n"
 "            - a name starting with '!' is excluded\n"
 "            - wildcard \"*\" is allowed\n"
@@ -1514,11 +1524,11 @@ msgid ""
 "  filter nicks displayed when joining channels or with /names:\n"
 "    /filter add nicks * irc_366 *\n"
 "  filter nick \"toto\" on IRC channel #weechat:\n"
-"    /filter add toto irc.freenode.#weechat nick_toto *\n"
+"    /filter add toto irc.libera.#weechat nick_toto *\n"
 "  filter IRC join/action messages from nick \"toto\":\n"
 "    /filter add toto * nick_toto+irc_join,nick_toto+irc_action *\n"
 "  filter lines containing \"weechat sucks\" on IRC channel #weechat:\n"
-"    /filter add sucks irc.freenode.#weechat * weechat sucks\n"
+"    /filter add sucks irc.libera.#weechat * weechat sucks\n"
 "  filter lines that are strictly equal to \"WeeChat sucks\" on all buffers:\n"
 "    /filter add sucks2 * * (?-i)^WeeChat sucks$"
 msgstr ""
@@ -1708,7 +1718,12 @@ msgid ""
 "Without argument, this command displays stored layouts.\n"
 "\n"
 "The current layout can be saved on /quit command with the option \"weechat."
-"look.save_layout_on_exit\"."
+"look.save_layout_on_exit\".\n"
+"\n"
+"Note: the layout only remembers windows split and buffers numbers. It does "
+"not open buffers. That means for example you must still auto-join IRC "
+"channels to open the buffers, the saved layout only applies once the buffers "
+"are opened."
 msgstr ""
 
 msgid "mouse control"
@@ -1743,8 +1758,8 @@ msgid ""
 "   -core: no output on WeeChat core buffer\n"
 "-current: no output on current buffer\n"
 " -buffer: no output on specified buffer\n"
-"    name: full buffer name (examples: \"irc.server.freenode\", \"irc."
-"freenode.#weechat\")\n"
+"    name: full buffer name (examples: \"irc.server.libera\", \"irc.libera."
+"#weechat\")\n"
 " command: command to execute silently (a '/' is automatically added if not "
 "found at beginning of command)\n"
 "\n"
@@ -1757,7 +1772,7 @@ msgid ""
 "  message to current IRC channel:\n"
 "    /mute -current msg * hi!\n"
 "  message to #weechat channel:\n"
-"    /mute -buffer irc.freenode.#weechat msg #weechat hi!"
+"    /mute -buffer irc.libera.#weechat msg #weechat hi!"
 msgstr ""
 
 msgid "list/load/unload plugins"
@@ -1835,7 +1850,7 @@ msgid ""
 "  display message on core buffer with prefix \"abc\":\n"
 "    /print -core abc\\tThe message\n"
 "  display a message on channel #weechat:\n"
-"    /print -buffer irc.freenode.#weechat Message on #weechat\n"
+"    /print -buffer irc.libera.#weechat Message on #weechat\n"
 "  display a snowman (U+2603):\n"
 "    /print -escape \\u2603\n"
 "  send alert (BEL):\n"
@@ -1989,16 +2004,16 @@ msgid ""
 "  use program \"pass\" to read the passphrase on startup:\n"
 "    /set sec.crypt.passphrase_command \"/usr/bin/pass show weechat/passphrase"
 "\"\n"
-"  encrypt freenode SASL password:\n"
-"    /secure set freenode mypassword\n"
-"    /set irc.server.freenode.sasl_password \"${sec.data.freenode}\"\n"
+"  encrypt libera SASL password:\n"
+"    /secure set libera mypassword\n"
+"    /set irc.server.libera.sasl_password \"${sec.data.libera}\"\n"
 "  encrypt oftc password for nickserv:\n"
 "    /secure set oftc mypassword\n"
 "    /set irc.server.oftc.command \"/msg nickserv identify ${sec.data."
 "oftc}\"\n"
 "  alias to ghost the nick \"mynick\":\n"
-"    /alias add ghost /eval /msg -server freenode nickserv ghost mynick ${sec."
-"data.freenode}"
+"    /alias add ghost /eval /msg -server libera nickserv ghost mynick ${sec."
+"data.libera}"
 msgstr ""
 
 msgid "set config options and environment variables"
@@ -2397,13 +2412,15 @@ msgid "Notify level for buffer"
 msgstr ""
 
 msgid ""
-"command executed when WeeChat starts, after loading plugins (note: content "
-"is evaluated, see /help eval)"
+"command executed when WeeChat starts, after loading plugins; multiple "
+"commands can be separated by semicolons (note: commands are evaluated, see /"
+"help eval)"
 msgstr ""
 
 msgid ""
-"command executed when WeeChat starts, before loading plugins (note: content "
-"is evaluated, see /help eval)"
+"command executed when WeeChat starts, before loading plugins; multiple "
+"commands can be separated by semicolons (note: commands are evaluated, see /"
+"help eval)"
 msgstr ""
 
 msgid "display WeeChat logo at startup"
@@ -3382,7 +3399,7 @@ msgstr ""
 
 msgid ""
 "command to execute when the signal is received, multiple commands can be "
-"separated by semicolons (note: content is evaluated, see /help eval)"
+"separated by semicolons (note: commands are evaluated, see /help eval)"
 msgstr ""
 
 msgid "FATAL: error initializing configuration options"
@@ -3572,14 +3589,6 @@ msgstr ""
 msgid "password for proxy server (note: content is evaluated, see /help eval)"
 msgstr ""
 
-msgid "secured data"
-msgstr ""
-
-msgid ""
-"secured data: names and values (be careful: the values are sensitive data: "
-"do NOT print/log them anywhere)"
-msgstr ""
-
 msgid "WeeChat secured data (sec.conf) | Keys: [alt-v] Toggle values"
 msgstr ""
 
@@ -3599,6 +3608,14 @@ msgid "Secured data STILL ENCRYPTED: (use /secure decrypt, see /help secure)"
 msgstr ""
 
 msgid "No secured data set"
+msgstr ""
+
+msgid "secured data"
+msgstr ""
+
+msgid ""
+"secured data: names and values (be careful: the values are sensitive data: "
+"do NOT print/log them anywhere)"
 msgstr ""
 
 msgid "Please enter your passphrase to decrypt the data secured by WeeChat:"
@@ -3891,10 +3908,14 @@ msgid ""
 "\" (from top to bottom)) when bar position is left or right"
 msgstr ""
 
-msgid "bar size in chars (0 = auto size)"
+msgid ""
+"bar size in chars (left/right bars) or lines (top/bottom bars) (0 = auto "
+"size)"
 msgstr ""
 
-msgid "max bar size in chars (0 = no limit)"
+msgid ""
+"max bar size in chars (left/right bars) or lines (top/bottom bars) (0 = no "
+"limit)"
 msgstr ""
 
 msgid "default text color for bar"
@@ -4427,6 +4448,9 @@ msgid ""
 "  reset: reset charsets for current buffer"
 msgstr ""
 
+msgid "Executed commands"
+msgstr ""
+
 msgid "Execution of external commands in WeeChat"
 msgstr ""
 
@@ -4436,9 +4460,6 @@ msgstr ""
 
 #, c-format
 msgid "%s: unexpected end of command %ld (\"%s\")"
-msgstr ""
-
-msgid "Executed commands"
 msgstr ""
 
 msgid "No command is running"
@@ -4682,8 +4703,8 @@ msgid ""
 "  plugin.buffer *text or command here\n"
 "  *text or command here\n"
 "\n"
-"For example to change your freenode nick:\n"
-"  echo 'irc.server.freenode */nick newnick' >/run/user/1000/weechat/"
+"For example to change your libera nick:\n"
+"  echo 'irc.server.libera */nick newnick' >/run/user/1000/weechat/"
 "weechat_fifo_12345\n"
 "\n"
 "Please read the user's guide for more info and examples.\n"
@@ -4724,6 +4745,9 @@ msgid ""
 "$)=unmark/refresh, (m)=mark matching options, (u)=unmark matching options, "
 "alt+p(p)=toggle plugins desc, alt+v(v)=toggle help bar, ctrl+X(x)=switch "
 "format, (q)=close buffer"
+msgstr ""
+
+msgid "Fast set of WeeChat and plugins options"
 msgstr ""
 
 #, c-format
@@ -5221,9 +5245,6 @@ msgstr ""
 msgid "fset options"
 msgstr ""
 
-msgid "Fast set of WeeChat and plugins options"
-msgstr ""
-
 #, c-format
 msgid "%s%s: script \"%s\" already registered (register ignored)"
 msgstr ""
@@ -5345,6 +5366,16 @@ msgstr ""
 msgid ""
 "%s%s: command \"%s\" with option \"%s\" must be executed on irc buffer "
 "(server, channel or private)"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s%s: \"%s\" command can only be executed if SASL is enabled via server "
+"options \"sasl_*\" (or you must give username and password)"
+msgstr ""
+
+#, c-format
+msgid "%s%s: SASL is not supported by the server"
 msgstr ""
 
 #, c-format
@@ -5640,12 +5671,13 @@ msgid "execute a command on all channels of all connected servers"
 msgstr ""
 
 msgid ""
-"[-current] [-exclude=<channel>[,<channel>...]] <command> || [-current] -"
-"include=<channel>[,<channel>...] <command>"
+"[-current] [-parted] [-exclude=<channel>[,<channel>...]] <command> || [-"
+"current] [-parted] -include=<channel>[,<channel>...] <command>"
 msgstr ""
 
 msgid ""
 " -current: execute command for channels of current server only\n"
+"  -parted: execute on parted channels only\n"
 " -exclude: exclude some channels (wildcard \"*\" is allowed)\n"
 " -include: include only some channels (wildcard \"*\" is allowed)\n"
 "  command: command to execute (or text to send to buffer if command does not "
@@ -5668,7 +5700,9 @@ msgid ""
 "#linux:\n"
 "    /allchan -exclude=#weechat,#linux* hello\n"
 "  say 'hello' on all channels beginning with #linux:\n"
-"    /allchan -include=#linux* hello"
+"    /allchan -include=#linux* hello\n"
+"  close all buffers with parted channels:\n"
+"    /allchan -parted /close"
 msgstr ""
 
 msgid "execute a command on all private buffers of all connected servers"
@@ -5736,6 +5770,32 @@ msgid ""
 "    /allserv /whois $nick"
 msgstr ""
 
+msgid "authenticate with SASL"
+msgstr ""
+
+msgid "[<username> <password>]"
+msgstr ""
+
+msgid ""
+"username: SASL username (content is evaluated, see /help eval; server "
+"options are evaluated with ${irc_server.xxx} and ${server} is replaced by "
+"the server name)\n"
+"password: SASL password or path to file with private key (content is "
+"evaluated, see /help eval; server options are evaluated with ${irc_server."
+"xxx} and ${server} is replaced by the server name)\n"
+"\n"
+"If username and password are not provided, the values from server options "
+"\"sasl_username\" and \"sasl_password\" (or \"sasl_key\") are used.\n"
+"\n"
+"Examples:\n"
+"  authenticate with username/password defined in the server:\n"
+"    /auth\n"
+"  authenticate as a different user:\n"
+"    /auth user2 password2\n"
+"  authenticate as a different user with mechanism ecdsa-nist256p-challenge:\n"
+"    /auth user2 ${weechat_config_dir}/ecdsa2.pem"
+msgstr ""
+
 msgid "ban nicks or hosts"
 msgstr ""
 
@@ -5765,8 +5825,8 @@ msgid ""
 "Without argument, \"ls\" and \"list\" are sent.\n"
 "\n"
 "Capabilities supported by WeeChat are: account-notify, away-notify, cap-"
-"notify, chghost, extended-join, invite-notify, multi-prefix, server-time, "
-"userhost-in-names.\n"
+"notify, chghost, extended-join, invite-notify, message-tags, multi-prefix, "
+"server-time, setname, userhost-in-names.\n"
 "\n"
 "The capabilities to automatically enable on servers can be set in option irc."
 "server_default.capabilities (or by server in option irc.server.xxx."
@@ -5807,7 +5867,7 @@ msgid ""
 "disconnect.\n"
 "\n"
 "Examples:\n"
-"  /connect freenode\n"
+"  /connect libera\n"
 "  /connect irc.oftc.net/6667\n"
 "  /connect irc6.oftc.net/6667 -ipv6\n"
 "  /connect irc6.oftc.net/6697 -ipv6 -ssl\n"
@@ -5938,10 +5998,10 @@ msgid ""
 "Examples:\n"
 "  ignore nick \"toto\" everywhere:\n"
 "    /ignore add toto\n"
-"  ignore host \"toto@domain.com\" on freenode server:\n"
-"    /ignore add toto@domain.com freenode\n"
-"  ignore host \"toto*@*.domain.com\" on freenode/#weechat:\n"
-"    /ignore add toto*@*.domain.com freenode #weechat"
+"  ignore host \"toto@domain.com\" on libera server:\n"
+"    /ignore add toto@domain.com libera\n"
+"  ignore host \"toto*@*.domain.com\" on libera/#weechat:\n"
+"    /ignore add toto*@*.domain.com libera #weechat"
 msgstr ""
 
 msgid "get information describing the server"
@@ -5985,7 +6045,7 @@ msgid ""
 "Examples:\n"
 "  /join #weechat\n"
 "  /join #protectedchan,#weechat key\n"
-"  /join -server freenode #weechat\n"
+"  /join -server libera #weechat\n"
 "  /join -noswitch #weechat"
 msgstr ""
 
@@ -5998,8 +6058,9 @@ msgstr ""
 msgid ""
 "channel: channel name\n"
 "   nick: nick\n"
-" reason: reason (special variables $nick, $channel and $server are replaced "
-"by their value)"
+" reason: reason (evaluated, see /help eval; special variables ${nick} (self "
+"nick), ${target} (target nick), ${channel} and ${server} are replaced by "
+"their values)"
 msgstr ""
 
 msgid "kick a user out of a channel and ban the host"
@@ -6008,8 +6069,9 @@ msgstr ""
 msgid ""
 "channel: channel name\n"
 "   nick: nick\n"
-" reason: reason (special variables $nick, $channel and $server are replaced "
-"by their value)\n"
+" reason: reason (evaluated, see /help eval; special variables ${nick} (self "
+"nick), ${target} (target nick), ${channel} and ${server} are replaced by "
+"their values)\n"
 "\n"
 "It is possible to kick/ban with a mask, nick will be extracted from mask and "
 "replaced by \"*\".\n"
@@ -6041,7 +6103,7 @@ msgid ""
 "server_mask: list of servers must match this mask"
 msgstr ""
 
-msgid "list channels and their topic"
+msgid "list channels and their topics"
 msgstr ""
 
 msgid "[-server <server>] [-re <regex>] [<channel>[,<channel>...]] [<target>]"
@@ -6193,10 +6255,10 @@ msgid ""
 "Examples:\n"
 "  notify when \"toto\" joins/quits current server:\n"
 "    /notify add toto\n"
-"  notify when \"toto\" joins/quits freenode server:\n"
-"    /notify add toto freenode\n"
-"  notify when \"toto\" is away or back on freenode server:\n"
-"    /notify add toto freenode -away"
+"  notify when \"toto\" joins/quits libera server:\n"
+"    /notify add toto libera\n"
+"  notify when \"toto\" is away or back on libera server:\n"
+"    /notify add toto libera -away"
 msgstr ""
 
 msgid "give channel operator status to nick(s)"
@@ -6307,6 +6369,13 @@ msgstr ""
 msgid "force a user to leave a channel"
 msgstr ""
 
+msgid ""
+"channel: channel name\n"
+"   nick: nick\n"
+" reason: reason (special variables $nick, $channel and $server are replaced "
+"by their values)"
+msgstr ""
+
 msgid "tell the server to restart itself"
 msgstr ""
 
@@ -6407,16 +6476,16 @@ msgid ""
 "\n"
 "Examples:\n"
 "  /server listfull\n"
-"  /server add freenode chat.freenode.net\n"
-"  /server add freenode chat.freenode.net/6697 -ssl -autoconnect\n"
+"  /server add libera irc.libera.chat\n"
+"  /server add libera irc.libera.chat/6697 -ssl -autoconnect\n"
 "  /server add chatspike irc.chatspike.net/6667,irc.duckspike.net/6667\n"
-"  /server copy freenode freenode-test\n"
-"  /server rename freenode-test freenode2\n"
-"  /server reorder freenode2 freenode\n"
-"  /server del freenode\n"
+"  /server copy libera libera-test\n"
+"  /server rename libera-test libera2\n"
+"  /server reorder libera2 libera\n"
+"  /server del libera\n"
 "  /server deloutq\n"
 "  /server raw\n"
-"  /server raw s:freenode\n"
+"  /server raw s:libera\n"
 "  /server raw c:${recv} && ${command}==PRIVMSG && ${nick}==foo"
 msgstr ""
 
@@ -6440,6 +6509,15 @@ msgstr ""
 msgid ""
 "service: name of service\n"
 "   text: text to send"
+msgstr ""
+
+msgid "set real name"
+msgstr ""
+
+msgid "<realname>"
+msgstr ""
+
+msgid "realname: new real name"
 msgstr ""
 
 msgid "disconnect server links"
@@ -6787,16 +6865,19 @@ msgstr ""
 #. TRANSLATORS: please keep words "client capabilities" between brackets if translation is different (see fr.po)
 msgid ""
 "comma-separated list of client capabilities to enable for server if they are "
-"available (see /help cap for a list of capabilities supported by WeeChat) "
-"(example: \"away-notify,multi-prefix\")"
+"available (see /help cap for a list of capabilities supported by WeeChat); "
+"\"*\" enables all capabilities by default (supported by both server and "
+"WeeChat); wildcard \"*\" is allowed; a capability beginning with \"!\" is "
+"excluded (example: \"*,!account-*,!extended-join\")"
 msgstr ""
 
 msgid ""
 "mechanism for SASL authentication: \"plain\" for plain text password, "
+"\"scram-sha-1\" for SCRAM authentication with SHA-1 digest algorithm, "
+"\"scram-sha-256\" for SCRAM authentication with SHA-256 digest algorithm, "
+"\"scram-sha-512\" for SCRAM authentication with SHA-512 digest algorithm, "
 "\"ecdsa-nist256p-challenge\" for key-based challenge authentication, "
-"\"external\" for authentication using client side SSL cert, \"dh-blowfish\" "
-"for blowfish crypted password (insecure, not recommended), \"dh-aes\" for "
-"AES crypted password (insecure, not recommended)"
+"\"external\" for authentication using client side SSL certificate"
 msgstr ""
 
 msgid ""
@@ -6880,8 +6961,8 @@ msgid ""
 "command(s) to run after connection to server and before auto-join of "
 "channels (many commands can be separated by \";\", use \"\\;\" for a "
 "semicolon, special variables $nick, $channel and $server are replaced by "
-"their value) (note: content is evaluated, see /help eval; server options are "
-"evaluated with ${irc_server.xxx} and ${server} is replaced by the server "
+"their values) (note: commands are evaluated, see /help eval; server options "
+"are evaluated with ${irc_server.xxx} and ${server} is replaced by the server "
 "name)"
 msgstr ""
 
@@ -6935,22 +7016,23 @@ msgstr ""
 
 msgid ""
 "default kick message used by commands \"/kick\" and \"/kickban\" (note: "
-"content is evaluated, see /help eval; special variables ${nick}, ${channel} "
-"and ${server} are replaced by their value)"
+"content is evaluated, see /help eval; special variables ${nick} (self nick), "
+"${target} (target nick), ${channel} and ${server} are replaced by their "
+"values)"
 msgstr ""
 
 msgid ""
 "default part message (leaving channel) (note: content is evaluated, see /"
 "help eval; special variables ${nick}, ${channel} and ${server} are replaced "
-"by their value; \"%v\" is replaced by WeeChat version if there is no ${...} "
+"by their values; \"%v\" is replaced by WeeChat version if there is no ${...} "
 "in string)"
 msgstr ""
 
 msgid ""
 "default quit message (disconnecting from server) (note: content is "
 "evaluated, see /help eval; special variables ${nick}, ${channel} and "
-"${server} are replaced by their value; \"%v\" is replaced by WeeChat version "
-"if there is no ${...} in string)"
+"${server} are replaced by their values; \"%v\" is replaced by WeeChat "
+"version if there is no ${...} in string)"
 msgstr ""
 
 msgid ""
@@ -7027,6 +7109,10 @@ msgid ""
 msgstr ""
 
 msgid ""
+"display ACCOUNT messages received when capability account-notify is enabled"
+msgstr ""
+
+msgid ""
 "display message when (un)marking as away (off: do not display/send anything, "
 "local: display locally, channel: send action to channels)"
 msgstr ""
@@ -7038,6 +7124,11 @@ msgid "display CTCP reply sent by WeeChat"
 msgstr ""
 
 msgid "display CTCP message even if it is unknown CTCP"
+msgstr ""
+
+msgid ""
+"display extra information in the JOIN messages: account name and real name "
+"(capability extended-join must be enabled)"
 msgstr ""
 
 msgid "display host in join messages"
@@ -7075,7 +7166,7 @@ msgid ""
 "comma separated list of words to highlight in channel buffers (case "
 "insensitive, use \"(?-i)\" at beginning of words to make them case "
 "sensitive; special variables $nick, $channel and $server are replaced by "
-"their value), these words are added to buffer property \"highlight_words\" "
+"their values), these words are added to buffer property \"highlight_words\" "
 "only when buffer is created (it does not affect current buffers), an empty "
 "string disables default highlight on nick, examples: \"$nick\", \"(?-i)$nick"
 "\""
@@ -7085,7 +7176,7 @@ msgid ""
 "comma separated list of words to highlight in private buffers (case "
 "insensitive, use \"(?-i)\" at beginning of words to make them case "
 "sensitive; special variables $nick, $channel and $server are replaced by "
-"their value), these words are added to buffer property \"highlight_words\" "
+"their values), these words are added to buffer property \"highlight_words\" "
 "only when buffer is created (it does not affect current buffers), an empty "
 "string disables default highlight on nick, examples: \"$nick\", \"(?-i)$nick"
 "\""
@@ -7095,7 +7186,7 @@ msgid ""
 "comma separated list of words to highlight in server buffers (case "
 "insensitive, use \"(?-i)\" at beginning of words to make them case "
 "sensitive; special variables $nick, $channel and $server are replaced by "
-"their value), these words are added to buffer property \"highlight_words\" "
+"their values), these words are added to buffer property \"highlight_words\" "
 "only when buffer is created (it does not affect current buffers), an empty "
 "string disables default highlight on nick, examples: \"$nick\", \"(?-i)$nick"
 "\""
@@ -7212,6 +7303,18 @@ msgstr ""
 msgid ""
 "number of raw messages to save in memory when raw data buffer is closed "
 "(messages will be displayed when opening raw data buffer)"
+msgstr ""
+
+msgid ""
+"display nicks typing on the channel in bar item \"typing\" (option typing."
+"look.enabled_nicks must be enabled and capability \"message-tags\" must be "
+"enabled on the server)"
+msgstr ""
+
+msgid ""
+"send self typing status to channels so that other users see when you are "
+"typing a message (option typing.look.enabled_self must be enabled and "
+"capability \"message-tags\" must be enabled on the server)"
 msgstr ""
 
 msgid ""
@@ -7525,11 +7628,12 @@ msgstr ""
 
 #. TRANSLATORS: please do not translate key names (enclosed by quotes)
 msgid ""
-"\"tags\": tags, \"message_without_tags\": message without the tags, \"nick"
-"\": nick, \"user\": user, \"host\": host, \"command\": command, \"channel\": "
-"channel, \"arguments\": arguments (includes channel), \"text\": text (for "
-"example user message), \"pos_command\": index of \"command\" message (\"-1\" "
-"if \"command\" was not found), \"pos_arguments\": index of \"arguments\" "
+"\"tags\": tags, \"tag_xxx\": unescaped value of tag \"xxx\" (one key per "
+"tag), \"message_without_tags\": message without the tags, \"nick\": nick, "
+"\"user\": user, \"host\": host, \"command\": command, \"channel\": channel, "
+"\"arguments\": arguments (includes channel), \"text\": text (for example "
+"user message), \"pos_command\": index of \"command\" message (\"-1\" if "
+"\"command\" was not found), \"pos_arguments\": index of \"arguments\" "
 "message (\"-1\" if \"arguments\" was not found), \"pos_channel\": index of "
 "\"channel\" message (\"-1\" if \"channel\" was not found), \"pos_text\": "
 "index of \"text\" message (\"-1\" if \"text\" was not found)"
@@ -7710,8 +7814,10 @@ msgid "%s%s%s%s has unidentified"
 msgstr ""
 
 #, c-format
-msgid ""
-"%s%s: error building answer for SASL authentication, using mechanism \"%s\""
+msgid "%s%s: SASL error: %s"
+msgstr ""
+
+msgid "internal error"
 msgstr ""
 
 #, c-format
@@ -7756,6 +7862,9 @@ msgstr ""
 
 #, c-format
 msgid "%s%s%s%s (%s%s%s)%s has changed host to %s%s"
+msgstr ""
+
+msgid "Failure:"
 msgstr ""
 
 #, c-format
@@ -7806,6 +7915,9 @@ msgstr ""
 msgid "%s%s%s%s is now known as %s%s%s"
 msgstr ""
 
+msgid "Note:"
+msgstr ""
+
 #, c-format
 msgid "%s%s%s%s%s%s%s%s%s%s has left %s%s%s %s(%s%s%s)"
 msgstr ""
@@ -7820,6 +7932,14 @@ msgstr ""
 
 #, c-format
 msgid "%s%s%s%s%s%s%s%s%s%s has quit"
+msgstr ""
+
+#, c-format
+msgid "%sYour real name has been set to \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%sReal name of %s%s%s has been set to \"%s\""
 msgstr ""
 
 #, c-format
@@ -7844,6 +7964,9 @@ msgstr ""
 
 #, c-format
 msgid "%sWallops from %s: %s"
+msgstr ""
+
+msgid "Warning:"
 msgstr ""
 
 #, c-format
@@ -8103,12 +8226,30 @@ msgstr ""
 msgid "%s%s: server \"%s\" not found for redirect"
 msgstr ""
 
-#, c-format
-msgid "%s%s: unable to read private key in file \"%s\""
+msgid "unable to validate server signature"
+msgstr ""
+
+msgid "memory error"
+msgstr ""
+
+msgid "base64 decode error"
+msgstr ""
+
+msgid "base64 encode error"
+msgstr ""
+
+msgid "cryptography error"
+msgstr ""
+
+msgid "protocol error"
 msgstr ""
 
 #, c-format
-msgid "%sgnutls: invalid private key file: error %d %s"
+msgid "unable to read private key in file \"%s\""
+msgstr ""
+
+#, c-format
+msgid "invalid private key file: error %d %s"
 msgstr ""
 
 #, c-format
@@ -8116,11 +8257,11 @@ msgid "%s%s: signing the challenge with ECC public key: %s"
 msgstr ""
 
 #, c-format
-msgid "%sgnutls: unable to import the private key: error %d %s"
+msgid "unable to import the private key: error %d %s"
 msgstr ""
 
 #, c-format
-msgid "%sgnutls: unable to sign the hashed data: error %d %s"
+msgid "unable to sign the hashed data: error %d %s"
 msgstr ""
 
 #, c-format
@@ -8275,10 +8416,6 @@ msgid "%sgnutls: failed to calculate certificate fingerprint (%s)"
 msgstr ""
 
 #, c-format
-msgid "%sgnutls: connected using %d-bit Diffie-Hellman shared secret exchange"
-msgstr ""
-
-#, c-format
 msgid "%sgnutls: failed to initialize certificate structure"
 msgstr ""
 
@@ -8388,30 +8525,6 @@ msgstr ""
 
 #, c-format
 msgid "%s%s: disconnected from server"
-msgstr ""
-
-#, c-format
-msgid "%s%s: exception: %s"
-msgstr ""
-
-#, c-format
-msgid "%s%s: unable to run function \"%s\""
-msgstr ""
-
-#, c-format
-msgid "%s%s: unable to create new sub-interpreter"
-msgstr ""
-
-#, c-format
-msgid "%s%s: unable to load file \"%s\""
-msgstr ""
-
-#, c-format
-msgid "%s%s: unable to execute file \"%s\""
-msgstr ""
-
-#, c-format
-msgid "%sCommand \"/%s eval\" is not yet implemented"
 msgstr ""
 
 #, c-format
@@ -8603,6 +8716,14 @@ msgid "Support of lua scripts"
 msgstr ""
 
 #, c-format
+msgid "%s%s: unable to run function \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to create new sub-interpreter"
+msgstr ""
+
+#, c-format
 msgid "%s%s: unable to redirect stdout and stderr"
 msgstr ""
 
@@ -8611,7 +8732,15 @@ msgid "%s%s: unable to load source code"
 msgstr ""
 
 #, c-format
+msgid "%s%s: unable to load file \"%s\""
+msgstr ""
+
+#, c-format
 msgid "%s%s: unable to execute source code"
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to execute file \"%s\""
 msgstr ""
 
 msgid "Support of perl scripts"
@@ -8638,6 +8767,10 @@ msgid "%s%s: unable to initialize %s"
 msgstr ""
 
 msgid "Support of PHP scripts"
+msgstr ""
+
+#, c-format
+msgid "%sCommand \"/%s eval\" is not yet implemented"
 msgstr ""
 
 msgid "bar"
@@ -9056,19 +9189,6 @@ msgstr ""
 msgid "description of plugin option"
 msgstr ""
 
-msgid ""
-"check the license of scripts when they are loaded: if the license is "
-"different from the plugin license, a warning is displayed"
-msgstr ""
-
-#, c-format
-msgid ""
-"keep context between two calls to the source code evaluation (option \"eval"
-"\" of script command or info \"%s_eval\"); a hidden script is used to eval "
-"script code; if this option is disabled, this hidden script is unloaded "
-"after each eval: this uses less memory, but is slower"
-msgstr ""
-
 msgid "list/load/unload scripts"
 msgstr ""
 
@@ -9171,6 +9291,19 @@ msgstr ""
 
 #, c-format
 msgid "%s: scripts unloaded"
+msgstr ""
+
+msgid ""
+"check the license of scripts when they are loaded: if the license is "
+"different from the plugin license, a warning is displayed"
+msgstr ""
+
+#, c-format
+msgid ""
+"keep context between two calls to the source code evaluation (option \"eval"
+"\" of script command or info \"%s_eval\"); a hidden script is used to eval "
+"script code; if this option is disabled, this hidden script is unloaded "
+"after each eval: this uses less memory, but is slower"
 msgstr ""
 
 #, c-format
@@ -9438,10 +9571,10 @@ msgid ""
 "Without argument, this command opens buffer with list of relay clients.\n"
 "\n"
 "Examples:\n"
-"  irc proxy, for server \"freenode\":\n"
-"    /relay add irc.freenode 8000\n"
-"  irc proxy, for server \"freenode\", with SSL:\n"
-"    /relay add ssl.irc.freenode 8001\n"
+"  irc proxy, for server \"libera\":\n"
+"    /relay add irc.libera 8000\n"
+"  irc proxy, for server \"libera\", with SSL:\n"
+"    /relay add ssl.irc.libera 8001\n"
 "  irc proxy, for all servers (client will choose), with SSL:\n"
 "    /relay add ssl.irc 8002\n"
 "  weechat protocol:\n"
@@ -10126,7 +10259,7 @@ msgstr ""
 
 msgid ""
 "format of columns displayed in script buffer: following column identifiers "
-"are replaced by their value: %a=author, %d=description, %D=date added, "
+"are replaced by their values: %a=author, %d=description, %D=date added, "
 "%e=extension, %l=language, %L=license, %n=name with extension, %N=name, "
 "%r=requirements, %s=status, %t=tags, %u=date updated, %v=version, %V=version "
 "loaded, %w=min_weechat, %W=max_weechat)"
@@ -10516,8 +10649,7 @@ msgid "comma-separated list of dictionaries used in buffer"
 msgstr ""
 
 msgid ""
-"buffer pointer (\"0x12345678\") or buffer full name (\"irc.freenode.#weechat"
-"\")"
+"buffer pointer (\"0x12345678\") or buffer full name (\"irc.libera.#weechat\")"
 msgstr ""
 
 #, c-format
@@ -10543,6 +10675,10 @@ msgstr ""
 msgid "%s%s: error occurred while parsing file \"%s\": %s"
 msgstr ""
 
+#, c-format
+msgid "Trigger monitor (filter: %s) | Input: q=close, words=filter"
+msgstr ""
+
 msgid ""
 "Text replacement and command execution on events triggered by WeeChat/plugins"
 msgstr ""
@@ -10553,10 +10689,6 @@ msgstr ""
 
 #, c-format
 msgid "%s%s: invalid regular expression in trigger: \"%s\""
-msgstr ""
-
-#, c-format
-msgid "Trigger monitor (filter: %s) | Input: q=close, words=filter"
 msgstr ""
 
 msgid "no variable"
@@ -10937,6 +11069,44 @@ msgstr ""
 msgid "text color for disabled trigger name"
 msgstr ""
 
+msgid "Typing status of users"
+msgstr ""
+
+#. TRANSLATORS: this text is displayed before the list of nicks typing in the bar item "typing", it must be as short as possible
+msgid "Typing:"
+msgstr ""
+
+msgid ""
+"number of seconds after paused status has been set: if reached, the typing "
+"status is removed"
+msgstr ""
+
+msgid ""
+"number of seconds after typing status has been set: if reached, the typing "
+"status is removed"
+msgstr ""
+
+msgid ""
+"number of seconds after typing last char: if reached, the typing status "
+"becomes \"paused\" and no more typing signals are sent"
+msgstr ""
+
+msgid ""
+"typing enabled for other nicks (display typing info for nicks typing in the "
+"current buffer)"
+msgstr ""
+
+msgid "typing enabled for self messages (send typing info to other users)"
+msgstr ""
+
+msgid "min number of chars in message to trigger send of typing signals"
+msgstr ""
+
+msgid ""
+"max number of chars displayed in the bar item \"typing\" (0 = do not "
+"truncate content)"
+msgstr ""
+
 msgid "  [A] Accept"
 msgstr ""
 
@@ -11229,7 +11399,7 @@ msgstr ""
 msgid ""
 "comma-separated list of nicks for which the incoming files and chats are "
 "automatically accepted; format is \"server.nick\" (for a specific server) or "
-"\"nick\" (for all servers); example: \"freenode.FlashCode,andrew\""
+"\"nick\" (for all servers); example: \"libera.FlashCode,andrew\""
 msgstr ""
 
 msgid ""

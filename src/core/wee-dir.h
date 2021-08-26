@@ -33,6 +33,7 @@ extern void dir_exec_on_files (const char *directory, int recurse_subdirs,
 extern char *dir_search_full_lib_name (const char *filename,
                                        const char *sys_directory);
 extern char *dir_file_get_content (const char *filename);
+extern int dir_file_copy (const char *from, const char *to);
 extern void dir_create_home_dirs ();
 extern void dir_remove_home_dirs ();
 extern char *dir_get_string_home_dirs ();

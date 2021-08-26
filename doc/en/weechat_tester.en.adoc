@@ -126,6 +126,6 @@ If you're still awake you should see the familiar interface and brag about
 having the newest possible version of WeeChat. ;)
 
 Now if you experience strange behavior (it may have issues or crash or boil
-your beer) don't hesitate to join _#weechat_ at _chat.freenode.net_ and tell us.
+your beer) don't hesitate to join _#weechat_ at _irc.libera.chat_ and tell us.
 
 If it doesn't crash - tell us too, we need your feedback!

@@ -1,5 +1,5 @@
 # Copyright (C) 2013 Hasan Kiran <sunder67@hotmail.com>
-# Copyright (C) 2020 Emir SARI <bitigchi@me.com>
+# Copyright (C) 2020-2021 Emir SARI <bitigchi@me.com>
 #
 # This file is part of WeeChat, the extensible chat client.
 #
@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2021-08-12 18:13+0200\n"
-"PO-Revision-Date: 2020-12-30 23:00+0100\n"
+"PO-Revision-Date: 2021-08-26 23:00+0100\n"
 "Last-Translator: Emir SARI <bitigchi@me.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: tr\n"
@@ -460,6 +460,11 @@ msgstr "%s\"%s\" eklentisi bulunamadı"
 
 msgid "Raw content of buffers has been written in log file"
 msgstr "Arabelleklerin ham içeriği günlük dosyasına yazıldı"
+
+#, fuzzy, c-format
+msgid "%d certificate loaded (system: %d, user: %d)"
+msgid_plural "%d certificates loaded (system: %d, user: %d)"
+msgstr[0] "%s: boru açıldı (dosya: %s)"
 
 #, c-format
 msgid "%d certificate loaded (system: %d, user: %d)"
@@ -1574,6 +1579,11 @@ msgstr ""
 msgid "debug functions"
 msgstr "hata ayıklama işlevleri"
 
+#, fuzzy
+#| msgid ""
+#| "list || set <plugin> <level> || dump [<plugin>] || buffer|color|infolists|"
+#| "memory|tags|term|windows || mouse|cursor [verbose] || hdata [free] || "
+#| "time <command>"
 msgid ""
 "list || set <plugin> <level> || dump [<plugin>] || buffer|color|infolists|"
 "libs|certs|memory|tags|term|windows || mouse|cursor [verbose] || hdata "
@@ -1898,19 +1908,19 @@ msgstr ""
 "  reference\", \"weechat_hdata_get\" işlevine bakın.\n"
 "\n"
 "Örnekler (yalın diziler):\n"
-"  /eval -n ${info:version}                    ==> 0.4.3\n"
-"  /eval -n ${env:HOME}                        ==> /home/user\n"
-"  /eval -n ${weechat.look.scroll_amount}      ==> 3\n"
-"  /eval -n ${sec.data.freenode_password}      ==> secret\n"
-"  /eval -n ${window}                          ==> 0x2549aa0\n"
-"  /eval -n ${window.buffer}                   ==> 0x2549320\n"
-"  /eval -n ${window.buffer.full_name}         ==> core.weechat\n"
-"  /eval -n ${window.buffer.number}            ==> 1\n"
-"  /eval -n ${\\t}                             ==> <sekme>\n"
-"  /eval -n ${hide:-,${relay.network.password}} ==> --------\n"
-"  /eval -n ${cut:3,+,test}                    ==> tes+\n"
-"  /eval -n ${cut:+3,+,test}                   ==> te+\n"
-"  /eval -n ${date:%H:%M:%S}                   ==> 07:46:40\n"
+"  /eval -n ${info:version}                       ==> 0.4.3\n"
+"  /eval -n ${env:HOME}                           ==> /home/user\n"
+"  /eval -n ${weechat.look.scroll_amount}         ==> 3\n"
+"  /eval -n ${sec.data.password}                  ==> secret\n"
+"  /eval -n ${window}                             ==> 0x2549aa0\n"
+"  /eval -n ${window.buffer}                      ==> 0x2549320\n"
+"  /eval -n ${window.buffer.full_name}            ==> core.weechat\n"
+"  /eval -n ${window.buffer.number}               ==> 1\n"
+"  /eval -n ${\\t}                                 ==> <sekme>\n"
+"  /eval -n ${hide:-,${relay.network.password}}   ==> --------\n"
+"  /eval -n ${cut:3,+,test}                       ==> tes+\n"
+"  /eval -n ${cut:+3,+,test}                      ==> te+\n"
+"  /eval -n ${date:%H:%M:%S}                      ==> 07:46:40\n"
 "  /eval -n ${if:${info:term_width}>80?big:small} ==> big\n"
 "  /eval -n ${rev:Hello}                       ==> olleH\n"
 "  /eval -n ${repeat:5,-}                      ==> -----\n"
@@ -2434,6 +2444,11 @@ msgstr ""
 "\n"
 "Geçerli yerleşim çıkışta \"weechat.look.save_layout_on_exit\"\n"
 "ile kaydedilebilir."
+"Not: Yerleşim yalnızca bölünmüş pencereleri ve arabellek\n"
+"numaralarını hatırlar, arabellekleri açmaz. Bu demek oluyor ki\n"
+"arabellekleri açmak için IRC kanallarına kendiliğinden yeniden\n"
+"katılmalısınız; kaydedilen yerleşim yalnızca arabellekler\n"
+"yeniden açıldığında uygulanır."
 
 msgid "mouse control"
 msgstr "fare denetimi"
@@ -4481,13 +4496,13 @@ msgstr ""
 #, c-format
 msgid "%d certificate purged"
 msgid_plural "%d certificates purged"
-msgstr[0] ""
+msgstr[0] "%d sertifika yok edildi"
 
 msgid "set server name indication (SNI) failed"
 msgstr ""
 
 msgid "invalid priorities"
-msgstr ""
+msgstr "geçersiz öncelikler"
 
 msgid "proxy type (http (default), socks4, socks5)"
 msgstr ""
@@ -4511,22 +4526,22 @@ msgid "WeeChat secured data (sec.conf) | Keys: [alt-v] Toggle values"
 msgstr ""
 
 msgid "on"
-msgstr ""
+msgstr "açık"
 
 msgid "off"
-msgstr ""
+msgstr "kapalı"
 
 msgid "Passphrase is set"
-msgstr ""
+msgstr "Parola ayarlandı"
 
 msgid "Secured data:"
-msgstr ""
+msgstr "Güvenli veri:"
 
 msgid "Secured data STILL ENCRYPTED: (use /secure decrypt, see /help secure)"
 msgstr ""
 
 msgid "No secured data set"
-msgstr ""
+msgstr "Güvenli veri ayarlanmadı"
 
 msgid "secured data"
 msgstr "güvenli veri"
@@ -6582,6 +6597,10 @@ msgstr "hedef: sunucu adı"
 msgid "execute a command on all channels of all connected servers"
 msgstr ""
 
+#, fuzzy
+#| msgid ""
+#| "[-current] [-exclude=<channel>[,<channel>...]] <command> || [-current] -"
+#| "include=<channel>[,<channel>...] <command>"
 msgid ""
 "[-current] [-parted] [-exclude=<channel>[,<channel>...]] <command> || [-"
 "current] [-parted] -include=<channel>[,<channel>...] <command>"
@@ -7371,7 +7390,6 @@ msgstr ""
 "<ad> [<ad>...] || open <ad>|-all [<ad>...] || del|keep <ad> || deloutq|jump "
 "|| raw [<süzgeç>]"
 
-#, fuzzy
 msgid ""
 "    list: list servers (without argument, this list is displayed)\n"
 "listfull: list servers with detailed info for each server\n"
@@ -8989,6 +9007,9 @@ msgstr "%s%s%s artık %s%s%s%s  olarak biliniyor"
 msgid "Note:"
 msgstr ""
 
+msgid "Note:"
+msgstr ""
+
 #, c-format
 msgid "%s%s%s%s%s%s%s%s%s%s has left %s%s%s %s(%s%s%s)"
 msgstr "%s%s%s%s%s%s%s%s%s%s, %s%s%s kanalından çıktı %s(%s%s%s)"
@@ -9004,6 +9025,14 @@ msgstr "%s%s%s%s%s%s%s%s%s%s çıktı %s(%s%s%s)"
 #, c-format
 msgid "%s%s%s%s%s%s%s%s%s%s has quit"
 msgstr "%s%s%s%s%s%s%s%s%s%s çıktı"
+
+#, fuzzy, c-format
+msgid "%sYour real name has been set to \"%s\""
+msgstr "%s\"%s\" seçeneği ayarlanamadı"
+
+#, fuzzy, c-format
+msgid "%sReal name of %s%s%s has been set to \"%s\""
+msgstr "%s\"%s\" seçeneği ayarlanamadı"
 
 #, c-format
 msgid "%sYour real name has been set to \"%s\""
@@ -9037,6 +9066,9 @@ msgstr "%s%s%s%s, %s%s%s için konuyu kaldırdı"
 #, c-format
 msgid "%sWallops from %s: %s"
 msgstr "%s%s konumundan dayaklar: %s"
+
+msgid "Warning:"
+msgstr ""
 
 msgid "Warning:"
 msgstr ""
@@ -9318,6 +9350,24 @@ msgstr "base64 kodlama hatası"
 
 msgid "cryptography error"
 msgstr "kriptografi hatası"
+
+msgid "protocol error"
+msgstr "protokol hatası"
+
+msgid "unable to validate server signature"
+msgstr "sunucu imzası doğrulanamıyor"
+
+msgid "memory error"
+msgstr "bellek hatası"
+
+msgid "base64 decode error"
+msgstr "base64 kod çözüm hatası"
+
+msgid "base64 encode error"
+msgstr "base64 kodlama hatası"
+
+msgid "cryptography error"
+msgstr "şifreleme hatası"
 
 msgid "protocol error"
 msgstr "protokol hatası"
@@ -9850,7 +9900,7 @@ msgstr ""
 
 #, c-format
 msgid "%s: warning:"
-msgstr ""
+msgstr "%s: uyarı:"
 
 #, c-format
 msgid "%s: error:"
@@ -9872,114 +9922,119 @@ msgid "%sCommand \"/%s eval\" is not yet implemented"
 msgstr "%s\"/%s eval\" komutu henüz yazılıma eklenmemiş"
 
 msgid "bar"
-msgstr ""
+msgstr "çubuk"
 
 msgid "bar item"
-msgstr ""
+msgstr "çubuk ögesi"
 
 msgid "bar window"
-msgstr ""
+msgstr "çubuk penceresi"
 
 msgid "buffer"
-msgstr ""
+msgstr "arabellek"
 
 msgid "visited buffer"
-msgstr ""
+msgstr "ziyaret edilmiş arabellek"
 
 msgid "structure with completion"
-msgstr ""
+msgstr "tamamlamalı yapı"
 
 msgid "structure with word found for a completion"
-msgstr ""
+msgstr "tamamlanacak bir sözcüklü yapı"
 
 msgid "config file"
-msgstr ""
+msgstr "yapılandırma dosyası"
 
 msgid "config section"
-msgstr ""
+msgstr "yapılandırma bölümü"
 
 msgid "config option"
-msgstr ""
+msgstr "yapılandırma seçeneği"
 
 msgid "filter"
 msgstr "süzgeç"
 
 msgid "history of commands in buffer"
-msgstr ""
+msgstr "arabellekteki komutların geçmişi"
 
 msgid "hotlist"
-msgstr ""
+msgstr "sıcak liste"
 
 msgid "structure with undo for input line"
-msgstr ""
+msgstr "girdi satırında geri almalı bir yapı"
 
 msgid "a key (keyboard shortcut)"
-msgstr ""
+msgstr "bir düğme (klavye kestirmesi)"
 
 msgid "layout"
-msgstr ""
+msgstr "yerleşim"
 
 msgid "buffer layout"
-msgstr ""
+msgstr "arabellek yerleşimi"
 
 msgid "window layout"
-msgstr ""
+msgstr "pencere yerleşimi"
 
 msgid "structure with lines"
-msgstr ""
+msgstr "çizgili bir yapı"
 
 msgid "structure with one line"
-msgstr ""
+msgstr "bir satırlı bir yapı"
 
 msgid "structure with one line data"
-msgstr ""
+msgstr "bir satır verili bir yapı"
 
 msgid "group in nicklist"
-msgstr ""
+msgstr "takma ad listesindeki grup"
 
 msgid "nick in nicklist"
-msgstr ""
+msgstr "takma ad listesindeki takma ad"
 
 msgid "plugin"
 msgstr "eklenti"
 
 msgid "proxy"
-msgstr ""
+msgstr "vekil"
 
 msgid "window"
 msgstr "pencere"
 
 msgid "scroll info in window"
-msgstr ""
+msgstr "penceredeki kaydırma bilgisi"
 
 msgid "tree of windows"
-msgstr ""
+msgstr "pencereler ağacı"
 
 msgid "WeeChat version"
-msgstr "WeeChat sürüm"
+msgstr "WeeChat sürümü"
 
 msgid "WeeChat version (as number)"
-msgstr ""
+msgstr "WeeChat sürümü (sayı olarak)"
 
 msgid ""
 "WeeChat git version (output of command \"git describe\" for a development "
 "version only, empty for a stable release)"
 msgstr ""
+"WeeChat git sürümü (yalnızca geliştirme sürümü için \"git describe\" "
+"komutunun çıktısı, kararlı sürüm için boş)
 
 msgid "WeeChat compilation date/time"
-msgstr ""
+msgstr "WeeChat derlenme tarihi/zamanı"
 
 msgid "WeeChat PID (process ID)"
-msgstr ""
+msgstr "WeeChat PID (işlem kimliği)"
 
 msgid "directory separator"
-msgstr ""
+msgstr "dizin ayırıcısı"
 
 msgid ""
 "WeeChat directory (*deprecated* since version 3.2, replaced by "
 "\"weechat_config_dir\", \"weechat_data_dir\", \"weechat_cache_dir\" and "
 "\"weechat_runtime_dir\")"
 msgstr ""
+"WeeChat dizini (3.2 sürümünden itibaren *kullanılmıyor*, \"weechat_"
+"config_dir\", \"weechat_data_dir\", \"weechat_cache_dir\" ve "
+"\"weechat_runtime_dir\" ile değiştirildi)"
 
 msgid "WeeChat config directory"
 msgstr "WeeChat yapılandırma dizini"
@@ -12200,12 +12255,6 @@ msgstr "Yazıyor:"
 
 msgid ""
 "number of seconds after paused status has been set: if reached, the typing "
-"status is removed"
-msgstr ""
-"duraklama etkinleştirme süresi (saniye): erişildiğinde yazma durumu kaldırılır"
-
-msgid ""
-"number of seconds after typing status has been set: if reached, the typing "
 "status is removed"
 msgstr ""
 "yazma etkinleştirme süresi (saniye): erişildiğinde yazma durumu kaldırılır"

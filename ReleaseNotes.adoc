@@ -17,8 +17,90 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 (file _ChangeLog.adoc_ in sources).
 
 
+[[v3.3]]
+== Version 3.3 (under dev)
+
+[[v3.3_typing_bar_item]]
+=== Bar item "typing"
+
+A bar item called "typing" has been added to status bar by default. It is used
+to display users that are currently typing a message on the current IRC channel
+or private buffer.
+
+If you want to display typing notifications in the status bar, add ",[typing]"
+in your option _weechat.bar.status.items_.
+
+[[v3.3_ordered_hashtables]]
+=== Ordered hashtables
+
+Hashtables entries are now ordered by creation date, the following functions
+are now returning entries sorted by insertion order:
+
+* hashtable_map
+* hashtable_map_string
+* hashtable_get_string (all properties except "keys_sorted" and "keys_values_sorted")
+* hashtable_add_to_infolist
+
+[[v3.3_irc_default_capabilities]]
+=== IRC default capabilities
+
+All supported capabilities are now enabled by default if the server support
+them:
+
+* account-notify
+* away-notify
+* cap-notify
+* chghost
+* extended-join
+* invite-notify
+* message-tags
+* multi-prefix
+* server-time
+* setname
+* userhost-in-names
+
+Two new options have been added and enabled by default to customize the behavior
+of capabilities "account-notify" and "extended-join":
+
+* _irc.look.display_account_message_: display ACCOUNT messages received
+* _irc.look.display_extended_join_: display extended join info in the JOIN
+  messages: account name and real name
+
+The default value of option _irc.server_default.capabilities_ is now `*` which
+means that all capabilities supported by both WeeChat and the server are enabled
+by default.
+
+After upgrade, to enable all capabilities and remove custom capabilities you
+have set, you can do:
+
+----
+/set irc.server_default.capabilities "*"
+/unset irc.server.example.capabilities
+----
+
+You can also explicitly disable some capabilities with this syntax
+(see `/help irc.server_default.capabilities`):
+
+----
+/set irc.server_default.capabilities "*,!away-notify,!extended-join"
+----
+
+[[v3.3_irc_sasl_blowfish_aes]]
+=== IRC SASL DH-BLOWFISH and DH-AES mechanisms removed
+
+The SASL mechanisms DH-BLOWFISH and DH-AES have been removed, because they
+are insecure and already removed from most IRC servers. +
+If you were using one of these mechanisms, it is highly recommended to switch
+to any other supported SASL mechanism.
+
+For example:
+
+----
+/set irc.server.example.sasl_mechanism scram-sha-256
+----
+
 [[v3.2]]
-== Version 3.2 (under dev)
+== Version 3.2 (2021-06-13)
 
 [[v3.2_xdg_directories]]
 === XDG directories
@@ -35,15 +117,15 @@ Some options have new default value: `%h` is replaced by `${weechat_xxx_dir}`. +
 If you didn't change the value, it is recommended to set the new default value,
 by doing `/unset <option>` on each option:
 
-[width="100%",cols="1m,3m",options="header"]
+[width="100%",cols="2m,2m,5m",options="header"]
 |===
-| Option                     | New default value
-| fifo.file.path             | ${weechat_runtime_dir}/weechat_fifo_${info:pid}
-| logger.file.path           | ${weechat_data_dir}/logs
-| relay.network.ssl_cert_key | ${weechat_config_dir}/ssl/relay.pem
-| script.scripts.path        | ${weechat_cache_dir}/script
-| weechat.plugin.path        | ${weechat_data_dir}/plugins
-| xfer.file.download_path    | ${weechat_data_dir}/xfer
+| Option                     | Old default value | New default value
+| fifo.file.path             | %h/weechat_fifo   | ${weechat_runtime_dir}/weechat_fifo_${info:pid}
+| logger.file.path           | %h/logs/          | ${weechat_data_dir}/logs
+| relay.network.ssl_cert_key | %h/ssl/relay.pem  | ${weechat_config_dir}/ssl/relay.pem
+| script.scripts.path        | %h/script         | ${weechat_cache_dir}/script
+| weechat.plugin.path        | %h/plugins        | ${weechat_data_dir}/plugins
+| xfer.file.download_path    | %h/xfer           | ${weechat_data_dir}/xfer
 |===
 
 The following scripts are updated to take care of XDG directories, be sure
@@ -137,6 +219,45 @@ _weechat.network.gnutls_ca_user_.
 
 When one of these options are changed, all certificates are purged and reloaded
 from files.
+
+[[v3.2_split_commands_before_eval]]
+=== Split of commands before evaluation
+
+The split of commands is now performed before the evaluation of string, in the
+following cases:
+
+* IRC server option _irc.server_default.command_ or _irc.server.xxx.command_
+* startup option with command line parameter `-r` / `--run-command`
+* options _weechat.startup.command_before_plugins_ and _weechat.startup.command_after_plugins_.
+
+If ever you used here multiple commands that are found by evaluation, then
+you must use multiple commands directly.
+
+For example if you did this:
+
+----
+/secure set commands "/command1 secret1;/command2 secret2"
+/set irc.server.libera.command "${sec.data.commands}"
+----
+
+This will now execute a single command: `/command1` with two parameters:
+`secret1;/command2` and `secret2`, which is not what you expect.
+
+So you must now do this instead:
+
+----
+/secure set command1 "/command1 secret1"
+/secure set command2 "/command2 secret2"
+/set irc.server.libera.command "${sec.data.command1};${sec.data.command2}"
+----
+
+You could also do this, but be careful, there are two evaluations of strings
+(the secured data itself is evaluated as well):
+
+----
+/secure set commands "/command1 secret1;/command2 secret2"
+/set irc.server.libera.command "/eval -s ${sec.data.commands}"
+----
 
 [[v3.1]]
 == Version 3.1 (2021-03-07)
@@ -323,7 +444,7 @@ using this modifier and the "modifier_data" argument must be updated.
 The old format contained plugin name + ";" + buffer name + ";" + tags:
 
 ----
-irc;freenode.#weechat;tag1,tag2,tag3
+irc;libera.#weechat;tag1,tag2,tag3
 ----
 
 The new format contains buffer pointer + ";" + tags:
@@ -399,8 +520,8 @@ For example you can do that:
 
 ----
 /secure passphrase my_secret_passphrase
-/secure set freenode my_password
-/set irc.server.freenode.sasl_password "${sec.data.freenode}"
+/secure set libera my_password
+/set irc.server.libera.sasl_password "${sec.data.libera}"
 ----
 
 This will be displayed like that in WeeChat, using the new regex value of
@@ -408,8 +529,8 @@ _cmd_pass_ trigger:
 
 ----
 /secure passphrase ********************
-/secure set freenode ***********
-/set irc.server.freenode.sasl_password "${sec.data.freenode}"
+/secure set libera ***********
+/set irc.server.libera.sasl_password "${sec.data.libera}"
 ----
 
 If you want to use the new trigger regex after upgrade, you can do:
@@ -1221,7 +1342,7 @@ Globally (default value for all servers):
 For a specific server:
 
 ----
-/set irc.server.freenode.nicks_alternate off
+/set irc.server.libera.nicks_alternate off
 ----
 
 [[v1.3]]

@@ -1315,43 +1315,43 @@
 ** valeur par défaut: `+on+`
 
 * [[option_weechat.signal.sighup]] *weechat.signal.sighup*
-** description: pass:none[commande à exécuter lorsque le signal est reçu, plusieurs commandes peuvent être séparées par des point-virgules (note : le contenu est évalué, voir /help eval)]
+** description: pass:none[commande à exécuter lorsque le signal est reçu, plusieurs commandes peuvent être séparées par des point-virgules (note : les commandes sont évaluées, voir /help eval)]
 ** type: chaîne
 ** valeurs: toute chaîne
 ** valeur par défaut: `+"${if:${info:weechat_headless}?/reload:/quit -yes}"+`
 
 * [[option_weechat.signal.sigquit]] *weechat.signal.sigquit*
-** description: pass:none[commande à exécuter lorsque le signal est reçu, plusieurs commandes peuvent être séparées par des point-virgules (note : le contenu est évalué, voir /help eval)]
+** description: pass:none[commande à exécuter lorsque le signal est reçu, plusieurs commandes peuvent être séparées par des point-virgules (note : les commandes sont évaluées, voir /help eval)]
 ** type: chaîne
 ** valeurs: toute chaîne
 ** valeur par défaut: `+"/quit -yes"+`
 
 * [[option_weechat.signal.sigterm]] *weechat.signal.sigterm*
-** description: pass:none[commande à exécuter lorsque le signal est reçu, plusieurs commandes peuvent être séparées par des point-virgules (note : le contenu est évalué, voir /help eval)]
+** description: pass:none[commande à exécuter lorsque le signal est reçu, plusieurs commandes peuvent être séparées par des point-virgules (note : les commandes sont évaluées, voir /help eval)]
 ** type: chaîne
 ** valeurs: toute chaîne
 ** valeur par défaut: `+"/quit -yes"+`
 
 * [[option_weechat.signal.sigusr1]] *weechat.signal.sigusr1*
-** description: pass:none[commande à exécuter lorsque le signal est reçu, plusieurs commandes peuvent être séparées par des point-virgules (note : le contenu est évalué, voir /help eval)]
+** description: pass:none[commande à exécuter lorsque le signal est reçu, plusieurs commandes peuvent être séparées par des point-virgules (note : les commandes sont évaluées, voir /help eval)]
 ** type: chaîne
 ** valeurs: toute chaîne
 ** valeur par défaut: `+""+`
 
 * [[option_weechat.signal.sigusr2]] *weechat.signal.sigusr2*
-** description: pass:none[commande à exécuter lorsque le signal est reçu, plusieurs commandes peuvent être séparées par des point-virgules (note : le contenu est évalué, voir /help eval)]
+** description: pass:none[commande à exécuter lorsque le signal est reçu, plusieurs commandes peuvent être séparées par des point-virgules (note : les commandes sont évaluées, voir /help eval)]
 ** type: chaîne
 ** valeurs: toute chaîne
 ** valeur par défaut: `+""+`
 
 * [[option_weechat.startup.command_after_plugins]] *weechat.startup.command_after_plugins*
-** description: pass:none[commande exécutée quand WeeChat démarre, après le chargement des extensions (note : le contenu est évalué, voir /help eval)]
+** description: pass:none[commande exécutée quand WeeChat démarre, après le chargement des extensions ; plusieurs commandes peuvent être séparées par des point-virgules (note : les commandes sont évaluées, voir /help eval)]
 ** type: chaîne
 ** valeurs: toute chaîne
 ** valeur par défaut: `+""+`
 
 * [[option_weechat.startup.command_before_plugins]] *weechat.startup.command_before_plugins*
-** description: pass:none[commande exécutée quand WeeChat démarre, avant le chargement des extensions (note : le contenu est évalué, voir /help eval)]
+** description: pass:none[commande exécutée quand WeeChat démarre, avant le chargement des extensions ; plusieurs commandes peuvent être séparées par des point-virgules (note : les commandes sont évaluées, voir /help eval)]
 ** type: chaîne
 ** valeurs: toute chaîne
 ** valeur par défaut: `+""+`
@@ -1845,6 +1845,50 @@
 ** valeur par défaut: `+"${weechat_runtime_dir}/weechat_fifo_${info:pid}"+`
 // end::fifo_options[]
 
+// tag::typing_options[]
+* [[option_typing.look.delay_purge_paused]] *typing.look.delay_purge_paused*
+** description: pass:none[nombre de secondes après que le statut "paused" ait été défini : si atteint, le statut d'écriture est supprimé]
+** type: entier
+** valeurs: 1 .. 2147483647
+** valeur par défaut: `+30+`
+
+* [[option_typing.look.delay_purge_typing]] *typing.look.delay_purge_typing*
+** description: pass:none[nombre de secondes après que le statut "typing" ait été défini : si atteint, le statut d'écriture est supprimé]
+** type: entier
+** valeurs: 1 .. 2147483647
+** valeur par défaut: `+6+`
+
+* [[option_typing.look.delay_set_paused]] *typing.look.delay_set_paused*
+** description: pass:none[nombre de secondes après avoir tapé le dernier caractère : si atteint, le statut d'écriture devient "paused" et il n'y a plus de signaux typing envoyés]
+** type: entier
+** valeurs: 1 .. 2147483647
+** valeur par défaut: `+10+`
+
+* [[option_typing.look.enabled_nicks]] *typing.look.enabled_nicks*
+** description: pass:none[activer le statut d'écriture pour les autres pseudos (afficher le statut d'écriture pour les autres pseudos écrivant un message dans le tampon courant)]
+** type: booléen
+** valeurs: on, off
+** valeur par défaut: `+off+`
+
+* [[option_typing.look.enabled_self]] *typing.look.enabled_self*
+** description: pass:none[activer le statut d'écriture pour ses propres messages (envoyer l'information aux autres utilisateurs)]
+** type: booléen
+** valeurs: on, off
+** valeur par défaut: `+off+`
+
+* [[option_typing.look.input_min_chars]] *typing.look.input_min_chars*
+** description: pass:none[nombre minimum de caractères dans le message pour déclencher l'envoi des signaux typing]
+** type: entier
+** valeurs: 1 .. 2147483647
+** valeur par défaut: `+4+`
+
+* [[option_typing.look.item_max_length]] *typing.look.item_max_length*
+** description: pass:none[nombre maximum de caractères affichés dans l'objet de barre "typing" (0 = ne pas tronquer le contenu)]
+** type: entier
+** valeurs: 0 .. 2147483647
+** valeur par défaut: `+0+`
+// end::typing_options[]
+
 // tag::xfer_options[]
 * [[option_xfer.color.status_aborted]] *xfer.color.status_aborted*
 ** description: pass:none[couleur du texte pour le statut "interrompu"]
@@ -1913,7 +1957,7 @@
 ** valeur par défaut: `+off+`
 
 * [[option_xfer.file.auto_accept_nicks]] *xfer.file.auto_accept_nicks*
-** description: pass:none[liste de pseudos (séparés par des virgules) pour lesquels les demandes d'envoi de fichiers et de discussion sont automatiquement acceptées ; le format est "serveur.pseudo" (pour un serveur spécifique) ou "pseudo" (pour tous les serveurs) ; exemple : "freenode.FlashCode,andrew"]
+** description: pass:none[liste de pseudos (séparés par des virgules) pour lesquels les demandes d'envoi de fichiers et de discussion sont automatiquement acceptées ; le format est "serveur.pseudo" (pour un serveur spécifique) ou "pseudo" (pour tous les serveurs) ; exemple : "libera.FlashCode,andrew"]
 ** type: chaîne
 ** valeurs: toute chaîne
 ** valeur par défaut: `+""+`
@@ -2214,6 +2258,12 @@
 ** valeurs: toute chaîne
 ** valeur par défaut: `+"%a, %d %b %Y %T %z"+`
 
+* [[option_irc.look.display_account_message]] *irc.look.display_account_message*
+** description: pass:none[afficher les messages ACCOUNT reçus quand la capacité account-notify est activée]
+** type: booléen
+** valeurs: on, off
+** valeur par défaut: `+on+`
+
 * [[option_irc.look.display_away]] *irc.look.display_away*
 ** description: pass:none[afficher un message pour l'absence/retour (off : ne rien afficher/envoyer, local : afficher en local, channel : envoyer l'action aux canaux)]
 ** type: entier
@@ -2234,6 +2284,12 @@
 
 * [[option_irc.look.display_ctcp_unknown]] *irc.look.display_ctcp_unknown*
 ** description: pass:none[afficher le message CTCP même si le CTCP est inconnu]
+** type: booléen
+** valeurs: on, off
+** valeur par défaut: `+on+`
+
+* [[option_irc.look.display_extended_join]] *irc.look.display_extended_join*
+** description: pass:none[afficher les informations supplémentaires sur les messages JOIN : nom de compte et nom réel (la capacité extended-join doit être activée)]
 ** type: booléen
 ** valeurs: on, off
 ** valeur par défaut: `+on+`
@@ -2508,6 +2564,18 @@
 ** valeurs: on, off
 ** valeur par défaut: `+off+`
 
+* [[option_irc.look.typing_status_nicks]] *irc.look.typing_status_nicks*
+** description: pass:none[afficher les pseudos qui écrivent sur le canal dans l'objet de barre "typing" (l'option typing.look.enabled_nicks doit être activée et la capacité "message-tags" doit être activée sur le serveur)]
+** type: booléen
+** valeurs: on, off
+** valeur par défaut: `+off+`
+
+* [[option_irc.look.typing_status_self]] *irc.look.typing_status_self*
+** description: pass:none[envoyer le statut d'écriture de message aux canaux de sorte que les autres utilisateurs voient quand vous écrivez un message (l'option typing.look.enabled_self doit être activée et la capacité "message-tags" doit être activée sur le serveur)]
+** type: booléen
+** valeurs: on, off
+** valeur par défaut: `+off+`
+
 * [[option_irc.network.autoreconnect_delay_growing]] *irc.network.autoreconnect_delay_growing*
 ** description: pass:none[facteur de croissance du délai d'auto-reconnexion au serveur (1 = toujours le même délai, 2 = délai*2 pour chaque tentative, etc.)]
 ** type: entier
@@ -2665,10 +2733,10 @@
 ** valeur par défaut: `+25+`
 
 * [[option_irc.server_default.capabilities]] *irc.server_default.capabilities*
-** description: pass:none[liste séparée par des virgules de capacités client ("client capabilities") à activer sur le serveur si elles sont disponibles (voir /help cap pour la liste des capacités supportées par WeeChat) (exemple : "away-notify,multi-prefix")]
+** description: pass:none[liste séparée par des virgules de capacités client ("client capabilities") à activer sur le serveur si elles sont disponibles (voir /help cap pour la liste des capacités supportées par WeeChat) ; "*" active toutes les capacités par défaut (supportées par le serveur et WeeChat) ; le caractère joker "*" est autorisé ; une capacité commençant par "!" est exclue (exemple : "*,!account-*,!extended-join")]
 ** type: chaîne
 ** valeurs: toute chaîne
-** valeur par défaut: `+""+`
+** valeur par défaut: `+"*"+`
 
 * [[option_irc.server_default.charset_message]] *irc.server_default.charset_message*
 ** description: pass:none[partie du message IRC (reçu ou envoyé) qui est décodé/encode vers le jeu de caractères cible ; message = le message IRC entier (par défaut), channel = à partir du nom du canal seulement (si trouvé, sinon à partir du texte), text = à partir du texte seulement (vous devriez essayer cette valeur si vous avec des problèmes d'encodage avec le nom du canal)]
@@ -2677,7 +2745,7 @@
 ** valeur par défaut: `+message+`
 
 * [[option_irc.server_default.command]] *irc.server_default.command*
-** description: pass:none[commande(s) à exécuter après la connexion au serveur et avant le "join" automatique des canaux (plusieurs commandes peuvent être séparées par ";", utilisez "\;" pour un point-virgule, les variables spéciales $nick, $channel et $server sont remplacées par leur valeur) (note : le contenu est évalué, voir /help eval ; les options de serveur sont évaluées avec ${irc_server.xxx} et ${server} est remplacé par le nom du serveur)]
+** description: pass:none[commande(s) à exécuter après la connexion au serveur et avant le "join" automatique des canaux (plusieurs commandes peuvent être séparées par ";", utilisez "\;" pour un point-virgule, les variables spéciales $nick, $channel et $server sont remplacées par leurs valeurs) (note : les commandes sont évaluées, voir /help eval ; les options de serveur sont évaluées avec ${irc_server.xxx} et ${server} est remplacé par le nom du serveur)]
 ** type: chaîne
 ** valeurs: toute chaîne
 ** valeur par défaut: `+""+`
@@ -2713,19 +2781,19 @@
 ** valeur par défaut: `+""+`
 
 * [[option_irc.server_default.msg_kick]] *irc.server_default.msg_kick*
-** description: pass:none[message par défaut pour l'éjection utilisé par les commandes "/kick" et "/kickban" (note : le contenu est évalué, voir /help eval ; les variables spéciales ${nick}, ${channel} et ${server} sont remplacées par leur valeur)]
+** description: pass:none[message par défaut pour l'éjection utilisé par les commandes "/kick" et "/kickban" (note : le contenu est évalué, voir /help eval ; les variables spéciales ${nick} (propre pseudo), ${target} (pseudo cible), ${channel} et ${server} sont remplacées par leur valeurs)]
 ** type: chaîne
 ** valeurs: toute chaîne
 ** valeur par défaut: `+""+`
 
 * [[option_irc.server_default.msg_part]] *irc.server_default.msg_part*
-** description: pass:none[message par défaut pour le part (en quittant un canal) (note : le contenu est évalué, voir /help eval ; les variables spéciales ${nick}, ${channel} et ${server} sont remplacées par leur valeur ; "%v" est remplacé par la version de WeeChat s'il n'y a pas de ${...} dans la chaîne)]
+** description: pass:none[message par défaut pour le part (en quittant un canal) (note : le contenu est évalué, voir /help eval ; les variables spéciales ${nick}, ${channel} et ${server} sont remplacées par leur valeurs ; "%v" est remplacé par la version de WeeChat s'il n'y a pas de ${...} dans la chaîne)]
 ** type: chaîne
 ** valeurs: toute chaîne
 ** valeur par défaut: `+"WeeChat ${info:version}"+`
 
 * [[option_irc.server_default.msg_quit]] *irc.server_default.msg_quit*
-** description: pass:none[message de fin par défaut (lors de la déconnexion du serveur) (note : le contenu est évalué, voir /help eval ; les variables spéciales ${nick}, ${channel} et ${server} sont remplacées par leur valeur ; "%v" est remplacé par la version de WeeChat s'il n'y a pas de ${...} dans la chaîne)]
+** description: pass:none[message de fin par défaut (lors de la déconnexion du serveur) (note : le contenu est évalué, voir /help eval ; les variables spéciales ${nick}, ${channel} et ${server} sont remplacées par leurs valeurs ; "%v" est remplacé par la version de WeeChat s'il n'y a pas de ${...} dans la chaîne)]
 ** type: chaîne
 ** valeurs: toute chaîne
 ** valeur par défaut: `+"WeeChat ${info:version}"+`
@@ -2770,7 +2838,7 @@
 ** description: pass:none[action à effectuer si l'authentification SASL échoue : "continue" pour ignorer le problème d'authentification, "reconnect" pour planifier une reconnexion au serveur, "disconnect" pour se déconnecter du serveur (voir aussi l'option irc.network.sasl_fail_unavailable)]
 ** type: entier
 ** valeurs: continue, reconnect, disconnect
-** valeur par défaut: `+continue+`
+** valeur par défaut: `+reconnect+`
 
 * [[option_irc.server_default.sasl_key]] *irc.server_default.sasl_key*
 ** description: pass:none[fichier avec la clé privée ECC pour le mécanisme "ecdsa-nist256p-challenge" (le chemin est évalué, voir la fonction string_eval_path_home dans la référence API extension)]
@@ -2779,9 +2847,9 @@
 ** valeur par défaut: `+""+`
 
 * [[option_irc.server_default.sasl_mechanism]] *irc.server_default.sasl_mechanism*
-** description: pass:none[mécanisme pour l'authentification SASL : "plain" pour un mot de passe en clair, "ecdsa-nist256p-challenge" pour une authentification par challenge avec clé, "external" pour une authentification en utilisant un certificat SSL côté client, "dh-blowfish" pour un mot de passe chiffré avec blowfish (non sûr, non recommandé), "dh-aes" pour un mot de passe chiffré avec AES (non sûr, non recommandé)]
+** description: pass:none[mécanisme pour l'authentification SASL : "plain" pour un mot de passe en clair, "scram-sha-1" pour une authentification SCRAM avec algorithme de hachage SHA-1, "scram-sha-256" pour une authentification SCRAM avec algorithme de hachage SHA-256, "scram-sha-512" pour une authentification SCRAM avec algorithme de hachage SHA-512, "ecdsa-nist256p-challenge" pour une authentification par challenge avec clé, "external" pour une authentification en utilisant un certificat SSL côté client]
 ** type: entier
-** valeurs: plain, ecdsa-nist256p-challenge, external, dh-blowfish, dh-aes
+** valeurs: plain, scram-sha-1, scram-sha-256, scram-sha-512, ecdsa-nist256p-challenge, external
 ** valeur par défaut: `+plain+`
 
 * [[option_irc.server_default.sasl_password]] *irc.server_default.sasl_password*
@@ -3345,7 +3413,7 @@
 ** valeur par défaut: `+lightmagenta+`
 
 * [[option_script.look.columns]] *script.look.columns*
-** description: pass:none[format des colonnes affichées dans le tampon des scripts : les identifiants de colonne suivants sont remplacés par leur valeur : %a=auteur, %d=description, %D=date d'ajout, %e=extension, %l=langage, %L=licence, %n=nom avec extension, %N=nom, %r=dépendances, %s=statuts, %t=étiquettes, %u=date de mise à jour, %v=version, %V=version chargée, %w=min_weechat, %W=max_weechat]
+** description: pass:none[format des colonnes affichées dans le tampon des scripts : les identifiants de colonne suivants sont remplacés par leurs valeurs : %a=auteur, %d=description, %D=date d'ajout, %e=extension, %l=langage, %L=licence, %n=nom avec extension, %N=nom, %r=dépendances, %s=statuts, %t=étiquettes, %u=date de mise à jour, %v=version, %V=version chargée, %w=min_weechat, %W=max_weechat]
 ** type: chaîne
 ** valeurs: toute chaîne
 ** valeur par défaut: `+"%s %n %V %v %u | %d | %t"+`

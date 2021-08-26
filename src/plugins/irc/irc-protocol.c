@@ -53,9 +53,11 @@
 #include "irc-modelist.h"
 #include "irc-msgbuffer.h"
 #include "irc-nick.h"
+#include "irc-notify.h"
 #include "irc-sasl.h"
 #include "irc-server.h"
-#include "irc-notify.h"
+#include "irc-tag.h"
+#include "irc-typing.h"
 
 
 /*
@@ -200,66 +202,6 @@ irc_protocol_nick_address (struct t_irc_server *server,
 }
 
 /*
- * Returns hashtable with tags for an IRC message.
- *
- * Example:
- *   if tags == "aaa=bbb;ccc;example.com/ddd=eee",
- *   hashtable will have following keys/values:
- *     "aaa" => "bbb"
- *     "ccc" => NULL
- *     "example.com/ddd" => "eee"
- */
-
-struct t_hashtable *
-irc_protocol_get_message_tags (const char *tags)
-{
-    struct t_hashtable *hashtable;
-    char **items, *pos, *key;
-    int num_items, i;
-
-    if (!tags || !tags[0])
-        return NULL;
-
-    hashtable = weechat_hashtable_new (32,
-                                       WEECHAT_HASHTABLE_STRING,
-                                       WEECHAT_HASHTABLE_STRING,
-                                       NULL, NULL);
-    if (!hashtable)
-        return NULL;
-
-    items = weechat_string_split (tags, ";", NULL,
-                                  WEECHAT_STRING_SPLIT_STRIP_LEFT
-                                  | WEECHAT_STRING_SPLIT_STRIP_RIGHT
-                                  | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
-                                  0, &num_items);
-    if (items)
-    {
-        for (i = 0; i < num_items; i++)
-        {
-            pos = strchr (items[i], '=');
-            if (pos)
-            {
-                /* format: "tag=value" */
-                key = weechat_strndup (items[i], pos - items[i]);
-                if (key)
-                {
-                    weechat_hashtable_set (hashtable, key, pos + 1);
-                    free (key);
-                }
-            }
-            else
-            {
-                /* format: "tag" */
-                weechat_hashtable_set (hashtable, items[i], NULL);
-            }
-        }
-        weechat_string_free_split (items);
-    }
-
-    return hashtable;
-}
-
-/*
  * Parses date/time received in a "time" tag.
  *
  * Returns value of time (timestamp), 0 if error.
@@ -319,6 +261,54 @@ irc_protocol_parse_time (const char *time)
 }
 
 /*
+ * Prints a FAIL/WARN/NOTE message.
+ *
+ * Called by callbacks for messages: FAIL, WARN, NOTE.
+ */
+
+void
+irc_protocol_print_error_warning_msg (struct t_irc_server *server,
+                                      time_t date,
+                                      const char *command,
+                                      const char *prefix,
+                                      const char *label,
+                                      char *error_command,
+                                      char *args)
+{
+    const char *ptr_command;
+    char *pos_desc;
+
+    ptr_command = (error_command && (strcmp (error_command, "*") != 0)) ?
+        error_command : NULL;
+
+    pos_desc = (args) ? strstr (args, " :") : NULL;
+    if (pos_desc)
+        pos_desc[0] = '\0';
+
+    weechat_printf_date_tags (
+        irc_msgbuffer_get_target_buffer (server, NULL, command, NULL, NULL),
+        date,
+        irc_protocol_tags (command, NULL, NULL, NULL),
+        "%s%s%s%s%s%s[%s%s%s]%s%s%s",
+        (prefix) ? prefix : "",
+        (label) ? label : "",
+        (label) ? " " : "",
+        (ptr_command) ? ptr_command : "",
+        (ptr_command) ? " " : "",
+        IRC_COLOR_CHAT_DELIMITERS,
+        IRC_COLOR_RESET,
+        (args) ? args : "",
+        IRC_COLOR_CHAT_DELIMITERS,
+        IRC_COLOR_RESET,
+        (pos_desc) ? ": " : "",
+        (pos_desc) ? pos_desc + 2 : "");
+
+    if (pos_desc)
+        pos_desc[0] = ' ';
+
+}
+
+/*
  * Callback for the IRC message "ACCOUNT": account info about a nick
  * (with capability "account-notify").
  *
@@ -361,7 +351,8 @@ IRC_PROTOCOL_CALLBACK(account)
         ptr_nick = irc_nick_search (server, ptr_channel, nick);
         if (ptr_nick)
         {
-            if (!ignored)
+            if (!ignored
+                && weechat_config_boolean (irc_config_look_display_account_message))
             {
                 ptr_nick_speaking = ((weechat_config_boolean (irc_config_look_smart_filter))
                                      && (weechat_config_boolean (irc_config_look_smart_filter_account))) ?
@@ -407,66 +398,88 @@ IRC_PROTOCOL_CALLBACK(account)
 
 IRC_PROTOCOL_CALLBACK(authenticate)
 {
-    int sasl_mechanism;
-    char *sasl_username, *sasl_password, *answer;
-    const char *sasl_key;
+    int arg_data, sasl_mechanism;
+    char *ptr_data, *sasl_username, *sasl_password, *sasl_key, *answer;
+    char *sasl_error;
 
     IRC_PROTOCOL_MIN_ARGS(2);
 
-    if (irc_server_sasl_enabled (server))
+    if (!irc_server_sasl_enabled (server))
+        return WEECHAT_RC_OK;
+
+    arg_data = (argv[0][0] == ':') ? 2 : 1;
+    if (arg_data >= argc)
+        return WEECHAT_RC_OK;
+    ptr_data = (argv_eol[arg_data][0] == ':') ?
+        argv_eol[arg_data] + 1 : argv_eol[arg_data];
+
+    irc_server_sasl_get_creds (server, &sasl_username, &sasl_password,
+                               &sasl_key);
+
+    sasl_mechanism = IRC_SERVER_OPTION_INTEGER(
+        server, IRC_SERVER_OPTION_SASL_MECHANISM);
+
+    answer = NULL;
+    sasl_error = NULL;
+    switch (sasl_mechanism)
     {
-        sasl_mechanism = IRC_SERVER_OPTION_INTEGER(
-            server, IRC_SERVER_OPTION_SASL_MECHANISM);
-        sasl_username = irc_server_eval_expression (
-            server,
-            IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_SASL_USERNAME));
-        sasl_password = irc_server_eval_expression (
-            server,
-            IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_SASL_PASSWORD));
-        sasl_key = IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_SASL_KEY);
-        answer = NULL;
-        switch (sasl_mechanism)
-        {
-            case IRC_SASL_MECHANISM_PLAIN:
-                answer = irc_sasl_mechanism_plain (sasl_username,
-                                                   sasl_password);
-                break;
-            case IRC_SASL_MECHANISM_ECDSA_NIST256P_CHALLENGE:
-                answer = irc_sasl_mechanism_ecdsa_nist256p_challenge (
-                    server, argv[1], sasl_username, sasl_key);
-                break;
-            case IRC_SASL_MECHANISM_EXTERNAL:
-                answer = strdup ("+");
-                break;
-            case IRC_SASL_MECHANISM_DH_BLOWFISH:
-                answer = irc_sasl_mechanism_dh_blowfish (
-                    argv[1], sasl_username, sasl_password);
-                break;
-            case IRC_SASL_MECHANISM_DH_AES:
-                answer = irc_sasl_mechanism_dh_aes (
-                    argv[1], sasl_username, sasl_password);
-                break;
-        }
-        if (answer)
-        {
-            irc_server_sendf (server, 0, NULL, "AUTHENTICATE %s", answer);
-            free (answer);
-        }
-        else
-        {
-            weechat_printf (
-                server->buffer,
-                _("%s%s: error building answer for SASL authentication, "
-                  "using mechanism \"%s\""),
-                weechat_prefix ("error"), IRC_PLUGIN_NAME,
-                irc_sasl_mechanism_string[IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_SASL_MECHANISM)]);
-            irc_server_sendf (server, 0, NULL, "CAP END");
-        }
-        if (sasl_username)
-            free (sasl_username);
-        if (sasl_password)
-            free (sasl_password);
+        case IRC_SASL_MECHANISM_PLAIN:
+            answer = irc_sasl_mechanism_plain (sasl_username, sasl_password);
+            break;
+        case IRC_SASL_MECHANISM_SCRAM_SHA_1:
+            answer = irc_sasl_mechanism_scram (
+                server, "sha1", ptr_data,
+                sasl_username, sasl_password, &sasl_error);
+            break;
+        case IRC_SASL_MECHANISM_SCRAM_SHA_256:
+            answer = irc_sasl_mechanism_scram (
+                server, "sha256", ptr_data,
+                sasl_username, sasl_password, &sasl_error);
+            break;
+        case IRC_SASL_MECHANISM_SCRAM_SHA_512:
+            answer = irc_sasl_mechanism_scram (
+                server, "sha512", ptr_data,
+                sasl_username, sasl_password, &sasl_error);
+            break;
+        case IRC_SASL_MECHANISM_ECDSA_NIST256P_CHALLENGE:
+            answer = irc_sasl_mechanism_ecdsa_nist256p_challenge (
+                server, ptr_data,
+                sasl_username, sasl_key, &sasl_error);
+            break;
+        case IRC_SASL_MECHANISM_EXTERNAL:
+            answer = strdup ("+");
+            break;
     }
+    if (answer)
+    {
+        if (sasl_error)
+        {
+            weechat_printf (server->buffer,
+                            _("%s%s: SASL error: %s"),
+                            weechat_prefix ("error"),
+                            IRC_PLUGIN_NAME,
+                            sasl_error);
+        }
+        irc_server_sendf (server, 0, NULL, "AUTHENTICATE %s", answer);
+        free (answer);
+    }
+    else
+    {
+        weechat_printf (server->buffer,
+                        _("%s%s: SASL error: %s"),
+                        weechat_prefix ("error"),
+                        IRC_PLUGIN_NAME,
+                        (sasl_error) ? sasl_error : _("internal error"));
+        irc_server_sendf (server, 0, NULL, "CAP END");
+    }
+    if (sasl_username)
+        free (sasl_username);
+    if (sasl_password)
+        free (sasl_password);
+    if (sasl_key)
+        free (sasl_key);
+    if (sasl_error)
+        free (sasl_error);
 
     return WEECHAT_RC_OK;
 }
@@ -525,16 +538,83 @@ irc_protocol_cap_print_cb (void *data,
 }
 
 /*
+ * Get capabilities to enable on the server (server option "capabilities" with
+ * "sasl" if requested, "*" is replaced by all supported capabilities).
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+irc_protocol_cap_to_enable (const char *capabilities, int sasl_requested)
+{
+    char **str_caps, **caps, *supported_caps;
+    int i, num_caps;
+
+    str_caps = weechat_string_dyn_alloc (128);
+    if (!str_caps)
+        return NULL;
+
+    if (capabilities && capabilities[0])
+    {
+        caps = weechat_string_split (
+            capabilities,
+            ",",
+            NULL,
+            WEECHAT_STRING_SPLIT_STRIP_LEFT
+            | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+            | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+            0,
+            &num_caps);
+        if (caps)
+        {
+            for (i = 0; i < num_caps; i++)
+            {
+                if (strcmp (caps[i], "*") == 0)
+                {
+                    supported_caps = weechat_string_replace (
+                        IRC_COMMAND_CAP_SUPPORTED_COMPLETION,
+                        "|",
+                        ",");
+                    if (supported_caps)
+                    {
+                        if (*str_caps[0])
+                            weechat_string_dyn_concat (str_caps, ",", -1);
+                        weechat_string_dyn_concat (str_caps, supported_caps, -1);
+                        free (supported_caps);
+                    }
+                }
+                else
+                {
+                    if (*str_caps[0])
+                        weechat_string_dyn_concat (str_caps, ",", -1);
+                    weechat_string_dyn_concat (str_caps, caps[i], -1);
+                }
+            }
+            weechat_string_free_split (caps);
+        }
+    }
+
+    if (sasl_requested)
+    {
+        if (*str_caps[0])
+            weechat_string_dyn_concat (str_caps, ",", -1);
+        weechat_string_dyn_concat (str_caps, "sasl", -1);
+    }
+
+    return weechat_string_dyn_free (str_caps, 0);
+}
+
+/*
  * Synchronizes requested capabilities for IRC server.
  */
 
 void
 irc_protocol_cap_sync (struct t_irc_server *server, int sasl)
 {
-    char *cap_option, *cap_req, **caps_requested;
+    char **caps_server, *caps_to_enable, **list_caps_to_enable, **cap_req;
     const char *ptr_cap_option;
     int sasl_requested, sasl_to_do, sasl_fail;
-    int i, length, num_caps_requested;
+    int i, num_caps_server;
 
     sasl_requested = (sasl) ? irc_server_sasl_enabled (server) : 0;
     sasl_to_do = 0;
@@ -542,59 +622,59 @@ irc_protocol_cap_sync (struct t_irc_server *server, int sasl)
     ptr_cap_option = IRC_SERVER_OPTION_STRING(
         server,
         IRC_SERVER_OPTION_CAPABILITIES);
-    length = ((ptr_cap_option && ptr_cap_option[0]) ?
-              strlen (ptr_cap_option) : 0) + 16;
-    cap_option = malloc (length);
-    cap_req = malloc (length);
-    if (cap_option && cap_req)
+
+    cap_req = weechat_string_dyn_alloc (128);
+
+    caps_to_enable = irc_protocol_cap_to_enable (ptr_cap_option,
+                                                 sasl_requested);
+    list_caps_to_enable = weechat_string_split (
+        caps_to_enable,
+        ",",
+        NULL,
+        WEECHAT_STRING_SPLIT_STRIP_LEFT
+        | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+        | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+        0,
+        NULL);
+    if (list_caps_to_enable)
     {
-        cap_option[0] = '\0';
-        if (ptr_cap_option && ptr_cap_option[0])
-            strcat (cap_option, ptr_cap_option);
-        if (sasl && sasl_requested)
-        {
-            if (cap_option[0])
-                strcat (cap_option, ",");
-            strcat (cap_option, "sasl");
-        }
-        cap_req[0] = '\0';
-        caps_requested = weechat_string_split (
-            cap_option,
+        caps_server = weechat_string_split (
+            weechat_hashtable_get_string (server->cap_ls, "keys"),
             ",",
             NULL,
             WEECHAT_STRING_SPLIT_STRIP_LEFT
             | WEECHAT_STRING_SPLIT_STRIP_RIGHT
             | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
             0,
-            &num_caps_requested);
-        if (caps_requested)
+            &num_caps_server);
+        if (caps_server)
         {
-            for (i = 0; i < num_caps_requested; i++)
+            for (i = 0; i < num_caps_server; i++)
             {
-                if (weechat_hashtable_has_key (server->cap_ls,
-                                               caps_requested[i]) &&
-                    !weechat_hashtable_has_key (server->cap_list,
-                                               caps_requested[i]))
+                if (!weechat_hashtable_has_key (server->cap_list,
+                                                caps_server[i])
+                    && weechat_string_match_list (caps_server[i],
+                                                  (const char **)list_caps_to_enable,
+                                                  0))
                 {
-                    if (sasl && strcmp (caps_requested[i], "sasl") == 0)
+                    if (sasl && strcmp (caps_server[i], "sasl") == 0)
                         sasl_to_do = 1;
-                    if (cap_req[0])
-                        strcat (cap_req, " ");
-                    strcat (cap_req, caps_requested[i]);
+                    if (*cap_req[0])
+                        weechat_string_dyn_concat (cap_req, " ", -1);
+                    weechat_string_dyn_concat (cap_req, caps_server[i], -1);
                 }
             }
-            weechat_string_free_split (caps_requested);
+            weechat_string_free_split (caps_server);
         }
 
-        if (cap_req[0])
+        if (*cap_req[0])
         {
             weechat_printf (
                 server->buffer,
                 _("%s%s: client capability, requesting: %s"),
                 weechat_prefix ("network"), IRC_PLUGIN_NAME,
-                cap_req);
-            irc_server_sendf (server, 0, NULL,
-                              "CAP REQ :%s", cap_req);
+                *cap_req);
+            irc_server_sendf (server, 0, NULL, "CAP REQ :%s", *cap_req);
         }
 
         if (sasl)
@@ -622,11 +702,13 @@ irc_protocol_cap_sync (struct t_irc_server *server, int sasl)
                 }
             }
         }
+        weechat_string_free_split (list_caps_to_enable);
     }
-    if (cap_option)
-        free (cap_option);
+
+    if (caps_to_enable)
+        free (caps_to_enable);
     if (cap_req)
-        free (cap_req);
+        weechat_string_dyn_free (cap_req, 1);
 }
 
 /*
@@ -1186,6 +1268,31 @@ IRC_PROTOCOL_CALLBACK(generic_error)
 }
 
 /*
+ * Callback for the IRC message "FAIL".
+ *
+ * Message looks like:
+ *   :server FAIL * NEED_REGISTRATION :You need to be registered to continue
+ *   :server FAIL ACC REG_INVALID_CALLBACK REGISTER :Email address is not valid
+ *   :server FAIL BOX BOXES_INVALID STACK CLOCKWISE :Given boxes are not supported
+ */
+
+IRC_PROTOCOL_CALLBACK(fail)
+{
+    IRC_PROTOCOL_MIN_ARGS(4);
+
+    irc_protocol_print_error_warning_msg (
+        server,
+        date,
+        command,
+        weechat_prefix ("error"),
+        _("Failure:"),
+        argv[2],
+        argv_eol[3]);
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Callback for the IRC message "INVITE".
  *
  * Message looks like:
@@ -1276,7 +1383,8 @@ IRC_PROTOCOL_CALLBACK(join)
         ((argv_eol[4][0] == ':') ? argv_eol[4] + 1 : argv_eol[4]) : NULL;
 
     str_account[0] = '\0';
-    if (pos_account)
+    if (pos_account
+        && weechat_config_boolean (irc_config_look_display_extended_join))
     {
         snprintf (str_account, sizeof (str_account),
                   "%s [%s%s%s]",
@@ -1287,7 +1395,8 @@ IRC_PROTOCOL_CALLBACK(join)
     }
 
     str_realname[0] = '\0';
-    if (pos_realname)
+    if (pos_realname
+        && weechat_config_boolean (irc_config_look_display_extended_join))
     {
         snprintf (str_realname, sizeof (str_realname),
                   "%s (%s%s%s)",
@@ -1897,6 +2006,29 @@ IRC_PROTOCOL_CALLBACK(nick)
 }
 
 /*
+ * Callback for the IRC message "NOTE".
+ *
+ * Message looks like:
+ *   :server NOTE * OPER_MESSAGE :The message
+ */
+
+IRC_PROTOCOL_CALLBACK(note)
+{
+    IRC_PROTOCOL_MIN_ARGS(4);
+
+    irc_protocol_print_error_warning_msg (
+        server,
+        date,
+        command,
+        weechat_prefix ("network"),
+        _("Note:"),
+        argv[2],
+        argv_eol[3]);
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Callback for the IRC message "NOTICE".
  *
  * Message looks like:
@@ -2016,6 +2148,13 @@ IRC_PROTOCOL_CALLBACK(notice)
             if (ptr_channel)
                 irc_channel_join_smart_filtered_unmask (ptr_channel, nick);
 
+            if (ptr_channel
+                && weechat_config_boolean (irc_config_look_typing_status_nicks))
+            {
+                irc_typing_channel_set_nick (ptr_channel, nick,
+                                             IRC_CHANNEL_TYPING_STATE_OFF);
+            }
+
             ptr_nick = irc_nick_search (server, ptr_channel, nick);
             weechat_printf_date_tags (
                 (ptr_channel) ? ptr_channel->buffer : server->buffer,
@@ -2084,6 +2223,12 @@ IRC_PROTOCOL_CALLBACK(notice)
 
             if (ptr_channel)
             {
+                if (weechat_config_boolean (irc_config_look_typing_status_nicks))
+                {
+                    irc_typing_channel_set_nick (ptr_channel, nick,
+                                                 IRC_CHANNEL_TYPING_STATE_OFF);
+                }
+
                 if (!ptr_channel->topic)
                     irc_channel_set_topic (ptr_channel, address);
 
@@ -2269,6 +2414,9 @@ IRC_PROTOCOL_CALLBACK(part)
     /* part request was issued by local client ? */
     if (local_part)
     {
+        if (weechat_config_boolean (irc_config_look_typing_status_nicks))
+            irc_typing_channel_reset (ptr_channel);
+
         irc_nick_free_all (server, ptr_channel);
 
         irc_channel_modelist_set_state (ptr_channel,
@@ -2308,12 +2456,20 @@ IRC_PROTOCOL_CALLBACK(part)
         }
         irc_bar_item_update_channel ();
     }
-    else if (ptr_nick)
+    else
     {
         /* part from another user */
-        irc_channel_join_smart_filtered_remove (ptr_channel,
-                                                ptr_nick->name);
-        irc_nick_free (server, ptr_channel, ptr_nick);
+        if (weechat_config_boolean (irc_config_look_typing_status_nicks))
+        {
+            irc_typing_channel_set_nick (ptr_channel, nick,
+                                         IRC_CHANNEL_TYPING_STATE_OFF);
+        }
+        if (ptr_nick)
+        {
+            irc_channel_join_smart_filtered_remove (ptr_channel,
+                                                    ptr_nick->name);
+            irc_nick_free (server, ptr_channel, ptr_nick);
+        }
     }
 
     return WEECHAT_RC_OK;
@@ -2451,6 +2607,12 @@ IRC_PROTOCOL_CALLBACK(privmsg)
             }
 
             /* other message */
+            if (weechat_config_boolean (irc_config_look_typing_status_nicks))
+            {
+                irc_typing_channel_set_nick (ptr_channel, nick,
+                                             IRC_CHANNEL_TYPING_STATE_OFF);
+            }
+
             ptr_nick = irc_nick_search (server, ptr_channel, nick);
 
             if (ptr_nick)
@@ -2541,6 +2703,13 @@ IRC_PROTOCOL_CALLBACK(privmsg)
                 return WEECHAT_RC_ERROR;
             }
         }
+
+        if (weechat_config_boolean (irc_config_look_typing_status_nicks))
+        {
+            irc_typing_channel_set_nick (ptr_channel, nick,
+                                         IRC_CHANNEL_TYPING_STATE_OFF);
+        }
+
         irc_channel_set_topic (ptr_channel, address);
 
         if (nick_is_me)
@@ -2628,6 +2797,12 @@ IRC_PROTOCOL_CALLBACK(quit)
     for (ptr_channel = server->channels; ptr_channel;
          ptr_channel = ptr_channel->next_channel)
     {
+        if (weechat_config_boolean (irc_config_look_typing_status_nicks))
+        {
+            irc_typing_channel_set_nick (ptr_channel, nick,
+                                         IRC_CHANNEL_TYPING_STATE_OFF);
+        }
+
         if (ptr_channel->type == IRC_CHANNEL_TYPE_PRIVATE)
             ptr_nick = NULL;
         else
@@ -2720,6 +2895,125 @@ IRC_PROTOCOL_CALLBACK(quit)
             }
             if (ptr_nick)
                 irc_nick_free (server, ptr_channel, ptr_nick);
+        }
+    }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * Callback for the IRC message "SETNAME": set real name
+ * (received when capability "setname" is enabled).
+ *
+ * Message looks like:
+ *   :nick!user@host SETNAME :the realname
+ */
+
+IRC_PROTOCOL_CALLBACK(setname)
+{
+    int local_setname;
+    struct t_irc_channel *ptr_channel;
+    struct t_irc_nick *ptr_nick;
+    char *pos_realname, *realname_color;
+
+    IRC_PROTOCOL_MIN_ARGS(3);
+
+    local_setname = (irc_server_strcasecmp (server, nick, server->nick) == 0);
+
+    pos_realname = (argv_eol[2][0] == ':') ? argv_eol[2] + 1 : argv_eol[2];
+
+    if (weechat_hashtable_has_key (server->cap_list, "setname"))
+    {
+        for (ptr_channel = server->channels; ptr_channel;
+             ptr_channel = ptr_channel->next_channel)
+        {
+            ptr_nick = irc_nick_search (server, ptr_channel, nick);
+            if (ptr_nick)
+            {
+                if (ptr_nick->realname)
+                    free (ptr_nick->realname);
+                ptr_nick->realname = strdup (pos_realname);
+            }
+        }
+    }
+
+    if (!ignored)
+    {
+        realname_color = irc_color_decode (
+            pos_realname,
+            weechat_config_boolean (irc_config_network_colors_receive));
+        if (local_setname)
+        {
+            weechat_printf_date_tags (
+                irc_msgbuffer_get_target_buffer (server, NULL, command, NULL, NULL),
+                date,
+                irc_protocol_tags (command, NULL, NULL, NULL),
+                _("%sYour real name has been set to \"%s\""),
+                weechat_prefix ("network"),
+                (realname_color) ? realname_color : "");
+        }
+        else
+        {
+            weechat_printf_date_tags (
+                irc_msgbuffer_get_target_buffer (server, NULL, command, NULL, NULL),
+                date,
+                irc_protocol_tags (command, NULL, NULL, NULL),
+                _("%sReal name of %s%s%s has been set to \"%s\""),
+                weechat_prefix ("network"),
+                irc_nick_color_for_msg (server, 1, NULL, nick),
+                nick,
+                IRC_COLOR_RESET,
+                (realname_color) ? realname_color : "");
+        }
+        if (realname_color)
+            free (realname_color);
+    }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * Callback for the IRC message "TAGMSG": message with tags but no text content
+ * (received when capability "message-tags" is enabled).
+ *
+ * Message looks like:
+ *   @msgid=6gqz7dxd22v7r3x9pvu;+typing=active :nick!user@host TAGMSG #channel
+ */
+
+IRC_PROTOCOL_CALLBACK(tagmsg)
+{
+    struct t_irc_channel *ptr_channel;
+    const char *ptr_typing_value;
+    int state;
+
+    IRC_PROTOCOL_MIN_ARGS(3);
+
+    if (ignored)
+        return WEECHAT_RC_OK;
+
+    if (!tags)
+        return WEECHAT_RC_OK;
+
+    ptr_channel = NULL;
+    if (irc_channel_is_channel (server, argv[2]))
+        ptr_channel = irc_channel_search (server, argv[2]);
+    else if (irc_server_strcasecmp (server, argv[2], server->nick) == 0)
+        ptr_channel = irc_channel_search (server, nick);
+    if (!ptr_channel)
+        return WEECHAT_RC_OK;
+
+    if (weechat_config_boolean (irc_config_look_typing_status_nicks))
+    {
+        ptr_typing_value = weechat_hashtable_get (tags, "+typing");
+        if (ptr_typing_value && ptr_typing_value[0])
+        {
+            if (strcmp (ptr_typing_value, "active") == 0)
+                state = IRC_CHANNEL_TYPING_STATE_ACTIVE;
+            else if (strcmp (ptr_typing_value, "paused") == 0)
+                state = IRC_CHANNEL_TYPING_STATE_PAUSED;
+            else
+                state = IRC_CHANNEL_TYPING_STATE_OFF;
+            irc_typing_channel_set_nick (ptr_channel, nick, state);
         }
     }
 
@@ -2959,11 +3253,34 @@ IRC_PROTOCOL_CALLBACK(wallops)
     weechat_printf_date_tags (
         irc_msgbuffer_get_target_buffer (server, nick, command, NULL, NULL),
         date,
-        irc_protocol_tags (command, NULL, nick, address),
+        irc_protocol_tags (command, "notify_private", nick, address),
         _("%sWallops from %s: %s"),
         weechat_prefix ("network"),
         (nick_address[0]) ? nick_address : "?",
         (argv_eol[2][0] == ':') ? argv_eol[2] + 1 : argv_eol[2]);
+
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * Callback for the IRC message "WARN".
+ *
+ * Message looks like:
+ *   :server WARN REHASH CERTS_EXPIRED :Certificate [xxx] has expired
+ */
+
+IRC_PROTOCOL_CALLBACK(warn)
+{
+    IRC_PROTOCOL_MIN_ARGS(4);
+
+    irc_protocol_print_error_warning_msg (
+        server,
+        date,
+        command,
+        weechat_prefix ("error"),
+        _("Warning:"),
+        argv[2],
+        argv_eol[3]);
 
     return WEECHAT_RC_OK;
 }
@@ -2977,8 +3294,9 @@ IRC_PROTOCOL_CALLBACK(wallops)
 
 IRC_PROTOCOL_CALLBACK(001)
 {
-    char *server_command, **commands, **ptr_command, *command2, *slash_command;
+    char **commands, **ptr_command, *command2, *command3, *slash_command;
     char *away_msg, *usermode;
+    const char *ptr_server_command;
     int length;
 
     IRC_PROTOCOL_MIN_ARGS(3);
@@ -2987,7 +3305,7 @@ IRC_PROTOCOL_CALLBACK(001)
         irc_server_set_nick (server, argv[2]);
 
     irc_protocol_cb_numeric (server,
-                             date, nick, address, host, command,
+                             date, tags, nick, address, host, command,
                              ignored, argc, argv, argv_eol);
 
     /* connection to IRC server is OK! */
@@ -3035,35 +3353,41 @@ IRC_PROTOCOL_CALLBACK(001)
         free (usermode);
 
     /* execute command when connected */
-    server_command = irc_server_eval_expression (
-        server,
-        IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_COMMAND));
-    if (server_command && server_command[0])
+    ptr_server_command = IRC_SERVER_OPTION_STRING(server,
+                                                  IRC_SERVER_OPTION_COMMAND);
+    if (ptr_server_command && ptr_server_command[0])
     {
         /* split command on ';' which can be escaped with '\;' */
-        commands = weechat_string_split_command (server_command, ';');
+        commands = weechat_string_split_command (ptr_server_command, ';');
         if (commands)
         {
             for (ptr_command = commands; *ptr_command; ptr_command++)
             {
-                command2 = irc_message_replace_vars (server, NULL,
-                                                     *ptr_command);
+                command2 = irc_server_eval_expression (server, *ptr_command);
                 if (command2)
                 {
-                    if (weechat_string_is_command_char (command2))
+                    command3 = irc_message_replace_vars (server, NULL,
+                                                         command2);
+                    if (command3)
                     {
-                        weechat_command (server->buffer, command2);
-                    }
-                    else
-                    {
-                        length = 1 + strlen(command2) + 1;
-                        slash_command = malloc (length);
-                        if (slash_command)
+                        if (weechat_string_is_command_char (command3))
                         {
-                            snprintf (slash_command, length, "/%s", command2);
-                            weechat_command (server->buffer, slash_command);
-                            free (slash_command);
+                            weechat_command (server->buffer, command3);
                         }
+                        else
+                        {
+                            length = 1 + strlen(command3) + 1;
+                            slash_command = malloc (length);
+                            if (slash_command)
+                            {
+                                snprintf (slash_command, length,
+                                          "/%s", command3);
+                                weechat_command (server->buffer,
+                                                 slash_command);
+                                free (slash_command);
+                            }
+                        }
+                        free (command3);
                     }
                     free (command2);
                 }
@@ -3080,8 +3404,6 @@ IRC_PROTOCOL_CALLBACK(001)
     {
         irc_server_autojoin_channels (server);
     }
-    if (server_command)
-        free (server_command);
 
     return WEECHAT_RC_OK;
 }
@@ -3105,7 +3427,7 @@ IRC_PROTOCOL_CALLBACK(005)
     IRC_PROTOCOL_MIN_ARGS(4);
 
     irc_protocol_cb_numeric (server,
-                             date, nick, address, host, command,
+                             date, tags, nick, address, host, command,
                              ignored, argc, argv, argv_eol);
 
     /* save prefix */
@@ -3241,6 +3563,19 @@ IRC_PROTOCOL_CALLBACK(005)
         value = strtol (pos, &error, 10);
         if (error && !error[0] && (value > 0))
             server->monitor = (int)value;
+        if (pos2)
+            pos2[0] = ' ';
+    }
+
+    /* save client tag deny */
+    pos = strstr (argv_eol[3], "CLIENTTAGDENY=");
+    if (pos)
+    {
+        pos += 14;
+        pos2 = strchr (pos, ' ');
+        if (pos2)
+            pos2[0] = '\0';
+        irc_server_set_clienttagdeny (server, pos);
         if (pos2)
             pos2[0] = ' ';
     }
@@ -3571,7 +3906,7 @@ IRC_PROTOCOL_CALLBACK(311)
  * Callback for the IRC message "312": whois, server.
  *
  * Message looks like:
- *   :server 312 mynick nick chat.freenode.net :https://freenode.net/
+ *   :server 312 mynick nick tungsten.libera.chat :Umeå, SE
  */
 
 IRC_PROTOCOL_CALLBACK(312)
@@ -4917,15 +5252,7 @@ IRC_PROTOCOL_CALLBACK(352)
     {
         if (ptr_nick->realname)
             free (ptr_nick->realname);
-        if (pos_realname &&
-            weechat_hashtable_has_key (server->cap_list, "extended-join"))
-        {
-            ptr_nick->realname = strdup (pos_realname);
-        }
-        else
-        {
-            ptr_nick->realname = NULL;
-        }
+        ptr_nick->realname = (pos_realname) ? strdup (pos_realname) : NULL;
     }
 
     /* display output of who (manual who from user) */
@@ -5205,15 +5532,8 @@ IRC_PROTOCOL_CALLBACK(354)
     {
         if (ptr_nick->realname)
             free (ptr_nick->realname);
-        if (ptr_channel && pos_realname
-            && weechat_hashtable_has_key (server->cap_list, "extended-join"))
-        {
-            ptr_nick->realname = strdup (pos_realname);
-        }
-        else
-        {
-            ptr_nick->realname = NULL;
-        }
+        ptr_nick->realname = (ptr_channel && pos_realname) ?
+            strdup (pos_realname) : NULL;
     }
 
     /* display output of who (manual who from user) */
@@ -5664,7 +5984,7 @@ IRC_PROTOCOL_CALLBACK(432)
     struct t_gui_buffer *ptr_buffer;
 
     irc_protocol_cb_generic_error (server,
-                                   date, nick, address, host, command,
+                                   date, tags, nick, address, host, command,
                                    ignored, argc, argv, argv_eol);
 
     if (!server->is_connected)
@@ -5749,7 +6069,7 @@ IRC_PROTOCOL_CALLBACK(433)
     else
     {
         return irc_protocol_cb_generic_error (server,
-                                              date, nick, address, host,
+                                              date, tags, nick, address, host,
                                               command, ignored, argc, argv,
                                               argv_eol);
     }
@@ -5770,7 +6090,7 @@ IRC_PROTOCOL_CALLBACK(437)
     struct t_gui_buffer *ptr_buffer;
 
     irc_protocol_cb_generic_error (server,
-                                   date, nick, address, host, command,
+                                   date, tags, nick, address, host, command,
                                    ignored, argc, argv, argv_eol);
 
     if (!server->is_connected)
@@ -5872,7 +6192,7 @@ IRC_PROTOCOL_CALLBACK(470)
     int lines_count;
 
     irc_protocol_cb_generic_error (server,
-                                   date, nick, address, host, command,
+                                   date, tags, nick, address, host, command,
                                    ignored, argc, argv, argv_eol);
 
     if ((argc >= 5) && !irc_channel_search (server, argv[3]))
@@ -6330,6 +6650,8 @@ IRC_PROTOCOL_CALLBACK(900)
         argv[3],
         IRC_COLOR_CHAT_DELIMITERS);
 
+    irc_server_free_sasl_data (server);
+
     return WEECHAT_RC_OK;
 }
 
@@ -6357,7 +6679,7 @@ IRC_PROTOCOL_CALLBACK(901)
     else
     {
         irc_protocol_cb_numeric (server,
-                                 date, nick, address, host, command,
+                                 date, tags, nick, address, host, command,
                                  ignored, argc, argv, argv_eol);
     }
 
@@ -6380,11 +6702,13 @@ IRC_PROTOCOL_CALLBACK(sasl_end_ok)
     }
 
     irc_protocol_cb_numeric (server,
-                             date, nick, address, host, command,
+                             date, tags, nick, address, host, command,
                              ignored, argc, argv, argv_eol);
 
     if (!server->is_connected)
         irc_server_sendf (server, 0, NULL, "CAP END");
+
+    irc_server_free_sasl_data (server);
 
     return WEECHAT_RC_OK;
 }
@@ -6407,12 +6731,13 @@ IRC_PROTOCOL_CALLBACK(sasl_end_fail)
     }
 
     irc_protocol_cb_numeric (server,
-                             date, nick, address, host, command,
+                             date, tags, nick, address, host, command,
                              ignored, argc, argv, argv_eol);
 
     sasl_fail = IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_SASL_FAIL);
-    if ((sasl_fail == IRC_SERVER_SASL_FAIL_RECONNECT)
-        || (sasl_fail == IRC_SERVER_SASL_FAIL_DISCONNECT))
+    if (!server->is_connected
+        && ((sasl_fail == IRC_SERVER_SASL_FAIL_RECONNECT)
+            || (sasl_fail == IRC_SERVER_SASL_FAIL_DISCONNECT)))
     {
         irc_server_disconnect (
             server, 0,
@@ -6422,6 +6747,8 @@ IRC_PROTOCOL_CALLBACK(sasl_end_fail)
 
     if (!server->is_connected)
         irc_server_sendf (server, 0, NULL, "CAP END");
+
+    irc_server_free_sasl_data (server);
 
     return WEECHAT_RC_OK;
 }
@@ -6449,159 +6776,164 @@ irc_protocol_recv_command (struct t_irc_server *server,
     char *nick, *address, *address_color, *host, *host_no_color, *host_color;
     char **argv, **argv_eol;
     struct t_hashtable *hash_tags;
-    struct t_irc_protocol_msg irc_protocol_messages[] =
-        { { "account", /* account (cap account-notify) */ 1, 0, &irc_protocol_cb_account },
-          { "authenticate", /* authenticate */ 1, 0, &irc_protocol_cb_authenticate },
-          { "away", /* away (cap away-notify) */ 1, 0, &irc_protocol_cb_away },
-          { "cap", /* client capability */ 1, 0, &irc_protocol_cb_cap },
-          { "chghost", /* user/host change (cap chghost) */ 1, 0, &irc_protocol_cb_chghost },
-          { "error", /* error received from IRC server */ 1, 0, &irc_protocol_cb_error },
-          { "invite", /* invite a nick on a channel */ 1, 0, &irc_protocol_cb_invite },
-          { "join", /* join a channel */ 1, 0, &irc_protocol_cb_join },
-          { "kick", /* forcibly remove a user from a channel */ 1, 1, &irc_protocol_cb_kick },
-          { "kill", /* close client-server connection */ 1, 1, &irc_protocol_cb_kill },
-          { "mode", /* change channel or user mode */ 1, 0, &irc_protocol_cb_mode },
-          { "nick", /* change current nickname */ 1, 0, &irc_protocol_cb_nick },
-          { "notice", /* send notice message to user */ 1, 1, &irc_protocol_cb_notice },
-          { "part", /* leave a channel */ 1, 1, &irc_protocol_cb_part },
-          { "ping", /* ping server */ 1, 0, &irc_protocol_cb_ping },
-          { "pong", /* answer to a ping message */ 1, 0, &irc_protocol_cb_pong },
-          { "privmsg", /* message received */ 1, 1, &irc_protocol_cb_privmsg },
-          { "quit", /* close all connections and quit */ 1, 1, &irc_protocol_cb_quit },
-          { "topic", /* get/set channel topic */ 0, 1, &irc_protocol_cb_topic },
-          { "wallops", /* send a message to all currently connected users who have "
-                          "set the 'w' user mode "
-                          "for themselves */ 1, 1, &irc_protocol_cb_wallops },
-          { "001", /* a server message */ 1, 0, &irc_protocol_cb_001 },
-          { "005", /* a server message */ 1, 0, &irc_protocol_cb_005 },
-          { "008", /* server notice mask */ 1, 0, &irc_protocol_cb_008 },
-          { "221", /* user mode string */ 1, 0, &irc_protocol_cb_221 },
-          { "223", /* whois (charset is) */ 1, 0, &irc_protocol_cb_whois_nick_msg },
-          { "264", /* whois (is using encrypted connection) */ 1, 0, &irc_protocol_cb_whois_nick_msg },
-          { "275", /* whois (secure connection) */ 1, 0, &irc_protocol_cb_whois_nick_msg },
-          { "276", /* whois (has client certificate fingerprint) */ 1, 0, &irc_protocol_cb_whois_nick_msg },
-          { "301", /* away message */ 1, 1, &irc_protocol_cb_301 },
-          { "303", /* ison */ 1, 0, &irc_protocol_cb_303 },
-          { "305", /* unaway */ 1, 0, &irc_protocol_cb_305 },
-          { "306", /* now away */ 1, 0, &irc_protocol_cb_306 },
-          { "307", /* whois (registered nick) */ 1, 0, &irc_protocol_cb_whois_nick_msg },
-          { "310", /* whois (help mode) */ 1, 0, &irc_protocol_cb_whois_nick_msg },
-          { "311", /* whois (user) */ 1, 0, &irc_protocol_cb_311 },
-          { "312", /* whois (server) */ 1, 0, &irc_protocol_cb_312 },
-          { "313", /* whois (operator) */ 1, 0, &irc_protocol_cb_whois_nick_msg },
-          { "314", /* whowas */ 1, 0, &irc_protocol_cb_314 },
-          { "315", /* end of /who list */ 1, 0, &irc_protocol_cb_315 },
-          { "317", /* whois (idle) */ 1, 0, &irc_protocol_cb_317 },
-          { "318", /* whois (end) */ 1, 0, &irc_protocol_cb_whois_nick_msg },
-          { "319", /* whois (channels) */ 1, 0, &irc_protocol_cb_whois_nick_msg },
-          { "320", /* whois (identified user) */ 1, 0, &irc_protocol_cb_whois_nick_msg },
-          { "321", /* /list start */ 1, 0, &irc_protocol_cb_321 },
-          { "322", /* channel (for /list) */ 1, 0, &irc_protocol_cb_322 },
-          { "323", /* end of /list */ 1, 0, &irc_protocol_cb_323 },
-          { "324", /* channel mode */ 1, 0, &irc_protocol_cb_324 },
-          { "326", /* whois (has oper privs) */ 1, 0, &irc_protocol_cb_whois_nick_msg },
-          { "327", /* whois (host) */ 1, 0, &irc_protocol_cb_327 },
-          { "328", /* channel url */ 1, 0, &irc_protocol_cb_328 },
-          { "329", /* channel creation date */ 1, 0, &irc_protocol_cb_329 },
-          { "330", /* is logged in as */ 1, 0, &irc_protocol_cb_330_343 },
-          { "331", /* no topic for channel */ 1, 0, &irc_protocol_cb_331 },
-          { "332", /* topic of channel */ 0, 1, &irc_protocol_cb_332 },
-          { "333", /* infos about topic (nick and date changed) */ 1, 0, &irc_protocol_cb_333 },
-          { "335", /* is a bot on */ 1, 0, &irc_protocol_cb_whois_nick_msg },
-          { "338", /* whois (host) */ 1, 0, &irc_protocol_cb_338 },
-          { "341", /* inviting */ 1, 0, &irc_protocol_cb_341 },
-          { "343", /* is opered as */ 1, 0, &irc_protocol_cb_330_343 },
-          { "344", /* channel reop */ 1, 0, &irc_protocol_cb_344 },
-          { "345", /* end of channel reop list */ 1, 0, &irc_protocol_cb_345 },
-          { "346", /* invite list */ 1, 0, &irc_protocol_cb_346 },
-          { "347", /* end of invite list */ 1, 0, &irc_protocol_cb_347 },
-          { "348", /* channel exception list */ 1, 0, &irc_protocol_cb_348 },
-          { "349", /* end of channel exception list */ 1, 0, &irc_protocol_cb_349 },
-          { "351", /* server version */ 1, 0, &irc_protocol_cb_351 },
-          { "352", /* who */ 1, 0, &irc_protocol_cb_352 },
-          { "353", /* list of nicks on channel */ 1, 0, &irc_protocol_cb_353 },
-          { "354", /* whox */ 1, 0, &irc_protocol_cb_354 },
-          { "366", /* end of /names list */ 1, 0, &irc_protocol_cb_366 },
-          { "367", /* banlist */ 1, 0, &irc_protocol_cb_367 },
-          { "368", /* end of banlist */ 1, 0, &irc_protocol_cb_368 },
-          { "369", /* whowas (end) */ 1, 0, &irc_protocol_cb_whowas_nick_msg },
-          { "378", /* whois (connecting from) */ 1, 0, &irc_protocol_cb_whois_nick_msg },
-          { "379", /* whois (using modes) */ 1, 0, &irc_protocol_cb_whois_nick_msg },
-          { "401", /* no such nick/channel */ 1, 0, &irc_protocol_cb_generic_error },
-          { "402", /* no such server */ 1, 0, &irc_protocol_cb_generic_error },
-          { "403", /* no such channel */ 1, 0, &irc_protocol_cb_generic_error },
-          { "404", /* cannot send to channel */ 1, 0, &irc_protocol_cb_generic_error },
-          { "405", /* too many channels */ 1, 0, &irc_protocol_cb_generic_error },
-          { "406", /* was no such nick */ 1, 0, &irc_protocol_cb_generic_error },
-          { "407", /* was no such nick */ 1, 0, &irc_protocol_cb_generic_error },
-          { "409", /* no origin */ 1, 0, &irc_protocol_cb_generic_error },
-          { "410", /* no services */ 1, 0, &irc_protocol_cb_generic_error },
-          { "411", /* no recipient */ 1, 0, &irc_protocol_cb_generic_error },
-          { "412", /* no text to send */ 1, 0, &irc_protocol_cb_generic_error },
-          { "413", /* no toplevel */ 1, 0, &irc_protocol_cb_generic_error },
-          { "414", /* wilcard in toplevel domain */ 1, 0, &irc_protocol_cb_generic_error },
-          { "421", /* unknown command */ 1, 0, &irc_protocol_cb_generic_error },
-          { "422", /* MOTD is missing */ 1, 0, &irc_protocol_cb_generic_error },
-          { "423", /* no administrative info */ 1, 0, &irc_protocol_cb_generic_error },
-          { "424", /* file error */ 1, 0, &irc_protocol_cb_generic_error },
-          { "431", /* no nickname given */ 1, 0, &irc_protocol_cb_generic_error },
-          { "432", /* erroneous nickname */ 1, 0, &irc_protocol_cb_432 },
-          { "433", /* nickname already in use */ 1, 0, &irc_protocol_cb_433 },
-          { "436", /* nickname collision */ 1, 0, &irc_protocol_cb_generic_error },
-          { "437", /* nick/channel unavailable */ 1, 0, &irc_protocol_cb_437 },
-          { "438", /* not authorized to change nickname */ 1, 0, &irc_protocol_cb_438 },
-          { "441", /* user not in channel */ 1, 0, &irc_protocol_cb_generic_error },
-          { "442", /* not on channel */ 1, 0, &irc_protocol_cb_generic_error },
-          { "443", /* user already on channel */ 1, 0, &irc_protocol_cb_generic_error },
-          { "444", /* user not logged in */ 1, 0, &irc_protocol_cb_generic_error },
-          { "445", /* summon has been disabled */ 1, 0, &irc_protocol_cb_generic_error },
-          { "446", /* users has been disabled */ 1, 0, &irc_protocol_cb_generic_error },
-          { "451", /* you are not registered */ 1, 0, &irc_protocol_cb_generic_error },
-          { "461", /* not enough parameters */ 1, 0, &irc_protocol_cb_generic_error },
-          { "462", /* you may not register */ 1, 0, &irc_protocol_cb_generic_error },
-          { "463", /* your host isn't among the privileged */ 1, 0, &irc_protocol_cb_generic_error },
-          { "464", /* password incorrect */ 1, 0, &irc_protocol_cb_generic_error },
-          { "465", /* you are banned from this server */ 1, 0, &irc_protocol_cb_generic_error },
-          { "467", /* channel key already set */ 1, 0, &irc_protocol_cb_generic_error },
-          { "470", /* forwarding to another channel */ 1, 0, &irc_protocol_cb_470 },
-          { "471", /* channel is already full */ 1, 0, &irc_protocol_cb_generic_error },
-          { "472", /* unknown mode char to me */ 1, 0, &irc_protocol_cb_generic_error },
-          { "473", /* cannot join channel (invite only) */ 1, 0, &irc_protocol_cb_generic_error },
-          { "474", /* cannot join channel (banned from channel) */ 1, 0, &irc_protocol_cb_generic_error },
-          { "475", /* cannot join channel (bad channel key) */ 1, 0, &irc_protocol_cb_generic_error },
-          { "476", /* bad channel mask */ 1, 0, &irc_protocol_cb_generic_error },
-          { "477", /* channel doesn't support modes */ 1, 0, &irc_protocol_cb_generic_error },
-          { "481", /* you're not an IRC operator */ 1, 0, &irc_protocol_cb_generic_error },
-          { "482", /* you're not channel operator */ 1, 0, &irc_protocol_cb_generic_error },
-          { "483", /* you can't kill a server! */ 1, 0, &irc_protocol_cb_generic_error },
-          { "484", /* your connection is restricted! */ 1, 0, &irc_protocol_cb_generic_error },
-          { "485", /* user is immune from kick/deop */ 1, 0, &irc_protocol_cb_generic_error },
-          { "487", /* network split */ 1, 0, &irc_protocol_cb_generic_error },
-          { "491", /* no O-lines for your host */ 1, 0, &irc_protocol_cb_generic_error },
-          { "501", /* unknown mode flag */ 1, 0, &irc_protocol_cb_generic_error },
-          { "502", /* can't change mode for other users */ 1, 0, &irc_protocol_cb_generic_error },
-          { "671", /* whois (secure connection) */ 1, 0, &irc_protocol_cb_whois_nick_msg },
-          { "728", /* quietlist */ 1, 0, &irc_protocol_cb_728 },
-          { "729", /* end of quietlist */ 1, 0, &irc_protocol_cb_729 },
-          { "730", /* monitored nicks online */ 1, 0, &irc_protocol_cb_730 },
-          { "731", /* monitored nicks offline */ 1, 0, &irc_protocol_cb_731 },
-          { "732", /* list of monitored nicks */ 1, 0, &irc_protocol_cb_732 },
-          { "733", /* end of monitor list */ 1, 0, &irc_protocol_cb_733 },
-          { "734", /* monitor list is full */ 1, 0, &irc_protocol_cb_734 },
-          { "900", /* logged in as (SASL) */ 1, 0, &irc_protocol_cb_900 },
-          { "901", /* you are now logged in */ 1, 0, &irc_protocol_cb_901 },
-          { "902", /* SASL authentication failed (account locked/held) */ 1, 0, &irc_protocol_cb_sasl_end_fail },
-          { "903", /* SASL authentication successful */ 1, 0, &irc_protocol_cb_sasl_end_ok },
-          { "904", /* SASL authentication failed */ 1, 0, &irc_protocol_cb_sasl_end_fail },
-          { "905", /* SASL message too long */ 1, 0, &irc_protocol_cb_sasl_end_fail },
-          { "906", /* SASL authentication aborted */ 1, 0, &irc_protocol_cb_sasl_end_fail },
-          { "907", /* You have already completed SASL authentication */ 1, 0, &irc_protocol_cb_sasl_end_ok },
-          { "936", /* censored word */ 1, 0, &irc_protocol_cb_generic_error },
-          { "973", /* whois (secure connection) */ 1, 0, &irc_protocol_cb_server_mode_reason },
-          { "974", /* whois (secure connection) */ 1, 0, &irc_protocol_cb_server_mode_reason },
-          { "975", /* whois (secure connection) */ 1, 0, &irc_protocol_cb_server_mode_reason },
-          { NULL, 0, 0, NULL }
-        };
+
+    struct t_irc_protocol_msg irc_protocol_messages[] = {
+        /* format: "command", decode_color, keep_trailing_spaces, func_cb   */
+        IRCB(account, 1, 0, account),    /* account (cap account-notify)    */
+        IRCB(authenticate, 1, 0, authenticate), /* authenticate             */
+        IRCB(away, 1, 0, away),          /* away (cap away-notify)          */
+        IRCB(cap, 1, 0, cap),            /* client capability               */
+        IRCB(chghost, 1, 0, chghost),    /* user/host change (cap chghost)  */
+        IRCB(error, 1, 0, error),        /* error received from server      */
+        IRCB(fail, 1, 0, fail),          /* error received from server      */
+        IRCB(invite, 1, 0, invite),      /* invite a nick on a channel      */
+        IRCB(join, 1, 0, join),          /* join a channel                  */
+        IRCB(kick, 1, 1, kick),          /* kick a user                     */
+        IRCB(kill, 1, 1, kill),          /* close client-server connection  */
+        IRCB(mode, 1, 0, mode),          /* change channel or user mode     */
+        IRCB(nick, 1, 0, nick),          /* change current nickname         */
+        IRCB(note, 1, 0, note),          /* note received from server       */
+        IRCB(notice, 1, 1, notice),      /* send notice message to user     */
+        IRCB(part, 1, 1, part),          /* leave a channel                 */
+        IRCB(ping, 1, 0, ping),          /* ping server                     */
+        IRCB(pong, 1, 0, pong),          /* answer to a ping message        */
+        IRCB(privmsg, 1, 1, privmsg),    /* message received                */
+        IRCB(quit, 1, 1, quit),          /* close all connections and quit  */
+        IRCB(setname, 0, 1, setname),    /* set realname                    */
+        IRCB(tagmsg, 0, 1, tagmsg),      /* tag message                     */
+        IRCB(topic, 0, 1, topic),        /* get/set channel topic           */
+        IRCB(wallops, 1, 1, wallops),    /* wallops                         */
+        IRCB(warn, 1, 0, warn),          /* warning received from server    */
+        IRCB(001, 1, 0, 001),            /* a server message                */
+        IRCB(005, 1, 0, 005),            /* a server message                */
+        IRCB(008, 1, 0, 008),            /* server notice mask              */
+        IRCB(221, 1, 0, 221),            /* user mode string                */
+        IRCB(223, 1, 0, whois_nick_msg), /* whois (charset is)              */
+        IRCB(264, 1, 0, whois_nick_msg), /* whois (encrypted connection)    */
+        IRCB(275, 1, 0, whois_nick_msg), /* whois (secure connection)       */
+        IRCB(276, 1, 0, whois_nick_msg), /* whois (client cert. fingerprint)*/
+        IRCB(301, 1, 1, 301),            /* away message                    */
+        IRCB(303, 1, 0, 303),            /* ison                            */
+        IRCB(305, 1, 0, 305),            /* unaway                          */
+        IRCB(306, 1, 0, 306),            /* now away                        */
+        IRCB(307, 1, 0, whois_nick_msg), /* whois (registered nick)         */
+        IRCB(310, 1, 0, whois_nick_msg), /* whois (help mode)               */
+        IRCB(311, 1, 0, 311),            /* whois (user)                    */
+        IRCB(312, 1, 0, 312),            /* whois (server)                  */
+        IRCB(313, 1, 0, whois_nick_msg), /* whois (operator)                */
+        IRCB(314, 1, 0, 314),            /* whowas                          */
+        IRCB(315, 1, 0, 315),            /* end of /who list                */
+        IRCB(317, 1, 0, 317),            /* whois (idle)                    */
+        IRCB(318, 1, 0, whois_nick_msg), /* whois (end)                     */
+        IRCB(319, 1, 0, whois_nick_msg), /* whois (channels)                */
+        IRCB(320, 1, 0, whois_nick_msg), /* whois (identified user)         */
+        IRCB(321, 1, 0, 321),            /* /list start                     */
+        IRCB(322, 1, 0, 322),            /* channel (for /list)             */
+        IRCB(323, 1, 0, 323),            /* end of /list                    */
+        IRCB(324, 1, 0, 324),            /* channel mode                    */
+        IRCB(326, 1, 0, whois_nick_msg), /* whois (has oper privs)          */
+        IRCB(327, 1, 0, 327),            /* whois (host)                    */
+        IRCB(328, 1, 0, 328),            /* channel URL                     */
+        IRCB(329, 1, 0, 329),            /* channel creation date           */
+        IRCB(330, 1, 0, 330_343),        /* is logged in as                 */
+        IRCB(331, 1, 0, 331),            /* no topic for channel            */
+        IRCB(332, 0, 1, 332),            /* topic of channel                */
+        IRCB(333, 1, 0, 333),            /* topic info (nick/date)          */
+        IRCB(335, 1, 0, whois_nick_msg), /* is a bot on                     */
+        IRCB(338, 1, 0, 338),            /* whois (host)                    */
+        IRCB(341, 1, 0, 341),            /* inviting                        */
+        IRCB(343, 1, 0, 330_343),        /* is opered as                    */
+        IRCB(344, 1, 0, 344),            /* channel reop                    */
+        IRCB(345, 1, 0, 345),            /* end of channel reop list        */
+        IRCB(346, 1, 0, 346),            /* invite list                     */
+        IRCB(347, 1, 0, 347),            /* end of invite list              */
+        IRCB(348, 1, 0, 348),            /* channel exception list          */
+        IRCB(349, 1, 0, 349),            /* end of channel exception list   */
+        IRCB(351, 1, 0, 351),            /* server version                  */
+        IRCB(352, 1, 0, 352),            /* who                             */
+        IRCB(353, 1, 0, 353),            /* list of nicks on channel        */
+        IRCB(354, 1, 0, 354),            /* whox                            */
+        IRCB(366, 1, 0, 366),            /* end of /names list              */
+        IRCB(367, 1, 0, 367),            /* banlist                         */
+        IRCB(368, 1, 0, 368),            /* end of banlist                  */
+        IRCB(369, 1, 0, whowas_nick_msg), /* whowas (end)                   */
+        IRCB(378, 1, 0, whois_nick_msg), /* whois (connecting from)         */
+        IRCB(379, 1, 0, whois_nick_msg), /* whois (using modes)             */
+        IRCB(401, 1, 0, generic_error),  /* no such nick/channel            */
+        IRCB(402, 1, 0, generic_error),  /* no such server                  */
+        IRCB(403, 1, 0, generic_error),  /* no such channel                 */
+        IRCB(404, 1, 0, generic_error),  /* cannot send to channel          */
+        IRCB(405, 1, 0, generic_error),  /* too many channels               */
+        IRCB(406, 1, 0, generic_error),  /* was no such nick                */
+        IRCB(407, 1, 0, generic_error),  /* was no such nick                */
+        IRCB(409, 1, 0, generic_error),  /* no origin                       */
+        IRCB(410, 1, 0, generic_error),  /* no services                     */
+        IRCB(411, 1, 0, generic_error),  /* no recipient                    */
+        IRCB(412, 1, 0, generic_error),  /* no text to send                 */
+        IRCB(413, 1, 0, generic_error),  /* no toplevel                     */
+        IRCB(414, 1, 0, generic_error),  /* wilcard in toplevel domain      */
+        IRCB(421, 1, 0, generic_error),  /* unknown command                 */
+        IRCB(422, 1, 0, generic_error),  /* MOTD is missing                 */
+        IRCB(423, 1, 0, generic_error),  /* no administrative info          */
+        IRCB(424, 1, 0, generic_error),  /* file error                      */
+        IRCB(431, 1, 0, generic_error),  /* no nickname given               */
+        IRCB(432, 1, 0, 432),            /* erroneous nickname              */
+        IRCB(433, 1, 0, 433),            /* nickname already in use         */
+        IRCB(436, 1, 0, generic_error),  /* nickname collision              */
+        IRCB(437, 1, 0, 437),            /* nick/channel unavailable        */
+        IRCB(438, 1, 0, 438),            /* not auth. to change nickname    */
+        IRCB(441, 1, 0, generic_error),  /* user not in channel             */
+        IRCB(442, 1, 0, generic_error),  /* not on channel                  */
+        IRCB(443, 1, 0, generic_error),  /* user already on channel         */
+        IRCB(444, 1, 0, generic_error),  /* user not logged in              */
+        IRCB(445, 1, 0, generic_error),  /* summon has been disabled        */
+        IRCB(446, 1, 0, generic_error),  /* users has been disabled         */
+        IRCB(451, 1, 0, generic_error),  /* you are not registered          */
+        IRCB(461, 1, 0, generic_error),  /* not enough parameters           */
+        IRCB(462, 1, 0, generic_error),  /* you may not register            */
+        IRCB(463, 1, 0, generic_error),  /* host not privileged             */
+        IRCB(464, 1, 0, generic_error),  /* password incorrect              */
+        IRCB(465, 1, 0, generic_error),  /* banned from this server         */
+        IRCB(467, 1, 0, generic_error),  /* channel key already set         */
+        IRCB(470, 1, 0, 470),            /* forwarding to another channel   */
+        IRCB(471, 1, 0, generic_error),  /* channel is already full         */
+        IRCB(472, 1, 0, generic_error),  /* unknown mode char to me         */
+        IRCB(473, 1, 0, generic_error),  /* cannot join (invite only)       */
+        IRCB(474, 1, 0, generic_error),  /* cannot join (banned)            */
+        IRCB(475, 1, 0, generic_error),  /* cannot join (bad key)           */
+        IRCB(476, 1, 0, generic_error),  /* bad channel mask                */
+        IRCB(477, 1, 0, generic_error),  /* channel doesn't support modes   */
+        IRCB(481, 1, 0, generic_error),  /* you're not an IRC operator      */
+        IRCB(482, 1, 0, generic_error),  /* you're not channel operator     */
+        IRCB(483, 1, 0, generic_error),  /* you can't kill a server!        */
+        IRCB(484, 1, 0, generic_error),  /* your connection is restricted!  */
+        IRCB(485, 1, 0, generic_error),  /* user immune from kick/deop      */
+        IRCB(487, 1, 0, generic_error),  /* network split                   */
+        IRCB(491, 1, 0, generic_error),  /* no O-lines for your host        */
+        IRCB(501, 1, 0, generic_error),  /* unknown mode flag               */
+        IRCB(502, 1, 0, generic_error),  /* can't chg mode for other users  */
+        IRCB(671, 1, 0, whois_nick_msg), /* whois (secure connection)       */
+        IRCB(728, 1, 0, 728),            /* quietlist                       */
+        IRCB(729, 1, 0, 729),            /* end of quietlist                */
+        IRCB(730, 1, 0, 730),            /* monitored nicks online          */
+        IRCB(731, 1, 0, 731),            /* monitored nicks offline         */
+        IRCB(732, 1, 0, 732),            /* list of monitored nicks         */
+        IRCB(733, 1, 0, 733),            /* end of monitor list             */
+        IRCB(734, 1, 0, 734),            /* monitor list is full            */
+        IRCB(900, 1, 0, 900),            /* logged in as (SASL)             */
+        IRCB(901, 1, 0, 901),            /* you are now logged in           */
+        IRCB(902, 1, 0, sasl_end_fail),  /* SASL auth failed (acc. locked)  */
+        IRCB(903, 1, 0, sasl_end_ok),    /* SASL auth successful            */
+        IRCB(904, 1, 0, sasl_end_fail),  /* SASL auth failed                */
+        IRCB(905, 1, 0, sasl_end_fail),  /* SASL message too long           */
+        IRCB(906, 1, 0, sasl_end_fail),  /* SASL authentication aborted     */
+        IRCB(907, 1, 0, sasl_end_ok),    /* already completed SASL auth     */
+        IRCB(936, 1, 0, generic_error),  /* censored word                   */
+        IRCB(973, 1, 0, server_mode_reason), /* whois (secure conn.)        */
+        IRCB(974, 1, 0, server_mode_reason), /* whois (secure conn.)        */
+        IRCB(975, 1, 0, server_mode_reason), /* whois (secure conn.)        */
+        { NULL, 0, 0, NULL },
+    };
 
     if (!msg_command)
         return;
@@ -6609,8 +6941,8 @@ irc_protocol_recv_command (struct t_irc_server *server,
     message_colors_decoded = NULL;
     argv = NULL;
     argv_eol = NULL;
-    hash_tags = NULL;
     date = 0;
+    hash_tags = NULL;
 
     ptr_msg_after_tags = irc_message;
 
@@ -6624,9 +6956,13 @@ irc_protocol_recv_command (struct t_irc_server *server,
                                     pos_space - (irc_message + 1));
             if (tags)
             {
-                hash_tags = irc_protocol_get_message_tags (tags);
+                hash_tags = weechat_hashtable_new (32,
+                                                   WEECHAT_HASHTABLE_STRING,
+                                                   WEECHAT_HASHTABLE_STRING,
+                                                   NULL, NULL);
                 if (hash_tags)
                 {
+                    irc_tag_parse (tags, hash_tags, NULL);
                     date = irc_protocol_parse_time (
                         weechat_hashtable_get (hash_tags, "time"));
                 }
@@ -6684,14 +7020,18 @@ irc_protocol_recv_command (struct t_irc_server *server,
         host_no_color);
 
     /* send signal with received command, even if command is ignored */
-    irc_server_send_signal (server, "irc_raw_in", msg_command,
-                            irc_message, NULL);
+    return_code = irc_server_send_signal (server, "irc_raw_in", msg_command,
+                                          irc_message, NULL);
+    if (return_code == WEECHAT_RC_OK_EAT)
+        goto end;
 
     /* send signal with received command, only if message is not ignored */
     if (!message_ignored)
     {
-        irc_server_send_signal (server, "irc_in", msg_command,
-                                irc_message, NULL);
+        return_code = irc_server_send_signal (server, "irc_in", msg_command,
+                                              irc_message, NULL);
+        if (return_code == WEECHAT_RC_OK_EAT)
+            goto end;
     }
 
     /* look for IRC command */
@@ -6767,11 +7107,10 @@ irc_protocol_recv_command (struct t_irc_server *server,
         argv_eol = weechat_string_split (message_colors_decoded, " ", NULL,
                                          flags, 0, NULL);
 
-        return_code = (int) (cmd_recv_func) (server,
-                                             date, nick, address_color,
-                                             host_color, cmd_name,
-                                             message_ignored, argc, argv,
-                                             argv_eol);
+        return_code = (int) (cmd_recv_func) (server, date, hash_tags, nick,
+                                             address_color, host_color,
+                                             cmd_name, message_ignored,
+                                             argc, argv, argv_eol);
 
         if (return_code == WEECHAT_RC_ERROR)
         {
@@ -6788,14 +7127,14 @@ irc_protocol_recv_command (struct t_irc_server *server,
         /* send signal with received command (if message is not ignored) */
         if (!message_ignored)
         {
-            irc_server_send_signal (server, "irc_in2", msg_command,
-                                    irc_message, NULL);
+            (void) irc_server_send_signal (server, "irc_in2", msg_command,
+                                           irc_message, NULL);
         }
     }
 
     /* send signal with received command, even if command is ignored */
-    irc_server_send_signal (server, "irc_raw_in2", msg_command,
-                            irc_message, NULL);
+    (void) irc_server_send_signal (server, "irc_raw_in2", msg_command,
+                                   irc_message, NULL);
 
 end:
     if (nick)

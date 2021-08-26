@@ -38,7 +38,7 @@ WEECHAT_PLUGIN_DESCRIPTION(N_("Buffers list"));
 WEECHAT_PLUGIN_AUTHOR("Sébastien Helleu <flashcode@flashtux.org>");
 WEECHAT_PLUGIN_VERSION(WEECHAT_VERSION);
 WEECHAT_PLUGIN_LICENSE(WEECHAT_LICENSE);
-WEECHAT_PLUGIN_PRIORITY(9000);
+WEECHAT_PLUGIN_PRIORITY(10000);
 
 struct t_weechat_plugin *weechat_buflist_plugin = NULL;
 
@@ -146,7 +146,7 @@ buflist_buffer_get_irc_pointers (struct t_gui_buffer *buffer,
  * For example with such list of merged buffers:
  *
  *     weechat
- *     freenode
+ *     libera
  *     oftc      (active)
  *     test
  *     another
@@ -157,7 +157,7 @@ buflist_buffer_get_irc_pointers (struct t_gui_buffer *buffer,
  *     test
  *     another
  *     weechat
- *     freenode
+ *     libera
  *
  * Returns:
  *   -1: buffer1 must be sorted before buffer2

@@ -28,6 +28,8 @@
 #include <string.h>
 
 #include "../core/weechat.h"
+#include "../core/wee-hook.h"
+#include "../plugins/plugin.h"
 #include "gui-cursor.h"
 #include "gui-bar.h"
 #include "gui-bar-window.h"
@@ -72,6 +74,11 @@ gui_cursor_mode_toggle ()
                                                     1); /* stop completion */
         gui_buffer_ask_chat_refresh (gui_current_window->buffer, 2);
     }
+
+    (void) hook_signal_send (
+        (gui_cursor_mode) ? "cursor_start" : "cursor_stop",
+        WEECHAT_HOOK_SIGNAL_STRING,
+        NULL);
 }
 
 /*

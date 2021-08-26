@@ -16,9 +16,9 @@
 
 | guile | guile_version | Version des verwendeten Interpreters | -
 
-| irc | irc_buffer | holt Buffer Pointer für einen IRC Server/Channel/Nick | server,channel,nick (Channel und Nicks sind optional)
+| irc | irc_buffer | holt Buffer Pointer für einen IRC Server/Kanal/Nick | server,channel,nick (Kanal und Nicks sind optional)
 
-| irc | irc_is_channel | 1, falls die Zeichenkette ein gültiger IRC-Channelname für den Server ist | Server,Channel (Server ist optional)
+| irc | irc_is_channel | 1, falls die Zeichenkette ein gültiger IRC-Kanalname für den Server ist | Server,Kanal (Server ist optional)
 
 | irc | irc_is_message_ignored | 1, wenn der Nick ignoriert wird (Meldung wird nicht angezeigt) | Server,Nachricht (Nachricht ist die unverarbeitete IRC Nachricht)
 
@@ -76,7 +76,7 @@
 
 | ruby | ruby_version | Version des verwendeten Interpreters | -
 
-| spell | spell_dict | durch Kommata getrennte Liste von Wörterbüchern, die in diesem Buffer genutzt werden sollen | Buffer-Pointer ("0x12345678") oder der vollständige Buffername ("irc.freenode.#weechat")
+| spell | spell_dict | durch Kommata getrennte Liste von Wörterbüchern, die in diesem Buffer genutzt werden sollen | Buffer-Pointer ("0x12345678") oder der vollständige Buffername ("irc.libera.#weechat")
 
 | tcl | tcl_eval | Evaluierung des Quelltextes | Quelltext welcher ausgeführt werden soll
 

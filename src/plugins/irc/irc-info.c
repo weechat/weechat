@@ -1183,6 +1183,7 @@ irc_info_init ()
         N_("\"message\": IRC message, \"server\": server name (optional)"),
         /* TRANSLATORS: please do not translate key names (enclosed by quotes) */
         N_("\"tags\": tags, "
+           "\"tag_xxx\": unescaped value of tag \"xxx\" (one key per tag), "
            "\"message_without_tags\": message without the tags, "
            "\"nick\": nick, "
            "\"user\": user, "

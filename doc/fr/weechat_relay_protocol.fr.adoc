@@ -447,11 +447,11 @@ hda:
     item 2:
         __path: ['0x558d62840ea0']
         number: 1
-        full_name: 'irc.server.freenode'
+        full_name: 'irc.server.libera'
     item 3:
         __path: ['0x558d62a9cea0']
         number: 2
-        full_name: 'irc.freenode.#weechat'
+        full_name: 'irc.libera.#weechat'
 ----
 
 * Demander toutes les lignes du premier tampon :
@@ -759,7 +759,7 @@ Syntaxe :
 Paramètres :
 
 * _tampon_ : pointeur (par exemple : "0x1234abcd") ou nom complet du tampon (par exemple :
-  _core.weechat_ ou _irc.freenode.#weechat_)
+  _core.weechat_ ou _irc.libera.#weechat_)
 
 Exemples :
 
@@ -868,10 +868,10 @@ hda:
         prefix_color: None
 ----
 
-* Demander la liste de pseudos pour le tampon "irc.freenode.#weechat" :
+* Demander la liste de pseudos pour le tampon "irc.libera.#weechat" :
 
 ----
-(nicklist_weechat) nicklist irc.freenode.#weechat
+(nicklist_weechat) nicklist irc.libera.#weechat
 ----
 
 Réponse :
@@ -960,7 +960,7 @@ Syntaxe :
 Paramètres :
 
 * _tampon_ : pointeur (par exemple : "0x1234abcd") ou nom complet du tampon (par exemple :
-  _core.weechat_ ou _irc.freenode.#weechat_)
+  _core.weechat_ ou _irc.libera.#weechat_)
 * _données_ : données à envoyer au tampon : si elles commencent par `/`,
   cela sera exécuté comme une commande sur le tampon, sinon le texte est envoyé
   comme entrée sur le tampon
@@ -976,7 +976,7 @@ input core.weechat /help filter
 * Envoyer le message "bonjour !" sur le canal #weechat :
 
 ----
-input irc.freenode.#weechat bonjour !
+input irc.libera.#weechat bonjour !
 ----
 
 [[command_completion]]
@@ -996,7 +996,7 @@ Syntaxe :
 Paramètres :
 
 * _tampon_ : pointeur (par exemple : "0x1234abcd") ou nom complet du tampon (par exemple :
-  _core.weechat_ ou _irc.freenode.#weechat_)
+  _core.weechat_ ou _irc.libera.#weechat_)
 * _position_ : position dans la chaîne pour la complétion (démarre à 0) ;
   si la valeur est -1, la position est la longueur de _données_ (donc la
   complétion se fait à la fin de _données_)
@@ -1157,7 +1157,7 @@ Syntaxe :
 Paramètres :
 
 * _tampon_ : pointeur (par exemple : "0x1234abcd") ou nom complet du tampon (par exemple :
-  _core.weechat_ ou _irc.freenode.#weechat_); le nom "*" peut être utilisé pour
+  _core.weechat_ ou _irc.libera.#weechat_); le nom "*" peut être utilisé pour
   spécifier tous les tampons
 * _options_ : un ou plusieurs mots-clés, séparés par des virgules (par défaut
   _buffers,upgrade,buffer,nicklist_ pour "*" et _buffer,nicklist_ pour un
@@ -1194,14 +1194,14 @@ sync core.buffer
 * Synchroniser le canal #weechat, sans la liste de pseudos :
 
 ----
-sync irc.freenode.#weechat buffer
+sync irc.libera.#weechat buffer
 ----
 
 * Obtenir les signaux généraux + tous les signaux pour le canal #weechat :
 
 ----
 sync * buffers,upgrade
-sync irc.freenode.#weechat
+sync irc.libera.#weechat
 ----
 
 [[command_desync]]
@@ -1225,7 +1225,7 @@ Syntaxe :
 Paramètres :
 
 * _tampon_ : pointeur (par exemple : "0x1234abcd") ou nom complet du tampon (par exemple :
-  _core.weechat_ ou _irc.freenode.#weechat_); le nom "*" peut être utilisé pour
+  _core.weechat_ ou _irc.libera.#weechat_); le nom "*" peut être utilisé pour
   spécifier tous les tampons
 * _options_ : un ou plusieurs mots-clés, séparés par des virgules (le défaut est
   _buffers,upgrade,buffer,nicklist_ pour "*" et _buffer,nicklist_ pour un
@@ -1234,7 +1234,7 @@ Paramètres :
 [NOTE]
 En utilisant le tampon "*", les autres tampons synchronisés (en utilisant un
 nom) sont gardés. +
-Donc si vous envoyez : "sync *", puis "sync irc.freenode.#weechat", puis
+Donc si vous envoyez : "sync *", puis "sync irc.libera.#weechat", puis
 "desync *", les mises à jour sur le canal #weechat seront toujours envoyées par
 WeeChat (vous devez le retirer explicitement pour stopper les mises à jour).
 
@@ -1253,13 +1253,13 @@ desync * buffers,upgrade,buffer,nicklist
   mises à jour du tampon) :
 
 ----
-desync irc.freenode.#weechat nicklist
+desync irc.libera.#weechat nicklist
 ----
 
 * Désynchroniser le canal #weechat :
 
 ----
-desync irc.freenode.#weechat
+desync irc.libera.#weechat
 ----
 
 [[command_test]]
@@ -1504,7 +1504,7 @@ Données envoyées dans le hdata :
 |===
 | Nom             | Type             | Description
 | number          | entier           | Numéro de tampon (≥ 1).
-| full_name       | chaîne           | Nom complet (exemple : _irc.freenode.#weechat_).
+| full_name       | chaîne           | Nom complet (exemple : _irc.libera.#weechat_).
 | short_name      | chaîne           | Nom court (exemple : _#weechat_).
 | nicklist        | entier           | 1 si le tampon a une liste de pseudos, sinon 0.
 | title           | chaîne           | Titre du tampon.
@@ -1513,8 +1513,8 @@ Données envoyées dans le hdata :
 | next_buffer     | pointeur         | Pointeur vers le tampon suivant.
 |===
 
-Exemple : canal _#weechat_ rejoint sur freenode, nouveau tampon
-_irc.freenode.#weechat_ :
+Exemple : canal _#weechat_ rejoint sur libera, nouveau tampon
+_irc.libera.#weechat_ :
 
 [source,python]
 ----
@@ -1534,13 +1534,13 @@ hda:
     item 1:
         __path: ['0x35a8a60']
         number: 3
-        full_name: 'irc.freenode.#weechat'
+        full_name: 'irc.libera.#weechat'
         short_name: None
         nicklist: 0
         title: None
         local_variables: {
             'plugin': 'irc',
-            'name': 'freenode.#weechat',
+            'name': 'libera.#weechat',
         }
         prev_buffer: '0x34e7400'
         next_buffer: '0x0'
@@ -1558,12 +1558,12 @@ Données envoyées dans le hdata :
 |===
 | Nom         | Type     | Description
 | number      | entier   | Numéro de tampon (≥ 1).
-| full_name   | chaîne   | Nom complet (exemple : _irc.freenode.#weechat_).
+| full_name   | chaîne   | Nom complet (exemple : _irc.libera.#weechat_).
 | prev_buffer | pointeur | Pointeur vers le tampon précédent.
 | next_buffer | pointeur | Pointeur vers le tampon suivant.
 |===
 
-Exemple : tampon _irc.freenode.#weechat_ déplacé vers le numéro 2 :
+Exemple : tampon _irc.libera.#weechat_ déplacé vers le numéro 2 :
 
 [source,python]
 ----
@@ -1579,7 +1579,7 @@ hda:
     item 1:
         __path: ['0x34588c0']
         number: 2
-        full_name: 'irc.freenode.#weechat'
+        full_name: 'irc.libera.#weechat'
         prev_buffer: '0x347b9f0'
         next_buffer: '0x3471bc0'
 ----
@@ -1596,12 +1596,12 @@ Données envoyées dans le hdata :
 |===
 | Nom         | Type     | Description
 | number      | entier   | Numéro de tampon (≥ 1).
-| full_name   | chaîne   | Nom complet (exemple : _irc.freenode.#weechat_).
+| full_name   | chaîne   | Nom complet (exemple : _irc.libera.#weechat_).
 | prev_buffer | pointeur | Pointeur vers le tampon précédent.
 | next_buffer | pointeur | Pointeur vers le tampon suivant.
 |===
 
-Exemple : tampon _irc.freenode.#weechat_ mélangé avec le tampon n°2 :
+Exemple : tampon _irc.libera.#weechat_ mélangé avec le tampon n°2 :
 
 [source,python]
 ----
@@ -1617,7 +1617,7 @@ hda:
     item 1:
         __path: ['0x4db4c00']
         number: 2
-        full_name: 'irc.freenode.#weechat'
+        full_name: 'irc.libera.#weechat'
         prev_buffer: '0x4cef9b0'
         next_buffer: '0x0'
 ----
@@ -1634,12 +1634,12 @@ Données envoyées dans le hdata :
 |===
 | Nom         | Type     | Description
 | number      | entier   | Numéro de tampon (≥ 1).
-| full_name   | chaîne   | Nom complet (exemple : _irc.freenode.#weechat_).
+| full_name   | chaîne   | Nom complet (exemple : _irc.libera.#weechat_).
 | prev_buffer | pointeur | Pointeur vers le tampon précédent.
 | next_buffer | pointeur | Pointeur vers le tampon suivant.
 |===
 
-Exemple : tampon _irc.freenode.#weechat_ sorti du mélange :
+Exemple : tampon _irc.libera.#weechat_ sorti du mélange :
 
 [source,python]
 ----
@@ -1655,7 +1655,7 @@ hda:
     item 1:
         __path: ['0x4db4c00']
         number: 3
-        full_name: 'irc.freenode.#weechat'
+        full_name: 'irc.libera.#weechat'
         prev_buffer: '0x4cef9b0'
         next_buffer: '0x0'
 ----
@@ -1674,12 +1674,12 @@ Données envoyées dans le hdata :
 |===
 | Nom         | Type     | Description
 | number      | entier   | Numéro de tampon (≥ 1).
-| full_name   | chaîne   | Nom complet (exemple : _irc.freenode.#weechat_).
+| full_name   | chaîne   | Nom complet (exemple : _irc.libera.#weechat_).
 | prev_buffer | pointeur | Pointeur vers le tampon précédent.
 | next_buffer | pointeur | Pointeur vers le tampon suivant.
 |===
 
-Exemple : tampon _irc.freenode.#weechat_ masqué :
+Exemple : tampon _irc.libera.#weechat_ masqué :
 
 [source,python]
 ----
@@ -1695,7 +1695,7 @@ hda:
     item 1:
         __path: ['0x4db4c00']
         number: 2
-        full_name: 'irc.freenode.#weechat'
+        full_name: 'irc.libera.#weechat'
         prev_buffer: '0x4cef9b0'
         next_buffer: '0x0'
 ----
@@ -1714,12 +1714,12 @@ Données envoyées dans le hdata :
 |===
 | Nom         | Type     | Description
 | number      | entier   | Numéro de tampon (≥ 1).
-| full_name   | chaîne   | Nom complet (exemple : _irc.freenode.#weechat_).
+| full_name   | chaîne   | Nom complet (exemple : _irc.libera.#weechat_).
 | prev_buffer | pointeur | Pointeur vers le tampon précédent.
 | next_buffer | pointeur | Pointeur vers le tampon suivant.
 |===
 
-Exemple : tampon _irc.freenode.#weechat_ démasqué :
+Exemple : tampon _irc.libera.#weechat_ démasqué :
 
 [source,python]
 ----
@@ -1735,7 +1735,7 @@ hda:
     item 1:
         __path: ['0x4db4c00']
         number: 3
-        full_name: 'irc.freenode.#weechat'
+        full_name: 'irc.libera.#weechat'
         prev_buffer: '0x4cef9b0'
         next_buffer: '0x0'
 ----
@@ -1752,7 +1752,7 @@ Données envoyées dans le hdata :
 |===
 | Nom             | Type             | Description
 | number          | entier           | Numéro de tampon (≥ 1).
-| full_name       | chaîne           | Nom complet (exemple : _irc.freenode.#weechat_).
+| full_name       | chaîne           | Nom complet (exemple : _irc.libera.#weechat_).
 | short_name      | chaîne           | Nom court (exemple : _#weechat_).
 | local_variables | table de hachage | Variables locales.
 |===
@@ -1773,15 +1773,15 @@ hda:
     item 1:
         __path: ['0x4df7b80']
         number: 5
-        full_name: 'irc.freenode.Flash2'
+        full_name: 'irc.libera.Flash2'
         short_name: 'Flash2'
         local_variables: {
-            'server': 'freenode',
+            'server': 'libera',
             'plugin': 'irc',
             'type': 'private',
             'channel': 'FlashCode',
             'nick': 'test',
-            'name': 'freenode.Flash2',
+            'name': 'libera.Flash2',
         }
 ----
 
@@ -1797,7 +1797,7 @@ Données envoyées dans le hdata :
 |===
 | Nom       | Type   | Description
 | number    | entier | Numéro de tampon (≥ 1).
-| full_name | chaîne | Nom complet (exemple : _irc.freenode.#weechat_).
+| full_name | chaîne | Nom complet (exemple : _irc.libera.#weechat_).
 | title     | chaîne | Titre du tampon.
 |===
 
@@ -1816,7 +1816,7 @@ hda:
     item 1:
         __path: ['0x4a715d0']
         number: 3
-        full_name: 'irc.freenode.#weechat'
+        full_name: 'irc.libera.#weechat'
         title: 'Welcome on #weechat!  https://weechat.org/'
 ----
 
@@ -1834,10 +1834,10 @@ Données envoyées dans le hdata :
 |===
 | Nom       | Type   | Description
 | number    | entier | Numéro de tampon (≥ 1).
-| full_name | chaîne | Nom complet (exemple : _irc.freenode.#weechat_).
+| full_name | chaîne | Nom complet (exemple : _irc.libera.#weechat_).
 |===
 
-Exemple : tampon _irc.freenode.#weechat_ vidé :
+Exemple : tampon _irc.libera.#weechat_ vidé :
 
 [source,python]
 ----
@@ -1851,7 +1851,7 @@ hda:
     item 1:
         __path: ['0x4a715d0']
         number: 3
-        full_name: 'irc.freenode.#weechat'
+        full_name: 'irc.libera.#weechat'
 ----
 
 [[message_buffer_type_changed]]
@@ -1866,7 +1866,7 @@ Données envoyées dans le hdata :
 |===
 | Nom       | Type   | Description
 | number    | entier | Numéro de tampon (≥ 1).
-| full_name | chaîne | Nom complet (exemple : _irc.freenode.#weechat_).
+| full_name | chaîne | Nom complet (exemple : _irc.libera.#weechat_).
 | type      | entier | Type de tampon : 0 = formaté (par défaut), 1 = contenu libre.
 |===
 
@@ -1902,12 +1902,12 @@ Données envoyées dans le hdata :
 |===
 | Nom             | Type             | Description
 | number          | entier           | Numéro de tampon (≥ 1).
-| full_name       | chaîne           | Nom complet (exemple : _irc.freenode.#weechat_).
+| full_name       | chaîne           | Nom complet (exemple : _irc.libera.#weechat_).
 | local_variables | table de hachage | Variables locales.
 |===
 
 Exemple : variable locale _test_ ajoutée dans le tampon
-_irc.freenode.#weechat_ :
+_irc.libera.#weechat_ :
 
 [source,python]
 ----
@@ -1922,15 +1922,15 @@ hda:
     item 1:
         __path: ['0x4a73de0']
         number: 3
-        full_name: 'irc.freenode.#weechat'
+        full_name: 'irc.libera.#weechat'
         local_variables: {
-            'server': 'freenode',
+            'server': 'libera',
             'test': 'value',
             'plugin': 'irc',
             'type': 'channel',
             'channel': '#weechat',
             'nick': 'test',
-            'name': 'freenode.#weechat',
+            'name': 'libera.#weechat',
         }
 ----
 
@@ -1946,12 +1946,12 @@ Données envoyées dans le hdata :
 |===
 | Nom             | Type             | Description
 | number          | entier           | Numéro de tampon (≥ 1).
-| full_name       | chaîne           | Nom complet (exemple : _irc.freenode.#weechat_).
+| full_name       | chaîne           | Nom complet (exemple : _irc.libera.#weechat_).
 | local_variables | table de hachage | Variables locales.
 |===
 
 Exemple : variable locale _test_ mise à jour dans le tampon
-_irc.freenode.#weechat_ :
+_irc.libera.#weechat_ :
 
 [source,python]
 ----
@@ -1966,7 +1966,7 @@ hda:
     item 1:
         __path: ['0x4a73de0']
         number: 3
-        full_name: 'irc.freenode.#weechat'
+        full_name: 'irc.libera.#weechat'
         local_variables: {
             'server': 'local',
             'test': 'value2',
@@ -1974,7 +1974,7 @@ hda:
             'type': 'channel',
             'channel': '#weechat',
             'nick': 'test',
-            'name': 'freenode.#weechat',
+            'name': 'libera.#weechat',
         }
 ----
 
@@ -1990,11 +1990,11 @@ Données envoyées dans le hdata :
 |===
 | Nom             | Type             | Description
 | number          | entier           | Numéro de tampon (≥ 1).
-| full_name       | chaîne           | Nom complet (exemple : _irc.freenode.#weechat_).
+| full_name       | chaîne           | Nom complet (exemple : _irc.libera.#weechat_).
 | local_variables | table de hachage | Variables locales.
 |===
 
-Exemple : variable locale _test_ supprimée du tampon _irc.freenode.#weechat_ :
+Exemple : variable locale _test_ supprimée du tampon _irc.libera.#weechat_ :
 
 [source,python]
 ----
@@ -2009,14 +2009,14 @@ hda:
     item 1:
         __path: ['0x4a73de0']
         number: 3
-        full_name: 'irc.freenode.#prout'
+        full_name: 'irc.libera.#prout'
         local_variables: {
             'server': 'local',
             'plugin': 'irc',
             'type': 'channel',
             'channel': '#weechat',
             'nick': 'test',
-            'name': 'freenode.#weechat',
+            'name': 'libera.#weechat',
         }
 ----
 
@@ -2043,7 +2043,7 @@ Données envoyées dans le hdata :
 |===
 
 Exemple : nouveau message _hello!_ du pseudo _FlashCode_ sur le tampon
-_irc.freenode.#weechat_ :
+_irc.libera.#weechat_ :
 
 [source,python]
 ----
@@ -2092,10 +2092,10 @@ Données envoyées dans le hdata :
 |===
 | Nom       | Type   | Description
 | number    | entier | Numéro de tampon (≥ 1).
-| full_name | chaîne | Nom complet (exemple : _irc.freenode.#weechat_).
+| full_name | chaîne | Nom complet (exemple : _irc.libera.#weechat_).
 |===
 
-Exemple : tampon _irc.freenode.#weechat_ en cours de fermeture par WeeChat :
+Exemple : tampon _irc.libera.#weechat_ en cours de fermeture par WeeChat :
 
 [source,python]
 ----
@@ -2109,7 +2109,7 @@ hda:
     item 1:
         __path: ['0x4a715d0']
         number: 3
-        full_name: 'irc.freenode.#weechat'
+        full_name: 'irc.libera.#weechat'
 ----
 
 [[message_nicklist]]
@@ -2137,7 +2137,7 @@ Données envoyées dans le hdata :
 | prefix_color | chaîne    | Couleur du préfixe (seulement pour un pseudo).
 |===
 
-Exemple : liste de pseudos pour le tampon _irc.freenode.#weechat_ :
+Exemple : liste de pseudos pour le tampon _irc.libera.#weechat_ :
 
 [source,python]
 ----
@@ -2567,17 +2567,17 @@ objets).
   retournées pour le hdata)
 
 Exemple de hdata avec deux tampons (tampon "core" weechat et le serveur
-freenode) et deux clés (_number_ et _full_name_) :
+libera) et deux clés (_number_ et _full_name_) :
 
 ....
 # commande
 hdata buffer:gui_buffers(*) number,full_name
 
 # réponse
-┌────────┬──────────────────────────┬───╥─────────┬───┬──────────────╥─────────┬───┬─────────────────────┐
-│ buffer │ number:int,full_name:str │ 2 ║ 0x12345 │ 1 │ core.weechat ║ 0x6789a │ 2 │ irc.server.freenode │
-└────────┴──────────────────────────┴───╨─────────┴───┴──────────────╨─────────┴───┴─────────────────────┘
- └──────┘ └────────────────────────┘ └─┘ └──────────────────────────┘ └────────────────────────────────┘
+┌────────┬──────────────────────────┬───╥─────────┬───┬──────────────╥─────────┬───┬───────────────────┐
+│ buffer │ number:int,full_name:str │ 2 ║ 0x12345 │ 1 │ core.weechat ║ 0x6789a │ 2 │ irc.server.libera │
+└────────┴──────────────────────────┴───╨─────────┴───┴──────────────╨─────────┴───┴───────────────────┘
+ └──────┘ └────────────────────────┘ └─┘ └──────────────────────────┘ └───────────────────────────────┘
   h-path          clés              nombre        tampon 1                         tampon 2
 ....
 
@@ -2721,7 +2721,7 @@ Un élément est :
 ** _value_ : valeur de la variable
 
 Exemple d'infolist avec deux tampons (tampon "core" weechat et le serveur
-freenode) :
+libera) :
 
 ....
 # commande

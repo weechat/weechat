@@ -64,6 +64,7 @@
 #include "irc-raw.h"
 #include "irc-redirect.h"
 #include "irc-sasl.h"
+#include "irc-typing.h"
 
 
 struct t_irc_server *irc_servers = NULL;
@@ -87,13 +88,13 @@ char *irc_server_options[IRC_SERVER_NUM_OPTIONS][2] =
   { "ssl_fingerprint",      ""                        },
   { "ssl_verify",           "on"                      },
   { "password",             ""                        },
-  { "capabilities",         ""                        },
+  { "capabilities",         "*"                       },
   { "sasl_mechanism",       "plain"                   },
   { "sasl_username",        ""                        },
   { "sasl_password",        ""                        },
   { "sasl_key",             "",                       },
   { "sasl_timeout",         "15"                      },
-  { "sasl_fail",            "continue"                },
+  { "sasl_fail",            "reconnect"               },
   { "autoconnect",          "off"                     },
   { "autoreconnect",        "on"                      },
   { "autoreconnect_delay",  "10"                      },
@@ -509,6 +510,33 @@ irc_server_eval_fingerprint (struct t_irc_server *server)
 }
 
 /*
+ * Gets SASL credentials on server (uses temporary SASL username/password if
+ * set by the command /auth <user> <pass>).
+ */
+
+void
+irc_server_sasl_get_creds (struct t_irc_server *server,
+                           char **username, char **password, char **key)
+{
+    const char *ptr_username, *ptr_password, *ptr_key;
+
+    ptr_username = (server->sasl_temp_username) ?
+        server->sasl_temp_username :
+        IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_SASL_USERNAME);
+    ptr_password = (server->sasl_temp_password) ?
+        server->sasl_temp_password :
+        IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_SASL_PASSWORD);
+    /* temporary password can also be a path to file with private key */
+    ptr_key = (server->sasl_temp_password) ?
+        server->sasl_temp_password :
+        IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_SASL_KEY);
+
+    *username = irc_server_eval_expression (server, ptr_username);
+    *password = irc_server_eval_expression (server, ptr_password);
+    *key = irc_server_eval_expression (server, ptr_key);
+}
+
+/*
  * Checks if SASL is enabled on server.
  *
  * Returns:
@@ -520,18 +548,13 @@ int
 irc_server_sasl_enabled (struct t_irc_server *server)
 {
     int sasl_mechanism, rc;
-    char *sasl_username, *sasl_password;
-    const char *sasl_key;
+    char *sasl_username, *sasl_password, *sasl_key;
+
+    irc_server_sasl_get_creds (server,
+                               &sasl_username, &sasl_password, &sasl_key);
 
     sasl_mechanism = IRC_SERVER_OPTION_INTEGER(
         server, IRC_SERVER_OPTION_SASL_MECHANISM);
-    sasl_username = irc_server_eval_expression (
-        server,
-        IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_SASL_USERNAME));
-    sasl_password = irc_server_eval_expression (
-        server,
-        IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_SASL_PASSWORD));
-    sasl_key = IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_SASL_KEY);
 
     /*
      * SASL is enabled if one of these conditions is true:
@@ -550,6 +573,8 @@ irc_server_sasl_enabled (struct t_irc_server *server)
         free (sasl_username);
     if (sasl_password)
         free (sasl_password);
+    if (sasl_key)
+        free (sasl_key);
 
     return rc;
 }
@@ -1091,6 +1116,72 @@ irc_server_set_prefix_modes_chars (struct t_irc_server *server,
 }
 
 /*
+ * Sets "clienttagdeny", "clienttagdeny_count", "clienttagdeny_array" and
+ * "typing_allowed" in server using value of CLIENTTAGDENY in IRC message 005.
+ * The masks in array start with "!" for a tag that is allowed (not denied).
+ *
+ * For example, if clienttagdeny is "*,-foo,-example/bar":
+ *   clienttagdeny is set to "*,-foo,-example/bar"
+ *   clienttagdeny_count is set to 3
+ *   clienttagdeny_array is set to ["*", "!foo", "!example/bar"]
+ *   typing_allowed is set to 0
+ *
+ * For example, if clienttagdeny is "*,-typing":
+ *   clienttagdeny is set to "*,-typing"
+ *   clienttagdeny_count is set to 2
+ *   clienttagdeny_array is set to ["*", "!typing"]
+ *   typing_allowed is set to 1
+ */
+
+void
+irc_server_set_clienttagdeny (struct t_irc_server *server,
+                              const char *clienttagdeny)
+{
+    int i, typing_denied;
+
+    if (!server)
+        return;
+
+    /* free previous values */
+    if (server->clienttagdeny)
+    {
+        free (server->clienttagdeny);
+        server->clienttagdeny = NULL;
+    }
+    if (server->clienttagdeny_array)
+    {
+        weechat_string_free_split (server->clienttagdeny_array);
+        server->clienttagdeny_array = NULL;
+    }
+    server->clienttagdeny_count = 0;
+    server->typing_allowed = 1;
+
+    /* assign new values */
+    if (!clienttagdeny || !clienttagdeny[0])
+        return;
+    server->clienttagdeny = strdup (clienttagdeny);
+    server->clienttagdeny_array = weechat_string_split (
+        clienttagdeny, ",", NULL,
+        WEECHAT_STRING_SPLIT_STRIP_LEFT
+        | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+        | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+        0, &server->clienttagdeny_count);
+    if (server->clienttagdeny_array)
+    {
+        for (i = 0; i < server->clienttagdeny_count; i++)
+        {
+            if (server->clienttagdeny_array[i][0] == '-')
+                server->clienttagdeny_array[i][0] = '!';
+        }
+    }
+    typing_denied = weechat_string_match_list (
+        "typing",
+        (const char **)server->clienttagdeny_array,
+        1);
+    server->typing_allowed = (typing_denied) ? 0 : 1;
+}
+
+/*
  * Sets lag in server buffer (local variable), update bar item "lag"
  * and send signal "irc_server_lag_changed" for the server.
  */
@@ -1361,7 +1452,8 @@ irc_server_get_max_modes (struct t_irc_server *server)
 char *
 irc_server_get_default_msg (const char *default_msg,
                             struct t_irc_server *server,
-                            const char *channel_name)
+                            const char *channel_name,
+                            const char *target_nick)
 {
     char *version;
     struct t_hashtable *extra_vars;
@@ -1393,6 +1485,8 @@ irc_server_get_default_msg (const char *default_msg,
         weechat_hashtable_set (extra_vars, "channel",
                                (channel_name) ? channel_name : "");
         weechat_hashtable_set (extra_vars, "nick", server->nick);
+        if (target_nick)
+            weechat_hashtable_set (extra_vars, "target", target_nick);
     }
 
     msg = weechat_string_eval_expression (default_msg, NULL, extra_vars, NULL);
@@ -1461,6 +1555,12 @@ irc_server_alloc (const char *name)
     new_server->hook_fd = NULL;
     new_server->hook_timer_connection = NULL;
     new_server->hook_timer_sasl = NULL;
+    new_server->sasl_scram_client_first = NULL;
+    new_server->sasl_scram_salted_pwd = NULL;
+    new_server->sasl_scram_salted_pwd_size = 0;
+    new_server->sasl_scram_auth_message = NULL;
+    new_server->sasl_temp_username = NULL;
+    new_server->sasl_temp_password = NULL;
     new_server->is_connected = 0;
     new_server->ssl_connected = 0;
     new_server->disconnected = 0;
@@ -1496,6 +1596,10 @@ irc_server_alloc (const char *name)
     new_server->chanmodes = NULL;
     new_server->monitor = 0;
     new_server->monitor_time = 0;
+    new_server->clienttagdeny = NULL;
+    new_server->clienttagdeny_count = 0;
+    new_server->clienttagdeny_array = NULL;
+    new_server->typing_allowed = 1;
     new_server->reconnect_delay = 0;
     new_server->reconnect_start = 0;
     new_server->command_time = 0;
@@ -1941,6 +2045,41 @@ irc_server_outqueue_free_all (struct t_irc_server *server, int priority)
 }
 
 /*
+ * Frees SASL data in server.
+ */
+
+void
+irc_server_free_sasl_data (struct t_irc_server *server)
+{
+    if (server->sasl_scram_client_first)
+    {
+        free (server->sasl_scram_client_first);
+        server->sasl_scram_client_first = NULL;
+    }
+    if (server->sasl_scram_salted_pwd)
+    {
+        free (server->sasl_scram_salted_pwd);
+        server->sasl_scram_salted_pwd = NULL;
+    }
+    server->sasl_scram_salted_pwd_size = 0;
+    if (server->sasl_scram_auth_message)
+    {
+        free (server->sasl_scram_auth_message);
+        server->sasl_scram_auth_message = NULL;
+    }
+    if (server->sasl_temp_username)
+    {
+        free (server->sasl_temp_username);
+        server->sasl_temp_username = NULL;
+    }
+    if (server->sasl_temp_password)
+    {
+        free (server->sasl_temp_password);
+        server->sasl_temp_password = NULL;
+    }
+}
+
+/*
  * Frees server data.
  */
 
@@ -1994,6 +2133,7 @@ irc_server_free_data (struct t_irc_server *server)
         weechat_unhook (server->hook_timer_connection);
     if (server->hook_timer_sasl)
         weechat_unhook (server->hook_timer_sasl);
+    irc_server_free_sasl_data (server);
     if (server->unterminated_message)
         free (server->unterminated_message);
     if (server->nicks_array)
@@ -2018,6 +2158,10 @@ irc_server_free_data (struct t_irc_server *server)
         free (server->chantypes);
     if (server->chanmodes)
         free (server->chanmodes);
+    if (server->clienttagdeny)
+        free (server->clienttagdeny);
+    if (server->clienttagdeny_array)
+        weechat_string_free_split (server->clienttagdeny_array);
     if (server->away_message)
         free (server->away_message);
     if (server->cmd_list_regexp)
@@ -2305,15 +2449,18 @@ irc_server_reorder (const char **servers, int num_servers)
  * Sends a signal for an IRC message (received or sent).
  */
 
-void
+int
 irc_server_send_signal (struct t_irc_server *server, const char *signal,
                         const char *command, const char *full_message,
                         const char *tags)
 {
-    int length;
+    int rc, length;
     char *str_signal, *full_message_tags;
 
-    length = strlen (server->name) + 1 + strlen (signal) + 1 + strlen (command) + 1;
+    rc = WEECHAT_RC_OK;
+
+    length = strlen (server->name) + 1 + strlen (signal) + 1
+        + strlen (command) + 1;
     str_signal = malloc (length);
     if (str_signal)
     {
@@ -2327,20 +2474,22 @@ irc_server_send_signal (struct t_irc_server *server, const char *signal,
             {
                 snprintf (full_message_tags, length,
                           "%s;%s", tags, full_message);
-                (void) weechat_hook_signal_send (str_signal,
-                                                 WEECHAT_HOOK_SIGNAL_STRING,
-                                                 (void *)full_message_tags);
+                rc = weechat_hook_signal_send (str_signal,
+                                               WEECHAT_HOOK_SIGNAL_STRING,
+                                               (void *)full_message_tags);
                 free (full_message_tags);
             }
         }
         else
         {
-            (void) weechat_hook_signal_send (str_signal,
-                                             WEECHAT_HOOK_SIGNAL_STRING,
-                                             (void *)full_message);
+            rc = weechat_hook_signal_send (str_signal,
+                                           WEECHAT_HOOK_SIGNAL_STRING,
+                                           (void *)full_message);
         }
         free (str_signal);
     }
+
+    return rc;
 }
 
 /*
@@ -2502,14 +2651,14 @@ irc_server_outqueue_send (struct t_irc_server *server)
                     pos[0] = '\r';
 
                 /* send signal with command that will be sent to server */
-                irc_server_send_signal (
+                (void) irc_server_send_signal (
                     server, "irc_out",
                     server->outqueue[priority]->command,
                     server->outqueue[priority]->message_after_mod,
                     NULL);
                 tags_to_send = irc_server_get_tags_to_send (
                     server->outqueue[priority]->tags);
-                irc_server_send_signal (
+                (void) irc_server_send_signal (
                     server, "irc_outtags",
                     server->outqueue[priority]->command,
                     server->outqueue[priority]->message_after_mod,
@@ -2710,14 +2859,16 @@ irc_server_send_one_msg (struct t_irc_server *server, int flags,
                 }
 
                 /* send signal with command that will be sent to server */
-                irc_server_send_signal (server, "irc_out",
-                                        (command) ? command : "unknown",
-                                        ptr_msg,
-                                        NULL);
-                irc_server_send_signal (server, "irc_outtags",
-                                        (command) ? command : "unknown",
-                                        ptr_msg,
-                                        (tags_to_send) ? tags_to_send : "");
+                (void) irc_server_send_signal (
+                    server, "irc_out",
+                    (command) ? command : "unknown",
+                    ptr_msg,
+                    NULL);
+                (void) irc_server_send_signal (
+                    server, "irc_outtags",
+                    (command) ? command : "unknown",
+                    ptr_msg,
+                    (tags_to_send) ? tags_to_send : "");
 
                 if (irc_server_send (server, buffer, strlen (buffer)) <= 0)
                     rc = 0;
@@ -2827,10 +2978,10 @@ irc_server_sendf (struct t_irc_server *server, int flags, const char *tags,
         if (!new_msg || new_msg[0])
         {
             /* send signal with command that will be sent to server (before split) */
-            irc_server_send_signal (server, "irc_out1",
-                                    (command) ? command : "unknown",
-                                    (new_msg) ? new_msg : items[i],
-                                    NULL);
+            (void) irc_server_send_signal (server, "irc_out1",
+                                           (command) ? command : "unknown",
+                                           (new_msg) ? new_msg : items[i],
+                                           NULL);
 
             /*
              * split message if needed (max is 512 bytes by default,
@@ -3658,6 +3809,9 @@ irc_server_timer_cb (const void *pointer, void *data, int remaining_calls)
                 ptr_redirect = ptr_next_redirect;
             }
 
+            /* send typing status on channels/privates */
+            irc_typing_send_to_targets (ptr_server);
+
             /* purge some data (every 10 minutes) */
             if (current_time > ptr_server->last_data_purge + (60 * 10))
             {
@@ -3705,6 +3859,7 @@ irc_server_close_connection (struct t_irc_server *server)
         weechat_unhook (server->hook_timer_sasl);
         server->hook_timer_sasl = NULL;
     }
+    irc_server_free_sasl_data (server);
 
     if (server->hook_fd)
     {
@@ -4540,14 +4695,6 @@ irc_server_gnutls_callback (const void *pointer, void *data,
 
     if (action == WEECHAT_HOOK_CONNECT_GNUTLS_CB_VERIFY_CERT)
     {
-        weechat_printf (
-            server->buffer,
-            _("%sgnutls: connected using %d-bit Diffie-Hellman shared secret "
-              "exchange"),
-            weechat_prefix ("network"),
-            IRC_SERVER_OPTION_INTEGER (server,
-                                       IRC_SERVER_OPTION_SSL_DHKEY_SIZE));
-
         /* initialize the certificate structure */
         if (gnutls_x509_crt_init (&cert_temp) != GNUTLS_E_SUCCESS)
         {
@@ -5876,6 +6023,12 @@ irc_server_hdata_server_cb (const void *pointer, void *data,
         WEECHAT_HDATA_VAR(struct t_irc_server, hook_fd, POINTER, 0, NULL, "hook");
         WEECHAT_HDATA_VAR(struct t_irc_server, hook_timer_connection, POINTER, 0, NULL, "hook");
         WEECHAT_HDATA_VAR(struct t_irc_server, hook_timer_sasl, POINTER, 0, NULL, "hook");
+        WEECHAT_HDATA_VAR(struct t_irc_server, sasl_scram_client_first, STRING, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_server, sasl_scram_salted_pwd, OTHER, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_server, sasl_scram_salted_pwd_size, INTEGER, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_server, sasl_scram_auth_message, STRING, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_server, sasl_temp_username, STRING, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_server, sasl_temp_password, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, is_connected, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, ssl_connected, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, disconnected, INTEGER, 0, NULL, NULL);
@@ -5906,6 +6059,10 @@ irc_server_hdata_server_cb (const void *pointer, void *data,
         WEECHAT_HDATA_VAR(struct t_irc_server, chanmodes, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, monitor, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, monitor_time, TIME, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_server, clienttagdeny, STRING, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_server, clienttagdeny_count, INTEGER, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_server, clienttagdeny_array, STRING, 0, "clienttagdeny_count", NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_server, typing_allowed, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, reconnect_delay, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, reconnect_start, TIME, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, command_time, TIME, 0, NULL, NULL);
@@ -6161,6 +6318,10 @@ irc_server_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!weechat_infolist_new_var_time (ptr_item, "monitor_time", server->monitor_time))
         return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "clienttagdeny", server->clienttagdeny))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "typing_allowed", server->typing_allowed))
+        return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "reconnect_delay", server->reconnect_delay))
         return 0;
     if (!weechat_infolist_new_var_time (ptr_item, "reconnect_start", server->reconnect_start))
@@ -6215,383 +6376,393 @@ irc_server_print_log ()
         weechat_log_printf ("[server %s (addr:0x%lx)]", ptr_server->name, ptr_server);
         /* addresses */
         if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_ADDRESSES]))
-            weechat_log_printf ("  addresses. . . . . . : null ('%s')",
+            weechat_log_printf ("  addresses . . . . . . . . : null ('%s')",
                                 IRC_SERVER_OPTION_STRING(ptr_server, IRC_SERVER_OPTION_ADDRESSES));
         else
-            weechat_log_printf ("  addresses. . . . . . : '%s'",
+            weechat_log_printf ("  addresses . . . . . . . . : '%s'",
                                 weechat_config_string (ptr_server->options[IRC_SERVER_OPTION_ADDRESSES]));
         /* proxy */
         if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_PROXY]))
-            weechat_log_printf ("  proxy. . . . . . . . : null ('%s')",
+            weechat_log_printf ("  proxy . . . . . . . . . . : null ('%s')",
                                 IRC_SERVER_OPTION_STRING(ptr_server, IRC_SERVER_OPTION_PROXY));
         else
-            weechat_log_printf ("  proxy. . . . . . . . : '%s'",
+            weechat_log_printf ("  proxy . . . . . . . . . . : '%s'",
                                 weechat_config_string (ptr_server->options[IRC_SERVER_OPTION_PROXY]));
         /* ipv6 */
         if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_IPV6]))
-            weechat_log_printf ("  ipv6 . . . . . . . . : null (%s)",
+            weechat_log_printf ("  ipv6. . . . . . . . . . . : null (%s)",
                                 (IRC_SERVER_OPTION_BOOLEAN(ptr_server, IRC_SERVER_OPTION_IPV6)) ?
                                 "on" : "off");
         else
-            weechat_log_printf ("  ipv6 . . . . . . . . : %s",
+            weechat_log_printf ("  ipv6. . . . . . . . . . . : %s",
                                 (weechat_config_boolean (ptr_server->options[IRC_SERVER_OPTION_IPV6])) ?
                                 "on" : "off");
         /* ssl */
         if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_SSL]))
-            weechat_log_printf ("  ssl. . . . . . . . . : null (%s)",
+            weechat_log_printf ("  ssl . . . . . . . . . . . : null (%s)",
                                 (IRC_SERVER_OPTION_BOOLEAN(ptr_server, IRC_SERVER_OPTION_SSL)) ?
                                 "on" : "off");
         else
-            weechat_log_printf ("  ssl. . . . . . . . . : %s",
+            weechat_log_printf ("  ssl . . . . . . . . . . . : %s",
                                 (weechat_config_boolean (ptr_server->options[IRC_SERVER_OPTION_SSL])) ?
                                 "on" : "off");
         /* ssl_cert */
         if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_SSL_CERT]))
-            weechat_log_printf ("  ssl_cert . . . . . . : null ('%s')",
+            weechat_log_printf ("  ssl_cert. . . . . . . . . : null ('%s')",
                                 IRC_SERVER_OPTION_STRING(ptr_server, IRC_SERVER_OPTION_SSL_CERT));
         else
-            weechat_log_printf ("  ssl_cert . . . . . . : '%s'",
+            weechat_log_printf ("  ssl_cert. . . . . . . . . : '%s'",
                                 weechat_config_string (ptr_server->options[IRC_SERVER_OPTION_SSL_CERT]));
         /* ssl_password */
         if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_SSL_PASSWORD]))
-            weechat_log_printf ("  ssl_password . . . . : null");
+            weechat_log_printf ("  ssl_password. . . . . . . : null");
         else
-            weechat_log_printf ("  ssl_password . . . . : (hidden)");
+            weechat_log_printf ("  ssl_password. . . . . . . : (hidden)");
         /* ssl_priorities */
         if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_SSL_PRIORITIES]))
-            weechat_log_printf ("  ssl_priorities . . . : null ('%s')",
+            weechat_log_printf ("  ssl_priorities. . . . . . : null ('%s')",
                                 IRC_SERVER_OPTION_STRING(ptr_server, IRC_SERVER_OPTION_SSL_PRIORITIES));
         else
-            weechat_log_printf ("  ssl_priorities . . . : '%s'",
+            weechat_log_printf ("  ssl_priorities. . . . . . : '%s'",
                                 weechat_config_string (ptr_server->options[IRC_SERVER_OPTION_SSL_PRIORITIES]));
         /* ssl_dhkey_size */
         if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_SSL_DHKEY_SIZE]))
-            weechat_log_printf ("  ssl_dhkey_size . . . : null ('%d')",
+            weechat_log_printf ("  ssl_dhkey_size. . . . . . : null ('%d')",
                                 IRC_SERVER_OPTION_INTEGER(ptr_server, IRC_SERVER_OPTION_SSL_DHKEY_SIZE));
         else
-            weechat_log_printf ("  ssl_dhkey_size . . . : '%d'",
+            weechat_log_printf ("  ssl_dhkey_size. . . . . . : '%d'",
                                 weechat_config_integer (ptr_server->options[IRC_SERVER_OPTION_SSL_DHKEY_SIZE]));
         /* ssl_fingerprint */
         if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_SSL_FINGERPRINT]))
-            weechat_log_printf ("  ssl_fingerprint. . . : null ('%s')",
+            weechat_log_printf ("  ssl_fingerprint . . . . . : null ('%s')",
                                 IRC_SERVER_OPTION_STRING(ptr_server, IRC_SERVER_OPTION_SSL_FINGERPRINT));
         else
-            weechat_log_printf ("  ssl_fingerprint. . . : '%s'",
+            weechat_log_printf ("  ssl_fingerprint . . . . . : '%s'",
                                 weechat_config_string (ptr_server->options[IRC_SERVER_OPTION_SSL_FINGERPRINT]));
         /* ssl_verify */
         if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_SSL_VERIFY]))
-            weechat_log_printf ("  ssl_verify . . . . . : null (%s)",
+            weechat_log_printf ("  ssl_verify. . . . . . . . : null (%s)",
                                 (IRC_SERVER_OPTION_BOOLEAN(ptr_server, IRC_SERVER_OPTION_SSL_VERIFY)) ?
                                 "on" : "off");
         else
-            weechat_log_printf ("  ssl_verify . . . . . : %s",
+            weechat_log_printf ("  ssl_verify. . . . . . . . : %s",
                                 (weechat_config_boolean (ptr_server->options[IRC_SERVER_OPTION_SSL_VERIFY])) ?
                                 "on" : "off");
         /* password */
         if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_PASSWORD]))
-            weechat_log_printf ("  password . . . . . . : null");
+            weechat_log_printf ("  password. . . . . . . . . : null");
         else
-            weechat_log_printf ("  password . . . . . . : (hidden)");
+            weechat_log_printf ("  password. . . . . . . . . : (hidden)");
         /* client capabilities */
         if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_CAPABILITIES]))
-            weechat_log_printf ("  capabilities . . . . : null ('%s')",
+            weechat_log_printf ("  capabilities. . . . . . . : null ('%s')",
                                 IRC_SERVER_OPTION_STRING(ptr_server, IRC_SERVER_OPTION_CAPABILITIES));
         else
-            weechat_log_printf ("  capabilities . . . . : '%s'",
+            weechat_log_printf ("  capabilities. . . . . . . : '%s'",
                                 weechat_config_string (ptr_server->options[IRC_SERVER_OPTION_CAPABILITIES]));
         /* sasl_mechanism */
         if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_SASL_MECHANISM]))
-            weechat_log_printf ("  sasl_mechanism . . . : null ('%s')",
+            weechat_log_printf ("  sasl_mechanism. . . . . . : null ('%s')",
                                 irc_sasl_mechanism_string[IRC_SERVER_OPTION_INTEGER(ptr_server, IRC_SERVER_OPTION_SASL_MECHANISM)]);
         else
-            weechat_log_printf ("  sasl_mechanism . . . : '%s'",
+            weechat_log_printf ("  sasl_mechanism. . . . . . : '%s'",
                                 irc_sasl_mechanism_string[weechat_config_integer (ptr_server->options[IRC_SERVER_OPTION_SASL_MECHANISM])]);
         /* sasl_username */
         if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_SASL_USERNAME]))
-            weechat_log_printf ("  sasl_username. . . . : null ('%s')",
+            weechat_log_printf ("  sasl_username . . . . . . : null ('%s')",
                                 IRC_SERVER_OPTION_STRING(ptr_server, IRC_SERVER_OPTION_SASL_USERNAME));
         else
-            weechat_log_printf ("  sasl_username. . . . : '%s'",
+            weechat_log_printf ("  sasl_username . . . . . . : '%s'",
                                 weechat_config_string (ptr_server->options[IRC_SERVER_OPTION_SASL_USERNAME]));
         /* sasl_password */
         if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_SASL_PASSWORD]))
-            weechat_log_printf ("  sasl_password. . . . : null");
+            weechat_log_printf ("  sasl_password . . . . . . : null");
         else
-            weechat_log_printf ("  sasl_password. . . . : (hidden)");
+            weechat_log_printf ("  sasl_password . . . . . . : (hidden)");
         /* sasl_key */
         if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_SASL_KEY]))
-            weechat_log_printf ("  sasl_key. .  . . . . : null ('%s')",
+            weechat_log_printf ("  sasl_key. . . . . . . . . : null ('%s')",
                                 IRC_SERVER_OPTION_STRING(ptr_server, IRC_SERVER_OPTION_SASL_KEY));
         else
-            weechat_log_printf ("  sasl_key. .  . . . . : '%s'",
+            weechat_log_printf ("  sasl_key. . . . . . . . . : '%s'",
                                 weechat_config_string (ptr_server->options[IRC_SERVER_OPTION_SASL_KEY]));
         /* sasl_fail */
         if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_SASL_FAIL]))
-            weechat_log_printf ("  sasl_fail. . . . . . : null ('%s')",
+            weechat_log_printf ("  sasl_fail . . . . . . . . : null ('%s')",
                                 irc_server_sasl_fail_string[IRC_SERVER_OPTION_INTEGER(ptr_server, IRC_SERVER_OPTION_SASL_FAIL)]);
         else
-            weechat_log_printf ("  sasl_fail. . . . . . : '%s'",
+            weechat_log_printf ("  sasl_fail . . . . . . . . : '%s'",
                                 irc_server_sasl_fail_string[weechat_config_integer (ptr_server->options[IRC_SERVER_OPTION_SASL_FAIL])]);
         /* autoconnect */
         if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_AUTOCONNECT]))
-            weechat_log_printf ("  autoconnect. . . . . : null (%s)",
+            weechat_log_printf ("  autoconnect . . . . . . . : null (%s)",
                                 (IRC_SERVER_OPTION_BOOLEAN(ptr_server, IRC_SERVER_OPTION_AUTOCONNECT)) ?
                                 "on" : "off");
         else
-            weechat_log_printf ("  autoconnect. . . . . : %s",
+            weechat_log_printf ("  autoconnect . . . . . . . : %s",
                                 (weechat_config_boolean (ptr_server->options[IRC_SERVER_OPTION_AUTOCONNECT])) ?
                                 "on" : "off");
         /* autoreconnect */
         if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_AUTORECONNECT]))
-            weechat_log_printf ("  autoreconnect. . . . : null (%s)",
+            weechat_log_printf ("  autoreconnect . . . . . . : null (%s)",
                                 (IRC_SERVER_OPTION_BOOLEAN(ptr_server, IRC_SERVER_OPTION_AUTORECONNECT)) ?
                                 "on" : "off");
         else
-            weechat_log_printf ("  autoreconnect. . . . : %s",
+            weechat_log_printf ("  autoreconnect . . . . . . : %s",
                                 (weechat_config_boolean (ptr_server->options[IRC_SERVER_OPTION_AUTORECONNECT])) ?
                                 "on" : "off");
         /* autoreconnect_delay */
         if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_AUTORECONNECT_DELAY]))
-            weechat_log_printf ("  autoreconnect_delay. : null (%d)",
+            weechat_log_printf ("  autoreconnect_delay . . . : null (%d)",
                                 IRC_SERVER_OPTION_INTEGER(ptr_server, IRC_SERVER_OPTION_AUTORECONNECT_DELAY));
         else
-            weechat_log_printf ("  autoreconnect_delay. : %d",
+            weechat_log_printf ("  autoreconnect_delay . . . : %d",
                                 weechat_config_integer (ptr_server->options[IRC_SERVER_OPTION_AUTORECONNECT_DELAY]));
         /* nicks */
         if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_NICKS]))
-            weechat_log_printf ("  nicks. . . . . . . . : null ('%s')",
+            weechat_log_printf ("  nicks . . . . . . . . . . : null ('%s')",
                                 IRC_SERVER_OPTION_STRING(ptr_server, IRC_SERVER_OPTION_NICKS));
         else
-            weechat_log_printf ("  nicks. . . . . . . . : '%s'",
+            weechat_log_printf ("  nicks . . . . . . . . . . : '%s'",
                                 weechat_config_string (ptr_server->options[IRC_SERVER_OPTION_NICKS]));
         /* nicks_alternate */
         if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_NICKS_ALTERNATE]))
-            weechat_log_printf ("  nicks_alternate. . . : null (%s)",
+            weechat_log_printf ("  nicks_alternate . . . . . : null (%s)",
                                 (IRC_SERVER_OPTION_BOOLEAN(ptr_server, IRC_SERVER_OPTION_NICKS_ALTERNATE)) ?
                                 "on" : "off");
         else
-            weechat_log_printf ("  nicks_alternate. . . : %s",
+            weechat_log_printf ("  nicks_alternate . . . . . : %s",
                                 (weechat_config_boolean (ptr_server->options[IRC_SERVER_OPTION_NICKS_ALTERNATE])) ?
                                 "on" : "off");
         /* username */
         if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_USERNAME]))
-            weechat_log_printf ("  username . . . . . . : null ('%s')",
+            weechat_log_printf ("  username. . . . . . . . . : null ('%s')",
                                 IRC_SERVER_OPTION_STRING(ptr_server, IRC_SERVER_OPTION_USERNAME));
         else
-            weechat_log_printf ("  username . . . . . . : '%s'",
+            weechat_log_printf ("  username. . . . . . . . . : '%s'",
                                 weechat_config_string (ptr_server->options[IRC_SERVER_OPTION_USERNAME]));
         /* realname */
         if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_REALNAME]))
-            weechat_log_printf ("  realname . . . . . . : null ('%s')",
+            weechat_log_printf ("  realname. . . . . . . . . : null ('%s')",
                                 IRC_SERVER_OPTION_STRING(ptr_server, IRC_SERVER_OPTION_REALNAME));
         else
-            weechat_log_printf ("  realname . . . . . . : '%s'",
+            weechat_log_printf ("  realname. . . . . . . . . : '%s'",
                                 weechat_config_string (ptr_server->options[IRC_SERVER_OPTION_REALNAME]));
         /* local_hostname */
         if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_LOCAL_HOSTNAME]))
-            weechat_log_printf ("  local_hostname . . . : null ('%s')",
+            weechat_log_printf ("  local_hostname. . . . . . : null ('%s')",
                                 IRC_SERVER_OPTION_STRING(ptr_server, IRC_SERVER_OPTION_LOCAL_HOSTNAME));
         else
-            weechat_log_printf ("  local_hostname . . . : '%s'",
+            weechat_log_printf ("  local_hostname. . . . . . : '%s'",
                                 weechat_config_string (ptr_server->options[IRC_SERVER_OPTION_LOCAL_HOSTNAME]));
         /* usermode */
         if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_USERMODE]))
-            weechat_log_printf ("  usermode . . . . . . : null ('%s')",
+            weechat_log_printf ("  usermode. . . . . . . . . : null ('%s')",
                                 IRC_SERVER_OPTION_STRING(ptr_server, IRC_SERVER_OPTION_USERMODE));
         else
-            weechat_log_printf ("  usermode . . . . . . : '%s'",
+            weechat_log_printf ("  usermode. . . . . . . . . : '%s'",
                                 weechat_config_string (ptr_server->options[IRC_SERVER_OPTION_USERMODE]));
         /* command */
         if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_COMMAND]))
-            weechat_log_printf ("  command. . . . . . . : null");
+            weechat_log_printf ("  command . . . . . . . . . : null");
         else
-            weechat_log_printf ("  command. . . . . . . : (hidden)");
+            weechat_log_printf ("  command . . . . . . . . . : (hidden)");
         /* command_delay */
         if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_COMMAND_DELAY]))
-            weechat_log_printf ("  command_delay. . . . : null (%d)",
+            weechat_log_printf ("  command_delay . . . . . . : null (%d)",
                                 IRC_SERVER_OPTION_INTEGER(ptr_server, IRC_SERVER_OPTION_COMMAND_DELAY));
         else
-            weechat_log_printf ("  command_delay. . . . : %d",
+            weechat_log_printf ("  command_delay . . . . . . : %d",
                                 weechat_config_integer (ptr_server->options[IRC_SERVER_OPTION_COMMAND_DELAY]));
         /* autojoin */
         if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_AUTOJOIN]))
-            weechat_log_printf ("  autojoin . . . . . . : null ('%s')",
+            weechat_log_printf ("  autojoin. . . . . . . . . : null ('%s')",
                                 IRC_SERVER_OPTION_STRING(ptr_server, IRC_SERVER_OPTION_AUTOJOIN));
         else
-            weechat_log_printf ("  autojoin . . . . . . : '%s'",
+            weechat_log_printf ("  autojoin. . . . . . . . . : '%s'",
                                 weechat_config_string (ptr_server->options[IRC_SERVER_OPTION_AUTOJOIN]));
         /* autorejoin */
         if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_AUTOREJOIN]))
-            weechat_log_printf ("  autorejoin . . . . . : null (%s)",
+            weechat_log_printf ("  autorejoin. . . . . . . . : null (%s)",
                                 (IRC_SERVER_OPTION_BOOLEAN(ptr_server, IRC_SERVER_OPTION_AUTOREJOIN)) ?
                                 "on" : "off");
         else
-            weechat_log_printf ("  autorejoin . . . . . : %s",
+            weechat_log_printf ("  autorejoin. . . . . . . . : %s",
                                 (weechat_config_boolean (ptr_server->options[IRC_SERVER_OPTION_AUTOREJOIN])) ?
                                 "on" : "off");
         /* autorejoin_delay */
         if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_AUTOREJOIN_DELAY]))
-            weechat_log_printf ("  autorejoin_delay . . : null (%d)",
+            weechat_log_printf ("  autorejoin_delay. . . . . : null (%d)",
                                 IRC_SERVER_OPTION_INTEGER(ptr_server, IRC_SERVER_OPTION_AUTOREJOIN_DELAY));
         else
-            weechat_log_printf ("  autorejoin_delay . . : %d",
+            weechat_log_printf ("  autorejoin_delay. . . . . : %d",
                                 weechat_config_integer (ptr_server->options[IRC_SERVER_OPTION_AUTOREJOIN_DELAY]));
         /* connection_timeout */
         if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_CONNECTION_TIMEOUT]))
-            weechat_log_printf ("  connection_timeout . : null (%d)",
+            weechat_log_printf ("  connection_timeout. . . . : null (%d)",
                                 IRC_SERVER_OPTION_INTEGER(ptr_server, IRC_SERVER_OPTION_CONNECTION_TIMEOUT));
         else
-            weechat_log_printf ("  connection_timeout . : %d",
+            weechat_log_printf ("  connection_timeout. . . . : %d",
                                 weechat_config_integer (ptr_server->options[IRC_SERVER_OPTION_CONNECTION_TIMEOUT]));
         /* anti_flood_prio_high */
         if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_ANTI_FLOOD_PRIO_HIGH]))
-            weechat_log_printf ("  anti_flood_prio_high : null (%d)",
+            weechat_log_printf ("  anti_flood_prio_high. . . : null (%d)",
                                 IRC_SERVER_OPTION_INTEGER(ptr_server, IRC_SERVER_OPTION_ANTI_FLOOD_PRIO_HIGH));
         else
-            weechat_log_printf ("  anti_flood_prio_high : %d",
+            weechat_log_printf ("  anti_flood_prio_high. . . : %d",
                                 weechat_config_integer (ptr_server->options[IRC_SERVER_OPTION_ANTI_FLOOD_PRIO_HIGH]));
         /* anti_flood_prio_low */
         if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_ANTI_FLOOD_PRIO_LOW]))
-            weechat_log_printf ("  anti_flood_prio_low. : null (%d)",
+            weechat_log_printf ("  anti_flood_prio_low . . . : null (%d)",
                                 IRC_SERVER_OPTION_INTEGER(ptr_server, IRC_SERVER_OPTION_ANTI_FLOOD_PRIO_LOW));
         else
-            weechat_log_printf ("  anti_flood_prio_low. : %d",
+            weechat_log_printf ("  anti_flood_prio_low . . . : %d",
                                 weechat_config_integer (ptr_server->options[IRC_SERVER_OPTION_ANTI_FLOOD_PRIO_LOW]));
         /* away_check */
         if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_AWAY_CHECK]))
-            weechat_log_printf ("  away_check . . . . . : null (%d)",
+            weechat_log_printf ("  away_check. . . . . . . . : null (%d)",
                                 IRC_SERVER_OPTION_INTEGER(ptr_server, IRC_SERVER_OPTION_AWAY_CHECK));
         else
-            weechat_log_printf ("  away_check . . . . . : %d",
+            weechat_log_printf ("  away_check. . . . . . . . : %d",
                                 weechat_config_integer (ptr_server->options[IRC_SERVER_OPTION_AWAY_CHECK]));
         /* away_check_max_nicks */
         if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_AWAY_CHECK_MAX_NICKS]))
-            weechat_log_printf ("  away_check_max_nicks : null (%d)",
+            weechat_log_printf ("  away_check_max_nicks. . . : null (%d)",
                                 IRC_SERVER_OPTION_INTEGER(ptr_server, IRC_SERVER_OPTION_AWAY_CHECK_MAX_NICKS));
         else
-            weechat_log_printf ("  away_check_max_nicks : %d",
+            weechat_log_printf ("  away_check_max_nicks. . . : %d",
                                 weechat_config_integer (ptr_server->options[IRC_SERVER_OPTION_AWAY_CHECK_MAX_NICKS]));
         /* msg_kick */
         if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_MSG_KICK]))
-            weechat_log_printf ("  msg_kick . . . . . . : null ('%s')",
+            weechat_log_printf ("  msg_kick. . . . . . . . . : null ('%s')",
                                 IRC_SERVER_OPTION_STRING(ptr_server, IRC_SERVER_OPTION_MSG_KICK));
         else
-            weechat_log_printf ("  msg_kick . . . . . . : '%s'",
+            weechat_log_printf ("  msg_kick. . . . . . . . . : '%s'",
                                 weechat_config_string (ptr_server->options[IRC_SERVER_OPTION_MSG_KICK]));
         /* msg_part */
         if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_MSG_PART]))
-            weechat_log_printf ("  msg_part . . . . . . : null ('%s')",
+            weechat_log_printf ("  msg_part. . . . . . . . . : null ('%s')",
                                 IRC_SERVER_OPTION_STRING(ptr_server, IRC_SERVER_OPTION_MSG_PART));
         else
-            weechat_log_printf ("  msg_part . . . . . . : '%s'",
+            weechat_log_printf ("  msg_part. . . . . . . . . : '%s'",
                                 weechat_config_string (ptr_server->options[IRC_SERVER_OPTION_MSG_PART]));
         /* msg_quit */
         if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_MSG_QUIT]))
-            weechat_log_printf ("  msg_quit . . . . . . : null ('%s')",
+            weechat_log_printf ("  msg_quit. . . . . . . . . : null ('%s')",
                                 IRC_SERVER_OPTION_STRING(ptr_server, IRC_SERVER_OPTION_MSG_QUIT));
         else
-            weechat_log_printf ("  msg_quit . . . . . . : '%s'",
+            weechat_log_printf ("  msg_quit. . . . . . . . . : '%s'",
                                 weechat_config_string (ptr_server->options[IRC_SERVER_OPTION_MSG_QUIT]));
         /* other server variables */
-        weechat_log_printf ("  temp_server. . . . . : %d",    ptr_server->temp_server);
-        weechat_log_printf ("  fake_server. . . . . : %d",    ptr_server->fake_server);
-        weechat_log_printf ("  reloading_from_config: %d",    ptr_server->reloaded_from_config);
-        weechat_log_printf ("  reloaded_from_config : %d",    ptr_server->reloaded_from_config);
-        weechat_log_printf ("  addresses_eval . . . : '%s'",  ptr_server->addresses_eval);
-        weechat_log_printf ("  addresses_count. . . : %d",    ptr_server->addresses_count);
-        weechat_log_printf ("  addresses_array. . . : 0x%lx", ptr_server->addresses_array);
-        weechat_log_printf ("  ports_array. . . . . : 0x%lx", ptr_server->ports_array);
-        weechat_log_printf ("  retry_array. . . . . : 0x%lx", ptr_server->retry_array);
-        weechat_log_printf ("  index_current_address: %d",    ptr_server->index_current_address);
-        weechat_log_printf ("  current_address. . . : '%s'",  ptr_server->current_address);
-        weechat_log_printf ("  current_ip . . . . . : '%s'",  ptr_server->current_ip);
-        weechat_log_printf ("  current_port . . . . : %d",    ptr_server->current_port);
-        weechat_log_printf ("  current_retry. . . . : %d",    ptr_server->current_retry);
-        weechat_log_printf ("  sock . . . . . . . . : %d",    ptr_server->sock);
-        weechat_log_printf ("  hook_connect . . . . : 0x%lx", ptr_server->hook_connect);
-        weechat_log_printf ("  hook_fd. . . . . . . : 0x%lx", ptr_server->hook_fd);
-        weechat_log_printf ("  hook_timer_connection: 0x%lx", ptr_server->hook_timer_connection);
-        weechat_log_printf ("  hook_timer_sasl. . . : 0x%lx", ptr_server->hook_timer_sasl);
-        weechat_log_printf ("  is_connected . . . . : %d",    ptr_server->is_connected);
-        weechat_log_printf ("  ssl_connected. . . . : %d",    ptr_server->ssl_connected);
-        weechat_log_printf ("  disconnected . . . . : %d",    ptr_server->disconnected);
-        weechat_log_printf ("  gnutls_sess. . . . . : 0x%lx", ptr_server->gnutls_sess);
-        weechat_log_printf ("  unterminated_message : '%s'",  ptr_server->unterminated_message);
-        weechat_log_printf ("  nicks_count. . . . . : %d",    ptr_server->nicks_count);
-        weechat_log_printf ("  nicks_array. . . . . : 0x%lx", ptr_server->nicks_array);
-        weechat_log_printf ("  nick_first_tried . . : %d",    ptr_server->nick_first_tried);
-        weechat_log_printf ("  nick_alternate_number: %d",    ptr_server->nick_alternate_number);
-        weechat_log_printf ("  nick . . . . . . . . : '%s'",  ptr_server->nick);
-        weechat_log_printf ("  nick_modes . . . . . : '%s'",  ptr_server->nick_modes);
-        weechat_log_printf ("  host . . . . . . . . : '%s'",  ptr_server->host);
-        weechat_log_printf ("  checking_cap_ls. . . : %d",    ptr_server->checking_cap_ls);
-        weechat_log_printf ("  cap_ls . . . . . . . : 0x%lx (hashtable: '%s')",
+        weechat_log_printf ("  temp_server . . . . . . . : %d",    ptr_server->temp_server);
+        weechat_log_printf ("  fake_server . . . . . . . : %d",    ptr_server->fake_server);
+        weechat_log_printf ("  reloading_from_config . . : %d",    ptr_server->reloaded_from_config);
+        weechat_log_printf ("  reloaded_from_config. . . : %d",    ptr_server->reloaded_from_config);
+        weechat_log_printf ("  addresses_eval. . . . . . : '%s'",  ptr_server->addresses_eval);
+        weechat_log_printf ("  addresses_count . . . . . : %d",    ptr_server->addresses_count);
+        weechat_log_printf ("  addresses_array . . . . . : 0x%lx", ptr_server->addresses_array);
+        weechat_log_printf ("  ports_array . . . . . . . : 0x%lx", ptr_server->ports_array);
+        weechat_log_printf ("  retry_array . . . . . . . : 0x%lx", ptr_server->retry_array);
+        weechat_log_printf ("  index_current_address . . : %d",    ptr_server->index_current_address);
+        weechat_log_printf ("  current_address . . . . . : '%s'",  ptr_server->current_address);
+        weechat_log_printf ("  current_ip. . . . . . . . : '%s'",  ptr_server->current_ip);
+        weechat_log_printf ("  current_port. . . . . . . : %d",    ptr_server->current_port);
+        weechat_log_printf ("  current_retry . . . . . . : %d",    ptr_server->current_retry);
+        weechat_log_printf ("  sock. . . . . . . . . . . : %d",    ptr_server->sock);
+        weechat_log_printf ("  hook_connect. . . . . . . : 0x%lx", ptr_server->hook_connect);
+        weechat_log_printf ("  hook_fd . . . . . . . . . : 0x%lx", ptr_server->hook_fd);
+        weechat_log_printf ("  hook_timer_connection . . : 0x%lx", ptr_server->hook_timer_connection);
+        weechat_log_printf ("  hook_timer_sasl . . . . . : 0x%lx", ptr_server->hook_timer_sasl);
+        weechat_log_printf ("  sasl_scram_client_first . : '%s'",  ptr_server->sasl_scram_client_first);
+        weechat_log_printf ("  sasl_scram_salted_pwd . . : (hidden)");
+        weechat_log_printf ("  sasl_scram_salted_pwd_size: %d",    ptr_server->sasl_scram_salted_pwd_size);
+        weechat_log_printf ("  sasl_scram_auth_message . : (hidden)");
+        weechat_log_printf ("  sasl_temp_username. . . . : '%s'",  ptr_server->sasl_temp_username);
+        weechat_log_printf ("  sasl_temp_password. . . . : (hidden)");
+        weechat_log_printf ("  is_connected. . . . . . . : %d",    ptr_server->is_connected);
+        weechat_log_printf ("  ssl_connected . . . . . . : %d",    ptr_server->ssl_connected);
+        weechat_log_printf ("  disconnected. . . . . . . : %d",    ptr_server->disconnected);
+        weechat_log_printf ("  gnutls_sess . . . . . . . : 0x%lx", ptr_server->gnutls_sess);
+        weechat_log_printf ("  unterminated_message. . . : '%s'",  ptr_server->unterminated_message);
+        weechat_log_printf ("  nicks_count . . . . . . . : %d",    ptr_server->nicks_count);
+        weechat_log_printf ("  nicks_array . . . . . . . : 0x%lx", ptr_server->nicks_array);
+        weechat_log_printf ("  nick_first_tried. . . . . : %d",    ptr_server->nick_first_tried);
+        weechat_log_printf ("  nick_alternate_number . . : %d",    ptr_server->nick_alternate_number);
+        weechat_log_printf ("  nick. . . . . . . . . . . : '%s'",  ptr_server->nick);
+        weechat_log_printf ("  nick_modes. . . . . . . . : '%s'",  ptr_server->nick_modes);
+        weechat_log_printf ("  host. . . . . . . . . . . : '%s'",  ptr_server->host);
+        weechat_log_printf ("  checking_cap_ls . . . . . : %d",    ptr_server->checking_cap_ls);
+        weechat_log_printf ("  cap_ls. . . . . . . . . . : 0x%lx (hashtable: '%s')",
                             ptr_server->cap_ls,
                             weechat_hashtable_get_string (ptr_server->cap_ls, "keys_values"));
-        weechat_log_printf ("  checking_cap_list. . : %d",    ptr_server->checking_cap_list);
-        weechat_log_printf ("  cap_list . . . . . . : 0x%lx (hashtable: '%s')",
+        weechat_log_printf ("  checking_cap_list . . . . : %d",    ptr_server->checking_cap_list);
+        weechat_log_printf ("  cap_list. . . . . . . . . : 0x%lx (hashtable: '%s')",
                             ptr_server->cap_list,
                             weechat_hashtable_get_string (ptr_server->cap_list, "keys_values"));
-        weechat_log_printf ("  isupport . . . . . . : '%s'",  ptr_server->isupport);
-        weechat_log_printf ("  prefix_modes . . . . : '%s'",  ptr_server->prefix_modes);
-        weechat_log_printf ("  prefix_chars . . . . : '%s'",  ptr_server->prefix_chars);
-        weechat_log_printf ("  nick_max_length. . . : %d",    ptr_server->nick_max_length);
-        weechat_log_printf ("  user_max_length. . . : %d",    ptr_server->user_max_length);
-        weechat_log_printf ("  host_max_length. . . : %d",    ptr_server->host_max_length);
-        weechat_log_printf ("  casemapping. . . . . : %d (%s)",
+        weechat_log_printf ("  isupport. . . . . . . . . : '%s'",  ptr_server->isupport);
+        weechat_log_printf ("  prefix_modes. . . . . . . : '%s'",  ptr_server->prefix_modes);
+        weechat_log_printf ("  prefix_chars. . . . . . . : '%s'",  ptr_server->prefix_chars);
+        weechat_log_printf ("  nick_max_length . . . . . : %d",    ptr_server->nick_max_length);
+        weechat_log_printf ("  user_max_length . . . . . : %d",    ptr_server->user_max_length);
+        weechat_log_printf ("  host_max_length . . . . . : %d",    ptr_server->host_max_length);
+        weechat_log_printf ("  casemapping . . . . . . . : %d (%s)",
                             ptr_server->casemapping,
                             irc_server_casemapping_string[ptr_server->casemapping]);
-        weechat_log_printf ("  utf8mapping. . . . . : %d (%s)",
+        weechat_log_printf ("  utf8mapping . . . . . . . : %d (%s)",
                             ptr_server->utf8mapping,
                             irc_server_utf8mapping_string[ptr_server->utf8mapping]);
-        weechat_log_printf ("  chantypes. . . . . . : '%s'",  ptr_server->chantypes);
-        weechat_log_printf ("  chanmodes. . . . . . : '%s'",  ptr_server->chanmodes);
-        weechat_log_printf ("  monitor. . . . . . . : %d",    ptr_server->monitor);
-        weechat_log_printf ("  monitor_time . . . . : %lld",  (long long)ptr_server->monitor_time);
-        weechat_log_printf ("  reconnect_delay. . . : %d",    ptr_server->reconnect_delay);
-        weechat_log_printf ("  reconnect_start. . . : %lld",  (long long)ptr_server->reconnect_start);
-        weechat_log_printf ("  command_time . . . . : %lld",  (long long)ptr_server->command_time);
-        weechat_log_printf ("  reconnect_join . . . : %d",    ptr_server->reconnect_join);
-        weechat_log_printf ("  disable_autojoin . . : %d",    ptr_server->disable_autojoin);
-        weechat_log_printf ("  is_away. . . . . . . : %d",    ptr_server->is_away);
-        weechat_log_printf ("  away_message . . . . : '%s'",  ptr_server->away_message);
-        weechat_log_printf ("  away_time. . . . . . : %lld",  (long long)ptr_server->away_time);
-        weechat_log_printf ("  lag. . . . . . . . . : %d",    ptr_server->lag);
-        weechat_log_printf ("  lag_displayed. . . . : %d",    ptr_server->lag_displayed);
-        weechat_log_printf ("  lag_check_time . . . : tv_sec:%d, tv_usec:%d",
+        weechat_log_printf ("  chantypes . . . . . . . . : '%s'",  ptr_server->chantypes);
+        weechat_log_printf ("  chanmodes . . . . . . . . : '%s'",  ptr_server->chanmodes);
+        weechat_log_printf ("  monitor . . . . . . . . . : %d",    ptr_server->monitor);
+        weechat_log_printf ("  monitor_time. . . . . . . : %lld",  (long long)ptr_server->monitor_time);
+        weechat_log_printf ("  clienttagdeny . . . . . . : '%s'",  ptr_server->clienttagdeny);
+        weechat_log_printf ("  clienttagdeny_count . . . : %d",    ptr_server->clienttagdeny_count);
+        weechat_log_printf ("  clienttagdeny_array . . . : 0x%lx", ptr_server->clienttagdeny_array);
+        weechat_log_printf ("  typing_allowed . .  . . . : %d",    ptr_server->typing_allowed);
+        weechat_log_printf ("  reconnect_delay . . . . . : %d",    ptr_server->reconnect_delay);
+        weechat_log_printf ("  reconnect_start . . . . . : %lld",  (long long)ptr_server->reconnect_start);
+        weechat_log_printf ("  command_time. . . . . . . : %lld",  (long long)ptr_server->command_time);
+        weechat_log_printf ("  reconnect_join. . . . . . : %d",    ptr_server->reconnect_join);
+        weechat_log_printf ("  disable_autojoin. . . . . : %d",    ptr_server->disable_autojoin);
+        weechat_log_printf ("  is_away . . . . . . . . . : %d",    ptr_server->is_away);
+        weechat_log_printf ("  away_message. . . . . . . : '%s'",  ptr_server->away_message);
+        weechat_log_printf ("  away_time . . . . . . . . : %lld",  (long long)ptr_server->away_time);
+        weechat_log_printf ("  lag . . . . . . . . . . . : %d",    ptr_server->lag);
+        weechat_log_printf ("  lag_displayed . . . . . . : %d",    ptr_server->lag_displayed);
+        weechat_log_printf ("  lag_check_time. . . . . . : tv_sec:%d, tv_usec:%d",
                             ptr_server->lag_check_time.tv_sec,
                             ptr_server->lag_check_time.tv_usec);
-        weechat_log_printf ("  lag_next_check . . . : %lld",  (long long)ptr_server->lag_next_check);
-        weechat_log_printf ("  lag_last_refresh . . : %lld",  (long long)ptr_server->lag_last_refresh);
-        weechat_log_printf ("  cmd_list_regexp. . . : 0x%lx", ptr_server->cmd_list_regexp);
-        weechat_log_printf ("  last_user_message. . : %lld",  (long long)ptr_server->last_user_message);
-        weechat_log_printf ("  last_away_check. . . : %lld",  (long long)ptr_server->last_away_check);
-        weechat_log_printf ("  last_data_purge. . . : %lld",  (long long)ptr_server->last_data_purge);
+        weechat_log_printf ("  lag_next_check. . . . . . : %lld",  (long long)ptr_server->lag_next_check);
+        weechat_log_printf ("  lag_last_refresh. . . . . : %lld",  (long long)ptr_server->lag_last_refresh);
+        weechat_log_printf ("  cmd_list_regexp . . . . . : 0x%lx", ptr_server->cmd_list_regexp);
+        weechat_log_printf ("  last_user_message . . . . : %lld",  (long long)ptr_server->last_user_message);
+        weechat_log_printf ("  last_away_check . . . . . : %lld",  (long long)ptr_server->last_away_check);
+        weechat_log_printf ("  last_data_purge . . . . . : %lld",  (long long)ptr_server->last_data_purge);
         for (i = 0; i < IRC_SERVER_NUM_OUTQUEUES_PRIO; i++)
         {
-            weechat_log_printf ("  outqueue[%02d] . . . . : 0x%lx", i, ptr_server->outqueue[i]);
-            weechat_log_printf ("  last_outqueue[%02d]. . : 0x%lx", i, ptr_server->last_outqueue[i]);
+            weechat_log_printf ("  outqueue[%02d]. . . . . . . : 0x%lx", i, ptr_server->outqueue[i]);
+            weechat_log_printf ("  last_outqueue[%02d] . . . . : 0x%lx", i, ptr_server->last_outqueue[i]);
         }
-        weechat_log_printf ("  redirects. . . . . . : 0x%lx", ptr_server->redirects);
-        weechat_log_printf ("  last_redirect. . . . : 0x%lx", ptr_server->last_redirect);
-        weechat_log_printf ("  notify_list. . . . . : 0x%lx", ptr_server->notify_list);
-        weechat_log_printf ("  last_notify. . . . . : 0x%lx", ptr_server->last_notify);
-        weechat_log_printf ("  notify_count . . . . : %d",    ptr_server->notify_count);
-        weechat_log_printf ("  join_manual. . . . . : 0x%lx (hashtable: '%s')",
+        weechat_log_printf ("  redirects . . . . . . . . : 0x%lx", ptr_server->redirects);
+        weechat_log_printf ("  last_redirect . . . . . . : 0x%lx", ptr_server->last_redirect);
+        weechat_log_printf ("  notify_list . . . . . . . : 0x%lx", ptr_server->notify_list);
+        weechat_log_printf ("  last_notify . . . . . . . : 0x%lx", ptr_server->last_notify);
+        weechat_log_printf ("  notify_count. . . . . . . : %d",    ptr_server->notify_count);
+        weechat_log_printf ("  join_manual . . . . . . . : 0x%lx (hashtable: '%s')",
                             ptr_server->join_manual,
                             weechat_hashtable_get_string (ptr_server->join_manual, "keys_values"));
-        weechat_log_printf ("  join_channel_key . . : 0x%lx (hashtable: '%s')",
+        weechat_log_printf ("  join_channel_key. . . . . : 0x%lx (hashtable: '%s')",
                             ptr_server->join_channel_key,
                             weechat_hashtable_get_string (ptr_server->join_channel_key, "keys_values"));
-        weechat_log_printf ("  join_noswitch. . . . : 0x%lx (hashtable: '%s')",
+        weechat_log_printf ("  join_noswitch . . . . . . : 0x%lx (hashtable: '%s')",
                             ptr_server->join_noswitch,
                             weechat_hashtable_get_string (ptr_server->join_noswitch, "keys_values"));
-        weechat_log_printf ("  buffer . . . . . . . : 0x%lx", ptr_server->buffer);
-        weechat_log_printf ("  buffer_as_string . . : 0x%lx", ptr_server->buffer_as_string);
-        weechat_log_printf ("  channels . . . . . . : 0x%lx", ptr_server->channels);
-        weechat_log_printf ("  last_channel . . . . : 0x%lx", ptr_server->last_channel);
-        weechat_log_printf ("  prev_server. . . . . : 0x%lx", ptr_server->prev_server);
-        weechat_log_printf ("  next_server. . . . . : 0x%lx", ptr_server->next_server);
+        weechat_log_printf ("  buffer. . . . . . . . . . : 0x%lx", ptr_server->buffer);
+        weechat_log_printf ("  buffer_as_string. . . . . : 0x%lx", ptr_server->buffer_as_string);
+        weechat_log_printf ("  channels. . . . . . . . . : 0x%lx", ptr_server->channels);
+        weechat_log_printf ("  last_channel. . . . . . . : 0x%lx", ptr_server->last_channel);
+        weechat_log_printf ("  prev_server . . . . . . . : 0x%lx", ptr_server->prev_server);
+        weechat_log_printf ("  next_server . . . . . . . : 0x%lx", ptr_server->next_server);
 
         irc_redirect_print_log (ptr_server);
 

@@ -17,10 +17,11 @@ cible : nom du serveur
 * `+allchan+`: exécuter une commande sur tous les canaux de tous les serveurs connectés
 
 ----
-/allchan  [-current] [-exclude=<canal>[,<canal>...]] <commande>
-          [-current] [-include=<canal>[,<canal>...]] <commande>
+/allchan  [-current] [-parted] [-exclude=<canal>[,<canal>...]] <commande>
+          [-current] [-parted] -include=<canal>[,<canal>...] <commande>
 
   -current : exécuter la commande pour les canaux du serveur courant seulement
+   -parted : exécuter la commande sur les canaux quittés seulement
   -exclude : exclure certains canaux (le caractère joker "*" est autorisé)
   -include : inclure seulement certains canaux (le caractère joker "*" est autorisé)
   commande : commande à exécuter (ou texte à envoyer au tampon si la commande ne commence pas par '/')
@@ -41,6 +42,8 @@ Exemples :
     /allchan -exclude=#weechat,#linux* bonjour
   dire 'bonjour' sur tous les canaux commençant par #linux :
     /allchan -include=#linux* bonjour
+  fermer tous les tampons avec des canaux quittés :
+    /allchan -parted /close
 ----
 
 [[command_irc_allpv]]
@@ -100,6 +103,26 @@ Exemples :
     /allserv /whois $nick
 ----
 
+[[command_irc_auth]]
+* `+auth+`: s'authentifier avec SASL
+
+----
+/auth  [<utilisateur> <mot_de_passe>]
+
+ utilisateur : nom d'utilisateur SASL (le contenu est évalué, voir /help eval ; les options de serveur sont évaluées avec ${irc_server.xxx} et ${server} est remplacé par le nom du serveur)
+mot_de_passe : mot de passe SASL ou chemin vers le fichier de clé privée (le contenu est évalué, voir /help eval ; les options de serveur sont évaluées avec ${irc_server.xxx} et ${server} est remplacé par le nom du serveur)
+
+Si le nom d'utilisateur et mot de passe ne sont pas donnés, les valeurs des options serveur "sasl_username" et "sasl_password" (ou "sasl_key") sont utilisées.
+
+Exemples :
+  s'authentifier avec le nom d'utilisateur et mot de passe défini dans le serveur :
+    /auth
+  s'authentifier avec un utilisateur différent :
+    /auth utilisateur2 mot_de_passe2
+  s'authentifier avec un utilisateur différent et le mécanisme ecdsa-nist256p-challenge :
+    /auth utilisateur2 ${weechat_config_dir}/ecdsa2.pem
+----
+
 [[command_irc_ban]]
 * `+ban+`: bannir des pseudos ou hôtes
 
@@ -129,7 +152,7 @@ Sans paramètre, cette commande affiche la liste des bannissements pour le canal
 
 Sans paramètre, "ls" et "list" sont envoyés.
 
-Les capacités supportées par WeeChat sont : account-notify, away-notify, cap-notify, chghost, extended-join, invite-notify, multi-prefix, server-time, userhost-in-names.
+Les capacités supportées par WeeChat sont : account-notify, away-notify, cap-notify, chghost, extended-join, invite-notify, message-tags, multi-prefix, server-time, setname, userhost-in-names.
 
 Les capacités à activer automatiquement sur les serveurs peuvent être définies dans l'option irc.server_default.capabilities (ou par serveur dans l'option irc.server.xxx.capabilities).
 
@@ -161,7 +184,7 @@ nooption : définir l'option booléenne à 'off' (par exemple : -nossl)
 Pour se déconnecter du serveur ou stopper toute tentative de connexion, utilisez la commande /disconnect.
 
 Exemples :
-  /connect freenode
+  /connect libera
   /connect irc.oftc.net/6667
   /connect irc6.oftc.net/6667 -ipv6
   /connect irc6.oftc.net/6697 -ipv6 -ssl
@@ -301,10 +324,10 @@ Note : l'expression régulière peut commencer par "(?-i)" pour devenir sensibl
 Exemples :
   ignorer le pseudo "toto" partout :
     /ignore add toto
-  ignorer le hôte "toto@domain.com" sur le serveur freenode :
-    /ignore add toto@domain.com freenode
-  ignorer le hôte "toto*@*.domain.com" sur freenode/#weechat :
-    /ignore add toto*@*.domain.com freenode #weechat
+  ignorer le hôte "toto@domain.com" sur le serveur libera :
+    /ignore add toto@domain.com libera
+  ignorer le hôte "toto*@*.domain.com" sur libera/#weechat :
+    /ignore add toto*@*.domain.com libera #weechat
 ----
 
 [[command_irc_info]]
@@ -349,7 +372,7 @@ pseudo : pseudo
 Exemples :
   /join #weechat
   /join #protectedchan,#weechat key
-  /join -server freenode #weechat
+  /join -server libera #weechat
   /join -noswitch #weechat
 ----
 
@@ -361,7 +384,7 @@ Exemples :
 
  canal : nom du canal
 pseudo : pseudo
-raison : raison (les variables spéciales $nick, $channel et $server sont remplacées par leur valeur)
+raison : raison (évaluée, voir /help eval ; les variables spéciales ${nick} (propre pseudo), ${target} (pseudo cible), ${channel} et ${server} sont remplacées par leur valeurs)
 ----
 
 [[command_irc_kickban]]
@@ -372,7 +395,7 @@ raison : raison (les variables spéciales $nick, $channel et $server sont rempl
 
  canal : nom du canal
 pseudo : pseudo
-raison : raison (les variables spéciales $nick, $channel et $server sont remplacées par leur valeur)
+raison : raison (évaluée, voir /help eval ; les variables spéciales ${nick} (propre pseudo), ${target} (pseudo cible), ${channel} et ${server} sont remplacées par leur valeurs)
 
 Il est possible d'éjecter/bannir avec un masque, le pseudo sera extrait du masque et remplacé par "*".
 
@@ -402,7 +425,7 @@ masque_serveur : liste des serveurs correspondant au masque
 ----
 
 [[command_irc_list]]
-* `+list+`: lister les canaux et leur titre
+* `+list+`: lister les canaux et leurs titres
 
 ----
 /list  [-server <serveur>] [-re <regex>] [<canal>[,<canal>...]] [<cible>]
@@ -552,10 +575,10 @@ Sans paramètre, cette commande affiche les notifications pour le serveur couran
 Exemples :
   notifier quand "toto" rejoint/quitte le serveur courant :
     /notify add toto
-  notifier quand "toto" rejoint/quitte le serveur freenode :
-    /notify add toto freenode
-  notifier quand "toto" est absent ou de retour sur le serveur freenode :
-    /notify add toto freenode -away
+  notifier quand "toto" rejoint/quitte le serveur libera :
+    /notify add toto libera
+  notifier quand "toto" est absent ou de retour sur le serveur libera :
+    /notify add toto libera -away
 ----
 
 [[command_irc_op]]
@@ -673,7 +696,7 @@ option : option supplémentaire, pour certains serveurs
 
  canal : nom du canal
 pseudo : pseudo
-raison : raison (les variables spéciales $nick, $channel et $server sont remplacées par leur valeur)
+raison : raison (les variables spéciales $nick, $channel et $server sont remplacées par leurs valeurs)
 ----
 
 [[command_irc_restart]]
@@ -775,16 +798,16 @@ nom_machine : nom ou adresse IP du serveur avec port en option (défaut : 6667
 
 Exemples :
   /server listfull
-  /server add freenode chat.freenode.net
-  /server add freenode chat.freenode.net/6697 -ssl -autoconnect
+  /server add libera irc.libera.chat
+  /server add libera irc.libera.chat/6697 -ssl -autoconnect
   /server add chatspike irc.chatspike.net/6667,irc.duckspike.net/6667
-  /server copy freenode freenode-test
-  /server rename freenode-test freenode2
-  /server reorder freenode2 freenode
-  /server del freenode
+  /server copy libera libera-test
+  /server rename libera-test libera2
+  /server reorder libera2 libera
+  /server del libera
   /server deloutq
   /server raw
-  /server raw s:freenode
+  /server raw s:libera
   /server raw c:${recv} && ${command}==PRIVMSG && ${nick}==foo
 ----
 
@@ -806,6 +829,15 @@ distribution : visibilité du service
 
 masque : lister seulement les services qui correspondent à ce masque
   type : lister seulement les services de ce type
+----
+
+[[command_irc_setname]]
+* `+setname+`: définir le nom réel
+
+----
+/setname  <nom_réel>
+
+nom_réel : nouveau nom réel
 ----
 
 [[command_irc_squery]]
@@ -1271,7 +1303,7 @@ Exemples :
 /debug  list
         set <extension> <niveau>
         dump [<extension>]
-        buffer|color|infolists|memory|tags|term|windows
+        buffer|color|infolists|libs|certs|memory|tags|term|windows
         cursor|mouse [verbose]
         hdata [free]
         time <commande>
@@ -1289,6 +1321,7 @@ extension : nom de l'extension ("core" pour le cœur de WeeChat)
     hooks : afficher des infos sur les hooks
 infolists : afficher des infos sur les infolists
      libs : afficher des infos sur les bibliothèques externes utilisées
+    certs : afficher le nombre de certificats des autorités de certification chargés
    memory : afficher des infos sur l'utilisation de la mémoire
     mouse : activer/désactiver le debug pour la souris
      tags : afficher les étiquettes pour les lignes
@@ -1359,10 +1392,11 @@ Des variables sont remplacées dans l'expression, en utilisant le format ${varia
   15. une variable d'environnement (format : "env:XXX")
   16. un opérateur ternaire (format : "if:condition?valeur_si_vrai:valeur_si_faux")
   17. le résultat d'une expression avec parenthèses et les opérateurs + - * / // % ** (format: "calc:xxx")
-  18. une chaîne traduite (format : "translate:xxx")
-  19. une option (format : "fichier.section.option")
-  20. une variable locale du tampon
-  21. un hdata/variable (la valeur est automatiquement convertie en chaîne), par défaut "window" et "buffer" pointent vers la fenêtre et le tampon courants.
+  18. un nombre entier aléatoire (format : "random:min,max")
+  19. une chaîne traduite (format : "translate:xxx")
+  20. une option (format : "fichier.section.option")
+  21. une variable locale du tampon
+  22. un hdata/variable (la valeur est automatiquement convertie en chaîne), par défaut "window" et "buffer" pointent vers la fenêtre et le tampon courants.
 Le format du hdata peut être le suivant :
   hdata.var1.var2... : démarrer avec un hdata (le pointeur doit être connu), et demander les variables l'une après l'autre (d'autres hdata peuvent être suivis)
   hdata[liste].var1.var2... : démarrer avec un hdata en utilisant une liste/pointeur/nom de pointeur, par exemple :
@@ -1379,7 +1413,7 @@ Exemples (chaînes simples) :
   /eval -n ${info:version}                       ==> 0.4.3
   /eval -n ${env:HOME}                           ==> /home/user
   /eval -n ${weechat.look.scroll_amount}         ==> 3
-  /eval -n ${sec.data.freenode_password}         ==> secret
+  /eval -n ${sec.data.password}                  ==> secret
   /eval -n ${window}                             ==> 0x2549aa0
   /eval -n ${window.buffer}                      ==> 0x2549320
   /eval -n ${window.buffer.full_name}            ==> core.weechat
@@ -1394,6 +1428,7 @@ Exemples (chaînes simples) :
   /eval -n ${repeat:5,-}                         ==> -----
   /eval -n ${length:test}                        ==> 4
   /eval -n ${calc:(5+2)*3}                       ==> 21
+  /eval -n ${random:0,10}                        ==> 3
   /eval -n ${base_encode:64,test}                ==> dGVzdA==
   /eval -n ${base_decode:64,dGVzdA==}            ==> test
   /eval -n ${translate:Plugin}                   ==> Extension
@@ -1434,7 +1469,7 @@ addreplace : ajouter ou remplacer un filtre existant
        del : supprimer un filtre
       -all : supprimer tous les filtres
     tampon : liste des tampons, séparés par des virgules, où le filtre est actif :
-             - il s'agit du nom complet incluant l'extension (exemple : "irc.freenode.#weechat" ou "irc.server.freenode")
+             - il s'agit du nom complet incluant l'extension (exemple : "irc.libera.#weechat" ou "irc.server.libera")
              - "*" signifie tous les tampons
              - un nom commençant par '!' est exclu
              - le caractère joker "*" est autorisé
@@ -1469,11 +1504,11 @@ Exemples :
   filtrer les pseudos afficher en rejoignant les canaux ou avec /names :
     /filter add nicks * irc_366 *
   filtrer le pseudo "toto" sur le canal IRC #weechat :
-    /filter add toto irc.freenode.#weechat nick_toto *
+    /filter add toto irc.libera.#weechat nick_toto *
   filtrer les messages IRC join/action du pseudo "toto" :
     /filter add toto * nick_toto+irc_join,nick_toto+irc_action *
   filtrer les lignes contenant "weechat sucks" sur le canal IRC #weechat :
-    /filter add sucks irc.freenode.#weechat * weechat sucks
+    /filter add sucks irc.libera.#weechat * weechat sucks
   filtrer les lignes qui sont strictement égales à "WeeChat sucks" sur tous les tampons :
     /filter add sucks2 * * (?-i)^WeeChat sucks$
 ----
@@ -1644,6 +1679,8 @@ windows : stocker/appliquer seulement pour les fenêtres (le tampon affiché pa
 Sans paramètre, cette commande affiche les dispositions stockées.
 
 La disposition courante peut être sauvegardée sur la commande /quit avec l'option "weechat.look.save_layout_on_exit".
+
+Note : la disposition se souvient seulement de la division des fenêtres et des numéros de tampons. Elle n'ouvre pas les tampons. Cela signifie par exemple que vous devez toujours automatiquement rejoindre les canaux IRC pour ouvrir les tampons, la disposition sauvée ne s'applique qu'une fois les tampons ouverts.
 ----
 
 [[command_weechat_mouse]]
@@ -1675,7 +1712,7 @@ Exemples :
    -core : pas d'affichage sur le tampon core WeeChat
 -current : pas d'affichage sur le tampon courant
  -buffer : pas d'affichage sur le tampon spécifié
-     nom : nom complet du tampon (exemples : "irc.server.freenode", "irc.freenode.#weechat")
+     nom : nom complet du tampon (exemples : "irc.server.libera", "irc.libera.#weechat")
 commande : commande à exécuter silencieusement (un '/' est automatiquement ajouté s'il n'est pas trouvé au début de la commande)
 
 Si aucune cible n'est spécifiée (-core, -current ou -buffer), alors par défaut tous les tampons seront silencieux.
@@ -1686,7 +1723,7 @@ Exemples :
   message au canal IRC courant :
     /mute -current msg * bonjour !
   message au canal #weechat :
-    /mute -buffer irc.freenode.#weechat msg #weechat bonjour !
+    /mute -buffer irc.libera.#weechat msg #weechat bonjour !
 ----
 
 [[command_weechat_plugin]]
@@ -1754,7 +1791,7 @@ Exemples :
   afficher un message sur le tampon core avec le préfixe "abc" :
     /print -core abc\tLe message
   afficher un message sur le canal #weechat :
-    /print -buffer irc.freenode.#weechat Message sur #weechat
+    /print -buffer irc.libera.#weechat Message sur #weechat
   afficher un bonhomme de neige (U+2603) :
     /print -escape \u2603
   envoyer une alerte (BEL) :
@@ -1889,14 +1926,14 @@ Exemples :
     /secure passphrase ceci est ma phrase de chiffrement
   utiliser le programme "pass" pour lire la phrase de chiffrement au démarrage :
     /set sec.crypt.passphrase_command "/usr/bin/pass show weechat/passphrase"
-  chiffrer le mot de passe freenode SASL :
-    /secure set freenode motdepasse
-    /set irc.server.freenode.sasl_password "${sec.data.freenode}"
+  chiffrer le mot de passe libera SASL :
+    /secure set libera motdepasse
+    /set irc.server.libera.sasl_password "${sec.data.libera}"
   chiffrer le mot de passe oftc pour nickserv :
     /secure set oftc motdepasse
     /set irc.server.oftc.command "/msg nickserv identify ${sec.data.oftc}"
   alias pour ghost du pseudo "pseudo" :
-    /alias add ghost /eval /msg -server freenode nickserv ghost pseudo ${sec.data.freenode}
+    /alias add ghost /eval /msg -server libera nickserv ghost pseudo ${sec.data.libera}
 ----
 
 [[command_weechat_set]]
@@ -2281,8 +2318,8 @@ Le format attendu est l'un des suivants :
   plugin.buffer *texte ou commande ici
   *texte ou commande ici
 
-Par exemple pour changer votre pseudo sur freenode :
-  echo 'irc.server.freenode */nick autrepseudo' >/run/user/1000/weechat/weechat_fifo_12345
+Par exemple pour changer votre pseudo sur libera :
+  echo 'irc.server.libera */nick autrepseudo' >/run/user/1000/weechat/weechat_fifo_12345
 
 Merci de lire le guide utilisateur pour plus d'information et des exemples.
 
@@ -2738,10 +2775,10 @@ Le protocole "weechat" permet à une interface distante de se connecter sur le p
 Sans paramètre, cette commande ouvre le tampon avec la liste des clients pour le relai.
 
 Exemples :
-  proxy irc, pour le serveur "freenode" :
-    /relay add irc.freenode 8000
-  proxy irc, pour le serveur "freenode", avec SSL :
-    /relay add ssl.irc.freenode 8001
+  proxy irc, pour le serveur "libera" :
+    /relay add irc.libera 8000
+  proxy irc, pour le serveur "libera", avec SSL :
+    /relay add ssl.irc.libera 8001
   proxy irc, pour tous les serveurs (le client choisira), avec SSL :
     /relay add ssl.irc 8002
   protocole weechat :

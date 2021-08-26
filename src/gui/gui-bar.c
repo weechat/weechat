@@ -1438,7 +1438,8 @@ gui_bar_create_option (const char *bar_name, int index_option, const char *value
             ptr_option = config_file_new_option (
                 weechat_config_file, weechat_config_section_bar,
                 option_name, "integer",
-                N_("bar size in chars (0 = auto size)"),
+                N_("bar size in chars (left/right bars) "
+                   "or lines (top/bottom bars) (0 = auto size)"),
                 NULL, 0, INT_MAX, value, NULL, 0,
                 &gui_bar_config_check_size, NULL, NULL,
                 &gui_bar_config_change_size, NULL, NULL,
@@ -1448,7 +1449,8 @@ gui_bar_create_option (const char *bar_name, int index_option, const char *value
             ptr_option = config_file_new_option (
                 weechat_config_file, weechat_config_section_bar,
                 option_name, "integer",
-                N_("max bar size in chars (0 = no limit)"),
+                N_("max bar size in chars (left/right bars) "
+                   "or lines (top/bottom bars) (0 = no limit)"),
                 NULL, 0, INT_MAX, value, NULL, 0,
                 NULL, NULL, NULL,
                 &gui_bar_config_change_size_max, NULL, NULL,

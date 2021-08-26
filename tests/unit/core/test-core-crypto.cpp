@@ -29,7 +29,8 @@ extern "C"
 #include "src/core/wee-crypto.h"
 #include "src/core/wee-string.h"
 
-#define DATA_HASH "this is a test of hash function"
+/* Hash */
+#define DATA_HASH_MSG "this is a test of hash function"
 #define DATA_HASH_CRC32 "ef26fe3e"
 #define DATA_HASH_MD5 "1197d121af621ac6a63cb8ef6b5dfa30"
 #define DATA_HASH_SHA1 "799d818061175b400dc5aaeb14b8d32cdef32ff0"
@@ -51,6 +52,8 @@ extern "C"
 #define DATA_HASH_SHA3_512 "31dfb5fc8f30ac7007acddc4fce562d408706833d0d2af2" \
     "e5f61a179099592927ff7d100e278406c7f98d42575001e26e153b135c21f7ef5b00c8" \
     "cef93ca048d"
+
+/* Hash PBKDF2 */
 #define DATA_HASH_SALT "this is a salt of 32 bytes xxxxx"
 #define DATA_HASH_PBKDF2_SHA1_1000 "85ce23c8873830df8f0a96aa82ae7d7635dad12" \
     "7"
@@ -59,6 +62,31 @@ extern "C"
 #define DATA_HASH_PBKDF2_SHA512_1000 "03d8e9e86f3bbe20b88a600a5aa15f8cfbee0" \
     "a402af301e1714c25467a32489c773c71eddf5aa39f42823ecc54c9e9b015517b5f3c0" \
     "19bae9463a2d8fe527882"
+
+/* HMAC */
+#define DATA_HMAC_KEY "secret key"
+#define DATA_HMAC_MSG "this is a test of hmac function"
+#define DATA_HMAC_CRC32 "3c189d75"
+#define DATA_HMAC_MD5 "8148a8e01eb0c6ca42880ea58f50d045"
+#define DATA_HMAC_SHA1 "28dea5713c0d48c7638db31050a7ded4308f46fe"
+#define DATA_HMAC_SHA224 "f1cf0ccf287a2e35b98414346931396d47ca929c92c48edcc" \
+    "e8e0b9e"
+#define DATA_HMAC_SHA256 "7be1b4281c0d74d4a3838892b1512efa13a25c7a50d7dce47" \
+    "da070c7e7c65dee"
+#define DATA_HMAC_SHA384 "8cd5f4afc602e11f6b3032fd65e906da810ac51aeb7d30f4b" \
+    "7b495ae3dcc0eede0c5f63d7d2e3688fe658daf4852be67"
+#define DATA_HMAC_SHA512 "940e5c280c08cd858f79a6085b4bdc54710ed339dd1008fa2" \
+    "1643b7bbeea8a5f61c77f395708505461af62776c9cb7be1c263f39055eb8478190cd8" \
+    "0ea5b0850"
+#define DATA_HMAC_SHA3_224 "a08c7f1598ecc7ea54feeb920ef90b3748d59b3203caa74" \
+    "7316eb2d4"
+#define DATA_HMAC_SHA3_256 "21aca280bc1ac1fa261b1169a321eb7a49e38a8ddec66a8" \
+    "fa2ed9c43d7fae4c5"
+#define DATA_HMAC_SHA3_384 "cbf189e8cd31f3c1c5742e2688b13be8e62691952eee374" \
+    "9523b48bd7a7d1cdf38812cf9a3e52dbb1d0e32a11e478ce7"
+#define DATA_HMAC_SHA3_512 "b1eeb16dd18f66cc8886754ac9cf238deea24d9797ceecb" \
+    "9e0582148bfb6b88f7530d594e80a5a5e22e351a079855983da91b0011dff85ea4a895" \
+    "e8fde6fd41a"
 
 #define TOTP_SECRET "secretpasswordbase32"
 
@@ -103,6 +131,30 @@ extern "C"
                                        __salt, __salt_size,             \
                                        __iterations,                    \
                                        hash, &hash_size));              \
+    if (__result_hash)                                                  \
+    {                                                                   \
+        MEMCMP_EQUAL(hash_expected, hash, hash_size);                   \
+    }                                                                   \
+    LONGS_EQUAL(hash_size_expected, hash_size);
+
+#define WEE_CHECK_HMAC(__result_code, __result_hash,                    \
+                       __key, __key_size, __message, __message_size,    \
+                       __hash_algo)                                     \
+    if (__result_hash)                                                  \
+    {                                                                   \
+        hash_size_expected = string_base16_decode (__result_hash,       \
+                                                   hash_expected);      \
+    }                                                                   \
+    else                                                                \
+    {                                                                   \
+        hash_size_expected = 0;                                         \
+    }                                                                   \
+    hash_size = -1;                                                     \
+    LONGS_EQUAL(__result_code,                                          \
+                weecrypto_hmac (__key, __key_size,                      \
+                                __message, __message_size,              \
+                                __hash_algo,                            \
+                                hash, &hash_size));                     \
     if (__result_hash)                                                  \
     {                                                                   \
         MEMCMP_EQUAL(hash_expected, hash, hash_size);                   \
@@ -165,7 +217,7 @@ TEST(CoreCrypto, GetHashAlgo)
 
 TEST(CoreCrypto, Hash)
 {
-    const char *data = DATA_HASH;
+    const char *data = DATA_HASH_MSG;
     char hash_expected[4096], hash[4096];
     int data_size, hash_size_expected, hash_size;
 
@@ -199,7 +251,7 @@ TEST(CoreCrypto, Hash)
 
 TEST(CoreCrypto, HashPbkdf2)
 {
-    const char *data = DATA_HASH, *salt = DATA_HASH_SALT;
+    const char *data = DATA_HASH_MSG, *salt = DATA_HASH_SALT;
     char hash_expected[4096], hash[4096];
     int data_size, salt_size, hash_size_expected, hash_size;
 
@@ -234,6 +286,43 @@ TEST(CoreCrypto, HashPbkdf2)
                           GCRY_MD_SHA512,
                           DATA_HASH_SALT, salt_size,
                           1000);
+}
+
+/*
+ * Tests functions:
+ *   weecrypto_hmac
+ */
+
+TEST(CoreCrypto, Hmac)
+{
+    const char *key = DATA_HMAC_KEY, *msg = DATA_HMAC_MSG;
+    char hash_expected[4096], hash[4096];
+    int key_size, msg_size, hash_size_expected, hash_size;
+
+    key_size = strlen (key);
+    msg_size = strlen (msg);
+
+    WEE_CHECK_HMAC(0, NULL, NULL, 0, NULL, 0, 0);
+    WEE_CHECK_HMAC(0, NULL, "key", 0, NULL, 0, 0);
+    WEE_CHECK_HMAC(0, NULL, NULL, 0, "msg", 0, 0);
+    WEE_CHECK_HMAC(0, NULL, "key", 0, "msg", 0, 0);
+
+    LONGS_EQUAL (0, weecrypto_hmac (key, key_size, msg, msg_size,
+                                    GCRY_MD_SHA256, NULL, NULL));
+
+    WEE_CHECK_HMAC(1, DATA_HMAC_CRC32, key, key_size, msg, msg_size, GCRY_MD_CRC32);
+    WEE_CHECK_HMAC(1, DATA_HMAC_MD5, key, key_size, msg, msg_size, GCRY_MD_MD5);
+    WEE_CHECK_HMAC(1, DATA_HMAC_SHA1, key, key_size, msg, msg_size, GCRY_MD_SHA1);
+    WEE_CHECK_HMAC(1, DATA_HMAC_SHA224, key, key_size, msg, msg_size, GCRY_MD_SHA224);
+    WEE_CHECK_HMAC(1, DATA_HMAC_SHA256, key, key_size, msg, msg_size, GCRY_MD_SHA256);
+    WEE_CHECK_HMAC(1, DATA_HMAC_SHA384, key, key_size, msg, msg_size, GCRY_MD_SHA384);
+    WEE_CHECK_HMAC(1, DATA_HMAC_SHA512, key, key_size, msg, msg_size, GCRY_MD_SHA512);
+#if GCRYPT_VERSION_NUMBER >= 0x010700
+    WEE_CHECK_HMAC(1, DATA_HMAC_SHA3_224, key, key_size, msg, msg_size, GCRY_MD_SHA3_224);
+    WEE_CHECK_HMAC(1, DATA_HMAC_SHA3_256, key, key_size, msg, msg_size, GCRY_MD_SHA3_256);
+    WEE_CHECK_HMAC(1, DATA_HMAC_SHA3_384, key, key_size, msg, msg_size, GCRY_MD_SHA3_384);
+    WEE_CHECK_HMAC(1, DATA_HMAC_SHA3_512, key, key_size, msg, msg_size, GCRY_MD_SHA3_512);
+#endif
 }
 
 /*

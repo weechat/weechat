@@ -8,7 +8,7 @@ irc プラグインでは以下の様な URL で一時的なサーバに接続�
 
 "mynick" というニックネームで WeeChat IRC チャンネルサポートに参加するには:
 
-    irc://mynick@chat.freenode.net/#weechat
+    irc://mynick@irc.libera.chat/#weechat
 
 IPv6 アドレスの後にポートを指定するには IPv6
 アドレスを括弧に入れてください、例えば:
@@ -85,6 +85,9 @@ $HOME/.config/weechat/tcl.conf::
 
 $HOME/.config/weechat/trigger.conf::
     _trigger_ プラグイン用の設定ファイル
+
+$HOME/.config/weechat/typing.conf::
+    _typing_ プラグイン用の設定ファイル
 
 $HOME/.config/weechat/xfer.conf::
     _xfer_ プラグイン用の設定ファイル

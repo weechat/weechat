@@ -32,6 +32,16 @@
 struct t_irc_server;
 struct t_irc_modelist;
 
+enum t_irc_channel_typing_state
+{
+    IRC_CHANNEL_TYPING_STATE_OFF = 0,
+    IRC_CHANNEL_TYPING_STATE_ACTIVE,
+    IRC_CHANNEL_TYPING_STATE_PAUSED,
+    IRC_CHANNEL_TYPING_STATE_DONE,
+    /* number of channel typing states */
+    IRC_CHANNEL_NUM_TYPING_STATES,
+};
+
 struct t_irc_channel_speaking
 {
     char *nick;                        /* nick speaking                     */
@@ -73,12 +83,15 @@ struct t_irc_channel
     struct t_irc_modelist *modelists;     /* modelists in the channel       */
     struct t_irc_modelist *last_modelist; /* last modelist in the channel   */
     struct t_hashtable *join_smart_filtered; /* smart filtered joins        */
+    int typing_state;                  /* typing state                      */
+    time_t typing_status_sent;         /* last time typing status was sent  */
     struct t_gui_buffer *buffer;       /* buffer allocated for channel      */
     char *buffer_as_string;            /* used to return buffer info        */
     struct t_irc_channel *prev_channel; /* link to previous channel         */
     struct t_irc_channel *next_channel; /* link to next channel             */
 };
 
+extern char *irc_channel_typing_state_string[IRC_CHANNEL_NUM_TYPING_STATES];
 extern char *irc_channel_default_chantypes;
 
 extern int irc_channel_valid (struct t_irc_server *server,

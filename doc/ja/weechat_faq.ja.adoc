@@ -526,7 +526,7 @@ scrreen
 
 // TRANSLATION MISSING
 You can remove side bars (buflist and nicklist), change time format to display
-only hours and seconds, disable alignment of messages and set a char for nick
+only hours and minutes, disable alignment of messages and set a char for nick
 prefix/suffix:
 
 ----
@@ -769,8 +769,8 @@ gnutls ハンドシェイクに関するエラーの場合、Diffie-Hellman キ�
 /set irc.server.xxx.ssl_priorities "NORMAL:-VERS-TLS-ALL:+VERS-TLS1.0:+VERS-SSL3.0:%COMPAT"
 ----
 
-[[irc_ssl_freenode]]
-=== どうすれば SSL を使って freenode サーバに接続できますか。
+[[irc_ssl_libera]]
+=== どうすれば SSL を使って libera サーバに接続できますか。
 
 // TRANSLATION MISSING
 With WeeChat ≤ 3.1, set option _weechat.network.gnutls_ca_file_ to file with
@@ -793,9 +793,9 @@ certificates:
 サーバポート、SSL を設定の後に接続してください:
 
 ----
-/set irc.server.freenode.addresses "chat.freenode.net/7000"
-/set irc.server.freenode.ssl on
-/connect freenode
+/set irc.server.libera.addresses "irc.libera.chat/6697"
+/set irc.server.libera.ssl on
+/connect libera
 ----
 
 [[irc_oauth]]
@@ -820,25 +820,25 @@ oauth を使うにはパスワードを "oauth:XXXX" のように指定してく
 SASL を利用する方が良いです。例えば:
 
 ----
-/set irc.server.freenode.sasl_username "mynick"
-/set irc.server.freenode.sasl_password "xxxxxxx"
+/set irc.server.libera.sasl_username "mynick"
+/set irc.server.libera.sasl_password "xxxxxxx"
 ----
 
 対象のサーバが SASL
 をサポートしない場合、コマンドとチャンネル参加の間に遅延時間を入れることもできます:
 
 ----
-/set irc.server.freenode.command_delay 5
+/set irc.server.libera.command_delay 5
 ----
 
 [[edit_autojoin]]
 === どうすれば自動参加オプションにチャンネルを追加/削除できますか。
 
-`/set` コマンドを使って、自動参加チャンネルのリストを編集してください。"freenode"
+`/set` コマンドを使って、自動参加チャンネルのリストを編集してください。"libera"
 サーバに対してこれを実行するには以下のようにします:
 
 ----
-/set irc.server.freenode.autojoin [TAB]
+/set irc.server.libera.autojoin [TAB]
 ----
 
 [NOTE]
@@ -1006,17 +1006,17 @@ WeeChat バージョン 0.3.4 以上の場合、link:weechat_user.en.html#max_ho
 /script install buffer_autoset.py
 ----
 
-例えば、IRC サーバ freenode のチャンネル #weechat に参加している "mike"
+例えば、IRC サーバ libera のチャンネル #weechat に参加している "mike"
 の発言に対してハイライトを永久的に無効化するには以下のように設定します:
 
 ----
-/buffer_autoset add irc.freenode.#weechat hotlist_max_level_nicks_add mike:2
+/buffer_autoset add irc.libera.#weechat hotlist_max_level_nicks_add mike:2
 ----
 
-この設定をすべての freenode サーバのバッファに対して適用するには以下のように設定します:
+この設定をすべての libera サーバのバッファに対して適用するには以下のように設定します:
 
 ----
-/buffer_autoset add irc.freenode hotlist_max_level_nicks_add mike:2
+/buffer_autoset add irc.libera hotlist_max_level_nicks_add mike:2
 ----
 
 これ以外の例は `+/help buffer_autoset+` を参照してください。
@@ -1193,10 +1193,10 @@ link:weechat_user.ja.html#secured_data[ユーザーズガイド / 暗号化デ�
 
 ----
 /secure passphrase xxxxxxxxxx
-/secure set freenode_username username
-/secure set freenode_password xxxxxxxx
-/set irc.server.freenode.sasl_username "${sec.data.freenode_username}"
-/set irc.server.freenode.sasl_password "${sec.data.freenode_password}"
+/secure set libera_username username
+/secure set libera_password xxxxxxxx
+/set irc.server.libera.sasl_username "${sec.data.libera_username}"
+/set irc.server.libera.sasl_password "${sec.data.libera_password}"
 ----
 
 [[sharing_config_files]]

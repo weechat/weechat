@@ -1315,43 +1315,43 @@
 ** デフォルト値: `+on+`
 
 * [[option_weechat.signal.sighup]] *weechat.signal.sighup*
-** 説明: pass:none[command to execute when the signal is received, multiple commands can be separated by semicolons (note: content is evaluated, see /help eval)]
+** 説明: pass:none[command to execute when the signal is received, multiple commands can be separated by semicolons (note: commands are evaluated, see /help eval)]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+"${if:${info:weechat_headless}?/reload:/quit -yes}"+`
 
 * [[option_weechat.signal.sigquit]] *weechat.signal.sigquit*
-** 説明: pass:none[command to execute when the signal is received, multiple commands can be separated by semicolons (note: content is evaluated, see /help eval)]
+** 説明: pass:none[command to execute when the signal is received, multiple commands can be separated by semicolons (note: commands are evaluated, see /help eval)]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+"/quit -yes"+`
 
 * [[option_weechat.signal.sigterm]] *weechat.signal.sigterm*
-** 説明: pass:none[command to execute when the signal is received, multiple commands can be separated by semicolons (note: content is evaluated, see /help eval)]
+** 説明: pass:none[command to execute when the signal is received, multiple commands can be separated by semicolons (note: commands are evaluated, see /help eval)]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+"/quit -yes"+`
 
 * [[option_weechat.signal.sigusr1]] *weechat.signal.sigusr1*
-** 説明: pass:none[command to execute when the signal is received, multiple commands can be separated by semicolons (note: content is evaluated, see /help eval)]
+** 説明: pass:none[command to execute when the signal is received, multiple commands can be separated by semicolons (note: commands are evaluated, see /help eval)]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+""+`
 
 * [[option_weechat.signal.sigusr2]] *weechat.signal.sigusr2*
-** 説明: pass:none[command to execute when the signal is received, multiple commands can be separated by semicolons (note: content is evaluated, see /help eval)]
+** 説明: pass:none[command to execute when the signal is received, multiple commands can be separated by semicolons (note: commands are evaluated, see /help eval)]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+""+`
 
 * [[option_weechat.startup.command_after_plugins]] *weechat.startup.command_after_plugins*
-** 説明: pass:none[WeeChat が実行され、プラグインのロード後に実行されるコマンド (注意: 値は評価されます、/help eval を参照してください)]
+** 説明: pass:none[command executed when WeeChat starts, after loading plugins; multiple commands can be separated by semicolons (note: commands are evaluated, see /help eval)]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+""+`
 
 * [[option_weechat.startup.command_before_plugins]] *weechat.startup.command_before_plugins*
-** 説明: pass:none[WeeChat が実行され、プラグインのロード前に実行されるコマンド (注意: 値は評価されます、/help eval を参照してください)]
+** 説明: pass:none[command executed when WeeChat starts, before loading plugins; multiple commands can be separated by semicolons (note: commands are evaluated, see /help eval)]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+""+`
@@ -1845,6 +1845,50 @@
 ** デフォルト値: `+"${weechat_runtime_dir}/weechat_fifo_${info:pid}"+`
 // end::fifo_options[]
 
+// tag::typing_options[]
+* [[option_typing.look.delay_purge_paused]] *typing.look.delay_purge_paused*
+** 説明: pass:none[number of seconds after paused status has been set: if reached, the typing status is removed]
+** タイプ: 整数
+** 値: 1 .. 2147483647
+** デフォルト値: `+30+`
+
+* [[option_typing.look.delay_purge_typing]] *typing.look.delay_purge_typing*
+** 説明: pass:none[number of seconds after typing status has been set: if reached, the typing status is removed]
+** タイプ: 整数
+** 値: 1 .. 2147483647
+** デフォルト値: `+6+`
+
+* [[option_typing.look.delay_set_paused]] *typing.look.delay_set_paused*
+** 説明: pass:none[number of seconds after typing last char: if reached, the typing status becomes "paused" and no more typing signals are sent]
+** タイプ: 整数
+** 値: 1 .. 2147483647
+** デフォルト値: `+10+`
+
+* [[option_typing.look.enabled_nicks]] *typing.look.enabled_nicks*
+** 説明: pass:none[typing enabled for other nicks (display typing info for nicks typing in the current buffer)]
+** タイプ: ブール
+** 値: on, off
+** デフォルト値: `+off+`
+
+* [[option_typing.look.enabled_self]] *typing.look.enabled_self*
+** 説明: pass:none[typing enabled for self messages (send typing info to other users)]
+** タイプ: ブール
+** 値: on, off
+** デフォルト値: `+off+`
+
+* [[option_typing.look.input_min_chars]] *typing.look.input_min_chars*
+** 説明: pass:none[min number of chars in message to trigger send of typing signals]
+** タイプ: 整数
+** 値: 1 .. 2147483647
+** デフォルト値: `+4+`
+
+* [[option_typing.look.item_max_length]] *typing.look.item_max_length*
+** 説明: pass:none[max number of chars displayed in the bar item "typing" (0 = do not truncate content)]
+** タイプ: 整数
+** 値: 0 .. 2147483647
+** デフォルト値: `+0+`
+// end::typing_options[]
+
 // tag::xfer_options[]
 * [[option_xfer.color.status_aborted]] *xfer.color.status_aborted*
 ** 説明: pass:none["中止" 状態のテキスト色]
@@ -1913,7 +1957,7 @@
 ** デフォルト値: `+off+`
 
 * [[option_xfer.file.auto_accept_nicks]] *xfer.file.auto_accept_nicks*
-** 説明: pass:none[ファイルやチャットの受け入れを自動的に許可するニックネームのコンマ区切りリスト; 書式は "server.nick" (サーバを特定する場合) または "nick" (すべてのサーバ); 例: "freenode.FlashCode,andrew"]
+** 説明: pass:none[comma-separated list of nicks for which the incoming files and chats are automatically accepted; format is "server.nick" (for a specific server) or "nick" (for all servers); example: "libera.FlashCode,andrew"]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+""+`
@@ -2214,6 +2258,12 @@
 ** 値: 未制約文字列
 ** デフォルト値: `+"%a, %d %b %Y %T %z"+`
 
+* [[option_irc.look.display_account_message]] *irc.look.display_account_message*
+** 説明: pass:none[display ACCOUNT messages received when capability account-notify is enabled]
+** タイプ: ブール
+** 値: on, off
+** デフォルト値: `+on+`
+
 * [[option_irc.look.display_away]] *irc.look.display_away*
 ** 説明: pass:none[離席状態が変更されたらメッセージを表示 (off: 何も表示/送信しない、local: ローカルに表示、channel: チャンネルにアクションを送信)]
 ** タイプ: 整数
@@ -2234,6 +2284,12 @@
 
 * [[option_irc.look.display_ctcp_unknown]] *irc.look.display_ctcp_unknown*
 ** 説明: pass:none[解釈できない CTCP の場合も CTCP メッセージを表示]
+** タイプ: ブール
+** 値: on, off
+** デフォルト値: `+on+`
+
+* [[option_irc.look.display_extended_join]] *irc.look.display_extended_join*
+** 説明: pass:none[display extra information in the JOIN messages: account name and real name (capability extended-join must be enabled)]
 ** タイプ: ブール
 ** 値: on, off
 ** デフォルト値: `+on+`
@@ -2287,19 +2343,19 @@
 ** デフォルト値: `+off+`
 
 * [[option_irc.look.highlight_channel]] *irc.look.highlight_channel*
-** 説明: pass:none[現在のバッファでハイライトする単語のコンマ区切りリスト (大文字小文字を区別しない、"(?-i)" を単語の最初につければ大文字小文字を区別する; 特殊変数 $nick、$channel、$server はそれぞれの値に置換される)、これらの単語は、バッファの作成時にバッファプロパティ "highlight_words" に追加される (既存のバッファには影響なし)、空文字列はニックネームに関するデフォルトのハイライトを無効にする、例: "$nick", "(?-i)$nick"]
+** 説明: pass:none[comma separated list of words to highlight in channel buffers (case insensitive, use "(?-i)" at beginning of words to make them case sensitive; special variables $nick, $channel and $server are replaced by their values), these words are added to buffer property "highlight_words" only when buffer is created (it does not affect current buffers), an empty string disables default highlight on nick, examples: "$nick", "(?-i)$nick"]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+"$nick"+`
 
 * [[option_irc.look.highlight_pv]] *irc.look.highlight_pv*
-** 説明: pass:none[プライベートバッファでハイライトする単語のコンマ区切りリスト (大文字小文字を区別しない、"(?-i)" を単語の最初につければ大文字小文字を区別する; 特殊変数 $nick、$channel、$server はそれぞれの値に置換される)、これらの単語は、バッファの作成時にバッファプロパティ "highlight_words" に追加される (既存のバッファには影響なし)、空文字列はニックネームに関するデフォルトのハイライトを無効にする、例: "$nick", "(?-i)$nick"]
+** 説明: pass:none[comma separated list of words to highlight in private buffers (case insensitive, use "(?-i)" at beginning of words to make them case sensitive; special variables $nick, $channel and $server are replaced by their values), these words are added to buffer property "highlight_words" only when buffer is created (it does not affect current buffers), an empty string disables default highlight on nick, examples: "$nick", "(?-i)$nick"]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+"$nick"+`
 
 * [[option_irc.look.highlight_server]] *irc.look.highlight_server*
-** 説明: pass:none[サーババッファでハイライトする単語のコンマ区切りリスト (大文字小文字を区別しない、"(?-i)" を単語の最初につければ大文字小文字を区別する; 特殊変数 $nick、$channel、$server はそれぞれの値に置換される)、これらの単語は、バッファの作成時にバッファプロパティ "highlight_words" に追加される (既存のバッファには影響なし)、空文字列はニックネームに関するデフォルトのハイライトを無効にする、例: "$nick", "(?-i)$nick"]
+** 説明: pass:none[comma separated list of words to highlight in server buffers (case insensitive, use "(?-i)" at beginning of words to make them case sensitive; special variables $nick, $channel and $server are replaced by their values), these words are added to buffer property "highlight_words" only when buffer is created (it does not affect current buffers), an empty string disables default highlight on nick, examples: "$nick", "(?-i)$nick"]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+"$nick"+`
@@ -2508,6 +2564,18 @@
 ** 値: on, off
 ** デフォルト値: `+off+`
 
+* [[option_irc.look.typing_status_nicks]] *irc.look.typing_status_nicks*
+** 説明: pass:none[display nicks typing on the channel in bar item "typing" (option typing.look.enabled_nicks must be enabled and capability "message-tags" must be enabled on the server)]
+** タイプ: ブール
+** 値: on, off
+** デフォルト値: `+off+`
+
+* [[option_irc.look.typing_status_self]] *irc.look.typing_status_self*
+** 説明: pass:none[send self typing status to channels so that other users see when you are typing a message (option typing.look.enabled_self must be enabled and capability "message-tags" must be enabled on the server)]
+** タイプ: ブール
+** 値: on, off
+** デフォルト値: `+off+`
+
 * [[option_irc.network.autoreconnect_delay_growing]] *irc.network.autoreconnect_delay_growing*
 ** 説明: pass:none[サーバに自動再接続する際の遅延間隔に関する増加係数 (1 = 遅延間隔は常に同じ, 2 = リトライごとに遅延間隔を 2 倍、など)]
 ** タイプ: 整数
@@ -2665,10 +2733,10 @@
 ** デフォルト値: `+25+`
 
 * [[option_irc.server_default.capabilities]] *irc.server_default.capabilities*
-** 説明: pass:none[サーバで利用可能ならば有効化する "client capabilities" のコンマ区切りリスト (WeeChat がサポートする機能のリストは /help cap を参照してください) (例: "away-notify,multi-prefix")]
+** 説明: pass:none[comma-separated list of client capabilities to enable for server if they are available (see /help cap for a list of capabilities supported by WeeChat); "*" enables all capabilities by default (supported by both server and WeeChat); wildcard "*" is allowed; a capability beginning with "!" is excluded (example: "*,!account-*,!extended-join")]
 ** タイプ: 文字列
 ** 値: 未制約文字列
-** デフォルト値: `+""+`
+** デフォルト値: `+"*"+`
 
 * [[option_irc.server_default.charset_message]] *irc.server_default.charset_message*
 ** 説明: pass:none[part of the IRC message (received or sent) which is decoded/encoded to the target charset; message = the whole IRC message (default), channel = starting from the channel name only (if found, with fallback on text), text = starting from the text only (you should try this value if you have issues with the channel name encoding)]
@@ -2677,7 +2745,7 @@
 ** デフォルト値: `+message+`
 
 * [[option_irc.server_default.command]] *irc.server_default.command*
-** 説明: pass:none[サーバに接続した後、チャンネルに自動参加する前に実行するコマンド (";" で分けて 複数のコマンドを列挙できます、セミコロンは "\;" のように使ってください、特殊変数 $nick、$channel、$server はそれぞれの値に置換されます) (注意: 値は評価されます、/help eval を参照してください; ここで ${irc_server.xxx} はサーバオプション、${server} はサーバ名を意味します)]
+** 説明: pass:none[command(s) to run after connection to server and before auto-join of channels (many commands can be separated by ";", use "\;" for a semicolon, special variables $nick, $channel and $server are replaced by their values) (note: commands are evaluated, see /help eval; server options are evaluated with ${irc_server.xxx} and ${server} is replaced by the server name)]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+""+`
@@ -2713,19 +2781,19 @@
 ** デフォルト値: `+""+`
 
 * [[option_irc.server_default.msg_kick]] *irc.server_default.msg_kick*
-** 説明: pass:none["/kick" と "/kickban" コマンドが使うデフォルトのキックメッセージ (注意: 値は評価されます、/help eval を参照してください。特殊変数 ${nick}、${channel}、${server} はそれぞれの値に置換されます)]
+** 説明: pass:none[default kick message used by commands "/kick" and "/kickban" (note: content is evaluated, see /help eval; special variables ${nick} (self nick), ${target} (target nick), ${channel} and ${server} are replaced by their values)]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+""+`
 
 * [[option_irc.server_default.msg_part]] *irc.server_default.msg_part*
-** 説明: pass:none[デフォルトの退出メッセージ (チャンネルから退出する際に送信されるメッセージ) (注意: 値は評価されます、/help eval を参照してください。特殊変数 ${nick}、${channel}、${server} はそれぞれの値に置換されます。${...} が文字列に含まれない場合、"%v" は WeeChat バージョン番号に置換されます)]
+** 説明: pass:none[default part message (leaving channel) (note: content is evaluated, see /help eval; special variables ${nick}, ${channel} and ${server} are replaced by their values; "%v" is replaced by WeeChat version if there is no ${...} in string)]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+"WeeChat ${info:version}"+`
 
 * [[option_irc.server_default.msg_quit]] *irc.server_default.msg_quit*
-** 説明: pass:none[デフォルトの終了メッセージ (サーバから切断する際に送信されるメッセージ) (注意: 値は評価されます、/help eval を参照してください。特殊変数 ${nick}、${channel}、${server} はそれぞれの値に置換されます。${...} が文字列に含まれない場合、"%v" は WeeChat バージョン番号に置換されます)]
+** 説明: pass:none[default quit message (disconnecting from server) (note: content is evaluated, see /help eval; special variables ${nick}, ${channel} and ${server} are replaced by their values; "%v" is replaced by WeeChat version if there is no ${...} in string)]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+"WeeChat ${info:version}"+`
@@ -2770,7 +2838,7 @@
 ** 説明: pass:none[SASL 認証が失敗した場合の挙動: 認証の問題を無視する場合は "continue"、サーバへの再接続を予定する場合は "reconnect"、サーバから切断する場合は "disconnect" (irc.network.sasl_fail_unavailable も参照してください)]
 ** タイプ: 整数
 ** 値: continue, reconnect, disconnect
-** デフォルト値: `+continue+`
+** デフォルト値: `+reconnect+`
 
 * [[option_irc.server_default.sasl_key]] *irc.server_default.sasl_key*
 ** 説明: pass:none[file with ECC private key for mechanism "ecdsa-nist256p-challenge" (path is evaluated, see function string_eval_path_home in plugin API reference)]
@@ -2779,9 +2847,9 @@
 ** デフォルト値: `+""+`
 
 * [[option_irc.server_default.sasl_mechanism]] *irc.server_default.sasl_mechanism*
-** 説明: pass:none[SASL 認証メカニズム: "plain" は平文パスワード、"ecdsa-nist256p-challenge" は鍵を使ったチャレンジ認証、"external" はクライアント側の SSL 証明書を利用した認証<、"dh-blowfish" は blowfish 暗号化パスワード (危険、非推奨)、"dh-aes" は AES 暗号化パスワード (危険、非推奨)]
+** 説明: pass:none[mechanism for SASL authentication: "plain" for plain text password, "scram-sha-1" for SCRAM authentication with SHA-1 digest algorithm, "scram-sha-256" for SCRAM authentication with SHA-256 digest algorithm, "scram-sha-512" for SCRAM authentication with SHA-512 digest algorithm, "ecdsa-nist256p-challenge" for key-based challenge authentication, "external" for authentication using client side SSL certificate]
 ** タイプ: 整数
-** 値: plain, ecdsa-nist256p-challenge, external, dh-blowfish, dh-aes
+** 値: plain, scram-sha-1, scram-sha-256, scram-sha-512, ecdsa-nist256p-challenge, external
 ** デフォルト値: `+plain+`
 
 * [[option_irc.server_default.sasl_password]] *irc.server_default.sasl_password*
@@ -3345,7 +3413,7 @@
 ** デフォルト値: `+lightmagenta+`
 
 * [[option_script.look.columns]] *script.look.columns*
-** 説明: pass:none[スクリプトバッファでの表示列の書式: 以下の列識別子がそれぞれの値で置き換えられます: %a=作者、%d=説明、%D=追加日、%e=拡張子、%l=言語、%L=ライセンス、%n=拡張子を含む名前、%N=名前、%r=依存、%s=状態、%t=タグ、%u=アップデート日、%v=バージョン、%V=ロード済みバージョン、%w=min_weechat、%W=max_weechat)]
+** 説明: pass:none[format of columns displayed in script buffer: following column identifiers are replaced by their values: %a=author, %d=description, %D=date added, %e=extension, %l=language, %L=license, %n=name with extension, %N=name, %r=requirements, %s=status, %t=tags, %u=date updated, %v=version, %V=version loaded, %w=min_weechat, %W=max_weechat)]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+"%s %n %V %v %u | %d | %t"+`

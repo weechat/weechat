@@ -17,10 +17,11 @@ target: サーバ名
 * `+allchan+`: 全てのサーバ、全てのチャンネルに対してコマンドを実行
 
 ----
-/allchan  [-current] [-exclude=<channel>[,<channel>...]] <command>
-          [-current] -include=<channel>[,<channel>...] <command>
+/allchan  [-current] [-parted] [-exclude=<channel>[,<channel>...]] <command>
+          [-current] [-parted] -include=<channel>[,<channel>...] <command>
 
  -current: execute command for channels of current server only
+  -parted: execute on parted channels only
  -exclude: exclude some channels (wildcard "*" is allowed)
  -include: include only some channels (wildcard "*" is allowed)
   command: command to execute (or text to send to buffer if command does not start with '/')
@@ -41,6 +42,8 @@ Examples:
     /allchan -exclude=#weechat,#linux* hello
   say 'hello' on all channels beginning with #linux:
     /allchan -include=#linux* hello
+  close all buffers with parted channels:
+    /allchan -parted /close
 ----
 
 [[command_irc_allpv]]
@@ -100,6 +103,26 @@ Examples:
     /allserv /whois $nick
 ----
 
+[[command_irc_auth]]
+* `+auth+`: authenticate with SASL
+
+----
+/auth  [<username> <password>]
+
+username: SASL username (content is evaluated, see /help eval; server options are evaluated with ${irc_server.xxx} and ${server} is replaced by the server name)
+password: SASL password or path to file with private key (content is evaluated, see /help eval; server options are evaluated with ${irc_server.xxx} and ${server} is replaced by the server name)
+
+If username and password are not provided, the values from server options "sasl_username" and "sasl_password" (or "sasl_key") are used.
+
+Examples:
+  authenticate with username/password defined in the server:
+    /auth
+  authenticate as a different user:
+    /auth user2 password2
+  authenticate as a different user with mechanism ecdsa-nist256p-challenge:
+    /auth user2 ${weechat_config_dir}/ecdsa2.pem
+----
+
 [[command_irc_ban]]
 * `+ban+`: ニックネームかホスト名を指定してバン
 
@@ -121,19 +144,19 @@ channel: チャンネル名
       req|ack [<capability> [<capability>...]]
       end
 
-   ls: サーバがサポートする機能をリスト
- list: 現在有効化されている機能をリスト
-  req: 機能情報を要求
-  ack: クライアント側に承認を要求する機能を承認
-  end: 機能情報交換を終了
+   ls: list the capabilities supported by the server
+ list: list the capabilities currently enabled
+  req: request a capability
+  ack: acknowledge capabilities which require client-side acknowledgement
+  end: end the capability negotiation
 
-引数無しの場合、"ls" と "list" を送信します。
+Without argument, "ls" and "list" are sent.
 
-WeeChat がサポートする機能: account-notify、away-notify、cap-notify、chghost、extended-join、invite-notify、multi-prefix、server-time、userhost-in-names。
+Capabilities supported by WeeChat are: account-notify, away-notify, cap-notify, chghost, extended-join, invite-notify, message-tags, multi-prefix, server-time, setname, userhost-in-names.
 
-自動的に有効化する機能を設定するにはオプション irc.server_default.capabilities (または対象のサーバに関するオプション irc.server.xxx.capabilities) を使ってください。
+The capabilities to automatically enable on servers can be set in option irc.server_default.capabilities (or by server in option irc.server.xxx.capabilities).
 
-例:
+Examples:
    /cap
    /cap req multi-prefix away-notify
 ----
@@ -145,23 +168,23 @@ WeeChat がサポートする機能: account-notify、away-notify、cap-notify�
 /connect  [<server> [<server>...]] [-<option>[=<value>]] [-no<option>] [-nojoin] [-switch]
           -all|-auto|-open [-nojoin] [-switch]
 
-    server: サーバ名、これは:
-            - 内部サーバ名 (/server add で追加されたもの、利用推奨)
-            - ホスト名/ポート番号または IP アドレス/ポート番号、デフォルトのポート番号は 6667
-            - 次の書式に従う URL: irc[6][s]://[nickname[:password]@]irc.example.org[:port][/#channel1][,#channel2[...]]
-            注意: アドレス/IP/URL を指定した場合、サーバを一時的に追加します (保存しません)、/help irc.look.temporary_servers を参照してください。
-    option: サーバに関するオプション (ブール型オプションでは、value は無視される)
-  nooption: ブール型オプションを 'off' にする (例: -nossl)
-      -all: 設定された全てのサーバに接続
-     -auto: 自動接続を有効化してサーバに接続
-     -open: 現在接続されていないがオープンされているサーバに接続
-   -nojoin: チャンネルに入らない (autojoin が有効化されていても)
-   -switch: 次のサーバアドレスに移動
+    server: server name, which can be:
+            - internal server name (added by /server add, recommended usage)
+            - hostname/port or IP/port, port is 6667 by default
+            - URL with format: irc[6][s]://[nickname[:password]@]irc.example.org[:port][/#channel1][,#channel2[...]]
+            Note: for an address/IP/URL, a temporary server is added (NOT SAVED), see /help irc.look.temporary_servers
+    option: set option for server (for boolean option, value can be omitted)
+  nooption: set boolean option to 'off' (for example: -nossl)
+      -all: connect to all servers defined in configuration
+     -auto: connect to servers with autoconnect enabled
+     -open: connect to all opened servers that are not currently connected
+   -nojoin: do not join any channel (even if autojoin is enabled on server)
+   -switch: switch to next server address
 
-サーバとの接続を切断するか、接続試行を中止するには /disconnect コマンドを使ってください。
+To disconnect from a server or stop any connection attempt, use command /disconnect.
 
-例:
-  /connect freenode
+Examples:
+  /connect libera
   /connect irc.oftc.net/6667
   /connect irc6.oftc.net/6667 -ipv6
   /connect irc6.oftc.net/6697 -ipv6 -ssl
@@ -287,24 +310,24 @@ nick: ニックネームまたはマスク (ワイルドカード "*" を使う�
          add [re:]<nick> [<server> [<channel>]]
          del <number>|-all
 
-     list: 無視エントリをリストアップ
-      add: 無視エントリを追加
-     nick: ニックネームまたはホスト名 ("re:" を付けることで POSIX 拡張正規表現を使えます、"*" は 0 個以上の文字にマッチします)
-      del: 無視エントリの削除
-   number: 削除する無視エントリ番号 (番号はリストを参照してください)
-     -all: 全ての無視エントリを削除
-   server: 無視設定を有効にする内部サーバ名
-  channel: 無視設定を有効にするチャンネル名
+     list: list all ignores
+      add: add an ignore
+     nick: nick or hostname (can be a POSIX extended regular expression if "re:" is given or a mask using "*" to replace zero or more chars)
+      del: delete an ignore
+   number: number of ignore to delete (look at list to find it)
+     -all: delete all ignores
+   server: internal server name where ignore is working
+  channel: channel name where ignore is working
 
-注意: 正規表現で大文字小文字を区別するには "(?-i)" を最初につけてください。
+Note: the regular expression can start with "(?-i)" to become case sensitive.
 
-例:
-  全てのサーバ上のニックネーム "toto" を無視:
+Examples:
+  ignore nick "toto" everywhere:
     /ignore add toto
-  freenode サーバ上のホスト名 "toto@domain.com" を無視:
-    /ignore add toto@domain.com freenode
-  freenode サーバの #weechat チャンネル上のホスト名 "toto*@*.domain.com" を無視:
-    /ignore add toto*@*.domain.com freenode #weechat
+  ignore host "toto@domain.com" on libera server:
+    /ignore add toto@domain.com libera
+  ignore host "toto*@*.domain.com" on libera/#weechat:
+    /ignore add toto*@*.domain.com libera #weechat
 ----
 
 [[command_irc_info]]
@@ -341,15 +364,15 @@ nick: ニックネーム
 ----
 /join  [-noswitch] [-server <server>] [<channel1>[,<channel2>...]] [<key1>[,<key2>...]]
 
--noswitch: 新しいバッファに移動しない
-   server: 送信先サーバ (内部サーバ名)
-  channel: 参加するチャンネルの名前
-      key: チャンネルに参加するためのキー (キーが必要なチャンネルは最初に置くこと)
+-noswitch: do not switch to new buffer
+   server: send to this server (internal name)
+  channel: channel name to join
+      key: key to join the channel (channels with a key must be the first in list)
 
-例:
+Examples:
   /join #weechat
   /join #protectedchan,#weechat key
-  /join -server freenode #weechat
+  /join -server libera #weechat
   /join -noswitch #weechat
 ----
 
@@ -359,9 +382,9 @@ nick: ニックネーム
 ----
 /kick  [<channel>] <nick> [<reason>]
 
-channel: チャンネル名
-   nick: ニックネーム
- reason: 理由 (特殊変数 $nick、$channel、$server はそれぞれの値に置換されます)
+channel: channel name
+   nick: nick
+ reason: reason (evaluated, see /help eval; special variables ${nick} (self nick), ${target} (target nick), ${channel} and ${server} are replaced by their values)
 ----
 
 [[command_irc_kickban]]
@@ -370,14 +393,14 @@ channel: チャンネル名
 ----
 /kickban  [<channel>] <nick> [<reason>]
 
-channel: チャンネル名
-   nick: ニックネーム
- reason: 理由 (特殊変数 $nick、$channel、$server はそれぞれの値に置換されます)
+channel: channel name
+   nick: nick
+ reason: reason (evaluated, see /help eval; special variables ${nick} (self nick), ${target} (target nick), ${channel} and ${server} are replaced by their values)
 
-キックと参加禁止にマスクを使うことが可能で、"*" のマスク展開後にマッチするニックネームがこれらの対象になります。
+It is possible to kick/ban with a mask, nick will be extracted from mask and replaced by "*".
 
-例:
-  "*!*@host.com" を参加禁止して "toto" をキック:
+Example:
+  ban "*!*@host.com" and then kick "toto":
     /kickban toto!*@host.com
 ----
 
@@ -402,7 +425,7 @@ server_mask: このマスクにマッチするサーバのリスト
 ----
 
 [[command_irc_list]]
-* `+list+`: チャンネルとトピックをリストアップ
+* `+list+`: list channels and their topics
 
 ----
 /list  [-server <server>] [-re <regex>] [<channel>[,<channel>...]] [<target>]
@@ -540,22 +563,22 @@ target: ニックネームまたはチャンネル名
 /notify  add <nick> [<server> [-away]]
          del <nick>|-all [<server>]
 
-   add: 通知の追加
-  nick: ニックネーム
-server: 内部サーバ名 (デフォルトでは現在のサーバ)
- -away: 離席メッセージが変更されたときに通知 (ニックネームの whois を行う)
-   del: 通知を削除
-  -all: 全ての通知を削除
+   add: add a notification
+  nick: nick
+server: internal server name (by default current server)
+ -away: notify when away message is changed (by doing whois on nick)
+   del: delete a notification
+  -all: delete all notifications
 
-引数無しの場合は、現在のサーバに関する通知設定を表示します (コアバッファで実行された場合は全てのサーバに関する設定)。
+Without argument, this command displays notifications for current server (or all servers if command is issued on core buffer).
 
-例:
-  "toto" が現在のサーバに接続/切断した場合に通知:
+Examples:
+  notify when "toto" joins/quits current server:
     /notify add toto
-  "toto" が freenode サーバに接続/切断した場合に通知:
-    /notify add toto freenode
-  "toto" が freenode サーバに戻るか離席状態になった場合に通知:
-    /notify add toto freenode -away
+  notify when "toto" joins/quits libera server:
+    /notify add toto libera
+  notify when "toto" is away or back on libera server:
+    /notify add toto libera -away
 ----
 
 [[command_irc_op]]
@@ -671,9 +694,9 @@ option: 追加オプション、いくつかのサーバ用
 ----
 /remove  [<channel>] <nick> [<reason>]
 
-channel: チャンネル名
-   nick: ニックネーム
- reason: 理由 (特殊変数 $nick、$channel、$server はそれぞれの値に置換されます)
+channel: channel name
+   nick: nick
+ reason: reason (special variables $nick, $channel and $server are replaced by their values)
 ----
 
 [[command_irc_restart]]
@@ -775,16 +798,16 @@ nooption: set boolean option to 'off' (for example: -nossl)
 
 Examples:
   /server listfull
-  /server add freenode chat.freenode.net
-  /server add freenode chat.freenode.net/6697 -ssl -autoconnect
+  /server add libera irc.libera.chat
+  /server add libera irc.libera.chat/6697 -ssl -autoconnect
   /server add chatspike irc.chatspike.net/6667,irc.duckspike.net/6667
-  /server copy freenode freenode-test
-  /server rename freenode-test freenode2
-  /server reorder freenode2 freenode
-  /server del freenode
+  /server copy libera libera-test
+  /server rename libera-test libera2
+  /server reorder libera2 libera
+  /server del libera
   /server deloutq
   /server raw
-  /server raw s:freenode
+  /server raw s:libera
   /server raw c:${recv} && ${command}==PRIVMSG && ${nick}==foo
 ----
 
@@ -806,6 +829,15 @@ distribution: サービスの可視性
 
 mask: マスクにマッチするサービスだけをリストアップ
 type: タイプにマッチするサービスだけをリストアップ
+----
+
+[[command_irc_setname]]
+* `+setname+`: set real name
+
+----
+/setname  <realname>
+
+realname: new real name
 ----
 
 [[command_irc_squery]]
@@ -1271,30 +1303,31 @@ Examples:
 /debug  list
         set <plugin> <level>
         dump [<plugin>]
-        buffer|color|infolists|memory|tags|term|windows
+        buffer|color|infolists|libs|certs|memory|tags|term|windows
         mouse|cursor [verbose]
         hdata [free]
         time <command>
 
-     list: デバッグレベルの設定されたプラグインをリストアップ
-      set: プラグインのデバッグレベルを設定
-   plugin: プラグインの名前 ("core" は WeeChat コアを意味する)
-    level: プラグインのデバッグレベル (0 はデバッグの無効化)
-     dump: WeeChat ログファイルにメモリダンプを保存 (WeeChat がクラッシュした場合と同じダンプが書き込まれます)
-   buffer: ログファイルに 16 進値でバッファの内容をダンプ
-    color: 現在の色ペアに関する情報を表示
-   cursor: カーソルモードのデバッグを切り替え
-     dirs: ディレクトリを表示
-    hdata: hdata に関する情報を表示 (free を付けた場合: メモリから全ての hdata を削除)
-    hooks: フックに関する情報を表示
-infolists: インフォリストに関する情報を表示
-     libs: 使用中の外部ライブラリに関する情報を表示
-   memory: メモリ使用量に関する情報を表示
-    mouse: マウスのデバックを切り替え
-     tags: 行のタグを表示
-     term: 端末に関する情報を表示
-  windows: ウィンドウツリーの情報を表示
-     time: コマンドの実行時間や現在のバッファへのテキスト送信にかかった時間を測定
+     list: list plugins with debug levels
+      set: set debug level for plugin
+   plugin: name of plugin ("core" for WeeChat core)
+    level: debug level for plugin (0 = disable debug)
+     dump: save memory dump in WeeChat log file (same dump is written when WeeChat crashes)
+   buffer: dump buffer content with hexadecimal values in log file
+    color: display infos about current color pairs
+   cursor: toggle debug for cursor mode
+     dirs: display directories
+    hdata: display infos about hdata (with free: remove all hdata in memory)
+    hooks: display infos about hooks
+infolists: display infos about infolists
+     libs: display infos about external libraries used
+    certs: display number of loaded trusted certificate authorities
+   memory: display infos about memory usage
+    mouse: toggle debug for mouse
+     tags: display tags for lines
+     term: display infos about terminal
+  windows: display windows tree
+     time: measure time to execute a command or to send text to the current buffer
 ----
 
 [[command_weechat_eval]]
@@ -1359,10 +1392,11 @@ Some variables are replaced in expression, using the format ${variable}, variabl
   15. an environment variable (format: "env:XXX")
   16. a ternary operator (format: "if:condition?value_if_true:value_if_false")
   17. result of an expression with parentheses and operators + - * / // % ** (format: "calc:xxx")
-  18. a translated string (format: "translate:xxx")
-  19. an option (format: "file.section.option")
-  20. a local variable in buffer
-  21. a hdata name/variable (the value is automatically converted to string), by default "window" and "buffer" point to current window/buffer.
+  18. a random integer number (format: "random:min,max")
+  19. a translated string (format: "translate:xxx")
+  20. an option (format: "file.section.option")
+  21. a local variable in buffer
+  22. a hdata name/variable (the value is automatically converted to string), by default "window" and "buffer" point to current window/buffer.
 Format for hdata can be one of following:
   hdata.var1.var2...: start with a hdata (pointer must be known), and ask variables one after one (other hdata can be followed)
   hdata[list].var1.var2...: start with a hdata using a list/pointer/pointer name, for example:
@@ -1379,7 +1413,7 @@ Examples (simple strings):
   /eval -n ${info:version}                       ==> 0.4.3
   /eval -n ${env:HOME}                           ==> /home/user
   /eval -n ${weechat.look.scroll_amount}         ==> 3
-  /eval -n ${sec.data.freenode_password}         ==> secret
+  /eval -n ${sec.data.password}                  ==> secret
   /eval -n ${window}                             ==> 0x2549aa0
   /eval -n ${window.buffer}                      ==> 0x2549320
   /eval -n ${window.buffer.full_name}            ==> core.weechat
@@ -1394,6 +1428,7 @@ Examples (simple strings):
   /eval -n ${repeat:5,-}                         ==> -----
   /eval -n ${length:test}                        ==> 4
   /eval -n ${calc:(5+2)*3}                       ==> 21
+  /eval -n ${random:0,10}                        ==> 3
   /eval -n ${base_encode:64,test}                ==> dGVzdA==
   /eval -n ${base_decode:64,dGVzdA==}            ==> test
   /eval -n ${translate:Plugin}                   ==> Extension
@@ -1434,7 +1469,7 @@ addreplace: add or replace an existing filter
        del: delete a filter
       -all: delete all filters
     buffer: comma separated list of buffers where filter is active:
-            - this is full name including plugin (example: "irc.freenode.#weechat" or "irc.server.freenode")
+            - this is full name including plugin (example: "irc.libera.#weechat" or "irc.server.libera")
             - "*" means all buffers
             - a name starting with '!' is excluded
             - wildcard "*" is allowed
@@ -1469,11 +1504,11 @@ Examples:
   filter nicks displayed when joining channels or with /names:
     /filter add nicks * irc_366 *
   filter nick "toto" on IRC channel #weechat:
-    /filter add toto irc.freenode.#weechat nick_toto *
+    /filter add toto irc.libera.#weechat nick_toto *
   filter IRC join/action messages from nick "toto":
     /filter add toto * nick_toto+irc_join,nick_toto+irc_action *
   filter lines containing "weechat sucks" on IRC channel #weechat:
-    /filter add sucks irc.freenode.#weechat * weechat sucks
+    /filter add sucks irc.libera.#weechat * weechat sucks
   filter lines that are strictly equal to "WeeChat sucks" on all buffers:
     /filter add sucks2 * * (?-i)^WeeChat sucks$
 ----
@@ -1631,19 +1666,21 @@ listdefault: デフォルトキーをリストアップ
          del [<name>] [buffers|windows]
          rename <name> <new_name>
 
-  store: レイアウトに現在のバッファ/ウィンドウを保存
-  apply: 保存されたレイアウトを適用
-  leave: 現在のレイアウトを保持する (レイアウトを更新しない)
-    del: レイアウトとして保存されているバッファとウィンドウを削除
-         (名前の後に "バッファ" や "ウィンドウ" を指定しない場合、レイアウトを削除)
- rename: レイアウトのリネーム
-   name: 保存されたレイアウトの名前 (初期状態は "default")
-buffers: バッファのみに対してレイアウトを保存/適用 (バッファの順番)
-windows: ウィンドウのみに対してレイアウトを保存/適用 (それぞれのウィンドウに表示されるバッファ)
+  store: store current buffers/windows in a layout
+  apply: apply stored layout
+  leave: leave current layout (does not update any layout)
+    del: delete buffers and/or windows in a stored layout
+         (if neither "buffers" nor "windows" is given after the name, the layout is deleted)
+ rename: rename a layout
+   name: name for stored layout (default is "default")
+buffers: store/apply only buffers (order of buffers)
+windows: store/apply only windows (buffer displayed by each window)
 
-引数を指定しなかった場合、保存されたレイアウトを表示します。
+Without argument, this command displays stored layouts.
 
-"weechat.look.save_layout_on_exit" オプションを使えば、現在のレイアウトを /quit コマンドの実行時に保存することが可能です。
+The current layout can be saved on /quit command with the option "weechat.look.save_layout_on_exit".
+
+Note: the layout only remembers windows split and buffers numbers. It does not open buffers. That means for example you must still auto-join IRC channels to open the buffers, the saved layout only applies once the buffers are opened.
 ----
 
 [[command_weechat_mouse]]
@@ -1672,21 +1709,21 @@ disable: マウスの無効化
 ----
 /mute  [-core | -current | -buffer <name>] <command>
 
-   -core: WeeChat コアバッファへの出力を抑制
--current: 現在のバッファへの出力を抑制
- -buffer: 指定したバッファへの出力を抑制
-    name: 完全なバッファの名前 (例: "irc.server.freenode"、"irc.freenode.#weechat")
- command: 静かに実行するコマンド (最初に '/' が無い場合は自動的に追加されます)
+   -core: no output on WeeChat core buffer
+-current: no output on current buffer
+ -buffer: no output on specified buffer
+    name: full buffer name (examples: "irc.server.libera", "irc.libera.#weechat")
+ command: command to execute silently (a '/' is automatically added if not found at beginning of command)
 
-ターゲット (-core、-current、-buffer) が指定されなかった場合、デフォルトでは全ての出力を抑制します。
+If no target is specified (-core, -current or -buffer), then default is to mute all buffers.
 
-例:
-  save を行う:
+Examples:
+  config save:
     /mute save
-  現在の IRC チャンネルへのメッセージ:
+  message to current IRC channel:
     /mute -current msg * hi!
-  #weechat チャンネルへのメッセージ:
-    /mute -buffer irc.freenode.#weechat msg #weechat hi!
+  message to #weechat channel:
+    /mute -buffer irc.libera.#weechat msg #weechat hi!
 ----
 
 [[command_weechat_plugin]]
@@ -1720,44 +1757,44 @@ arguments: ロードするプラグインに与える引数
         -stdout|-stderr [<text>]
         -beep
 
-   -buffer: 指定したバッファにテキストを表示 (デフォルト: コマンドを実行したバッファ)
--newbuffer: 新しいバッファの作成、そのバッファ内にテキストの表示
-     -free: 自由内容バッファの作成 (-newbuffer と共に使用)
-   -switch: 指定したバッファに切り替え
-     -core: "-buffer core.weechat" のエイリアス
-  -current: 現在のバッファにテキストを表示
-        -y: 指定した行番号に表示 (自由内容バッファ専用)
-      line: 自由内容バッファの行番号 (1 行目は 0、負数は最後の行から数えた行: -1 = 最終行から数えて 1 行目、-2 = 最終行から数えて 2 行目、など)
-   -escape: エスケープ文字を解釈 (例えば \a、\07、\x07)
-     -date: メッセージの日付、書式:
-              -n: 今から 'n' 秒前
-              +n: 今から 'n' 秒後
-               n: エポックから 'n' 秒目 (man time を参照してください)
-              日付/時間 (ISO 8601): yyyy-mm-ddThh:mm:ss、例: 2014-01-19T04:32:55
-              時間: hh:mm:ss (example: 04:32:55)
-     -tags: タグのコンマ区切りリスト (よく使うタグのリストは /help filter を参照してください)
-      text: 表示するテキスト (プレフィックスとメッセージは必ず \t で区切ってください、"-" で始まるテキストは "\" を前置してください)
-   -stdout: 標準出力にテキストを表示 (エスケープ文字を解釈)
-   -stderr: 標準エラー出力にテキストを表示 (エスケープ文字を解釈)
-     -beep: "-stderr \a" の別名
+   -buffer: display text in this buffer (default: buffer where command is executed)
+-newbuffer: create a new buffer and display text in this buffer
+     -free: create a buffer with free content (with -newbuffer only)
+   -switch: switch to the buffer
+     -core: alias of "-buffer core.weechat"
+  -current: display text on current buffer
+        -y: display on a custom line (for buffer with free content only)
+      line: line number for buffer with free content (first line is 0, a negative number displays after last line: -1 = after last line, -2 = two lines after last line, etc.)
+   -escape: interpret escaped chars (for example \a, \07, \x07)
+     -date: message date, format can be:
+              -n: 'n' seconds before now
+              +n: 'n' seconds in the future
+               n: 'n' seconds since the Epoch (see man time)
+              date/time (ISO 8601): yyyy-mm-ddThh:mm:ss, example: 2014-01-19T04:32:55
+              time: hh:mm:ss (example: 04:32:55)
+     -tags: comma-separated list of tags (see /help filter for a list of tags most commonly used)
+      text: text to display (prefix and message must be separated by "\t", if text starts with "-", then add a "\" before)
+   -stdout: display text on stdout (escaped chars are interpreted)
+   -stderr: display text on stderr (escaped chars are interpreted)
+     -beep: alias of "-stderr \a"
 
-オプション -action ... -quit をつけた場合、プレフィックスは "weechat.look.prefix_*" で定義されているものになります。
+The options -action ... -quit use the prefix defined in options "weechat.look.prefix_*".
 
-以下のエスケープ文字を使うことができます:
+Following escaped chars are supported:
   \" \\ \a \b \e \f \n \r \t \v \0ooo \xhh \uhhhh \Uhhhhhhhh
 
-例:
-  コアバッファにハイライトを付けてリマインダを表示:
+Examples:
+  display a reminder on core buffer with a highlight:
     /print -core -tags notify_highlight Reminder: buy milk
-  コアバッファにエラーを表示:
+  display an error on core buffer:
     /print -core -error Some error here
-  コアバッファにプレフィックス "abc" を付けてメッセージを表示:
+  display message on core buffer with prefix "abc":
     /print -core abc\tThe message
-  チャンネル #weechat にメッセージを表示:
-    /print -buffer irc.freenode.#weechat Message on #weechat
-  雪だるまを表示 (U+2603):
+  display a message on channel #weechat:
+    /print -buffer irc.libera.#weechat Message on #weechat
+  display a snowman (U+2603):
     /print -escape \u2603
-  警告を送信 (BEL):
+  send alert (BEL):
     /print -beep
 ----
 
@@ -1889,14 +1926,14 @@ Examples:
     /secure passphrase this is my passphrase
   use program "pass" to read the passphrase on startup:
     /set sec.crypt.passphrase_command "/usr/bin/pass show weechat/passphrase"
-  encrypt freenode SASL password:
-    /secure set freenode mypassword
-    /set irc.server.freenode.sasl_password "${sec.data.freenode}"
+  encrypt libera SASL password:
+    /secure set libera mypassword
+    /set irc.server.libera.sasl_password "${sec.data.libera}"
   encrypt oftc password for nickserv:
     /secure set oftc mypassword
     /set irc.server.oftc.command "/msg nickserv identify ${sec.data.oftc}"
   alias to ghost the nick "mynick":
-    /alias add ghost /eval /msg -server freenode nickserv ghost mynick ${sec.data.freenode}
+    /alias add ghost /eval /msg -server libera nickserv ghost mynick ${sec.data.libera}
 ----
 
 [[command_weechat_set]]
@@ -2281,8 +2318,8 @@ The expected format is one of:
   plugin.buffer *text or command here
   *text or command here
 
-For example to change your freenode nick:
-  echo 'irc.server.freenode */nick newnick' >/run/user/1000/weechat/weechat_fifo_12345
+For example to change your libera nick:
+  echo 'irc.server.libera */nick newnick' >/run/user/1000/weechat/weechat_fifo_12345
 
 Please read the user's guide for more info and examples.
 
@@ -2738,10 +2775,10 @@ The "weechat" protocol allows a remote interface to connect on the port, see the
 Without argument, this command opens buffer with list of relay clients.
 
 Examples:
-  irc proxy, for server "freenode":
-    /relay add irc.freenode 8000
-  irc proxy, for server "freenode", with SSL:
-    /relay add ssl.irc.freenode 8001
+  irc proxy, for server "libera":
+    /relay add irc.libera 8000
+  irc proxy, for server "libera", with SSL:
+    /relay add ssl.irc.libera 8001
   irc proxy, for all servers (client will choose), with SSL:
     /relay add ssl.irc 8002
   weechat protocol:

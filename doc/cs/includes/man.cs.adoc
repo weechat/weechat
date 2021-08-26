@@ -8,7 +8,7 @@ S irc pluginem se můžete doččasně připojit na server s URL jako:
 
 K připojení na IRC kanál Weechatu pro podporu s přezdívkou "mynick":
 
-    irc://mynick@chat.freenode.net/#weechat
+    irc://mynick@irc.libera.chat/#weechat
 
 IPv6 adresa může být uzavřena do hranatých závorek k přidání portu, například:
 
@@ -84,6 +84,9 @@ $HOME/.config/weechat/tcl.conf::
 
 $HOME/.config/weechat/trigger.conf::
     konfigurační soubor pro _trigger_ plugin
+
+$HOME/.config/weechat/typing.conf::
+    konfigurační soubor pro _typing_ plugin
 
 $HOME/.config/weechat/xfer.conf::
     konfigurační soubor pro _xfer_ plugin

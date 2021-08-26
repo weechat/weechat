@@ -62,6 +62,7 @@ if(ENABLE_IRC)
     unit/plugins/irc/test-irc-nick.cpp
     unit/plugins/irc/test-irc-protocol.cpp
     unit/plugins/irc/test-irc-server.cpp
+    unit/plugins/irc/test-irc-tag.cpp
   )
 endif()
 
@@ -74,6 +75,13 @@ endif()
 if(ENABLE_TRIGGER)
   list(APPEND LIB_WEECHAT_UNIT_TESTS_PLUGINS_SRC
     unit/plugins/trigger/test-trigger.cpp
+  )
+endif()
+
+if(ENABLE_TYPING)
+  list(APPEND LIB_WEECHAT_UNIT_TESTS_PLUGINS_SRC
+    unit/plugins/typing/test-typing.cpp
+    unit/plugins/typing/test-typing-status.cpp
   )
 endif()
 

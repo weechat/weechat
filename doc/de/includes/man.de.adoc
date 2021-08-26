@@ -9,7 +9,7 @@ indem man eine URL verwendet:
 
 Um dem WeeChat IRC Support-Channel, mit dem Nick "mynick", beizutreten:
 
-    irc://mynick@chat.freenode.net/#weechat
+    irc://mynick@irc.libera.chat/#weechat
 
 Um eine IPv6 Adresse zu nutzen, muss diese in eckige Klammern gesetzt werden:
 
@@ -85,6 +85,9 @@ $HOME/.config/weechat/tcl.conf::
 
 $HOME/.config/weechat/trigger.conf::
     Konfigurationsdatei für _trigger_ Erweiterung
+
+$HOME/.config/weechat/typing.conf::
+    Konfigurationsdatei für _typing_ Erweiterung
 
 $HOME/.config/weechat/xfer.conf::
     Konfigurationsdatei für _xfer_ Erweiterung

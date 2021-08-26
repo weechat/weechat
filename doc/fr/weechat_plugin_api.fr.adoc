@@ -583,6 +583,44 @@ free (str);
 [NOTE]
 Cette fonction n'est pas disponible dans l'API script.
 
+==== string_cut
+
+_WeeChat ≥ 3.3._
+
+Couper une chaîne après un nombre donné de caractères, ajouter un suffixe
+facultatif après la chaîne si elle est coupée.
+
+Prototype :
+
+[source,C]
+----
+char *weechat_string_cut (const char *string, int length, int count_suffix, int screen, const char *cut_suffix);
+----
+
+Paramètres :
+
+* _string_ : chaîne à couper
+* _length_ : nombre maximum de caractères
+* _count_suffix_ : si 1, la longueur du suffixe est comptée dans la longueur maximale
+* _screen_ : si 1, le découpage est basé sur la largeur des caractères affichés
+* _cut_suffix_ : le suffixe ajouté à la fin de la chaîne si elle est découpée
+
+Valeur de retour :
+
+* chaîne coupée (doit être supprimée par un appel à "free" après utilisation)
+
+Exemple en C :
+
+[source,C]
+----
+char *str = weechat_string_cut ("ceci est un test", 5, 1, 1, "…");  /* résultat : "ceci…" */
+/* ... */
+free (str);
+----
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
 ==== string_tolower
 
 Convertir une chaîne UTF-8 en minuscules.
@@ -2253,7 +2291,7 @@ str3 = weechat.string_input_for_buffer("//test")  # "/test"
 ==== string_eval_expression
 
 _WeeChat ≥ 0.4.0, mis à jour dans la 0.4.2, 0.4.3, 1.0, 1.1, 1.2, 1.3, 1.6, 1.8,
-2.0, 2.2, 2.3, 2.7, 2.9, 3.1 et 3.2._
+2.0, 2.2, 2.3, 2.7, 2.9, 3.1, 3.2 et 3.3._
 
 Évaluer l'expression et retourner le résultat sous forme de chaîne.
 Les variables spéciales avec le format `+${variable}+` sont étendues (voir le
@@ -2804,6 +2842,12 @@ première étendue à la dernière) :
   `+0.2+` +
   `+65536+`
 
+| `+${random:min,max}+` +
+  _(WeeChat ≥ 3.3)_ |
+  Nombre entier aléatoire dans l'intervalle de `min` à `max` (inclus). |
+  `+${random:0,10}+` |
+  `+3+`
+
 | `+${translate:xxx}+` +
   _(WeeChat ≥ 3.2)_ |
   Chaîne traduite (dépend de la langue utilisée par WeeChat pour afficher les
@@ -2813,7 +2857,7 @@ première étendue à la dernière) :
 
 | `+${sec.data.nom}+` |
   Valeur de la donnée sécurisée `nom`. |
-  `+${sec.data.freenode_pass}+` |
+  `+${sec.data.libera_pass}+` |
   `+mon_mot_de_passe+`
 
 | `+${fichier.section.option}+` |
@@ -3687,6 +3731,56 @@ rc = weechat_crypto_hash_pbkdf2 (data, strlen (data), "sha256", salt, strlen (sa
 [NOTE]
 Cette fonction n'est pas disponible dans l'API script.
 
+==== crypto_hmac
+
+_WeeChat ≥ 3.2._
+
+Calculer le code d'authentification d'une empreinte cryptographique de message
+avec clé (HMAC).
+
+Prototype :
+
+[source,C]
+----
+int weechat_crypto_hmac (const void *key, int key_size, const void *message, int message_size,
+                         int hash_algo, void *hash, int *hash_size);
+----
+
+Paramètres :
+
+* _key_ : la clé
+* _key_size_ : nombre d'octets dans _key_
+* _message_ : le message
+* _message_size_ : nombre d'octets dans _message_
+* _hash_algo_ : l'algorithme de hachage, voir le tableau dans la fonction
+  <<crypto_hash_algorithms,crypto_hash>>
+* _hash_ : pointeur vers la variable de hachage, qui est utilisée pour stocker
+  le résultat du hachage (le tampon doit être suffisamment grand, selon
+  l'algorithme, voir le tableau dans la fonction
+  <<crypto_hash_algorithms,crypto_hash>>)
+* _hash_size_ : pointeur vers une variable utiliser pour stocker la longueur
+  du résultat du hachage (en octets) (peut être NULL)
+
+Valeur de retour :
+
+* 1 si OK, 0 si erreur
+
+Exemple en C :
+
+[source,C]
+----
+const char *key = "the key";
+const char *message = "the message";
+char hash[256 / 8];
+int rc, hash_size;
+rc = weechat_crypto_hmac (key, strlen (key), message, strlen (message), "sha256", hash, &hash_size);
+/* rc == 1, hash_size == 32 et hash est un tampon avec :
+   47 36 67 02 fc bc b1 97 a4 25 e6 7a b9 52 92 bd 15 9a 66 91 9c fb 94 b0 b4 9a 39 cb c0 24 2d 7b */
+----
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
 [[directories]]
 === Répertoires
 
@@ -3898,6 +3992,41 @@ char *contenu;
 contenu = weechat_file_get_content ("/tmp/test.txt");
 /* ... */
 free (contenu);
+----
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
+==== file_copy
+
+_WeeChat ≥ 3.3._
+
+Copier un fichier vers une autre destination.
+
+Prototype :
+
+[source,C]
+----
+int weechat_file_copy (const char *from, const char *to);
+----
+
+Paramètres :
+
+* _from_ : fichier source
+* _to_ : fichier cible
+
+Valeur de retour :
+
+* 1 si OK, 0 si erreur
+
+Exemple en C :
+
+[source,C]
+----
+if (weechat_file_copy ("/tmp/test.txt", "/path/to/test2.txt"))
+{
+    /* OK */
+}
 ----
 
 [NOTE]
@@ -5248,7 +5377,8 @@ Cette fonction n'est pas disponible dans l'API script.
 
 _WeeChat ≥ 0.3.3._
 
-Appeller une fonction pour chaque entrée d'une table de hachage.
+Appeller une fonction pour chaque entrée d'une table de hachage, par ordre
+d'insertion dans la table de hachage (de la plus ancienne à la plus récente).
 
 Prototype :
 
@@ -5293,8 +5423,9 @@ Cette fonction n'est pas disponible dans l'API script.
 
 _WeeChat ≥ 0.3.7._
 
-Appeller une fonction pour chaque entrée d'une table de hachage, en envoyant les
-clés et valeurs sous forme de chaînes.
+Appeller une fonction pour chaque entrée d'une table de hachage, par ordre
+d'insertion dans la table de hachage (de la plus ancienne à la plus récente),
+en envoyant les clés et valeurs sous forme de chaînes.
 
 Prototype :
 
@@ -5513,7 +5644,8 @@ Cette fonction n'est pas disponible dans l'API script.
 
 _WeeChat ≥ 0.3.3._
 
-Ajouter les éléments d'une table de hachage dans un objet infolist.
+Ajouter les éléments d'une table de hachage dans un objet infolist, par ordre
+d'insertion dans la table de hachage (de la plus ancienne à la plus récente).
 
 Prototype :
 
@@ -9383,37 +9515,25 @@ Les paramètres sont les mêmes que ceux de la fonction
 Pour une commande standard (ne commençant pas par "url:"), les options suivantes
 sont disponibles :
 
-[width="100%",cols="^1,1,1,4",options="header"]
+[width="100%",cols="^1,^1,1,1,5",options="header"]
 |===
-| Option | Valeur | Défaut | Description
+| Option | WeeChat mini | Valeur | Défaut | Description
 
-| argN (N ≥ 1) +
-  _(WeeChat ≥ 0.4.0)_ |
-  toute chaîne |
-  pas de paramètres |
+| argN (N ≥ 1) | 0.4.0 | toute chaîne | pas de paramètres |
   Paramètres pour la commande ; si aucun paramètre n'est donné avec ces options,
   la commande sera automatiquement découpée comme le fait le shell (et donc les
   paramètres de la commande sont lus dans le paramètre _command_).
 
-| stdin +
-  _(WeeChat ≥ 0.4.3)_ |
-  (non utilisée) |
-  pas de stdin |
+| stdin | 0.4.3 | (non utilisée) | pas de stdin |
   Créer un tuyau pour écrire sur l'entrée standard (stdin) du processus fils
   (voir la fonction <<_hook_set,hook_set>>).
 
-| buffer_flush +
-  _(WeeChat ≥ 1.0)_ |
-  nombre d'octets |
-  65536 |
+| buffer_flush | 1.0 | nombre d'octets | 65536 |
   Nombre minimum d'octets pour vider stdout/stderr (pour envoyer la sortie à la
   fonction de rappel), entre 1 et 65536. Avec la valeur 1, la sortie est envoyée
   immédiatement à la fonction de rappel.
 
-| detached +
-  _(WeeChat ≥ 1.0)_ |
-  (non utilisée) |
-  non détaché |
+| detached | 1.0 | (non utilisée) | non détaché |
   Lancer le process dans un mode détaché : stdout et stderr sont redirigés vers
   _/dev/null_.
 |===
@@ -9873,8 +9993,8 @@ de hachage, avec les valeurs suivantes (les clés et valeurs sont des chaînes)�
   Nom du tampon. |
   Nom du tampon. |
   `+core.weechat+` +
-  `+irc.server.freenode+` +
-  `+irc.freenode.#weechat+`
+  `+irc.server.libera+` +
+  `+irc.libera.#weechat+`
 
 | buffer_type |
   "formatted" |
@@ -10242,833 +10362,650 @@ Valeur de retour :
 
 Liste des signaux envoyés par WeeChat et les extensions :
 
-[width="100%",cols="^1,^3,^4,5",options="header"]
+[width="100%",cols="^2,^4,^1,6,9",options="header"]
 |===
-| Extension | Signal | Paramètres | Description
+| Extension | Signal | WeeChat mini | Paramètres | Description
 
-| guile |
-  [[hook_signal_guile_script_loaded]] guile_script_loaded +
-  _(WeeChat ≥ 0.3.9)_ |
+| guile | [[hook_signal_guile_script_loaded]] guile_script_loaded | 0.3.9 |
   Chaîne : chemin vers le script. |
   Script scheme chargé.
 
-| guile |
-  [[hook_signal_guile_script_unloaded]] guile_script_unloaded +
-  _(WeeChat ≥ 0.3.9)_ |
+| guile | [[hook_signal_guile_script_unloaded]] guile_script_unloaded | 0.3.9 |
   Chaîne : chemin vers le script. |
   Script scheme déchargé.
 
-| guile |
-  [[hook_signal_guile_script_installed]] guile_script_installed +
-  _(WeeChat ≥ 0.3.9)_ |
+| guile | [[hook_signal_guile_script_installed]] guile_script_installed | 0.3.9 |
   Chaîne : liste de chemins vers scripts installés (séparés par des virgules). |
   Script(s) scheme installé(s).
 
-| guile |
-  [[hook_signal_guile_script_removed]] guile_script_removed +
-  _(WeeChat ≥ 0.3.9)_ |
+| guile | [[hook_signal_guile_script_removed]] guile_script_removed | 0.3.9 |
   Chaîne : liste de scripts supprimés (séparés par des virgules). |
   Script(s) scheme supprimé(s).
 
-| irc |
-  [[hook_signal_xxx_irc_in_yyy]] xxx,irc_in_yyy ^(1)^ |
+| irc | [[hook_signal_xxx_irc_in_yyy]] xxx,irc_in_yyy ^(1)^ | |
   Chaîne : message. |
   Message IRC du serveur (avant utilisation par l'extension irc,
   signal envoyé uniquement si le message n'est *pas* ignoré). +
   Depuis la version 2.2, le message IRC entier est envoyé, en incluant
-  les étiquettes.
+  les étiquettes. +
+  Si le code retour d'une fonction de rappel est _WEECHAT_RC_OK_EAT_, alors
+  le message IRC est immédiatement détruit et non traité _(WeeChat ≥ 3.3)_.
 
-| irc |
-  [[hook_signal_xxx_irc_in2_yyy]] xxx,irc_in2_yyy ^(1)^ |
+| irc | [[hook_signal_xxx_irc_in2_yyy]] xxx,irc_in2_yyy ^(1)^ | |
   Chaîne : message. |
   Message IRC du serveur (après utilisation par l'extension irc,
   signal envoyé uniquement si le message n'est *pas* ignoré). +
   Depuis la version 2.2, le message IRC entier est envoyé, en incluant
   les étiquettes.
 
-| irc |
-  [[hook_signal_xxx_irc_raw_in_yyy]] xxx,irc_raw_in_yyy ^(1)^ +
-  _(WeeChat ≥ 0.3.2)_ |
+| irc | [[hook_signal_xxx_irc_raw_in_yyy]] xxx,irc_raw_in_yyy ^(1)^ + | 0.3.2 |
   Chaîne : message. |
   Message IRC du serveur (avant utilisation par l'extension irc,
   signal envoyé même si le message est ignoré). +
   Depuis la version 2.2, le message IRC entier est envoyé, en incluant
-  les étiquettes.
+  les étiquettes. +
+  Si le code retour d'une fonction de rappel est _WEECHAT_RC_OK_EAT_, alors
+  le message IRC est immédiatement détruit et non traité _(WeeChat ≥ 3.3)_.
 
-| irc |
-  [[hook_signal_xxx_irc_raw_in2_yyy]] xxx,irc_raw_in2_yyy ^(1)^ +
-  _(WeeChat ≥ 0.3.2)_ |
+| irc | [[hook_signal_xxx_irc_raw_in2_yyy]] xxx,irc_raw_in2_yyy ^(1)^ | 0.3.2 |
   Chaîne : message. |
   Message IRC du serveur (après utilisation par l'extension irc,
   signal envoyé même si le message est ignoré). +
   Depuis la version 2.2, le message IRC entier est envoyé, en incluant
   les étiquettes.
 
-| irc |
-  [[hook_signal_xxx_irc_out1_yyy]] xxx,irc_out1_yyy ^(1)^ +
-  _(WeeChat ≥ 0.3.7)_ |
+| irc | [[hook_signal_xxx_irc_out1_yyy]] xxx,irc_out1_yyy ^(1)^ | 0.3.7 |
   Chaîne : message. |
   Message IRC envoyé au serveur avant découpage automatique
   (pour tenir dans les 512 octets par défaut). +
   *Attention :* la chaîne peut contenir des données invalides UTF-8.
   Le signal "xxx,irc_out1_yyy" est recommandé à la place de celui-ci.
 
-| irc |
-  [[hook_signal_xxx_irc_out_yyy]] xxx,irc_out_yyy ^(1)^ |
+| irc | [[hook_signal_xxx_irc_out_yyy]] xxx,irc_out_yyy ^(1)^ | |
   Chaîne : message. |
   Message IRC envoyé au serveur après découpage automatique
   (pour tenir dans les 512 octets par défaut). +
   *Attention :* la chaîne peut contenir des données invalides UTF-8.
   Le signal "xxx,irc_out1_yyy" est recommandé à la place de celui-ci.
 
-| irc |
-  [[hook_signal_xxx_irc_outtags_yyy]] xxx,irc_outtags_yyy ^(1)^ +
-  _(WeeChat ≥ 0.3.4)_ |
+| irc | [[hook_signal_xxx_irc_outtags_yyy]] xxx,irc_outtags_yyy ^(1)^ | 0.3.4 |
   Chaîne : étiquettes + ";" + message. |
   Étiquettes + message IRC envoyé au serveur.
 
-| irc |
-  [[hook_signal_irc_ctcp]] irc_ctcp |
+| irc | [[hook_signal_irc_ctcp]] irc_ctcp | |
   Chaîne : message. |
   CTCP reçu.
 
-| irc |
-  [[hook_signal_irc_dcc]] irc_dcc |
+| irc | [[hook_signal_irc_dcc]] irc_dcc | |
   Chaîne : message. |
   Nouveau DCC.
 
-| irc |
-  [[hook_signal_irc_pv]] irc_pv |
+| irc | [[hook_signal_irc_pv]] irc_pv | |
   Chaîne : message. |
   Message privé reçu.
 
-| irc |
-  [[hook_signal_irc_channel_opened]] irc_channel_opened |
+| irc | [[hook_signal_irc_channel_opened]] irc_channel_opened | |
   Pointeur : tampon. |
   Canal ouvert.
 
-| irc |
-  [[hook_signal_irc_pv_opened]] irc_pv_opened |
+| irc | [[hook_signal_irc_pv_opened]] irc_pv_opened | |
   Pointeur : tampon. |
   Discussion privée ouverte.
 
-| irc |
-  [[hook_signal_irc_server_opened]] irc_server_opened +
-  _(WeeChat ≥ 0.3.7)_ |
+| irc | [[hook_signal_irc_server_opened]] irc_server_opened | 0.3.7 |
   Pointeur : tampon. |
   Tampon du serveur ouvert.
 
-| irc |
-  [[hook_signal_irc_server_connecting]] irc_server_connecting |
+| irc | [[hook_signal_irc_server_connecting]] irc_server_connecting | |
   Chaîne : nom du serveur. |
   Connexion en cours au serveur.
 
-| irc |
-  [[hook_signal_irc_server_connected]] irc_server_connected |
+| irc | [[hook_signal_irc_server_connected]] irc_server_connected | |
   Chaîne : nom du serveur. |
   Connecté au serveur.
 
-| irc |
-  [[hook_signal_irc_server_disconnected]] irc_server_disconnected |
+| irc | [[hook_signal_irc_server_disconnected]] irc_server_disconnected | |
   Chaîne : nom du serveur. |
   Déconnecté du serveur.
 
-| irc |
-  [[hook_signal_irc_server_lag_changed]] irc_server_lag_changed +
-  _(WeeChat ≥ 1.8)_ |
+| irc | [[hook_signal_irc_server_lag_changed]] irc_server_lag_changed | 1.8 |
   Chaîne : nom du serveur. |
   Le lag a changé sur le serveur.
 
-| irc |
-  [[hook_signal_irc_ignore_removing]] irc_ignore_removing |
+| irc | [[hook_signal_irc_ignore_removing]] irc_ignore_removing | |
   Pointeur : ignore. |
   Suppression d'un ignore en cours.
 
-| irc |
-  [[hook_signal_irc_ignore_removed]] irc_ignore_removed |
+| irc | [[hook_signal_irc_ignore_removed]] irc_ignore_removed | |
   - |
   Ignore supprimé.
 
-| irc |
-  [[hook_signal_irc_notify_join]] irc_notify_join +
-  _(WeeChat ≥ 0.3.8)_ |
+| irc | [[hook_signal_irc_notify_join]] irc_notify_join | 0.3.8 |
   Chaîne : nom du serveur + "," + pseudo. |
   Un pseudo dans la liste de notifications a rejoint le serveur.
 
-| irc |
-  [[hook_signal_irc_notify_quit]] irc_notify_quit +
-  _(WeeChat ≥ 0.3.8)_ |
+| irc | [[hook_signal_irc_notify_quit]] irc_notify_quit | 0.3.8 |
   Chaîne : nom du serveur + "," + pseudo. |
   Un pseudo dans la liste de notifications a quitté le serveur.
 
-| irc |
-  [[hook_signal_irc_notify_away]] irc_notify_away +
-  _(WeeChat ≥ 0.3.8)_ |
+| irc | [[hook_signal_irc_notify_away]] irc_notify_away | 0.3.8 |
   Chaîne : nom du serveur + "," + pseudo + "," + message d'absence. |
   Un pseudo dans la liste de notifications est maintenant absent sur le serveur.
 
-| irc |
-  [[hook_signal_irc_notify_still_away]] irc_notify_still_away +
-  _(WeeChat ≥ 0.3.8)_ |
+| irc | [[hook_signal_irc_notify_still_away]] irc_notify_still_away | 0.3.8 |
   Chaîne : nom du serveur + "," + pseudo + "," + message d'absence. |
   Un pseudo dans la liste de notifications est toujours absent sur le serveur
   (le message d'absence a changé).
 
-| irc |
-  [[hook_signal_irc_notify_back]] irc_notify_back +
-  _(WeeChat ≥ 0.3.8)_ |
+| irc | [[hook_signal_irc_notify_back]] irc_notify_back | 0.3.8 |
   Chaîne : nom du serveur + "," + pseudo. |
   Un pseudo dans la liste de notifications est de retour (statut d'absence
   supprimé).
 
-| javascript |
-  [[hook_signal_javascript_script_loaded]] javascript_script_loaded +
-  _(WeeChat ≥ 1.2)_ |
+| javascript | [[hook_signal_javascript_script_loaded]] javascript_script_loaded | 1.2 |
   Chaîne : chemin vers le script. |
   Script JavaScript chargé.
 
-| javascript |
-  [[hook_signal_javascript_script_unloaded]] javascript_script_unloaded +
-  _(WeeChat ≥ 1.2)_ |
+| javascript | [[hook_signal_javascript_script_unloaded]] javascript_script_unloaded | 1.2 |
   Chaîne : chemin vers le script. |
   Script JavaScript déchargé.
 
-| javascript |
-  [[hook_signal_javascript_script_installed]] javascript_script_installed +
-  _(WeeChat ≥ 1.2)_ |
+| javascript | [[hook_signal_javascript_script_installed]] javascript_script_installed | 1.2 |
   Chaîne : liste de chemins vers scripts installés (séparés par des virgules). |
   Script(s) JavaScript installé(s).
 
-| javascript |
-  [[hook_signal_javascript_script_removed]] javascript_script_removed +
-  _(WeeChat ≥ 1.2)_ |
+| javascript | [[hook_signal_javascript_script_removed]] javascript_script_removed | 1.2 |
   Chaîne : liste de scripts supprimés (séparés par des virgules). |
   Script(s) JavaScript supprimé(s).
 
-| logger |
-  [[hook_signal_logger_start]] logger_start |
+| logger | [[hook_signal_logger_start]] logger_start | |
   Pointeur : tampon. |
   Démarrage de l'enregistrement sur disque pour le tampon.
 
-| logger |
-  [[hook_signal_logger_stop]] logger_stop |
+| logger | [[hook_signal_logger_stop]] logger_stop | |
   Pointeur : tampon. |
   Fin de l'enregistrement sur disque pour le tampon.
 
-| logger |
-  [[hook_signal_logger_backlog]] logger_backlog |
+| logger | [[hook_signal_logger_backlog]] logger_backlog | |
   Pointeur : tampon. |
   Affichage du backlog pour le tampon.
 
-| lua |
-  [[hook_signal_lua_script_loaded]] lua_script_loaded +
-  _(WeeChat ≥ 0.3.9)_ |
+| lua | [[hook_signal_lua_script_loaded]] lua_script_loaded | 0.3.9 |
   Chaîne : chemin vers le script. |
   Script lua chargé.
 
-| lua |
-  [[hook_signal_lua_script_unloaded]] lua_script_unloaded +
-  _(WeeChat ≥ 0.3.9)_ |
+| lua | [[hook_signal_lua_script_unloaded]] lua_script_unloaded | 0.3.9 |
   Chaîne : chemin vers le script. |
   Script lua déchargé.
 
-| lua |
-  [[hook_signal_lua_script_installed]] lua_script_installed +
-  _(WeeChat ≥ 0.3.9)_ |
+| lua | [[hook_signal_lua_script_installed]] lua_script_installed | 0.3.9 |
   Chaîne : liste de chemins vers scripts installés (séparés par des virgules). |
   Script(s) lua installé(s).
 
-| lua |
-  [[hook_signal_lua_script_removed]] lua_script_removed +
-  _(WeeChat ≥ 0.3.9)_ |
+| lua | [[hook_signal_lua_script_removed]] lua_script_removed | 0.3.9 |
   Chaîne : liste de scripts supprimés (séparés par des virgules). |
   Script(s) lua supprimé(s).
 
-| perl |
-  [[hook_signal_perl_script_loaded]] perl_script_loaded +
-  _(WeeChat ≥ 0.3.9)_ |
+| perl | [[hook_signal_perl_script_loaded]] perl_script_loaded | 0.3.9 |
   Chaîne : chemin vers le script. |
   Script perl chargé.
 
-| perl |
-  [[hook_signal_perl_script_unloaded]] perl_script_unloaded +
-  _(WeeChat ≥ 0.3.9)_ |
+| perl | [[hook_signal_perl_script_unloaded]] perl_script_unloaded | 0.3.9 |
   Chaîne : chemin vers le script. |
   Script perl déchargé.
 
-| perl |
-  [[hook_signal_perl_script_installed]] perl_script_installed +
-  _(WeeChat ≥ 0.3.9)_ |
+| perl | [[hook_signal_perl_script_installed]] perl_script_installed | 0.3.9 |
   Chaîne : liste de chemins vers scripts installés (séparés par des virgules). |
   Script(s) perl installé(s).
 
-| perl |
-  [[hook_signal_perl_script_removed]] perl_script_removed +
-  _(WeeChat ≥ 0.3.9)_ |
+| perl | [[hook_signal_perl_script_removed]] perl_script_removed | 0.3.9 |
   Chaîne : liste de scripts supprimés (séparés par des virgules). |
   Script(s) perl supprimé(s).
 
-| php |
-  [[hook_signal_php_script_loaded]] php_script_loaded +
-  _(WeeChat ≥ 2.0)_ |
+| php | [[hook_signal_php_script_loaded]] php_script_loaded | 2.0 |
   Chaîne : chemin vers le script. |
   Script PHP chargé.
 
-| php |
-  [[hook_signal_php_script_unloaded]] php_script_unloaded +
-  _(WeeChat ≥ 2.0)_ |
+| php | [[hook_signal_php_script_unloaded]] php_script_unloaded | 2.0 |
   Chaîne : chemin vers le script. |
   Script PHP déchargé.
 
-| php |
-  [[hook_signal_php_script_installed]] php_script_installed +
-  _(WeeChat ≥ 2.0)_ |
+| php | [[hook_signal_php_script_installed]] php_script_installed | 2.0 |
   Chaîne : liste de chemins vers scripts installés (séparés par des virgules). |
   Script(s) PHP installé(s).
 
-| php |
-  [[hook_signal_php_script_removed]] php_script_removed +
-  _(WeeChat ≥ 2.0)_ |
+| php | [[hook_signal_php_script_removed]] php_script_removed | 2.0 |
   Chaîne : liste de scripts supprimés (séparés par des virgules). |
   Script(s) PHP supprimé(s).
 
-| python |
-  [[hook_signal_python_script_loaded]] python_script_loaded +
-  _(WeeChat ≥ 0.3.9)_ |
+| python | [[hook_signal_python_script_loaded]] python_script_loaded | 0.3.9 |
   Chaîne : chemin vers le script. |
   Script python chargé.
 
-| python |
-  [[hook_signal_python_script_unloaded]] python_script_unloaded +
-  _(WeeChat ≥ 0.3.9)_ |
+| python | [[hook_signal_python_script_unloaded]] python_script_unloaded | 0.3.9 |
   Chaîne : chemin vers le script. |
   Script python déchargé.
 
-| python |
-  [[hook_signal_python_script_installed]] python_script_installed +
-  _(WeeChat ≥ 0.3.9)_ |
+| python | [[hook_signal_python_script_installed]] python_script_installed | 0.3.9 |
   Chaîne : liste de chemins vers scripts installés (séparés par des virgules). |
   Script(s) python installé(s).
 
-| python |
-  [[hook_signal_python_script_removed]] python_script_removed +
-  _(WeeChat ≥ 0.3.9)_ |
+| python | [[hook_signal_python_script_removed]] python_script_removed | 0.3.9 |
   Chaîne : liste de scripts supprimés (séparés par des virgules). |
   Script(s) python supprimé(s).
 
-| relay |
-  [[hook_signal_relay_client_connecting]] relay_client_connecting +
-  _(WeeChat ≥ 1.0)_ |
+| relay | [[hook_signal_relay_client_connecting]] relay_client_connecting | 1.0 |
   Pointeur : client relay. |
   Un client relay est en train de se connecter.
 
-| relay |
-  [[hook_signal_relay_client_waiting_auth]] relay_client_waiting_auth +
-  _(WeeChat ≥ 1.0)_ |
+| relay | [[hook_signal_relay_client_waiting_auth]] relay_client_waiting_auth | 1.0 |
   Pointeur : client relay. |
   Attente de l'authentification d'un client relay.
 
-| relay |
-  [[hook_signal_relay_client_auth_ok]] relay_client_auth_ok +
-  _(WeeChat ≥ 1.0)_ |
+| relay | [[hook_signal_relay_client_auth_ok]] relay_client_auth_ok | 1.0 |
   Pointeur : client relay. |
   Authentification réussie d'un client relay.
 
-| relay |
-  [[hook_signal_relay_client_connected]] relay_client_connected +
-  _(WeeChat ≥ 1.0)_ |
+| relay | [[hook_signal_relay_client_connected]] relay_client_connected | 1.0 |
   Pointeur : client relay. |
   Un client relay est connecté.
 
-| relay |
-  [[hook_signal_relay_client_auth_failed]] relay_client_auth_failed +
-  _(WeeChat ≥ 1.0)_ |
+| relay | [[hook_signal_relay_client_auth_failed]] relay_client_auth_failed | 1.0 |
   Pointeur : client relay. |
   L'authentification d'un client relay a échoué.
 
-| relay |
-  [[hook_signal_relay_client_disconnected]] relay_client_disconnected +
-  _(WeeChat ≥ 1.0)_ |
+| relay | [[hook_signal_relay_client_disconnected]] relay_client_disconnected | 1.0 |
   Pointeur : client relay. |
   Un client relay est déconnecté.
 
-| ruby |
-  [[hook_signal_ruby_script_loaded]] ruby_script_loaded +
-  _(WeeChat ≥ 0.3.9)_ |
+| ruby | [[hook_signal_ruby_script_loaded]] ruby_script_loaded | 0.3.9 |
   Chaîne : chemin vers le script. |
   Script ruby chargé.
 
-| ruby |
-  [[hook_signal_ruby_script_unloaded]] ruby_script_unloaded +
-  _(WeeChat ≥ 0.3.9)_ |
+| ruby | [[hook_signal_ruby_script_unloaded]] ruby_script_unloaded | 0.3.9 |
   Chaîne : chemin vers le script. |
   Script ruby déchargé.
 
-| ruby |
-  [[hook_signal_ruby_script_installed]] ruby_script_installed +
-  _(WeeChat ≥ 0.3.9)_ |
+| ruby | [[hook_signal_ruby_script_installed]] ruby_script_installed | 0.3.9 |
   Chaîne : liste de chemins vers scripts installés (séparés par des virgules). |
   Script(s) ruby installé(s).
 
-| ruby |
-  [[hook_signal_ruby_script_removed]] ruby_script_removed +
-  _(WeeChat ≥ 0.3.9)_ |
+| ruby | [[hook_signal_ruby_script_removed]] ruby_script_removed | 0.3.9 |
   Chaîne : liste de scripts supprimés (séparés par des virgules). |
   Script(s) ruby supprimé(s).
 
-| spell |
-  [[hook_signal_spell_suggest]] spell_suggest +
-  _(WeeChat ≥ 2.4)_ |
+| spell | [[hook_signal_spell_suggest]] spell_suggest | 2.4 |
   Pointeur : tampon. |
   Nouvelles suggestions pour un mot mal orthographié.
 
-| tcl |
-  [[hook_signal_tcl_script_loaded]] tcl_script_loaded +
-  _(WeeChat ≥ 0.3.9)_ |
+| tcl | [[hook_signal_tcl_script_loaded]] tcl_script_loaded | 0.3.9 |
   Chaîne : chemin vers le script. |
   Script tcl chargé.
 
-| tcl |
-  [[hook_signal_tcl_script_unloaded]] tcl_script_unloaded +
-  _(WeeChat ≥ 0.3.9)_ |
+| tcl | [[hook_signal_tcl_script_unloaded]] tcl_script_unloaded | 0.3.9 |
   Chaîne : chemin vers le script. |
   Script tcl déchargé.
 
-| tcl |
-  [[hook_signal_tcl_script_installed]] tcl_script_installed +
-  _(WeeChat ≥ 0.3.9)_ |
+| tcl | [[hook_signal_tcl_script_installed]] tcl_script_installed | 0.3.9 |
   Chaîne : liste de chemins vers scripts installés (séparés par des virgules). |
   Script(s) tcl installé(s).
 
-| tcl |
-  [[hook_signal_tcl_script_removed]] tcl_script_removed +
-  _(WeeChat ≥ 0.3.9)_ |
+| tcl | [[hook_signal_tcl_script_removed]] tcl_script_removed | 0.3.9 |
   Chaîne : liste de scripts supprimés (séparés par des virgules). |
   Script(s) tcl supprimé(s).
 
-| weechat |
-  [[hook_signal_buffer_opened]] buffer_opened |
+| typing | [[hook_signal_typing_self_typing]] typing_self_typing | 3.3 |
+  Pointeur : tampon. |
+  L'utilisateur est en train de taper un message (envoyé par l'extension typing,
+  utilisé par l'extension irc).
+
+| typing | [[hook_signal_typing_self_paused]] typing_self_paused | 3.3 |
+  Pointeur : tampon. |
+  L'utilisateur a fait une pause pendant la saisie du message (envoyé par
+  l'extension typing, utilisé par l'extension irc).
+
+| typing | [[hook_signal_typing_self_cleared]] typing_self_cleared | 3.3 |
+  Pointeur : tampon. |
+  L'utilisateur a effacé la ligne de commande sans envoyer le message
+  (envoyé par l'extension typing, utilisé par l'extension irc).
+
+| typing | [[hook_signal_typing_self_sent]] typing_self_sent | 3.3 |
+  Pointeur : tampon. |
+  Message (pas une commande) envoyé au tampon (envoyé par l'extension typing,
+  utilisé par l'extension irc).
+
+| typing | [[hook_signal_typing_set_nick]] typing_set_nick | 3.3 |
+  Chaîne : pointeur tampon + ";" + état (un parmi ceux-ci : "off",
+  "typing", "paused", "cleared") + ";" + pseudo. |
+  Définir l'état de la saisie du pseudo sur le tampon (envoyé par l'extension irc,
+  géré par l'extension typing).
+
+| typing | [[hook_signal_typing_reset_buffer]] typing_reset_buffer | 3.3 |
+  Pointeur : tampon. |
+  Supprimer l'état de saisir pour tous les pseudos d'un tampon (envoyé par
+  l'extension irc, géré par l'extension typing).
+
+| weechat | [[hook_signal_buffer_opened]] buffer_opened | |
   Pointeur : tampon. |
   Tampon ouvert.
 
-| weechat |
-  [[hook_signal_buffer_closing]] buffer_closing |
+| weechat | [[hook_signal_buffer_closing]] buffer_closing | |
   Pointeur : tampon. |
   Fermeture du tampon en cours.
 
-| weechat |
-  [[hook_signal_buffer_closed]] buffer_closed |
+| weechat | [[hook_signal_buffer_closed]] buffer_closed | |
   Pointeur : tampon. |
   Tampon fermé.
 
-| weechat |
-  [[hook_signal_buffer_cleared]] buffer_cleared |
+| weechat | [[hook_signal_buffer_cleared]] buffer_cleared | |
   Pointeur : tampon. |
   Tampon vidé.
 
-| weechat |
-  [[hook_signal_buffer_filters_enabled]] buffer_filters_enabled +
-  _(WeeChat ≥ 2.0)_ |
+| weechat | [[hook_signal_buffer_filters_enabled]] buffer_filters_enabled | 2.0 |
   Pointeur : tampon. |
   Filtres activés dans le tampon.
 
-| weechat |
-  [[hook_signal_buffer_filters_disabled]] buffer_filters_disabled +
-  _(WeeChat ≥ 2.0)_ |
+| weechat | [[hook_signal_buffer_filters_disabled]] buffer_filters_disabled | 2.0 |
   Pointeur : tampon. |
   Filtres désactivés dans le tampon.
 
-| weechat |
-  [[hook_signal_buffer_hidden]] buffer_hidden |
+| weechat | [[hook_signal_buffer_hidden]] buffer_hidden | |
   Pointeur : tampon. |
   Tampon masqué.
 
-| weechat |
-  [[hook_signal_buffer_unhidden]] buffer_unhidden |
+| weechat | [[hook_signal_buffer_unhidden]] buffer_unhidden | |
   Pointeur : tampon. |
   Tampon démasqué.
 
-| weechat |
-  [[hook_signal_buffer_line_added]] buffer_line_added +
-  _(WeeChat ≥ 0.3.7)_ |
+| weechat | [[hook_signal_buffer_line_added]] buffer_line_added | 0.3.7 |
   Pointeur : ligne. |
   Ligne ajoutée dans un tampon.
 
-| weechat |
-  [[hook_signal_buffer_lines_hidden]] buffer_lines_hidden |
+| weechat | [[hook_signal_buffer_lines_hidden]] buffer_lines_hidden | |
   Pointeur : tampon. |
   Lignes cachées dans le tampon.
 
-| weechat |
-  [[hook_signal_buffer_localvar_added]] buffer_localvar_added |
+| weechat | [[hook_signal_buffer_localvar_added]] buffer_localvar_added | |
   Pointeur : tampon. |
   Variable locale ajoutée.
 
-| weechat |
-  [[hook_signal_buffer_localvar_changed]] buffer_localvar_changed |
+| weechat | [[hook_signal_buffer_localvar_changed]] buffer_localvar_changed | |
   Pointeur : tampon. |
   Variable locale modifiée.
 
-| weechat |
-  [[hook_signal_buffer_localvar_removed]] buffer_localvar_removed |
+| weechat | [[hook_signal_buffer_localvar_removed]] buffer_localvar_removed | |
   Pointeur : tampon. |
   Variable locale supprimée.
 
-| weechat |
-  [[hook_signal_buffer_merged]] buffer_merged |
+| weechat | [[hook_signal_buffer_merged]] buffer_merged | |
   Pointeur : tampon. |
   Tampon mélangé.
 
-| weechat |
-  [[hook_signal_buffer_unmerged]] buffer_unmerged |
+| weechat | [[hook_signal_buffer_unmerged]] buffer_unmerged | |
   Pointeur : tampon. |
   Le tampon n'est plus mélangé.
 
-| weechat |
-  [[hook_signal_buffer_moved]] buffer_moved |
+| weechat | [[hook_signal_buffer_moved]] buffer_moved | |
   Pointeur : tampon. |
   Tampon déplacé.
 
-| weechat |
-  [[hook_signal_buffer_renamed]] buffer_renamed |
+| weechat | [[hook_signal_buffer_renamed]] buffer_renamed | |
   Pointeur : tampon. |
   Tampon renommé.
 
-| weechat |
-  [[hook_signal_buffer_switch]] buffer_switch |
+| weechat | [[hook_signal_buffer_switch]] buffer_switch | |
   Pointeur : tampon. |
   Basculement vers un autre tampon.
 
-| weechat |
-  [[hook_signal_buffer_title_changed]] buffer_title_changed |
+| weechat | [[hook_signal_buffer_title_changed]] buffer_title_changed | |
   Pointeur : tampon. |
   Titre du tampon changé.
 
-| weechat |
-  [[hook_signal_buffer_type_changed]] buffer_type_changed |
+| weechat | [[hook_signal_buffer_type_changed]] buffer_type_changed | |
   Pointeur : tampon. |
   Type de tampon changé.
 
-| weechat |
-  [[hook_signal_buffer_zoomed]] buffer_zoomed +
-  _(WeeChat ≥ 0.4.3)_ |
+| weechat | [[hook_signal_buffer_zoomed]] buffer_zoomed | 0.4.3 |
   Pointeur : tampon. |
   Zoom sur un tampon mélangé.
 
-| weechat |
-  [[hook_signal_buffer_unzoomed]] buffer_unzoomed +
-  _(WeeChat ≥ 0.4.3)_ |
+| weechat | [[hook_signal_buffer_unzoomed]] buffer_unzoomed | 0.4.3 |
   Pointeur : tampon. |
   Fin du zoom sur un tampon mélangé.
 
-| weechat |
-  [[hook_signal_day_changed]] day_changed +
-  _(WeeChat ≥ 0.3.2)_ |
+| weechat | [[hook_signal_cursor_start]] cursor_start | 3.2 |
+  - |
+  Début du mode curseur.
+
+| weechat | [[hook_signal_cursor_end]] cursor_end | 3.2 |
+  - |
+  Fin du mode curseur.
+
+| weechat | [[hook_signal_day_changed]] day_changed | 0.3.2 |
   Chaîne : nouvelle date, format : "2010-01-31". |
   Le jour de la date système a changé.
 
-| weechat |
-  [[hook_signal_debug_dump]] debug_dump |
+| weechat | [[hook_signal_debug_dump]] debug_dump | |
   Chaîne : nom d'extension. |
   Requête de "dump".
 
-| weechat |
-  [[hook_signal_debug_libs]] debug_libs |
+| weechat | [[hook_signal_debug_libs]] debug_libs | |
   - |
   Affichage des bibliothèques externes utilisées.
 
-| weechat |
-  [[hook_signal_filter_added]] filter_added |
+| weechat | [[hook_signal_filter_added]] filter_added | |
   Pointeur : filtre. |
   Filtre ajouté.
 
-| weechat |
-  [[hook_signal_filter_removing]] filter_removing |
+| weechat | [[hook_signal_filter_removing]] filter_removing | |
   Pointeur : filtre. |
   Suppression de filtre en cours.
 
-| weechat |
-  [[hook_signal_filter_removed]] filter_removed |
+| weechat | [[hook_signal_filter_removed]] filter_removed | |
   - |
   Filtre supprimé.
 
-| weechat |
-  [[hook_signal_filters_enabled]] filters_enabled |
+| weechat | [[hook_signal_filters_enabled]] filters_enabled | |
   - |
   Filtres activés.
 
-| weechat |
-  [[hook_signal_filters_disabled]] filters_disabled |
+| weechat | [[hook_signal_filters_disabled]] filters_disabled | |
   - |
   Filtres désactivés.
 
-| weechat |
-  [[hook_signal_hotlist_changed]] hotlist_changed |
+| weechat | [[hook_signal_hotlist_changed]] hotlist_changed | |
   Pointeur : tampon (peut être NULL). |
   La hotlist a changé.
 
-| weechat |
-  [[hook_signal_input_paste_pending]] input_paste_pending |
+| weechat | [[hook_signal_input_paste_pending]] input_paste_pending | |
   - |
   Coller de lignes en cours.
 
-| weechat |
-  [[hook_signal_input_search]] input_search |
+| weechat | [[hook_signal_input_search]] input_search | |
   Pointeur : tampon. |
   Recherche de texte dans le tampon.
 
-| weechat |
-  [[hook_signal_input_text_changed]] input_text_changed |
+| weechat | [[hook_signal_input_text_changed]] input_text_changed | |
   Pointeur : tampon. |
   Texte modifié dans la barre "input".
 
-| weechat |
-  [[hook_signal_input_text_cursor_moved]] input_text_cursor_moved |
+| weechat | [[hook_signal_input_text_cursor_moved]] input_text_cursor_moved | |
   Pointeur : tampon. |
   Curseur déplacé dans la barre "input".
 
-| weechat |
-  [[hook_signal_key_bind]] key_bind |
+| weechat | [[hook_signal_key_bind]] key_bind | |
   Chaîne : touche. |
   Touche ajoutée.
 
-| weechat |
-  [[hook_signal_key_unbind]] key_unbind |
+| weechat | [[hook_signal_key_unbind]] key_unbind | |
   Chaîne : touche. |
   Touche supprimée.
 
-| weechat |
-  [[hook_signal_key_pressed]] key_pressed |
+| weechat | [[hook_signal_key_pressed]] key_pressed | |
   Chaîne : touche appuyée. |
   Touche appuyée.
 
-| weechat |
-  [[hook_signal_key_combo_default]] key_combo_default +
-  _(WeeChat ≥ 1.0)_ |
+| weechat | [[hook_signal_key_combo_default]] key_combo_default | 1.0 |
   Chaîne : combinaison de touches. |
   Combinaison de touches dans le contexte _default_.
 
-| weechat |
-  [[hook_signal_key_combo_search]] key_combo_search +
-  _(WeeChat ≥ 1.0)_ |
+| weechat | [[hook_signal_key_combo_search]] key_combo_search | 1.0 |
   Chaîne : combinaison de touches. |
   Combinaison de touches dans le contexte _search_.
 
-| weechat |
-  [[hook_signal_key_combo_cursor]] key_combo_cursor +
-  _(WeeChat ≥ 1.0)_ |
+| weechat | [[hook_signal_key_combo_cursor]] key_combo_cursor | 1.0 |
   Chaîne : combinaison de touches. |
   Combinaison de touches dans le contexte _cursor_.
 
-| weechat |
-  [[hook_signal_mouse_enabled]] mouse_enabled +
-  _(WeeChat ≥ 1.1)_ |
+| weechat | [[hook_signal_mouse_enabled]] mouse_enabled | 1.1 |
   - |
   Souris activée.
 
-| weechat |
-  [[hook_signal_mouse_disabled]] mouse_disabled +
-  _(WeeChat ≥ 1.1)_ |
+| weechat | [[hook_signal_mouse_disabled]] mouse_disabled | 1.1 |
   - |
   Souris désactivée.
 
-| weechat |
-  [[hook_signal_nicklist_group_added]] nicklist_group_added +
-  _(WeeChat ≥ 0.3.2)_ |
+| weechat | [[hook_signal_nicklist_group_added]] nicklist_group_added | 0.3.2 |
   Chaîne : pointeur tampon + "," + nom du groupe. |
   Groupe ajouté dans la liste des pseudos.
 
-| weechat |
-  [[hook_signal_nicklist_group_changed]] nicklist_group_changed +
-  _(WeeChat ≥ 0.3.4)_ |
+| weechat | [[hook_signal_nicklist_group_changed]] nicklist_group_changed | 0.3.4 |
   Chaîne : pointeur tampon + "," + nom du groupe. |
   Groupe modifié dans la liste des pseudos.
 
-| weechat |
-  [[hook_signal_nicklist_group_removing]] nicklist_group_removing +
-  _(WeeChat ≥ 0.4.1)_ |
+| weechat | [[hook_signal_nicklist_group_removing]] nicklist_group_removing | 0.4.1 |
   Chaîne : pointeur tampon + "," + nom du groupe. |
   Suppression du groupe de la liste des pseudos.
 
-| weechat |
-  [[hook_signal_nicklist_group_removed]] nicklist_group_removed +
-  _(WeeChat ≥ 0.3.2)_ |
+| weechat | [[hook_signal_nicklist_group_removed]] nicklist_group_removed | 0.3.2 |
   Chaîne : pointeur tampon + "," + nom du groupe. |
   Groupe supprimé de la liste des pseudos.
 
-| weechat |
-  [[hook_signal_nicklist_nick_added]] nicklist_nick_added +
-  _(WeeChat ≥ 0.3.2)_ |
+| weechat | [[hook_signal_nicklist_nick_added]] nicklist_nick_added | 0.3.2 |
   Chaîne : pointeur tampon + "," + pseudo. |
   Pseudo ajouté dans la liste des pseudos.
 
-| weechat |
-  [[hook_signal_nicklist_nick_changed]] nicklist_nick_changed +
-  _(WeeChat ≥ 0.3.4)_ |
+| weechat | [[hook_signal_nicklist_nick_changed]] nicklist_nick_changed | 0.3.4 |
   Chaîne : pointeur tampon + "," + pseudo. |
   Pseudo modifié dans la liste des pseudos.
 
-| weechat |
-  [[hook_signal_nicklist_nick_removing]] nicklist_nick_removing +
-  _(WeeChat ≥ 0.4.1)_ |
+| weechat | [[hook_signal_nicklist_nick_removing]] nicklist_nick_removing | 0.4.1 |
   Chaîne : pointeur tampon + "," + pseudo. |
   Suppression du pseudo de la liste des pseudos.
 
-| weechat |
-  [[hook_signal_nicklist_nick_removed]] nicklist_nick_removed +
-  _(WeeChat ≥ 0.3.2)_ |
+| weechat | [[hook_signal_nicklist_nick_removed]] nicklist_nick_removed | 0.3.2 |
   Chaîne : pointeur tampon + "," + pseudo. |
   Pseudo supprimé de la liste des pseudos.
 
-| weechat |
-  [[hook_signal_partial_completion]] partial_completion |
+| weechat | [[hook_signal_partial_completion]] partial_completion | |
   - |
   Une complétion partielle a été faite.
 
-| weechat |
-  [[hook_signal_plugin_loaded]] plugin_loaded +
-  _(WeeChat ≥ 0.3.9)_ |
+| weechat | [[hook_signal_plugin_loaded]] plugin_loaded | 0.3.9 |
   Chaîne : chemin vers l'extension chargée. |
   Extension chargée.
 
-| weechat |
-  [[hook_signal_plugin_unloaded]] plugin_unloaded +
-  _(WeeChat ≥ 0.3.9)_ |
+| weechat | [[hook_signal_plugin_unloaded]] plugin_unloaded | 0.3.9 |
   Chaîne : nom de l'extension déchargée (exemple : "irc"). |
   Extension déchargée.
 
-| weechat |
-  [[hook_signal_quit]] quit |
+| weechat | [[hook_signal_quit]] quit | |
   Chaîne : paramètres pour le /quit. |
   La commande `/quit` a été exécutée par l'utilisateur.
 
-| weechat |
-  [[hook_signal_signal_sighup]] signal_sighup +
-  _(WeeChat ≥ 1.3)_ |
+| weechat | [[hook_signal_signal_sighup]] signal_sighup | 1.3 |
   - |
   Signal SIGHUP reçu.
 
-| weechat |
-  [[hook_signal_signal_sigquit]] signal_sigquit +
-  _(WeeChat ≥ 1.2)_ |
+| weechat | [[hook_signal_signal_sigquit]] signal_sigquit | 1.2 |
   - |
   Signal SIGQUIT reçu (requête pour quitter avec une copie de la mémoire).
 
-| weechat |
-  [[hook_signal_signal_sigterm]] signal_sigterm +
-  _(WeeChat ≥ 1.2)_ |
+| weechat | [[hook_signal_signal_sigterm]] signal_sigterm | 1.2 |
   - |
   Signal SIGTERM reçu (arrêt propre du processus WeeChat).
 
-| weechat |
-  [[hook_signal_signal_sigwinch]] signal_sigwinch +
-  _(WeeChat ≥ 0.4.3)_ |
+| weechat | [[hook_signal_signal_sigwinch]] signal_sigwinch | 0.4.3 |
   - |
   Signal SIGWINCH reçu (le terminal a été redimensionné).
 
-| weechat |
-  [[hook_signal_upgrade]] upgrade |
+| weechat | [[hook_signal_upgrade]] upgrade | |
   Chaîne : "quit" si le paramètre "-quit" a été donné pour /upgrade, sinon NULL. |
   La commande `/upgrade` a été exécutée par l'utilisateur.
 
-| weechat |
-  [[hook_signal_upgrade_ended]] upgrade_ended +
-  _(WeeChat ≥ 0.3.4)_ |
+| weechat | [[hook_signal_upgrade_ended]] upgrade_ended | 0.3.4 |
   - |
   Fin du processus de mise à jour (commande `/upgrade`).
 
-| weechat |
-  [[hook_signal_weechat_highlight]] weechat_highlight |
+| weechat | [[hook_signal_weechat_highlight]] weechat_highlight | |
   Chaîne : message avec le préfixe. |
   Un highlight est survenu.
 
-| weechat |
-  [[hook_signal_weechat_pv]] weechat_pv |
+| weechat | [[hook_signal_weechat_pv]] weechat_pv | |
   Chaîne : message avec le préfixe. |
   Un message privé a été affiché.
 
-| weechat |
-  [[hook_signal_window_closing]] window_closing +
-  _(WeeChat ≥ 0.3.6)_ |
+| weechat | [[hook_signal_window_closing]] window_closing | 0.3.6 |
   Pointeur : fenêtre. |
   Fermeture de la fenêtre en cours.
 
-| weechat |
-  [[hook_signal_window_closed]] window_closed +
-  _(WeeChat ≥ 0.3.6)_ |
+| weechat | [[hook_signal_window_closed]] window_closed | 0.3.6 |
   Pointeur : fenêtre. |
   Fenêtre fermée.
 
-| weechat |
-  [[hook_signal_window_opened]] window_opened +
-  _(WeeChat ≥ 0.4.1)_ |
+| weechat | [[hook_signal_window_opened]] window_opened | 0.4.1 |
   Pointeur : fenêtre. |
   Fenêtre ouverte.
 
-| weechat |
-  [[hook_signal_window_scrolled]] window_scrolled |
+| weechat | [[hook_signal_window_scrolled]] window_scrolled | |
   Pointeur : fenêtre. |
   Défilement dans la fenêtre.
 
-| weechat |
-  [[hook_signal_window_switch]] window_switch +
-  _(WeeChat ≥ 0.3.7)_ |
+| weechat | [[hook_signal_window_switch]] window_switch | 0.3.7 |
   Pointeur : fenêtre. |
   Basculement vers une autre fenêtre.
 
-| weechat |
-  [[hook_signal_window_zoom]] window_zoom |
+| weechat | [[hook_signal_window_zoom]] window_zoom | |
   Pointeur : fenêtre courante. |
   Zoom en cours sur la fenêtre.
 
-| weechat |
-  [[hook_signal_window_zoomed]] window_zoomed |
+| weechat | [[hook_signal_window_zoomed]] window_zoomed | |
   Pointeur : fenêtre courante. |
   Zoom effectué sur la fenêtre.
 
-| weechat |
-  [[hook_signal_window_unzoom]] window_unzoom |
+| weechat | [[hook_signal_window_unzoom]] window_unzoom | |
   Pointeur : fenêtre courante. |
   Fin du zoom en cours sur la fenêtre.
 
-| weechat |
-  [[hook_signal_window_unzoomed]] window_unzoomed |
+| weechat | [[hook_signal_window_unzoomed]] window_unzoomed | |
   Pointeur : fenêtre courante. |
   Fin du zoom effectué sur la fenêtre.
 
-| xfer |
-  [[hook_signal_xfer_add]] xfer_add |
+| xfer | [[hook_signal_xfer_add]] xfer_add | |
   Pointeur : infolist avec l'info xfer. |
   Nouveau xfer.
 
-| xfer |
-  [[hook_signal_xfer_send_ready]] xfer_send_ready |
+| xfer | [[hook_signal_xfer_send_ready]] xfer_send_ready | |
   Pointeur : infolist avec l'info xfer. |
   Xfer prêt.
 
-| xfer |
-  [[hook_signal_xfer_accept_resume]] xfer_accept_resume |
+| xfer | [[hook_signal_xfer_accept_resume]] xfer_accept_resume | |
   Pointeur : infolist avec l'info xfer. |
   Accepter la reprise xfer.
 
-| xfer |
-  [[hook_signal_xfer_send_accept_resume]] xfer_send_accept_resume |
+| xfer | [[hook_signal_xfer_send_accept_resume]] xfer_send_accept_resume | |
   Pointeur : infolist avec l'info xfer. |
   Reprise xfer acceptée.
 
-| xfer |
-  [[hook_signal_xfer_start_resume]] xfer_start_resume |
+| xfer | [[hook_signal_xfer_start_resume]] xfer_start_resume | |
   Pointeur : infolist avec l'info xfer. |
   Redémarrage.
 
-| xfer |
-  [[hook_signal_xfer_resume_ready]] xfer_resume_ready |
+| xfer | [[hook_signal_xfer_resume_ready]] xfer_resume_ready | |
   Pointeur : infolist avec l'info xfer. |
   Redémarrage prêt.
 
-| xfer |
-  [[hook_signal_xfer_ended]] xfer_ended +
-  _(WeeChat ≥ 0.3.2)_ |
+| xfer | [[hook_signal_xfer_ended]] xfer_ended | 0.3.2 |
   Pointeur : infolist avec l'info xfer. |
   Le xfer s'est terminé.
 |===
@@ -11294,26 +11231,26 @@ Exemples en C :
 
 [source,C]
 ----
-/* dis "Bonjour !" sur le serveur freenode, canal #weechat */
+/* dis "Bonjour !" sur le serveur libera, canal #weechat */
 weechat_hook_signal_send ("irc_input_send", WEECHAT_HOOK_SIGNAL_STRING,
-                          "freenode;#weechat;priority_high,user_message;;Bonjour !");
+                          "libera;#weechat;priority_high,user_message;;Bonjour !");
 
-/* envoie la commande "/whois FlashCode" sur le canal freenode, en basse priorité */
+/* envoie la commande "/whois FlashCode" sur le canal libera, en basse priorité */
 weechat_hook_signal_send ("irc_input_send", WEECHAT_HOOK_SIGNAL_STRING,
-                          "freenode;;priority_low;;/whois FlashCode");
+                          "libera;;priority_low;;/whois FlashCode");
 ----
 
 Script (Python) :
 
 [source,python]
 ----
-# dis "Bonjour !" sur le serveur freenode, canal #weechat
+# dis "Bonjour !" sur le serveur libera, canal #weechat
 weechat.hook_signal_send("irc_input_send", weechat.WEECHAT_HOOK_SIGNAL_STRING,
-                         "freenode;#weechat;priority_high,user_message;;Bonjour !")
+                         "libera;#weechat;priority_high,user_message;;Bonjour !")
 
-# envoie la commande "/whois FlashCode" sur le canal freenode, en basse priorité
+# envoie la commande "/whois FlashCode" sur le canal libera, en basse priorité
 weechat.hook_signal_send("irc_input_send", weechat.WEECHAT_HOOK_SIGNAL_STRING,
-                         "freenode;;priority_low;;/whois FlashCode")
+                         "libera;;priority_low;;/whois FlashCode")
 ----
 
 ==== hook_hsignal
@@ -11364,59 +11301,45 @@ Valeur de retour :
 
 Liste des hsignaux envoyés par WeeChat et les extensions :
 
-[width="100%",cols="^1,^3,5,5",options="header"]
+[width="100%",cols="^1,^3,^1,5,5",options="header"]
 |===
-| Extension | Signal | Paramètres | Description
+| Extension | Signal | WeeChat mini | Paramètres | Description
 
-| irc |
-  [[hook_hsignal_irc_redirection_xxx_yyy]] irc_redirection_xxx_yyy ^(1)^ +
-  _(WeeChat ≥ 0.3.4)_ |
+| irc | [[hook_hsignal_irc_redirection_xxx_yyy]] irc_redirection_xxx_yyy ^(1)^ | 0.3.4 |
   Voir <<hsignal_irc_redirect_command,hsignal_irc_redirect_command>> |
   Sortie de la redirection.
 
-| weechat |
-  [[hook_hsignal_nicklist_group_added]] nicklist_group_added +
-  _(WeeChat ≥ 0.4.1)_ |
+| weechat | [[hook_hsignal_nicklist_group_added]] nicklist_group_added | 0.4.1 |
   _buffer_ (_struct t_gui_buffer *_) : tampon +
   _parent_group_ (_struct t_gui_nick_group *_) : groupe parent +
   _group_ (_struct t_gui_nick_group *_) : groupe |
   Groupe ajouté dans la liste de pseudos.
 
-| weechat |
-  [[hook_hsignal_nicklist_nick_added]] nicklist_nick_added +
-  _(WeeChat ≥ 0.4.1)_ |
+| weechat | [[hook_hsignal_nicklist_nick_added]] nicklist_nick_added | 0.4.1 |
   _buffer_ (_struct t_gui_buffer *_) : tampon +
   _parent_group_ (_struct t_gui_nick_group *_) : groupe parent +
   _nick_ (_struct t_gui_nick *_) : pseudo |
   Pseudo ajouté dans la liste de pseudos.
 
-| weechat |
-  [[hook_hsignal_nicklist_group_removing]] nicklist_group_removing +
-  _(WeeChat ≥ 0.4.1)_ |
+| weechat | [[hook_hsignal_nicklist_group_removing]] nicklist_group_removing | 0.4.1 |
   _buffer_ (_struct t_gui_buffer *_) : tampon +
   _parent_group_ (_struct t_gui_nick_group *_) : groupe parent +
   _group_ (_struct t_gui_nick_group *_) : groupe |
   Suppression d'un groupe de la liste de pseudos.
 
-| weechat |
-  [[hook_hsignal_nicklist_nick_removing]] nicklist_nick_removing +
-  _(WeeChat ≥ 0.4.1)_ |
+| weechat | [[hook_hsignal_nicklist_nick_removing]] nicklist_nick_removing | 0.4.1 |
   _buffer_ (_struct t_gui_buffer *_) : tampon +
   _parent_group_ (_struct t_gui_nick_group *_) : groupe parent +
   _nick_ (_struct t_gui_nick *_) : pseudo |
   Suppression d'un pseudo de la liste de pseudos.
 
-| weechat |
-  [[hook_hsignal_nicklist_group_changed]] nicklist_group_changed +
-  _(WeeChat ≥ 0.4.1)_ |
+| weechat | [[hook_hsignal_nicklist_group_changed]] nicklist_group_changed | 0.4.1 |
   _buffer_ (_struct t_gui_buffer *_) : tampon +
   _parent_group_ (_struct t_gui_nick_group *_) : groupe parent +
   _group_ (_struct t_gui_nick_group *_) : groupe |
   Groupe changé dans la liste de pseudos.
 
-| weechat |
-  [[hook_hsignal_nicklist_nick_changed]] nicklist_nick_changed +
-  _(WeeChat ≥ 0.4.1)_ |
+| weechat | [[hook_hsignal_nicklist_nick_changed]] nicklist_nick_changed | 0.4.1 |
   _buffer_ (_struct t_gui_buffer *_) : tampon +
   _parent_group_ (_struct t_gui_nick_group *_) : parent +
   _nick_ (_struct t_gui_nick *_) : pseudo |
@@ -11595,13 +11518,13 @@ struct t_hashtable *hashtable = weechat_hashtable_new (8,
                                                        NULL);
 if (hashtable)
 {
-    weechat_hashtable_set (hashtable, "server", "freenode");
+    weechat_hashtable_set (hashtable, "server", "libera");
     weechat_hashtable_set (hashtable, "pattern", "whois");
     weechat_hashtable_set (hashtable, "signal", "test");
     weechat_hashtable_set (hashtable, "string", "FlashCode");
     weechat_hook_hsignal_send ("irc_redirect_command", hashtable);
     weechat_hook_signal_send ("irc_input_send", WEECHAT_HOOK_SIGNAL_STRING,
-                              "freenode;;2;;/whois FlashCode");
+                              "libera;;2;;/whois FlashCode");
     weechat_hashtable_free (hashtable);
 }
 ----
@@ -11617,10 +11540,10 @@ def test_whois_cb(data, signal, hashtable):
 
 weechat.hook_hsignal("irc_redirection_test_whois", "test_whois_cb", "")
 weechat.hook_hsignal_send("irc_redirect_command",
-                          {"server": "freenode", "pattern": "whois", "signal": "test",
+                          {"server": "libera", "pattern": "whois", "signal": "test",
                            "string": "FlashCode"})
 weechat.hook_signal_send("irc_input_send", weechat.WEECHAT_HOOK_SIGNAL_STRING,
-                         "freenode;;2;;/whois FlashCode")
+                         "libera;;2;;/whois FlashCode")
 ----
 
 [[hsignal_irc_redirect_pattern]]
@@ -11825,11 +11748,11 @@ Valeur de retour :
 
 Liste des modificateurs utilisés par WeeChat et les extensions :
 
-[width="100%",cols="^2,3,4,4",options="header"]
+[width="100%",cols="^2,^1,3,4,4",options="header"]
 |===
-| Modificateur | Données du modificateur | Chaîne | Sortie
+| Modificateur | WeeChat mini | Données du modificateur | Chaîne | Sortie
 
-| [[hook_modifier_irc_in_xxx]] irc_in_xxx ^(1)^ |
+| [[hook_modifier_irc_in_xxx]] irc_in_xxx ^(1)^ | |
   Nom de serveur |
   Contenu du message reçu du serveur IRC (avant décodage du jeu de caractères). +
   *Attention :* la chaîne peut contenir des données invalides UTF-8 ; à utiliser
@@ -11838,61 +11761,57 @@ Liste des modificateurs utilisés par WeeChat et les extensions :
   place de celui-ci. |
   Nouveau contenu du message.
 
-| [[hook_modifier_irc_in2_xxx]] irc_in2_xxx ^(1)^ +
-  _(WeeChat ≥ 0.3.5)_ |
+| [[hook_modifier_irc_in2_xxx]] irc_in2_xxx ^(1)^ | 0.3.5 |
   Nom de serveur |
   Contenu du message reçu du serveur IRC (après décodage du jeu de caractères). |
   Nouveau contenu du message.
 
-| [[hook_modifier_irc_out1_xxx]] irc_out1_xxx ^(1)^ +
-  _(WeeChat ≥ 0.3.7)_ |
+| [[hook_modifier_irc_out1_xxx]] irc_out1_xxx ^(1)^ | 0.3.7 |
   Nom de serveur |
   Contenu du message qui va être envoyé au serveur IRC avant découpage automatique
   (pour tenir dans les 512 octets par défaut). |
   Nouveau contenu du message.
 
-| [[hook_modifier_irc_out_xxx]] irc_out_xxx ^(1)^ |
+| [[hook_modifier_irc_out_xxx]] irc_out_xxx ^(1)^ | |
   Nom de serveur |
   Contenu du message qui va être envoyé au serveur IRC après découpage automatique
   (pour tenir dans les 512 octets par défaut). |
   Nouveau contenu du message.
 
-| [[hook_modifier_bar_condition_yyy]] bar_condition_yyy ^(2)^ |
+| [[hook_modifier_bar_condition_yyy]] bar_condition_yyy ^(2)^ | |
   Chaîne avec un pointeur vers la fenêtre (par exemple : "0x1234abcd") |
   Chaîne vide. |
   "1" pour afficher la barre, "0" pour la cacher.
 
-| [[hook_modifier_history_add]] history_add +
-  _(WeeChat ≥ 0.3.2)_ |
+| [[hook_modifier_history_add]] history_add | 0.3.2 |
   Chaîne avec un pointeur vers le tampon (par exemple : "0x1234abcd") |
   Contenu de la ligne de commande à ajouter à l'historique des commandes
   (tampon et global). |
   Chaîne ajoutée à l'historique des commandes.
 
-| [[hook_modifier_input_text_content]] input_text_content |
+| [[hook_modifier_input_text_content]] input_text_content | |
   Chaîne avec un pointeur vers le tampon (par exemple : "0x1234abcd") |
   Contenu de la ligne de commande. |
   Nouvelle chaîne pour la ligne de commande.
 
-| [[hook_modifier_input_text_display]] input_text_display |
+| [[hook_modifier_input_text_display]] input_text_display | |
   Chaîne avec un pointeur vers le tampon (par exemple : "0x1234abcd") |
   Contenu de la ligne de commande, sans le code du curseur dedans. |
   Nouvelle chaîne, pour affichage seulement (la ligne de commande n'est pas
   modifiée).
 
-| [[hook_modifier_input_text_display_with_cursor]] input_text_display_with_cursor |
+| [[hook_modifier_input_text_display_with_cursor]] input_text_display_with_cursor | |
   Chaîne avec un pointeur vers le tampon (par exemple : "0x1234abcd") |
   Contenu de la ligne de commande, avec le code du curseur dedans. |
   Nouvelle chaîne, pour affichage seulement (la ligne de commande n'est pas
   modifiée).
 
-| [[hook_modifier_input_text_for_buffer]] input_text_for_buffer +
-  _(WeeChat ≥ 0.3.7)_ |
+| [[hook_modifier_input_text_for_buffer]] input_text_for_buffer | 0.3.7 |
   Chaîne avec un pointeur vers le tampon (par exemple : "0x1234abcd") |
   Contenu de la ligne de commande envoyée au tampon (texte ou commande). |
   Nouveau contenu de la ligne de commande envoyée au tampon.
 
-| [[hook_modifier_weechat_print]] weechat_print |
+| [[hook_modifier_weechat_print]] weechat_print | |
   pointeur vers le tampon (par exemple : "0x1234abcd") + ";" + étiquettes ^(3)^ |
   Message affiché. |
   Nouveau message affiché. +
@@ -11975,67 +11894,73 @@ Valeur de retour :
 Liste des modificateurs définis par WeeChat et les extensions qui peuvent être
 utilisés :
 
-[width="100%",cols="^2,3,4,4",options="header"]
+[width="100%",cols="^2,^1,3,4,4",options="header"]
 |===
-| Modificateur | Données du modificateur | Chaîne | Sortie
+| Modificateur | WeeChat mini | Données du modificateur | Chaîne | Sortie
 
-| [[hook_modifier_charset_decode]] charset_decode |
+| [[hook_modifier_charset_decode]] charset_decode | |
   extension.nom_tampon |
   Toute chaîne. |
   Chaîne décodée depuis le jeu de caractères trouvé pour l'extension/tampon
   vers UTF-8.
 
-| [[hook_modifier_charset_encode]] charset_encode |
+| [[hook_modifier_charset_encode]] charset_encode | |
   extension.nom_tampon |
   Toute chaîne. |
   Chaîne encodée depuis UTF-8 vers le jeu de caractères trouvé pour
   l'extension/tampon.
 
-| [[hook_modifier_irc_color_decode]] irc_color_decode |
+| [[hook_modifier_irc_color_decode]] irc_color_decode | |
   "1" pour garder les couleurs, "0" pour les supprimer |
   Toute chaîne. |
   Chaîne avec les couleurs IRC converties en couleurs WeeChat (ou avec les
   couleurs IRC supprimées).
 
-| [[hook_modifier_irc_color_encode]] irc_color_encode |
+| [[hook_modifier_irc_color_encode]] irc_color_encode | |
   "1" pour garder les couleurs, "0" pour les supprimer |
   Toute chaîne. |
   Chaîne avec les couleurs IRC (ou avec les couleurs IRC supprimées).
 
-| [[hook_modifier_irc_color_decode_ansi]] irc_color_decode_ansi +
-  _(WeeChat ≥ 1.0)_ |
+| [[hook_modifier_irc_color_decode_ansi]] irc_color_decode_ansi | 1.0 |
   "1" pour garder les couleurs, "0" pour les supprimer |
   Toute chaîne. |
   Chaîne avec les couleurs ANSI converties en couleurs IRC (ou avec les couleurs
   ANSI supprimées).
 
-| [[hook_modifier_irc_command_auth]] irc_command_auth +
-  _(WeeChat ≥ 0.4.1)_ |
+| [[hook_modifier_irc_command_auth]] irc_command_auth | 0.4.1 |
   Nom du serveur |
   Commande d'authentification (par exemple : `+/msg nickserv identify password+`). |
   Commande avec le mot de passe caché (par exemple : `+/msg nickserv identify ********+`).
 
-| [[hook_modifier_irc_message_auth]] irc_message_auth +
-  _(WeeChat ≥ 0.4.1)_ |
+| [[hook_modifier_irc_message_auth]] irc_message_auth | 0.4.1 |
   Nom du serveur |
   Message affiché après `msg` envoyé à nickserv. |
   Message avec le mot de passe caché.
 
-| [[hook_modifier_color_decode_ansi]] color_decode_ansi +
-  _(WeeChat ≥ 1.0)_ |
+| [[hook_modifier_irc_tag_escape_value]] irc_tag_escape_value | 3.3 |
+  - |
+  Toute chaîne. |
+  Chaîne avec la valeur de l'étiquette IRC échappée,
+  voir : https://ircv3.net/specs/extensions/message-tags#escaping-values.
+
+| [[hook_modifier_irc_tag_unescape_value]] irc_tag_unescape_value | 3.3 |
+  - |
+  Toute chaîne. |
+  Chaîne avec la valeur de l'étiquette IRC sans échappements,
+  voir : https://ircv3.net/specs/extensions/message-tags#escaping-values.
+
+| [[hook_modifier_color_decode_ansi]] color_decode_ansi | 1.0 |
   "1" pour garder les couleurs, "0" pour les supprimer |
   Toute chaîne. |
   Chaîne avec les couleurs ANSI converties en couleurs WeeChat (ou avec les
   couleurs ANSI supprimées).
 
-| [[hook_modifier_color_encode_ansi]] color_encode_ansi +
-  _(WeeChat ≥ 2.7)_ |
+| [[hook_modifier_color_encode_ansi]] color_encode_ansi | 2.7 |
   - |
   Toute chaîne. |
   Chaîne avec les couleurs WeeChat converties en couleurs ANSI.
 
-| [[hook_modifier_eval_path_home]] eval_path_home +
-  _(WeeChat ≥ 2.7)_ |
+| [[hook_modifier_eval_path_home]] eval_path_home | 2.7 |
   Facultatif : `directory=xxx` où `xxx` peut être : `config`, `data`, `cache`, `runtime` |
   Toute chaîne. |
   Chemin évalué, résultat de la fonction
@@ -12476,10 +12401,10 @@ valeurs sont de type "string") :
   "core", "irc", ... | ""
 
 | _buffer_name | Nom du tampon. |
-  "weechat", "freenode.#weechat", ... | ""
+  "weechat", "libera.#weechat", ... | ""
 
 | _buffer_full_name | Nom complet du tampon. |
-  "core.weechat", "irc.freenode.#weechat", ... | ""
+  "core.weechat", "irc.libera.#weechat", ... | ""
 
 | _buffer_localvar_XXX ^(2)^ | Variables locales du tampon. |
   toute chaîne | non défini
@@ -12632,28 +12557,23 @@ Paramètres :
 
 Propriétés :
 
-[width="100%",cols="^2,2,2,5",options="header"]
+[width="100%",cols="^1,^1,2,2,5",options="header"]
 |===
-| Nom | Type de hook | Valeur | Description
+| Nom | WeeChat mini | Type de hook | Valeur | Description
 
-| subplugin | tout type | toute chaîne |
+| subplugin | | tout type |
+  toute chaîne |
   Nom de la sous-extension (couramment un nom de script, qui est affiché dans
   `/help commande` pour un hook de type _command_).
 
-| stdin +
-  _(WeeChat ≥ 0.4.3)_ |
-  _process_, _process_hashtable_ | toute chaîne |
+| stdin | 0.4.3 | _process_, _process_hashtable_ | toute chaîne |
   Envoyer les données sur l'entrée standard (_stdin_) du processus fils.
 
-| stdin_close +
-  _(WeeChat ≥ 0.4.3)_ |
-  _process_, _process_hashtable_ | (non utilisée) |
+| stdin_close | 0.4.3 | _process_, _process_hashtable_ | (non utilisée) |
   Fermer le tuyau utilisé pour envoyer les données sur l'entrée standard
   (_stdin_) du processus fils.
 
-| signal +
-  _(WeeChat ≥ 1.0)_ |
-  _process_, _process_hashtable_ |
+| signal | 1.0 | _process_, _process_hashtable_ |
   numéro de signal ou un de ces noms : `hup`, `int`, `quit`, `kill`, `term`,
   `usr1`, `usr2` |
   Envoyer un signal au proces.sus fils
@@ -12922,7 +12842,7 @@ Paramètres :
 
 * _plugin_ : nom de l'extension, la valeur spéciale suivante est autorisée :
 ** `+==+` : le nom utilisé est le nom complet du tampon (par exemple :
-   `irc.freenode.#weechat` au lieu de `freenode.#weechat`)
+   `irc.libera.#weechat` au lieu de `libera.#weechat`)
    _(WeeChat ≥ 1.0)_
 * _name_ : nom du tampon, si c'est NULL ou une chaîne vide, le tampon courant
   est retourné (tampon affiché par la fenêtre courante); si le nom commence par
@@ -12936,8 +12856,8 @@ Exemples en C :
 
 [source,C]
 ----
-struct t_gui_buffer *buffer1 = weechat_buffer_search ("irc", "freenode.#weechat");
-struct t_gui_buffer *buffer2 = weechat_buffer_search ("==", "irc.freenode.#test");  /* WeeChat ≥ 1.0 */
+struct t_gui_buffer *buffer1 = weechat_buffer_search ("irc", "libera.#weechat");
+struct t_gui_buffer *buffer2 = weechat_buffer_search ("==", "irc.libera.#test");  /* WeeChat ≥ 1.0 */
 ----
 
 Script (Python) :
@@ -13358,11 +13278,11 @@ Paramètres :
 
 Propriétés :
 
-[width="100%",cols="^2,4,8",options="header"]
+[width="100%",cols="^2,^1,4,8",options="header"]
 |===
-| Nom | Valeur | Description.
+| Nom | WeeChat mini | Valeur | Description.
 
-| hotlist | "+", "-", WEECHAT_HOTLIST_LOW, WEECHAT_HOTLIST_MESSAGE,
+| hotlist | | "+", "-", WEECHAT_HOTLIST_LOW, WEECHAT_HOTLIST_MESSAGE,
   WEECHAT_HOTLIST_PRIVATE, WEECHAT_HOTLIST_HIGHLIGHT, "-1" |
   "+" : active la hotlist (option globale, le pointeur vers le tampon n'est pas
   utilisé) +
@@ -13371,156 +13291,152 @@ Propriétés :
   priorité : ajouter ce tampon dans la hotlist avec cette priorité +
   "-1" : supprimer ce tampon de la hotlist _(WeeChat ≥ 1.0)_.
 
-| completion_freeze | "0" ou "1" |
+| completion_freeze | | "0" ou "1" |
   "0" : pas de gel de la complétion (valeur par défaut)
   (option globale, le pointeur vers le tampon n'est pas utilisé) +
   "1" : ne pas arrêter la complétion lorsque la ligne de commande est mise à
   jour (option globale, le pointeur vers le tampon n'est pas utilisé).
 
-| unread | - |
+| unread | | - |
   Définit le marqueur de données non lues après la dernière ligne du tampon.
 
-| display | "1" ou "auto" |
+| display | | "1" ou "auto" |
   "1" : basculer vers ce tampon dans la fenêtre active +
   "auto" : basculer vers ce tampon dans la fenêtre active, le marqueur de
   données non lues n'est pas réinitialisé.
 
-| hidden +
-  _(WeeChat ≥ 1.0)_ | "0" ou "1" |
+| hidden | 1.0 | "0" ou "1" |
   "0" : démasquer le tampon +
   "1" : masquer le tampon.
 
-| number | numéro |
+| number | | numéro |
   Déplace le tampon vers ce numéro.
 
-| name | toute chaîne |
+| name | | toute chaîne |
   Change le nom du tampon.
 
-| short_name | toute chaîne |
+| short_name | | toute chaîne |
   Change le nom court du tampon.
 
-| type | "formatted" ou "free" |
+| type | | "formatted" ou "free" |
   Définit le type de tampon : "formatted" (pour afficher les messages d'une
   discussion), ou "free" (pour du contenu libre); lorsque la valeur est "free",
   la propriété _clear_ est forcée à "0" _(WeeChat ≥ 1.0)_.
 
-| notify | "0", "1", "2", "3" |
+| notify | | "0", "1", "2", "3" |
   Définit le niveau de notification du tampon : "0" = ne jamais ajouter à la
   hotlist, "1" = ajouter pour les highlights seulement, "2" = ajouter pour les
   highlights et les messages, "3" = ajouter pour tous les messages.
 
-| print_hooks_enabled | "0" ou "1" |
+| print_hooks_enabled | | "0" ou "1" |
   "0" pour désactiver les hooks "print", "1" pour les activer
   (par défaut pour un nouveau tampon).
 
-| day_change +
-  _(WeeChat ≥ 0.4.3)_ | "0" ou "1" |
+| day_change | 0.4.3 | "0" ou "1" |
   "0" pour cacher les messages de changement de jour, "1" pour les voir
   (par défaut pour un nouveau tampon).
 
-| clear +
-  _(WeeChat ≥ 1.0)_ | "0" ou "1" |
+| clear | 1.0 | "0" ou "1" |
   "0" pour empêcher l'utilisateur d'effacer le tampon avec la commande
   `/buffer clear`, "1" pour autoriser l'utilisateur à effacer le tampon (par
    défaut pour un nouveau tampon) (note : même lorsque la valeur est "0", le
    tampon peut toujours être effacé avec la fonction <<_buffer_clear,buffer_clear>>).
 
-| filter +
-  _(WeeChat ≥ 1.0)_ | "0" or "1" |
+| filter | 1.0 | "0" or "1" |
   "0" : désactiver les filtres sur le tampon +
   "1" : activer les filtres sur le tampon.
 
-| title | toute chaîne |
+| title | | toute chaîne |
   Change le titre du tampon.
 
-| time_for_each_line | "0" ou "1" |
+| time_for_each_line | | "0" ou "1" |
   "0" pour cacher l'heure sur toutes les lignes du tampon, "1" pour afficher
   l'heure sur toutes les lignes (par défaut pour un nouveau tampon).
 
-| nicklist | "0" ou "1" |
+| nicklist | | "0" ou "1" |
   "0" pour supprimer la liste des pseudos du tampon, "1" pour ajouter la liste
   des pseudos du tampon.
 
-| nicklist_case_sensitive | "0" ou "1" |
+| nicklist_case_sensitive | | "0" ou "1" |
   "0" pour avoir la liste des pseudos insensible à la casse, "1" pour avoir
   la liste des pseudos sensible à la casse.
 
-| nicklist_display_groups | "0" ou "1" |
+| nicklist_display_groups | | "0" ou "1" |
   "0" pour cacher les groupes de la liste des pseudos, "1" pour afficher les
   groupes de la liste des pseudos.
 
-| highlight_words | "-" ou une liste de mots séparés par des virgules |
+| highlight_words | | "-" ou une liste de mots séparés par des virgules |
   "-" est une valeur spéciale pour désactiver tout highlight sur ce tampon, ou
   une liste de mots à mettre en valeur dans ce tampon, par exemple :
   "abc,def,ghi".
 
-| highlight_words_add | liste de mots séparés par des virgules |
+| highlight_words_add | | liste de mots séparés par des virgules |
   Liste de mots à mettre en valeur dans ce tampon, ces mots sont ajoutés aux
   mots existants pour le tampon.
 
-| highlight_words_del | liste de mots séparés par des virgules |
+| highlight_words_del | | liste de mots séparés par des virgules |
   Liste de mots à supprimer de la liste des mots à mettre en valeur dans ce
   tampon.
 
-| highlight_regex | toute chaîne |
+| highlight_regex | | toute chaîne |
   Expression régulière POSIX étendue pour le highlight.
 
-| highlight_tags_restrict | liste d'étiquettes séparées par des virgules |
+| highlight_tags_restrict | | liste d'étiquettes séparées par des virgules |
   Restreindre les highlights aux messages avec ces étiquettes dans ce tampon
   (il est possible de combiner plusieurs étiquettes sous forme d'un "et" logique
   avec le séparateur "+", par exemple : "nick_toto+irc_action").
 
-| highlight_tags | liste d'étiquettes séparées par des virgules |
+| highlight_tags | | liste d'étiquettes séparées par des virgules |
   Forcer le highlight pour les messages avec ces étiquettes dans ce tampon
   (il est possible de combiner plusieurs étiquettes sous forme d'un "et" logique
   avec le séparateur "+", par exemple : "nick_toto+irc_action").
 
-| hotlist_max_level_nicks | liste de "pseudo:niveau" séparés par des virgules |
+| hotlist_max_level_nicks | | liste de "pseudo:niveau" séparés par des virgules |
   Liste de pseudos avec niveau max pour la hotlist sur ce tampon (le niveau peut
   être : -1 : jamais dans la hotlist, 0 : faible, 1 : message, 2 : privé,
   3 : highlight), par exemple : "joe:2,mike:-1,robert:-1" (joe ne produira
   jamais de highlight sur le tampon, mike et robert ne changeront jamais la
   hotlist).
 
-| hotlist_max_level_nicks_add | liste de "pseudo:niveau" séparés par des virgules" |
+| hotlist_max_level_nicks_add | | liste de "pseudo:niveau" séparés par des virgules" |
   Liste de pseudos avec niveau pour la hotlist, ces pseudos sont ajoutés aux
   pseudos existant dans le tampon.
 
-| hotlist_max_level_nicks_del | liste de pseudos séparés par des virgules |
+| hotlist_max_level_nicks_del | | liste de pseudos séparés par des virgules |
   Liste de pseudos à supprimer des niveaux max de hotlist.
 
-| key_bind_xxx | toute chaîne |
+| key_bind_xxx | | toute chaîne |
   Associe la nouvelle touche _xxx_, spécifique à ce tampon, la valeur est la
   commande à exécuter pour cette touche.
 
-| key_unbind_xxx | - |
+| key_unbind_xxx | | - |
   Supprime la touche _xxx_ pour ce tampon.
 
-| input | toute chaîne |
+| input | | toute chaîne |
   Change le contenu de la zone de saisie.
 
-| input_pos | position |
+| input_pos | | position |
   Change la position du curseur dans la zone de saisie.
 
-| input_get_unknown_commands | "0" ou "1" |
+| input_get_unknown_commands | | "0" ou "1" |
   "0" pour désactiver les commandes inconnues sur ce tampon (comportement par
   défaut), "1" pour recevoir les commandes inconnues, par exemple si
   l'utilisateur tape "/commandeinconnue", le tampon le recevra (pas d'erreur
   sur la commande inconnue).
 
-| input_get_empty | "0" ou "1" |
+| input_get_empty | | "0" ou "1" |
   "0" pour désactiver l'entrée vide sur ce tampon (comportement par défaut),
   "1" pour recevoir l'entrée vide.
 
-| input_multiline | "0" ou "1" |
+| input_multiline | | "0" ou "1" |
   "0" pour envoyer chaque ligne séparément au tampon (comportement par défaut),
   "1" pour envoyer plusieurs lignes comme un seul message.
 
-| localvar_set_xxx | toute chaîne |
+| localvar_set_xxx | | toute chaîne |
   Change la valeur de la variable locale _xxx_ (la variable est créée si elle
   n'existe pas).
 
-| localvar_del_xxx | - |
+| localvar_del_xxx | | - |
   Supprime la variable locale _xxx_.
 |===
 
@@ -13705,12 +13621,12 @@ Exemple en C :
 
 [source,C]
 ----
-struct t_gui_buffer *buffer = weechat_buffer_search ("irc", "freenode.#weechat");
+struct t_gui_buffer *buffer = weechat_buffer_search ("irc", "libera.#weechat");
 if (buffer)
 {
     weechat_printf (NULL, "%d", weechat_buffer_match_list (buffer, "*"));                    /* 1 */
     weechat_printf (NULL, "%d", weechat_buffer_match_list (buffer, "*,!*#weechat*"));        /* 0 */
-    weechat_printf (NULL, "%d", weechat_buffer_match_list (buffer, "irc.freenode.*"));       /* 1 */
+    weechat_printf (NULL, "%d", weechat_buffer_match_list (buffer, "irc.libera.*"));       /* 1 */
     weechat_printf (NULL, "%d", weechat_buffer_match_list (buffer, "irc.oftc.*,python.*"));  /* 0 */
 }
 ----
@@ -13723,11 +13639,11 @@ Script (Python) :
 def buffer_match_list(buffer: str, string: str) -> int: ...
 
 # exemple
-buffer = weechat.buffer_search("irc", "freenode.#weechat")
+buffer = weechat.buffer_search("irc", "libera.#weechat")
 if buffer:
     weechat.prnt("", "%d" % weechat.buffer_match_list(buffer, "*"))                    # 1
     weechat.prnt("", "%d" % weechat.buffer_match_list(buffer, "*,!*#weechat*"))        # 0
-    weechat.prnt("", "%d" % weechat.buffer_match_list(buffer, "irc.freenode.*"))       # 1
+    weechat.prnt("", "%d" % weechat.buffer_match_list(buffer, "irc.libera.*"))       # 1
     weechat.prnt("", "%d" % weechat.buffer_match_list(buffer, "irc.oftc.*,python.*"))  # 0
 ----
 
@@ -15309,7 +15225,7 @@ Exemple en C :
 [source,C]
 ----
 int rc;
-rc = weechat_command (weechat_buffer_search ("irc", "freenode.#weechat"),
+rc = weechat_command (weechat_buffer_search ("irc", "libera.#weechat"),
                       "/whois FlashCode");
 ----
 
@@ -15321,7 +15237,7 @@ Script (Python) :
 def command(buffer: str, command: str) -> int: ...
 
 # exemple
-rc = weechat.command(weechat.buffer_search("irc", "freenode.#weechat"), "/whois FlashCode")
+rc = weechat.command(weechat.buffer_search("irc", "libera.#weechat"), "/whois FlashCode")
 ----
 
 ==== command_options
@@ -15645,7 +15561,7 @@ Exemple en C :
 
 [source,C]
 ----
-if (weechat_network_pass_proxy ("mon_proxy", sock, "chat.freenode.net", 6667))
+if (weechat_network_pass_proxy ("mon_proxy", sock, "irc.libera.chat", 6667))
 {
     /* OK */
 }
@@ -15826,12 +15742,14 @@ if (hashtable_in)
     weechat_hashtable_set (
         hashtable_in,
         "message",
-        "@time=2015-06-27T16:40:35.000Z :nick!user@host PRIVMSG #weechat :hello!");
+        "@time=2015-06-27T16:40:35.000Z;tag2=value\\sspace :nick!user@host PRIVMSG #weechat :hello!");
     hashtable_out = weechat_info_get_hashtable ("irc_message_parse",
                                                 hashtable_in);
     /*
      * maintenant hashtable_out a les clés/valeurs suivantes :
-     *   "tags"                : "time=2015-06-27T16:40:35.000Z"
+     *   "tags"                : "time=2015-06-27T16:40:35.000Z;tag2=value\\sspace"
+     *   "tag_time"            : "2015-06-27T16:40:35.000Z"
+     *   "tag_tag2"            : "value space"
      *   "message_without_tags": ":nick!user@host PRIVMSG #weechat :hello!"
      *   "nick"                : "nick"
      "   "user"                : "user"
@@ -15840,10 +15758,10 @@ if (hashtable_in)
      *   "channel"             : "#weechat"
      *   "arguments"           : "#weechat :hello!"
      *   "text"                : "hello!"
-     *   "pos_command"         : "47"
-     *   "pos_arguments"       : "55"
-     *   "pos_channel"         : "55"
-     *   "pos_text"            : "65"
+     *   "pos_command"         : "65"
+     *   "pos_arguments"       : "73"
+     *   "pos_channel"         : "73"
+     *   "pos_text"            : "83"
      */
     weechat_hashtable_free (hashtable_in);
     weechat_hashtable_free (hashtable_out);
@@ -17501,8 +17419,8 @@ Exemple en C :
 struct t_hdata *hdata = weechat_hdata_get ("irc_server");
 void *servers = weechat_hdata_get_list (hdata, "irc_servers");
 
-/* cherche un serveur irc avec le nom "freenode" */
-void *server = weechat_hdata_search (hdata, servers, "${irc_server.name} == freenode", 1);
+/* cherche un serveur irc avec le nom "libera" */
+void *server = weechat_hdata_search (hdata, servers, "${irc_server.name} == libera", 1);
 if (server)
 {
     /* ... */
@@ -17520,8 +17438,8 @@ def hdata_search(hdata: str, pointer: str, search: str, count: int) -> str: ...
 hdata = weechat.hdata_get("irc_server")
 servers = weechat.hdata_get_list(hdata, "irc_servers")
 
-# cherche un serveur irc avec le nom "freenode"
-server = weechat.hdata_search(hdata, servers, "${irc_server.name} == freenode", 1)
+# cherche un serveur irc avec le nom "libera"
+server = weechat.hdata_search(hdata, servers, "${irc_server.name} == libera", 1)
 if server:
     # ...
 ----
@@ -17915,8 +17833,8 @@ Exemple en C :
 [source,C]
 ----
 struct t_hdata *hdata = weechat_hdata_get ("buffer");
-struct t_gui_buffer *buffer1 = weechat_buffer_search ("irc", "freenode.#weechat");
-struct t_gui_buffer *buffer2 = weechat_buffer_search ("irc", "freenode.#weechat-fr");
+struct t_gui_buffer *buffer1 = weechat_buffer_search ("irc", "libera.#weechat");
+struct t_gui_buffer *buffer2 = weechat_buffer_search ("irc", "libera.#weechat-fr");
 weechat_printf (NULL, "comparaison de numéro = %d", weechat_hdata_compare (hdata, buffer1, buffer2, "number", 0));
 ----
 
@@ -17929,8 +17847,8 @@ def hdata_compare(hdata: str, pointer1: str, pointer2: str, name: str, case_sens
 
 # exemple
 hdata = weechat.hdata_get("buffer")
-buffer1 = weechat.buffer_search("irc", "freenode.#weechat")
-buffer2 = weechat.buffer_search("irc", "freenode.#weechat-fr")
+buffer1 = weechat.buffer_search("irc", "libera.#weechat")
+buffer2 = weechat.buffer_search("irc", "libera.#weechat-fr")
 weechat.prnt("", "comparaison de numéro = %d" % weechat.hdata_compare(hdata, buffer1, buffer2, "number", 0))
 ----
 

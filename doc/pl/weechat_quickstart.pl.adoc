@@ -111,12 +111,12 @@ na liście "irc" oraz inne wtyczki.
 Możesz dodać serwer IRC za pomocą komendy `/server`, na przykład:
 
 ----
-/server add freenode chat.freenode.net
+/server add libera irc.libera.chat/6697 -ssl
 ----
 
-W tej komendzie `freenode` to nazwa wewnętrzna używana przez WeeChat:
-będziesz mógł połączyć się za pomocą `/connect freenode`. Opcje serwera
-będą miały postać _irc.server.freenode.xxx_.
+W tej komendzie `libera` to nazwa wewnętrzna używana przez WeeChat:
+będziesz mógł połączyć się za pomocą `/connect libera`. Opcje serwera
+będą miały postać _irc.server.libera.xxx_.
 
 Jak zawsze w razie wątpliwości dostępna jest pomoc:
 
@@ -135,45 +135,38 @@ Dla każdej opcji serwera WeeChat używa jej wartości jeśli jest zdefiniowana 
 "null"). W przeciwnym przypadku WeeChat używa wartości domyślnych ("irc.server_default.xxx").
 
 Na przykład znajdują się tam domyślne nicki (bazujące na Twoim loginie un*x),
-możesz je zmienić dla serwera freenode następującą komendą:
+możesz je zmienić dla serwera libera następującą komendą:
 
 ----
-/set irc.server.freenode.nicks "mójnick,mójnick2,mójnick3,mójnick4,mójnick5"
+/set irc.server.libera.nicks "mójnick,mójnick2,mójnick3,mójnick4,mójnick5"
 ----
 
 Ustawienie nazwy użytkownika i imienia:
 
 ----
-/set irc.server.freenode.username "Moja nazwa użytkownika"
-/set irc.server.freenode.realname "Moje imię"
+/set irc.server.libera.username "Moja nazwa użytkownika"
+/set irc.server.libera.realname "Moje imię"
 ----
 
 Aby włączyć automatyczne łączenie się z serwerem przy starcie:
 
 ----
-/set irc.server.freenode.autoconnect on
-----
-
-W celu połączenia z użyciem SSL:
-
-----
-/set irc.server.freenode.addresses "chat.freenode.net/7000"
-/set irc.server.freenode.ssl on
+/set irc.server.libera.autoconnect on
 ----
 
 Jeśli SASL jest dostępny na serwerze, można użyć go do uwierzytelnienia (zostaniesz
 zidentyfikowany przed wejściem na kanał):
 
 ----
-/set irc.server.freenode.sasl_username "mójnick"
-/set irc.server.freenode.sasl_password "xxxxxxx"
+/set irc.server.libera.sasl_username "mójnick"
+/set irc.server.libera.sasl_password "xxxxxxx"
 ----
 
 Żeby wykonać komendę po połączeniu z serwerem, na przykład uwierzytelnienie
 przez nickserv (tylko jeśli nie uwierzytelniasz się przez SASL):
 
 ----
-/set irc.server.freenode.command "/msg nickserv identify xxxxxxx"
+/set irc.server.libera.command "/msg nickserv identify xxxxxxx"
 ----
 
 [NOTE]
@@ -188,23 +181,23 @@ Najpierw ustaw hasło:
 /secure passphrase to jest moje tajne hasło
 ----
 
-Następnie dodaj swoje hasło, np dla sieci freenode:
+Następnie dodaj swoje hasło, np dla sieci libera:
 
 ----
-/secure set freenode_password xxxxxxx
+/secure set libera_password xxxxxxx
 ----
 
-Następnie możesz użyć `+${sec.data.freenode_password}+` zamiast swojego hasła dla
+Następnie możesz użyć `+${sec.data.libera_password}+` zamiast swojego hasła dla
 opcji IRC omówionych wcześniej, na przykład:
 
 ----
-/set irc.server.freenode.sasl_password "${sec.data.freenode_password}"
+/set irc.server.libera.sasl_password "${sec.data.libera_password}"
 ----
 
 Aby automatycznie wejść na kanały po połączeniu z serwerem:
 
 ----
-/set irc.server.freenode.autojoin "#kanał1,#kanał2"
+/set irc.server.libera.autojoin "#kanał1,#kanał2"
 ----
 
 [TIP]
@@ -216,24 +209,24 @@ Aby usunąć wartość dla opcji serwera, używając w zamian wartości domyśln
 na przykład, aby używać domyślnych nicków (irc.server_default.nicks):
 
 ----
-/unset irc.server.freenode.nicks
+/unset irc.server.libera.nicks
 ----
 
 Inne opcje: możesz ustawić pozostałe opcje za pomocą komendy ("xxx" to
 nazwa opcji):
 
 ----
-/set irc.server.freenode.xxx wartość
+/set irc.server.libera.xxx wartość
 ----
 
 [[connect_to_irc_server]]
 == Łączenie z serwerem IRC
 
 ----
-/connect freenode
+/connect libera
 ----
 
-Dzięki tej komendzie WeeChat łączy się z serwerem freenode i automatycznie
+Dzięki tej komendzie WeeChat łączy się z serwerem libera i automatycznie
 wchodzi na kanały skonfigurowane w opcji "autojoin" dla serwera.
 
 [NOTE]

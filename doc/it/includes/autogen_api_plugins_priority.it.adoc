@@ -4,14 +4,15 @@
 //
 
 // tag::plugins_priority[]
-. charset (15000)
-. logger (14000)
-. exec (13000)
-. trigger (12000)
-. spell (11000)
-. alias (10000)
-. buflist (9000)
-. fifo (8000)
+. charset (16000)
+. logger (15000)
+. exec (14000)
+. trigger (13000)
+. spell (12000)
+. alias (11000)
+. buflist (10000)
+. fifo (9000)
+. typing (8000)
 . xfer (7000)
 . irc (6000)
 . relay (5000)

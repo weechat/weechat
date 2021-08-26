@@ -31,6 +31,10 @@ extern int weecrypto_hash_pbkdf2 (const void *data, int data_size,
                                   const void *salt, int salt_size,
                                   int iterations,
                                   void *hash, int *hash_size);
+extern int weecrypto_hmac (const void *key, int key_size,
+                           const void *message, int message_size,
+                           int hash_algo,
+                           void *hash, int *hash_size);
 extern char *weecrypto_totp_generate (const char *secret, time_t totp_time,
                                       int digits);
 extern int weecrypto_totp_validate (const char *secret, time_t totp_time,

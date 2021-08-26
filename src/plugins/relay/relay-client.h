@@ -99,7 +99,7 @@ struct t_relay_client
     char *real_ip;                     /* real IP (X-Real-IP HTTP header)   */
     enum t_relay_status status;        /* status (connecting, active,..)    */
     enum t_relay_protocol protocol;    /* protocol (irc,..)                 */
-    char *protocol_string;             /* example: "ipv6.ssl.irc.freenode"  */
+    char *protocol_string;             /* example: "ipv6.ssl.irc.libera"    */
     char *protocol_args;               /* arguments used for protocol       */
                                        /* example: server for irc protocol  */
     char *nonce;                       /* nonce used in salt of hashed pwd  */

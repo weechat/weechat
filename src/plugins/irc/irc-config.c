@@ -59,10 +59,12 @@ struct t_config_option *irc_config_look_color_nicks_in_nicklist;
 struct t_config_option *irc_config_look_color_nicks_in_server_messages;
 struct t_config_option *irc_config_look_color_pv_nick_like_channel;
 struct t_config_option *irc_config_look_ctcp_time_format;
+struct t_config_option *irc_config_look_display_account_message;
 struct t_config_option *irc_config_look_display_away;
 struct t_config_option *irc_config_look_display_ctcp_blocked;
 struct t_config_option *irc_config_look_display_ctcp_reply;
 struct t_config_option *irc_config_look_display_ctcp_unknown;
+struct t_config_option *irc_config_look_display_extended_join;
 struct t_config_option *irc_config_look_display_host_join;
 struct t_config_option *irc_config_look_display_host_join_local;
 struct t_config_option *irc_config_look_display_host_quit;
@@ -96,6 +98,8 @@ struct t_config_option *irc_config_look_part_closes_buffer;
 struct t_config_option *irc_config_look_pv_buffer;
 struct t_config_option *irc_config_look_pv_tags;
 struct t_config_option *irc_config_look_raw_messages;
+struct t_config_option *irc_config_look_typing_status_nicks;
+struct t_config_option *irc_config_look_typing_status_self;
 struct t_config_option *irc_config_look_server_buffer;
 struct t_config_option *irc_config_look_smart_filter;
 struct t_config_option *irc_config_look_smart_filter_account;
@@ -1840,8 +1844,11 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 /* TRANSLATORS: please keep words "client capabilities" between brackets if translation is different (see fr.po) */
                 N_("comma-separated list of client capabilities to enable for "
                    "server if they are available (see /help cap for a list of "
-                   "capabilities supported by WeeChat) "
-                   "(example: \"away-notify,multi-prefix\")"),
+                   "capabilities supported by WeeChat); \"*\" enables all "
+                   "capabilities by default (supported by both server and "
+                   "WeeChat); wildcard \"*\" is allowed; a capability "
+                   "beginning with \"!\" is excluded "
+                   "(example: \"*,!account-*,!extended-join\")"),
                 NULL, 0, 0,
                 default_value, value,
                 null_value_allowed,
@@ -1859,15 +1866,18 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 option_name, "integer",
                 N_("mechanism for SASL authentication: "
                    "\"plain\" for plain text password, "
+                   "\"scram-sha-1\" for SCRAM authentication with SHA-1 "
+                   "digest algorithm, "
+                   "\"scram-sha-256\" for SCRAM authentication with SHA-256 "
+                   "digest algorithm, "
+                   "\"scram-sha-512\" for SCRAM authentication with SHA-512 "
+                   "digest algorithm, "
                    "\"ecdsa-nist256p-challenge\" for key-based "
                    "challenge authentication, "
                    "\"external\" for authentication using client side SSL "
-                   "cert, "
-                   "\"dh-blowfish\" for blowfish crypted password "
-                   "(insecure, not recommended), "
-                   "\"dh-aes\" for AES crypted password "
-                   "(insecure, not recommended)"),
-                "plain|ecdsa-nist256p-challenge|external|dh-blowfish|dh-aes",
+                   "certificate"),
+                "plain|scram-sha-1|scram-sha-256|scram-sha-512|"
+                "ecdsa-nist256p-challenge|external",
                 0, 0,
                 default_value, value,
                 null_value_allowed,
@@ -2149,8 +2159,8 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 N_("command(s) to run after connection to server and before "
                    "auto-join of channels (many commands can be separated by "
                    "\";\", use \"\\;\" for a semicolon, special variables "
-                   "$nick, $channel and $server are replaced by their value) "
-                   "(note: content is evaluated, see /help eval; server "
+                   "$nick, $channel and $server are replaced by their values) "
+                   "(note: commands are evaluated, see /help eval; server "
                    "options are evaluated with ${irc_server.xxx} and "
                    "${server} is replaced by the server name)"),
                 NULL, 0, 0,
@@ -2338,8 +2348,8 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 N_("default kick message used by commands \"/kick\" and "
                    "\"/kickban\" "
                    "(note: content is evaluated, see /help eval; special "
-                   "variables ${nick}, ${channel} and ${server} are replaced "
-                   "by their value)"),
+                   "variables ${nick} (self nick), ${target} (target nick), "
+                   "${channel} and ${server} are replaced by their values)"),
                 NULL, 0, 0,
                 default_value, value,
                 null_value_allowed,
@@ -2358,7 +2368,7 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 N_("default part message (leaving channel) "
                    "(note: content is evaluated, see /help eval; special "
                    "variables ${nick}, ${channel} and ${server} are replaced "
-                   "by their value; \"%v\" is replaced by WeeChat version if "
+                   "by their values; \"%v\" is replaced by WeeChat version if "
                    "there is no ${...} in string)"),
                 NULL, 0, 0,
                 default_value, value,
@@ -2378,7 +2388,7 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 N_("default quit message (disconnecting from server) "
                    "(note: content is evaluated, see /help eval; special "
                    "variables ${nick}, ${channel} and ${server} are replaced "
-                   "by their value; \"%v\" is replaced by WeeChat version if "
+                   "by their values; \"%v\" is replaced by WeeChat version if "
                    "there is no ${...} in string)"),
                 NULL, 0, 0,
                 default_value, value,
@@ -2785,6 +2795,13 @@ irc_config_init ()
            "for date/time specifiers)"),
         NULL, 0, 0, "%a, %d %b %Y %T %z", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    irc_config_look_display_account_message = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "display_account_message", "boolean",
+        N_("display ACCOUNT messages received when capability account-notify "
+           "is enabled"),
+        NULL, 0, 0, "on", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_look_display_away = weechat_config_new_option (
         irc_config_file, ptr_section,
         "display_away", "integer",
@@ -2810,6 +2827,13 @@ irc_config_init ()
         irc_config_file, ptr_section,
         "display_ctcp_unknown", "boolean",
         N_("display CTCP message even if it is unknown CTCP"),
+        NULL, 0, 0, "on", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    irc_config_look_display_extended_join = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "display_extended_join", "boolean",
+        N_("display extra information in the JOIN messages: account name "
+           "and real name (capability extended-join must be enabled)"),
         NULL, 0, 0, "on", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_look_display_host_join = weechat_config_new_option (
@@ -2876,7 +2900,7 @@ irc_config_init ()
         N_("comma separated list of words to highlight in channel buffers "
            "(case insensitive, use \"(?-i)\" at beginning of words to "
            "make them case sensitive; special variables $nick, $channel and "
-           "$server are replaced by their value), these words are added to "
+           "$server are replaced by their values), these words are added to "
            "buffer property \"highlight_words\" only when buffer is created "
            "(it does not affect current buffers), an empty string disables "
             "default highlight on nick, examples: \"$nick\", \"(?-i)$nick\""),
@@ -2888,7 +2912,7 @@ irc_config_init ()
         N_("comma separated list of words to highlight in private buffers "
            "(case insensitive, use \"(?-i)\" at beginning of words to "
            "make them case sensitive; special variables $nick, $channel and "
-           "$server are replaced by their value), these words are added to "
+           "$server are replaced by their values), these words are added to "
            "buffer property \"highlight_words\" only when buffer is created "
            "(it does not affect current buffers), an empty string disables "
             "default highlight on nick, examples: \"$nick\", \"(?-i)$nick\""),
@@ -2900,7 +2924,7 @@ irc_config_init ()
         N_("comma separated list of words to highlight in server buffers "
            "(case insensitive, use \"(?-i)\" at beginning of words to "
            "make them case sensitive; special variables $nick, $channel and "
-           "$server are replaced by their value), these words are added to "
+           "$server are replaced by their values), these words are added to "
            "buffer property \"highlight_words\" only when buffer is created "
            "(it does not affect current buffers), an empty string disables "
            "default highlight on nick, examples: \"$nick\", \"(?-i)$nick\""),
@@ -3092,6 +3116,23 @@ irc_config_init ()
         N_("number of raw messages to save in memory when raw data buffer is "
            "closed (messages will be displayed when opening raw data buffer)"),
         NULL, 0, 65535, "256", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    irc_config_look_typing_status_nicks = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "typing_status_nicks", "boolean",
+        N_("display nicks typing on the channel in bar item \"typing\" "
+           "(option typing.look.enabled_nicks must be enabled and capability "
+           "\"message-tags\" must be enabled on the server)"),
+        NULL, 0, 0, "off", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    irc_config_look_typing_status_self = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "typing_status_self", "boolean",
+        N_("send self typing status to channels so that other users see when "
+           "you are typing a message "
+           "(option typing.look.enabled_self must be enabled and capability "
+           "\"message-tags\" must be enabled on the server)"),
+        NULL, 0, 0, "off", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_look_server_buffer = weechat_config_new_option (
         irc_config_file, ptr_section,

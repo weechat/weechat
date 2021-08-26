@@ -757,12 +757,9 @@ gui_color_display_terminal_colors ()
         refresh ();
         endwin ();
     }
+    gui_color_info_term_colors (str_line, sizeof (str_line));
     printf ("\n");
-    printf ("%s $TERM=%s  COLORS: %d, COLOR_PAIRS: %d, "
-            "can_change_color: %s\n",
-            _("Terminal infos:"),
-            getenv ("TERM"), gui_color_term_colors, gui_color_term_color_pairs,
-            (gui_color_term_can_change_color) ? "yes" : "no");
+    printf ("%s %s\n", _("Terminal infos:"), str_line);
     if (gui_color_term_colors == 0)
     {
         printf ("%s\n", _("No color support in terminal."));
@@ -1571,9 +1568,13 @@ gui_color_alloc ()
 void
 gui_color_dump ()
 {
+    char str_line[1024];
     int fg, bg, index, used;
 
+    gui_color_info_term_colors (str_line, sizeof (str_line));
+
     gui_chat_printf (NULL, "");
+    gui_chat_printf (NULL, "%s", str_line);
     gui_chat_printf (NULL,
                      _("WeeChat colors (in use: %d, left: %d):"),
                      gui_color_pairs_used,

@@ -42,7 +42,8 @@ extern const char *irc_protocol_nick_address (struct t_irc_server *server,
                                               struct t_irc_nick *nick,
                                               const char *nickname,
                                               const char *address);
-extern struct t_hashtable *irc_protocol_get_message_tags (const char *tags);
+extern char *irc_protocol_cap_to_enable (const char *capabilities,
+                                         int sasl_requested);
 }
 
 #include "tests/tests.h"
@@ -54,6 +55,15 @@ extern struct t_hashtable *irc_protocol_get_message_tags (const char *tags);
     "USERLEN=16 HOSTLEN=32 CHANNELLEN=50 TOPICLEN=390 DEAF=D "          \
     "CHANTYPES=# CHANMODES=eIbq,k,flj,CFLMPQScgimnprstuz "              \
     "MONITOR=100"
+#define IRC_ALL_CAPS "account-notify,away-notify,cap-notify,chghost,"   \
+    "extended-join,invite-notify,message-tags,multi-prefix,"            \
+    "server-time,setname,userhost-in-names"
+
+#define WEE_CHECK_CAP_TO_ENABLE(__result, __string, __sasl_requested)   \
+    str = irc_protocol_cap_to_enable (__string, __sasl_requested);      \
+    STRCMP_EQUAL(__result, str);                                        \
+    free (str);
+
 
 struct t_irc_server *ptr_server;
 
@@ -156,39 +166,6 @@ TEST(IrcProtocol, Tags)
     STRCMP_EQUAL("irc_join,tag1,tag2,nick_bob,host_example.com,log4",
                  irc_protocol_tags ("join", "tag1,tag2", "bob",
                                     "example.com"));
-}
-
-/*
- * Tests functions:
- *   irc_protocol_get_message_tags
- */
-
-TEST(IrcProtocol, GetMessageTags)
-{
-    struct t_hashtable *hashtable;
-
-    POINTERS_EQUAL(NULL, irc_protocol_get_message_tags (NULL));
-    POINTERS_EQUAL(NULL, irc_protocol_get_message_tags (""));
-
-    hashtable = irc_protocol_get_message_tags ("abc");
-    CHECK(hashtable);
-    LONGS_EQUAL(1, hashtable->items_count);
-    POINTERS_EQUAL(NULL, (const char *)hashtable_get (hashtable, "abc"));
-    hashtable_free (hashtable);
-
-    hashtable = irc_protocol_get_message_tags ("abc=def");
-    CHECK(hashtable);
-    LONGS_EQUAL(1, hashtable->items_count);
-    STRCMP_EQUAL("def", (const char *)hashtable_get (hashtable, "abc"));
-    hashtable_free (hashtable);
-
-    hashtable = irc_protocol_get_message_tags ("aaa=bbb;ccc;example.com/ddd=eee");
-    CHECK(hashtable);
-    LONGS_EQUAL(3, hashtable->items_count);
-    STRCMP_EQUAL("bbb", (const char *)hashtable_get (hashtable, "aaa"));
-    POINTERS_EQUAL(NULL, (const char *)hashtable_get (hashtable, "ccc"));
-    STRCMP_EQUAL("eee", (const char *)hashtable_get (hashtable, "example.com/ddd"));
-    hashtable_free (hashtable);
 }
 
 /*
@@ -502,6 +479,8 @@ TEST(IrcProtocolWithServer, authenticate)
 
     server_recv ("AUTHENTICATE "
                  "QQDaUzXAmVffxuzFy77XWBGwABBQAgdinelBrKZaR3wE7nsIETuTVY=");
+    server_recv (":server.address AUTHENTICATE "
+                 "QQDaUzXAmVffxuzFy77XWBGwABBQAgdinelBrKZaR3wE7nsIETuTVY=");
 }
 
 /*
@@ -528,6 +507,25 @@ TEST(IrcProtocolWithServer, away)
 
     server_recv (":alice!user@host AWAY");
     LONGS_EQUAL(0, ptr_nick->away);
+}
+
+/*
+ * Tests functions:
+ *   irc_protocol_cap_to_enable
+ */
+
+TEST(IrcProtocol, cap_to_enable)
+{
+    char *str;
+
+    WEE_CHECK_CAP_TO_ENABLE("", NULL, 0);
+    WEE_CHECK_CAP_TO_ENABLE("", "", 0);
+    WEE_CHECK_CAP_TO_ENABLE("extended-join", "extended-join", 0);
+    WEE_CHECK_CAP_TO_ENABLE("extended-join,sasl", "extended-join", 1);
+    WEE_CHECK_CAP_TO_ENABLE(IRC_ALL_CAPS, "*", 0);
+    WEE_CHECK_CAP_TO_ENABLE(IRC_ALL_CAPS ",sasl", "*", 1);
+    WEE_CHECK_CAP_TO_ENABLE(IRC_ALL_CAPS ",!away-notify,!extended-join,sasl",
+                            "*,!away-notify,!extended-join", 1);
 }
 
 /*
@@ -605,6 +603,31 @@ TEST(IrcProtocolWithServer, error)
 
     server_recv ("ERROR test");
     server_recv ("ERROR :Closing Link: irc.server.org (Bad Password)");
+}
+
+/*
+ * Tests functions:
+ *   irc_protocol_cb_fail
+ */
+
+TEST(IrcProtocolWithServer, fail)
+{
+    server_recv (":server 001 alice");
+
+    /* not enough arguments */
+    server_recv (":server FAIL");
+    server_recv (":server FAIL *");
+    server_recv (":server FAIL COMMAND");
+
+    server_recv (":server FAIL * TEST");
+    server_recv (":server FAIL * TEST :the message");
+    server_recv (":server FAIL * TEST TEST2");
+    server_recv (":server FAIL * TEST TEST2 :the message");
+
+    server_recv (":server FAIL COMMAND TEST");
+    server_recv (":server FAIL COMMAND TEST :the message");
+    server_recv (":server FAIL COMMAND TEST TEST2");
+    server_recv (":server FAIL COMMAND TEST TEST2 :the message");
 }
 
 /*
@@ -938,6 +961,31 @@ TEST(IrcProtocolWithServer, nick)
 
 /*
  * Tests functions:
+ *   irc_protocol_cb_note
+ */
+
+TEST(IrcProtocolWithServer, note)
+{
+    server_recv (":server 001 alice");
+
+    /* not enough arguments */
+    server_recv (":server NOTE");
+    server_recv (":server NOTE *");
+    server_recv (":server NOTE COMMAND");
+
+    server_recv (":server NOTE * TEST");
+    server_recv (":server NOTE * TEST :the message");
+    server_recv (":server NOTE * TEST TEST2");
+    server_recv (":server NOTE * TEST TEST2 :the message");
+
+    server_recv (":server NOTE COMMAND TEST");
+    server_recv (":server NOTE COMMAND TEST :the message");
+    server_recv (":server NOTE COMMAND TEST TEST2");
+    server_recv (":server NOTE COMMAND TEST TEST2 :the message");
+}
+
+/*
+ * Tests functions:
  *   irc_protocol_cb_notice
  */
 
@@ -1209,6 +1257,78 @@ TEST(IrcProtocolWithServer, quit)
 
 /*
  * Tests functions:
+ *   irc_protocol_cb_setname (without setname capability)
+ */
+
+TEST(IrcProtocolWithServer, setname_without_setname_cap)
+{
+    struct t_irc_nick *ptr_nick;
+
+    server_recv (":server 001 alice");
+    server_recv (":alice!user@host JOIN #test");
+
+    ptr_nick = ptr_server->channels->nicks;
+
+    POINTERS_EQUAL(NULL, ptr_nick->realname);
+
+    /* not enough arguments */
+    server_recv (":alice!user@host SETNAME");
+    POINTERS_EQUAL(NULL, ptr_nick->realname);
+
+    server_recv (":alice!user@host SETNAME :new realname");
+    POINTERS_EQUAL(NULL, ptr_nick->realname);
+}
+
+/*
+ * Tests functions:
+ *   irc_protocol_cb_setname (with setname capability)
+ */
+
+TEST(IrcProtocolWithServer, setname_with_setname_cap)
+{
+    struct t_irc_nick *ptr_nick;
+
+    /* assume "setname" capability is enabled in server */
+    hashtable_set (ptr_server->cap_list, "setname", NULL);
+
+    server_recv (":server 001 alice");
+    server_recv (":alice!user@host JOIN #test");
+
+    ptr_nick = ptr_server->channels->nicks;
+
+    POINTERS_EQUAL(NULL, ptr_nick->realname);
+
+    server_recv (":alice!user@host SETNAME :new realname");
+    STRCMP_EQUAL("new realname", ptr_nick->realname);
+
+    server_recv (":alice!user@host SETNAME :new realname2");
+    STRCMP_EQUAL("new realname2", ptr_nick->realname);
+}
+
+/*
+ * Tests functions:
+ *   irc_protocol_cb_tagmsg
+ */
+
+TEST(IrcProtocolWithServer, tagmsg)
+{
+    server_recv (":server 001 alice");
+
+    server_recv (":alice!user@host JOIN #test");
+    server_recv (":bob!user@host JOIN #test");
+
+    /* not enough arguments */
+    server_recv (":bob!user@host TAGMSG");
+
+    /* no tags */
+    server_recv (":bob!user@host TAGMSG #test");
+
+    /* with tags */
+    server_recv ("@tag1=123;tag2=456 :bob!user@host TAGMSG #test");
+}
+
+/*
+ * Tests functions:
  *   irc_protocol_cb_topic
  */
 
@@ -1260,6 +1380,31 @@ TEST(IrcProtocolWithServer, wallops)
     server_recv (":alice!user@host WALLOPS");
 
     server_recv (":alice!user@host WALLOPS :message from admin");
+}
+
+/*
+ * Tests functions:
+ *   irc_protocol_cb_warn
+ */
+
+TEST(IrcProtocolWithServer, warn)
+{
+    server_recv (":server 001 alice");
+
+    /* not enough arguments */
+    server_recv (":server WARN");
+    server_recv (":server WARN *");
+    server_recv (":server WARN COMMAND");
+
+    server_recv (":server WARN * TEST");
+    server_recv (":server WARN * TEST :the message");
+    server_recv (":server WARN * TEST TEST2");
+    server_recv (":server WARN * TEST TEST2 :the message");
+
+    server_recv (":server WARN COMMAND TEST");
+    server_recv (":server WARN COMMAND TEST :the message");
+    server_recv (":server WARN COMMAND TEST TEST2");
+    server_recv (":server WARN COMMAND TEST TEST2 :the message");
 }
 
 /*
