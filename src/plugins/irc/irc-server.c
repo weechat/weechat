@@ -2954,9 +2954,22 @@ irc_server_send_one_msg (struct t_irc_server *server, int flags,
                           weechat_plugin->name,
                           server->name);
             }
-            msg_encoded = irc_message_convert_charset (ptr_msg, pos_encode,
-                                                       "charset_encode",
-                                                       modifier_data);
+
+
+            if (!irc_server_get_isupport_value (server, "UTF8ONLY"))
+            {
+                /* "Clients implementing this specification MUST NOT send
+                 * non-UTF-8 data to the server once they have seen
+                 * this token."
+                 * "If a client implementing this specification sees this token,
+                 * they MUST set their outgoing encoding to UTF-8 without
+                 * requiring any user intervention."
+                 * -- https://ircv3.net/specs/extensions/utf8-only
+                 */
+                msg_encoded = irc_message_convert_charset (ptr_msg, pos_encode,
+                                                           "charset_encode",
+                                                           modifier_data);
+            }
         }
 
         if (msg_encoded)
@@ -3549,9 +3562,18 @@ irc_server_msgq_flush ()
                                                   irc_recv_msgq->server->name);
                                     }
                                 }
-                                msg_decoded = irc_message_convert_charset (
-                                    ptr_msg, pos_decode,
-                                    "charset_decode", modifier_data);
+                                if (!irc_server_get_isupport_value (irc_recv_msgq->server,
+                                                                    "UTF8ONLY"))
+                                {
+                                    /* "Servers publishing this token MUST NOT relay content
+                                     * [...] containing non-UTF-8 data to clients"
+                                     * -- https://ircv3.net/specs/extensions/utf8-only
+                                     * Therefore, no need to decode, we are sure it is UTF-8.
+                                     */
+                                    msg_decoded = irc_message_convert_charset (
+                                        ptr_msg, pos_decode,
+                                        "charset_decode", modifier_data);
+                                }
                             }
 
                             /* replace WeeChat internal color codes by "?" */
