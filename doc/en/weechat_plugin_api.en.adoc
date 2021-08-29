@@ -2682,21 +2682,26 @@ expanded to last):
   `+4+` +
   `+14+`
 
-| `+${re:N}+` +
+| `+${re:xxx}+` +
   _(WeeChat ≥ 1.1)_ |
-  Regex captured group: `0` = whole string matching, `1` to `99` = group
-  captured, `+++` = last group captured,
-  `#` = index of last group captured _(WeeChat ≥ 1.8)_. |
+  Regex data: +
+  `0` = whole string matching, +
+  `1` to `99` = group captured, +
+  `+++` = last group captured, +
+  `#` = index of last group captured _(WeeChat ≥ 1.8)_, +
+  `repl_index` = index of replacement being done (starts to 1) _(WeeChat ≥ 3.3)_. |
   `+${re:0}+` +
   `+${re:1}+` +
   `+${re:2}+` +
   `+${re:+}+` +
-  `+${re:#}+` |
+  `+${re:#}+` +
+  `+${re:repl_index}+` |
   `+test1 test2+` +
   `+test1+` +
   `+test2+` +
   `+test2+` +
-  `+2+`
+  `+2+` +
+  `+1+`
 
 | `+${color:name}+` +
   _(WeeChat ≥ 0.4.2)_ |
