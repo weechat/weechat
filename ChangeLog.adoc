@@ -21,6 +21,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 New features::
 
   * core: add option "certs" in command /debug
+  * api: add `${re:repl_index}` to get the index of replacement in function string_eval_expression (issue #1689)
   * api: add random integer number in evaluation of expressions with "random:min,max"
   * api: add function string_cut
   * api: add function file_copy (issue #1667)

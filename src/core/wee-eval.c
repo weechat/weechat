@@ -416,13 +416,23 @@ eval_string_regex_group (const char *text, struct t_eval_context *eval_context)
     if (!eval_context->regex || !eval_context->regex->result)
         return strdup ("");
 
-    if (strcmp (text, "+") == 0)
-        number = eval_context->regex->last_match;
-    else if (strcmp (text, "#") == 0)
+    if (strcmp (text, "#") == 0)
     {
         snprintf (str_value, sizeof (str_value),
                   "%d", eval_context->regex->last_match);
         return strdup (str_value);
+    }
+
+    if (strcmp (text, "repl_index") == 0)
+    {
+        snprintf (str_value, sizeof (str_value),
+                  "%d", eval_context->regex_replacement_index);
+        return strdup (str_value);
+    }
+
+    if (strcmp (text, "+") == 0)
+    {
+        number = eval_context->regex->last_match;
     }
     else
     {
@@ -1901,6 +1911,7 @@ eval_replace_regex (const char *string, regex_t *regex, const char *replace,
     snprintf (result, length, "%s", string);
 
     eval_context->regex = &eval_regex;
+    eval_context->regex_replacement_index = 1;
 
     start_offset = 0;
 
@@ -1984,6 +1995,8 @@ eval_replace_regex (const char *string, regex_t *regex, const char *replace,
 
         if (!result[start_offset])
             break;
+
+        (eval_context->regex_replacement_index)++;
     }
 
 end:
@@ -2084,6 +2097,7 @@ eval_expression (const char *expr, struct t_hashtable *pointers,
     eval_context->prefix = default_prefix;
     eval_context->suffix = default_suffix;
     eval_context->regex = NULL;
+    eval_context->regex_replacement_index = 1;
     eval_context->recursion_count = 0;
     eval_context->debug_level = 0;
     eval_context->debug_depth = 0;
