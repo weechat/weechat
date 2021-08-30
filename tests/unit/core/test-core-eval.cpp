@@ -989,6 +989,18 @@ TEST(CoreEval, EvalReplaceRegex)
     hashtable_set (options, "regex_replace", "${re:z}");
     WEE_CHECK_EVAL("", "abc");
 
+    /* use replace index: add number before each item */
+    hashtable_remove (pointers, "regex");
+    hashtable_set (options, "regex", "[^,]+");
+    hashtable_set (options, "regex_replace", "${re:repl_index}.${re:0}");
+    WEE_CHECK_EVAL("1.item1,2.item2,3.item3", "item1,item2,item3");
+
+    /* use replace index: replace each letter by its position */
+    hashtable_remove (pointers, "regex");
+    hashtable_set (options, "regex", ".");
+    hashtable_set (options, "regex_replace", "${re:repl_index}");
+    WEE_CHECK_EVAL("1234", "test");
+
     hashtable_free (pointers);
     hashtable_free (extra_vars);
     hashtable_free (options);

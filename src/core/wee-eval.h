@@ -77,6 +77,7 @@ struct t_eval_context
     const char *prefix;                /* prefix (default is "${")          */
     const char *suffix;                /* suffix (default is "}")           */
     struct t_eval_regex *regex;        /* in case of replace with regex     */
+    int regex_replacement_index;       /* replacement index (≥ 1)           */
     int recursion_count;               /* to prevent infinite recursion     */
     int debug_level;                   /* 0: no debug, 1: debug, 2: extra   */
     int debug_depth;                   /* used for debug indentation        */

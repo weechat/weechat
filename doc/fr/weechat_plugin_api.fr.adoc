@@ -2728,21 +2728,26 @@ première étendue à la dernière) :
   `+4+` +
   `+14+`
 
-| `+${re:N}+` +
+| `+${re:xxx}+` +
   _(WeeChat ≥ 1.1)_ |
-  Groupe regex capturé : `0` = toute la chaîne correspondante,
-  `1` à `99` = groupe capturé, `+++` = dernier groupe capturé,
-  `#` = index du dernier groupe capturé _(WeeChat ≥ 1.8)_. |
+  Données sur l'expression régulière : +
+  `0` = toute la chaîne correspondante, +
+  `1` à `99` = groupe capturé, +
+  `+++` = dernier groupe capturé, +
+  `#` = index du dernier groupe capturé _(WeeChat ≥ 1.8)_ +
+  `repl_index` = index du remplacement en cours (démarre à 1) _(WeeChat ≥ 3.3)_. |
   `+${re:0}+` +
   `+${re:1}+` +
   `+${re:2}+` +
   `+${re:+}+` +
-  `+${re:#}+` |
+  `+${re:#}+` +
+  `+${re:repl_index}+` |
   `+test1 test2+` +
   `+test1+` +
   `+test2+` +
   `+test2+` +
-  `+2+`
+  `+2+` +
+  `+1+`
 
 | `+${color:nom}+` +
   _(WeeChat ≥ 0.4.2)_ |
