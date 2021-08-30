@@ -295,8 +295,7 @@ WeeChat „језгро” се налази у следећим директо�
 |       irc-redirect.c              | Преусмеравање излаза IRC команде.
 |       irc-sasl.c                  | SASL аутентификација са IRC сервером.
 |       irc-server.c                | У/И комуникација са IRC сервером.
-// TRANSLATION MISSING
-|       irc-tag.c                   | Functions to manipulate IRC message tags.
+|       irc-tag.c                   | Функције за манипулацију ознакама IRC порука.
 |       irc-upgrade.c               | Чување/обнављање IRC података када се ажурира програм WeeChat.
 |    javascript/                    | JavaScript додатак.
 |       weechat-js.cpp              | Главне JavaScript функције (учитавање/уклањање скрипти, извршавање JavaScript кода).
@@ -366,16 +365,11 @@ WeeChat „језгро” се налази у следећим директо�
 |       trigger-command.c           | Окидач команде.
 |       trigger-completion.c        | Окидач довршавања.
 |       trigger-config.c            | Окидач опције конфиг (фајл trigger.conf).
-// TRANSLATION MISSING
-|    typing/                        | Typing plugin.
-// TRANSLATION MISSING
-|       typing.c                    | Main typing functions.
-// TRANSLATION MISSING
-|       typing-bar-item.c           | Typing bar items.
-// TRANSLATION MISSING
-|       typing-config.c             | Typing config options (file typing.conf).
-// TRANSLATION MISSING
-|       typing-status.c             | Messages typing status on buffers.
+|    typing/                        | Typing додатак.
+|       typing.c                    | Главне typing функције.
+|       typing-bar-item.c           | Typing ставке траке.
+|       typing-config.c             | Typing конфигурационе опције (фајл typing.conf).
+|       typing-status.c             | Статус куцања порука на баферима.
 |    xfer/                          | Xfer додатак (IRC DCC фајл/разговор).
 |       xfer.c                      | Главне xfer функције.
 |       xfer-buffer.c               | Xfer бафер.
@@ -441,12 +435,9 @@ WeeChat „језгро” се налази у следећим директо�
 |             test-irc-server.cpp    | Тестови: IRC сервер.
 |          trigger/                  | Корен unit тестова за окидач додатак.
 |             test-trigger.cpp       | Тестови: окидачи.
-// TRANSLATION MISSING
-|          typing/                   | Root of unit tests for typing plugin.
-// TRANSLATION MISSING
-|             test-typing.cpp        | Tests: typing.
-// TRANSLATION MISSING
-|             test-typing-status.cpp | Tests: typing status.
+|          typing/                   | Корен unit тестова за typing додатак.
+|             test-typing.cpp        | Тестови: typing.
+|             test-typing-status.cpp | Тестови: typing статус.
 |          relay/                    | Корен unit тестова за Релеј додатак.
 |             test-relay-auth.cpp    | Тестови: аутентификација клијената.
 
