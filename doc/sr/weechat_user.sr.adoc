@@ -1840,7 +1840,18 @@ _трака_ је површина уз разговор која може да 
 | kbd:[Alt+F12]      | Скок на крај листе надимака. | `+/bar scroll nicklist * e+`
 | kbd:[Alt+a]        | Пребацивање на следећи бафер у коме има активности (са приоритетом: истицање, порука, остало). | `+/input jump_smart+`
 | kbd:[Alt+Shift+B]  | Пребацивање активности листе бафера. | `+/buflist toggle+`
-| kbd:[Alt+h]        | Чишћење вруће листе (обавештавање о активности у осталим баферима). | `+/input hotlist_clear+`
+// TRANSLATION MISSING
+| kbd:[Alt+h],
+  kbd:[Alt+c]        | Clear hotlist (activity notification on buffers). | `+/input hotlist_clear+`
+// TRANSLATION MISSING
+| kbd:[Alt+h],
+  kbd:[Alt+m]        | Remove current buffer from hotlist. | `+/input hotlist_remove_buffer+`
+// TRANSLATION MISSING
+| kbd:[Alt+h],
+  kbd:[Alt+r]        | Restore latest hotlist removed in the current buffer. | `+/input hotlist_restore_buffer+`
+// TRANSLATION MISSING
+| kbd:[Alt+h],
+  kbd:[Alt+Shift+R]  | Restore latest hotlist removed in all buffers. | `+/input hotlist_restore_all+`
 | kbd:[Alt+j],
   kbd:[Alt+f]        | Пребацивање на први бафер. | `+/buffer -+`
 | kbd:[Alt+j],

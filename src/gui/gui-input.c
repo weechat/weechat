@@ -642,7 +642,7 @@ gui_input_search_compile_regex (struct t_gui_buffer *buffer)
 }
 
 /*
- * Switches case for search in buffer (default key: meta-c during search).
+ * Switches case for search in buffer (default key: alt-c during search).
  */
 
 void
@@ -894,7 +894,7 @@ gui_input_delete_previous_word (struct t_gui_buffer *buffer)
 }
 
 /*
- * Deletes next word (default key: meta-d).
+ * Deletes next word (default key: alt-d).
  */
 
 void
@@ -1006,7 +1006,7 @@ gui_input_delete_end_of_line (struct t_gui_buffer *buffer)
 }
 
 /*
- * Deletes entire line (default key: meta-r).
+ * Deletes entire line (default key: alt-r).
  */
 
 void
@@ -1121,7 +1121,7 @@ gui_input_move_next_char (struct t_gui_buffer *buffer)
 }
 
 /*
- * Moves cursor to beginning of previous word (default key: meta-b or
+ * Moves cursor to beginning of previous word (default key: alt-b or
  * ctrl-left).
  */
 
@@ -1160,7 +1160,7 @@ gui_input_move_previous_word (struct t_gui_buffer *buffer)
 }
 
 /*
- * Moves cursor to the beginning of next word (default key: meta-f or
+ * Moves cursor to the beginning of next word (default key: alt-f or
  * ctrl-right).
  */
 
@@ -1469,7 +1469,7 @@ gui_input_jump_smart (struct t_gui_buffer *buffer)
 
 /*
  * Jumps to last buffer displayed (before last jump to a buffer) (default key:
- * meta-/).
+ * alt-/).
  */
 
 void
@@ -1489,7 +1489,7 @@ gui_input_jump_last_buffer_displayed (struct t_gui_buffer *buffer)
 
 /*
  * Jumps to previously visited buffer (buffer displayed before current one)
- * (default key: meta-<).
+ * (default key: alt-<).
  */
 
 void
@@ -1523,7 +1523,7 @@ gui_input_jump_previously_visited_buffer (struct t_gui_buffer *buffer)
 
 /*
  * Jumps to next visited buffer (buffer displayed after current one) (default
- * key: meta->).
+ * key: alt->).
  */
 
 void
@@ -1555,7 +1555,7 @@ gui_input_jump_next_visited_buffer (struct t_gui_buffer *buffer)
 }
 
 /*
- * Clears hotlist (default key: meta-h).
+ * Clears hotlist (default key: alt-h, alt-c).
  */
 
 void
@@ -1621,8 +1621,44 @@ gui_input_hotlist_clear (struct t_gui_buffer *buffer,
 }
 
 /*
+ * Removes buffer from hotlist (default key: alt-h, alt-m).
+ */
+
+void
+gui_input_hotlist_remove_buffer (struct t_gui_buffer *buffer)
+{
+    gui_hotlist_remove_buffer (buffer, 1);
+}
+
+/*
+ * Restores latest hotlist removed in a buffer (default key: alt-h, alt-r).
+ */
+
+void
+gui_input_hotlist_restore_buffer (struct t_gui_buffer *buffer)
+{
+    gui_hotlist_restore_buffer (buffer);
+}
+
+/*
+ * Restores latest hotlist removed in all buffers (default key: alt-h, alt-R).
+ */
+
+void
+gui_input_hotlist_restore_all ()
+{
+    struct t_gui_buffer *ptr_buffer;
+
+    for (ptr_buffer = gui_buffers; ptr_buffer;
+         ptr_buffer = ptr_buffer->next_buffer)
+    {
+        gui_hotlist_restore_buffer (ptr_buffer);
+    }
+}
+
+/*
  * Initializes "grab key mode" (next key will be inserted into input buffer)
- * (default key: meta-k).
+ * (default key: alt-k).
  */
 
 void

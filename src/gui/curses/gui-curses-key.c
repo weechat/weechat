@@ -137,7 +137,10 @@ gui_key_default_bindings (int context)
         BIND(/* m-j,m-l       */ "meta-jmeta-l",       "/buffer +");
         BIND(/* m-j,m-r       */ "meta-jmeta-r",       "/server raw");
         BIND(/* m-j,m-s       */ "meta-jmeta-s",       "/server jump");
-        BIND(/* m-h           */ "meta-h",             "/input hotlist_clear");
+        BIND(/* m-h,m-c       */ "meta-hmeta-c",       "/input hotlist_clear");
+        BIND(/* m-h,m-m       */ "meta-hmeta-m",       "/input hotlist_remove_buffer");
+        BIND(/* m-h,m-r       */ "meta-hmeta-r",       "/input hotlist_restore_buffer");
+        BIND(/* m-h,m-R       */ "meta-hmeta-R",       "/input hotlist_restore_all");
         BIND(/* m-k           */ "meta-k",             "/input grab_key_command");
         BIND(/* m-s           */ "meta-s",             "/mute spell toggle");
         BIND(/* m-u           */ "meta-u",             "/window scroll_unread");

@@ -206,6 +206,7 @@ struct t_gui_buffer
 
     /* hotlist */
     struct t_gui_hotlist *hotlist;     /* hotlist entry for buffer          */
+    struct t_gui_hotlist *hotlist_removed; /* hotlist that can be restored  */
     struct t_hashtable *hotlist_max_level_nicks; /* max hotlist level for   */
                                                  /* some nicks              */
 
