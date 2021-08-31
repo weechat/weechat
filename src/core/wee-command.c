@@ -3329,6 +3329,12 @@ COMMAND_CALLBACK(input)
         gui_input_jump_next_visited_buffer (buffer);
     else if (string_strcasecmp (argv[1], "hotlist_clear") == 0)
         gui_input_hotlist_clear (buffer, (argc > 2) ? argv[2] : NULL);
+    else if (string_strcasecmp (argv[1], "hotlist_remove_buffer") == 0)
+        gui_input_hotlist_remove_buffer (buffer);
+    else if (string_strcasecmp (argv[1], "hotlist_restore_buffer") == 0)
+        gui_input_hotlist_restore_buffer (buffer);
+    else if (string_strcasecmp (argv[1], "hotlist_restore_all") == 0)
+        gui_input_hotlist_restore_all ();
     else if (string_strcasecmp (argv[1], "grab_key") == 0)
         gui_input_grab_key (buffer, 0, (argc > 2) ? argv[2] : NULL);
     else if (string_strcasecmp (argv[1], "grab_key_command") == 0)
@@ -7815,6 +7821,11 @@ command_init ()
            "clear only lowest level in hotlist, \"highest\" to clear only "
            "highest level in hotlist, or level mask: integer which is a "
            "combination of 1=join/part, 2=message, 4=private, 8=highlight)\n"
+           "  hotlist_remove_buffer: remove current buffer from hotlist\n"
+           "  hotlist_restore_buffer: restore latest hotlist removed in the "
+           "current buffer\n"
+           "  hotlist_restore_all: restore latest hotlist removed in all "
+           "buffers\n"
            "  grab_key: grab a key (optional argument: delay for end of grab, "
             "default is 500 milliseconds)\n"
            "  grab_key_command: grab a key with its associated command (optional "
@@ -7846,10 +7857,11 @@ command_init ()
         "history_global_next || jump_smart || jump_last_buffer_displayed || "
         "jump_previously_visited_buffer || jump_next_visited_buffer || "
         "hotlist_clear 1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|lowest|highest || "
-        "grab_key || grab_key_command || grab_mouse || grab_mouse_area || "
-        "set_unread || set_unread_current_buffer || switch_active_buffer || "
-        "switch_active_buffer_previous || zoom_merged_buffer || insert || "
-        "send || paste_start || paste_stop",
+        "hotlist_remove_buffer || hotlist_restore_buffer || "
+        "hotlist_restore_all || grab_key || grab_key_command || grab_mouse || "
+        "grab_mouse_area || set_unread || set_unread_current_buffer || "
+        "switch_active_buffer || switch_active_buffer_previous || "
+        "zoom_merged_buffer || insert || send || paste_start || paste_stop",
         &command_input, NULL, NULL);
     hook_command (
         NULL, "key",

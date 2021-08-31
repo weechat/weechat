@@ -20,6 +20,29 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 [[v3.3]]
 == Version 3.3 (under dev)
 
+[[v3.3_hotlist_keys_clear_restore]]
+=== New keys for hotlist
+
+New keys have been added to manipulate the hotlist:
+
+* kbd:[Alt+h], kbd:[Alt+c]: clear the whole hotlist (former key: kbd:[Alt+h])
+* kbd:[Alt+h], kbd:[Alt+m]: mark the current buffer as read by removing it from the hotlist
+* kbd:[Alt+h], kbd:[Alt+r]: restore latest hotlist removed in the current buffer
+* kbd:[Alt+h], kbd:[Alt+Shift+R]: restore latest hotlist removed in all buffers
+
+You can add them with the following command:
+
+----
+/key missing
+----
+
+Since the key kbd:[Alt+h] has been moved to kbd:[Alt+h], kbd:[Alt+c], you must
+manually remove the old key:
+
+----
+/key unbind meta-h
+----
+
 [[v3.3_typing_bar_item]]
 === Bar item "typing"
 
@@ -1581,7 +1604,7 @@ The command `/input jump_last_buffer` still works for compatibility reasons,
 but it should not be used any more.
 
 Similarly, a new key has been added to jump to first buffer: kbd:[Alt+j], kbd:[Alt+f].
-You can add it with following command:
+You can add it with the following command:
 
 ----
 /key missing
@@ -2321,7 +2344,7 @@ All users of version 0.3.1 should upgrade to this version.
 === Aliases
 
 IRC commands /ame and /amsg are now aliases, if you are upgrading from version
-0.3.0, you must create aliases with following commands:
+0.3.0, you must create aliases with the following commands:
 
 ----
 /alias aaway allserv /away

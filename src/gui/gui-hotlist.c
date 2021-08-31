@@ -86,18 +86,54 @@ gui_hotlist_search (struct t_gui_hotlist *hotlist, struct t_gui_buffer *buffer)
 }
 
 /*
+ * Duplicates a hotlist element.
+ *
+ * Returns pointer to new hotlist, NULL if error.
+ */
+
+struct t_gui_hotlist *
+gui_hotlist_dup (struct t_gui_hotlist *hotlist)
+{
+    struct t_gui_hotlist *new_hotlist;
+
+    new_hotlist = malloc (sizeof (*new_hotlist));
+    if (!new_hotlist)
+        return NULL;
+
+    new_hotlist->priority = hotlist->priority;
+    memcpy (&(new_hotlist->creation_time), &(hotlist->creation_time),
+            sizeof (new_hotlist->creation_time));
+    new_hotlist->buffer = hotlist->buffer;
+    memcpy (new_hotlist->count, hotlist->count, sizeof (hotlist->count));
+    new_hotlist->prev_hotlist = NULL;
+    new_hotlist->next_hotlist = NULL;
+
+    return new_hotlist;
+}
+
+/*
  * Frees a hotlist and removes it from hotlist queue.
  */
 
 void
 gui_hotlist_free (struct t_gui_hotlist **hotlist,
                   struct t_gui_hotlist **last_hotlist,
-                  struct t_gui_hotlist *ptr_hotlist)
+                  struct t_gui_hotlist *ptr_hotlist,
+                  int save_removed_hotlist)
 {
     struct t_gui_hotlist *new_hotlist;
 
     if (!ptr_hotlist)
         return;
+
+    if (save_removed_hotlist)
+    {
+        if (ptr_hotlist->buffer->hotlist_removed)
+            free (ptr_hotlist->buffer->hotlist_removed);
+        ptr_hotlist->buffer->hotlist_removed = gui_hotlist_dup (ptr_hotlist);
+        ptr_hotlist->buffer->hotlist_removed->prev_hotlist = NULL;
+        ptr_hotlist->buffer->hotlist_removed->next_hotlist = NULL;
+    }
 
     ptr_hotlist->buffer->hotlist = NULL;
 
@@ -130,7 +166,7 @@ gui_hotlist_free_all (struct t_gui_hotlist **hotlist,
     /* remove all hotlists */
     while (*hotlist)
     {
-        gui_hotlist_free (hotlist, last_hotlist, *hotlist);
+        gui_hotlist_free (hotlist, last_hotlist, *hotlist, 1);
     }
 }
 
@@ -391,7 +427,7 @@ gui_hotlist_add (struct t_gui_buffer *buffer,
          * and go on
          */
         memcpy (count, ptr_hotlist->count, sizeof (ptr_hotlist->count));
-        gui_hotlist_free (&gui_hotlist, &last_gui_hotlist, ptr_hotlist);
+        gui_hotlist_free (&gui_hotlist, &last_gui_hotlist, ptr_hotlist, 1);
     }
 
     new_hotlist = malloc (sizeof (*new_hotlist));
@@ -421,29 +457,31 @@ gui_hotlist_add (struct t_gui_buffer *buffer,
 }
 
 /*
- * Duplicates a hotlist element.
- *
- * Returns pointer to new hotlist, NULL if error.
+ * Restores a hotlist that was removed from a buffer.
  */
 
-struct t_gui_hotlist *
-gui_hotlist_dup (struct t_gui_hotlist *hotlist)
+void
+gui_hotlist_restore_buffer (struct t_gui_buffer *buffer)
 {
-    struct t_gui_hotlist *new_hotlist;
+    struct t_gui_hotlist *ptr_hotlist;
 
-    new_hotlist = malloc (sizeof (*new_hotlist));
-    if (new_hotlist)
-    {
-        new_hotlist->priority = hotlist->priority;
-        memcpy (&(new_hotlist->creation_time), &(hotlist->creation_time),
-                sizeof (new_hotlist->creation_time));
-        new_hotlist->buffer = hotlist->buffer;
-        memcpy (new_hotlist->count, hotlist->count, sizeof (hotlist->count));
-        new_hotlist->prev_hotlist = NULL;
-        new_hotlist->next_hotlist = NULL;
-        return new_hotlist;
-    }
-    return NULL;
+    if (!buffer->hotlist_removed)
+        return;
+
+    /* remove hotlist with buffer from list (if found) */
+    ptr_hotlist = gui_hotlist_search (gui_hotlist, buffer);
+    if (ptr_hotlist)
+        gui_hotlist_free (&gui_hotlist, &last_gui_hotlist, ptr_hotlist, 0);
+
+    /* restore the removed hotlist */
+    buffer->hotlist_removed->buffer = buffer;
+    ptr_hotlist = gui_hotlist_dup (buffer->hotlist_removed);
+    gui_hotlist_add_hotlist (&gui_hotlist, &last_gui_hotlist, ptr_hotlist);
+
+    free (buffer->hotlist_removed);
+    buffer->hotlist_removed = NULL;
+
+    gui_hotlist_changed_signal (buffer);
 }
 
 /*
@@ -503,7 +541,7 @@ gui_hotlist_clear (int level_mask)
         ptr_next_hotlist = ptr_hotlist->next_hotlist;
         if (level_mask & (1 << ptr_hotlist->priority))
         {
-            gui_hotlist_free (&gui_hotlist, &last_gui_hotlist, ptr_hotlist);
+            gui_hotlist_free (&gui_hotlist, &last_gui_hotlist, ptr_hotlist, 1);
             hotlist_changed = 1;
         }
         ptr_hotlist = ptr_next_hotlist;
@@ -554,7 +592,7 @@ gui_hotlist_remove_buffer (struct t_gui_buffer *buffer,
 
         if (buffer_to_remove)
         {
-            gui_hotlist_free (&gui_hotlist, &last_gui_hotlist, ptr_hotlist);
+            gui_hotlist_free (&gui_hotlist, &last_gui_hotlist, ptr_hotlist, 1);
             hotlist_changed = 1;
         }
 

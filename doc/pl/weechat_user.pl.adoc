@@ -1999,7 +1999,18 @@ Można ją zapisać za pomocą skryptu _buffer_autoset.py_: można go zaintalowa
 | kbd:[Alt+F12]      | Idź na koniec listy nicków. | `+/bar scroll nicklist * e+`
 | kbd:[Alt+a]        | Przełącz na następny bufor z aktywnością (z priorytetem: powiadomienie, wiadomość, inne). | `+/input jump_smart+`
 | kbd:[Alt+Shift+B]  | Przełącza widoczność listy buforów. | `+/buflist toggle+`
-| kbd:[Alt+h]        | Wyczyść hotlistę (powiadomienia o aktywności w innych buforach). | `+/input hotlist_clear+`
+// TRANSLATION MISSING
+| kbd:[Alt+h],
+  kbd:[Alt+c]        | Clear hotlist (activity notification on buffers). | `+/input hotlist_clear+`
+// TRANSLATION MISSING
+| kbd:[Alt+h],
+  kbd:[Alt+m]        | Remove current buffer from hotlist. | `+/input hotlist_remove_buffer+`
+// TRANSLATION MISSING
+| kbd:[Alt+h],
+  kbd:[Alt+r]        | Restore latest hotlist removed in the current buffer. | `+/input hotlist_restore_buffer+`
+// TRANSLATION MISSING
+| kbd:[Alt+h],
+  kbd:[Alt+Shift+R]  | Restore latest hotlist removed in all buffers. | `+/input hotlist_restore_all+`
 | kbd:[Alt+j],
   kbd:[Alt+f]        | Przełącz na pierwszy bufor. | `+/buffer -+`
 | kbd:[Alt+j],

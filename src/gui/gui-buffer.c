@@ -790,6 +790,7 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
 
     /* hotlist */
     new_buffer->hotlist = NULL;
+    new_buffer->hotlist_removed = NULL;
     new_buffer->hotlist_max_level_nicks = hashtable_new (
         32,
         WEECHAT_HASHTABLE_STRING,
@@ -2900,6 +2901,8 @@ gui_buffer_close (struct t_gui_buffer *buffer)
     }
 
     gui_hotlist_remove_buffer (buffer, 1);
+    if (buffer->hotlist_removed)
+        free (buffer->hotlist_removed);
     if (gui_hotlist_initial_buffer == buffer)
         gui_hotlist_initial_buffer = NULL;
 
@@ -4798,6 +4801,7 @@ gui_buffer_print_log ()
         log_printf ("  highlight_tags_count. . : %d",    ptr_buffer->highlight_tags_count);
         log_printf ("  highlight_tags_array. . : 0x%lx", ptr_buffer->highlight_tags_array);
         log_printf ("  hotlist . . . . . . . . : 0x%lx", ptr_buffer->hotlist);
+        log_printf ("  hotlist_removed . . . . : 0x%lx", ptr_buffer->hotlist_removed);
         log_printf ("  keys. . . . . . . . . . : 0x%lx", ptr_buffer->keys);
         log_printf ("  last_key. . . . . . . . : 0x%lx", ptr_buffer->last_key);
         log_printf ("  keys_count. . . . . . . : %d",    ptr_buffer->keys_count);
