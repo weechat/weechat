@@ -1986,7 +1986,14 @@ with `+/script install buffer_autoset.py+` and get help with
 | kbd:[Alt+F12]      | Go to the end of nicklist. | `+/bar scroll nicklist * e+`
 | kbd:[Alt+a]        | Switch to next buffer with activity (with priority: highlight, message, other). | `+/input jump_smart+`
 | kbd:[Alt+Shift+B]  | Toggle buflist. | `+/buflist toggle+`
-| kbd:[Alt+h]        | Clear hotlist (activity notification on other buffers). | `+/input hotlist_clear+`
+| kbd:[Alt+h],
+  kbd:[Alt+c]        | Clear hotlist (activity notification on buffers). | `+/input hotlist_clear+`
+| kbd:[Alt+h],
+  kbd:[Alt+m]        | Remove current buffer from hotlist. | `+/input hotlist_remove_buffer+`
+| kbd:[Alt+h],
+  kbd:[Alt+r]        | Restore latest hotlist removed in the current buffer. | `+/input hotlist_restore_buffer+`
+| kbd:[Alt+h],
+  kbd:[Alt+Shift+R]  | Restore latest hotlist removed in all buffers. | `+/input hotlist_restore_all+`
 | kbd:[Alt+j],
   kbd:[Alt+f]        | Switch to first buffer. | `+/buffer -+`
 | kbd:[Alt+j],

@@ -2052,7 +2052,14 @@ avec `+/help buffer_autoset+`.
 | kbd:[Alt+F12]      | Aller à la fin de la liste des pseudos. | `+/bar scroll nicklist * e+`
 | kbd:[Alt+a]        | Sauter au prochain tampon avec activité (avec priorité : highlight, message, autre). | `+/input jump_smart+`
 | kbd:[Alt+Shift+B]  | Activer/désactiver buflist. | `+/buflist toggle+`
-| kbd:[Alt+h]        | Vider la hotlist (notification d'activité sur les autres tampons). | `+/input hotlist_clear+`
+| kbd:[Alt+h],
+  kbd:[Alt+c]        | Vider la hotlist (notification d'activité sur les tampons). | `+/input hotlist_clear+`
+| kbd:[Alt+h],
+  kbd:[Alt+m]        | Supprimer le tampon courant de la hotlist. | `+/input hotlist_remove_buffer+`
+| kbd:[Alt+h],
+  kbd:[Alt+r]        | Restaurer la dernière hotlist supprimée dans le tampon courant. | `+/input hotlist_restore_buffer+`
+| kbd:[Alt+h],
+  kbd:[Alt+Shift+R]  | Restaurer la dernière hotlist supprimée dans tous les tampons. | `+/input hotlist_restore_all+`
 | kbd:[Alt+j],
   kbd:[Alt+f]        | Sauter au premier tampon. | `+/buffer -+`
 | kbd:[Alt+j],
