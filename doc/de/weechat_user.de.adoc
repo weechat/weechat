@@ -1824,7 +1824,7 @@ Befehl festgelegt werden:
 [[max_hotlist_level_nicks]]
 ==== Maximaler Hotlist-Level für Nicks
 
-Es ist möglich den sogeannten maximalen Hotlist-Level für einzele Nicks einzustellen,
+Es ist möglich den sogenannten maximalen Hotlist-Level für einzele Nicks einzustellen,
 per Buffer oder für mehrere Gruppen (wie IRC Server).
 
 Die Buffer-Eigenschaft "hotlist_max_level_nicks" kann mit einer Anzahl von Nicks genutzt werden
@@ -2022,18 +2022,14 @@ und um eine Hilfe zu erhalten wie man es nutzt: `+/help buffer_autoset+`.
 | kbd:[Alt+F12]      | springt zum Ende der Benutzerliste. | `+/bar scroll nicklist * e+`
 | kbd:[Alt+a]        | wechselt zum nächsten Buffer mit Aktivität (nach Priorität: highlight, Nachricht, ...). | `+/input jump_smart+`
 | kbd:[Alt+Shift+B]  | buflist-Bar umschalten. | `+/buflist toggle+`
-// TRANSLATION MISSING
 | kbd:[Alt+h],
-  kbd:[Alt+c]        | Clear hotlist (activity notification on buffers). | `+/input hotlist_clear+`
-// TRANSLATION MISSING
+  kbd:[Alt+c]        | Hotlist löschen (Aktivitätsbenachrichtigung bei Buffern). | `+/input hotlist_clear+`
 | kbd:[Alt+h],
-  kbd:[Alt+m]        | Remove current buffer from hotlist. | `+/input hotlist_remove_buffer+`
-// TRANSLATION MISSING
+  kbd:[Alt+m]        | Aktuellen Puffer aus Hotlist entfernen. | `+/input hotlist_remove_buffer+`
 | kbd:[Alt+h],
-  kbd:[Alt+r]        | Restore latest hotlist removed in the current buffer. | `+/input hotlist_restore_buffer+`
-// TRANSLATION MISSING
+  kbd:[Alt+r]        | stelle die letzte aus dem aktuellen Buffer entfernte Hotlist wieder her. | `+/input hotlist_restore_buffer+`
 | kbd:[Alt+h],
-  kbd:[Alt+Shift+R]  | Restore latest hotlist removed in all buffers. | `+/input hotlist_restore_all+`
+  kbd:[Alt+Shift+R]  | stelle die neueste Hotlist wieder her, die in allen Buffern entfernt wurde. | `+/input hotlist_restore_all+`
 | kbd:[Alt+j],
   kbd:[Alt+f]        | wechselt zum ersten Buffer. | `+/buffer -+`
 | kbd:[Alt+j],
