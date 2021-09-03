@@ -1088,7 +1088,7 @@ TEST(IrcServerConnected, BuildAutojoin)
 
     server_recv (":server 001 alice");
 
-    WEE_TEST_STR("", irc_server_build_autojoin (ptr_server));
+    POINTERS_EQUAL(NULL, irc_server_build_autojoin (ptr_server));
 
     /* join one channel */
     server_recv (":alice!user@host JOIN #test1");
@@ -1096,7 +1096,7 @@ TEST(IrcServerConnected, BuildAutojoin)
 
     /* simulate a "parted" channel */
     ptr_server->channels->part = 1;
-    WEE_TEST_STR("", irc_server_build_autojoin (ptr_server));
+    POINTERS_EQUAL(NULL, irc_server_build_autojoin (ptr_server));
 
     /* restore "part" flag */
     ptr_server->channels->part = 0;

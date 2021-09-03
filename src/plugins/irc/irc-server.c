@@ -5519,6 +5519,8 @@ irc_server_autojoin_create_buffers (struct t_irc_server *server)
  *
  *   #channel1,#channel2,#channel3 key1,key2
  *
+ * Returns NULL if no channels have been found.
+ *
  * Note: result must be freed after use.
  */
 
@@ -5527,6 +5529,7 @@ irc_server_build_autojoin (struct t_irc_server *server)
 {
     struct t_irc_channel *ptr_channel;
     char **channels_with_key, **channels_others, **keys;
+    int num_channels;
 
     channels_with_key = NULL;
     channels_others = NULL;
@@ -5541,6 +5544,8 @@ irc_server_build_autojoin (struct t_irc_server *server)
     keys = weechat_string_dyn_alloc (1024);
     if (!keys)
         goto error;
+
+    num_channels = 0;
 
     for (ptr_channel = server->channels; ptr_channel;
          ptr_channel = ptr_channel->next_channel)
@@ -5569,8 +5574,12 @@ irc_server_build_autojoin (struct t_irc_server *server)
                                            ptr_channel->name,
                                            -1);
             }
+            num_channels++;
         }
     }
+
+    if (num_channels == 0)
+        goto error;
 
     /*
      * concatenate channels_with_key + channels_others + keys
