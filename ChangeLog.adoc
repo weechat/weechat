@@ -16,7 +16,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 
 [[v3.2.1]]
-== Version 3.2.1 (under dev)
+== Version 3.2.1 (2021-09-04)
 
 Bug fixes::
 
