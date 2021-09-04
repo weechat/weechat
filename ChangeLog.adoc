@@ -50,7 +50,6 @@ Bug fixes::
   * irc: remove unneeded message about Diffie-Hellman shared secret exchange during SSL connection to server (issue #857)
   * irc: escape/unescape IRC message tags values (issue #1654)
   * irc: set notify level to "private" for received WALLOPS
-  * relay: fix crash when decoding a malformed websocket frame
   * script: fix move of installed script on another filesystem (issue #1667)
 
 Documentation::
@@ -67,6 +66,13 @@ Build::
 
   * php: add support of PHP 8.0 and 8.1 (issue #1668)
   * core: fix build on macOS (issue #1662)
+
+[[v3.2.1]]
+== Version 3.2.1 (2021-09-04)
+
+Bug fixes::
+
+  * relay: fix crash when decoding a malformed websocket frame
 
 [[v3.2]]
 == Version 3.2 (2021-06-13)
