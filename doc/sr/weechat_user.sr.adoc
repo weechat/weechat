@@ -1840,18 +1840,14 @@ _трака_ је површина уз разговор која може да 
 | kbd:[Alt+F12]      | Скок на крај листе надимака. | `+/bar scroll nicklist * e+`
 | kbd:[Alt+a]        | Пребацивање на следећи бафер у коме има активности (са приоритетом: истицање, порука, остало). | `+/input jump_smart+`
 | kbd:[Alt+Shift+B]  | Пребацивање активности листе бафера. | `+/buflist toggle+`
-// TRANSLATION MISSING
 | kbd:[Alt+h],
-  kbd:[Alt+c]        | Clear hotlist (activity notification on buffers). | `+/input hotlist_clear+`
-// TRANSLATION MISSING
+  kbd:[Alt+c]        | Брисање вруће листе (обавештења о активности у баферима). | `+/input hotlist_clear+`
 | kbd:[Alt+h],
-  kbd:[Alt+m]        | Remove current buffer from hotlist. | `+/input hotlist_remove_buffer+`
-// TRANSLATION MISSING
+  kbd:[Alt+m]        | Уклањање текућег бафера из вруће листе. | `+/input hotlist_remove_buffer+`
 | kbd:[Alt+h],
-  kbd:[Alt+r]        | Restore latest hotlist removed in the current buffer. | `+/input hotlist_restore_buffer+`
-// TRANSLATION MISSING
+  kbd:[Alt+r]        | Враћање најновије вруће листе уклоњене из текућег бафера. | `+/input hotlist_restore_buffer+`
 | kbd:[Alt+h],
-  kbd:[Alt+Shift+R]  | Restore latest hotlist removed in all buffers. | `+/input hotlist_restore_all+`
+  kbd:[Alt+Shift+R]  | Враћање најновије вруће листе уклоњене из свих бафера. | `+/input hotlist_restore_all+`
 | kbd:[Alt+j],
   kbd:[Alt+f]        | Пребацивање на први бафер. | `+/buffer -+`
 | kbd:[Alt+j],
@@ -2367,8 +2363,7 @@ include::includes/autogen_user_options.sr.adoc[tag=weechat_options]
 | php        | PHP API скриптовања.
 | spell      | Провера правописа за командну линију.
 | trigger    | Замена текста и извршавање команди приликом догађаја које окида програм WeeChat/додаци.
-// TRANSLATION MISSING
-| typing     | Display users currently writing messages.
+| typing     | Приказује кориснике који тренутно пишу поруке.
 | xfer       | Пренос фајлова и директни разговор.
 |===
 
@@ -2671,31 +2666,30 @@ irc[6][s]://[надимак[:лозинка]@]irc.пример.org[:порт][/�
 $ weechat irc://alice@irc.libera.chat/#weechat,#weechat-fr
 ----
 
-// TRANSLATION MISSING
 [[irc_servers]]
-==== Servers
+==== Сервери
 
 [[irc_servers_add]]
-===== Add a server
+===== Додавање сервера
 
-By default no servers are defined. You can add as many servers as you want with
-the <<command_irc_server,/server>> command.
+Подразумевано није дефинисан ниједан сервер. Командом <<command_irc_server,/server>>
+можете додати произвољан број сервера.
 
-For example to connect to https://libera.chat/[libera.chat] with SSL (encrypted trafic):
+На пример, да бисте се повезали на https://libera.chat/[libera.chat] са SSL (шифровани саобраћај):
 
 ----
 /server add libera irc.libera.chat/6697 -ssl
 ----
 
-You can tell WeeChat to auto-connect to this server on startup:
+Програму WeeChat можете наложити да се приликом покретања аутоматски повеже са овим сервером:
 
 ----
 /set irc.server.libera.autoconnect on
 ----
 
-To authenticate, it is recommended to use SASL (if supported on the server),
-with the password stored as secured data (see also chapter on
-<<irc_sasl_authentication,SASL authentication>>):
+За аутентификацију се препоручује употреба SASL (ако сервер подржава),
+са лозинком сачуваном као обезбеђени податак (погледајте такође поглавље
+о <<irc_sasl_authentication,SASL аутентификацији>>):
 
 ----
 /set irc.server.libera.sasl_username "alice"
@@ -2703,28 +2697,28 @@ with the password stored as secured data (see also chapter on
 /set irc.server.libera.sasl_password "${sec.data.libera}"
 ----
 
-If SASL is not supported, you can use a command to send a message to nickserv:
+Ако се SASL не подржава, можете да употребите команду која шаље поруку nickserv:
 
 ----
 /set irc.server.libera.command "/msg nickserv identify ${sec.data.libera}"
 ----
 
 [NOTE]
-By sending a message to nickserv, you may authenticate after joining channels
-which could be a problem on some channels requiring you to be authenticated
-to join. In this case, you can set a command delay:
+Ако пошаљете поруку сервису nickserv, постоји могућност да се аутентификујете након
+приступања каналу, што може да представља проблем на неким каналима који захтевају
+да се аутентификујете пре приступања. У овом случају, можете поставити кашњење за команду:
 `/set irc.server.libera.command_delay 5`.
 
 [[irc_servers_options]]
-===== Server options
+===== Опције сервера
 
-Server options are named `irc.server.<server>.<option>` where `<server>` is the
-internal name of the server and `<option>` the name of an option. +
-The value of a server option is inherited from `irc.server_default.xxx`
-if the server option has the special value `null`.
+Опције сервера се називају `irc.server.<сервер>.<опција>` где је `<сервер>` интерно
+име сервера, а `<опција>` је име опције. +
+У случају када опција сервера има специјалну вредност `null`, стварна вредност се
+наслеђује из `irc.server_default.xxx`.
 
-For example if you created the _libera_ server with the commands above, you'll
-see this with the command `/fset libera`:
+На пример, ако сте креирали _libera_ сервер са командама наведеним изнад, видећете
+следећи списак када будете извршите команду `/fset libera`:
 
 ....
 irc.server.libera.addresses             string   "irc.libera.chat/6697"
@@ -2773,15 +2767,15 @@ irc.server.libera.usermode              string   null -> ""
 irc.server.libera.username              string   null -> "alice"
 ....
 
-For example if you want to automatically connect to all servers you define
-without having to do it on each server, you can do:
+На пример, ако желите да се аутоматски повежете са свим серверима које сте дефинисали, без
+потребе да то подешавате за сваки од њих посебно, можете да урадите следеће:
 
 ----
 /set irc.server_default.autoconnect on
 ----
 
-And then you can reset the server option so that it uses the default inherited
-value, which is now `on` instead of the default value `off`:
+Па затим можете да ресетујете серверску опцију тако да користи подразумевану, наслеђену
+вредност, која је сада `on` уместо подразумеване вредности `off`:
 
 ----
 /unset irc.server.libera.autoconnect
@@ -2921,33 +2915,32 @@ $ openssl ec -noout -text -conv_form compressed -in ~/.config/weechat/ecdsa.pem 
 /reconnect libera
 ----
 
-// TRANSLATION MISSING
 [[irc_servers_connection]]
-===== Connection
+===== Повезивање
 
-You can connect to server with the <<command_irc_connect,/connect>> command:
+Командом <<command_irc_connect,/connect>> можете да се повежете са сервером:
 
 ----
 /connect libera
 ----
 
-To disconnect:
+Ако желите да прекинете везу:
 
 ----
 /disconnect libera
 ----
 
-Or just this if you are on any buffer belonging to _libera_ server (server,
-channel, private):
+Или просто ово ако се налазите у било којем баферу који припада _libera_
+серверу (сервер, канал, приватни разговор):
 
 ----
 /disconnect
 ----
 
-When you connect to multiple servers at same time, server buffers are merged
-by default and you can switch between them with the kbd:[Ctrl+x] key. +
-It is possible to disable auto merge of server buffers to have independent
-server buffers:
+Када се у исто време повежете са неколико сервера, бафери сервера се подразумевано
+спајају, па тастером kbd:[Ctrl+x] можете да се крећете између њих. +
+Аутоматско спајање серверских бафера може да се искључи, тако да имате по један
+бафер за сваки сервер:
 
 ----
 /set irc.look.server_buffer independent
@@ -2996,59 +2989,58 @@ $ sudo apt-get install tor
 /connect irc-tor
 ----
 
-// TRANSLATION MISSING
 [[irc_channels]]
-==== Channels
+==== Канали
 
-You can join channels with the <<command_irc_join,/join>> command:
+Каналима приступате командом <<command_irc_join,/join>>:
 
 ----
 /join #channel
 ----
 
-Part a channel (keeping the buffer open):
+Напуштање канала (уз остављање отвореног бафера):
 
 ----
-/part [quit message]
+/part [порука о напуштању]
 ----
 
-The channels you joined are not saved. If you want to join them automatically
-when connecting to the server, you must set the server `autojoin` option:
+Канали којима приступите се не чувају. Ако желите да им аутоматски приступите
+када се повежете са сервером, морате поставити `autojoin` опцију за сервер:
 
 ----
 /set irc.server.libera.autojoin "#weechat,#weechat-fr"
 ----
 
 [NOTE]
-Some scripts can help to automatically set this option,
-see `/script search autojoin`.
+Неке скрипте могу да помогну са аутоматским постављањем ове опције,
+погледајте `/script search autojoin`.
 
-Be careful, spaces can be used only to separate list of channels from keys,
-for example if `#channel1` requires a key but not `#channel2`:
+Будите пажљиви, за раздвајање листе канала од кључева могу да се користе само размаци,
+на пример, ако `#канал1` захтева кључ, а `#канал2` не захтева:
 
 ----
-/set irc.server.libera.autojoin "#channel1,#channel2 key1"
+/set irc.server.libera.autojoin "#канал1,#канал2 кључ1"
 ----
 
-For help on the format, see `/help irc.server.libera.autojoin`.
+Помоћ у вези формата потражите помоћу `/help irc.server.libera.autojoin`.
 
 [[irc_private_messages]]
-==== Private messages
+==== Приватне поруке
 
-You can send a private message with the <<command_irc_query,/query>> command,
-which opens a separate buffer:
-
-----
-/query bob hi, how are you?
-----
-
-Without arguments the command just opens the buffer (or selects it if already open):
+Командом <<command_irc_query,/query>> можете да шаљете приватне поруке и
+она отвара посебан бафер:
 
 ----
-/query bob
+/query здраво перо, како си?
 ----
 
-To close the private buffer, you can do this command on the private buffer:
+Без аргумената, команда једноставно отвара бафер (или га активира ако је већ отворен):
+
+----
+/query пера
+----
+
+Ако желите да затворите приватни бафер, урадите то следћем командом у приватном баферу:
 
 ----
 /close
@@ -4585,23 +4577,22 @@ include::includes/autogen_user_commands.sr.adoc[tag=trigger_commands]
 
 include::includes/autogen_user_options.sr.adoc[tag=trigger_options]
 
-// TRANSLATION MISSING
 [[typing_plugin]]
 === Typing
 
-The typing plugin is used to inform other users you are typing messages and
-show a list of users currently typing a message on the buffer.
+Доатак typing се користи да обавести остале кориснике када куцате поруке, као и да
+прикаже листу корисника који тренутно куцају поруке у баферу.
 
-It is used by IRC plugin on channel and private buffers, when the "message-tags"
-capability is enabled (you can check with <<command_irc_cap,/cap>> command). +
-Under the hood, typing client tag is used, following this specification:
+Користи га IRC додатак на баферима канала и на приватним баферима када је укључена
+„message-tags” могућност (што можете да проверите командом <<command_irc_cap,/cap>>). +
+Испод хаубе, користи се ознака клијент који куца, пратећи следећу спецификацију:
 https://ircv3.net/specs/client-tags/typing.html.
 
 [[typing_activation]]
-==== Activation
+==== Активација
 
-For privacy considerations, the typing feature is disabled by default. +
-If you want to use it, you must enable options in both typing and irc plugins:
+Ова могућност је подразумевано искључена из разлога приватности. +
+Ако желите да је користите, морате да укључите опцију и у typing и у irc додатку:
 
 ----
 /set typing.look.enabled_nicks on
@@ -4610,10 +4601,10 @@ If you want to use it, you must enable options in both typing and irc plugins:
 /set irc.look.typing_status_self on
 ----
 
-The typing notifications are displayed at the end of the status bar.
+Обавештења о куцању се приказују на крају статусне линије.
 
-Example of status bar with the "typing" item: "bob" is typing a message and
-"alice" was typing a message but made a pause:
+Пример статусне линије са ставком "typing": "bob" куца поруку, а
+"alice" је куцала порукку и направила паузу:
 
 ....
 │[12:55] [6] [irc/libera] 3:#test(+n){4} [Typing: bob, (alice)]                   │
@@ -4622,46 +4613,46 @@ Example of status bar with the "typing" item: "bob" is typing a message and
 ....
 
 [[typing_signals_sent]]
-==== Signals sent
+==== Сигнали који се шаљу
 
-When you are typing a message (not a command starting with `/`), the typing
-plugin sends signals to inform other plugins (like IRC) that you are typing,
-and these plugins can then send typing notifications to other users.
+Када куцате поруку (не команду која поиње са `/`), typing додатак шаље сигнале
+којима обавештава остале додатке (као што је IRC) да куцате, па онда ови додаци
+могу осталим корисницима да шаљу обавешења о куцању.
 
-The following signals are sent when you are typing messages:
+Док куцате поруке, шаљу се следећи сигнали:
 
 [width="100%",cols="1,1,5",options="header"]
 |===
-| Signal              | Arguments        | Description
-| typing_self_typing  | Pointer: buffer. | You are typing a message.
-| typing_self_paused  | Pointer: buffer. | You made a pause while typing a message.
-| typing_self_cleared | Pointer: buffer. | You cleared the command line without sending the message.
-| typing_self_sent    | Pointer: buffer. | You sent the message to the buffer.
+| Сигнал              | Аргументи         | Опис
+| typing_self_typing  | Показивач: Бафер. | Куцате поруку.
+| typing_self_paused  | Показивач: Бафер. | Направили сте паузу током куцања поруке.
+| typing_self_cleared | Показивач: Бафер. | Обрисали сте командну линију и нисте послали поруку.
+| typing_self_sent    | Показивач: Бафер. | Послали сте поруку у бафер.
 |===
 
 [[typing_signals_caught]]
-==== Signals caught
+==== Сигнали који се хватају
 
-The typing plugin is catching some signals that can be sent by other plugins
-(like IRC), to update internal hashtables used to store the typing state of
-nicks on buffers. These hashtables are used to build the content of "typing"
-bar item.
+Typing додатак хвата неке сигнале које шаљу остали додаци (као што је IRC)
+и ажурира интерне хеш табеле које се користе за чување стања куцања надимака
+у баферу. Ове хеш табеле се користе за изградњу садржаја „typing” ставке
+траке.
 
-The following signals are caught by the typing plugin:
+Typing додатак хвата следеће сигнале:
 
 [width="100%",cols="1,4,3",options="header"]
 |===
-| Signal | Arguments | Description
+| Сигнал | Аргументи | Опис
 
 | typing_set_nick |
-  String: buffer pointer + ";" + state (one of: "off", "typing", "paused",
-  "cleared") + ";" + nick. +
-  Example: "0x1234abcd;typing;alice". |
-  Set typing state for a nick on a buffer.
+  Стринг: показивач на бафер + ";" + стање (једнос од: "off", "typing", "paused",
+  "cleared") + ";" + надимак. +
+  Пример: "0x1234abcd;typing;alice". |
+  Поставља стање куцања за надимак у баферу.
 
 | typing_reset_buffer |
-  Pointer: buffer. |
-  Remove typing state for all nicks on a buffer.
+  Показивач: бафер. |
+  Уклања стање куцања за све надимке у баферу.
 |===
 
 [[typing_options]]

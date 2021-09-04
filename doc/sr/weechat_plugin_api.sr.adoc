@@ -547,13 +547,12 @@ free (str);
 [NOTE]
 Ова функција није доступна у API скриптовања.
 
-// TRANSLATION MISSING
 ==== string_cut
 
 _WeeChat ≥ 3.3._
 
-Cut a string after a given number of chars, add an optional suffix after the
-string if it is cut.
+Одсеца стринг након датог броја карактера и додаје необавезни суфикс на
+крај остатка стринга.
 
 Прототип:
 
@@ -564,15 +563,15 @@ char *weechat_string_cut (const char *string, int length, int count_suffix, int 
 
 Аргументи:
 
-* _string_: string to cut
-* _length_: max chars
-* _count_suffix_: if 1, the length of suffix is counter in the max length
-* _screen_: if 1, the cut is based on width of chars displayed
-* _cut_suffix_: the suffix added after the string if it is cut
+* _string_: стринг које треба да се скрати
+* _length_: макс дужина
+* _count_suffix_: ако је 1, дужина суфикса се урачунава у макс дужину
+* _screen_: ако је 1, одсецање је базирано на ширини приказаних карактера
+* _cut_suffix_: суфикс који се додаје након што се стринг одсече
 
 Повратна вредност:
 
-* cut string (must be freed by calling "free" after use)
+* скраћени стринг (након употребе мора да се ослободи позивом „free”)
 
 C пример:
 
@@ -2566,15 +2565,14 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
   `+4+` +
   `+14+`
 
-// TRANSLATION MISSING
 | `+${re:xxx}+` +
   _(WeeChat ≥ 1.1)_ |
-  Regex data: +
-  `0` = whole string matching, +
-  `1` to `99` = group captured, +
-  `+++` = last group captured, +
-  `#` = index of last group captured _(WeeChat ≥ 1.8)_, +
-  `repl_index` = index of replacement being done (starts to 1) _(WeeChat ≥ 3.3)_. |
+  Подаци регуларног израза: +
+  `0` = цео подударени стринг, +
+  `1` до `99` = ухваћена група, +
+  `+++` = последња ухваћена група, +
+  `#` = индекс последње ухваћене групе _(WeeChat ≥ 1.8)_, +
+  `repl_index` = индекс замене која се врши (почиње од 1) _(WeeChat ≥ 3.3)_. |
   `+${re:0}+` +
   `+${re:1}+` +
   `+${re:2}+` +
@@ -2686,10 +2684,9 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
   `+0.2+` +
   `+65536+`
 
-// TRANSLATION MISSING
 | `+${random:min,max}+` +
   _(WeeChat ≥ 3.3)_ |
-  Random integer number in the range from `min` to `max` (inclusive). |
+  Случајни цео број из опсега `min` до `max` (укључујући и њих). |
   `+${random:0,10}+` |
   `+3+`
 
@@ -3797,12 +3794,11 @@ free (content);
 [NOTE]
 Ова функција није доступна у API скриптовања.
 
-// TRANSLATION MISSING
 ==== file_copy
 
 _WeeChat ≥ 3.3._
 
-Copy a file to another location.
+Копира фајл на другу локацију.
 
 Прототип:
 
@@ -3813,12 +3809,12 @@ int weechat_file_copy (const char *from, const char *to);
 
 Аргументи:
 
-* _from_: source file
-* _to_: destination file
+* _from_: изворишни фајл
+* _to_: одредишни фајл
 
 Повратна вредност:
 
-* 1 if OK, 0 if error
+* 1 ако је копирање OK, 0 у случају грешке
 
 C пример:
 
@@ -5151,9 +5147,8 @@ if (weechat_hashtable_has_key (hashtable, "my_key"))
 
 _WeeChat ≥ 0.3.3._
 
-// TRANSLATION MISSING
-Позива функцију над свим ставкама хеш табеле, by insertion order in the hashtable
-(from oldest to newest one).
+Позива функцију над свим ставкама хеш табеле, по редоследу уметања у хештабелу
+(од најстарије до најновије).
 
 Прототип:
 
@@ -5197,9 +5192,8 @@ weechat_hashtable_map (hashtable, &map_cb, NULL);
 
 _WeeChat ≥ 0.3.7._
 
-// TRANSLATION MISSING
-Call a function on all hashtable entries, by insertion order in the hashtable
-(from oldest to newest one), sending keys and values as strings.
+Позива функцију над свим ставкама хеш табеле, по редоследу у којем су уметнуте у
+хеш табелу (од најстарије до најновије), шаљући књучеве и вредности као стрингове.
 
 Прототип:
 
@@ -5409,9 +5403,8 @@ weechat_hashtable_set_pointer (hashtable, "callback_free_key", &my_free_key_cb);
 
 _WeeChat ≥ 0.3.3._
 
-// TRANSLATION MISSING
-Додаје ставе хеш табеле у ставку инфо листе, by insertion order in the hashtable
-(from oldest to newest one).
+Додаје ставе хеш табеле у ставку инфо листе, по редоследу у којем су уметнуте у хеш
+табелу (од најстарије до најновије).
 
 Прототип:
 
@@ -9027,8 +9020,7 @@ struct t_hook *weechat_hook_process_hashtable (const char *command,
 
 [width="100%", cols="^1,^1,1,1,5", options="header"]
 |===
-// TRANSLATION MISSING
-| Опција | Min WeeChat | Вредност | Подразумевана | Опис
+| Опција | Мин WeeChat | Вредност | Подразумевана | Опис
 
 | argN (N ≥ 1) | 0.4.0 | било који стринг | без аргумената |
   Аргументи команде; ако се овим опцијама не наведе ниједан аргумент,
@@ -9798,8 +9790,7 @@ struct t_hook *weechat_hook_signal (const char *signal,
 
 [width="100%", cols="^2,^4,^1,6,9", options="header"]
 |===
-// TRANSLATION MISSING
-| Додатак | Сигнал | Min WeeChat | Аргументи | Опис
+| Додатак | Сигнал | Мин WeeChat | Аргументи | Опис
 
 | guile | [[hook_signal_guile_script_loaded]] guile_script_loaded | 0.3.9 |
   Стринг: путања до скрипте. |
@@ -9817,14 +9808,13 @@ struct t_hook *weechat_hook_signal (const char *signal,
   Стринг: листа уклоњених скрипти раздвојених запетама. |
   Уклоњен(а/е) Scheme скрипт(а/е).
 
-// TRANSLATION MISSING
 | irc | [[hook_signal_xxx_irc_in_yyy]] xxx,irc_in_yyy ^(1)^ | |
   Стринг: порука. |
   IRC порука од сервера (пре него што је употреби irc додатак,
   сигнал се шаље само ако се порука *не* игнорише). +
   Почевши од верзије 2.2, шаље се комплетна IRC порука, заједно са ознакама. +
-  If the return code of a callback is _WEECHAT_RC_OK_EAT_, then the IRC message
-  is immediately destroyed and not processed _(WeeChat ≥ 3.3)_.
+  Ако је повратни код функције повратног позива _WEECHAT_RC_OK_EAT_, онда се IRC
+  порука одмах брише и не обрађује се _(WeeChat ≥ 3.3)_.
 
 | irc | [[hook_signal_xxx_irc_in2_yyy]] xxx,irc_in2_yyy ^(1)^ | |
   Стринг: порука. |
@@ -9832,14 +9822,13 @@ struct t_hook *weechat_hook_signal (const char *signal,
   сигнал се шаље само ако се порука *не* игнорише). +
   Почевши од верзије 2.2, шаље се комплетна IRC порука, заједно са ознакама.
 
-// TRANSLATION MISSING
 | irc | [[hook_signal_xxx_irc_raw_in_yyy]] xxx,irc_raw_in_yyy ^(1)^ | 0.3.2 |
   Стринг: порука. |
   IRC порука од сервера (пре него што је употреби irc додатак,
   сигнал се шаље чак и када се порука игнорише). +
   Почевши од верзије 2.2, шаље се комплетна IRC порука, заједно са ознакама. +
-  If the return code of a callback is _WEECHAT_RC_OK_EAT_, then the IRC message
-  is immediately destroyed and not processed _(WeeChat ≥ 3.3)_.
+  Ако је повратни кôд функције повратног позива _WEECHAT_RC_OK_EAT_, онда се IRC
+  порука одмах брише и обрађује се _(WeeChat ≥ 3.3)_.
 
 | irc | [[hook_signal_xxx_irc_raw_in2_yyy]] xxx,irc_raw_in2_yyy ^(1)^ | 0.3.2 |
   Стринг: порука. |
@@ -10085,36 +10074,30 @@ struct t_hook *weechat_hook_signal (const char *signal,
   Стринг: листа уклоњених скрипти раздвојених запетама. |
   Уклоњен(а/е) Tcl скрипт(а/е).
 
-// TRANSLATION MISSING
 | typing | [[hook_signal_typing_self_typing]] typing_self_typing | 3.3 |
-  Pointer: buffer. |
-  User is typing a message (sent by typing plugin, used by irc plugin).
+  Показивач: бафер. |
+  Корисник куца поруку (шаље typing додатак, користи irc додатак).
 
-// TRANSLATION MISSING
 | typing | [[hook_signal_typing_self_paused]] typing_self_paused | 3.3 |
-  Pointer: buffer. |
-  User paused during typing (sent by typing plugin, used by irc plugin).
+  Показивач: бафер. |
+  Корисник је застао током куцања поруке (шаље typing додатак, користи irc додатак).
 
-// TRANSLATION MISSING
 | typing | [[hook_signal_typing_self_cleared]] typing_self_cleared | 3.3 |
-  Pointer: buffer. |
-  User cleared the input without sending the message (sent by typing plugin, used by irc plugin).
+  Показивач: бафер. |
+  Корисник је обрисао унос и није послао поруку (шаље typing додатак, користи irc додатак).
 
-// TRANSLATION MISSING
 | typing | [[hook_signal_typing_self_sent]] typing_self_sent | 3.3 |
-  Pointer: buffer. |
-  Message (not a command) sent to the buffer (sent by typing plugin, used by irc plugin).
+  Показивач: бафер. |
+  Порука (не команда) је послата баферу (шаље typing додатак, користи irc додатак).
 
-// TRANSLATION MISSING
 | typing | [[hook_signal_typing_set_nick]] typing_set_nick | 3.3 |
-  String: buffer pointer + ";" + state (one of: "off", "typing", "paused",
-  "cleared") + ";" + nick. |
-  Set typing state for a nick on a buffer (sent by irc plugin, handled by typing plugin).
+  Стринг: показивач на бафер + ";" + стање (једно од: "off", "typing", "paused",
+  "cleared") + ";" + надимак. |
+  Поставља стање куцања за надимак у баферу (шаље irc додатак, обрађује typing додатак).
 
-// TRANSLATION MISSING
 | typing | [[hook_signal_typing_reset_buffer]] typing_reset_buffer | 3.3 |
-  Pointer: buffer. |
-  Remove typing state for all nicks on a buffer (sent by irc plugin, handled by typing plugin).
+  Показивач: бафер. |
+  Уклања стање куцања за све надимке у баферу (шаље irc додатак, обрађује typing додатак).
 
 | weechat | [[hook_signal_buffer_opened]] buffer_opened | |
   Показивач: бафер. |
@@ -10710,8 +10693,7 @@ struct t_hook *weechat_hook_hsignal (const char *signal,
 
 [width="100%", cols="^1,^3,^1,5,5", options="header"]
 |===
-// TRANSLATION MISSING
-| Додатак | Сигнал | Min WeeChat | Аргументи | Опис
+| Додатак | Сигнал | Мин WeeChat | Аргументи | Опис
 
 | irc | [[hook_hsignal_irc_redirection_xxx_yyy]] irc_redirection_xxx_yyy ^(1)^ | 0.3.4 |
   Погледајте <<hsignal_irc_redirect_command,hsignal_irc_redirect_command>> |
@@ -11116,8 +11098,7 @@ struct t_hook *weechat_hook_modifier (const char *modifier,
 
 [width="100%", cols="^2,^1,3,4,4", options="header"]
 |===
-// TRANSLATION MISSING
-| Модификатор | Min WeeChat | Подаци модификатора | Стринг | Излаз
+| Модификатор | Мин WeeChat | Подаци модификатора | Стринг | Излаз
 
 | [[hook_modifier_irc_in_xxx]] irc_in_xxx ^(1)^ | |
   Име сервера |
@@ -11258,8 +11239,7 @@ char *weechat_hook_modifier_exec (const char *modifier,
 
 [width="100%", cols="^2,^1,3,4,4", options="header"]
 |===
-// TRANSLATION MISSING
-| Модификатор | Min WeeChat | Подаци модификатора | Стринг | Излаз
+| Модификатор | Мин WeeChat | Подаци модификатора | Стринг | Излаз
 
 | [[hook_modifier_charset_decode]] charset_decode | |
   plugin.buffer_name |
@@ -11296,19 +11276,17 @@ char *weechat_hook_modifier_exec (const char *modifier,
   Порука која се приказује након што се `/msg` пошаље nickserv боту. |
   Порука са скривеном лозинком.
 
-// TRANSLATION MISSING
 | [[hook_modifier_irc_tag_escape_value]] irc_tag_escape_value | 3.3 |
   - |
-  Any string. |
-  String with IRC tag value escaped,
-  see: https://ircv3.net/specs/extensions/message-tags#escaping-values.
+  Било који стринг. |
+  Стринг са означеном вредности IRC ознаке,
+  погледајте: https://ircv3.net/specs/extensions/message-tags#escaping-values.
 
-// TRANSLATION MISSING
 | [[hook_modifier_irc_tag_unescape_value]] irc_tag_unescape_value | 3.3 |
   - |
-  Any string. |
-  String with IRC tag value unescaped,
-  see: https://ircv3.net/specs/extensions/message-tags#escaping-values.
+  Било који стринг. |
+  Стринг са неозначеном вредности IRC ознаке,
+  погледајте: https://ircv3.net/specs/extensions/message-tags#escaping-values.
 
 | [[hook_modifier_color_decode_ansi]] color_decode_ansi | 1.0 |
   "1" да се боје задрже, "0" да се боје уклоне |
@@ -11862,8 +11840,7 @@ void weechat_hook_set (struct t_hook *hook, const char *property,
 
 [width="100%", cols="^1,^1,2,2,5", options="header"]
 |===
-// TRANSLATION MISSING
-| Име | Min WeeChat | Тип куке | Вредност | Опис
+| Име | Мин WeeChat | Тип куке | Вредност | Опис
 
 | subplugin | | било који тип |
   било који стринг |
@@ -12545,8 +12522,7 @@ void weechat_buffer_set (struct t_gui_buffer *buffer, const char *property,
 
 [width="100%", cols="^2,^1,4,8", options="header"]
 |===
-// TRANSLATION MISSING
-| Име | Min WeeChat | Вредност | Опис
+| Име | Мин WeeChat | Вредност | Опис
 
 | hotlist | | "+", "-", WEECHAT_HOTLIST_LOW, WEECHAT_HOTLIST_MESSAGE,
   WEECHAT_HOTLIST_PRIVATE, WEECHAT_HOTLIST_HIGHLIGHT, "-1" |
