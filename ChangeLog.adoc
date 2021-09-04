@@ -15,6 +15,13 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 (file _ReleaseNotes.adoc_ in sources).
 
 
+[[v3.2.1]]
+== Version 3.2.1 (under dev)
+
+Bug fixes::
+
+  * relay: fix crash when decoding a malformed websocket frame
+
 [[v3.2]]
 == Version 3.2 (2021-06-13)
 
