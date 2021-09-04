@@ -50,6 +50,7 @@ Bug fixes::
   * irc: remove unneeded message about Diffie-Hellman shared secret exchange during SSL connection to server (issue #857)
   * irc: escape/unescape IRC message tags values (issue #1654)
   * irc: set notify level to "private" for received WALLOPS
+  * relay: fix crash when decoding a malformed websocket frame
   * script: fix move of installed script on another filesystem (issue #1667)
 
 Documentation::
