@@ -7,7 +7,7 @@ jobs:
   build:
 
     name: ${{ matrix.config.name }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
     strategy:
       fail-fast: false
       matrix:
