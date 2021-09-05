@@ -66,7 +66,7 @@ Build::
 
   * core: fix build on macOS (issue #1662)
   * lua: add detection of Lua 5.4
-  * php: add support of PHP 8.0 and 8.1 (issue #1668)
+  * php: add support of PHP 8.0 and 8.1 (issue #1599, issue #1668)
 
 [[v3.2.1]]
 == Version 3.2.1 (2021-09-04)
