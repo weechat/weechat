@@ -73,7 +73,7 @@ Build::
 
 Bug fixes::
 
-  * relay: fix crash when decoding a malformed websocket frame
+  * relay: fix crash when decoding a malformed websocket frame (CVE-2021-40516)
 
 [[v3.2]]
 == Version 3.2 (2021-06-13)
