@@ -1847,43 +1847,43 @@
 
 // tag::typing_options[]
 * [[option_typing.look.delay_purge_paused]] *typing.look.delay_purge_paused*
-** опис: pass:none[number of seconds after paused status has been set: if reached, the typing status is removed]
+** опис: pass:none[број секунди након постављања статуса паузирано: ако се достигне, статус статус куцања се уклања]
 ** тип: целобројна
 ** вредности: 1 .. 2147483647
 ** подразумевана вредност: `+30+`
 
 * [[option_typing.look.delay_purge_typing]] *typing.look.delay_purge_typing*
-** опис: pass:none[number of seconds after typing status has been set: if reached, the typing status is removed]
+** опис: pass:none[број секунди након постављања статуса куцања: ако се достигне, статус куцања се уклања]
 ** тип: целобројна
 ** вредности: 1 .. 2147483647
 ** подразумевана вредност: `+6+`
 
 * [[option_typing.look.delay_set_paused]] *typing.look.delay_set_paused*
-** опис: pass:none[number of seconds after typing last char: if reached, the typing status becomes "paused" and no more typing signals are sent]
+** опис: pass:none[број секунди након уношења последњег карактера: ако се достигне, статус куцања постаје „паузирано” и не шаље се више ниједан сигнал куцања]
 ** тип: целобројна
 ** вредности: 1 .. 2147483647
 ** подразумевана вредност: `+10+`
 
 * [[option_typing.look.enabled_nicks]] *typing.look.enabled_nicks*
-** опис: pass:none[typing enabled for other nicks (display typing info for nicks typing in the current buffer)]
+** опис: pass:none[куцање је укључено за остале надимке (приказује инфо о куцању за надимке из текућег бафера)]
 ** тип: логичка
 ** вредности: on, off
 ** подразумевана вредност: `+off+`
 
 * [[option_typing.look.enabled_self]] *typing.look.enabled_self*
-** опис: pass:none[typing enabled for self messages (send typing info to other users)]
+** опис: pass:none[куцање је укључено за сопствене поруке (осталим корисницима се шаље инфо о куцању]
 ** тип: логичка
 ** вредности: on, off
 ** подразумевана вредност: `+off+`
 
 * [[option_typing.look.input_min_chars]] *typing.look.input_min_chars*
-** опис: pass:none[min number of chars in message to trigger send of typing signals]
+** опис: pass:none[мин број карактера у поруци који окида слање сигнала о куцању]
 ** тип: целобројна
 ** вредности: 1 .. 2147483647
 ** подразумевана вредност: `+4+`
 
 * [[option_typing.look.item_max_length]] *typing.look.item_max_length*
-** опис: pass:none[max number of chars displayed in the bar item "typing" (0 = do not truncate content)]
+** опис: pass:none[макс број карактера који се приказује у ставци траке "typing" (0 = садржај се не одсеца)]
 ** тип: целобројна
 ** вредности: 0 .. 2147483647
 ** подразумевана вредност: `+0+`
@@ -2565,13 +2565,13 @@
 ** подразумевана вредност: `+off+`
 
 * [[option_irc.look.typing_status_nicks]] *irc.look.typing_status_nicks*
-** опис: pass:none[display nicks typing on the channel in bar item "typing" (option typing.look.enabled_nicks must be enabled and capability "message-tags" must be enabled on the server)]
+** опис: pass:none[приказивање надимака који куцају у ставци траке „typing” (опција typing.look.enabled_nicks мора бити укључена и на серверу мора бити укључена опција „message-tags”)]
 ** тип: логичка
 ** вредности: on, off
 ** подразумевана вредност: `+off+`
 
 * [[option_irc.look.typing_status_self]] *irc.look.typing_status_self*
-** опис: pass:none[send self typing status to channels so that other users see when you are typing a message (option typing.look.enabled_self must be enabled and capability "message-tags" must be enabled on the server)]
+** опис: pass:none[слање сопственог статуса куцања каналима тако да остали корисници виде када куцате поруку (опција typing.look.enabled_self мора бити укључена и на серверу мора бити укључена опција „message-tags”)]
 ** тип: логичка
 ** вредности: on, off
 ** подразумевана вредност: `+off+`

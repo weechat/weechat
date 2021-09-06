@@ -1384,19 +1384,21 @@ Des variables sont remplacées dans l'expression, en utilisant le format ${varia
   7. une chaîne inversée (format : "rev:xxx" ou "revscr:xxx")
   8. une chaîne répétée (format : "repeat:nombre,chaîne")
   9. longueur d'une chaîne (format : "length:xxx" ou "lengthscr:xxx")
-  10. une couleur (format : "color:xxx", voir la "Référence API extension", fonction "color")
-  11. un modificateur (format : "modifier:nom,données,chaîne")
-  12. une info (format : "info:nom,paramètres", les paramètres sont optionnels)
-  13. une chaîne encodée/decodée en base 16, 32 ou 64 (format : "base_encode:base,xxx" ou "base_decode:base,xxx")
-  14. la date/heure courante (format : "date" ou "date:format")
-  15. une variable d'environnement (format : "env:XXX")
-  16. un opérateur ternaire (format : "if:condition?valeur_si_vrai:valeur_si_faux")
-  17. le résultat d'une expression avec parenthèses et les opérateurs + - * / // % ** (format: "calc:xxx")
-  18. un nombre entier aléatoire (format : "random:min,max")
-  19. une chaîne traduite (format : "translate:xxx")
-  20. une option (format : "fichier.section.option")
-  21. une variable locale du tampon
-  22. un hdata/variable (la valeur est automatiquement convertie en chaîne), par défaut "window" et "buffer" pointent vers la fenêtre et le tampon courants.
+  10. découpage d'une chaîne (format : "split:nombre,séparateurs,flags,xxx")
+  11. découpage de paramètres shell (format : "split_shell:nombre,xxx")
+  12. une couleur (format : "color:xxx", voir la "Référence API extension", fonction "color")
+  13. un modificateur (format : "modifier:nom,données,chaîne")
+  14. une info (format : "info:nom,paramètres", les paramètres sont optionnels)
+  15. une chaîne encodée/decodée en base 16, 32 ou 64 (format : "base_encode:base,xxx" ou "base_decode:base,xxx")
+  16. la date/heure courante (format : "date" ou "date:format")
+  17. une variable d'environnement (format : "env:XXX")
+  18. un opérateur ternaire (format : "if:condition?valeur_si_vrai:valeur_si_faux")
+  19. le résultat d'une expression avec parenthèses et les opérateurs + - * / // % ** (format: "calc:xxx")
+  20. un nombre entier aléatoire (format : "random:min,max")
+  21. une chaîne traduite (format : "translate:xxx")
+  22. une option (format : "fichier.section.option")
+  23. une variable locale du tampon
+  24. un hdata/variable (la valeur est automatiquement convertie en chaîne), par défaut "window" et "buffer" pointent vers la fenêtre et le tampon courants.
 Le format du hdata peut être le suivant :
   hdata.var1.var2... : démarrer avec un hdata (le pointeur doit être connu), et demander les variables l'une après l'autre (d'autres hdata peuvent être suivis)
   hdata[liste].var1.var2... : démarrer avec un hdata en utilisant une liste/pointeur/nom de pointeur, par exemple :
@@ -1427,6 +1429,14 @@ Exemples (chaînes simples) :
   /eval -n ${rev:Hello}                          ==> olleH
   /eval -n ${repeat:5,-}                         ==> -----
   /eval -n ${length:test}                        ==> 4
+  /eval -n ${split:1,,,abc,def,ghi}              ==> abc
+  /eval -n ${split:-1,,,abc,def,ghi}             ==> ghi
+  /eval -n ${split:count,,,abc,def,ghi}          ==> 3
+  /eval -n ${split:random,,,abc,def,ghi}         ==> def
+  /eval -n ${split_shell:1,\"arg 1\" arg2}       ==> arg 1
+  /eval -n ${split_shell:-1,\"arg 1\" arg2}      ==> arg2
+  /eval -n ${split_shell:count,\"arg 1\" arg2}   ==> 2
+  /eval -n ${split_shell:random,\"arg 1\" arg2}  ==> arg2
   /eval -n ${calc:(5+2)*3}                       ==> 21
   /eval -n ${random:0,10}                        ==> 3
   /eval -n ${base_encode:64,test}                ==> dGVzdA==

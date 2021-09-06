@@ -17,32 +17,32 @@
 * `+allchan+`: извршавање команде на свим каналима свих повезаних сервера
 
 ----
-/allchan  [-current] [-parted] [-exclude=<channel>[,<channel>...]] <command>
-          [-current] [-parted] -include=<channel>[,<channel>...] <command>
+/allchan  [-current] [-parted] [-exclude=<канал>[,<канал>...]] <команда>
+          [-current] [-parted] -include=<канал>[,<канал>...] <команда>
 
- -current: execute command for channels of current server only
-  -parted: execute on parted channels only
- -exclude: exclude some channels (wildcard "*" is allowed)
- -include: include only some channels (wildcard "*" is allowed)
-  command: command to execute (or text to send to buffer if command does not start with '/')
+ -current: команда се извршава само за канале текућег сервера
+  -parted: команда се извршава само на напуштеним каналима
+ -exclude: неки канали се изузимају (дозвољен је џокер „*”)
+ -include: узимају се у обзир само неки канали (дозвољен је џокер „*”)
+  команда: команда која треба да се изврши (или текст који се шаље баферу ако команда не почиње са ’/’)
 
-Command and arguments are evaluated (see /help eval), the following variables are replaced:
-  $server             server name
-  $channel            channel name
-  $nick               nick on server
-  ${irc_server.xxx}   variable xxx in server
-  ${irc_channel.xxx}  variable xxx in channel
+Команде и аргументи се израчунавају (погледајте /help eval), замењују се следеће променљиве:
+  $server             име сервера
+  $channel            име канала
+  $nick               надимак на серверу
+  ${irc_server.xxx}   променљива xxx на серверу
+  ${irc_channel.xxx}  променљива xxx на каналу
 
-Examples:
-  execute '/me is testing' on all channels:
+Примери:
+  извршава ’/me is testing’ на свим каналима:
     /allchan /me is testing
-  say 'hello' everywhere but not on #weechat:
-    /allchan -exclude=#weechat hello
-  say 'hello' everywhere but not on #weechat and channels beginning with #linux:
-    /allchan -exclude=#weechat,#linux* hello
-  say 'hello' on all channels beginning with #linux:
-    /allchan -include=#linux* hello
-  close all buffers with parted channels:
+  каже ’здраво’ свуда осим на #weechat:
+    /allchan -exclude=#weechat здраво
+  каже ’здраво’ свуда осим на #weechat и каналима који почињу са #linux:
+    /allchan -exclude=#weechat,#linux* здраво
+  каже ’здраво’ на свим каналима који почињу на #linux:
+    /allchan -include=#linux* здраво
+  затвара све бафере са напуштеним каналима:
     /allchan -parted /close
 ----
 
@@ -104,23 +104,23 @@ Examples:
 ----
 
 [[command_irc_auth]]
-* `+auth+`: authenticate with SASL
+* `+auth+`: аутентификација са SASL
 
 ----
-/auth  [<username> <password>]
+/auth  [<кор_име> <лозинка>]
 
-username: SASL username (content is evaluated, see /help eval; server options are evaluated with ${irc_server.xxx} and ${server} is replaced by the server name)
-password: SASL password or path to file with private key (content is evaluated, see /help eval; server options are evaluated with ${irc_server.xxx} and ${server} is replaced by the server name)
+кор_име: SASL корисничко име (садржај се израчунава, погледајте /help eval; опције сервера се израчунавају са ${irc_server.xxx} и ${server} се замењује са именом сервера)
+лозинка: SASL лозинка или путања до фајла са приватним кључем (садржај се израчунава, погледајте /help eval; опције сервера се израчунавају са ${irc_server.xxx} и ${server} се замњеује именом сервера)
 
-If username and password are not provided, the values from server options "sasl_username" and "sasl_password" (or "sasl_key") are used.
+Ако се не наведу корисничко име и лозинка, користе се вредности из серверских опције „sasl_username” и „sasl_password” (или „sasl_key”).
 
-Examples:
-  authenticate with username/password defined in the server:
+Примери:
+  аутентификација са корисничким именом/лозинком дефинисаним на серверу:
     /auth
-  authenticate as a different user:
-    /auth user2 password2
-  authenticate as a different user with mechanism ecdsa-nist256p-challenge:
-    /auth user2 ${weechat_config_dir}/ecdsa2.pem
+  аутентификација као други корисник:
+    /auth корисник2 лозинка2
+  аутентификација као други корисник ecdsa-nist256p-challenge механизмом:
+    /auth корисник2 ${weechat_config_dir}/ecdsa2.pem
 ----
 
 [[command_irc_ban]]
@@ -1384,19 +1384,21 @@ Some variables are replaced in expression, using the format ${variable}, variabl
   7. a reversed string (format: "rev:xxx" or "revscr:xxx")
   8. a repeated string (format: "repeat:count,string")
   9. length of a string (format: "length:xxx" or "lengthscr:xxx")
-  10. a color (format: "color:xxx", see "Plugin API reference", function "color")
-  11. a modifier (format: "modifier:name,data,string")
-  12. an info (format: "info:name,arguments", arguments are optional)
-  13. a base 16/32/64 encoded/decoded string (format: "base_encode:base,xxx" or "base_decode:base,xxx")
-  14. current date/time (format: "date" or "date:format")
-  15. an environment variable (format: "env:XXX")
-  16. a ternary operator (format: "if:condition?value_if_true:value_if_false")
-  17. result of an expression with parentheses and operators + - * / // % ** (format: "calc:xxx")
-  18. a random integer number (format: "random:min,max")
-  19. a translated string (format: "translate:xxx")
-  20. an option (format: "file.section.option")
-  21. a local variable in buffer
-  22. a hdata name/variable (the value is automatically converted to string), by default "window" and "buffer" point to current window/buffer.
+  10. split of a string (format: "split:number,separators,flags,xxx")
+  11. split of shell argmuents (format: "split_shell:number,xxx")
+  12. a color (format: "color:xxx", see "Plugin API reference", function "color")
+  13. a modifier (format: "modifier:name,data,string")
+  14. an info (format: "info:name,arguments", arguments are optional)
+  15. a base 16/32/64 encoded/decoded string (format: "base_encode:base,xxx" or "base_decode:base,xxx")
+  16. current date/time (format: "date" or "date:format")
+  17. an environment variable (format: "env:XXX")
+  18. a ternary operator (format: "if:condition?value_if_true:value_if_false")
+  19. result of an expression with parentheses and operators + - * / // % ** (format: "calc:xxx")
+  20. a random integer number (format: "random:min,max")
+  21. a translated string (format: "translate:xxx")
+  22. an option (format: "file.section.option")
+  23. a local variable in buffer
+  24. a hdata name/variable (the value is automatically converted to string), by default "window" and "buffer" point to current window/buffer.
 Format for hdata can be one of following:
   hdata.var1.var2...: start with a hdata (pointer must be known), and ask variables one after one (other hdata can be followed)
   hdata[list].var1.var2...: start with a hdata using a list/pointer/pointer name, for example:
@@ -1427,6 +1429,14 @@ Examples (simple strings):
   /eval -n ${rev:Hello}                          ==> olleH
   /eval -n ${repeat:5,-}                         ==> -----
   /eval -n ${length:test}                        ==> 4
+  /eval -n ${split:1,,,abc,def,ghi}              ==> abc
+  /eval -n ${split:-1,,,abc,def,ghi}             ==> ghi
+  /eval -n ${split:count,,,abc,def,ghi}          ==> 3
+  /eval -n ${split:random,,,abc,def,ghi}         ==> def
+  /eval -n ${split_shell:1,"arg 1" arg2}       ==> arg 1
+  /eval -n ${split_shell:-1,"arg 1" arg2}      ==> arg2
+  /eval -n ${split_shell:count,"arg 1" arg2}   ==> 2
+  /eval -n ${split_shell:random,"arg 1" arg2}  ==> arg2
   /eval -n ${calc:(5+2)*3}                       ==> 21
   /eval -n ${random:0,10}                        ==> 3
   /eval -n ${base_encode:64,test}                ==> dGVzdA==
@@ -1545,63 +1555,63 @@ addreplace: додаје или замењује постојећи филтер
 ----
 /input  <акција> [<аргументи>]
 
-list of actions:
-  return: simulate key "enter"
-  complete_next: complete word with next completion
-  complete_previous: complete word with previous completion
-  search_text_here: search text in buffer at current position
-  search_text: search text in buffer
-  search_switch_case: switch exact case for search
-  search_switch_regex: switch search type: string/regular expression
-  search_switch_where: switch search in messages/prefixes
-  search_previous: search previous line
-  search_next: search next line
-  search_stop_here: stop search at current position
-  search_stop: stop search
-  delete_previous_char: delete previous char
-  delete_next_char: delete next char
-  delete_previous_word: delete previous word
-  delete_next_word: delete next word
-  delete_beginning_of_line: delete from beginning of line until cursor
-  delete_end_of_line: delete from cursor until end of line
-  delete_line: delete entire line
-  clipboard_paste: paste from the internal clipboard
-  transpose_chars: transpose two chars
-  undo: undo last command line action
-  redo: redo last command line action
-  move_beginning_of_line: move cursor to beginning of line
-  move_end_of_line: move cursor to end of line
-  move_previous_char: move cursor to previous char
-  move_next_char: move cursor to next char
-  move_previous_word: move cursor to previous word
-  move_next_word: move cursor to next word
-  history_previous: recall previous command in current buffer history
-  history_next: recall next command in current buffer history
-  history_global_previous: recall previous command in global history
-  history_global_next: recall next command in global history
-  jump_smart: jump to next buffer with activity
-  jump_last_buffer_displayed: jump to last buffer displayed (before last jump to a buffer)
-  jump_previously_visited_buffer: jump to previously visited buffer
-  jump_next_visited_buffer: jump to next visited buffer
-  hotlist_clear: clear hotlist (optional argument: "lowest" to clear only lowest level in hotlist, "highest" to clear only highest level in hotlist, or level mask: integer which is a combination of 1=join/part, 2=message, 4=private, 8=highlight)
-  hotlist_remove_buffer: remove current buffer from hotlist
-  hotlist_restore_buffer: restore latest hotlist removed in the current buffer
-  hotlist_restore_all: restore latest hotlist removed in all buffers
-  grab_key: grab a key (optional argument: delay for end of grab, default is 500 milliseconds)
-  grab_key_command: grab a key with its associated command (optional argument: delay for end of grab, default is 500 milliseconds)
-  grab_mouse: grab mouse event code
-  grab_mouse_area: grab mouse event code with area
-  set_unread: set unread marker for all buffers
-  set_unread_current_buffer: set unread marker for current buffer
-  switch_active_buffer: switch to next merged buffer
-  switch_active_buffer_previous: switch to previous merged buffer
-  zoom_merged_buffer: zoom on merged buffer
-  insert: insert text in command line (escaped chars are allowed, see /help print)
-  send: send text to the buffer
-  paste_start: start paste (bracketed paste mode)
-  paste_stop: stop paste (bracketed paste mode)
+листа акција:
+  return: симулира притисак на тастер „ентер”
+  complete_next: довршава реч са наредним довршавањем
+  complete_previous: довршава реч са претходним довршавањем
+  search_text_here: претражује текст у баферу почевши од текуће позиције
+  search_text: претражује текст у баферу
+  search_switch_case: укључује употребу тачне величине слова код претраге
+  search_switch_regex: мења тип претраге: стринг/регуларни израз
+  search_switch_where: укључује претрагу у порукама/префиксима
+  search_previous: претрага у претходној линији
+  search_next: претрага у наредној линији
+  search_stop_here: зауставља претрагу на текућој позицији
+  search_stop: зауставља претрагу
+  delete_previous_char: брише претходни карактер
+  delete_next_char: брише наредни карактер
+  delete_previous_word: брише претходну реч
+  delete_next_word: брише наредну реч
+  delete_beginning_of_line: брише од почетка линије до позиције курсора
+  delete_end_of_line: брише од позиције курсора до краја линије
+  delete_line: брише комплетну линију
+  clipboard_paste: налепљује из интерног клипборда
+  transpose_chars: транспонује два карактера (замењују места)
+  undo: поништава последњу акцију командне линије
+  redo: обнавља последње поништену акцију команде линије
+  move_beginning_of_line: помера курсор на почетак линије
+  move_end_of_line: помера курсор на крај линије
+  move_previous_char: помера курсор на претходни карактер
+  move_next_char: помера курсор на наредни карактер
+  move_previous_word: помера курсор на претходну реч
+  move_next_word: помера курсор на наредну реч
+  history_previous: позива претходну команду из историје команди текућег бафера
+  history_next: позива наредну команду из историје команди текућег бафера
+  history_global_previous: позива претходну команду из глобалне историје команди
+  history_global_next: позива наредну команду из глобалне историје команди
+  jump_smart: скаче на наредни бафер у коме постоји активност
+  jump_last_buffer_displayed: скаче на последњи приказани бафер (пре последњег скока на бафер)
+  jump_previously_visited_buffer: скаче на претходно посећени бафер
+  jump_next_visited_buffer: скаче на наредни посећени бафер
+  hotlist_clear: брише врућу листу (необавезни аргументи: „lowest” за брисање само најнижег нивоа у врућој листи, „highest” за брисање само највишег нивоа у врућој листи, или маска нивоа: целобројна вредност која представља комбинацију 1=join/part, 2=порука, 4=приватно, 8=истицање)
+  hotlist_remove_buffer: уклања текући бафер из вруће листе
+  hotlist_restore_buffer: враћа последњу уклоњену врућу листу у текући бафер
+  hotlist_restore_all: враћа последњу уклоњену врућу листу у све бафере
+  grab_key: преузима тастер (необавезни аргумент: кашњење за крај преузимања, подразумевано је 500 милисекунди)
+  grab_key_command: преузима тастер са својом придруженом командом (необавезни аргумент: кашњење за крај преузимања, подразумевано је 500 милисекунди)
+  grab_mouse: преузима кôд догађаја миша
+  grab_mouse_area: преузима кôд догађаја миша заједно са површином
+  set_unread: поставља маркер непрочитан за све бафере
+  set_unread_current_buffer: поставља маркер непрочитан за текући бафер
+  switch_active_buffer: прелази на наредни спојени бафер
+  switch_active_buffer_previous: прелази на претходни спојени бафер
+  zoom_merged_buffer: зумира на спојени бафер
+  insert: умеће текст у командну линију (дозвољени су означени карактери, погледајте /help print)
+  send: шаље текст баферу
+  paste_start: започиње налепљивање (режим ограђеног налепљивања)
+  paste_stop: зауставља налепљивање (режим ограђеног налепљивања)
 
-This command is used by key bindings or plugins.
+Ову команду користе тастерске пречице или додаци.
 ----
 
 [[command_weechat_key]]
@@ -1669,21 +1679,21 @@ listdefault: исписује подразумеване тастере
          del [<име>] [buffers|windows]
          rename <име> <ново_име>
 
-  store: store current buffers/windows in a layout
-  apply: apply stored layout
-  leave: leave current layout (does not update any layout)
-    del: delete buffers and/or windows in a stored layout
-         (if neither "buffers" nor "windows" is given after the name, the layout is deleted)
- rename: rename a layout
-   name: name for stored layout (default is "default")
-buffers: store/apply only buffers (order of buffers)
-windows: store/apply only windows (buffer displayed by each window)
+  store: чува текуће бафере/прозоре у распореду
+  apply: примењује сачувани распоред
+  leave: напушта текући распоред (не ажурира ниједан распоред)
+    del: брише бафере и/или прозоре из сачуваног распореда
+          (ако након имена није наведено ни „buffers” ни „windows”, онда се брише распоред)
+ rename: измена имена распореда
+    име: име распореда који се чува (подразумевано је „default”)
+buffers: чува/обнавља само бафере (редослед бафера)
+windows: чува/обнавља само прозоре (бафер који приказује сваки прозор)
 
-Without argument, this command displays stored layouts.
+Без аргумента, ова команда приказује сачуване распореде.
 
-The current layout can be saved on /quit command with the option "weechat.look.save_layout_on_exit".
+Текући распоред може да се сачува приликом /quit команде опцијом „weechat.look.save_layout_on_exit”.
 
-Note: the layout only remembers windows split and buffers numbers. It does not open buffers. That means for example you must still auto-join IRC channels to open the buffers, the saved layout only applies once the buffers are opened.
+Напомена: распоред памти само поделе прозора и бројеве бафера. Он не отвара бафере. То значи да још увек морате аутоматски да приступите IRC каналима да бисте отворили бафере, сачувани распоред се примењује тек онда када се отворе бафери.
 ----
 
 [[command_weechat_mouse]]

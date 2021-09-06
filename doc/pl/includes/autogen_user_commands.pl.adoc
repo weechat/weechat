@@ -1383,19 +1383,21 @@ Some variables are replaced in expression, using the format ${variable}, variabl
   7. a reversed string (format: "rev:xxx" or "revscr:xxx")
   8. a repeated string (format: "repeat:count,string")
   9. length of a string (format: "length:xxx" or "lengthscr:xxx")
-  10. a color (format: "color:xxx", see "Plugin API reference", function "color")
-  11. a modifier (format: "modifier:name,data,string")
-  12. an info (format: "info:name,arguments", arguments are optional)
-  13. a base 16/32/64 encoded/decoded string (format: "base_encode:base,xxx" or "base_decode:base,xxx")
-  14. current date/time (format: "date" or "date:format")
-  15. an environment variable (format: "env:XXX")
-  16. a ternary operator (format: "if:condition?value_if_true:value_if_false")
-  17. result of an expression with parentheses and operators + - * / // % ** (format: "calc:xxx")
-  18. a random integer number (format: "random:min,max")
-  19. a translated string (format: "translate:xxx")
-  20. an option (format: "file.section.option")
-  21. a local variable in buffer
-  22. a hdata name/variable (the value is automatically converted to string), by default "window" and "buffer" point to current window/buffer.
+  10. split of a string (format: "split:number,separators,flags,xxx")
+  11. split of shell argmuents (format: "split_shell:number,xxx")
+  12. a color (format: "color:xxx", see "Plugin API reference", function "color")
+  13. a modifier (format: "modifier:name,data,string")
+  14. an info (format: "info:name,arguments", arguments are optional)
+  15. a base 16/32/64 encoded/decoded string (format: "base_encode:base,xxx" or "base_decode:base,xxx")
+  16. current date/time (format: "date" or "date:format")
+  17. an environment variable (format: "env:XXX")
+  18. a ternary operator (format: "if:condition?value_if_true:value_if_false")
+  19. result of an expression with parentheses and operators + - * / // % ** (format: "calc:xxx")
+  20. a random integer number (format: "random:min,max")
+  21. a translated string (format: "translate:xxx")
+  22. an option (format: "file.section.option")
+  23. a local variable in buffer
+  24. a hdata name/variable (the value is automatically converted to string), by default "window" and "buffer" point to current window/buffer.
 Format for hdata can be one of following:
   hdata.var1.var2...: start with a hdata (pointer must be known), and ask variables one after one (other hdata can be followed)
   hdata[list].var1.var2...: start with a hdata using a list/pointer/pointer name, for example:
@@ -1426,6 +1428,14 @@ Examples (simple strings):
   /eval -n ${rev:Hello}                          ==> olleH
   /eval -n ${repeat:5,-}                         ==> -----
   /eval -n ${length:test}                        ==> 4
+  /eval -n ${split:1,,,abc,def,ghi}              ==> abc
+  /eval -n ${split:-1,,,abc,def,ghi}             ==> ghi
+  /eval -n ${split:count,,,abc,def,ghi}          ==> 3
+  /eval -n ${split:random,,,abc,def,ghi}         ==> def
+  /eval -n ${split_shell:1,"arg 1" arg2}       ==> arg 1
+  /eval -n ${split_shell:-1,"arg 1" arg2}      ==> arg2
+  /eval -n ${split_shell:count,"arg 1" arg2}   ==> 2
+  /eval -n ${split_shell:random,"arg 1" arg2}  ==> arg2
   /eval -n ${calc:(5+2)*3}                       ==> 21
   /eval -n ${random:0,10}                        ==> 3
   /eval -n ${base_encode:64,test}                ==> dGVzdA==
