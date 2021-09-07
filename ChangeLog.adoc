@@ -20,7 +20,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 Bug fixes::
 
-  * relay: fix crash when decoding a malformed websocket frame
+  * relay: fix crash when decoding a malformed websocket frame (CVE-2021-40516)
 
 [[v3.0.1]]
 == Version 3.0.1 (2021-01-31)
