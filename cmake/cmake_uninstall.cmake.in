@@ -28,9 +28,7 @@ list(REVERSE files)
 foreach(file ${files})
   message(STATUS "Uninstalling \"$ENV{DESTDIR}${file}\"")
   if(EXISTS "$ENV{DESTDIR}${file}")
-    exec_program("@CMAKE_COMMAND@" ARGS "-E remove \"$ENV{DESTDIR}${file}\""
-      OUTPUT_VARIABLE rm_out
-      RETURN_VARIABLE rm_retval)
+    execute_process(COMMAND "@CMAKE_COMMAND@" -E remove "$ENV{DESTDIR}${file}" OUTPUT_VARIABLE rm_out RESULT_VARIABLE rm_retval)
     if("${rm_retval}" GREATER 0)
       message(FATAL_ERROR "Problem when removing \"$ENV{DESTDIR}${file}\"")
     endif()
