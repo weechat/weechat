@@ -23,8 +23,8 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2021-09-06 22:37+0200\n"
-"PO-Revision-Date: 2021-07-10 16:01+0200\n"
-"Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
+"PO-Revision-Date: 2021-09-07 18:01+0500\n"
+"Last-Translator: Santiago Forero <santiago@forero.ga>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
@@ -72,7 +72,7 @@ msgid "undefined value allowed (null)"
 msgstr "valor sin definir permitido (null)"
 
 msgid "Alias"
-msgstr ""
+msgstr "Alias"
 
 #, fuzzy
 msgid "Command"
@@ -212,26 +212,33 @@ msgstr ""
 "                     sobre posibles opciones)\n"
 
 msgid "Extra options in headless mode:\n"
-msgstr ""
+msgstr "Opciones extra en el modo de segundo plano:\n"
 
 msgid ""
 "      --daemon             run WeeChat as a daemon (fork, new process group, "
 "file descriptors closed);\n"
 msgstr ""
+"      --daemon             ejecuta WeeChat como un daemon (fork, nuevo grupo de procesos, "
+"file descriptores cerrados);\n"
 
 msgid ""
 "                           (by default in headless mode WeeChat is blocking "
 "and does not run in background)\n"
 msgstr ""
+"                           (por defecto en el modo de segundo plano WeeChat está bloqueado "
+"y no se ejecuta)\n"
 
 msgid ""
 "      --stdout             display log messages on standard output instead "
 "of writing them in log file\n"
 msgstr ""
+"      --stdout             imprime los registros (logs) en salida estandar "
+"en lugar de escribirlos en un archivo\n"
 
 msgid ""
 "                           (option ignored if option \"--daemon\" is given)\n"
 msgstr ""
+"                           (opción ignorada si la opción \"--daemon\" es indicada)\n"
 
 msgid ""
 "Debug options (for tools like valgrind, DO NOT USE IN PRODUCTION):\n"
@@ -240,13 +247,18 @@ msgid ""
 "      --no-gnutls          disable init/deinit of gnutls\n"
 "      --no-gcrypt          disable init/deinit of gcrypt\n"
 msgstr ""
+"Opciones de depuración (para herramientas como valgrind, NO USAR EN PRODUCCIÓN):\n"
+"      --no-dlclose         no llamar a la función dlclose luego de que los plugins estén "
+"descargados\n"
+"      --no-gnutls          desactivar init/deinit de gnutls\n"
+"      --no-gcrypt          desactivar init/deinit de gcrypt\n"
 
 #, c-format
 msgid "Error: missing argument for \"%s\" option\n"
 msgstr "Error: falta un argumento para la opción \"%s\"\n"
 
 msgid "WeeChat is running in headless mode (Ctrl-C to quit)."
-msgstr ""
+msgstr "WeeChat se está ejecutando en modo de segundo plano (Ctrl-C para salir)."
 
 msgid ""
 "Welcome to WeeChat!\n"
@@ -263,6 +275,19 @@ msgid ""
 "You can add and connect to an IRC server with /server and /connect commands "
 "(see /help server)."
 msgstr ""
+"¡Bienvenido a WeeChat!\n"
+"\n"
+"Si estás conociendo WeeChat, es recomendable que leas la "
+"guia de inicio, y la guia de usuario si tienes tiempo; en ellas se explican"
+"lo conceptos principales de WeeChat.\n"
+"Toda la documentación de WeeChat se encuentra disponible en: https://weechat.org/doc\n"
+"\n"
+"Adicionalmente, hay un menú de ayuda con el comando /help con todos los comandos y opciones (usa "
+"el tabulador (Tab) para completar el nombre).\n"
+"El comando /fset puede ayudar a customizar WeeChat.\n"
+"\n"
+"Puedes agregar y conectarte a un servidor IRC con los comandos /server y /connect "
+"(más información en /help server)."
 
 #. TRANSLATORS: the "under %s" can be "under screen" or "under tmux"
 #, c-format
@@ -270,16 +295,20 @@ msgid ""
 "%sWarning: WeeChat is running under %s and $TERM is \"%s\", which can cause "
 "display bugs; $TERM should be set to one of these values: %s"
 msgstr ""
+"%sAdvertencia: WeeChat está ejecutandose bajo %s y $TERM es \"%s\", lo que puede causar "
+"bugs con la pantalla ; $TERM debería ser configurado a uno de estos valoers: %s"
 
 #, c-format
 msgid "%sYou should add this line in the file %s:  %s"
-msgstr ""
+msgstr "Deberías añadir esta línea al archivo %s: %s"
 
 #, c-format
 msgid ""
 "%sWarning: cannot set the locale; make sure $LANG and $LC_* variables are "
 "correct"
 msgstr ""
+"%sAdvertencia: no se pudo configurar la configuraciónregión; asegúrate las variables "
+"$LANG y $LC_* estén configuradas de manera correcta."
 
 msgid "List of bars:"
 msgstr "Lista de barras:"
@@ -355,7 +384,7 @@ msgstr "Todas la barras fueron eliminadas"
 
 #, fuzzy, c-format
 msgid "%sBar \"%s\" not found"
-msgstr "%sAlias \"%s\" no encontrado"
+msgstr "%sABarra \"%s\" no encontrada"
 
 #, fuzzy, c-format
 msgid "Bar \"%s\" deleted"
@@ -386,7 +415,7 @@ msgstr "  %s[%s%d%s]%s (%s) %s%s%s (aviso: %s)"
 
 #, c-format
 msgid "%sBuffer name \"%s\" is reserved for WeeChat"
-msgstr ""
+msgstr "%sEl nombre del buffer \"%s\" está reservado por WeeChat"
 
 #, fuzzy, c-format
 msgid "%sInvalid buffer number: \"%s\""
@@ -394,13 +423,15 @@ msgstr "%s%s: set de caracteres inválido: \"%s\""
 
 #, fuzzy, c-format
 msgid "%sBuffer \"%s\" not found"
-msgstr "%s%s: servidor \"%s\" no encontrado"
+msgstr "%s Buffer \"%s\" no encontrado"
 
 #, c-format
 msgid ""
 "%sRenumbering is allowed only if option weechat.look.buffer_auto_renumber is "
 "off"
 msgstr ""
+"%sEl renombrado es permitido solo sila opción weechat.look.buffer_auto_renumber está "
+"desactivada (off)"
 
 #, fuzzy, c-format
 msgid "%sWeeChat main buffer can't be closed"
@@ -428,7 +459,7 @@ msgstr "%sNúmero de color \"%s\" inválido (debe ser entre %d y %d)"
 
 #, c-format
 msgid "%sColor \"%s\" is not defined in palette"
-msgstr "%sColor \"%s\" no está definido en la paleta"
+msgstr "%sel color \"%s\" no está definido en la paleta"
 
 #, c-format
 msgid "%sPlugin \"%s\" not found"
@@ -441,8 +472,8 @@ msgstr ""
 #, fuzzy, c-format
 msgid "%d certificate loaded (system: %d, user: %d)"
 msgid_plural "%d certificates loaded (system: %d, user: %d)"
-msgstr[0] "%sgnutls: el certificado ha expirado"
-msgstr[1] "%sgnutls: el certificado ha expirado"
+msgstr[0] "%d certificado cargado (sistema: %d, usuario: %d)"
+msgstr[1] "%d certificados cargados (sistema: %d, usuario: %d)"
 
 #, c-format
 msgid "Debug disabled for \"%s\""
@@ -480,7 +511,7 @@ msgstr "Filtro \"%s\" activado"
 
 #, fuzzy, c-format
 msgid "%sFilter \"%s\" not found"
-msgstr "%sTecla \"%s\" no encontrada"
+msgstr "%sFiltro \"%s\" no encontrada"
 
 #, c-format
 msgid "Filter \"%s\" disabled"
@@ -494,7 +525,7 @@ msgstr ""
 
 #, fuzzy, c-format
 msgid "Filter \"%s\" updated:"
-msgstr "Filtro \"%s\" añadido:"
+msgstr "Filtro \"%s\" actualizado:"
 
 #, c-format
 msgid "Filter \"%s\" added:"
@@ -567,7 +598,7 @@ msgstr "%sError: no se pudo crear el atajo \"%s\""
 
 #, c-format
 msgid "Key \"%s\" has already default value"
-msgstr "Atajo \"%s\" ya tiene un valor por defecto"
+msgstr "El atajo \"%s\" ya tiene un valor por defecto"
 
 #, fuzzy, c-format
 msgid "%sUnable to unbind key \"%s\""
@@ -593,7 +624,7 @@ msgstr "Ningún atajo predefinido en el contexto \"%s\""
 #. TRANSLATORS: first "%d" is number of keys
 #, c-format
 msgid "%d default key bindings for context \"%s\":"
-msgstr "%d atajos predefinido en el contexto \"%s\":"
+msgstr "%d atajos predefinidos en el contexto \"%s\":"
 
 msgid "Key:"
 msgstr "Tecla:"
@@ -607,6 +638,9 @@ msgid ""
 "meta code (tip: use alt-k to find key codes); if you want to bind this key "
 "anyway, turn off option weechat.look.key_bind_safe"
 msgstr ""
+"%sNo es seguro el atajo \"%s\" porque no comienza con Control o meta "
+"(tip: usa alt-k para encontrar codigos); si aún quieres usar esta tecla, "
+"desactiva la opción weechat.look.key_bind_safe"
 
 #, fuzzy, c-format
 msgid "%sContext \"%s\" not found"
@@ -630,48 +664,48 @@ msgstr[1] "%d nuevos atajos agregados (contexto: \"%s\")"
 
 #, fuzzy
 msgid "Stored layouts:"
-msgstr "Esquema de buffers guardado:"
+msgstr "Tema guardado:"
 
 #, fuzzy
 msgid " (current layout)"
-msgstr "valor actual"
+msgstr " (valor actual)"
 
 #, fuzzy
 msgid "No stored layouts"
-msgstr "nombres de barras"
+msgstr "Sin temas almacenados"
 
 #. TRANSLATORS: %s%s%s is "buffers" or "windows" or "buffers+windows"
 #, fuzzy, c-format
 msgid "Layout of %s%s%s stored in \"%s\" (current layout: %s)"
-msgstr "%sTema para %s%s%s establecido el %s"
+msgstr "%sTema para %s%s%s establecido en %s (tema actual: %s)"
 
 #, fuzzy
 msgid "buffers"
-msgstr "buffer"
+msgstr "buffers"
 
 #, fuzzy
 msgid "windows"
-msgstr "ventana"
+msgstr "ventanas"
 
 msgid "Layout of buffers+windows reset (current layout: -)"
-msgstr ""
+msgstr "Tema de buffers+ventanas reiniciados (tema actual: -)"
 
 #, c-format
 msgid "Layout \"%s\" deleted (current layout: %s)"
-msgstr ""
+msgstr "Tema \"%s\" borrado (tema actual: %s)"
 
 #. TRANSLATORS: %s%s%s is "buffers" or "windows" or "buffers+windows"
 #, fuzzy, c-format
 msgid "Layout of %s%s%s reset in \"%s\""
-msgstr "%sTema para %s%s%s establecido el %s"
+msgstr "%sTema para %s%s%s establecido en %s"
 
 #, fuzzy, c-format
 msgid "%sLayout \"%s\" not found"
-msgstr "%sTecla \"%s\" no encontrada"
+msgstr "%sTema \"%s\" no encontrado"
 
 #, fuzzy, c-format
 msgid "%sLayout \"%s\" already exists for \"%s\" command"
-msgstr "%s%s: ya existe el servidor \"%s\" para el comando \"%s\""
+msgstr "%s%s: ya existe el tema \"%s\" para el comando \"%s\""
 
 #, fuzzy, c-format
 msgid "Layout \"%s\" has been renamed to \"%s\""
@@ -817,7 +851,7 @@ msgstr "Todos los proxies fueron eliminados"
 
 #, fuzzy, c-format
 msgid "%sProxy \"%s\" not found"
-msgstr "%sTecla \"%s\" no encontrada"
+msgstr "%sProxy \"%s\" no encontrado"
 
 msgid "Proxy deleted"
 msgstr "Proxy eliminado"
@@ -847,7 +881,7 @@ msgstr "Archivo de configuración \"%s\" desconocido"
 
 #, fuzzy, c-format
 msgid "%sInvalid number: \"%s\""
-msgstr "%s%s: set de caracteres inválido: \"%s\""
+msgstr "%s%s: Número inválido: \"%s\""
 
 #, c-format
 msgid "Options saved to %s"
@@ -858,60 +892,65 @@ msgid "%sFailed to save options to %s"
 msgstr "%sError: no se pudo guardar las opciones en %s"
 
 msgid "There is no encrypted data"
-msgstr ""
+msgstr "No hay datos encriptados"
 
 #, fuzzy
 msgid "All encrypted data has been deleted"
-msgstr "Todas la barras fueron eliminadas"
+msgstr "Todos los datos encriptados fueron eliminados"
 
 msgid "Encrypted data has been successfully decrypted"
-msgstr ""
+msgstr "Los datos encriptados fueron desencriptados"
 
 #, c-format
 msgid "%sFailed to decrypt data (wrong passphrase?)"
-msgstr ""
+msgstr "%s Error al desencriptar datos (¿passphrase incorrecta?)"
 
 #, c-format
 msgid ""
 "%sYou must decrypt data still encrypted before doing any operation on "
 "secured data or passphrase"
 msgstr ""
+"%sDebes desencriptar los datos aún encriptados antes de hacer cualquier operación "
+"en datos asegurados o en la passphrase"
 
 #, c-format
 msgid "%sPassphrase is too long (max: %d chars)"
-msgstr ""
+msgstr "%sLa passphrase es muy larga (máx: %d caracteres)"
 
 #, fuzzy
 msgid "Passphrase deleted"
-msgstr "Barra eliminada"
+msgstr "Passphrase eliminada"
 
 msgid "Passphrase is not set"
-msgstr ""
+msgstr "La Passphrase no está configurada"
 
 msgid "Passphrase changed"
-msgstr ""
+msgstr "Passphrase cambiada"
 
 #, fuzzy
 msgid "Passphrase added"
-msgstr "Fecha agregada"
+msgstr "Passphrase agregada"
 
 msgid ""
 "Important: an external program is configured to read the passphrase on "
 "startup (option sec.crypt.passphrase_command); you must ensure this program "
 "returns the new passphrase you just defined"
 msgstr ""
+"Importante: un programa externo está configurado para leer la passphrase en el"
+"arranque (opción sec.crypt.passphrase_command); deber asegurate de que este programa "
+"devuelva la nueva passphrase que acabas de definir."
 
 #, c-format
 msgid "Secured data \"%s\" set"
-msgstr ""
+msgstr "Datos \"%s\" asegurados"
 
 #, fuzzy, c-format
 msgid "Secured data \"%s\" deleted"
-msgstr "Barra eliminada"
+msgstr "Datos asegurados \"%s\" eliminados"
 
 #, fuzzy, c-format
 msgid "%sSecured data \"%s\" not found"
-msgstr "%s: script \"%s\" no encontrado"
+msgstr "Datos asegurados \"%s\" no encontrados"
 
 #, fuzzy
 msgid "default if null: "
@@ -929,7 +968,7 @@ msgstr ""
 "de la opción para ver un listado)"
 
 msgid "No option found"
-msgstr "Ninguna opción encontrado"
+msgstr "Ninguna opción encontrada"
 
 #, c-format
 msgid "%s%d%s option with value changed (matching with \"%s\")"
@@ -942,28 +981,22 @@ msgid "%s%d%s option (matching with \"%s\")"
 msgid_plural "%s%d%s options (matching with \"%s\")"
 msgstr[0] "%s%d%s opción (coincidiendo con \"%s\")"
 msgstr[1] "%s%d%s opciones coincidiendo con \"%s\")"
-
-#, c-format
-msgid "%s%d%s option"
-msgid_plural "%s%d%s options"
-msgstr[0] "%s%d%s opción"
-msgstr[1] "%s%d%s opciones"
-
+ 
 #, fuzzy, c-format
 msgid "Environment variable \"%s\" is not defined"
-msgstr "Variables"
+msgstr "Variables de entorno no definidas"
 
 #, fuzzy, c-format
 msgid "%sFailed to set variable \"%s\": %s"
-msgstr "%sError: no se pudo configurar la opción \"%s\""
+msgstr "%sError: no se pudo configurar la variable: \"%s\""
 
 #, c-format
 msgid "Variable \"%s\" unset"
-msgstr ""
+msgstr "Variable \"%s\" no determinada"
 
 #, fuzzy, c-format
 msgid "%sFailed to unset variable \"%s\": %s"
-msgstr "%sError: no se pudo configurar la opción \"%s\""
+msgstr "%sError: no se pudo eliminar la variable \"%s\""
 
 #, c-format
 msgid "%s%d%s option with value changed"
@@ -973,11 +1006,11 @@ msgstr[1] "%s%d%s opciones con valores cambiados"
 
 #, fuzzy, c-format
 msgid "%sFailed to set option \"%s\""
-msgstr "%sNo se pudo deshacer la opción \"%s\""
+msgstr "%sNo se pudo configurar la opción \"%s\""
 
 #, fuzzy, c-format
 msgid "%sOption \"%s\" not found"
-msgstr "%sError: opción \"%s\" no encontrado"
+msgstr "%sError: opción \"%s\" no encontrada"
 
 msgid "Option changed: "
 msgstr "Opción cambiada: "
@@ -1024,12 +1057,12 @@ msgstr "%sNo se puede actualizar: el ejecutable de WeeChat \"%s\" no existe"
 msgid ""
 "%sCan't upgrade: WeeChat binary \"%s\" does not have execute permissions"
 msgstr ""
-"%sNo se puede actualizar:el ejecutable de  WeeChat \"%s\" no tiene permisos "
+"%sNo se puede actualizar: el ejecutable de WeeChat \"%s\" no tiene permisos "
 "de ejecución"
 
 #, fuzzy, c-format
 msgid "%sNo binary specified"
-msgstr "Ninguna barra definida"
+msgstr "Ningún ejecutable especificado"
 
 #, c-format
 msgid "Upgrading WeeChat with binary file: \"%s\"..."
@@ -1064,7 +1097,7 @@ msgstr "compilado en"
 
 #, fuzzy, c-format
 msgid "Upgraded %d %s, first start: %s, last start: %s"
-msgstr "Actualizado %d %s, primer inicio: %s"
+msgstr "Actualizado %d %s, último inicio: %s"
 
 #. TRANSLATORS: text is: "upgraded xx times"
 msgid "time"
@@ -1077,14 +1110,14 @@ msgstr "Lista de ventanas:"
 
 #, fuzzy, c-format
 msgid "%sInvalid window number: \"%s\""
-msgstr "%s%s: set de caracteres inválido: \"%s\""
+msgstr "%sNúmero de ventana inválido: \"%s\""
 
 #, fuzzy, c-format
 msgid ""
 "%sCan not merge windows, there's no other window with same size near current "
 "one"
 msgstr ""
-"%sError: no puede unir las ventanas, no hay ninguna otra ventana con el "
+"%sError: no se pueden unir las ventanas, no hay ninguna otra ventana con el "
 "mismo tamaño de la actual"
 
 #, fuzzy, c-format
@@ -1092,12 +1125,12 @@ msgid ""
 "%sCan not close window, there's no other window with same size near current "
 "one"
 msgstr ""
-"%sError: no puede unir las ventanas, no hay ninguna otra ventana con el "
+"%sError: no se pudo cerrar la ventana, no hay ninguna otra ventana con el "
 "mismo tamaño de la actual"
 
 #, fuzzy
 msgid "set or remove away status"
-msgstr "activa/desactiva el estado ausente"
+msgstr "activa o desactiva el estado ausente"
 
 msgid "[-all] [<message>]"
 msgstr "[-all] [<mensaje>]"
@@ -1107,9 +1140,9 @@ msgid ""
 "   -all: set or remove away status on all connected servers\n"
 "message: message for away (if no message is given, away status is removed)"
 msgstr ""
-"   -all: activa/desactiva el estado ausente en todos los servidores "
+"   -all: activa o desactiva el estado ausente en todos los servidores "
 "conectados\n"
-"mensaje: mensaje de ausencia (si no se da ningún mensaje, se remueve el "
+"mensaje: mensaje de ausencia (si no se especifica ningún mensaje, se remueve el "
 "estado ausente)"
 
 msgid "manage bars"
@@ -1243,10 +1276,15 @@ msgid ""
 "[<value>] || delvar <name> || set <property> [<value>] || get <property> || "
 "<number>|-|+|<name>"
 msgstr ""
-"list || clear [<número>|<nombre>|-merged|-all] || move|merge <número> ||  "
-"swap<número1>|<nombre1> [<número2>|<nombre2>] || unmerge [<número>|-all] || "
-"close [<n1>[-<n2>]|<nombre>] || notify <nivel> || localvar || set "
-"<propiedad> <valor> || get <propiedad> || <número>|<nombre>"
+"list || add [-free] [-switch] <nombre> || clear [<número>|<nombre>|-merged|-all "
+"[<número>|<nombre>...]] || move <número>|-|+ || swap <número1>|<nombre1> "
+"[<número2>|<nombre2>] || cycle <número>|<nombre> [<número>|<nombre>...] || merge "
+"<número>|<nombre> || unmerge [<número>|-all] || hide [<número>|<nombre>|-all "
+"[<número>|<nombre>...]] || unhide [<número>|<nombre>|-all [<número>|<nombre>...]] "
+"|| renumber [<número1> [<número2> [<start>]]] || close [<n1>[-<n2>]|"
+"<nombre>...] || notify [<level>] || listvar [<número>|<nombre>] || setvar <nombre> "
+"[<valor>] || delvar <nombre> || set <propiedad> [<valor>] || get <propiedad> || "
+"<propiedad>|-|+|<nombre>"
 
 #, fuzzy
 msgid ""
@@ -1376,7 +1414,8 @@ msgstr "define alias de colores y muestra la paleta de colores"
 msgid ""
 "alias <color> <name> || unalias <color> || reset || term2rgb <color> || "
 "rgb2term <rgb> [<limit>] || -o"
-msgstr "alias <color> <nombre> || unalias <color> || reset"
+msgstr "alias <color> <nombre> || unalias <color> || reset || term2rgb <color> || "
+"rgb2term <rgb> [<límite>] || -o"
 
 #, fuzzy
 msgid ""
@@ -1420,11 +1459,11 @@ msgstr ""
 "    /color unalias 214"
 
 msgid "launch explicit WeeChat or plugin command"
-msgstr "lanza explícitamente un comando de WeeChat o plugin"
+msgstr "lanza explícitamente un comando de WeeChat o un comando de plugin"
 
 #, fuzzy
 msgid "[-buffer <name>] <plugin> <command>"
-msgstr "<plugin> <comando>"
+msgstr "[-buffer <nombre>] <plugin> <comando>"
 
 #, fuzzy
 msgid ""
@@ -1505,7 +1544,7 @@ msgstr ""
 "    /cursor go 10,5"
 
 msgid "debug functions"
-msgstr ""
+msgstr "funciones de depuración"
 
 # hooks missing?
 #, fuzzy
@@ -1514,8 +1553,9 @@ msgid ""
 "libs|certs|memory|tags|term|windows || mouse|cursor [verbose] || hdata "
 "[free] || time <command>"
 msgstr ""
-"list || set <plugin> <nivel> || dump [<plugin>] || buffer|color|infolists|"
-"memory|tags|term|windows || mouse|cursor [verbose] || hdata [free]"
+"list || set <plugin> <nível> || dump [<plugin>] || buffer|color|infolists|"
+"libs|certs|memory|tags|term|windows || mouse|cursor [verbose] || hdata "
+"[free] || time <comando>"
 
 #, fuzzy
 msgid ""
@@ -1564,12 +1604,14 @@ msgstr ""
 "  windows: muestra el árbol de ventanas."
 
 msgid "evaluate expression"
-msgstr ""
+msgstr "evaluar expresión"
 
 msgid ""
 "[-n|-s] [-d] <expression> || [-n] [-d [-d]] -c <expression1> <operator> "
 "<expression2>"
 msgstr ""
+"[-n|-s] [-d] <expresión> || [-n] [-d [-d]] -c <expresión1> <operador> "
+"<expresión2>"
 
 msgid ""
 "        -n: display result without sending it to buffer (debug mode)\n"
@@ -1718,6 +1760,146 @@ msgid ""
 "  /eval -n -c abcd =* a*d                 ==> 1\n"
 "  /eval -n -c abcd =- bc                  ==> 1"
 msgstr ""
+"        -n: muestra el resultado sin enviarlo al buffer (modo de depuración)\n"
+"        -s: divide la expresión antes de evaluarla (algunos comandos pueden ser separados "
+"por punto y coma)\n"
+"        -d: muestra la salida de la depuración luego de la evaluación (con dos -d: más información de "
+"depuración)\n"
+"        -c: evalua una condición: usa operadores y paréntesis, devuelve un "
+"valor booleano (\"0\" o \"1\")\n"
+"expresión: expresión a evaluar, las variables con el formato ${variable} son "
+"reemplazadas (ver abajo); varios comandos pueden ser separados por punto y coma\n"
+"  operador: un operador lógico o de comparación:\n"
+"            - operadores lógicos:\n"
+"                &&   booleano \"y\"\n"
+"                ||   booleano \"o\"\n"
+"            - comparison operators:\n"
+"                ==   igual\n"
+"                !=   no igual\n"
+"                <=   menor o igual\n"
+"                <    menor\n"
+"                >=   mayor o igual\n"
+"                >    mayor\n"
+"                =~   concide REGEX extendido POSIX\n"
+"                !~   NO concide REGEX extendido POSIX\n"
+"                ==*  coincide máscara, distingue mayúsculas y minúsculas (el comodín \"*\" es "
+"permitido)\n"
+"                !!*  NO coincide máscara, distingue mayúsculas y minúsculas (el comodín \"*\" es "
+"permitido)\n"
+"                =*   coincide máscara, no distingue mayúsculas y minúsculas (el comodín \"*\" es "
+"permitido)\n"
+"                !*   NO coincide máscara, no distingue mayúsculas y minúsculas (el comodín \"*\" es "
+"permitido)\n"
+"                ==-  está incluido, distingue mayúsculas y minúsculas\n"
+"                !!-  NO está incluido, distingue mayúsculas y minúsculas\n"
+"                =-   está incluido, no distingue mayúsculas y minúsculas\n"
+"                !-   NO está incluido, no distingue mayúsculas y minúsculas\n"
+"\n"
+"Una expresión es considerada como \"true\" si no es NULL (nula), no vacía, y "
+"diferente de \"0\".\n"
+"La comparación es hecha usando número de punto flotanto if las dos expresiones "
+"son números válidos, siguiendo uno de los siguientes formatos:\n"
+"  - entero (ejemplos: 5, -7)\n"
+"  - número de punto flotante (ejemplos: 5.2, -7.5, 2.83e-2)\n"
+"  - número hexadecimal (ejemplos: 0xA3, -0xA3)\n"
+"Para forzar la comparación entre strings, puedes agregar doble comillas alrededor de cada expresión, "
+"por ejemplo:\n"
+"  50 > 100      ==> 0\n"
+"  \"50\" > \"100\"  ==> 1\n"
+"\n"
+"Algunas variables se reemplazan en la expresión, usando el formato ${variable}, "
+"la variable puede ser, por orden de prioridad:\n"
+"  1. la cadena de texto en sí sin evaluación (formato: \"raw:xxx\")\n"
+"  2. una sub-cadena de texto evaluada (formato: \"eval:xxx\")\n"
+"  3. una condición evaluada (formato: \"eval_cond:xxx\")\n"
+"  4. una cadena de texto con caracteres escapados (formato: \"esc:xxx\" o \"\\xxx\")\n"
+"  5. una cadena de texto con caracteres para ocultar (formato: \"hide:char,string\")\n"
+"  6. una cadena de texto con un máximo de caracteres (formato: \"cut:max,suffix,string\" or \"cut:"
+"+max,suffix,string\")\n"
+"     o máx de caracteres mostrados en pantalla (formato: \"cutscr:max,suffix,string\" "
+"o \"cutscr:+max,suffix,string\")\n"
+"  7. una cadena de texto reservada (formato: \"rev:xxx\" o \"revscr:xxx\")\n"
+"  8. una cadena de texto repetida (formato: \"repeat:count,string\")\n"
+"  9. tamaño de una cadena de texto (formato: \"length:xxx\" o \"lengthscr:xxx\")\n"
+"  10. división de una cadena de texto (formato: \"split:number,separators,flags,xxx\")\n"
+"  11. división de argumentos shell (formato: \"split_shell:number,xxx\")\n"
+"  12. un color (formato: \"color:xxx\", ver \"Plugin API reference\", función "
+"\"color\")\n"
+"  13. un modificador (formato: \"modifier:name,data,string\")\n"
+"  14. información (formato: \"info:name,arguments\", arguments are optional)\n"
+"  15. una cadena de texto con base 16/32/64 (format: \"base_encode:base,xxx"
+"\" o \"base_decode:base,xxx\")\n"
+"  16. fecha/hora actual (formato: \"date\" o \"date:format\")\n"
+"  17. una variable de entorno (formato: \"env:XXX\")\n"
+"  18. un operador ternario (formato: \"if:condition?value_if_true:value_if_false"
+"\")\n"
+"  19. resultado de una expresión con paréntesis y operadores + - * / // % ** "
+"(formato: \"calc:xxx\")\n"
+"  20. un número entero aleatorio (formato: \"random:min,max\")\n"
+"  21. una cadena de texto traducida (formato: \"translate:xxx\")\n"
+"  22. una opción (formato: \"file.section.option\")\n"
+"  23. una variable local en un buffer\n"
+"  24. un nombre/variable hdata (el valor es automáticamente convertido a "
+"cadena de texto), por defacto \"window\" y \"buffer\" apuntan a la venta o buffer actual.\n"
+"El formato para hdata puede ser uno de los siguientes:\n"
+"  hdata.var1.var2...: comienza con hdata (el puntero debe conocerse), y solicitar "
+"variables una luego de otra (otros datos hdata pueden ser seguidos)\n"
+"  hdata[list].var1.var2...: comienza con un dato hdata usando una lista/puntero/puntero de "
+"nombre, por ejemplo:\n"
+"    ${buffer[gui_buffers].full_name}: nombre completo del primer buffer en la lista de buffers\n"
+"    ${plugin[weechat_plugins].name}: nombre del primer plugin en la lista de plugins\n"
+"  hdata[puntero].var1.var2...: comienza con un dato hdata usando un puntero, por ejemplo:\n"
+"    ${buffer[0x1234abcd].full_name}: nombre completo del buffer con este puntero "
+"(puede ser usado en disparadores)\n"
+"    ${buffer[my_pointer].full_name}: nombre completo del buffer con este puntero "
+"(puede ser usado en disparadores)\n"
+"Para el nombre de datos hdata y variables, por favor visita la función \"weechat_hdata_get\" en \"Plugin API reference\".\n"
+"\n"
+"Ejemplos (cadenas simples):\n"
+"  /eval -n ${raw:${info:version}}                ==> ${info:version}\n"
+"  /eval -n ${eval_cond:${window.win_width}>100}  ==> 1\n"
+"  /eval -n ${info:version}                       ==> 0.4.3\n"
+"  /eval -n ${env:HOME}                           ==> /home/user\n"
+"  /eval -n ${weechat.look.scroll_amount}         ==> 3\n"
+"  /eval -n ${sec.data.password}                  ==> secret\n"
+"  /eval -n ${window}                             ==> 0x2549aa0\n"
+"  /eval -n ${window.buffer}                      ==> 0x2549320\n"
+"  /eval -n ${window.buffer.full_name}            ==> core.weechat\n"
+"  /eval -n ${window.buffer.number}               ==> 1\n"
+"  /eval -n ${\\t}                                 ==> <tab>\n"
+"  /eval -n ${hide:-,${relay.network.password}}   ==> --------\n"
+"  /eval -n ${cut:3,+,test}                       ==> tes+\n"
+"  /eval -n ${cut:+3,+,test}                      ==> te+\n"
+"  /eval -n ${date:%H:%M:%S}                      ==> 07:46:40\n"
+"  /eval -n ${if:${info:term_width}>80?big:small} ==> big\n"
+"  /eval -n ${rev:Hello}                          ==> olleH\n"
+"  /eval -n ${repeat:5,-}                         ==> -----\n"
+"  /eval -n ${length:test}                        ==> 4\n"
+"  /eval -n ${split:1,,,abc,def,ghi}              ==> abc\n"
+"  /eval -n ${split:-1,,,abc,def,ghi}             ==> ghi\n"
+"  /eval -n ${split:count,,,abc,def,ghi}          ==> 3\n"
+"  /eval -n ${split:random,,,abc,def,ghi}         ==> def\n"
+"  /eval -n ${split_shell:1,\"arg 1\" arg2}         ==> arg 1\n"
+"  /eval -n ${split_shell:-1,\"arg 1\" arg2}        ==> arg2\n"
+"  /eval -n ${split_shell:count,\"arg 1\" arg2}     ==> 2\n"
+"  /eval -n ${split_shell:random,\"arg 1\" arg2}    ==> arg2\n"
+"  /eval -n ${calc:(5+2)*3}                       ==> 21\n"
+"  /eval -n ${random:0,10}                        ==> 3\n"
+"  /eval -n ${base_encode:64,test}                ==> dGVzdA==\n"
+"  /eval -n ${base_decode:64,dGVzdA==}            ==> test\n"
+"  /eval -n ${translate:Plugin}                   ==> Extension\n"
+"\n"
+"Ejemplos (condiciones):\n"
+"  /eval -n -c ${window.buffer.number} > 2 ==> 0\n"
+"  /eval -n -c ${window.win_width} > 100   ==> 1\n"
+"  /eval -n -c (8 > 12) || (5 > 2)         ==> 1\n"
+"  /eval -n -c (8 > 12) && (5 > 2)         ==> 0\n"
+"  /eval -n -c abcd =~ ^ABC                ==> 1\n"
+"  /eval -n -c abcd =~ (?-i)^ABC           ==> 0\n"
+"  /eval -n -c abcd =~ (?-i)^abc           ==> 1\n"
+"  /eval -n -c abcd !~ abc                 ==> 0\n"
+"  /eval -n -c abcd =* a*d                 ==> 1\n"
+"  /eval -n -c abcd =- bc                  ==> 1"
 
 msgid ""
 "filter messages in buffers, to hide/show them according to tags or regex"
@@ -1731,8 +1913,9 @@ msgid ""
 "<buffer>...] <tags> <regex> || rename <name> <new_name> || recreate <name> "
 "|| del <name>|-all"
 msgstr ""
-"list || enable|disable|toggle [<nombre>] || add <nombre> <buffer>[,"
-"<buffer>...] <etiquetas> <regex> || del <nombre>|-all"
+"list || enable|disable|toggle [<nombre>|@] || add|addreplace <nombre> <buffer>[,"
+"<buffer>...] <etiquetas> <expresión regular> || rename <nombre> <nuevo nombre> || recreate <nombre> "
+"|| del <nombre>|-all"
 
 msgid ""
 "      list: list all filters\n"
@@ -2100,7 +2283,7 @@ msgstr ""
 
 #, fuzzy
 msgid "manage buffers/windows layouts"
-msgstr "gestionar los buffers"
+msgstr "gestionar los temas de buffers y ventansas"
 
 #, fuzzy
 msgid ""
