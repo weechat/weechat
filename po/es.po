@@ -300,7 +300,7 @@ msgstr ""
 
 #, c-format
 msgid "%sYou should add this line in the file %s:  %s"
-msgstr "Deberías añadir esta línea al archivo %s: %s"
+msgstr "%sDeberías añadir esta línea al archivo %s: %s"
 
 #, c-format
 msgid ""
@@ -308,7 +308,7 @@ msgid ""
 "correct"
 msgstr ""
 "%sAdvertencia: no se pudo configurar la configuraciónregión; asegúrate las variables "
-"$LANG y $LC_* estén configuradas de manera correcta."
+"$LANG y $LC_* estén configuradas de manera correcta"
 
 msgid "List of bars:"
 msgstr "Lista de barras:"
@@ -384,7 +384,7 @@ msgstr "Todas la barras fueron eliminadas"
 
 #, fuzzy, c-format
 msgid "%sBar \"%s\" not found"
-msgstr "%sABarra \"%s\" no encontrada"
+msgstr "%sBarra \"%s\" no encontrada"
 
 #, fuzzy, c-format
 msgid "Bar \"%s\" deleted"
@@ -423,7 +423,7 @@ msgstr "%s%s: set de caracteres inválido: \"%s\""
 
 #, fuzzy, c-format
 msgid "%sBuffer \"%s\" not found"
-msgstr "%s Buffer \"%s\" no encontrado"
+msgstr "%sBuffer \"%s\" no encontrado"
 
 #, c-format
 msgid ""
@@ -459,7 +459,7 @@ msgstr "%sNúmero de color \"%s\" inválido (debe ser entre %d y %d)"
 
 #, c-format
 msgid "%sColor \"%s\" is not defined in palette"
-msgstr "%sel color \"%s\" no está definido en la paleta"
+msgstr "%sEl color \"%s\" no está definido en la paleta"
 
 #, c-format
 msgid "%sPlugin \"%s\" not found"
@@ -881,7 +881,7 @@ msgstr "Archivo de configuración \"%s\" desconocido"
 
 #, fuzzy, c-format
 msgid "%sInvalid number: \"%s\""
-msgstr "%s%s: Número inválido: \"%s\""
+msgstr "%sNúmero inválido: \"%s\""
 
 #, c-format
 msgid "Options saved to %s"
@@ -938,7 +938,7 @@ msgid ""
 msgstr ""
 "Importante: un programa externo está configurado para leer la passphrase en el"
 "arranque (opción sec.crypt.passphrase_command); deber asegurate de que este programa "
-"devuelva la nueva passphrase que acabas de definir."
+"devuelva la nueva passphrase que acabas de definir"
 
 #, c-format
 msgid "Secured data \"%s\" set"
@@ -950,7 +950,7 @@ msgstr "Datos asegurados \"%s\" eliminados"
 
 #, fuzzy, c-format
 msgid "%sSecured data \"%s\" not found"
-msgstr "Datos asegurados \"%s\" no encontrados"
+msgstr "%sDatos asegurados \"%s\" no encontrados"
 
 #, fuzzy
 msgid "default if null: "
@@ -1461,7 +1461,6 @@ msgstr ""
 msgid "launch explicit WeeChat or plugin command"
 msgstr "lanza explícitamente un comando de WeeChat o un comando de plugin"
 
-#, fuzzy
 msgid "[-buffer <name>] <plugin> <command>"
 msgstr "[-buffer <nombre>] <plugin> <comando>"
 
@@ -2281,7 +2280,6 @@ msgstr ""
 "    /key bindctxt mouse @item(buffer_nicklist):button3 /msg nickserv info "
 "${nick}"
 
-#, fuzzy
 msgid "manage buffers/windows layouts"
 msgstr "gestionar los temas de buffers y ventansas"
 
