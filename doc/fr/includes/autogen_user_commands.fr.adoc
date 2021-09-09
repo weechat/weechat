@@ -1743,21 +1743,26 @@ Exemples :
 * `+plugin+`: lister/charger/décharger des extensions
 
 ----
-/plugin  list|listfull [<nom>]
+/plugin  list [-o|-ol|-i|-il|<nom>]
+         listfull [<nom>]
          load <fichier> [<paramètres>]
          autoload [<paramètres>]
          reload [<nom>|* [<paramètres]]
          unload [<nom>]
 
       list : lister les extensions chargées
+        -o : envoyer la liste des extensions chargées au tampon (chaîne en anglais)
+       -ol : envoyer la liste des extensions chargées au tampon (chaîne traduite)
+        -i : copier la liste des extensions chargées dans la ligne de commande (pour envoi au tampon) (chaîne en anglais)
+       -il : copier la liste des extensions chargées dans la ligne de commande (pour envoi au tampon) (chaîne traduite)
+       nom : nom d'extension
   listfull : lister les extensions chargées (verbeux)
       load : charger une extension
+   fichier : extension (fichier) à charger
+paramètres : paramètres donnés à l'extension lors de son chargement
   autoload : charger automatiquement les extensions dans un répertoire système ou utilisateur
     reload : recharger une extension (si pas de nom donné, décharger toutes les extensions, puis recharger automatiquement les extensions)
     unload : décharger une extension (si pas de nom donné, décharger toutes les extensions)
-   fichier : extension (fichier) à charger
-       nom : nom d'extension
-paramètres : paramètres donnés à l'extension lors de son chargement
 
 Sans paramètre, cette commande liste les extensions chargées.
 ----

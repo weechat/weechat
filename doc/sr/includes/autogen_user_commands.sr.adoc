@@ -1743,23 +1743,28 @@ disable: искључује миша
 * `+plugin+`: приказ/учитавање/уклањање додатака
 
 ----
-/plugin  list|listfull [<име>]
-         load <имефајла> [<аргументи>]
-         autoload [<аргументи>]
-         reload [<име>|* [<аргументи>]]
-         unload [<име>]
+/plugin  list [-o|-ol|-i|-il|<name>]
+         listfull [<name>]
+         load <filename> [<arguments>]
+         autoload [<arguments>]
+         reload [<name>|* [<arguments>]]
+         unload [<name>]
 
-     list: исписује учитане додатке
- listfull: исписује учитане додатке (детаљно)
-     load: учитава додатак
- autoload: аутоматски учитава додатке из системског или корисничког директоријума
-   reload: поново учитава додатак (ако се не зада име, уклања из меморије све додатке, па их затим аутоматски учитава)
-   unload: уклања додатак из меморије (ако се не зада име, уклања све додатке из меморије)
- имефајла: додатак (фајл) који треба да се учита
-      име: име додатка
-аргументи: аргументи који се прослеђују додатку приликом учитавања
+     list: list loaded plugins
+       -o: send list of loaded plugins to buffer (string in English)
+      -ol: send list of loaded plugins to buffer (translated string)
+       -i: copy list of loaded plugins in command line (for sending to buffer) (string in English)
+      -il: copy list of loaded plugins in command line (for sending to buffer) (translated string)
+     name: a plugin name
+ listfull: list loaded plugins (verbose)
+     load: load a plugin
+ filename: plugin (file) to load
+arguments: arguments given to plugin on load
+ autoload: autoload plugins in system or user directory
+   reload: reload a plugin (if no name given, unload all plugins, then autoload plugins)
+   unload: unload a plugin (if no name given, unload all plugins)
 
-Без аргумента, ова команда исписује учитане додатке.
+Without argument, this command lists loaded plugins.
 ----
 
 [[command_weechat_print]]

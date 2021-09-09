@@ -390,7 +390,7 @@ script_command_init ()
            "  /script hold urlserver.py\n"
            "  /script reload urlserver\n"
            "  /script upgrade"),
-        "list -o|-i"
+        "list -i|-il|-o|-ol"
         " || search %(script_tags)|%(script_languages)|%(script_extensions)"
         " || show %(script_scripts)"
         " || load %(script_files)|%*"
