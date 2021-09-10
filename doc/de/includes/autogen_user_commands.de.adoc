@@ -1750,21 +1750,21 @@ Beispiele:
          reload [<name>|* [<arguments>]]
          unload [<name>]
 
-     list: list loaded plugins
-       -o: send list of loaded plugins to buffer (string in English)
-      -ol: send list of loaded plugins to buffer (translated string)
-       -i: copy list of loaded plugins in command line (for sending to buffer) (string in English)
-      -il: copy list of loaded plugins in command line (for sending to buffer) (translated string)
-     name: a plugin name
- listfull: list loaded plugins (verbose)
-     load: load a plugin
- filename: plugin (file) to load
-arguments: arguments given to plugin on load
- autoload: autoload plugins in system or user directory
-   reload: reload a plugin (if no name given, unload all plugins, then autoload plugins)
-   unload: unload a plugin (if no name given, unload all plugins)
+     list: installierte Erweiterungen werden aufgelistet
+       -o: sende Liste der geladenen Erweiterungen an den Buffer (Ausgabe in Englisch)
+      -ol: sende Liste der geladenen Erweiterungen an den Buffer (Übersetzte Ausgabe)
+       -i: Liste der geladenen Erweiterungen in die Befehlszeile kopieren (zum Senden an den Buffer) (Ausgabe in Englisch)
+      -il: Liste der geladenen Erweiterungen in die Befehlszeile kopieren (zum Senden an den Buffer) (Übersetzte Ausgabe)
+     name: Name einer Erweiterung
+ listfull: geladene Erweiterungen auflisten (ausführlich)
+     load: Laden einer Erweiterung
+ filename: Erweiterung (Dateiname) welche installiert werden soll
+arguments: Argumente die der Erweiterung beim Installieren übergeben werden sollen
+ autoload: installiert automatisch alle Erweiterungen aus dem System- oder Benutzerverzeichnis
+   reload: startet eine Erweiterung erneut (falls kein Name angegeben wird, werden alle Erweiterungen beendet und neu gestartet)
+   unload: beendet eine oder alle Erweiterungen (wird kein Name angegeben dann werden alle Erweiterung beendet)
 
-Without argument, this command lists loaded plugins.
+Ohne Angabe eines Arguments werden alle installierten Erweiterungen angezeigt.
 ----
 
 [[command_weechat_print]]
