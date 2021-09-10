@@ -4428,9 +4428,9 @@ command_plugin_list (const char *name, int full)
     struct t_hook *ptr_hook;
     int plugins_found, hook_found, interval;
 
-    gui_chat_printf (NULL, "");
     if (!name)
     {
+        gui_chat_printf (NULL, "");
         gui_chat_printf (NULL, _("Plugins loaded:"));
     }
 
