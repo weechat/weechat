@@ -41,7 +41,6 @@ msgstr "cualquier carácter"
 msgid "max chars"
 msgstr "máximo de caracteres"
 
-#, fuzzy
 msgid ""
 "a WeeChat color name (default, black, (dark)gray, white, (light)red, "
 "(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a "
@@ -74,21 +73,17 @@ msgstr "valor sin definir permitido (null)"
 msgid "Alias"
 msgstr "Alias"
 
-#, fuzzy
 msgid "Command"
-msgstr "Alias de comandos"
+msgstr "Comando"
 
-#, fuzzy
 msgid "Completion"
-msgstr "compilado en"
+msgstr "Terminación"
 
-#, fuzzy
 msgid "IRC color"
 msgstr "color"
 
-#, fuzzy
 msgid "WeeChat color"
-msgstr "Colores básicos de WeeChat:"
+msgstr "Colores de WeeChat"
 
 msgid "Plugin"
 msgstr "Plugin"
@@ -111,17 +106,14 @@ msgstr "Tabla hash (salida)"
 msgid "Pointer"
 msgstr "Puntero"
 
-#, fuzzy
 msgid "Lists"
 msgstr "Listas"
 
-#, fuzzy
 msgid "Variables"
 msgstr "Variables"
 
-#, fuzzy
 msgid "Update allowed:"
-msgstr "Actualización permitida"
+msgstr "Actualización permitida:"
 
 msgid "Option"
 msgstr "Opción"
@@ -132,11 +124,11 @@ msgstr "Tipo"
 msgid "Constants"
 msgstr "Constantes"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sAnother command \"%s\" already exists for plugin \"%s\""
 msgstr "%sError: el comando \"%s\" ya existe en el plugin \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sBad file descriptor (%d) used in hook_fd"
 msgstr "%sError: mal descriptor de archivo (%d) usado en hook_fd"
 
@@ -162,8 +154,7 @@ msgstr ""
 #, c-format
 msgid "Usage: %s [option...] [plugin:option...]\n"
 msgstr "Uso: %s [opción...] [plugin:opción...]\n"
-
-#, fuzzy
+# fuzzy
 msgid ""
 "  -a, --no-connect         disable auto-connect to servers at startup\n"
 "  -c, --colors             display default colors in terminal\n"
@@ -355,15 +346,15 @@ msgstr "  %s (plugin: %s)"
 msgid "No bar item defined"
 msgstr "Ningún elemento definido"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sNot enough memory (%s)"
-msgstr "%sNo hay suficiente memoria"
+msgstr "%sNo hay suficiente memoria (%s)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sInvalid type \"%s\" for bar \"%s\""
 msgstr "%sError: tipo \"%s\" incorrecto para la barra \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sInvalid position \"%s\" for bar \"%s\""
 msgstr "%sError: posición \"%s\" incorrecta para la barra \"%s\""
 
@@ -371,47 +362,47 @@ msgstr "%sError: posición \"%s\" incorrecta para la barra \"%s\""
 msgid "Bar \"%s\" created"
 msgstr "Barra \"%s\" creada"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sFailed to create bar \"%s\""
 msgstr "%sError: no se pudo crear la barra \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sInvalid size \"%s\" for bar \"%s\""
 msgstr "%sError: tamaño incorrecto \"%s\" para la barra \"%s\""
 
 msgid "All bars have been deleted"
 msgstr "Todas la barras fueron eliminadas"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sBar \"%s\" not found"
 msgstr "%sBarra \"%s\" no encontrada"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Bar \"%s\" deleted"
-msgstr "Barra eliminada"
+msgstr "Barra \"%s\" eliminada"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sUnable to set option \"%s\" for bar \"%s\""
 msgstr "%sError: no se pudo configurar la opción \"%s\" en la barra \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sWindow not found for \"%s\" command"
 msgstr "%sError: no se encontró una ventana para el comando \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sUnable to scroll bar \"%s\""
 msgstr "%sError: no se puede desplazar la barra \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sBuffer number \"%d\" is out of range (it must be between 1 and %d)"
-msgstr "%sNúmero de color \"%s\" inválido (debe ser entre %d y %d)"
+msgstr "%sNúmero de buffer \"%d\" inválido (debe ser entre 1 y %d)"
 
 msgid "Buffers list:"
 msgstr "Lista de buffers:"
 
-#, fuzzy, c-format
+#, c-format
 msgid "  %s[%s%d%s]%s %s%s.%s%s%s (notify: %s%s%s)%s%s"
-msgstr "  %s[%s%d%s]%s (%s) %s%s%s (aviso: %s)"
+msgstr "  %s[%s%d%s]%s %s%s.%s%s%s  (aviso: %s%s%s)%s%s)"
 
 #, c-format
 msgid "%sBuffer name \"%s\" is reserved for WeeChat"
@@ -419,7 +410,7 @@ msgstr "%sEl nombre del buffer \"%s\" está reservado por WeeChat"
 
 #, fuzzy, c-format
 msgid "%sInvalid buffer number: \"%s\""
-msgstr "%s%s: set de caracteres inválido: \"%s\""
+msgstr "%s: set de caracteres inválido: \"%s\""
 
 #, fuzzy, c-format
 msgid "%sBuffer \"%s\" not found"
@@ -433,7 +424,7 @@ msgstr ""
 "%sEl renombrado es permitido solo sila opción weechat.look.buffer_auto_renumber está "
 "desactivada (off)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sWeeChat main buffer can't be closed"
 msgstr "%sError: el buffer principal de WeeChat no puede ser cerrado"
 
@@ -469,7 +460,7 @@ msgid "Raw content of buffers has been written in log file"
 msgstr ""
 "Se escribió el contenido bruto de los buffers en el archivo de registro"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%d certificate loaded (system: %d, user: %d)"
 msgid_plural "%d certificates loaded (system: %d, user: %d)"
 msgstr[0] "%d certificado cargado (sistema: %d, usuario: %d)"
@@ -509,9 +500,9 @@ msgstr "Ningún filtro definido"
 msgid "Filter \"%s\" enabled"
 msgstr "Filtro \"%s\" activado"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sFilter \"%s\" not found"
-msgstr "%sFiltro \"%s\" no encontrada"
+msgstr "%sFiltro \"%s\" no encontrado"
 
 #, c-format
 msgid "Filter \"%s\" disabled"
@@ -871,7 +862,7 @@ msgstr ""
 msgid "Options reloaded from %s"
 msgstr "Opciones recargadas desde %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sFailed to reload options from %s"
 msgstr "%sError: no se pudo recargar las opciones desde %s"
 
@@ -879,7 +870,7 @@ msgstr "%sError: no se pudo recargar las opciones desde %s"
 msgid "Unknown configuration file \"%s\""
 msgstr "Archivo de configuración \"%s\" desconocido"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sInvalid number: \"%s\""
 msgstr "%sNúmero inválido: \"%s\""
 
@@ -887,14 +878,13 @@ msgstr "%sNúmero inválido: \"%s\""
 msgid "Options saved to %s"
 msgstr "Opciones guardadas en %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sFailed to save options to %s"
 msgstr "%sError: no se pudo guardar las opciones en %s"
 
 msgid "There is no encrypted data"
 msgstr "No hay datos encriptados"
 
-#, fuzzy
 msgid "All encrypted data has been deleted"
 msgstr "Todos los datos encriptados fueron eliminados"
 
@@ -982,9 +972,9 @@ msgid_plural "%s%d%s options (matching with \"%s\")"
 msgstr[0] "%s%d%s opción (coincidiendo con \"%s\")"
 msgstr[1] "%s%d%s opciones coincidiendo con \"%s\")"
  
-#, fuzzy, c-format
+#, c-format
 msgid "Environment variable \"%s\" is not defined"
-msgstr "Variables de entorno no definidas"
+msgstr "Variable \"%s\" no definida"
 
 #, fuzzy, c-format
 msgid "%sFailed to set variable \"%s\": %s"
@@ -994,9 +984,9 @@ msgstr "%sError: no se pudo configurar la variable: \"%s\""
 msgid "Variable \"%s\" unset"
 msgstr "Variable \"%s\" no determinada"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sFailed to unset variable \"%s\": %s"
-msgstr "%sError: no se pudo eliminar la variable \"%s\""
+msgstr "%sError: no se pudo eliminar la variable \"%s\": %s"
 
 #, c-format
 msgid "%s%d%s option with value changed"
@@ -1004,11 +994,11 @@ msgid_plural "%s%d%s options with value changed"
 msgstr[0] "%s%d%s opción con valor cambiado"
 msgstr[1] "%s%d%s opciones con valores cambiados"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sFailed to set option \"%s\""
 msgstr "%sNo se pudo configurar la opción \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sOption \"%s\" not found"
 msgstr "%sError: opción \"%s\" no encontrada"
 
@@ -1060,15 +1050,15 @@ msgstr ""
 "%sNo se puede actualizar: el ejecutable de WeeChat \"%s\" no tiene permisos "
 "de ejecución"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sNo binary specified"
-msgstr "Ningún ejecutable especificado"
+msgstr "%sNingún ejecutable especificado"
 
 #, c-format
 msgid "Upgrading WeeChat with binary file: \"%s\"..."
 msgstr "Actualizando WeeChat con el archivo binario: \"%s\"..."
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sUnable to save session in file"
 msgstr "%sError: no se pudo guardar la sesión"
 
@@ -1079,7 +1069,7 @@ msgstr "***** Error: el ejecutable falló (programa: \"%s\"), cerrando WeeChat"
 #. TRANSLATORS: "%s" after "started on" is a date
 #, c-format
 msgid "WeeChat uptime: %d %s %02d:%02d:%02d, started on %s"
-msgstr "Uptime de WeeChat: %d %s %02d:%02d:%02d, iniciado en %s"
+msgstr "Uptime de WeeChat: %d %s %02d:%02d:%02d, iniciado el %s"
 
 msgid "day"
 msgid_plural "days"
@@ -1410,7 +1400,6 @@ msgstr ""
 msgid "define color aliases and display palette of colors"
 msgstr "define alias de colores y muestra la paleta de colores"
 
-#, fuzzy
 msgid ""
 "alias <color> <name> || unalias <color> || reset || term2rgb <color> || "
 "rgb2term <rgb> [<limit>] || -o"
