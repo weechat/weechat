@@ -34,7 +34,7 @@
 
 WEECHAT_STABLE=3.2.1
 WEECHAT_DEVEL=3.3
-WEECHAT_DEVEL_FULL=3.3-dev
+WEECHAT_DEVEL_FULL=3.3-rc1
 
 if [ $# -lt 1 ]; then
     echo >&2 "Syntax: $0 stable|devel|devel-full|devel-major|devel-minor|devel-patch"
@@ -42,12 +42,12 @@ if [ $# -lt 1 ]; then
 fi
 
 case $1 in
-    stable ) echo $WEECHAT_STABLE ;;
-    devel ) echo $WEECHAT_DEVEL ;;
-    devel-full ) echo $WEECHAT_DEVEL_FULL ;;
-    devel-major ) echo $WEECHAT_DEVEL_FULL | cut -d'.' -f1 ;;
-    devel-minor ) echo $WEECHAT_DEVEL_FULL | cut -d'.' -f2 ;;
-    devel-patch ) echo $WEECHAT_DEVEL_FULL | cut -d'.' -f3- ;;
+    stable ) echo "$WEECHAT_STABLE" ;;
+    devel ) echo "$WEECHAT_DEVEL" ;;
+    devel-full ) echo "$WEECHAT_DEVEL_FULL" ;;
+    devel-major ) echo "$WEECHAT_DEVEL_FULL" | cut -d'.' -f1 ;;
+    devel-minor ) echo "$WEECHAT_DEVEL_FULL" | cut -d'.' -f2 ;;
+    devel-patch ) echo "$WEECHAT_DEVEL_FULL" | cut -d'.' -f3- ;;
     * ) echo >&2 "ERROR: unknown version."
         exit 1 ;;
 esac

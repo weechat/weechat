@@ -4428,9 +4428,9 @@ command_plugin_list (const char *name, int full)
     struct t_hook *ptr_hook;
     int plugins_found, hook_found, interval;
 
-    gui_chat_printf (NULL, "");
     if (!name)
     {
+        gui_chat_printf (NULL, "");
         gui_chat_printf (NULL, _("Plugins loaded:"));
     }
 
@@ -4714,6 +4714,82 @@ command_plugin_list (const char *name, int full)
 }
 
 /*
+ * Lists loaded plugins in input.
+ *
+ * Sends input to buffer if send_to_buffer == 1.
+ * String is translated if translated == 1 (otherwise it's English).
+ */
+
+void
+command_plugin_list_input (struct t_gui_buffer *buffer,
+                           int send_to_buffer, int translated)
+{
+    struct t_weechat_plugin *ptr_plugin;
+    struct t_weelist *list;
+    struct t_weelist_item *ptr_item;
+    int length;
+    char **buf, str_pos[16];
+
+    buf = string_dyn_alloc (256);
+    if (!buf)
+        return;
+
+    list = weelist_new ();
+    if (!list)
+    {
+        string_dyn_free (buf, 1);
+        return;
+    }
+
+    for (ptr_plugin = weechat_plugins; ptr_plugin;
+         ptr_plugin = ptr_plugin->next_plugin)
+    {
+        weelist_add (list, ptr_plugin->name, WEECHAT_LIST_POS_SORT, NULL);
+    }
+
+    for (ptr_item = list->items; ptr_item;
+         ptr_item = ptr_item->next_item)
+    {
+        if (*buf[0])
+        {
+            string_dyn_concat (buf, ", ", -1);
+        }
+        else
+        {
+            string_dyn_concat (
+                buf,
+                (translated) ? _("Plugins loaded:") : "Plugins loaded:",
+                -1);
+            string_dyn_concat (buf, " ", -1);
+        }
+        string_dyn_concat (buf, ptr_item->data, -1);
+    }
+
+    if (!*buf[0])
+    {
+        string_dyn_concat (
+            buf,
+            (translated) ? _("No plugins loaded") : "No plugins loaded",
+            -1);
+    }
+
+    if (send_to_buffer)
+    {
+        (void) input_data (buffer, *buf, NULL);
+    }
+    else
+    {
+        gui_buffer_set (buffer, "input", *buf);
+        length = strlen (*buf);
+        snprintf (str_pos, sizeof (str_pos), "%d", length);
+        gui_buffer_set (buffer, "input_pos", str_pos);
+    }
+
+    weelist_free (list);
+    string_dyn_free (buf, 1);
+}
+
+/*
  * Callback for command "/plugin": lists/loads/unloads WeeChat plugins.
  */
 
@@ -4736,7 +4812,23 @@ COMMAND_CALLBACK(plugin)
 
     if (string_strcasecmp (argv[1], "list") == 0)
     {
-        command_plugin_list ((argc > 2) ? argv[2] : NULL, 0);
+        if (argc > 2)
+        {
+            if (string_strcasecmp (argv[2], "-i") == 0)
+                command_plugin_list_input (buffer, 0, 0);
+            else if (string_strcasecmp (argv[2], "-il") == 0)
+                command_plugin_list_input (buffer, 0, 1);
+            else if (string_strcasecmp (argv[2], "-o") == 0)
+                command_plugin_list_input (buffer, 1, 0);
+            else if (string_strcasecmp (argv[2], "-ol") == 0)
+                command_plugin_list_input (buffer, 1, 1);
+            else
+                command_plugin_list (argv[2], 0);
+        }
+        else
+        {
+            command_plugin_list (NULL, 0);
+        }
         return WEECHAT_RC_OK;
     }
 
@@ -8035,24 +8127,33 @@ command_init ()
     hook_command (
         NULL, "plugin",
         N_("list/load/unload plugins"),
-        N_("list|listfull [<name>]"
+        N_("list [-o|-ol|-i|-il|<name>]"
+           " || listfull [<name>]"
            " || load <filename> [<arguments>]"
            " || autoload [<arguments>]"
            " || reload [<name>|* [<arguments>]]"
            " || unload [<name>]"),
         N_("     list: list loaded plugins\n"
+           "       -o: send list of loaded plugins to buffer "
+           "(string in English)\n"
+           "      -ol: send list of loaded plugins to buffer "
+           "(translated string)\n"
+           "       -i: copy list of loaded plugins in command line (for "
+           "sending to buffer) (string in English)\n"
+           "      -il: copy list of loaded plugins in command line (for "
+           "sending to buffer) (translated string)\n"
+           "     name: a plugin name\n"
            " listfull: list loaded plugins (verbose)\n"
            "     load: load a plugin\n"
+           " filename: plugin (file) to load\n"
+           "arguments: arguments given to plugin on load\n"
            " autoload: autoload plugins in system or user directory\n"
            "   reload: reload a plugin (if no name given, unload all plugins, "
            "then autoload plugins)\n"
            "   unload: unload a plugin (if no name given, unload all plugins)\n"
-           " filename: plugin (file) to load\n"
-           "     name: a plugin name\n"
-           "arguments: arguments given to plugin on load\n"
            "\n"
            "Without argument, this command lists loaded plugins."),
-        "list %(plugins_names)"
+        "list %(plugins_names)|-i|-il|-o|-ol"
         " || listfull %(plugins_names)"
         " || load %(plugins_installed)"
         " || autoload"

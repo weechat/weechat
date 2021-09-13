@@ -1742,23 +1742,28 @@ Przykłady:
 * `+plugin+`: lista/załaduj/wyładuj wtyczkę
 
 ----
-/plugin  list|listfull [<nazwa>]
-         load <nazwapliku> [<argumenty>]
-         autoload [<argumenty>]
-         reload [<nazwa>|* [<argumenty>]]
-         unload [<nazwa>]
+/plugin  list [-o|-ol|-i|-il|<name>]
+         listfull [<name>]
+         load <filename> [<arguments>]
+         autoload [<arguments>]
+         reload [<name>|* [<arguments>]]
+         unload [<name>]
 
-    list: lista załadowanych wtyczek
-listfull: lista załadowanych wtyczek (szczegółowa)
-    load: ładuje wtyczkę
-autoload: automatycznie ładuje wtyczki w katalogu systemowym lub użytkownika
-  reload: przeładuje pojedynczą wtyczkę (jeśli nie podano nazwy, przeładuje wszystkie wtyczki)
-  unload: wyładowuje wtyczkę (jeśli nie podano nazwy, wyładuje wszystkie wtyczkę
-nazwapliku: wtyczka (plik) do załadowania
-    nazwa: nazwa wtyczki
-argumenty: argumenty przekazywane do wtyczki podczas ładowania
+     list: list loaded plugins
+       -o: send list of loaded plugins to buffer (string in English)
+      -ol: send list of loaded plugins to buffer (translated string)
+       -i: copy list of loaded plugins in command line (for sending to buffer) (string in English)
+      -il: copy list of loaded plugins in command line (for sending to buffer) (translated string)
+     name: a plugin name
+ listfull: list loaded plugins (verbose)
+     load: load a plugin
+ filename: plugin (file) to load
+arguments: arguments given to plugin on load
+ autoload: autoload plugins in system or user directory
+   reload: reload a plugin (if no name given, unload all plugins, then autoload plugins)
+   unload: unload a plugin (if no name given, unload all plugins)
 
-Bez argumentów ta komenda wyświetli wszystkie załadowane wtyczki.
+Without argument, this command lists loaded plugins.
 ----
 
 [[command_weechat_print]]

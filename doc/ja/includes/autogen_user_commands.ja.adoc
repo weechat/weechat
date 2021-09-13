@@ -1743,23 +1743,28 @@ Examples:
 * `+plugin+`: プラグインの表示/ロード/アンロード
 
 ----
-/plugin  list|listfull [<name>]
+/plugin  list [-o|-ol|-i|-il|<name>]
+         listfull [<name>]
          load <filename> [<arguments>]
          autoload [<arguments>]
          reload [<name>|* [<arguments>]]
          unload [<name>]
 
-     list: ロードされたプラグインをリストアップ
- listfull: ロードされたプラグインをリストアップ (詳細)
-     load: プラグインをロード
- autoload: システムかユーザディレクトリ指定の自動ロードプラグインをロード
-   reload: プラグインを再ロード (名前が指定されない場合は、全てのプラグインをアンロードし、プラグインを自動ロード)
-   unload: プラグインのアンロード (名前が指定されない場合は、全てのプラグインをアンロード)
- filename: ロードするプラグイン (ファイル)
-     name: プラグイン名
-arguments: ロードするプラグインに与える引数
+     list: list loaded plugins
+       -o: send list of loaded plugins to buffer (string in English)
+      -ol: send list of loaded plugins to buffer (translated string)
+       -i: copy list of loaded plugins in command line (for sending to buffer) (string in English)
+      -il: copy list of loaded plugins in command line (for sending to buffer) (translated string)
+     name: a plugin name
+ listfull: list loaded plugins (verbose)
+     load: load a plugin
+ filename: plugin (file) to load
+arguments: arguments given to plugin on load
+ autoload: autoload plugins in system or user directory
+   reload: reload a plugin (if no name given, unload all plugins, then autoload plugins)
+   unload: unload a plugin (if no name given, unload all plugins)
 
-引数無しでは、ロードされたプラグインをリストアップ。
+Without argument, this command lists loaded plugins.
 ----
 
 [[command_weechat_print]]

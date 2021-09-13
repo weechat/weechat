@@ -1743,21 +1743,26 @@ Beispiele:
 * `+plugin+`: Erweiterungen verwalten (auflisten/installieren/beenden)
 
 ----
-/plugin  list|listfull [<name>]
+/plugin  list [-o|-ol|-i|-il|<name>]
+         listfull [<name>]
          load <filename> [<arguments>]
          autoload [<arguments>]
          reload [<name>|* [<arguments>]]
          unload [<name>]
 
      list: installierte Erweiterungen werden aufgelistet
- listfull: detaillierte Auflistung aller installierten Erweiterungen
-     load: installiert eine Erweiterung
+       -o: sende Liste der geladenen Erweiterungen an den Buffer (Ausgabe in Englisch)
+      -ol: sende Liste der geladenen Erweiterungen an den Buffer (Übersetzte Ausgabe)
+       -i: Liste der geladenen Erweiterungen in die Befehlszeile kopieren (zum Senden an den Buffer) (Ausgabe in Englisch)
+      -il: Liste der geladenen Erweiterungen in die Befehlszeile kopieren (zum Senden an den Buffer) (Übersetzte Ausgabe)
+     name: Name einer Erweiterung
+ listfull: geladene Erweiterungen auflisten (ausführlich)
+     load: Laden einer Erweiterung
+ filename: Erweiterung (Dateiname) welche installiert werden soll
+arguments: Argumente die der Erweiterung beim Installieren übergeben werden sollen
  autoload: installiert automatisch alle Erweiterungen aus dem System- oder Benutzerverzeichnis
    reload: startet eine Erweiterung erneut (falls kein Name angegeben wird, werden alle Erweiterungen beendet und neu gestartet)
    unload: beendet eine oder alle Erweiterungen (wird kein Name angegeben dann werden alle Erweiterung beendet)
- filename: Erweiterung (Datei) welche installiert werden soll
-     name: Name einer Erweiterung
-arguments: Argumente die der Erweiterung beim installieren übergeben werden sollen
 
 Ohne Angabe eines Arguments werden alle installierten Erweiterungen angezeigt.
 ----
