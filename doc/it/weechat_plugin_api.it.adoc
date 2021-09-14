@@ -2780,6 +2780,56 @@ expanded to last):
   `+4+` +
   `+14+`
 
+| `+${split:number,seps,flags,xxx}+` +
+  _(WeeChat ≥ 3.3)_ |
+  Split string, and return, according to `number`: +
+  - `count`: the number of items after split +
+  - `random`: a random item +
+  - integer ≥ 1: the item by index (1 = first item) +
+  - integer ≤ -1: the item by index from the end (-1 = last item, -2 = penultimate item, etc.), +
+  `seps` is a list of chars that are used as separators (if empty, a comma is used), +
+  `flags` is a list of flags separated by `+`: +
+  - `strip_left`: strip separators on the left (beginning of string) +
+  - `strip_right`: strip separators on the right (end of string) +
+  - `collapse_seps`: collapse multiple consecutive separators into a single one +
+  - `keep_eol`: keep end of line for each value +
+  - `strip_items=xyz`: strip chars `x`, `y` and `z` from beginning/end of items +
+  - `max_items=N`: return max N items |
+  `+${split:1,,,abc,def,ghi}+` +
+  `+${split:-1,,,abc,def,ghi}+` +
+  `+${split:count,,,abc,def,ghi}+` +
+  `+${split:random,,,abc,def,ghi}+` +
+  `+${split:3,,collapse_seps,abc,,,def,,,ghi}+` +
+  `+${split:3,,strip_items=-_,_-abc-_,_-def-_,_-ghi-_}+` +
+  `+${split:2, ,,this is a test}+` +
+  `+${split:2, ,strip_left+strip_right, this is a test }+` +
+  `+${split:2, ,keep_eol,this is a test}+` |
+  `+abc+` +
+  `+ghi+` +
+  `+3+` +
+  `+def+` +
+  `+ghi+` +
+  `+ghi+` +
+  `+is+` +
+  `+is+` +
+  `+is a test+`
+
+| `+${split_shell:number,xxx}+` +
+  _(WeeChat ≥ 3.3)_ |
+  Split shell arguments, and return, according to `number`: +
+  - `count`: the number of arguments after split +
+  - `random`: a random argument +
+  - integer ≥ 1: the argument by index (1 = first argument) +
+  - integer ≤ -1: the argument by index from the end (-1 = last argument, -2 = penultimate argument, etc.) |
+  `+${split_shell:1,"first arg" arg2}+` +
+  `+${split_shell:-1,"first arg" arg2}+` +
+  `+${split_shell:count,"first arg" arg2}+` +
+  `+${split_shell:random,"first arg" arg2}+` |
+  `+first arg+` +
+  `+arg2+` +
+  `+2+` +
+  `+arg2+`
+
 | `+${re:xxx}+` +
   _(WeeChat ≥ 1.1)_ |
   Regex data: +

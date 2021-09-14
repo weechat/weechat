@@ -23,6 +23,8 @@ New features::
   * core: change key kbd:[Alt+h] to kbd:[Alt+h], kbd:[Alt+c] (clear hotlist)
   * core: add options "hotlist_remove_buffer", "hotlist_restore_buffer" and "hotlist_restore_all" in command /input, add default keys kbd:[Alt+h], kbd:[Alt+m] (remove buffer), kbd:[Alt+h], kbd:[Alt+r] (restore hotlist in current buffer) and kbd:[Alt+h], kbd:[Alt+Shift+R] (restore hotlist in all buffers)
   * core: add option "certs" in command /debug
+  * core: add options "-o", "-ol", "-i" and "-il" in command "/plugin list"
+  * api: add split of string and shell arguments in evaluation of expressions with "split:number,seps,flags,xxx" and "split_shell:number,xxx"
   * api: add `${re:repl_index}` to get the index of replacement in function string_eval_expression (issue #1689)
   * api: add random integer number in evaluation of expressions with "random:min,max"
   * api: add function string_cut
@@ -64,8 +66,16 @@ Tests::
 
 Build::
 
-  * php: add support of PHP 8.0 and 8.1 (issue #1668)
   * core: fix build on macOS (issue #1662)
+  * lua: add detection of Lua 5.4
+  * php: add support of PHP 8.0 and 8.1 (issue #1599, issue #1668)
+
+[[v3.2.1]]
+== Version 3.2.1 (2021-09-04)
+
+Bug fixes::
+
+  * relay: fix crash when decoding a malformed websocket frame (CVE-2021-40516)
 
 [[v3.2]]
 == Version 3.2 (2021-06-13)
