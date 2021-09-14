@@ -648,6 +648,85 @@ TEST(CoreEval, EvalExpression)
     WEE_CHECK_EVAL("14", "${lengthscr:こんにちは世界}");
     WEE_CHECK_EVAL("14", "${lengthscr:${color:green}こんにちは世界}");
 
+    /* test split of string */
+    WEE_CHECK_EVAL("", "${split:}");
+    WEE_CHECK_EVAL("", "${split:1}");
+    WEE_CHECK_EVAL("", "${split:1,}");
+    WEE_CHECK_EVAL("", "${split:1,,}");
+    WEE_CHECK_EVAL("", "${split:count}");
+    WEE_CHECK_EVAL("", "${split:count,}");
+    WEE_CHECK_EVAL("", "${split:count,,}");
+    WEE_CHECK_EVAL("0", "${split:count,,,}");
+
+    WEE_CHECK_EVAL("abc", "${split:random,,,abc}");
+
+    WEE_CHECK_EVAL("", "${split:0,,,abc,def,ghi}");
+    WEE_CHECK_EVAL("abc", "${split:1,,,abc}");
+    WEE_CHECK_EVAL("abc", "${split:1,,,abc,def}");
+    WEE_CHECK_EVAL("abc", "${split:1,,,abc,def,ghi}");
+    WEE_CHECK_EVAL("def", "${split:2,,,abc,def,ghi}");
+    WEE_CHECK_EVAL("ghi", "${split:3,,,abc,def,ghi}");
+    WEE_CHECK_EVAL("", "${split:4,,,abc,def,ghi}");
+
+    WEE_CHECK_EVAL("ghi", "${split:-1,,,abc,def,ghi}");
+    WEE_CHECK_EVAL("def", "${split:-2,,,abc,def,ghi}");
+    WEE_CHECK_EVAL("abc", "${split:-3,,,abc,def,ghi}");
+    WEE_CHECK_EVAL("", "${split:-4,,,abc,def,ghi}");
+    WEE_CHECK_EVAL("3", "${split:count,,,abc,def,ghi}");
+
+    WEE_CHECK_EVAL("abc", "${split:1, ,,abc def ghi}");
+    WEE_CHECK_EVAL("def", "${split:2, ,,abc def ghi}");
+    WEE_CHECK_EVAL("ghi", "${split:3, ,,abc def ghi}");
+    WEE_CHECK_EVAL("", "${split:4, ,,abc def ghi}");
+    WEE_CHECK_EVAL("3", "${split:count, ,,abc def ghi}");
+
+    WEE_CHECK_EVAL("abc", "${split:1,_-,,abc-def_ghi}");
+    WEE_CHECK_EVAL("def", "${split:2,_-,,abc-def_ghi}");
+    WEE_CHECK_EVAL("ghi", "${split:3,_-,,abc-def_ghi}");
+    WEE_CHECK_EVAL("", "${split:4,_-,,abc-def_ghi}");
+    WEE_CHECK_EVAL("3", "${split:count,_-,,abc-def_ghi}");
+
+    WEE_CHECK_EVAL("abc,def,ghi", "${split:1,,keep_eol,abc,def,ghi}");
+    WEE_CHECK_EVAL("def,ghi", "${split:2,,keep_eol,abc,def,ghi}");
+    WEE_CHECK_EVAL("ghi", "${split:3,,keep_eol,abc,def,ghi}");
+
+    WEE_CHECK_EVAL("abc,def,ghi", "${split:1,,keep_eol+strip_left,,,abc,def,ghi}");
+    WEE_CHECK_EVAL("def,ghi", "${split:2,,keep_eol+strip_left,,,abc,def,ghi}");
+    WEE_CHECK_EVAL("ghi", "${split:3,,keep_eol+strip_left,,,abc,def,ghi}");
+
+    WEE_CHECK_EVAL("abc,def,ghi", "${split:1,,keep_eol+strip_left+strip_right,,,abc,def,ghi,,}");
+    WEE_CHECK_EVAL("def,ghi", "${split:2,,keep_eol+strip_left+strip_right,,,abc,def,ghi,,}");
+    WEE_CHECK_EVAL("ghi", "${split:3,,keep_eol+strip_left+strip_right,,,abc,def,ghi,,}");
+
+    WEE_CHECK_EVAL("abc", "${split:1,,collapse_seps,abc,,,def,,ghi}");
+    WEE_CHECK_EVAL("def", "${split:2,,collapse_seps,abc,,,def,,ghi}");
+    WEE_CHECK_EVAL("ghi", "${split:3,,collapse_seps,abc,,,def,,ghi}");
+
+    WEE_CHECK_EVAL("abc", "${split:1,,strip_items=_,_abc_,_def_,_ghi_}");
+    WEE_CHECK_EVAL("def", "${split:2,,strip_items=_,_abc_,_def_,_ghi_}");
+    WEE_CHECK_EVAL("ghi", "${split:3,,strip_items=_,_abc_,_def_,_ghi_}");
+
+    WEE_CHECK_EVAL("def", "${split:2,,max_items=0,abc,def,ghi}");
+    WEE_CHECK_EVAL("def", "${split:2,,max_items=2,abc,def,ghi}");
+    WEE_CHECK_EVAL("", "${split:2,,max_items=1,abc,def,ghi}");
+
+    /* test split of shell arguments */
+    WEE_CHECK_EVAL("", "${split_shell:}");
+    WEE_CHECK_EVAL("", "${split_shell:1}");
+    WEE_CHECK_EVAL("", "${split_shell:1,}");
+    WEE_CHECK_EVAL("", "${split_shell:count}");
+    WEE_CHECK_EVAL("0", "${split_shell:count,}");
+
+    WEE_CHECK_EVAL("first arg", "${split_shell:random,\"first arg\"}");
+
+    WEE_CHECK_EVAL("", "${split_shell:0,\"first arg\" arg2}");
+    WEE_CHECK_EVAL("first arg", "${split_shell:1,\"first arg\" arg2}");
+    WEE_CHECK_EVAL("arg2", "${split_shell:2,\"first arg\" arg2}");
+
+    WEE_CHECK_EVAL("arg2", "${split_shell:-1,\"first arg\" arg2}");
+    WEE_CHECK_EVAL("first arg", "${split_shell:-2,\"first arg\" arg2}");
+    WEE_CHECK_EVAL("", "${split_shell:-3,\"first arg\" arg2}");
+
     /* test color */
     WEE_CHECK_EVAL(gui_color_get_custom ("green"), "${color:green}");
     WEE_CHECK_EVAL(gui_color_get_custom ("*214"), "${color:*214}");

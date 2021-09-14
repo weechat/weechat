@@ -2728,6 +2728,56 @@ première étendue à la dernière) :
   `+4+` +
   `+14+`
 
+| `+${split:number,seps,flags,xxx}+` +
+  _(WeeChat ≥ 3.3)_ |
+  Chaîne découpée, et retour, selon `number` : +
+  - `count` : nombre d'éléments après le découpage +
+  - `random` : un élément au hasard +
+  - entier ≥ 1 : l'élément par son index (1 = premier élément) +
+  - entier ≤ -1 : l'élément par son index en partant de la fin (-1 = dernier élément, -2 = avant-dernier élément, etc.), +
+  `seps` est une liste de caractères qui sont utilisés comme séparateurs (si vide, une virgule est utilisé), +
+  `flags` est une liste de drapeaux séparés par `+`: +
+  - `strip_left` : supprimer les séparateurs sur la gauche (début de chaîne) +
+  - `strip_right` : supprimer les séparateurs sur la droite (fin de chaîne) +
+  - `collapse_seps` : regrouper de multiples séparateurs consécutifs en un seul +
+  - `keep_eol` : garder jusqu'à la fin de la ligne pour chaque valeur +
+  - `strip_items=xyz` : supprimer les caractères `x`, `y` et `z` au début/fin des éléments +
+  - `max_items=N` : retourner au plus N éléments |
+  `+${split:1,,,abc,def,ghi}+` +
+  `+${split:-1,,,abc,def,ghi}+` +
+  `+${split:count,,,abc,def,ghi}+` +
+  `+${split:random,,,abc,def,ghi}+` +
+  `+${split:3,,collapse_seps,abc,,,def,,,ghi}+` +
+  `+${split:3,,strip_items=-_,_-abc-_,_-def-_,_-ghi-_}+` +
+  `+${split:2, ,,this is a test}+` +
+  `+${split:2, ,strip_left+strip_right, this is a test }+` +
+  `+${split:2, ,keep_eol,this is a test}+` |
+  `+abc+` +
+  `+ghi+` +
+  `+3+` +
+  `+def+` +
+  `+ghi+` +
+  `+ghi+` +
+  `+is+` +
+  `+is+` +
+  `+is a test+`
+
+| `+${split_shell:number,xxx}+` +
+  _(WeeChat ≥ 3.3)_ |
+  Paramètres shells découpés, et retour, selon `number` : +
+  - `count` : le nombre de paramètres après découpage +
+  - `random` : un paramètre au hasard +
+  - entier ≥ 1 : le paramètre par son index (1 = premier paramètre) +
+  - entier ≤ -1 : le paramètre par son index en partant de la fin (-1 = dernier paramètre, -2 = avant-dernier paramètre, etc.) |
+  `+${split_shell:1,"first arg" arg2}+` +
+  `+${split_shell:-1,"first arg" arg2}+` +
+  `+${split_shell:count,"first arg" arg2}+` +
+  `+${split_shell:random,"first arg" arg2}+` |
+  `+first arg+` +
+  `+arg2+` +
+  `+2+` +
+  `+arg2+`
+
 | `+${re:xxx}+` +
   _(WeeChat ≥ 1.1)_ |
   Données sur l'expression régulière : +

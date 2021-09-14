@@ -4428,9 +4428,9 @@ command_plugin_list (const char *name, int full)
     struct t_hook *ptr_hook;
     int plugins_found, hook_found, interval;
 
-    gui_chat_printf (NULL, "");
     if (!name)
     {
+        gui_chat_printf (NULL, "");
         gui_chat_printf (NULL, _("Plugins loaded:"));
     }
 
@@ -4714,6 +4714,82 @@ command_plugin_list (const char *name, int full)
 }
 
 /*
+ * Lists loaded plugins in input.
+ *
+ * Sends input to buffer if send_to_buffer == 1.
+ * String is translated if translated == 1 (otherwise it's English).
+ */
+
+void
+command_plugin_list_input (struct t_gui_buffer *buffer,
+                           int send_to_buffer, int translated)
+{
+    struct t_weechat_plugin *ptr_plugin;
+    struct t_weelist *list;
+    struct t_weelist_item *ptr_item;
+    int length;
+    char **buf, str_pos[16];
+
+    buf = string_dyn_alloc (256);
+    if (!buf)
+        return;
+
+    list = weelist_new ();
+    if (!list)
+    {
+        string_dyn_free (buf, 1);
+        return;
+    }
+
+    for (ptr_plugin = weechat_plugins; ptr_plugin;
+         ptr_plugin = ptr_plugin->next_plugin)
+    {
+        weelist_add (list, ptr_plugin->name, WEECHAT_LIST_POS_SORT, NULL);
+    }
+
+    for (ptr_item = list->items; ptr_item;
+         ptr_item = ptr_item->next_item)
+    {
+        if (*buf[0])
+        {
+            string_dyn_concat (buf, ", ", -1);
+        }
+        else
+        {
+            string_dyn_concat (
+                buf,
+                (translated) ? _("Plugins loaded:") : "Plugins loaded:",
+                -1);
+            string_dyn_concat (buf, " ", -1);
+        }
+        string_dyn_concat (buf, ptr_item->data, -1);
+    }
+
+    if (!*buf[0])
+    {
+        string_dyn_concat (
+            buf,
+            (translated) ? _("No plugins loaded") : "No plugins loaded",
+            -1);
+    }
+
+    if (send_to_buffer)
+    {
+        (void) input_data (buffer, *buf, NULL);
+    }
+    else
+    {
+        gui_buffer_set (buffer, "input", *buf);
+        length = strlen (*buf);
+        snprintf (str_pos, sizeof (str_pos), "%d", length);
+        gui_buffer_set (buffer, "input_pos", str_pos);
+    }
+
+    weelist_free (list);
+    string_dyn_free (buf, 1);
+}
+
+/*
  * Callback for command "/plugin": lists/loads/unloads WeeChat plugins.
  */
 
@@ -4736,7 +4812,23 @@ COMMAND_CALLBACK(plugin)
 
     if (string_strcasecmp (argv[1], "list") == 0)
     {
-        command_plugin_list ((argc > 2) ? argv[2] : NULL, 0);
+        if (argc > 2)
+        {
+            if (string_strcasecmp (argv[2], "-i") == 0)
+                command_plugin_list_input (buffer, 0, 0);
+            else if (string_strcasecmp (argv[2], "-il") == 0)
+                command_plugin_list_input (buffer, 0, 1);
+            else if (string_strcasecmp (argv[2], "-o") == 0)
+                command_plugin_list_input (buffer, 1, 0);
+            else if (string_strcasecmp (argv[2], "-ol") == 0)
+                command_plugin_list_input (buffer, 1, 1);
+            else
+                command_plugin_list (argv[2], 0);
+        }
+        else
+        {
+            command_plugin_list (NULL, 0);
+        }
         return WEECHAT_RC_OK;
     }
 
@@ -7579,24 +7671,27 @@ command_init ()
            "  8. a repeated string (format: \"repeat:count,string\")\n"
            "  9. length of a string (format: \"length:xxx\" or "
            "\"lengthscr:xxx\")\n"
-           "  10. a color (format: \"color:xxx\", see \"Plugin API "
+           "  10. split of a string (format: "
+           "\"split:number,separators,flags,xxx\")\n"
+           "  11. split of shell argmuents (format: \"split_shell:number,xxx\")\n"
+           "  12. a color (format: \"color:xxx\", see \"Plugin API "
            "reference\", function \"color\")\n"
-           "  11. a modifier (format: \"modifier:name,data,string\")\n"
-           "  12. an info (format: \"info:name,arguments\", arguments are "
+           "  13. a modifier (format: \"modifier:name,data,string\")\n"
+           "  14. an info (format: \"info:name,arguments\", arguments are "
            "optional)\n"
-           "  13. a base 16/32/64 encoded/decoded string (format: "
+           "  15. a base 16/32/64 encoded/decoded string (format: "
            "\"base_encode:base,xxx\" or \"base_decode:base,xxx\")\n"
-           "  14. current date/time (format: \"date\" or \"date:format\")\n"
-           "  15. an environment variable (format: \"env:XXX\")\n"
-           "  16. a ternary operator (format: "
+           "  16. current date/time (format: \"date\" or \"date:format\")\n"
+           "  17. an environment variable (format: \"env:XXX\")\n"
+           "  18. a ternary operator (format: "
            "\"if:condition?value_if_true:value_if_false\")\n"
-           "  17. result of an expression with parentheses and operators "
+           "  19. result of an expression with parentheses and operators "
            "+ - * / // % ** (format: \"calc:xxx\")\n"
-           "  18. a random integer number (format: \"random:min,max\")\n"
-           "  19. a translated string (format: \"translate:xxx\")\n"
-           "  20. an option (format: \"file.section.option\")\n"
-           "  21. a local variable in buffer\n"
-           "  22. a hdata name/variable (the value is automatically converted "
+           "  20. a random integer number (format: \"random:min,max\")\n"
+           "  21. a translated string (format: \"translate:xxx\")\n"
+           "  22. an option (format: \"file.section.option\")\n"
+           "  23. a local variable in buffer\n"
+           "  24. a hdata name/variable (the value is automatically converted "
            "to string), by default \"window\" and \"buffer\" point to current "
            "window/buffer.\n"
            "Format for hdata can be one of following:\n"
@@ -7637,6 +7732,14 @@ command_init ()
            "  /eval -n ${rev:Hello}                          ==> olleH\n"
            "  /eval -n ${repeat:5,-}                         ==> -----\n"
            "  /eval -n ${length:test}                        ==> 4\n"
+           "  /eval -n ${split:1,,,abc,def,ghi}              ==> abc\n"
+           "  /eval -n ${split:-1,,,abc,def,ghi}             ==> ghi\n"
+           "  /eval -n ${split:count,,,abc,def,ghi}          ==> 3\n"
+           "  /eval -n ${split:random,,,abc,def,ghi}         ==> def\n"
+           "  /eval -n ${split_shell:1,\"arg 1\" arg2}         ==> arg 1\n"
+           "  /eval -n ${split_shell:-1,\"arg 1\" arg2}        ==> arg2\n"
+           "  /eval -n ${split_shell:count,\"arg 1\" arg2}     ==> 2\n"
+           "  /eval -n ${split_shell:random,\"arg 1\" arg2}    ==> arg2\n"
            "  /eval -n ${calc:(5+2)*3}                       ==> 21\n"
            "  /eval -n ${random:0,10}                        ==> 3\n"
            "  /eval -n ${base_encode:64,test}                ==> dGVzdA==\n"
@@ -8024,24 +8127,33 @@ command_init ()
     hook_command (
         NULL, "plugin",
         N_("list/load/unload plugins"),
-        N_("list|listfull [<name>]"
+        N_("list [-o|-ol|-i|-il|<name>]"
+           " || listfull [<name>]"
            " || load <filename> [<arguments>]"
            " || autoload [<arguments>]"
            " || reload [<name>|* [<arguments>]]"
            " || unload [<name>]"),
         N_("     list: list loaded plugins\n"
+           "       -o: send list of loaded plugins to buffer "
+           "(string in English)\n"
+           "      -ol: send list of loaded plugins to buffer "
+           "(translated string)\n"
+           "       -i: copy list of loaded plugins in command line (for "
+           "sending to buffer) (string in English)\n"
+           "      -il: copy list of loaded plugins in command line (for "
+           "sending to buffer) (translated string)\n"
+           "     name: a plugin name\n"
            " listfull: list loaded plugins (verbose)\n"
            "     load: load a plugin\n"
+           " filename: plugin (file) to load\n"
+           "arguments: arguments given to plugin on load\n"
            " autoload: autoload plugins in system or user directory\n"
            "   reload: reload a plugin (if no name given, unload all plugins, "
            "then autoload plugins)\n"
            "   unload: unload a plugin (if no name given, unload all plugins)\n"
-           " filename: plugin (file) to load\n"
-           "     name: a plugin name\n"
-           "arguments: arguments given to plugin on load\n"
            "\n"
            "Without argument, this command lists loaded plugins."),
-        "list %(plugins_names)"
+        "list %(plugins_names)|-i|-il|-o|-ol"
         " || listfull %(plugins_names)"
         " || load %(plugins_installed)"
         " || autoload"

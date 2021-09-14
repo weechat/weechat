@@ -2565,6 +2565,56 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
   `+4+` +
   `+14+`
 
+| `+${split:number,seps,flags,xxx}+` +
+  _(WeeChat ≥ 3.3)_ |
+  Дели стринг и враћа сагласно са `number`: +
+  - `count`: број ставки након поделе +
+  - `random`: произвољну ставку +
+  - цео број ≥ 1: ставку са индексом (1 = прва ставка) +
+  - цео број ≤ -1: ставку са индеком од краја (-1 = последња ставка, -2 = претпоследњља ставка, итд.), +
+  `seps` је листа карактера који се користе као граничници (ако је празно, користи се запета), +
+  `flags` је листа заставица раздвојена са `+`: +
+  - `strip_left`: уклања граничнике са леве стране (почетка стринга) +
+  - `strip_right`: уклања граничнике са десне стране (краја стринга) +
+  - `collapse_seps`: стапа више узастопних граничника у један +
+  - `keep_eol`: задржава прелом линије за сваку вредност +
+  - `strip_items=xyz`: уклања карактере `x`, `y` и `z` са почетка/краја ставки +
+  - `max_items=N`: враћа максимално N ставки |
+  `+${split:1,,,abc,def,ghi}+` +
+  `+${split:-1,,,abc,def,ghi}+` +
+  `+${split:count,,,abc,def,ghi}+` +
+  `+${split:random,,,abc,def,ghi}+` +
+  `+${split:3,,collapse_seps,abc,,,def,,,ghi}+` +
+  `+${split:3,,strip_items=-_,_-abc-_,_-def-_,_-ghi-_}+` +
+  `+${split:2, ,,this is a test}+` +
+  `+${split:2, ,strip_left+strip_right, this is a test }+` +
+  `+${split:2, ,keep_eol,this is a test}+` |
+  `+abc+` +
+  `+ghi+` +
+  `+3+` +
+  `+def+` +
+  `+ghi+` +
+  `+ghi+` +
+  `+is+` +
+  `+is+` +
+  `+is a test+`
+
+| `+${split_shell:number,xxx}+` +
+  _(WeeChat ≥ 3.3)_ |
+  Дели аргументе љуске и враћа сагласно са `number`: +
+  - `count`: број аргумената након поделе +
+  - `random`: произвољни аргумент +
+  - цео број ≥ 1: аргумент по индексу (1 = први аргумент) +
+  - цео број ≤ -1: аргумент по индексу од краја (-1 = последњи аргумент, -2 = претпоследњи аргумент, итд.) |
+  `+${split_shell:1,"first arg" arg2}+` +
+  `+${split_shell:-1,"first arg" arg2}+` +
+  `+${split_shell:count,"first arg" arg2}+` +
+  `+${split_shell:random,"first arg" arg2}+` |
+  `+first arg+` +
+  `+arg2+` +
+  `+2+` +
+  `+arg2+`
+
 | `+${re:xxx}+` +
   _(WeeChat ≥ 1.1)_ |
   Подаци регуларног израза: +

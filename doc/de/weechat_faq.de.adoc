@@ -441,7 +441,7 @@ Natürlich ist das möglich:
 [[timezone]]
 === Wie kann ich die Zeitzone ändern?
 
-Es gibt in WeeChat keine Option um die Zeitzone einzustellen. Die 
+Es gibt in WeeChat keine Option um die Zeitzone einzustellen. Die
 Umgebungsvariable `TZ` muss auf einen entsprechenden Wert eingestellt werden.
 Am Besten machen Sie dies in Ihrer Shell-Initialisierungsdatei oder in der
 Befehlszeile, bevor Sie WeeChat starten:

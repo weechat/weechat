@@ -122,6 +122,11 @@ For example:
 /set irc.server.example.sasl_mechanism scram-sha-256
 ----
 
+[[v3.2.1]]
+== Version 3.2.1 (2021-09-04)
+
+Bug fix and maintenance release.
+
 [[v3.2]]
 == Version 3.2 (2021-06-13)
 

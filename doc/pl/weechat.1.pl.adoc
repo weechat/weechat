@@ -43,7 +43,7 @@ include::includes/man.pl.adoc[tag=plugin_options]
 
 include::includes/man.pl.adoc[tag=files]
 
-== Zobacz również 
+== Zobacz również
 
 *weechat-headless*(1)
 

@@ -402,6 +402,269 @@ eval_string_repeat (const char *text)
 }
 
 /*
+ * Splits string.
+ *
+ * Format: number,separators,flags,string
+ *
+ * If number == "count", returns the number of items after split.
+ * If number == "random", returns a random item.
+ * If number > 0, return this index (empty string if not enough items).
+ * If number < 0, return this index starting from the end (-1 = last item,
+ * -2 = penultimate item, etc.).
+ *
+ * If separators is empty string, a comma is used by default.
+ *
+ * Flags is a list of flags, separated by "+":
+ *   strip_left
+ *   strip_right
+ *   collapse_seps
+ *   keep_eol
+ *   strip_items=xyz
+ *   max_items=N
+ *
+ * Examples:
+ *   ${split:1,,,abc,def,ghi}                              ==> abc
+ *   ${split:-1,,,abc,def,ghi}                             ==> ghi
+ *   ${split:count,,,abc,def,ghi}                          ==> 3
+ *   ${split:random,,,abc,def,ghi}                         ==> def
+ *   ${split:3,,collapse_seps,abc,,,def,,,ghi}             ==> ghi
+ *   ${split:3,,strip_items=-_,_-abc-_,_-def-_,_-ghi-_}    ==> ghi
+ *   ${split:2, ,,this is a test}                          ==> is
+ *   ${split:2, ,strip_left+strip_right, this is a test }  ==> is
+ *   ${split:2, ,keep_eol,this is a test}                  ==> is a test
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+eval_string_split (const char *text)
+{
+    char *pos, *pos2, *pos3, *str_number, *separators, **items, *value, *error;
+    char str_value[32], *str_flags, **list_flags, *strip_items;
+    int i, num_items, count_items, random_item, flags;
+    long number, max_items;
+
+    str_number = NULL;
+    separators = NULL;
+    items = NULL;
+    value = NULL;
+    str_flags = NULL;
+    list_flags = NULL;
+    strip_items = NULL;
+    count_items = 0;
+    random_item = 0;
+    flags = 0;
+    max_items = 0;
+
+    if (!text || !text[0])
+        goto end;
+
+    pos = strchr (text, ',');
+    if (!pos || (pos == text))
+        goto end;
+
+    number = 0;
+    str_number = string_strndup (text, pos - text);
+    if (strcmp (str_number, "count") == 0)
+    {
+        count_items = 1;
+    }
+    else if (strcmp (str_number, "random") == 0)
+    {
+        random_item = 1;
+    }
+    else
+    {
+        number = strtol (str_number, &error, 10);
+        if (!error || error[0] || (number == 0))
+            goto end;
+    }
+
+    pos++;
+    pos2 = strchr (pos, ',');
+    if (!pos2)
+        goto end;
+    if (pos2 == pos)
+        separators = strdup (",");
+    else
+        separators = string_strndup (pos, pos2 - pos);
+
+    pos2++;
+    pos3 = strchr (pos2, ',');
+    if (!pos3)
+        goto end;
+    str_flags = string_strndup (pos2, pos3 - pos2);
+    list_flags = string_split (str_flags, "+", NULL, 0, 0, NULL);
+    if (list_flags)
+    {
+        for (i = 0; list_flags[i]; i++)
+        {
+            if (strcmp (list_flags[i], "strip_left") == 0)
+                flags |= WEECHAT_STRING_SPLIT_STRIP_LEFT;
+            else if (strcmp (list_flags[i], "strip_right") == 0)
+                flags |= WEECHAT_STRING_SPLIT_STRIP_RIGHT;
+            else if (strcmp (list_flags[i], "collapse_seps") == 0)
+                flags |= WEECHAT_STRING_SPLIT_COLLAPSE_SEPS;
+            else if (strcmp (list_flags[i], "keep_eol") == 0)
+                flags |= WEECHAT_STRING_SPLIT_KEEP_EOL;
+            else if (strncmp (list_flags[i], "strip_items=", 12) == 0)
+                strip_items = strdup (list_flags[i] + 12);
+            else if (strncmp (list_flags[i], "max_items=", 10) == 0)
+            {
+                max_items = strtol (list_flags[i] + 10, &error, 10);
+                if (!error || error[0] || (max_items < 0))
+                    goto end;
+            }
+        }
+    }
+
+    pos3++;
+
+    items = string_split (pos3, separators, strip_items, flags,
+                          max_items, &num_items);
+
+    /* if "count" was asked, return the number of items found after split */
+    if (count_items)
+    {
+        snprintf (str_value, sizeof (str_value), "%d", num_items);
+        value = strdup (str_value);
+        goto end;
+    }
+
+    if (!items || (num_items < 1))
+        goto end;
+
+    /* if "random" was asked, return a random item */
+    if (random_item)
+        number = random () % num_items;
+    else if (number > 0)
+        number--;
+
+    if (((number >= 0) && (number >= num_items))
+        || ((number < 0) && (labs (number) > num_items)))
+    {
+        goto end;
+    }
+
+    if (number < 0)
+        number = num_items + number;
+
+    value = strdup (items[number]);
+
+end:
+    if (str_number)
+        free (str_number);
+    if (separators)
+        free (separators);
+    if (str_flags)
+        free (str_flags);
+    if (list_flags)
+        string_free_split (list_flags);
+    if (strip_items)
+        free (strip_items);
+    if (items)
+        string_free_split (items);
+    return (value) ? value : strdup ("");
+}
+
+/*
+ * Splits shell arguments.
+ *
+ * Format: number,string
+ *
+ * If number == "count", returns the number of arguments.
+ * If number == "random", returns a random argument.
+ * If number > 0, return this index (empty string if not enough arguments).
+ * If number < 0, return this index starting from the end (-1 = last argument,
+ * -2 = penultimate argument, etc.).
+ *
+ * Examples:
+ *   ${split_shell:count,"arg 1" arg2}   ==> "2"
+ *   ${split_shell:random,"arg 1" arg2}  ==> "arg2"
+ *   ${split_shell:1,"arg 1" arg2}       ==> "arg 1"
+ *   ${split_shell:-1,"arg 1" arg2}      ==> "arg2"
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+eval_string_split_shell (const char *text)
+{
+    char *pos, *str_number, **items, *value, *error, str_value[32];
+    int num_items, count_items, random_item;
+    long number;
+
+    str_number = NULL;
+    items = NULL;
+    value = NULL;
+    count_items = 0;
+    random_item = 0;
+
+    if (!text || !text[0])
+        goto end;
+
+    pos = strchr (text, ',');
+    if (!pos || (pos == text))
+        goto end;
+
+    number = 0;
+    str_number = string_strndup (text, pos - text);
+    if (strcmp (str_number, "count") == 0)
+    {
+        count_items = 1;
+    }
+    else if (strcmp (str_number, "random") == 0)
+    {
+        random_item = 1;
+    }
+    else
+    {
+        number = strtol (str_number, &error, 10);
+        if (!error || error[0] || (number == 0))
+            goto end;
+    }
+
+    pos++;
+
+    items = string_split_shell (pos, &num_items);
+
+    /* if "count" was asked, return the number of items found after split */
+    if (count_items)
+    {
+        snprintf (str_value, sizeof (str_value), "%d", num_items);
+        value = strdup (str_value);
+        goto end;
+    }
+
+    if (!items || (num_items < 1))
+        goto end;
+
+    /* if "random" was asked, return a random item */
+    if (random_item)
+        number = random () % num_items;
+    else if (number > 0)
+        number--;
+
+    if (((number >= 0) && (number >= num_items))
+        || ((number < 0) && (labs (number) > num_items)))
+    {
+        goto end;
+    }
+
+    if (number < 0)
+        number = num_items + number;
+
+    value = strdup (items[number]);
+
+end:
+    if (str_number)
+        free (str_number);
+    if (items)
+        string_free_split (items);
+    return (value) ? value : strdup ("");
+}
+
+/*
  * Returns a regex group captured.
  *
  * Note: result must be freed after use.
@@ -1104,23 +1367,28 @@ end:
  *  10. a repeated string (format: repeat:count,string)
  *  11. length of a string (format: length:xxx) or length of a string on screen
  *      (format: lengthscr:xxx); color codes are ignored
- *  12. a regex group captured (format: re:N (0.99) or re:+)
- *  13. a color (format: color:xxx)
- *  14. a modifier (format: modifier:name,data,xxx)
- *  15. an info (format: info:name,arguments)
- *  16. a base 16/32/64 encoded/decoded string (format: base_encode:base,xxx
+ *  12. split string (format: split:number,separators,flags,xxx
+ *      or split:count,separators,flags,xxx
+ *      or split:random,separators,flags,xxx)
+ *  13. split shell arguments (format: split:number,xxx or split:count,xxx
+ *      or split:random,xxx)
+ *  14. a regex group captured (format: re:N (0.99) or re:+)
+ *  15. a color (format: color:xxx)
+ *  16. a modifier (format: modifier:name,data,xxx)
+ *  17. an info (format: info:name,arguments)
+ *  18. a base 16/32/64 encoded/decoded string (format: base_encode:base,xxx
  *      or base_decode:base,xxx)
- *  17. current date/time (format: date or date:xxx)
- *  18. an environment variable (format: env:XXX)
- *  19. a ternary operator (format: if:condition?value_if_true:value_if_false)
- *  20. calculate result of an expression (format: calc:xxx)
- *  21. a random integer number in the range from "min" to "max"
+ *  19. current date/time (format: date or date:xxx)
+ *  20. an environment variable (format: env:XXX)
+ *  21. a ternary operator (format: if:condition?value_if_true:value_if_false)
+ *  22. calculate result of an expression (format: calc:xxx)
+ *  23. a random integer number in the range from "min" to "max"
  *      (format: random:min,max)
- *  22. a translated string (format: translate:xxx)
- *  23. an option (format: file.section.option)
- *  24. a buffer local variable
- *  25. a pointer name from hashtable "pointers"
- *  26. a hdata variable (format: hdata.var1.var2 or hdata[list].var1.var2
+ *  24. a translated string (format: translate:xxx)
+ *  25. an option (format: file.section.option)
+ *  26. a buffer local variable
+ *  27. a pointer name from hashtable "pointers"
+ *  28. a hdata variable (format: hdata.var1.var2 or hdata[list].var1.var2
  *                        or hdata[ptr].var1.var2 or hdata[ptr_name].var1.var2)
  *
  * See /help in WeeChat for examples.
@@ -1296,35 +1564,49 @@ eval_replace_vars_cb (void *data, const char *text)
         goto end;
     }
 
-    /* 12. regex group captured */
+    /* 12: split string */
+    if (strncmp (text, "split:", 6) == 0)
+    {
+        value = eval_string_split (text + 6);
+        goto end;
+    }
+
+    /* 13: split shell */
+    if (strncmp (text, "split_shell:", 12) == 0)
+    {
+        value = eval_string_split_shell (text + 12);
+        goto end;
+    }
+
+    /* 14. regex group captured */
     if (strncmp (text, "re:", 3) == 0)
     {
         value = eval_string_regex_group (text + 3, eval_context);
         goto end;
     }
 
-    /* 13. color code */
+    /* 15. color code */
     if (strncmp (text, "color:", 6) == 0)
     {
         value = eval_string_color (text + 6);
         goto end;
     }
 
-    /* 14. modifier */
+    /* 16. modifier */
     if (strncmp (text, "modifier:", 9) == 0)
     {
         value = eval_string_modifier (text + 9);
         goto end;
     }
 
-    /* 15. info */
+    /* 17. info */
     if (strncmp (text, "info:", 5) == 0)
     {
         value = eval_string_info (text + 5);
         goto end;
     }
 
-    /* 16. base_encode/base_decode */
+    /* 18. base_encode/base_decode */
     if (strncmp (text, "base_encode:", 12) == 0)
     {
         value = eval_string_base_encode (text + 12);
@@ -1336,14 +1618,14 @@ eval_replace_vars_cb (void *data, const char *text)
         goto end;
     }
 
-    /* 17. current date/time */
+    /* 19. current date/time */
     if ((strncmp (text, "date", 4) == 0) && (!text[4] || (text[4] == ':')))
     {
         value = eval_string_date (text + 4);
         goto end;
     }
 
-    /* 18. environment variable */
+    /* 20. environment variable */
     if (strncmp (text, "env:", 4) == 0)
     {
         ptr_value = getenv (text + 4);
@@ -1351,7 +1633,7 @@ eval_replace_vars_cb (void *data, const char *text)
         goto end;
     }
 
-    /* 19: ternary operator: if:condition?value_if_true:value_if_false */
+    /* 21: ternary operator: if:condition?value_if_true:value_if_false */
     if (strncmp (text, "if:", 3) == 0)
     {
         value = eval_string_if (text + 3, eval_context);
@@ -1359,7 +1641,7 @@ eval_replace_vars_cb (void *data, const char *text)
     }
 
     /*
-     * 20. calculate the result of an expression
+     * 22. calculate the result of an expression
      * (with number, operators and parentheses)
      */
     if (strncmp (text, "calc:", 5) == 0)
@@ -1369,7 +1651,7 @@ eval_replace_vars_cb (void *data, const char *text)
     }
 
     /*
-     * 21. random number
+     * 23. random number
      */
     if (strncmp (text, "random:", 7) == 0)
     {
@@ -1378,7 +1660,7 @@ eval_replace_vars_cb (void *data, const char *text)
     }
 
     /*
-     * 22. translated text
+     * 24. translated text
      */
     if (strncmp (text, "translate:", 10) == 0)
     {
@@ -1386,7 +1668,7 @@ eval_replace_vars_cb (void *data, const char *text)
         goto end;
     }
 
-    /* 22. option: if found, return this value */
+    /* 25. option: if found, return this value */
     if (strncmp (text, "sec.data.", 9) == 0)
     {
         ptr_value = hashtable_get (secure_hashtable_data, text + 9);
@@ -1429,7 +1711,7 @@ eval_replace_vars_cb (void *data, const char *text)
         }
     }
 
-    /* 23. local variable in buffer */
+    /* 26. local variable in buffer */
     ptr_buffer = hashtable_get (eval_context->pointers, "buffer");
     if (ptr_buffer)
     {
@@ -1441,7 +1723,7 @@ eval_replace_vars_cb (void *data, const char *text)
         }
     }
 
-    /* 24. hdata */
+    /* 27. hdata */
     value = eval_string_hdata (text, eval_context);
 
 end:
