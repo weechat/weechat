@@ -13,6 +13,7 @@
 * Алексей Бортник <thebosha@gmail.com>, 2009
 * Alexander Turenko <totktonada.ru@gmail.com>, 2014-2015
 * Evgeny Shmarnev <eshmarnev@suse.com>, 2016
+* German Youdin <hozztie@gmail.com>, 2021
 
 
 [[start]]
@@ -27,9 +28,8 @@
 $ weechat
 ----
 
-// TRANSLATION MISSING
 [[help]]
-== Online help
+== Онлайн-справка
 
 В WeeChat есть справка по всем командам, просто наберите:
 
@@ -43,8 +43,7 @@ $ weechat
 /help команда
 ----
 
-// TRANSLATION MISSING
-Help is available for options as well:
+Также доступна справка по опциям:
 
 ----
 /help config.section.option
@@ -53,9 +52,8 @@ Help is available for options as well:
 (где `config` — название конфигурации (`weechat` для ядра или название плагина
 для плагина), `section` — группа параметров и `option` — название параметра).
 
-// TRANSLATION MISSING
 [[options]]
-== Set options
+== Задание параметров
 
 Для задания параметров используйте:
 
@@ -69,39 +67,33 @@ WeeChat немедленно применяет все изменения (ва�
 Все параметры сохраняются при выходе из WeeChat (или путём принудительной
 записи с помощью команды `/save`).
 
-// TRANSLATION MISSING
 [IMPORTANT]
-It is *not recommended* to edit configuration files by hand because WeeChat
-may write them at any time (for example on `/quit`) and after any change
-you must run the command `/reload` (with the risk of losing other changes
-that were not yet saved with `/save`). +
-You can use the command `/set`, which checks the value and applies immediately
-the changes.
+Не рекомендуется редактировать файлы конфигурации вручную, потому что WeeChat
+может перезаписать их в любое время (например, при `/quit`) и после любого изменения
+вы должны выполнить команду `/reload` (с риском потери других изменений,
+которые еще не были сохранены с помощью `/save`). +
+Вы можете использовать команду `/set`, которая проверяет значение и немедленно применяет
+изменения.
 
-// TRANSLATION MISSING
-The plugin _fset_ allows you to easily browse options and change them.
+Плагин _fset_ позволяет легко просматривать параметры и изменять их.
 
-// TRANSLATION MISSING
-For example to display WeeChat options:
+Например, чтобы отобразить параметры WeeChat:
 
 ----
 /fset weechat.*
 ----
 
-// TRANSLATION MISSING
-IRC options:
+Или параметры IRC:
 
 ----
 /fset irc.*
 ----
 
-// TRANSLATION MISSING
-The `/fset` command has completion on part of option names, so for example if
-you type `/fset hot` and press kbd:[Tab] this is completed as `/fset hotlist`.
-If you press kbd:[Enter], options about the hotlist are displayed.
+Команда `/fset` имеет завершение для части имен опций, поэтому, например, если
+вы наберете `/fset hot` и нажмете kbd:[Tab], это будет завершено как `/fset hotlist`.
+Если вы нажмете kbd:[Enter], отобразятся параметры hotlist.
 
-// TRANSLATION MISSING
-For more information about `/fset` command and keys, see `/help fset`.
+Дополнительные сведения о команде и клавишах можно увидеть с помощью `/help fset`.
 
 [[core_vs_plugins]]
 == Ядро и плагины
@@ -124,10 +116,8 @@ For more information about `/fset` command and keys, see `/help fset`.
 /server add libera irc.libera.chat/6697 -ssl
 ----
 
-// TRANSLATION MISSING
-In this command, `libera` is the internal server name used by WeeChat:
-you'll be able to connect with `/connect libera` and the server options
-are _irc.server.libera.xxx_.
+В этой команде `libera` - это внутреннее имя сервера, используемое WeeChat:
+вы сможете подключиться с помощью `/connect libera` и параметров сервера _irc.server.libera.xxx_.
 
 Вы всегда можете обратиться к справке, набрав:
 
@@ -213,11 +203,10 @@ are _irc.server.libera.xxx_.
 /set irc.server.libera.autojoin "#channel1,#channel2"
 ----
 
-// TRANSLATION MISSING
 [TIP]
-You can complete name and value of options with the kbd:[Tab] key
-and kbd:[Shift+Tab] for a partial completion (useful for long words like
-the name of option).
+Вы можете заполнить имя и значение параметров с помощью клавиши
+kbd:[Tab] и kbd:[Shift + Tab] для частичного завершения 
+(полезно для длинных слов, таких как название параметра).
 
 Для очистки параметра из группы _server_ и установки значения по умолчанию
 используется следующая конструкция, например, для возврата к псевдонимам по
@@ -236,20 +225,18 @@ the name of option).
 
 // TRANSLATION MISSING
 [[connect_to_irc_server]]
-== Connect to IRC server
+== Подключение к IRC-серверу
 
 ----
 /connect libera
 ----
 
-// TRANSLATION MISSING
-With this command, WeeChat connects to the libera server and auto-joins the
-channels configured in the "autojoin" server option.
+С помощью этой команды WeeChat подключается к серверу libera и автоматически присоединяется 
+к каналам, настроенным в опции сервера "autojoin".
 
-// TRANSLATION MISSING
 [NOTE]
 Эту команду можно использовать для добавления нового сервера и подключения к
-нему без команды `/server` (see `/help connect`).
+нему без команды `/server` (см. `/help connect`).
 
 По умолчанию буфер сервера совмещён с _core_-буфером WeeChat. Для переключения
 между _core_-буфером и буферами сервера можно использовать kbd:[Ctrl+x].
