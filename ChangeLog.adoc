@@ -15,6 +15,13 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 (file _ReleaseNotes.adoc_ in sources).
 
 
+[[v3.4]]
+== Version 3.4 (under dev)
+
+New features::
+
+  * api: add user variables in evaluation of expressions with "define:name,value"
+
 [[v3.3]]
 == Version 3.3 (2021-09-19)
 

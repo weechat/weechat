@@ -2159,7 +2159,7 @@ str3 = weechat.string_input_for_buffer("//test")  # "/test"
 
 ==== string_eval_expression
 
-_WeeChat ≥ 0.4.0, ажурирано у верзијама 0.4.2, 0.4.3, 1.0, 1.1, 1.2, 1.3, 1.6, 1.8, 2.0, 2.2, 2.3, 2.7, 2.9, 3.1, 3.2 и 3.3._
+_WeeChat ≥ 0.4.0, ажурирано у верзијама 0.4.2, 0.4.3, 1.0, 1.1, 1.2, 1.3, 1.6, 1.8, 2.0, 2.2, 2.3, 2.7, 2.9, 3.1, 3.2, 3.3 и 3.4._
 
 Израчунава израз и враћа вредност као стринг. Специјалне променљиве у формату `+${променљива}+` се развијају (погледајте табелу испод).
 
@@ -2457,6 +2457,13 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
   `+${raw:${info:version}}+` |
   `+${info:version}+`
 
+// TRANSLATION MISSING
+| `+${name}+` +
+  _(WeeChat ≥ 3.4)_ |
+  User variable (defined with `+${define:name,value}+`). |
+  `+${name}+` |
+  `+value+`
+
 | `+${име}+` |
   Променљива `name` из хеш табеле _extra_vars_. |
   `+${име}+` |
@@ -2748,6 +2755,14 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
   `+${translate:Plugin}+` |
   `+Extension+` (пример из француског)
 
+// TRANSLATION MISSING
+| `+${define:name,value}+` +
+  _(WeeChat ≥ 3.4)_ |
+  Define a variable `name` set to `value`, which can then be used in the same
+  evaluated expression with `+${name}+`. |
+  `+${define:len,${calc:5+3}}${len}x${len}+` |
+  `+8x8+`
+
 | `+${sec.data.име}+` |
   Вредност обезбеђених података `име`. |
   `+${sec.data.libera_pass}+` |
@@ -2765,7 +2780,7 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
 
 | `+${pointer}+` |
   Променљива `pointer` из хеш табеле _pointers_. |
-  `+${my_pointer}+` |
+  `+${buffer}+` |
   `+0x1234abcd+`
 
 | `+${hdata.пром1.пром2...}+` +
