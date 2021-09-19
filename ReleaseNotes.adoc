@@ -18,7 +18,7 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 
 
 [[v3.3]]
-== Version 3.3 (under dev)
+== Version 3.3 (2021-09-19)
 
 [[v3.3_hotlist_keys_clear_restore]]
 === New keys for hotlist
