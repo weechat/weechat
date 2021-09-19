@@ -1,11 +1,9 @@
-// TRANSLATION MISSING
 = weechat-headless(1)
 :doctype: manpage
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: ru
-// TRANSLATION MISSING
-:man manual: WeeChat Manual
+:man manual: WeeChat руководство
 :man source: WeeChat {revnumber}
 
 == НАЗВАНИЕ
@@ -14,9 +12,8 @@ weechat-headless - расширяемый чат-клиент (headless version)
 
 == ОБЗОР
 
-// TRANSLATION MISSING
 [verse]
-*weechat-headless* [-a|--no-connect] [--daemon] [--stdout] [-d|--dir <path>] [-t|--temp-dir] [-p|--no-plugin] [-P|--plugins <plugins>] [-r|--run-command <command>] [-s|--no-script] [--upgrade] [debug-option...] [plugin:option...]
+*weechat-headless* [-a|--no-connect] [--daemon] [--stdout] [-d|--dir <путь>] [-t|--temp-dir] [-p|--no-plugin] [-P|--plugins <плагины>] [-r|--run-command <команда>] [-s|--no-script] [--upgrade] [отладка-параметр...] [плагин:параметр...]
 *weechat-headless* [-c|--colors]
 *weechat-headless* [-h|--help]
 *weechat-headless* [-l|--license]
@@ -28,18 +25,16 @@ WeeChat (Wee Enhanced Environment for Chat) это свободный чат-к�
 он подходит для большинства операционных систем.
 Его легко настроить, кроме того, вы можете расширить его функицонал при помощи скриптов.
 
-// TRANSLATION MISSING
-The command *weechat-headless* runs WeeChat in a headless mode (no interface).
-It can be used for tests or to daemonize WeeChat with the option "--daemon".
+Команда *weechat-headless* запускает WeeChat в headless режиме (без интерфейса).
+Его можно использовать для тестов или для демонизации WeeChat с помощью опции "--daemon".
 
 == ПАРАМЕТРЫ
 
 include::includes/cmdline_options.ru.adoc[tag=standard]
 
-// TRANSLATION MISSING
-== DEBUG OPTIONS
+== ПАРАМЕТРЫ ОТЛАДКИ
 
-*WARNING:* these options are for debug purposes only, *DO NOT USE IN PRODUCTION!*
+*ВНИМАНИЕ:* эти параметры предназначены только для отладки, *НЕ ИСПОЛЬЗУЙТЕ В ПРОИЗВОДСТВЕ!*
 
 include::includes/cmdline_options.ru.adoc[tag=debug]
 
@@ -51,8 +46,7 @@ include::includes/man.ru.adoc[tag=plugin_options]
 
 include::includes/man.ru.adoc[tag=files]
 
-// TRANSLATION MISSING
-== SEE ALSO
+== СМОТРИТЕ ТАКЖЕ
 
 *weechat*(1)
 
@@ -60,7 +54,7 @@ include::includes/man.ru.adoc[tag=files]
 
 Эта man-страница написана {author}.
 
-Перевод: Alexander Turenko.
+Перевод: Alexander Turenko и German Youdin.
 
 == КОПИРАЙТ
 

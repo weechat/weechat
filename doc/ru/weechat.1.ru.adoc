@@ -3,8 +3,7 @@
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: ru
-// TRANSLATION MISSING
-:man manual: WeeChat Manual
+:man manual: Руководство по WeeChat
 :man source: WeeChat {revnumber}
 
 == НАЗВАНИЕ
@@ -13,9 +12,8 @@ weechat - расширяемый чат-клиент
 
 == ОБЗОР
 
-// TRANSLATION MISSING
 [verse]
-*weechat* [-a|--no-connect] [-d|--dir <путь>] [-t|--temp-dir] [-p|--no-plugin] [-P|--plugins <plugins>] [-r|--run-command <команда>] [-s|--no-script] [--upgrade] [debug-option...] [<плагин>:<параметр>...]
+*weechat* [-a|--no-connect] [-d|--dir <путь>] [-t|--temp-dir] [-p|--no-plugin] [-P|--plugins <плагины>] [-r|--run-command <команда>] [-s|--no-script] [--upgrade] [отладка-параметр...] [плагин:параметр...]
 *weechat* [-c|--colors]
 *weechat* [-h|--help]
 *weechat* [-l|--license]
@@ -31,10 +29,9 @@ WeeChat (Wee Enhanced Environment for Chat) это свободный чат-к�
 
 include::includes/cmdline_options.ru.adoc[tag=standard]
 
-// TRANSLATION MISSING
-== DEBUG OPTIONS
+== ПАРАМЕТРЫ ОТЛАДКИ
 
-*WARNING:* these options are for debug purposes only, *DO NOT USE IN PRODUCTION!*
+*ВНИМАНИЕ:* эти параметры предназначены только для отладки, *НЕ ИСПОЛЬЗУЙТЕ В ПРОИЗВОДСТВЕ!*
 
 include::includes/cmdline_options.ru.adoc[tag=debug]
 
@@ -46,8 +43,7 @@ include::includes/man.ru.adoc[tag=plugin_options]
 
 include::includes/man.ru.adoc[tag=files]
 
-// TRANSLATION MISSING
-== SEE ALSO
+== СМОТРИТЕ ТАКЖЕ
 
 *weechat-headless*(1)
 
@@ -55,7 +51,7 @@ include::includes/man.ru.adoc[tag=files]
 
 Эта man-страница написана {author}.
 
-Перевод: Alexander Turenko.
+Перевод: Alexander Turenko и German Youdin.
 
 == КОПИРАЙТ
 
