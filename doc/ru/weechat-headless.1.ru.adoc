@@ -3,7 +3,7 @@
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: ru
-:man manual: WeeChat руководство
+:man manual: Руководство по WeeChat 
 :man source: WeeChat {revnumber}
 
 == НАЗВАНИЕ
