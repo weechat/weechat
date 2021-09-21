@@ -13,7 +13,7 @@ weechat-headless - расширяемый чат-клиент (headless version)
 == ОБЗОР
 
 [verse]
-*weechat-headless* [-a|--no-connect] [--daemon] [--stdout] [-d|--dir <путь>] [-t|--temp-dir] [-p|--no-plugin] [-P|--plugins <плагины>] [-r|--run-command <команда>] [-s|--no-script] [--upgrade] [отладка-параметр...] [плагин:параметр...]
+*weechat-headless* [-a|--no-connect] [--daemon] [--stdout] [-d|--dir <путь>] [-t|--temp-dir] [-p|--no-plugin] [-P|--plugins <плагины>] [-r|--run-command <команда>] [-s|--no-script] [--upgrade] [параметр-отладки...] [плагин:параметр...]
 *weechat-headless* [-c|--colors]
 *weechat-headless* [-h|--help]
 *weechat-headless* [-l|--license]
@@ -34,7 +34,7 @@ include::includes/cmdline_options.ru.adoc[tag=standard]
 
 == ПАРАМЕТРЫ ОТЛАДКИ
 
-*ВНИМАНИЕ:* эти параметры предназначены только для отладки, *НЕ ИСПОЛЬЗУЙТЕ В ПРОИЗВОДСТВЕ!*
+*ВНИМАНИЕ:* эти параметры предназначены только для отладки, *НЕ ИСПОЛЬЗУЙТЕ В РЕЖИМЕ ЭКСПЛУАТАЦИИ!*
 
 include::includes/cmdline_options.ru.adoc[tag=debug]
 
