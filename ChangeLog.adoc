@@ -22,6 +22,10 @@ New features::
 
   * api: add user variables in evaluation of expressions with "define:name,value"
 
+Bug fixes::
+
+  * irc: fix parsing of TAGMSG message when there is a colon before the channel
+
 [[v3.3]]
 == Version 3.3 (2021-09-19)
 
