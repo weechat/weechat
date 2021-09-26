@@ -1375,30 +1375,32 @@ Pour forcer une comparaison de chaînes, vous pouvez ajouter des guillemets auto
 
 Des variables sont remplacées dans l'expression, en utilisant le format ${variable}, la variable pouvant être, par ordre de priorité :
   1. la chaîne elle-même sans évaluation (format : "raw:xxx")
-  2. une sous-chaîne évaluée (format : "eval:xxx")
-  3. une condition évaluée (format : "eval_cond:xxx")
-  4. une chaîne avec les caractères échappés (format : "esc:xxx" ou "\xxx")
-  5. une chaîne avec des caractères à cacher (format : "hide:caractère,chaîne")
-  6. une chaîne avec un maximum de caractères (format : "cut:max,suffixe,chaîne" ou "cut:+max,suffixe,chaîne")
+  2. une variable définie par l'utilisateur (format : "nom")
+  3. une sous-chaîne évaluée (format : "eval:xxx")
+  4. une condition évaluée (format : "eval_cond:xxx")
+  5. une chaîne avec les caractères échappés (format : "esc:xxx" ou "\xxx")
+  6. une chaîne avec des caractères à cacher (format : "hide:caractère,chaîne")
+  7. une chaîne avec un maximum de caractères (format : "cut:max,suffixe,chaîne" ou "cut:+max,suffixe,chaîne")
      ou un maximum de caractères affichés à l'écran (format : "cutscr:max,suffixe,chaîne" ou "cutscr:+max,suffixe,chaîne")
-  7. une chaîne inversée (format : "rev:xxx" ou "revscr:xxx")
-  8. une chaîne répétée (format : "repeat:nombre,chaîne")
-  9. longueur d'une chaîne (format : "length:xxx" ou "lengthscr:xxx")
-  10. découpage d'une chaîne (format : "split:nombre,séparateurs,flags,xxx")
-  11. découpage de paramètres shell (format : "split_shell:nombre,xxx")
-  12. une couleur (format : "color:xxx", voir la "Référence API extension", fonction "color")
-  13. un modificateur (format : "modifier:nom,données,chaîne")
-  14. une info (format : "info:nom,paramètres", les paramètres sont optionnels)
-  15. une chaîne encodée/decodée en base 16, 32 ou 64 (format : "base_encode:base,xxx" ou "base_decode:base,xxx")
-  16. la date/heure courante (format : "date" ou "date:format")
-  17. une variable d'environnement (format : "env:XXX")
-  18. un opérateur ternaire (format : "if:condition?valeur_si_vrai:valeur_si_faux")
-  19. le résultat d'une expression avec parenthèses et les opérateurs + - * / // % ** (format: "calc:xxx")
-  20. un nombre entier aléatoire (format : "random:min,max")
-  21. une chaîne traduite (format : "translate:xxx")
-  22. une option (format : "fichier.section.option")
-  23. une variable locale du tampon
-  24. un hdata/variable (la valeur est automatiquement convertie en chaîne), par défaut "window" et "buffer" pointent vers la fenêtre et le tampon courants.
+  8. une chaîne inversée (format : "rev:xxx" ou "revscr:xxx")
+  9. une chaîne répétée (format : "repeat:nombre,chaîne")
+  10. longueur d'une chaîne (format : "length:xxx" ou "lengthscr:xxx")
+  11. découpage d'une chaîne (format : "split:nombre,séparateurs,flags,xxx")
+  12. découpage de paramètres shell (format : "split_shell:nombre,xxx")
+  13. une couleur (format : "color:xxx", voir la "Référence API extension", fonction "color")
+  14. un modificateur (format : "modifier:nom,données,chaîne")
+  15. une info (format : "info:nom,paramètres", les paramètres sont optionnels)
+  16. une chaîne encodée/decodée en base 16, 32 ou 64 (format : "base_encode:base,xxx" ou "base_decode:base,xxx")
+  17. la date/heure courante (format : "date" ou "date:format")
+  18. une variable d'environnement (format : "env:XXX")
+  19. un opérateur ternaire (format : "if:condition?valeur_si_vrai:valeur_si_faux")
+  20. le résultat d'une expression avec parenthèses et les opérateurs + - * / // % ** (format : "calc:xxx")
+  21. un nombre entier aléatoire (format : "random:min,max")
+  22. une chaîne traduite (format : "translate:xxx")
+  23. déclaration d'une variable utilisateur (format : "define:nom,valeur")
+  24. une option (format : "fichier.section.option")
+  25. une variable locale du tampon
+  26. un hdata/variable (la valeur est automatiquement convertie en chaîne), par défaut "window" et "buffer" pointent vers la fenêtre et le tampon courants.
 Le format du hdata peut être le suivant :
   hdata.var1.var2... : démarrer avec un hdata (le pointeur doit être connu), et demander les variables l'une après l'autre (d'autres hdata peuvent être suivis)
   hdata[liste].var1.var2... : démarrer avec un hdata en utilisant une liste/pointeur/nom de pointeur, par exemple :
@@ -1410,38 +1412,39 @@ Le format du hdata peut être le suivant :
 Pour le nom du hdata et des variables, voir la "Référence API extension", fonction "weechat_hdata_get".
 
 Exemples (chaînes simples) :
-  /eval -n ${raw:${info:version}}                ==> ${info:version}
-  /eval -n ${eval_cond:${window.win_width}>100}  ==> 1
-  /eval -n ${info:version}                       ==> 0.4.3
-  /eval -n ${env:HOME}                           ==> /home/user
-  /eval -n ${weechat.look.scroll_amount}         ==> 3
-  /eval -n ${sec.data.password}                  ==> secret
-  /eval -n ${window}                             ==> 0x2549aa0
-  /eval -n ${window.buffer}                      ==> 0x2549320
-  /eval -n ${window.buffer.full_name}            ==> core.weechat
-  /eval -n ${window.buffer.number}               ==> 1
-  /eval -n ${\t}                                 ==> <tab>
-  /eval -n ${hide:-,${relay.network.password}}   ==> --------
-  /eval -n ${cut:3,+,test}                       ==> tes+
-  /eval -n ${cut:+3,+,test}                      ==> te+
-  /eval -n ${date:%H:%M:%S}                      ==> 07:46:40
-  /eval -n ${if:${info:term_width}>80?big:small} ==> big
-  /eval -n ${rev:Hello}                          ==> olleH
-  /eval -n ${repeat:5,-}                         ==> -----
-  /eval -n ${length:test}                        ==> 4
-  /eval -n ${split:1,,,abc,def,ghi}              ==> abc
-  /eval -n ${split:-1,,,abc,def,ghi}             ==> ghi
-  /eval -n ${split:count,,,abc,def,ghi}          ==> 3
-  /eval -n ${split:random,,,abc,def,ghi}         ==> def
-  /eval -n ${split_shell:1,"arg 1" arg2}         ==> arg 1
-  /eval -n ${split_shell:-1,"arg 1" arg2}        ==> arg2
-  /eval -n ${split_shell:count,"arg 1" arg2}     ==> 2
-  /eval -n ${split_shell:random,"arg 1" arg2}    ==> arg2
-  /eval -n ${calc:(5+2)*3}                       ==> 21
-  /eval -n ${random:0,10}                        ==> 3
-  /eval -n ${base_encode:64,test}                ==> dGVzdA==
-  /eval -n ${base_decode:64,dGVzdA==}            ==> test
-  /eval -n ${translate:Plugin}                   ==> Extension
+  /eval -n ${raw:${info:version}}                 ==> ${info:version}
+  /eval -n ${eval_cond:${window.win_width}>100}   ==> 1
+  /eval -n ${info:version}                        ==> 0.4.3
+  /eval -n ${env:HOME}                            ==> /home/user
+  /eval -n ${weechat.look.scroll_amount}          ==> 3
+  /eval -n ${sec.data.password}                   ==> secret
+  /eval -n ${window}                              ==> 0x2549aa0
+  /eval -n ${window.buffer}                       ==> 0x2549320
+  /eval -n ${window.buffer.full_name}             ==> core.weechat
+  /eval -n ${window.buffer.number}                ==> 1
+  /eval -n ${\t}                                  ==> <tab>
+  /eval -n ${hide:-,${relay.network.password}}    ==> --------
+  /eval -n ${cut:3,+,test}                        ==> tes+
+  /eval -n ${cut:+3,+,test}                       ==> te+
+  /eval -n ${date:%H:%M:%S}                       ==> 07:46:40
+  /eval -n ${if:${info:term_width}>80?big:small}  ==> big
+  /eval -n ${rev:Hello}                           ==> olleH
+  /eval -n ${repeat:5,-}                          ==> -----
+  /eval -n ${length:test}                         ==> 4
+  /eval -n ${split:1,,,abc,def,ghi}               ==> abc
+  /eval -n ${split:-1,,,abc,def,ghi}              ==> ghi
+  /eval -n ${split:count,,,abc,def,ghi}           ==> 3
+  /eval -n ${split:random,,,abc,def,ghi}          ==> def
+  /eval -n ${split_shell:1,"arg 1" arg2}          ==> arg 1
+  /eval -n ${split_shell:-1,"arg 1" arg2}         ==> arg2
+  /eval -n ${split_shell:count,"arg 1" arg2}      ==> 2
+  /eval -n ${split_shell:random,"arg 1" arg2}     ==> arg2
+  /eval -n ${calc:(5+2)*3}                        ==> 21
+  /eval -n ${random:0,10}                         ==> 3
+  /eval -n ${base_encode:64,test}                 ==> dGVzdA==
+  /eval -n ${base_decode:64,dGVzdA==}             ==> test
+  /eval -n ${translate:Plugin}                    ==> Extension
+  /eval -n ${define:len,${calc:5+3}}${len}x${len} ==> 8x8
 
 Exemples (conditions) :
   /eval -n -c ${window.buffer.number} > 2 ==> 0

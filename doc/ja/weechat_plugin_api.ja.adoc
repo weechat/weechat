@@ -2274,7 +2274,7 @@ str3 = weechat.string_input_for_buffer("//test")  # "/test"
 
 // TRANSLATION MISSING
 _WeeChat ≥ 0.4.0, updated in 0.4.2, 0.4.3, 1.0, 1.1, 1.2, 1.3, 1.6, 1.8, 2.0,
-2.2, 2.3, 2.7, 2.9, 3.1, 3.2 and 3.3._
+2.2, 2.3, 2.7, 2.9, 3.1, 3.2, 3.3 and 3.4._
 
 式を評価して文字列として返す。`+${variable}+`
 という書式で書かれた特殊変数は展開されます (以下の表を参照)。
@@ -2603,6 +2603,13 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
   `+${raw:${info:version}}+` |
   `+${info:version}+`
 
+// TRANSLATION MISSING
+| `+${name}+` +
+  _(WeeChat ≥ 3.4)_ |
+  User variable (defined with `+${define:name,value}+`). |
+  `+${name}+` |
+  `+value+`
+
 | `+${name}+` |
   _extra_vars_ の変数 `name` の値に展開 |
   `+${name}+` |
@@ -2907,6 +2914,14 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
   `+${translate:Plugin}+` |
   `+Extension+` (example in French)
 
+// TRANSLATION MISSING
+| `+${define:name,value}+` +
+  _(WeeChat ≥ 3.4)_ |
+  Define a variable `name` set to `value`, which can then be used in the same
+  evaluated expression with `+${name}+`. |
+  `+${define:len,${calc:5+3}}${len}x${len}+` |
+  `+8x8+`
+
 | `+${sec.data.name}+` |
   セキュアデータ `name` の値 |
   `+${sec.data.libera_pass}+` |
@@ -2924,7 +2939,7 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
 
 | `+${pointer}+` |
   _pointers_ の変数 `pointer` の値に展開 |
-  `+${my_pointer}+` |
+  `+${buffer}+` |
   `+0x1234abcd+`
 
 // TRANSLATION MISSING
