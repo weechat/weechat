@@ -2572,22 +2572,21 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
   `+4+` +
   `+14+`
 
-// TRANSLATION MISSING
 | `+${split:number,seps,flags,xxx}+` +
   _(WeeChat ≥ 3.3)_ |
-  Split string, and return, according to `number`: +
-  - `count`: the number of items after split +
-  - `random`: a random item +
-  - integer ≥ 1: the item by index (1 = first item) +
-  - integer ≤ -1: the item by index from the end (-1 = last item, -2 = penultimate item, etc.), +
-  `seps` is a list of chars that are used as separators (if empty, a comma is used), +
-  `flags` is a list of flags separated by `+`: +
-  - `strip_left`: strip separators on the left (beginning of string) +
-  - `strip_right`: strip separators on the right (end of string) +
-  - `collapse_seps`: collapse multiple consecutive separators into a single one +
-  - `keep_eol`: keep end of line for each value +
-  - `strip_items=xyz`: strip chars `x`, `y` and `z` from beginning/end of items +
-  - `max_items=N`: return max N items |
+ Дели стринг и враћа сагласно са `number`: +
+  - `count`: број ставки након поделе +
+  - `random`: произвољну ставку +
+  - цео број ≥ 1: ставку са индексом (1 = прва ставка) +
+  - цео број ≤ -1: ставку са индеком од краја (-1 = последња ставка, -2 = претпоследња ставка, итд.), +
+  `seps` је листа карактера који се користе као граничници (ако је празно, користи се запета), +
+  `flags` је листа заставица раздвојена са `+`: +
+  - `strip_left`: уклања граничнике са леве стране (почетка стринга) +
+  - `strip_right`: уклања граничнике са десне стране (краја стринга) +
+  - `collapse_seps`: стапа више узастопних граничника у један +
+  - `keep_eol`: задржава прелом линије за сваку вредност +
+  - `strip_items=xyz`: уклања карактере `x`, `y` и `z` са почетка/краја ставки +
+  - `max_items=N`: враћа максимално N ставки |
   `+${split:1,,,abc,def,ghi}+` +
   `+${split:-1,,,abc,def,ghi}+` +
   `+${split:count,,,abc,def,ghi}+` +
@@ -2607,14 +2606,13 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
   `+is+` +
   `+is a test+`
 
-// TRANSLATION MISSING
 | `+${split_shell:number,xxx}+` +
   _(WeeChat ≥ 3.3)_ |
-  Split shell arguments, and return, according to `number`: +
-  - `count`: the number of arguments after split +
-  - `random`: a random argument +
-  - integer ≥ 1: the argument by index (1 = first argument) +
-  - integer ≤ -1: the argument by index from the end (-1 = last argument, -2 = penultimate argument, etc.) |
+  Дели аргументе љуске и враћа сагласно са `number`: +
+  - `count`: број аргумената након поделе +
+  - `random`: произвољни аргумент +
+  - цео број ≥ 1: аргумент по индексу (1 = први аргумент) +
+  - цео број ≤ -1: аргумент по индексу од краја (-1 = последњи аргумент, -2 = претпоследњи аргумент, итд.) |
   `+${split_shell:1,"first arg" arg2}+` +
   `+${split_shell:-1,"first arg" arg2}+` +
   `+${split_shell:count,"first arg" arg2}+` +
