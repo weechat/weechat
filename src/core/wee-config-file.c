@@ -1748,6 +1748,9 @@ config_file_option_value_to_string (struct t_config_option *option,
     const char *ptr_value;
     int enabled, length;
 
+    if (!option)
+        return NULL;
+
     if ((default_value && !option->default_value)
         || (!default_value && !option->value))
     {
