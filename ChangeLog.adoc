@@ -24,6 +24,7 @@ New features::
 
 Bug fixes::
 
+  * api: fix search of option when the section is not given in functions config_search_option and config_search_section_option
   * irc: fix parsing of TAGMSG message when there is a colon before the channel
 
 [[v3.3]]

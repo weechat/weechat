@@ -847,7 +847,7 @@ config_file_search_option (struct t_config_file *config_file,
             if (rc == 0)
                 return ptr_option;
             else if (rc < 0)
-                return NULL;
+                break;
         }
     }
     else if (config_file)
@@ -862,7 +862,7 @@ config_file_search_option (struct t_config_file *config_file,
                 if (rc == 0)
                     return ptr_option;
                 else if (rc < 0)
-                    return NULL;
+                    break;
             }
         }
     }
@@ -908,7 +908,7 @@ config_file_search_section_option (struct t_config_file *config_file,
                 return;
             }
             else if (rc < 0)
-                return;
+                break;
         }
     }
     else if (config_file)
@@ -927,7 +927,7 @@ config_file_search_section_option (struct t_config_file *config_file,
                     return;
                 }
                 else if (rc < 0)
-                    return;
+                    break;
             }
         }
     }
