@@ -835,6 +835,9 @@ config_file_search_option (struct t_config_file *config_file,
     struct t_config_option *ptr_option;
     int rc;
 
+    if (!option_name)
+        return NULL;
+
     if (section)
     {
         for (ptr_option = section->last_option; ptr_option;
@@ -844,7 +847,7 @@ config_file_search_option (struct t_config_file *config_file,
             if (rc == 0)
                 return ptr_option;
             else if (rc < 0)
-                return NULL;
+                break;
         }
     }
     else if (config_file)
@@ -859,7 +862,7 @@ config_file_search_option (struct t_config_file *config_file,
                 if (rc == 0)
                     return ptr_option;
                 else if (rc < 0)
-                    return NULL;
+                    break;
             }
         }
     }
@@ -889,6 +892,9 @@ config_file_search_section_option (struct t_config_file *config_file,
     *section_found = NULL;
     *option_found = NULL;
 
+    if (!option_name)
+        return;
+
     if (section)
     {
         for (ptr_option = section->last_option; ptr_option;
@@ -902,7 +908,7 @@ config_file_search_section_option (struct t_config_file *config_file,
                 return;
             }
             else if (rc < 0)
-                return;
+                break;
         }
     }
     else if (config_file)
@@ -921,7 +927,7 @@ config_file_search_section_option (struct t_config_file *config_file,
                     return;
                 }
                 else if (rc < 0)
-                    return;
+                    break;
             }
         }
     }
@@ -952,6 +958,9 @@ config_file_search_with_string (const char *option_name,
         *option = NULL;
     if (pos_option_name)
         *pos_option_name = NULL;
+
+    if (!option_name)
+        return;
 
     ptr_config = NULL;
     ptr_section = NULL;
@@ -1738,6 +1747,9 @@ config_file_option_value_to_string (struct t_config_option *option,
     char *value;
     const char *ptr_value;
     int enabled, length;
+
+    if (!option)
+        return NULL;
 
     if ((default_value && !option->default_value)
         || (!default_value && !option->value))
