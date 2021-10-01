@@ -1993,6 +1993,32 @@ option: オプションの名前 (value を指定せずにワイルドカード 
     /set env ABC ""
 ----
 
+[[command_weechat_toggle]]
+* `+toggle+`: toggle value of a config option
+
+----
+/toggle  <option> [<value> [<value>...]]
+
+option: name of an option
+ value: possible values for the option (values are split like the shell command arguments: quotes can be used to preserve spaces at the beginning/end of values)
+
+Behavior:
+  - only an option of type boolean or string can be toggled without a value:
+      - boolean: toggle between on/off according to current value
+      - string: toggle between empty string and default value (works only if empty string is allowed for the option)
+  - with a single value given, toggle between this value and the default value of option
+  - with multiple values given, toggle between these values: the value used is the one following the current value of option; if the current value of option is not in list, the first value in the list is used
+  - the special value "null" can be given, but only as first value in the list and without quotes around.
+
+Examples:
+  toggle display of time in chat area (without displaying the new value used):
+    /mute /toggle weechat.look.buffer_time_format
+  switch format of time in chat area (with seconds, without seconds, disabled):
+    /toggle weechat.look.buffer_time_format "%H:%M:%S" "%H:%M" ""
+  toggle autojoin of #weechat channel on libera server:
+    /toggle irc.server.libera.autojoin null #weechat
+----
+
 [[command_weechat_unset]]
 * `+unset+`: オプションのアンセット/リセット
 

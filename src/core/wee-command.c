@@ -6303,6 +6303,78 @@ COMMAND_CALLBACK(set)
 }
 
 /*
+ * Callback for command "/toggle": toggles value of configuration option.
+ */
+
+COMMAND_CALLBACK(toggle)
+{
+    char **sargv;
+    int sargc, rc;
+    struct t_config_option *ptr_option;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) buffer;
+
+    COMMAND_MIN_ARGS(2, "");
+
+    config_file_search_with_string (argv[1], NULL, NULL, &ptr_option, NULL);
+    if (!ptr_option)
+    {
+        gui_chat_printf (NULL,
+                         _("%sOption \"%s\" not found"),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                         argv[1]);
+        return WEECHAT_RC_OK;
+    }
+
+    if ((ptr_option->type != CONFIG_OPTION_TYPE_BOOLEAN)
+        && (ptr_option->type != CONFIG_OPTION_TYPE_STRING))
+    {
+        /* only boolean options can be toggled without a value */
+        COMMAND_MIN_ARGS(3, "");
+    }
+
+    if (argc > 2)
+    {
+        sargv = string_split_shell (argv_eol[2], &sargc);
+        if (!sargv)
+            COMMAND_ERROR;
+        if (string_strcasecmp (argv[2], WEECHAT_CONFIG_OPTION_NULL) == 0)
+        {
+            if (sargv[0])
+                free (sargv[0]);
+            sargv[0] = NULL;
+        }
+    }
+    else
+    {
+        sargv = NULL;
+        sargc = 0;
+    }
+
+    rc = config_file_option_toggle (ptr_option, (const char **)sargv, sargc, 1);
+    string_free_split (sargv);
+    switch (rc)
+    {
+        case WEECHAT_CONFIG_OPTION_SET_ERROR:
+            gui_chat_printf (NULL,
+                             _("%sFailed to set option \"%s\""),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             argv[1]);
+            return WEECHAT_RC_OK;
+        case WEECHAT_CONFIG_OPTION_SET_OK_CHANGED:
+            command_set_display_option (ptr_option, _("Option changed: "));
+            break;
+        default:
+            break;
+    }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Unsets/resets one option.
  */
 
@@ -8425,6 +8497,42 @@ command_init ()
         " || diff %(config_options)|%*"
         " || env %(env_vars) %(env_value)",
         &command_set, NULL, NULL);
+    hook_command (
+        NULL, "toggle",
+        N_("toggle value of a config option"),
+        N_("<option> [<value> [<value>...]]"),
+        N_("option: name of an option\n"
+           " value: possible values for the option (values are split like the "
+           "shell command arguments: quotes can be used to preserve spaces at "
+           "the beginning/end of values)\n"
+           "\n"
+           "Behavior:\n"
+           "  - only an option of type boolean or string can be toggled "
+           "without a value:\n"
+           "      - boolean: toggle between on/off according to current value\n"
+           "      - string: toggle between empty string and default value "
+           "(works only if empty string is allowed for the option)\n"
+           "  - with a single value given, toggle between this value and "
+           "the default value of option\n"
+           "  - with multiple values given, toggle between these values: "
+           "the value used is the one following the current value of option; "
+           "if the current value of option is not in list, the first value in "
+           "the list is used\n"
+           "  - the special value \"null\" can be given, but only as first "
+           "value in the list and without quotes around.\n"
+           "\n"
+           "Examples:\n"
+           "  toggle display of time in chat area (without displaying the "
+           "new value used):\n"
+           "    /mute /toggle weechat.look.buffer_time_format\n"
+           "  switch format of time in chat area (with seconds, without "
+           "seconds, disabled):\n"
+           "    /toggle weechat.look.buffer_time_format \"%H:%M:%S\" "
+           "\"%H:%M\" \"\"\n"
+           "  toggle autojoin of #weechat channel on libera server:\n"
+           "    /toggle irc.server.libera.autojoin null #weechat"),
+        "%(config_options) %(config_option_values)",
+        &command_toggle, NULL, NULL);
     hook_command (
         NULL, "unset",
         N_("unset/reset config options"),

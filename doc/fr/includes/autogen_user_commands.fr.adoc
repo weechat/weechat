@@ -1993,6 +1993,32 @@ Exemples :
     /set env ABC ""
 ----
 
+[[command_weechat_toggle]]
+* `+toggle+`: basculer la valeur d'une option de configuration
+
+----
+/toggle  <option> [<valeur> [<valeur>...]]
+
+option : nom d'une option
+valeur : valeurs possibles pour l'option (les valeurs sont découpées comme le les paramètres d'une commande par le shell : des guillemets peuvent être utilisés pour préserver les espaces au début et à la fin des valeurs)
+
+Comportement :
+  - seule une option de type booléen ou chaîne peut être basculée sans valeur :
+      - booléen : basculer on/off selon la valeur courante
+      - chaîne : basculer entre chaîne vide et la valeur par défaut (fonctionne seulement si une chaîne vide est autorisée pour l'option)
+  - avec une seule valeur donnée, basculer entre cette valeur et la valeur par défaut de l'option
+  - avec plusieurs valeurs données, basculer entre les valeurs : la valeur utilisée est celle qui suit la valeur courante de l'option ; si la valeur courante n'est pas dans la liste, la première valeur de la liste est utilisée
+  - la valeur spéciale "null" peut être donnée, mais seulement comme première valeur dans la liste et sans guillemets autour.
+
+Exemples :
+  basculer l'affichage de l'heure dans la zone de discussion (sans afficher la nouvelle valeur utilisée) :
+    /mute /toggle weechat.look.buffer_time_format
+  basculer le format de l'heure dans la zone de discussion (avec secondes, sans secondes, désactivé) :
+    /toggle weechat.look.buffer_time_format "%H:%M:%S" "%H:%M" ""
+  basculer le "join" automatique du canal #weechat sur le serveur libera :
+    /toggle irc.server.libera.autojoin null #weechat
+----
+
 [[command_weechat_unset]]
 * `+unset+`: supprimer/réinitialiser des options de configuration
 
