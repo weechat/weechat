@@ -1994,28 +1994,28 @@ Beispiele:
 ----
 
 [[command_weechat_toggle]]
-* `+toggle+`: toggle value of a config option
+* `+toggle+`: den Wert einer Konfigurationsoption umschalten
 
 ----
 /toggle  <option> [<value> [<value>...]]
 
-option: name of an option
- value: possible values for the option (values are split like the shell command arguments: quotes can be used to preserve spaces at the beginning/end of values)
+option: Name einer Option
+ value: mögliche Werte für die Option (Werte werden wie bei Shell-Befehlsargumente aufgeteilt: Anführungszeichen können verwendet werden, um Leerzeichen am Anfang/Ende von Werten zu nutzen)
 
-Behavior:
-  - only an option of type boolean or string can be toggled without a value:
-      - boolean: toggle between on/off according to current value
-      - string: toggle between empty string and default value (works only if empty string is allowed for the option)
-  - with a single value given, toggle between this value and the default value of option
-  - with multiple values given, toggle between these values: the value used is the one following the current value of option; if the current value of option is not in list, the first value in the list is used
-  - the special value "null" can be given, but only as first value in the list and without quotes around.
+Verhalten:
+  - nur eine Option vom Typ Boolean oder String kann ohne Wert umgeschaltet werden:
+      - boolean: zwischen Ein/Aus Status umschalten, entsprechend dem aktuellen Wert
+      - string: Umschalten zwischen leerem String und Standardwert (funktioniert nur, wenn für die Option ein leerer String erlaubt ist)
+  - mit einem vorgegeben einzelnen Wert, zwischen diesem Wert und dem Standardwert der Option umschalten
+  - sind mehrere Werte angegeben, schalten Sie zwischen diesen Werten um: Der verwendete Wert ist der, der dem aktuellen Wert der Option folgt; wenn der aktuelle Wert der Option nicht in der Liste enthalten ist, wird der erste Wert aus der Liste verwendet
+  - der Sonderwert "null" kann genutzt werden, jedoch nur als erster Wert in der Liste und ohne Anführungszeichen.
 
-Examples:
-  toggle display of time in chat area (without displaying the new value used):
+Beispiele:
+  die Uhrzeit im Chat-Bereich umschalten (die Ausgabe des neuen Wertes wird unterdrückt):
     /mute /toggle weechat.look.buffer_time_format
-  switch format of time in chat area (with seconds, without seconds, disabled):
+  Zeitformat im Chat-Bereich ändern (mit Sekunden, ohne Sekunden, deaktiviert):
     /toggle weechat.look.buffer_time_format "%H:%M:%S" "%H:%M" ""
-  toggle autojoin of #weechat channel on libera server:
+  den automatischen Beitritt des #weechat-Kanals auf dem libera-Server umschalten:
     /toggle irc.server.libera.autojoin null #weechat
 ----
 
