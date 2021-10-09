@@ -715,6 +715,9 @@ irc_protocol_cap_sync (struct t_irc_server *server, int sasl)
  * Callback for the IRC message "CAP": client capability.
  *
  * Message looks like:
+ *   CAP * LS :identify-msg multi-prefix sasl
+ *   CAP * ACK :sasl
+ *   CAP * NAK :sasl
  *   :server CAP * LS :identify-msg multi-prefix sasl
  *   :server CAP * ACK :sasl
  *   :server CAP * NAK :sasl
@@ -725,24 +728,26 @@ IRC_PROTOCOL_CALLBACK(cap)
     char *ptr_caps, **caps_supported, **caps_added, **caps_removed;
     char **caps_enabled, *pos_value, *str_name, **str_caps;
     char str_msg_auth[512], **str_caps_enabled, **str_caps_disabled;
-    int num_caps_supported, num_caps_added, num_caps_removed;
+    int arg_cmd, num_caps_supported, num_caps_added, num_caps_removed;
     int num_caps_enabled, sasl_to_do, sasl_mechanism;
     int i, timeout, last_reply;
 
-    IRC_PROTOCOL_MIN_ARGS(4);
+    arg_cmd = (argv[0][0] == ':') ? 1 : 0;
 
-    if (strcmp (argv[3], "LS") == 0)
+    IRC_PROTOCOL_MIN_ARGS(arg_cmd + 3);
+
+    if (strcmp (argv[arg_cmd + 2], "LS") == 0)
     {
-        if (argc > 4)
+        if (argc > arg_cmd + 3)
         {
-            if (argc > 5 && (strcmp (argv[4], "*") == 0))
+            if (argc > arg_cmd + 4 && (strcmp (argv[arg_cmd + 3], "*") == 0))
             {
-                ptr_caps = argv_eol[5];
+                ptr_caps = argv_eol[arg_cmd + 4];
                 last_reply = 0;
             }
             else
             {
-                ptr_caps = argv_eol[4];
+                ptr_caps = argv_eol[arg_cmd + 3];
                 last_reply = 1;
             }
 
@@ -814,18 +819,18 @@ IRC_PROTOCOL_CALLBACK(cap)
                 weechat_string_free_split (caps_supported);
         }
     }
-    else if (strcmp (argv[3], "LIST") == 0)
+    else if (strcmp (argv[arg_cmd + 2], "LIST") == 0)
     {
-        if (argc > 4)
+        if (argc > arg_cmd + 3)
         {
-            if (argc > 5 && (strcmp (argv[4], "*") == 0))
+            if (argc > arg_cmd + 4 && (strcmp (argv[arg_cmd + 3], "*") == 0))
             {
-                ptr_caps = argv_eol[5];
+                ptr_caps = argv_eol[arg_cmd + 4];
                 last_reply = 0;
             }
             else
             {
-                ptr_caps = argv_eol[4];
+                ptr_caps = argv_eol[arg_cmd + 3];
                 last_reply = 1;
             }
 
@@ -893,11 +898,12 @@ IRC_PROTOCOL_CALLBACK(cap)
                 weechat_string_free_split (caps_enabled);
         }
     }
-    else if (strcmp (argv[3], "ACK") == 0)
+    else if (strcmp (argv[arg_cmd + 2], "ACK") == 0)
     {
-        if (argc > 4)
+        if (argc > arg_cmd + 3)
         {
-            ptr_caps = (argv_eol[4][0] == ':') ? argv_eol[4] + 1 : argv_eol[4];
+            ptr_caps = (argv_eol[arg_cmd + 3][0] == ':') ?
+                argv_eol[arg_cmd + 3] + 1 : argv_eol[arg_cmd + 3];
 
             sasl_to_do = 0;
             str_caps_enabled = weechat_string_dyn_alloc (128);
@@ -996,11 +1002,12 @@ IRC_PROTOCOL_CALLBACK(cap)
             }
         }
     }
-    else if (strcmp (argv[3], "NAK") == 0)
+    else if (strcmp (argv[arg_cmd + 2], "NAK") == 0)
     {
-        if (argc > 4)
+        if (argc > arg_cmd + 3)
         {
-            ptr_caps = (argv_eol[4][0] == ':') ? argv_eol[4] + 1 : argv_eol[4];
+            ptr_caps = (argv_eol[arg_cmd + 3][0] == ':') ?
+                argv_eol[arg_cmd + 3] + 1 : argv_eol[arg_cmd + 3];
             weechat_printf_date_tags (
                 server->buffer, date, NULL,
                 _("%s%s: client capability, refused: %s"),
@@ -1009,11 +1016,12 @@ IRC_PROTOCOL_CALLBACK(cap)
                 irc_server_sendf (server, 0, NULL, "CAP END");
         }
     }
-    else if (strcmp (argv[3], "NEW") == 0)
+    else if (strcmp (argv[arg_cmd + 2], "NEW") == 0)
     {
-        if (argc > 4)
+        if (argc > arg_cmd + 3)
         {
-            ptr_caps = (argv_eol[4][0] == ':') ? argv_eol[4] + 1 : argv_eol[4];
+            ptr_caps = (argv_eol[arg_cmd + 3][0] == ':') ?
+                argv_eol[arg_cmd + 3] + 1 : argv_eol[arg_cmd + 3];
             weechat_printf_date_tags (
                 server->buffer, date, NULL,
                 _("%s%s: client capability, now available: %s"),
@@ -1056,11 +1064,12 @@ IRC_PROTOCOL_CALLBACK(cap)
             irc_protocol_cap_sync (server, 0);
         }
     }
-    else if (strcmp (argv[3], "DEL") == 0)
+    else if (strcmp (argv[arg_cmd + 2], "DEL") == 0)
     {
-        if (argc > 4)
+        if (argc > arg_cmd + 3)
         {
-            ptr_caps = (argv_eol[4][0] == ':') ? argv_eol[4] + 1 : argv_eol[4];
+            ptr_caps = (argv_eol[arg_cmd + 3][0] == ':') ?
+                argv_eol[arg_cmd + 3] + 1 : argv_eol[arg_cmd + 3];
             weechat_printf_date_tags (
                 server->buffer, date, NULL,
                 _("%s%s: client capability, removed: %s"),

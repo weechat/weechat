@@ -538,8 +538,19 @@ TEST(IrcProtocolWithServer, cap)
     server_recv (":server 001 alice");
 
     /* not enough arguments */
+    server_recv ("CAP");
+    server_recv ("CAP *");
     server_recv (":server CAP");
     server_recv (":server CAP *");
+
+    server_recv ("CAP * LS :identify-msg multi-prefix sasl");
+    server_recv ("CAP * LS * :identify-msg multi-prefix sasl");
+    server_recv ("CAP * LIST :identify-msg multi-prefix sasl");
+    server_recv ("CAP * LIST * :identify-msg multi-prefix sasl");
+    server_recv ("CAP * NEW :identify-msg multi-prefix sasl");
+    server_recv ("CAP * DEL :identify-msg multi-prefix sasl");
+    server_recv ("CAP * ACK :sasl");
+    server_recv ("CAP * NAK :sasl");
 
     server_recv (":server CAP * LS :identify-msg multi-prefix sasl");
     server_recv (":server CAP * LS * :identify-msg multi-prefix sasl");
