@@ -35,7 +35,7 @@
                                  int argc,                              \
                                  char **argv,                           \
                                  char **argv_eol,                       \
-                                 char **params,                         \
+                                 const char **params,                   \
                                  int num_params)
 #define IRCB(__message, __decode_color, __keep_trailing_spaces,         \
              __func_cb)                                                 \
@@ -111,7 +111,7 @@ typedef int (t_irc_recv_func)(struct t_irc_server *server,
                               const char *host, const char *command,
                               int ignored,
                               int argc, char **argv, char **argv_eol,
-                              char **params, int num_params);
+                              const char **params, int num_params);
 
 struct t_irc_protocol_msg
 {

@@ -46,6 +46,7 @@ extern const char *irc_protocol_nick_address (struct t_irc_server *server,
                                               struct t_irc_nick *nick,
                                               const char *nickname,
                                               const char *address);
+extern char *irc_protocol_string_params (const char **params, int start_arg);
 extern char *irc_protocol_cap_to_enable (const char *capabilities,
                                          int sasl_requested);
 }
@@ -303,6 +304,43 @@ TEST(IrcProtocol, ParseTime)
     /* valid time as timestamp */
     LONGS_EQUAL(1547386699, irc_protocol_parse_time ("1547386699.123"));
     LONGS_EQUAL(1547386699, irc_protocol_parse_time ("1547386699"));
+}
+
+/*
+ * Tests functions:
+ *   irc_protocol_string_params
+ */
+
+TEST(IrcProtocol, StringParams)
+{
+    char *str;
+    const char *params_empty[] = { "", NULL };
+    const char *params_1[] = { "param1", NULL };
+    const char *params_2[] = { "param1", "param2", NULL };
+    const char *params_3[] = { "param1", "param2", "param3", NULL };
+
+    /* invalid arguments */
+    WEE_TEST_STR("", irc_protocol_string_params (NULL, -1));
+    WEE_TEST_STR("", irc_protocol_string_params (NULL, 0));
+
+    /* empty parameter */
+    WEE_TEST_STR("", irc_protocol_string_params (params_empty, 0));
+    WEE_TEST_STR("", irc_protocol_string_params (params_empty, 1));
+
+    /* one parameter */
+    WEE_TEST_STR("param1", irc_protocol_string_params (params_1, 0));
+    WEE_TEST_STR("", irc_protocol_string_params (params_1, 1));
+
+    /* two parameters */
+    WEE_TEST_STR("param1 param2", irc_protocol_string_params (params_2, 0));
+    WEE_TEST_STR("param2", irc_protocol_string_params (params_2, 1));
+    WEE_TEST_STR("", irc_protocol_string_params (params_2, 2));
+
+    /* three parameters */
+    WEE_TEST_STR("param1 param2 param3", irc_protocol_string_params (params_3, 0));
+    WEE_TEST_STR("param2 param3", irc_protocol_string_params (params_3, 1));
+    WEE_TEST_STR("param3", irc_protocol_string_params (params_3, 2));
+    WEE_TEST_STR("", irc_protocol_string_params (params_3, 3));
 }
 
 TEST_GROUP(IrcProtocolWithServer)

@@ -261,6 +261,47 @@ irc_protocol_parse_time (const char *time)
 }
 
 /*
+ * Builds a string with concatenation of IRC command parameters.
+ *
+ * Note: result must be free after use.
+ */
+
+char *
+irc_protocol_string_params (const char **params, int start_arg)
+{
+    int i, length;
+    char *result;
+
+    if (!params || (start_arg < 0))
+        return strdup ("");
+
+    length = 0;
+    for (i = 0; params[i]; i++)
+    {
+        if (i >= start_arg)
+            length += strlen (params[i]) + 1;
+    }
+
+    if (length == 0)
+        return strdup ("");
+
+    result = malloc (length + 1);
+    if (!result)
+        return NULL;
+
+    result[0] = '\0';
+
+    for (i = start_arg; params[i]; i++)
+    {
+        strcat (result, params[i]);
+        if (params[i + 1])
+            strcat (result, " ");
+    }
+
+    return result;
+}
+
+/*
  * Prints a FAIL/WARN/NOTE command.
  *
  * Called by callbacks for commands: FAIL, WARN, NOTE.
@@ -716,53 +757,48 @@ irc_protocol_cap_sync (struct t_irc_server *server, int sasl)
  *   CAP * LS :identify-msg multi-prefix sasl
  *   CAP * ACK :sasl
  *   CAP * NAK :sasl
- *   :server CAP * LS :identify-msg multi-prefix sasl
- *   :server CAP * ACK :sasl
- *   :server CAP * NAK :sasl
  */
 
 IRC_PROTOCOL_CALLBACK(cap)
 {
-    char *ptr_caps, **caps_supported, **caps_added, **caps_removed;
+    char **caps_supported, **caps_added, **caps_removed;
     char **caps_enabled, *pos_value, *str_name, **str_caps;
-    char str_msg_auth[512], **str_caps_enabled, **str_caps_disabled;
-    int arg_cmd, num_caps_supported, num_caps_added, num_caps_removed;
+    char str_msg_auth[512], **str_caps_enabled, **str_caps_disabled, *str_params;
+    int arg_caps, num_caps_supported, num_caps_added, num_caps_removed;
     int num_caps_enabled, sasl_to_do, sasl_mechanism;
-    int i, timeout, last_reply;
+    int i, j, timeout, last_reply;
 
-    arg_cmd = (argv[0][0] == ':') ? 1 : 0;
+    IRC_PROTOCOL_MIN_PARAMS(2);
 
-    IRC_PROTOCOL_MIN_ARGS(arg_cmd + 3);
-
-    if (strcmp (argv[arg_cmd + 2], "LS") == 0)
+    if (strcmp (params[1], "LS") == 0)
     {
-        if (argc > arg_cmd + 3)
+        if (num_params < 3)
+            return WEECHAT_RC_OK;
+
+        if ((num_params > 3) && (strcmp (params[2], "*") == 0))
         {
-            if (argc > arg_cmd + 4 && (strcmp (argv[arg_cmd + 3], "*") == 0))
-            {
-                ptr_caps = argv_eol[arg_cmd + 4];
-                last_reply = 0;
-            }
-            else
-            {
-                ptr_caps = argv_eol[arg_cmd + 3];
-                last_reply = 1;
-            }
+            arg_caps = 3;
+            last_reply = 0;
+        }
+        else
+        {
+            arg_caps = 2;
+            last_reply = 1;
+        }
 
-            if (!server->checking_cap_ls)
-            {
-                weechat_hashtable_remove_all (server->cap_ls);
-                server->checking_cap_ls = 1;
-            }
+        if (!server->checking_cap_ls)
+        {
+            weechat_hashtable_remove_all (server->cap_ls);
+            server->checking_cap_ls = 1;
+        }
 
-            if (last_reply)
-                server->checking_cap_ls = 0;
+        if (last_reply)
+            server->checking_cap_ls = 0;
 
-            if (ptr_caps[0] == ':')
-                ptr_caps++;
-
+        for (i = arg_caps; i < num_params; i++)
+        {
             caps_supported = weechat_string_split (
-                ptr_caps,
+                params[i],
                 " ",
                 NULL,
                 WEECHAT_STRING_SPLIT_STRIP_LEFT
@@ -770,82 +806,79 @@ IRC_PROTOCOL_CALLBACK(cap)
                 | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
                 0,
                 &num_caps_supported);
-            if (caps_supported)
+            if (!caps_supported)
+                continue;
+            for (j = 0; j < num_caps_supported; j++)
             {
-                for (i = 0; i < num_caps_supported; i++)
+                pos_value = strstr (caps_supported[j], "=");
+                if (pos_value)
                 {
-                    pos_value = strstr (caps_supported[i], "=");
-                    if (pos_value)
-                    {
-                        str_name = strndup (caps_supported[i],
-                                            pos_value - caps_supported[i]);
-                        if (str_name)
-                        {
-                            weechat_hashtable_set (server->cap_ls,
-                                                   str_name, pos_value + 1);
-                            free (str_name);
-                        }
-                    }
-                    else
+                    str_name = strndup (caps_supported[j],
+                                        pos_value - caps_supported[j]);
+                    if (str_name)
                     {
                         weechat_hashtable_set (server->cap_ls,
-                                               caps_supported[i], NULL);
+                                               str_name, pos_value + 1);
+                        free (str_name);
                     }
                 }
+                else
+                {
+                    weechat_hashtable_set (server->cap_ls,
+                                           caps_supported[j], NULL);
+                }
             }
-
-            if (last_reply)
-            {
-                str_caps = weechat_string_dyn_alloc (128);
-                weechat_hashtable_map_string (server->cap_ls,
-                                              irc_protocol_cap_print_cb,
-                                              str_caps);
-                weechat_printf_date_tags (
-                    server->buffer, date, NULL,
-                    _("%s%s: client capability, server supports: %s"),
-                    weechat_prefix ("network"),
-                    IRC_PLUGIN_NAME,
-                    *str_caps);
-                weechat_string_dyn_free (str_caps, 1);
-            }
-
-            /* auto-enable capabilities only when connecting to server */
-            if (last_reply && !server->is_connected)
-                irc_protocol_cap_sync (server, 1);
-
-            if (caps_supported)
-                weechat_string_free_split (caps_supported);
+            weechat_string_free_split (caps_supported);
         }
-    }
-    else if (strcmp (argv[arg_cmd + 2], "LIST") == 0)
-    {
-        if (argc > arg_cmd + 3)
+
+        if (last_reply)
         {
-            if (argc > arg_cmd + 4 && (strcmp (argv[arg_cmd + 3], "*") == 0))
-            {
-                ptr_caps = argv_eol[arg_cmd + 4];
-                last_reply = 0;
-            }
-            else
-            {
-                ptr_caps = argv_eol[arg_cmd + 3];
-                last_reply = 1;
-            }
+            str_caps = weechat_string_dyn_alloc (128);
+            weechat_hashtable_map_string (server->cap_ls,
+                                          irc_protocol_cap_print_cb,
+                                          str_caps);
+            weechat_printf_date_tags (
+                server->buffer, date, NULL,
+                _("%s%s: client capability, server supports: %s"),
+                weechat_prefix ("network"),
+                IRC_PLUGIN_NAME,
+                *str_caps);
+            weechat_string_dyn_free (str_caps, 1);
+        }
 
-            if (!server->checking_cap_list)
-            {
-                weechat_hashtable_remove_all (server->cap_list);
-                server->checking_cap_list = 1;
-            }
+        /* auto-enable capabilities only when connecting to server */
+        if (last_reply && !server->is_connected)
+            irc_protocol_cap_sync (server, 1);
+    }
+    else if (strcmp (params[1], "LIST") == 0)
+    {
+        if (num_params < 3)
+            return WEECHAT_RC_OK;
 
-            if (last_reply)
-                server->checking_cap_list = 0;
+        if ((num_params > 3) && (strcmp (params[2], "*") == 0))
+        {
+            arg_caps = 3;
+            last_reply = 0;
+        }
+        else
+        {
+            arg_caps = 2;
+            last_reply = 1;
+        }
 
-            if (ptr_caps[0] == ':')
-                ptr_caps++;
+        if (!server->checking_cap_list)
+        {
+            weechat_hashtable_remove_all (server->cap_list);
+            server->checking_cap_list = 1;
+        }
 
+        if (last_reply)
+            server->checking_cap_list = 0;
+
+        for (i = arg_caps; i < num_params; i++)
+        {
             caps_enabled = weechat_string_split (
-                ptr_caps,
+                params[i],
                 " ",
                 NULL,
                 WEECHAT_STRING_SPLIT_STRIP_LEFT
@@ -853,62 +886,59 @@ IRC_PROTOCOL_CALLBACK(cap)
                 | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
                 0,
                 &num_caps_enabled);
-            if (caps_enabled)
+            if (!caps_enabled)
+                continue;
+            for (j = 0; j < num_caps_enabled; j++)
             {
-                for (i = 0; i < num_caps_enabled; i++)
+                pos_value = strstr (caps_enabled[j], "=");
+                if (pos_value)
                 {
-                    pos_value = strstr (caps_enabled[i], "=");
-                    if (pos_value)
-                    {
-                        str_name = strndup (caps_enabled[i],
-                                            pos_value - caps_enabled[i]);
-                        if (str_name)
-                        {
-                            weechat_hashtable_set (server->cap_list,
-                                                   str_name, pos_value + 1);
-                            free (str_name);
-                        }
-                    }
-                    else
+                    str_name = strndup (caps_enabled[j],
+                                        pos_value - caps_enabled[j]);
+                    if (str_name)
                     {
                         weechat_hashtable_set (server->cap_list,
-                                               caps_enabled[i], NULL);
+                                               str_name, pos_value + 1);
+                        free (str_name);
                     }
                 }
+                else
+                {
+                    weechat_hashtable_set (server->cap_list,
+                                           caps_enabled[j], NULL);
+                }
             }
+            weechat_string_free_split (caps_enabled);
+        }
 
-            if (last_reply)
-            {
-                str_caps = weechat_string_dyn_alloc (128);
-                weechat_hashtable_map_string (server->cap_list,
-                                              irc_protocol_cap_print_cb,
-                                              str_caps);
-                weechat_printf_date_tags (
-                    server->buffer, date, NULL,
-                    _("%s%s: client capability, currently enabled: %s"),
-                    weechat_prefix ("network"),
-                    IRC_PLUGIN_NAME,
-                    *str_caps);
-                weechat_string_dyn_free (str_caps, 1);
-            }
-
-            if (caps_enabled)
-                weechat_string_free_split (caps_enabled);
+        if (last_reply)
+        {
+            str_caps = weechat_string_dyn_alloc (128);
+            weechat_hashtable_map_string (server->cap_list,
+                                          irc_protocol_cap_print_cb,
+                                          str_caps);
+            weechat_printf_date_tags (
+                server->buffer, date, NULL,
+                _("%s%s: client capability, currently enabled: %s"),
+                weechat_prefix ("network"),
+                IRC_PLUGIN_NAME,
+                *str_caps);
+            weechat_string_dyn_free (str_caps, 1);
         }
     }
-    else if (strcmp (argv[arg_cmd + 2], "ACK") == 0)
+    else if (strcmp (params[1], "ACK") == 0)
     {
-        if (argc > arg_cmd + 3)
+        if (num_params < 3)
+            return WEECHAT_RC_OK;
+
+        sasl_to_do = 0;
+        str_caps_enabled = weechat_string_dyn_alloc (128);
+        str_caps_disabled = weechat_string_dyn_alloc (128);
+
+        for (i = 2; i < num_params; i++)
         {
-            ptr_caps = (argv_eol[arg_cmd + 3][0] == ':') ?
-                argv_eol[arg_cmd + 3] + 1 : argv_eol[arg_cmd + 3];
-
-            sasl_to_do = 0;
-            str_caps_enabled = weechat_string_dyn_alloc (128);
-            str_caps_disabled = weechat_string_dyn_alloc (128);
-
             caps_supported = weechat_string_split (
-                ptr_caps,
+                params[i],
                 " ",
                 NULL,
                 WEECHAT_STRING_SPLIT_STRIP_LEFT
@@ -916,116 +946,120 @@ IRC_PROTOCOL_CALLBACK(cap)
                 | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
                 0,
                 &num_caps_supported);
-            if (caps_supported)
+            if (!caps_supported)
+                continue;
+            for (j = 0; j < num_caps_supported; j++)
             {
-                for (i = 0; i < num_caps_supported; i++)
+                if (caps_supported[j][0] == '-')
                 {
-                    if (caps_supported[i][0] == '-')
-                    {
-                        if (*str_caps_disabled[0])
-                            weechat_string_dyn_concat (str_caps_disabled, " ", -1);
-                        weechat_string_dyn_concat (str_caps_disabled,
-                                                   caps_supported[i] + 1,
-                                                   -1);
+                    if (*str_caps_disabled[0])
+                        weechat_string_dyn_concat (str_caps_disabled, " ", -1);
+                    weechat_string_dyn_concat (str_caps_disabled,
+                                               caps_supported[j] + 1,
+                                               -1);
 
-                        weechat_hashtable_remove (server->cap_list,
-                                                  caps_supported[i] + 1);
-                    }
-                    else
-                    {
-                        if (*str_caps_enabled[0])
-                            weechat_string_dyn_concat (str_caps_enabled, " ", -1);
-                        weechat_string_dyn_concat (str_caps_enabled,
-                                                   caps_supported[i],
-                                                   -1);
-
-                        weechat_hashtable_set (server->cap_list,
-                                               caps_supported[i], NULL);
-
-                        if (strcmp (caps_supported[i], "sasl") == 0)
-                            sasl_to_do = 1;
-                    }
+                    weechat_hashtable_remove (server->cap_list,
+                                              caps_supported[j] + 1);
                 }
-                weechat_string_free_split (caps_supported);
-            }
-            if (*str_caps_enabled[0] && *str_caps_disabled[0])
-            {
-                weechat_printf_date_tags (
-                    server->buffer, date, NULL,
-                    _("%s%s: client capability, enabled: %s, disabled: %s"),
-                    weechat_prefix ("network"), IRC_PLUGIN_NAME,
-                    *str_caps_enabled, *str_caps_disabled);
-            }
-            else if (*str_caps_enabled[0])
-            {
-                weechat_printf_date_tags (
-                    server->buffer, date, NULL,
-                    _("%s%s: client capability, enabled: %s"),
-                    weechat_prefix ("network"), IRC_PLUGIN_NAME,
-                    *str_caps_enabled);
-            }
-            else if (*str_caps_disabled[0])
-            {
-                weechat_printf_date_tags (
-                    server->buffer, date, NULL,
-                    _("%s%s: client capability, disabled: %s"),
-                    weechat_prefix ("network"), IRC_PLUGIN_NAME,
-                    *str_caps_disabled);
-            }
-            weechat_string_dyn_free (str_caps_enabled, 1);
-            weechat_string_dyn_free (str_caps_disabled, 1);
-
-            if (sasl_to_do)
-            {
-                sasl_mechanism = IRC_SERVER_OPTION_INTEGER(
-                    server, IRC_SERVER_OPTION_SASL_MECHANISM);
-                if ((sasl_mechanism >= 0)
-                    && (sasl_mechanism < IRC_NUM_SASL_MECHANISMS))
+                else
                 {
-                    snprintf (str_msg_auth, sizeof (str_msg_auth),
-                              "AUTHENTICATE %s",
-                              irc_sasl_mechanism_string[sasl_mechanism]);
-                    weechat_string_toupper (str_msg_auth);
-                    irc_server_sendf (server, 0, NULL, str_msg_auth);
-                    if (server->hook_timer_sasl)
-                        weechat_unhook (server->hook_timer_sasl);
-                    timeout = IRC_SERVER_OPTION_INTEGER(
-                        server, IRC_SERVER_OPTION_SASL_TIMEOUT);
-                    server->hook_timer_sasl = weechat_hook_timer (
-                        timeout * 1000,
-                        0, 1,
-                        &irc_server_timer_sasl_cb,
-                        server, NULL);
+                    if (*str_caps_enabled[0])
+                        weechat_string_dyn_concat (str_caps_enabled, " ", -1);
+                    weechat_string_dyn_concat (str_caps_enabled,
+                                               caps_supported[j],
+                                               -1);
+
+                    weechat_hashtable_set (server->cap_list,
+                                           caps_supported[j], NULL);
+
+                    if (strcmp (caps_supported[j], "sasl") == 0)
+                        sasl_to_do = 1;
                 }
+            }
+            weechat_string_free_split (caps_supported);
+        }
+        if (*str_caps_enabled[0] && *str_caps_disabled[0])
+        {
+            weechat_printf_date_tags (
+                server->buffer, date, NULL,
+                _("%s%s: client capability, enabled: %s, disabled: %s"),
+                weechat_prefix ("network"), IRC_PLUGIN_NAME,
+                *str_caps_enabled, *str_caps_disabled);
+        }
+        else if (*str_caps_enabled[0])
+        {
+            weechat_printf_date_tags (
+                server->buffer, date, NULL,
+                _("%s%s: client capability, enabled: %s"),
+                weechat_prefix ("network"), IRC_PLUGIN_NAME,
+                *str_caps_enabled);
+        }
+        else if (*str_caps_disabled[0])
+        {
+            weechat_printf_date_tags (
+                server->buffer, date, NULL,
+                _("%s%s: client capability, disabled: %s"),
+                weechat_prefix ("network"), IRC_PLUGIN_NAME,
+                *str_caps_disabled);
+        }
+        weechat_string_dyn_free (str_caps_enabled, 1);
+        weechat_string_dyn_free (str_caps_disabled, 1);
+
+        if (sasl_to_do)
+        {
+            sasl_mechanism = IRC_SERVER_OPTION_INTEGER(
+                server, IRC_SERVER_OPTION_SASL_MECHANISM);
+            if ((sasl_mechanism >= 0)
+                && (sasl_mechanism < IRC_NUM_SASL_MECHANISMS))
+            {
+                snprintf (str_msg_auth, sizeof (str_msg_auth),
+                          "AUTHENTICATE %s",
+                          irc_sasl_mechanism_string[sasl_mechanism]);
+                weechat_string_toupper (str_msg_auth);
+                irc_server_sendf (server, 0, NULL, str_msg_auth);
+                if (server->hook_timer_sasl)
+                    weechat_unhook (server->hook_timer_sasl);
+                timeout = IRC_SERVER_OPTION_INTEGER(
+                    server, IRC_SERVER_OPTION_SASL_TIMEOUT);
+                server->hook_timer_sasl = weechat_hook_timer (
+                    timeout * 1000,
+                    0, 1,
+                    &irc_server_timer_sasl_cb,
+                    server, NULL);
             }
         }
     }
-    else if (strcmp (argv[arg_cmd + 2], "NAK") == 0)
+    else if (strcmp (params[1], "NAK") == 0)
     {
-        if (argc > arg_cmd + 3)
-        {
-            ptr_caps = (argv_eol[arg_cmd + 3][0] == ':') ?
-                argv_eol[arg_cmd + 3] + 1 : argv_eol[arg_cmd + 3];
-            weechat_printf_date_tags (
-                server->buffer, date, NULL,
-                _("%s%s: client capability, refused: %s"),
-                weechat_prefix ("error"), IRC_PLUGIN_NAME, ptr_caps);
-            if (!server->is_connected)
-                irc_server_sendf (server, 0, NULL, "CAP END");
-        }
+        if (num_params < 3)
+            return WEECHAT_RC_OK;
+
+        str_params = irc_protocol_string_params (params, 2);
+        weechat_printf_date_tags (
+            server->buffer, date, NULL,
+            _("%s%s: client capability, refused: %s"),
+            weechat_prefix ("error"), IRC_PLUGIN_NAME, str_params);
+        if (str_params)
+            free (str_params);
+        if (!server->is_connected)
+            irc_server_sendf (server, 0, NULL, "CAP END");
     }
-    else if (strcmp (argv[arg_cmd + 2], "NEW") == 0)
+    else if (strcmp (params[1], "NEW") == 0)
     {
-        if (argc > arg_cmd + 3)
+        if (num_params < 3)
+            return WEECHAT_RC_OK;
+
+        str_params = irc_protocol_string_params (params, 2);
+        weechat_printf_date_tags (
+            server->buffer, date, NULL,
+            _("%s%s: client capability, now available: %s"),
+            weechat_prefix ("network"), IRC_PLUGIN_NAME, str_params);
+        if (str_params)
+            free (str_params);
+        for (i = 2; i < num_params; i++)
         {
-            ptr_caps = (argv_eol[arg_cmd + 3][0] == ':') ?
-                argv_eol[arg_cmd + 3] + 1 : argv_eol[arg_cmd + 3];
-            weechat_printf_date_tags (
-                server->buffer, date, NULL,
-                _("%s%s: client capability, now available: %s"),
-                weechat_prefix ("network"), IRC_PLUGIN_NAME, ptr_caps);
             caps_added = weechat_string_split (
-                ptr_caps,
+                params[i],
                 " ",
                 NULL,
                 WEECHAT_STRING_SPLIT_STRIP_LEFT
@@ -1033,47 +1067,50 @@ IRC_PROTOCOL_CALLBACK(cap)
                 | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
                 0,
                 &num_caps_added);
-            if (caps_added)
+            if (!caps_added)
+                continue;
+            for (j = 0; j < num_caps_added; j++)
             {
-                for (i = 0; i < num_caps_added; i++)
+                pos_value = strstr (caps_added[j], "=");
+                if (pos_value)
                 {
-                    pos_value = strstr (caps_added[i], "=");
-                    if (pos_value)
-                    {
-                        str_name = strndup (caps_added[i],
-                                            pos_value - caps_added[i]);
-                        if (str_name)
-                        {
-                            weechat_hashtable_set (server->cap_ls,
-                                                   str_name, pos_value + 1);
-                            free (str_name);
-                        }
-                    }
-                    else
+                    str_name = strndup (caps_added[j],
+                                        pos_value - caps_added[j]);
+                    if (str_name)
                     {
                         weechat_hashtable_set (server->cap_ls,
-                                               caps_added[i], NULL);
+                                               str_name, pos_value + 1);
+                        free (str_name);
                     }
                 }
-                weechat_string_free_split (caps_added);
+                else
+                {
+                    weechat_hashtable_set (server->cap_ls,
+                                           caps_added[j], NULL);
+                }
             }
-
-            /* TODO: SASL Reauthentication */
-            irc_protocol_cap_sync (server, 0);
+            weechat_string_free_split (caps_added);
         }
+
+        /* TODO: SASL Reauthentication */
+        irc_protocol_cap_sync (server, 0);
     }
-    else if (strcmp (argv[arg_cmd + 2], "DEL") == 0)
+    else if (strcmp (params[1], "DEL") == 0)
     {
-        if (argc > arg_cmd + 3)
+        if (num_params < 3)
+            return WEECHAT_RC_OK;
+
+        str_params = irc_protocol_string_params (params, 2);
+        weechat_printf_date_tags (
+            server->buffer, date, NULL,
+            _("%s%s: client capability, removed: %s"),
+            weechat_prefix ("network"), IRC_PLUGIN_NAME, str_params);
+        if (str_params)
+            free (str_params);
+        for (i = 2; i < num_params; i++)
         {
-            ptr_caps = (argv_eol[arg_cmd + 3][0] == ':') ?
-                argv_eol[arg_cmd + 3] + 1 : argv_eol[arg_cmd + 3];
-            weechat_printf_date_tags (
-                server->buffer, date, NULL,
-                _("%s%s: client capability, removed: %s"),
-                weechat_prefix ("network"), IRC_PLUGIN_NAME, ptr_caps);
             caps_removed = weechat_string_split (
-                ptr_caps,
+                params[i],
                 " ",
                 NULL,
                 WEECHAT_STRING_SPLIT_STRIP_LEFT
@@ -1081,15 +1118,14 @@ IRC_PROTOCOL_CALLBACK(cap)
                 | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
                 0,
                 &num_caps_removed);
-            if (caps_removed)
+            if (!caps_removed)
+                continue;
+            for (j = 0; j < num_caps_removed; j++)
             {
-                for (i = 0; i < num_caps_removed; i++)
-                {
-                    weechat_hashtable_remove (server->cap_ls, caps_removed[i]);
-                    weechat_hashtable_remove (server->cap_list, caps_removed[i]);
-                }
-                weechat_string_free_split (caps_removed);
+                weechat_hashtable_remove (server->cap_ls, caps_removed[j]);
+                weechat_hashtable_remove (server->cap_list, caps_removed[j]);
             }
+            weechat_string_free_split (caps_removed);
         }
     }
 
@@ -7151,11 +7187,19 @@ irc_protocol_recv_command (struct t_irc_server *server,
                            NULL,  /* pos_channel */
                            NULL);  /* pos_text */
 
-        return_code = (int) (cmd_recv_func) (server, date, hash_tags, nick,
-                                             address_color, host_color,
-                                             cmd_name, message_ignored,
-                                             argc, argv, argv_eol,
-                                             params, num_params);
+        return_code = (int) (cmd_recv_func) (server,
+                                             date,
+                                             hash_tags,
+                                             nick,
+                                             address_color,
+                                             host_color,
+                                             cmd_name,
+                                             message_ignored,
+                                             argc,
+                                             argv,
+                                             argv_eol,
+                                             (const char **)params,
+                                             num_params);
 
         if (return_code == WEECHAT_RC_ERROR)
         {
