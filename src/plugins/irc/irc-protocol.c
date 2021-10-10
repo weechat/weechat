@@ -261,9 +261,9 @@ irc_protocol_parse_time (const char *time)
 }
 
 /*
- * Prints a FAIL/WARN/NOTE message.
+ * Prints a FAIL/WARN/NOTE command.
  *
- * Called by callbacks for messages: FAIL, WARN, NOTE.
+ * Called by callbacks for commands: FAIL, WARN, NOTE.
  */
 
 void
@@ -309,12 +309,12 @@ irc_protocol_print_error_warning_msg (struct t_irc_server *server,
 }
 
 /*
- * Callback for the IRC message "ACCOUNT": account info about a nick
+ * Callback for the IRC command "ACCOUNT": account info about a nick
  * (with capability "account-notify").
  *
- * Message looks like:
- *   :nick!user@host ACCOUNT *
- *   :nick!user@host ACCOUNT :accountname
+ * Command looks like:
+ *   ACCOUNT *
+ *   ACCOUNT :accountname
  */
 
 IRC_PROTOCOL_CALLBACK(account)
@@ -389,9 +389,9 @@ IRC_PROTOCOL_CALLBACK(account)
 }
 
 /*
- * Callback for the IRC message "AUTHENTICATE".
+ * Callback for the IRC command "AUTHENTICATE".
  *
- * Message looks like:
+ * Command looks like:
  *   AUTHENTICATE +
  *   AUTHENTICATE QQDaUzXAmVffxuzFy77XWBGwABBQAgdinelBrKZaR3wE7nsIETuTVY=
  */
@@ -485,10 +485,10 @@ IRC_PROTOCOL_CALLBACK(authenticate)
 }
 
 /*
- * Callback for the IRC message "AWAY": away info about a nick (with capability
+ * Callback for the IRC command "AWAY": away info about a nick (with capability
  * "away-notify").
  *
- * Message looks like:
+ * Command looks like:
  *   :nick!user@host AWAY
  *   :nick!user@host AWAY :I am away
  */
@@ -712,9 +712,9 @@ irc_protocol_cap_sync (struct t_irc_server *server, int sasl)
 }
 
 /*
- * Callback for the IRC message "CAP": client capability.
+ * Callback for the IRC command "CAP": client capability.
  *
- * Message looks like:
+ * Command looks like:
  *   CAP * LS :identify-msg multi-prefix sasl
  *   CAP * ACK :sasl
  *   CAP * NAK :sasl
@@ -1099,11 +1099,11 @@ IRC_PROTOCOL_CALLBACK(cap)
 }
 
 /*
- * Callback for the IRC message "CHGHOST": user/host change of a nick (with
+ * Callback for the IRC command "CHGHOST": user/host change of a nick (with
  * capability "chghost"):
  * https://ircv3.net/specs/extensions/chghost-3.2.html
  *
- * Message looks like:
+ * Command looks like:
  *   :nick!user@host CHGHOST user new.host.goes.here
  *   :nick!user@host CHGHOST newuser host
  *   :nick!user@host CHGHOST newuser new.host.goes.here
@@ -1186,9 +1186,9 @@ IRC_PROTOCOL_CALLBACK(chghost)
 }
 
 /*
- * Callback for the IRC message "ERROR".
+ * Callback for the IRC command "ERROR".
  *
- * Message looks like:
+ * Command looks like:
  *   ERROR :Closing Link: irc.server.org (Bad Password)
  */
 
@@ -1217,10 +1217,10 @@ IRC_PROTOCOL_CALLBACK(error)
 }
 
 /*
- * Callback for an IRC error message (used by many error messages, but not for
- * message "ERROR").
+ * Callback for an IRC error command (used by many error messages, but not for
+ * command "ERROR").
  *
- * Example of error:
+ * Command looks like:
  *   :server 404 nick #channel :Cannot send to channel
  */
 
@@ -1277,9 +1277,9 @@ IRC_PROTOCOL_CALLBACK(generic_error)
 }
 
 /*
- * Callback for the IRC message "FAIL".
+ * Callback for the IRC command "FAIL".
  *
- * Message looks like:
+ * Command looks like:
  *   :server FAIL * NEED_REGISTRATION :You need to be registered to continue
  *   :server FAIL ACC REG_INVALID_CALLBACK REGISTER :Email address is not valid
  *   :server FAIL BOX BOXES_INVALID STACK CLOCKWISE :Given boxes are not supported
@@ -1302,9 +1302,9 @@ IRC_PROTOCOL_CALLBACK(fail)
 }
 
 /*
- * Callback for the IRC message "INVITE".
+ * Callback for the IRC command "INVITE".
  *
- * Message looks like:
+ * Command looks like:
  *   :nick!user@host INVITE mynick :#channel
  *
  * With invite-notify capability
@@ -1361,9 +1361,9 @@ IRC_PROTOCOL_CALLBACK(invite)
 }
 
 /*
- * Callback for the IRC message "JOIN".
+ * Callback for the IRC command "JOIN".
  *
- * Message looks like:
+ * Command looks like:
  *   :nick!user@host JOIN :#channel
  *
  * With extended-join capability:
@@ -1544,9 +1544,9 @@ IRC_PROTOCOL_CALLBACK(join)
 }
 
 /*
- * Callback for the IRC message "KICK".
+ * Callback for the IRC command "KICK".
  *
- * Message looks like:
+ * Command looks like:
  *   :nick1!user@host KICK #channel nick2 :kick reason
  */
 
@@ -1668,9 +1668,9 @@ IRC_PROTOCOL_CALLBACK(kick)
 }
 
 /*
- * Callback for the IRC message "KILL".
+ * Callback for the IRC command "KILL".
  *
- * Message looks like:
+ * Command looks like:
  *   :nick1!user@host KILL mynick :kill reason
  */
 
@@ -1753,9 +1753,9 @@ IRC_PROTOCOL_CALLBACK(kill)
 }
 
 /*
- * Callback for the IRC message "MODE".
+ * Callback for the IRC command "MODE".
  *
- * Message looks like:
+ * Command looks like:
  *   :nick!user@host MODE #test +nt
  *   :nick!user@host MODE #test +o nick
  *   :nick!user@host MODE #test :+o :nick
@@ -1835,9 +1835,9 @@ IRC_PROTOCOL_CALLBACK(mode)
 }
 
 /*
- * Callback for the IRC message "NICK".
+ * Callback for the IRC command "NICK".
  *
- * Message looks like:
+ * Command looks like:
  *   :oldnick!user@host NICK :newnick
  */
 
@@ -2015,9 +2015,9 @@ IRC_PROTOCOL_CALLBACK(nick)
 }
 
 /*
- * Callback for the IRC message "NOTE".
+ * Callback for the IRC command "NOTE".
  *
- * Message looks like:
+ * Command looks like:
  *   :server NOTE * OPER_MESSAGE :The message
  */
 
@@ -2038,9 +2038,9 @@ IRC_PROTOCOL_CALLBACK(note)
 }
 
 /*
- * Callback for the IRC message "NOTICE".
+ * Callback for the IRC command "NOTICE".
  *
- * Message looks like:
+ * Command looks like:
  *   NOTICE AUTH :*** Looking up your hostname...
  *   :nick!user@host NOTICE mynick :notice text
  *   :nick!user@host NOTICE #channel :notice text
@@ -2312,9 +2312,9 @@ IRC_PROTOCOL_CALLBACK(notice)
 }
 
 /*
- * Callback for the IRC message "PART".
+ * Callback for the IRC command "PART".
  *
- * Message looks like:
+ * Command looks like:
  *   :nick!user@host PART #channel :part message
  *
  * On undernet server, it can be:
@@ -2485,9 +2485,9 @@ IRC_PROTOCOL_CALLBACK(part)
 }
 
 /*
- * Callback for the IRC message "PING".
+ * Callback for the IRC command "PING".
  *
- * Message looks like:
+ * Command looks like:
  *   PING :arguments
  */
 
@@ -2502,9 +2502,9 @@ IRC_PROTOCOL_CALLBACK(ping)
 }
 
 /*
- * Callback for the IRC message "PONG".
+ * Callback for the IRC command "PONG".
  *
- * Message looks like:
+ * Command looks like:
  *   :server PONG server :arguments
  */
 
@@ -2550,9 +2550,9 @@ IRC_PROTOCOL_CALLBACK(pong)
 }
 
 /*
- * Callback for the IRC message "PRIVMSG".
+ * Callback for the IRC command "PRIVMSG".
  *
- * Message looks like:
+ * Command looks like:
  *   :nick!user@host PRIVMSG #channel :message for channel here
  *   :nick!user@host PRIVMSG @#channel :message for channel ops here
  *   :nick!user@host PRIVMSG mynick :message for private here
@@ -2783,9 +2783,9 @@ IRC_PROTOCOL_CALLBACK(privmsg)
 }
 
 /*
- * Callback for the IRC message "QUIT".
+ * Callback for the IRC command "QUIT".
  *
- * Message looks like:
+ * Command looks like:
  *   :nick!user@host QUIT :quit message
  */
 
@@ -2911,10 +2911,10 @@ IRC_PROTOCOL_CALLBACK(quit)
 }
 
 /*
- * Callback for the IRC message "SETNAME": set real name
+ * Callback for the IRC command "SETNAME": set real name
  * (received when capability "setname" is enabled).
  *
- * Message looks like:
+ * Command looks like:
  *   :nick!user@host SETNAME :the realname
  */
 
@@ -2982,10 +2982,10 @@ IRC_PROTOCOL_CALLBACK(setname)
 }
 
 /*
- * Callback for the IRC message "TAGMSG": message with tags but no text content
+ * Callback for the IRC command "TAGMSG": message with tags but no text content
  * (received when capability "message-tags" is enabled).
  *
- * Message looks like:
+ * Command looks like:
  *   @msgid=6gqz7dxd22v7r3x9pvu;+typing=active :nick!user@host TAGMSG #channel
  *   @msgid=6gqz7dxd22v7r3x9pvu;+typing=active :nick!user@host TAGMSG :#channel
  */
@@ -3034,7 +3034,7 @@ IRC_PROTOCOL_CALLBACK(tagmsg)
 }
 
 /*
- * Callback for an IRC message with mode and reason (numeric).
+ * Callback for an IRC command with mode and reason (numeric).
  */
 
 IRC_PROTOCOL_CALLBACK(server_mode_reason)
@@ -3074,7 +3074,7 @@ IRC_PROTOCOL_CALLBACK(server_mode_reason)
 }
 
 /*
- * Callback for a numeric IRC message.
+ * Callback for a numeric IRC command.
  */
 
 IRC_PROTOCOL_CALLBACK(numeric)
@@ -3108,9 +3108,9 @@ IRC_PROTOCOL_CALLBACK(numeric)
 }
 
 /*
- * Callback for the IRC message "TOPIC".
+ * Callback for the IRC command "TOPIC".
  *
- * Message looks like:
+ * Command looks like:
  *   :nick!user@host TOPIC #channel :new topic for channel
  */
 
@@ -3254,9 +3254,9 @@ IRC_PROTOCOL_CALLBACK(topic)
 }
 
 /*
- * Callback for the IRC message "WALLOPS".
+ * Callback for the IRC command "WALLOPS".
  *
- * Message looks like:
+ * Command looks like:
  *   :nick!user@host WALLOPS :message from admin
  */
 
@@ -3283,9 +3283,9 @@ IRC_PROTOCOL_CALLBACK(wallops)
 }
 
 /*
- * Callback for the IRC message "WARN".
+ * Callback for the IRC command "WARN".
  *
- * Message looks like:
+ * Command looks like:
  *   :server WARN REHASH CERTS_EXPIRED :Certificate [xxx] has expired
  */
 
@@ -3306,9 +3306,9 @@ IRC_PROTOCOL_CALLBACK(warn)
 }
 
 /*
- * Callback for the IRC message "001": connected to IRC server.
+ * Callback for the IRC command "001": connected to IRC server.
  *
- * Message looks like:
+ * Command looks like:
  *   :server 001 mynick :Welcome to the dancer-ircd Network
  */
 
@@ -3430,9 +3430,9 @@ IRC_PROTOCOL_CALLBACK(001)
 }
 
 /*
- * Callback for the IRC message "005": some infos from server.
+ * Callback for the IRC command "005": some infos from server.
  *
- * Message looks like:
+ * Command looks like:
  *   :server 005 mynick MODES=4 CHANLIMIT=#:20 NICKLEN=16 USERLEN=10
  *     HOSTLEN=63 TOPICLEN=450 KICKLEN=450 CHANNELLEN=30 KEYLEN=23
  *     CHANTYPES=# PREFIX=(ov)@+ CASEMAPPING=ascii CAPAB IRCD=dancer
@@ -3636,9 +3636,9 @@ IRC_PROTOCOL_CALLBACK(005)
 }
 
 /*
- * Callback for the IRC message "008": server notice mask.
+ * Callback for the IRC command "008": server notice mask.
  *
- * Message looks like:
+ * Command looks like:
  *   :server 008 nick +Zbfkrsuy :Server notice mask
  */
 
@@ -3661,9 +3661,9 @@ IRC_PROTOCOL_CALLBACK(008)
 }
 
 /*
- * Callback for the IRC message "221": user mode string.
+ * Callback for the IRC command "221": user mode string.
  *
- * Message looks like:
+ * Command looks like:
  *   :server 221 nick :+s
  */
 
@@ -3697,12 +3697,12 @@ IRC_PROTOCOL_CALLBACK(221)
 }
 
 /*
- * Callback for the IRC message "301": away message.
+ * Callback for the IRC command "301": away message.
  *
- * Message is received when we are talking to a user in private and that remote
+ * Command is received when we are talking to a user in private and that remote
  * user is away (we receive away message).
  *
- * Message looks like:
+ * Command looks like:
  *   :server 301 mynick nick :away message for nick
  */
 
@@ -3752,9 +3752,9 @@ IRC_PROTOCOL_CALLBACK(301)
 }
 
 /*
- * Callback for the IRC message "303": ison.
+ * Callback for the IRC command "303": ison.
  *
- * Message looks like:
+ * Command looks like:
  *   :server 303 mynick :nick1 nick2
  */
 
@@ -3775,9 +3775,9 @@ IRC_PROTOCOL_CALLBACK(303)
 }
 
 /*
- * Callback for the IRC message "305": unaway.
+ * Callback for the IRC command "305": unaway.
  *
- * Message looks like:
+ * Command looks like:
  *   :server 305 mynick :Does this mean you're really back?
  */
 
@@ -3806,9 +3806,9 @@ IRC_PROTOCOL_CALLBACK(305)
 }
 
 /*
- * Callback for the IRC message "306": now away.
+ * Callback for the IRC command "306": now away.
  *
- * Message looks like:
+ * Command looks like:
  *   :server 306 mynick :We'll miss you
  */
 
@@ -3837,9 +3837,9 @@ IRC_PROTOCOL_CALLBACK(306)
 }
 
 /*
- * Callback for the whois messages with nick and message.
+ * Callback for the whois commands with nick and message.
  *
- * Message looks like:
+ * Command looks like:
  *   :server 319 flashy FlashCode :some text here
  */
 
@@ -3865,9 +3865,9 @@ IRC_PROTOCOL_CALLBACK(whois_nick_msg)
 }
 
 /*
- * Callback for the whowas messages with nick and message.
+ * Callback for the whowas commands with nick and message.
  *
- * Message looks like:
+ * Command looks like:
  *   :server 369 flashy FlashCode :some text here
  */
 
@@ -3893,9 +3893,9 @@ IRC_PROTOCOL_CALLBACK(whowas_nick_msg)
 }
 
 /*
- * Callback for the IRC message "311": whois, user.
+ * Callback for the IRC command "311": whois, user.
  *
- * Message looks like:
+ * Command looks like:
  *   :server 311 mynick nick user host * :realname here
  */
 
@@ -3925,9 +3925,9 @@ IRC_PROTOCOL_CALLBACK(311)
 }
 
 /*
- * Callback for the IRC message "312": whois, server.
+ * Callback for the IRC command "312": whois, server.
  *
- * Message looks like:
+ * Command looks like:
  *   :server 312 mynick nick tungsten.libera.chat :Umeå, SE
  */
 
@@ -3957,9 +3957,9 @@ IRC_PROTOCOL_CALLBACK(312)
 }
 
 /*
- * Callback for the IRC message "314": whowas.
+ * Callback for the IRC command "314": whowas.
  *
- * Message looks like:
+ * Command looks like:
  *   :server 314 mynick nick user host * :realname here
  */
 
@@ -3989,9 +3989,9 @@ IRC_PROTOCOL_CALLBACK(314)
 }
 
 /*
- * Callback for the IRC message "315": end of /who.
+ * Callback for the IRC command "315": end of /who.
  *
- * Message looks like:
+ * Command looks like:
  *   :server 315 mynick #channel :End of /WHO list.
  */
 
@@ -4027,9 +4027,9 @@ IRC_PROTOCOL_CALLBACK(315)
 }
 
 /*
- * Callback for the IRC message "317": whois, idle.
+ * Callback for the IRC command "317": whois, idle.
  *
- * Message looks like:
+ * Command looks like:
  *   :server 317 mynick nick 122877 1205327880 :seconds idle, signon time
  */
 
@@ -4119,9 +4119,9 @@ IRC_PROTOCOL_CALLBACK(317)
 }
 
 /*
- * Callback for the IRC message "321": /list start.
+ * Callback for the IRC command "321": /list start.
  *
- * Message looks like:
+ * Command looks like:
  *   :server 321 mynick Channel :Users  Name
  */
 
@@ -4149,9 +4149,9 @@ IRC_PROTOCOL_CALLBACK(321)
 }
 
 /*
- * Callback for the IRC message "322": channel for /list.
+ * Callback for the IRC command "322": channel for /list.
  *
- * Message looks like:
+ * Command looks like:
  *   :server 322 mynick #channel 3 :topic of channel
  */
 
@@ -4189,9 +4189,9 @@ IRC_PROTOCOL_CALLBACK(322)
 }
 
 /*
- * Callback for the IRC message "323": end of /list.
+ * Callback for the IRC command "323": end of /list.
  *
- * Message looks like:
+ * Command looks like:
  *   :server 323 mynick :End of /LIST
  */
 
@@ -4216,9 +4216,9 @@ IRC_PROTOCOL_CALLBACK(323)
 }
 
 /*
- * Callback for the IRC message "324": channel mode.
+ * Callback for the IRC command "324": channel mode.
  *
- * Message looks like:
+ * Command looks like:
  *   :server 324 mynick #channel +nt
  */
 
@@ -4271,9 +4271,9 @@ IRC_PROTOCOL_CALLBACK(324)
 }
 
 /*
- * Callback for the IRC message "327": whois, host.
+ * Callback for the IRC command "327": whois, host.
  *
- * Message looks like:
+ * Command looks like:
  *   :server 327 mynick nick host ip :real hostname/ip
  */
 
@@ -4331,9 +4331,9 @@ IRC_PROTOCOL_CALLBACK(327)
 }
 
 /*
- * Callback for the IRC message "328": channel URL.
+ * Callback for the IRC command "328": channel URL.
  *
- * Message looks like:
+ * Command looks like:
  *   :server 328 mynick #channel :https://example.com/
  */
 
@@ -4364,9 +4364,9 @@ IRC_PROTOCOL_CALLBACK(328)
 }
 
 /*
- * Callback for the IRC message "329": channel creation date.
+ * Callback for the IRC command "329": channel creation date.
  *
- * Message looks like:
+ * Command looks like:
  *   :server 329 mynick #channel 1205327894
  */
 
@@ -4421,10 +4421,10 @@ IRC_PROTOCOL_CALLBACK(329)
 }
 
 /*
- * Callback for the IRC messages "330" (whois, is logged in as), and "343"
+ * Callback for the IRC commands "330" (whois, is logged in as), and "343"
  * (whois, is opered as).
  *
- * Messages look like:
+ * Commands look like:
  *   :server 330 mynick nick1 nick2 :is logged in as
  *   :server 330 mynick #channel https://example.com/
  *   :server 343 mynick nick1 nick2 :is opered as
@@ -4479,9 +4479,9 @@ IRC_PROTOCOL_CALLBACK(330_343)
 }
 
 /*
- * Callback for the IRC message "331": no topic for channel.
+ * Callback for the IRC command "331": no topic for channel.
  *
- * Message looks like:
+ * Command looks like:
  *   :server 331 mynick #channel :There isn't a topic.
  */
 
@@ -4508,9 +4508,9 @@ IRC_PROTOCOL_CALLBACK(331)
 }
 
 /*
- * Callback for the IRC message "332": topic of channel.
+ * Callback for the IRC command "332": topic of channel.
  *
- * Message looks like:
+ * Command looks like:
  *   :server 332 mynick #channel :topic of channel
  */
 
@@ -4580,9 +4580,9 @@ IRC_PROTOCOL_CALLBACK(332)
 }
 
 /*
- * Callback for the IRC message "333": infos about topic (nick / date).
+ * Callback for the IRC command "333": infos about topic (nick / date).
  *
- * Message looks like:
+ * Command looks like:
  *   :server 333 mynick #channel nick!user@host 1205428096
  *   :server 333 mynick #channel 1205428096
  */
@@ -4702,9 +4702,9 @@ IRC_PROTOCOL_CALLBACK(333)
 }
 
 /*
- * Callback for the IRC message "338": whois, host.
+ * Callback for the IRC command "338": whois, host.
  *
- * Message looks like:
+ * Command looks like:
  *   :server 338 mynick nick host :actually using host
  */
 
@@ -4732,9 +4732,9 @@ IRC_PROTOCOL_CALLBACK(338)
 }
 
 /*
- * Callback for the IRC message "341": inviting.
+ * Callback for the IRC command "341": inviting.
  *
- * Message looks like:
+ * Command looks like:
  *   :server 341 mynick nick #channel
  *   :server 341 mynick nick :#channel
  */
@@ -4767,9 +4767,9 @@ IRC_PROTOCOL_CALLBACK(341)
 }
 
 /*
- * Callback for the IRC message "344": channel reop.
+ * Callback for the IRC command "344": channel reop.
  *
- * Message looks like:
+ * Command looks like:
  *   :server 344 mynick #channel nick!user@host
  */
 
@@ -4793,9 +4793,9 @@ IRC_PROTOCOL_CALLBACK(344)
 }
 
 /*
- * Callback for the IRC message "345": end of channel reop.
+ * Callback for the IRC command "345": end of channel reop.
  *
- * Message looks like:
+ * Command looks like:
  *   :server 345 mynick #channel :End of Channel Reop List
  */
 
@@ -4818,9 +4818,9 @@ IRC_PROTOCOL_CALLBACK(345)
 }
 
 /*
- * Callback for the IRC message "346": channel invite list.
+ * Callback for the IRC command "346": channel invite list.
  *
- * Message looks like:
+ * Command looks like:
  *   :server 346 mynick #channel invitemask nick!user@host 1205590879
  *   :server 346 mynick #channel invitemask
  */
@@ -4936,9 +4936,9 @@ IRC_PROTOCOL_CALLBACK(346)
 }
 
 /*
- * Callback for the IRC message "347": end of channel invite list.
+ * Callback for the IRC command "347": end of channel invite list.
  *
- * Message looks like:
+ * Command looks like:
  *   :server 347 mynick #channel :End of Channel Invite List
  */
 
@@ -4989,9 +4989,9 @@ IRC_PROTOCOL_CALLBACK(347)
 }
 
 /*
- * Callback for the IRC message "348": channel exception list.
+ * Callback for the IRC command "348": channel exception list.
  *
- * Message looks like:
+ * Command looks like:
  *   :server 348 mynick #channel nick1!user1@host1 nick2!user2@host2 1205585109
  *   (nick2 is nick who set exception on nick1)
  */
@@ -5109,9 +5109,9 @@ IRC_PROTOCOL_CALLBACK(348)
 }
 
 /*
- * Callback for the IRC message "349": end of channel exception list.
+ * Callback for the IRC command "349": end of channel exception list.
  *
- * Message looks like:
+ * Command looks like:
  *   :server 349 mynick #channel :End of Channel Exception List
  */
 
@@ -5162,9 +5162,9 @@ IRC_PROTOCOL_CALLBACK(349)
 }
 
 /*
- * Callback for the IRC message "351": server version.
+ * Callback for the IRC command "351": server version.
  *
- * Message looks like:
+ * Command looks like:
  *   :server 351 mynick dancer-ircd-1.0.36(2006/07/23_13:11:50). server :iMZ dncrTS/v4
  */
 
@@ -5205,9 +5205,9 @@ IRC_PROTOCOL_CALLBACK(351)
 }
 
 /*
- * Callback for the IRC message "352": who.
+ * Callback for the IRC command "352": who.
  *
- * Message looks like:
+ * Command looks like:
  *   :server 352 mynick #channel user host server nick (*) (H/G) :0 flashcode
  */
 
@@ -5313,9 +5313,9 @@ IRC_PROTOCOL_CALLBACK(352)
 }
 
 /*
- * Callback for the IRC message "353": list of users on a channel.
+ * Callback for the IRC command "353": list of users on a channel.
  *
- * Message looks like:
+ * Command looks like:
  *   :server 353 mynick = #channel :mynick nick1 @nick2 +nick3
  */
 
@@ -5461,9 +5461,9 @@ IRC_PROTOCOL_CALLBACK(353)
 }
 
 /*
- * Callback for the IRC message "354": WHOX output
+ * Callback for the IRC command "354": WHOX output
  *
- * Message looks like:
+ * Command looks like:
  *   :server 354 mynick #channel user host server nick status hopcount account :GECOS Information
  */
 
@@ -5599,9 +5599,9 @@ IRC_PROTOCOL_CALLBACK(354)
 }
 
 /*
- * Callback for the IRC message "366": end of /names list.
+ * Callback for the IRC command "366": end of /names list.
  *
- * Message looks like:
+ * Command looks like:
  *   :server 366 mynick #channel :End of /NAMES list.
  */
 
@@ -5824,9 +5824,9 @@ IRC_PROTOCOL_CALLBACK(366)
 }
 
 /*
- * Callback for the IRC message "367": banlist.
+ * Callback for the IRC command "367": banlist.
  *
- * Message looks like:
+ * Command looks like:
  *   :server 367 mynick #channel banmask nick!user@host 1205590879
  */
 
@@ -5941,9 +5941,9 @@ IRC_PROTOCOL_CALLBACK(367)
 }
 
 /*
- * Callback for the IRC message "368": end of banlist.
+ * Callback for the IRC command "368": end of banlist.
  *
- * Message looks like:
+ * Command looks like:
  *   :server 368 mynick #channel :End of Channel Ban List
  */
 
@@ -5994,9 +5994,9 @@ IRC_PROTOCOL_CALLBACK(368)
 }
 
 /*
- * Callback for the IRC message "432": erroneous nickname.
+ * Callback for the IRC command "432": erroneous nickname.
  *
- * Message looks like:
+ * Command looks like:
  *   :server 432 * mynick :Erroneous Nickname
  */
 
@@ -6046,9 +6046,9 @@ IRC_PROTOCOL_CALLBACK(432)
 }
 
 /*
- * Callback for the IRC message "433": nickname already in use.
+ * Callback for the IRC command "433": nickname already in use.
  *
- * Message looks like:
+ * Command looks like:
  *   :server 433 * mynick :Nickname is already in use.
  */
 
@@ -6102,9 +6102,9 @@ IRC_PROTOCOL_CALLBACK(433)
 }
 
 /*
- * Callback for the IRC message "437": nick/channel temporarily unavailable.
+ * Callback for the IRC command "437": nick/channel temporarily unavailable.
  *
- * Message looks like:
+ * Command looks like:
  *   :server 437 * mynick :Nick/channel is temporarily unavailable
  */
 
@@ -6159,9 +6159,9 @@ IRC_PROTOCOL_CALLBACK(437)
 }
 
 /*
- * Callback for the IRC message "438": not authorized to change nickname.
+ * Callback for the IRC command "438": not authorized to change nickname.
  *
- * Message looks like:
+ * Command looks like:
  *   :server 438 mynick newnick :Nick change too fast. Please wait 30 seconds.
  */
 
@@ -6202,9 +6202,9 @@ IRC_PROTOCOL_CALLBACK(438)
 }
 
 /*
- * Callback for the IRC message "470": forwarding to another channel.
+ * Callback for the IRC command "470": forwarding to another channel.
  *
- * Message looks like:
+ * Command looks like:
  *   :server 470 mynick #channel ##channel :Forwarding to another channel
  */
 
@@ -6311,9 +6311,9 @@ IRC_PROTOCOL_CALLBACK(470)
 }
 
 /*
- * Callback for the IRC message "728": quietlist.
+ * Callback for the IRC command "728": quietlist.
  *
- * Message looks like:
+ * Command looks like:
  *   :server 728 mynick #channel mode quietmask nick!user@host 1351350090
  */
 
@@ -6428,9 +6428,9 @@ IRC_PROTOCOL_CALLBACK(728)
 }
 
 /*
- * Callback for the IRC message "729": end of quietlist.
+ * Callback for the IRC command "729": end of quietlist.
  *
- * Message looks like:
+ * Command looks like:
  *   :server 729 mynick #channel mode :End of Channel Quiet List
  */
 
@@ -6481,10 +6481,10 @@ IRC_PROTOCOL_CALLBACK(729)
 }
 
 /*
- * Callback for the IRC message "730": monitored nicks are online
+ * Callback for the IRC command "730": monitored nicks are online
  * (RPL_MONONLINE).
  *
- * Message looks like:
+ * Command looks like:
  *   :server 730 mynick :nick1!user1@host1,nick2!user2@host2
  */
 
@@ -6525,10 +6525,10 @@ IRC_PROTOCOL_CALLBACK(730)
 }
 
 /*
- * Callback for the IRC message "731": monitored nicks are offline
+ * Callback for the IRC command "731": monitored nicks are offline
  * (RPL_MONOFFLINE).
  *
- * Message looks like:
+ * Command looks like:
  *   :server 731 mynick :nick1!user1@host1,nick2!user2@host2
  */
 
@@ -6569,9 +6569,9 @@ IRC_PROTOCOL_CALLBACK(731)
 }
 
 /*
- * Callback for the IRC message "732": list of monitored nicks (RPL_MONLIST).
+ * Callback for the IRC command "732": list of monitored nicks (RPL_MONLIST).
  *
- * Message looks like:
+ * Command looks like:
  *   :server 732 mynick :nick1!user1@host1,nick2!user2@host2
  */
 
@@ -6597,9 +6597,9 @@ IRC_PROTOCOL_CALLBACK(732)
 }
 
 /*
- * Callback for the IRC message "733": end of a monitor list (RPL_ENDOFMONLIST).
+ * Callback for the IRC command "733": end of a monitor list (RPL_ENDOFMONLIST).
  *
- * Message looks like:
+ * Command looks like:
  *   :server 733 mynick :End of MONITOR list
  */
 
@@ -6625,9 +6625,9 @@ IRC_PROTOCOL_CALLBACK(733)
 }
 
 /*
- * Callback for the IRC message "734": monitor list is full (ERR_MONLISTFULL)
+ * Callback for the IRC command "734": monitor list is full (ERR_MONLISTFULL)
  *
- * Message looks like:
+ * Command looks like:
  *   :server 734 mynick limit nick1,nick2 :Monitor list is full.
  */
 
@@ -6654,9 +6654,9 @@ IRC_PROTOCOL_CALLBACK(734)
 }
 
 /*
- * Callback for the IRC message "900": logged in as (SASL).
+ * Callback for the IRC command "900": logged in as (SASL).
  *
- * Message looks like:
+ * Command looks like:
  *   :server 900 mynick nick!user@host mynick :You are now logged in as mynick
  */
 
@@ -6682,9 +6682,9 @@ IRC_PROTOCOL_CALLBACK(900)
 }
 
 /*
- * Callback for the IRC message "901": you are now logged in.
+ * Callback for the IRC command "901": you are now logged in.
  *
- * Message looks like:
+ * Command looks like:
  *   :server 901 mynick nick user host :You are now logged in. (id nick, username user, hostname host)
  */
 
@@ -6714,9 +6714,9 @@ IRC_PROTOCOL_CALLBACK(901)
 }
 
 /*
- * Callback for the IRC messages "903" and "907" (SASL OK).
+ * Callback for the IRC commands "903" and "907" (SASL OK).
  *
- * Messages look like:
+ * Commands look like:
  *   :server 903 nick :SASL authentication successful
  */
 
@@ -6742,9 +6742,9 @@ IRC_PROTOCOL_CALLBACK(sasl_end_ok)
 }
 
 /*
- * Callback for the IRC messages "902", "904", "905", "906" (SASL failed).
+ * Callback for the IRC commands "902", "904", "905", "906" (SASL failed).
  *
- * Messages look like:
+ * Commands look like:
  *   :server 904 nick :SASL authentication failed
  */
 
@@ -6783,7 +6783,7 @@ IRC_PROTOCOL_CALLBACK(sasl_end_fail)
 }
 
 /*
- * Executes action when an IRC message is received.
+ * Executes action when an IRC command is received.
  *
  * Argument "irc_message" is the full message without optional tags.
  */
