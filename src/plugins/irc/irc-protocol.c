@@ -1595,29 +1595,28 @@ IRC_PROTOCOL_CALLBACK(join)
  * Callback for the IRC command "KICK".
  *
  * Command looks like:
- *   :nick1!user@host KICK #channel nick2 :kick reason
+ *   KICK #channel nick :kick reason
  */
 
 IRC_PROTOCOL_CALLBACK(kick)
 {
-    char *pos_comment;
-    const char *ptr_autorejoin;
+    const char *pos_comment, *ptr_autorejoin;
     int rejoin;
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick, *ptr_nick_kicked;
 
-    IRC_PROTOCOL_MIN_ARGS(4);
-    IRC_PROTOCOL_CHECK_HOST;
+    IRC_PROTOCOL_MIN_PARAMS(2);
+    IRC_PROTOCOL_CHECK_NICK;
+    IRC_PROTOCOL_CHECK_ADDRESS;
 
-    pos_comment = (argc > 4) ?
-        ((argv_eol[4][0] == ':') ? argv_eol[4] + 1 : argv_eol[4]) : NULL;
+    pos_comment = (num_params > 2) ? params[2] : NULL;
 
-    ptr_channel = irc_channel_search (server, argv[2]);
+    ptr_channel = irc_channel_search (server, params[0]);
     if (!ptr_channel)
         return WEECHAT_RC_OK;
 
     ptr_nick = irc_nick_search (server, ptr_channel, nick);
-    ptr_nick_kicked = irc_nick_search (server, ptr_channel, argv[3]);
+    ptr_nick_kicked = irc_nick_search (server, ptr_channel, params[1]);
 
     if (pos_comment)
     {
@@ -1631,8 +1630,8 @@ IRC_PROTOCOL_CALLBACK(kick)
             irc_nick_color_for_msg (server, 1, ptr_nick, nick),
             nick,
             IRC_COLOR_MESSAGE_KICK,
-            irc_nick_color_for_msg (server, 1, ptr_nick_kicked, argv[3]),
-            argv[3],
+            irc_nick_color_for_msg (server, 1, ptr_nick_kicked, params[1]),
+            params[1],
             IRC_COLOR_MESSAGE_KICK,
             IRC_COLOR_CHAT_DELIMITERS,
             IRC_COLOR_REASON_KICK,
@@ -1651,12 +1650,12 @@ IRC_PROTOCOL_CALLBACK(kick)
             irc_nick_color_for_msg (server, 1, ptr_nick, nick),
             nick,
             IRC_COLOR_MESSAGE_KICK,
-            irc_nick_color_for_msg (server, 1, ptr_nick_kicked, argv[3]),
-            argv[3],
+            irc_nick_color_for_msg (server, 1, ptr_nick_kicked, params[1]),
+            params[1],
             IRC_COLOR_MESSAGE_KICK);
     }
 
-    if (irc_server_strcasecmp (server, argv[3], server->nick) == 0)
+    if (irc_server_strcasecmp (server, params[1], server->nick) == 0)
     {
         /*
          * my nick was kicked => free all nicks, channel is not active any
