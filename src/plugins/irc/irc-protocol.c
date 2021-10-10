@@ -1412,11 +1412,12 @@ IRC_PROTOCOL_CALLBACK(invite)
  * Callback for the IRC command "JOIN".
  *
  * Command looks like:
- *   :nick!user@host JOIN :#channel
+ *   JOIN #channel
+ *   JOIN :#channel
  *
  * With extended-join capability:
- *   :nick!user@host JOIN :#channel * :real name
- *   :nick!user@host JOIN :#channel account :real name
+ *   JOIN #channel * :real name
+ *   JOIN #channel account :real name
  */
 
 IRC_PROTOCOL_CALLBACK(join)
@@ -1424,20 +1425,19 @@ IRC_PROTOCOL_CALLBACK(join)
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
     struct t_irc_channel_speaking *ptr_nick_speaking;
-    char *pos_channel, *pos_account, *pos_realname;
+    const char *pos_account, *pos_realname;
     char str_account[512], str_realname[512];
     int local_join, display_host, smart_filter;
 
-    IRC_PROTOCOL_MIN_ARGS(3);
-    IRC_PROTOCOL_CHECK_HOST;
+    IRC_PROTOCOL_MIN_PARAMS(1);
+    IRC_PROTOCOL_CHECK_NICK;
+    IRC_PROTOCOL_CHECK_ADDRESS;
 
     local_join = (irc_server_strcasecmp (server, nick, server->nick) == 0);
 
-    pos_channel = (argv[2][0] == ':') ? argv[2] + 1 : argv[2];
-    pos_account = ((argc > 3) && (strcmp (argv[3], "*") != 0)) ?
-        argv[3] : NULL;
-    pos_realname = (argc > 4) ?
-        ((argv_eol[4][0] == ':') ? argv_eol[4] + 1 : argv_eol[4]) : NULL;
+    pos_account = ((num_params > 1) && (strcmp (params[1], "*") != 0)) ?
+        params[1] : NULL;
+    pos_realname = (num_params > 2) ? params[2] : NULL;
 
     str_account[0] = '\0';
     if (pos_account
@@ -1463,7 +1463,7 @@ IRC_PROTOCOL_CALLBACK(join)
                   IRC_COLOR_CHAT_DELIMITERS);
     }
 
-    ptr_channel = irc_channel_search (server, pos_channel);
+    ptr_channel = irc_channel_search (server, params[0]);
     if (ptr_channel)
     {
         ptr_channel->part = 0;
@@ -1478,13 +1478,13 @@ IRC_PROTOCOL_CALLBACK(join)
             return WEECHAT_RC_OK;
 
         ptr_channel = irc_channel_new (server, IRC_CHANNEL_TYPE_CHANNEL,
-                                       pos_channel, 1, 1);
+                                       params[0], 1, 1);
         if (!ptr_channel)
         {
             weechat_printf (server->buffer,
                             _("%s%s: cannot create new channel \"%s\""),
                             weechat_prefix ("error"), IRC_PLUGIN_NAME,
-                            pos_channel);
+                            params[0]);
             return WEECHAT_RC_ERROR;
         }
     }
@@ -1559,7 +1559,7 @@ IRC_PROTOCOL_CALLBACK(join)
             (display_host) ? ")" : "",
             IRC_COLOR_MESSAGE_JOIN,
             IRC_COLOR_CHAT_CHANNEL,
-            pos_channel,
+            params[0],
             IRC_COLOR_MESSAGE_JOIN);
 
         /*
