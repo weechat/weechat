@@ -1718,26 +1718,26 @@ IRC_PROTOCOL_CALLBACK(kick)
  * Callback for the IRC command "KILL".
  *
  * Command looks like:
- *   :nick1!user@host KILL mynick :kill reason
+ *   KILL nick :kill reason
  */
 
 IRC_PROTOCOL_CALLBACK(kill)
 {
-    char *pos_comment;
+    const char *pos_comment;
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick, *ptr_nick_killed;
 
-    IRC_PROTOCOL_MIN_ARGS(3);
-    IRC_PROTOCOL_CHECK_HOST;
+    IRC_PROTOCOL_MIN_PARAMS(1);
+    IRC_PROTOCOL_CHECK_NICK;
+    IRC_PROTOCOL_CHECK_ADDRESS;
 
-    pos_comment = (argc > 3) ?
-        ((argv_eol[3][0] == ':') ? argv_eol[3] + 1 : argv_eol[3]) : NULL;
+    pos_comment = (num_params > 1) ? params[1] : NULL;
 
     for (ptr_channel = server->channels; ptr_channel;
          ptr_channel = ptr_channel->next_channel)
     {
         ptr_nick = irc_nick_search (server, ptr_channel, nick);
-        ptr_nick_killed = irc_nick_search (server, ptr_channel, argv[2]);
+        ptr_nick_killed = irc_nick_search (server, ptr_channel, params[0]);
 
         if (pos_comment)
         {
@@ -1772,7 +1772,7 @@ IRC_PROTOCOL_CALLBACK(kill)
                 IRC_COLOR_MESSAGE_KICK);
         }
 
-        if (irc_server_strcasecmp (server, argv[2], server->nick) == 0)
+        if (irc_server_strcasecmp (server, params[0], server->nick) == 0)
         {
             /*
              * my nick was killed => free all nicks, channel is not active any
