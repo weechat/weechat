@@ -3326,7 +3326,8 @@ IRC_PROTOCOL_CALLBACK(001)
 
     irc_protocol_cb_numeric (server,
                              date, tags, nick, address, host, command,
-                             ignored, argc, argv, argv_eol);
+                             ignored, argc, argv, argv_eol,
+                             params, num_params);
 
     /* connection to IRC server is OK! */
     server->is_connected = 1;
@@ -3448,7 +3449,8 @@ IRC_PROTOCOL_CALLBACK(005)
 
     irc_protocol_cb_numeric (server,
                              date, tags, nick, address, host, command,
-                             ignored, argc, argv, argv_eol);
+                             ignored, argc, argv, argv_eol,
+                             params, num_params);
 
     /* save prefix */
     pos = strstr (argv_eol[3], "PREFIX=");
@@ -6005,7 +6007,8 @@ IRC_PROTOCOL_CALLBACK(432)
 
     irc_protocol_cb_generic_error (server,
                                    date, tags, nick, address, host, command,
-                                   ignored, argc, argv, argv_eol);
+                                   ignored, argc, argv, argv_eol,
+                                   params, num_params);
 
     if (!server->is_connected)
     {
@@ -6090,8 +6093,9 @@ IRC_PROTOCOL_CALLBACK(433)
     {
         return irc_protocol_cb_generic_error (server,
                                               date, tags, nick, address, host,
-                                              command, ignored, argc, argv,
-                                              argv_eol);
+                                              command, ignored,
+                                              argc, argv, argv_eol,
+                                              params, num_params);
     }
 
     return WEECHAT_RC_OK;
@@ -6111,7 +6115,8 @@ IRC_PROTOCOL_CALLBACK(437)
 
     irc_protocol_cb_generic_error (server,
                                    date, tags, nick, address, host, command,
-                                   ignored, argc, argv, argv_eol);
+                                   ignored, argc, argv, argv_eol,
+                                   params, num_params);
 
     if (!server->is_connected)
     {
@@ -6213,7 +6218,8 @@ IRC_PROTOCOL_CALLBACK(470)
 
     irc_protocol_cb_generic_error (server,
                                    date, tags, nick, address, host, command,
-                                   ignored, argc, argv, argv_eol);
+                                   ignored, argc, argv, argv_eol,
+                                   params, num_params);
 
     if ((argc >= 5) && !irc_channel_search (server, argv[3]))
     {
@@ -6700,7 +6706,8 @@ IRC_PROTOCOL_CALLBACK(901)
     {
         irc_protocol_cb_numeric (server,
                                  date, tags, nick, address, host, command,
-                                 ignored, argc, argv, argv_eol);
+                                 ignored, argc, argv, argv_eol,
+                                 params, num_params);
     }
 
     return WEECHAT_RC_OK;
@@ -6723,7 +6730,8 @@ IRC_PROTOCOL_CALLBACK(sasl_end_ok)
 
     irc_protocol_cb_numeric (server,
                              date, tags, nick, address, host, command,
-                             ignored, argc, argv, argv_eol);
+                             ignored, argc, argv, argv_eol,
+                             params, num_params);
 
     if (!server->is_connected)
         irc_server_sendf (server, 0, NULL, "CAP END");
@@ -6752,7 +6760,8 @@ IRC_PROTOCOL_CALLBACK(sasl_end_fail)
 
     irc_protocol_cb_numeric (server,
                              date, tags, nick, address, host, command,
-                             ignored, argc, argv, argv_eol);
+                             ignored, argc, argv, argv_eol,
+                             params, num_params);
 
     sasl_fail = IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_SASL_FAIL);
     if (!server->is_connected
@@ -6786,8 +6795,8 @@ irc_protocol_recv_command (struct t_irc_server *server,
                            const char *msg_channel)
 {
     int i, cmd_found, return_code, argc, decode_color, keep_trailing_spaces;
-    int message_ignored, flags;
-    char *message_colors_decoded, *pos_space, *tags;
+    int message_ignored, flags, num_params;
+    char *message_colors_decoded, *pos_space, *tags, **params;
     struct t_irc_channel *ptr_channel;
     t_irc_recv_func *cmd_recv_func;
     const char *cmd_name, *ptr_msg_after_tags;
@@ -7110,7 +7119,9 @@ irc_protocol_recv_command (struct t_irc_server *server,
             }
         }
         else
+        {
             message_colors_decoded = NULL;
+        }
         argv = weechat_string_split (message_colors_decoded, " ", NULL,
                                      WEECHAT_STRING_SPLIT_STRIP_LEFT
                                      | WEECHAT_STRING_SPLIT_STRIP_RIGHT
@@ -7124,10 +7135,29 @@ irc_protocol_recv_command (struct t_irc_server *server,
         argv_eol = weechat_string_split (message_colors_decoded, " ", NULL,
                                          flags, 0, NULL);
 
+        irc_message_parse (server,
+                           message_colors_decoded,
+                           NULL,  /* tags */
+                           NULL,  /* message_without_tags */
+                           NULL,  /* nick */
+                           NULL,  /* user */
+                           NULL,  /* host */
+                           NULL,  /* command */
+                           NULL,  /* channel */
+                           NULL,  /* arguments */
+                           NULL,  /* text */
+                           &params,
+                           &num_params,
+                           NULL,  /* pos_command */
+                           NULL,  /* pos_arguments */
+                           NULL,  /* pos_channel */
+                           NULL);  /* pos_text */
+
         return_code = (int) (cmd_recv_func) (server, date, hash_tags, nick,
                                              address_color, host_color,
                                              cmd_name, message_ignored,
-                                             argc, argv, argv_eol);
+                                             argc, argv, argv_eol,
+                                             params, num_params);
 
         if (return_code == WEECHAT_RC_ERROR)
         {

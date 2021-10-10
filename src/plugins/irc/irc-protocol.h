@@ -34,7 +34,9 @@
                                  int ignored,                           \
                                  int argc,                              \
                                  char **argv,                           \
-                                 char **argv_eol)
+                                 char **argv_eol,                       \
+                                 char **params,                         \
+                                 int num_params)
 #define IRCB(__message, __decode_color, __keep_trailing_spaces,         \
              __func_cb)                                                 \
     { #__message,                                                       \
@@ -52,6 +54,8 @@
     (void) ignored;                                                     \
     (void) argv;                                                        \
     (void) argv_eol;                                                    \
+    (void) params;                                                      \
+    (void) num_params;                                                  \
     if (argc < __min_args)                                              \
     {                                                                   \
         weechat_printf (server->buffer,                                 \
@@ -81,7 +85,8 @@ typedef int (t_irc_recv_func)(struct t_irc_server *server,
                               const char *nick, const char *address,
                               const char *host, const char *command,
                               int ignored,
-                              int argc, char **argv, char **argv_eol);
+                              int argc, char **argv, char **argv_eol,
+                              char **params, int num_params);
 
 struct t_irc_protocol_msg
 {
