@@ -1227,11 +1227,11 @@ IRC_PROTOCOL_CALLBACK(chghost)
 
 IRC_PROTOCOL_CALLBACK(error)
 {
-    char *ptr_args;
+    char *str_params;
 
-    IRC_PROTOCOL_MIN_ARGS(2);
+    IRC_PROTOCOL_MIN_PARAMS(1);
 
-    ptr_args = (argv_eol[1][0] == ':') ? argv_eol[1] + 1 : argv_eol[1];
+    str_params = irc_protocol_string_params (params, 0);
 
     weechat_printf_date_tags (
         irc_msgbuffer_get_target_buffer (server, NULL, command, NULL, NULL),
@@ -1239,12 +1239,13 @@ IRC_PROTOCOL_CALLBACK(error)
         irc_protocol_tags (command, NULL, NULL, NULL),
         "%s%s",
         weechat_prefix ("error"),
-        ptr_args);
+        str_params);
 
-    if (strncmp (ptr_args, "Closing Link", 12) == 0)
-    {
+    if (str_params && (strncmp (str_params, "Closing Link", 12) == 0))
         irc_server_disconnect (server, !server->is_connected, 1);
-    }
+
+    if (str_params)
+        free (str_params);
 
     return WEECHAT_RC_OK;
 }
