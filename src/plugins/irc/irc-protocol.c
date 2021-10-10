@@ -261,24 +261,27 @@ irc_protocol_parse_time (const char *time)
 }
 
 /*
- * Builds a string with concatenation of IRC command parameters.
+ * Builds a string with concatenation of IRC command parameters, from
+ * arg_start to arg_end.
  *
  * Note: result must be free after use.
  */
 
 char *
-irc_protocol_string_params (const char **params, int start_arg)
+irc_protocol_string_params (const char **params, int arg_start, int arg_end)
 {
     int i, length;
     char *result;
 
-    if (!params || (start_arg < 0))
+    if (!params || (arg_start < 0) || (arg_end < arg_start))
         return strdup ("");
 
     length = 0;
     for (i = 0; params[i]; i++)
     {
-        if (i >= start_arg)
+        if (i > arg_end)
+            break;
+        if (i >= arg_start)
             length += strlen (params[i]) + 1;
     }
 
@@ -291,10 +294,12 @@ irc_protocol_string_params (const char **params, int start_arg)
 
     result[0] = '\0';
 
-    for (i = start_arg; params[i]; i++)
+    for (i = arg_start; params[i]; i++)
     {
+        if (i > arg_end)
+            break;
         strcat (result, params[i]);
-        if (params[i + 1])
+        if ((i + 1 <= arg_end) && params[i + 1])
             strcat (result, " ");
     }
 
@@ -305,6 +310,13 @@ irc_protocol_string_params (const char **params, int start_arg)
  * Prints a FAIL/WARN/NOTE command.
  *
  * Called by callbacks for commands: FAIL, WARN, NOTE.
+ *
+ * Commands looks like:
+ *   FAIL * NEED_REGISTRATION :You need to be registered to continue
+ *   FAIL ACC REG_INVALID_CALLBACK REGISTER :Email address is not valid
+ *   FAIL BOX BOXES_INVALID STACK CLOCKWISE :Given boxes are not supported
+ *   WARN REHASH CERTS_EXPIRED :Certificate [xxx] has expired
+ *   NOTE * OPER_MESSAGE :The message
  */
 
 void
@@ -313,24 +325,23 @@ irc_protocol_print_error_warning_msg (struct t_irc_server *server,
                                       const char *command,
                                       const char *prefix,
                                       const char *label,
-                                      char *error_command,
-                                      char *args)
+                                      const char **params,
+                                      int num_params)
 {
     const char *ptr_command;
-    char *pos_desc;
+    char *str_context;
 
-    ptr_command = (error_command && (strcmp (error_command, "*") != 0)) ?
-        error_command : NULL;
+    ptr_command = (strcmp (params[0], "*") != 0) ?
+        params[0] : NULL;
 
-    pos_desc = (args) ? strstr (args, " :") : NULL;
-    if (pos_desc)
-        pos_desc[0] = '\0';
+    str_context = (num_params > 2) ?
+        irc_protocol_string_params (params, 1, num_params - 2) : NULL;
 
     weechat_printf_date_tags (
         irc_msgbuffer_get_target_buffer (server, NULL, command, NULL, NULL),
         date,
         irc_protocol_tags (command, NULL, NULL, NULL),
-        "%s%s%s%s%s%s[%s%s%s]%s%s%s",
+        "%s%s%s%s%s%s[%s%s%s]%s %s",
         (prefix) ? prefix : "",
         (label) ? label : "",
         (label) ? " " : "",
@@ -338,15 +349,13 @@ irc_protocol_print_error_warning_msg (struct t_irc_server *server,
         (ptr_command) ? " " : "",
         IRC_COLOR_CHAT_DELIMITERS,
         IRC_COLOR_RESET,
-        (args) ? args : "",
+        (str_context) ? str_context : "",
         IRC_COLOR_CHAT_DELIMITERS,
         IRC_COLOR_RESET,
-        (pos_desc) ? ": " : "",
-        (pos_desc) ? pos_desc + 2 : "");
+        params[num_params - 1]);
 
-    if (pos_desc)
-        pos_desc[0] = ' ';
-
+    if (str_context)
+        free (str_context);
 }
 
 /*
@@ -1034,7 +1043,7 @@ IRC_PROTOCOL_CALLBACK(cap)
         if (num_params < 3)
             return WEECHAT_RC_OK;
 
-        str_params = irc_protocol_string_params (params, 2);
+        str_params = irc_protocol_string_params (params, 2, num_params - 1);
         weechat_printf_date_tags (
             server->buffer, date, NULL,
             _("%s%s: client capability, refused: %s"),
@@ -1049,7 +1058,7 @@ IRC_PROTOCOL_CALLBACK(cap)
         if (num_params < 3)
             return WEECHAT_RC_OK;
 
-        str_params = irc_protocol_string_params (params, 2);
+        str_params = irc_protocol_string_params (params, 2, num_params - 1);
         weechat_printf_date_tags (
             server->buffer, date, NULL,
             _("%s%s: client capability, now available: %s"),
@@ -1100,7 +1109,7 @@ IRC_PROTOCOL_CALLBACK(cap)
         if (num_params < 3)
             return WEECHAT_RC_OK;
 
-        str_params = irc_protocol_string_params (params, 2);
+        str_params = irc_protocol_string_params (params, 2, num_params - 1);
         weechat_printf_date_tags (
             server->buffer, date, NULL,
             _("%s%s: client capability, removed: %s"),
@@ -1231,7 +1240,7 @@ IRC_PROTOCOL_CALLBACK(error)
 
     IRC_PROTOCOL_MIN_PARAMS(1);
 
-    str_params = irc_protocol_string_params (params, 0);
+    str_params = irc_protocol_string_params (params, 0, num_params - 1);
 
     weechat_printf_date_tags (
         irc_msgbuffer_get_target_buffer (server, NULL, command, NULL, NULL),
@@ -1285,7 +1294,7 @@ IRC_PROTOCOL_CALLBACK(generic_error)
 
     ptr_buffer = (ptr_channel) ? ptr_channel->buffer : server->buffer;
 
-    str_params = irc_protocol_string_params (params, arg_error);
+    str_params = irc_protocol_string_params (params, arg_error, num_params - 1);
 
     weechat_printf_date_tags (
         irc_msgbuffer_get_target_buffer (
@@ -1316,14 +1325,14 @@ IRC_PROTOCOL_CALLBACK(generic_error)
  * Callback for the IRC command "FAIL".
  *
  * Command looks like:
- *   :server FAIL * NEED_REGISTRATION :You need to be registered to continue
- *   :server FAIL ACC REG_INVALID_CALLBACK REGISTER :Email address is not valid
- *   :server FAIL BOX BOXES_INVALID STACK CLOCKWISE :Given boxes are not supported
+ *   FAIL * NEED_REGISTRATION :You need to be registered to continue
+ *   FAIL ACC REG_INVALID_CALLBACK REGISTER :Email address is not valid
+ *   FAIL BOX BOXES_INVALID STACK CLOCKWISE :Given boxes are not supported
  */
 
 IRC_PROTOCOL_CALLBACK(fail)
 {
-    IRC_PROTOCOL_MIN_ARGS(4);
+    IRC_PROTOCOL_MIN_PARAMS(2);
 
     irc_protocol_print_error_warning_msg (
         server,
@@ -1331,8 +1340,8 @@ IRC_PROTOCOL_CALLBACK(fail)
         command,
         weechat_prefix ("error"),
         _("Failure:"),
-        argv[2],
-        argv_eol[3]);
+        params,
+        num_params);
 
     return WEECHAT_RC_OK;
 }
@@ -2054,12 +2063,12 @@ IRC_PROTOCOL_CALLBACK(nick)
  * Callback for the IRC command "NOTE".
  *
  * Command looks like:
- *   :server NOTE * OPER_MESSAGE :The message
+ *   NOTE * OPER_MESSAGE :The message
  */
 
 IRC_PROTOCOL_CALLBACK(note)
 {
-    IRC_PROTOCOL_MIN_ARGS(4);
+    IRC_PROTOCOL_MIN_PARAMS(2);
 
     irc_protocol_print_error_warning_msg (
         server,
@@ -2067,8 +2076,8 @@ IRC_PROTOCOL_CALLBACK(note)
         command,
         weechat_prefix ("network"),
         _("Note:"),
-        argv[2],
-        argv_eol[3]);
+        params,
+        num_params);
 
     return WEECHAT_RC_OK;
 }
@@ -3322,12 +3331,12 @@ IRC_PROTOCOL_CALLBACK(wallops)
  * Callback for the IRC command "WARN".
  *
  * Command looks like:
- *   :server WARN REHASH CERTS_EXPIRED :Certificate [xxx] has expired
+ *   WARN REHASH CERTS_EXPIRED :Certificate [xxx] has expired
  */
 
 IRC_PROTOCOL_CALLBACK(warn)
 {
-    IRC_PROTOCOL_MIN_ARGS(4);
+    IRC_PROTOCOL_MIN_PARAMS(2);
 
     irc_protocol_print_error_warning_msg (
         server,
@@ -3335,8 +3344,8 @@ IRC_PROTOCOL_CALLBACK(warn)
         command,
         weechat_prefix ("error"),
         _("Warning:"),
-        argv[2],
-        argv_eol[3]);
+        params,
+        num_params);
 
     return WEECHAT_RC_OK;
 }
