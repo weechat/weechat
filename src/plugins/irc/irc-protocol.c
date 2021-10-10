@@ -1350,23 +1350,26 @@ IRC_PROTOCOL_CALLBACK(fail)
  * Callback for the IRC command "INVITE".
  *
  * Command looks like:
- *   :nick!user@host INVITE mynick :#channel
+ *   INVITE mynick :#channel
  *
- * With invite-notify capability
- * (https://ircv3.net/specs/extensions/invite-notify-3.2.html):
+ * With invite-notify capability, the whole message looks like:
  *   :<inviter> INVITE <target> <channel>
  *   :ChanServ!ChanServ@example.com INVITE Attila #channel
+ *
+ * For more information, see:
+ * https://ircv3.net/specs/extensions/invite-notify-3.2.html
  */
 
 IRC_PROTOCOL_CALLBACK(invite)
 {
-    IRC_PROTOCOL_MIN_ARGS(4);
-    IRC_PROTOCOL_CHECK_HOST;
+    IRC_PROTOCOL_MIN_PARAMS(2);
+    IRC_PROTOCOL_CHECK_NICK;
+    IRC_PROTOCOL_CHECK_ADDRESS;
 
     if (ignored)
         return WEECHAT_RC_OK;
 
-    if (irc_server_strcasecmp (server, argv[2], server->nick) == 0)
+    if (irc_server_strcasecmp (server, params[0], server->nick) == 0)
     {
         weechat_printf_date_tags (
             irc_msgbuffer_get_target_buffer (server, nick, command, NULL, NULL),
@@ -1375,7 +1378,7 @@ IRC_PROTOCOL_CALLBACK(invite)
             _("%sYou have been invited to %s%s%s by %s%s%s"),
             weechat_prefix ("network"),
             IRC_COLOR_CHAT_CHANNEL,
-            (argv[3][0] == ':') ? argv[3] + 1 : argv[3],
+            params[1],
             IRC_COLOR_RESET,
             irc_nick_color_for_msg (server, 1, NULL, nick),
             nick,
@@ -1394,11 +1397,11 @@ IRC_PROTOCOL_CALLBACK(invite)
             irc_nick_color_for_msg (server, 1, NULL, nick),
             nick,
             IRC_COLOR_RESET,
-            irc_nick_color_for_msg (server, 1, NULL, argv[2]),
-            argv[2],
+            irc_nick_color_for_msg (server, 1, NULL, params[0]),
+            params[0],
             IRC_COLOR_RESET,
             IRC_COLOR_CHAT_CHANNEL,
-            (argv[3][0] == ':') ? argv[3] + 1 : argv[3],
+            params[1],
             IRC_COLOR_RESET);
     }
 
