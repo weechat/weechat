@@ -322,14 +322,15 @@ IRC_PROTOCOL_CALLBACK(account)
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
     struct t_irc_channel_speaking *ptr_nick_speaking;
-    char *pos_account, str_account[512];
+    const char *pos_account;
+    char str_account[512];
     int cap_account_notify, local_account, smart_filter;
 
-    IRC_PROTOCOL_MIN_ARGS(3);
+    IRC_PROTOCOL_MIN_PARAMS(1);
 
     local_account = (irc_server_strcasecmp (server, nick, server->nick) == 0);
 
-    pos_account = (argv[2][0] == ':') ? argv[2] + 1 : argv[2];
+    pos_account = params[0];
     if (strcmp (pos_account, "*") == 0)
         pos_account = NULL;
 

@@ -52,6 +52,7 @@
     (void) host;                                                        \
     (void) command;                                                     \
     (void) ignored;                                                     \
+    (void) argc;                                                        \
     (void) argv;                                                        \
     (void) argv_eol;                                                    \
     (void) params;                                                      \
@@ -64,6 +65,30 @@
                           "arguments, expected: at least %d)"),         \
                         weechat_prefix ("error"), IRC_PLUGIN_NAME,      \
                         command, argc, __min_args);                     \
+        return WEECHAT_RC_ERROR;                                        \
+    }
+
+#define IRC_PROTOCOL_MIN_PARAMS(__min_params)                           \
+    (void) date;                                                        \
+    (void) tags;                                                        \
+    (void) nick;                                                        \
+    (void) address;                                                     \
+    (void) host;                                                        \
+    (void) command;                                                     \
+    (void) ignored;                                                     \
+    (void) argc;                                                        \
+    (void) argv;                                                        \
+    (void) argv_eol;                                                    \
+    (void) params;                                                      \
+    (void) num_params;                                                  \
+    if (num_params < __min_params)                                      \
+    {                                                                   \
+        weechat_printf (server->buffer,                                 \
+                        _("%s%s: too few parameters received in "       \
+                          "command \"%s\" (received: %d parameters, "   \
+                          "expected: at least %d)"),                    \
+                        weechat_prefix ("error"), IRC_PLUGIN_NAME,      \
+                        command, num_params, __min_params);             \
         return WEECHAT_RC_ERROR;                                        \
     }
 
