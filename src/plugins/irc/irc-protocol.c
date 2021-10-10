@@ -1817,7 +1817,7 @@ IRC_PROTOCOL_CALLBACK(mode)
     struct t_gui_buffer *ptr_buffer;
 
     IRC_PROTOCOL_MIN_ARGS(4);
-    IRC_PROTOCOL_CHECK_HOST;
+    IRC_PROTOCOL_CHECK_PREFIX;
 
     pos_modes = (argv[3][0] == ':') ? argv[3] + 1 : argv[3];
     pos_modes_args = (argc > 4) ?
@@ -1898,7 +1898,7 @@ IRC_PROTOCOL_CALLBACK(nick)
     struct t_irc_channel_speaking *ptr_nick_speaking;
 
     IRC_PROTOCOL_MIN_ARGS(3);
-    IRC_PROTOCOL_CHECK_HOST;
+    IRC_PROTOCOL_CHECK_PREFIX;
 
     new_nick = (argv[2][0] == ':') ? argv[2] + 1 : argv[2];
 
@@ -2378,7 +2378,7 @@ IRC_PROTOCOL_CALLBACK(part)
     struct t_irc_channel_speaking *ptr_nick_speaking;
 
     IRC_PROTOCOL_MIN_ARGS(3);
-    IRC_PROTOCOL_CHECK_HOST;
+    IRC_PROTOCOL_CHECK_PREFIX;
 
     pos_comment = (argc > 3) ?
         ((argv_eol[3][0] == ':') ? argv_eol[3] + 1 : argv_eol[3]) : NULL;
@@ -2620,7 +2620,7 @@ IRC_PROTOCOL_CALLBACK(privmsg)
     struct t_irc_nick *ptr_nick;
 
     IRC_PROTOCOL_MIN_ARGS(4);
-    IRC_PROTOCOL_CHECK_HOST;
+    IRC_PROTOCOL_CHECK_PREFIX;
 
     if (ignored)
         return WEECHAT_RC_OK;
@@ -2845,7 +2845,7 @@ IRC_PROTOCOL_CALLBACK(quit)
     int local_quit, display_host;
 
     IRC_PROTOCOL_MIN_ARGS(2);
-    IRC_PROTOCOL_CHECK_HOST;
+    IRC_PROTOCOL_CHECK_PREFIX;
 
     pos_comment = (argc > 2) ?
         ((argv_eol[2][0] == ':') ? argv_eol[2] + 1 : argv_eol[2]) : NULL;

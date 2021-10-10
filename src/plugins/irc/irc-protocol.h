@@ -92,7 +92,7 @@
         return WEECHAT_RC_ERROR;                                        \
     }
 
-#define IRC_PROTOCOL_CHECK_HOST                                         \
+#define IRC_PROTOCOL_CHECK_PREFIX                                       \
     if (argv[0][0] != ':')                                              \
     {                                                                   \
         weechat_printf (server->buffer,                                 \
