@@ -1255,38 +1255,37 @@ IRC_PROTOCOL_CALLBACK(error)
  * command "ERROR").
  *
  * Command looks like:
- *   :server 404 nick #channel :Cannot send to channel
+ *   404 nick #channel :Cannot send to channel
  */
 
 IRC_PROTOCOL_CALLBACK(generic_error)
 {
-    int first_arg;
-    char *chan_nick, *args;
+    int arg_error;
+    char *str_params;
+    const char *pos_chan_nick;
     struct t_irc_channel *ptr_channel;
     struct t_gui_buffer *ptr_buffer;
 
-    IRC_PROTOCOL_MIN_ARGS(4);
+    IRC_PROTOCOL_MIN_PARAMS(1);
 
-    first_arg = (irc_server_strcasecmp (server, argv[2], server->nick) == 0) ? 3 : 2;
+    arg_error = (irc_server_strcasecmp (server, params[0], server->nick) == 0) ?
+        1 : 0;
 
-    if ((argv[first_arg][0] != ':') && argv[first_arg + 1])
+    pos_chan_nick = NULL;
+    if (params[arg_error + 1]
+        && irc_channel_is_channel (server, params[arg_error]))
     {
-        chan_nick = argv[first_arg];
-        args = argv_eol[first_arg + 1];
+        pos_chan_nick = params[arg_error];
+        arg_error++;
     }
-    else
-    {
-        chan_nick = NULL;
-        args = argv_eol[first_arg];
-    }
-    if (args[0] == ':')
-        args++;
 
     ptr_channel = NULL;
-    if (chan_nick)
-        ptr_channel = irc_channel_search (server, chan_nick);
+    if (pos_chan_nick)
+        ptr_channel = irc_channel_search (server, pos_chan_nick);
 
     ptr_buffer = (ptr_channel) ? ptr_channel->buffer : server->buffer;
+
+    str_params = irc_protocol_string_params (params, arg_error);
 
     weechat_printf_date_tags (
         irc_msgbuffer_get_target_buffer (
@@ -1298,14 +1297,17 @@ IRC_PROTOCOL_CALLBACK(generic_error)
         irc_protocol_tags (command, NULL, NULL, NULL),
         "%s%s%s%s%s%s",
         weechat_prefix ("network"),
-        (ptr_channel && chan_nick
-         && (irc_server_strcasecmp (server, chan_nick,
+        (ptr_channel && pos_chan_nick
+         && (irc_server_strcasecmp (server, pos_chan_nick,
                                     ptr_channel->name) == 0)) ?
         IRC_COLOR_CHAT_CHANNEL : "",
-        (chan_nick) ? chan_nick : "",
+        (pos_chan_nick) ? pos_chan_nick : "",
         IRC_COLOR_RESET,
-        (chan_nick) ? ": " : "",
-        args);
+        (pos_chan_nick) ? ": " : "",
+        str_params);
+
+    if (str_params)
+        free (str_params);
 
     return WEECHAT_RC_OK;
 }
