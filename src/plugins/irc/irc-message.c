@@ -35,6 +35,107 @@
 
 
 /*
+ * Parses command arguments and returns:
+ *   - params (array of strings)
+ *   - num_params (integer)
+ *
+ * Leading spaces are skipped, trailing spaces are preserved.
+ *
+ * Trailing parameters (if starting with ":") are returned as a single
+ * parameter.
+ *
+ * Example:
+ *
+ *   " #channel nick :trailing parameters "
+ *
+ *   ==> params[0] == "#channel"
+ *       params[1] == "nick"
+ *       params[2] == "trailing parameters "
+ *       params[3] == NULL
+ *       num_params = 3
+ */
+
+void
+irc_message_parse_params (const char *parameters,
+                          char ***params, int *num_params)
+{
+    const char *ptr_params, *pos_end, *pos_next;
+    int alloc_params, trailing;
+
+    if (!params && !num_params)
+        return;
+
+    if (params)
+        *params = NULL;
+    if (num_params)
+        *num_params = 0;
+
+    if (!parameters)
+        return;
+
+    alloc_params = 0;
+    if (params)
+    {
+        *params = malloc ((alloc_params + 1) * sizeof ((*params)[0]));
+        if (!*params)
+            return;
+        *params[0] = NULL;
+    }
+
+    ptr_params = parameters;
+    while (ptr_params[0] == ' ')
+    {
+        ptr_params++;
+    }
+
+    trailing = 0;
+    while (1)
+    {
+        pos_end = NULL;
+        if (ptr_params[0] == ':')
+        {
+            ptr_params++;
+            trailing = 1;
+        }
+        else
+        {
+            pos_end = strchr (ptr_params, ' ');
+        }
+        if (!pos_end)
+            pos_end = ptr_params + strlen (ptr_params);
+        pos_next = pos_end;
+        while (pos_next[0] == ' ')
+        {
+            pos_next++;
+        }
+        if (!pos_next[0])
+            pos_end = pos_next;
+        if (params)
+        {
+            alloc_params++;
+            *params = realloc (*params,
+                               (alloc_params + 1) * sizeof ((*params)[0]));
+            if (!*params)
+                return;
+            (*params)[alloc_params - 1] = weechat_strndup (ptr_params,
+                                                           pos_end - ptr_params);
+            (*params)[alloc_params] = NULL;
+        }
+        if (num_params)
+            *num_params += 1;
+        if (trailing)
+            break;
+        ptr_params = pos_end;
+        while (ptr_params[0] == ' ')
+        {
+            ptr_params++;
+        }
+        if (!ptr_params[0])
+            break;
+    }
+}
+
+/*
  * Parses an IRC message and returns:
  *   - tags (string)
  *   - message without tags (string)
@@ -44,24 +145,26 @@
  *   - channel (string)
  *   - arguments (string)
  *   - text (string)
+ *   - params (array of strings)
+ *   - num_params (integer)
  *   - pos_command (integer: command index in message)
  *   - pos_arguments (integer: arguments index in message)
  *   - pos_channel (integer: channel index in message)
  *   - pos_text (integer: text index in message)
  *
  * Example:
- *   @time=2015-06-27T16:40:35.000Z :nick!user@host PRIVMSG #weechat :hello!
+ *   @time=2015-06-27T16:40:35.000Z :nick!user@host PRIVMSG #weechat :Hello world!
  *
  * Result:
  *               tags: "time=2015-06-27T16:40:35.000Z"
- *   msg_without_tags: ":nick!user@host PRIVMSG #weechat :hello!"
+ *   msg_without_tags: ":nick!user@host PRIVMSG #weechat :Hello world!"
  *               nick: "nick"
  *               user: "user"
  *               host: "nick!user@host"
  *            command: "PRIVMSG"
  *            channel: "#weechat"
- *          arguments: "#weechat :hello!"
- *               text: "hello!"
+ *          arguments: "#weechat :Hello world!"
+ *               text: "Hello world!"
  *        pos_command: 47
  *      pos_arguments: 55
  *        pos_channel: 55
@@ -73,6 +176,7 @@ irc_message_parse (struct t_irc_server *server, const char *message,
                    char **tags, char **message_without_tags, char **nick,
                    char **user, char **host, char **command, char **channel,
                    char **arguments, char **text,
+                   char ***params, int *num_params,
                    int *pos_command, int *pos_arguments, int *pos_channel,
                    int *pos_text)
 {
@@ -96,6 +200,10 @@ irc_message_parse (struct t_irc_server *server, const char *message,
         *arguments = NULL;
     if (text)
         *text = NULL;
+    if (params)
+        *params = NULL;
+    if (num_params)
+        *num_params = 0;
     if (pos_command)
         *pos_command = -1;
     if (pos_arguments)
@@ -113,7 +221,7 @@ irc_message_parse (struct t_irc_server *server, const char *message,
     /*
      * we will use this message as example:
      *
-     *   @time=2015-06-27T16:40:35.000Z :nick!user@host PRIVMSG #weechat :hello!
+     *   @time=2015-06-27T16:40:35.000Z :nick!user@host PRIVMSG #weechat :Hello world!
      */
 
     if (ptr_message[0] == '@')
@@ -142,7 +250,7 @@ irc_message_parse (struct t_irc_server *server, const char *message,
     if (message_without_tags)
         *message_without_tags = strdup (ptr_message);
 
-    /* now we have: ptr_message --> ":nick!user@host PRIVMSG #weechat :hello!" */
+    /* now we have: ptr_message --> ":nick!user@host PRIVMSG #weechat :Hello world!" */
     if (ptr_message[0] == ':')
     {
         /* read host/nick */
@@ -185,7 +293,7 @@ irc_message_parse (struct t_irc_server *server, const char *message,
         }
     }
 
-    /* now we have: ptr_message --> "PRIVMSG #weechat :hello!" */
+    /* now we have: ptr_message --> "PRIVMSG #weechat :Hello world!" */
     if (ptr_message[0])
     {
         pos = strchr (ptr_message, ' ');
@@ -200,11 +308,12 @@ irc_message_parse (struct t_irc_server *server, const char *message,
             {
                 pos++;
             }
-            /* now we have: pos --> "#weechat :hello!" */
+            /* now we have: pos --> "#weechat :Hello world!" */
             if (arguments)
                 *arguments = strdup (pos);
             if (pos_arguments)
                 *pos_arguments = pos - message;
+            irc_message_parse_params (pos, params, num_params);
             if ((pos[0] == ':')
                 && ((strncmp (ptr_message, "JOIN ", 5) == 0)
                     || (strncmp (ptr_message, "PART ", 5) == 0)))
@@ -336,6 +445,8 @@ irc_message_parse (struct t_irc_server *server, const char *message,
  *   - channel
  *   - arguments
  *   - text
+ *   - num_params
+ *   - param1, param2, ..., paramN
  *   - pos_command
  *   - pos_arguments
  *   - pos_channel
@@ -349,13 +460,14 @@ irc_message_parse_to_hashtable (struct t_irc_server *server,
                                 const char *message)
 {
     char *tags, *message_without_tags, *nick, *user, *host, *command, *channel;
-    char *arguments, *text, str_pos[32];
+    char *arguments, *text, **params, str_key[64], str_pos[32];
     char empty_str[1] = { '\0' };
-    int pos_command, pos_arguments, pos_channel, pos_text;
+    int i, num_params, pos_command, pos_arguments, pos_channel, pos_text;
     struct t_hashtable *hashtable;
 
     irc_message_parse (server, message, &tags, &message_without_tags, &nick,
                        &user, &host, &command, &channel, &arguments, &text,
+                       &params, &num_params,
                        &pos_command, &pos_arguments, &pos_channel, &pos_text);
 
     hashtable = weechat_hashtable_new (32,
@@ -384,6 +496,13 @@ irc_message_parse_to_hashtable (struct t_irc_server *server,
                            (arguments) ? arguments : empty_str);
     weechat_hashtable_set (hashtable, "text",
                            (text) ? text : empty_str);
+    snprintf (str_pos, sizeof (str_pos), "%d", num_params);
+    weechat_hashtable_set (hashtable, "num_params", str_pos);
+    for (i = 0; i < num_params; i++)
+    {
+        snprintf (str_key, sizeof (str_key), "param%d", i + 1);
+        weechat_hashtable_set (hashtable, str_key, params[i]);
+    }
     snprintf (str_pos, sizeof (str_pos), "%d", pos_command);
     weechat_hashtable_set (hashtable, "pos_command", str_pos);
     snprintf (str_pos, sizeof (str_pos), "%d", pos_arguments);
@@ -562,11 +681,23 @@ irc_message_ignored (struct t_irc_server *server, const char *message)
         return 0;
 
     /* parse raw message */
-    irc_message_parse (server, message,
-                       NULL, NULL, &nick, NULL, &host,
-                       NULL, &channel, NULL,
-                       NULL, NULL, NULL,
-                       NULL, NULL);
+    irc_message_parse (server,
+                       message,
+                       NULL,  /* tags */
+                       NULL,  /* message_without_tags */
+                       &nick,
+                       NULL,  /* user */
+                       &host,
+                       NULL,  /* command */
+                       &channel,
+                       NULL,  /* arguments */
+                       NULL,  /* text */
+                       NULL,  /* params */
+                       NULL,  /* num_params */
+                       NULL,  /* pos_command */
+                       NULL,  /* pos_arguments */
+                       NULL,  /* pos_channel */
+                       NULL);  /* pos_text */
 
     /* remove colors from host */
     host_no_color = (host) ? irc_color_decode (host, 0) : NULL;

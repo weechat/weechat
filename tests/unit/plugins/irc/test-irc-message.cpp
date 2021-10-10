@@ -28,6 +28,7 @@ extern "C"
 #include "src/core/wee-config-file.h"
 #include "src/core/wee-hashtable.h"
 #include "src/core/wee-hook.h"
+#include "src/core/wee-string.h"
 #include "src/plugins/irc/irc-config.h"
 #include "src/plugins/irc/irc-ignore.h"
 #include "src/plugins/irc/irc-message.h"
@@ -158,7 +159,8 @@ extern "C"
 
 #define WEE_CHECK_PARSE(__tags, __message_without_tags, __nick, __user, \
                         __host, __command, __channel, __arguments,      \
-                        __text, __pos_command, __pos_arguments,         \
+                        __text, __params, __num_params,                 \
+                        __pos_command, __pos_arguments,                 \
                         __pos_channel, __pos_text, __server, __message) \
     tags = NULL;                                                        \
     message_without_tags = NULL;                                        \
@@ -169,6 +171,8 @@ extern "C"
     channel = NULL;                                                     \
     arguments = NULL;                                                   \
     text = NULL;                                                        \
+    params = NULL;                                                      \
+    num_params = -1;                                                    \
     pos_command = -1;                                                   \
     pos_channel = -1;                                                   \
     pos_text = -1;                                                      \
@@ -176,7 +180,8 @@ extern "C"
     irc_message_parse (__server, __message, &tags,                      \
                        &message_without_tags,                           \
                        &nick, &user, &host, &command, &channel,         \
-                       &arguments, &text, &pos_command, &pos_arguments, \
+                       &arguments, &text, &params, &num_params,         \
+                       &pos_command, &pos_arguments,                    \
                        &pos_channel, &pos_text);                        \
                                                                         \
     if (__tags == NULL)                                                 \
@@ -251,6 +256,29 @@ extern "C"
     {                                                                   \
         STRCMP_EQUAL(__text, text);                                     \
     }                                                                   \
+    if (__params == NULL)                                               \
+    {                                                                   \
+        POINTERS_EQUAL(NULL, params);                                   \
+    }                                                                   \
+    else                                                                \
+    {                                                                   \
+        ptr_params = __params;                                          \
+        for (i = 0; ptr_params[i]; i++)                                 \
+        {                                                               \
+            if (!params[i])                                             \
+            {                                                           \
+                snprintf (str_error, sizeof (str_error),                \
+                          "params[%d] should not be NULL",              \
+                          i);                                           \
+                FAIL(str_error);                                        \
+            }                                                           \
+            else                                                        \
+            {                                                           \
+                STRCMP_EQUAL(ptr_params[i], params[i]);                 \
+            }                                                           \
+        }                                                               \
+        POINTERS_EQUAL(NULL, params[i]);                                \
+    }                                                                   \
     LONGS_EQUAL(__pos_command, pos_command);                            \
     LONGS_EQUAL(__pos_arguments, pos_arguments);                        \
     LONGS_EQUAL(__pos_channel, pos_channel);                            \
@@ -279,25 +307,203 @@ TEST_GROUP(IrcMessage)
 
 /*
  * Tests functions:
+ *   irc_message_parse_params
+ */
+
+TEST(IrcMessage, ParseParams)
+{
+    char **params;
+    int num_params;
+
+    irc_message_parse_params (NULL, NULL, NULL);
+    irc_message_parse_params ("", NULL, NULL);
+
+    params = (char **)0x1;
+    num_params = -1;
+    irc_message_parse_params (NULL, &params, &num_params);
+    LONGS_EQUAL(0, num_params);
+    POINTERS_EQUAL(NULL, params);
+
+    /* empty string */
+    params = NULL;
+    num_params = -1;
+    irc_message_parse_params ("", &params, &num_params);
+    LONGS_EQUAL(1, num_params);
+    CHECK(params);
+    STRCMP_EQUAL("", params[0]);
+    POINTERS_EQUAL(NULL, params[1]);
+    string_free_split (params);
+
+    /* empty trailing parameter */
+    params = NULL;
+    num_params = -1;
+    irc_message_parse_params (":", &params, &num_params);
+    LONGS_EQUAL(1, num_params);
+    CHECK(params);
+    STRCMP_EQUAL("", params[0]);
+    POINTERS_EQUAL(NULL, params[1]);
+    string_free_split (params);
+
+    /* single parameter */
+    params = NULL;
+    num_params = -1;
+    irc_message_parse_params ("param1", &params, &num_params);
+    LONGS_EQUAL(1, num_params);
+    CHECK(params);
+    STRCMP_EQUAL("param1", params[0]);
+    POINTERS_EQUAL(NULL, params[1]);
+    string_free_split (params);
+
+    /* two parameters */
+    params = NULL;
+    num_params = -1;
+    irc_message_parse_params ("param1 param2", &params, &num_params);
+    LONGS_EQUAL(2, num_params);
+    CHECK(params);
+    STRCMP_EQUAL("param1", params[0]);
+    STRCMP_EQUAL("param2", params[1]);
+    POINTERS_EQUAL(NULL, params[2]);
+    string_free_split (params);
+
+    /* trailing spaces */
+    params = NULL;
+    num_params = -1;
+    irc_message_parse_params ("param1 param2  ", &params, &num_params);
+    LONGS_EQUAL(2, num_params);
+    CHECK(params);
+    STRCMP_EQUAL("param1", params[0]);
+    STRCMP_EQUAL("param2  ", params[1]);
+    POINTERS_EQUAL(NULL, params[2]);
+    string_free_split (params);
+
+    /* leading and trailing spaces */
+    params = NULL;
+    num_params = -1;
+    irc_message_parse_params ("  param1 param2  ", &params, &num_params);
+    LONGS_EQUAL(2, num_params);
+    CHECK(params);
+    STRCMP_EQUAL("param1", params[0]);
+    STRCMP_EQUAL("param2  ", params[1]);
+    POINTERS_EQUAL(NULL, params[2]);
+    string_free_split (params);
+
+    /* empty trailing parameter */
+    params = NULL;
+    num_params = -1;
+    irc_message_parse_params ("param1 :", &params, &num_params);
+    LONGS_EQUAL(2, num_params);
+    CHECK(params);
+    STRCMP_EQUAL("param1", params[0]);
+    STRCMP_EQUAL("", params[1]);
+    POINTERS_EQUAL(NULL, params[2]);
+    string_free_split (params);
+
+    /* trailing parameter */
+    params = NULL;
+    num_params = -1;
+    irc_message_parse_params ("param1 :trailing  params ", &params, &num_params);
+    LONGS_EQUAL(2, num_params);
+    CHECK(params);
+    STRCMP_EQUAL("param1", params[0]);
+    STRCMP_EQUAL("trailing  params ", params[1]);
+    POINTERS_EQUAL(NULL, params[2]);
+    string_free_split (params);
+
+    /* trailing parameter with colon inside */
+    params = NULL;
+    num_params = -1;
+    irc_message_parse_params ("param1 param2 param3  :trailing  params :here ",
+                              &params, &num_params);
+    LONGS_EQUAL(4, num_params);
+    CHECK(params);
+    STRCMP_EQUAL("param1", params[0]);
+    STRCMP_EQUAL("param2", params[1]);
+    STRCMP_EQUAL("param3", params[2]);
+    STRCMP_EQUAL("trailing  params :here ", params[3]);
+    POINTERS_EQUAL(NULL, params[4]);
+    string_free_split (params);
+
+    /* with params set to NULL */
+    params = (char **)0x1;
+    num_params = -1;
+    irc_message_parse_params ("param1 param2 param3  :trailing  params :here ",
+                              NULL, &num_params);
+    LONGS_EQUAL(4, num_params);
+    POINTERS_EQUAL(0x1, params);
+
+    /* with num_params set to NULL */
+    params = NULL;
+    num_params = -1;
+    irc_message_parse_params ("param1 param2 param3  :trailing  params :here ",
+                              &params, NULL);
+    LONGS_EQUAL(-1, num_params);
+    CHECK(params);
+    STRCMP_EQUAL("param1", params[0]);
+    STRCMP_EQUAL("param2", params[1]);
+    STRCMP_EQUAL("param3", params[2]);
+    STRCMP_EQUAL("trailing  params :here ", params[3]);
+    POINTERS_EQUAL(NULL, params[4]);
+    string_free_split (params);
+}
+
+/*
+ * Tests functions:
  *   irc_message_parse
  */
 
 TEST(IrcMessage, Parse)
 {
     char *tags, *message_without_tags, *nick, *user, *host, *command, *channel;
-    char *arguments, *text;
-    int pos_command, pos_arguments, pos_channel, pos_text;
+    char *arguments, *text, **params, str_error[4096];
+    const char **ptr_params;
+    const char *params_away[] = { "I am away", NULL };
+    const char *params_caps[] = {
+        "*", "LS", "identify-msg multi-prefix sasl", NULL
+    };
+    const char *params_join[] = { "#channel", NULL };
+    const char *params_join_extended[] = {
+        "#channel", "account", "real name", NULL
+    };
+    const char *params_kick[] = { "#channel", "nick2", "kick reason", NULL };
+    const char *params_mode[] = { "#channel", "+o", "nick", NULL };
+    const char *params_mode_colon[] = { "#channel", "+o nick", NULL };
+    const char *params_nick[] = { "newnick", NULL };
+    const char *params_notice[] = {
+        "AUTH", "*** Looking up your hostname...", NULL
+    };
+    const char *params_ping[] = { "arguments", NULL };
+    const char *params_part[] = { "#channel", NULL };
+    const char *params_invite[] = { "nick2", "#channel", NULL };
+    const char *params_privmsg_no_msg[] = { "#channel", NULL };
+    const char *params_privmsg[] = { "#channel", "the message", NULL };
+    const char *params_privmsg_nick2[] = { "nick2", "the message", NULL };
+    const char *params_005[] = {
+        "mynick", "MODES=4", "CHANLIMIT=#:20", "NICKLEN=16", "USERLEN=10",
+        "HOSTLEN=63", "TOPICLEN=450", "KICKLEN=450", "CHANNELLEN=30",
+        "KEYLEN=23", "CHANTYPES=#", "PREFIX=(ov)@+", "CASEMAPPING=ascii",
+        "CAPAB", "IRCD=dancer", "are available on this server", NULL
+    };
+    const char *params_301[] = {
+        "mynick", "nick", "away message for nick", NULL
+    };
+    const char *params_error[] = {
+        "nick", "#channel", "Cannot send to channel", NULL
+    };
+    int i, num_params, pos_command, pos_arguments, pos_channel, pos_text;
 
     WEE_CHECK_PARSE(NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+                    NULL, -1,
                     -1, -1, -1, -1,
                     NULL, NULL);
 
     WEE_CHECK_PARSE(NULL, "", NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+                    NULL, -1,
                     -1, -1, -1, -1,
                     NULL, "");
 
     WEE_CHECK_PARSE(NULL, ":nick!user@host", "nick", "user", "nick!user@host",
                     NULL, NULL, NULL, NULL,
+                    NULL, -1,
                     -1, -1, -1, -1,
                     NULL, ":nick!user@host");
 
@@ -305,10 +511,12 @@ TEST(IrcMessage, Parse)
     WEE_CHECK_PARSE(NULL, ":nick!user@host AWAY", "nick", "user",
                     "nick!user@host",
                     "AWAY", NULL, NULL, NULL,
+                    NULL, -1,
                     16, -1, -1, -1,
                     NULL, ":nick!user@host AWAY");
     WEE_CHECK_PARSE(NULL, ":nick!user@host AWAY :I am away", "nick", "user",
                     "nick!user@host", "AWAY", NULL, ":I am away", "I am away",
+                    params_away, 1,
                     16, 21, -1, 22,
                     NULL, ":nick!user@host AWAY :I am away");
 
@@ -318,6 +526,7 @@ TEST(IrcMessage, Parse)
                     "irc.example.com", NULL, "irc.example.com", "CAP", "*",
                     "* LS :identify-msg multi-prefix sasl",
                     "LS :identify-msg multi-prefix sasl",
+                    params_caps, 3,
                     17, 21, 21, 23,
                     NULL,
                     ":irc.example.com CAP * LS :identify-msg multi-prefix sasl");
@@ -325,12 +534,14 @@ TEST(IrcMessage, Parse)
     /* JOIN */
     WEE_CHECK_PARSE(NULL, ":nick!user@host JOIN #channel", "nick", "user",
                     "nick!user@host", "JOIN", "#channel", "#channel", NULL,
+                    params_join, 1,
                     16, 21, 21, -1,
                     NULL, ":nick!user@host JOIN #channel");
 
     /* JOIN with colon */
     WEE_CHECK_PARSE(NULL, ":nick!user@host JOIN :#channel", "nick", "user",
                     "nick!user@host", "JOIN", "#channel", ":#channel", NULL,
+                    params_join, 1,
                     16, 21, 22, -1,
                     NULL, ":nick!user@host JOIN :#channel");
 
@@ -338,6 +549,7 @@ TEST(IrcMessage, Parse)
     WEE_CHECK_PARSE(NULL, ":nick!user@host JOIN #channel account :real name",
                     "nick", "user", "nick!user@host", "JOIN", "#channel",
                     "#channel account :real name", "account :real name",
+                    params_join_extended, 3,
                     16, 21, 21, 30,
                     NULL, ":nick!user@host JOIN #channel account :real name");
 
@@ -345,6 +557,7 @@ TEST(IrcMessage, Parse)
     WEE_CHECK_PARSE(NULL, ":nick1!user@host KICK #channel nick2 :kick reason",
                     "nick1", "user", "nick1!user@host", "KICK", "#channel",
                     "#channel nick2 :kick reason", "nick2 :kick reason",
+                    params_kick, 3,
                     17, 22, 22, 31,
                     NULL, ":nick1!user@host KICK #channel nick2 :kick reason");
 
@@ -352,6 +565,7 @@ TEST(IrcMessage, Parse)
     WEE_CHECK_PARSE(NULL, ":nick!user@host MODE #channel +o nick",
                     "nick", "user", "nick!user@host", "MODE", "#channel",
                     "#channel +o nick", "+o nick",
+                    params_mode, 3,
                     16, 21, 21, 30,
                     NULL, ":nick!user@host MODE #channel +o nick");
 
@@ -359,6 +573,7 @@ TEST(IrcMessage, Parse)
     WEE_CHECK_PARSE(NULL, ":nick!user@host MODE #channel :+o nick",
                     "nick", "user", "nick!user@host", "MODE", "#channel",
                     "#channel :+o nick", "+o nick",
+                    params_mode_colon, 2,
                     16, 21, 21, 31,
                     NULL, ":nick!user@host MODE #channel :+o nick");
 
@@ -366,6 +581,7 @@ TEST(IrcMessage, Parse)
     WEE_CHECK_PARSE(NULL, ":oldnick!user@host NICK :newnick",
                     "oldnick", "user", "oldnick!user@host", "NICK", NULL,
                     ":newnick", "newnick",
+                    params_nick, 1,
                     19, 24, -1, 25,
                     NULL, ":oldnick!user@host NICK :newnick");
 
@@ -374,24 +590,28 @@ TEST(IrcMessage, Parse)
                     "AUTH", NULL, NULL, "NOTICE", "AUTH",
                     "AUTH :*** Looking up your hostname...",
                     "*** Looking up your hostname...",
+                    params_notice, 2,
                     0, 7, 7, 13,
                     NULL, "NOTICE AUTH :*** Looking up your hostname...");
 
     /* PING */
     WEE_CHECK_PARSE(NULL, "PING :arguments", NULL, NULL, NULL, "PING", NULL,
                     ":arguments", "arguments",
+                    params_ping, 1,
                     0, 5, -1, 6,
                     NULL, "PING :arguments");
 
     /* PART */
     WEE_CHECK_PARSE(NULL, ":nick!user@host PART #channel", "nick", "user",
                     "nick!user@host", "PART", "#channel", "#channel", NULL,
+                    params_part, 1,
                     16, 21, 21, -1,
                     NULL, ":nick!user@host PART #channel");
 
     /* PART with colon */
     WEE_CHECK_PARSE(NULL, ":nick!user@host PART :#channel", "nick", "user",
                     "nick!user@host", "PART", "#channel", ":#channel", NULL,
+                    params_part, 1,
                     16, 21, 22, -1,
                     NULL, ":nick!user@host PART :#channel");
 
@@ -400,30 +620,36 @@ TEST(IrcMessage, Parse)
                     "user", "nick!user@host", "INVITE", "#channel",
                     "nick2 #channel",
                     NULL,
+                    params_invite, 2,
                     16, 23, 29, -1,
                     NULL, ":nick!user@host INVITE nick2 #channel");
 
     /* PRIVMSG */
     WEE_CHECK_PARSE(NULL, ":nick PRIVMSG", "nick", NULL, "nick",
                     "PRIVMSG", NULL, NULL, NULL,
+                    NULL, -1,
                     6, -1, -1, -1,
                     NULL, ":nick PRIVMSG");
     WEE_CHECK_PARSE(NULL, ":nick@host PRIVMSG", "nick", NULL, "nick@host",
                     "PRIVMSG", NULL, NULL, NULL,
+                    NULL, -1,
                     11, -1, -1, -1,
                     NULL, ":nick@host PRIVMSG");
     WEE_CHECK_PARSE(NULL, ":nick!user@host PRIVMSG", "nick", "user",
                     "nick!user@host",
                     "PRIVMSG", NULL, NULL, NULL,
+                    NULL, -1,
                     16, -1, -1, -1,
                     NULL, ":nick!user@host PRIVMSG");
     WEE_CHECK_PARSE(NULL, ":nick!user@host PRIVMSG #channel", "nick", "user",
                     "nick!user@host", "PRIVMSG", "#channel", "#channel", NULL,
+                    params_privmsg_no_msg, 1,
                     16, 24, 24, -1,
                     NULL, ":nick!user@host PRIVMSG #channel");
     WEE_CHECK_PARSE(NULL, ":nick!user@host PRIVMSG #channel :the message",
                     "nick", "user", "nick!user@host", "PRIVMSG", "#channel",
                     "#channel :the message", "the message",
+                    params_privmsg, 2,
                     16, 24, 24, 34,
                     NULL, ":nick!user@host PRIVMSG #channel :the message");
 
@@ -432,6 +658,7 @@ TEST(IrcMessage, Parse)
                     ":nick!user@host PRIVMSG #channel :the message",
                     "nick", "user", "nick!user@host", "PRIVMSG", "#channel",
                     "#channel :the message", "the message",
+                    params_privmsg, 2,
                     47, 55, 55, 65,
                     NULL,
                     "@time=2019-08-03T12:13:00.000Z :nick!user@host PRIVMSG "
@@ -442,6 +669,7 @@ TEST(IrcMessage, Parse)
                     ":nick!user@host  PRIVMSG  #channel  :the message",
                     "nick", "user", "nick!user@host", "PRIVMSG", "#channel",
                     "#channel  :the message", "the message",
+                    params_privmsg, 2,
                     49, 58, 58, 69,
                     NULL,
                     "@time=2019-08-03T12:13:00.000Z  :nick!user@host  "
@@ -451,6 +679,7 @@ TEST(IrcMessage, Parse)
     WEE_CHECK_PARSE(NULL, ":nick!user@host PRIVMSG nick2 :the message",
                     "nick", "user", "nick!user@host", "PRIVMSG", "nick2",
                     "nick2 :the message", "the message",
+                    params_privmsg_nick2, 2,
                     16, 24, 24, 31,
                     NULL, ":nick!user@host PRIVMSG nick2 :the message");
 
@@ -471,6 +700,7 @@ TEST(IrcMessage, Parse)
                     "TOPICLEN=450 KICKLEN=450 CHANNELLEN=30 KEYLEN=23 "
                     "CHANTYPES=# PREFIX=(ov)@+ CASEMAPPING=ascii CAPAB "
                     "IRCD=dancer :are available on this server",
+                    params_005, 16,
                     17, 21, 21, 28,
                     NULL,
                     ":irc.example.com 005 mynick MODES=4 CHANLIMIT=#:20 "
@@ -486,6 +716,7 @@ TEST(IrcMessage, Parse)
                     "mynick",
                     "mynick nick :away message for nick",
                     "nick :away message for nick",
+                    params_301, 3,
                     17, 21, 21, 28,
                     NULL,
                     ":irc.example.com 301 mynick nick :away message for nick");
@@ -496,6 +727,7 @@ TEST(IrcMessage, Parse)
                     "nick", NULL, NULL, "404", "#channel",
                     "nick #channel :Cannot send to channel",
                     "Cannot send to channel",
+                    params_error, 3,
                     0, 4, 9, 19,
                     NULL,
                     "404 nick #channel :Cannot send to channel");
@@ -505,6 +737,7 @@ TEST(IrcMessage, Parse)
                     "#channel",
                     "nick #channel :Cannot send to channel",
                     "Cannot send to channel",
+                    params_error, 3,
                     17, 21, 26, 36,
                     NULL,
                     ":irc.example.com 404 nick #channel :Cannot send to channel");
@@ -519,12 +752,47 @@ TEST(IrcMessage, ParseToHashtable)
 {
     struct t_hashtable *hashtable;
 
+    hashtable = irc_message_parse_to_hashtable (NULL, "PING :arguments here");
+    CHECK(hashtable);
+    STRCMP_EQUAL("",
+                 (const char *)hashtable_get (hashtable, "tags"));
+    POINTERS_EQUAL(NULL,
+                   (const char *)hashtable_get (hashtable, "tag_time"));
+    STRCMP_EQUAL(NULL,
+                 (const char *)hashtable_get (hashtable, "tag_tag2"));
+    STRCMP_EQUAL("PING :arguments here",
+                 (const char *)hashtable_get (hashtable, "message_without_tags"));
+    STRCMP_EQUAL("",
+                 (const char *)hashtable_get (hashtable, "nick"));
+    STRCMP_EQUAL("",
+                 (const char *)hashtable_get (hashtable, "host"));
+    STRCMP_EQUAL("PING",
+                 (const char *)hashtable_get (hashtable, "command"));
+    STRCMP_EQUAL("",
+                 (const char *)hashtable_get (hashtable, "channel"));
+    STRCMP_EQUAL(":arguments here",
+                 (const char *)hashtable_get (hashtable, "arguments"));
+    STRCMP_EQUAL("arguments here",
+                 (const char *)hashtable_get (hashtable, "text"));
+    STRCMP_EQUAL("1",
+                 (const char *)hashtable_get (hashtable, "num_params"));
+    STRCMP_EQUAL("arguments here",
+                 (const char *)hashtable_get (hashtable, "param1"));
+    STRCMP_EQUAL("0",
+                 (const char *)hashtable_get (hashtable, "pos_command"));
+    STRCMP_EQUAL("5",
+                 (const char *)hashtable_get (hashtable, "pos_arguments"));
+    STRCMP_EQUAL("-1",
+                 (const char *)hashtable_get (hashtable, "pos_channel"));
+    STRCMP_EQUAL("6",
+                 (const char *)hashtable_get (hashtable, "pos_text"));
+    hashtable_free (hashtable);
+
     hashtable = irc_message_parse_to_hashtable (
         NULL,
         "@time=2019-08-03T12:13:00.000Z;tag2=value\\sspace "
         ":nick!user@host PRIVMSG #channel :the message");
     CHECK(hashtable);
-
     STRCMP_EQUAL("time=2019-08-03T12:13:00.000Z;tag2=value\\sspace",
                  (const char *)hashtable_get (hashtable, "tags"));
     STRCMP_EQUAL("2019-08-03T12:13:00.000Z",
@@ -545,6 +813,12 @@ TEST(IrcMessage, ParseToHashtable)
                  (const char *)hashtable_get (hashtable, "arguments"));
     STRCMP_EQUAL("the message",
                  (const char *)hashtable_get (hashtable, "text"));
+    STRCMP_EQUAL("2",
+                 (const char *)hashtable_get (hashtable, "num_params"));
+    STRCMP_EQUAL("#channel",
+                 (const char *)hashtable_get (hashtable, "param1"));
+    STRCMP_EQUAL("the message",
+                 (const char *)hashtable_get (hashtable, "param2"));
     STRCMP_EQUAL("65",
                  (const char *)hashtable_get (hashtable, "pos_command"));
     STRCMP_EQUAL("73",
@@ -553,7 +827,6 @@ TEST(IrcMessage, ParseToHashtable)
                  (const char *)hashtable_get (hashtable, "pos_channel"));
     STRCMP_EQUAL("83",
                  (const char *)hashtable_get (hashtable, "pos_text"));
-
     hashtable_free (hashtable);
 }
 
