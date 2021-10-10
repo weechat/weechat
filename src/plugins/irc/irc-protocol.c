@@ -1481,7 +1481,7 @@ IRC_PROTOCOL_CALLBACK(join)
             weechat_config_boolean (irc_config_look_display_host_join);
 
         /*
-         * "smart" filter the join message is it's not a join from myself, if
+         * "smart" filter the join message if it's not a join from myself, if
          * smart filtering is enabled, and if nick was not speaking in channel
          */
         smart_filter = (!local_join
