@@ -1803,39 +1803,40 @@ IRC_PROTOCOL_CALLBACK(kill)
  * Callback for the IRC command "MODE".
  *
  * Command looks like:
- *   :nick!user@host MODE #test +nt
- *   :nick!user@host MODE #test +o nick
- *   :nick!user@host MODE #test :+o :nick
+ *   MODE #test +nt
+ *   MODE #test +o nick
+ *   MODE #test +o :nick
  */
 
 IRC_PROTOCOL_CALLBACK(mode)
 {
-    char *pos_modes, *pos_modes_args, *modes_args;
+    char *msg_modes_args, *modes_args;
     int smart_filter, local_mode;
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
     struct t_gui_buffer *ptr_buffer;
 
-    IRC_PROTOCOL_MIN_ARGS(4);
-    IRC_PROTOCOL_CHECK_PREFIX;
+    IRC_PROTOCOL_MIN_PARAMS(2);
+    IRC_PROTOCOL_CHECK_NICK;
+    IRC_PROTOCOL_CHECK_ADDRESS;
+    IRC_PROTOCOL_CHECK_HOST;
 
-    pos_modes = (argv[3][0] == ':') ? argv[3] + 1 : argv[3];
-    pos_modes_args = (argc > 4) ?
-        ((argv_eol[4][0] == ':') ? argv_eol[4] + 1 : argv_eol[4]) : NULL;
+    msg_modes_args = (num_params > 2) ?
+        irc_protocol_string_params (params, 2, num_params - 1) : NULL;
 
-    if (irc_channel_is_channel (server, argv[2]))
+    if (irc_channel_is_channel (server, params[0]))
     {
         smart_filter = 0;
-        ptr_channel = irc_channel_search (server, argv[2]);
+        ptr_channel = irc_channel_search (server, params[0]);
         if (ptr_channel)
         {
             smart_filter = irc_mode_channel_set (server, ptr_channel, host,
-                                                 pos_modes, pos_modes_args);
+                                                 params[1], msg_modes_args);
         }
         local_mode = (irc_server_strcasecmp (server, nick, server->nick) == 0);
         ptr_nick = irc_nick_search (server, ptr_channel, nick);
         ptr_buffer = (ptr_channel) ? ptr_channel->buffer : server->buffer;
-        modes_args = irc_mode_get_arguments (pos_modes_args);
+        modes_args = irc_mode_get_arguments (msg_modes_args);
         weechat_printf_date_tags (
             irc_msgbuffer_get_target_buffer (server, NULL, command, NULL,
                                              ptr_buffer),
@@ -1847,10 +1848,10 @@ IRC_PROTOCOL_CALLBACK(mode)
             _("%sMode %s%s %s[%s%s%s%s%s]%s by %s%s"),
             weechat_prefix ("network"),
             IRC_COLOR_CHAT_CHANNEL,
-            (ptr_channel) ? ptr_channel->name : argv[2],
+            (ptr_channel) ? ptr_channel->name : params[0],
             IRC_COLOR_CHAT_DELIMITERS,
             IRC_COLOR_RESET,
-            pos_modes,
+            params[1],
             (modes_args && modes_args[0]) ? " " : "",
             (modes_args && modes_args[0]) ? modes_args : "",
             IRC_COLOR_CHAT_DELIMITERS,
@@ -1870,13 +1871,16 @@ IRC_PROTOCOL_CALLBACK(mode)
             weechat_prefix ("network"),
             IRC_COLOR_CHAT_DELIMITERS,
             IRC_COLOR_RESET,
-            pos_modes,
+            params[1],
             IRC_COLOR_CHAT_DELIMITERS,
             IRC_COLOR_RESET,
             irc_nick_color_for_msg (server, 1, NULL, nick),
             nick);
-        irc_mode_user_set (server, pos_modes, 0);
+        irc_mode_user_set (server, params[1], 0);
     }
+
+    if (msg_modes_args)
+        free (msg_modes_args);
 
     return WEECHAT_RC_OK;
 }
