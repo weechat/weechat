@@ -1138,28 +1138,27 @@ IRC_PROTOCOL_CALLBACK(cap)
  * https://ircv3.net/specs/extensions/chghost-3.2.html
  *
  * Command looks like:
- *   :nick!user@host CHGHOST user new.host.goes.here
- *   :nick!user@host CHGHOST newuser host
- *   :nick!user@host CHGHOST newuser new.host.goes.here
- *   :nick!user@host CHGHOST newuser :new.host.goes.here
+ *   CHGHOST user new.host.goes.here
+ *   CHGHOST newuser host
+ *   CHGHOST newuser new.host.goes.here
+ *   CHGHOST newuser :new.host.goes.here
  */
 
 IRC_PROTOCOL_CALLBACK(chghost)
 {
     int length, local_chghost, smart_filter;
-    char *str_host, *pos_new_host;
+    char *str_host;
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
     struct t_irc_channel_speaking *ptr_nick_speaking;
 
-    IRC_PROTOCOL_MIN_ARGS(4);
-    IRC_PROTOCOL_CHECK_HOST;
+    IRC_PROTOCOL_MIN_PARAMS(2);
+    IRC_PROTOCOL_CHECK_NICK;
+    IRC_PROTOCOL_CHECK_ADDRESS;
 
     local_chghost = (irc_server_strcasecmp (server, nick, server->nick) == 0);
 
-    pos_new_host = (argv_eol[3][0] == ':') ? argv_eol[3] + 1 : argv_eol[3];
-
-    length = strlen (argv[2]) + 1 + strlen (pos_new_host) + 1;
+    length = strlen (params[0]) + 1 + strlen (params[1]) + 1;
     str_host = malloc (length);
     if (!str_host)
     {
@@ -1169,7 +1168,7 @@ IRC_PROTOCOL_CALLBACK(chghost)
             weechat_prefix ("error"), IRC_PLUGIN_NAME, "chghost");
         return WEECHAT_RC_OK;
     }
-    snprintf (str_host, length, "%s@%s", argv[2], pos_new_host);
+    snprintf (str_host, length, "%s@%s", params[0], params[1]);
 
     if (local_chghost)
         irc_server_set_host (server, str_host);

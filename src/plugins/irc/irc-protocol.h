@@ -103,6 +103,28 @@
         return WEECHAT_RC_ERROR;                                        \
     }
 
+#define IRC_PROTOCOL_CHECK_NICK                                         \
+    if (!nick)                                                          \
+    {                                                                   \
+        weechat_printf (server->buffer,                                 \
+                        _("%s%s: \"%s\" command received without "      \
+                          "nick"),                                      \
+                        weechat_prefix ("error"), IRC_PLUGIN_NAME,      \
+                        command);                                       \
+        return WEECHAT_RC_ERROR;                                        \
+    }
+
+#define IRC_PROTOCOL_CHECK_ADDRESS                                      \
+    if (!address)                                                       \
+    {                                                                   \
+        weechat_printf (server->buffer,                                 \
+                        _("%s%s: \"%s\" command received without "      \
+                          "address"),                                   \
+                        weechat_prefix ("error"), IRC_PLUGIN_NAME,      \
+                        command);                                       \
+        return WEECHAT_RC_ERROR;                                        \
+    }
+
 struct t_irc_server;
 
 typedef int (t_irc_recv_func)(struct t_irc_server *server,
