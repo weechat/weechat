@@ -1889,28 +1889,32 @@ IRC_PROTOCOL_CALLBACK(mode)
  * Callback for the IRC command "NICK".
  *
  * Command looks like:
- *   :oldnick!user@host NICK :newnick
+ *   NICK :newnick
  */
 
 IRC_PROTOCOL_CALLBACK(nick)
 {
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick, *ptr_nick_found;
-    char *new_nick, *old_color, str_tags[512];
+    char *old_color, str_tags[512];
     const char *buffer_name;
     int local_nick, smart_filter;
     struct t_irc_channel_speaking *ptr_nick_speaking;
 
-    IRC_PROTOCOL_MIN_ARGS(3);
-    IRC_PROTOCOL_CHECK_PREFIX;
+    IRC_PROTOCOL_MIN_PARAMS(1);
+    IRC_PROTOCOL_CHECK_NICK;
+    IRC_PROTOCOL_CHECK_ADDRESS;
+    IRC_PROTOCOL_CHECK_HOST;
 
-    new_nick = (argv[2][0] == ':') ? argv[2] + 1 : argv[2];
+    if (!params[0][0])
+        return WEECHAT_RC_OK;
 
-    local_nick = (irc_server_strcasecmp (server, nick, server->nick) == 0) ? 1 : 0;
+    local_nick = (irc_server_strcasecmp (server, nick, server->nick) == 0) ?
+        1 : 0;
 
     if (local_nick)
     {
-        irc_server_set_nick (server, new_nick);
+        irc_server_set_nick (server, params[0]);
         irc_server_set_host (server, address);
     }
 
@@ -1925,7 +1929,7 @@ IRC_PROTOCOL_CALLBACK(nick)
         snprintf (str_tags, sizeof (str_tags),
                   "irc_nick1_%s,irc_nick2_%s",
                   nick,
-                  new_nick);
+                  params[0]);
         weechat_printf_date_tags (
             server->buffer,
             date,
@@ -1933,7 +1937,7 @@ IRC_PROTOCOL_CALLBACK(nick)
             _("%sYou are now known as %s%s%s"),
             weechat_prefix ("network"),
             IRC_COLOR_CHAT_NICK_SELF,
-            new_nick,
+            params[0],
             IRC_COLOR_RESET);
 
         /* enable hotlist */
@@ -1947,11 +1951,12 @@ IRC_PROTOCOL_CALLBACK(nick)
         {
             case IRC_CHANNEL_TYPE_PRIVATE:
                 /* rename private window if this is with "old nick" */
-                if ((irc_server_strcasecmp (server, ptr_channel->name, nick) == 0)
-                    && !irc_channel_search (server, new_nick))
+                if ((irc_server_strcasecmp (server,
+                                            ptr_channel->name, nick) == 0)
+                    && !irc_channel_search (server, params[0]))
                 {
                     free (ptr_channel->name);
-                    ptr_channel->name = strdup (new_nick);
+                    ptr_channel->name = strdup (params[0]);
                     if (ptr_channel->pv_remote_nick_color)
                     {
                         free (ptr_channel->pv_remote_nick_color);
@@ -1980,7 +1985,7 @@ IRC_PROTOCOL_CALLBACK(nick)
 
                     /* change nick and display message on channel */
                     old_color = strdup (ptr_nick->color);
-                    irc_nick_change (server, ptr_channel, ptr_nick, new_nick);
+                    irc_nick_change (server, ptr_channel, ptr_nick, params[0]);
                     if (local_nick)
                     {
                         /* temporary disable hotlist */
@@ -1989,7 +1994,7 @@ IRC_PROTOCOL_CALLBACK(nick)
                         snprintf (str_tags, sizeof (str_tags),
                                   "irc_nick1_%s,irc_nick2_%s",
                                   nick,
-                                  new_nick);
+                                  params[0]);
                         weechat_printf_date_tags (ptr_channel->buffer,
                                                   date,
                                                   irc_protocol_tags (command,
@@ -2000,7 +2005,7 @@ IRC_PROTOCOL_CALLBACK(nick)
                                                     "%s%s%s"),
                                                   weechat_prefix ("network"),
                                                   IRC_COLOR_CHAT_NICK_SELF,
-                                                  new_nick,
+                                                  params[0],
                                                   IRC_COLOR_RESET);
 
                         /* enable hotlist */
@@ -2021,7 +2026,7 @@ IRC_PROTOCOL_CALLBACK(nick)
                                       "%sirc_nick1_%s,irc_nick2_%s",
                                       (smart_filter) ? "irc_smart_filter," : "",
                                       nick,
-                                      new_nick);
+                                      params[0]);
                             weechat_printf_date_tags (
                                 ptr_channel->buffer,
                                 date,
@@ -2034,18 +2039,18 @@ IRC_PROTOCOL_CALLBACK(nick)
                                 nick,
                                 IRC_COLOR_RESET,
                                 irc_nick_color_for_msg (server, 1, ptr_nick,
-                                                        new_nick),
-                                new_nick,
+                                                        params[0]),
+                                params[0],
                                 IRC_COLOR_RESET);
                         }
                         irc_channel_nick_speaking_rename (ptr_channel,
-                                                          nick, new_nick);
+                                                          nick, params[0]);
                         irc_channel_nick_speaking_time_rename (server,
                                                                ptr_channel,
-                                                               nick, new_nick);
+                                                               nick, params[0]);
                         irc_channel_join_smart_filtered_rename (ptr_channel,
                                                                 nick,
-                                                                new_nick);
+                                                                params[0]);
                     }
 
                     if (old_color)
@@ -2057,9 +2062,9 @@ IRC_PROTOCOL_CALLBACK(nick)
 
     if (!local_nick)
     {
-        irc_channel_display_nick_back_in_pv (server, ptr_nick_found, new_nick);
+        irc_channel_display_nick_back_in_pv (server, ptr_nick_found, params[0]);
         irc_channel_set_topic_private_buffers (server, ptr_nick_found,
-                                               new_nick, address);
+                                               params[0], address);
     }
 
     return WEECHAT_RC_OK;
