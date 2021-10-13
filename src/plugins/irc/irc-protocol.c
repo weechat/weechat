@@ -7076,12 +7076,9 @@ irc_protocol_recv_command (struct t_irc_server *server,
         else
         {
             weechat_printf (server->buffer,
-                            _("%s%s: command \"%s\" not found:"),
+                            _("%s%s: command \"%s\" not found: \"%s\""),
                             weechat_prefix ("error"), IRC_PLUGIN_NAME,
-                            msg_command);
-            weechat_printf (server->buffer,
-                            "%s%s",
-                            weechat_prefix ("error"), irc_message);
+                            msg_command, irc_message);
             goto end;
         }
     }
