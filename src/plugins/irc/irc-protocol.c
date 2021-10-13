@@ -3089,13 +3089,16 @@ IRC_PROTOCOL_CALLBACK(numeric)
         pos_args = (argv_eol[2][0] == ':') ? argv_eol[2] + 1 : argv_eol[2];
     }
 
-    weechat_printf_date_tags (
-        irc_msgbuffer_get_target_buffer (server, NULL, command, NULL, NULL),
-        date,
-        irc_protocol_tags (command, "irc_numeric", NULL, NULL),
-        "%s%s",
-        weechat_prefix ("network"),
-        pos_args);
+    if (pos_args)
+    {
+        weechat_printf_date_tags (
+            irc_msgbuffer_get_target_buffer (server, NULL, command, NULL, NULL),
+            date,
+            irc_protocol_tags (command, "irc_numeric", NULL, NULL),
+            "%s%s",
+            weechat_prefix ("network"),
+            pos_args);
+    }
 
     return WEECHAT_RC_OK;
 }
