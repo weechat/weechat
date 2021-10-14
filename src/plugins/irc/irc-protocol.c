@@ -1163,7 +1163,6 @@ IRC_PROTOCOL_CALLBACK(chghost)
 
     IRC_PROTOCOL_MIN_PARAMS(2);
     IRC_PROTOCOL_CHECK_NICK;
-    IRC_PROTOCOL_CHECK_ADDRESS;
 
     local_chghost = (irc_server_strcasecmp (server, nick, server->nick) == 0);
 
@@ -1364,7 +1363,6 @@ IRC_PROTOCOL_CALLBACK(invite)
 {
     IRC_PROTOCOL_MIN_PARAMS(2);
     IRC_PROTOCOL_CHECK_NICK;
-    IRC_PROTOCOL_CHECK_ADDRESS;
 
     if (ignored)
         return WEECHAT_RC_OK;
@@ -1431,7 +1429,6 @@ IRC_PROTOCOL_CALLBACK(join)
 
     IRC_PROTOCOL_MIN_PARAMS(1);
     IRC_PROTOCOL_CHECK_NICK;
-    IRC_PROTOCOL_CHECK_ADDRESS;
 
     local_join = (irc_server_strcasecmp (server, nick, server->nick) == 0);
 
@@ -1607,7 +1604,6 @@ IRC_PROTOCOL_CALLBACK(kick)
 
     IRC_PROTOCOL_MIN_PARAMS(2);
     IRC_PROTOCOL_CHECK_NICK;
-    IRC_PROTOCOL_CHECK_ADDRESS;
 
     pos_comment = (num_params > 2) ? params[2] : NULL;
 
@@ -1729,7 +1725,6 @@ IRC_PROTOCOL_CALLBACK(kill)
 
     IRC_PROTOCOL_MIN_PARAMS(1);
     IRC_PROTOCOL_CHECK_NICK;
-    IRC_PROTOCOL_CHECK_ADDRESS;
 
     pos_comment = (num_params > 1) ? params[1] : NULL;
 
@@ -1818,8 +1813,6 @@ IRC_PROTOCOL_CALLBACK(mode)
 
     IRC_PROTOCOL_MIN_PARAMS(2);
     IRC_PROTOCOL_CHECK_NICK;
-    IRC_PROTOCOL_CHECK_ADDRESS;
-    IRC_PROTOCOL_CHECK_HOST;
 
     msg_modes_args = (num_params > 2) ?
         irc_protocol_string_params (params, 2, num_params - 1) : NULL;
@@ -1903,8 +1896,6 @@ IRC_PROTOCOL_CALLBACK(nick)
 
     IRC_PROTOCOL_MIN_PARAMS(1);
     IRC_PROTOCOL_CHECK_NICK;
-    IRC_PROTOCOL_CHECK_ADDRESS;
-    IRC_PROTOCOL_CHECK_HOST;
 
     if (!params[0][0])
         return WEECHAT_RC_OK;
@@ -2374,7 +2365,6 @@ IRC_PROTOCOL_CALLBACK(part)
 
     IRC_PROTOCOL_MIN_PARAMS(1);
     IRC_PROTOCOL_CHECK_NICK;
-    IRC_PROTOCOL_CHECK_ADDRESS;
 
     ptr_channel = irc_channel_search (server, params[0]);
     if (!ptr_channel)
