@@ -105,6 +105,10 @@ extern char *irc_protocol_cap_to_enable (const char *capabilities,
               "\"" __command "\" (received: " #__params ", "            \
               "expected: at least " #__expected_params ")");
 
+#define CHECK_ERROR_NICK(__command)                                     \
+    CHECK_SRV("=!= irc: command \"" __command "\" received without "    \
+              "nick");
+
 #define CHECK_ERROR_PARSE(__command, __message)                         \
     CHECK_SRV("=!= irc: failed to parse command \"" __command "\" "     \
               "(please report to developers): \"" __message "\"");
@@ -932,6 +936,16 @@ TEST(IrcProtocolWithServer, invite)
 {
     SRV_INIT;
 
+    /* not enough parameters */
+    RECV(":bob!user@host INVITE");
+    CHECK_ERROR_PARAMS("invite", 0, 2);
+    RECV(":bob!user@host INVITE alice");
+    CHECK_ERROR_PARAMS("invite", 1, 2);
+
+    /* missing nick */
+    RECV("INVITE alice #channel");
+    CHECK_ERROR_NICK("invite");
+
     RECV(":bob!user@host INVITE alice #channel");
     CHECK_SRV("-- You have been invited to #channel by bob");
     RECV(":bob!user@host INVITE xxx #channel");
@@ -955,6 +969,10 @@ TEST(IrcProtocolWithServer, join)
     /* not enough parameters */
     RECV(":alice!user@host JOIN");
     CHECK_ERROR_PARAMS("join", 0, 1);
+
+    /* missing nick */
+    RECV("JOIN #test");
+    CHECK_ERROR_NICK("join");
 
     POINTERS_EQUAL(NULL, ptr_server->channels);
 
@@ -1067,6 +1085,10 @@ TEST(IrcProtocolWithServer, kick)
     RECV(":alice!user@host KICK #test");
     CHECK_ERROR_PARAMS("kick", 1, 2);
 
+    /* missing nick */
+    RECV("KICK #test bob");
+    CHECK_ERROR_NICK("kick");
+
     STRCMP_EQUAL("bob", ptr_channel->nicks->next_nick->name);
 
     /* channel not found */
@@ -1120,6 +1142,10 @@ TEST(IrcProtocolWithServer, kill)
     RECV(":alice!user@host KILL");
     CHECK_ERROR_PARAMS("kill", 0, 1);
 
+    /* missing nick */
+    RECV("KILL alice");
+    CHECK_ERROR_NICK("kill");
+
     STRCMP_EQUAL("bob", ptr_channel->nicks->next_nick->name);
 
     /* kill without a reason */
@@ -1164,6 +1190,10 @@ TEST(IrcProtocolWithServer, mode)
     CHECK_ERROR_PARAMS("mode", 0, 2);
     RECV(":admin MODE #test");
     CHECK_ERROR_PARAMS("mode", 1, 2);
+
+    /* missing nick */
+    RECV("MODE #test +nt");
+    CHECK_ERROR_NICK("mode");
 
     POINTERS_EQUAL(NULL, ptr_channel->modes);
 
@@ -1252,6 +1282,10 @@ TEST(IrcProtocolWithServer, nick)
     CHECK_ERROR_PARAMS("nick", 0, 1);
     STRCMP_EQUAL("alice", ptr_nick1->name);
     STRCMP_EQUAL("bob", ptr_nick2->name);
+
+    /* missing nick */
+    RECV("NICK alice_away");
+    CHECK_ERROR_NICK("nick");
 
     /* new nick for alice */
     RECV(":alice!user@host NICK alice_away");
@@ -1440,6 +1474,10 @@ TEST(IrcProtocolWithServer, part)
     /* not enough parameters */
     RECV(":alice!user@host PART");
     CHECK_ERROR_PARAMS("part", 0, 1);
+
+    /* missing nick */
+    RECV("PART #test");
+    CHECK_ERROR_NICK("part");
 
     STRCMP_EQUAL("#test", ptr_server->channels->name);
     CHECK(ptr_server->channels->nicks);
