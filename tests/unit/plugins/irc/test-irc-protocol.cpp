@@ -24,6 +24,7 @@
 extern "C"
 {
 #include <stdio.h>
+#include <string.h>
 #include "src/core/wee-arraylist.h"
 #include "src/core/wee-config-file.h"
 #include "src/core/wee-hashtable.h"
