@@ -725,6 +725,10 @@ TEST(IrcProtocolWithServer, away)
 
     SRV_INIT_JOIN;
 
+    /* missing nick */
+    RECV("AWAY");
+    CHECK_ERROR_NICK("away");
+
     ptr_nick = ptr_server->channels->nicks;
 
     LONGS_EQUAL(0, ptr_nick->away);

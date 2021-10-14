@@ -544,6 +544,7 @@ IRC_PROTOCOL_CALLBACK(away)
     struct t_irc_nick *ptr_nick;
 
     IRC_PROTOCOL_MIN_PARAMS(0);
+    IRC_PROTOCOL_CHECK_NICK;
 
     for (ptr_channel = server->channels; ptr_channel;
          ptr_channel = ptr_channel->next_channel)
