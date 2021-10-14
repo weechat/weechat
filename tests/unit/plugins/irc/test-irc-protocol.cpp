@@ -100,6 +100,11 @@ extern char *irc_protocol_cap_to_enable (const char *capabilities,
               "for command \"" __command "\" (received: " #__args " "   \
               "arguments, expected: at least " #__expected_args ")");
 
+#define CHECK_ERROR_PARAMS(__command, __params, __expected_params)      \
+    CHECK_SRV("=!= irc: too few parameters received in command "        \
+              "\"" __command "\" (received: " #__params ", "            \
+              "expected: at least " #__expected_params ")");
+
 #define CHECK_ERROR_PARSE(__command, __message)                         \
     CHECK_SRV("=!= irc: failed to parse command \"" __command "\" "     \
               "(please report to developers): \"" __message "\"");
@@ -622,7 +627,7 @@ TEST(IrcProtocolWithServer, account_without_account_notify_cap)
 
     /* not enough arguments */
     RECV(":alice!user@host ACCOUNT");
-    CHECK_ERROR_ARGS("account", 2, 3);
+    CHECK_ERROR_PARAMS("account", 0, 1);
 
     POINTERS_EQUAL(NULL, ptr_nick->account);
 
@@ -693,7 +698,9 @@ TEST(IrcProtocolWithServer, authenticate)
 
     /* not enough arguments */
     RECV("AUTHENTICATE");
-    CHECK_ERROR_ARGS("authenticate", 1, 2);
+    CHECK_ERROR_PARAMS("authenticate", 0, 1);
+    RECV(":server.address AUTHENTICATE");
+    CHECK_ERROR_PARAMS("authenticate", 0, 1);
 
     RECV("AUTHENTICATE "
          "QQDaUzXAmVffxuzFy77XWBGwABBQAgdinelBrKZaR3wE7nsIETuTVY=");
@@ -761,13 +768,13 @@ TEST(IrcProtocolWithServer, cap)
 
     /* not enough arguments */
     RECV("CAP");
-    CHECK_ERROR_ARGS("cap", 1, 3);
+    CHECK_ERROR_PARAMS("cap", 0, 2);
     RECV("CAP *");
-    CHECK_ERROR_ARGS("cap", 2, 3);
+    CHECK_ERROR_PARAMS("cap", 1, 2);
     RECV(":server CAP");
-    CHECK_ERROR_ARGS("cap", 2, 4);
+    CHECK_ERROR_PARAMS("cap", 0, 2);
     RECV(":server CAP *");
-    CHECK_ERROR_ARGS("cap", 3, 4);
+    CHECK_ERROR_PARAMS("cap", 1, 2);
 
     /* CAP LS */
     RECV("CAP * LS :multi-prefix sasl");
@@ -832,9 +839,9 @@ TEST(IrcProtocolWithServer, chghost)
 
     /* not enough arguments */
     RECV(":alice!user@host CHGHOST");
-    CHECK_ERROR_ARGS("chghost", 2, 4);
+    CHECK_ERROR_PARAMS("chghost", 0, 2);
     RECV(":alice!user@host CHGHOST user2");
-    CHECK_ERROR_ARGS("chghost", 3, 4);
+    CHECK_ERROR_PARAMS("chghost", 1, 2);
 
     STRCMP_EQUAL("user@host", ptr_nick->host);
 
@@ -868,7 +875,7 @@ TEST(IrcProtocolWithServer, error)
 
     /* not enough arguments */
     RECV("ERROR");
-    CHECK_ERROR_ARGS("error", 1, 2);
+    CHECK_ERROR_PARAMS("error", 0, 1);
 
     RECV("ERROR test");
     CHECK_SRV("=!= test");
@@ -887,29 +894,29 @@ TEST(IrcProtocolWithServer, fail)
 
     /* not enough arguments */
     RECV(":server FAIL");
-    CHECK_ERROR_ARGS("fail", 2, 4);
+    CHECK_ERROR_PARAMS("fail", 0, 2);
     RECV(":server FAIL *");
-    CHECK_ERROR_ARGS("fail", 3, 4);
+    CHECK_ERROR_PARAMS("fail", 1, 2);
     RECV(":server FAIL COMMAND");
-    CHECK_ERROR_ARGS("fail", 3, 4);
+    CHECK_ERROR_PARAMS("fail", 1, 2);
 
     RECV(":server FAIL * TEST");
-    CHECK_SRV("=!= Failure: [TEST]");
+    CHECK_SRV("=!= Failure: [] TEST");
     RECV(":server FAIL * TEST :the message");
-    CHECK_SRV("=!= Failure: [TEST]: the message");
+    CHECK_SRV("=!= Failure: [TEST] the message");
     RECV(":server FAIL * TEST TEST2");
-    CHECK_SRV("=!= Failure: [TEST TEST2]");
+    CHECK_SRV("=!= Failure: [TEST] TEST2");
     RECV(":server FAIL * TEST TEST2 :the message");
-    CHECK_SRV("=!= Failure: [TEST TEST2]: the message");
+    CHECK_SRV("=!= Failure: [TEST TEST2] the message");
 
     RECV(":server FAIL COMMAND TEST");
-    CHECK_SRV("=!= Failure: COMMAND [TEST]");
+    CHECK_SRV("=!= Failure: COMMAND [] TEST");
     RECV(":server FAIL COMMAND TEST :the message");
-    CHECK_SRV("=!= Failure: COMMAND [TEST]: the message");
+    CHECK_SRV("=!= Failure: COMMAND [TEST] the message");
     RECV(":server FAIL COMMAND TEST TEST2");
-    CHECK_SRV("=!= Failure: COMMAND [TEST TEST2]");
+    CHECK_SRV("=!= Failure: COMMAND [TEST] TEST2");
     RECV(":server FAIL COMMAND TEST TEST2 :the message");
-    CHECK_SRV("=!= Failure: COMMAND [TEST TEST2]: the message");
+    CHECK_SRV("=!= Failure: COMMAND [TEST TEST2] the message");
 }
 
 /*
@@ -943,7 +950,7 @@ TEST(IrcProtocolWithServer, join)
 
     /* not enough arguments */
     RECV(":alice!user@host JOIN");
-    CHECK_ERROR_ARGS("join", 2, 3);
+    CHECK_ERROR_PARAMS("join", 0, 1);
 
     POINTERS_EQUAL(NULL, ptr_server->channels);
 
@@ -1052,9 +1059,9 @@ TEST(IrcProtocolWithServer, kick)
 
     /* not enough arguments */
     RECV(":alice!user@host KICK");
-    CHECK_ERROR_ARGS("kick", 2, 4);
+    CHECK_ERROR_PARAMS("kick", 0, 2);
     RECV(":alice!user@host KICK #test");
-    CHECK_ERROR_ARGS("kick", 3, 4);
+    CHECK_ERROR_PARAMS("kick", 1, 2);
 
     STRCMP_EQUAL("bob", ptr_channel->nicks->next_nick->name);
 
@@ -1107,7 +1114,7 @@ TEST(IrcProtocolWithServer, kill)
 
     /* not enough arguments */
     RECV(":alice!user@host KILL");
-    CHECK_ERROR_ARGS("kill", 2, 3);
+    CHECK_ERROR_PARAMS("kill", 0, 1);
 
     STRCMP_EQUAL("bob", ptr_channel->nicks->next_nick->name);
 
@@ -1150,9 +1157,9 @@ TEST(IrcProtocolWithServer, mode)
 
     /* not enough arguments */
     RECV(":admin MODE");
-    CHECK_ERROR_ARGS("mode", 2, 4);
+    CHECK_ERROR_PARAMS("mode", 0, 2);
     RECV(":admin MODE #test");
-    CHECK_ERROR_ARGS("mode", 3, 4);
+    CHECK_ERROR_PARAMS("mode", 1, 2);
 
     POINTERS_EQUAL(NULL, ptr_channel->modes);
 
@@ -1238,7 +1245,7 @@ TEST(IrcProtocolWithServer, nick)
 
     /* not enough arguments */
     RECV(":alice!user@host NICK");
-    CHECK_ERROR_ARGS("nick", 2, 3);
+    CHECK_ERROR_PARAMS("nick", 0, 1);
     STRCMP_EQUAL("alice", ptr_nick1->name);
     STRCMP_EQUAL("bob", ptr_nick2->name);
 
@@ -1278,29 +1285,29 @@ TEST(IrcProtocolWithServer, note)
 
     /* not enough arguments */
     RECV(":server NOTE");
-    CHECK_ERROR_ARGS("note", 2, 4);
+    CHECK_ERROR_PARAMS("note", 0, 2);
     RECV(":server NOTE *");
-    CHECK_ERROR_ARGS("note", 3, 4);
+    CHECK_ERROR_PARAMS("note", 1, 2);
     RECV(":server NOTE COMMAND");
-    CHECK_ERROR_ARGS("note", 3, 4);
+    CHECK_ERROR_PARAMS("note", 1, 2);
 
     RECV(":server NOTE * TEST");
-    CHECK_SRV("-- Note: [TEST]");
+    CHECK_SRV("-- Note: [] TEST");
     RECV(":server NOTE * TEST :the message");
-    CHECK_SRV("-- Note: [TEST]: the message");
+    CHECK_SRV("-- Note: [TEST] the message");
     RECV(":server NOTE * TEST TEST2");
-    CHECK_SRV("-- Note: [TEST TEST2]");
+    CHECK_SRV("-- Note: [TEST] TEST2");
     RECV(":server NOTE * TEST TEST2 :the message");
-    CHECK_SRV("-- Note: [TEST TEST2]: the message");
+    CHECK_SRV("-- Note: [TEST TEST2] the message");
 
     RECV(":server NOTE COMMAND TEST");
-    CHECK_SRV("-- Note: COMMAND [TEST]");
+    CHECK_SRV("-- Note: COMMAND [] TEST");
     RECV(":server NOTE COMMAND TEST :the message");
-    CHECK_SRV("-- Note: COMMAND [TEST]: the message");
+    CHECK_SRV("-- Note: COMMAND [TEST] the message");
     RECV(":server NOTE COMMAND TEST TEST2");
-    CHECK_SRV("-- Note: COMMAND [TEST TEST2]");
+    CHECK_SRV("-- Note: COMMAND [TEST] TEST2");
     RECV(":server NOTE COMMAND TEST TEST2 :the message");
-    CHECK_SRV("-- Note: COMMAND [TEST TEST2]: the message");
+    CHECK_SRV("-- Note: COMMAND [TEST TEST2] the message");
 }
 
 /*
@@ -1838,29 +1845,29 @@ TEST(IrcProtocolWithServer, warn)
 
     /* not enough arguments */
     RECV(":server WARN");
-    CHECK_ERROR_ARGS("warn", 2, 4);
+    CHECK_ERROR_PARAMS("warn", 0, 2);
     RECV(":server WARN *");
-    CHECK_ERROR_ARGS("warn", 3, 4);
+    CHECK_ERROR_PARAMS("warn", 1, 2);
     RECV(":server WARN COMMAND");
-    CHECK_ERROR_ARGS("warn", 3, 4);
+    CHECK_ERROR_PARAMS("warn", 1, 2);
 
     RECV(":server WARN * TEST");
-    CHECK_SRV("=!= Warning: [TEST]");
+    CHECK_SRV("=!= Warning: [] TEST");
     RECV(":server WARN * TEST :the message");
-    CHECK_SRV("=!= Warning: [TEST]: the message");
+    CHECK_SRV("=!= Warning: [TEST] the message");
     RECV(":server WARN * TEST TEST2");
-    CHECK_SRV("=!= Warning: [TEST TEST2]");
+    CHECK_SRV("=!= Warning: [TEST] TEST2");
     RECV(":server WARN * TEST TEST2 :the message");
-    CHECK_SRV("=!= Warning: [TEST TEST2]: the message");
+    CHECK_SRV("=!= Warning: [TEST TEST2] the message");
 
     RECV(":server WARN COMMAND TEST");
-    CHECK_SRV("=!= Warning: COMMAND [TEST]");
+    CHECK_SRV("=!= Warning: COMMAND [] TEST");
     RECV(":server WARN COMMAND TEST :the message");
-    CHECK_SRV("=!= Warning: COMMAND [TEST]: the message");
+    CHECK_SRV("=!= Warning: COMMAND [TEST] the message");
     RECV(":server WARN COMMAND TEST TEST2");
-    CHECK_SRV("=!= Warning: COMMAND [TEST TEST2]");
+    CHECK_SRV("=!= Warning: COMMAND [TEST] TEST2");
     RECV(":server WARN COMMAND TEST TEST2 :the message");
-    CHECK_SRV("=!= Warning: COMMAND [TEST TEST2]: the message");
+    CHECK_SRV("=!= Warning: COMMAND [TEST TEST2] the message");
 }
 
 /*
@@ -3219,22 +3226,22 @@ TEST(IrcProtocolWithServer, 368)
 TEST(IrcProtocolWithServer, 432_not_connected)
 {
     RECV(":server 432 * alice error");
-    CHECK_SRV("-- *: alice error");
+    CHECK_SRV("-- * alice error");
     CHECK_SRV("=!= irc: nickname \"nick1\" is invalid, "
               "trying nickname \"nick2\"");
 
     RECV(":server 432 * :alice error");
-    CHECK_SRV("-- *: alice error");
+    CHECK_SRV("-- * alice error");
     CHECK_SRV("=!= irc: nickname \"nick2\" is invalid, "
               "trying nickname \"nick3\"");
 
     RECV(":server 432 * alice :Erroneous Nickname");
-    CHECK_SRV("-- *: alice :Erroneous Nickname");
+    CHECK_SRV("-- * alice Erroneous Nickname");
     CHECK_SRV("=!= irc: nickname \"nick3\" is invalid, "
               "trying nickname \"nick1_\"");
 
     RECV(":server 432 * alice1 :Erroneous Nickname");
-    CHECK_SRV("-- *: alice1 :Erroneous Nickname");
+    CHECK_SRV("-- * alice1 Erroneous Nickname");
     CHECK_SRV("=!= irc: nickname \"nick1_\" is invalid, "
               "trying nickname \"nick1__\"");
 }
@@ -3250,16 +3257,16 @@ TEST(IrcProtocolWithServer, 432_connected)
 
     /* not enough arguments */
     RECV(":server 432");
-    CHECK_ERROR_ARGS("432", 2, 4);
+    CHECK_ERROR_PARAMS("432", 0, 2);
     RECV(":server 432 alice");
-    CHECK_ERROR_ARGS("432", 3, 4);
+    CHECK_ERROR_PARAMS("432", 1, 2);
 
     RECV(":server 432 * alice");
-    CHECK_SRV("-- *: alice");
+    CHECK_SRV("-- * alice");
     RECV(":server 432 * alice error");
-    CHECK_SRV("-- *: alice error");
+    CHECK_SRV("-- * alice error");
     RECV(":server 432 * alice :Erroneous Nickname");
-    CHECK_SRV("-- *: alice :Erroneous Nickname");
+    CHECK_SRV("-- * alice Erroneous Nickname");
 }
 
 /*
@@ -3293,16 +3300,16 @@ TEST(IrcProtocolWithServer, 433_connected)
 
     /* not enough arguments */
     RECV(":server 433");
-    CHECK_ERROR_ARGS("433", 2, 4);
+    CHECK_ERROR_PARAMS("433", 0, 2);
     RECV(":server 433 alice");
-    CHECK_ERROR_ARGS("433", 3, 4);
+    CHECK_ERROR_PARAMS("433", 1, 2);
 
     RECV(":server 433 * alice");
-    CHECK_SRV("-- *: alice");
+    CHECK_SRV("-- * alice");
     RECV(":server 433 * alice error");
-    CHECK_SRV("-- *: alice error");
+    CHECK_SRV("-- * alice error");
     RECV(":server 433 * alice :Nickname is already in use.");
-    CHECK_SRV("-- *: alice :Nickname is already in use.");
+    CHECK_SRV("-- * alice Nickname is already in use.");
 }
 
 /*
@@ -3313,11 +3320,11 @@ TEST(IrcProtocolWithServer, 433_connected)
 TEST(IrcProtocolWithServer, 437_not_connected)
 {
     RECV(":server 437 * alice error");
-    CHECK_SRV("-- *: alice error");
+    CHECK_SRV("-- * alice error");
     RECV(":server 437 * alice :Nick/channel is temporarily unavailable");
-    CHECK_SRV("-- *: alice :Nick/channel is temporarily unavailable");
+    CHECK_SRV("-- * alice Nick/channel is temporarily unavailable");
     RECV(":server 437 * alice1 :Nick/channel is temporarily unavailable");
-    CHECK_SRV("-- *: alice1 :Nick/channel is temporarily unavailable");
+    CHECK_SRV("-- * alice1 Nick/channel is temporarily unavailable");
 }
 
 /*
@@ -3331,16 +3338,16 @@ TEST(IrcProtocolWithServer, 437_connected)
 
     /* not enough arguments */
     RECV(":server 437");
-    CHECK_ERROR_ARGS("437", 2, 4);
+    CHECK_ERROR_PARAMS("437", 0, 2);
     RECV(":server 437 alice");
-    CHECK_ERROR_ARGS("437", 3, 4);
+    CHECK_ERROR_PARAMS("437", 1, 2);
 
     RECV(":server 437 * alice");
-    CHECK_SRV("-- *: alice");
+    CHECK_SRV("-- * alice");
     RECV(":server 437 * alice error");
-    CHECK_SRV("-- *: alice error");
+    CHECK_SRV("-- * alice error");
     RECV(":server 437 * alice :Nick/channel is temporarily unavailable");
-    CHECK_SRV("-- *: alice :Nick/channel is temporarily unavailable");
+    CHECK_SRV("-- * alice Nick/channel is temporarily unavailable");
 }
 
 /*
@@ -3379,9 +3386,9 @@ TEST(IrcProtocolWithServer, 470)
 
     /* not enough arguments */
     RECV(":server 470");
-    CHECK_ERROR_ARGS("470", 2, 4);
+    CHECK_ERROR_PARAMS("470", 0, 2);
     RECV(":server 470 alice");
-    CHECK_ERROR_ARGS("470", 3, 4);
+    CHECK_ERROR_PARAMS("470", 1, 2);
 
     RECV(":server 470 alice #test");
     CHECK_SRV("-- #test");
@@ -3390,7 +3397,7 @@ TEST(IrcProtocolWithServer, 470)
     RECV(":server 470 alice #test #test2 forwarding");
     CHECK_SRV("-- #test: #test2 forwarding");
     RECV(":server 470 alice #test #test2 :Forwarding to another channel");
-    CHECK_SRV("-- #test: #test2 :Forwarding to another channel");
+    CHECK_SRV("-- #test: #test2 Forwarding to another channel");
 }
 
 /*
