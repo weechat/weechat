@@ -625,7 +625,7 @@ TEST(IrcProtocolWithServer, account_without_account_notify_cap)
 
     POINTERS_EQUAL(NULL, ptr_nick->account);
 
-    /* not enough arguments */
+    /* not enough parameters */
     RECV(":alice!user@host ACCOUNT");
     CHECK_ERROR_PARAMS("account", 0, 1);
 
@@ -696,7 +696,7 @@ TEST(IrcProtocolWithServer, authenticate)
 {
     SRV_INIT;
 
-    /* not enough arguments */
+    /* not enough parameters */
     RECV("AUTHENTICATE");
     CHECK_ERROR_PARAMS("authenticate", 0, 1);
     RECV(":server.address AUTHENTICATE");
@@ -766,7 +766,7 @@ TEST(IrcProtocolWithServer, cap)
 {
     SRV_INIT;
 
-    /* not enough arguments */
+    /* not enough parameters */
     RECV("CAP");
     CHECK_ERROR_PARAMS("cap", 0, 2);
     RECV("CAP *");
@@ -837,11 +837,15 @@ TEST(IrcProtocolWithServer, chghost)
 
     STRCMP_EQUAL("user@host", ptr_nick->host);
 
-    /* not enough arguments */
+    /* not enough parameters */
     RECV(":alice!user@host CHGHOST");
     CHECK_ERROR_PARAMS("chghost", 0, 2);
     RECV(":alice!user@host CHGHOST user2");
     CHECK_ERROR_PARAMS("chghost", 1, 2);
+
+    /* missing nick */
+    RECV("CHGHOST user2 host2");
+    CHECK_ERROR_NICK("chghost");
 
     STRCMP_EQUAL("user@host", ptr_nick->host);
 
@@ -873,7 +877,7 @@ TEST(IrcProtocolWithServer, error)
 {
     SRV_INIT;
 
-    /* not enough arguments */
+    /* not enough parameters */
     RECV("ERROR");
     CHECK_ERROR_PARAMS("error", 0, 1);
 
@@ -892,7 +896,7 @@ TEST(IrcProtocolWithServer, fail)
 {
     SRV_INIT;
 
-    /* not enough arguments */
+    /* not enough parameters */
     RECV(":server FAIL");
     CHECK_ERROR_PARAMS("fail", 0, 2);
     RECV(":server FAIL *");
@@ -948,7 +952,7 @@ TEST(IrcProtocolWithServer, join)
 
     POINTERS_EQUAL(NULL, ptr_server->channels);
 
-    /* not enough arguments */
+    /* not enough parameters */
     RECV(":alice!user@host JOIN");
     CHECK_ERROR_PARAMS("join", 0, 1);
 
@@ -1057,7 +1061,7 @@ TEST(IrcProtocolWithServer, kick)
     CHECK(ptr_channel->nicks->next_nick);
     STRCMP_EQUAL("bob", ptr_channel->nicks->next_nick->name);
 
-    /* not enough arguments */
+    /* not enough parameters */
     RECV(":alice!user@host KICK");
     CHECK_ERROR_PARAMS("kick", 0, 2);
     RECV(":alice!user@host KICK #test");
@@ -1112,7 +1116,7 @@ TEST(IrcProtocolWithServer, kill)
     CHECK(ptr_channel->nicks->next_nick);
     STRCMP_EQUAL("bob", ptr_channel->nicks->next_nick->name);
 
-    /* not enough arguments */
+    /* not enough parameters */
     RECV(":alice!user@host KILL");
     CHECK_ERROR_PARAMS("kill", 0, 1);
 
@@ -1155,7 +1159,7 @@ TEST(IrcProtocolWithServer, mode)
     STRCMP_EQUAL("  ", ptr_nick->prefixes);
     STRCMP_EQUAL(" ", ptr_nick->prefix);
 
-    /* not enough arguments */
+    /* not enough parameters */
     RECV(":admin MODE");
     CHECK_ERROR_PARAMS("mode", 0, 2);
     RECV(":admin MODE #test");
@@ -1243,7 +1247,7 @@ TEST(IrcProtocolWithServer, nick)
     STRCMP_EQUAL("alice", ptr_nick1->name);
     STRCMP_EQUAL("bob", ptr_nick2->name);
 
-    /* not enough arguments */
+    /* not enough parameters */
     RECV(":alice!user@host NICK");
     CHECK_ERROR_PARAMS("nick", 0, 1);
     STRCMP_EQUAL("alice", ptr_nick1->name);
@@ -1283,7 +1287,7 @@ TEST(IrcProtocolWithServer, note)
 {
     SRV_INIT;
 
-    /* not enough arguments */
+    /* not enough parameters */
     RECV(":server NOTE");
     CHECK_ERROR_PARAMS("note", 0, 2);
     RECV(":server NOTE *");
@@ -1319,7 +1323,7 @@ TEST(IrcProtocolWithServer, notice)
 {
     SRV_INIT_JOIN;
 
-    /* not enough arguments */
+    /* not enough parameters */
     RECV("NOTICE");
     CHECK_ERROR_PARAMS("notice", 0, 2);
     RECV("NOTICE AUTH");
@@ -1433,7 +1437,7 @@ TEST(IrcProtocolWithServer, part)
 {
     SRV_INIT_JOIN;
 
-    /* not enough arguments */
+    /* not enough parameters */
     RECV(":alice!user@host PART");
     CHECK_ERROR_PARAMS("part", 0, 1);
 
@@ -1847,7 +1851,7 @@ TEST(IrcProtocolWithServer, warn)
 {
     SRV_INIT;
 
-    /* not enough arguments */
+    /* not enough parameters */
     RECV(":server WARN");
     CHECK_ERROR_PARAMS("warn", 0, 2);
     RECV(":server WARN *");
@@ -3259,7 +3263,7 @@ TEST(IrcProtocolWithServer, 432_connected)
 {
     SRV_INIT;
 
-    /* not enough arguments */
+    /* not enough parameters */
     RECV(":server 432");
     CHECK_ERROR_PARAMS("432", 0, 2);
     RECV(":server 432 alice");
@@ -3302,7 +3306,7 @@ TEST(IrcProtocolWithServer, 433_connected)
 {
     SRV_INIT;
 
-    /* not enough arguments */
+    /* not enough parameters */
     RECV(":server 433");
     CHECK_ERROR_PARAMS("433", 0, 2);
     RECV(":server 433 alice");
@@ -3340,7 +3344,7 @@ TEST(IrcProtocolWithServer, 437_connected)
 {
     SRV_INIT;
 
-    /* not enough arguments */
+    /* not enough parameters */
     RECV(":server 437");
     CHECK_ERROR_PARAMS("437", 0, 2);
     RECV(":server 437 alice");
@@ -3388,7 +3392,7 @@ TEST(IrcProtocolWithServer, 470)
 {
     SRV_INIT;
 
-    /* not enough arguments */
+    /* not enough parameters */
     RECV(":server 470");
     CHECK_ERROR_PARAMS("470", 0, 2);
     RECV(":server 470 alice");
