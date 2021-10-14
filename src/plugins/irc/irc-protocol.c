@@ -2968,7 +2968,7 @@ IRC_PROTOCOL_CALLBACK(quit)
  * (received when capability "setname" is enabled).
  *
  * Command looks like:
- *   :nick!user@host SETNAME :the realname
+ *   SETNAME :the realname
  */
 
 IRC_PROTOCOL_CALLBACK(setname)
@@ -2976,13 +2976,16 @@ IRC_PROTOCOL_CALLBACK(setname)
     int local_setname;
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
-    char *pos_realname, *realname_color;
+    char *str_params, *realname_color;
 
-    IRC_PROTOCOL_MIN_ARGS(3);
+    IRC_PROTOCOL_MIN_PARAMS(1);
+    IRC_PROTOCOL_CHECK_NICK;
 
     local_setname = (irc_server_strcasecmp (server, nick, server->nick) == 0);
 
-    pos_realname = (argv_eol[2][0] == ':') ? argv_eol[2] + 1 : argv_eol[2];
+    str_params = irc_protocol_string_params (params, 0, num_params - 1);
+    if (!str_params)
+        return WEECHAT_RC_ERROR;
 
     if (weechat_hashtable_has_key (server->cap_list, "setname"))
     {
@@ -2994,7 +2997,7 @@ IRC_PROTOCOL_CALLBACK(setname)
             {
                 if (ptr_nick->realname)
                     free (ptr_nick->realname);
-                ptr_nick->realname = strdup (pos_realname);
+                ptr_nick->realname = strdup (str_params);
             }
         }
     }
@@ -3002,7 +3005,7 @@ IRC_PROTOCOL_CALLBACK(setname)
     if (!ignored)
     {
         realname_color = irc_color_decode (
-            pos_realname,
+            str_params,
             weechat_config_boolean (irc_config_network_colors_receive));
         if (local_setname)
         {
@@ -3030,6 +3033,8 @@ IRC_PROTOCOL_CALLBACK(setname)
         if (realname_color)
             free (realname_color);
     }
+
+    free (str_params);
 
     return WEECHAT_RC_OK;
 }

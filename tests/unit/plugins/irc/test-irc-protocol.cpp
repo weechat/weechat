@@ -1764,9 +1764,13 @@ TEST(IrcProtocolWithServer, setname_without_setname_cap)
 
     POINTERS_EQUAL(NULL, ptr_nick->realname);
 
-    /* not enough arguments */
+    /* not enough parameters */
     RECV(":alice!user@host SETNAME");
-    CHECK_ERROR_ARGS("setname", 2, 3);
+    CHECK_ERROR_PARAMS("setname", 0, 1);
+
+    /* missing nick */
+    RECV("SETNAME :new bob realname");
+    CHECK_ERROR_NICK("setname");
 
     POINTERS_EQUAL(NULL, ptr_nick->realname);
 
