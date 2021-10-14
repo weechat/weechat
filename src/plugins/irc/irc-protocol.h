@@ -104,7 +104,7 @@
     }
 
 #define IRC_PROTOCOL_CHECK_NICK                                         \
-    if (!nick)                                                          \
+    if (!nick || !nick[0])                                              \
     {                                                                   \
         weechat_printf (server->buffer,                                 \
                         _("%s%s: command \"%s\" received without "      \
