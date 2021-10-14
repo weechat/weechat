@@ -2598,36 +2598,37 @@ IRC_PROTOCOL_CALLBACK(pong)
  * Callback for the IRC command "PRIVMSG".
  *
  * Command looks like:
- *   :nick!user@host PRIVMSG #channel :message for channel here
- *   :nick!user@host PRIVMSG @#channel :message for channel ops here
- *   :nick!user@host PRIVMSG mynick :message for private here
- *   :nick!user@host PRIVMSG #channel :\01ACTION is testing action\01
- *   :nick!user@host PRIVMSG mynick :\01ACTION is testing action\01
- *   :nick!user@host PRIVMSG #channel :\01VERSION\01
- *   :nick!user@host PRIVMSG mynick :\01VERSION\01
- *   :nick!user@host PRIVMSG mynick :\01DCC SEND file.txt 1488915698 50612 128\01
+ *   PRIVMSG #channel :message for channel here
+ *   PRIVMSG @#channel :message for channel ops here
+ *   PRIVMSG mynick :message for private here
+ *   PRIVMSG #channel :\01ACTION is testing action\01
+ *   PRIVMSG mynick :\01ACTION is testing action\01
+ *   PRIVMSG #channel :\01VERSION\01
+ *   PRIVMSG mynick :\01VERSION\01
+ *   PRIVMSG mynick :\01DCC SEND file.txt 1488915698 50612 128\01
  */
 
 IRC_PROTOCOL_CALLBACK(privmsg)
 {
-    char *pos_args, *pos_target, str_tags[1024], *str_color, status_msg[2];
-    char *color;
-    const char *remote_nick, *pv_tags;
+    char *msg_args, str_tags[1024], *str_color, status_msg[2], *color;
+    const char *pos_target, *remote_nick, *pv_tags;
     int is_channel, nick_is_me;
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
 
-    IRC_PROTOCOL_MIN_ARGS(4);
-    IRC_PROTOCOL_CHECK_PREFIX;
+    IRC_PROTOCOL_MIN_PARAMS(2);
+    IRC_PROTOCOL_CHECK_NICK;
 
     if (ignored)
         return WEECHAT_RC_OK;
 
-    pos_args = (argv_eol[3][0] == ':') ? argv_eol[3] + 1 : argv_eol[3];
+    msg_args = irc_protocol_string_params (params, 1, num_params - 1);
+    if (!msg_args)
+        return WEECHAT_RC_ERROR;
 
     status_msg[0] = '\0';
     status_msg[1] = '\0';
-    pos_target = argv[2];
+    pos_target = params[0];
     is_channel = irc_channel_is_channel (server, pos_target);
     if (!is_channel)
     {
@@ -2653,11 +2654,11 @@ IRC_PROTOCOL_CALLBACK(privmsg)
             irc_channel_join_smart_filtered_unmask (ptr_channel, nick);
 
             /* CTCP to channel */
-            if (pos_args[0] == '\01')
+            if (msg_args[0] == '\01')
             {
                 irc_ctcp_recv (server, date, command, ptr_channel,
-                               address, nick, NULL, pos_args, argv_eol[0]);
-                return WEECHAT_RC_OK;
+                               address, nick, NULL, msg_args, irc_message);
+                goto end;
             }
 
             /* other message */
@@ -2690,7 +2691,7 @@ IRC_PROTOCOL_CALLBACK(privmsg)
                     (nick && nick[0]) ? nick : "?",
                     IRC_COLOR_CHAT_DELIMITERS,
                     IRC_COLOR_RESET,
-                    pos_args);
+                    msg_args);
             }
             else
             {
@@ -2712,13 +2713,13 @@ IRC_PROTOCOL_CALLBACK(privmsg)
                     irc_nick_as_prefix (server, ptr_nick,
                                         (ptr_nick) ? NULL : nick,
                                         NULL),
-                    pos_args);
+                    msg_args);
             }
 
             irc_channel_nick_speaking_add (
                 ptr_channel,
                 nick,
-                weechat_string_has_highlight (pos_args,
+                weechat_string_has_highlight (msg_args,
                                               server->nick));
             irc_channel_nick_speaking_time_remove_old (ptr_channel);
             irc_channel_nick_speaking_time_add (server, ptr_channel, nick,
@@ -2732,11 +2733,11 @@ IRC_PROTOCOL_CALLBACK(privmsg)
         remote_nick = (nick_is_me) ? pos_target : nick;
 
         /* CTCP to user */
-        if (pos_args[0] == '\01')
+        if (msg_args[0] == '\01')
         {
             irc_ctcp_recv (server, date, command, NULL,
-                           address, nick, remote_nick, pos_args, argv_eol[0]);
-            return WEECHAT_RC_OK;
+                           address, nick, remote_nick, msg_args, irc_message);
+            goto end;
         }
 
         /* private message received => display it */
@@ -2754,7 +2755,7 @@ IRC_PROTOCOL_CALLBACK(privmsg)
                                   "private buffer \"%s\""),
                                 weechat_prefix ("error"),
                                 IRC_PLUGIN_NAME, remote_nick);
-                return WEECHAT_RC_ERROR;
+                goto end;
             }
         }
 
@@ -2814,16 +2815,19 @@ IRC_PROTOCOL_CALLBACK(privmsg)
                 server, NULL, nick,
                 (nick_is_me) ?
                 IRC_COLOR_CHAT_NICK_SELF : irc_nick_color_for_pv (ptr_channel, nick)),
-            pos_args);
+            msg_args);
 
         if (ptr_channel->has_quit_server)
             ptr_channel->has_quit_server = 0;
 
         (void) weechat_hook_signal_send ("irc_pv",
                                          WEECHAT_HOOK_SIGNAL_STRING,
-                                         argv_eol[0]);
+                                         (char *)irc_message);
     }
 
+end:
+    if (msg_args)
+        free (msg_args);
     return WEECHAT_RC_OK;
 }
 
@@ -3369,8 +3373,8 @@ IRC_PROTOCOL_CALLBACK(001)
     if (irc_server_strcasecmp (server, server->nick, argv[2]) != 0)
         irc_server_set_nick (server, argv[2]);
 
-    irc_protocol_cb_numeric (server,
-                             date, tags, nick, address, host, command,
+    irc_protocol_cb_numeric (server, date, irc_message,
+                             tags, nick, address, host, command,
                              ignored, argc, argv, argv_eol,
                              params, num_params);
 
@@ -3492,8 +3496,8 @@ IRC_PROTOCOL_CALLBACK(005)
 
     IRC_PROTOCOL_MIN_ARGS(4);
 
-    irc_protocol_cb_numeric (server,
-                             date, tags, nick, address, host, command,
+    irc_protocol_cb_numeric (server, date, irc_message,
+                             tags, nick, address, host, command,
                              ignored, argc, argv, argv_eol,
                              params, num_params);
 
@@ -6050,8 +6054,8 @@ IRC_PROTOCOL_CALLBACK(432)
     const char *alternate_nick;
     struct t_gui_buffer *ptr_buffer;
 
-    irc_protocol_cb_generic_error (server,
-                                   date, tags, nick, address, host, command,
+    irc_protocol_cb_generic_error (server, date, irc_message,
+                                   tags, nick, address, host, command,
                                    ignored, argc, argv, argv_eol,
                                    params, num_params);
 
@@ -6136,8 +6140,8 @@ IRC_PROTOCOL_CALLBACK(433)
     }
     else
     {
-        return irc_protocol_cb_generic_error (server,
-                                              date, tags, nick, address, host,
+        return irc_protocol_cb_generic_error (server, date, irc_message,
+                                              tags, nick, address, host,
                                               command, ignored,
                                               argc, argv, argv_eol,
                                               params, num_params);
@@ -6158,8 +6162,8 @@ IRC_PROTOCOL_CALLBACK(437)
     const char *alternate_nick;
     struct t_gui_buffer *ptr_buffer;
 
-    irc_protocol_cb_generic_error (server,
-                                   date, tags, nick, address, host, command,
+    irc_protocol_cb_generic_error (server, date, irc_message,
+                                   tags, nick, address, host, command,
                                    ignored, argc, argv, argv_eol,
                                    params, num_params);
 
@@ -6261,8 +6265,8 @@ IRC_PROTOCOL_CALLBACK(470)
     char *old_channel_lower, *new_channel_lower;
     int lines_count;
 
-    irc_protocol_cb_generic_error (server,
-                                   date, tags, nick, address, host, command,
+    irc_protocol_cb_generic_error (server, date, irc_message,
+                                   tags, nick, address, host, command,
                                    ignored, argc, argv, argv_eol,
                                    params, num_params);
 
@@ -6749,8 +6753,8 @@ IRC_PROTOCOL_CALLBACK(901)
     }
     else
     {
-        irc_protocol_cb_numeric (server,
-                                 date, tags, nick, address, host, command,
+        irc_protocol_cb_numeric (server, date, irc_message,
+                                 tags, nick, address, host, command,
                                  ignored, argc, argv, argv_eol,
                                  params, num_params);
     }
@@ -6773,8 +6777,8 @@ IRC_PROTOCOL_CALLBACK(sasl_end_ok)
         server->hook_timer_sasl = NULL;
     }
 
-    irc_protocol_cb_numeric (server,
-                             date, tags, nick, address, host, command,
+    irc_protocol_cb_numeric (server, date, irc_message,
+                             tags, nick, address, host, command,
                              ignored, argc, argv, argv_eol,
                              params, num_params);
 
@@ -6803,8 +6807,8 @@ IRC_PROTOCOL_CALLBACK(sasl_end_fail)
         server->hook_timer_sasl = NULL;
     }
 
-    irc_protocol_cb_numeric (server,
-                             date, tags, nick, address, host, command,
+    irc_protocol_cb_numeric (server, date, irc_message,
+                             tags, nick, address, host, command,
                              ignored, argc, argv, argv_eol,
                              params, num_params);
 
@@ -7200,6 +7204,7 @@ irc_protocol_recv_command (struct t_irc_server *server,
 
         return_code = (int) (cmd_recv_func) (server,
                                              date,
+                                             message_colors_decoded,
                                              hash_tags,
                                              nick,
                                              address_color,

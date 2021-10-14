@@ -26,6 +26,7 @@
     int                                                                 \
     irc_protocol_cb_##__command (struct t_irc_server *server,           \
                                  time_t date,                           \
+                                 const char *irc_message,               \
                                  struct t_hashtable *tags,              \
                                  const char *nick,                      \
                                  const char *address,                   \
@@ -46,6 +47,7 @@
 
 #define IRC_PROTOCOL_MIN_ARGS(__min_args)                               \
     (void) date;                                                        \
+    (void) irc_message;                                                 \
     (void) tags;                                                        \
     (void) nick;                                                        \
     (void) address;                                                     \
@@ -70,6 +72,7 @@
 
 #define IRC_PROTOCOL_MIN_PARAMS(__min_params)                           \
     (void) date;                                                        \
+    (void) irc_message;                                                 \
     (void) tags;                                                        \
     (void) nick;                                                        \
     (void) address;                                                     \
@@ -117,7 +120,8 @@
 struct t_irc_server;
 
 typedef int (t_irc_recv_func)(struct t_irc_server *server,
-                              time_t date, struct t_hashtable *tags,
+                              time_t date, const char *irc_message,
+                              struct t_hashtable *tags,
                               const char *nick, const char *address,
                               const char *host, const char *command,
                               int ignored,

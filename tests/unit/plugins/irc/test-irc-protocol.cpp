@@ -1566,13 +1566,17 @@ TEST(IrcProtocolWithServer, privmsg)
 
     SRV_INIT_JOIN2;
 
-    /* not enough arguments */
+    /* not enough parameters */
     RECV(":bob!user@host PRIVMSG");
-    CHECK_ERROR_ARGS("privmsg", 2, 4);
+    CHECK_ERROR_PARAMS("privmsg", 0, 2);
     RECV(":bob!user@host PRIVMSG #test");
-    CHECK_ERROR_ARGS("privmsg", 3, 4);
+    CHECK_ERROR_PARAMS("privmsg", 1, 2);
     RECV(":bob!user@host PRIVMSG alice");
-    CHECK_ERROR_ARGS("privmsg", 3, 4);
+    CHECK_ERROR_PARAMS("privmsg", 1, 2);
+
+    /* missing nick */
+    RECV("PRIVMSG #test :this is the message");
+    CHECK_ERROR_NICK("privmsg");
 
     /* message to channel/user */
     RECV(":bob!user@host PRIVMSG #test :this is the message");
