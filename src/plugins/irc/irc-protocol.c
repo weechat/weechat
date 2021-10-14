@@ -2097,22 +2097,21 @@ IRC_PROTOCOL_CALLBACK(note)
  * Callback for the IRC command "NOTICE".
  *
  * Command looks like:
- *   NOTICE AUTH :*** Looking up your hostname...
- *   :nick!user@host NOTICE mynick :notice text
- *   :nick!user@host NOTICE #channel :notice text
- *   :nick!user@host NOTICE @#channel :notice text for channel ops
+ *   NOTICE mynick :notice text
+ *   NOTICE #channel :notice text
+ *   NOTICE @#channel :notice text for channel ops
  */
 
 IRC_PROTOCOL_CALLBACK(notice)
 {
-    char *pos_target, *pos_args, *pos, end_char, *channel, status_notice[2];
-    const char *nick_address;
+    char *notice_args, *pos, end_char, *channel, status_notice[2];
+    const char *pos_target, *pos_args, *nick_address;
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
     int notify_private, is_channel, is_channel_orig;
     struct t_gui_buffer *ptr_buffer;
 
-    IRC_PROTOCOL_MIN_ARGS(3);
+    IRC_PROTOCOL_MIN_PARAMS(2);
 
     if (ignored)
         return WEECHAT_RC_OK;
@@ -2120,29 +2119,19 @@ IRC_PROTOCOL_CALLBACK(notice)
     status_notice[0] = '\0';
     status_notice[1] = '\0';
 
-    if (argv[0][0] == ':')
+    notice_args = irc_protocol_string_params (params, 1, num_params - 1);
+    if (!notice_args)
+        return WEECHAT_RC_ERROR;
+
+    pos_args = notice_args;
+
+    pos_target = params[0];
+    is_channel = irc_channel_is_channel (server, pos_target + 1);
+    if (is_channel
+        && irc_server_prefix_char_statusmsg (server, pos_target[0]))
     {
-        if (argc < 4)
-            return WEECHAT_RC_ERROR;
-        pos_target = argv[2];
-        is_channel = irc_channel_is_channel (server, pos_target + 1);
-        if (is_channel
-            && irc_server_prefix_char_statusmsg (server, pos_target[0]))
-        {
-            status_notice[0] = pos_target[0];
-            pos_target++;
-        }
-        pos_args = (argv_eol[3][0] == ':') ? argv_eol[3] + 1 : argv_eol[3];
-        if ((status_notice[0])
-            && (pos_args[0] == status_notice[0]) && (pos_args[1] == ' '))
-        {
-            pos_args += 2;
-        }
-    }
-    else
-    {
-        pos_target = NULL;
-        pos_args = (argv_eol[2][0] == ':') ? argv_eol[2] + 1 : argv_eol[2];
+        status_notice[0] = pos_target[0];
+        pos_target++;
     }
 
     if (nick && (pos_args[0] == '\01'))
@@ -2152,50 +2141,45 @@ IRC_PROTOCOL_CALLBACK(notice)
     }
     else
     {
-        is_channel = 0;
-        is_channel_orig = 0;
         channel = NULL;
-        if (pos_target)
+        is_channel = irc_channel_is_channel (server, pos_target);
+        is_channel_orig = is_channel;
+        if (is_channel)
         {
-            is_channel = irc_channel_is_channel (server, pos_target);
-            is_channel_orig = is_channel;
-            if (is_channel)
+            channel = strdup (pos_target);
+        }
+        else if (weechat_config_boolean (irc_config_look_notice_welcome_redirect))
+        {
+            end_char = ' ';
+            switch (pos_args[0])
             {
-                channel = strdup (pos_target);
+                case '[':
+                    end_char = ']';
+                    break;
+                case '(':
+                    end_char = ')';
+                    break;
+                case '{':
+                    end_char = '}';
+                    break;
+                case '<':
+                    end_char = '>';
+                    break;
             }
-            else if (weechat_config_boolean (irc_config_look_notice_welcome_redirect))
+            if (end_char != ' ')
             {
-                end_char = ' ';
-                switch (pos_args[0])
+                pos = strchr (pos_args, end_char);
+                if (pos && (pos > pos_args + 1))
                 {
-                    case '[':
-                        end_char = ']';
-                        break;
-                    case '(':
-                        end_char = ')';
-                        break;
-                    case '{':
-                        end_char = '}';
-                        break;
-                    case '<':
-                        end_char = '>';
-                        break;
-                }
-                if (end_char != ' ')
-                {
-                    pos = strchr (pos_args, end_char);
-                    if (pos && (pos > pos_args + 1))
+                    channel = weechat_strndup (pos_args + 1,
+                                               pos - pos_args - 1);
+                    if (channel && irc_channel_search (server, channel))
                     {
-                        channel = weechat_strndup (pos_args + 1,
-                                                   pos - pos_args - 1);
-                        if (channel && irc_channel_search (server, channel))
+                        is_channel = 1;
+                        pos_args = pos + 1;
+                        while (pos_args[0] == ' ')
                         {
-                            is_channel = 1;
-                            pos_args = pos + 1;
-                            while (pos_args[0] == ' ')
-                            {
-                                pos_args++;
-                            }
+                            pos_args++;
                         }
                     }
                 }
@@ -2363,6 +2347,8 @@ IRC_PROTOCOL_CALLBACK(notice)
         if (channel)
             free (channel);
     }
+
+    free (notice_args);
 
     return WEECHAT_RC_OK;
 }

@@ -1321,11 +1321,11 @@ TEST(IrcProtocolWithServer, notice)
 
     /* not enough arguments */
     RECV("NOTICE");
-    CHECK_ERROR_ARGS("notice", 1, 3);
+    CHECK_ERROR_PARAMS("notice", 0, 2);
     RECV("NOTICE AUTH");
-    CHECK_ERROR_ARGS("notice", 2, 3);
+    CHECK_ERROR_PARAMS("notice", 1, 2);
     RECV(":bob!user@host NOTICE");
-    CHECK_ERROR_ARGS("notice", 2, 3);
+    CHECK_ERROR_PARAMS("notice", 0, 2);
     RECV(":bob!user@host NOTICE #test");
     CHECK_ERROR_PARSE("notice", ":bob!user@host NOTICE #test");
     RECV(":bob!user@host NOTICE alice");
