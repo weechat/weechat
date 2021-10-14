@@ -2357,31 +2357,31 @@ IRC_PROTOCOL_CALLBACK(notice)
  * Callback for the IRC command "PART".
  *
  * Command looks like:
- *   :nick!user@host PART #channel :part message
+ *   PART #channel :part message
  *
  * On undernet server, it can be:
- *   :nick!user@host PART :#channel
- *   :nick!user@host PART #channel :part message
+ *   PART :#channel
+ *   PART #channel :part message
  */
 
 IRC_PROTOCOL_CALLBACK(part)
 {
-    char *pos_comment, *join_string;
+    char *str_comment, *join_string;
     int join_length, local_part, display_host;
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
     struct t_irc_channel_speaking *ptr_nick_speaking;
 
-    IRC_PROTOCOL_MIN_ARGS(3);
-    IRC_PROTOCOL_CHECK_PREFIX;
+    IRC_PROTOCOL_MIN_PARAMS(1);
+    IRC_PROTOCOL_CHECK_NICK;
+    IRC_PROTOCOL_CHECK_ADDRESS;
 
-    pos_comment = (argc > 3) ?
-        ((argv_eol[3][0] == ':') ? argv_eol[3] + 1 : argv_eol[3]) : NULL;
-
-    ptr_channel = irc_channel_search (server,
-                                      (argv[2][0] == ':') ? argv[2] + 1 : argv[2]);
+    ptr_channel = irc_channel_search (server, params[0]);
     if (!ptr_channel)
         return WEECHAT_RC_OK;
+
+    str_comment = (num_params > 1) ?
+        irc_protocol_string_params (params, 1, num_params - 1) : NULL;
 
     ptr_nick = irc_nick_search (server, ptr_channel, nick);
 
@@ -2398,7 +2398,7 @@ IRC_PROTOCOL_CALLBACK(part)
                 irc_channel_nick_speaking_time_search (server, ptr_channel, nick, 1) : NULL;
         }
         display_host = weechat_config_boolean (irc_config_look_display_host_quit);
-        if (pos_comment)
+        if (str_comment && str_comment[0])
         {
             weechat_printf_date_tags (
                 irc_msgbuffer_get_target_buffer (
@@ -2428,7 +2428,7 @@ IRC_PROTOCOL_CALLBACK(part)
                 IRC_COLOR_MESSAGE_QUIT,
                 IRC_COLOR_CHAT_DELIMITERS,
                 IRC_COLOR_REASON_QUIT,
-                pos_comment,
+                str_comment,
                 IRC_COLOR_CHAT_DELIMITERS);
         }
         else
@@ -2522,6 +2522,9 @@ IRC_PROTOCOL_CALLBACK(part)
             irc_nick_free (server, ptr_channel, ptr_nick);
         }
     }
+
+    if (str_comment)
+        free (str_comment);
 
     return WEECHAT_RC_OK;
 }

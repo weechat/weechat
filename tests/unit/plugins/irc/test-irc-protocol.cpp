@@ -1435,7 +1435,7 @@ TEST(IrcProtocolWithServer, part)
 
     /* not enough arguments */
     RECV(":alice!user@host PART");
-    CHECK_ERROR_ARGS("part", 2, 3);
+    CHECK_ERROR_PARAMS("part", 0, 1);
 
     STRCMP_EQUAL("#test", ptr_server->channels->name);
     CHECK(ptr_server->channels->nicks);
@@ -1457,15 +1457,19 @@ TEST(IrcProtocolWithServer, part)
     RECV(":alice!user@host JOIN #test");
 
     RECV(":alice!user@host PART #test :part message");
+    CHECK_CHAN("<-- alice (user@host) has left #test (part message)");
     STRCMP_EQUAL("#test", ptr_server->channels->name);
     POINTERS_EQUAL(NULL, ptr_server->channels->nicks);
     LONGS_EQUAL(1, ptr_server->channels->part);
 
     RECV(":alice!user@host JOIN #test");
+    CHECK_CHAN("--> alice (user@host) has joined #test");
     RECV(":bob!user@host JOIN #test");
+    CHECK_CHAN("--> bob (user@host) has joined #test");
 
     /* part from another user */
     RECV(":bob!user@host PART #test :part message");
+    CHECK_CHAN("<-- bob (user@host) has left #test (part message)");
     STRCMP_EQUAL("#test", ptr_server->channels->name);
     CHECK(ptr_server->channels->nicks == ptr_server->channels->last_nick);
     LONGS_EQUAL(0, ptr_server->channels->part);
