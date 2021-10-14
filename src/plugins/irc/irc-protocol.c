@@ -1275,7 +1275,7 @@ IRC_PROTOCOL_CALLBACK(generic_error)
     struct t_irc_channel *ptr_channel;
     struct t_gui_buffer *ptr_buffer;
 
-    IRC_PROTOCOL_MIN_PARAMS(1);
+    IRC_PROTOCOL_MIN_PARAMS(2);
 
     arg_error = (irc_server_strcasecmp (server, params[0], server->nick) == 0) ?
         1 : 0;
