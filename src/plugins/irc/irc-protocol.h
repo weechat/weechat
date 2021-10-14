@@ -85,8 +85,8 @@
     {                                                                   \
         weechat_printf (server->buffer,                                 \
                         _("%s%s: too few parameters received in "       \
-                          "command \"%s\" (received: %d parameters, "   \
-                          "expected: at least %d)"),                    \
+                          "command \"%s\" (received: %d, expected: "    \
+                          "at least %d)"),                              \
                         weechat_prefix ("error"), IRC_PLUGIN_NAME,      \
                         command, num_params, __min_params);             \
         return WEECHAT_RC_ERROR;                                        \
