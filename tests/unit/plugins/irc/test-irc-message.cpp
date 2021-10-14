@@ -912,19 +912,13 @@ TEST(IrcMessage, GetAddressFromHost)
 {
     POINTERS_EQUAL(NULL, irc_message_get_address_from_host (NULL));
     STRCMP_EQUAL("", irc_message_get_address_from_host (""));
-    STRCMP_EQUAL("host", irc_message_get_address_from_host ("host"));
-    STRCMP_EQUAL("host", irc_message_get_address_from_host ("host "));
-    STRCMP_EQUAL("host", irc_message_get_address_from_host ("host test"));
-    STRCMP_EQUAL("host", irc_message_get_address_from_host (":host "));
+    STRCMP_EQUAL("", irc_message_get_address_from_host ("host"));
+    STRCMP_EQUAL("", irc_message_get_address_from_host ("host "));
+    STRCMP_EQUAL("", irc_message_get_address_from_host ("host test"));
+    STRCMP_EQUAL("", irc_message_get_address_from_host (":host "));
     STRCMP_EQUAL("host", irc_message_get_address_from_host (":nick!host"));
     STRCMP_EQUAL("user@host",
                  irc_message_get_address_from_host (":nick!user@host"));
-    STRCMP_EQUAL("nick_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-                 "x_64_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-                 "xxxx_128_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-                 "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-                 "xxxxxxxxxxxx_25",
-                 irc_message_get_address_from_host (NICK_256_WITH_SPACE));
 }
 
 /*

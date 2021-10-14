@@ -634,30 +634,26 @@ irc_message_get_address_from_host (const char *host)
         return NULL;
 
     address[0] = '\0';
-    if (host)
-    {
-        ptr_host = host;
-        pos_space = strchr (host, ' ');
-        if (pos_space)
-        {
-            if (pos_space - host < (int)sizeof (host2))
-            {
-                strncpy (host2, host, pos_space - host);
-                host2[pos_space - host] = '\0';
-            }
-            else
-                snprintf (host2, sizeof (host2), "%s", host);
-            ptr_host = host2;
-        }
 
-        if (ptr_host[0] == ':')
-            ptr_host++;
-        pos = strchr (ptr_host, '!');
-        if (pos)
-            snprintf (address, sizeof (address), "%s", pos + 1);
+    ptr_host = host;
+    pos_space = strchr (host, ' ');
+    if (pos_space)
+    {
+        if (pos_space - host < (int)sizeof (host2))
+        {
+            strncpy (host2, host, pos_space - host);
+            host2[pos_space - host] = '\0';
+        }
         else
-            snprintf (address, sizeof (address), "%s", ptr_host);
+            snprintf (host2, sizeof (host2), "%s", host);
+        ptr_host = host2;
     }
+
+    if (ptr_host[0] == ':')
+        ptr_host++;
+    pos = strchr (ptr_host, '!');
+    if (pos)
+        snprintf (address, sizeof (address), "%s", pos + 1);
 
     return address;
 }
