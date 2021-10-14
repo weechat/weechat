@@ -96,7 +96,7 @@
     if (argv[0][0] != ':')                                              \
     {                                                                   \
         weechat_printf (server->buffer,                                 \
-                        _("%s%s: \"%s\" command received without "      \
+                        _("%s%s: command \"%s\" received without "      \
                           "host"),                                      \
                         weechat_prefix ("error"), IRC_PLUGIN_NAME,      \
                         command);                                       \
@@ -107,7 +107,7 @@
     if (!nick)                                                          \
     {                                                                   \
         weechat_printf (server->buffer,                                 \
-                        _("%s%s: \"%s\" command received without "      \
+                        _("%s%s: command \"%s\" received without "      \
                           "nick"),                                      \
                         weechat_prefix ("error"), IRC_PLUGIN_NAME,      \
                         command);                                       \
