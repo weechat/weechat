@@ -1526,9 +1526,9 @@ TEST(IrcProtocolWithServer, ping)
 {
     SRV_INIT;
 
-    /* not enough arguments, no response */
+    /* not enough parameters, no response */
     RECV("PING");
-    CHECK_ERROR_ARGS("ping", 1, 2);
+    CHECK_ERROR_PARAMS("ping", 0, 1);
     CHECK_SENT(NULL);
 
     RECV("PING :123456789");

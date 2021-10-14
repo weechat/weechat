@@ -2528,10 +2528,16 @@ IRC_PROTOCOL_CALLBACK(part)
 
 IRC_PROTOCOL_CALLBACK(ping)
 {
-    IRC_PROTOCOL_MIN_ARGS(2);
+    char *str_params;
 
-    irc_server_sendf (server, 0, NULL, "PONG :%s",
-                      (argv_eol[1][0] == ':') ? argv_eol[1] + 1 : argv_eol[1]);
+    IRC_PROTOCOL_MIN_PARAMS(1);
+
+    str_params = irc_protocol_string_params (params, 0, num_params - 1);
+
+    irc_server_sendf (server, 0, NULL, "PONG :%s", str_params);
+
+    if (str_params)
+        free (str_params);
 
     return WEECHAT_RC_OK;
 }
