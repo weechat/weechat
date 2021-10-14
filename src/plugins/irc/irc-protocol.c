@@ -7135,7 +7135,7 @@ irc_protocol_recv_command (struct t_irc_server *server,
                             _("%s%s: failed to parse command \"%s\" (please "
                               "report to developers): \"%s\""),
                             weechat_prefix ("error"), IRC_PLUGIN_NAME,
-                            msg_command, irc_message);
+                            cmd_name, irc_message);
         }
 
         /* send signal with received command (if message is not ignored) */
