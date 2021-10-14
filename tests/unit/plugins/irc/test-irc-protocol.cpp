@@ -1549,8 +1549,10 @@ TEST(IrcProtocolWithServer, pong)
     CHECK_SRV("PONG");
     RECV(":server PONG server");
     CHECK_SRV("PONG");
-    RECV(":server PONG server :srv");
-    CHECK_SRV("PONG: srv");
+    RECV(":server PONG server :info");
+    CHECK_SRV("PONG: info");
+    RECV(":server PONG server :extra info");
+    CHECK_SRV("PONG: extra info");
 }
 
 /*

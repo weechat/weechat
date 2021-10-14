@@ -2546,14 +2546,15 @@ IRC_PROTOCOL_CALLBACK(ping)
  * Callback for the IRC command "PONG".
  *
  * Command looks like:
- *   :server PONG server :arguments
+ *   PONG server :arguments
  */
 
 IRC_PROTOCOL_CALLBACK(pong)
 {
     struct timeval tv;
+    char *str_params;
 
-    IRC_PROTOCOL_MIN_ARGS(0);
+    IRC_PROTOCOL_MIN_PARAMS(0);
 
     if (server->lag_check_time.tv_sec != 0)
     {
@@ -2577,14 +2578,17 @@ IRC_PROTOCOL_CALLBACK(pong)
     }
     else
     {
+        str_params = (num_params > 1) ?
+            irc_protocol_string_params (params, 1, num_params - 1) : NULL;
         weechat_printf_date_tags (
             irc_msgbuffer_get_target_buffer (server, NULL, command, NULL, NULL),
             date,
             irc_protocol_tags (command, NULL, NULL, NULL),
             "PONG%s%s",
-            (argc >= 4) ? ": " : "",
-            (argc >= 4) ? ((argv_eol[3][0] == ':') ?
-                           argv_eol[3] + 1 : argv_eol[3]) : "");
+            (str_params) ? ": " : "",
+            (str_params) ? str_params : "");
+        if (str_params)
+            free (str_params);
     }
 
     return WEECHAT_RC_OK;
