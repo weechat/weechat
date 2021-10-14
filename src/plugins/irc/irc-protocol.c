@@ -2835,22 +2835,22 @@ end:
  * Callback for the IRC command "QUIT".
  *
  * Command looks like:
- *   :nick!user@host QUIT :quit message
+ *   QUIT :quit message
  */
 
 IRC_PROTOCOL_CALLBACK(quit)
 {
-    char *pos_comment;
+    char *str_params;
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
     struct t_irc_channel_speaking *ptr_nick_speaking;
     int local_quit, display_host;
 
-    IRC_PROTOCOL_MIN_ARGS(2);
-    IRC_PROTOCOL_CHECK_PREFIX;
+    IRC_PROTOCOL_MIN_PARAMS(0);
+    IRC_PROTOCOL_CHECK_NICK;
 
-    pos_comment = (argc > 2) ?
-        ((argv_eol[2][0] == ':') ? argv_eol[2] + 1 : argv_eol[2]) : NULL;
+    str_params = (num_params > 0) ?
+        irc_protocol_string_params (params, 0, num_params - 1) : NULL;
 
     for (ptr_channel = server->channels; ptr_channel;
          ptr_channel = ptr_channel->next_channel)
@@ -2885,7 +2885,7 @@ IRC_PROTOCOL_CALLBACK(quit)
                     ptr_channel->has_quit_server = 1;
                 }
                 display_host = weechat_config_boolean (irc_config_look_display_host_quit);
-                if (pos_comment && pos_comment[0])
+                if (str_params)
                 {
                     weechat_printf_date_tags (
                         irc_msgbuffer_get_target_buffer (
@@ -2914,7 +2914,7 @@ IRC_PROTOCOL_CALLBACK(quit)
                         IRC_COLOR_MESSAGE_QUIT,
                         IRC_COLOR_CHAT_DELIMITERS,
                         IRC_COLOR_REASON_QUIT,
-                        pos_comment,
+                        str_params,
                         IRC_COLOR_CHAT_DELIMITERS);
                 }
                 else
@@ -2955,6 +2955,9 @@ IRC_PROTOCOL_CALLBACK(quit)
                 irc_nick_free (server, ptr_channel, ptr_nick);
         }
     }
+
+    if (str_params)
+        free (str_params);
 
     return WEECHAT_RC_OK;
 }

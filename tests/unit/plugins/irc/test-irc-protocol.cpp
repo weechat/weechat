@@ -1709,6 +1709,10 @@ TEST(IrcProtocolWithServer, quit)
 
     SRV_INIT_JOIN;
 
+    /* missing nick */
+    RECV("QUIT");
+    CHECK_ERROR_NICK("quit");
+
     RECV(":bob!user@host PRIVMSG alice :hi Alice!");
     CHECK_PV("bob", "bob hi Alice!");
 
