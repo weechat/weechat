@@ -3503,204 +3503,136 @@ IRC_PROTOCOL_CALLBACK(001)
  * Callback for the IRC command "005": some infos from server.
  *
  * Command looks like:
- *   :server 005 mynick MODES=4 CHANLIMIT=#:20 NICKLEN=16 USERLEN=10
- *     HOSTLEN=63 TOPICLEN=450 KICKLEN=450 CHANNELLEN=30 KEYLEN=23
- *     CHANTYPES=# PREFIX=(ov)@+ CASEMAPPING=ascii CAPAB IRCD=dancer
+ *   005 mynick MODES=4 CHANLIMIT=#:20 NICKLEN=16 USERLEN=10 HOSTLEN=63
+ *     TOPICLEN=450 KICKLEN=450 CHANNELLEN=30 KEYLEN=23 CHANTYPES=#
+ *     PREFIX=(ov)@+ CASEMAPPING=ascii CAPAB IRCD=dancer
  *     :are available on this server
  */
 
 IRC_PROTOCOL_CALLBACK(005)
 {
-    char *pos, *pos2, *pos_start, *error, *isupport2;
-    int length_isupport, length, casemapping, utf8mapping;
+    char *str_info, *error, *isupport2, *pos_start;
+    int i, arg_last, length_isupport, length, casemapping, utf8mapping;
     long value;
 
-    IRC_PROTOCOL_MIN_ARGS(4);
+    IRC_PROTOCOL_MIN_PARAMS(2);
 
     irc_protocol_cb_numeric (server, date, irc_message,
                              tags, nick, address, host, command,
                              ignored, argc, argv, argv_eol,
                              params, num_params);
 
-    /* save prefix */
-    pos = strstr (argv_eol[3], "PREFIX=");
-    if (pos)
-    {
-        pos += 7;
-        pos2 = strchr (pos, ' ');
-        if (pos2)
-            pos2[0] = '\0';
-        irc_server_set_prefix_modes_chars (server, pos);
-        if (pos2)
-            pos2[0] = ' ';
-    }
+    arg_last = (strstr (irc_message, " :")) ? num_params - 2 : num_params - 1;
 
-    /* save max nick length */
-    pos = strstr (argv_eol[3], "NICKLEN=");
-    if (pos)
+    for (i = 1; i <= arg_last; i++)
     {
-        pos += 8;
-        pos2 = strchr (pos, ' ');
-        if (pos2)
-            pos2[0] = '\0';
-        error = NULL;
-        value = strtol (pos, &error, 10);
-        if (error && !error[0] && (value > 0))
-            server->nick_max_length = (int)value;
-        if (pos2)
-            pos2[0] = ' ';
-    }
-
-    /* save max user length */
-    pos = strstr (argv_eol[3], "USERLEN=");
-    if (pos)
-    {
-        pos += 8;
-        pos2 = strchr (pos, ' ');
-        if (pos2)
-            pos2[0] = '\0';
-        error = NULL;
-        value = strtol (pos, &error, 10);
-        if (error && !error[0] && (value > 0))
-            server->user_max_length = (int)value;
-        if (pos2)
-            pos2[0] = ' ';
-    }
-
-    /* save max host length */
-    pos = strstr (argv_eol[3], "HOSTLEN=");
-    if (pos)
-    {
-        pos += 8;
-        pos2 = strchr (pos, ' ');
-        if (pos2)
-            pos2[0] = '\0';
-        error = NULL;
-        value = strtol (pos, &error, 10);
-        if (error && !error[0] && (value > 0))
-            server->host_max_length = (int)value;
-        if (pos2)
-            pos2[0] = ' ';
-    }
-
-    /* save casemapping */
-    pos = strstr (argv_eol[3], "CASEMAPPING=");
-    if (pos)
-    {
-        pos += 12;
-        pos2 = strchr (pos, ' ');
-        if (pos2)
-            pos2[0] = '\0';
-        casemapping = irc_server_search_casemapping (pos);
-        if (casemapping >= 0)
-            server->casemapping = casemapping;
-        if (pos2)
-            pos2[0] = ' ';
-    }
-
-    /* save utf8mapping */
-    pos = strstr (argv_eol[3], "UTF8MAPPING=");
-    if (pos)
-    {
-        pos += 12;
-        pos2 = strchr (pos, ' ');
-        if (pos2)
-            pos2[0] = '\0';
-        utf8mapping = irc_server_search_utf8mapping (pos);
-        if (utf8mapping >= 0)
-            server->utf8mapping = utf8mapping;
-        if (pos2)
-            pos2[0] = ' ';
-    }
-
-    /* save chantypes */
-    pos = strstr (argv_eol[3], "CHANTYPES=");
-    if (pos)
-    {
-        pos += 10;
-        pos2 = strchr (pos, ' ');
-        if (pos2)
-            pos2[0] = '\0';
-        if (server->chantypes)
-            free (server->chantypes);
-        server->chantypes = strdup (pos);
-        if (pos2)
-            pos2[0] = ' ';
-    }
-
-    /* save chanmodes */
-    pos = strstr (argv_eol[3], "CHANMODES=");
-    if (pos)
-    {
-        pos += 10;
-        pos2 = strchr (pos, ' ');
-        if (pos2)
-            pos2[0] = '\0';
-        if (server->chanmodes)
-            free (server->chanmodes);
-        server->chanmodes = strdup (pos);
-        if (pos2)
-            pos2[0] = ' ';
-    }
-
-    /* save monitor (limit) */
-    pos = strstr (argv_eol[3], "MONITOR=");
-    if (pos)
-    {
-        pos += 8;
-        pos2 = strchr (pos, ' ');
-        if (pos2)
-            pos2[0] = '\0';
-        error = NULL;
-        value = strtol (pos, &error, 10);
-        if (error && !error[0] && (value > 0))
-            server->monitor = (int)value;
-        if (pos2)
-            pos2[0] = ' ';
-    }
-
-    /* save client tag deny */
-    pos = strstr (argv_eol[3], "CLIENTTAGDENY=");
-    if (pos)
-    {
-        pos += 14;
-        pos2 = strchr (pos, ' ');
-        if (pos2)
-            pos2[0] = '\0';
-        irc_server_set_clienttagdeny (server, pos);
-        if (pos2)
-            pos2[0] = ' ';
+        if (strncmp (params[i], "PREFIX=", 7) == 0)
+        {
+            /* save prefix */
+            irc_server_set_prefix_modes_chars (server, params[i] + 7);
+        }
+        else if (strncmp (params[i], "NICKLEN=", 8) == 0)
+        {
+            /* save max nick length */
+            error = NULL;
+            value = strtol (params[i] + 8, &error, 10);
+            if (error && !error[0] && (value > 0))
+                server->nick_max_length = (int)value;
+        }
+        else if (strncmp (params[i], "USERLEN=", 8) == 0)
+        {
+            /* save max user length */
+            error = NULL;
+            value = strtol (params[i] + 8, &error, 10);
+            if (error && !error[0] && (value > 0))
+                server->user_max_length = (int)value;
+        }
+        else if (strncmp (params[i], "HOSTLEN=", 8) == 0)
+        {
+            /* save max host length */
+            error = NULL;
+            value = strtol (params[i] + 8, &error, 10);
+            if (error && !error[0] && (value > 0))
+                server->host_max_length = (int)value;
+        }
+        else if (strncmp (params[i], "CASEMAPPING=", 12) == 0)
+        {
+            /* save casemapping */
+            casemapping = irc_server_search_casemapping (params[i] + 12);
+            if (casemapping >= 0)
+                server->casemapping = casemapping;
+        }
+        else if (strncmp (params[i], "UTF8MAPPING=", 12) == 0)
+        {
+            /* save utf8mapping */
+            utf8mapping = irc_server_search_utf8mapping (params[i] + 12);
+            if (utf8mapping >= 0)
+                server->utf8mapping = utf8mapping;
+        }
+        else if (strncmp (params[i], "CHANTYPES=", 10) == 0)
+        {
+            /* save chantypes */
+            if (server->chantypes)
+                free (server->chantypes);
+            server->chantypes = strdup (params[i] + 10);
+        }
+        else if (strncmp (params[i], "CHANMODES=", 10) == 0)
+        {
+            /* save chanmodes */
+            if (server->chanmodes)
+                free (server->chanmodes);
+            server->chanmodes = strdup (params[i] + 10);
+        }
+        else if (strncmp (params[i], "MONITOR=", 8) == 0)
+        {
+            /* save monitor (limit) */
+            error = NULL;
+            value = strtol (params[i] + 8, &error, 10);
+            if (error && !error[0] && (value > 0))
+                server->monitor = (int)value;
+        }
+        else if (strncmp (params[i], "CLIENTTAGDENY=", 14) == 0)
+        {
+            /* save client tag deny */
+            irc_server_set_clienttagdeny (server, params[i] + 14);
+        }
     }
 
     /* save whole message (concatenate to existing isupport, if any) */
-    pos_start = NULL;
-    pos = strstr (argv_eol[3], " :");
-    length = (pos) ? pos - argv_eol[3] : (int)strlen (argv_eol[3]);
-    if (server->isupport)
+    str_info = irc_protocol_string_params (params, 1, arg_last);
+    if (str_info && str_info[0])
     {
-        length_isupport = strlen (server->isupport);
-        isupport2 = realloc (server->isupport,
-                             length_isupport + /* existing */
-                             1 + length + 1); /* new */
-        if (isupport2)
+        pos_start = NULL;
+        length = strlen (str_info);
+        if (server->isupport)
         {
-            server->isupport = isupport2;
-            pos_start = server->isupport + length_isupport;
+            length_isupport = strlen (server->isupport);
+            isupport2 = realloc (server->isupport,
+                                 length_isupport +  /* existing */
+                                 1 +  /* space */
+                                 length +  /* new */
+                                 1);
+            if (isupport2)
+            {
+                server->isupport = isupport2;
+                pos_start = server->isupport + length_isupport;
+            }
+        }
+        else
+        {
+            server->isupport = malloc (1 + length + 1);
+            if (server->isupport)
+                pos_start = server->isupport;
+        }
+        if (pos_start)
+        {
+            pos_start[0] = ' ';
+            memcpy (pos_start + 1, str_info, length);
+            pos_start[length + 1] = '\0';
         }
     }
-    else
-    {
-        server->isupport = malloc (1 + length + 1);
-        if (server->isupport)
-            pos_start = server->isupport;
-    }
-
-    if (pos_start)
-    {
-        pos_start[0] = ' ';
-        memcpy (pos_start + 1, argv_eol[3], length);
-        pos_start[length + 1] = '\0';
-    }
+    if (str_info)
+        free (str_info);
 
     return WEECHAT_RC_OK;
 }
