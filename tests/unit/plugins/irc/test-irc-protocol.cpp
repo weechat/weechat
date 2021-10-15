@@ -2141,11 +2141,11 @@ TEST(IrcProtocolWithServer, 221)
 {
     SRV_INIT;
 
-    /* not enough arguments */
+    /* not enough parameters */
     RECV(":server 221");
-    CHECK_ERROR_ARGS("221", 2, 4);
+    CHECK_ERROR_PARAMS("221", 0, 2);
     RECV(":server 221 alice");
-    CHECK_ERROR_ARGS("221", 3, 4);
+    CHECK_ERROR_PARAMS("221", 1, 2);
 
     POINTERS_EQUAL(NULL, ptr_server->nick_modes);
 
