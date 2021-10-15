@@ -1927,9 +1927,12 @@ TEST(IrcProtocolWithServer, wallops)
 {
     SRV_INIT;
 
-    /* not enough arguments */
+    /* not enough parameters */
     RECV(":alice!user@host WALLOPS");
-    CHECK_ERROR_ARGS("wallops", 2, 3);
+    CHECK_ERROR_PARAMS("wallops", 0, 1);
+
+    RECV(":alice!user@host WALLOPS message");
+    CHECK_SRV("-- Wallops from alice (user@host): message");
 
     RECV(":alice!user@host WALLOPS :message from admin");
     CHECK_SRV("-- Wallops from alice (user@host): message from admin");

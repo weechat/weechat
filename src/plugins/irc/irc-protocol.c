@@ -3320,19 +3320,23 @@ IRC_PROTOCOL_CALLBACK(topic)
  * Callback for the IRC command "WALLOPS".
  *
  * Command looks like:
- *   :nick!user@host WALLOPS :message from admin
+ *   WALLOPS :message from admin
  */
 
 IRC_PROTOCOL_CALLBACK(wallops)
 {
     const char *nick_address;
+    char *str_params;
 
-    IRC_PROTOCOL_MIN_ARGS(3);
+    IRC_PROTOCOL_MIN_PARAMS(1);
 
     if (ignored)
         return WEECHAT_RC_OK;
 
     nick_address = irc_protocol_nick_address (server, 0, NULL, nick, address);
+
+    str_params = irc_protocol_string_params (params, 0, num_params - 1);
+
     weechat_printf_date_tags (
         irc_msgbuffer_get_target_buffer (server, nick, command, NULL, NULL),
         date,
@@ -3340,7 +3344,10 @@ IRC_PROTOCOL_CALLBACK(wallops)
         _("%sWallops from %s: %s"),
         weechat_prefix ("network"),
         (nick_address[0]) ? nick_address : "?",
-        (argv_eol[2][0] == ':') ? argv_eol[2] + 1 : argv_eol[2]);
+        str_params);
+
+    if (str_params)
+        free (str_params);
 
     return WEECHAT_RC_OK;
 }
