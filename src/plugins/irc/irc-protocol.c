@@ -3769,12 +3769,16 @@ IRC_PROTOCOL_CALLBACK(301)
  * Callback for the IRC command "303": ison.
  *
  * Command looks like:
- *   :server 303 mynick :nick1 nick2
+ *   303 mynick :nick1 nick2
  */
 
 IRC_PROTOCOL_CALLBACK(303)
 {
-    IRC_PROTOCOL_MIN_ARGS(4);
+    char *str_params;
+
+    IRC_PROTOCOL_MIN_PARAMS(2);
+
+    str_params = irc_protocol_string_params (params, 1, num_params - 1);
 
     weechat_printf_date_tags (
         irc_msgbuffer_get_target_buffer (server, NULL, command, NULL, NULL),
@@ -3783,7 +3787,10 @@ IRC_PROTOCOL_CALLBACK(303)
         _("%sUsers online: %s%s"),
         weechat_prefix ("network"),
         IRC_COLOR_CHAT_NICK,
-        (argv_eol[3][0] == ':') ? argv_eol[3] + 1 : argv_eol[3]);
+        str_params);
+
+    if (str_params)
+        free (str_params);
 
     return WEECHAT_RC_OK;
 }

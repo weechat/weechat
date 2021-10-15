@@ -2288,11 +2288,11 @@ TEST(IrcProtocolWithServer, 303)
 {
     SRV_INIT;
 
-    /* not enough arguments */
+    /* not enough parameters */
     RECV(":server 303");
-    CHECK_ERROR_ARGS("303", 2, 4);
+    CHECK_ERROR_PARAMS("303", 0, 2);
     RECV(":server 303 alice");
-    CHECK_ERROR_ARGS("303", 3, 4);
+    CHECK_ERROR_PARAMS("303", 1, 2);
 
     RECV(":server 303 alice :nick1 nick2");
     CHECK_SRV("-- Users online: nick1 nick2");
