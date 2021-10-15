@@ -3799,15 +3799,18 @@ IRC_PROTOCOL_CALLBACK(303)
  * Callback for the IRC command "305": unaway.
  *
  * Command looks like:
- *   :server 305 mynick :Does this mean you're really back?
+ *   305 mynick :Does this mean you're really back?
  */
 
 IRC_PROTOCOL_CALLBACK(305)
 {
-    IRC_PROTOCOL_MIN_ARGS(3);
+    char *str_params;
 
-    if (argc > 3)
+    IRC_PROTOCOL_MIN_PARAMS(1);
+
+    if (num_params > 1)
     {
+        str_params = irc_protocol_string_params (params, 1, num_params - 1);
         weechat_printf_date_tags (
             irc_msgbuffer_get_target_buffer (
                 server, NULL, command, "unaway", NULL),
@@ -3815,7 +3818,9 @@ IRC_PROTOCOL_CALLBACK(305)
             irc_protocol_tags (command, "irc_numeric", NULL, NULL),
             "%s%s",
             weechat_prefix ("network"),
-            (argv_eol[3][0] == ':') ? argv_eol[3] + 1 : argv_eol[3]);
+            str_params);
+        if (str_params)
+            free (str_params);
     }
 
     server->is_away = 0;
@@ -3830,15 +3835,18 @@ IRC_PROTOCOL_CALLBACK(305)
  * Callback for the IRC command "306": now away.
  *
  * Command looks like:
- *   :server 306 mynick :We'll miss you
+ *   306 mynick :We'll miss you
  */
 
 IRC_PROTOCOL_CALLBACK(306)
 {
-    IRC_PROTOCOL_MIN_ARGS(3);
+    char *str_params;
 
-    if (argc > 3)
+    IRC_PROTOCOL_MIN_PARAMS(1);
+
+    if (num_params > 1)
     {
+        str_params = irc_protocol_string_params (params, 1, num_params - 1);
         weechat_printf_date_tags (
             irc_msgbuffer_get_target_buffer (
                 server, NULL, command, "away", NULL),
@@ -3846,7 +3854,9 @@ IRC_PROTOCOL_CALLBACK(306)
             irc_protocol_tags (command, "irc_numeric", NULL, NULL),
             "%s%s",
             weechat_prefix ("network"),
-            (argv_eol[3][0] == ':') ? argv_eol[3] + 1 : argv_eol[3]);
+            str_params);
+        if (str_params)
+            free (str_params);
     }
 
     server->is_away = 1;

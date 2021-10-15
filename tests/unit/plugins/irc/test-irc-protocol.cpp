@@ -2311,10 +2311,11 @@ TEST(IrcProtocolWithServer, 305_306)
     RECV(":bob!user@host PRIVMSG alice :hi Alice!");
     CHECK_PV("bob", "bob hi Alice!");
 
-    /* not enough arguments */
+    /* not enough parameters */
     RECV(":server 305");
-    CHECK_ERROR_ARGS("305", 2, 3);
+    CHECK_ERROR_PARAMS("305", 0, 1);
     RECV(":server 306");
+    CHECK_ERROR_PARAMS("306", 0, 1);
 
     POINTERS_EQUAL(NULL, ptr_server->channels->away_message);
 
