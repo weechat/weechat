@@ -366,8 +366,10 @@ gui_chat_string_next_char (struct t_gui_window *window, struct t_gui_line *line,
  */
 
 int
-gui_chat_display_word_raw (struct t_gui_window *window, struct t_gui_line *line,
+gui_chat_display_word_raw (struct t_gui_window *window,
+                           struct t_gui_line *line,
                            const char *string,
+                           const char *url,
                            int max_chars_on_screen, int simulate,
                            int apply_style_inactive,
                            int nick_offline)
@@ -385,6 +387,17 @@ gui_chat_display_word_raw (struct t_gui_window *window, struct t_gui_line *line,
     chars_displayed = 0;
     x = window->win_chat_cursor_x;
 
+    if (url)
+    {
+        /* doesn't work: raw codes are displayed as-is */
+        waddstr (GUI_WINDOW_OBJECTS(window)->win_chat, "\33]8;;");
+        waddstr (GUI_WINDOW_OBJECTS(window)->win_chat, url);
+        waddstr (GUI_WINDOW_OBJECTS(window)->win_chat, "\33\\");
+        /* doesn't work: no effect */
+        fprintf (stderr, "\33]8;;%s\33\\", url);
+        fflush (stderr);
+    }
+
     while (string && string[0])
     {
         string = gui_chat_string_next_char (window, line,
@@ -392,7 +405,7 @@ gui_chat_display_word_raw (struct t_gui_window *window, struct t_gui_line *line,
                                             apply_style_inactive,
                                             nick_offline);
         if (!string)
-            return chars_displayed;
+            goto end;
 
         next_char = (char *)utf8_next_char (string);
         if (next_char)
@@ -414,7 +427,7 @@ gui_chat_display_word_raw (struct t_gui_window *window, struct t_gui_line *line,
             if ((max_chars_on_screen > 0)
                 && (chars_displayed + size_on_screen > max_chars_on_screen))
             {
-                return chars_displayed;
+                goto end;
             }
             if (display_char && (size_on_screen >= 0))
             {
@@ -442,6 +455,15 @@ gui_chat_display_word_raw (struct t_gui_window *window, struct t_gui_line *line,
         string = next_char;
     }
 
+end:
+    if (url)
+    {
+        /* doesn't work: raw codes are displayed as-is */
+        waddstr (GUI_WINDOW_OBJECTS(window)->win_chat, "\33]8;;\33\\");
+        /* doesn't work: no effect */
+        fprintf (stderr, "\33]8;;\33\\");
+        fflush (stderr);
+    }
     return chars_displayed;
 }
 
@@ -461,7 +483,7 @@ gui_chat_display_word (struct t_gui_window *window,
                        int apply_style_inactive,
                        int nick_offline)
 {
-    char *data, *ptr_data, *end_line, saved_char, str_space[] = " ";
+    char *data, *ptr_data, *url, *end_line, saved_char, str_space[] = " ";
     int chars_displayed, pos_saved_char, chars_to_display, num_displayed;
     int length_align;
 
@@ -484,6 +506,8 @@ gui_chat_display_word (struct t_gui_window *window,
         data[word_end - word] = '\0';
     else
         word_end = NULL;
+
+    url = (strncmp (data, "http", 4) == 0) ? strdup (data) : NULL;
 
     ptr_data = data;
     while (ptr_data && ptr_data[0])
@@ -518,12 +542,14 @@ gui_chat_display_word (struct t_gui_window *window,
                     }
                     chars_displayed += gui_chat_display_word_raw (window, line,
                                                                   CONFIG_STRING(config_look_prefix_suffix),
+                                                                  NULL,
                                                                   0, simulate,
                                                                   apply_style_inactive,
                                                                   nick_offline);
                     window->win_chat_cursor_x += gui_chat_strlen_screen (CONFIG_STRING(config_look_prefix_suffix));
                     chars_displayed += gui_chat_display_word_raw (window, line,
                                                                   str_space,
+                                                                  NULL,
                                                                   0, simulate,
                                                                   apply_style_inactive,
                                                                   nick_offline);
@@ -553,6 +579,7 @@ gui_chat_display_word (struct t_gui_window *window,
             {
                 chars_displayed += gui_chat_display_word_raw (window, line,
                                                               ptr_data,
+                                                              url,
                                                               0, simulate,
                                                               apply_style_inactive,
                                                               nick_offline);
@@ -561,6 +588,7 @@ gui_chat_display_word (struct t_gui_window *window,
             {
                 chars_displayed += gui_chat_display_word_raw (window, line,
                                                               ptr_data,
+                                                              url,
                                                               0, 0,
                                                               apply_style_inactive,
                                                               nick_offline);
@@ -575,6 +603,7 @@ gui_chat_display_word (struct t_gui_window *window,
             {
                 chars_displayed += gui_chat_display_word_raw (window, line,
                                                               ptr_data,
+                                                              url,
                                                               0, simulate,
                                                               apply_style_inactive,
                                                               nick_offline);
@@ -583,6 +612,7 @@ gui_chat_display_word (struct t_gui_window *window,
             {
                 chars_displayed += gui_chat_display_word_raw (window, line,
                                                               ptr_data,
+                                                              url,
                                                               0, 0,
                                                               apply_style_inactive,
                                                               nick_offline);
@@ -606,6 +636,8 @@ gui_chat_display_word (struct t_gui_window *window,
     }
 
     free (data);
+    if (url)
+        free (url);
 
     return chars_displayed;
 }
@@ -677,6 +709,7 @@ gui_chat_display_day_changed (struct t_gui_window *window,
     gui_chat_clrtoeol (window);
     gui_chat_display_word_raw (window, NULL,
                                (message_with_color) ? message_with_color : message,
+                               NULL,
                                0, simulate, 0, 0);
     window->win_chat_cursor_x = window->win_chat_width;
 
@@ -1670,7 +1703,7 @@ gui_chat_display_line_y (struct t_gui_window *window, struct t_gui_line *line,
     }
 
     /* display the line */
-    if (gui_chat_display_word_raw (window, line, ptr_data,
+    if (gui_chat_display_word_raw (window, line, ptr_data, NULL,
                                    window->win_chat_width, 0,
                                    CONFIG_BOOLEAN(config_look_color_inactive_message),
                                    0) < window->win_chat_width)
