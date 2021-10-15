@@ -1881,9 +1881,13 @@ TEST(IrcProtocolWithServer, topic)
     ptr_channel = ptr_server->channels;
     POINTERS_EQUAL(NULL, ptr_channel->topic);
 
-    /* not enough arguments */
+    /* not enough parameters */
     RECV(":alice!user@host TOPIC");
-    CHECK_ERROR_ARGS("topic", 2, 3);
+    CHECK_ERROR_PARAMS("topic", 0, 1);
+
+    /* missing nick */
+    RECV("TOPIC #test :new topic");
+    CHECK_ERROR_NICK("topic");
 
     POINTERS_EQUAL(NULL, ptr_channel->topic);
 

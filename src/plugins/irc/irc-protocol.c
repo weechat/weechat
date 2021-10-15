@@ -3170,19 +3170,20 @@ IRC_PROTOCOL_CALLBACK(numeric)
  * Callback for the IRC command "TOPIC".
  *
  * Command looks like:
- *   :nick!user@host TOPIC #channel :new topic for channel
+ *   TOPIC #channel :new topic for channel
  */
 
 IRC_PROTOCOL_CALLBACK(topic)
 {
-    char *pos_topic, *old_topic_color, *topic_color;
+    char *str_topic, *old_topic_color, *topic_color;
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
     struct t_gui_buffer *ptr_buffer;
 
-    IRC_PROTOCOL_MIN_ARGS(3);
+    IRC_PROTOCOL_MIN_PARAMS(1);
+    IRC_PROTOCOL_CHECK_NICK;
 
-    if (!irc_channel_is_channel (server, argv[2]))
+    if (!irc_channel_is_channel (server, params[0]))
     {
         weechat_printf (server->buffer,
                         _("%s%s: \"%s\" command received without channel"),
@@ -3190,10 +3191,10 @@ IRC_PROTOCOL_CALLBACK(topic)
         return WEECHAT_RC_OK;
     }
 
-    pos_topic = (argc > 3) ?
-        ((argv_eol[3][0] == ':') ? argv_eol[3] + 1 : argv_eol[3]) : NULL;
+    str_topic = (num_params > 1) ?
+        irc_protocol_string_params (params, 1, num_params - 1) : NULL;
 
-    ptr_channel = irc_channel_search (server, argv[2]);
+    ptr_channel = irc_channel_search (server, params[0]);
     ptr_nick = irc_nick_search (server, ptr_channel, nick);
     ptr_buffer = (ptr_channel) ? ptr_channel->buffer : server->buffer;
 
@@ -3204,10 +3205,10 @@ IRC_PROTOCOL_CALLBACK(topic)
     if (ptr_channel)
         irc_channel_join_smart_filtered_unmask (ptr_channel, nick);
 
-    if (pos_topic && pos_topic[0])
+    if (str_topic)
     {
         topic_color = irc_color_decode (
-            pos_topic,
+            str_topic,
             weechat_config_boolean (irc_config_network_colors_receive));
         if (weechat_config_boolean (irc_config_look_display_old_topic)
             && ptr_channel && ptr_channel->topic && ptr_channel->topic[0])
@@ -3227,13 +3228,13 @@ IRC_PROTOCOL_CALLBACK(topic)
                 nick,
                 IRC_COLOR_RESET,
                 IRC_COLOR_CHAT_CHANNEL,
-                argv[2],
+                params[0],
                 IRC_COLOR_RESET,
                 IRC_COLOR_TOPIC_OLD,
                 (old_topic_color) ? old_topic_color : ptr_channel->topic,
                 IRC_COLOR_RESET,
                 IRC_COLOR_TOPIC_NEW,
-                (topic_color) ? topic_color : pos_topic,
+                (topic_color) ? topic_color : str_topic,
                 IRC_COLOR_RESET);
             if (old_topic_color)
                 free (old_topic_color);
@@ -3251,10 +3252,10 @@ IRC_PROTOCOL_CALLBACK(topic)
                 nick,
                 IRC_COLOR_RESET,
                 IRC_COLOR_CHAT_CHANNEL,
-                argv[2],
+                params[0],
                 IRC_COLOR_RESET,
                 IRC_COLOR_TOPIC_NEW,
-                (topic_color) ? topic_color : pos_topic,
+                (topic_color) ? topic_color : str_topic,
                 IRC_COLOR_RESET);
         }
         if (topic_color)
@@ -3280,7 +3281,7 @@ IRC_PROTOCOL_CALLBACK(topic)
                 nick,
                 IRC_COLOR_RESET,
                 IRC_COLOR_CHAT_CHANNEL,
-                argv[2],
+                params[0],
                 IRC_COLOR_RESET,
                 IRC_COLOR_TOPIC_OLD,
                 (old_topic_color) ? old_topic_color : ptr_channel->topic,
@@ -3301,13 +3302,16 @@ IRC_PROTOCOL_CALLBACK(topic)
                 nick,
                 IRC_COLOR_RESET,
                 IRC_COLOR_CHAT_CHANNEL,
-                argv[2],
+                params[0],
                 IRC_COLOR_RESET);
         }
     }
 
     if (ptr_channel)
-        irc_channel_set_topic (ptr_channel, pos_topic);
+        irc_channel_set_topic (ptr_channel, str_topic);
+
+    if (str_topic)
+        free (str_topic);
 
     return WEECHAT_RC_OK;
 }
