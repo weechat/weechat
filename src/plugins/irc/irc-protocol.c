@@ -3043,7 +3043,7 @@ IRC_PROTOCOL_CALLBACK(setname)
  * Callback for the IRC command "TAGMSG": message with tags but no text content
  * (received when capability "message-tags" is enabled).
  *
- * Command looks like:
+ * Whole message looks like:
  *   @msgid=6gqz7dxd22v7r3x9pvu;+typing=active :nick!user@host TAGMSG #channel
  *   @msgid=6gqz7dxd22v7r3x9pvu;+typing=active :nick!user@host TAGMSG :#channel
  */
@@ -3052,10 +3052,9 @@ IRC_PROTOCOL_CALLBACK(tagmsg)
 {
     struct t_irc_channel *ptr_channel;
     const char *ptr_typing_value;
-    char *pos_channel;
     int state;
 
-    IRC_PROTOCOL_MIN_ARGS(3);
+    IRC_PROTOCOL_MIN_PARAMS(1);
 
     if (ignored)
         return WEECHAT_RC_OK;
@@ -3063,12 +3062,10 @@ IRC_PROTOCOL_CALLBACK(tagmsg)
     if (!tags)
         return WEECHAT_RC_OK;
 
-    pos_channel = (argv[2][0] == ':') ? argv[2] + 1 : argv[2];
-
     ptr_channel = NULL;
-    if (irc_channel_is_channel (server, pos_channel))
-        ptr_channel = irc_channel_search (server, pos_channel);
-    else if (irc_server_strcasecmp (server, pos_channel, server->nick) == 0)
+    if (irc_channel_is_channel (server, params[0]))
+        ptr_channel = irc_channel_search (server, params[0]);
+    else if (irc_server_strcasecmp (server, params[0], server->nick) == 0)
         ptr_channel = irc_channel_search (server, nick);
     if (!ptr_channel)
         return WEECHAT_RC_OK;

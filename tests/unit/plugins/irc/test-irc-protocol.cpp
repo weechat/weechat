@@ -38,6 +38,8 @@ extern "C"
 #include "src/plugins/irc/irc-config.h"
 #include "src/plugins/irc/irc-nick.h"
 #include "src/plugins/irc/irc-server.h"
+#include "src/plugins/typing/typing-config.h"
+#include "src/plugins/typing/typing-status.h"
 
 extern int irc_protocol_is_numeric_command (const char *str);
 extern int irc_protocol_log_level_for_command (const char *command);
@@ -1819,19 +1821,50 @@ TEST(IrcProtocolWithServer, setname_with_setname_cap)
 
 TEST(IrcProtocolWithServer, tagmsg)
 {
+    struct t_gui_buffer *ptr_buffer;
+    struct t_typing_status *ptr_typing_status;
+
     SRV_INIT_JOIN2;
 
-    /* not enough arguments */
+    /* not enough parameters */
     RECV(":bob!user@host TAGMSG");
-    CHECK_ERROR_ARGS("tagmsg", 2, 3);
+    CHECK_ERROR_PARAMS("tagmsg", 0, 1);
 
     /* no tags */
     RECV(":bob!user@host TAGMSG #test");
+    CHECK_NO_MSG;
+    RECV(":bob!user@host TAGMSG :#test");
     CHECK_NO_MSG;
 
     /* with tags */
     RECV("@tag1=123;tag2=456 :bob!user@host TAGMSG #test");
     CHECK_NO_MSG;
+    RECV("@tag1=123;tag2=456 :bob!user@host TAGMSG :#test");
+    CHECK_NO_MSG;
+
+    /* check typing status */
+    ptr_buffer = ptr_server->channels->buffer;
+
+    config_file_option_set (irc_config_look_typing_status_nicks, "on", 1);
+    config_file_option_set (typing_config_look_enabled_nicks, "on", 1);
+
+    POINTERS_EQUAL(NULL, typing_status_nick_search (ptr_buffer, "bob"));
+
+    RECV("@+typing=active :bob!user@host TAGMSG #test");
+    ptr_typing_status = typing_status_nick_search (ptr_buffer, "bob");
+    CHECK(ptr_typing_status);
+    LONGS_EQUAL(TYPING_STATUS_STATE_TYPING, ptr_typing_status->state);
+
+    RECV("@+typing=paused :bob!user@host TAGMSG :#test");
+    ptr_typing_status = typing_status_nick_search (ptr_buffer, "bob");
+    CHECK(ptr_typing_status);
+    LONGS_EQUAL(TYPING_STATUS_STATE_PAUSED, ptr_typing_status->state);
+
+    RECV("@+typing=done :bob!user@host TAGMSG #test");
+    POINTERS_EQUAL(NULL, typing_status_nick_search (ptr_buffer, "bob"));
+
+    config_file_option_reset (typing_config_look_enabled_nicks, 1);
+    config_file_option_reset (irc_config_look_typing_status_nicks, 1);
 }
 
 /*
