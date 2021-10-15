@@ -1984,6 +1984,10 @@ TEST(IrcProtocolWithServer, 001_empty)
     LONGS_EQUAL(0, ptr_server->is_connected);
     STRCMP_EQUAL("nick1", ptr_server->nick);
 
+    /* not enough parameters */
+    RECV(":server 001");
+    CHECK_ERROR_PARAMS("001", 0, 1);
+
     RECV(":server 001 alice");
     CHECK_NO_MSG;
     LONGS_EQUAL(1, ptr_server->is_connected);

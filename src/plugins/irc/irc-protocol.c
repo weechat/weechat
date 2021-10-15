@@ -3379,7 +3379,7 @@ IRC_PROTOCOL_CALLBACK(warn)
  * Callback for the IRC command "001": connected to IRC server.
  *
  * Command looks like:
- *   :server 001 mynick :Welcome to the dancer-ircd Network
+ *   001 mynick :Welcome to the dancer-ircd Network
  */
 
 IRC_PROTOCOL_CALLBACK(001)
@@ -3389,10 +3389,10 @@ IRC_PROTOCOL_CALLBACK(001)
     const char *ptr_server_command;
     int length;
 
-    IRC_PROTOCOL_MIN_ARGS(3);
+    IRC_PROTOCOL_MIN_PARAMS(1);
 
-    if (irc_server_strcasecmp (server, server->nick, argv[2]) != 0)
-        irc_server_set_nick (server, argv[2]);
+    if (irc_server_strcasecmp (server, server->nick, params[0]) != 0)
+        irc_server_set_nick (server, params[0]);
 
     irc_protocol_cb_numeric (server, date, irc_message,
                              tags, nick, address, host, command,
