@@ -2122,14 +2122,14 @@ TEST(IrcProtocolWithServer, 008)
 {
     SRV_INIT;
 
-    /* not enough arguments */
+    /* not enough parameters */
     RECV(":server 008");
-    CHECK_ERROR_ARGS("008", 2, 4);
+    CHECK_ERROR_PARAMS("008", 0, 2);
     RECV(":server 008 alice");
-    CHECK_ERROR_ARGS("008", 3, 4);
+    CHECK_ERROR_PARAMS("008", 1, 2);
 
     RECV(":server 008 alice +Zbfkrsuy :Server notice mask");
-    CHECK_SRV("-- Server notice mask for alice: +Zbfkrsuy :Server notice mask");
+    CHECK_SRV("-- Server notice mask for alice: +Zbfkrsuy Server notice mask");
 }
 
 /*

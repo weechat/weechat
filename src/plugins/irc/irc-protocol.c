@@ -3641,23 +3641,30 @@ IRC_PROTOCOL_CALLBACK(005)
  * Callback for the IRC command "008": server notice mask.
  *
  * Command looks like:
- *   :server 008 nick +Zbfkrsuy :Server notice mask
+ *   008 nick +Zbfkrsuy :Server notice mask
  */
 
 IRC_PROTOCOL_CALLBACK(008)
 {
-    IRC_PROTOCOL_MIN_ARGS(4);
+    char *str_params;
+
+    IRC_PROTOCOL_MIN_PARAMS(2);
+
+    str_params = irc_protocol_string_params (params, 1, num_params - 1);
 
     weechat_printf_date_tags (
-        irc_msgbuffer_get_target_buffer (server, argv[2], command, NULL, NULL),
+        irc_msgbuffer_get_target_buffer (server, params[0], command, NULL, NULL),
         date,
         irc_protocol_tags (command, "irc_numeric", NULL, address),
         _("%sServer notice mask for %s%s%s: %s"),
         weechat_prefix ("network"),
-        irc_nick_color_for_msg (server, 1, NULL, argv[2]),
-        argv[2],
+        irc_nick_color_for_msg (server, 1, NULL, params[0]),
+        params[0],
         IRC_COLOR_RESET,
-        (argv_eol[3][0] == ':') ? argv_eol[3] + 1 : argv_eol[3]);
+        str_params);
+
+    if (str_params)
+        free (str_params);
 
     return WEECHAT_RC_OK;
 }
