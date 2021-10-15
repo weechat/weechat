@@ -3138,21 +3138,17 @@ IRC_PROTOCOL_CALLBACK(server_mode_reason)
 
 IRC_PROTOCOL_CALLBACK(numeric)
 {
-    char *pos_args;
+    int arg_text;
+    char *str_params;
 
-    IRC_PROTOCOL_MIN_ARGS(3);
+    IRC_PROTOCOL_MIN_PARAMS(1);
 
-    if (irc_server_strcasecmp (server, server->nick, argv[2]) == 0)
-    {
-        pos_args = (argc > 3) ?
-            ((argv_eol[3][0] == ':') ? argv_eol[3] + 1 : argv_eol[3]) : NULL;
-    }
-    else
-    {
-        pos_args = (argv_eol[2][0] == ':') ? argv_eol[2] + 1 : argv_eol[2];
-    }
+    arg_text = (irc_server_strcasecmp (server, server->nick, params[0]) == 0) ?
+        1 : 0;
 
-    if (pos_args)
+    str_params = irc_protocol_string_params (params, arg_text, num_params - 1);
+
+    if (str_params && str_params[0])
     {
         weechat_printf_date_tags (
             irc_msgbuffer_get_target_buffer (server, NULL, command, NULL, NULL),
@@ -3160,8 +3156,11 @@ IRC_PROTOCOL_CALLBACK(numeric)
             irc_protocol_tags (command, "irc_numeric", NULL, NULL),
             "%s%s",
             weechat_prefix ("network"),
-            pos_args);
+            str_params);
     }
+
+    if (str_params)
+        free (str_params);
 
     return WEECHAT_RC_OK;
 }

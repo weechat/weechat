@@ -579,7 +579,7 @@ TEST(IrcProtocolWithServer, recv_command_not_found)
               "abc def\"");
 
     RECV(":alice!user@host 099");
-    CHECK_ERROR_ARGS("099", 2, 3);
+    CHECK_ERROR_PARAMS("099", 0, 1);
 
     RECV(":alice!user@host 099 abc def");
     CHECK_SRV("-- abc def");
@@ -3762,13 +3762,13 @@ TEST(IrcProtocolWithServer, 903_907)
 {
     SRV_INIT;
 
-    /* not enough arguments */
+    /* not enough parameters */
     RECV(":server 903");
-    CHECK_ERROR_ARGS("903", 2, 3);
+    CHECK_ERROR_PARAMS("903", 0, 1);
 
-    /* not enough arguments */
+    /* not enough parameters */
     RECV(":server 907");
-    CHECK_ERROR_ARGS("907", 2, 3);
+    CHECK_ERROR_PARAMS("907", 0, 1);
 
     RECV(":server 903 alice ok");
     CHECK_SRV("-- ok");
@@ -3793,21 +3793,21 @@ TEST(IrcProtocolWithServer, 902_904_905_906)
 {
     SRV_INIT;
 
-    /* not enough arguments */
+    /* not enough parameters */
     RECV(":server 902");
-    CHECK_ERROR_ARGS("902", 2, 3);
+    CHECK_ERROR_PARAMS("902", 0, 1);
 
-    /* not enough arguments */
+    /* not enough parameters */
     RECV(":server 904");
-    CHECK_ERROR_ARGS("904", 2, 3);
+    CHECK_ERROR_PARAMS("904", 0, 1);
 
-    /* not enough arguments */
+    /* not enough parameters */
     RECV(":server 905");
-    CHECK_ERROR_ARGS("905", 2, 3);
+    CHECK_ERROR_PARAMS("905", 0, 1);
 
-    /* not enough arguments */
+    /* not enough parameters */
     RECV(":server 906");
-    CHECK_ERROR_ARGS("906", 2, 3);
+    CHECK_ERROR_PARAMS("906", 0, 1);
 
     RECV(":server 902 alice error");
     CHECK_SRV("-- error");
