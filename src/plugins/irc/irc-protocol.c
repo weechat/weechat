@@ -3714,50 +3714,54 @@ IRC_PROTOCOL_CALLBACK(221)
  * user is away (we receive away message).
  *
  * Command looks like:
- *   :server 301 mynick nick :away message for nick
+ *   301 mynick nick :away message for nick
  */
 
 IRC_PROTOCOL_CALLBACK(301)
 {
-    char *pos_away_msg;
+    char *str_params;
     struct t_irc_channel *ptr_channel;
     struct t_gui_buffer *ptr_buffer;
 
-    IRC_PROTOCOL_MIN_ARGS(3);
+    IRC_PROTOCOL_MIN_PARAMS(1);
 
-    if (argc > 4)
+    if (num_params < 3)
+        return WEECHAT_RC_OK;
+
+    str_params = irc_protocol_string_params (params, 2, num_params - 1);
+    if (!str_params)
+        return WEECHAT_RC_ERROR;
+
+    /* look for private buffer to display message */
+    ptr_channel = irc_channel_search (server, params[1]);
+    if (!weechat_config_boolean (irc_config_look_display_pv_away_once)
+        || !ptr_channel
+        || !(ptr_channel->away_message)
+        || (strcmp (ptr_channel->away_message, str_params) != 0))
     {
-        pos_away_msg = (argv_eol[4][0] == ':') ? argv_eol[4] + 1 : argv_eol[4];
-
-        /* look for private buffer to display message */
-        ptr_channel = irc_channel_search (server, argv[3]);
-        if (!weechat_config_boolean (irc_config_look_display_pv_away_once)
-            || !ptr_channel
-            || !(ptr_channel->away_message)
-            || (strcmp (ptr_channel->away_message, pos_away_msg) != 0))
+        ptr_buffer = (ptr_channel) ? ptr_channel->buffer : server->buffer;
+        weechat_printf_date_tags (
+            irc_msgbuffer_get_target_buffer (
+                server, params[1], command, "whois", ptr_buffer),
+            date,
+            irc_protocol_tags (command, "irc_numeric", NULL, address),
+            _("%s%s[%s%s%s]%s is away: %s"),
+            weechat_prefix ("network"),
+            IRC_COLOR_CHAT_DELIMITERS,
+            irc_nick_color_for_msg (server, 1, NULL, params[1]),
+            params[1],
+            IRC_COLOR_CHAT_DELIMITERS,
+            IRC_COLOR_RESET,
+            str_params);
+        if (ptr_channel)
         {
-            ptr_buffer = (ptr_channel) ? ptr_channel->buffer : server->buffer;
-            weechat_printf_date_tags (
-                irc_msgbuffer_get_target_buffer (
-                    server, argv[3], command, "whois", ptr_buffer),
-                date,
-                irc_protocol_tags (command, "irc_numeric", NULL, address),
-                _("%s%s[%s%s%s]%s is away: %s"),
-                weechat_prefix ("network"),
-                IRC_COLOR_CHAT_DELIMITERS,
-                irc_nick_color_for_msg (server, 1, NULL, argv[3]),
-                argv[3],
-                IRC_COLOR_CHAT_DELIMITERS,
-                IRC_COLOR_RESET,
-                pos_away_msg);
-            if (ptr_channel)
-            {
-                if (ptr_channel->away_message)
-                    free (ptr_channel->away_message);
-                ptr_channel->away_message = strdup (pos_away_msg);
-            }
+            if (ptr_channel->away_message)
+                free (ptr_channel->away_message);
+            ptr_channel->away_message = strdup (str_params);
         }
     }
+
+    free (str_params);
 
     return WEECHAT_RC_OK;
 }
