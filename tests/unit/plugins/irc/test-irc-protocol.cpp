@@ -3820,9 +3820,9 @@ TEST(IrcProtocolWithServer, server_mode_reason)
 {
     SRV_INIT;
 
-    /* not enough arguments */
+    /* not enough parameters */
     RECV(":server 973");
-    CHECK_ERROR_ARGS("973", 2, 3);
+    CHECK_ERROR_PARAMS("973", 0, 1);
 
     RECV(":server 973 alice");
     CHECK_NO_MSG;
@@ -3858,7 +3858,7 @@ TEST(IrcProtocolWithServer, server_mode_reason)
     RECV(":server 973 bob mode test");
     CHECK_SRV("-- bob: mode test");
     RECV(":server 973 bob mode :test");
-    CHECK_SRV("-- bob: mode :test");
+    CHECK_SRV("-- bob: mode test");
 
     RECV(":server 974 bob");
     CHECK_SRV("-- bob");
@@ -3867,7 +3867,7 @@ TEST(IrcProtocolWithServer, server_mode_reason)
     RECV(":server 974 bob mode test");
     CHECK_SRV("-- bob: mode test");
     RECV(":server 974 bob mode :test");
-    CHECK_SRV("-- bob: mode :test");
+    CHECK_SRV("-- bob: mode test");
 
     RECV(":server 975 bob");
     CHECK_SRV("-- bob");
@@ -3876,5 +3876,5 @@ TEST(IrcProtocolWithServer, server_mode_reason)
     RECV(":server 975 bob mode test");
     CHECK_SRV("-- bob: mode test");
     RECV(":server 975 bob mode :test");
-    CHECK_SRV("-- bob: mode :test");
+    CHECK_SRV("-- bob: mode test");
 }

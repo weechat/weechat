@@ -3094,36 +3094,40 @@ IRC_PROTOCOL_CALLBACK(tagmsg)
 
 IRC_PROTOCOL_CALLBACK(server_mode_reason)
 {
-    char *pos_mode, *pos_args;
+    char *str_params;
+    const char *pos_mode;
+    int arg_text;
 
-    IRC_PROTOCOL_MIN_ARGS(3);
+    IRC_PROTOCOL_MIN_PARAMS(1);
 
     /* skip nickname if at beginning of server message */
-    if (irc_server_strcasecmp (server, server->nick, argv[2]) == 0)
+    if (irc_server_strcasecmp (server, server->nick, params[0]) == 0)
     {
-        pos_mode = argv[3];
-        pos_args = (argc > 4) ?
-            ((argv_eol[4][0] == ':') ? argv_eol[4] + 1 : argv_eol[4]) : NULL;
+        if (num_params < 2)
+            return WEECHAT_RC_OK;
+        pos_mode = params[1];
+        arg_text = 2;
     }
     else
     {
-        pos_mode = argv[2];
-        pos_args = (argc > 3) ?
-            ((argv_eol[3][0] == ':') ? argv_eol[3] + 1 : argv_eol[3]) : NULL;
+        pos_mode = params[0];
+        arg_text = 1;
     }
 
-    if (pos_mode)
-    {
-        weechat_printf_date_tags (
+    str_params = irc_protocol_string_params (params, arg_text, num_params - 1);
+
+    weechat_printf_date_tags (
             irc_msgbuffer_get_target_buffer (server, NULL, command, NULL, NULL),
             date,
             irc_protocol_tags (command, "irc_numeric", NULL, NULL),
             "%s%s%s%s",
             weechat_prefix ("network"),
             pos_mode,
-            (pos_args) ? ": " : "",
-            (pos_args) ? pos_args : "");
-    }
+            (str_params && str_params[0]) ? ": " : "",
+            (str_params && str_params[0]) ? str_params : "");
+
+    if (str_params)
+        free (str_params);
 
     return WEECHAT_RC_OK;
 }
