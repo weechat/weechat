@@ -7006,7 +7006,7 @@ irc_protocol_recv_command (struct t_irc_server *server,
         IRCB(privmsg, 1, 1, privmsg),    /* message received                */
         IRCB(quit, 1, 1, quit),          /* close all connections and quit  */
         IRCB(setname, 0, 1, setname),    /* set realname                    */
-        IRCB(tagmsg, 0, 1, tagmsg),      /* tag message                     */
+        IRCB(tagmsg, 0, 0, tagmsg),      /* tag message                     */
         IRCB(topic, 0, 1, topic),        /* get/set channel topic           */
         IRCB(wallops, 1, 1, wallops),    /* wallops                         */
         IRCB(warn, 1, 0, warn),          /* warning received from server    */
