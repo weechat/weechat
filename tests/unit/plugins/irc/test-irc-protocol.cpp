@@ -3109,13 +3109,13 @@ TEST(IrcProtocolWithServer, 351)
 {
     SRV_INIT;
 
-    /* not enough arguments */
+    /* not enough parameters */
     RECV(":server 351");
-    CHECK_ERROR_ARGS("351", 2, 5);
+    CHECK_ERROR_PARAMS("351", 0, 3);
     RECV(":server 351 alice");
-    CHECK_ERROR_ARGS("351", 3, 5);
+    CHECK_ERROR_PARAMS("351", 1, 3);
     RECV(":server 351 alice dancer-ircd-1.0");
-    CHECK_ERROR_ARGS("351", 4, 5);
+    CHECK_ERROR_PARAMS("351", 2, 3);
 
     RECV(":server 351 alice dancer-ircd-1.0 server");
     CHECK_SRV("-- dancer-ircd-1.0 server");

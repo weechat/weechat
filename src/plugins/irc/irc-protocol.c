@@ -5279,29 +5279,33 @@ IRC_PROTOCOL_CALLBACK(349)
  * Callback for the IRC command "351": server version.
  *
  * Command looks like:
- *   :server 351 mynick dancer-ircd-1.0.36(2006/07/23_13:11:50). server :iMZ dncrTS/v4
+ *   351 mynick dancer-ircd-1.0.36(2006/07/23_13:11:50). server :iMZ dncrTS/v4
  */
 
 IRC_PROTOCOL_CALLBACK(351)
 {
+    char *str_params;
     struct t_gui_buffer *ptr_buffer;
 
-    IRC_PROTOCOL_MIN_ARGS(5);
+    IRC_PROTOCOL_MIN_PARAMS(3);
 
     ptr_buffer = irc_msgbuffer_get_target_buffer (server, NULL, command, NULL,
                                                   NULL);
 
-    if (argc > 5)
+    if (num_params > 3)
     {
+        str_params = irc_protocol_string_params (params, 3, num_params - 1);
         weechat_printf_date_tags (
             ptr_buffer,
             date,
             irc_protocol_tags (command, "irc_numeric", NULL, NULL),
             "%s%s %s (%s)",
             weechat_prefix ("network"),
-            argv[3],
-            argv[4],
-            (argv_eol[5][0] == ':') ? argv_eol[5] + 1 : argv_eol[5]);
+            params[1],
+            params[2],
+            str_params);
+        if (str_params)
+            free (str_params);
     }
     else
     {
@@ -5311,8 +5315,8 @@ IRC_PROTOCOL_CALLBACK(351)
             irc_protocol_tags (command, "irc_numeric", NULL, NULL),
             "%s%s %s",
             weechat_prefix ("network"),
-            argv[3],
-            argv[4]);
+            params[1],
+            params[2]);
     }
 
     return WEECHAT_RC_OK;
