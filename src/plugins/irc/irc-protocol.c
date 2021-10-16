@@ -4509,54 +4509,61 @@ IRC_PROTOCOL_CALLBACK(329)
  * (whois, is opered as).
  *
  * Commands look like:
- *   :server 330 mynick nick1 nick2 :is logged in as
- *   :server 330 mynick #channel https://example.com/
- *   :server 343 mynick nick1 nick2 :is opered as
+ *   330 mynick nick1 nick2 :is logged in as
+ *   330 mynick #channel https://example.com/
+ *   343 mynick nick1 nick2 :is opered as
  */
 
 IRC_PROTOCOL_CALLBACK(330_343)
 {
+    char *str_text;
     struct t_irc_channel *ptr_channel;
     struct t_gui_buffer *ptr_buffer;
 
-    IRC_PROTOCOL_MIN_ARGS(5);
+    IRC_PROTOCOL_MIN_PARAMS(3);
 
-    if (argc >= 6)
+    if (num_params >= 4)
     {
+        str_text = irc_protocol_string_params (params, 3, num_params - 1);
         weechat_printf_date_tags (
             irc_msgbuffer_get_target_buffer (
-                server, argv[3], command, "whois", NULL),
+                server, params[1], command, "whois", NULL),
             date,
             irc_protocol_tags (command, "irc_numeric", NULL, NULL),
             "%s%s[%s%s%s] %s%s %s%s",
             weechat_prefix ("network"),
             IRC_COLOR_CHAT_DELIMITERS,
-            irc_nick_color_for_msg (server, 1, NULL, argv[3]),
-            argv[3],
+            irc_nick_color_for_msg (server, 1, NULL, params[1]),
+            params[1],
             IRC_COLOR_CHAT_DELIMITERS,
             IRC_COLOR_RESET,
-            (argv_eol[5][0] == ':') ? argv_eol[5] + 1 : argv_eol[5],
-            irc_nick_color_for_msg (server, 1, NULL, argv[4]),
-            argv[4]);
+            str_text,
+            irc_nick_color_for_msg (server, 1, NULL, params[2]),
+            params[2]);
+        if (str_text)
+            free (str_text);
     }
     else
     {
-        ptr_channel = (irc_channel_is_channel (server, argv[3])) ?
-            irc_channel_search (server, argv[3]) : NULL;
+        ptr_channel = (irc_channel_is_channel (server, params[1])) ?
+            irc_channel_search (server, params[1]) : NULL;
         ptr_buffer = (ptr_channel) ? ptr_channel->buffer : server->buffer;
+        str_text = irc_protocol_string_params (params, 2, num_params - 1);
         weechat_printf_date_tags (
             irc_msgbuffer_get_target_buffer (
-                server, argv[3], command, "whois", ptr_buffer),
+                server, params[1], command, "whois", ptr_buffer),
             date,
             irc_protocol_tags (command, "irc_numeric", NULL, NULL),
             "%s%s[%s%s%s] %s%s",
             weechat_prefix ("network"),
             IRC_COLOR_CHAT_DELIMITERS,
-            irc_nick_color_for_msg (server, 1, NULL, argv[3]),
-            argv[3],
+            irc_nick_color_for_msg (server, 1, NULL, params[1]),
+            params[1],
             IRC_COLOR_CHAT_DELIMITERS,
             IRC_COLOR_RESET,
-            (argv_eol[4][0] == ':') ? argv_eol[4] + 1 : argv_eol[4]);
+            str_text);
+        if (str_text)
+            free (str_text);
     }
 
     return WEECHAT_RC_OK;

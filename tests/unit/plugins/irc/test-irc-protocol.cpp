@@ -2751,21 +2751,21 @@ TEST(IrcProtocolWithServer, 330_343)
 {
     SRV_INIT_JOIN;
 
-    /* not enough arguments */
+    /* not enough parameters */
     RECV(":server 330");
-    CHECK_ERROR_ARGS("330", 2, 5);
+    CHECK_ERROR_PARAMS("330", 0, 3);
     RECV(":server 330 alice");
-    CHECK_ERROR_ARGS("330", 3, 5);
+    CHECK_ERROR_PARAMS("330", 1, 3);
     RECV(":server 330 alice bob");
-    CHECK_ERROR_ARGS("330", 4, 5);
+    CHECK_ERROR_PARAMS("330", 2, 3);
 
-    /* not enough arguments */
+    /* not enough parameters */
     RECV(":server 343");
-    CHECK_ERROR_ARGS("343", 2, 5);
+    CHECK_ERROR_PARAMS("343", 0, 3);
     RECV(":server 343 alice");
-    CHECK_ERROR_ARGS("343", 3, 5);
+    CHECK_ERROR_PARAMS("343", 1, 3);
     RECV(":server 343 alice bob");
-    CHECK_ERROR_ARGS("343", 4, 5);
+    CHECK_ERROR_PARAMS("343", 2, 3);
 
     RECV(":server 330 alice bob bob2");
     CHECK_SRV("-- [bob] bob2");
