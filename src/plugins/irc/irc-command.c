@@ -5276,7 +5276,7 @@ IRC_COMMAND_CALLBACK(server)
 {
     int i, detailed_list, one_server_found, length, count, refresh;
     struct t_irc_server *ptr_server2, *server_found, *new_server;
-    char *server_name, *message;
+    char *server_name, *msg_no_quotes, *message;
 
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
 
@@ -5672,14 +5672,15 @@ IRC_COMMAND_CALLBACK(server)
     {
         WEECHAT_COMMAND_MIN_ARGS(3, "fakerecv");
         IRC_COMMAND_CHECK_SERVER("server fakerecv", 0, 1);
-        length = strlen (argv_eol[2]);
+        msg_no_quotes = weechat_string_remove_quotes (argv_eol[2], "\"");
+        length = strlen (msg_no_quotes);
         if (length > 0)
         {
             /* allocate length + 2 (CR-LF) + 1 (final '\0') */
             message = malloc (length + 2 + 1);
             if (message)
             {
-                strcpy (message, argv_eol[2]);
+                strcpy (message, msg_no_quotes);
                 strcat (message, "\r\n");
                 irc_server_msgq_add_buffer (ptr_server, message);
                 irc_server_msgq_flush ();
