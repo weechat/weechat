@@ -369,7 +369,7 @@ TEST_GROUP(IrcProtocolWithServer)
 
         snprintf (str_command, sizeof (str_command),
                   "/command -buffer irc.server." IRC_FAKE_SERVER " irc "
-                  "/server fakerecv %s",
+                  "/server fakerecv \"%s\"",
                   command);
         run_cmd_quiet (str_command);
 
