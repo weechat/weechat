@@ -2835,13 +2835,13 @@ TEST(IrcProtocolWithServer, 333)
 {
     SRV_INIT_JOIN;
 
-    /* not enough arguments */
+    /* not enough parameters */
     RECV(":server 333");
-    CHECK_ERROR_ARGS("333", 2, 5);
+    CHECK_ERROR_PARAMS("333", 0, 3);
     RECV(":server 333 alice");
-    CHECK_ERROR_ARGS("333", 3, 5);
+    CHECK_ERROR_PARAMS("333", 1, 3);
     RECV(":server 333 alice #test");
-    CHECK_ERROR_ARGS("333", 4, 5);
+    CHECK_ERROR_PARAMS("333", 2, 3);
 
     RECV(":server 333 alice #test nick!user@host");
     CHECK_NO_MSG;
