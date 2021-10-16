@@ -2648,11 +2648,11 @@ TEST(IrcProtocolWithServer, 324)
 
     POINTERS_EQUAL(NULL, ptr_server->channels->modes);
 
-    /* not enough arguments */
+    /* not enough parameters */
     RECV(":server 324");
-    CHECK_ERROR_ARGS("324", 2, 4);
+    CHECK_ERROR_PARAMS("324", 0, 2);
     RECV(":server 324 alice");
-    CHECK_ERROR_ARGS("324", 3, 4);
+    CHECK_ERROR_PARAMS("324", 1, 2);
 
     RECV(":server 324 alice #test +nt");
     CHECK_NO_MSG;

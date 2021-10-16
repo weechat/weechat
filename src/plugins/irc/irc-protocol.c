@@ -4293,29 +4293,29 @@ IRC_PROTOCOL_CALLBACK(323)
  * Callback for the IRC command "324": channel mode.
  *
  * Command looks like:
- *   :server 324 mynick #channel +nt
+ *   324 mynick #channel +nt
  */
 
 IRC_PROTOCOL_CALLBACK(324)
 {
-    const char *ptr_modes, *ptr_modes_args;
+    char *str_modes, *str_modes_args;
     struct t_irc_channel *ptr_channel;
 
-    IRC_PROTOCOL_MIN_ARGS(4);
+    IRC_PROTOCOL_MIN_PARAMS(2);
 
-    ptr_modes = (argc > 4) ?
-        ((argv_eol[4][0] == ':') ? argv_eol[4] + 1 : argv_eol[4]) : NULL;
-    ptr_modes_args = (argc > 5) ?
-        ((argv_eol[5][0] == ':') ? argv_eol[5] + 1 : argv_eol[5]) : NULL;
+    str_modes = (num_params > 2) ?
+        irc_protocol_string_params (params, 2, num_params - 1) : NULL;
+    str_modes_args = (num_params > 3) ?
+        irc_protocol_string_params (params, 3, num_params - 1) : NULL;
 
-    ptr_channel = irc_channel_search (server, argv[3]);
+    ptr_channel = irc_channel_search (server, params[1]);
     if (ptr_channel)
     {
-        irc_channel_set_modes (ptr_channel, ptr_modes);
-        if (argc > 4)
+        irc_channel_set_modes (ptr_channel, str_modes);
+        if (num_params > 2)
         {
             (void) irc_mode_channel_set (server, ptr_channel, host,
-                                         ptr_modes, ptr_modes_args);
+                                         str_modes, str_modes_args);
         }
     }
     if (!ptr_channel
@@ -4331,15 +4331,20 @@ IRC_PROTOCOL_CALLBACK(324)
             _("%sMode %s%s %s[%s%s%s]"),
             weechat_prefix ("network"),
             IRC_COLOR_CHAT_CHANNEL,
-            argv[3],
+            params[1],
             IRC_COLOR_CHAT_DELIMITERS,
             IRC_COLOR_RESET,
-            (ptr_modes) ? ptr_modes : "",
+            (str_modes) ? str_modes : "",
             IRC_COLOR_CHAT_DELIMITERS);
     }
 
     if (ptr_channel)
         weechat_hashtable_set (ptr_channel->join_msg_received, command, "1");
+
+    if (str_modes)
+        free (str_modes);
+    if (str_modes_args)
+        free (str_modes_args);
 
     return WEECHAT_RC_OK;
 }
