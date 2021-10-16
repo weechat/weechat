@@ -2456,15 +2456,15 @@ TEST(IrcProtocolWithServer, 312)
 {
     SRV_INIT;
 
-    /* not enough arguments */
+    /* not enough parameters */
     RECV(":server 312");
-    CHECK_ERROR_ARGS("312", 2, 6);
+    CHECK_ERROR_PARAMS("312", 0, 4);
     RECV(":server 312 alice");
-    CHECK_ERROR_ARGS("312", 3, 6);
+    CHECK_ERROR_PARAMS("312", 1, 4);
     RECV(":server 312 alice bob");
-    CHECK_ERROR_ARGS("312", 4, 6);
+    CHECK_ERROR_PARAMS("312", 2, 4);
     RECV(":server 312 alice bob server");
-    CHECK_ERROR_ARGS("312", 5, 6);
+    CHECK_ERROR_PARAMS("312", 3, 4);
 
     RECV(":server 312 alice bob server :https://example.com/");
     CHECK_SRV("-- [bob] server (https://example.com/)");
