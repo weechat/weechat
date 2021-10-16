@@ -4898,12 +4898,16 @@ IRC_PROTOCOL_CALLBACK(344)
  * Callback for the IRC command "345": end of channel reop.
  *
  * Command looks like:
- *   :server 345 mynick #channel :End of Channel Reop List
+ *   345 mynick #channel :End of Channel Reop List
  */
 
 IRC_PROTOCOL_CALLBACK(345)
 {
-    IRC_PROTOCOL_MIN_ARGS(5);
+    char *str_params;
+
+    IRC_PROTOCOL_MIN_PARAMS(3);
+
+    str_params = irc_protocol_string_params (params, 2, num_params - 1);
 
     weechat_printf_date_tags (
         irc_msgbuffer_get_target_buffer (server, NULL, command, "reop", NULL),
@@ -4912,9 +4916,12 @@ IRC_PROTOCOL_CALLBACK(345)
         "%s%s%s%s: %s",
         weechat_prefix ("network"),
         IRC_COLOR_CHAT_CHANNEL,
-        argv[3],
+        params[1],
         IRC_COLOR_RESET,
-        (argv_eol[4][0] == ':') ? argv_eol[4] + 1 : argv_eol[4]);
+        str_params);
+
+    if (str_params)
+        free (str_params);
 
     return WEECHAT_RC_OK;
 }
