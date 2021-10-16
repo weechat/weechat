@@ -33,9 +33,6 @@
                                  const char *host,                      \
                                  const char *command,                   \
                                  int ignored,                           \
-                                 int argc,                              \
-                                 char **argv,                           \
-                                 char **argv_eol,                       \
                                  const char **params,                   \
                                  int num_params)
 #define IRCB(__message, __decode_color, __keep_trailing_spaces,         \
@@ -44,31 +41,6 @@
       __decode_color,                                                   \
       __keep_trailing_spaces,                                           \
       &irc_protocol_cb_##__func_cb }
-
-#define IRC_PROTOCOL_MIN_ARGS(__min_args)                               \
-    (void) date;                                                        \
-    (void) irc_message;                                                 \
-    (void) tags;                                                        \
-    (void) nick;                                                        \
-    (void) address;                                                     \
-    (void) host;                                                        \
-    (void) command;                                                     \
-    (void) ignored;                                                     \
-    (void) argc;                                                        \
-    (void) argv;                                                        \
-    (void) argv_eol;                                                    \
-    (void) params;                                                      \
-    (void) num_params;                                                  \
-    if (argc < __min_args)                                              \
-    {                                                                   \
-        weechat_printf (server->buffer,                                 \
-                        _("%s%s: too few arguments received from IRC "  \
-                          "server for command \"%s\" (received: %d "    \
-                          "arguments, expected: at least %d)"),         \
-                        weechat_prefix ("error"), IRC_PLUGIN_NAME,      \
-                        command, argc, __min_args);                     \
-        return WEECHAT_RC_ERROR;                                        \
-    }
 
 #define IRC_PROTOCOL_MIN_PARAMS(__min_params)                           \
     (void) date;                                                        \
@@ -79,9 +51,6 @@
     (void) host;                                                        \
     (void) command;                                                     \
     (void) ignored;                                                     \
-    (void) argc;                                                        \
-    (void) argv;                                                        \
-    (void) argv_eol;                                                    \
     (void) params;                                                      \
     (void) num_params;                                                  \
     if (num_params < __min_params)                                      \
@@ -92,17 +61,6 @@
                           "at least %d)"),                              \
                         weechat_prefix ("error"), IRC_PLUGIN_NAME,      \
                         command, num_params, __min_params);             \
-        return WEECHAT_RC_ERROR;                                        \
-    }
-
-#define IRC_PROTOCOL_CHECK_PREFIX                                       \
-    if (argv[0][0] != ':')                                              \
-    {                                                                   \
-        weechat_printf (server->buffer,                                 \
-                        _("%s%s: command \"%s\" received without "      \
-                          "host"),                                      \
-                        weechat_prefix ("error"), IRC_PLUGIN_NAME,      \
-                        command);                                       \
         return WEECHAT_RC_ERROR;                                        \
     }
 
@@ -125,7 +83,6 @@ typedef int (t_irc_recv_func)(struct t_irc_server *server,
                               const char *nick, const char *address,
                               const char *host, const char *command,
                               int ignored,
-                              int argc, char **argv, char **argv_eol,
                               const char **params, int num_params);
 
 struct t_irc_protocol_msg

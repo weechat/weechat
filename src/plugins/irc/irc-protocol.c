@@ -3395,8 +3395,7 @@ IRC_PROTOCOL_CALLBACK(001)
 
     irc_protocol_cb_numeric (server, date, irc_message,
                              tags, nick, address, host, command,
-                             ignored, argc, argv, argv_eol,
-                             params, num_params);
+                             ignored, params, num_params);
 
     /* connection to IRC server is OK! */
     server->is_connected = 1;
@@ -3518,8 +3517,7 @@ IRC_PROTOCOL_CALLBACK(005)
 
     irc_protocol_cb_numeric (server, date, irc_message,
                              tags, nick, address, host, command,
-                             ignored, argc, argv, argv_eol,
-                             params, num_params);
+                             ignored, params, num_params);
 
     arg_last = (strstr (irc_message, " :")) ? num_params - 2 : num_params - 1;
 
@@ -6142,8 +6140,7 @@ IRC_PROTOCOL_CALLBACK(432)
 
     irc_protocol_cb_generic_error (server, date, irc_message,
                                    tags, nick, address, host, command,
-                                   ignored, argc, argv, argv_eol,
-                                   params, num_params);
+                                   ignored, params, num_params);
 
     if (!server->is_connected)
     {
@@ -6229,7 +6226,6 @@ IRC_PROTOCOL_CALLBACK(433)
         return irc_protocol_cb_generic_error (server, date, irc_message,
                                               tags, nick, address, host,
                                               command, ignored,
-                                              argc, argv, argv_eol,
                                               params, num_params);
     }
 
@@ -6250,8 +6246,7 @@ IRC_PROTOCOL_CALLBACK(437)
 
     irc_protocol_cb_generic_error (server, date, irc_message,
                                    tags, nick, address, host, command,
-                                   ignored, argc, argv, argv_eol,
-                                   params, num_params);
+                                   ignored, params, num_params);
 
     if (!server->is_connected)
     {
@@ -6357,8 +6352,7 @@ IRC_PROTOCOL_CALLBACK(470)
 
     irc_protocol_cb_generic_error (server, date, irc_message,
                                    tags, nick, address, host, command,
-                                   ignored, argc, argv, argv_eol,
-                                   params, num_params);
+                                   ignored, params, num_params);
 
     if ((num_params >= 3) && !irc_channel_search (server, params[1]))
     {
@@ -6883,8 +6877,7 @@ IRC_PROTOCOL_CALLBACK(901)
     {
         irc_protocol_cb_numeric (server, date, irc_message,
                                  tags, nick, address, host, command,
-                                 ignored, argc, argv, argv_eol,
-                                 params, num_params);
+                                 ignored, params, num_params);
     }
 
     return WEECHAT_RC_OK;
@@ -6907,8 +6900,7 @@ IRC_PROTOCOL_CALLBACK(sasl_end_ok)
 
     irc_protocol_cb_numeric (server, date, irc_message,
                              tags, nick, address, host, command,
-                             ignored, argc, argv, argv_eol,
-                             params, num_params);
+                             ignored, params, num_params);
 
     if (!server->is_connected)
         irc_server_sendf (server, 0, NULL, "CAP END");
@@ -6937,8 +6929,7 @@ IRC_PROTOCOL_CALLBACK(sasl_end_fail)
 
     irc_protocol_cb_numeric (server, date, irc_message,
                              tags, nick, address, host, command,
-                             ignored, argc, argv, argv_eol,
-                             params, num_params);
+                             ignored, params, num_params);
 
     sasl_fail = IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_SASL_FAIL);
     if (!server->is_connected
@@ -6971,16 +6962,15 @@ irc_protocol_recv_command (struct t_irc_server *server,
                            const char *msg_command,
                            const char *msg_channel)
 {
-    int i, cmd_found, return_code, argc, decode_color, keep_trailing_spaces;
-    int message_ignored, flags, num_params;
-    char *message_colors_decoded, *pos_space, *tags, **params;
+    int i, cmd_found, return_code, decode_color, keep_trailing_spaces;
+    int message_ignored, num_params;
+    char *message_colors_decoded, *msg_to_parse, *pos_space, *tags, **params;
     struct t_irc_channel *ptr_channel;
     t_irc_recv_func *cmd_recv_func;
     const char *cmd_name, *ptr_msg_after_tags;
     time_t date;
     const char *nick1, *address1, *host1;
     char *nick, *address, *address_color, *host, *host_no_color, *host_color;
-    char **argv, **argv_eol;
     struct t_hashtable *hash_tags;
 
     struct t_irc_protocol_msg irc_protocol_messages[] = {
@@ -7145,8 +7135,7 @@ irc_protocol_recv_command (struct t_irc_server *server,
         return;
 
     message_colors_decoded = NULL;
-    argv = NULL;
-    argv_eol = NULL;
+    msg_to_parse = NULL;
     date = 0;
     hash_tags = NULL;
 
@@ -7280,40 +7269,24 @@ irc_protocol_recv_command (struct t_irc_server *server,
         cmd_recv_func = irc_protocol_messages[cmd_found].recv_function;
     }
 
-    if (cmd_recv_func != NULL)
+    if ((cmd_recv_func != NULL) && ptr_msg_after_tags)
     {
-        if (ptr_msg_after_tags)
+        if (decode_color)
         {
-            if (decode_color)
-            {
-                message_colors_decoded = irc_color_decode (
-                    ptr_msg_after_tags,
-                    weechat_config_boolean (irc_config_network_colors_receive));
-            }
-            else
-            {
-                message_colors_decoded = strdup (ptr_msg_after_tags);
-            }
+            message_colors_decoded = irc_color_decode (
+                ptr_msg_after_tags,
+                weechat_config_boolean (irc_config_network_colors_receive));
         }
         else
         {
-            message_colors_decoded = NULL;
+            message_colors_decoded = strdup (ptr_msg_after_tags);
         }
-        argv = weechat_string_split (message_colors_decoded, " ", NULL,
-                                     WEECHAT_STRING_SPLIT_STRIP_LEFT
-                                     | WEECHAT_STRING_SPLIT_STRIP_RIGHT
-                                     | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
-                                     0, &argc);
-        flags = WEECHAT_STRING_SPLIT_STRIP_LEFT
-            | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS
-            | WEECHAT_STRING_SPLIT_KEEP_EOL;
-        if (!keep_trailing_spaces)
-            flags |= WEECHAT_STRING_SPLIT_STRIP_RIGHT;
-        argv_eol = weechat_string_split (message_colors_decoded, " ", NULL,
-                                         flags, 0, NULL);
+        msg_to_parse = (keep_trailing_spaces) ?
+            strdup (message_colors_decoded) :
+            weechat_string_strip (message_colors_decoded, 0, 1, " ");
 
         irc_message_parse (server,
-                           message_colors_decoded,
+                           msg_to_parse,
                            NULL,  /* tags */
                            NULL,  /* message_without_tags */
                            NULL,  /* nick */
@@ -7332,16 +7305,13 @@ irc_protocol_recv_command (struct t_irc_server *server,
 
         return_code = (int) (cmd_recv_func) (server,
                                              date,
-                                             message_colors_decoded,
+                                             msg_to_parse,
                                              hash_tags,
                                              nick,
                                              address_color,
                                              host_color,
                                              cmd_name,
                                              message_ignored,
-                                             argc,
-                                             argv,
-                                             argv_eol,
                                              (const char **)params,
                                              num_params);
 
@@ -7381,10 +7351,8 @@ end:
         free (host_color);
     if (message_colors_decoded)
         free (message_colors_decoded);
-    if (argv)
-        weechat_string_free_split (argv);
-    if (argv_eol)
-        weechat_string_free_split (argv_eol);
+    if (msg_to_parse)
+        free (msg_to_parse);
     if (hash_tags)
         weechat_hashtable_free (hash_tags);
 }

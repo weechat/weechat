@@ -97,11 +97,6 @@ extern char *irc_protocol_cap_to_enable (const char *capabilities,
         FAIL(string_dyn_free (msg, 0));                                 \
     }
 
-#define CHECK_ERROR_ARGS(__command, __args, __expected_args)            \
-    CHECK_SRV("=!= irc: too few arguments received from IRC server "    \
-              "for command \"" __command "\" (received: " #__args " "   \
-              "arguments, expected: at least " #__expected_args ")");
-
 #define CHECK_ERROR_PARAMS(__command, __params, __expected_params)      \
     CHECK_SRV("=!= irc: too few parameters received in command "        \
               "\"" __command "\" (received: " #__params ", "            \
