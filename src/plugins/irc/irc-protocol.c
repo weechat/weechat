@@ -6297,29 +6297,33 @@ IRC_PROTOCOL_CALLBACK(437)
  * Callback for the IRC command "438": not authorized to change nickname.
  *
  * Command looks like:
- *   :server 438 mynick newnick :Nick change too fast. Please wait 30 seconds.
+ *   438 mynick newnick :Nick change too fast. Please wait 30 seconds.
  */
 
 IRC_PROTOCOL_CALLBACK(438)
 {
+    char *str_params;
     struct t_gui_buffer *ptr_buffer;
 
-    IRC_PROTOCOL_MIN_ARGS(4);
+    IRC_PROTOCOL_MIN_PARAMS(2);
 
     ptr_buffer = irc_msgbuffer_get_target_buffer (server, NULL,
                                                   command, NULL, NULL);
 
-    if (argc >= 5)
+    if (num_params >= 3)
     {
+        str_params = irc_protocol_string_params (params, 2, num_params - 1);
         weechat_printf_date_tags (
             ptr_buffer,
             date,
             irc_protocol_tags (command, "irc_numeric", NULL, NULL),
             "%s%s (%s => %s)",
             weechat_prefix ("network"),
-            (argv_eol[4][0] == ':') ? argv_eol[4] + 1 : argv_eol[4],
-            argv[2],
-            argv[3]);
+            str_params,
+            params[0],
+            params[1]);
+        if (str_params)
+            free (str_params);
     }
     else
     {
@@ -6329,8 +6333,8 @@ IRC_PROTOCOL_CALLBACK(438)
             irc_protocol_tags (command, "irc_numeric", NULL, NULL),
             "%s%s %s",
             weechat_prefix ("network"),
-            argv[2],
-            argv[3]);
+            params[0],
+            params[1]);
     }
 
     return WEECHAT_RC_OK;

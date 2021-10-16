@@ -3774,11 +3774,11 @@ TEST(IrcProtocolWithServer, 438)
 {
     SRV_INIT;
 
-    /* not enough arguments */
+    /* not enough parameters */
     RECV(":server 438");
-    CHECK_ERROR_ARGS("438", 2, 4);
+    CHECK_ERROR_PARAMS("438", 0, 2);
     RECV(":server 438 alice");
-    CHECK_ERROR_ARGS("438", 3, 4);
+    CHECK_ERROR_PARAMS("438", 1, 2);
 
     RECV(":server 438 alice alice2");
     CHECK_SRV("-- alice alice2");
