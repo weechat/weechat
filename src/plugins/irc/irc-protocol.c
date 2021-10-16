@@ -5103,9 +5103,8 @@ IRC_PROTOCOL_CALLBACK(347)
 /*
  * Callback for the IRC command "348": channel exception list.
  *
- * Command looks like:
- *   :server 348 mynick #channel nick1!user1@host1 nick2!user2@host2 1205585109
- *   (nick2 is nick who set exception on nick1)
+ * Command looks like (nick2 is nick who set exception on nick1):
+ *   348 mynick #channel nick1!user1@host1 nick2!user2@host2 1205585109
  */
 
 IRC_PROTOCOL_CALLBACK(348)
@@ -5117,9 +5116,9 @@ IRC_PROTOCOL_CALLBACK(348)
     const char *nick_address;
     char str_number[64];
 
-    IRC_PROTOCOL_MIN_ARGS(5);
+    IRC_PROTOCOL_MIN_PARAMS(3);
 
-    ptr_channel = irc_channel_search (server, argv[3]);
+    ptr_channel = irc_channel_search (server, params[1]);
     ptr_buffer = (ptr_channel && ptr_channel->nicks) ?
         ptr_channel->buffer : server->buffer;
     ptr_modelist = irc_modelist_search (ptr_channel, 'e');
@@ -5143,16 +5142,16 @@ IRC_PROTOCOL_CALLBACK(348)
     else
         str_number[0] = '\0';
 
-    if (argc >= 6)
+    if (num_params >= 4)
     {
         nick_address = irc_protocol_nick_address (
-            server, 1, NULL, irc_message_get_nick_from_host (argv[5]),
-            irc_message_get_address_from_host (argv[5]));
-        if (argc >= 7)
+            server, 1, NULL, irc_message_get_nick_from_host (params[3]),
+            irc_message_get_address_from_host (params[3]));
+        if (num_params >= 5)
         {
-            datetime = (time_t)(atol ((argv[6][0] == ':') ? argv[6] + 1 : argv[6]));
+            datetime = (time_t)(atol (params[4]));
             if (ptr_modelist)
-                irc_modelist_item_new (ptr_modelist, argv[4], argv[5], datetime);
+                irc_modelist_item_new (ptr_modelist, params[2], params[3], datetime);
             weechat_printf_date_tags (
                 irc_msgbuffer_get_target_buffer (
                     server, NULL, command, "exceptionlist", ptr_buffer),
@@ -5163,12 +5162,12 @@ IRC_PROTOCOL_CALLBACK(348)
                 weechat_prefix ("network"),
                 IRC_COLOR_CHAT_DELIMITERS,
                 IRC_COLOR_CHAT_CHANNEL,
-                argv[3],
+                params[1],
                 IRC_COLOR_CHAT_DELIMITERS,
                 str_number,
                 IRC_COLOR_RESET,
                 IRC_COLOR_CHAT_HOST,
-                argv[4],
+                params[2],
                 IRC_COLOR_RESET,
                 (nick_address[0]) ? nick_address : "?",
                 weechat_util_get_time_string (&datetime));
@@ -5176,7 +5175,7 @@ IRC_PROTOCOL_CALLBACK(348)
         else
         {
             if (ptr_modelist)
-                irc_modelist_item_new (ptr_modelist, argv[4], argv[5], 0);
+                irc_modelist_item_new (ptr_modelist, params[2], params[3], 0);
             weechat_printf_date_tags (
                 irc_msgbuffer_get_target_buffer (
                     server, NULL, command, "exceptionlist", ptr_buffer),
@@ -5186,12 +5185,12 @@ IRC_PROTOCOL_CALLBACK(348)
                 weechat_prefix ("network"),
                 IRC_COLOR_CHAT_DELIMITERS,
                 IRC_COLOR_CHAT_CHANNEL,
-                argv[3],
+                params[1],
                 IRC_COLOR_CHAT_DELIMITERS,
                 str_number,
                 IRC_COLOR_RESET,
                 IRC_COLOR_CHAT_HOST,
-                argv[4],
+                params[2],
                 IRC_COLOR_RESET,
                 (nick_address[0]) ? nick_address : "?");
         }
@@ -5199,7 +5198,7 @@ IRC_PROTOCOL_CALLBACK(348)
     else
     {
         if (ptr_modelist)
-            irc_modelist_item_new (ptr_modelist, argv[4], NULL, 0);
+            irc_modelist_item_new (ptr_modelist, params[2], NULL, 0);
         weechat_printf_date_tags (
             irc_msgbuffer_get_target_buffer (
                 server, NULL, command, "exceptionlist", ptr_buffer),
@@ -5209,12 +5208,12 @@ IRC_PROTOCOL_CALLBACK(348)
             weechat_prefix ("network"),
             IRC_COLOR_CHAT_DELIMITERS,
             IRC_COLOR_CHAT_CHANNEL,
-            argv[3],
+            params[1],
             IRC_COLOR_CHAT_DELIMITERS,
             str_number,
             IRC_COLOR_RESET,
             IRC_COLOR_CHAT_HOST,
-            argv[4]);
+            params[2]);
     }
 
     return WEECHAT_RC_OK;

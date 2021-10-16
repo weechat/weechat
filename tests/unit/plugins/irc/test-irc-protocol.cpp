@@ -3039,13 +3039,13 @@ TEST(IrcProtocolWithServer, 348)
 {
     SRV_INIT_JOIN;
 
-    /* not enough arguments */
+    /* not enough parameters */
     RECV(":server 348");
-    CHECK_ERROR_ARGS("348", 2, 5);
+    CHECK_ERROR_PARAMS("348", 0, 3);
     RECV(":server 348 alice");
-    CHECK_ERROR_ARGS("348", 3, 5);
+    CHECK_ERROR_PARAMS("348", 1, 3);
     RECV(":server 348 alice #test");
-    CHECK_ERROR_ARGS("348", 4, 5);
+    CHECK_ERROR_PARAMS("348", 2, 3);
 
     RECV(":server 348 alice #test nick1!user1@host1");
     CHECK_CHAN("-- [#test] [1] exception nick1!user1@host1");
