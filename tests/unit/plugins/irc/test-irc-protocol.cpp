@@ -2973,13 +2973,13 @@ TEST(IrcProtocolWithServer, 346)
 {
     SRV_INIT_JOIN;
 
-    /* not enough arguments */
+    /* not enough parameters */
     RECV(":server 346");
-    CHECK_ERROR_ARGS("346", 2, 5);
+    CHECK_ERROR_PARAMS("346", 0, 3);
     RECV(":server 346 alice");
-    CHECK_ERROR_ARGS("346", 3, 5);
+    CHECK_ERROR_PARAMS("346", 1, 3);
     RECV(":server 346 alice #test");
-    CHECK_ERROR_ARGS("346", 4, 5);
+    CHECK_ERROR_PARAMS("346", 2, 3);
 
     RECV(":server 346 alice #test invitemask");
     CHECK_CHAN("-- [#test] [1] invitemask invited");
