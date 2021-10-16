@@ -4865,12 +4865,16 @@ IRC_PROTOCOL_CALLBACK(341)
  * Callback for the IRC command "344": channel reop.
  *
  * Command looks like:
- *   :server 344 mynick #channel nick!user@host
+ *   344 mynick #channel nick!user@host
  */
 
 IRC_PROTOCOL_CALLBACK(344)
 {
-    IRC_PROTOCOL_MIN_ARGS(5);
+    char *str_host;
+
+    IRC_PROTOCOL_MIN_PARAMS(3);
+
+    str_host = irc_protocol_string_params (params, 2, num_params - 1);
 
     weechat_printf_date_tags (
         irc_msgbuffer_get_target_buffer (server, NULL, command, "reop", NULL),
@@ -4879,10 +4883,13 @@ IRC_PROTOCOL_CALLBACK(344)
         _("%sChannel reop %s%s%s: %s%s"),
         weechat_prefix ("network"),
         IRC_COLOR_CHAT_CHANNEL,
-        argv[3],
+        params[1],
         IRC_COLOR_RESET,
         IRC_COLOR_CHAT_HOST,
-        (argv_eol[4][0] == ':') ? argv_eol[4] + 1 : argv_eol[4]);
+        str_host);
+
+    if (str_host)
+        free (str_host);
 
     return WEECHAT_RC_OK;
 }

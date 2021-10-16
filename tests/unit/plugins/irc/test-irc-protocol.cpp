@@ -2915,19 +2915,23 @@ TEST(IrcProtocolWithServer, 344)
 {
     SRV_INIT_JOIN;
 
-    /* not enough arguments */
+    /* not enough parameters */
     RECV(":server 344");
-    CHECK_ERROR_ARGS("344", 2, 5);
+    CHECK_ERROR_PARAMS("344", 0, 3);
     RECV(":server 344 alice");
-    CHECK_ERROR_ARGS("344", 3, 5);
+    CHECK_ERROR_PARAMS("344", 1, 3);
     RECV(":server 344 alice #test");
-    CHECK_ERROR_ARGS("344", 4, 5);
+    CHECK_ERROR_PARAMS("344", 2, 3);
 
     RECV(":server 344 alice #test nick!user@host");
+    CHECK_SRV("-- Channel reop #test: nick!user@host");
+    RECV(":server 344 alice #test :nick!user@host");
     CHECK_SRV("-- Channel reop #test: nick!user@host");
 
     /* channel not found */
     RECV(":server 344 alice #xyz nick!user@host");
+    CHECK_SRV("-- Channel reop #xyz: nick!user@host");
+    RECV(":server 344 alice #xyz :nick!user@host");
     CHECK_SRV("-- Channel reop #xyz: nick!user@host");
 }
 
