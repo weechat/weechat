@@ -4100,7 +4100,7 @@ IRC_PROTOCOL_CALLBACK(315)
  * Callback for the IRC command "317": whois, idle.
  *
  * Command looks like:
- *   :server 317 mynick nick 122877 1205327880 :seconds idle, signon time
+ *   317 mynick nick 122877 1205327880 :seconds idle, signon time
  */
 
 IRC_PROTOCOL_CALLBACK(317)
@@ -4109,17 +4109,17 @@ IRC_PROTOCOL_CALLBACK(317)
     time_t datetime;
     struct t_gui_buffer *ptr_buffer;
 
-    IRC_PROTOCOL_MIN_ARGS(6);
+    IRC_PROTOCOL_MIN_PARAMS(4);
 
-    idle_time = atoi (argv[4]);
+    idle_time = atoi (params[2]);
     day = idle_time / (60 * 60 * 24);
     hour = (idle_time % (60 * 60 * 24)) / (60 * 60);
     min = ((idle_time % (60 * 60 * 24)) % (60 * 60)) / 60;
     sec = ((idle_time % (60 * 60 * 24)) % (60 * 60)) % 60;
 
-    datetime = (time_t)(atol (argv[5]));
+    datetime = (time_t)(atol (params[3]));
 
-    ptr_buffer = irc_msgbuffer_get_target_buffer (server, argv[3],
+    ptr_buffer = irc_msgbuffer_get_target_buffer (server, params[1],
                                                   command, "whois", NULL);
 
     if (day > 0)
@@ -4132,8 +4132,8 @@ IRC_PROTOCOL_CALLBACK(317)
               "%s%s, signon at: %s%s"),
             weechat_prefix ("network"),
             IRC_COLOR_CHAT_DELIMITERS,
-            irc_nick_color_for_msg (server, 1, NULL, argv[3]),
-            argv[3],
+            irc_nick_color_for_msg (server, 1, NULL, params[1]),
+            params[1],
             IRC_COLOR_CHAT_DELIMITERS,
             IRC_COLOR_RESET,
             IRC_COLOR_CHAT_CHANNEL,
@@ -4165,8 +4165,8 @@ IRC_PROTOCOL_CALLBACK(317)
               "signon at: %s%s"),
             weechat_prefix ("network"),
             IRC_COLOR_CHAT_DELIMITERS,
-            irc_nick_color_for_msg (server, 1, NULL, argv[3]),
-            argv[3],
+            irc_nick_color_for_msg (server, 1, NULL, params[1]),
+            params[1],
             IRC_COLOR_CHAT_DELIMITERS,
             IRC_COLOR_RESET,
             IRC_COLOR_CHAT_CHANNEL,

@@ -2530,15 +2530,15 @@ TEST(IrcProtocolWithServer, 317)
 
     SRV_INIT;
 
-    /* not enough arguments */
+    /* not enough parameters */
     RECV(":server 317");
-    CHECK_ERROR_ARGS("317", 2, 6);
+    CHECK_ERROR_PARAMS("317", 0, 4);
     RECV(":server 317 alice");
-    CHECK_ERROR_ARGS("317", 3, 6);
+    CHECK_ERROR_PARAMS("317", 1, 4);
     RECV(":server 317 alice bob");
-    CHECK_ERROR_ARGS("317", 4, 6);
+    CHECK_ERROR_PARAMS("317", 2, 4);
     RECV(":server 317 alice bob 122877");
-    CHECK_ERROR_ARGS("317", 5, 6);
+    CHECK_ERROR_PARAMS("317", 3, 4);
 
     /* signon at 03/12/2008 @ 1:18pm (UTC) */
     RECV(":server 317 alice bob 122877 1205327880");
