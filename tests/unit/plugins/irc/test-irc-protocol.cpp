@@ -1111,8 +1111,8 @@ TEST(IrcProtocolWithServer, kick)
     CHECK_CHAN("--> bob (user@host) has joined #test");
 
     /* with kick a reason */
-    RECV(":alice!user@host KICK #test bob :no spam here!");
-    CHECK_CHAN("<-- alice has kicked bob (no spam here!)");
+    RECV(":alice!user@host KICK #test bob :no spam here! ");
+    CHECK_CHAN("<-- alice has kicked bob (no spam here! )");
     STRCMP_EQUAL("alice", ptr_channel->nicks->name);
     POINTERS_EQUAL(NULL, ptr_channel->nicks->next_nick);
 
@@ -1120,8 +1120,8 @@ TEST(IrcProtocolWithServer, kick)
     CHECK_CHAN("--> bob (user@host) has joined #test");
 
     /* kick of self nick */
-    RECV(":bob!user@host KICK #test alice :no spam here!");
-    CHECK_CHAN("<-- bob has kicked alice (no spam here!)");
+    RECV(":bob!user@host KICK #test alice :no spam here! ");
+    CHECK_CHAN("<-- bob has kicked alice (no spam here! )");
     POINTERS_EQUAL(NULL, ptr_channel->nicks);
 }
 
@@ -1165,8 +1165,8 @@ TEST(IrcProtocolWithServer, kill)
     CHECK_CHAN("--> bob (user@host) has joined #test");
 
     /* kill with a reason */
-    RECV(":bob!user@host KILL alice :killed by admin");
-    CHECK_CHAN("<-- You were killed by bob (killed by admin)");
+    RECV(":bob!user@host KILL alice :killed by admin ");
+    CHECK_CHAN("<-- You were killed by bob (killed by admin )");
     POINTERS_EQUAL(NULL, ptr_channel->nicks);
 }
 
@@ -1376,50 +1376,50 @@ TEST(IrcProtocolWithServer, notice)
     CHECK_ERROR_PARSE("notice", ":bob!user@host NOTICE alice");
 
     /* notice from server */
-    RECV("NOTICE AUTH :*** Looking up your hostname...");
-    CHECK_SRV("-- *** Looking up your hostname...");
-    RECV(":server.address NOTICE AUTH :*** Looking up your hostname...");
-    CHECK_SRV("-- server.address: *** Looking up your hostname...");
-    RECV(":server.address NOTICE * :*** Looking up your hostname...");
-    CHECK_SRV("-- server.address: *** Looking up your hostname...");
+    RECV("NOTICE AUTH :*** Looking up your hostname... ");
+    CHECK_SRV("-- *** Looking up your hostname... ");
+    RECV(":server.address NOTICE AUTH :*** Looking up your hostname... ");
+    CHECK_SRV("-- server.address: *** Looking up your hostname... ");
+    RECV(":server.address NOTICE * :*** Looking up your hostname... ");
+    CHECK_SRV("-- server.address: *** Looking up your hostname... ");
 
     /* notice to channel/user */
-    RECV(":server.address NOTICE #test :a notice");
-    CHECK_CHAN("-- Notice(server.address): a notice");
-    RECV(":server.address NOTICE alice :a notice");
-    CHECK_SRV("-- server.address: a notice");
-    RECV(":bob!user@host NOTICE #test :a notice");
-    CHECK_CHAN("-- Notice(bob): a notice");
-    RECV(":bob!user@host NOTICE alice :a notice");
-    CHECK_SRV("-- bob (user@host): a notice");
+    RECV(":server.address NOTICE #test :a notice ");
+    CHECK_CHAN("-- Notice(server.address): a notice ");
+    RECV(":server.address NOTICE alice :a notice ");
+    CHECK_SRV("-- server.address: a notice ");
+    RECV(":bob!user@host NOTICE #test :a notice ");
+    CHECK_CHAN("-- Notice(bob): a notice ");
+    RECV(":bob!user@host NOTICE alice :a notice ");
+    CHECK_SRV("-- bob (user@host): a notice ");
 
     /* notice to ops of channel */
-    RECV(":server.address NOTICE @#test :a notice");
-    CHECK_CHAN("-- Notice:@(server.address): a notice");
-    RECV(":bob!user@host NOTICE @#test :a notice");
-    CHECK_CHAN("-- Notice:@(bob): a notice");
+    RECV(":server.address NOTICE @#test :a notice ");
+    CHECK_CHAN("-- Notice:@(server.address): a notice ");
+    RECV(":bob!user@host NOTICE @#test :a notice ");
+    CHECK_CHAN("-- Notice:@(bob): a notice ");
 
     /* notice from self nick (case of bouncer) */
-    RECV(":alice!user@host NOTICE alice :a notice");
-    CHECK_SRV("-- Notice -> alice: a notice");
+    RECV(":alice!user@host NOTICE alice :a notice ");
+    CHECK_SRV("-- Notice -> alice: a notice ");
 
     /* notice with channel name at beginning */
-    RECV(":server.address NOTICE alice :[#test] a notice");
-    CHECK_CHAN("-- PvNotice(server.address): a notice");
-    RECV(":server.address NOTICE alice :(#test) a notice");
-    CHECK_CHAN("-- PvNotice(server.address): a notice");
-    RECV(":server.address NOTICE alice :{#test} a notice");
-    CHECK_CHAN("-- PvNotice(server.address): a notice");
-    RECV(":server.address NOTICE alice :<#test> a notice");
-    CHECK_CHAN("-- PvNotice(server.address): a notice");
-    RECV(":bob!user@host NOTICE alice :[#test] a notice");
-    CHECK_CHAN("-- PvNotice(bob): a notice");
-    RECV(":bob!user@host NOTICE alice :(#test) a notice");
-    CHECK_CHAN("-- PvNotice(bob): a notice");
-    RECV(":bob!user@host NOTICE alice :{#test} a notice");
-    CHECK_CHAN("-- PvNotice(bob): a notice");
-    RECV(":bob!user@host NOTICE alice :<#test> a notice");
-    CHECK_CHAN("-- PvNotice(bob): a notice");
+    RECV(":server.address NOTICE alice :[#test] a notice ");
+    CHECK_CHAN("-- PvNotice(server.address): a notice ");
+    RECV(":server.address NOTICE alice :(#test) a notice ");
+    CHECK_CHAN("-- PvNotice(server.address): a notice ");
+    RECV(":server.address NOTICE alice :{#test} a notice ");
+    CHECK_CHAN("-- PvNotice(server.address): a notice ");
+    RECV(":server.address NOTICE alice :<#test> a notice ");
+    CHECK_CHAN("-- PvNotice(server.address): a notice ");
+    RECV(":bob!user@host NOTICE alice :[#test] a notice ");
+    CHECK_CHAN("-- PvNotice(bob): a notice ");
+    RECV(":bob!user@host NOTICE alice :(#test) a notice ");
+    CHECK_CHAN("-- PvNotice(bob): a notice ");
+    RECV(":bob!user@host NOTICE alice :{#test} a notice ");
+    CHECK_CHAN("-- PvNotice(bob): a notice ");
+    RECV(":bob!user@host NOTICE alice :<#test> a notice ");
+    CHECK_CHAN("-- PvNotice(bob): a notice ");
 
     /* broken CTCP to channel */
     RECV(":bob!user@host NOTICE #test :\01");
@@ -1522,8 +1522,8 @@ TEST(IrcProtocolWithServer, part)
 
     RECV(":alice!user@host JOIN #test");
 
-    RECV(":alice!user@host PART #test :part message");
-    CHECK_CHAN("<-- alice (user@host) has left #test (part message)");
+    RECV(":alice!user@host PART #test :part message ");
+    CHECK_CHAN("<-- alice (user@host) has left #test (part message )");
     STRCMP_EQUAL("#test", ptr_server->channels->name);
     POINTERS_EQUAL(NULL, ptr_server->channels->nicks);
     LONGS_EQUAL(1, ptr_server->channels->part);
@@ -1534,8 +1534,8 @@ TEST(IrcProtocolWithServer, part)
     CHECK_CHAN("--> bob (user@host) has joined #test");
 
     /* part from another user */
-    RECV(":bob!user@host PART #test :part message");
-    CHECK_CHAN("<-- bob (user@host) has left #test (part message)");
+    RECV(":bob!user@host PART #test :part message ");
+    CHECK_CHAN("<-- bob (user@host) has left #test (part message )");
     STRCMP_EQUAL("#test", ptr_server->channels->name);
     CHECK(ptr_server->channels->nicks == ptr_server->channels->last_nick);
     LONGS_EQUAL(0, ptr_server->channels->part);
@@ -1603,26 +1603,26 @@ TEST(IrcProtocolWithServer, privmsg)
     CHECK_ERROR_NICK("privmsg");
 
     /* message to channel/user */
-    RECV(":bob!user@host PRIVMSG #test :this is the message");
-    CHECK_CHAN("bob this is the message");
-    RECV(":bob!user@host PRIVMSG alice :this is the message");
-    CHECK_PV("bob", "bob this is the message");
+    RECV(":bob!user@host PRIVMSG #test :this is the message ");
+    CHECK_CHAN("bob this is the message ");
+    RECV(":bob!user@host PRIVMSG alice :this is the message ");
+    CHECK_PV("bob", "bob this is the message ");
 
     /* message with tags to channel/user */
     RECV("@tag1=value1;tag2=value2 :bob!user@host PRIVMSG #test "
-         ":this is the message");
-    CHECK_CHAN("bob this is the message");
+         ":this is the message ");
+    CHECK_CHAN("bob this is the message ");
     RECV("@tag1=value1;tag2=value2 :bob!user@host PRIVMSG alice "
-         ":this is the message");
-    CHECK_PV("bob", "bob this is the message");
+         ":this is the message ");
+    CHECK_PV("bob", "bob this is the message ");
 
     /* message to ops of channel */
-    RECV(":bob!user@host PRIVMSG @#test :this is the message");
-    CHECK_CHAN("-- Msg:@(bob): this is the message");
+    RECV(":bob!user@host PRIVMSG @#test :this is the message ");
+    CHECK_CHAN("-- Msg:@(bob): this is the message ");
 
     /* message from self nick (case of bouncer) */
-    RECV(":alice!user@host PRIVMSG alice :this is the message");
-    CHECK_PV("alice", "alice this is the message");
+    RECV(":alice!user@host PRIVMSG alice :this is the message ");
+    CHECK_PV("alice", "alice this is the message ");
 
     /* broken CTCP to channel */
     RECV(":bob!user@host PRIVMSG #test :\01");
@@ -1762,8 +1762,8 @@ TEST(IrcProtocolWithServer, quit)
     STRCMP_EQUAL("bob", ptr_channel->last_nick->name);
 
     /* with quit message */
-    RECV(":bob!user@host QUIT :quit message");
-    CHECK_CHAN("<-- bob (user@host) has quit (quit message)");
+    RECV(":bob!user@host QUIT :quit message ");
+    CHECK_CHAN("<-- bob (user@host) has quit (quit message )");
     LONGS_EQUAL(1, ptr_channel->nicks_count);
     STRCMP_EQUAL("alice", ptr_channel->nicks->name);
     POINTERS_EQUAL(NULL, ptr_channel->nicks->next_nick);
@@ -1795,13 +1795,13 @@ TEST(IrcProtocolWithServer, setname_without_setname_cap)
     POINTERS_EQUAL(NULL, ptr_nick->realname);
 
     /* real name of "bob" has changed */
-    RECV(":bob!user@host SETNAME :new bob realname");
-    CHECK_SRV("-- Real name of bob has been set to \"new bob realname\"");
+    RECV(":bob!user@host SETNAME :new bob realname ");
+    CHECK_SRV("-- Real name of bob has been set to \"new bob realname \"");
     POINTERS_EQUAL(NULL, ptr_nick->realname);
 
     /* self real name has changed */
-    RECV(":alice!user@host SETNAME :new alice realname");
-    CHECK_SRV("-- Your real name has been set to \"new alice realname\"");
+    RECV(":alice!user@host SETNAME :new alice realname ");
+    CHECK_SRV("-- Your real name has been set to \"new alice realname \"");
     POINTERS_EQUAL(NULL, ptr_nick->realname);
 }
 
@@ -1855,9 +1855,9 @@ TEST(IrcProtocolWithServer, tagmsg)
     CHECK_NO_MSG;
 
     /* with tags */
-    RECV("@tag1=123;tag2=456 :bob!user@host TAGMSG #test");
+    RECV("@tag1=123;tag2=456 :bob!user@host TAGMSG #test ");
     CHECK_NO_MSG;
-    RECV("@tag1=123;tag2=456 :bob!user@host TAGMSG :#test");
+    RECV("@tag1=123;tag2=456 :bob!user@host TAGMSG :#test ");
     CHECK_NO_MSG;
 
     /* check typing status */
@@ -1919,20 +1919,20 @@ TEST(IrcProtocolWithServer, topic)
     POINTERS_EQUAL(NULL, ptr_channel->topic);
 
     /* new topic */
-    RECV(":alice!user@host TOPIC #test :new topic");
-    CHECK_CHAN("-- alice has changed topic for #test to \"new topic\"");
-    STRCMP_EQUAL("new topic", ptr_channel->topic);
+    RECV(":alice!user@host TOPIC #test :new topic ");
+    CHECK_CHAN("-- alice has changed topic for #test to \"new topic \"");
+    STRCMP_EQUAL("new topic ", ptr_channel->topic);
 
     /* another new topic */
-    RECV(":alice!user@host TOPIC #test :another new topic");
-    CHECK_CHAN("-- alice has changed topic for #test from \"new topic\" to "
-               "\"another new topic\"");
-    STRCMP_EQUAL("another new topic", ptr_channel->topic);
+    RECV(":alice!user@host TOPIC #test :another new topic ");
+    CHECK_CHAN("-- alice has changed topic for #test from \"new topic \" to "
+               "\"another new topic \"");
+    STRCMP_EQUAL("another new topic ", ptr_channel->topic);
 
     /* empty topic */
     RECV(":alice!user@host TOPIC #test");
     CHECK_CHAN("-- alice has unset topic for #test (old topic: "
-               "\"another new topic\")");
+               "\"another new topic \")");
     POINTERS_EQUAL(NULL, ptr_channel->topic);
 }
 
@@ -1949,11 +1949,11 @@ TEST(IrcProtocolWithServer, wallops)
     RECV(":alice!user@host WALLOPS");
     CHECK_ERROR_PARAMS("wallops", 0, 1);
 
-    RECV(":alice!user@host WALLOPS message");
-    CHECK_SRV("-- Wallops from alice (user@host): message");
+    RECV(":alice!user@host WALLOPS message ");
+    CHECK_SRV("-- Wallops from alice (user@host): message ");
 
-    RECV(":alice!user@host WALLOPS :message from admin");
-    CHECK_SRV("-- Wallops from alice (user@host): message from admin");
+    RECV(":alice!user@host WALLOPS :message from admin ");
+    CHECK_SRV("-- Wallops from alice (user@host): message from admin ");
 }
 
 /*
@@ -2376,9 +2376,9 @@ TEST(IrcProtocolWithServer, 301)
     CHECK_NO_MSG;
     POINTERS_EQUAL(NULL, ptr_server->channels->away_message);
 
-    RECV(":server 301 alice bob :I am away");
-    CHECK_PV("bob", "-- [bob] is away: I am away");
-    STRCMP_EQUAL("I am away", ptr_server->channels->away_message);
+    RECV(":server 301 alice bob :I am away ");
+    CHECK_PV("bob", "-- [bob] is away: I am away ");
+    STRCMP_EQUAL("I am away ", ptr_server->channels->away_message);
 }
 
 /*
@@ -2617,20 +2617,20 @@ TEST(IrcProtocolWithServer, 322)
 
     RECV(":server 322 alice #test 3");
     CHECK_SRV("-- #test(3)");
-    RECV(":server 322 alice #test 3 :topic of channel");
-    CHECK_SRV("-- #test(3): topic of channel");
+    RECV(":server 322 alice #test 3 :topic of channel ");
+    CHECK_SRV("-- #test(3): topic of channel ");
 
     run_cmd_quiet ("/list -server " IRC_FAKE_SERVER " -re #test.*");
-    CHECK_SRV("-- #test(3): topic of channel");
+    CHECK_SRV("-- #test(3): topic of channel ");
 
     RECV(":server 322 alice #test 3");
     CHECK_SRV("-- #test(3)");
-    RECV(":server 322 alice #test 3 :topic of channel");
-    CHECK_SRV("-- #test(3): topic of channel");
+    RECV(":server 322 alice #test 3 :topic of channel ");
+    CHECK_SRV("-- #test(3): topic of channel ");
 
     RECV(":server 322 alice #xyz 3");
     CHECK_NO_MSG;
-    RECV(":server 322 alice #xyz 3 :topic of channel");
+    RECV(":server 322 alice #xyz 3 :topic of channel ");
     CHECK_NO_MSG;
 }
 
@@ -2839,9 +2839,9 @@ TEST(IrcProtocolWithServer, 332)
     RECV(":server 332 alice #test");
     CHECK_CHAN("-- Topic for #test is \"\"");
 
-    RECV(":server 332 alice #test :the new topic");
-    CHECK_CHAN("-- Topic for #test is \"the new topic\"");
-    STRCMP_EQUAL("the new topic", ptr_server->channels->topic);
+    RECV(":server 332 alice #test :the new topic ");
+    CHECK_CHAN("-- Topic for #test is \"the new topic \"");
+    STRCMP_EQUAL("the new topic ", ptr_server->channels->topic);
 }
 
 /*
