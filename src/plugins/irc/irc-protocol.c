@@ -6132,7 +6132,7 @@ IRC_PROTOCOL_CALLBACK(368)
  * Callback for the IRC command "432": erroneous nickname.
  *
  * Command looks like:
- *   :server 432 * mynick :Erroneous Nickname
+ *   432 * mynick :Erroneous Nickname
  */
 
 IRC_PROTOCOL_CALLBACK(432)
@@ -6184,7 +6184,7 @@ IRC_PROTOCOL_CALLBACK(432)
  * Callback for the IRC command "433": nickname already in use.
  *
  * Command looks like:
- *   :server 433 * mynick :Nickname is already in use.
+ *   433 * mynick :Nickname is already in use.
  */
 
 IRC_PROTOCOL_CALLBACK(433)
