@@ -2506,13 +2506,13 @@ TEST(IrcProtocolWithServer, 315)
 {
     SRV_INIT_JOIN;
 
-    /* not enough arguments */
+    /* not enough parameters */
     RECV(":server 315");
-    CHECK_ERROR_ARGS("315", 2, 5);
+    CHECK_ERROR_PARAMS("315", 0, 3);
     RECV(":server 315 alice");
-    CHECK_ERROR_ARGS("315", 3, 5);
+    CHECK_ERROR_PARAMS("315", 1, 3);
     RECV(":server 315 alice #test");
-    CHECK_ERROR_ARGS("315", 4, 5);
+    CHECK_ERROR_PARAMS("315", 2, 3);
 
     RECV(":server 315 alice #test End of /WHO list.");
     CHECK_SRV("-- [#test] End of /WHO list.");

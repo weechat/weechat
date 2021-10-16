@@ -4058,22 +4058,24 @@ IRC_PROTOCOL_CALLBACK(314)
  * Callback for the IRC command "315": end of /who.
  *
  * Command looks like:
- *   :server 315 mynick #channel :End of /WHO list.
+ *   315 mynick #channel :End of /WHO list.
  */
 
 IRC_PROTOCOL_CALLBACK(315)
 {
+    char *str_params;
     struct t_irc_channel *ptr_channel;
 
-    IRC_PROTOCOL_MIN_ARGS(5);
+    IRC_PROTOCOL_MIN_PARAMS(3);
 
-    ptr_channel = irc_channel_search (server, argv[3]);
+    ptr_channel = irc_channel_search (server, params[1]);
     if (ptr_channel && (ptr_channel->checking_whox > 0))
     {
         ptr_channel->checking_whox--;
     }
     else
     {
+        str_params = irc_protocol_string_params (params, 2, num_params - 1);
         weechat_printf_date_tags (
             irc_msgbuffer_get_target_buffer (
                 server, NULL, command, "who", NULL),
@@ -4083,10 +4085,12 @@ IRC_PROTOCOL_CALLBACK(315)
             weechat_prefix ("network"),
             IRC_COLOR_CHAT_DELIMITERS,
             IRC_COLOR_CHAT_CHANNEL,
-            argv[3],
+            params[1],
             IRC_COLOR_CHAT_DELIMITERS,
             IRC_COLOR_RESET,
-            (argv_eol[4][0] == ':') ? argv_eol[4] + 1 : argv_eol[4]);
+            str_params);
+        if (str_params)
+            free (str_params);
     }
 
     return WEECHAT_RC_OK;
