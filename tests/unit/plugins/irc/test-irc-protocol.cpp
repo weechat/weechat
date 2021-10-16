@@ -3267,15 +3267,17 @@ TEST(IrcProtocolWithServer, 353)
     STRCMP_EQUAL("bob", ptr_channel->nicks->next_nick->name);
     POINTERS_EQUAL(NULL, ptr_channel->nicks->next_nick->next_nick);
 
-    /* not enough arguments */
+    /* not enough parameters */
     RECV(":server 353");
-    CHECK_ERROR_ARGS("353", 2, 5);
+    CHECK_ERROR_PARAMS("353", 0, 3);
     RECV(":server 353 alice");
-    CHECK_ERROR_ARGS("353", 3, 5);
+    CHECK_ERROR_PARAMS("353", 1, 3);
     RECV(":server 353 alice #test");
-    CHECK_ERROR_ARGS("353", 4, 5);
+    CHECK_ERROR_PARAMS("353", 2, 3);
     RECV(":server 353 alice =");
-    CHECK_ERROR_ARGS("353", 4, 5);
+    CHECK_ERROR_PARAMS("353", 2, 3);
+    RECV(":server 353 alice = #test");
+    CHECK_ERROR_PARSE("353", ":server 353 alice = #test");
 
     RECV(":server 353 alice #test :alice");
     CHECK_NO_MSG;

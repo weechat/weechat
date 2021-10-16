@@ -5441,63 +5441,62 @@ IRC_PROTOCOL_CALLBACK(352)
  * Callback for the IRC command "353": list of users on a channel.
  *
  * Command looks like:
- *   :server 353 mynick = #channel :mynick nick1 @nick2 +nick3
+ *   353 mynick #channel :mynick nick1 @nick2 +nick3
+ *   353 mynick = #channel :mynick nick1 @nick2 +nick3
  */
 
 IRC_PROTOCOL_CALLBACK(353)
 {
-    char *pos_channel, *pos_nick, *pos_nick_orig, *pos_host, *nickname;
-    char *prefixes, *str_nicks, *color;
-    int args, i, length;
+    char *str_params, **str_nicks, **nicks, *nickname;
+    const char *pos_channel, *pos_nick, *pos_host;
+    char *prefixes, *color;
+    int i, num_nicks;
     struct t_irc_channel *ptr_channel;
 
-    IRC_PROTOCOL_MIN_ARGS(5);
+    IRC_PROTOCOL_MIN_PARAMS(3);
 
-    if (irc_channel_is_channel (server, argv[3]))
+    if (irc_channel_is_channel (server, params[1]))
     {
-        pos_channel = argv[3];
-        args = 4;
+        pos_channel = params[1];
+        str_params = irc_protocol_string_params (params, 2, num_params - 1);
     }
     else
     {
-        pos_channel = argv[4];
-        args = 5;
+        if (num_params < 4)
+            return WEECHAT_RC_ERROR;
+        pos_channel = params[2];
+        str_params = irc_protocol_string_params (params, 3, num_params - 1);
     }
 
-    IRC_PROTOCOL_MIN_ARGS(args + 1);
-
     ptr_channel = irc_channel_search (server, pos_channel);
-    str_nicks = NULL;
+
+    nicks = weechat_string_split (
+        str_params,
+        " ",
+        NULL,
+        WEECHAT_STRING_SPLIT_STRIP_LEFT
+        | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+        | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+        0,
+        &num_nicks);
 
     /*
      * for a channel without buffer, prepare a string that will be built
-     * with nicks and colors (argc - args is the number of nicks)
+     * with nicks and colors
      */
-    if (!ptr_channel)
-    {
-        /*
-         * prefix color (16) + nick color (16) + reset color (16) = 48 bytes
-         * added for each nick
-         */
-        length = strlen (argv_eol[args]) + ((argc - args) * (16 + 16 + 16)) + 1;
-        str_nicks = malloc (length);
-        if (str_nicks)
-            str_nicks[0] = '\0';
-    }
+    str_nicks = (ptr_channel) ? NULL : weechat_string_dyn_alloc (1024);
 
-    for (i = args; i < argc; i++)
+    for (i = 0; i < num_nicks; i++)
     {
-        pos_nick = (argv[i][0] == ':') ? argv[i] + 1 : argv[i];
-        pos_nick_orig = pos_nick;
-
         /* skip and save prefix(es) */
+        pos_nick = nicks[i];
         while (pos_nick[0]
                && (irc_server_get_prefix_char_index (server, pos_nick[0]) >= 0))
         {
             pos_nick++;
         }
-        prefixes = (pos_nick > pos_nick_orig) ?
-            weechat_strndup (pos_nick_orig, pos_nick - pos_nick_orig) : NULL;
+        prefixes = (pos_nick > nicks[i]) ?
+            weechat_strndup (nicks[i], pos_nick - nicks[i]) : NULL;
 
         /* extract nick from host */
         pos_host = strchr (pos_nick, '!');
@@ -5507,7 +5506,9 @@ IRC_PROTOCOL_CALLBACK(353)
             pos_host++;
         }
         else
+        {
             nickname = strdup (pos_nick);
+        }
 
         /* add or update nick on channel */
         if (nickname)
@@ -5526,34 +5527,42 @@ IRC_PROTOCOL_CALLBACK(353)
             }
             else if (!ptr_channel && str_nicks)
             {
-                if (str_nicks[0])
+                if (*str_nicks[0])
                 {
-                    strcat (str_nicks, IRC_COLOR_RESET);
-                    strcat (str_nicks, " ");
+                    weechat_string_dyn_concat (str_nicks, IRC_COLOR_RESET, -1);
+                    weechat_string_dyn_concat (str_nicks, " ", -1);
                 }
                 if (prefixes)
                 {
-                    strcat (str_nicks,
-                            weechat_color (
-                                irc_nick_get_prefix_color_name (server,
-                                                                prefixes[0])));
-                    strcat (str_nicks, prefixes);
+                    weechat_string_dyn_concat (
+                        str_nicks,
+                        weechat_color (
+                            irc_nick_get_prefix_color_name (server,
+                                                            prefixes[0])),
+                        -1);
+                    weechat_string_dyn_concat (str_nicks, prefixes, -1);
                 }
                 if (weechat_config_boolean (irc_config_look_color_nicks_in_names))
                 {
                     if (irc_server_strcasecmp (server, nickname, server->nick) == 0)
-                        strcat (str_nicks, IRC_COLOR_CHAT_NICK_SELF);
+                    {
+                        weechat_string_dyn_concat (str_nicks,
+                                                   IRC_COLOR_CHAT_NICK_SELF,
+                                                   -1);
+                    }
                     else
                     {
                         color = irc_nick_find_color (nickname);
-                        strcat (str_nicks, color);
+                        weechat_string_dyn_concat (str_nicks, color, -1);
                         if (color)
                             free (color);
                     }
                 }
                 else
-                    strcat (str_nicks, IRC_COLOR_RESET);
-                strcat (str_nicks, nickname);
+                {
+                    weechat_string_dyn_concat (str_nicks, IRC_COLOR_RESET, -1);
+                }
+                weechat_string_dyn_concat (str_nicks, nickname, -1);
             }
             free (nickname);
         }
@@ -5575,12 +5584,14 @@ IRC_PROTOCOL_CALLBACK(353)
             IRC_COLOR_RESET,
             IRC_COLOR_CHAT_DELIMITERS,
             IRC_COLOR_RESET,
-            (str_nicks) ? str_nicks : "",
+            (str_nicks) ? *str_nicks : "",
             IRC_COLOR_CHAT_DELIMITERS);
     }
 
+    if (str_params)
+        free (str_params);
     if (str_nicks)
-        free (str_nicks);
+        weechat_string_dyn_free (str_nicks, 1);
 
     return WEECHAT_RC_OK;
 }
