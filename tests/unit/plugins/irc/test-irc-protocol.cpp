@@ -3573,13 +3573,13 @@ TEST(IrcProtocolWithServer, 367)
 {
     SRV_INIT_JOIN;
 
-    /* not enough arguments */
+    /* not enough parameters */
     RECV(":server 367");
-    CHECK_ERROR_ARGS("367", 2, 5);
+    CHECK_ERROR_PARAMS("367", 0, 3);
     RECV(":server 367 alice");
-    CHECK_ERROR_ARGS("367", 3, 5);
+    CHECK_ERROR_PARAMS("367", 1, 3);
     RECV(":server 367 alice #test");
-    CHECK_ERROR_ARGS("367", 4, 5);
+    CHECK_ERROR_PARAMS("367", 2, 3);
 
     RECV(":server 367 alice #test nick1!user1@host1");
     CHECK_CHAN("-- [#test] [1] nick1!user1@host1 banned");
