@@ -4019,30 +4019,37 @@ IRC_PROTOCOL_CALLBACK(312)
  * Callback for the IRC command "314": whowas.
  *
  * Command looks like:
- *   :server 314 mynick nick user host * :realname here
+ *   314 mynick nick user host * :realname here
  */
 
 IRC_PROTOCOL_CALLBACK(314)
 {
-    IRC_PROTOCOL_MIN_ARGS(8);
+    char *str_params;
+
+    IRC_PROTOCOL_MIN_PARAMS(6);
+
+    str_params = irc_protocol_string_params (params, 5, num_params - 1);
 
     weechat_printf_date_tags (
         irc_msgbuffer_get_target_buffer (
-            server, argv[3], command, "whowas", NULL),
+            server, params[1], command, "whowas", NULL),
         date,
         irc_protocol_tags (command, "irc_numeric", NULL, NULL),
         _("%s%s[%s%s%s] (%s%s@%s%s)%s was %s"),
         weechat_prefix ("network"),
         IRC_COLOR_CHAT_DELIMITERS,
-        irc_nick_color_for_msg (server, 1, NULL, argv[3]),
-        argv[3],
+        irc_nick_color_for_msg (server, 1, NULL, params[1]),
+        params[1],
         IRC_COLOR_CHAT_DELIMITERS,
         IRC_COLOR_CHAT_HOST,
-        argv[4],
-        argv[5],
+        params[2],
+        params[3],
         IRC_COLOR_CHAT_DELIMITERS,
         IRC_COLOR_RESET,
-        (argv_eol[7][0] == ':') ? argv_eol[7] + 1 : argv_eol[7]);
+        str_params);
+
+    if (str_params)
+        free (str_params);
 
     return WEECHAT_RC_OK;
 }

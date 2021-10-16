@@ -2479,19 +2479,19 @@ TEST(IrcProtocolWithServer, 314)
 {
     SRV_INIT;
 
-    /* not enough arguments */
+    /* not enough parameters */
     RECV(":server 314");
-    CHECK_ERROR_ARGS("314", 2, 8);
+    CHECK_ERROR_PARAMS("314", 0, 6);
     RECV(":server 314 alice");
-    CHECK_ERROR_ARGS("314", 3, 8);
+    CHECK_ERROR_PARAMS("314", 1, 6);
     RECV(":server 314 alice bob");
-    CHECK_ERROR_ARGS("314", 4, 8);
+    CHECK_ERROR_PARAMS("314", 2, 6);
     RECV(":server 314 alice bob user");
-    CHECK_ERROR_ARGS("314", 5, 8);
+    CHECK_ERROR_PARAMS("314", 3, 6);
     RECV(":server 314 alice bob user host");
-    CHECK_ERROR_ARGS("314", 6, 8);
+    CHECK_ERROR_PARAMS("314", 4, 6);
     RECV(":server 314 alice bob user host *");
-    CHECK_ERROR_ARGS("314", 7, 8);
+    CHECK_ERROR_PARAMS("314", 5, 6);
 
     RECV(":server 314 alice bob user host * :real name");
     CHECK_SRV("-- [bob] (user@host) was real name");
