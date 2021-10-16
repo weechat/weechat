@@ -7034,7 +7034,7 @@ irc_protocol_recv_command (struct t_irc_server *server,
         IRCB(319, 1, 0, whois_nick_msg), /* whois (channels)                */
         IRCB(320, 1, 0, whois_nick_msg), /* whois (identified user)         */
         IRCB(321, 1, 0, 321),            /* /list start                     */
-        IRCB(322, 1, 0, 322),            /* channel (for /list)             */
+        IRCB(322, 1, 1, 322),            /* channel (for /list)             */
         IRCB(323, 1, 0, 323),            /* end of /list                    */
         IRCB(324, 1, 0, 324),            /* channel mode                    */
         IRCB(326, 1, 0, whois_nick_msg), /* whois (has oper privs)          */
