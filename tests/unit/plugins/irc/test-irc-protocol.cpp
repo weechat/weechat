@@ -2892,15 +2892,17 @@ TEST(IrcProtocolWithServer, 341)
 {
     SRV_INIT;
 
-    /* not enough arguments */
+    /* not enough parameters */
     RECV(":server 341");
-    CHECK_ERROR_ARGS("341", 2, 5);
+    CHECK_ERROR_PARAMS("341", 0, 3);
     RECV(":server 341 alice");
-    CHECK_ERROR_ARGS("341", 3, 5);
+    CHECK_ERROR_PARAMS("341", 1, 3);
     RECV(":server 341 alice bob");
-    CHECK_ERROR_ARGS("341", 4, 5);
+    CHECK_ERROR_PARAMS("341", 2, 3);
 
     RECV(":server 341 alice bob #test");
+    CHECK_SRV("-- alice has invited bob to #test");
+    RECV(":server 341 alice bob :#test");
     CHECK_SRV("-- alice has invited bob to #test");
 }
 

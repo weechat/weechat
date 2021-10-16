@@ -4834,32 +4834,28 @@ IRC_PROTOCOL_CALLBACK(338)
  * Callback for the IRC command "341": inviting.
  *
  * Command looks like:
- *   :server 341 mynick nick #channel
- *   :server 341 mynick nick :#channel
+ *   341 mynick nick #channel
+ *   341 mynick nick :#channel
  */
 
 IRC_PROTOCOL_CALLBACK(341)
 {
-    char *pos_channel;
-
-    IRC_PROTOCOL_MIN_ARGS(5);
-
-    pos_channel = (argv[4][0] == ':') ? argv[4] + 1 : argv[4];
+    IRC_PROTOCOL_MIN_PARAMS(3);
 
     weechat_printf_date_tags (
-        irc_msgbuffer_get_target_buffer (server, argv[2], command, NULL, NULL),
+        irc_msgbuffer_get_target_buffer (server, params[0], command, NULL, NULL),
         date,
-        irc_protocol_tags (command, "irc_numeric", argv[2], address),
+        irc_protocol_tags (command, "irc_numeric", params[0], address),
         _("%s%s%s%s has invited %s%s%s to %s%s%s"),
         weechat_prefix ("network"),
-        irc_nick_color_for_msg (server, 1, NULL, argv[2]),
-        argv[2],
+        irc_nick_color_for_msg (server, 1, NULL, params[0]),
+        params[0],
         IRC_COLOR_RESET,
-        irc_nick_color_for_msg (server, 1, NULL, argv[3]),
-        argv[3],
+        irc_nick_color_for_msg (server, 1, NULL, params[1]),
+        params[1],
         IRC_COLOR_RESET,
         IRC_COLOR_CHAT_CHANNEL,
-        pos_channel,
+        params[2],
         IRC_COLOR_RESET);
 
     return WEECHAT_RC_OK;
