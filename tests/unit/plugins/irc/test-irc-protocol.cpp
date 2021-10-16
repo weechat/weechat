@@ -3863,13 +3863,13 @@ TEST(IrcProtocolWithServer, 729)
 {
     SRV_INIT_JOIN;
 
-    /* not enough arguments */
+    /* not enough parameters */
     RECV(":server 729");
-    CHECK_ERROR_ARGS("729", 2, 5);
+    CHECK_ERROR_PARAMS("729", 0, 3);
     RECV(":server 729 alice");
-    CHECK_ERROR_ARGS("729", 3, 5);
+    CHECK_ERROR_PARAMS("729", 1, 3);
     RECV(":server 729 alice #test");
-    CHECK_ERROR_ARGS("729", 4, 5);
+    CHECK_ERROR_PARAMS("729", 2, 3);
 
     RECV(":server 729 alice #test q");
     CHECK_CHAN("-- [#test]");

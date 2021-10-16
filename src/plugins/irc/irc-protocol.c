@@ -6573,25 +6573,27 @@ IRC_PROTOCOL_CALLBACK(728)
  * Callback for the IRC command "729": end of quietlist.
  *
  * Command looks like:
- *   :server 729 mynick #channel mode :End of Channel Quiet List
+ *   729 mynick #channel mode :End of Channel Quiet List
  */
 
 IRC_PROTOCOL_CALLBACK(729)
 {
-    char *pos_args;
+    char *str_params;
     struct t_irc_channel *ptr_channel;
     struct t_gui_buffer *ptr_buffer;
     struct t_irc_modelist *ptr_modelist;
 
-    IRC_PROTOCOL_MIN_ARGS(5);
+    IRC_PROTOCOL_MIN_PARAMS(3);
 
-    pos_args = (argc > 5) ?
-        ((argv_eol[5][0] == ':') ? argv_eol[5] + 1 : argv_eol[5]) : NULL;
+    str_params = (num_params > 3) ?
+        irc_protocol_string_params (params, 3, num_params - 1) : NULL;
 
-    ptr_channel = irc_channel_search (server, argv[3]);
+    ptr_channel = irc_channel_search (server, params[1]);
     ptr_buffer = (ptr_channel && ptr_channel->nicks) ?
         ptr_channel->buffer : server->buffer;
-    ptr_modelist = irc_modelist_search (ptr_channel, argv[4][0]);
+    ptr_modelist = (ptr_channel) ?
+        irc_modelist_search (ptr_channel, params[2][0]) : NULL;
+
     if (ptr_modelist)
     {
         if (ptr_modelist->state != IRC_MODELIST_STATE_RECEIVING)
@@ -6604,6 +6606,7 @@ IRC_PROTOCOL_CALLBACK(729)
         }
         ptr_modelist->state = IRC_MODELIST_STATE_RECEIVED;
     }
+
     weechat_printf_date_tags (
         irc_msgbuffer_get_target_buffer (
             server, NULL, command, "quietlist", ptr_buffer),
@@ -6613,11 +6616,14 @@ IRC_PROTOCOL_CALLBACK(729)
         weechat_prefix ("network"),
         IRC_COLOR_CHAT_DELIMITERS,
         IRC_COLOR_CHAT_CHANNEL,
-        argv[3],
+        params[1],
         IRC_COLOR_CHAT_DELIMITERS,
         IRC_COLOR_RESET,
-        (pos_args) ? " " : "",
-        (pos_args) ? pos_args : "");
+        (str_params) ? " " : "",
+        (str_params) ? str_params : "");
+
+    if (str_params)
+        free (str_params);
 
     return WEECHAT_RC_OK;
 }
