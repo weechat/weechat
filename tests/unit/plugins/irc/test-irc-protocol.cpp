@@ -3897,15 +3897,15 @@ TEST(IrcProtocolWithServer, 730)
 {
     SRV_INIT;
 
-    /* not enough arguments */
+    /* not enough parameters */
     RECV(":server 730");
-    CHECK_ERROR_ARGS("730", 2, 4);
+    CHECK_ERROR_PARAMS("730", 0, 2);
     RECV(":server 730 alice");
-    CHECK_ERROR_ARGS("730", 3, 4);
+    CHECK_ERROR_PARAMS("730", 1, 2);
     RECV(":server 731");
-    CHECK_ERROR_ARGS("731", 2, 4);
+    CHECK_ERROR_PARAMS("731", 0, 2);
     RECV(":server 731 alice");
-    CHECK_ERROR_ARGS("731", 3, 4);
+    CHECK_ERROR_PARAMS("731", 1, 2);
 
     RECV(":server 730 alice :nick1!user1@host1,nick2!user2@host2");
     CHECK_NO_MSG;
@@ -3939,9 +3939,9 @@ TEST(IrcProtocolWithServer, 732)
 {
     SRV_INIT;
 
-    /* not enough arguments */
+    /* not enough parameters */
     RECV(":server 732");
-    CHECK_ERROR_ARGS("732", 2, 3);
+    CHECK_ERROR_PARAMS("732", 0, 1);
 
     RECV(":server 732 alice");
     CHECK_NO_MSG;
@@ -3958,9 +3958,9 @@ TEST(IrcProtocolWithServer, 733)
 {
     SRV_INIT;
 
-    /* not enough arguments */
+    /* not enough parameters */
     RECV(":server 733");
-    CHECK_ERROR_ARGS("733", 2, 3);
+    CHECK_ERROR_PARAMS("733", 0, 1);
 
     RECV(":server 733 alice");
     CHECK_NO_MSG;
@@ -3979,13 +3979,13 @@ TEST(IrcProtocolWithServer, 734)
 {
     SRV_INIT;
 
-    /* not enough arguments */
+    /* not enough parameters */
     RECV(":server 734");
-    CHECK_ERROR_ARGS("734", 2, 5);
+    CHECK_ERROR_PARAMS("734", 0, 3);
     RECV(":server 734 alice");
-    CHECK_ERROR_ARGS("734", 3, 5);
+    CHECK_ERROR_PARAMS("734", 1, 3);
     RECV(":server 734 alice 10");
-    CHECK_ERROR_ARGS("734", 4, 5);
+    CHECK_ERROR_PARAMS("734", 2, 3);
 
     RECV(":server 734 alice 10 nick1,nick2");
     CHECK_SRV("=!=  (10)");

@@ -6633,20 +6633,21 @@ IRC_PROTOCOL_CALLBACK(729)
  * (RPL_MONONLINE).
  *
  * Command looks like:
- *   :server 730 mynick :nick1!user1@host1,nick2!user2@host2
+ *   730 mynick :nick1!user1@host1,nick2!user2@host2
  */
 
 IRC_PROTOCOL_CALLBACK(730)
 {
     struct t_irc_notify *ptr_notify;
     const char *monitor_nick, *monitor_host;
-    char **nicks;
+    char *str_nicks, **nicks;
     int i, num_nicks;
 
-    IRC_PROTOCOL_MIN_ARGS(4);
+    IRC_PROTOCOL_MIN_PARAMS(2);
 
-    nicks = weechat_string_split ((argv_eol[3][0] == ':') ?
-                                  argv_eol[3] + 1 : argv_eol[3],
+    str_nicks = irc_protocol_string_params (params, 1, num_params - 1);
+
+    nicks = weechat_string_split (str_nicks,
                                   ",",
                                   NULL,
                                   WEECHAT_STRING_SPLIT_STRIP_LEFT
@@ -6669,6 +6670,9 @@ IRC_PROTOCOL_CALLBACK(730)
         weechat_string_free_split (nicks);
     }
 
+    if (str_nicks)
+        free (str_nicks);
+
     return WEECHAT_RC_OK;
 }
 
@@ -6677,20 +6681,21 @@ IRC_PROTOCOL_CALLBACK(730)
  * (RPL_MONOFFLINE).
  *
  * Command looks like:
- *   :server 731 mynick :nick1!user1@host1,nick2!user2@host2
+ *   731 mynick :nick1!user1@host1,nick2!user2@host2
  */
 
 IRC_PROTOCOL_CALLBACK(731)
 {
     struct t_irc_notify *ptr_notify;
     const char *monitor_nick, *monitor_host;
-    char **nicks;
+    char *str_nicks, **nicks;
     int i, num_nicks;
 
-    IRC_PROTOCOL_MIN_ARGS(4);
+    IRC_PROTOCOL_MIN_PARAMS(2);
 
-    nicks = weechat_string_split ((argv_eol[3][0] == ':') ?
-                                  argv_eol[3] + 1 : argv_eol[3],
+    str_nicks = irc_protocol_string_params (params, 1, num_params - 1);
+
+    nicks = weechat_string_split (str_nicks,
                                   ",",
                                   NULL,
                                   WEECHAT_STRING_SPLIT_STRIP_LEFT
@@ -6713,6 +6718,9 @@ IRC_PROTOCOL_CALLBACK(731)
         weechat_string_free_split (nicks);
     }
 
+    if (str_nicks)
+        free (str_nicks);
+
     return WEECHAT_RC_OK;
 }
 
@@ -6720,17 +6728,17 @@ IRC_PROTOCOL_CALLBACK(731)
  * Callback for the IRC command "732": list of monitored nicks (RPL_MONLIST).
  *
  * Command looks like:
- *   :server 732 mynick :nick1!user1@host1,nick2!user2@host2
+ *   732 mynick :nick1!user1@host1,nick2!user2@host2
  */
 
 IRC_PROTOCOL_CALLBACK(732)
 {
-    char *pos_args;
+    char *str_nicks;
 
-    IRC_PROTOCOL_MIN_ARGS(3);
+    IRC_PROTOCOL_MIN_PARAMS(1);
 
-    pos_args = (argc > 3) ?
-        ((argv_eol[3][0] == ':') ? argv_eol[3] + 1 : argv_eol[3]) : NULL;
+    str_nicks = (num_params > 1) ?
+        irc_protocol_string_params (params, 1, num_params - 1) : NULL;
 
     weechat_printf_date_tags (
         irc_msgbuffer_get_target_buffer (
@@ -6739,7 +6747,10 @@ IRC_PROTOCOL_CALLBACK(732)
         irc_protocol_tags (command, "irc_numeric", NULL, NULL),
         "%s%s",
         weechat_prefix ("network"),
-        (pos_args && pos_args[0]) ? pos_args : "");
+        (str_nicks) ? str_nicks : "");
+
+    if (str_nicks)
+        free (str_nicks);
 
     return WEECHAT_RC_OK;
 }
@@ -6748,17 +6759,17 @@ IRC_PROTOCOL_CALLBACK(732)
  * Callback for the IRC command "733": end of a monitor list (RPL_ENDOFMONLIST).
  *
  * Command looks like:
- *   :server 733 mynick :End of MONITOR list
+ *   733 mynick :End of MONITOR list
  */
 
 IRC_PROTOCOL_CALLBACK(733)
 {
-    char *pos_args;
+    char *str_params;
 
-    IRC_PROTOCOL_MIN_ARGS(3);
+    IRC_PROTOCOL_MIN_PARAMS(1);
 
-    pos_args = (argc > 3) ?
-        ((argv_eol[3][0] == ':') ? argv_eol[3] + 1 : argv_eol[3]) : NULL;
+    str_params = (num_params > 1) ?
+        irc_protocol_string_params (params, 1, num_params - 1) : NULL;
 
     weechat_printf_date_tags (
         irc_msgbuffer_get_target_buffer (
@@ -6767,7 +6778,10 @@ IRC_PROTOCOL_CALLBACK(733)
         irc_protocol_tags (command, "irc_numeric", NULL, NULL),
         "%s%s",
         weechat_prefix ("network"),
-        (pos_args && pos_args[0]) ? pos_args : "");
+        (str_params) ? str_params : "");
+
+    if (str_params)
+        free (str_params);
 
     return WEECHAT_RC_OK;
 }
@@ -6776,17 +6790,17 @@ IRC_PROTOCOL_CALLBACK(733)
  * Callback for the IRC command "734": monitor list is full (ERR_MONLISTFULL)
  *
  * Command looks like:
- *   :server 734 mynick limit nick1,nick2 :Monitor list is full.
+ *   734 mynick limit nick1,nick2 :Monitor list is full.
  */
 
 IRC_PROTOCOL_CALLBACK(734)
 {
-    char *pos_args;
+    char *str_params;
 
-    IRC_PROTOCOL_MIN_ARGS(5);
+    IRC_PROTOCOL_MIN_PARAMS(3);
 
-    pos_args = (argc > 5) ?
-        ((argv_eol[5][0] == ':') ? argv_eol[5] + 1 : argv_eol[5]) : NULL;
+    str_params = (num_params > 3) ?
+        irc_protocol_string_params (params, 3, num_params - 1) : NULL;
 
     weechat_printf_date_tags (
         irc_msgbuffer_get_target_buffer (
@@ -6795,8 +6809,11 @@ IRC_PROTOCOL_CALLBACK(734)
         irc_protocol_tags (command, "irc_numeric", NULL, NULL),
         "%s%s (%s)",
         weechat_prefix ("error"),
-        (pos_args && pos_args[0]) ? pos_args : "",
-        argv[3]);
+        (str_params) ? str_params : "",
+        params[1]);
+
+    if (str_params)
+        free (str_params);
 
     return WEECHAT_RC_OK;
 }
