@@ -1378,14 +1378,24 @@ TEST(IrcProtocolWithServer, notice)
     /* notice from server */
     RECV("NOTICE AUTH :*** Looking up your hostname...");
     CHECK_SRV("-- *** Looking up your hostname...");
+    RECV(":server.address NOTICE AUTH :*** Looking up your hostname...");
+    CHECK_SRV("-- server.address: *** Looking up your hostname...");
+    RECV(":server.address NOTICE * :*** Looking up your hostname...");
+    CHECK_SRV("-- server.address: *** Looking up your hostname...");
 
     /* notice to channel/user */
+    RECV(":server.address NOTICE #test :a notice");
+    CHECK_CHAN("-- Notice(server.address): a notice");
+    RECV(":server.address NOTICE alice :a notice");
+    CHECK_SRV("-- server.address: a notice");
     RECV(":bob!user@host NOTICE #test :a notice");
     CHECK_CHAN("-- Notice(bob): a notice");
     RECV(":bob!user@host NOTICE alice :a notice");
     CHECK_SRV("-- bob (user@host): a notice");
 
     /* notice to ops of channel */
+    RECV(":server.address NOTICE @#test :a notice");
+    CHECK_CHAN("-- Notice:@(server.address): a notice");
     RECV(":bob!user@host NOTICE @#test :a notice");
     CHECK_CHAN("-- Notice:@(bob): a notice");
 
@@ -1394,6 +1404,14 @@ TEST(IrcProtocolWithServer, notice)
     CHECK_SRV("-- Notice -> alice: a notice");
 
     /* notice with channel name at beginning */
+    RECV(":server.address NOTICE alice :[#test] a notice");
+    CHECK_CHAN("-- PvNotice(server.address): a notice");
+    RECV(":server.address NOTICE alice :(#test) a notice");
+    CHECK_CHAN("-- PvNotice(server.address): a notice");
+    RECV(":server.address NOTICE alice :{#test} a notice");
+    CHECK_CHAN("-- PvNotice(server.address): a notice");
+    RECV(":server.address NOTICE alice :<#test> a notice");
+    CHECK_CHAN("-- PvNotice(server.address): a notice");
     RECV(":bob!user@host NOTICE alice :[#test] a notice");
     CHECK_CHAN("-- PvNotice(bob): a notice");
     RECV(":bob!user@host NOTICE alice :(#test) a notice");
