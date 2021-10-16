@@ -4192,17 +4192,16 @@ IRC_PROTOCOL_CALLBACK(317)
  * Callback for the IRC command "321": /list start.
  *
  * Command looks like:
- *   :server 321 mynick Channel :Users  Name
+ *   321 mynick Channel :Users  Name
  */
 
 IRC_PROTOCOL_CALLBACK(321)
 {
-    char *pos_args;
+    char *str_params;
 
-    IRC_PROTOCOL_MIN_ARGS(4);
+    IRC_PROTOCOL_MIN_PARAMS(2);
 
-    pos_args = (argc > 4) ?
-        ((argv_eol[4][0] == ':') ? argv_eol[4] + 1 : argv_eol[4]) : NULL;
+    str_params = irc_protocol_string_params (params, 2, num_params - 1);
 
     weechat_printf_date_tags (
         irc_msgbuffer_get_target_buffer (
@@ -4211,9 +4210,12 @@ IRC_PROTOCOL_CALLBACK(321)
         irc_protocol_tags (command, "irc_numeric", NULL, NULL),
         "%s%s%s%s",
         weechat_prefix ("network"),
-        argv[3],
-        (pos_args) ? " " : "",
-        (pos_args) ? pos_args : "");
+        params[1],
+        (str_params && str_params[0]) ? " " : "",
+        (str_params && str_params[0]) ? str_params : "");
+
+    if (str_params)
+        free (str_params);
 
     return WEECHAT_RC_OK;
 }

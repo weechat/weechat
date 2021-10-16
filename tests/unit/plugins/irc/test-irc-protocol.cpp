@@ -2566,11 +2566,11 @@ TEST(IrcProtocolWithServer, 321)
 {
     SRV_INIT;
 
-    /* not enough arguments */
+    /* not enough parameters */
     RECV(":server 321");
-    CHECK_ERROR_ARGS("321", 2, 4);
+    CHECK_ERROR_PARAMS("321", 0, 2);
     RECV(":server 321 alice");
-    CHECK_ERROR_ARGS("321", 3, 4);
+    CHECK_ERROR_PARAMS("321", 1, 2);
 
     RECV(":server 321 alice #test");
     CHECK_SRV("-- #test");
