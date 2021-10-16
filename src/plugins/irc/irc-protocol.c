@@ -6894,7 +6894,7 @@ IRC_PROTOCOL_CALLBACK(901)
  * Callback for the IRC commands "903" and "907" (SASL OK).
  *
  * Commands look like:
- *   :server 903 nick :SASL authentication successful
+ *   903 nick :SASL authentication successful
  */
 
 IRC_PROTOCOL_CALLBACK(sasl_end_ok)
@@ -6922,7 +6922,7 @@ IRC_PROTOCOL_CALLBACK(sasl_end_ok)
  * Callback for the IRC commands "902", "904", "905", "906" (SASL failed).
  *
  * Commands look like:
- *   :server 904 nick :SASL authentication failed
+ *   904 nick :SASL authentication failed
  */
 
 IRC_PROTOCOL_CALLBACK(sasl_end_fail)
