@@ -4416,18 +4416,20 @@ IRC_PROTOCOL_CALLBACK(327)
  * Callback for the IRC command "328": channel URL.
  *
  * Command looks like:
- *   :server 328 mynick #channel :https://example.com/
+ *   328 mynick #channel :https://example.com/
  */
 
 IRC_PROTOCOL_CALLBACK(328)
 {
+    char *str_url;
     struct t_irc_channel *ptr_channel;
 
-    IRC_PROTOCOL_MIN_ARGS(5);
+    IRC_PROTOCOL_MIN_PARAMS(3);
 
-    ptr_channel = irc_channel_search (server, argv[3]);
+    ptr_channel = irc_channel_search (server, params[1]);
     if (ptr_channel)
     {
+        str_url = irc_protocol_string_params (params, 2, num_params - 1);
         weechat_printf_date_tags (
             irc_msgbuffer_get_target_buffer (
                 server, NULL, command, NULL, ptr_channel->buffer),
@@ -4436,10 +4438,11 @@ IRC_PROTOCOL_CALLBACK(328)
             _("%sURL for %s%s%s: %s"),
             weechat_prefix ("network"),
             IRC_COLOR_CHAT_CHANNEL,
-            argv[3],
+            params[1],
             IRC_COLOR_RESET,
-            (argv_eol[4][0] == ':') ?
-            argv_eol[4] + 1 : argv_eol[4]);
+            str_url);
+        if (str_url)
+            free (str_url);
     }
 
     return WEECHAT_RC_OK;

@@ -2697,16 +2697,19 @@ TEST(IrcProtocolWithServer, 328)
 {
     SRV_INIT_JOIN;
 
-    /* not enough arguments */
+    /* not enough parameters */
     RECV(":server 328");
-    CHECK_ERROR_ARGS("328", 2, 5);
+    CHECK_ERROR_PARAMS("328", 0, 3);
     RECV(":server 328 alice");
-    CHECK_ERROR_ARGS("328", 3, 5);
+    CHECK_ERROR_PARAMS("328", 1, 3);
     RECV(":server 328 alice #test");
-    CHECK_ERROR_ARGS("328", 4, 5);
+    CHECK_ERROR_PARAMS("328", 2, 3);
 
     RECV(":server 328 alice #test :https://example.com/");
     CHECK_CHAN("-- URL for #test: https://example.com/");
+    RECV(":server 328 alice #test :URL is https://example.com/");
+    CHECK_CHAN("-- URL for #test: URL is https://example.com/");
+
 }
 
 /*
