@@ -2869,15 +2869,15 @@ TEST(IrcProtocolWithServer, 338)
 {
     SRV_INIT;
 
-    /* not enough arguments */
+    /* not enough parameters */
     RECV(":server 338");
-    CHECK_ERROR_ARGS("338", 2, 6);
+    CHECK_ERROR_PARAMS("338", 0, 4);
     RECV(":server 338 alice");
-    CHECK_ERROR_ARGS("338", 3, 6);
+    CHECK_ERROR_PARAMS("338", 1, 4);
     RECV(":server 338 alice bob");
-    CHECK_ERROR_ARGS("338", 4, 6);
-    RECV(":server 338 alice bob host");
-    CHECK_ERROR_ARGS("338", 5, 6);
+    CHECK_ERROR_PARAMS("338", 2, 4);
+    RECV(":server 338 alice bob hostname");
+    CHECK_ERROR_PARAMS("338", 3, 4);
 
     RECV(":server 338 alice bob hostname :actually using host");
     CHECK_SRV("-- [bob] actually using host hostname");
