@@ -3611,11 +3611,11 @@ TEST(IrcProtocolWithServer, 368)
 {
     SRV_INIT_JOIN;
 
-    /* not enough arguments */
+    /* not enough parameters */
     RECV(":server 368");
-    CHECK_ERROR_ARGS("368", 2, 4);
+    CHECK_ERROR_PARAMS("368", 0, 2);
     RECV(":server 368 alice");
-    CHECK_ERROR_ARGS("368", 3, 4);
+    CHECK_ERROR_PARAMS("368", 1, 2);
 
     RECV(":server 368 alice #test");
     CHECK_CHAN("-- [#test]");
