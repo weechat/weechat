@@ -2721,13 +2721,13 @@ TEST(IrcProtocolWithServer, 329)
 {
     SRV_INIT_JOIN;
 
-    /* not enough arguments */
+    /* not enough parameters */
     RECV(":server 329");
-    CHECK_ERROR_ARGS("329", 2, 5);
+    CHECK_ERROR_PARAMS("329", 0, 3);
     RECV(":server 329 alice");
-    CHECK_ERROR_ARGS("329", 3, 5);
+    CHECK_ERROR_PARAMS("329", 1, 3);
     RECV(":server 329 alice #test");
-    CHECK_ERROR_ARGS("329", 4, 5);
+    CHECK_ERROR_PARAMS("329", 2, 3);
 
     RECV(":server 329 alice #test 1205327894");
     CHECK_CHAN("-- Channel created on Wed, 12 Mar 2008 13:18:14");

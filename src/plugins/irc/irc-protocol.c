@@ -4452,7 +4452,7 @@ IRC_PROTOCOL_CALLBACK(328)
  * Callback for the IRC command "329": channel creation date.
  *
  * Command looks like:
- *   :server 329 mynick #channel 1205327894
+ *   329 mynick #channel 1205327894
  */
 
 IRC_PROTOCOL_CALLBACK(329)
@@ -4460,12 +4460,11 @@ IRC_PROTOCOL_CALLBACK(329)
     struct t_irc_channel *ptr_channel;
     time_t datetime;
 
-    IRC_PROTOCOL_MIN_ARGS(5);
+    IRC_PROTOCOL_MIN_PARAMS(3);
 
-    ptr_channel = irc_channel_search (server, argv[3]);
+    ptr_channel = irc_channel_search (server, params[1]);
 
-    datetime = (time_t)(atol ((argv_eol[4][0] == ':') ?
-                              argv_eol[4] + 1 : argv_eol[4]));
+    datetime = (time_t)(atol (params[2]));
 
     if (ptr_channel)
     {
@@ -4494,7 +4493,7 @@ IRC_PROTOCOL_CALLBACK(329)
             _("%sChannel %s%s%s created on %s"),
             weechat_prefix ("network"),
             IRC_COLOR_CHAT_CHANNEL,
-            argv[3],
+            params[1],
             IRC_COLOR_RESET,
             weechat_util_get_time_string (&datetime));
     }
