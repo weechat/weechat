@@ -177,13 +177,13 @@ extern char *irc_protocol_cap_to_enable (const char *capabilities,
 
 #define SRV_INIT_JOIN                                                   \
     SRV_INIT;                                                           \
-    RECV(":alice!user@host JOIN #test");                                \
-    CHECK_CHAN("--> alice (user@host) has joined #test");
+    RECV(":alice!user_a@host_a JOIN #test");                            \
+    CHECK_CHAN("--> alice (user_a@host_a) has joined #test");
 
 #define SRV_INIT_JOIN2                                                  \
     SRV_INIT_JOIN;                                                      \
-    RECV(":bob!user@host JOIN #test");                                  \
-    CHECK_CHAN("--> bob (user@host) has joined #test");
+    RECV(":bob!user_b@host_b JOIN #test");                              \
+    CHECK_CHAN("--> bob (user_b@host_b) has joined #test");
 
 struct t_irc_server *ptr_server = NULL;
 struct t_arraylist *sent_messages = NULL;
@@ -845,7 +845,7 @@ TEST(IrcProtocolWithServer, chghost)
     ptr_nick = ptr_server->channels->nicks;
     ptr_nick2 = ptr_server->channels->last_nick;
 
-    STRCMP_EQUAL("user@host", ptr_nick->host);
+    STRCMP_EQUAL("user_a@host_a", ptr_nick->host);
 
     /* not enough parameters */
     RECV(":alice!user@host CHGHOST");
@@ -857,7 +857,7 @@ TEST(IrcProtocolWithServer, chghost)
     RECV("CHGHOST user2 host2");
     CHECK_ERROR_NICK("chghost");
 
-    STRCMP_EQUAL("user@host", ptr_nick->host);
+    STRCMP_EQUAL("user_a@host_a", ptr_nick->host);
 
     /* self nick */
     RECV(":alice!user@host CHGHOST user2 host2");
@@ -3148,32 +3148,88 @@ TEST(IrcProtocolWithServer, 351)
 
 TEST(IrcProtocolWithServer, 352)
 {
+    struct t_irc_nick *ptr_nick, *ptr_nick2;
+
     SRV_INIT_JOIN2;
 
-    /* not enough arguments */
+    /* not enough parameters */
     RECV(":server 352");
-    CHECK_ERROR_ARGS("352", 2, 5);
+    CHECK_ERROR_PARAMS("352", 0, 3);
     RECV(":server 352 alice");
-    CHECK_ERROR_ARGS("352", 3, 5);
+    CHECK_ERROR_PARAMS("352", 1, 3);
     RECV(":server 352 alice #test");
-    CHECK_ERROR_ARGS("352", 4, 5);
+    CHECK_ERROR_PARAMS("352", 2, 3);
 
+    /* not enough parameters, but silently ignored */
     RECV(":server 352 alice #test user");
     CHECK_NO_MSG;
     RECV(":server 352 alice #test user host");
     CHECK_NO_MSG;
     RECV(":server 352 alice #test user host server");
     CHECK_NO_MSG;
-    RECV(":server 352 alice #test user host server bob");
-    CHECK_SRV("-- [#test] bob (user@host) ()");
-    RECV(":server 352 alice #test user host server bob *");
-    CHECK_SRV("-- [#test] bob (user@host) * ()");
-    RECV(":server 352 alice #test user host server bob * :0 nick");
-    CHECK_SRV("-- [#test] bob (user@host) 0 (nick)");
-    RECV(":server 352 alice #test user host server bob H :0 nick");
-    CHECK_SRV("-- [#test] bob (user@host) H 0 (nick)");
-    RECV(":server 352 alice #test user host server bob G :0 nick");
-    CHECK_SRV("-- [#test] bob (user@host) G 0 (nick)");
+
+    ptr_nick = ptr_server->channels->nicks;
+    ptr_nick2 = ptr_server->channels->last_nick;
+
+    STRCMP_EQUAL("user_a@host_a", ptr_nick->host);
+    STRCMP_EQUAL("user_b@host_b", ptr_nick2->host);
+    LONGS_EQUAL(0, ptr_nick->away);
+    LONGS_EQUAL(0, ptr_nick2->away);
+    POINTERS_EQUAL(NULL, ptr_nick->realname);
+    POINTERS_EQUAL(NULL, ptr_nick2->realname);
+
+    RECV(":server 352 alice #test user2 host2 server bob");
+    CHECK_SRV("-- [#test] bob (user2@host2) ()");
+    STRCMP_EQUAL("user2@host2", ptr_nick2->host);
+    LONGS_EQUAL(0, ptr_nick2->away);
+    POINTERS_EQUAL(NULL, ptr_nick2->realname);
+
+    RECV(":server 352 alice #test user3 host3 server bob *");
+    CHECK_SRV("-- [#test] bob (user3@host3) * ()");
+    STRCMP_EQUAL("user3@host3", ptr_nick2->host);
+    LONGS_EQUAL(0, ptr_nick2->away);
+    POINTERS_EQUAL(NULL, ptr_nick2->realname);
+
+    RECV(":server 352 alice #test user4 host4 server bob * :0 real name 1");
+    CHECK_SRV("-- [#test] bob (user4@host4) * 0 (real name 1)");
+    STRCMP_EQUAL("user4@host4", ptr_nick2->host);
+    LONGS_EQUAL(0, ptr_nick2->away);
+    STRCMP_EQUAL("real name 1", ptr_nick2->realname);
+
+    RECV(":server 352 alice #test user5 host5 server bob H@ :0 real name 2");
+    CHECK_SRV("-- [#test] bob (user5@host5) H@ 0 (real name 2)");
+    STRCMP_EQUAL("user5@host5", ptr_nick2->host);
+    LONGS_EQUAL(0, ptr_nick2->away);
+    STRCMP_EQUAL("real name 2", ptr_nick2->realname);
+
+    RECV(":server 352 alice #test user6 host6 server bob G@ :0 real name 3");
+    CHECK_SRV("-- [#test] bob (user6@host6) G@ 0 (real name 3)");
+    STRCMP_EQUAL("user6@host6", ptr_nick2->host);
+    LONGS_EQUAL(1, ptr_nick2->away);
+    STRCMP_EQUAL("real name 3", ptr_nick2->realname);
+
+    RECV(":server 352 alice #test user7 host7 server bob * :0 real name 4");
+    CHECK_SRV("-- [#test] bob (user7@host7) * 0 (real name 4)");
+    STRCMP_EQUAL("user7@host7", ptr_nick2->host);
+    LONGS_EQUAL(1, ptr_nick2->away);
+    STRCMP_EQUAL("real name 4", ptr_nick2->realname);
+
+    RECV(":server 352 alice #test user8 host8 server bob H@ :0 real name 5");
+    CHECK_SRV("-- [#test] bob (user8@host8) H@ 0 (real name 5)");
+    STRCMP_EQUAL("user8@host8", ptr_nick2->host);
+    LONGS_EQUAL(0, ptr_nick2->away);
+    STRCMP_EQUAL("real name 5", ptr_nick2->realname);
+
+    RECV(":server 352 alice #test user8 host8 server bob H@ :0");
+    CHECK_SRV("-- [#test] bob (user8@host8) H@ 0 ()");
+    STRCMP_EQUAL("user8@host8", ptr_nick2->host);
+    LONGS_EQUAL(0, ptr_nick2->away);
+    STRCMP_EQUAL("real name 5", ptr_nick2->realname);
+
+    /* nothing should have changed in the first nick */
+    STRCMP_EQUAL("user_a@host_a", ptr_nick->host);
+    LONGS_EQUAL(0, ptr_nick->away);
+    POINTERS_EQUAL(NULL, ptr_nick->realname);
 
     /* channel not found */
     RECV(":server 352 alice #xyz user");
@@ -3187,11 +3243,11 @@ TEST(IrcProtocolWithServer, 352)
     RECV(":server 352 alice #xyz user host server bob *");
     CHECK_SRV("-- [#xyz] bob (user@host) * ()");
     RECV(":server 352 alice #xyz user host server bob * :0 nick");
-    CHECK_SRV("-- [#xyz] bob (user@host) 0 (nick)");
-    RECV(":server 352 alice #xyz user host server bob H :0 nick");
-    CHECK_SRV("-- [#xyz] bob (user@host) H 0 (nick)");
-    RECV(":server 352 alice #xyz user host server bob G :0 nick");
-    CHECK_SRV("-- [#xyz] bob (user@host) G 0 (nick)");
+    CHECK_SRV("-- [#xyz] bob (user@host) * 0 (nick)");
+    RECV(":server 352 alice #xyz user host server bob H@ :0 nick");
+    CHECK_SRV("-- [#xyz] bob (user@host) H@ 0 (nick)");
+    RECV(":server 352 alice #xyz user host server bob G@ :0 nick");
+    CHECK_SRV("-- [#xyz] bob (user@host) G@ 0 (nick)");
 }
 
 /*
@@ -3297,36 +3353,139 @@ TEST(IrcProtocolWithServer, 353)
 
 TEST(IrcProtocolWithServer, 354)
 {
+    struct t_irc_nick *ptr_nick, *ptr_nick2;
+
+    /* assume "account-notify" capability is enabled in server */
+    hashtable_set (ptr_server->cap_list, "account-notify", NULL);
+
     SRV_INIT_JOIN2;
 
-    /* not enough arguments */
+    /* not enough parameters */
     RECV(":server 354");
-    CHECK_ERROR_ARGS("354", 2, 4);
+    CHECK_ERROR_PARAMS("354", 0, 2);
     RECV(":server 354 alice");
-    CHECK_ERROR_ARGS("354", 3, 4);
+    CHECK_ERROR_PARAMS("354", 1, 2);
+
+    ptr_nick = ptr_server->channels->nicks;
+    ptr_nick2 = ptr_server->channels->last_nick;
+
+    STRCMP_EQUAL("user_a@host_a", ptr_nick->host);
+    STRCMP_EQUAL("user_b@host_b", ptr_nick2->host);
+    LONGS_EQUAL(0, ptr_nick->away);
+    LONGS_EQUAL(0, ptr_nick2->away);
+    POINTERS_EQUAL(NULL, ptr_nick->account);
+    POINTERS_EQUAL(NULL, ptr_nick2->account);
+    POINTERS_EQUAL(NULL, ptr_nick->realname);
+    POINTERS_EQUAL(NULL, ptr_nick2->realname);
 
     RECV(":server 354 alice #test");
     CHECK_SRV("-- [#test]");
+    STRCMP_EQUAL("user_b@host_b", ptr_nick2->host);
+    LONGS_EQUAL(0, ptr_nick2->away);
+    POINTERS_EQUAL(NULL, ptr_nick2->account);
+    POINTERS_EQUAL(NULL, ptr_nick2->realname);
+
     RECV(":server 354 alice #test user2");
     CHECK_SRV("-- [#test] user2");
+    STRCMP_EQUAL("user_b@host_b", ptr_nick2->host);
+    LONGS_EQUAL(0, ptr_nick2->away);
+    POINTERS_EQUAL(NULL, ptr_nick2->account);
+    POINTERS_EQUAL(NULL, ptr_nick2->realname);
+
+    RECV(":server 354 alice #test user2 :trailing parameter");
+    CHECK_SRV("-- [#test] user2 trailing parameter");
+    STRCMP_EQUAL("user_b@host_b", ptr_nick2->host);
+    LONGS_EQUAL(0, ptr_nick2->away);
+    POINTERS_EQUAL(NULL, ptr_nick2->account);
+    POINTERS_EQUAL(NULL, ptr_nick2->realname);
+
     RECV(":server 354 alice #test user2 host2");
     CHECK_SRV("-- [#test] user2 host2");
+    STRCMP_EQUAL("user_b@host_b", ptr_nick2->host);
+    LONGS_EQUAL(0, ptr_nick2->away);
+    POINTERS_EQUAL(NULL, ptr_nick2->account);
+    POINTERS_EQUAL(NULL, ptr_nick2->realname);
+
     RECV(":server 354 alice #test user2 host2 server");
     CHECK_SRV("-- [#test] user2 host2 server");
+    STRCMP_EQUAL("user_b@host_b", ptr_nick2->host);
+    LONGS_EQUAL(0, ptr_nick2->away);
+    POINTERS_EQUAL(NULL, ptr_nick2->account);
+    POINTERS_EQUAL(NULL, ptr_nick2->realname);
+
     RECV(":server 354 alice #test user2 host2 server bob");
     CHECK_SRV("-- [#test] user2 host2 server bob");
-    RECV(":server 354 alice #test user2 host2 server bob status");
-    CHECK_SRV("-- [#test] user2 host2 server bob status");
-    RECV(":server 354 alice #test user2 host2 server bob status "
-         "hopcount");
-    CHECK_SRV("-- [#test] user2 host2 server bob status hopcount");
-    RECV(":server 354 alice #test user2 host2 server bob status "
-         "hopcount account");
-    CHECK_SRV("-- [#test] bob [account] (user2@host2) status hopcount ()");
-    RECV(":server 354 alice #test user2 host2 server bob status "
-         "hopcount account :real name");
-    CHECK_SRV("-- [#test] bob [account] (user2@host2) status hopcount "
-              "(real name)");
+    STRCMP_EQUAL("user_b@host_b", ptr_nick2->host);
+    LONGS_EQUAL(0, ptr_nick2->away);
+    POINTERS_EQUAL(NULL, ptr_nick2->account);
+    POINTERS_EQUAL(NULL, ptr_nick2->realname);
+
+    RECV(":server 354 alice #test user2 host2 server bob *");
+    CHECK_SRV("-- [#test] user2 host2 server bob *");
+    STRCMP_EQUAL("user_b@host_b", ptr_nick2->host);
+    LONGS_EQUAL(0, ptr_nick2->away);
+    POINTERS_EQUAL(NULL, ptr_nick2->account);
+    POINTERS_EQUAL(NULL, ptr_nick2->realname);
+
+    RECV(":server 354 alice #test user2 host2 server bob H@ 0");
+    CHECK_SRV("-- [#test] user2 host2 server bob H@ 0");
+    STRCMP_EQUAL("user_b@host_b", ptr_nick2->host);
+    LONGS_EQUAL(0, ptr_nick2->away);
+    POINTERS_EQUAL(NULL, ptr_nick2->account);
+    POINTERS_EQUAL(NULL, ptr_nick2->realname);
+
+    RECV(":server 354 alice #test user2 host2 server bob * 0 account2");
+    CHECK_SRV("-- [#test] bob [account2] (user2@host2) * 0 ()");
+    STRCMP_EQUAL("user2@host2", ptr_nick2->host);
+    LONGS_EQUAL(0, ptr_nick2->away);
+    STRCMP_EQUAL("account2", ptr_nick2->account);
+    POINTERS_EQUAL(NULL, ptr_nick2->realname);
+
+    RECV(":server 354 alice #test user3 host3 server bob * 0 account3 "
+         ":real name 2");
+    CHECK_SRV("-- [#test] bob [account3] (user3@host3) * 0 (real name 2)");
+    STRCMP_EQUAL("user3@host3", ptr_nick2->host);
+    LONGS_EQUAL(0, ptr_nick2->away);
+    STRCMP_EQUAL("account3", ptr_nick2->account);
+    STRCMP_EQUAL("real name 2", ptr_nick2->realname);
+
+    RECV(":server 354 alice #test user4 host4 server bob H@ 0 account4 "
+         ":real name 3");
+    CHECK_SRV("-- [#test] bob [account4] (user4@host4) H@ 0 (real name 3)");
+    STRCMP_EQUAL("user4@host4", ptr_nick2->host);
+    LONGS_EQUAL(0, ptr_nick2->away);
+    STRCMP_EQUAL("account4", ptr_nick2->account);
+    STRCMP_EQUAL("real name 3", ptr_nick2->realname);
+
+    RECV(":server 354 alice #test user5 host5 server bob G@ 0 account5 "
+         ":real name 4");
+    CHECK_SRV("-- [#test] bob [account5] (user5@host5) G@ 0 (real name 4)");
+    STRCMP_EQUAL("user5@host5", ptr_nick2->host);
+    LONGS_EQUAL(1, ptr_nick2->away);
+    STRCMP_EQUAL("account5", ptr_nick2->account);
+    STRCMP_EQUAL("real name 4", ptr_nick2->realname);
+
+    RECV(":server 354 alice #test user6 host6 server bob * 0 account6 "
+         ":real name 5");
+    CHECK_SRV("-- [#test] bob [account6] (user6@host6) * 0 (real name 5)");
+    STRCMP_EQUAL("user6@host6", ptr_nick2->host);
+    LONGS_EQUAL(1, ptr_nick2->away);
+    STRCMP_EQUAL("account6", ptr_nick2->account);
+    STRCMP_EQUAL("real name 5", ptr_nick2->realname);
+
+    RECV(":server 354 alice #test user7 host7 server bob H@ 0 account7 "
+         ":real name 6");
+    CHECK_SRV("-- [#test] bob [account7] (user7@host7) H@ 0 (real name 6)");
+    STRCMP_EQUAL("user7@host7", ptr_nick2->host);
+    LONGS_EQUAL(0, ptr_nick2->away);
+    STRCMP_EQUAL("account7", ptr_nick2->account);
+    STRCMP_EQUAL("real name 6", ptr_nick2->realname);
+
+    /* nothing should have changed in the first nick */
+    STRCMP_EQUAL("user_a@host_a", ptr_nick->host);
+    LONGS_EQUAL(0, ptr_nick->away);
+    POINTERS_EQUAL(NULL, ptr_nick->account);
+    POINTERS_EQUAL(NULL, ptr_nick->realname);
 
     /* channel not found */
     RECV(":server 354 alice #xyz");
@@ -3339,18 +3498,15 @@ TEST(IrcProtocolWithServer, 354)
     CHECK_SRV("-- [#xyz] user2 host2 server");
     RECV(":server 354 alice #xyz user2 host2 server bob");
     CHECK_SRV("-- [#xyz] user2 host2 server bob");
-    RECV(":server 354 alice #xyz user2 host2 server bob status");
-    CHECK_SRV("-- [#xyz] user2 host2 server bob status");
-    RECV(":server 354 alice #xyz user2 host2 server bob status "
-         "hopcount");
-    CHECK_SRV("-- [#xyz] user2 host2 server bob status hopcount");
-    RECV(":server 354 alice #xyz user2 host2 server bob status "
-         "hopcount account");
-    CHECK_SRV("-- [#xyz] bob [account] (user2@host2) status hopcount ()");
-    RECV(":server 354 alice #xyz user2 host2 server bob status "
-         "hopcount account :real name");
-    CHECK_SRV("-- [#xyz] bob [account] (user2@host2) status hopcount "
-              "(real name)");
+    RECV(":server 354 alice #xyz user2 host2 server bob *");
+    CHECK_SRV("-- [#xyz] user2 host2 server bob *");
+    RECV(":server 354 alice #xyz user2 host2 server bob G@ 0");
+    CHECK_SRV("-- [#xyz] user2 host2 server bob G@ 0");
+    RECV(":server 354 alice #xyz user2 host2 server bob H@ 0 account");
+    CHECK_SRV("-- [#xyz] bob [account] (user2@host2) H@ 0 ()");
+    RECV(":server 354 alice #xyz user2 host2 server bob G@ 0 account "
+         ":real name");
+    CHECK_SRV("-- [#xyz] bob [account] (user2@host2) G@ 0 (real name)");
 }
 
 /*

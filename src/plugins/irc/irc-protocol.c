@@ -5326,73 +5326,75 @@ IRC_PROTOCOL_CALLBACK(351)
  * Callback for the IRC command "352": who.
  *
  * Command looks like:
- *   :server 352 mynick #channel user host server nick (*) (H/G) :0 flashcode
+ *   352 mynick #channel user host server nick status :hopcount real name
  */
 
 IRC_PROTOCOL_CALLBACK(352)
 {
-    char *pos_attr, *pos_hopcount, *pos_realname, *str_host;
-    int arg_start, length;
+    char *str_host, *str_hopcount, *str_realname;
+    const char *pos;
+    int length;
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
 
-    IRC_PROTOCOL_MIN_ARGS(5);
+    IRC_PROTOCOL_MIN_PARAMS(3);
 
     /* silently ignore malformed 352 message (missing infos) */
-    if (argc < 8)
+    if (num_params < 6)
         return WEECHAT_RC_OK;
 
-    pos_attr = NULL;
-    pos_hopcount = NULL;
-    pos_realname = NULL;
-
-    if (argc > 8)
+    str_hopcount = NULL;
+    str_realname = NULL;
+    if (num_params >= 8)
     {
-        arg_start = ((argc > 9) && (strcmp (argv[8], "*") == 0)) ? 9 : 8;
-        if (argv[arg_start][0] == ':')
+        pos = strchr (params[num_params - 1],  ' ');
+        if (pos)
         {
-            pos_attr = NULL;
-            pos_hopcount = (argc > arg_start) ? argv[arg_start] + 1 : NULL;
-            pos_realname = (argc > arg_start + 1) ? argv_eol[arg_start + 1] : NULL;
+            str_hopcount = weechat_strndup (params[num_params - 1],
+                                            pos - params[num_params - 1]);
+            while (pos[0] == ' ')
+            {
+                pos++;
+            }
+            if (pos[0])
+                str_realname = strdup (pos);
         }
         else
         {
-            pos_attr = argv[arg_start];
-            pos_hopcount = (argc > arg_start + 1) ? argv[arg_start + 1] + 1 : NULL;
-            pos_realname = (argc > arg_start + 2) ? argv_eol[arg_start + 2] : NULL;
+            str_hopcount = strdup (params[num_params - 1]);
         }
     }
 
-    ptr_channel = irc_channel_search (server, argv[3]);
+    ptr_channel = irc_channel_search (server, params[1]);
     ptr_nick = (ptr_channel) ?
-        irc_nick_search (server, ptr_channel, argv[7]) : NULL;
+        irc_nick_search (server, ptr_channel, params[5]) : NULL;
 
     /* update host in nick */
     if (ptr_nick)
     {
-        length = strlen (argv[4]) + 1 + strlen (argv[5]) + 1;
+        length = strlen (params[2]) + 1 + strlen (params[3]) + 1;
         str_host = malloc (length);
         if (str_host)
         {
-            snprintf (str_host, length, "%s@%s", argv[4], argv[5]);
+            snprintf (str_host, length, "%s@%s", params[2], params[3]);
             irc_nick_set_host (ptr_nick, str_host);
             free (str_host);
         }
     }
 
     /* update away flag in nick */
-    if (ptr_channel && ptr_nick && pos_attr)
+    if (ptr_channel && ptr_nick && (num_params >= 7) && (params[6][0] != '*'))
     {
         irc_nick_set_away (server, ptr_channel, ptr_nick,
-                           (pos_attr[0] == 'G') ? 1 : 0);
+                           (params[6][0] == 'G') ? 1 : 0);
     }
 
     /* update realname in nick */
-    if (ptr_channel && ptr_nick && pos_realname)
+    if (ptr_channel && ptr_nick && str_realname)
     {
         if (ptr_nick->realname)
             free (ptr_nick->realname);
-        ptr_nick->realname = (pos_realname) ? strdup (pos_realname) : NULL;
+        ptr_nick->realname = strdup (str_realname);
     }
 
     /* display output of who (manual who from user) */
@@ -5407,25 +5409,30 @@ IRC_PROTOCOL_CALLBACK(352)
             weechat_prefix ("network"),
             IRC_COLOR_CHAT_DELIMITERS,
             IRC_COLOR_CHAT_CHANNEL,
-            argv[3],
+            params[1],
             IRC_COLOR_CHAT_DELIMITERS,
-            irc_nick_color_for_msg (server, 1, NULL, argv[7]),
-            argv[7],
+            irc_nick_color_for_msg (server, 1, NULL, params[5]),
+            params[5],
             IRC_COLOR_CHAT_DELIMITERS,
             IRC_COLOR_CHAT_HOST,
-            argv[4],
-            argv[5],
+            params[2],
+            params[3],
             IRC_COLOR_CHAT_DELIMITERS,
             IRC_COLOR_RESET,
-            (pos_attr) ? pos_attr : "",
-            (pos_attr) ? " " : "",
-            (pos_hopcount) ? pos_hopcount : "",
-            (pos_hopcount) ? " " : "",
+            (num_params >= 7) ? params[6] : "",
+            (num_params >= 7) ? " " : "",
+            (str_hopcount) ? str_hopcount : "",
+            (str_hopcount) ? " " : "",
             IRC_COLOR_CHAT_DELIMITERS,
             IRC_COLOR_RESET,
-            (pos_realname) ? pos_realname : "",
+            (str_realname) ? str_realname : "",
             IRC_COLOR_CHAT_DELIMITERS);
     }
+
+    if (str_hopcount)
+        free (str_hopcount);
+    if (str_realname)
+        free (str_realname);
 
     return WEECHAT_RC_OK;
 }
@@ -5582,29 +5589,30 @@ IRC_PROTOCOL_CALLBACK(353)
  * Callback for the IRC command "354": WHOX output
  *
  * Command looks like:
- *   :server 354 mynick #channel user host server nick status hopcount account :GECOS Information
+ *   354 mynick #channel user host server nick status hopcount account :real name
  */
 
 IRC_PROTOCOL_CALLBACK(354)
 {
-    char *pos_attr, *pos_hopcount, *pos_account, *pos_realname, *str_host;
+    char *str_params, *str_host;
     int length;
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
 
-    IRC_PROTOCOL_MIN_ARGS(4);
+    IRC_PROTOCOL_MIN_PARAMS(2);
 
-    ptr_channel = irc_channel_search (server, argv[3]);
+    ptr_channel = irc_channel_search (server, params[1]);
 
     /*
-     * if there are less than 11 arguments, we are unable to parse the message,
+     * if there are less than 9 arguments, we are unable to parse the message,
      * some infos are missing but we don't know which ones; in this case we
      * just display the message as-is
      */
-    if (argc < 11)
+    if (num_params < 9)
     {
         if (!ptr_channel || (ptr_channel->checking_whox <= 0))
         {
+            str_params = irc_protocol_string_params (params, 2, num_params - 1);
             weechat_printf_date_tags (
                 irc_msgbuffer_get_target_buffer (
                     server, NULL, command, "who", NULL),
@@ -5614,52 +5622,49 @@ IRC_PROTOCOL_CALLBACK(354)
                 weechat_prefix ("network"),
                 IRC_COLOR_CHAT_DELIMITERS,
                 IRC_COLOR_CHAT_CHANNEL,
-                argv[3],
+                params[1],
                 IRC_COLOR_CHAT_DELIMITERS,
                 IRC_COLOR_RESET,
-                (argc > 4) ? " " : "",
-                (argc > 4) ? argv_eol[4] : "");
+                (str_params && str_params[0]) ? " " : "",
+                (str_params && str_params[0]) ? str_params : "");
+            if (str_params)
+                free (str_params);
         }
         return WEECHAT_RC_OK;
     }
 
     ptr_nick = (ptr_channel) ?
-        irc_nick_search (server, ptr_channel, argv[7]) : NULL;
-    pos_attr = argv[8];
-    pos_hopcount = argv[9];
-    pos_account = (strcmp (argv[10], "0") != 0) ? argv[10] : NULL;
-    pos_realname = (argc > 11) ?
-        ((argv_eol[11][0] == ':') ? argv_eol[11] + 1 : argv_eol[11]) : NULL;
+        irc_nick_search (server, ptr_channel, params[5]) : NULL;
 
     /* update host in nick */
     if (ptr_nick)
     {
-        length = strlen (argv[4]) + 1 + strlen (argv[5]) + 1;
+        length = strlen (params[2]) + 1 + strlen (params[3]) + 1;
         str_host = malloc (length);
         if (str_host)
         {
-            snprintf (str_host, length, "%s@%s", argv[4], argv[5]);
+            snprintf (str_host, length, "%s@%s", params[2], params[3]);
             irc_nick_set_host (ptr_nick, str_host);
             free (str_host);
         }
     }
 
     /* update away flag in nick */
-    if (ptr_channel && ptr_nick)
+    if (ptr_channel && ptr_nick && (params[6][0] != '*'))
     {
         irc_nick_set_away (server, ptr_channel, ptr_nick,
-                           (pos_attr && (pos_attr[0] == 'G')) ? 1 : 0);
+                           (params[6][0] == 'G') ? 1 : 0);
     }
 
-    /* update account flag in nick */
+    /* update account in nick */
     if (ptr_nick)
     {
         if (ptr_nick->account)
             free (ptr_nick->account);
-        if (ptr_channel && pos_account
+        if (ptr_channel
             && weechat_hashtable_has_key (server->cap_list, "account-notify"))
         {
-            ptr_nick->account = strdup (pos_account);
+            ptr_nick->account = strdup (params[8]);
         }
         else
         {
@@ -5672,8 +5677,8 @@ IRC_PROTOCOL_CALLBACK(354)
     {
         if (ptr_nick->realname)
             free (ptr_nick->realname);
-        ptr_nick->realname = (ptr_channel && pos_realname) ?
-            strdup (pos_realname) : NULL;
+        ptr_nick->realname = (ptr_channel && (num_params >= 10)) ?
+            strdup (params[9]) : NULL;
     }
 
     /* display output of who (manual who from user) */
@@ -5684,32 +5689,28 @@ IRC_PROTOCOL_CALLBACK(354)
                 server, NULL, command, "who", NULL),
             date,
             irc_protocol_tags (command, "irc_numeric", NULL, NULL),
-            "%s%s[%s%s%s] %s%s %s%s%s%s%s%s(%s%s@%s%s)%s %s%s%s%s%s(%s%s%s)",
+            "%s%s[%s%s%s] %s%s %s[%s%s%s] (%s%s@%s%s)%s %s %s %s(%s%s%s)",
             weechat_prefix ("network"),
             IRC_COLOR_CHAT_DELIMITERS,
             IRC_COLOR_CHAT_CHANNEL,
-            argv[3],
+            params[1],
             IRC_COLOR_CHAT_DELIMITERS,
-            irc_nick_color_for_msg (server, 1, NULL, argv[7]),
-            argv[7],
+            irc_nick_color_for_msg (server, 1, NULL, params[5]),
+            params[5],
             IRC_COLOR_CHAT_DELIMITERS,
-            (pos_account) ? "[" : "",
-            (pos_account) ? IRC_COLOR_CHAT_HOST : "",
-            (pos_account) ? pos_account : "",
-            (pos_account) ? IRC_COLOR_CHAT_DELIMITERS : "",
-            (pos_account) ? "] " : "",
             IRC_COLOR_CHAT_HOST,
-            argv[4],
-            argv[5],
+            params[8],
+            IRC_COLOR_CHAT_DELIMITERS,
+            IRC_COLOR_CHAT_HOST,
+            params[2],
+            params[3],
             IRC_COLOR_CHAT_DELIMITERS,
             IRC_COLOR_RESET,
-            (pos_attr) ? pos_attr : "",
-            (pos_attr) ? " " : "",
-            (pos_hopcount) ? pos_hopcount : "",
-            (pos_hopcount) ? " " : "",
+            params[6],
+            params[7],
             IRC_COLOR_CHAT_DELIMITERS,
             IRC_COLOR_RESET,
-            (pos_realname) ? pos_realname : "",
+            (num_params >= 10) ? params[9] : "",
             IRC_COLOR_CHAT_DELIMITERS);
     }
 
