@@ -2625,9 +2625,9 @@ TEST(IrcProtocolWithServer, 323)
 {
     SRV_INIT;
 
-    /* not enough arguments */
+    /* not enough parameters */
     RECV(":server 323");
-    CHECK_ERROR_ARGS("323", 2, 3);
+    CHECK_ERROR_PARAMS("323", 0, 1);
 
     RECV(":server 323 alice");
     CHECK_NO_MSG;

@@ -4264,17 +4264,16 @@ IRC_PROTOCOL_CALLBACK(322)
  * Callback for the IRC command "323": end of /list.
  *
  * Command looks like:
- *   :server 323 mynick :End of /LIST
+ *   323 mynick :End of /LIST
  */
 
 IRC_PROTOCOL_CALLBACK(323)
 {
-    char *pos_args;
+    char *str_params;
 
-    IRC_PROTOCOL_MIN_ARGS(3);
+    IRC_PROTOCOL_MIN_PARAMS(1);
 
-    pos_args = (argc > 3) ?
-        ((argv_eol[3][0] == ':') ? argv_eol[3] + 1 : argv_eol[3]) : NULL;
+    str_params = irc_protocol_string_params (params, 1, num_params - 1);
 
     weechat_printf_date_tags (
         irc_msgbuffer_get_target_buffer (server, NULL, command, "list", NULL),
@@ -4282,7 +4281,10 @@ IRC_PROTOCOL_CALLBACK(323)
         irc_protocol_tags (command, "irc_numeric", NULL, NULL),
         "%s%s",
         weechat_prefix ("network"),
-        (pos_args && pos_args[0]) ? pos_args : "");
+        str_params);
+
+    if (str_params)
+        free (str_params);
 
     return WEECHAT_RC_OK;
 }
