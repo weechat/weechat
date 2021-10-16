@@ -4004,15 +4004,15 @@ TEST(IrcProtocolWithServer, 900)
 {
     SRV_INIT;
 
-    /* not enough arguments */
+    /* not enough parameters */
     RECV(":server 900");
-    CHECK_ERROR_ARGS("900", 2, 6);
+    CHECK_ERROR_PARAMS("900", 0, 4);
     RECV(":server 900 alice");
-    CHECK_ERROR_ARGS("900", 3, 6);
+    CHECK_ERROR_PARAMS("900", 1, 4);
     RECV(":server 900 alice alice!user@host");
-    CHECK_ERROR_ARGS("900", 4, 6);
+    CHECK_ERROR_PARAMS("900", 2, 4);
     RECV(":server 900 alice alice!user@host alice");
-    CHECK_ERROR_ARGS("900", 5, 6);
+    CHECK_ERROR_PARAMS("900", 3, 4);
 
     RECV(":server 900 alice alice!user@host alice logged");
     CHECK_SRV("-- logged (alice!user@host)");

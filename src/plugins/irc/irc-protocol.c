@@ -6822,26 +6822,33 @@ IRC_PROTOCOL_CALLBACK(734)
  * Callback for the IRC command "900": logged in as (SASL).
  *
  * Command looks like:
- *   :server 900 mynick nick!user@host mynick :You are now logged in as mynick
+ *   900 mynick nick!user@host mynick :You are now logged in as mynick
  */
 
 IRC_PROTOCOL_CALLBACK(900)
 {
-    IRC_PROTOCOL_MIN_ARGS(6);
+    char *str_params;
+
+    IRC_PROTOCOL_MIN_PARAMS(4);
+
+    str_params = irc_protocol_string_params (params, 3, num_params - 1);
 
     weechat_printf_date_tags (
-        irc_msgbuffer_get_target_buffer (server, argv[3], command, NULL, NULL),
+        irc_msgbuffer_get_target_buffer (server, params[1], command, NULL, NULL),
         date,
         irc_protocol_tags (command, "irc_numeric", NULL, NULL),
         "%s%s %s(%s%s%s)",
         weechat_prefix ("network"),
-        (argv_eol[5][0] == ':') ? argv_eol[5] + 1 : argv_eol[5],
+        str_params,
         IRC_COLOR_CHAT_DELIMITERS,
         IRC_COLOR_CHAT_HOST,
-        argv[3],
+        params[1],
         IRC_COLOR_CHAT_DELIMITERS);
 
     irc_server_free_sasl_data (server);
+
+    if (str_params)
+        free (str_params);
 
     return WEECHAT_RC_OK;
 }
