@@ -4353,23 +4353,23 @@ IRC_PROTOCOL_CALLBACK(324)
  * Callback for the IRC command "327": whois, host.
  *
  * Command looks like:
- *   :server 327 mynick nick host ip :real hostname/ip
+ *   327 mynick nick host ip :real hostname/ip
  */
 
 IRC_PROTOCOL_CALLBACK(327)
 {
-    char *pos_realname;
+    char *str_realname;
     struct t_gui_buffer *ptr_buffer;
 
-    IRC_PROTOCOL_MIN_ARGS(6);
+    IRC_PROTOCOL_MIN_PARAMS(4);
 
-    pos_realname = (argc > 6) ?
-        ((argv_eol[6][0] == ':') ? argv_eol[6] + 1 : argv_eol[6]) : NULL;
+    str_realname = (num_params > 4) ?
+        irc_protocol_string_params (params, 4, num_params - 1) : NULL;
 
-    ptr_buffer = irc_msgbuffer_get_target_buffer (server, argv[3],
+    ptr_buffer = irc_msgbuffer_get_target_buffer (server, params[1],
                                                   command, "whois", NULL);
 
-    if (pos_realname && pos_realname[0])
+    if (str_realname && str_realname[0])
     {
         weechat_printf_date_tags (
             ptr_buffer,
@@ -4378,15 +4378,15 @@ IRC_PROTOCOL_CALLBACK(327)
             "%s%s[%s%s%s] %s%s %s %s(%s%s%s)",
             weechat_prefix ("network"),
             IRC_COLOR_CHAT_DELIMITERS,
-            irc_nick_color_for_msg (server, 1, NULL, argv[3]),
-            argv[3],
+            irc_nick_color_for_msg (server, 1, NULL, params[1]),
+            params[1],
             IRC_COLOR_CHAT_DELIMITERS,
             IRC_COLOR_CHAT_HOST,
-            argv[4],
-            argv[5],
+            params[2],
+            params[3],
             IRC_COLOR_CHAT_DELIMITERS,
             IRC_COLOR_RESET,
-            pos_realname,
+            str_realname,
             IRC_COLOR_CHAT_DELIMITERS);
     }
     else
@@ -4398,13 +4398,16 @@ IRC_PROTOCOL_CALLBACK(327)
             "%s%s[%s%s%s] %s%s %s",
             weechat_prefix ("network"),
             IRC_COLOR_CHAT_DELIMITERS,
-            irc_nick_color_for_msg (server, 1, NULL, argv[3]),
-            argv[3],
+            irc_nick_color_for_msg (server, 1, NULL, params[1]),
+            params[1],
             IRC_COLOR_CHAT_DELIMITERS,
             IRC_COLOR_CHAT_HOST,
-            argv[4],
-            argv[5]);
+            params[2],
+            params[3]);
     }
+
+    if (str_realname)
+        free (str_realname);
 
     return WEECHAT_RC_OK;
 }
