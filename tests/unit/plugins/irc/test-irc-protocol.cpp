@@ -2787,11 +2787,11 @@ TEST(IrcProtocolWithServer, 331)
 {
     SRV_INIT_JOIN;
 
-    /* not enough arguments */
+    /* not enough parameters */
     RECV(":server 331");
-    CHECK_ERROR_ARGS("331", 2, 4);
+    CHECK_ERROR_PARAMS("331", 0, 2);
     RECV(":server 331 alice");
-    CHECK_ERROR_ARGS("331", 3, 4);
+    CHECK_ERROR_PARAMS("331", 1, 2);
 
     RECV(":server 331 alice #test");
     CHECK_CHAN("-- No topic set for channel #test");
