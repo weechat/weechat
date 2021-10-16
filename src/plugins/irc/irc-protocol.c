@@ -6240,7 +6240,7 @@ IRC_PROTOCOL_CALLBACK(433)
  * Callback for the IRC command "437": nick/channel temporarily unavailable.
  *
  * Command looks like:
- *   :server 437 * mynick :Nick/channel is temporarily unavailable
+ *   437 * mynick :Nick/channel is temporarily unavailable
  */
 
 IRC_PROTOCOL_CALLBACK(437)
@@ -6255,8 +6255,8 @@ IRC_PROTOCOL_CALLBACK(437)
 
     if (!server->is_connected)
     {
-        if ((argc >= 4)
-            && (irc_server_strcasecmp (server, server->nick, argv[3]) == 0))
+        if ((num_params >= 2)
+            && (irc_server_strcasecmp (server, server->nick, params[1]) == 0))
         {
             ptr_buffer = irc_msgbuffer_get_target_buffer (server, NULL,
                                                           command, NULL, NULL);
