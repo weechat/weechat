@@ -173,7 +173,7 @@ irc_protocol_nick_address (struct t_irc_server *server,
 
     string[0] = '\0';
 
-    if (nickname && address && (strcmp (nickname, address) != 0))
+    if (nickname && address && address[0] && (strcmp (nickname, address) != 0))
     {
         /* display nick and address if they are different */
         snprintf (string, sizeof (string),
