@@ -6344,7 +6344,7 @@ IRC_PROTOCOL_CALLBACK(438)
  * Callback for the IRC command "470": forwarding to another channel.
  *
  * Command looks like:
- *   :server 470 mynick #channel ##channel :Forwarding to another channel
+ *   470 mynick #channel ##channel :Forwarding to another channel
  */
 
 IRC_PROTOCOL_CALLBACK(470)
@@ -6360,11 +6360,11 @@ IRC_PROTOCOL_CALLBACK(470)
                                    ignored, argc, argv, argv_eol,
                                    params, num_params);
 
-    if ((argc >= 5) && !irc_channel_search (server, argv[3]))
+    if ((num_params >= 3) && !irc_channel_search (server, params[1]))
     {
         ptr_buffer = irc_channel_search_buffer (server,
                                                 IRC_CHANNEL_TYPE_CHANNEL,
-                                                argv[3]);
+                                                params[1]);
         if (ptr_buffer)
         {
             short_name = weechat_buffer_get_string (ptr_buffer, "short_name");
@@ -6378,11 +6378,11 @@ IRC_PROTOCOL_CALLBACK(470)
                  * update the short_name only if it was not changed by the
                  * user
                  */
-                weechat_buffer_set (ptr_buffer, "short_name", argv[4]);
+                weechat_buffer_set (ptr_buffer, "short_name", params[2]);
             }
-            buffer_name = irc_buffer_build_name (server->name, argv[4]);
+            buffer_name = irc_buffer_build_name (server->name, params[2]);
             weechat_buffer_set (ptr_buffer, "name", buffer_name);
-            weechat_buffer_set (ptr_buffer, "localvar_set_channel", argv[4]);
+            weechat_buffer_set (ptr_buffer, "localvar_set_channel", params[2]);
 
             /*
              * check if logger backlog should be displayed for the new channel
@@ -6406,11 +6406,11 @@ IRC_PROTOCOL_CALLBACK(470)
             }
         }
 
-        old_channel_lower = strdup (argv[3]);
+        old_channel_lower = strdup (params[1]);
         if (old_channel_lower)
         {
             weechat_string_tolower (old_channel_lower);
-            new_channel_lower = strdup (argv[4]);
+            new_channel_lower = strdup (params[2]);
             if (new_channel_lower)
             {
                 weechat_string_tolower (new_channel_lower);
