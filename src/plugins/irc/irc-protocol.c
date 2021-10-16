@@ -5048,22 +5048,22 @@ IRC_PROTOCOL_CALLBACK(346)
  * Callback for the IRC command "347": end of channel invite list.
  *
  * Command looks like:
- *   :server 347 mynick #channel :End of Channel Invite List
+ *   347 mynick #channel :End of Channel Invite List
  */
 
 IRC_PROTOCOL_CALLBACK(347)
 {
-    char *pos_args;
+    char *str_params;
     struct t_irc_channel *ptr_channel;
     struct t_gui_buffer *ptr_buffer;
     struct t_irc_modelist *ptr_modelist;
 
-    IRC_PROTOCOL_MIN_ARGS(4);
+    IRC_PROTOCOL_MIN_PARAMS(2);
 
-    pos_args = (argc > 4) ?
-        ((argv_eol[4][0] == ':') ? argv_eol[4] + 1 : argv_eol[4]) : NULL;
+    str_params = (num_params > 2) ?
+        irc_protocol_string_params (params, 2, num_params - 1) : NULL;
 
-    ptr_channel = irc_channel_search (server, argv[3]);
+    ptr_channel = irc_channel_search (server, params[1]);
     ptr_buffer = (ptr_channel && ptr_channel->nicks) ?
         ptr_channel->buffer : server->buffer;
     ptr_modelist = irc_modelist_search (ptr_channel, 'I');
@@ -5088,11 +5088,14 @@ IRC_PROTOCOL_CALLBACK(347)
         weechat_prefix ("network"),
         IRC_COLOR_CHAT_DELIMITERS,
         IRC_COLOR_CHAT_CHANNEL,
-        argv[3],
+        params[1],
         IRC_COLOR_CHAT_DELIMITERS,
         IRC_COLOR_RESET,
-        (pos_args) ? " " : "",
-        (pos_args) ? pos_args : "");
+        (str_params) ? " " : "",
+        (str_params) ? str_params : "");
+
+    if (str_params)
+        free (str_params);
 
     return WEECHAT_RC_OK;
 }

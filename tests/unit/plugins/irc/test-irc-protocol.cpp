@@ -3008,11 +3008,11 @@ TEST(IrcProtocolWithServer, 347)
 {
     SRV_INIT_JOIN;
 
-    /* not enough arguments */
+    /* not enough parameters */
     RECV(":server 347");
-    CHECK_ERROR_ARGS("347", 2, 4);
+    CHECK_ERROR_PARAMS("347", 0, 2);
     RECV(":server 347 alice");
-    CHECK_ERROR_ARGS("347", 3, 4);
+    CHECK_ERROR_PARAMS("347", 1, 2);
 
     RECV(":server 347 alice #test");
     CHECK_CHAN("-- [#test]");
