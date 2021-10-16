@@ -2589,13 +2589,13 @@ TEST(IrcProtocolWithServer, 322)
 {
     SRV_INIT;
 
-    /* not enough arguments */
+    /* not enough parameters */
     RECV(":server 322");
-    CHECK_ERROR_ARGS("322", 2, 5);
+    CHECK_ERROR_PARAMS("322", 0, 3);
     RECV(":server 322 alice");
-    CHECK_ERROR_ARGS("322", 3, 5);
+    CHECK_ERROR_PARAMS("322", 1, 3);
     RECV(":server 322 alice #test");
-    CHECK_ERROR_ARGS("322", 4, 5);
+    CHECK_ERROR_PARAMS("322", 2, 3);
 
     RECV(":server 322 alice #test 3");
     CHECK_SRV("-- #test(3)");

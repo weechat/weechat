@@ -4224,21 +4224,19 @@ IRC_PROTOCOL_CALLBACK(321)
  * Callback for the IRC command "322": channel for /list.
  *
  * Command looks like:
- *   :server 322 mynick #channel 3 :topic of channel
+ *   322 mynick #channel 3 :topic of channel
  */
 
 IRC_PROTOCOL_CALLBACK(322)
 {
-    char *pos_topic;
+    char *str_params;
 
-    IRC_PROTOCOL_MIN_ARGS(5);
-
-    pos_topic = (argc > 5) ?
-        ((argv_eol[5][0] == ':') ? argv_eol[5] + 1 : argv_eol[5]) : NULL;
+    IRC_PROTOCOL_MIN_PARAMS(3);
 
     if (!server->cmd_list_regexp ||
-        (regexec (server->cmd_list_regexp, argv[3], 0, NULL, 0) == 0))
+        (regexec (server->cmd_list_regexp, params[1], 0, NULL, 0) == 0))
     {
+        str_params = irc_protocol_string_params (params, 3, num_params - 1);
         weechat_printf_date_tags (
             irc_msgbuffer_get_target_buffer (
                 server, NULL, command, "list", NULL),
@@ -4247,14 +4245,16 @@ IRC_PROTOCOL_CALLBACK(322)
             "%s%s%s%s(%s%s%s)%s%s%s",
             weechat_prefix ("network"),
             IRC_COLOR_CHAT_CHANNEL,
-            argv[3],
+            params[1],
             IRC_COLOR_CHAT_DELIMITERS,
             IRC_COLOR_RESET,
-            argv[4],
+            params[2],
             IRC_COLOR_CHAT_DELIMITERS,
             IRC_COLOR_RESET,
-            (pos_topic && pos_topic[0]) ? ": " : "",
-            (pos_topic && pos_topic[0]) ? pos_topic : "");
+            (str_params && str_params[0]) ? ": " : "",
+            (str_params && str_params[0]) ? str_params : "");
+        if (str_params)
+            free (str_params);
     }
 
     return WEECHAT_RC_OK;
