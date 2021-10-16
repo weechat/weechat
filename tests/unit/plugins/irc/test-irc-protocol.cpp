@@ -4030,15 +4030,15 @@ TEST(IrcProtocolWithServer, 901)
 {
     SRV_INIT;
 
-    /* not enough arguments */
+    /* not enough parameters */
     RECV(":server 901");
-    CHECK_ERROR_ARGS("901", 2, 6);
+    CHECK_ERROR_PARAMS("901", 0, 4);
     RECV(":server 901 alice");
-    CHECK_ERROR_ARGS("901", 3, 6);
+    CHECK_ERROR_PARAMS("901", 1, 4);
     RECV(":server 901 alice user");
-    CHECK_ERROR_ARGS("901", 4, 6);
+    CHECK_ERROR_PARAMS("901", 2, 4);
     RECV(":server 901 alice user host");
-    CHECK_ERROR_ARGS("901", 5, 6);
+    CHECK_ERROR_PARAMS("901", 3, 4);
 
     RECV(":server 901 alice nick user host logged");
     CHECK_SRV("-- logged");

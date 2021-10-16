@@ -6857,22 +6857,27 @@ IRC_PROTOCOL_CALLBACK(900)
  * Callback for the IRC command "901": you are now logged in.
  *
  * Command looks like:
- *   :server 901 mynick nick user host :You are now logged in. (id nick, username user, hostname host)
+ *   901 mynick nick user host :You are now logged in. (id nick, username user, hostname host)
  */
 
 IRC_PROTOCOL_CALLBACK(901)
 {
-    IRC_PROTOCOL_MIN_ARGS(6);
+    char *str_params;
 
-    if (argc >= 7)
+    IRC_PROTOCOL_MIN_PARAMS(4);
+
+    if (num_params >= 5)
     {
+        str_params = irc_protocol_string_params (params, 4, num_params - 1);
         weechat_printf_date_tags (
             irc_msgbuffer_get_target_buffer (server, NULL, command, NULL, NULL),
             date,
             irc_protocol_tags (command, "irc_numeric", NULL, NULL),
             "%s%s",
             weechat_prefix ("network"),
-            (argv_eol[6][0] == ':') ? argv_eol[6] + 1 : argv_eol[6]);
+            str_params);
+        if (str_params)
+            free (str_params);
     }
     else
     {
