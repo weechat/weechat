@@ -2184,13 +2184,97 @@ TEST(IrcProtocolWithServer, whois_nick_msg)
 {
     SRV_INIT;
 
-    /* not enough arguments */
+    /* not enough parameters */
     RECV(":server 223");
-    CHECK_ERROR_ARGS("223", 2, 5);
+    CHECK_ERROR_PARAMS("223", 0, 3);
     RECV(":server 223 alice");
-    CHECK_ERROR_ARGS("223", 3, 5);
+    CHECK_ERROR_PARAMS("223", 1, 3);
     RECV(":server 223 alice bob");
-    CHECK_ERROR_ARGS("223", 4, 5);
+    CHECK_ERROR_PARAMS("223", 2, 3);
+    RECV(":server 264");
+    CHECK_ERROR_PARAMS("264", 0, 3);
+    RECV(":server 264 alice");
+    CHECK_ERROR_PARAMS("264", 1, 3);
+    RECV(":server 264 alice bob");
+    CHECK_ERROR_PARAMS("264", 2, 3);
+    RECV(":server 275");
+    CHECK_ERROR_PARAMS("275", 0, 3);
+    RECV(":server 275 alice");
+    CHECK_ERROR_PARAMS("275", 1, 3);
+    RECV(":server 275 alice bob");
+    CHECK_ERROR_PARAMS("275", 2, 3);
+    RECV(":server 276");
+    CHECK_ERROR_PARAMS("276", 0, 3);
+    RECV(":server 276 alice");
+    CHECK_ERROR_PARAMS("276", 1, 3);
+    RECV(":server 276 alice bob");
+    CHECK_ERROR_PARAMS("276", 2, 3);
+    RECV(":server 307");
+    CHECK_ERROR_PARAMS("307", 0, 3);
+    RECV(":server 307 alice");
+    CHECK_ERROR_PARAMS("307", 1, 3);
+    RECV(":server 307 alice bob");
+    CHECK_ERROR_PARAMS("307", 2, 3);
+    RECV(":server 310");
+    CHECK_ERROR_PARAMS("310", 0, 3);
+    RECV(":server 310 alice");
+    CHECK_ERROR_PARAMS("310", 1, 3);
+    RECV(":server 310 alice bob");
+    CHECK_ERROR_PARAMS("310", 2, 3);
+    RECV(":server 313");
+    CHECK_ERROR_PARAMS("313", 0, 3);
+    RECV(":server 313 alice");
+    CHECK_ERROR_PARAMS("313", 1, 3);
+    RECV(":server 313 alice bob");
+    CHECK_ERROR_PARAMS("313", 2, 3);
+    RECV(":server 318");
+    CHECK_ERROR_PARAMS("318", 0, 3);
+    RECV(":server 318 alice");
+    CHECK_ERROR_PARAMS("318", 1, 3);
+    RECV(":server 318 alice bob");
+    CHECK_ERROR_PARAMS("318", 2, 3);
+    RECV(":server 319");
+    CHECK_ERROR_PARAMS("319", 0, 3);
+    RECV(":server 319 alice");
+    CHECK_ERROR_PARAMS("319", 1, 3);
+    RECV(":server 319 alice bob");
+    CHECK_ERROR_PARAMS("319", 2, 3);
+    RECV(":server 320");
+    CHECK_ERROR_PARAMS("320", 0, 3);
+    RECV(":server 320 alice");
+    CHECK_ERROR_PARAMS("320", 1, 3);
+    RECV(":server 320 alice bob");
+    CHECK_ERROR_PARAMS("320", 2, 3);
+    RECV(":server 326");
+    CHECK_ERROR_PARAMS("326", 0, 3);
+    RECV(":server 326 alice");
+    CHECK_ERROR_PARAMS("326", 1, 3);
+    RECV(":server 326 alice bob");
+    CHECK_ERROR_PARAMS("326", 2, 3);
+    RECV(":server 335");
+    CHECK_ERROR_PARAMS("335", 0, 3);
+    RECV(":server 335 alice");
+    CHECK_ERROR_PARAMS("335", 1, 3);
+    RECV(":server 335 alice bob");
+    CHECK_ERROR_PARAMS("335", 2, 3);
+    RECV(":server 378");
+    CHECK_ERROR_PARAMS("378", 0, 3);
+    RECV(":server 378 alice");
+    CHECK_ERROR_PARAMS("378", 1, 3);
+    RECV(":server 378 alice bob");
+    CHECK_ERROR_PARAMS("378", 2, 3);
+    RECV(":server 379");
+    CHECK_ERROR_PARAMS("379", 0, 3);
+    RECV(":server 379 alice");
+    CHECK_ERROR_PARAMS("379", 1, 3);
+    RECV(":server 379 alice bob");
+    CHECK_ERROR_PARAMS("379", 2, 3);
+    RECV(":server 671");
+    CHECK_ERROR_PARAMS("671", 0, 3);
+    RECV(":server 671 alice");
+    CHECK_ERROR_PARAMS("671", 1, 3);
+    RECV(":server 671 alice bob");
+    CHECK_ERROR_PARAMS("671", 2, 3);
 
     RECV(":server 223 alice bob UTF-8");
     CHECK_SRV("-- [bob] UTF-8");
@@ -2238,13 +2322,13 @@ TEST(IrcProtocolWithServer, whowas_nick_msg)
 {
     SRV_INIT;
 
-    /* not enough arguments */
+    /* not enough parameters */
     RECV(":server 369");
-    CHECK_ERROR_ARGS("369", 2, 5);
+    CHECK_ERROR_PARAMS("369", 0, 3);
     RECV(":server 369 alice");
-    CHECK_ERROR_ARGS("369", 3, 5);
+    CHECK_ERROR_PARAMS("369", 1, 3);
     RECV(":server 369 alice bob");
-    CHECK_ERROR_ARGS("369", 4, 5);
+    CHECK_ERROR_PARAMS("369", 2, 3);
 
     RECV(":server 369 alice bob end");
     CHECK_SRV("-- [bob] end");
