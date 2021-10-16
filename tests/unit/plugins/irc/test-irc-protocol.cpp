@@ -3824,15 +3824,15 @@ TEST(IrcProtocolWithServer, 728)
 {
     SRV_INIT_JOIN;
 
-    /* not enough arguments */
+    /* not enough parameters */
     RECV(":server 728");
-    CHECK_ERROR_ARGS("728", 2, 6);
+    CHECK_ERROR_PARAMS("728", 0, 4);
     RECV(":server 728 alice");
-    CHECK_ERROR_ARGS("728", 3, 6);
+    CHECK_ERROR_PARAMS("728", 1, 4);
     RECV(":server 728 alice #test");
-    CHECK_ERROR_ARGS("728", 4, 6);
+    CHECK_ERROR_PARAMS("728", 2, 4);
     RECV(":server 728 alice #test q");
-    CHECK_ERROR_ARGS("728", 5, 6);
+    CHECK_ERROR_PARAMS("728", 3, 4);
 
     RECV(":server 728 alice #test q nick1!user1@host1");
     CHECK_CHAN("-- [#test] nick1!user1@host1 quieted");
