@@ -4602,31 +4602,30 @@ IRC_PROTOCOL_CALLBACK(331)
  * Callback for the IRC command "332": topic of channel.
  *
  * Command looks like:
- *   :server 332 mynick #channel :topic of channel
+ *   332 mynick #channel :topic of channel
  */
 
 IRC_PROTOCOL_CALLBACK(332)
 {
-    char *pos_topic, *topic_no_color, *topic_color;
+    char *str_topic, *topic_no_color, *topic_color;
     struct t_irc_channel *ptr_channel;
     struct t_gui_buffer *ptr_buffer;
 
-    IRC_PROTOCOL_MIN_ARGS(4);
+    IRC_PROTOCOL_MIN_PARAMS(2);
 
-    pos_topic = NULL;
-    if (argc >= 5)
-        pos_topic = (argv_eol[4][0] == ':') ? argv_eol[4] + 1 : argv_eol[4];
+    str_topic = (num_params >= 3) ?
+        irc_protocol_string_params (params, 2, num_params - 1) : NULL;
 
-    ptr_channel = irc_channel_search (server, argv[3]);
+    ptr_channel = irc_channel_search (server, params[1]);
 
     if (ptr_channel && ptr_channel->nicks)
     {
-        if (pos_topic)
+        if (str_topic)
         {
             topic_no_color = (weechat_config_boolean (irc_config_network_colors_receive)) ?
-                NULL : irc_color_decode (pos_topic, 0);
+                NULL : irc_color_decode (str_topic, 0);
             irc_channel_set_topic (ptr_channel,
-                                   (topic_no_color) ? topic_no_color : pos_topic);
+                                   (topic_no_color) ? topic_no_color : str_topic);
             if (topic_no_color)
                 free (topic_no_color);
         }
@@ -4636,10 +4635,11 @@ IRC_PROTOCOL_CALLBACK(332)
         ptr_buffer = server->buffer;
 
     topic_color = NULL;
-    if (pos_topic)
+    if (str_topic)
     {
-        topic_color = irc_color_decode (pos_topic,
-                                        (weechat_config_boolean (irc_config_network_colors_receive)) ? 1 : 0);
+        topic_color = irc_color_decode (
+            str_topic,
+            (weechat_config_boolean (irc_config_network_colors_receive)) ? 1 : 0);
     }
 
     if (!ptr_channel
@@ -4654,10 +4654,10 @@ IRC_PROTOCOL_CALLBACK(332)
             _("%sTopic for %s%s%s is \"%s%s%s\""),
             weechat_prefix ("network"),
             IRC_COLOR_CHAT_CHANNEL,
-            argv[3],
+            params[1],
             IRC_COLOR_RESET,
             IRC_COLOR_TOPIC_CURRENT,
-            (topic_color) ? topic_color : ((pos_topic) ? pos_topic : ""),
+            (topic_color) ? topic_color : ((str_topic) ? str_topic : ""),
             IRC_COLOR_RESET);
     }
 
@@ -4666,6 +4666,9 @@ IRC_PROTOCOL_CALLBACK(332)
 
     if (ptr_channel)
         weechat_hashtable_set (ptr_channel->join_msg_received, command, "1");
+
+    if (str_topic)
+        free (str_topic);
 
     return WEECHAT_RC_OK;
 }

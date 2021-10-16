@@ -2810,11 +2810,11 @@ TEST(IrcProtocolWithServer, 332)
 {
     SRV_INIT_JOIN;
 
-    /* not enough arguments */
+    /* not enough parameters */
     RECV(":server 332");
-    CHECK_ERROR_ARGS("332", 2, 4);
+    CHECK_ERROR_PARAMS("332", 0, 2);
     RECV(":server 332 alice");
-    CHECK_ERROR_ARGS("332", 3, 4);
+    CHECK_ERROR_PARAMS("332", 1, 2);
 
     POINTERS_EQUAL(NULL, ptr_server->channels->topic);
 
