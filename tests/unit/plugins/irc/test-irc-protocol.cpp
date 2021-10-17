@@ -4065,6 +4065,9 @@ TEST(IrcProtocolWithServer, 903_907)
     CHECK_SRV("-- ok");
     RECV(":server 903 alice :SASL authentication successful");
     CHECK_SRV("-- SASL authentication successful");
+    RECV(":server 903 * :SASL authentication successful");
+    CHECK_SRV("-- SASL authentication successful");
+
 
     RECV(":server 907 alice ok");
     CHECK_SRV("-- ok");

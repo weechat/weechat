@@ -3149,7 +3149,8 @@ IRC_PROTOCOL_CALLBACK(numeric)
 
     IRC_PROTOCOL_MIN_PARAMS(1);
 
-    arg_text = (irc_server_strcasecmp (server, server->nick, params[0]) == 0) ?
+    arg_text = ((irc_server_strcasecmp (server, server->nick, params[0]) == 0)
+                || (strcmp (params[0], "*") == 0)) ?
         1 : 0;
 
     str_params = irc_protocol_string_params (params, arg_text, num_params - 1);
@@ -6910,7 +6911,8 @@ IRC_PROTOCOL_CALLBACK(901)
  * Callback for the IRC commands "903" and "907" (SASL OK).
  *
  * Commands look like:
- *   903 nick :SASL authentication successful
+ *   903 nick :Authentication successful
+ *   903 * :Authentication successful
  */
 
 IRC_PROTOCOL_CALLBACK(sasl_end_ok)
