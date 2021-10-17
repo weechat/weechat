@@ -6823,27 +6823,44 @@ IRC_PROTOCOL_CALLBACK(734)
  *
  * Command looks like:
  *   900 mynick nick!user@host mynick :You are now logged in as mynick
+ *   900 * * mynick :You are now logged in as mynick
  */
 
 IRC_PROTOCOL_CALLBACK(900)
 {
     char *str_params;
+    const char *pos_nick_host;
 
     IRC_PROTOCOL_MIN_PARAMS(4);
 
+    pos_nick_host = (strcmp (params[1], "*") != 0) ? params[1] : NULL;
+
     str_params = irc_protocol_string_params (params, 3, num_params - 1);
 
-    weechat_printf_date_tags (
-        irc_msgbuffer_get_target_buffer (server, params[1], command, NULL, NULL),
-        date,
-        irc_protocol_tags (command, "irc_numeric", NULL, NULL),
-        "%s%s %s(%s%s%s)",
-        weechat_prefix ("network"),
-        str_params,
-        IRC_COLOR_CHAT_DELIMITERS,
-        IRC_COLOR_CHAT_HOST,
-        params[1],
-        IRC_COLOR_CHAT_DELIMITERS);
+    if (pos_nick_host)
+    {
+        weechat_printf_date_tags (
+            irc_msgbuffer_get_target_buffer (server, NULL, command, NULL, NULL),
+            date,
+            irc_protocol_tags (command, "irc_numeric", NULL, NULL),
+            "%s%s %s(%s%s%s)",
+            weechat_prefix ("network"),
+            str_params,
+            IRC_COLOR_CHAT_DELIMITERS,
+            IRC_COLOR_CHAT_HOST,
+            pos_nick_host,
+            IRC_COLOR_CHAT_DELIMITERS);
+    }
+    else
+    {
+        weechat_printf_date_tags (
+            irc_msgbuffer_get_target_buffer (server, NULL, command, NULL, NULL),
+            date,
+            irc_protocol_tags (command, "irc_numeric", NULL, NULL),
+            "%s%s",
+            weechat_prefix ("network"),
+            str_params);
+    }
 
     irc_server_free_sasl_data (server);
 

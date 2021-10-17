@@ -4014,6 +4014,8 @@ TEST(IrcProtocolWithServer, 900)
     RECV(":server 900 alice alice!user@host alice "
          ":You are now logged in as mynick");
     CHECK_SRV("-- You are now logged in as mynick (alice!user@host)");
+    RECV(":server 900 * * alice :You are now logged in as mynick");
+    CHECK_SRV("-- You are now logged in as mynick");
 }
 
 /*
