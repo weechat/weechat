@@ -765,8 +765,11 @@ irc_protocol_cap_sync (struct t_irc_server *server, int sasl)
  *
  * Command looks like:
  *   CAP * LS :identify-msg multi-prefix sasl
- *   CAP * ACK :sasl
- *   CAP * NAK :sasl
+ *   CAP * LIST :identify-msg multi-prefix
+ *   CAP * ACK :identify-msg
+ *   CAP * NAK :multi-prefix
+ *   CAP * NEW :batch
+ *   CAP * DEL :identify-msg multi-prefix
  */
 
 IRC_PROTOCOL_CALLBACK(cap)
