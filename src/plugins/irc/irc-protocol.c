@@ -1360,7 +1360,7 @@ IRC_PROTOCOL_CALLBACK(fail)
  *   :ChanServ!ChanServ@example.com INVITE Attila #channel
  *
  * For more information, see:
- * https://ircv3.net/specs/extensions/invite-notify-3.2.html
+ * https://ircv3.net/specs/extensions/invite-notify
  */
 
 IRC_PROTOCOL_CALLBACK(invite)
