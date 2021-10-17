@@ -1420,6 +1420,9 @@ IRC_PROTOCOL_CALLBACK(invite)
  * With extended-join capability:
  *   JOIN #channel * :real name
  *   JOIN #channel account :real name
+ *
+ * For more information, see:
+ * https://ircv3.net/specs/extensions/extended-join
  */
 
 IRC_PROTOCOL_CALLBACK(join)
