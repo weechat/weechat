@@ -429,7 +429,7 @@ msgstr "%sError: el buffer principal de WeeChat no puede ser cerrado"
 
 #, c-format
 msgid "Notify for \"%s%s%s\": \"%s%s%s\""
-msgstr "%sNotificar \"%s%s%s\":  \"%s%s%s\""
+msgstr "Notificar \"%s%s%s\":  \"%s%s%s\""
 
 #, c-format
 msgid "%sUnable to set notify level \"%s\""
@@ -690,7 +690,7 @@ msgstr "%sTema \"%s\" no encontrado"
 
 #, c-format
 msgid "%sLayout \"%s\" already exists for \"%s\" command"
-msgstr "%s%s: ya existe el tema \"%s\" para el comando \"%s\""
+msgstr "%s: ya existe el tema \"%s\" para el comando \"%s\""
 
 #, c-format
 msgid "Layout \"%s\" has been renamed to \"%s\""
@@ -852,8 +852,8 @@ msgstr "%sError: no se pudo configurar la opción \"%s\" para el proxy \"%s\""
 msgid ""
 "%sYou must confirm /%s command with extra argument \"-yes\" (see /help %s)"
 msgstr ""
-"%sDebes confirmar el comando de salida con el argumento extra \"-yes\" (ver /"
-"help quit)"
+"%sDebes confirmar el comando /%s con el argumento extra \"-yes\" (ver /"
+"help quit %s)"
 
 #, c-format
 msgid "Options reloaded from %s"
@@ -972,7 +972,7 @@ msgstr "Variable \"%s\" no definida"
 
 #, c-format
 msgid "%sFailed to set variable \"%s\": %s"
-msgstr "%sError: no se pudo configurar la variable: \"%s\""
+msgstr "%sError: no se pudo configurar la variable \"%s\": %s"
 
 #, c-format
 msgid "Variable \"%s\" unset"
@@ -1081,7 +1081,7 @@ msgstr "compilado en"
 
 #, c-format
 msgid "Upgraded %d %s, first start: %s, last start: %s"
-msgstr "Actualizado el %d %s, último inicio: %s"
+msgstr "Actualizado el %d %s, primer inicio: %s, último inicio: %s"
 
 #. TRANSLATORS: text is: "upgraded xx times"
 msgid "time"
@@ -3048,7 +3048,7 @@ msgstr ""
 
 #, c-format
 msgid "%sToo few arguments for command \"%s%s%s\" (help on command: /help %s)"
-msgstr "%sError con los argumentos del comando \"%s\" (trata con /help %s)"
+msgstr "%sError con los argumentos del comando \"%s%s%s\" (trata con /help %s)"
 
 #, c-format
 msgid "%sError with command \"%s\" (help on command: /help %s)"
@@ -13335,7 +13335,7 @@ msgstr "FALLÓ"
 
 #, c-format
 msgid "%s%s: chat closed with %s (%s)"
-msgstr "%s: chat cerrado con con %s (%s)"
+msgstr "%s%s: chat cerrado con con %s (%s)"
 
 #, c-format
 msgid "%s%s: aborting active xfer: \"%s\" from %s"
@@ -13358,7 +13358,6 @@ msgid ""
 "%s: incoming file from %s (%s, %s.%s), name: %s, %llu bytes (protocol: %s)"
 msgstr ""
 "%s: archivo entrante de %s (%s, %s.%s), nombre: %s, %llu bytes (protocolo: %s)"
-"bytes (protocolo: %s)"
 
 #, c-format
 msgid ""
@@ -13472,8 +13471,8 @@ msgid ""
 "     plugin: %s (id: %s), file: %llu bytes (position: %llu), address: %s "
 "(port %d)"
 msgstr ""
-"     plugin: %s (id: %s), archivo: %llu bytes (posición: %llu), dirección: "
-"%ld.%ld.%ld.%ld (puerto %d)"
+"     plugin: %s (id: %s), archivo: %llu bytes (posición: %llu), dirección: %s "
+"(puerto %d)"
 
 #. TRANSLATORS: "%s" after "started on" is a date
 #, c-format
@@ -13703,11 +13702,11 @@ msgstr ""
 
 #, c-format
 msgid "%s%s: unable to create socket for sending file: error %d %s"
-msgstr "%s%s: no es posible crear el socket para enviar el archivo"
+msgstr "%s%s: no es posible crear el socket para enviar el archivo: error %d %s"
 
 #, c-format
 msgid "%s%s: unable to set option \"nonblock\" for socket: error %d %s"
-msgstr "%s%s: no es posible configurar la opción \"nonblock\" para el socket"
+msgstr "%s%s: no es posible configurar la opción \"nonblock\" para el socket: error %d %s"
 
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
