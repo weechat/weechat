@@ -73,6 +73,7 @@ struct t_eval_context
 {
     struct t_hashtable *pointers;      /* pointers used in eval             */
     struct t_hashtable *extra_vars;    /* extra variables used in eval      */
+    struct t_hashtable *user_vars;     /* user-defined variables            */
     int extra_vars_eval;               /* 1 if extra vars must be evaluated */
     const char *prefix;                /* prefix (default is "${")          */
     const char *suffix;                /* suffix (default is "}")           */

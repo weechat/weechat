@@ -183,7 +183,7 @@ TEST(Scripts, API)
     /* check that there was no errors in script generation */
     LONGS_EQUAL(0, api_tests_errors);
 
-    /* unload generator scritp */
+    /* unload generator script */
     snprintf (str_command, sizeof (str_command),
               "/script unload testapigen.py");
     run_cmd (str_command);

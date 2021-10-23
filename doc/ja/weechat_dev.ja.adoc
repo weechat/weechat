@@ -424,6 +424,8 @@ WeeChat "core" は以下のディレクトリに配置されています:
 // TRANSLATION MISSING
 |          test-core-calc.cpp        | Tests: calculation of expressions.
 // TRANSLATION MISSING
+|          test-core-config-file.cpp | Tests: configuration files.
+// TRANSLATION MISSING
 |          test-core-crypto.cpp      | Tests: cryptographic functions.
 // TRANSLATION MISSING
 |          test-core-dir.cpp         | Tests: directory/file functions.

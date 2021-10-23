@@ -1375,30 +1375,32 @@ To force a string comparison, you can add double quotes around each expression, 
 
 Some variables are replaced in expression, using the format ${variable}, variable can be, by order of priority:
   1. the string itself without evaluation (format: "raw:xxx")
-  2. an evaluated sub-string (format: "eval:xxx")
-  3. an evaluated condition (format: "eval_cond:xxx")
-  4. a string with escaped chars (format: "esc:xxx" or "\xxx")
-  5. a string with chars to hide (format: "hide:char,string")
-  6. a string with max chars (format: "cut:max,suffix,string" or "cut:+max,suffix,string")
+  2. a user-defined variable (format: "name")
+  3. an evaluated sub-string (format: "eval:xxx")
+  4. an evaluated condition (format: "eval_cond:xxx")
+  5. a string with escaped chars (format: "esc:xxx" or "\xxx")
+  6. a string with chars to hide (format: "hide:char,string")
+  7. a string with max chars (format: "cut:max,suffix,string" or "cut:+max,suffix,string")
      or max chars displayed on screen (format: "cutscr:max,suffix,string" or "cutscr:+max,suffix,string")
-  7. a reversed string (format: "rev:xxx" or "revscr:xxx")
-  8. a repeated string (format: "repeat:count,string")
-  9. length of a string (format: "length:xxx" or "lengthscr:xxx")
-  10. split of a string (format: "split:number,separators,flags,xxx")
-  11. split of shell argmuents (format: "split_shell:number,xxx")
-  12. a color (format: "color:xxx", see "Plugin API reference", function "color")
-  13. a modifier (format: "modifier:name,data,string")
-  14. an info (format: "info:name,arguments", arguments are optional)
-  15. a base 16/32/64 encoded/decoded string (format: "base_encode:base,xxx" or "base_decode:base,xxx")
-  16. current date/time (format: "date" or "date:format")
-  17. an environment variable (format: "env:XXX")
-  18. a ternary operator (format: "if:condition?value_if_true:value_if_false")
-  19. result of an expression with parentheses and operators + - * / // % ** (format: "calc:xxx")
-  20. a random integer number (format: "random:min,max")
-  21. a translated string (format: "translate:xxx")
-  22. an option (format: "file.section.option")
-  23. a local variable in buffer
-  24. a hdata name/variable (the value is automatically converted to string), by default "window" and "buffer" point to current window/buffer.
+  8. a reversed string (format: "rev:xxx" or "revscr:xxx")
+  9. a repeated string (format: "repeat:count,string")
+  10. length of a string (format: "length:xxx" or "lengthscr:xxx")
+  11. split of a string (format: "split:number,separators,flags,xxx")
+  12. split of shell argmuents (format: "split_shell:number,xxx")
+  13. a color (format: "color:xxx", see "Plugin API reference", function "color")
+  14. a modifier (format: "modifier:name,data,string")
+  15. an info (format: "info:name,arguments", arguments are optional)
+  16. a base 16/32/64 encoded/decoded string (format: "base_encode:base,xxx" or "base_decode:base,xxx")
+  17. current date/time (format: "date" or "date:format")
+  18. an environment variable (format: "env:XXX")
+  19. a ternary operator (format: "if:condition?value_if_true:value_if_false")
+  20. result of an expression with parentheses and operators + - * / // % ** (format: "calc:xxx")
+  21. a random integer number (format: "random:min,max")
+  22. a translated string (format: "translate:xxx")
+  23. define a user variable (format: "define:name,value")
+  24. an option (format: "file.section.option")
+  25. a local variable in buffer
+  26. a hdata name/variable (the value is automatically converted to string), by default "window" and "buffer" point to current window/buffer.
 Format for hdata can be one of following:
   hdata.var1.var2...: start with a hdata (pointer must be known), and ask variables one after one (other hdata can be followed)
   hdata[list].var1.var2...: start with a hdata using a list/pointer/pointer name, for example:
@@ -1410,38 +1412,39 @@ Format for hdata can be one of following:
 For name of hdata and variables, please look at "Plugin API reference", function "weechat_hdata_get".
 
 Examples (simple strings):
-  /eval -n ${raw:${info:version}}                ==> ${info:version}
-  /eval -n ${eval_cond:${window.win_width}>100}  ==> 1
-  /eval -n ${info:version}                       ==> 0.4.3
-  /eval -n ${env:HOME}                           ==> /home/user
-  /eval -n ${weechat.look.scroll_amount}         ==> 3
-  /eval -n ${sec.data.password}                  ==> secret
-  /eval -n ${window}                             ==> 0x2549aa0
-  /eval -n ${window.buffer}                      ==> 0x2549320
-  /eval -n ${window.buffer.full_name}            ==> core.weechat
-  /eval -n ${window.buffer.number}               ==> 1
-  /eval -n ${\t}                                 ==> <tab>
-  /eval -n ${hide:-,${relay.network.password}}   ==> --------
-  /eval -n ${cut:3,+,test}                       ==> tes+
-  /eval -n ${cut:+3,+,test}                      ==> te+
-  /eval -n ${date:%H:%M:%S}                      ==> 07:46:40
-  /eval -n ${if:${info:term_width}>80?big:small} ==> big
-  /eval -n ${rev:Hello}                          ==> olleH
-  /eval -n ${repeat:5,-}                         ==> -----
-  /eval -n ${length:test}                        ==> 4
-  /eval -n ${split:1,,,abc,def,ghi}              ==> abc
-  /eval -n ${split:-1,,,abc,def,ghi}             ==> ghi
-  /eval -n ${split:count,,,abc,def,ghi}          ==> 3
-  /eval -n ${split:random,,,abc,def,ghi}         ==> def
-  /eval -n ${split_shell:1,"arg 1" arg2}         ==> arg 1
-  /eval -n ${split_shell:-1,"arg 1" arg2}        ==> arg2
-  /eval -n ${split_shell:count,"arg 1" arg2}     ==> 2
-  /eval -n ${split_shell:random,"arg 1" arg2}    ==> arg2
-  /eval -n ${calc:(5+2)*3}                       ==> 21
-  /eval -n ${random:0,10}                        ==> 3
-  /eval -n ${base_encode:64,test}                ==> dGVzdA==
-  /eval -n ${base_decode:64,dGVzdA==}            ==> test
-  /eval -n ${translate:Plugin}                   ==> Extension
+  /eval -n ${raw:${info:version}}                 ==> ${info:version}
+  /eval -n ${eval_cond:${window.win_width}>100}   ==> 1
+  /eval -n ${info:version}                        ==> 0.4.3
+  /eval -n ${env:HOME}                            ==> /home/user
+  /eval -n ${weechat.look.scroll_amount}          ==> 3
+  /eval -n ${sec.data.password}                   ==> secret
+  /eval -n ${window}                              ==> 0x2549aa0
+  /eval -n ${window.buffer}                       ==> 0x2549320
+  /eval -n ${window.buffer.full_name}             ==> core.weechat
+  /eval -n ${window.buffer.number}                ==> 1
+  /eval -n ${\t}                                  ==> <tab>
+  /eval -n ${hide:-,${relay.network.password}}    ==> --------
+  /eval -n ${cut:3,+,test}                        ==> tes+
+  /eval -n ${cut:+3,+,test}                       ==> te+
+  /eval -n ${date:%H:%M:%S}                       ==> 07:46:40
+  /eval -n ${if:${info:term_width}>80?big:small}  ==> big
+  /eval -n ${rev:Hello}                           ==> olleH
+  /eval -n ${repeat:5,-}                          ==> -----
+  /eval -n ${length:test}                         ==> 4
+  /eval -n ${split:1,,,abc,def,ghi}               ==> abc
+  /eval -n ${split:-1,,,abc,def,ghi}              ==> ghi
+  /eval -n ${split:count,,,abc,def,ghi}           ==> 3
+  /eval -n ${split:random,,,abc,def,ghi}          ==> def
+  /eval -n ${split_shell:1,"arg 1" arg2}          ==> arg 1
+  /eval -n ${split_shell:-1,"arg 1" arg2}         ==> arg2
+  /eval -n ${split_shell:count,"arg 1" arg2}      ==> 2
+  /eval -n ${split_shell:random,"arg 1" arg2}     ==> arg2
+  /eval -n ${calc:(5+2)*3}                        ==> 21
+  /eval -n ${random:0,10}                         ==> 3
+  /eval -n ${base_encode:64,test}                 ==> dGVzdA==
+  /eval -n ${base_decode:64,dGVzdA==}             ==> test
+  /eval -n ${translate:Plugin}                    ==> Extension
+  /eval -n ${define:len,${calc:5+3}}${len}x${len} ==> 8x8
 
 Examples (conditions):
   /eval -n -c ${window.buffer.number} > 2 ==> 0
@@ -1988,6 +1991,32 @@ option: オプションの名前 (value を指定せずにワイルドカード 
     /upgrade
   環境変数 ABC の値を削除する:
     /set env ABC ""
+----
+
+[[command_weechat_toggle]]
+* `+toggle+`: toggle value of a config option
+
+----
+/toggle  <option> [<value> [<value>...]]
+
+option: name of an option
+ value: possible values for the option (values are split like the shell command arguments: quotes can be used to preserve spaces at the beginning/end of values)
+
+Behavior:
+  - only an option of type boolean or string can be toggled without a value:
+      - boolean: toggle between on/off according to current value
+      - string: toggle between empty string and default value (works only if empty string is allowed for the option)
+  - with a single value given, toggle between this value and the default value of option
+  - with multiple values given, toggle between these values: the value used is the one following the current value of option; if the current value of option is not in list, the first value in the list is used
+  - the special value "null" can be given, but only as first value in the list and without quotes around.
+
+Examples:
+  toggle display of time in chat area (without displaying the new value used):
+    /mute /toggle weechat.look.buffer_time_format
+  switch format of time in chat area (with seconds, without seconds, disabled):
+    /toggle weechat.look.buffer_time_format "%H:%M:%S" "%H:%M" ""
+  toggle autojoin of #weechat channel on libera server:
+    /toggle irc.server.libera.autojoin null #weechat
 ----
 
 [[command_weechat_unset]]

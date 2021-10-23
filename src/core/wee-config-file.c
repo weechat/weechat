@@ -835,6 +835,9 @@ config_file_search_option (struct t_config_file *config_file,
     struct t_config_option *ptr_option;
     int rc;
 
+    if (!option_name)
+        return NULL;
+
     if (section)
     {
         for (ptr_option = section->last_option; ptr_option;
@@ -844,7 +847,7 @@ config_file_search_option (struct t_config_file *config_file,
             if (rc == 0)
                 return ptr_option;
             else if (rc < 0)
-                return NULL;
+                break;
         }
     }
     else if (config_file)
@@ -859,7 +862,7 @@ config_file_search_option (struct t_config_file *config_file,
                 if (rc == 0)
                     return ptr_option;
                 else if (rc < 0)
-                    return NULL;
+                    break;
             }
         }
     }
@@ -889,6 +892,9 @@ config_file_search_section_option (struct t_config_file *config_file,
     *section_found = NULL;
     *option_found = NULL;
 
+    if (!option_name)
+        return;
+
     if (section)
     {
         for (ptr_option = section->last_option; ptr_option;
@@ -902,7 +908,7 @@ config_file_search_section_option (struct t_config_file *config_file,
                 return;
             }
             else if (rc < 0)
-                return;
+                break;
         }
     }
     else if (config_file)
@@ -921,7 +927,7 @@ config_file_search_section_option (struct t_config_file *config_file,
                     return;
                 }
                 else if (rc < 0)
-                    return;
+                    break;
             }
         }
     }
@@ -952,6 +958,9 @@ config_file_search_with_string (const char *option_name,
         *option = NULL;
     if (pos_option_name)
         *pos_option_name = NULL;
+
+    if (!option_name)
+        return;
 
     ptr_config = NULL;
     ptr_section = NULL;
@@ -1512,6 +1521,110 @@ config_file_option_set (struct t_config_option *option, const char *value,
 }
 
 /*
+ * Toggles value of an option.
+ *
+ * Returns:
+ *   WEECHAT_CONFIG_OPTION_SET_OK_CHANGED: OK, value has been changed
+ *   WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE: OK, value not changed
+ *   WEECHAT_CONFIG_OPTION_SET_ERROR: error
+ */
+
+int
+config_file_option_toggle (struct t_config_option *option,
+                           const char **values, int num_values,
+                           int run_callback)
+{
+    char *current_value;
+    const char *ptr_new_value, *empty_string = "";
+    int i, rc, index_found, value_is_null, reset_value;
+
+    if (!option || (num_values < 0))
+        return WEECHAT_CONFIG_OPTION_SET_ERROR;
+
+    rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
+    ptr_new_value = NULL;
+    reset_value = 0;
+
+    value_is_null = (option->value == NULL);
+    current_value = config_file_option_value_to_string (option, 0, 0, 0);
+
+    switch (option->type)
+    {
+        case CONFIG_OPTION_TYPE_BOOLEAN:
+            if (!values)
+            {
+                ptr_new_value = (option->value && CONFIG_BOOLEAN(option)) ?
+                    config_boolean_false[0] : config_boolean_true[0];
+            }
+            break;
+        case CONFIG_OPTION_TYPE_INTEGER:
+            if (!values)
+                goto end;
+            break;
+        case CONFIG_OPTION_TYPE_STRING:
+            if (!values)
+            {
+                if (option->value && (strcmp (CONFIG_STRING(option), "") == 0))
+                    ptr_new_value = CONFIG_STRING_DEFAULT(option);
+                else
+                    ptr_new_value = empty_string;
+            }
+            break;
+        case CONFIG_OPTION_TYPE_COLOR:
+            if (!values)
+                goto end;
+            break;
+        case CONFIG_NUM_OPTION_TYPES:
+            /* make C compiler happy */
+            break;
+    }
+
+    /* search new value to use with the provided list of values */
+    if (!ptr_new_value && values)
+    {
+        index_found = -1;
+        for (i = 0; i < num_values; i++)
+        {
+            if ((value_is_null && !values[i])
+                || (!value_is_null && current_value && values[i]
+                    && strcmp (current_value, values[i]) == 0))
+            {
+                index_found = i;
+                break;
+            }
+        }
+        if (index_found >= 0)
+        {
+            if (index_found + 1 < num_values)
+            {
+                ptr_new_value =  values[index_found + 1];
+            }
+            else
+            {
+                if (num_values < 2)
+                    reset_value = 1;
+                else
+                    ptr_new_value = values[0];
+            }
+        }
+        else
+        {
+            ptr_new_value = values[0];
+        }
+    }
+
+    if (reset_value)
+        rc = config_file_option_reset (option, run_callback);
+    else
+        rc = config_file_option_set (option, ptr_new_value, run_callback);
+
+end:
+    if (current_value)
+        free (current_value);
+    return rc;
+}
+
+/*
  * Sets null (undefined) value for an option.
  *
  * Returns:
@@ -1738,6 +1851,9 @@ config_file_option_value_to_string (struct t_config_option *option,
     char *value;
     const char *ptr_value;
     int enabled, length;
+
+    if (!option)
+        return NULL;
 
     if ((default_value && !option->default_value)
         || (!default_value && !option->value))

@@ -2351,7 +2351,7 @@ str3 = weechat.string_input_for_buffer("//test")  # "/test"
 ==== string_eval_expression
 
 _WeeChat ≥ 0.4.0, updated in 0.4.2, 0.4.3, 1.0, 1.1, 1.2, 1.3, 1.6, 1.8, 2.0,
-2.2, 2.3, 2.7, 2.9, 3.1, 3.2 and 3.3._
+2.2, 2.3, 2.7, 2.9, 3.1, 3.2, 3.3 and 3.4._
 
 Evaluate an expression and return result as a string.
 Special variables with format `+${variable}+` are expanded (see table below).
@@ -2672,6 +2672,12 @@ expanded to last):
   `+${raw:${info:version}}+` |
   `+${info:version}+`
 
+| `+${name}+` +
+  _(WeeChat ≥ 3.4)_ |
+  User variable (defined with `+${define:name,value}+`). |
+  `+${name}+` |
+  `+value+`
+
 | `+${name}+` |
   Variable `name` from hashtable _extra_vars_. |
   `+${name}+` |
@@ -2960,6 +2966,13 @@ expanded to last):
   `+${translate:Plugin}+` |
   `+Extension+` (example in French)
 
+| `+${define:name,value}+` +
+  _(WeeChat ≥ 3.4)_ |
+  Define a variable `name` set to `value`, which can then be used in the same
+  evaluated expression with `+${name}+`. |
+  `+${define:len,${calc:5+3}}${len}x${len}+` |
+  `+8x8+`
+
 | `+${sec.data.name}+` |
   Value of the secured data `name`. |
   `+${sec.data.libera_pass}+` |
@@ -2977,7 +2990,7 @@ expanded to last):
 
 | `+${pointer}+` |
   Variable `pointer` from hashtable _pointers_. |
-  `+${my_pointer}+` |
+  `+${buffer}+` |
   `+0x1234abcd+`
 
 | `+${hdata.var1.var2...}+` +

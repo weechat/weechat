@@ -1,3 +1,15 @@
+weechat (3.2.1-1) unstable; urgency=medium
+
+  * New upstream release
+    - fix CVE-2021-40516: possible denial of service (crash) via a crafted
+    WebSocket in relay plugin (Closes: #993803)
+  * Add a patch to fix a FTBFS (related to recent changes on which command
+    output) (Closes: #993333)
+  * Bump Standards-Version to 4.6.0.1
+  * Remove useless HomePage field in upstream/metadata
+
+ -- Emmanuel Bouthenot <kolter@debian.org>  Tue, 07 Sep 2021 20:25:39 +0000
+
 weechat (3.0.1-1) unstable; urgency=medium
 
   * New upstream release
