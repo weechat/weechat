@@ -3143,34 +3143,6 @@
 ** Standardwert: `+""+`
 // end::relay_options[]
 
-// tag::javascript_options[]
-* [[option_javascript.look.check_license]] *javascript.look.check_license*
-** Beschreibung: pass:none[Überprüft die Lizenz von Skripten, wenn sie geladen werden: Sollte die Lizenz abweichend von der Erweiterungslizenz sein, wird eine Warnung ausgegeben]
-** Typ: boolesch
-** Werte: on, off
-** Standardwert: `+off+`
-
-* [[option_javascript.look.eval_keep_context]] *javascript.look.eval_keep_context*
-** Beschreibung: pass:none[behält den Inhalt zwischen zwei Aufrufen bei Quellcode Evaluierung (Option "eval" des Skript-Befehls oder Info "%s_eval"); ein Hintergrundskript wird für die Evaluierung verwendet; wird diese Option deaktiviert, dann wird das Hintergrundskript nach jeder Evaluierung entfernt: das bedeutet weniger Speicherbedarf, ist aber langsamer]
-** Typ: boolesch
-** Werte: on, off
-** Standardwert: `+on+`
-// end::javascript_options[]
-
-// tag::ruby_options[]
-* [[option_ruby.look.check_license]] *ruby.look.check_license*
-** Beschreibung: pass:none[Überprüft die Lizenz von Skripten, wenn sie geladen werden: Sollte die Lizenz abweichend von der Erweiterungslizenz sein, wird eine Warnung ausgegeben]
-** Typ: boolesch
-** Werte: on, off
-** Standardwert: `+off+`
-
-* [[option_ruby.look.eval_keep_context]] *ruby.look.eval_keep_context*
-** Beschreibung: pass:none[behält den Inhalt zwischen zwei Aufrufen bei Quellcode Evaluierung (Option "eval" des Skript-Befehls oder Info "%s_eval"); ein Hintergrundskript wird für die Evaluierung verwendet; wird diese Option deaktiviert, dann wird das Hintergrundskript nach jeder Evaluierung entfernt: das bedeutet weniger Speicherbedarf, ist aber langsamer]
-** Typ: boolesch
-** Werte: on, off
-** Standardwert: `+on+`
-// end::ruby_options[]
-
 // tag::guile_options[]
 * [[option_guile.look.check_license]] *guile.look.check_license*
 ** Beschreibung: pass:none[Überprüft die Lizenz von Skripten, wenn sie geladen werden: Sollte die Lizenz abweichend von der Erweiterungslizenz sein, wird eine Warnung ausgegeben]
@@ -3185,19 +3157,33 @@
 ** Standardwert: `+on+`
 // end::guile_options[]
 
-// tag::tcl_options[]
-* [[option_tcl.look.check_license]] *tcl.look.check_license*
+// tag::javascript_options[]
+* [[option_javascript.look.check_license]] *javascript.look.check_license*
 ** Beschreibung: pass:none[Überprüft die Lizenz von Skripten, wenn sie geladen werden: Sollte die Lizenz abweichend von der Erweiterungslizenz sein, wird eine Warnung ausgegeben]
 ** Typ: boolesch
 ** Werte: on, off
 ** Standardwert: `+off+`
 
-* [[option_tcl.look.eval_keep_context]] *tcl.look.eval_keep_context*
+* [[option_javascript.look.eval_keep_context]] *javascript.look.eval_keep_context*
 ** Beschreibung: pass:none[behält den Inhalt zwischen zwei Aufrufen bei Quellcode Evaluierung (Option "eval" des Skript-Befehls oder Info "%s_eval"); ein Hintergrundskript wird für die Evaluierung verwendet; wird diese Option deaktiviert, dann wird das Hintergrundskript nach jeder Evaluierung entfernt: das bedeutet weniger Speicherbedarf, ist aber langsamer]
 ** Typ: boolesch
 ** Werte: on, off
 ** Standardwert: `+on+`
-// end::tcl_options[]
+// end::javascript_options[]
+
+// tag::lua_options[]
+* [[option_lua.look.check_license]] *lua.look.check_license*
+** Beschreibung: pass:none[Überprüft die Lizenz von Skripten, wenn sie geladen werden: Sollte die Lizenz abweichend von der Erweiterungslizenz sein, wird eine Warnung ausgegeben]
+** Typ: boolesch
+** Werte: on, off
+** Standardwert: `+off+`
+
+* [[option_lua.look.eval_keep_context]] *lua.look.eval_keep_context*
+** Beschreibung: pass:none[behält den Inhalt zwischen zwei Aufrufen bei Quellcode Evaluierung (Option "eval" des Skript-Befehls oder Info "%s_eval"); ein Hintergrundskript wird für die Evaluierung verwendet; wird diese Option deaktiviert, dann wird das Hintergrundskript nach jeder Evaluierung entfernt: das bedeutet weniger Speicherbedarf, ist aber langsamer]
+** Typ: boolesch
+** Werte: on, off
+** Standardwert: `+on+`
+// end::lua_options[]
 
 // tag::perl_options[]
 * [[option_perl.look.check_license]] *perl.look.check_license*
@@ -3227,20 +3213,6 @@
 ** Standardwert: `+on+`
 // end::php_options[]
 
-// tag::lua_options[]
-* [[option_lua.look.check_license]] *lua.look.check_license*
-** Beschreibung: pass:none[Überprüft die Lizenz von Skripten, wenn sie geladen werden: Sollte die Lizenz abweichend von der Erweiterungslizenz sein, wird eine Warnung ausgegeben]
-** Typ: boolesch
-** Werte: on, off
-** Standardwert: `+off+`
-
-* [[option_lua.look.eval_keep_context]] *lua.look.eval_keep_context*
-** Beschreibung: pass:none[behält den Inhalt zwischen zwei Aufrufen bei Quellcode Evaluierung (Option "eval" des Skript-Befehls oder Info "%s_eval"); ein Hintergrundskript wird für die Evaluierung verwendet; wird diese Option deaktiviert, dann wird das Hintergrundskript nach jeder Evaluierung entfernt: das bedeutet weniger Speicherbedarf, ist aber langsamer]
-** Typ: boolesch
-** Werte: on, off
-** Standardwert: `+on+`
-// end::lua_options[]
-
 // tag::python_options[]
 * [[option_python.look.check_license]] *python.look.check_license*
 ** Beschreibung: pass:none[Überprüft die Lizenz von Skripten, wenn sie geladen werden: Sollte die Lizenz abweichend von der Erweiterungslizenz sein, wird eine Warnung ausgegeben]
@@ -3254,6 +3226,34 @@
 ** Werte: on, off
 ** Standardwert: `+on+`
 // end::python_options[]
+
+// tag::ruby_options[]
+* [[option_ruby.look.check_license]] *ruby.look.check_license*
+** Beschreibung: pass:none[Überprüft die Lizenz von Skripten, wenn sie geladen werden: Sollte die Lizenz abweichend von der Erweiterungslizenz sein, wird eine Warnung ausgegeben]
+** Typ: boolesch
+** Werte: on, off
+** Standardwert: `+off+`
+
+* [[option_ruby.look.eval_keep_context]] *ruby.look.eval_keep_context*
+** Beschreibung: pass:none[behält den Inhalt zwischen zwei Aufrufen bei Quellcode Evaluierung (Option "eval" des Skript-Befehls oder Info "%s_eval"); ein Hintergrundskript wird für die Evaluierung verwendet; wird diese Option deaktiviert, dann wird das Hintergrundskript nach jeder Evaluierung entfernt: das bedeutet weniger Speicherbedarf, ist aber langsamer]
+** Typ: boolesch
+** Werte: on, off
+** Standardwert: `+on+`
+// end::ruby_options[]
+
+// tag::tcl_options[]
+* [[option_tcl.look.check_license]] *tcl.look.check_license*
+** Beschreibung: pass:none[Überprüft die Lizenz von Skripten, wenn sie geladen werden: Sollte die Lizenz abweichend von der Erweiterungslizenz sein, wird eine Warnung ausgegeben]
+** Typ: boolesch
+** Werte: on, off
+** Standardwert: `+off+`
+
+* [[option_tcl.look.eval_keep_context]] *tcl.look.eval_keep_context*
+** Beschreibung: pass:none[behält den Inhalt zwischen zwei Aufrufen bei Quellcode Evaluierung (Option "eval" des Skript-Befehls oder Info "%s_eval"); ein Hintergrundskript wird für die Evaluierung verwendet; wird diese Option deaktiviert, dann wird das Hintergrundskript nach jeder Evaluierung entfernt: das bedeutet weniger Speicherbedarf, ist aber langsamer]
+** Typ: boolesch
+** Werte: on, off
+** Standardwert: `+on+`
+// end::tcl_options[]
 
 // tag::script_options[]
 * [[option_script.color.status_autoloaded]] *script.color.status_autoloaded*

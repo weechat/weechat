@@ -26,7 +26,9 @@ lib_LTLIBRARIES = php.la
 php_la_SOURCES = weechat-php.c \
                  weechat-php.h \
                  weechat-php-api.c \
-                 weechat-php-api.h
+                 weechat-php-api.h \
+                 weechat-php_arginfo.h \
+                 weechat-php_legacy_arginfo.h
 php_la_LDFLAGS = -module -no-undefined
 php_la_LIBADD  = ../lib_weechat_plugins_scripts.la $(PHP_LFLAGS)
 

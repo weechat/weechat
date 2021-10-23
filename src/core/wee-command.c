@@ -6303,6 +6303,78 @@ COMMAND_CALLBACK(set)
 }
 
 /*
+ * Callback for command "/toggle": toggles value of configuration option.
+ */
+
+COMMAND_CALLBACK(toggle)
+{
+    char **sargv;
+    int sargc, rc;
+    struct t_config_option *ptr_option;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) buffer;
+
+    COMMAND_MIN_ARGS(2, "");
+
+    config_file_search_with_string (argv[1], NULL, NULL, &ptr_option, NULL);
+    if (!ptr_option)
+    {
+        gui_chat_printf (NULL,
+                         _("%sOption \"%s\" not found"),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                         argv[1]);
+        return WEECHAT_RC_OK;
+    }
+
+    if ((ptr_option->type != CONFIG_OPTION_TYPE_BOOLEAN)
+        && (ptr_option->type != CONFIG_OPTION_TYPE_STRING))
+    {
+        /* only boolean options can be toggled without a value */
+        COMMAND_MIN_ARGS(3, "");
+    }
+
+    if (argc > 2)
+    {
+        sargv = string_split_shell (argv_eol[2], &sargc);
+        if (!sargv)
+            COMMAND_ERROR;
+        if (string_strcasecmp (argv[2], WEECHAT_CONFIG_OPTION_NULL) == 0)
+        {
+            if (sargv[0])
+                free (sargv[0]);
+            sargv[0] = NULL;
+        }
+    }
+    else
+    {
+        sargv = NULL;
+        sargc = 0;
+    }
+
+    rc = config_file_option_toggle (ptr_option, (const char **)sargv, sargc, 1);
+    string_free_split (sargv);
+    switch (rc)
+    {
+        case WEECHAT_CONFIG_OPTION_SET_ERROR:
+            gui_chat_printf (NULL,
+                             _("%sFailed to set option \"%s\""),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             argv[1]);
+            return WEECHAT_RC_OK;
+        case WEECHAT_CONFIG_OPTION_SET_OK_CHANGED:
+            command_set_display_option (ptr_option, _("Option changed: "));
+            break;
+        default:
+            break;
+    }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Unsets/resets one option.
  */
 
@@ -7658,40 +7730,42 @@ command_init ()
            "Some variables are replaced in expression, using the format "
            "${variable}, variable can be, by order of priority:\n"
            "  1. the string itself without evaluation (format: \"raw:xxx\")\n"
-           "  2. an evaluated sub-string (format: \"eval:xxx\")\n"
-           "  3. an evaluated condition (format: \"eval_cond:xxx\")\n"
-           "  4. a string with escaped chars (format: \"esc:xxx\" or \"\\xxx\")\n"
-           "  5. a string with chars to hide (format: \"hide:char,string\")\n"
-           "  6. a string with max chars (format: \"cut:max,suffix,string\" "
+           "  2. a user-defined variable (format: \"name\")\n"
+           "  3. an evaluated sub-string (format: \"eval:xxx\")\n"
+           "  4. an evaluated condition (format: \"eval_cond:xxx\")\n"
+           "  5. a string with escaped chars (format: \"esc:xxx\" or \"\\xxx\")\n"
+           "  6. a string with chars to hide (format: \"hide:char,string\")\n"
+           "  7. a string with max chars (format: \"cut:max,suffix,string\" "
            "or \"cut:+max,suffix,string\")\n"
            "     or max chars displayed on screen "
            "(format: \"cutscr:max,suffix,string\" or "
            "\"cutscr:+max,suffix,string\")\n"
-           "  7. a reversed string (format: \"rev:xxx\" or \"revscr:xxx\")\n"
-           "  8. a repeated string (format: \"repeat:count,string\")\n"
-           "  9. length of a string (format: \"length:xxx\" or "
+           "  8. a reversed string (format: \"rev:xxx\" or \"revscr:xxx\")\n"
+           "  9. a repeated string (format: \"repeat:count,string\")\n"
+           "  10. length of a string (format: \"length:xxx\" or "
            "\"lengthscr:xxx\")\n"
-           "  10. split of a string (format: "
+           "  11. split of a string (format: "
            "\"split:number,separators,flags,xxx\")\n"
-           "  11. split of shell argmuents (format: \"split_shell:number,xxx\")\n"
-           "  12. a color (format: \"color:xxx\", see \"Plugin API "
+           "  12. split of shell argmuents (format: \"split_shell:number,xxx\")\n"
+           "  13. a color (format: \"color:xxx\", see \"Plugin API "
            "reference\", function \"color\")\n"
-           "  13. a modifier (format: \"modifier:name,data,string\")\n"
-           "  14. an info (format: \"info:name,arguments\", arguments are "
+           "  14. a modifier (format: \"modifier:name,data,string\")\n"
+           "  15. an info (format: \"info:name,arguments\", arguments are "
            "optional)\n"
-           "  15. a base 16/32/64 encoded/decoded string (format: "
+           "  16. a base 16/32/64 encoded/decoded string (format: "
            "\"base_encode:base,xxx\" or \"base_decode:base,xxx\")\n"
-           "  16. current date/time (format: \"date\" or \"date:format\")\n"
-           "  17. an environment variable (format: \"env:XXX\")\n"
-           "  18. a ternary operator (format: "
+           "  17. current date/time (format: \"date\" or \"date:format\")\n"
+           "  18. an environment variable (format: \"env:XXX\")\n"
+           "  19. a ternary operator (format: "
            "\"if:condition?value_if_true:value_if_false\")\n"
-           "  19. result of an expression with parentheses and operators "
+           "  20. result of an expression with parentheses and operators "
            "+ - * / // % ** (format: \"calc:xxx\")\n"
-           "  20. a random integer number (format: \"random:min,max\")\n"
-           "  21. a translated string (format: \"translate:xxx\")\n"
-           "  22. an option (format: \"file.section.option\")\n"
-           "  23. a local variable in buffer\n"
-           "  24. a hdata name/variable (the value is automatically converted "
+           "  21. a random integer number (format: \"random:min,max\")\n"
+           "  22. a translated string (format: \"translate:xxx\")\n"
+           "  23. define a user variable (format: \"define:name,value\")\n"
+           "  24. an option (format: \"file.section.option\")\n"
+           "  25. a local variable in buffer\n"
+           "  26. a hdata name/variable (the value is automatically converted "
            "to string), by default \"window\" and \"buffer\" point to current "
            "window/buffer.\n"
            "Format for hdata can be one of following:\n"
@@ -7713,38 +7787,39 @@ command_init ()
            "reference\", function \"weechat_hdata_get\".\n"
            "\n"
            "Examples (simple strings):\n"
-           "  /eval -n ${raw:${info:version}}                ==> ${info:version}\n"
-           "  /eval -n ${eval_cond:${window.win_width}>100}  ==> 1\n"
-           "  /eval -n ${info:version}                       ==> 0.4.3\n"
-           "  /eval -n ${env:HOME}                           ==> /home/user\n"
-           "  /eval -n ${weechat.look.scroll_amount}         ==> 3\n"
-           "  /eval -n ${sec.data.password}                  ==> secret\n"
-           "  /eval -n ${window}                             ==> 0x2549aa0\n"
-           "  /eval -n ${window.buffer}                      ==> 0x2549320\n"
-           "  /eval -n ${window.buffer.full_name}            ==> core.weechat\n"
-           "  /eval -n ${window.buffer.number}               ==> 1\n"
-           "  /eval -n ${\\t}                                 ==> <tab>\n"
-           "  /eval -n ${hide:-,${relay.network.password}}   ==> --------\n"
-           "  /eval -n ${cut:3,+,test}                       ==> tes+\n"
-           "  /eval -n ${cut:+3,+,test}                      ==> te+\n"
-           "  /eval -n ${date:%H:%M:%S}                      ==> 07:46:40\n"
-           "  /eval -n ${if:${info:term_width}>80?big:small} ==> big\n"
-           "  /eval -n ${rev:Hello}                          ==> olleH\n"
-           "  /eval -n ${repeat:5,-}                         ==> -----\n"
-           "  /eval -n ${length:test}                        ==> 4\n"
-           "  /eval -n ${split:1,,,abc,def,ghi}              ==> abc\n"
-           "  /eval -n ${split:-1,,,abc,def,ghi}             ==> ghi\n"
-           "  /eval -n ${split:count,,,abc,def,ghi}          ==> 3\n"
-           "  /eval -n ${split:random,,,abc,def,ghi}         ==> def\n"
-           "  /eval -n ${split_shell:1,\"arg 1\" arg2}         ==> arg 1\n"
-           "  /eval -n ${split_shell:-1,\"arg 1\" arg2}        ==> arg2\n"
-           "  /eval -n ${split_shell:count,\"arg 1\" arg2}     ==> 2\n"
-           "  /eval -n ${split_shell:random,\"arg 1\" arg2}    ==> arg2\n"
-           "  /eval -n ${calc:(5+2)*3}                       ==> 21\n"
-           "  /eval -n ${random:0,10}                        ==> 3\n"
-           "  /eval -n ${base_encode:64,test}                ==> dGVzdA==\n"
-           "  /eval -n ${base_decode:64,dGVzdA==}            ==> test\n"
-           "  /eval -n ${translate:Plugin}                   ==> Extension\n"
+           "  /eval -n ${raw:${info:version}}                 ==> ${info:version}\n"
+           "  /eval -n ${eval_cond:${window.win_width}>100}   ==> 1\n"
+           "  /eval -n ${info:version}                        ==> 0.4.3\n"
+           "  /eval -n ${env:HOME}                            ==> /home/user\n"
+           "  /eval -n ${weechat.look.scroll_amount}          ==> 3\n"
+           "  /eval -n ${sec.data.password}                   ==> secret\n"
+           "  /eval -n ${window}                              ==> 0x2549aa0\n"
+           "  /eval -n ${window.buffer}                       ==> 0x2549320\n"
+           "  /eval -n ${window.buffer.full_name}             ==> core.weechat\n"
+           "  /eval -n ${window.buffer.number}                ==> 1\n"
+           "  /eval -n ${\\t}                                  ==> <tab>\n"
+           "  /eval -n ${hide:-,${relay.network.password}}    ==> --------\n"
+           "  /eval -n ${cut:3,+,test}                        ==> tes+\n"
+           "  /eval -n ${cut:+3,+,test}                       ==> te+\n"
+           "  /eval -n ${date:%H:%M:%S}                       ==> 07:46:40\n"
+           "  /eval -n ${if:${info:term_width}>80?big:small}  ==> big\n"
+           "  /eval -n ${rev:Hello}                           ==> olleH\n"
+           "  /eval -n ${repeat:5,-}                          ==> -----\n"
+           "  /eval -n ${length:test}                         ==> 4\n"
+           "  /eval -n ${split:1,,,abc,def,ghi}               ==> abc\n"
+           "  /eval -n ${split:-1,,,abc,def,ghi}              ==> ghi\n"
+           "  /eval -n ${split:count,,,abc,def,ghi}           ==> 3\n"
+           "  /eval -n ${split:random,,,abc,def,ghi}          ==> def\n"
+           "  /eval -n ${split_shell:1,\"arg 1\" arg2}          ==> arg 1\n"
+           "  /eval -n ${split_shell:-1,\"arg 1\" arg2}         ==> arg2\n"
+           "  /eval -n ${split_shell:count,\"arg 1\" arg2}      ==> 2\n"
+           "  /eval -n ${split_shell:random,\"arg 1\" arg2}     ==> arg2\n"
+           "  /eval -n ${calc:(5+2)*3}                        ==> 21\n"
+           "  /eval -n ${random:0,10}                         ==> 3\n"
+           "  /eval -n ${base_encode:64,test}                 ==> dGVzdA==\n"
+           "  /eval -n ${base_decode:64,dGVzdA==}             ==> test\n"
+           "  /eval -n ${translate:Plugin}                    ==> Extension\n"
+           "  /eval -n ${define:len,${calc:5+3}}${len}x${len} ==> 8x8\n"
            "\n"
            "Examples (conditions):\n"
            "  /eval -n -c ${window.buffer.number} > 2 ==> 0\n"
@@ -8422,6 +8497,42 @@ command_init ()
         " || diff %(config_options)|%*"
         " || env %(env_vars) %(env_value)",
         &command_set, NULL, NULL);
+    hook_command (
+        NULL, "toggle",
+        N_("toggle value of a config option"),
+        N_("<option> [<value> [<value>...]]"),
+        N_("option: name of an option\n"
+           " value: possible values for the option (values are split like the "
+           "shell command arguments: quotes can be used to preserve spaces at "
+           "the beginning/end of values)\n"
+           "\n"
+           "Behavior:\n"
+           "  - only an option of type boolean or string can be toggled "
+           "without a value:\n"
+           "      - boolean: toggle between on/off according to current value\n"
+           "      - string: toggle between empty string and default value "
+           "(works only if empty string is allowed for the option)\n"
+           "  - with a single value given, toggle between this value and "
+           "the default value of option\n"
+           "  - with multiple values given, toggle between these values: "
+           "the value used is the one following the current value of option; "
+           "if the current value of option is not in list, the first value in "
+           "the list is used\n"
+           "  - the special value \"null\" can be given, but only as first "
+           "value in the list and without quotes around.\n"
+           "\n"
+           "Examples:\n"
+           "  toggle display of time in chat area (without displaying the "
+           "new value used):\n"
+           "    /mute /toggle weechat.look.buffer_time_format\n"
+           "  switch format of time in chat area (with seconds, without "
+           "seconds, disabled):\n"
+           "    /toggle weechat.look.buffer_time_format \"%H:%M:%S\" "
+           "\"%H:%M\" \"\"\n"
+           "  toggle autojoin of #weechat channel on libera server:\n"
+           "    /toggle irc.server.libera.autojoin null #weechat"),
+        "%(config_options) %(config_option_values)",
+        &command_toggle, NULL, NULL);
     hook_command (
         NULL, "unset",
         N_("unset/reset config options"),

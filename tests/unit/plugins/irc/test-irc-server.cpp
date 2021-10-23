@@ -1050,19 +1050,17 @@ TEST_GROUP(IrcServerConnected)
                   "/command -buffer irc.server." IRC_FAKE_SERVER " irc "
                   "/server fakerecv %s",
                   command);
-        run_cmd (str_command);
+        run_cmd_quiet (str_command);
     }
 
     void setup ()
     {
-        printf ("\n");
-
         /* create a fake server (no I/O) */
-        run_cmd ("/server add " IRC_FAKE_SERVER " fake:127.0.0.1 "
-                 "-nicks=nick1,nick2,nick3");
+        run_cmd_quiet ("/mute /server add " IRC_FAKE_SERVER " fake:127.0.0.1 "
+                       "-nicks=nick1,nick2,nick3");
 
         /* connect to the fake server */
-        run_cmd ("/connect " IRC_FAKE_SERVER);
+        run_cmd_quiet ("/mute /connect " IRC_FAKE_SERVER);
 
         /* get the server pointer */
         ptr_server = irc_server_search (IRC_FAKE_SERVER);
@@ -1071,8 +1069,8 @@ TEST_GROUP(IrcServerConnected)
     void teardown ()
     {
         /* disconnect and delete the fake server */
-        run_cmd ("/disconnect " IRC_FAKE_SERVER);
-        run_cmd ("/server del " IRC_FAKE_SERVER);
+        run_cmd_quiet ("/mute /disconnect " IRC_FAKE_SERVER);
+        run_cmd_quiet ("/mute /server del " IRC_FAKE_SERVER);
         ptr_server = NULL;
     }
 };

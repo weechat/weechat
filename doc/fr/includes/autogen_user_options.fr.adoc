@@ -3143,34 +3143,6 @@
 ** valeur par défaut: `+""+`
 // end::relay_options[]
 
-// tag::javascript_options[]
-* [[option_javascript.look.check_license]] *javascript.look.check_license*
-** description: pass:none[vérifier la licence des scripts quand ils sont chargés : si la licence est différente de la licence de l'extension, un avertissement est affiché]
-** type: booléen
-** valeurs: on, off
-** valeur par défaut: `+off+`
-
-* [[option_javascript.look.eval_keep_context]] *javascript.look.eval_keep_context*
-** description: pass:none[garder le contexte entre deux appels à l'évaluation de code source (option "eval" de la commande de script ou info "%s_eval") ; un script caché est utilisé pour évaluer le code du script ; si cette option est désactivée, ce script caché est déchargé après chaque eval ; cela utilise moins de mémoire, mais est plus lent]
-** type: booléen
-** valeurs: on, off
-** valeur par défaut: `+on+`
-// end::javascript_options[]
-
-// tag::ruby_options[]
-* [[option_ruby.look.check_license]] *ruby.look.check_license*
-** description: pass:none[vérifier la licence des scripts quand ils sont chargés : si la licence est différente de la licence de l'extension, un avertissement est affiché]
-** type: booléen
-** valeurs: on, off
-** valeur par défaut: `+off+`
-
-* [[option_ruby.look.eval_keep_context]] *ruby.look.eval_keep_context*
-** description: pass:none[garder le contexte entre deux appels à l'évaluation de code source (option "eval" de la commande de script ou info "%s_eval") ; un script caché est utilisé pour évaluer le code du script ; si cette option est désactivée, ce script caché est déchargé après chaque eval ; cela utilise moins de mémoire, mais est plus lent]
-** type: booléen
-** valeurs: on, off
-** valeur par défaut: `+on+`
-// end::ruby_options[]
-
 // tag::guile_options[]
 * [[option_guile.look.check_license]] *guile.look.check_license*
 ** description: pass:none[vérifier la licence des scripts quand ils sont chargés : si la licence est différente de la licence de l'extension, un avertissement est affiché]
@@ -3185,19 +3157,33 @@
 ** valeur par défaut: `+on+`
 // end::guile_options[]
 
-// tag::tcl_options[]
-* [[option_tcl.look.check_license]] *tcl.look.check_license*
+// tag::javascript_options[]
+* [[option_javascript.look.check_license]] *javascript.look.check_license*
 ** description: pass:none[vérifier la licence des scripts quand ils sont chargés : si la licence est différente de la licence de l'extension, un avertissement est affiché]
 ** type: booléen
 ** valeurs: on, off
 ** valeur par défaut: `+off+`
 
-* [[option_tcl.look.eval_keep_context]] *tcl.look.eval_keep_context*
+* [[option_javascript.look.eval_keep_context]] *javascript.look.eval_keep_context*
 ** description: pass:none[garder le contexte entre deux appels à l'évaluation de code source (option "eval" de la commande de script ou info "%s_eval") ; un script caché est utilisé pour évaluer le code du script ; si cette option est désactivée, ce script caché est déchargé après chaque eval ; cela utilise moins de mémoire, mais est plus lent]
 ** type: booléen
 ** valeurs: on, off
 ** valeur par défaut: `+on+`
-// end::tcl_options[]
+// end::javascript_options[]
+
+// tag::lua_options[]
+* [[option_lua.look.check_license]] *lua.look.check_license*
+** description: pass:none[vérifier la licence des scripts quand ils sont chargés : si la licence est différente de la licence de l'extension, un avertissement est affiché]
+** type: booléen
+** valeurs: on, off
+** valeur par défaut: `+off+`
+
+* [[option_lua.look.eval_keep_context]] *lua.look.eval_keep_context*
+** description: pass:none[garder le contexte entre deux appels à l'évaluation de code source (option "eval" de la commande de script ou info "%s_eval") ; un script caché est utilisé pour évaluer le code du script ; si cette option est désactivée, ce script caché est déchargé après chaque eval ; cela utilise moins de mémoire, mais est plus lent]
+** type: booléen
+** valeurs: on, off
+** valeur par défaut: `+on+`
+// end::lua_options[]
 
 // tag::perl_options[]
 * [[option_perl.look.check_license]] *perl.look.check_license*
@@ -3227,20 +3213,6 @@
 ** valeur par défaut: `+on+`
 // end::php_options[]
 
-// tag::lua_options[]
-* [[option_lua.look.check_license]] *lua.look.check_license*
-** description: pass:none[vérifier la licence des scripts quand ils sont chargés : si la licence est différente de la licence de l'extension, un avertissement est affiché]
-** type: booléen
-** valeurs: on, off
-** valeur par défaut: `+off+`
-
-* [[option_lua.look.eval_keep_context]] *lua.look.eval_keep_context*
-** description: pass:none[garder le contexte entre deux appels à l'évaluation de code source (option "eval" de la commande de script ou info "%s_eval") ; un script caché est utilisé pour évaluer le code du script ; si cette option est désactivée, ce script caché est déchargé après chaque eval ; cela utilise moins de mémoire, mais est plus lent]
-** type: booléen
-** valeurs: on, off
-** valeur par défaut: `+on+`
-// end::lua_options[]
-
 // tag::python_options[]
 * [[option_python.look.check_license]] *python.look.check_license*
 ** description: pass:none[vérifier la licence des scripts quand ils sont chargés : si la licence est différente de la licence de l'extension, un avertissement est affiché]
@@ -3254,6 +3226,34 @@
 ** valeurs: on, off
 ** valeur par défaut: `+on+`
 // end::python_options[]
+
+// tag::ruby_options[]
+* [[option_ruby.look.check_license]] *ruby.look.check_license*
+** description: pass:none[vérifier la licence des scripts quand ils sont chargés : si la licence est différente de la licence de l'extension, un avertissement est affiché]
+** type: booléen
+** valeurs: on, off
+** valeur par défaut: `+off+`
+
+* [[option_ruby.look.eval_keep_context]] *ruby.look.eval_keep_context*
+** description: pass:none[garder le contexte entre deux appels à l'évaluation de code source (option "eval" de la commande de script ou info "%s_eval") ; un script caché est utilisé pour évaluer le code du script ; si cette option est désactivée, ce script caché est déchargé après chaque eval ; cela utilise moins de mémoire, mais est plus lent]
+** type: booléen
+** valeurs: on, off
+** valeur par défaut: `+on+`
+// end::ruby_options[]
+
+// tag::tcl_options[]
+* [[option_tcl.look.check_license]] *tcl.look.check_license*
+** description: pass:none[vérifier la licence des scripts quand ils sont chargés : si la licence est différente de la licence de l'extension, un avertissement est affiché]
+** type: booléen
+** valeurs: on, off
+** valeur par défaut: `+off+`
+
+* [[option_tcl.look.eval_keep_context]] *tcl.look.eval_keep_context*
+** description: pass:none[garder le contexte entre deux appels à l'évaluation de code source (option "eval" de la commande de script ou info "%s_eval") ; un script caché est utilisé pour évaluer le code du script ; si cette option est désactivée, ce script caché est déchargé après chaque eval ; cela utilise moins de mémoire, mais est plus lent]
+** type: booléen
+** valeurs: on, off
+** valeur par défaut: `+on+`
+// end::tcl_options[]
 
 // tag::script_options[]
 * [[option_script.color.status_autoloaded]] *script.color.status_autoloaded*

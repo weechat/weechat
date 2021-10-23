@@ -853,6 +853,14 @@ TEST(CoreEval, EvalExpression)
     WEE_CHECK_EVAL("", "${translate:}");
     WEE_CHECK_EVAL("abcdef", "${translate:abcdef}");
 
+    /* test user variables */
+    WEE_CHECK_EVAL("", "${define:}");
+    WEE_CHECK_EVAL("", "${define:test}");
+    WEE_CHECK_EVAL("", "${define:test,value}");
+    WEE_CHECK_EVAL("value", "${define:test,value}${test}");
+    WEE_CHECK_EVAL("8", "${define:test,${calc:5+3}}${test}");
+    WEE_CHECK_EVAL("value", "${define:buffer,value}${buffer}");
+
     /* test option */
     hashtable_set (secure_hashtable_data, "sec_option", "sec_value");
     WEE_CHECK_EVAL("sec_value", "${sec.data.sec_option}");

@@ -1069,6 +1069,28 @@ eval_string_translate (const char *text)
 }
 
 /*
+ * Defines a variable.
+ */
+
+void
+eval_string_define (const char *text, struct t_eval_context *eval_context)
+{
+    char *pos, *name;
+
+    pos = strchr (text, ',');
+    if (!pos)
+        return;
+
+    name = strndup (text, pos - text);
+    if (!name)
+        return;
+
+    hashtable_set (eval_context->user_vars, name, pos + 1);
+
+    free (name);
+}
+
+/*
  * Gets value of hdata using "path" to a variable.
  *
  * Note: result must be freed after use.
@@ -1352,7 +1374,7 @@ end:
 /*
  * Replaces variables, which can be, by order of priority:
  *   1. the string itself without evaluation (format: raw:xxx)
- *   2. an extra variable from hashtable "extra_vars"
+ *   2. a variable from hashtable "user_vars" or "extra_vars"
  *   3. a WeeChat home directory, one of: "weechat_config_dir",
  *      "weechat_data_dir", "weechat_cache_dir", "weechat_runtime_dir"
  *   4. a string to evaluate (format: eval:xxx)
@@ -1421,7 +1443,13 @@ eval_replace_vars_cb (void *data, const char *text)
         goto end;
     }
 
-    /* 2. variable in hashtable "extra_vars" */
+    /* 2. variable in hashtable "user_vars" or "extra_vars" */
+    ptr_value = hashtable_get (eval_context->user_vars, text);
+    if (ptr_value)
+    {
+        value = strdup (ptr_value);
+        goto end;
+    }
     if (eval_context->extra_vars)
     {
         ptr_value = hashtable_get (eval_context->extra_vars, text);
@@ -1665,6 +1693,14 @@ eval_replace_vars_cb (void *data, const char *text)
     if (strncmp (text, "translate:", 10) == 0)
     {
         value = eval_string_translate (text + 10);
+        goto end;
+    }
+
+    /* 25. define a variable */
+    if (strncmp (text, "define:", 7) == 0)
+    {
+        eval_string_define (text + 7, eval_context);
+        value = strdup ("");
         goto end;
     }
 
@@ -2333,6 +2369,7 @@ eval_expression (const char *expr, struct t_hashtable *pointers,
                  struct t_hashtable *extra_vars, struct t_hashtable *options)
 {
     struct t_eval_context context, *eval_context;
+    struct t_hashtable *user_vars;
     int condition, rc, pointers_allocated, regex_allocated, debug_id;
     int ptr_window_added, ptr_buffer_added;
     long number;
@@ -2347,6 +2384,7 @@ eval_expression (const char *expr, struct t_hashtable *pointers,
         return NULL;
 
     condition = 0;
+    user_vars = NULL;
     pointers_allocated = 0;
     regex_allocated = 0;
     regex = NULL;
@@ -2371,10 +2409,17 @@ eval_expression (const char *expr, struct t_hashtable *pointers,
         pointers_allocated = 1;
     }
 
+    user_vars = hashtable_new (32,
+                               WEECHAT_HASHTABLE_STRING,
+                               WEECHAT_HASHTABLE_STRING,
+                               NULL,
+                               NULL);
+
     eval_context = &context;
 
     eval_context->pointers = pointers;
     eval_context->extra_vars = extra_vars;
+    eval_context->user_vars = user_vars;
     eval_context->extra_vars_eval = 0;
     eval_context->prefix = default_prefix;
     eval_context->suffix = default_suffix;
@@ -2506,6 +2551,8 @@ eval_expression (const char *expr, struct t_hashtable *pointers,
         if (ptr_buffer_added)
             hashtable_remove (pointers, "buffer");
     }
+    if (user_vars)
+        hashtable_free (user_vars);
     if (regex && regex_allocated)
     {
         regfree (regex);

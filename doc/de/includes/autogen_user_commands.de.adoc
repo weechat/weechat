@@ -1374,31 +1374,33 @@ Um einen Vergleich zwischen zwei Zeichenketten zu erzwingen, müssen die Ausdrü
   "50" > "100"  ==> 1
 
 Einige Variablen werden im Ausdruck mittels der Formatierung ${variable} ersetzt. Mögliche Variablen sind, nach Reihenfolge ihrer Priorität:
-  1. die Zeichenfolge selbst ohne Auswertung (Format: "raw:xxx")\n
-  2. eine evaluierte Teilzeichenkette (Format: "eval:xxx")
-  3. eine evaluierte Bedingung (Format: "eval_cond:xxx")
-  4. eine Zeichenkette mit Escapesequenzen (Format: "esc:xxx" oder "\xxx")
-  5. Zeichen, die in einer Zeichenkette nicht dargestellt werden sollen (Format: "hide:Zeichen,Zeichenkette")
-  6. eine Zeichenkette mit einer maximalen Anzahl an Zeichen (Format: "cut:max,suffix,string" oder "cut:+max,suffix,string")
+  1. die Zeichenfolge selbst ohne Auswertung (Format: "raw:xxx")
+  2. eine benutzerdefinierte Variable (Format: "name")
+  3. eine evaluierte Teilzeichenkette (Format: "eval:xxx")
+  4. eine evaluierte Bedingung (Format: "eval_cond:xxx")
+  5. eine Zeichenkette mit Escapesequenzen (Format: "esc:xxx" oder "\xxx")
+  6. Zeichen, die in einer Zeichenkette nicht dargestellt werden sollen (Format: "hide:Zeichen,Zeichenkette")
+  7. eine Zeichenkette mit einer maximalen Anzahl an Zeichen (Format: "cut:max,suffix,string" oder "cut:+max,suffix,string")
      oder maximale Anzahl an Zeichen die auf dem Bildschirm angezeigt werden sollen (Format: "cutscr:Max,Suffix,Zeichenkette oder "cutscr:+Max,Suffix,Zeichenkette")
-  7. eine Zeichenkette umkehren (Format: "rev:xxx" oder "revscr:xxx")
-  8. eine Zeichenkette wiederholen (Format: "repeat:Anzahl,Zeichenkette")
-  9. Länge einer Zeichenkette (Format: "length:xxx" oder "lengthscr:xxx")
-  10. Aufteilen einer Zeichenkette (Format: "split:Anzahl,Trennzeichen,Flags,xxx")
-  11. Aufteilen von Shell-Argumenten (Format: "split_shell:Anzahl,xxx")
-  12. eine Farbe (Format: "color:xxx", siehe "Anleitung für API Erweiterung", Funktion "color")
-  13. zum modifizieren (Format: "modifier:name,data,string")
-  14. eine Info (Format: "Info:Name,Argumente", Argumente sind optional)
-  15. eine Basis 16/32/64 kodierte / dekodierte Zeichenfolge (Format: "base_encode:base,xxx" oder "base_decode:base,xxx")
-  16. aktuelles Datum/Uhrzeit (Format: "date" oder "date:format")
-  17. eine Umgebungsvariable (Format: "env:XXX")
-  18. ein Dreifachoperand (Format: "if:Bedingung?Wert_falls_wahr:Wert_falls_unwahr")
-  19. Ergebnis eines Ausdrucks mit Klammern und Operatoren + - * / // % ** (Format: "calc:xxx")
-  20. eine zufällige ganze Zahl (Format: "random:min,max")
-  21. eine übersetzte Zeichenkette (Format: "translate:xxx")
-  22. eine Option (Format: "file.section.option")
-  23. eine lokale Variable eines Buffers
-  24. ein(e) hdata - Name/Variable (der Wert wird automatisch in eine Zeichenkette konvertiert), standardmäßig wird für "window" und "buffer" das aktuelle Fenster/Buffer verwendet.
+  8. eine Zeichenkette umkehren (Format: "rev:xxx" oder "revscr:xxx")
+  9. eine Zeichenkette wiederholen (Format: "repeat:Anzahl,Zeichenkette")
+  10. Länge einer Zeichenkette (Format: "length:xxx" oder "lengthscr:xxx")
+  11. Aufteilen einer Zeichenkette (Format: "split:Anzahl,Trennzeichen,Flags,xxx")
+  12. Aufteilen von Shell-Argumenten (Format: "split_shell:Anzahl,xxx")
+  13. eine Farbe (Format: "color:xxx", siehe "Anleitung für API Erweiterung", Funktion "color")
+  14. zum modifizieren (Format: "modifier:name,data,string")
+  15. eine Info (Format: "Info:Name,Argumente", Argumente sind optional)
+  16. eine Basis 16/32/64 kodierte / dekodierte Zeichenfolge (Format: "base_encode:base,xxx" oder "base_decode:base,xxx")
+  17. aktuelles Datum/Uhrzeit (Format: "date" oder "date:format")
+  18. eine Umgebungsvariable (Format: "env:XXX")
+  19. ein Dreifachoperand (Format: "if:Bedingung?Wert_falls_wahr:Wert_falls_unwahr")
+  20. Ergebnis eines Ausdrucks mit Klammern und Operatoren + - * / // % ** (Format: "calc:xxx")
+  21. eine zufällige ganze Zahl (Format: "random:min,max")
+  22. eine übersetzte Zeichenkette (Format: "translate:xxx")
+  23. eine Benutzervariable definieren (Format: "define:Name,Wert")
+  24. eine Option (Format: "file.section.option")
+  25. eine lokale Variable eines Buffers
+  26. ein(e) hdata - Name/Variable (der Wert wird automatisch in eine Zeichenkette konvertiert), standardmäßig wird für "window" und "buffer" das aktuelle Fenster/Buffer verwendet.
 Das Format für hdata kann wie folgt aufgebaut sein:
   hdata.var1.var2...: startet mit hdata (der Pointer muss bekannt sein) und fragt eine Variable nach der anderen ab (weitere hdata können folgen)
   hdata[list].var1.var2...: startet hdata mittels einer Liste, zum Beispiel:
@@ -1442,6 +1444,7 @@ Beispiele (einfache Zeichenketten):
   /eval -n ${base_encode:64,test}                ==> dGVzdA==
   /eval -n ${base_decode:64,dGVzdA==}            ==> test
   /eval -n ${translate:Plugin}                   ==> Erweiterung
+  /eval -n ${define:len,${calc:5+3}}${len}x${len} ==> 8x8
 
 Beispiele (Bedingungen):
   /eval -n -c ${window.buffer.number} > 2  ==> 0
@@ -1988,6 +1991,32 @@ Beispiele:
     /upgrade
   entfernt die Umgebungsvariable ABC:
     /set env ABC ""
+----
+
+[[command_weechat_toggle]]
+* `+toggle+`: den Wert einer Konfigurationsoption umschalten
+
+----
+/toggle  <option> [<value> [<value>...]]
+
+option: Name einer Option
+ value: mögliche Werte für die Option (Werte werden wie bei Shell-Befehlsargumente aufgeteilt: Anführungszeichen können verwendet werden, um Leerzeichen am Anfang/Ende von Werten zu nutzen)
+
+Verhalten:
+  - nur eine Option vom Typ Boolean oder String kann ohne Wert umgeschaltet werden:
+      - boolean: zwischen Ein/Aus Status umschalten, entsprechend dem aktuellen Wert
+      - string: Umschalten zwischen leerem String und Standardwert (funktioniert nur, wenn für die Option ein leerer String erlaubt ist)
+  - mit einem vorgegeben einzelnen Wert, zwischen diesem Wert und dem Standardwert der Option umschalten
+  - sind mehrere Werte angegeben, schalten Sie zwischen diesen Werten um: Der verwendete Wert ist der, der dem aktuellen Wert der Option folgt; wenn der aktuelle Wert der Option nicht in der Liste enthalten ist, wird der erste Wert aus der Liste verwendet
+  - der Sonderwert "null" kann genutzt werden, jedoch nur als erster Wert in der Liste und ohne Anführungszeichen.
+
+Beispiele:
+  die Uhrzeit im Chat-Bereich umschalten (die Ausgabe des neuen Wertes wird unterdrückt):
+    /mute /toggle weechat.look.buffer_time_format
+  Zeitformat im Chat-Bereich ändern (mit Sekunden, ohne Sekunden, deaktiviert):
+    /toggle weechat.look.buffer_time_format "%H:%M:%S" "%H:%M" ""
+  den automatischen Beitritt des #weechat-Kanals auf dem libera-Server umschalten:
+    /toggle irc.server.libera.autojoin null #weechat
 ----
 
 [[command_weechat_unset]]
