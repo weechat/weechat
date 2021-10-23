@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-10-01 22:52+0200\n"
+"POT-Creation-Date: 2021-10-23 14:36+0200\n"
 "PO-Revision-Date: 2021-07-10 16:01+0200\n"
 "Last-Translator: Emir SARI <bitigchi@me.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8245,11 +8245,13 @@ msgid ""
 "tag), \"message_without_tags\": message without the tags, \"nick\": nick, "
 "\"user\": user, \"host\": host, \"command\": command, \"channel\": channel, "
 "\"arguments\": arguments (includes channel), \"text\": text (for example "
-"user message), \"pos_command\": index of \"command\" message (\"-1\" if "
-"\"command\" was not found), \"pos_arguments\": index of \"arguments\" "
-"message (\"-1\" if \"arguments\" was not found), \"pos_channel\": index of "
-"\"channel\" message (\"-1\" if \"channel\" was not found), \"pos_text\": "
-"index of \"text\" message (\"-1\" if \"text\" was not found)"
+"user message), \"param1\" ... \"paramN\": parsed command parameters, "
+"\"num_params\": number of parsed command parameters, \"pos_command\": index "
+"of \"command\" message (\"-1\" if \"command\" was not found), \"pos_arguments"
+"\": index of \"arguments\" message (\"-1\" if \"arguments\" was not found), "
+"\"pos_channel\": index of \"channel\" message (\"-1\" if \"channel\" was not "
+"found), \"pos_text\": index of \"text\" message (\"-1\" if \"text\" was not "
+"found)"
 msgstr ""
 
 msgid "split an IRC message (to fit in 512 bytes by default)"
@@ -8781,23 +8783,26 @@ msgstr "%s%s[%s%s%s] %s%s%s%s, %s tarafından sessize alındı"
 msgid "%s%s[%s%s%s] %s%s%s%s quieted"
 msgstr "%s%s[%s%s%s] %s%s%s%s sessize alındı"
 
-#, c-format
-msgid "%s%s: command \"%s\" not found:"
+#, fuzzy, c-format
+#| msgid "%s%s: command \"%s\" not found:"
+msgid "%s%s: command \"%s\" not found: \"%s\""
 msgstr "%s%s: \"%s\" komutu bulunamadı:"
 
 #, c-format
-msgid "%s%s: failed to parse command \"%s\" (please report to developers):"
+msgid ""
+"%s%s: failed to parse command \"%s\" (please report to developers): \"%s\""
 msgstr ""
 
 #, c-format
 msgid ""
-"%s%s: too few arguments received from IRC server for command \"%s"
-"\" (received: %d arguments, expected: at least %d)"
+"%s%s: too few parameters received in command \"%s\" (received: %d, expected: "
+"at least %d)"
 msgstr ""
 
-#, c-format
-msgid "%s%s: \"%s\" command received without host"
-msgstr ""
+#, fuzzy, c-format
+#| msgid "%s%s: command \"%s\" not found:"
+msgid "%s%s: command \"%s\" received without nick"
+msgstr "%s%s: \"%s\" komutu bulunamadı:"
 
 #, c-format
 msgid "IRC raw messages | Filter: %s"

@@ -160,9 +160,23 @@ irc_raw_message_match_filter (struct t_irc_raw_message *raw_message,
     else if (strncmp (filter, "m:", 2) == 0)
     {
         /* filter by IRC command */
-        irc_message_parse (raw_message->server, raw_message->message,
-                           NULL, NULL, NULL, NULL, NULL, &command, NULL,
-                           NULL, NULL, NULL, NULL, NULL, NULL);
+        irc_message_parse (raw_message->server,
+                           raw_message->message,
+                           NULL,  /* tags */
+                           NULL,  /* message_without_tags */
+                           NULL,  /* nick */
+                           NULL,  /* user */
+                           NULL,  /* host */
+                           &command,
+                           NULL,  /* channel */
+                           NULL,  /* arguments */
+                           NULL,  /* text */
+                           NULL,  /* params */
+                           NULL,  /* num_params */
+                           NULL,  /* pos_command */
+                           NULL,  /* pos_arguments */
+                           NULL,  /* pos_channel */
+                           NULL);  /* pos_text */
         match = (command && (weechat_strcasecmp (command, filter + 2) == 0)) ?
             1 : 0;
         if (command)
