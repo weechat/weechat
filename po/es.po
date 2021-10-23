@@ -154,7 +154,7 @@ msgstr ""
 #, c-format
 msgid "Usage: %s [option...] [plugin:option...]\n"
 msgstr "Uso: %s [opción...] [plugin:opción...]\n"
-# fuzzy
+#
 msgid ""
 "  -a, --no-connect         disable auto-connect to servers at startup\n"
 "  -c, --colors             display default colors in terminal\n"
@@ -182,13 +182,12 @@ msgid ""
 "  plugin:option            option for plugin (see man weechat)\n"
 msgstr ""
 "  -a, --no-connect   desactivar la autoconexión de los servidores al inicio\n"
-"  -c, --colors       muestra los colores predeterminados en la terminal\n"
+"  -c, --colors       mostrar los colores predeterminados en la terminal\n"
 "  -d, --dir <ruta>   establecer el directorio raíz de WeeChat (por defecto "
 "~/.weechat)\n"
 "  -h, --help         esta ayuda\n"
-"  -k, --keys         mostrar los atajos de teclado por defecto de WeeChat\n"
 "  -l, --license      mostrar la licencia de WeeChat\n"
-"  -p, --no-plugin    no cargar ningún plugin (extensión) al inicio\n"
+"  -p, --no-plugin    no cargar ningún plugin al inicio\n"
 "  -r, --run-command  ejecutar un comando después del inicio\n"
 "                     (varios comandos pueden ser separados por punto y "
 "coma)\n"
@@ -305,12 +304,12 @@ msgid "List of bars:"
 msgstr "Lista de barras:"
 
 #. TRANSLATORS: the last thing displayed is "width:" or "height:" with its value
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "  %s%s%s: %s%s%s (conditions: %s), %s, filling: %s(top/bottom)/%s(left/"
 "right), %s: %s"
 msgstr ""
-"  %s%s%s: %s%s%s (cond: %s), %s, llenado: %s(arriba/abajo)/%s(izquierda/"
+"  %s%s%s: %s%s%s (condiciones: %s), %s, llenado: %s(arriba/abajo)/%s(izquierda/"
 "derecha), %s: %s"
 
 #. TRANSLATORS: "hidden" is displayed in list of buffers
@@ -326,9 +325,9 @@ msgstr "ancho"
 msgid "auto"
 msgstr "auto"
 
-#, fuzzy, c-format
+#, c-format
 msgid "    priority: %d, fg: %s, bg: %s, bg_inactive: %s, items: %s%s"
-msgstr "    prioridad: %d, color: %s, fondo: %s, elementos: %s%s"
+msgstr "    prioridad: %d, color: %s, fondo: %s, fondo_inactivo: %s, elementos: %s%s"
 
 msgid ", with separator"
 msgstr ", con separador"
@@ -408,11 +407,11 @@ msgstr "  %s[%s%d%s]%s %s%s.%s%s%s  (aviso: %s%s%s)%s%s)"
 msgid "%sBuffer name \"%s\" is reserved for WeeChat"
 msgstr "%sEl nombre del buffer \"%s\" está reservado por WeeChat"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sInvalid buffer number: \"%s\""
-msgstr "%s: set de caracteres inválido: \"%s\""
+msgstr "%sNúmero de buffer inválido: \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sBuffer \"%s\" not found"
 msgstr "%sBuffer \"%s\" no encontrado"
 
@@ -428,13 +427,13 @@ msgstr ""
 msgid "%sWeeChat main buffer can't be closed"
 msgstr "%sError: el buffer principal de WeeChat no puede ser cerrado"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Notify for \"%s%s%s\": \"%s%s%s\""
-msgstr "%sEl tema para %s%s%s es \"%s%s\""
+msgstr "%sNotificar \"%s%s%s\":  \"%s%s%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sUnable to set notify level \"%s\""
-msgstr "%sError: no se pudo configurar la opción \"%s\" en la barra \"%s\""
+msgstr "%sError: no se pudo configurar la notificación \"%s\""
 
 #, c-format
 msgid "Local variables for buffer \"%s\":"
@@ -508,13 +507,13 @@ msgstr "%sFiltro \"%s\" no encontrado"
 msgid "Filter \"%s\" disabled"
 msgstr "Filtro \"%s\" desactivado"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sYou must specify at least tags or regex for filter"
 msgstr ""
 "%sError: Debes especificar al menos una etiqueta (o varias) o una expresión "
 "regular para el filtro"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Filter \"%s\" updated:"
 msgstr "Filtro \"%s\" actualizado:"
 
@@ -526,7 +525,7 @@ msgstr "Filtro \"%s\" añadido:"
 msgid "Filter \"%s\" renamed to \"%s\""
 msgstr "Filtro \"%s\" renombrado a \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sUnable to rename filter \"%s\" to \"%s\""
 msgstr "%sError: no se pudo renombrar el filtro \"%s\" a \"%s\""
 
@@ -583,7 +582,7 @@ msgstr "%d atajos borrados en el contexto \"%s\":"
 msgid "No key binding added, redefined or removed for context \"%s\""
 msgstr "Ningún atajo agregado, redefinido o borrado en el contexto \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sUnable to bind key \"%s\""
 msgstr "%sError: no se pudo crear el atajo \"%s\""
 
@@ -591,7 +590,7 @@ msgstr "%sError: no se pudo crear el atajo \"%s\""
 msgid "Key \"%s\" has already default value"
 msgstr "El atajo \"%s\" ya tiene un valor por defecto"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sUnable to unbind key \"%s\""
 msgstr "%sError: no se pudo deshacer el atajo \"%s\""
 
@@ -633,7 +632,7 @@ msgstr ""
 "(tip: usa alt-k para encontrar codigos); si aún quieres usar esta tecla, "
 "desactiva la opción weechat.look.key_bind_safe"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sContext \"%s\" not found"
 msgstr "%sError: contexto \"%s\" no encontrado"
 
@@ -641,7 +640,7 @@ msgstr "%sError: contexto \"%s\" no encontrado"
 msgid "Default key bindings restored for context \"%s\""
 msgstr "Atajos predefinidos en el contexto \"%s\" restaurados"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sArgument \"-yes\" is required for keys reset (security reason)"
 msgstr ""
 "%sError: por seguridad, se requiere el argumento \"-yes\" para restaurar los "
@@ -653,28 +652,23 @@ msgid_plural "%d new keys added (context: \"%s\")"
 msgstr[0] "%d nuevo atajo agregado"
 msgstr[1] "%d nuevos atajos agregados (contexto: \"%s\")"
 
-#, fuzzy
 msgid "Stored layouts:"
 msgstr "Tema guardado:"
 
-#, fuzzy
 msgid " (current layout)"
 msgstr " (valor actual)"
 
-#, fuzzy
 msgid "No stored layouts"
 msgstr "Sin temas almacenados"
 
 #. TRANSLATORS: %s%s%s is "buffers" or "windows" or "buffers+windows"
-#, fuzzy, c-format
+#, c-format
 msgid "Layout of %s%s%s stored in \"%s\" (current layout: %s)"
-msgstr "%sTema para %s%s%s establecido en %s (tema actual: %s)"
+msgstr "Tema para %s%s%s establecido en %s (tema actual: %s)"
 
-#, fuzzy
 msgid "buffers"
 msgstr "buffers"
 
-#, fuzzy
 msgid "windows"
 msgstr "ventanas"
 
@@ -686,21 +680,21 @@ msgid "Layout \"%s\" deleted (current layout: %s)"
 msgstr "Tema \"%s\" borrado (tema actual: %s)"
 
 #. TRANSLATORS: %s%s%s is "buffers" or "windows" or "buffers+windows"
-#, fuzzy, c-format
+#, c-format
 msgid "Layout of %s%s%s reset in \"%s\""
-msgstr "%sTema para %s%s%s establecido en %s"
+msgstr "Tema para %s%s%s establecido en \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sLayout \"%s\" not found"
 msgstr "%sTema \"%s\" no encontrado"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sLayout \"%s\" already exists for \"%s\" command"
 msgstr "%s%s: ya existe el tema \"%s\" para el comando \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Layout \"%s\" has been renamed to \"%s\""
-msgstr "Filtro \"%s\" renombrado a \"%s\""
+msgstr "Tema \"%s\" renombrado a \"%s\""
 
 msgid "Mouse enabled"
 msgstr "Ratón activado"
@@ -811,10 +805,8 @@ msgstr "Ningún plugin encontrado"
 msgid "  (no plugin)"
 msgstr "  (sin plugins)"
 
-#, fuzzy
-#| msgid "Plugins loaded:"
 msgid "No plugins loaded"
-msgstr "Plugins cargados:"
+msgstr "Sin plugins cargados"
 
 msgid "List of proxies:"
 msgstr "Lista de proxies:"
@@ -826,37 +818,37 @@ msgstr "  %s%s%s: %s, %s/%d (%s), nombre de usuario: %s, contraseña: %s"
 msgid "No proxy defined"
 msgstr "Ningún proxy definido"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sInvalid type \"%s\" for proxy \"%s\""
 msgstr "%sError: tipo \"%s\" incorrecto para el proxy \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Proxy \"%s\" added"
 msgstr "Proxy \"%s\" creado"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sFailed to add proxy \"%s\""
 msgstr "%sError: no se pudo crear el proxy \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sInvalid port \"%s\" for proxy \"%s\""
 msgstr "%sError: puerto \"%s\" incorrecto para el proxy \"%s\""
 
 msgid "All proxies have been deleted"
 msgstr "Todos los proxies fueron eliminados"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sProxy \"%s\" not found"
 msgstr "%sProxy \"%s\" no encontrado"
 
 msgid "Proxy deleted"
 msgstr "Proxy eliminado"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sUnable to set option \"%s\" for proxy \"%s\""
 msgstr "%sError: no se pudo configurar la opción \"%s\" para el proxy \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%sYou must confirm /%s command with extra argument \"-yes\" (see /help %s)"
 msgstr ""
@@ -912,7 +904,6 @@ msgstr ""
 msgid "%sPassphrase is too long (max: %d chars)"
 msgstr "%sLa passphrase es muy larga (máx: %d caracteres)"
 
-#, fuzzy
 msgid "Passphrase deleted"
 msgstr "Passphrase eliminada"
 
@@ -922,7 +913,6 @@ msgstr "La Passphrase no está configurada"
 msgid "Passphrase changed"
 msgstr "Passphrase cambiada"
 
-#, fuzzy
 msgid "Passphrase added"
 msgstr "Passphrase agregada"
 
@@ -932,22 +922,21 @@ msgid ""
 "returns the new passphrase you just defined"
 msgstr ""
 "Importante: un programa externo está configurado para leer la passphrase en el"
-"arranque (opción sec.crypt.passphrase_command); deber asegurate de que este programa "
+"arranque (opción sec.crypt.passphrase_command); debes asegurate de que este programa "
 "devuelva la nueva passphrase que acabas de definir"
 
 #, c-format
 msgid "Secured data \"%s\" set"
 msgstr "Datos \"%s\" asegurados"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Secured data \"%s\" deleted"
-msgstr "Datos asegurados \"%s\" eliminados"
+msgstr "Datos \"%s\" eliminados"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sSecured data \"%s\" not found"
-msgstr "%sDatos asegurados \"%s\" no encontrados"
+msgstr "%sDatos \"%s\" no encontrados"
 
-#, fuzzy
 msgid "default if null: "
 msgstr "predeterminado: "
 
@@ -981,7 +970,7 @@ msgstr[1] "%s%d%s opciones coincidiendo con \"%s\")"
 msgid "Environment variable \"%s\" is not defined"
 msgstr "Variable \"%s\" no definida"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sFailed to set variable \"%s\": %s"
 msgstr "%sError: no se pudo configurar la variable: \"%s\""
 
@@ -1090,9 +1079,9 @@ msgstr ""
 msgid "compiled on"
 msgstr "compilado en"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Upgraded %d %s, first start: %s, last start: %s"
-msgstr "Actualizado %d %s, último inicio: %s"
+msgstr "Actualizado el %d %s, último inicio: %s"
 
 #. TRANSLATORS: text is: "upgraded xx times"
 msgid "time"
@@ -1103,11 +1092,11 @@ msgstr[1] "veces"
 msgid "Windows list:"
 msgstr "Lista de ventanas:"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sInvalid window number: \"%s\""
 msgstr "%sNúmero de ventana inválido: \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%sCan not merge windows, there's no other window with same size near current "
 "one"
@@ -1115,7 +1104,7 @@ msgstr ""
 "%sError: no se pueden unir las ventanas, no hay ninguna otra ventana con el "
 "mismo tamaño de la actual"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%sCan not close window, there's no other window with same size near current "
 "one"
@@ -1123,14 +1112,12 @@ msgstr ""
 "%sError: no se pudo cerrar la ventana, no hay ninguna otra ventana con el "
 "mismo tamaño de la actual"
 
-#, fuzzy
 msgid "set or remove away status"
 msgstr "activa o desactiva el estado ausente"
 
 msgid "[-all] [<message>]"
 msgstr "[-all] [<mensaje>]"
 
-#, fuzzy
 msgid ""
 "   -all: set or remove away status on all connected servers\n"
 "message: message for away (if no message is given, away status is removed)"
@@ -1143,7 +1130,6 @@ msgstr ""
 msgid "manage bars"
 msgstr "gestionar las barras"
 
-#, fuzzy
 msgid ""
 "list|listfull|listitems || add <name> <type>[,<conditions>] <position> "
 "<size> <separator> <item1>[,<item2>...] || default [input|title|status|"
@@ -1156,7 +1142,6 @@ msgstr ""
 "<valor> || hide|show|toggle <nombre> || scroll <nombre> <ventana> "
 "<desplazamiento>"
 
-#, fuzzy
 msgid ""
 "         list: list all bars\n"
 "     listfull: list all bars (verbose)\n"
@@ -1539,8 +1524,6 @@ msgstr ""
 msgid "debug functions"
 msgstr "funciones de depuración"
 
-# hooks missing?
-#, fuzzy
 msgid ""
 "list || set <plugin> <level> || dump [<plugin>] || buffer|color|infolists|"
 "libs|certs|memory|tags|term|windows || mouse|cursor [verbose] || hdata "
@@ -1900,7 +1883,6 @@ msgstr ""
 "filtra mensajes en buffers, para ocultar/mostrar según etiquetas o "
 "expresiones regulares"
 
-#, fuzzy
 msgid ""
 "list || enable|disable|toggle [<name>|@] || add|addreplace <name> <buffer>[,"
 "<buffer>...] <tags> <regex> || rename <name> <new_name> || recreate <name> "
@@ -2357,7 +2339,7 @@ msgstr "ejecuta un comando silenciosamente"
 
 #, fuzzy
 msgid "[-core | -current | -buffer <name>] <command>"
-msgstr "[-current | -buffer <nombre> | -all] <comando>"
+msgstr "[-core |-current | -buffer <nombre>] <comando>"
 
 msgid ""
 "   -core: no output on WeeChat core buffer\n"
@@ -2383,14 +2365,14 @@ msgstr ""
 msgid "list/load/unload plugins"
 msgstr "listar/cargar/descargar plugins"
 
-#, fuzzy
 msgid ""
 "list [-o|-ol|-i|-il|<name>] || listfull [<name>] || load <filename> "
 "[<arguments>] || autoload [<arguments>] || reload [<name>|* [<arguments>]] "
 "|| unload [<name>]"
 msgstr ""
-"list|listfull [<nombre>] || load <archivo> [<argumentos>] || autoload "
-"[<argumentos>] || reload [<nombre> [<argumentos>]] || unload [<nombre>]"
+"list [-o|-ol|-i|-il|<nombre>] || listfull [<nombre>] || load <archivo> "
+"[<argumentos>] || autoload [<argumentos>] || reload [<nombre>|* [<argumentos>]] "
+"|| unload [<nombre>]"
 
 msgid ""
 "     list: list loaded plugins\n"
@@ -2413,9 +2395,8 @@ msgid ""
 "Without argument, this command lists loaded plugins."
 msgstr ""
 
-#, fuzzy
 msgid "display text on a buffer"
-msgstr "color del texto en el buffer del repetidor"
+msgstr "color del texto en el buffer"
 
 msgid ""
 "[-buffer <number>|<name>] [-newbuffer <name>] [-free] [-switch] [-core|-"
@@ -2576,9 +2557,8 @@ msgstr ""
 msgid "execute a command several times"
 msgstr "ejecuta un comando varias veces"
 
-#, fuzzy
 msgid "[-interval <delay>[<unit>]] <count> <command>"
-msgstr "[-interval <retraso>] <cantidad> <omando>"
+msgstr "[-interval <retraso>] <cantidad> <comando>"
 
 #, fuzzy
 msgid ""
@@ -2689,11 +2669,11 @@ msgstr ""
 msgid "set config options and environment variables"
 msgstr ""
 
-#, fuzzy
 msgid ""
 "[<option> [<value>]] || diff [<option> [<option>...]] || env [<variable> "
 "[<value>]]"
-msgstr "[<opción> [<valor>]] || diff [<opción> [<opción>...]]"
+msgstr "[<opción> [<valor>]] || diff [<opción> [<opción>...]]|| env [<variable> "
+"[<valor>]]"
 
 #, fuzzy
 msgid ""
@@ -2784,13 +2764,11 @@ msgstr ""
 "  reiniciar todas las opciones de colores:\n"
 "    /unset weechat.color.*"
 
-#, fuzzy
 msgid "reload the WeeChat binary without disconnecting from servers"
-msgstr "actualizar WeeChat sin desconectarse de los servidores"
+msgstr "reiniciar WeeChat sin desconectarse de los servidores"
 
-#, fuzzy
 msgid "[-yes] [<path_to_binary>|-quit]"
-msgstr "[<ruta_al_ejecutable>|-quit]"
+msgstr "[-yes] [<ruta_al_ejecutable>|-quit]"
 
 #, fuzzy
 msgid ""
@@ -3068,11 +3046,11 @@ msgstr ""
 "  aumentar la ventana #2:\n"
 "    /window zoom -window 2"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sToo few arguments for command \"%s%s%s\" (help on command: /help %s)"
-msgstr "%sError con el comando \"%s\" (trata con /help %s)"
+msgstr "%sError con los argumentos del comando \"%s\" (trata con /help %s)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sError with command \"%s\" (help on command: /help %s)"
 msgstr "%sError con el comando \"%s\" (trata con /help %s)"
 
@@ -3085,13 +3063,11 @@ msgstr "números de los buffers"
 msgid "names of buffers (including plugins names)"
 msgstr "nombre de los buffers (incluyendo nombre de los plugins)"
 
-#, fuzzy
 msgid "buffer local variables"
-msgstr "Guardar registro de buffers"
+msgstr "Variables del buffer local"
 
-#, fuzzy
 msgid "value of a buffer local variable"
-msgstr "Variables"
+msgstr "valor de una variable local de un buffer"
 
 msgid "properties that can be set on a buffer"
 msgstr "propiedades del buffer que pueden configurarse"
@@ -3104,7 +3080,7 @@ msgstr "números de ventanas"
 
 #, fuzzy
 msgid "color names"
-msgstr "obtiene el nombre del color del apodo"
+msgstr "nombres de colores"
 
 msgid "palette colors"
 msgstr "paleta de colores"
@@ -3138,9 +3114,8 @@ msgstr "opciones de configuración"
 msgid "names of plugins"
 msgstr "nombres de plugins"
 
-#, fuzzy
 msgid "names of plugins installed"
-msgstr "nombres de plugins"
+msgstr "nombres de los plugins instalados"
 
 msgid ""
 "commands defined by plugins; optional argument: prefix to add before the "
@@ -3181,32 +3156,30 @@ msgstr ""
 msgid "areas (\"chat\" or bar name) for free cursor movement"
 msgstr "áreas (\"chat\" o nombre de barra) para movimiento libre del cursor"
 
-#, fuzzy
 msgid "names of layouts"
-msgstr "nombres de barras"
+msgstr "nombres de temas"
 
+#, fuzzy
 msgid "names of secured data (file sec.conf, section data)"
 msgstr ""
 
-#, fuzzy
 msgid "environment variables"
-msgstr "Variables"
+msgstr "variables de entorno"
+
+msgid "value of an environment variable"
+msgstr "valor de una variable de entorno"
 
 #, fuzzy
-msgid "value of an environment variable"
-msgstr "Variables"
-
 msgid ""
 "Warning: option weechat.look.save_config_on_exit is disabled, so the option "
 "weechat.look.save_layout_on_exit is ignored"
 msgstr ""
 
-#, fuzzy
 msgid ""
 "Warning: you should now issue /save to write option weechat.look."
 "save_config_on_exit in configuration file"
 msgstr ""
-"Atención: ahora se debería ejecutar /save para guardar la opción "
+"Atención: ahora deberías ejecutar /save para guardar la opción "
 "\"save_config_on_exit\" en el archivo de configuración"
 
 msgid ""
@@ -3228,7 +3201,7 @@ msgstr "nivel de depurado para el plugin (\"core\" para el núcleo de WeeChat)"
 msgid "alias for color"
 msgstr "alias para el color"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sPalette option must be numeric"
 msgstr "%sError: el valor de la paleta debe ser un número"
 
@@ -3240,26 +3213,29 @@ msgstr ""
 msgid "Notify level for buffer"
 msgstr "Nivel de notificación para el buffer"
 
-#, fuzzy
 msgid ""
 "command executed when WeeChat starts, after loading plugins; multiple "
 "commands can be separated by semicolons (note: commands are evaluated, see /"
 "help eval)"
-msgstr "comando ejecutado cuando WeeChat inicia, después de cargar los plugins"
+msgstr "comando ejecutado cuando WeeChat inicia, después de cargar los plugins, "
+"multiples comandos pueden ser separados por puntos y comas (nota: los comandos se "
+"evaluan, ver /help eval)"
 
-#, fuzzy
 msgid ""
 "command executed when WeeChat starts, before loading plugins; multiple "
 "commands can be separated by semicolons (note: commands are evaluated, see /"
 "help eval)"
-msgstr "comando ejecutado cuando WeeChat inicia, después de cargar los plugins"
+msgstr "comando ejecutado cuando WeeChat inicia, antes de cargar los plugins, "
+"multiples comandos pueden ser separados por puntos y comas (nota: los comandos se "
+"evaluan, ver /help eval)"
 
 msgid "display WeeChat logo at startup"
-msgstr "mostrar el logotipo de WeeChat en el arranque"
+msgstr "mostrar el logo de WeeChat en el arranque"
 
 msgid "display WeeChat version at startup"
 msgstr "mostrar la versión de WeeChat en el arranque"
 
+#, fuzzy
 msgid ""
 "set resource limits for WeeChat process, format is: \"res1:limit1,res2:"
 "limit2\"; resource name is the end of constant (RLIMIT_XXX) in lower case "
@@ -13244,9 +13220,8 @@ msgstr "color para grupos en la lista de apodos"
 msgid "text color for post action flag (in /trigger list)"
 msgstr "color para acciones en la línea de entrada"
 
-#, fuzzy
 msgid "text color for regular expressions"
-msgstr "color para el prefijo de error"
+msgstr "color para expresiones regulares"
 
 msgid "text color for replacement text (for regular expressions)"
 msgstr ""
@@ -13342,13 +13317,12 @@ msgstr ""
 msgid "wrong CRC"
 msgstr ""
 
-#, fuzzy
 msgid "CRC error"
-msgstr "error"
+msgstr "error CRC"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: file %s %s %s (%s): %s"
-msgstr "%s%s: archivo %s %s %s (%ld.%ld.%ld.%ld): %s"
+msgstr "%s%s: archivo %s %s %s (%s): %s"
 
 msgid "sent to"
 msgstr "enviado a"
@@ -13359,9 +13333,9 @@ msgstr "recibido de"
 msgid "FAILED"
 msgstr "FALLÓ"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: chat closed with %s (%s)"
-msgstr "%s: charla con %s (%ld.%ld.%ld.%ld) cerrada"
+msgstr "%s: chat cerrado con con %s (%s)"
 
 #, c-format
 msgid "%s%s: aborting active xfer: \"%s\" from %s"
@@ -13371,19 +13345,19 @@ msgstr "%s%s: abortando la transferencia activa: \"%s\" desde %s"
 msgid "%s%s: not enough memory for new xfer"
 msgstr "%s%s: no hay memoria suficiente para una nueva transferencia"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unable to interpret address: error %d %s"
-msgstr "%s%s: no es posible crear la tubería"
+msgstr "%s%s: no es posible interpretar la dirección: error %d %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: hashing error"
-msgstr "%s%s: error de inicialización de TLS"
+msgstr "%s%s: error de hash"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s: incoming file from %s (%s, %s.%s), name: %s, %llu bytes (protocol: %s)"
 msgstr ""
-"%s: archivo entrante desde %s (%ld.%ld.%ld.%ld, %s.%s), nombre: %s, %llu "
+"%s: archivo entrante de %s (%s, %s.%s), nombre: %s, %llu bytes (protocolo: %s)"
 "bytes (protocolo: %s)"
 
 #, c-format
@@ -13394,9 +13368,9 @@ msgstr ""
 "%s: ofreciendo archivo a %s (%s.%s): nombre: %s (archivo local: %s), %llu "
 "bytes (protocolo: %s)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: incoming chat request from %s (%s, %s.%s)"
-msgstr "%s: recibida petición de charla desde %s (%ld.%ld.%ld.%ld, %s.%s)"
+msgstr "%s: solicitud de chat recibida de %s (%s, %s.%s)"
 
 #, c-format
 msgid "%s: sending chat request to %s (%s.%s)"
@@ -13412,9 +13386,9 @@ msgstr ""
 msgid "%s%s: address \"%s\" resolved to a larger sockaddr than expected"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: invalid address \"%s\": error %d %s"
-msgstr "%s%s: set de caracteres inválido: \"%s\""
+msgstr "%s%s: dirección inválida \"%s\": error %d %s"
 
 #, c-format
 msgid "%s%s: missing arguments (%s)"
@@ -13493,7 +13467,7 @@ msgid "%3d. %s, chat with %s (local nick: %s), started on %s, status: %s%s"
 msgstr ""
 "%3d. %s, conversación con %s (apodo local: %s), iniciado en %s, estado: %s%s"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "     plugin: %s (id: %s), file: %llu bytes (position: %llu), address: %s "
 "(port %d)"
@@ -13601,7 +13575,6 @@ msgid ""
 "acks may prevent a freeze if the acks are not sent immediately to the sender"
 msgstr ""
 
-#, fuzzy
 msgid ""
 "speed limit for receiving files, in kilo-bytes by second (0 means no limit)"
 msgstr ""
@@ -13725,14 +13698,14 @@ msgid ""
 "%s: sending file to %s (%s, %s.%s), name: %s (local filename: %s), %llu "
 "bytes (protocol: %s)"
 msgstr ""
-"%s: ofreciendo archivo a %s (%s.%s): nombre: %s (archivo local: %s), %llu "
+"%s: enviando archivo a %s (%s, %s.%s), nombre: %s (archivo local: %s), %llu "
 "bytes (protocolo: %s)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unable to create socket for sending file: error %d %s"
 msgstr "%s%s: no es posible crear el socket para enviar el archivo"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unable to set option \"nonblock\" for socket: error %d %s"
 msgstr "%s%s: no es posible configurar la opción \"nonblock\" para el socket"
 
@@ -13740,9 +13713,9 @@ msgstr "%s%s: no es posible configurar la opción \"nonblock\" para el socket"
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: tiempo de espera máximo para \"%s\" con %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
-msgstr "%s%s: no es posible conectarse al transmisor"
+msgstr "%s%s: no es posible conectarse: error (%d)"
 
 #~ msgid ""
 #~ "     list: list loaded plugins\n"
