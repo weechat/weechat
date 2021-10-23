@@ -1998,19 +1998,15 @@ Można ją zapisać za pomocą skryptu _buffer_autoset.py_: można go zaintalowa
 | kbd:[Alt+F11]      | Idź na początek listy nicków. | `+/bar scroll nicklist * b+`
 | kbd:[Alt+F12]      | Idź na koniec listy nicków. | `+/bar scroll nicklist * e+`
 | kbd:[Alt+a]        | Przełącz na następny bufor z aktywnością (z priorytetem: powiadomienie, wiadomość, inne). | `+/input jump_smart+`
-| kbd:[Alt+Shift+B]  | Przełącza widoczność listy buforów. | `+/buflist toggle+`
-// TRANSLATION MISSING
+| kbd:[Alt+Shift+B]  | Przełącz widoczność listy buforów. | `+/buflist toggle+`
 | kbd:[Alt+h],
-  kbd:[Alt+c]        | Clear hotlist (activity notification on buffers). | `+/input hotlist_clear+`
-// TRANSLATION MISSING
+  kbd:[Alt+c]        | Wyczyść hotliste (powiadomienia o aktywności w buforach). | `+/input hotlist_clear+`
 | kbd:[Alt+h],
-  kbd:[Alt+m]        | Remove current buffer from hotlist. | `+/input hotlist_remove_buffer+`
-// TRANSLATION MISSING
+  kbd:[Alt+m]        | Usuń obecny bufor z hotlisty. | `+/input hotlist_remove_buffer+`
 | kbd:[Alt+h],
-  kbd:[Alt+r]        | Restore latest hotlist removed in the current buffer. | `+/input hotlist_restore_buffer+`
-// TRANSLATION MISSING
+  kbd:[Alt+r]        | Przywróć ostatnią usuniętą hotlistę w obecnym buforze. | `+/input hotlist_restore_buffer+`
 | kbd:[Alt+h],
-  kbd:[Alt+Shift+R]  | Restore latest hotlist removed in all buffers. | `+/input hotlist_restore_all+`
+  kbd:[Alt+Shift+R]  | Przywróć ostatnią hotlistę usuniętą we wszystkich buforach. | `+/input hotlist_restore_all+`
 | kbd:[Alt+j],
   kbd:[Alt+f]        | Przełącz na pierwszy bufor. | `+/buffer -+`
 | kbd:[Alt+j],
@@ -2564,8 +2560,7 @@ Domyślne wtyczki:
 | php        | Wsparcie dla skryptów napisanych w PHP.
 | spell      | Sprawdzanie pisowni w linii poleceń.
 | trigger    | Zamiana tekstu i wykonywanie komend dla zdarzeń wywołanych przez WeeChat/wtyczki.
-// TRANSLATION MISSING
-| typing     | Display users currently writing messages.
+| typing     | Pokazuje użytkowników obecnie piszących wiadomości.
 | xfer       | Przesyłanie plików i bezpośredni chat.
 |===
 
@@ -2896,31 +2891,31 @@ _irc.libera.chat_, na domyślnym porcie (6667), z nickiem _alice_:
 $ weechat irc://alice@irc.libera.chat/#weechat,#weechat-fr
 ----
 
-// TRANSLATION MISSING
 [[irc_servers]]
-==== Servers
+==== Serwery
 
 [[irc_servers_add]]
-===== Add a server
+===== Dodanie serwera
 
-By default no servers are defined. You can add as many servers as you want with
-the <<command_irc_server,/server>> command.
+Domyślnie nie są zdefiniowane żadne serwery. Możesz dodać ich tyle ile chcesz
+za pomocą polecenia <<command_irc_server,/server>>.
 
-For example to connect to https://libera.chat/[libera.chat] with SSL (encrypted trafic):
+Na przykład w celu połączenia się do https://libera.chat/[libera.chat] używając SSL (szyfrowane połączenie):
 
 ----
 /server add libera irc.libera.chat/6697 -ssl
 ----
 
-You can tell WeeChat to auto-connect to this server on startup:
+Możesz powiedzieć WeeChat, aby automatycznie łączył się z tym serwerem po
+uruchomieniu:
 
 ----
 /set irc.server.libera.autoconnect on
 ----
 
-To authenticate, it is recommended to use SASL (if supported on the server),
-with the password stored as secured data (see also chapter on
-<<irc_sasl_authentication,SASL authentication>>):
+W celu uwierzytelnienia zalecane jest używanie SASL (jeśli wspiera to
+serwer), za pomocą hasła przechowaywanego w bezpieczny sposób (więcej
+w rozdziale <<irc_sasl_authentication,Uwierzytelnianie SASL>>):
 
 ----
 /set irc.server.libera.sasl_username "alice"
@@ -2928,28 +2923,29 @@ with the password stored as secured data (see also chapter on
 /set irc.server.libera.sasl_password "${sec.data.libera}"
 ----
 
-If SASL is not supported, you can use a command to send a message to nickserv:
+Jeśli SASL nie jest wspierane możesz użyć komendy, aby wysłać wiadomość do
+nickserva:
 
 ----
 /set irc.server.libera.command "/msg nickserv identify ${sec.data.libera}"
 ----
 
 [NOTE]
-By sending a message to nickserv, you may authenticate after joining channels
-which could be a problem on some channels requiring you to be authenticated
-to join. In this case, you can set a command delay:
-`/set irc.server.libera.command_delay 5`.
+Wysyłając wiadomość do nickserva możesz sie uwierzytelnić po wejściu na
+kanały, co może być problemem na kanałach, na które mogą wejść tylko
+uwierzytelnione osoby. W takim przypadku możesz ustawić opóźnienie dla
+komendy: `/set irc.server.libera.command_delay 5`.
 
 [[irc_servers_options]]
-===== Server options
+===== Opcje serwerów
 
-Server options are named `irc.server.<server>.<option>` where `<server>` is the
-internal name of the server and `<option>` the name of an option. +
-The value of a server option is inherited from `irc.server_default.xxx`
-if the server option has the special value `null`.
+Opcje serwerów są nazywane w taki sposób `irc.server.<serwer>.<opcja>`,
+gdzie `<serwer>` to zdefiniowana nazwa serwera, `<opcja>` to nazwa opcji. +
+Wartość opcji jest dziedziczona z `irc.server_default.xxx` w przypadku
+kiedy opcja ma specalną wartość `null`.
 
-For example if you created the _libera_ server with the commands above, you'll
-see this with the command `/fset libera`:
+Na przykład jeśli stworzyłeś serwer _libera_ za pomocą po wyższych komend
+zobaczysz to po wykonaniu `/fset libera`:
 
 ....
 irc.server.libera.addresses             string   "irc.libera.chat/6697"
@@ -2998,15 +2994,16 @@ irc.server.libera.usermode              string   null -> ""
 irc.server.libera.username              string   null -> "alice"
 ....
 
-For example if you want to automatically connect to all servers you define
-without having to do it on each server, you can do:
+Na przykład jeśli chcesz automatycznie połączyć się ze wszystkimi zdefiniowanym
+serwerami bez potrzeby ustawiania tej opcji dla każdego z serwerów, możesz to
+zrobić za pomocą:
 
 ----
 /set irc.server_default.autoconnect on
 ----
 
-And then you can reset the server option so that it uses the default inherited
-value, which is now `on` instead of the default value `off`:
+Następnie możesz zresetować opcję serwera do jej domyślnej (dziedziczonej)
+wartości, która teraz ma wartość `on` zamiast domyślnego `off`: 
 
 ----
 /unset irc.server.libera.autoconnect
@@ -3156,33 +3153,32 @@ Ponowne połączenie z serwerem:
 /reconnect libera
 ----
 
-// TRANSLATION MISSING
 [[irc_servers_connection]]
-===== Connection
+===== Łączenie się z serwerem
 
-You can connect to server with the <<command_irc_connect,/connect>> command:
+Możesz połączyć się z serwerem za pomocą komendy <<command_irc_connect,/connect>>:
 
 ----
 /connect libera
 ----
 
-To disconnect:
+Aby się rozłączyć:
 
 ----
 /disconnect libera
 ----
 
-Or just this if you are on any buffer belonging to _libera_ server (server,
-channel, private):
+Lub tylko to jeśli jesteś w buforze należącym do serwera _libera_ (serwer,
+kanał, wiadomości prywatne):
 
 ----
 /disconnect
 ----
 
-When you connect to multiple servers at same time, server buffers are merged
-by default and you can switch between them with the kbd:[Ctrl+x] key. +
-It is possible to disable auto merge of server buffers to have independent
-server buffers:
+Jeśli łączysz się do wielu serwerów na raz, bufory serwerów są domyślnie połączone
+i możesz się między nimi przełączać za pomocą klawiszy kbd:[Ctrl+x]. +
+Możliwe jest wyłączenie automatycznego łączenia buforów serwerów i posiadania
+oddzielnych buforów dla serwerów:
 
 ----
 /set irc.look.server_buffer independent
@@ -3237,59 +3233,61 @@ Teraz pozostaje już się tylko połączyć z serwerem:
 /connect irc-tor
 ----
 
-// TRANSLATION MISSING
 [[irc_channels]]
-==== Channels
+==== Kanały
 
-You can join channels with the <<command_irc_join,/join>> command:
+Możesz dołączać do kanałów za pomocą komendy <<command_irc_join,/join>>:
 
 ----
 /join #channel
 ----
 
-Part a channel (keeping the buffer open):
+Wyjście z kanału (zostawiając otwarty bufor):
 
 ----
 /part [quit message]
 ----
 
-The channels you joined are not saved. If you want to join them automatically
-when connecting to the server, you must set the server `autojoin` option:
+Kanały do których dołączyłeś nie są zapisywane. Jeśli chcesz automatycznie
+do nich dołączać podczas łączenia się z serwerem, należy ustawić opcje
+serwera `autojoin`: 
 
 ----
-/set irc.server.libera.autojoin "#weechat,#weechat-fr"
+/set irc.server.libera.autojoin "#weechat"
 ----
 
 [NOTE]
-Some scripts can help to automatically set this option,
-see `/script search autojoin`.
+Niektóre skrypty mogą pomóc w automatycznym ustawianiu tej opcji, zobacz
+`/script search autojoin`.
 
-Be careful, spaces can be used only to separate list of channels from keys,
-for example if `#channel1` requires a key but not `#channel2`:
+Bądź ostrożny, spacje mogą być używane tylko do oddzielenia listy kanałów
+od ich haseł, na przykład jeśli `#kanał1` wymaga hasła ale `#kanał2` już
+nie:
 
 ----
-/set irc.server.libera.autojoin "#channel1,#channel2 key1"
+/set irc.server.libera.autojoin "#kanał1,#kanał2 hasło1"
 ----
 
-For help on the format, see `/help irc.server.libera.autojoin`.
+Informacje na temat formatu można uzyskać za pomocą `/help irc.server.libera.autojoin`.
 
 [[irc_private_messages]]
-==== Private messages
+==== Prywatne wiadomości
 
-You can send a private message with the <<command_irc_query,/query>> command,
-which opens a separate buffer:
+Możesz wysłać prywatną wiadomość za pomocą polecenia <<command_irc_query,/query>>,
+co otwiera oddzielny bufor:
 
 ----
-/query bob hi, how are you?
+/query bob cześć, co tam?
 ----
 
-Without arguments the command just opens the buffer (or selects it if already open):
+Bez argumentów to polecenie otwiera bufor (lub przechodzi do niego jeśli już jest
+otwarty):
 
 ----
 /query bob
 ----
 
-To close the private buffer, you can do this command on the private buffer:
+W celu zamknięcia prywatnego buforu możesz wykonać to polecenie w prywatnym buforze:
 
 ----
 /close
@@ -4944,23 +4942,24 @@ Opcje:
 
 include::includes/autogen_user_options.pl.adoc[tag=trigger_options]
 
-// TRANSLATION MISSING
 [[typing_plugin]]
 === Typing
 
-The typing plugin is used to inform other users you are typing messages and
-show a list of users currently typing a message on the buffer.
+Wtyczka typing jest używana do informowania innych że coś piszesz oraz
+pokazaniu listy osób piszących obecnie wiadomości w buforze.
 
-It is used by IRC plugin on channel and private buffers, when the "message-tags"
-capability is enabled (you can check with <<command_irc_cap,/cap>> command). +
-Under the hood, typing client tag is used, following this specification:
+Jest używana przez wtyczkę IRC na kanałach i w prywatnych buforach, kiedy
+serwer posiada włączoną opcję "message-tags" (możesz to sprawdzić komendą
+<<command_irc_cap,/cap>>). +
+Pod spodem, używany jest tag klienta "typing" zgodnie z tą specyfikacją:
 https://ircv3.net/specs/client-tags/typing.html.
 
 [[typing_activation]]
-==== Activation
+==== Aktywacja
 
-For privacy considerations, the typing feature is disabled by default. +
-If you want to use it, you must enable options in both typing and irc plugins:
+W trosce o prywatność, opcja ta jest domyślnie wyłączona. +
+Jeśli chcesz ją włączyć, musisz ustawić opcje zarówno we wtyczce typing
+jak i irc:
 
 ----
 /set typing.look.enabled_nicks on
@@ -4969,10 +4968,10 @@ If you want to use it, you must enable options in both typing and irc plugins:
 /set irc.look.typing_status_self on
 ----
 
-The typing notifications are displayed at the end of the status bar.
+Powiadomienia o pisaniu są wyświetlane na końcu pasku statusu.
 
-Example of status bar with the "typing" item: "bob" is typing a message and
-"alice" was typing a message but made a pause:
+Przykład paska statusu z elementem "typing": "bob" pisze wiadomość, natomiast
+"alice" pisała coś ale zrobiła sobie przerwę:
 
 ....
 │[12:55] [6] [irc/libera] 3:#test(+n){4} [Typing: bob, (alice)]                   │
@@ -4981,46 +4980,46 @@ Example of status bar with the "typing" item: "bob" is typing a message and
 ....
 
 [[typing_signals_sent]]
-==== Signals sent
+==== Wysyłane sygnały
 
-When you are typing a message (not a command starting with `/`), the typing
-plugin sends signals to inform other plugins (like IRC) that you are typing,
-and these plugins can then send typing notifications to other users.
+Kiedy piszesz wiadomość (ale nie polecenie zaczynające się od `/`) ta wtyczka
+wysyła sygnały informujące inne wtyczki (jak IRC) o tym że piszesz, te wtyczki
+mogą następnie wysłać informacje do innych użytkowników.
 
-The following signals are sent when you are typing messages:
+Następujące sygnały są wysyłane, kiedy piszesz wiadomość:
 
 [width="100%",cols="1,1,5",options="header"]
 |===
-| Signal              | Arguments        | Description
-| typing_self_typing  | Pointer: buffer. | You are typing a message.
-| typing_self_paused  | Pointer: buffer. | You made a pause while typing a message.
-| typing_self_cleared | Pointer: buffer. | You cleared the command line without sending the message.
-| typing_self_sent    | Pointer: buffer. | You sent the message to the buffer.
+| Sygnał              | Argumenty        | Opis
+| typing_self_typing  | Wskaźnik: bufor. | Piszesz wiadomość.
+| typing_self_paused  | Wskaźnik: bufor. | Przestałeś pisać wiadomość.
+| typing_self_cleared | Wskaźnik: bufor. | Skasowałeś pisaną wiadomość z lini poleceń (bez wysłania).
+| typing_self_sent    | Wskaźnik: bufor. | Wysłałeś wiadomość do bufora.
 |===
 
 [[typing_signals_caught]]
-==== Signals caught
+==== Przechwytywane sygnały
 
-The typing plugin is catching some signals that can be sent by other plugins
-(like IRC), to update internal hashtables used to store the typing state of
-nicks on buffers. These hashtables are used to build the content of "typing"
-bar item.
+Wtyczka typing przechwyytuje niektóre sygnały, które mogą być wysłane przez
+inne wtyczki (jak IRC) do aktualizacji wewnętrznych tablicy hashy używanych
+do przechowywania stanu nicków i buforów. Te tablice są używane do budowania
+zawartości elementu paska "typing".
 
-The following signals are caught by the typing plugin:
+Następujące sygnały są przechwytywane przez wtyczke typing:
 
 [width="100%",cols="1,4,3",options="header"]
 |===
-| Signal | Arguments | Description
+| Sygnal | Argumenty | Opis
 
 | typing_set_nick |
-  String: buffer pointer + ";" + state (one of: "off", "typing", "paused",
+  Ciąg: wskaźnik bufora + ";" + stan (jeden z: "off", "typing", "paused",
   "cleared") + ";" + nick. +
-  Example: "0x1234abcd;typing;alice". |
-  Set typing state for a nick on a buffer.
+  Przykład: "0x1234abcd;typing;alice". |
+  Ustawia stan pisania dla nicka w buforze.
 
 | typing_reset_buffer |
-  Pointer: buffer. |
-  Remove typing state for all nicks on a buffer.
+  Wskaźnik: bufor. |
+  Usuwa status pisania dla nicków w buforze.
 |===
 
 [[typing_options]]
