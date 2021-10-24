@@ -1847,43 +1847,43 @@
 
 // tag::typing_options[]
 * [[option_typing.look.delay_purge_paused]] *typing.look.delay_purge_paused*
-** opis: pass:none[number of seconds after paused status has been set: if reached, the typing status is removed]
+** opis: pass:none[ilość sekund po ustawieniu statusu pauzy: jeśli osiągnięty, status pisania zostaje usunięty]
 ** typ: liczba
 ** wartości: 1 .. 2147483647
 ** domyślna wartość: `+30+`
 
 * [[option_typing.look.delay_purge_typing]] *typing.look.delay_purge_typing*
-** opis: pass:none[number of seconds after typing status has been set: if reached, the typing status is removed]
+** opis: pass:none[ilość sekund po ustawieniu statusu o pisaniu: jeśli osiągnięte, status pisania zostaje usunięty]
 ** typ: liczba
 ** wartości: 1 .. 2147483647
 ** domyślna wartość: `+6+`
 
 * [[option_typing.look.delay_set_paused]] *typing.look.delay_set_paused*
-** opis: pass:none[number of seconds after typing last char: if reached, the typing status becomes "paused" and no more typing signals are sent]
+** opis: pass:none[ilość sekund po napisaniu ostatniego znaku: jeśli osiągnięte, status pisania zmieni się na "paused" i kolejne sygnały nie będą wysyłane]
 ** typ: liczba
 ** wartości: 1 .. 2147483647
 ** domyślna wartość: `+10+`
 
 * [[option_typing.look.enabled_nicks]] *typing.look.enabled_nicks*
-** opis: pass:none[typing enabled for other nicks (display typing info for nicks typing in the current buffer)]
+** opis: pass:none[powiadomienia o pisaniu przez innych włączone (wyświetlaj informacje o tym że inne osoby piszą coś w obecnym buforze)]
 ** typ: bool
 ** wartości: on, off
 ** domyślna wartość: `+off+`
 
 * [[option_typing.look.enabled_self]] *typing.look.enabled_self*
-** opis: pass:none[typing enabled for self messages (send typing info to other users)]
+** opis: pass:none[wysylanie informacji o pisaniu włączone (wysyłaj tą informację do innych użytkowników)]
 ** typ: bool
 ** wartości: on, off
 ** domyślna wartość: `+off+`
 
 * [[option_typing.look.input_min_chars]] *typing.look.input_min_chars*
-** opis: pass:none[min number of chars in message to trigger send of typing signals]
+** opis: pass:none[minimalna ilość znaków w wiadomości po której zostaną wysłane sygnały o pisaniu wiadomości]
 ** typ: liczba
 ** wartości: 1 .. 2147483647
 ** domyślna wartość: `+4+`
 
 * [[option_typing.look.item_max_length]] *typing.look.item_max_length*
-** opis: pass:none[max number of chars displayed in the bar item "typing" (0 = do not truncate content)]
+** opis: pass:none[maksymalna ilość znaków wyświetlana w elemencie paska "typing" (0 = nie ograniczaj zawartości)]
 ** typ: liczba
 ** wartości: 0 .. 2147483647
 ** domyślna wartość: `+0+`
@@ -2565,13 +2565,13 @@
 ** domyślna wartość: `+off+`
 
 * [[option_irc.look.typing_status_nicks]] *irc.look.typing_status_nicks*
-** opis: pass:none[display nicks typing on the channel in bar item "typing" (option typing.look.enabled_nicks must be enabled and capability "message-tags" must be enabled on the server)]
+** opis: pass:none[wyświetlaj nicki osób, które coś piszą w elemencie paska "typing" (opcja typing.look.enabled_nicks musi zostać włączona i opcja "message-tags" musi być wspierana przez serwer)]
 ** typ: bool
 ** wartości: on, off
 ** domyślna wartość: `+off+`
 
 * [[option_irc.look.typing_status_self]] *irc.look.typing_status_self*
-** opis: pass:none[send self typing status to channels so that other users see when you are typing a message (option typing.look.enabled_self must be enabled and capability "message-tags" must be enabled on the server)]
+** opis: pass:none[wyślij status pisania do kanałów tak, że inni użytkownicy będą mogli zobaczyć, kiedy piszesz wiadomość (opcja typing.look.enabled_self musi zostać włączona i opcja "message-tags" musi być wspierana przez serwer)]
 ** typ: bool
 ** wartości: on, off
 ** domyślna wartość: `+off+`

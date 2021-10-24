@@ -17,32 +17,32 @@ cel: nazwa serwera
 * `+allchan+`: wykonuje komendę na wszystkich kanałach na połączonych serwerach
 
 ----
-/allchan  [-current] [-parted] [-exclude=<channel>[,<channel>...]] <command>
-          [-current] [-parted] -include=<channel>[,<channel>...] <command>
+/allchan  [-current] [-parted] [-exclude=<kanał>[,<kanał>...]] <komenda>
+          [-current] [-parted] -include=<kanał>[,<kanał>...] <komenda>
 
- -current: execute command for channels of current server only
-  -parted: execute on parted channels only
- -exclude: exclude some channels (wildcard "*" is allowed)
- -include: include only some channels (wildcard "*" is allowed)
-  command: command to execute (or text to send to buffer if command does not start with '/')
+ -current: wykonuje komendę tylko na kanałach obecnego serwera
+  -parted: wykonaj tylko na opuszczonych kanałach
+ -exclude: wyklucza niektóre kanały (wildcard "*" jest dozwolony)
+ -include: uwzględnia tylko niektóre znaki (wildcard "*" est dozwolony)
+  komenda: komenda do wykonania (albo tekst do wysłania do bufora jeśli komenda nie zaczyna się od '/')
 
-Command and arguments are evaluated (see /help eval), the following variables are replaced:
-  $server             server name
-  $channel            channel name
-  $nick               nick on server
-  ${irc_server.xxx}   variable xxx in server
-  ${irc_channel.xxx}  variable xxx in channel
+Komenda i argumenty są przetwarzane (zobacz /help eval), następujące zmienne są podmieniane:
+  $server             nazwa serwera
+  $channel            nazwa kanału
+  $nick               nick na serwerze
+  ${irc_server.xxx}   zmienna xxx na serwerze
+  ${irc_channel.xxx}  zmienna xxx w kanalel
 
-Examples:
-  execute '/me is testing' on all channels:
-    /allchan /me is testing
-  say 'hello' everywhere but not on #weechat:
-    /allchan -exclude=#weechat hello
-  say 'hello' everywhere but not on #weechat and channels beginning with #linux:
-    /allchan -exclude=#weechat,#linux* hello
-  say 'hello' on all channels beginning with #linux:
-    /allchan -include=#linux* hello
-  close all buffers with parted channels:
+Przykłady:
+  wykonuje '/me testuje' na wszystkich kanałach:
+    /allchan /me testuje
+  wysyła 'witam' wszędzie tylko nie na #weechat:
+    /allchan -exclude=#weechat witam
+  wysyła 'witam' wszędzie poza #weechat oraz kanałami zaczynającymi się od #linux:
+    /allchan -exclude=#weechat,#linux* witam
+  wysyła 'witam' na wszytkich kanałach zaczynających się od #linux:
+    /allchan -include=#linux* witam
+  zamyka wszystkie bufory opuszczonych kanałów:
     /allchan -parted /close
 ----
 
@@ -1336,100 +1336,100 @@ infolists: wyświetla informacje o infolistach
 /eval  [-n|-s] [-d] <wyrażenie>
        [-n] [-d [-d]] -c <wyrażenie1> <operator> <wyrażenie2>
 
-        -n: display result without sending it to buffer (debug mode)
-        -s: split expression before evaluating it (many commands can be separated by semicolons)
-        -d: display debug output after evaluation (with two -d: more verbose debug)
-        -c: evaluate as condition: use operators and parentheses, return a boolean value ("0" or "1")
-expression: expression to evaluate, variables with format ${variable} are replaced (see below); many commands can be separated by semicolons
-  operator: a logical or comparison operator:
-            - logical operators:
-                &&   boolean "and"
-                ||   boolean "or"
-            - comparison operators:
-                ==   equal
-                !=   not equal
-                <=   less or equal
-                <    less
-                >=   greater or equal
-                >    greater
-                =~   is matching POSIX extended regex
-                !~   is NOT matching POSIX extended regex
-                ==*  is matching mask, case sensitive (wildcard "*" is allowed)
-                !!*  is NOT matching mask, case sensitive (wildcard "*" is allowed)
-                =*   is matching mask, case insensitive (wildcard "*" is allowed)
-                !*   is NOT matching mask, case insensitive (wildcard "*" is allowed)
-                ==-  is included, case sensitive
-                !!-  is NOT included, case sensitive
-                =-   is included, case insensitive
-                !-   is NOT included, case insensitive
+        -n: wyświetla wynik bez wysyłania go do buforu (tryb debugowania)
+        -s: podziel wyrażenie przed przetworzeniem go (wiele komend może być oddzielonych średnikami)
+        -d: wyświetl wyjście debugowe po ewaluacji (drugie -d wyświetli więcej informacji)
+        -c: przetwarza jako warunek: użyj operatorów i nawiasów, zwraca wartość logiczną ("0" lub "1")
+wyrażenie: wyrażenie do przetworzenia, zmienne o formacie ${zmienna} są zastępowane (zobacz niżej); wiele komend można oddzielić średnikami
+  operator: operator logiczny lub porównania:
+            - operatory logiczne:
+                &&  logiczne „i”
+                ||  logiczne „lub”
+            - operatory porównania:
+                ==  równy
+                !=  różny
+                <=  mniejszy lub równy
+                <   mniejszy
+                >=  większy lub równy
+                >   większy
+                =~  pasuje do rozszerzonego wyrażenia regularnego POSIX
+                !~  NIE pasuje do rozszerzonego wyrażenia regularnego POSIX
+                ==*  pasuje do maski, rozróżnia wielkość znaków (dzika karta „*” dozwolona)
+                !!*  NIE pasuje do maski, rozróżnia wielkość znaków (dzika karta „*” dozwolona)
+                =*  pasuje do maski, nie rozróżnia wielkość znaków (dzika karta „*” dozwolona)
+                !*  NIE pasuje do maski, nie rozróżnia wielkość znaków (dzika karta „*” dozwolona)
+                ==-  jest zawarte, rozróżnia wielkość znaków
+                !!-  NIE jest zawarte,rozróżnia wielkość znaków
+                =-   jest zawarte, nie rozróżnia wielkość znaków
+                !-   NIE jest zawarte, nie rozróżnia wielkość znaków
 
-An expression is considered as "true" if it is not NULL, not empty, and different from "0".
-The comparison is made using floating point numbers if the two expressions are valid numbers, with one of the following formats:
-  - integer (examples: 5, -7)
-  - floating point number (examples: 5.2, -7.5, 2.83e-2)
-  - hexadecimal number (examples: 0xA3, -0xA3)
-To force a string comparison, you can add double quotes around each expression, for example:
+Wyrażenie jest uznawane za „prawdziwe” jeśli nie jest NULL, nie jest puste, oraz różni się od „0”.
+Porównania dokonuje się z użyciem liczb całkowitych jeśli oba wyrażenia są liczbami całkowitymi, w jednym z następujących formatów:
+  - liczby całkowite (przykłady: 5, -7)
+  - liczby zmiennoprzecinkowe (przykłady: 5.2, -7.5, 2.83e-2)
+  - liczby szesnastkowe (przykłady: 0xA3, -0xA3)
+W celu wymuszenia porównywania ciągów, należy umieścić każde wyrażenie w cudzysłowie, na przykład:
   50 > 100      ==> 0
   "50" > "100"  ==> 1
 
-Some variables are replaced in expression, using the format ${variable}, variable can be, by order of priority:
-  1. the string itself without evaluation (format: "raw:xxx")
-  2. a user-defined variable (format: "name")
-  3. an evaluated sub-string (format: "eval:xxx")
-  4. an evaluated condition (format: "eval_cond:xxx")
-  5. a string with escaped chars (format: "esc:xxx" or "\xxx")
-  6. a string with chars to hide (format: "hide:char,string")
-  7. a string with max chars (format: "cut:max,suffix,string" or "cut:+max,suffix,string")
-     or max chars displayed on screen (format: "cutscr:max,suffix,string" or "cutscr:+max,suffix,string")
-  8. a reversed string (format: "rev:xxx" or "revscr:xxx")
-  9. a repeated string (format: "repeat:count,string")
-  10. length of a string (format: "length:xxx" or "lengthscr:xxx")
-  11. split of a string (format: "split:number,separators,flags,xxx")
-  12. split of shell argmuents (format: "split_shell:number,xxx")
-  13. a color (format: "color:xxx", see "Plugin API reference", function "color")
-  14. a modifier (format: "modifier:name,data,string")
-  15. an info (format: "info:name,arguments", arguments are optional)
-  16. a base 16/32/64 encoded/decoded string (format: "base_encode:base,xxx" or "base_decode:base,xxx")
-  17. current date/time (format: "date" or "date:format")
-  18. an environment variable (format: "env:XXX")
-  19. a ternary operator (format: "if:condition?value_if_true:value_if_false")
-  20. result of an expression with parentheses and operators + - * / // % ** (format: "calc:xxx")
-  21. a random integer number (format: "random:min,max")
-  22. a translated string (format: "translate:xxx")
-  23. define a user variable (format: "define:name,value")
-  24. an option (format: "file.section.option")
-  25. a local variable in buffer
-  26. a hdata name/variable (the value is automatically converted to string), by default "window" and "buffer" point to current window/buffer.
-Format for hdata can be one of following:
-  hdata.var1.var2...: start with a hdata (pointer must be known), and ask variables one after one (other hdata can be followed)
-  hdata[list].var1.var2...: start with a hdata using a list/pointer/pointer name, for example:
-    ${buffer[gui_buffers].full_name}: full name of first buffer in linked list of buffers
-    ${plugin[weechat_plugins].name}: name of first plugin in linked list of plugins
-  hdata[pointer].var1.var2...: start with a hdata using a pointer, for example:
-    ${buffer[0x1234abcd].full_name}: full name of the buffer with this pointer (can be used in triggers)
-    ${buffer[my_pointer].full_name}: full name of the buffer with this pointer name (can be used in triggers)
-For name of hdata and variables, please look at "Plugin API reference", function "weechat_hdata_get".
+Niektóre zmienne w wyrażeniach są zamieniane, poprzez zastosowanie formatu ${zmienna}, według priorytetu zmienną może być:
+  1. nieprzetworzony ciąg (format: "raw:xxx")
+  2. zmienna zdefiniowana przez użytkownika (format: "name")
+  3. przetworzony ciąg (format: "eval:xxx")
+  4. przetworzony warunek (format: "eval_cond:xxx")
+  5. ciąg z wyescapowanymi znakami (format: "esc:xxx" lub "\xxx")
+  6. ciąg ze znakami do ukrycia (format: "hide:char,string")
+  7. ciąg o maksymalnej długości (format: "cut:max,suffix,string" lub "cut:+max,suffix,string")
+     lub maksymalna ilość znaków wyświetlanych na ekranie (format: "cutscr:max,suffix,string" lub "cutscr:+max,suffix,string")
+  8. odwrócony ciąg (format: "rev:xxx")
+  9. powtórzony ciąg (format: "repeat:ilość,ciąg")
+  10. długość ciągu (format: "length:xxx" or "lengthscr:xxx")
+  11. podział ciągu (format: "split:number,separators,flags,xxx")
+  12. podział argumentów powłoki (format: "split_shell:number,xxx")
+  13. kolor (format "color:xxx", zobacz „Opis API wtyczek”, funkcja "color")
+  14. modyfikator (format: "modifier:name,data,string")
+  15. informacja (format: "info:nazwa,argumenty", argumenty są opcjonalne)
+  16. ciąg zakodowany/zdekodowany z base 16/32/64 (format: "base_encode:base,xxx" lub "base_decode:base,xxx")
+  17. obecna data/czas (format: "date" lub "date:format")
+  18. zmienna środowiskowa (format: "env:XXX")
+  19. wyrażenie warunkowe (format: "if:warunek?wartość_jeśli_prawda:wartość_jeśli_fałsz")
+  20. wynik wyrażenia z nawiasami i operatorami + - * / // % ** (format: "calc:xxx")
+  21. losowa liczba całkowita (format: "random:min,max")
+  22. przetłumaczony ciąg (format: "translate:xxx")
+  23. definiowanie zmiennej użytkownika (format: "define:nazwa,wartość")
+  24. opcja (format: plik.sekcja.opcja)
+  25. zmienna lokalna w buforze
+  26. nazwa hdatay/zmiennej (wartość jest automatycznie konwertowana na ciąg znaków), domyślnie „window” i „buffer” wskazują na aktualne okno/bufor.
+Format dla hdata może być jednym z poniższych:
+  hdata.zmienna1.zmienna2...: inicjuje hdata (wskaźnik musi być znany), następnie wypytuje zmienne jedna po drugiej (inne hdata mogą być następne)
+  hdata[list].zmienna1.zmienna2...: inicjuje hdata z wykorzystaniem listy, na przykład:
+    ${buffer[gui_buffers].full_name}: pełna nazwa buforu w połączonej liście buforów
+    ${plugin[weechat_plugins].name}: nazwa pierwszej wtyczki w połączonej liście wtyczek
+  hdata[wskaźnik].zmienna1.zmienna2...: zacznij z hdata używając wskaźnika, na przykład:
+    ${buffer[0x1234abcd].full_name}: pełna nazwa buforu z tym wskaźnikiem (może zostać użyte w triggerach)
+    ${buffer[my_pointer].full_name}: pełna nazwa buforu z jego wskaźnikiem (może zostać użyte w triggerach)
+Nazwy hdata i zmiennych, można znaleźć w „Opisie API wtyczek”, funkcja "weechat_hdata_get".
 
-Examples (simple strings):
-  /eval -n ${raw:${info:version}}                 ==> ${info:version}
-  /eval -n ${eval_cond:${window.win_width}>100}   ==> 1
-  /eval -n ${info:version}                        ==> 0.4.3
-  /eval -n ${env:HOME}                            ==> /home/user
-  /eval -n ${weechat.look.scroll_amount}          ==> 3
-  /eval -n ${sec.data.password}                   ==> secret
-  /eval -n ${window}                              ==> 0x2549aa0
-  /eval -n ${window.buffer}                       ==> 0x2549320
-  /eval -n ${window.buffer.full_name}             ==> core.weechat
-  /eval -n ${window.buffer.number}                ==> 1
-  /eval -n ${\t}                                  ==> <tab>
-  /eval -n ${hide:-,${relay.network.password}}    ==> --------
-  /eval -n ${cut:3,+,test}                        ==> tes+
-  /eval -n ${cut:+3,+,test}                       ==> te+
-  /eval -n ${date:%H:%M:%S}                       ==> 07:46:40
-  /eval -n ${if:${info:term_width}>80?big:small}  ==> big
-  /eval -n ${rev:Hello}                           ==> olleH
-  /eval -n ${repeat:5,-}                          ==> -----
-  /eval -n ${length:test}                         ==> 4
+Przykłady (proste ciągi):
+  /eval -n ${raw:${info:version}}                ==> ${info:version}
+  /eval -n ${eval_cond:${window.win_width}>100}  ==> 1
+  /eval -n ${info:version}                       ==> 0.4.3
+  /eval -n ${env:HOME}                           ==> /home/user
+  /eval -n ${weechat.look.scroll_amount}         ==> 3
+  /eval -n ${sec.data.password}                  ==> secret
+  /eval -n ${window}                             ==> 0x2549aa0
+  /eval -n ${window.buffer}                      ==> 0x2549320
+  /eval -n ${window.buffer.full_name}            ==> core.weechat
+  /eval -n ${window.buffer.number}               ==> 1
+  /eval -n ${\t}                                 ==> <tab>
+  /eval -n ${hide:-,${relay.network.password}}   ==> --------
+  /eval -n ${cut:3,+,test}                       ==> tes+
+  /eval -n ${cut:+3,+,test}                      ==> te+
+  /eval -n ${date:%H:%M:%S}                      ==> 07:46:40
+  /eval -n ${if:${info:term_width}>80?big:small} ==> big
+  /eval -n ${rev:Hello}                          ==> olleH
+  /eval -n ${repeat:5,-}                         ==> -----
+  /eval -n ${length:test}                        ==> 4
   /eval -n ${split:1,,,abc,def,ghi}               ==> abc
   /eval -n ${split:-1,,,abc,def,ghi}              ==> ghi
   /eval -n ${split:count,,,abc,def,ghi}           ==> 3
@@ -1438,14 +1438,14 @@ Examples (simple strings):
   /eval -n ${split_shell:-1,"arg 1" arg2}         ==> arg2
   /eval -n ${split_shell:count,"arg 1" arg2}      ==> 2
   /eval -n ${split_shell:random,"arg 1" arg2}     ==> arg2
-  /eval -n ${calc:(5+2)*3}                        ==> 21
+  /eval -n ${calc:(5+2)*3}                       ==> 21
   /eval -n ${random:0,10}                         ==> 3
-  /eval -n ${base_encode:64,test}                 ==> dGVzdA==
-  /eval -n ${base_decode:64,dGVzdA==}             ==> test
-  /eval -n ${translate:Plugin}                    ==> Extension
-  /eval -n ${define:len,${calc:5+3}}${len}x${len} ==> 8x8
+  /eval -n ${base_encode:64,test}                ==> dGVzdA==
+  /eval -n ${base_decode:64,dGVzdA==}            ==> test
+  /eval -n ${translate:Plugin}                   ==> Wtyczka
+  /eval -n ${random:0,10}                         ==> 3
 
-Examples (conditions):
+Przykłady (warunki):
   /eval -n -c ${window.buffer.number} > 2 ==> 0
   /eval -n -c ${window.win_width} > 100   ==> 1
   /eval -n -c (8 > 12) || (5 > 2)         ==> 1
@@ -1557,63 +1557,63 @@ Wartość: ilość elementów historii do pokazania
 ----
 /input  <akcja> [<argumenty>]
 
-list of actions:
-  return: simulate key "enter"
-  complete_next: complete word with next completion
-  complete_previous: complete word with previous completion
-  search_text_here: search text in buffer at current position
-  search_text: search text in buffer
-  search_switch_case: switch exact case for search
-  search_switch_regex: switch search type: string/regular expression
-  search_switch_where: switch search in messages/prefixes
-  search_previous: search previous line
-  search_next: search next line
-  search_stop_here: stop search at current position
-  search_stop: stop search
-  delete_previous_char: delete previous char
-  delete_next_char: delete next char
-  delete_previous_word: delete previous word
-  delete_next_word: delete next word
-  delete_beginning_of_line: delete from beginning of line until cursor
-  delete_end_of_line: delete from cursor until end of line
-  delete_line: delete entire line
-  clipboard_paste: paste from the internal clipboard
-  transpose_chars: transpose two chars
-  undo: undo last command line action
-  redo: redo last command line action
-  move_beginning_of_line: move cursor to beginning of line
-  move_end_of_line: move cursor to end of line
-  move_previous_char: move cursor to previous char
-  move_next_char: move cursor to next char
-  move_previous_word: move cursor to previous word
-  move_next_word: move cursor to next word
-  history_previous: recall previous command in current buffer history
-  history_next: recall next command in current buffer history
-  history_global_previous: recall previous command in global history
-  history_global_next: recall next command in global history
-  jump_smart: jump to next buffer with activity
-  jump_last_buffer_displayed: jump to last buffer displayed (before last jump to a buffer)
-  jump_previously_visited_buffer: jump to previously visited buffer
-  jump_next_visited_buffer: jump to next visited buffer
-  hotlist_clear: clear hotlist (optional argument: "lowest" to clear only lowest level in hotlist, "highest" to clear only highest level in hotlist, or level mask: integer which is a combination of 1=join/part, 2=message, 4=private, 8=highlight)
-  hotlist_remove_buffer: remove current buffer from hotlist
-  hotlist_restore_buffer: restore latest hotlist removed in the current buffer
-  hotlist_restore_all: restore latest hotlist removed in all buffers
-  grab_key: grab a key (optional argument: delay for end of grab, default is 500 milliseconds)
-  grab_key_command: grab a key with its associated command (optional argument: delay for end of grab, default is 500 milliseconds)
-  grab_mouse: grab mouse event code
-  grab_mouse_area: grab mouse event code with area
-  set_unread: set unread marker for all buffers
-  set_unread_current_buffer: set unread marker for current buffer
-  switch_active_buffer: switch to next merged buffer
-  switch_active_buffer_previous: switch to previous merged buffer
-  zoom_merged_buffer: zoom on merged buffer
-  insert: insert text in command line (escaped chars are allowed, see /help print)
-  send: send text to the buffer
-  paste_start: start paste (bracketed paste mode)
-  paste_stop: stop paste (bracketed paste mode)
+lista akcji:
+  return: symuluje klawisz "enter"
+  complete_next: dopełnia słowo następnym dopełnieniem
+  complete_previous: dopełnia słowo poprzednim dopełnieniem
+  search_text_here: szuka testu w obecnej pozycji w buforze
+  search_text: szuka tekstu w buforze
+  search_switch_case: przełącza na dokładne dopasowanie przy szukaniu
+  search_switch_regex: przełącza typy wyszukiwania ciąg/wyrażenie regularne
+  search_switch_where: zmienia miejsce przeszukiwania na wiadomości/przedrostki
+  search_previous: szuka poprzednich linii
+  search_next: szuka następnych linii
+  search_stop_here: zatrzymuje wyszukiwanie na obecnej pozycji
+  search_stop: zatrzymuje wyszukiwanie
+  delete_previous_char: usuwa poprzedni znak
+  delete_next_char: usuwa następny znak
+  delete_previous_word: usuwa poprzednie słowo
+  delete_next_word: usuwa następne słowo
+  delete_beginning_of_line: usuwa od początku linii do kursora
+  delete_end_of_line: usuwa od kursora do końca linii
+  delete_line: usuwa cała linię
+  clipboard_paste: wkleja ze schowka
+  transpose_chars: zamienia dwa znaki
+  undo: cofa ostatnia akcję w linii poleceń
+  redo: ponownie wykonuje cofniętą akcję w linii poleceń
+  move_beginning_of_line: przesuwa kursor na początek linii
+  move_end_of_line: przesuwa kursor na koniec linii
+  move_previous_char: przesuwa kursor do poprzedniego znaku
+  move_next_char: przesuwa kursor do następnego znaku
+  move_previous_word: przesuwa kursor do poprzedniego słowa
+  move_next_word: przesuwa kursor do następnego słowa
+  history_previous: przywołuje poprzednia komendę z historii obecnego bufora
+  history_next: przywołuje następną komendę z historii obecnego bufora
+  history_global_previous: przywołuje poprzednią komendę z globalnej historii
+  history_global_next: przywołuje następną komendę z globalnej historii
+  jump_smart: przechodzi do następnego bufora z aktywnością
+  jump_last_buffer_displayed: przechodzi do ostatnio wyświetlanego bufora (przed ostatnim przeskoczeniem do bufora)
+  jump_previously_visited_buffer: przeskakuje do poprzedniego bufora
+  jump_next_visited_buffer: przeskakuje to następnego bufora
+  hotlist_clear: czyści hotlistę (opcjonaly argument: "lowest" czyści najniższy poziom na hotliście, "highest" czyści najwyższy poziom na hotliście, albo maska poziomu: liczba będąca kombinacją 1=join/part, 2=wiadomość, 4=prywatny, 8=podświetlenie)
+  hotlist_remove_buffer: usuwa obecny bufor z hotlisty
+  hotlist_restore_buffer: przywraca ostatnią usuniętą hotlistę w obecnym buforze
+  hotlist_restore_all: przywraca ostatnią usuniętą hotlistę we wszystkich buforach
+  grab_key: przechwytuje klawisz (opcjonalny argument: opóźnienie końca przechwycenia, domyślnie jest to 500 milisekund)
+  grab_key_command: przechwytuje klawisz z przypisaną komendą (opcjonalny argument: opóźnienie końca przechwycenia, domyślnie jest to 500 milisekund)
+  grab_mouse: przechwytuje kod zdarzenia myszy
+  grab_mouse_area: przechwytuje kod zdarzenia myszy z obszarem
+  set_unread: ustawia znacznik nie przeczytania dla wszystkich buforów
+  set_unread_current_buffer: ustawia znacznik nie przeczytania dla obecnego bufora
+  switch_active_buffer: przełącza do następnego połączonego buforu
+  switch_active_buffer_previous: przełącza do poprzedniego połączonego buforu
+  zoom_merged_buffer: zoom na połączony bufor
+  insert: wkleja tekst do linii poleceń (dozwolone są wyescapowane znaki, zobacz /help print)
+  send: wysyła tekst do bufora
+  paste_start: zaczyna wklejanie (tryb z rozpoznawaniem wklejanego tekstu)
+  paste_stop: kończy wklejanie (tryb z rozpoznawaniem wklejanego tekstu)
 
-This command is used by key bindings or plugins.
+Ta komenda jest używana do przypisywania klawiszy lub przez wtyczki.
 ----
 
 [[command_weechat_key]]
@@ -1745,28 +1745,28 @@ Przykłady:
 * `+plugin+`: lista/załaduj/wyładuj wtyczkę
 
 ----
-/plugin  list [-o|-ol|-i|-il|<name>]
-         listfull [<name>]
-         load <filename> [<arguments>]
-         autoload [<arguments>]
-         reload [<name>|* [<arguments>]]
-         unload [<name>]
+/plugin  list [-o|-ol|-i|-il|<nazwa>]
+         listfull [<nazwa>]
+         load <nazwapliku> [<argumenty>]
+         autoload [<argumenty>]
+         reload [<nazwa>|* [<argumenty>]]
+         unload [<nazwa>]
 
-     list: list loaded plugins
-       -o: send list of loaded plugins to buffer (string in English)
-      -ol: send list of loaded plugins to buffer (translated string)
-       -i: copy list of loaded plugins in command line (for sending to buffer) (string in English)
-      -il: copy list of loaded plugins in command line (for sending to buffer) (translated string)
-     name: a plugin name
- listfull: list loaded plugins (verbose)
-     load: load a plugin
- filename: plugin (file) to load
-arguments: arguments given to plugin on load
- autoload: autoload plugins in system or user directory
-   reload: reload a plugin (if no name given, unload all plugins, then autoload plugins)
-   unload: unload a plugin (if no name given, unload all plugins)
+     list: lista załadowanych wtyczek
+       -o: wyślij listę załadowanych wtyczek do bufora (ciąg po angielsku)
+      -ol: wyślij listę załadowanych wtyczek do bufora (przetłumaczony ciąg)
+       -i: skopiuj listę załadowanych wtyczek do linii poleceń (do wysłania do bufora) (ciąg po angielsku)
+      -il: skopiuj listę załadowanych wtyczek do linii poleceń  (do wysłania do bufora) (przetłumaczony ciąg)
+     nazwa: nazwa wtyczki
+ listfull: lista załadowanych wtyczek (ze szczegółami)
+     load: załaduj wtyczkę
+ nazwa_pliku: wtyczka (plik) do załadowania
+argumenty: argumenty przekazywane do wtyczki przy ładowaniu
+ autoload: automatycznie ładuj wtyczki z katalogu systemowego lub użytkownika
+   reload: przeładuj wtyczkę (bez podania nazwy wyładuje wszystkie wtyczki, następnie załaduje te ładowane automatycznie)
+   unload: wyłącza wtyczkę (bez podania nazwy wyłącza wszystkie wtyczki)
 
-Without argument, this command lists loaded plugins.
+Bez argumentów polecenie pokaże listę załadowanych wtyczek.
 ----
 
 [[command_weechat_print]]
@@ -1993,28 +1993,28 @@ Przykłady:
 ----
 
 [[command_weechat_toggle]]
-* `+toggle+`: toggle value of a config option
+* `+toggle+`: przełącza wartość opcji konfiguracyjnej
 
 ----
-/toggle  <option> [<value> [<value>...]]
+/toggle  <opcja> [<wartość> [<wartość>...]]
 
-option: name of an option
- value: possible values for the option (values are split like the shell command arguments: quotes can be used to preserve spaces at the beginning/end of values)
+opcja: nazwa opcji
+ vartość: możliwe wartości dla opcji (wartości są dzielone jak argumenty komendy powłoki: można użyć cudzysłowów żeby zachować spacje na początku/końcu wartości)
 
-Behavior:
-  - only an option of type boolean or string can be toggled without a value:
-      - boolean: toggle between on/off according to current value
-      - string: toggle between empty string and default value (works only if empty string is allowed for the option)
-  - with a single value given, toggle between this value and the default value of option
-  - with multiple values given, toggle between these values: the value used is the one following the current value of option; if the current value of option is not in list, the first value in the list is used
-  - the special value "null" can be given, but only as first value in the list and without quotes around.
+Zachowanie:
+  - tylko opcje typu boolowskiego lub ciągi mogą być przełączane bez wartości:
+      - boolowskie: przełączanie pomiędzy włączony/wyłączony zgodnie z obecną wartością
+      - ciąg: przełącza między pustym ciągiem a domyślną wartością (działa tylko jeśli pusty ciąg może być użyty jako wartość opcji)
+  - jeśli podano pojedynczą wartość, przełącza między nią a wartością domyślną dla danej opcji
+  - jeśli podano wiele wartości, przełącza pomiędzy nimi; użyta wartość jest jedną z obecnych wartości dla opcji; jeśli obecna wartość nie znajduje się na liście, użyta zostanie pierwsza wartość z listy
+  - specjalna wartość "null" może zostać podana, ale tylko jako pierwsza wartość na liście, bez cudzysłowów.
 
-Examples:
-  toggle display of time in chat area (without displaying the new value used):
+Przykłady:
+  przełącza wyświetlanie czasu w obszarze czatu (bez wyświetlania nowej, użytej wartości):
     /mute /toggle weechat.look.buffer_time_format
-  switch format of time in chat area (with seconds, without seconds, disabled):
+  przełącza format czasu w obszarze czatu (z sekundami, bez sekund, wyłączone):
     /toggle weechat.look.buffer_time_format "%H:%M:%S" "%H:%M" ""
-  toggle autojoin of #weechat channel on libera server:
+  przełącza automatyczne dołączenie do kanału #weechat na serwerze libera:
     /toggle irc.server.libera.autojoin null #weechat
 ----
 
