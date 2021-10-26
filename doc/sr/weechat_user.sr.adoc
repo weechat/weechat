@@ -372,9 +372,8 @@ $ git clone https://github.com/weechat/weechat.git
 * Укључите _core_ фајлове на свом систему.
 * Инсталирате gdb.
 
-// TRANSLATION MISSING
 [[debug_build]]
-==== Debug build
+==== Дибаг изградња
 
 Ако компајлирате са CMake:
 
@@ -382,9 +381,8 @@ $ git clone https://github.com/weechat/weechat.git
 $ cmake .. -DCMAKE_BUILD_TYPE=Debug
 ----
 
-// TRANSLATION MISSING
 [[address_sanitizer]]
-==== Address sanitizer
+==== Чистач адресе
 
 Можете и да укључите чистач адресе, помоћу кога се програм WeeChat тренутно руши чим дође до неког проблема:
 
@@ -503,10 +501,8 @@ gdb /usr/bin/weechat 12345
 === Команда upgrade
 
 Програм WeeChat у месту може да поново покрене нови бинарни фајл, употребом команде <<command_weechat_upgrade,/upgrade>>: садржаји бафера и не-SSL везе се задржавају. +
-// TRANSLATION MISSING
-The SSL connections are lost during upgrade and are restored automatically
-after the upgrade (reload of SSL sessions is currently not possible
-with GnuTLS).
+Током процеса ажурирња, SSL конекције се губе и аутоматски се обнављају
+након ажурирања (са GnuTLS тренутно није могуће поновно учитавање SSL сесија).
 
 Команда такође може да се употреби и када морате поново да покренете машину, на пример, да бисте ажурирали кернел или да преместите свој WeeChat на другу машину:
 
@@ -563,12 +559,10 @@ $ weechat
 
 include::includes/cmdline_options.sr.adoc[tag=standard]
 
-// TRANSLATION MISSING
-Some extra options are available for debug purposes only:
+Неке додатне опције су доступне само за потребе откањања грешака:
 
-// TRANSLATION MISSING
 [WARNING]
-Do *NOT* use any of these options in production!
+Ниједну од ових опција *НЕМОЈТЕ* користити у продукцији!
 
 include::includes/cmdline_options.sr.adoc[tag=debug]
 
@@ -585,9 +579,8 @@ include::includes/cmdline_options.sr.adoc[tag=debug]
 | WEECHAT_EXTRA_LIBDIR | Додатни директоријум из кога се учитавају додаци (из „plugins” директоријума на овој путањи).
 |===
 
-// TRANSLATION MISSING
 [[colors_support]]
-=== Colors support
+=== Подршка за боје
 
 За приказ текста у тракама и простору за чет, програм WeeChat може да користи до 32767 парова боја (ваш терминал мора да подржава 256 боја како могле да се користе у програму WeeChat).
 
@@ -725,9 +718,8 @@ WeeChat подразумевано користи XDG директоријуме
 *Не препоручује се* ручно уређивање конфигурационих фајлова јер програм WeeChat може да их упише у било које време (на пример приликом команде <<command_weechat_quit,/quit>>) и јер након сваке измене морате да извршите команду <<command_weechat_reload,/reload>> (уз ризик губитка осталих измена које још увек нисте сачували командом <<command_weechat_save,/save>>). +
 Можете да употребљавате команду <<command_weechat_set,/set>>, која врши проверу вредности и тренутно примењује измене.
 
-// TRANSLATION MISSING
 [[interface]]
-== Interface
+== Интерфејс
 
 [[screen_layout]]
 === Распоред екрана
@@ -1326,9 +1318,8 @@ _прозор_ је површина екрана која приказује б
 [NOTE]
 Спољни додаци и скрипте могу да дефинишу и користе остале локалне променљиве.
 
-// TRANSLATION MISSING
 [[buflist]]
-=== List of buffers
+=== Листа бафера
 
 Buflist додатак приказује листу бафера у ставки траке која се зове „buflist” (такође су доступне још две ставке траке „buflist2” и „buflist3”). +
 Подразумевана трака „buflist” са овом ставком се креира током покретања програма.
@@ -1359,8 +1350,7 @@ include::includes/autogen_user_options.sr.adoc[tag=buflist_options]
 
 Fast Set додатак приказује листу опција у баферу и помаже вам да постављате WeeChat опције и опције додатака.
 
-// TRANSLATION MISSING
-Example of fset buffer displaying options starting with `weechat.look` :
+Пример fset бафера који приказује опције што почињу на `weechat.look`:
 
 [subs="quotes"]
 ....
@@ -1413,21 +1403,17 @@ include::includes/autogen_user_commands.sr.adoc[tag=fset_commands]
 
 include::includes/autogen_user_options.sr.adoc[tag=fset_options]
 
-// TRANSLATION MISSING
 [[key_bindings]]
-== Key bindings
+== Тастерске пречице
 
-// TRANSLATION MISSING
-WeeChat provides a lot of default key bindings, listed in the following chapters. +
-They can be changed and new ones can be added with the <<command_weechat_key,/key>> command.
+WeeChat нуди доста подразумеваних тастерских пречица, наведених у следећим поглављима. +
+Оне могу да се промене и нове могу да се дефинишу командом <<command_weechat_key,/key>>.
 
-// TRANSLATION MISSING
 [[key_bindings_cmdline]]
-=== Command line
+=== Командна линија
 
-// TRANSLATION MISSING
 [[key_bindings_cmdline_cursor_movement]]
-==== Cursor movement
+==== Померање курсора
 
 [width="100%", cols="^.^3,.^8,.^5", options="header"]
 |===
@@ -1446,9 +1432,8 @@ They can be changed and new ones can be added with the <<command_weechat_key,/ke
   kbd:[Ctrl+e]   | Одлазак на крај командне линије. | `+/input move_end_of_line+`
 |===
 
-// TRANSLATION MISSING
 [[key_bindings_cmdline_editing]]
-==== Editing
+==== Уређивање
 
 [width="100%", cols="^.^3,.^8,.^5", options="header"]
 |===
@@ -1475,9 +1460,8 @@ They can be changed and new ones can be added with the <<command_weechat_key,/ke
 | kbd:[Alt+r]       | Брише комплетну командну линију. | `+/input delete_line+`
 |===
 
-// TRANSLATION MISSING
 [[key_bindings_cmdline_color_codes]]
-==== Color codes
+==== Кодови боја
 
 [width="100%", cols="^.^3,.^8,.^5", options="header"]
 |===
@@ -1490,9 +1474,8 @@ They can be changed and new ones can be added with the <<command_weechat_key,/ke
 | kbd:[Ctrl+c], kbd:[_] | Уметање кода за подвучени текст. | `+/input insert \x1F+`
 |===
 
-// TRANSLATION MISSING
 [[key_bindings_cmdline_history]]
-==== Command history
+==== Историја команди
 
 [width="100%", cols="^.^3,.^8,.^5", options="header"]
 |===
@@ -1503,9 +1486,8 @@ They can be changed and new ones can be added with the <<command_weechat_key,/ke
 | kbd:[Ctrl+↓] | Позив наредне команде/поруке у глобалној историји (заједничкој за све бафере). | `+/input history_global_next+`
 |===
 
-// TRANSLATION MISSING
 [[key_bindings_buffers]]
-=== Buffers
+=== Бафери
 
 [width="100%", cols="^.^3,.^8,.^5", options="header"]
 |===
@@ -1542,9 +1524,8 @@ They can be changed and new ones can be added with the <<command_weechat_key,/ke
 | kbd:[Alt+/]                    | Прелаз на последње приказани бафер. | `+/input jump_last_buffer_displayed+`
 |===
 
-// TRANSLATION MISSING
 [[key_bindings_windows]]
-=== Windows
+=== Прозори
 
 [width="100%", cols="^.^3,.^8,.^5", options="header"]
 |===
@@ -1562,9 +1543,8 @@ They can be changed and new ones can be added with the <<command_weechat_key,/ke
 | kbd:[Alt+z]              | Зум на текући прозор (kbd:[Alt+z] поново: враћање почетног стања прозора, пре зумирања). | `+/window zoom+`
 |===
 
-// TRANSLATION MISSING
 [[key_bindings_bars]]
-=== Bars
+=== Траке
 
 [width="100%", cols="^.^3,.^8,.^5", options="header"]
 |===
@@ -1587,9 +1567,8 @@ They can be changed and new ones can be added with the <<command_weechat_key,/ke
 | kbd:[Alt+Shift+N] | Пребацивање видљивости траке листе надимака. | `+/bar toggle nicklist+`
 |===
 
-// TRANSLATION MISSING
 [[key_bindings_hotlist]]
-=== Hotlist
+=== Врућа листа
 
 [width="100%", cols="^.^3,.^8,.^5", options="header"]
 |===
@@ -1601,9 +1580,8 @@ They can be changed and new ones can be added with the <<command_weechat_key,/ke
 | kbd:[Alt+h], kbd:[Alt+Shift+R] | Враћање најновије вруће листе уклоњене из свих бафера. | `+/input hotlist_restore_all+`
 |===
 
-// TRANSLATION MISSING
 [[key_bindings_toggle_keys]]
-=== Toggle keys
+=== Тастери преклопници
 
 [width="100%", cols="^.^3,.^8,.^5", options="header"]
 |===
@@ -1614,9 +1592,8 @@ They can be changed and new ones can be added with the <<command_weechat_key,/ke
 | kbd:[Alt+-] | Пребацивање активности филтера у текућем баферу. | `+/filter toggle @+`
 |===
 
-// TRANSLATION MISSING
 [[key_bindings_search_context]]
-=== Search context
+=== Контекст претраге
 
 Следећи тастери се користе у „search” контексту (када се притисне kbd:[Ctrl+r] за претрагу текста у баферу).
 
@@ -1634,9 +1611,8 @@ They can be changed and new ones can be added with the <<command_weechat_key,/ke
 | kbd:[Ctrl+q]   | Заустављање претраге и скроловање на дно бафера. | `+/input search_stop+`
 |===
 
-// TRANSLATION MISSING
 [[key_bindings_cursor_context]]
-=== Cursor context
+=== Контекст курсора
 
 Ови тастери се користе у „cursor” контексту (слободно померање курсора по екрану).
 
@@ -1664,13 +1640,11 @@ They can be changed and new ones can be added with the <<command_weechat_key,/ke
   kbd:[Ctrl+m]   | -        | Зауставља режим померања курсора | `/cursor stop`
 |===
 
-// TRANSLATION MISSING
 [[key_bindings_mouse]]
-=== Mouse
+=== Миш
 
-// TRANSLATION MISSING
-These mouse actions are possible only if mouse is enabled with key kbd:[Alt+m]
-(command: `+/mouse toggle+`).
+Следеће акције мишем су доступне само ако је миш укључен тастером kbd:[Alt+m]
+(команда: `+/mouse toggle+`).
 
 [width="100%", cols="^.^3,^.^3,^.^3,.^8,.^8", options="header"]
 |===
@@ -1719,9 +1693,8 @@ These mouse actions are possible only if mouse is enabled with key kbd:[Alt+m]
 [NOTE]
 ^(1)^ kbd:[▲] и kbd:[▼] значе точкић навише и наниже.
 
-// TRANSLATION MISSING
 [[key_bindings_fset_buffer]]
-=== Fset buffer
+=== Fset бафер
 
 Ови тастери и акције се користе у fset баферу (погледајте<<fset,Fset додатак>>).
 
@@ -1766,12 +1739,10 @@ These mouse actions are possible only if mouse is enabled with key kbd:[Alt+m]
 [NOTE]
 ^(1)^ Акција мора да се унесе као унос у командну линију, након чега се притисне kbd:[Ентер].
 
-// TRANSLATION MISSING
 [[key_bindings_script_buffer]]
-=== Script buffer
+=== Script бафер
 
-// TRANSLATION MISSING
-Ови тастери и акције се користе у script баферу (погледајте <<script_manager,script manager>>).
+Следећи тастери и акције се користе у script баферу (погледајте <<script_manager,script manager>>).
 
 [width="100%", cols="^.^3,^.^2,.^8,.^5", options="header"]
 |===
@@ -1792,13 +1763,11 @@ These mouse actions are possible only if mouse is enabled with key kbd:[Alt+m]
 [NOTE]
 ^(1)^ Акција мора да се унесе као унос у командну линију, након чега се притисне kbd:[Ентер].
 
-// TRANSLATION MISSING
 [[configuration]]
-== Configuration
+== Конфигурација
 
-// TRANSLATION MISSING
 [[colors]]
-=== Colors
+=== Боје
 
 [[colors_basic]]
 ==== Основне боје
@@ -2114,9 +2083,8 @@ include::includes/autogen_user_options.sr.adoc[tag=charset_options]
 Особина бафера „highlight_regex” се не чува у конфигурацији. +
 Лако можете да је сачувате скриптом _buffer_autoset.py_: инсталирате је командом `+/script install buffer_autoset.py+`, а помоћ добијате са `+/help buffer_autoset+`.
 
-// TRANSLATION MISSING
 [[buffer_logging]]
-=== Buffer logging
+=== Логовање бафера
 
 Logger додатак вам омогућава да чувате садржај бафера у фајлове, и нуди опције којима подешавате шта се и како чува.
 
@@ -2298,8 +2266,7 @@ include::includes/autogen_user_options.sr.adoc[tag=logger_options]
 [[mouse_bind_events]]
 ==== Везивање догађаја миша за команде
 
-// TRANSLATION MISSING
-Програм WeeChat је већ дефинисао подразумеване догађаје миша (погледајте <<key_bindings_mouse,mouse actions>>).
+Програм WeeChat је већ дефинисао подразумеване догађаје миша (погледајте <<key_bindings_mouse,акције миша>>).
 
 Командом `/key`, уз употребу контекста „mouse”, можете да измените или да додате нова везивања тастера (у вези синтаксе, погледајте команду <<command_weechat_key,/key>>).
 
@@ -2370,9 +2337,8 @@ include::includes/autogen_user_options.sr.adoc[tag=logger_options]
 [TIP]
 Име догађаја можете сазнати командом `+/input grab_mouse+`, па извршавањем догађаја мишем. Ово ће да уметне име догађаја који сете извели у командну линију.
 
-// TRANSLATION MISSING
 [[spell_checking]]
-=== Spell checking
+=== Провера правописа
 
 Spell додатак вам омогућава да проверите правопис у командној линији. У баферу можете да користите више језика.
 
@@ -2763,9 +2729,8 @@ libera = "53B1C86FCDA28FC122A95B0456ABD79B5AB74654F21C3D099A6CCA8173239EEA59533A
 /set irc.server.libera.sasl_password "${sec.data.libera}"
 ----
 
-// TRANSLATION MISSING
 [[command_aliases]]
-=== Command aliases
+=== Алијаси команди
 
 Алијас додатак вам омогућава да креирате алијасе за команде (из програма WeeChat или осталих додатака).
 
@@ -3546,11 +3511,10 @@ include::includes/autogen_user_commands.sr.adoc[tag=xfer_commands]
 
 include::includes/autogen_user_options.sr.adoc[tag=xfer_options]
 
-// TRANSLATION MISSING
 [[typing_notifications]]
-== Typing notifications
+== Обавештења о куцању
 
-Доатак typing се користи да обавести остале кориснике када куцате поруке, као и да
+Додатак typing се користи да обавести остале кориснике када куцате поруке, као и да
 прикаже листу корисника који тренутно куцају поруке у баферу.
 
 Користи га IRC додатак на баферима канала и на приватним баферима када је укључена
@@ -3745,8 +3709,7 @@ PASS сервер:лозинка
 
 Релеј додатак може да шаље податке удаљеном интерфејсу користећи WeeChat протокол.
 
-// TRANSLATION MISSING
-You can connect with a remote interface, see: https://weechat.org/about/interfaces
+Можете се повезати помоћу удаљеног интерфејса, погледајте: https://weechat.org/about/interfaces
 
 [IMPORTANT]
 Сам програм WeeChat НЕ може да се повеже на други програм WeeChat преко овог протокола.
@@ -3819,9 +3782,8 @@ include::includes/autogen_user_commands.sr.adoc[tag=relay_commands]
 
 include::includes/autogen_user_options.sr.adoc[tag=relay_options]
 
-// TRANSLATION MISSING
 [[external_commands]]
-== External commands
+== Спољне команде
 
 Команда `/exec` вам омогућава да извршите спољне команде из програма WeeChat и да локално прикажете њихов излаз, или да га пошаљете у бафер.
 
@@ -3846,9 +3808,8 @@ include::includes/autogen_user_commands.sr.adoc[tag=exec_commands]
 
 include::includes/autogen_user_options.sr.adoc[tag=exec_options]
 
-// TRANSLATION MISSING
 [[fifo_pipe]]
-== FIFO pipe
+== FIFO пајп
 
 Програм WeeChat можете даљински да контролишете слањем команди или текста у FIFO пајп (ако је укључена опција „fifo.file.enabled”, што је подразумевано).
 
@@ -4560,12 +4521,10 @@ include::includes/autogen_user_commands.sr.adoc[tag=trigger_commands]
 
 include::includes/autogen_user_options.sr.adoc[tag=trigger_options]
 
-// TRANSLATION MISSING
 [[extending_weechat]]
-== Extending WeeChat
+== Проширивање програма WeeChat
 
-// TRANSLATION MISSING
-WeeChat has a modular design and can be extended with plugins and scripts.
+Дизајн програма WeeChat је модуларан и може да се прошири додацима и скриптама.
 
 Важно је да се направи разлика између _додатка_ и _скрипте_: _додатак_ је бинарни фајл који се компајлира и учитава командом `/plugin`, док је _скрипта_ текст фајл који се учитава додатком као што је _python_ командом `/python`.
 
@@ -4633,26 +4592,22 @@ WeeChat has a modular design and can be extended with plugins and scripts.
 
 За више информација о функцијама које постоје у API, молимо вас да прочитате link:weechat_plugin_api.sr.html[WeeChat водич за скриптовање].
 
-// TRANSLATION MISSING
 [[script_manager]]
-==== Script manager
+==== Менаџер скрипти
 
-// TRANSLATION MISSING
-The script manager (command <<command_script_script,/script>>) is used to
-load/unload scripts of any language, and install/remove scripts of WeeChat
-scripts repository, which are visible at this URL: https://weechat.org/scripts
+Менаџер скрипти (команда <<command_script_script,/script>>) се користи за
+учитавање/уклањање из меморије скрипти на било ком језику, и за инсталирање/уклањање скрипти из WeeChat
+репозиторијума скрипти, који се налази на URL адреси: https://weechat.org/scripts
 
-// TRANSLATION MISSING
-For privacy considerations, the download of scripts is disabled by default. +
-To enable it, type this command:
+Из разлога приватности, преузимање скрипти је подразумевано искључено. +
+Ако желите да га укључите, откуцајте следећу команду:
 
 ----
 /set script.scripts.download_enabled on
 ----
 
-// TRANSLATION MISSING
-Then you can download the list of scripts and display them in a new buffer
-with the <<command_script_script,/script>> command:
+Сада можете да преузмете листу скрипти и да је прикажете у новом баферу командом
+<<command_script_script,/script>>:
 
 [subs="quotes,attributes"]
 :x: *
@@ -4712,9 +4667,8 @@ include::includes/autogen_user_commands.sr.adoc[tag=script_commands]
 
 include::includes/autogen_user_options.sr.adoc[tag=script_options]
 
-// TRANSLATION MISSING
 [[scripting_plugins]]
-==== Scripting plugins
+==== Скриптинг додаци
 
 [[python_commands]]
 ===== Python команде
