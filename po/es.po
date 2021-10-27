@@ -23,7 +23,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2021-09-06 22:37+0200\n"
-"PO-Revision-Date: 2021-09-07 18:01+0500\n"
+"PO-Revision-Date: 2021-10-23 17:50-0500\n"
 "Last-Translator: Santiago Forero <santiago@forero.xyz>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: es\n"
@@ -9500,11 +9500,13 @@ msgid ""
 "tag), \"message_without_tags\": message without the tags, \"nick\": nick, "
 "\"user\": user, \"host\": host, \"command\": command, \"channel\": channel, "
 "\"arguments\": arguments (includes channel), \"text\": text (for example "
-"user message), \"pos_command\": index of \"command\" message (\"-1\" if "
-"\"command\" was not found), \"pos_arguments\": index of \"arguments\" "
-"message (\"-1\" if \"arguments\" was not found), \"pos_channel\": index of "
-"\"channel\" message (\"-1\" if \"channel\" was not found), \"pos_text\": "
-"index of \"text\" message (\"-1\" if \"text\" was not found)"
+"user message), \"param1\" ... \"paramN\": parsed command parameters, "
+"\"num_params\": number of parsed command parameters, \"pos_command\": index "
+"of \"command\" message (\"-1\" if \"command\" was not found), \"pos_arguments"
+"\": index of \"arguments\" message (\"-1\" if \"arguments\" was not found), "
+"\"pos_channel\": index of \"channel\" message (\"-1\" if \"channel\" was not "
+"found), \"pos_text\": index of \"text\" message (\"-1\" if \"text\" was not "
+"found)"
 msgstr ""
 "\"tags\": etiquetas, \"message_without_tags\": mensaje sin etiquetas, \"nick"
 "\": apodo, \"host\": host, \"command\": comando, \"channel\": canal, "
@@ -10070,26 +10072,33 @@ msgstr "%s%s[%s%s%s] %s%s%s silenciado por %s%s %s(%s%s%s)"
 msgid "%s%s[%s%s%s] %s%s%s%s quieted"
 msgstr "%s%s[%s%s%s] %s%s%s invitado"
 
-#, c-format
-msgid "%s%s: command \"%s\" not found:"
+#, fuzzy, c-format
+#| msgid "%s%s: command \"%s\" not found:"
+msgid "%s%s: command \"%s\" not found: \"%s\""
 msgstr "%s%s: comando \"%s\" no encontrado:"
 
-#, c-format
-msgid "%s%s: failed to parse command \"%s\" (please report to developers):"
+#, fuzzy, c-format
+#| msgid "%s%s: failed to parse command \"%s\" (please report to developers):"
+msgid ""
+"%s%s: failed to parse command \"%s\" (please report to developers): \"%s\""
 msgstr ""
 "%s%s: falló el análisis del comando \"%s\" (por favor repórtalo a los "
 "desarrolladores):"
 
-#, c-format
+#, fuzzy, c-format
+#| msgid ""
+#| "%s%s: too few arguments received from client %s%s%s for command \"%s"
+#| "\" (received: %d arguments, expected: at least %d)"
 msgid ""
-"%s%s: too few arguments received from IRC server for command \"%s"
-"\" (received: %d arguments, expected: at least %d)"
+"%s%s: too few parameters received in command \"%s\" (received: %d, expected: "
+"at least %d)"
 msgstr ""
-"%s%s: muy pocos argumentos recibidos del servidor IRC para el comando \"%s"
-"\"\" (recibidos: %d argumentos, esperado: al menos %d)"
+"%s%s: muy pocos argumentos recibidos del cliente %s%s%s para el comando \"%s"
+"\" (recibidos: %d argumentos, esperado: al menos %d)"
 
-#, c-format
-msgid "%s%s: \"%s\" command received without host"
+#, fuzzy, c-format
+#| msgid "%s%s: \"%s\" command received without host"
+msgid "%s%s: command \"%s\" received without nick"
 msgstr "%s%s: comando \"%s\" recibido sin host"
 
 #, fuzzy, c-format
@@ -13766,6 +13775,14 @@ msgstr "%s%s: tiempo de espera máximo para \"%s\" con %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: no es posible conectarse: error (%d)"
+
+#, c-format
+#~ msgid ""
+#~ "%s%s: too few arguments received from IRC server for command \"%s"
+#~ "\" (received: %d arguments, expected: at least %d)"
+#~ msgstr ""
+#~ "%s%s: muy pocos argumentos recibidos del servidor IRC para el comando \"%s"
+#~ "\"\" (recibidos: %d argumentos, esperado: al menos %d)"
 
 #~ msgid ""
 #~ "     list: list loaded plugins\n"

@@ -1192,6 +1192,8 @@ irc_info_init ()
            "\"channel\": channel, "
            "\"arguments\": arguments (includes channel), "
            "\"text\": text (for example user message), "
+           "\"param1\" ... \"paramN\": parsed command parameters, "
+           "\"num_params\": number of parsed command parameters, "
            "\"pos_command\": index of \"command\" message (\"-1\" if "
            "\"command\" was not found), "
            "\"pos_arguments\": index of \"arguments\" message (\"-1\" if "

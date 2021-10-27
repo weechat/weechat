@@ -2740,8 +2740,22 @@ irc_server_send_one_msg (struct t_irc_server *server, int flags,
         ptr_msg = (new_msg) ? new_msg : message;
 
         msg_encoded = NULL;
-        irc_message_parse (server, ptr_msg, NULL, NULL, NULL, NULL, NULL, NULL,
-                           NULL, NULL, NULL, NULL, NULL, &pos_channel,
+        irc_message_parse (server,
+                           ptr_msg,
+                           NULL,  /* tags */
+                           NULL,  /* message_without_tags */
+                           NULL,  /* nick */
+                           NULL,  /* user */
+                           NULL,  /* host */
+                           NULL,  /* command */
+                           NULL,  /* channel */
+                           NULL,  /* arguments */
+                           NULL,  /* text */
+                           NULL,  /* params */
+                           NULL,  /* num_params */
+                           NULL,  /* pos_command */
+                           NULL,  /* pos_arguments */
+                           &pos_channel,
                            &pos_text);
         switch (IRC_SERVER_OPTION_INTEGER(server,
                                           IRC_SERVER_OPTION_CHARSET_MESSAGE))
@@ -2957,9 +2971,23 @@ irc_server_sendf (struct t_irc_server *server, int flags, const char *tags,
     for (i = 0; i < items_count; i++)
     {
         /* run modifier "irc_out1_xxx" (like "irc_out_xxx", but before split) */
-        irc_message_parse (server, items[i], NULL, NULL,
-                           &nick, NULL, NULL, &command, &channel, NULL, NULL,
-                           NULL, NULL, NULL, NULL);
+        irc_message_parse (server,
+                           items[i],
+                           NULL,  /* tags */
+                           NULL,  /* message_without_tags */
+                           &nick,
+                           NULL,  /* user */
+                           NULL,  /* host */
+                           &command,
+                           &channel,
+                           NULL,  /* arguments */
+                           NULL,  /* text */
+                           NULL,  /* params */
+                           NULL,  /* num_params */
+                           NULL,  /* pos_command */
+                           NULL,  /* pos_arguments */
+                           NULL,  /* pos_channel */
+                           NULL);  /* pos_text */
         snprintf (str_modifier, sizeof (str_modifier),
                   "irc_out1_%s",
                   (command) ? command : "unknown");
@@ -3224,9 +3252,22 @@ irc_server_msgq_flush ()
                                    ptr_data);
 
                     irc_message_parse (irc_recv_msgq->server,
-                                       ptr_data, NULL, NULL, NULL, NULL, NULL,
-                                       &command, NULL, NULL, NULL, NULL, NULL,
-                                       NULL, NULL);
+                                       ptr_data,
+                                       NULL,  /* tags */
+                                       NULL,  /* message_without_tags */
+                                       NULL,  /* nick */
+                                       NULL,  /* user */
+                                       NULL,  /* host */
+                                       &command,
+                                       NULL,  /* channel */
+                                       NULL,  /* arguments */
+                                       NULL,  /* text */
+                                       NULL,  /* params */
+                                       NULL,  /* num_params */
+                                       NULL,  /* pos_command */
+                                       NULL,  /* pos_arguments */
+                                       NULL,  /* pos_channel */
+                                       NULL);  /* pos_text */
                     snprintf (str_modifier, sizeof (str_modifier),
                               "irc_in_%s",
                               (command) ? command : "unknown");
@@ -3264,11 +3305,23 @@ irc_server_msgq_flush ()
                                     ptr_msg);
                             }
 
-                            irc_message_parse (irc_recv_msgq->server, ptr_msg,
-                                               NULL, NULL, &nick, NULL, &host,
-                                               &command, &channel, &arguments,
-                                               NULL, NULL, NULL,
-                                               &pos_channel, &pos_text);
+                            irc_message_parse (irc_recv_msgq->server,
+                                               ptr_msg,
+                                               NULL,  /* tags */
+                                               NULL,  /* message_without_tags */
+                                               &nick,
+                                               NULL,  /* user */
+                                               &host,
+                                               &command,
+                                               &channel,
+                                               &arguments,
+                                               NULL,  /* text */
+                                               NULL,  /* params */
+                                               NULL,  /* num_params */
+                                               NULL,  /* pos_command */
+                                               NULL,  /* pos_arguments */
+                                               &pos_channel,
+                                               &pos_text);
 
                             msg_decoded = NULL;
 

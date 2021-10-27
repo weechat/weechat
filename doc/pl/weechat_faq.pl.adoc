@@ -525,10 +525,9 @@ Możesz po prostu wyłączyć tą opcję:
 [[small_terminal]]
 === Jak mogę dostosować wyświetlanie do bardzo małych terminali (jak 80x25), żeby nie tracić przestrzeni?
 
-// TRANSLATION MISSING
-You can remove side bars (buflist and nicklist), change time format to display
-only hours and minutes, disable alignment of messages and set a char for nick
-prefix/suffix:
+Możesz wyłączyć boczne paski (listy buforów i nicków), zmienić format czasu, żeby
+wyświetlane były tylko godziny i minuty, wyłączyć wyrównywanie wiadomości oraz
+ustawić prefiks i sufiks nicku:
 
 ----
 /set buflist.look.enabled off

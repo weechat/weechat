@@ -868,9 +868,23 @@ irc_notify_hsignal_cb (const void *pointer, void *data, const char *signal,
             }
             for (i = 0; i < num_messages; i++)
             {
-                irc_message_parse (ptr_server, messages[i], NULL, NULL, NULL,
-                                   NULL, NULL, NULL, NULL, &arguments, NULL,
-                                   NULL, NULL, NULL, NULL);
+                irc_message_parse (ptr_server,
+                                   messages[i],
+                                   NULL,  /* tags */
+                                   NULL,  /* message_without_tags */
+                                   NULL,  /* nick */
+                                   NULL,  /* user */
+                                   NULL,  /* host */
+                                   NULL,  /* command */
+                                   NULL,  /* channel */
+                                   &arguments,
+                                   NULL,  /* text */
+                                   NULL,  /* params */
+                                   NULL,  /* num_params */
+                                   NULL,  /* pos_command */
+                                   NULL,  /* pos_arguments */
+                                   NULL,  /* pos_channel */
+                                   NULL);  /* pos_text */
                 if (arguments)
                 {
                     pos = strchr (arguments, ' ');
@@ -966,10 +980,23 @@ irc_notify_hsignal_cb (const void *pointer, void *data, const char *signal,
             {
                 for (i = 0; i < num_messages; i++)
                 {
-                    irc_message_parse (ptr_server, messages[i], NULL, NULL,
-                                       NULL, NULL, NULL, &irc_cmd, NULL,
-                                       &arguments, NULL, NULL, NULL, NULL,
-                                       NULL);
+                    irc_message_parse (ptr_server,
+                                       messages[i],
+                                       NULL,  /* tags */
+                                       NULL,  /* message_without_tags */
+                                       NULL,  /* nick */
+                                       NULL,  /* user */
+                                       NULL,  /* host */
+                                       &irc_cmd,
+                                       NULL,  /* channel */
+                                       &arguments,
+                                       NULL,  /* text */
+                                       NULL,  /* params */
+                                       NULL,  /* num_params */
+                                       NULL,  /* pos_command */
+                                       NULL,  /* pos_arguments */
+                                       NULL,  /* pos_channel */
+                                       NULL);  /* pos_text */
                     if (irc_cmd && arguments)
                     {
                         if (strcmp (irc_cmd, "401") == 0)
