@@ -52,8 +52,7 @@ char *hdata_type_string[9] =
  */
 
 void
-hdata_free_var (struct t_hashtable *hashtable,
-                const void *key, void *value)
+hdata_free_var_cb (struct t_hashtable *hashtable, const void *key, void *value)
 {
     struct t_hdata_var *var;
 
@@ -77,8 +76,7 @@ hdata_free_var (struct t_hashtable *hashtable,
  */
 
 void
-hdata_free_list (struct t_hashtable *hashtable,
-                 const void *key, void *value)
+hdata_free_list_cb (struct t_hashtable *hashtable, const void *key, void *value)
 {
     /* make C compiler happy */
     (void) hashtable;
@@ -120,13 +118,13 @@ hdata_new (struct t_weechat_plugin *plugin, const char *hdata_name,
                                              WEECHAT_HASHTABLE_POINTER,
                                              NULL,
                                              NULL);
-        new_hdata->hash_var->callback_free_value = &hdata_free_var;
+        new_hdata->hash_var->callback_free_value = &hdata_free_var_cb;
         new_hdata->hash_list = hashtable_new (32,
                                               WEECHAT_HASHTABLE_STRING,
                                               WEECHAT_HASHTABLE_POINTER,
                                               NULL,
                                               NULL);
-        new_hdata->hash_list->callback_free_value = &hdata_free_list;
+        new_hdata->hash_list->callback_free_value = &hdata_free_list_cb;
         hashtable_set (weechat_hdata, hdata_name, new_hdata);
         new_hdata->create_allowed = create_allowed;
         new_hdata->delete_allowed = delete_allowed;
@@ -1191,10 +1189,7 @@ hdata_free_all_plugin_map_cb (void *data, struct t_hashtable *hashtable,
     ptr_hdata = (struct t_hdata *)value;
 
     if (ptr_hdata->plugin == (struct t_weechat_plugin *)data)
-    {
-        hdata_free (ptr_hdata);
         hashtable_remove (hashtable, key);
-    }
 }
 
 /*
@@ -1208,32 +1203,13 @@ hdata_free_all_plugin (struct t_weechat_plugin *plugin)
 }
 
 /*
- * Frees hdata (callback called for each hdata in memory).
- */
-
-void
-hdata_free_all_map_cb (void *data, struct t_hashtable *hashtable,
-                       const void *key, const void *value)
-{
-    struct t_hdata *ptr_hdata;
-
-    /* make C compiler happy */
-    (void) data;
-
-    ptr_hdata = (struct t_hdata *)value;
-
-    hdata_free (ptr_hdata);
-    hashtable_remove (hashtable, key);
-}
-
-/*
  * Frees all hdata.
  */
 
 void
 hdata_free_all ()
 {
-    hashtable_map (weechat_hdata, &hdata_free_all_map_cb, NULL);
+    hashtable_remove_all (weechat_hdata);
 }
 
 /*
@@ -1310,6 +1286,21 @@ hdata_print_log ()
 }
 
 /*
+ * Frees a hdata in hashtable "weechat_hdata".
+ */
+
+void
+hdata_free_hdata_cb (struct t_hashtable *hashtable,
+                     const void *key, void *value)
+{
+    /* make C compiler happy */
+    (void) hashtable;
+    (void) key;
+
+    hdata_free (value);
+}
+
+/*
  * Initializes hdata: creates a hashtable with hdata.
  */
 
@@ -1321,6 +1312,7 @@ hdata_init ()
                                    WEECHAT_HASHTABLE_POINTER,
                                    NULL,
                                    NULL);
+    weechat_hdata->callback_free_value = &hdata_free_hdata_cb;
 }
 
 /*
