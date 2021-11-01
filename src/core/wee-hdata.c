@@ -392,7 +392,7 @@ hdata_get_var (struct t_hdata *hdata, void *pointer, const char *name)
 {
     int offset;
 
-    if (!hdata || !pointer)
+    if (!hdata || !pointer || !name)
         return NULL;
 
     offset = hdata_get_var_offset (hdata, name);
