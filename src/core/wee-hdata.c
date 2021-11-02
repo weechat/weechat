@@ -896,6 +896,9 @@ hdata_compare (struct t_hdata *hdata, void *pointer1, void *pointer2,
     void *ptr_value1, *ptr_value2;
     time_t time_value1, time_value2;
 
+    if (!hdata || !name)
+        return 0;
+
     if (!pointer1 && pointer2)
         return -1;
     if (pointer1 && !pointer2)
