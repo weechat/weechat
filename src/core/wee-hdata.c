@@ -1108,8 +1108,6 @@ hdata_update (struct t_hdata *hdata, void *pointer,
     value = hashtable_get (hashtable, "__update_allowed");
     if (value)
     {
-        if (!hdata->callback_update)
-            return 0;
         var = hashtable_get (hdata->hash_var, value);
         if (!var)
             return 0;
