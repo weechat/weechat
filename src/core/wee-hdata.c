@@ -1049,10 +1049,18 @@ hdata_set (struct t_hdata *hdata, void *pointer, const char *name,
             return 1;
             break;
         case WEECHAT_HDATA_POINTER:
-            rc = sscanf (value, "%lx", &ptr);
-            if ((rc != EOF) && (rc != 0))
+            if (value)
             {
-                *((void **)(pointer + var->offset)) = (void *)ptr;
+                rc = sscanf (value, "%lx", &ptr);
+                if ((rc != EOF) && (rc != 0))
+                {
+                    *((void **)(pointer + var->offset)) = (void *)ptr;
+                    return 1;
+                }
+            }
+            else
+            {
+                *((void **)(pointer + var->offset)) = NULL;
                 return 1;
             }
             break;
