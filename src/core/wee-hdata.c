@@ -1059,7 +1059,7 @@ hdata_set (struct t_hdata *hdata, void *pointer, const char *name,
         case WEECHAT_HDATA_TIME:
             error = NULL;
             number = strtol (value, &error, 10);
-            if (error && !error[0])
+            if (error && !error[0] && (number >= 0))
             {
                 *((time_t *)(pointer + var->offset)) = (time_t)number;
                 return 1;
