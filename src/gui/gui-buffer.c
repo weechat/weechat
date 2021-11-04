@@ -4363,10 +4363,10 @@ gui_buffer_hdata_buffer_cb (const void *pointer, void *data,
         HDATA_VAR(struct t_gui_buffer, highlight_regex_compiled, POINTER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, highlight_tags_restrict, STRING, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, highlight_tags_restrict_count, INTEGER, 0, NULL, NULL);
-        HDATA_VAR(struct t_gui_buffer, highlight_tags_restrict_array, POINTER, 0, "highlight_tags_restrict_count", NULL);
+        HDATA_VAR(struct t_gui_buffer, highlight_tags_restrict_array, POINTER, 0, "*,highlight_tags_restrict_count", NULL);
         HDATA_VAR(struct t_gui_buffer, highlight_tags, STRING, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, highlight_tags_count, INTEGER, 0, NULL, NULL);
-        HDATA_VAR(struct t_gui_buffer, highlight_tags_array, POINTER, 0, "highlight_tags_count", NULL);
+        HDATA_VAR(struct t_gui_buffer, highlight_tags_array, POINTER, 0, "*,highlight_tags_count", NULL);
         HDATA_VAR(struct t_gui_buffer, hotlist, POINTER, 0, NULL, "hotlist");
         HDATA_VAR(struct t_gui_buffer, hotlist_max_level_nicks, HASHTABLE, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, keys, POINTER, 0, NULL, "key");

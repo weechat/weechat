@@ -6072,9 +6072,9 @@ irc_server_hdata_server_cb (const void *pointer, void *data,
         WEECHAT_HDATA_VAR(struct t_irc_server, reloaded_from_config, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, addresses_eval, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, addresses_count, INTEGER, 0, NULL, NULL);
-        WEECHAT_HDATA_VAR(struct t_irc_server, addresses_array, STRING, 0, "addresses_count", NULL);
-        WEECHAT_HDATA_VAR(struct t_irc_server, ports_array, INTEGER, 0, "addresses_count", NULL);
-        WEECHAT_HDATA_VAR(struct t_irc_server, retry_array, INTEGER, 0, "addresses_count", NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_server, addresses_array, STRING, 0, "*,addresses_count", NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_server, ports_array, INTEGER, 0, "*,addresses_count", NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_server, retry_array, INTEGER, 0, "*,addresses_count", NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, index_current_address, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, current_address, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, current_ip, STRING, 0, NULL, NULL);
@@ -6099,7 +6099,7 @@ irc_server_hdata_server_cb (const void *pointer, void *data,
         WEECHAT_HDATA_VAR(struct t_irc_server, tls_cert_key, OTHER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, unterminated_message, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, nicks_count, INTEGER, 0, NULL, NULL);
-        WEECHAT_HDATA_VAR(struct t_irc_server, nicks_array, STRING, 0, "nicks_count", NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_server, nicks_array, STRING, 0, "*,nicks_count", NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, nick_first_tried, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, nick_alternate_number, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, nick, STRING, 0, NULL, NULL);
@@ -6123,7 +6123,7 @@ irc_server_hdata_server_cb (const void *pointer, void *data,
         WEECHAT_HDATA_VAR(struct t_irc_server, monitor_time, TIME, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, clienttagdeny, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, clienttagdeny_count, INTEGER, 0, NULL, NULL);
-        WEECHAT_HDATA_VAR(struct t_irc_server, clienttagdeny_array, STRING, 0, "clienttagdeny_count", NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_server, clienttagdeny_array, STRING, 0, "*,clienttagdeny_count", NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, typing_allowed, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, reconnect_delay, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, reconnect_start, TIME, 0, NULL, NULL);

@@ -146,6 +146,7 @@ hdata_new_var (struct t_hdata *hdata, const char *name, int offset, int type,
                const char *hdata_name)
 {
     struct t_hdata_var *var;
+    const char *ptr_array_size;
 
     if (!hdata || !name)
         return;
@@ -156,8 +157,20 @@ hdata_new_var (struct t_hdata *hdata, const char *name, int offset, int type,
         var->offset = offset;
         var->type = type;
         var->update_allowed = update_allowed;
-        var->array_size = (array_size && array_size[0]) ? strdup (array_size) : NULL;
-        var->hdata_name = (hdata_name && hdata_name[0]) ? strdup (hdata_name) : NULL;
+        ptr_array_size = array_size;
+        if (ptr_array_size && (strncmp (ptr_array_size, "*,", 2) == 0))
+        {
+            var->array_pointer = 1;
+            ptr_array_size += 2;
+        }
+        else
+        {
+            var->array_pointer = 0;
+        }
+        var->array_size = (ptr_array_size && ptr_array_size[0]) ?
+            strdup (ptr_array_size) : NULL;
+        var->hdata_name = (hdata_name && hdata_name[0]) ?
+            strdup (hdata_name) : NULL;
         hashtable_set (hdata->hash_var, name, var);
     }
 }
@@ -704,9 +717,16 @@ hdata_char (struct t_hdata *hdata, void *pointer, const char *name)
     if (var && (var->offset >= 0))
     {
         if (var->array_size && (index >= 0))
-            return (*((char **)(pointer + var->offset)))[index];
+        {
+            if (var->array_pointer)
+                return (*((char **)(pointer + var->offset)))[index];
+            else
+                return ((char *)(pointer + var->offset))[index];
+        }
         else
+        {
             return *((char *)(pointer + var->offset));
+        }
     }
 
     return '\0';
@@ -731,9 +751,16 @@ hdata_integer (struct t_hdata *hdata, void *pointer, const char *name)
     if (var && (var->offset >= 0))
     {
         if (var->array_size && (index >= 0))
-            return ((int *)(pointer + var->offset))[index];
+        {
+            if (var->array_pointer)
+                return (*((int **)(pointer + var->offset)))[index];
+            else
+                return ((int *)(pointer + var->offset))[index];
+        }
         else
+        {
             return *((int *)(pointer + var->offset));
+        }
     }
 
     return 0;
@@ -758,9 +785,16 @@ hdata_long (struct t_hdata *hdata, void *pointer, const char *name)
     if (var && (var->offset >= 0))
     {
         if (var->array_size && (index >= 0))
-            return ((long *)(pointer + var->offset))[index];
+        {
+            if (var->array_pointer)
+                return (*((long **)(pointer + var->offset)))[index];
+            else
+                return ((long *)(pointer + var->offset))[index];
+        }
         else
+        {
             return *((long *)(pointer + var->offset));
+        }
     }
 
     return 0;
@@ -785,9 +819,19 @@ hdata_string (struct t_hdata *hdata, void *pointer, const char *name)
     if (var && (var->offset >= 0))
     {
         if (var->array_size && (index >= 0))
-            return (*((char ***)(pointer + var->offset)))[index];
+        {
+            if (var->array_pointer)
+                return (*((char ***)(pointer + var->offset)))[index];
+            else
+            {
+                /* we can not index a static array of strings */
+                return NULL;
+            }
+        }
         else
+        {
             return *((char **)(pointer + var->offset));
+        }
     }
 
     return NULL;
@@ -812,9 +856,16 @@ hdata_pointer (struct t_hdata *hdata, void *pointer, const char *name)
     if (var && (var->offset >= 0))
     {
         if (var->array_size && (index >= 0))
-            return (*((void ***)(pointer + var->offset)))[index];
+        {
+            if (var->array_pointer)
+                return (*((void ***)(pointer + var->offset)))[index];
+            else
+                return ((void **)(pointer + var->offset))[index];
+        }
         else
+        {
             return *((void **)(pointer + var->offset));
+        }
     }
 
     return NULL;
@@ -839,9 +890,16 @@ hdata_time (struct t_hdata *hdata, void *pointer, const char *name)
     if (var && (var->offset >= 0))
     {
         if (var->array_size && (index >= 0))
-            return ((time_t *)(pointer + var->offset))[index];
+        {
+            if (var->array_pointer)
+                return (*((time_t **)(pointer + var->offset)))[index];
+            else
+                return ((time_t *)(pointer + var->offset))[index];
+        }
         else
+        {
             return *((time_t *)(pointer + var->offset));
+        }
     }
 
     return 0;
@@ -866,9 +924,16 @@ hdata_hashtable (struct t_hdata *hdata, void *pointer, const char *name)
     if (var && (var->offset >= 0))
     {
         if (var->array_size && (index >= 0))
-            return (*((struct t_hashtable ***)(pointer + var->offset)))[index];
+        {
+            if (var->array_pointer)
+                return (*((struct t_hashtable ***)(pointer + var->offset)))[index];
+            else
+                return ((struct t_hashtable **)(pointer + var->offset))[index];
+        }
         else
+        {
             return *((struct t_hashtable **)(pointer + var->offset));
+        }
     }
 
     return NULL;

@@ -20,6 +20,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 New features::
 
+  * core: add support of static arrays in hdata
   * core: add command /toggle
   * api: add user variables in evaluation of expressions with "define:name,value"
   * api: add IRC message parameters "param1" to "paramN" and "num_params" in output of irc_message_parse
@@ -27,6 +28,7 @@ New features::
 
 Bug fixes::
 
+  * core: fix access to integer/long/time arrays in hdata
   * api: fix search of option when the section is not given in functions config_search_option and config_search_section_option
   * irc: fix parsing of parameters in all IRC messages (issue #1666)
   * irc: fix parsing of CAP message when there is no prefix (issue #1707)

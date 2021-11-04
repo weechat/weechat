@@ -36,6 +36,8 @@ struct t_hdata_var
     char type;                         /* type                              */
     char update_allowed;               /* update allowed?                   */
     char *array_size;                  /* array size                        */
+    char array_pointer;                /* pointer to dynamically allocated  */
+                                       /* array?                            */
     char *hdata_name;                  /* hdata name                        */
 };
 

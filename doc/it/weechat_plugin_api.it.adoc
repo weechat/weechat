@@ -17078,7 +17078,7 @@ Questa funzione non è disponibile nelle API per lo scripting.
 ==== hdata_new_var
 
 // TRANSLATION MISSING
-_WeeChat ≥ 0.3.6, updated in 0.3.9_
+_WeeChat ≥ 0.3.6, updated in 0.3.7, 0.3.9, 0.4.3 and 3.4_
 
 Crea una nuova variabile in hdata.
 
@@ -17096,15 +17096,15 @@ Argomenti:
 * _name_: nome della variabile
 * _offset_: offset della variabile nella struttura
 * _type_: tipo variabile, una di:
-** WEECHAT_HDATA_CHAR
-** WEECHAT_HDATA_INTEGER
-** WEECHAT_HDATA_LONG
-** WEECHAT_HDATA_STRING
-** WEECHAT_HDATA_SHARED_STRING
-** WEECHAT_HDATA_POINTER
-** WEECHAT_HDATA_TIME
-** WEECHAT_HDATA_HASHTABLE
-** WEECHAT_HDATA_OTHER
+** _WEECHAT_HDATA_CHAR_
+** _WEECHAT_HDATA_INTEGER_
+** _WEECHAT_HDATA_LONG_
+** _WEECHAT_HDATA_STRING_
+** _WEECHAT_HDATA_SHARED_STRING_ (_WeeChat ≥ 0.4.3_)
+** _WEECHAT_HDATA_POINTER_
+** _WEECHAT_HDATA_TIME_
+** _WEECHAT_HDATA_HASHTABLE_ (_WeeChat ≥ 0.3.7_)
+** _WEECHAT_HDATA_OTHER_
 // TRANSLATION MISSING
 * _update_allowed_: 1 if update of variable is allowed, otherwise 0
   _(WeeChat ≥ 0.3.9)_
@@ -17118,6 +17118,38 @@ Argomenti:
    the first NULL is found (only for type string, pointer or hashtable)
 * _hdata_name_: nome di un hdata (se è un puntatore ad una struttura con dati)
 
+// TRANSLATION MISSING
+With WeeChat ≥ 3.4, the _array_size_ parameter can be prefixed with `*,` for
+pointer to dynamically allocated array (without this prefix, the array is
+considered static).
+
+// TRANSLATION MISSING
+Examples of variables and the corresponding array size (_WeeChat ≥ 3.4_):
+
+// TRANSLATION MISSING
+[width="100%",cols="3,3m,2,7",options="header"]
+|===
+| Variable declaration in C | Hdata type | Array size | Description
+
+| `+int *numbers;+` | WEECHAT_HDATA_INTEGER | `+*,2+` |
+  Allocated array of 2 integers.
+
+| `+int *numbers;+` | WEECHAT_HDATA_INTEGER | `+*,array_size+` |
+  Allocated array of integers, the size is stored in another variable called
+  "array_size".
+
+| `+int numbers[3];+` | WEECHAT_HDATA_INTEGER | `+3+` |
+  Static array of 3 integers.
+
+| `+char **words;+` | WEECHAT_HDATA_STRING | `+*,*+` |
+  Allocated array of strings, dynamic size (NULL pointer must be present after
+  last word).
+
+| `+char **words;+` | WEECHAT_HDATA_STRING | `+*,count_words+` |
+  Allocated array of strings, the size is stored in another variable called
+  "count_words".
+|===
+
 Esempio in C:
 
 [source,C]
@@ -17126,6 +17158,7 @@ struct t_myplugin_list
 {
     char *name;
     struct t_gui_buffer *buffer;
+    int numbers[3];
     int tags_count;
     char **tags_array;
     char **string_split;
@@ -17138,9 +17171,10 @@ struct t_myplugin_list
 struct t_hdata *hdata = weechat_hdata_new ("myplugin_list", "prev", "next");
 weechat_hdata_new_var (hdata, "name", offsetof (struct t_myplugin_list, name), WEECHAT_HDATA_STRING, 0, NULL, NULL);
 weechat_hdata_new_var (hdata, "buffer", offsetof (struct t_myplugin_list, buffer), WEECHAT_HDATA_POINTER, 0, NULL, NULL);
+weechat_hdata_new_var (hdata, "numbers", offsetof (struct t_myplugin_list, numbers), WEECHAT_HDATA_INTEGER, 0, "3", NULL);
 weechat_hdata_new_var (hdata, "tags_count", offsetof (struct t_myplugin_list, tags_count), WEECHAT_HDATA_INTEGER, 0, NULL, NULL);
-weechat_hdata_new_var (hdata, "tags_array", offsetof (struct t_myplugin_list, tags_array), WEECHAT_HDATA_STRING, 0, "tags_count", NULL);
-weechat_hdata_new_var (hdata, "string_split", offsetof (struct t_myplugin_list, string_split), WEECHAT_HDATA_STRING, 0, "*", NULL);
+weechat_hdata_new_var (hdata, "tags_array", offsetof (struct t_myplugin_list, tags_array), WEECHAT_HDATA_STRING, 0, "*,tags_count", NULL);
+weechat_hdata_new_var (hdata, "string_split", offsetof (struct t_myplugin_list, string_split), WEECHAT_HDATA_STRING, 0, "*,*", NULL);
 weechat_hdata_new_var (hdata, "prev", offsetof (struct t_myplugin_list, prev), WEECHAT_HDATA_POINTER, 0, NULL, "myplugin_list");
 weechat_hdata_new_var (hdata, "next", offsetof (struct t_myplugin_list, next), WEECHAT_HDATA_POINTER, 0, NULL, "myplugin_list");
 ----
@@ -17151,9 +17185,10 @@ La macro "WEECHAT_HDATA_VAR" può essere usata per accorciare il codice:
 ----
 WEECHAT_HDATA_VAR(struct t_myplugin_list, name, STRING, 0, NULL, NULL);
 WEECHAT_HDATA_VAR(struct t_myplugin_list, buffer, POINTER, 0, NULL, NULL);
+WEECHAT_HDATA_VAR(struct t_myplugin_list, numbers, INTEGER, 0, "3", NULL);
 WEECHAT_HDATA_VAR(struct t_myplugin_list, tags_count, INTEGER, 0, NULL, NULL);
-WEECHAT_HDATA_VAR(struct t_myplugin_list, tags_array, STRING, 0, "tags_count", NULL);
-WEECHAT_HDATA_VAR(struct t_myplugin_list, string_split, STRING, 0, "*", NULL);
+WEECHAT_HDATA_VAR(struct t_myplugin_list, tags_array, STRING, 0, "*,tags_count", NULL);
+WEECHAT_HDATA_VAR(struct t_myplugin_list, string_split, STRING, 0, "*,*", NULL);
 WEECHAT_HDATA_VAR(struct t_myplugin_list, prev, POINTER, 0, NULL, "myplugin_list");
 WEECHAT_HDATA_VAR(struct t_myplugin_list, next, POINTER, 0, NULL, "myplugin_list");
 ----

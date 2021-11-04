@@ -3310,7 +3310,7 @@ config_file_hdata_config_option_cb (const void *pointer, void *data,
         HDATA_VAR(struct t_config_option, parent_name, STRING, 0, NULL, NULL);
         HDATA_VAR(struct t_config_option, type, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_config_option, description, STRING, 0, NULL, NULL);
-        HDATA_VAR(struct t_config_option, string_values, STRING, 0, "*", NULL);
+        HDATA_VAR(struct t_config_option, string_values, STRING, 0, "*,*", NULL);
         HDATA_VAR(struct t_config_option, min, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_config_option, max, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_config_option, default_value, POINTER, 0, NULL, NULL);

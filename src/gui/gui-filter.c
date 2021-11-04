@@ -544,7 +544,7 @@ gui_filter_hdata_filter_cb (const void *pointer, void *data,
         HDATA_VAR(struct t_gui_filter, buffers, POINTER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_filter, tags, STRING, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_filter, tags_count, INTEGER, 0, NULL, NULL);
-        HDATA_VAR(struct t_gui_filter, tags_array, POINTER, 0, "tags_count", NULL);
+        HDATA_VAR(struct t_gui_filter, tags_array, POINTER, 0, "*,tags_count", NULL);
         HDATA_VAR(struct t_gui_filter, regex, STRING, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_filter, regex_prefix, POINTER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_filter, regex_message, POINTER, 0, NULL, NULL);

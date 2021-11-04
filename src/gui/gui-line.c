@@ -2059,7 +2059,7 @@ gui_line_hdata_line_data_cb (const void *pointer, void *data,
         HDATA_VAR(struct t_gui_line_data, date_printed, TIME, 1, NULL, NULL);
         HDATA_VAR(struct t_gui_line_data, str_time, STRING, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_line_data, tags_count, INTEGER, 0, NULL, NULL);
-        HDATA_VAR(struct t_gui_line_data, tags_array, SHARED_STRING, 1, "tags_count", NULL);
+        HDATA_VAR(struct t_gui_line_data, tags_array, SHARED_STRING, 1, "*,tags_count", NULL);
         HDATA_VAR(struct t_gui_line_data, displayed, CHAR, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_line_data, notify_level, CHAR, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_line_data, highlight, CHAR, 0, NULL, NULL);
