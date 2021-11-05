@@ -17,6 +17,16 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 (file _ChangeLog.adoc_ in sources).
 
 
+[[v3.4]]
+== Version 3.4 (under dev)
+
+[[v3.4_hdata_arrays]]
+=== Static array support in hdata
+
+Support of static array in hdata has been added.
+For pointers to arrays, a prefix `*,` must be added in parameter `array_size`
+of API function link:weechat_plugin_api.en.html#_hdata_new_var[hdata_new_var].
+
 [[v3.3]]
 == Version 3.3 (2021-09-19)
 
