@@ -31,7 +31,7 @@ Bug fixes::
 
   * core: fix access to integer/long/time arrays in hdata
   * api: fix search of option when the section is not given in functions config_search_option and config_search_section_option
-  * irc: fix join of channels with name longer than 127 chars (issue #1717)
+  * irc: fix join of channels with long name (issue #1717)
   * irc: fix parsing of parameters in all IRC messages (issue #1666)
   * irc: fix parsing of CAP message when there is no prefix (issue #1707)
   * irc: fix parsing of TAGMSG message when there is a colon before the channel
