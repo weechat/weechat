@@ -1896,8 +1896,7 @@ IRC_PROTOCOL_CALLBACK(nick)
 {
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick, *ptr_nick_found;
-    char *old_color, str_tags[512];
-    const char *buffer_name;
+    char *old_color, str_tags[512], *buffer_name;
     int local_nick, smart_filter;
     struct t_irc_channel_speaking *ptr_nick_speaking;
 
@@ -1969,6 +1968,8 @@ IRC_PROTOCOL_CALLBACK(nick)
                     weechat_buffer_set (ptr_channel->buffer,
                                         "localvar_set_channel",
                                         ptr_channel->name);
+                    if (buffer_name)
+                        free (buffer_name);
                 }
                 break;
             case IRC_CHANNEL_TYPE_CHANNEL:
@@ -6355,8 +6356,8 @@ IRC_PROTOCOL_CALLBACK(470)
 {
     struct t_gui_buffer *ptr_buffer;
     struct t_gui_lines *own_lines;
-    const char *buffer_name, *short_name, *localvar_channel;
-    char *old_channel_lower, *new_channel_lower;
+    const char *short_name, *localvar_channel;
+    char *old_channel_lower, *new_channel_lower, *buffer_name;
     int lines_count;
 
     irc_protocol_cb_generic_error (server, date, irc_message,
@@ -6386,6 +6387,8 @@ IRC_PROTOCOL_CALLBACK(470)
             buffer_name = irc_buffer_build_name (server->name, params[2]);
             weechat_buffer_set (ptr_buffer, "name", buffer_name);
             weechat_buffer_set (ptr_buffer, "localvar_set_channel", params[2]);
+            if (buffer_name)
+                free (buffer_name);
 
             /*
              * check if logger backlog should be displayed for the new channel

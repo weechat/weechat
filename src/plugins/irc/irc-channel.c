@@ -245,8 +245,8 @@ irc_channel_create_buffer (struct t_irc_server *server,
     struct t_gui_buffer *ptr_buffer, *ptr_buffer_for_merge;
     int buffer_created, current_buffer_number, buffer_position;
     int manual_join, noswitch;
-    char str_number[32], *channel_name_lower;
-    const char *buffer_name, *short_name, *localvar_channel;
+    char str_number[32], *channel_name_lower, *buffer_name;
+    const char *short_name, *localvar_channel;
 
     buffer_created = 0;
 
@@ -294,7 +294,7 @@ irc_channel_create_buffer (struct t_irc_server *server,
                                          &irc_input_data_cb, NULL, NULL,
                                          &irc_buffer_close_cb, NULL, NULL);
         if (!ptr_buffer)
-            return NULL;
+            goto end;
 
         if (weechat_buffer_get_integer (ptr_buffer, "layout_number") < 1)
         {
@@ -432,6 +432,9 @@ irc_channel_create_buffer (struct t_irc_server *server,
         }
     }
 
+end:
+    if (buffer_name)
+        free (buffer_name);
     return ptr_buffer;
 }
 

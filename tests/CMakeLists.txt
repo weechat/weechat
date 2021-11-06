@@ -54,6 +54,7 @@ set(LIB_WEECHAT_UNIT_TESTS_PLUGINS_SRC unit/plugins/test-plugins.cpp)
 
 if(ENABLE_IRC)
   list(APPEND LIB_WEECHAT_UNIT_TESTS_PLUGINS_SRC
+    unit/plugins/irc/test-irc-buffer.cpp
     unit/plugins/irc/test-irc-channel.cpp
     unit/plugins/irc/test-irc-color.cpp
     unit/plugins/irc/test-irc-config.cpp

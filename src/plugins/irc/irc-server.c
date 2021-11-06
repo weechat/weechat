@@ -2302,7 +2302,8 @@ irc_server_rename (struct t_irc_server *server, const char *new_name)
 {
     int length;
     char *mask, *pos_option, *new_option_name, charset_modifier[256];
-    const char *buffer_name, *option_name;
+    char *buffer_name;
+    const char *option_name;
     struct t_infolist *infolist;
     struct t_config_option *ptr_option;
     struct t_irc_channel *ptr_channel;
@@ -2366,6 +2367,8 @@ irc_server_rename (struct t_irc_server *server, const char *new_name)
             weechat_buffer_set (ptr_channel->buffer, "name", buffer_name);
             weechat_buffer_set (ptr_channel->buffer, "localvar_set_server",
                                 server->name);
+            if (buffer_name)
+                free (buffer_name);
         }
     }
     if (server->buffer)
@@ -2381,6 +2384,8 @@ irc_server_rename (struct t_irc_server *server, const char *new_name)
                   "irc.%s", server->name);
         weechat_buffer_set (server->buffer, "localvar_set_charset_modifier",
                             charset_modifier);
+        if (buffer_name)
+            free (buffer_name);
     }
 
     return 1;

@@ -85,26 +85,38 @@ irc_buffer_get_server_and_channel (struct t_gui_buffer *buffer,
 
 /*
  * Builds buffer name with a server and a channel.
+ *
+ * Note: result must be freed after use.
  */
 
-const char *
+char *
 irc_buffer_build_name (const char *server, const char *channel)
 {
-    static char buffer[128];
+    char **buffer;
 
-    buffer[0] = '\0';
+    buffer = weechat_string_dyn_alloc (128);
 
     if (!server && !channel)
-        return buffer;
+        goto end;
 
     if (server && channel)
-        snprintf (buffer, sizeof (buffer), "%s.%s", server, channel);
+    {
+        weechat_string_dyn_concat (buffer, server, -1);
+        weechat_string_dyn_concat (buffer, ".", -1);
+        weechat_string_dyn_concat (buffer, channel, -1);
+    }
     else if (server)
-        snprintf (buffer, sizeof (buffer), "server.%s", server);
+    {
+        weechat_string_dyn_concat (buffer, "server.", -1);
+        weechat_string_dyn_concat (buffer, server, -1);
+    }
     else
-        snprintf (buffer, sizeof (buffer), "%s", channel);
+    {
+        weechat_string_dyn_concat (buffer, channel, -1);
+    }
 
-    return buffer;
+end:
+    return weechat_string_dyn_free (buffer, 0);
 }
 
 /*
