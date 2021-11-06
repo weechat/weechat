@@ -51,7 +51,7 @@ jobs:
         bandit tests/scripts/python/testapigen.py tests/scripts/python/testapi.py tests/scripts/python/unparse.py
 
     - name: Check Python stub file
-      run: ./doc/python_stub.py | diff - src/plugins/python/weechat.pyi
+      run: ./doc/python_stub.py | diff src/plugins/python/weechat.pyi -
 
     - name: Build and run tests
       env:
