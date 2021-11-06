@@ -7342,6 +7342,9 @@ irc_protocol_recv_command (struct t_irc_server *server,
                                              (const char **)params,
                                              num_params);
 
+        if (params)
+            weechat_string_free_split (params);
+
         if (return_code == WEECHAT_RC_ERROR)
         {
             weechat_printf (server->buffer,
