@@ -1489,7 +1489,7 @@ IRC_PROTOCOL_CALLBACK(join)
                             _("%s%s: cannot create new channel \"%s\""),
                             weechat_prefix ("error"), IRC_PLUGIN_NAME,
                             params[0]);
-            return WEECHAT_RC_ERROR;
+            return WEECHAT_RC_OK;
         }
     }
 
