@@ -5938,30 +5938,60 @@ weechat_ruby_api_hdata_move (VALUE class, VALUE hdata, VALUE pointer,
 
 static VALUE
 weechat_ruby_api_hdata_search (VALUE class, VALUE hdata, VALUE pointer,
-                               VALUE search, VALUE move)
+                               VALUE search, VALUE pointers, VALUE extra_vars,
+                               VALUE options, VALUE move)
 {
     char *c_hdata, *c_pointer, *c_search;
     const char *result;
+    struct t_hashtable *c_pointers, *c_extra_vars, *c_options;
     int c_move;
 
     API_INIT_FUNC(1, "hdata_search", API_RETURN_EMPTY);
-    if (NIL_P (hdata) || NIL_P (pointer) || NIL_P (search) || NIL_P (move))
+    if (NIL_P (hdata) || NIL_P (pointer) || NIL_P (search) || NIL_P (pointers)
+        || NIL_P (extra_vars) || NIL_P (options) || NIL_P (move))
+    {
         API_WRONG_ARGS(API_RETURN_EMPTY);
+    }
 
     Check_Type (hdata, T_STRING);
     Check_Type (pointer, T_STRING);
     Check_Type (search, T_STRING);
+    Check_Type (pointers, T_HASH);
+    Check_Type (extra_vars, T_HASH);
+    Check_Type (options, T_HASH);
     CHECK_INTEGER(move);
 
     c_hdata = StringValuePtr (hdata);
     c_pointer = StringValuePtr (pointer);
     c_search = StringValuePtr (search);
+    c_pointers = weechat_ruby_hash_to_hashtable (pointers,
+                                                 WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                                 WEECHAT_HASHTABLE_STRING,
+                                                 WEECHAT_HASHTABLE_POINTER);
+    c_extra_vars = weechat_ruby_hash_to_hashtable (extra_vars,
+                                                   WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                                   WEECHAT_HASHTABLE_STRING,
+                                                   WEECHAT_HASHTABLE_STRING);
+    c_options = weechat_ruby_hash_to_hashtable (options,
+                                                WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                                WEECHAT_HASHTABLE_STRING,
+                                                WEECHAT_HASHTABLE_STRING);
     c_move = NUM2INT (move);
 
     result = API_PTR2STR(weechat_hdata_search (API_STR2PTR(c_hdata),
                                                API_STR2PTR(c_pointer),
                                                c_search,
+                                               c_pointers,
+                                               c_extra_vars,
+                                               c_options,
                                                c_move));
+
+    if (c_pointers)
+        weechat_hashtable_free (c_pointers);
+    if (c_extra_vars)
+        weechat_hashtable_free (c_extra_vars);
+    if (c_options)
+        weechat_hashtable_free (c_options);
 
     API_RETURN_STRING(result);
 }
@@ -6616,7 +6646,7 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     API_DEF_FUNC(hdata_get_list, 2);
     API_DEF_FUNC(hdata_check_pointer, 3);
     API_DEF_FUNC(hdata_move, 3);
-    API_DEF_FUNC(hdata_search, 4);
+    API_DEF_FUNC(hdata_search, 7);
     API_DEF_FUNC(hdata_char, 3);
     API_DEF_FUNC(hdata_integer, 3);
     API_DEF_FUNC(hdata_long, 3);

@@ -4569,22 +4569,48 @@ API_FUNC(hdata_move)
 
 API_FUNC(hdata_search)
 {
+    struct t_hashtable *pointers, *extra_vars, *options;
     int move;
     const char *result;
 
-    API_INIT_FUNC(1, "hdata_search", "sssi", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hdata_search", "ssshhhi", API_RETURN_EMPTY);
 
     v8::String::Utf8Value hdata(args[0]);
     v8::String::Utf8Value pointer(args[1]);
     v8::String::Utf8Value search(args[2]);
-    move = args[3]->IntegerValue();
+    pointers = weechat_js_object_to_hashtable (
+        args[3]->ToObject(),
+        WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+        WEECHAT_HASHTABLE_STRING,
+        WEECHAT_HASHTABLE_POINTER);
+    extra_vars = weechat_js_object_to_hashtable (
+        args[4]->ToObject(),
+        WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+        WEECHAT_HASHTABLE_STRING,
+        WEECHAT_HASHTABLE_STRING);
+    options = weechat_js_object_to_hashtable (
+        args[5]->ToObject(),
+        WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+        WEECHAT_HASHTABLE_STRING,
+        WEECHAT_HASHTABLE_STRING);
+    move = args[6]->IntegerValue();
 
     result = API_PTR2STR(
         weechat_hdata_search (
             (struct t_hdata *)API_STR2PTR(*hdata),
             API_STR2PTR(*pointer),
             *search,
+            pointers,
+            extra_vars,
+            options,
             move));
+
+    if (pointers)
+        weechat_hashtable_free (pointers);
+    if (extra_vars)
+        weechat_hashtable_free (extra_vars);
+    if (options)
+        weechat_hashtable_free (options);
 
     API_RETURN_STRING(result);
 }

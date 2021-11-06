@@ -198,7 +198,7 @@ TEST(Scripts, API)
         snprintf (str_condition, sizeof (str_condition),
                   "${plugin.name} == %s",
                   languages[i][0]);
-        if (!hdata_search (hdata, plugins, str_condition, 1))
+        if (!hdata_search (hdata, plugins, str_condition, NULL, NULL, NULL, 1))
             continue;
 
         /*

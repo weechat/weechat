@@ -111,7 +111,9 @@ extern int hdata_check_pointer (struct t_hdata *hdata, void *list,
                                 void *pointer);
 extern void *hdata_move (struct t_hdata *hdata, void *pointer, int count);
 extern void *hdata_search (struct t_hdata *hdata, void *pointer,
-                           const char *search, int move);
+                           const char *search, struct t_hashtable *pointers,
+                           struct t_hashtable *extra_vars,
+                           struct t_hashtable *options, int move);
 extern void hdata_get_index_and_name (const char *name, int *index,
                                       const char **ptr_name);
 extern char hdata_char (struct t_hdata *hdata, void *pointer,

@@ -20,6 +20,31 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 [[v3.4]]
 == Version 3.4 (under dev)
 
+[[v3.4_hdata_search]]
+=== New parameters in function hdata_search
+
+New parameters have been added in function
+link:weechat_plugin_api.en.html#_hdata_search[hdata_search], used for the
+evaluation of expression.
+
+New parameters are the same as function
+link:weechat_plugin_api.en.html#_string_eval_expression[string_eval_expression]:
+
+* pointers: hashtable with pointers (pointers)
+* extra_vars: hashtable with extra variables (strings)
+* options: hashtable with options (strings).
+
+The following scripts are updated consequently to be compatible with all
+WeeChat versions:
+
+* https://weechat.org/scripts/source/autoauth.py/[autoauth.py] 1.3
+* https://weechat.org/scripts/source/buffer_open.py/[buffer_open.py] 0.3
+* https://weechat.org/scripts/source/collapse_channel.py/[collapse_channel.py] 0.9
+* https://weechat.org/scripts/source/grep_filter.py/[grep_filter.py] 0.11
+* https://weechat.org/scripts/source/samechannel.rb/[samechannel.rb] 0.2
+* https://weechat.org/scripts/source/soju.py/[soju.py] 0.1.4
+* https://weechat.org/scripts/source/stalker.pl/[stalker.pl] 1.6.3
+
 [[v3.4_hdata_arrays]]
 === Static array support in hdata
 

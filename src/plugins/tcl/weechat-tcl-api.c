@@ -5256,23 +5256,46 @@ API_FUNC(hdata_search)
     Tcl_Obj *objp;
     char *hdata, *pointer, *search;
     const char *result;
+    struct t_hashtable *pointers, *extra_vars, *options;
     int i, move;
 
     API_INIT_FUNC(1, "hdata_search", API_RETURN_EMPTY);
-    if (objc < 5)
+    if (objc < 8)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     hdata = Tcl_GetStringFromObj (objv[1], &i);
     pointer = Tcl_GetStringFromObj (objv[2], &i);
     search = Tcl_GetStringFromObj (objv[3], &i);
+    pointers = weechat_tcl_dict_to_hashtable (interp, objv[4],
+                                              WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                              WEECHAT_HASHTABLE_STRING,
+                                              WEECHAT_HASHTABLE_POINTER);
+    extra_vars = weechat_tcl_dict_to_hashtable (interp, objv[5],
+                                                WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                                WEECHAT_HASHTABLE_STRING,
+                                                WEECHAT_HASHTABLE_STRING);
+    options = weechat_tcl_dict_to_hashtable (interp, objv[6],
+                                             WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                             WEECHAT_HASHTABLE_STRING,
+                                             WEECHAT_HASHTABLE_STRING);
 
-    if (Tcl_GetIntFromObj (interp, objv[4], &move) != TCL_OK)
+    if (Tcl_GetIntFromObj (interp, objv[7], &move) != TCL_OK)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     result = API_PTR2STR(weechat_hdata_search (API_STR2PTR(hdata),
                                                API_STR2PTR(pointer),
                                                search,
+                                               pointers,
+                                               extra_vars,
+                                               options,
                                                move));
+
+    if (pointers)
+        weechat_hashtable_free (pointers);
+    if (extra_vars)
+        weechat_hashtable_free (extra_vars);
+    if (options)
+        weechat_hashtable_free (options);
 
     API_RETURN_STRING(result);
 }

@@ -4961,21 +4961,44 @@ API_FUNC(hdata_search)
 {
     const char *hdata, *pointer, *search;
     const char *result;
+    struct t_hashtable *pointers, *extra_vars, *options;
     int move;
 
     API_INIT_FUNC(1, "hdata_search", API_RETURN_EMPTY);
-    if (lua_gettop (L) < 4)
+    if (lua_gettop (L) < 7)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
-    hdata = lua_tostring (L, -4);
-    pointer = lua_tostring (L, -3);
-    search = lua_tostring (L, -2);
+    hdata = lua_tostring (L, -7);
+    pointer = lua_tostring (L, -6);
+    search = lua_tostring (L, -5);
+    pointers = weechat_lua_tohashtable (L, -4,
+                                        WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                        WEECHAT_HASHTABLE_STRING,
+                                        WEECHAT_HASHTABLE_POINTER);
+    extra_vars = weechat_lua_tohashtable (L, -3,
+                                          WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                          WEECHAT_HASHTABLE_STRING,
+                                          WEECHAT_HASHTABLE_STRING);
+    options = weechat_lua_tohashtable (L, -2,
+                                       WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                       WEECHAT_HASHTABLE_STRING,
+                                       WEECHAT_HASHTABLE_STRING);
     move = lua_tonumber (L, -1);
 
     result = API_PTR2STR(weechat_hdata_search (API_STR2PTR(hdata),
                                                API_STR2PTR(pointer),
                                                search,
+                                               pointers,
+                                               extra_vars,
+                                               options,
                                                move));
+
+    if (pointers)
+        weechat_hashtable_free (pointers);
+    if (extra_vars)
+        weechat_hashtable_free (extra_vars);
+    if (options)
+        weechat_hashtable_free (options);
 
     API_RETURN_STRING(result);
 }

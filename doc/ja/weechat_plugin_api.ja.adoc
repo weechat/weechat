@@ -17199,7 +17199,7 @@ if buffer:
 
 ==== hdata_search
 
-_WeeChat バージョン 0.4.1 以上で利用可。_
+_WeeChat バージョン 0.4.1 以上で利用可、バージョン 3.4 で更新。_
 
 リストから要素を検索: リスト内の各要素に対して _search_
 の内容を評価し、マッチする要素が見つかるかリストの最後に到達するまでこれを続ける。
@@ -17208,7 +17208,9 @@ _WeeChat バージョン 0.4.1 以上で利用可。_
 
 [source,C]
 ----
-void *weechat_hdata_search (struct t_hdata *hdata, void *pointer, const char *search, int move);
+void *weechat_hdata_search (struct t_hdata *hdata, void *pointer, const char *search,
+                            struct t_hashtable *pointers, struct t_hashtable *extra_vars,
+                            struct t_hashtable *options, int move);
 ----
 
 引数:
@@ -17218,8 +17220,20 @@ void *weechat_hdata_search (struct t_hdata *hdata, void *pointer, const char *se
 * _search_: 評価する式、式中のデフォルトポインタは hdata の名前
   (デフォルトポインタはリストに含まれる各要素で置換されます); 式に関する詳細は
   link:weechat_user.ja.html#command_weechat_eval[WeeChat ユーザーズガイド / WeeChat コマンド / eval] を参照してください
+* _pointers_: 関数に渡されるハッシュテーブル
+  <<_string_eval_expression,string_eval_expression>>
+* _extra_vars_: 関数に渡されるハッシュテーブル
+  <<_string_eval_expression,string_eval_expression>>
+* _options_: 関数に渡されるハッシュテーブル
+  <<_string_eval_expression,string_eval_expression>>
 * _move_: 検索に失敗した後に移動を実行する回数
   (負および正の整数、ゼロは禁止)
+
+// TRANSLATION MISSING
+[IMPORTANT]
+You must ensure the _search_ expression is safe and does not include any
+user data. Such unsafe data must be given in the hashtable _extra_vars_ and
+referenced by `${xxx}` in the _search_ expression (see the example below).
 
 戻り値:
 
@@ -17231,13 +17245,21 @@ C 言語での使用例:
 ----
 struct t_hdata *hdata = weechat_hdata_get ("irc_server");
 void *servers = weechat_hdata_get_list (hdata, "irc_servers");
+struct t_hashtable *extra_vars = weechat_hashtable_new (8,
+                                                        WEECHAT_HASHTABLE_STRING,
+                                                        WEECHAT_HASHTABLE_STRING,
+                                                        NULL,
+                                                        NULL);
 
 /* search irc server with name "libera" */
-void *server = weechat_hdata_search (hdata, servers, "${irc_server.name} == libera", 1);
+weechat_hashtable_set (extra_vars, "name", "libera");
+void *server = weechat_hdata_search (hdata, servers, "${irc_server.name} == ${name}",
+                                     NULL, extra_vars, NULL, 1);
 if (server)
 {
     /* ... */
 }
+weechat_hashtable_free (extra_vars);
 ----
 
 スクリプト (Python) での使用例:
@@ -17245,14 +17267,17 @@ if (server)
 [source,python]
 ----
 # プロトタイプ
-def hdata_search(hdata: str, pointer: str, search: str, count: int) -> str: ...
+def hdata_search(hdata: str, pointer: str, search: str,
+                 pointers: Dict[str, str], extra_vars: Dict[str, str], options: Dict[str, str],
+                 count: int) -> str: ...
 
 # 例
 hdata = weechat.hdata_get("irc_server")
 servers = weechat.hdata_get_list(hdata, "irc_servers")
 
 # search irc server with name "libera"
-server = weechat.hdata_search(hdata, servers, "${irc_server.name} == libera", 1)
+server = weechat.hdata_search(hdata, servers, "${irc_server.name} == ${name}",
+                              {}, {"name": "libera"}, {}, 1)
 if server:
     # ...
 ----

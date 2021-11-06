@@ -1299,145 +1299,288 @@ TEST(CoreHdataWithList, Move)
 
 TEST(CoreHdataWithList, Search)
 {
-    POINTERS_EQUAL(NULL, hdata_search (NULL, NULL, NULL, 0));
-    POINTERS_EQUAL(NULL, hdata_search (ptr_hdata, NULL, NULL, 0));
-    POINTERS_EQUAL(NULL, hdata_search (NULL, items, NULL, 0));
-    POINTERS_EQUAL(NULL, hdata_search (NULL, NULL, "${test_char} == A", 0));
-    POINTERS_EQUAL(NULL, hdata_search (NULL, NULL, NULL, 1));
-    POINTERS_EQUAL(NULL, hdata_search (ptr_hdata, items, NULL, 0));
-    POINTERS_EQUAL(NULL, hdata_search (ptr_hdata, NULL, "${test_char} == A", 0));
-    POINTERS_EQUAL(NULL, hdata_search (ptr_hdata, NULL, NULL, 1));
-    POINTERS_EQUAL(NULL, hdata_search (NULL, items, "${test_char} == A", 0));
-    POINTERS_EQUAL(NULL, hdata_search (NULL, items, NULL, 1));
-    POINTERS_EQUAL(NULL, hdata_search (NULL, NULL, "${test_char} == A", 1));
-    POINTERS_EQUAL(NULL, hdata_search (ptr_hdata, items, "${test_char} == A", 0));
-    POINTERS_EQUAL(NULL, hdata_search (ptr_hdata, items, NULL, 1));
-    POINTERS_EQUAL(NULL, hdata_search (ptr_hdata, NULL, "${test_char} == A", 1));
-    POINTERS_EQUAL(NULL, hdata_search (NULL, items, "${test_char} == A", 1));
+    struct t_hashtable *pointers, *extra_vars;
+
+    pointers = hashtable_new (8,
+                              WEECHAT_HASHTABLE_STRING,
+                              WEECHAT_HASHTABLE_POINTER,
+                              NULL,
+                              NULL);
+
+    extra_vars = hashtable_new (8,
+                                WEECHAT_HASHTABLE_STRING,
+                                WEECHAT_HASHTABLE_STRING,
+                                NULL,
+                                NULL);
+
+    POINTERS_EQUAL(NULL, hdata_search (NULL, NULL, NULL,
+                                       NULL, NULL, NULL, 0));
+    POINTERS_EQUAL(NULL, hdata_search (ptr_hdata, NULL, NULL,
+                                       NULL, NULL, NULL, 0));
+    POINTERS_EQUAL(NULL, hdata_search (NULL, items, NULL,
+                                       NULL, NULL, NULL, 0));
+    POINTERS_EQUAL(NULL, hdata_search (NULL, NULL, "${test_char} == A",
+                                       NULL, NULL, NULL, 0));
+    POINTERS_EQUAL(NULL, hdata_search (NULL, NULL, NULL,
+                                       NULL, NULL, NULL, 1));
+    POINTERS_EQUAL(NULL, hdata_search (ptr_hdata, items, NULL,
+                                       NULL, NULL, NULL, 0));
+    POINTERS_EQUAL(NULL, hdata_search (ptr_hdata, NULL, "${test_char} == A",
+                                       NULL, NULL, NULL, 0));
+    POINTERS_EQUAL(NULL, hdata_search (ptr_hdata, NULL, NULL, NULL, NULL, NULL, 1));
+    POINTERS_EQUAL(NULL, hdata_search (NULL, items, "${test_char} == A",
+                                       NULL, NULL, NULL, 0));
+    POINTERS_EQUAL(NULL, hdata_search (NULL, items, NULL, NULL, NULL, NULL, 1));
+    POINTERS_EQUAL(NULL, hdata_search (NULL, NULL, "${test_char} == A",
+                                       NULL, NULL, NULL, 1));
+    POINTERS_EQUAL(NULL, hdata_search (ptr_hdata, items, "${test_char} == A",
+                                       NULL, NULL, NULL, 0));
+    POINTERS_EQUAL(NULL, hdata_search (ptr_hdata, items, NULL,
+                                       NULL, NULL, NULL, 1));
+    POINTERS_EQUAL(NULL, hdata_search (ptr_hdata, NULL, "${test_char} == A",
+                                       NULL, NULL, NULL, 1));
+    POINTERS_EQUAL(NULL, hdata_search (NULL, items, "${test_char} == A",
+                                       NULL, NULL, NULL, 1));
 
     /* search char */
-    POINTERS_EQUAL(NULL,
-                   hdata_search (ptr_hdata, items,
-                                 "${test_item.test_char} == Z", 1));
-    POINTERS_EQUAL(NULL,
-                   hdata_search (ptr_hdata, items,
-                                 "${test_item.test_char} == X", 2));
-    POINTERS_EQUAL(ptr_item1,
-                   hdata_search (ptr_hdata, items,
-                                 "${test_item.test_char} == A", 1));
-    POINTERS_EQUAL(ptr_item2,
-                   hdata_search (ptr_hdata, items,
-                                 "${test_item.test_char} == a", 1));
-    POINTERS_EQUAL(ptr_item1,
-                   hdata_search (ptr_hdata, last_item,
-                                 "${test_item.test_char} == A", -1));
+    POINTERS_EQUAL(
+        NULL,
+        hdata_search (ptr_hdata, items,
+                      "${test_item.test_char} == Z",
+                      NULL, NULL, NULL, 1));
+    POINTERS_EQUAL(
+        NULL,
+        hdata_search (ptr_hdata, items,
+                      "${test_item.test_char} == X",
+                      NULL, NULL, NULL, 2));
+    POINTERS_EQUAL(
+        ptr_item1,
+        hdata_search (ptr_hdata, items,
+                      "${test_item.test_char} == A",
+                      NULL, NULL, NULL, 1));
+    POINTERS_EQUAL(
+        ptr_item2,
+        hdata_search (ptr_hdata, items,
+                      "${test_item.test_char} == a",
+                      NULL, NULL, NULL, 1));
+    POINTERS_EQUAL(
+        ptr_item1,
+        hdata_search (ptr_hdata, last_item,
+                      "${test_item.test_char} == A",
+                      NULL, NULL, NULL, -1));
+    hashtable_set (extra_vars, "value", "a");
+    POINTERS_EQUAL(
+        ptr_item2,
+        hdata_search (ptr_hdata, items,
+                      "${test_item.test_char} == ${value}",
+                      NULL, extra_vars, NULL, 1));
 
     /* search integer */
-    POINTERS_EQUAL(NULL,
-                   hdata_search (ptr_hdata, items,
-                                 "${test_item.test_int} == 999", 1));
-    POINTERS_EQUAL(NULL,
-                   hdata_search (ptr_hdata, items,
-                                 "${test_item.test_int} == 456", 2));
-    POINTERS_EQUAL(ptr_item1,
-                   hdata_search (ptr_hdata, items,
-                                 "${test_item.test_int} == 123", 1));
-    POINTERS_EQUAL(ptr_item2,
-                   hdata_search (ptr_hdata, items,
-                                 "${test_item.test_int} == 456", 1));
-    POINTERS_EQUAL(ptr_item1,
-                   hdata_search (ptr_hdata, last_item,
-                                 "${test_item.test_int} == 123", -1));
+    POINTERS_EQUAL(
+        NULL,
+        hdata_search (ptr_hdata, items,
+                      "${test_item.test_int} == 999",
+                      NULL, NULL, NULL, 1));
+    POINTERS_EQUAL(
+        NULL,
+        hdata_search (ptr_hdata, items,
+                      "${test_item.test_int} == 456",
+                      NULL, NULL, NULL, 2));
+    POINTERS_EQUAL(
+        ptr_item1,
+        hdata_search (ptr_hdata, items,
+                      "${test_item.test_int} == 123",
+                      NULL, NULL, NULL, 1));
+    POINTERS_EQUAL(
+        ptr_item2,
+        hdata_search (ptr_hdata, items,
+                      "${test_item.test_int} == 456",
+                      NULL, NULL, NULL, 1));
+    POINTERS_EQUAL(
+        ptr_item1,
+        hdata_search (ptr_hdata, last_item,
+                      "${test_item.test_int} == 123",
+                      NULL, NULL, NULL, -1));
+    hashtable_set (extra_vars, "value", "456");
+    POINTERS_EQUAL(
+        ptr_item2,
+        hdata_search (ptr_hdata, items,
+                      "${test_item.test_int} == ${value}",
+                      NULL, extra_vars, NULL, 1));
 
     /* search long */
-    POINTERS_EQUAL(NULL,
-                   hdata_search (ptr_hdata, items,
-                                 "${test_item.test_long} == 999", 1));
-    POINTERS_EQUAL(NULL,
-                   hdata_search (ptr_hdata, items,
-                                 "${test_item.test_long} == 987654321", 2));
-    POINTERS_EQUAL(ptr_item1,
-                   hdata_search (ptr_hdata, items,
-                                 "${test_item.test_long} == 123456789", 1));
-    POINTERS_EQUAL(ptr_item2,
-                   hdata_search (ptr_hdata, items,
-                                 "${test_item.test_long} == 987654321", 1));
-    POINTERS_EQUAL(ptr_item1,
-                   hdata_search (ptr_hdata, last_item,
-                                 "${test_item.test_long} == 123456789", -1));
+    POINTERS_EQUAL(
+        NULL,
+        hdata_search (ptr_hdata, items,
+                      "${test_item.test_long} == 999",
+                      NULL, NULL, NULL, 1));
+    POINTERS_EQUAL(
+        NULL,
+        hdata_search (ptr_hdata, items,
+                      "${test_item.test_long} == 987654321",
+                      NULL, NULL, NULL, 2));
+    POINTERS_EQUAL(
+        ptr_item1,
+        hdata_search (ptr_hdata, items,
+                      "${test_item.test_long} == 123456789",
+                      NULL, NULL, NULL, 1));
+    POINTERS_EQUAL(
+        ptr_item2,
+        hdata_search (ptr_hdata, items,
+                      "${test_item.test_long} == 987654321",
+                      NULL, NULL, NULL, 1));
+    POINTERS_EQUAL(
+        ptr_item1,
+        hdata_search (ptr_hdata, last_item,
+                      "${test_item.test_long} == 123456789",
+                      NULL, NULL, NULL, -1));
+    hashtable_set (extra_vars, "value", "987654321");
+    POINTERS_EQUAL(
+        ptr_item2,
+        hdata_search (ptr_hdata, items,
+                      "${test_item.test_long} == ${value}",
+                      NULL, extra_vars, NULL, 1));
 
     /* search string */
-    POINTERS_EQUAL(NULL,
-                   hdata_search (ptr_hdata, items,
-                                 "${test_item.test_string} == zzz", 1));
-    POINTERS_EQUAL(NULL,
-                   hdata_search (ptr_hdata, items,
-                                 "${test_item.test_string} == item2", 2));
-    POINTERS_EQUAL(ptr_item1,
-                   hdata_search (ptr_hdata, items,
-                                 "${test_item.test_string} == item1", 1));
-    POINTERS_EQUAL(ptr_item2,
-                   hdata_search (ptr_hdata, items,
-                                 "${test_item.test_string} == item2", 1));
-    POINTERS_EQUAL(ptr_item1,
-                   hdata_search (ptr_hdata, last_item,
-                                 "${test_item.test_string} == item1", -1));
+    POINTERS_EQUAL(
+        NULL,
+        hdata_search (ptr_hdata, items,
+                      "${test_item.test_string} == zzz",
+                      NULL, NULL, NULL, 1));
+    POINTERS_EQUAL(
+        NULL,
+        hdata_search (ptr_hdata, items,
+                      "${test_item.test_string} == item2",
+                      NULL, NULL, NULL, 2));
+    POINTERS_EQUAL(
+        ptr_item1,
+        hdata_search (ptr_hdata, items,
+                      "${test_item.test_string} == item1",
+                      NULL, NULL, NULL, 1));
+    POINTERS_EQUAL(
+        ptr_item2,
+        hdata_search (ptr_hdata, items,
+                      "${test_item.test_string} == item2",
+                      NULL, NULL, NULL, 1));
+    POINTERS_EQUAL(
+        ptr_item1,
+        hdata_search (ptr_hdata, last_item,
+                      "${test_item.test_string} == item1",
+                      NULL, NULL, NULL, -1));
+    hashtable_set (extra_vars, "value", "item2");
+    POINTERS_EQUAL(
+        ptr_item2,
+        hdata_search (ptr_hdata, items,
+                      "${test_item.test_string} == item2",
+                      NULL, extra_vars, NULL, 1));
 
     /* search shared string */
     POINTERS_EQUAL(
         NULL,
         hdata_search (ptr_hdata, items,
-                      "${test_item.test_shared_string} == zzz", 1));
+                      "${test_item.test_shared_string} == zzz",
+                      NULL, NULL, NULL, 1));
     POINTERS_EQUAL(
         NULL,
         hdata_search (ptr_hdata, items,
-                      "${test_item.test_shared_string} == item2_shared", 2));
+                      "${test_item.test_shared_string} == item2_shared",
+                      NULL, NULL, NULL, 2));
     POINTERS_EQUAL(
         ptr_item1,
         hdata_search (ptr_hdata, items,
-                      "${test_item.test_shared_string} == item1_shared", 1));
+                      "${test_item.test_shared_string} == item1_shared",
+                      NULL, NULL, NULL, 1));
     POINTERS_EQUAL(
         ptr_item2,
         hdata_search (ptr_hdata, items,
-                      "${test_item.test_shared_string} == item2_shared", 1));
+                      "${test_item.test_shared_string} == item2_shared",
+                      NULL, NULL, NULL, 1));
     POINTERS_EQUAL(
         ptr_item1,
         hdata_search (ptr_hdata, last_item,
-                      "${test_item.test_shared_string} == item1_shared", -1));
+                      "${test_item.test_shared_string} == item1_shared",
+                      NULL, NULL, NULL, -1));
+    hashtable_set (extra_vars, "value", "item2_shared");
+    POINTERS_EQUAL(
+        ptr_item2,
+        hdata_search (ptr_hdata, items,
+                      "${test_item.test_shared_string} == item2_shared",
+                      NULL, NULL, NULL, 1));
 
     /* search pointer */
-    POINTERS_EQUAL(NULL,
-                   hdata_search (ptr_hdata, items,
-                                 "${test_item.test_pointer} == 0x999", 1));
-    POINTERS_EQUAL(NULL,
-                   hdata_search (ptr_hdata, items,
-                                 "${test_item.test_pointer} == 0x456", 2));
-    POINTERS_EQUAL(ptr_item1,
-                   hdata_search (ptr_hdata, items,
-                                 "${test_item.test_pointer} == 0x123", 1));
-    POINTERS_EQUAL(ptr_item2,
-                   hdata_search (ptr_hdata, items,
-                                 "${test_item.test_pointer} == 0x456", 1));
-    POINTERS_EQUAL(ptr_item1,
-                   hdata_search (ptr_hdata, last_item,
-                                 "${test_item.test_pointer} == 0x123", -1));
+    POINTERS_EQUAL(
+        NULL,
+        hdata_search (ptr_hdata, items,
+                      "${test_item.test_pointer} == 0x999",
+                      NULL, NULL, NULL, 1));
+    POINTERS_EQUAL(
+        NULL,
+        hdata_search (ptr_hdata, items,
+                      "${test_item.test_pointer} == 0x456",
+                      NULL, NULL, NULL, 2));
+    POINTERS_EQUAL(
+        ptr_item1,
+        hdata_search (ptr_hdata, items,
+                      "${test_item.test_pointer} == 0x123",
+                      NULL, NULL, NULL, 1));
+    POINTERS_EQUAL(
+        ptr_item2,
+        hdata_search (ptr_hdata, items,
+                      "${test_item.test_pointer} == 0x456",
+                      NULL, NULL, NULL, 1));
+    POINTERS_EQUAL(
+        ptr_item1,
+        hdata_search (ptr_hdata, last_item,
+                      "${test_item.test_pointer} == 0x123",
+                      NULL, NULL, NULL, -1));
+    hashtable_set (extra_vars, "value", "0x456");
+    POINTERS_EQUAL(
+        ptr_item2,
+        hdata_search (ptr_hdata, items,
+                      "${test_item.test_pointer} == ${value}",
+                      NULL, extra_vars, NULL, 1));
+    hashtable_set (pointers, "value", (void *)0x456);
+    POINTERS_EQUAL(
+        ptr_item2,
+        hdata_search (ptr_hdata, items,
+                      "${test_item.test_pointer} == ${value}",
+                      pointers, NULL, NULL, 1));
 
     /* search time */
-    POINTERS_EQUAL(NULL,
-                   hdata_search (ptr_hdata, items,
-                                 "${test_item.test_time} == 999", 1));
-    POINTERS_EQUAL(NULL,
-                   hdata_search (ptr_hdata, items,
-                                 "${test_item.test_time} == 789123", 2));
-    POINTERS_EQUAL(ptr_item1,
-                   hdata_search (ptr_hdata, items,
-                                 "${test_item.test_time} == 123456", 1));
-    POINTERS_EQUAL(ptr_item2,
-                   hdata_search (ptr_hdata, items,
-                                 "${test_item.test_time} == 789123", 1));
-    POINTERS_EQUAL(ptr_item1,
-                   hdata_search (ptr_hdata, last_item,
-                                 "${test_item.test_time} == 123456", -1));
+    POINTERS_EQUAL(
+        NULL,
+        hdata_search (ptr_hdata, items,
+                      "${test_item.test_time} == 999",
+                      NULL, NULL, NULL, 1));
+    POINTERS_EQUAL(
+        NULL,
+        hdata_search (ptr_hdata, items,
+                      "${test_item.test_time} == 789123",
+                      NULL, NULL, NULL, 2));
+    POINTERS_EQUAL(
+        ptr_item1,
+        hdata_search (ptr_hdata, items,
+                      "${test_item.test_time} == 123456",
+                      NULL, NULL, NULL, 1));
+    POINTERS_EQUAL(
+        ptr_item2,
+        hdata_search (ptr_hdata, items,
+                      "${test_item.test_time} == 789123",
+                      NULL, NULL, NULL, 1));
+    POINTERS_EQUAL(
+        ptr_item1,
+        hdata_search (ptr_hdata, last_item,
+                      "${test_item.test_time} == 123456",
+                      NULL, NULL, NULL, -1));
+    hashtable_set (extra_vars, "value", "789123");
+    POINTERS_EQUAL(
+        ptr_item2,
+        hdata_search (ptr_hdata, items,
+                      "${test_item.test_time} == ${value}",
+                      NULL, extra_vars, NULL, 1));
+
+    hashtable_free (pointers);
+    hashtable_free (extra_vars);
 }
 
 /*

@@ -22,6 +22,7 @@ New features::
 
   * core: add support of static arrays in hdata
   * core: add command /toggle
+  * api: add parameters pointers, extra_vars and options in function hdata_search
   * api: add user variables in evaluation of expressions with "define:name,value"
   * api: add IRC message parameters "param1" to "paramN" and "num_params" in output of irc_message_parse
   * irc: allow quotes around IRC message in command /server fakerecv

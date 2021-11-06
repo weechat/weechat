@@ -4877,20 +4877,51 @@ API_FUNC(hdata_search)
 {
     char *hdata, *pointer, *search;
     const char *result;
+    struct t_hashtable *pointers, *extra_vars, *options;
+    PyObject *dict, *dict2, *dict3;
     int move;
 
     API_INIT_FUNC(1, "hdata_search", API_RETURN_EMPTY);
     hdata = NULL;
     pointer = NULL;
     search = NULL;
+    pointers = NULL;
+    extra_vars = NULL;
+    options = NULL;
     move = 0;
-    if (!PyArg_ParseTuple (args, "sssi", &hdata, &pointer, &search, &move))
+    if (!PyArg_ParseTuple (args, "sssOOOi", &hdata, &pointer, &search,
+                           &dict, &dict2, &dict3, &move))
+    {
         API_WRONG_ARGS(API_RETURN_EMPTY);
+    }
+
+    pointers = weechat_python_dict_to_hashtable (dict,
+                                                 WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                                 WEECHAT_HASHTABLE_STRING,
+                                                 WEECHAT_HASHTABLE_POINTER);
+    extra_vars = weechat_python_dict_to_hashtable (dict2,
+                                                   WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                                   WEECHAT_HASHTABLE_STRING,
+                                                   WEECHAT_HASHTABLE_STRING);
+    options = weechat_python_dict_to_hashtable (dict3,
+                                                WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                                WEECHAT_HASHTABLE_STRING,
+                                                WEECHAT_HASHTABLE_STRING);
 
     result = API_PTR2STR(weechat_hdata_search (API_STR2PTR(hdata),
                                                API_STR2PTR(pointer),
                                                search,
+                                               pointers,
+                                               extra_vars,
+                                               options,
                                                move));
+
+    if (pointers)
+        weechat_hashtable_free (pointers);
+    if (extra_vars)
+        weechat_hashtable_free (extra_vars);
+    if (options)
+        weechat_hashtable_free (options);
 
     API_RETURN_STRING(result);
 }

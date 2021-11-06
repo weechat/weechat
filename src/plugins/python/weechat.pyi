@@ -973,7 +973,9 @@ def hdata_move(hdata: str, pointer: str, count: int) -> str:
     ...
 
 
-def hdata_search(hdata: str, pointer: str, search: str, count: int) -> str:
+def hdata_search(hdata: str, pointer: str, search: str,
+                 pointers: Dict[str, str], extra_vars: Dict[str, str], options: Dict[str, str],
+                 count: int) -> str:
     """`hdata_search in WeeChat plugin API reference <https://weechat.org/doc/api#_hdata_search>`_"""
     ...
 

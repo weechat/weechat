@@ -17488,7 +17488,7 @@ if buffer:
 
 ==== hdata_search
 
-_WeeChat ≥ 0.4.1._
+_WeeChat ≥ 0.4.1, mis à jour dans la 3.4._
 
 Chercher un élément dans la liste : l'expression _search_ est évaluée pour
 chaque élément dans la liste, jusqu'à trouver l'élément (ou la fin de la liste).
@@ -17497,7 +17497,9 @@ Prototype :
 
 [source,C]
 ----
-void *weechat_hdata_search (struct t_hdata *hdata, void *pointer, const char *search, int move);
+void *weechat_hdata_search (struct t_hdata *hdata, void *pointer, const char *search,
+                            struct t_hashtable *pointers, struct t_hashtable *extra_vars,
+                            struct t_hashtable *options, int move);
 ----
 
 Paramètres :
@@ -17508,8 +17510,21 @@ Paramètres :
   le nom du hdata (et ce pointeur change pour chaque élément dans la liste);
   pour l'aide sur l'expression, voir le
   link:weechat_user.fr.html#command_weechat_eval[Guide utilisateur WeeChat / Commande /eval]
+* _pointers_ : table de hachage pour l'appel à la fonction
+  <<_string_eval_expression,string_eval_expression>>
+* _extra_vars_ : table de hachage pour l'appel à la fonction
+  <<_string_eval_expression,string_eval_expression>>
+* _options_ : table de hachage pour l'appel à la fonction
+  <<_string_eval_expression,string_eval_expression>>
 * _move_ : nombre de saut(s) à exécuter après une recherche infructueuse (entier
   négatif ou positif, différent de 0)
+
+// TRANSLATION MISSING
+[IMPORTANT]
+Vous devez vous assurer que l'expression _search_ est sûre et ne contient
+aucune donnée utilisateur. De telles données non sûres doivent être données
+dans la table de hachage _extra_vars_ et être référencées par `${xxx}` dans
+l'expression _search_ (voir l'exemple ci-dessous).
 
 Valeur de retour :
 
@@ -17521,13 +17536,21 @@ Exemple en C :
 ----
 struct t_hdata *hdata = weechat_hdata_get ("irc_server");
 void *servers = weechat_hdata_get_list (hdata, "irc_servers");
+struct t_hashtable *extra_vars = weechat_hashtable_new (8,
+                                                        WEECHAT_HASHTABLE_STRING,
+                                                        WEECHAT_HASHTABLE_STRING,
+                                                        NULL,
+                                                        NULL);
 
 /* cherche un serveur irc avec le nom "libera" */
-void *server = weechat_hdata_search (hdata, servers, "${irc_server.name} == libera", 1);
+weechat_hashtable_set (extra_vars, "name", "libera");
+void *server = weechat_hdata_search (hdata, servers, "${irc_server.name} == ${name}",
+                                     NULL, extra_vars, NULL, 1);
 if (server)
 {
     /* ... */
 }
+weechat_hashtable_free (extra_vars);
 ----
 
 Script (Python) :
@@ -17535,14 +17558,17 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-def hdata_search(hdata: str, pointer: str, search: str, count: int) -> str: ...
+def hdata_search(hdata: str, pointer: str, search: str,
+                 pointers: Dict[str, str], extra_vars: Dict[str, str], options: Dict[str, str],
+                 count: int) -> str: ...
 
 # exemple
 hdata = weechat.hdata_get("irc_server")
 servers = weechat.hdata_get_list(hdata, "irc_servers")
 
 # cherche un serveur irc avec le nom "libera"
-server = weechat.hdata_search(hdata, servers, "${irc_server.name} == libera", 1)
+server = weechat.hdata_search(hdata, servers, "${irc_server.name} == ${name}",
+                              {}, {"name": "libera"}, {}, 1)
 if server:
     # ...
 ----

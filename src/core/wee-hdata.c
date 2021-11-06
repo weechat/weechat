@@ -37,11 +37,6 @@
 
 struct t_hashtable *weechat_hdata = NULL;
 
-/* hashtables used in hdata_search() for evaluating expression */
-struct t_hashtable *hdata_search_pointers = NULL;
-struct t_hashtable *hdata_search_extra_vars = NULL;
-struct t_hashtable *hdata_search_options = NULL;
-
 char *hdata_type_string[9] =
 { "other", "char", "integer", "long", "string", "pointer", "time",
   "hashtable", "shared_string" };
@@ -587,72 +582,78 @@ hdata_move (struct t_hdata *hdata, void *pointer, int count)
  */
 
 void *
-hdata_search (struct t_hdata *hdata, void *pointer, const char *search, int move)
+hdata_search (struct t_hdata *hdata,
+              void *pointer,
+              const char *search,
+              struct t_hashtable *pointers,
+              struct t_hashtable *extra_vars,
+              struct t_hashtable *options,
+              int move)
 {
+    struct t_hashtable *pointers2, *options2;
     char *result;
+    void *ret_pointer;
     int rc;
 
     if (!hdata || !pointer || !search || !search[0] || (move == 0))
         return NULL;
 
-    /* clear or create hashtable with pointer for search */
-    if (hdata_search_pointers)
+    ret_pointer = NULL;
+
+    /* duplicate or create hashtable with pointers */
+    if (pointers)
     {
-        hashtable_remove_all (hdata_search_pointers);
+        pointers2 = hashtable_dup (pointers);
     }
     else
     {
-        hdata_search_pointers = hashtable_new (32,
-                                               WEECHAT_HASHTABLE_STRING,
-                                               WEECHAT_HASHTABLE_POINTER,
-                                               NULL,
-                                               NULL);
+        pointers2 = hashtable_new (32,
+                                   WEECHAT_HASHTABLE_STRING,
+                                   WEECHAT_HASHTABLE_POINTER,
+                                   NULL,
+                                   NULL);
     }
 
-    /*
-     * create hashtable with extra vars (empty hashtable)
-     * (hashtable would be created in eval_expression(), but it's created here
-     * so it will not be created for each call to eval_expression())
-     */
-    if (!hdata_search_extra_vars)
+    /* duplicate or create hashtable with options */
+    if (options)
     {
-        hdata_search_extra_vars = hashtable_new (32,
-                                                 WEECHAT_HASHTABLE_STRING,
-                                                 WEECHAT_HASHTABLE_STRING,
-                                                 NULL,
-                                                 NULL);
+        options2 = hashtable_dup (options);
     }
-
-    if (!hdata_search_options)
+    else
     {
-        hdata_search_options = hashtable_new (32,
-                                              WEECHAT_HASHTABLE_STRING,
-                                              WEECHAT_HASHTABLE_STRING,
-                                              NULL,
-                                              NULL);
-        if (hdata_search_options)
-            hashtable_set (hdata_search_options, "type", "condition");
+        options2 = hashtable_new (32,
+                                  WEECHAT_HASHTABLE_STRING,
+                                  WEECHAT_HASHTABLE_POINTER,
+                                  NULL,
+                                  NULL);
     }
+    if (options2)
+        hashtable_set (options2, "type", "condition");
 
     while (pointer)
     {
         /* set pointer in hashtable (used for evaluating expression) */
-        hashtable_set (hdata_search_pointers, hdata->name, pointer);
+        if (pointers2)
+            hashtable_set (pointers2, hdata->name, pointer);
 
         /* evaluate expression */
-        result = eval_expression (search, hdata_search_pointers,
-                                  hdata_search_extra_vars,
-                                  hdata_search_options);
+        result = eval_expression (search, pointers2, extra_vars, options2);
         rc = eval_is_true (result);
         if (result)
             free (result);
         if (rc)
-            return pointer;
+        {
+            ret_pointer = pointer;
+            goto end;
+        }
 
         pointer = hdata_move (hdata, pointer, move);
     }
 
-    return NULL;
+end:
+    hashtable_free (pointers2);
+    hashtable_free (options2);
+    return ret_pointer;
 }
 
 /*
@@ -1399,20 +1400,4 @@ hdata_end ()
     hdata_free_all ();
     hashtable_free (weechat_hdata);
     weechat_hdata = NULL;
-
-    if (hdata_search_pointers)
-    {
-        hashtable_free (hdata_search_pointers);
-        hdata_search_pointers = NULL;
-    }
-    if (hdata_search_extra_vars)
-    {
-        hashtable_free (hdata_search_extra_vars);
-        hdata_search_extra_vars = NULL;
-    }
-    if (hdata_search_options)
-    {
-        hashtable_free (hdata_search_options);
-        hdata_search_options = NULL;
-    }
 }

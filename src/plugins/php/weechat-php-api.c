@@ -4975,25 +4975,57 @@ API_FUNC(hdata_move)
 API_FUNC(hdata_search)
 {
     zend_string *z_hdata, *z_pointer, *z_search;
+    zval *z_pointers, *z_extra_vars, *z_options;
     zend_long z_move;
     struct t_hdata *hdata;
     void *pointer;
     char *search;
     int move;
     const char *result;
+    struct t_hashtable *pointers, *extra_vars, *options;
 
     API_INIT_FUNC(1, "hdata_search", API_RETURN_EMPTY);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SSSl", &z_hdata, &z_pointer,
-                               &z_search, &z_move) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SSSaaal", &z_hdata,
+                               &z_pointer, &z_search, &z_pointers,
+                               &z_extra_vars, &z_options, &z_move) == FAILURE)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     hdata = (struct t_hdata *)API_STR2PTR(ZSTR_VAL(z_hdata));
     pointer = (void *)API_STR2PTR(ZSTR_VAL(z_pointer));
     search = ZSTR_VAL(z_search);
+    pointers = weechat_php_array_to_hashtable (
+        z_pointers,
+        WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+        WEECHAT_HASHTABLE_STRING,
+        WEECHAT_HASHTABLE_POINTER);
+    extra_vars = weechat_php_array_to_hashtable (
+        z_extra_vars,
+        WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+        WEECHAT_HASHTABLE_STRING,
+        WEECHAT_HASHTABLE_STRING);
+    options = weechat_php_array_to_hashtable (
+        z_options,
+        WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+        WEECHAT_HASHTABLE_STRING,
+        WEECHAT_HASHTABLE_STRING);
     move = (int)z_move;
 
     result = API_PTR2STR(
-        weechat_hdata_search (hdata, pointer, (const char *)search, move));
+        weechat_hdata_search (
+            hdata,
+            pointer,
+            (const char *)search,
+            pointers,
+            extra_vars,
+            options,
+            move));
+
+    if (pointers)
+        weechat_hashtable_free (pointers);
+    if (extra_vars)
+        weechat_hashtable_free (extra_vars);
+    if (options)
+        weechat_hashtable_free (options);
 
     API_RETURN_STRING(result);
 }

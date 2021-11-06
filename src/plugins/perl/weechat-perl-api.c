@@ -4894,22 +4894,45 @@ API_FUNC(hdata_search)
 {
     char *hdata, *pointer, *search;
     const char *result;
+    struct t_hashtable *pointers, *extra_vars, *options;
     int move;
     dXSARGS;
 
     API_INIT_FUNC(1, "hdata_search", API_RETURN_EMPTY);
-    if (items < 4)
+    if (items < 7)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     hdata = SvPV_nolen (ST (0));
     pointer = SvPV_nolen (ST (1));
     search = SvPV_nolen (ST (2));
-    move = SvIV(ST (3));
+    pointers = weechat_perl_hash_to_hashtable (ST (3),
+                                               WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                               WEECHAT_HASHTABLE_STRING,
+                                               WEECHAT_HASHTABLE_POINTER);
+    extra_vars = weechat_perl_hash_to_hashtable (ST (4),
+                                                 WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                                 WEECHAT_HASHTABLE_STRING,
+                                                 WEECHAT_HASHTABLE_STRING);
+    options = weechat_perl_hash_to_hashtable (ST (5),
+                                              WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                              WEECHAT_HASHTABLE_STRING,
+                                              WEECHAT_HASHTABLE_STRING);
+    move = SvIV(ST (6));
 
     result = API_PTR2STR(weechat_hdata_search (API_STR2PTR(hdata),
                                                API_STR2PTR(pointer),
                                                search,
+                                               pointers,
+                                               extra_vars,
+                                               options,
                                                move));
+
+    if (pointers)
+        weechat_hashtable_free (pointers);
+    if (extra_vars)
+        weechat_hashtable_free (extra_vars);
+    if (options)
+        weechat_hashtable_free (options);
 
     API_RETURN_STRING(result);
 }
