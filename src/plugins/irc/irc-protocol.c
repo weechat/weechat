@@ -5597,6 +5597,8 @@ IRC_PROTOCOL_CALLBACK(353)
         free (str_params);
     if (str_nicks)
         weechat_string_dyn_free (str_nicks, 1);
+    if (nicks)
+        weechat_string_free_split (nicks);
 
     return WEECHAT_RC_OK;
 }
