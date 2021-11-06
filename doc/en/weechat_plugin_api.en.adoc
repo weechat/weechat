@@ -17188,8 +17188,8 @@ struct t_hashtable *extra_vars = weechat_hashtable_new (8,
                                                         NULL);
 
 /* search irc server with name "libera" */
-weechat_hashtable_set (extra_vars, "name", "libera");
-void *server = weechat_hdata_search (hdata, servers, "${irc_server.name} == ${name}",
+weechat_hashtable_set (extra_vars, "server_name", "libera");
+void *server = weechat_hdata_search (hdata, servers, "${irc_server.name} == ${server_name}",
                                      NULL, extra_vars, NULL, 1);
 if (server)
 {
@@ -17212,8 +17212,8 @@ hdata = weechat.hdata_get("irc_server")
 servers = weechat.hdata_get_list(hdata, "irc_servers")
 
 # search irc server with name "libera"
-server = weechat.hdata_search(hdata, servers, "${irc_server.name} == ${name}",
-                              {}, {"name": "libera"}, {}, 1)
+server = weechat.hdata_search(hdata, servers, "${irc_server.name} == ${server_name}",
+                              {}, {"server_name": "libera"}, {}, 1)
 if server:
     # ...
 ----
