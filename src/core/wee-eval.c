@@ -1008,7 +1008,7 @@ char *
 eval_string_random (const char *text)
 {
     char *pos, *error, *tmp, result[128];
-    long min_number, max_number;
+    long long min_number, max_number;
 
     if (!text || !text[0])
         goto error;
@@ -1020,7 +1020,7 @@ eval_string_random (const char *text)
     tmp = strndup (text, pos - text);
     if (!tmp)
         goto error;
-    min_number = strtol (tmp, &error, 10);
+    min_number = strtoll (tmp, &error, 10);
     if (!error || error[0])
     {
         free (tmp);
@@ -1028,7 +1028,7 @@ eval_string_random (const char *text)
     }
     free (tmp);
 
-    max_number = strtol (pos + 1, &error, 10);
+    max_number = strtoll (pos + 1, &error, 10);
     if (!error || error[0])
         goto error;
 
@@ -1042,7 +1042,7 @@ eval_string_random (const char *text)
      * but this is enough for our usage here
      */
     snprintf (result, sizeof (result),
-              "%ld", min_number + (random () % (max_number - min_number + 1)));
+              "%lld", min_number + (random () % (max_number - min_number + 1)));
     return strdup (result);
 
 error:
