@@ -459,7 +459,7 @@ TEST_GROUP(CoreHdataWithList)
         hashtable_set (item->test_ptr_2_hashtable[1],
                        "key1.2", "value1.2");
         item->test_ptr_1_hashtable_dyn = (struct t_hashtable **)malloc (
-            1 * sizeof (item->test_ptr_2_hashtable[0]));
+            2 * sizeof (item->test_ptr_1_hashtable_dyn[0]));
         item->test_ptr_1_hashtable_dyn[0] = hashtable_new (
             8,
             WEECHAT_HASHTABLE_STRING,
@@ -607,7 +607,7 @@ TEST_GROUP(CoreHdataWithList)
         hashtable_set (item->test_ptr_2_hashtable[1],
                        "key2.2", "value2.2");
         item->test_ptr_1_hashtable_dyn = (struct t_hashtable **)malloc (
-            1 * sizeof (item->test_ptr_2_hashtable[0]));
+            2 * sizeof (item->test_ptr_1_hashtable_dyn[0]));
         item->test_ptr_1_hashtable_dyn[0] = hashtable_new (
             8,
             WEECHAT_HASHTABLE_STRING,
