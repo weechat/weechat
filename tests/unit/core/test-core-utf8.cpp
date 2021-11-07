@@ -28,8 +28,17 @@ extern "C"
 #include <wctype.h>
 #include "tests/tests.h"
 #include "src/core/wee-utf8.h"
+#include "src/core/wee-config.h"
 }
 
+const char *empty_string = "";
+const char *utf_4bytes_invalid = "\xf0\x03\x02\x01";
+const char *utf_2bytes_truncated_1 = "\xc0";
+const char *utf_3bytes_truncated_1 = "\xe2";
+const char *utf_3bytes_truncated_2 = "\xe2\xbb";
+const char *utf_4bytes_truncated_1 = "\xf0";
+const char *utf_4bytes_truncated_2 = "\xf0\xa4";
+const char *utf_4bytes_truncated_3 = "\xf0\xa4\xad";
 const char *noel_valid = "no\xc3\xabl";        /* noël */
 const char *noel_invalid = "no\xc3l";
 const char *noel_invalid2 = "no\xff\xffl";
@@ -84,6 +93,18 @@ TEST(CoreUtf8, Validity)
     POINTERS_EQUAL(NULL, error);
     LONGS_EQUAL(1, utf8_is_valid (noel_valid, 1, &error));
     POINTERS_EQUAL(NULL, error);
+    LONGS_EQUAL(0, utf8_is_valid (utf_4bytes_invalid, -1, &error));
+    POINTERS_EQUAL(utf_4bytes_invalid, error);
+    LONGS_EQUAL(0, utf8_is_valid (utf_4bytes_invalid, 0, &error));
+    POINTERS_EQUAL(utf_4bytes_invalid, error);
+    LONGS_EQUAL(0, utf8_is_valid (utf_4bytes_invalid, 1, &error));
+    POINTERS_EQUAL(utf_4bytes_invalid, error);
+    LONGS_EQUAL(0, utf8_is_valid (utf_4bytes_invalid, 2, &error));
+    POINTERS_EQUAL(utf_4bytes_invalid, error);
+    LONGS_EQUAL(0, utf8_is_valid (utf_4bytes_invalid, 3, &error));
+    POINTERS_EQUAL(utf_4bytes_invalid, error);
+    LONGS_EQUAL(0, utf8_is_valid (utf_4bytes_invalid, 4, &error));
+    POINTERS_EQUAL(utf_4bytes_invalid, error);
     LONGS_EQUAL(0, utf8_is_valid (noel_invalid, -1, &error));
     POINTERS_EQUAL(noel_invalid + 2, error);
     LONGS_EQUAL(0, utf8_is_valid (noel_invalid, 0, &error));
@@ -239,6 +260,9 @@ TEST(CoreUtf8, Move)
     /* previous/next char */
     POINTERS_EQUAL(NULL, utf8_prev_char (NULL, NULL));
     POINTERS_EQUAL(NULL, utf8_next_char (NULL));
+    POINTERS_EQUAL(NULL, utf8_prev_char (empty_string, empty_string));
+    POINTERS_EQUAL(empty_string + 1, utf8_next_char (empty_string));
+    POINTERS_EQUAL(NULL, utf8_prev_char (noel_valid + 1, noel_valid));
     ptr = utf8_next_char (noel_valid);
     STRCMP_EQUAL("oël", ptr);
     ptr = utf8_next_char (ptr);
@@ -246,12 +270,31 @@ TEST(CoreUtf8, Move)
     ptr = utf8_next_char (ptr);
     STRCMP_EQUAL("l", ptr);
     ptr = utf8_prev_char (noel_valid, ptr);
+    STRCMP_EQUAL("ël", ptr);
     ptr = utf8_prev_char (noel_valid, ptr);
+    STRCMP_EQUAL("oël", ptr);
     ptr = utf8_prev_char (noel_valid, ptr);
     STRCMP_EQUAL("noël", ptr);
     POINTERS_EQUAL(noel_valid, ptr);
+    ptr = utf8_prev_char (han_char, han_char + 4);
+    POINTERS_EQUAL(han_char, ptr);
+    ptr = utf8_prev_char (noel_valid + 3, noel_valid + 4);
+    POINTERS_EQUAL(noel_valid + 3, ptr);
+    POINTERS_EQUAL(utf_2bytes_truncated_1 + 1,
+                   utf8_next_char (utf_2bytes_truncated_1));
+    POINTERS_EQUAL(utf_3bytes_truncated_1 + 1,
+                   utf8_next_char (utf_3bytes_truncated_1));
+    POINTERS_EQUAL(utf_3bytes_truncated_2 + 2,
+                   utf8_next_char (utf_3bytes_truncated_2));
+    POINTERS_EQUAL(utf_4bytes_truncated_1 + 1,
+                   utf8_next_char (utf_4bytes_truncated_1));
+    POINTERS_EQUAL(utf_4bytes_truncated_2 + 2,
+                   utf8_next_char (utf_4bytes_truncated_2));
+    POINTERS_EQUAL(utf_4bytes_truncated_3 + 3,
+                   utf8_next_char (utf_4bytes_truncated_3));
 
     /* add offset */
+    POINTERS_EQUAL(NULL, utf8_add_offset (NULL, 0));
     ptr = utf8_add_offset (noel_valid, 0);
     STRCMP_EQUAL(noel_valid, ptr);
     ptr = utf8_add_offset (noel_valid, 1);
@@ -260,12 +303,18 @@ TEST(CoreUtf8, Move)
     STRCMP_EQUAL("l", ptr);
 
     /* real position */
+    LONGS_EQUAL(-1, utf8_real_pos (NULL, -1));
+    LONGS_EQUAL(0, utf8_real_pos (NULL, 0));
+    LONGS_EQUAL(0, utf8_real_pos (noel_valid, -1));
     LONGS_EQUAL(0, utf8_real_pos (noel_valid, 0));
     LONGS_EQUAL(1, utf8_real_pos (noel_valid, 1));
     LONGS_EQUAL(2, utf8_real_pos (noel_valid, 2));
     LONGS_EQUAL(4, utf8_real_pos (noel_valid, 3));
 
     /* position */
+    LONGS_EQUAL(-1, utf8_pos (NULL, -1));
+    LONGS_EQUAL(0, utf8_pos (NULL, 0));
+    LONGS_EQUAL(0, utf8_pos (noel_valid, -1));
     LONGS_EQUAL(0, utf8_pos (noel_valid, 0));
     LONGS_EQUAL(1, utf8_pos (noel_valid, 1));
     LONGS_EQUAL(2, utf8_pos (noel_valid, 2));
@@ -284,32 +333,39 @@ TEST(CoreUtf8, Convert)
     char result[5];
 
     /* get UTF-8 char as integer */
-    BYTES_EQUAL(0, utf8_char_int (NULL));
-    BYTES_EQUAL(0, utf8_char_int (""));
-    BYTES_EQUAL(65, utf8_char_int ("ABC"));
-    BYTES_EQUAL(235, utf8_char_int ("ë"));
-    BYTES_EQUAL(0x20ac, utf8_char_int ("€"));
-    BYTES_EQUAL(0x2ee9, utf8_char_int (cjk_yellow));
-    BYTES_EQUAL(0x24b62, utf8_char_int (han_char));
+    LONGS_EQUAL(0, utf8_char_int (NULL));
+    LONGS_EQUAL(0, utf8_char_int (""));
+    LONGS_EQUAL(65, utf8_char_int ("ABC"));
+    LONGS_EQUAL(235, utf8_char_int ("ë"));
+    LONGS_EQUAL(0x20ac, utf8_char_int ("€"));
+    LONGS_EQUAL(0x2ee9, utf8_char_int (cjk_yellow));
+    LONGS_EQUAL(0x24b62, utf8_char_int (han_char));
 
-    BYTES_EQUAL(0x0, utf8_char_int ("\xc0\x80"));   /* invalid */
-    BYTES_EQUAL(0x7f, utf8_char_int ("\xc1\xbf"));  /* invalid */
-    BYTES_EQUAL(0x80, utf8_char_int ("\xc2\x80"));
-    BYTES_EQUAL(0x7ff, utf8_char_int ("\xdf\xbf"));
+    LONGS_EQUAL(0x0, utf8_char_int ("\xc0\x80"));   /* invalid */
+    LONGS_EQUAL(0x7f, utf8_char_int ("\xc1\xbf"));  /* invalid */
+    LONGS_EQUAL(0x80, utf8_char_int ("\xc2\x80"));
+    LONGS_EQUAL(0x7ff, utf8_char_int ("\xdf\xbf"));
 
-    BYTES_EQUAL(0x0, utf8_char_int ("\xe0\x80\x80"));     /* invalid */
-    BYTES_EQUAL(0x7ff, utf8_char_int ("\xe0\x9f\xbf"));   /* invalid */
+    LONGS_EQUAL(0x0, utf8_char_int ("\xe0\x80\x80"));     /* invalid */
+    LONGS_EQUAL(0x7ff, utf8_char_int ("\xe0\x9f\xbf"));   /* invalid */
     LONGS_EQUAL(0xd800, utf8_char_int ("\xed\xa0\x80"));  /* invalid */
     LONGS_EQUAL(0xdfff, utf8_char_int ("\xed\xbf\xbf"));  /* invalid */
-    BYTES_EQUAL(0x800, utf8_char_int ("\xe0\xa0\x80"));
-    BYTES_EQUAL(0xd7ff, utf8_char_int ("\xed\x9f\xbf"));
-    BYTES_EQUAL(0xe000, utf8_char_int ("\xe7\x80\x80"));
-    BYTES_EQUAL(0xffff, utf8_char_int ("\xef\xbf\xbf"));
+    LONGS_EQUAL(0x800, utf8_char_int ("\xe0\xa0\x80"));
+    LONGS_EQUAL(0xd7ff, utf8_char_int ("\xed\x9f\xbf"));
+    LONGS_EQUAL(0x7000, utf8_char_int ("\xe7\x80\x80"));
+    LONGS_EQUAL(0xffff, utf8_char_int ("\xef\xbf\xbf"));
 
-    BYTES_EQUAL(0x0, utf8_char_int ("\xf0\x80\x80\x80"));     /* invalid */
-    BYTES_EQUAL(0xffff, utf8_char_int ("\xf0\x8f\xbf\xbf"));  /* invalid */
-    BYTES_EQUAL(0x10000, utf8_char_int ("\xf0\x90\x80\x80"));
-    BYTES_EQUAL(0x1fffff, utf8_char_int ("\xf7\xbf\xbf\xbf"));
+    LONGS_EQUAL(0x0, utf8_char_int ("\xf0\x80\x80\x80"));     /* invalid */
+    LONGS_EQUAL(0xffff, utf8_char_int ("\xf0\x8f\xbf\xbf"));  /* invalid */
+    LONGS_EQUAL(0x10000, utf8_char_int ("\xf0\x90\x80\x80"));
+    LONGS_EQUAL(0x1fffff, utf8_char_int ("\xf7\xbf\xbf\xbf"));
+
+    LONGS_EQUAL(0x0, utf8_char_int (utf_2bytes_truncated_1));
+    LONGS_EQUAL(0x02, utf8_char_int (utf_3bytes_truncated_1));
+    LONGS_EQUAL(0xbb, utf8_char_int (utf_3bytes_truncated_2));
+    LONGS_EQUAL(0x0, utf8_char_int (utf_4bytes_truncated_1));
+    LONGS_EQUAL(0x24, utf8_char_int (utf_4bytes_truncated_2));
+    LONGS_EQUAL(0x92d, utf8_char_int (utf_4bytes_truncated_3));
 
     /* convert unicode char to a string */
     utf8_int_string (0, NULL);
@@ -325,13 +381,13 @@ TEST(CoreUtf8, Convert)
     STRCMP_EQUAL(han_char, result);
 
     /* get wide char */
-    BYTES_EQUAL(WEOF, utf8_wide_char (NULL));
-    BYTES_EQUAL(WEOF, utf8_wide_char (""));
-    BYTES_EQUAL(65, utf8_wide_char ("A"));
-    BYTES_EQUAL(0xc3ab, utf8_wide_char ("ë"));
-    BYTES_EQUAL(0xe282ac, utf8_wide_char ("€"));
-    BYTES_EQUAL(0xe2bba9, utf8_wide_char (cjk_yellow));
-    BYTES_EQUAL(0xf0a4ada2, utf8_wide_char (han_char));
+    LONGS_EQUAL(WEOF, utf8_wide_char (NULL));
+    LONGS_EQUAL(WEOF, utf8_wide_char (""));
+    LONGS_EQUAL(65, utf8_wide_char ("A"));
+    LONGS_EQUAL(0xc3ab, utf8_wide_char ("ë"));
+    LONGS_EQUAL(0xe282ac, utf8_wide_char ("€"));
+    LONGS_EQUAL(0xe2bba9, utf8_wide_char (cjk_yellow));
+    LONGS_EQUAL(0xf0a4ada2, utf8_wide_char (han_char));
 }
 
 /*
@@ -403,6 +459,14 @@ TEST(CoreUtf8, Size)
     LONGS_EQUAL(1, utf8_strlen_screen ("€"));
     LONGS_EQUAL(1, utf8_strlen_screen ("\x7f"));
     LONGS_EQUAL(2, utf8_strlen_screen (cjk_yellow));
+
+    /* length of Tabulation */
+    LONGS_EQUAL(1, utf8_strlen_screen ("\t"));
+    config_file_option_set (config_look_tab_width, "4", 1);
+    LONGS_EQUAL(4, utf8_strlen_screen ("\t"));
+    config_file_option_set (config_look_tab_width, "8", 1);
+    LONGS_EQUAL(8, utf8_strlen_screen ("\t"));
+    config_file_option_reset (config_look_tab_width, 1);
 }
 
 /*
@@ -423,6 +487,8 @@ TEST(CoreUtf8, Comparison)
     LONGS_EQUAL(1, utf8_charcmp ("Z", "A"));
     LONGS_EQUAL(-1, utf8_charcmp ("A", "a"));
     LONGS_EQUAL(-1, utf8_charcmp ("ë", "€"));
+    LONGS_EQUAL(1, utf8_charcmp ("ë", ""));
+    LONGS_EQUAL(-1, utf8_charcmp ("", "ë"));
 
     /* case-insensitive comparison */
     LONGS_EQUAL(0, utf8_charcasecmp (NULL, NULL));
@@ -462,6 +528,7 @@ TEST(CoreUtf8, Duplicate)
 {
     char *str;
 
+    WEE_TEST_STR(NULL, utf8_strndup (NULL, 0));
     WEE_TEST_STR("", utf8_strndup (noel_valid, 0));
     WEE_TEST_STR("n", utf8_strndup (noel_valid, 1));
     WEE_TEST_STR("no", utf8_strndup (noel_valid, 2));
