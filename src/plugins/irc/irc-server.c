@@ -2301,7 +2301,7 @@ int
 irc_server_rename (struct t_irc_server *server, const char *new_name)
 {
     int length;
-    char *mask, *pos_option, *new_option_name, charset_modifier[256];
+    char *mask, *pos_option, *new_option_name, charset_modifier[1024];
     char *buffer_name;
     const char *option_name;
     struct t_infolist *infolist;
@@ -2715,7 +2715,7 @@ irc_server_send_one_msg (struct t_irc_server *server, int flags,
     static char buffer[4096];
     const char *ptr_msg, *ptr_chan_nick;
     char *new_msg, *pos, *tags_to_send, *msg_encoded;
-    char str_modifier[128], modifier_data[256];
+    char str_modifier[128], modifier_data[1024];
     int rc, queue_msg, add_to_queue, first_message, anti_flood;
     int pos_channel, pos_text, pos_encode;
     time_t time_now;
@@ -3231,7 +3231,7 @@ irc_server_msgq_flush ()
     char *ptr_data, *new_msg, *new_msg2, *ptr_msg, *ptr_msg2, *pos;
     char *nick, *host, *command, *channel, *arguments;
     char *msg_decoded, *msg_decoded_without_color;
-    char str_modifier[128], modifier_data[256];
+    char str_modifier[128], modifier_data[1024];
     int pos_channel, pos_text, pos_decode;
 
     while (irc_recv_msgq)
@@ -4436,7 +4436,7 @@ irc_server_set_buffer_title (struct t_irc_server *server)
 struct t_gui_buffer *
 irc_server_create_buffer (struct t_irc_server *server)
 {
-    char buffer_name[256], charset_modifier[256];
+    char buffer_name[1024], charset_modifier[1024];
     struct t_gui_buffer *ptr_buffer_for_merge;
 
     ptr_buffer_for_merge = NULL;

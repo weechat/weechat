@@ -1885,7 +1885,7 @@ IRC_COMMAND_CALLBACK(dcc)
     socklen_t length;
     struct t_infolist *infolist;
     struct t_infolist_item *item;
-    char str_address[NI_MAXHOST], charset_modifier[256];
+    char str_address[NI_MAXHOST], charset_modifier[1024];
     int rc;
 
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);

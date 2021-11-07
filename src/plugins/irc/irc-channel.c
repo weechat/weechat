@@ -1361,7 +1361,7 @@ irc_channel_join_smart_filtered_unmask (struct t_irc_channel *channel,
 void
 irc_channel_rejoin (struct t_irc_server *server, struct t_irc_channel *channel)
 {
-    char join_args[256];
+    char join_args[1024];
 
     snprintf (join_args, sizeof (join_args), "%s%s%s",
               channel->name,

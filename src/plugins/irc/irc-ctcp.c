@@ -558,7 +558,7 @@ irc_ctcp_recv_dcc (struct t_irc_server *server, const char *nick,
     char *pos_start_resume, *filename;
     struct t_infolist *infolist;
     struct t_infolist_item *item;
-    char charset_modifier[256];
+    char charset_modifier[1024];
 
     if (!arguments || !arguments[0])
         return;
