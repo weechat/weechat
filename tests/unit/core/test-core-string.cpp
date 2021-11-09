@@ -498,6 +498,10 @@ TEST(CoreString, Comparison)
                                                ".-", 0));
     LONGS_EQUAL(1, string_strcmp_ignore_chars ("abc..abc", "ABC-.-.ABC",
                                                ".-", 1));
+    LONGS_EQUAL(0, string_strcmp_ignore_chars (".abc..abc", "..abcabc", ".", 0));
+    LONGS_EQUAL(1, string_strcmp_ignore_chars (".abc..abc", "..", ".", 0));
+    LONGS_EQUAL(-1, string_strcmp_ignore_chars (".", "..abcabc", ".", 0));
+    LONGS_EQUAL(0, string_strcmp_ignore_chars (".", ".", ".", 0));
 }
 
 /*
@@ -875,12 +879,15 @@ TEST(CoreString, ConvertEscapedChars)
                  string_convert_escaped_chars ("\\0123"));  /* invalid */
     WEE_TEST_STR("\x41", string_convert_escaped_chars ("\\x41"));
     WEE_TEST_STR("\x04z", string_convert_escaped_chars ("\\x4z"));
+    WEE_TEST_STR("xzzy", string_convert_escaped_chars ("\\xzzy"));
     WEE_TEST_STR(" zz", string_convert_escaped_chars ("\\u20zz"));
     WEE_TEST_STR("\U00012345", string_convert_escaped_chars ("\\U00012345"));
     WEE_TEST_STR("\U00000123zzz",
                  string_convert_escaped_chars ("\\U00123zzz"));
     WEE_TEST_STR("",
                  string_convert_escaped_chars ("\\U12345678")); /* invalid */
+    WEE_TEST_STR("Uzzy", string_convert_escaped_chars ("\\Uzzy"));
+    WEE_TEST_STR("\\~zzy", string_convert_escaped_chars ("\\~zzy"));
 }
 
 /*
