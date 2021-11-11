@@ -93,7 +93,7 @@ Sous macOS, vous pouvez utiliser https://brew.sh/[Homebrew] :
 [[dependencies]]
 ==== Dépendances
 
-Le tableau suivant liste les paquets qui sont *requis* pour compiler WeeChat :
+Le tableau suivant liste les paquets *requis* pour compiler WeeChat :
 
 [width="100%",cols="5,^3,.^15",options="header"]
 |===
@@ -113,13 +113,13 @@ Le tableau suivant liste les paquets qui sont *requis* pour compiler WeeChat :
 ^(1)^ Le nom provient de la distribution GNU/Linux Debian, la version dans le
 nom du paquet peut être différente. +
 ^(2)^ Il est recommandé de compiler avec libncurses**w**5-dev (le *w* est
-important). WeeChat peut compiler avec libncurses5-dev, but ce n'est *PAS*
-recommandé : vous pourriez avoir des bugs d'affichage avec les caractères
+important). WeeChat peut compiler avec libncurses5-dev, mais ce n'est *PAS*
+recommandé : vous pourriez avoir des problèmes d'affichage avec les caractères
 larges. +
 ^(3)^ GnuTLS ≥ 3.0.21 est requis pour l'authentification SASL avec le mécanisme
 ECDSA-NIST256P-CHALLENGE.
 
-Le tableau suivant liste les paquets qui sont optionnels pour compiler WeeChat :
+Le tableau suivant liste les paquets optionnels pour compiler WeeChat :
 
 [width="100%",cols="5,^3,.^15",options="header"]
 |===
