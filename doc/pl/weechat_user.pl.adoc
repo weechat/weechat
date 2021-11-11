@@ -546,9 +546,10 @@ Można to zrobić podczas działania WeeChat.
 WeeChat może zostać ponownie uruchomiony z nowego pliku binarnego bez potrzeby
 jego wyłączania za pomocą komendy <<command_weechat_upgrade,/upgrade>>:
 zawartości buforów i połączenia nie SSL zostają zachowane. +
-Połączenia SSL są przerywane podczas aktualizacji i są automatycznie
-wznawiane po aktualizacji (przeładowanie sesji SSL nie jest obecnie wspierane
-przez GnuTLS).
+// TRANSLATION MISSING
+The SSL connections are lost during upgrade and are restored automatically
+after the upgrade (reload of SSL sessions is currently not possible
+with GnuTLS).
 
 Komenda ta może zostać użyta również w momencie restartu maszyny, na przykład
 w celu aktualizacji kernela albo przeniesienia WeeChat na nową maszynę:

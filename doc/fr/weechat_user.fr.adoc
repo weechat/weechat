@@ -553,8 +553,8 @@ Cela peut être fait pendant que WeeChat tourne.
 WeeChat peut redémarrer le nouveau binaire avec la commande
 <<command_weechat_upgrade,/upgrade>> : le contenu des tampons et les connexions
 non SSL sont préservées. +
-Les connexions SSL sont perdues pendant la mise à jour et vous êtres automatiquement
-reconnectés après la mise à jour (le rechargement des sessions SSL n'est pas
+Les connexions SSL sont perdues pendant la mise à jour et sont automatiquement
+rétablies après la mise à jour (le rechargement des sessions SSL n'est pas
 possible actuellement avec GnuTLS).
 
 La commande peut aussi être utilisée si vous devez redémarrer la machine, par
@@ -5123,7 +5123,7 @@ Exemple de barre de statut avec l'objet "typing" : "bob" écrit un message et
 
 Lorsque vous écrivez un message (pas une commande commençant par `/`), l'extension
 typing envoie des signaux pour informer les autres extensions (comme IRC) que
-vous êtres en train d'écrire, et ces extensions peuvent alors envoyer des
+vous êtes en train d'écrire, et ces extensions peuvent alors envoyer des
 notifications aux autres utilisateurs.
 
 Les signaux suivants sont envoyés quand vous écrivez des messages :

@@ -598,8 +598,8 @@ This can be done while WeeChat is running.
 WeeChat can restart the new binary, in place, using the
 <<command_weechat_upgrade,/upgrade>> command: the buffer contents and non-SSL
 connections are preserved. +
-The SSL connections are lost during upgrade and you are automatically
-reconnected after the upgrade (reload of SSL sessions is currently not possible
+The SSL connections are lost during upgrade and are restored automatically
+after the upgrade (reload of SSL sessions is currently not possible
 with GnuTLS).
 
 The command can also be used if you have to restart the machine, for example

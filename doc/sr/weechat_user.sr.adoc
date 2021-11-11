@@ -501,7 +501,10 @@ gdb /usr/bin/weechat 12345
 ==== Команда upgrade
 
 Програм WeeChat у месту може да поново покрене нови бинарни фајл, употребом команде <<command_weechat_upgrade,/upgrade>>: садржаји бафера и не-SSL везе се задржавају. +
-SSL везе се раскидају током ажурирања и аутоматски се поново успостављају након завршетка процеса ажурирања (тренутно са GnuTLS није могуће поновно учитавање SSL сесија).
+// TRANSLATION MISSING
+The SSL connections are lost during upgrade and are restored automatically
+after the upgrade (reload of SSL sessions is currently not possible
+with GnuTLS).
 
 Команда такође може да се употреби и када морате поново да покренете машину, на пример, да бисте ажурирали кернел или да преместите свој WeeChat на другу машину:
 
