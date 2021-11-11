@@ -369,10 +369,10 @@ $ ctest -V
 [[git_sources]]
 === Git sources
 
-Warning: git sources are for advanced users: it may not compile or not be
+Warning: Git sources are for advanced users: it may not compile or not be
 stable. You're warned!
 
-To get git sources, issue this command:
+To get Git sources, issue this command:
 
 ----
 $ git clone https://github.com/weechat/weechat.git
@@ -3351,7 +3351,7 @@ when replying to CTCP:
 | Code         | Description                         | Value/example
 | $clientinfo  | List of supported CTCP              | `+ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION+`
 | $version     | WeeChat version                     | `+0.4.0-dev+`
-| $versiongit  | WeeChat version + git version ^(1)^ | `+0.4.0-dev (git: v0.3.9-104-g7eb5cc4)+`
+| $versiongit  | WeeChat version + Git version ^(1)^ | `+0.4.0-dev (git: v0.3.9-104-g7eb5cc4)+`
 | $git         | Git version ^(1)^                   | `+v0.3.9-104-g7eb5cc4+`
 | $compilation | WeeChat compilation date            | `+Dec 16 2012+`
 | $osinfo      | Info about OS                       | `+Linux 2.6.32-5-amd64 / x86_64+`
@@ -3363,8 +3363,8 @@ when replying to CTCP:
 |===
 
 [NOTE]
-^(1)^ The git version is the output of command `git describe`. It is known only
-if WeeChat has been compiled inside the git repository and if git was installed.
+^(1)^ The Git version is the output of command `git describe`. It is known only
+if WeeChat has been compiled inside the Git repository and if Git was installed.
 
 If CTCP options are not defined (by default), CTCP replies are:
 

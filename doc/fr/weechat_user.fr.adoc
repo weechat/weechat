@@ -199,7 +199,7 @@ Liste des options couramment utilisées :
   Le répertoire "maison" par défaut lors du lancement de WeeChat. +
   Avec une valeur vide (recommandé), les répertoires XDG sont utilisés par défaut.
   Si non vide, un répertoire unique est utilisé pour tous les fichiers.
-  La valeur peut aussi être 4 répertoires séparés par ":", dans cet order :
+  La valeur peut aussi être 4 répertoires séparés par ":", dans cet ordre :
   config, data, cache, runtime.
 
 | ENABLE_ALIAS | `ON`, `OFF` | ON |
@@ -319,9 +319,8 @@ $ ccmake ..
 ==== Compilation avec autotools
 
 [WARNING]
-Seulement CMake est officiellement supporté pour construire WeeChat. Vous ne
-devriez utiliser les autotools que si vous n'avez pas la possibilité d'utiliser
-CMake. +
+Seul CMake est officiellement supporté pour construire WeeChat. Vous ne devriez
+utiliser les autotools que si vous n'avez pas la possibilité d'utiliser CMake. +
 La compilation avec les autotools requiert plus de dépendances et est plus lente
 qu'avec CMake.
 
@@ -378,10 +377,10 @@ $ ctest -V
 [[git_sources]]
 === Sources Git
 
-Attention : les sources git sont réservés aux utilisateurs avancés : il se peut
+Attention : les sources Git sont réservées aux utilisateurs avancés : il se peut
 que WeeChat ne compile pas et qu'il soit très instable. Vous êtes prévenus !
 
-Pour récupérer les sources git, tapez cette commande :
+Pour récupérer les sources Git, tapez cette commande :
 
 ----
 $ git clone https://github.com/weechat/weechat.git
@@ -412,7 +411,7 @@ $ cmake .. -DCMAKE_BUILD_TYPE=Debug
 ----
 
 [[build_debug_address_sanitizer]]
-==== Construction avec options de debug et la vérification des adresses
+==== Construction avec options de debug et vérification des adresses
 
 Vous pouvez aussi activer la vérification des adresses (« address sanitizer »),
 ce qui provoquera immédiatement un plantage de WeeChat en cas de problème :
@@ -423,7 +422,7 @@ $ cmake .. -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_FLAGS=-fsanitize=address -DCMAKE_C
 
 [WARNING]
 Vous ne devriez activer la vérification des adresses que si vous essayez de
-provoquer un plantage, ceci n'est pas recommandé en production.
+provoquer un plantage, ce qui n'est pas recommandé en production.
 
 Une fois compilé et installé, vous devez lancer WeeChat comme ceci :
 
@@ -431,7 +430,7 @@ Une fois compilé et installé, vous devez lancer WeeChat comme ceci :
 $ ASAN_OPTIONS="detect_odr_violation=0 log_path=asan.log" weechat
 ----
 
-En cas de plantage, la trace est dans le fichier `asan.log`.
+En cas de plantage, la trace se trouve dans le fichier `asan.log`.
 
 [[core_files]]
 ==== Fichiers core
@@ -469,13 +468,13 @@ Ce fichier est créé dans le répertoire où vous avez lancé WeeChat (ce n'est
 *pas* le répertoire où WeeChat est installé !).
 
 [NOTE]
-Sur certains systèmes comme Archlinux, les fichiers _core_ sont dans un autre
-répertoire tel que _/var/lib/systemd/coredump_ et vous devez utiliser la commande
-`coredumpctl` pour le lire. +
+Sur certains systèmes comme Archlinux, les fichiers _core_ se trouvent dans un
+autre répertoire tel que _/var/lib/systemd/coredump_ et vous devez utiliser la
+commande `coredumpctl` pour le lire. +
 Pour plus d'informations, voir cette page wiki : https://wiki.archlinux.org/index.php/Core_dump
 
 Par exemple si _weechat_ est installé dans _/usr/bin/_ et que le fichier
-_core_ est dans _/home/user/_, alors lancez gdb avec cette commande :
+_core_ se trouve dans _/home/user/_, alors il faut lancer gdb avec cette commande :
 
 ----
 gdb /usr/bin/weechat /home/user/core
@@ -3465,8 +3464,8 @@ automatiquement remplacées par WeeChat lors de la réponse au CTCP :
 | Code         | Description                            | Valeur / exemple
 | $clientinfo  | Liste des CTCP supportés               | `+ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION+`
 | $version     | Version de WeeChat                     | `+0.4.0-dev+`
-| $versiongit  | Version de WeeChat + version git ^(1)^ | `+0.4.0-dev (git: v0.3.9-104-g7eb5cc4)+`
-| $git         | Version git ^(1)^                      | `+v0.3.9-104-g7eb5cc4+`
+| $versiongit  | Version de WeeChat + version Git ^(1)^ | `+0.4.0-dev (git: v0.3.9-104-g7eb5cc4)+`
+| $git         | Version Git ^(1)^                      | `+v0.3.9-104-g7eb5cc4+`
 | $compilation | Date de compilation WeeChat            | `+Dec 16 2012+`
 | $osinfo      | Information sur l'OS                   | `+Linux 2.6.32-5-amd64 / x86_64+`
 | $site        | Site WeeChat                           | `+https://weechat.org/+`
@@ -3477,8 +3476,8 @@ automatiquement remplacées par WeeChat lors de la réponse au CTCP :
 |===
 
 [NOTE]
-^(1)^ La version git est la sortie de la commande `git describe`. Elle est
-connue seulement si WeeChat a été compilé dans le dépôt git et si git était
+^(1)^ La version Git est la sortie de la commande `git describe`. Elle est
+connue seulement si WeeChat a été compilé dans le dépôt Git et si Git était
 installé.
 
 Si les options CTCP ne sont pas définies (par défaut), les réponses CTCP sont :

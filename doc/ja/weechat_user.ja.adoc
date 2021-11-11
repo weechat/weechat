@@ -380,10 +380,10 @@ $ ctest -V
 [[git_sources]]
 === Git ソース
 
-警告: git ソースを用いる方法は上級者向けです。コンパイルに失敗したり、
+警告: Git ソースを用いる方法は上級者向けです。コンパイルに失敗したり、
 不安定な可能性があります。警告しましたよ!
 
-git ソースを入手するには、以下のコマンドを使ってください:
+Git ソースを入手するには、以下のコマンドを使ってください:
 
 ----
 $ git clone https://github.com/weechat/weechat.git
@@ -3451,8 +3451,8 @@ CTCP 応答時に自動的に WeeChat によって展開されます:
 | コード       | 説明                                      | 値/例
 | $clientinfo  | サポートしている CTCP オプションのリスト  | `+ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION+`
 | $version     | WeeChat バージョン                        | `+0.4.0-dev+`
-| $versiongit  | WeeChat バージョン + git バージョン ^(1)^ | `+0.4.0-dev (git: v0.3.9-104-g7eb5cc4)+`
-| $git         | git バージョン ^(1)^                      | `+v0.3.9-104-g7eb5cc4+`
+| $versiongit  | WeeChat バージョン + Git バージョン ^(1)^ | `+0.4.0-dev (git: v0.3.9-104-g7eb5cc4)+`
+| $git         | Git バージョン ^(1)^                      | `+v0.3.9-104-g7eb5cc4+`
 | $compilation | WeeChat コンパイル日時                    | `+Dec 16 2012+`
 | $osinfo      | OS に関する情報                           | `+Linux 2.6.32-5-amd64 / x86_64+`
 | $site        | WeeChat ウェブサイト                      | `+https://weechat.org/+`
@@ -3463,8 +3463,8 @@ CTCP 応答時に自動的に WeeChat によって展開されます:
 |===
 
 [NOTE]
-^(1)^ git バージョンとは `git describe` コマンドの出力です。git リポジトリで
-WeeChat をコンパイルし、git がインストールされている場合のみ値が設定されます。
+^(1)^ git バージョンとは `git describe` コマンドの出力です。Git リポジトリで
+WeeChat をコンパイルし、Git がインストールされている場合のみ値が設定されます。
 
 CTCP オプションが設定されていない (デフォルトの) 場合、CTCP 応答は以下のようになります:
 

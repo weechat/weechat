@@ -3379,7 +3379,7 @@ przez WeeChat podczas odpowiedzi na CTCP:
 | Kod          | Opis                              | Wartość/Przykład
 | $clientinfo  | Lista wspieranych CTCP            | `+ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION+`
 | $version     | Wersja WeeChat                    | `+0.4.0-dev+`
-| $versiongit  | Wersja WeeChat + wersja git ^(1)^ | `+0.4.0-dev (git: v0.3.9-104-g7eb5cc4)+`
+| $versiongit  | Wersja WeeChat + wersja Git ^(1)^ | `+0.4.0-dev (git: v0.3.9-104-g7eb5cc4)+`
 | $git         | Wersja git ^(1)^                  | `+v0.3.9-104-g7eb5cc4+`
 | $compilation | Data kompilacji WeeChat           | `+Dec 16 2012+`
 | $osinfo      | Informacje o systemie operacyjnym | `+Linux 2.6.32-5-amd64 / x86_64+`
@@ -3392,7 +3392,7 @@ przez WeeChat podczas odpowiedzi na CTCP:
 
 [NOTE]
 ^(1)^ Wersja git jest wynikiem komendy `git describe`. Jest dostępna tylko jeśli
-WeeChat został skompilowany wewnątrz repozytorium git i git był zainstalowany.
+WeeChat został skompilowany wewnątrz repozytorium Git i Git był zainstalowany.
 
 Jeśli opcje CTCP nie są zdefiniowane (domyślne), odpowiedzi CTCP to:
 
