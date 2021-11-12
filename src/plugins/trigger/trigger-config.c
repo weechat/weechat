@@ -100,8 +100,8 @@ char *trigger_config_default_list[][1 + TRIGGER_NUM_OPTIONS] =
       "modifier",
       "5000|input_text_display;5000|history_add;5000|irc_command_auth",
       "",
-      "==^(/(msg|m|quote) +nickserv +register +)([^ ]+)(.*)"
-      "==${re:1}${hide:*,${re:3}}${re:4}",
+      "==^(/(msg|m|quote) +(-server +[^ ]+ +)?nickserv +register +)([^ ]+)(.*)"
+      "==${re:1}${hide:*,${re:4}}${re:5}",
       "",
       "",
       "" },
