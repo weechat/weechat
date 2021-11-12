@@ -87,7 +87,8 @@ tests_relay = unit/plugins/relay/test-relay-auth.cpp
 endif
 
 if PLUGIN_TRIGGER
-tests_trigger = unit/plugins/trigger/test-trigger.cpp
+tests_trigger = unit/plugins/trigger/test-trigger.cpp \
+                unit/plugins/trigger/test-trigger-config.cpp
 endif
 
 if PLUGIN_TYPING

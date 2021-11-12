@@ -77,6 +77,7 @@ endif()
 if(ENABLE_TRIGGER)
   list(APPEND LIB_WEECHAT_UNIT_TESTS_PLUGINS_SRC
     unit/plugins/trigger/test-trigger.cpp
+    unit/plugins/trigger/test-trigger-config.cpp
   )
 endif()
 
