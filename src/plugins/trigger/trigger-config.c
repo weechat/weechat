@@ -71,10 +71,17 @@ char *trigger_config_default_list[][1 + TRIGGER_NUM_OPTIONS] =
       "" },
     /*
      * hide passwords in commands:
-     *   - /msg nickserv id|identify|ghost|release|regain|recover
-     *   - /oper
-     *   - /quote pass
-     *   - /secure passphrase|decrypt|set
+     *   - /msg [-server <name>] nickserv id <password>
+     *   - /msg [-server <name>] nickserv identify <password>
+     *   - /msg [-server <name>] nickserv ghost <nick> <password>
+     *   - /msg [-server <name>] nickserv release <nick> <password>
+     *   - /msg [-server <name>] nickserv regain <nick> <password>
+     *   - /msg [-server <name>] nickserv recover <nick> <password>
+     *   - /oper <nick> <password>
+     *   - /quote pass <password>
+     *   - /secure passphrase <passphrase>
+     *   - /secure decrypt <passphrase>
+     *   - /secure set <name> <value>
      */
     { "cmd_pass", "on",
       "modifier",
@@ -101,7 +108,7 @@ char *trigger_config_default_list[][1 + TRIGGER_NUM_OPTIONS] =
       "" },
     /*
      * hide passwords in commands:
-     *   - /msg nickserv register
+     *   - /msg [-server <name>] nickserv register <password> <email>
      */
     { "cmd_pass_register", "on",
       "modifier",
@@ -113,8 +120,16 @@ char *trigger_config_default_list[][1 + TRIGGER_NUM_OPTIONS] =
       "",
       "" },
     /*
-     * hide password in IRC auth message displayed
-     * (message received from server after the user issued the command)
+     * hide password in IRC auth message displayed (message received from
+     * server after the user issued the command):
+     *   - id <password>
+     *   - identify <password>
+     *   - set password <password>
+     *   - register <password>
+     *   - ghost <nick> <password>
+     *   - release <nick> <password>
+     *   - regain <nick> <password>
+     *   - recover <nick> <password>
      */
     { "msg_auth", "on",
       "modifier",
@@ -136,8 +151,10 @@ char *trigger_config_default_list[][1 + TRIGGER_NUM_OPTIONS] =
       "" },
     /*
      * hide server password in commands:
-     *   - /server
-     *   - /connect
+     *   - /server add <name> <address> -password=<password>
+     *   - /server add <name> <address> -sasl_password=<password>
+     *   - /connect <address> -password=<password>
+     *   - /connect <address> -sasl_password=<password>
      */
     { "server_pass", "on",
       "modifier",
