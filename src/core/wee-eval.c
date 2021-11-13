@@ -508,7 +508,11 @@ eval_string_split (const char *text)
             else if (strcmp (list_flags[i], "keep_eol") == 0)
                 flags |= WEECHAT_STRING_SPLIT_KEEP_EOL;
             else if (strncmp (list_flags[i], "strip_items=", 12) == 0)
+            {
+                if (strip_items)
+                    free (strip_items);
                 strip_items = strdup (list_flags[i] + 12);
+            }
             else if (strncmp (list_flags[i], "max_items=", 10) == 0)
             {
                 max_items = strtol (list_flags[i] + 10, &error, 10);

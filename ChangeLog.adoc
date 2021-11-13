@@ -30,6 +30,7 @@ New features::
 
 Bug fixes::
 
+  * core: fix memory leak in evaluated expression "split:number,seps,flags,xxx" when multiple "strip_items" are given
   * core: fix random integer number with large range in evaluation of expressions on GNU/Hurd
   * core: fix access to integer/long/time arrays in hdata
   * api: fix search of option when the section is not given in functions config_search_option and config_search_section_option
