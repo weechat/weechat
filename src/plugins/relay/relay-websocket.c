@@ -290,7 +290,6 @@ relay_websocket_decode_frame (const unsigned char *buffer,
             return 0;
 
         /* decode frame */
-        length_frame_size = 1;
         length_frame = buffer[index_buffer + 1] & 127;
         index_buffer += 2;
         if (index_buffer >= buffer_length)
