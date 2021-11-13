@@ -77,6 +77,7 @@ char *trigger_config_default_list[][1 + TRIGGER_NUM_OPTIONS] =
      *   - /msg [-server <name>] nickserv release <nick> <password>
      *   - /msg [-server <name>] nickserv regain <nick> <password>
      *   - /msg [-server <name>] nickserv recover <nick> <password>
+     *   - /msg [-server <name>] nickserv setpass <nick> <key> <password>
      *   - /oper <nick> <password>
      *   - /quote pass <password>
      *   - /secure passphrase <passphrase>
@@ -95,7 +96,8 @@ char *trigger_config_default_list[][1 + TRIGGER_NUM_OPTIONS] =
       "ghost +[^ ]+|"
       "release +[^ ]+|"
       "regain +[^ ]+|"
-      "recover +[^ ]+"
+      "recover +[^ ]+|"
+      "setpass +[^ ]+"
       ") +)|"
       "/oper +[^ ]+ +|"
       "/quote +pass +|"

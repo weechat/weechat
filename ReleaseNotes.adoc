@@ -20,17 +20,17 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 [[v3.4]]
 == Version 3.4 (under dev)
 
-[[v3.4_trigger_cmd_pass_register]]
-=== Default trigger "cmd_pass_register"
+[[v3.4_default_triggers]]
+=== Default triggers
 
-The trigger "cmd_pass_register" has been updated to support option
-`-server <name>` in commands `/msg` and `/quote`.
+The existing triggers "cmd_pass" and "cmd_pass_register" have been updated to
+hide key and password in command `/msg nickserv setpass <nick> <key> <password>`
+and support the option `-server <name>`.
 
-You can restore the default trigger "cmd_pass_register" with the following
-command:
+You can restore the default triggers with the following command:
 
 ----
-/trigger restore cmd_pass_register
+/trigger restore cmd_pass cmd_pass_register
 ----
 
 [[v3.4_hdata_search]]
@@ -996,7 +996,7 @@ Or set explicitly the value:
 
 The existing triggers "cmd_pass" and "msg_auth" have been updated to hide
 password in command `/msg nickserv set password` and support the option
-`-server xxx`.
+`-server <name>`.
 
 You can restore the default triggers with the following command:
 

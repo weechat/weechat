@@ -26,6 +26,7 @@ New features::
   * api: add user variables in evaluation of expressions with "define:name,value"
   * api: add IRC message parameters "param1" to "paramN" and "num_params" in output of irc_message_parse
   * irc: allow quotes around IRC message in command /server fakerecv
+  * trigger: hide key and password in command "/msg nickserv setpass nick key password"
   * trigger: add support of option "-server" when hiding passwords in command /msg nickserv register
 
 Bug fixes::

@@ -170,6 +170,12 @@ TEST(TriggerConfig, DefaultTriggerCmdPass)
     WEE_CHECK_MODIFIER_INPUT("/msg nickserv recover alice ******",
                              "/msg nickserv recover alice secret");
 
+    /* /msg nickserv setpass <nick> <key> <password> */
+    WEE_CHECK_MODIFIER_INPUT("/msg nickserv setpass alice",
+                             "/msg nickserv setpass alice");
+    WEE_CHECK_MODIFIER_INPUT("/msg nickserv setpass alice **********",
+                             "/msg nickserv setpass alice key secret");
+
     /* /oper <nick> <password> */
     WEE_CHECK_MODIFIER_INPUT("/oper alice",
                              "/oper alice");
