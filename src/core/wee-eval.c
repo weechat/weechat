@@ -181,7 +181,7 @@ eval_strstr_level (const char *string, const char *search,
 {
     const char *ptr_string;
     int level, length_search, debug_id;
-    int length_prefix, length_prefix2, length_suffix, length_suffix2;
+    int length_prefix2, length_suffix2;
 
     ptr_string = NULL;
 
@@ -195,9 +195,6 @@ eval_strstr_level (const char *string, const char *search,
     }
 
     length_search = strlen (search);
-
-    length_prefix = strlen (eval_context->prefix);
-    length_suffix = strlen (eval_context->suffix);
 
     length_prefix2 = (extra_prefix) ? strlen (extra_prefix) : 0;
     length_suffix2 = (extra_suffix) ? strlen (extra_suffix) : 0;
@@ -213,10 +210,10 @@ eval_strstr_level (const char *string, const char *search,
         {
             ptr_string++;
         }
-        else if (strncmp (ptr_string, eval_context->prefix, length_prefix) == 0)
+        else if (strncmp (ptr_string, eval_context->prefix, eval_context->length_prefix) == 0)
         {
             level++;
-            ptr_string += length_prefix;
+            ptr_string += eval_context->length_prefix;
         }
         else if ((length_prefix2 > 0)
                  && (strncmp (ptr_string, extra_prefix, length_prefix2) == 0))
@@ -224,11 +221,11 @@ eval_strstr_level (const char *string, const char *search,
             level++;
             ptr_string += length_prefix2;
         }
-        else if (strncmp (ptr_string, eval_context->suffix, length_suffix) == 0)
+        else if (strncmp (ptr_string, eval_context->suffix, eval_context->length_suffix) == 0)
         {
             if (level > 0)
                 level--;
-            ptr_string += length_suffix;
+            ptr_string += eval_context->length_suffix;
         }
         else if ((length_suffix2 > 0)
                  && (strncmp (ptr_string, extra_suffix, length_suffix2) == 0))
@@ -2426,7 +2423,9 @@ eval_expression (const char *expr, struct t_hashtable *pointers,
     eval_context->user_vars = user_vars;
     eval_context->extra_vars_eval = 0;
     eval_context->prefix = default_prefix;
+    eval_context->length_prefix = strlen (eval_context->prefix);
     eval_context->suffix = default_suffix;
+    eval_context->length_suffix = strlen (eval_context->suffix);
     eval_context->regex = NULL;
     eval_context->regex_replacement_index = 1;
     eval_context->recursion_count = 0;
@@ -2473,12 +2472,18 @@ eval_expression (const char *expr, struct t_hashtable *pointers,
         /* check for custom prefix */
         ptr_value = hashtable_get (options, "prefix");
         if (ptr_value && ptr_value[0])
+        {
             eval_context->prefix = ptr_value;
+            eval_context->length_prefix = strlen (eval_context->prefix);
+        }
 
         /* check for custom suffix */
         ptr_value = hashtable_get (options, "suffix");
         if (ptr_value && ptr_value[0])
+        {
             eval_context->suffix = ptr_value;
+            eval_context->length_suffix = strlen (eval_context->suffix);
+        }
 
         /* check for regex */
         ptr_value = hashtable_get (options, "regex");

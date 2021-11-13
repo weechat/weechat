@@ -76,7 +76,9 @@ struct t_eval_context
     struct t_hashtable *user_vars;     /* user-defined variables            */
     int extra_vars_eval;               /* 1 if extra vars must be evaluated */
     const char *prefix;                /* prefix (default is "${")          */
+    int length_prefix;                 /* length of prefix                  */
     const char *suffix;                /* suffix (default is "}")           */
+    int length_suffix;                 /* length of suffix                  */
     struct t_eval_regex *regex;        /* in case of replace with regex     */
     int regex_replacement_index;       /* replacement index (≥ 1)           */
     int recursion_count;               /* to prevent infinite recursion     */
