@@ -58,6 +58,9 @@ irc_sasl_mechanism_plain (const char *sasl_username, const char *sasl_password)
     char *answer_base64, *string;
     int length_username, length;
 
+    if (!sasl_username || !sasl_password)
+        return NULL;
+
     answer_base64 = NULL;
     length_username = strlen (sasl_username);
     length = ((length_username + 1) * 2) + strlen (sasl_password) + 1;
@@ -116,6 +119,12 @@ irc_sasl_mechanism_scram (struct t_irc_server *server,
     int client_key_size, stored_key_size, client_signature_size;
     int server_key_size, server_signature_size, verifier_size;
     long number;
+
+    if (!server || !hash_algo || !data_base64 || !sasl_username
+        || !sasl_password)
+    {
+        return NULL;
+    }
 
     answer_base64 = NULL;
     string = NULL;
