@@ -750,6 +750,11 @@ dir_find_xdg_dirs (char **config_dir, char **data_dir, char **cache_dir,
     char *ptr_home, path[PATH_MAX];
     char *xdg_config_home, *xdg_data_home, *xdg_cache_home, *xdg_runtime_dir;
 
+    *config_dir = NULL;
+    *data_dir = NULL;
+    *cache_dir = NULL;
+    *runtime_dir = NULL;
+
     ptr_home = getenv ("HOME");
     xdg_config_home = getenv ("XDG_CONFIG_HOME");
     xdg_data_home = getenv ("XDG_DATA_HOME");
@@ -826,6 +831,26 @@ dir_find_xdg_dirs (char **config_dir, char **data_dir, char **cache_dir,
     return 1;
 
 error:
+    if (*config_dir)
+    {
+        free (*config_dir);
+        *config_dir = NULL;
+    }
+    if (*data_dir)
+    {
+        free (*data_dir);
+        *data_dir = NULL;
+    }
+    if (*cache_dir)
+    {
+        free (*cache_dir);
+        *cache_dir = NULL;
+    }
+    if (*runtime_dir)
+    {
+        free (*runtime_dir);
+        *runtime_dir = NULL;
+    }
     string_fprintf (stderr, _("Error: not enough memory\n"));
     return 0;
 }
