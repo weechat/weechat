@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2021-10-23 14:36+0200\n"
-"PO-Revision-Date: 2021-10-23 23:00+0100\n"
+"PO-Revision-Date: 2021-11-20 23:00+0100\n"
 "Last-Translator: Emir SARI <emir_sari@msn.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: tr\n"
@@ -399,7 +399,7 @@ msgid "%sBuffer number \"%d\" is out of range (it must be between 1 and %d)"
 msgstr "%s%d numaralı arabellek erim dışı (1 ve %d arasında olmalı)"
 
 msgid "Buffers list:"
-msgstr "Arabellekler listesi:"
+msgstr "Arabellek listesi:"
 
 #, c-format
 msgid "  %s[%s%d%s]%s %s%s.%s%s%s (notify: %s%s%s)%s%s"
@@ -2569,6 +2569,53 @@ msgid ""
 "  send alert (BEL):\n"
 "    /print -beep"
 msgstr ""
+"   -buffer: bu arabellekte metin görüntüle (öntanımlı: komutun çalıştırıldığı "
+"arabellek)\n"
+"-newbuffer: yeni bir arabellek oluştur ve bu arabellekte metin görüntüle\n"
+"     -free: boş içerikli yeni bir arabellek oluştur (yalnızca -newbuffer ile)\n"
+"   -switch: bu arabelleğe geç\n"
+"     -core: \"-buffer core.weechat\" komutunun arması\n"
+"  -current: geçerli arabellekte metin görüntüle\n"
+"        -y: özel bir satırda görüntüle (boş içerikli arabellekler için)\n"
+"      line: boş içerikli arabelleğin satır numarası (ilk satır 0, son "
+"satırdan sonra bir negatif görüntülenir: -1 = son satırdan sonra, -2 = "
+"son satırdan sonra iki satır vb.)\n"
+"   -escape: kaçırılmış karakterleri yorumla (örneğin, \\a, \\07, \\x07)\n"
+"     -date: ileti tarihi, biçimi şöyle olabilir:\n"
+"              -n: şimdiden önce 'n' saniye\n"
+"              +n: gelecekte 'n' saniye\n"
+"               n: Epoch'tan 'n' saniye sonra (bkz. man time)\n"
+"              date/time (ISO 8601): yyyy-aa-ggTss:dd:snsn; örnek: "
+"2014-01-19T04:32:55\n"
+"              time: ss:dd:snsn (örnek: 04:32:55)\n"
+"     -tags: etiketlerin virgülle ayrılmış listesi (en çok kullanılan "
+"etiketlerin bir listesi için /help filter yazın)\n"
+"      text: görüntülenecek metin (önek ve ileti \"\\t\" ile ayrılmalıdır, "
+"eğer metin \"-\" ile başlıyorsa önüne bir \"\\\" ekleyin)\n"
+"   -stdout: stdout'ta metin görüntüle (kaçış karakterleri yorumlanır)\n"
+"   -stderr: stderr'de metin görüntüle (kaçış karakterleri yorumlanır)\n"
+"     -beep: \"-stderr \\a\" arması\n"
+"\n"
+"-action ... -quit seçenekleri, \"weechat.look.prefix_*\"te tanımlanan öneki "
+"kullanır.\n"
+"\n"
+"Aşağıdaki kaçış karakterleri desteklenir:\n"
+"  \\\" \\\\ \\a \\b \\e \\f \\n \\r \\t \\v \\0ooo \\xhh \\uhhh "
+"\\Uhhhhhhhh\n"
+"\n"
+"Örnekler:\n"
+"  çekirdek arabellekte vurgulu bir anımsatıcı görüntüle:\n"
+"    /print -core -tags -notify_highlight Anımsatıcı: Süt al\n"
+"  çekirdek arabellekte bir hata görüntüle:\n"
+"    /print -core -error Bir hata iletisi\n"
+"  çekirdek arabellekte \"abc\" önekine iye bir ileti görüntüle:\n"
+"    /print -core abc\\tİleti\n"
+"  #weechat kanalında bir ileti görüntüle:\n"
+"    /print -buffer irc.libera.#weechat #weechat kanalında ileti\n"
+"  bir kardanadam görüntüle (U+2603):\n"
+"    /print -escape \\u2603\n"
+"  alarm gönder (BEL):\n"
+"    /print -beep"
 
 msgid "manage proxies"
 msgstr "vekilleri yönet"
@@ -2694,6 +2741,22 @@ msgid ""
 "  scroll 2 pages up:\n"
 "    /repeat 2 /window page_up"
 msgstr ""
+"gecikme: komutların çalıştırılması arasındaki gecikme\n"
+"  birim: isteğe bağlı, değerler:\n"
+"           ms: milisaniye\n"
+"            s: saniye (öntanımlı)\n"
+"            m: dakika\n"
+"            h: saat\n"
+"  sayım: komutun çalıştırılacağı yineleme sayısı\n"
+"  komut: çalıştırılacak komut (veya komut '/' ile başlamıyorsa arabelleğe "
+"gönderilecek metin)\n"
+"\n"
+"Not: Komut, /repeat'in çalıştırıldığı arabellekte çalıştırılır (eğer "
+"arabellek artık yoksa komut çalıştırılmaz).\n"
+"\n"
+"Örnekler:\n"
+"  iki sayfa yukarı kaydır:\n"
+"    /repeat 2 /window page_up"
 
 msgid "save configuration files to disk"
 msgstr "yapılandırma dosyalarını diske kaydet"
@@ -2706,6 +2769,12 @@ msgid ""
 "By default all configuration files are saved to disk on /quit command (see "
 "option \"weechat.look.save_config_on_exit\")."
 msgstr ""
+"dosya: kaydedilecek yapılandırma dosyası (\".conf\" uzantısı olmadan)\n"
+"\n"
+"Argüman yoksa tüm dosyalar (WeeChat ve eklenti) kaydedilir.\n"
+"\n"
+"Öntanımlı olarak tüm yapılandırma dosyaları /quit komutunda diske kaydedilir "
+"(bkz. \"weechat.look.save_config_on_exit\" seçeneği)."
 
 msgid ""
 "manage secured data (passwords or private data encrypted in file sec.conf)"
@@ -2768,6 +2837,51 @@ msgid ""
 "    /alias add ghost /eval /msg -server libera nickserv ghost mynick ${sec."
 "data.libera}"
 msgstr ""
+"  parola: parolayı değiştir (parola olmadan veri sec.conf dosyasında düz metin "
+"olarak kyadedilir)\n"
+" -delete: parolayı sil\n"
+" decrypt: şifrelenen verinin şifresini çöz (yalnızca başlangıçta parola "
+"verilmemişse yapılır)\n"
+"-discard: hâlâ şifreli olan tüm veriyi at\n"
+"     set: güvenli saklanan veri ekle veya veriyi değiştir\n"
+"     del: güvenli saklanan veriyi sil\n"
+"\n"
+"Argüman olmadan, bu komut yeni bir arabellekte güvenli veriyi görüntüler.\n"
+"\n"
+"Güvenli arabellek düğmeleri:\n"
+"  alt+v: değerleri aç/kapa\n"
+"\n"
+"Bir parola kullanıldığında (veri şifrelendiğinde) WeeChat tarafından "
+"başlangıçta istenir.\n"
+"Bu istemi devre dışı bırakmak için \"WEECHAT_PASSPHRASE\" ortam değişkeni "
+"ayarlanabilir (aynı değişken WeeChat tarafından /upgrade komutunda da "
+"kullanılır) veya sec.crypt.passphrase_command seçeneğini bir dış komuttan "
+"okuyacak biçimde de ayarlanabilir (örn. bir parola yöneticisi; bkz. /help "
+"sec.crypt.passphrase_command).\n"
+"\n"
+"${sec.data.xxx} biçimli veriler şuralarda kullanılabilirler:\n"
+"  - /eval komutu\n"
+"  - \"--run-command\" komut satırı argümanı\n"
+"  - weechat.startup.command_{before|after}_plugins seçenekleri\n"
+"  - bir parola veya başka bir tür hassas veri içerebilen diğer seçenekler "
+"(örn. vekil sunucu, irc sunucusu ve aktarıcısı); seçeneklerin değerlendirilip "
+"değerlendirilmediğini denetlemek için /help içeriğine bakın.\n"
+"\n"
+"Örnekler:\n"
+"  bir parola ayarla:\n"
+"    /secure passphrase bu benim parolam\n"
+"  başlangıçta parolayı \"pass\" programından oku:\n"
+"    /set sec.crypt.passphrase_command \"/usr/bin/pass show weechat/parola\"\n"
+"  libera SASL parolasını şifrele:\n"
+"    /secure set libera mypassword\n"
+"    /set irc.server.libera.sasl_password \"${sec.data.libera}\"\n"
+"  nickserv için oftc parolasını şifrele:\n"
+"    /secure set oftc mypassword\n"
+"    /set irc.server.oftc.command \"/msg nickserv identify ${sec.data."
+"oftc}\"\n"
+"  \"takmaadım\" takma adını hayalet yapmak için arma:\n"
+"    /alia add ghost /eval /msg -server libera nickserv ghost takmaadım "
+"${sec.data.libera}"
 
 msgid "set config options and environment variables"
 msgstr "yapılandırma seçeneklerini ve ortam değişkenlerini ayarla"
@@ -3083,11 +3197,11 @@ msgstr ""
 
 #, c-format
 msgid "%sToo few arguments for command \"%s%s%s\" (help on command: /help %s)"
-msgstr "%s\"%s%s%s\" komutu için pek az argüman (yardım için: /help %s)"
+msgstr "%s\"%s%s%s\" komutunda pek az argüman (yardım için: /help %s)"
 
 #, c-format
 msgid "%sError with command \"%s\" (help on command: /help %s)"
-msgstr "%s\"%s\" komutu ile hata (yardım için: /help %s)"
+msgstr "%s\"%s\" komutunda hata (yardım için: /help %s)"
 
 msgid "names of buffers"
 msgstr "arabelleklerin adları"
@@ -3716,37 +3830,49 @@ msgid ""
 "number of chars displayed after end of input line when scrolling to display "
 "end of line"
 msgstr ""
+"ekran satır sonuna kaydırma yaparken girdi satırı sonundan sonra "
+"görüntülenen karakter sayısı"
 
 msgid ""
 "share commands, text, or both in input for all buffers (there is still local "
 "history for each buffer)"
 msgstr ""
+"tüm arabellekler için komutları, metni veya her ikisini de paylaş (her bir "
+"arabellek için yerel geçmiş hâlâ mevcut)"
 
 msgid "if set and input is shared, always overwrite input in target buffer"
-msgstr ""
+msgstr "ayarlıysa ve girdi paylaşılıyorsa her zaman hedef arabellekteki "
+"girdinin üzerine yaz"
 
 msgid "max number of \"undo\" for command line, by buffer (0 = undo disabled)"
-msgstr ""
+msgstr "arabellek başına komut satırı için en çok \"undo\" (0 = geri alma "
+"kapalı)"
 
 msgid "display server away message in away bar item"
-msgstr ""
+msgstr "uzakta çubuk ögesinde sunucu uzakta iletisini göster"
 
 msgid ""
 "string used to show that some lines are filtered in current buffer (bar item "
 "\"buffer_filter\")"
 msgstr ""
+"geçerli arabellekte bazı satırların süzüldüğünü gösteren dizi (çubuk ögesi "
+"\"buffer_filter\")"
 
 msgid "string used to show zoom on merged buffer (bar item \"buffer_zoom\")"
-msgstr ""
+msgstr "birleştirilmiş arabellekte yakınlaştırmayı gösteren dizi (çubuk ögesi "
+"\buffer_filter\")"
 
 msgid "string used to show if mouse is enabled (bar item \"mouse_status\")"
-msgstr ""
+msgstr "farenin etkinleştirildiğini gösteren dizi (çubuk ögesi \"mouse_status\")"
 
 msgid ""
 "time format for \"time\" bar item (see man strftime for date/time "
 "specifiers) (note: content is evaluated, so you can use colors with format "
 "\"${color:xxx}\", see /help eval)"
 msgstr ""
+"\"time\" çubuk ögesi için zaman biçimi (tarih/zaman belirticileri için bkz. "
+"man strftime) (not: içerik değerlendirilir, böylelikle \"${color:xxx} biçimi "
+"ile birlikte renkleri kullanabilirsiniz, bkz. /help eval)"
 
 msgid ""
 "jump to previous buffer displayed when jumping to current buffer number "
@@ -4030,222 +4156,251 @@ msgid "text color for \"+\" when scrolling bars"
 msgstr "kaydırma çubuklarındaki \"+\" metin rengi"
 
 msgid "text color for chat"
-msgstr "sohbet için metin rengi"
+msgstr "sohbet metin rengi"
 
 msgid "background color for chat"
-msgstr "sohbet için arkaplan rengi"
+msgstr "sohbet arkaplan rengi"
 
 msgid "text color for buffer names"
-msgstr ""
+msgstr "arabellek adları metin rengi"
 
 msgid "text color for channel names"
-msgstr "kanal adları için metin rengi"
+msgstr "kanal adları metin rengi"
 
 msgid "text color for message displayed when the day has changed"
-msgstr ""
+msgstr "gün değişimini bildiren ileti metin rengi"
 
 msgid "text color for delimiters"
-msgstr ""
+msgstr "sınırlandırıcılar metin rengi"
 
 msgid "text color for highlighted prefix"
-msgstr ""
+msgstr "vurgulanmış önek metin rengi"
 
 msgid "background color for highlighted prefix"
-msgstr ""
+msgstr "vurgulanmış önek arka plan rengi"
 
 msgid "text color for hostnames"
-msgstr ""
+msgstr "makine adları metin rengi"
 
 msgid ""
 "text color for chat when line is inactive (buffer is merged with other "
 "buffers and is not selected)"
 msgstr ""
+"satır etkin değilkenki sohbet metin rengi (arabellek diğer arabelleklerle "
+"birleştirilmiş ve seçilmemiş)"
 
 msgid ""
 "text color for chat when window is inactive (not current selected window)"
 msgstr ""
+"pencere etkin değilkenki sohbet metin rengi (geçerli seçili pencere değil)"
 
 msgid ""
 "text color for nicks in chat window: used in some server messages and as "
 "fallback when a nick color is not found; most of times nick color comes from "
 "option weechat.color.chat_nick_colors"
 msgstr ""
+"sohbet penceresindeki takma adlar metin rengi: bazı sunucu iletilerinde "
+"ve bir takma ad rengi bulunamadığında yedekte kullanılır; çoğu zaman takma "
+"ad renkleri weechat.color.chat_nick_colors seçeneğinden gelir"
 
 #. TRANSLATORS: please do not translate "lightred:blue"
 msgid ""
 "text color for nicks (comma separated list of colors, background is allowed "
 "with format: \"fg:bg\", for example: \"lightred:blue\")"
 msgstr ""
+"takma ad metin rengi (renklerin virgülle ayrılmış bir listesi, arka "
+"plan için \"fg:bg\" biçimiyle izin verilir; örneğin \"lightred:blue\""
 
 msgid ""
 "text color for offline nick (not in nicklist any more); this color is used "
 "only if option weechat.look.color_nick_offline is enabled"
 msgstr ""
+"çevrimdışı takma ad metin rengi (artık takma ad listesinde değil); bu renk "
+"yalnızca weechat.look.color_nick_offline seçeneği etkinken kullanılır"
 
 msgid ""
 "text color for offline nick with highlight; this color is used only if "
 "option weechat.look.color_nick_offline is enabled"
 msgstr ""
+"vurgulanmış çevrimdışı takma ad metin rengi; bu renk yalnızca weechat.look."
+"color_nick_offline seçeneği etkinken kullanılır"
 
 msgid ""
 "background color for offline nick with highlight; this color is used only if "
 "option weechat.look.color_nick_offline is enabled"
 msgstr ""
+"vurgulanmış çevrimdışı takma ad arka plan rengi; bu renk yalnızca weechat.look"
+"color_nick_offline seçeneği etkinken kullanılır"
 
 msgid "text color for other nick in private buffer"
-msgstr ""
+msgstr "gizli arabellekteki diğer takma ad metin rengi"
 
 msgid "color for nick prefix (string displayed before nick in prefix)"
-msgstr ""
+msgstr "takma ad öneki renk (dizi, önekteki takma addan önce görüntülenir)"
 
 msgid "text color for local nick in chat window"
-msgstr "sohbet penceresindeki yerel takma ad için metin rengi"
+msgstr "sohbet penceresindeki yerel takma ad metin rengi"
 
 msgid "color for nick suffix (string displayed after nick in prefix)"
-msgstr ""
+msgstr "takma ad soneki renk (dizi, önekteki takma addan sonra görüntülenir)"
 
 msgid "text color for error prefix"
-msgstr ""
+msgstr "hata öneki metin rengi"
 
 msgid ""
 "text color for buffer name (before prefix, when many buffers are merged with "
 "same number)"
 msgstr ""
+"arabellek adı metin rengi (önekten önce, birden çok arabellek aynı numara"
+" ile birleştirildiğinde)"
 
 msgid ""
 "text color for inactive buffer name (before prefix, when many buffers are "
 "merged with same number and if buffer is not selected)"
 msgstr ""
+"etkin olmayan arabellek adı metin rengi (önekten önce, birden çok arabellek "
+"aynı numara ile birleştirildiğinde ve arabellek seçili değilse)"
 
 msgid "text color for network prefix"
-msgstr ""
+msgstr "ağ öneki metin rengi"
 
 msgid "text color for action prefix"
-msgstr ""
+msgstr "eylem öneki metin rengi"
 
 msgid "text color for join prefix"
-msgstr ""
+msgstr "katılım öneki metin rengi"
 
 msgid "text color for quit prefix"
-msgstr ""
+msgstr "çıkış öneki metin rengi"
 
 msgid "text color for \"+\" when prefix is too long"
-msgstr "önek çok uzunken \"+\" için metin rengi"
+msgstr "önek çok uzunken \"+\" metin rengi"
 
 msgid "text color for suffix (after prefix)"
-msgstr ""
+msgstr "sonek metin rengi (önekten sonra)"
 
 msgid "text color for unread data marker"
-msgstr ""
+msgstr "okunmamış veri imleyicisi metin rengi"
 
 msgid "background color for unread data marker"
-msgstr ""
+msgstr "okunmamış veri imleyicisi arka plan rengi"
 
 msgid "text color for server names"
-msgstr "sunucu adları için metin rengi"
+msgstr "sunucu adları metin rengi"
 
 msgid "text color for tags after messages (displayed with command /debug tags)"
-msgstr ""
+msgstr "iletilerden sonraki etiket metin rengi (/debug tags komutu ile "
+"görüntülenir)"
 
 msgid "text color for marker on lines where text sought is found"
-msgstr ""
+msgstr "aranan metnin bulunduğu satır imleyicisi metin rengi"
 
 msgid "background color for marker on lines where text sought is found"
-msgstr ""
+msgstr "aranan metnin bulunduğu satır imleyicisi arka plan rengi"
 
 msgid "text color for time in chat window"
-msgstr "sohbet penceresindeki zaman için metin rengi"
+msgstr "sohbet penceresindeki zaman metin rengi"
 
 msgid "text color for time delimiters"
-msgstr ""
+msgstr "zaman sınırlayıcısı metin rengi"
 
 msgid "text color for values"
-msgstr "değerler için metin rengi"
+msgstr "değer metin rengi"
 
 msgid "text color for null values (undefined)"
-msgstr "null değerler için metin rengi (tanımlanmamış)"
+msgstr "null değer metin rengi (tanımlanmamış)"
 
 msgid ""
 "text color for emphasized text (for example when searching text); this "
 "option is used only if option weechat.look.emphasized_attributes is an empty "
 "string (default value)"
 msgstr ""
+"vurgulanan metin rengi (örneğin arama yaparken); bu seçenek yalnızca weechat."
+"look.emphasized_attributes seçeneği boş bir diziyse kullanılır (öntanımlı "
+"değer)"
 
 msgid ""
 "background color for emphasized text (for example when searching text); used "
 "only if option weechat.look.emphasized_attributes is an empty string "
 "(default value)"
 msgstr ""
+"vurgulanan metin arka plan rengi (örneğin arama yaparken); bu seçenek yalnızca"
+" weechat.look.emphasized_attributes seçeneği boş bir diziyse kullanılır "
+"(öntanımlı değer)"
 
 msgid "text color for actions in input line"
-msgstr ""
+msgstr "girdi satırındaki eylemler metin rengi"
 
 msgid "text color for unsuccessful text search in input line"
-msgstr ""
+msgstr "girdi satırındaki başarısız arama metin rengi"
 
 msgid "text color for away item"
-msgstr "uzakta öğesi için metin rengi"
+msgstr "uzakta öğesi metin rengi"
 
 msgid "text color for away nicknames"
-msgstr "uzaktaki kullanıcı adları için metin rengi"
+msgstr "uzaktaki kullanıcı adları metin rengi"
 
 msgid "text color for groups in nicklist"
-msgstr ""
+msgstr "takma ad listesindeki gruplar metin rengi"
 
 msgid ""
 "color for window separators (when split) and separators beside bars (like "
 "nicklist)"
 msgstr ""
+"pencere ayırıcıları (bölündüğünde) ve çubukların yanındaki ayırıcıların "
+"(örn. takma ad listesi) rengi"
 
 msgid "text color for count of highlight messages in hotlist (status bar)"
-msgstr ""
+msgstr "sıcak listedeki vurgulanan ileti sayısı metin rengi (durum çubuğu)"
 
 msgid "text color for count of messages in hotlist (status bar)"
-msgstr ""
+msgstr "sıcak listedeki ileti sayısı metin rengi (durum çubuğu)"
 
 msgid "text color for count of other messages in hotlist (status bar)"
-msgstr ""
+msgstr "sıcak listedeki diğer iletiler sayısı metin rengi (durum çubuğu)"
 
 msgid "text color for count of private messages in hotlist (status bar)"
-msgstr ""
+msgstr "sıcak listedeki kişisel iletiler sayısı metin rengi (durum çubuğu)"
 
 msgid "text color for buffer with highlight (status bar)"
-msgstr ""
+msgstr "vurgulanan arabellek metin rengi (durum çubuğu)"
 
 msgid "text color for buffer with new messages (status bar)"
-msgstr ""
+msgstr "yeni ileti içeren arabellek metin rengi (durum çubuğu)"
 
 msgid "text color for buffer with new data (not messages) (status bar)"
-msgstr ""
+msgstr "yeni veri içeren arabellek metin rengi (ileti değil) (durum çubuğu)"
 
 msgid "text color for buffer with private message (status bar)"
-msgstr ""
+msgstr "kişisel ileti içeren arabellek metin rengi (durum çubuğu)"
 
 msgid "text color for filter indicator in status bar"
-msgstr ""
+msgstr "durum çubuğundaki süzgeç göstergesi metin rengi"
 
 msgid "text color for buffer with new data (status bar)"
-msgstr ""
+msgstr "yeni veri içeren arabellek metin rengi (durum çubuğu)"
 
 msgid "text color for mouse indicator in status bar"
-msgstr "durum çubuğundaki fare belirteci için metin rengi"
+msgstr "durum çubuğundaki fare belirteci metin rengi"
 
 msgid "text color for current buffer name in status bar"
-msgstr ""
+msgstr "durum çubuğundaki geçerli arabellek metin rengi"
 
 msgid ""
 "text color for current buffer name in status bar, if data are secured with a "
 "protocol like SSL"
 msgstr ""
+"durum çubuğundaki geçerli arabellek metin rengi, yalnızca verinin SSL gibi "
+"bir protokolle korunduğu arabellekler için geçerlidir"
 
 msgid "text color for number of nicks in nicklist (status bar)"
-msgstr "takma ad listesindeki takma ad sayısı için metin rengi (durum çubuğu)"
+msgstr "takma ad listesindeki takma ad sayısı metin rengi (durum çubuğu)"
 
 msgid "text color for current buffer number in status bar"
-msgstr ""
+msgstr "durum çubuğundaki geçerli arabellek numarası metin rengi"
 
 msgid "text color for time (status bar)"
-msgstr "zaman için metin rengi (durum çubuğu)"
+msgstr "zaman metin rengi (durum çubuğu)"
 
 msgid ""
 "if enabled, the base word to complete ends at char before cursor; otherwise "
@@ -4351,13 +4506,16 @@ msgid ""
 msgstr ""
 
 msgid "timeout (in seconds) for gnutls handshake"
-msgstr ""
+msgstr "gnutls el sıkışması için zaman aşımı (saniye)"
 
 msgid ""
 "name of proxy used for download of URLs with Curl (used to download list of "
 "scripts and in scripts calling function hook_process); the proxy must be "
 "defined with command /proxy"
 msgstr ""
+"cURL ile URL'lerin indirilmesinde kullanılacak vekilin adı (betik listelerini "
+"indermede ve betiklerde hook_process işlevini çağırmada kullanılır); vekil, "
+"/proxy komutu ile tanımlanmalıdır"
 
 msgid ""
 "comma separated list of plugins to load automatically at startup, \"*\" "
@@ -4365,22 +4523,30 @@ msgid ""
 "prevent a plugin from being loaded, wildcard \"*\" is allowed in names "
 "(examples: \"*\" or \"*,!lua,!tcl\")"
 msgstr ""
+"başlangıçta kendiliğinden yüklenecek eklentilerin virgülle ayrılmış listesi, "
+"\"*\", bulunan tüm eklentileri belirtir; \"!\" ile başlayan bir ad, o "
+"eklentinin yüklenmeyeceğini gösteren negatif bir değerdir; adlarda \"*\" "
+"jokerine izin verilir (örnek: \"*\" veya \"*,!lue,!tcl\")"
 
 msgid ""
 "enable debug messages by default in all plugins (option disabled by default, "
 "which is highly recommended)"
 msgstr ""
+"tüm eklentiler için hata ayıklama iletilerini öntanımlı olarak etkinleştir "
+"bu ayar kapalı gelir, böyle kalması önerilir)"
 
 msgid "comma separated list of file name extensions for plugins"
-msgstr ""
+msgstr "eklentiler için dosya adı uzantılarının virgülle ayrılmış listesi"
 
 msgid ""
 "path for searching plugins (path is evaluated, see function "
 "string_eval_path_home in plugin API reference)"
 msgstr ""
+"eklentilerin aranacağı yol (yol değerlendirilir, eklenti API başvurusunda "
+"string_eval_path_home işlevine bakın)"
 
 msgid "save configuration files when unloading plugins"
-msgstr ""
+msgstr "eklentileri geri yüklerken yapılandırma dosyalarını kaydet"
 
 msgid ""
 "command to execute when the signal is received, multiple commands can be "
@@ -4485,21 +4651,23 @@ msgstr "Hata: \"%s\" dizini oluşturulamıyor\n"
 
 #, c-format
 msgid "%sError sending signal %d to pid %d: %s"
-msgstr ""
+msgstr "%sŞu PID'ye %d sinyali gönderilirken hata: %d: %s"
 
 #, c-format
 msgid "%sYou can not write text in this buffer"
-msgstr ""
+msgstr "%sBu arabelleğe metin giremezsiniz"
 
 #, c-format
 msgid ""
 "warning: the command \"%s\" is not currently allowed (command: \"%s\", "
 "buffer: \"%s\")"
 msgstr ""
+"uyarı: şu anda \"%s\" komutuna izin verilmiyor (komut: \"%s\", arabellek: "
+"\"%s\")"
 
 #, c-format
 msgid "%sUnknown command \"%s\" (type /help for help)"
-msgstr ""
+msgstr "%s Bilinmeyen komut \"%s\" (yardım için /help yazın)"
 
 #, c-format
 msgid ""
@@ -4596,7 +4764,7 @@ msgid "Secured data STILL ENCRYPTED: (use /secure decrypt, see /help secure)"
 msgstr ""
 
 msgid "No secured data set"
-msgstr "Güvenli veri ayarlanmadı"
+msgstr "Ayarlanan güvenli veri yok"
 
 msgid "secured data"
 msgstr "güvenli veri"
@@ -4866,13 +5034,13 @@ msgid ""
 msgstr ""
 
 msgid "true if bar is hidden, false if it is displayed"
-msgstr ""
+msgstr "çubuk gizliyse true, görüntüleniyorsa false"
 
 msgid "bar priority (high number means bar displayed first)"
-msgstr ""
+msgstr "çubuk önceliği (yüksek sayı çubuğun ilk görüntülendiğini belirtir)"
 
 msgid "bar type (root, window, window_active, window_inactive)"
-msgstr ""
+msgstr "çubuk türü (root, window, window_active, window_inactive)"
 
 msgid ""
 "conditions to display the bar: a simple condition: \"active\", \"inactive\", "
@@ -4881,75 +5049,93 @@ msgid ""
 "${info:term_width} > 100\" (local variables for expression are ${active}, "
 "${inactive} and ${nicklist})"
 msgstr ""
+"çubuğu görüntüleme koşulları: tek bir koşul: \"active\", \"inactive\", "
+"\"nicklist\", (pencere etkin/devre dışı olmalı, arabellekte bir takma ad "
+"listesi olmalı veya koşullu bir ifade (bkz. /help eval); örneğin, "
+"${nicklist} && ${info:term_width} > 100\" (ifade için yerel değişkenler, "
+"${active}, ${inactive} ve ${nicklist}'tir)"
 
 msgid "bar position (bottom, top, left, right)"
-msgstr ""
+msgstr "çubuk konumu (alt, üst, sol, sağ)"
 
 msgid ""
 "bar filling direction (\"horizontal\" (from left to right) or \"vertical"
 "\" (from top to bottom)) when bar position is top or bottom"
 msgstr ""
+"çubuk doldurma yönü; çubuk konumu alt veya üst ise \"horizontal\" (soldan "
+"sağa) veya \"vertical\" (yukarıdan aşağıya)"
 
 msgid ""
 "bar filling direction (\"horizontal\" (from left to right) or \"vertical"
 "\" (from top to bottom)) when bar position is left or right"
 msgstr ""
+"çubuk doldurma yönü; çubuk konumu sol veya sağ ise \"horizontal\" (soldan "
+"sağa) veya \"vertical\" (yukarıdan aşağıya)"
 
 msgid ""
 "bar size in chars (left/right bars) or lines (top/bottom bars) (0 = auto "
 "size)"
 msgstr ""
+"karakter cinsinden çubuk boyutu (sol/sağ çubuklar) veya satırlar (alt/üst "
+"çubuklar) (0 = otomatik boyut)"
 
 msgid ""
 "max bar size in chars (left/right bars) or lines (top/bottom bars) (0 = no "
 "limit)"
 msgstr ""
+"karakter cinsinden en büyük çubuk boyutu (sol/sağ çubuklar) veya satırlar "
+"(alt/üst çubuklar) (0 = sınırsız)"
 
 msgid "default text color for bar"
 msgstr "çubuk için varsayılan metin rengi"
 
 msgid "default delimiter color for bar"
-msgstr ""
+msgstr "çubuk için öntanımlı sınırlandırıcı rengi"
 
 msgid "default background color for bar"
-msgstr "çubuk için varsayılan arkaplan rengi"
+msgstr "çubuk için varsayılan arka plan rengi"
 
 msgid ""
 "background color for a bar with type \"window\" which is not displayed in "
 "the active window"
 msgstr ""
+"etkin pencerede görüntülenmeyen \"window\" türündeki çubuk için arka plan "
+"rengi"
 
 msgid "separator line between bar and other bars/windows"
-msgstr ""
+msgstr "çubuk ve diğer çubuklar/pencereler arasındaki ayırıcı çizgi"
 
 msgid ""
 "items of bar, they can be separated by comma (space between items) or \"+"
 "\" (glued items); special syntax \"@buffer:item\" can be used to force "
 "buffer used when displaying the bar item"
 msgstr ""
+"çubuk ögeleri, virgülle ayrılabilirler (ögeler arasında boşluk) veya \"+\" "
+"(yapıştırılan ögeler); çubuk ögesini görüntülerken kullanılacak arabellek "
+"\"@buffer:item\" özel sözdizimiyle zorlanabilir"
 
 #, c-format
 msgid "Bar \"%s\" updated"
-msgstr ""
+msgstr "\"%s\" çubuğu güncellendi"
 
 #, c-format
 msgid "%sPaste %d line? [ctrl-Y] Yes [ctrl-N] No"
 msgid_plural "%sPaste %d lines? [ctrl-Y] Yes [ctrl-N] No"
-msgstr[0] ""
+msgstr[0] "%s%d satır yapıştırılsın mı? [ctrl-Y] Evet [ctrl-N] Hayır"
 
 msgid "Search"
-msgstr ""
+msgstr "Arama"
 
 #, c-format
 msgid "%s-MORE(%d)-"
-msgstr ""
+msgstr "%s-DAHA FAZLA(%d)-"
 
 msgid "away"
-msgstr ""
+msgstr "uzakta"
 
 #, c-format
 msgid "Notify changed for \"%s%s%s\": \"%s%s%s\" to \"%s%s%s\""
-msgstr ""
+msgstr "\"%s%s%s\" için bildir değiştirildi: \"%s%s%s\" -> \"%s%s%s\""
 
 #, c-format
 msgid "%sA buffer with same name (%s) already exists"
@@ -4957,24 +5143,24 @@ msgstr "%sAynı adlı başka bir arabellek (%s) halihazırda var"
 
 #, c-format
 msgid "%sMaximum number of buffers is reached (%d)"
-msgstr ""
+msgstr "%sEn çok arabellek sayısına ulaşıldı (%d)"
 
 #, c-format
 msgid "%sIt is only possible to merge buffers with formatted content"
-msgstr ""
+msgstr "%sYalnızca biçimlendirilmiş içeriğe iye arabellekler birleştirilebilir"
 
 #, c-format
 msgid "Debug enabled for cursor mode (%s)"
-msgstr ""
+msgstr "İmleç kipi için hata ayıklama etkin (%s)"
 
 msgid "verbose"
-msgstr ""
+msgstr "sözlü"
 
 msgid "normal"
-msgstr ""
+msgstr "olağan"
 
 msgid "Debug disabled for cursor mode"
-msgstr ""
+msgstr "İmleç kipi için hata ayıklama devre dışı"
 
 #, c-format
 msgid "%sUnable to add filter \"%s\": %s"
@@ -4987,6 +5173,8 @@ msgid ""
 "a filter with same name already exists (choose another name or use option "
 "\"addreplace\" to overwrite it)"
 msgstr ""
+"aynı adlı bir süzgeç mevcut (başka bir ad seçin veya \"addreplace\" seçeneğini"
+" kullanarak üzerine yazın)"
 
 #. TRANSLATORS: %s is the error returned by regerror
 #, c-format
@@ -4998,40 +5186,40 @@ msgstr "yetersiz bellek"
 
 #, c-format
 msgid "New key binding (context \"%s\"): %s%s => %s%s"
-msgstr ""
+msgstr "Yeni düğme bağıntısı (bağlam: \"%s\"): %s%s => %s%s"
 
 #, c-format
 msgid "Key \"%s\" unbound (context: \"%s\")"
-msgstr ""
+msgstr "\"%s\" düğmesi bağıntılı değil (bağlam: \"%s\")"
 
 msgid "Hashtable focus:"
-msgstr ""
+msgstr "Sağlama tablosu odağı:"
 
 #, c-format
 msgid "Command for key: \"%s\""
-msgstr ""
+msgstr "Düğme komutu: \"%s\""
 
 #, c-format
 msgid "Sending hsignal: \"%s\""
-msgstr ""
+msgstr "hsignal gönderiliyor: \"%s\""
 
 #, c-format
 msgid "Executing command: \"%s\" on buffer \"%s\""
-msgstr ""
+msgstr "Komut çalıştırılıyor: \"%s\", \"%s\" arabelleğinde"
 
 #, c-format
 msgid "Debug enabled for mouse (%s)"
-msgstr ""
+msgstr "Fare için hata ayıklama etkin (%s)"
 
 msgid "Debug disabled for mouse"
-msgstr ""
+msgstr "Fare için hata ayıklaması devre dışı"
 
 msgid "Alias commands"
-msgstr ""
+msgstr "Arma komutları"
 
 #, c-format
 msgid "%s%s: error, circular reference when calling alias \"%s\""
-msgstr ""
+msgstr "%s%s: hata, \"%s\" arması çağrılırken dairesel başvuru"
 
 #, c-format
 msgid "%s%s: invalid alias name: \"%s\""
@@ -5039,15 +5227,15 @@ msgstr "%s%s: geçersiz arma adı: \"%s\""
 
 #, c-format
 msgid "%s%s: error creating alias \"%s\" => \"%s\""
-msgstr ""
+msgstr "%s%s: \"%s\" => \"%s\" arması oluşturulurken hata"
 
 #, c-format
 msgid "Alias \"%s\" => \"%s\" created"
-msgstr ""
+msgstr "\"%s\" => \"%s\" arması oluşturuldu"
 
 #, c-format
 msgid "Aliases with \"%s\":"
-msgstr ""
+msgstr "\"%s\" içeren armalar:"
 
 msgid "All aliases:"
 msgstr "Tüm armalar:"
@@ -5057,18 +5245,18 @@ msgstr "tamamlama:"
 
 #, c-format
 msgid "No alias found matching \"%s\""
-msgstr ""
+msgstr "\"%s\" ile eşleşen bir arma bulunamadı"
 
 msgid "No alias defined"
-msgstr ""
+msgstr "Bir arma tanımlı değil"
 
 #, c-format
 msgid "%sAlias \"%s\" not found"
-msgstr ""
+msgstr "%s\"%s\" arması bulunamadı"
 
 #, c-format
 msgid "Alias \"%s\" removed"
-msgstr ""
+msgstr "\"%s\" arması kaldırıldı"
 
 msgid "list, add or remove command aliases"
 msgstr "komut armalarını listele, ekle veya kaldır"
@@ -5133,7 +5321,7 @@ msgid "list of default aliases"
 msgstr "öntanımlı armaların listesi"
 
 msgid "Buffers list"
-msgstr "Arabellekler listesi"
+msgstr "Arabellek listesi"
 
 #, c-format
 msgid ""
@@ -6423,55 +6611,55 @@ msgstr ""
 
 #, c-format
 msgid "%s%s: not connected to server \"%s\"!"
-msgstr ""
+msgstr "%s%s: \"%s\" sunucusuna bağlı değil!"
 
 #, c-format
 msgid "%s: auto-reconnection is cancelled"
-msgstr ""
+msgstr "%s: Kendiliğinden yeniden bağlanma iptal edildi"
 
 #, c-format
 msgid "%s%s: server \"%s\" not found"
-msgstr "%s%s: sunucu \"%s\" bulunamadı"
+msgstr "%s%s: \"%s\" sunucusu bulunamadı"
 
 #, c-format
 msgid "  %s[%s%d%s]%s mask: %s / server: %s / channel: %s"
-msgstr ""
+msgstr "  %s[%s%d%s]%s maske: %s / sunucu: %s / kanal: %s"
 
 #, c-format
 msgid "%s: ignore list:"
-msgstr ""
+msgstr "%s: Yok sayma listesi"
 
 #, c-format
 msgid "%s: no ignore in list"
-msgstr ""
+msgstr "%s: Listede yok sayma yok"
 
 #, c-format
 msgid "%s%s: ignore already exists"
-msgstr ""
+msgstr "%s%s: Yok sayma halihazırda mevcut"
 
 #, c-format
 msgid "%s: ignore added:"
-msgstr ""
+msgstr "%s: Yok sayma eklendi:"
 
 #, c-format
 msgid "%s%s: error adding ignore"
-msgstr ""
+msgstr "%s%s: Yok sayma eklerken hata"
 
 #, c-format
 msgid "%s: all ignores deleted"
-msgstr ""
+msgstr "%s: Tüm yok saymalar silindi"
 
 #, c-format
 msgid "%s: ignore \"%s\" deleted"
-msgstr "%s: \"%s\" yok say silindi"
+msgstr "%s: \"%s\" için yok sayma silindi"
 
 #, c-format
 msgid "%s%s: ignore not found"
-msgstr ""
+msgstr "%s%s: Yok sayma bulunamadı"
 
 #, c-format
 msgid "%s%s: wrong ignore number"
-msgstr ""
+msgstr "%s%s: Yanlış yok sayma numarası"
 
 #, c-format
 msgid "%s%s: command \"%s\" must be executed on connected irc server"
@@ -6577,11 +6765,11 @@ msgstr "Sunucu yok"
 
 #, c-format
 msgid "Servers with \"%s\":"
-msgstr ""
+msgstr "\"%s\" içeren sunucular:"
 
 #, c-format
 msgid "No server found with \"%s\""
-msgstr ""
+msgstr "\"%s\" içeren sunucu bulunamadı"
 
 #, c-format
 msgid "%s%s: server \"%s\" already exists, can't add it!"
@@ -6593,19 +6781,19 @@ msgstr "%s%s: sunucu eklenemiyor"
 
 #, c-format
 msgid "%s%s: server \"%s\" not found for \"%s\" command"
-msgstr ""
+msgstr "%s%s: \"%s\" sunucusu \"%s\" komutu için bulunamadı"
 
 #, c-format
 msgid "%s%s: server \"%s\" already exists for \"%s\" command"
-msgstr ""
+msgstr "%s%s: \"%s\" sunucusu \"%s\" komutu için halihazırda mevcut"
 
 #, c-format
 msgid "%s: server %s%s%s has been copied to %s%s%s"
-msgstr ""
+msgstr "%s: %s%s%s sunucusu %s%s%s konumuna kopyalandı"
 
 #, c-format
 msgid "%s: server %s%s%s has been renamed to %s%s%s"
-msgstr ""
+msgstr "%s: %s%s%s sunucusu %s%s%s olarak yeniden adlandırıldı"
 
 #, c-format
 msgid "%d server moved"
@@ -6614,17 +6802,18 @@ msgstr[0] "%d sunucu taşındı"
 
 #, c-format
 msgid "%s%s: server \"%s\" is not a temporary server"
-msgstr ""
+msgstr "%s%s: \"%s\" sunucusu geçici bir sunucu değil"
 
 #, c-format
 msgid "%s: server %s%s%s is not temporary any more"
-msgstr ""
+msgstr "%s: %s%s%s sunucusu artık geçici değil"
 
 #, c-format
 msgid ""
 "%s%s: you can not delete server \"%s\" because you are connected to. Try \"/"
 "disconnect %s\" before."
-msgstr ""
+msgstr "%s%s: \"%s\" sunucusunu silemezsiniz; çünkü ona bağlı değilsiniz. "
+"Önce \"/ disconnect %s\" deneyin."
 
 #, c-format
 msgid "%s: server %s%s%s has been deleted"
@@ -6635,13 +6824,15 @@ msgid ""
 "%s: messages outqueue DELETED for all servers. Some messages from you or "
 "WeeChat may have been lost!"
 msgstr ""
+"%s: İletiler çıkış kuyruğu tüm sunucular için SİLİNDİ. Sizden veya WeeChat'ten"
+" bazı iletiler kaybolmuş olabilir!"
 
 #, c-format
 msgid "%s%s: you are not on channel \"%s\""
-msgstr ""
+msgstr "%s%s: \"%s\" kanalında değilsiniz"
 
 msgid "find information about the administrator of the server"
-msgstr ""
+msgstr "sunucu yöneticisi hakkında bilgi bul"
 
 msgid "[<target>]"
 msgstr "[<hedef>]"
@@ -6650,7 +6841,7 @@ msgid "target: server name"
 msgstr "hedef: sunucu adı"
 
 msgid "execute a command on all channels of all connected servers"
-msgstr ""
+msgstr "bağlanılan tüm sunucuların tüm kanallarında bir komut çalıştır"
 
 msgid ""
 "[-current] [-parted] [-exclude=<channel>[,<channel>...]] <command> || [-"
@@ -6798,7 +6989,7 @@ msgid ""
 msgstr ""
 
 msgid "client capability negotiation"
-msgstr ""
+msgstr "istemci yeteneği pazarlığı"
 
 msgid "ls || list || req|ack [<capability> [<capability>...]] || end"
 msgstr ""
@@ -7544,35 +7735,39 @@ msgstr ""
 "  /server raw c:${recv} && ${komut}==PRIVMSG && ${takma ad}==foo"
 
 msgid "list services currently connected to the network"
-msgstr ""
+msgstr "şu anda ağa bağlı servisleri listele"
 
 msgid "[<mask> [<type>]]"
-msgstr ""
+msgstr "[<maske> [<tür>]]"
 
 msgid ""
 "mask: list only services matching this mask\n"
 "type: list only services of this type"
 msgstr ""
+"maske: yalnızca bu maske ile eşleşen servisleri listele\n"
+"  tür: yalnızca bu türden olan servisleri listele"
 
 msgid "deliver a message to a service"
-msgstr ""
+msgstr "bir servise ileti ilet"
 
 msgid "<service> <text>"
-msgstr ""
+msgstr "<servis> <metin>"
 
 msgid ""
 "service: name of service\n"
 "   text: text to send"
 msgstr ""
+"servis: servisin adı\n"
+" metin: gönderilecek metin"
 
 msgid "set real name"
 msgstr "gerçek adı ayarla"
 
 msgid "<realname>"
-msgstr "<gerçek-ad>"
+msgstr "<gerçekad>"
 
 msgid "realname: new real name"
-msgstr "realname: Yeni gerçek ad"
+msgstr "gerçekad: Yeni gerçek ad"
 
 msgid "disconnect server links"
 msgstr "sunucu bağlantılarını kes"
@@ -7584,11 +7779,11 @@ msgid ""
 " target: server name\n"
 "comment: comment"
 msgstr ""
-" target: sunucu adı\n"
-"comment: yorum"
+"hedef: sunucu adı\n"
+"yorum: yorum"
 
 msgid "query statistics about server"
-msgstr ""
+msgstr "sunucu hakkındaki istatistikleri sorgula"
 
 msgid "[<query> [<target>]]"
 msgstr "[<sorgu> [<hedef>]]"
@@ -7597,11 +7792,15 @@ msgid ""
 " query: c/h/i/k/l/m/o/y/u (see RFC1459)\n"
 "target: server name"
 msgstr ""
+"sorgu: c/h/i/k/l/m/o/y/u (bkz. RFC1459)\n"
+"hedef: sunucu adı"
 
 msgid ""
 "give users who are on a host running an IRC server a message asking them to "
 "please join IRC"
 msgstr ""
+"bir makine üzerinde IRC sunucusu çalıştıran kullanıcılara IRC'ye katılmaları "
+"için bir ileti gönder"
 
 msgid "<user> [<target> [<channel>]]"
 msgstr "<kullanıcı> [<hedef> [<kanal>]]"
@@ -7611,15 +7810,18 @@ msgid ""
 " target: server name\n"
 "channel: channel name"
 msgstr ""
+"kullanıcı: kullanıcı adı\n"
+"    hedef: sunucu adı\n"
+"    kanal: kanal adı"
 
 msgid "query local time from server"
-msgstr ""
+msgstr "sunucudan yerel zamanı sorgula"
 
 msgid "target: query time from specified server"
-msgstr ""
+msgstr "hedef: belirlenen sunucudan zaman sorgula"
 
 msgid "get/set channel topic"
-msgstr ""
+msgstr "kanal konusunu al/ayarla"
 
 msgid "[<channel>] [<topic>|-delete]"
 msgstr "[<kanal>] [<konu>|-delete]"
@@ -7629,15 +7831,15 @@ msgid ""
 "  topic: new topic\n"
 "-delete: delete channel topic"
 msgstr ""
-"channel: kanal adı\n"
-"  topic: yeni konu\n"
+"  kanal: kanal adı\n"
+"   konu: yeni konu\n"
 "-delete: kanal konusunu sil"
 
 msgid "find the route to specific server"
-msgstr ""
+msgstr "belirli bir sunucuya olan yolu bul"
 
 msgid "unban nicks or hosts"
-msgstr ""
+msgstr "takma adların veya makinelerin yasağını kaldır"
 
 msgid "[<channel>] <nick>|<number> [<nick>|<number>...]"
 msgstr "[<kanal>] <takmaad>|<sayı> [<takmaad>|<sayı>...]"
@@ -7647,27 +7849,27 @@ msgid ""
 "   nick: nick or host\n"
 " number: ban number (as displayed by command /ban)"
 msgstr ""
-"channel: kanal adı\n"
-"   nick: takma ad veya makine\n"
-" number: yasak numarası (/ban komutunda görüntülendiği üzere)"
+"  kanal: kanal adı\n"
+"takmaad: takma ad veya makine\n"
+"   sayı: yasak numarası (/ban komutunda görüntülendiği üzere)"
 
 msgid "unquiet nicks or hosts"
-msgstr ""
+msgstr "takma adların veya makinelerin sessiz durumunu kaldır"
 
 msgid ""
 "channel: channel name\n"
 "   nick: nick or host\n"
 " number: quiet number (as displayed by command /quiet)"
 msgstr ""
-"channel: kanal adı\n"
-"   nick: takma ad veya makine\n"
-" number: sessiz numarası (/quiet komutunda görüntülendiği üzere)"
+"  kanal: kanal adı\n"
+"takmaad: takma ad veya makine\n"
+"   sayı: sessiz numarası (/quiet komutunda görüntülendiği üzere)"
 
 msgid "return a list of information about nicks"
 msgstr "takma adlar hakkında bilgi listele"
 
 msgid "list of users logged into the server"
-msgstr "Sunucuya giriş yapmış kullanıcıların listesi"
+msgstr "sunucuya giriş yapmış kullanıcıların listesi"
 
 msgid "give the version info of nick or server (current or specified)"
 msgstr "takma ad veya sunucunun sürüm bilgisini ver (geçerli veya belirtilen)"
@@ -7679,18 +7881,18 @@ msgid ""
 "target: server name\n"
 "  nick: nick"
 msgstr ""
-"server: sunucu adı\n"
-"  nick: takma ad"
+" sunucu: sunucu adı\n"
+"takmaad: takma ad"
 
 msgid "give voice to nick(s)"
-msgstr "takma adlara ses ver"
+msgstr "takma adlara yardımcı unvanı ver"
 
 msgid ""
 "nick: nick or mask (wildcard \"*\" is allowed)\n"
 "   *: give voice to everybody on channel"
 msgstr ""
-"nick: takma ad veya maske (\"*\" jokerine izin verilir)\n"
-"   *: kanaldaki herkese ses ver"
+"takmaad: takma ad veya maske (\"*\" jokerine izin verilir)\n"
+"      *: kanaldaki herkese yardımcı unvanı ver"
 
 msgid "send a notice to channel ops"
 msgstr "kanal operatörlerine bir bildirim gönder"
@@ -7935,7 +8137,7 @@ msgstr ""
 "IPv4'e dönün); devre dışı ise yalnızca IPv4 kullanılır"
 
 msgid "use SSL for server communication"
-msgstr "sunucu iletişimi için SSl kullan"
+msgstr "sunucu iletişimi için SSL kullan"
 
 msgid ""
 "SSL certificate file used to automatically identify your nick (path is "
@@ -8671,7 +8873,7 @@ msgid ""
 msgstr ""
 
 msgid "send unknown commands to server"
-msgstr ""
+msgstr "sunucuya bilinmeyen komutlar gönder"
 
 msgid ""
 "double the nick in /whois command (if only one nick is given), to get idle "
@@ -8683,7 +8885,7 @@ msgid "%sCTCP requested by %s%s%s: %s%s%s%s%s%s"
 msgstr ""
 
 msgid " (blocked)"
-msgstr ""
+msgstr " (engelli)"
 
 #. TRANSLATORS: %.3fs is a float number + "s" ("seconds")
 #, c-format
@@ -8976,7 +9178,7 @@ msgstr "iç hata"
 
 #, c-format
 msgid "%s%s: client capability, requesting: %s"
-msgstr ""
+msgstr "%s%s: istemci yeteneği, isteniliyor: %s"
 
 #, c-format
 msgid "%s%s: client capability: SASL not supported"
@@ -9019,7 +9221,7 @@ msgid "%s%s%s%s (%s%s%s)%s has changed host to %s%s"
 msgstr "%s%s%s%s (%s%s%s)%s ana makineyi %s%s olarak değiştirdi"
 
 msgid "Failure:"
-msgstr ""
+msgstr "Başarısız:"
 
 #, c-format
 msgid "%sYou have been invited to %s%s%s by %s%s%s"
@@ -9055,11 +9257,11 @@ msgstr "%s%s%s%s%s tarafından çıkarıldınız"
 
 #, c-format
 msgid "%sMode %s%s %s[%s%s%s%s%s]%s by %s%s"
-msgstr "%sKip %s%s %s[%s%s%s%s%s}%s, %s%s tarafından"
+msgstr "%s%s%s %s[%s%s%s%s%s}%s kipi ayarlandı: %s%s"
 
 #, c-format
 msgid "%sUser mode %s[%s%s%s]%s by %s%s"
-msgstr "%sKullanıcı kipi %s[%s%s%s]%s, %s%s tarafından"
+msgstr "%s%s[%s%s%s]%s kullanıcı kipi ayarlandı: %s%s"
 
 #, c-format
 msgid "%sYou are now known as %s%s%s"
@@ -9253,15 +9455,15 @@ msgstr "%sTakma adlar %s%s%s: %s[%s%s]"
 
 msgid "op"
 msgid_plural "ops"
-msgstr[0] "op"
+msgstr[0] "operatör"
 
 msgid "halfop"
 msgid_plural "halfops"
-msgstr[0] "yarım op"
+msgstr[0] "yarım operatör"
 
 msgid "voice"
 msgid_plural "voices"
-msgstr[0] "ses"
+msgstr[0] "yardımcı"
 
 #. TRANSLATORS: number of "normal" nicks on a channel (ie no op/voice), for example: "56 normals"
 #, c-format
