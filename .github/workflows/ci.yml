@@ -15,6 +15,7 @@ jobs:
           - ubuntu-20.04
         config:
           - { name: "cmake_gcc", cc: "gcc", cxx: "g++", tool: "cmake", args: "" }
+          - { name: "cmake_gcc_ninja", cc: "gcc", cxx: "g++", tool: "cmake", args: "-G Ninja" }
           - { name: "cmake_gcc_no_nls", cc: "gcc", cxx: "g++", tool: "cmake", args: "-DENABLE_NLS=OFF" }
           - { name: "cmake_gcc_py2", cc: "gcc", cxx: "g++", tool: "cmake", args: "-DENABLE_PYTHON2=ON" }
           - { name: "cmake_gcc_coverage", cc: "gcc", cxx: "g++", tool: "cmake", args: "-DENABLE_CODE_COVERAGE=ON" }
@@ -33,7 +34,7 @@ jobs:
       run: |
         sudo apt-add-repository --yes ppa:ondrej/php
         sudo apt-get update -qq
-        sudo apt-get --yes --no-install-recommends install devscripts equivs python3-pip libenchant-dev autopoint cmake lcov pkg-config libncursesw5-dev gem2deb libperl-dev python2-dev python3-dev libaspell-dev liblua5.3-dev tcl8.6-dev guile-2.0-dev libv8-dev libcurl4-gnutls-dev libgcrypt20-dev libgnutls28-dev zlib1g-dev curl libcpputest-dev php8.0-dev libphp8.0-embed libargon2-0-dev libsodium-dev pylint python3-bandit asciidoctor
+        sudo apt-get --yes --no-install-recommends install devscripts equivs python3-pip libenchant-dev autopoint cmake ninja-build lcov pkg-config libncursesw5-dev gem2deb libperl-dev python2-dev python3-dev libaspell-dev liblua5.3-dev tcl8.6-dev guile-2.0-dev libv8-dev libcurl4-gnutls-dev libgcrypt20-dev libgnutls28-dev zlib1g-dev curl libcpputest-dev php8.0-dev libphp8.0-embed libargon2-0-dev libsodium-dev pylint python3-bandit asciidoctor
         sudo -H pip3 install --ignore-installed msgcheck
 
     - name: Test patches
