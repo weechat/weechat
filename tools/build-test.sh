@@ -69,6 +69,8 @@ if [ "$BUILDTOOL" = "cmake" ]; then
     # build with CMake
     run "cmake .. -DENABLE_MAN=ON -DENABLE_DOC=ON -DENABLE_TESTS=ON ${BUILDARGS}"
     run "make VERBOSE=1 -j$(nproc)"
+    run "make VERBOSE=1 changelog"
+    run "make VERBOSE=1 rn"
     run "sudo make install"
     run "ctest -V"
 fi
