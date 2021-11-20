@@ -6627,7 +6627,7 @@ msgstr "  %s[%s%d%s]%s maske: %s / sunucu: %s / kanal: %s"
 
 #, c-format
 msgid "%s: ignore list:"
-msgstr "%s: Yok sayma listesi"
+msgstr "%s: Yok sayma listesi:"
 
 #, c-format
 msgid "%s: no ignore in list"
