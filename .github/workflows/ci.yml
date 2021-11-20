@@ -89,7 +89,8 @@ jobs:
       fail-fast: false
       matrix:
         os:
-          - macos-latest
+          - macos-11
+          - macos-10.15
         config:
           - { name: "cmake_gcc", cc: "gcc", cxx: "g++" }
           - { name: "cmake_clang", cc: "clang", cxx: "clang++" }

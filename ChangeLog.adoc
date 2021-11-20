@@ -40,6 +40,10 @@ Bug fixes::
   * irc: fix parsing of CAP message when there is no prefix (issue #1707)
   * irc: fix parsing of TAGMSG message when there is a colon before the channel
 
+Tests::
+
+  * core: add build on macOS 11 in CI
+
 Build::
 
   * core: add targets "changelog" and "rn" to build HTML version of ChangeLog and release notes (CMake build only)
