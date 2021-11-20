@@ -33,12 +33,21 @@
 #             defaults to current directory
 #
 
+# exit on any error
+set -e
+
+error ()
+{
+    echo >&2 "ERROR: $*"
+    exit 1
+}
+
 # check git repository
 ROOT_DIR=$(git rev-parse --show-toplevel)
 if [ -z "${ROOT_DIR}" ] || [ ! -d "${ROOT_DIR}/.git" ]; then
-    echo "This script must be run from WeeChat git repository."
-    exit 1
+    error "this script must be run from WeeChat git repository."
 fi
+cd "${ROOT_DIR}"
 
 # default values
 VERSION="$("${ROOT_DIR}/version.sh" devel-full)"
@@ -52,10 +61,8 @@ if [ $# -ge 2 ]; then
     TREEISH=$2
 fi
 if [ $# -ge 3 ]; then
-    OUTPATH=$(cd "$3" || exit 1; pwd)
+    OUTPATH=$(cd "$3"; pwd)
 fi
-
-cd "${ROOT_DIR}" || exit 1
 
 PREFIX="weechat-${VERSION}/"
 FILE="${OUTPATH}/weechat-${VERSION}.tar"
