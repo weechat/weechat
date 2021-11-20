@@ -37,11 +37,11 @@ You can restore the default triggers with the following command:
 === New parameters in function hdata_search
 
 New parameters have been added in function
-link:weechat_plugin_api.en.html#_hdata_search[hdata_search], used for the
+link:https://weechat.org/doc/plugin#_hdata_search[hdata_search], used for the
 evaluation of expression.
 
 New parameters are the same as function
-link:weechat_plugin_api.en.html#_string_eval_expression[string_eval_expression]:
+link:https://weechat.org/doc/plugin#_string_eval_expression[string_eval_expression]:
 
 * pointers: hashtable with pointers (pointers)
 * extra_vars: hashtable with extra variables (strings)
@@ -63,7 +63,7 @@ WeeChat versions:
 
 Support of static array in hdata has been added.
 For pointers to arrays, a prefix `*,` must be added in parameter `array_size`
-of API function link:weechat_plugin_api.en.html#_hdata_new_var[hdata_new_var].
+of API function link:https://weechat.org/doc/plugin#_hdata_new_var[hdata_new_var].
 
 [[v3.3]]
 == Version 3.3 (2021-09-19)
@@ -652,7 +652,7 @@ A _handshake_ command has been added in weechat relay protocol. +
 The client should send this command before the _init_ to negotiate the way to
 authenticate with the relay server.
 
-See the link:weechat_relay_protocol.en.html#command_handshake[handshake command]
+See the link:https://weechat.org/doc/relay#command_handshake[handshake command]
 in Relay protocol doc for more information.
 
 ==== Server "nonce"
@@ -670,7 +670,7 @@ So the hash is computed on: (`server nonce` + `client nonce` + `password`).
 This salt is now mandatory even for algorithms `SHA256` and `SHA512`; this is
 a breaking change in protocol, needed for security reasons.
 
-See the link:weechat_relay_protocol.en.html#command_init[init command]
+See the link:https://weechat.org/doc/relay#command_init[init command]
 in Relay protocol doc for more information.
 
 [[v2.8]]
