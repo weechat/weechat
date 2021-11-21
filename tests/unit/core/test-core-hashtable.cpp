@@ -23,6 +23,7 @@
 
 extern "C"
 {
+#include <stdio.h>
 #include <string.h>
 #include "src/core/wee-hashtable.h"
 #include "src/core/wee-infolist.h"
