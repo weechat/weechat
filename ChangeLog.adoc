@@ -47,7 +47,7 @@ Tests::
 
 Build::
 
-  * ruby: add detection of Ruby 3.0 (issue #1721)
+  * ruby: add detection of Ruby 3.0 (issue #1721, issue #1605)
   * core: add targets "changelog" and "rn" to build HTML version of ChangeLog and release notes (CMake build only)
 
 [[v3.3]]
