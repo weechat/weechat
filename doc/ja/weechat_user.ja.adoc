@@ -920,7 +920,7 @@ Each aspect of the layout can be customized with the appropriate <<command_line,
 <<command_weechat_bar,`/bar`>> to customize the bars,
 <<command_weechat_buffer,/buffer>> and <<command_weechat_window,`/window`>>
 to customize <<buffers_and_windows,buffers and windows>>,
-and <<command_weechat_layot,/layout>> to name, save and restore the screen layout
+and <<command_weechat_layout,/layout>> to name, save and restore the screen layout
 and the association between windows and buffers.
 
 [[command_line]]

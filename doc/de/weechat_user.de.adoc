@@ -882,7 +882,7 @@ angepasst werden:
 <<command_weechat_bar,`/bar`>> um die Bars anzupassen,
 <<command_weechat_buffer,/buffer>> und <<command_weechat_window,`/window`>>
 um <<buffers_and_windows,Buffer und Fenster>> anzupassen,
-und <<command_weechat_layot,/layout>> um das Bildschirmlayout zu benennen,
+und <<command_weechat_layout,/layout>> um das Bildschirmlayout zu benennen,
 zu speichern und wiederherzustellen sowie die Zuordnung zwischen Fenstern
 und Buffern zu behalten.
 
