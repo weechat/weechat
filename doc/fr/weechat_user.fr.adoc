@@ -893,7 +893,7 @@ Chaque aspect de la disposition peut être configuré par la <<command_line,comm
 <<command_weechat_bar,`/bar`>> pour configurer les barres,
 <<command_weechat_buffer,/buffer>> et <<command_weechat_window,`/window`>>
 pour configurer les <<buffers_and_windows,tampons et fenêtres>>,
-et <<command_weechat_layot,/layout>> pour nommer, sauver et restaurer la disposition
+et <<command_weechat_layout,/layout>> pour nommer, sauver et restaurer la disposition
 de l'écran et l'association entre les fenêtres et les tampons.
 
 [[command_line]]

@@ -882,7 +882,7 @@ Każdy aspekt układu może zostać spersonalizowany za pomocą <<command_line,k
 <<command_weechat_bar,`/bar`>> do dostosowania pasków,
 <<command_weechat_buffer,/buffer>> i <<command_weechat_window,`/window`>>
 do dostosowania <<buffers_and_windows,budorów i okien>>,
-i <<command_weechat_layot,/layout>> żeby nazwać, zapisać i przywrócić układ ekranu
+i <<command_weechat_layout,/layout>> żeby nazwać, zapisać i przywrócić układ ekranu
 i powiązania między oknami i buforami.
 
 [[command_line]]
