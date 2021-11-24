@@ -549,10 +549,9 @@ Diese Installation kann durchgeführt werden, während WeeChat ausgeführt wird.
 
 WeeChat kann die neue Binärdatei mit Hilfe des  <<command_weechat_upgrade,/upgrade>>
 Befehls starten: der Bufferinhalt und nicht-SSL Verbindungen bleiben dabei erhalten. +
-// TRANSLATION MISSING
-The SSL connections are lost during upgrade and are restored automatically
-after the upgrade (reload of SSL sessions is currently not possible
-with GnuTLS).
+Eine SSL-Verbindung wird während des Upgrades getrennt und wird automatisch,
+nach dem Beenden des Upgrades, wiederhergestellt (das aufrechterhalten einer
+SSL-Sitzungen ist derzeit, mit GnuTLS, nicht möglich).
 
 Der Befehl kann auch verwendet werden, wenn Sie den Computer neu starten müssen,
 z.B. um den Kernel zu aktualisieren oder WeeChat auf einen anderen Computer zu verschieben:
