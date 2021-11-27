@@ -935,7 +935,7 @@ Dans le tableau qui suit, les conventions suivantes sont utilisées :
 
 Toutes les combinaisons sont résumées dans ce tableau :
 
-[width="100%",cols="4,2,2,8",options="header"]
+[width="100%",cols="4,3,2,8",options="header"]
 |===
 | Code                                       | Exemple                      | Aires         | Description
 | [hex]#19# + STD                            | [hex]#19# `+01+`             | chat + barres | Définir les attributs et la couleur en utilisant une option, voir le tableau ci-dessous.

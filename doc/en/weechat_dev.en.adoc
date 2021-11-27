@@ -919,7 +919,7 @@ In following table, these conventions are used:
 
 All combinations are summarized in this table:
 
-[width="100%",cols="4,2,2,8",options="header"]
+[width="100%",cols="4,3,2,8",options="header"]
 |===
 | Code                                       | Example                      | Areas       | Description
 | [hex]#19# + STD                            | [hex]#19# `+01+`             | chat + bars | Set attributes and color using option, see table below.
