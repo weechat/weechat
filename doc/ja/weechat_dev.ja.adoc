@@ -555,7 +555,7 @@ WeeChat とプラグインの翻訳は gettext で行います、ファイルは
 ** 電子メールアドレス、
 ** ライセンス。
 
-[source,C]
+[source,c]
 ----
 /*
  * weechat.c - core functions for WeeChat
@@ -593,7 +593,7 @@ C 言語のコードを書く際には以下の基本的なルールを *必ず*
 
 例:
 
-[source,C]
+[source,c]
 ----
 /*
  * Checks if a string with boolean value is valid.
@@ -624,7 +624,7 @@ foo ()
   例外: `for` ループのカウンタ変数に "i" や "n" を使うのは問題ありません。
 * 関数内で行うローカル変数の初期化は宣言の後に行ってください、例:
 
-[source,C]
+[source,c]
 ----
 void
 foo ()
@@ -642,7 +642,7 @@ foo ()
 * 中括弧 `+{ }+` は制御文の次の行に単独で置き、制御文 (以下の `if` です)
   と同じ空白文字の数だけインデントしてください:
 
-[source,C]
+[source,c]
 ----
 if (nicks_count == 1)
 {
@@ -652,7 +652,7 @@ if (nicks_count == 1)
 
 * 関数内部でブロックを分けるには空行を使ってください、可能であればそれぞれのブロックにコメントを付けてください:
 
-[source,C]
+[source,c]
 ----
 /*
  * Sends a message from out queue.
@@ -695,7 +695,7 @@ irc_server_outqueue_send (struct t_irc_server *server)
 * `if` 条件はインデントし、演算子を含む条件は丸括弧で括ってください
   (単独のブール値を評価する場合は不要)、例:
 
-[source,C]
+[source,c]
 ----
 if (something)
 {
@@ -719,7 +719,7 @@ else
 
 * `switch` 文は以下の様にインデントしてください:
 
-[source,C]
+[source,c]
 ----
 switch (string[0])
 {
@@ -737,7 +737,7 @@ switch (string[0])
 
 * 関数プロトタイプには `typedef` を使い、構造体を使わないでください:
 
-[source,C]
+[source,c]
 ----
 typedef int (t_hook_callback_fd)(void *data, int fd);
 
@@ -819,7 +819,7 @@ _wee-command.c_ のヘッダファイルは _wee-command.h_ です
 
 例: IRC のニックネーム (_src/plugins/irc/irc-nick.h_ より):
 
-[source,C]
+[source,c]
 ----
 struct t_irc_nick
 {
@@ -849,7 +849,7 @@ struct t_irc_nick
 
 例: ウィンドウ (_src/gui/gui-window.c_ より):
 
-[source,C]
+[source,c]
 ----
 struct t_gui_window *gui_windows = NULL;        /* first window             */
 struct t_gui_window *last_gui_window = NULL;    /* last window              */
@@ -868,7 +868,7 @@ struct t_gui_window *gui_current_window = NULL; /* current window           */
 
 例: 新しいウィンドウの作成 (_src/gui/gui-window.c_ より):
 
-[source,C]
+[source,c]
 ----
 /*
  * Creates a new window.
@@ -904,7 +904,7 @@ WeeChat のほとんどの連結リストは双方向連結リストです: 各�
 
 例: バッファのリスト (_src/gui/gui-buffer.h_ より):
 
-[source,C]
+[source,c]
 ----
 struct t_gui_buffer
 {
@@ -919,7 +919,7 @@ struct t_gui_buffer
 
 さらにリストの最初と最後を示す 2 つのポインタがあります:
 
-[source,C]
+[source,c]
 ----
 struct t_gui_buffer *gui_buffers = NULL;           /* first buffer          */
 struct t_gui_buffer *last_gui_buffer = NULL;       /* last buffer           */
@@ -1110,7 +1110,7 @@ API 関数を簡単に呼び出すためのマクロが定義されています�
 例えば、関数 _hook_timer_ は以下のように構造体
 _t_weechat_plugin_ で定義されています:
 
-[source,C]
+[source,c]
 ----
 struct t_hook *(*hook_timer) (struct t_weechat_plugin *plugin,
                               long interval,
@@ -1123,7 +1123,7 @@ struct t_hook *(*hook_timer) (struct t_weechat_plugin *plugin,
 
 この関数を呼び出すマクロは:
 
-[source,C]
+[source,c]
 ----
 #define weechat_hook_timer(__interval, __align_second, __max_calls,     \
                            __callback, __data)                          \
@@ -1134,7 +1134,7 @@ struct t_hook *(*hook_timer) (struct t_weechat_plugin *plugin,
 
 このため、プラグイン内での関数の呼び出しは以下の例の様に行います:
 
-[source,C]
+[source,c]
 ----
 server->hook_timer_sasl = weechat_hook_timer (timeout * 1000,
                                               0, 1,

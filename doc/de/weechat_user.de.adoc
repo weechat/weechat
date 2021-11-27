@@ -3941,7 +3941,7 @@ bestätigt wurde (siehe Option <<option_relay.network.websocket_allowed_origins,
 
 Ein WebSocket kann in HTML5, mit einer JavaScript Zeile, geöffnet werden:
 
-[source,js]
+[source,javascript]
 ----
 websocket = new WebSocket("ws://server.com:9000/weechat");
 ----

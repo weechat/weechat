@@ -3853,7 +3853,7 @@ WebSocket if required headers are found in handshake and if origin is allowed
 
 A WebSocket can be opened in a HTML5 with a single line of JavaScript:
 
-[source,js]
+[source,javascript]
 ----
 websocket = new WebSocket("ws://server.com:9000/weechat");
 ----

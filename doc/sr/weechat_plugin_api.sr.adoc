@@ -556,7 +556,7 @@ _WeeChat ≥ 3.3._
 
 Прототип:
 
-[source,C]
+[source,c]
 ----
 char *weechat_string_cut (const char *string, int length, int count_suffix, int screen, const char *cut_suffix);
 ----
@@ -575,7 +575,7 @@ char *weechat_string_cut (const char *string, int length, int count_suffix, int 
 
 C пример:
 
-[source,C]
+[source,c]
 ----
 char *str = weechat_string_cut ("this is a test", 5, 1, 1, "…");  /* result: "this…" */
 /* ... */
@@ -3867,7 +3867,7 @@ _WeeChat ≥ 3.3._
 
 Прототип:
 
-[source,C]
+[source,c]
 ----
 int weechat_file_copy (const char *from, const char *to);
 ----
@@ -3883,7 +3883,7 @@ int weechat_file_copy (const char *from, const char *to);
 
 C пример:
 
-[source,C]
+[source,c]
 ----
 if (weechat_file_copy ("/tmp/test.txt", "/path/to/test2.txt"))
 {

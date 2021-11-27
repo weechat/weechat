@@ -22,7 +22,7 @@ if(ENABLE_MAN OR ENABLE_DOC)
   find_package(Asciidoctor)
   if(ASCIIDOCTOR_FOUND)
     # common asciidoctor arguments
-    set(ASCIIDOCTOR_ARGS -a experimental -a "prewrap!" -a icons=font -a revnumber="${VERSION}" -a sectanchors -a source-highlighter=prettify)
+    set(ASCIIDOCTOR_ARGS -a experimental -a "prewrap!" -a icons=font -a revnumber="${VERSION}" -a sectanchors -a source-highlighter=pygments -a pygments-style=native)
 
     # sed arguments used to replace links in ChangeLog and release notes
     set(SED_LINKS_ARGS

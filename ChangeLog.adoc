@@ -40,6 +40,10 @@ Bug fixes::
   * irc: fix parsing of CAP message when there is no prefix (issue #1707)
   * irc: fix parsing of TAGMSG message when there is a colon before the channel
 
+Documentation::
+
+  * doc: switch from prettify to pygments for syntax highlighting
+
 Tests::
 
   * core: add build with CMake and Ninja in CI

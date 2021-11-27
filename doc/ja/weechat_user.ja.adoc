@@ -3961,7 +3961,7 @@ origin が許可されていれば WebSocket 用のソケットが準備され�
 
 HTML5 を使えばたった 1 行の JavaScript で WebSocket をオープンすることが可能です:
 
-[source,js]
+[source,javascript]
 ----
 websocket = new WebSocket("ws://server.com:9000/weechat");
 ----

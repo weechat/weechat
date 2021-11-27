@@ -511,7 +511,7 @@ directory:
 
 Example in C:
 
-[source,C]
+[source,c]
 ----
 /*
  * weechat.c - core functions for WeeChat
@@ -549,7 +549,7 @@ Some basic rules you *must* follow when you write C code:
 
 Example:
 
-[source,C]
+[source,c]
 ----
 /*
  * Checks if a string with boolean value is valid.
@@ -580,7 +580,7 @@ foo ()
   Exception: in `for` loops, where variables like "i" or "n" are OK.
 * Initialize local variables after declaration, in body of function, example:
 
-[source,C]
+[source,c]
 ----
 void
 foo ()
@@ -598,7 +598,7 @@ foo ()
 * Place curly brackets `+{ }+` alone on lines, and indent them with number of
   spaces used for line above opening curly bracket (the `if` in example):
 
-[source,C]
+[source,c]
 ----
 if (nicks_count == 1)
 {
@@ -609,7 +609,7 @@ if (nicks_count == 1)
 * Use empty lines to separate many different blocks inside functions, and if
   possible add a comment for each one, like this:
 
-[source,C]
+[source,c]
 ----
 /*
  * Sends a message from out queue.
@@ -652,7 +652,7 @@ irc_server_outqueue_send (struct t_irc_server *server)
 * Indent the `if` conditions, and use parentheses around conditions with an
   operator (not needed for single boolean), like this:
 
-[source,C]
+[source,c]
 ----
 if (something)
 {
@@ -676,7 +676,7 @@ else
 
 * Indent the `switch` statements like this:
 
-[source,C]
+[source,c]
 ----
 switch (string[0])
 {
@@ -694,7 +694,7 @@ switch (string[0])
 
 * Use `typedef` for function prototypes but not for structures:
 
-[source,C]
+[source,c]
 ----
 typedef int (t_hook_callback_fd)(void *data, int fd);
 
@@ -776,7 +776,7 @@ Structures have name _t_X_Y_ or _t_X_Y_Z_:
 
 Example: an IRC nick (from _src/plugins/irc/irc-nick.h_):
 
-[source,C]
+[source,c]
 ----
 struct t_irc_nick
 {
@@ -806,7 +806,7 @@ _X_ is name of variable, using singular form).
 
 Example: windows (from _src/gui/gui-window.c_):
 
-[source,C]
+[source,c]
 ----
 struct t_gui_window *gui_windows = NULL;        /* first window             */
 struct t_gui_window *last_gui_window = NULL;    /* last window              */
@@ -826,7 +826,7 @@ Naming convention for functions is the same as
 
 Example: creation of a new window (from _src/gui/gui-window.c_):
 
-[source,C]
+[source,c]
 ----
 /*
  * Creates a new window.
@@ -862,7 +862,7 @@ and next node.
 
 Example: list of buffers (from _src/gui/gui-buffer.h_):
 
-[source,C]
+[source,c]
 ----
 struct t_gui_buffer
 {
@@ -877,7 +877,7 @@ struct t_gui_buffer
 
 Then the two list pointers, to the head and tail of list:
 
-[source,C]
+[source,c]
 ----
 struct t_gui_buffer *gui_buffers = NULL;           /* first buffer          */
 struct t_gui_buffer *last_gui_buffer = NULL;       /* last buffer           */
@@ -1067,7 +1067,7 @@ Then some macros are defined to call these functions.
 For example, function _hook_timer_ is defined in structure _t_weechat_plugin_
 like this:
 
-[source,C]
+[source,c]
 ----
 struct t_hook *(*hook_timer) (struct t_weechat_plugin *plugin,
                               long interval,
@@ -1080,7 +1080,7 @@ struct t_hook *(*hook_timer) (struct t_weechat_plugin *plugin,
 
 And the macro used to call this function is:
 
-[source,C]
+[source,c]
 ----
 #define weechat_hook_timer(__interval, __align_second, __max_calls,     \
                            __callback, __data)                          \
@@ -1091,7 +1091,7 @@ And the macro used to call this function is:
 
 So in a plugin, the call to function will be for example:
 
-[source,C]
+[source,c]
 ----
 server->hook_timer_sasl = weechat_hook_timer (timeout * 1000,
                                               0, 1,

@@ -3888,7 +3888,7 @@ transmisji WebSocket jeśli wymagane nagłówki znajdują się w żądaniu oraz,
 
 WebSocket może zostać otworzony w HTML5 za pomocą jednej linii w JavaScript:
 
-[source,js]
+[source,javascript]
 ----
 websocket = new WebSocket("ws://server.com:9000/weechat");
 ----
