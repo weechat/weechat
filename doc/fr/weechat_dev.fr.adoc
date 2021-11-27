@@ -1244,7 +1244,7 @@ pour les notes, avertissements, ... Ces mots doivent être gardés tels quels :
 [CAUTION]
 ----
 
-Lorsqu'il y a un nom après `<<link_name>>`, alors vous devez le traduire :
+Lorsqu'il y a un nom après `+<<link_name>>+`, alors vous devez le traduire :
 
 ----
 <<link_name,ce texte doit être traduit>>
