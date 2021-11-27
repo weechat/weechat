@@ -11,6 +11,7 @@
   :root {
     --body-bg-color: #1a1a1a;
     --body-color: #ddd;
+    --body-font: system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
     --link-color: #8aceff;
     --table-thead-tfoot: #252525;
     --th-color: #fff;
@@ -39,6 +40,7 @@
   :root {
     --body-bg-color: ##fff;
     --body-color: #353535;
+    --body-font: system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
     --link-color: #1d4b8f;
     --table-thead-tfoot: #f7f8f7;
     --th-color: #000;
@@ -65,6 +67,7 @@
 body {
   background-color: var(--body-bg-color);
   color: var(--body-color);
+  font-family: var(--body-font);
 }
 
 h1 {
@@ -73,6 +76,10 @@ h1 {
 
 h2, h3, h4, h5, h6 {
   color: var(--color-header2) !important;
+}
+
+h1, h2, h3, #toctitle, .sidebarblock > .content > .title, h4, h5, h6 {
+  font-family: var(--body-font);
 }
 
 a:link, a:visited, #header .details span.email a {

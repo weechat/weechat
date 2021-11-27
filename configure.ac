@@ -1263,7 +1263,7 @@ if test "x$enable_man" = "xyes" -o "x$enable_doc" = "xyes"; then
         enable_man="no"
         enable_doc="no"
     fi
-    ASCIIDOCTOR_ARGS="-a experimental -a reproducible -a 'prewrap!' -a icons=font -a sectanchors -a source-highlighter=pygments -a pygments-style=native"
+    ASCIIDOCTOR_ARGS="-a experimental -a reproducible -a 'prewrap!' -a 'webfonts!' -a icons=font -a sectanchors -a source-highlighter=pygments -a pygments-style=native"
     AC_SUBST(ASCIIDOCTOR)
     AC_SUBST(ASCIIDOCTOR_ARGS)
 fi
