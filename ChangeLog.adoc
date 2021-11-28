@@ -42,6 +42,9 @@ Bug fixes::
 
 Documentation::
 
+  * doc: add dark theme (automatic, following browser/desktop settings)
+  * doc: make build reproducible
+  * doc: disable web fonts
   * doc: switch from prettify to pygments for syntax highlighting
 
 Tests::
