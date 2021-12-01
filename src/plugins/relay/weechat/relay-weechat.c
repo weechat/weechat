@@ -73,6 +73,10 @@ relay_weechat_compression_search (const char *compression)
 void
 relay_weechat_hook_signals (struct t_relay_client *client)
 {
+    RELAY_WEECHAT_DATA(client, hook_signal_hotlist) =
+        weechat_hook_signal ("hotlist_*",
+                             &relay_weechat_protocol_signal_hotlist_cb,
+                             client, NULL);
     RELAY_WEECHAT_DATA(client, hook_signal_buffer) =
         weechat_hook_signal ("buffer_*",
                              &relay_weechat_protocol_signal_buffer_cb,
