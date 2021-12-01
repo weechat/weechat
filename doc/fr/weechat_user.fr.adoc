@@ -3982,7 +3982,7 @@ poignée de main et si l'origine est autorisée (voir l'option
 Un WebSocket peut être ouvert dans une page HTML5 avec une seule ligne de
 JavaScript :
 
-[source,js]
+[source,javascript]
 ----
 websocket = new WebSocket("ws://server.com:9000/weechat");
 ----

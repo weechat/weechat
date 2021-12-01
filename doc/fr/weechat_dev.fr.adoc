@@ -513,7 +513,7 @@ fichiers sont dans le répertoire _po/_ :
 
 Exemple en C :
 
-[source,C]
+[source,c]
 ----
 /*
  * weechat.c - core functions for WeeChat
@@ -554,7 +554,7 @@ Quelques règles basiques que vous *devez* suivre quand vous écrivez du code C�
 
 Exemple :
 
-[source,C]
+[source,c]
 ----
 /*
  * Checks if a string with boolean value is valid.
@@ -587,7 +587,7 @@ foo ()
 * Initialisez les variables locales après la déclaration, dans le corps de la
   fonction, exemple :
 
-[source,C]
+[source,c]
 ----
 void
 foo ()
@@ -607,7 +607,7 @@ foo ()
   nombre d'espaces utilisés sur la ligne au dessus de l'accolade ouvrante (le
   `if` dans l'exemple) :
 
-[source,C]
+[source,c]
 ----
 if (nicks_count == 1)
 {
@@ -618,7 +618,7 @@ if (nicks_count == 1)
 * Utilisez des lignes vides pour séparer différents blocs dans les fonctions, et
   si possible ajoutez un commentaire pour chacun, comme ceci :
 
-[source,C]
+[source,c]
 ----
 /*
  * Sends a message from out queue.
@@ -662,7 +662,7 @@ irc_server_outqueue_send (struct t_irc_server *server)
   conditions avec un opérateur (pas nécessaire pour un booléen simple), comme
   ceci :
 
-[source,C]
+[source,c]
 ----
 if (something)
 {
@@ -686,7 +686,7 @@ else
 
 * Indentez les `switch` comme ceci :
 
-[source,C]
+[source,c]
 ----
 switch (string[0])
 {
@@ -705,7 +705,7 @@ switch (string[0])
 * Utilisez `typedef` pur les prototypes de fonctions mais pas pour les
   structures :
 
-[source,C]
+[source,c]
 ----
 typedef int (t_hook_callback_fd)(void *data, int fd);
 
@@ -787,7 +787,7 @@ Les structures ont le nom _t_X_Y_ ou _t_X_Y_Z_ :
 
 Exemple : un pseudo IRC (de _src/plugins/irc/irc-nick.h_) :
 
-[source,C]
+[source,c]
 ----
 struct t_irc_nick
 {
@@ -817,7 +817,7 @@ _last_X_ (où _X_ est le nom de la variable, en utilisant le singulier).
 
 Exemple : fenêtres (de _src/gui/gui-window.c_) :
 
-[source,C]
+[source,c]
 ----
 struct t_gui_window *gui_windows = NULL;        /* first window             */
 struct t_gui_window *last_gui_window = NULL;    /* last window              */
@@ -837,7 +837,7 @@ La convention pour les noms des fonctions est le même que celui des
 
 Exemple : création d'une nouvelle fenêtre (de _src/gui/gui-window.c_) :
 
-[source,C]
+[source,c]
 ----
 /*
  * Creates a new window.
@@ -875,7 +875,7 @@ pointeur vers le nœud précédent/suivant.
 
 Exemple : liste des tampons (de _src/gui/gui-buffer.h_) :
 
-[source,C]
+[source,c]
 ----
 struct t_gui_buffer
 {
@@ -890,7 +890,7 @@ struct t_gui_buffer
 
 Et les deux pointeurs vers la tête et la fin de liste :
 
-[source,C]
+[source,c]
 ----
 struct t_gui_buffer *gui_buffers = NULL;           /* first buffer          */
 struct t_gui_buffer *last_gui_buffer = NULL;       /* last buffer           */
@@ -935,7 +935,7 @@ Dans le tableau qui suit, les conventions suivantes sont utilisées :
 
 Toutes les combinaisons sont résumées dans ce tableau :
 
-[width="100%",cols="4,2,2,8",options="header"]
+[width="100%",cols="4,3,2,8",options="header"]
 |===
 | Code                                       | Exemple                      | Aires         | Description
 | [hex]#19# + STD                            | [hex]#19# `+01+`             | chat + barres | Définir les attributs et la couleur en utilisant une option, voir le tableau ci-dessous.
@@ -1086,7 +1086,7 @@ Et puis des macros sont utilisées pour appeler ces fonctions.
 Par exemple, la fonction _hook_timer_ est définie dans la structure
 _t_weechat_plugin_ comme ceci :
 
-[source,C]
+[source,c]
 ----
 struct t_hook *(*hook_timer) (struct t_weechat_plugin *plugin,
                               long interval,
@@ -1099,7 +1099,7 @@ struct t_hook *(*hook_timer) (struct t_weechat_plugin *plugin,
 
 Et la macro utilisée pour appeler cette fonction est :
 
-[source,C]
+[source,c]
 ----
 #define weechat_hook_timer(__interval, __align_second, __max_calls,     \
                            __callback, __data)                          \
@@ -1110,7 +1110,7 @@ Et la macro utilisée pour appeler cette fonction est :
 
 Donc dans une extension, l'appel à cette fonction sera par exemple :
 
-[source,C]
+[source,c]
 ----
 server->hook_timer_sasl = weechat_hook_timer (timeout * 1000,
                                               0, 1,
@@ -1244,7 +1244,7 @@ pour les notes, avertissements, ... Ces mots doivent être gardés tels quels :
 [CAUTION]
 ----
 
-Lorsqu'il y a un nom après `<<link_name>>`, alors vous devez le traduire :
+Lorsqu'il y a un nom après `+<<link_name>>+`, alors vous devez le traduire :
 
 ----
 <<link_name,ce texte doit être traduit>>

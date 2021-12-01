@@ -45,7 +45,7 @@ In order to call WeeChat functions in the format displayed in <<plugin_api>>,
 the following global pointer must be declared and initialized in the function
 <<_weechat_plugin_init,weechat_plugin_init>>:
 
-[source,C]
+[source,c]
 ----
 struct t_weechat_plugin *weechat_plugin;
 ----
@@ -84,7 +84,7 @@ This function is called when plugin is loaded by WeeChat.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_plugin_init (struct t_weechat_plugin *plugin,
                          int argc, char *argv[]);
@@ -147,7 +147,7 @@ This function is called when plugin is unloaded by WeeChat.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_plugin_end (struct t_weechat_plugin *plugin);
 ----
@@ -194,7 +194,7 @@ Full example of plugin, which adds a command `/double`: displays two times
 arguments on current buffer, or execute two times a command (OK that's not
 very useful, but that's just an example!):
 
-[source,C]
+[source,c]
 ----
 #include <stdlib.h>
 
@@ -307,7 +307,7 @@ Get plugin name.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 const char *weechat_plugin_get_name (struct t_weechat_plugin *plugin);
 ----
@@ -322,7 +322,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 const char *name = weechat_plugin_get_name (plugin);
 ----
@@ -353,7 +353,7 @@ _UTF-8_, you don't need to call this function).
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 void weechat_charset_set (const char *charset);
 ----
@@ -364,7 +364,7 @@ Arguments:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 weechat_charset_set ("iso-8859-1");
 ----
@@ -386,7 +386,7 @@ Convert string to WeeChat internal charset (UTF-8).
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 char *weechat_iconv_to_internal (const char *charset, const char *string);
 ----
@@ -402,7 +402,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 char *str = weechat_iconv_to_internal ("iso-8859-1", "iso string: é à");
 /* ... */
@@ -426,7 +426,7 @@ Convert string from internal WeeChat charset (UTF-8) to another.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 char *weechat_iconv_from_internal (const char *charset, const char *string);
 ----
@@ -442,7 +442,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 char *str = weechat_iconv_from_internal ("iso-8859-1", "utf-8 string: é à");
 /* ... */
@@ -466,7 +466,7 @@ Return translated string (depends on local language).
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 const char *weechat_gettext (const char *string);
 ----
@@ -481,7 +481,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 char *str = weechat_gettext ("hello");
 ----
@@ -504,7 +504,7 @@ argument.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 const char *weechat_ngettext (const char *string, const char *plural,
                               int count);
@@ -524,7 +524,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 char *str = weechat_ngettext ("file", "files", num_files);
 ----
@@ -547,7 +547,7 @@ Return duplicated string, with _length_ chars max.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 char *weechat_strndup (const char *string, int length);
 ----
@@ -563,7 +563,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 char *str = weechat_strndup ("abcdef", 3);  /* result: "abc" */
 /* ... */
@@ -582,7 +582,7 @@ string if it is cut.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 char *weechat_string_cut (const char *string, int length, int count_suffix, int screen, const char *cut_suffix);
 ----
@@ -601,7 +601,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 char *str = weechat_string_cut ("this is a test", 5, 1, 1, "…");  /* result: "this…" */
 /* ... */
@@ -617,7 +617,7 @@ Convert UTF-8 string to lower case.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 void weechat_string_tolower (char *string);
 ----
@@ -628,7 +628,7 @@ Arguments:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 char str[] = "AbCdé";
 weechat_string_tolower (str);  /* str is now: "abcdé" */
@@ -643,7 +643,7 @@ Convert UTF-8 string to upper case.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 void weechat_string_toupper (char *string);
 ----
@@ -654,7 +654,7 @@ Arguments:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 char str[] = "AbCdé";
 weechat_string_toupper (str);  /* str is now: "ABCDé" */
@@ -671,7 +671,7 @@ Locale and case independent string comparison.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_strcasecmp (const char *string1, const char *string2);
 ----
@@ -689,7 +689,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 int diff = weechat_strcasecmp ("aaa", "CCC");  /* == -2 */
 ----
@@ -706,7 +706,7 @@ comparison.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_strcasecmp_range (const char *string1, const char *string2, int range);
 ----
@@ -731,7 +731,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 int diff = weechat_strcasecmp_range ("nick{away}", "NICK[away]", 29);  /* == 0 */
 ----
@@ -747,7 +747,7 @@ Locale and case independent string comparison, for _max_ chars.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_strncasecmp (const char *string1, const char *string2, int max);
 ----
@@ -766,7 +766,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 int diff = weechat_strncasecmp ("aabb", "aacc", 2);  /* == 0 */
 ----
@@ -783,7 +783,7 @@ for case comparison.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_strncasecmp_range (const char *string1, const char *string2, int max, int range);
 ----
@@ -809,7 +809,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 int diff = weechat_strncasecmp_range ("nick{away}", "NICK[away]", 6, 29);  /* == 0 */
 ----
@@ -826,7 +826,7 @@ chars.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_strcmp_ignore_chars (const char *string1, const char *string2,
                                  const char *chars_ignored,
@@ -848,7 +848,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 int diff = weechat_strcmp_ignore_chars ("a-b", "--a-e", "-", 1);  /* == -3 */
 ----
@@ -864,7 +864,7 @@ Locale and case independent string search.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 const char *weechat_strcasestr (const char *string, const char *search);
 ----
@@ -881,7 +881,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 const char *pos = weechat_strcasestr ("aBcDeF", "de");  /* result: pointer to "DeF" */
 ----
@@ -899,7 +899,7 @@ Non-printable chars have a width of 1 (this is the difference with the function
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_strlen_screen (const char *string);
 ----
@@ -914,7 +914,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 int length_on_screen = weechat_strlen_screen ("é");  /* == 1 */
 ----
@@ -938,7 +938,7 @@ Check if a string matches a mask.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_string_match (const char *string, const char *mask,
                           int case_sensitive);
@@ -961,7 +961,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 int match1 = weechat_string_match ("abcdef", "abc*", 0);   /* == 1 */
 int match2 = weechat_string_match ("abcdef", "*dd*", 0);   /* == 0 */
@@ -995,7 +995,7 @@ mask.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_string_match_list (const char *string, const char **masks,
                                int case_sensitive);
@@ -1015,7 +1015,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 const char *masks[3] = { "*", "!abc*", NULL };
 int match1 = weechat_string_match_list ("abc", masks, 0);     /* == 0 */
@@ -1045,7 +1045,7 @@ with `+~+`, then same string is returned.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 char *weechat_string_expand_home (const char *path);
 ----
@@ -1061,7 +1061,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 char *str = weechat_string_expand_home ("~/file.txt");
 /* result: "/home/user/file.txt" */
@@ -1085,7 +1085,7 @@ Evaluate a path in 3 steps:
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 char *weechat_string_eval_path_home (const char *path,
                                      struct t_hashtable *pointers,
@@ -1115,7 +1115,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 char *str = weechat_string_eval_path_home ("${weechat_config_dir}/test.conf", NULL, NULL, NULL);
 /* result: "/home/user/.config/weechat/test.conf" */
@@ -1142,7 +1142,7 @@ first quote or after last quote).
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 char *weechat_string_remove_quotes (const char *string, const char *quotes);
 ----
@@ -1159,7 +1159,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 char *str = weechat_string_remove_quotes (string, " 'I can't' ", "'");
 /* result: "I can't" */
@@ -1176,7 +1176,7 @@ Strip chars at beginning and/or end of string.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 char *weechat_string_strip (const char *string, int left, int right,
                             const char *chars);
@@ -1195,7 +1195,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 char *str = weechat_string_strip (".abc -", 0, 1, "- .");  /* result: ".abc" */
 /* ... */
@@ -1228,7 +1228,7 @@ Convert escaped chars to their value:
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 char *weechat_string_convert_escaped_chars (const char *string);
 ----
@@ -1244,7 +1244,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 char *str = weechat_string_convert_escaped_chars ("snowman: \\u2603");
 /* str == "snowman: ☃" */
@@ -1262,7 +1262,7 @@ special chars for regex are escaped.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 char *weechat_string_mask_to_regex (const char *mask);
 ----
@@ -1277,7 +1277,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 char *str_regex = weechat_string_mask_to_regex ("test*mask");
 /* result: "test.*mask" */
@@ -1305,7 +1305,7 @@ expression.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 const char *weechat_string_regex_flags (const char *regex, int default_flags, int *flags)
 ----
@@ -1337,7 +1337,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 const char *regex = "(?i)test";
 int flags;
@@ -1358,7 +1358,7 @@ of string (for format of flags, see
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_string_regcomp (void *preg, const char *regex, int default_flags)
 ----
@@ -1384,7 +1384,7 @@ if the function returned 0 (OK).
 
 C example:
 
-[source,C]
+[source,c]
 ----
 regex_t my_regex;
 if (weechat_string_regcomp (&my_regex, "(?i)test", REG_EXTENDED) == 0)
@@ -1409,7 +1409,7 @@ Check if a string has one or more highlights, using list of highlight words.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_string_has_highlight (const char *string,
                                   const char highlight_words);
@@ -1426,7 +1426,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 int hl = weechat_string_has_highlight ("my test string", "test,word2");  /* == 1 */
 ----
@@ -1453,7 +1453,7 @@ by delimiters (chars different from: alphanumeric, `+-+`, `+_+` and `+|+`).
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_string_has_highlight_regex (const char *string, const char *regex);
 ----
@@ -1469,7 +1469,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 int hl = weechat_string_has_highlight_regex ("my test string", "test|word2");  /* == 1 */
 ----
@@ -1491,7 +1491,7 @@ Replace all occurrences of a string by another string.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 char *weechat_string_replace (const char *string, const char *search,
                               const char *replace);
@@ -1510,7 +1510,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 char *str = weechat_string_replace ("test", "s", "x");  /* result: "text" */
 /* ... */
@@ -1529,7 +1529,7 @@ optional callback.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 char *weechat_string_replace_regex (const char *string, void *regex,
                                     const char *replace, const char reference_char,
@@ -1565,7 +1565,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 regex_t my_regex;
 char *string;
@@ -1592,7 +1592,7 @@ Split a string according to one or more delimiter(s).
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 char **weechat_string_split (const char *string, const char *separators,
                              const char *strip_items, int flags,
@@ -1637,7 +1637,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 char **argv;
 int argc;
@@ -1721,7 +1721,7 @@ Python repository), see: https://docs.python.org/3/library/shlex.html.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 char **weechat_string_split_shell (const char *string, int *num_items);
 ----
@@ -1738,7 +1738,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 char **argv;
 int argc;
@@ -1761,7 +1761,7 @@ Free memory used by a split string.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 void weechat_string_free_split (char **split_string);
 ----
@@ -1772,7 +1772,7 @@ Arguments:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 char *argv;
 int argc;
@@ -1790,7 +1790,7 @@ Build a string with a split string.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 char *weechat_string_build_with_split_string (char **split_string,
                                               const char *separator);
@@ -1807,7 +1807,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 char **argv;
 int argc;
@@ -1828,7 +1828,7 @@ in string).
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 char **weechat_string_split_command (const char *command, char separator);
 ----
@@ -1845,7 +1845,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 char **argv = weechat_string_split_command ("/command1 arg;/command2", ';');
 /* result: argv[0] == "/command1 arg"
@@ -1864,7 +1864,7 @@ Free memory used by a split command.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 void weechat_string_free_split_command (char **split_command);
 ----
@@ -1875,7 +1875,7 @@ Arguments:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 char **argv = weechat_string_split_command ("/command1 arg;/command2", ';');
 /* ... */
@@ -1892,7 +1892,7 @@ language.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 char *weechat_string_format_size (unsigned long long size);
 ----
@@ -1907,7 +1907,7 @@ Return value:
 
 C examples:
 
-[source,C]
+[source,c]
 ----
 /* examples with English locale */
 
@@ -1952,7 +1952,7 @@ the string.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_string_color_code_size (const char *string);
 ----
@@ -1970,7 +1970,7 @@ Return value:
 
 C examples:
 
-[source,C]
+[source,c]
 ----
 int size;
 
@@ -1998,7 +1998,7 @@ Remove WeeChat colors from a string.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 char *weechat_string_remove_color (const char *string,
                                    const char *replacement);
@@ -2017,7 +2017,7 @@ Return value:
 
 C examples:
 
-[source,C]
+[source,c]
 ----
 /* remove color codes */
 char *str = weechat_string_remove_color (my_string1, NULL);
@@ -2049,7 +2049,7 @@ Encode a string in base 16, 32, or 64.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_string_base_encode (int base, const char *from, int length, char *to);
 ----
@@ -2068,7 +2068,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 char *string = "abcdefgh", result[128];
 int length;
@@ -2091,7 +2091,7 @@ Decode a string encoded in base 16, 32, or 64.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_string_base_decode (int base, const char *from, char *to);
 ----
@@ -2109,7 +2109,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 char result[128];
 int length;
@@ -2132,7 +2132,7 @@ Display a dump of data as hexadecimal and ascii bytes.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 char *string_hex_dump (const char *data, int data_size, int bytes_per_line,
                        const char *prefix, const char *suffix);
@@ -2154,7 +2154,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 char *string = "abc def-ghi";
 char *dump = weechat_string_hex_dump (string, strlen (string), 8, " >> ", NULL);
@@ -2173,7 +2173,7 @@ Check if first char of string is a command char (default command char is `+/+`).
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_string_is_command_char (const char *string);
 ----
@@ -2188,7 +2188,7 @@ Return value:
 
 C examples:
 
-[source,C]
+[source,c]
 ----
 int command_char1 = weechat_string_is_command_char ("/test");  /* == 1 */
 int command_char2 = weechat_string_is_command_char ("test");   /* == 0 */
@@ -2215,7 +2215,7 @@ NULL if it's a command.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 const char *weechat_string_input_for_buffer (const char *string);
 ----
@@ -2230,7 +2230,7 @@ Return value:
 
 C examples:
 
-[source,C]
+[source,c]
 ----
 const char *str1 = weechat_string_input_for_buffer ("test");    /* "test"  */
 const char *str2 = weechat_string_input_for_buffer ("/test");   /* NULL    */
@@ -2264,7 +2264,7 @@ Since version 1.0, nested variables are supported, for example:
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 char *weechat_string_eval_expression (const char *expr,
                                       struct t_hashtable *pointers,
@@ -2313,7 +2313,7 @@ Return value:
 
 C examples:
 
-[source,C]
+[source,c]
 ----
 /* conditions */
 struct t_hashtable *options1 = weechat_hashtable_new (8,
@@ -2921,7 +2921,7 @@ _pass:[string_dyn_*]_ functions.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 char **weechat_string_dyn_alloc (int size_alloc);
 ----
@@ -2936,7 +2936,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 char **string = weechat_string_dyn_alloc (256);
 ----
@@ -2955,7 +2955,7 @@ not enough space to copy the string).
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_string_dyn_copy (char **string, const char *new_string);
 ----
@@ -2971,7 +2971,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 char **string = weechat_string_dyn_alloc (256);
 if (weechat_string_dyn_copy (string, "test"))
@@ -2998,7 +2998,7 @@ not enough space to concatenate the string).
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_string_dyn_concat (char **string, const char *add, int bytes);
 ----
@@ -3017,7 +3017,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 char **string = weechat_string_dyn_alloc (256);
 if (weechat_string_dyn_copy (string, "test"))
@@ -3040,7 +3040,7 @@ Free a dynamic string.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 char *weechat_string_dyn_free (char **string, int free_string);
 ----
@@ -3057,7 +3057,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 char **string = weechat_string_dyn_alloc (256);
 if (weechat_string_dyn_concat (string, "test"))
@@ -3086,7 +3086,7 @@ Check if a string has 8-bits chars.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_utf8_has_8bits (const char *string);
 ----
@@ -3101,7 +3101,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 if (weechat_utf8_has_8bits (string))
 {
@@ -3120,7 +3120,7 @@ Check if a string is UTF-8 valid.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_utf8_is_valid (const char *string, int length, char **error);
 ----
@@ -3139,7 +3139,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 char *error;
 if (weechat_utf8_is_valid (string, -1, &error))
@@ -3161,7 +3161,7 @@ Normalize UTF-8 string: remove non UTF-8 chars and replace them by a char.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 void weechat_utf8_normalize (char *string, char replacement);
 ----
@@ -3173,7 +3173,7 @@ Arguments:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 weechat_utf8_normalize (string, '?');
 ----
@@ -3189,7 +3189,7 @@ Return pointer to previous UTF-8 char in a string.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 const char *weechat_utf8_prev_char (const char *string_start,
                                     const char *string);
@@ -3208,7 +3208,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 const char *prev_char = weechat_utf8_prev_char (string, ptr_in_string);
 ----
@@ -3224,7 +3224,7 @@ Return pointer to next UTF-8 char in a string.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 const char *weechat_utf8_next_char (const char *string);
 ----
@@ -3240,7 +3240,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 const char *next_char = weechat_utf8_next_char (string);
 ----
@@ -3254,7 +3254,7 @@ Return UTF-8 char as integer.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_utf8_char_int (const char *string);
 ----
@@ -3269,7 +3269,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 int char_int = weechat_utf8_char_int ("être");  /* "ê" as integer */
 ----
@@ -3283,7 +3283,7 @@ Return UTF-8 char size (in bytes).
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_utf8_char_size (const char *string);
 ----
@@ -3298,7 +3298,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 int char_size = weechat_utf8_char_size ("être");  /* == 2 */
 ----
@@ -3312,7 +3312,7 @@ Return UTF-8 string length (in UTF-8 chars).
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_utf8_strlen (const char *string);
 ----
@@ -3327,7 +3327,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 int length = weechat_utf8_strlen ("chêne");  /* == 5 */
 ----
@@ -3341,7 +3341,7 @@ Return UTF-8 string length (in UTF-8 chars), for max _bytes_ in string.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_utf8_strnlen (const char *string, int bytes);
 ----
@@ -3357,7 +3357,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 int length = weechat_utf8_strnlen ("chêne", 4);  /* == 3 */
 ----
@@ -3371,7 +3371,7 @@ Return number of chars needed on screen to display UTF-8 string.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_utf8_strlen_screen (const char *string);
 ----
@@ -3386,7 +3386,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 int length_on_screen = weechat_utf8_strlen_screen ("é");  /* == 1 */
 ----
@@ -3402,7 +3402,7 @@ Compare two UTF-8 chars.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_utf8_charcmp (const char *string1, const char *string2);
 ----
@@ -3420,7 +3420,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 int diff = weechat_utf8_charcmp ("aaa", "ccc");  /* == -2 */
 ----
@@ -3436,7 +3436,7 @@ Compare two UTF-8 chars, ignoring case.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_utf8_charcasecmp (const char *string1, const char *string2);
 ----
@@ -3454,7 +3454,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 int diff = weechat_utf8_charcasecmp ("aaa", "CCC");  /* == -2 */
 ----
@@ -3468,7 +3468,7 @@ Return number of chars needed on screen to display UTF-8 char.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_utf8_char_size_screen (const char *string);
 ----
@@ -3483,7 +3483,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 int length_on_screen = weechat_utf8_char_size_screen ("é");  /* == 1 */
 ----
@@ -3499,7 +3499,7 @@ Move forward N chars in an UTF-8 string.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 const char *weechat_utf8_add_offset (const char *string, int offset);
 ----
@@ -3516,7 +3516,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 const char *str = "chêne";
 const char *str2 = weechat_utf8_add_offset (str, 3);  /* points to "ne" */
@@ -3531,7 +3531,7 @@ Return real position in UTF-8 string.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_utf8_real_pos (const char *string, int pos);
 ----
@@ -3547,7 +3547,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 int pos = weechat_utf8_real_pos ("chêne", 3);  /* == 4 */
 ----
@@ -3561,7 +3561,7 @@ Return position in UTF-8 string.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_utf8_pos (const char *string, int real_pos);
 ----
@@ -3577,7 +3577,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 int pos = weechat_utf8_pos ("chêne", 4);  /* == 3 */
 ----
@@ -3591,7 +3591,7 @@ Return duplicate string, with _length_ chars max.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 char *weechat_utf8_strndup (const char *string, int length);
 ----
@@ -3607,7 +3607,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 char *string = weechat_utf8_strndup ("chêne", 3);  /* returns "chê" */
 /* ... */
@@ -3630,7 +3630,7 @@ Compute hash of data.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_crypto_hash (const void *data, int data_size, const char *hash_algo,
                          void *hash, int *hash_size);
@@ -3671,7 +3671,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 const char *data = "abcdefghijklmnopqrstuvwxyz";
 char hash[256 / 8];
@@ -3693,7 +3693,7 @@ of data.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_crypto_hash_pbkdf2 (const void *data, int data_size,
                                 const char *hash_algo,
@@ -3723,7 +3723,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 const char *data = "abcdefghijklmnopqrstuvwxyz";
 const char *salt = "12345678901234567890123456789012";  /* 32 bytes */
@@ -3746,7 +3746,7 @@ Compute keyed-hash message authentication code (HMAC).
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_crypto_hmac (const void *key, int key_size, const void *message, int message_size,
                          int hash_algo, void *hash, int *hash_size);
@@ -3772,7 +3772,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 const char *key = "the key";
 const char *message = "the message";
@@ -3799,7 +3799,7 @@ Create a directory in WeeChat home.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_mkdir_home (char *directory, int mode);
 ----
@@ -3820,7 +3820,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 if (!weechat_mkdir_home ("${weechat_cache_dir}/temp", 0755))
 {
@@ -3845,7 +3845,7 @@ Create a directory.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_mkdir (char *directory, int mode);
 ----
@@ -3861,7 +3861,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 if (!weechat_mkdir ("/tmp/mydir", 0755))
 {
@@ -3886,7 +3886,7 @@ Create a directory and make parent directories as needed.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_mkdir_parents (char *directory, int mode);
 ----
@@ -3902,7 +3902,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 if (!weechat_mkdir_parents ("/tmp/my/dir", 0755))
 {
@@ -3929,7 +3929,7 @@ Find files in a directory and execute a callback on each file.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 void weechat_exec_on_files (const char *directory,
                             int recurse_subdirs,
@@ -3951,7 +3951,7 @@ Arguments:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 void callback (void *data, const char *filename)
 {
@@ -3972,7 +3972,7 @@ Get content of text file in a string.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 char *weechat_file_get_content (const char *filename);
 ----
@@ -3987,7 +3987,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 char *content;
 
@@ -4007,7 +4007,7 @@ Copy a file to another location.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_file_copy (const char *from, const char *to);
 ----
@@ -4023,7 +4023,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 if (weechat_file_copy ("/tmp/test.txt", "/path/to/test2.txt"))
 {
@@ -4045,7 +4045,7 @@ Compare two "timeval" structures.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_util_timeval_cmp (struct timeval *tv1, struct timeval *tv2);
 ----
@@ -4063,7 +4063,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 if (weechat_util_timeval_cmp (&tv1, &tv2) > 0)
 {
@@ -4082,7 +4082,7 @@ Return difference (in microseconds) between two "timeval" structures.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 long long weechat_util_timeval_diff (struct timeval *tv1, struct timeval *tv2);
 ----
@@ -4101,7 +4101,7 @@ With WeeChat ≤ 1.0, the returned value was in milliseconds.
 
 C example:
 
-[source,C]
+[source,c]
 ----
 long long diff = weechat_util_timeval_diff (&tv1, &tv2);
 ----
@@ -4117,7 +4117,7 @@ Add interval (in microseconds) to a timeval structure.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 void weechat_util_timeval_add (struct timeval *tv, long long interval);
 ----
@@ -4132,7 +4132,7 @@ With WeeChat ≤ 1.0, the interval was expressed in milliseconds.
 
 C example:
 
-[source,C]
+[source,c]
 ----
 weechat_util_timeval_add (&tv, 2000000);  /* add 2 seconds */
 ----
@@ -4149,7 +4149,7 @@ option _weechat.look.time_format_.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 const char *weechat_util_get_time_string (const time_t *date);
 ----
@@ -4164,7 +4164,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 time_t date = time (NULL);
 weechat_printf (NULL, "date: %s",
@@ -4182,7 +4182,7 @@ Convert a string with WeeChat version to a number.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_util_version_number (const char *version);
 ----
@@ -4193,7 +4193,7 @@ Arguments:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 version_number = weechat_util_version_number ("0.3.8");      /* == 0x00030800 */
 version_number = weechat_util_version_number ("0.3.9-dev");  /* == 0x00030900 */
@@ -4215,7 +4215,7 @@ Create a new list.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 struct t_weelist *weechat_list_new ();
 ----
@@ -4226,7 +4226,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 struct t_weelist *list = weechat_list_new ();
 ----
@@ -4248,7 +4248,7 @@ Add an item in a list.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 struct t_weelist_item *weechat_list_add (struct t_weelist *weelist,
                                          const char *data,
@@ -4272,7 +4272,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 struct t_weelist_item *my_item =
     weechat_list_add (list, "my data", WEECHAT_LIST_POS_SORT, NULL);
@@ -4295,7 +4295,7 @@ Search an item in a list.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 struct t_weelist_item *weechat_list_search (struct t_weelist *weelist,
                                             const char *data);
@@ -4312,7 +4312,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 struct t_weelist_item *item = weechat_list_search (list, "my data");
 ----
@@ -4336,7 +4336,7 @@ Search an item position in a list.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_list_search_pos (struct t_weelist *weelist,
                              const char *data);
@@ -4353,7 +4353,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 int pos_item = weechat_list_search_pos (list, "my data");
 ----
@@ -4375,7 +4375,7 @@ Search an item in a list, ignoring case.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 struct t_weelist_item *weechat_list_casesearch (struct t_weelist *weelist,
                                                 const char *data);
@@ -4392,7 +4392,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 struct t_weelist_item *item = weechat_list_casesearch (list, "my data");
 ----
@@ -4416,7 +4416,7 @@ Search an item position in a list, ignoring case.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_list_casesearch_pos (struct t_weelist *weelist,
                                  const char *data);
@@ -4433,7 +4433,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 int pos_item = weechat_list_casesearch_pos (list, "my data");
 ----
@@ -4455,7 +4455,7 @@ Return an item in a list by position.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 struct t_weelist_item *weechat_list_get (struct t_weelist *weelist,
                                          int position);
@@ -4472,7 +4472,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 struct t_weelist_item *item = weechat_list_get (list, 0);  /* first item */
 ----
@@ -4494,7 +4494,7 @@ Set new value for an item.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 void weechat_list_set (struct t_weelist_item *item, const char *value);
 ----
@@ -4506,7 +4506,7 @@ Arguments:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 weechat_list_set (item, "new data");
 ----
@@ -4528,7 +4528,7 @@ Return next item in list.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 struct t_weelist_item *weechat_list_next (struct t_weelist_item *item);
 ----
@@ -4543,7 +4543,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 struct t_weelist_item *next_item = weechat_list_next (item);
 ----
@@ -4565,7 +4565,7 @@ Return previous item in list.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 struct t_weelist_item *weechat_list_prev (struct t_weelist_item *item);
 ----
@@ -4580,7 +4580,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 struct t_weelist_item *prev_item = weechat_list_prev (item);
 ----
@@ -4602,7 +4602,7 @@ Return string value of an item.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 const char *weechat_list_string (struct t_weelist_item *item);
 ----
@@ -4617,7 +4617,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 weechat_printf (NULL, "value of item: %s", weechat_list_string (item));
 ----
@@ -4641,7 +4641,7 @@ Return pointer to the user data of an item.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 void *weechat_list_user_data (struct t_weelist_item *item);
 ----
@@ -4656,7 +4656,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 weechat_printf (NULL, "user data of item: 0x%lx", weechat_list_user_data (item));
 ----
@@ -4670,7 +4670,7 @@ Return size of list (number of items).
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 char *weechat_list_size (struct t_weelist *weelist);
 ----
@@ -4685,7 +4685,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 weechat_printf (NULL, "size of list: %d", weechat_list_size (list));
 ----
@@ -4707,7 +4707,7 @@ Remove an item in a list.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 void weechat_list_remove (struct t_weelist *weelist,
                           struct t_weelist_item *item);
@@ -4720,7 +4720,7 @@ Arguments:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 weechat_list_remove (list, item);
 ----
@@ -4742,7 +4742,7 @@ Remove all items from a list.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 void weechat_list_remove_all (struct t_weelist *weelist);
 ----
@@ -4753,7 +4753,7 @@ Arguments:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 weechat_list_remove_all (list);
 ----
@@ -4775,7 +4775,7 @@ Free a list.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 void weechat_list_free (struct t_weelist *weelist);
 ----
@@ -4786,7 +4786,7 @@ Arguments:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 weechat_list_free (list);
 ----
@@ -4817,7 +4817,7 @@ Create a new array list.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 struct t_arraylist *weechat_arraylist_new (int initial_size,
                                            int sorted,
@@ -4862,7 +4862,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 int
 cmp_cb (void *data, struct t_arraylist *arraylist,
@@ -4891,7 +4891,7 @@ Return size of array list (number of item pointers).
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_list_size (struct t_arraylist *arraylist);
 ----
@@ -4906,7 +4906,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 weechat_printf (NULL, "size of array list: %d", weechat_arraylist_size (arraylist));
 ----
@@ -4922,7 +4922,7 @@ Return an item pointer by position.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 void *weechat_arraylist_get (struct t_arraylist *arraylist, int index);
 ----
@@ -4938,7 +4938,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 void *pointer = weechat_arraylist_get (arraylist, 0);  /* first item */
 ----
@@ -4954,7 +4954,7 @@ Search an item in an array list.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 void *weechat_arraylist_search (struct t_arraylist *arraylist, void *pointer,
                                 int *index, int *index_insert);
@@ -4975,7 +4975,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 int index, index_insert;
 void *item = weechat_arraylist_search (arraylist, pointer, &index, &index_insert);
@@ -4992,7 +4992,7 @@ Insert an item in an array list.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_arraylist_insert (struct t_arraylist *arraylist, int index, void *pointer);
 ----
@@ -5011,7 +5011,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 int index = weechat_arraylist_insert (arraylist, -1, pointer);  /* insert at the end if not sorted */
 ----
@@ -5027,7 +5027,7 @@ Add an item in an array list.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_arraylist_add (struct t_arraylist *arraylist, void *pointer);
 ----
@@ -5043,7 +5043,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 int index = weechat_arraylist_add (arraylist, pointer);
 ----
@@ -5059,7 +5059,7 @@ Remove an item from an array list.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_arraylist_remove (struct t_arraylist *arraylist, int index);
 ----
@@ -5075,7 +5075,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 int index_removed = weechat_arraylist_remove (arraylist, index);
 ----
@@ -5091,7 +5091,7 @@ Remove all items from an array list.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_arraylist_clear (struct t_arraylist *arraylist);
 ----
@@ -5106,7 +5106,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 if (weechat_arraylist_clear (arraylist))
 {
@@ -5125,7 +5125,7 @@ Free an array list.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 void weechat_arraylist_free (struct t_arraylist *arraylist);
 ----
@@ -5136,7 +5136,7 @@ Arguments:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 weechat_arraylist_free (arraylist);
 ----
@@ -5157,7 +5157,7 @@ Create a new hashtable.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 struct t_hashtable *weechat_hashtable_new (int size,
                                            const char *type_keys,
@@ -5209,7 +5209,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 struct t_hashtable *hashtable = weechat_hashtable_new (8,
                                                        WEECHAT_HASHTABLE_STRING,
@@ -5229,7 +5229,7 @@ Add or update item in a hashtable with size for key and value.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 struct t_hashtable_item *weechat_hashtable_set_with_size (struct t_hashtable *hashtable,
                                                           const void *key, int key_size,
@@ -5252,7 +5252,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 weechat_hashtable_set_with_size (hashtable, "my_key", 0,
                                  my_buffer, sizeof (my_buffer_struct));
@@ -5269,7 +5269,7 @@ Add or update item in a hashtable.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 struct t_hashtable_item *weechat_hashtable_set (struct t_hashtable *hashtable,
                                                 const void *key, const void *value);
@@ -5287,7 +5287,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 weechat_hashtable_set (hashtable, "my_key", "my_value");
 ----
@@ -5303,7 +5303,7 @@ Get value associated with a key in a hashtable.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 void *weechat_hashtable_get (struct t_hashtable *hashtable, void *key);
 ----
@@ -5319,7 +5319,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 void *value = weechat_hashtable_get (hashtable, "my_key");
 ----
@@ -5335,7 +5335,7 @@ Check if a key is in the hashtable.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_hashtable_has_key (struct t_hashtable *hashtable, void *key);
 ----
@@ -5351,7 +5351,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 if (weechat_hashtable_has_key (hashtable, "my_key"))
 {
@@ -5372,7 +5372,7 @@ Call a function on all hashtable entries, by insertion order in the hashtable
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 void weechat_hashtable_map (struct t_hashtable *hashtable,
                             void (*callback_map)(void *data,
@@ -5390,7 +5390,7 @@ Arguments:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 void
 map_cb (void *data, struct t_hashtable *hashtable,
@@ -5417,7 +5417,7 @@ Call a function on all hashtable entries, by insertion order in the hashtable
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 void weechat_hashtable_map_string (struct t_hashtable *hashtable,
                                    void (*callback_map)(void *data,
@@ -5439,7 +5439,7 @@ are deleted after call to callback.
 
 C example:
 
-[source,C]
+[source,c]
 ----
 void
 map_cb (void *data, struct t_hashtable *hashtable,
@@ -5464,7 +5464,7 @@ Duplicate a hashtable.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 struct t_hashtable *weechat_hashtable_dup (struct t_hashtable *hashtable);
 ----
@@ -5479,7 +5479,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 struct t_hashtable *new_hashtable = weechat_hashtable_dup (hashtable);
 ----
@@ -5495,7 +5495,7 @@ Return integer value of a hashtable property.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_hashtable_get_integer (struct t_hashtable *hashtable,
                                    void *property);
@@ -5514,7 +5514,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 int items_count = weechat_hashtable_get_integer (hashtable, "items_count");
 ----
@@ -5530,7 +5530,7 @@ Return string value of a hashtable property.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 const char *weechat_hashtable_get_string (struct t_hashtable *hashtable,
                                           const char *property);
@@ -5566,7 +5566,7 @@ Return value:
 
 C examples:
 
-[source,C]
+[source,c]
 ----
 weechat_printf (NULL, "keys are type: %s",
                 weechat_hashtable_get_string (hashtable, "type_keys"));
@@ -5585,7 +5585,7 @@ Set pointer value of a hashtable property.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 void weechat_hashtable_set_pointer (struct t_hashtable *hashtable,
                                     const char *property, void *pointer);
@@ -5602,7 +5602,7 @@ Arguments:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 void
 my_free_value_cb (struct t_hashtable *hashtable, const void *key, void *value)
@@ -5632,7 +5632,7 @@ Add hashtable items to an infolist item, by insertion order in the hashtable
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_hashtable_add_to_infolist (struct t_hashtable *hashtable,
                                        struct t_infolist_item *infolist_item,
@@ -5651,7 +5651,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 weechat_hashtable_add_to_infolist (hashtable, infolist_item, "testhash");
 
@@ -5677,7 +5677,7 @@ Add infolist items in a hashtable.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_hashtable_add_from_infolist (struct t_hashtable *hashtable,
                                          struct t_infolist *infolist,
@@ -5696,7 +5696,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 weechat_hashtable_add_from_infolist (hashtable, infolist, "testhash");
 
@@ -5722,7 +5722,7 @@ Remove an item from a hashtable.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 void weechat_hashtable_remove (struct t_hashtable *hashtable, const void *key);
 ----
@@ -5734,7 +5734,7 @@ Arguments:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 weechat_hashtable_remove (hashtable, "my_key");
 ----
@@ -5750,7 +5750,7 @@ Remove all items from a hashtable.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 void weechat_hashtable_remove_all (struct t_hashtable *hashtable);
 ----
@@ -5761,7 +5761,7 @@ Arguments:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 weechat_hashtable_remove_all (hashtable);
 ----
@@ -5777,7 +5777,7 @@ Free a hashtable.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 void weechat_hashtable_free (struct t_hashtable *hashtable);
 ----
@@ -5788,7 +5788,7 @@ Arguments:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 weechat_hashtable_free (hashtable);
 ----
@@ -5809,7 +5809,7 @@ Create a new configuration file.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 struct t_config_file *weechat_config_new (const char *name,
                                           int (*callback_reload)(const void *pointer,
@@ -5859,7 +5859,7 @@ You should call this function only after adding some sections (with
 
 C example:
 
-[source,C]
+[source,c]
 ----
 int
 my_config_reload_cb (const void *pointer, void *data,
@@ -5898,7 +5898,7 @@ Create a new section in configuration file.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 struct t_config_section *weechat_config_new_section (
     struct t_config_file *config_file,
@@ -6044,7 +6044,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 int
 my_section_read_cb (const void *pointer, void *data,
@@ -6183,7 +6183,7 @@ Search a section in a configuration file.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 struct t_config_section *weechat_config_search_section (
     struct t_config_file *config_file,
@@ -6201,7 +6201,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 struct t_config_section *section = weechat_config_search_section (config_file,
                                                                   "section");
@@ -6226,7 +6226,7 @@ Create a new option in a section of a configuration file.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 struct t_config_option *weechat_config_new_option (
     struct t_config_file *config_file,
@@ -6321,7 +6321,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 /* boolean */
 struct t_config_option *option1 =
@@ -6462,7 +6462,7 @@ Search an option in a section of a configuration file.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 struct t_config_option *weechat_config_search_option (
     struct t_config_file *config_file,
@@ -6482,7 +6482,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 struct t_config_option *option =
     weechat_config_search_option (config_file, section, "option");
@@ -6505,7 +6505,7 @@ Search a section and an option in a configuration file or section.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 void weechat_config_search_section_option (struct t_config_file *config_file,
                                            struct t_config_section *section,
@@ -6526,7 +6526,7 @@ Arguments:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 struct t_config_section *ptr_section;
 struct t_config_option *ptr_option;
@@ -6555,7 +6555,7 @@ Get file/section/option info about an option with full name.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 void weechat_config_search_with_string (const char *option_name,
                                         struct t_config_file **config_file,
@@ -6578,7 +6578,7 @@ Arguments:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 struct t_config_file *ptr_config_file;
 struct t_config_section *ptr_section;
@@ -6609,7 +6609,7 @@ Check if a text is "true" or "false", as boolean value.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_config_string_to_boolean (const char *text);
 ----
@@ -6625,7 +6625,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 if (weechat_config_string_to_boolean (option_value))
 {
@@ -6655,7 +6655,7 @@ Reset an option to its default value.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_config_option_reset (struct t_config_option *option,
                                  int run_callback);
@@ -6675,7 +6675,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 switch (weechat_config_option_reset (option, 1))
 {
@@ -6714,7 +6714,7 @@ Set new value for an option.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_config_option_set (struct t_config_option *option,
                                const char *value, int run_callback);
@@ -6741,7 +6741,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 switch (weechat_config_option_set (option, "new_value", 1))
 {
@@ -6780,7 +6780,7 @@ Set null (undefined value) for an option.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_config_option_set_null (struct t_config_option *option,
                                     int run_callback);
@@ -6804,7 +6804,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 switch (weechat_config_option_set_null (option, 1))
 {
@@ -6843,7 +6843,7 @@ Unset/reset option.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_config_option_unset (struct t_config_option *option);
 ----
@@ -6861,7 +6861,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 switch (weechat_config_option_unset (option))
 {
@@ -6905,7 +6905,7 @@ Rename an option.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 void weechat_config_option_rename (struct t_config_option *option,
                                    const char *new_name);
@@ -6918,7 +6918,7 @@ Arguments:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 weechat_config_option_rename (option, "new_name");
 ----
@@ -6942,7 +6942,7 @@ Return string value of an option property.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 const char *weechat_config_option_get_string (struct t_config_option *option,
                                               const char *property);
@@ -6969,7 +6969,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 const char *type = weechat_config_option_get_string (option, "type");
 ----
@@ -6983,7 +6983,7 @@ Return a pointer on an option property.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 void *weechat_config_option_get_pointer (struct t_config_option *option,
                                          const char *property);
@@ -7013,7 +7013,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 char *description = weechat_config_option_get_pointer (option, "description");
 ----
@@ -7027,7 +7027,7 @@ Check if an option is "null" (undefined value).
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_config_option_is_null (struct t_config_option *option);
 ----
@@ -7043,7 +7043,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 if (weechat_config_option_is_null (option))
 {
@@ -7073,7 +7073,7 @@ Check if default value for an option is "null" (undefined value).
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_config_option_default_is_null (struct t_config_option *option);
 ----
@@ -7089,7 +7089,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 if (weechat_config_option_default_is_null (option))
 {
@@ -7119,7 +7119,7 @@ Return boolean value of option.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_config_boolean (struct t_config_option *option);
 ----
@@ -7137,7 +7137,7 @@ Return value, depending on the option type:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 struct t_config_option *option = weechat_config_get ("plugin.section.option");
 if (weechat_config_boolean (option))
@@ -7169,7 +7169,7 @@ Return default boolean value of option.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_config_boolean_default (struct t_config_option *option);
 ----
@@ -7187,7 +7187,7 @@ Return value, depending on the option type:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 struct t_config_option *option = weechat_config_get ("plugin.section.option");
 if (weechat_config_boolean_default (option))
@@ -7219,7 +7219,7 @@ Return integer value of option.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_config_integer (struct t_config_option *option);
 ----
@@ -7237,7 +7237,7 @@ Return value, depending on the option type:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 struct t_config_option *option = weechat_config_get ("plugin.section.option");
 int value = weechat_config_integer (option);
@@ -7261,7 +7261,7 @@ Return default integer value of option.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_config_integer_default (struct t_config_option *option);
 ----
@@ -7279,7 +7279,7 @@ Return value, depending on the option type:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 struct t_config_option *option = weechat_config_get ("plugin.section.option");
 int value = weechat_config_integer_default (option);
@@ -7303,7 +7303,7 @@ Return string value of option.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 const char *weechat_config_string (struct t_config_option *option);
 ----
@@ -7322,7 +7322,7 @@ Return value, depending on the option type:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 struct t_config_option *option = weechat_config_get ("plugin.section.option");
 const char *value = weechat_config_string (option);
@@ -7346,7 +7346,7 @@ Return default string value of option.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 const char *weechat_config_string_default (struct t_config_option *option);
 ----
@@ -7365,7 +7365,7 @@ Return value, depending on the option type:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 struct t_config_option *option = weechat_config_get ("plugin.section.option");
 const char *value = weechat_config_string_default (option);
@@ -7389,7 +7389,7 @@ Return color value of option.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 const char *weechat_config_color (struct t_config_option *option);
 ----
@@ -7407,7 +7407,7 @@ Return value, depending on the option type:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 struct t_config_option *option = weechat_config_get ("plugin.section.option");
 const char *color = weechat_config_color (option);
@@ -7431,7 +7431,7 @@ Return default color value of option.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 const char *weechat_config_color_default (struct t_config_option *option);
 ----
@@ -7449,7 +7449,7 @@ Return value, depending on the option type:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 struct t_config_option *option = weechat_config_get ("plugin.section.option");
 const char *color = weechat_config_color_default (option);
@@ -7474,7 +7474,7 @@ should be called only in "write" or "write_default" callbacks for a section).
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 void weechat_config_write_option (struct t_config_file *config_file,
                                   struct t_config_option *option);
@@ -7487,7 +7487,7 @@ Arguments:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 int
 my_section_write_cb (const void *pointer, void *data,
@@ -7523,7 +7523,7 @@ Write a line in a configuration file (this function should be called only in
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 void weechat_config_write_line (struct t_config_file *config_file,
                                 const char *option_name,
@@ -7539,7 +7539,7 @@ Arguments:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 int
 my_section_write_cb (const void *pointer, void *data,
@@ -7575,7 +7575,7 @@ Write configuration file to disk.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_config_write (struct t_config_file *config_file);
 ----
@@ -7592,7 +7592,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 switch (weechat_config_write (config_file))
 {
@@ -7631,7 +7631,7 @@ Read configuration file from disk.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_config_read (struct t_config_file *config_file);
 ----
@@ -7648,7 +7648,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 switch (weechat_config_read (config_file))
 {
@@ -7687,7 +7687,7 @@ Reload configuration file from disk.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_config_reload (struct t_config_file *config_file);
 ----
@@ -7704,7 +7704,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 switch (weechat_config_reload (config_file))
 {
@@ -7743,7 +7743,7 @@ Free an option.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 void weechat_config_option_free (struct t_config_option *option);
 ----
@@ -7754,7 +7754,7 @@ Arguments:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 weechat_config_option_free (option);
 ----
@@ -7776,7 +7776,7 @@ Free all options in a section.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 void weechat_config_section_free_options (struct t_config_section *section);
 ----
@@ -7787,7 +7787,7 @@ Arguments:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 weechat_config_section_free_options (section);
 ----
@@ -7809,7 +7809,7 @@ Free a section.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 void weechat_config_section_free (struct t_config_section *section);
 ----
@@ -7820,7 +7820,7 @@ Arguments:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 weechat_config_section_free (section);
 ----
@@ -7842,7 +7842,7 @@ Free a configuration file.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 void weechat_config_free (struct t_config_file *config_file);
 ----
@@ -7853,7 +7853,7 @@ Arguments:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 weechat_config_free (config_file);
 ----
@@ -7875,7 +7875,7 @@ Search an option with full name.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 struct t_config_option *weechat_config_get (const char *option_name);
 ----
@@ -7890,7 +7890,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 struct t_config_option *option = weechat_config_get ("weechat.look.item_time_format");
 ----
@@ -7912,7 +7912,7 @@ Search an option in plugins configuration file (plugins.conf).
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 const char *weechat_config_get_plugin (const char *option_name);
 ----
@@ -7928,7 +7928,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 /* if current plugin is "test", then look for value of option
    "plugins.var.test.option" in file plugins.conf */
@@ -7952,7 +7952,7 @@ Check if option is set in plugins configuration file (plugins.conf).
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_config_is_set_plugin (const char *option_name);
 ----
@@ -7968,7 +7968,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 if (weechat_config_is_set_plugin ("option"))
 {
@@ -8002,7 +8002,7 @@ Set new value for option in plugins configuration file (plugins.conf).
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_config_set_plugin (const char *option_name, const char *value);
 ----
@@ -8022,7 +8022,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 switch (weechat_config_set_plugin ("option", "test_value"))
 {
@@ -8068,7 +8068,7 @@ Set description for option in plugins configuration file (plugins.conf).
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 void weechat_config_set_desc_plugin (const char *option_name,
                                      const char *description);
@@ -8086,7 +8086,7 @@ A future creation of option with this name will use this description.
 
 C example:
 
-[source,C]
+[source,c]
 ----
 weechat_config_set_desc_plugin ("option", "description of option");
 ----
@@ -8110,7 +8110,7 @@ Unset option in plugins configuration file (plugins.conf).
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_config_unset_plugin (const char *option_name);
 ----
@@ -8129,7 +8129,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 switch (weechat_config_unset_plugin ("option"))
 {
@@ -8184,7 +8184,7 @@ binding, only new keys are created. To remove a key binding, use <<_key_unbind,k
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_key_bind (const char *context, struct t_hashtable *keys);
 ----
@@ -8208,7 +8208,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 struct t_hashtable *keys = weechat_hashtable_new (8,
                                                   WEECHAT_HASHTABLE_STRING,
@@ -8250,7 +8250,7 @@ When calling this function, ensure that you will not remove a user key binding.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_key_unbind (const char *context, const char *key);
 ----
@@ -8268,7 +8268,7 @@ Return value:
 
 C examples:
 
-[source,C]
+[source,c]
 ----
 /* remove a single key */
 weechat_key_unbind ("mouse", "@chat(plugin.buffer):button1");
@@ -8304,7 +8304,7 @@ Return a prefix.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 const char *weechat_prefix (const char *prefix);
 ----
@@ -8335,7 +8335,7 @@ Values and colors can be customized with command `/set`.
 
 C example:
 
-[source,C]
+[source,c]
 ----
 weechat_printf (NULL, "%sThis is an error...", weechat_prefix ("error"));
 ----
@@ -8357,7 +8357,7 @@ Return a string color code for display.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 const char *weechat_color (const char *color_name);
 ----
@@ -8414,7 +8414,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 weechat_printf (NULL, "Color: %sblue %sdefault color %syellow on red",
                 weechat_color ("blue"),
@@ -8440,7 +8440,7 @@ Display a message on a buffer.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 void weechat_printf (struct t_gui_buffer *buffer, const char *message, ...);
 ----
@@ -8448,7 +8448,7 @@ void weechat_printf (struct t_gui_buffer *buffer, const char *message, ...);
 This function is a shortcut for function printf_date_tags. These two calls give
 exactly same result:
 
-[source,C]
+[source,c]
 ----
 weechat_printf (buffer, "message");
 weechat_printf_date_tags (buffer, 0, NULL, "message");
@@ -8472,7 +8472,7 @@ set to 0.
 
 C example:
 
-[source,C]
+[source,c]
 ----
 weechat_printf (NULL, "Hello on WeeChat buffer");
 weechat_printf (buffer, "Hello on this buffer");
@@ -8507,7 +8507,7 @@ Display a message on a buffer, using a custom date and tags.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 void weechat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
                                const char *tags, const char *message, ...);
@@ -8525,7 +8525,7 @@ for a list of commonly used tags in WeeChat.
 
 C example:
 
-[source,C]
+[source,c]
 ----
 weechat_printf_date_tags (NULL, time (NULL) - 120, "notify_message",
                           "Message 2 minutes ago, with a tag 'notify_message'");
@@ -8553,7 +8553,7 @@ Display a message on a line of a buffer with free content.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 void weechat_printf_y (struct t_gui_buffer *buffer, int y,
                        const char *message, ...);
@@ -8570,7 +8570,7 @@ Arguments:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 weechat_printf_y (buffer, 2, "My message on third line");
 ----
@@ -8595,7 +8595,7 @@ Write a message in WeeChat log file (weechat.log).
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 void weechat_log_printf (const char *message, ...);
 ----
@@ -8606,7 +8606,7 @@ Arguments:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 weechat_log_printf ("My message in log file");
 ----
@@ -8647,7 +8647,7 @@ Default priority is 1000.
 
 C example:
 
-[source,C]
+[source,c]
 ----
 /* hook modifier with priority = 2000 */
 weechat_hook_modifier ("2000|input_text_display", &modifier_cb, NULL, NULL);
@@ -8664,7 +8664,7 @@ Hook a command.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 struct t_hook *weechat_hook_command (const char *command,
                                      const char *description,
@@ -8741,7 +8741,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 int
 my_command_cb (const void *pointer, void *data, struct t_gui_buffer *buffer,
@@ -8817,7 +8817,7 @@ Hook a completion.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 struct t_hook *weechat_hook_completion (const char *completion_item,
                                         const char *description,
@@ -8873,7 +8873,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 int
 my_completion_cb (const void *pointer, void *data, const char *completion_item,
@@ -8927,7 +8927,7 @@ Hook a command when WeeChat runs it.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 struct t_hook *weechat_hook_command_run (const char *command,
                                          int (*callback)(const void *pointer,
@@ -8962,7 +8962,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 int
 my_command_run_cb (const void *pointer, void *data,
@@ -9000,7 +9000,7 @@ Hook a timer.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 struct t_hook *weechat_hook_timer (long interval,
                                    int align_second,
@@ -9037,7 +9037,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 int
 my_timer_cb (const void *pointer, void *data, int remaining_calls)
@@ -9075,7 +9075,7 @@ Hook a file descriptor (file or socket).
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 struct t_hook *weechat_hook_fd (int fd,
                                 int flag_read,
@@ -9120,7 +9120,7 @@ to integer before using it, for example in Python: `int(fd)`.
 
 C example:
 
-[source,C]
+[source,c]
 ----
 int
 my_fd_cb (const void *pointer, void *data, int fd)
@@ -9168,7 +9168,7 @@ _options_ _(WeeChat ≥ 0.4.0)_.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 struct t_hook *weechat_hook_process (const char *command,
                                      int timeout,
@@ -9253,7 +9253,7 @@ many calls and use data only when return code is non-negative.
 
 C example:
 
-[source,C]
+[source,c]
 ----
 /* example with an external command */
 int
@@ -9386,7 +9386,7 @@ output.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 struct t_hook *weechat_hook_process_hashtable (const char *command,
                                                struct t_hashtable *options,
@@ -9455,7 +9455,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 int
 my_process_cb (const void *pointer, void *data, const char *command,
@@ -9615,7 +9615,7 @@ Hook a connection (background connection to a remote host).
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 struct t_hook *weechat_hook_connect (const char *proxy,
                                      const char *address,
@@ -9700,7 +9700,7 @@ to integer before using it, for example in Python: `int(sock)`.
 
 C example:
 
-[source,C]
+[source,c]
 ----
 int
 my_connect_cb (const void *pointer, void *data, int status, int gnutls_rc,
@@ -9812,7 +9812,7 @@ buffers with free content.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 struct t_hook *weechat_hook_line (const char *buffer_type,
                                   const char *buffer_name,
@@ -10026,7 +10026,7 @@ in this hashtable):
 
 C example:
 
-[source,C]
+[source,c]
 ----
 int
 my_line_cb (const void *pointer, void *data, struct t_hasbtable *line)
@@ -10076,7 +10076,7 @@ For more information on the hooks called when a line is printed, see
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 struct t_hook *weechat_hook_print (struct t_gui_buffer *buffer,
                                    const char *tags,
@@ -10141,7 +10141,7 @@ to integer before testing it, for example in Python: `if int(highlight):`.
 
 C example:
 
-[source,C]
+[source,c]
 ----
 int
 my_print_cb (const void *pointer, void *data, struct t_gui_buffer *buffer,
@@ -10183,7 +10183,7 @@ Hook a signal.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 struct t_hook *weechat_hook_signal (const char *signal,
                                     int (*callback)(const void *pointer,
@@ -10867,7 +10867,7 @@ List of signals sent by WeeChat and plugins:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 int
 my_signal_cb (const void *pointer, void *data, const char *signal,
@@ -10906,7 +10906,7 @@ Send a signal.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_hook_signal_send (const char *signal, const char *type_data,
                               void *signal_data);
@@ -10928,7 +10928,7 @@ Return value _(WeeChat ≥ 1.0)_:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 int rc = weechat_hook_signal_send ("my_signal", WEECHAT_HOOK_SIGNAL_STRING, my_string);
 ----
@@ -10954,7 +10954,7 @@ Argument is a pointer to buffer.
 
 C example:
 
-[source,C]
+[source,c]
 ----
 weechat_hook_signal_send ("logger_backlog", WEECHAT_HOOK_SIGNAL_POINTER, buffer);
 ----
@@ -10995,7 +10995,7 @@ Argument is a string with path to script to install.
 
 C example:
 
-[source,C]
+[source,c]
 ----
 weechat_hook_signal_send ("python_script_install", WEECHAT_HOOK_SIGNAL_STRING, "/path/to/test.py");
 ----
@@ -11030,7 +11030,7 @@ is name without path, for example _script.py_).
 
 C example:
 
-[source,C]
+[source,c]
 ----
 /* unload and remove scripts test.py and script.py */
 weechat_hook_signal_send ("python_script_remove", WEECHAT_HOOK_SIGNAL_STRING,
@@ -11073,7 +11073,7 @@ Argument is a string with following format:
 
 C examples:
 
-[source,C]
+[source,c]
 ----
 /* say "Hello!" on libera server, #weechat channel */
 weechat_hook_signal_send ("irc_input_send", WEECHAT_HOOK_SIGNAL_STRING,
@@ -11105,7 +11105,7 @@ Hook a hsignal (signal with hashtable).
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 struct t_hook *weechat_hook_hsignal (const char *signal,
                                      int (*callback)(const void *pointer,
@@ -11194,7 +11194,7 @@ pattern.
 
 C example:
 
-[source,C]
+[source,c]
 ----
 int
 my_hsignal_cb (const void *pointer, void *data, const char *signal,
@@ -11231,7 +11231,7 @@ Send a hsignal (signal with hashtable).
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_hook_hsignal_send (const char *signal, struct t_hashtable *hashtable);
 ----
@@ -11251,7 +11251,7 @@ Return value _(WeeChat ≥ 1.0)_:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 int rc;
 struct t_hashtable *hashtable = weechat_hashtable_new (8,
@@ -11336,7 +11336,7 @@ Hashtable sent in hsignal has following content (key and values are strings):
 
 C example:
 
-[source,C]
+[source,c]
 ----
 int
 test_whois_cb (const void *pointer, void *data, const char *signal,
@@ -11417,7 +11417,7 @@ for many redirections, you must create pattern before each redirect.
 
 C example:
 
-[source,C]
+[source,c]
 ----
 struct t_hashtable *hashtable = weechat_hashtable_new (8,
                                                        WEECHAT_HASHTABLE_STRING,
@@ -11463,7 +11463,7 @@ Hook a configuration option.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 struct t_hook *weechat_hook_config (const char *option,
                                     int (*callback)(const void *pointer,
@@ -11499,7 +11499,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 int
 my_config_cb (const void *pointer, void *data, const char *option,
@@ -11538,7 +11538,7 @@ Hook a modifier.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 struct t_hook *weechat_hook_modifier (const char *modifier,
                                       char *(*callback)(const void *pointer,
@@ -11647,7 +11647,7 @@ List of modifiers used by WeeChat and plugins:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 char *
 my_modifier_cb (const void *pointer, void *data, const char *modifier,
@@ -11695,7 +11695,7 @@ Execute modifier(s).
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 char *weechat_hook_modifier_exec (const char *modifier,
                                   const char *modifier_data,
@@ -11784,7 +11784,7 @@ List of modifiers defined by WeeChat and plugins that can be used:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 char *new_string = weechat_hook_modifier_exec ("my_modifier",
                                                my_data, my_string);
@@ -11809,7 +11809,7 @@ Hook an information (callback takes and returns a string).
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 struct t_hook *weechat_hook_info (const char *info_name,
                                   const char *description,
@@ -11849,7 +11849,7 @@ With WeeChat ≥ 2.5, the callback returns an allocated string
 
 C example:
 
-[source,C]
+[source,c]
 ----
 char *
 my_info_cb (const void *pointer, void *data, const char *info_name,
@@ -11890,7 +11890,7 @@ Hook an information (callback takes and returns a hashtable).
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 struct t_hook *weechat_hook_info_hashtable (const char *info_name,
                                             const char *description,
@@ -11929,7 +11929,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 struct t_hashtable *
 my_info_hashtable_cb (const void *pointer, void *data, const char *info_name,
@@ -11973,7 +11973,7 @@ Hook an infolist: callback will return pointer to infolist asked.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 struct t_hook *weechat_hook_infolist (const char *infolist_name,
                                       const char *description,
@@ -12015,7 +12015,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 struct t_infolist *
 my_infolist_cb (const void *pointer, void *data, const char *infolist_name,
@@ -12064,7 +12064,7 @@ Hook a hdata: callback will return pointer to hdata asked.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 struct t_hook *weechat_hook_hdata (const char *hdata_name,
                                    const char *description,
@@ -12097,7 +12097,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 struct t_hdata *
 my_hdata_cb (const void *pointer, void *data, const char *hdata_name)
@@ -12128,7 +12128,7 @@ cursor).
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 struct t_hook *weechat_hook_focus (const char *area,
                                    struct t_hashtable *(*callback)(const void *pointer,
@@ -12296,7 +12296,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 struct t_hashtable *
 my_focus_nicklist_cb (const void *pointer, void *data, struct t_hashtable *info)
@@ -12336,7 +12336,7 @@ Set string value of a hook property.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 void weechat_hook_set (struct t_hook *hook, const char *property,
                        const char *value);
@@ -12375,7 +12375,7 @@ Properties:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 struct t_hook *my_command_hook =
     weechat_hook_command ("abcd", "description",
@@ -12408,7 +12408,7 @@ Unhook something hooked.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 void weechat_unhook (struct t_hook *hook);
 ----
@@ -12419,7 +12419,7 @@ Arguments:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 struct t_hook *my_hook = weechat_hook_command ( /* ... */ );
 /* ... */
@@ -12445,7 +12445,7 @@ Unhook everything that has been hooked by current plugin.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 void weechat_unhook_all (const char *subplugin);
 ----
@@ -12457,7 +12457,7 @@ Arguments:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 weechat_unhook_all (NULL);
 ----
@@ -12486,7 +12486,7 @@ Open a new buffer.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 struct t_gui_buffer *weechat_buffer_new (const char *name,
                                          int (*input_callback)(const void *pointer,
@@ -12539,7 +12539,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 int
 my_input_cb (const void *pointer, void *data,
@@ -12588,7 +12588,7 @@ Return pointer to current buffer (buffer displayed by current window).
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 struct t_gui_buffer *weechat_current_buffer ();
 ----
@@ -12599,7 +12599,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 weechat_printf (weechat_current_buffer (), "Text on current buffer");
 ----
@@ -12623,7 +12623,7 @@ Search a buffer by plugin and/or name.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 struct t_gui_buffer *weechat_buffer_search (const char *plugin,
                                             const char *name);
@@ -12645,7 +12645,7 @@ Return value:
 
 C examples:
 
-[source,C]
+[source,c]
 ----
 struct t_gui_buffer *buffer1 = weechat_buffer_search ("irc", "libera.#weechat");
 struct t_gui_buffer *buffer2 = weechat_buffer_search ("==", "irc.libera.#test");  /* WeeChat ≥ 1.0 */
@@ -12669,7 +12669,7 @@ is starting).
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 struct t_gui_buffer *weechat_buffer_search_main ();
 ----
@@ -12680,7 +12680,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 struct t_gui_buffer *weechat_buffer = weechat_buffer_search_main ();
 ----
@@ -12702,7 +12702,7 @@ Clear content of a buffer.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 void weechat_buffer_clear (struct t_gui_buffer *buffer);
 ----
@@ -12713,7 +12713,7 @@ Arguments:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 struct t_gui_buffer *my_buffer = weechat_buffer_search ("my_plugin",
                                                         "my_buffer");
@@ -12742,7 +12742,7 @@ Close a buffer.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 void weechat_buffer_close (struct t_gui_buffer *buffer);
 ----
@@ -12753,7 +12753,7 @@ Arguments:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 struct t_gui_buffer *my_buffer = weechat_buffer_new ("my_buffer",
                                                      &my_input_cb, NULL,
@@ -12783,7 +12783,7 @@ lines).
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 void weechat_buffer_merge (struct t_gui_buffer *buffer,
                            struct t_gui_buffer *target_buffer);
@@ -12796,7 +12796,7 @@ Arguments:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 /* merge current buffer with weechat "core" buffer */
 weechat_buffer_merge (weechat_current_buffer (),
@@ -12821,7 +12821,7 @@ Unmerge buffer from a group of merged buffers.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 void weechat_buffer_unmerge (struct t_gui_buffer *buffer,
                              int number);
@@ -12835,7 +12835,7 @@ Arguments:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 weechat_buffer_unmerge (weechat_current_buffer (), 1);
 ----
@@ -12857,7 +12857,7 @@ Return integer value of a buffer property.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_buffer_get_integer (struct t_gui_buffer *buffer,
                                 const char *property);
@@ -12926,7 +12926,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 weechat_printf (NULL, "my buffer number is: %d",
                 weechat_buffer_get_integer (my_buffer, "number"));
@@ -12949,7 +12949,7 @@ Return string value of a buffer property.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 const char *weechat_buffer_get_string (struct t_gui_buffer *buffer,
                                        const char *property);
@@ -12983,7 +12983,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 weechat_printf (NULL, "name / short name of buffer are: %s / %s",
                 weechat_buffer_get_string (my_buffer, "name"),
@@ -13009,7 +13009,7 @@ Return pointer value of a buffer property.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 void *weechat_buffer_pointer (struct t_gui_buffer *buffer,
                               const char *property);
@@ -13029,7 +13029,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 weechat_printf (NULL, "plugin pointer of my buffer: %lx",
                 weechat_buffer_get_pointer (my_buffer, "plugin"));
@@ -13052,7 +13052,7 @@ Set string value of a buffer property.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 void weechat_buffer_set (struct t_gui_buffer *buffer, const char *property,
                          const char *value);
@@ -13219,7 +13219,7 @@ Properties:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 /* disable hotlist (for all buffers) */
 weechat_buffer_set (NULL, "hotlist", "-");
@@ -13268,7 +13268,7 @@ Set pointer value of a buffer property.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 void weechat_buffer_set_pointer (struct t_gui_buffer *buffer, const char *property,
                                  void *pointer);
@@ -13290,7 +13290,7 @@ Arguments:
 
 Prototypes for callbacks:
 
-[source,C]
+[source,c]
 ----
 int close_callback (const void *pointer, void *data,
                     struct t_gui_buffer *buffer);
@@ -13305,7 +13305,7 @@ int nickcmp_callback (const void *pointer, void *data,
 
 C example:
 
-[source,C]
+[source,c]
 ----
 int
 my_close_cb (const void *pointer, void *data, struct t_gui_buffer *buffer)
@@ -13327,7 +13327,7 @@ variables.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 char *weechat_buffer_string_replace_local_var (struct t_gui_buffer *buffer,
                                                const char *string);
@@ -13344,7 +13344,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 weechat_buffer_set (my_buffer, "localvar_set_toto", "abc");
 
@@ -13374,7 +13374,7 @@ Check if buffer matches a list of buffers.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_buffer_match_list (struct t_gui_buffer *buffer, const char *string);
 ----
@@ -13393,7 +13393,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 struct t_gui_buffer *buffer = weechat_buffer_search ("irc", "libera.#weechat");
 if (buffer)
@@ -13432,7 +13432,7 @@ Return pointer to current window.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 struct t_gui_window *weechat_current_window ();
 ----
@@ -13443,7 +13443,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 struct t_gui_window *current_window = weechat_current_window ();
 ----
@@ -13467,7 +13467,7 @@ Return pointer to window displaying buffer.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 struct t_gui_window *weechat_window_search_with_buffer (struct t_gui_buffer *buffer);
 ----
@@ -13482,7 +13482,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 weechat_printf (NULL,
                 "window displaying core buffer: %lx",
@@ -13507,7 +13507,7 @@ Return integer value of a window property.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_window_get_integer (struct t_gui_window *window,
                                 const char *property);
@@ -13542,7 +13542,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 weechat_printf (NULL, "current window is at position (x,y): (%d,%d)",
                 weechat_window_get_integer (weechat_current_window (), "win_x"),
@@ -13571,7 +13571,7 @@ This function is not used today, it is reserved for a future version.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 const char *weechat_window_get_string (struct t_gui_window *window,
                                        const char *property);
@@ -13600,7 +13600,7 @@ Return pointer value of a window property.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 void *weechat_window_get_pointer (struct t_gui_window *window,
                                   const char *property);
@@ -13619,7 +13619,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 weechat_printf (NULL,
                 "buffer displayed in current window: %lx",
@@ -13644,7 +13644,7 @@ Set title for terminal.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 void weechat_window_set_title (const char *title);
 ----
@@ -13657,7 +13657,7 @@ Arguments:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 weechat_window_set_title ("new title here");
 ----
@@ -13684,7 +13684,7 @@ Add a group in a nicklist.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 struct t_gui_nick_group *weechat_nicklist_add_group (struct t_gui_buffer *buffer,
                                                      struct t_gui_nick_group *parent_group,
@@ -13722,7 +13722,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 struct t_gui_nick_group *my_group =
     weechat_nicklist_add_group (my_buffer,
@@ -13750,7 +13750,7 @@ Search a group in a nicklist.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 struct t_gui_nick_group *weechat_nicklist_search_group (struct t_gui_buffer *buffer,
                                                         struct t_gui_nick_group *from_group,
@@ -13770,7 +13770,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 struct t_gui_nick_group *ptr_group = weechat_nicklist_search_group (my_buffer,
                                                                     NULL, "test_group");
@@ -13793,7 +13793,7 @@ Add a nick in a group.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 struct t_gui_nick_group *weechat_nicklist_add_nick (struct t_gui_buffer *buffer,
                                                     struct t_gui_nick_group *group,
@@ -13834,7 +13834,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 struct t_gui_nick *my_nick =
     weechat_nicklist_add_nick (my_buffer, my_group,
@@ -13865,7 +13865,7 @@ Search a nick in a nicklist.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 struct t_gui_nick *weechat_nicklist_search_nick (struct t_gui_buffer *buffer,
                                                  struct t_gui_nick_group *from_group,
@@ -13885,7 +13885,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 struct t_gui_nick *ptr_nick = weechat_nicklist_search_nick (my_buffer,
                                                             NULL, "test_nick");
@@ -13908,7 +13908,7 @@ Remove a group from a nicklist.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 void weechat_nicklist_remove_group (struct t_gui_buffer *buffer,
                                     struct t_gui_nick_group *group);
@@ -13921,7 +13921,7 @@ Arguments:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 weechat_nicklist_remove_group (my_buffer, my_group);
 ----
@@ -13943,7 +13943,7 @@ Remove a nick from a nicklist.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 void weechat_nicklist_remove_nick (struct t_gui_buffer *buffer,
                                    struct t_gui_nick *nick);
@@ -13956,7 +13956,7 @@ Arguments:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 weechat_nicklist_remove_nick (my_buffer, my_nick);
 ----
@@ -13978,7 +13978,7 @@ Remove all groups/nicks from a nicklist.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 void weechat_nicklist_remove_all (struct t_gui_buffer *buffer);
 ----
@@ -13989,7 +13989,7 @@ Arguments:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 weechat_nicklist_remove_all (my_buffer);
 ----
@@ -14013,7 +14013,7 @@ Get next group or nick from nicklist (mainly used to display nicklist).
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 void weechat_nicklist_get_next_item (struct t_gui_buffer *buffer,
                                      struct t_gui_nick_group **group,
@@ -14028,7 +14028,7 @@ Arguments:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 struct t_gui_nick_group *ptr_group;
 struct t_gui_nick *ptr_nick;
@@ -14063,7 +14063,7 @@ Return integer value of a group property.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_nicklist_group_get_integer (struct t_gui_buffer *buffer,
                                         struct t_gui_nick_group *group,
@@ -14084,7 +14084,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 int visible = weechat_nicklist_group_get_integer (buffer, group, "visible");
 ----
@@ -14108,7 +14108,7 @@ Return string value of a group property.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 const char *weechat_nicklist_group_get_string (struct t_gui_buffer *buffer,
                                                struct t_gui_nick_group *group,
@@ -14129,7 +14129,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 const char *color = weechat_nicklist_group_get_string (buffer, group, "color");
 ----
@@ -14153,7 +14153,7 @@ Return pointer value of a group property.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 void *weechat_nicklist_group_get_pointer (struct t_gui_buffer *buffer,
                                           struct t_gui_nick_group *group,
@@ -14173,7 +14173,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 struct t_gui_nick_group *parent = weechat_nicklist_group_get_pointer (buffer, group, "parent");
 ----
@@ -14197,7 +14197,7 @@ Set string value of a group property.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 void weechat_nicklist_group_set (struct t_gui_buffer *buffer,
                                  struct t_gui_nick_group *group,
@@ -14227,7 +14227,7 @@ Properties:
 
 C examples:
 
-[source,C]
+[source,c]
 ----
 /* change group color to "bar_fg" */
 weechat_nicklist_group_set (buffer, group, "color", "bar_fg");
@@ -14266,7 +14266,7 @@ Return integer value of a nick property.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_nicklist_nick_get_integer (struct t_gui_buffer *buffer,
                                        struct t_gui_nick *nick,
@@ -14286,7 +14286,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 int visible = weechat_nicklist_nick_get_integer (buffer, nick, "visible");
 ----
@@ -14310,7 +14310,7 @@ Return string value of a nick property.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 const char *weechat_nicklist_nick_get_string (struct t_gui_buffer *buffer,
                                               struct t_gui_nick *nick,
@@ -14333,7 +14333,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 const char *color = weechat_nicklist_nick_get_string (buffer, nick, "color");
 ----
@@ -14357,7 +14357,7 @@ Return pointer value of a nick property.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 void *weechat_nicklist_nick_get_pointer (struct t_gui_buffer *buffer,
                                          struct t_gui_nick *nick,
@@ -14377,7 +14377,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 struct t_gui_nick_group *group = weechat_nicklist_nick_get_pointer (buffer, nick, "group");
 ----
@@ -14401,7 +14401,7 @@ Set string value of a nick property.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 void weechat_nicklist_nick_set (struct t_gui_buffer *buffer,
                                 struct t_gui_nick *nick,
@@ -14437,7 +14437,7 @@ Properties:
 
 C examples:
 
-[source,C]
+[source,c]
 ----
 /* change nick color to cyan */
 weechat_nicklist_nick_set (buffer, nick, "color", "cyan");
@@ -14485,7 +14485,7 @@ Search a bar item.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 struct t_gui_bar_item *weechat_bar_item_search (const char *name);
 ----
@@ -14500,7 +14500,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 struct t_gui_bar_item *bar_item = weechat_bar_item_search ("myitem");
 ----
@@ -14524,7 +14524,7 @@ Create a new bar item.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 struct t_gui_bar_item *weechat_bar_item_new (const char *name,
                                              char *(*build_callback)(const void *pointer,
@@ -14565,7 +14565,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 char *
 my_build_callback (const void *pointer, void *data,
@@ -14614,7 +14614,7 @@ Update content of a bar item, by calling its build callback.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 void weechat_bar_item_update (const char *name);
 ----
@@ -14625,7 +14625,7 @@ Arguments:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 weechat_bar_item_update ("myitem");
 ----
@@ -14647,7 +14647,7 @@ Remove a bar item.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 void weechat_bar_item_remove (struct t_gui_bar_item *item);
 ----
@@ -14658,7 +14658,7 @@ Arguments:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 weechat_bar_item_remove (&my_item);
 ----
@@ -14680,7 +14680,7 @@ Search a bar.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 struct t_gui_bar *weechat_bar_search (const char *name);
 ----
@@ -14695,7 +14695,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 struct t_gui_bar *bar = weechat_bar_search ("mybar");
 ----
@@ -14719,7 +14719,7 @@ Create a new bar.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 struct t_gui_bar *weechat_bar_new (const char *name,
                                    const char *hidden,
@@ -14785,7 +14785,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 struct t_gui_bar *my_bar = weechat_bar_new ("mybar",
                                             "off",
@@ -14832,7 +14832,7 @@ Set a new value for a bar property.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_bar_set (struct t_gui_bar *bar, const char *property,
                      const char *value);
@@ -14852,7 +14852,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 weechat_bar_set (mybar, "position", "bottom");
 ----
@@ -14874,7 +14874,7 @@ Refresh content of a bar on screen.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 void weechat_bar_update (const char *name);
 ----
@@ -14885,7 +14885,7 @@ Arguments:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 weechat_bar_update ("mybar");
 ----
@@ -14907,7 +14907,7 @@ Remove a bar.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 void weechat_bar_remove (struct t_gui_bar *bar);
 ----
@@ -14918,7 +14918,7 @@ Arguments:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 weechat_bar_remove (mybar);
 ----
@@ -14947,7 +14947,7 @@ Execute a command or send text to buffer.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_command (struct t_gui_buffer *buffer, const char *command);
 ----
@@ -14966,7 +14966,7 @@ Return value _(WeeChat ≥ 1.1)_:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 int rc;
 rc = weechat_command (weechat_buffer_search ("irc", "libera.#weechat"),
@@ -14992,7 +14992,7 @@ Execute a command or send text to buffer with options.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_command_options (struct t_gui_buffer *buffer, const char *command,
                              struct t_hashtable *options);
@@ -15018,7 +15018,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 /* allow any command except /exec, run command in 2 seconds */
 int rc;
@@ -15056,7 +15056,7 @@ Create a new completion.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 struct t_gui_completion *weechat_completion_new (struct t_gui_buffer *buffer);
 ----
@@ -15071,7 +15071,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 struct t_gui_completion *completion = weechat_completion_new (weechat_buffer_search_main ());
 ----
@@ -15096,7 +15096,7 @@ context.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_completion_search (struct t_gui_completion *completion, const char *data,
                                int position, int direction);
@@ -15115,7 +15115,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 struct t_gui_completion *completion = weechat_completion_new (weechat_buffer_search_main ());
 if (weechat_completion_search (completion, "/help filt", 10, 1))
@@ -15145,7 +15145,7 @@ Get a completion property as string.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 const char *weechat_completion_get_string (struct t_gui_completion *completion,
                                            const char *property);
@@ -15161,7 +15161,7 @@ Arguments:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 int
 my_completion_cb (const void *pointer, void *data, const char *completion_item,
@@ -15202,7 +15202,7 @@ Add a word for a completion.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 void weechat_completion_list_add (struct t_gui_completion *completion,
                                   const char *word,
@@ -15240,7 +15240,7 @@ Free a completion.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 void weechat_completion_free (struct t_gui_completion *completion);
 ----
@@ -15251,7 +15251,7 @@ Arguments:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 weechat_completion_free (completion);
 ----
@@ -15282,7 +15282,7 @@ process only, to not block WeeChat.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_network_pass_proxy (const char *proxy,
                                 int sock,
@@ -15303,7 +15303,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 if (weechat_network_pass_proxy ("my_proxy", sock, "irc.libera.chat", 6667))
 {
@@ -15330,7 +15330,7 @@ process only, to not block WeeChat.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_network_connect_to (const char *proxy,
                                 struct sockaddr *address,
@@ -15349,7 +15349,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 struct sockaddr *addr;
 socklen_t length;
@@ -15385,7 +15385,7 @@ Return info, as string, from WeeChat or a plugin.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 char *weechat_info_get (const char *info_name, const char *arguments);
 ----
@@ -15411,7 +15411,7 @@ include::includes/autogen_api_infos.en.adoc[tag=infos]
 
 C example:
 
-[source,C]
+[source,c]
 ----
 char *version = weechat_info_get ("version", NULL);
 char *date = weechat_info_get ("date", NULL);
@@ -15449,7 +15449,7 @@ Return info, as hashtable, from WeeChat or a plugin.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 struct t_hashtable *weechat_info_get_hashtable (const char *info_name,
                                                 struct t_hashtable *hashtable);
@@ -15471,7 +15471,7 @@ include::includes/autogen_api_infos_hashtable.en.adoc[tag=infos_hashtable]
 
 C example:
 
-[source,C]
+[source,c]
 ----
 struct t_hashtable *hashtable_in, *hashtable_out;
 
@@ -15554,7 +15554,7 @@ Create a new infolist.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 struct t_infolist *weechat_infolist_new ();
 ----
@@ -15565,7 +15565,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 struct t_infolist *infolist = weechat_infolist_new ();
 ----
@@ -15587,7 +15587,7 @@ Add an item in an infolist.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 struct t_infolist_item *weechat_infolist_new_item (struct t_infolist *infolist);
 ----
@@ -15602,7 +15602,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 struct t_infolist_item *item = weechat_infolist_new_item (infolist);
 ----
@@ -15624,7 +15624,7 @@ Add an integer variable to an infolist item.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 struct t_infolist_var *weechat_infolist_new_var_integer (struct t_infolist_item *item,
                                                          const char *name,
@@ -15643,7 +15643,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 struct t_infolist_var *var = weechat_infolist_new_var_integer (item,
                                                                "my_integer",
@@ -15667,7 +15667,7 @@ Add a string variable to an infolist item.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 struct t_infolist_var *weechat_infolist_new_var_string (struct t_infolist_item *item,
                                                         const char *name,
@@ -15686,7 +15686,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 struct t_infolist_var *var = weechat_infolist_new_var_string (item,
                                                               "my_string",
@@ -15710,7 +15710,7 @@ Add a pointer variable to an infolist item.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 struct t_infolist_var *weechat_infolist_new_var_pointer (struct t_infolist_item *item,
                                                          const char *name,
@@ -15729,7 +15729,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 struct t_infolist_var *var = weechat_infolist_new_var_pointer (item,
                                                                "my_pointer",
@@ -15753,7 +15753,7 @@ Add a buffer variable to an infolist item.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 struct t_infolist_var *weechat_infolist_new_var_buffer (struct t_infolist_item *item,
                                                         const char *name,
@@ -15774,7 +15774,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 char buffer[256];
 /* ... */
@@ -15793,7 +15793,7 @@ Add a time variable to an infolist item.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 struct t_infolist_var *weechat_infolist_new_var_time (struct t_infolist_item *item,
                                                       const char *name,
@@ -15812,7 +15812,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 struct t_infolist_var *var = weechat_infolist_new_var_time (item,
                                                             "my_time",
@@ -15843,7 +15843,7 @@ have more info than hdata, which is raw data), see <<hdata,hdata>>.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 struct t_infolist *weechat_infolist_get (const char *infolist_name,
                                          void *pointer,
@@ -15868,7 +15868,7 @@ include::includes/autogen_api_infolists.en.adoc[tag=infolists]
 
 C example:
 
-[source,C]
+[source,c]
 ----
 struct t_infolist *infolist = weechat_infolist_get ("irc_server", NULL, NULL);
 ----
@@ -15891,7 +15891,7 @@ an infolist moves cursor to first item in infolist.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_infolist_next (struct t_infolist *infolist);
 ----
@@ -15906,7 +15906,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 if (weechat_infolist_next (infolist))
 {
@@ -15940,7 +15940,7 @@ for an infolist moves cursor to last item in infolist.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_infolist_prev (struct t_infolist *infolist);
 ----
@@ -15956,7 +15956,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 if (weechat_infolist_prev (infolist))
 {
@@ -15989,7 +15989,7 @@ Reset "cursor" for infolist.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 void weechat_infolist_reset_item_cursor (struct t_infolist *infolist);
 ----
@@ -16000,7 +16000,7 @@ Arguments:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 weechat_infolist_reset_item_cursor (infolist);
 ----
@@ -16024,7 +16024,7 @@ Search a variable in the current infolist item.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 struct t_infolist_var *weechat_infolist_search_var (struct t_infolist *infolist,
                                                     const char *name);
@@ -16041,7 +16041,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 if (weechat_infolist_search_var (infolist, "name"))
 {
@@ -16069,7 +16069,7 @@ Return list of fields for current infolist item.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 const char *weechat_infolist_fields (struct t_infolist *infolist);
 ----
@@ -16086,7 +16086,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 const char *fields = weechat_infolist_fields (infolist);
 /* fields contains something like:
@@ -16112,7 +16112,7 @@ Return value of integer variable in current infolist item.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_infolist_integer (struct t_infolist *infolist, const char *var);
 ----
@@ -16128,7 +16128,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 weechat_printf (NULL, "integer = %d",
                 weechat_infolist_integer (infolist, "my_integer"));
@@ -16151,7 +16151,7 @@ Return value of string variable in current infolist item.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 const char *weechat_infolist_string (struct t_infolist *infolist, const char *var);
 ----
@@ -16167,7 +16167,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 weechat_printf (NULL, "string = %s",
                 weechat_infolist_string (infolist, "my_string"));
@@ -16190,7 +16190,7 @@ Return value of pointer variable in current infolist item.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 void *weechat_infolist_pointer (struct t_infolist *infolist, const char *var);
 ----
@@ -16206,7 +16206,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 weechat_printf (NULL, "pointer = 0x%lx",
                 weechat_infolist_pointer (infolist, "my_pointer"));
@@ -16229,7 +16229,7 @@ Return value of buffer variable in current infolist item.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 void *weechat_infolist_buffer (struct t_infolist *infolist, const char *var,
                                int *size);
@@ -16247,7 +16247,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 int size;
 void *pointer = weechat_infolist_buffer (infolist, "my_buffer", &size);
@@ -16264,7 +16264,7 @@ Return value of time variable in current infolist item.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 time_t weechat_infolist_time (struct t_infolist *infolist, const char *var);
 ----
@@ -16280,7 +16280,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 weechat_printf (NULL, "time = %ld",
                 weechat_infolist_time (infolist, "my_time"));
@@ -16303,7 +16303,7 @@ Free an infolist.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 void weechat_infolist_free (struct t_infolist *infolist);
 ----
@@ -16314,7 +16314,7 @@ Arguments:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 weechat_infolist_free (infolist);
 ----
@@ -16360,7 +16360,7 @@ infolist, but there are some differences:
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 struct t_hdata *weechat_hdata_new (const char *hdata_name, const char *var_prev, const char *var_next,
                                    int create_allowed, int delete_allowed,
@@ -16398,7 +16398,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 struct t_hdata *hdata = weechat_hdata_new ("myplugin_list", "prev", "next", 0, 0, &callback_update, NULL);
 ----
@@ -16414,7 +16414,7 @@ Create a new variable in hdata.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 void weechat_hdata_new_var (struct t_hdata *hdata, const char *name, int offset, int type,
                             int update_allowed, const char *array_size, const char *hdata_name);
@@ -16477,7 +16477,7 @@ Examples of variables and the corresponding array size (_WeeChat ≥ 3.4_):
 
 C example:
 
-[source,C]
+[source,c]
 ----
 struct t_myplugin_list
 {
@@ -16506,7 +16506,7 @@ weechat_hdata_new_var (hdata, "next", offsetof (struct t_myplugin_list, next), W
 
 The macro "WEECHAT_HDATA_VAR" can be used to shorten code:
 
-[source,C]
+[source,c]
 ----
 WEECHAT_HDATA_VAR(struct t_myplugin_list, name, STRING, 0, NULL, NULL);
 WEECHAT_HDATA_VAR(struct t_myplugin_list, buffer, POINTER, 0, NULL, NULL);
@@ -16529,7 +16529,7 @@ Create a new list pointer in hdata.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 void weechat_hdata_new_list (struct t_hdata *hdata, const char *name, void *pointer, int flags);
 ----
@@ -16544,7 +16544,7 @@ Arguments:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 struct t_myplugin_list
 {
@@ -16574,7 +16574,7 @@ weechat_hdata_new_list (hdata, "last_buffer", &last_buffer, 0);
 
 The macro "WEECHAT_HDATA_LIST" can be used to shorten code:
 
-[source,C]
+[source,c]
 ----
 WEECHAT_HDATA_LIST(buffers, WEECHAT_HDATA_LIST_CHECK_POINTERS);
 WEECHAT_HDATA_LIST(last_buffer, 0);
@@ -16596,7 +16596,7 @@ WeeChat/plugin object to read some data.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 struct t_hdata *weechat_hdata_get (const char *hdata_name);
 ----
@@ -16615,7 +16615,7 @@ include::includes/autogen_api_hdata.en.adoc[tag=hdata]
 
 C example:
 
-[source,C]
+[source,c]
 ----
 struct t_hdata *hdata = weechat_hdata_get ("irc_server");
 ----
@@ -16639,7 +16639,7 @@ Return offset of variable in hdata.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_hdata_get_var_offset (struct t_hdata *hdata, const char *name);
 ----
@@ -16655,7 +16655,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 int offset = weechat_hdata_get_var_offset (hdata, "name");
 ----
@@ -16679,7 +16679,7 @@ Return type of variable in hdata (as integer).
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_hdata_get_var_type (struct t_hdata *hdata, const char *name);
 ----
@@ -16695,7 +16695,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 int type = weechat_hdata_get_var_type (hdata, "name");
 switch (type)
@@ -16744,7 +16744,7 @@ Return type of variable in hdata (as string).
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 const char *weechat_hdata_get_var_type_string (struct t_hdata *hdata, const char *name);
 ----
@@ -16760,7 +16760,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 weechat_printf (NULL, "type = %s", weechat_hdata_get_var_type_string (hdata, "name"));
 ----
@@ -16784,7 +16784,7 @@ Return array size for variable in hdata.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_hdata_get_var_array_size (struct t_hdata *hdata, void *pointer, const char *name);
 ----
@@ -16801,7 +16801,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 int array_size = weechat_hdata_get_var_array_size (hdata, pointer, "name");
 ----
@@ -16825,7 +16825,7 @@ Return array size for variable in hdata (as string).
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 const char *weechat_hdata_get_var_array_size_string (struct t_hdata *hdata, void *pointer,
                                                      const char *name);
@@ -16844,7 +16844,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 const char *array_size = weechat_hdata_get_var_array_size_string (hdata, pointer, "name");
 ----
@@ -16868,7 +16868,7 @@ Return hdata for a variable in hdata.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 const char *weechat_hdata_get_var_hdata (struct t_hdata *hdata, const char *name);
 ----
@@ -16884,7 +16884,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 weechat_printf (NULL, "hdata = %s", weechat_hdata_get_var_hdata (hdata, "name"));
 ----
@@ -16908,7 +16908,7 @@ Return pointer to content of variable in hdata.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 void *weechat_hdata_get_var (struct t_hdata *hdata, void *pointer, const char *name);
 ----
@@ -16925,7 +16925,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 struct t_hdata *hdata = weechat_hdata_get ("buffer");
 struct t_gui_buffer *buffer = weechat_buffer_search_main ();
@@ -16943,7 +16943,7 @@ Return pointer to content of variable in hdata, using offset.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 void *weechat_hdata_get_var_at_offset (struct t_hdata *hdata, void *pointer, int offset);
 ----
@@ -16960,7 +16960,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 struct t_hdata *hdata = weechat_hdata_get ("buffer");
 struct t_gui_buffer *buffer = weechat_buffer_search_main ();
@@ -16979,7 +16979,7 @@ Return list pointer from hdata.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 void *weechat_hdata_get_list (struct t_hdata *hdata, const char *name);
 ----
@@ -16995,7 +16995,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 struct t_hdata *hdata = weechat_hdata_get ("buffer");
 struct t_gui_buffer *buffers = weechat_hdata_get_list (hdata, "gui_buffers");
@@ -17021,7 +17021,7 @@ Check if a pointer is valid for a hdata and a list pointer.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_hdata_check_pointer (struct t_hdata *hdata, void *list, void *pointer);
 ----
@@ -17041,7 +17041,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 /* check if a buffer pointer is valid */
 struct t_hdata *hdata = weechat_hdata_get ("buffer");
@@ -17082,7 +17082,7 @@ Move pointer to another element in list.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 void *weechat_hdata_move (struct t_hdata *hdata, void *pointer, int count);
 ----
@@ -17101,7 +17101,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 struct t_hdata *hdata = weechat_hdata_get ("buffer");
 struct t_gui_buffer *buffer = weechat_buffer_search_main ();
@@ -17142,7 +17142,7 @@ in list, until element is found (or end of list).
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 void *weechat_hdata_search (struct t_hdata *hdata, void *pointer, const char *search,
                             struct t_hashtable *pointers, struct t_hashtable *extra_vars,
@@ -17177,7 +17177,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 struct t_hdata *hdata = weechat_hdata_get ("irc_server");
 void *servers = weechat_hdata_get_list (hdata, "irc_servers");
@@ -17226,7 +17226,7 @@ Return value of char variable in structure using hdata.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 char weechat_hdata_char (struct t_hdata *hdata, void *pointer, const char *name);
 ----
@@ -17244,7 +17244,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 weechat_printf (NULL, "letter = %c", weechat_hdata_char (hdata, pointer, "letter"));
 ----
@@ -17268,7 +17268,7 @@ Return value of integer variable in structure using hdata.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_hdata_integer (struct t_hdata *hdata, void *pointer, const char *name);
 ----
@@ -17286,7 +17286,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 struct t_hdata *hdata = weechat_hdata_get ("buffer");
 struct t_gui_buffer *buffer = weechat_buffer_search_main ();
@@ -17314,7 +17314,7 @@ Return value of long variable in structure using hdata.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 long weechat_hdata_long (struct t_hdata *hdata, void *pointer, const char *name);
 ----
@@ -17332,7 +17332,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 weechat_printf (NULL, "longvar = %ld", weechat_hdata_long (hdata, pointer, "longvar"));
 ----
@@ -17356,7 +17356,7 @@ Return value of string variable in structure using hdata.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 const char *weechat_hdata_string (struct t_hdata *hdata, void *pointer, const char *name);
 ----
@@ -17374,7 +17374,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 struct t_hdata *hdata = weechat_hdata_get ("buffer");
 struct t_gui_buffer *buffer = weechat_buffer_search_main ();
@@ -17402,7 +17402,7 @@ Return value of pointer variable in structure using hdata.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 void *weechat_hdata_pointer (struct t_hdata *hdata, void *pointer, const char *name);
 ----
@@ -17420,7 +17420,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 struct t_hdata *hdata = weechat_hdata_get ("buffer");
 struct t_gui_buffer *buffer = weechat_buffer_search_main ();
@@ -17448,7 +17448,7 @@ Return value of time variable in structure using hdata.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 time_t weechat_hdata_time (struct t_hdata *hdata, void *pointer, const char *name);
 ----
@@ -17466,7 +17466,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 struct t_hdata *hdata = weechat_hdata_get ("buffer");
 struct t_gui_buffer *ptr = weechat_buffer_search_main ();
@@ -17516,7 +17516,7 @@ Return value of hashtable variable in structure using hdata.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 struct t_hashtable *weechat_hdata_hashtable (struct t_hdata *hdata, void *pointer, const char *name);
 ----
@@ -17534,7 +17534,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 struct t_hdata *hdata = weechat_hdata_get ("buffer");
 struct t_gui_buffer *buffer = weechat_buffer_search_main ();
@@ -17567,7 +17567,7 @@ Compare a hdata variable of two objects.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_hdata_compare (struct t_hdata *hdata, void *pointer1, void *pointer2, const char *name, int case_sensitive);
 ----
@@ -17589,7 +17589,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 struct t_hdata *hdata = weechat_hdata_get ("buffer");
 struct t_gui_buffer *buffer1 = weechat_buffer_search ("irc", "libera.#weechat");
@@ -17625,7 +17625,7 @@ if the variable can be updated.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_hdata_set (struct t_hdata *hdata, void *pointer, const char *name, const char *value);
 ----
@@ -17644,7 +17644,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 weechat_hdata_set (hdata, pointer, "message", "test");
 ----
@@ -17660,7 +17660,7 @@ Update data in a hdata.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_hdata_update (struct t_hdata *hdata, void *pointer, struct t_hashtable *hashtable);
 ----
@@ -17686,7 +17686,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 /* subtract one hour on last message displayed in current buffer */
 
@@ -17746,7 +17746,7 @@ Return string value of a hdata property.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 const char *weechat_hdata_get_string (struct t_hdata *hdata, const char *property);
 ----
@@ -17778,7 +17778,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 weechat_printf (NULL, "variables in hdata: %s", weechat_hdata_get_string (hdata, "var_keys"));
 weechat_printf (NULL, "lists in hdata: %s", weechat_hdata_get_string (hdata, "list_keys"));
@@ -17809,7 +17809,7 @@ Create or read a file for upgrade.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 struct t_upgrade_file *upgrade_file_new (const char *filename,
                                          int (*callback_read)(const void *pointer,
@@ -17848,7 +17848,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 struct t_upgrade_file *upgrade_file = weechat_upgrade_new ("my_file",
                                                            NULL, NULL, NULL);
@@ -17871,7 +17871,7 @@ Write an object in upgrade file.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_upgrade_write_object (struct t_upgrade_file *upgrade_file,
                                   int object_id,
@@ -17890,7 +17890,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 if (weechat_upgrade_write_object (upgrade_file, 1, &infolist))
 {
@@ -17921,7 +17921,7 @@ Read an upgrade file.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 int weechat_upgrade_read (struct t_upgrade_file *upgrade_file);
 ----
@@ -17936,7 +17936,7 @@ Return value:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 weechat_upgrade_read (upgrade_file);
 ----
@@ -17958,7 +17958,7 @@ Close an upgrade file.
 
 Prototype:
 
-[source,C]
+[source,c]
 ----
 void weechat_upgrade_close (struct t_upgrade_file *upgrade_file);
 ----
@@ -17969,7 +17969,7 @@ Arguments:
 
 C example:
 
-[source,C]
+[source,c]
 ----
 weechat_upgrade_close (upgrade_file);
 ----

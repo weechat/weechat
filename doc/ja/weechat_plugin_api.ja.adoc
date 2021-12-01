@@ -51,7 +51,7 @@ WeeChat 関数を <<plugin_api>>
 に表示された書式で呼び出すには、以下のグローバルポインタを定義して
 <<_weechat_plugin_init,weechat_plugin_init>> 関数の中でそれを初期化しなければいけません:
 
-[source,C]
+[source,c]
 ----
 struct t_weechat_plugin *weechat_plugin;
 ----
@@ -90,7 +90,7 @@ WeeChat はプラグインを読み込む際にこの関数を呼び出します
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_plugin_init (struct t_weechat_plugin *plugin,
                          int argc, char *argv[]);
@@ -155,7 +155,7 @@ WeeChat プラグインをリロードする際にこの関数を呼び出しま
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_plugin_end (struct t_weechat_plugin *plugin);
 ----
@@ -202,7 +202,7 @@ WeeChat の中で:
 倍して現在のバッファに表示するか、コマンドを 2 回実行する
 (これは実用的なコマンドというよりも、ただの例です!):
 
-[source,C]
+[source,c]
 ----
 #include <stdlib.h>
 
@@ -316,7 +316,7 @@ This function is not available in the C API.
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 const char *weechat_plugin_get_name (struct t_weechat_plugin *plugin);
 ----
@@ -331,7 +331,7 @@ const char *weechat_plugin_get_name (struct t_weechat_plugin *plugin);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 const char *name = weechat_plugin_get_name (plugin);
 ----
@@ -362,7 +362,7 @@ UTF-8 とロケールに準じて取り扱うようになっているからで�
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 void weechat_charset_set (const char *charset);
 ----
@@ -373,7 +373,7 @@ void weechat_charset_set (const char *charset);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 weechat_charset_set ("iso-8859-1");
 ----
@@ -395,7 +395,7 @@ weechat.charset_set("iso-8859-1")
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 char *weechat_iconv_to_internal (const char *charset, const char *string);
 ----
@@ -411,7 +411,7 @@ char *weechat_iconv_to_internal (const char *charset, const char *string);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 char *str = weechat_iconv_to_internal ("iso-8859-1", "iso string: é à");
 /* ... */
@@ -435,7 +435,7 @@ str = weechat.iconv_to_internal("iso-8859-1", "iso string: é à")
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 char *weechat_iconv_from_internal (const char *charset, const char *string);
 ----
@@ -451,7 +451,7 @@ char *weechat_iconv_from_internal (const char *charset, const char *string);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 char *str = weechat_iconv_from_internal ("iso-8859-1", "utf-8 string: é à");
 /* ... */
@@ -475,7 +475,7 @@ str = weechat.iconv_from_internal("iso-8859-1", "utf-8 string: é à")
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 const char *weechat_gettext (const char *string);
 ----
@@ -490,7 +490,7 @@ const char *weechat_gettext (const char *string);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 char *str = weechat_gettext ("hello");
 ----
@@ -513,7 +513,7 @@ _count_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 const char *weechat_ngettext (const char *string, const char *plural,
                               int count);
@@ -533,7 +533,7 @@ const char *weechat_ngettext (const char *string, const char *plural,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 char *str = weechat_ngettext ("file", "files", num_files);
 ----
@@ -556,7 +556,7 @@ str = weechat.ngettext("file", "files", num_files)
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 char *weechat_strndup (const char *string, int length);
 ----
@@ -572,7 +572,7 @@ char *weechat_strndup (const char *string, int length);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 char *str = weechat_strndup ("abcdef", 3);  /* result: "abc" */
 /* ... */
@@ -592,7 +592,7 @@ string if it is cut.
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 char *weechat_string_cut (const char *string, int length, int count_suffix, int screen, const char *cut_suffix);
 ----
@@ -611,7 +611,7 @@ char *weechat_string_cut (const char *string, int length, int count_suffix, int 
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 char *str = weechat_string_cut ("this is a test", 5, 1, 1, "…");  /* result: "this…" */
 /* ... */
@@ -627,7 +627,7 @@ UTF-8 文字列を小文字に変換。
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 void weechat_string_tolower (char *string);
 ----
@@ -638,7 +638,7 @@ void weechat_string_tolower (char *string);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 char str[] = "AbCdé";
 weechat_string_tolower (str);  /* str is now: "abcdé" */
@@ -653,7 +653,7 @@ UTF-8 文字列を大文字に変換。
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 void weechat_string_toupper (char *string);
 ----
@@ -664,7 +664,7 @@ void weechat_string_toupper (char *string);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 char str[] = "AbCdé";
 weechat_string_toupper (str);  /* str is now: "ABCDé" */
@@ -681,7 +681,7 @@ _WeeChat バージョン 1.0 で更新。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_strcasecmp (const char *string1, const char *string2);
 ----
@@ -699,7 +699,7 @@ int weechat_strcasecmp (const char *string1, const char *string2);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 int diff = weechat_strcasecmp ("aaa", "CCC");  /* == -2 */
 ----
@@ -715,7 +715,7 @@ _WeeChat バージョン 0.3.7 以上で利用可、バージョン 1.0 で更�
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_strcasecmp_range (const char *string1, const char *string2, int range);
 ----
@@ -740,7 +740,7 @@ int weechat_strcasecmp_range (const char *string1, const char *string2, int rang
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 int diff = weechat_strcasecmp_range ("nick{away}", "NICK[away]", 29);  /* == 0 */
 ----
@@ -756,7 +756,7 @@ _WeeChat バージョン 1.0 で更新。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_strncasecmp (const char *string1, const char *string2, int max);
 ----
@@ -775,7 +775,7 @@ int weechat_strncasecmp (const char *string1, const char *string2, int max);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 int diff = weechat_strncasecmp ("aabb", "aacc", 2);  /* == 0 */
 ----
@@ -792,7 +792,7 @@ _max_ 文字だけ文字列を比較。
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_strncasecmp_range (const char *string1, const char *string2, int max, int range);
 ----
@@ -818,7 +818,7 @@ int weechat_strncasecmp_range (const char *string1, const char *string2, int max
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 int diff = weechat_strncasecmp_range ("nick{away}", "NICK[away]", 6, 29);  /* == 0 */
 ----
@@ -835,7 +835,7 @@ _WeeChat バージョン 1.0 で更新。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_strcmp_ignore_chars (const char *string1, const char *string2,
                                  const char *chars_ignored,
@@ -857,7 +857,7 @@ int weechat_strcmp_ignore_chars (const char *string1, const char *string2,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 int diff = weechat_strcmp_ignore_chars ("a-b", "--a-e", "-", 1);  /* == -3 */
 ----
@@ -873,7 +873,7 @@ _WeeChat バージョン 1.3 で更新。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 const char *weechat_strcasestr (const char *string, const char *search);
 ----
@@ -890,7 +890,7 @@ const char *weechat_strcasestr (const char *string, const char *search);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 const char *pos = weechat_strcasestr ("aBcDeF", "de");  /* result: pointer to "DeF" */
 ----
@@ -908,7 +908,7 @@ UTF-8 文字列を画面上に表示するために必要な画面幅を返す�
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_strlen_screen (const char *string);
 ----
@@ -923,7 +923,7 @@ int weechat_strlen_screen (const char *string);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 int length_on_screen = weechat_strlen_screen ("é");  /* == 1 */
 ----
@@ -947,7 +947,7 @@ _WeeChat バージョン 1.0 で更新。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_string_match (const char *string, const char *mask,
                           int case_sensitive);
@@ -970,7 +970,7 @@ WeeChat バージョン 1.0 以上の場合、ワイルドカードをマスク�
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 int match1 = weechat_string_match ("abcdef", "abc*", 0);   /* == 1 */
 int match2 = weechat_string_match ("abcdef", "*dd*", 0);   /* == 0 */
@@ -1004,7 +1004,7 @@ _WeeChat バージョン 2.5 以上で利用可。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_string_match_list (const char *string, const char **masks,
                                int case_sensitive);
@@ -1026,7 +1026,7 @@ int weechat_string_match_list (const char *string, const char **masks,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 const char *masks[3] = { "*", "!abc*", NULL };
 int match1 = weechat_string_match_list ("abc", masks, 0);     /* == 0 */
@@ -1056,7 +1056,7 @@ _WeeChat バージョン 0.3.3 以上で利用可。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 char *weechat_string_expand_home (const char *path);
 ----
@@ -1072,7 +1072,7 @@ char *weechat_string_expand_home (const char *path);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 char *str = weechat_string_expand_home ("~/file.txt");
 /* result: "/home/user/file.txt" */
@@ -1099,7 +1099,7 @@ _WeeChat ≥ 1.3, updated in 3.2._
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 char *weechat_string_eval_path_home (const char *path,
                                      struct t_hashtable *pointers,
@@ -1130,7 +1130,7 @@ char *weechat_string_eval_path_home (const char *path,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 char *str = weechat_string_eval_path_home ("${weechat_config_dir}/test.conf", NULL, NULL, NULL);
 /* result: "/home/user/.config/weechat/test.conf" */
@@ -1157,7 +1157,7 @@ path = weechat.string_eval_path_home("${weechat_config_dir}/test.conf", {}, {}, 
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 char *weechat_string_remove_quotes (const char *string, const char *quotes);
 ----
@@ -1174,7 +1174,7 @@ char *weechat_string_remove_quotes (const char *string, const char *quotes);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 char *str = weechat_string_remove_quotes (string, " 'I can't' ", "'");
 /* result: "I can't" */
@@ -1191,7 +1191,7 @@ free (str);
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 char *weechat_string_strip (const char *string, int left, int right,
                             const char *chars);
@@ -1210,7 +1210,7 @@ char *weechat_string_strip (const char *string, int left, int right,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 char *str = weechat_string_strip (".abc -", 0, 1, "- .");  /* result: ".abc" */
 /* ... */
@@ -1243,7 +1243,7 @@ _WeeChat バージョン 1.0 以上で利用可。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 char *weechat_string_convert_escaped_chars (const char *string);
 ----
@@ -1259,7 +1259,7 @@ char *weechat_string_convert_escaped_chars (const char *string);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 char *str = weechat_string_convert_escaped_chars ("snowman: \\u2603");
 /* str == "snowman: ☃" */
@@ -1277,7 +1277,7 @@ free (str);
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 char *weechat_string_mask_to_regex (const char *mask);
 ----
@@ -1292,7 +1292,7 @@ char *weechat_string_mask_to_regex (const char *mask);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 char *str_regex = weechat_string_mask_to_regex ("test*mask");
 /* result: "test.*mask" */
@@ -1319,7 +1319,7 @@ _WeeChat バージョン 0.3.7 以上で利用可。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 const char *weechat_string_regex_flags (const char *regex, int default_flags, int *flags)
 ----
@@ -1351,7 +1351,7 @@ const char *weechat_string_regex_flags (const char *regex, int default_flags, in
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 const char *regex = "(?i)test";
 int flags;
@@ -1372,7 +1372,7 @@ _WeeChat バージョン 0.3.7 以上で利用可。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_string_regcomp (void *preg, const char *regex, int default_flags)
 ----
@@ -1399,7 +1399,7 @@ if the function returned 0 (OK).
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 regex_t my_regex;
 if (weechat_string_regcomp (&my_regex, "(?i)test", REG_EXTENDED) == 0)
@@ -1424,7 +1424,7 @@ else
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_string_has_highlight (const char *string,
                                   const char highlight_words);
@@ -1441,7 +1441,7 @@ int weechat_string_has_highlight (const char *string,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 int hl = weechat_string_has_highlight ("my test string", "test,word2");  /* == 1 */
 ----
@@ -1468,7 +1468,7 @@ POSIX 拡張正規表現を使って、文字列中から正規表現にマッ�
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_string_has_highlight_regex (const char *string, const char *regex);
 ----
@@ -1484,7 +1484,7 @@ int weechat_string_has_highlight_regex (const char *string, const char *regex);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 int hl = weechat_string_has_highlight_regex ("my test string", "test|word2");  /* == 1 */
 ----
@@ -1506,7 +1506,7 @@ highlight = weechat.string_has_highlight_regex("my test string", "test|word2")  
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 char *weechat_string_replace (const char *string, const char *search,
                               const char *replace);
@@ -1525,7 +1525,7 @@ char *weechat_string_replace (const char *string, const char *search,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 char *str = weechat_string_replace ("test", "s", "x");  /* result: "text" */
 /* ... */
@@ -1543,7 +1543,7 @@ _WeeChat バージョン 1.0 以上で利用可。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 char *weechat_string_replace_regex (const char *string, void *regex,
                                     const char *replace, const char reference_char,
@@ -1579,7 +1579,7 @@ char *weechat_string_replace_regex (const char *string, void *regex,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 regex_t my_regex;
 char *string;
@@ -1606,7 +1606,7 @@ _WeeChat バージョン 2.5、2.6 で更新。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 char **weechat_string_split (const char *string, const char *separators,
                              const char *strip_items, int flags,
@@ -1652,7 +1652,7 @@ WeeChat バージョン 2.4 以下で _keep_eol_ とされていた引数は現�
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 char **argv;
 int argc;
@@ -1736,7 +1736,7 @@ Lib/shlex.py)、参照: https://docs.python.org/3/library/shlex.html 。
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 char **weechat_string_split_shell (const char *string, int *num_items);
 ----
@@ -1753,7 +1753,7 @@ char **weechat_string_split_shell (const char *string, int *num_items);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 char **argv;
 int argc;
@@ -1776,7 +1776,7 @@ weechat_string_free_split (argv);
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 void weechat_string_free_split (char **split_string);
 ----
@@ -1788,7 +1788,7 @@ void weechat_string_free_split (char **split_string);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 char *argv;
 int argc;
@@ -1806,7 +1806,7 @@ weechat_string_free_split (argv);
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 char *weechat_string_build_with_split_string (char **split_string,
                                               const char *separator);
@@ -1824,7 +1824,7 @@ char *weechat_string_build_with_split_string (char **split_string,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 char **argv;
 int argc;
@@ -1845,7 +1845,7 @@ _separator_ でコマンドのリストを分割
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 char **weechat_string_split_command (const char *command, char separator);
 ----
@@ -1862,7 +1862,7 @@ char **weechat_string_split_command (const char *command, char separator);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 char **argv = weechat_string_split_command ("/command1 arg;/command2", ';');
 /* result: argv[0] == "/command1 arg"
@@ -1881,7 +1881,7 @@ weechat_free_split_command (argv);
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 void weechat_string_free_split_command (char **split_command);
 ----
@@ -1893,7 +1893,7 @@ void weechat_string_free_split_command (char **split_command);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 char **argv = weechat_string_split_command ("/command1 arg;/command2", ';');
 /* ... */
@@ -1909,7 +1909,7 @@ weechat_free_split_command (argv);
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 char *weechat_string_format_size (unsigned long long size);
 ----
@@ -1924,7 +1924,7 @@ char *weechat_string_format_size (unsigned long long size);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 /* examples with English locale */
 
@@ -1970,7 +1970,7 @@ the string.
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_string_color_code_size (const char *string);
 ----
@@ -1989,7 +1989,7 @@ int weechat_string_color_code_size (const char *string);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 int size;
 
@@ -2017,7 +2017,7 @@ size = weechat.string_color_code_size(weechat.color("yellow,red"))  # size == 7
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 char *weechat_string_remove_color (const char *string,
                                    const char *replacement);
@@ -2036,7 +2036,7 @@ char *weechat_string_remove_color (const char *string,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 /* remove color codes */
 char *str = weechat_string_remove_color (my_string1, NULL);
@@ -2069,7 +2069,7 @@ base 16、32、64 で文字列をエンコード。
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_string_base_encode (int base, const char *from, int length, char *to);
 ----
@@ -2088,7 +2088,7 @@ int weechat_string_base_encode (int base, const char *from, int length, char *to
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 char *string = "abcdefgh", result[128];
 int length;
@@ -2111,7 +2111,7 @@ base 16、32、64 でエンコードされた文字列をデコード。
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_string_base_decode (int base, const char *from, char *to);
 ----
@@ -2129,7 +2129,7 @@ int weechat_string_base_decode (int base, const char *from, char *to);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 char result[128];
 int length;
@@ -2152,7 +2152,7 @@ _WeeChat バージョン 1.4 以上で利用可。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 char *string_hex_dump (const char *data, int data_size, int bytes_per_line,
                        const char *prefix, const char *suffix);
@@ -2174,7 +2174,7 @@ char *string_hex_dump (const char *data, int data_size, int bytes_per_line,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 char *string = "abc def-ghi";
 char *dump = weechat_string_hex_dump (string, strlen (string), 8, " >> ", NULL);
@@ -2193,7 +2193,7 @@ _WeeChat バージョン 0.3.2 以上で利用可。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_string_is_command_char (const char *string);
 ----
@@ -2208,7 +2208,7 @@ int weechat_string_is_command_char (const char *string);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 int command_char1 = weechat_string_is_command_char ("/test");  /* == 1 */
 int command_char2 = weechat_string_is_command_char ("test");   /* == 0 */
@@ -2235,7 +2235,7 @@ _WeeChat バージョン 0.3.2 以上で利用可。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 const char *weechat_string_input_for_buffer (const char *string);
 ----
@@ -2250,7 +2250,7 @@ const char *weechat_string_input_for_buffer (const char *string);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 const char *str1 = weechat_string_input_for_buffer ("test");    /* "test"  */
 const char *str2 = weechat_string_input_for_buffer ("/test");   /* NULL    */
@@ -2285,7 +2285,7 @@ WeeChat バージョン 1.0 以上の場合、入れ子変数を使えるよう�
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 char *weechat_string_eval_expression (const char *expr,
                                       struct t_hashtable *pointers,
@@ -2335,7 +2335,7 @@ char *weechat_string_eval_expression (const char *expr,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 /* 条件式の評価 */
 struct t_hashtable *options1 = weechat_hashtable_new (8,
@@ -2968,7 +2968,7 @@ _WeeChat バージョン 1.8 以上で利用可_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 char **weechat_string_dyn_alloc (int size_alloc);
 ----
@@ -2983,7 +2983,7 @@ char **weechat_string_dyn_alloc (int size_alloc);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 char **string = weechat_string_dyn_alloc (256);
 ----
@@ -3002,7 +3002,7 @@ _WeeChat バージョン 1.8 以上で利用可_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_string_dyn_copy (char **string, const char *new_string);
 ----
@@ -3018,7 +3018,7 @@ int weechat_string_dyn_copy (char **string, const char *new_string);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 char **string = weechat_string_dyn_alloc (256);
 if (weechat_string_dyn_copy (string, "test"))
@@ -3046,7 +3046,7 @@ _WeeChat バージョン 1.8 以上で利用可, updated in 3.0_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_string_dyn_concat (char **string, const char *add, int bytes);
 ----
@@ -3066,7 +3066,7 @@ int weechat_string_dyn_concat (char **string, const char *add, int bytes);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 char **string = weechat_string_dyn_alloc (256);
 if (weechat_string_dyn_copy (string, "test"))
@@ -3089,7 +3089,7 @@ _WeeChat バージョン 1.8 以上で利用可_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 char *weechat_string_dyn_free (char **string, int free_string);
 ----
@@ -3106,7 +3106,7 @@ char *weechat_string_dyn_free (char **string, int free_string);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 char **string = weechat_string_dyn_alloc (256);
 if (weechat_string_dyn_concat (string, "test"))
@@ -3135,7 +3135,7 @@ UTF-8 文字列関数。
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_utf8_has_8bits (const char *string);
 ----
@@ -3150,7 +3150,7 @@ int weechat_utf8_has_8bits (const char *string);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 if (weechat_utf8_has_8bits (string))
 {
@@ -3169,7 +3169,7 @@ _WeeChat バージョン 1.4 で更新。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_utf8_is_valid (const char *string, int length, char **error);
 ----
@@ -3188,7 +3188,7 @@ int weechat_utf8_is_valid (const char *string, int length, char **error);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 char *error;
 if (weechat_utf8_is_valid (string, -1, &error))
@@ -3210,7 +3210,7 @@ UTF-8 文字列を正規化: 非 UTF-8 文字を削除し、これらを文字�
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 void weechat_utf8_normalize (char *string, char replacement);
 ----
@@ -3222,7 +3222,7 @@ void weechat_utf8_normalize (char *string, char replacement);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 weechat_utf8_normalize (string, '?');
 ----
@@ -3238,7 +3238,7 @@ _WeeChat バージョン 1.3 で更新。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 const char *weechat_utf8_prev_char (const char *string_start,
                                     const char *string);
@@ -3257,7 +3257,7 @@ const char *weechat_utf8_prev_char (const char *string_start,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 const char *prev_char = weechat_utf8_prev_char (string, ptr_in_string);
 ----
@@ -3273,7 +3273,7 @@ _WeeChat バージョン 1.3 で更新。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 const char *weechat_utf8_next_char (const char *string);
 ----
@@ -3289,7 +3289,7 @@ const char *weechat_utf8_next_char (const char *string);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 const char *next_char = weechat_utf8_next_char (string);
 ----
@@ -3303,7 +3303,7 @@ UTF-8 文字を整数で返す。
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_utf8_char_int (const char *string);
 ----
@@ -3318,7 +3318,7 @@ int weechat_utf8_char_int (const char *string);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 int char_int = weechat_utf8_char_int ("être");  /* "ê" as integer */
 ----
@@ -3332,7 +3332,7 @@ UTF-8 文字のサイズを返す (バイト単位)。
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_utf8_char_size (const char *string);
 ----
@@ -3347,7 +3347,7 @@ int weechat_utf8_char_size (const char *string);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 int char_size = weechat_utf8_char_size ("être");  /* == 2 */
 ----
@@ -3361,7 +3361,7 @@ UTF-8 文字の長さを返す (UTF-8 文字の個数)。
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_utf8_strlen (const char *string);
 ----
@@ -3376,7 +3376,7 @@ int weechat_utf8_strlen (const char *string);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 int length = weechat_utf8_strlen ("chêne");  /* == 5 */
 ----
@@ -3390,7 +3390,7 @@ int length = weechat_utf8_strlen ("chêne");  /* == 5 */
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_utf8_strnlen (const char *string, int bytes);
 ----
@@ -3406,7 +3406,7 @@ int weechat_utf8_strnlen (const char *string, int bytes);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 int length = weechat_utf8_strnlen ("chêne", 4);  /* == 3 */
 ----
@@ -3420,7 +3420,7 @@ UTF-8 文字列を画面上に表示するために必要な画面幅を返す�
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_utf8_strlen_screen (const char *string);
 ----
@@ -3435,7 +3435,7 @@ int weechat_utf8_strlen_screen (const char *string);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 int length_on_screen = weechat_utf8_strlen_screen ("é");  /* == 1 */
 ----
@@ -3451,7 +3451,7 @@ _WeeChat バージョン 1.0 で更新。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_utf8_charcmp (const char *string1, const char *string2);
 ----
@@ -3469,7 +3469,7 @@ int weechat_utf8_charcmp (const char *string1, const char *string2);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 int diff = weechat_utf8_charcmp ("aaa", "ccc");  /* == -2 */
 ----
@@ -3485,7 +3485,7 @@ _WeeChat バージョン 1.0 で更新。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_utf8_charcasecmp (const char *string1, const char *string2);
 ----
@@ -3503,7 +3503,7 @@ int weechat_utf8_charcasecmp (const char *string1, const char *string2);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 int diff = weechat_utf8_charcasecmp ("aaa", "CCC");  /* == -2 */
 ----
@@ -3517,7 +3517,7 @@ UTF-8 文字を画面上に表示するために必要な画面幅を返す。
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_utf8_char_size_screen (const char *string);
 ----
@@ -3532,7 +3532,7 @@ int weechat_utf8_char_size_screen (const char *string);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 int length_on_screen = weechat_utf8_char_size_screen ("é");  /* == 1 */
 ----
@@ -3548,7 +3548,7 @@ UTF-8 文字列で N 文字前に進む。
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 const char *weechat_utf8_add_offset (const char *string, int offset);
 ----
@@ -3565,7 +3565,7 @@ const char *weechat_utf8_add_offset (const char *string, int offset);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 const char *str = "chêne";
 const char *str2 = weechat_utf8_add_offset (str, 3);  /* points to "ne" */
@@ -3580,7 +3580,7 @@ UTF-8 文字列中の真の位置を返す。
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_utf8_real_pos (const char *string, int pos);
 ----
@@ -3596,7 +3596,7 @@ int weechat_utf8_real_pos (const char *string, int pos);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 int pos = weechat_utf8_real_pos ("chêne", 3);  /* == 4 */
 ----
@@ -3610,7 +3610,7 @@ UTF-8 文字列中の位置を返す。
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_utf8_pos (const char *string, int real_pos);
 ----
@@ -3626,7 +3626,7 @@ int weechat_utf8_pos (const char *string, int real_pos);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 int pos = weechat_utf8_pos ("chêne", 4);  /* == 3 */
 ----
@@ -3640,7 +3640,7 @@ int pos = weechat_utf8_pos ("chêne", 4);  /* == 3 */
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 char *weechat_utf8_strndup (const char *string, int length);
 ----
@@ -3656,7 +3656,7 @@ char *weechat_utf8_strndup (const char *string, int length);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 char *string = weechat_utf8_strndup ("chêne", 3);  /* returns "chê" */
 /* ... */
@@ -3681,7 +3681,7 @@ Compute hash of data.
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_crypto_hash (const void *data, int data_size, const char *hash_algo,
                          void *hash, int *hash_size);
@@ -3722,7 +3722,7 @@ Supported hash algorithms:
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 const char *data = "abcdefghijklmnopqrstuvwxyz";
 char hash[256 / 8];
@@ -3744,7 +3744,7 @@ of data.
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_crypto_hash_pbkdf2 (const void *data, int data_size,
                                 const char *hash_algo,
@@ -3774,7 +3774,7 @@ int weechat_crypto_hash_pbkdf2 (const void *data, int data_size,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 const char *data = "abcdefghijklmnopqrstuvwxyz";
 const char *salt = "12345678901234567890123456789012";  /* 32 bytes */
@@ -3798,7 +3798,7 @@ Compute keyed-hash message authentication code (HMAC).
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_crypto_hmac (const void *key, int key_size, const void *message, int message_size,
                          int hash_algo, void *hash, int *hash_size);
@@ -3824,7 +3824,7 @@ int weechat_crypto_hmac (const void *key, int key_size, const void *message, int
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 const char *key = "the key";
 const char *message = "the message";
@@ -3851,7 +3851,7 @@ WeeChat ホームディレクトリの下にディレクトリを作成。
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_mkdir_home (char *directory, int mode);
 ----
@@ -3873,7 +3873,7 @@ int weechat_mkdir_home (char *directory, int mode);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 if (!weechat_mkdir_home ("${weechat_cache_dir}/temp", 0755))
 {
@@ -3898,7 +3898,7 @@ weechat.mkdir_home("${weechat_cache_dir}/temp", 0755)
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_mkdir (char *directory, int mode);
 ----
@@ -3914,7 +3914,7 @@ int weechat_mkdir (char *directory, int mode);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 if (!weechat_mkdir ("/tmp/mydir", 0755))
 {
@@ -3939,7 +3939,7 @@ weechat.mkdir("/tmp/mydir", 0755)
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_mkdir_parents (char *directory, int mode);
 ----
@@ -3955,7 +3955,7 @@ int weechat_mkdir_parents (char *directory, int mode);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 if (!weechat_mkdir_parents ("/tmp/my/dir", 0755))
 {
@@ -3982,7 +3982,7 @@ _WeeChat バージョン 1.5 と 2.0 で更新。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 void weechat_exec_on_files (const char *directory,
                             int recurse_subdirs,
@@ -4004,7 +4004,7 @@ void weechat_exec_on_files (const char *directory,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 void callback (void *data, const char *filename)
 {
@@ -4025,7 +4025,7 @@ _WeeChat バージョン 0.3.1 以上で利用可。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 char *weechat_file_get_content (const char *filename);
 ----
@@ -4040,7 +4040,7 @@ char *weechat_file_get_content (const char *filename);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 char *content;
 
@@ -4061,7 +4061,7 @@ Copy a file to another location.
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_file_copy (const char *from, const char *to);
 ----
@@ -4077,7 +4077,7 @@ int weechat_file_copy (const char *from, const char *to);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 if (weechat_file_copy ("/tmp/test.txt", "/path/to/test2.txt"))
 {
@@ -4099,7 +4099,7 @@ if (weechat_file_copy ("/tmp/test.txt", "/path/to/test2.txt"))
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_util_timeval_cmp (struct timeval *tv1, struct timeval *tv2);
 ----
@@ -4117,7 +4117,7 @@ int weechat_util_timeval_cmp (struct timeval *tv1, struct timeval *tv2);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 if (weechat_util_timeval_cmp (&tv1, &tv2) > 0)
 {
@@ -4136,7 +4136,7 @@ _WeeChat バージョン 1.1 で更新。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 long long weechat_util_timeval_diff (struct timeval *tv1, struct timeval *tv2);
 ----
@@ -4155,7 +4155,7 @@ WeeChat バージョン 1.0 以前の場合、戻り値の単位はミリ秒で�
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 long long diff = weechat_util_timeval_diff (&tv1, &tv2);
 ----
@@ -4171,7 +4171,7 @@ timeval 構造体に時間間隔を追加 (マイクロ秒単位)。
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 void weechat_util_timeval_add (struct timeval *tv, long long interval);
 ----
@@ -4186,7 +4186,7 @@ WeeChat バージョン 1.0 以前の場合、時間間隔の単位はミリ秒�
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 weechat_util_timeval_add (&tv, 2000000);  /* add 2 seconds */
 ----
@@ -4203,7 +4203,7 @@ _weechat.look.time_format_ で定義されています。
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 const char *weechat_util_get_time_string (const time_t *date);
 ----
@@ -4218,7 +4218,7 @@ const char *weechat_util_get_time_string (const time_t *date);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 time_t date = time (NULL);
 weechat_printf (NULL, "date: %s",
@@ -4236,7 +4236,7 @@ WeeChat バージョンの文字列を番号に変換。
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_util_version_number (const char *version);
 ----
@@ -4247,7 +4247,7 @@ int weechat_util_version_number (const char *version);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 version_number = weechat_util_version_number ("0.3.8");      /* == 0x00030800 */
 version_number = weechat_util_version_number ("0.3.9-dev");  /* == 0x00030900 */
@@ -4269,7 +4269,7 @@ version_number = weechat_util_version_number ("0.3.9");      /* == 0x00030900 */
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 struct t_weelist *weechat_list_new ();
 ----
@@ -4280,7 +4280,7 @@ struct t_weelist *weechat_list_new ();
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 struct t_weelist *list = weechat_list_new ();
 ----
@@ -4302,7 +4302,7 @@ list = weechat.list_new()
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 struct t_weelist_item *weechat_list_add (struct t_weelist *weelist,
                                          const char *data,
@@ -4326,7 +4326,7 @@ struct t_weelist_item *weechat_list_add (struct t_weelist *weelist,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 struct t_weelist_item *my_item =
     weechat_list_add (list, "my data", WEECHAT_LIST_POS_SORT, NULL);
@@ -4349,7 +4349,7 @@ item = weechat.list_add(list, "my data", weechat.WEECHAT_LIST_POS_SORT, "")
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 struct t_weelist_item *weechat_list_search (struct t_weelist *weelist,
                                             const char *data);
@@ -4366,7 +4366,7 @@ struct t_weelist_item *weechat_list_search (struct t_weelist *weelist,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 struct t_weelist_item *item = weechat_list_search (list, "my data");
 ----
@@ -4390,7 +4390,7 @@ _WeeChat バージョン 0.3.4 以上で利用可。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_list_search_pos (struct t_weelist *weelist,
                              const char *data);
@@ -4407,7 +4407,7 @@ int weechat_list_search_pos (struct t_weelist *weelist,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 int pos_item = weechat_list_search_pos (list, "my data");
 ----
@@ -4429,7 +4429,7 @@ pos_item = weechat.list_search_pos(list, "my data")
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 struct t_weelist_item *weechat_list_casesearch (struct t_weelist *weelist,
                                                 const char *data);
@@ -4446,7 +4446,7 @@ struct t_weelist_item *weechat_list_casesearch (struct t_weelist *weelist,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 struct t_weelist_item *item = weechat_list_casesearch (list, "my data");
 ----
@@ -4470,7 +4470,7 @@ _WeeChat バージョン 0.3.4 以上で利用可。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_list_casesearch_pos (struct t_weelist *weelist,
                                  const char *data);
@@ -4487,7 +4487,7 @@ int weechat_list_casesearch_pos (struct t_weelist *weelist,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 int pos_item = weechat_list_casesearch_pos (list, "my data");
 ----
@@ -4509,7 +4509,7 @@ pos_item = weechat.list_casesearch_pos(list, "my data")
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 struct t_weelist_item *weechat_list_get (struct t_weelist *weelist,
                                          int position);
@@ -4526,7 +4526,7 @@ struct t_weelist_item *weechat_list_get (struct t_weelist *weelist,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 struct t_weelist_item *item = weechat_list_get (list, 0);  /* first item */
 ----
@@ -4548,7 +4548,7 @@ item = weechat.list_get(list, 0)
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 void weechat_list_set (struct t_weelist_item *item, const char *value);
 ----
@@ -4560,7 +4560,7 @@ void weechat_list_set (struct t_weelist_item *item, const char *value);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 weechat_list_set (item, "new data");
 ----
@@ -4582,7 +4582,7 @@ weechat.list_set(item, "new data")
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 struct t_weelist_item *weechat_list_next (struct t_weelist_item *item);
 ----
@@ -4597,7 +4597,7 @@ struct t_weelist_item *weechat_list_next (struct t_weelist_item *item);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 struct t_weelist_item *next_item = weechat_list_next (item);
 ----
@@ -4619,7 +4619,7 @@ item = weechat.list_next(item)
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 struct t_weelist_item *weechat_list_prev (struct t_weelist_item *item);
 ----
@@ -4634,7 +4634,7 @@ struct t_weelist_item *weechat_list_prev (struct t_weelist_item *item);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 struct t_weelist_item *prev_item = weechat_list_prev (item);
 ----
@@ -4656,7 +4656,7 @@ item = weechat.list_prev(item)
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 const char *weechat_list_string (struct t_weelist_item *item);
 ----
@@ -4671,7 +4671,7 @@ const char *weechat_list_string (struct t_weelist_item *item);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 weechat_printf (NULL, "value of item: %s", weechat_list_string (item));
 ----
@@ -4696,7 +4696,7 @@ Return pointer to the user data of an item.
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 void *weechat_list_user_data (struct t_weelist_item *item);
 ----
@@ -4713,7 +4713,7 @@ void *weechat_list_user_data (struct t_weelist_item *item);
 C 言語での使用例:
 
 // TRANSLATION MISSING
-[source,C]
+[source,c]
 ----
 weechat_printf (NULL, "user data of item: 0x%lx", weechat_list_user_data (item));
 ----
@@ -4727,7 +4727,7 @@ weechat_printf (NULL, "user data of item: 0x%lx", weechat_list_user_data (item))
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 char *weechat_list_size (struct t_weelist *weelist);
 ----
@@ -4742,7 +4742,7 @@ char *weechat_list_size (struct t_weelist *weelist);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 weechat_printf (NULL, "size of list: %d", weechat_list_size (list));
 ----
@@ -4764,7 +4764,7 @@ weechat.prnt("", "size of list: %d" % weechat.list_size(list))
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 void weechat_list_remove (struct t_weelist *weelist,
                           struct t_weelist_item *item);
@@ -4777,7 +4777,7 @@ void weechat_list_remove (struct t_weelist *weelist,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 weechat_list_remove (list, item);
 ----
@@ -4799,7 +4799,7 @@ weechat.list_remove(list, item)
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 void weechat_list_remove_all (struct t_weelist *weelist);
 ----
@@ -4810,7 +4810,7 @@ void weechat_list_remove_all (struct t_weelist *weelist);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 weechat_list_remove_all (list);
 ----
@@ -4832,7 +4832,7 @@ weechat.list_remove_all(list)
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 void weechat_list_free (struct t_weelist *weelist);
 ----
@@ -4843,7 +4843,7 @@ void weechat_list_free (struct t_weelist *weelist);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 weechat_list_free (list);
 ----
@@ -4874,7 +4874,7 @@ _WeeChat バージョン 1.8 以上で利用可_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 struct t_arraylist *weechat_arraylist_new (int initial_size,
                                            int sorted,
@@ -4919,7 +4919,7 @@ struct t_arraylist *weechat_arraylist_new (int initial_size,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 int
 cmp_cb (void *data, struct t_arraylist *arraylist,
@@ -4948,7 +4948,7 @@ _WeeChat バージョン 1.8 以上で利用可_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_list_size (struct t_arraylist *arraylist);
 ----
@@ -4963,7 +4963,7 @@ int weechat_list_size (struct t_arraylist *arraylist);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 weechat_printf (NULL, "size of array list: %d", weechat_arraylist_size (arraylist));
 ----
@@ -4979,7 +4979,7 @@ _WeeChat バージョン 1.8 以上で利用可_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 void *weechat_arraylist_get (struct t_arraylist *arraylist, int index);
 ----
@@ -4995,7 +4995,7 @@ void *weechat_arraylist_get (struct t_arraylist *arraylist, int index);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 void *pointer = weechat_arraylist_get (arraylist, 0);  /* first item */
 ----
@@ -5011,7 +5011,7 @@ _WeeChat バージョン 1.8 以上で利用可_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 void *weechat_arraylist_search (struct t_arraylist *arraylist, void *pointer,
                                 int *index, int *index_insert);
@@ -5032,7 +5032,7 @@ void *weechat_arraylist_search (struct t_arraylist *arraylist, void *pointer,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 int index, index_insert;
 void *item = weechat_arraylist_search (arraylist, pointer, &index, &index_insert);
@@ -5049,7 +5049,7 @@ _WeeChat バージョン 1.8 以上で利用可_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_arraylist_insert (struct t_arraylist *arraylist, int index, void *pointer);
 ----
@@ -5068,7 +5068,7 @@ int weechat_arraylist_insert (struct t_arraylist *arraylist, int index, void *po
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 int index = weechat_arraylist_insert (arraylist, -1, pointer);  /* 未ソートの配列リストに対しては要素を末尾に挿入します */
 ----
@@ -5084,7 +5084,7 @@ _WeeChat バージョン 1.8 以上で利用可_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_arraylist_add (struct t_arraylist *arraylist, void *pointer);
 ----
@@ -5100,7 +5100,7 @@ int weechat_arraylist_add (struct t_arraylist *arraylist, void *pointer);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 int index = weechat_arraylist_add (arraylist, pointer);
 ----
@@ -5116,7 +5116,7 @@ _WeeChat バージョン 1.8 以上で利用可_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_arraylist_remove (struct t_arraylist *arraylist, int index);
 ----
@@ -5132,7 +5132,7 @@ int weechat_arraylist_remove (struct t_arraylist *arraylist, int index);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 int index_removed = weechat_arraylist_remove (arraylist, index);
 ----
@@ -5148,7 +5148,7 @@ _WeeChat バージョン 1.8 以上で利用可_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_arraylist_clear (struct t_arraylist *arraylist);
 ----
@@ -5163,7 +5163,7 @@ int weechat_arraylist_clear (struct t_arraylist *arraylist);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 if (weechat_arraylist_clear (arraylist))
 {
@@ -5182,7 +5182,7 @@ _WeeChat バージョン 1.8 以上で利用可_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 void weechat_arraylist_free (struct t_arraylist *arraylist);
 ----
@@ -5193,7 +5193,7 @@ void weechat_arraylist_free (struct t_arraylist *arraylist);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 weechat_arraylist_free (arraylist);
 ----
@@ -5214,7 +5214,7 @@ _WeeChat バージョン 0.3.3 以上で利用可。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 struct t_hashtable *weechat_hashtable_new (int size,
                                            const char *type_keys,
@@ -5266,7 +5266,7 @@ struct t_hashtable *weechat_hashtable_new (int size,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 struct t_hashtable *hashtable = weechat_hashtable_new (8,
                                                        WEECHAT_HASHTABLE_STRING,
@@ -5286,7 +5286,7 @@ _WeeChat バージョン 0.3.3 以上で利用可、バージョン 0.4.2 で更
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 struct t_hashtable_item *weechat_hashtable_set_with_size (struct t_hashtable *hashtable,
                                                           const void *key, int key_size,
@@ -5309,7 +5309,7 @@ struct t_hashtable_item *weechat_hashtable_set_with_size (struct t_hashtable *ha
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 weechat_hashtable_set_with_size (hashtable, "my_key", 0,
                                  my_buffer, sizeof (my_buffer_struct));
@@ -5326,7 +5326,7 @@ _WeeChat バージョン 0.3.3 以上で利用可、バージョン 0.4.2 で更
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 struct t_hashtable_item *weechat_hashtable_set (struct t_hashtable *hashtable,
                                                 const void *key, const void *value);
@@ -5344,7 +5344,7 @@ struct t_hashtable_item *weechat_hashtable_set (struct t_hashtable *hashtable,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 weechat_hashtable_set (hashtable, "my_key", "my_value");
 ----
@@ -5360,7 +5360,7 @@ _WeeChat バージョン 0.3.3 以上で利用可。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 void *weechat_hashtable_get (struct t_hashtable *hashtable, void *key);
 ----
@@ -5376,7 +5376,7 @@ void *weechat_hashtable_get (struct t_hashtable *hashtable, void *key);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 void *value = weechat_hashtable_get (hashtable, "my_key");
 ----
@@ -5392,7 +5392,7 @@ _WeeChat バージョン 0.3.4 以上で利用可。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_hashtable_has_key (struct t_hashtable *hashtable, void *key);
 ----
@@ -5408,7 +5408,7 @@ int weechat_hashtable_has_key (struct t_hashtable *hashtable, void *key);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 if (weechat_hashtable_has_key (hashtable, "my_key"))
 {
@@ -5430,7 +5430,7 @@ by insertion order in the hashtable (from oldest to newest one).
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 void weechat_hashtable_map (struct t_hashtable *hashtable,
                             void (*callback_map)(void *data,
@@ -5448,7 +5448,7 @@ void weechat_hashtable_map (struct t_hashtable *hashtable,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 void
 map_cb (void *data, struct t_hashtable *hashtable,
@@ -5476,7 +5476,7 @@ Call a function on all hashtable entries, by insertion order in the hashtable
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 void weechat_hashtable_map_string (struct t_hashtable *hashtable,
                                    void (*callback_map)(void *data,
@@ -5498,7 +5498,7 @@ void weechat_hashtable_map_string (struct t_hashtable *hashtable,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 void
 map_cb (void *data, struct t_hashtable *hashtable,
@@ -5523,7 +5523,7 @@ _WeeChat バージョン 1.0 以上で利用可。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 struct t_hashtable *weechat_hashtable_dup (struct t_hashtable *hashtable);
 ----
@@ -5538,7 +5538,7 @@ struct t_hashtable *weechat_hashtable_dup (struct t_hashtable *hashtable);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 struct t_hashtable *new_hashtable = weechat_hashtable_dup (hashtable);
 ----
@@ -5554,7 +5554,7 @@ _WeeChat バージョン 0.3.3 以上で利用可。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_hashtable_get_integer (struct t_hashtable *hashtable,
                                    void *property);
@@ -5573,7 +5573,7 @@ int weechat_hashtable_get_integer (struct t_hashtable *hashtable,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 int items_count = weechat_hashtable_get_integer (hashtable, "items_count");
 ----
@@ -5589,7 +5589,7 @@ _WeeChat バージョン 0.3.4 以上で利用可。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 const char *weechat_hashtable_get_string (struct t_hashtable *hashtable,
                                           const char *property);
@@ -5625,7 +5625,7 @@ const char *weechat_hashtable_get_string (struct t_hashtable *hashtable,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 weechat_printf (NULL, "keys are type: %s",
                 weechat_hashtable_get_string (hashtable, "type_keys"));
@@ -5644,7 +5644,7 @@ _WeeChat バージョン 0.3.4 以上で利用可。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 void weechat_hashtable_set_pointer (struct t_hashtable *hashtable,
                                     const char *property, void *pointer);
@@ -5661,7 +5661,7 @@ void weechat_hashtable_set_pointer (struct t_hashtable *hashtable,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 void
 my_free_value_cb (struct t_hashtable *hashtable, const void *key, void *value)
@@ -5692,7 +5692,7 @@ _WeeChat バージョン 0.3.3 以上で利用可。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_hashtable_add_to_infolist (struct t_hashtable *hashtable,
                                        struct t_infolist_item *infolist_item,
@@ -5711,7 +5711,7 @@ int weechat_hashtable_add_to_infolist (struct t_hashtable *hashtable,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 weechat_hashtable_add_to_infolist (hashtable, infolist_item, "testhash");
 
@@ -5737,7 +5737,7 @@ _WeeChat バージョン 0.3.3 以上で利用可。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 void weechat_hashtable_remove (struct t_hashtable *hashtable, const void *key);
 ----
@@ -5749,7 +5749,7 @@ void weechat_hashtable_remove (struct t_hashtable *hashtable, const void *key);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 weechat_hashtable_remove (hashtable, "my_key");
 ----
@@ -5765,7 +5765,7 @@ _WeeChat バージョン 0.3.3 以上で利用可。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 void weechat_hashtable_remove_all (struct t_hashtable *hashtable);
 ----
@@ -5776,7 +5776,7 @@ void weechat_hashtable_remove_all (struct t_hashtable *hashtable);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 weechat_hashtable_remove_all (hashtable);
 ----
@@ -5792,7 +5792,7 @@ _WeeChat バージョン 0.3.3 以上で利用可。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 void weechat_hashtable_free (struct t_hashtable *hashtable);
 ----
@@ -5803,7 +5803,7 @@ void weechat_hashtable_free (struct t_hashtable *hashtable);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 weechat_hashtable_free (hashtable);
 ----
@@ -5824,7 +5824,7 @@ _WeeChat バージョン 1.5 で更新。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 struct t_config_file *weechat_config_new (const char *name,
                                           int (*callback_reload)(const void *pointer,
@@ -5874,7 +5874,7 @@ struct t_config_file *weechat_config_new (const char *name,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 int
 my_config_reload_cb (const void *pointer, void *data,
@@ -5913,7 +5913,7 @@ _WeeChat バージョン 1.5 で更新。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 struct t_config_section *weechat_config_new_section (
     struct t_config_file *config_file,
@@ -6058,7 +6058,7 @@ struct t_config_section *weechat_config_new_section (
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 int
 my_section_read_cb (const void *pointer, void *data,
@@ -6197,7 +6197,7 @@ section = weechat.config_new_section(config_file, "section1", 1, 1,
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 struct t_config_section *weechat_config_search_section (
     struct t_config_file *config_file,
@@ -6215,7 +6215,7 @@ struct t_config_section *weechat_config_search_section (
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 struct t_config_section *section = weechat_config_search_section (config_file,
                                                                   "section");
@@ -6240,7 +6240,7 @@ _WeeChat バージョン 1.5 で更新。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 struct t_config_option *weechat_config_new_option (
     struct t_config_file *config_file,
@@ -6335,7 +6335,7 @@ struct t_config_option *weechat_config_new_option (
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 /* boolean */
 struct t_config_option *option1 =
@@ -6477,7 +6477,7 @@ _(WeeChat バージョン 0.4.1 で修正済み)_。
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 struct t_config_option *weechat_config_search_option (
     struct t_config_file *config_file,
@@ -6497,7 +6497,7 @@ struct t_config_option *weechat_config_search_option (
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 struct t_config_option *option =
     weechat_config_search_option (config_file, section, "option");
@@ -6520,7 +6520,7 @@ option = weechat.config_search_option(config_file, section, "option")
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 void weechat_config_search_section_option (struct t_config_file *config_file,
                                            struct t_config_section *section,
@@ -6541,7 +6541,7 @@ void weechat_config_search_section_option (struct t_config_file *config_file,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 struct t_config_section *ptr_section;
 struct t_config_option *ptr_option;
@@ -6570,7 +6570,7 @@ else
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 void weechat_config_search_with_string (const char *option_name,
                                         struct t_config_file **config_file,
@@ -6593,7 +6593,7 @@ void weechat_config_search_with_string (const char *option_name,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 struct t_config_file *ptr_config_file;
 struct t_config_section *ptr_section;
@@ -6624,7 +6624,7 @@ else
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_config_string_to_boolean (const char *text);
 ----
@@ -6640,7 +6640,7 @@ int weechat_config_string_to_boolean (const char *text);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 if (weechat_config_string_to_boolean (option_value))
 {
@@ -6670,7 +6670,7 @@ if weechat.config_string_to_boolean(text):
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_config_option_reset (struct t_config_option *option,
                                  int run_callback);
@@ -6690,7 +6690,7 @@ int weechat_config_option_reset (struct t_config_option *option,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 switch (weechat_config_option_reset (option, 1))
 {
@@ -6729,7 +6729,7 @@ elif rc == weechat.WEECHAT_CONFIG_OPTION_SET_ERROR:
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_config_option_set (struct t_config_option *option,
                                const char *value, int run_callback);
@@ -6756,7 +6756,7 @@ int weechat_config_option_set (struct t_config_option *option,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 switch (weechat_config_option_set (option, "new_value", 1))
 {
@@ -6795,7 +6795,7 @@ elif rc == weechat.WEECHAT_CONFIG_OPTION_SET_ERROR:
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_config_option_set_null (struct t_config_option *option,
                                     int run_callback);
@@ -6819,7 +6819,7 @@ int weechat_config_option_set_null (struct t_config_option *option,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 switch (weechat_config_option_set_null (option, 1))
 {
@@ -6858,7 +6858,7 @@ elif rc == weechat.WEECHAT_CONFIG_OPTION_SET_ERROR:
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_config_option_unset (struct t_config_option *option);
 ----
@@ -6876,7 +6876,7 @@ int weechat_config_option_unset (struct t_config_option *option);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 switch (weechat_config_option_unset (option))
 {
@@ -6920,7 +6920,7 @@ elif rc == weechat.WEECHAT_CONFIG_OPTION_UNSET_ERROR:
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 void weechat_config_option_rename (struct t_config_option *option,
                                    const char *new_name);
@@ -6933,7 +6933,7 @@ void weechat_config_option_rename (struct t_config_option *option,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 weechat_config_option_rename (option, "new_name");
 ----
@@ -6957,7 +6957,7 @@ _WeeChat バージョン 1.9 以上で利用可。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 const char *weechat_config_option_get_string (struct t_config_option *option,
                                               const char *property);
@@ -6984,7 +6984,7 @@ const char *weechat_config_option_get_string (struct t_config_option *option,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 const char *type = weechat_config_option_get_string (option, "type");
 ----
@@ -6998,7 +6998,7 @@ const char *type = weechat_config_option_get_string (option, "type");
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 void *weechat_config_option_get_pointer (struct t_config_option *option,
                                          const char *property);
@@ -7028,7 +7028,7 @@ void *weechat_config_option_get_pointer (struct t_config_option *option,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 char *description = weechat_config_option_get_pointer (option, "description");
 ----
@@ -7042,7 +7042,7 @@ char *description = weechat_config_option_get_pointer (option, "description");
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_config_option_is_null (struct t_config_option *option);
 ----
@@ -7058,7 +7058,7 @@ int weechat_config_option_is_null (struct t_config_option *option);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 if (weechat_config_option_is_null (option))
 {
@@ -7088,7 +7088,7 @@ if weechat.config_option_is_null(option):
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_config_option_default_is_null (struct t_config_option *option);
 ----
@@ -7104,7 +7104,7 @@ int weechat_config_option_default_is_null (struct t_config_option *option);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 if (weechat_config_option_default_is_null (option))
 {
@@ -7134,7 +7134,7 @@ if weechat.config_option_default_is_null(option):
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_config_boolean (struct t_config_option *option);
 ----
@@ -7152,7 +7152,7 @@ int weechat_config_boolean (struct t_config_option *option);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 struct t_config_option *option = weechat_config_get ("plugin.section.option");
 if (weechat_config_boolean (option))
@@ -7184,7 +7184,7 @@ if weechat.config_boolean(option):
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_config_boolean_default (struct t_config_option *option);
 ----
@@ -7202,7 +7202,7 @@ int weechat_config_boolean_default (struct t_config_option *option);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 struct t_config_option *option = weechat_config_get ("plugin.section.option");
 if (weechat_config_boolean_default (option))
@@ -7234,7 +7234,7 @@ if weechat.config_boolean_default(option):
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_config_integer (struct t_config_option *option);
 ----
@@ -7252,7 +7252,7 @@ int weechat_config_integer (struct t_config_option *option);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 struct t_config_option *option = weechat_config_get ("plugin.section.option");
 int value = weechat_config_integer (option);
@@ -7276,7 +7276,7 @@ value = weechat.config_integer(option)
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_config_integer_default (struct t_config_option *option);
 ----
@@ -7294,7 +7294,7 @@ int weechat_config_integer_default (struct t_config_option *option);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 struct t_config_option *option = weechat_config_get ("plugin.section.option");
 int value = weechat_config_integer_default (option);
@@ -7318,7 +7318,7 @@ value = weechat.config_integer_default(option)
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 const char *weechat_config_string (struct t_config_option *option);
 ----
@@ -7337,7 +7337,7 @@ const char *weechat_config_string (struct t_config_option *option);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 struct t_config_option *option = weechat_config_get ("plugin.section.option");
 const char *value = weechat_config_string (option);
@@ -7361,7 +7361,7 @@ value = weechat.config_string(option)
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 const char *weechat_config_string_default (struct t_config_option *option);
 ----
@@ -7380,7 +7380,7 @@ const char *weechat_config_string_default (struct t_config_option *option);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 struct t_config_option *option = weechat_config_get ("plugin.section.option");
 const char *value = weechat_config_string_default (option);
@@ -7404,7 +7404,7 @@ value = weechat.config_string_default(option)
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 const char *weechat_config_color (struct t_config_option *option);
 ----
@@ -7422,7 +7422,7 @@ const char *weechat_config_color (struct t_config_option *option);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 struct t_config_option *option = weechat_config_get ("plugin.section.option");
 const char *color = weechat_config_color (option);
@@ -7446,7 +7446,7 @@ value = weechat.config_color(option)
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 const char *weechat_config_color_default (struct t_config_option *option);
 ----
@@ -7464,7 +7464,7 @@ const char *weechat_config_color_default (struct t_config_option *option);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 struct t_config_option *option = weechat_config_get ("plugin.section.option");
 const char *color = weechat_config_color_default (option);
@@ -7489,7 +7489,7 @@ value = weechat.config_color_default(option)
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 void weechat_config_write_option (struct t_config_file *config_file,
                                   struct t_config_option *option);
@@ -7502,7 +7502,7 @@ void weechat_config_write_option (struct t_config_file *config_file,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 int
 my_section_write_cb (const void *pointer, void *data,
@@ -7538,7 +7538,7 @@ def my_section_write_cb(data, config_file, section_name):
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 void weechat_config_write_line (struct t_config_file *config_file,
                                 const char *option_name,
@@ -7554,7 +7554,7 @@ void weechat_config_write_line (struct t_config_file *config_file,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 int
 my_section_write_cb (const void *pointer, void *data,
@@ -7590,7 +7590,7 @@ def my_section_write_cb(data, config_file, section_name):
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_config_write (struct t_config_file *config_file);
 ----
@@ -7607,7 +7607,7 @@ int weechat_config_write (struct t_config_file *config_file);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 switch (weechat_config_write (config_file))
 {
@@ -7646,7 +7646,7 @@ elif rc == weechat.WEECHAT_CONFIG_WRITE_ERROR:
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_config_read (struct t_config_file *config_file);
 ----
@@ -7663,7 +7663,7 @@ int weechat_config_read (struct t_config_file *config_file);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 switch (weechat_config_read (config_file))
 {
@@ -7702,7 +7702,7 @@ elif rc == weechat.WEECHAT_CONFIG_READ_FILE_NOT_FOUND:
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_config_reload (struct t_config_file *config_file);
 ----
@@ -7719,7 +7719,7 @@ int weechat_config_reload (struct t_config_file *config_file);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 switch (weechat_config_reload (config_file))
 {
@@ -7758,7 +7758,7 @@ elif rc == weechat.WEECHAT_CONFIG_READ_FILE_NOT_FOUND:
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 void weechat_config_option_free (struct t_config_option *option);
 ----
@@ -7769,7 +7769,7 @@ void weechat_config_option_free (struct t_config_option *option);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 weechat_config_option_free (option);
 ----
@@ -7791,7 +7791,7 @@ weechat.config_option_free(option)
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 void weechat_config_section_free_options (struct t_config_section *section);
 ----
@@ -7802,7 +7802,7 @@ void weechat_config_section_free_options (struct t_config_section *section);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 weechat_config_section_free_options (section);
 ----
@@ -7824,7 +7824,7 @@ weechat.config_section_free_options(section)
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 void weechat_config_section_free (struct t_config_section *section);
 ----
@@ -7835,7 +7835,7 @@ void weechat_config_section_free (struct t_config_section *section);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 weechat_config_section_free (section);
 ----
@@ -7857,7 +7857,7 @@ weechat.config_section_free(section)
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 void weechat_config_free (struct t_config_file *config_file);
 ----
@@ -7868,7 +7868,7 @@ void weechat_config_free (struct t_config_file *config_file);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 weechat_config_free (config_file);
 ----
@@ -7890,7 +7890,7 @@ weechat.config_free(config_file)
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 struct t_config_option *weechat_config_get (const char *option_name);
 ----
@@ -7905,7 +7905,7 @@ struct t_config_option *weechat_config_get (const char *option_name);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 struct t_config_option *option = weechat_config_get ("weechat.look.item_time_format");
 ----
@@ -7927,7 +7927,7 @@ option = weechat.config_get("weechat.look.item_time_format")
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 const char *weechat_config_get_plugin (const char *option_name);
 ----
@@ -7943,7 +7943,7 @@ const char *weechat_config_get_plugin (const char *option_name);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 /* if current plugin is "test", then look for value of option
    "plugins.var.test.option" in file plugins.conf */
@@ -7967,7 +7967,7 @@ value = weechat.config_get_plugin("option")
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_config_is_set_plugin (const char *option_name);
 ----
@@ -7983,7 +7983,7 @@ int weechat_config_is_set_plugin (const char *option_name);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 if (weechat_config_is_set_plugin ("option"))
 {
@@ -8017,7 +8017,7 @@ else:
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_config_set_plugin (const char *option_name, const char *value);
 ----
@@ -8037,7 +8037,7 @@ int weechat_config_set_plugin (const char *option_name, const char *value);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 switch (weechat_config_set_plugin ("option", "test_value"))
 {
@@ -8083,7 +8083,7 @@ _WeeChat バージョン 0.3.5 以上で利用可。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 void weechat_config_set_desc_plugin (const char *option_name,
                                      const char *description);
@@ -8101,7 +8101,7 @@ void weechat_config_set_desc_plugin (const char *option_name,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 weechat_config_set_desc_plugin ("option", "description of option");
 ----
@@ -8125,7 +8125,7 @@ if int(version) >= 0x00030500:
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_config_unset_plugin (const char *option_name);
 ----
@@ -8144,7 +8144,7 @@ int weechat_config_unset_plugin (const char *option_name);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 switch (weechat_config_unset_plugin ("option"))
 {
@@ -8200,7 +8200,7 @@ _WeeChat バージョン 0.3.6 以上で利用可、バージョン 1.8 で更�
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_key_bind (const char *context, struct t_hashtable *keys);
 ----
@@ -8224,7 +8224,7 @@ int weechat_key_bind (const char *context, struct t_hashtable *keys);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 struct t_hashtable *keys = weechat_hashtable_new (8,
                                                   WEECHAT_HASHTABLE_STRING,
@@ -8266,7 +8266,7 @@ _WeeChat バージョン 0.3.6 以上で利用可、バージョン 2.0 で更�
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_key_unbind (const char *context, const char *key);
 ----
@@ -8285,7 +8285,7 @@ int weechat_key_unbind (const char *context, const char *key);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 /* remove a single key */
 weechat_key_unbind ("mouse", "@chat(plugin.buffer):button1");
@@ -8321,7 +8321,7 @@ weechat.key_unbind("mouse", "area:chat(python.test)")
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 const char *weechat_prefix (const char *prefix);
 ----
@@ -8352,7 +8352,7 @@ List of prefixes:
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 weechat_printf (NULL, "%sThis is an error...", weechat_prefix ("error"));
 ----
@@ -8374,7 +8374,7 @@ weechat.prnt("", "%sThis is an error..." % weechat.prefix("error"))
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 const char *weechat_color (const char *color_name);
 ----
@@ -8431,7 +8431,7 @@ const char *weechat_color (const char *color_name);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 weechat_printf (NULL, "Color: %sblue %sdefault color %syellow on red",
                 weechat_color ("blue"),
@@ -8457,7 +8457,7 @@ weechat.prnt("", "Color: %sblue %sdefault color %syellow on red"
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 void weechat_printf (struct t_gui_buffer *buffer, const char *message, ...);
 ----
@@ -8465,7 +8465,7 @@ void weechat_printf (struct t_gui_buffer *buffer, const char *message, ...);
 この関数は printf_date_tags
 関数の別名です。以下に示す通り、どちらの関数も同じ結果を返します:
 
-[source,C]
+[source,c]
 ----
 weechat_printf (buffer, "message");
 weechat_printf_date_tags (buffer, 0, NULL, "message");
@@ -8489,7 +8489,7 @@ weechat_printf_date_tags (buffer, 0, NULL, "message");
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 weechat_printf (NULL, "Hello on WeeChat buffer");
 weechat_printf (buffer, "Hello on this buffer");
@@ -8524,7 +8524,7 @@ weechat.prnt(buffer, "\t\t")  # empty line (without time)
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 void weechat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
                                const char *tags, const char *message, ...);
@@ -8542,7 +8542,7 @@ link:weechat_user.ja.html#lines_tags[WeeChat ユーザーズガイド / 行の�
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 weechat_printf_date_tags (NULL, time (NULL) - 120, "notify_message",
                           "Message 2 minutes ago, with a tag 'notify_message'");
@@ -8570,7 +8570,7 @@ weechat.prnt_date_tags("", time - 120, "notify_message",
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 void weechat_printf_y (struct t_gui_buffer *buffer, int y,
                        const char *message, ...);
@@ -8587,7 +8587,7 @@ void weechat_printf_y (struct t_gui_buffer *buffer, int y,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 weechat_printf_y (buffer, 2, "My message on third line");
 ----
@@ -8612,7 +8612,7 @@ WeeChat ログファイル (weechat.log) にメッセージを書き込む。
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 void weechat_log_printf (const char *message, ...);
 ----
@@ -8623,7 +8623,7 @@ void weechat_log_printf (const char *message, ...);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 weechat_log_printf ("My message in log file");
 ----
@@ -8662,7 +8662,7 @@ _WeeChat バージョン 0.3.4 以上で利用可。_
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 /* hook modifier with priority = 2000 */
 weechat_hook_modifier ("2000|input_text_display", &modifier_cb, NULL, NULL);
@@ -8679,7 +8679,7 @@ _WeeChat バージョン 1.5 と 1.7 で更新。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 struct t_hook *weechat_hook_command (const char *command,
                                      const char *description,
@@ -8756,7 +8756,7 @@ include::includes/autogen_api_completions.ja.adoc[tag=completions]
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 int
 my_command_cb (const void *pointer, void *data, struct t_gui_buffer *buffer,
@@ -8832,7 +8832,7 @@ _WeeChat バージョン 1.5 と 1.7 で更新。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 struct t_hook *weechat_hook_completion (const char *completion_item,
                                         const char *description,
@@ -8890,7 +8890,7 @@ _WEECHAT_RC_OK_EAT_ を返してください。そうすれば WeeChat は補完
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 int
 my_completion_cb (const void *pointer, void *data, const char *completion_item,
@@ -8946,7 +8946,7 @@ WeeChat がコマンドを実行する際にこれをフック。
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 struct t_hook *weechat_hook_command_run (const char *command,
                                          int (*callback)(const void *pointer,
@@ -8981,7 +8981,7 @@ struct t_hook *weechat_hook_command_run (const char *command,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 int
 my_command_run_cb (const void *pointer, void *data,
@@ -9019,7 +9019,7 @@ _WeeChat バージョン 1.5 で更新。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 struct t_hook *weechat_hook_timer (long interval,
                                    int align_second,
@@ -9056,7 +9056,7 @@ struct t_hook *weechat_hook_timer (long interval,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 int
 my_timer_cb (const void *pointer, void *data, int remaining_calls)
@@ -9094,7 +9094,7 @@ _WeeChat バージョン 1.3、1.5、2.0 で更新。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 struct t_hook *weechat_hook_fd (int fd,
                                 int flag_read,
@@ -9139,7 +9139,7 @@ WeeChat バージョン 2.0 以上では整数、バージョン 1.9 以下で�
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 int
 my_fd_cb (const void *pointer, void *data, int fd)
@@ -9187,7 +9187,7 @@ WeeChat バージョン 0.3.9.2
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 struct t_hook *weechat_hook_process (const char *command,
                                      int timeout,
@@ -9272,7 +9272,7 @@ WeeChat に関する情報 (例えば現在の安定版、最新の git コミ�
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 /* 外部コマンドを実行する例 */
 int
@@ -9405,7 +9405,7 @@ _WeeChat バージョン 0.3.7 以上で利用可、バージョン 1.5 で更�
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 struct t_hook *weechat_hook_process_hashtable (const char *command,
                                                struct t_hashtable *options,
@@ -9476,7 +9476,7 @@ URL では、入力/出力ファイル用に 2 つのオプション (文字列)
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 int
 my_process_cb (const void *pointer, void *data, const char *command,
@@ -9636,7 +9636,7 @@ _WeeChat バージョン 1.5 と 2.0 で更新。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 struct t_hook *weechat_hook_connect (const char *proxy,
                                      const char *address,
@@ -9721,7 +9721,7 @@ WeeChat バージョン 2.0 以上では整数、バージョン 1.9 以下で�
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 int
 my_connect_cb (const void *pointer, void *data, int status, int gnutls_rc,
@@ -9833,7 +9833,7 @@ _WeeChat バージョン 2.3 以上で利用可_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 struct t_hook *weechat_hook_line (const char *buffer_type,
                                   const char *buffer_name,
@@ -10048,7 +10048,7 @@ WeeChat はそれらを無視します。
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 int
 my_line_cb (const void *pointer, void *data, struct t_hasbtable *line)
@@ -10097,7 +10097,7 @@ _WeeChat バージョン 0.4.3、1.0、1.5 で更新。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 struct t_hook *weechat_hook_print (struct t_gui_buffer *buffer,
                                    const char *tags,
@@ -10162,7 +10162,7 @@ WeeChat バージョン 1.0 以上では整数、バージョン 0.4.3 以下で
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 int
 my_print_cb (const void *pointer, void *data, struct t_gui_buffer *buffer,
@@ -10204,7 +10204,7 @@ _WeeChat バージョン 1.5 で更新。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 struct t_hook *weechat_hook_signal (const char *signal,
                                     int (*callback)(const void *pointer,
@@ -10901,7 +10901,7 @@ WeeChat とプラグインが送信するシグナルのリスト:
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 int
 my_signal_cb (const void *pointer, void *data, const char *signal,
@@ -10940,7 +10940,7 @@ _WeeChat バージョン 1.0 で更新。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_hook_signal_send (const char *signal, const char *type_data,
                               void *signal_data);
@@ -10963,7 +10963,7 @@ int weechat_hook_signal_send (const char *signal, const char *type_data,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 int rc = weechat_hook_signal_send ("my_signal", WEECHAT_HOOK_SIGNAL_STRING, my_string);
 ----
@@ -10989,7 +10989,7 @@ rc = weechat.hook_signal_send("my_signal", weechat.WEECHAT_HOOK_SIGNAL_STRING, m
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 weechat_hook_signal_send ("logger_backlog", WEECHAT_HOOK_SIGNAL_POINTER, buffer);
 ----
@@ -11030,7 +11030,7 @@ _script_ プラグインはスクリプトをインストールする際にこ�
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 weechat_hook_signal_send ("python_script_install", WEECHAT_HOOK_SIGNAL_STRING, "/path/to/test.py");
 ----
@@ -11065,7 +11065,7 @@ _script_ プラグインはスクリプトを削除する際にこれらのシ�
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 /* unload and remove scripts test.py and script.py */
 weechat_hook_signal_send ("python_script_remove", WEECHAT_HOOK_SIGNAL_STRING,
@@ -11108,7 +11108,7 @@ irc バッファ(サーバ、チャンネル、プライベート)
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 /* say "Hello!" on libera server, #weechat channel */
 weechat_hook_signal_send ("irc_input_send", WEECHAT_HOOK_SIGNAL_STRING,
@@ -11140,7 +11140,7 @@ hsignal (ハッシュテーブルを持つシグナル) をフック。
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 struct t_hook *weechat_hook_hsignal (const char *signal,
                                      int (*callback)(const void *pointer,
@@ -11230,7 +11230,7 @@ hsignal のリスト:
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 int
 my_hsignal_cb (const void *pointer, void *data, const char *signal,
@@ -11267,7 +11267,7 @@ hsignal (ハッシュテーブルを持つシグナル) を送信。
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_hook_hsignal_send (const char *signal, struct t_hashtable *hashtable);
 ----
@@ -11287,7 +11287,7 @@ int weechat_hook_hsignal_send (const char *signal, struct t_hashtable *hashtable
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 int rc;
 struct t_hashtable *hashtable = weechat_hashtable_new (8,
@@ -11372,7 +11372,7 @@ _signal_、_yyy_ は _pattern_ で指定したものになります。
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 int
 test_whois_cb (const void *pointer, void *data, const char *signal,
@@ -11452,7 +11452,7 @@ _cmd_start_、_cmd_stop_、_cmd_extra_
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 struct t_hashtable *hashtable = weechat_hashtable_new (8,
                                                        WEECHAT_HASHTABLE_STRING,
@@ -11498,7 +11498,7 @@ _WeeChat バージョン 1.5 で更新。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 struct t_hook *weechat_hook_config (const char *option,
                                     int (*callback)(const void *pointer,
@@ -11534,7 +11534,7 @@ struct t_hook *weechat_hook_config (const char *option,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 int
 my_config_cb (const void *pointer, void *data, const char *option,
@@ -11573,7 +11573,7 @@ _WeeChat バージョン 1.5 で更新。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 struct t_hook *weechat_hook_modifier (const char *modifier,
                                       char *(*callback)(const void *pointer,
@@ -11692,7 +11692,7 @@ WeeChat とプラグインが使う修飾子のリスト:
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 char *
 my_modifier_cb (const void *pointer, void *data, const char *modifier,
@@ -11740,7 +11740,7 @@ hook = weechat.hook_modifier("weechat_print", "my_modifier_cb", "")
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 char *weechat_hook_modifier_exec (const char *modifier,
                                   const char *modifier_data,
@@ -11834,7 +11834,7 @@ WeeChat とプラグインが定義する修飾子のリスト:
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 char *new_string = weechat_hook_modifier_exec ("my_modifier",
                                                my_data, my_string);
@@ -11859,7 +11859,7 @@ _WeeChat バージョン 1.5, 2.5 で更新。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 struct t_hook *weechat_hook_info (const char *info_name,
                                   const char *description,
@@ -11899,7 +11899,7 @@ WeeChat バージョン 2.5 以上の場合、コールバックは確保され�
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 char *
 my_info_cb (const void *pointer, void *data, const char *info_name,
@@ -11940,7 +11940,7 @@ _WeeChat バージョン 0.3.4 以上で利用可、バージョン 1.5 で更�
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 struct t_hook *weechat_hook_info_hashtable (const char *info_name,
                                             const char *description,
@@ -11979,7 +11979,7 @@ struct t_hook *weechat_hook_info_hashtable (const char *info_name,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 struct t_hashtable *
 my_info_hashtable_cb (const void *pointer, void *data, const char *info_name,
@@ -12023,7 +12023,7 @@ _WeeChat バージョン 1.5 で更新。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 struct t_hook *weechat_hook_infolist (const char *infolist_name,
                                       const char *description,
@@ -12065,7 +12065,7 @@ struct t_hook *weechat_hook_infolist (const char *infolist_name,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 struct t_infolist *
 my_infolist_cb (const void *pointer, void *data, const char *infolist_name,
@@ -12114,7 +12114,7 @@ hdata をフック: コールバックは要求した hdata へのポインタ�
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 struct t_hook *weechat_hook_hdata (const char *hdata_name,
                                    const char *description,
@@ -12147,7 +12147,7 @@ struct t_hook *weechat_hook_hdata (const char *hdata_name,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 struct t_hdata *
 my_hdata_cb (const void *pointer, void *data, const char *hdata_name)
@@ -12178,7 +12178,7 @@ _WeeChat バージョン 1.5 で更新。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 struct t_hook *weechat_hook_focus (const char *area,
                                    struct t_hashtable *(*callback)(const void *pointer,
@@ -12350,7 +12350,7 @@ info を使う前にエリアが一致していることを確認して下さい
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 struct t_hashtable *
 my_focus_nicklist_cb (const void *pointer, void *data, struct t_hashtable *info)
@@ -12390,7 +12390,7 @@ _WeeChat バージョン 0.3.9 以上で利用可 (スクリプト: WeeChat バ�
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 void weechat_hook_set (struct t_hook *hook, const char *property,
                        const char *value);
@@ -12428,7 +12428,7 @@ void weechat_hook_set (struct t_hook *hook, const char *property,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 struct t_hook *my_command_hook =
     weechat_hook_command ("abcd", "description",
@@ -12461,7 +12461,7 @@ weechat.hook_set(hook, "stdin_close", "")  # optional
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 void weechat_unhook (struct t_hook *hook);
 ----
@@ -12472,7 +12472,7 @@ void weechat_unhook (struct t_hook *hook);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 struct t_hook *my_hook = weechat_hook_command ( /* ... */ );
 /* ... */
@@ -12498,7 +12498,7 @@ _WeeChat バージョン 1.5 で更新。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 void weechat_unhook_all (const char *subplugin);
 ----
@@ -12510,7 +12510,7 @@ void weechat_unhook_all (const char *subplugin);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 weechat_unhook_all (NULL);
 ----
@@ -12539,7 +12539,7 @@ _WeeChat バージョン 1.5 で更新。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 struct t_gui_buffer *weechat_buffer_new (const char *name,
                                          int (*input_callback)(const void *pointer,
@@ -12591,7 +12591,7 @@ struct t_gui_buffer *weechat_buffer_new (const char *name,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 int
 my_input_cb (const void *pointer, void *data,
@@ -12640,7 +12640,7 @@ buffer = weechat.buffer_new("my_buffer", "my_input_cb", "", "my_close_cb", "")
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 struct t_gui_buffer *weechat_current_buffer ();
 ----
@@ -12651,7 +12651,7 @@ struct t_gui_buffer *weechat_current_buffer ();
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 weechat_printf (weechat_current_buffer (), "Text on current buffer");
 ----
@@ -12675,7 +12675,7 @@ _WeeChat バージョン 1.0 で更新。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 struct t_gui_buffer *weechat_buffer_search (const char *plugin,
                                             const char *name);
@@ -12697,7 +12697,7 @@ struct t_gui_buffer *weechat_buffer_search (const char *plugin,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 struct t_gui_buffer *buffer1 = weechat_buffer_search ("irc", "libera.#weechat");
 struct t_gui_buffer *buffer2 = weechat_buffer_search ("==", "irc.libera.#test");  /* WeeChat バージョン 1.0 以上で利用可 */
@@ -12721,7 +12721,7 @@ WeeChat メインバッファ (_core_ バッファ、WeeChat
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 struct t_gui_buffer *weechat_buffer_search_main ();
 ----
@@ -12732,7 +12732,7 @@ struct t_gui_buffer *weechat_buffer_search_main ();
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 struct t_gui_buffer *weechat_buffer = weechat_buffer_search_main ();
 ----
@@ -12754,7 +12754,7 @@ buffer = weechat.buffer_search_main()
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 void weechat_buffer_clear (struct t_gui_buffer *buffer);
 ----
@@ -12765,7 +12765,7 @@ void weechat_buffer_clear (struct t_gui_buffer *buffer);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 struct t_gui_buffer *my_buffer = weechat_buffer_search ("my_plugin",
                                                         "my_buffer");
@@ -12794,7 +12794,7 @@ if buffer != "":
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 void weechat_buffer_close (struct t_gui_buffer *buffer);
 ----
@@ -12805,7 +12805,7 @@ void weechat_buffer_close (struct t_gui_buffer *buffer);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 struct t_gui_buffer *my_buffer = weechat_buffer_new ("my_buffer",
                                                      &my_input_cb, NULL,
@@ -12835,7 +12835,7 @@ weechat.buffer_close(buffer)
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 void weechat_buffer_merge (struct t_gui_buffer *buffer,
                            struct t_gui_buffer *target_buffer);
@@ -12848,7 +12848,7 @@ void weechat_buffer_merge (struct t_gui_buffer *buffer,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 /* merge current buffer with weechat "core" buffer */
 weechat_buffer_merge (weechat_current_buffer (),
@@ -12873,7 +12873,7 @@ weechat.buffer_merge(weechat.current_buffer(), weechat.buffer_search_main())
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 void weechat_buffer_unmerge (struct t_gui_buffer *buffer,
                              int number);
@@ -12887,7 +12887,7 @@ void weechat_buffer_unmerge (struct t_gui_buffer *buffer,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 weechat_buffer_unmerge (weechat_current_buffer (), 1);
 ----
@@ -12909,7 +12909,7 @@ weechat.buffer_unmerge(weechat.current_buffer(), 1)
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_buffer_get_integer (struct t_gui_buffer *buffer,
                                 const char *property);
@@ -12977,7 +12977,7 @@ int weechat_buffer_get_integer (struct t_gui_buffer *buffer,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 weechat_printf (NULL, "my buffer number is: %d",
                 weechat_buffer_get_integer (my_buffer, "number"));
@@ -13000,7 +13000,7 @@ weechat.prnt("", "my buffer number is: %d" % weechat.buffer_get_integer(my_buffe
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 const char *weechat_buffer_get_string (struct t_gui_buffer *buffer,
                                        const char *property);
@@ -13034,7 +13034,7 @@ const char *weechat_buffer_get_string (struct t_gui_buffer *buffer,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 weechat_printf (NULL, "name / short name of buffer are: %s / %s",
                 weechat_buffer_get_string (my_buffer, "name"),
@@ -13060,7 +13060,7 @@ weechat.prnt("", "name / short name of buffer are: %s / %s"
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 void *weechat_buffer_pointer (struct t_gui_buffer *buffer,
                               const char *property);
@@ -13080,7 +13080,7 @@ void *weechat_buffer_pointer (struct t_gui_buffer *buffer,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 weechat_printf (NULL, "plugin pointer of my buffer: %lx",
                 weechat_buffer_get_pointer (my_buffer, "plugin"));
@@ -13103,7 +13103,7 @@ weechat.prnt("", "plugin pointer of my buffer: %s" % weechat.buffer_get_pointer(
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 void weechat_buffer_set (struct t_gui_buffer *buffer, const char *property,
                          const char *value);
@@ -13270,7 +13270,7 @@ void weechat_buffer_set (struct t_gui_buffer *buffer, const char *property,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 /* disable hotlist (for all buffers) */
 weechat_buffer_set (NULL, "hotlist", "-");
@@ -13319,7 +13319,7 @@ weechat.buffer_set(my_buffer, "localvar_del_toto", "")
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 void weechat_buffer_set_pointer (struct t_gui_buffer *buffer, const char *property,
                                  void *pointer);
@@ -13341,7 +13341,7 @@ void weechat_buffer_set_pointer (struct t_gui_buffer *buffer, const char *proper
 
 コールバックのプロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int close_callback (const void *pointer, void *data,
                     struct t_gui_buffer *buffer);
@@ -13356,7 +13356,7 @@ int nickcmp_callback (const void *pointer, void *data,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 int
 my_close_cb (const void *pointer, void *data, struct t_gui_buffer *buffer)
@@ -13377,7 +13377,7 @@ weechat_buffer_set_pointer (my_buffer, "close_callback", &my_close_cb);
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 char *weechat_buffer_string_replace_local_var (struct t_gui_buffer *buffer,
                                                const char *string);
@@ -13394,7 +13394,7 @@ char *weechat_buffer_string_replace_local_var (struct t_gui_buffer *buffer,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 weechat_buffer_set (my_buffer, "localvar_set_toto", "abc");
 
@@ -13424,7 +13424,7 @@ _WeeChat バージョン 0.3.5 以上で利用可。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_buffer_match_list (struct t_gui_buffer *buffer, const char *string);
 ----
@@ -13443,7 +13443,7 @@ int weechat_buffer_match_list (struct t_gui_buffer *buffer, const char *string);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 struct t_gui_buffer *buffer = weechat_buffer_search ("irc", "libera.#weechat");
 if (buffer)
@@ -13482,7 +13482,7 @@ if buffer:
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 struct t_gui_window *weechat_current_window ();
 ----
@@ -13493,7 +13493,7 @@ struct t_gui_window *weechat_current_window ();
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 struct t_gui_window *current_window = weechat_current_window ();
 ----
@@ -13517,7 +13517,7 @@ _WeeChat バージョン 0.3.5 以上で利用可。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 struct t_gui_window *weechat_window_search_with_buffer (struct t_gui_buffer *buffer);
 ----
@@ -13532,7 +13532,7 @@ struct t_gui_window *weechat_window_search_with_buffer (struct t_gui_buffer *buf
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 weechat_printf (NULL,
                 "window displaying core buffer: %lx",
@@ -13557,7 +13557,7 @@ weechat.prnt("", "window displaying core buffer: %s"
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_window_get_integer (struct t_gui_window *window,
                                 const char *property);
@@ -13592,7 +13592,7 @@ int weechat_window_get_integer (struct t_gui_window *window,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 weechat_printf (NULL, "current window is at position (x,y): (%d,%d)",
                 weechat_window_get_integer (weechat_current_window (), "win_x"),
@@ -13621,7 +13621,7 @@ weechat.prnt("", "current window is at position (x,y): (%d,%d)"
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 const char *weechat_window_get_string (struct t_gui_window *window,
                                        const char *property);
@@ -13650,7 +13650,7 @@ def window_get_string(window: str, property: str) -> str: ...
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 void *weechat_window_get_pointer (struct t_gui_window *window,
                                   const char *property);
@@ -13669,7 +13669,7 @@ void *weechat_window_get_pointer (struct t_gui_window *window,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 weechat_printf (NULL,
                 "buffer displayed in current window: %lx",
@@ -13694,7 +13694,7 @@ weechat.prnt("", "buffer displayed in current window: %s"
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 void weechat_window_set_title (const char *title);
 ----
@@ -13707,7 +13707,7 @@ void weechat_window_set_title (const char *title);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 weechat_window_set_title ("new title here");
 ----
@@ -13734,7 +13734,7 @@ weechat.window_set_title("new title here")
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 struct t_gui_nick_group *weechat_nicklist_add_group (struct t_gui_buffer *buffer,
                                                      struct t_gui_nick_group *parent_group,
@@ -13772,7 +13772,7 @@ struct t_gui_nick_group *weechat_nicklist_add_group (struct t_gui_buffer *buffer
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 struct t_gui_nick_group *my_group =
     weechat_nicklist_add_group (my_buffer,
@@ -13800,7 +13800,7 @@ group = weechat.nicklist_add_group(my_buffer, my_parent_group, "test_group",
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 struct t_gui_nick_group *weechat_nicklist_search_group (struct t_gui_buffer *buffer,
                                                         struct t_gui_nick_group *from_group,
@@ -13820,7 +13820,7 @@ struct t_gui_nick_group *weechat_nicklist_search_group (struct t_gui_buffer *buf
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 struct t_gui_nick_group *ptr_group = weechat_nicklist_search_group (my_buffer,
                                                                     NULL, "test_group");
@@ -13843,7 +13843,7 @@ group = weechat.nicklist_search_group(my_buffer, "", "test_group")
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 struct t_gui_nick_group *weechat_nicklist_add_nick (struct t_gui_buffer *buffer,
                                                     struct t_gui_nick_group *group,
@@ -13884,7 +13884,7 @@ struct t_gui_nick_group *weechat_nicklist_add_nick (struct t_gui_buffer *buffer,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 struct t_gui_nick *my_nick =
     weechat_nicklist_add_nick (my_buffer, my_group,
@@ -13915,7 +13915,7 @@ nick = weechat.nicklist_add_nick(my_buffer, my_group, "test_nick", color, "@", "
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 struct t_gui_nick *weechat_nicklist_search_nick (struct t_gui_buffer *buffer,
                                                  struct t_gui_nick_group *from_group,
@@ -13935,7 +13935,7 @@ struct t_gui_nick *weechat_nicklist_search_nick (struct t_gui_buffer *buffer,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 struct t_gui_nick *ptr_nick = weechat_nicklist_search_nick (my_buffer,
                                                             NULL, "test_nick");
@@ -13958,7 +13958,7 @@ nick = weechat.nicklist_search_nick(my_buffer, "", "test_nick")
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 void weechat_nicklist_remove_group (struct t_gui_buffer *buffer,
                                     struct t_gui_nick_group *group);
@@ -13971,7 +13971,7 @@ void weechat_nicklist_remove_group (struct t_gui_buffer *buffer,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 weechat_nicklist_remove_group (my_buffer, my_group);
 ----
@@ -13993,7 +13993,7 @@ weechat.nicklist_remove_group(my_buffer, my_group)
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 void weechat_nicklist_remove_nick (struct t_gui_buffer *buffer,
                                    struct t_gui_nick *nick);
@@ -14006,7 +14006,7 @@ void weechat_nicklist_remove_nick (struct t_gui_buffer *buffer,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 weechat_nicklist_remove_nick (my_buffer, my_nick);
 ----
@@ -14028,7 +14028,7 @@ weechat.nicklist_remove_nick(my_buffer, my_nick)
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 void weechat_nicklist_remove_all (struct t_gui_buffer *buffer);
 ----
@@ -14039,7 +14039,7 @@ void weechat_nicklist_remove_all (struct t_gui_buffer *buffer);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 weechat_nicklist_remove_all (my_buffer);
 ----
@@ -14063,7 +14063,7 @@ _WeeChat バージョン 0.3.7 以上で利用可。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 void weechat_nicklist_get_next_item (struct t_gui_buffer *buffer,
                                      struct t_gui_nick_group **group,
@@ -14078,7 +14078,7 @@ void weechat_nicklist_get_next_item (struct t_gui_buffer *buffer,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 struct t_gui_nick_group *ptr_group;
 struct t_gui_nick *ptr_nick;
@@ -14113,7 +14113,7 @@ _WeeChat バージョン 0.3.4 以上で利用可。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_nicklist_group_get_integer (struct t_gui_buffer *buffer,
                                         struct t_gui_nick_group *group,
@@ -14134,7 +14134,7 @@ int weechat_nicklist_group_get_integer (struct t_gui_buffer *buffer,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 int visible = weechat_nicklist_group_get_integer (buffer, group, "visible");
 ----
@@ -14158,7 +14158,7 @@ _WeeChat バージョン 0.3.4 以上で利用可。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 const char *weechat_nicklist_group_get_string (struct t_gui_buffer *buffer,
                                                struct t_gui_nick_group *group,
@@ -14179,7 +14179,7 @@ const char *weechat_nicklist_group_get_string (struct t_gui_buffer *buffer,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 const char *color = weechat_nicklist_group_get_string (buffer, group, "color");
 ----
@@ -14203,7 +14203,7 @@ _WeeChat バージョン 0.3.4 以上で利用可。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 void *weechat_nicklist_group_get_pointer (struct t_gui_buffer *buffer,
                                           struct t_gui_nick_group *group,
@@ -14223,7 +14223,7 @@ void *weechat_nicklist_group_get_pointer (struct t_gui_buffer *buffer,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 struct t_gui_nick_group *parent = weechat_nicklist_group_get_pointer (buffer, group, "parent");
 ----
@@ -14247,7 +14247,7 @@ _WeeChat バージョン 0.3.4 以上で利用可。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 void weechat_nicklist_group_set (struct t_gui_buffer *buffer,
                                  struct t_gui_nick_group *group,
@@ -14278,7 +14278,7 @@ void weechat_nicklist_group_set (struct t_gui_buffer *buffer,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 /* change group color to "bar_fg" */
 weechat_nicklist_group_set (buffer, group, "color", "bar_fg");
@@ -14317,7 +14317,7 @@ _WeeChat バージョン 0.3.4 以上で利用可。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_nicklist_nick_get_integer (struct t_gui_buffer *buffer,
                                        struct t_gui_nick *nick,
@@ -14337,7 +14337,7 @@ int weechat_nicklist_nick_get_integer (struct t_gui_buffer *buffer,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 int visible = weechat_nicklist_nick_get_integer (buffer, nick, "visible");
 ----
@@ -14361,7 +14361,7 @@ _WeeChat バージョン 0.3.4 以上で利用可。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 const char *weechat_nicklist_nick_get_string (struct t_gui_buffer *buffer,
                                               struct t_gui_nick *nick,
@@ -14384,7 +14384,7 @@ const char *weechat_nicklist_nick_get_string (struct t_gui_buffer *buffer,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 const char *color = weechat_nicklist_nick_get_string (buffer, nick, "color");
 ----
@@ -14408,7 +14408,7 @@ _WeeChat バージョン 0.3.4 以上で利用可。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 void *weechat_nicklist_nick_get_pointer (struct t_gui_buffer *buffer,
                                          struct t_gui_nick *nick,
@@ -14428,7 +14428,7 @@ void *weechat_nicklist_nick_get_pointer (struct t_gui_buffer *buffer,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 struct t_gui_nick_group *group = weechat_nicklist_nick_get_pointer (buffer, nick, "group");
 ----
@@ -14452,7 +14452,7 @@ _WeeChat バージョン 0.3.4 以上で利用可。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 void weechat_nicklist_nick_set (struct t_gui_buffer *buffer,
                                 struct t_gui_nick *nick,
@@ -14490,7 +14490,7 @@ void weechat_nicklist_nick_set (struct t_gui_buffer *buffer,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 /* change nick color to cyan */
 weechat_nicklist_nick_set (buffer, nick, "color", "cyan");
@@ -14538,7 +14538,7 @@ weechat.nicklist_nick_set(buffer, nick, "visible", "0")
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 struct t_gui_bar_item *weechat_bar_item_search (const char *name);
 ----
@@ -14553,7 +14553,7 @@ struct t_gui_bar_item *weechat_bar_item_search (const char *name);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 struct t_gui_bar_item *bar_item = weechat_bar_item_search ("myitem");
 ----
@@ -14577,7 +14577,7 @@ _WeeChat バージョン 0.4.2 と 1.5 で更新。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 struct t_gui_bar_item *weechat_bar_item_new (const char *name,
                                              char *(*build_callback)(const void *pointer,
@@ -14618,7 +14618,7 @@ struct t_gui_bar_item *weechat_bar_item_new (const char *name,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 char *
 my_build_callback (const void *pointer, void *data,
@@ -14667,7 +14667,7 @@ _build_callback_ コールバックを呼び出してバー要素の内容を更
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 void weechat_bar_item_update (const char *name);
 ----
@@ -14678,7 +14678,7 @@ void weechat_bar_item_update (const char *name);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 weechat_bar_item_update ("myitem");
 ----
@@ -14700,7 +14700,7 @@ weechat.bar_item_update("myitem")
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 void weechat_bar_item_remove (struct t_gui_bar_item *item);
 ----
@@ -14711,7 +14711,7 @@ void weechat_bar_item_remove (struct t_gui_bar_item *item);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 weechat_bar_item_remove (&my_item);
 ----
@@ -14733,7 +14733,7 @@ weechat.bar_item_remove(myitem)
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 struct t_gui_bar *weechat_bar_search (const char *name);
 ----
@@ -14748,7 +14748,7 @@ struct t_gui_bar *weechat_bar_search (const char *name);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 struct t_gui_bar *bar = weechat_bar_search ("mybar");
 ----
@@ -14772,7 +14772,7 @@ _WeeChat バージョン 2.9 で更新。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 struct t_gui_bar *weechat_bar_new (const char *name,
                                    const char *hidden,
@@ -14839,7 +14839,7 @@ struct t_gui_bar *weechat_bar_new (const char *name,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 struct t_gui_bar *my_bar = weechat_bar_new ("mybar",
                                             "off",
@@ -14887,7 +14887,7 @@ link:++weechat_scripting.en.html#_ruby++[WeeChat scripting guide] for more info.
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_bar_set (struct t_gui_bar *bar, const char *property,
                      const char *value);
@@ -14905,7 +14905,7 @@ int weechat_bar_set (struct t_gui_bar *bar, const char *property,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 weechat_bar_set (mybar, "position", "bottom");
 ----
@@ -14927,7 +14927,7 @@ weechat.bar_set(my_bar, "position", "bottom")
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 void weechat_bar_update (const char *name);
 ----
@@ -14938,7 +14938,7 @@ void weechat_bar_update (const char *name);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 weechat_bar_update ("mybar");
 ----
@@ -14960,7 +14960,7 @@ weechat.bar_update("mybar")
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 void weechat_bar_remove (struct t_gui_bar *bar);
 ----
@@ -14971,7 +14971,7 @@ void weechat_bar_remove (struct t_gui_bar *bar);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 weechat_bar_remove (mybar);
 ----
@@ -15000,7 +15000,7 @@ _WeeChat バージョン 1.1 で更新。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_command (struct t_gui_buffer *buffer, const char *command);
 ----
@@ -15019,7 +15019,7 @@ int weechat_command (struct t_gui_buffer *buffer, const char *command);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 int rc;
 rc = weechat_command (weechat_buffer_search ("irc", "libera.#weechat"),
@@ -15045,7 +15045,7 @@ _WeeChat バージョン 2.5 以上で利用可。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_command_options (struct t_gui_buffer *buffer, const char *command,
                              struct t_hashtable *options);
@@ -15072,7 +15072,7 @@ int weechat_command_options (struct t_gui_buffer *buffer, const char *command,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 /* /exec 以外のコマンド実行を許可、2 秒後にコマンドを実行 */
 int rc;
@@ -15112,7 +15112,7 @@ Create a new completion.
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 struct t_gui_completion *weechat_completion_new (struct t_gui_buffer *buffer);
 ----
@@ -15127,7 +15127,7 @@ Return value:
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 struct t_gui_completion *completion = weechat_completion_new (weechat_buffer_search_main ());
 ----
@@ -15153,7 +15153,7 @@ context.
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_completion_search (struct t_gui_completion *completion, const char *data,
                                int position, int direction);
@@ -15172,7 +15172,7 @@ int weechat_completion_search (struct t_gui_completion *completion, const char *
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 struct t_gui_completion *completion = weechat_completion_new (weechat_buffer_search_main ());
 if (weechat_completion_search (completion, "/help filt", 10, 1))
@@ -15202,7 +15202,7 @@ _WeeChat バージョン 2.9 以上で利用可。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 const char *weechat_completion_get_string (struct t_gui_completion *completion,
                                            const char *property);
@@ -15218,7 +15218,7 @@ const char *weechat_completion_get_string (struct t_gui_completion *completion,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 int
 my_completion_cb (const void *pointer, void *data, const char *completion_item,
@@ -15259,7 +15259,7 @@ _WeeChat バージョン 2.9 以上で利用可。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 void weechat_completion_list_add (struct t_gui_completion *completion,
                                   const char *word,
@@ -15299,7 +15299,7 @@ Free a completion.
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 void weechat_completion_free (struct t_gui_completion *completion);
 ----
@@ -15310,7 +15310,7 @@ void weechat_completion_free (struct t_gui_completion *completion);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 weechat_completion_free (completion);
 ----
@@ -15341,7 +15341,7 @@ WeeChat がこれを遮断しないように必ずフォークしたプロセス
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_network_pass_proxy (const char *proxy,
                                 int sock,
@@ -15362,7 +15362,7 @@ int weechat_network_pass_proxy (const char *proxy,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 if (weechat_network_pass_proxy ("my_proxy", sock, "irc.libera.chat", 6667))
 {
@@ -15389,7 +15389,7 @@ WeeChat がこれを遮断しないように必ずフォークしたプロセス
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_network_connect_to (const char *proxy,
                                 struct sockaddr *address,
@@ -15408,7 +15408,7 @@ int weechat_network_connect_to (const char *proxy,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 struct sockaddr *addr;
 socklen_t length;
@@ -15444,7 +15444,7 @@ _WeeChat バージョン 2.5 で更新。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 char *weechat_info_get (const char *info_name, const char *arguments);
 ----
@@ -15470,7 +15470,7 @@ include::includes/autogen_api_infos.ja.adoc[tag=infos]
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 char *version = weechat_info_get ("version", NULL);
 char *date = weechat_info_get ("date", NULL);
@@ -15508,7 +15508,7 @@ _WeeChat バージョン 0.3.4 以上で利用可。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 struct t_hashtable *weechat_info_get_hashtable (const char *info_name,
                                                 struct t_hashtable *hashtable);
@@ -15530,7 +15530,7 @@ include::includes/autogen_api_infos_hashtable.ja.adoc[tag=infos_hashtable]
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 struct t_hashtable *hashtable_in, *hashtable_out;
 
@@ -15614,7 +15614,7 @@ weechat.prnt("", "message parsed: %s"
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 struct t_infolist *weechat_infolist_new ();
 ----
@@ -15625,7 +15625,7 @@ struct t_infolist *weechat_infolist_new ();
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 struct t_infolist *infolist = weechat_infolist_new ();
 ----
@@ -15647,7 +15647,7 @@ infolist = weechat.infolist_new()
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 struct t_infolist_item *weechat_infolist_new_item (struct t_infolist *infolist);
 ----
@@ -15662,7 +15662,7 @@ struct t_infolist_item *weechat_infolist_new_item (struct t_infolist *infolist);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 struct t_infolist_item *item = weechat_infolist_new_item (infolist);
 ----
@@ -15684,7 +15684,7 @@ item = weechat.infolist_new_item(infolist)
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 struct t_infolist_var *weechat_infolist_new_var_integer (struct t_infolist_item *item,
                                                          const char *name,
@@ -15703,7 +15703,7 @@ struct t_infolist_var *weechat_infolist_new_var_integer (struct t_infolist_item 
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 struct t_infolist_var *var = weechat_infolist_new_var_integer (item,
                                                                "my_integer",
@@ -15727,7 +15727,7 @@ var = weechat.infolist_new_var_integer(item, "my_integer", 123)
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 struct t_infolist_var *weechat_infolist_new_var_string (struct t_infolist_item *item,
                                                         const char *name,
@@ -15746,7 +15746,7 @@ struct t_infolist_var *weechat_infolist_new_var_string (struct t_infolist_item *
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 struct t_infolist_var *var = weechat_infolist_new_var_string (item,
                                                               "my_string",
@@ -15770,7 +15770,7 @@ var = weechat.infolist_new_var_string(item, "my_string", "value")
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 struct t_infolist_var *weechat_infolist_new_var_pointer (struct t_infolist_item *item,
                                                          const char *name,
@@ -15789,7 +15789,7 @@ struct t_infolist_var *weechat_infolist_new_var_pointer (struct t_infolist_item 
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 struct t_infolist_var *var = weechat_infolist_new_var_pointer (item,
                                                                "my_pointer",
@@ -15813,7 +15813,7 @@ var = weechat.infolist_new_var_pointer(item, "my_pointer", pointer)
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 struct t_infolist_var *weechat_infolist_new_var_buffer (struct t_infolist_item *item,
                                                         const char *name,
@@ -15834,7 +15834,7 @@ struct t_infolist_var *weechat_infolist_new_var_buffer (struct t_infolist_item *
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 char buffer[256];
 /* ... */
@@ -15853,7 +15853,7 @@ struct t_infolist_var *var = weechat_infolist_new_var_buffer (item,
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 struct t_infolist_var *weechat_infolist_new_var_time (struct t_infolist_item *item,
                                                       const char *name,
@@ -15872,7 +15872,7 @@ struct t_infolist_var *weechat_infolist_new_var_time (struct t_infolist_item *it
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 struct t_infolist_var *var = weechat_infolist_new_var_time (item,
                                                             "my_time",
@@ -15903,7 +15903,7 @@ WeeChat またはプラグインからインフォリストを返す。
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 struct t_infolist *weechat_infolist_get (const char *infolist_name,
                                          void *pointer,
@@ -15928,7 +15928,7 @@ include::includes/autogen_api_infolists.ja.adoc[tag=infolists]
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 struct t_infolist *infolist = weechat_infolist_get ("irc_server", NULL, NULL);
 ----
@@ -15951,7 +15951,7 @@ infolist = weechat.infolist_get("irc_server", "", "")
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_infolist_next (struct t_infolist *infolist);
 ----
@@ -15966,7 +15966,7 @@ int weechat_infolist_next (struct t_infolist *infolist);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 if (weechat_infolist_next (infolist))
 {
@@ -16000,7 +16000,7 @@ else:
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_infolist_prev (struct t_infolist *infolist);
 ----
@@ -16016,7 +16016,7 @@ int weechat_infolist_prev (struct t_infolist *infolist);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 if (weechat_infolist_prev (infolist))
 {
@@ -16049,7 +16049,7 @@ else:
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 void weechat_infolist_reset_item_cursor (struct t_infolist *infolist);
 ----
@@ -16060,7 +16060,7 @@ void weechat_infolist_reset_item_cursor (struct t_infolist *infolist);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 weechat_infolist_reset_item_cursor (infolist);
 ----
@@ -16084,7 +16084,7 @@ _WeeChat バージョン 0.4.3 以上で利用可。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 struct t_infolist_var *weechat_infolist_search_var (struct t_infolist *infolist,
                                                     const char *name);
@@ -16101,7 +16101,7 @@ struct t_infolist_var *weechat_infolist_search_var (struct t_infolist *infolist,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 if (weechat_infolist_search_var (infolist, "name"))
 {
@@ -16129,7 +16129,7 @@ if weechat.infolist_search_var(infolist, "name"):
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 const char *weechat_infolist_fields (struct t_infolist *infolist);
 ----
@@ -16146,7 +16146,7 @@ const char *weechat_infolist_fields (struct t_infolist *infolist);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 const char *fields = weechat_infolist_fields (infolist);
 /* fields contains something like:
@@ -16172,7 +16172,7 @@ fields = weechat.infolist_fields(infolist)
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_infolist_integer (struct t_infolist *infolist, const char *var);
 ----
@@ -16188,7 +16188,7 @@ int weechat_infolist_integer (struct t_infolist *infolist, const char *var);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 weechat_printf (NULL, "integer = %d",
                 weechat_infolist_integer (infolist, "my_integer"));
@@ -16211,7 +16211,7 @@ weechat.prnt("", "integer = %d" % weechat.infolist_integer(infolist, "my_integer
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 const char *weechat_infolist_string (struct t_infolist *infolist, const char *var);
 ----
@@ -16227,7 +16227,7 @@ const char *weechat_infolist_string (struct t_infolist *infolist, const char *va
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 weechat_printf (NULL, "string = %s",
                 weechat_infolist_string (infolist, "my_string"));
@@ -16250,7 +16250,7 @@ weechat.prnt("", "string = %s" % weechat.infolist_string(infolist, "my_string"))
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 void *weechat_infolist_pointer (struct t_infolist *infolist, const char *var);
 ----
@@ -16266,7 +16266,7 @@ void *weechat_infolist_pointer (struct t_infolist *infolist, const char *var);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 weechat_printf (NULL, "pointer = 0x%lx",
                 weechat_infolist_pointer (infolist, "my_pointer"));
@@ -16289,7 +16289,7 @@ weechat.prnt("", "pointer = 0x%s" % weechat.infolist_pointer(infolist, "my_point
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 void *weechat_infolist_buffer (struct t_infolist *infolist, const char *var,
                                int *size);
@@ -16307,7 +16307,7 @@ void *weechat_infolist_buffer (struct t_infolist *infolist, const char *var,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 int size;
 void *pointer = weechat_infolist_buffer (infolist, "my_buffer", &size);
@@ -16324,7 +16324,7 @@ weechat_printf (NULL, "buffer = 0x%lx, size = %d",
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 time_t weechat_infolist_time (struct t_infolist *infolist, const char *var);
 ----
@@ -16340,7 +16340,7 @@ time_t weechat_infolist_time (struct t_infolist *infolist, const char *var);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 weechat_printf (NULL, "time = %ld",
                 weechat_infolist_time (infolist, "my_time"));
@@ -16363,7 +16363,7 @@ weechat.prnt("", "time = %ld" % weechat.infolist_time(infolist, "my_time"))
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 void weechat_infolist_free (struct t_infolist *infolist);
 ----
@@ -16374,7 +16374,7 @@ void weechat_infolist_free (struct t_infolist *infolist);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 weechat_infolist_free (infolist);
 ----
@@ -16420,7 +16420,7 @@ Hdata を使うことで高速に WeeChat およびプラグインのデータ�
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 struct t_hdata *weechat_hdata_new (const char *hdata_name, const char *var_prev, const char *var_next,
                                    int create_allowed, int delete_allowed,
@@ -16458,7 +16458,7 @@ struct t_hdata *weechat_hdata_new (const char *hdata_name, const char *var_prev,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 struct t_hdata *hdata = weechat_hdata_new ("myplugin_list", "prev", "next", 0, 0, &callback_update, NULL);
 ----
@@ -16475,7 +16475,7 @@ hdata に新しい変数を作成。
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 void weechat_hdata_new_var (struct t_hdata *hdata, const char *name, int offset, int type,
                             int update_allowed, const char *array_size, const char *hdata_name);
@@ -16541,7 +16541,7 @@ Examples of variables and the corresponding array size (_WeeChat ≥ 3.4_):
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 struct t_myplugin_list
 {
@@ -16570,7 +16570,7 @@ weechat_hdata_new_var (hdata, "next", offsetof (struct t_myplugin_list, next), W
 
 コードを短くするためにはマクロ "WEECHAT_HDATA_VAR" を使います。
 
-[source,C]
+[source,c]
 ----
 WEECHAT_HDATA_VAR(struct t_myplugin_list, name, STRING, 0, NULL, NULL);
 WEECHAT_HDATA_VAR(struct t_myplugin_list, buffer, POINTER, 0, NULL, NULL);
@@ -16593,7 +16593,7 @@ hdata に新しいリストへのポインタを作成。
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 void weechat_hdata_new_list (struct t_hdata *hdata, const char *name, void *pointer, int flags);
 ----
@@ -16608,7 +16608,7 @@ void weechat_hdata_new_list (struct t_hdata *hdata, const char *name, void *poin
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 struct t_myplugin_list
 {
@@ -16638,7 +16638,7 @@ weechat_hdata_new_list (hdata, "last_buffer", &last_buffer, 0);
 
 コードを短くするためにはマクロ "WEECHAT_HDATA_LIST" を使います。
 
-[source,C]
+[source,c]
 ----
 WEECHAT_HDATA_LIST(buffers, WEECHAT_HDATA_LIST_CHECK_POINTERS);
 WEECHAT_HDATA_LIST(last_buffer, 0);
@@ -16660,7 +16660,7 @@ hdata と WeeChat およびプラグインへのポインタが必要です。
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 struct t_hdata *weechat_hdata_get (const char *hdata_name);
 ----
@@ -16679,7 +16679,7 @@ include::includes/autogen_api_hdata.ja.adoc[tag=hdata]
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 struct t_hdata *hdata = weechat_hdata_get ("irc_server");
 ----
@@ -16703,7 +16703,7 @@ hdata における変数のオフセットを返す。
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_hdata_get_var_offset (struct t_hdata *hdata, const char *name);
 ----
@@ -16719,7 +16719,7 @@ int weechat_hdata_get_var_offset (struct t_hdata *hdata, const char *name);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 int offset = weechat_hdata_get_var_offset (hdata, "name");
 ----
@@ -16743,7 +16743,7 @@ hdata 内の変数の型を (整数で) 返す。
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_hdata_get_var_type (struct t_hdata *hdata, const char *name);
 ----
@@ -16759,7 +16759,7 @@ int weechat_hdata_get_var_type (struct t_hdata *hdata, const char *name);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 int type = weechat_hdata_get_var_type (hdata, "name");
 switch (type)
@@ -16808,7 +16808,7 @@ _WeeChat バージョン 0.3.6 以上で利用可。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 const char *weechat_hdata_get_var_type_string (struct t_hdata *hdata, const char *name);
 ----
@@ -16824,7 +16824,7 @@ const char *weechat_hdata_get_var_type_string (struct t_hdata *hdata, const char
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 weechat_printf (NULL, "type = %s", weechat_hdata_get_var_type_string (hdata, "name"));
 ----
@@ -16848,7 +16848,7 @@ hdata に含まれる配列変数のサイズを返す。
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_hdata_get_var_array_size (struct t_hdata *hdata, void *pointer, const char *name);
 ----
@@ -16865,7 +16865,7 @@ int weechat_hdata_get_var_array_size (struct t_hdata *hdata, void *pointer, cons
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 int array_size = weechat_hdata_get_var_array_size (hdata, pointer, "name");
 ----
@@ -16889,7 +16889,7 @@ hdata に含まれる配列変数のサイズを (文字列で) 返す。
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 const char *weechat_hdata_get_var_array_size_string (struct t_hdata *hdata, void *pointer,
                                                      const char *name);
@@ -16908,7 +16908,7 @@ const char *weechat_hdata_get_var_array_size_string (struct t_hdata *hdata, void
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 const char *array_size = weechat_hdata_get_var_array_size_string (hdata, pointer, "name");
 ----
@@ -16932,7 +16932,7 @@ hdata に含まれる変数に対応する hdata を返す。
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 const char *weechat_hdata_get_var_hdata (struct t_hdata *hdata, const char *name);
 ----
@@ -16948,7 +16948,7 @@ const char *weechat_hdata_get_var_hdata (struct t_hdata *hdata, const char *name
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 weechat_printf (NULL, "hdata = %s", weechat_hdata_get_var_hdata (hdata, "name"));
 ----
@@ -16972,7 +16972,7 @@ hdata に含まれる変数の内容へのポインタを返す。
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 void *weechat_hdata_get_var (struct t_hdata *hdata, void *pointer, const char *name);
 ----
@@ -16989,7 +16989,7 @@ void *weechat_hdata_get_var (struct t_hdata *hdata, void *pointer, const char *n
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 struct t_hdata *hdata = weechat_hdata_get ("buffer");
 struct t_gui_buffer *buffer = weechat_buffer_search_main ();
@@ -17007,7 +17007,7 @@ _WeeChat バージョン 0.3.6 以上で利用可。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 void *weechat_hdata_get_var_at_offset (struct t_hdata *hdata, void *pointer, int offset);
 ----
@@ -17024,7 +17024,7 @@ void *weechat_hdata_get_var_at_offset (struct t_hdata *hdata, void *pointer, int
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 struct t_hdata *hdata = weechat_hdata_get ("buffer");
 struct t_gui_buffer *buffer = weechat_buffer_search_main ();
@@ -17043,7 +17043,7 @@ hdata からリストへのポインタを返す。
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 void *weechat_hdata_get_list (struct t_hdata *hdata, const char *name);
 ----
@@ -17059,7 +17059,7 @@ void *weechat_hdata_get_list (struct t_hdata *hdata, const char *name);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 struct t_hdata *hdata = weechat_hdata_get ("buffer");
 struct t_gui_buffer *buffers = weechat_hdata_get_list (hdata, "gui_buffers");
@@ -17085,7 +17085,7 @@ hdata とリストへのポインタを使ってポインタの妥当性を確�
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_hdata_check_pointer (struct t_hdata *hdata, void *list, void *pointer);
 ----
@@ -17105,7 +17105,7 @@ int weechat_hdata_check_pointer (struct t_hdata *hdata, void *list, void *pointe
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 /* check if a buffer pointer is valid */
 struct t_hdata *hdata = weechat_hdata_get ("buffer");
@@ -17146,7 +17146,7 @@ _WeeChat バージョン 0.3.6 以上で利用可。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 void *weechat_hdata_move (struct t_hdata *hdata, void *pointer, int count);
 ----
@@ -17165,7 +17165,7 @@ void *weechat_hdata_move (struct t_hdata *hdata, void *pointer, int count);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 struct t_hdata *hdata = weechat_hdata_get ("buffer");
 struct t_gui_buffer *buffer = weechat_buffer_search_main ();
@@ -17206,7 +17206,7 @@ _WeeChat バージョン 0.4.1 以上で利用可、バージョン 3.4 で更�
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 void *weechat_hdata_search (struct t_hdata *hdata, void *pointer, const char *search,
                             struct t_hashtable *pointers, struct t_hashtable *extra_vars,
@@ -17241,7 +17241,7 @@ referenced by `${xxx}` in the _search_ expression (see the example below).
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 struct t_hdata *hdata = weechat_hdata_get ("irc_server");
 void *servers = weechat_hdata_get_list (hdata, "irc_servers");
@@ -17290,7 +17290,7 @@ hdata を使って構造体に含まれる文字型変数の値を返す。
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 char weechat_hdata_char (struct t_hdata *hdata, void *pointer, const char *name);
 ----
@@ -17308,7 +17308,7 @@ char weechat_hdata_char (struct t_hdata *hdata, void *pointer, const char *name)
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 weechat_printf (NULL, "letter = %c", weechat_hdata_char (hdata, pointer, "letter"));
 ----
@@ -17332,7 +17332,7 @@ hdata を使って構造体に含まれる整数型変数の値を返す。
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_hdata_integer (struct t_hdata *hdata, void *pointer, const char *name);
 ----
@@ -17350,7 +17350,7 @@ int weechat_hdata_integer (struct t_hdata *hdata, void *pointer, const char *nam
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 struct t_hdata *hdata = weechat_hdata_get ("buffer");
 struct t_gui_buffer *buffer = weechat_buffer_search_main ();
@@ -17378,7 +17378,7 @@ hdata を使って構造体に含まれる long 型変数の値を返す。
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 long weechat_hdata_long (struct t_hdata *hdata, void *pointer, const char *name);
 ----
@@ -17396,7 +17396,7 @@ long weechat_hdata_long (struct t_hdata *hdata, void *pointer, const char *name)
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 weechat_printf (NULL, "longvar = %ld", weechat_hdata_long (hdata, pointer, "longvar"));
 ----
@@ -17420,7 +17420,7 @@ hdata を使って構造体に含まれる文字列型変数の値を返す。
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 const char *weechat_hdata_string (struct t_hdata *hdata, void *pointer, const char *name);
 ----
@@ -17438,7 +17438,7 @@ const char *weechat_hdata_string (struct t_hdata *hdata, void *pointer, const ch
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 struct t_hdata *hdata = weechat_hdata_get ("buffer");
 struct t_gui_buffer *buffer = weechat_buffer_search_main ();
@@ -17466,7 +17466,7 @@ hdata を使って構造体に含まれるポインタ型変数の値を返す�
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 void *weechat_hdata_pointer (struct t_hdata *hdata, void *pointer, const char *name);
 ----
@@ -17484,7 +17484,7 @@ void *weechat_hdata_pointer (struct t_hdata *hdata, void *pointer, const char *n
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 struct t_hdata *hdata = weechat_hdata_get ("buffer");
 struct t_gui_buffer *buffer = weechat_buffer_search_main ();
@@ -17512,7 +17512,7 @@ hdata を使って構造体に含まれる時刻型変数の値を返す。
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 time_t weechat_hdata_time (struct t_hdata *hdata, void *pointer, const char *name);
 ----
@@ -17530,7 +17530,7 @@ time_t weechat_hdata_time (struct t_hdata *hdata, void *pointer, const char *nam
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 struct t_hdata *hdata = weechat_hdata_get ("buffer");
 struct t_gui_buffer *ptr = weechat_buffer_search_main ();
@@ -17580,7 +17580,7 @@ hdata を使って構造体に含まれるハッシュテーブル型変数の�
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 struct t_hashtable *weechat_hdata_hashtable (struct t_hdata *hdata, void *pointer, const char *name);
 ----
@@ -17598,7 +17598,7 @@ struct t_hashtable *weechat_hdata_hashtable (struct t_hdata *hdata, void *pointe
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 struct t_hdata *hdata = weechat_hdata_get ("buffer");
 struct t_gui_buffer *buffer = weechat_buffer_search_main ();
@@ -17631,7 +17631,7 @@ _WeeChat バージョン 1.9 以上で利用可。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_hdata_compare (struct t_hdata *hdata, void *pointer1, void *pointer2, const char *name, int case_sensitive);
 ----
@@ -17653,7 +17653,7 @@ int weechat_hdata_compare (struct t_hdata *hdata, void *pointer1, void *pointer2
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 struct t_hdata *hdata = weechat_hdata_get ("buffer");
 struct t_gui_buffer *buffer1 = weechat_buffer_search ("irc", "libera.#weechat");
@@ -17689,7 +17689,7 @@ hdata の変数に新しい値を設定。
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_hdata_set (struct t_hdata *hdata, void *pointer, const char *name, const char *value);
 ----
@@ -17708,7 +17708,7 @@ int weechat_hdata_set (struct t_hdata *hdata, void *pointer, const char *name, c
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 weechat_hdata_set (hdata, pointer, "message", "test");
 ----
@@ -17724,7 +17724,7 @@ hdata 内のデータを更新。
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_hdata_update (struct t_hdata *hdata, void *pointer, struct t_hashtable *hashtable);
 ----
@@ -17750,7 +17750,7 @@ int weechat_hdata_update (struct t_hdata *hdata, void *pointer, struct t_hashtab
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 /* 現在のバッファに表示されている最後のメッセージの時間を 1 時間前にする */
 
@@ -17810,7 +17810,7 @@ hdata プロパティの文字列値を返す。
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 const char *weechat_hdata_get_string (struct t_hdata *hdata, const char *property);
 ----
@@ -17842,7 +17842,7 @@ const char *weechat_hdata_get_string (struct t_hdata *hdata, const char *propert
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 weechat_printf (NULL, "variables in hdata: %s", weechat_hdata_get_string (hdata, "var_keys"));
 weechat_printf (NULL, "lists in hdata: %s", weechat_hdata_get_string (hdata, "list_keys"));
@@ -17873,7 +17873,7 @@ _WeeChat バージョン 1.5 で更新。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 struct t_upgrade_file *upgrade_file_new (const char *filename,
                                          int (*callback_read)(const void *pointer,
@@ -17911,7 +17911,7 @@ struct t_upgrade_file *upgrade_file_new (const char *filename,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 struct t_upgrade_file *upgrade_file = weechat_upgrade_new ("my_file",
                                                            NULL, NULL, NULL);
@@ -17934,7 +17934,7 @@ upgrade_file = weechat.upgrade_new("my_file", "", "")
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_upgrade_write_object (struct t_upgrade_file *upgrade_file,
                                   int object_id,
@@ -17953,7 +17953,7 @@ int weechat_upgrade_write_object (struct t_upgrade_file *upgrade_file,
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 if (weechat_upgrade_write_object (upgrade_file, 1, &infolist))
 {
@@ -17984,7 +17984,7 @@ _WeeChat バージョン 1.5 で更新。_
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 int weechat_upgrade_read (struct t_upgrade_file *upgrade_file);
 ----
@@ -17999,7 +17999,7 @@ int weechat_upgrade_read (struct t_upgrade_file *upgrade_file);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 weechat_upgrade_read (upgrade_file);
 ----
@@ -18021,7 +18021,7 @@ weechat.upgrade_read(upgrade_file)
 
 プロトタイプ:
 
-[source,C]
+[source,c]
 ----
 void weechat_upgrade_close (struct t_upgrade_file *upgrade_file);
 ----
@@ -18032,7 +18032,7 @@ void weechat_upgrade_close (struct t_upgrade_file *upgrade_file);
 
 C 言語での使用例:
 
-[source,C]
+[source,c]
 ----
 weechat_upgrade_close (upgrade_file);
 ----
