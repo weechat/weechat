@@ -892,10 +892,11 @@ relay_weechat_protocol_signal_hotlist_cb (const void *pointer, void *data,
             if (msg)
             {
                 snprintf (cmd_hdata, sizeof (cmd_hdata),
-                          "hotlist:0x%p", ptr_hotlist);
+                          "hotlist:0x%lx", (unsigned long)ptr_hotlist);
                 relay_weechat_msg_add_hdata (msg, cmd_hdata,
-                                             "priority,creation_time,buffer,"
-                                             "count,prev_hotlist,next_hotlist");
+                                             "priority,creation_time.tv_sec,"
+                                             "creation_time.tv_usec,buffer,"
+                                             "count");
                 relay_weechat_msg_send (ptr_client, msg);
                 relay_weechat_msg_free (msg);
             }
