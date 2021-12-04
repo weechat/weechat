@@ -1902,151 +1902,198 @@ Można ją zapisać za pomocą skryptu _buffer_autoset.py_: można go zaintalowa
 [[key_bindings_command_line]]
 ==== Skróty dla linii poleceń
 
+// TRANSLATION MISSING
+[[key_bindings_cmdline_cursor_movement]]
+===== Cursor movement
+
 [width="100%",cols="^.^3,.^8,.^5",options="header"]
 |===
-| Skrót           | Opis | Komenda
+| Skrót          | Opis | Komenda
 | kbd:[←] +
-  kbd:[Ctrl+b]    | Idź do poprzedniego znaku w linii poleceń. | `+/input move_previous_char+`
+  kbd:[Ctrl+b]   | Idź do poprzedniego znaku w linii poleceń. | `+/input move_previous_char+`
 | kbd:[→] +
-  kbd:[Ctrl+f]    | Idź do następnego znaku w linii poleceń. | `+/input move_next_char+`
+  kbd:[Ctrl+f]   | Idź do następnego znaku w linii poleceń. | `+/input move_next_char+`
 | kbd:[Ctrl+←] +
-  kbd:[Alt+b]     | Idź do poprzedniego słowa w linii poleceń. | `+/input move_previous_word+`
+  kbd:[Alt+b]    | Idź do poprzedniego słowa w linii poleceń. | `+/input move_previous_word+`
 | kbd:[Ctrl+→] +
-  kbd:[Alt+f]     | Idź do następnego słowa w linii poleceń. | `+/input move_next_word+`
+  kbd:[Alt+f]    | Idź do następnego słowa w linii poleceń. | `+/input move_next_word+`
 | kbd:[Home] +
-  kbd:[Ctrl+a]    | Idź na początek linii poleceń. | `+/input move_beginning_of_line+`
+  kbd:[Ctrl+a]   | Idź na początek linii poleceń. | `+/input move_beginning_of_line+`
 | kbd:[End] +
-  kbd:[Ctrl+e]    | Idź na koniec linii poleceń. | `+/input move_end_of_line+`
-| kbd:[Ctrl+c],
-  kbd:[b]         | Wstaw kod dla pogrubionego tekstu. | `+/input insert \x02+`
-| kbd:[Ctrl+c],
-  kbd:[c]         | Wstaw kod dla kolorowego tekstu. | `+/input insert \x03+`
-| kbd:[Ctrl+c],
-  kbd:[i]         | Wstaw kod dla pochyłego tekstu. | `+/input insert \x1D+`
-| kbd:[Ctrl+c],
-  kbd:[o]         | Wstaw kod dla zresetowania koloru. | `+/input insert \x0F+`
-| kbd:[Ctrl+c],
-  kbd:[v]         | Wstaw kod dla odwrócenia koloru. | `+/input insert \x16+`
-| kbd:[Ctrl+c],
-  kbd:[_]         | Wstaw kod dla podkreślonego tekstu. | `+/input insert \x1F+`
+  kbd:[Ctrl+e]   | Idź na koniec linii poleceń. | `+/input move_end_of_line+`
+|===
+
+// TRANSLATION MISSING
+[[key_bindings_cmdline_editing]]
+===== Editing
+
+[width="100%",cols="^.^3,.^8,.^5",options="header"]
+|===
+| Skrót             | Opis | Komenda
 | kbd:[Del] +
-  kbd:[Ctrl+d]    | Usuń następny znak w linii poleceń. | `+/input delete_next_char+`
-| kbd:[Backsp.] +
-  kbd:[Ctrl+h]    | Usuń poprzedni znak w linii poleceń. | `+/input delete_previous_char+`
-| kbd:[Ctrl+k]    | Usuń od znacznika kursora do końca linii poleceń (usuwany ciąg jest kopiowany do wewnętrznego schowka). | `+/input delete_end_of_line+`
-| kbd:[Ctrl+r]    | Wyszukaj tekst w historii bufora (zobacz <<key_bindings_search_context,skróty dla kontekstu wyszukiwania>>). | `+/input search_text_here+`
-| kbd:[Ctrl+t]    | Przestaw znaki. | `+/input transpose_chars+`
-| kbd:[Ctrl+u]    | Usuń od znaku kursora do początku linii poleceń (usuwany ciąg jest kopiowany do wewnętrznego schowka). | `+/input delete_beginning_of_line+`
-| kbd:[Ctrl+w]    | Usuń poprzednie słowo w linii poleceń (usuwany ciąg jest kopiowany do wewnętrznego schowka). | `+/input delete_previous_word+`
-| kbd:[Ctrl+y]    | Wkleja zawartość wewnętrznego schowka. | `+/input clipboard_paste+`
-| kbd:[Ctrl+_]    | Cofnij poprzednia akcję w linii poleceń. | `+/input undo+`
-| kbd:[Alt+_]     | Powtórz ostatnią akcję w linii poleceń. | `+/input redo+`
-| kbd:[Tab]       | Dopełnij komendę lub nick (ponowne wciśnięcie kbd:[Tab]: znajdź następne dopełnienie). | `+/input complete_next+`
-| kbd:[Shift+Tab] | Bez dopełnienia: wykonaj częściowe dopełnienie, z oczekującym dopełnieniem: dopełnij z poprzednim dopełnieniem. | `+/input complete_previous+`
+  kbd:[Ctrl+d]      | Usuń następny znak w linii poleceń. | `+/input delete_next_char+`
+| kbd:[Backspace] +
+  kbd:[Ctrl+h]      | Usuń poprzedni znak w linii poleceń. | `+/input delete_previous_char+`
+| kbd:[Ctrl+k]      | Usuń od znacznika kursora do końca linii poleceń (usuwany ciąg jest kopiowany do wewnętrznego schowka). | `+/input delete_end_of_line+`
+| kbd:[Ctrl+t]      | Przestaw znaki. | `+/input transpose_chars+`
+| kbd:[Ctrl+u]      | Usuń od znaku kursora do początku linii poleceń (usuwany ciąg jest kopiowany do wewnętrznego schowka). | `+/input delete_beginning_of_line+`
+| kbd:[Ctrl+w]      | Usuń poprzednie słowo w linii poleceń (usuwany ciąg jest kopiowany do wewnętrznego schowka). | `+/input delete_previous_word+`
+| kbd:[Ctrl+y]      | Wkleja zawartość wewnętrznego schowka. | `+/input clipboard_paste+`
+| kbd:[Ctrl+_]      | Cofnij poprzednia akcję w linii poleceń. | `+/input undo+`
+| kbd:[Alt+_]       | Powtórz ostatnią akcję w linii poleceń. | `+/input redo+`
+| kbd:[Tab]         | Dopełnij komendę lub nick (ponowne wciśnięcie kbd:[Tab]: znajdź następne dopełnienie). | `+/input complete_next+`
+| kbd:[Shift+Tab]   | Bez dopełnienia: wykonaj częściowe dopełnienie, z oczekującym dopełnieniem: dopełnij z poprzednim dopełnieniem. | `+/input complete_previous+`
 | kbd:[Enter] +
   kbd:[Ctrl+j] +
-  kbd:[Ctrl+m]    | Wykonaj komendę lub wyślij wiadomość (w trybie wyszukiwania: przerwij wyszukiwanie). | `+/input return+`
-| kbd:[Alt+Enter] | Wstawia nową linię. | `+/input insert \n+`
-| kbd:[↑]         | Pokaż poprzednią komendę/wiadomość (w trybie wyszukiwania: szukaj w górę). | `+/input history_previous+`
-| kbd:[↓]         | Pokaż następną komendę/wiadomość (w trybie wyszukiwania: szukaj w dół). | `+/input history_next+`
-| kbd:[Ctrl+↑]    | Pokaż poprzednią komendę/wiadomość w historii globalnej (wspólnej dla wszystkich buforów). | `+/input history_global_previous+`
-| kbd:[Ctrl+↓]    | Pokaż następną komendę/wiadomość w historii globalnej (wspólnej dla wszystkich buforów). | `+/input history_global_next+`
-| kbd:[Alt+d]     | Usuń następne słowo w linii poleceń (usuwany ciąg jest kopiowany do wewnętrznego schowka). | `+/input delete_next_word+`
-| kbd:[Alt+k]     | Przechwyć wciśnięte klawisze i zwróć ich kod (i przypisaną komendę, jeśli istnieje) w linii poleceń. | `+/input grab_key_command+`
-| kbd:[Alt+r]     | Usuń całą zawartość linii poleceń. | `+/input delete_line+`
-| kbd:[Alt+s]     | Włącz/wyłącz sprawdzenie pisowni. | `+/mute spell toggle+`
+  kbd:[Ctrl+m]      | Wykonaj komendę lub wyślij wiadomość (w trybie wyszukiwania: przerwij wyszukiwanie). | `+/input return+`
+| kbd:[Alt+Enter]   | Wstawia nową linię. | `+/input insert \n+`
+| kbd:[Alt+d]       | Usuń następne słowo w linii poleceń (usuwany ciąg jest kopiowany do wewnętrznego schowka). | `+/input delete_next_word+`
+| kbd:[Alt+k]       | Przechwyć wciśnięte klawisze i zwróć ich kod (i przypisaną komendę, jeśli istnieje) w linii poleceń. | `+/input grab_key_command+`
+| kbd:[Alt+r]       | Usuń całą zawartość linii poleceń. | `+/input delete_line+`
 |===
 
-[[key_bindings_buffers_windows]]
-==== Skróty dla buforów / okien
+// TRANSLATION MISSING
+[[key_bindings_cmdline_color_codes]]
+===== Color codes
 
 [width="100%",cols="^.^3,.^8,.^5",options="header"]
 |===
-| Skrót              | Opis | Komenda
-| kbd:[Ctrl+l] (`L`) | Przerysuj całe okno. | `+/window refresh+`
-| kbd:[Ctrl+s],
-  kbd:[Ctrl+u]       | Ustaw znacznik nieprzeczytania we wszystkich buforach. | `+/input set_unread+`
-| kbd:[Ctrl+x]       | Przełącz obecny bufor jeśli bufory są dołączone z tym samym numerem. | `+/input switch_active_buffer+`
-| kbd:[Alt+x]        | Pokaż wybrany z połączonych buforów (naciśnij kbd:[Alt+x] ponownie: wyświetl wszystkie połączone bufory). | `+/input zoom_merged_buffer+`
-| kbd:[PgUp]         | Przewiń jedną stronę w górę w historii bufora. | `+/window page_up+`
-| kbd:[PgDn]         | Przewiń jedną stronę w dół w historii bufora. | `+/window page_down+`
-| kbd:[Alt+PgUp]     | Przewiń w górę kilka linii w historii bufora. | `+/window scroll_up+`
-| kbd:[Alt+PgDn]     | Przewiń w dół kilka linii w historii bufora. | `+/window scroll_down+`
-| kbd:[Alt+Home]     | Przewiń na górę bufora. | `+/window scroll_top+`
-| kbd:[Alt+End]      | Przewiń na dół bufora. | `+/window scroll_bottom+`
-| kbd:[F1] +
-  kbd:[Ctrl+F1]      | Przewiń do góry jedną stronę na liście buforów. | `+/bar scroll buflist * -100%+`
-| kbd:[F2] +
-  kbd:[Ctrl+F2]      | Przewiń w dół jedną stronę na liście buforów. | `+/bar scroll buflist * +100%+`
-| kbd:[Alt+F1]       | Idź na początek listy buforów. | `+/bar scroll buflist * b+`
-| kbd:[Alt+F2]       | Idź na koniec listy buforów. | `+/bar scroll buflist * e+`
+| Skrót                 | Opis | Komenda
+| kbd:[Ctrl+c], kbd:[b] | Wstaw kod dla pogrubionego tekstu. | `+/input insert \x02+`
+| kbd:[Ctrl+c], kbd:[c] | Wstaw kod dla kolorowego tekstu. | `+/input insert \x03+`
+| kbd:[Ctrl+c], kbd:[i] | Wstaw kod dla pochyłego tekstu. | `+/input insert \x1D+`
+| kbd:[Ctrl+c], kbd:[o] | Wstaw kod dla zresetowania koloru. | `+/input insert \x0F+`
+| kbd:[Ctrl+c], kbd:[v] | Wstaw kod dla odwrócenia koloru. | `+/input insert \x16+`
+| kbd:[Ctrl+c], kbd:[_] | Wstaw kod dla podkreślonego tekstu. | `+/input insert \x1F+`
+|===
+
+// TRANSLATION MISSING
+[[key_bindings_cmdline_history]]
+===== Command history
+
+[width="100%",cols="^.^3,.^8,.^5",options="header"]
+|===
+| Skrót        | Opis | Komenda
+| kbd:[↑]      | Pokaż poprzednią komendę/wiadomość (w trybie wyszukiwania: szukaj w górę). | `+/input history_previous+`
+| kbd:[↓]      | Pokaż następną komendę/wiadomość (w trybie wyszukiwania: szukaj w dół). | `+/input history_next+`
+| kbd:[Ctrl+↑] | Pokaż poprzednią komendę/wiadomość w historii globalnej (wspólnej dla wszystkich buforów). | `+/input history_global_previous+`
+| kbd:[Ctrl+↓] | Pokaż następną komendę/wiadomość w historii globalnej (wspólnej dla wszystkich buforów). | `+/input history_global_next+`
+|===
+
+// TRANSLATION MISSING
+[[key_bindings_buffers]]
+==== Buffers
+
+[width="100%",cols="^.^3,.^8,.^5",options="header"]
+|===
+| Skrót                          | Opis | Komenda
+| kbd:[Ctrl+r]                   | Wyszukaj tekst w historii bufora (zobacz <<key_bindings_search_context,skróty dla kontekstu wyszukiwania>>). | `+/input search_text_here+`
+| kbd:[Ctrl+s], kbd:[Ctrl+u]     | Ustaw znacznik nieprzeczytania we wszystkich buforach. | `+/input set_unread+`
+| kbd:[Ctrl+x]                   | Przełącz obecny bufor jeśli bufory są dołączone z tym samym numerem. | `+/input switch_active_buffer+`
+| kbd:[Alt+x]                    | Pokaż wybrany z połączonych buforów (naciśnij kbd:[Alt+x] ponownie: wyświetl wszystkie połączone bufory). | `+/input zoom_merged_buffer+`
+| kbd:[PgUp]                     | Przewiń jedną stronę w górę w historii bufora. | `+/window page_up+`
+| kbd:[PgDn]                     | Przewiń jedną stronę w dół w historii bufora. | `+/window page_down+`
+| kbd:[Alt+PgUp]                 | Przewiń w górę kilka linii w historii bufora. | `+/window scroll_up+`
+| kbd:[Alt+PgDn]                 | Przewiń w dół kilka linii w historii bufora. | `+/window scroll_down+`
+| kbd:[Alt+Home]                 | Przewiń na górę bufora. | `+/window scroll_top+`
+| kbd:[Alt+End]                  | Przewiń na dół bufora. | `+/window scroll_bottom+`
 | kbd:[Alt+←] +
   kbd:[Alt+↑] +
   kbd:[Ctrl+p] +
-  kbd:[F5]           | Przełącz na poprzedni bufor. | `+/buffer -1+`
+  kbd:[F5]                       | Przełącz na poprzedni bufor. | `+/buffer -1+`
 | kbd:[Alt+→] +
   kbd:[Alt+↓] +
   kbd:[Ctrl+n] +
-  kbd:[F6]           | Przełącz na następny bufor. | `+/buffer +1+`
-| kbd:[F7]           | Przełącz na poprzednie okno. | `+/window -1+`
-| kbd:[F8]           | Przełącz na następne okno. | `+/window +1+`
-| kbd:[F9]           | Przewiń tytuł bufora w lewo. | `+/bar scroll title * -30%+`
-| kbd:[F10]          | Przewiń tytuł bufora w prawo. | `+/bar scroll title * +30%+`
-| kbd:[F11] +
-  kbd:[Ctrl+F11]     | Przewiń w górę jedna stronę listy nicków. | `+/bar scroll nicklist * -100%+`
-| kbd:[F12] +
-  kbd:[Ctrl+F12]     | Przewiń w dół jedna stronę listy nicków. | `+/bar scroll nicklist * +100%+`
-| kbd:[Alt+F11]      | Idź na początek listy nicków. | `+/bar scroll nicklist * b+`
-| kbd:[Alt+F12]      | Idź na koniec listy nicków. | `+/bar scroll nicklist * e+`
-| kbd:[Alt+a]        | Przełącz na następny bufor z aktywnością (z priorytetem: powiadomienie, wiadomość, inne). | `+/input jump_smart+`
-| kbd:[Alt+Shift+B]  | Przełącz widoczność listy buforów. | `+/buflist toggle+`
-| kbd:[Alt+h],
-  kbd:[Alt+c]        | Wyczyść hotliste (powiadomienia o aktywności w buforach). | `+/input hotlist_clear+`
-| kbd:[Alt+h],
-  kbd:[Alt+m]        | Usuń obecny bufor z hotlisty. | `+/input hotlist_remove_buffer+`
-| kbd:[Alt+h],
-  kbd:[Alt+r]        | Przywróć ostatnią usuniętą hotlistę w obecnym buforze. | `+/input hotlist_restore_buffer+`
-| kbd:[Alt+h],
-  kbd:[Alt+Shift+R]  | Przywróć ostatnią hotlistę usuniętą we wszystkich buforach. | `+/input hotlist_restore_all+`
-| kbd:[Alt+j],
-  kbd:[Alt+f]        | Przełącz na pierwszy bufor. | `+/buffer -+`
-| kbd:[Alt+j],
-  kbd:[Alt+l] (`L`)  | Przełącz na ostatni bufor. | `+/buffer ++`
-| kbd:[Alt+j],
-  kbd:[Alt+r]        | Przełącz na bufor IRC raw. | `+/server raw+`
-| kbd:[Alt+j],
-  kbd:[Alt+s]        | Przełącz na bufor serwera IRC. | `+/server jump+`
-| kbd:[Alt+0...9]    | Przełącz na bufor za pomocą liczb (0 = 10). | `+/buffer *N+`
-| kbd:[Alt+j],
-  kbd:[01...99]      | Przełącz na bufor za pomocą liczb. | `+/buffer *NN+`
-| kbd:[Alt+l] (`L`)  | Przełącz tryb niesformatowanego wyświetlania. | `+/window bare+`
-| kbd:[Alt+m]        | Przełącz obsługę myszy. | `+/mouse toggle+`
-| kbd:[Alt+n]        | Przewiń do następnego powiadomienia. | `+/window scroll_next_highlight+`
-| kbd:[Alt+Shift+N]  | Przełącza widoczność paska z listą nicków. | `+/bar toggle nicklist+`
-| kbd:[Alt+p]        | Przewiń do poprzedniego powiadomienia. | `+/window scroll_previous_highlight+`
-| kbd:[Alt+u]        | Przewiń do pierwszej nieprzeczytanej linii w buforze. | `+/window scroll_unread+`
-| kbd:[Alt+w],
-  kbd:[Alt+↑]        | Przełącz na okno wyżej. | `+/window up+`
-| kbd:[Alt+w],
-  kbd:[Alt+↓]        | Przełącz na okno niżej. | `+/window down+`
-| kbd:[Alt+w],
-  kbd:[Alt+←]        | Przełącz na okno z lewej. | `+/window left+`
-| kbd:[Alt+w],
-  kbd:[Alt+→]        | Przełącz na okno z prawej. | `+/window right+`
-| kbd:[Alt+w],
-  kbd:[Alt+b]        | Balansuj rozmiar wszystkich okien. | `+/window balance+`
-| kbd:[Alt+w],
-  kbd:[Alt+s]        | Zamień bufory między dwoma oknami. | `+/window swap+`
-| kbd:[Alt+z]        | Pokaż obecne okno (ponowne wciśnięcie kbd:[Alt+z]: przywraca wcześniejszy układ okien). | `+/window zoom+`
-| kbd:[Alt+<]        | Przełącz na poprzedni bufor z listy odwiedzonych buforów. | `+/input jump_previously_visited_buffer+`
-| kbd:[Alt+>]        | Przełącz na następny bufor z listy odwiedzonych buforów. | `+/input jump_next_visited_buffer+`
-| kbd:[Alt+/]        | Przełącz na ostatnio wyświetlony bufor (przed ostatnią zmianą bufora). | `+/input jump_last_buffer_displayed+`
-| kbd:[Alt+=]        | Włącz/wyłącz filtry. | `+/filter toggle+`
-| kbd:[Alt+-]        | Włącz/wyłącz filtry w bieżącym buforze. | `+/filter toggle @+`
+  kbd:[F6]                       | Przełącz na następny bufor. | `+/buffer +1+`
+| kbd:[Alt+j], kbd:[Alt+f]       | Przełącz na pierwszy bufor. | `+/buffer -+`
+| kbd:[Alt+j], kbd:[Alt+l] (`L`) | Przełącz na ostatni bufor. | `+/buffer ++`
+| kbd:[Alt+j], kbd:[Alt+r]       | Przełącz na bufor IRC raw. | `+/server raw+`
+| kbd:[Alt+j], kbd:[Alt+s]       | Przełącz na bufor serwera IRC. | `+/server jump+`
+| kbd:[Alt+0...9]                | Przełącz na bufor za pomocą liczb (0 = 10). | `+/buffer *N+`
+| kbd:[Alt+j], kbd:[01...99]     | Przełącz na bufor za pomocą liczb. | `+/buffer *NN+`
+| kbd:[Alt+n]                    | Przewiń do następnego powiadomienia. | `+/window scroll_next_highlight+`
+| kbd:[Alt+p]                    | Przewiń do poprzedniego powiadomienia. | `+/window scroll_previous_highlight+`
+| kbd:[Alt+u]                    | Przewiń do pierwszej nieprzeczytanej linii w buforze. | `+/window scroll_unread+`
+| kbd:[Alt+<]                    | Przełącz na poprzedni bufor z listy odwiedzonych buforów. | `+/input jump_previously_visited_buffer+`
+| kbd:[Alt+>]                    | Przełącz na następny bufor z listy odwiedzonych buforów. | `+/input jump_next_visited_buffer+`
+| kbd:[Alt+/]                    | Przełącz na ostatnio wyświetlony bufor (przed ostatnią zmianą bufora). | `+/input jump_last_buffer_displayed+`
 |===
 
+// TRANSLATION MISSING
+[[key_bindings_windows]]
+==== Windows
+
+[width="100%",cols="^.^3,.^8,.^5",options="header"]
+|===
+| Skrót                    | Opis | Komenda
+| kbd:[Ctrl+l] (`L`)       | Przerysuj całe okno. | `+/window refresh+`
+| kbd:[Alt+l] (`L`)        | Przełącz tryb niesformatowanego wyświetlania. | `+/window bare+`
+| kbd:[F7]                 | Przełącz na poprzednie okno. | `+/window -1+`
+| kbd:[F8]                 | Przełącz na następne okno. | `+/window +1+`
+| kbd:[Alt+w], kbd:[Alt+↑] | Przełącz na okno wyżej. | `+/window up+`
+| kbd:[Alt+w], kbd:[Alt+↓] | Przełącz na okno niżej. | `+/window down+`
+| kbd:[Alt+w], kbd:[Alt+←] | Przełącz na okno z lewej. | `+/window left+`
+| kbd:[Alt+w], kbd:[Alt+→] | Przełącz na okno z prawej. | `+/window right+`
+| kbd:[Alt+w], kbd:[Alt+b] | Balansuj rozmiar wszystkich okien. | `+/window balance+`
+| kbd:[Alt+w], kbd:[Alt+s] | Zamień bufory między dwoma oknami. | `+/window swap+`
+| kbd:[Alt+z]              | Pokaż obecne okno (ponowne wciśnięcie kbd:[Alt+z]: przywraca wcześniejszy układ okien). | `+/window zoom+`
+|===
+
+// TRANSLATION MISSING
+[[key_bindings_bars]]
+==== Bars
+
+[width="100%",cols="^.^3,.^8,.^5",options="header"]
+|===
+| Skrót             | Opis | Komenda
+| kbd:[F1] +
+  kbd:[Ctrl+F1]     | Przewiń do góry jedną stronę na liście buforów. | `+/bar scroll buflist * -100%+`
+| kbd:[F2] +
+  kbd:[Ctrl+F2]     | Przewiń w dół jedną stronę na liście buforów. | `+/bar scroll buflist * +100%+`
+| kbd:[Alt+F1]      | Idź na początek listy buforów. | `+/bar scroll buflist * b+`
+| kbd:[Alt+F2]      | Idź na koniec listy buforów. | `+/bar scroll buflist * e+`
+| kbd:[F9]          | Przewiń tytuł bufora w lewo. | `+/bar scroll title * -30%+`
+| kbd:[F10]         | Przewiń tytuł bufora w prawo. | `+/bar scroll title * +30%+`
+| kbd:[F11] +
+  kbd:[Ctrl+F11]    | Przewiń w górę jedna stronę listy nicków. | `+/bar scroll nicklist * -100%+`
+| kbd:[F12] +
+  kbd:[Ctrl+F12]    | Przewiń w dół jedna stronę listy nicków. | `+/bar scroll nicklist * +100%+`
+| kbd:[Alt+F11]     | Idź na początek listy nicków. | `+/bar scroll nicklist * b+`
+| kbd:[Alt+F12]     | Idź na koniec listy nicków. | `+/bar scroll nicklist * e+`
+| kbd:[Alt+Shift+B] | Przełącz widoczność listy buforów. | `+/buflist toggle+`
+| kbd:[Alt+Shift+N] | Przełącza widoczność paska z listą nicków. | `+/bar toggle nicklist+`
+|===
+
+// TRANSLATION MISSING
+[[key_bindings_hotlist]]
+==== Hotlist
+
+[width="100%",cols="^.^3,.^8,.^5",options="header"]
+|===
+| Skrót                          | Opis | Komenda
+| kbd:[Alt+a]                    | Przełącz na następny bufor z aktywnością (z priorytetem: powiadomienie, wiadomość, inne). | `+/input jump_smart+`
+| kbd:[Alt+h], kbd:[Alt+c]       | Wyczyść hotliste (powiadomienia o aktywności w buforach). | `+/input hotlist_clear+`
+| kbd:[Alt+h], kbd:[Alt+m]       | Usuń obecny bufor z hotlisty. | `+/input hotlist_remove_buffer+`
+| kbd:[Alt+h], kbd:[Alt+r]       | Przywróć ostatnią usuniętą hotlistę w obecnym buforze. | `+/input hotlist_restore_buffer+`
+| kbd:[Alt+h], kbd:[Alt+Shift+R] | Przywróć ostatnią hotlistę usuniętą we wszystkich buforach. | `+/input hotlist_restore_all+`
+|===
+
+// TRANSLATION MISSING
+[[key_bindings_toggle_keys]]
+==== Toggle keys
+
+[width="100%",cols="^.^3,.^8,.^5",options="header"]
+|===
+| Skrót       | Opis | Komenda
+| kbd:[Alt+m] | Przełącz obsługę myszy. | `+/mouse toggle+`
+| kbd:[Alt+s] | Włącz/wyłącz sprawdzenie pisowni. | `+/mute spell toggle+`
+| kbd:[Alt+=] | Włącz/wyłącz filtry. | `+/filter toggle+`
+| kbd:[Alt+-] | Włącz/wyłącz filtry w bieżącym buforze. | `+/filter toggle @+`
+|===
+
+// TRANSLATION MISSING
 [[key_bindings_search_context]]
-==== Skróty dla kontekstu wyszukiwania
+==== Search context
 
 Te skróty są używane w kontekście wyszukiwania (kiedy kombinacja kbd:[Ctrl+r]
 zostanie wciśnięta w buforze tekstowym).
@@ -2065,8 +2112,9 @@ zostanie wciśnięta w buforze tekstowym).
 | kbd:[Ctrl+q]   | Zatrzymaj wyszukiwanie i przewin na spód bufora. | `+/input search_stop+`
 |===
 
+// TRANSLATION MISSING
 [[key_bindings_cursor_context]]
-==== Skróty dla kontekstu kursora
+==== Cursor context
 
 Te skróty są używane s kontekście kursora (dowolne przemieszczanie kursora na
 ekranie).
@@ -2095,10 +2143,13 @@ ekranie).
   kbd:[Ctrl+m]   | -        | Wyłącz tryb kursora. | `/cursor stop`
 |===
 
-[[key_bindings_mouse_context]]
-==== Skróty dla kontekstu myszy
+// TRANSLATION MISSING
+[[key_bindings_mouse]]
+==== Mouse
 
-Te skróty używane są w kontekście myszy, w momencie wystąpienia zdarzenia myszy.
+// TRANSLATION MISSING
+These mouse actions are possible only if mouse is enabled with key kbd:[Alt+m]
+(command: `+/mouse toggle+`).
 
 [width="100%",cols="^.^3,^.^3,^.^3,.^8,.^8",options="header"]
 |===
@@ -2147,75 +2198,73 @@ Te skróty używane są w kontekście myszy, w momencie wystąpienia zdarzenia m
 [NOTE]
 ^(1)^ kbd:[▲] i kbd:[▼] to przewijanie rolką myszy w górę i w dół.
 
+// TRANSLATION MISSING
 [[key_bindings_fset_buffer]]
-==== Skróty klawiszowe dla bufora fset
+==== Fset buffer
 
 Poniższe skróty i akcje mogą zostać użyte w buforze fset (zobacz <<fset_plugin,wtyczka fset>>).
 
 [width="100%",cols="^.^3,^.^2,.^8,.^5",options="header"]
 |===
-| Skrót              | Akcja ^(1)^  | Opis | Komenda
-| kbd:[↑]            |              | Przejdź linię wyżej. | `+/fset -up+`
-| kbd:[↓]            |              | Przejdź linię niżej. | `+/fset -down+`
-| kbd:[PgUp]         |              | Przejdź stronę do góry. | `+/window page_up+`
-| kbd:[PgDn]         |              | Przejdź stronę w dół. | `+/window page_down+`
-| kbd:[Alt+Home]     | `pass:[<<]`  | Przejdź do pierwszej linii. | `+/fset -go 0+`
-| kbd:[Alt+End]      | `pass:[>>]`  | Przejdź do ostatniej linii. | `+/fset -go end+`
-| kbd:[F11]          | `pass:[<]`   | Przewiń poziomo w lewo. | `+/fset -left+`
-| kbd:[F12]          | `pass:[>]`   | Przewiń poziomo w prawo. | `+/fset -right+`
-| kbd:[Alt+Space]    | `t`          | Przełącz zmienną boolowską. | `+/fset -toggle+`
-| kbd:[Alt+-]        | `-`          | Odejmij 1 od wartości liczbowej/koloru, ustaw wartość pozostałych typów. | `+/fset -del -1+`
-| kbd:[Alt++]        | `+`          | Dodaj 1 do wartości liczbowej/koloru, dodaj to wartości pozostałych typów. | `+/fset -add 1+`
-| kbd:[Alt+f],
-  kbd:[Alt+r]        | `r`          | Zresetuj wartość. | `+/fset -reset+`
-| kbd:[Alt+f],
-  kbd:[Alt+u]        | `u`          | Skasuj wartość. | `+/fset -unset+`
-| kbd:[Alt+Enter]    | `s`          | Ustaw wartość. | `+/fset -set+`
-| kbd:[Alt+f],
-  kbd:[Alt+n]        | `n`          | Ustaw nową wartość. | `+/fset -setnew+`
-| kbd:[Alt+f],
-  kbd:[Alt+a]        | `a`          | Dodaj do wartości. | `+/fset -append+`
-| kbd:[Alt+,]        | `,`          | Zaznacz/odznacz opcję. | `+/fset -mark 1+`
-| kbd:[Shift+↑]      |              | Przejdź do linii wyżej oraz zaznacz/odznacz opcję. | `+/fset -up; /fset -mark+`
-| kbd:[Shift+↓]      |              | Przejdź do linii niżej oraz zaznacz/odznacz opcję. | `+/fset -mark; /fset -down+`
-|                    | `m:xxx`      | Zaznacz wyświetlane opcje pasujące do filtra "xxx" (dowolny filtr na opcję albo wartość, zobacz <<command_fset_fset,komenda fset>>). |
-|                    | `u:xxx`      | Odznacz zaznaczone opcje pasujące do filtra "xxx" (dowolny filtr an opcję lub wartość, zobacz <<command_fset_fset,komenda fset>>). |
-| kbd:[Ctrl+l] (`L`) |              | Odświerz opcje i cały ekran. | `+/fset -refresh+`
-|                    | `$`          | Odświerz opcje (zachowuje zaznaczone opcje). |
-|                    | `$$`         | Odświerz opcje (odznacza zaznaczone kompilację). |
-| kbd:[Alt+p]        |              | Przełącz opcje opisu wtyczki (`pass:[plugins.desc.*]`). | `+/mute /set fset.look.show_plugins_desc toggle+`
-| kbd:[Alt+v]        |              | Przełącz pasek pomocy. | `+/bar toggle fset+`
-|                    | `s:x,y`      | Sortuj opcje po polach x,y (zobacz opcję <<option_fset.look.sort,fset.look.sort>>). | `+/mute /set fset.look.sort x,y+`
-|                    | `s:`         | Zresetuj soerowanie do domyślnej wartości (zobacz opcję <<option_fset.look.sort,fset.look.sort>>). | `+/mute /unset fset.look.sort+`
-|                    | `w:xxx`      | Wyeksportuj opcje do pliku "xxx". | `+/fset -export xxx+`
-|                    | `w-:xxx`     | Wyeksportuj opcje do pliku "xxx" bez dodatkowych informacji. | `+/fset -export -nohelp xxx+`
-|                    | `w+:xxx`     | Wyeksportuj opcje do pliku "xxx" z dodatkowymi informacjami. | `+/fset -export -help xxx+`
-| kbd:[Ctrl+x]       | `x`          | Zmień format w jakim wyświetlane są opcje. | `+/fset -format+`
-|                    | `q`          | Zamkknij bufor fset. | `+/buffer close+`
+| Skrót                    | Akcja ^(1)^  | Opis | Komenda
+| kbd:[↑]                  |              | Przejdź linię wyżej. | `+/fset -up+`
+| kbd:[↓]                  |              | Przejdź linię niżej. | `+/fset -down+`
+| kbd:[PgUp]               |              | Przejdź stronę do góry. | `+/window page_up+`
+| kbd:[PgDn]               |              | Przejdź stronę w dół. | `+/window page_down+`
+| kbd:[Alt+Home]           | `pass:[<<]`  | Przejdź do pierwszej linii. | `+/fset -go 0+`
+| kbd:[Alt+End]            | `pass:[>>]`  | Przejdź do ostatniej linii. | `+/fset -go end+`
+| kbd:[F11]                | `pass:[<]`   | Przewiń poziomo w lewo. | `+/fset -left+`
+| kbd:[F12]                | `pass:[>]`   | Przewiń poziomo w prawo. | `+/fset -right+`
+| kbd:[Alt+Space]          | `t`          | Przełącz zmienną boolowską. | `+/fset -toggle+`
+| kbd:[Alt+-]              | `-`          | Odejmij 1 od wartości liczbowej/koloru, ustaw wartość pozostałych typów. | `+/fset -del -1+`
+| kbd:[Alt++]              | `+`          | Dodaj 1 do wartości liczbowej/koloru, dodaj to wartości pozostałych typów. | `+/fset -add 1+`
+| kbd:[Alt+f], kbd:[Alt+r] | `r`          | Zresetuj wartość. | `+/fset -reset+`
+| kbd:[Alt+f], kbd:[Alt+u] | `u`          | Skasuj wartość. | `+/fset -unset+`
+| kbd:[Alt+Enter]          | `s`          | Ustaw wartość. | `+/fset -set+`
+| kbd:[Alt+f], kbd:[Alt+n] | `n`          | Ustaw nową wartość. | `+/fset -setnew+`
+| kbd:[Alt+f], kbd:[Alt+a] | `a`          | Dodaj do wartości. | `+/fset -append+`
+| kbd:[Alt+,]              | `,`          | Zaznacz/odznacz opcję. | `+/fset -mark 1+`
+| kbd:[Shift+↑]            |              | Przejdź do linii wyżej oraz zaznacz/odznacz opcję. | `+/fset -up; /fset -mark+`
+| kbd:[Shift+↓]            |              | Przejdź do linii niżej oraz zaznacz/odznacz opcję. | `+/fset -mark; /fset -down+`
+|                          | `m:xxx`      | Zaznacz wyświetlane opcje pasujące do filtra "xxx" (dowolny filtr na opcję albo wartość, zobacz <<command_fset_fset,komenda fset>>). |
+|                          | `u:xxx`      | Odznacz zaznaczone opcje pasujące do filtra "xxx" (dowolny filtr an opcję lub wartość, zobacz <<command_fset_fset,komenda fset>>). |
+| kbd:[Ctrl+l] (`L`)       |              | Odświerz opcje i cały ekran. | `+/fset -refresh+`
+|                          | `$`          | Odświerz opcje (zachowuje zaznaczone opcje). |
+|                          | `$$`         | Odświerz opcje (odznacza zaznaczone kompilację). |
+| kbd:[Alt+p]              |              | Przełącz opcje opisu wtyczki (`pass:[plugins.desc.*]`). | `+/mute /set fset.look.show_plugins_desc toggle+`
+| kbd:[Alt+v]              |              | Przełącz pasek pomocy. | `+/bar toggle fset+`
+|                          | `s:x,y`      | Sortuj opcje po polach x,y (zobacz opcję <<option_fset.look.sort,fset.look.sort>>). | `+/mute /set fset.look.sort x,y+`
+|                          | `s:`         | Zresetuj soerowanie do domyślnej wartości (zobacz opcję <<option_fset.look.sort,fset.look.sort>>). | `+/mute /unset fset.look.sort+`
+|                          | `w:xxx`      | Wyeksportuj opcje do pliku "xxx". | `+/fset -export xxx+`
+|                          | `w-:xxx`     | Wyeksportuj opcje do pliku "xxx" bez dodatkowych informacji. | `+/fset -export -nohelp xxx+`
+|                          | `w+:xxx`     | Wyeksportuj opcje do pliku "xxx" z dodatkowymi informacjami. | `+/fset -export -help xxx+`
+| kbd:[Ctrl+x]             | `x`          | Zmień format w jakim wyświetlane są opcje. | `+/fset -format+`
+|                          | `q`          | Zamkknij bufor fset. | `+/buffer close+`
 |===
 
 [NOTE]
 ^(1)^ Akcja musi zostać wprowadzona z linii poleceń i potwierdzona przez kbd:[Enter].
 
+// TRANSLATION MISSING
 [[key_bindings_script_buffer]]
-==== Skróty klawiszowe w buforze skryptów
+==== Script buffer
 
 Te skróty klawiszowe i akcje mogą zostać użyte w oknie skryptów (zobacz <<scripts_plugins,wtyczka script>>).
 
 [width="100%",cols="^.^3,^.^2,.^8,.^5",options="header"]
 |===
-| Skrót              | Akcja ^(1)^  | Opis | Komenda
-| kbd:[↑]            |              | Przejdź linię wyżej. | `+/script up+`
-| kbd:[↓]            |              | Przejdź linię niżej. | `+/script down+`
-| kbd:[PgUp]         |              | Przewiń stronę do góry. | `+/window page_up+`
-| kbd:[PgDn]         |              | Przewiń stronę w dół. | `+/window page_down+`
-| kbd:[Alt+i]        | `i`          | Zainstaluj skrypt. | `+/script install+`
-| kbd:[Alt+r]        | `r`          | Usuń skrypt. | `+/script remove+`
-| kbd:[Alt+l] (`L`)  | `l`          | Załaduj skrypt. | `+/script load+`
-| kbd:[Alt+u]        | `u`          | Wyładuj skrypt. | `+/script unload+`
-| kbd:[Alt+Shift+A]  | `A`          | Automatycznie ładuj skrypt. | `+/script toggleautoload+`
-| kbd:[Alt+h]        | `h`          | Zablokuj/odblokuj skrypt. | `+/script hold+`
-| kbd:[Alt+v]        | `v`          | Pokarz skrypt. | `+/script show+`
+| Skrót             | Akcja ^(1)^  | Opis | Komenda
+| kbd:[↑]           |              | Przejdź linię wyżej. | `+/script up+`
+| kbd:[↓]           |              | Przejdź linię niżej. | `+/script down+`
+| kbd:[PgUp]        |              | Przewiń stronę do góry. | `+/window page_up+`
+| kbd:[PgDn]        |              | Przewiń stronę w dół. | `+/window page_down+`
+| kbd:[Alt+i]       | `i`          | Zainstaluj skrypt. | `+/script install+`
+| kbd:[Alt+r]       | `r`          | Usuń skrypt. | `+/script remove+`
+| kbd:[Alt+l] (`L`) | `l`          | Załaduj skrypt. | `+/script load+`
+| kbd:[Alt+u]       | `u`          | Wyładuj skrypt. | `+/script unload+`
+| kbd:[Alt+Shift+A] | `A`          | Automatycznie ładuj skrypt. | `+/script toggleautoload+`
+| kbd:[Alt+h]       | `h`          | Zablokuj/odblokuj skrypt. | `+/script hold+`
+| kbd:[Alt+v]       | `v`          | Pokarz skrypt. | `+/script show+`
 |===
 
 [NOTE]

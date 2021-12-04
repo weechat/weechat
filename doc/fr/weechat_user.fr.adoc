@@ -1950,154 +1950,191 @@ avec `+/help buffer_autoset+`.
 [[key_bindings]]
 === Raccourcis clavier par défaut
 
-[[key_bindings_command_line]]
-==== Touches pour la ligne de commande
+[[key_bindings_cmdline]]
+==== Ligne de commande
+
+[[key_bindings_cmdline_cursor_movement]]
+===== Mouvement du curseur
 
 [width="100%",cols="^.^3,.^8,.^5",options="header"]
 |===
-| Touche          | Description | Commande
+| Touche         | Description | Commande
 | kbd:[←] +
-  kbd:[Ctrl+b]    | Aller au caractère précédent sur la ligne de commande. | `+/input move_previous_char+`
+  kbd:[Ctrl+b]   | Aller au caractère précédent sur la ligne de commande. | `+/input move_previous_char+`
 | kbd:[→] +
-  kbd:[Ctrl+f]    | Aller au caractère suivant sur la ligne de commande. | `+/input move_next_char+`
+  kbd:[Ctrl+f]   | Aller au caractère suivant sur la ligne de commande. | `+/input move_next_char+`
 | kbd:[Ctrl+←] +
-  kbd:[Alt+b]     | Aller au mot précédent sur la ligne de commande. | `+/input move_previous_word+`
+  kbd:[Alt+b]    | Aller au mot précédent sur la ligne de commande. | `+/input move_previous_word+`
 | kbd:[Ctrl+→] +
-  kbd:[Alt+f]     | Aller au mot suivant sur la ligne de commande. | `+/input move_next_word+`
+  kbd:[Alt+f]    | Aller au mot suivant sur la ligne de commande. | `+/input move_next_word+`
 | kbd:[Home] +
-  kbd:[Ctrl+a]    | Aller au début de la ligne de commande. | `+/input move_beginning_of_line+`
+  kbd:[Ctrl+a]   | Aller au début de la ligne de commande. | `+/input move_beginning_of_line+`
 | kbd:[End] +
-  kbd:[Ctrl+e]    | Aller à la fin de la ligne de commande. | `+/input move_end_of_line+`
-| kbd:[Ctrl+c],
-  kbd:[b]         | Insérer le code pour mettre le texte en gras. | `+/input insert \x02+`
-| kbd:[Ctrl+c],
-  kbd:[c]         | Insérer le code pour écrire en couleur. | `+/input insert \x03+`
-| kbd:[Ctrl+c],
-  kbd:[i]         | Insérer le code pour mettre le texte en italique. | `+/input insert \x1D+`
-| kbd:[Ctrl+c],
-  kbd:[o]         | Insérer le code pour réinitialiser la couleur. | `+/input insert \x0F+`
-| kbd:[Ctrl+c],
-  kbd:[v]         | Insérer le code pour écrire en couleur inversée. | `+/input insert \x16+`
-| kbd:[Ctrl+c],
-  kbd:[_]         | Insérer le code pour écrire en souligné. | `+/input insert \x1F+`
+  kbd:[Ctrl+e]   | Aller à la fin de la ligne de commande. | `+/input move_end_of_line+`
+|===
+
+[[key_bindings_cmdline_editing]]
+===== Édition
+
+[width="100%",cols="^.^3,.^8,.^5",options="header"]
+|===
+| Touche            | Description | Commande
 | kbd:[Del] +
-  kbd:[Ctrl+d]    | Effacer le caractère suivant sur la ligne de commande. | `+/input delete_next_char+`
-| kbd:[Backsp.] +
-  kbd:[Ctrl+h]    | Effacer le caractère précédent sur la ligne de commande. | `+/input delete_previous_char+`
-| kbd:[Ctrl+k]    | Effacer du curseur jusqu'à la fin de la ligne de commande (la chaîne supprimée est copiée dans le presse-papiers interne). | `+/input delete_end_of_line+`
-| kbd:[Ctrl+r]    | Chercher du texte dans l'historique du tampon (voir <<key_bindings_search_context,les touches pour le contexte de recherche>>). | `+/input search_text_here+`
-| kbd:[Ctrl+t]    | Inverser deux caractères. | `+/input transpose_chars+`
-| kbd:[Ctrl+u]    | Effacer du curseur jusqu'au début de la ligne de commande (la chaîne supprimée est copiée dans le presse-papiers interne). | `+/input delete_beginning_of_line+`
-| kbd:[Ctrl+w]    | Effacer le mot précédent sur la ligne de commande (la chaîne supprimée est copiée dans le presse-papiers interne). | `+/input delete_previous_word+`
-| kbd:[Ctrl+y]    | Coller le contenu du presse-papiers interne. | `+/input clipboard_paste+`
-| kbd:[Ctrl+_]    | Défaire la dernière action sur la ligne de commande. | `+/input undo+`
-| kbd:[Alt+_]     | Refaire la dernière action sur la ligne de commande. | `+/input redo+`
-| kbd:[Tab]       | Compléter la commande ou le pseudo (kbd:[Tab] de nouveau : trouver la complétion suivante). | `+/input complete_next+`
-| kbd:[Shift+Tab] | Sans complétion, effectue une complétion partielle. Avec une complétion en cours, complète avec la complétion précédente. | `+/input complete_previous+`
+  kbd:[Ctrl+d]      | Effacer le caractère suivant sur la ligne de commande. | `+/input delete_next_char+`
+| kbd:[Backspace] +
+  kbd:[Ctrl+h]      | Effacer le caractère précédent sur la ligne de commande. | `+/input delete_previous_char+`
+| kbd:[Ctrl+k]      | Effacer du curseur jusqu'à la fin de la ligne de commande (la chaîne supprimée est copiée dans le presse-papiers interne). | `+/input delete_end_of_line+`
+| kbd:[Ctrl+t]      | Inverser deux caractères. | `+/input transpose_chars+`
+| kbd:[Ctrl+u]      | Effacer du curseur jusqu'au début de la ligne de commande (la chaîne supprimée est copiée dans le presse-papiers interne). | `+/input delete_beginning_of_line+`
+| kbd:[Ctrl+w]      | Effacer le mot précédent sur la ligne de commande (la chaîne supprimée est copiée dans le presse-papiers interne). | `+/input delete_previous_word+`
+| kbd:[Ctrl+y]      | Coller le contenu du presse-papiers interne. | `+/input clipboard_paste+`
+| kbd:[Ctrl+_]      | Défaire la dernière action sur la ligne de commande. | `+/input undo+`
+| kbd:[Alt+_]       | Refaire la dernière action sur la ligne de commande. | `+/input redo+`
+| kbd:[Tab]         | Compléter la commande ou le pseudo (kbd:[Tab] de nouveau : trouver la complétion suivante). | `+/input complete_next+`
+| kbd:[Shift+Tab]   | Sans complétion, effectue une complétion partielle. Avec une complétion en cours, complète avec la complétion précédente. | `+/input complete_previous+`
 | kbd:[Enter] +
   kbd:[Ctrl+j] +
-  kbd:[Ctrl+m]    | Exécuter la commande ou envoyer le message (en mode recherche : arrêter la recherche). | `+/input return+`
-| kbd:[Alt+Enter] | Insérer une nouvelle ligne. | `+/input insert \n+`
-| kbd:[↑]         | Rappeler la commande précédente (en mode recherche : chercher plus haut). | `+/input history_previous+`
-| kbd:[↓]         | Rappeler la commande suivante (en mode recherche : chercher plus bas). | `+/input history_next+`
-| kbd:[Ctrl+↑]    | Rappeler la commande précédente dans l'historique global (commun à tous les tampons). | `+/input history_global_previous+`
-| kbd:[Ctrl+↓]    | Rappeler la commande suivante dans l'historique global (commun à tous les tampons). | `+/input history_global_next+`
-| kbd:[Alt+d]     | Effacer le mot suivant (la chaîne supprimée est copiée dans le presse-papiers interne). | `+/input delete_next_word+`
-| kbd:[Alt+k]     | Capturer une touche et insérer son code (et la commande associée si la commande existe) sur la ligne de commande. | `+/input grab_key_command+`
-| kbd:[Alt+r]     | Effacer entièrement la ligne de commande. | `+/input delete_line+`
-| kbd:[Alt+s]     | Activer/désactiver la vérification de l'orthographe. | `+/mute spell toggle+`
+  kbd:[Ctrl+m]      | Exécuter la commande ou envoyer le message (en mode recherche : arrêter la recherche). | `+/input return+`
+| kbd:[Alt+Enter]   | Insérer une nouvelle ligne. | `+/input insert \n+`
+| kbd:[Alt+d]       | Effacer le mot suivant (la chaîne supprimée est copiée dans le presse-papiers interne). | `+/input delete_next_word+`
+| kbd:[Alt+k]       | Capturer une touche et insérer son code (et la commande associée si la commande existe) sur la ligne de commande. | `+/input grab_key_command+`
+| kbd:[Alt+r]       | Effacer entièrement la ligne de commande. | `+/input delete_line+`
 |===
 
-[[key_bindings_buffers_windows]]
-==== Touches pour les tampons / fenêtres
+[[key_bindings_cmdline_color_codes]]
+===== Codes couleur
 
 [width="100%",cols="^.^3,.^8,.^5",options="header"]
 |===
-| Touche             | Description | Commande
-| kbd:[Ctrl+l] (`L`) | Réafficher toute la fenêtre. | `+/window refresh+`
-| kbd:[Ctrl+s],
-  kbd:[Ctrl+u]       | Positionner le marqueur de données non lues sur tous les tampons. | `+/input set_unread+`
-| kbd:[Ctrl+x]       | Changer de tampon courant si plusieurs tampons sont attachés avec le même numéro. | `+/input switch_active_buffer+`
-| kbd:[Alt+x]        | Zoomer sur le tampon mélangé (kbd:[Alt+x] de nouveau : afficher tous les tampons mélangés). | `+/input zoom_merged_buffer+`
-| kbd:[PgUp]         | Monter d'une page dans l'historique du tampon. | `+/window page_up+`
-| kbd:[PgDn]         | Descendre d'une page dans l'historique du tampon. | `+/window page_down+`
-| kbd:[Alt+PgUp]     | Monter de quelques lignes dans l'historique du tampon. | `+/window scroll_up+`
-| kbd:[Alt+PgDn]     | Descendre de quelques lignes dans l'historique du tampon. | `+/window scroll_down+`
-| kbd:[Alt+Home]     | Aller au début du tampon. | `+/window scroll_top+`
-| kbd:[Alt+End]      | Aller à la fin du tampon. | `+/window scroll_bottom+`
-| kbd:[F1] +
-  kbd:[Ctrl+F1]      | Monter d'une page dans la liste des tampons. | `+/bar scroll buflist * -100%+`
-| kbd:[F2] +
-  kbd:[Ctrl+F2]      | Descendre d'une page dans la liste des tampons. | `+/bar scroll buflist * +100%+`
-| kbd:[Alt+F1]       | Aller au début de la liste des tampons. | `+/bar scroll buflist * b+`
-| kbd:[Alt+F2]       | Aller à la fin de la liste des tampons. | `+/bar scroll buflist * e+`
+| Touche                | Description | Commande
+| kbd:[Ctrl+c], kbd:[b] | Insérer le code pour mettre le texte en gras. | `+/input insert \x02+`
+| kbd:[Ctrl+c], kbd:[c] | Insérer le code pour écrire en couleur. | `+/input insert \x03+`
+| kbd:[Ctrl+c], kbd:[i] | Insérer le code pour mettre le texte en italique. | `+/input insert \x1D+`
+| kbd:[Ctrl+c], kbd:[o] | Insérer le code pour réinitialiser la couleur. | `+/input insert \x0F+`
+| kbd:[Ctrl+c], kbd:[v] | Insérer le code pour écrire en couleur inversée. | `+/input insert \x16+`
+| kbd:[Ctrl+c], kbd:[_] | Insérer le code pour écrire en souligné. | `+/input insert \x1F+`
+|===
+
+[[key_bindings_cmdline_history]]
+===== Historique de commandes
+
+[width="100%",cols="^.^3,.^8,.^5",options="header"]
+|===
+| Touche       | Description | Commande
+| kbd:[↑]      | Rappeler la commande précédente (en mode recherche : chercher plus haut). | `+/input history_previous+`
+| kbd:[↓]      | Rappeler la commande suivante (en mode recherche : chercher plus bas). | `+/input history_next+`
+| kbd:[Ctrl+↑] | Rappeler la commande précédente dans l'historique global (commun à tous les tampons). | `+/input history_global_previous+`
+| kbd:[Ctrl+↓] | Rappeler la commande suivante dans l'historique global (commun à tous les tampons). | `+/input history_global_next+`
+|===
+
+[[key_bindings_buffers]]
+==== Tampons
+
+[width="100%",cols="^.^3,.^8,.^5",options="header"]
+|===
+| Touche                         | Description | Commande
+| kbd:[Ctrl+r]                   | Chercher du texte dans l'historique du tampon (voir <<key_bindings_search_context,les touches pour le contexte de recherche>>). | `+/input search_text_here+`
+| kbd:[Ctrl+s], kbd:[Ctrl+u]     | Positionner le marqueur de données non lues sur tous les tampons. | `+/input set_unread+`
+| kbd:[Ctrl+x]                   | Changer de tampon courant si plusieurs tampons sont attachés avec le même numéro. | `+/input switch_active_buffer+`
+| kbd:[Alt+x]                    | Zoomer sur le tampon mélangé (kbd:[Alt+x] de nouveau : afficher tous les tampons mélangés). | `+/input zoom_merged_buffer+`
+| kbd:[PgUp]                     | Monter d'une page dans l'historique du tampon. | `+/window page_up+`
+| kbd:[PgDn]                     | Descendre d'une page dans l'historique du tampon. | `+/window page_down+`
+| kbd:[Alt+PgUp]                 | Monter de quelques lignes dans l'historique du tampon. | `+/window scroll_up+`
+| kbd:[Alt+PgDn]                 | Descendre de quelques lignes dans l'historique du tampon. | `+/window scroll_down+`
+| kbd:[Alt+Home]                 | Aller au début du tampon. | `+/window scroll_top+`
+| kbd:[Alt+End]                  | Aller à la fin du tampon. | `+/window scroll_bottom+`
 | kbd:[Alt+←] +
   kbd:[Alt+↑] +
   kbd:[Ctrl+p] +
-  kbd:[F5]           | Aller au tampon précédent. | `+/buffer -1+`
+  kbd:[F5]                       | Aller au tampon précédent. | `+/buffer -1+`
 | kbd:[Alt+→] +
   kbd:[Alt+↓] +
   kbd:[Ctrl+n] +
-  kbd:[F6]           | Aller au tampon suivant. | `+/buffer +1+`
-| kbd:[F7]           | Aller à la fenêtre précédente. | `+/window -1+`
-| kbd:[F8]           | Aller à la fenêtre suivante. | `+/window +1+`
-| kbd:[F9]           | Faire défiler le titre du tampon vers la gauche. | `+/bar scroll title * -30%+`
-| kbd:[F10]          | Faire défiler le titre du tampon vers la droite. | `+/bar scroll title * +30%+`
+  kbd:[F6]                       | Aller au tampon suivant. | `+/buffer +1+`
+| kbd:[Alt+j], kbd:[Alt+f]       | Sauter au premier tampon. | `+/buffer -+`
+| kbd:[Alt+j], kbd:[Alt+l] (`L`) | Sauter au dernier tampon. | `+/buffer ++`
+| kbd:[Alt+j], kbd:[Alt+r]       | Sauter au tampon IRC de données brutes. | `+/server raw+`
+| kbd:[Alt+j], kbd:[Alt+s]       | Sauter au tampon IRC du serveur. | `+/server jump+`
+| kbd:[Alt+0...9]                | Sauter au tampon qui porte ce numéro (0 = 10). | `+/buffer *N+`
+| kbd:[Alt+j], kbd:[01...99]     | Sauter au tampon qui porte ce numéro. | `+/buffer *NN+`
+| kbd:[Alt+n]                    | Se positionner sur le highlight suivant. | `+/window scroll_next_highlight+`
+| kbd:[Alt+p]                    | Se positionner sur le highlight précédent. | `+/window scroll_previous_highlight+`
+| kbd:[Alt+u]                    | Se positionner sur la première ligne non lue du tampon. | `+/window scroll_unread+`
+| kbd:[Alt+<]                    | Sauter au tampon précédent dans la liste des tampons visités. | `+/input jump_previously_visited_buffer+`
+| kbd:[Alt+>]                    | Sauter au tampon suivant dans la liste des tampons visités. | `+/input jump_next_visited_buffer+`
+| kbd:[Alt+/]                    | Sauter au dernier tampon affiché (avant le dernier saut vers un tampon). | `+/input jump_last_buffer_displayed+`
+|===
+
+[[key_bindings_windows]]
+==== Fenêtres
+
+[width="100%",cols="^.^3,.^8,.^5",options="header"]
+|===
+| Touche                   | Description | Commande
+| kbd:[Ctrl+l] (`L`)       | Réafficher toute la fenêtre. | `+/window refresh+`
+| kbd:[Alt+l] (`L`)        | Activer/désactiver le mode d'affichage dépouillé. | `+/window bare+`
+| kbd:[F7]                 | Aller à la fenêtre précédente. | `+/window -1+`
+| kbd:[F8]                 | Aller à la fenêtre suivante. | `+/window +1+`
+| kbd:[Alt+w], kbd:[Alt+↑] | Sauter à la fenêtre au dessus. | `+/window up+`
+| kbd:[Alt+w], kbd:[Alt+↓] | Sauter à la fenêtre en dessous. | `+/window down+`
+| kbd:[Alt+w], kbd:[Alt+←] | Sauter à la fenêtre de gauche. | `+/window left+`
+| kbd:[Alt+w], kbd:[Alt+→] | Sauter à la fenêtre de droite. | `+/window right+`
+| kbd:[Alt+w], kbd:[Alt+b] | Équilibrer la taille de toutes les fenêtres. | `+/window balance+`
+| kbd:[Alt+w], kbd:[Alt+s] | Échanger les tampons de deux fenêtres. | `+/window swap+`
+| kbd:[Alt+z]              | Zoomer sur la fenêtre courante (kbd:[Alt+z] de nouveau : restaurer l'état initial des fenêtres, avant le zoom). | `+/window zoom+`
+|===
+
+[[key_bindings_bars]]
+==== Barres
+
+[width="100%",cols="^.^3,.^8,.^5",options="header"]
+|===
+| Touche            | Description | Commande
+| kbd:[F1] +
+  kbd:[Ctrl+F1]     | Monter d'une page dans la liste des tampons. | `+/bar scroll buflist * -100%+`
+| kbd:[F2] +
+  kbd:[Ctrl+F2]     | Descendre d'une page dans la liste des tampons. | `+/bar scroll buflist * +100%+`
+| kbd:[Alt+F1]      | Aller au début de la liste des tampons. | `+/bar scroll buflist * b+`
+| kbd:[Alt+F2]      | Aller à la fin de la liste des tampons. | `+/bar scroll buflist * e+`
+| kbd:[F9]          | Faire défiler le titre du tampon vers la gauche. | `+/bar scroll title * -30%+`
+| kbd:[F10]         | Faire défiler le titre du tampon vers la droite. | `+/bar scroll title * +30%+`
 | kbd:[F11] +
-  kbd:[Ctrl+F11]     | Monter d'une page dans la liste des pseudos. | `+/bar scroll nicklist * -100%+`
+  kbd:[Ctrl+F11]    | Monter d'une page dans la liste des pseudos. | `+/bar scroll nicklist * -100%+`
 | kbd:[F12] +
-  kbd:[Ctrl+F12]     | Descendre d'une page dans la liste des pseudos. | `+/bar scroll nicklist * +100%+`
-| kbd:[Alt+F11]      | Aller au début de la liste des pseudos. | `+/bar scroll nicklist * b+`
-| kbd:[Alt+F12]      | Aller à la fin de la liste des pseudos. | `+/bar scroll nicklist * e+`
-| kbd:[Alt+a]        | Sauter au prochain tampon avec activité (avec priorité : highlight, message, autre). | `+/input jump_smart+`
-| kbd:[Alt+Shift+B]  | Activer/désactiver buflist. | `+/buflist toggle+`
-| kbd:[Alt+h],
-  kbd:[Alt+c]        | Vider la hotlist (notification d'activité sur les tampons). | `+/input hotlist_clear+`
-| kbd:[Alt+h],
-  kbd:[Alt+m]        | Supprimer le tampon courant de la hotlist. | `+/input hotlist_remove_buffer+`
-| kbd:[Alt+h],
-  kbd:[Alt+r]        | Restaurer la dernière hotlist supprimée dans le tampon courant. | `+/input hotlist_restore_buffer+`
-| kbd:[Alt+h],
-  kbd:[Alt+Shift+R]  | Restaurer la dernière hotlist supprimée dans tous les tampons. | `+/input hotlist_restore_all+`
-| kbd:[Alt+j],
-  kbd:[Alt+f]        | Sauter au premier tampon. | `+/buffer -+`
-| kbd:[Alt+j],
-  kbd:[Alt+l] (`L`)  | Sauter au dernier tampon. | `+/buffer ++`
-| kbd:[Alt+j],
-  kbd:[Alt+r]        | Sauter au tampon IRC de données brutes. | `+/server raw+`
-| kbd:[Alt+j],
-  kbd:[Alt+s]        | Sauter au tampon IRC du serveur. | `+/server jump+`
-| kbd:[Alt+0...9]    | Sauter au tampon qui porte ce numéro (0 = 10). | `+/buffer *N+`
-| kbd:[Alt+j],
-  kbd:[01...99]      | Sauter au tampon qui porte ce numéro. | `+/buffer *NN+`
-| kbd:[Alt+l] (`L`)  | Activer/désactiver le mode d'affichage dépouillé. | `+/window bare+`
-| kbd:[Alt+m]        | Activer/désactiver la souris. | `+/mouse toggle+`
-| kbd:[Alt+n]        | Se positionner sur le highlight suivant. | `+/window scroll_next_highlight+`
-| kbd:[Alt+Shift+N]  | Activer/désactiver la barre nicklist. | `+/bar toggle nicklist+`
-| kbd:[Alt+p]        | Se positionner sur le highlight précédent. | `+/window scroll_previous_highlight+`
-| kbd:[Alt+u]        | Se positionner sur la première ligne non lue du tampon. | `+/window scroll_unread+`
-| kbd:[Alt+w],
-  kbd:[Alt+↑]        | Sauter à la fenêtre au dessus. | `+/window up+`
-| kbd:[Alt+w],
-  kbd:[Alt+↓]        | Sauter à la fenêtre en dessous. | `+/window down+`
-| kbd:[Alt+w],
-  kbd:[Alt+←]        | Sauter à la fenêtre de gauche. | `+/window left+`
-| kbd:[Alt+w],
-  kbd:[Alt+→]        | Sauter à la fenêtre de droite. | `+/window right+`
-| kbd:[Alt+w],
-  kbd:[Alt+b]        | Équilibrer la taille de toutes les fenêtres. | `+/window balance+`
-| kbd:[Alt+w],
-  kbd:[Alt+s]        | Échanger les tampons de deux fenêtres. | `+/window swap+`
-| kbd:[Alt+z]        | Zoomer sur la fenêtre courante (kbd:[Alt+z] de nouveau : restaurer l'état initial des fenêtres, avant le zoom). | `+/window zoom+`
-| kbd:[Alt+<]        | Sauter au tampon précédent dans la liste des tampons visités. | `+/input jump_previously_visited_buffer+`
-| kbd:[Alt+>]        | Sauter au tampon suivant dans la liste des tampons visités. | `+/input jump_next_visited_buffer+`
-| kbd:[Alt+/]        | Sauter au dernier tampon affiché (avant le dernier saut vers un tampon). | `+/input jump_last_buffer_displayed+`
-| kbd:[Alt+=]        | Activer/désactiver les filtres. | `+/filter toggle+`
-| kbd:[Alt+-]        | Activer/désactiver les filtres dans le tampon courant. | `+/filter toggle @+`
+  kbd:[Ctrl+F12]    | Descendre d'une page dans la liste des pseudos. | `+/bar scroll nicklist * +100%+`
+| kbd:[Alt+F11]     | Aller au début de la liste des pseudos. | `+/bar scroll nicklist * b+`
+| kbd:[Alt+F12]     | Aller à la fin de la liste des pseudos. | `+/bar scroll nicklist * e+`
+| kbd:[Alt+Shift+B] | Activer/désactiver buflist. | `+/buflist toggle+`
+| kbd:[Alt+Shift+N] | Activer/désactiver la barre nicklist. | `+/bar toggle nicklist+`
+|===
+
+[[key_bindings_hotlist]]
+==== Hotlist
+
+[width="100%",cols="^.^3,.^8,.^5",options="header"]
+|===
+| Touche                         | Description | Commande
+| kbd:[Alt+a]                    | Sauter au prochain tampon avec activité (avec priorité : highlight, message, autre). | `+/input jump_smart+`
+| kbd:[Alt+h], kbd:[Alt+c]       | Vider la hotlist (notification d'activité sur les tampons). | `+/input hotlist_clear+`
+| kbd:[Alt+h], kbd:[Alt+m]       | Supprimer le tampon courant de la hotlist. | `+/input hotlist_remove_buffer+`
+| kbd:[Alt+h], kbd:[Alt+r]       | Restaurer la dernière hotlist supprimée dans le tampon courant. | `+/input hotlist_restore_buffer+`
+| kbd:[Alt+h], kbd:[Alt+Shift+R] | Restaurer la dernière hotlist supprimée dans tous les tampons. | `+/input hotlist_restore_all+`
+|===
+
+[[key_bindings_toggle_keys]]
+==== Touches de bascule
+
+[width="100%",cols="^.^3,.^8,.^5",options="header"]
+|===
+| Touche      | Description | Commande
+| kbd:[Alt+m] | Activer/désactiver la souris. | `+/mouse toggle+`
+| kbd:[Alt+s] | Activer/désactiver la vérification de l'orthographe. | `+/mute spell toggle+`
+| kbd:[Alt+=] | Activer/désactiver les filtres. | `+/filter toggle+`
+| kbd:[Alt+-] | Activer/désactiver les filtres dans le tampon courant. | `+/filter toggle @+`
 |===
 
 [[key_bindings_search_context]]
-==== Touches pour le contexte "search"
+==== Contexte de recherche
 
 Ces touches sont utilisées dans le contexte "search" (lorsque kbd:[Ctrl+r] est
 pressé pour chercher du texte dans le tampon).
@@ -2117,7 +2154,7 @@ pressé pour chercher du texte dans le tampon).
 |===
 
 [[key_bindings_cursor_context]]
-==== Touches pour le contexte "cursor"
+==== Contexte curseur
 
 Ces touches sont utilisées dans le contexte "cursor" (mouvement libre du curseur
 à l'écran).
@@ -2146,11 +2183,11 @@ Ces touches sont utilisées dans le contexte "cursor" (mouvement libre du curseu
   kbd:[Ctrl+m]   | -                 | Arrêter le mode curseur ("cursor"). | `+/cursor stop+`
 |===
 
-[[key_bindings_mouse_context]]
-==== Touches pour le contexte "mouse"
+[[key_bindings_mouse]]
+==== Souris
 
-Ces touches sont utilisées dans le contexte "mouse", c'est-à-dire lorsqu'un
-évènement de la souris se produit.
+Ces actions avec la souris sont possibles seulement si la souris est activée
+avec la touche kbd:[Alt+m] (commande : `+/mouse toggle+`).
 
 [width="100%",cols="^.^3,^.^3,^.^3,.^8,.^8",options="header"]
 |===
@@ -2200,76 +2237,72 @@ Ces touches sont utilisées dans le contexte "mouse", c'est-à-dire lorsqu'un
 ^(1)^ kbd:[▲] et kbd:[▼] sont la roulette vers le haut et le bas.
 
 [[key_bindings_fset_buffer]]
-==== Touches pour le tampon fset
+==== Tampon fset
 
 Ces touches et actions sont utilisées sur le tampon fset
 (voir <<fset_plugin,l'extension Fset>>).
 
 [width="100%",cols="^.^3,^.^2,.^8,.^5",options="header"]
 |===
-| Touche             | Action ^(1)^ | Description | Commande
-| kbd:[↑]            |              | Monter d'une ligne. | `+/fset -up+`
-| kbd:[↓]            |              | Descendre d'une ligne. | `+/fset -down+`
-| kbd:[PgUp]         |              | Monter d'une page. | `+/window page_up+`
-| kbd:[PgDn]         |              | Descendre d'une page. | `+/window page_down+`
-| kbd:[Alt+Home]     | `pass:[<<]`  | Aller à la première ligne. | `+/fset -go 0+`
-| kbd:[Alt+End]      | `pass:[>>]`  | Aller à la dernière ligne. | `+/fset -go end+`
-| kbd:[F11]          | `pass:[<]`   | Faire défiler horizontalement vers la gauche. | `+/fset -left+`
-| kbd:[F12]          | `pass:[>]`   | Faire défiler horizontalement vers la droite. | `+/fset -right+`
-| kbd:[Alt+Space]    | `t`          | Basculer la valeur booléenne. | `+/fset -toggle+`
-| kbd:[Alt+-]        | `-`          | Soustraire 1 de la valeur de l'entier/couleur, définir la valeur pour les autres types. | `+/fset -add -1+`
-| kbd:[Alt++]        | `+`          | Ajouter 1 à la valeur de l'entier/couleur, ajouter à la valeur pour les autres types. | `+/fset -add 1+`
-| kbd:[Alt+f],
-  kbd:[Alt+r]        | `r`          | Réinitialiser la valeur. | `+/fset -reset+`
-| kbd:[Alt+f],
-  kbd:[Alt+u]        | `u`          | Supprimer/réinitialiser la valeur. | `+/fset -unset+`
-| kbd:[Alt+Enter]    | `s`          | Définir la valeur. | `+/fset -set+`
-| kbd:[Alt+f],
-  kbd:[Alt+n]        | `n`          | Définir une nouvelle valeur. | `+/fset -setnew+`
-| kbd:[Alt+f],
-  kbd:[Alt+a]        | `a`          | Ajouter à la valeur. | `+/fset -append+`
-| kbd:[Alt+,]        | `,`          | Marquer/démarquer l'option. | `+/fset -mark 1+`
-| kbd:[Shift+↑]      |              | Se déplacer d'une ligne vers le haut et marquer/démarquer l'option. | `+/fset -up; /fset -mark+`
-| kbd:[Shift+↓]      |              | Marquer/démarquer l'option et se déplacer d'une ligne vers le bas. | `+/fset -mark; /fset -down+`
-|                    | `m:xxx`      | Marquer les options affichées qui correspondent au filtre "xxx" (tout filtre sur une option ou valeur est autorisé, voir la <<command_fset_fset,commande fset>>). |
-|                    | `u:xxx`      | Démarquer les options affichées qui correspondent au filtre "xxx" (tout filtre sur une option ou valeur est autorisé, voir la <<command_fset_fset,commande fset>>). |
-| kbd:[Ctrl+l] (`L`) |              | Rafraîchir les options et l'écran entier. | `+/fset -refresh+`
-|                    | `$`          | Rafraîchir les options (garder les options marquées). |
-|                    | `$$`         | Rafraîchir les options (démarquer toutes les options). |
-| kbd:[Alt+p]        |              | Activer/désactiver la description des options d'extensions (`pass:[plugins.desc.*]`). | `+/mute /set fset.look.show_plugins_desc toggle+`
-| kbd:[Alt+v]        |              | Activer/désactiver la barre d'aide. | `+/bar toggle fset+`
-|                    | `s:x,y`      | Trier les options par les champs x,y (voir l'option <<option_fset.look.sort,fset.look.sort>>). | `+/mute /set fset.look.sort x,y+`
-|                    | `s:`         | Réinitialiser le tri à sa valeur par défaut (voir l'option <<option_fset.look.sort,fset.look.sort>>). | `+/mute /unset fset.look.sort+`
-|                    | `w:xxx`      | Exporter les options dans le fichier "xxx". | `+/fset -export xxx+`
-|                    | `w-:xxx`     | Exporter les options dans le fichier "xxx" sans aide. | `+/fset -export -nohelp xxx+`
-|                    | `w+:xxx`     | Exporter les options dans le fichier "xxx" avec aide. | `+/fset -export -help xxx+`
-| kbd:[Ctrl+x]       | `x`          | Basculer le format utilisé pour afficher les options. | `+/fset -format+`
-|                    | `q`          | Fermer le tampon fset. | `+/buffer close+`
+| Touche                   | Action ^(1)^ | Description | Commande
+| kbd:[↑]                  |              | Monter d'une ligne. | `+/fset -up+`
+| kbd:[↓]                  |              | Descendre d'une ligne. | `+/fset -down+`
+| kbd:[PgUp]               |              | Monter d'une page. | `+/window page_up+`
+| kbd:[PgDn]               |              | Descendre d'une page. | `+/window page_down+`
+| kbd:[Alt+Home]           | `pass:[<<]`  | Aller à la première ligne. | `+/fset -go 0+`
+| kbd:[Alt+End]            | `pass:[>>]`  | Aller à la dernière ligne. | `+/fset -go end+`
+| kbd:[F11]                | `pass:[<]`   | Faire défiler horizontalement vers la gauche. | `+/fset -left+`
+| kbd:[F12]                | `pass:[>]`   | Faire défiler horizontalement vers la droite. | `+/fset -right+`
+| kbd:[Alt+Space]          | `t`          | Basculer la valeur booléenne. | `+/fset -toggle+`
+| kbd:[Alt+-]              | `-`          | Soustraire 1 de la valeur de l'entier/couleur, définir la valeur pour les autres types. | `+/fset -add -1+`
+| kbd:[Alt++]              | `+`          | Ajouter 1 à la valeur de l'entier/couleur, ajouter à la valeur pour les autres types. | `+/fset -add 1+`
+| kbd:[Alt+f], kbd:[Alt+r] | `r`          | Réinitialiser la valeur. | `+/fset -reset+`
+| kbd:[Alt+f], kbd:[Alt+u] | `u`          | Supprimer/réinitialiser la valeur. | `+/fset -unset+`
+| kbd:[Alt+Enter]          | `s`          | Définir la valeur. | `+/fset -set+`
+| kbd:[Alt+f], kbd:[Alt+n] | `n`          | Définir une nouvelle valeur. | `+/fset -setnew+`
+| kbd:[Alt+f], kbd:[Alt+a] | `a`          | Ajouter à la valeur. | `+/fset -append+`
+| kbd:[Alt+,]              | `,`          | Marquer/démarquer l'option. | `+/fset -mark 1+`
+| kbd:[Shift+↑]            |              | Se déplacer d'une ligne vers le haut et marquer/démarquer l'option. | `+/fset -up; /fset -mark+`
+| kbd:[Shift+↓]            |              | Marquer/démarquer l'option et se déplacer d'une ligne vers le bas. | `+/fset -mark; /fset -down+`
+|                          | `m:xxx`      | Marquer les options affichées qui correspondent au filtre "xxx" (tout filtre sur une option ou valeur est autorisé, voir la <<command_fset_fset,commande fset>>). |
+|                          | `u:xxx`      | Démarquer les options affichées qui correspondent au filtre "xxx" (tout filtre sur une option ou valeur est autorisé, voir la <<command_fset_fset,commande fset>>). |
+| kbd:[Ctrl+l] (`L`)       |              | Rafraîchir les options et l'écran entier. | `+/fset -refresh+`
+|                          | `$`          | Rafraîchir les options (garder les options marquées). |
+|                          | `$$`         | Rafraîchir les options (démarquer toutes les options). |
+| kbd:[Alt+p]              |              | Activer/désactiver la description des options d'extensions (`pass:[plugins.desc.*]`). | `+/mute /set fset.look.show_plugins_desc toggle+`
+| kbd:[Alt+v]              |              | Activer/désactiver la barre d'aide. | `+/bar toggle fset+`
+|                          | `s:x,y`      | Trier les options par les champs x,y (voir l'option <<option_fset.look.sort,fset.look.sort>>). | `+/mute /set fset.look.sort x,y+`
+|                          | `s:`         | Réinitialiser le tri à sa valeur par défaut (voir l'option <<option_fset.look.sort,fset.look.sort>>). | `+/mute /unset fset.look.sort+`
+|                          | `w:xxx`      | Exporter les options dans le fichier "xxx". | `+/fset -export xxx+`
+|                          | `w-:xxx`     | Exporter les options dans le fichier "xxx" sans aide. | `+/fset -export -nohelp xxx+`
+|                          | `w+:xxx`     | Exporter les options dans le fichier "xxx" avec aide. | `+/fset -export -help xxx+`
+| kbd:[Ctrl+x]             | `x`          | Basculer le format utilisé pour afficher les options. | `+/fset -format+`
+|                          | `q`          | Fermer le tampon fset. | `+/buffer close+`
 |===
 
 [NOTE]
 ^(1)^ L'action doit être tapée comme entrée dans la ligne de commande, suivie de kbd:[Enter].
 
 [[key_bindings_script_buffer]]
-==== Touches pour le tampon script
+==== Tampon script
 
 Ces touches et actions sont utilisées sur le tampon script
 (voir <<scripts_plugins,l'extension Script>>).
 
 [width="100%",cols="^.^3,^.^2,.^8,.^5",options="header"]
 |===
-| Touche             | Action ^(1)^ | Description | Commande
-| kbd:[↑]            |              | Move one line up. | `+/script up+`
-| kbd:[↓]            |              | Move one line down. | `+/script down+`
-| kbd:[PgUp]         |              | Move one page up. | `+/window page_up+`
-| kbd:[PgDn]         |              | Move one page down. | `+/window page_down+`
-| kbd:[Alt+i]        | `i`          | Install script. | `+/script install+`
-| kbd:[Alt+r]        | `r`          | Remove script. | `+/script remove+`
-| kbd:[Alt+l] (`L`)  | `l`          | Load script. | `+/script load+`
-| kbd:[Alt+u]        | `u`          | Unload script. | `+/script unload+`
-| kbd:[Alt+Shift+A]  | `A`          | Autoload script. | `+/script toggleautoload+`
-| kbd:[Alt+h]        | `h`          | Hold/unhold script. | `+/script hold+`
-| kbd:[Alt+v]        | `v`          | View script. | `+/script show+`
+| Touche            | Action ^(1)^ | Description | Commande
+| kbd:[↑]           |              | Move one line up. | `+/script up+`
+| kbd:[↓]           |              | Move one line down. | `+/script down+`
+| kbd:[PgUp]        |              | Move one page up. | `+/window page_up+`
+| kbd:[PgDn]        |              | Move one page down. | `+/window page_down+`
+| kbd:[Alt+i]       | `i`          | Install script. | `+/script install+`
+| kbd:[Alt+r]       | `r`          | Remove script. | `+/script remove+`
+| kbd:[Alt+l] (`L`) | `l`          | Load script. | `+/script load+`
+| kbd:[Alt+u]       | `u`          | Unload script. | `+/script unload+`
+| kbd:[Alt+Shift+A] | `A`          | Autoload script. | `+/script toggleautoload+`
+| kbd:[Alt+h]       | `h`          | Hold/unhold script. | `+/script hold+`
+| kbd:[Alt+v]       | `v`          | View script. | `+/script show+`
 |===
 
 [NOTE]

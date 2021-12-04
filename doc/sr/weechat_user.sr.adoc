@@ -1742,154 +1742,202 @@ _трака_ је површина уз разговор која може да 
 [[key_bindings]]
 === Подразумеване тастерске пречице
 
-[[key_bindings_command_line]]
-==== Тастери за командну линију
+// TRANSLATION MISSING
+[[key_bindings_cmdline]]
+==== Command line
+
+// TRANSLATION MISSING
+[[key_bindings_cmdline_cursor_movement]]
+===== Cursor movement
 
 [width="100%", cols="^.^3,.^8,.^5", options="header"]
 |===
-| Тастер          | Опис | Команда
+| Тастер         | Опис | Команда
 | kbd:[←] +
-  kbd:[Ctrl+b]    | Одлазак на претходни карактер у командној линији. | `+/input move_previous_char+`
+  kbd:[Ctrl+b]   | Одлазак на претходни карактер у командној линији. | `+/input move_previous_char+`
 | kbd:[→] +
-  kbd:[Ctrl+f]    | Одлазак на наредни карактер у командној линији. | `+/input move_next_char+`
+  kbd:[Ctrl+f]   | Одлазак на наредни карактер у командној линији. | `+/input move_next_char+`
 | kbd:[Ctrl+←] +
-  kbd:[Alt+b]     | Одлазак на претходну реч у командној линији. | `+/input move_previous_word+`
+  kbd:[Alt+b]    | Одлазак на претходну реч у командној линији. | `+/input move_previous_word+`
 | kbd:[Ctrl+→] +
-  kbd:[Alt+f]     | Одлазак на наредну реч у командној линији. | `+/input move_next_word+`
+  kbd:[Alt+f]    | Одлазак на наредну реч у командној линији. | `+/input move_next_word+`
 | kbd:[Home] +
-  kbd:[Ctrl+a]    | Одлазак на почетак командне линије. | `+/input move_beginning_of_line+`
+  kbd:[Ctrl+a]   | Одлазак на почетак командне линије. | `+/input move_beginning_of_line+`
 | kbd:[End] +
-  kbd:[Ctrl+e]    | Одлазак на крај командне линије. | `+/input move_end_of_line+`
-| kbd:[Ctrl+c],
-  kbd:[b]         | Уметање кода за подебљани текст. | `+/input insert \x02+`
-| kbd:[Ctrl+c],
-  kbd:[c]         | Уметање кода за обојени текст. | `+/input insert \x03+`
-| kbd:[Ctrl+c],
-  kbd:[i]         | Уметање кода за текст у курзиву. | `+/input insert \x1D+`
-| kbd:[Ctrl+c],
-  kbd:[o]         | Уметање кода за ресет боје. | `+/input insert \x0F+`
-| kbd:[Ctrl+c],
-  kbd:[v]         | Уметање кода за обрнуту боју. | `+/input insert \x16+`
-| kbd:[Ctrl+c],
-  kbd:[_]         | Уметање кода за подвучени текст. | `+/input insert \x1F+`
+  kbd:[Ctrl+e]   | Одлазак на крај командне линије. | `+/input move_end_of_line+`
+|===
+
+// TRANSLATION MISSING
+[[key_bindings_cmdline_editing]]
+===== Editing
+
+[width="100%", cols="^.^3,.^8,.^5", options="header"]
+|===
+| Тастер            | Опис | Команда
 | kbd:[Del] +
-  kbd:[Ctrl+d]    | Брисање наредног карактера у командној линији. | `+/input delete_next_char+`
-| kbd:[Backsp.] +
-  kbd:[Ctrl+h]    | Брисање претходног карактера у командној линији. | `+/input delete_previous_char+`
-| kbd:[Ctrl+k]    | Брисање од курсора до краја командне линије (обрисани стринг се копира у интерни клипборд). | `+/input delete_end_of_line+`
-| kbd:[Ctrl+r]    | Претрага на текст у историји бафера (погледајте <<key_bindings_search_context,тастери у „search”>>). | `+/input search_text_here+`
-| kbd:[Ctrl+t]    | Транспозиција карактера. | `/input transpose_chars`
-| kbd:[Ctrl+u]    | Брисање од курсора до почетка командне линије (обрисани стринг се копира у интерни клипборд). | `+/input delete_beginning_of_line+`
-| kbd:[Ctrl+w]    | Брисање претходне речи командне линије (обрисани стринг се копира у интерни клипборд). | `+/input delete_previous_word+`
-| kbd:[Ctrl+y]    | Налепљивање садржаја интерног клипборда. | `+/input clipboard_paste+`
-| kbd:[Ctrl+_]    | Поништавање последње акције у командној линији. | `+/input undo+`
-| kbd:[Alt+_]     | Враћање последње поништене акције у командној линији. | `+/input redo+`
-| kbd:[Tab]       | Довршавање команде или надимка (kbd:[Tab] поново: проналажење наредног довршавања). | `+/input complete_next+`
-| kbd:[Shift+Tab] | Без довршавања: обављање парцијалног довршавања, са довршавањем на чекању: довршавање са претходно пронађеним појмом. | `+/input complete_previous+`
+  kbd:[Ctrl+d]      | Брисање наредног карактера у командној линији. | `+/input delete_next_char+`
+| kbd:[Backspace] +
+  kbd:[Ctrl+h]      | Брисање претходног карактера у командној линији. | `+/input delete_previous_char+`
+| kbd:[Ctrl+k]      | Брисање од курсора до краја командне линије (обрисани стринг се копира у интерни клипборд). | `+/input delete_end_of_line+`
+| kbd:[Ctrl+t]      | Транспозиција карактера. | `/input transpose_chars`
+| kbd:[Ctrl+u]      | Брисање од курсора до почетка командне линије (обрисани стринг се копира у интерни клипборд). | `+/input delete_beginning_of_line+`
+| kbd:[Ctrl+w]      | Брисање претходне речи командне линије (обрисани стринг се копира у интерни клипборд). | `+/input delete_previous_word+`
+| kbd:[Ctrl+y]      | Налепљивање садржаја интерног клипборда. | `+/input clipboard_paste+`
+| kbd:[Ctrl+_]      | Поништавање последње акције у командној линији. | `+/input undo+`
+| kbd:[Alt+_]       | Враћање последње поништене акције у командној линији. | `+/input redo+`
+| kbd:[Tab]         | Довршавање команде или надимка (kbd:[Tab] поново: проналажење наредног довршавања). | `+/input complete_next+`
+| kbd:[Shift+Tab]   | Без довршавања: обављање парцијалног довршавања, са довршавањем на чекању: довршавање са претходно пронађеним појмом. | `+/input complete_previous+`
 | kbd:[Enter] +
   kbd:[Ctrl+j] +
-  kbd:[Ctrl+m]    | Извршавање команде или слање поруке (у режиму претраге: заустављање претраге). | `+/input return+`
-| kbd:[Alt+Enter] | Умеће прелом реда. | `+/input insert \n+`
-| kbd:[↑]         | Позив претходне команде/поруке (у режиму претраге: претрага навише). | `+/input history_previous+`
-| kbd:[↓]         | Позив наредне команде/поруке (у режиму претраге: претрага наниже). | `+/input history_next+`
-| kbd:[Ctrl+↑]    | Позив претходне команде/поруке у глобалној историји (заједничкој за све бафере). | `+/input history_global_previous+`
-| kbd:[Ctrl+↓]    | Позив наредне команде/поруке у глобалној историји (заједничкој за све бафере). | `+/input history_global_next+`
-| kbd:[Alt+d]     | Брисање наредне речи у командној линији (обрисани стринг се копира у интерни клипборд). | `+/input delete_next_word+`
-| kbd:[Alt+k]     | Хвата тастер и умеће његов кôд (и комадну везану за њега, ако постоји таква пречица) у командну линију. | `+/input grab_key_command+`
-| kbd:[Alt+r]     | Брише комплетну командну линију. | `+/input delete_line+`
-| kbd:[Alt+s]     | Пребацује стање активности модула за проверу правописа. | `+/mute spell toggle+`
+  kbd:[Ctrl+m]      | Извршавање команде или слање поруке (у режиму претраге: заустављање претраге). | `+/input return+`
+| kbd:[Alt+Enter]   | Умеће прелом реда. | `+/input insert \n+`
+| kbd:[Alt+d]       | Брисање наредне речи у командној линији (обрисани стринг се копира у интерни клипборд). | `+/input delete_next_word+`
+| kbd:[Alt+k]       | Хвата тастер и умеће његов кôд (и комадну везану за њега, ако постоји таква пречица) у командну линију. | `+/input grab_key_command+`
+| kbd:[Alt+r]       | Брише комплетну командну линију. | `+/input delete_line+`
 |===
 
-[[key_bindings_buffers_windows]]
-==== Тастери за бафере / прозоре
+// TRANSLATION MISSING
+[[key_bindings_cmdline_color_codes]]
+===== Color codes
 
 [width="100%", cols="^.^3,.^8,.^5", options="header"]
 |===
-| Тастер             | Опис | Команда
-| kbd:[Ctrl+l] (`L`) | Поново исцртава цео прозор. | `+/window refresh+`
-| kbd:[Ctrl+s],
-  kbd:[Ctrl+u]       | Поставља маркер непрочитано за све бафере. | `+/input set_unread+`
-| kbd:[Ctrl+x]       | Пребацује текући бафер ако су бафери прикачени са истим бројем. | `+/input switch_active_buffer+`
-| kbd:[Alt+x]        | Зум на спојени бафер (kbd:[Alt+x] поново: приказује све спојене бафере). | `+/input zoom_merged_buffer+`
-| kbd:[PgUp]         | Скролује навише једну страну у историји бафера. | `+/window page_up+`
-| kbd:[PgDn]         | Скролује наниже једну страну у историји бафера. | `+/window page_down+`
-| kbd:[Alt+PgUp]     | Скролује навише неколико линија у историји бафера. | `+/window scroll_up+`
-| kbd:[Alt+PgDn]     | Скролује наниже неколико линија у историји бафера. | `+/window scroll_down+`
-| kbd:[Alt+Home]     | Скролује на врх бафера. | `+/window scroll_top+`
-| kbd:[Alt+End]      | Скролује на дно бафера. | `+/window scroll_bottom+`
-| kbd:[F1] +
-  kbd:[Ctrl+F1]      | Скролује навише једну страну листе бафера. | `+/bar scroll buflist * -100%+`
-| kbd:[F2] +
-  kbd:[Ctrl+F2]      | Скролује наниже једну страну листе бафера. | `+/bar scroll buflist * +100%+`
-| kbd:[Alt+F1]       | Скок на почетак листе бафера. | `+/bar scroll buflist * b+`
-| kbd:[Alt+F2]       | Скок на крај листе бафера. | `+/bar scroll buflist * e+`
+| Тастер                | Опис | Команда
+| kbd:[Ctrl+c], kbd:[b] | Уметање кода за подебљани текст. | `+/input insert \x02+`
+| kbd:[Ctrl+c], kbd:[c] | Уметање кода за обојени текст. | `+/input insert \x03+`
+| kbd:[Ctrl+c], kbd:[i] | Уметање кода за текст у курзиву. | `+/input insert \x1D+`
+| kbd:[Ctrl+c], kbd:[o] | Уметање кода за ресет боје. | `+/input insert \x0F+`
+| kbd:[Ctrl+c], kbd:[v] | Уметање кода за обрнуту боју. | `+/input insert \x16+`
+| kbd:[Ctrl+c], kbd:[_] | Уметање кода за подвучени текст. | `+/input insert \x1F+`
+|===
+
+// TRANSLATION MISSING
+[[key_bindings_cmdline_history]]
+===== Command history
+
+[width="100%", cols="^.^3,.^8,.^5", options="header"]
+|===
+| Тастер       | Опис | Команда
+| kbd:[↑]      | Позив претходне команде/поруке (у режиму претраге: претрага навише). | `+/input history_previous+`
+| kbd:[↓]      | Позив наредне команде/поруке (у режиму претраге: претрага наниже). | `+/input history_next+`
+| kbd:[Ctrl+↑] | Позив претходне команде/поруке у глобалној историји (заједничкој за све бафере). | `+/input history_global_previous+`
+| kbd:[Ctrl+↓] | Позив наредне команде/поруке у глобалној историји (заједничкој за све бафере). | `+/input history_global_next+`
+|===
+
+// TRANSLATION MISSING
+[[key_bindings_buffers]]
+==== Buffers
+
+[width="100%", cols="^.^3,.^8,.^5", options="header"]
+|===
+| Тастер                         | Опис | Команда
+| kbd:[Ctrl+r]                   | Претрага на текст у историји бафера (погледајте <<key_bindings_search_context,тастери у „search”>>). | `+/input search_text_here+`
+| kbd:[Ctrl+s], kbd:[Ctrl+u]     | Поставља маркер непрочитано за све бафере. | `+/input set_unread+`
+| kbd:[Ctrl+x]                   | Пребацује текући бафер ако су бафери прикачени са истим бројем. | `+/input switch_active_buffer+`
+| kbd:[Alt+x]                    | Зум на спојени бафер (kbd:[Alt+x] поново: приказује све спојене бафере). | `+/input zoom_merged_buffer+`
+| kbd:[PgUp]                     | Скролује навише једну страну у историји бафера. | `+/window page_up+`
+| kbd:[PgDn]                     | Скролује наниже једну страну у историји бафера. | `+/window page_down+`
+| kbd:[Alt+PgUp]                 | Скролује навише неколико линија у историји бафера. | `+/window scroll_up+`
+| kbd:[Alt+PgDn]                 | Скролује наниже неколико линија у историји бафера. | `+/window scroll_down+`
+| kbd:[Alt+Home]                 | Скролује на врх бафера. | `+/window scroll_top+`
+| kbd:[Alt+End]                  | Скролује на дно бафера. | `+/window scroll_bottom+`
 | kbd:[Alt+←] +
   kbd:[Alt+↑] +
   kbd:[Ctrl+p] +
-  kbd:[F5]           | Пребацивање на претходни бафер. | `+/buffer -1+`
+  kbd:[F5]                       | Пребацивање на претходни бафер. | `+/buffer -1+`
 | kbd:[Alt+→] +
   kbd:[Alt+↓] +
   kbd:[Ctrl+n] +
-  kbd:[F6]           | Пребацивање на наредни бафер. | `+/buffer +1+`
-| kbd:[F7]           | Пребацивање на претходни прозор. | `+/window -1+`
-| kbd:[F8]           | Пребацивање на наредни прозор. | `+/window +1+`
-| kbd:[F9]           | Скролује наслов бафера у лево. | `+/bar scroll title * -30%+`
-| kbd:[F10]          | Скролује наслов бафера у десно. | `+/bar scroll title * +30%+`
-| kbd:[F11] +
-  kbd:[Ctrl+F11]     | Скролује једну страну навише у листи надимака. | `+/bar scroll nicklist * -100%+`
-| kbd:[F12] +
-  kbd:[Ctrl+F12]     | Скролује једну страну наниже у листи надимака. | `+/bar scroll nicklist * +100%+`
-| kbd:[Alt+F11]      | Скок на почетак листе надимака. | `+/bar scroll nicklist * b+`
-| kbd:[Alt+F12]      | Скок на крај листе надимака. | `+/bar scroll nicklist * e+`
-| kbd:[Alt+a]        | Пребацивање на следећи бафер у коме има активности (са приоритетом: истицање, порука, остало). | `+/input jump_smart+`
-| kbd:[Alt+Shift+B]  | Пребацивање активности листе бафера. | `+/buflist toggle+`
-| kbd:[Alt+h],
-  kbd:[Alt+c]        | Брисање вруће листе (обавештења о активности у баферима). | `+/input hotlist_clear+`
-| kbd:[Alt+h],
-  kbd:[Alt+m]        | Уклањање текућег бафера из вруће листе. | `+/input hotlist_remove_buffer+`
-| kbd:[Alt+h],
-  kbd:[Alt+r]        | Враћање најновије вруће листе уклоњене из текућег бафера. | `+/input hotlist_restore_buffer+`
-| kbd:[Alt+h],
-  kbd:[Alt+Shift+R]  | Враћање најновије вруће листе уклоњене из свих бафера. | `+/input hotlist_restore_all+`
-| kbd:[Alt+j],
-  kbd:[Alt+f]        | Пребацивање на први бафер. | `+/buffer -+`
-| kbd:[Alt+j],
-  kbd:[Alt+l] (`L`)  | Пребацивање на последњи бафер. | `+/buffer ++`
-| kbd:[Alt+j],
-  kbd:[Alt+r]        | Пребацивање на сирови IRC бафер. | `+/server raw+`
-| kbd:[Alt+j],
-  kbd:[Alt+s]        | пребацивање на бафер IRC сервера. | `+/server jump+`
-| kbd:[Alt+0...9]    | Пребацивање на бафер према броју (0 = 10). | `+/buffer *N+`
-| kbd:[Alt+j],
-  kbd:[01...99]      | Пребацивање на бафер према броју. | `+/buffer *NN+`
-| kbd:[Alt+l] (`L`)  | Пребацивање активности огољеног приказа. | `+/window bare+`
-| kbd:[Alt+m]        | Пребацивање активности миша. | `+/mouse toggle+`
-| kbd:[Alt+n]        | Скроловање до наредног истицања. | `+/window scroll_next_highlight+`
-| kbd:[Alt+Shift+N]  | Пребацивање видљивости траке листе надимака. | `+/bar toggle nicklist+`
-| kbd:[Alt+p]        | Скроловање на претходно истицање. | `+/window scroll_previous_highlight+`
-| kbd:[Alt+u]        | Скроловање на прву непрочитану линију у баферу. | `+/window scroll_unread+`
-| kbd:[Alt+w],
-  kbd:[Alt+↑]        | Прелаз на прозор изнад. | `+/window up+`
-| kbd:[Alt+w],
-  kbd:[Alt+↓]        | Прелаз на прозор испод. | `+/window down+`
-| kbd:[Alt+w],
-  kbd:[Alt+←]        | Прелаз на прозор са леве стране. | `+/window left+`
-| kbd:[Alt+w],
-  kbd:[Alt+→]        | Прелаз на прозор са десне стране. | `+/window right+`
-| kbd:[Alt+w],
-  kbd:[Alt+b]        | Уједначавање величине свих прозора. | `+/window balance+`
-| kbd:[Alt+w],
-  kbd:[Alt+s]        | Замена бафера два прозора. | `+/window swap+`
-| kbd:[Alt+z]        | Зум на текући прозор (kbd:[Alt+z] поново: враћање почетног стања прозора, пре зумирања). | `+/window zoom+`
-| kbd:[Alt+<]        | Прелаз на претходни бафер у листи посећених бафера. | `+/input jump_previously_visited_buffer+`
-| kbd:[Alt+>]        | Прелаз на наредни бафер у листи посећених бафера. | `+/input jump_next_visited_buffer+`
-| kbd:[Alt+/]        | Прелаз на последње приказани бафер. | `+/input jump_last_buffer_displayed+`
-| kbd:[Alt+=]        | Пребацивање активности филтера. | `+/filter toggle+`
-| kbd:[Alt+-]        | Пребацивање активности филтера у текућем баферу. | `+/filter toggle @+`
+  kbd:[F6]                       | Пребацивање на наредни бафер. | `+/buffer +1+`
+| kbd:[Alt+j], kbd:[Alt+f]       | Пребацивање на први бафер. | `+/buffer -+`
+| kbd:[Alt+j], kbd:[Alt+l] (`L`) | Пребацивање на последњи бафер. | `+/buffer ++`
+| kbd:[Alt+j], kbd:[Alt+r]       | Пребацивање на сирови IRC бафер. | `+/server raw+`
+| kbd:[Alt+j], kbd:[Alt+s]       | пребацивање на бафер IRC сервера. | `+/server jump+`
+| kbd:[Alt+0...9]                | Пребацивање на бафер према броју (0 = 10). | `+/buffer *N+`
+| kbd:[Alt+j], kbd:[01...99]     | Пребацивање на бафер према броју. | `+/buffer *NN+`
+| kbd:[Alt+n]                    | Скроловање до наредног истицања. | `+/window scroll_next_highlight+`
+| kbd:[Alt+p]                    | Скроловање на претходно истицање. | `+/window scroll_previous_highlight+`
+| kbd:[Alt+u]                    | Скроловање на прву непрочитану линију у баферу. | `+/window scroll_unread+`
+| kbd:[Alt+<]                    | Прелаз на претходни бафер у листи посећених бафера. | `+/input jump_previously_visited_buffer+`
+| kbd:[Alt+>]                    | Прелаз на наредни бафер у листи посећених бафера. | `+/input jump_next_visited_buffer+`
+| kbd:[Alt+/]                    | Прелаз на последње приказани бафер. | `+/input jump_last_buffer_displayed+`
 |===
 
+// TRANSLATION MISSING
+[[key_bindings_windows]]
+==== Windows
+
+[width="100%", cols="^.^3,.^8,.^5", options="header"]
+|===
+| Тастер                   | Опис | Команда
+| kbd:[Ctrl+l] (`L`)       | Поново исцртава цео прозор. | `+/window refresh+`
+| kbd:[Alt+l] (`L`)        | Пребацивање активности огољеног приказа. | `+/window bare+`
+| kbd:[F7]                 | Пребацивање на претходни прозор. | `+/window -1+`
+| kbd:[F8]                 | Пребацивање на наредни прозор. | `+/window +1+`
+| kbd:[Alt+w], kbd:[Alt+↑] | Прелаз на прозор изнад. | `+/window up+`
+| kbd:[Alt+w], kbd:[Alt+↓] | Прелаз на прозор испод. | `+/window down+`
+| kbd:[Alt+w], kbd:[Alt+←] | Прелаз на прозор са леве стране. | `+/window left+`
+| kbd:[Alt+w], kbd:[Alt+→] | Прелаз на прозор са десне стране. | `+/window right+`
+| kbd:[Alt+w], kbd:[Alt+b] | Уједначавање величине свих прозора. | `+/window balance+`
+| kbd:[Alt+w], kbd:[Alt+s] | Замена бафера два прозора. | `+/window swap+`
+| kbd:[Alt+z]              | Зум на текући прозор (kbd:[Alt+z] поново: враћање почетног стања прозора, пре зумирања). | `+/window zoom+`
+|===
+
+// TRANSLATION MISSING
+[[key_bindings_bars]]
+==== Bars
+
+[width="100%", cols="^.^3,.^8,.^5", options="header"]
+|===
+| Тастер            | Опис | Команда
+| kbd:[F1] +
+  kbd:[Ctrl+F1]     | Скролује навише једну страну листе бафера. | `+/bar scroll buflist * -100%+`
+| kbd:[F2] +
+  kbd:[Ctrl+F2]     | Скролује наниже једну страну листе бафера. | `+/bar scroll buflist * +100%+`
+| kbd:[Alt+F1]      | Скок на почетак листе бафера. | `+/bar scroll buflist * b+`
+| kbd:[Alt+F2]      | Скок на крај листе бафера. | `+/bar scroll buflist * e+`
+| kbd:[F9]          | Скролује наслов бафера у лево. | `+/bar scroll title * -30%+`
+| kbd:[F10]         | Скролује наслов бафера у десно. | `+/bar scroll title * +30%+`
+| kbd:[F11] +
+  kbd:[Ctrl+F11]    | Скролује једну страну навише у листи надимака. | `+/bar scroll nicklist * -100%+`
+| kbd:[F12] +
+  kbd:[Ctrl+F12]    | Скролује једну страну наниже у листи надимака. | `+/bar scroll nicklist * +100%+`
+| kbd:[Alt+F11]     | Скок на почетак листе надимака. | `+/bar scroll nicklist * b+`
+| kbd:[Alt+F12]     | Скок на крај листе надимака. | `+/bar scroll nicklist * e+`
+| kbd:[Alt+Shift+B] | Пребацивање активности листе бафера. | `+/buflist toggle+`
+| kbd:[Alt+Shift+N] | Пребацивање видљивости траке листе надимака. | `+/bar toggle nicklist+`
+|===
+
+// TRANSLATION MISSING
+[[key_bindings_hotlist]]
+==== Hotlist
+
+[width="100%", cols="^.^3,.^8,.^5", options="header"]
+|===
+| Тастер                         | Опис | Команда
+| kbd:[Alt+a]                    | Пребацивање на следећи бафер у коме има активности (са приоритетом: истицање, порука, остало). | `+/input jump_smart+`
+| kbd:[Alt+h], kbd:[Alt+c]       | Брисање вруће листе (обавештења о активности у баферима). | `+/input hotlist_clear+`
+| kbd:[Alt+h], kbd:[Alt+m]       | Уклањање текућег бафера из вруће листе. | `+/input hotlist_remove_buffer+`
+| kbd:[Alt+h], kbd:[Alt+r]       | Враћање најновије вруће листе уклоњене из текућег бафера. | `+/input hotlist_restore_buffer+`
+| kbd:[Alt+h], kbd:[Alt+Shift+R] | Враћање најновије вруће листе уклоњене из свих бафера. | `+/input hotlist_restore_all+`
+|===
+
+// TRANSLATION MISSING
+[[key_bindings_toggle_keys]]
+==== Toggle keys
+
+[width="100%", cols="^.^3,.^8,.^5", options="header"]
+|===
+| Тастер      | Опис | Команда
+| kbd:[Alt+m] | Пребацивање активности миша. | `+/mouse toggle+`
+| kbd:[Alt+s] | Пребацује стање активности модула за проверу правописа. | `+/mute spell toggle+`
+| kbd:[Alt+=] | Пребацивање активности филтера. | `+/filter toggle+`
+| kbd:[Alt+-] | Пребацивање активности филтера у текућем баферу. | `+/filter toggle @+`
+|===
+
+// TRANSLATION MISSING
 [[key_bindings_search_context]]
-==== Тастери за „search” контекст
+==== Search context
 
 Следећи тастери се користе у „search” контексту (када се притисне kbd:[Ctrl+r] за претрагу текста у баферу).
 
@@ -1907,8 +1955,9 @@ _трака_ је површина уз разговор која може да 
 | kbd:[Ctrl+q]   | Заустављање претраге и скроловање на дно бафера. | `+/input search_stop+`
 |===
 
+// TRANSLATION MISSING
 [[key_bindings_cursor_context]]
-==== Тастери за „cursor” контекст
+==== Cursor context
 
 Ови тастери се користе у „cursor” контексту (слободно померање курсора по екрану).
 
@@ -1936,127 +1985,128 @@ _трака_ је површина уз разговор која може да 
   kbd:[Ctrl+m]   | -        | Зауставља режим померања курсора | `/cursor stop`
 |===
 
-[[key_bindings_mouse_context]]
-==== Тастери за „mouse” контекст
+// TRANSLATION MISSING
+[[key_bindings_mouse]]
+==== Mouse
 
-Ови тастери се користе у „mouse” контексту, то јест када се јаве догађаји миша.
+// TRANSLATION MISSING
+These mouse actions are possible only if mouse is enabled with key kbd:[Alt+m]
+(command: `+/mouse toggle+`).
 
 [width="100%", cols="^.^3,^.^3,^.^3,.^8,.^8", options="header"]
 |===
 | Тастер/Точкић ^(1)^ | Гестикулација      | Површина                | Опис | Команда
-| ◾◽◽                | -            | чет                | Пребацивање на прозор. | `+/window ${_window_number}+`
-| ◾◽◽                | лево         | чет                | Пребацивање на претходни бафер. | `+/window ${_window_number};/buffer +1+`
-| ◾◽◽                | десно        | чет                | Пребацивање на наредни бафер. | `+/window ${_window_number};/buffer +1+`
-| ◾◽◽                | лево (дуго)  | чет                | Пребацивање на први бафер. | `+/window ${_window_number};/buffer 1+`
-| ◾◽◽                | десно (дуго) | чет                | Пребацивање на последњи бафер. | `+/window ${_window_number};/input jump_last_buffer+`
-| kbd:[▲]            | -            | чет                | Скролује навише неколико линија у историји бафера. | `+/window scroll_up -window ${_window_number}+`
-| kbd:[▼]            | -            | чет                | Скролује наниже неколико линија у историји бафера. | `+/window scroll_down -window ${_window_number}+`
-| kbd:[Ctrl+▲]       | -            | чет                | Скролује хоризонтално у лево. | `+/window scroll_horiz -window ${_window_number} -10%+`
-| kbd:[Ctrl+▼]       | -            | чет                | Скролује хоризонтално у десно. | `+/window scroll_horiz -window ${_window_number} +10%+`
-| kbd:[▲]            | -            | чет: fset бафер   | Помера за пет линија навише у fset баферу. | `+/fset -up 5+`
-| kbd:[▼]            | -            | чет: fset бафер   | Помера за пет линија наниже у fset баферу. | `+/fset -down 5+`
-| ◾◽◽                | -            | чет: fset бафер   | Бира линију у fset баферу. | `+/window ${_window_number};/fset -go ${_chat_line_y}+`
-| ◽◽◾                | -            | чет: fset бафер   | Пребацује логичку вредност (on/off) или уређује вредност опције. | `+hsignal:fset_mouse+`
-| ◽◽◾                | лево         | чет: fset бафер   | Умањује вредност за цео број/боју, поставља/надовезује вредност за остале типове. | `+hsignal:fset_mouse+`
-| ◽◽◾                | десно        | чет: fset бафер   | Увећава вредност за цео број/боју, поставља/надовезује вредност за остале типове. | `+hsignal:fset_mouse+`
-| ◽◽◾                | горе / доле  | чет: fset бафер   | Маркира/уклања маркер са више опција. | `+hsignal:fset_mouse+`
-| kbd:[▲]            | -            | чет: script бафер | Помера за пет линија навише у script баферу. | `+/script up 5+`
-| kbd:[▼]            | -            | чет: script бафер | Помера за пет линија наниже у script баферу. | `+/script down 5+`
-| ◾◽◽                | -            | chat: script бафер | Бира линију у script баферу. | `+/script go ${_chat_line_y}+`
-| ◽◽◾                | -            | chat: script бафер | Инсталира/уклања скрипту. | `+/script go ${_chat_line_y};/script installremove -q ${script_name_with_extension}+`
-| ◾◽◽                | горе / лево  | листа бафера       | Помера бафер на нижи број. | Signal `+buflist_mouse+`.
-| ◾◽◽                | доле / десно | листа бафера       | Помера бафер на виши број. | Signal `+buflist_mouse+`.
-| ◾◽◽                | -            | листа бафера       | Пребацивање на бафер (претходно посећени багер ако је бафер текући). | Signal `+buflist_mouse+`.
-| ◽◽◾                | -            | листа бафера       | Пребацивање на наредни посећени бафер ако је бафер текући. | Signal `+buflist_mouse+`.
-| kbd:[Ctrl+▲]       | -            | листа бафера       | Пребацивање на претходни бафер. | Signal `+buflist_mouse+`.
-| kbd:[Ctrl+▼]       | -            | листа бафера        | Пребацивање на наредни бафер. | Signal `+buflist_mouse+`.
-| ◾◽◽                | горе         | листа надимака      | Скроловање једне стране навише у листи надимака. | `+/bar scroll nicklist ${_window_number} -100%+`
-| ◾◽◽                | доле         | листа надимака      | Скроловање једне стране наниже у листи надимака. | `+/bar scroll nicklist ${_window_number} +100%+`
-| ◾◽◽                | горе (дуго)  | листа надимака      | Скок на почетак листе надимака. | `+/bar scroll nicklist ${_window_number} b+`
-| ◾◽◽                | доле (дуго)  | листа надимака      | Скок на крај листе надимака. | `+/bar scroll nicklist ${_window_number} e+`
-| ◾◽◽                | -            | листа надимака      | Отварање упита са надимком. | `+/window ${_window_number};/query ${nick}+`
-| ◽◽◾                | -            | листа надимака      | Извршавање whois над надимком. | `+/window ${_window_number};/whois ${nick}+`
-| ◾◽◽                | лево         | листа надимака      | Избацивање надимка. | `+/window ${_window_number};/kick ${nick}+`
-| ◾◽◽                | лево (дуго)  | листа надимака      | Избацивање и забрана надимка. | `+/window ${_window_number};/kickban ${nick}+`
-| ◽◽◾                | лево         | листа надимака      | Забрана надимка. | `+/window ${_window_number};/ban ${nick}+`
-| ◽◽◾                | -            | унос                | Хвата догађај миша и умеће његов кôд у командну линију. | `+/input grab_mouse_area+`
-| kbd:[▲]            | -            | било која трака     | Скролује траку за -20%. | `+/bar scroll ${_bar_name} ${_window_number} -20%+`
-| kbd:[▼]            | -            | било која трака     | Скролује траку за +20%. | `+/bar scroll ${_bar_name} ${_window_number} +20%+`
-| ◽◾◽                | -            | било где            | Започиње режим померања курсора на овој тачки. | `+/cursor go ${_x},${_y}+`
+| ◾◽◽                 | -            | чет                | Пребацивање на прозор. | `+/window ${_window_number}+`
+| ◾◽◽                 | лево         | чет                | Пребацивање на претходни бафер. | `+/window ${_window_number};/buffer +1+`
+| ◾◽◽                 | десно        | чет                | Пребацивање на наредни бафер. | `+/window ${_window_number};/buffer +1+`
+| ◾◽◽                 | лево (дуго)  | чет                | Пребацивање на први бафер. | `+/window ${_window_number};/buffer 1+`
+| ◾◽◽                 | десно (дуго) | чет                | Пребацивање на последњи бафер. | `+/window ${_window_number};/input jump_last_buffer+`
+| kbd:[▲]             | -            | чет                | Скролује навише неколико линија у историји бафера. | `+/window scroll_up -window ${_window_number}+`
+| kbd:[▼]             | -            | чет                | Скролује наниже неколико линија у историји бафера. | `+/window scroll_down -window ${_window_number}+`
+| kbd:[Ctrl+▲]        | -            | чет                | Скролује хоризонтално у лево. | `+/window scroll_horiz -window ${_window_number} -10%+`
+| kbd:[Ctrl+▼]        | -            | чет                | Скролује хоризонтално у десно. | `+/window scroll_horiz -window ${_window_number} +10%+`
+| kbd:[▲]             | -            | чет: fset бафер   | Помера за пет линија навише у fset баферу. | `+/fset -up 5+`
+| kbd:[▼]             | -            | чет: fset бафер   | Помера за пет линија наниже у fset баферу. | `+/fset -down 5+`
+| ◾◽◽                 | -            | чет: fset бафер   | Бира линију у fset баферу. | `+/window ${_window_number};/fset -go ${_chat_line_y}+`
+| ◽◽◾                 | -            | чет: fset бафер   | Пребацује логичку вредност (on/off) или уређује вредност опције. | `+hsignal:fset_mouse+`
+| ◽◽◾                 | лево         | чет: fset бафер   | Умањује вредност за цео број/боју, поставља/надовезује вредност за остале типове. | `+hsignal:fset_mouse+`
+| ◽◽◾                 | десно        | чет: fset бафер   | Увећава вредност за цео број/боју, поставља/надовезује вредност за остале типове. | `+hsignal:fset_mouse+`
+| ◽◽◾                 | горе / доле  | чет: fset бафер   | Маркира/уклања маркер са више опција. | `+hsignal:fset_mouse+`
+| kbd:[▲]             | -            | чет: script бафер | Помера за пет линија навише у script баферу. | `+/script up 5+`
+| kbd:[▼]             | -            | чет: script бафер | Помера за пет линија наниже у script баферу. | `+/script down 5+`
+| ◾◽◽                 | -            | chat: script бафер | Бира линију у script баферу. | `+/script go ${_chat_line_y}+`
+| ◽◽◾                 | -            | chat: script бафер | Инсталира/уклања скрипту. | `+/script go ${_chat_line_y};/script installremove -q ${script_name_with_extension}+`
+| ◾◽◽                 | горе / лево  | листа бафера       | Помера бафер на нижи број. | Signal `+buflist_mouse+`.
+| ◾◽◽                 | доле / десно | листа бафера       | Помера бафер на виши број. | Signal `+buflist_mouse+`.
+| ◾◽◽                 | -            | листа бафера       | Пребацивање на бафер (претходно посећени багер ако је бафер текући). | Signal `+buflist_mouse+`.
+| ◽◽◾                 | -            | листа бафера       | Пребацивање на наредни посећени бафер ако је бафер текући. | Signal `+buflist_mouse+`.
+| kbd:[Ctrl+▲]        | -            | листа бафера       | Пребацивање на претходни бафер. | Signal `+buflist_mouse+`.
+| kbd:[Ctrl+▼]        | -            | листа бафера        | Пребацивање на наредни бафер. | Signal `+buflist_mouse+`.
+| ◾◽◽                 | горе         | листа надимака      | Скроловање једне стране навише у листи надимака. | `+/bar scroll nicklist ${_window_number} -100%+`
+| ◾◽◽                 | доле         | листа надимака      | Скроловање једне стране наниже у листи надимака. | `+/bar scroll nicklist ${_window_number} +100%+`
+| ◾◽◽                 | горе (дуго)  | листа надимака      | Скок на почетак листе надимака. | `+/bar scroll nicklist ${_window_number} b+`
+| ◾◽◽                 | доле (дуго)  | листа надимака      | Скок на крај листе надимака. | `+/bar scroll nicklist ${_window_number} e+`
+| ◾◽◽                 | -            | листа надимака      | Отварање упита са надимком. | `+/window ${_window_number};/query ${nick}+`
+| ◽◽◾                 | -            | листа надимака      | Извршавање whois над надимком. | `+/window ${_window_number};/whois ${nick}+`
+| ◾◽◽                 | лево         | листа надимака      | Избацивање надимка. | `+/window ${_window_number};/kick ${nick}+`
+| ◾◽◽                 | лево (дуго)  | листа надимака      | Избацивање и забрана надимка. | `+/window ${_window_number};/kickban ${nick}+`
+| ◽◽◾                 | лево         | листа надимака      | Забрана надимка. | `+/window ${_window_number};/ban ${nick}+`
+| ◽◽◾                 | -            | унос                | Хвата догађај миша и умеће његов кôд у командну линију. | `+/input grab_mouse_area+`
+| kbd:[▲]             | -            | било која трака     | Скролује траку за -20%. | `+/bar scroll ${_bar_name} ${_window_number} -20%+`
+| kbd:[▼]             | -            | било која трака     | Скролује траку за +20%. | `+/bar scroll ${_bar_name} ${_window_number} +20%+`
+| ◽◾◽                 | -            | било где            | Започиње режим померања курсора на овој тачки. | `+/cursor go ${_x},${_y}+`
 |===
 
 [NOTE]
 ^(1)^ kbd:[▲] и kbd:[▼] значе точкић навише и наниже.
 
+// TRANSLATION MISSING
 [[key_bindings_fset_buffer]]
-==== Тастери за fset бафер
+==== Fset buffer
 
 Ови тастери и акције се користе у fset баферу (погледајте<<fset_plugin,Fset додатак>>).
 
 [width="100%", cols="^.^3,^.^2,.^8,.^5", options="header"]
 |===
-| Тастер             | Акција ^(1)^ | Опис | Команда
-| kbd:[↑]            |              | Помера једну линију навише. | `+/fset -up+`
-| kbd:[↓]            |              | Помера једну линију наниже. | `+/fset -down+`
-| kbd:[PgUp]         |              | Помера једну страну навише. | `+/window page_up+`
-| kbd:[PgDn]         |              | Помера једну страну наниже. | `+/window page_down+`
-| kbd:[Alt+Home]     | `pass:[<<]`  | Скок на прву линију. | `+/fset -go 0+`
-| kbd:[Alt+End]      | `pass:[>>]`  | Скок на последњу линију. | `+/fset -go end+`
-| kbd:[F11]          | `pass:[<]`   | Скролује хоризонтално у лево. | `+/fset -left+`
-| kbd:[F12]          | `pass:[>]`   | Скролује хоризонтално у десно. | `+/fset -right+`
-| kbd:[Alt+Space]    | `t`          | Пребацује стање логичке вредности. | `+/fset -toggle+`
-| kbd:[Alt+-]        | `-`          | Одузима 1 од вредности за цео број/боју, поставља вредност за остале типове. | `+/fset -add -1+`
-| kbd:[Alt++]        | `+`          | Додаје 1 на вредност за цео број/боју, надовезује вредност за остале типове. | `+/fset -add 1+`
-| kbd:[Alt+f],
-  kbd:[Alt+r]        | `r`          | Ресетује вредност. | `+/fset -reset+`
-| kbd:[Alt+f],
-  kbd:[Alt+u]        | `u`          | Поставља да је вредност празна. | `+/fset -unset+`
-| kbd:[Alt+Enter]    | `s`          | Поставља вредност. | `+/fset -set+`
-| kbd:[Alt+f],
-  kbd:[Alt+n]        | `n`          | Поставља нову вредност. | `+/fset -setnew+`
-| kbd:[Alt+f],
-  kbd:[Alt+a]        | `a`          | Надовезује на вредност. | `+/fset -append+`
-| kbd:[Alt+,]        | `,`          | Маркира/уклања маркирање са опције. | `+/fset -mark 1+`
-| kbd:[Shift+↑]      |              | Помера једну линију навише и маркира/уклања маркирање са опције. | `+/fset -up; /fset -mark+`
-| kbd:[Shift+↓]      |              | Маркира/уклања маркирање са опције и помера се једну линију наниже. | `+/fset -mark; /fset -down+`
-|                    | `m:xxx`      | Маркира приказане опције које се подударају са филтером „xxx” (дозвољава се било који филтер над опцијом или вредности, погледајте <<command_fset_fset,fset команду>>). |
-|                    | `u:xxx`      | Уклања маркирање са приказаних опција које се подударају са филтером „xxx” (дозвољава се било који филтер над опцијом или вредности, погледајте <<command_fset_fset,fset команду>>). |
-| kbd:[Ctrl+l] (`L`) |              | Освежава опције и цео екран. | `+/fset -refresh+`
-|                    | `$`          | Освежава опције (маркиране опције остају маркиране). |
-|                    | `$$`         | Освежава опције (уклања се маркирање са свих опција). |
-| kbd:[Alt+p]        |              | Пребацује стање опција описа додатка (`pass:[plugins.desc.*]`). | `+/mute /set fset.look.show_plugins_desc toggle+`
-| kbd:[Alt+v]        |              | Пребацује стање видљивости траке помоћи. | `+/bar toggle fset+`
-|                    | `s:x,y`      | Сортира опције по пољима x,y (погледајте опцију <<option_fset.look.sort,fset.look.sort>>). | `+/mute /set fset.look.sort x,y+`
-|                    | `s:`         | Ресетује сортирање на подразумевану вредност (погледајте опцију <<option_fset.look.sort,fset.look.sort>>). | `+/mute /unset fset.look.sort+`
-|                    | `w:xxx`      | Извози опције у фајл „xxx”. | `+/fset -export xxx+`
-|                    | `w-:xxx`     | Извози опције у фајл „xxx” без помоћи. | `+/fset -export -nohelp xxx+`
-|                    | `w+:xxx`     | Извози опције у фајл „xxx” заједно са помоћи. | `+/fset -export -help xxx+`
-| kbd:[Ctrl+x]       | `x`          | Пребацује формат који се користи за приказ опција. | `+/fset -format+`
-|                    | `q`          | Затвара fset бафер. | `+/buffer close+`
+| Тастер                   | Акција ^(1)^ | Опис | Команда
+| kbd:[↑]                  |              | Помера једну линију навише. | `+/fset -up+`
+| kbd:[↓]                  |              | Помера једну линију наниже. | `+/fset -down+`
+| kbd:[PgUp]               |              | Помера једну страну навише. | `+/window page_up+`
+| kbd:[PgDn]               |              | Помера једну страну наниже. | `+/window page_down+`
+| kbd:[Alt+Home]           | `pass:[<<]`  | Скок на прву линију. | `+/fset -go 0+`
+| kbd:[Alt+End]            | `pass:[>>]`  | Скок на последњу линију. | `+/fset -go end+`
+| kbd:[F11]                | `pass:[<]`   | Скролује хоризонтално у лево. | `+/fset -left+`
+| kbd:[F12]                | `pass:[>]`   | Скролује хоризонтално у десно. | `+/fset -right+`
+| kbd:[Alt+Space]          | `t`          | Пребацује стање логичке вредности. | `+/fset -toggle+`
+| kbd:[Alt+-]              | `-`          | Одузима 1 од вредности за цео број/боју, поставља вредност за остале типове. | `+/fset -add -1+`
+| kbd:[Alt++]              | `+`          | Додаје 1 на вредност за цео број/боју, надовезује вредност за остале типове. | `+/fset -add 1+`
+| kbd:[Alt+f], kbd:[Alt+r] | `r`          | Ресетује вредност. | `+/fset -reset+`
+| kbd:[Alt+f], kbd:[Alt+u] | `u`          | Поставља да је вредност празна. | `+/fset -unset+`
+| kbd:[Alt+Enter]          | `s`          | Поставља вредност. | `+/fset -set+`
+| kbd:[Alt+f], kbd:[Alt+n] | `n`          | Поставља нову вредност. | `+/fset -setnew+`
+| kbd:[Alt+f], kbd:[Alt+a] | `a`          | Надовезује на вредност. | `+/fset -append+`
+| kbd:[Alt+,]              | `,`          | Маркира/уклања маркирање са опције. | `+/fset -mark 1+`
+| kbd:[Shift+↑]            |              | Помера једну линију навише и маркира/уклања маркирање са опције. | `+/fset -up; /fset -mark+`
+| kbd:[Shift+↓]            |              | Маркира/уклања маркирање са опције и помера се једну линију наниже. | `+/fset -mark; /fset -down+`
+|                          | `m:xxx`      | Маркира приказане опције које се подударају са филтером „xxx” (дозвољава се било који филтер над опцијом или вредности, погледајте <<command_fset_fset,fset команду>>). |
+|                          | `u:xxx`      | Уклања маркирање са приказаних опција које се подударају са филтером „xxx” (дозвољава се било који филтер над опцијом или вредности, погледајте <<command_fset_fset,fset команду>>). |
+| kbd:[Ctrl+l] (`L`)       |              | Освежава опције и цео екран. | `+/fset -refresh+`
+|                          | `$`          | Освежава опције (маркиране опције остају маркиране). |
+|                          | `$$`         | Освежава опције (уклања се маркирање са свих опција). |
+| kbd:[Alt+p]              |              | Пребацује стање опција описа додатка (`pass:[plugins.desc.*]`). | `+/mute /set fset.look.show_plugins_desc toggle+`
+| kbd:[Alt+v]              |              | Пребацује стање видљивости траке помоћи. | `+/bar toggle fset+`
+|                          | `s:x,y`      | Сортира опције по пољима x,y (погледајте опцију <<option_fset.look.sort,fset.look.sort>>). | `+/mute /set fset.look.sort x,y+`
+|                          | `s:`         | Ресетује сортирање на подразумевану вредност (погледајте опцију <<option_fset.look.sort,fset.look.sort>>). | `+/mute /unset fset.look.sort+`
+|                          | `w:xxx`      | Извози опције у фајл „xxx”. | `+/fset -export xxx+`
+|                          | `w-:xxx`     | Извози опције у фајл „xxx” без помоћи. | `+/fset -export -nohelp xxx+`
+|                          | `w+:xxx`     | Извози опције у фајл „xxx” заједно са помоћи. | `+/fset -export -help xxx+`
+| kbd:[Ctrl+x]             | `x`          | Пребацује формат који се користи за приказ опција. | `+/fset -format+`
+|                          | `q`          | Затвара fset бафер. | `+/buffer close+`
 |===
 
 [NOTE]
 ^(1)^ Акција мора да се унесе као унос у командну линију, након чега се притисне kbd:[Ентер].
 
+// TRANSLATION MISSING
 [[key_bindings_script_buffer]]
-==== Тастери за script бафер
+==== Script buffer
 
 Ови тастери и акције се користе у script баферу (погледајте <<scripts_plugins,Script додатак>>).
 
 [width="100%", cols="^.^3,^.^2,.^8,.^5", options="header"]
 |===
-| Тастер             | Акција ^(1)^ | Опис | Команда
-| kbd:[↑]            |              | Помера једну линију навише. | `+/script up+`
-| kbd:[↓]            |              | Помера једну линију наниже. | `+/script down+`
-| kbd:[PgUp]         |              | Помера једну страну навише. | `+/window page_up+`
-| kbd:[PgDn]         |              | Помера једну страну наниже. | `+/window page_down+`
-| kbd:[Alt+i]        | `i`          | Инсталира скрипту. | `+/script install+`
-| kbd:[Alt+r]        | `r`          | Брише скрипту. | `+/script remove+`
-| kbd:[Alt+l] (`L`)  | `l`          | Учитава скрипту. | `+/script load+`
-| kbd:[Alt+u]        | `u`          | Уклања скрипту из меморије. | `+/script unload+`
-| kbd:[Alt+Shift+A]  | `A`          | Аутоучитавање скрипте. | `+/script toggleautoload+`
-| kbd:[Alt+h]        | `h`          | Задржава/отпушта скрипту. | `+/script hold+`
-| kbd:[Alt+v]        | `v`          | Преглед скрипте. | `+/script show+`
+| Тастер            | Акција ^(1)^ | Опис | Команда
+| kbd:[↑]           |              | Помера једну линију навише. | `+/script up+`
+| kbd:[↓]           |              | Помера једну линију наниже. | `+/script down+`
+| kbd:[PgUp]        |              | Помера једну страну навише. | `+/window page_up+`
+| kbd:[PgDn]        |              | Помера једну страну наниже. | `+/window page_down+`
+| kbd:[Alt+i]       | `i`          | Инсталира скрипту. | `+/script install+`
+| kbd:[Alt+r]       | `r`          | Брише скрипту. | `+/script remove+`
+| kbd:[Alt+l] (`L`) | `l`          | Учитава скрипту. | `+/script load+`
+| kbd:[Alt+u]       | `u`          | Уклања скрипту из меморије. | `+/script unload+`
+| kbd:[Alt+Shift+A] | `A`          | Аутоучитавање скрипте. | `+/script toggleautoload+`
+| kbd:[Alt+h]       | `h`          | Задржава/отпушта скрипту. | `+/script hold+`
+| kbd:[Alt+v]       | `v`          | Преглед скрипте. | `+/script show+`
 |===
 
 [NOTE]
