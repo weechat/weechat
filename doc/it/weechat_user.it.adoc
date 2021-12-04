@@ -697,6 +697,58 @@ Some environment variables are used by WeeChat if they are defined:
 |===
 
 // TRANSLATION MISSING
+[[colors_support]]
+=== Colors support
+
+WeeChat può usare fino a 32767 coppie di colore per visualizzare il testo nelle barre e
+nell'area di chat(il terminale deve supportare 256 colori per essere utilizzati in WeeChat).
+
+In base al valore della variabile di ambiente _TERM_, potrebbero verificarsi i
+seguenti limiti per i colori in WeeChat:
+
+[width="75%",cols="8,>3,>3",options="header"]
+|===
+| $TERM                                  | Colori | Coppie
+| "rxvt-unicode", "xterm", ...           |     88 |  32767
+| "rxvt-256color", "xterm-256color", ... |    256 |  32767
+| "screen"                               |      8 |     64
+| "screen-256color"                      |    256 |  32767
+| "tmux"                                 |      8 |     64
+| "tmux-256color"                        |    256 |  32767
+|===
+
+È possibile eseguire `weechat --colors` o utilizzare il comando `/color` in
+WeeChat per visualizzare i limiti del proprio ambiente.
+
+Alcuni valori raccomandati per _TERM_ se si desiderano 256 colori:
+
+* con screen: _screen-256color_
+// TRANSLATION MISSING
+* under tmux: _screen-256color_ or _tmux-256color_
+// TRANSLATION MISSING
+* outside screen/tmux: _xterm-256color_, _rxvt-256color_, _putty-256color_, ...
+
+[NOTE]
+Potrebbe essere necessario installare il pacchetto "ncurses-term" per usare
+questi valori nella variabile _TERM_.
+
+Se si sta utilizzando screen, è possibile aggiungere questa riga al
+proprio _~/.screenrc_:
+
+----
+term screen-256color
+----
+
+// TRANSLATION MISSING
+If your _TERM_ variable has wrong value and that WeeChat is already running,
+you can change it with these two commands:
+
+----
+/set env TERM screen-256color
+/upgrade
+----
+
+// TRANSLATION MISSING
 [[files_and_directories]]
 === Files and directories
 
@@ -1047,157 +1099,6 @@ kbd:[!]
 Nel plugin irc, si possono riorganizzare i colori usando l'opzione
 <<option_irc.color.mirc_remap,irc.color.mirc_remap>>.
 
-[[colors]]
-=== Colori
-
-WeeChat può usare fino a 32767 coppie di colore per visualizzare il testo nelle barre e
-nell'area di chat(il terminale deve supportare 256 colori per essere utilizzati in WeeChat).
-
-In base al valore della variabile di ambiente _TERM_, potrebbero verificarsi i
-seguenti limiti per i colori in WeeChat:
-
-[width="75%",cols="8,>3,>3",options="header"]
-|===
-| $TERM                                  | Colori | Coppie
-| "rxvt-unicode", "xterm", ...           |     88 |  32767
-| "rxvt-256color", "xterm-256color", ... |    256 |  32767
-| "screen"                               |      8 |     64
-| "screen-256color"                      |    256 |  32767
-| "tmux"                                 |      8 |     64
-| "tmux-256color"                        |    256 |  32767
-|===
-
-È possibile eseguire `weechat --colors` o utilizzare il comando `/color` in
-WeeChat per visualizzare i limiti del proprio ambiente.
-
-Alcuni valori raccomandati per _TERM_ se si desiderano 256 colori:
-
-* con screen: _screen-256color_
-// TRANSLATION MISSING
-* under tmux: _screen-256color_ or _tmux-256color_
-// TRANSLATION MISSING
-* outside screen/tmux: _xterm-256color_, _rxvt-256color_, _putty-256color_, ...
-
-[NOTE]
-Potrebbe essere necessario installare il pacchetto "ncurses-term" per usare
-questi valori nella variabile _TERM_.
-
-Se si sta utilizzando screen, è possibile aggiungere questa riga al
-proprio _~/.screenrc_:
-
-----
-term screen-256color
-----
-
-// TRANSLATION MISSING
-If your _TERM_ variable has wrong value and that WeeChat is already running,
-you can change it with these two commands:
-
-----
-/set env TERM screen-256color
-/upgrade
-----
-
-[[colors_basic]]
-==== Colori base
-
-I colori base in WeeChat sono:
-
-[width="75%",cols="1m,4",options="header"]
-|===
-| Nome         | Colore
-| default      | Colore predefinito del terminale (trasparente per lo sfondo)
-| black        | Nero
-| darkgray     | Grigio scuro
-| red          | Rosso scuro
-| lightred     | Rosso chiaro
-| green        | Verde scuro
-| lightgreen   | Verde chiaro
-| brown        | Marrone
-| yellow       | Giallo
-| blue         | Blu scuro
-| lightblue    | Blu chiaro
-| magenta      | Rosa scuro
-| lightmagenta | Rosa chiaro
-| cyan         | Azzurro scuro
-| lightcyan    | Azzurro chiaro
-| gray         | Grigio
-| white        | Bianco
-|===
-
-[[colors_extended]]
-==== Colori estesi
-
-WeeChat alloca dinamicamente le coppie colore quando vengono usati i colori
-sullo schermo (per mostrare buffer e barre).
-
-In aggiunta ai colori di base, si può usare un numero per il colore compreso
-tra 1 e il limite del proprio terminale.
-
-Il comando `/color` mostra i colori attivi ed i limiti. Com kbd:[Alt+c] si può
-passare temporaneamente ai colori del terminale per sceglierne uno.
-
-Se ad esempio si desidera visualizzare l'ora in arancione nel buffer:
-
-----
-/set weechat.color.chat_time 214
-----
-
-O se si desidera uno sfondo verde scuro per la barra di stato:
-
-----
-/set weechat.bar.status.color_bg 22
-----
-
-[[colors_aliases]]
-==== Alias
-
-Si possono aggiungere degli alias ai colori con il comando `/color alias` e
-usarli in ogni opzione relativa al colore.
-
-Ad esempio:
-
-----
-/color alias 214 orange
-/set weechat.color.chat_delimiters orange
-----
-
-[[colors_attributes]]
-==== Attributi
-
-Esistono alcuni attributi per i colori. Uno o più attributi vanno aggiunti prima
-del nome o del numero del colore:
-
-* `+*+` : testo in grassetto
-* `+!+` : video inverso
-* `+/+` : testo in corsivo
-* `+_+` : testo sottolineato
-* `+|+` : mantiene attributi: non ripristina grassetto/inverso/sottolineato
-  al cambio di colore
-
-Ad esempio se si vuole il proprio nick bianco e sottolineato:
-
-----
-/set weechat.color.chat_nick_self _white
-----
-
-O se si desidera l'ora nella barra di stato arancione sottolineata
-e in grassetto:
-
-----
-/set weechat.color.status_time *_214
-----
-
-Per usare un attributo con il colore predefinito del terminale (-1), bisogna
-usare un numero maggiore dell'ultimo colore del terminale, ad esempio il
-numero massimo in WeeChat: 99999.
-
-Esempio di grassetto con il colore di primo piano del terminale:
-
-----
-/set weechat.color.status_time *99999
-----
-
 [[buffers_and_windows]]
 === Buffer e finestre
 
@@ -1537,6 +1438,897 @@ By default WeeChat and its default plugins interpret these variables:
 External plugins and scripts can define and use other local variables.
 
 // TRANSLATION MISSING
+[[bare_display]]
+=== Bare display
+
+A special display, called "bare display" can be used for easy click on long URLs
+and selection of text (using the mouse).
+
+The bare display has following features:
+
+* it displays only the content of current buffer: no window split neither bars
+  (no title, nicklist, status, input, ...)
+* the WeeChat mouse support is disabled (if it was enabled): you can use your
+  mouse like you do in the terminal to click on URLs and select text
+* ncurses is not used, therefore URLs are not cut at the end of lines.
+
+The default key to enable bare display is kbd:[Alt+l] (`L`), and same key to exit
+(or by default anything changing the input will exit the bare display, see option
+<<option_weechat.look.bare_display_exit_on_input,weechat.look.bare_display_exit_on_input>>).
+
+The time format can be customized with the option
+<<option_weechat.look.bare_display_time_format,weechat.look.bare_display_time_format>>.
+
+The bare display can be enabled for a specific delay using the command
+<<command_weechat_window,/window>>.
+
+If WeeChat looks like that:
+
+....
+┌──────────────────────────────────────────────────────────────────────────────────────┐
+│1.libera │Welcome to #abc                                                             │
+│  weechat│12:52:27   --> | Flashy (flashcode@weechat.org) has joined #abc     │@Flashy│
+│2.  #test│12:52:27    -- | Nicks #abc: [@Flashy @joe +weebot peter]           │@joe   │
+│3.  #abc │12:52:27    -- | Channel #abc: 4 nicks (2 ops, 1 voice, 1 normal)   │+weebot│
+│4.  #def │12:52:27    -- | Channel created on Tue Jan 27 06:30:17 2009        │peter  │
+│5.  #ghi │12:54:15 peter | hey!                                               │       │
+│         │12:55:01  @joe | peter: hook_process: https://weechat.org/files/doc │       │
+│         │               | /devel/weechat_plugin_api.en.html#_weechat_hook_pr │       │
+│         │               | ocess                                              │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │[12:55] [5] [irc/libera] 3:#abc(+n){4}                                      │
+│         │[@Flashy(i)] hi peter!█                                                     │
+└──────────────────────────────────────────────────────────────────────────────────────┘
+....
+
+The screen will look like that in bare display:
+
+....
+┌──────────────────────────────────────────────────────────────────────────────────────┐
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│12:52 --> Flashy (flashcode@weechat.org) has joined #abc                              │
+│12:52 -- Nicks #abc: [@Flashy @joe +weebot peter]                                     │
+│12:52 -- Channel #abc: 4 nicks (2 ops, 1 voice, 1 normal)                             │
+│12:52 -- Channel created on Tue Jan 27 06:30:17 2009                                  │
+│12:54 <peter> hey!                                                                    │
+│12:55 <@joe> peter: hook_process: https://weechat.org/files/doc/devel/weechat_plugin_a│
+│pi.en.html#_weechat_hook_process                                                      │
+└──────────────────────────────────────────────────────────────────────────────────────┘
+....
+
+So you can click the URL from _joe_ without any problem in your terminal (of
+course this supposes that your terminal supports click on URLs).
+
+// TRANSLATION MISSING
+[[key_bindings]]
+== Key bindings
+
+// TRANSLATION MISSING
+WeeChat provides a lot of default key bindings, listed in the following chapters. +
+They can be changed and new ones can be added with the <<command_weechat_key,/key>> command.
+
+[[key_bindings_command_line]]
+=== Tasti per la riga di comando
+
+// TRANSLATION MISSING
+[[key_bindings_cmdline_cursor_movement]]
+==== Cursor movement
+
+[width="100%",cols="^.^3,.^8,.^5",options="header"]
+|===
+| Tasti          | Descrizione | Comando
+| kbd:[←] +
+  kbd:[Ctrl+b]   | Passa al carattere precedente nella riga di comando. | `+/input move_previous_char+`
+| kbd:[→] +
+  kbd:[Ctrl+f]   | Passa al carattere successivo nella riga di comando. | `+/input move_next_char+`
+| kbd:[Ctrl+←] +
+  kbd:[Alt+b]    | Passa alla parola precedente nella riga di comando. | `+/input move_previous_word+`
+| kbd:[Ctrl+→] +
+  kbd:[Alt+f]    | Passa alla parola successiva nella riga di comando. | `+/input move_next_word+`
+| kbd:[Home] +
+  kbd:[Ctrl+a]   | Si sposta all'inizio della riga di comando. | `+/input move_beginning_of_line+`
+| kbd:[End] +
+  kbd:[Ctrl+e]   | Si sposta alla fine della riga di comando. | `+/input move_end_of_line+`
+|===
+
+// TRANSLATION MISSING
+[[key_bindings_cmdline_editing]]
+==== Editing
+
+[width="100%",cols="^.^3,.^8,.^5",options="header"]
+|===
+| Tasti             | Descrizione | Comando
+| kbd:[Del] +
+  kbd:[Ctrl+d]      | Elimina il carattere successivo nella riga di comando. | `+/input delete_next_char+`
+| kbd:[Backspace] +
+  kbd:[Ctrl+h]      | Elimina il carattere precedente nella riga di comando. | `+/input delete_previous_char+`
+// TRANSLATION MISSING
+| kbd:[Ctrl+k]      | Elimina dal cursore fino alla fine della riga di comando (deleted string is copied to the internal clipboard). | `+/input delete_end_of_line+`
+| kbd:[Ctrl+t]      | Inverti caratteri. | `+/input transpose_chars+`
+// TRANSLATION MISSING
+| kbd:[Ctrl+u]      | Elimina dal cursore fino all'inizio della riga di comando (deleted string is copied to the internal clipboard). | `+/input delete_beginning_of_line+`
+// TRANSLATION MISSING
+| kbd:[Ctrl+w]      | Elimina la parola precedente nella riga di comando (deleted string is copied to the internal clipboard). | `+/input delete_previous_word+`
+// TRANSLATION MISSING
+| kbd:[Ctrl+y]      | Paste the internal clipboard content. | `+/input clipboard_paste+`
+| kbd:[Ctrl+_]      | Annulla l'ultima azione sulla riga di comando. | `+/input undo+`
+| kbd:[Alt+_]       | Ripete l'ultima azione sulla riga di comando. | `+/input redo+`
+| kbd:[Tab]         | Completa comando o nick (kbd:[Tab] di nuovo: trova prossimo completamento). | `+/input complete_next+`
+| kbd:[Shift+Tab]   | Senza completamento: effettua un completamento parziale, con completamento in sospeso: completa con il completamento precedente. | `+/input complete_previous+`
+| kbd:[Invio] +
+  kbd:[Ctrl+j] +
+  kbd:[Ctrl+m]      | Esegue comando o invia messaggio (in modalità ricerca: ferma ricerca). | `+/input return+`
+// TRANSLATION MISSING
+| kbd:[Alt+Enter]   | Insert a newline. | `+/input insert \n+`
+// TRANSLATION MISSING
+| kbd:[Alt+d]       | Elimina la parola successiva nella riga di comando (deleted string is copied to the internal clipboard). | `+/input delete_next_word+`
+| kbd:[Alt+k]       | Cattura un tasto ed inserisce il suo codice (e il comando associato se il tasto esiste) nella riga di comando. | `+/input grab_key_command+`
+| kbd:[Alt+r]       | Elimina l'intera riga di comando. | `+/input delete_line+`
+|===
+
+// TRANSLATION MISSING
+[[key_bindings_cmdline_color_codes]]
+==== Color codes
+
+[width="100%",cols="^.^3,.^8,.^5",options="header"]
+|===
+| Tasti                 | Descrizione | Comando
+| kbd:[Ctrl+c], kbd:[b] | Inserisce il codice per il testo in grassetto. | `+/input insert \x02+`
+| kbd:[Ctrl+c], kbd:[c] | Inserisce il codice per il testo colorato. | `+/input insert \x03+`
+| kbd:[Ctrl+c], kbd:[i] | Inserisce il codice per il testo in corsivo. | `+/input insert \x1D+`
+| kbd:[Ctrl+c], kbd:[o] | Inserisce il codice per il reset dei colori. | `+/input insert \x0F+`
+| kbd:[Ctrl+c], kbd:[v] | Inserisce il codice per l'inversione dei colori. | `+/input insert \x16+`
+| kbd:[Ctrl+c], kbd:[_] | Inserisce il codice per il testo sottolineato. | `+/input insert \x1F+`
+|===
+
+// TRANSLATION MISSING
+[[key_bindings_cmdline_history]]
+==== Command history
+
+[width="100%",cols="^.^3,.^8,.^5",options="header"]
+|===
+| Tasti        | Descrizione | Comando
+| kbd:[↑]      | Chiama comando/messaggio precedente (in modalità ricerca: cerca in alto). | `+/input history_previous+`
+| kbd:[↓]      | Chiama comando/messaggio precedente (in modalità ricerca: cerca in basso). | `+/input history_next+`
+| kbd:[Ctrl+↑] | Chiama il comando/messaggio precedente nella cronologia globale (identico per tutti i buffer). | `+/input history_global_previous+`
+| kbd:[Ctrl+↓] | Chiama il comando/messaggio successivo nella cronologia globale (identico per tutti i buffer). | `+/input history_global_next+`
+|===
+
+// TRANSLATION MISSING
+[[key_bindings_buffers]]
+=== Buffers
+
+[width="100%",cols="^.^3,.^8,.^5",options="header"]
+|===
+| Tasti                          | Descrizione | Comando
+| kbd:[Ctrl+r]                   | Cerca del testo nella cronologia del buffer (consultare <<key_bindings_search_context,tasti per il contesto search>>). | `+/input search_text_here+`
+| kbd:[Ctrl+s], kbd:[Ctrl+u]     | Imposta l'evidenziatore dei messaggi non letti su tutti i buffer. | `+/input set_unread+`
+| kbd:[Ctrl+x]                   | Passa al buffer attivo se i buffer sono collegati con lo stesso numero. | `+/input switch_active_buffer+`
+// TRANSLATION MISSING
+| kbd:[Alt+x]                    | Zoom on merged buffer (kbd:[Alt+x] again: display all merged buffers). | `+/input zoom_merged_buffer+`
+| kbd:[PgUp]                     | Scorre in alto di una pagina nella cronologia del buffer. | `+/window page_up+`
+| kbd:[PgDn]                     | Scorre di una pagina in basso nella cronologia del buffer. | `+/window page_down+`
+| kbd:[Alt+PgUp]                 | Scorre di qualche riga in alto nella cronologia del buffer. | `+/window scroll_up+`
+| kbd:[Alt+PgDn]                 | Scorre di qualche riga in basso nella cronologia del buffer. | `+/window scroll_down+`
+| kbd:[Alt+Home]                 | Scorre in cima al buffer. | `+/window scroll_top+`
+| kbd:[Alt+End]                  | Scorre alla fine del del buffer. | `+/window scroll_bottom+`
+| kbd:[Alt+←] +
+  kbd:[Alt+↑] +
+  kbd:[Ctrl+p] +
+  kbd:[F5]                       | Passa al buffer precedente. | `+/buffer -1+`
+| kbd:[Alt+→] +
+  kbd:[Alt+↓] +
+  kbd:[Ctrl+n] +
+  kbd:[F6]                       | Passa al buffer successivo. | `+/buffer +1+`
+// TRANSLATION MISSING
+| kbd:[Alt+j], kbd:[Alt+f]       | Switch to first buffer. | `+/buffer -+`
+| kbd:[Alt+j], kbd:[Alt+l] (`L`) | Passa all'ultimo buffer. | `+/buffer ++`
+| kbd:[Alt+j], kbd:[Alt+r]       | Passa al buffer raw IRC. | `+/server raw+`
+| kbd:[Alt+j], kbd:[Alt+s]       | Passa al buffer server IRC. | `+/server jump+`
+| kbd:[Alt+0...9]                | Passa al buffer numero (0 = 10). | `+/buffer *N+`
+| kbd:[Alt+j], kbd:[01...99]     | Passa al buffer numero. | `+/buffer *NN+`
+| kbd:[Alt+n]                    | Scorre fino alla notifica successiva. | `+/window scroll_next_highlight+`
+| kbd:[Alt+p]                    | Scorre fino alla notifica precedente. | `+/window scroll_previous_highlight+`
+| kbd:[Alt+u]                    | Scorre fino alla prima riga non letta nel buffer. | `+/window scroll_unread+`
+| kbd:[Alt+<]                    | Passa al buffer precedente nella lista dei buffer visitati. | `+/input jump_previously_visited_buffer+`
+| kbd:[Alt+>]                    | Passa al buffer successivo nella lista dei buffer visitati. | `+/input jump_next_visited_buffer+`
+| kbd:[Alt+/]                    | Passa all'ultimo buffer mostrato (prima dell'ultimo passaggio ad un buffer). | `+/input jump_last_buffer_displayed+`
+|===
+
+// TRANSLATION MISSING
+[[key_bindings_windows]]
+=== Windows
+
+[width="100%",cols="^.^3,.^8,.^5",options="header"]
+|===
+| Tasti                    | Descrizione | Comando
+| kbd:[Ctrl+l] (`L`)       | Ridisegna l'intera finestra. | `+/window refresh+`
+// TRANSLATION MISSING
+| kbd:[Alt+l] (`L`)        | Toggle bare display. | `+/window bare+`
+| kbd:[F7]                 | Passa alla finestra precedente. | `+/window -1+`
+| kbd:[F8]                 | Passa alla finestra successiva. | `+/window +1+`
+| kbd:[Alt+w], kbd:[Alt+↑] | Passa alla finestra in alto. | `+/window up+`
+| kbd:[Alt+w], kbd:[Alt+↓] | Passa alla finestra in basso. | `+/window down+`
+| kbd:[Alt+w], kbd:[Alt+←] | Passa alla finestra sulla sinistra. | `+/window left+`
+| kbd:[Alt+w], kbd:[Alt+→] | Passa alla finestrs sulla destra. | `+/window right+`
+| kbd:[Alt+w], kbd:[Alt+b] | Bilancia le dimensioni di tutte le finestre. | `+/window balance+`
+| kbd:[Alt+w], kbd:[Alt+s] | Scambia i buffer di due finestra. | `+/window swap+`
+| kbd:[Alt+z]              | Ingrandimento sulla finestra attiva (kbd:[Alt+z] di nuovo: ripristina lo stato iniziale della finestra, prima dell'ingrandimento). | `+/window zoom+`
+|===
+
+[[key_bindings_bars]]
+=== Bars
+
+[width="100%",cols="^.^3,.^8,.^5",options="header"]
+|===
+| Tasti             | Descrizione | Comando
+// TRANSLATION MISSING
+| kbd:[F1] +
+  kbd:[Ctrl+F1]     | Scroll up one page in buflist. | `+/bar scroll buflist * -100%+`
+// TRANSLATION MISSING
+| kbd:[F2] +
+  kbd:[Ctrl+F2]     | Scroll down one page in buflist. | `+/bar scroll buflist * +100%+`
+// TRANSLATION MISSING
+| kbd:[Alt+F1]      | Go to the beginning of buflist. | `+/bar scroll buflist * b+`
+// TRANSLATION MISSING
+| kbd:[Alt+F2]      | Go to the end of buflist. | `+/bar scroll buflist * e+`
+| kbd:[F9]          | Scorre il titolo del buffer sulla sinistra. | `+/bar scroll title * -30%+`
+| kbd:[F10]         | Scorre il titolo del buffer sulla destra. | `+/bar scroll title * +30%+`
+| kbd:[F11] +
+  kbd:[Ctrl+F11]    | Scorre di una pagina in alto nella lista nick. | `+/bar scroll nicklist * -100%+`
+| kbd:[F12] +
+  kbd:[Ctrl+F12]    | Scorre di una pagina in basso nella lista nick. | `+/bar scroll nicklist * +100%+`
+| kbd:[Alt+F11]     | Sposta all'inizio della lista nick. | `+/bar scroll nicklist * b+`
+| kbd:[Alt+F12]     | Sposta alla fine della lista nick. | `+/bar scroll nicklist * e+`
+// TRANSLATION MISSING
+| kbd:[Alt+Shift+B] | Toggle buflist. | `+/buflist toggle+`
+// TRANSLATION MISSING
+| kbd:[Alt+Shift+N] | Toggle nicklist bar. | `+/bar toggle nicklist+`
+|===
+
+[[key_bindings_hotlist]]
+=== Hotlist
+
+[width="100%",cols="^.^3,.^8,.^5",options="header"]
+|===
+| Tasti                          | Descrizione | Comando
+| kbd:[Alt+a]                    | Passa al buffer successivo con attività (con priorità: highligh, messagge, altro). | `+/input jump_smart+`
+// TRANSLATION MISSING
+| kbd:[Alt+h], kbd:[Alt+c]       | Clear hotlist (activity notification on buffers). | `+/input hotlist_clear+`
+// TRANSLATION MISSING
+| kbd:[Alt+h], kbd:[Alt+m]       | Remove current buffer from hotlist. | `+/input hotlist_remove_buffer+`
+// TRANSLATION MISSING
+| kbd:[Alt+h], kbd:[Alt+r]       | Restore latest hotlist removed in the current buffer. | `+/input hotlist_restore_buffer+`
+// TRANSLATION MISSING
+| kbd:[Alt+h], kbd:[Alt+Shift+R] | Restore latest hotlist removed in all buffers. | `+/input hotlist_restore_all+`
+|===
+
+// TRANSLATION MISSING
+[[key_bindings_toggle_keys]]
+=== Toggle keys
+
+[width="100%",cols="^.^3,.^8,.^5",options="header"]
+|===
+| Tasti       | Descrizione | Comando
+| kbd:[Alt+m] | Abilita/disabilita. | `+/mouse toggle+`
+// TRANSLATION MISSING
+| kbd:[Alt+s] | Toggle spell checker. | `+/mute spell toggle+`
+| kbd:[Alt+=] | Attiva/disattiva filtri. | `+/filter toggle+`
+// TRANSLATION MISSING
+| kbd:[Alt+-] | Toggle filters in current buffer. | `+/filter toggle @+`
+|===
+
+// TRANSLATION MISSING
+[[key_bindings_search_context]]
+=== Search context
+
+Questi tasti sono usati nel contesto "search" (quando viene digitato
+kbd:[Ctrl+r] per cercare del testo nel buffer).
+
+[width="100%",cols="^.^3,.^8,.^5",options="header"]
+|===
+| Tasti          | Descrizione | Comando
+// TRANSLATION MISSING
+| kbd:[Ctrl+r]   | Switch search type: string (default), regular expression. | `+/input search_switch_regex+`
+| kbd:[Alt+c]    | Passa alla ricerca esatta. | `+/input search_switch_case+`
+// TRANSLATION MISSING
+| kbd:[Tab]      | Switch search in: messages (default), prefixes, prefixes + messages. | `+/input search_switch_where+`
+| kbd:[↑]        | Cerca riga precedente. | `+/input search_previous+`
+| kbd:[↓]        | Cerca riga successiva. | `+/input search_next+`
+// TRANSLATION MISSING
+| kbd:[Enter] +
+  kbd:[Ctrl+j] +
+  kbd:[Ctrl+m]   | Stop search at current position. | `+/input search_stop_here+`
+// TRANSLATION MISSING
+| kbd:[Ctrl+q]   | Stop search and scroll to bottom of buffer. | `+/input search_stop+`
+|===
+
+// TRANSLATION MISSING
+[[key_bindings_cursor_context]]
+=== Cursor context
+
+Questi tasti sono usati nel contesto "cursor" (movimento libero del cursore
+sullo schermo.
+
+[width="100%",cols="^.^3,^.^2,.^7,.^7",options="header"]
+|===
+| Tasto          | Zona       | Descrizione | Comando
+| kbd:[↑]        | -          | Sposta il cursore di una riga in alto. | `+/cursor move up+`
+| kbd:[↓]        | -          | Sposta il cursore di una riga in basso. | `+/cursor move down+`
+| kbd:[←]        | -          | Sposta il cursore di una colonna a sinistra. | `+/cursor move left+`
+| kbd:[→]        | -          | Sposta il cursore di una colonna a destra. | `+/cursor move right+`
+| kbd:[Alt+↑]    | -          | Sposta il cursore nell'area in alto. | `+/cursor move area_up+`
+| kbd:[Alt+↓]    | -          | Sposta il cursore nell'area in basso. | `+/cursor move area_down+`
+| kbd:[Alt+←]    | -          | Sposta il cursore nell'area a sinistra. | `+/cursor move area_left+`
+| kbd:[Alt+→]    | -          | Sposta il cursore nell'area a destra. | `+/cursor move area_right+`
+| kbd:[m]        | chat       | Cita messaggio. | `+hsignal:chat_quote_message;/cursor stop+`
+| kbd:[q]        | chat       | Cita prefisso + messaggio. | `+hsignal:chat_quote_prefix_message;/cursor stop+`
+| kbd:[Q]        | chat       | Cita ora + prefisso + messaggio. | `+hsignal:chat_quote_time_prefix_message;/cursor stop+`
+| kbd:[b]        | lista nick | Ban di un nick. | `+/window ${_window_number};/ban ${nick}+`
+| kbd:[k]        | lista nick | Kick di un nick. | `+/window ${_window_number};/kick ${nick}+`
+| kbd:[K]        | lista nick | Kick e ban di un nick. | `+/window ${_window_number};/kickban ${nick}+`
+| kbd:[q]        | lista nick | Apri query con il nick. | `+/window ${_window_number};/query ${nick};/cursor stop+`
+| kbd:[w]        | lista nick | Effettua un whois sul nick. | `+/window ${_window_number};/whois ${nick}+`
+| kbd:[Enter] +
+  kbd:[Ctrl+j] +
+  kbd:[Ctrl+m]   | -          | Ferma la modalità cursore. | `+/cursor stop+`
+|===
+
+// TRANSLATION MISSING
+[[key_bindings_mouse]]
+=== Mouse
+
+// TRANSLATION MISSING
+These mouse actions are possible only if mouse is enabled with key kbd:[Alt+m]
+(command: `+/mouse toggle+`).
+
+// TRANSLATION MISSING (6)
+[width="100%",cols="^.^3,^.^3,^.^3,.^8,.^8",options="header"]
+|===
+// TRANSLATION MISSING
+| Tasto/Wheel ^(1)^ | Azione           | Zona                | Descrizione | Comando
+| ◾◽◽               | -                | chat                | Passa alla finestra. | `+/window ${_window_number}+`
+| ◾◽◽               | sinistra         | chat                | Passa al buffer precedente. | `+/window ${_window_number};/buffer +1+`
+| ◾◽◽               | destra           | chat                | Passa al buffer successivo. | `+/window ${_window_number};/buffer +1+`
+| ◾◽◽               | sinistra (lungo) | chat                | Switch to first buffer. | `+/window ${_window_number};/buffer 1+`
+| ◾◽◽               | destra (lungo)   | chat                | Passa all'ultimo buffer. | `+/window ${_window_number};/input jump_last_buffer+`
+| kbd:[▲]           | -                | chat                | Scorre di qualche riga in alto nella cronologia del buffer. | `+/window scroll_up -window ${_window_number}+`
+| kbd:[▼]           | -                | chat                | Scorre di qualche riga in basso nella cronologia del buffer. | `+/window scroll_down -window ${_window_number}+`
+| kbd:[Ctrl+▲]      | -                | chat                | Scroll horizontally to the left. | `+/window scroll_horiz -window ${_window_number} -10%+`
+| kbd:[Ctrl+▼]      | -                | chat                | Scroll horizontally to the right. | `+/window scroll_horiz -window ${_window_number} +10%+`
+// TRANSLATION MISSING
+| kbd:[▲]           | -                | chat: fset buffer   | Move five lines up in fset buffer. | `+/fset -up 5+`
+// TRANSLATION MISSING
+| kbd:[▼]           | -                | chat: fset buffer   | Move five lines down in fset buffer. | `+/fset -down 5+`
+// TRANSLATION MISSING
+| ◾◽◽               | -                | chat: fset buffer   | Select line in fset buffer. | `+/window ${_window_number};/fset -go ${_chat_line_y}+`
+// TRANSLATION MISSING
+| ◽◽◾               | -                | chat: fset buffer   | Toggle boolean (on/off) or edit the option value. | `+hsignal:fset_mouse+`
+// TRANSLATION MISSING
+| ◽◽◾               | left             | chat: fset buffer   | Decrease value for integer/color, set/append to value for other types. | `+hsignal:fset_mouse+`
+// TRANSLATION MISSING
+| ◽◽◾               | right            | chat: fset buffer   | Increase value for integer/color, set/append to value for other types. | `+hsignal:fset_mouse+`
+// TRANSLATION MISSING
+| ◽◽◾               | up / down        | chat: fset buffer   | Mark/unmark multiple options. | `+hsignal:fset_mouse+`
+// TRANSLATION MISSING
+| kbd:[▲]           | -                | chat: script buffer | Move 5 lines up in script buffer. | `+/script up 5+`
+// TRANSLATION MISSING
+| kbd:[▼]           | -                | chat: script buffer | Move 5 lines down in script buffer. | `+/script down 5+`
+// TRANSLATION MISSING
+| ◾◽◽               | -                | chat: script buffer | Select line in script buffer. | `+/script go ${_chat_line_y}+`
+// TRANSLATION MISSING
+| ◽◽◾               | -                | chat: script buffer | Install/remove script. | `+/script go ${_chat_line_y};/script installremove -q ${script_name_with_extension}+`
+// TRANSLATION MISSING
+| ◾◽◽               | up / left        | buflist             | Move buffer to a lower number. | Signal `+buflist_mouse+`.
+// TRANSLATION MISSING
+| ◾◽◽               | down / right     | buflist             | Move buffer to a higher number. | Signal `+buflist_mouse+`.
+// TRANSLATION MISSING
+| ◾◽◽               | -                | buflist             | Switch to buffer (previously visited buffer if the buffer is the current one). | Signal `+buflist_mouse+`.
+// TRANSLATION MISSING
+| ◽◽◾               | -                | buflist             | Switch to next visited buffer if the buffer is the current one. | Signal `+buflist_mouse+`.
+// TRANSLATION MISSING
+| kbd:[Ctrl+▲]      | -                | buflist             | Switch to previous buffer. | Signal `+buflist_mouse+`.
+// TRANSLATION MISSING
+| kbd:[Ctrl+▼]      | -                | buflist             | Switch to next buffer. | Signal `+buflist_mouse+`.
+| ◾◽◽               | su               | lista nick          | Scorre di una pagina in alto nella lista nick. | `+/bar scroll nicklist ${_window_number} -100%+`
+| ◾◽◽               | giù              | lista nick          | Scorre di una pagina in basso nella lista nick. | `+/bar scroll nicklist ${_window_number} +100%+`
+| ◾◽◽               | up (lungo)       | lista nick          | Sposta all'inizio della lista nick. | `+/bar scroll nicklist ${_window_number} b+`
+| ◾◽◽               | giù (lungo)      | lista nick          | Sposta alla fine della lista nick. | `+/bar scroll nicklist ${_window_number} e+`
+| ◾◽◽               | -                | lista nick          | Apre una query con un nick. | `+/window ${_window_number};/query ${nick}+`
+| ◽◽◾               | -                | lista nick          | Effettua un whois su un nick. | `+/window ${_window_number};/whois ${nick}+`
+| ◾◽◽               | sinistra         | lista nick          | Kick di un nick. | `+/window ${_window_number};/kick ${nick}+`
+| ◾◽◽               | sinistra (lungo) | lista nick          | Kick e ban di un nick. | `+/window ${_window_number};/kickban ${nick}+`
+| ◽◽◾               | sinistra         | lista nick          | Ban di un nick. | `+/window ${_window_number};/ban ${nick}+`
+| ◽◽◾               | -                | input               | Cattura un evento del mouse e inserisce il codice nella riga di comando. | `+/input grab_mouse_area+`
+| kbd:[▲]           | -                | ogni barra          | Scorre la barra del -20%. | `+/bar scroll ${_bar_name} ${_window_number} -20%+`
+| kbd:[▼]           | -                | ogni barra          | Scorre la barra del +20%. | `+/bar scroll ${_bar_name} ${_window_number} +20%+`
+| ◽◾◽               | -                | ovunque             | Avvia la modalità cursore in questo punto. | `+/cursor go ${_x},${_y}+`
+|===
+
+// TRANSLATION MISSING
+[NOTE]
+^(1)^ kbd:[▲] and kbd:[▼] are wheel up and down.
+
+// TRANSLATION MISSING
+[[key_bindings_fset_buffer]]
+=== Fset buffer
+
+// TRANSLATION MISSING
+These keys and actions are used on the fset buffer (see <<fset_plugin,Fset plugin>>).
+
+// TRANSLATION MISSING
+[width="100%",cols="^.^3,^.^2,.^8,.^5",options="header"]
+|===
+| Key                      | Action ^(1)^ | Description | Command
+| kbd:[↑]                  |              | Move one line up. | `+/fset -up+`
+| kbd:[↓]                  |              | Move one line down. | `+/fset -down+`
+| kbd:[PgUp]               |              | Move one page up. | `+/window page_up+`
+| kbd:[PgDn]               |              | Move one page down. | `+/window page_down+`
+| kbd:[Alt+Home]           | `pass:[<<]`  | Move to first line. | `+/fset -go 0+`
+| kbd:[Alt+End]            | `pass:[>>]`  | Move to last line. | `+/fset -go end+`
+| kbd:[F11]                | `pass:[<]`   | Scroll horizontally on the left. | `+/fset -left+`
+| kbd:[F12]                | `pass:[>]`   | Scroll horizontally on the right. | `+/fset -right+`
+| kbd:[Alt+Space]          | `t`          | Toggle boolean value. | `+/fset -toggle+`
+| kbd:[Alt+-]              | `-`          | Subtract 1 from value for integer/color, set value for other types. | `+/fset -add -1+`
+| kbd:[Alt++]              | `+`          | Add 1 to value for integer/color, append to value for other types. | `+/fset -add 1+`
+| kbd:[Alt+f], kbd:[Alt+r] | `r`          | Reset value. | `+/fset -reset+`
+| kbd:[Alt+f], kbd:[Alt+u] | `u`          | Unset value. | `+/fset -unset+`
+| kbd:[Alt+Enter]          | `s`          | Set value. | `+/fset -set+`
+| kbd:[Alt+f], kbd:[Alt+n] | `n`          | Set new value. | `+/fset -setnew+`
+| kbd:[Alt+f], kbd:[Alt+a] | `a`          | Append to value. | `+/fset -append+`
+| kbd:[Alt+,]              | `,`          | Mark/unmark option. | `+/fset -mark 1+`
+| kbd:[Shift+↑]            |              | Move one line up and mark/unmark option. | `+/fset -up; /fset -mark+`
+| kbd:[Shift+↓]            |              | Mark/unmark option and move one line down. | `+/fset -mark; /fset -down+`
+|                          | `m:xxx`      | Mark options displayed that are matching filter "xxx" (any filter on option or value is allowed, see <<command_fset_fset,fset command>>). |
+|                          | `u:xxx`      | Unmark options displayed that are matching filter "xxx" (any filter on option or value is allowed, see <<command_fset_fset,fset command>>). |
+| kbd:[Ctrl+l] (`L`)       |              | Refresh options and whole screen. | `+/fset -refresh+`
+|                          | `$`          | Refresh options (keep marked options). |
+|                          | `$$`         | Refresh options (unmark all options). |
+| kbd:[Alt+p]              |              | Toggle plugin description options (`pass:[plugins.desc.*]`). | `+/mute /set fset.look.show_plugins_desc toggle+`
+| kbd:[Alt+v]              |              | Toggle help bar. | `+/bar toggle fset+`
+|                          | `s:x,y`      | Sort options by fields x,y (see option <<option_fset.look.sort,fset.look.sort>>). | `+/mute /set fset.look.sort x,y+`
+|                          | `s:`         | Reset sort to its default value (see option <<option_fset.look.sort,fset.look.sort>>). | `+/mute /unset fset.look.sort+`
+|                          | `w:xxx`      | Export options in file "xxx". | `+/fset -export xxx+`
+|                          | `w-:xxx`     | Export options in file "xxx" without help. | `+/fset -export -nohelp xxx+`
+|                          | `w+:xxx`     | Export options in file "xxx" with help. | `+/fset -export -help xxx+`
+| kbd:[Ctrl+x]             | `x`          | Switch the format used to display options. | `+/fset -format+`
+|                          | `q`          | Close fset buffer. | `+/buffer close+`
+|===
+
+// TRANSLATION MISSING
+[NOTE]
+^(1)^ The action must be entered as input on the command line, followed by kbd:[Enter].
+
+// TRANSLATION MISSING
+[[key_bindings_script_buffer]]
+=== Script buffer
+
+// TRANSLATION MISSING
+These keys and actions are used on the script buffer (see <<scripts_plugins,Script plugin>>).
+
+// TRANSLATION MISSING
+[width="100%",cols="^.^3,^.^2,.^8,.^5",options="header"]
+|===
+| Key               | Action ^(1)^ | Description | Command
+| kbd:[↑]           |              | Move one line up. | `+/script up+`
+| kbd:[↓]           |              | Move one line down. | `+/script down+`
+| kbd:[PgUp]        |              | Move one page up. | `+/window page_up+`
+| kbd:[PgDn]        |              | Move one page down. | `+/window page_down+`
+| kbd:[Alt+i]       | `i`          | Install script. | `+/script install+`
+| kbd:[Alt+r]       | `r`          | Remove script. | `+/script remove+`
+| kbd:[Alt+l] (`L`) | `l`          | Load script. | `+/script load+`
+| kbd:[Alt+u]       | `u`          | Unload script. | `+/script unload+`
+| kbd:[Alt+Shift+A] | `A`          | Autoload script. | `+/script toggleautoload+`
+| kbd:[Alt+h]       | `h`          | Hold/unhold script. | `+/script hold+`
+| kbd:[Alt+v]       | `v`          | View script. | `+/script show+`
+|===
+
+// TRANSLATION MISSING
+[NOTE]
+^(1)^ The action must be entered as input on the command line, followed by kbd:[Enter].
+
+// TRANSLATION MISSING
+[[configuration]]
+== Configuration
+
+// TRANSLATION MISSING
+[[colors]]
+=== Colors
+
+[[colors_basic]]
+==== Colori base
+
+I colori base in WeeChat sono:
+
+[width="75%",cols="1m,4",options="header"]
+|===
+| Nome         | Colore
+| default      | Colore predefinito del terminale (trasparente per lo sfondo)
+| black        | Nero
+| darkgray     | Grigio scuro
+| red          | Rosso scuro
+| lightred     | Rosso chiaro
+| green        | Verde scuro
+| lightgreen   | Verde chiaro
+| brown        | Marrone
+| yellow       | Giallo
+| blue         | Blu scuro
+| lightblue    | Blu chiaro
+| magenta      | Rosa scuro
+| lightmagenta | Rosa chiaro
+| cyan         | Azzurro scuro
+| lightcyan    | Azzurro chiaro
+| gray         | Grigio
+| white        | Bianco
+|===
+
+[[colors_extended]]
+==== Colori estesi
+
+WeeChat alloca dinamicamente le coppie colore quando vengono usati i colori
+sullo schermo (per mostrare buffer e barre).
+
+In aggiunta ai colori di base, si può usare un numero per il colore compreso
+tra 1 e il limite del proprio terminale.
+
+Il comando `/color` mostra i colori attivi ed i limiti. Com kbd:[Alt+c] si può
+passare temporaneamente ai colori del terminale per sceglierne uno.
+
+Se ad esempio si desidera visualizzare l'ora in arancione nel buffer:
+
+----
+/set weechat.color.chat_time 214
+----
+
+O se si desidera uno sfondo verde scuro per la barra di stato:
+
+----
+/set weechat.bar.status.color_bg 22
+----
+
+[[colors_aliases]]
+==== Alias
+
+Si possono aggiungere degli alias ai colori con il comando `/color alias` e
+usarli in ogni opzione relativa al colore.
+
+Ad esempio:
+
+----
+/color alias 214 orange
+/set weechat.color.chat_delimiters orange
+----
+
+[[colors_attributes]]
+==== Attributi
+
+Esistono alcuni attributi per i colori. Uno o più attributi vanno aggiunti prima
+del nome o del numero del colore:
+
+* `+*+` : testo in grassetto
+* `+!+` : video inverso
+* `+/+` : testo in corsivo
+* `+_+` : testo sottolineato
+* `+|+` : mantiene attributi: non ripristina grassetto/inverso/sottolineato
+  al cambio di colore
+
+Ad esempio se si vuole il proprio nick bianco e sottolineato:
+
+----
+/set weechat.color.chat_nick_self _white
+----
+
+O se si desidera l'ora nella barra di stato arancione sottolineata
+e in grassetto:
+
+----
+/set weechat.color.status_time *_214
+----
+
+Per usare un attributo con il colore predefinito del terminale (-1), bisogna
+usare un numero maggiore dell'ultimo colore del terminale, ad esempio il
+numero massimo in WeeChat: 99999.
+
+Esempio di grassetto con il colore di primo piano del terminale:
+
+----
+/set weechat.color.status_time *99999
+----
+
+[[notify_levels]]
+=== Livelli di notifica
+
+// TRANSLATION MISSING
+[[setup_notify_levels]]
+==== Setup notify levels
+
+Sono possibili quattro livelli per i messaggi mostrati nei buffer, dal più basso
+al più alto:
+
+* _low_: messaggio di bassa importanza (ad esempio entrata/uscita/disconnessione
+  di irc)
+* _message_: messaggio da un utente
+* _private_: messaggio in un buffer privato
+* _highlight_: messaggio con notifica
+
+Ogni buffer ha un livello di notifica, che viene usato per decidere quale
+messaggio il buffer andrà ad aggiungere nella hotlist.
+
+Il livello predefinito di notifica può essere impostato usando l'opzione
+<<option_weechat.look.buffer_notify_default,weechat.look.buffer_notify_default>>,
+il valore predefinito è _all_.
+
+[width="75%",cols="2m,7",options="header"]
+|===
+| Livello di notifica | Livello del messaggio aggiunto alla hotlist
+| none                | (nessuno)
+| highlight           | _highlight_ + _private_
+| message             | _highlight_ + _private_ + _message_
+| all                 | _highlight_ + _private_ + _message_ + _low_
+|===
+
+Il livello di notifica può essere definito per un set di buffer, ad esempio
+tutti i buffer per il server irc "libera":
+
+----
+/set weechat.notify.irc.libera message
+----
+
+Imposta il livello di notifica _highlight_ solo sul canale _#weechat_:
+
+----
+/set weechat.notify.irc.libera.#weechat highlight
+----
+
+Il livello di notifica per un buffer può essere impostato con il comando `/buffer`:
+
+----
+/buffer notify highlight
+----
+
+// TRANSLATION MISSING
+[[max_hotlist_level_nicks]]
+==== Max hotlist level for nicks
+
+It is possible to set max hotlist level for some nicks, per buffer, or per group
+of buffers (like IRC servers).
+
+The buffer property "hotlist_max_level_nicks" can be set with a list of nicks
+and for each nick the max hotlist level to trigger, possible levels are:
+
+* -1: no hotlist changes for nick
+* 0: low priority (like join/part messages)
+* 1: message
+* 2: private message
+* 3: highlight (in fact useless, since it's already the default max for all messages)
+
+For example to disable highlights from "joe" and "mike" on current buffer:
+
+----
+/buffer set hotlist_max_level_nicks_add joe:2,mike:2
+----
+
+[NOTE]
+The buffer property "hotlist_max_level_nicks" is not saved in configuration. +
+You can easily save it with the script _buffer_autoset.py_: you can install it
+with `+/script install buffer_autoset.py+` and get help with `+/help buffer_autoset+`.
+
+// TRANSLATION MISSING
+[[highlights]]
+=== Highlights
+
+[[highlights_words]]
+==== Add words to highlight
+
+By default, WeeChat highlights messages from other users containing your nick,
+therefore the highlight depends on the buffer (the nick can be different from
+one buffer to another).
+
+You can add other words to highlight with the option
+<<option_weechat.look.highlight,weechat.look.highlight>>, for example to
+highlight your nick and "word1", "word2" and all words beginning with "test":
+
+----
+/set weechat.look.highlight word1,word2,test*
+----
+
+If you need a more specific rule for the word, you can use regular expressions
+with the option <<option_weechat.look.highlight_regex,weechat.look.highlight_regex>>,
+for example to highlight words "flashcode", "flashcöde" and "flashy":
+
+----
+/set weechat.look.highlight_regex flashc[oö]de|flashy
+----
+
+The delimiters around words to highlight can be customized with the option
+<<option_weechat.look.word_chars_highlight,weechat.look.word_chars_highlight>>.
+
+[[highlights_tags]]
+==== Add tags to highlight
+
+Lines displayed can contain "tags", which give some info about the origin of
+message or the message itself. +
+You can display tags with the command `/debug tags` (same command to hide them).
+
+You can add specific tags to highlight with the option
+<<option_weechat.look.highlight_tags,weechat.look.highlight_tags>>.
+Tags are separated by commas, and multiple tags can be separated by `+++` to do
+a logical "and" between them.
+
+For example to highlight all messages from nick "FlashCode" and all notices
+from nicks beginning with "toto":
+
+----
+/set weechat.look.highlight_tags "nick_flashcode,irc_notice+nick_toto*"
+----
+
+[[highlights_regex_buffer]]
+==== Set extra highlights on buffer
+
+You can force highlight using a regular expression with the buffer property
+"highlight_regex".
+
+For example to force the highlight on all messages in the current buffer:
+
+----
+/buffer set highlight_regex .*
+----
+
+[NOTE]
+The buffer property "highlight_regex" is not saved in configuration. +
+You can easily save it with the script _buffer_autoset.py_: you can install it
+with `+/script install buffer_autoset.py+` and get help with `+/help buffer_autoset+`.
+
+[[mouse]]
+=== Supporto del mouse
+
+WeeChat supporta i click e le azioni del mouse. Funziona con il terminale
+locale, e da remoto via connessione ssh con o senza screen/tmux.
+
+[[mouse_enable]]
+==== Abilitare il mouse
+
+Per abilitare il mouse all'avvio:
+
+----
+/set weechat.look.mouse on
+----
+
+Per abilitarlo subito, digitare kbd:[Alt+m] oppure eseguire il seguente comando:
+
+----
+/mouse enable
+----
+
+È possibile disabilitarlo temporaneamente, e associare il comando ad un
+tasto. Ad esempio il tasto kbd:[Alt+%] per disabilitare il mouse per 10 secondi:
+
+----
+/key bind meta-% /mouse toggle 10
+----
+
+// TRANSLATION MISSING
+[IMPORTANT]
+When mouse is enabled in WeeChat, all mouse events are caught by WeeChat, so
+actions such as copy/paste or clicks on URLs are not sent to the terminal. +
+Using kbd:[Shift] key causes the events to be sent directly to the terminal,
+as if the mouse was disabled (on some terminals like iTerm, you have to use
+kbd:[Alt] instead of kbd:[Shift]).
+
+[NOTE]
+Per qualunque problema con il mouse, consultare
+link:weechat_faq.it.html#mouse[FAQ di WeeChat / Mouse].
+
+[[mouse_bind_events]]
+==== Associare gli eventi del mouse a comandi
+
+Molti eventi del mouse predefiniti sono già definiti da WeeChat (consultare
+<<key_bindings_mouse_context,tasti per il contesto "mouse">>).
+
+È possibile cambiare o aggiungere combinazioni con il comando `/key` usando il
+contesto "mouse" (per la sintassi, consultare comando
+<<command_weechat_key,/key>>).
+
+Il nome dell'evento consiste di un modificatore (opzionale), il nome di un
+pulsante/rotellina e un'azione (opzionale). Elementi diversi sono separati da `+-+`.
+
+Elenco di modificatori
+
+[width="100%",cols="1m,4",options="header"]
+|===
+| Modificatore | Descrizione
+| ctrl         | Tasto kbd:[Ctrl]
+| alt          | Tasto kbd:[Alt]
+| ctrl-alt     | Tasto kbd:[Ctrl] + kbd:[Alt]
+|===
+
+Elenco di pulsanti/rotellina:
+
+[width="100%",cols="1m,4",options="header"]
+|===
+| Pulsante/rotellina  | Descrizione
+| button1             | Click sul tasto sinistro
+| button2             | Click sul tasto destro
+| button3             | Click sul tasto centrale (spesso click sulla rotellina)
+| button4 ... button9 | Click sui pulsanti extra
+| wheelup             | Rotellina (su)
+| wheeldown           | Rotellina (giù)
+|===
+
+Elenco di azioni (solo per i pulsanti, non la rotellina):
+
+[width="100%",cols="1m,4",options="header"]
+|===
+| Azione             | Distanza
+| gesture-up         | 3 ... 19
+| gesture-up-long    | ≥ 20
+| gesture-down       | 3 ... 19
+| gesture-down-long  | ≥ 20
+| gesture-left       | 3 ... 39
+| gesture-left-long  | ≥ 40
+| gesture-right      | 3 ... 39
+| gesture-right-long | ≥ 40
+|===
+
+// TRANSLATION MISSING
+List of incomplete events (only for buttons, useful for plugins/scripts):
+
+[width="100%",cols="1m,4",options="header"]
+|===
+| Event      | Description
+| event-down | Button was pressed but not released yet
+| event-drag | Mouse was moved with button pressed down
+|===
+
+Esempio di eventi:
+
+* `button1`
+* `ctrl-button1`
+* `button1-gesture-right`
+* `button1-event-down`
+* `button1-event-drag`
+* `alt-button2-gesture-down-long`
+* `wheelup`
+* `ctrl-alt-wheeldown`
+* ...
+
+[TIP]
+Quando si associa un tasto nel contesto "mouse", è possibile far corrispondere
+più eventi usando `+*+` all'inizio o alla fine del nome, ad esempio
+`+button1-gesture-*+` corrisponderà ad ogni azione compiuta col tasto sinistro.
+
+[TIP]
+È possibile trovare il nome di un evento con il comando `+/input grab_mouse+`
+poi eseguire l'evento col mouse. Il comando inserisce il nome dell'evento
+nella riga di comando.
+
+// TRANSLATION MISSING
 [[bars]]
 === Bars
 
@@ -1769,784 +2561,6 @@ Same condition, but always display nicklist on buffer _&bitlbee_
 ----
 /set weechat.bar.nicklist.conditions "${nicklist} && (${info:term_width} > 100 || ${buffer.full_name} == irc.bitlbee.&bitlbee)"
 ----
-
-// TRANSLATION MISSING
-[[bare_display]]
-=== Bare display
-
-A special display, called "bare display" can be used for easy click on long URLs
-and selection of text (using the mouse).
-
-The bare display has following features:
-
-* it displays only the content of current buffer: no window split neither bars
-  (no title, nicklist, status, input, ...)
-* the WeeChat mouse support is disabled (if it was enabled): you can use your
-  mouse like you do in the terminal to click on URLs and select text
-* ncurses is not used, therefore URLs are not cut at the end of lines.
-
-The default key to enable bare display is kbd:[Alt+l] (`L`), and same key to exit
-(or by default anything changing the input will exit the bare display, see option
-<<option_weechat.look.bare_display_exit_on_input,weechat.look.bare_display_exit_on_input>>).
-
-The time format can be customized with the option
-<<option_weechat.look.bare_display_time_format,weechat.look.bare_display_time_format>>.
-
-The bare display can be enabled for a specific delay using the command
-<<command_weechat_window,/window>>.
-
-If WeeChat looks like that:
-
-....
-┌──────────────────────────────────────────────────────────────────────────────────────┐
-│1.libera │Welcome to #abc                                                             │
-│  weechat│12:52:27   --> | Flashy (flashcode@weechat.org) has joined #abc     │@Flashy│
-│2.  #test│12:52:27    -- | Nicks #abc: [@Flashy @joe +weebot peter]           │@joe   │
-│3.  #abc │12:52:27    -- | Channel #abc: 4 nicks (2 ops, 1 voice, 1 normal)   │+weebot│
-│4.  #def │12:52:27    -- | Channel created on Tue Jan 27 06:30:17 2009        │peter  │
-│5.  #ghi │12:54:15 peter | hey!                                               │       │
-│         │12:55:01  @joe | peter: hook_process: https://weechat.org/files/doc │       │
-│         │               | /devel/weechat_plugin_api.en.html#_weechat_hook_pr │       │
-│         │               | ocess                                              │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │[12:55] [5] [irc/libera] 3:#abc(+n){4}                                      │
-│         │[@Flashy(i)] hi peter!█                                                     │
-└──────────────────────────────────────────────────────────────────────────────────────┘
-....
-
-The screen will look like that in bare display:
-
-....
-┌──────────────────────────────────────────────────────────────────────────────────────┐
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│12:52 --> Flashy (flashcode@weechat.org) has joined #abc                              │
-│12:52 -- Nicks #abc: [@Flashy @joe +weebot peter]                                     │
-│12:52 -- Channel #abc: 4 nicks (2 ops, 1 voice, 1 normal)                             │
-│12:52 -- Channel created on Tue Jan 27 06:30:17 2009                                  │
-│12:54 <peter> hey!                                                                    │
-│12:55 <@joe> peter: hook_process: https://weechat.org/files/doc/devel/weechat_plugin_a│
-│pi.en.html#_weechat_hook_process                                                      │
-└──────────────────────────────────────────────────────────────────────────────────────┘
-....
-
-So you can click the URL from _joe_ without any problem in your terminal (of
-course this supposes that your terminal supports click on URLs).
-
-[[notify_levels]]
-=== Livelli di notifica
-
-// TRANSLATION MISSING
-[[setup_notify_levels]]
-==== Setup notify levels
-
-Sono possibili quattro livelli per i messaggi mostrati nei buffer, dal più basso
-al più alto:
-
-* _low_: messaggio di bassa importanza (ad esempio entrata/uscita/disconnessione
-  di irc)
-* _message_: messaggio da un utente
-* _private_: messaggio in un buffer privato
-* _highlight_: messaggio con notifica
-
-Ogni buffer ha un livello di notifica, che viene usato per decidere quale
-messaggio il buffer andrà ad aggiungere nella hotlist.
-
-Il livello predefinito di notifica può essere impostato usando l'opzione
-<<option_weechat.look.buffer_notify_default,weechat.look.buffer_notify_default>>,
-il valore predefinito è _all_.
-
-[width="75%",cols="2m,7",options="header"]
-|===
-| Livello di notifica | Livello del messaggio aggiunto alla hotlist
-| none                | (nessuno)
-| highlight           | _highlight_ + _private_
-| message             | _highlight_ + _private_ + _message_
-| all                 | _highlight_ + _private_ + _message_ + _low_
-|===
-
-Il livello di notifica può essere definito per un set di buffer, ad esempio
-tutti i buffer per il server irc "libera":
-
-----
-/set weechat.notify.irc.libera message
-----
-
-Imposta il livello di notifica _highlight_ solo sul canale _#weechat_:
-
-----
-/set weechat.notify.irc.libera.#weechat highlight
-----
-
-Il livello di notifica per un buffer può essere impostato con il comando `/buffer`:
-
-----
-/buffer notify highlight
-----
-
-// TRANSLATION MISSING
-[[max_hotlist_level_nicks]]
-==== Max hotlist level for nicks
-
-It is possible to set max hotlist level for some nicks, per buffer, or per group
-of buffers (like IRC servers).
-
-The buffer property "hotlist_max_level_nicks" can be set with a list of nicks
-and for each nick the max hotlist level to trigger, possible levels are:
-
-* -1: no hotlist changes for nick
-* 0: low priority (like join/part messages)
-* 1: message
-* 2: private message
-* 3: highlight (in fact useless, since it's already the default max for all messages)
-
-For example to disable highlights from "joe" and "mike" on current buffer:
-
-----
-/buffer set hotlist_max_level_nicks_add joe:2,mike:2
-----
-
-[NOTE]
-The buffer property "hotlist_max_level_nicks" is not saved in configuration. +
-You can easily save it with the script _buffer_autoset.py_: you can install it
-with `+/script install buffer_autoset.py+` and get help with `+/help buffer_autoset+`.
-
-// TRANSLATION MISSING
-[[highlights]]
-=== Highlights
-
-[[highlights_words]]
-==== Add words to highlight
-
-By default, WeeChat highlights messages from other users containing your nick,
-therefore the highlight depends on the buffer (the nick can be different from
-one buffer to another).
-
-You can add other words to highlight with the option
-<<option_weechat.look.highlight,weechat.look.highlight>>, for example to
-highlight your nick and "word1", "word2" and all words beginning with "test":
-
-----
-/set weechat.look.highlight word1,word2,test*
-----
-
-If you need a more specific rule for the word, you can use regular expressions
-with the option <<option_weechat.look.highlight_regex,weechat.look.highlight_regex>>,
-for example to highlight words "flashcode", "flashcöde" and "flashy":
-
-----
-/set weechat.look.highlight_regex flashc[oö]de|flashy
-----
-
-The delimiters around words to highlight can be customized with the option
-<<option_weechat.look.word_chars_highlight,weechat.look.word_chars_highlight>>.
-
-[[highlights_tags]]
-==== Add tags to highlight
-
-Lines displayed can contain "tags", which give some info about the origin of
-message or the message itself. +
-You can display tags with the command `/debug tags` (same command to hide them).
-
-You can add specific tags to highlight with the option
-<<option_weechat.look.highlight_tags,weechat.look.highlight_tags>>.
-Tags are separated by commas, and multiple tags can be separated by `+++` to do
-a logical "and" between them.
-
-For example to highlight all messages from nick "FlashCode" and all notices
-from nicks beginning with "toto":
-
-----
-/set weechat.look.highlight_tags "nick_flashcode,irc_notice+nick_toto*"
-----
-
-[[highlights_regex_buffer]]
-==== Set extra highlights on buffer
-
-You can force highlight using a regular expression with the buffer property
-"highlight_regex".
-
-For example to force the highlight on all messages in the current buffer:
-
-----
-/buffer set highlight_regex .*
-----
-
-[NOTE]
-The buffer property "highlight_regex" is not saved in configuration. +
-You can easily save it with the script _buffer_autoset.py_: you can install it
-with `+/script install buffer_autoset.py+` and get help with `+/help buffer_autoset+`.
-
-[[key_bindings]]
-=== Associazione tasti predefinita
-
-[[key_bindings_command_line]]
-==== Tasti per la riga di comando
-
-// TRANSLATION MISSING
-[[key_bindings_cmdline_cursor_movement]]
-===== Cursor movement
-
-[width="100%",cols="^.^3,.^8,.^5",options="header"]
-|===
-| Tasti          | Descrizione | Comando
-| kbd:[←] +
-  kbd:[Ctrl+b]   | Passa al carattere precedente nella riga di comando. | `+/input move_previous_char+`
-| kbd:[→] +
-  kbd:[Ctrl+f]   | Passa al carattere successivo nella riga di comando. | `+/input move_next_char+`
-| kbd:[Ctrl+←] +
-  kbd:[Alt+b]    | Passa alla parola precedente nella riga di comando. | `+/input move_previous_word+`
-| kbd:[Ctrl+→] +
-  kbd:[Alt+f]    | Passa alla parola successiva nella riga di comando. | `+/input move_next_word+`
-| kbd:[Home] +
-  kbd:[Ctrl+a]   | Si sposta all'inizio della riga di comando. | `+/input move_beginning_of_line+`
-| kbd:[End] +
-  kbd:[Ctrl+e]   | Si sposta alla fine della riga di comando. | `+/input move_end_of_line+`
-|===
-
-// TRANSLATION MISSING
-[[key_bindings_cmdline_editing]]
-===== Editing
-
-[width="100%",cols="^.^3,.^8,.^5",options="header"]
-|===
-| Tasti             | Descrizione | Comando
-| kbd:[Del] +
-  kbd:[Ctrl+d]      | Elimina il carattere successivo nella riga di comando. | `+/input delete_next_char+`
-| kbd:[Backspace] +
-  kbd:[Ctrl+h]      | Elimina il carattere precedente nella riga di comando. | `+/input delete_previous_char+`
-// TRANSLATION MISSING
-| kbd:[Ctrl+k]      | Elimina dal cursore fino alla fine della riga di comando (deleted string is copied to the internal clipboard). | `+/input delete_end_of_line+`
-| kbd:[Ctrl+t]      | Inverti caratteri. | `+/input transpose_chars+`
-// TRANSLATION MISSING
-| kbd:[Ctrl+u]      | Elimina dal cursore fino all'inizio della riga di comando (deleted string is copied to the internal clipboard). | `+/input delete_beginning_of_line+`
-// TRANSLATION MISSING
-| kbd:[Ctrl+w]      | Elimina la parola precedente nella riga di comando (deleted string is copied to the internal clipboard). | `+/input delete_previous_word+`
-// TRANSLATION MISSING
-| kbd:[Ctrl+y]      | Paste the internal clipboard content. | `+/input clipboard_paste+`
-| kbd:[Ctrl+_]      | Annulla l'ultima azione sulla riga di comando. | `+/input undo+`
-| kbd:[Alt+_]       | Ripete l'ultima azione sulla riga di comando. | `+/input redo+`
-| kbd:[Tab]         | Completa comando o nick (kbd:[Tab] di nuovo: trova prossimo completamento). | `+/input complete_next+`
-| kbd:[Shift+Tab]   | Senza completamento: effettua un completamento parziale, con completamento in sospeso: completa con il completamento precedente. | `+/input complete_previous+`
-| kbd:[Invio] +
-  kbd:[Ctrl+j] +
-  kbd:[Ctrl+m]      | Esegue comando o invia messaggio (in modalità ricerca: ferma ricerca). | `+/input return+`
-// TRANSLATION MISSING
-| kbd:[Alt+Enter]   | Insert a newline. | `+/input insert \n+`
-// TRANSLATION MISSING
-| kbd:[Alt+d]       | Elimina la parola successiva nella riga di comando (deleted string is copied to the internal clipboard). | `+/input delete_next_word+`
-| kbd:[Alt+k]       | Cattura un tasto ed inserisce il suo codice (e il comando associato se il tasto esiste) nella riga di comando. | `+/input grab_key_command+`
-| kbd:[Alt+r]       | Elimina l'intera riga di comando. | `+/input delete_line+`
-|===
-
-// TRANSLATION MISSING
-[[key_bindings_cmdline_color_codes]]
-===== Color codes
-
-[width="100%",cols="^.^3,.^8,.^5",options="header"]
-|===
-| Tasti                 | Descrizione | Comando
-| kbd:[Ctrl+c], kbd:[b] | Inserisce il codice per il testo in grassetto. | `+/input insert \x02+`
-| kbd:[Ctrl+c], kbd:[c] | Inserisce il codice per il testo colorato. | `+/input insert \x03+`
-| kbd:[Ctrl+c], kbd:[i] | Inserisce il codice per il testo in corsivo. | `+/input insert \x1D+`
-| kbd:[Ctrl+c], kbd:[o] | Inserisce il codice per il reset dei colori. | `+/input insert \x0F+`
-| kbd:[Ctrl+c], kbd:[v] | Inserisce il codice per l'inversione dei colori. | `+/input insert \x16+`
-| kbd:[Ctrl+c], kbd:[_] | Inserisce il codice per il testo sottolineato. | `+/input insert \x1F+`
-|===
-
-// TRANSLATION MISSING
-[[key_bindings_cmdline_history]]
-===== Command history
-
-[width="100%",cols="^.^3,.^8,.^5",options="header"]
-|===
-| Tasti        | Descrizione | Comando
-| kbd:[↑]      | Chiama comando/messaggio precedente (in modalità ricerca: cerca in alto). | `+/input history_previous+`
-| kbd:[↓]      | Chiama comando/messaggio precedente (in modalità ricerca: cerca in basso). | `+/input history_next+`
-| kbd:[Ctrl+↑] | Chiama il comando/messaggio precedente nella cronologia globale (identico per tutti i buffer). | `+/input history_global_previous+`
-| kbd:[Ctrl+↓] | Chiama il comando/messaggio successivo nella cronologia globale (identico per tutti i buffer). | `+/input history_global_next+`
-|===
-
-// TRANSLATION MISSING
-[[key_bindings_buffers]]
-==== Buffers
-
-[width="100%",cols="^.^3,.^8,.^5",options="header"]
-|===
-| Tasti                          | Descrizione | Comando
-| kbd:[Ctrl+r]                   | Cerca del testo nella cronologia del buffer (consultare <<key_bindings_search_context,tasti per il contesto search>>). | `+/input search_text_here+`
-| kbd:[Ctrl+s], kbd:[Ctrl+u]     | Imposta l'evidenziatore dei messaggi non letti su tutti i buffer. | `+/input set_unread+`
-| kbd:[Ctrl+x]                   | Passa al buffer attivo se i buffer sono collegati con lo stesso numero. | `+/input switch_active_buffer+`
-// TRANSLATION MISSING
-| kbd:[Alt+x]                    | Zoom on merged buffer (kbd:[Alt+x] again: display all merged buffers). | `+/input zoom_merged_buffer+`
-| kbd:[PgUp]                     | Scorre in alto di una pagina nella cronologia del buffer. | `+/window page_up+`
-| kbd:[PgDn]                     | Scorre di una pagina in basso nella cronologia del buffer. | `+/window page_down+`
-| kbd:[Alt+PgUp]                 | Scorre di qualche riga in alto nella cronologia del buffer. | `+/window scroll_up+`
-| kbd:[Alt+PgDn]                 | Scorre di qualche riga in basso nella cronologia del buffer. | `+/window scroll_down+`
-| kbd:[Alt+Home]                 | Scorre in cima al buffer. | `+/window scroll_top+`
-| kbd:[Alt+End]                  | Scorre alla fine del del buffer. | `+/window scroll_bottom+`
-| kbd:[Alt+←] +
-  kbd:[Alt+↑] +
-  kbd:[Ctrl+p] +
-  kbd:[F5]                       | Passa al buffer precedente. | `+/buffer -1+`
-| kbd:[Alt+→] +
-  kbd:[Alt+↓] +
-  kbd:[Ctrl+n] +
-  kbd:[F6]                       | Passa al buffer successivo. | `+/buffer +1+`
-// TRANSLATION MISSING
-| kbd:[Alt+j], kbd:[Alt+f]       | Switch to first buffer. | `+/buffer -+`
-| kbd:[Alt+j], kbd:[Alt+l] (`L`) | Passa all'ultimo buffer. | `+/buffer ++`
-| kbd:[Alt+j], kbd:[Alt+r]       | Passa al buffer raw IRC. | `+/server raw+`
-| kbd:[Alt+j], kbd:[Alt+s]       | Passa al buffer server IRC. | `+/server jump+`
-| kbd:[Alt+0...9]                | Passa al buffer numero (0 = 10). | `+/buffer *N+`
-| kbd:[Alt+j], kbd:[01...99]     | Passa al buffer numero. | `+/buffer *NN+`
-| kbd:[Alt+n]                    | Scorre fino alla notifica successiva. | `+/window scroll_next_highlight+`
-| kbd:[Alt+p]                    | Scorre fino alla notifica precedente. | `+/window scroll_previous_highlight+`
-| kbd:[Alt+u]                    | Scorre fino alla prima riga non letta nel buffer. | `+/window scroll_unread+`
-| kbd:[Alt+<]                    | Passa al buffer precedente nella lista dei buffer visitati. | `+/input jump_previously_visited_buffer+`
-| kbd:[Alt+>]                    | Passa al buffer successivo nella lista dei buffer visitati. | `+/input jump_next_visited_buffer+`
-| kbd:[Alt+/]                    | Passa all'ultimo buffer mostrato (prima dell'ultimo passaggio ad un buffer). | `+/input jump_last_buffer_displayed+`
-|===
-
-// TRANSLATION MISSING
-[[key_bindings_windows]]
-==== Windows
-
-[width="100%",cols="^.^3,.^8,.^5",options="header"]
-|===
-| Tasti                    | Descrizione | Comando
-| kbd:[Ctrl+l] (`L`)       | Ridisegna l'intera finestra. | `+/window refresh+`
-// TRANSLATION MISSING
-| kbd:[Alt+l] (`L`)        | Toggle bare display. | `+/window bare+`
-| kbd:[F7]                 | Passa alla finestra precedente. | `+/window -1+`
-| kbd:[F8]                 | Passa alla finestra successiva. | `+/window +1+`
-| kbd:[Alt+w], kbd:[Alt+↑] | Passa alla finestra in alto. | `+/window up+`
-| kbd:[Alt+w], kbd:[Alt+↓] | Passa alla finestra in basso. | `+/window down+`
-| kbd:[Alt+w], kbd:[Alt+←] | Passa alla finestra sulla sinistra. | `+/window left+`
-| kbd:[Alt+w], kbd:[Alt+→] | Passa alla finestrs sulla destra. | `+/window right+`
-| kbd:[Alt+w], kbd:[Alt+b] | Bilancia le dimensioni di tutte le finestre. | `+/window balance+`
-| kbd:[Alt+w], kbd:[Alt+s] | Scambia i buffer di due finestra. | `+/window swap+`
-| kbd:[Alt+z]              | Ingrandimento sulla finestra attiva (kbd:[Alt+z] di nuovo: ripristina lo stato iniziale della finestra, prima dell'ingrandimento). | `+/window zoom+`
-|===
-
-[[key_bindings_bars]]
-==== Bars
-
-[width="100%",cols="^.^3,.^8,.^5",options="header"]
-|===
-| Tasti             | Descrizione | Comando
-// TRANSLATION MISSING
-| kbd:[F1] +
-  kbd:[Ctrl+F1]     | Scroll up one page in buflist. | `+/bar scroll buflist * -100%+`
-// TRANSLATION MISSING
-| kbd:[F2] +
-  kbd:[Ctrl+F2]     | Scroll down one page in buflist. | `+/bar scroll buflist * +100%+`
-// TRANSLATION MISSING
-| kbd:[Alt+F1]      | Go to the beginning of buflist. | `+/bar scroll buflist * b+`
-// TRANSLATION MISSING
-| kbd:[Alt+F2]      | Go to the end of buflist. | `+/bar scroll buflist * e+`
-| kbd:[F9]          | Scorre il titolo del buffer sulla sinistra. | `+/bar scroll title * -30%+`
-| kbd:[F10]         | Scorre il titolo del buffer sulla destra. | `+/bar scroll title * +30%+`
-| kbd:[F11] +
-  kbd:[Ctrl+F11]    | Scorre di una pagina in alto nella lista nick. | `+/bar scroll nicklist * -100%+`
-| kbd:[F12] +
-  kbd:[Ctrl+F12]    | Scorre di una pagina in basso nella lista nick. | `+/bar scroll nicklist * +100%+`
-| kbd:[Alt+F11]     | Sposta all'inizio della lista nick. | `+/bar scroll nicklist * b+`
-| kbd:[Alt+F12]     | Sposta alla fine della lista nick. | `+/bar scroll nicklist * e+`
-// TRANSLATION MISSING
-| kbd:[Alt+Shift+B] | Toggle buflist. | `+/buflist toggle+`
-// TRANSLATION MISSING
-| kbd:[Alt+Shift+N] | Toggle nicklist bar. | `+/bar toggle nicklist+`
-|===
-
-[[key_bindings_hotlist]]
-==== Hotlist
-
-[width="100%",cols="^.^3,.^8,.^5",options="header"]
-|===
-| Tasti                          | Descrizione | Comando
-| kbd:[Alt+a]                    | Passa al buffer successivo con attività (con priorità: highligh, messagge, altro). | `+/input jump_smart+`
-// TRANSLATION MISSING
-| kbd:[Alt+h], kbd:[Alt+c]       | Clear hotlist (activity notification on buffers). | `+/input hotlist_clear+`
-// TRANSLATION MISSING
-| kbd:[Alt+h], kbd:[Alt+m]       | Remove current buffer from hotlist. | `+/input hotlist_remove_buffer+`
-// TRANSLATION MISSING
-| kbd:[Alt+h], kbd:[Alt+r]       | Restore latest hotlist removed in the current buffer. | `+/input hotlist_restore_buffer+`
-// TRANSLATION MISSING
-| kbd:[Alt+h], kbd:[Alt+Shift+R] | Restore latest hotlist removed in all buffers. | `+/input hotlist_restore_all+`
-|===
-
-// TRANSLATION MISSING
-[[key_bindings_toggle_keys]]
-==== Toggle keys
-
-[width="100%",cols="^.^3,.^8,.^5",options="header"]
-|===
-| Tasti       | Descrizione | Comando
-| kbd:[Alt+m] | Abilita/disabilita. | `+/mouse toggle+`
-// TRANSLATION MISSING
-| kbd:[Alt+s] | Toggle spell checker. | `+/mute spell toggle+`
-| kbd:[Alt+=] | Attiva/disattiva filtri. | `+/filter toggle+`
-// TRANSLATION MISSING
-| kbd:[Alt+-] | Toggle filters in current buffer. | `+/filter toggle @+`
-|===
-
-// TRANSLATION MISSING
-[[key_bindings_search_context]]
-==== Search context
-
-Questi tasti sono usati nel contesto "search" (quando viene digitato
-kbd:[Ctrl+r] per cercare del testo nel buffer).
-
-[width="100%",cols="^.^3,.^8,.^5",options="header"]
-|===
-| Tasti          | Descrizione | Comando
-// TRANSLATION MISSING
-| kbd:[Ctrl+r]   | Switch search type: string (default), regular expression. | `+/input search_switch_regex+`
-| kbd:[Alt+c]    | Passa alla ricerca esatta. | `+/input search_switch_case+`
-// TRANSLATION MISSING
-| kbd:[Tab]      | Switch search in: messages (default), prefixes, prefixes + messages. | `+/input search_switch_where+`
-| kbd:[↑]        | Cerca riga precedente. | `+/input search_previous+`
-| kbd:[↓]        | Cerca riga successiva. | `+/input search_next+`
-// TRANSLATION MISSING
-| kbd:[Enter] +
-  kbd:[Ctrl+j] +
-  kbd:[Ctrl+m]   | Stop search at current position. | `+/input search_stop_here+`
-// TRANSLATION MISSING
-| kbd:[Ctrl+q]   | Stop search and scroll to bottom of buffer. | `+/input search_stop+`
-|===
-
-// TRANSLATION MISSING
-[[key_bindings_cursor_context]]
-==== Cursor context
-
-Questi tasti sono usati nel contesto "cursor" (movimento libero del cursore
-sullo schermo.
-
-[width="100%",cols="^.^3,^.^2,.^7,.^7",options="header"]
-|===
-| Tasto          | Zona       | Descrizione | Comando
-| kbd:[↑]        | -          | Sposta il cursore di una riga in alto. | `+/cursor move up+`
-| kbd:[↓]        | -          | Sposta il cursore di una riga in basso. | `+/cursor move down+`
-| kbd:[←]        | -          | Sposta il cursore di una colonna a sinistra. | `+/cursor move left+`
-| kbd:[→]        | -          | Sposta il cursore di una colonna a destra. | `+/cursor move right+`
-| kbd:[Alt+↑]    | -          | Sposta il cursore nell'area in alto. | `+/cursor move area_up+`
-| kbd:[Alt+↓]    | -          | Sposta il cursore nell'area in basso. | `+/cursor move area_down+`
-| kbd:[Alt+←]    | -          | Sposta il cursore nell'area a sinistra. | `+/cursor move area_left+`
-| kbd:[Alt+→]    | -          | Sposta il cursore nell'area a destra. | `+/cursor move area_right+`
-| kbd:[m]        | chat       | Cita messaggio. | `+hsignal:chat_quote_message;/cursor stop+`
-| kbd:[q]        | chat       | Cita prefisso + messaggio. | `+hsignal:chat_quote_prefix_message;/cursor stop+`
-| kbd:[Q]        | chat       | Cita ora + prefisso + messaggio. | `+hsignal:chat_quote_time_prefix_message;/cursor stop+`
-| kbd:[b]        | lista nick | Ban di un nick. | `+/window ${_window_number};/ban ${nick}+`
-| kbd:[k]        | lista nick | Kick di un nick. | `+/window ${_window_number};/kick ${nick}+`
-| kbd:[K]        | lista nick | Kick e ban di un nick. | `+/window ${_window_number};/kickban ${nick}+`
-| kbd:[q]        | lista nick | Apri query con il nick. | `+/window ${_window_number};/query ${nick};/cursor stop+`
-| kbd:[w]        | lista nick | Effettua un whois sul nick. | `+/window ${_window_number};/whois ${nick}+`
-| kbd:[Enter] +
-  kbd:[Ctrl+j] +
-  kbd:[Ctrl+m]   | -          | Ferma la modalità cursore. | `+/cursor stop+`
-|===
-
-// TRANSLATION MISSING
-[[key_bindings_mouse]]
-==== Mouse
-
-// TRANSLATION MISSING
-These mouse actions are possible only if mouse is enabled with key kbd:[Alt+m]
-(command: `+/mouse toggle+`).
-
-// TRANSLATION MISSING (6)
-[width="100%",cols="^.^3,^.^3,^.^3,.^8,.^8",options="header"]
-|===
-// TRANSLATION MISSING
-| Tasto/Wheel ^(1)^ | Azione           | Zona                | Descrizione | Comando
-| ◾◽◽               | -                | chat                | Passa alla finestra. | `+/window ${_window_number}+`
-| ◾◽◽               | sinistra         | chat                | Passa al buffer precedente. | `+/window ${_window_number};/buffer +1+`
-| ◾◽◽               | destra           | chat                | Passa al buffer successivo. | `+/window ${_window_number};/buffer +1+`
-| ◾◽◽               | sinistra (lungo) | chat                | Switch to first buffer. | `+/window ${_window_number};/buffer 1+`
-| ◾◽◽               | destra (lungo)   | chat                | Passa all'ultimo buffer. | `+/window ${_window_number};/input jump_last_buffer+`
-| kbd:[▲]           | -                | chat                | Scorre di qualche riga in alto nella cronologia del buffer. | `+/window scroll_up -window ${_window_number}+`
-| kbd:[▼]           | -                | chat                | Scorre di qualche riga in basso nella cronologia del buffer. | `+/window scroll_down -window ${_window_number}+`
-| kbd:[Ctrl+▲]      | -                | chat                | Scroll horizontally to the left. | `+/window scroll_horiz -window ${_window_number} -10%+`
-| kbd:[Ctrl+▼]      | -                | chat                | Scroll horizontally to the right. | `+/window scroll_horiz -window ${_window_number} +10%+`
-// TRANSLATION MISSING
-| kbd:[▲]           | -                | chat: fset buffer   | Move five lines up in fset buffer. | `+/fset -up 5+`
-// TRANSLATION MISSING
-| kbd:[▼]           | -                | chat: fset buffer   | Move five lines down in fset buffer. | `+/fset -down 5+`
-// TRANSLATION MISSING
-| ◾◽◽               | -                | chat: fset buffer   | Select line in fset buffer. | `+/window ${_window_number};/fset -go ${_chat_line_y}+`
-// TRANSLATION MISSING
-| ◽◽◾               | -                | chat: fset buffer   | Toggle boolean (on/off) or edit the option value. | `+hsignal:fset_mouse+`
-// TRANSLATION MISSING
-| ◽◽◾               | left             | chat: fset buffer   | Decrease value for integer/color, set/append to value for other types. | `+hsignal:fset_mouse+`
-// TRANSLATION MISSING
-| ◽◽◾               | right            | chat: fset buffer   | Increase value for integer/color, set/append to value for other types. | `+hsignal:fset_mouse+`
-// TRANSLATION MISSING
-| ◽◽◾               | up / down        | chat: fset buffer   | Mark/unmark multiple options. | `+hsignal:fset_mouse+`
-// TRANSLATION MISSING
-| kbd:[▲]           | -                | chat: script buffer | Move 5 lines up in script buffer. | `+/script up 5+`
-// TRANSLATION MISSING
-| kbd:[▼]           | -                | chat: script buffer | Move 5 lines down in script buffer. | `+/script down 5+`
-// TRANSLATION MISSING
-| ◾◽◽               | -                | chat: script buffer | Select line in script buffer. | `+/script go ${_chat_line_y}+`
-// TRANSLATION MISSING
-| ◽◽◾               | -                | chat: script buffer | Install/remove script. | `+/script go ${_chat_line_y};/script installremove -q ${script_name_with_extension}+`
-// TRANSLATION MISSING
-| ◾◽◽               | up / left        | buflist             | Move buffer to a lower number. | Signal `+buflist_mouse+`.
-// TRANSLATION MISSING
-| ◾◽◽               | down / right     | buflist             | Move buffer to a higher number. | Signal `+buflist_mouse+`.
-// TRANSLATION MISSING
-| ◾◽◽               | -                | buflist             | Switch to buffer (previously visited buffer if the buffer is the current one). | Signal `+buflist_mouse+`.
-// TRANSLATION MISSING
-| ◽◽◾               | -                | buflist             | Switch to next visited buffer if the buffer is the current one. | Signal `+buflist_mouse+`.
-// TRANSLATION MISSING
-| kbd:[Ctrl+▲]      | -                | buflist             | Switch to previous buffer. | Signal `+buflist_mouse+`.
-// TRANSLATION MISSING
-| kbd:[Ctrl+▼]      | -                | buflist             | Switch to next buffer. | Signal `+buflist_mouse+`.
-| ◾◽◽               | su               | lista nick          | Scorre di una pagina in alto nella lista nick. | `+/bar scroll nicklist ${_window_number} -100%+`
-| ◾◽◽               | giù              | lista nick          | Scorre di una pagina in basso nella lista nick. | `+/bar scroll nicklist ${_window_number} +100%+`
-| ◾◽◽               | up (lungo)       | lista nick          | Sposta all'inizio della lista nick. | `+/bar scroll nicklist ${_window_number} b+`
-| ◾◽◽               | giù (lungo)      | lista nick          | Sposta alla fine della lista nick. | `+/bar scroll nicklist ${_window_number} e+`
-| ◾◽◽               | -                | lista nick          | Apre una query con un nick. | `+/window ${_window_number};/query ${nick}+`
-| ◽◽◾               | -                | lista nick          | Effettua un whois su un nick. | `+/window ${_window_number};/whois ${nick}+`
-| ◾◽◽               | sinistra         | lista nick          | Kick di un nick. | `+/window ${_window_number};/kick ${nick}+`
-| ◾◽◽               | sinistra (lungo) | lista nick          | Kick e ban di un nick. | `+/window ${_window_number};/kickban ${nick}+`
-| ◽◽◾               | sinistra         | lista nick          | Ban di un nick. | `+/window ${_window_number};/ban ${nick}+`
-| ◽◽◾               | -                | input               | Cattura un evento del mouse e inserisce il codice nella riga di comando. | `+/input grab_mouse_area+`
-| kbd:[▲]           | -                | ogni barra          | Scorre la barra del -20%. | `+/bar scroll ${_bar_name} ${_window_number} -20%+`
-| kbd:[▼]           | -                | ogni barra          | Scorre la barra del +20%. | `+/bar scroll ${_bar_name} ${_window_number} +20%+`
-| ◽◾◽               | -                | ovunque             | Avvia la modalità cursore in questo punto. | `+/cursor go ${_x},${_y}+`
-|===
-
-// TRANSLATION MISSING
-[NOTE]
-^(1)^ kbd:[▲] and kbd:[▼] are wheel up and down.
-
-// TRANSLATION MISSING
-[[key_bindings_fset_buffer]]
-==== Fset buffer
-
-// TRANSLATION MISSING
-These keys and actions are used on the fset buffer (see <<fset_plugin,Fset plugin>>).
-
-// TRANSLATION MISSING
-[width="100%",cols="^.^3,^.^2,.^8,.^5",options="header"]
-|===
-| Key                      | Action ^(1)^ | Description | Command
-| kbd:[↑]                  |              | Move one line up. | `+/fset -up+`
-| kbd:[↓]                  |              | Move one line down. | `+/fset -down+`
-| kbd:[PgUp]               |              | Move one page up. | `+/window page_up+`
-| kbd:[PgDn]               |              | Move one page down. | `+/window page_down+`
-| kbd:[Alt+Home]           | `pass:[<<]`  | Move to first line. | `+/fset -go 0+`
-| kbd:[Alt+End]            | `pass:[>>]`  | Move to last line. | `+/fset -go end+`
-| kbd:[F11]                | `pass:[<]`   | Scroll horizontally on the left. | `+/fset -left+`
-| kbd:[F12]                | `pass:[>]`   | Scroll horizontally on the right. | `+/fset -right+`
-| kbd:[Alt+Space]          | `t`          | Toggle boolean value. | `+/fset -toggle+`
-| kbd:[Alt+-]              | `-`          | Subtract 1 from value for integer/color, set value for other types. | `+/fset -add -1+`
-| kbd:[Alt++]              | `+`          | Add 1 to value for integer/color, append to value for other types. | `+/fset -add 1+`
-| kbd:[Alt+f], kbd:[Alt+r] | `r`          | Reset value. | `+/fset -reset+`
-| kbd:[Alt+f], kbd:[Alt+u] | `u`          | Unset value. | `+/fset -unset+`
-| kbd:[Alt+Enter]          | `s`          | Set value. | `+/fset -set+`
-| kbd:[Alt+f], kbd:[Alt+n] | `n`          | Set new value. | `+/fset -setnew+`
-| kbd:[Alt+f], kbd:[Alt+a] | `a`          | Append to value. | `+/fset -append+`
-| kbd:[Alt+,]              | `,`          | Mark/unmark option. | `+/fset -mark 1+`
-| kbd:[Shift+↑]            |              | Move one line up and mark/unmark option. | `+/fset -up; /fset -mark+`
-| kbd:[Shift+↓]            |              | Mark/unmark option and move one line down. | `+/fset -mark; /fset -down+`
-|                          | `m:xxx`      | Mark options displayed that are matching filter "xxx" (any filter on option or value is allowed, see <<command_fset_fset,fset command>>). |
-|                          | `u:xxx`      | Unmark options displayed that are matching filter "xxx" (any filter on option or value is allowed, see <<command_fset_fset,fset command>>). |
-| kbd:[Ctrl+l] (`L`)       |              | Refresh options and whole screen. | `+/fset -refresh+`
-|                          | `$`          | Refresh options (keep marked options). |
-|                          | `$$`         | Refresh options (unmark all options). |
-| kbd:[Alt+p]              |              | Toggle plugin description options (`pass:[plugins.desc.*]`). | `+/mute /set fset.look.show_plugins_desc toggle+`
-| kbd:[Alt+v]              |              | Toggle help bar. | `+/bar toggle fset+`
-|                          | `s:x,y`      | Sort options by fields x,y (see option <<option_fset.look.sort,fset.look.sort>>). | `+/mute /set fset.look.sort x,y+`
-|                          | `s:`         | Reset sort to its default value (see option <<option_fset.look.sort,fset.look.sort>>). | `+/mute /unset fset.look.sort+`
-|                          | `w:xxx`      | Export options in file "xxx". | `+/fset -export xxx+`
-|                          | `w-:xxx`     | Export options in file "xxx" without help. | `+/fset -export -nohelp xxx+`
-|                          | `w+:xxx`     | Export options in file "xxx" with help. | `+/fset -export -help xxx+`
-| kbd:[Ctrl+x]             | `x`          | Switch the format used to display options. | `+/fset -format+`
-|                          | `q`          | Close fset buffer. | `+/buffer close+`
-|===
-
-// TRANSLATION MISSING
-[NOTE]
-^(1)^ The action must be entered as input on the command line, followed by kbd:[Enter].
-
-// TRANSLATION MISSING
-[[key_bindings_script_buffer]]
-==== Script buffer
-
-// TRANSLATION MISSING
-These keys and actions are used on the script buffer (see <<scripts_plugins,Script plugin>>).
-
-// TRANSLATION MISSING
-[width="100%",cols="^.^3,^.^2,.^8,.^5",options="header"]
-|===
-| Key               | Action ^(1)^ | Description | Command
-| kbd:[↑]           |              | Move one line up. | `+/script up+`
-| kbd:[↓]           |              | Move one line down. | `+/script down+`
-| kbd:[PgUp]        |              | Move one page up. | `+/window page_up+`
-| kbd:[PgDn]        |              | Move one page down. | `+/window page_down+`
-| kbd:[Alt+i]       | `i`          | Install script. | `+/script install+`
-| kbd:[Alt+r]       | `r`          | Remove script. | `+/script remove+`
-| kbd:[Alt+l] (`L`) | `l`          | Load script. | `+/script load+`
-| kbd:[Alt+u]       | `u`          | Unload script. | `+/script unload+`
-| kbd:[Alt+Shift+A] | `A`          | Autoload script. | `+/script toggleautoload+`
-| kbd:[Alt+h]       | `h`          | Hold/unhold script. | `+/script hold+`
-| kbd:[Alt+v]       | `v`          | View script. | `+/script show+`
-|===
-
-// TRANSLATION MISSING
-[NOTE]
-^(1)^ The action must be entered as input on the command line, followed by kbd:[Enter].
-
-[[mouse]]
-=== Supporto del mouse
-
-WeeChat supporta i click e le azioni del mouse. Funziona con il terminale
-locale, e da remoto via connessione ssh con o senza screen/tmux.
-
-[[mouse_enable]]
-==== Abilitare il mouse
-
-Per abilitare il mouse all'avvio:
-
-----
-/set weechat.look.mouse on
-----
-
-Per abilitarlo subito, digitare kbd:[Alt+m] oppure eseguire il seguente comando:
-
-----
-/mouse enable
-----
-
-È possibile disabilitarlo temporaneamente, e associare il comando ad un
-tasto. Ad esempio il tasto kbd:[Alt+%] per disabilitare il mouse per 10 secondi:
-
-----
-/key bind meta-% /mouse toggle 10
-----
-
-// TRANSLATION MISSING
-[IMPORTANT]
-When mouse is enabled in WeeChat, all mouse events are caught by WeeChat, so
-actions such as copy/paste or clicks on URLs are not sent to the terminal. +
-Using kbd:[Shift] key causes the events to be sent directly to the terminal,
-as if the mouse was disabled (on some terminals like iTerm, you have to use
-kbd:[Alt] instead of kbd:[Shift]).
-
-[NOTE]
-Per qualunque problema con il mouse, consultare
-link:weechat_faq.it.html#mouse[FAQ di WeeChat / Mouse].
-
-[[mouse_bind_events]]
-==== Associare gli eventi del mouse a comandi
-
-Molti eventi del mouse predefiniti sono già definiti da WeeChat (consultare
-<<key_bindings_mouse_context,tasti per il contesto "mouse">>).
-
-È possibile cambiare o aggiungere combinazioni con il comando `/key` usando il
-contesto "mouse" (per la sintassi, consultare comando
-<<command_weechat_key,/key>>).
-
-Il nome dell'evento consiste di un modificatore (opzionale), il nome di un
-pulsante/rotellina e un'azione (opzionale). Elementi diversi sono separati da `+-+`.
-
-Elenco di modificatori
-
-[width="100%",cols="1m,4",options="header"]
-|===
-| Modificatore | Descrizione
-| ctrl         | Tasto kbd:[Ctrl]
-| alt          | Tasto kbd:[Alt]
-| ctrl-alt     | Tasto kbd:[Ctrl] + kbd:[Alt]
-|===
-
-Elenco di pulsanti/rotellina:
-
-[width="100%",cols="1m,4",options="header"]
-|===
-| Pulsante/rotellina  | Descrizione
-| button1             | Click sul tasto sinistro
-| button2             | Click sul tasto destro
-| button3             | Click sul tasto centrale (spesso click sulla rotellina)
-| button4 ... button9 | Click sui pulsanti extra
-| wheelup             | Rotellina (su)
-| wheeldown           | Rotellina (giù)
-|===
-
-Elenco di azioni (solo per i pulsanti, non la rotellina):
-
-[width="100%",cols="1m,4",options="header"]
-|===
-| Azione             | Distanza
-| gesture-up         | 3 ... 19
-| gesture-up-long    | ≥ 20
-| gesture-down       | 3 ... 19
-| gesture-down-long  | ≥ 20
-| gesture-left       | 3 ... 39
-| gesture-left-long  | ≥ 40
-| gesture-right      | 3 ... 39
-| gesture-right-long | ≥ 40
-|===
-
-// TRANSLATION MISSING
-List of incomplete events (only for buttons, useful for plugins/scripts):
-
-[width="100%",cols="1m,4",options="header"]
-|===
-| Event      | Description
-| event-down | Button was pressed but not released yet
-| event-drag | Mouse was moved with button pressed down
-|===
-
-Esempio di eventi:
-
-* `button1`
-* `ctrl-button1`
-* `button1-gesture-right`
-* `button1-event-down`
-* `button1-event-drag`
-* `alt-button2-gesture-down-long`
-* `wheelup`
-* `ctrl-alt-wheeldown`
-* ...
-
-[TIP]
-Quando si associa un tasto nel contesto "mouse", è possibile far corrispondere
-più eventi usando `+*+` all'inizio o alla fine del nome, ad esempio
-`+button1-gesture-*+` corrisponderà ad ogni azione compiuta col tasto sinistro.
-
-[TIP]
-È possibile trovare il nome di un evento con il comando `+/input grab_mouse+`
-poi eseguire l'evento col mouse. Il comando inserisce il nome dell'evento
-nella riga di comando.
 
 // TRANSLATION MISSING
 [[secured_data]]

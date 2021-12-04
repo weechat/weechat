@@ -583,6 +583,49 @@ include::includes/cmdline_options.sr.adoc[tag=debug]
 | WEECHAT_EXTRA_LIBDIR | Додатни директоријум из кога се учитавају додаци (из „plugins” директоријума на овој путањи).
 |===
 
+// TRANSLATION MISSING
+[[colors_support]]
+=== Colors support
+
+За приказ текста у тракама и простору за чет, програм WeeChat може да користи до 32767 парова боја (ваш терминал мора да подржава 256 боја како могле да се користе у програму WeeChat).
+
+Сагласно са вредности променљиве окружења _TERM_, можете имати следећа ограничења за боје у програму WeeChat:
+
+[width="75%", cols="8,>3,>3", options="header"]
+|===
+| $TERM                                  | Боја   | Парова
+| "rxvt-unicode", "xterm", ...           |     88 | 32767
+| "rxvt-256color", "xterm-256color", ... |    256 | 32767
+| "screen"                               |      8 |    64
+| "screen-256color"                      |    256 | 32767
+| "tmux"                                 |      8 |    64
+| "tmux-256color"                        |    256 | 32767
+|===
+
+Ако желите да прикажете ограничења за своје окружење, покрените `weechat --colors`, или извршите команду `/color` у програму WeeChat.
+
+Неке од препоручених вредности за _TERM_ ако желите 256 боја:
+
+* под screen: _screen-256color_
+* под tmux: _screen-256color_ или _tmux-256color_
+* ван screen/tmux: _xterm-256color_, _rxvt-256color_, _putty-256color_, ...
+
+[NOTE]
+Можда ће бити потребно да инсталирате пакет „ncurses-term” како бисте могли да у _TERM_ променљивој користите ове вредности.
+
+Ако користите screen, можете да додате следећу линију у свој _~/.screenrc_:
+
+----
+term screen-256color
+----
+
+Ако је вредност ваше _TERM_ променљиве погрешна, а програм WeeChat се већ извршава, можете да је промените помоћу следеће две команде:
+
+----
+/set env TERM screen-256color
+/upgrade
+----
+
 [[files_and_directories]]
 === Фајлови и директоријуми
 
@@ -889,139 +932,6 @@ kbd:[!]
 
 [NOTE]
 У irc додатку можете да ремапирате ове боје употребом опције <<option_irc.color.mirc_remap,irc.color.mirc_remap>>.
-
-[[colors]]
-=== Боје
-
-За приказ текста у тракама и простору за чет, програм WeeChat може да користи до 32767 парова боја (ваш терминал мора да подржава 256 боја како могле да се користе у програму WeeChat).
-
-Сагласно са вредности променљиве окружења _TERM_, можете имати следећа ограничења за боје у програму WeeChat:
-
-[width="75%", cols="8,>3,>3", options="header"]
-|===
-| $TERM                                  | Боја   | Парова
-| "rxvt-unicode", "xterm", ...           |     88 | 32767
-| "rxvt-256color", "xterm-256color", ... |    256 | 32767
-| "screen"                               |      8 |    64
-| "screen-256color"                      |    256 | 32767
-| "tmux"                                 |      8 |    64
-| "tmux-256color"                        |    256 | 32767
-|===
-
-Ако желите да прикажете ограничења за своје окружење, покрените `weechat --colors`, или извршите команду `/color` у програму WeeChat.
-
-Неке од препоручених вредности за _TERM_ ако желите 256 боја:
-
-* под screen: _screen-256color_
-* под tmux: _screen-256color_ или _tmux-256color_
-* ван screen/tmux: _xterm-256color_, _rxvt-256color_, _putty-256color_, ...
-
-[NOTE]
-Можда ће бити потребно да инсталирате пакет „ncurses-term” како бисте могли да у _TERM_ променљивој користите ове вредности.
-
-Ако користите screen, можете да додате следећу линију у свој _~/.screenrc_:
-
-----
-term screen-256color
-----
-
-Ако је вредност ваше _TERM_ променљиве погрешна, а програм WeeChat се већ извршава, можете да је промените помоћу следеће две команде:
-
-----
-/set env TERM screen-256color
-/upgrade
-----
-
-[[colors_basic]]
-==== Основне боје
-
-Основне боје у програму WeeChat су:
-
-[width="75%", cols="1m,4", options="header"]
-|===
-| Име          | Боја
-| default      | Подразумевана боја терминала (провидна за позадину)
-| black        | Црна
-| darkgray     | Тамносива
-| red          | Тамноцрвена
-| lightred     | Светлоцрвена
-| green        | Тамнозелена
-| lightgreen   | Светлозелена
-| brown        | Браон
-| yellow       | Жута
-| blue         | Тамноплава
-| lightblue    | Светлоплава
-| magenta      | Тамномагента
-| lightmagenta | Светломагента
-| cyan         | Тамноцијан
-| lightcyan    | Светлоцијан
-| gray         | Сива
-| white        | Бела
-|===
-
-[[colors_extended]]
-==== Проширене боје
-
-Програм WeeChat динамички алоцира парове боја када се боје употребе на екрану (за приказ бафера и трака).
-
-Уз основне боје, можете да користите и број боје између 1 и границе вашег терминала.
-
-Употребите команду `/color` да видите текуће боје и ограничења. Са kbd:[Alt+c] можете привремено да се пребаците на боје терминала како бисте изабрали боју.
-
-На пример, ако желите да се време у баферу приказује у наранџастој боји, извршите:
-
-----
-/set weechat.color.chat_time 214
-----
-
-Или ако желите тамну тамнозелену позадину за статусну линију:
-
-----
-/set weechat.bar.status.color_bg 22
-----
-
-[[colors_aliases]]
-==== Алијаси
-
-Алијасе боја можете додати командом `/color alias`, па затим користити тај алијас у било којој опцији за боје.
-
-На пример:
-
-----
-/color alias 214 orange
-/set weechat.color.chat_delimiters orange
-----
-
-[[colors_attributes]]
-==== Атрибути
-
-За боје можете да користите и неке атрибуте. Испред имена или броја боје можете додати један или више атрибута:
-
-* `+*+`: подебљани текст
-* `+!+`: обрнути видео
-* `+/+`: курзив
-* `+_+`: подвучен текст
-* `+|+`: задржавање атрибута: када се мења боја, подебљано/обрнуто/курзив/подвучено се не ресетује
-
-На пример, ако желите да ваш надимак исписује у белој боји, подвучено, извршите:
-
-----
-/set weechat.color.chat_nick_self _white
-----
-
-Или ако желите да се у статусној траци време исписује у наранџастој боји, подебљано:
-
-----
-/set weechat.color.status_time *_214
-----
-
-Ако атрибуте желите да користите са подразумеваном бојом терминала (-1), морате да употребите број већи од последње боје терминала, на пример, максималну боју у програму WeeChat: 99999.
-
-Пример подебљаног текста са бојом предњег плана терминала:
-
-----
-/set weechat.color.status_time *99999
-----
 
 [[buffers_and_windows]]
 === Бафери и прозори
@@ -1335,6 +1245,786 @@ _прозор_ је површина екрана која приказује б
 [NOTE]
 Спољни додаци и скрипте могу да дефинишу и користе остале локалне променљиве.
 
+[[bare_display]]
+=== Огољени приказ
+
+Да бисте једноставно кликнули на дугачке URL адресе и бирали текст (користећи миша), можете употребити посебан приказ који се зове „огољени приказ”.
+
+Огољени приказ има следеће особине:
+
+* Приказује само садржај текућег бафера: нема ни подељених прозора ни трака (нема наслова, листе надимака, статуса, уноса, ...).
+* Подршка за миш програма WeeChat је искључена (ако је била укључена): миш можете да користите на исти начин као у терминалу, да кликћете на URL адресе и вршите избор текста.
+* Ncurses се не користи, тако да се URL адресе не секу на крају линије.
+
+Подразумевани тастер којим се укључује огољени приказ је kbd:[Alt+l] (`L`), и истим тастером се напушта (или као што је подразумевано, било шта што мења унос ће изазвати напуштање огољеног приказа, погледајте опцију <<option_weechat.look.bare_display_exit_on_input,weechat.look.bare_display_exit_on_input>>).
+
+Формат приказа времена може да се прилагоди опцијом <<option_weechat.look.bare_display_time_format,weechat.look.bare_display_time_format>>.
+
+Огољени приказ може да се укључи на неко одређено време командом <<command_weechat_window,/window>>.
+
+Ако програм WeeChat изгледа на следећи начин:
+
+....
+┌──────────────────────────────────────────────────────────────────────────────────────┐
+│1.libera │Добродошли на #abc                                                          │
+│  weechat│12:52:27   --> | Flashy (flashcode@weechat.org) је приступио у #abc │@Flashy│
+│2.  #test│12:52:27    -- | Надимци #abc: [@Flashy @joe +weebot peter]         │@joe   │
+│3.  #abc │12:52:27    -- | Канал #abc: 4 надимка (2 опа, 1 глас, 1 обични)    │+weebot│
+│4.  #def │12:52:27    -- | Канал је креиран у Уто Јан 27 06:30:17 2009        │peter  │
+│5.  #ghi │12:54:15 peter | hey!                                               │       │
+│         │12:55:01  @joe | peter: hook_process: https://weechat.org/files/do  │       │
+│         │               | c/devel/weechat_plugin_api.en.html#_weechat_hook_  │       │
+│         │               | process                                            │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │[12:55] [5] [irc/libera] 3:#abc(+n){4}                                      │
+│         │[@Flashy(i)] hi peter!█                                                     │
+└──────────────────────────────────────────────────────────────────────────────────────┘
+....
+
+Екран у огољеном приказу ће изгледати овако:
+
+....
+┌───────────────────────────────────────────────────────────────────────────────────────┐
+│                                                                                       │
+│                                                                                       │
+│                                                                                       │
+│                                                                                       │
+│                                                                                       │
+│                                                                                       │
+│                                                                                       │
+│                                                                                       │
+│                                                                                       │
+│                                                                                       │
+│                                                                                       │
+│                                                                                       │
+│                                                                                       │
+│                                                                                       │
+│                                                                                       │
+│                                                                                       │
+│12:52 --> Flashy (flashcode@weechat.org) је приступио у #abc                           │
+│12:52 -- Надимци #abc: [@Flashy @joe +weebot peter]                                    │
+│12:52 -- Канал #abc: 4 надимка (2 опа, 1 глас, 1 обичан)                               │
+│12:52 -- Канал је креиран у Уто Јан 27 06:30:17 2009                                   │
+│12:54 <peter> hey!                                                                     │
+│12:55 <@joe> peter: hook_process: https://weechat.org/files/doc/devel/weechat_plugin_ap│
+│i.en.html#_weechat_hook_process                                                        │
+└───────────────────────────────────────────────────────────────────────────────────────┘
+....
+
+Тако да у свом терминалу без проблема можете кликнути на URL адресу од надимка _joe_ (наравно, ово претпоставља да ваш терминал подржава кликове на URL адресе).
+
+// TRANSLATION MISSING
+[[key_bindings]]
+== Key bindings
+
+// TRANSLATION MISSING
+WeeChat provides a lot of default key bindings, listed in the following chapters. +
+They can be changed and new ones can be added with the <<command_weechat_key,/key>> command.
+
+// TRANSLATION MISSING
+[[key_bindings_cmdline]]
+=== Command line
+
+// TRANSLATION MISSING
+[[key_bindings_cmdline_cursor_movement]]
+==== Cursor movement
+
+[width="100%", cols="^.^3,.^8,.^5", options="header"]
+|===
+| Тастер         | Опис | Команда
+| kbd:[←] +
+  kbd:[Ctrl+b]   | Одлазак на претходни карактер у командној линији. | `+/input move_previous_char+`
+| kbd:[→] +
+  kbd:[Ctrl+f]   | Одлазак на наредни карактер у командној линији. | `+/input move_next_char+`
+| kbd:[Ctrl+←] +
+  kbd:[Alt+b]    | Одлазак на претходну реч у командној линији. | `+/input move_previous_word+`
+| kbd:[Ctrl+→] +
+  kbd:[Alt+f]    | Одлазак на наредну реч у командној линији. | `+/input move_next_word+`
+| kbd:[Home] +
+  kbd:[Ctrl+a]   | Одлазак на почетак командне линије. | `+/input move_beginning_of_line+`
+| kbd:[End] +
+  kbd:[Ctrl+e]   | Одлазак на крај командне линије. | `+/input move_end_of_line+`
+|===
+
+// TRANSLATION MISSING
+[[key_bindings_cmdline_editing]]
+==== Editing
+
+[width="100%", cols="^.^3,.^8,.^5", options="header"]
+|===
+| Тастер            | Опис | Команда
+| kbd:[Del] +
+  kbd:[Ctrl+d]      | Брисање наредног карактера у командној линији. | `+/input delete_next_char+`
+| kbd:[Backspace] +
+  kbd:[Ctrl+h]      | Брисање претходног карактера у командној линији. | `+/input delete_previous_char+`
+| kbd:[Ctrl+k]      | Брисање од курсора до краја командне линије (обрисани стринг се копира у интерни клипборд). | `+/input delete_end_of_line+`
+| kbd:[Ctrl+t]      | Транспозиција карактера. | `/input transpose_chars`
+| kbd:[Ctrl+u]      | Брисање од курсора до почетка командне линије (обрисани стринг се копира у интерни клипборд). | `+/input delete_beginning_of_line+`
+| kbd:[Ctrl+w]      | Брисање претходне речи командне линије (обрисани стринг се копира у интерни клипборд). | `+/input delete_previous_word+`
+| kbd:[Ctrl+y]      | Налепљивање садржаја интерног клипборда. | `+/input clipboard_paste+`
+| kbd:[Ctrl+_]      | Поништавање последње акције у командној линији. | `+/input undo+`
+| kbd:[Alt+_]       | Враћање последње поништене акције у командној линији. | `+/input redo+`
+| kbd:[Tab]         | Довршавање команде или надимка (kbd:[Tab] поново: проналажење наредног довршавања). | `+/input complete_next+`
+| kbd:[Shift+Tab]   | Без довршавања: обављање парцијалног довршавања, са довршавањем на чекању: довршавање са претходно пронађеним појмом. | `+/input complete_previous+`
+| kbd:[Enter] +
+  kbd:[Ctrl+j] +
+  kbd:[Ctrl+m]      | Извршавање команде или слање поруке (у режиму претраге: заустављање претраге). | `+/input return+`
+| kbd:[Alt+Enter]   | Умеће прелом реда. | `+/input insert \n+`
+| kbd:[Alt+d]       | Брисање наредне речи у командној линији (обрисани стринг се копира у интерни клипборд). | `+/input delete_next_word+`
+| kbd:[Alt+k]       | Хвата тастер и умеће његов кôд (и комадну везану за њега, ако постоји таква пречица) у командну линију. | `+/input grab_key_command+`
+| kbd:[Alt+r]       | Брише комплетну командну линију. | `+/input delete_line+`
+|===
+
+// TRANSLATION MISSING
+[[key_bindings_cmdline_color_codes]]
+==== Color codes
+
+[width="100%", cols="^.^3,.^8,.^5", options="header"]
+|===
+| Тастер                | Опис | Команда
+| kbd:[Ctrl+c], kbd:[b] | Уметање кода за подебљани текст. | `+/input insert \x02+`
+| kbd:[Ctrl+c], kbd:[c] | Уметање кода за обојени текст. | `+/input insert \x03+`
+| kbd:[Ctrl+c], kbd:[i] | Уметање кода за текст у курзиву. | `+/input insert \x1D+`
+| kbd:[Ctrl+c], kbd:[o] | Уметање кода за ресет боје. | `+/input insert \x0F+`
+| kbd:[Ctrl+c], kbd:[v] | Уметање кода за обрнуту боју. | `+/input insert \x16+`
+| kbd:[Ctrl+c], kbd:[_] | Уметање кода за подвучени текст. | `+/input insert \x1F+`
+|===
+
+// TRANSLATION MISSING
+[[key_bindings_cmdline_history]]
+==== Command history
+
+[width="100%", cols="^.^3,.^8,.^5", options="header"]
+|===
+| Тастер       | Опис | Команда
+| kbd:[↑]      | Позив претходне команде/поруке (у режиму претраге: претрага навише). | `+/input history_previous+`
+| kbd:[↓]      | Позив наредне команде/поруке (у режиму претраге: претрага наниже). | `+/input history_next+`
+| kbd:[Ctrl+↑] | Позив претходне команде/поруке у глобалној историји (заједничкој за све бафере). | `+/input history_global_previous+`
+| kbd:[Ctrl+↓] | Позив наредне команде/поруке у глобалној историји (заједничкој за све бафере). | `+/input history_global_next+`
+|===
+
+// TRANSLATION MISSING
+[[key_bindings_buffers]]
+=== Buffers
+
+[width="100%", cols="^.^3,.^8,.^5", options="header"]
+|===
+| Тастер                         | Опис | Команда
+| kbd:[Ctrl+r]                   | Претрага на текст у историји бафера (погледајте <<key_bindings_search_context,тастери у „search”>>). | `+/input search_text_here+`
+| kbd:[Ctrl+s], kbd:[Ctrl+u]     | Поставља маркер непрочитано за све бафере. | `+/input set_unread+`
+| kbd:[Ctrl+x]                   | Пребацује текући бафер ако су бафери прикачени са истим бројем. | `+/input switch_active_buffer+`
+| kbd:[Alt+x]                    | Зум на спојени бафер (kbd:[Alt+x] поново: приказује све спојене бафере). | `+/input zoom_merged_buffer+`
+| kbd:[PgUp]                     | Скролује навише једну страну у историји бафера. | `+/window page_up+`
+| kbd:[PgDn]                     | Скролује наниже једну страну у историји бафера. | `+/window page_down+`
+| kbd:[Alt+PgUp]                 | Скролује навише неколико линија у историји бафера. | `+/window scroll_up+`
+| kbd:[Alt+PgDn]                 | Скролује наниже неколико линија у историји бафера. | `+/window scroll_down+`
+| kbd:[Alt+Home]                 | Скролује на врх бафера. | `+/window scroll_top+`
+| kbd:[Alt+End]                  | Скролује на дно бафера. | `+/window scroll_bottom+`
+| kbd:[Alt+←] +
+  kbd:[Alt+↑] +
+  kbd:[Ctrl+p] +
+  kbd:[F5]                       | Пребацивање на претходни бафер. | `+/buffer -1+`
+| kbd:[Alt+→] +
+  kbd:[Alt+↓] +
+  kbd:[Ctrl+n] +
+  kbd:[F6]                       | Пребацивање на наредни бафер. | `+/buffer +1+`
+| kbd:[Alt+j], kbd:[Alt+f]       | Пребацивање на први бафер. | `+/buffer -+`
+| kbd:[Alt+j], kbd:[Alt+l] (`L`) | Пребацивање на последњи бафер. | `+/buffer ++`
+| kbd:[Alt+j], kbd:[Alt+r]       | Пребацивање на сирови IRC бафер. | `+/server raw+`
+| kbd:[Alt+j], kbd:[Alt+s]       | пребацивање на бафер IRC сервера. | `+/server jump+`
+| kbd:[Alt+0...9]                | Пребацивање на бафер према броју (0 = 10). | `+/buffer *N+`
+| kbd:[Alt+j], kbd:[01...99]     | Пребацивање на бафер према броју. | `+/buffer *NN+`
+| kbd:[Alt+n]                    | Скроловање до наредног истицања. | `+/window scroll_next_highlight+`
+| kbd:[Alt+p]                    | Скроловање на претходно истицање. | `+/window scroll_previous_highlight+`
+| kbd:[Alt+u]                    | Скроловање на прву непрочитану линију у баферу. | `+/window scroll_unread+`
+| kbd:[Alt+<]                    | Прелаз на претходни бафер у листи посећених бафера. | `+/input jump_previously_visited_buffer+`
+| kbd:[Alt+>]                    | Прелаз на наредни бафер у листи посећених бафера. | `+/input jump_next_visited_buffer+`
+| kbd:[Alt+/]                    | Прелаз на последње приказани бафер. | `+/input jump_last_buffer_displayed+`
+|===
+
+// TRANSLATION MISSING
+[[key_bindings_windows]]
+=== Windows
+
+[width="100%", cols="^.^3,.^8,.^5", options="header"]
+|===
+| Тастер                   | Опис | Команда
+| kbd:[Ctrl+l] (`L`)       | Поново исцртава цео прозор. | `+/window refresh+`
+| kbd:[Alt+l] (`L`)        | Пребацивање активности огољеног приказа. | `+/window bare+`
+| kbd:[F7]                 | Пребацивање на претходни прозор. | `+/window -1+`
+| kbd:[F8]                 | Пребацивање на наредни прозор. | `+/window +1+`
+| kbd:[Alt+w], kbd:[Alt+↑] | Прелаз на прозор изнад. | `+/window up+`
+| kbd:[Alt+w], kbd:[Alt+↓] | Прелаз на прозор испод. | `+/window down+`
+| kbd:[Alt+w], kbd:[Alt+←] | Прелаз на прозор са леве стране. | `+/window left+`
+| kbd:[Alt+w], kbd:[Alt+→] | Прелаз на прозор са десне стране. | `+/window right+`
+| kbd:[Alt+w], kbd:[Alt+b] | Уједначавање величине свих прозора. | `+/window balance+`
+| kbd:[Alt+w], kbd:[Alt+s] | Замена бафера два прозора. | `+/window swap+`
+| kbd:[Alt+z]              | Зум на текући прозор (kbd:[Alt+z] поново: враћање почетног стања прозора, пре зумирања). | `+/window zoom+`
+|===
+
+// TRANSLATION MISSING
+[[key_bindings_bars]]
+=== Bars
+
+[width="100%", cols="^.^3,.^8,.^5", options="header"]
+|===
+| Тастер            | Опис | Команда
+| kbd:[F1] +
+  kbd:[Ctrl+F1]     | Скролује навише једну страну листе бафера. | `+/bar scroll buflist * -100%+`
+| kbd:[F2] +
+  kbd:[Ctrl+F2]     | Скролује наниже једну страну листе бафера. | `+/bar scroll buflist * +100%+`
+| kbd:[Alt+F1]      | Скок на почетак листе бафера. | `+/bar scroll buflist * b+`
+| kbd:[Alt+F2]      | Скок на крај листе бафера. | `+/bar scroll buflist * e+`
+| kbd:[F9]          | Скролује наслов бафера у лево. | `+/bar scroll title * -30%+`
+| kbd:[F10]         | Скролује наслов бафера у десно. | `+/bar scroll title * +30%+`
+| kbd:[F11] +
+  kbd:[Ctrl+F11]    | Скролује једну страну навише у листи надимака. | `+/bar scroll nicklist * -100%+`
+| kbd:[F12] +
+  kbd:[Ctrl+F12]    | Скролује једну страну наниже у листи надимака. | `+/bar scroll nicklist * +100%+`
+| kbd:[Alt+F11]     | Скок на почетак листе надимака. | `+/bar scroll nicklist * b+`
+| kbd:[Alt+F12]     | Скок на крај листе надимака. | `+/bar scroll nicklist * e+`
+| kbd:[Alt+Shift+B] | Пребацивање активности листе бафера. | `+/buflist toggle+`
+| kbd:[Alt+Shift+N] | Пребацивање видљивости траке листе надимака. | `+/bar toggle nicklist+`
+|===
+
+// TRANSLATION MISSING
+[[key_bindings_hotlist]]
+=== Hotlist
+
+[width="100%", cols="^.^3,.^8,.^5", options="header"]
+|===
+| Тастер                         | Опис | Команда
+| kbd:[Alt+a]                    | Пребацивање на следећи бафер у коме има активности (са приоритетом: истицање, порука, остало). | `+/input jump_smart+`
+| kbd:[Alt+h], kbd:[Alt+c]       | Брисање вруће листе (обавештења о активности у баферима). | `+/input hotlist_clear+`
+| kbd:[Alt+h], kbd:[Alt+m]       | Уклањање текућег бафера из вруће листе. | `+/input hotlist_remove_buffer+`
+| kbd:[Alt+h], kbd:[Alt+r]       | Враћање најновије вруће листе уклоњене из текућег бафера. | `+/input hotlist_restore_buffer+`
+| kbd:[Alt+h], kbd:[Alt+Shift+R] | Враћање најновије вруће листе уклоњене из свих бафера. | `+/input hotlist_restore_all+`
+|===
+
+// TRANSLATION MISSING
+[[key_bindings_toggle_keys]]
+=== Toggle keys
+
+[width="100%", cols="^.^3,.^8,.^5", options="header"]
+|===
+| Тастер      | Опис | Команда
+| kbd:[Alt+m] | Пребацивање активности миша. | `+/mouse toggle+`
+| kbd:[Alt+s] | Пребацује стање активности модула за проверу правописа. | `+/mute spell toggle+`
+| kbd:[Alt+=] | Пребацивање активности филтера. | `+/filter toggle+`
+| kbd:[Alt+-] | Пребацивање активности филтера у текућем баферу. | `+/filter toggle @+`
+|===
+
+// TRANSLATION MISSING
+[[key_bindings_search_context]]
+=== Search context
+
+Следећи тастери се користе у „search” контексту (када се притисне kbd:[Ctrl+r] за претрагу текста у баферу).
+
+[width="100%", cols="^.^3,.^8,.^5", options="header"]
+|===
+| Тастер         | Опис | Команда
+| kbd:[Ctrl+r]   | Пребацивање типа претраге: стринг (подраз.), регуларни израз. | `+/input search_switch_regex+`
+| kbd:[Alt+c]    | Пребацивање разликовања величине слова у претраци. | `+/input search_switch_case+`
+| kbd:[Tab]      | Пребацивање претраге у: порукама (подраз.), префиксима, префиксима + порукама. | `+/input search_switch_where+`
+| kbd:[↑]        | Претрага претходне линије. | `+/input search_previous+`
+| kbd:[↓]        | Претрага наредне линије. | `+/input search_next+`
+| kbd:[Enter] +
+  kbd:[Ctrl+j] +
+  kbd:[Ctrl+m]   | Заустављање претраге на текућој позицији. | `+/input search_stop_here+`
+| kbd:[Ctrl+q]   | Заустављање претраге и скроловање на дно бафера. | `+/input search_stop+`
+|===
+
+// TRANSLATION MISSING
+[[key_bindings_cursor_context]]
+=== Cursor context
+
+Ови тастери се користе у „cursor” контексту (слободно померање курсора по екрану).
+
+[width="100%", cols="^.^3,^.^2,.^7,.^7", options="header"]
+|===
+| Тастер         | Површина       | Опис | Команда
+| kbd:[↑]        | -              | Помера курсор једну линију навише. | `+/cursor move up+`
+| kbd:[↓]        | -              | Помера курсор једну линију наниже. | `+/cursor move down+`
+| kbd:[←]        | -              | Помера курсор једну колони у лево. | `+/cursor move left+`
+| kbd:[→]        | -              | Помера курсор једну колону у десно. | `+/cursor move right+`
+| kbd:[Alt+↑]    | -              | Помера курсор једну површину навише. | `+/cursor move area_up+`
+| kbd:[Alt+↓]    | -              | Помера курсор једну површину наниже. | `+/cursor move area_down+`
+| kbd:[Alt+←]    | -              | Помера курсор једну површину у лево. | `+/cursor move area_left+`
+| kbd:[Alt+→]    | -              | Помера курсор једну површину у десно. | `+/cursor move area_right+`
+| kbd:[m]        | чет            | Цитирање поруке. | `+hsignal:chat_quote_message;/cursor stop+`
+| kbd:[q]        | чет            | Цитирање префикса + поруке. | `+hsignal:chat_quote_prefix_message;/cursor stop+`
+| kbd:[Q]        | чет            | Quote time + prefix + message. | `+hsignal:chat_quote_time_prefix_message;/cursor stop+`
+| kbd:[b]        | листа надимака | Забрањује надимак. | `+/window ${_window_number};/ban ${nick}+`
+| kbd:[k]        | листа надимака | Избацује надимак. | `+/window ${_window_number};/kick ${nick}+`
+| kbd:[K]        | листа надимака | Избацује и забрањује надимак. | `+/window ${_window_number};/kickban ${nick}+`
+| kbd:[q]        | листа надимака | Отвара упит са надимком. | `+/window ${_window_number};/query ${nick};/cursor stop+`
+| kbd:[w]        | листа надимака | Извршава whois над надимком. | `+/window ${_window_number};/whois ${nick}+`
+| kbd:[Enter] +
+  kbd:[Ctrl+j] +
+  kbd:[Ctrl+m]   | -        | Зауставља режим померања курсора | `/cursor stop`
+|===
+
+// TRANSLATION MISSING
+[[key_bindings_mouse]]
+=== Mouse
+
+// TRANSLATION MISSING
+These mouse actions are possible only if mouse is enabled with key kbd:[Alt+m]
+(command: `+/mouse toggle+`).
+
+[width="100%", cols="^.^3,^.^3,^.^3,.^8,.^8", options="header"]
+|===
+| Тастер/Точкић ^(1)^ | Гестикулација      | Површина                | Опис | Команда
+| ◾◽◽                 | -            | чет                | Пребацивање на прозор. | `+/window ${_window_number}+`
+| ◾◽◽                 | лево         | чет                | Пребацивање на претходни бафер. | `+/window ${_window_number};/buffer +1+`
+| ◾◽◽                 | десно        | чет                | Пребацивање на наредни бафер. | `+/window ${_window_number};/buffer +1+`
+| ◾◽◽                 | лево (дуго)  | чет                | Пребацивање на први бафер. | `+/window ${_window_number};/buffer 1+`
+| ◾◽◽                 | десно (дуго) | чет                | Пребацивање на последњи бафер. | `+/window ${_window_number};/input jump_last_buffer+`
+| kbd:[▲]             | -            | чет                | Скролује навише неколико линија у историји бафера. | `+/window scroll_up -window ${_window_number}+`
+| kbd:[▼]             | -            | чет                | Скролује наниже неколико линија у историји бафера. | `+/window scroll_down -window ${_window_number}+`
+| kbd:[Ctrl+▲]        | -            | чет                | Скролује хоризонтално у лево. | `+/window scroll_horiz -window ${_window_number} -10%+`
+| kbd:[Ctrl+▼]        | -            | чет                | Скролује хоризонтално у десно. | `+/window scroll_horiz -window ${_window_number} +10%+`
+| kbd:[▲]             | -            | чет: fset бафер   | Помера за пет линија навише у fset баферу. | `+/fset -up 5+`
+| kbd:[▼]             | -            | чет: fset бафер   | Помера за пет линија наниже у fset баферу. | `+/fset -down 5+`
+| ◾◽◽                 | -            | чет: fset бафер   | Бира линију у fset баферу. | `+/window ${_window_number};/fset -go ${_chat_line_y}+`
+| ◽◽◾                 | -            | чет: fset бафер   | Пребацује логичку вредност (on/off) или уређује вредност опције. | `+hsignal:fset_mouse+`
+| ◽◽◾                 | лево         | чет: fset бафер   | Умањује вредност за цео број/боју, поставља/надовезује вредност за остале типове. | `+hsignal:fset_mouse+`
+| ◽◽◾                 | десно        | чет: fset бафер   | Увећава вредност за цео број/боју, поставља/надовезује вредност за остале типове. | `+hsignal:fset_mouse+`
+| ◽◽◾                 | горе / доле  | чет: fset бафер   | Маркира/уклања маркер са више опција. | `+hsignal:fset_mouse+`
+| kbd:[▲]             | -            | чет: script бафер | Помера за пет линија навише у script баферу. | `+/script up 5+`
+| kbd:[▼]             | -            | чет: script бафер | Помера за пет линија наниже у script баферу. | `+/script down 5+`
+| ◾◽◽                 | -            | chat: script бафер | Бира линију у script баферу. | `+/script go ${_chat_line_y}+`
+| ◽◽◾                 | -            | chat: script бафер | Инсталира/уклања скрипту. | `+/script go ${_chat_line_y};/script installremove -q ${script_name_with_extension}+`
+| ◾◽◽                 | горе / лево  | листа бафера       | Помера бафер на нижи број. | Signal `+buflist_mouse+`.
+| ◾◽◽                 | доле / десно | листа бафера       | Помера бафер на виши број. | Signal `+buflist_mouse+`.
+| ◾◽◽                 | -            | листа бафера       | Пребацивање на бафер (претходно посећени багер ако је бафер текући). | Signal `+buflist_mouse+`.
+| ◽◽◾                 | -            | листа бафера       | Пребацивање на наредни посећени бафер ако је бафер текући. | Signal `+buflist_mouse+`.
+| kbd:[Ctrl+▲]        | -            | листа бафера       | Пребацивање на претходни бафер. | Signal `+buflist_mouse+`.
+| kbd:[Ctrl+▼]        | -            | листа бафера        | Пребацивање на наредни бафер. | Signal `+buflist_mouse+`.
+| ◾◽◽                 | горе         | листа надимака      | Скроловање једне стране навише у листи надимака. | `+/bar scroll nicklist ${_window_number} -100%+`
+| ◾◽◽                 | доле         | листа надимака      | Скроловање једне стране наниже у листи надимака. | `+/bar scroll nicklist ${_window_number} +100%+`
+| ◾◽◽                 | горе (дуго)  | листа надимака      | Скок на почетак листе надимака. | `+/bar scroll nicklist ${_window_number} b+`
+| ◾◽◽                 | доле (дуго)  | листа надимака      | Скок на крај листе надимака. | `+/bar scroll nicklist ${_window_number} e+`
+| ◾◽◽                 | -            | листа надимака      | Отварање упита са надимком. | `+/window ${_window_number};/query ${nick}+`
+| ◽◽◾                 | -            | листа надимака      | Извршавање whois над надимком. | `+/window ${_window_number};/whois ${nick}+`
+| ◾◽◽                 | лево         | листа надимака      | Избацивање надимка. | `+/window ${_window_number};/kick ${nick}+`
+| ◾◽◽                 | лево (дуго)  | листа надимака      | Избацивање и забрана надимка. | `+/window ${_window_number};/kickban ${nick}+`
+| ◽◽◾                 | лево         | листа надимака      | Забрана надимка. | `+/window ${_window_number};/ban ${nick}+`
+| ◽◽◾                 | -            | унос                | Хвата догађај миша и умеће његов кôд у командну линију. | `+/input grab_mouse_area+`
+| kbd:[▲]             | -            | било која трака     | Скролује траку за -20%. | `+/bar scroll ${_bar_name} ${_window_number} -20%+`
+| kbd:[▼]             | -            | било која трака     | Скролује траку за +20%. | `+/bar scroll ${_bar_name} ${_window_number} +20%+`
+| ◽◾◽                 | -            | било где            | Започиње режим померања курсора на овој тачки. | `+/cursor go ${_x},${_y}+`
+|===
+
+[NOTE]
+^(1)^ kbd:[▲] и kbd:[▼] значе точкић навише и наниже.
+
+// TRANSLATION MISSING
+[[key_bindings_fset_buffer]]
+=== Fset buffer
+
+Ови тастери и акције се користе у fset баферу (погледајте<<fset_plugin,Fset додатак>>).
+
+[width="100%", cols="^.^3,^.^2,.^8,.^5", options="header"]
+|===
+| Тастер                   | Акција ^(1)^ | Опис | Команда
+| kbd:[↑]                  |              | Помера једну линију навише. | `+/fset -up+`
+| kbd:[↓]                  |              | Помера једну линију наниже. | `+/fset -down+`
+| kbd:[PgUp]               |              | Помера једну страну навише. | `+/window page_up+`
+| kbd:[PgDn]               |              | Помера једну страну наниже. | `+/window page_down+`
+| kbd:[Alt+Home]           | `pass:[<<]`  | Скок на прву линију. | `+/fset -go 0+`
+| kbd:[Alt+End]            | `pass:[>>]`  | Скок на последњу линију. | `+/fset -go end+`
+| kbd:[F11]                | `pass:[<]`   | Скролује хоризонтално у лево. | `+/fset -left+`
+| kbd:[F12]                | `pass:[>]`   | Скролује хоризонтално у десно. | `+/fset -right+`
+| kbd:[Alt+Space]          | `t`          | Пребацује стање логичке вредности. | `+/fset -toggle+`
+| kbd:[Alt+-]              | `-`          | Одузима 1 од вредности за цео број/боју, поставља вредност за остале типове. | `+/fset -add -1+`
+| kbd:[Alt++]              | `+`          | Додаје 1 на вредност за цео број/боју, надовезује вредност за остале типове. | `+/fset -add 1+`
+| kbd:[Alt+f], kbd:[Alt+r] | `r`          | Ресетује вредност. | `+/fset -reset+`
+| kbd:[Alt+f], kbd:[Alt+u] | `u`          | Поставља да је вредност празна. | `+/fset -unset+`
+| kbd:[Alt+Enter]          | `s`          | Поставља вредност. | `+/fset -set+`
+| kbd:[Alt+f], kbd:[Alt+n] | `n`          | Поставља нову вредност. | `+/fset -setnew+`
+| kbd:[Alt+f], kbd:[Alt+a] | `a`          | Надовезује на вредност. | `+/fset -append+`
+| kbd:[Alt+,]              | `,`          | Маркира/уклања маркирање са опције. | `+/fset -mark 1+`
+| kbd:[Shift+↑]            |              | Помера једну линију навише и маркира/уклања маркирање са опције. | `+/fset -up; /fset -mark+`
+| kbd:[Shift+↓]            |              | Маркира/уклања маркирање са опције и помера се једну линију наниже. | `+/fset -mark; /fset -down+`
+|                          | `m:xxx`      | Маркира приказане опције које се подударају са филтером „xxx” (дозвољава се било који филтер над опцијом или вредности, погледајте <<command_fset_fset,fset команду>>). |
+|                          | `u:xxx`      | Уклања маркирање са приказаних опција које се подударају са филтером „xxx” (дозвољава се било који филтер над опцијом или вредности, погледајте <<command_fset_fset,fset команду>>). |
+| kbd:[Ctrl+l] (`L`)       |              | Освежава опције и цео екран. | `+/fset -refresh+`
+|                          | `$`          | Освежава опције (маркиране опције остају маркиране). |
+|                          | `$$`         | Освежава опције (уклања се маркирање са свих опција). |
+| kbd:[Alt+p]              |              | Пребацује стање опција описа додатка (`pass:[plugins.desc.*]`). | `+/mute /set fset.look.show_plugins_desc toggle+`
+| kbd:[Alt+v]              |              | Пребацује стање видљивости траке помоћи. | `+/bar toggle fset+`
+|                          | `s:x,y`      | Сортира опције по пољима x,y (погледајте опцију <<option_fset.look.sort,fset.look.sort>>). | `+/mute /set fset.look.sort x,y+`
+|                          | `s:`         | Ресетује сортирање на подразумевану вредност (погледајте опцију <<option_fset.look.sort,fset.look.sort>>). | `+/mute /unset fset.look.sort+`
+|                          | `w:xxx`      | Извози опције у фајл „xxx”. | `+/fset -export xxx+`
+|                          | `w-:xxx`     | Извози опције у фајл „xxx” без помоћи. | `+/fset -export -nohelp xxx+`
+|                          | `w+:xxx`     | Извози опције у фајл „xxx” заједно са помоћи. | `+/fset -export -help xxx+`
+| kbd:[Ctrl+x]             | `x`          | Пребацује формат који се користи за приказ опција. | `+/fset -format+`
+|                          | `q`          | Затвара fset бафер. | `+/buffer close+`
+|===
+
+[NOTE]
+^(1)^ Акција мора да се унесе као унос у командну линију, након чега се притисне kbd:[Ентер].
+
+// TRANSLATION MISSING
+[[key_bindings_script_buffer]]
+=== Script buffer
+
+Ови тастери и акције се користе у script баферу (погледајте <<scripts_plugins,Script додатак>>).
+
+[width="100%", cols="^.^3,^.^2,.^8,.^5", options="header"]
+|===
+| Тастер            | Акција ^(1)^ | Опис | Команда
+| kbd:[↑]           |              | Помера једну линију навише. | `+/script up+`
+| kbd:[↓]           |              | Помера једну линију наниже. | `+/script down+`
+| kbd:[PgUp]        |              | Помера једну страну навише. | `+/window page_up+`
+| kbd:[PgDn]        |              | Помера једну страну наниже. | `+/window page_down+`
+| kbd:[Alt+i]       | `i`          | Инсталира скрипту. | `+/script install+`
+| kbd:[Alt+r]       | `r`          | Брише скрипту. | `+/script remove+`
+| kbd:[Alt+l] (`L`) | `l`          | Учитава скрипту. | `+/script load+`
+| kbd:[Alt+u]       | `u`          | Уклања скрипту из меморије. | `+/script unload+`
+| kbd:[Alt+Shift+A] | `A`          | Аутоучитавање скрипте. | `+/script toggleautoload+`
+| kbd:[Alt+h]       | `h`          | Задржава/отпушта скрипту. | `+/script hold+`
+| kbd:[Alt+v]       | `v`          | Преглед скрипте. | `+/script show+`
+|===
+
+[NOTE]
+^(1)^ Акција мора да се унесе као унос у командну линију, након чега се притисне kbd:[Ентер].
+
+// TRANSLATION MISSING
+[[configuration]]
+== Configuration
+
+// TRANSLATION MISSING
+[[colors]]
+=== Colors
+
+[[colors_basic]]
+==== Основне боје
+
+Основне боје у програму WeeChat су:
+
+[width="75%", cols="1m,4", options="header"]
+|===
+| Име          | Боја
+| default      | Подразумевана боја терминала (провидна за позадину)
+| black        | Црна
+| darkgray     | Тамносива
+| red          | Тамноцрвена
+| lightred     | Светлоцрвена
+| green        | Тамнозелена
+| lightgreen   | Светлозелена
+| brown        | Браон
+| yellow       | Жута
+| blue         | Тамноплава
+| lightblue    | Светлоплава
+| magenta      | Тамномагента
+| lightmagenta | Светломагента
+| cyan         | Тамноцијан
+| lightcyan    | Светлоцијан
+| gray         | Сива
+| white        | Бела
+|===
+
+[[colors_extended]]
+==== Проширене боје
+
+Програм WeeChat динамички алоцира парове боја када се боје употребе на екрану (за приказ бафера и трака).
+
+Уз основне боје, можете да користите и број боје између 1 и границе вашег терминала.
+
+Употребите команду `/color` да видите текуће боје и ограничења. Са kbd:[Alt+c] можете привремено да се пребаците на боје терминала како бисте изабрали боју.
+
+На пример, ако желите да се време у баферу приказује у наранџастој боји, извршите:
+
+----
+/set weechat.color.chat_time 214
+----
+
+Или ако желите тамну тамнозелену позадину за статусну линију:
+
+----
+/set weechat.bar.status.color_bg 22
+----
+
+[[colors_aliases]]
+==== Алијаси
+
+Алијасе боја можете додати командом `/color alias`, па затим користити тај алијас у било којој опцији за боје.
+
+На пример:
+
+----
+/color alias 214 orange
+/set weechat.color.chat_delimiters orange
+----
+
+[[colors_attributes]]
+==== Атрибути
+
+За боје можете да користите и неке атрибуте. Испред имена или броја боје можете додати један или више атрибута:
+
+* `+*+`: подебљани текст
+* `+!+`: обрнути видео
+* `+/+`: курзив
+* `+_+`: подвучен текст
+* `+|+`: задржавање атрибута: када се мења боја, подебљано/обрнуто/курзив/подвучено се не ресетује
+
+На пример, ако желите да ваш надимак исписује у белој боји, подвучено, извршите:
+
+----
+/set weechat.color.chat_nick_self _white
+----
+
+Или ако желите да се у статусној траци време исписује у наранџастој боји, подебљано:
+
+----
+/set weechat.color.status_time *_214
+----
+
+Ако атрибуте желите да користите са подразумеваном бојом терминала (-1), морате да употребите број већи од последње боје терминала, на пример, максималну боју у програму WeeChat: 99999.
+
+Пример подебљаног текста са бојом предњег плана терминала:
+
+----
+/set weechat.color.status_time *99999
+----
+
+[[notify_levels]]
+=== Нивои обавештавања
+
+[[setup_notify_levels]]
+==== Постављање нивоа обавештавања
+
+У порукама које се приказују у баферима може постојати четири нивоа, од нижег ка вишем:
+
+* _low_: важност поруке је мала (на пример, irc join/part/quit порука)
+* _message_: порука од корисника
+* _private_: порука у приватном баферу
+* _highlight_: порука са истицањем
+
+Сваки бафер поседује ниво обавештавања који се користи за одлуку које поруке се додају на врућу листу бафера.
+
+Подразумевани ниво обавештавања може да се постави опцијом <<option_weechat.look.buffer_notify_default,weechat.look.buffer_notify_default>>, подразумевана вредност је _all_.
+
+[width="75%", cols="2m,7", options="header"]
+|===
+| Ниво обавештавања | Ниво порука које се додају на врућу листу
+| none              | (ниједна)
+| highlight         | _highlight_ + _private_
+| message           | _highlight_ + _private_ + _message_
+| all               | _highlight_ + _private_ + _message_ + _low_
+|===
+
+Ниво обавештавања може да се дефинише за скуп бафера, на пример за све бафере irc сервера „libera”:
+
+----
+/set weechat.notify.irc.libera message
+----
+
+Постављање нивоа обавештавања _highlight_ само на каналу „#weechat”:
+
+----
+/set weechat.notify.irc.libera.#weechat highlight
+----
+
+Ниво обавештавања за бафер може да се постави командом `/buffer`:
+
+----
+/buffer notify highlight
+----
+
+[[max_hotlist_level_nicks]]
+==== Максимални ниво вруће листе за надимке
+
+За неке надимке је могуће постављање максималног нивоа вруће листе, по баферу или по групи бафера (као што су IRC сервери).
+
+Особина бафера „hotlist_max_level_nicks” може да се постави на листу надимака, а за сваки надимак у листи максимални ниво вруће листе који се окида. Могући су следећи нивои:
+
+* -1: за надимак нема измене вруће листе
+* 0: ниски приоритет (као што су join/part поруке)
+* 1: порука
+* 2: приватна порука
+* 3: истицање (у суштини је бескорисно, јер је за све поруке већ подразумевани максимум)
+
+На пример, ако желите да искључите истицања од „joe” и „mike” у текућем баферу:
+
+----
+/buffer set hotlist_max_level_nicks_add joe:2,mike:2
+----
+
+[NOTE]
+Особина бафера „hotlist_max_level_nicks” се не чува у конфигурацији. +
+Лако можете да је сачувате скриптом _buffer_autoset.py_: инсталирате је командом `+/script install buffer_autoset.py+`, а помоћ добијате са `+/help buffer_autoset+`.
+
+[[highlights]]
+=== Истицања
+
+[[highlights_words]]
+==== Додавање речи које се истичу
+
+Програм WeeChat подразумевано истиче поруке од осталих корисника које садрже у себи ваш надимак, тако да истицање зависи од бафера (ваш надимак не мора да буде исти у свим баферима).
+
+Остале речи моожете да додате опцијом <<option_weechat.look.highlight,weechat.look.highlight>>, на пример ако желите да се истиче ваш надимак и „реч1”, „реч2”, као и све речи које почињу са „test”:
+
+----
+/set weechat.look.highlight реч1,реч2,test*
+----
+
+Ако вам је потребно одређеније правило за реч, можете да употребите регуларне изразе опцијом <<option_weechat.look.highlight_regex,weechat.look.highlight_regex>>, на пример да истакнете речи „flashcode”, „flashcöde” и „flashy”:
+
+----
+/set weechat.look.highlight_regex flashc[oö]de|flashy
+----
+
+Граничници око речи које се истичу могу да се прилагоде опцијом <<option_weechat.look.word_chars_highlight,weechat.look.word_chars_highlight>>.
+
+[[highlights_tags]]
+==== Додавање ознака истицању
+
+Приказане линије могу да садрже „ознаке” које пружају неке информације о пореклу само поруке. +
+Ознаке можете приказати командом `/debug tags` (иста команда их и сакрива).
+
+Опцијом <<option_weechat.look.highlight_tags,weechat.look.highlight_tags>> можете да додате одређене ознаке истицању. Ознаке се раздвајају запетама и више ознака можете да раздвојите са `+++` чиме наводите логичко „и” међу њима.
+
+На пример, ако желите да се истичу све поруке од надимка „FlashCode” и сва обавештења од надимака који почињу са „toto”:
+
+----
+/set weechat.look.highlight_tags "nick_flashcode,irc_notice+nick_toto*"
+----
+
+[[highlights_regex_buffer]]
+==== Постављање посебних истицања у баферу
+
+Истицање помоћу регуларног израза можете да форсирате особином бафера „highlight_regex”.
+
+На пример, да форсирате истицање свих порука у текућем баферу:
+
+----
+/buffer set highlight_regex .*
+----
+
+[NOTE]
+Особина бафера „highlight_regex” се не чува у конфигурацији. +
+Лако можете да је сачувате скриптом _buffer_autoset.py_: инсталирате је командом `+/script install buffer_autoset.py+`, а помоћ добијате са `+/help buffer_autoset+`.
+
+[[mouse]]
+=== Подршка за миша
+
+Програм WeeChat подржава кликове и гестикулације мишем. Ради са локалним терминалом, и удаљено преко ssh везе са или без screen/tmux.
+
+[[mouse_enable]]
+==== Укључивање миша
+
+Ако при покретању програма желите да укључите миша:
+
+----
+/set weechat.look.mouse on
+----
+
+Ако тренутно желите да укључите миша, притисните kbd:[Alt+m] или извршите команду:
+
+----
+/mouse enable
+----
+
+Миш може привремено да се искључи, а то можете и да вежете за тастер. На пример тастер kbd:[Alt+%] да се на 10 секунди искључи миш:
+
+----
+/key bind meta-% /mouse toggle 10
+----
+
+[IMPORTANT]
+Када се у програму WeeChat укључи миш, он хвата све догађаје миша, тако да се акције као што су копирање/налепљивање или кликови на URL адресе не шаљу терминалу. Употреба тастера kbd:[Shift] чини да се догађаји шаљу директно терминалу, као да је миш искључен (на неким терминалима као што је iTerm, морате уместо kbd:[Shift] да употребите kbd:[Alt]).
+
+[NOTE]
+Ако имате било какав проблем са мишем, молимо вас да погледате link:weechat_faq.sr.html#mouse[WeeChat ЧПП / Миш].
+
+[[mouse_bind_events]]
+==== Везивање догађаја миша за команде
+
+Програм WeeChat је већ дефинисао подразумеване догађаје миша (погледајте <<key_bindings_mouse_context,тастере за „mouse” контекст>>).
+
+Командом `/key`, уз употребу контекста „mouse”, можете да измените или да додате нова везивања тастера (у вези синтаксе, погледајте команду <<command_weechat_key,/key>>).
+
+Име догађаја се састоји од модификатора (није обавезан), имена тастера/точкића и гестикулације (није обавезна). Различити елементи се раздвајају са `+-+`.
+
+Листа модификатора:
+
+[width="100%", cols="1m,4", options="header"]
+|===
+| Модификатор | Опис
+| ctrl        | Тастер kbd:[Ctrl]
+| alt         | Тастер kbd:[Alt]
+| ctrl-alt    | Тастери kbd:[Ctrl] + kbd:[Alt]
+|===
+
+Листа тастера/точкића:
+
+[width="100%", cols="1m,4", options="header"]
+|===
+| Тастер/точкић       | Опис
+| button1             | Клик левим тастером
+| button2             | Клик десним тастером
+| button3             | Клик средњим тастером (често је то клик точкићем)
+| button4 ... button9 | Клик на додатне тастере
+| wheelup             | Точкић (навише)
+| wheeldown           | Точкић (наниже)
+|===
+
+Листа гестикулација (само за тастере, не за точкић):
+
+[width="100%", cols="1m,4", options="header"]
+|===
+| Гестикулација      | Растојање
+| gesture-up         | 3 ... 19
+| gesture-up-long    | ≥ 20
+| gesture-down       | 3 ... 19
+| gesture-down-long  | ≥ 20
+| gesture-left       | 3 ... 39
+| gesture-left-long  | ≥ 40
+| gesture-right      | 3 ... 39
+| gesture-right-long | ≥ 40
+|===
+
+Листа некомплетних догађаја (само за тастере, корисно је у додацима/скриптама):
+
+[width="100%", cols="1m,4", options="header"]
+|===
+| Догађај    | Опис
+| event-down | Тастер је притиснут, али још увек није отпуштен
+| event-drag | Миш је померен док се тастер држао притиснут
+|===
+
+Примери догађаја:
+
+* `button1`
+* `ctrl-button1`
+* `button1-gesture-right`
+* `button1-event-down`
+* `button1-event-drag`
+* `alt-button2-gesture-down-long`
+* `wheelup`
+* `ctrl-alt-wheeldown`
+* ...
+
+[TIP]
+Када се тастер везује у „mouse” контексту, могуће је подударање са више догађаја користећи `+*+` на почетку или крају имена, на пример `+button1-gesture-*+` ће да се подудари са било којом гестикулацијом која користи леви тастер миша.
+
+[TIP]
+Име догађаја можете сазнати командом `+/input grab_mouse+`, па извршавањем догађаја мишем. Ово ће да уметне име догађаја који сете извели у командну линију.
+
 [[bars]]
 === Траке
 
@@ -1543,682 +2233,6 @@ _трака_ је површина уз разговор која може да 
 ----
 /set weechat.bar.nicklist.conditions "${nicklist} && (${info:term_width} > 100 || ${buffer.full_name} == irc.bitlbee.&bitlbee)"
 ----
-
-[[bare_display]]
-=== Огољени приказ
-
-Да бисте једноставно кликнули на дугачке URL адресе и бирали текст (користећи миша), можете употребити посебан приказ који се зове „огољени приказ”.
-
-Огољени приказ има следеће особине:
-
-* Приказује само садржај текућег бафера: нема ни подељених прозора ни трака (нема наслова, листе надимака, статуса, уноса, ...).
-* Подршка за миш програма WeeChat је искључена (ако је била укључена): миш можете да користите на исти начин као у терминалу, да кликћете на URL адресе и вршите избор текста.
-* Ncurses се не користи, тако да се URL адресе не секу на крају линије.
-
-Подразумевани тастер којим се укључује огољени приказ је kbd:[Alt+l] (`L`), и истим тастером се напушта (или као што је подразумевано, било шта што мења унос ће изазвати напуштање огољеног приказа, погледајте опцију <<option_weechat.look.bare_display_exit_on_input,weechat.look.bare_display_exit_on_input>>).
-
-Формат приказа времена може да се прилагоди опцијом <<option_weechat.look.bare_display_time_format,weechat.look.bare_display_time_format>>.
-
-Огољени приказ може да се укључи на неко одређено време командом <<command_weechat_window,/window>>.
-
-Ако програм WeeChat изгледа на следећи начин:
-
-....
-┌──────────────────────────────────────────────────────────────────────────────────────┐
-│1.libera │Добродошли на #abc                                                          │
-│  weechat│12:52:27   --> | Flashy (flashcode@weechat.org) је приступио у #abc │@Flashy│
-│2.  #test│12:52:27    -- | Надимци #abc: [@Flashy @joe +weebot peter]         │@joe   │
-│3.  #abc │12:52:27    -- | Канал #abc: 4 надимка (2 опа, 1 глас, 1 обични)    │+weebot│
-│4.  #def │12:52:27    -- | Канал је креиран у Уто Јан 27 06:30:17 2009        │peter  │
-│5.  #ghi │12:54:15 peter | hey!                                               │       │
-│         │12:55:01  @joe | peter: hook_process: https://weechat.org/files/do  │       │
-│         │               | c/devel/weechat_plugin_api.en.html#_weechat_hook_  │       │
-│         │               | process                                            │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │[12:55] [5] [irc/libera] 3:#abc(+n){4}                                      │
-│         │[@Flashy(i)] hi peter!█                                                     │
-└──────────────────────────────────────────────────────────────────────────────────────┘
-....
-
-Екран у огољеном приказу ће изгледати овако:
-
-....
-┌───────────────────────────────────────────────────────────────────────────────────────┐
-│                                                                                       │
-│                                                                                       │
-│                                                                                       │
-│                                                                                       │
-│                                                                                       │
-│                                                                                       │
-│                                                                                       │
-│                                                                                       │
-│                                                                                       │
-│                                                                                       │
-│                                                                                       │
-│                                                                                       │
-│                                                                                       │
-│                                                                                       │
-│                                                                                       │
-│                                                                                       │
-│12:52 --> Flashy (flashcode@weechat.org) је приступио у #abc                           │
-│12:52 -- Надимци #abc: [@Flashy @joe +weebot peter]                                    │
-│12:52 -- Канал #abc: 4 надимка (2 опа, 1 глас, 1 обичан)                               │
-│12:52 -- Канал је креиран у Уто Јан 27 06:30:17 2009                                   │
-│12:54 <peter> hey!                                                                     │
-│12:55 <@joe> peter: hook_process: https://weechat.org/files/doc/devel/weechat_plugin_ap│
-│i.en.html#_weechat_hook_process                                                        │
-└───────────────────────────────────────────────────────────────────────────────────────┘
-....
-
-Тако да у свом терминалу без проблема можете кликнути на URL адресу од надимка _joe_ (наравно, ово претпоставља да ваш терминал подржава кликове на URL адресе).
-
-[[notify_levels]]
-=== Нивои обавештавања
-
-[[setup_notify_levels]]
-==== Постављање нивоа обавештавања
-
-У порукама које се приказују у баферима може постојати четири нивоа, од нижег ка вишем:
-
-* _low_: важност поруке је мала (на пример, irc join/part/quit порука)
-* _message_: порука од корисника
-* _private_: порука у приватном баферу
-* _highlight_: порука са истицањем
-
-Сваки бафер поседује ниво обавештавања који се користи за одлуку које поруке се додају на врућу листу бафера.
-
-Подразумевани ниво обавештавања може да се постави опцијом <<option_weechat.look.buffer_notify_default,weechat.look.buffer_notify_default>>, подразумевана вредност је _all_.
-
-[width="75%", cols="2m,7", options="header"]
-|===
-| Ниво обавештавања | Ниво порука које се додају на врућу листу
-| none              | (ниједна)
-| highlight         | _highlight_ + _private_
-| message           | _highlight_ + _private_ + _message_
-| all               | _highlight_ + _private_ + _message_ + _low_
-|===
-
-Ниво обавештавања може да се дефинише за скуп бафера, на пример за све бафере irc сервера „libera”:
-
-----
-/set weechat.notify.irc.libera message
-----
-
-Постављање нивоа обавештавања _highlight_ само на каналу „#weechat”:
-
-----
-/set weechat.notify.irc.libera.#weechat highlight
-----
-
-Ниво обавештавања за бафер може да се постави командом `/buffer`:
-
-----
-/buffer notify highlight
-----
-
-[[max_hotlist_level_nicks]]
-==== Максимални ниво вруће листе за надимке
-
-За неке надимке је могуће постављање максималног нивоа вруће листе, по баферу или по групи бафера (као што су IRC сервери).
-
-Особина бафера „hotlist_max_level_nicks” може да се постави на листу надимака, а за сваки надимак у листи максимални ниво вруће листе који се окида. Могући су следећи нивои:
-
-* -1: за надимак нема измене вруће листе
-* 0: ниски приоритет (као што су join/part поруке)
-* 1: порука
-* 2: приватна порука
-* 3: истицање (у суштини је бескорисно, јер је за све поруке већ подразумевани максимум)
-
-На пример, ако желите да искључите истицања од „joe” и „mike” у текућем баферу:
-
-----
-/buffer set hotlist_max_level_nicks_add joe:2,mike:2
-----
-
-[NOTE]
-Особина бафера „hotlist_max_level_nicks” се не чува у конфигурацији. +
-Лако можете да је сачувате скриптом _buffer_autoset.py_: инсталирате је командом `+/script install buffer_autoset.py+`, а помоћ добијате са `+/help buffer_autoset+`.
-
-[[highlights]]
-=== Истицања
-
-[[highlights_words]]
-==== Додавање речи које се истичу
-
-Програм WeeChat подразумевано истиче поруке од осталих корисника које садрже у себи ваш надимак, тако да истицање зависи од бафера (ваш надимак не мора да буде исти у свим баферима).
-
-Остале речи моожете да додате опцијом <<option_weechat.look.highlight,weechat.look.highlight>>, на пример ако желите да се истиче ваш надимак и „реч1”, „реч2”, као и све речи које почињу са „test”:
-
-----
-/set weechat.look.highlight реч1,реч2,test*
-----
-
-Ако вам је потребно одређеније правило за реч, можете да употребите регуларне изразе опцијом <<option_weechat.look.highlight_regex,weechat.look.highlight_regex>>, на пример да истакнете речи „flashcode”, „flashcöde” и „flashy”:
-
-----
-/set weechat.look.highlight_regex flashc[oö]de|flashy
-----
-
-Граничници око речи које се истичу могу да се прилагоде опцијом <<option_weechat.look.word_chars_highlight,weechat.look.word_chars_highlight>>.
-
-[[highlights_tags]]
-==== Додавање ознака истицању
-
-Приказане линије могу да садрже „ознаке” које пружају неке информације о пореклу само поруке. +
-Ознаке можете приказати командом `/debug tags` (иста команда их и сакрива).
-
-Опцијом <<option_weechat.look.highlight_tags,weechat.look.highlight_tags>> можете да додате одређене ознаке истицању. Ознаке се раздвајају запетама и више ознака можете да раздвојите са `+++` чиме наводите логичко „и” међу њима.
-
-На пример, ако желите да се истичу све поруке од надимка „FlashCode” и сва обавештења од надимака који почињу са „toto”:
-
-----
-/set weechat.look.highlight_tags "nick_flashcode,irc_notice+nick_toto*"
-----
-
-[[highlights_regex_buffer]]
-==== Постављање посебних истицања у баферу
-
-Истицање помоћу регуларног израза можете да форсирате особином бафера „highlight_regex”.
-
-На пример, да форсирате истицање свих порука у текућем баферу:
-
-----
-/buffer set highlight_regex .*
-----
-
-[NOTE]
-Особина бафера „highlight_regex” се не чува у конфигурацији. +
-Лако можете да је сачувате скриптом _buffer_autoset.py_: инсталирате је командом `+/script install buffer_autoset.py+`, а помоћ добијате са `+/help buffer_autoset+`.
-
-[[key_bindings]]
-=== Подразумеване тастерске пречице
-
-// TRANSLATION MISSING
-[[key_bindings_cmdline]]
-==== Command line
-
-// TRANSLATION MISSING
-[[key_bindings_cmdline_cursor_movement]]
-===== Cursor movement
-
-[width="100%", cols="^.^3,.^8,.^5", options="header"]
-|===
-| Тастер         | Опис | Команда
-| kbd:[←] +
-  kbd:[Ctrl+b]   | Одлазак на претходни карактер у командној линији. | `+/input move_previous_char+`
-| kbd:[→] +
-  kbd:[Ctrl+f]   | Одлазак на наредни карактер у командној линији. | `+/input move_next_char+`
-| kbd:[Ctrl+←] +
-  kbd:[Alt+b]    | Одлазак на претходну реч у командној линији. | `+/input move_previous_word+`
-| kbd:[Ctrl+→] +
-  kbd:[Alt+f]    | Одлазак на наредну реч у командној линији. | `+/input move_next_word+`
-| kbd:[Home] +
-  kbd:[Ctrl+a]   | Одлазак на почетак командне линије. | `+/input move_beginning_of_line+`
-| kbd:[End] +
-  kbd:[Ctrl+e]   | Одлазак на крај командне линије. | `+/input move_end_of_line+`
-|===
-
-// TRANSLATION MISSING
-[[key_bindings_cmdline_editing]]
-===== Editing
-
-[width="100%", cols="^.^3,.^8,.^5", options="header"]
-|===
-| Тастер            | Опис | Команда
-| kbd:[Del] +
-  kbd:[Ctrl+d]      | Брисање наредног карактера у командној линији. | `+/input delete_next_char+`
-| kbd:[Backspace] +
-  kbd:[Ctrl+h]      | Брисање претходног карактера у командној линији. | `+/input delete_previous_char+`
-| kbd:[Ctrl+k]      | Брисање од курсора до краја командне линије (обрисани стринг се копира у интерни клипборд). | `+/input delete_end_of_line+`
-| kbd:[Ctrl+t]      | Транспозиција карактера. | `/input transpose_chars`
-| kbd:[Ctrl+u]      | Брисање од курсора до почетка командне линије (обрисани стринг се копира у интерни клипборд). | `+/input delete_beginning_of_line+`
-| kbd:[Ctrl+w]      | Брисање претходне речи командне линије (обрисани стринг се копира у интерни клипборд). | `+/input delete_previous_word+`
-| kbd:[Ctrl+y]      | Налепљивање садржаја интерног клипборда. | `+/input clipboard_paste+`
-| kbd:[Ctrl+_]      | Поништавање последње акције у командној линији. | `+/input undo+`
-| kbd:[Alt+_]       | Враћање последње поништене акције у командној линији. | `+/input redo+`
-| kbd:[Tab]         | Довршавање команде или надимка (kbd:[Tab] поново: проналажење наредног довршавања). | `+/input complete_next+`
-| kbd:[Shift+Tab]   | Без довршавања: обављање парцијалног довршавања, са довршавањем на чекању: довршавање са претходно пронађеним појмом. | `+/input complete_previous+`
-| kbd:[Enter] +
-  kbd:[Ctrl+j] +
-  kbd:[Ctrl+m]      | Извршавање команде или слање поруке (у режиму претраге: заустављање претраге). | `+/input return+`
-| kbd:[Alt+Enter]   | Умеће прелом реда. | `+/input insert \n+`
-| kbd:[Alt+d]       | Брисање наредне речи у командној линији (обрисани стринг се копира у интерни клипборд). | `+/input delete_next_word+`
-| kbd:[Alt+k]       | Хвата тастер и умеће његов кôд (и комадну везану за њега, ако постоји таква пречица) у командну линију. | `+/input grab_key_command+`
-| kbd:[Alt+r]       | Брише комплетну командну линију. | `+/input delete_line+`
-|===
-
-// TRANSLATION MISSING
-[[key_bindings_cmdline_color_codes]]
-===== Color codes
-
-[width="100%", cols="^.^3,.^8,.^5", options="header"]
-|===
-| Тастер                | Опис | Команда
-| kbd:[Ctrl+c], kbd:[b] | Уметање кода за подебљани текст. | `+/input insert \x02+`
-| kbd:[Ctrl+c], kbd:[c] | Уметање кода за обојени текст. | `+/input insert \x03+`
-| kbd:[Ctrl+c], kbd:[i] | Уметање кода за текст у курзиву. | `+/input insert \x1D+`
-| kbd:[Ctrl+c], kbd:[o] | Уметање кода за ресет боје. | `+/input insert \x0F+`
-| kbd:[Ctrl+c], kbd:[v] | Уметање кода за обрнуту боју. | `+/input insert \x16+`
-| kbd:[Ctrl+c], kbd:[_] | Уметање кода за подвучени текст. | `+/input insert \x1F+`
-|===
-
-// TRANSLATION MISSING
-[[key_bindings_cmdline_history]]
-===== Command history
-
-[width="100%", cols="^.^3,.^8,.^5", options="header"]
-|===
-| Тастер       | Опис | Команда
-| kbd:[↑]      | Позив претходне команде/поруке (у режиму претраге: претрага навише). | `+/input history_previous+`
-| kbd:[↓]      | Позив наредне команде/поруке (у режиму претраге: претрага наниже). | `+/input history_next+`
-| kbd:[Ctrl+↑] | Позив претходне команде/поруке у глобалној историји (заједничкој за све бафере). | `+/input history_global_previous+`
-| kbd:[Ctrl+↓] | Позив наредне команде/поруке у глобалној историји (заједничкој за све бафере). | `+/input history_global_next+`
-|===
-
-// TRANSLATION MISSING
-[[key_bindings_buffers]]
-==== Buffers
-
-[width="100%", cols="^.^3,.^8,.^5", options="header"]
-|===
-| Тастер                         | Опис | Команда
-| kbd:[Ctrl+r]                   | Претрага на текст у историји бафера (погледајте <<key_bindings_search_context,тастери у „search”>>). | `+/input search_text_here+`
-| kbd:[Ctrl+s], kbd:[Ctrl+u]     | Поставља маркер непрочитано за све бафере. | `+/input set_unread+`
-| kbd:[Ctrl+x]                   | Пребацује текући бафер ако су бафери прикачени са истим бројем. | `+/input switch_active_buffer+`
-| kbd:[Alt+x]                    | Зум на спојени бафер (kbd:[Alt+x] поново: приказује све спојене бафере). | `+/input zoom_merged_buffer+`
-| kbd:[PgUp]                     | Скролује навише једну страну у историји бафера. | `+/window page_up+`
-| kbd:[PgDn]                     | Скролује наниже једну страну у историји бафера. | `+/window page_down+`
-| kbd:[Alt+PgUp]                 | Скролује навише неколико линија у историји бафера. | `+/window scroll_up+`
-| kbd:[Alt+PgDn]                 | Скролује наниже неколико линија у историји бафера. | `+/window scroll_down+`
-| kbd:[Alt+Home]                 | Скролује на врх бафера. | `+/window scroll_top+`
-| kbd:[Alt+End]                  | Скролује на дно бафера. | `+/window scroll_bottom+`
-| kbd:[Alt+←] +
-  kbd:[Alt+↑] +
-  kbd:[Ctrl+p] +
-  kbd:[F5]                       | Пребацивање на претходни бафер. | `+/buffer -1+`
-| kbd:[Alt+→] +
-  kbd:[Alt+↓] +
-  kbd:[Ctrl+n] +
-  kbd:[F6]                       | Пребацивање на наредни бафер. | `+/buffer +1+`
-| kbd:[Alt+j], kbd:[Alt+f]       | Пребацивање на први бафер. | `+/buffer -+`
-| kbd:[Alt+j], kbd:[Alt+l] (`L`) | Пребацивање на последњи бафер. | `+/buffer ++`
-| kbd:[Alt+j], kbd:[Alt+r]       | Пребацивање на сирови IRC бафер. | `+/server raw+`
-| kbd:[Alt+j], kbd:[Alt+s]       | пребацивање на бафер IRC сервера. | `+/server jump+`
-| kbd:[Alt+0...9]                | Пребацивање на бафер према броју (0 = 10). | `+/buffer *N+`
-| kbd:[Alt+j], kbd:[01...99]     | Пребацивање на бафер према броју. | `+/buffer *NN+`
-| kbd:[Alt+n]                    | Скроловање до наредног истицања. | `+/window scroll_next_highlight+`
-| kbd:[Alt+p]                    | Скроловање на претходно истицање. | `+/window scroll_previous_highlight+`
-| kbd:[Alt+u]                    | Скроловање на прву непрочитану линију у баферу. | `+/window scroll_unread+`
-| kbd:[Alt+<]                    | Прелаз на претходни бафер у листи посећених бафера. | `+/input jump_previously_visited_buffer+`
-| kbd:[Alt+>]                    | Прелаз на наредни бафер у листи посећених бафера. | `+/input jump_next_visited_buffer+`
-| kbd:[Alt+/]                    | Прелаз на последње приказани бафер. | `+/input jump_last_buffer_displayed+`
-|===
-
-// TRANSLATION MISSING
-[[key_bindings_windows]]
-==== Windows
-
-[width="100%", cols="^.^3,.^8,.^5", options="header"]
-|===
-| Тастер                   | Опис | Команда
-| kbd:[Ctrl+l] (`L`)       | Поново исцртава цео прозор. | `+/window refresh+`
-| kbd:[Alt+l] (`L`)        | Пребацивање активности огољеног приказа. | `+/window bare+`
-| kbd:[F7]                 | Пребацивање на претходни прозор. | `+/window -1+`
-| kbd:[F8]                 | Пребацивање на наредни прозор. | `+/window +1+`
-| kbd:[Alt+w], kbd:[Alt+↑] | Прелаз на прозор изнад. | `+/window up+`
-| kbd:[Alt+w], kbd:[Alt+↓] | Прелаз на прозор испод. | `+/window down+`
-| kbd:[Alt+w], kbd:[Alt+←] | Прелаз на прозор са леве стране. | `+/window left+`
-| kbd:[Alt+w], kbd:[Alt+→] | Прелаз на прозор са десне стране. | `+/window right+`
-| kbd:[Alt+w], kbd:[Alt+b] | Уједначавање величине свих прозора. | `+/window balance+`
-| kbd:[Alt+w], kbd:[Alt+s] | Замена бафера два прозора. | `+/window swap+`
-| kbd:[Alt+z]              | Зум на текући прозор (kbd:[Alt+z] поново: враћање почетног стања прозора, пре зумирања). | `+/window zoom+`
-|===
-
-// TRANSLATION MISSING
-[[key_bindings_bars]]
-==== Bars
-
-[width="100%", cols="^.^3,.^8,.^5", options="header"]
-|===
-| Тастер            | Опис | Команда
-| kbd:[F1] +
-  kbd:[Ctrl+F1]     | Скролује навише једну страну листе бафера. | `+/bar scroll buflist * -100%+`
-| kbd:[F2] +
-  kbd:[Ctrl+F2]     | Скролује наниже једну страну листе бафера. | `+/bar scroll buflist * +100%+`
-| kbd:[Alt+F1]      | Скок на почетак листе бафера. | `+/bar scroll buflist * b+`
-| kbd:[Alt+F2]      | Скок на крај листе бафера. | `+/bar scroll buflist * e+`
-| kbd:[F9]          | Скролује наслов бафера у лево. | `+/bar scroll title * -30%+`
-| kbd:[F10]         | Скролује наслов бафера у десно. | `+/bar scroll title * +30%+`
-| kbd:[F11] +
-  kbd:[Ctrl+F11]    | Скролује једну страну навише у листи надимака. | `+/bar scroll nicklist * -100%+`
-| kbd:[F12] +
-  kbd:[Ctrl+F12]    | Скролује једну страну наниже у листи надимака. | `+/bar scroll nicklist * +100%+`
-| kbd:[Alt+F11]     | Скок на почетак листе надимака. | `+/bar scroll nicklist * b+`
-| kbd:[Alt+F12]     | Скок на крај листе надимака. | `+/bar scroll nicklist * e+`
-| kbd:[Alt+Shift+B] | Пребацивање активности листе бафера. | `+/buflist toggle+`
-| kbd:[Alt+Shift+N] | Пребацивање видљивости траке листе надимака. | `+/bar toggle nicklist+`
-|===
-
-// TRANSLATION MISSING
-[[key_bindings_hotlist]]
-==== Hotlist
-
-[width="100%", cols="^.^3,.^8,.^5", options="header"]
-|===
-| Тастер                         | Опис | Команда
-| kbd:[Alt+a]                    | Пребацивање на следећи бафер у коме има активности (са приоритетом: истицање, порука, остало). | `+/input jump_smart+`
-| kbd:[Alt+h], kbd:[Alt+c]       | Брисање вруће листе (обавештења о активности у баферима). | `+/input hotlist_clear+`
-| kbd:[Alt+h], kbd:[Alt+m]       | Уклањање текућег бафера из вруће листе. | `+/input hotlist_remove_buffer+`
-| kbd:[Alt+h], kbd:[Alt+r]       | Враћање најновије вруће листе уклоњене из текућег бафера. | `+/input hotlist_restore_buffer+`
-| kbd:[Alt+h], kbd:[Alt+Shift+R] | Враћање најновије вруће листе уклоњене из свих бафера. | `+/input hotlist_restore_all+`
-|===
-
-// TRANSLATION MISSING
-[[key_bindings_toggle_keys]]
-==== Toggle keys
-
-[width="100%", cols="^.^3,.^8,.^5", options="header"]
-|===
-| Тастер      | Опис | Команда
-| kbd:[Alt+m] | Пребацивање активности миша. | `+/mouse toggle+`
-| kbd:[Alt+s] | Пребацује стање активности модула за проверу правописа. | `+/mute spell toggle+`
-| kbd:[Alt+=] | Пребацивање активности филтера. | `+/filter toggle+`
-| kbd:[Alt+-] | Пребацивање активности филтера у текућем баферу. | `+/filter toggle @+`
-|===
-
-// TRANSLATION MISSING
-[[key_bindings_search_context]]
-==== Search context
-
-Следећи тастери се користе у „search” контексту (када се притисне kbd:[Ctrl+r] за претрагу текста у баферу).
-
-[width="100%", cols="^.^3,.^8,.^5", options="header"]
-|===
-| Тастер         | Опис | Команда
-| kbd:[Ctrl+r]   | Пребацивање типа претраге: стринг (подраз.), регуларни израз. | `+/input search_switch_regex+`
-| kbd:[Alt+c]    | Пребацивање разликовања величине слова у претраци. | `+/input search_switch_case+`
-| kbd:[Tab]      | Пребацивање претраге у: порукама (подраз.), префиксима, префиксима + порукама. | `+/input search_switch_where+`
-| kbd:[↑]        | Претрага претходне линије. | `+/input search_previous+`
-| kbd:[↓]        | Претрага наредне линије. | `+/input search_next+`
-| kbd:[Enter] +
-  kbd:[Ctrl+j] +
-  kbd:[Ctrl+m]   | Заустављање претраге на текућој позицији. | `+/input search_stop_here+`
-| kbd:[Ctrl+q]   | Заустављање претраге и скроловање на дно бафера. | `+/input search_stop+`
-|===
-
-// TRANSLATION MISSING
-[[key_bindings_cursor_context]]
-==== Cursor context
-
-Ови тастери се користе у „cursor” контексту (слободно померање курсора по екрану).
-
-[width="100%", cols="^.^3,^.^2,.^7,.^7", options="header"]
-|===
-| Тастер         | Површина       | Опис | Команда
-| kbd:[↑]        | -              | Помера курсор једну линију навише. | `+/cursor move up+`
-| kbd:[↓]        | -              | Помера курсор једну линију наниже. | `+/cursor move down+`
-| kbd:[←]        | -              | Помера курсор једну колони у лево. | `+/cursor move left+`
-| kbd:[→]        | -              | Помера курсор једну колону у десно. | `+/cursor move right+`
-| kbd:[Alt+↑]    | -              | Помера курсор једну површину навише. | `+/cursor move area_up+`
-| kbd:[Alt+↓]    | -              | Помера курсор једну површину наниже. | `+/cursor move area_down+`
-| kbd:[Alt+←]    | -              | Помера курсор једну површину у лево. | `+/cursor move area_left+`
-| kbd:[Alt+→]    | -              | Помера курсор једну површину у десно. | `+/cursor move area_right+`
-| kbd:[m]        | чет            | Цитирање поруке. | `+hsignal:chat_quote_message;/cursor stop+`
-| kbd:[q]        | чет            | Цитирање префикса + поруке. | `+hsignal:chat_quote_prefix_message;/cursor stop+`
-| kbd:[Q]        | чет            | Quote time + prefix + message. | `+hsignal:chat_quote_time_prefix_message;/cursor stop+`
-| kbd:[b]        | листа надимака | Забрањује надимак. | `+/window ${_window_number};/ban ${nick}+`
-| kbd:[k]        | листа надимака | Избацује надимак. | `+/window ${_window_number};/kick ${nick}+`
-| kbd:[K]        | листа надимака | Избацује и забрањује надимак. | `+/window ${_window_number};/kickban ${nick}+`
-| kbd:[q]        | листа надимака | Отвара упит са надимком. | `+/window ${_window_number};/query ${nick};/cursor stop+`
-| kbd:[w]        | листа надимака | Извршава whois над надимком. | `+/window ${_window_number};/whois ${nick}+`
-| kbd:[Enter] +
-  kbd:[Ctrl+j] +
-  kbd:[Ctrl+m]   | -        | Зауставља режим померања курсора | `/cursor stop`
-|===
-
-// TRANSLATION MISSING
-[[key_bindings_mouse]]
-==== Mouse
-
-// TRANSLATION MISSING
-These mouse actions are possible only if mouse is enabled with key kbd:[Alt+m]
-(command: `+/mouse toggle+`).
-
-[width="100%", cols="^.^3,^.^3,^.^3,.^8,.^8", options="header"]
-|===
-| Тастер/Точкић ^(1)^ | Гестикулација      | Површина                | Опис | Команда
-| ◾◽◽                 | -            | чет                | Пребацивање на прозор. | `+/window ${_window_number}+`
-| ◾◽◽                 | лево         | чет                | Пребацивање на претходни бафер. | `+/window ${_window_number};/buffer +1+`
-| ◾◽◽                 | десно        | чет                | Пребацивање на наредни бафер. | `+/window ${_window_number};/buffer +1+`
-| ◾◽◽                 | лево (дуго)  | чет                | Пребацивање на први бафер. | `+/window ${_window_number};/buffer 1+`
-| ◾◽◽                 | десно (дуго) | чет                | Пребацивање на последњи бафер. | `+/window ${_window_number};/input jump_last_buffer+`
-| kbd:[▲]             | -            | чет                | Скролује навише неколико линија у историји бафера. | `+/window scroll_up -window ${_window_number}+`
-| kbd:[▼]             | -            | чет                | Скролује наниже неколико линија у историји бафера. | `+/window scroll_down -window ${_window_number}+`
-| kbd:[Ctrl+▲]        | -            | чет                | Скролује хоризонтално у лево. | `+/window scroll_horiz -window ${_window_number} -10%+`
-| kbd:[Ctrl+▼]        | -            | чет                | Скролује хоризонтално у десно. | `+/window scroll_horiz -window ${_window_number} +10%+`
-| kbd:[▲]             | -            | чет: fset бафер   | Помера за пет линија навише у fset баферу. | `+/fset -up 5+`
-| kbd:[▼]             | -            | чет: fset бафер   | Помера за пет линија наниже у fset баферу. | `+/fset -down 5+`
-| ◾◽◽                 | -            | чет: fset бафер   | Бира линију у fset баферу. | `+/window ${_window_number};/fset -go ${_chat_line_y}+`
-| ◽◽◾                 | -            | чет: fset бафер   | Пребацује логичку вредност (on/off) или уређује вредност опције. | `+hsignal:fset_mouse+`
-| ◽◽◾                 | лево         | чет: fset бафер   | Умањује вредност за цео број/боју, поставља/надовезује вредност за остале типове. | `+hsignal:fset_mouse+`
-| ◽◽◾                 | десно        | чет: fset бафер   | Увећава вредност за цео број/боју, поставља/надовезује вредност за остале типове. | `+hsignal:fset_mouse+`
-| ◽◽◾                 | горе / доле  | чет: fset бафер   | Маркира/уклања маркер са више опција. | `+hsignal:fset_mouse+`
-| kbd:[▲]             | -            | чет: script бафер | Помера за пет линија навише у script баферу. | `+/script up 5+`
-| kbd:[▼]             | -            | чет: script бафер | Помера за пет линија наниже у script баферу. | `+/script down 5+`
-| ◾◽◽                 | -            | chat: script бафер | Бира линију у script баферу. | `+/script go ${_chat_line_y}+`
-| ◽◽◾                 | -            | chat: script бафер | Инсталира/уклања скрипту. | `+/script go ${_chat_line_y};/script installremove -q ${script_name_with_extension}+`
-| ◾◽◽                 | горе / лево  | листа бафера       | Помера бафер на нижи број. | Signal `+buflist_mouse+`.
-| ◾◽◽                 | доле / десно | листа бафера       | Помера бафер на виши број. | Signal `+buflist_mouse+`.
-| ◾◽◽                 | -            | листа бафера       | Пребацивање на бафер (претходно посећени багер ако је бафер текући). | Signal `+buflist_mouse+`.
-| ◽◽◾                 | -            | листа бафера       | Пребацивање на наредни посећени бафер ако је бафер текући. | Signal `+buflist_mouse+`.
-| kbd:[Ctrl+▲]        | -            | листа бафера       | Пребацивање на претходни бафер. | Signal `+buflist_mouse+`.
-| kbd:[Ctrl+▼]        | -            | листа бафера        | Пребацивање на наредни бафер. | Signal `+buflist_mouse+`.
-| ◾◽◽                 | горе         | листа надимака      | Скроловање једне стране навише у листи надимака. | `+/bar scroll nicklist ${_window_number} -100%+`
-| ◾◽◽                 | доле         | листа надимака      | Скроловање једне стране наниже у листи надимака. | `+/bar scroll nicklist ${_window_number} +100%+`
-| ◾◽◽                 | горе (дуго)  | листа надимака      | Скок на почетак листе надимака. | `+/bar scroll nicklist ${_window_number} b+`
-| ◾◽◽                 | доле (дуго)  | листа надимака      | Скок на крај листе надимака. | `+/bar scroll nicklist ${_window_number} e+`
-| ◾◽◽                 | -            | листа надимака      | Отварање упита са надимком. | `+/window ${_window_number};/query ${nick}+`
-| ◽◽◾                 | -            | листа надимака      | Извршавање whois над надимком. | `+/window ${_window_number};/whois ${nick}+`
-| ◾◽◽                 | лево         | листа надимака      | Избацивање надимка. | `+/window ${_window_number};/kick ${nick}+`
-| ◾◽◽                 | лево (дуго)  | листа надимака      | Избацивање и забрана надимка. | `+/window ${_window_number};/kickban ${nick}+`
-| ◽◽◾                 | лево         | листа надимака      | Забрана надимка. | `+/window ${_window_number};/ban ${nick}+`
-| ◽◽◾                 | -            | унос                | Хвата догађај миша и умеће његов кôд у командну линију. | `+/input grab_mouse_area+`
-| kbd:[▲]             | -            | било која трака     | Скролује траку за -20%. | `+/bar scroll ${_bar_name} ${_window_number} -20%+`
-| kbd:[▼]             | -            | било која трака     | Скролује траку за +20%. | `+/bar scroll ${_bar_name} ${_window_number} +20%+`
-| ◽◾◽                 | -            | било где            | Започиње режим померања курсора на овој тачки. | `+/cursor go ${_x},${_y}+`
-|===
-
-[NOTE]
-^(1)^ kbd:[▲] и kbd:[▼] значе точкић навише и наниже.
-
-// TRANSLATION MISSING
-[[key_bindings_fset_buffer]]
-==== Fset buffer
-
-Ови тастери и акције се користе у fset баферу (погледајте<<fset_plugin,Fset додатак>>).
-
-[width="100%", cols="^.^3,^.^2,.^8,.^5", options="header"]
-|===
-| Тастер                   | Акција ^(1)^ | Опис | Команда
-| kbd:[↑]                  |              | Помера једну линију навише. | `+/fset -up+`
-| kbd:[↓]                  |              | Помера једну линију наниже. | `+/fset -down+`
-| kbd:[PgUp]               |              | Помера једну страну навише. | `+/window page_up+`
-| kbd:[PgDn]               |              | Помера једну страну наниже. | `+/window page_down+`
-| kbd:[Alt+Home]           | `pass:[<<]`  | Скок на прву линију. | `+/fset -go 0+`
-| kbd:[Alt+End]            | `pass:[>>]`  | Скок на последњу линију. | `+/fset -go end+`
-| kbd:[F11]                | `pass:[<]`   | Скролује хоризонтално у лево. | `+/fset -left+`
-| kbd:[F12]                | `pass:[>]`   | Скролује хоризонтално у десно. | `+/fset -right+`
-| kbd:[Alt+Space]          | `t`          | Пребацује стање логичке вредности. | `+/fset -toggle+`
-| kbd:[Alt+-]              | `-`          | Одузима 1 од вредности за цео број/боју, поставља вредност за остале типове. | `+/fset -add -1+`
-| kbd:[Alt++]              | `+`          | Додаје 1 на вредност за цео број/боју, надовезује вредност за остале типове. | `+/fset -add 1+`
-| kbd:[Alt+f], kbd:[Alt+r] | `r`          | Ресетује вредност. | `+/fset -reset+`
-| kbd:[Alt+f], kbd:[Alt+u] | `u`          | Поставља да је вредност празна. | `+/fset -unset+`
-| kbd:[Alt+Enter]          | `s`          | Поставља вредност. | `+/fset -set+`
-| kbd:[Alt+f], kbd:[Alt+n] | `n`          | Поставља нову вредност. | `+/fset -setnew+`
-| kbd:[Alt+f], kbd:[Alt+a] | `a`          | Надовезује на вредност. | `+/fset -append+`
-| kbd:[Alt+,]              | `,`          | Маркира/уклања маркирање са опције. | `+/fset -mark 1+`
-| kbd:[Shift+↑]            |              | Помера једну линију навише и маркира/уклања маркирање са опције. | `+/fset -up; /fset -mark+`
-| kbd:[Shift+↓]            |              | Маркира/уклања маркирање са опције и помера се једну линију наниже. | `+/fset -mark; /fset -down+`
-|                          | `m:xxx`      | Маркира приказане опције које се подударају са филтером „xxx” (дозвољава се било који филтер над опцијом или вредности, погледајте <<command_fset_fset,fset команду>>). |
-|                          | `u:xxx`      | Уклања маркирање са приказаних опција које се подударају са филтером „xxx” (дозвољава се било који филтер над опцијом или вредности, погледајте <<command_fset_fset,fset команду>>). |
-| kbd:[Ctrl+l] (`L`)       |              | Освежава опције и цео екран. | `+/fset -refresh+`
-|                          | `$`          | Освежава опције (маркиране опције остају маркиране). |
-|                          | `$$`         | Освежава опције (уклања се маркирање са свих опција). |
-| kbd:[Alt+p]              |              | Пребацује стање опција описа додатка (`pass:[plugins.desc.*]`). | `+/mute /set fset.look.show_plugins_desc toggle+`
-| kbd:[Alt+v]              |              | Пребацује стање видљивости траке помоћи. | `+/bar toggle fset+`
-|                          | `s:x,y`      | Сортира опције по пољима x,y (погледајте опцију <<option_fset.look.sort,fset.look.sort>>). | `+/mute /set fset.look.sort x,y+`
-|                          | `s:`         | Ресетује сортирање на подразумевану вредност (погледајте опцију <<option_fset.look.sort,fset.look.sort>>). | `+/mute /unset fset.look.sort+`
-|                          | `w:xxx`      | Извози опције у фајл „xxx”. | `+/fset -export xxx+`
-|                          | `w-:xxx`     | Извози опције у фајл „xxx” без помоћи. | `+/fset -export -nohelp xxx+`
-|                          | `w+:xxx`     | Извози опције у фајл „xxx” заједно са помоћи. | `+/fset -export -help xxx+`
-| kbd:[Ctrl+x]             | `x`          | Пребацује формат који се користи за приказ опција. | `+/fset -format+`
-|                          | `q`          | Затвара fset бафер. | `+/buffer close+`
-|===
-
-[NOTE]
-^(1)^ Акција мора да се унесе као унос у командну линију, након чега се притисне kbd:[Ентер].
-
-// TRANSLATION MISSING
-[[key_bindings_script_buffer]]
-==== Script buffer
-
-Ови тастери и акције се користе у script баферу (погледајте <<scripts_plugins,Script додатак>>).
-
-[width="100%", cols="^.^3,^.^2,.^8,.^5", options="header"]
-|===
-| Тастер            | Акција ^(1)^ | Опис | Команда
-| kbd:[↑]           |              | Помера једну линију навише. | `+/script up+`
-| kbd:[↓]           |              | Помера једну линију наниже. | `+/script down+`
-| kbd:[PgUp]        |              | Помера једну страну навише. | `+/window page_up+`
-| kbd:[PgDn]        |              | Помера једну страну наниже. | `+/window page_down+`
-| kbd:[Alt+i]       | `i`          | Инсталира скрипту. | `+/script install+`
-| kbd:[Alt+r]       | `r`          | Брише скрипту. | `+/script remove+`
-| kbd:[Alt+l] (`L`) | `l`          | Учитава скрипту. | `+/script load+`
-| kbd:[Alt+u]       | `u`          | Уклања скрипту из меморије. | `+/script unload+`
-| kbd:[Alt+Shift+A] | `A`          | Аутоучитавање скрипте. | `+/script toggleautoload+`
-| kbd:[Alt+h]       | `h`          | Задржава/отпушта скрипту. | `+/script hold+`
-| kbd:[Alt+v]       | `v`          | Преглед скрипте. | `+/script show+`
-|===
-
-[NOTE]
-^(1)^ Акција мора да се унесе као унос у командну линију, након чега се притисне kbd:[Ентер].
-
-[[mouse]]
-=== Подршка за миша
-
-Програм WeeChat подржава кликове и гестикулације мишем. Ради са локалним терминалом, и удаљено преко ssh везе са или без screen/tmux.
-
-[[mouse_enable]]
-==== Укључивање миша
-
-Ако при покретању програма желите да укључите миша:
-
-----
-/set weechat.look.mouse on
-----
-
-Ако тренутно желите да укључите миша, притисните kbd:[Alt+m] или извршите команду:
-
-----
-/mouse enable
-----
-
-Миш може привремено да се искључи, а то можете и да вежете за тастер. На пример тастер kbd:[Alt+%] да се на 10 секунди искључи миш:
-
-----
-/key bind meta-% /mouse toggle 10
-----
-
-[IMPORTANT]
-Када се у програму WeeChat укључи миш, он хвата све догађаје миша, тако да се акције као што су копирање/налепљивање или кликови на URL адресе не шаљу терминалу. Употреба тастера kbd:[Shift] чини да се догађаји шаљу директно терминалу, као да је миш искључен (на неким терминалима као што је iTerm, морате уместо kbd:[Shift] да употребите kbd:[Alt]).
-
-[NOTE]
-Ако имате било какав проблем са мишем, молимо вас да погледате link:weechat_faq.sr.html#mouse[WeeChat ЧПП / Миш].
-
-[[mouse_bind_events]]
-==== Везивање догађаја миша за команде
-
-Програм WeeChat је већ дефинисао подразумеване догађаје миша (погледајте <<key_bindings_mouse_context,тастере за „mouse” контекст>>).
-
-Командом `/key`, уз употребу контекста „mouse”, можете да измените или да додате нова везивања тастера (у вези синтаксе, погледајте команду <<command_weechat_key,/key>>).
-
-Име догађаја се састоји од модификатора (није обавезан), имена тастера/точкића и гестикулације (није обавезна). Различити елементи се раздвајају са `+-+`.
-
-Листа модификатора:
-
-[width="100%", cols="1m,4", options="header"]
-|===
-| Модификатор | Опис
-| ctrl        | Тастер kbd:[Ctrl]
-| alt         | Тастер kbd:[Alt]
-| ctrl-alt    | Тастери kbd:[Ctrl] + kbd:[Alt]
-|===
-
-Листа тастера/точкића:
-
-[width="100%", cols="1m,4", options="header"]
-|===
-| Тастер/точкић       | Опис
-| button1             | Клик левим тастером
-| button2             | Клик десним тастером
-| button3             | Клик средњим тастером (често је то клик точкићем)
-| button4 ... button9 | Клик на додатне тастере
-| wheelup             | Точкић (навише)
-| wheeldown           | Точкић (наниже)
-|===
-
-Листа гестикулација (само за тастере, не за точкић):
-
-[width="100%", cols="1m,4", options="header"]
-|===
-| Гестикулација      | Растојање
-| gesture-up         | 3 ... 19
-| gesture-up-long    | ≥ 20
-| gesture-down       | 3 ... 19
-| gesture-down-long  | ≥ 20
-| gesture-left       | 3 ... 39
-| gesture-left-long  | ≥ 40
-| gesture-right      | 3 ... 39
-| gesture-right-long | ≥ 40
-|===
-
-Листа некомплетних догађаја (само за тастере, корисно је у додацима/скриптама):
-
-[width="100%", cols="1m,4", options="header"]
-|===
-| Догађај    | Опис
-| event-down | Тастер је притиснут, али још увек није отпуштен
-| event-drag | Миш је померен док се тастер држао притиснут
-|===
-
-Примери догађаја:
-
-* `button1`
-* `ctrl-button1`
-* `button1-gesture-right`
-* `button1-event-down`
-* `button1-event-drag`
-* `alt-button2-gesture-down-long`
-* `wheelup`
-* `ctrl-alt-wheeldown`
-* ...
-
-[TIP]
-Када се тастер везује у „mouse” контексту, могуће је подударање са више догађаја користећи `+*+` на почетку или крају имена, на пример `+button1-gesture-*+` ће да се подудари са било којом гестикулацијом која користи леви тастер миша.
-
-[TIP]
-Име догађаја можете сазнати командом `+/input grab_mouse+`, па извршавањем догађаја мишем. Ово ће да уметне име догађаја који сете извели у командну линију.
 
 [[secured_data]]
 === Обезбеђени подаци
