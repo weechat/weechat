@@ -601,11 +601,8 @@ Oznaza to, że opcja `sec.crypt.passphrase_file` została usunięta i jej warto�
 ustawiona na pusty ciąg, który był domyślną wartością w poprzednej wersji
 (w tym przypadku żadna dodatkowa akcja nie jest wymagana).
 
-[[usage]]
-== Używanie
-
 [[running_weechat]]
-=== Uruchamianie WeeChat
+== Uruchamianie WeeChat
 
 Żeby uruchomić WeeChat, wykonaj polecenie:
 
@@ -618,7 +615,7 @@ w  _~/.config/weechat_ z domyślnymi opcjami i wartościami
 (zobacz <<files_and_directories,Pliki i foldery>>).
 
 [[command_line_options]]
-==== Argumenty linii poleceń
+=== Argumenty linii poleceń
 
 include::includes/cmdline_options.pl.adoc[tag=standard]
 
@@ -748,6 +745,10 @@ oraz po wprowadzeniu ręcznie zmian należy użyć komendy <<command_weechat_rel
 (ryzykując utratę zmian, nie zapisanych za pomocą komendy <<command_weechat_save,/save>>). +
 Możesz użyć komendy <<command_weechat_set,/set>>, która sprawdza ustawianą wartość
 i od razu wprowadza zmiany.
+
+// TRANSLATION MISSING
+[[interface]]
+== Interface
 
 [[screen_layout]]
 === Układ ekranu

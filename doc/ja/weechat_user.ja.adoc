@@ -614,11 +614,8 @@ That means the option `sec.crypt.passphrase_file` has been removed, and you
 had value set to empty string, which was the default value in the previous version
 (in this case no manual action is required).
 
-[[usage]]
-== 使い方
-
 [[running_weechat]]
-=== WeeChat の起動
+== WeeChat の起動
 
 WeeChat を起動させるには、以下コマンドを実行:
 
@@ -631,7 +628,7 @@ _~/.config/weechat_ ディレクトリの中に作成されます
 (<<files_and_directories,ファイルとディレクトリ>>を参照してください)。
 
 [[command_line_options]]
-==== コマンドラインオプション
+=== コマンドラインオプション
 
 include::includes/cmdline_options.ja.adoc[tag=standard]
 
@@ -772,6 +769,10 @@ WeeChat は常時 (例えば <<command_weechat_quit,/quit>> コマンドの実�
 を使って保存されていない変更を失うリスクがある) からです。 +
 設定を編集するには <<command_weechat_set,/set>>
 コマンドを使ってください。これは値を検査し、設定の変更をすぐに適用します。
+
+// TRANSLATION MISSING
+[[interface]]
+== Interface
 
 [[screen_layout]]
 === 画面レイアウト

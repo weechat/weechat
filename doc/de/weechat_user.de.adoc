@@ -603,11 +603,8 @@ Das bedeutet, dass die Option "sec.crypt.passphrase_file" entfernt wurde und der
 Wert für diese Option eine leere Zeichenkette war. Dies war der Standardwert in
 der vorherigen Version (in diesem Fall ist kein manuelles Eingreifen erforderlich).
 
-[[usage]]
-== Nutzung
-
 [[running_weechat]]
-=== WeeChat starten
+== WeeChat starten
 
 Um WeeChat zu starten muss folgender Befehl ausgeführt werden:
 
@@ -620,7 +617,7 @@ die entsprechenden Dateien im Verzeichnis _~/.config/weechat_ erstellt.
 (siehe <<files_and_directories,Dateien und Verzeichnisse>>).
 
 [[command_line_options]]
-==== Optionen für Befehlszeile
+=== Optionen für Befehlszeile
 
 include::includes/cmdline_options.de.adoc[tag=standard]
 
@@ -749,6 +746,10 @@ laden muss (mit dem Risiko von Datenverlust da Daten kommentarlos überschrieben
 bevor man diese ggf. gesichert hat <<command_weechat_save,/save>>). +
 Man sollte immer den <<command_weechat_set,/set>> Befehl nutzen, da der Befehl die
 Eingabe prüft und Änderungen sofort wirksam werden.
+
+// TRANSLATION MISSING
+[[interface]]
+== Interface
 
 [[screen_layout]]
 === Screen layout

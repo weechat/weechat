@@ -607,11 +607,8 @@ Cela signifie que l'option `sec.crypt.passphrase_file` a été supprimée, et vo
 aviez la valeur définie à une chaîne vide, ce qui était la valeur par défaut
 dans la version précédente (dans ce cas aucune action manuelle n'est nécessaire).
 
-[[usage]]
-== Utilisation
-
 [[running_weechat]]
-=== Lancement de WeeChat
+== Lancement de WeeChat
 
 Pour lancer WeeChat, tapez cette commande :
 
@@ -624,7 +621,7 @@ par défaut sont créés dans _~/.config/weechat_ avec les options et valeurs pa
 (voir <<files_and_directories,Fichiers et répertoires>>).
 
 [[command_line_options]]
-==== Options de ligne de commande
+=== Options de ligne de commande
 
 include::includes/cmdline_options.fr.adoc[tag=standard]
 
@@ -757,6 +754,9 @@ commande <<command_weechat_reload,/reload>> (avec le risque de perdre d'autres
 changements qui n'auraient pas été sauvés avec <<command_weechat_save,/save>>). +
 Vous pouvez utiliser la commande <<command_weechat_set,/set>>, qui vérifie la
 valeur et applique les changements immédiatement.
+
+[[interface]]
+== Interface
 
 [[screen_layout]]
 === Organisation de l'écran
