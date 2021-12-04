@@ -635,11 +635,12 @@ _~/.config/weechat_ ディレクトリの中に作成されます
 
 include::includes/cmdline_options.ja.adoc[tag=standard]
 
-[[extra_debug_options]]
-==== デバッグオプション
+// TRANSLATION MISSING
+Some extra options are available for debug purposes only:
 
+// TRANSLATION MISSING
 [WARNING]
-以下のオプションはデバッグ用です。*通常利用時には使わないでください!*
+Do *NOT* use any of these options in production!
 
 include::includes/cmdline_options.ja.adoc[tag=debug]
 

@@ -677,11 +677,11 @@ created in _~/.config/weechat_ with default options and values
 include::includes/cmdline_options.it.adoc[tag=standard]
 
 // TRANSLATION MISSING
-[[extra_debug_options]]
-==== Extra debug options
+Some extra options are available for debug purposes only:
 
+// TRANSLATION MISSING
 [WARNING]
-These options are for debug purposes only, *DO NOT USE IN PRODUCTION!*
+Do *NOT* use any of these options in production!
 
 include::includes/cmdline_options.it.adoc[tag=debug]
 

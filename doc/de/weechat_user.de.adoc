@@ -624,11 +624,12 @@ die entsprechenden Dateien im Verzeichnis _~/.config/weechat_ erstellt.
 
 include::includes/cmdline_options.de.adoc[tag=standard]
 
-[[extra_debug_options]]
-==== zusätzliche Debug-Optionen
+// TRANSLATION MISSING
+Some extra options are available for debug purposes only:
 
+// TRANSLATION MISSING
 [WARNING]
-These options are for debug purposes only, *DO NOT USE IN PRODUCTION!*
+Do *NOT* use any of these options in production!
 
 include::includes/cmdline_options.de.adoc[tag=debug]
 

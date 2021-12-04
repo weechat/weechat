@@ -628,11 +628,11 @@ par défaut sont créés dans _~/.config/weechat_ avec les options et valeurs pa
 
 include::includes/cmdline_options.fr.adoc[tag=standard]
 
-[[extra_debug_options]]
-==== Options supplémentaires de debug
+Quelques options supplémentaires sont disponibles pour du debug seulement :
 
+// TRANSLATION MISSING
 [WARNING]
-Ces options sont pour du debug seulement, *NE PAS UTILISER EN PRODUCTION !*
+N'utilisez *AUCUNE* de ces options in production !
 
 include::includes/cmdline_options.fr.adoc[tag=debug]
 

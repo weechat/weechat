@@ -564,11 +564,12 @@ $ weechat
 
 include::includes/cmdline_options.sr.adoc[tag=standard]
 
-[[extra_debug_options]]
-==== Додатне дибаг опције
+// TRANSLATION MISSING
+Some extra options are available for debug purposes only:
 
+// TRANSLATION MISSING
 [WARNING]
-Ове опције служе само за дибаг, *НЕ КОРИСТИТЕ ИХ ЗА ПРОГРАМ КОЈИ СЕ НОРМАЛНО КОРИСТИ!*
+Do *NOT* use any of these options in production!
 
 include::includes/cmdline_options.sr.adoc[tag=debug]
 

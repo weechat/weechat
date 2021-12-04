@@ -622,11 +622,12 @@ w  _~/.config/weechat_ z domyślnymi opcjami i wartościami
 
 include::includes/cmdline_options.pl.adoc[tag=standard]
 
-[[extra_debug_options]]
-==== Dodatkowe opcje do debugowania
+// TRANSLATION MISSING
+Some extra options are available for debug purposes only:
 
+// TRANSLATION MISSING
 [WARNING]
-Te opcje służą tylko do debugowania błędów, *NIE UŻYWAĆ NA PRODUKCJI!*
+Do *NOT* use any of these options in production!
 
 include::includes/cmdline_options.pl.adoc[tag=debug]
 
