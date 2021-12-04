@@ -542,7 +542,7 @@ gdb /usr/bin/weechat 12345
 
 // TRANSLATION MISSING
 [[upgrade]]
-=== Upgrade
+== Upgrade
 
 If a new stable version of WeeChat is released, this is time for you to
 switch to this version.
@@ -554,7 +554,7 @@ This can be done while WeeChat is running.
 
 // TRANSLATION MISSING
 [[upgrade_command]]
-==== Upgrade command
+=== Upgrade command
 
 WeeChat can restart the new binary, in place, using the
 <<command_weechat_upgrade,/upgrade>> command: the buffer contents and non-SSL
@@ -580,10 +580,10 @@ $ weechat --upgrade
 
 // TRANSLATION MISSING
 [[restart_after_upgrade]]
-==== Restart after upgrade
+=== Restart after upgrade
 
 [[restart_release_notes]]
-===== Release notes
+==== Release notes
 
 After an upgrade, it is *strongly recommended* to read the
 https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
@@ -596,7 +596,7 @@ For example if you switch from version 3.0 to 3.2, you must read release notes
 of versions 3.1 and 3.2.
 
 [[restart_configuration_upgrade]]
-===== Configuration upgrade
+==== Configuration upgrade
 
 WeeChat has an automatic upgrade of configuration files (`*.conf`):
 

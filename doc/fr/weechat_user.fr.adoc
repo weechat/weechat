@@ -535,7 +535,7 @@ Ensuite comme pour un crash, utilisez la commande `bt full` :
 ----
 
 [[upgrade]]
-=== Mise à jour
+== Mise à jour
 
 Si une nouvelle version stable de WeeChat est disponible, il est temps pour vous
 de passer à cette version.
@@ -547,7 +547,7 @@ répertoires. +
 Cela peut être fait pendant que WeeChat tourne.
 
 [[upgrade_command]]
-==== Commande de mise à jour
+=== Commande de mise à jour
 
 WeeChat peut redémarrer le nouveau binaire avec la commande
 <<command_weechat_upgrade,/upgrade>> : le contenu des tampons et les connexions
@@ -572,10 +572,10 @@ $ weechat --upgrade
 ----
 
 [[restart_after_upgrade]]
-==== Redémarrage après mise à jour
+=== Redémarrage après mise à jour
 
 [[restart_release_notes]]
-===== Notes de version
+==== Notes de version
 
 Après une mise à jour, il est *fortement recommandé* de lire les
 https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[notes de version]
@@ -588,7 +588,7 @@ Par exemple si vous passez de la version 3.0 à 3.2, vous devez lire les notes
 des versions 3.1 et 3.2.
 
 [[restart_configuration_upgrade]]
-===== Mise à jour de la configuration
+==== Mise à jour de la configuration
 
 WeeChat a un système de mise à jour automatique des fichiers de configuration
 (`*.conf`) :

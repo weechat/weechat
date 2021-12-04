@@ -529,7 +529,7 @@ Następnie jak w przypadku awarii, użyj polecenia `bt full`:
 ----
 
 [[upgrade]]
-=== Aktualizacja
+== Aktualizacja
 
 Jeśli zostanie wydana nowa stabilna wersja WeeChat należy zaktualizować
 się do tej wersji.
@@ -541,7 +541,7 @@ wykonywalny `weechat` i wszystke wymagane pliki znajdowały się w tych samych
 Można to zrobić podczas działania WeeChat.
 
 [[upgrade_command]]
-==== Komenda aktualizacji
+=== Komenda aktualizacji
 
 WeeChat może zostać ponownie uruchomiony z nowego pliku binarnego bez potrzeby
 jego wyłączania za pomocą komendy <<command_weechat_upgrade,/upgrade>>:
@@ -567,10 +567,10 @@ $ weechat --upgrade
 ----
 
 [[restart_after_upgrade]]
-==== Restart po aktualizacji
+=== Restart po aktualizacji
 
 [[restart_release_notes]]
-===== Informacje o wydaniu
+==== Informacje o wydaniu
 
 Po aktualizacji *zaleca się* przeczytanie
 https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[informacji o wydaniu],
@@ -583,7 +583,7 @@ Na przykład aktualizując z wersji 3.0 do 3.2, musisz przeczytać informacje dl
 3.1 i 3.2.
 
 [[restart_configuration_upgrade]]
-===== Aktualizacja konfiguracji
+==== Aktualizacja konfiguracji
 
 WeeChat potrafi automatycznie aktualizować pliki konfiguracyjne (`*.conf`):
 

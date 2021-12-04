@@ -533,7 +533,7 @@ Sollte WeeChat abgestürzt sein, muss der Befehl `bt full` genutzt werden:
 ----
 
 [[upgrade]]
-=== Upgrade
+== Upgrade
 
 Wenn eine neue stabile Version von WeeChat veröffentlicht wird, ist es Zeit
 auf diese neue Version zu wechseln.
@@ -545,7 +545,7 @@ und alle erforderlichen Dateien in den selben Pfaden. +
 Diese Installation kann durchgeführt werden, während WeeChat ausgeführt wird.
 
 [[upgrade_command]]
-==== Upgrade Befehl
+=== Upgrade Befehl
 
 WeeChat kann die neue Binärdatei mit Hilfe des  <<command_weechat_upgrade,/upgrade>>
 Befehls starten: der Bufferinhalt und nicht-SSL Verbindungen bleiben dabei erhalten. +
@@ -569,10 +569,10 @@ $ weechat --upgrade
 ----
 
 [[restart_after_upgrade]]
-==== Neustart nach Upgrade
+=== Neustart nach Upgrade
 
 [[restart_release_notes]]
-===== Versionshinweise
+==== Versionshinweise
 
 Nach einem Upgrade wird *dringend empfohlen* die,
 https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
@@ -585,7 +585,7 @@ Wenn Sie beispielsweise von Version 3.0 auf 3.2 wechseln, müssen Sie die Versio
 der Versionen 3.1 und 3.2 lesen.
 
 [[restart_configuration_upgrade]]
-===== Konfigurations-Upgrade
+==== Konfigurations-Upgrade
 
 WeeChat hat ein automatisches Upgrade für Konfigurationsdateien (`*.conf`):
 
