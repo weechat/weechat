@@ -209,7 +209,7 @@ Liste des options couramment utilisées :
   Compiler <<buflist,l'extension Buflist>>.
 
 | ENABLE_CHARSET | `ON`, `OFF` | ON |
-  Compiler <<charset_plugin,l'extension Charset>>.
+  Compiler <<charset,l'extension Charset>>.
 
 | ENABLE_MAN | `ON`, `OFF` | OFF |
   Construire la page man.
@@ -1958,6 +1958,130 @@ Exemple de gras avec la couleur de texte du terminal :
 /set weechat.color.status_time *99999
 ----
 
+[[charset]]
+=== Charset
+
+L'extension Charset vous permet de décoder et encoder les données en utilisant
+un jeu de caractères.
+
+Il y a un jeu de caractère par défaut pour le décodage/encodage, et un
+spécifique pour les tampons (ou groupes de tampons).
+
+Cette extension est facultative, mais recommandée : si elle n'est pas chargée,
+WeeChat pourra uniquement lire/écrire des données UTF-8.
+
+L'extension Charset devrait être automatiquement chargée par WeeChat au
+démarrage. Pour s'assurer que l'extension est bien chargée, essayez :
+
+----
+/charset
+----
+
+Si la commande n'est pas trouvée, alors chargez l'extension avec la commande :
+
+----
+/plugin load charset
+----
+
+Si l'extension n'est pas trouvée, alors vous devriez recompiler WeeChat avec
+les extensions et le support de Charset.
+
+Lorsque l'extension Charset démarre, elle affiche le jeu de caractères du
+terminal et l'interne.
+Le jeu de caractères du terminal dépend de votre locale, et l'interne est
+UTF-8.
+
+Par exemple :
+
+....
+charset : terminal : ISO-8859-15, interne : UTF-8
+....
+
+[[charset_set]]
+==== Définir le jeu de caractère
+
+Pour modifier les jeux de caractères de décodage et d'encodage
+globaux, utilisez la commande `/set`.
+
+Par exemple :
+
+----
+/set charset.default.decode ISO-8859-15
+/set charset.default.encode ISO-8859-15
+----
+
+Si le jeu de caractères de décodage global n'est pas renseigné (par exemple
+pendant le premier chargement de Charset), il sera renseigné automatiquement
+avec le jeu de caractères du terminal (s'il est différent de UTF-8) ou par
+défaut à _ISO-8859-1_.
+
+La valeur d'encodage par défaut est vide, donc WeeChat envoie par défaut avec
+le jeu de caractères interne (UTF-8).
+
+Pour modifier le jeu de caractères d'un serveur IRC, utilisez la commande
+`/charset` sur le tampon serveur.
+Si vous donnez seulement le jeu de caractères, alors vous
+modifiez en même temps les valeurs de décodage et d'encodage.
+
+Par exemple :
+
+----
+/charset ISO-8859-15
+----
+
+Ce qui est équivalent à :
+
+----
+/charset decode ISO-8859-15
+/charset encode ISO-8859-15
+----
+
+Pour modifier le jeu de caractères d'un canal IRC (ou d'une conversation
+privée), utilisez la même commande que pour le serveur, mais sur le tampon du
+canal (ou du privé).
+
+Pour définir le jeu de caractères pour tous les canaux/privés d'un serveur IRC :
+
+----
+/set charset.encode.irc.libera ISO-8859-15
+----
+
+Pour voir tous les jeux de caractères utilisés, utilisez la commande suivante :
+
+----
+/set charset.*
+----
+
+[[charset_troubleshooting]]
+==== En cas de problème
+
+Pour tout problème avec les jeux de caractères, merci de consulter la
+link:weechat_faq.fr.html#charset[FAQ WeeChat / Accents].
+
+[[charset_commands]]
+==== Commandes
+
+include::includes/autogen_user_commands.fr.adoc[tag=charset_commands]
+
+[[charset_options]]
+==== Options
+
+Sections dans le fichier _charset.conf_ :
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section | Commande de contrôle                        | Description
+| default | /set charset.default.*                      | Jeu de caractère d'encodage/décodage par défaut.
+| decode  | <<command_charset_charset,/charset decode>> +
+            /set charset.decode.*                       | Jeu de caractère d'encodage par tampon (les options peuvent être ajoutées/supprimées dans la section).
+| encode  | <<command_charset_charset,/charset encode>> +
+            /set charset.encode.*                       | Jeu de caractère de décodage par tampon (les options peuvent être ajoutées/supprimées dans la section).
+|===
+
+Options :
+
+include::includes/autogen_user_options.fr.adoc[tag=charset_options]
+
 [[notify_levels]]
 === Niveaux de notification
 
@@ -2743,130 +2867,6 @@ Pour en apprendre plus sur le développement d'extension ou de script (via
 l'API), merci de consulter la
 link:weechat_plugin_api.fr.html[Référence API extension WeeChat] ou le
 link:weechat_scripting.fr.html[Guide pour scripts WeeChat].
-
-[[charset_plugin]]
-=== Charset
-
-L'extension Charset vous permet de décoder et encoder les données en utilisant
-un jeu de caractères.
-
-Il y a un jeu de caractère par défaut pour le décodage/encodage, et un
-spécifique pour les tampons (ou groupes de tampons).
-
-Cette extension est facultative, mais recommandée : si elle n'est pas chargée,
-WeeChat pourra uniquement lire/écrire des données UTF-8.
-
-L'extension Charset devrait être automatiquement chargée par WeeChat au
-démarrage. Pour s'assurer que l'extension est bien chargée, essayez :
-
-----
-/charset
-----
-
-Si la commande n'est pas trouvée, alors chargez l'extension avec la commande :
-
-----
-/plugin load charset
-----
-
-Si l'extension n'est pas trouvée, alors vous devriez recompiler WeeChat avec
-les extensions et le support de Charset.
-
-Lorsque l'extension Charset démarre, elle affiche le jeu de caractères du
-terminal et l'interne.
-Le jeu de caractères du terminal dépend de votre locale, et l'interne est
-UTF-8.
-
-Par exemple :
-
-....
-charset : terminal : ISO-8859-15, interne : UTF-8
-....
-
-[[charset_set]]
-==== Définir le jeu de caractère
-
-Pour modifier les jeux de caractères de décodage et d'encodage
-globaux, utilisez la commande `/set`.
-
-Par exemple :
-
-----
-/set charset.default.decode ISO-8859-15
-/set charset.default.encode ISO-8859-15
-----
-
-Si le jeu de caractères de décodage global n'est pas renseigné (par exemple
-pendant le premier chargement de Charset), il sera renseigné automatiquement
-avec le jeu de caractères du terminal (s'il est différent de UTF-8) ou par
-défaut à _ISO-8859-1_.
-
-La valeur d'encodage par défaut est vide, donc WeeChat envoie par défaut avec
-le jeu de caractères interne (UTF-8).
-
-Pour modifier le jeu de caractères d'un serveur IRC, utilisez la commande
-`/charset` sur le tampon serveur.
-Si vous donnez seulement le jeu de caractères, alors vous
-modifiez en même temps les valeurs de décodage et d'encodage.
-
-Par exemple :
-
-----
-/charset ISO-8859-15
-----
-
-Ce qui est équivalent à :
-
-----
-/charset decode ISO-8859-15
-/charset encode ISO-8859-15
-----
-
-Pour modifier le jeu de caractères d'un canal IRC (ou d'une conversation
-privée), utilisez la même commande que pour le serveur, mais sur le tampon du
-canal (ou du privé).
-
-Pour définir le jeu de caractères pour tous les canaux/privés d'un serveur IRC :
-
-----
-/set charset.encode.irc.libera ISO-8859-15
-----
-
-Pour voir tous les jeux de caractères utilisés, utilisez la commande suivante :
-
-----
-/set charset.*
-----
-
-[[charset_troubleshooting]]
-==== En cas de problème
-
-Pour tout problème avec les jeux de caractères, merci de consulter la
-link:weechat_faq.fr.html#charset[FAQ WeeChat / Accents].
-
-[[charset_commands]]
-==== Commandes
-
-include::includes/autogen_user_commands.fr.adoc[tag=charset_commands]
-
-[[charset_options]]
-==== Options
-
-Sections dans le fichier _charset.conf_ :
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Section | Commande de contrôle                        | Description
-| default | /set charset.default.*                      | Jeu de caractère d'encodage/décodage par défaut.
-| decode  | <<command_charset_charset,/charset decode>> +
-            /set charset.decode.*                       | Jeu de caractère d'encodage par tampon (les options peuvent être ajoutées/supprimées dans la section).
-| encode  | <<command_charset_charset,/charset encode>> +
-            /set charset.encode.*                       | Jeu de caractère de décodage par tampon (les options peuvent être ajoutées/supprimées dans la section).
-|===
-
-Options :
-
-include::includes/autogen_user_options.fr.adoc[tag=charset_options]
 
 [[exec_plugin]]
 === Exec

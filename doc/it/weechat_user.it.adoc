@@ -243,7 +243,7 @@ List of commonly used options:
   Compile <<buflist,Buflist plugin>>.
 
 | ENABLE_CHARSET | `ON`, `OFF` | ON |
-  Compile <<charset_plugin,Charset plugin>>.
+  Compile <<charset,Charset plugin>>.
 
 | ENABLE_MAN | `ON`, `OFF` | OFF |
   Build man page.
@@ -2094,6 +2094,131 @@ Esempio di grassetto con il colore di primo piano del terminale:
 /set weechat.color.status_time *99999
 ----
 
+[[charset]]
+=== Charset
+
+Il plugin Charset consente di decodificare o codificare dati utilizzando
+i set caratteri.
+
+Esiste un set caratteri predefinito per la codifica/decodifica, e set caratteri
+specifici per i buffer (o gruppi di buffer).
+
+Questo plugin è opzionale, ma raccomandato: se non caricato, WeeChat
+può leggere/scrivere soltanto dati UTF-8.
+
+Il plugin Charset dovrebbe essere caricato automaticamente da WeeChat.
+Per essere sicuri che sia caricato, provare con:
+
+----
+/charset
+----
+
+Se non trovato, allora si deve caricare il plugin con il comando:
+
+----
+/plugin load charset
+----
+
+Se il plugin non viene trovato, allora è necessario ricompilare WeeChat
+con il supporto ai plugin e a Charset.
+
+Quando viene avviato il plugin Charset, mostra i set caratteri del
+terminale e quello interno. Il set caratteri dipende dal proprio
+locale, mentre quello interno è UTF-8.
+
+Per esempio:
+
+....
+set caratteri: terminale: ISO-8859-15, interno: UTF-8
+....
+
+[[charset_set]]
+==== Impostare il set caratteri
+
+Per impostare il set caratteri globale per la codifica e la decodifica,
+utilizzare il comando `/set`.
+
+Per esempio:
+
+----
+/set charset.default.decode ISO-8859-15
+/set charset.default.encode ISO-8859-15
+----
+
+Se il set caratteri globale per la decodifica non è impostato (ad
+esempio durante il primo caricamento del plugin Charset), verrà
+impostato automaticamente sul set caratteri del terminale (se
+diverso da UTF-8), oppure su _ISO-8859-1_.
+
+Il valore di codifica predefinito è vuoto, perciò il testo viene
+inviato per default con il set caratteri interno (UTF-8).
+
+Per impostare il set caratteri del server IRC, utilizzare il comando `charset`
+sul buffer del server. Se viene immesso solo il set caratteri, allora i valori
+di codifica e decodifica saranno gli stessi.
+
+Ad esempio:
+
+----
+/charset ISO-8859-15
+----
+
+È l'equivalente di:
+
+----
+/charset decode ISO-8859-15
+/charset encode ISO-8859-15
+----
+
+Per impostare il set caratteri per il canale IRC (o il privato), utilizzare gli
+stessi comandi per il server, ma sul buffer del canale (o quello privato).
+
+// TRANSLATION MISSING
+To set charset for all channels/privates of an IRC server:
+
+----
+/set charset.encode.irc.libera ISO-8859-15
+----
+
+Per visualizzare tutti i set caratteri utilizzati, utilizzare il comando seguente:
+
+----
+/set charset.*
+----
+
+[[charset_troubleshooting]]
+==== Risoluzione problemi
+
+Per qualunque problema con i set caratteri, per favore consultare
+le link:weechat_faq.it.html#charset[Domande Frequenti di WeeChat / Charset].
+
+[[charset_commands]]
+==== Comandi
+
+include::includes/autogen_user_commands.it.adoc[tag=charset_commands]
+
+[[charset_options]]
+==== Opzioni
+
+// TRANSLATION MISSING
+Sections in file _charset.conf_:
+
+// TRANSLATION MISSING
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section | Control command                             | Description
+| default | /set charset.default.*                      | Default decoding/encoding charset.
+| decode  | <<command_charset_charset,/charset decode>> +
+            /set charset.decode.*                       | Decoding charset by buffer (options can be added/removed in section).
+| encode  | <<command_charset_charset,/charset encode>> +
+            /set charset.encode.*                       | Encoding charset by buffer (options can be added/removed in section).
+|===
+
+// TRANSLATION MISSING
+Options:
+
+include::includes/autogen_user_options.it.adoc[tag=charset_options]
+
 [[notify_levels]]
 === Livelli di notifica
 
@@ -2878,131 +3003,6 @@ I plugin predefiniti sono:
 Per saperne di più riguardo lo sviluppo di plugin o script (tramite le API), per
 favore consultare link:weechat_plugin_api.it.html[Riferimento API dei Plugin per WeeChat]
 oppure link:weechat_scripting.it.html[Guida allo Scripting di WeeChat].
-
-[[charset_plugin]]
-=== Charset
-
-Il plugin Charset consente di decodificare o codificare dati utilizzando
-i set caratteri.
-
-Esiste un set caratteri predefinito per la codifica/decodifica, e set caratteri
-specifici per i buffer (o gruppi di buffer).
-
-Questo plugin è opzionale, ma raccomandato: se non caricato, WeeChat
-può leggere/scrivere soltanto dati UTF-8.
-
-Il plugin Charset dovrebbe essere caricato automaticamente da WeeChat.
-Per essere sicuri che sia caricato, provare con:
-
-----
-/charset
-----
-
-Se non trovato, allora si deve caricare il plugin con il comando:
-
-----
-/plugin load charset
-----
-
-Se il plugin non viene trovato, allora è necessario ricompilare WeeChat
-con il supporto ai plugin e a Charset.
-
-Quando viene avviato il plugin Charset, mostra i set caratteri del
-terminale e quello interno. Il set caratteri dipende dal proprio
-locale, mentre quello interno è UTF-8.
-
-Per esempio:
-
-....
-set caratteri: terminale: ISO-8859-15, interno: UTF-8
-....
-
-[[charset_set]]
-==== Impostare il set caratteri
-
-Per impostare il set caratteri globale per la codifica e la decodifica,
-utilizzare il comando `/set`.
-
-Per esempio:
-
-----
-/set charset.default.decode ISO-8859-15
-/set charset.default.encode ISO-8859-15
-----
-
-Se il set caratteri globale per la decodifica non è impostato (ad
-esempio durante il primo caricamento del plugin Charset), verrà
-impostato automaticamente sul set caratteri del terminale (se
-diverso da UTF-8), oppure su _ISO-8859-1_.
-
-Il valore di codifica predefinito è vuoto, perciò il testo viene
-inviato per default con il set caratteri interno (UTF-8).
-
-Per impostare il set caratteri del server IRC, utilizzare il comando `charset`
-sul buffer del server. Se viene immesso solo il set caratteri, allora i valori
-di codifica e decodifica saranno gli stessi.
-
-Ad esempio:
-
-----
-/charset ISO-8859-15
-----
-
-È l'equivalente di:
-
-----
-/charset decode ISO-8859-15
-/charset encode ISO-8859-15
-----
-
-Per impostare il set caratteri per il canale IRC (o il privato), utilizzare gli
-stessi comandi per il server, ma sul buffer del canale (o quello privato).
-
-// TRANSLATION MISSING
-To set charset for all channels/privates of an IRC server:
-
-----
-/set charset.encode.irc.libera ISO-8859-15
-----
-
-Per visualizzare tutti i set caratteri utilizzati, utilizzare il comando seguente:
-
-----
-/set charset.*
-----
-
-[[charset_troubleshooting]]
-==== Risoluzione problemi
-
-Per qualunque problema con i set caratteri, per favore consultare
-le link:weechat_faq.it.html#charset[Domande Frequenti di WeeChat / Charset].
-
-[[charset_commands]]
-==== Comandi
-
-include::includes/autogen_user_commands.it.adoc[tag=charset_commands]
-
-[[charset_options]]
-==== Opzioni
-
-// TRANSLATION MISSING
-Sections in file _charset.conf_:
-
-// TRANSLATION MISSING
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Section | Control command                             | Description
-| default | /set charset.default.*                      | Default decoding/encoding charset.
-| decode  | <<command_charset_charset,/charset decode>> +
-            /set charset.decode.*                       | Decoding charset by buffer (options can be added/removed in section).
-| encode  | <<command_charset_charset,/charset encode>> +
-            /set charset.encode.*                       | Encoding charset by buffer (options can be added/removed in section).
-|===
-
-// TRANSLATION MISSING
-Options:
-
-include::includes/autogen_user_options.it.adoc[tag=charset_options]
 
 // TRANSLATION MISSING
 [[exec_plugin]]

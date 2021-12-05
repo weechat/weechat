@@ -213,7 +213,7 @@ Liste von häufig verwendeten Optionen:
   kompiliert <<buflist,Buflist Erweiterung>>.
 
 | ENABLE_CHARSET | `ON`, `OFF` | ON |
-  kompiliert <<charset_plugin,Charset Erweiterung>>.
+  kompiliert <<charset,Charset Erweiterung>>.
 
 | ENABLE_MAN | `ON`, `OFF` | OFF |
   erstellt die man page.
@@ -1955,6 +1955,126 @@ Um der Vordergrundfarbe des Terminals das Attribut "fett" zuzuordnen:
 /set weechat.color.status_time *99999
 ----
 
+[[charset]]
+=== Charset
+
+Die Charset Erweiterung übernimmt das de-/kodieren der Zeichensätze.
+
+Es existiert ein Standardzeichensatz zum de-/kodieren und spezielle Zeichensätze
+für Buffer (oder Gruppen von Buffern).
+
+Diese Erweiterung ist optional, sie wird aber empfohlen. Wenn diese Erweiterung
+nicht genutzt wird steht WeeChat lediglich UTF-8 zur Verfügung.
+
+Die Charset Erweiterung wird automatisch von WeeChat geladen. Um sicher zu gehen
+dass diese Erweiterung geladen wurde führen Sie folgenden Befehl aus:
+
+----
+/charset
+----
+
+Wird der Befehl nicht gefunden dann kann die Erweiterung mit dem nachfolgenden
+Befehl nachgeladen werden:
+
+----
+/plugin load charset
+----
+
+Wird die Erweiterung nicht geladen dann sollten Sie WeeChat nochmals mit allen
+Erweiterungen und der Charset Unterstützung kompilieren.
+
+Wird die Charset Erweiterung gestartet dann wird der Terminal und der interne
+Zeichensatz genutzt. Welcher Terminal Zeichensatz genutzt wird hängt davon ab
+welchen Zeichensatz Sie lokal nutzen. Intern wird UTF-8 genutzt.
+
+Beispiel:
+
+....
+charset: terminal: ISO-8859-15, internal: UTF-8
+....
+
+[[charset_set]]
+==== Zeichensatz auswählen
+
+Um einen Zeichensatz zum de-/kodieren zu bestimmen wird der Befehl `/set` genutzt.
+
+Beispiel:
+
+----
+/set charset.default.decode ISO-8859-15
+/set charset.default.encode ISO-8859-15
+----
+
+Wenn der globale Zeichensatz zum dekodieren nicht gesetzt ist (dies tritt beim
+ersten Aufruf des Charset Erweiterung auf) dann wird automatisch der Zeichensatz
+genutzt der vom Terminal verwendet wird (sofern dieser nicht UTF-8 ist) oder
+der Standardzeichensatz _ISO-8859-1_.
+
+Der Standardwert zum kodieren ist nicht gesetzt. Deshalb wird der interne Zeichensatz
+(UTF-8) genutzt.
+
+Um einen Zeichensatz für IRC Server einzustellen wird der Befehl `/charset` im Server
+Buffer ausgeführt. Wird nur der Zeichensatz als Argument übergeben wird dieser sowohl
+zum kodieren als auch dekodieren genutzt.
+
+Beispiel:
+
+----
+/charset ISO-8859-15
+----
+
+ist identisch mit den Befehlen:
+
+----
+/charset decode ISO-8859-15
+/charset encode ISO-8859-15
+----
+
+Um den Zeichensatz in einem IRC-Channel (oder in einem privaten Buffer) zu ändern
+wird der selbe Befehl im entsprechenden Buffer genutzt.
+
+Um die Zeichenkodierung für alle Channels und privaten Buffer eines IRC Server zu ändern:
+
+----
+/set charset.encode.irc.libera ISO-8859-15
+----
+
+Um sich alle genutzten Zeichensätze anzeigen zu lassen wird folgender Befehl genutzt:
+
+----
+/set charset.*
+----
+
+[[charset_troubleshooting]]
+==== Fehlersuche
+
+sollten Probleme bei der Zeichensatzdarstellung auftreten dann werfen Sie bitte
+einen Blick in die link:weechat_faq.de.html#charset[WeeChat FAQ / Charset].
+
+[[charset_commands]]
+==== Befehle
+
+include::includes/autogen_user_commands.de.adoc[tag=charset_commands]
+
+[[charset_options]]
+==== Optionen
+
+Sektionen in Datei _charset.conf_:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Sektion | Steuerbefehl                                | Beschreibung
+| default | /set charset.default.*                      | Vorgegebener Zeichensatz zum De-/kodieren.
+| decode  | <<command_charset_charset,/charset decode>> +
+            /set charset.decode.*                       | Zeichensatz zum dekodieren (Optionen können in Sektion hinzugefügt/entfernt werden).
+| encode  | <<command_charset_charset,/charset encode>> +
+            /set charset.encode.*                       | Zeichensatz zum kodieren (Optionen können in Sektion hinzugefügt/entfernt werden).
+|===
+
+Optionen:
+
+include::includes/autogen_user_options.de.adoc[tag=charset_options]
+
 [[notify_levels]]
 === Benachrichtigungsstufen
 
@@ -2728,126 +2848,6 @@ Standarderweiterungen:
 Um mehr über Erweiterungen- und Skriptenprogrammierung (mittels API) zu erfahren,
 sollten Sie die link:weechat_plugin_api.en.html[Anleitung für API Erweiterung] (Englisch) oder
 link:weechat_scripting.de.html[WeeChat scripting guide] lesen.
-
-[[charset_plugin]]
-=== Charset
-
-Die Charset Erweiterung übernimmt das de-/kodieren der Zeichensätze.
-
-Es existiert ein Standardzeichensatz zum de-/kodieren und spezielle Zeichensätze
-für Buffer (oder Gruppen von Buffern).
-
-Diese Erweiterung ist optional, sie wird aber empfohlen. Wenn diese Erweiterung
-nicht genutzt wird steht WeeChat lediglich UTF-8 zur Verfügung.
-
-Die Charset Erweiterung wird automatisch von WeeChat geladen. Um sicher zu gehen
-dass diese Erweiterung geladen wurde führen Sie folgenden Befehl aus:
-
-----
-/charset
-----
-
-Wird der Befehl nicht gefunden dann kann die Erweiterung mit dem nachfolgenden
-Befehl nachgeladen werden:
-
-----
-/plugin load charset
-----
-
-Wird die Erweiterung nicht geladen dann sollten Sie WeeChat nochmals mit allen
-Erweiterungen und der Charset Unterstützung kompilieren.
-
-Wird die Charset Erweiterung gestartet dann wird der Terminal und der interne
-Zeichensatz genutzt. Welcher Terminal Zeichensatz genutzt wird hängt davon ab
-welchen Zeichensatz Sie lokal nutzen. Intern wird UTF-8 genutzt.
-
-Beispiel:
-
-....
-charset: terminal: ISO-8859-15, internal: UTF-8
-....
-
-[[charset_set]]
-==== Zeichensatz auswählen
-
-Um einen Zeichensatz zum de-/kodieren zu bestimmen wird der Befehl `/set` genutzt.
-
-Beispiel:
-
-----
-/set charset.default.decode ISO-8859-15
-/set charset.default.encode ISO-8859-15
-----
-
-Wenn der globale Zeichensatz zum dekodieren nicht gesetzt ist (dies tritt beim
-ersten Aufruf des Charset Erweiterung auf) dann wird automatisch der Zeichensatz
-genutzt der vom Terminal verwendet wird (sofern dieser nicht UTF-8 ist) oder
-der Standardzeichensatz _ISO-8859-1_.
-
-Der Standardwert zum kodieren ist nicht gesetzt. Deshalb wird der interne Zeichensatz
-(UTF-8) genutzt.
-
-Um einen Zeichensatz für IRC Server einzustellen wird der Befehl `/charset` im Server
-Buffer ausgeführt. Wird nur der Zeichensatz als Argument übergeben wird dieser sowohl
-zum kodieren als auch dekodieren genutzt.
-
-Beispiel:
-
-----
-/charset ISO-8859-15
-----
-
-ist identisch mit den Befehlen:
-
-----
-/charset decode ISO-8859-15
-/charset encode ISO-8859-15
-----
-
-Um den Zeichensatz in einem IRC-Channel (oder in einem privaten Buffer) zu ändern
-wird der selbe Befehl im entsprechenden Buffer genutzt.
-
-Um die Zeichenkodierung für alle Channels und privaten Buffer eines IRC Server zu ändern:
-
-----
-/set charset.encode.irc.libera ISO-8859-15
-----
-
-Um sich alle genutzten Zeichensätze anzeigen zu lassen wird folgender Befehl genutzt:
-
-----
-/set charset.*
-----
-
-[[charset_troubleshooting]]
-==== Fehlersuche
-
-sollten Probleme bei der Zeichensatzdarstellung auftreten dann werfen Sie bitte
-einen Blick in die link:weechat_faq.de.html#charset[WeeChat FAQ / Charset].
-
-[[charset_commands]]
-==== Befehle
-
-include::includes/autogen_user_commands.de.adoc[tag=charset_commands]
-
-[[charset_options]]
-==== Optionen
-
-Sektionen in Datei _charset.conf_:
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Sektion | Steuerbefehl                                | Beschreibung
-| default | /set charset.default.*                      | Vorgegebener Zeichensatz zum De-/kodieren.
-| decode  | <<command_charset_charset,/charset decode>> +
-            /set charset.decode.*                       | Zeichensatz zum dekodieren (Optionen können in Sektion hinzugefügt/entfernt werden).
-| encode  | <<command_charset_charset,/charset encode>> +
-            /set charset.encode.*                       | Zeichensatz zum kodieren (Optionen können in Sektion hinzugefügt/entfernt werden).
-|===
-
-Optionen:
-
-include::includes/autogen_user_options.de.adoc[tag=charset_options]
 
 [[exec_plugin]]
 === Exec

@@ -215,7 +215,7 @@ CMake に対するオプションを指定するには、以下の書式を使�
   <<buflist,Buflist プラグイン>>のコンパイル。
 
 | ENABLE_CHARSET | `ON`, `OFF` | ON |
-  <<charset_plugin,Charset プラグイン>>のコンパイル。
+  <<charset,Charset プラグイン>>のコンパイル。
 
 | ENABLE_MAN | `ON`, `OFF` | OFF |
   man ページのコンパイル。
@@ -2013,6 +2013,121 @@ WeeChat は画面に色が表示された時点で色ペアを動的に割り当
 /set weechat.color.status_time *99999
 ----
 
+[[charset]]
+=== Charset
+
+Charset プラグインを使うことで、文字コードに従ってデータのデコードとエンコードができます。
+
+デコード/エンコード用にデフォルトの文字コードが設定されていますが、それぞれのバッファ
+(バッファグループ) に対して個別に文字コードを設定することもできます。
+
+このプラグインの導入は任意ですが、導入を推奨します:
+このプラグインがロードされていない場合、WeeChat が読み書きできるデータは UTF-8 データのみになります。
+
+Charset プラグインは WeeChat
+によって自動的にロードされるべきです。プラグインがロードされていることを確認するには、以下のようにしてください:
+
+----
+/charset
+----
+
+コマンドが見つからない場合、以下のコマンドでプラグインをロードしてください:
+
+----
+/plugin load charset
+----
+
+プラグインが見つからない場合、文字コードサポートを有効化した状態で
+WeeChat を再コンパイルしてください。
+
+Charset プラグインがロードされた場合、端末文字コードと内部文字コードが表示されます。端末文字コードはロケールに依存し、内部文字コードは
+UTF-8 です。
+
+例:
+
+....
+charset: terminal: ISO-8859-15, internal: UTF-8
+....
+
+[[charset_set]]
+==== 文字コードの設定
+
+グローバルデコード文字コードとエンコード文字コードを設定するには、`/set` コマンドを使ってください。
+
+例:
+
+----
+/set charset.default.decode ISO-8859-15
+/set charset.default.encode ISO-8859-15
+----
+
+グローバルデコード文字コードが設定されていない場合 (例えば Charset
+プラグインを始めてロードした場合)、これは自動的に端末の文字コードか
+(UTF-8 でなければ)、デフォルトの _ISO-8859-1_ に設定されます。
+
+デフォルトのエンコード文字コードはありません。従って、内部文字コード
+(UTF-8) が使われます。
+
+IRC サーバの文字コードを設定するには、サーババッファで `/charset`
+コマンドを使ってください。文字コードのみを引数として与えた場合、この文字コードがデコードとエンコードに利用されます。
+
+例:
+
+----
+/charset ISO-8859-15
+----
+
+これは以下と等価です:
+
+----
+/charset decode ISO-8859-15
+/charset encode ISO-8859-15
+----
+
+IRC チャンネル (またはプライベートメッセージ) の文字コードを設定するには、サーバの文字コード設定と同様のコマンドをチャンネル
+(またはプライベートメッセージ) バッファで使ってください。
+
+IRC サーバの全てのチャンネルおよびプライベートバッファに対する文字コードを設定するには:
+
+----
+/set charset.encode.irc.libera ISO-8859-15
+----
+
+すべての文字コード設定を確認するには、以下のコマンドを利用してください:
+
+----
+/set charset.*
+----
+
+[[charset_troubleshooting]]
+==== トラブルシューティング
+
+文字コードに関する問題があれば、link:weechat_faq.ja.html#charset[WeeChat FAQ (よくある質問) / いくつかの文字が見えません。どうすれば良いですか。]を参照してください。
+
+[[charset_commands]]
+==== コマンド
+
+include::includes/autogen_user_commands.ja.adoc[tag=charset_commands]
+
+[[charset_options]]
+==== オプション
+
+_charset.conf_ ファイル内のセクション:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| セクション | 操作コマンド                                | 説明
+| default    | /set charset.default.*                      | デフォルトのデコード/エンコード文字セット
+| decode     | <<command_charset_charset,/charset decode>> +
+               /set charset.decode.*                       | バッファのデコード文字セット (オプションをセクションに追加/削除出来ます)
+| encode     | <<command_charset_charset,/charset encode>> +
+               /set charset.encode.*                       | バッファのエンコード文字セット (オプションをセクションに追加/削除出来ます)
+|===
+
+オプション:
+
+include::includes/autogen_user_options.ja.adoc[tag=charset_options]
+
 [[notify_levels]]
 === 通知レベル
 
@@ -2765,121 +2880,6 @@ When a plugin is unloaded, WeeChat removes:
 API を使ったプラグインやスクリプトの開発についてより詳しく学ぶには
 link:weechat_plugin_api.ja.html[WeeChat プラグイン API リファレンス]または
 link:weechat_scripting.ja.html[WeeChat スクリプト作成ガイド]を参照してください。
-
-[[charset_plugin]]
-=== Charset
-
-Charset プラグインを使うことで、文字コードに従ってデータのデコードとエンコードができます。
-
-デコード/エンコード用にデフォルトの文字コードが設定されていますが、それぞれのバッファ
-(バッファグループ) に対して個別に文字コードを設定することもできます。
-
-このプラグインの導入は任意ですが、導入を推奨します:
-このプラグインがロードされていない場合、WeeChat が読み書きできるデータは UTF-8 データのみになります。
-
-Charset プラグインは WeeChat
-によって自動的にロードされるべきです。プラグインがロードされていることを確認するには、以下のようにしてください:
-
-----
-/charset
-----
-
-コマンドが見つからない場合、以下のコマンドでプラグインをロードしてください:
-
-----
-/plugin load charset
-----
-
-プラグインが見つからない場合、文字コードサポートを有効化した状態で
-WeeChat を再コンパイルしてください。
-
-Charset プラグインがロードされた場合、端末文字コードと内部文字コードが表示されます。端末文字コードはロケールに依存し、内部文字コードは
-UTF-8 です。
-
-例:
-
-....
-charset: terminal: ISO-8859-15, internal: UTF-8
-....
-
-[[charset_set]]
-==== 文字コードの設定
-
-グローバルデコード文字コードとエンコード文字コードを設定するには、`/set` コマンドを使ってください。
-
-例:
-
-----
-/set charset.default.decode ISO-8859-15
-/set charset.default.encode ISO-8859-15
-----
-
-グローバルデコード文字コードが設定されていない場合 (例えば Charset
-プラグインを始めてロードした場合)、これは自動的に端末の文字コードか
-(UTF-8 でなければ)、デフォルトの _ISO-8859-1_ に設定されます。
-
-デフォルトのエンコード文字コードはありません。従って、内部文字コード
-(UTF-8) が使われます。
-
-IRC サーバの文字コードを設定するには、サーババッファで `/charset`
-コマンドを使ってください。文字コードのみを引数として与えた場合、この文字コードがデコードとエンコードに利用されます。
-
-例:
-
-----
-/charset ISO-8859-15
-----
-
-これは以下と等価です:
-
-----
-/charset decode ISO-8859-15
-/charset encode ISO-8859-15
-----
-
-IRC チャンネル (またはプライベートメッセージ) の文字コードを設定するには、サーバの文字コード設定と同様のコマンドをチャンネル
-(またはプライベートメッセージ) バッファで使ってください。
-
-IRC サーバの全てのチャンネルおよびプライベートバッファに対する文字コードを設定するには:
-
-----
-/set charset.encode.irc.libera ISO-8859-15
-----
-
-すべての文字コード設定を確認するには、以下のコマンドを利用してください:
-
-----
-/set charset.*
-----
-
-[[charset_troubleshooting]]
-==== トラブルシューティング
-
-文字コードに関する問題があれば、link:weechat_faq.ja.html#charset[WeeChat FAQ (よくある質問) / いくつかの文字が見えません。どうすれば良いですか。]を参照してください。
-
-[[charset_commands]]
-==== コマンド
-
-include::includes/autogen_user_commands.ja.adoc[tag=charset_commands]
-
-[[charset_options]]
-==== オプション
-
-_charset.conf_ ファイル内のセクション:
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| セクション | 操作コマンド                                | 説明
-| default    | /set charset.default.*                      | デフォルトのデコード/エンコード文字セット
-| decode     | <<command_charset_charset,/charset decode>> +
-               /set charset.decode.*                       | バッファのデコード文字セット (オプションをセクションに追加/削除出来ます)
-| encode     | <<command_charset_charset,/charset encode>> +
-               /set charset.encode.*                       | バッファのエンコード文字セット (オプションをセクションに追加/削除出来ます)
-|===
-
-オプション:
-
-include::includes/autogen_user_options.ja.adoc[tag=charset_options]
 
 [[exec_plugin]]
 === Exec

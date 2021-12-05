@@ -205,7 +205,7 @@ List of commonly used options:
   Compile <<buflist,Buflist plugin>>.
 
 | ENABLE_CHARSET | `ON`, `OFF` | ON |
-  Compile <<charset_plugin,Charset plugin>>.
+  Compile <<charset,Charset plugin>>.
 
 | ENABLE_MAN | `ON`, `OFF` | OFF |
   Build man page.
@@ -1908,6 +1908,122 @@ Example of bold with terminal foreground color:
 /set weechat.color.status_time *99999
 ----
 
+[[charset]]
+=== Charset
+
+Charset plugin lets you decode or encode data using charsets.
+
+There is default charset for decode/encode, and specific charsets for buffers
+(or group of buffers).
+
+This plugin is optional, but recommended: if it's not loaded, WeeChat
+can only read/write UTF-8 data.
+
+Charset plugin should be autoloaded by WeeChat. To be sure plugin is loaded,
+try:
+
+----
+/charset
+----
+
+If command is not found, then load plugin with command:
+
+----
+/plugin load charset
+----
+
+If plugin is not found, then you should compile again WeeChat with
+plugins and Charset support.
+
+When Charset plugin starts, it displays terminal and internal charsets.
+Terminal charset depends on your locale, and internal is UTF-8.
+
+For example:
+
+....
+charset: terminal: ISO-8859-15, internal: UTF-8
+....
+
+[[charset_set]]
+==== Set charset
+
+To set global decode and encode charsets, use command `/set`.
+
+For example:
+
+----
+/set charset.default.decode ISO-8859-15
+/set charset.default.encode ISO-8859-15
+----
+
+If global decode charset is not set (for example during first
+load of Charset plugin), it will be automatically set to terminal
+charset (if it's different from UTF-8), or by default to _ISO-8859-1_.
+
+Default encode value is empty, so it sends by default with
+internal charset (UTF-8).
+
+To set IRC server charset, use command `/charset` on server buffer.
+If you give only charset, then it will set decoding and encoding values.
+
+For example:
+
+----
+/charset ISO-8859-15
+----
+
+It's equivalent to:
+
+----
+/charset decode ISO-8859-15
+/charset encode ISO-8859-15
+----
+
+To set IRC channel (or private) charset, use same commands as server,
+but on channel (or private) buffer.
+
+To set charset for all channels/privates of an IRC server:
+
+----
+/set charset.encode.irc.libera ISO-8859-15
+----
+
+To see all charsets used, use following command:
+
+----
+/set charset.*
+----
+
+[[charset_troubleshooting]]
+==== Troubleshooting
+
+For any problem with charsets, please look at
+link:weechat_faq.en.html#charset[WeeChat FAQ / Charset].
+
+[[charset_commands]]
+==== Commands
+
+include::includes/autogen_user_commands.en.adoc[tag=charset_commands]
+
+[[charset_options]]
+==== Options
+
+Sections in file _charset.conf_:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section | Control command                             | Description
+| default | /set charset.default.*                      | Default decoding/encoding charset.
+| decode  | <<command_charset_charset,/charset decode>> +
+            /set charset.decode.*                       | Decoding charset by buffer (options can be added/removed in section).
+| encode  | <<command_charset_charset,/charset encode>> +
+            /set charset.encode.*                       | Encoding charset by buffer (options can be added/removed in section).
+|===
+
+Options:
+
+include::includes/autogen_user_options.en.adoc[tag=charset_options]
+
 [[notify_levels]]
 === Notify levels
 
@@ -2654,122 +2770,6 @@ Default plugins are:
 To learn more about plugin or script development (through API), please read the
 link:weechat_plugin_api.en.html[WeeChat plugin API reference] or the
 link:weechat_scripting.en.html[WeeChat scripting guide].
-
-[[charset_plugin]]
-=== Charset
-
-Charset plugin lets you decode or encode data using charsets.
-
-There is default charset for decode/encode, and specific charsets for buffers
-(or group of buffers).
-
-This plugin is optional, but recommended: if it's not loaded, WeeChat
-can only read/write UTF-8 data.
-
-Charset plugin should be autoloaded by WeeChat. To be sure plugin is loaded,
-try:
-
-----
-/charset
-----
-
-If command is not found, then load plugin with command:
-
-----
-/plugin load charset
-----
-
-If plugin is not found, then you should compile again WeeChat with
-plugins and Charset support.
-
-When Charset plugin starts, it displays terminal and internal charsets.
-Terminal charset depends on your locale, and internal is UTF-8.
-
-For example:
-
-....
-charset: terminal: ISO-8859-15, internal: UTF-8
-....
-
-[[charset_set]]
-==== Set charset
-
-To set global decode and encode charsets, use command `/set`.
-
-For example:
-
-----
-/set charset.default.decode ISO-8859-15
-/set charset.default.encode ISO-8859-15
-----
-
-If global decode charset is not set (for example during first
-load of Charset plugin), it will be automatically set to terminal
-charset (if it's different from UTF-8), or by default to _ISO-8859-1_.
-
-Default encode value is empty, so it sends by default with
-internal charset (UTF-8).
-
-To set IRC server charset, use command `/charset` on server buffer.
-If you give only charset, then it will set decoding and encoding values.
-
-For example:
-
-----
-/charset ISO-8859-15
-----
-
-It's equivalent to:
-
-----
-/charset decode ISO-8859-15
-/charset encode ISO-8859-15
-----
-
-To set IRC channel (or private) charset, use same commands as server,
-but on channel (or private) buffer.
-
-To set charset for all channels/privates of an IRC server:
-
-----
-/set charset.encode.irc.libera ISO-8859-15
-----
-
-To see all charsets used, use following command:
-
-----
-/set charset.*
-----
-
-[[charset_troubleshooting]]
-==== Troubleshooting
-
-For any problem with charsets, please look at
-link:weechat_faq.en.html#charset[WeeChat FAQ / Charset].
-
-[[charset_commands]]
-==== Commands
-
-include::includes/autogen_user_commands.en.adoc[tag=charset_commands]
-
-[[charset_options]]
-==== Options
-
-Sections in file _charset.conf_:
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Section | Control command                             | Description
-| default | /set charset.default.*                      | Default decoding/encoding charset.
-| decode  | <<command_charset_charset,/charset decode>> +
-            /set charset.decode.*                       | Decoding charset by buffer (options can be added/removed in section).
-| encode  | <<command_charset_charset,/charset encode>> +
-            /set charset.encode.*                       | Encoding charset by buffer (options can be added/removed in section).
-|===
-
-Options:
-
-include::includes/autogen_user_options.en.adoc[tag=charset_options]
 
 [[exec_plugin]]
 === Exec

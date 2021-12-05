@@ -211,7 +211,7 @@ Lista popularnych opcji:
   Kompilacja <<buflist,wtyczki buflist>>.
 
 | ENABLE_CHARSET | `ON`, `OFF` | ON |
-  Kompilacja <<charset_plugin,wtyczki charset>>.
+  Kompilacja <<charset,wtyczki charset>>.
 
 | ENABLE_MAN | `ON`, `OFF` | OFF |
   Generowanie strony manuala.
@@ -1948,6 +1948,124 @@ Przykład pogrubienia z domyślnym kolorem terminala:
 /set weechat.color.status_time *99999
 ----
 
+[[charset]]
+=== Charset
+
+Wtyczka charset pozwala na zmianę kodowania dla wysyłanych i otrzymywanych danych.
+
+Można zdefiniować domyślne kodowanie, oraz dla poszczególnych buforów (lub grup
+buforów).
+
+Ta wtyczka jest opcjonalna, jednak zalecana: jeśli nie jest załadowana WeeChat
+może odczytywać/zapisywać dane tylko w UTF-8.
+
+Ta wtyczka powinna zostać automatycznie załadowana przy uruchomieniu WeeChat.
+Aby się upewnić, że została załadowana, spróbuj:
+
+----
+/charset
+----
+
+Jeśli komenda nie zostanie znaleziona, załaduj tą wtyczkę za pomocą:
+
+----
+/plugin load charset
+----
+
+Jeśli wtyczka nie zostanie znaleziona, powinieneś skompilować ponownie WeeChat z
+wtyczkami i wsparciem dla charset.
+
+Kiedy wtyczka charset zostanie uruchomiona wyświetla kodowanie terminala i.
+wewnętrzne.
+Kodowanie terminala zależy od ustawień systemu, a wewnętrzne to UTF-8.
+
+Na przykład:
+
+....
+charset: terminal: ISO-8859-15, internal: UTF-8
+....
+
+[[charset_set]]
+==== Ustawianie kodowania
+
+Żeby ustawić globalne kodowanie dla wysyłanych i otrzymywanych danych należy
+użyć komendy `/set`.
+
+Na przykład:
+
+----
+/set charset.default.decode ISO-8859-15
+/set charset.default.encode ISO-8859-15
+----
+
+Jeżeli globalna wartość dla kodowania nie jest ustawiona (na przykład podczas
+pierwszego zaladowania wtyczki), zostanie automatycznie ustawione na kodowanie
+terminala (jeśli jest inne niż UTF-8), lub domyślnie na _ISO-8859-1_.
+
+Domyślnie kodowanie dla wysyłanych danych nie jest ustawione, dane domyślnie
+wysyłane są w kodowaniu wewnętrznym (UTF-8).
+
+W celu ustawienia kodowania dla serwera IRC, należy wywołać komendę `/charset`
+w buforze serwera.
+Jeśli zostanie podane tylko kodowanie, zostanie ono użyte dla wysyłania i odbioru.
+
+Na przykład:
+
+----
+/charset ISO-8859-15
+----
+
+Jest równoważne z:
+
+----
+/charset decode ISO-8859-15
+/charset encode ISO-8859-15
+----
+
+Aby ustawić kodowanie dla kanału (lub prywatnej rozmowy) należy wykonać to samo,
+co w przypadku serwera, tylko w buforze kanału (lub prywatnej rozmowy).
+
+Aby ustawić kodowanie dla wszystkich kanałów/rozmów prywatnych na danym serwerze:
+
+----
+/set charset.encode.irc.libera ISO-8859-15
+----
+
+W celu wyświetlenia wszystkich ustawionych kodowań, wykonaj:
+
+----
+/set charset.*
+----
+
+[[charset_troubleshooting]]
+==== Rozwiązywanie problemów
+
+W razie jakichś problemów z kodowaniem, zajrzyj do link:weechat_faq.pl.html#charset[WeeChat FAQ / Charset].
+
+[[charset_commands]]
+==== Komendy
+
+include::includes/autogen_user_commands.pl.adoc[tag=charset_commands]
+
+[[charset_options]]
+==== Opcje
+
+Sekcje w pliku _charset.conf_:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Sekcja  | Komenda                                     | Opis
+| default | /set charset.default.*                      | Domyślne kodowanie.
+| decode  | <<command_charset_charset,/charset decode>> +
+            /set charset.decode.*                       | Kodowanie dla wiadomości przychodzących w buforach (opcje w tej sekcji mogą być dodawane/usuwane).
+| encode  | <<command_charset_charset,/charset encode>> +
+            /set charset.encode.*                       | Kodowanie dla wiadomości wychodzących w buforach (opcje w tej sekcji mogą być dodawane/usuwane).
+|===
+
+Opcje:
+
+include::includes/autogen_user_options.pl.adoc[tag=charset_options]
+
 [[notify_levels]]
 === Poziomy powiadomień
 
@@ -2698,124 +2816,6 @@ Domyślne wtyczki:
 Więcej informacji o wtyczkach i tworzeniu skryptów (przez API), można znaleźć w
 link:weechat_plugin_api.en.html[Opisie API wtyczek] (Angielski) i
 link:weechat_scripting.pl.html[Poradniku pisania skryptów].
-
-[[charset_plugin]]
-=== Charset
-
-Wtyczka charset pozwala na zmianę kodowania dla wysyłanych i otrzymywanych danych.
-
-Można zdefiniować domyślne kodowanie, oraz dla poszczególnych buforów (lub grup
-buforów).
-
-Ta wtyczka jest opcjonalna, jednak zalecana: jeśli nie jest załadowana WeeChat
-może odczytywać/zapisywać dane tylko w UTF-8.
-
-Ta wtyczka powinna zostać automatycznie załadowana przy uruchomieniu WeeChat.
-Aby się upewnić, że została załadowana, spróbuj:
-
-----
-/charset
-----
-
-Jeśli komenda nie zostanie znaleziona, załaduj tą wtyczkę za pomocą:
-
-----
-/plugin load charset
-----
-
-Jeśli wtyczka nie zostanie znaleziona, powinieneś skompilować ponownie WeeChat z
-wtyczkami i wsparciem dla charset.
-
-Kiedy wtyczka charset zostanie uruchomiona wyświetla kodowanie terminala i.
-wewnętrzne.
-Kodowanie terminala zależy od ustawień systemu, a wewnętrzne to UTF-8.
-
-Na przykład:
-
-....
-charset: terminal: ISO-8859-15, internal: UTF-8
-....
-
-[[charset_set]]
-==== Ustawianie kodowania
-
-Żeby ustawić globalne kodowanie dla wysyłanych i otrzymywanych danych należy
-użyć komendy `/set`.
-
-Na przykład:
-
-----
-/set charset.default.decode ISO-8859-15
-/set charset.default.encode ISO-8859-15
-----
-
-Jeżeli globalna wartość dla kodowania nie jest ustawiona (na przykład podczas
-pierwszego zaladowania wtyczki), zostanie automatycznie ustawione na kodowanie
-terminala (jeśli jest inne niż UTF-8), lub domyślnie na _ISO-8859-1_.
-
-Domyślnie kodowanie dla wysyłanych danych nie jest ustawione, dane domyślnie
-wysyłane są w kodowaniu wewnętrznym (UTF-8).
-
-W celu ustawienia kodowania dla serwera IRC, należy wywołać komendę `/charset`
-w buforze serwera.
-Jeśli zostanie podane tylko kodowanie, zostanie ono użyte dla wysyłania i odbioru.
-
-Na przykład:
-
-----
-/charset ISO-8859-15
-----
-
-Jest równoważne z:
-
-----
-/charset decode ISO-8859-15
-/charset encode ISO-8859-15
-----
-
-Aby ustawić kodowanie dla kanału (lub prywatnej rozmowy) należy wykonać to samo,
-co w przypadku serwera, tylko w buforze kanału (lub prywatnej rozmowy).
-
-Aby ustawić kodowanie dla wszystkich kanałów/rozmów prywatnych na danym serwerze:
-
-----
-/set charset.encode.irc.libera ISO-8859-15
-----
-
-W celu wyświetlenia wszystkich ustawionych kodowań, wykonaj:
-
-----
-/set charset.*
-----
-
-[[charset_troubleshooting]]
-==== Rozwiązywanie problemów
-
-W razie jakichś problemów z kodowaniem, zajrzyj do link:weechat_faq.pl.html#charset[WeeChat FAQ / Charset].
-
-[[charset_commands]]
-==== Komendy
-
-include::includes/autogen_user_commands.pl.adoc[tag=charset_commands]
-
-[[charset_options]]
-==== Opcje
-
-Sekcje w pliku _charset.conf_:
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Sekcja  | Komenda                                     | Opis
-| default | /set charset.default.*                      | Domyślne kodowanie.
-| decode  | <<command_charset_charset,/charset decode>> +
-            /set charset.decode.*                       | Kodowanie dla wiadomości przychodzących w buforach (opcje w tej sekcji mogą być dodawane/usuwane).
-| encode  | <<command_charset_charset,/charset encode>> +
-            /set charset.encode.*                       | Kodowanie dla wiadomości wychodzących w buforach (opcje w tej sekcji mogą być dodawane/usuwane).
-|===
-
-Opcje:
-
-include::includes/autogen_user_options.pl.adoc[tag=charset_options]
 
 [[exec_plugin]]
 === Exec
