@@ -290,7 +290,7 @@ Lista popularnych opcji:
   Kompilacja <<trigger_plugin,wtyczki trigger>>.
 
 | ENABLE_TYPING | `ON`, `OFF` | ON |
-  Kompilacja <<typing_plugin,wtyczki typing>>.
+  Kompilacja <<typing_notifications,wtyczki typing>>.
 
 | ENABLE_XFER | `ON`, `OFF` | ON |
   Kompilacja <<xfer_plugin,wtyczki xfer>>.
@@ -3782,6 +3782,102 @@ Opcje:
 
 include::includes/autogen_user_options.pl.adoc[tag=irc_options]
 
+// TRANSLATION MISSING
+[[typing_notifications]]
+== Typing notifications
+
+Wtyczka typing jest używana do informowania innych że coś piszesz oraz
+pokazaniu listy osób piszących obecnie wiadomości w buforze.
+
+Jest używana przez wtyczkę IRC na kanałach i w prywatnych buforach, kiedy
+serwer posiada włączoną opcję "message-tags" (możesz to sprawdzić komendą
+<<command_irc_cap,/cap>>). +
+Pod spodem, używany jest tag klienta "typing" zgodnie z tą specyfikacją:
+https://ircv3.net/specs/client-tags/typing.html.
+
+[[typing_activation]]
+=== Aktywacja
+
+W trosce o prywatność, opcja ta jest domyślnie wyłączona. +
+Jeśli chcesz ją włączyć, musisz ustawić opcje zarówno we wtyczce typing
+jak i irc:
+
+----
+/set typing.look.enabled_nicks on
+/set typing.look.enabled_self on
+/set irc.look.typing_status_nicks on
+/set irc.look.typing_status_self on
+----
+
+Powiadomienia o pisaniu są wyświetlane na końcu pasku statusu.
+
+Przykład paska statusu z elementem "typing": "bob" pisze wiadomość, natomiast
+"alice" pisała coś ale zrobiła sobie przerwę:
+
+....
+│[12:55] [6] [irc/libera] 3:#test(+n){4} [Typing: bob, (alice)]                   │
+│[@Flashy] █                                                                      │
+└─────────────────────────────────────────────────────────────────────────────────┘
+....
+
+[[typing_signals_sent]]
+=== Wysyłane sygnały
+
+Kiedy piszesz wiadomość (ale nie polecenie zaczynające się od `/`) ta wtyczka
+wysyła sygnały informujące inne wtyczki (jak IRC) o tym że piszesz, te wtyczki
+mogą następnie wysłać informacje do innych użytkowników.
+
+Następujące sygnały są wysyłane, kiedy piszesz wiadomość:
+
+[width="100%",cols="1,1,5",options="header"]
+|===
+| Sygnał              | Argumenty        | Opis
+| typing_self_typing  | Wskaźnik: bufor. | Piszesz wiadomość.
+| typing_self_paused  | Wskaźnik: bufor. | Przestałeś pisać wiadomość.
+| typing_self_cleared | Wskaźnik: bufor. | Skasowałeś pisaną wiadomość z lini poleceń (bez wysłania).
+| typing_self_sent    | Wskaźnik: bufor. | Wysłałeś wiadomość do bufora.
+|===
+
+[[typing_signals_caught]]
+=== Przechwytywane sygnały
+
+Wtyczka typing przechwyytuje niektóre sygnały, które mogą być wysłane przez
+inne wtyczki (jak IRC) do aktualizacji wewnętrznych tablicy hashy używanych
+do przechowywania stanu nicków i buforów. Te tablice są używane do budowania
+zawartości elementu paska "typing".
+
+Następujące sygnały są przechwytywane przez wtyczke typing:
+
+[width="100%",cols="1,4,3",options="header"]
+|===
+| Sygnal | Argumenty | Opis
+
+| typing_set_nick |
+  Ciąg: wskaźnik bufora + ";" + stan (jeden z: "off", "typing", "paused",
+  "cleared") + ";" + nick. +
+  Przykład: "0x1234abcd;typing;alice". |
+  Ustawia stan pisania dla nicka w buforze.
+
+| typing_reset_buffer |
+  Wskaźnik: bufor. |
+  Usuwa status pisania dla nicków w buforze.
+|===
+
+[[typing_options]]
+=== Opcje
+
+Sekcje w pliku _typing.conf_:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Sekcja | Komenda            | Opis
+| look   | /set typing.look.* | Wygląd.
+|===
+
+Opcje:
+
+include::includes/autogen_user_options.pl.adoc[tag=typing_options]
+
 [[relay]]
 == Relay
 
@@ -5046,101 +5142,6 @@ Sekcje w pliku _trigger.conf_:
 Opcje:
 
 include::includes/autogen_user_options.pl.adoc[tag=trigger_options]
-
-[[typing_plugin]]
-=== Typing
-
-Wtyczka typing jest używana do informowania innych że coś piszesz oraz
-pokazaniu listy osób piszących obecnie wiadomości w buforze.
-
-Jest używana przez wtyczkę IRC na kanałach i w prywatnych buforach, kiedy
-serwer posiada włączoną opcję "message-tags" (możesz to sprawdzić komendą
-<<command_irc_cap,/cap>>). +
-Pod spodem, używany jest tag klienta "typing" zgodnie z tą specyfikacją:
-https://ircv3.net/specs/client-tags/typing.html.
-
-[[typing_activation]]
-==== Aktywacja
-
-W trosce o prywatność, opcja ta jest domyślnie wyłączona. +
-Jeśli chcesz ją włączyć, musisz ustawić opcje zarówno we wtyczce typing
-jak i irc:
-
-----
-/set typing.look.enabled_nicks on
-/set typing.look.enabled_self on
-/set irc.look.typing_status_nicks on
-/set irc.look.typing_status_self on
-----
-
-Powiadomienia o pisaniu są wyświetlane na końcu pasku statusu.
-
-Przykład paska statusu z elementem "typing": "bob" pisze wiadomość, natomiast
-"alice" pisała coś ale zrobiła sobie przerwę:
-
-....
-│[12:55] [6] [irc/libera] 3:#test(+n){4} [Typing: bob, (alice)]                   │
-│[@Flashy] █                                                                      │
-└─────────────────────────────────────────────────────────────────────────────────┘
-....
-
-[[typing_signals_sent]]
-==== Wysyłane sygnały
-
-Kiedy piszesz wiadomość (ale nie polecenie zaczynające się od `/`) ta wtyczka
-wysyła sygnały informujące inne wtyczki (jak IRC) o tym że piszesz, te wtyczki
-mogą następnie wysłać informacje do innych użytkowników.
-
-Następujące sygnały są wysyłane, kiedy piszesz wiadomość:
-
-[width="100%",cols="1,1,5",options="header"]
-|===
-| Sygnał              | Argumenty        | Opis
-| typing_self_typing  | Wskaźnik: bufor. | Piszesz wiadomość.
-| typing_self_paused  | Wskaźnik: bufor. | Przestałeś pisać wiadomość.
-| typing_self_cleared | Wskaźnik: bufor. | Skasowałeś pisaną wiadomość z lini poleceń (bez wysłania).
-| typing_self_sent    | Wskaźnik: bufor. | Wysłałeś wiadomość do bufora.
-|===
-
-[[typing_signals_caught]]
-==== Przechwytywane sygnały
-
-Wtyczka typing przechwyytuje niektóre sygnały, które mogą być wysłane przez
-inne wtyczki (jak IRC) do aktualizacji wewnętrznych tablicy hashy używanych
-do przechowywania stanu nicków i buforów. Te tablice są używane do budowania
-zawartości elementu paska "typing".
-
-Następujące sygnały są przechwytywane przez wtyczke typing:
-
-[width="100%",cols="1,4,3",options="header"]
-|===
-| Sygnal | Argumenty | Opis
-
-| typing_set_nick |
-  Ciąg: wskaźnik bufora + ";" + stan (jeden z: "off", "typing", "paused",
-  "cleared") + ";" + nick. +
-  Przykład: "0x1234abcd;typing;alice". |
-  Ustawia stan pisania dla nicka w buforze.
-
-| typing_reset_buffer |
-  Wskaźnik: bufor. |
-  Usuwa status pisania dla nicków w buforze.
-|===
-
-[[typing_options]]
-==== Opcje
-
-Sekcje w pliku _typing.conf_:
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Sekcja | Komenda            | Opis
-| look   | /set typing.look.* | Wygląd.
-|===
-
-Opcje:
-
-include::includes/autogen_user_options.pl.adoc[tag=typing_options]
 
 [[xfer_plugin]]
 === Xfer

@@ -292,7 +292,7 @@ Liste von häufig verwendeten Optionen:
   kompiliert <<trigger_plugin,Trigger Erweiterung>>.
 
 | ENABLE_TYPING | `ON`, `OFF` | ON |
-  kompiliert <<typing_plugin,Typing Erweiterung>>.
+  kompiliert <<typing_notifications,Typing Erweiterung>>.
 
 | ENABLE_XFER | `ON`, `OFF` | ON |
   kompiliert <<xfer_plugin,Xfer Erweiterung>>.
@@ -3831,6 +3831,105 @@ Optionen:
 
 include::includes/autogen_user_options.de.adoc[tag=irc_options]
 
+// TRANSLATION MISSING
+[[typing_notifications]]
+== Typing notifications
+
+Die typing-Erweitertung wird verwendet, um andere Benutzer darüber zu informieren,
+dass Sie Nachrichten schreiben, und zeigt eine Liste der Benutzer an, die derzeit
+eine Nachricht in dem Buffer eingeben.
+
+Es wird von der IRC-Erweiterung für Kanäle- und private Buffern verwendet, sofern
+die "message-tags"-Fähigkeit aktiviert ist (dies kann mit folgendenen Befehl,
+wie folgt überprüfen werden <<command_irc_cap,/cap>>). +
+
+Unter der Haube wird die Eingabe des Client-Tags gemäß dieser Spezifikation verwendet:
+https://ircv3.net/specs/client-tags/typing.html.
+
+[[typing_activation]]
+=== Aktivierung
+
+Aus Datenschutzgründen ist diese Tippfunktion standardmäßig deaktiviert. +
+Wenn Sie es verwenden möchten, müssen Sie Optionen sowohl in den typing- als
+auch für die IRC-Erweiterung aktivieren:
+
+----
+/set typing.look.enabled_nicks on
+/set typing.look.enabled_self on
+/set irc.look.typing_status_nicks on
+/set irc.look.typing_status_self on
+----
+
+Die Tippbenachrichtigungen werden am Ende der Statusleiste angezeigt.
+
+Beispiel für die Statusleiste mit dem "typing" Item: "bob" tippt gerade eine
+Nachricht und "alice" hat eine Nachricht getippt, machte aber eine Pause:
+
+....
+│[12:55] [6] [irc/libera] 3:#test(+n){4} [Typing: bob, (alice)]                   │
+│[@Flashy] █                                                                      │
+└─────────────────────────────────────────────────────────────────────────────────┘
+....
+
+[[typing_signals_sent]]
+=== Signale gesendet
+
+Wenn Sie eine Nachricht eingeben (Befehle, die mit `/` beginnen, werden ignoriert),
+sendet die typing-Erweitertung Signale, um andere Erweiterungen (wie z.B. IRC) darüber
+zu informieren, dass Sie eine Nachricht eingeben. Diese Erweiterungen können dann
+Tippbenachrichtigungen an andere Benutzer senden.
+
+Die folgenden Signale werden gesendet, wenn Sie eine Nachricht schreiben:
+
+[width="100%",cols="1,1,5",options="header"]
+|===
+| Signal              | Argumente        | Beschreibung
+| typing_self_typing  | Pointer: buffer. | Du schreibst eine Nachricht.
+| typing_self_paused  | Pointer: buffer. | Du machst beim Schrieben einer Nachricht, eine Pause.
+| typing_self_cleared | Pointer: buffer. | Du hast die Eingabezeile gelöscht, ohne die Nachricht zu senden.
+| typing_self_sent    | Pointer: buffer. | Du hast die Nachricht in den Buffer geschickt.
+|===
+
+[[typing_signals_caught]]
+=== Signale empfangen
+
+Die typing-Erweiterung fängt einige Signale ab, die von anderen Erweiterungen (wie IRC)
+gesendet werden können, um interne Hashtables zu aktualisieren, die verwendet werden,
+um den Schreibstatus von Nicks in Buffern zu sichern. Diese Hashtabellen werden verwendet,
+um den Inhalt des "typing"-Items zu erstellen.
+
+Die folgenden Signale werden von der typing-Erweiterung empfangen:
+
+[width="100%",cols="1,4,3",options="header"]
+|===
+| Signal | Argumente | Beschreibung
+
+| typing_set_nick |
+  Zeichenkette: Bufferpointer + ";" + Status (möglich: "off", "typing", "paused",
+  "cleared") + ";" + Nick. +
+  Beispiele: "0x1234abcd;typing;alice". |
+  Schreibstatus für einen Nick in einem Buffer festlegen.
+
+| typing_reset_buffer |
+  Pointer: Buffer. |
+  Schreibstatus für alle Nicks in einem Buffer entfernen.
+|===
+
+[[typing_options]]
+=== Optionen
+
+Sektionen in Datei _typing.conf_:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Sektion | Steuerbefehl       | Beschreibung
+| look    | /set typing.look.* | Erscheinungsbild.
+|===
+
+Optionen:
+
+include::includes/autogen_user_options.de.adoc[tag=typing_options]
+
 [[relay]]
 == Relay
 
@@ -5116,104 +5215,6 @@ Sektionen in Datei _trigger.conf_:
 Optionen:
 
 include::includes/autogen_user_options.de.adoc[tag=trigger_options]
-
-[[typing_plugin]]
-=== Schreibstatus
-
-Die typing-Erweitertung wird verwendet, um andere Benutzer darüber zu informieren,
-dass Sie Nachrichten schreiben, und zeigt eine Liste der Benutzer an, die derzeit
-eine Nachricht in dem Buffer eingeben.
-
-Es wird von der IRC-Erweiterung für Kanäle- und private Buffern verwendet, sofern
-die "message-tags"-Fähigkeit aktiviert ist (dies kann mit folgendenen Befehl,
-wie folgt überprüfen werden <<command_irc_cap,/cap>>). +
-
-Unter der Haube wird die Eingabe des Client-Tags gemäß dieser Spezifikation verwendet:
-https://ircv3.net/specs/client-tags/typing.html.
-
-[[typing_activation]]
-==== Aktivierung
-
-Aus Datenschutzgründen ist diese Tippfunktion standardmäßig deaktiviert. +
-Wenn Sie es verwenden möchten, müssen Sie Optionen sowohl in den typing- als
-auch für die IRC-Erweiterung aktivieren:
-
-----
-/set typing.look.enabled_nicks on
-/set typing.look.enabled_self on
-/set irc.look.typing_status_nicks on
-/set irc.look.typing_status_self on
-----
-
-Die Tippbenachrichtigungen werden am Ende der Statusleiste angezeigt.
-
-Beispiel für die Statusleiste mit dem "typing" Item: "bob" tippt gerade eine
-Nachricht und "alice" hat eine Nachricht getippt, machte aber eine Pause:
-
-....
-│[12:55] [6] [irc/libera] 3:#test(+n){4} [Typing: bob, (alice)]                   │
-│[@Flashy] █                                                                      │
-└─────────────────────────────────────────────────────────────────────────────────┘
-....
-
-[[typing_signals_sent]]
-==== Signale gesendet
-
-Wenn Sie eine Nachricht eingeben (Befehle, die mit `/` beginnen, werden ignoriert),
-sendet die typing-Erweitertung Signale, um andere Erweiterungen (wie z.B. IRC) darüber
-zu informieren, dass Sie eine Nachricht eingeben. Diese Erweiterungen können dann
-Tippbenachrichtigungen an andere Benutzer senden.
-
-Die folgenden Signale werden gesendet, wenn Sie eine Nachricht schreiben:
-
-[width="100%",cols="1,1,5",options="header"]
-|===
-| Signal              | Argumente        | Beschreibung
-| typing_self_typing  | Pointer: buffer. | Du schreibst eine Nachricht.
-| typing_self_paused  | Pointer: buffer. | Du machst beim Schrieben einer Nachricht, eine Pause.
-| typing_self_cleared | Pointer: buffer. | Du hast die Eingabezeile gelöscht, ohne die Nachricht zu senden.
-| typing_self_sent    | Pointer: buffer. | Du hast die Nachricht in den Buffer geschickt.
-|===
-
-[[typing_signals_caught]]
-==== Signale empfangen
-
-Die typing-Erweiterung fängt einige Signale ab, die von anderen Erweiterungen (wie IRC)
-gesendet werden können, um interne Hashtables zu aktualisieren, die verwendet werden,
-um den Schreibstatus von Nicks in Buffern zu sichern. Diese Hashtabellen werden verwendet,
-um den Inhalt des "typing"-Items zu erstellen.
-
-Die folgenden Signale werden von der typing-Erweiterung empfangen:
-
-[width="100%",cols="1,4,3",options="header"]
-|===
-| Signal | Argumente | Beschreibung
-
-| typing_set_nick |
-  Zeichenkette: Bufferpointer + ";" + Status (möglich: "off", "typing", "paused",
-  "cleared") + ";" + Nick. +
-  Beispiele: "0x1234abcd;typing;alice". |
-  Schreibstatus für einen Nick in einem Buffer festlegen.
-
-| typing_reset_buffer |
-  Pointer: Buffer. |
-  Schreibstatus für alle Nicks in einem Buffer entfernen.
-|===
-
-[[typing_options]]
-==== Optionen
-
-Sektionen in Datei _typing.conf_:
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Sektion | Steuerbefehl       | Beschreibung
-| look    | /set typing.look.* | Erscheinungsbild.
-|===
-
-Optionen:
-
-include::includes/autogen_user_options.de.adoc[tag=typing_options]
 
 [[xfer_plugin]]
 === Xfer

@@ -284,7 +284,7 @@ List of commonly used options:
   Compile <<trigger_plugin,Trigger plugin>>.
 
 | ENABLE_TYPING | `ON`, `OFF` | ON |
-  Compile <<typing_plugin,Typing plugin>>.
+  Compile <<typing_notifications,Typing plugin>>.
 
 | ENABLE_XFER | `ON`, `OFF` | ON |
   Compile <<xfer_plugin,Xfer plugin>>.
@@ -3721,6 +3721,99 @@ Options:
 
 include::includes/autogen_user_options.en.adoc[tag=irc_options]
 
+[[typing_notifications]]
+== Typing notifications
+
+The typing plugin is used to inform other users you are typing messages and
+show a list of users currently typing a message on the buffer.
+
+It is used by IRC plugin on channel and private buffers, when the "message-tags"
+capability is enabled (you can check with <<command_irc_cap,/cap>> command). +
+Under the hood, typing client tag is used, following this specification:
+https://ircv3.net/specs/client-tags/typing.html.
+
+[[typing_activation]]
+=== Activation
+
+For privacy considerations, the typing feature is disabled by default. +
+If you want to use it, you must enable options in both typing and irc plugins:
+
+----
+/set typing.look.enabled_nicks on
+/set typing.look.enabled_self on
+/set irc.look.typing_status_nicks on
+/set irc.look.typing_status_self on
+----
+
+The typing notifications are displayed at the end of the status bar.
+
+Example of status bar with the "typing" item: "bob" is typing a message and
+"alice" was typing a message but made a pause:
+
+....
+│[12:55] [6] [irc/libera] 3:#test(+n){4} [Typing: bob, (alice)]                   │
+│[@Flashy] █                                                                      │
+└─────────────────────────────────────────────────────────────────────────────────┘
+....
+
+[[typing_signals_sent]]
+=== Signals sent
+
+When you are typing a message (not a command starting with `/`), the typing
+plugin sends signals to inform other plugins (like IRC) that you are typing,
+and these plugins can then send typing notifications to other users.
+
+The following signals are sent when you are typing messages:
+
+[width="100%",cols="1,1,5",options="header"]
+|===
+| Signal              | Arguments        | Description
+| typing_self_typing  | Pointer: buffer. | You are typing a message.
+| typing_self_paused  | Pointer: buffer. | You made a pause while typing a message.
+| typing_self_cleared | Pointer: buffer. | You cleared the command line without sending the message.
+| typing_self_sent    | Pointer: buffer. | You sent the message to the buffer.
+|===
+
+[[typing_signals_caught]]
+=== Signals caught
+
+The typing plugin is catching some signals that can be sent by other plugins
+(like IRC), to update internal hashtables used to store the typing state of
+nicks on buffers. These hashtables are used to build the content of "typing"
+bar item.
+
+The following signals are caught by the typing plugin:
+
+[width="100%",cols="1,4,3",options="header"]
+|===
+| Signal | Arguments | Description
+
+| typing_set_nick |
+  String: buffer pointer + ";" + state (one of: "off", "typing", "paused",
+  "cleared") + ";" + nick. +
+  Example: "0x1234abcd;typing;alice". |
+  Set typing state for a nick on a buffer.
+
+| typing_reset_buffer |
+  Pointer: buffer. |
+  Remove typing state for all nicks on a buffer.
+|===
+
+[[typing_options]]
+=== Options
+
+Sections in file _typing.conf_:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section | Control command    | Description
+| look    | /set typing.look.* | Look and feel.
+|===
+
+Options:
+
+include::includes/autogen_user_options.en.adoc[tag=typing_options]
+
 [[relay]]
 == Relay
 
@@ -4981,99 +5074,6 @@ Sections in file _trigger.conf_:
 Options:
 
 include::includes/autogen_user_options.en.adoc[tag=trigger_options]
-
-[[typing_plugin]]
-=== Typing
-
-The typing plugin is used to inform other users you are typing messages and
-show a list of users currently typing a message on the buffer.
-
-It is used by IRC plugin on channel and private buffers, when the "message-tags"
-capability is enabled (you can check with <<command_irc_cap,/cap>> command). +
-Under the hood, typing client tag is used, following this specification:
-https://ircv3.net/specs/client-tags/typing.html.
-
-[[typing_activation]]
-==== Activation
-
-For privacy considerations, the typing feature is disabled by default. +
-If you want to use it, you must enable options in both typing and irc plugins:
-
-----
-/set typing.look.enabled_nicks on
-/set typing.look.enabled_self on
-/set irc.look.typing_status_nicks on
-/set irc.look.typing_status_self on
-----
-
-The typing notifications are displayed at the end of the status bar.
-
-Example of status bar with the "typing" item: "bob" is typing a message and
-"alice" was typing a message but made a pause:
-
-....
-│[12:55] [6] [irc/libera] 3:#test(+n){4} [Typing: bob, (alice)]                   │
-│[@Flashy] █                                                                      │
-└─────────────────────────────────────────────────────────────────────────────────┘
-....
-
-[[typing_signals_sent]]
-==== Signals sent
-
-When you are typing a message (not a command starting with `/`), the typing
-plugin sends signals to inform other plugins (like IRC) that you are typing,
-and these plugins can then send typing notifications to other users.
-
-The following signals are sent when you are typing messages:
-
-[width="100%",cols="1,1,5",options="header"]
-|===
-| Signal              | Arguments        | Description
-| typing_self_typing  | Pointer: buffer. | You are typing a message.
-| typing_self_paused  | Pointer: buffer. | You made a pause while typing a message.
-| typing_self_cleared | Pointer: buffer. | You cleared the command line without sending the message.
-| typing_self_sent    | Pointer: buffer. | You sent the message to the buffer.
-|===
-
-[[typing_signals_caught]]
-==== Signals caught
-
-The typing plugin is catching some signals that can be sent by other plugins
-(like IRC), to update internal hashtables used to store the typing state of
-nicks on buffers. These hashtables are used to build the content of "typing"
-bar item.
-
-The following signals are caught by the typing plugin:
-
-[width="100%",cols="1,4,3",options="header"]
-|===
-| Signal | Arguments | Description
-
-| typing_set_nick |
-  String: buffer pointer + ";" + state (one of: "off", "typing", "paused",
-  "cleared") + ";" + nick. +
-  Example: "0x1234abcd;typing;alice". |
-  Set typing state for a nick on a buffer.
-
-| typing_reset_buffer |
-  Pointer: buffer. |
-  Remove typing state for all nicks on a buffer.
-|===
-
-[[typing_options]]
-==== Options
-
-Sections in file _typing.conf_:
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Section | Control command    | Description
-| look    | /set typing.look.* | Look and feel.
-|===
-
-Options:
-
-include::includes/autogen_user_options.en.adoc[tag=typing_options]
 
 [[xfer_plugin]]
 === Xfer

@@ -289,7 +289,7 @@ Liste des options couramment utilisées :
   Compiler <<trigger_plugin,l'extension Trigger>>.
 
 | ENABLE_TYPING | `ON`, `OFF` | ON |
-  Compiler <<typing_plugin,l'extension Typing>>.
+  Compiler <<typing_notifications,l'extension Typing>>.
 
 | ENABLE_XFER | `ON`, `OFF` | ON |
   Compiler <<xfer_plugin,l'extension Xfer>>.
@@ -3839,6 +3839,105 @@ Options :
 
 include::includes/autogen_user_options.fr.adoc[tag=irc_options]
 
+[[typing_notifications]]
+== Notifications de saisie
+
+L'extension typing est utilisée pour informer les autres utilisateurs quand
+vous êtes en train d'écrire un message et afficher la liste des utilisateurs
+qui écrivent actuellement un message sur un tampon.
+
+Elle est utilisée par l'extension IRC sur les tampons de canaux et privés,
+lorsque la capacité "message-tags" est activée (vous pouvez vérifier avec la
+commande <<command_irc_cap,/cap>>). +
+Sous le capot, l'étiquette client typing est utilisée, en suivant cette
+spécification : https://ircv3.net/specs/client-tags/typing.html.
+
+[[typing_activation]]
+=== Activation
+
+Pour des considérations de confidentialité, la fonctionnalité typing est
+désactivée par défaut. +
+Si vous voulez l'utiliser, vous devez activer des options dans les extensions
+typing et irc :
+
+----
+/set typing.look.enabled_nicks on
+/set typing.look.enabled_self on
+/set irc.look.typing_status_nicks on
+/set irc.look.typing_status_self on
+----
+
+Les notifications "typing" sont affichées à la fin de la barre de statut.
+
+Exemple de barre de statut avec l'objet "typing" : "bob" écrit un message et
+"alice" était en train d'en écrire un mais a fait une pause :
+
+....
+│[12:55] [6] [irc/libera] 3:#test(+n){4} [Écrit : bob, (alice)]                   │
+│[@Flashy] █                                                                      │
+└─────────────────────────────────────────────────────────────────────────────────┘
+....
+
+[[typing_signals_sent]]
+=== Signaux envoyés
+
+Lorsque vous écrivez un message (pas une commande commençant par `/`), l'extension
+typing envoie des signaux pour informer les autres extensions (comme IRC) que
+vous êtes en train d'écrire, et ces extensions peuvent alors envoyer des
+notifications aux autres utilisateurs.
+
+Les signaux suivants sont envoyés quand vous écrivez des messages :
+
+[width="100%",cols="1,1,5",options="header"]
+|===
+| Signal              | Paramètres         | Description
+| typing_self_typing  | Pointeur : tampon. | Vous écrivez un message.
+| typing_self_paused  | Pointeur : tampon. | Vous avez fait une pause dans l'écriture d'un message.
+| typing_self_cleared | Pointeur : tampon. | Vous avez effacé la ligne de commande sans envoyée le message.
+| typing_self_sent    | Pointeur : tampon. | Vous avez envoyé le message au tampon.
+|===
+
+[[typing_signals_caught]]
+=== Signaux captés
+
+L'extension typing capte des signaux qui peuvent être envoyés par d'autres
+extensions (comme IRC), pour mettre à jour des tables de hachage internes
+qui sont utilisées pour sauvegarder l'état d'écriture de message des pseudos
+sur les tampons. Ces tables de hachages sont utilisées pour construire le
+contenu de l'objet de barre "typing".
+
+Les signaux suivants sont captés par l'extension typing :
+
+[width="100%",cols="1,4,3",options="header"]
+|===
+| Signal | Paramètres | Description
+
+| typing_set_nick |
+  Chaîne : pointeur tampon + ";" + état (un parmi ceux-ci : "off", "typing",
+  "paused", "cleared") + ";" + pseudo. +
+  Example: "0x1234abcd;typing;alice". |
+  Définir l'état de la saisie du pseudo sur le tampon.
+
+| typing_reset_buffer |
+  Pointeur : tampon. |
+  Supprimer l'état de saisir pour tous les pseudos d'un tampon.
+|===
+
+[[typing_options]]
+=== Options
+
+Sections dans le fichier _typing.conf_ :
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section | Commande de contrôle | Description
+| look    | /set typing.look.*   | Aspect/présentation.
+|===
+
+Options :
+
+include::includes/autogen_user_options.fr.adoc[tag=typing_options]
+
 [[relay]]
 == Relay
 
@@ -5152,105 +5251,6 @@ Sections dans le fichier _trigger.conf_ :
 Options :
 
 include::includes/autogen_user_options.fr.adoc[tag=trigger_options]
-
-[[typing_plugin]]
-=== Typing
-
-L'extension typing est utilisée pour informer les autres utilisateurs quand
-vous êtes en train d'écrire un message et afficher la liste des utilisateurs
-qui écrivent actuellement un message sur un tampon.
-
-Elle est utilisée par l'extension IRC sur les tampons de canaux et privés,
-lorsque la capacité "message-tags" est activée (vous pouvez vérifier avec la
-commande <<command_irc_cap,/cap>>). +
-Sous le capot, l'étiquette client typing est utilisée, en suivant cette
-spécification : https://ircv3.net/specs/client-tags/typing.html.
-
-[[typing_activation]]
-==== Activation
-
-Pour des considérations de confidentialité, la fonctionnalité typing est
-désactivée par défaut. +
-Si vous voulez l'utiliser, vous devez activer des options dans les extensions
-typing et irc :
-
-----
-/set typing.look.enabled_nicks on
-/set typing.look.enabled_self on
-/set irc.look.typing_status_nicks on
-/set irc.look.typing_status_self on
-----
-
-Les notifications "typing" sont affichées à la fin de la barre de statut.
-
-Exemple de barre de statut avec l'objet "typing" : "bob" écrit un message et
-"alice" était en train d'en écrire un mais a fait une pause :
-
-....
-│[12:55] [6] [irc/libera] 3:#test(+n){4} [Écrit : bob, (alice)]                   │
-│[@Flashy] █                                                                      │
-└─────────────────────────────────────────────────────────────────────────────────┘
-....
-
-[[typing_signals_sent]]
-==== Signaux envoyés
-
-Lorsque vous écrivez un message (pas une commande commençant par `/`), l'extension
-typing envoie des signaux pour informer les autres extensions (comme IRC) que
-vous êtes en train d'écrire, et ces extensions peuvent alors envoyer des
-notifications aux autres utilisateurs.
-
-Les signaux suivants sont envoyés quand vous écrivez des messages :
-
-[width="100%",cols="1,1,5",options="header"]
-|===
-| Signal              | Paramètres         | Description
-| typing_self_typing  | Pointeur : tampon. | Vous écrivez un message.
-| typing_self_paused  | Pointeur : tampon. | Vous avez fait une pause dans l'écriture d'un message.
-| typing_self_cleared | Pointeur : tampon. | Vous avez effacé la ligne de commande sans envoyée le message.
-| typing_self_sent    | Pointeur : tampon. | Vous avez envoyé le message au tampon.
-|===
-
-[[typing_signals_caught]]
-==== Signaux captés
-
-L'extension typing capte des signaux qui peuvent être envoyés par d'autres
-extensions (comme IRC), pour mettre à jour des tables de hachage internes
-qui sont utilisées pour sauvegarder l'état d'écriture de message des pseudos
-sur les tampons. Ces tables de hachages sont utilisées pour construire le
-contenu de l'objet de barre "typing".
-
-Les signaux suivants sont captés par l'extension typing :
-
-[width="100%",cols="1,4,3",options="header"]
-|===
-| Signal | Paramètres | Description
-
-| typing_set_nick |
-  Chaîne : pointeur tampon + ";" + état (un parmi ceux-ci : "off", "typing",
-  "paused", "cleared") + ";" + pseudo. +
-  Example: "0x1234abcd;typing;alice". |
-  Définir l'état de la saisie du pseudo sur le tampon.
-
-| typing_reset_buffer |
-  Pointeur : tampon. |
-  Supprimer l'état de saisir pour tous les pseudos d'un tampon.
-|===
-
-[[typing_options]]
-==== Options
-
-Sections dans le fichier _typing.conf_ :
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Section | Commande de contrôle | Description
-| look    | /set typing.look.*   | Aspect/présentation.
-|===
-
-Options :
-
-include::includes/autogen_user_options.fr.adoc[tag=typing_options]
 
 [[xfer_plugin]]
 === Xfer
