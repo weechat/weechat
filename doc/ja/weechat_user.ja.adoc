@@ -406,8 +406,8 @@ WeeChat がクラッシュした場合、または WeeChat
 * gdb のインストール
 
 // TRANSLATION MISSING
-[[build_debug]]
-==== Build with debug options
+[[debug_build]]
+==== Debug build
 
 CMake でコンパイルする場合:
 
@@ -416,8 +416,8 @@ $ cmake .. -DCMAKE_BUILD_TYPE=Debug
 ----
 
 // TRANSLATION MISSING
-[[build_debug_address_sanitizer]]
-==== Build with debug options and address sanitizer
+[[address_sanitizer]]
+==== Address sanitizer
 
 // TRANSLATION MISSING
 You can additionally enable the address sanitizer, which causes WeeChat to

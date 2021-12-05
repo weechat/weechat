@@ -372,8 +372,9 @@ $ git clone https://github.com/weechat/weechat.git
 * Укључите _core_ фајлове на свом систему.
 * Инсталирате gdb.
 
-[[build_debug]]
-==== Изградња са дибаг опцијама
+// TRANSLATION MISSING
+[[debug_build]]
+==== Debug build
 
 Ако компајлирате са CMake:
 
@@ -381,8 +382,9 @@ $ git clone https://github.com/weechat/weechat.git
 $ cmake .. -DCMAKE_BUILD_TYPE=Debug
 ----
 
-[[build_debug_address_sanitizer]]
-==== Изградња са дибаг опцијама и чистачем адресе
+// TRANSLATION MISSING
+[[address_sanitizer]]
+==== Address sanitizer
 
 Можете и да укључите чистач адресе, помоћу кога се програм WeeChat тренутно руши чим дође до неког проблема:
 

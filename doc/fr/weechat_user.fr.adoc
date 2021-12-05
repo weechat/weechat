@@ -401,8 +401,8 @@ futur de WeeChat, vous devez :
 * Activer les fichiers _core_ sur votre système.
 * Installer gdb.
 
-[[build_debug]]
-==== Construction avec options de debug
+[[debug_build]]
+==== Construction en debug
 
 Si vous compilez avec CMake :
 
@@ -410,8 +410,8 @@ Si vous compilez avec CMake :
 $ cmake .. -DCMAKE_BUILD_TYPE=Debug
 ----
 
-[[build_debug_address_sanitizer]]
-==== Construction avec options de debug et vérification des adresses
+[[address_sanitizer]]
+==== Vérification des adresses
 
 Vous pouvez aussi activer la vérification des adresses (« address sanitizer »),
 ce qui provoquera immédiatement un plantage de WeeChat en cas de problème :

@@ -393,8 +393,8 @@ you have to:
 * Enable _core_ files on your system.
 * Install gdb.
 
-[[build_debug]]
-==== Build with debug options
+[[debug_build]]
+==== Debug build
 
 If you're compiling with CMake:
 
@@ -402,8 +402,8 @@ If you're compiling with CMake:
 $ cmake .. -DCMAKE_BUILD_TYPE=Debug
 ----
 
-[[build_debug_address_sanitizer]]
-==== Build with debug options and address sanitizer
+[[address_sanitizer]]
+==== Address sanitizer
 
 You can additionally enable the address sanitizer, which causes WeeChat to
 crash immediately in case of problem:

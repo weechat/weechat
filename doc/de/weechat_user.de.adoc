@@ -400,8 +400,9 @@ Falls WeeChat abgestürzt sein sollte und Sie diesen Fehler melden möchten:
 * aktivieren Sie _core_ Dateien auf Ihrem System
 * installieren Sie gdb
 
-[[build_debug]]
-==== Mit Debug-Optionen erstellen
+// TRANSLATION MISSING
+[[debug_build]]
+==== Debug build
 
 Bei der Kompilierung mit CMake muss folgende Option gesetzt werden:
 
@@ -409,8 +410,8 @@ Bei der Kompilierung mit CMake muss folgende Option gesetzt werden:
 $ cmake .. -DCMAKE_BUILD_TYPE=Debug
 ----
 
-[[build_debug_address_sanitizer]]
-==== Erstellen mit Debug-Optionen und Address Sanitizer
+[[address_sanitizer]]
+==== Address Sanitizer
 
 Sie können zusätzlich den Adress-Sanitizer aktivieren, der bei Problemen sofort
 zum Absturz von WeeChat führt:

@@ -399,8 +399,9 @@ Jeśli doświadczyłeś awarii, lub chcesz zgłosić przyszłą awarię WeeChat,
 * włączyć obsługę plików _core_ w systemie
 * zainstalować gdb
 
-[[build_debug]]
-==== Kompilowanie z informacjami dla debuggera
+// TRANSLATION MISSING
+[[debug_build]]
+==== Debug build
 
 Jeśli kompilujesz z użyciem CMake:
 
@@ -408,8 +409,9 @@ Jeśli kompilujesz z użyciem CMake:
 $ cmake .. -DCMAKE_BUILD_TYPE=Debug
 ----
 
-[[build_debug_address_sanitizer]]
-==== Kompilowanie z weryfikowaniem adresów
+// TRANSLATION MISSING
+[[address_sanitizer]]
+==== Address sanitizer
 
 Możesz dodatowo włączyć weryfikację adresów, co spowoduje natychmiastową awarię
 WeeChat w przypadku wystąpienia problemu:
