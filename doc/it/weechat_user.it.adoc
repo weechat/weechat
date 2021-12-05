@@ -237,7 +237,7 @@ List of commonly used options:
   config, data, cache, runtime.
 
 | ENABLE_ALIAS | `ON`, `OFF` | ON |
-  Compile <<alias_plugin,Alias plugin>>.
+  Compile <<command_aliases,Alias plugin>>.
 
 | ENABLE_BUFLIST | `ON`, `OFF` | ON |
   Compile <<buflist_plugin,Buflist plugin>>.
@@ -2664,6 +2664,44 @@ To use the _libera_ password, for example with
 ----
 
 // TRANSLATION MISSING
+[[command_aliases]]
+=== Command aliases
+
+Il plugin Alias consente di creare alias per i comandi (da WeeChat o altri
+plugin).
+
+// TRANSLATION MISSING
+Some aliases are created by default, with name in upper case (to make them
+different from standard commands); commands are not case sensitive in WeeChat,
+so for example `/close` runs the alias `/CLOSE`.
+
+// TRANSLATION MISSING
+List of default aliases:
+
+include::includes/autogen_user_default_aliases.it.adoc[tag=default_aliases]
+
+[[alias_commands]]
+==== Comandi
+
+include::includes/autogen_user_commands.it.adoc[tag=alias_commands]
+
+[[alias_options]]
+==== Options
+
+// TRANSLATION MISSING
+Sections in file _alias.conf_:
+
+// TRANSLATION MISSING
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section    | Control command                | Description
+| cmd        | <<command_alias_alias,/alias>> +
+               /set alias.cmd.*               | Commands for aliases.
+| completion | <<command_alias_alias,/alias>> +
+               /set alias.completion.*        | Completions for aliases.
+|===
+
+// TRANSLATION MISSING
 [[commands_and_options]]
 === Commands and options
 
@@ -2807,43 +2845,6 @@ I plugin predefiniti sono:
 Per saperne di più riguardo lo sviluppo di plugin o script (tramite le API), per
 favore consultare link:weechat_plugin_api.it.html[Riferimento API dei Plugin per WeeChat]
 oppure link:weechat_scripting.it.html[Guida allo Scripting di WeeChat].
-
-[[alias_plugin]]
-=== Alias
-
-Il plugin Alias consente di creare alias per i comandi (da WeeChat o altri
-plugin).
-
-// TRANSLATION MISSING
-Some aliases are created by default, with name in upper case (to make them
-different from standard commands); commands are not case sensitive in WeeChat,
-so for example `/close` runs the alias `/CLOSE`.
-
-// TRANSLATION MISSING
-List of default aliases:
-
-include::includes/autogen_user_default_aliases.it.adoc[tag=default_aliases]
-
-[[alias_commands]]
-==== Comandi
-
-include::includes/autogen_user_commands.it.adoc[tag=alias_commands]
-
-[[alias_options]]
-==== Options
-
-// TRANSLATION MISSING
-Sections in file _alias.conf_:
-
-// TRANSLATION MISSING
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Section    | Control command                | Description
-| cmd        | <<command_alias_alias,/alias>> +
-               /set alias.cmd.*               | Commands for aliases.
-| completion | <<command_alias_alias,/alias>> +
-               /set alias.completion.*        | Completions for aliases.
-|===
 
 [[buflist_plugin]]
 === Buflist

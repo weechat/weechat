@@ -209,7 +209,7 @@ CMake に対するオプションを指定するには、以下の書式を使�
   config, data, cache, runtime.
 
 | ENABLE_ALIAS | `ON`, `OFF` | ON |
-  <<alias_plugin,Alias プラグイン>>のコンパイル。
+  <<command_aliases,Alias プラグイン>>のコンパイル。
 
 | ENABLE_BUFLIST | `ON`, `OFF` | ON |
   <<buflist_plugin,Buflist プラグイン>>のコンパイル。
@@ -2569,6 +2569,41 @@ IRC サーバのパスワードを設定する例:
 /set irc.server.libera.sasl_password "${sec.data.libera}"
 ----
 
+// TRANSLATION MISSING
+[[command_aliases]]
+=== Command aliases
+
+Alias プラグインを使うことで、コマンドの別名を定義できます (WeeChat
+だけでなく他のプラグインが提供するコマンドの別名を定義することもできます)。
+
+大文字の別名はデフォルトで定義されたものです (標準コマンドと区別するために大文字を使っています);
+WeeChat はコマンドの大文字小文字を区別しないので、コマンド
+`/close` は別名である `/CLOSE` を実行します。
+
+
+デフォルトで定義された別名のリスト:
+
+include::includes/autogen_user_default_aliases.ja.adoc[tag=default_aliases]
+
+[[alias_commands]]
+==== コマンド
+
+include::includes/autogen_user_commands.ja.adoc[tag=alias_commands]
+
+[[alias_options]]
+==== オプション
+
+_alias.conf_ ファイル内のセクション:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| セクション | 操作コマンド                   | 説明
+| cmd        | <<command_alias_alias,/alias>> +
+               /set alias.cmd.*               | 別名に割り当てたコマンド
+| completion | <<command_alias_alias,/alias>> +
+               /set alias.completion.*        | 別名に割り当てた補完
+|===
+
 [[commands_and_options]]
 === コマンドとオプション
 
@@ -2701,40 +2736,6 @@ When a plugin is unloaded, WeeChat removes:
 API を使ったプラグインやスクリプトの開発についてより詳しく学ぶには
 link:weechat_plugin_api.ja.html[WeeChat プラグイン API リファレンス]または
 link:weechat_scripting.ja.html[WeeChat スクリプト作成ガイド]を参照してください。
-
-[[alias_plugin]]
-=== Alias
-
-Alias プラグインを使うことで、コマンドの別名を定義できます (WeeChat
-だけでなく他のプラグインが提供するコマンドの別名を定義することもできます)。
-
-大文字の別名はデフォルトで定義されたものです (標準コマンドと区別するために大文字を使っています);
-WeeChat はコマンドの大文字小文字を区別しないので、コマンド
-`/close` は別名である `/CLOSE` を実行します。
-
-
-デフォルトで定義された別名のリスト:
-
-include::includes/autogen_user_default_aliases.ja.adoc[tag=default_aliases]
-
-[[alias_commands]]
-==== コマンド
-
-include::includes/autogen_user_commands.ja.adoc[tag=alias_commands]
-
-[[alias_options]]
-==== オプション
-
-_alias.conf_ ファイル内のセクション:
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| セクション | 操作コマンド                   | 説明
-| cmd        | <<command_alias_alias,/alias>> +
-               /set alias.cmd.*               | 別名に割り当てたコマンド
-| completion | <<command_alias_alias,/alias>> +
-               /set alias.completion.*        | 別名に割り当てた補完
-|===
 
 [[buflist_plugin]]
 === Buflist

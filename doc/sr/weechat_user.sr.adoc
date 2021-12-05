@@ -183,7 +183,7 @@ $ make install
   config, data, cache, runtime.
 
 | ENABLE_ALIAS | `ON`, `OFF` | ON |
-  Компајлира <<alias_plugin,Alias додатак>>.
+  Компајлира <<command_aliases,Alias додатак>>.
 
 | ENABLE_BUFLIST | `ON`, `OFF` | ON |
   Компајлира <<buflist_plugin,Buflist додатак>>.
@@ -2321,6 +2321,37 @@ libera = "53B1C86FCDA28FC122A95B0456ABD79B5AB74654F21C3D099A6CCA8173239EEA59533A
 /set irc.server.libera.sasl_password "${sec.data.libera}"
 ----
 
+// TRANSLATION MISSING
+[[command_aliases]]
+=== Command aliases
+
+Алијас додатак вам омогућава да креирате алијасе за команде (из програма WeeChat или осталих додатака).
+
+Неки алијаси се подразумевано креирају, са именом исписаним великим словима (како би се разликовали од обичних команди); у програму WeeChat команде не разликују величину слова, тако да на пример, `/close` покреће алијас `/CLOSE`.
+
+Листа подразумеваних алијаса:
+
+include::includes/autogen_user_default_aliases.sr.adoc[tag=default_aliases]
+
+[[alias_commands]]
+==== Команде
+
+include::includes/autogen_user_commands.sr.adoc[tag=alias_commands]
+
+[[alias_options]]
+==== Опције
+
+Одељци у фајлу _alias.conf_:
+
+[width="100%", cols="3m,6m,16", options="header"]
+|===
+| Одељак     | Команда за контролу            | Опис
+| cmd        | <<command_alias_alias,/alias>> +
+               /set alias.cmd.*               | Команде за алијасе.
+| completion | <<command_alias_alias,/alias>> +
+               /set alias.completion.*        | Довршавања за алијасе.
+|===
+
 [[commands_and_options]]
 === Команде и опције
 
@@ -2440,36 +2471,6 @@ include::includes/autogen_user_options.sr.adoc[tag=weechat_options]
 |===
 
 За више информација о развоју додатака или скрипти (помоћу API), молимо вас да прочитате link:weechat_plugin_api.sr.html[WeeChat референтно упутство за API додатака] или link:weechat_scripting.sr.html[WeeChat водич за скриптовање].
-
-[[alias_plugin]]
-=== Алијас
-
-Алијас додатак вам омогућава да креирате алијасе за команде (из програма WeeChat или осталих додатака).
-
-Неки алијаси се подразумевано креирају, са именом исписаним великим словима (како би се разликовали од обичних команди); у програму WeeChat команде не разликују величину слова, тако да на пример, `/close` покреће алијас `/CLOSE`.
-
-Листа подразумеваних алијаса:
-
-include::includes/autogen_user_default_aliases.sr.adoc[tag=default_aliases]
-
-[[alias_commands]]
-==== Команде
-
-include::includes/autogen_user_commands.sr.adoc[tag=alias_commands]
-
-[[alias_options]]
-==== Опције
-
-Одељци у фајлу _alias.conf_:
-
-[width="100%", cols="3m,6m,16", options="header"]
-|===
-| Одељак     | Команда за контролу            | Опис
-| cmd        | <<command_alias_alias,/alias>> +
-               /set alias.cmd.*               | Команде за алијасе.
-| completion | <<command_alias_alias,/alias>> +
-               /set alias.completion.*        | Довршавања за алијасе.
-|===
 
 [[buflist_plugin]]
 === Buflist

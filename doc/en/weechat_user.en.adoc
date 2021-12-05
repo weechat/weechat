@@ -199,7 +199,7 @@ List of commonly used options:
   config, data, cache, runtime.
 
 | ENABLE_ALIAS | `ON`, `OFF` | ON |
-  Compile <<alias_plugin,Alias plugin>>.
+  Compile <<command_aliases,Alias plugin>>.
 
 | ENABLE_BUFLIST | `ON`, `OFF` | ON |
   Compile <<buflist_plugin,Buflist plugin>>.
@@ -2465,6 +2465,39 @@ To use the _libera_ password, for example with
 /set irc.server.libera.sasl_password "${sec.data.libera}"
 ----
 
+[[command_aliases]]
+=== Command aliases
+
+Alias plugin lets you create alias for commands (from WeeChat or other
+plugins).
+
+Some aliases are created by default, with name in upper case (to make them
+different from standard commands); commands are not case sensitive in WeeChat,
+so for example `/close` runs the alias `/CLOSE`.
+
+List of default aliases:
+
+include::includes/autogen_user_default_aliases.en.adoc[tag=default_aliases]
+
+[[alias_commands]]
+==== Commands
+
+include::includes/autogen_user_commands.en.adoc[tag=alias_commands]
+
+[[alias_options]]
+==== Options
+
+Sections in file _alias.conf_:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section    | Control command                | Description
+| cmd        | <<command_alias_alias,/alias>> +
+               /set alias.cmd.*               | Commands for aliases.
+| completion | <<command_alias_alias,/alias>> +
+               /set alias.completion.*        | Completions for aliases.
+|===
+
 [[commands_and_options]]
 === Commands and options
 
@@ -2593,39 +2626,6 @@ Default plugins are:
 To learn more about plugin or script development (through API), please read the
 link:weechat_plugin_api.en.html[WeeChat plugin API reference] or the
 link:weechat_scripting.en.html[WeeChat scripting guide].
-
-[[alias_plugin]]
-=== Alias
-
-Alias plugin lets you create alias for commands (from WeeChat or other
-plugins).
-
-Some aliases are created by default, with name in upper case (to make them
-different from standard commands); commands are not case sensitive in WeeChat,
-so for example `/close` runs the alias `/CLOSE`.
-
-List of default aliases:
-
-include::includes/autogen_user_default_aliases.en.adoc[tag=default_aliases]
-
-[[alias_commands]]
-==== Commands
-
-include::includes/autogen_user_commands.en.adoc[tag=alias_commands]
-
-[[alias_options]]
-==== Options
-
-Sections in file _alias.conf_:
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Section    | Control command                | Description
-| cmd        | <<command_alias_alias,/alias>> +
-               /set alias.cmd.*               | Commands for aliases.
-| completion | <<command_alias_alias,/alias>> +
-               /set alias.completion.*        | Completions for aliases.
-|===
 
 [[buflist_plugin]]
 === Buflist

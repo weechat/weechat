@@ -203,7 +203,7 @@ Liste des options couramment utilisées :
   config, data, cache, runtime.
 
 | ENABLE_ALIAS | `ON`, `OFF` | ON |
-  Compiler <<alias_plugin,l'extension Alias>>.
+  Compiler <<command_aliases,l'extension Alias>>.
 
 | ENABLE_BUFLIST | `ON`, `OFF` | ON |
   Compiler <<buflist_plugin,l'extension Buflist>>.
@@ -2551,6 +2551,39 @@ Pour utiliser le mot de passe _libera_, par exemple avec
 /set irc.server.libera.sasl_password "${sec.data.libera}"
 ----
 
+[[command_aliases]]
+=== Alias de commandes
+
+L'extension Alias permet de définir des alias pour des commandes (WeeChat ou
+d'autres extensions).
+
+Des alias sont créés par défaut, avec le nom en lettres majuscules (pour les
+différencier des commandes standard) ; les commandes ne sont pas sensibles à la
+casse dans WeeChat, donc par exemple `/close` lance l'alias `/CLOSE`.
+
+Liste des alias par défaut :
+
+include::includes/autogen_user_default_aliases.fr.adoc[tag=default_aliases]
+
+[[alias_commands]]
+==== Commandes
+
+include::includes/autogen_user_commands.fr.adoc[tag=alias_commands]
+
+[[alias_options]]
+==== Options
+
+Sections dans le fichier _alias.conf_ :
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section    | Commande de contrôle           | Description
+| cmd        | <<command_alias_alias,/alias>> +
+               /set alias.cmd.*               | Commandes pour les alias.
+| completion | <<command_alias_alias,/alias>> +
+               /set alias.completion.*        | Complétions pour les alias.
+|===
+
 [[commands_and_options]]
 === Commandes et options
 
@@ -2681,39 +2714,6 @@ Pour en apprendre plus sur le développement d'extension ou de script (via
 l'API), merci de consulter la
 link:weechat_plugin_api.fr.html[Référence API extension WeeChat] ou le
 link:weechat_scripting.fr.html[Guide pour scripts WeeChat].
-
-[[alias_plugin]]
-=== Alias
-
-L'extension Alias permet de définir des alias pour des commandes (WeeChat ou
-d'autres extensions).
-
-Des alias sont créés par défaut, avec le nom en lettres majuscules (pour les
-différencier des commandes standard) ; les commandes ne sont pas sensibles à la
-casse dans WeeChat, donc par exemple `/close` lance l'alias `/CLOSE`.
-
-Liste des alias par défaut :
-
-include::includes/autogen_user_default_aliases.fr.adoc[tag=default_aliases]
-
-[[alias_commands]]
-==== Commandes
-
-include::includes/autogen_user_commands.fr.adoc[tag=alias_commands]
-
-[[alias_options]]
-==== Options
-
-Sections dans le fichier _alias.conf_ :
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Section    | Commande de contrôle           | Description
-| cmd        | <<command_alias_alias,/alias>> +
-               /set alias.cmd.*               | Commandes pour les alias.
-| completion | <<command_alias_alias,/alias>> +
-               /set alias.completion.*        | Complétions pour les alias.
-|===
 
 [[buflist_plugin]]
 === Buflist

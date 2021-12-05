@@ -205,7 +205,7 @@ Lista popularnych opcji:
   kolejności: config, data, cache, runtime.
 
 | ENABLE_ALIAS | `ON`, `OFF` | ON |
-  Kompilacja <<alias_plugin,wtyczki alias>>.
+  Kompilacja <<command_aliases,wtyczki alias>>.
 
 | ENABLE_BUFLIST | `ON`, `OFF` | ON |
   Kompilacja <<buflist_plugin,wtyczki buflist>>.
@@ -2508,6 +2508,39 @@ W celu użycia hasła _libera_, na przykład z
 /set irc.server.libera.sasl_password "${sec.data.libera}"
 ----
 
+// TRANSLATION MISSING
+[[command_aliases]]
+=== Command aliases
+
+Wtyczka alias pozwala tworzyć aliasy dla komend (z WeeChat lub innych wtyczek).
+
+Niektóre aliasy tworzone są domyślnie z nazwami pisanymi wielkimi literami
+(żeby można było je odróżnić od standardowch poleceń); komendy w WeeChat nie
+rozróżniają wielkości znaków dlatego na przykład `/close` wywoła alias `/CLOSE`.
+
+Lista domyślnych aliasów:
+
+include::includes/autogen_user_default_aliases.pl.adoc[tag=default_aliases]
+
+[[alias_commands]]
+==== Komendy
+
+include::includes/autogen_user_commands.pl.adoc[tag=alias_commands]
+
+[[alias_options]]
+==== Options
+
+Ssekcje w pliku _alias.conf_:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Sekcja     | Komenda                        | Opis
+| cmd        | <<command_alias_alias,/alias>> +
+               /set alias.cmd.*               | Commands for aliases.
+| completion | <<command_alias_alias,/alias>> +
+               /set alias.completion.*        | Completions for aliases.
+|===
+
 [[commands_and_options]]
 === Komendy i opcje
 
@@ -2636,38 +2669,6 @@ Domyślne wtyczki:
 Więcej informacji o wtyczkach i tworzeniu skryptów (przez API), można znaleźć w
 link:weechat_plugin_api.en.html[Opisie API wtyczek] (Angielski) i
 link:weechat_scripting.pl.html[Poradniku pisania skryptów].
-
-[[alias_plugin]]
-=== Alias
-
-Wtyczka alias pozwala tworzyć aliasy dla komend (z WeeChat lub innych wtyczek).
-
-Niektóre aliasy tworzone są domyślnie z nazwami pisanymi wielkimi literami
-(żeby można było je odróżnić od standardowch poleceń); komendy w WeeChat nie
-rozróżniają wielkości znaków dlatego na przykład `/close` wywoła alias `/CLOSE`.
-
-Lista domyślnych aliasów:
-
-include::includes/autogen_user_default_aliases.pl.adoc[tag=default_aliases]
-
-[[alias_commands]]
-==== Komendy
-
-include::includes/autogen_user_commands.pl.adoc[tag=alias_commands]
-
-[[alias_options]]
-==== Options
-
-Ssekcje w pliku _alias.conf_:
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Sekcja     | Komenda                        | Opis
-| cmd        | <<command_alias_alias,/alias>> +
-               /set alias.cmd.*               | Commands for aliases.
-| completion | <<command_alias_alias,/alias>> +
-               /set alias.completion.*        | Completions for aliases.
-|===
 
 [[buflist_plugin]]
 === Buflist
