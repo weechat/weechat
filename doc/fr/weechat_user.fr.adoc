@@ -2126,7 +2126,7 @@ link:weechat_faq.fr.html#mouse[FAQ WeeChat / Souris].
 ==== Associer des évènements souris à des commandes
 
 De nombreux évènements souris sont déjà définis par WeeChat (voir
-<<key_bindings_mouse_context,les touches pour le contexte "mouse">>).
+<<key_bindings_mouse,les actions souris>>).
 
 Vous pouvez modifier ou ajouter des associations avec la commande `/key` en
 utilisant le contexte "mouse" (pour la syntaxe voir la commande

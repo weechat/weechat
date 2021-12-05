@@ -1954,7 +1954,8 @@ These mouse actions are possible only if mouse is enabled with key kbd:[Alt+m]
 [[mouse_bind_events]]
 ==== Везивање догађаја миша за команде
 
-Програм WeeChat је већ дефинисао подразумеване догађаје миша (погледајте <<key_bindings_mouse_context,тастере за „mouse” контекст>>).
+// TRANSLATION MISSING
+Програм WeeChat је већ дефинисао подразумеване догађаје миша (погледајте <<key_bindings_mouse,mouse actions>>).
 
 Командом `/key`, уз употребу контекста „mouse”, можете да измените или да додате нова везивања тастера (у вези синтаксе, погледајте команду <<command_weechat_key,/key>>).
 

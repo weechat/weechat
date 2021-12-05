@@ -2064,7 +2064,7 @@ link:weechat_faq.en.html#mouse[WeeChat FAQ / Mouse].
 ==== Bind mouse events to commands
 
 Many default mouse events are already defined by WeeChat (see
-<<key_bindings_mouse_context,keys for "mouse" context>>).
+<<key_bindings_mouse,mouse actions>>).
 
 You can change or add bindings with the command `/key` using context "mouse"
 (for syntax, see command <<command_weechat_key,/key>>).

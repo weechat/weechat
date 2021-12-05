@@ -2163,8 +2163,9 @@ WeeChat でマウスを有効化した場合、すべてのマウスイベント
 [[mouse_bind_events]]
 ==== コマンドに対してマウスイベントを割り当てる
 
+// TRANSLATION MISSING
 WeeChat はデフォルトマウスイベントの多くを定義しています
-(<<key_bindings_mouse_context,「マウス」モード用のキー>>を参照)。
+(<<key_bindings_mouse,mouse actions>>を参照)。
 
 `/key` コマンドで "mouse" コンテキストを指定することで割り当てを追加、変更できます
 (詳しい使い方は <<command_weechat_key,/key>> コマンドを参照)。
