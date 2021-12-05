@@ -230,13 +230,13 @@ Liste des options couramment utilisées :
   Compiler <<fset,l'extension Fset>>.
 
 | ENABLE_GUILE | `ON`, `OFF` | ON |
-  Compiler <<scripts_plugins,l'extension Guile>> (Scheme).
+  Compiler <<scripting_plugins,l'extension Guile>> (Scheme).
 
 | ENABLE_IRC | `ON`, `OFF` | ON |
   Compiler <<irc,l'extension IRC>>.
 
 | ENABLE_JAVASCRIPT | `ON`, `OFF` | OFF |
-  Compiler <<scripts_plugins,l'extension JavaScript>>.
+  Compiler <<scripting_plugins,l'extension JavaScript>>.
 
 | ENABLE_LARGEFILE | `ON`, `OFF` | ON |
   Support des gros fichiers.
@@ -245,7 +245,7 @@ Liste des options couramment utilisées :
   Compiler <<buffer_logging,l'extension Logger>>.
 
 | ENABLE_LUA | `ON`, `OFF` | ON |
-  Compiler <<scripts_plugins,l'extension Lua>>.
+  Compiler <<scripting_plugins,l'extension Lua>>.
 
 | ENABLE_NCURSES | `ON`, `OFF` | ON |
   Compiler l'interface Ncurses.
@@ -254,36 +254,36 @@ Liste des options couramment utilisées :
   Activer NLS (traductions).
 
 | ENABLE_PERL | `ON`, `OFF` | ON |
-  Compiler <<scripts_plugins,l'extension Perl>>.
+  Compiler <<scripting_plugins,l'extension Perl>>.
 
 | ENABLE_PHP | `ON`, `OFF` | ON |
-  Compiler <<scripts_plugins,l'extension PHP>>.
+  Compiler <<scripting_plugins,l'extension PHP>>.
 
 | ENABLE_PYTHON | `ON`, `OFF` | ON |
-  Compiler <<scripts_plugins,l'extension Python>>.
+  Compiler <<scripting_plugins,l'extension Python>>.
 
 | ENABLE_PYTHON2 | `ON`, `OFF` | OFF |
-  Compiler <<scripts_plugins,l'extension Python>> avec Python 2 au lieu de
+  Compiler <<scripting_plugins,l'extension Python>> avec Python 2 au lieu de
   Python 3.
 
 | ENABLE_RELAY | `ON`, `OFF` | ON |
   Compiler <<relay,l'extension Relay>>.
 
 | ENABLE_RUBY | `ON`, `OFF` | ON |
-  Compiler <<scripts_plugins,l'extension Ruby>>.
+  Compiler <<scripting_plugins,l'extension Ruby>>.
 
 | ENABLE_SCRIPT | `ON`, `OFF` | ON |
-  Compiler <<scripts_plugins,l'extension Script>>.
+  Compiler <<script_manager,l'extension Script>>.
 
 | ENABLE_SCRIPTS | `ON`, `OFF` | ON |
-  Compiler <<scripts_plugins,les extensions de script>> (Python, Perl, Ruby,
+  Compiler <<scripting_plugins,les extensions de script>> (Python, Perl, Ruby,
   Lua, Tcl, Guile, JavaScript, PHP).
 
 | ENABLE_SPELL | `ON`, `OFF` | ON |
   Compiler <<spell_checking,l'extension Spell>>.
 
 | ENABLE_TCL | `ON`, `OFF` | ON |
-  Compiler <<scripts_plugins,l'extension Tcl>>.
+  Compiler <<scripting_plugins,l'extension Tcl>>.
 
 | ENABLE_TRIGGER | `ON`, `OFF` | ON |
   Compiler <<trigger,l'extension Trigger>>.
@@ -1889,7 +1889,7 @@ Ces touches et actions sont utilisées sur le tampon fset
 === Tampon script
 
 Ces touches et actions sont utilisées sur le tampon script
-(voir <<scripts_plugins,l'extension Script>>).
+(voir <<script_manager,le gestionnaire de scripts>>).
 
 [width="100%",cols="^.^3,^.^2,.^8,.^5",options="header"]
 |===
@@ -5091,7 +5091,7 @@ l'API), merci de consulter la
 link:weechat_plugin_api.fr.html[Référence API extension WeeChat] ou le
 link:weechat_scripting.fr.html[Guide pour scripts WeeChat].
 
-[[scripts_plugins]]
+[[scripts]]
 === Scripts
 
 WeeChat fournit 8 extensions pour scripts : Python, Perl, Ruby, Lua, Tcl,
@@ -5099,62 +5099,72 @@ Guile (scheme), JavaScript et PHP.
 Ces extensions peuvent charger, exécuter et décharger des scripts pour ces
 langages.
 
-Une autre extension appelée "script" est un gestionnaire de scripts et est
-utilisé pour charger/décharger des scripts pour n'importe quel langage, et
-installer/supprimer des scripts du dépôt WeeChat, qui sont visibles à cette
-URL : https://weechat.org/scripts
-
 Pour plus d'informations sur comment écrire des scripts, ou sur l'API
 WeeChat pour les scripts, merci de lire le
 link:weechat_scripting.fr.html[Guide pour scripts WeeChat].
 
+[[script_manager]]
+==== Gestionnaire de scripts
+
+Le gestionnaire de scripts (commands <<command_script_script,/script>>) est
+utilisé pour charger/décharger des scripts pour n'importe quel langage, et
+installer/supprimer des scripts du dépôt WeeChat, qui sont visibles à cette
+URL : https://weechat.org/scripts
+
+Pour des considérations de confidentialité, le téléchargement des scripts est
+désactivé par défaut. +
+Pour l'activer, tapez cette commande :
+
+----
+/set script.scripts.download_enabled on
+----
+
+Vous pouvez alors télécharger la liste des scripts et les afficher dans un tampon
+avec la commande <<command_script_script,/script>> :
+
+[subs="quotes,attributes"]
+:x: *
+....
+┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│1.weechat│368/368 scripts (filter: {x}) | Sort: i,p,n | Alt+key/input: i=install, r=remove, l=load, L=reload, u=│
+│2.scripts│{x}      autosort.py                 3.9     2020-10-11 | Automatically keep buffers grouped by server│
+│         │{x}      multiline.pl                0.6.3   2016-01-02 | Multi-line edit box, also supports editing o│
+│         │{x}      highmon.pl                  2.7     2020-06-21 | Adds a highlight monitor buffer.            │
+│         │##{x}ia r  grep.py               0.8.5 0.8.5   2021-05-11 | Search regular expression in buffers or log ##│
+│         │{x}      autojoin.py                 0.3.1   2019-10-06 | Configure autojoin for all servers according│
+│         │{x}      colorize_nicks.py           28      2021-03-06 | Use the weechat nick colors in the chat area│
+│         │{x}ia r  go.py                 2.7   2.7     2021-05-26 | Quick jump to buffers.                      │
+│         │{x}      text_item.py                0.9     2019-05-25 | Add bar items with plain text.              │
+│         │       aesthetic.py                1.0.6   2020-10-25 | Make messages more A E S T H E T I C A L L Y│
+│         │       aformat.py                  0.2     2018-06-21 | Alternate text formatting, useful for relays│
+│         │       alternatetz.py              0.3     2018-11-11 | Add an alternate timezone item.             │
+│         │       amarok2.pl                  0.7     2012-05-08 | Amarok 2 control and now playing script.    │
+│         │       amqp_notify.rb              0.1     2011-01-12 | Send private messages and highlights to an A│
+│         │       announce_url_title.py       19      2021-06-05 | Announce URL title to user or to channel.   │
+│         │       anotify.py                  1.0.2   2020-05-16 | Notifications of private messages, highlight│
+│         │       anti_password.py            1.2.1   2021-03-13 | Prevent a password from being accidentally s│
+│         │       apply_corrections.py        1.3     2018-06-21 | Display corrected text when user sends s/typ│
+│         │       arespond.py                 0.1.1   2020-10-11 | Simple autoresponder.                       │
+│         │       atcomplete.pl               0.001   2016-10-29 | Tab complete nicks when prefixed with "@".  │
+│         │       audacious.pl                0.3     2009-05-03 | Display which song Audacious is currently pl│
+│         │       auth.rb                     0.3     2014-05-30 | Automatically authenticate with NickServ usi│
+│         │       auto_away.py                0.4     2018-11-11 | A simple auto-away script.                  │
+│         │       autoauth.py                 1.3     2021-11-07 | Permits to auto-authenticate when changing n│
+│         │       autobump.py                 0.1.0   2019-06-14 | Bump buffers upon activity.                 │
+│         │       autoconf.py                 0.4     2021-05-11 | Auto save/load changed options in a .weerc f│
+│         │       autoconnect.py              0.3.3   2019-10-06 | Reopen servers and channels opened last time│
+│         │[12:55] [2] [script] 2:scripts                                                                      │
+│         │█                                                                                                   │
+└──────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+....
+
 [[script_commands]]
-==== Commandes Script
+===== Commandes Script
 
 include::includes/autogen_user_commands.fr.adoc[tag=script_commands]
 
-[[python_commands]]
-==== Commandes Python
-
-include::includes/autogen_user_commands.fr.adoc[tag=python_commands]
-
-[[perl_commands]]
-==== Commandes Perl
-
-include::includes/autogen_user_commands.fr.adoc[tag=perl_commands]
-
-[[ruby_commands]]
-==== Commandes Ruby
-
-include::includes/autogen_user_commands.fr.adoc[tag=ruby_commands]
-
-[[lua_commands]]
-==== Commandes Lua
-
-include::includes/autogen_user_commands.fr.adoc[tag=lua_commands]
-
-[[tcl_commands]]
-==== Commandes Tcl
-
-include::includes/autogen_user_commands.fr.adoc[tag=tcl_commands]
-
-[[guile_commands]]
-==== Commandes Guile
-
-include::includes/autogen_user_commands.fr.adoc[tag=guile_commands]
-
-[[javascript_commands]]
-==== Commandes JavaScript
-
-include::includes/autogen_user_commands.fr.adoc[tag=javascript_commands]
-
-[[php_commands]]
-==== Commandes PHP
-
-include::includes/autogen_user_commands.fr.adoc[tag=php_commands]
-
 [[script_options]]
-==== Options Script
+===== Options Script
 
 Sections dans le fichier _script.conf_ :
 
@@ -5170,8 +5180,52 @@ Options :
 
 include::includes/autogen_user_options.fr.adoc[tag=script_options]
 
+// TRANSLATION MISSING
+[[scripting_plugins]]
+==== Extensions pour les scripts
+
+[[python_commands]]
+===== Commandes Python
+
+include::includes/autogen_user_commands.fr.adoc[tag=python_commands]
+
+[[perl_commands]]
+===== Commandes Perl
+
+include::includes/autogen_user_commands.fr.adoc[tag=perl_commands]
+
+[[ruby_commands]]
+===== Commandes Ruby
+
+include::includes/autogen_user_commands.fr.adoc[tag=ruby_commands]
+
+[[lua_commands]]
+===== Commandes Lua
+
+include::includes/autogen_user_commands.fr.adoc[tag=lua_commands]
+
+[[tcl_commands]]
+===== Commandes Tcl
+
+include::includes/autogen_user_commands.fr.adoc[tag=tcl_commands]
+
+[[guile_commands]]
+===== Commandes Guile
+
+include::includes/autogen_user_commands.fr.adoc[tag=guile_commands]
+
+[[javascript_commands]]
+===== Commandes JavaScript
+
+include::includes/autogen_user_commands.fr.adoc[tag=javascript_commands]
+
+[[php_commands]]
+===== Commandes PHP
+
+include::includes/autogen_user_commands.fr.adoc[tag=php_commands]
+
 [[python_options]]
-==== Options Python
+===== Options Python
 
 Sections dans le fichier _python.conf_ :
 
@@ -5186,7 +5240,7 @@ Options :
 include::includes/autogen_user_options.fr.adoc[tag=python_options]
 
 [[perl_options]]
-==== Options Perl
+===== Options Perl
 
 Sections dans le fichier _perl.conf_ :
 
@@ -5201,7 +5255,7 @@ Options :
 include::includes/autogen_user_options.fr.adoc[tag=perl_options]
 
 [[ruby_options]]
-==== Options Ruby
+===== Options Ruby
 
 Sections dans le fichier _ruby.conf_ :
 
@@ -5216,7 +5270,7 @@ Options :
 include::includes/autogen_user_options.fr.adoc[tag=ruby_options]
 
 [[lua_options]]
-==== Options Lua
+===== Options Lua
 
 Sections dans le fichier _lua.conf_ :
 
@@ -5231,7 +5285,7 @@ Options :
 include::includes/autogen_user_options.fr.adoc[tag=lua_options]
 
 [[tcl_options]]
-==== Options Tcl
+===== Options Tcl
 
 Sections dans le fichier _tcl.conf_ :
 
@@ -5246,7 +5300,7 @@ Options :
 include::includes/autogen_user_options.fr.adoc[tag=tcl_options]
 
 [[guile_options]]
-==== Options Guile
+===== Options Guile
 
 Sections dans le fichier _guile.conf_ :
 
@@ -5261,7 +5315,7 @@ Options :
 include::includes/autogen_user_options.fr.adoc[tag=guile_options]
 
 [[javascript_options]]
-==== Options Javascript
+===== Options Javascript
 
 Sections dans le fichier _javascript.conf_ :
 
@@ -5276,7 +5330,7 @@ Options :
 include::includes/autogen_user_options.fr.adoc[tag=javascript_options]
 
 [[php_options]]
-==== Options PHP
+===== Options PHP
 
 Sections dans le fichier _php.conf_ :
 
