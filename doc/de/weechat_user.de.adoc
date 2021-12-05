@@ -4984,8 +4984,20 @@ Optionen:
 
 include::includes/autogen_user_options.de.adoc[tag=trigger_options]
 
+// TRANSLATION MISSING
+[[extension]]
+== WeeChat extension
+
+// TRANSLATION MISSING
+WeeChat has a modular design and can be extended with plugins and scripts.
+
+Es ist wichtig zwischen _Erweiterung_ und _Skript_ zu unterscheiden. Eine Erweiterung
+ist eine Binärdatei die kompiliert wurde und mit dem Befehl `/plugin` geladen wird.
+Dem gegenüber ist ein _Skript_ eine Textdatei die durch eine Erweiterung z.B. _python_
+mittels dem Befehl `/python` geladen wird.
+
 [[plugins]]
-== Erweiterungen
+=== Erweiterungen
 
 Eine WeeChat Erweiterung ist eine dynamische Bibliothek (library), die in C geschrieben
 und kompiliert ist. Unter GNU/Linux besitzt eine Erweiterung als Dateiendung ".so", unter
@@ -4994,11 +5006,6 @@ Windows ".dll".
 Erweiterungen die gefunden werden, werden beim Start von WeeChat automatisch geladen.
 Natürlich ist es möglich während einer laufenden Session von WeeChat Erweiterungen
 nachträglich zu laden oder zu entfernen.
-
-Es ist wichtig zwischen _Erweiterung_ und _Skript_ zu unterscheiden. Eine Erweiterung
-ist eine Binärdatei die kompiliert wurde und mit dem Befehl `/plugin` geladen wird.
-Dem gegenüber ist ein _Skript_ eine Textdatei die durch eine Erweiterung z.B. _python_
-mittels dem Befehl `/python` geladen wird.
 
 Mit dem Befehl `/plugin` kann eine Erweiterung geladen bzw. entfernt werden. Auch können
 mit dem Befehl alle installierten Erweiterungen aufgelistet werden.

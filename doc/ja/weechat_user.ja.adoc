@@ -4983,8 +4983,20 @@ _trigger.conf_ ファイル内のセクション:
 
 include::includes/autogen_user_options.ja.adoc[tag=trigger_options]
 
+// TRANSLATION MISSING
+[[extension]]
+== WeeChat extension
+
+// TRANSLATION MISSING
+WeeChat has a modular design and can be extended with plugins and scripts.
+
+_プラグイン_ と _スクリプト_ の違いを明らかにすることは重要です:
+_プラグイン_ とは `/plugin` コマンドで読み込まれるコンパイル済みバイナリファイルです。これに対して、
+_スクリプト_ とは `/python` 等のコマンドで _python_
+等のプラグインとともに読み込まれるテキストファイルです。
+
 [[plugins]]
-== プラグイン
+=== プラグイン
 
 プラグインとは動的ライブラリのことで、C
 言語で書かれてコンパイルされています。プラグインは WeeChat によって読み込まれます。GNU/Linux
@@ -4992,11 +5004,6 @@ include::includes/autogen_user_options.ja.adoc[tag=trigger_options]
 
 見つかったプラグインは WeeChat の起動時に自動的に読み込まれます。WeeChat
 の起動時にプラグインを読み込むか否かは選択可能です。
-
-_プラグイン_ と _スクリプト_ の違いを明らかにすることは重要です:
-_プラグイン_ とは `/plugin` コマンドで読み込まれるコンパイル済みバイナリファイルです。これに対して、
-_スクリプト_ とは `/python` 等のコマンドで _python_
-等のプラグインとともに読み込まれるテキストファイルです。
 
 `/plugin`
 コマンドを使うことで、プラグインのロード/アンロード、ロード済みプラグインの表示を行うことができます。

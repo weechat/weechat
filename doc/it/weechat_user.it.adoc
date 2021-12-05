@@ -5173,8 +5173,20 @@ Options:
 
 include::includes/autogen_user_options.it.adoc[tag=trigger_options]
 
+// TRANSLATION MISSING
+[[extension]]
+== WeeChat extension
+
+// TRANSLATION MISSING
+WeeChat has a modular design and can be extended with plugins and scripts.
+
+È importante evidenziare la differenza tra un _plugin_ ed uno _script_: un
+_plugin_ è un file binario compilato e caricato con il comando `/plugin`,
+mentre uno _script_ è un file di testo caricato con un plugin come _python_
+con il comando `/python`.
+
 [[plugins]]
-== Plugin
+=== Plugin
 
 Un plugin è una libreria dinamica, scritta in C e compilata, che viene caricata
 da WeeChat.
@@ -5182,11 +5194,6 @@ In GNU/Linux, il file ha estensione ".so", ".dll" in Windows.
 
 I plugin trovati vengono caricati automaticamente all'avvio di WeeChat, ed
 è possibile caricare o scaricare i plugin durante l'esecuzione del programma.
-
-È importante evidenziare la differenza tra un _plugin_ ed uno _script_: un
-_plugin_ è un file binario compilato e caricato con il comando `/plugin`,
-mentre uno _script_ è un file di testo caricato con un plugin come _python_
-con il comando `/python`.
 
 È possibile utilizzare il comando `/plugin` per caricare/scaricare un plugin,
 oppure elencare tutti i plugin caricati.

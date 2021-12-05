@@ -4912,8 +4912,20 @@ Opcje:
 
 include::includes/autogen_user_options.pl.adoc[tag=trigger_options]
 
+// TRANSLATION MISSING
+[[extension]]
+== WeeChat extension
+
+// TRANSLATION MISSING
+WeeChat has a modular design and can be extended with plugins and scripts.
+
+Ważne jest, aby odróżniać _wtyczkę_ od _skryptu_: _wtyczka_ jest to plik binarny
+skompilowany i ładowany za pomocą polecenia `/plugin`, natomiast _skrypt_ to
+plik tekstowy, ładowany za pomocą wtyczki jak na przykład _python_ za pomocą
+polecenia `/python`.
+
 [[plugins]]
-== Wtyczki
+=== Wtyczki
 
 Wtyczka jest biblioteka dynamiczną, napisaną w C i skompilowaną, która jest
 ładowana przez WeeChat.
@@ -4921,11 +4933,6 @@ W systemach GNU/Linux plik ma rozszerzenie ".so", w Windowsie ".dll".
 
 Znalezione wtyczki są automatycznie ładowane podczas uruchamiania WeeChat,
 możliwe jest również ładowanie lub wyładowywanie wtyczek podczas pracy WeeChat.
-
-Ważne jest, aby odróżniać _wtyczkę_ od _skryptu_: _wtyczka_ jest to plik binarny
-skompilowany i ładowany za pomocą polecenia `/plugin`, natomiast _skrypt_ to
-plik tekstowy, ładowany za pomocą wtyczki jak na przykład _python_ za pomocą
-polecenia `/python`.
 
 Możesz użyć komendy `/plugin` żeby załadować/wyładować wtyczkę, lub wyświetlić
 wszystkie załadowane wtyczki.

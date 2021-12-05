@@ -5015,8 +5015,19 @@ Options :
 
 include::includes/autogen_user_options.fr.adoc[tag=trigger_options]
 
+[[extension]]
+== Extension de WeeChat
+
+WeeChat est conçu de manière modulaire et peut être étendu avec des extensions
+et des scripts.
+
+Il est important de bien faire la différence entre une _extension_ et un
+_script_ : une _extension_ est un fichier binaire compilé et chargé avec la
+commande `/plugin`, tandis qu'un _script_ est un fichier texte chargé par une
+extension comme _python_ par la commande `/python`.
+
 [[plugins]]
-== Extensions
+=== Extensions
 
 Une extension est une bibliothèque dynamique, écrite en C et compilée, qui est
 chargée par WeeChat.
@@ -5025,11 +5036,6 @@ Sous GNU/Linux, ce fichier a une extension ".so", et ".dll" sous Windows.
 Les extensions trouvées sont automatiquement chargées par WeeChat lorsqu'il
 démarre, et il est possible de charger et décharger des extensions pendant que
 WeeChat tourne.
-
-Il est important de bien faire la différence entre une _extension_ et un
-_script_ : une _extension_ est un fichier binaire compilé et chargé avec la
-commande `/plugin`, tandis qu'un _script_ est un fichier texte chargé par une
-extension comme _python_ par la commande `/python`.
 
 Vous pouvez utiliser la commande `/plugin` pour charger/décharger une
 extension, ou afficher les extensions chargées.
