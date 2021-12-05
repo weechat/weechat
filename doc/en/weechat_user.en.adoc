@@ -1362,6 +1362,37 @@ include::includes/autogen_user_options.en.adoc[tag=buflist_options]
 Fast Set plugin displays a list of options in a buffer, and helps to set WeeChat
 and plugin options.
 
+Example of fset buffer displaying options starting with `weechat.look` :
+
+[subs="quotes"]
+....
+┌──────────────────────────────────────────────────────────────────────────────────────┐
+│1.weechat│1/121 | Filter: weechat.look.* | Sort: ~name | Key(input): alt+space=toggle │
+│2.fset   │weechat.look.bare_display_exit_on_input: exit the bare display mode on any c│
+│         │hanges in input [default: on]                                               │
+│         │----------------------------------------------------------------------------│
+│         │  weechat.look.align_end_of_lines                   integer  message        │
+│         │  weechat.look.align_multiline_words                boolean  on             │
+│         │  weechat.look.bar_more_down                        string   "++"           │
+│         │  weechat.look.bar_more_left                        string   "<<"           │
+│         │  weechat.look.bar_more_right                       string   ">>"           │
+│         │  weechat.look.bar_more_up                          string   "--"           │
+│         │##  weechat.look.bare_display_exit_on_input           boolean  on             ##│
+│         │  weechat.look.bare_display_time_format             string   "%H:%M"        │
+│         │  weechat.look.buffer_auto_renumber                 boolean  on             │
+│         │  weechat.look.buffer_notify_default                integer  all            │
+│         │  weechat.look.buffer_position                      integer  end            │
+│         │  weechat.look.buffer_search_case_sensitive         boolean  off            │
+│         │  weechat.look.buffer_search_force_default          boolean  off            │
+│         │  weechat.look.buffer_search_regex                  boolean  off            │
+│         │  weechat.look.buffer_search_where                  integer  prefix_message │
+│         │  weechat.look.buffer_time_format                   string   "%H:%M:%S"     │
+│         │  weechat.look.buffer_time_same                     string   ""             │
+│         │[12:55] [2] [fset] 2:fset                                                   │
+│         │█                                                                           │
+└──────────────────────────────────────────────────────────────────────────────────────┘
+....
+
 [[fset_commands]]
 ==== Commands
 

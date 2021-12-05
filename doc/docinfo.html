@@ -32,6 +32,7 @@
     --icon-warning-color: #f39c12;
     --icon-caution-color: #bf3400;
     --icon-important-color: #f44336;
+    --mark-bg-color: #007;
   }
 }
 
@@ -61,6 +62,7 @@
     --icon-warning-color: #bf6900;
     --icon-caution-color: #ff0000;
     --icon-important-color: #bf0000;
+    --mark-bg-color: #9df;
   }
 }
 
@@ -178,6 +180,11 @@ kbd {
 
 .admonitionblock > table td.content {
   border-left: var(--border);
+}
+
+mark {
+  background-color: var(--mark-bg-color);
+  color: var(--body-color);
 }
 
 /* syntax highlighting tuning */
