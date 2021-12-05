@@ -268,7 +268,7 @@ Lista popularnych opcji:
   Kompilacja <<scripts_plugins,wtyczki Python>> z użyciem Pythona 2 zamiast Pythona 3.
 
 | ENABLE_RELAY | `ON`, `OFF` | ON |
-  Kompilacja <<relay_plugin,wtyczki relay>>.
+  Kompilacja <<relay,wtyczki relay>>.
 
 | ENABLE_RUBY | `ON`, `OFF` | ON |
   Kompilacja <<scripts_plugins,wtyczki ruby>>.
@@ -3673,6 +3673,221 @@ Opcje:
 
 include::includes/autogen_user_options.pl.adoc[tag=irc_options]
 
+[[relay]]
+== Relay
+
+Wtyczka relay jest używana do przekazywania danych przez sieć, z użyciem różnych
+protokołów:
+
+* _irc_: pośrednik IRC: używany do dzielenia połączeń z serwerami IRC z jednym
+  lub wieloma klientami IRC
+* _weechat_: protokół używany przez zdalne interfejsy do wyświetlania i
+  interakcji z WeeChat, na przykład:
+** Glowing Bear (HTML5): https://www.glowing-bear.org/
+** QWeeChat (Qt): https://weechat.org/download
+** WeeChat-Android (Android): https://github.com/ubergeek42/weechat-android
+** weechat.el (Emacs): https://github.com/the-kenny/weechat.el
+** WeeCloud (JavaScript): https://github.com/eirikb/weecloud
+
+[[relay_password]]
+=== Hasło
+
+Zaleca się ustawenia hasła dla pośrednika za pomocą poniższych komend:
+
+----
+/secure set relay moje_hasło
+/set relay.network.password "${sec.data.relay}"
+----
+
+Hasło to używane jest przez protokoły _irc_ i _weechat_.
+
+[[relay_totp]]
+=== TOTP
+
+TOTP (Time-based One-Time Password) może zostać użyte jako drugi stopień uwierzytelnienia
+dla protokołu _weechat_, poza normalnym hasłem.
+
+Jest to opcjomalne ale podnosi to poziom bezpieczeństwa.
+This is optional and increases the security level.
+
+Hasła jednorazowe mogą być generowane między innymi za pomocą:
+
+* FreeOTP:
+  https://play.google.com/store/apps/details?id=org.fedorahosted.freeotp[Android],
+  https://itunes.apple.com/fr/app/freeotp-authenticator/id872559395[iOS]
+  (https://freeotp.github.io/[website])
+* Google Authenticator:
+  https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2[Android],
+  https://itunes.apple.com/fr/app/google-authenticator/id388497605[iOS]
+
+Ten sam sekret TOTP musi być utawiony w WeeChat i aplikacji używanej do generowania haseł.
+
+Musi to być ciąg zakodowany za pomocą base32, zawierajcy tylko litery i liczby od 2 do 7,
+na przykład:
+
+----
+/secure set relay_totp secretpasswordbase32
+/set relay.network.totp_secret "${sec.data.relay_totp}"
+----
+
+[[relay_ssl]]
+=== SSL
+
+Możesz używać SSL poprzez utworzenie certyfikatu i klucza prywatnego, oraz
+użycie prefiksu "ssl." w nazwie protokołu.
+
+Domyślna ścieżka do certyfikatów/kluczy jest zdefiniowana przez opcję
+<<option_relay.network.ssl_cert_key,relay.network.ssl_cert_key>>.
+
+Możesz utworzyć certyfikat i klucz prywatny wykonując poniższe komendy:
+
+----
+$ mkdir -p ~/.config/weechat/ssl
+$ cd ~/.config/weechat/ssl
+$ openssl req -nodes -newkey rsa:2048 -keyout relay.pem -x509 -days 365 -out relay.pem
+----
+
+[NOTE]
+Musisz zamienić `~/.config/weechat` na ścieżkę do katalogu z konfiguracją WeeChat,
+który może być ustawiony na przykład na `~/.weechat`.
+
+Jeśli WeeChat jest już uruchomiony, możesz przładować certyfikat i klucz prywatny
+za pomocą polecenia:
+
+----
+/relay sslcertkey
+----
+
+[[relay_irc_proxy]]
+=== IRC proxy
+
+Wtyczka relay może zachowywać się jak proxy dla IRC: będzie symulować serwer IRC,
+możesz się połączyć do niego za pomocą dowolnego klienta IRC (w tym WeeChat).
+
+Możesz zdefiniować oddzielne porty dla serwerów IRC, lub jeden dla wszystkich.
+
+Jeśli używasz jednego portu dla wszystkich serwerów, klient musi wysłać
+wewnętrzną nazwę serwera w komendzie IRC "PASS", zachowując format
+(zobacz poniższy przykład):
+
+----
+PASS serwer:hasło
+----
+
+Przykład: proxy IRC z SSL dla dowolnego serwera (klient wybiera):
+
+----
+/relay add ssl.irc 8000
+----
+
+Przykład: proxy IRC bez SSL tylko dla serwera "libera":
+
+----
+/relay add irc.libera 8000
+----
+
+Teraz możesz się połączyć na porcie 8000 za pomocą dowolnego klienta IRC
+używając hasła serwera "moje_hasło" (lub "libera:moje_hasło" jeśli żaden
+serwer nie został podany w przekaźniku).
+
+Na przydład jeśli używasz WeeChat jako klienta pośrednika IRC, z serwerem
+nazwanym "relay" i hasłem pośrednika "moje_hasło", możesz ustawić hasło
+za pomocą tych komend:
+
+----
+/secure set relay_libera libera:moje_hasło
+/set irc.server.relay.password "{sec.data.relay_libera}"
+----
+
+[[relay_weechat_protocol]]
+=== Protokół WeeChat
+
+Wtyczka relay może wysyłać dane do zdalnego interfejsu korzystając z protokołu
+WeeChat.
+
+Możesz połączyć się zdalnym inrerfejsem, listę znajdziesz w <<relay>>.
+
+[IMPORTANT]
+WeeChat NIE MOŻE się połączyć z innym WeeChat za pomocą tego protokołu.
+
+Na przykład:
+
+----
+/relay add weechat 9000
+----
+
+Teraz możesz się połączyć zdalnym interfejsem na porcie 9000 za pomocą hasła
+"moje_hasło".
+
+[[relay_websocket]]
+=== WebSocket
+
+Protokół WebSocket (https://tools.ietf.org/html/rfc6455[RFC 6455]) jest wspierany
+dla wszystkich protokołów.
+
+Żądanie WebSocket jest automatycznie wykrywane i socket staje się gotowy do
+transmisji WebSocket jeśli wymagane nagłówki znajdują się w żądaniu oraz, gdy
+źródło jest dopuszczone (zobacz opcję
+<<option_relay.network.websocket_allowed_origins,relay.network.websocket_allowed_origins>>).
+
+WebSocket może zostać otworzony w HTML5 za pomocą jednej linii w JavaScript:
+
+[source,javascript]
+----
+websocket = new WebSocket("ws://server.com:9000/weechat");
+----
+
+Port (9000 w przykładzie) to port zdefiniowany we wtyczce relay.
+Adres URL musi się zawsze kończyć "/weechat" (dla protokołów _irc_ i _weechat_).
+
+[[relay_unix_socket]]
+=== Sockety UNIXowe
+
+Używając opcji protokołu "unix" razem z komendą `/relay`, można nasłuchiwać dowolnego
+protokołu za pomocą socketu UNIXowego w podanej ścieżce. Na przykład:
+
+----
+/relay add unix.weechat ${weechat_runtime_dir}/relay_socket
+----
+
+Pozwala to na połączenia od klientów za pomocą protokołu weechat do
+_/run/user/1000/weechat/relay_socket_. Jest to przydatne zwłaszcza jeśli chcemy
+tunelować klienty przez SSH, w przypadku, kiedy inne porty nie moga być otwierane.
+
+Za pomocą OpenSSH:
+
+----
+$ ssh -L 9000:.weechat/relay_socket user@hostname
+----
+
+Przekerowuje to połączenia lokalnych klientów łączących się na port 9000 do intancji
+WeeChat uruchomionej na "hostname".
+
+[[relay_commands]]
+=== Komendy
+
+include::includes/autogen_user_commands.pl.adoc[tag=relay_commands]
+
+[[relay_options]]
+=== Opcje
+
+Sekcje w pliku _relay.conf_:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Sekcja  | Komenda                            | Opis
+| look    | /set relay.look.*                  | Wygląd.
+| color   | /set relay.color.*                 | Kolory.
+| network | /set relay.network.*               | Opcje sieci.
+| irc     | /set relay.irc.*                   | Opcje specyficzne dla protokołu irc (pośrednik irc).
+| port    | <<command_relay_relay,/relay add>> +
+            /set relay.port.*                  | Porty używane do przekazywania (protokoły irc i weechat) (opcje w tej sekcji mogą być dodawane/usuwane).
+|===
+
+Opcje:
+
+include::includes/autogen_user_options.pl.adoc[tag=relay_options]
+
 [[plugins]]
 == Wtyczki
 
@@ -3831,221 +4046,6 @@ Sekcje w pliku _fifo.conf_:
 Opcje:
 
 include::includes/autogen_user_options.pl.adoc[tag=fifo_options]
-
-[[relay_plugin]]
-=== Relay
-
-Wtyczka relay jest używana do przekazywania danych przez sieć, z użyciem różnych
-protokołów:
-
-* _irc_: pośrednik IRC: używany do dzielenia połączeń z serwerami IRC z jednym
-  lub wieloma klientami IRC
-* _weechat_: protokół używany przez zdalne interfejsy do wyświetlania i
-  interakcji z WeeChat, na przykład:
-** Glowing Bear (HTML5): https://www.glowing-bear.org/
-** QWeeChat (Qt): https://weechat.org/download
-** WeeChat-Android (Android): https://github.com/ubergeek42/weechat-android
-** weechat.el (Emacs): https://github.com/the-kenny/weechat.el
-** WeeCloud (JavaScript): https://github.com/eirikb/weecloud
-
-[[relay_password]]
-==== Hasło
-
-Zaleca się ustawenia hasła dla pośrednika za pomocą poniższych komend:
-
-----
-/secure set relay moje_hasło
-/set relay.network.password "${sec.data.relay}"
-----
-
-Hasło to używane jest przez protokoły _irc_ i _weechat_.
-
-[[relay_totp]]
-==== TOTP
-
-TOTP (Time-based One-Time Password) może zostać użyte jako drugi stopień uwierzytelnienia
-dla protokołu _weechat_, poza normalnym hasłem.
-
-Jest to opcjomalne ale podnosi to poziom bezpieczeństwa.
-This is optional and increases the security level.
-
-Hasła jednorazowe mogą być generowane między innymi za pomocą:
-
-* FreeOTP:
-  https://play.google.com/store/apps/details?id=org.fedorahosted.freeotp[Android],
-  https://itunes.apple.com/fr/app/freeotp-authenticator/id872559395[iOS]
-  (https://freeotp.github.io/[website])
-* Google Authenticator:
-  https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2[Android],
-  https://itunes.apple.com/fr/app/google-authenticator/id388497605[iOS]
-
-Ten sam sekret TOTP musi być utawiony w WeeChat i aplikacji używanej do generowania haseł.
-
-Musi to być ciąg zakodowany za pomocą base32, zawierajcy tylko litery i liczby od 2 do 7,
-na przykład:
-
-----
-/secure set relay_totp secretpasswordbase32
-/set relay.network.totp_secret "${sec.data.relay_totp}"
-----
-
-[[relay_ssl]]
-==== SSL
-
-Możesz używać SSL poprzez utworzenie certyfikatu i klucza prywatnego, oraz
-użycie prefiksu "ssl." w nazwie protokołu.
-
-Domyślna ścieżka do certyfikatów/kluczy jest zdefiniowana przez opcję
-<<option_relay.network.ssl_cert_key,relay.network.ssl_cert_key>>.
-
-Możesz utworzyć certyfikat i klucz prywatny wykonując poniższe komendy:
-
-----
-$ mkdir -p ~/.config/weechat/ssl
-$ cd ~/.config/weechat/ssl
-$ openssl req -nodes -newkey rsa:2048 -keyout relay.pem -x509 -days 365 -out relay.pem
-----
-
-[NOTE]
-Musisz zamienić `~/.config/weechat` na ścieżkę do katalogu z konfiguracją WeeChat,
-który może być ustawiony na przykład na `~/.weechat`.
-
-Jeśli WeeChat jest już uruchomiony, możesz przładować certyfikat i klucz prywatny
-za pomocą polecenia:
-
-----
-/relay sslcertkey
-----
-
-[[relay_irc_proxy]]
-==== IRC proxy
-
-Wtyczka relay może zachowywać się jak proxy dla IRC: będzie symulować serwer IRC,
-możesz się połączyć do niego za pomocą dowolnego klienta IRC (w tym WeeChat).
-
-Możesz zdefiniować oddzielne porty dla serwerów IRC, lub jeden dla wszystkich.
-
-Jeśli używasz jednego portu dla wszystkich serwerów, klient musi wysłać
-wewnętrzną nazwę serwera w komendzie IRC "PASS", zachowując format
-(zobacz poniższy przykład):
-
-----
-PASS serwer:hasło
-----
-
-Przykład: proxy IRC z SSL dla dowolnego serwera (klient wybiera):
-
-----
-/relay add ssl.irc 8000
-----
-
-Przykład: proxy IRC bez SSL tylko dla serwera "libera":
-
-----
-/relay add irc.libera 8000
-----
-
-Teraz możesz się połączyć na porcie 8000 za pomocą dowolnego klienta IRC
-używając hasła serwera "moje_hasło" (lub "libera:moje_hasło" jeśli żaden
-serwer nie został podany w przekaźniku).
-
-Na przydład jeśli używasz WeeChat jako klienta pośrednika IRC, z serwerem
-nazwanym "relay" i hasłem pośrednika "moje_hasło", możesz ustawić hasło
-za pomocą tych komend:
-
-----
-/secure set relay_libera libera:moje_hasło
-/set irc.server.relay.password "{sec.data.relay_libera}"
-----
-
-[[relay_weechat_protocol]]
-==== Protokół WeeChat
-
-Wtyczka relay może wysyłać dane do zdalnego interfejsu korzystając z protokołu
-WeeChat.
-
-Możesz połączyć się zdalnym inrerfejsem, listę znajdziesz w <<relay_plugin>>.
-
-[IMPORTANT]
-WeeChat NIE MOŻE się połączyć z innym WeeChat za pomocą tego protokołu.
-
-Na przykład:
-
-----
-/relay add weechat 9000
-----
-
-Teraz możesz się połączyć zdalnym interfejsem na porcie 9000 za pomocą hasła
-"moje_hasło".
-
-[[relay_websocket]]
-==== WebSocket
-
-Protokół WebSocket (https://tools.ietf.org/html/rfc6455[RFC 6455]) jest wspierany
-dla wszystkich protokołów.
-
-Żądanie WebSocket jest automatycznie wykrywane i socket staje się gotowy do
-transmisji WebSocket jeśli wymagane nagłówki znajdują się w żądaniu oraz, gdy
-źródło jest dopuszczone (zobacz opcję
-<<option_relay.network.websocket_allowed_origins,relay.network.websocket_allowed_origins>>).
-
-WebSocket może zostać otworzony w HTML5 za pomocą jednej linii w JavaScript:
-
-[source,javascript]
-----
-websocket = new WebSocket("ws://server.com:9000/weechat");
-----
-
-Port (9000 w przykładzie) to port zdefiniowany we wtyczce relay.
-Adres URL musi się zawsze kończyć "/weechat" (dla protokołów _irc_ i _weechat_).
-
-[[relay_unix_socket]]
-==== Sockety UNIXowe
-
-Używając opcji protokołu "unix" razem z komendą `/relay`, można nasłuchiwać dowolnego
-protokołu za pomocą socketu UNIXowego w podanej ścieżce. Na przykład:
-
-----
-/relay add unix.weechat ${weechat_runtime_dir}/relay_socket
-----
-
-Pozwala to na połączenia od klientów za pomocą protokołu weechat do
-_/run/user/1000/weechat/relay_socket_. Jest to przydatne zwłaszcza jeśli chcemy
-tunelować klienty przez SSH, w przypadku, kiedy inne porty nie moga być otwierane.
-
-Za pomocą OpenSSH:
-
-----
-$ ssh -L 9000:.weechat/relay_socket user@hostname
-----
-
-Przekerowuje to połączenia lokalnych klientów łączących się na port 9000 do intancji
-WeeChat uruchomionej na "hostname".
-
-[[relay_commands]]
-==== Komendy
-
-include::includes/autogen_user_commands.pl.adoc[tag=relay_commands]
-
-[[relay_options]]
-==== Opcje
-
-Sekcje w pliku _relay.conf_:
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Sekcja  | Komenda                            | Opis
-| look    | /set relay.look.*                  | Wygląd.
-| color   | /set relay.color.*                 | Kolory.
-| network | /set relay.network.*               | Opcje sieci.
-| irc     | /set relay.irc.*                   | Opcje specyficzne dla protokołu irc (pośrednik irc).
-| port    | <<command_relay_relay,/relay add>> +
-            /set relay.port.*                  | Porty używane do przekazywania (protokoły irc i weechat) (opcje w tej sekcji mogą być dodawane/usuwane).
-|===
-
-Opcje:
-
-include::includes/autogen_user_options.pl.adoc[tag=relay_options]
 
 [[scripts_plugins]]
 === Skryptowe

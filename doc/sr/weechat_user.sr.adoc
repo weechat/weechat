@@ -246,7 +246,7 @@ $ make install
   Компајлира <<scripts_plugins,Python додатак>> користећи Python 2 уместо Python 3.
 
 | ENABLE_RELAY | `ON`, `OFF` | ON |
-  Компајлира <<relay_plugin,Relay додатак>>.
+  Компајлира <<relay,Relay додатак>>.
 
 | ENABLE_RUBY | `ON`, `OFF` | ON |
   Компајлира <<scripts_plugins,Ruby додатак>>.
@@ -3414,6 +3414,188 @@ include::includes/autogen_user_commands.sr.adoc[tag=irc_commands]
 
 include::includes/autogen_user_options.sr.adoc[tag=irc_options]
 
+[[relay]]
+== Релеј
+
+Релеј додатак се користи за релеј података преко мреже, употребом различитих протокола:
+
+* _irc_: IRC прокси: користи се за дељење веза са IRC серверима са једним или више других клијената
+* _weechat_: протокол који користе удаљени интерфејси за приказ и интеракцију са програмом WeeChat, на пример:
+** Glowing Bear (HTML5): https://www.glowing-bear.org/
+** QWeeChat (Qt): https://weechat.org/download
+** WeeChat-Android (Android): https://github.com/ubergeek42/weechat-android
+** weechat.el (Emacs): https://github.com/the-kenny/weechat.el
+** WeeCloud (JavaScript): https://github.com/eirikb/weecloud
+
+[[relay_password]]
+=== Лозинка
+
+Топло се препоручује постављање лозинке за релеј следећим командама:
+
+----
+/secure set relay мојалозинка
+/set relay.network.password "${sec.data.relay}"
+----
+
+Ова лозинка се користи и за _irc_ и за _weechat_ протокол.
+
+[[relay_totp]]
+=== TOTP
+
+TOTP (Time-based One-Time Password) може уз лозинку да се користи као секундарни фактор аутентификације за _weechat_ протокол.
+
+Ово није обавезно, мада повећава ниво безбедности.
+
+једнократне лозинке могу да се генеришу апликацијама, на пример:
+
+* FreeOTP: https://play.google.com/store/apps/details?id=org.fedorahosted.freeotp[Android], https://itunes.apple.com/fr/app/freeotp-authenticator/id872559395[iOS] (https://freeotp.github.io/[вебсајт])
+* Google Authenticator: https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2[Android], https://itunes.apple.com/fr/app/google-authenticator/id388497605[iOS]
+
+TOTP тајна мора да се постави у програму WeeChat и у апликацији која се користи за генерисање једнократних лозинки.
+
+То мора бити стринг кодиран у base32, само са словима и цифрама од 2 до 7, на пример:
+
+----
+/secure set relay_totp тајналозинкаbase32
+/set relay.network.totp_secret "${sec.data.relay_totp}"
+----
+
+[[relay_ssl]]
+=== SSL
+
+SSL можете да користите креирањем сертификата и приватног кључа и употребом префикса „ssl.” у имену протокола.
+
+Подразумевана путања до сертификата/кључа је дефинисана опцијом <<option_relay.network.ssl_cert_key,relay.network.ssl_cert_key>>.
+
+Сертификат и приватни кључ можете да креирате следећим командама:
+
+----
+$ mkdir -p ~/.config/weechat/ssl
+$ cd ~/.config/weechat/ssl
+$ openssl req -nodes -newkey rsa:2048 -keyout relay.pem -x509 -days 365 -out relay.pem
+----
+
+[NOTE]
+`~/.config/weechat` морате да замените путањом до вашег WeeChat config директоријума који на пример, такође може да буде `~/.weechat`.
+
+Ако се програм WeeChat већ извршава, сертификат и приватни кључ можете поново да учитате командом:
+
+----
+/relay sslcertkey
+----
+
+[[relay_irc_proxy]]
+=== IRC прокси
+
+Релеј додатак може да се понаша као IRC прокси: симулираће IRC сервер, па можете да се повежете са програмом WeeChat помоћу било ког другог IRC клијента (укључујући и сам WeeChat).
+
+Можете да дефинишете по један порт за сваки IRC сервер, или један генерички за све сервере.
+
+Када се користи један порт за све сервере, клијент мора да пошаље интерно име сервера у IRC команди „PASS”, у следећем формату (погледајте пример испод):
+
+----
+PASS сервер:лозинка
+----
+
+Пример: IRC прокси са SSL за било који сервер (клијент ће изабрати):
+
+----
+/relay add ssl.irc 8000
+----
+
+Пример: IRC прокси без SSL само за сервер „libera”:
+
+----
+/relay add irc.libera 8000
+----
+
+Сада можете да успоставите везу на порту 8000 помоћу било ког IRC клијента употребом лозинке „мојалозинка” (или „libera:мојалозинка” ако у релеју није био наведен ниједан сервер).
+
+На пример, ако као IRC клијент користите програм WeeChat, а сервер се зове „relay” и релеј лозинка је „secret”, можете да поставите лозинку следећим командама:
+
+----
+/secure set relay_libera libera:secret
+/set irc.server.relay.password "${sec.data.relay_libera}"
+----
+
+[[relay_weechat_protocol]]
+=== WeeChat протокол
+
+Релеј додатак може да шаље податке удаљеном интерфејсу користећи WeeChat протокол.
+
+Можете да се повежете употребом удаљеног интерфејса, погледајте листу <<relay,релеј додатак>>.
+
+[IMPORTANT]
+Сам програм WeeChat НЕ може да се повеже на други програм WeeChat преко овог протокола.
+
+На пример:
+
+----
+/relay add weechat 9000
+----
+
+Сада можете да се повежете са удаљеног интерфејса преко порта 9000 користећи лозинку „мојалозинка”.
+
+[[relay_websocket]]
+=== ВебСокет
+
+Релеј додатак подржава ВебСокет протокол (https://tools.ietf.org/html/rfc6455[RFC 6455]) за све протоколе.
+
+ВебСокет руковање се аутоматски детектује и ако се у руковању пронађу одговарајућа заглавља и ако је порекло дозвољено (погледајте опцију <<option_relay.network.websocket_allowed_origins,relay.network.websocket_allowed_origins>>), сокет постаје спреман за WebSocket.
+
+ВебСокет може да се отвори у HTML5 једном једином линијом JavaScript кода:
+
+[source, js]
+----
+websocket = new WebSocket("ws://server.com:9000/weechat");
+----
+
+Порт (9000 у примеру) је порт који је дефинисан у Релеј додатку. URI увек мора да се завршава са „/weechat” (и за _irc_ и за _weechat_ протокол).
+
+[[relay_unix_socket]]
+=== UNIX доменски сокети
+
+Ако у `/relay add` команди употребите опцију протокола „unix”, можете да ослушкујете било којим протоколом на UNIX доменском сокету на задатој путањи. На пример:
+
+----
+/relay add unix.weechat ${weechat_runtime_dir}/relay_socket
+----
+
+Ово омогућава да се клијенти повежу користећи weechat протокол на _/run/user/1000/weechat/relay_socket_. Врло је корисно за дозвољавање SSH прослеђивања релеј клијентима, када други портови не могу да се отворе.
+
+Употребом OpenSSH:
+
+----
+$ ssh -L 9000:.weechat/relay_socket корисник@имехоста
+----
+
+Ово преусмерава локалне релеј клијенте који се повезују на порт 9000 на инстанцу програма WeeChat која се извршава на машини „имехоста”.
+
+[[relay_commands]]
+=== Команде
+
+include::includes/autogen_user_commands.sr.adoc[tag=relay_commands]
+
+[[relay_options]]
+=== Опције
+
+Одељци у фајлу _relay.conf_:
+
+[width="100%", cols="3m,6m,16", options="header"]
+|===
+| Одељак  | Команда за контролу                | Опис
+| look    | /set relay.look.*                  | Изглед и осећај.
+| color   | /set relay.color.*                 | Боје.
+| network | /set relay.network.*               | Мрежне опције.
+| irc     | /set relay.irc.*                   | Опције специфичне за irc протокол (irc прокси).
+| port    | <<command_relay_relay,/relay add>> +
+            /set relay.port.*                  | Портови који се користе за релеј (irc и weechat протоколи) (у одељку је могуће додавање/уклањање опција).
+|===
+
+Опције:
+
+include::includes/autogen_user_options.sr.adoc[tag=relay_options]
+
 [[plugins]]
 == Додаци
 
@@ -3558,188 +3740,6 @@ include::includes/autogen_user_commands.sr.adoc[tag=fifo_commands]
 Опције:
 
 include::includes/autogen_user_options.sr.adoc[tag=fifo_options]
-
-[[relay_plugin]]
-=== Релеј
-
-Релеј додатак се користи за релеј података преко мреже, употребом различитих протокола:
-
-* _irc_: IRC прокси: користи се за дељење веза са IRC серверима са једним или више других клијената
-* _weechat_: протокол који користе удаљени интерфејси за приказ и интеракцију са програмом WeeChat, на пример:
-** Glowing Bear (HTML5): https://www.glowing-bear.org/
-** QWeeChat (Qt): https://weechat.org/download
-** WeeChat-Android (Android): https://github.com/ubergeek42/weechat-android
-** weechat.el (Emacs): https://github.com/the-kenny/weechat.el
-** WeeCloud (JavaScript): https://github.com/eirikb/weecloud
-
-[[relay_password]]
-==== Лозинка
-
-Топло се препоручује постављање лозинке за релеј следећим командама:
-
-----
-/secure set relay мојалозинка
-/set relay.network.password "${sec.data.relay}"
-----
-
-Ова лозинка се користи и за _irc_ и за _weechat_ протокол.
-
-[[relay_totp]]
-==== TOTP
-
-TOTP (Time-based One-Time Password) може уз лозинку да се користи као секундарни фактор аутентификације за _weechat_ протокол.
-
-Ово није обавезно, мада повећава ниво безбедности.
-
-једнократне лозинке могу да се генеришу апликацијама, на пример:
-
-* FreeOTP: https://play.google.com/store/apps/details?id=org.fedorahosted.freeotp[Android], https://itunes.apple.com/fr/app/freeotp-authenticator/id872559395[iOS] (https://freeotp.github.io/[вебсајт])
-* Google Authenticator: https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2[Android], https://itunes.apple.com/fr/app/google-authenticator/id388497605[iOS]
-
-TOTP тајна мора да се постави у програму WeeChat и у апликацији која се користи за генерисање једнократних лозинки.
-
-То мора бити стринг кодиран у base32, само са словима и цифрама од 2 до 7, на пример:
-
-----
-/secure set relay_totp тајналозинкаbase32
-/set relay.network.totp_secret "${sec.data.relay_totp}"
-----
-
-[[relay_ssl]]
-==== SSL
-
-SSL можете да користите креирањем сертификата и приватног кључа и употребом префикса „ssl.” у имену протокола.
-
-Подразумевана путања до сертификата/кључа је дефинисана опцијом <<option_relay.network.ssl_cert_key,relay.network.ssl_cert_key>>.
-
-Сертификат и приватни кључ можете да креирате следећим командама:
-
-----
-$ mkdir -p ~/.config/weechat/ssl
-$ cd ~/.config/weechat/ssl
-$ openssl req -nodes -newkey rsa:2048 -keyout relay.pem -x509 -days 365 -out relay.pem
-----
-
-[NOTE]
-`~/.config/weechat` морате да замените путањом до вашег WeeChat config директоријума који на пример, такође може да буде `~/.weechat`.
-
-Ако се програм WeeChat већ извршава, сертификат и приватни кључ можете поново да учитате командом:
-
-----
-/relay sslcertkey
-----
-
-[[relay_irc_proxy]]
-==== IRC прокси
-
-Релеј додатак може да се понаша као IRC прокси: симулираће IRC сервер, па можете да се повежете са програмом WeeChat помоћу било ког другог IRC клијента (укључујући и сам WeeChat).
-
-Можете да дефинишете по један порт за сваки IRC сервер, или један генерички за све сервере.
-
-Када се користи један порт за све сервере, клијент мора да пошаље интерно име сервера у IRC команди „PASS”, у следећем формату (погледајте пример испод):
-
-----
-PASS сервер:лозинка
-----
-
-Пример: IRC прокси са SSL за било који сервер (клијент ће изабрати):
-
-----
-/relay add ssl.irc 8000
-----
-
-Пример: IRC прокси без SSL само за сервер „libera”:
-
-----
-/relay add irc.libera 8000
-----
-
-Сада можете да успоставите везу на порту 8000 помоћу било ког IRC клијента употребом лозинке „мојалозинка” (или „libera:мојалозинка” ако у релеју није био наведен ниједан сервер).
-
-На пример, ако као IRC клијент користите програм WeeChat, а сервер се зове „relay” и релеј лозинка је „secret”, можете да поставите лозинку следећим командама:
-
-----
-/secure set relay_libera libera:secret
-/set irc.server.relay.password "${sec.data.relay_libera}"
-----
-
-[[relay_weechat_protocol]]
-==== WeeChat протокол
-
-Релеј додатак може да шаље податке удаљеном интерфејсу користећи WeeChat протокол.
-
-Можете да се повежете употребом удаљеног интерфејса, погледајте листу <<relay_plugin,релеј додатак>>.
-
-[IMPORTANT]
-Сам програм WeeChat НЕ може да се повеже на други програм WeeChat преко овог протокола.
-
-На пример:
-
-----
-/relay add weechat 9000
-----
-
-Сада можете да се повежете са удаљеног интерфејса преко порта 9000 користећи лозинку „мојалозинка”.
-
-[[relay_websocket]]
-==== ВебСокет
-
-Релеј додатак подржава ВебСокет протокол (https://tools.ietf.org/html/rfc6455[RFC 6455]) за све протоколе.
-
-ВебСокет руковање се аутоматски детектује и ако се у руковању пронађу одговарајућа заглавља и ако је порекло дозвољено (погледајте опцију <<option_relay.network.websocket_allowed_origins,relay.network.websocket_allowed_origins>>), сокет постаје спреман за WebSocket.
-
-ВебСокет може да се отвори у HTML5 једном једином линијом JavaScript кода:
-
-[source, js]
-----
-websocket = new WebSocket("ws://server.com:9000/weechat");
-----
-
-Порт (9000 у примеру) је порт који је дефинисан у Релеј додатку. URI увек мора да се завршава са „/weechat” (и за _irc_ и за _weechat_ протокол).
-
-[[relay_unix_socket]]
-==== UNIX доменски сокети
-
-Ако у `/relay add` команди употребите опцију протокола „unix”, можете да ослушкујете било којим протоколом на UNIX доменском сокету на задатој путањи. На пример:
-
-----
-/relay add unix.weechat ${weechat_runtime_dir}/relay_socket
-----
-
-Ово омогућава да се клијенти повежу користећи weechat протокол на _/run/user/1000/weechat/relay_socket_. Врло је корисно за дозвољавање SSH прослеђивања релеј клијентима, када други портови не могу да се отворе.
-
-Употребом OpenSSH:
-
-----
-$ ssh -L 9000:.weechat/relay_socket корисник@имехоста
-----
-
-Ово преусмерава локалне релеј клијенте који се повезују на порт 9000 на инстанцу програма WeeChat која се извршава на машини „имехоста”.
-
-[[relay_commands]]
-==== Команде
-
-include::includes/autogen_user_commands.sr.adoc[tag=relay_commands]
-
-[[relay_options]]
-==== Опције
-
-Одељци у фајлу _relay.conf_:
-
-[width="100%", cols="3m,6m,16", options="header"]
-|===
-| Одељак  | Команда за контролу                | Опис
-| look    | /set relay.look.*                  | Изглед и осећај.
-| color   | /set relay.color.*                 | Боје.
-| network | /set relay.network.*               | Мрежне опције.
-| irc     | /set relay.irc.*                   | Опције специфичне за irc протокол (irc прокси).
-| port    | <<command_relay_relay,/relay add>> +
-            /set relay.port.*                  | Портови који се користе за релеј (irc и weechat протоколи) (у одељку је могуће додавање/уклањање опција).
-|===
-
-Опције:
-
-include::includes/autogen_user_options.sr.adoc[tag=relay_options]
 
 [[scripts_plugins]]
 === Скрипте

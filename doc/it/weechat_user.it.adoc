@@ -301,7 +301,7 @@ List of commonly used options:
   Compile <<scripts_plugins,Python plugin>> using Python 2 instead of Python 3.
 
 | ENABLE_RELAY | `ON`, `OFF` | ON |
-  Compile <<relay_plugin,Relay plugin>>.
+  Compile <<relay,Relay plugin>>.
 
 | ENABLE_RUBY | `ON`, `OFF` | ON |
   Compile <<scripts_plugins,Ruby plugin>>.
@@ -3900,6 +3900,231 @@ Options:
 
 include::includes/autogen_user_options.it.adoc[tag=irc_options]
 
+[[relay]]
+== Relay
+
+Il plugin Relay viene utilizzato per inoltrare i dati via rete, facendo uso di
+protocolli differenti:
+
+* _irc_: proxy IRC: usato per condividere le connessioni ai server IRC con uno
+  o più client IRC
+* _weechat_: protocollo usato dalle interfacce remote per mostrare ed interagire
+  con WeeChat, ad esempio:
+** Glowing Bear (HTML5): https://www.glowing-bear.org/
+** QWeeChat (Qt): https://weechat.org/download
+** WeeChat-Android (Android): https://github.com/ubergeek42/weechat-android
+** weechat.el (Emacs): https://github.com/the-kenny/weechat.el
+** WeeCloud (JavaScript): https://github.com/eirikb/weecloud
+
+// TRANSLATION MISSING
+[[relay_password]]
+=== Password
+
+It is highly recommended to set a password for relay, with these commands:
+
+----
+/secure set relay miapass
+/set relay.network.password "${sec.data.relay}"
+----
+
+This password is used for _irc_ and _weechat_ protocols.
+
+// TRANSLATION MISSING
+[[relay_totp]]
+=== TOTP
+
+TOTP (Time-based One-Time Password) can be used as secondary authentication
+factor for _weechat_ protocol, in addition to the password.
+
+This is optional and increases the security level.
+
+One-time passwords can be generated with applications, for example:
+
+* FreeOTP:
+  https://play.google.com/store/apps/details?id=org.fedorahosted.freeotp[Android],
+  https://itunes.apple.com/fr/app/freeotp-authenticator/id872559395[iOS]
+  (https://freeotp.github.io/[website])
+* Google Authenticator:
+  https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2[Android],
+  https://itunes.apple.com/fr/app/google-authenticator/id388497605[iOS]
+
+The TOTP secret must be set in WeeChat and the application used to generate
+one-time passwords.
+
+It must be a string encoded in base32, with only letters and digits from 2 to 7,
+for example:
+
+----
+/secure set relay_totp secretpasswordbase32
+/set relay.network.totp_secret "${sec.data.relay_totp}"
+----
+
+[[relay_ssl]]
+=== SSL
+
+È possibile usare SSL creando un certificato e una chiave privata, e usando il
+prefisso "ssl." nel nome del protocollo.
+
+// TRANSLATION MISSING
+The default path to certificate/key is defined by option
+<<option_relay.network.ssl_cert_key,relay.network.ssl_cert_key>>.
+
+È possibile creare un certificato e una chiave privata con i seguenti comandi:
+
+----
+$ mkdir -p ~/.config/weechat/ssl
+$ cd ~/.config/weechat/ssl
+$ openssl req -nodes -newkey rsa:2048 -keyout relay.pem -x509 -days 365 -out relay.pem
+----
+
+// TRANSLATION MISSING
+[NOTE]
+You must replace `~/.config/weechat` by the path to your WeeChat config directory
+which can also be for example `~/.weechat`.
+
+Se WeeChat è già in esecuzione, è possibile ricaricare il certificato e la
+chiave privata con il comando:
+
+----
+/relay sslcertkey
+----
+
+// TRANSLATION MISSING
+[[relay_irc_proxy]]
+=== Proxy IRC
+
+The Relay plugin can act as an IRC proxy: it will simulate an IRC server, and
+you can connect to WeeChat with any other IRC client (including WeeChat itself).
+
+You can define one port by IRC server, or one generic port for all servers.
+
+When using one port for all servers, the client must send the internal name of
+server in the IRC "PASS" command, with this format (see example below):
+
+----
+PASS server:miapass
+----
+
+Example: IRC proxy with SSL for any server (client will choose):
+
+----
+/relay add ssl.irc 8000
+----
+
+Example: IRC proxy without SSL only for server "libera":
+
+----
+/relay add irc.libera 8000
+----
+
+Now you can connect on port 8000 with any IRC client using server password
+"miapass" (or "libera:miapass" if no server was specified in the relay).
+
+For example if you use WeeChat as IRC client of the relay, with a server called
+"relay" and the relay password "secret", you can setup the password with these
+commands:
+
+----
+/secure set relay_libera libera:secret
+/set irc.server.relay.password "${sec.data.relay_libera}"
+----
+
+[[relay_weechat_protocol]]
+=== Protocollo WeeChat
+
+Il plugin Relay può inviare dati alle interfacce remote usando il protocollo
+WeeChat.
+
+// TRANSLATION MISSING
+You can connect with a remote interface, see the list in <<relay>>.
+
+[IMPORTANT]
+// TRANSLATION MISSING
+WeeChat itself can NOT connect to another WeeChat with this protocol.
+
+Ad esempio:
+
+----
+/relay add weechat 9000
+----
+
+Ora è possibile connettersi sulla porta 9000 con un'interfaccia remota usando la
+password "miapass".
+
+// TRANSLATION MISSING
+[[relay_websocket]]
+=== WebSocket
+
+WebSocket protocol (https://tools.ietf.org/html/rfc6455[RFC 6455]) is supported
+in Relay plugin for all protocols.
+
+The WebSocket handshake is automatically detected and socket becomes ready for
+WebSocket if required headers are found in handshake and if origin is allowed
+(see option
+<<option_relay.network.websocket_allowed_origins,relay.network.websocket_allowed_origins>>).
+
+A WebSocket can be opened in a HTML5 with a single line of JavaScript:
+
+[source,javascript]
+----
+websocket = new WebSocket("ws://server.com:9000/weechat");
+----
+
+The port (9000 in example) is the port defined in Relay plugin.
+The URI must always end with "/weechat" (for _irc_ and _weechat_ protocols).
+
+// TRANSLATION MISSING
+[[relay_unix_socket]]
+=== UNIX domain sockets
+
+Using the protocol option "unix" with the `/relay add` command, you can listen
+using any protocol on a UNIX domain socket at a given path. For example:
+
+----
+/relay add unix.weechat ${weechat_runtime_dir}/relay_socket
+----
+
+This allows clients to connect using the weechat protocol to
+_/run/user/1000/weechat/relay_socket_. This is particularly useful to allow
+SSH forwarding for relay clients, when other ports cannot be opened.
+
+Using OpenSSH:
+
+----
+$ ssh -L 9000:.weechat/relay_socket user@hostname
+----
+
+This redirects local relay clients connecting on port 9000 to the WeeChat
+instance running on "hostname".
+
+[[relay_commands]]
+=== Comandi
+
+include::includes/autogen_user_commands.it.adoc[tag=relay_commands]
+
+[[relay_options]]
+=== Opzioni
+
+// TRANSLATION MISSING
+Sections in file _relay.conf_:
+
+// TRANSLATION MISSING
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section | Control command                    | Description
+| look    | /set relay.look.*                  | Look and feel.
+| color   | /set relay.color.*                 | Colors.
+| network | /set relay.network.*               | Network options.
+| irc     | /set relay.irc.*                   | Options specific to irc protocol (irc proxy).
+| port    | <<command_relay_relay,/relay add>> +
+            /set relay.port.*                  | Ports used for relay (irc and weechat protocols) (options can be added/removed in section).
+|===
+
+// TRANSLATION MISSING
+Options:
+
+include::includes/autogen_user_options.it.adoc[tag=relay_options]
+
 [[plugins]]
 == Plugin
 
@@ -4072,231 +4297,6 @@ Sections in file _fifo.conf_:
 Options:
 
 include::includes/autogen_user_options.it.adoc[tag=fifo_options]
-
-[[relay_plugin]]
-=== Relay
-
-Il plugin Relay viene utilizzato per inoltrare i dati via rete, facendo uso di
-protocolli differenti:
-
-* _irc_: proxy IRC: usato per condividere le connessioni ai server IRC con uno
-  o più client IRC
-* _weechat_: protocollo usato dalle interfacce remote per mostrare ed interagire
-  con WeeChat, ad esempio:
-** Glowing Bear (HTML5): https://www.glowing-bear.org/
-** QWeeChat (Qt): https://weechat.org/download
-** WeeChat-Android (Android): https://github.com/ubergeek42/weechat-android
-** weechat.el (Emacs): https://github.com/the-kenny/weechat.el
-** WeeCloud (JavaScript): https://github.com/eirikb/weecloud
-
-// TRANSLATION MISSING
-[[relay_password]]
-==== Password
-
-It is highly recommended to set a password for relay, with these commands:
-
-----
-/secure set relay miapass
-/set relay.network.password "${sec.data.relay}"
-----
-
-This password is used for _irc_ and _weechat_ protocols.
-
-// TRANSLATION MISSING
-[[relay_totp]]
-==== TOTP
-
-TOTP (Time-based One-Time Password) can be used as secondary authentication
-factor for _weechat_ protocol, in addition to the password.
-
-This is optional and increases the security level.
-
-One-time passwords can be generated with applications, for example:
-
-* FreeOTP:
-  https://play.google.com/store/apps/details?id=org.fedorahosted.freeotp[Android],
-  https://itunes.apple.com/fr/app/freeotp-authenticator/id872559395[iOS]
-  (https://freeotp.github.io/[website])
-* Google Authenticator:
-  https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2[Android],
-  https://itunes.apple.com/fr/app/google-authenticator/id388497605[iOS]
-
-The TOTP secret must be set in WeeChat and the application used to generate
-one-time passwords.
-
-It must be a string encoded in base32, with only letters and digits from 2 to 7,
-for example:
-
-----
-/secure set relay_totp secretpasswordbase32
-/set relay.network.totp_secret "${sec.data.relay_totp}"
-----
-
-[[relay_ssl]]
-==== SSL
-
-È possibile usare SSL creando un certificato e una chiave privata, e usando il
-prefisso "ssl." nel nome del protocollo.
-
-// TRANSLATION MISSING
-The default path to certificate/key is defined by option
-<<option_relay.network.ssl_cert_key,relay.network.ssl_cert_key>>.
-
-È possibile creare un certificato e una chiave privata con i seguenti comandi:
-
-----
-$ mkdir -p ~/.config/weechat/ssl
-$ cd ~/.config/weechat/ssl
-$ openssl req -nodes -newkey rsa:2048 -keyout relay.pem -x509 -days 365 -out relay.pem
-----
-
-// TRANSLATION MISSING
-[NOTE]
-You must replace `~/.config/weechat` by the path to your WeeChat config directory
-which can also be for example `~/.weechat`.
-
-Se WeeChat è già in esecuzione, è possibile ricaricare il certificato e la
-chiave privata con il comando:
-
-----
-/relay sslcertkey
-----
-
-// TRANSLATION MISSING
-[[relay_irc_proxy]]
-==== Proxy IRC
-
-The Relay plugin can act as an IRC proxy: it will simulate an IRC server, and
-you can connect to WeeChat with any other IRC client (including WeeChat itself).
-
-You can define one port by IRC server, or one generic port for all servers.
-
-When using one port for all servers, the client must send the internal name of
-server in the IRC "PASS" command, with this format (see example below):
-
-----
-PASS server:miapass
-----
-
-Example: IRC proxy with SSL for any server (client will choose):
-
-----
-/relay add ssl.irc 8000
-----
-
-Example: IRC proxy without SSL only for server "libera":
-
-----
-/relay add irc.libera 8000
-----
-
-Now you can connect on port 8000 with any IRC client using server password
-"miapass" (or "libera:miapass" if no server was specified in the relay).
-
-For example if you use WeeChat as IRC client of the relay, with a server called
-"relay" and the relay password "secret", you can setup the password with these
-commands:
-
-----
-/secure set relay_libera libera:secret
-/set irc.server.relay.password "${sec.data.relay_libera}"
-----
-
-[[relay_weechat_protocol]]
-==== Protocollo WeeChat
-
-Il plugin Relay può inviare dati alle interfacce remote usando il protocollo
-WeeChat.
-
-// TRANSLATION MISSING
-You can connect with a remote interface, see the list in <<relay_plugin>>.
-
-[IMPORTANT]
-// TRANSLATION MISSING
-WeeChat itself can NOT connect to another WeeChat with this protocol.
-
-Ad esempio:
-
-----
-/relay add weechat 9000
-----
-
-Ora è possibile connettersi sulla porta 9000 con un'interfaccia remota usando la
-password "miapass".
-
-// TRANSLATION MISSING
-[[relay_websocket]]
-==== WebSocket
-
-WebSocket protocol (https://tools.ietf.org/html/rfc6455[RFC 6455]) is supported
-in Relay plugin for all protocols.
-
-The WebSocket handshake is automatically detected and socket becomes ready for
-WebSocket if required headers are found in handshake and if origin is allowed
-(see option
-<<option_relay.network.websocket_allowed_origins,relay.network.websocket_allowed_origins>>).
-
-A WebSocket can be opened in a HTML5 with a single line of JavaScript:
-
-[source,javascript]
-----
-websocket = new WebSocket("ws://server.com:9000/weechat");
-----
-
-The port (9000 in example) is the port defined in Relay plugin.
-The URI must always end with "/weechat" (for _irc_ and _weechat_ protocols).
-
-// TRANSLATION MISSING
-[[relay_unix_socket]]
-==== UNIX domain sockets
-
-Using the protocol option "unix" with the `/relay add` command, you can listen
-using any protocol on a UNIX domain socket at a given path. For example:
-
-----
-/relay add unix.weechat ${weechat_runtime_dir}/relay_socket
-----
-
-This allows clients to connect using the weechat protocol to
-_/run/user/1000/weechat/relay_socket_. This is particularly useful to allow
-SSH forwarding for relay clients, when other ports cannot be opened.
-
-Using OpenSSH:
-
-----
-$ ssh -L 9000:.weechat/relay_socket user@hostname
-----
-
-This redirects local relay clients connecting on port 9000 to the WeeChat
-instance running on "hostname".
-
-[[relay_commands]]
-==== Comandi
-
-include::includes/autogen_user_commands.it.adoc[tag=relay_commands]
-
-[[relay_options]]
-==== Opzioni
-
-// TRANSLATION MISSING
-Sections in file _relay.conf_:
-
-// TRANSLATION MISSING
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Section | Control command                    | Description
-| look    | /set relay.look.*                  | Look and feel.
-| color   | /set relay.color.*                 | Colors.
-| network | /set relay.network.*               | Network options.
-| irc     | /set relay.irc.*                   | Options specific to irc protocol (irc proxy).
-| port    | <<command_relay_relay,/relay add>> +
-            /set relay.port.*                  | Ports used for relay (irc and weechat protocols) (options can be added/removed in section).
-|===
-
-// TRANSLATION MISSING
-Options:
-
-include::includes/autogen_user_options.it.adoc[tag=relay_options]
 
 // TRANSLATION MISSING
 [[scripts_plugins]]
