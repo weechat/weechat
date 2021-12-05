@@ -4843,8 +4843,8 @@ Options:
 
 include::includes/autogen_user_options.en.adoc[tag=trigger_options]
 
-[[extension]]
-== WeeChat extension
+[[extending_weechat]]
+== Extending WeeChat
 
 WeeChat has a modular design and can be extended with plugins and scripts.
 

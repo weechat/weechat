@@ -4564,8 +4564,8 @@ include::includes/autogen_user_commands.sr.adoc[tag=trigger_commands]
 include::includes/autogen_user_options.sr.adoc[tag=trigger_options]
 
 // TRANSLATION MISSING
-[[extension]]
-== WeeChat extension
+[[extending_weechat]]
+== Extending WeeChat
 
 // TRANSLATION MISSING
 WeeChat has a modular design and can be extended with plugins and scripts.

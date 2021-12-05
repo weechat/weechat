@@ -5174,8 +5174,8 @@ Options:
 include::includes/autogen_user_options.it.adoc[tag=trigger_options]
 
 // TRANSLATION MISSING
-[[extension]]
-== WeeChat extension
+[[extending_weechat]]
+== Extending WeeChat
 
 // TRANSLATION MISSING
 WeeChat has a modular design and can be extended with plugins and scripts.

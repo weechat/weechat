@@ -5015,7 +5015,7 @@ Options :
 
 include::includes/autogen_user_options.fr.adoc[tag=trigger_options]
 
-[[extension]]
+[[extending_weechat]]
 == Extension de WeeChat
 
 WeeChat est conçu de manière modulaire et peut être étendu avec des extensions
