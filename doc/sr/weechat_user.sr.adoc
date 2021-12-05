@@ -207,7 +207,7 @@ $ make install
   Компајлира <<fifo_plugin,Fifo додатак>>.
 
 | ENABLE_FSET | `ON`, `OFF` | ON |
-  Компајлира <<fset_plugin,Fset додатак>>.
+  Компајлира <<fset,Fset додатак>>.
 
 | ENABLE_GUILE | `ON`, `OFF` | ON |
   Компајлира <<scripts_plugins,Guile додатак>> (Scheme).
@@ -1275,6 +1275,33 @@ include::includes/autogen_user_commands.sr.adoc[tag=buflist_commands]
 
 include::includes/autogen_user_options.sr.adoc[tag=buflist_options]
 
+[[fset]]
+=== Fset
+
+Fast Set додатак приказује листу опција у баферу и помаже вам да постављате WeeChat опције и опције додатака.
+
+[[fset_commands]]
+==== Команде
+
+include::includes/autogen_user_commands.sr.adoc[tag=fset_commands]
+
+[[fset_options]]
+==== Опције
+
+Одељци у фајлу _fset.conf_:
+
+[width="100%", cols="3m,6m,16", options="header"]
+|===
+| Одељак  | Команда за контролу | Опис
+| color   | /set fset.color.*   | Боје.
+| format  | /set fset.format.*  | Формати који се користе за приказ команди.
+| look    | /set fset.look.*    | Изглед и осећај.
+|===
+
+Опције:
+
+include::includes/autogen_user_options.sr.adoc[tag=fset_options]
+
 [[bare_display]]
 === Огољени приказ
 
@@ -1664,7 +1691,7 @@ These mouse actions are possible only if mouse is enabled with key kbd:[Alt+m]
 [[key_bindings_fset_buffer]]
 === Fset buffer
 
-Ови тастери и акције се користе у fset баферу (погледајте<<fset_plugin,Fset додатак>>).
+Ови тастери и акције се користе у fset баферу (погледајте<<fset,Fset додатак>>).
 
 [width="100%", cols="^.^3,^.^2,.^8,.^5", options="header"]
 |===
@@ -2690,33 +2717,6 @@ include::includes/autogen_user_commands.sr.adoc[tag=fifo_commands]
 Опције:
 
 include::includes/autogen_user_options.sr.adoc[tag=fifo_options]
-
-[[fset_plugin]]
-=== Fset
-
-Fast Set додатак приказује листу опција у баферу и помаже вам да постављате WeeChat опције и опције додатака.
-
-[[fset_commands]]
-==== Команде
-
-include::includes/autogen_user_commands.sr.adoc[tag=fset_commands]
-
-[[fset_options]]
-==== Опције
-
-Одељци у фајлу _fset.conf_:
-
-[width="100%", cols="3m,6m,16", options="header"]
-|===
-| Одељак  | Команда за контролу | Опис
-| color   | /set fset.color.*   | Боје.
-| format  | /set fset.format.*  | Формати који се користе за приказ команди.
-| look    | /set fset.look.*    | Изглед и осећај.
-|===
-
-Опције:
-
-include::includes/autogen_user_options.sr.adoc[tag=fset_options]
 
 [[irc_plugin]]
 === IRC

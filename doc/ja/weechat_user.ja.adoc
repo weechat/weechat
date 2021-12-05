@@ -233,7 +233,7 @@ CMake に対するオプションを指定するには、以下の書式を使�
   <<fifo_plugin,Fifo プラグイン>>のコンパイル。
 
 | ENABLE_FSET | `ON`, `OFF` | ON |
-  <<fset_plugin,Fset プラグイン>>のコンパイル。
+  <<fset,Fset プラグイン>>のコンパイル。
 
 | ENABLE_GUILE | `ON`, `OFF` | ON |
   <<scripts_plugins,Guile プラグイン>> (Scheme) のコンパイル。
@@ -1422,6 +1422,34 @@ _buflist.conf_ ファイル内のセクション:
 
 include::includes/autogen_user_options.ja.adoc[tag=buflist_options]
 
+[[fset]]
+=== Fset
+
+fset (高速設定) プラグインはバッファ内にオプションのリストを表示し、WeeChat
+とプラグインのオプション設定を支援します。
+
+[[fset_commands]]
+==== コマンド
+
+include::includes/autogen_user_commands.ja.adoc[tag=fset_commands]
+
+[[fset_options]]
+==== オプション
+
+_fset.conf_ ファイル内のセクション:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| セクション | 操作コマンド       | 説明
+| color      | /set fset.color.*  | 色
+| format     | /set fset.format.* | オプションリストの表示書式
+| look       | /set fset.look.*   | 外観
+|===
+
+オプション:
+
+include::includes/autogen_user_options.ja.adoc[tag=fset_options]
+
 [[bare_display]]
 === 最小限表示
 
@@ -1834,7 +1862,7 @@ These mouse actions are possible only if mouse is enabled with key kbd:[Alt+m]
 === Fset buffer
 
 // TRANSLATION MISSING
-These keys and actions are used on the fset buffer (see <<fset_plugin,Fset plugin>>).
+These keys and actions are used on the fset buffer (see <<fset,Fset plugin>>).
 
 // TRANSLATION MISSING
 [width="100%",cols="^.^3,^.^2,.^8,.^5",options="header"]
@@ -2971,34 +2999,6 @@ _fifo.conf_ ファイル内のセクション:
 オプション:
 
 include::includes/autogen_user_options.ja.adoc[tag=fifo_options]
-
-[[fset_plugin]]
-=== Fset
-
-fset (高速設定) プラグインはバッファ内にオプションのリストを表示し、WeeChat
-とプラグインのオプション設定を支援します。
-
-[[fset_commands]]
-==== コマンド
-
-include::includes/autogen_user_commands.ja.adoc[tag=fset_commands]
-
-[[fset_options]]
-==== オプション
-
-_fset.conf_ ファイル内のセクション:
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| セクション | 操作コマンド       | 説明
-| color      | /set fset.color.*  | 色
-| format     | /set fset.format.* | オプションリストの表示書式
-| look       | /set fset.look.*   | 外観
-|===
-
-オプション:
-
-include::includes/autogen_user_options.ja.adoc[tag=fset_options]
 
 [[irc_plugin]]
 === IRC

@@ -223,7 +223,7 @@ List of commonly used options:
   Compile <<fifo_plugin,Fifo plugin>>.
 
 | ENABLE_FSET | `ON`, `OFF` | ON |
-  Compile <<fset_plugin,Fset plugin>>.
+  Compile <<fset,Fset plugin>>.
 
 | ENABLE_GUILE | `ON`, `OFF` | ON |
   Compile <<scripts_plugins,Guile plugin>> (Scheme).
@@ -1356,6 +1356,34 @@ Options:
 
 include::includes/autogen_user_options.en.adoc[tag=buflist_options]
 
+[[fset]]
+=== Fset
+
+Fast Set plugin displays a list of options in a buffer, and helps to set WeeChat
+and plugin options.
+
+[[fset_commands]]
+==== Commands
+
+include::includes/autogen_user_commands.en.adoc[tag=fset_commands]
+
+[[fset_options]]
+==== Options
+
+Sections in file _fset.conf_:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section | Control command    | Description
+| color   | /set fset.color.*  | Colors.
+| format  | /set fset.format.* | Formats used to display list of options.
+| look    | /set fset.look.*   | Look and feel.
+|===
+
+Options:
+
+include::includes/autogen_user_options.en.adoc[tag=fset_options]
+
 [[bare_display]]
 === Bare display
 
@@ -1737,7 +1765,7 @@ These mouse actions are possible only if mouse is enabled with key kbd:[Alt+m]
 [[key_bindings_fset_buffer]]
 === Fset buffer
 
-These keys and actions are used on the fset buffer (see <<fset_plugin,Fset plugin>>).
+These keys and actions are used on the fset buffer (see <<fset,Fset plugin>>).
 
 [width="100%",cols="^.^3,^.^2,.^8,.^5",options="header"]
 |===
@@ -2860,34 +2888,6 @@ Sections in file _fifo.conf_:
 Options:
 
 include::includes/autogen_user_options.en.adoc[tag=fifo_options]
-
-[[fset_plugin]]
-=== Fset
-
-Fast Set plugin displays a list of options in a buffer, and helps to set WeeChat
-and plugin options.
-
-[[fset_commands]]
-==== Commands
-
-include::includes/autogen_user_commands.en.adoc[tag=fset_commands]
-
-[[fset_options]]
-==== Options
-
-Sections in file _fset.conf_:
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Section | Control command    | Description
-| color   | /set fset.color.*  | Colors.
-| format  | /set fset.format.* | Formats used to display list of options.
-| look    | /set fset.look.*   | Look and feel.
-|===
-
-Options:
-
-include::includes/autogen_user_options.en.adoc[tag=fset_options]
 
 [[irc_plugin]]
 === IRC

@@ -231,7 +231,7 @@ Liste von häufig verwendeten Optionen:
   kompiliert <<fifo_plugin,Fifo Erweiterung>>.
 
 | ENABLE_FSET | `ON`, `OFF` | ON |
-  kompiliert <<fset_plugin,Fset Erweiterung>>.
+  kompiliert <<fset,Fset Erweiterung>>.
 
 | ENABLE_GUILE | `ON`, `OFF` | ON |
   kompiliert <<scripts_plugins,Guile Erweiterung>> (Scheme).
@@ -1376,6 +1376,34 @@ Optionen:
 
 include::includes/autogen_user_options.de.adoc[tag=buflist_options]
 
+[[fset]]
+=== Fset
+
+Die fset Erweiterung stellt eine Liste aller Optionen in einem Buffer dar und erleichtert
+die Konfiguration von WeeChat und Erweiterungen.
+
+[[fset_commands]]
+==== Befehle
+
+include::includes/autogen_user_commands.de.adoc[tag=fset_commands]
+
+[[fset_options]]
+==== Optionen
+
+Sektionen in Datei _fset.conf_:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Sektion | Steuerbefehl       | Beschreibung
+| color   | /set fset.color.*  | Farben.
+| format  | /set fset.format.* | Format um die Liste der Optionen darzustellen.
+| look    | /set fset.look.*   | Erscheinungsbild.
+|===
+
+Optionen:
+
+include::includes/autogen_user_options.de.adoc[tag=fset_options]
+
 [[bare_display]]
 === einfacher Anzeigemodus
 
@@ -1777,7 +1805,7 @@ These mouse actions are possible only if mouse is enabled with key kbd:[Alt+m]
 [[key_bindings_fset_buffer]]
 === Fset buffer
 
-Diese Tasten und Aktionen werden im fset-Buffer verwendet (siehe <<fset_plugin,Fset Erweiterung>>).
+Diese Tasten und Aktionen werden im fset-Buffer verwendet (siehe <<fset,Fset Erweiterung>>).
 
 [width="100%",cols="^.^3,^.^2,.^8,.^5",options="header"]
 |===
@@ -2940,34 +2968,6 @@ Sektionen in Datei _fifo.conf_:
 Optionen:
 
 include::includes/autogen_user_options.de.adoc[tag=fifo_options]
-
-[[fset_plugin]]
-=== Fset
-
-Die fset Erweiterung stellt eine Liste aller Optionen in einem Buffer dar und erleichtert
-die Konfiguration von WeeChat und Erweiterungen.
-
-[[fset_commands]]
-==== Befehle
-
-include::includes/autogen_user_commands.de.adoc[tag=fset_commands]
-
-[[fset_options]]
-==== Optionen
-
-Sektionen in Datei _fset.conf_:
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Sektion | Steuerbefehl       | Beschreibung
-| color   | /set fset.color.*  | Farben.
-| format  | /set fset.format.* | Format um die Liste der Optionen darzustellen.
-| look    | /set fset.look.*   | Erscheinungsbild.
-|===
-
-Optionen:
-
-include::includes/autogen_user_options.de.adoc[tag=fset_options]
 
 [[irc_plugin]]
 === IRC

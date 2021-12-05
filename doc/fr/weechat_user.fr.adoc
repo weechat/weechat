@@ -227,7 +227,7 @@ Liste des options couramment utilisées :
   Compiler <<fifo_plugin,l'extension Fifo>>.
 
 | ENABLE_FSET | `ON`, `OFF` | ON |
-  Compiler <<fset_plugin,l'extension Fset>>.
+  Compiler <<fset,l'extension Fset>>.
 
 | ENABLE_GUILE | `ON`, `OFF` | ON |
   Compiler <<scripts_plugins,l'extension Guile>> (Scheme).
@@ -1395,6 +1395,34 @@ Options :
 
 include::includes/autogen_user_options.fr.adoc[tag=buflist_options]
 
+[[fset]]
+=== Fset
+
+L'extension Fset affiche une liste des options dans un tampon et aide à définir
+les options de WeeChat et des extensions.
+
+[[fset_commands]]
+==== Commandes
+
+include::includes/autogen_user_commands.fr.adoc[tag=fset_commands]
+
+[[fset_options]]
+==== Options
+
+Sections dans le fichier _fset.conf_ :
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section | Commande de contrôle | Description
+| color   | /set fset.color.*    | Couleurs.
+| format  | /set fset.format.*   | Formats utilisés pour afficher la liste des options.
+| look    | /set fset.look.*     | Aspect/présentation.
+|===
+
+Options :
+
+include::includes/autogen_user_options.fr.adoc[tag=fset_options]
+
 [[bare_display]]
 === Affichage dépouillé
 
@@ -1783,7 +1811,7 @@ avec la touche kbd:[Alt+m] (commande : `+/mouse toggle+`).
 === Tampon fset
 
 Ces touches et actions sont utilisées sur le tampon fset
-(voir <<fset_plugin,l'extension Fset>>).
+(voir <<fset,l'extension Fset>>).
 
 [width="100%",cols="^.^3,^.^2,.^8,.^5",options="header"]
 |===
@@ -2959,34 +2987,6 @@ Sections dans le fichier _fifo.conf_ :
 Options :
 
 include::includes/autogen_user_options.fr.adoc[tag=fifo_options]
-
-[[fset_plugin]]
-=== Fset
-
-L'extension Fset affiche une liste des options dans un tampon et aide à définir
-les options de WeeChat et des extensions.
-
-[[fset_commands]]
-==== Commandes
-
-include::includes/autogen_user_commands.fr.adoc[tag=fset_commands]
-
-[[fset_options]]
-==== Options
-
-Sections dans le fichier _fset.conf_ :
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Section | Commande de contrôle | Description
-| color   | /set fset.color.*    | Couleurs.
-| format  | /set fset.format.*   | Formats utilisés pour afficher la liste des options.
-| look    | /set fset.look.*     | Aspect/présentation.
-|===
-
-Options :
-
-include::includes/autogen_user_options.fr.adoc[tag=fset_options]
 
 [[irc_plugin]]
 === IRC

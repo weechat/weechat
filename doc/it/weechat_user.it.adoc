@@ -261,7 +261,7 @@ List of commonly used options:
   Compile <<fifo_plugin,Fifo plugin>>.
 
 | ENABLE_FSET | `ON`, `OFF` | ON |
-  Compile <<fset_plugin,Fset plugin>>.
+  Compile <<fset,Fset plugin>>.
 
 | ENABLE_GUILE | `ON`, `OFF` | ON |
   Compile <<scripts_plugins,Guile plugin>> (Scheme).
@@ -1470,6 +1470,38 @@ Options:
 
 include::includes/autogen_user_options.it.adoc[tag=buflist_options]
 
+[[fset]]
+=== Fset
+
+// TRANSLATION MISSING
+Fast Set plugin displays a list of options in a buffer, and helps to set WeeChat
+and plugin options.
+
+[[fset_commands]]
+==== Comandi
+
+include::includes/autogen_user_commands.it.adoc[tag=fset_commands]
+
+[[fset_options]]
+==== Opzioni
+
+// TRANSLATION MISSING
+Sections in file _fset.conf_:
+
+// TRANSLATION MISSING
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section | Control command    | Description
+| color   | /set fset.color.*  | Colors.
+| format  | /set fset.format.* | Formats used to display list of options.
+| look    | /set fset.look.*   | Look and feel.
+|===
+
+// TRANSLATION MISSING
+Options:
+
+include::includes/autogen_user_options.it.adoc[tag=fset_options]
+
 // TRANSLATION MISSING
 [[bare_display]]
 === Bare display
@@ -1913,7 +1945,7 @@ These mouse actions are possible only if mouse is enabled with key kbd:[Alt+m]
 === Fset buffer
 
 // TRANSLATION MISSING
-These keys and actions are used on the fset buffer (see <<fset_plugin,Fset plugin>>).
+These keys and actions are used on the fset buffer (see <<fset,Fset plugin>>).
 
 // TRANSLATION MISSING
 [width="100%",cols="^.^3,^.^2,.^8,.^5",options="header"]
@@ -3102,38 +3134,6 @@ Sections in file _fifo.conf_:
 Options:
 
 include::includes/autogen_user_options.it.adoc[tag=fifo_options]
-
-[[fset_plugin]]
-=== Fset
-
-// TRANSLATION MISSING
-Fast Set plugin displays a list of options in a buffer, and helps to set WeeChat
-and plugin options.
-
-[[fset_commands]]
-==== Comandi
-
-include::includes/autogen_user_commands.it.adoc[tag=fset_commands]
-
-[[fset_options]]
-==== Opzioni
-
-// TRANSLATION MISSING
-Sections in file _fset.conf_:
-
-// TRANSLATION MISSING
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Section | Control command    | Description
-| color   | /set fset.color.*  | Colors.
-| format  | /set fset.format.* | Formats used to display list of options.
-| look    | /set fset.look.*   | Look and feel.
-|===
-
-// TRANSLATION MISSING
-Options:
-
-include::includes/autogen_user_options.it.adoc[tag=fset_options]
 
 [[irc_plugin]]
 === IRC
