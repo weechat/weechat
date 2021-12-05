@@ -248,7 +248,7 @@ CMake に対するオプションを指定するには、以下の書式を使�
   巨大ファイルのサポート。
 
 | ENABLE_LOGGER | `ON`, `OFF` | ON |
-  <<logger_plugin,Logger プラグイン>>のコンパイル。
+  <<buffer_logging,Logger プラグイン>>のコンパイル。
 
 | ENABLE_LUA | `ON`, `OFF` | ON |
   <<scripts_plugins,Lua プラグイン>>のコンパイル。
@@ -2326,6 +2326,168 @@ irc サーバ "libera" に含まれる全てのバッファに対して設定す
 これを保存するには _buffer_autoset.py_ スクリプトを使ってください: このスクリプトをインストールするには
 `+/script install buffer_autoset.py+` コマンドを使い、ヘルプを見るには `+/help buffer_autoset+` コマンドを使ってください。
 
+// TRANSLATION MISSING
+[[buffer_logging]]
+=== Buffer logging
+
+Logger
+プラグインを使うことで、バッファの内容をファイルに保存できます。保存形式とその方法をオプションで設定できます。
+
+[[logger_log_levels]]
+==== ログレベル
+
+ログ保存はそれぞれのバッファに対して設定されたログレベルに従って行われます。デフォルトのレベルは
+9 (バッファに表示されたメッセージをすべて保存)
+です。特定のバッファやバッファグループに対して個別にログレベルを設定できます。
+
+設定可能なレベルは 0 から 9 です。0 は "保存しない"、9
+は「すべてのメッセージを保存」を意味します。
+
+それぞれのプラグインでレベルの意味が変わります。IRC
+プラグインに対しては以下のレベルが利用されます:
+
+* レベル 1: ユーザからのメッセージ (チャンネルまたはプライベート)
+* レベル 2: ニックネームの変更 (自身と他のユーザ)
+* レベル 3: 任意のサーバメッセージ (参加/退出/終了メッセージを除く)
+* レベル 4: 参加/退出/終了メッセージ
+
+従って、IRC チャンネルに対してレベル 3 を設定した場合、WeeChat
+は参加/退出/終了メッセージを除いて全てのメッセージを保存します。
+
+例:
+
+* IRC チャンネル #weechat に対してレベル 3 を設定:
+
+----
+/set logger.level.irc.libera.#weechat 3
+----
+
+* libera サーババッファに対してレベル 3 を設定:
+
+----
+/set logger.level.irc.server.libera 3
+----
+
+* libera サーバの全てのチャンネルに対してレベル 3 を設定:
+
+----
+/set logger.level.irc.libera 3
+----
+
+* 全ての IRC バッファに対してレベル 2 を設定:
+
+----
+/set logger.level.irc 2
+----
+
+[[logger_filenames_masks]]
+==== ファイル名マスク
+
+// TRANSLATION MISSING
+It is possible to define a filename mask for each buffer, and use local buffer
+variables to build filename. To see available local variables for current buffer:
+
+----
+/buffer listvar
+----
+
+// TRANSLATION MISSING
+Masks will be matched on options in descending order of specificity on
+`logger.mask.$plugin.*`, with `logger.file.mask` as fallback option.
+
+例えば "irc.libera.#weechat" バッファの場合、WeeChat
+は以下の順番でオプションに設定されたファイル名マスクを検索します:
+
+----
+logger.mask.irc.libera.#weechat
+logger.mask.irc.libera
+logger.mask.irc
+logger.file.mask
+----
+
+特定の IRC サーバ ("logger.mask.irc.libera") またはプラグイン
+("logger.mask.irc") のグループに対して共通のマスクを適用できます。
+
+[[logger_files_by_date]]
+===== ログファイルに日付を利用する
+
+ログファイルに日付を使うには、マスクに日時/時間指定子を利用できます
+(書式に関しては `man strftime` を参照してください)。例えば:
+
+----
+/set logger.file.mask "%Y/%m/$plugin.$name.weechatlog"
+----
+
+以下のファイルが作成されます:
+
+....
+~/.local/share/weechat
+└── logs
+    ├── 2010
+    │   ├── 11
+    │   │   ├── irc.server.libera.weechatlog
+    │   │   └── irc.libera.#weechat.weechatlog
+    │   └── 12
+    │       ├── irc.server.libera.weechatlog
+    │       └── irc.libera.#weechat.weechatlog
+    ├── 2011
+    │   ├── 01
+    │   │   ├── irc.server.libera.weechatlog
+    │   │   └── irc.libera.#weechat.weechatlog
+    │   ├── 02
+    ...
+....
+
+[[logger_irc_files_by_server_channel]]
+===== IRC ログファイルにサーバとチャンネル名を利用する
+
+IRC サーバ名を使ったディレクトリに、チャンネル名を使ったファイルを作成する場合:
+
+----
+/set logger.mask.irc "irc/$server/$channel.weechatlog"
+----
+
+以下のファイルが作成されます:
+
+....
+~/.local/share/weechat
+└── logs
+    └── irc
+        ├── libera
+        │   ├── libera.weechatlog
+        │   ├── #weechat.weechatlog
+        │   └── #mychan.weechatlog
+        ├── oftc
+        │   ├── oftc.weechatlog
+        │   ├── #channel1.weechatlog
+        │   └── #channel2.weechatlog
+        ...
+....
+
+[[logger_commands]]
+==== コマンド
+
+include::includes/autogen_user_commands.ja.adoc[tag=logger_commands]
+
+[[logger_options]]
+==== オプション
+
+_logger.conf_ ファイル内のセクション:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| セクション | 操作コマンド        | 説明
+| look       | /set logger.look.*  | 外観
+| color      | /set logger.color.* | 色
+| file       | /set logger.file.*  | ログファイルのオプション
+| level      | /set logger.level.* | バッファのログレベル (オプションをセクションに追加/削除出来ます)
+| mask       | /set logger.mask.*  | バッファのファイル名マスク (オプションをセクションに追加/削除出来ます)
+|===
+
+オプション:
+
+include::includes/autogen_user_options.ja.adoc[tag=logger_options]
+
 [[mouse]]
 === マウスサポート
 
@@ -3736,167 +3898,6 @@ _fifo.conf_ ファイル内のセクション:
 オプション:
 
 include::includes/autogen_user_options.ja.adoc[tag=fifo_options]
-
-[[logger_plugin]]
-=== Logger
-
-Logger
-プラグインを使うことで、バッファの内容をファイルに保存できます。保存形式とその方法をオプションで設定できます。
-
-[[logger_log_levels]]
-==== ログレベル
-
-ログ保存はそれぞれのバッファに対して設定されたログレベルに従って行われます。デフォルトのレベルは
-9 (バッファに表示されたメッセージをすべて保存)
-です。特定のバッファやバッファグループに対して個別にログレベルを設定できます。
-
-設定可能なレベルは 0 から 9 です。0 は "保存しない"、9
-は「すべてのメッセージを保存」を意味します。
-
-それぞれのプラグインでレベルの意味が変わります。IRC
-プラグインに対しては以下のレベルが利用されます:
-
-* レベル 1: ユーザからのメッセージ (チャンネルまたはプライベート)
-* レベル 2: ニックネームの変更 (自身と他のユーザ)
-* レベル 3: 任意のサーバメッセージ (参加/退出/終了メッセージを除く)
-* レベル 4: 参加/退出/終了メッセージ
-
-従って、IRC チャンネルに対してレベル 3 を設定した場合、WeeChat
-は参加/退出/終了メッセージを除いて全てのメッセージを保存します。
-
-例:
-
-* IRC チャンネル #weechat に対してレベル 3 を設定:
-
-----
-/set logger.level.irc.libera.#weechat 3
-----
-
-* libera サーババッファに対してレベル 3 を設定:
-
-----
-/set logger.level.irc.server.libera 3
-----
-
-* libera サーバの全てのチャンネルに対してレベル 3 を設定:
-
-----
-/set logger.level.irc.libera 3
-----
-
-* 全ての IRC バッファに対してレベル 2 を設定:
-
-----
-/set logger.level.irc 2
-----
-
-[[logger_filenames_masks]]
-==== ファイル名マスク
-
-// TRANSLATION MISSING
-It is possible to define a filename mask for each buffer, and use local buffer
-variables to build filename. To see available local variables for current buffer:
-
-----
-/buffer listvar
-----
-
-// TRANSLATION MISSING
-Masks will be matched on options in descending order of specificity on
-`logger.mask.$plugin.*`, with `logger.file.mask` as fallback option.
-
-例えば "irc.libera.#weechat" バッファの場合、WeeChat
-は以下の順番でオプションに設定されたファイル名マスクを検索します:
-
-----
-logger.mask.irc.libera.#weechat
-logger.mask.irc.libera
-logger.mask.irc
-logger.file.mask
-----
-
-特定の IRC サーバ ("logger.mask.irc.libera") またはプラグイン
-("logger.mask.irc") のグループに対して共通のマスクを適用できます。
-
-[[logger_files_by_date]]
-===== ログファイルに日付を利用する
-
-ログファイルに日付を使うには、マスクに日時/時間指定子を利用できます
-(書式に関しては `man strftime` を参照してください)。例えば:
-
-----
-/set logger.file.mask "%Y/%m/$plugin.$name.weechatlog"
-----
-
-以下のファイルが作成されます:
-
-....
-~/.local/share/weechat
-└── logs
-    ├── 2010
-    │   ├── 11
-    │   │   ├── irc.server.libera.weechatlog
-    │   │   └── irc.libera.#weechat.weechatlog
-    │   └── 12
-    │       ├── irc.server.libera.weechatlog
-    │       └── irc.libera.#weechat.weechatlog
-    ├── 2011
-    │   ├── 01
-    │   │   ├── irc.server.libera.weechatlog
-    │   │   └── irc.libera.#weechat.weechatlog
-    │   ├── 02
-    ...
-....
-
-[[logger_irc_files_by_server_channel]]
-===== IRC ログファイルにサーバとチャンネル名を利用する
-
-IRC サーバ名を使ったディレクトリに、チャンネル名を使ったファイルを作成する場合:
-
-----
-/set logger.mask.irc "irc/$server/$channel.weechatlog"
-----
-
-以下のファイルが作成されます:
-
-....
-~/.local/share/weechat
-└── logs
-    └── irc
-        ├── libera
-        │   ├── libera.weechatlog
-        │   ├── #weechat.weechatlog
-        │   └── #mychan.weechatlog
-        ├── oftc
-        │   ├── oftc.weechatlog
-        │   ├── #channel1.weechatlog
-        │   └── #channel2.weechatlog
-        ...
-....
-
-[[logger_commands]]
-==== コマンド
-
-include::includes/autogen_user_commands.ja.adoc[tag=logger_commands]
-
-[[logger_options]]
-==== オプション
-
-_logger.conf_ ファイル内のセクション:
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| セクション | 操作コマンド        | 説明
-| look       | /set logger.look.*  | 外観
-| color      | /set logger.color.* | 色
-| file       | /set logger.file.*  | ログファイルのオプション
-| level      | /set logger.level.* | バッファのログレベル (オプションをセクションに追加/削除出来ます)
-| mask       | /set logger.mask.*  | バッファのファイル名マスク (オプションをセクションに追加/削除出来ます)
-|===
-
-オプション:
-
-include::includes/autogen_user_options.ja.adoc[tag=logger_options]
 
 [[relay_plugin]]
 === Relay

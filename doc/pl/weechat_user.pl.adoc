@@ -244,7 +244,7 @@ Lista popularnych opcji:
   Wsparcie dla dużych plików.
 
 | ENABLE_LOGGER | `ON`, `OFF` | ON |
-  Kompilacja <<logger_plugin,wtyczki logger>>.
+  Kompilacja <<buffer_logging,wtyczki logger>>.
 
 | ENABLE_LUA | `ON`, `OFF` | ON |
   Kompilacja <<scripts_plugins,wtyczki lua>>.
@@ -2265,6 +2265,169 @@ Właściwość bufora "highlight_regex" nie jest zapisywana w konfiguracji. +
 Można ją zapisać za pomocą skryptu _buffer_autoset.py_: można go zaintalować za pomocą
 `+/script install buffer_autoset.py+`, informacje o używaniu `+/help buffer_autoset+`.
 
+// TRANSLATION MISSING
+[[buffer_logging]]
+=== Buffer logging
+
+Wtyczka logger pozwala zapisywać zawartość bufora do pliku, oraz wybrać co i jak
+ma być zapisywane.
+
+[[logger_log_levels]]
+==== Poziomy logowania
+
+Logowanie odbywa się dla odpowiedniego poziomu dla każdego bufora. Domyślny
+poziom to 9 (logowane są wszystkie wiadomości wyświetlane w buforze).
+Możesz zmienić poziom dla pojedynczego bufora lub grupy buforów.
+
+Dostępne są poziomy od 0 do 9. Zero oznacza "nic nie loguj", a 9 oznacza "loguj
+wszystko".
+
+Wtyczki wykorzystują różne poziomy dla wyświetlanych wiadomości.
+Wtyczka IRC używa następujących:
+
+* poziom 1: wiadomość od użytkownika (na kanale lub prywatnie)
+* poziom 2: zmiana nicka (twojego lub innego)
+* poziom 3: dowolna wiadomość serwera (poza wejściem/opuszczeniem/wyjściem z kanału)
+* poziom 4: wiadomości serwera o wejściu/opuszczeniu/wyjściu z kanału
+
+Zatem jeśli ustawisz poziom 3 dla kanału IRC, WeeChat będzie logować wszystkie
+wiadomości, poza tymi o wejściu/opuszczeniu/wyjściu z kanału.
+
+Kilka przykładów:
+
+* ustawienie poziomu 3 dla kanału IRC #weechat:
+
+----
+/set logger.level.irc.libera.#weechat 3
+----
+
+* ustawienie poziomu 3 dla buforu serwera libera:
+
+----
+/set logger.level.irc.server.libera 3
+----
+
+* ustawienie poziomu 3 dla wszystkich kanałów na serwerze libera:
+
+----
+/set logger.level.irc.libera 3
+----
+
+* ustawienie poziomu 2 dla wszystkich buforów IRC:
+
+----
+/set logger.level.irc 2
+----
+
+[[logger_filenames_masks]]
+==== Maski dla nazw plików
+
+Możliwe jest zdefiniowanie maski dla nazwy pliku z logiem dla każdego bufora i
+użycie do tego zmiennych lokalnych bufora. W celu wyświetlenia listy dostępnych
+zmiennych dla bufora wykonaj:
+
+----
+/buffer listvar
+----
+
+Maski zostaną dopasowane do opcji w kolejności malejącej specyficznie dla
+`logger.mask.$plugin.*`, z `logger.file.mask` jako opcją zapasową.
+
+Na przykład, w buforze "irc.libera.#weechat", WeeChat będzie szukał maski dla
+nazwy w takiej kolejności:
+
+----
+logger.mask.irc.libera.#weechat
+logger.mask.irc.libera
+logger.mask.irc
+logger.file.mask
+----
+
+Oznacza to, że można mieć maski specyficzne tylko dla niektórych serwerów IRC
+("logger.mask.irc.libera") lub dla wtyczek ("logger.mask.irc").
+
+[[logger_files_by_date]]
+===== Pliki z logami uporządkowane według daty
+
+Żeby mieć pliki z logami uporządkowane według daty, możesz użyć specyfikatorów
+daty/czasu w masce (obsługiwane formaty można znaleźć w `man strftime`),
+na przykład:
+
+----
+/set logger.file.mask "%Y/%m/$plugin.$name.weechatlog"
+----
+
+Spowoduje powstanie następującej struktury:
+
+....
+~/.local/share/weechat
+└── logs
+    ├── 2010
+    │   ├── 11
+    │   │   ├── irc.server.libera.weechatlog
+    │   │   └── irc.libera.#weechat.weechatlog
+    │   └── 12
+    │       ├── irc.server.libera.weechatlog
+    │       └── irc.libera.#weechat.weechatlog
+    ├── 2011
+    │   ├── 01
+    │   │   ├── irc.server.libera.weechatlog
+    │   │   └── irc.libera.#weechat.weechatlog
+    │   ├── 02
+    ...
+....
+
+[[logger_irc_files_by_server_channel]]
+===== Pliki z logami IRC uporządkowane według serwera i daty
+
+Jeśli chcesz mieć oddzielne katalogi dla serwerów IRC z oddzielnym plikiem dla
+każdego kanału:
+
+----
+/set logger.mask.irc "irc/$server/$channel.weechatlog"
+----
+
+Spowoduje powstanie następującej struktury:
+
+....
+~/.local/share/weechat
+└── logs
+    └── irc
+        ├── libera
+        │   ├── libera.weechatlog
+        │   ├── #weechat.weechatlog
+        │   └── #mychan.weechatlog
+        ├── oftc
+        │   ├── oftc.weechatlog
+        │   ├── #channel1.weechatlog
+        │   └── #channel2.weechatlog
+        ...
+....
+
+[[logger_commands]]
+==== Komendy
+
+include::includes/autogen_user_commands.pl.adoc[tag=logger_commands]
+
+[[logger_options]]
+==== Opcje
+
+Sekcje w pliku _logger.conf_:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Sekcja  | Komenda             | Opis
+| look    | /set logger.look.*  | Wygląd.
+| color   | /set logger.color.* | Kolory.
+| file    | /set logger.file.*  | Opcje dla plików z logami.
+| level   | /set logger.level.* | Poziomy logowania dla buforów (opcje w tej sekcji mogą być dodawane/usuwane).
+| mask    | /set logger.mask.*  | Maski dla nazw plików dla buforów (opcje w tej sekcji mogą być dodawane/usuwane).
+|===
+
+Opcje:
+
+include::includes/autogen_user_options.pl.adoc[tag=logger_options]
+
 [[mouse]]
 === Wsparcie myszy
 
@@ -3668,168 +3831,6 @@ Sekcje w pliku _fifo.conf_:
 Opcje:
 
 include::includes/autogen_user_options.pl.adoc[tag=fifo_options]
-
-[[logger_plugin]]
-=== Logger
-
-Wtyczka logger pozwala zapisywać zawartość bufora do pliku, oraz wybrać co i jak
-ma być zapisywane.
-
-[[logger_log_levels]]
-==== Poziomy logowania
-
-Logowanie odbywa się dla odpowiedniego poziomu dla każdego bufora. Domyślny
-poziom to 9 (logowane są wszystkie wiadomości wyświetlane w buforze).
-Możesz zmienić poziom dla pojedynczego bufora lub grupy buforów.
-
-Dostępne są poziomy od 0 do 9. Zero oznacza "nic nie loguj", a 9 oznacza "loguj
-wszystko".
-
-Wtyczki wykorzystują różne poziomy dla wyświetlanych wiadomości.
-Wtyczka IRC używa następujących:
-
-* poziom 1: wiadomość od użytkownika (na kanale lub prywatnie)
-* poziom 2: zmiana nicka (twojego lub innego)
-* poziom 3: dowolna wiadomość serwera (poza wejściem/opuszczeniem/wyjściem z kanału)
-* poziom 4: wiadomości serwera o wejściu/opuszczeniu/wyjściu z kanału
-
-Zatem jeśli ustawisz poziom 3 dla kanału IRC, WeeChat będzie logować wszystkie
-wiadomości, poza tymi o wejściu/opuszczeniu/wyjściu z kanału.
-
-Kilka przykładów:
-
-* ustawienie poziomu 3 dla kanału IRC #weechat:
-
-----
-/set logger.level.irc.libera.#weechat 3
-----
-
-* ustawienie poziomu 3 dla buforu serwera libera:
-
-----
-/set logger.level.irc.server.libera 3
-----
-
-* ustawienie poziomu 3 dla wszystkich kanałów na serwerze libera:
-
-----
-/set logger.level.irc.libera 3
-----
-
-* ustawienie poziomu 2 dla wszystkich buforów IRC:
-
-----
-/set logger.level.irc 2
-----
-
-[[logger_filenames_masks]]
-==== Maski dla nazw plików
-
-Możliwe jest zdefiniowanie maski dla nazwy pliku z logiem dla każdego bufora i
-użycie do tego zmiennych lokalnych bufora. W celu wyświetlenia listy dostępnych
-zmiennych dla bufora wykonaj:
-
-----
-/buffer listvar
-----
-
-Maski zostaną dopasowane do opcji w kolejności malejącej specyficznie dla
-`logger.mask.$plugin.*`, z `logger.file.mask` jako opcją zapasową.
-
-Na przykład, w buforze "irc.libera.#weechat", WeeChat będzie szukał maski dla
-nazwy w takiej kolejności:
-
-----
-logger.mask.irc.libera.#weechat
-logger.mask.irc.libera
-logger.mask.irc
-logger.file.mask
-----
-
-Oznacza to, że można mieć maski specyficzne tylko dla niektórych serwerów IRC
-("logger.mask.irc.libera") lub dla wtyczek ("logger.mask.irc").
-
-[[logger_files_by_date]]
-===== Pliki z logami uporządkowane według daty
-
-Żeby mieć pliki z logami uporządkowane według daty, możesz użyć specyfikatorów
-daty/czasu w masce (obsługiwane formaty można znaleźć w `man strftime`),
-na przykład:
-
-----
-/set logger.file.mask "%Y/%m/$plugin.$name.weechatlog"
-----
-
-Spowoduje powstanie następującej struktury:
-
-....
-~/.local/share/weechat
-└── logs
-    ├── 2010
-    │   ├── 11
-    │   │   ├── irc.server.libera.weechatlog
-    │   │   └── irc.libera.#weechat.weechatlog
-    │   └── 12
-    │       ├── irc.server.libera.weechatlog
-    │       └── irc.libera.#weechat.weechatlog
-    ├── 2011
-    │   ├── 01
-    │   │   ├── irc.server.libera.weechatlog
-    │   │   └── irc.libera.#weechat.weechatlog
-    │   ├── 02
-    ...
-....
-
-[[logger_irc_files_by_server_channel]]
-===== Pliki z logami IRC uporządkowane według serwera i daty
-
-Jeśli chcesz mieć oddzielne katalogi dla serwerów IRC z oddzielnym plikiem dla
-każdego kanału:
-
-----
-/set logger.mask.irc "irc/$server/$channel.weechatlog"
-----
-
-Spowoduje powstanie następującej struktury:
-
-....
-~/.local/share/weechat
-└── logs
-    └── irc
-        ├── libera
-        │   ├── libera.weechatlog
-        │   ├── #weechat.weechatlog
-        │   └── #mychan.weechatlog
-        ├── oftc
-        │   ├── oftc.weechatlog
-        │   ├── #channel1.weechatlog
-        │   └── #channel2.weechatlog
-        ...
-....
-
-[[logger_commands]]
-==== Komendy
-
-include::includes/autogen_user_commands.pl.adoc[tag=logger_commands]
-
-[[logger_options]]
-==== Opcje
-
-Sekcje w pliku _logger.conf_:
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Sekcja  | Komenda             | Opis
-| look    | /set logger.look.*  | Wygląd.
-| color   | /set logger.color.* | Kolory.
-| file    | /set logger.file.*  | Opcje dla plików z logami.
-| level   | /set logger.level.* | Poziomy logowania dla buforów (opcje w tej sekcji mogą być dodawane/usuwane).
-| mask    | /set logger.mask.*  | Maski dla nazw plików dla buforów (opcje w tej sekcji mogą być dodawane/usuwane).
-|===
-
-Opcje:
-
-include::includes/autogen_user_options.pl.adoc[tag=logger_options]
 
 [[relay_plugin]]
 === Relay

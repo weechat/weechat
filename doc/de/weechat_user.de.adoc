@@ -246,7 +246,7 @@ Liste von häufig verwendeten Optionen:
   Unterstützung großer Dateien.
 
 | ENABLE_LOGGER | `ON`, `OFF` | ON |
-  kompiliert <<logger_plugin,Logger Erweiterung>>.
+  kompiliert <<buffer_logging,Logger Erweiterung>>.
 
 | ENABLE_LUA | `ON`, `OFF` | ON |
   kompiliert <<scripts_plugins,Lua Erweiterung>>.
@@ -2284,6 +2284,173 @@ in der Konfigurationsdatei gesichert. + Um diese Einstellung persistent zu mache
 das Skript _buffer_autoset.py_: Um das Skript zu installieren `+/script install buffer_autoset.py+`
 und um eine Hilfe zu erhalten wie man es nutzt: `+/help buffer_autoset+`.
 
+// TRANSLATION MISSING
+[[buffer_logging]]
+=== Buffer logging
+
+Die Logger Erweiterung erlaubt es den Inhalt von Buffern in Dateien zu sichern.
+Dabei kann man über Optionen Einfluss darauf nehmen was gesichert und wie etwas
+gesichert werden soll.
+
+[[logger_log_levels]]
+==== Log Levels
+
+Die Protokollierung wird durch einen sogenannten Level für jeden Buffer sichergestellt.
+Der Standardlevel ist dabei 9 (damit werden alle Nachrichten die im Buffer angezeigt
+werden protokolliert). Der Grad einer Protokollierung kann separat für jeden einzelnen
+Buffer oder aber für eine Anzahl von Buffern festgelegt werden.
+
+Mögliche Level sind hierbei 0 bis 9. Null bedeutet, es findet keine Protokollierung
+statt und neun, dass alle Nachrichten protokolliert werden.
+
+Erweiterungen nutzen unterschiedliche Level um Nachrichten anzuzeigen.
+Die IRC Erweiterung nutzt folgende Level:
+
+* Level 1: Nachrichten eines Users (im Channel oder privat)
+* Level 2: Nick wurde geändert (der eigene oder von einer anderen Person)
+* Level 3: jedwede Server Nachricht (ausgenommen join/part/quit)
+* Level 4: Server Nachrichten join/part/quit
+
+Setzen Sie also den Grad der Protokollierung für einen IRC Channel auf "3"
+wird WeeChat alle Nachrichten protokollieren, ausgenommen join/part/quit
+Nachrichten.
+
+weitere Beispiele:
+
+* Level 3 für IRC Channel #weechat nutzen:
+
+----
+/set logger.level.irc.libera.#weechat 3
+----
+
+* Level 3 für libera Server Buffer nutzen:
+
+----
+/set logger.level.irc.server.libera 3
+----
+
+* Level 3 für alle Channels auf dem Server libera nutzen:
+
+----
+/set logger.level.irc.libera 3
+----
+
+* Level 2 für alle IRC Buffers nutzen:
+
+----
+/set logger.level.irc 2
+----
+
+[[logger_filenames_masks]]
+==== Dateinamenmaske
+
+Es ist möglich eine Dateinamenmaske für jeden Buffer zu erstellen und diese Maske
+mit lokalen Buffervariablen zu füllen. Um sich die verfügbaren lokalen Variablen
+für den aktuellen Buffer anzeigen zu lassen:
+
+----
+/buffer listvar
+----
+
+Masken werden in absteigender Reihenfolge abgeglichen, beginnend mit
+`logger.mask.$plugin.*`, dabei fungiert `logger.file.mask` als Fallback-Option.
+
+Zum Beispiel für den Buffer "irc.libera.#weechat". WeeChat sucht in dieser
+Reihenfolge nach einer Maske:
+
+----
+logger.mask.irc.libera.#weechat
+logger.mask.irc.libera
+logger.mask.irc
+logger.file.mask
+----
+
+Dies bedeutet dass man eine Maske speziell für einen IRC Server
+("logger.mask.irc.libera") anlegen kann oder aber global für
+die Erweiterung ("logger.mask.irc").
+
+[[logger_files_by_date]]
+===== Protokolldatei nach Datum
+
+Um Protokolldateien mit einer Datumsrelevanz zu erstellen müssen
+Datumsspezifikationen in der Maske genutzt werden (siehe
+`man strftime` für das Format). Zum Beispiel:
+
+----
+/set logger.file.mask "%Y/%m/$plugin.$name.weechatlog"
+----
+
+Erstellt eine Struktur in folgender Form:
+
+....
+~/.local/share/weechat
+└── logs
+    ├── 2010
+    │   ├── 11
+    │   │   ├── irc.server.libera.weechatlog
+    │   │   └── irc.libera.#weechat.weechatlog
+    │   └── 12
+    │       ├── irc.server.libera.weechatlog
+    │       └── irc.libera.#weechat.weechatlog
+    ├── 2011
+    │   ├── 01
+    │   │   ├── irc.server.libera.weechatlog
+    │   │   └── irc.libera.#weechat.weechatlog
+    │   ├── 02
+    ...
+....
+
+[[logger_irc_files_by_server_channel]]
+===== Protokolldateien nach Server und Channel
+
+Soll für jeden IRC Server ein Verzeichnis erstellt werden mit jeweils
+einer Protokolldatei für jeden Channel:
+
+----
+/set logger.mask.irc "irc/$server/$channel.weechatlog"
+----
+
+Erstellt eine Struktur in folgender Form:
+
+....
+~/.local/share/weechat
+└── logs
+    └── irc
+        ├── libera
+        │   ├── libera.weechatlog
+        │   ├── #weechat.weechatlog
+        │   └── #mychan.weechatlog
+        ├── oftc
+        │   ├── oftc.weechatlog
+        │   ├── #channel1.weechatlog
+        │   └── #channel2.weechatlog
+        ...
+....
+
+[[logger_commands]]
+==== Befehle
+
+include::includes/autogen_user_commands.de.adoc[tag=logger_commands]
+
+[[logger_options]]
+==== Optionen
+
+Sektionen in Datei _logger.conf_:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Sektion | Steuerbefehl        | Beschreibung
+| look    | /set logger.look.*  | Erscheinungsbild.
+| color   | /set logger.color.* | Farben.
+| file    | /set logger.file.*  | Optionen für Protokolldateien.
+| level   | /set logger.level.* | Protokollierungslevel pro Buffer (Optionen können in Sektion hinzugefügt/entfernt werden).
+| mask    | /set logger.mask.*  | Dateinamenmaske pro buffer (Optionen können in Sektion hinzugefügt/entfernt werden).
+|===
+
+Optionen:
+
+include::includes/autogen_user_options.de.adoc[tag=logger_options]
+
 [[mouse]]
 === Mausunterstützung
 
@@ -3712,172 +3879,6 @@ Sektionen in Datei _fifo.conf_:
 Optionen:
 
 include::includes/autogen_user_options.de.adoc[tag=fifo_options]
-
-[[logger_plugin]]
-=== Logger
-
-Die Logger Erweiterung erlaubt es den Inhalt von Buffern in Dateien zu sichern.
-Dabei kann man über Optionen Einfluss darauf nehmen was gesichert und wie etwas
-gesichert werden soll.
-
-[[logger_log_levels]]
-==== Log Levels
-
-Die Protokollierung wird durch einen sogenannten Level für jeden Buffer sichergestellt.
-Der Standardlevel ist dabei 9 (damit werden alle Nachrichten die im Buffer angezeigt
-werden protokolliert). Der Grad einer Protokollierung kann separat für jeden einzelnen
-Buffer oder aber für eine Anzahl von Buffern festgelegt werden.
-
-Mögliche Level sind hierbei 0 bis 9. Null bedeutet, es findet keine Protokollierung
-statt und neun, dass alle Nachrichten protokolliert werden.
-
-Erweiterungen nutzen unterschiedliche Level um Nachrichten anzuzeigen.
-Die IRC Erweiterung nutzt folgende Level:
-
-* Level 1: Nachrichten eines Users (im Channel oder privat)
-* Level 2: Nick wurde geändert (der eigene oder von einer anderen Person)
-* Level 3: jedwede Server Nachricht (ausgenommen join/part/quit)
-* Level 4: Server Nachrichten join/part/quit
-
-Setzen Sie also den Grad der Protokollierung für einen IRC Channel auf "3"
-wird WeeChat alle Nachrichten protokollieren, ausgenommen join/part/quit
-Nachrichten.
-
-weitere Beispiele:
-
-* Level 3 für IRC Channel #weechat nutzen:
-
-----
-/set logger.level.irc.libera.#weechat 3
-----
-
-* Level 3 für libera Server Buffer nutzen:
-
-----
-/set logger.level.irc.server.libera 3
-----
-
-* Level 3 für alle Channels auf dem Server libera nutzen:
-
-----
-/set logger.level.irc.libera 3
-----
-
-* Level 2 für alle IRC Buffers nutzen:
-
-----
-/set logger.level.irc 2
-----
-
-[[logger_filenames_masks]]
-==== Dateinamenmaske
-
-Es ist möglich eine Dateinamenmaske für jeden Buffer zu erstellen und diese Maske
-mit lokalen Buffervariablen zu füllen. Um sich die verfügbaren lokalen Variablen
-für den aktuellen Buffer anzeigen zu lassen:
-
-----
-/buffer listvar
-----
-
-Masken werden in absteigender Reihenfolge abgeglichen, beginnend mit
-`logger.mask.$plugin.*`, dabei fungiert `logger.file.mask` als Fallback-Option.
-
-Zum Beispiel für den Buffer "irc.libera.#weechat". WeeChat sucht in dieser
-Reihenfolge nach einer Maske:
-
-----
-logger.mask.irc.libera.#weechat
-logger.mask.irc.libera
-logger.mask.irc
-logger.file.mask
-----
-
-Dies bedeutet dass man eine Maske speziell für einen IRC Server
-("logger.mask.irc.libera") anlegen kann oder aber global für
-die Erweiterung ("logger.mask.irc").
-
-[[logger_files_by_date]]
-===== Protokolldatei nach Datum
-
-Um Protokolldateien mit einer Datumsrelevanz zu erstellen müssen
-Datumsspezifikationen in der Maske genutzt werden (siehe
-`man strftime` für das Format). Zum Beispiel:
-
-----
-/set logger.file.mask "%Y/%m/$plugin.$name.weechatlog"
-----
-
-Erstellt eine Struktur in folgender Form:
-
-....
-~/.local/share/weechat
-└── logs
-    ├── 2010
-    │   ├── 11
-    │   │   ├── irc.server.libera.weechatlog
-    │   │   └── irc.libera.#weechat.weechatlog
-    │   └── 12
-    │       ├── irc.server.libera.weechatlog
-    │       └── irc.libera.#weechat.weechatlog
-    ├── 2011
-    │   ├── 01
-    │   │   ├── irc.server.libera.weechatlog
-    │   │   └── irc.libera.#weechat.weechatlog
-    │   ├── 02
-    ...
-....
-
-[[logger_irc_files_by_server_channel]]
-===== Protokolldateien nach Server und Channel
-
-Soll für jeden IRC Server ein Verzeichnis erstellt werden mit jeweils
-einer Protokolldatei für jeden Channel:
-
-----
-/set logger.mask.irc "irc/$server/$channel.weechatlog"
-----
-
-Erstellt eine Struktur in folgender Form:
-
-....
-~/.local/share/weechat
-└── logs
-    └── irc
-        ├── libera
-        │   ├── libera.weechatlog
-        │   ├── #weechat.weechatlog
-        │   └── #mychan.weechatlog
-        ├── oftc
-        │   ├── oftc.weechatlog
-        │   ├── #channel1.weechatlog
-        │   └── #channel2.weechatlog
-        ...
-....
-
-[[logger_commands]]
-==== Befehle
-
-include::includes/autogen_user_commands.de.adoc[tag=logger_commands]
-
-[[logger_options]]
-==== Optionen
-
-Sektionen in Datei _logger.conf_:
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Sektion | Steuerbefehl        | Beschreibung
-| look    | /set logger.look.*  | Erscheinungsbild.
-| color   | /set logger.color.* | Farben.
-| file    | /set logger.file.*  | Optionen für Protokolldateien.
-| level   | /set logger.level.* | Protokollierungslevel pro Buffer (Optionen können in Sektion hinzugefügt/entfernt werden).
-| mask    | /set logger.mask.*  | Dateinamenmaske pro buffer (Optionen können in Sektion hinzugefügt/entfernt werden).
-|===
-
-Optionen:
-
-include::includes/autogen_user_options.de.adoc[tag=logger_options]
 
 [[relay_plugin]]
 === Relay

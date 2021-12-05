@@ -222,7 +222,7 @@ $ make install
   Подршка за велике фајлове.
 
 | ENABLE_LOGGER | `ON`, `OFF` | ON |
-  Компајлира <<logger_plugin,Logger додатак>>.
+  Компајлира <<buffer_logging,Logger додатак>>.
 
 | ENABLE_LUA | `ON`, `OFF` | ON |
   Компајлира <<scripts_plugins,Lua додатак>>.
@@ -2113,6 +2113,155 @@ include::includes/autogen_user_options.sr.adoc[tag=charset_options]
 Особина бафера „highlight_regex” се не чува у конфигурацији. +
 Лако можете да је сачувате скриптом _buffer_autoset.py_: инсталирате је командом `+/script install buffer_autoset.py+`, а помоћ добијате са `+/help buffer_autoset+`.
 
+// TRANSLATION MISSING
+[[buffer_logging]]
+=== Buffer logging
+
+Logger додатак вам омогућава да чувате садржај бафера у фајлове, и нуди опције којима подешавате шта се и како чува.
+
+[[logger_log_levels]]
+==== Лог нивои
+
+Логовање се врши са нивоом за сваки бафер. Подразумевани ниво је 9 (логују се све поруке које су приказане у баферу). Ниво можете да промените само за један бафер, или за групу бафера.
+
+Могући нивои су од 0 до 9. Нула значи „ништа се не логује”, а 9 значи „логују се све поруке”.
+
+Додаци користе различите нивое за приказане поруке. IRC додатак користи следеће нивое:
+
+* ниво 1: порука од корисника (на каналу или приватна)
+* ниво 2: измена надимка (вашег или неког другог)
+* ниво 3: било која серверска порука (осим join/part/quit)
+* ниво 4: join/part/quit серверска порука
+
+Тако да ако за IRC канал поставите ниво 3, програм WeeChat ће логовати све поруке осим join/part/quit.
+
+Неки примери:
+
+* Постављање нивоа 3 за IRC канал #weechat:
+
+----
+/set logger.level.irc.libera.#weechat 3
+----
+
+* Постављање нивоа 3 за libera серверски бафер:
+
+----
+/set logger.level.irc.server.libera 3
+----
+
+* Постављање нивоа 3 за све канале на серверу libera:
+
+----
+/set logger.level.irc.libera 3
+----
+
+* Постављање нивоа 2 за све IRC бафере:
+
+----
+/set logger.level.irc 2
+----
+
+[[logger_filenames_masks]]
+==== Маске имена фајлова
+
+За сваки бафер можете да дефинишете маску имена фајла, па да употребите локалне променљиве бафера за изградњу имена фајла. Да бисте видели доступне локалне променљиве текућег бафера:
+
+----
+/buffer listvar
+----
+
+Masks will be matched on options in descending order of specificity on `logger.mask.$plugin.*`, with `logger.file.mask` as fallback option.
+
+На пример, у баферу „irc.libera.#weechat”, програм WeeChat ће потражити маску са именом опције, по следећем редоследу:
+
+----
+logger.mask.irc.libera.#weechat
+logger.mask.irc.libera
+logger.mask.irc
+logger.file.mask
+----
+
+Ово значи да можете имати маске које су специфичне за одређене IRC сервере („logger.mask.irc.libera”) или за додатак („logger.mask.irc”).
+
+[[logger_files_by_date]]
+===== Лог фајлови по датуму
+
+Ако желите да се лог фајлови креирају по датуму, у маски можете да употребите спецификаторе датума/времена (за формате, погледајте `man strftime`), на пример:
+
+----
+/set logger.file.mask "%Y/%m/$plugin.$name.weechatlog"
+----
+
+Имаћете следеће фајлове:
+
+....
+~/.local/share/weechat
+└── logs
+    ├── 2010
+    │   ├── 11
+    │   │   ├── irc.server.libera.weechatlog
+    │   │   └── irc.libera.#weechat.weechatlog
+    │   └── 12
+    │       ├── irc.server.libera.weechatlog
+    │       └── irc.libera.#weechat.weechatlog
+    ├── 2011
+    │   ├── 01
+    │   │   ├── irc.server.libera.weechatlog
+    │   │   └── irc.libera.#weechat.weechatlog
+    │   ├── 02
+    ...
+....
+
+[[logger_irc_files_by_server_channel]]
+===== IRC лог фајлови по серверу и каналу
+
+Ако желите један директоријум по IRC серверу и један фајл по каналу у њему:
+
+----
+/set logger.mask.irc "irc/$server/$channel.weechatlog"
+----
+
+Имаћете следеће фајлове:
+
+....
+~/.local/share/weechat
+└── logs
+    └── irc
+        ├── libera
+        │   ├── libera.weechatlog
+        │   ├── #weechat.weechatlog
+        │   └── #mychan.weechatlog
+        ├── oftc
+        │   ├── oftc.weechatlog
+        │   ├── #channel1.weechatlog
+        │   └── #channel2.weechatlog
+        ...
+....
+
+[[logger_commands]]
+==== Команде
+
+include::includes/autogen_user_commands.sr.adoc[tag=logger_commands]
+
+[[logger_options]]
+==== Опције
+
+Одељци у фајлу _logger.conf_:
+
+[width="100%", cols="3m,6m,16", options="header"]
+|===
+| Одељак  | Команда за контролу | Опис
+| look    | /set logger.look.*  | Изглед и осећај.
+| color   | /set logger.color.* | Боје.
+| file    | /set logger.file.*  | Опције за лог фајлове.
+| level   | /set logger.level.* | Лог ниво по баферу (у одељку је могуће додавање/уклањање опција).
+| mask    | /set logger.mask.*  | Маска имена фајла по баферу (у одељку је могуће додавање/уклањање опција).
+|===
+
+Опције:
+
+include::includes/autogen_user_options.sr.adoc[tag=logger_options]
+
 [[mouse]]
 === Подршка за миша
 
@@ -3409,154 +3558,6 @@ include::includes/autogen_user_commands.sr.adoc[tag=fifo_commands]
 Опције:
 
 include::includes/autogen_user_options.sr.adoc[tag=fifo_options]
-
-[[logger_plugin]]
-=== Logger
-
-Logger додатак вам омогућава да чувате садржај бафера у фајлове, и нуди опције којима подешавате шта се и како чува.
-
-[[logger_log_levels]]
-==== Лог нивои
-
-Логовање се врши са нивоом за сваки бафер. Подразумевани ниво је 9 (логују се све поруке које су приказане у баферу). Ниво можете да промените само за један бафер, или за групу бафера.
-
-Могући нивои су од 0 до 9. Нула значи „ништа се не логује”, а 9 значи „логују се све поруке”.
-
-Додаци користе различите нивое за приказане поруке. IRC додатак користи следеће нивое:
-
-* ниво 1: порука од корисника (на каналу или приватна)
-* ниво 2: измена надимка (вашег или неког другог)
-* ниво 3: било која серверска порука (осим join/part/quit)
-* ниво 4: join/part/quit серверска порука
-
-Тако да ако за IRC канал поставите ниво 3, програм WeeChat ће логовати све поруке осим join/part/quit.
-
-Неки примери:
-
-* Постављање нивоа 3 за IRC канал #weechat:
-
-----
-/set logger.level.irc.libera.#weechat 3
-----
-
-* Постављање нивоа 3 за libera серверски бафер:
-
-----
-/set logger.level.irc.server.libera 3
-----
-
-* Постављање нивоа 3 за све канале на серверу libera:
-
-----
-/set logger.level.irc.libera 3
-----
-
-* Постављање нивоа 2 за све IRC бафере:
-
-----
-/set logger.level.irc 2
-----
-
-[[logger_filenames_masks]]
-==== Маске имена фајлова
-
-За сваки бафер можете да дефинишете маску имена фајла, па да употребите локалне променљиве бафера за изградњу имена фајла. Да бисте видели доступне локалне променљиве текућег бафера:
-
-----
-/buffer listvar
-----
-
-Masks will be matched on options in descending order of specificity on `logger.mask.$plugin.*`, with `logger.file.mask` as fallback option.
-
-На пример, у баферу „irc.libera.#weechat”, програм WeeChat ће потражити маску са именом опције, по следећем редоследу:
-
-----
-logger.mask.irc.libera.#weechat
-logger.mask.irc.libera
-logger.mask.irc
-logger.file.mask
-----
-
-Ово значи да можете имати маске које су специфичне за одређене IRC сервере („logger.mask.irc.libera”) или за додатак („logger.mask.irc”).
-
-[[logger_files_by_date]]
-===== Лог фајлови по датуму
-
-Ако желите да се лог фајлови креирају по датуму, у маски можете да употребите спецификаторе датума/времена (за формате, погледајте `man strftime`), на пример:
-
-----
-/set logger.file.mask "%Y/%m/$plugin.$name.weechatlog"
-----
-
-Имаћете следеће фајлове:
-
-....
-~/.local/share/weechat
-└── logs
-    ├── 2010
-    │   ├── 11
-    │   │   ├── irc.server.libera.weechatlog
-    │   │   └── irc.libera.#weechat.weechatlog
-    │   └── 12
-    │       ├── irc.server.libera.weechatlog
-    │       └── irc.libera.#weechat.weechatlog
-    ├── 2011
-    │   ├── 01
-    │   │   ├── irc.server.libera.weechatlog
-    │   │   └── irc.libera.#weechat.weechatlog
-    │   ├── 02
-    ...
-....
-
-[[logger_irc_files_by_server_channel]]
-===== IRC лог фајлови по серверу и каналу
-
-Ако желите један директоријум по IRC серверу и један фајл по каналу у њему:
-
-----
-/set logger.mask.irc "irc/$server/$channel.weechatlog"
-----
-
-Имаћете следеће фајлове:
-
-....
-~/.local/share/weechat
-└── logs
-    └── irc
-        ├── libera
-        │   ├── libera.weechatlog
-        │   ├── #weechat.weechatlog
-        │   └── #mychan.weechatlog
-        ├── oftc
-        │   ├── oftc.weechatlog
-        │   ├── #channel1.weechatlog
-        │   └── #channel2.weechatlog
-        ...
-....
-
-[[logger_commands]]
-==== Команде
-
-include::includes/autogen_user_commands.sr.adoc[tag=logger_commands]
-
-[[logger_options]]
-==== Опције
-
-Одељци у фајлу _logger.conf_:
-
-[width="100%", cols="3m,6m,16", options="header"]
-|===
-| Одељак  | Команда за контролу | Опис
-| look    | /set logger.look.*  | Изглед и осећај.
-| color   | /set logger.color.* | Боје.
-| file    | /set logger.file.*  | Опције за лог фајлове.
-| level   | /set logger.level.* | Лог ниво по баферу (у одељку је могуће додавање/уклањање опција).
-| mask    | /set logger.mask.*  | Маска имена фајла по баферу (у одељку је могуће додавање/уклањање опција).
-|===
-
-Опције:
-
-include::includes/autogen_user_options.sr.adoc[tag=logger_options]
 
 [[relay_plugin]]
 === Релеј

@@ -238,7 +238,7 @@ List of commonly used options:
   Support of large files.
 
 | ENABLE_LOGGER | `ON`, `OFF` | ON |
-  Compile <<logger_plugin,Logger plugin>>.
+  Compile <<buffer_logging,Logger plugin>>.
 
 | ENABLE_LUA | `ON`, `OFF` | ON |
   Compile <<scripts_plugins,Lua plugin>>.
@@ -2224,6 +2224,165 @@ You can easily save it with the script _buffer_autoset.py_: you can install it
 with `+/script install buffer_autoset.py+` and get help with
 `+/help buffer_autoset+`.
 
+[[buffer_logging]]
+=== Buffer logging
+
+The Logger plugin lets you save content of buffers to files, with options
+about what and how it is saved.
+
+[[logger_log_levels]]
+==== Log levels
+
+Logging is made with a level for each buffer. Default level is 9 (log
+all messages displayed on buffer).
+You can change level for one buffer, or a group of buffers.
+
+Possible levels are 0 to 9. Zero means "do not log anything" and 9 means
+"log all messages".
+
+Plugins are using different levels for messages displayed.
+IRC plugin uses following levels:
+
+* level 1: message from user (on channel or private)
+* level 2: nick change (you or someone else)
+* level 3: any server message (except join/part/quit)
+* level 4: server message join/part/quit
+
+So if you set level 3 for an IRC channel, WeeChat will log all messages,
+but not join/part/quit.
+
+Some examples:
+
+* Set level 3 for IRC channel #weechat:
+
+----
+/set logger.level.irc.libera.#weechat 3
+----
+
+* Set level 3 for libera server buffer:
+
+----
+/set logger.level.irc.server.libera 3
+----
+
+* Set level 3 for all channels on server libera:
+
+----
+/set logger.level.irc.libera 3
+----
+
+* Set level 2 for all IRC buffers:
+
+----
+/set logger.level.irc 2
+----
+
+[[logger_filenames_masks]]
+==== Filenames masks
+
+It is possible to define a filename mask for each buffer, and use local buffer
+variables to build filename. To see available local variables for current buffer:
+
+----
+/buffer listvar
+----
+
+Masks will be matched on options in descending order of specificity on
+`logger.mask.$plugin.*`, with `logger.file.mask` as fallback option.
+
+For example, on buffer "irc.libera.#weechat", WeeChat will search a mask with
+option name, in this order:
+
+----
+logger.mask.irc.libera.#weechat
+logger.mask.irc.libera
+logger.mask.irc
+logger.file.mask
+----
+
+That means you can have masks specific for some IRC servers
+("logger.mask.irc.libera") or for a plugin ("logger.mask.irc").
+
+[[logger_files_by_date]]
+===== Log files by date
+
+To have log files by date, you can use date/time specifiers in mask (see
+`man strftime` for formats), for example:
+
+----
+/set logger.file.mask "%Y/%m/$plugin.$name.weechatlog"
+----
+
+You'll have following files:
+
+....
+~/.local/share/weechat
+└── logs
+    ├── 2010
+    │   ├── 11
+    │   │   ├── irc.server.libera.weechatlog
+    │   │   └── irc.libera.#weechat.weechatlog
+    │   └── 12
+    │       ├── irc.server.libera.weechatlog
+    │       └── irc.libera.#weechat.weechatlog
+    ├── 2011
+    │   ├── 01
+    │   │   ├── irc.server.libera.weechatlog
+    │   │   └── irc.libera.#weechat.weechatlog
+    │   ├── 02
+    ...
+....
+
+[[logger_irc_files_by_server_channel]]
+===== IRC log files by server and channel
+
+If you want one directory by IRC server and one file by channel inside:
+
+----
+/set logger.mask.irc "irc/$server/$channel.weechatlog"
+----
+
+You'll have following files:
+
+....
+~/.local/share/weechat
+└── logs
+    └── irc
+        ├── libera
+        │   ├── libera.weechatlog
+        │   ├── #weechat.weechatlog
+        │   └── #mychan.weechatlog
+        ├── oftc
+        │   ├── oftc.weechatlog
+        │   ├── #channel1.weechatlog
+        │   └── #channel2.weechatlog
+        ...
+....
+
+[[logger_commands]]
+==== Commands
+
+include::includes/autogen_user_commands.en.adoc[tag=logger_commands]
+
+[[logger_options]]
+==== Options
+
+Sections in file _logger.conf_:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section | Control command     | Description
+| look    | /set logger.look.*  | Look and feel.
+| color   | /set logger.color.* | Colors.
+| file    | /set logger.file.*  | Options for log files.
+| level   | /set logger.level.* | Log level by buffer (options can be added/removed in section).
+| mask    | /set logger.mask.*  | Filename mask by buffer (options can be added/removed in section).
+|===
+
+Options:
+
+include::includes/autogen_user_options.en.adoc[tag=logger_options]
+
 [[mouse]]
 === Mouse support
 
@@ -3611,165 +3770,6 @@ Sections in file _fifo.conf_:
 Options:
 
 include::includes/autogen_user_options.en.adoc[tag=fifo_options]
-
-[[logger_plugin]]
-=== Logger
-
-The Logger plugin lets you save content of buffers to files, with options
-about what and how it is saved.
-
-[[logger_log_levels]]
-==== Log levels
-
-Logging is made with a level for each buffer. Default level is 9 (log
-all messages displayed on buffer).
-You can change level for one buffer, or a group of buffers.
-
-Possible levels are 0 to 9. Zero means "do not log anything" and 9 means
-"log all messages".
-
-Plugins are using different levels for messages displayed.
-IRC plugin uses following levels:
-
-* level 1: message from user (on channel or private)
-* level 2: nick change (you or someone else)
-* level 3: any server message (except join/part/quit)
-* level 4: server message join/part/quit
-
-So if you set level 3 for an IRC channel, WeeChat will log all messages,
-but not join/part/quit.
-
-Some examples:
-
-* Set level 3 for IRC channel #weechat:
-
-----
-/set logger.level.irc.libera.#weechat 3
-----
-
-* Set level 3 for libera server buffer:
-
-----
-/set logger.level.irc.server.libera 3
-----
-
-* Set level 3 for all channels on server libera:
-
-----
-/set logger.level.irc.libera 3
-----
-
-* Set level 2 for all IRC buffers:
-
-----
-/set logger.level.irc 2
-----
-
-[[logger_filenames_masks]]
-==== Filenames masks
-
-It is possible to define a filename mask for each buffer, and use local buffer
-variables to build filename. To see available local variables for current buffer:
-
-----
-/buffer listvar
-----
-
-Masks will be matched on options in descending order of specificity on
-`logger.mask.$plugin.*`, with `logger.file.mask` as fallback option.
-
-For example, on buffer "irc.libera.#weechat", WeeChat will search a mask with
-option name, in this order:
-
-----
-logger.mask.irc.libera.#weechat
-logger.mask.irc.libera
-logger.mask.irc
-logger.file.mask
-----
-
-That means you can have masks specific for some IRC servers
-("logger.mask.irc.libera") or for a plugin ("logger.mask.irc").
-
-[[logger_files_by_date]]
-===== Log files by date
-
-To have log files by date, you can use date/time specifiers in mask (see
-`man strftime` for formats), for example:
-
-----
-/set logger.file.mask "%Y/%m/$plugin.$name.weechatlog"
-----
-
-You'll have following files:
-
-....
-~/.local/share/weechat
-└── logs
-    ├── 2010
-    │   ├── 11
-    │   │   ├── irc.server.libera.weechatlog
-    │   │   └── irc.libera.#weechat.weechatlog
-    │   └── 12
-    │       ├── irc.server.libera.weechatlog
-    │       └── irc.libera.#weechat.weechatlog
-    ├── 2011
-    │   ├── 01
-    │   │   ├── irc.server.libera.weechatlog
-    │   │   └── irc.libera.#weechat.weechatlog
-    │   ├── 02
-    ...
-....
-
-[[logger_irc_files_by_server_channel]]
-===== IRC log files by server and channel
-
-If you want one directory by IRC server and one file by channel inside:
-
-----
-/set logger.mask.irc "irc/$server/$channel.weechatlog"
-----
-
-You'll have following files:
-
-....
-~/.local/share/weechat
-└── logs
-    └── irc
-        ├── libera
-        │   ├── libera.weechatlog
-        │   ├── #weechat.weechatlog
-        │   └── #mychan.weechatlog
-        ├── oftc
-        │   ├── oftc.weechatlog
-        │   ├── #channel1.weechatlog
-        │   └── #channel2.weechatlog
-        ...
-....
-
-[[logger_commands]]
-==== Commands
-
-include::includes/autogen_user_commands.en.adoc[tag=logger_commands]
-
-[[logger_options]]
-==== Options
-
-Sections in file _logger.conf_:
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Section | Control command     | Description
-| look    | /set logger.look.*  | Look and feel.
-| color   | /set logger.color.* | Colors.
-| file    | /set logger.file.*  | Options for log files.
-| level   | /set logger.level.* | Log level by buffer (options can be added/removed in section).
-| mask    | /set logger.mask.*  | Filename mask by buffer (options can be added/removed in section).
-|===
-
-Options:
-
-include::includes/autogen_user_options.en.adoc[tag=logger_options]
 
 [[relay_plugin]]
 === Relay
