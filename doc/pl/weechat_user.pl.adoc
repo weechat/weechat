@@ -235,7 +235,7 @@ Lista popularnych opcji:
   Kompilacja <<scripts_plugins,wtyczki guile>> (Scheme).
 
 | ENABLE_IRC | `ON`, `OFF` | ON |
-  Kompilacja <<irc_plugin,wtyczki IRC>>.
+  Kompilacja <<irc,wtyczki IRC>>.
 
 | ENABLE_JAVASCRIPT | `ON`, `OFF` | OFF |
   Kompilacja <<scripts_plugins,wtyczki javascript>>.
@@ -2809,6 +2809,707 @@ Opcje:
 
 include::includes/autogen_user_options.pl.adoc[tag=weechat_options]
 
+[[irc]]
+== IRC
+
+Wtyczka IRC jest zaprojektowana do prowadzenia rozmów z innymi osobami przez
+protokół IRC.
+
+Jest multi-serwerowa i oferuje wszystkie wspierane komendy IRC włącznie z
+rozmowami DCC i transferami plików (poprzez wtyczkę xfer, zobacz
+<<xfer_plugin,Wtyczka xfer>>).
+
+[[irc_command_line_options]]
+=== Opcje z linii poleceń
+
+Możliwe jest podanie adresu URL do jednego lub wielu serwerów IRC:
+
+----
+irc[6][s]://[nick[:hasło]@]adres.serwera.irc[:port][/kanał][,kanał[...]]
+----
+
+Przykład wejścia na kanały _#weechat_ i _#weechat-fr_ na serwerze
+_irc.libera.chat_, na domyślnym porcie (6667), z nickiem _alice_:
+
+----
+$ weechat irc://alice@irc.libera.chat/#weechat,#weechat-fr
+----
+
+[[irc_servers]]
+=== Serwery
+
+[[irc_servers_add]]
+==== Dodanie serwera
+
+Domyślnie nie są zdefiniowane żadne serwery. Możesz dodać ich tyle ile chcesz
+za pomocą polecenia <<command_irc_server,/server>>.
+
+Na przykład w celu połączenia się do https://libera.chat/[libera.chat] używając SSL (szyfrowane połączenie):
+
+----
+/server add libera irc.libera.chat/6697 -ssl
+----
+
+Możesz powiedzieć WeeChat, aby automatycznie łączył się z tym serwerem po
+uruchomieniu:
+
+----
+/set irc.server.libera.autoconnect on
+----
+
+W celu uwierzytelnienia zalecane jest używanie SASL (jeśli wspiera to
+serwer), za pomocą hasła przechowaywanego w bezpieczny sposób (więcej
+w rozdziale <<irc_sasl_authentication,Uwierzytelnianie SASL>>):
+
+----
+/set irc.server.libera.sasl_username "alice"
+/secure set libera xxxxxxx
+/set irc.server.libera.sasl_password "${sec.data.libera}"
+----
+
+Jeśli SASL nie jest wspierane możesz użyć komendy, aby wysłać wiadomość do
+nickserva:
+
+----
+/set irc.server.libera.command "/msg nickserv identify ${sec.data.libera}"
+----
+
+[NOTE]
+Wysyłając wiadomość do nickserva możesz sie uwierzytelnić po wejściu na
+kanały, co może być problemem na kanałach, na które mogą wejść tylko
+uwierzytelnione osoby. W takim przypadku możesz ustawić opóźnienie dla
+komendy: `/set irc.server.libera.command_delay 5`.
+
+[[irc_servers_options]]
+==== Opcje serwerów
+
+Opcje serwerów są nazywane w taki sposób `irc.server.<serwer>.<opcja>`,
+gdzie `<serwer>` to zdefiniowana nazwa serwera, `<opcja>` to nazwa opcji. +
+Wartość opcji jest dziedziczona z `irc.server_default.xxx` w przypadku
+kiedy opcja ma specalną wartość `null`.
+
+Na przykład jeśli stworzyłeś serwer _libera_ za pomocą po wyższych komend
+zobaczysz to po wykonaniu `/fset libera`:
+
+....
+irc.server.libera.addresses             string   "irc.libera.chat/6697"
+irc.server.libera.anti_flood_prio_high  integer  null -> 2
+irc.server.libera.anti_flood_prio_low   integer  null -> 2
+irc.server.libera.autoconnect           boolean  on
+irc.server.libera.autojoin              string   null -> ""
+irc.server.libera.autoreconnect         boolean  null -> on
+irc.server.libera.autoreconnect_delay   integer  null -> 10
+irc.server.libera.autorejoin            boolean  null -> off
+irc.server.libera.autorejoin_delay      integer  null -> 30
+irc.server.libera.away_check            integer  null -> 0
+irc.server.libera.away_check_max_nicks  integer  null -> 25
+irc.server.libera.capabilities          string   null -> "*"
+irc.server.libera.charset_message       integer  null -> message
+irc.server.libera.command               string   null -> ""
+irc.server.libera.command_delay         integer  null -> 0
+irc.server.libera.connection_timeout    integer  null -> 60
+irc.server.libera.default_chantypes     string   null -> "#&"
+irc.server.libera.ipv6                  boolean  null -> on
+irc.server.libera.local_hostname        string   null -> ""
+irc.server.libera.msg_kick              string   null -> ""
+irc.server.libera.msg_part              string   null -> "WeeChat ${info:version}"
+irc.server.libera.msg_quit              string   null -> "WeeChat ${info:version}"
+irc.server.libera.nicks                 string   null -> "alice,alice1,alice2,alice3,alice4"
+irc.server.libera.nicks_alternate       boolean  null -> on
+irc.server.libera.notify                string   null -> ""
+irc.server.libera.password              string   null -> ""
+irc.server.libera.proxy                 string   null -> ""
+irc.server.libera.realname              string   null -> ""
+irc.server.libera.sasl_fail             integer  null -> reconnect
+irc.server.libera.sasl_key              string   null -> ""
+irc.server.libera.sasl_mechanism        integer  null -> plain
+irc.server.libera.sasl_password         string   "${sec.data.libera}"
+irc.server.libera.sasl_timeout          integer  null -> 15
+irc.server.libera.sasl_username         string   "alice"
+irc.server.libera.split_msg_max_length  integer  null -> 512
+irc.server.libera.ssl                   boolean  on
+irc.server.libera.ssl_cert              string   null -> ""
+irc.server.libera.ssl_dhkey_size        integer  null -> 2048
+irc.server.libera.ssl_fingerprint       string   null -> ""
+irc.server.libera.ssl_password          string   null -> ""
+irc.server.libera.ssl_priorities        string   null -> "NORMAL:-VERS-SSL3.0"
+irc.server.libera.ssl_verify            boolean  null -> on
+irc.server.libera.usermode              string   null -> ""
+irc.server.libera.username              string   null -> "alice"
+....
+
+Na przykład jeśli chcesz automatycznie połączyć się ze wszystkimi zdefiniowanym
+serwerami bez potrzeby ustawiania tej opcji dla każdego z serwerów, możesz to
+zrobić za pomocą:
+
+----
+/set irc.server_default.autoconnect on
+----
+
+Następnie możesz zresetować opcję serwera do jej domyślnej (dziedziczonej)
+wartości, która teraz ma wartość `on` zamiast domyślnego `off`:
+
+----
+/unset irc.server.libera.autoconnect
+----
+
+[[irc_ssl_certificates]]
+==== Certyfikaty SSL
+
+Podczas łączenia się z serwerem IRC, WeeChat domyślnie sprawdza czy połączenie
+jest w pełni zaufane.
+
+Niektóre opcje są używane do kontroli połączenia SSL:
+
+weechat.network.gnutls_ca_system::
+    ładuje domyślne systemowe zaufane urzędy cetyfikujące
+
+weechat.network.gnutls_ca_user::
+    dodatkowy plik(i) urzędów certyfikacyjnych
+
+irc.server.xxx.ssl_cert::
+    certyfikat SSL używany do automatycznej identyfikacji twojego nicka (na
+    przykład CertFP w sieci oftc, zobacz niżej)
+
+irc.server.xxx.ssl_dhkey_size::
+    rozmiar klucza użytego podczas wymiany kluczy Diffie-Hellman (domyślnie: 2048)
+
+irc.server.xxx.ssl_verify::
+    sprawdź, że połączenie SSL jest w pełni zaufane (domyślnie włączone)
+
+[NOTE]
+Opcja "ssl_verify" jest domyślnie włączona, weryfikacja jest restrykcyjna i może
+się nie powieść, nawet jeśli wszystko było OK w wersjach przed 0.3.1.
+
+[[irc_connect_oftc_with_certificate]]
+===== Pierwszy przykład: połączenie z oftc i sprawdzenie certyfikatu
+
+* Import certyfikatu w kosoli:
+
+----
+$ mkdir -p ~/.config/weechat/ssl
+$ wget -O ~/.config/weechat/ssl/CAs.pem https://www.spi-inc.org/ca/spi-cacert.crt
+----
+
+[NOTE]
+Musisz zamienić `~/.config/weechat` na ścieżkę do katalogu z konfiguracją WeeChat,
+który może być ustawiony na przykład na `~/.weechat`.
+
+[NOTE]
+Możliwe jest umieszczenie wielu certyfikatów w pliku CAs.pem.
+
+* W WeeChat z dodanym wcześniej serwerem "oftc":
+
+----
+/connect oftc
+----
+
+[[irc_connect_oftc_with_certfp]]
+===== Drugi przykład: połączenie z oftc używając CertFP
+
+* Tworzenie certyfikatu w konsoli:
+
+----
+$ mkdir -p ~/.config/weechat/ssl
+$ cd ~/.config/weechat/ssl
+$ openssl req -nodes -newkey rsa:2048 -keyout nick.pem -x509 -days 365 -out nick.pem
+----
+
+[NOTE]
+Musisz zamienić `~/.config/weechat` na ścieżkę do katalogu z konfiguracją WeeChat,
+który może być ustawiony na przykład na `~/.weechat`.
+
+* W WeeChat z dodanym wcześniej serwerem "oftc":
+
+----
+/set irc.server.oftc.ssl_cert "${weechat_config_dir}/ssl/nick.pem"
+/connect oftc
+/msg nickserv cert add
+----
+
+Więcej informacji można znaleźć pod adresem: https://www.oftc.net/NickServ/CertFP
+
+[[irc_sasl_authentication]]
+==== Uwierzytelnianie SASL
+
+WeeChat wspiera uwierzytelnianie SASL, używając różnych mechanizmów:
+
+* _plain_: hasło w czystym tekście (domyślne)
+* _scram-sha-1_: SCRAM z użyciem algorytmu SHA-1
+* _scram-sha-256_: SCRAM z użyciem algorytmu SHA-256
+* _scram-sha-512_: SCRAM z użyciem algorytmu SHA-512
+* _ecdsa-nist256p-challenge_: klucz prywatny/publiczny
+* _external_: certyfikat SSL po stronie klienta
+
+Opcje dla serwerów to:
+
+* _sasl_mechanism_: mechanizm do użycia (zobacz wyżej)
+* _sasl_timeout_: limit czasu (w sekundach) na uwierzytelnienie
+* _sasl_fail_: akcja wykonywana jeśli uwierzytelnienie się nie powiedzie
+* _sasl_username_: nazwa użytkownika (nick)
+* _sasl_password_: hasło
+* _sasl_key_: plik z kluczem prywatnym ECc (dla mechanizmu
+  _ecdsa-nist256p-challenge_)
+
+[[irc_sasl_ecdsa_nist256p_challenge]]
+===== SASL ECDSA-NIST256P-CHALLENGE
+
+Musisz wygenerować klucz prywatny w celu uwierzytelnienia za pomocą mechanizmu
+ECDSA-NIST256P-CHALLENGE (hasło nie potrzebne do połączenia).
+
+Klucz można wygenerować za pomocą komendy:
+
+----
+$ openssl ecparam -genkey -name prime256v1 -out ~/.config/weechat/ecdsa.pem
+----
+
+[NOTE]
+Musisz zamienić `~/.config/weechat` na ścieżkę do katalogu z konfiguracją WeeChat,
+który może być ustawiony na przykład na `~/.weechat`.
+
+Klucz publiczny (zakodowany za pomocą base64) uzyskujemy wywołując komendę:
+
+----
+$ openssl ec -noout -text -conv_form compressed -in ~/.config/weechat/ecdsa.pem | grep '^pub:' -A 3 | tail -n 3 | tr -d ' \n:' | xxd -r -p | base64
+----
+
+Połącz się do serwera, zidentyfikuj (na przykład za pomocą "nickserv identify")
+i ustaw swój klucz publiczny dla swojego konta, za pomocą nickserva (zamień
+wartość base64 wartościa dla swojego klucza):
+
+----
+/connect libera
+/msg nickserv identify your_password
+/msg nickserv set pubkey Av8k1FOGetUDq7sPMBfufSIZ5c2I/QYWgiwHtNXkVe/q
+----
+
+Konfiguracja opcji SASL dla serwera:
+
+----
+/set irc.server.libera.sasl_mechanism ecdsa-nist256p-challenge
+/set irc.server.libera.sasl_username "twój_nick"
+/set irc.server.libera.sasl_key "${weechat_config_dir}/ecdsa.pem"
+----
+
+Ponowne połączenie z serwerem:
+
+----
+/reconnect libera
+----
+
+[[irc_servers_connection]]
+==== Łączenie się z serwerem
+
+Możesz połączyć się z serwerem za pomocą komendy <<command_irc_connect,/connect>>:
+
+----
+/connect libera
+----
+
+Aby się rozłączyć:
+
+----
+/disconnect libera
+----
+
+Lub tylko to jeśli jesteś w buforze należącym do serwera _libera_ (serwer,
+kanał, wiadomości prywatne):
+
+----
+/disconnect
+----
+
+Jeśli łączysz się do wielu serwerów na raz, bufory serwerów są domyślnie połączone
+i możesz się między nimi przełączać za pomocą klawiszy kbd:[Ctrl+x]. +
+Możliwe jest wyłączenie automatycznego łączenia buforów serwerów i posiadania
+oddzielnych buforów dla serwerów:
+
+----
+/set irc.look.server_buffer independent
+----
+
+[[irc_tor_sasl]]
+==== Połączenie za pomocą TORa i SASL
+
+Niekróre serwery wspierają połączenia z sieci TOR (https://www.torproject.org/),
+sieci wirtualnych tuneli, które umożliwają poprawienie swojej prywatności
+i bezpieczeństwa w Internecie.
+
+Pierwszym krokiem jest instalacja TORa. Dla Debiana (i pochodnych):
+
+----
+$ sudo apt-get install tor
+----
+
+W WeeChat należy stworzyć proxy socks5 dla serwisu TOR (nazwa hosta/IP i port
+zależą od twojej konfiguracji TORa):
+
+----
+/proxy add tor socks5 127.0.0.1 9050
+----
+
+Teraz należy dodać nowy serwer (zastąp nazwę serwera "irc-tor" i andres właściwymi
+wartościami):
+
+----
+/server add irc-tor adres.serwera.onion
+----
+
+Ustaw proxy dla TOR:
+
+----
+/set irc.server.irc-tor.proxy "tor"
+----
+
+Ustaw uwierzytelnianie SASL z użyciem ECDSA-NIST256P-CHALLENGE (zobacz rozdział
+<<irc_sasl_ecdsa_nist256p_challenge,SASL ECDSA-NIST256P-CHALLENGE>> żeby dowiedzieć
+się jak wygenerować klucz prywatny):
+
+----
+/set irc.server.irc-tor.sasl_mechanism ecdsa-nist256p-challenge
+/set irc.server.irc-tor.sasl_username "twój_użytkownik"
+/set irc.server.irc-tor.sasl_key "${weechat_config_dir}/ecdsa.pem"
+----
+
+Teraz pozostaje już się tylko połączyć z serwerem:
+
+----
+/connect irc-tor
+----
+
+[[irc_channels]]
+=== Kanały
+
+Możesz dołączać do kanałów za pomocą komendy <<command_irc_join,/join>>:
+
+----
+/join #channel
+----
+
+Wyjście z kanału (zostawiając otwarty bufor):
+
+----
+/part [quit message]
+----
+
+Kanały do których dołączyłeś nie są zapisywane. Jeśli chcesz automatycznie
+do nich dołączać podczas łączenia się z serwerem, należy ustawić opcje
+serwera `autojoin`:
+
+----
+/set irc.server.libera.autojoin "#weechat"
+----
+
+[NOTE]
+Niektóre skrypty mogą pomóc w automatycznym ustawianiu tej opcji, zobacz
+`/script search autojoin`.
+
+Bądź ostrożny, spacje mogą być używane tylko do oddzielenia listy kanałów
+od ich haseł, na przykład jeśli `#kanał1` wymaga hasła ale `#kanał2` już
+nie:
+
+----
+/set irc.server.libera.autojoin "#kanał1,#kanał2 hasło1"
+----
+
+Informacje na temat formatu można uzyskać za pomocą `/help irc.server.libera.autojoin`.
+
+[[irc_private_messages]]
+=== Prywatne wiadomości
+
+Możesz wysłać prywatną wiadomość za pomocą polecenia <<command_irc_query,/query>>,
+co otwiera oddzielny bufor:
+
+----
+/query bob cześć, co tam?
+----
+
+Bez argumentów to polecenie otwiera bufor (lub przechodzi do niego jeśli już jest
+otwarty):
+
+----
+/query bob
+----
+
+W celu zamknięcia prywatnego buforu możesz wykonać to polecenie w prywatnym buforze:
+
+----
+/close
+----
+
+[[irc_smart_filter_join_part_quit]]
+=== Inteligentne filtry dla wiadomości
+
+Inteligentny filtr umożliwia filtrowanie informacji o wejściu/opuszczeniu/wyjściu
+z kanału, kiedy dany nick nie powiedział nic na kanale w ciągu ostatnich X minut.
+
+Jest on domyślnie włączony, ale należy dodać filtr do ukrywania linii w buforach,
+na przykład:
+
+----
+/filter add irc_smart * irc_smart_filter *
+----
+
+Możliwe jest tworzenie filtru tylko dla jednego kanału lub kanałów zaczynających
+się od tej samej nazwy (zobacz `/help filter`):
+
+----
+/filter add irc_smart_weechat irc.libera.#weechat irc_smart_filter *
+/filter add irc_smart_weechats irc.libera.#weechat* irc_smart_filter *
+----
+
+Można ukrywac tylko wejściu lub opuszczenia/wyjścia z kanału za pomocą tych opcji:
+
+----
+/set irc.look.smart_filter_join on
+/set irc.look.smart_filter_quit on
+----
+
+Ustawianie opóźnienia (w minutach):
+
+----
+/set irc.look.smart_filter_delay 5
+----
+
+Jeśli osoba nie odzywała się w ciągu ostatnich 5 minut, jej wejście i/lub
+opuszczenie/wyjście zostanie ukryte na kanale.
+
+[[irc_ctcp_replies]]
+=== Odpowiedzi CTCP
+
+Możliwe jest dostosowywanie odpowiedzi CTCP, lub blokowanie niektórych zapytań
+CTCP (brak odpowiedzi).
+
+Na przykład, ustawianie własnej odpowiedzi na CTCP "VERSION", możliwe jest za
+pomocą polecenia:
+
+----
+/set irc.ctcp.version "I'm running WeeChat $version, it rocks!"
+----
+
+Jeśli chcesz zablokować CTCP "VERSION" (nie odpowiadać na zapytanie), ustaw
+pusty ciąg:
+
+----
+/set irc.ctcp.version ""
+----
+
+Nawet odpowiedzi na nieznane zapytania CTCP mogą być dostosowywane, na przykład
+odpowiedź na CTCP "BLABLA":
+
+----
+/set irc.ctcp.blabla "This is my answer to CTCP BLABLA"
+----
+
+Możliwe jest dostosowywanie odpowiedzi na CTCP tylko w obrębie serwera, używając
+jego wewnętrznej nazwy przed nazwą zapytania CTCP:
+
+----
+/set irc.ctcp.libera.version "WeeChat $version (for libera)"
+----
+
+Jeśli chcesz przywrócić standardowe odpowiedzi dla CTCP usuń opcję:
+
+----
+/unset irc.ctcp.version
+----
+
+Następujące kody mogą być użyte w ciągach i zostaną automatycznie zamienione
+przez WeeChat podczas odpowiedzi na CTCP:
+
+[width="100%",cols="2l,4,8",options="header"]
+|===
+| Kod          | Opis                              | Wartość/Przykład
+| $clientinfo  | Lista wspieranych CTCP            | `+ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION+`
+| $version     | Wersja WeeChat                    | `+0.4.0-dev+`
+| $versiongit  | Wersja WeeChat + wersja Git ^(1)^ | `+0.4.0-dev (git: v0.3.9-104-g7eb5cc4)+`
+| $git         | Wersja git ^(1)^                  | `+v0.3.9-104-g7eb5cc4+`
+| $compilation | Data kompilacji WeeChat           | `+Dec 16 2012+`
+| $osinfo      | Informacje o systemie operacyjnym | `+Linux 2.6.32-5-amd64 / x86_64+`
+| $site        | Strona WeeChat                    | `+https://weechat.org/+`
+| $download    | Strona WeeChat, pobieranie        | `+https://weechat.org/download+`
+| $time        | Obecna data/czas                  | `+Sun, 16 Dec 2012 10:40:48 +0100+`
+| $username    | Nazwa użytkownika na serwerze IRC | `+name+`
+| $realname    | Prawdziwa nazwa na serwerze IRC   | `+John Doe+`
+|===
+
+[NOTE]
+^(1)^ Wersja git jest wynikiem komendy `git describe`. Jest dostępna tylko jeśli
+WeeChat został skompilowany wewnątrz repozytorium Git i Git był zainstalowany.
+
+Jeśli opcje CTCP nie są zdefiniowane (domyślne), odpowiedzi CTCP to:
+
+[width="100%",cols="2,4,8",options="header"]
+|===
+| CTCP       | Format odpowiedzi                      | Przykład
+| CLIENTINFO | `+$clientinfo+`                        | `+ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION+`
+| FINGER     | `+WeeChat $versiongit+`                | `+WeeChat 0.4.0-dev (git: v0.3.9-104-g7eb5cc4)+`
+| SOURCE     | `+$download+`                          | `+https://weechat.org/download+`
+| TIME       | `+$time+`                              | `+Sun, 16 Dec 2012 10:40:48 +0100+`
+| USERINFO   | `+$username ($realname)+`              | `+name (John Doe)+`
+| VERSION    | `+WeeChat $versiongit ($compilation)+` | `+WeeChat 0.4.0-dev (git: v0.3.9-104-g7eb5cc4) (Dec 16 2012)+`
+|===
+
+[[irc_target_buffer]]
+=== Bufor dla wiadomości IRC
+
+Jest możliwe dostosowanie buforu docelowego dla wiadomości IRC (bufor użyty do
+wyświetlania wiadomości) za pomocą opcji `+irc.msgbuffer.*+`.
+
+Dla niektórych wiadomości IRC (Zobacz poniższa listę), można ustawić wartość:
+
+current::
+    obecny bufor (jeśli jest to bufor IRC, lub domyślnie bufor serwera)
+
+private::
+    prywatny bufor dla osoby, lub bufor obecny/serwera jeśli nie zostanie
+    znaleziony (zgodnie z opcją _irc.look.msgbuffer_fallback_)
+
+server::
+    bufor serwera
+
+weechat::
+    Bufor "rdzeń" WeeChat
+
+Kiedy opcja nie jest ustawiona (domyślnie), WeeChat wybiera odpowiedni bufor,
+zazwyczaj bufor serwera albo kanału.
+
+Niepełna lista wiadomości IRC lub aliasów jakie można dostosować:
+
+[width="100%",cols="^2m,^3m,15",options="header"]
+|===
+| wiadomość | alias         | opis
+| error     |               | błąd
+| invite    |               | zaproszono na kanał
+| join      |               | wejście
+| kick      |               | wykopanie
+| kill      |               | zabicie
+| mode      |               | tryb
+| notice    |               | powiadomienie
+| part      |               | opuszczenie
+| quit      |               | wyjście
+| topic     |               | temat
+| wallops   |               | wallops
+|           | ctcp          | ctcp (wysłane lub otrzymane, w wiadomości prywatnej lub powiadomieniu)
+| 221       |               | ciąg trybu użytkownika
+| 275       | whois         | whois (bezpieczne połączenie)
+| 301       | whois         | whois (away)
+| 303       |               | ison
+| 305       | unaway        | unaway
+| 306       | away          | away
+| 307       | whois         | whois (zarejestrowany nick)
+| 310       | whois         | whois (tryb pomocy)
+| 311       | whois         | whois (użytkownik)
+| 312       | whois         | whois (serwer)
+| 313       | whois         | whois (operator)
+| 314       | whowas        | whowas
+| 315       | who           | who (koniec)
+| 317       | whois         | whois (idle)
+| 318       | whois         | whois (koniec)
+| 319       | whois         | whois (kanały)
+| 320       | whois         | whois (zidentyfikowany użytkownik)
+| 321       | list          | list (start)
+| 322       | list          | list (kanał)
+| 323       | list          | list (koniec)
+| 326       | whois         | whois (ma uprawnienia operatora)
+| 327       | whois         | whois (host)
+| 328       |               | URL kanału
+| 329       |               | data utworzenia kanału
+| 330       | whois         | whois (zalogowany jako)
+| 331       |               | brak tematu na kanale
+| 332       |               | temat kanału
+| 333       |               | informacje o temacie
+| 335       | whois         | whois (jest botem na)
+| 338       | whois         | whois (host)
+| 341       |               | zaproszenie
+| 343       | whois         | whois (is opered as)
+| 344       | reop          | reop dla kanału
+| 345       | reop          | reop dla kanału (koniec)
+| 346       | invitelist    | lista zaproszonych
+| 347       | invitelist    | lista zaproszonych (koniec)
+| 348       | exceptionlist | lista wyjątków
+| 349       | exceptionlist | lista wyjątków (koniec)
+| 351       |               | wersja serwera
+| 352       | who           | who
+| 353       | names         | lista osób na kanale
+| 366       | names         | koniec listy osób na kanale
+| 367       | banlist       | lista zbanowanych
+| 368       | banlist       | koniec listy zbanowanych
+| 369       | whowas        | whowas (koniec)
+| 378       | whois         | whois (łączy się z)
+| 379       | whois         | whois (używa trybów)
+| 401       | whois         | brak nicka/kanału
+| 402       | whois         | brak serwera
+| 432       |               | błędna nazwa użytkownika
+| 433       |               | nazwa użytkownika już zajęta
+| 438       |               | brak uprawnień do zmiany nicka
+| 671       | whois         | whois (bezpieczne połączenie)
+| 728       | quietlist     | cicha lista
+| 729       | quietlist     | koniec cichej listy
+| 732       | monitor       | lista monitorowanych nicków
+| 733       | monitor       | lista monitorowanych nicków (koniec)
+| 901       |               | jesteś teraz zalogowany
+|===
+
+Inne numeryczne komendy mogą również zostać spersonalizowane.
+
+Wiadomość może być poprzedzona nazwą serwera, żeby być specyficzna dla danego
+serwera irc (na przykład: `libera.whois`).
+
+Kilka przykładów:
+
+* wyświetlaj wynik komendy `/whois` w prywatnym buforze:
+
+----
+/set irc.msgbuffer.whois private
+----
+
+* przywróć domyślny bufor dla komendy `/whois` (bufor serwera):
+
+----
+/unset irc.msgbuffer.whois
+----
+
+* wyświetlaj zaproszenia w obecnym buforze, tylko na serwerze "libera":
+
+----
+/set irc.msgbuffer.libera.invite current
+----
+
+* wyświetlaj wiadomość "303" (ison) w buforze "core" WeeChat:
+
+----
+/set irc.msgbuffer.303 weechat
+----
+
+[[irc_commands]]
+=== Komendy
+
+include::includes/autogen_user_commands.pl.adoc[tag=irc_commands]
+
+[[irc_options]]
+=== Opcje
+
+Sekcje w pliku _irc.conf_:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Sekcja         | Komenda                        | Opis
+| look           | /set irc.look.*                | Wygląd.
+| color          | /set irc.color.*               | Kolory.
+| network        | /set irc.network.*             | Opcje sieci.
+| msgbuffer      | /set irc.msgbuffer.*           | <<irc_target_buffer,Bufor dla wiadomości IRC>> (opcje w tej sekcji mogą być dodawane/usuwane).
+| ctcp           | /set irc.ctcp.*                | <<irc_ctcp_replies,Odpowiedzi CTCP>> (opcje w tej sekcji mogą być dodawane/usuwane).
+| ignore         | <<command_irc_ignore,/ignore>> | Osoby ignorowane.
+| server_default | /set irc.server_default.*      | Domyślne ustawienia dla serwerów (opcje w tej sekcji mogą być dodawane/usuwane).
+| server         | <<command_irc_server,/server>> +
+                   /set irc.server.*              | Serwery.
+|===
+
+Opcje:
+
+include::includes/autogen_user_options.pl.adoc[tag=irc_options]
+
 [[plugins]]
 == Wtyczki
 
@@ -2967,707 +3668,6 @@ Sekcje w pliku _fifo.conf_:
 Opcje:
 
 include::includes/autogen_user_options.pl.adoc[tag=fifo_options]
-
-[[irc_plugin]]
-=== IRC
-
-Wtyczka IRC jest zaprojektowana do prowadzenia rozmów z innymi osobami przez
-protokół IRC.
-
-Jest multi-serwerowa i oferuje wszystkie wspierane komendy IRC włącznie z
-rozmowami DCC i transferami plików (poprzez wtyczkę xfer, zobacz
-<<xfer_plugin,Wtyczka xfer>>).
-
-[[irc_command_line_options]]
-==== Opcje z linii poleceń
-
-Możliwe jest podanie adresu URL do jednego lub wielu serwerów IRC:
-
-----
-irc[6][s]://[nick[:hasło]@]adres.serwera.irc[:port][/kanał][,kanał[...]]
-----
-
-Przykład wejścia na kanały _#weechat_ i _#weechat-fr_ na serwerze
-_irc.libera.chat_, na domyślnym porcie (6667), z nickiem _alice_:
-
-----
-$ weechat irc://alice@irc.libera.chat/#weechat,#weechat-fr
-----
-
-[[irc_servers]]
-==== Serwery
-
-[[irc_servers_add]]
-===== Dodanie serwera
-
-Domyślnie nie są zdefiniowane żadne serwery. Możesz dodać ich tyle ile chcesz
-za pomocą polecenia <<command_irc_server,/server>>.
-
-Na przykład w celu połączenia się do https://libera.chat/[libera.chat] używając SSL (szyfrowane połączenie):
-
-----
-/server add libera irc.libera.chat/6697 -ssl
-----
-
-Możesz powiedzieć WeeChat, aby automatycznie łączył się z tym serwerem po
-uruchomieniu:
-
-----
-/set irc.server.libera.autoconnect on
-----
-
-W celu uwierzytelnienia zalecane jest używanie SASL (jeśli wspiera to
-serwer), za pomocą hasła przechowaywanego w bezpieczny sposób (więcej
-w rozdziale <<irc_sasl_authentication,Uwierzytelnianie SASL>>):
-
-----
-/set irc.server.libera.sasl_username "alice"
-/secure set libera xxxxxxx
-/set irc.server.libera.sasl_password "${sec.data.libera}"
-----
-
-Jeśli SASL nie jest wspierane możesz użyć komendy, aby wysłać wiadomość do
-nickserva:
-
-----
-/set irc.server.libera.command "/msg nickserv identify ${sec.data.libera}"
-----
-
-[NOTE]
-Wysyłając wiadomość do nickserva możesz sie uwierzytelnić po wejściu na
-kanały, co może być problemem na kanałach, na które mogą wejść tylko
-uwierzytelnione osoby. W takim przypadku możesz ustawić opóźnienie dla
-komendy: `/set irc.server.libera.command_delay 5`.
-
-[[irc_servers_options]]
-===== Opcje serwerów
-
-Opcje serwerów są nazywane w taki sposób `irc.server.<serwer>.<opcja>`,
-gdzie `<serwer>` to zdefiniowana nazwa serwera, `<opcja>` to nazwa opcji. +
-Wartość opcji jest dziedziczona z `irc.server_default.xxx` w przypadku
-kiedy opcja ma specalną wartość `null`.
-
-Na przykład jeśli stworzyłeś serwer _libera_ za pomocą po wyższych komend
-zobaczysz to po wykonaniu `/fset libera`:
-
-....
-irc.server.libera.addresses             string   "irc.libera.chat/6697"
-irc.server.libera.anti_flood_prio_high  integer  null -> 2
-irc.server.libera.anti_flood_prio_low   integer  null -> 2
-irc.server.libera.autoconnect           boolean  on
-irc.server.libera.autojoin              string   null -> ""
-irc.server.libera.autoreconnect         boolean  null -> on
-irc.server.libera.autoreconnect_delay   integer  null -> 10
-irc.server.libera.autorejoin            boolean  null -> off
-irc.server.libera.autorejoin_delay      integer  null -> 30
-irc.server.libera.away_check            integer  null -> 0
-irc.server.libera.away_check_max_nicks  integer  null -> 25
-irc.server.libera.capabilities          string   null -> "*"
-irc.server.libera.charset_message       integer  null -> message
-irc.server.libera.command               string   null -> ""
-irc.server.libera.command_delay         integer  null -> 0
-irc.server.libera.connection_timeout    integer  null -> 60
-irc.server.libera.default_chantypes     string   null -> "#&"
-irc.server.libera.ipv6                  boolean  null -> on
-irc.server.libera.local_hostname        string   null -> ""
-irc.server.libera.msg_kick              string   null -> ""
-irc.server.libera.msg_part              string   null -> "WeeChat ${info:version}"
-irc.server.libera.msg_quit              string   null -> "WeeChat ${info:version}"
-irc.server.libera.nicks                 string   null -> "alice,alice1,alice2,alice3,alice4"
-irc.server.libera.nicks_alternate       boolean  null -> on
-irc.server.libera.notify                string   null -> ""
-irc.server.libera.password              string   null -> ""
-irc.server.libera.proxy                 string   null -> ""
-irc.server.libera.realname              string   null -> ""
-irc.server.libera.sasl_fail             integer  null -> reconnect
-irc.server.libera.sasl_key              string   null -> ""
-irc.server.libera.sasl_mechanism        integer  null -> plain
-irc.server.libera.sasl_password         string   "${sec.data.libera}"
-irc.server.libera.sasl_timeout          integer  null -> 15
-irc.server.libera.sasl_username         string   "alice"
-irc.server.libera.split_msg_max_length  integer  null -> 512
-irc.server.libera.ssl                   boolean  on
-irc.server.libera.ssl_cert              string   null -> ""
-irc.server.libera.ssl_dhkey_size        integer  null -> 2048
-irc.server.libera.ssl_fingerprint       string   null -> ""
-irc.server.libera.ssl_password          string   null -> ""
-irc.server.libera.ssl_priorities        string   null -> "NORMAL:-VERS-SSL3.0"
-irc.server.libera.ssl_verify            boolean  null -> on
-irc.server.libera.usermode              string   null -> ""
-irc.server.libera.username              string   null -> "alice"
-....
-
-Na przykład jeśli chcesz automatycznie połączyć się ze wszystkimi zdefiniowanym
-serwerami bez potrzeby ustawiania tej opcji dla każdego z serwerów, możesz to
-zrobić za pomocą:
-
-----
-/set irc.server_default.autoconnect on
-----
-
-Następnie możesz zresetować opcję serwera do jej domyślnej (dziedziczonej)
-wartości, która teraz ma wartość `on` zamiast domyślnego `off`: 
-
-----
-/unset irc.server.libera.autoconnect
-----
-
-[[irc_ssl_certificates]]
-===== Certyfikaty SSL
-
-Podczas łączenia się z serwerem IRC, WeeChat domyślnie sprawdza czy połączenie
-jest w pełni zaufane.
-
-Niektóre opcje są używane do kontroli połączenia SSL:
-
-weechat.network.gnutls_ca_system::
-    ładuje domyślne systemowe zaufane urzędy cetyfikujące
-
-weechat.network.gnutls_ca_user::
-    dodatkowy plik(i) urzędów certyfikacyjnych
-
-irc.server.xxx.ssl_cert::
-    certyfikat SSL używany do automatycznej identyfikacji twojego nicka (na
-    przykład CertFP w sieci oftc, zobacz niżej)
-
-irc.server.xxx.ssl_dhkey_size::
-    rozmiar klucza użytego podczas wymiany kluczy Diffie-Hellman (domyślnie: 2048)
-
-irc.server.xxx.ssl_verify::
-    sprawdź, że połączenie SSL jest w pełni zaufane (domyślnie włączone)
-
-[NOTE]
-Opcja "ssl_verify" jest domyślnie włączona, weryfikacja jest restrykcyjna i może
-się nie powieść, nawet jeśli wszystko było OK w wersjach przed 0.3.1.
-
-[[irc_connect_oftc_with_certificate]]
-====== Pierwszy przykład: połączenie z oftc i sprawdzenie certyfikatu
-
-* Import certyfikatu w kosoli:
-
-----
-$ mkdir -p ~/.config/weechat/ssl
-$ wget -O ~/.config/weechat/ssl/CAs.pem https://www.spi-inc.org/ca/spi-cacert.crt
-----
-
-[NOTE]
-Musisz zamienić `~/.config/weechat` na ścieżkę do katalogu z konfiguracją WeeChat,
-który może być ustawiony na przykład na `~/.weechat`.
-
-[NOTE]
-Możliwe jest umieszczenie wielu certyfikatów w pliku CAs.pem.
-
-* W WeeChat z dodanym wcześniej serwerem "oftc":
-
-----
-/connect oftc
-----
-
-[[irc_connect_oftc_with_certfp]]
-====== Drugi przykład: połączenie z oftc używając CertFP
-
-* Tworzenie certyfikatu w konsoli:
-
-----
-$ mkdir -p ~/.config/weechat/ssl
-$ cd ~/.config/weechat/ssl
-$ openssl req -nodes -newkey rsa:2048 -keyout nick.pem -x509 -days 365 -out nick.pem
-----
-
-[NOTE]
-Musisz zamienić `~/.config/weechat` na ścieżkę do katalogu z konfiguracją WeeChat,
-który może być ustawiony na przykład na `~/.weechat`.
-
-* W WeeChat z dodanym wcześniej serwerem "oftc":
-
-----
-/set irc.server.oftc.ssl_cert "${weechat_config_dir}/ssl/nick.pem"
-/connect oftc
-/msg nickserv cert add
-----
-
-Więcej informacji można znaleźć pod adresem: https://www.oftc.net/NickServ/CertFP
-
-[[irc_sasl_authentication]]
-===== Uwierzytelnianie SASL
-
-WeeChat wspiera uwierzytelnianie SASL, używając różnych mechanizmów:
-
-* _plain_: hasło w czystym tekście (domyślne)
-* _scram-sha-1_: SCRAM z użyciem algorytmu SHA-1
-* _scram-sha-256_: SCRAM z użyciem algorytmu SHA-256
-* _scram-sha-512_: SCRAM z użyciem algorytmu SHA-512
-* _ecdsa-nist256p-challenge_: klucz prywatny/publiczny
-* _external_: certyfikat SSL po stronie klienta
-
-Opcje dla serwerów to:
-
-* _sasl_mechanism_: mechanizm do użycia (zobacz wyżej)
-* _sasl_timeout_: limit czasu (w sekundach) na uwierzytelnienie
-* _sasl_fail_: akcja wykonywana jeśli uwierzytelnienie się nie powiedzie
-* _sasl_username_: nazwa użytkownika (nick)
-* _sasl_password_: hasło
-* _sasl_key_: plik z kluczem prywatnym ECc (dla mechanizmu
-  _ecdsa-nist256p-challenge_)
-
-[[irc_sasl_ecdsa_nist256p_challenge]]
-====== SASL ECDSA-NIST256P-CHALLENGE
-
-Musisz wygenerować klucz prywatny w celu uwierzytelnienia za pomocą mechanizmu
-ECDSA-NIST256P-CHALLENGE (hasło nie potrzebne do połączenia).
-
-Klucz można wygenerować za pomocą komendy:
-
-----
-$ openssl ecparam -genkey -name prime256v1 -out ~/.config/weechat/ecdsa.pem
-----
-
-[NOTE]
-Musisz zamienić `~/.config/weechat` na ścieżkę do katalogu z konfiguracją WeeChat,
-który może być ustawiony na przykład na `~/.weechat`.
-
-Klucz publiczny (zakodowany za pomocą base64) uzyskujemy wywołując komendę:
-
-----
-$ openssl ec -noout -text -conv_form compressed -in ~/.config/weechat/ecdsa.pem | grep '^pub:' -A 3 | tail -n 3 | tr -d ' \n:' | xxd -r -p | base64
-----
-
-Połącz się do serwera, zidentyfikuj (na przykład za pomocą "nickserv identify")
-i ustaw swój klucz publiczny dla swojego konta, za pomocą nickserva (zamień
-wartość base64 wartościa dla swojego klucza):
-
-----
-/connect libera
-/msg nickserv identify your_password
-/msg nickserv set pubkey Av8k1FOGetUDq7sPMBfufSIZ5c2I/QYWgiwHtNXkVe/q
-----
-
-Konfiguracja opcji SASL dla serwera:
-
-----
-/set irc.server.libera.sasl_mechanism ecdsa-nist256p-challenge
-/set irc.server.libera.sasl_username "twój_nick"
-/set irc.server.libera.sasl_key "${weechat_config_dir}/ecdsa.pem"
-----
-
-Ponowne połączenie z serwerem:
-
-----
-/reconnect libera
-----
-
-[[irc_servers_connection]]
-===== Łączenie się z serwerem
-
-Możesz połączyć się z serwerem za pomocą komendy <<command_irc_connect,/connect>>:
-
-----
-/connect libera
-----
-
-Aby się rozłączyć:
-
-----
-/disconnect libera
-----
-
-Lub tylko to jeśli jesteś w buforze należącym do serwera _libera_ (serwer,
-kanał, wiadomości prywatne):
-
-----
-/disconnect
-----
-
-Jeśli łączysz się do wielu serwerów na raz, bufory serwerów są domyślnie połączone
-i możesz się między nimi przełączać za pomocą klawiszy kbd:[Ctrl+x]. +
-Możliwe jest wyłączenie automatycznego łączenia buforów serwerów i posiadania
-oddzielnych buforów dla serwerów:
-
-----
-/set irc.look.server_buffer independent
-----
-
-[[irc_tor_sasl]]
-===== Połączenie za pomocą TORa i SASL
-
-Niekróre serwery wspierają połączenia z sieci TOR (https://www.torproject.org/),
-sieci wirtualnych tuneli, które umożliwają poprawienie swojej prywatności
-i bezpieczeństwa w Internecie.
-
-Pierwszym krokiem jest instalacja TORa. Dla Debiana (i pochodnych):
-
-----
-$ sudo apt-get install tor
-----
-
-W WeeChat należy stworzyć proxy socks5 dla serwisu TOR (nazwa hosta/IP i port
-zależą od twojej konfiguracji TORa):
-
-----
-/proxy add tor socks5 127.0.0.1 9050
-----
-
-Teraz należy dodać nowy serwer (zastąp nazwę serwera "irc-tor" i andres właściwymi
-wartościami):
-
-----
-/server add irc-tor adres.serwera.onion
-----
-
-Ustaw proxy dla TOR:
-
-----
-/set irc.server.irc-tor.proxy "tor"
-----
-
-Ustaw uwierzytelnianie SASL z użyciem ECDSA-NIST256P-CHALLENGE (zobacz rozdział
-<<irc_sasl_ecdsa_nist256p_challenge,SASL ECDSA-NIST256P-CHALLENGE>> żeby dowiedzieć
-się jak wygenerować klucz prywatny):
-
-----
-/set irc.server.irc-tor.sasl_mechanism ecdsa-nist256p-challenge
-/set irc.server.irc-tor.sasl_username "twój_użytkownik"
-/set irc.server.irc-tor.sasl_key "${weechat_config_dir}/ecdsa.pem"
-----
-
-Teraz pozostaje już się tylko połączyć z serwerem:
-
-----
-/connect irc-tor
-----
-
-[[irc_channels]]
-==== Kanały
-
-Możesz dołączać do kanałów za pomocą komendy <<command_irc_join,/join>>:
-
-----
-/join #channel
-----
-
-Wyjście z kanału (zostawiając otwarty bufor):
-
-----
-/part [quit message]
-----
-
-Kanały do których dołączyłeś nie są zapisywane. Jeśli chcesz automatycznie
-do nich dołączać podczas łączenia się z serwerem, należy ustawić opcje
-serwera `autojoin`: 
-
-----
-/set irc.server.libera.autojoin "#weechat"
-----
-
-[NOTE]
-Niektóre skrypty mogą pomóc w automatycznym ustawianiu tej opcji, zobacz
-`/script search autojoin`.
-
-Bądź ostrożny, spacje mogą być używane tylko do oddzielenia listy kanałów
-od ich haseł, na przykład jeśli `#kanał1` wymaga hasła ale `#kanał2` już
-nie:
-
-----
-/set irc.server.libera.autojoin "#kanał1,#kanał2 hasło1"
-----
-
-Informacje na temat formatu można uzyskać za pomocą `/help irc.server.libera.autojoin`.
-
-[[irc_private_messages]]
-==== Prywatne wiadomości
-
-Możesz wysłać prywatną wiadomość za pomocą polecenia <<command_irc_query,/query>>,
-co otwiera oddzielny bufor:
-
-----
-/query bob cześć, co tam?
-----
-
-Bez argumentów to polecenie otwiera bufor (lub przechodzi do niego jeśli już jest
-otwarty):
-
-----
-/query bob
-----
-
-W celu zamknięcia prywatnego buforu możesz wykonać to polecenie w prywatnym buforze:
-
-----
-/close
-----
-
-[[irc_smart_filter_join_part_quit]]
-==== Inteligentne filtry dla wiadomości
-
-Inteligentny filtr umożliwia filtrowanie informacji o wejściu/opuszczeniu/wyjściu
-z kanału, kiedy dany nick nie powiedział nic na kanale w ciągu ostatnich X minut.
-
-Jest on domyślnie włączony, ale należy dodać filtr do ukrywania linii w buforach,
-na przykład:
-
-----
-/filter add irc_smart * irc_smart_filter *
-----
-
-Możliwe jest tworzenie filtru tylko dla jednego kanału lub kanałów zaczynających
-się od tej samej nazwy (zobacz `/help filter`):
-
-----
-/filter add irc_smart_weechat irc.libera.#weechat irc_smart_filter *
-/filter add irc_smart_weechats irc.libera.#weechat* irc_smart_filter *
-----
-
-Można ukrywac tylko wejściu lub opuszczenia/wyjścia z kanału za pomocą tych opcji:
-
-----
-/set irc.look.smart_filter_join on
-/set irc.look.smart_filter_quit on
-----
-
-Ustawianie opóźnienia (w minutach):
-
-----
-/set irc.look.smart_filter_delay 5
-----
-
-Jeśli osoba nie odzywała się w ciągu ostatnich 5 minut, jej wejście i/lub
-opuszczenie/wyjście zostanie ukryte na kanale.
-
-[[irc_ctcp_replies]]
-==== Odpowiedzi CTCP
-
-Możliwe jest dostosowywanie odpowiedzi CTCP, lub blokowanie niektórych zapytań
-CTCP (brak odpowiedzi).
-
-Na przykład, ustawianie własnej odpowiedzi na CTCP "VERSION", możliwe jest za
-pomocą polecenia:
-
-----
-/set irc.ctcp.version "I'm running WeeChat $version, it rocks!"
-----
-
-Jeśli chcesz zablokować CTCP "VERSION" (nie odpowiadać na zapytanie), ustaw
-pusty ciąg:
-
-----
-/set irc.ctcp.version ""
-----
-
-Nawet odpowiedzi na nieznane zapytania CTCP mogą być dostosowywane, na przykład
-odpowiedź na CTCP "BLABLA":
-
-----
-/set irc.ctcp.blabla "This is my answer to CTCP BLABLA"
-----
-
-Możliwe jest dostosowywanie odpowiedzi na CTCP tylko w obrębie serwera, używając
-jego wewnętrznej nazwy przed nazwą zapytania CTCP:
-
-----
-/set irc.ctcp.libera.version "WeeChat $version (for libera)"
-----
-
-Jeśli chcesz przywrócić standardowe odpowiedzi dla CTCP usuń opcję:
-
-----
-/unset irc.ctcp.version
-----
-
-Następujące kody mogą być użyte w ciągach i zostaną automatycznie zamienione
-przez WeeChat podczas odpowiedzi na CTCP:
-
-[width="100%",cols="2l,4,8",options="header"]
-|===
-| Kod          | Opis                              | Wartość/Przykład
-| $clientinfo  | Lista wspieranych CTCP            | `+ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION+`
-| $version     | Wersja WeeChat                    | `+0.4.0-dev+`
-| $versiongit  | Wersja WeeChat + wersja Git ^(1)^ | `+0.4.0-dev (git: v0.3.9-104-g7eb5cc4)+`
-| $git         | Wersja git ^(1)^                  | `+v0.3.9-104-g7eb5cc4+`
-| $compilation | Data kompilacji WeeChat           | `+Dec 16 2012+`
-| $osinfo      | Informacje o systemie operacyjnym | `+Linux 2.6.32-5-amd64 / x86_64+`
-| $site        | Strona WeeChat                    | `+https://weechat.org/+`
-| $download    | Strona WeeChat, pobieranie        | `+https://weechat.org/download+`
-| $time        | Obecna data/czas                  | `+Sun, 16 Dec 2012 10:40:48 +0100+`
-| $username    | Nazwa użytkownika na serwerze IRC | `+name+`
-| $realname    | Prawdziwa nazwa na serwerze IRC   | `+John Doe+`
-|===
-
-[NOTE]
-^(1)^ Wersja git jest wynikiem komendy `git describe`. Jest dostępna tylko jeśli
-WeeChat został skompilowany wewnątrz repozytorium Git i Git był zainstalowany.
-
-Jeśli opcje CTCP nie są zdefiniowane (domyślne), odpowiedzi CTCP to:
-
-[width="100%",cols="2,4,8",options="header"]
-|===
-| CTCP       | Format odpowiedzi                      | Przykład
-| CLIENTINFO | `+$clientinfo+`                        | `+ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION+`
-| FINGER     | `+WeeChat $versiongit+`                | `+WeeChat 0.4.0-dev (git: v0.3.9-104-g7eb5cc4)+`
-| SOURCE     | `+$download+`                          | `+https://weechat.org/download+`
-| TIME       | `+$time+`                              | `+Sun, 16 Dec 2012 10:40:48 +0100+`
-| USERINFO   | `+$username ($realname)+`              | `+name (John Doe)+`
-| VERSION    | `+WeeChat $versiongit ($compilation)+` | `+WeeChat 0.4.0-dev (git: v0.3.9-104-g7eb5cc4) (Dec 16 2012)+`
-|===
-
-[[irc_target_buffer]]
-==== Bufor dla wiadomości IRC
-
-Jest możliwe dostosowanie buforu docelowego dla wiadomości IRC (bufor użyty do
-wyświetlania wiadomości) za pomocą opcji `+irc.msgbuffer.*+`.
-
-Dla niektórych wiadomości IRC (Zobacz poniższa listę), można ustawić wartość:
-
-current::
-    obecny bufor (jeśli jest to bufor IRC, lub domyślnie bufor serwera)
-
-private::
-    prywatny bufor dla osoby, lub bufor obecny/serwera jeśli nie zostanie
-    znaleziony (zgodnie z opcją _irc.look.msgbuffer_fallback_)
-
-server::
-    bufor serwera
-
-weechat::
-    Bufor "rdzeń" WeeChat
-
-Kiedy opcja nie jest ustawiona (domyślnie), WeeChat wybiera odpowiedni bufor,
-zazwyczaj bufor serwera albo kanału.
-
-Niepełna lista wiadomości IRC lub aliasów jakie można dostosować:
-
-[width="100%",cols="^2m,^3m,15",options="header"]
-|===
-| wiadomość | alias         | opis
-| error     |               | błąd
-| invite    |               | zaproszono na kanał
-| join      |               | wejście
-| kick      |               | wykopanie
-| kill      |               | zabicie
-| mode      |               | tryb
-| notice    |               | powiadomienie
-| part      |               | opuszczenie
-| quit      |               | wyjście
-| topic     |               | temat
-| wallops   |               | wallops
-|           | ctcp          | ctcp (wysłane lub otrzymane, w wiadomości prywatnej lub powiadomieniu)
-| 221       |               | ciąg trybu użytkownika
-| 275       | whois         | whois (bezpieczne połączenie)
-| 301       | whois         | whois (away)
-| 303       |               | ison
-| 305       | unaway        | unaway
-| 306       | away          | away
-| 307       | whois         | whois (zarejestrowany nick)
-| 310       | whois         | whois (tryb pomocy)
-| 311       | whois         | whois (użytkownik)
-| 312       | whois         | whois (serwer)
-| 313       | whois         | whois (operator)
-| 314       | whowas        | whowas
-| 315       | who           | who (koniec)
-| 317       | whois         | whois (idle)
-| 318       | whois         | whois (koniec)
-| 319       | whois         | whois (kanały)
-| 320       | whois         | whois (zidentyfikowany użytkownik)
-| 321       | list          | list (start)
-| 322       | list          | list (kanał)
-| 323       | list          | list (koniec)
-| 326       | whois         | whois (ma uprawnienia operatora)
-| 327       | whois         | whois (host)
-| 328       |               | URL kanału
-| 329       |               | data utworzenia kanału
-| 330       | whois         | whois (zalogowany jako)
-| 331       |               | brak tematu na kanale
-| 332       |               | temat kanału
-| 333       |               | informacje o temacie
-| 335       | whois         | whois (jest botem na)
-| 338       | whois         | whois (host)
-| 341       |               | zaproszenie
-| 343       | whois         | whois (is opered as)
-| 344       | reop          | reop dla kanału
-| 345       | reop          | reop dla kanału (koniec)
-| 346       | invitelist    | lista zaproszonych
-| 347       | invitelist    | lista zaproszonych (koniec)
-| 348       | exceptionlist | lista wyjątków
-| 349       | exceptionlist | lista wyjątków (koniec)
-| 351       |               | wersja serwera
-| 352       | who           | who
-| 353       | names         | lista osób na kanale
-| 366       | names         | koniec listy osób na kanale
-| 367       | banlist       | lista zbanowanych
-| 368       | banlist       | koniec listy zbanowanych
-| 369       | whowas        | whowas (koniec)
-| 378       | whois         | whois (łączy się z)
-| 379       | whois         | whois (używa trybów)
-| 401       | whois         | brak nicka/kanału
-| 402       | whois         | brak serwera
-| 432       |               | błędna nazwa użytkownika
-| 433       |               | nazwa użytkownika już zajęta
-| 438       |               | brak uprawnień do zmiany nicka
-| 671       | whois         | whois (bezpieczne połączenie)
-| 728       | quietlist     | cicha lista
-| 729       | quietlist     | koniec cichej listy
-| 732       | monitor       | lista monitorowanych nicków
-| 733       | monitor       | lista monitorowanych nicków (koniec)
-| 901       |               | jesteś teraz zalogowany
-|===
-
-Inne numeryczne komendy mogą również zostać spersonalizowane.
-
-Wiadomość może być poprzedzona nazwą serwera, żeby być specyficzna dla danego
-serwera irc (na przykład: `libera.whois`).
-
-Kilka przykładów:
-
-* wyświetlaj wynik komendy `/whois` w prywatnym buforze:
-
-----
-/set irc.msgbuffer.whois private
-----
-
-* przywróć domyślny bufor dla komendy `/whois` (bufor serwera):
-
-----
-/unset irc.msgbuffer.whois
-----
-
-* wyświetlaj zaproszenia w obecnym buforze, tylko na serwerze "libera":
-
-----
-/set irc.msgbuffer.libera.invite current
-----
-
-* wyświetlaj wiadomość "303" (ison) w buforze "core" WeeChat:
-
-----
-/set irc.msgbuffer.303 weechat
-----
-
-[[irc_commands]]
-==== Komendy
-
-include::includes/autogen_user_commands.pl.adoc[tag=irc_commands]
-
-[[irc_options]]
-==== Opcje
-
-Sekcje w pliku _irc.conf_:
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Sekcja         | Komenda                        | Opis
-| look           | /set irc.look.*                | Wygląd.
-| color          | /set irc.color.*               | Kolory.
-| network        | /set irc.network.*             | Opcje sieci.
-| msgbuffer      | /set irc.msgbuffer.*           | <<irc_target_buffer,Bufor dla wiadomości IRC>> (opcje w tej sekcji mogą być dodawane/usuwane).
-| ctcp           | /set irc.ctcp.*                | <<irc_ctcp_replies,Odpowiedzi CTCP>> (opcje w tej sekcji mogą być dodawane/usuwane).
-| ignore         | <<command_irc_ignore,/ignore>> | Osoby ignorowane.
-| server_default | /set irc.server_default.*      | Domyślne ustawienia dla serwerów (opcje w tej sekcji mogą być dodawane/usuwane).
-| server         | <<command_irc_server,/server>> +
-                   /set irc.server.*              | Serwery.
-|===
-
-Opcje:
-
-include::includes/autogen_user_options.pl.adoc[tag=irc_options]
 
 [[logger_plugin]]
 === Logger

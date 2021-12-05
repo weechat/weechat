@@ -239,7 +239,7 @@ CMake に対するオプションを指定するには、以下の書式を使�
   <<scripts_plugins,Guile プラグイン>> (Scheme) のコンパイル。
 
 | ENABLE_IRC | `ON`, `OFF` | ON |
-  <<irc_plugin,IRC プラグイン>>のコンパイル
+  <<irc,IRC プラグイン>>のコンパイル
 
 | ENABLE_JAVASCRIPT | `ON`, `OFF` | OFF |
   <<scripts_plugins,JavaScript プラグイン>>のコンパイル。
@@ -2871,6 +2871,711 @@ _weechat.conf_ ファイル内のセクション:
 
 include::includes/autogen_user_options.ja.adoc[tag=weechat_options]
 
+[[irc]]
+== IRC
+
+IRC プラグインは IRC プロトコルに従って他の人と会話を行うために設計されています。
+
+マルチサーバに対応し、DCC チャットとファイル転送 (xfer
+プラグインを使います。<<xfer_plugin,Xfer プラグイン>>を参照) を含む全ての IRC コマンドをサポートしています。
+
+[[irc_command_line_options]]
+=== コマンドラインオプション
+
+以下のように 1 つ以上の IRC サーバに対応する URL を引数として与えることができます:
+
+----
+irc[6][s]://[nick[:password]@]irc.example.org[:port][/channel][,channel[...]]
+----
+
+_alice_ というニックネームを使って _irc.libera.chat_ ホストのデフォルトポート (6667)
+で稼働中の IRC サーバ上の _#weechat_ と _#weechat-fr_ チャンネルに参加する例:
+
+----
+$ weechat irc://alice@irc.libera.chat/#weechat,#weechat-fr
+----
+
+// TRANSLATION MISSING
+[[irc_servers]]
+=== Servers
+
+[[irc_servers_add]]
+==== Add a server
+
+By default no servers are defined. You can add as many servers as you want with
+the <<command_irc_server,/server>> command.
+
+For example to connect to https://libera.chat/[libera.chat] with SSL (encrypted trafic):
+
+----
+/server add libera irc.libera.chat/6697 -ssl
+----
+
+You can tell WeeChat to auto-connect to this server on startup:
+
+----
+/set irc.server.libera.autoconnect on
+----
+
+To authenticate, it is recommended to use SASL (if supported on the server),
+with the password stored as secured data (see also chapter on
+<<irc_sasl_authentication,SASL authentication>>):
+
+----
+/set irc.server.libera.sasl_username "alice"
+/secure set libera xxxxxxx
+/set irc.server.libera.sasl_password "${sec.data.libera}"
+----
+
+If SASL is not supported, you can use a command to send a message to nickserv:
+
+----
+/set irc.server.libera.command "/msg nickserv identify ${sec.data.libera}"
+----
+
+[NOTE]
+By sending a message to nickserv, you may authenticate after joining channels
+which could be a problem on some channels requiring you to be authenticated
+to join. In this case, you can set a command delay:
+`/set irc.server.libera.command_delay 5`.
+
+[[irc_servers_options]]
+==== Server options
+
+Server options are named `irc.server.<server>.<option>` where `<server>` is the
+internal name of the server and `<option>` the name of an option. +
+The value of a server option is inherited from `irc.server_default.xxx`
+if the server option has the special value `null`.
+
+For example if you created the _libera_ server with the commands above, you'll
+see this with the command `/fset libera`:
+
+....
+irc.server.libera.addresses             string   "irc.libera.chat/6697"
+irc.server.libera.anti_flood_prio_high  integer  null -> 2
+irc.server.libera.anti_flood_prio_low   integer  null -> 2
+irc.server.libera.autoconnect           boolean  on
+irc.server.libera.autojoin              string   null -> ""
+irc.server.libera.autoreconnect         boolean  null -> on
+irc.server.libera.autoreconnect_delay   integer  null -> 10
+irc.server.libera.autorejoin            boolean  null -> off
+irc.server.libera.autorejoin_delay      integer  null -> 30
+irc.server.libera.away_check            integer  null -> 0
+irc.server.libera.away_check_max_nicks  integer  null -> 25
+irc.server.libera.capabilities          string   null -> "*"
+irc.server.libera.charset_message       integer  null -> message
+irc.server.libera.command               string   null -> ""
+irc.server.libera.command_delay         integer  null -> 0
+irc.server.libera.connection_timeout    integer  null -> 60
+irc.server.libera.default_chantypes     string   null -> "#&"
+irc.server.libera.ipv6                  boolean  null -> on
+irc.server.libera.local_hostname        string   null -> ""
+irc.server.libera.msg_kick              string   null -> ""
+irc.server.libera.msg_part              string   null -> "WeeChat ${info:version}"
+irc.server.libera.msg_quit              string   null -> "WeeChat ${info:version}"
+irc.server.libera.nicks                 string   null -> "alice,alice1,alice2,alice3,alice4"
+irc.server.libera.nicks_alternate       boolean  null -> on
+irc.server.libera.notify                string   null -> ""
+irc.server.libera.password              string   null -> ""
+irc.server.libera.proxy                 string   null -> ""
+irc.server.libera.realname              string   null -> ""
+irc.server.libera.sasl_fail             integer  null -> reconnect
+irc.server.libera.sasl_key              string   null -> ""
+irc.server.libera.sasl_mechanism        integer  null -> plain
+irc.server.libera.sasl_password         string   "${sec.data.libera}"
+irc.server.libera.sasl_timeout          integer  null -> 15
+irc.server.libera.sasl_username         string   "alice"
+irc.server.libera.split_msg_max_length  integer  null -> 512
+irc.server.libera.ssl                   boolean  on
+irc.server.libera.ssl_cert              string   null -> ""
+irc.server.libera.ssl_dhkey_size        integer  null -> 2048
+irc.server.libera.ssl_fingerprint       string   null -> ""
+irc.server.libera.ssl_password          string   null -> ""
+irc.server.libera.ssl_priorities        string   null -> "NORMAL:-VERS-SSL3.0"
+irc.server.libera.ssl_verify            boolean  null -> on
+irc.server.libera.usermode              string   null -> ""
+irc.server.libera.username              string   null -> "alice"
+....
+
+For example if you want to automatically connect to all servers you define
+without having to do it on each server, you can do:
+
+----
+/set irc.server_default.autoconnect on
+----
+
+And then you can reset the server option so that it uses the default inherited
+value, which is now `on` instead of the default value `off`:
+
+----
+/unset irc.server.libera.autoconnect
+----
+
+[[irc_ssl_certificates]]
+==== SSL 証明書
+
+SSL を使って IRC サーバに接続する場合、WeeChat
+はデフォルトで接続が完全に信頼できるものかどうかを確認します。
+
+以下のオプションで SSL 接続を設定します:
+
+// TRANSLATION MISSING
+weechat.network.gnutls_ca_system::
+    load system's default trusted certificate authorities on startup
+
+// TRANSLATION MISSING
+weechat.network.gnutls_ca_user::
+    extra file(s) with certificate authorities
+
+irc.server.xxx.ssl_cert::
+    自動的にニックネームを確認するために利用される SSL 証明書ファイル (例えば
+    oftc サーバにおける CertFP の場合、以下を確認してください)
+
+irc.server.xxx.ssl_dhkey_size::
+    Diffie-Hellman キー交換の際に利用される鍵サイズ (デフォルト:
+    2048)
+
+irc.server.xxx.ssl_verify::
+    SSL 接続が完全に信頼できることの確認を行う (デフォルトで有効)
+
+[NOTE]
+"ssl_verify" オプションはデフォルトで有効です、したがって厳密な確認が行われ、0.3.1
+より前のバージョンでは信頼性の確認に成功していたものが失敗する場合もあります。
+
+[[irc_connect_oftc_with_certificate]]
+===== 最初の例: oftc に接続して、証明書を確認
+
+* シェルを使って証明書をインポート:
+
+----
+$ mkdir -p ~/.config/weechat/ssl
+$ wget -O ~/.config/weechat/ssl/CAs.pem https://www.spi-inc.org/ca/spi-cacert.crt
+----
+
+// TRANSLATION MISSING
+[NOTE]
+You must replace `~/.config/weechat` by the path to your WeeChat config directory
+which can also be for example `~/.weechat`.
+
+[NOTE]
+CAs.pem ファイル中で複数の証明書を連結することもできます。
+
+* WeeChat では、"oftc" サーバが既に追加されています:
+
+----
+/connect oftc
+----
+
+[[irc_connect_oftc_with_certfp]]
+===== 2 番目の例: CertFP を使って oftc に接続
+
+* シェルで証明書を作成:
+
+----
+$ mkdir -p ~/.config/weechat/ssl
+$ cd ~/.config/weechat/ssl
+$ openssl req -nodes -newkey rsa:2048 -keyout nick.pem -x509 -days 365 -out nick.pem
+----
+
+// TRANSLATION MISSING
+[NOTE]
+You must replace `~/.config/weechat` by the path to your WeeChat config directory
+which can also be for example `~/.weechat`.
+
+* WeeChat では、"oftc" サーバが既に追加されています:
+
+----
+/set irc.server.oftc.ssl_cert "${weechat_config_dir}/ssl/nick.pem"
+/connect oftc
+/msg nickserv cert add
+----
+
+より詳しい情報は https://www.oftc.net/NickServ/CertFP を確認してください。
+
+[[irc_sasl_authentication]]
+==== SASL 認証
+
+WeeChat は SASL 認証をサポートします、以下の認証メカニズムを利用できます:
+
+* _plain_: 平文パスワード (デフォルト)
+// TRANSLATION MISSING
+* _scram-sha-1_: SCRAM with SHA-1 digest algorithm
+// TRANSLATION MISSING
+* _scram-sha-256_: SCRAM with SHA-256 digest algorithm
+// TRANSLATION MISSING
+* _scram-sha-512_: SCRAM with SHA-512 digest algorithm
+* _ecdsa-nist256p-challenge_: 公開鍵/秘密鍵を使うチャレンジ認証
+* _external_: クライアント側 SSL 証明書
+
+サーバオプション:
+
+* _sasl_mechanism_: 利用する認証メカニズム (上記参照)
+* _sasl_timeout_: 認証時のタイムアウト (秒単位)
+* _sasl_fail_: 認証に失敗した場合の挙動
+* _sasl_username_: ユーザ名 (ニックネーム)
+* _sasl_password_: パスワード
+* _sasl_key_: ECC 秘密鍵を含むファイル
+  (_ecdsa-nist256p-challenge_ 用)
+
+[[irc_sasl_ecdsa_nist256p_challenge]]
+===== SASL ECDSA-NIST256P-CHALLENGE 認証
+
+ECDSA-NIST256P-CHALLENGE を使って認証を行うためには、秘密鍵を作成してください
+(接続の際にパスワードは不要です)。
+
+鍵を作成するには、以下のコマンドを使ってください:
+
+----
+$ openssl ecparam -genkey -name prime256v1 -out ~/.config/weechat/ecdsa.pem
+----
+
+// TRANSLATION MISSING
+[NOTE]
+You must replace `~/.config/weechat` by the path to your WeeChat config directory
+which can also be for example `~/.weechat`.
+
+公開鍵を (base64 エンコード形式で) 作成するには、以下のコマンドを使ってください:
+
+----
+$ openssl ec -noout -text -conv_form compressed -in ~/.config/weechat/ecdsa.pem | grep '^pub:' -A 3 | tail -n 3 | tr -d ' \n:' | xxd -r -p | base64
+----
+
+サーバに接続、本人確認 (例えば "nickserv identify" を使って)、nickserv
+を使ってアカウントに公開鍵を設定 (アカウントの公開鍵に base64
+文字列を指定する):
+
+----
+/connect libera
+/msg nickserv identify your_password
+/msg nickserv set pubkey Av8k1FOGetUDq7sPMBfufSIZ5c2I/QYWgiwHtNXkVe/q
+----
+
+サーバの SASL オプションを設定:
+
+----
+/set irc.server.libera.sasl_mechanism ecdsa-nist256p-challenge
+/set irc.server.libera.sasl_username "your_nickname"
+/set irc.server.libera.sasl_key "${weechat_config_dir}/ecdsa.pem"
+----
+
+サーバに再接続:
+
+----
+/reconnect libera
+----
+
+// TRANSLATION MISSING
+[[irc_servers_connection]]
+==== Connection
+
+You can connect to server with the <<command_irc_connect,/connect>> command:
+
+----
+/connect libera
+----
+
+To disconnect:
+
+----
+/disconnect libera
+----
+
+Or just this if you are on any buffer belonging to _libera_ server (server,
+channel, private):
+
+----
+/disconnect
+----
+
+When you connect to multiple servers at same time, server buffers are merged
+by default and you can switch between them with the kbd:[Ctrl+x] key. +
+It is possible to disable auto merge of server buffers to have independent
+server buffers:
+
+----
+/set irc.look.server_buffer independent
+----
+
+// TRANSLATION MISSING
+[[irc_tor_sasl]]
+==== Connect with TOR and SASL
+
+// TRANSLATION MISSING
+Some servers support connections with TOR (https://www.torproject.org/),
+a network of virtual tunnels that allows people and groups to improve their
+privacy and security on the Internet.
+
+最初に、TOR をインストールしてください。Debian (とその派生ディストリビューション) の場合:
+
+----
+$ sudo apt-get install tor
+----
+
+WeeChat で TOR サービスを使った socks5 プロキシを作成してください
+(ホスト名/IP アドレス、ポート番号は TOR の設定に依存します):
+
+----
+/proxy add tor socks5 127.0.0.1 9050
+----
+
+// TRANSLATION MISSING
+Now, add a new server (replace server name "irc-tor" and the address by a valid one):
+
+----
+/server add irc-tor this.is.the.address.onion
+----
+
+TOR プロキシを設定:
+
+----
+/set irc.server.irc-tor.proxy "tor"
+----
+
+ECDSA-NIST256P-CHALLENGE メカニズムで SASL 認証を設定 (秘密鍵を作成するには
+<<irc_sasl_ecdsa_nist256p_challenge,SASL ECDSA-NIST256P-CHALLENGE 認証>>を参照してください):
+
+----
+/set irc.server.irc-tor.sasl_mechanism ecdsa-nist256p-challenge
+/set irc.server.irc-tor.sasl_username "your_nickname"
+/set irc.server.irc-tor.sasl_key "${weechat_config_dir}/ecdsa.pem"
+----
+
+// TRANSLATION MISSING
+And finally, connect to the server:
+
+----
+/connect irc-tor
+----
+
+// TRANSLATION MISSING
+[[irc_channels]]
+=== Channels
+
+You can join channels with the <<command_irc_join,/join>> command:
+
+----
+/join #channel
+----
+
+Part a channel (keeping the buffer open):
+
+----
+/part [quit message]
+----
+
+The channels you joined are not saved. If you want to join them automatically
+when connecting to the server, you must set the server `autojoin` option:
+
+----
+/set irc.server.libera.autojoin "#weechat,#weechat-fr"
+----
+
+[NOTE]
+Some scripts can help to automatically set this option,
+see `/script search autojoin`.
+
+Be careful, spaces can be used only to separate list of channels from keys,
+for example if `#channel1` requires a key but not `#channel2`:
+
+----
+/set irc.server.libera.autojoin "#channel1,#channel2 key1"
+----
+
+For help on the format, see `/help irc.server.libera.autojoin`.
+
+[[irc_private_messages]]
+=== Private messages
+
+You can send a private message with the <<command_irc_query,/query>> command,
+which opens a separate buffer:
+
+----
+/query bob hi, how are you?
+----
+
+Without arguments the command just opens the buffer (or selects it if already open):
+
+----
+/query bob
+----
+
+To close the private buffer, you can do this command on the private buffer:
+
+----
+/close
+----
+
+[[irc_smart_filter_join_part_quit]]
+=== 参加/退出/終了メッセージに対するスマートフィルタ
+
+チャンネル内での発言が過去 X
+分間なかった場合に参加/退出/終了メッセージをフィルタリングするスマートフィルタが利用できます。
+
+スマートフィルタはデフォルトで有効化されていますが、バッファ内のメッセージを隠すにはフィルタを追加する必要があります。例えば:
+
+----
+/filter add irc_smart * irc_smart_filter *
+----
+
+特定のチャンネルのみ、またはある名前で始まるチャンネルに対してフィルタを作成することもできます
+(`/help filter` を参照):
+
+----
+/filter add irc_smart_weechat irc.libera.#weechat irc_smart_filter *
+/filter add irc_smart_weechats irc.libera.#weechat* irc_smart_filter *
+----
+
+以下のコマンドで参加メッセージだけ、または退出/終了メッセージだけを隠すこともできます:
+
+----
+/set irc.look.smart_filter_join on
+/set irc.look.smart_filter_quit on
+----
+
+遅延時間 (分単位) を設定することもできます:
+
+----
+/set irc.look.smart_filter_delay 5
+----
+
+過去 5
+分間あるニックネームからの発言が無かった場合、このニックネームに対する参加または退出/終了メッセージがチャンネルから隠されます。
+
+[[irc_ctcp_replies]]
+=== CTCP 応答
+
+CTCP 応答をカスタマイズしたり、いくつかの CTCP
+要求をブロック (無応答) することができます。
+
+例えば、CTCP "VERSION" 要求に対する応答をカスタマイズするには、以下のコマンドを使ってください:
+
+----
+/set irc.ctcp.version "I'm running WeeChat $version, it rocks!"
+----
+
+CTCP "VERSION" 要求をブロックする (要求に対する応答を行わない)
+には、空文字列を設定してください:
+
+----
+/set irc.ctcp.version ""
+----
+
+未定義の CTCP 要求に対する応答もカスタマイズできます。例えば
+CTCP "BLABLA" 要求に対する応答を以下のように設定できます:
+
+----
+/set irc.ctcp.blabla "This is my answer to CTCP BLABLA"
+----
+
+特定のサーバに対して CTCP 応答をカスタマイズするには、CTCP
+名の前に内部サーバ名をつけてください:
+
+----
+/set irc.ctcp.libera.version "WeeChat $version (for libera)"
+----
+
+標準の CTCP 応答を復元するには、オプションを削除してください:
+
+----
+/unset irc.ctcp.version
+----
+
+以下のコードを設定値に含めることが可能です。これらのコードは
+CTCP 応答時に自動的に WeeChat によって展開されます:
+
+[width="100%",cols="2l,4,8",options="header"]
+|===
+| コード       | 説明                                      | 値/例
+| $clientinfo  | サポートしている CTCP オプションのリスト  | `+ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION+`
+| $version     | WeeChat バージョン                        | `+0.4.0-dev+`
+| $versiongit  | WeeChat バージョン + Git バージョン ^(1)^ | `+0.4.0-dev (git: v0.3.9-104-g7eb5cc4)+`
+| $git         | Git バージョン ^(1)^                      | `+v0.3.9-104-g7eb5cc4+`
+| $compilation | WeeChat コンパイル日時                    | `+Dec 16 2012+`
+| $osinfo      | OS に関する情報                           | `+Linux 2.6.32-5-amd64 / x86_64+`
+| $site        | WeeChat ウェブサイト                      | `+https://weechat.org/+`
+| $download    | WeeChat ウェブサイトのダウンロードページ  | `+https://weechat.org/download+`
+| $time        | 現在の日時                                | `+Sun, 16 Dec 2012 10:40:48 +0100+`
+| $username    | IRC サーバ上で使うユーザ名                | `+name+`
+| $realname    | IRC サーバ上で使う実名                    | `+John Doe+`
+|===
+
+[NOTE]
+^(1)^ git バージョンとは `git describe` コマンドの出力です。Git リポジトリで
+WeeChat をコンパイルし、Git がインストールされている場合のみ値が設定されます。
+
+CTCP オプションが設定されていない (デフォルトの) 場合、CTCP 応答は以下のようになります:
+
+[width="100%",cols="2,4,8",options="header"]
+|===
+| CTCP       | 応答書式                               | 例
+| CLIENTINFO | `+$clientinfo+`                        | `+ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION+`
+| FINGER     | `+WeeChat $versiongit+`                | `+WeeChat 0.4.0-dev (git: v0.3.9-104-g7eb5cc4)+`
+| SOURCE     | `+$download+`                          | `+https://weechat.org/download+`
+| TIME       | `+$time+`                              | `+Sun, 16 Dec 2012 10:40:48 +0100+`
+| USERINFO   | `+$username ($realname)+`              | `+name (John Doe)+`
+| VERSION    | `+WeeChat $versiongit ($compilation)+` | `+WeeChat 0.4.0-dev (git: v0.3.9-104-g7eb5cc4) (Dec 16 2012)+`
+|===
+
+[[irc_target_buffer]]
+=== IRC メッセージのターゲットバッファ
+
+`+irc.msgbuffer.*+` オプションを使えば、IRC メッセージに対するターゲットバッファ
+(メッセージを表示するバッファ) をカスタマイズすることができます。
+
+一部の IRC メッセージ (以下のリストを参照) に対して、以下の値を設定できます:
+
+current::
+    現在のバッファ (IRC バッファまたはサーババッファの場合のデフォルト)
+
+private::
+    ニックネームに対するプライベートバッファ、見つからない場合は現在のバッファまたはサーババッファ
+    (_irc.look.msgbuffer_fallback_ オプションに依存)
+
+server::
+    サーババッファ
+
+weechat::
+    WeeChat "core" バッファ
+
+オプションが設定されていない (デフォルトの) 場合、WeeChat
+は適当なバッファを選びます。通常ではサーバまたはチャンネルバッファです。
+
+カスタマイズできる一部の IRC メッセージ、別名のリストは以下です:
+
+[width="100%",cols="^2m,^3m,15",options="header"]
+|===
+| メッセージ | 別名       | 説明
+| error   |               | エラー
+| invite  |               | チャンネルへの招待
+| join    |               | 参加
+| kick    |               | キック
+| kill    |               | キル
+| mode    |               | モード
+| notice  |               | 通知
+| part    |               | 退出
+| quit    |               | 終了
+| topic   |               | トピック
+| wallops |               | IRC オペレータメッセージ
+|         | ctcp          | ctcp (プライベートまたは notice メッセージ内の、送信または受信メッセージ)
+| 221     |               | ユーザモード文字列
+| 275     | whois         | whois (セキュアな接続)
+| 301     | whois         | whois (離席状態)
+| 303     |               | サーバへの接続状態
+| 305     | unaway        | 着席状態
+| 306     | away          | 離席状態
+| 307     | whois         | whois (登録済みニックネーム)
+| 310     | whois         | whois (ヘルプモード)
+| 311     | whois         | whois (ユーザ)
+| 312     | whois         | whois (サーバ)
+| 313     | whois         | whois (オペレータ)
+| 314     | whowas        | whowas
+| 315     | who           | who (終了)
+| 317     | whois         | whois (アイドル状態)
+| 318     | whois         | whois (終了)
+| 319     | whois         | whois (チャンネル)
+| 320     | whois         | whois (身元確認済みユーザ)
+| 321     | list          | list (開始)
+| 322     | list          | list (チャンネル)
+| 323     | list          | list (終了)
+| 326     | whois         | whois (オペレータ権限を持っているユーザ)
+| 327     | whois         | whois (ホスト)
+| 328     |               | チャンネルの URL
+| 329     |               | チャンネル作成日時
+| 330     | whois         | whois (ログイン時の名前)
+| 331     |               | トピックが未設定のチャンネル
+| 332     |               | チャンネルのトピック
+| 333     |               | トピックに関する情報
+| 335     | whois         | whois (ボットが有効化されているか)
+| 338     | whois         | whois (ホスト)
+| 341     |               | 招待中
+| 343     | whois         | whois (オペレータ)
+| 344     | reop          | チャンネルオペレータを復活
+| 345     | reop          | チャンネルオペレータを復活 (終了)
+| 346     | invitelist    | 招待リスト
+| 347     | invitelist    | 招待リスト (終了)
+| 348     | exceptionlist | 除外リスト
+| 349     | exceptionlist | 除外リスト (終了)
+| 351     |               | サーババージョン
+| 352     | who           | who
+| 353     | names         | チャンネル内ユーザのリスト
+| 366     | names         | チャンネル内ユーザのリストの終了
+| 367     | banlist       | 禁止リスト
+| 368     | banlist       | 禁止リストの終了
+| 369     | whowas        | whowas (終了)
+| 378     | whois         | whois (接続元)
+| 379     | whois         | whois (モード)
+| 401     | whois         | 指定したニックネームおよびチャンネルがありません
+| 402     | whois         | 指定したサーバがありません
+| 432     |               | ニックネームにエラーがあります
+| 433     |               | ニックネームが使用されています
+| 438     |               | ニックネームを変更する権限がありません
+| 671     | whois         | whois (セキュアな接続)
+| 728     | quietlist     | 発言禁止リスト
+| 729     | quietlist     | 発言禁止リストの終了
+| 732     | monitor       | 監視中のニックネームのリスト
+| 733     | monitor       | 監視中のニックネームのリスト (終了)
+| 901     |               | ログインに成功
+|===
+
+その他の数値コマンドも同様にカスタマイズできます。
+
+サーバ名を前につけることで、特定のサーバに対して設定することができます
+(例: `libera.whois`)。
+
+例:
+
+* `/whois` の結果をプライベートバッファに表示:
+
+----
+/set irc.msgbuffer.whois private
+----
+
+* whois に対する設定をデフォルトに戻す (サーババッファに表示):
+
+----
+/unset irc.msgbuffer.whois
+----
+
+* "libera" サーバの場合、招待メッセージを現在のバッファに表示:
+
+----
+/set irc.msgbuffer.libera.invite current
+----
+
+* "303" (ison) メッセージを WeeChat "core" バッファに表示:
+
+----
+/set irc.msgbuffer.303 weechat
+----
+
+[[irc_commands]]
+=== コマンド
+
+include::includes/autogen_user_commands.ja.adoc[tag=irc_commands]
+
+[[irc_options]]
+=== オプション
+
+_irc.conf_ ファイル内のセクション:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| セクション     | 操作コマンド                   | 説明
+| look           | /set irc.look.*                | 外観
+| color          | /set irc.color.*               | 色
+| network        | /set irc.network.*             | ネットワークオプション
+| msgbuffer      | /set irc.msgbuffer.*           | <<irc_target_buffer,IRC メッセージのターゲットバッファ>> (オプションをセクションに追加/削除出来ます)
+| ctcp           | /set irc.ctcp.*                | <<irc_ctcp_replies,CTCP 応答>> (オプションをセクションに追加/削除出来ます)
+| ignore         | <<command_irc_ignore,/ignore>> | 無視ユーザ
+| server_default | /set irc.server_default.*      | サーバに対するデフォルト値 (サーバオプションが定義されていない場合に利用されます)
+| server         | <<command_irc_server,/server>> +
+                   /set irc.server.*              | サーバ
+|===
+
+オプション:
+
+include::includes/autogen_user_options.ja.adoc[tag=irc_options]
+
 [[plugins]]
 == プラグイン
 
@@ -3031,711 +3736,6 @@ _fifo.conf_ ファイル内のセクション:
 オプション:
 
 include::includes/autogen_user_options.ja.adoc[tag=fifo_options]
-
-[[irc_plugin]]
-=== IRC
-
-IRC プラグインは IRC プロトコルに従って他の人と会話を行うために設計されています。
-
-マルチサーバに対応し、DCC チャットとファイル転送 (xfer
-プラグインを使います。<<xfer_plugin,Xfer プラグイン>>を参照) を含む全ての IRC コマンドをサポートしています。
-
-[[irc_command_line_options]]
-==== コマンドラインオプション
-
-以下のように 1 つ以上の IRC サーバに対応する URL を引数として与えることができます:
-
-----
-irc[6][s]://[nick[:password]@]irc.example.org[:port][/channel][,channel[...]]
-----
-
-_alice_ というニックネームを使って _irc.libera.chat_ ホストのデフォルトポート (6667)
-で稼働中の IRC サーバ上の _#weechat_ と _#weechat-fr_ チャンネルに参加する例:
-
-----
-$ weechat irc://alice@irc.libera.chat/#weechat,#weechat-fr
-----
-
-// TRANSLATION MISSING
-[[irc_servers]]
-==== Servers
-
-[[irc_servers_add]]
-===== Add a server
-
-By default no servers are defined. You can add as many servers as you want with
-the <<command_irc_server,/server>> command.
-
-For example to connect to https://libera.chat/[libera.chat] with SSL (encrypted trafic):
-
-----
-/server add libera irc.libera.chat/6697 -ssl
-----
-
-You can tell WeeChat to auto-connect to this server on startup:
-
-----
-/set irc.server.libera.autoconnect on
-----
-
-To authenticate, it is recommended to use SASL (if supported on the server),
-with the password stored as secured data (see also chapter on
-<<irc_sasl_authentication,SASL authentication>>):
-
-----
-/set irc.server.libera.sasl_username "alice"
-/secure set libera xxxxxxx
-/set irc.server.libera.sasl_password "${sec.data.libera}"
-----
-
-If SASL is not supported, you can use a command to send a message to nickserv:
-
-----
-/set irc.server.libera.command "/msg nickserv identify ${sec.data.libera}"
-----
-
-[NOTE]
-By sending a message to nickserv, you may authenticate after joining channels
-which could be a problem on some channels requiring you to be authenticated
-to join. In this case, you can set a command delay:
-`/set irc.server.libera.command_delay 5`.
-
-[[irc_servers_options]]
-===== Server options
-
-Server options are named `irc.server.<server>.<option>` where `<server>` is the
-internal name of the server and `<option>` the name of an option. +
-The value of a server option is inherited from `irc.server_default.xxx`
-if the server option has the special value `null`.
-
-For example if you created the _libera_ server with the commands above, you'll
-see this with the command `/fset libera`:
-
-....
-irc.server.libera.addresses             string   "irc.libera.chat/6697"
-irc.server.libera.anti_flood_prio_high  integer  null -> 2
-irc.server.libera.anti_flood_prio_low   integer  null -> 2
-irc.server.libera.autoconnect           boolean  on
-irc.server.libera.autojoin              string   null -> ""
-irc.server.libera.autoreconnect         boolean  null -> on
-irc.server.libera.autoreconnect_delay   integer  null -> 10
-irc.server.libera.autorejoin            boolean  null -> off
-irc.server.libera.autorejoin_delay      integer  null -> 30
-irc.server.libera.away_check            integer  null -> 0
-irc.server.libera.away_check_max_nicks  integer  null -> 25
-irc.server.libera.capabilities          string   null -> "*"
-irc.server.libera.charset_message       integer  null -> message
-irc.server.libera.command               string   null -> ""
-irc.server.libera.command_delay         integer  null -> 0
-irc.server.libera.connection_timeout    integer  null -> 60
-irc.server.libera.default_chantypes     string   null -> "#&"
-irc.server.libera.ipv6                  boolean  null -> on
-irc.server.libera.local_hostname        string   null -> ""
-irc.server.libera.msg_kick              string   null -> ""
-irc.server.libera.msg_part              string   null -> "WeeChat ${info:version}"
-irc.server.libera.msg_quit              string   null -> "WeeChat ${info:version}"
-irc.server.libera.nicks                 string   null -> "alice,alice1,alice2,alice3,alice4"
-irc.server.libera.nicks_alternate       boolean  null -> on
-irc.server.libera.notify                string   null -> ""
-irc.server.libera.password              string   null -> ""
-irc.server.libera.proxy                 string   null -> ""
-irc.server.libera.realname              string   null -> ""
-irc.server.libera.sasl_fail             integer  null -> reconnect
-irc.server.libera.sasl_key              string   null -> ""
-irc.server.libera.sasl_mechanism        integer  null -> plain
-irc.server.libera.sasl_password         string   "${sec.data.libera}"
-irc.server.libera.sasl_timeout          integer  null -> 15
-irc.server.libera.sasl_username         string   "alice"
-irc.server.libera.split_msg_max_length  integer  null -> 512
-irc.server.libera.ssl                   boolean  on
-irc.server.libera.ssl_cert              string   null -> ""
-irc.server.libera.ssl_dhkey_size        integer  null -> 2048
-irc.server.libera.ssl_fingerprint       string   null -> ""
-irc.server.libera.ssl_password          string   null -> ""
-irc.server.libera.ssl_priorities        string   null -> "NORMAL:-VERS-SSL3.0"
-irc.server.libera.ssl_verify            boolean  null -> on
-irc.server.libera.usermode              string   null -> ""
-irc.server.libera.username              string   null -> "alice"
-....
-
-For example if you want to automatically connect to all servers you define
-without having to do it on each server, you can do:
-
-----
-/set irc.server_default.autoconnect on
-----
-
-And then you can reset the server option so that it uses the default inherited
-value, which is now `on` instead of the default value `off`:
-
-----
-/unset irc.server.libera.autoconnect
-----
-
-[[irc_ssl_certificates]]
-===== SSL 証明書
-
-SSL を使って IRC サーバに接続する場合、WeeChat
-はデフォルトで接続が完全に信頼できるものかどうかを確認します。
-
-以下のオプションで SSL 接続を設定します:
-
-// TRANSLATION MISSING
-weechat.network.gnutls_ca_system::
-    load system's default trusted certificate authorities on startup
-
-// TRANSLATION MISSING
-weechat.network.gnutls_ca_user::
-    extra file(s) with certificate authorities
-
-irc.server.xxx.ssl_cert::
-    自動的にニックネームを確認するために利用される SSL 証明書ファイル (例えば
-    oftc サーバにおける CertFP の場合、以下を確認してください)
-
-irc.server.xxx.ssl_dhkey_size::
-    Diffie-Hellman キー交換の際に利用される鍵サイズ (デフォルト:
-    2048)
-
-irc.server.xxx.ssl_verify::
-    SSL 接続が完全に信頼できることの確認を行う (デフォルトで有効)
-
-[NOTE]
-"ssl_verify" オプションはデフォルトで有効です、したがって厳密な確認が行われ、0.3.1
-より前のバージョンでは信頼性の確認に成功していたものが失敗する場合もあります。
-
-[[irc_connect_oftc_with_certificate]]
-====== 最初の例: oftc に接続して、証明書を確認
-
-* シェルを使って証明書をインポート:
-
-----
-$ mkdir -p ~/.config/weechat/ssl
-$ wget -O ~/.config/weechat/ssl/CAs.pem https://www.spi-inc.org/ca/spi-cacert.crt
-----
-
-// TRANSLATION MISSING
-[NOTE]
-You must replace `~/.config/weechat` by the path to your WeeChat config directory
-which can also be for example `~/.weechat`.
-
-[NOTE]
-CAs.pem ファイル中で複数の証明書を連結することもできます。
-
-* WeeChat では、"oftc" サーバが既に追加されています:
-
-----
-/connect oftc
-----
-
-[[irc_connect_oftc_with_certfp]]
-====== 2 番目の例: CertFP を使って oftc に接続
-
-* シェルで証明書を作成:
-
-----
-$ mkdir -p ~/.config/weechat/ssl
-$ cd ~/.config/weechat/ssl
-$ openssl req -nodes -newkey rsa:2048 -keyout nick.pem -x509 -days 365 -out nick.pem
-----
-
-// TRANSLATION MISSING
-[NOTE]
-You must replace `~/.config/weechat` by the path to your WeeChat config directory
-which can also be for example `~/.weechat`.
-
-* WeeChat では、"oftc" サーバが既に追加されています:
-
-----
-/set irc.server.oftc.ssl_cert "${weechat_config_dir}/ssl/nick.pem"
-/connect oftc
-/msg nickserv cert add
-----
-
-より詳しい情報は https://www.oftc.net/NickServ/CertFP を確認してください。
-
-[[irc_sasl_authentication]]
-===== SASL 認証
-
-WeeChat は SASL 認証をサポートします、以下の認証メカニズムを利用できます:
-
-* _plain_: 平文パスワード (デフォルト)
-// TRANSLATION MISSING
-* _scram-sha-1_: SCRAM with SHA-1 digest algorithm
-// TRANSLATION MISSING
-* _scram-sha-256_: SCRAM with SHA-256 digest algorithm
-// TRANSLATION MISSING
-* _scram-sha-512_: SCRAM with SHA-512 digest algorithm
-* _ecdsa-nist256p-challenge_: 公開鍵/秘密鍵を使うチャレンジ認証
-* _external_: クライアント側 SSL 証明書
-
-サーバオプション:
-
-* _sasl_mechanism_: 利用する認証メカニズム (上記参照)
-* _sasl_timeout_: 認証時のタイムアウト (秒単位)
-* _sasl_fail_: 認証に失敗した場合の挙動
-* _sasl_username_: ユーザ名 (ニックネーム)
-* _sasl_password_: パスワード
-* _sasl_key_: ECC 秘密鍵を含むファイル
-  (_ecdsa-nist256p-challenge_ 用)
-
-[[irc_sasl_ecdsa_nist256p_challenge]]
-====== SASL ECDSA-NIST256P-CHALLENGE 認証
-
-ECDSA-NIST256P-CHALLENGE を使って認証を行うためには、秘密鍵を作成してください
-(接続の際にパスワードは不要です)。
-
-鍵を作成するには、以下のコマンドを使ってください:
-
-----
-$ openssl ecparam -genkey -name prime256v1 -out ~/.config/weechat/ecdsa.pem
-----
-
-// TRANSLATION MISSING
-[NOTE]
-You must replace `~/.config/weechat` by the path to your WeeChat config directory
-which can also be for example `~/.weechat`.
-
-公開鍵を (base64 エンコード形式で) 作成するには、以下のコマンドを使ってください:
-
-----
-$ openssl ec -noout -text -conv_form compressed -in ~/.config/weechat/ecdsa.pem | grep '^pub:' -A 3 | tail -n 3 | tr -d ' \n:' | xxd -r -p | base64
-----
-
-サーバに接続、本人確認 (例えば "nickserv identify" を使って)、nickserv
-を使ってアカウントに公開鍵を設定 (アカウントの公開鍵に base64
-文字列を指定する):
-
-----
-/connect libera
-/msg nickserv identify your_password
-/msg nickserv set pubkey Av8k1FOGetUDq7sPMBfufSIZ5c2I/QYWgiwHtNXkVe/q
-----
-
-サーバの SASL オプションを設定:
-
-----
-/set irc.server.libera.sasl_mechanism ecdsa-nist256p-challenge
-/set irc.server.libera.sasl_username "your_nickname"
-/set irc.server.libera.sasl_key "${weechat_config_dir}/ecdsa.pem"
-----
-
-サーバに再接続:
-
-----
-/reconnect libera
-----
-
-// TRANSLATION MISSING
-[[irc_servers_connection]]
-===== Connection
-
-You can connect to server with the <<command_irc_connect,/connect>> command:
-
-----
-/connect libera
-----
-
-To disconnect:
-
-----
-/disconnect libera
-----
-
-Or just this if you are on any buffer belonging to _libera_ server (server,
-channel, private):
-
-----
-/disconnect
-----
-
-When you connect to multiple servers at same time, server buffers are merged
-by default and you can switch between them with the kbd:[Ctrl+x] key. +
-It is possible to disable auto merge of server buffers to have independent
-server buffers:
-
-----
-/set irc.look.server_buffer independent
-----
-
-// TRANSLATION MISSING
-[[irc_tor_sasl]]
-===== Connect with TOR and SASL
-
-// TRANSLATION MISSING
-Some servers support connections with TOR (https://www.torproject.org/),
-a network of virtual tunnels that allows people and groups to improve their
-privacy and security on the Internet.
-
-最初に、TOR をインストールしてください。Debian (とその派生ディストリビューション) の場合:
-
-----
-$ sudo apt-get install tor
-----
-
-WeeChat で TOR サービスを使った socks5 プロキシを作成してください
-(ホスト名/IP アドレス、ポート番号は TOR の設定に依存します):
-
-----
-/proxy add tor socks5 127.0.0.1 9050
-----
-
-// TRANSLATION MISSING
-Now, add a new server (replace server name "irc-tor" and the address by a valid one):
-
-----
-/server add irc-tor this.is.the.address.onion
-----
-
-TOR プロキシを設定:
-
-----
-/set irc.server.irc-tor.proxy "tor"
-----
-
-ECDSA-NIST256P-CHALLENGE メカニズムで SASL 認証を設定 (秘密鍵を作成するには
-<<irc_sasl_ecdsa_nist256p_challenge,SASL ECDSA-NIST256P-CHALLENGE 認証>>を参照してください):
-
-----
-/set irc.server.irc-tor.sasl_mechanism ecdsa-nist256p-challenge
-/set irc.server.irc-tor.sasl_username "your_nickname"
-/set irc.server.irc-tor.sasl_key "${weechat_config_dir}/ecdsa.pem"
-----
-
-// TRANSLATION MISSING
-And finally, connect to the server:
-
-----
-/connect irc-tor
-----
-
-// TRANSLATION MISSING
-[[irc_channels]]
-==== Channels
-
-You can join channels with the <<command_irc_join,/join>> command:
-
-----
-/join #channel
-----
-
-Part a channel (keeping the buffer open):
-
-----
-/part [quit message]
-----
-
-The channels you joined are not saved. If you want to join them automatically
-when connecting to the server, you must set the server `autojoin` option:
-
-----
-/set irc.server.libera.autojoin "#weechat,#weechat-fr"
-----
-
-[NOTE]
-Some scripts can help to automatically set this option,
-see `/script search autojoin`.
-
-Be careful, spaces can be used only to separate list of channels from keys,
-for example if `#channel1` requires a key but not `#channel2`:
-
-----
-/set irc.server.libera.autojoin "#channel1,#channel2 key1"
-----
-
-For help on the format, see `/help irc.server.libera.autojoin`.
-
-[[irc_private_messages]]
-==== Private messages
-
-You can send a private message with the <<command_irc_query,/query>> command,
-which opens a separate buffer:
-
-----
-/query bob hi, how are you?
-----
-
-Without arguments the command just opens the buffer (or selects it if already open):
-
-----
-/query bob
-----
-
-To close the private buffer, you can do this command on the private buffer:
-
-----
-/close
-----
-
-[[irc_smart_filter_join_part_quit]]
-==== 参加/退出/終了メッセージに対するスマートフィルタ
-
-チャンネル内での発言が過去 X
-分間なかった場合に参加/退出/終了メッセージをフィルタリングするスマートフィルタが利用できます。
-
-スマートフィルタはデフォルトで有効化されていますが、バッファ内のメッセージを隠すにはフィルタを追加する必要があります。例えば:
-
-----
-/filter add irc_smart * irc_smart_filter *
-----
-
-特定のチャンネルのみ、またはある名前で始まるチャンネルに対してフィルタを作成することもできます
-(`/help filter` を参照):
-
-----
-/filter add irc_smart_weechat irc.libera.#weechat irc_smart_filter *
-/filter add irc_smart_weechats irc.libera.#weechat* irc_smart_filter *
-----
-
-以下のコマンドで参加メッセージだけ、または退出/終了メッセージだけを隠すこともできます:
-
-----
-/set irc.look.smart_filter_join on
-/set irc.look.smart_filter_quit on
-----
-
-遅延時間 (分単位) を設定することもできます:
-
-----
-/set irc.look.smart_filter_delay 5
-----
-
-過去 5
-分間あるニックネームからの発言が無かった場合、このニックネームに対する参加または退出/終了メッセージがチャンネルから隠されます。
-
-[[irc_ctcp_replies]]
-==== CTCP 応答
-
-CTCP 応答をカスタマイズしたり、いくつかの CTCP
-要求をブロック (無応答) することができます。
-
-例えば、CTCP "VERSION" 要求に対する応答をカスタマイズするには、以下のコマンドを使ってください:
-
-----
-/set irc.ctcp.version "I'm running WeeChat $version, it rocks!"
-----
-
-CTCP "VERSION" 要求をブロックする (要求に対する応答を行わない)
-には、空文字列を設定してください:
-
-----
-/set irc.ctcp.version ""
-----
-
-未定義の CTCP 要求に対する応答もカスタマイズできます。例えば
-CTCP "BLABLA" 要求に対する応答を以下のように設定できます:
-
-----
-/set irc.ctcp.blabla "This is my answer to CTCP BLABLA"
-----
-
-特定のサーバに対して CTCP 応答をカスタマイズするには、CTCP
-名の前に内部サーバ名をつけてください:
-
-----
-/set irc.ctcp.libera.version "WeeChat $version (for libera)"
-----
-
-標準の CTCP 応答を復元するには、オプションを削除してください:
-
-----
-/unset irc.ctcp.version
-----
-
-以下のコードを設定値に含めることが可能です。これらのコードは
-CTCP 応答時に自動的に WeeChat によって展開されます:
-
-[width="100%",cols="2l,4,8",options="header"]
-|===
-| コード       | 説明                                      | 値/例
-| $clientinfo  | サポートしている CTCP オプションのリスト  | `+ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION+`
-| $version     | WeeChat バージョン                        | `+0.4.0-dev+`
-| $versiongit  | WeeChat バージョン + Git バージョン ^(1)^ | `+0.4.0-dev (git: v0.3.9-104-g7eb5cc4)+`
-| $git         | Git バージョン ^(1)^                      | `+v0.3.9-104-g7eb5cc4+`
-| $compilation | WeeChat コンパイル日時                    | `+Dec 16 2012+`
-| $osinfo      | OS に関する情報                           | `+Linux 2.6.32-5-amd64 / x86_64+`
-| $site        | WeeChat ウェブサイト                      | `+https://weechat.org/+`
-| $download    | WeeChat ウェブサイトのダウンロードページ  | `+https://weechat.org/download+`
-| $time        | 現在の日時                                | `+Sun, 16 Dec 2012 10:40:48 +0100+`
-| $username    | IRC サーバ上で使うユーザ名                | `+name+`
-| $realname    | IRC サーバ上で使う実名                    | `+John Doe+`
-|===
-
-[NOTE]
-^(1)^ git バージョンとは `git describe` コマンドの出力です。Git リポジトリで
-WeeChat をコンパイルし、Git がインストールされている場合のみ値が設定されます。
-
-CTCP オプションが設定されていない (デフォルトの) 場合、CTCP 応答は以下のようになります:
-
-[width="100%",cols="2,4,8",options="header"]
-|===
-| CTCP       | 応答書式                               | 例
-| CLIENTINFO | `+$clientinfo+`                        | `+ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION+`
-| FINGER     | `+WeeChat $versiongit+`                | `+WeeChat 0.4.0-dev (git: v0.3.9-104-g7eb5cc4)+`
-| SOURCE     | `+$download+`                          | `+https://weechat.org/download+`
-| TIME       | `+$time+`                              | `+Sun, 16 Dec 2012 10:40:48 +0100+`
-| USERINFO   | `+$username ($realname)+`              | `+name (John Doe)+`
-| VERSION    | `+WeeChat $versiongit ($compilation)+` | `+WeeChat 0.4.0-dev (git: v0.3.9-104-g7eb5cc4) (Dec 16 2012)+`
-|===
-
-[[irc_target_buffer]]
-==== IRC メッセージのターゲットバッファ
-
-`+irc.msgbuffer.*+` オプションを使えば、IRC メッセージに対するターゲットバッファ
-(メッセージを表示するバッファ) をカスタマイズすることができます。
-
-一部の IRC メッセージ (以下のリストを参照) に対して、以下の値を設定できます:
-
-current::
-    現在のバッファ (IRC バッファまたはサーババッファの場合のデフォルト)
-
-private::
-    ニックネームに対するプライベートバッファ、見つからない場合は現在のバッファまたはサーババッファ
-    (_irc.look.msgbuffer_fallback_ オプションに依存)
-
-server::
-    サーババッファ
-
-weechat::
-    WeeChat "core" バッファ
-
-オプションが設定されていない (デフォルトの) 場合、WeeChat
-は適当なバッファを選びます。通常ではサーバまたはチャンネルバッファです。
-
-カスタマイズできる一部の IRC メッセージ、別名のリストは以下です:
-
-[width="100%",cols="^2m,^3m,15",options="header"]
-|===
-| メッセージ | 別名       | 説明
-| error   |               | エラー
-| invite  |               | チャンネルへの招待
-| join    |               | 参加
-| kick    |               | キック
-| kill    |               | キル
-| mode    |               | モード
-| notice  |               | 通知
-| part    |               | 退出
-| quit    |               | 終了
-| topic   |               | トピック
-| wallops |               | IRC オペレータメッセージ
-|         | ctcp          | ctcp (プライベートまたは notice メッセージ内の、送信または受信メッセージ)
-| 221     |               | ユーザモード文字列
-| 275     | whois         | whois (セキュアな接続)
-| 301     | whois         | whois (離席状態)
-| 303     |               | サーバへの接続状態
-| 305     | unaway        | 着席状態
-| 306     | away          | 離席状態
-| 307     | whois         | whois (登録済みニックネーム)
-| 310     | whois         | whois (ヘルプモード)
-| 311     | whois         | whois (ユーザ)
-| 312     | whois         | whois (サーバ)
-| 313     | whois         | whois (オペレータ)
-| 314     | whowas        | whowas
-| 315     | who           | who (終了)
-| 317     | whois         | whois (アイドル状態)
-| 318     | whois         | whois (終了)
-| 319     | whois         | whois (チャンネル)
-| 320     | whois         | whois (身元確認済みユーザ)
-| 321     | list          | list (開始)
-| 322     | list          | list (チャンネル)
-| 323     | list          | list (終了)
-| 326     | whois         | whois (オペレータ権限を持っているユーザ)
-| 327     | whois         | whois (ホスト)
-| 328     |               | チャンネルの URL
-| 329     |               | チャンネル作成日時
-| 330     | whois         | whois (ログイン時の名前)
-| 331     |               | トピックが未設定のチャンネル
-| 332     |               | チャンネルのトピック
-| 333     |               | トピックに関する情報
-| 335     | whois         | whois (ボットが有効化されているか)
-| 338     | whois         | whois (ホスト)
-| 341     |               | 招待中
-| 343     | whois         | whois (オペレータ)
-| 344     | reop          | チャンネルオペレータを復活
-| 345     | reop          | チャンネルオペレータを復活 (終了)
-| 346     | invitelist    | 招待リスト
-| 347     | invitelist    | 招待リスト (終了)
-| 348     | exceptionlist | 除外リスト
-| 349     | exceptionlist | 除外リスト (終了)
-| 351     |               | サーババージョン
-| 352     | who           | who
-| 353     | names         | チャンネル内ユーザのリスト
-| 366     | names         | チャンネル内ユーザのリストの終了
-| 367     | banlist       | 禁止リスト
-| 368     | banlist       | 禁止リストの終了
-| 369     | whowas        | whowas (終了)
-| 378     | whois         | whois (接続元)
-| 379     | whois         | whois (モード)
-| 401     | whois         | 指定したニックネームおよびチャンネルがありません
-| 402     | whois         | 指定したサーバがありません
-| 432     |               | ニックネームにエラーがあります
-| 433     |               | ニックネームが使用されています
-| 438     |               | ニックネームを変更する権限がありません
-| 671     | whois         | whois (セキュアな接続)
-| 728     | quietlist     | 発言禁止リスト
-| 729     | quietlist     | 発言禁止リストの終了
-| 732     | monitor       | 監視中のニックネームのリスト
-| 733     | monitor       | 監視中のニックネームのリスト (終了)
-| 901     |               | ログインに成功
-|===
-
-その他の数値コマンドも同様にカスタマイズできます。
-
-サーバ名を前につけることで、特定のサーバに対して設定することができます
-(例: `libera.whois`)。
-
-例:
-
-* `/whois` の結果をプライベートバッファに表示:
-
-----
-/set irc.msgbuffer.whois private
-----
-
-* whois に対する設定をデフォルトに戻す (サーババッファに表示):
-
-----
-/unset irc.msgbuffer.whois
-----
-
-* "libera" サーバの場合、招待メッセージを現在のバッファに表示:
-
-----
-/set irc.msgbuffer.libera.invite current
-----
-
-* "303" (ison) メッセージを WeeChat "core" バッファに表示:
-
-----
-/set irc.msgbuffer.303 weechat
-----
-
-[[irc_commands]]
-==== コマンド
-
-include::includes/autogen_user_commands.ja.adoc[tag=irc_commands]
-
-[[irc_options]]
-==== オプション
-
-_irc.conf_ ファイル内のセクション:
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| セクション     | 操作コマンド                   | 説明
-| look           | /set irc.look.*                | 外観
-| color          | /set irc.color.*               | 色
-| network        | /set irc.network.*             | ネットワークオプション
-| msgbuffer      | /set irc.msgbuffer.*           | <<irc_target_buffer,IRC メッセージのターゲットバッファ>> (オプションをセクションに追加/削除出来ます)
-| ctcp           | /set irc.ctcp.*                | <<irc_ctcp_replies,CTCP 応答>> (オプションをセクションに追加/削除出来ます)
-| ignore         | <<command_irc_ignore,/ignore>> | 無視ユーザ
-| server_default | /set irc.server_default.*      | サーバに対するデフォルト値 (サーバオプションが定義されていない場合に利用されます)
-| server         | <<command_irc_server,/server>> +
-                   /set irc.server.*              | サーバ
-|===
-
-オプション:
-
-include::includes/autogen_user_options.ja.adoc[tag=irc_options]
 
 [[logger_plugin]]
 === Logger

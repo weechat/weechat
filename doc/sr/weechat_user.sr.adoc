@@ -213,7 +213,7 @@ $ make install
   Компајлира <<scripts_plugins,Guile додатак>> (Scheme).
 
 | ENABLE_IRC | `ON`, `OFF` | ON |
-  Компајлира <<irc_plugin,IRC додатак>>.
+  Компајлира <<irc,IRC додатак>>.
 
 | ENABLE_JAVASCRIPT | `ON`, `OFF` | OFF |
   Компајлира <<scripts_plugins,JavaScript додатак>>.
@@ -2605,6 +2605,666 @@ include::includes/autogen_user_options.sr.adoc[tag=sec_options]
 
 include::includes/autogen_user_options.sr.adoc[tag=weechat_options]
 
+[[irc]]
+== IRC
+
+IRC додатак је дизајниран за чет са другим људима преко IRC протокола.
+
+Подржава више сервера и нуди све подржане IRC команде, укључујући DCC чет и пренос фајлова (преко xfer додатка, погледајте <<xfer_plugin,Xfer додатак>>).
+
+[[irc_command_line_options]]
+=== Опције командне линије
+
+URL за један или више IRC сервера може да се зада на следећи начин:
+
+----
+irc[6][s]://[надимак[:лозинка]@]irc.пример.org[:порт][/канал][,канал[...]]
+----
+
+Пример за приступ каналима _#weechat_ и _#weechat-fr_ на серверу _irc.libera.chat_,подразумевани порт (6667), користећи надимак _alice_:
+
+----
+$ weechat irc://alice@irc.libera.chat/#weechat,#weechat-fr
+----
+
+[[irc_servers]]
+=== Сервери
+
+[[irc_servers_add]]
+==== Додавање сервера
+
+Подразумевано није дефинисан ниједан сервер. Командом <<command_irc_server,/server>>
+можете додати произвољан број сервера.
+
+На пример, да бисте се повезали на https://libera.chat/[libera.chat] са SSL (шифровани саобраћај):
+
+----
+/server add libera irc.libera.chat/6697 -ssl
+----
+
+Програму WeeChat можете наложити да се приликом покретања аутоматски повеже са овим сервером:
+
+----
+/set irc.server.libera.autoconnect on
+----
+
+За аутентификацију се препоручује употреба SASL (ако сервер подржава),
+са лозинком сачуваном као обезбеђени податак (погледајте такође поглавље
+о <<irc_sasl_authentication,SASL аутентификацији>>):
+
+----
+/set irc.server.libera.sasl_username "alice"
+/secure set libera xxxxxxx
+/set irc.server.libera.sasl_password "${sec.data.libera}"
+----
+
+Ако се SASL не подржава, можете да употребите команду која шаље поруку nickserv:
+
+----
+/set irc.server.libera.command "/msg nickserv identify ${sec.data.libera}"
+----
+
+[NOTE]
+Ако пошаљете поруку сервису nickserv, постоји могућност да се аутентификујете након
+приступања каналу, што може да представља проблем на неким каналима који захтевају
+да се аутентификујете пре приступања. У овом случају, можете поставити кашњење за команду:
+`/set irc.server.libera.command_delay 5`.
+
+[[irc_servers_options]]
+==== Опције сервера
+
+Опције сервера се називају `irc.server.<сервер>.<опција>` где је `<сервер>` интерно
+име сервера, а `<опција>` је име опције. +
+У случају када опција сервера има специјалну вредност `null`, стварна вредност се
+наслеђује из `irc.server_default.xxx`.
+
+На пример, ако сте креирали _libera_ сервер са командама наведеним изнад, видећете
+следећи списак када будете извршите команду `/fset libera`:
+
+....
+irc.server.libera.addresses             string   "irc.libera.chat/6697"
+irc.server.libera.anti_flood_prio_high  integer  null -> 2
+irc.server.libera.anti_flood_prio_low   integer  null -> 2
+irc.server.libera.autoconnect           boolean  on
+irc.server.libera.autojoin              string   null -> ""
+irc.server.libera.autoreconnect         boolean  null -> on
+irc.server.libera.autoreconnect_delay   integer  null -> 10
+irc.server.libera.autorejoin            boolean  null -> off
+irc.server.libera.autorejoin_delay      integer  null -> 30
+irc.server.libera.away_check            integer  null -> 0
+irc.server.libera.away_check_max_nicks  integer  null -> 25
+irc.server.libera.capabilities          string   null -> "*"
+irc.server.libera.charset_message       integer  null -> message
+irc.server.libera.command               string   null -> ""
+irc.server.libera.command_delay         integer  null -> 0
+irc.server.libera.connection_timeout    integer  null -> 60
+irc.server.libera.default_chantypes     string   null -> "#&"
+irc.server.libera.ipv6                  boolean  null -> on
+irc.server.libera.local_hostname        string   null -> ""
+irc.server.libera.msg_kick              string   null -> ""
+irc.server.libera.msg_part              string   null -> "WeeChat ${info:version}"
+irc.server.libera.msg_quit              string   null -> "WeeChat ${info:version}"
+irc.server.libera.nicks                 string   null -> "alice,alice1,alice2,alice3,alice4"
+irc.server.libera.nicks_alternate       boolean  null -> on
+irc.server.libera.notify                string   null -> ""
+irc.server.libera.password              string   null -> ""
+irc.server.libera.proxy                 string   null -> ""
+irc.server.libera.realname              string   null -> ""
+irc.server.libera.sasl_fail             integer  null -> reconnect
+irc.server.libera.sasl_key              string   null -> ""
+irc.server.libera.sasl_mechanism        integer  null -> plain
+irc.server.libera.sasl_password         string   "${sec.data.libera}"
+irc.server.libera.sasl_timeout          integer  null -> 15
+irc.server.libera.sasl_username         string   "alice"
+irc.server.libera.split_msg_max_length  integer  null -> 512
+irc.server.libera.ssl                   boolean  on
+irc.server.libera.ssl_cert              string   null -> ""
+irc.server.libera.ssl_dhkey_size        integer  null -> 2048
+irc.server.libera.ssl_fingerprint       string   null -> ""
+irc.server.libera.ssl_password          string   null -> ""
+irc.server.libera.ssl_priorities        string   null -> "NORMAL:-VERS-SSL3.0"
+irc.server.libera.ssl_verify            boolean  null -> on
+irc.server.libera.usermode              string   null -> ""
+irc.server.libera.username              string   null -> "alice"
+....
+
+На пример, ако желите да се аутоматски повежете са свим серверима које сте дефинисали, без
+потребе да то подешавате за сваки од њих посебно, можете да урадите следеће:
+
+----
+/set irc.server_default.autoconnect on
+----
+
+Па затим можете да ресетујете серверску опцију тако да користи подразумевану, наслеђену
+вредност, која је сада `on` уместо подразумеване вредности `off`:
+
+----
+/unset irc.server.libera.autoconnect
+----
+
+[[irc_ssl_certificates]]
+==== SSL сертификати
+
+Када се са IRC серверима успоставља веза преко SSL, програм WeeChat подразумевано проверава да ли се вези потпуно верује.
+
+Неке опције се користе за контролу SSL везе:
+
+weechat.network.gnutls_ca_system::
+    током покретања учитава подразумеване системске сертификате којима се верује
+
+weechat.network.gnutls_ca_user::
+    додатни фајл(ови) са ауторитетима сертификата
+
+irc.server.xxx.ssl_cert::
+    Фајл SSL сертификата који се користи за аутоматску идентификацију вашег надимка (на пример CertFP на oftc, погледајте испод)
+
+irc.server.xxx.ssl_dhkey_size::
+    величина кључа који се користи током Дифи-Хелман Размене Кључева (подразумевано је: 2048)
+
+irc.server.xxx.ssl_verify::
+    провера да се SSL вези потпуно верује (подразумевано је укључено)
+
+[NOTE]
+Опција „ssl_verify” је подразумевано укључена, тако да је верификација стриктна и може да не успе, чак и када је била OK у верзијама пре 0.3.1.
+
+[[irc_connect_oftc_with_certificate]]
+===== Први пример: повезивање на oftc и провера сертификата
+
+* Увоз сертификата у командном окружењу:
+
+----
+$ mkdir -p ~/.config/weechat/ssl
+$ wget -O ~/.config/weechat/ssl/CAs.pem https://www.spi-inc.org/ca/spi-cacert.crt
+----
+
+[NOTE]
+`~/.config/weechat` морате да замените путањом до вашег WeeChat config директоријума који на пример, такође може да буде `~/.weechat`.
+
+[NOTE]
+Можете да надовежете више сертификата у фајл CAs.pem.
+
+* У програму WeeChat, када је сервер „oftc” већ додат:
+
+----
+/connect oftc
+----
+
+[[irc_connect_oftc_with_certfp]]
+===== Други пример: повезивање са oftc употребом CertFP
+
+* Креирајте сертификат у командном окружењу:
+
+----
+$ mkdir -p ~/.config/weechat/ssl
+$ cd ~/.config/weechat/ssl
+$ openssl req -nodes -newkey rsa:2048 -keyout nick.pem -x509 -days 365 -out nick.pem
+----
+
+[NOTE]
+`~/.config/weechat` морате да замените путањом до вашег WeeChat config директоријума који на пример, такође може да буде `~/.weechat`.
+
+* У програму WeeChat, када је сервер „oftc” већ додат:
+
+----
+/set irc.server.oftc.ssl_cert "${weechat_config_dir}/ssl/nick.pem"
+/connect oftc
+/msg nickserv cert add
+----
+
+За више информација, погледајте https://www.oftc.net/NickServ/CertFP
+
+[[irc_sasl_authentication]]
+==== SASL аутентификација
+
+Програм WeeChat подржава SASL аутентификацију, употребом различитих механизама:
+
+* _plain_: лозинка у чистом тексту (подразумевано)
+* _scram-sha-1_: SCRAM са SHA-1 digest алгоритмом
+* _scram-sha-256_: SCRAM са SHA-256 digest алгоритмом
+* _scram-sha-512_: SCRAM са SHA-512 digest алгоритмом
+* _ecdsa-nist256p-challenge_: изазов са јавним/приватним кључем
+* _external_: SSL сертификат са клијентске стране
+
+Опције за сервере су следеће:
+
+* _sasl_mechanism_: механизам који треба да се користи (погледајте изнад)
+* _sasl_timeout_: тајмаут (у секундама) за аутентификацију
+* _sasl_fail_: акција која треба да се изврши ако аутентификација не успе
+* _sasl_username_: корисничко име (надимак)
+* _sasl_password_: лозинка
+* _sasl_key_: фајл са ECC приватним кључем (за механизам _ecdsa-nist256p-challenge_)
+
+[[irc_sasl_ecdsa_nist256p_challenge]]
+===== SASL ECDSA-NIST256P-CHALLENGE
+
+Да бисте могли да се аутентификујете ECDSA-NIST256P-CHALLENGE механизмом, морате да генеришете приватни кључ (није потребна лозинка за успостављање везе).
+
+Кључ можете да генеришете следећом командом:
+
+----
+$ openssl ecparam -genkey -name prime256v1 -out ~/.config/weechat/ecdsa.pem
+----
+
+[NOTE]
+`~/.config/weechat` морате да замените путањом до вашег WeeChat config директоријума који на пример, такође може да буде `~/.weechat`.
+
+Набавите јавни кључ (кодиран у base64) следећом командом:
+
+----
+$ openssl ec -noout -text -conv_form compressed -in ~/.config/weechat/ecdsa.pem | grep '^pub:' -A 3 | tail -n 3 | tr -d ' \n:' | xxd -r -p | base64
+----
+
+Повежите се са сервером, идентификујте се (на пример са „nickserv identify”) и поставите свој јавни кључ у налог, користећи nickserv (замените base64 вредност са вредношћу вашег јавног кључа):
+
+----
+/connect libera
+/msg nickserv identify ваша_лозинка
+/msg nickserv set pubkey Av8k1FOGetUDq7sPMBfufSIZ5c2I/QYWgiwHtNXkVe/q
+----
+
+Подесите SASL опције за сервер:
+
+----
+/set irc.server.libera.sasl_mechanism ecdsa-nist256p-challenge
+/set irc.server.libera.sasl_username "ваш_надимак"
+/set irc.server.libera.sasl_key "${weechat_config_dir}/ecdsa.pem"
+----
+
+Поново успоставите везу са сервером:
+
+----
+/reconnect libera
+----
+
+[[irc_servers_connection]]
+==== Повезивање
+
+Командом <<command_irc_connect,/connect>> можете да се повежете са сервером:
+
+----
+/connect libera
+----
+
+Ако желите да прекинете везу:
+
+----
+/disconnect libera
+----
+
+Или просто ово ако се налазите у било којем баферу који припада _libera_
+серверу (сервер, канал, приватни разговор):
+
+----
+/disconnect
+----
+
+Када се у исто време повежете са неколико сервера, бафери сервера се подразумевано
+спајају, па тастером kbd:[Ctrl+x] можете да се крећете између њих. +
+Аутоматско спајање серверских бафера може да се искључи, тако да имате по један
+бафер за сваки сервер:
+
+----
+/set irc.look.server_buffer independent
+----
+
+[[irc_tor_sasl]]
+==== Повезивање преко TOR и SASL
+
+Неки сервери подржавају и везе са TOR (https://www.torproject.org/), мрежом виртуелних тунела који омогућавају људима и групама да унапреде своју приватност и безбедност на Интернету.
+
+Најпре морате да инсталирате TOR. За Debian (и изведене из њега):
+
+----
+$ sudo apt-get install tor
+----
+
+У програму WeeChat морате да додате socks5 прокси за TOR сервис (имехоста/IP и порт зависе од ваше TOR конфигурације):
+
+----
+/proxy add tor socks5 127.0.0.1 9050
+----
+
+Додајте сада нови сервер (замените име сервера „irc-tor” и адресу са важећим вредностима):
+
+----
+/server add irc-tor ово.је.адреса.onion
+----
+
+Поставите прокси за TOR:
+
+----
+/set irc.server.irc-tor.proxy "tor"
+----
+
+Поставите SASL аутентификацију са ECDSA-NIST256P-CHALLENGE (погледајте поглавље <<irc_sasl_ecdsa_nist256p_challenge,SASL ECDSA-NIST256P-CHALLENGE>> у вези генерисања приватног кључа):
+
+----
+/set irc.server.irc-tor.sasl_mechanism ecdsa-nist256p-challenge
+/set irc.server.irc-tor.sasl_username "ваш_надимак"
+/set irc.server.irc-tor.sasl_key "${weechat_config_dir}/ecdsa.pem"
+----
+
+И коначно, успоставите везу са сервером:
+
+----
+/connect irc-tor
+----
+
+[[irc_channels]]
+=== Канали
+
+Каналима приступате командом <<command_irc_join,/join>>:
+
+----
+/join #channel
+----
+
+Напуштање канала (уз остављање отвореног бафера):
+
+----
+/part [порука о напуштању]
+----
+
+Канали којима приступите се не чувају. Ако желите да им аутоматски приступите
+када се повежете са сервером, морате поставити `autojoin` опцију за сервер:
+
+----
+/set irc.server.libera.autojoin "#weechat,#weechat-fr"
+----
+
+[NOTE]
+Неке скрипте могу да помогну са аутоматским постављањем ове опције,
+погледајте `/script search autojoin`.
+
+Будите пажљиви, за раздвајање листе канала од кључева могу да се користе само размаци,
+на пример, ако `#канал1` захтева кључ, а `#канал2` не захтева:
+
+----
+/set irc.server.libera.autojoin "#канал1,#канал2 кључ1"
+----
+
+Помоћ у вези формата потражите помоћу `/help irc.server.libera.autojoin`.
+
+[[irc_private_messages]]
+=== Приватне поруке
+
+Командом <<command_irc_query,/query>> можете да шаљете приватне поруке и
+она отвара посебан бафер:
+
+----
+/query здраво перо, како си?
+----
+
+Без аргумената, команда једноставно отвара бафер (или га активира ако је већ отворен):
+
+----
+/query пера
+----
+
+Ако желите да затворите приватни бафер, урадите то следћем командом у приватном баферу:
+
+----
+/close
+----
+
+[[irc_smart_filter_join_part_quit]]
+=== Паметни филтер за join/part/quit поруке
+
+За филтрирање join/part/quit порука када надимак на каналу ништа није рекао у последњих X минута, можете употребити паметни филтер.
+
+Паметни филтер је подразумевано укључен, али морате да додате филтер који скрива линије у баферу, на пример:
+
+----
+/filter add irc_smart * irc_smart_filter *
+----
+
+Можете да креирате филтер само за један канал, или за канале који почињу на исто име (погледајте `/help filter`):
+
+----
+/filter add irc_smart_weechat irc.libera.#weechat irc_smart_filter *
+/filter add irc_smart_weechats irc.libera.#weechat* irc_smart_filter *
+----
+
+Следећим опцијама можете да сакријете само join или part/quit поруке:
+
+----
+/set irc.look.smart_filter_join on
+/set irc.look.smart_filter_quit on
+----
+
+Можете да поставите паузу (у минутима):
+
+----
+/set irc.look.smart_filter_delay 5
+----
+
+Ако надимак није ништа рекао у последњих 5 минута, његове join и/или part/quit поруке ће бити скривене на каналу.
+
+[[irc_ctcp_replies]]
+=== CTCP одговори
+
+CTCP одговори могу да се прилагоде, или неки CTCP упити могу да се блокирају (да се не пошаље одговор).
+
+На пример, ако желите да прилагодите одговор на CTCP „VERSION”, употребите следећу команду:
+
+----
+/set irc.ctcp.version "Користим WeeChat $version, одличан је!"
+----
+
+Ако желите да блокирате CTCP „VERSION” (да се не пошаље одговор на овај упит), онда поставите празан стринг:
+
+----
+/set irc.ctcp.version ""
+----
+
+Могу да се прилагоде чак и непознати CTCP, можете на пример да одговорите на CTCP „BLABLA”:
+
+----
+/set irc.ctcp.blabla "Ево мог одговора на CTCP BLABLA"
+----
+
+CTCP може да се прилагоди само за један сервер, употребом његовог интерног имена испред CTCP имена:
+
+----
+/set irc.ctcp.libera.version "WeeChat $version (за libera)"
+----
+
+Ако желите да вратите стандардни CTCP одговор, уклоните опцију:
+
+----
+/unset irc.ctcp.version
+----
+
+У стринговима је могућа употреба следећих кодова и они се аутоматски развијају када програм WeeChat одговара на CTCP:
+
+[width="100%", cols="2l,4,8", options="header"]
+|===
+| Кôд          | Опис                                | Вредност/пример
+| $clientinfo  | Листа подржаних CTCP                | `+ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION+`
+| $version     | Верзија програма WeeChat            | `+0.4.0-dev+`
+| $versiongit  | WeeChat верзија + Git верзија ^(1)^ | `+0.4.0-dev (git: v0.3.9-104-g7eb5cc4)+`
+| $git         | Git верзија ^(1)^                   | `+v0.3.9-104-g7eb5cc4+`
+| $compilation | Датум компајлирања програма WeeChat | `+Dec 16 2012+`
+| $osinfo      | Инфо о ОС                           | `+Linux 2.6.32-5-amd64 / x86_64+`
+| $site        | WeeChat вебсајт                     | `+https://weechat.org/+`
+| $download    | WeeChat сајт, страна за преузимање  | `+https://weechat.org/download+`
+| $time        | Текући датум/време                  | `+Sun, 16 Dec 2012 10:40:48 +0100+`
+| $username    | Корисничко име на IRC серверу       | `+name+`
+| $realname    | Реално име на IRC серверу           | `+John Doe+`
+|===
+
+[NOTE]
+^(1)^ Git верзија је излаз команде `git describe`. Позната је само ако је програм WeeChat компајлиран унутар Git репозиторијума и ако је Git инсталиран.
+
+Ако CTCP опције нису дефинисане (што је подразумевано), CTCP одговори су следећи:
+
+[width="100%", cols="2,4,8", options="header"]
+|===
+| CTCP       | Формат одговора                        | Пример
+| CLIENTINFO | `+$clientinfo+`                        | `+ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION+`
+| FINGER     | `+WeeChat $versiongit+`                | `+WeeChat 0.4.0-dev (git: v0.3.9-104-g7eb5cc4)+`
+| SOURCE     | `+$download+`                          | `+https://weechat.org/download+`
+| TIME       | `+$time+`                              | `+нед, 16 дец 2012 10:40:48 +0100+`
+| USERINFO   | `+$username ($realname)+`              | `+име (Пера Перић)+`
+| VERSION    | `+WeeChat $versiongit ($compilation)+` | `+WeeChat 0.4.0-dev (git: v0.3.9-104-g7eb5cc4) (Dec 16 2012)+`
+|===
+
+[[irc_target_buffer]]
+=== Циљни бафер за IRC поруке
+
+Могуће је прилагођавање циљног бафера за IRC поруке (бафер који се користи за приказ порука) опцијама `+irc.msgbuffer.*+`.
+
+За неке IRC поруке (погледајте листу испод), можете да користите вредност:
+
+current::
+    текући бафер (ако је IRC бафер, или подразумевано у серверском баферу)
+
+private::
+    приватни бафер за надимак, или текући/серверски бафер ако се тај не пронађе (сагласно са опцијом _irc.look.msgbuffer_fallback_)
+
+server::
+    серверски бафер
+
+weechat::
+    Бафер „језгра” програма WeeChat
+
+Када опција није постављена (подразумевано), програм WeeChat бира погодан бафер, обично је то серверски или бафер канала.
+
+Непотпуна листа IRC порука или алијаса које можете да прилагодите:
+
+[width="100%", cols="^2m,^3m,15", options="header"]
+|===
+| порука  | алијас        | опис
+| error   |               | грешка
+| invite  |               | позвани сте на канал
+| join    |               | приступ
+| kick    |               | избацивање
+| kill    |               | убијање
+| mode    |               | режим
+| notice  |               | обавештење
+| part    |               | одлазак
+| quit    |               | напуштање
+| topic   |               | тема
+| wallops |               | wallops
+|         | ctcp          | ctcp (послата или примљена, у privmsg или notice поруци)
+| 221     |               | стринг режима корисника
+| 275     | whois         | whois (безбедна веза)
+| 301     | whois         | whois (одсутан)
+| 303     |               | ison
+| 305     | unaway        | вратио се
+| 306     | away          | одсутан
+| 307     | whois         | whois (регистровани надимак)
+| 310     | whois         | whois (режим помоћи)
+| 311     | whois         | whois (корисник)
+| 312     | whois         | whois (сервер)
+| 313     | whois         | whois (оператор)
+| 314     | whowas        | whowas
+| 315     | who           | who (крај)
+| 317     | whois         | whois (неактиван)
+| 318     | whois         | whois (крај)
+| 319     | whois         | whois (канали)
+| 320     | whois         | whois (идентификован корисник)
+| 321     | list          | list (старт)
+| 322     | list          | list (канал)
+| 323     | list          | list (крај)
+| 326     | whois         | whois (има oper privs)
+| 327     | whois         | whois (хост)
+| 328     |               | URL канала
+| 329     |               | датум креирања канала
+| 330     | whois         | whois (пријављен као)
+| 331     |               | нема теме за канал
+| 332     |               | тема канала
+| 333     |               | инфо о теми
+| 335     | whois         | whois (да ли је бот)
+| 338     | whois         | whois (хост)
+| 341     |               | позивница
+| 343     | whois         | whois (је opered као)
+| 344     | reop          | reop канала
+| 345     | reop          | reop канала (крај)
+| 346     | invitelist    | листа позваних
+| 347     | invitelist    | листа позваних (крај)
+| 348     | exceptionlist | листа изузетака
+| 349     | exceptionlist | листа изузетака (крај)
+| 351     |               | верзија сервера
+| 352     | who           | who
+| 353     | names         | листа корисника на каналу
+| 366     | names         | крај /names листе
+| 367     | banlist       | листа забрањених
+| 368     | banlist       | крај листе забрањених
+| 369     | whowas        | whowas (крај)
+| 378     | whois         | whois (повезује се са)
+| 379     | whois         | whois (употребом режима)
+| 401     | whois         | нема таквог надимка/канала
+| 402     | whois         | нема таквог сервера
+| 432     |               | погрешан надимак
+| 433     |               | надимак се већ користи
+| 438     |               | нисте ауторизовани да промените надимак
+| 671     | whois         | whois (безбедна веза)
+| 728     | quietlist     | листа ућутканих
+| 729     | quietlist     | крај листе ућутканих
+| 732     | monitor       | листа надимака који се прате
+| 733     | monitor       | листа надимака који се прате (крај)
+| 901     |               | сада сте пријављени
+|===
+
+И остале нумеричке команде могу да се прилагоде.
+
+Испред поруке може да стоји име сервера како би била специфична за одређени irc сервер (на пример: `libera.whois`).
+
+Неки примери:
+
+* Приказ резултата команде `/whois` у приватном баферу:
+
+----
+/set irc.msgbuffer.whois private
+----
+
+* Враћање подразумеваног бафера за whois (серверски бафер):
+
+----
+/unset irc.msgbuffer.whois
+----
+
+* Приказивање позивнице у текућем баферу, само за „libera” сервер:
+
+----
+/set irc.msgbuffer.libera.invite current
+----
+
+* Приказивање „303” (ison) поруке у баферу „језгра” програма WeeChat:
+
+----
+/set irc.msgbuffer.303 weechat
+----
+
+[[irc_commands]]
+=== Команде
+
+include::includes/autogen_user_commands.sr.adoc[tag=irc_commands]
+
+[[irc_options]]
+=== Опције
+
+Одељци у фајлу _irc.conf_:
+
+[width="100%", cols="3m,6m,16", options="header"]
+|===
+| Одељак         | Команда за контролу            | Опис
+| look           | /set irc.look.*                | Изглед и осећај.
+| color          | /set irc.color.*               | Боје.
+| network        | /set irc.network.*             | Мрежне опције.
+| msgbuffer      | /set irc.msgbuffer.*           | <<irc_target_buffer,Циљни бафер за IRC поруке>> (у одељку је могуће додавање/уклањање опција).
+| ctcp           | /set irc.ctcp.*                | <<irc_ctcp_replies,CTCP одговори>> (у одељку је могуће додавање/уклањање опција).
+| ignore         | <<command_irc_ignore,/ignore>> | Игнорисање људи.
+| server_default | /set irc.server_default.*      | Подразумеване вредности за сервере (користе се када у серверу није дефинисана опција).
+| server         | <<command_irc_server,/server>> +
+                   /set irc.server.*              | Сервери.
+|===
+
+Опције:
+
+include::includes/autogen_user_options.sr.adoc[tag=irc_options]
+
 [[plugins]]
 == Додаци
 
@@ -2749,666 +3409,6 @@ include::includes/autogen_user_commands.sr.adoc[tag=fifo_commands]
 Опције:
 
 include::includes/autogen_user_options.sr.adoc[tag=fifo_options]
-
-[[irc_plugin]]
-=== IRC
-
-IRC додатак је дизајниран за чет са другим људима преко IRC протокола.
-
-Подржава више сервера и нуди све подржане IRC команде, укључујући DCC чет и пренос фајлова (преко xfer додатка, погледајте <<xfer_plugin,Xfer додатак>>).
-
-[[irc_command_line_options]]
-==== Опције командне линије
-
-URL за један или више IRC сервера може да се зада на следећи начин:
-
-----
-irc[6][s]://[надимак[:лозинка]@]irc.пример.org[:порт][/канал][,канал[...]]
-----
-
-Пример за приступ каналима _#weechat_ и _#weechat-fr_ на серверу _irc.libera.chat_,подразумевани порт (6667), користећи надимак _alice_:
-
-----
-$ weechat irc://alice@irc.libera.chat/#weechat,#weechat-fr
-----
-
-[[irc_servers]]
-==== Сервери
-
-[[irc_servers_add]]
-===== Додавање сервера
-
-Подразумевано није дефинисан ниједан сервер. Командом <<command_irc_server,/server>>
-можете додати произвољан број сервера.
-
-На пример, да бисте се повезали на https://libera.chat/[libera.chat] са SSL (шифровани саобраћај):
-
-----
-/server add libera irc.libera.chat/6697 -ssl
-----
-
-Програму WeeChat можете наложити да се приликом покретања аутоматски повеже са овим сервером:
-
-----
-/set irc.server.libera.autoconnect on
-----
-
-За аутентификацију се препоручује употреба SASL (ако сервер подржава),
-са лозинком сачуваном као обезбеђени податак (погледајте такође поглавље
-о <<irc_sasl_authentication,SASL аутентификацији>>):
-
-----
-/set irc.server.libera.sasl_username "alice"
-/secure set libera xxxxxxx
-/set irc.server.libera.sasl_password "${sec.data.libera}"
-----
-
-Ако се SASL не подржава, можете да употребите команду која шаље поруку nickserv:
-
-----
-/set irc.server.libera.command "/msg nickserv identify ${sec.data.libera}"
-----
-
-[NOTE]
-Ако пошаљете поруку сервису nickserv, постоји могућност да се аутентификујете након
-приступања каналу, што може да представља проблем на неким каналима који захтевају
-да се аутентификујете пре приступања. У овом случају, можете поставити кашњење за команду:
-`/set irc.server.libera.command_delay 5`.
-
-[[irc_servers_options]]
-===== Опције сервера
-
-Опције сервера се називају `irc.server.<сервер>.<опција>` где је `<сервер>` интерно
-име сервера, а `<опција>` је име опције. +
-У случају када опција сервера има специјалну вредност `null`, стварна вредност се
-наслеђује из `irc.server_default.xxx`.
-
-На пример, ако сте креирали _libera_ сервер са командама наведеним изнад, видећете
-следећи списак када будете извршите команду `/fset libera`:
-
-....
-irc.server.libera.addresses             string   "irc.libera.chat/6697"
-irc.server.libera.anti_flood_prio_high  integer  null -> 2
-irc.server.libera.anti_flood_prio_low   integer  null -> 2
-irc.server.libera.autoconnect           boolean  on
-irc.server.libera.autojoin              string   null -> ""
-irc.server.libera.autoreconnect         boolean  null -> on
-irc.server.libera.autoreconnect_delay   integer  null -> 10
-irc.server.libera.autorejoin            boolean  null -> off
-irc.server.libera.autorejoin_delay      integer  null -> 30
-irc.server.libera.away_check            integer  null -> 0
-irc.server.libera.away_check_max_nicks  integer  null -> 25
-irc.server.libera.capabilities          string   null -> "*"
-irc.server.libera.charset_message       integer  null -> message
-irc.server.libera.command               string   null -> ""
-irc.server.libera.command_delay         integer  null -> 0
-irc.server.libera.connection_timeout    integer  null -> 60
-irc.server.libera.default_chantypes     string   null -> "#&"
-irc.server.libera.ipv6                  boolean  null -> on
-irc.server.libera.local_hostname        string   null -> ""
-irc.server.libera.msg_kick              string   null -> ""
-irc.server.libera.msg_part              string   null -> "WeeChat ${info:version}"
-irc.server.libera.msg_quit              string   null -> "WeeChat ${info:version}"
-irc.server.libera.nicks                 string   null -> "alice,alice1,alice2,alice3,alice4"
-irc.server.libera.nicks_alternate       boolean  null -> on
-irc.server.libera.notify                string   null -> ""
-irc.server.libera.password              string   null -> ""
-irc.server.libera.proxy                 string   null -> ""
-irc.server.libera.realname              string   null -> ""
-irc.server.libera.sasl_fail             integer  null -> reconnect
-irc.server.libera.sasl_key              string   null -> ""
-irc.server.libera.sasl_mechanism        integer  null -> plain
-irc.server.libera.sasl_password         string   "${sec.data.libera}"
-irc.server.libera.sasl_timeout          integer  null -> 15
-irc.server.libera.sasl_username         string   "alice"
-irc.server.libera.split_msg_max_length  integer  null -> 512
-irc.server.libera.ssl                   boolean  on
-irc.server.libera.ssl_cert              string   null -> ""
-irc.server.libera.ssl_dhkey_size        integer  null -> 2048
-irc.server.libera.ssl_fingerprint       string   null -> ""
-irc.server.libera.ssl_password          string   null -> ""
-irc.server.libera.ssl_priorities        string   null -> "NORMAL:-VERS-SSL3.0"
-irc.server.libera.ssl_verify            boolean  null -> on
-irc.server.libera.usermode              string   null -> ""
-irc.server.libera.username              string   null -> "alice"
-....
-
-На пример, ако желите да се аутоматски повежете са свим серверима које сте дефинисали, без
-потребе да то подешавате за сваки од њих посебно, можете да урадите следеће:
-
-----
-/set irc.server_default.autoconnect on
-----
-
-Па затим можете да ресетујете серверску опцију тако да користи подразумевану, наслеђену
-вредност, која је сада `on` уместо подразумеване вредности `off`:
-
-----
-/unset irc.server.libera.autoconnect
-----
-
-[[irc_ssl_certificates]]
-===== SSL сертификати
-
-Када се са IRC серверима успоставља веза преко SSL, програм WeeChat подразумевано проверава да ли се вези потпуно верује.
-
-Неке опције се користе за контролу SSL везе:
-
-weechat.network.gnutls_ca_system::
-    током покретања учитава подразумеване системске сертификате којима се верује
-
-weechat.network.gnutls_ca_user::
-    додатни фајл(ови) са ауторитетима сертификата
-
-irc.server.xxx.ssl_cert::
-    Фајл SSL сертификата који се користи за аутоматску идентификацију вашег надимка (на пример CertFP на oftc, погледајте испод)
-
-irc.server.xxx.ssl_dhkey_size::
-    величина кључа који се користи током Дифи-Хелман Размене Кључева (подразумевано је: 2048)
-
-irc.server.xxx.ssl_verify::
-    провера да се SSL вези потпуно верује (подразумевано је укључено)
-
-[NOTE]
-Опција „ssl_verify” је подразумевано укључена, тако да је верификација стриктна и може да не успе, чак и када је била OK у верзијама пре 0.3.1.
-
-[[irc_connect_oftc_with_certificate]]
-====== Први пример: повезивање на oftc и провера сертификата
-
-* Увоз сертификата у командном окружењу:
-
-----
-$ mkdir -p ~/.config/weechat/ssl
-$ wget -O ~/.config/weechat/ssl/CAs.pem https://www.spi-inc.org/ca/spi-cacert.crt
-----
-
-[NOTE]
-`~/.config/weechat` морате да замените путањом до вашег WeeChat config директоријума који на пример, такође може да буде `~/.weechat`.
-
-[NOTE]
-Можете да надовежете више сертификата у фајл CAs.pem.
-
-* У програму WeeChat, када је сервер „oftc” већ додат:
-
-----
-/connect oftc
-----
-
-[[irc_connect_oftc_with_certfp]]
-====== Други пример: повезивање са oftc употребом CertFP
-
-* Креирајте сертификат у командном окружењу:
-
-----
-$ mkdir -p ~/.config/weechat/ssl
-$ cd ~/.config/weechat/ssl
-$ openssl req -nodes -newkey rsa:2048 -keyout nick.pem -x509 -days 365 -out nick.pem
-----
-
-[NOTE]
-`~/.config/weechat` морате да замените путањом до вашег WeeChat config директоријума који на пример, такође може да буде `~/.weechat`.
-
-* У програму WeeChat, када је сервер „oftc” већ додат:
-
-----
-/set irc.server.oftc.ssl_cert "${weechat_config_dir}/ssl/nick.pem"
-/connect oftc
-/msg nickserv cert add
-----
-
-За више информација, погледајте https://www.oftc.net/NickServ/CertFP
-
-[[irc_sasl_authentication]]
-===== SASL аутентификација
-
-Програм WeeChat подржава SASL аутентификацију, употребом различитих механизама:
-
-* _plain_: лозинка у чистом тексту (подразумевано)
-* _scram-sha-1_: SCRAM са SHA-1 digest алгоритмом
-* _scram-sha-256_: SCRAM са SHA-256 digest алгоритмом
-* _scram-sha-512_: SCRAM са SHA-512 digest алгоритмом
-* _ecdsa-nist256p-challenge_: изазов са јавним/приватним кључем
-* _external_: SSL сертификат са клијентске стране
-
-Опције за сервере су следеће:
-
-* _sasl_mechanism_: механизам који треба да се користи (погледајте изнад)
-* _sasl_timeout_: тајмаут (у секундама) за аутентификацију
-* _sasl_fail_: акција која треба да се изврши ако аутентификација не успе
-* _sasl_username_: корисничко име (надимак)
-* _sasl_password_: лозинка
-* _sasl_key_: фајл са ECC приватним кључем (за механизам _ecdsa-nist256p-challenge_)
-
-[[irc_sasl_ecdsa_nist256p_challenge]]
-====== SASL ECDSA-NIST256P-CHALLENGE
-
-Да бисте могли да се аутентификујете ECDSA-NIST256P-CHALLENGE механизмом, морате да генеришете приватни кључ (није потребна лозинка за успостављање везе).
-
-Кључ можете да генеришете следећом командом:
-
-----
-$ openssl ecparam -genkey -name prime256v1 -out ~/.config/weechat/ecdsa.pem
-----
-
-[NOTE]
-`~/.config/weechat` морате да замените путањом до вашег WeeChat config директоријума који на пример, такође може да буде `~/.weechat`.
-
-Набавите јавни кључ (кодиран у base64) следећом командом:
-
-----
-$ openssl ec -noout -text -conv_form compressed -in ~/.config/weechat/ecdsa.pem | grep '^pub:' -A 3 | tail -n 3 | tr -d ' \n:' | xxd -r -p | base64
-----
-
-Повежите се са сервером, идентификујте се (на пример са „nickserv identify”) и поставите свој јавни кључ у налог, користећи nickserv (замените base64 вредност са вредношћу вашег јавног кључа):
-
-----
-/connect libera
-/msg nickserv identify ваша_лозинка
-/msg nickserv set pubkey Av8k1FOGetUDq7sPMBfufSIZ5c2I/QYWgiwHtNXkVe/q
-----
-
-Подесите SASL опције за сервер:
-
-----
-/set irc.server.libera.sasl_mechanism ecdsa-nist256p-challenge
-/set irc.server.libera.sasl_username "ваш_надимак"
-/set irc.server.libera.sasl_key "${weechat_config_dir}/ecdsa.pem"
-----
-
-Поново успоставите везу са сервером:
-
-----
-/reconnect libera
-----
-
-[[irc_servers_connection]]
-===== Повезивање
-
-Командом <<command_irc_connect,/connect>> можете да се повежете са сервером:
-
-----
-/connect libera
-----
-
-Ако желите да прекинете везу:
-
-----
-/disconnect libera
-----
-
-Или просто ово ако се налазите у било којем баферу који припада _libera_
-серверу (сервер, канал, приватни разговор):
-
-----
-/disconnect
-----
-
-Када се у исто време повежете са неколико сервера, бафери сервера се подразумевано
-спајају, па тастером kbd:[Ctrl+x] можете да се крећете између њих. +
-Аутоматско спајање серверских бафера може да се искључи, тако да имате по један
-бафер за сваки сервер:
-
-----
-/set irc.look.server_buffer independent
-----
-
-[[irc_tor_sasl]]
-===== Повезивање преко TOR и SASL
-
-Неки сервери подржавају и везе са TOR (https://www.torproject.org/), мрежом виртуелних тунела који омогућавају људима и групама да унапреде своју приватност и безбедност на Интернету.
-
-Најпре морате да инсталирате TOR. За Debian (и изведене из њега):
-
-----
-$ sudo apt-get install tor
-----
-
-У програму WeeChat морате да додате socks5 прокси за TOR сервис (имехоста/IP и порт зависе од ваше TOR конфигурације):
-
-----
-/proxy add tor socks5 127.0.0.1 9050
-----
-
-Додајте сада нови сервер (замените име сервера „irc-tor” и адресу са важећим вредностима):
-
-----
-/server add irc-tor ово.је.адреса.onion
-----
-
-Поставите прокси за TOR:
-
-----
-/set irc.server.irc-tor.proxy "tor"
-----
-
-Поставите SASL аутентификацију са ECDSA-NIST256P-CHALLENGE (погледајте поглавље <<irc_sasl_ecdsa_nist256p_challenge,SASL ECDSA-NIST256P-CHALLENGE>> у вези генерисања приватног кључа):
-
-----
-/set irc.server.irc-tor.sasl_mechanism ecdsa-nist256p-challenge
-/set irc.server.irc-tor.sasl_username "ваш_надимак"
-/set irc.server.irc-tor.sasl_key "${weechat_config_dir}/ecdsa.pem"
-----
-
-И коначно, успоставите везу са сервером:
-
-----
-/connect irc-tor
-----
-
-[[irc_channels]]
-==== Канали
-
-Каналима приступате командом <<command_irc_join,/join>>:
-
-----
-/join #channel
-----
-
-Напуштање канала (уз остављање отвореног бафера):
-
-----
-/part [порука о напуштању]
-----
-
-Канали којима приступите се не чувају. Ако желите да им аутоматски приступите
-када се повежете са сервером, морате поставити `autojoin` опцију за сервер:
-
-----
-/set irc.server.libera.autojoin "#weechat,#weechat-fr"
-----
-
-[NOTE]
-Неке скрипте могу да помогну са аутоматским постављањем ове опције,
-погледајте `/script search autojoin`.
-
-Будите пажљиви, за раздвајање листе канала од кључева могу да се користе само размаци,
-на пример, ако `#канал1` захтева кључ, а `#канал2` не захтева:
-
-----
-/set irc.server.libera.autojoin "#канал1,#канал2 кључ1"
-----
-
-Помоћ у вези формата потражите помоћу `/help irc.server.libera.autojoin`.
-
-[[irc_private_messages]]
-==== Приватне поруке
-
-Командом <<command_irc_query,/query>> можете да шаљете приватне поруке и
-она отвара посебан бафер:
-
-----
-/query здраво перо, како си?
-----
-
-Без аргумената, команда једноставно отвара бафер (или га активира ако је већ отворен):
-
-----
-/query пера
-----
-
-Ако желите да затворите приватни бафер, урадите то следћем командом у приватном баферу:
-
-----
-/close
-----
-
-[[irc_smart_filter_join_part_quit]]
-==== Паметни филтер за join/part/quit поруке
-
-За филтрирање join/part/quit порука када надимак на каналу ништа није рекао у последњих X минута, можете употребити паметни филтер.
-
-Паметни филтер је подразумевано укључен, али морате да додате филтер који скрива линије у баферу, на пример:
-
-----
-/filter add irc_smart * irc_smart_filter *
-----
-
-Можете да креирате филтер само за један канал, или за канале који почињу на исто име (погледајте `/help filter`):
-
-----
-/filter add irc_smart_weechat irc.libera.#weechat irc_smart_filter *
-/filter add irc_smart_weechats irc.libera.#weechat* irc_smart_filter *
-----
-
-Следећим опцијама можете да сакријете само join или part/quit поруке:
-
-----
-/set irc.look.smart_filter_join on
-/set irc.look.smart_filter_quit on
-----
-
-Можете да поставите паузу (у минутима):
-
-----
-/set irc.look.smart_filter_delay 5
-----
-
-Ако надимак није ништа рекао у последњих 5 минута, његове join и/или part/quit поруке ће бити скривене на каналу.
-
-[[irc_ctcp_replies]]
-==== CTCP одговори
-
-CTCP одговори могу да се прилагоде, или неки CTCP упити могу да се блокирају (да се не пошаље одговор).
-
-На пример, ако желите да прилагодите одговор на CTCP „VERSION”, употребите следећу команду:
-
-----
-/set irc.ctcp.version "Користим WeeChat $version, одличан је!"
-----
-
-Ако желите да блокирате CTCP „VERSION” (да се не пошаље одговор на овај упит), онда поставите празан стринг:
-
-----
-/set irc.ctcp.version ""
-----
-
-Могу да се прилагоде чак и непознати CTCP, можете на пример да одговорите на CTCP „BLABLA”:
-
-----
-/set irc.ctcp.blabla "Ево мог одговора на CTCP BLABLA"
-----
-
-CTCP може да се прилагоди само за један сервер, употребом његовог интерног имена испред CTCP имена:
-
-----
-/set irc.ctcp.libera.version "WeeChat $version (за libera)"
-----
-
-Ако желите да вратите стандардни CTCP одговор, уклоните опцију:
-
-----
-/unset irc.ctcp.version
-----
-
-У стринговима је могућа употреба следећих кодова и они се аутоматски развијају када програм WeeChat одговара на CTCP:
-
-[width="100%", cols="2l,4,8", options="header"]
-|===
-| Кôд          | Опис                                | Вредност/пример
-| $clientinfo  | Листа подржаних CTCP                | `+ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION+`
-| $version     | Верзија програма WeeChat            | `+0.4.0-dev+`
-| $versiongit  | WeeChat верзија + Git верзија ^(1)^ | `+0.4.0-dev (git: v0.3.9-104-g7eb5cc4)+`
-| $git         | Git верзија ^(1)^                   | `+v0.3.9-104-g7eb5cc4+`
-| $compilation | Датум компајлирања програма WeeChat | `+Dec 16 2012+`
-| $osinfo      | Инфо о ОС                           | `+Linux 2.6.32-5-amd64 / x86_64+`
-| $site        | WeeChat вебсајт                     | `+https://weechat.org/+`
-| $download    | WeeChat сајт, страна за преузимање  | `+https://weechat.org/download+`
-| $time        | Текући датум/време                  | `+Sun, 16 Dec 2012 10:40:48 +0100+`
-| $username    | Корисничко име на IRC серверу       | `+name+`
-| $realname    | Реално име на IRC серверу           | `+John Doe+`
-|===
-
-[NOTE]
-^(1)^ Git верзија је излаз команде `git describe`. Позната је само ако је програм WeeChat компајлиран унутар Git репозиторијума и ако је Git инсталиран.
-
-Ако CTCP опције нису дефинисане (што је подразумевано), CTCP одговори су следећи:
-
-[width="100%", cols="2,4,8", options="header"]
-|===
-| CTCP       | Формат одговора                        | Пример
-| CLIENTINFO | `+$clientinfo+`                        | `+ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION+`
-| FINGER     | `+WeeChat $versiongit+`                | `+WeeChat 0.4.0-dev (git: v0.3.9-104-g7eb5cc4)+`
-| SOURCE     | `+$download+`                          | `+https://weechat.org/download+`
-| TIME       | `+$time+`                              | `+нед, 16 дец 2012 10:40:48 +0100+`
-| USERINFO   | `+$username ($realname)+`              | `+име (Пера Перић)+`
-| VERSION    | `+WeeChat $versiongit ($compilation)+` | `+WeeChat 0.4.0-dev (git: v0.3.9-104-g7eb5cc4) (Dec 16 2012)+`
-|===
-
-[[irc_target_buffer]]
-==== Циљни бафер за IRC поруке
-
-Могуће је прилагођавање циљног бафера за IRC поруке (бафер који се користи за приказ порука) опцијама `+irc.msgbuffer.*+`.
-
-За неке IRC поруке (погледајте листу испод), можете да користите вредност:
-
-current::
-    текући бафер (ако је IRC бафер, или подразумевано у серверском баферу)
-
-private::
-    приватни бафер за надимак, или текући/серверски бафер ако се тај не пронађе (сагласно са опцијом _irc.look.msgbuffer_fallback_)
-
-server::
-    серверски бафер
-
-weechat::
-    Бафер „језгра” програма WeeChat
-
-Када опција није постављена (подразумевано), програм WeeChat бира погодан бафер, обично је то серверски или бафер канала.
-
-Непотпуна листа IRC порука или алијаса које можете да прилагодите:
-
-[width="100%", cols="^2m,^3m,15", options="header"]
-|===
-| порука  | алијас        | опис
-| error   |               | грешка
-| invite  |               | позвани сте на канал
-| join    |               | приступ
-| kick    |               | избацивање
-| kill    |               | убијање
-| mode    |               | режим
-| notice  |               | обавештење
-| part    |               | одлазак
-| quit    |               | напуштање
-| topic   |               | тема
-| wallops |               | wallops
-|         | ctcp          | ctcp (послата или примљена, у privmsg или notice поруци)
-| 221     |               | стринг режима корисника
-| 275     | whois         | whois (безбедна веза)
-| 301     | whois         | whois (одсутан)
-| 303     |               | ison
-| 305     | unaway        | вратио се
-| 306     | away          | одсутан
-| 307     | whois         | whois (регистровани надимак)
-| 310     | whois         | whois (режим помоћи)
-| 311     | whois         | whois (корисник)
-| 312     | whois         | whois (сервер)
-| 313     | whois         | whois (оператор)
-| 314     | whowas        | whowas
-| 315     | who           | who (крај)
-| 317     | whois         | whois (неактиван)
-| 318     | whois         | whois (крај)
-| 319     | whois         | whois (канали)
-| 320     | whois         | whois (идентификован корисник)
-| 321     | list          | list (старт)
-| 322     | list          | list (канал)
-| 323     | list          | list (крај)
-| 326     | whois         | whois (има oper privs)
-| 327     | whois         | whois (хост)
-| 328     |               | URL канала
-| 329     |               | датум креирања канала
-| 330     | whois         | whois (пријављен као)
-| 331     |               | нема теме за канал
-| 332     |               | тема канала
-| 333     |               | инфо о теми
-| 335     | whois         | whois (да ли је бот)
-| 338     | whois         | whois (хост)
-| 341     |               | позивница
-| 343     | whois         | whois (је opered као)
-| 344     | reop          | reop канала
-| 345     | reop          | reop канала (крај)
-| 346     | invitelist    | листа позваних
-| 347     | invitelist    | листа позваних (крај)
-| 348     | exceptionlist | листа изузетака
-| 349     | exceptionlist | листа изузетака (крај)
-| 351     |               | верзија сервера
-| 352     | who           | who
-| 353     | names         | листа корисника на каналу
-| 366     | names         | крај /names листе
-| 367     | banlist       | листа забрањених
-| 368     | banlist       | крај листе забрањених
-| 369     | whowas        | whowas (крај)
-| 378     | whois         | whois (повезује се са)
-| 379     | whois         | whois (употребом режима)
-| 401     | whois         | нема таквог надимка/канала
-| 402     | whois         | нема таквог сервера
-| 432     |               | погрешан надимак
-| 433     |               | надимак се већ користи
-| 438     |               | нисте ауторизовани да промените надимак
-| 671     | whois         | whois (безбедна веза)
-| 728     | quietlist     | листа ућутканих
-| 729     | quietlist     | крај листе ућутканих
-| 732     | monitor       | листа надимака који се прате
-| 733     | monitor       | листа надимака који се прате (крај)
-| 901     |               | сада сте пријављени
-|===
-
-И остале нумеричке команде могу да се прилагоде.
-
-Испред поруке може да стоји име сервера како би била специфична за одређени irc сервер (на пример: `libera.whois`).
-
-Неки примери:
-
-* Приказ резултата команде `/whois` у приватном баферу:
-
-----
-/set irc.msgbuffer.whois private
-----
-
-* Враћање подразумеваног бафера за whois (серверски бафер):
-
-----
-/unset irc.msgbuffer.whois
-----
-
-* Приказивање позивнице у текућем баферу, само за „libera” сервер:
-
-----
-/set irc.msgbuffer.libera.invite current
-----
-
-* Приказивање „303” (ison) поруке у баферу „језгра” програма WeeChat:
-
-----
-/set irc.msgbuffer.303 weechat
-----
-
-[[irc_commands]]
-==== Команде
-
-include::includes/autogen_user_commands.sr.adoc[tag=irc_commands]
-
-[[irc_options]]
-==== Опције
-
-Одељци у фајлу _irc.conf_:
-
-[width="100%", cols="3m,6m,16", options="header"]
-|===
-| Одељак         | Команда за контролу            | Опис
-| look           | /set irc.look.*                | Изглед и осећај.
-| color          | /set irc.color.*               | Боје.
-| network        | /set irc.network.*             | Мрежне опције.
-| msgbuffer      | /set irc.msgbuffer.*           | <<irc_target_buffer,Циљни бафер за IRC поруке>> (у одељку је могуће додавање/уклањање опција).
-| ctcp           | /set irc.ctcp.*                | <<irc_ctcp_replies,CTCP одговори>> (у одељку је могуће додавање/уклањање опција).
-| ignore         | <<command_irc_ignore,/ignore>> | Игнорисање људи.
-| server_default | /set irc.server_default.*      | Подразумеване вредности за сервере (користе се када у серверу није дефинисана опција).
-| server         | <<command_irc_server,/server>> +
-                   /set irc.server.*              | Сервери.
-|===
-
-Опције:
-
-include::includes/autogen_user_options.sr.adoc[tag=irc_options]
 
 [[logger_plugin]]
 === Logger
