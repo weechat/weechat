@@ -198,7 +198,7 @@ $ make install
   Изграђује HTML документацију.
 
 | ENABLE_ENCHANT | `ON`, `OFF` | OFF |
-  Компајлира <<spell_plugin,Spell додатак>> са Enchant.
+  Компајлира <<spell_checking,Spell додатак>> са Enchant.
 
 | ENABLE_EXEC | `ON`, `OFF` | ON |
   Компајлира <<exec_plugin,Exec додатак>>.
@@ -259,7 +259,7 @@ $ make install
   Guile, JavaScript, PHP).
 
 | ENABLE_SPELL | `ON`, `OFF` | ON |
-  Компајлира <<spell_plugin,Spell додатак>>.
+  Компајлира <<spell_checking,Spell додатак>>.
 
 | ENABLE_TCL | `ON`, `OFF` | ON |
   Компајлира <<scripts_plugins,Tcl додатак>>.
@@ -2369,6 +2369,106 @@ include::includes/autogen_user_options.sr.adoc[tag=logger_options]
 [TIP]
 Име догађаја можете сазнати командом `+/input grab_mouse+`, па извршавањем догађаја мишем. Ово ће да уметне име догађаја који сете извели у командну линију.
 
+// TRANSLATION MISSING
+[[spell_checking]]
+=== Spell checking
+
+Spell додатак вам омогућава да проверите правопис у командној линији. У баферу можете да користите више језика.
+
+Подразумевано је провера правописа искључена и стање активности може да се мења тастером kbd:[Alt+s].
+
+[[spell_dictionaries]]
+==== Речници
+
+Пре него што будете могли да користите проверу правописа, морате да дефинишете речнике, или глобално, или посебно за бафере.
+
+У исто време можете да користити више речника: програм WeeChat ће проверавати речи у свим речницима.
+
+На пример, ако желите да користите енглески и француски:
+
+----
+/set spell.check.default_dict "en,fr"
+----
+
+Могуће је да у одређеном баферу користите различити речник, на пример, на немачком каналу:
+
+----
+/spell setdict de
+----
+
+Можете такође да наведете и речник за групу бафера, на пример енглески на свим каналима IRC сервера libera:
+
+----
+/set spell.dict.irc.libera en
+----
+
+За више информација, погледајте команду <<command_spell_spell,/spell>>.
+
+[[spell_speller_options]]
+==== Опције модула за проверу правописа
+
+Опције модула за проверу правописа могу да се дефинишу додавањем опција у одељак „option” aspell конфигурације.
+
+Име опције је aspell конфигурациона опција. Листа опција може да се пронађе у командном окружењу помоћу следеће команде:
+
+----
+$ aspell config
+----
+
+На пример, ако желите да укључите опцију „ignore-case”:
+
+----
+/set spell.option.ignore-case "true"
+----
+
+[[spell_suggestions]]
+==== Предлози
+
+Предлози се приказују у ставки траке под именом „spell_suggest”. Број предлога се поставља у опцији _spell.check.suggestions_.
+
+Да бисте укључили предлоге морате поставити вредност опције _spell.check.suggestions_ на цео број ≥ 0 и да додате ставку траке „spell_suggest” у неку траку, као на пример у _status_.
+
+Пример предлога са енглеским речником (`en`):
+
+....
+│[12:55] [6] [irc/libera] 3:#test(+n){4} [print,prone,prune]                      │
+│[@Flashy] prinr █                                                                │
+└─────────────────────────────────────────────────────────────────────────────────┘
+....
+
+Пример предлога са енглеским и француским речницима (`en,fr`):
+
+....
+│[12:55] [6] [irc/libera] 3:#test(+n){4} [print,prone,prune/prime,primer,primé]   │
+│[@Flashy] prinr █                                                                │
+└─────────────────────────────────────────────────────────────────────────────────┘
+....
+
+[[spell_commands]]
+==== Команде
+
+include::includes/autogen_user_commands.sr.adoc[tag=spell_commands]
+
+[[spell_options]]
+==== Опције
+
+Одељци у фајлу _spell.conf_:
+
+[width="100%", cols="3m,6m,16", options="header"]
+|===
+| Одељак     | Команда за контролу                    | Опис
+| color      | /set spell.color.*                     | Боје.
+| check      | /set spell.check.*                     | Опције за контролу провере правописа.
+| dict       | <<command_spell_spell,/spell setdict>> +
+               /set spell.dict.*                      | Речници који се користе у баферу (у одељку је могуће додавање/уклањање опција).
+| look       | /set spell.look.*                      | Изглед и осећај.
+| option     | /set spell.option.*                    | <<spell_speller_options,Опције модула проверу правописа>> (у одељку је могуће додавање/уклањање опција).
+|===
+
+Опције:
+
+include::includes/autogen_user_options.sr.adoc[tag=spell_options]
+
 [[bars]]
 === Траке
 
@@ -3931,105 +4031,6 @@ include::includes/autogen_user_options.sr.adoc[tag=javascript_options]
 Опције:
 
 include::includes/autogen_user_options.sr.adoc[tag=php_options]
-
-[[spell_plugin]]
-=== Spell
-
-Spell додатак вам омогућава да проверите правопис у командној линији. У баферу можете да користите више језика.
-
-Подразумевано је провера правописа искључена и стање активности може да се мења тастером kbd:[Alt+s].
-
-[[spell_dictionaries]]
-==== Речници
-
-Пре него што будете могли да користите проверу правописа, морате да дефинишете речнике, или глобално, или посебно за бафере.
-
-У исто време можете да користити више речника: програм WeeChat ће проверавати речи у свим речницима.
-
-На пример, ако желите да користите енглески и француски:
-
-----
-/set spell.check.default_dict "en,fr"
-----
-
-Могуће је да у одређеном баферу користите различити речник, на пример, на немачком каналу:
-
-----
-/spell setdict de
-----
-
-Можете такође да наведете и речник за групу бафера, на пример енглески на свим каналима IRC сервера libera:
-
-----
-/set spell.dict.irc.libera en
-----
-
-За више информација, погледајте команду <<command_spell_spell,/spell>>.
-
-[[spell_speller_options]]
-==== Опције модула за проверу правописа
-
-Опције модула за проверу правописа могу да се дефинишу додавањем опција у одељак „option” aspell конфигурације.
-
-Име опције је aspell конфигурациона опција. Листа опција може да се пронађе у командном окружењу помоћу следеће команде:
-
-----
-$ aspell config
-----
-
-На пример, ако желите да укључите опцију „ignore-case”:
-
-----
-/set spell.option.ignore-case "true"
-----
-
-[[spell_suggestions]]
-==== Предлози
-
-Предлози се приказују у ставки траке под именом „spell_suggest”. Број предлога се поставља у опцији _spell.check.suggestions_.
-
-Да бисте укључили предлоге морате поставити вредност опције _spell.check.suggestions_ на цео број ≥ 0 и да додате ставку траке „spell_suggest” у неку траку, као на пример у _status_.
-
-Пример предлога са енглеским речником (`en`):
-
-....
-│[12:55] [6] [irc/libera] 3:#test(+n){4} [print,prone,prune]                      │
-│[@Flashy] prinr █                                                                │
-└─────────────────────────────────────────────────────────────────────────────────┘
-....
-
-Пример предлога са енглеским и француским речницима (`en,fr`):
-
-....
-│[12:55] [6] [irc/libera] 3:#test(+n){4} [print,prone,prune/prime,primer,primé]   │
-│[@Flashy] prinr █                                                                │
-└─────────────────────────────────────────────────────────────────────────────────┘
-....
-
-[[spell_commands]]
-==== Команде
-
-include::includes/autogen_user_commands.sr.adoc[tag=spell_commands]
-
-[[spell_options]]
-==== Опције
-
-Одељци у фајлу _spell.conf_:
-
-[width="100%", cols="3m,6m,16", options="header"]
-|===
-| Одељак     | Команда за контролу                    | Опис
-| color      | /set spell.color.*                     | Боје.
-| check      | /set spell.check.*                     | Опције за контролу провере правописа.
-| dict       | <<command_spell_spell,/spell setdict>> +
-               /set spell.dict.*                      | Речници који се користе у баферу (у одељку је могуће додавање/уклањање опција).
-| look       | /set spell.look.*                      | Изглед и осећај.
-| option     | /set spell.option.*                    | <<spell_speller_options,Опције модула проверу правописа>> (у одељку је могуће додавање/уклањање опција).
-|===
-
-Опције:
-
-include::includes/autogen_user_options.sr.adoc[tag=spell_options]
 
 [[trigger_plugin]]
 === Окидач
