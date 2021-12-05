@@ -210,7 +210,7 @@ Liste von häufig verwendeten Optionen:
   kompiliert <<command_aliases,Alias Erweiterung>>.
 
 | ENABLE_BUFLIST | `ON`, `OFF` | ON |
-  kompiliert <<buflist_plugin,Buflist Erweiterung>>.
+  kompiliert <<buflist,Buflist Erweiterung>>.
 
 | ENABLE_CHARSET | `ON`, `OFF` | ON |
   kompiliert <<charset_plugin,Charset Erweiterung>>.
@@ -1346,6 +1346,35 @@ Standardmäßig interpretieren WeeChat und seine Standard-Erweitertungen diese V
 
 [NOTE]
 Externe Erweitertungen und Skripte können andere lokale Variablen definieren und verwenden.
+
+// TRANSLATION MISSING
+[[buflist]]
+=== List of buffers
+
+Die Buflist-Erweiterung dient dazu eine Liste der geöffneten Buffer in einer Bar-Item mit Namen
+"buflist" darzustellen (zwei weiere Bar-Items "buflist2" und "buflist3" sind zusätzlich verfügbar). +
+Eine Standardbar, "buflist", wird beim Programmstart automatisch mit folgendem Inhalt erstellt.
+
+[[buflist_commands]]
+==== Befehle
+
+include::includes/autogen_user_commands.de.adoc[tag=buflist_commands]
+
+[[buflist_options]]
+==== Optionen
+
+Sektionen in Datei _buflist.conf_:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Sektion | Steuerbefehl          | Beschreibung
+| format  | /set buflist.format.* | Format für die Darstellung der Bufferliste.
+| look    | /set buflist.look.*   | Erscheinungsbild.
+|===
+
+Optionen:
+
+include::includes/autogen_user_options.de.adoc[tag=buflist_options]
 
 [[bare_display]]
 === einfacher Anzeigemodus
@@ -2699,34 +2728,6 @@ Standarderweiterungen:
 Um mehr über Erweiterungen- und Skriptenprogrammierung (mittels API) zu erfahren,
 sollten Sie die link:weechat_plugin_api.en.html[Anleitung für API Erweiterung] (Englisch) oder
 link:weechat_scripting.de.html[WeeChat scripting guide] lesen.
-
-[[buflist_plugin]]
-=== Buflist
-
-Die Buflist-Erweiterung dient dazu eine Liste der geöffneten Buffer in einer Bar-Item mit Namen
-"buflist" darzustellen (zwei weiere Bar-Items "buflist2" und "buflist3" sind zusätzlich verfügbar). +
-Eine Standardbar, "buflist", wird beim Programmstart automatisch mit folgendem Inhalt erstellt.
-
-[[buflist_commands]]
-==== Befehle
-
-include::includes/autogen_user_commands.de.adoc[tag=buflist_commands]
-
-[[buflist_options]]
-==== Optionen
-
-Sektionen in Datei _buflist.conf_:
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Sektion | Steuerbefehl          | Beschreibung
-| format  | /set buflist.format.* | Format für die Darstellung der Bufferliste.
-| look    | /set buflist.look.*   | Erscheinungsbild.
-|===
-
-Optionen:
-
-include::includes/autogen_user_options.de.adoc[tag=buflist_options]
 
 [[charset_plugin]]
 === Charset

@@ -206,7 +206,7 @@ Liste des options couramment utilisées :
   Compiler <<command_aliases,l'extension Alias>>.
 
 | ENABLE_BUFLIST | `ON`, `OFF` | ON |
-  Compiler <<buflist_plugin,l'extension Buflist>>.
+  Compiler <<buflist,l'extension Buflist>>.
 
 | ENABLE_CHARSET | `ON`, `OFF` | ON |
   Compiler <<charset_plugin,l'extension Charset>>.
@@ -1365,6 +1365,35 @@ Par défaut WeeChat et ses extensions par défaut interprètent ces variables :
 [NOTE]
 Les extensions et script externes peuvent définir et utiliser d'autres
 variables locales.
+
+[[buflist]]
+=== Liste des tampons
+
+L'extension Buflist affiche une liste des tampons dans un objet de barre appelé
+"buflist" (deux autres objets de barre "buflist2" et "buflist3" sont également
+disponibles). +
+Une barre par défaut "buflist" est créée au démarrage avec cet objet de barre.
+
+[[buflist_commands]]
+==== Commandes
+
+include::includes/autogen_user_commands.fr.adoc[tag=buflist_commands]
+
+[[buflist_options]]
+==== Options
+
+Sections dans le fichier _buflist.conf_ :
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section | Commande de contrôle  | Description
+| format  | /set buflist.format.* | Formats utilisés pour l'affichage de la liste des tampons.
+| look    | /set buflist.look.*   | Aspect/présentation.
+|===
+
+Options :
+
+include::includes/autogen_user_options.fr.adoc[tag=buflist_options]
 
 [[bare_display]]
 === Affichage dépouillé
@@ -2714,35 +2743,6 @@ Pour en apprendre plus sur le développement d'extension ou de script (via
 l'API), merci de consulter la
 link:weechat_plugin_api.fr.html[Référence API extension WeeChat] ou le
 link:weechat_scripting.fr.html[Guide pour scripts WeeChat].
-
-[[buflist_plugin]]
-=== Buflist
-
-L'extension Buflist affiche une liste des tampons dans un objet de barre appelé
-"buflist" (deux autres objets de barre "buflist2" et "buflist3" sont également
-disponibles). +
-Une barre par défaut "buflist" est créée au démarrage avec cet objet de barre.
-
-[[buflist_commands]]
-==== Commandes
-
-include::includes/autogen_user_commands.fr.adoc[tag=buflist_commands]
-
-[[buflist_options]]
-==== Options
-
-Sections dans le fichier _buflist.conf_ :
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Section | Commande de contrôle  | Description
-| format  | /set buflist.format.* | Formats utilisés pour l'affichage de la liste des tampons.
-| look    | /set buflist.look.*   | Aspect/présentation.
-|===
-
-Options :
-
-include::includes/autogen_user_options.fr.adoc[tag=buflist_options]
 
 [[charset_plugin]]
 === Charset

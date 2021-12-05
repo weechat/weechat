@@ -208,7 +208,7 @@ Lista popularnych opcji:
   Kompilacja <<command_aliases,wtyczki alias>>.
 
 | ENABLE_BUFLIST | `ON`, `OFF` | ON |
-  Kompilacja <<buflist_plugin,wtyczki buflist>>.
+  Kompilacja <<buflist,wtyczki buflist>>.
 
 | ENABLE_CHARSET | `ON`, `OFF` | ON |
   Kompilacja <<charset_plugin,wtyczki charset>>.
@@ -1344,6 +1344,35 @@ WeeChat i jego wtyczki domyślnie tworzą następujące zmienne:
 
 [NOTE]
 External plugins and scripts can define and use other local variables.
+
+// TRANSLATION MISSING
+[[buflist]]
+=== List of buffers
+
+Wtyczka buflist wyświetla listę buforów w elemencie paska nazwanym "buflist"
+(dostępne są również dwa dodatkowe elementy "buflist2" oraz "buflist3"). +
+Domyślny pasek "buflist" jest tworzony podczas uruchomieina z włączoną wtyczką.
+
+[[buflist_commands]]
+==== Komendy
+
+include::includes/autogen_user_commands.pl.adoc[tag=buflist_commands]
+
+[[buflist_options]]
+==== Options
+
+Sekcje w pliku _buflist.conf_:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Sekcja | Komenda               | Opis
+| format | /set buflist.format.* | Formaty użyte do wyświetlania listy buforów.
+| look   | /set buflist.look.*   | Wygląd elementów na liście buforów.
+|===
+
+Opcje:
+
+include::includes/autogen_user_options.pl.adoc[tag=buflist_options]
 
 [[bare_display]]
 === Niesformatowany ekran
@@ -2669,34 +2698,6 @@ Domyślne wtyczki:
 Więcej informacji o wtyczkach i tworzeniu skryptów (przez API), można znaleźć w
 link:weechat_plugin_api.en.html[Opisie API wtyczek] (Angielski) i
 link:weechat_scripting.pl.html[Poradniku pisania skryptów].
-
-[[buflist_plugin]]
-=== Buflist
-
-Wtyczka buflist wyświetla listę buforów w elemencie paska nazwanym "buflist"
-(dostępne są również dwa dodatkowe elementy "buflist2" oraz "buflist3"). +
-Domyślny pasek "buflist" jest tworzony podczas uruchomieina z włączoną wtyczką.
-
-[[buflist_commands]]
-==== Komendy
-
-include::includes/autogen_user_commands.pl.adoc[tag=buflist_commands]
-
-[[buflist_options]]
-==== Options
-
-Sekcje w pliku _buflist.conf_:
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Sekcja | Komenda               | Opis
-| format | /set buflist.format.* | Formaty użyte do wyświetlania listy buforów.
-| look   | /set buflist.look.*   | Wygląd elementów na liście buforów.
-|===
-
-Opcje:
-
-include::includes/autogen_user_options.pl.adoc[tag=buflist_options]
 
 [[charset_plugin]]
 === Charset

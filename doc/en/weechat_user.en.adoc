@@ -202,7 +202,7 @@ List of commonly used options:
   Compile <<command_aliases,Alias plugin>>.
 
 | ENABLE_BUFLIST | `ON`, `OFF` | ON |
-  Compile <<buflist_plugin,Buflist plugin>>.
+  Compile <<buflist,Buflist plugin>>.
 
 | ENABLE_CHARSET | `ON`, `OFF` | ON |
   Compile <<charset_plugin,Charset plugin>>.
@@ -1327,6 +1327,34 @@ By default WeeChat and its default plugins interpret these variables:
 
 [NOTE]
 External plugins and scripts can define and use other local variables.
+
+[[buflist]]
+=== List of buffers
+
+Buflist plugin displays a list of buffers in a bar item called "buflist"
+(two other bar items "buflist2" and "buflist3" are available as well). +
+A default bar "buflist" is created on startup with this item.
+
+[[buflist_commands]]
+==== Commands
+
+include::includes/autogen_user_commands.en.adoc[tag=buflist_commands]
+
+[[buflist_options]]
+==== Options
+
+Sections in file _buflist.conf_:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section | Control command       | Description
+| format  | /set buflist.format.* | Formats used to display list of buffers.
+| look    | /set buflist.look.*   | Look and feel.
+|===
+
+Options:
+
+include::includes/autogen_user_options.en.adoc[tag=buflist_options]
 
 [[bare_display]]
 === Bare display
@@ -2626,34 +2654,6 @@ Default plugins are:
 To learn more about plugin or script development (through API), please read the
 link:weechat_plugin_api.en.html[WeeChat plugin API reference] or the
 link:weechat_scripting.en.html[WeeChat scripting guide].
-
-[[buflist_plugin]]
-=== Buflist
-
-Buflist plugin displays a list of buffers in a bar item called "buflist"
-(two other bar items "buflist2" and "buflist3" are available as well). +
-A default bar "buflist" is created on startup with this item.
-
-[[buflist_commands]]
-==== Commands
-
-include::includes/autogen_user_commands.en.adoc[tag=buflist_commands]
-
-[[buflist_options]]
-==== Options
-
-Sections in file _buflist.conf_:
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Section | Control command       | Description
-| format  | /set buflist.format.* | Formats used to display list of buffers.
-| look    | /set buflist.look.*   | Look and feel.
-|===
-
-Options:
-
-include::includes/autogen_user_options.en.adoc[tag=buflist_options]
 
 [[charset_plugin]]
 === Charset

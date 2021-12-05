@@ -186,7 +186,7 @@ $ make install
   Компајлира <<command_aliases,Alias додатак>>.
 
 | ENABLE_BUFLIST | `ON`, `OFF` | ON |
-  Компајлира <<buflist_plugin,Buflist додатак>>.
+  Компајлира <<buflist,Buflist додатак>>.
 
 | ENABLE_CHARSET | `ON`, `OFF` | ON |
   Компајлира <<charset_plugin,Charset додатак>>.
@@ -1246,6 +1246,34 @@ _прозор_ је површина екрана која приказује б
 
 [NOTE]
 Спољни додаци и скрипте могу да дефинишу и користе остале локалне променљиве.
+
+// TRANSLATION MISSING
+[[buflist]]
+=== List of buffers
+
+Buflist додатак приказује листу бафера у ставки траке која се зове „buflist” (такође су доступне још две ставке траке „buflist2” и „buflist3”). +
+Подразумевана трака „buflist” са овом ставком се креира током покретања програма.
+
+[[buflist_commands]]
+==== Команде
+
+include::includes/autogen_user_commands.sr.adoc[tag=buflist_commands]
+
+[[buflist_options]]
+==== Опције
+
+Одељци у фајлу _buflist.conf_:
+
+[width="100%", cols="3m,6m,16", options="header"]
+|===
+| Одељак  | Команда за контролу   | Опис
+| format  | /set buflist.format.* | Формати који се користе за приказ листе бафера.
+| look    | /set buflist.look.*   | Изглед и осећај.
+|===
+
+Опције:
+
+include::includes/autogen_user_options.sr.adoc[tag=buflist_options]
 
 [[bare_display]]
 === Огољени приказ
@@ -2471,33 +2499,6 @@ include::includes/autogen_user_options.sr.adoc[tag=weechat_options]
 |===
 
 За више информација о развоју додатака или скрипти (помоћу API), молимо вас да прочитате link:weechat_plugin_api.sr.html[WeeChat референтно упутство за API додатака] или link:weechat_scripting.sr.html[WeeChat водич за скриптовање].
-
-[[buflist_plugin]]
-=== Buflist
-
-Buflist додатак приказује листу бафера у ставки траке која се зове „buflist” (такође су доступне још две ставке траке „buflist2” и „buflist3”). +
-Подразумевана трака „buflist” са овом ставком се креира током покретања програма.
-
-[[buflist_commands]]
-==== Команде
-
-include::includes/autogen_user_commands.sr.adoc[tag=buflist_commands]
-
-[[buflist_options]]
-==== Опције
-
-Одељци у фајлу _buflist.conf_:
-
-[width="100%", cols="3m,6m,16", options="header"]
-|===
-| Одељак  | Команда за контролу   | Опис
-| format  | /set buflist.format.* | Формати који се користе за приказ листе бафера.
-| look    | /set buflist.look.*   | Изглед и осећај.
-|===
-
-Опције:
-
-include::includes/autogen_user_options.sr.adoc[tag=buflist_options]
 
 [[charset_plugin]]
 === Charset
