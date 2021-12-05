@@ -1153,6 +1153,96 @@ Exemple de découpage vertical + horizontal :
                  ▲ fenêtre n°1 (tampon n°3)            ▲ fenêtre n°2 (tampon n°4)
 ....
 
+[[bare_display]]
+==== Affichage dépouillé
+
+Un affichage spécial, appelé "dépouillé" (_bare display_) peut être utilisé pour
+un clic facile sur les URLs longs et la sélection de texte (avec la souris).
+
+L'affichage dépouillé a les caractéristiques suivantes :
+
+* Il n'affiche que le contenu du tampon courant : pas de découpage de fenêtres
+  ni de barre (pas de titre, liste de pseudos, statut, ligne de commande, ...).
+* Le support souris de WeeChat est désactivé (s'il avait été activé) : vous
+  pouvez utiliser votre souris comme vous le faites dans le terminal pour
+  cliquer sur les URLs et sélectionner du texte.
+* Ncurses n'est pas utilisé, par conséquent les URLs ne sont pas coupés en fin
+  de ligne.
+
+La touche par défaut pour activer l'affichage dépouillé est kbd:[Alt+l] (`L`),
+et la même touche pour en sortir (ou par défaut tout changement dans la ligne de
+commande sortira de l'affichage dépouillé, voir l'option
+<<option_weechat.look.bare_display_exit_on_input,weechat.look.bare_display_exit_on_input>>).
+
+Le format de l'heure peut être personnalisé avec l'option
+<<option_weechat.look.bare_display_time_format,weechat.look.bare_display_time_format>>.
+
+L'affichage dépouillé peut être activé pour un temps donné en utilisant la
+commande <<command_weechat_window,/window>>.
+
+Si WeeChat ressemble à ceci :
+
+....
+┌──────────────────────────────────────────────────────────────────────────────────────┐
+│1.libera │Bienvenue sur #abc                                                          │
+│  weechat│12:52:27   --> | Flashy (flashcode@weechat.org) a rejoint #abc      │@Flashy│
+│2.  #test│12:52:27    -- | Pseudos #abc: [@Flashy @joe +weebot peter]         │@joe   │
+│3.  #abc │12:52:27    -- | Canal #abc: 4 pseudos (2 ops, 1 voice, 1 normal)   │+weebot│
+│4.  #def │12:52:27    -- | Canal créé le Tue Jan 27 06:30:17 2009             │peter  │
+│5.  #ghi │12:54:15 peter | bonjour !                                          │       │
+│         │12:55:01  @joe | peter: hook_process: https://weechat.org/files/doc │       │
+│         │               | /devel/weechat_plugin_api.en.html#_weechat_hook_pr │       │
+│         │               | ocess                                              │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │[12:55] [5] [irc/libera] 3:#abc(+n){4}                                      │
+│         │[@Flashy(i)] salut peter !█                                                 │
+└──────────────────────────────────────────────────────────────────────────────────────┘
+....
+
+L'écran ressemblera à ça en mode dépouillé :
+
+....
+┌──────────────────────────────────────────────────────────────────────────────────────┐
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│12:52 --> Flashy (flashcode@weechat.org) a rejoint #abc                               │
+│12:52 -- Pseudos #abc: [@Flashy @joe +weebot peter]                                   │
+│12:52 -- Canal #abc: 4 pseudos (2 ops, 1 voice, 1 normal)                             │
+│12:52 -- Canal créé le Tue Jan 27 06:30:17 2009                                       │
+│12:54 <peter> bonjour !                                                               │
+│12:55 <@joe> peter: hook_process: https://weechat.org/files/doc/devel/weechat_plugin_a│
+│pi.en.html#_weechat_hook_process                                                      │
+└──────────────────────────────────────────────────────────────────────────────────────┘
+....
+
+Donc vous pouvez cliquer l'URL de _joe_ sans problème dans votre terminal (bien
+entendu cela suppose que votre terminal permet le clic sur les URLs).
+
 [[buffers]]
 === Tampons
 
@@ -1453,96 +1543,6 @@ Sections dans le fichier _fset.conf_ :
 Options :
 
 include::includes/autogen_user_options.fr.adoc[tag=fset_options]
-
-[[bare_display]]
-=== Affichage dépouillé
-
-Un affichage spécial, appelé "dépouillé" (_bare display_) peut être utilisé pour
-un clic facile sur les URLs longs et la sélection de texte (avec la souris).
-
-L'affichage dépouillé a les caractéristiques suivantes :
-
-* Il n'affiche que le contenu du tampon courant : pas de découpage de fenêtres
-  ni de barre (pas de titre, liste de pseudos, statut, ligne de commande, ...).
-* Le support souris de WeeChat est désactivé (s'il avait été activé) : vous
-  pouvez utiliser votre souris comme vous le faites dans le terminal pour
-  cliquer sur les URLs et sélectionner du texte.
-* Ncurses n'est pas utilisé, par conséquent les URLs ne sont pas coupés en fin
-  de ligne.
-
-La touche par défaut pour activer l'affichage dépouillé est kbd:[Alt+l] (`L`),
-et la même touche pour en sortir (ou par défaut tout changement dans la ligne de
-commande sortira de l'affichage dépouillé, voir l'option
-<<option_weechat.look.bare_display_exit_on_input,weechat.look.bare_display_exit_on_input>>).
-
-Le format de l'heure peut être personnalisé avec l'option
-<<option_weechat.look.bare_display_time_format,weechat.look.bare_display_time_format>>.
-
-L'affichage dépouillé peut être activé pour un temps donné en utilisant la
-commande <<command_weechat_window,/window>>.
-
-Si WeeChat ressemble à ceci :
-
-....
-┌──────────────────────────────────────────────────────────────────────────────────────┐
-│1.libera │Bienvenue sur #abc                                                          │
-│  weechat│12:52:27   --> | Flashy (flashcode@weechat.org) a rejoint #abc      │@Flashy│
-│2.  #test│12:52:27    -- | Pseudos #abc: [@Flashy @joe +weebot peter]         │@joe   │
-│3.  #abc │12:52:27    -- | Canal #abc: 4 pseudos (2 ops, 1 voice, 1 normal)   │+weebot│
-│4.  #def │12:52:27    -- | Canal créé le Tue Jan 27 06:30:17 2009             │peter  │
-│5.  #ghi │12:54:15 peter | bonjour !                                          │       │
-│         │12:55:01  @joe | peter: hook_process: https://weechat.org/files/doc │       │
-│         │               | /devel/weechat_plugin_api.en.html#_weechat_hook_pr │       │
-│         │               | ocess                                              │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │[12:55] [5] [irc/libera] 3:#abc(+n){4}                                      │
-│         │[@Flashy(i)] salut peter !█                                                 │
-└──────────────────────────────────────────────────────────────────────────────────────┘
-....
-
-L'écran ressemblera à ça en mode dépouillé :
-
-....
-┌──────────────────────────────────────────────────────────────────────────────────────┐
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│12:52 --> Flashy (flashcode@weechat.org) a rejoint #abc                               │
-│12:52 -- Pseudos #abc: [@Flashy @joe +weebot peter]                                   │
-│12:52 -- Canal #abc: 4 pseudos (2 ops, 1 voice, 1 normal)                             │
-│12:52 -- Canal créé le Tue Jan 27 06:30:17 2009                                       │
-│12:54 <peter> bonjour !                                                               │
-│12:55 <@joe> peter: hook_process: https://weechat.org/files/doc/devel/weechat_plugin_a│
-│pi.en.html#_weechat_hook_process                                                      │
-└──────────────────────────────────────────────────────────────────────────────────────┘
-....
-
-Donc vous pouvez cliquer l'URL de _joe_ sans problème dans votre terminal (bien
-entendu cela suppose que votre terminal permet le clic sur les URLs).
 
 [[key_bindings]]
 == Raccourcis clavier

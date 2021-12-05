@@ -1183,6 +1183,93 @@ Screen layouts and the association between windows and buffers can be
                  ▲ ウィンドウ #1 (バッファ #3)         ▲ ウィンドウ #2 (バッファ #4)
 ....
 
+[[bare_display]]
+==== 最小限表示
+
+「最小限表示」と呼ばれる特殊な表示状態を使うことで、(マウスを使って) 長い
+URL を簡単にクリックしたり、テキストを簡単に選択できるようになっています。
+
+最小限表示は以下の機能を持っています:
+
+* 現在のバッファの内容だけを表示: 分割ウィンドウやバー等
+  (タイトル、ニックネームリスト、状態、入力、...) も表示しない
+* WeeChat マウスサポートを無効化 (有効化されていた場合):
+  端末でやるのと同じように URL をクリックしたりテキストを選択できます
+* ncurses を使わない、このため URL を行の最後で分断されることがなくなります。
+
+最小限表示を有効化するデフォルトキーは kbd:[Alt+l] (`L`) で、終了するには同じキーを押してください
+(また、デフォルトでは入力が変更された場合に最小限表示を終了します、<<option_weechat.look.bare_display_exit_on_input,weechat.look.bare_display_exit_on_input>>
+オプションを参照)。
+
+<<option_weechat.look.bare_display_time_format,weechat.look.bare_display_time_format>>
+オプションを使えば、時間書式を変更することも可能です。
+
+<<command_weechat_window,/window>>
+コマンドを使えば、指定秒後に最小限表示を有効化することができます。
+
+WeeChat が以下のような表示状態の場合:
+
+....
+┌──────────────────────────────────────────────────────────────────────────────────────┐
+│1.libera │Welcome to #abc                                                             │
+│  weechat│12:52:27   --> | Flashy (flashcode@weechat.org) has joined #abc     │@Flashy│
+│2.  #test│12:52:27    -- | Nicks #abc: [@Flashy @joe +weebot peter]           │@joe   │
+│3.  #abc │12:52:27    -- | Channel #abc: 4 nicks (2 ops, 1 voice, 1 normal)   │+weebot│
+│4.  #def │12:52:27    -- | Channel created on Tue Jan 27 06:30:17 2009        │peter  │
+│5.  #ghi │12:54:15 peter | hey!                                               │       │
+│         │12:55:01  @joe | peter: hook_process: https://weechat.org/files/doc │       │
+│         │               | /devel/weechat_plugin_api.en.html#_weechat_hook_pr │       │
+│         │               | ocess                                              │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │[12:55] [5] [irc/libera] 3:#abc(+n){4}                                      │
+│         │[@Flashy(i)] hi peter!█                                                     │
+└──────────────────────────────────────────────────────────────────────────────────────┘
+....
+
+最小限表示では以下の様に表示されます:
+
+....
+┌──────────────────────────────────────────────────────────────────────────────────────┐
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│12:52 --> Flashy (flashcode@weechat.org) has joined #abc                              │
+│12:52 -- Nicks #abc: [@Flashy @joe +weebot peter]                                     │
+│12:52 -- Channel #abc: 4 nicks (2 ops, 1 voice, 1 normal)                             │
+│12:52 -- Channel created on Tue Jan 27 06:30:17 2009                                  │
+│12:54 <peter> hey!                                                                    │
+│12:55 <@joe> peter: hook_process: https://weechat.org/files/doc/devel/weechat_plugin_a│
+│pi.en.html#_weechat_hook_process                                                      │
+└──────────────────────────────────────────────────────────────────────────────────────┘
+....
+
+このため、端末で問題なく _joe_ さんからの URL をクリックできます
+(もちろん、使用中の端末で URL をクリックできるように設定されていなければいけませんが)。
+
 // TRANSLATION MISSING
 [[buffers]]
 === Buffers
@@ -1481,93 +1568,6 @@ _fset.conf_ ファイル内のセクション:
 オプション:
 
 include::includes/autogen_user_options.ja.adoc[tag=fset_options]
-
-[[bare_display]]
-=== 最小限表示
-
-「最小限表示」と呼ばれる特殊な表示状態を使うことで、(マウスを使って) 長い
-URL を簡単にクリックしたり、テキストを簡単に選択できるようになっています。
-
-最小限表示は以下の機能を持っています:
-
-* 現在のバッファの内容だけを表示: 分割ウィンドウやバー等
-  (タイトル、ニックネームリスト、状態、入力、...) も表示しない
-* WeeChat マウスサポートを無効化 (有効化されていた場合):
-  端末でやるのと同じように URL をクリックしたりテキストを選択できます
-* ncurses を使わない、このため URL を行の最後で分断されることがなくなります。
-
-最小限表示を有効化するデフォルトキーは kbd:[Alt+l] (`L`) で、終了するには同じキーを押してください
-(また、デフォルトでは入力が変更された場合に最小限表示を終了します、<<option_weechat.look.bare_display_exit_on_input,weechat.look.bare_display_exit_on_input>>
-オプションを参照)。
-
-<<option_weechat.look.bare_display_time_format,weechat.look.bare_display_time_format>>
-オプションを使えば、時間書式を変更することも可能です。
-
-<<command_weechat_window,/window>>
-コマンドを使えば、指定秒後に最小限表示を有効化することができます。
-
-WeeChat が以下のような表示状態の場合:
-
-....
-┌──────────────────────────────────────────────────────────────────────────────────────┐
-│1.libera │Welcome to #abc                                                             │
-│  weechat│12:52:27   --> | Flashy (flashcode@weechat.org) has joined #abc     │@Flashy│
-│2.  #test│12:52:27    -- | Nicks #abc: [@Flashy @joe +weebot peter]           │@joe   │
-│3.  #abc │12:52:27    -- | Channel #abc: 4 nicks (2 ops, 1 voice, 1 normal)   │+weebot│
-│4.  #def │12:52:27    -- | Channel created on Tue Jan 27 06:30:17 2009        │peter  │
-│5.  #ghi │12:54:15 peter | hey!                                               │       │
-│         │12:55:01  @joe | peter: hook_process: https://weechat.org/files/doc │       │
-│         │               | /devel/weechat_plugin_api.en.html#_weechat_hook_pr │       │
-│         │               | ocess                                              │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │[12:55] [5] [irc/libera] 3:#abc(+n){4}                                      │
-│         │[@Flashy(i)] hi peter!█                                                     │
-└──────────────────────────────────────────────────────────────────────────────────────┘
-....
-
-最小限表示では以下の様に表示されます:
-
-....
-┌──────────────────────────────────────────────────────────────────────────────────────┐
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│12:52 --> Flashy (flashcode@weechat.org) has joined #abc                              │
-│12:52 -- Nicks #abc: [@Flashy @joe +weebot peter]                                     │
-│12:52 -- Channel #abc: 4 nicks (2 ops, 1 voice, 1 normal)                             │
-│12:52 -- Channel created on Tue Jan 27 06:30:17 2009                                  │
-│12:54 <peter> hey!                                                                    │
-│12:55 <@joe> peter: hook_process: https://weechat.org/files/doc/devel/weechat_plugin_a│
-│pi.en.html#_weechat_hook_process                                                      │
-└──────────────────────────────────────────────────────────────────────────────────────┘
-....
-
-このため、端末で問題なく _joe_ さんからの URL をクリックできます
-(もちろん、使用中の端末で URL をクリックできるように設定されていなければいけませんが)。
 
 // TRANSLATION MISSING
 [[key_bindings]]

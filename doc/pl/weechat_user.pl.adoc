@@ -1139,6 +1139,94 @@ Przykład podziałów pionowego i poziomego:
                  ▲ window #1 (buffer #3)               ▲ window #2 (buffer #4)
 ....
 
+[[bare_display]]
+==== Niesformatowany ekran
+
+Specjalny ekran nazywany "bare display" może zostać użyty do łatwego kliknięcia
+w długi adres URL i zaznaczania tekstu (za pomocą myszy).
+
+Tryb niesformatowanego ekranu posiada następujące cechy:
+
+* wyświetlana jest tylko zawartość obecnego bufora: bez podziału okna i pasków
+  (brak tematu, listy nicków, statusu, wejścia, ...)
+* wsparcie dla myszy w WeeChat jest wyłączone (jeśli zostało włączone): możesz
+  używać myszy jak w normalnym terminalu do klikania w adresy URL i zaznaczania
+  tekstu
+* ncurses nie jest używane, dlatego URLe nie są obcinane z końcem linii.
+
+Domyślnym skrótem uruchamiającym ten tryb jest kbd:[Alt+l] (`L`), tak jak wyłączającym
+go (lub domyślnie dowolna zmiana wejścia spowoduje wyjście z tego trybu, zobacz
+<<option_weechat.look.bare_display_exit_on_input,weechat.look.bare_display_exit_on_input>>).
+
+Format czasu może zostać dostosowany za pomocą opcji
+<<option_weechat.look.bare_display_time_format,weechat.look.bare_display_time_format>>.
+
+Tryb ten może być włączony również na specyficzny czas za pomocą komendy
+<<command_weechat_window,/window>>.
+
+Jeśłi WeeChat wygląda następująco:
+
+....
+┌──────────────────────────────────────────────────────────────────────────────────────┐
+│1.libera │Welcome to #abc                                                             │
+│  weechat│12:52:27   --> | Flashy (flashcode@weechat.org) has joined #abc     │@Flashy│
+│2.  #test│12:52:27    -- | Nicks #abc: [@Flashy @joe +weebot peter]           │@joe   │
+│3.  #abc │12:52:27    -- | Channel #abc: 4 nicks (2 ops, 1 voice, 1 normal)   │+weebot│
+│4.  #def │12:52:27    -- | Channel created on Tue Jan 27 06:30:17 2009        │peter  │
+│5.  #ghi │12:54:15 peter | hey!                                               │       │
+│         │12:55:01  @joe | peter: hook_process: https://weechat.org/files/doc │       │
+│         │               | /devel/weechat_plugin_api.en.html#_weechat_hook_pr │       │
+│         │               | ocess                                              │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │[12:55] [5] [irc/libera] 3:#abc(+n){4}                                      │
+│         │[@Flashy(i)] hi peter!█                                                     │
+└──────────────────────────────────────────────────────────────────────────────────────┘
+....
+
+Ekran w trybie niesformatowanego wyświetlania będzie wyglądać tak:
+
+....
+┌──────────────────────────────────────────────────────────────────────────────────────┐
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│12:52 --> Flashy (flashcode@weechat.org) has joined #abc                              │
+│12:52 -- Nicks #abc: [@Flashy @joe +weebot peter]                                     │
+│12:52 -- Channel #abc: 4 nicks (2 ops, 1 voice, 1 normal)                             │
+│12:52 -- Channel created on Tue Jan 27 06:30:17 2009                                  │
+│12:54 <peter> hey!                                                                    │
+│12:55 <@joe> peter: hook_process: https://weechat.org/files/doc/devel/weechat_plugin_a│
+│pi.en.html#_weechat_hook_process                                                      │
+└──────────────────────────────────────────────────────────────────────────────────────┘
+....
+
+Możesz więc kliknąć w URL od _joe_ bez żadnych problemów w swoim terminalu (jeśli
+twój terminal wspiera klikanie w URLe).
+
 [[buffers]]
 === Buforów
 
@@ -1433,94 +1521,6 @@ Sekcje w pliku _fset.conf_:
 Opcje:
 
 include::includes/autogen_user_options.pl.adoc[tag=fset_options]
-
-[[bare_display]]
-=== Niesformatowany ekran
-
-Specjalny ekran nazywany "bare display" może zostać użyty do łatwego kliknięcia
-w długi adres URL i zaznaczania tekstu (za pomocą myszy).
-
-Tryb niesformatowanego ekranu posiada następujące cechy:
-
-* wyświetlana jest tylko zawartość obecnego bufora: bez podziału okna i pasków
-  (brak tematu, listy nicków, statusu, wejścia, ...)
-* wsparcie dla myszy w WeeChat jest wyłączone (jeśli zostało włączone): możesz
-  używać myszy jak w normalnym terminalu do klikania w adresy URL i zaznaczania
-  tekstu
-* ncurses nie jest używane, dlatego URLe nie są obcinane z końcem linii.
-
-Domyślnym skrótem uruchamiającym ten tryb jest kbd:[Alt+l] (`L`), tak jak wyłączającym
-go (lub domyślnie dowolna zmiana wejścia spowoduje wyjście z tego trybu, zobacz
-<<option_weechat.look.bare_display_exit_on_input,weechat.look.bare_display_exit_on_input>>).
-
-Format czasu może zostać dostosowany za pomocą opcji
-<<option_weechat.look.bare_display_time_format,weechat.look.bare_display_time_format>>.
-
-Tryb ten może być włączony również na specyficzny czas za pomocą komendy
-<<command_weechat_window,/window>>.
-
-Jeśłi WeeChat wygląda następująco:
-
-....
-┌──────────────────────────────────────────────────────────────────────────────────────┐
-│1.libera │Welcome to #abc                                                             │
-│  weechat│12:52:27   --> | Flashy (flashcode@weechat.org) has joined #abc     │@Flashy│
-│2.  #test│12:52:27    -- | Nicks #abc: [@Flashy @joe +weebot peter]           │@joe   │
-│3.  #abc │12:52:27    -- | Channel #abc: 4 nicks (2 ops, 1 voice, 1 normal)   │+weebot│
-│4.  #def │12:52:27    -- | Channel created on Tue Jan 27 06:30:17 2009        │peter  │
-│5.  #ghi │12:54:15 peter | hey!                                               │       │
-│         │12:55:01  @joe | peter: hook_process: https://weechat.org/files/doc │       │
-│         │               | /devel/weechat_plugin_api.en.html#_weechat_hook_pr │       │
-│         │               | ocess                                              │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │[12:55] [5] [irc/libera] 3:#abc(+n){4}                                      │
-│         │[@Flashy(i)] hi peter!█                                                     │
-└──────────────────────────────────────────────────────────────────────────────────────┘
-....
-
-Ekran w trybie niesformatowanego wyświetlania będzie wyglądać tak:
-
-....
-┌──────────────────────────────────────────────────────────────────────────────────────┐
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│12:52 --> Flashy (flashcode@weechat.org) has joined #abc                              │
-│12:52 -- Nicks #abc: [@Flashy @joe +weebot peter]                                     │
-│12:52 -- Channel #abc: 4 nicks (2 ops, 1 voice, 1 normal)                             │
-│12:52 -- Channel created on Tue Jan 27 06:30:17 2009                                  │
-│12:54 <peter> hey!                                                                    │
-│12:55 <@joe> peter: hook_process: https://weechat.org/files/doc/devel/weechat_plugin_a│
-│pi.en.html#_weechat_hook_process                                                      │
-└──────────────────────────────────────────────────────────────────────────────────────┘
-....
-
-Możesz więc kliknąć w URL od _joe_ bez żadnych problemów w swoim terminalu (jeśli
-twój terminal wspiera klikanie w URLe).
 
 // TRANSLATION MISSING
 [[key_bindings]]

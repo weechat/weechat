@@ -1226,6 +1226,94 @@ Esempio di split orizzontale + verticale:
 ....
 
 // TRANSLATION MISSING
+[[bare_display]]
+==== Bare display
+
+A special display, called "bare display" can be used for easy click on long URLs
+and selection of text (using the mouse).
+
+The bare display has following features:
+
+* it displays only the content of current buffer: no window split neither bars
+  (no title, nicklist, status, input, ...)
+* the WeeChat mouse support is disabled (if it was enabled): you can use your
+  mouse like you do in the terminal to click on URLs and select text
+* ncurses is not used, therefore URLs are not cut at the end of lines.
+
+The default key to enable bare display is kbd:[Alt+l] (`L`), and same key to exit
+(or by default anything changing the input will exit the bare display, see option
+<<option_weechat.look.bare_display_exit_on_input,weechat.look.bare_display_exit_on_input>>).
+
+The time format can be customized with the option
+<<option_weechat.look.bare_display_time_format,weechat.look.bare_display_time_format>>.
+
+The bare display can be enabled for a specific delay using the command
+<<command_weechat_window,/window>>.
+
+If WeeChat looks like that:
+
+....
+┌──────────────────────────────────────────────────────────────────────────────────────┐
+│1.libera │Welcome to #abc                                                             │
+│  weechat│12:52:27   --> | Flashy (flashcode@weechat.org) has joined #abc     │@Flashy│
+│2.  #test│12:52:27    -- | Nicks #abc: [@Flashy @joe +weebot peter]           │@joe   │
+│3.  #abc │12:52:27    -- | Channel #abc: 4 nicks (2 ops, 1 voice, 1 normal)   │+weebot│
+│4.  #def │12:52:27    -- | Channel created on Tue Jan 27 06:30:17 2009        │peter  │
+│5.  #ghi │12:54:15 peter | hey!                                               │       │
+│         │12:55:01  @joe | peter: hook_process: https://weechat.org/files/doc │       │
+│         │               | /devel/weechat_plugin_api.en.html#_weechat_hook_pr │       │
+│         │               | ocess                                              │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │[12:55] [5] [irc/libera] 3:#abc(+n){4}                                      │
+│         │[@Flashy(i)] hi peter!█                                                     │
+└──────────────────────────────────────────────────────────────────────────────────────┘
+....
+
+The screen will look like that in bare display:
+
+....
+┌──────────────────────────────────────────────────────────────────────────────────────┐
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│12:52 --> Flashy (flashcode@weechat.org) has joined #abc                              │
+│12:52 -- Nicks #abc: [@Flashy @joe +weebot peter]                                     │
+│12:52 -- Channel #abc: 4 nicks (2 ops, 1 voice, 1 normal)                             │
+│12:52 -- Channel created on Tue Jan 27 06:30:17 2009                                  │
+│12:54 <peter> hey!                                                                    │
+│12:55 <@joe> peter: hook_process: https://weechat.org/files/doc/devel/weechat_plugin_a│
+│pi.en.html#_weechat_hook_process                                                      │
+└──────────────────────────────────────────────────────────────────────────────────────┘
+....
+
+So you can click the URL from _joe_ without any problem in your terminal (of
+course this supposes that your terminal supports click on URLs).
+
+// TRANSLATION MISSING
 [[buffers]]
 === Buffers
 
@@ -1533,94 +1621,6 @@ Sections in file _fset.conf_:
 Options:
 
 include::includes/autogen_user_options.it.adoc[tag=fset_options]
-
-// TRANSLATION MISSING
-[[bare_display]]
-=== Bare display
-
-A special display, called "bare display" can be used for easy click on long URLs
-and selection of text (using the mouse).
-
-The bare display has following features:
-
-* it displays only the content of current buffer: no window split neither bars
-  (no title, nicklist, status, input, ...)
-* the WeeChat mouse support is disabled (if it was enabled): you can use your
-  mouse like you do in the terminal to click on URLs and select text
-* ncurses is not used, therefore URLs are not cut at the end of lines.
-
-The default key to enable bare display is kbd:[Alt+l] (`L`), and same key to exit
-(or by default anything changing the input will exit the bare display, see option
-<<option_weechat.look.bare_display_exit_on_input,weechat.look.bare_display_exit_on_input>>).
-
-The time format can be customized with the option
-<<option_weechat.look.bare_display_time_format,weechat.look.bare_display_time_format>>.
-
-The bare display can be enabled for a specific delay using the command
-<<command_weechat_window,/window>>.
-
-If WeeChat looks like that:
-
-....
-┌──────────────────────────────────────────────────────────────────────────────────────┐
-│1.libera │Welcome to #abc                                                             │
-│  weechat│12:52:27   --> | Flashy (flashcode@weechat.org) has joined #abc     │@Flashy│
-│2.  #test│12:52:27    -- | Nicks #abc: [@Flashy @joe +weebot peter]           │@joe   │
-│3.  #abc │12:52:27    -- | Channel #abc: 4 nicks (2 ops, 1 voice, 1 normal)   │+weebot│
-│4.  #def │12:52:27    -- | Channel created on Tue Jan 27 06:30:17 2009        │peter  │
-│5.  #ghi │12:54:15 peter | hey!                                               │       │
-│         │12:55:01  @joe | peter: hook_process: https://weechat.org/files/doc │       │
-│         │               | /devel/weechat_plugin_api.en.html#_weechat_hook_pr │       │
-│         │               | ocess                                              │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │[12:55] [5] [irc/libera] 3:#abc(+n){4}                                      │
-│         │[@Flashy(i)] hi peter!█                                                     │
-└──────────────────────────────────────────────────────────────────────────────────────┘
-....
-
-The screen will look like that in bare display:
-
-....
-┌──────────────────────────────────────────────────────────────────────────────────────┐
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│12:52 --> Flashy (flashcode@weechat.org) has joined #abc                              │
-│12:52 -- Nicks #abc: [@Flashy @joe +weebot peter]                                     │
-│12:52 -- Channel #abc: 4 nicks (2 ops, 1 voice, 1 normal)                             │
-│12:52 -- Channel created on Tue Jan 27 06:30:17 2009                                  │
-│12:54 <peter> hey!                                                                    │
-│12:55 <@joe> peter: hook_process: https://weechat.org/files/doc/devel/weechat_plugin_a│
-│pi.en.html#_weechat_hook_process                                                      │
-└──────────────────────────────────────────────────────────────────────────────────────┘
-....
-
-So you can click the URL from _joe_ without any problem in your terminal (of
-course this supposes that your terminal supports click on URLs).
 
 // TRANSLATION MISSING
 [[key_bindings]]

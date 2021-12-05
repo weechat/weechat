@@ -1145,6 +1145,96 @@ Beispiele für eine vertikale und horizontale Fensteraufteilung:
                  ▲ Fenster #1 (Buffer #3)              ▲ Fenster #2 (Buffer #4)
 ....
 
+[[bare_display]]
+==== einfacher Anzeigemodus
+
+Ein vereinfachter Anzeigemodus, mit Namen "bare", kann aktiviert werden um
+überlange URLs ganz einfach mit der Maus anzuklicken oder um Text mit der
+Maus zu markieren.
+
+Der vereinfachte Anzeigemodus hat folgende Funktionen:
+
+* es wird lediglich der Inhalt des aktuellen Buffers angezeigt, es findet keine
+  Aufteilung des Fensters statt, es werden keine Bars angezeigt (Title, Nicklist,
+  Status, Input, ...)
+* die Mausunterstützung ist deaktiviert (sofern sie aktiviert war): die Maus kann
+  wie in einem Terminal genutzt werden um URLs anzuklicken oder Text zu markieren
+* ncurses wird nicht genutzt, deshalb werden URLs am Ende der Zeile nicht abgeschnitten.
+
+Der Standardtastenbefehl um den vereinfachten Textmodus zu aktivieren ist kbd:[Alt+l] (`L`),
+mit dem selben Tastenbefehl wird dieser Modus wieder beendet (dieser Modus kann auch
+mit jeder beliegen Tasteneingabe beendet werden, siehe Option
+<<option_weechat.look.bare_display_exit_on_input,weechat.look.bare_display_exit_on_input>>).
+
+Das Format für die Zeitanzeige kann mit folgender Option angepasst werden
+<<option_weechat.look.bare_display_time_format,weechat.look.bare_display_time_format>>.
+
+Der vereinfachte Anzeigemodus kann mit einer vorgegebenen Zeit gestartet werden
+<<command_weechat_window,/window>>.
+
+Im normalen Modus sieht WeeChat wie folgt aus:
+
+....
+┌──────────────────────────────────────────────────────────────────────────────────────┐
+│1.libera │Welcome to #abc                                                             │
+│  weechat│12:52:27   --> | Flashy (flashcode@weechat.org) has joined #abc     │@Flashy│
+│2.  #test│12:52:27    -- | Nicks #abc: [@Flashy @joe +weebot peter]           │@joe   │
+│3.  #abc │12:52:27    -- | Channel #abc: 4 nicks (2 ops, 1 voice, 1 normal)   │+weebot│
+│4.  #def │12:52:27    -- | Channel created on Tue Jan 27 06:30:17 2009        │peter  │
+│5.  #ghi │12:54:15 peter | hey!                                               │       │
+│         │12:55:01  @joe | peter: hook_process: https://weechat.org/files/doc │       │
+│         │               | /devel/weechat_plugin_api.en.html#_weechat_hook_pr │       │
+│         │               | ocess                                              │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │[12:55] [5] [irc/libera] 3:#abc(+n){4}                                      │
+│         │[@Flashy(i)] hi peter!█                                                     │
+└──────────────────────────────────────────────────────────────────────────────────────┘
+....
+
+Der selbe Bildschirm sieht im vereinfachten Anzeigemodus wie folgt aus:
+
+....
+┌──────────────────────────────────────────────────────────────────────────────────────┐
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│12:52 --> Flashy (flashcode@weechat.org) has joined #abc                              │
+│12:52 -- Nicks #abc: [@Flashy @joe +weebot peter]                                     │
+│12:52 -- Channel #abc: 4 nicks (2 ops, 1 voice, 1 normal)                             │
+│12:52 -- Channel created on Tue Jan 27 06:30:17 2009                                  │
+│12:54 <peter> hey!                                                                    │
+│12:55 <@joe> peter: hook_process: https://weechat.org/files/doc/devel/weechat_plugin_a│
+│pi.en.html#_weechat_hook_process                                                      │
+└──────────────────────────────────────────────────────────────────────────────────────┘
+....
+
+Es kann nun die URL von _joe_ ohne Probleme angeklickt werden (dies setzt
+natürlich voraus, dass der Terminal das Anwählen von URLs unterstützt).
+
 [[buffers]]
 === Buffern
 
@@ -1435,96 +1525,6 @@ Sektionen in Datei _fset.conf_:
 Optionen:
 
 include::includes/autogen_user_options.de.adoc[tag=fset_options]
-
-[[bare_display]]
-=== einfacher Anzeigemodus
-
-Ein vereinfachter Anzeigemodus, mit Namen "bare", kann aktiviert werden um
-überlange URLs ganz einfach mit der Maus anzuklicken oder um Text mit der
-Maus zu markieren.
-
-Der vereinfachte Anzeigemodus hat folgende Funktionen:
-
-* es wird lediglich der Inhalt des aktuellen Buffers angezeigt, es findet keine
-  Aufteilung des Fensters statt, es werden keine Bars angezeigt (Title, Nicklist,
-  Status, Input, ...)
-* die Mausunterstützung ist deaktiviert (sofern sie aktiviert war): die Maus kann
-  wie in einem Terminal genutzt werden um URLs anzuklicken oder Text zu markieren
-* ncurses wird nicht genutzt, deshalb werden URLs am Ende der Zeile nicht abgeschnitten.
-
-Der Standardtastenbefehl um den vereinfachten Textmodus zu aktivieren ist kbd:[Alt+l] (`L`),
-mit dem selben Tastenbefehl wird dieser Modus wieder beendet (dieser Modus kann auch
-mit jeder beliegen Tasteneingabe beendet werden, siehe Option
-<<option_weechat.look.bare_display_exit_on_input,weechat.look.bare_display_exit_on_input>>).
-
-Das Format für die Zeitanzeige kann mit folgender Option angepasst werden
-<<option_weechat.look.bare_display_time_format,weechat.look.bare_display_time_format>>.
-
-Der vereinfachte Anzeigemodus kann mit einer vorgegebenen Zeit gestartet werden
-<<command_weechat_window,/window>>.
-
-Im normalen Modus sieht WeeChat wie folgt aus:
-
-....
-┌──────────────────────────────────────────────────────────────────────────────────────┐
-│1.libera │Welcome to #abc                                                             │
-│  weechat│12:52:27   --> | Flashy (flashcode@weechat.org) has joined #abc     │@Flashy│
-│2.  #test│12:52:27    -- | Nicks #abc: [@Flashy @joe +weebot peter]           │@joe   │
-│3.  #abc │12:52:27    -- | Channel #abc: 4 nicks (2 ops, 1 voice, 1 normal)   │+weebot│
-│4.  #def │12:52:27    -- | Channel created on Tue Jan 27 06:30:17 2009        │peter  │
-│5.  #ghi │12:54:15 peter | hey!                                               │       │
-│         │12:55:01  @joe | peter: hook_process: https://weechat.org/files/doc │       │
-│         │               | /devel/weechat_plugin_api.en.html#_weechat_hook_pr │       │
-│         │               | ocess                                              │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │[12:55] [5] [irc/libera] 3:#abc(+n){4}                                      │
-│         │[@Flashy(i)] hi peter!█                                                     │
-└──────────────────────────────────────────────────────────────────────────────────────┘
-....
-
-Der selbe Bildschirm sieht im vereinfachten Anzeigemodus wie folgt aus:
-
-....
-┌──────────────────────────────────────────────────────────────────────────────────────┐
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│12:52 --> Flashy (flashcode@weechat.org) has joined #abc                              │
-│12:52 -- Nicks #abc: [@Flashy @joe +weebot peter]                                     │
-│12:52 -- Channel #abc: 4 nicks (2 ops, 1 voice, 1 normal)                             │
-│12:52 -- Channel created on Tue Jan 27 06:30:17 2009                                  │
-│12:54 <peter> hey!                                                                    │
-│12:55 <@joe> peter: hook_process: https://weechat.org/files/doc/devel/weechat_plugin_a│
-│pi.en.html#_weechat_hook_process                                                      │
-└──────────────────────────────────────────────────────────────────────────────────────┘
-....
-
-Es kann nun die URL von _joe_ ohne Probleme angeklickt werden (dies setzt
-natürlich voraus, dass der Terminal das Anwählen von URLs unterstützt).
 
 // TRANSLATION MISSING
 [[key_bindings]]
