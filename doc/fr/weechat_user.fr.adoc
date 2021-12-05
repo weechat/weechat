@@ -1500,7 +1500,7 @@ L'écran ressemblera à ça en mode dépouillé :
 │                                                                                      │
 │                                                                                      │
 │                                                                                      │
-│12:52 --> Flashy (flashcode@weechat.org) a rejoin #abc                                │
+│12:52 --> Flashy (flashcode@weechat.org) a rejoint #abc                               │
 │12:52 -- Pseudos #abc: [@Flashy @joe +weebot peter]                                   │
 │12:52 -- Canal #abc: 4 pseudos (2 ops, 1 voice, 1 normal)                             │
 │12:52 -- Canal créé le Tue Jan 27 06:30:17 2009                                       │
