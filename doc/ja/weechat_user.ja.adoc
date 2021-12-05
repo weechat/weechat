@@ -298,7 +298,7 @@ CMake に対するオプションを指定するには、以下の書式を使�
   <<typing_notifications,Typing プラグイン>>のコンパイル。
 
 | ENABLE_XFER | `ON`, `OFF` | ON |
-  <<xfer_plugin,Xfer プラグイン>>のコンパイル。
+  <<xfer,Xfer プラグイン>>のコンパイル。
 
 | ENABLE_TESTS | `ON`, `OFF` | OFF |
   コンパイルテスト。
@@ -3146,7 +3146,7 @@ include::includes/autogen_user_options.ja.adoc[tag=weechat_options]
 IRC プラグインは IRC プロトコルに従って他の人と会話を行うために設計されています。
 
 マルチサーバに対応し、DCC チャットとファイル転送 (xfer
-プラグインを使います。<<xfer_plugin,Xfer プラグイン>>を参照) を含む全ての IRC コマンドをサポートしています。
+プラグインを使います。<<xfer,Xfer プラグイン>>を参照) を含む全ての IRC コマンドをサポートしています。
 
 [[irc_command_line_options]]
 === コマンドラインオプション
@@ -3844,6 +3844,38 @@ _irc.conf_ ファイル内のセクション:
 オプション:
 
 include::includes/autogen_user_options.ja.adoc[tag=irc_options]
+
+[[xfer]]
+== Xfer
+
+Xfer プラグインの機能:
+
+* ダイレクトチャット (サーバ不要の 2 ホスト間直接接続):
+  例えば IRC プラグイン経由の "DCC チャット"
+* ファイル転送、例えば IRC プラグイン経由の "DCC"
+
+[[xfer_commands]]
+=== コマンド
+
+include::includes/autogen_user_commands.ja.adoc[tag=xfer_commands]
+
+[[xfer_options]]
+=== オプション
+
+_xfer.conf_ ファイル内のセクション:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| セクション | 操作コマンド        | 説明
+| look       | /set xfer.look.*    | 外観
+| color      | /set xfer.color.*   | 色
+| network    | /set xfer.network.* | ネットワークオプション
+| file       | /set xfer.file.*    | ファイルの送信/受信に関するオプション
+|===
+
+オプション:
+
+include::includes/autogen_user_options.ja.adoc[tag=xfer_options]
 
 // TRANSLATION MISSING
 [[typing_notifications]]
@@ -5214,38 +5246,6 @@ _trigger.conf_ ファイル内のセクション:
 オプション:
 
 include::includes/autogen_user_options.ja.adoc[tag=trigger_options]
-
-[[xfer_plugin]]
-=== Xfer
-
-Xfer プラグインの機能:
-
-* ダイレクトチャット (サーバ不要の 2 ホスト間直接接続):
-  例えば IRC プラグイン経由の "DCC チャット"
-* ファイル転送、例えば IRC プラグイン経由の "DCC"
-
-[[xfer_commands]]
-==== コマンド
-
-include::includes/autogen_user_commands.ja.adoc[tag=xfer_commands]
-
-[[xfer_options]]
-==== オプション
-
-_xfer.conf_ ファイル内のセクション:
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| セクション | 操作コマンド        | 説明
-| look       | /set xfer.look.*    | 外観
-| color      | /set xfer.color.*   | 色
-| network    | /set xfer.network.* | ネットワークオプション
-| file       | /set xfer.file.*    | ファイルの送信/受信に関するオプション
-|===
-
-オプション:
-
-include::includes/autogen_user_options.ja.adoc[tag=xfer_options]
 
 [[support]]
 == サポート

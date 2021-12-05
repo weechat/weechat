@@ -293,7 +293,7 @@ Lista popularnych opcji:
   Kompilacja <<typing_notifications,wtyczki typing>>.
 
 | ENABLE_XFER | `ON`, `OFF` | ON |
-  Kompilacja <<xfer_plugin,wtyczki xfer>>.
+  Kompilacja <<xfer,wtyczki xfer>>.
 
 | ENABLE_TESTS | `ON`, `OFF` | OFF |
   Kompiluje testy.
@@ -3089,7 +3089,7 @@ protokół IRC.
 
 Jest multi-serwerowa i oferuje wszystkie wspierane komendy IRC włącznie z
 rozmowami DCC i transferami plików (poprzez wtyczkę xfer, zobacz
-<<xfer_plugin,Wtyczka xfer>>).
+<<xfer,Wtyczka xfer>>).
 
 [[irc_command_line_options]]
 === Opcje z linii poleceń
@@ -3781,6 +3781,38 @@ Sekcje w pliku _irc.conf_:
 Opcje:
 
 include::includes/autogen_user_options.pl.adoc[tag=irc_options]
+
+[[xfer]]
+== Xfer
+
+Wtyczka xfer zapewnia:
+
+* bezpośrednią rozmowę (pomiędzy dwoma hostami, bez serwera): na przykład
+  "DCC Chat" przez wtyczkę IRC
+* transfer plików, na przykład "DCC" przez wtyczkę IRC
+
+[[xfer_commands]]
+=== Komendy
+
+include::includes/autogen_user_commands.pl.adoc[tag=xfer_commands]
+
+[[xfer_options]]
+=== Opcje
+
+Sekcje w pliku _xfer.conf_:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Sekcja  | Komenda             | Opis
+| look    | /set xfer.look.*    | Wygląd.
+| color   | /set xfer.color.*   | Kolory.
+| network | /set xfer.network.* | Opcje sieci.
+| file    | /set xfer.file.*    | Opcje dla plików odbieranych/wysyłanych.
+|===
+
+Opcje:
+
+include::includes/autogen_user_options.pl.adoc[tag=xfer_options]
 
 // TRANSLATION MISSING
 [[typing_notifications]]
@@ -5142,38 +5174,6 @@ Sekcje w pliku _trigger.conf_:
 Opcje:
 
 include::includes/autogen_user_options.pl.adoc[tag=trigger_options]
-
-[[xfer_plugin]]
-=== Xfer
-
-Wtyczka xfer zapewnia:
-
-* bezpośrednią rozmowę (pomiędzy dwoma hostami, bez serwera): na przykład
-  "DCC Chat" przez wtyczkę IRC
-* transfer plików, na przykład "DCC" przez wtyczkę IRC
-
-[[xfer_commands]]
-==== Komendy
-
-include::includes/autogen_user_commands.pl.adoc[tag=xfer_commands]
-
-[[xfer_options]]
-==== Opcje
-
-Sekcje w pliku _xfer.conf_:
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Sekcja  | Komenda             | Opis
-| look    | /set xfer.look.*    | Wygląd.
-| color   | /set xfer.color.*   | Kolory.
-| network | /set xfer.network.* | Opcje sieci.
-| file    | /set xfer.file.*    | Opcje dla plików odbieranych/wysyłanych.
-|===
-
-Opcje:
-
-include::includes/autogen_user_options.pl.adoc[tag=xfer_options]
 
 [[support]]
 == Wsparcie

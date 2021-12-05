@@ -292,7 +292,7 @@ Liste des options couramment utilisées :
   Compiler <<typing_notifications,l'extension Typing>>.
 
 | ENABLE_XFER | `ON`, `OFF` | ON |
-  Compiler <<xfer_plugin,l'extension Xfer>>.
+  Compiler <<xfer,l'extension Xfer>>.
 
 | ENABLE_TESTS | `ON`, `OFF` | OFF |
   Compiler les tests.
@@ -3136,7 +3136,7 @@ protocole IRC.
 
 Elle est multi-serveurs, et offre toutes les commandes IRC supportées, y
 compris la discussion directe (DCC chat) et le transfert de fichier DCC
-(via l'extension xfer, voir <<xfer_plugin,extension Xfer>>).
+(via l'extension xfer, voir <<xfer,extension Xfer>>).
 
 [[irc_command_line_options]]
 === Options de ligne de commande
@@ -3838,6 +3838,38 @@ Sections dans le fichier _irc.conf_ :
 Options :
 
 include::includes/autogen_user_options.fr.adoc[tag=irc_options]
+
+[[xfer]]
+== Xfer
+
+L'extension Xfer permet :
+
+* la discussion directe (entre deux machines, sans serveur), par exemple le
+  "DCC Chat" via l'extension IRC
+* le transfert de fichiers, par exemple le "DCC" via l'extension IRC
+
+[[xfer_commands]]
+=== Commandes
+
+include::includes/autogen_user_commands.fr.adoc[tag=xfer_commands]
+
+[[xfer_options]]
+=== Options
+
+Sections dans le fichier _xfer.conf_ :
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section | Commande de contrôle | Description
+| look    | /set xfer.look.*     | Aspect/présentation.
+| color   | /set xfer.color.*    | Couleurs.
+| network | /set xfer.network.*  | Options réseau.
+| file    | /set xfer.file.*     | Options pour les fichiers envoyés/reçus.
+|===
+
+Options :
+
+include::includes/autogen_user_options.fr.adoc[tag=xfer_options]
 
 [[typing_notifications]]
 == Notifications de saisie
@@ -5251,38 +5283,6 @@ Sections dans le fichier _trigger.conf_ :
 Options :
 
 include::includes/autogen_user_options.fr.adoc[tag=trigger_options]
-
-[[xfer_plugin]]
-=== Xfer
-
-L'extension Xfer permet :
-
-* la discussion directe (entre deux machines, sans serveur), par exemple le
-  "DCC Chat" via l'extension IRC
-* le transfert de fichiers, par exemple le "DCC" via l'extension IRC
-
-[[xfer_commands]]
-==== Commandes
-
-include::includes/autogen_user_commands.fr.adoc[tag=xfer_commands]
-
-[[xfer_options]]
-==== Options
-
-Sections dans le fichier _xfer.conf_ :
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Section | Commande de contrôle | Description
-| look    | /set xfer.look.*     | Aspect/présentation.
-| color   | /set xfer.color.*    | Couleurs.
-| network | /set xfer.network.*  | Options réseau.
-| file    | /set xfer.file.*     | Options pour les fichiers envoyés/reçus.
-|===
-
-Options :
-
-include::includes/autogen_user_options.fr.adoc[tag=xfer_options]
 
 [[support]]
 == Support

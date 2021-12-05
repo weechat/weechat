@@ -287,7 +287,7 @@ List of commonly used options:
   Compile <<typing_notifications,Typing plugin>>.
 
 | ENABLE_XFER | `ON`, `OFF` | ON |
-  Compile <<xfer_plugin,Xfer plugin>>.
+  Compile <<xfer,Xfer plugin>>.
 
 | ENABLE_TESTS | `ON`, `OFF` | OFF |
   Compile tests.
@@ -3035,7 +3035,7 @@ include::includes/autogen_user_options.en.adoc[tag=weechat_options]
 The IRC plugin is designed to chat through IRC protocol with other people.
 
 It is multi-servers, and offers all supported IRC commands including DCC chat
-and file transfer (via xfer plugin, see <<xfer_plugin,Xfer plugin>>).
+and file transfer (via xfer plugin, see <<xfer,Xfer plugin>>).
 
 [[irc_command_line_options]]
 === Command line options
@@ -3720,6 +3720,38 @@ Sections in file _irc.conf_:
 Options:
 
 include::includes/autogen_user_options.en.adoc[tag=irc_options]
+
+[[xfer]]
+== Xfer
+
+Xfer plugin brings:
+
+* direct chat (between two hosts, without server): for example "DCC Chat" via
+  IRC plugin
+* file transfer, for example "DCC" via IRC plugin
+
+[[xfer_commands]]
+=== Commands
+
+include::includes/autogen_user_commands.en.adoc[tag=xfer_commands]
+
+[[xfer_options]]
+=== Options
+
+Sections in file _xfer.conf_:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section | Control command     | Description
+| look    | /set xfer.look.*    | Look and feel.
+| color   | /set xfer.color.*   | Colors.
+| network | /set xfer.network.* | Network options.
+| file    | /set xfer.file.*    | Options for files sent/received.
+|===
+
+Options:
+
+include::includes/autogen_user_options.en.adoc[tag=xfer_options]
 
 [[typing_notifications]]
 == Typing notifications
@@ -5074,38 +5106,6 @@ Sections in file _trigger.conf_:
 Options:
 
 include::includes/autogen_user_options.en.adoc[tag=trigger_options]
-
-[[xfer_plugin]]
-=== Xfer
-
-Xfer plugin brings:
-
-* direct chat (between two hosts, without server): for example "DCC Chat" via
-  IRC plugin
-* file transfer, for example "DCC" via IRC plugin
-
-[[xfer_commands]]
-==== Commands
-
-include::includes/autogen_user_commands.en.adoc[tag=xfer_commands]
-
-[[xfer_options]]
-==== Options
-
-Sections in file _xfer.conf_:
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Section | Control command     | Description
-| look    | /set xfer.look.*    | Look and feel.
-| color   | /set xfer.color.*   | Colors.
-| network | /set xfer.network.* | Network options.
-| file    | /set xfer.file.*    | Options for files sent/received.
-|===
-
-Options:
-
-include::includes/autogen_user_options.en.adoc[tag=xfer_options]
 
 [[support]]
 == Support

@@ -295,7 +295,7 @@ Liste von häufig verwendeten Optionen:
   kompiliert <<typing_notifications,Typing Erweiterung>>.
 
 | ENABLE_XFER | `ON`, `OFF` | ON |
-  kompiliert <<xfer_plugin,Xfer Erweiterung>>.
+  kompiliert <<xfer,Xfer Erweiterung>>.
 
 | ENABLE_TESTS | `ON`, `OFF` | OFF |
   kompiliert Testumgebung.
@@ -3125,7 +3125,7 @@ include::includes/autogen_user_options.de.adoc[tag=weechat_options]
 Die IRC Erweiterung ist konzipiert um mittels dem IRC Protokoll mit anderen Menschen zu chatten.
 
 Die Erweiterung ist Multi-Server fähig und verfügt über alle IRC Befehle, einschließlich DCC Chat
-und Datenübertragung (via xfer Erweiterung, siehe <<xfer_plugin,Xfer Erweiterung>>).
+und Datenübertragung (via xfer Erweiterung, siehe <<xfer,Xfer Erweiterung>>).
 
 [[irc_command_line_options]]
 === Kommandozeilen Befehle
@@ -3830,6 +3830,38 @@ Sektionen in Datei _irc.conf_:
 Optionen:
 
 include::includes/autogen_user_options.de.adoc[tag=irc_options]
+
+[[xfer]]
+== Xfer
+
+Mit der xfer Erweiterung kann man:
+
+* einen direkten Chat nutzen (zwischen zwei Hosts, ohne Server): zum Beispiel "DCC Chat"
+  mittels IRC Erweiterung
+* Datentransfer, zum Beispiel "DCC" mittels IRC Erweiterung
+
+[[xfer_commands]]
+=== Befehle
+
+include::includes/autogen_user_commands.de.adoc[tag=xfer_commands]
+
+[[xfer_options]]
+=== Optionen
+
+Sektionen in Datei _xfer.conf_:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Sektion | Steuerbefehl        | Beschreibung
+| look    | /set xfer.look.*    | Erscheinungsbild.
+| color   | /set xfer.color.*   | Farben.
+| network | /set xfer.network.* | Netzwerkoptionen.
+| file    | /set xfer.file.*    | Optionen zum Versenden und Empfangen von Dateien.
+|===
+
+Optionen:
+
+include::includes/autogen_user_options.de.adoc[tag=xfer_options]
 
 // TRANSLATION MISSING
 [[typing_notifications]]
@@ -5215,38 +5247,6 @@ Sektionen in Datei _trigger.conf_:
 Optionen:
 
 include::includes/autogen_user_options.de.adoc[tag=trigger_options]
-
-[[xfer_plugin]]
-=== Xfer
-
-Mit der xfer Erweiterung kann man:
-
-* einen direkten Chat nutzen (zwischen zwei Hosts, ohne Server): zum Beispiel "DCC Chat"
-  mittels IRC Erweiterung
-* Datentransfer, zum Beispiel "DCC" mittels IRC Erweiterung
-
-[[xfer_commands]]
-==== Befehle
-
-include::includes/autogen_user_commands.de.adoc[tag=xfer_commands]
-
-[[xfer_options]]
-==== Optionen
-
-Sektionen in Datei _xfer.conf_:
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Sektion | Steuerbefehl        | Beschreibung
-| look    | /set xfer.look.*    | Erscheinungsbild.
-| color   | /set xfer.color.*   | Farben.
-| network | /set xfer.network.* | Netzwerkoptionen.
-| file    | /set xfer.file.*    | Optionen zum Versenden und Empfangen von Dateien.
-|===
-
-Optionen:
-
-include::includes/autogen_user_options.de.adoc[tag=xfer_options]
 
 [[support]]
 == Unterstützung

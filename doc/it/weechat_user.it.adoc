@@ -326,7 +326,7 @@ List of commonly used options:
   Compile <<typing_notifications,Typing plugin>>.
 
 | ENABLE_XFER | `ON`, `OFF` | ON |
-  Compile <<xfer_plugin,Xfer plugin>>.
+  Compile <<xfer,Xfer plugin>>.
 
 | ENABLE_TESTS | `ON`, `OFF` | OFF |
   Compile tests.
@@ -3283,7 +3283,7 @@ include::includes/autogen_user_options.it.adoc[tag=weechat_options]
 Il plugin IRC è realizzato per chattare tramite protocollo IRC con altre persone.
 
 È multi-server, ed offre tutti i comandi IRC supportati inclusi la chat DCC ed il
-trasferimento file (tramite plugin xfer, consultare <<xfer_plugin,plugin Xfer>>).
+trasferimento file (tramite plugin xfer, consultare <<xfer,plugin Xfer>>).
 
 [[irc_command_line_options]]
 === Opzioni a riga di comando
@@ -4015,6 +4015,41 @@ Sections in file _irc.conf_:
 Options:
 
 include::includes/autogen_user_options.it.adoc[tag=irc_options]
+
+[[xfer]]
+== Xfer
+
+Il plugin Xfer fornisce:
+
+* chat diretta (tra due host, senza server): per esempio "DCC Chat"
+  tramite plugin IRC
+* trasferimento file, per esempio "DCC" tramite il plugin IRC
+
+[[xfer_commands]]
+=== Comandi
+
+include::includes/autogen_user_commands.it.adoc[tag=xfer_commands]
+
+[[xfer_options]]
+=== Opzioni
+
+// TRANSLATION MISSING
+Sections in file _xfer.conf_:
+
+// TRANSLATION MISSING
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section | Control command     | Description
+| look    | /set xfer.look.*    | Look and feel.
+| color   | /set xfer.color.*   | Colors.
+| network | /set xfer.network.* | Network options.
+| file    | /set xfer.file.*    | Options for files sent/received.
+|===
+
+// TRANSLATION MISSING
+Options:
+
+include::includes/autogen_user_options.it.adoc[tag=xfer_options]
 
 // TRANSLATION MISSING
 [[typing_notifications]]
@@ -5445,41 +5480,6 @@ Sections in file _trigger.conf_:
 Options:
 
 include::includes/autogen_user_options.it.adoc[tag=trigger_options]
-
-[[xfer_plugin]]
-=== Xfer
-
-Il plugin Xfer fornisce:
-
-* chat diretta (tra due host, senza server): per esempio "DCC Chat"
-  tramite plugin IRC
-* trasferimento file, per esempio "DCC" tramite il plugin IRC
-
-[[xfer_commands]]
-==== Comandi
-
-include::includes/autogen_user_commands.it.adoc[tag=xfer_commands]
-
-[[xfer_options]]
-==== Opzioni
-
-// TRANSLATION MISSING
-Sections in file _xfer.conf_:
-
-// TRANSLATION MISSING
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Section | Control command     | Description
-| look    | /set xfer.look.*    | Look and feel.
-| color   | /set xfer.color.*   | Colors.
-| network | /set xfer.network.* | Network options.
-| file    | /set xfer.file.*    | Options for files sent/received.
-|===
-
-// TRANSLATION MISSING
-Options:
-
-include::includes/autogen_user_options.it.adoc[tag=xfer_options]
 
 [[support]]
 == Supporto

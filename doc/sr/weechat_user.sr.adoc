@@ -271,7 +271,7 @@ $ make install
   Компајлира <<typing_notifications,Typing додатак>>.
 
 | ENABLE_XFER | `ON`, `OFF` | ON |
-  Компајлира <<xfer_plugin,Xfer додатак>>.
+  Компајлира <<xfer,Xfer додатак>>.
 
 | ENABLE_TESTS | `ON`, `OFF` | OFF |
   Компајлира тестове.
@@ -2859,7 +2859,7 @@ include::includes/autogen_user_options.sr.adoc[tag=weechat_options]
 
 IRC додатак је дизајниран за чет са другим људима преко IRC протокола.
 
-Подржава више сервера и нуди све подржане IRC команде, укључујући DCC чет и пренос фајлова (преко xfer додатка, погледајте <<xfer_plugin,Xfer додатак>>).
+Подржава више сервера и нуди све подржане IRC команде, укључујући DCC чет и пренос фајлова (преко xfer додатка, погледајте <<xfer,Xfer додатак>>).
 
 [[irc_command_line_options]]
 === Опције командне линије
@@ -3513,6 +3513,37 @@ include::includes/autogen_user_commands.sr.adoc[tag=irc_commands]
 Опције:
 
 include::includes/autogen_user_options.sr.adoc[tag=irc_options]
+
+[[xfer]]
+== Xfer
+
+Xfer додатак вам омогућава:
+
+* директни разговор (између два хоста, без сервера): на пример „DCC Chat” преко IRC додатка
+* пренос фајлова, на пример „DCC” преко IRC додатка
+
+[[xfer_commands]]
+=== Команде
+
+include::includes/autogen_user_commands.sr.adoc[tag=xfer_commands]
+
+[[xfer_options]]
+=== Опције
+
+Одељци у фајлу _xfer.conf_:
+
+[width="100%", cols="3m,6m,16", options="header"]
+|===
+| Одељак  | Команда за контролу | Опис
+| look    | /set xfer.look.*    | Изглед и осећај.
+| color   | /set xfer.color.*   | Боје.
+| network | /set xfer.network.* | Мрежне опције.
+| file    | /set xfer.file.*    | Опције за послате/примљене фајлове.
+|===
+
+Опције:
+
+include::includes/autogen_user_options.sr.adoc[tag=xfer_options]
 
 // TRANSLATION MISSING
 [[typing_notifications]]
@@ -4778,37 +4809,6 @@ include::includes/autogen_user_commands.sr.adoc[tag=trigger_commands]
 Опције:
 
 include::includes/autogen_user_options.sr.adoc[tag=trigger_options]
-
-[[xfer_plugin]]
-=== Xfer
-
-Xfer додатак вам омогућава:
-
-* директни разговор (између два хоста, без сервера): на пример „DCC Chat” преко IRC додатка
-* пренос фајлова, на пример „DCC” преко IRC додатка
-
-[[xfer_commands]]
-==== Команде
-
-include::includes/autogen_user_commands.sr.adoc[tag=xfer_commands]
-
-[[xfer_options]]
-==== Опције
-
-Одељци у фајлу _xfer.conf_:
-
-[width="100%", cols="3m,6m,16", options="header"]
-|===
-| Одељак  | Команда за контролу | Опис
-| look    | /set xfer.look.*    | Изглед и осећај.
-| color   | /set xfer.color.*   | Боје.
-| network | /set xfer.network.* | Мрежне опције.
-| file    | /set xfer.file.*    | Опције за послате/примљене фајлове.
-|===
-
-Опције:
-
-include::includes/autogen_user_options.sr.adoc[tag=xfer_options]
 
 [[support]]
 == Подршка
