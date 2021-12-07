@@ -113,6 +113,11 @@ relay_weechat_unhook_signals (struct t_relay_client *client)
         weechat_unhook (RELAY_WEECHAT_DATA(client, hook_signal_upgrade));
         RELAY_WEECHAT_DATA(client, hook_signal_upgrade) = NULL;
     }
+    if (RELAY_WEECHAT_DATA(client, hook_signal_hotlist))
+    {
+        weechat_unhook (RELAY_WEECHAT_DATA(client, hook_signal_hotlist));
+        RELAY_WEECHAT_DATA(client, hook_signal_hotlist) = NULL;
+    }
 }
 
 /*
