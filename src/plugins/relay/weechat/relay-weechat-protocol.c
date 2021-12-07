@@ -854,11 +854,13 @@ relay_weechat_protocol_signal_hotlist_cb (const void *pointer, void *data,
                                           void *signal_data)
 {
     struct t_relay_client *ptr_client;
-    struct t_hdata *ptr_hdata_buffer;
+    struct t_hdata *ptr_hdata_buffer, *ptr_hdata_plugin;
     struct t_gui_buffer *ptr_buffer;
     struct t_gui_hotlist *ptr_hotlist;
     char cmd_hdata[64], str_signal[128];
     struct t_relay_weechat_msg *msg;
+    struct t_weechat_plugin *ptr_plugin;
+    char *str_plugin, *str_buffer_name;
 
     /* make C compiler happy */
     (void) data;
@@ -875,9 +877,26 @@ relay_weechat_protocol_signal_hotlist_cb (const void *pointer, void *data,
         ptr_buffer = (struct t_gui_buffer *)signal_data;
         if (!ptr_buffer)
             return WEECHAT_RC_OK;
-
         ptr_hdata_buffer = weechat_hdata_get ("buffer");
         if (!ptr_hdata_buffer)
+            return WEECHAT_RC_OK;
+
+        /* get name of buffer */
+        str_buffer_name = weechat_hdata_pointer (ptr_hdata_buffer, ptr_buffer, "name");
+
+        /* get name of plugin */
+        ptr_plugin = weechat_hdata_pointer (ptr_hdata_buffer, ptr_buffer, "plugin");
+        if (!ptr_plugin)
+            return WEECHAT_RC_OK;
+        ptr_hdata_plugin = weechat_hdata_get ("plugin");
+        if (!ptr_hdata_plugin)
+            return WEECHAT_RC_OK;
+        str_plugin = weechat_hdata_pointer (ptr_hdata_plugin, ptr_plugin, "name");
+
+        /* ignore hotlist changes from relay raw buffer (this would induce loops) */
+        if (str_plugin && str_buffer_name &&
+                strcmp (str_plugin, "relay") == 0 &&
+                strcmp (str_buffer_name, "relay_raw") == 0)
             return WEECHAT_RC_OK;
 
         ptr_hotlist = weechat_hdata_pointer (ptr_hdata_buffer, ptr_buffer, "hotlist");
