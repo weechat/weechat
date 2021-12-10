@@ -400,9 +400,8 @@ Falls WeeChat abgestürzt sein sollte und Sie diesen Fehler melden möchten:
 * aktivieren Sie _core_ Dateien auf Ihrem System
 * installieren Sie gdb
 
-// TRANSLATION MISSING
 [[debug_build]]
-==== Debug build
+==== Debug-Build
 
 Bei der Kompilierung mit CMake muss folgende Option gesetzt werden:
 
@@ -622,12 +621,10 @@ die entsprechenden Dateien im Verzeichnis _~/.config/weechat_ erstellt.
 
 include::includes/cmdline_options.de.adoc[tag=standard]
 
-// TRANSLATION MISSING
-Some extra options are available for debug purposes only:
+Einige zusätzliche Optionen sollten nur für Debug-Zwecke genutzt werden:
 
-// TRANSLATION MISSING
 [WARNING]
-Do *NOT* use any of these options in production!
+*KEINE* dieser Optionen sollte für ein Produktivsystem genutzt werden!
 
 include::includes/cmdline_options.de.adoc[tag=debug]
 
@@ -644,9 +641,8 @@ Einige Umgebungsvariablen werden von WeeChat genutzt, sofern sie definiert wurde
 | WEECHAT_EXTRA_LIBDIR | Ein zusätzliches Verzeichnis um Erweiterungen zu installieren (vom "plugins" Verzeichnis in dieses Verzeichnis).
 |===
 
-// TRANSLATION MISSING
 [[colors_support]]
-=== Colors support
+=== Farbunterstützung
 
 WeeChat kann bis zu 32767 Farbpaarungen nutzen um einen Text in Bars oder im
 Chatbereich darzustellen (der Terminal muss natürlich 256 Farben unterstützten).
@@ -799,12 +795,11 @@ bevor man diese ggf. gesichert hat <<command_weechat_save,/save>>). +
 Man sollte immer den <<command_weechat_set,/set>> Befehl nutzen, da der Befehl die
 Eingabe prüft und Änderungen sofort wirksam werden.
 
-// TRANSLATION MISSING
 [[interface]]
-== Interface
+== Schnittstelle
 
 [[screen_layout]]
-=== Screen layout
+=== Bildschirmgestaltung
 
 Beispiel des WeeChat-Terminals:
 
@@ -1437,12 +1432,11 @@ Standardmäßig interpretieren WeeChat und seine Standard-Erweitertungen diese V
 [NOTE]
 Externe Erweitertungen und Skripte können andere lokale Variablen definieren und verwenden.
 
-// TRANSLATION MISSING
 [[buflist]]
-=== List of buffers
+=== Liste der Buffer
 
-Die Buflist-Erweiterung dient dazu eine Liste der geöffneten Buffer in einer Bar-Item mit Namen
-"buflist" darzustellen (zwei weiere Bar-Items "buflist2" und "buflist3" sind zusätzlich verfügbar). +
+Die Buflist-Erweiterung dient dazu eine Liste der geöffneten Buffer in einer Bar-Item, mit Namen
+"buflist", darzustellen (zwei weiere Bar-Items "buflist2" und "buflist3" sind zusätzlich verfügbar). +
 Eine Standardbar, "buflist", wird beim Programmstart automatisch mit folgendem Inhalt erstellt.
 
 [[buflist_commands]]
@@ -1472,8 +1466,7 @@ include::includes/autogen_user_options.de.adoc[tag=buflist_options]
 Die fset Erweiterung stellt eine Liste aller Optionen in einem Buffer dar und erleichtert
 die Konfiguration von WeeChat und Erweiterungen.
 
-// TRANSLATION MISSING
-Example of fset buffer displaying options starting with `weechat.look` :
+Beispiel des fset-Buffer, der Optionen anzeigt, die mit `weechat.look` beginnen:
 
 [subs="quotes"]
 ....
@@ -1526,21 +1519,17 @@ Optionen:
 
 include::includes/autogen_user_options.de.adoc[tag=fset_options]
 
-// TRANSLATION MISSING
 [[key_bindings]]
-== Key bindings
+== Tastenbelegungen
 
-// TRANSLATION MISSING
-WeeChat provides a lot of default key bindings, listed in the following chapters. +
-They can be changed and new ones can be added with the <<command_weechat_key,/key>> command.
+WeeChat bietet viele Standardtastenzuordnungen, die in den folgenden Kapiteln aufgeführt sind. +
+Sie können mit dem Befehl <<command_weechat_key,/key>> geändert und neue hinzugefügt werden.
 
-// TRANSLATION MISSING
 [[key_bindings_cmdline]]
-=== Command line
+=== Kommandozeile
 
-// TRANSLATION MISSING
 [[key_bindings_cmdline_cursor_movement]]
-==== Cursor movement
+==== Cursorbewegung
 
 [width="100%",cols="^.^3,.^8,.^5",options="header"]
 |===
@@ -1559,9 +1548,8 @@ They can be changed and new ones can be added with the <<command_weechat_key,/ke
   kbd:[Ctrl+e]   | springt ans Ende der Befehlszeile. | `+/input move_end_of_line+`
 |===
 
-// TRANSLATION MISSING
 [[key_bindings_cmdline_editing]]
-==== Editing
+==== Bearbeitung
 
 [width="100%",cols="^.^3,.^8,.^5",options="header"]
 |===
@@ -1588,9 +1576,8 @@ They can be changed and new ones can be added with the <<command_weechat_key,/ke
 | kbd:[Alt+r]       | komplette Eingabezeile lösche.n| `+/input delete_line+`
 |===
 
-// TRANSLATION MISSING
 [[key_bindings_cmdline_color_codes]]
-==== Color codes
+==== Farbkodierung
 
 [width="100%",cols="^.^3,.^8,.^5",options="header"]
 |===
@@ -1603,9 +1590,8 @@ They can be changed and new ones can be added with the <<command_weechat_key,/ke
 | kbd:[Ctrl+c], kbd:[_] | fügt Steuerzeichen für unterstrichenen Text ein. | `+/input insert \x1F+`
 |===
 
-// TRANSLATION MISSING
 [[key_bindings_cmdline_history]]
-==== Command history
+==== Befehlsverlauf
 
 [width="100%",cols="^.^3,.^8,.^5",options="header"]
 |===
@@ -1616,9 +1602,8 @@ They can be changed and new ones can be added with the <<command_weechat_key,/ke
 | kbd:[Ctrl+↓] | ruft nächsten Befehl/Nachricht aus dem globalen Verlaufsspeicher auf (für alle Buffer). | `+/input history_global_next+`
 |===
 
-// TRANSLATION MISSING
 [[key_bindings_buffers]]
-=== Buffers
+=== Buffer
 
 [width="100%",cols="^.^3,.^8,.^5",options="header"]
 |===
@@ -1655,9 +1640,8 @@ They can be changed and new ones can be added with the <<command_weechat_key,/ke
 | kbd:[Alt+/]                    | wechselt zum jeweils zuletzt angezeigten Buffern. | `+/input jump_last_buffer_displayed+`
 |===
 
-// TRANSLATION MISSING
 [[key_bindings_windows]]
-=== Windows
+=== Fenster
 
 [width="100%",cols="^.^3,.^8,.^5",options="header"]
 |===
@@ -1675,7 +1659,6 @@ They can be changed and new ones can be added with the <<command_weechat_key,/ke
 | kbd:[Alt+z]              | Zoom für aktuelles Fenster (nochmals kbd:[Alt+z]: stellt die vorherigen Einstellungen wieder her). | `+/window zoom+`
 |===
 
-// TRANSLATION MISSING
 [[key_bindings_bars]]
 === Bars
 
@@ -1700,7 +1683,6 @@ They can be changed and new ones can be added with the <<command_weechat_key,/ke
 | kbd:[Alt+Shift+N] | nicklist bar umschalten. | `+/bar toggle nicklist+`
 |===
 
-// TRANSLATION MISSING
 [[key_bindings_hotlist]]
 === Hotlist
 
@@ -1714,9 +1696,8 @@ They can be changed and new ones can be added with the <<command_weechat_key,/ke
 | kbd:[Alt+h], kbd:[Alt+Shift+R] | stelle die neueste Hotlist wieder her, die in allen Buffern entfernt wurde. | `+/input hotlist_restore_all+`
 |===
 
-// TRANSLATION MISSING
 [[key_bindings_toggle_keys]]
-=== Toggle keys
+=== Tasten zum Umschalten von Funktionen
 
 [width="100%",cols="^.^3,.^8,.^5",options="header"]
 |===
@@ -1727,9 +1708,8 @@ They can be changed and new ones can be added with the <<command_weechat_key,/ke
 | kbd:[Alt+-] | schaltet, für den aktuellen Buffer, Filterfunktion an/aus. | `+/filter toggle @+`
 |===
 
-// TRANSLATION MISSING
 [[key_bindings_search_context]]
-=== Search context
+=== Suchkontext
 
 Diese Tasten werden im Kontext "search" verwendet (wenn kbd:[Ctrl+r] genutzt wird um
 in einem Buffer nach einem Text zu suchen).
@@ -1748,9 +1728,8 @@ in einem Buffer nach einem Text zu suchen).
 | kbd:[Ctrl+q]   | beendet Suche und blättert zum Ende des Buffers. | `+/input search_stop+`
 |===
 
-// TRANSLATION MISSING
 [[key_bindings_cursor_context]]
-=== Cursor context
+=== Cursor-Kontext
 
 Diese Tasten werden im Kontext "cursor" verwendet (Cursor kann frei auf dem Bildschirm bewegt werden)
 
@@ -1778,13 +1757,11 @@ Diese Tasten werden im Kontext "cursor" verwendet (Cursor kann frei auf dem Bild
   kbd:[Ctrl+m]   | -             | beendet den Cursor-Modus. | `+/cursor stop+`
 |===
 
-// TRANSLATION MISSING
 [[key_bindings_mouse]]
-=== Mouse
+=== Maus
 
-// TRANSLATION MISSING
-These mouse actions are possible only if mouse is enabled with key kbd:[Alt+m]
-(command: `+/mouse toggle+`).
+Diese Mausaktionen sind nur möglich, wenn die Maus mit der Taste kbd:[Alt+m] aktiviert
+wurde (Befehl: `+/mouse toggle+`).
 
 [width="100%",cols="^.^3,^.^3,^.^3,.^8,.^8",options="header"]
 |===
@@ -1833,9 +1810,8 @@ These mouse actions are possible only if mouse is enabled with key kbd:[Alt+m]
 [NOTE]
 ^(1)^ kbd:[▲] und kbd:[▼] sind Symbole für Mausrad hoch/runter.
 
-// TRANSLATION MISSING
 [[key_bindings_fset_buffer]]
-=== Fset buffer
+=== Fset Buffer
 
 Diese Tasten und Aktionen werden im fset-Buffer verwendet (siehe <<fset,Fset Erweiterung>>).
 
@@ -1880,11 +1856,9 @@ Diese Tasten und Aktionen werden im fset-Buffer verwendet (siehe <<fset,Fset Erw
 [NOTE]
 ^(1)^ Die Aktion muss als Eingabe in die Befehlszeile eingegeben werden, gefolgt von kbd:[Enter].
 
-// TRANSLATION MISSING
 [[key_bindings_script_buffer]]
-=== Script buffer
+=== Skriptbuffer
 
-// TRANSLATION MISSING
 Diese Tasten und Aktionen werden im fset-Buffer verwendet (siehe <<script_manager,script manager>>).
 
 [width="100%",cols="^.^3,^.^2,.^8,.^5",options="header"]
@@ -1906,13 +1880,11 @@ Diese Tasten und Aktionen werden im fset-Buffer verwendet (siehe <<script_manage
 [NOTE]
 ^(1)^ Die Aktion muss als Eingabe in die Befehlszeile eingegeben werden, gefolgt von kbd:[Enter].
 
-// TRANSLATION MISSING
 [[configuration]]
-== Configuration
+== Konfiguration
 
-// TRANSLATION MISSING
 [[colors]]
-=== Colors
+=== Farben
 
 [[colors_basic]]
 ==== Basisfarben
@@ -2285,16 +2257,15 @@ in der Konfigurationsdatei gesichert. + Um diese Einstellung persistent zu mache
 das Skript _buffer_autoset.py_: Um das Skript zu installieren `+/script install buffer_autoset.py+`
 und um eine Hilfe zu erhalten wie man es nutzt: `+/help buffer_autoset+`.
 
-// TRANSLATION MISSING
 [[buffer_logging]]
-=== Buffer logging
+=== Bufferprotokollierung
 
 Die Logger Erweiterung erlaubt es den Inhalt von Buffern in Dateien zu sichern.
 Dabei kann man über Optionen Einfluss darauf nehmen was gesichert und wie etwas
 gesichert werden soll.
 
 [[logger_log_levels]]
-==== Log Levels
+==== Log-Level
 
 Die Protokollierung wird durch einen sogenannten Level für jeden Buffer sichergestellt.
 Der Standardlevel ist dabei 9 (damit werden alle Nachrichten die im Buffer angezeigt
@@ -2497,7 +2468,6 @@ link:weechat_faq.de.html#mouse[WeeChat FAQ / Mausunterstützung].
 [[mouse_bind_events]]
 ==== Befehle einem Maus-Ereignis zuweisen
 
-// TRANSLATION MISSING
 Es gibt eine Anzahl von Maus-Ereignissen, die standardmäßig durch WeeChat definiert
 sind (siehe <<key_bindings_mouse,mouse actions>>).
 
@@ -2576,9 +2546,8 @@ Den Namen eines Mausereignisses kann man mittels des Befehls `+/input grab_mouse
 Man führt den Befehl in der Eingabezeile aus und startet das Ereignis. Als Ergebnis erhält
 man in der Eingabezeile den Namen des ausgeführten Mausereignisses.
 
-// TRANSLATION MISSING
 [[spell_checking]]
-=== Spell checking
+=== Rechtschreibprüfung
 
 Mit der Spell Erweiterung findet eine Rechtschreibprüfung Einzug in WeeChat.
 Dabei ist es möglich mehrere Wörterbücher für einen Buffer zu nutzen.
@@ -3026,9 +2995,8 @@ Um z.B. das oben eingestellte _libera_ Passwort für eine
 /set irc.server.libera.sasl_password "${sec.data.libera}"
 ----
 
-// TRANSLATION MISSING
 [[command_aliases]]
-=== Command aliases
+=== Kurzbefehle
 
 Die Alias-Erweiterung erlaubt es, für Befehle, sogenannte Kurzbefehle (einen Alias) zu erstellen.
 
@@ -3864,9 +3832,8 @@ Optionen:
 
 include::includes/autogen_user_options.de.adoc[tag=xfer_options]
 
-// TRANSLATION MISSING
 [[typing_notifications]]
-== Typing notifications
+== Schreibbenachrichtigung
 
 Die typing-Erweitertung wird verwendet, um andere Benutzer darüber zu informieren,
 dass Sie Nachrichten schreiben, und zeigt eine Liste der Benutzer an, die derzeit
@@ -4094,8 +4061,7 @@ folgenden Befehlen einrichten:
 Die Relay-Erweiterung kann Daten, mittels dem WeeChat Protokoll, an eine
 externe Oberfläche senden.
 
-// TRANSLATION MISSING
-You can connect with a remote interface, see: https://weechat.org/about/interfaces
+Sie können eine Verbindung mit einer Remote-Schnittstelle herstellen, siehe: https://weechat.org/about/interfaces
 
 [IMPORTANT]
 Eine WeeChat Instanz kann sich NICHT mit einer anderen WeeChat Instanz über
@@ -4180,9 +4146,8 @@ Optionen:
 
 include::includes/autogen_user_options.de.adoc[tag=relay_options]
 
-// TRANSLATION MISSING
 [[external_commands]]
-== External commands
+== externe Befehle
 
 Der `/exec` Befehl erlaubt es aus WeeChat heraus einen oder mehrere externe
 Befehle auszuführen und eine Ausgabe im lokalen Buffer darzustellen oder in
@@ -4209,9 +4174,8 @@ Options:
 
 include::includes/autogen_user_options.de.adoc[tag=exec_options]
 
-// TRANSLATION MISSING
 [[fifo_pipe]]
-== FIFO pipe
+== FIFO Pipe
 
 Sie können WeeChat fern steuern indem Sie Befehle oder einen Text an die FIFO Pipe
 schicken (dazu muss die Option "fifo.file.enabled" aktiviert sein (standardmäßig
@@ -4980,12 +4944,11 @@ Optionen:
 
 include::includes/autogen_user_options.de.adoc[tag=trigger_options]
 
-// TRANSLATION MISSING
 [[extending_weechat]]
-== Extending WeeChat
+== WeeChat erweitern
 
-// TRANSLATION MISSING
-WeeChat has a modular design and can be extended with plugins and scripts.
+WeeChat ist modular aufgebaut und kann durch Erweiterungen und Skripten in der
+Funktionalität erweitert werden.
 
 Es ist wichtig zwischen _Erweiterung_ und _Skript_ zu unterscheiden. Eine Erweiterung
 ist eine Binärdatei die kompiliert wurde und mit dem Befehl `/plugin` geladen wird.
@@ -5066,26 +5029,23 @@ Mit jeder dieser Erweiterungen können Skripten geladen, ausgeführt und entfern
 Sollten wir Ihr Interesse geweckt haben selber Skripten für WeeChat zu programmieren, dann lesen Sie
 bitte die link:weechat_scripting.de.html[WeeChat scripting Guide].
 
-// TRANSLATION MISSING
 [[script_manager]]
-==== Script manager
+==== Skriptmanager
 
-// TRANSLATION MISSING
-The script manager (command <<command_script_script,/script>>) is used to
-load/unload scripts of any language, and install/remove scripts of WeeChat
-scripts repository, which are visible at this URL: https://weechat.org/scripts
+Der Skriptmanager (Befehl <<command_script_script,/script>>) wird verwendet, um
+Skripte zu laden/stoppen. Dies ist unabhängig von der Skriptsprache. Ausserdem
+können Skripte installiert und wieder entfernt werden, dazu wird das Skript-Repository
+verwendet, welches man unter folgender URL findet: https://weechat.org/scripts
 
-// TRANSLATION MISSING
-For privacy considerations, the download of scripts is disabled by default. +
-To enable it, type this command:
+Aus Datenschutzgründen ist das Herunterladen von Skripten standardmäßig deaktiviert. +
+Um es zu aktivieren, geben Sie diesen Befehl ein:
 
 ----
 /set script.scripts.download_enabled on
 ----
 
-// TRANSLATION MISSING
-Then you can download the list of scripts and display them in a new buffer
-with the <<command_script_script,/script>> command:
+Dann können Sie die Liste der Skripte herunterladen und in einem separaten Buffer,
+mit dem Befehl <<command_script_script,/script>>, anzeigen lassen:
 
 [subs="quotes,attributes"]
 :x: *
@@ -5145,9 +5105,8 @@ Optionen:
 
 include::includes/autogen_user_options.de.adoc[tag=script_options]
 
-// TRANSLATION MISSING
 [[scripting_plugins]]
-==== Scripting plugins
+==== Skripterweiterung
 
 [[python_commands]]
 ===== Python Befehle
