@@ -1205,7 +1205,7 @@ work on it.
 The translations missing in files are indicated by this string:
 
 ----
-// TRANSLATION MISSING
+// TRANSLATION MISSING
 ----
 
 You must translate whole file except links and special keywords for notes,

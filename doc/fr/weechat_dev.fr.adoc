@@ -1228,7 +1228,7 @@ _doc/en/_), puis travaillez dessus.
 Les traductions manquantes dans les fichiers sont indiquées par cette chaîne :
 
 ----
-// TRANSLATION MISSING
+// TRANSLATION MISSING
 ----
 
 Vous devez traduire tout le fichier sauf les liens et les mots-clés spéciaux
