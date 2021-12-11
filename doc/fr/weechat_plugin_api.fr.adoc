@@ -17519,7 +17519,6 @@ Paramètres :
 * _move_ : nombre de saut(s) à exécuter après une recherche infructueuse (entier
   négatif ou positif, différent de 0)
 
-// TRANSLATION MISSING
 [IMPORTANT]
 Vous devez vous assurer que l'expression _search_ est sûre et ne contient
 aucune donnée utilisateur. De telles données non sûres doivent être données

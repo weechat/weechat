@@ -627,7 +627,6 @@ include::includes/cmdline_options.fr.adoc[tag=standard]
 
 Quelques options supplémentaires sont disponibles pour du debug seulement :
 
-// TRANSLATION MISSING
 [WARNING]
 N'utilisez *AUCUNE* de ces options in production !
 
@@ -5176,7 +5175,6 @@ Options :
 
 include::includes/autogen_user_options.fr.adoc[tag=script_options]
 
-// TRANSLATION MISSING
 [[scripting_plugins]]
 ==== Extensions pour les scripts
 
