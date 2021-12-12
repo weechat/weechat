@@ -8,17 +8,15 @@
 *--daemon*::
     Uruchamia WeeChat w tle jako demona (działa tylko z komendą *weechat-headless*).
 
-// TRANSLATION MISSING
 *--stdout*::
-    Display log messages on standard output instead of writing them in log file
-    (works only with the command *weechat-headless*, not compatible with option
-    "--daemon").
+    Wyświetla informacje z logów na standardowe wyjście zamiast zapisywać je do
+    pliku z logami (działa tylko z opcją *weechat-headless*, nie kompatybilne z
+    opcją "--daemon").
 
-// TRANSLATION MISSING
 *-d*, *--dir* _<ścieżka>_::
-    Force a single directory for all WeeChat files (directory is created if not found).
-    Four directories can be given, separated by colons (in this order: config,
-    data, cache, runtime).
+    Wymusza użycie wskazanego katalogu na wszyskie pliki WeeChat (katalog zostanie
+    utworzony jeśli nie istnieje). Można podać cztery katalogi oddzielając
+    je dwukropkami (w kolejności: config, data, cache, runtime).
     Jeśli ta opcja nie zostanie podada, użyta zostanie zawartość zmiennej
     WEECHAT_HOME (jeśli została ustawiona).
 
