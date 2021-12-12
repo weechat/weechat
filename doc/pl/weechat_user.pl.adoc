@@ -395,13 +395,12 @@ Jeśli doświadczyłeś awarii, lub chcesz zgłosić przyszłą awarię WeeChat,
 
 * skompilować WeeChat z:
 ** informacjami dla debuggera (albo zainstalować stosowną paczkę w systemie)
-** weryfikacją adresów (opcjonalnie)
+** weryfikacją adresów w pamięci (opcjonalnie)
 * włączyć obsługę plików _core_ w systemie
 * zainstalować gdb
 
-// TRANSLATION MISSING
 [[debug_build]]
-==== Debug build
+==== Kompilacja w trybie debug
 
 Jeśli kompilujesz z użyciem CMake:
 
@@ -409,9 +408,8 @@ Jeśli kompilujesz z użyciem CMake:
 $ cmake .. -DCMAKE_BUILD_TYPE=Debug
 ----
 
-// TRANSLATION MISSING
 [[address_sanitizer]]
-==== Address sanitizer
+==== Weryfikacja adresów w pamięci
 
 Możesz dodatowo włączyć weryfikację adresów, co spowoduje natychmiastową awarię
 WeeChat w przypadku wystąpienia problemu:
@@ -548,10 +546,9 @@ Można to zrobić podczas działania WeeChat.
 WeeChat może zostać ponownie uruchomiony z nowego pliku binarnego bez potrzeby
 jego wyłączania za pomocą komendy <<command_weechat_upgrade,/upgrade>>:
 zawartości buforów i połączenia nie SSL zostają zachowane. +
-// TRANSLATION MISSING
-The SSL connections are lost during upgrade and are restored automatically
-after the upgrade (reload of SSL sessions is currently not possible
-with GnuTLS).
+Połączenia SSL są przerywane podczas aktualizacji i są automatycznie
+przywracane po jej zakończeniu (przeładowanie sesji SSL jest obecnie
+niemożliwe z użyciem GnuTLS).
 
 Komenda ta może zostać użyta również w momencie restartu maszyny, na przykład
 w celu aktualizacji kernela albo przeniesienia WeeChat na nową maszynę:
@@ -621,12 +618,10 @@ w  _~/.config/weechat_ z domyślnymi opcjami i wartościami
 
 include::includes/cmdline_options.pl.adoc[tag=standard]
 
-// TRANSLATION MISSING
-Some extra options are available for debug purposes only:
+Kilka dodatkowych opcji jest dostępne tylko do celu debugowania:
 
-// TRANSLATION MISSING
 [WARNING]
-Do *NOT* use any of these options in production!
+*NIE* używaj żadnej z nich podczas codziennej pracy!
 
 include::includes/cmdline_options.pl.adoc[tag=debug]
 
@@ -643,9 +638,8 @@ Niektóre zmienne śwodowiskowe są używane przez WeeChat o ile zostały zdefin
 | WEECHAT_EXTRA_LIBDIR | Dodatkowy katalog do ładowania wtyczek (z katalogu "plugins" znajdującego się pod tą ścieżką).
 |===
 
-// TRANSLATION MISSING
 [[colors_support]]
-=== Colors support
+=== Wsparcie kolorów
 
 WeeChat może użyć do 32767 par kolorów do wyświetlania tekstu w paskach i obszarze
 rozmów (twój terminal musi wspierać do 256 par kolorów, aby użyć ich w WeeChat).
@@ -796,9 +790,8 @@ oraz po wprowadzeniu ręcznie zmian należy użyć komendy <<command_weechat_rel
 Możesz użyć komendy <<command_weechat_set,/set>>, która sprawdza ustawianą wartość
 i od razu wprowadza zmiany.
 
-// TRANSLATION MISSING
 [[interface]]
-== Interface
+== Interfejs
 
 [[screen_layout]]
 === Układ ekranu
@@ -1433,9 +1426,8 @@ WeeChat i jego wtyczki domyślnie tworzą następujące zmienne:
 [NOTE]
 External plugins and scripts can define and use other local variables.
 
-// TRANSLATION MISSING
 [[buflist]]
-=== List of buffers
+=== Lista buforów
 
 Wtyczka buflist wyświetla listę buforów w elemencie paska nazwanym "buflist"
 (dostępne są również dwa dodatkowe elementy "buflist2" oraz "buflist3"). +
@@ -1468,8 +1460,7 @@ include::includes/autogen_user_options.pl.adoc[tag=buflist_options]
 Wtyczka Fast Set wyświetla listę opcji w buforze i pomaga w ustawianiu opcji
 WeeChat i wtyczek.
 
-// TRANSLATION MISSING
-Example of fset buffer displaying options starting with `weechat.look` :
+Przykład bufora fset wyświetlający opcje zaczynające się od `weechat.look` :
 
 [subs="quotes"]
 ....
@@ -1522,20 +1513,17 @@ Opcje:
 
 include::includes/autogen_user_options.pl.adoc[tag=fset_options]
 
-// TRANSLATION MISSING
 [[key_bindings]]
-== Key bindings
+== Skróty klawiszowe
 
-// TRANSLATION MISSING
-WeeChat provides a lot of default key bindings, listed in the following chapters. +
-They can be changed and new ones can be added with the <<command_weechat_key,/key>> command.
+WeeChat posiada wiele domyślnych skrótów opisanych w poniższych rozdziałach. +
+Można je zmienić oraz dodać nowe za pomocą komendy <<command_weechat_key,/key>>.
 
 [[key_bindings_command_line]]
 === Skróty dla linii poleceń
 
-// TRANSLATION MISSING
 [[key_bindings_cmdline_cursor_movement]]
-==== Cursor movement
+==== Poruszanie kursora
 
 [width="100%",cols="^.^3,.^8,.^5",options="header"]
 |===
@@ -1554,9 +1542,8 @@ They can be changed and new ones can be added with the <<command_weechat_key,/ke
   kbd:[Ctrl+e]   | Idź na koniec linii poleceń. | `+/input move_end_of_line+`
 |===
 
-// TRANSLATION MISSING
 [[key_bindings_cmdline_editing]]
-==== Editing
+==== Edycja
 
 [width="100%",cols="^.^3,.^8,.^5",options="header"]
 |===
@@ -1583,9 +1570,8 @@ They can be changed and new ones can be added with the <<command_weechat_key,/ke
 | kbd:[Alt+r]       | Usuń całą zawartość linii poleceń. | `+/input delete_line+`
 |===
 
-// TRANSLATION MISSING
 [[key_bindings_cmdline_color_codes]]
-==== Color codes
+==== Kolory
 
 [width="100%",cols="^.^3,.^8,.^5",options="header"]
 |===
@@ -1598,9 +1584,8 @@ They can be changed and new ones can be added with the <<command_weechat_key,/ke
 | kbd:[Ctrl+c], kbd:[_] | Wstaw kod dla podkreślonego tekstu. | `+/input insert \x1F+`
 |===
 
-// TRANSLATION MISSING
 [[key_bindings_cmdline_history]]
-==== Command history
+==== Historia poleceń
 
 [width="100%",cols="^.^3,.^8,.^5",options="header"]
 |===
@@ -1611,9 +1596,8 @@ They can be changed and new ones can be added with the <<command_weechat_key,/ke
 | kbd:[Ctrl+↓] | Pokaż następną komendę/wiadomość w historii globalnej (wspólnej dla wszystkich buforów). | `+/input history_global_next+`
 |===
 
-// TRANSLATION MISSING
 [[key_bindings_buffers]]
-=== Buffers
+=== Bufory
 
 [width="100%",cols="^.^3,.^8,.^5",options="header"]
 |===
@@ -1650,9 +1634,8 @@ They can be changed and new ones can be added with the <<command_weechat_key,/ke
 | kbd:[Alt+/]                    | Przełącz na ostatnio wyświetlony bufor (przed ostatnią zmianą bufora). | `+/input jump_last_buffer_displayed+`
 |===
 
-// TRANSLATION MISSING
 [[key_bindings_windows]]
-=== Windows
+=== Okna
 
 [width="100%",cols="^.^3,.^8,.^5",options="header"]
 |===
@@ -1670,9 +1653,8 @@ They can be changed and new ones can be added with the <<command_weechat_key,/ke
 | kbd:[Alt+z]              | Pokaż obecne okno (ponowne wciśnięcie kbd:[Alt+z]: przywraca wcześniejszy układ okien). | `+/window zoom+`
 |===
 
-// TRANSLATION MISSING
 [[key_bindings_bars]]
-=== Bars
+=== Paski
 
 [width="100%",cols="^.^3,.^8,.^5",options="header"]
 |===
@@ -1695,9 +1677,8 @@ They can be changed and new ones can be added with the <<command_weechat_key,/ke
 | kbd:[Alt+Shift+N] | Przełącza widoczność paska z listą nicków. | `+/bar toggle nicklist+`
 |===
 
-// TRANSLATION MISSING
 [[key_bindings_hotlist]]
-=== Hotlist
+=== Hotlista
 
 [width="100%",cols="^.^3,.^8,.^5",options="header"]
 |===
@@ -1709,22 +1690,20 @@ They can be changed and new ones can be added with the <<command_weechat_key,/ke
 | kbd:[Alt+h], kbd:[Alt+Shift+R] | Przywróć ostatnią hotlistę usuniętą we wszystkich buforach. | `+/input hotlist_restore_all+`
 |===
 
-// TRANSLATION MISSING
 [[key_bindings_toggle_keys]]
-=== Toggle keys
+=== Włącz/wyłącz
 
 [width="100%",cols="^.^3,.^8,.^5",options="header"]
 |===
 | Skrót       | Opis | Komenda
-| kbd:[Alt+m] | Przełącz obsługę myszy. | `+/mouse toggle+`
+| kbd:[Alt+m] | Włącz/wyłącz obsługę myszy. | `+/mouse toggle+`
 | kbd:[Alt+s] | Włącz/wyłącz sprawdzenie pisowni. | `+/mute spell toggle+`
 | kbd:[Alt+=] | Włącz/wyłącz filtry. | `+/filter toggle+`
 | kbd:[Alt+-] | Włącz/wyłącz filtry w bieżącym buforze. | `+/filter toggle @+`
 |===
 
-// TRANSLATION MISSING
 [[key_bindings_search_context]]
-=== Search context
+=== Wyszukiwanie
 
 Te skróty są używane w kontekście wyszukiwania (kiedy kombinacja kbd:[Ctrl+r]
 zostanie wciśnięta w buforze tekstowym).
@@ -1743,11 +1722,10 @@ zostanie wciśnięta w buforze tekstowym).
 | kbd:[Ctrl+q]   | Zatrzymaj wyszukiwanie i przewin na spód bufora. | `+/input search_stop+`
 |===
 
-// TRANSLATION MISSING
 [[key_bindings_cursor_context]]
-=== Cursor context
+=== Kursor
 
-Te skróty są używane s kontekście kursora (dowolne przemieszczanie kursora na
+Te skróty są używane w kontekście kursora (dowolne przemieszczanie kursora na
 ekranie).
 
 [width="100%",cols="^.^3,^.^2,.^7,.^7",options="header"]
@@ -1774,13 +1752,11 @@ ekranie).
   kbd:[Ctrl+m]   | -        | Wyłącz tryb kursora. | `/cursor stop`
 |===
 
-// TRANSLATION MISSING
 [[key_bindings_mouse]]
-=== Mouse
+=== Mysz
 
-// TRANSLATION MISSING
-These mouse actions are possible only if mouse is enabled with key kbd:[Alt+m]
-(command: `+/mouse toggle+`).
+Te akcje myszą mogą zostać użyte tylko jeśli obsługa myszy została włączona
+za pomocą skrótu kbd:[Alt+m] (komenda: `+/mouse toggle+`).
 
 [width="100%",cols="^.^3,^.^3,^.^3,.^8,.^8",options="header"]
 |===
@@ -1829,9 +1805,8 @@ These mouse actions are possible only if mouse is enabled with key kbd:[Alt+m]
 [NOTE]
 ^(1)^ kbd:[▲] i kbd:[▼] to przewijanie rolką myszy w górę i w dół.
 
-// TRANSLATION MISSING
 [[key_bindings_fset_buffer]]
-=== Fset buffer
+=== Bufor fset
 
 Poniższe skróty i akcje mogą zostać użyte w buforze fset (zobacz <<fset,wtyczka fset>>).
 
@@ -1876,12 +1851,10 @@ Poniższe skróty i akcje mogą zostać użyte w buforze fset (zobacz <<fset,wty
 [NOTE]
 ^(1)^ Akcja musi zostać wprowadzona z linii poleceń i potwierdzona przez kbd:[Enter].
 
-// TRANSLATION MISSING
 [[key_bindings_script_buffer]]
-=== Script buffer
+=== Bufor skryptów
 
-// TRANSLATION MISSING
-Te skróty klawiszowe i akcje mogą zostać użyte w oknie skryptów (zobacz <<script_manager,script manager>>).
+Te skróty klawiszowe i akcje mogą zostać użyte w buforze skryptów (zobacz <<script_manager,manager skryptów>>).
 
 [width="100%",cols="^.^3,^.^2,.^8,.^5",options="header"]
 |===
@@ -1902,13 +1875,11 @@ Te skróty klawiszowe i akcje mogą zostać użyte w oknie skryptów (zobacz <<s
 [NOTE]
 ^(1)^ Akcja musi zostać wprowadzona z linii poleceń i potwierdzona przez kbd:[Enter].
 
-// TRANSLATION MISSING
 [[configuration]]
-== Configuration
+== Konfiguracja
 
-// TRANSLATION MISSING
 [[colors]]
-=== Colors
+=== Kolory
 
 [[colors_basic]]
 ==== Podstawowe kolory
@@ -2266,9 +2237,8 @@ Właściwość bufora "highlight_regex" nie jest zapisywana w konfiguracji. +
 Można ją zapisać za pomocą skryptu _buffer_autoset.py_: można go zaintalować za pomocą
 `+/script install buffer_autoset.py+`, informacje o używaniu `+/help buffer_autoset+`.
 
-// TRANSLATION MISSING
 [[buffer_logging]]
-=== Buffer logging
+=== Bufor logera
 
 Wtyczka logger pozwala zapisywać zawartość bufora do pliku, oraz wybrać co i jak
 ma być zapisywane.
@@ -2472,9 +2442,8 @@ link:weechat_faq.pl.html#mouse[WeeChat FAQ / Obsługa myszy].
 [[mouse_bind_events]]
 ==== Przypisanie zdarzeń myszy do komend
 
-// TRANSLATION MISSING
 Wiele domyślnych zdarzeń myszy jest już zdefiniowanych w WeeChat (zobacz
-<<key_bindings_mouse,mouse actions>>).
+<<key_bindings_mouse,obsługa myszy>>).
 
 Możesz zmienić lub dodać przypisania za pomocą komendy `/key` używając kontekstu
 "mouse" (dla składni zobacz komenda <<command_weechat_key,/key>>).
@@ -2551,9 +2520,8 @@ przycisku myszy.
 Możesz znaleźć nazwę zdarzenia za pomocą komendy `+/input grab_mouse+` wykonując
 następnie zdarzenie za pomocą myszy. Umieści to zdarzenie w linii poleceń.
 
-// TRANSLATION MISSING
 [[spell_checking]]
-=== Spell checking
+=== Sprawdzanie pisowni
 
 Wtyczka spell pozwala na sprawdzanie pisowni w linii poleceń. Możliwe jest
 ustawienie wielu języków dla bufora.
@@ -2988,9 +2956,8 @@ W celu użycia hasła _libera_, na przykład z
 /set irc.server.libera.sasl_password "${sec.data.libera}"
 ----
 
-// TRANSLATION MISSING
 [[command_aliases]]
-=== Command aliases
+=== Aliasy
 
 Wtyczka alias pozwala tworzyć aliasy dla komend (z WeeChat lub innych wtyczek).
 
@@ -3815,9 +3782,8 @@ Opcje:
 
 include::includes/autogen_user_options.pl.adoc[tag=xfer_options]
 
-// TRANSLATION MISSING
 [[typing_notifications]]
-== Typing notifications
+== Powiadomienia o pisaniu
 
 Wtyczka typing jest używana do informowania innych że coś piszesz oraz
 pokazaniu listy osób piszących obecnie wiadomości w buforze.
@@ -4038,8 +4004,7 @@ za pomocą tych komend:
 Wtyczka relay może wysyłać dane do zdalnego interfejsu korzystając z protokołu
 WeeChat.
 
-// TRANSLATION MISSING
-You can connect with a remote interface, see: https://weechat.org/about/interfaces
+Możesz się połączyć ze zdalnym interfejsem, zobacz: https://weechat.org/about/interfaces
 
 [IMPORTANT]
 WeeChat NIE MOŻE się połączyć z innym WeeChat za pomocą tego protokołu.
@@ -4122,9 +4087,8 @@ Opcje:
 
 include::includes/autogen_user_options.pl.adoc[tag=relay_options]
 
-// TRANSLATION MISSING
 [[external_commands]]
-== External commands
+== Zewnętrzne polecenia
 
 Komenda `/exec` pozwala wykonać zewnętrzne polecenie wewnątrz WeeChat i wyświetlić
 jej wynik lokalnie lub wysłać do bufora.
@@ -4150,9 +4114,8 @@ Opcje:
 
 include::includes/autogen_user_options.pl.adoc[tag=exec_options]
 
-// TRANSLATION MISSING
 [[fifo_pipe]]
-== FIFO pipe
+== Kolejka FIFO
 
 Możesz zdalnie kontrolować WeeChat, poprzez wysyłanie komend lub tekstu do
 kolejki FIFO (jeśli opcja "fifo.file.enabled" jest włączona, domyślnie jest
@@ -4909,12 +4872,11 @@ Opcje:
 
 include::includes/autogen_user_options.pl.adoc[tag=trigger_options]
 
-// TRANSLATION MISSING
 [[extending_weechat]]
-== Extending WeeChat
+== Rozszerzanie WeeChat
 
-// TRANSLATION MISSING
-WeeChat has a modular design and can be extended with plugins and scripts.
+WeeChat zbudowany jest z modułów i może być rozszerzany przez wtyczki
+i skrypty.
 
 Ważne jest, aby odróżniać _wtyczkę_ od _skryptu_: _wtyczka_ jest to plik binarny
 skompilowany i ładowany za pomocą polecenia `/plugin`, natomiast _skrypt_ to
@@ -4994,26 +4956,23 @@ Wtyczki te potrafią ładować, wykonywać i wyładowywać skrypty w tych język
 Więcej informacji o tym jak pisać skrypty lub o API WeeChat dla skryptów można
 znaleźć w link:weechat_scripting.pl.html[Poradniku pisania skryptów].
 
-// TRANSLATION MISSING
 [[script_manager]]
-==== Script manager
+==== Manager skryptów
 
-// TRANSLATION MISSING
-The script manager (command <<command_script_script,/script>>) is used to
-load/unload scripts of any language, and install/remove scripts of WeeChat
-scripts repository, which are visible at this URL: https://weechat.org/scripts
+Manager skryptów (polecenie <<command_script_script,/script>>) jest używany do
+ładowania/wyładowywania skryptów w dowolnym języku, oraz instalowania/kasowania
+skryptów z repozytorium ze skryptami WeeChat, które można znaleźć pod adresem
+URL: https://weechat.org/scripts
 
-// TRANSLATION MISSING
-For privacy considerations, the download of scripts is disabled by default. +
-To enable it, type this command:
+W trosce o prywatność pobieranie skryptów jest domyślnie wyłąćzone. +
+Żeby je włączyć, wpisz poniższe polecenie:
 
 ----
 /set script.scripts.download_enabled on
 ----
 
-// TRANSLATION MISSING
-Then you can download the list of scripts and display them in a new buffer
-with the <<command_script_script,/script>> command:
+Następnie możesz pobrać listę skryptów i wyświetlić je w nowym buforze
+za pomocą polecenia <<command_script_script,/script>>:
 
 [subs="quotes,attributes"]
 :x: *
@@ -5073,9 +5032,8 @@ Opcje:
 
 include::includes/autogen_user_options.pl.adoc[tag=script_options]
 
-// TRANSLATION MISSING
 [[scripting_plugins]]
-==== Scripting plugins
+==== Wtyczki skryptowe
 
 [[python_commands]]
 ===== Komendy wtyczki python
