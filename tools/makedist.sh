@@ -75,3 +75,6 @@ git archive --prefix="${PREFIX}" "${TREEISH}" | bzip2 -c >"${FILE}.bz2"
 
 echo "Building package ${FILE}.xz"
 git archive --prefix="${PREFIX}" "${TREEISH}" | xz -c >"${FILE}.xz"
+
+echo "Building package ${FILE}.zst"
+git archive --prefix="${PREFIX}" "${TREEISH}" | zstd -c -15 >"${FILE}.zst"
