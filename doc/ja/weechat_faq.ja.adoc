@@ -1089,6 +1089,15 @@ $ cd ~/.cache/weechat/script
 $ curl -O https://weechat.org/files/plugins.xml.gz
 ----
 
+// TRANSLATION MISSING
+If you're running macOS and the downloaded file has a size of 0 bytes,
+try to set this variable in your shell initialization file or on command line,
+before starting WeeChat:
+
+----
+export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
+----
+
 [[spell_dictionaries]]
 === システムに aspell 辞書をインストールした後、WeeChat を再起動せずにそれを使う方法を教えてください。
 
