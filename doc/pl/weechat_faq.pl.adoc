@@ -1089,10 +1089,9 @@ $ cd ~/.cache/weechat/script
 $ curl -O https://weechat.org/files/plugins.xml.gz
 ----
 
-// TRANSLATION MISSING
-If you're running macOS and the downloaded file has a size of 0 bytes,
-try to set this variable in your shell initialization file or on command line,
-before starting WeeChat:
+Jeśli używasz macOS i pobrany plik ma wielkość 0 bajtów, spróbuj ustawić poniższą
+zmianną w inicjalizującym powłokę w terminalu lub z linii poleceń przed
+uruchomieniem WeeChat:
 
 ----
 export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
