@@ -1610,7 +1610,8 @@ Sie können mit dem Befehl <<command_weechat_key,/key>> geändert und neue hinzu
 | Taste                          | Beschreibung | Befehl
 | kbd:[Ctrl+r]                   | Textsuche im Verlaufsspeicher des Buffers (siehe <<key_bindings_search_context,Tasten für Such-Kontext>>). | `+/input search_text_here+`
 | kbd:[Ctrl+s], kbd:[Ctrl+u]     | setzt für alle Buffer die Markierung für ungelesene Nachrichten. | `+/input set_unread+`
-| kbd:[Ctrl+x]                   | sind mehrere Buffer zu einem Buffer zusammen gefügt wechselt man diese durch. | `+/input switch_active_buffer+`
+// TRANSLATION MISSING
+| kbd:[Ctrl+x]                   | Switch current buffer if buffers are merged with same number, for example switch to another IRC server buffer. | `+/input switch_active_buffer+`
 | kbd:[Alt+x]                    | Zoom eines zusammengefügten Buffers (kbd:[Alt+x] ein zweites mal: alle zusammengefügten Buffer werden angezeigt). | `+/input zoom_merged_buffer+`
 | kbd:[PgUp]                     | eine Seite im Verlaufsspeicher des Buffers nach oben blättern. | `+/window page_up+`
 | kbd:[PgDn]                     | eine Seite im Verlaufsspeicher des Buffer nach unten blättern. | `+/window page_down+`

@@ -1494,7 +1494,8 @@ WeeChat нуди доста подразумеваних тастерских п
 | Тастер                         | Опис | Команда
 | kbd:[Ctrl+r]                   | Претрага на текст у историји бафера (погледајте <<key_bindings_search_context,тастери у „search”>>). | `+/input search_text_here+`
 | kbd:[Ctrl+s], kbd:[Ctrl+u]     | Поставља маркер непрочитано за све бафере. | `+/input set_unread+`
-| kbd:[Ctrl+x]                   | Пребацује текући бафер ако су бафери прикачени са истим бројем. | `+/input switch_active_buffer+`
+// TRANSLATION MISSING
+| kbd:[Ctrl+x]                   | Switch current buffer if buffers are merged with same number, for example switch to another IRC server buffer. | `+/input switch_active_buffer+`
 | kbd:[Alt+x]                    | Зум на спојени бафер (kbd:[Alt+x] поново: приказује све спојене бафере). | `+/input zoom_merged_buffer+`
 | kbd:[PgUp]                     | Скролује навише једну страну у историји бафера. | `+/window page_up+`
 | kbd:[PgDn]                     | Скролује наниже једну страну у историји бафера. | `+/window page_down+`
