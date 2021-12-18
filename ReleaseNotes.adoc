@@ -18,7 +18,7 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 
 
 [[v3.4]]
-== Version 3.4 (under dev)
+== Version 3.4 (2021-12-18)
 
 [[v3.4_default_triggers]]
 === Default triggers
