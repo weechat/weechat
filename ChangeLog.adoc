@@ -15,6 +15,13 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 (file _ReleaseNotes.adoc_ in sources).
 
 
+[[v3.5]]
+== Version 3.5 (under dev)
+
+Bug fixes::
+
+  * irc: fix display of IRC numeric messages with no parameters
+
 [[v3.4]]
 == Version 3.4 (2021-12-18)
 

@@ -3156,7 +3156,7 @@ IRC_PROTOCOL_CALLBACK(numeric)
 
     str_params = irc_protocol_string_params (params, arg_text, num_params - 1);
 
-    if (str_params && str_params[0])
+    if (str_params)
     {
         weechat_printf_date_tags (
             irc_msgbuffer_get_target_buffer (server, NULL, command, NULL, NULL),
@@ -3165,10 +3165,8 @@ IRC_PROTOCOL_CALLBACK(numeric)
             "%s%s",
             weechat_prefix ("network"),
             str_params);
-    }
-
-    if (str_params)
         free (str_params);
+    }
 
     return WEECHAT_RC_OK;
 }
