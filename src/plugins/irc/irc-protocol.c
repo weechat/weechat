@@ -7083,6 +7083,7 @@ irc_protocol_recv_command (struct t_irc_server *server,
         IRCB(367, 1, 0, 367),            /* banlist                         */
         IRCB(368, 1, 0, 368),            /* end of banlist                  */
         IRCB(369, 1, 0, whowas_nick_msg), /* whowas (end)                   */
+        IRCB(372, 1, 1, numeric),        /* motd                            */
         IRCB(378, 1, 0, whois_nick_msg), /* whois (connecting from)         */
         IRCB(379, 1, 0, whois_nick_msg), /* whois (using modes)             */
         IRCB(401, 1, 0, generic_error),  /* no such nick/channel            */
