@@ -19,6 +19,7 @@ Build-Depends:
     libcurl4-gnutls-dev,
     libgcrypt20-dev,
     libgnutls28-dev,
+    libzstd-dev,
     zlib1g-dev
 Standards-Version: 4.6.0.1
 Homepage: https://weechat.org/

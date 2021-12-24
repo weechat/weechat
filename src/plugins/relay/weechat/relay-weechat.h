@@ -34,6 +34,7 @@ enum t_relay_weechat_compression
 {
     RELAY_WEECHAT_COMPRESSION_OFF = 0, /* no compression of binary objects  */
     RELAY_WEECHAT_COMPRESSION_ZLIB,    /* zlib compression                  */
+    RELAY_WEECHAT_COMPRESSION_ZSTD,    /* Zstandard compression             */
     /* number of compressions */
     RELAY_WEECHAT_NUM_COMPRESSIONS,
 };

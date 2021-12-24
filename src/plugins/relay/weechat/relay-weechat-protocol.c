@@ -229,7 +229,7 @@ relay_weechat_protocol_handshake_reply (struct t_relay_client *client,
 
 RELAY_WEECHAT_PROTOCOL_CALLBACK(handshake)
 {
-    char **options, **auths, *pos;
+    char **options, **auths, **compressions, *pos;
     int i, j, index_hash_algo, hash_algo_found, auth_allowed, compression;
     int password_received, plain_text_password;
 
@@ -292,9 +292,28 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(handshake)
                 }
                 else if (strcmp (options[i], "compression") == 0)
                 {
-                    compression = relay_weechat_compression_search (pos);
-                    if (compression >= 0)
-                        RELAY_WEECHAT_DATA(client, compression) = compression;
+                    compressions = weechat_string_split (
+                        pos,
+                        ":",
+                        NULL,
+                        WEECHAT_STRING_SPLIT_STRIP_LEFT
+                        | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                        | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                        0,
+                        NULL);
+                    if (compressions)
+                    {
+                        for (j = 0; compressions[j]; j++)
+                        {
+                            compression = relay_weechat_compression_search (compressions[j]);
+                            if (compression >= 0)
+                            {
+                                RELAY_WEECHAT_DATA(client, compression) = compression;
+                                break;
+                            }
+                        }
+                        weechat_string_free_split (compressions);
+                    }
                 }
             }
         }
@@ -337,12 +356,9 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(handshake)
  *                  hash is given in hexadecimal
  *   totp           time-based one time password used as secondary
  *                  authentication factor
- *   compression    zlib (default) or off
  *
  * Message looks like:
  *   init password=mypass
- *   init password=mypass,compression=zlib
- *   init password=mypass,compression=off
  *   init password_hash=sha256:71c480df93d6ae2f1efad1447c66c9…,totp=123456
  *   init password_hash=pbkdf2:sha256:414232…:100000:01757d53157c…,totp=123456
  */
@@ -350,7 +366,7 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(handshake)
 RELAY_WEECHAT_PROTOCOL_CALLBACK(init)
 {
     char **options, *pos, *relay_password, *totp_secret, *info_totp_args, *info_totp;
-    int i, compression, length, password_received, totp_received;
+    int i, length, password_received, totp_received;
 
     RELAY_WEECHAT_PROTOCOL_MIN_ARGS(0);
 
@@ -410,12 +426,6 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(init)
                             free (info_totp_args);
                         }
                     }
-                }
-                else if (strcmp (options[i], "compression") == 0)
-                {
-                    compression = relay_weechat_compression_search (pos);
-                    if (compression >= 0)
-                        RELAY_WEECHAT_DATA(client, compression) = compression;
                 }
             }
         }

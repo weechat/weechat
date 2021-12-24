@@ -196,7 +196,10 @@ list(APPEND EXTRA_LIBS gnutls)
 
 # Check for zlib
 find_package(ZLIB REQUIRED)
-add_definitions(-DHAVE_ZLIB)
+
+# Check for zstd
+include(FindPkgConfig)
+pkg_check_modules(LIBZSTD REQUIRED libzstd)
 
 # Check for iconv
 find_package(Iconv)

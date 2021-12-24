@@ -1176,6 +1176,27 @@ else
 fi
 
 # ------------------------------------------------------------------------------
+#                                     zstd
+# ------------------------------------------------------------------------------
+
+AC_CHECK_HEADER(zstd.h,ac_found_zstd_header="yes",ac_found_zstd_header="no")
+AC_CHECK_LIB(zstd,ZSTD_compress,ac_found_zstd_lib="yes",ac_found_zstd_lib="no")
+
+AC_MSG_CHECKING(for zstd headers and libraries)
+if test "x$ac_found_zstd_header" = "xno" -o "x$ac_found_zstd_lib" = "xno" ; then
+    AC_MSG_RESULT(no)
+    AC_MSG_ERROR([
+*** zstd was not found. You may want to get it from https://github.com/facebook/zstd
+*** or try to install it with your software package manager.])
+else
+    AC_MSG_RESULT(yes)
+    ZSTD_CFLAGS=`pkg-config libzstd --cflags`
+    ZSTD_LFLAGS=`pkg-config libzstd --libs`
+    AC_SUBST(ZSTD_CFLAGS)
+    AC_SUBST(ZSTD_LFLAGS)
+fi
+
+# ------------------------------------------------------------------------------
 #                                     curl
 # ------------------------------------------------------------------------------
 

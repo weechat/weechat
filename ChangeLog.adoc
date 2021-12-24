@@ -18,6 +18,10 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 [[v3.5]]
 == Version 3.5 (under dev)
 
+New features::
+
+  * relay: add `zstd` (https://facebook.github.io/zstd/[Zstandard]) compression in weechat protocol, remove option `compression` from `init` command, rename option relay.network.compression_level to relay.network.compression
+
 Bug fixes::
 
   * irc: fix display of IRC numeric messages with no parameters

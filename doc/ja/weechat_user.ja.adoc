@@ -108,9 +108,12 @@ WeeChat:
 | pkg-config             |                  | インストール済みライブラリを検出
 | libncursesw5-dev ^(2)^ |                  | ncurses インターフェース
 | libcurl4-gnutls-dev    |                  | URL 転送
-| zlib1g-dev             |                  | relay プラグインでパケットを圧縮 (weechat プロトコル)、スクリプトプラグイン
 | libgcrypt20-dev        |                  | 保護データ、IRC SASL 認証
 | libgnutls28-dev        | 2.2.0 以上 ^(3)^ | IRC サーバへの SSL 接続、IRC SASL 認証 (ECDSA-NIST256P-CHALLENGE)
+// TRANSLATION MISSING
+| zlib1g-dev             |                  | Compression of messages (WeeChat -> client) with https://zlib.net/[zlib] in relay plugin (weechat protocol), script plugin.
+// TRANSLATION MISSING
+| libzstd-dev            |                  | Compression of messages (WeeChat -> client) with https://facebook.github.io/zstd/[Zstandard] in relay plugin (weechat protocol).
 |===
 
 [NOTE]

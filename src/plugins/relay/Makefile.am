@@ -17,7 +17,7 @@
 # along with WeeChat.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-AM_CPPFLAGS = -DLOCALEDIR=\"$(datadir)/locale\" $(ZLIB_CFLAGS) $(GCRYPT_CFLAGS) $(GNUTLS_CFLAGS)
+AM_CPPFLAGS = -DLOCALEDIR=\"$(datadir)/locale\" $(GCRYPT_CFLAGS) $(GNUTLS_CFLAGS) $(ZLIB_CFLAGS) $(ZSTD_CFLAGS)
 
 libdir = ${weechat_libdir}/plugins
 
@@ -61,6 +61,6 @@ relay_la_SOURCES = relay.c \
                    weechat/relay-weechat-protocol.h
 
 relay_la_LDFLAGS = -module -no-undefined
-relay_la_LIBADD  = $(RELAY_LFLAGS) $(ZLIB_LFLAGS) $(GCRYPT_LFLAGS) $(GNUTLS_LFLAGS)
+relay_la_LIBADD  = $(RELAY_LFLAGS) $(GCRYPT_LFLAGS) $(GNUTLS_LFLAGS) $(ZLIB_LFLAGS) $(ZSTD_LFLAGS)
 
 EXTRA_DIST = CMakeLists.txt

@@ -93,9 +93,12 @@ WeeChat почетна страница се налази на адреси: htt
 | pkg-config             |               | Детекција инсталираних библиотека.
 | libncursesw5-dev ^(2)^ |               | Ncurses интерфејс.
 | libcurl4-gnutls-dev    |               | URL пренос.
-| zlib1g-dev             |               | Компресија пакета у релеј додатку (weechat протокол), скрипт додатку.
 | libgcrypt20-dev        |               | Обезбеђени подаци, IRC SASL аутентификација.
 | libgnutls28-dev        | ≥ 2.2.0 ^(3)^ | SSL веза са IRC сервером, подршка за SSL у релеј додатку, IRC SASL аутентификација (ECDSA-NIST256P-CHALLENGE).
+// TRANSLATION MISSING
+| zlib1g-dev             |               | Compression of messages (WeeChat -> client) with https://zlib.net/[zlib] in relay plugin (weechat protocol), script plugin.
+// TRANSLATION MISSING
+| libzstd-dev            |               | Compression of messages (WeeChat -> client) with https://facebook.github.io/zstd/[Zstandard] in relay plugin (weechat protocol).
 |===
 
 [NOTE]

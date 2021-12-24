@@ -122,11 +122,13 @@ WeeChat:
 | libncursesw5-dev ^(2)^ |               | Interfaccia ncurses.
 | libcurl4-gnutls-dev    |               | Trasferimento URL.
 // TRANSLATION MISSING
-| zlib1g-dev             |               | Compression of packets in relay plugin (weechat protocol), script plugin.
-// TRANSLATION MISSING
 | libgcrypt20-dev        |               | Secured data, IRC SASL authentication.
 // TRANSLATION MISSING
 | libgnutls28-dev        | ≥ 2.2.0 ^(3)^ | Connessione SSL al server IRC, support of SSL in relay plugin, IRC SASL authentication (ECDSA-NIST256P-CHALLENGE).
+// TRANSLATION MISSING
+| zlib1g-dev             |               | Compression of messages (WeeChat -> client) with https://zlib.net/[zlib] in relay plugin (weechat protocol), script plugin.
+// TRANSLATION MISSING
+| libzstd-dev            |               | Compression of messages (WeeChat -> client) with https://facebook.github.io/zstd/[Zstandard] in relay plugin (weechat protocol).
 |===
 
 [NOTE]

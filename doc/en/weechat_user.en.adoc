@@ -101,9 +101,10 @@ WeeChat:
 | pkg-config             |               | Detect installed libraries.
 | libncursesw5-dev ^(2)^ |               | Ncurses interface.
 | libcurl4-gnutls-dev    |               | URL transfer.
-| zlib1g-dev             |               | Compression of packets in relay plugin (weechat protocol), script plugin.
 | libgcrypt20-dev        |               | Secured data, IRC SASL authentication.
 | libgnutls28-dev        | ≥ 2.2.0 ^(3)^ | SSL connection to IRC server, support of SSL in relay plugin, IRC SASL authentication (ECDSA-NIST256P-CHALLENGE).
+| zlib1g-dev             |               | Compression of messages (WeeChat -> client) with https://zlib.net/[zlib] in relay plugin (weechat protocol), script plugin.
+| libzstd-dev            |               | Compression of messages (WeeChat -> client) with https://facebook.github.io/zstd/[Zstandard] in relay plugin (weechat protocol).
 |===
 
 [NOTE]
