@@ -1073,12 +1073,12 @@ relay_config_init ()
     relay_config_network_compression = weechat_config_new_option (
         relay_config_file, ptr_section,
         "compression", "integer",
-        N_("compression for packets sent to client with WeeChat "
-           "protocol: 0 = disable compression, 1 = low compression, fast "
-           "... 100 = best compression, slow; the value is a percentage "
+        N_("compression of messages sent to clients with \"weechat\" "
+           "protocol: 0 = disable compression, 1 = low compression / fast "
+           "... 100 = best compression / slow; the value is a percentage "
            "converted to 1-9 for zlib and 1-19 for zstd; "
-           "default value is 20 which is a sane default and offers good "
-           "compression and speed"),
+           "the default value is recommended, it offers a good "
+           "compromise between compression and speed"),
         NULL, 0, 100, "20", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     relay_config_network_ipv6 = weechat_config_new_option (

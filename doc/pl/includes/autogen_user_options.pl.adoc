@@ -3065,7 +3065,7 @@
 ** domyślna wartość: `+0+`
 
 * [[option_relay.network.compression]] *relay.network.compression*
-** opis: pass:none[compression for packets sent to client with WeeChat protocol: 0 = disable compression, 1 = low compression, fast ... 100 = best compression, slow; the value is a percentage converted to 1-9 for zlib and 1-19 for zstd; default value is 20 which is a sane default and offers good compression and speed]
+** opis: pass:none[compression of messages sent to clients with "weechat" protocol: 0 = disable compression, 1 = low compression / fast ... 100 = best compression / slow; the value is a percentage converted to 1-9 for zlib and 1-19 for zstd; the default value is recommended, it offers a good compromise between compression and speed]
 ** typ: liczba
 ** wartości: 0 .. 100
 ** domyślna wartość: `+20+`
