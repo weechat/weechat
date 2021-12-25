@@ -21,6 +21,7 @@
     --header-details-color: #aaa;
     --border: 1px solid #444;
     --code-bg-color: #252525;
+    --pre-color: #ddd;
     --pre-bg-color: #202020;
     --pre-code-bg-color: #202020;
     --keyseq-color: #777;
@@ -52,6 +53,7 @@
     --border: 1px solid #dddddf;
     --code-bg-color: #f7f7f8;
     --keyseq-color: #333c;
+    --pre-color: #353535;
     --pre-bg-color: #f7f7f8;
     --pre-code-bg-color: #202020;
     --kbd-bg-color: #f7f7f7;
@@ -132,6 +134,10 @@ p, .paragraph.lead > p, #preamble > .sectionbody > [class="paragraph"]:first-of-
 code, .prettyprint {
   background-color: var(--code-bg-color) !important;
   color: var(--body-color);
+}
+
+pre {
+  color: var(--pre-color) !important;
 }
 
 pre > code {
