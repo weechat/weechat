@@ -3064,11 +3064,11 @@
 ** valori: -1 .. 43200
 ** valore predefinito: `+0+`
 
-* [[option_relay.network.compression_level]] *relay.network.compression_level*
-** descrizione: pass:none[livello di compressione per i pacchetti inviati al client con il protocollo WeeChat (0 = disabilita compressione, 1 = compressione bassa ... 9 = compressione migliore)]
+* [[option_relay.network.compression]] *relay.network.compression*
+** descrizione: pass:none[compression for packets sent to client with WeeChat protocol: 0 = disable compression, 1 = low compression, fast ... 100 = best compression, slow; the value is a percentage converted to 1-9 for zlib and 1-19 for zstd; default value is 20 which is a sane default and offers good compression and speed]
 ** tipo: intero
-** valori: 0 .. 9
-** valore predefinito: `+6+`
+** valori: 0 .. 100
+** valore predefinito: `+20+`
 
 * [[option_relay.network.ipv6]] *relay.network.ipv6*
 ** descrizione: pass:none[listen on IPv6 socket by default (in addition to IPv4 which is default); protocols IPv4 and IPv6 can be forced (individually or together) in the protocol name (see /help relay)]
