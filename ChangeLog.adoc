@@ -26,6 +26,10 @@ Bug fixes::
 
   * irc: fix display of IRC numeric messages with no parameters
 
+Tests::
+
+  * core: add build of Debian packages in CI
+
 [[v3.4]]
 == Version 3.4 (2021-12-18)
 

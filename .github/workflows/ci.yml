@@ -4,12 +4,14 @@ on:
   - push
   - pull_request
 
+env:
+  WEECHAT_DEPENDENCIES: devscripts equivs python3-pip libenchant-dev autopoint cmake ninja-build lcov pkg-config libncursesw5-dev gem2deb libperl-dev python2-dev python3-dev libaspell-dev liblua5.3-dev tcl8.6-dev guile-2.2-dev libv8-dev libcurl4-gnutls-dev libgcrypt20-dev libgnutls28-dev libzstd-dev zlib1g-dev curl libcpputest-dev php-dev php8.0-dev libphp8.0-embed libargon2-0-dev libsodium-dev pylint python3-bandit asciidoctor
+
 jobs:
 
-  build_linux:
+  tests_linux:
 
     strategy:
-      fail-fast: false
       matrix:
         os:
           - ubuntu-20.04
@@ -23,7 +25,7 @@ jobs:
           - { name: "autotools_gcc", cc: "gcc", cxx: "g++", tool: "autotools", args: "" }
           - { name: "autotools_clang", cc: "clang", cxx: "clang++", tool: "autotools", args: "" }
 
-    name: ${{ matrix.config.name }} on ${{ matrix.os }}
+    name: "Tests: ${{ matrix.config.name }} on ${{ matrix.os }}"
     runs-on: ${{ matrix.os }}
 
     steps:
@@ -35,11 +37,8 @@ jobs:
         sudo apt-add-repository --yes ppa:ondrej/php
         sudo apt-get update -qq
         sudo apt-get --yes purge php8.1-dev
-        sudo apt-get --yes --no-install-recommends install devscripts equivs python3-pip libenchant-dev autopoint cmake ninja-build lcov pkg-config libncursesw5-dev gem2deb libperl-dev python2-dev python3-dev libaspell-dev liblua5.3-dev tcl8.6-dev guile-2.0-dev libv8-dev libcurl4-gnutls-dev libgcrypt20-dev libgnutls28-dev libzstd-dev zlib1g-dev curl libcpputest-dev php8.0-dev libphp8.0-embed libargon2-0-dev libsodium-dev pylint python3-bandit asciidoctor
+        sudo apt-get --yes --no-install-recommends install ${{ env.WEECHAT_DEPENDENCIES }}
         sudo -H pip3 install --ignore-installed msgcheck
-
-    - name: Test patches
-      run: ./tools/build-debian.sh test-patches
 
     - name: Check gettext files
       run: msgcheck po/*.po
@@ -72,7 +71,7 @@ jobs:
         weechat --colors
         weechat --license
         weechat --version
-        weechat --temp-dir --run-command "/debug dirs;/debug libs" --run-command "/quit"
+        weechat --run-command "/debug dirs;/debug libs" --run-command "/quit"
 
     - name: Code coverage
       if: ${{ matrix.config.name == 'cmake_gcc_coverage' }}
@@ -85,10 +84,9 @@ jobs:
         lcov --list coverage.info
         bash <(curl -s https://codecov.io/bash) -f coverage.info || echo 'Codecov error'
 
-  build_macos:
+  tests_macos:
 
     strategy:
-      fail-fast: false
       matrix:
         os:
           - macos-11
@@ -97,7 +95,7 @@ jobs:
           - { name: "cmake_gcc", cc: "gcc", cxx: "g++" }
           - { name: "cmake_clang", cc: "clang", cxx: "clang++" }
 
-    name: ${{ matrix.config.name }} on ${{ matrix.os }}
+    name: "Tests: ${{ matrix.config.name }} on ${{ matrix.os }}"
     runs-on: ${{ matrix.os }}
 
     steps:
@@ -128,4 +126,43 @@ jobs:
         weechat --colors
         weechat --license
         weechat --version
-        weechat --temp-dir --run-command "/debug dirs;/debug libs" --run-command "/quit"
+        weechat --run-command "/debug dirs;/debug libs" --run-command "/quit"
+
+  build_debian:
+
+    strategy:
+      matrix:
+        os:
+          - ubuntu-20.04
+
+    name: "Build Debian on ${{ matrix.os }}"
+    runs-on: ${{ matrix.os }}
+
+    steps:
+
+    - uses: actions/checkout@v2
+
+    - name: Install dependencies
+      run: |
+        sudo apt-add-repository --yes ppa:ondrej/php
+        sudo apt-get update -qq
+        sudo apt-get --yes purge php8.1-dev
+        sudo apt-get --yes --no-install-recommends install ${{ env.WEECHAT_DEPENDENCIES }}
+
+    - name: Test Debian patches
+      run: ./tools/build-debian.sh test-patches
+
+    - name: Build Debian packages
+      run: ./tools/build-debian.sh devel ubuntu/focal
+
+    - name: Install Debian packages
+      run: sudo dpkg -i ../weechat-devel*.deb
+
+    - name: Run WeeChat
+      env:
+        TERM: xterm-256color
+      run: |
+        weechat --help
+        weechat-curses --help
+        weechat --version
+        weechat --run-command "/debug dirs;/debug libs" --run-command "/quit"
