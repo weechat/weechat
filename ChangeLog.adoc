@@ -24,6 +24,7 @@ New features::
 
 Bug fixes::
 
+  * core: fix display of hotlist in buflist after changing value of option weechat.look.hotlist_sort (issue #1733)
   * irc: fix display of IRC numeric messages with no parameters
 
 Tests::
