@@ -1457,65 +1457,6 @@ Opcje:
 
 include::includes/autogen_user_options.pl.adoc[tag=buflist_options]
 
-[[fset]]
-=== Fset
-
-Wtyczka Fast Set wyświetla listę opcji w buforze i pomaga w ustawianiu opcji
-WeeChat i wtyczek.
-
-Przykład bufora fset wyświetlający opcje zaczynające się od `weechat.look` :
-
-[subs="quotes"]
-....
-┌──────────────────────────────────────────────────────────────────────────────────────┐
-│1.weechat│1/121 | Filter: weechat.look.* | Sort: ~name | Key(input): alt+space=toggle │
-│2.fset   │weechat.look.bare_display_exit_on_input: exit the bare display mode on any c│
-│         │hanges in input [default: on]                                               │
-│         │----------------------------------------------------------------------------│
-│         │  weechat.look.align_end_of_lines                   integer  message        │
-│         │  weechat.look.align_multiline_words                boolean  on             │
-│         │  weechat.look.bar_more_down                        string   "++"           │
-│         │  weechat.look.bar_more_left                        string   "<<"           │
-│         │  weechat.look.bar_more_right                       string   ">>"           │
-│         │  weechat.look.bar_more_up                          string   "--"           │
-│         │##  weechat.look.bare_display_exit_on_input           boolean  on             ##│
-│         │  weechat.look.bare_display_time_format             string   "%H:%M"        │
-│         │  weechat.look.buffer_auto_renumber                 boolean  on             │
-│         │  weechat.look.buffer_notify_default                integer  all            │
-│         │  weechat.look.buffer_position                      integer  end            │
-│         │  weechat.look.buffer_search_case_sensitive         boolean  off            │
-│         │  weechat.look.buffer_search_force_default          boolean  off            │
-│         │  weechat.look.buffer_search_regex                  boolean  off            │
-│         │  weechat.look.buffer_search_where                  integer  prefix_message │
-│         │  weechat.look.buffer_time_format                   string   "%H:%M:%S"     │
-│         │  weechat.look.buffer_time_same                     string   ""             │
-│         │[12:55] [2] [fset] 2:fset                                                   │
-│         │█                                                                           │
-└──────────────────────────────────────────────────────────────────────────────────────┘
-....
-
-[[fset_commands]]
-==== Komendy
-
-include::includes/autogen_user_commands.pl.adoc[tag=fset_commands]
-
-[[fset_options]]
-==== Opcje
-
-Sekcje w pliku _fset.conf_:
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Sekcja | Komenda            | Opis
-| color  | /set fset.color.*  | Kolory.
-| format | /set fset.format.* | Formaty używane do wyświetlenia listy opcji.
-| look   | /set fset.look.*   | Wygląd.
-|===
-
-Opcje:
-
-include::includes/autogen_user_options.pl.adoc[tag=fset_options]
-
 [[key_bindings]]
 == Skróty klawiszowe
 
@@ -1881,6 +1822,65 @@ Te skróty klawiszowe i akcje mogą zostać użyte w buforze skryptów (zobacz <
 
 [[configuration]]
 == Konfiguracja
+
+[[fset]]
+=== Fset
+
+Wtyczka Fast Set wyświetla listę opcji w buforze i pomaga w ustawianiu opcji
+WeeChat i wtyczek.
+
+Przykład bufora fset wyświetlający opcje zaczynające się od `weechat.look` :
+
+[subs="quotes"]
+....
+┌──────────────────────────────────────────────────────────────────────────────────────┐
+│1.weechat│1/121 | Filter: weechat.look.* | Sort: ~name | Key(input): alt+space=toggle │
+│2.fset   │weechat.look.bare_display_exit_on_input: exit the bare display mode on any c│
+│         │hanges in input [default: on]                                               │
+│         │----------------------------------------------------------------------------│
+│         │  weechat.look.align_end_of_lines                   integer  message        │
+│         │  weechat.look.align_multiline_words                boolean  on             │
+│         │  weechat.look.bar_more_down                        string   "++"           │
+│         │  weechat.look.bar_more_left                        string   "<<"           │
+│         │  weechat.look.bar_more_right                       string   ">>"           │
+│         │  weechat.look.bar_more_up                          string   "--"           │
+│         │##  weechat.look.bare_display_exit_on_input           boolean  on             ##│
+│         │  weechat.look.bare_display_time_format             string   "%H:%M"        │
+│         │  weechat.look.buffer_auto_renumber                 boolean  on             │
+│         │  weechat.look.buffer_notify_default                integer  all            │
+│         │  weechat.look.buffer_position                      integer  end            │
+│         │  weechat.look.buffer_search_case_sensitive         boolean  off            │
+│         │  weechat.look.buffer_search_force_default          boolean  off            │
+│         │  weechat.look.buffer_search_regex                  boolean  off            │
+│         │  weechat.look.buffer_search_where                  integer  prefix_message │
+│         │  weechat.look.buffer_time_format                   string   "%H:%M:%S"     │
+│         │  weechat.look.buffer_time_same                     string   ""             │
+│         │[12:55] [2] [fset] 2:fset                                                   │
+│         │█                                                                           │
+└──────────────────────────────────────────────────────────────────────────────────────┘
+....
+
+[[fset_commands]]
+==== Komendy
+
+include::includes/autogen_user_commands.pl.adoc[tag=fset_commands]
+
+[[fset_options]]
+==== Opcje
+
+Sekcje w pliku _fset.conf_:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Sekcja | Komenda            | Opis
+| color  | /set fset.color.*  | Kolory.
+| format | /set fset.format.* | Formaty używane do wyświetlenia listy opcji.
+| look   | /set fset.look.*   | Wygląd.
+|===
+
+Opcje:
+
+include::includes/autogen_user_options.pl.adoc[tag=fset_options]
 
 [[colors]]
 === Kolory
