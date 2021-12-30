@@ -4315,6 +4315,8 @@ ${buffer[${tg_signal_data}].full_name}
 | tg_tag_prefix_nick | стринг | Боја надимка у префиксу (из ознаке „prefix_nick_ccc”).
 | tg_tag_host        | стринг | Корисничко име и хост, формат: корисничкоиме@хост (из ознаке „host_xxx”).
 | tg_tag_notify      | стринг | Ниво обавештавања (_none_, _message_, _private_, _highlight_).
+// TRANSLATION MISSING
+| tg_tag_irc_xxx     | стринг | IRC message tag (key "xxx").
 | tg_notify          | стринг | Ниво обавештавања, ако се разликује од _none_.
 | tg_msg_pv          | стринг | „1” за приватну поруку, у супротном „0”.
 |===
@@ -4348,6 +4350,8 @@ ${buffer[${tg_signal_data}].full_name}
 | tg_tag_prefix_nick | стринг | Боја надимка у префиксу (из ознаке „prefix_nick_ccc”).
 | tg_tag_host        | стринг | Корисничко име и хост, формат: корисничкоиме@хост (из ознаке „host_xxx”).
 | tg_tag_notify      | стринг | Ниво обавештавања (_none_, _message_, _private_, _highlight_).
+// TRANSLATION MISSING
+| tg_tag_irc_xxx     | стринг | IRC message tag (key "xxx").
 | tg_notify          | стринг | Ниво обавештавања, ако се разликује од _none_.
 | tg_msg_pv          | стринг | „1” за приватну поруку, у супротном „0”.
 |===

@@ -4759,6 +4759,8 @@ _weechat_print_ 修飾子では、メッセージタグを使う変数 (下の
 | tg_tag_prefix_nick | string | プレフィックスで使うニックネームの色 ("prefix_nick_ccc" タグから)
 | tg_tag_host        | string | ユーザ名とホスト名、書式: username@host ("host_xxx" タグから)
 | tg_tag_notify      | string | 通知レベル (_none_、_message_、_private_、_highlight_)
+// TRANSLATION MISSING
+| tg_tag_irc_xxx     | string | IRC message tag (key "xxx").
 | tg_notify          | string | 通知レベルが _none_ 以外の場合、その通知レベル
 | tg_msg_pv          | string | プライベートメッセージの場合 "1"、それ以外は "0"
 |===
@@ -4792,6 +4794,8 @@ _weechat_print_ 修飾子では、メッセージタグを使う変数 (下の
 | tg_tag_prefix_nick | string | プレフィックスで使うニックネームの色 ("prefix_nick_ccc" タグから)
 | tg_tag_host        | string | ユーザ名とホスト名、書式: username@host ("host_xxx" タグから)
 | tg_tag_notify      | string | 通知レベル (_none_、_message_、_private_、_highlight_)
+// TRANSLATION MISSING
+| tg_tag_irc_xxx     | string | IRC message tag (key "xxx").
 | tg_notify          | string | 通知レベルが _none_ 以外の場合、その通知レベル
 | tg_msg_pv          | string | プライベートメッセージの場合 "1"、それ以外は "0"
 |===
