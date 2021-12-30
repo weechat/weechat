@@ -4780,10 +4780,18 @@ Variables définies avec les étiquettes du message :
 | tg_tag_prefix_nick | chaîne | Couleur du pseudo dans le préfixe (depuis l'étiquette "prefix_nick_ccc").
 | tg_tag_host        | chaîne | Nom d'utilisateur et hôte, format : utilisateur@hôte (depuis l'étiquette "host_xxx").
 | tg_tag_notify      | chaîne | Niveau de notification (_none_, _message_, _private_, _highlight_).
-| tg_tag_irc_xxx     | chaîne | Étiquette de message IRC (clé "xxx").
+| tg_tag_irc_xxx     | chaîne | Étiquette de message IRC (clé "xxx"). ^(1)^
 | tg_notify          | chaîne | Niveau de notification, si différent de _none_.
 | tg_msg_pv          | chaîne | "1" pour un message privé, sinon "0".
 |===
+
+[NOTE]
+====
+^(1)^ Des caractères spéciaux sont remplacés dans l'étiquette IRC :
+
+* clé : `_` -> `-` et `,` -> `;`
+* valeur : `,` -> `;`
+====
 
 [[trigger_data_print]]
 ==== Print
@@ -4815,10 +4823,18 @@ Variables définies avec les étiquettes du message :
 | tg_tag_prefix_nick | chaîne | Couleur du pseudo dans le préfixe (depuis l'étiquette "prefix_nick_ccc").
 | tg_tag_host        | chaîne | Nom d'utilisateur et hôte, format : utilisateur@hôte (depuis l'étiquette "host_xxx").
 | tg_tag_notify      | chaîne | Niveau de notification (_none_, _message_, _private_, _highlight_).
-| tg_tag_irc_xxx     | chaîne | Étiquette de message IRC (clé "xxx").
+| tg_tag_irc_xxx     | chaîne | Étiquette de message IRC (clé "xxx"). ^(1)^
 | tg_notify          | chaîne | Niveau de notification, si différent de _none_.
 | tg_msg_pv          | chaîne | "1" pour un message privé, sinon "0".
 |===
+
+[NOTE]
+====
+^(1)^ Des caractères spéciaux sont remplacés dans l'étiquette IRC :
+
+* clé : `_` -> `-` et `,` -> `;`
+* valeur : `,` -> `;`
+====
 
 [[trigger_data_command]]
 ==== Command

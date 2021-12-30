@@ -4721,7 +4721,6 @@ The regular expression is used to change variables in callback hashtable.
 The format is: "/regex/replace" or "/regex/replace/var" (where _var_ is a
 variable of the hashtable).
 
-// TRANSLATION MISSING
 If _var_ does not exist in the hashtable, it is created automatically with an
 empty value. This allows to create custom temporary variables.
 
@@ -4815,10 +4814,8 @@ using the command:
 /trigger monitor
 ----
 
-// TRANSLATION MISSING
 All callbacks set following variables in hashtable:
 
-// TRANSLATION MISSING
 [width="100%",cols="3m,2,14",options="header"]
 |===
 | Variable        | Type   | Description
@@ -4930,7 +4927,6 @@ The "line" callback sets following variables in hashtable:
 | str_time           | string  | Date for display. It may contain color codes.
 | tags               | string  | Tags of message (with comma added at beginning/end of string).
 | displayed          | string  | "1" if displayed, "0" if line filtered.
-// TRANSLATION MISSING
 | notify_level       | string  | "-1" = no notify, "0" = low level, "1" = message, "2" = private message, "3" = highlight
 | highlight          | string  | "1" if highlight, otherwise "0".
 | prefix             | string  | Prefix.
@@ -4949,11 +4945,18 @@ Variables set using tags in message:
 | tg_tag_prefix_nick | string | Color of nick in prefix (from tag "prefix_nick_ccc").
 | tg_tag_host        | string | User name and host, format: username@host (from tag "host_xxx").
 | tg_tag_notify      | string | Notify level (_none_, _message_, _private_, _highlight_).
-// TRANSLATION MISSING
-| tg_tag_irc_xxx     | string | IRC message tag (key "xxx").
+| tg_tag_irc_xxx     | string | IRC message tag (key "xxx"). ^(1)^
 | tg_notify          | string | Notify level, if different from _none_.
 | tg_msg_pv          | string | "1" for a private message, otherwise "0".
 |===
+
+[NOTE]
+====
+^(1)^ Special chars are replaced in IRC tag:
+
+* key: `_` -> `-` and `,` -> `;`
+* value: `,` -> `;`
+====
 
 [[trigger_data_print]]
 ==== Print
@@ -4984,11 +4987,18 @@ Variables set using tags in message:
 | tg_tag_prefix_nick | string | Color of nick in prefix (from tag "prefix_nick_ccc").
 | tg_tag_host        | string | User name and host, format: username@host (from tag "host_xxx").
 | tg_tag_notify      | string | Notify level (_none_, _message_, _private_, _highlight_).
-// TRANSLATION MISSING
-| tg_tag_irc_xxx     | string | IRC message tag (key "xxx").
+| tg_tag_irc_xxx     | string | IRC message tag (key "xxx"). ^(1)^
 | tg_notify          | string | Notify level, if different from _none_.
 | tg_msg_pv          | string | "1" for a private message, otherwise "0".
 |===
+
+[NOTE]
+====
+^(1)^ Special chars are replaced in IRC tag:
+
+* key: `_` -> `-` and `,` -> `;`
+* value: `,` -> `;`
+====
 
 [[trigger_data_command]]
 ==== Command
@@ -5002,9 +5012,7 @@ The "command" callback sets following variables in hashtable:
 | tg_argc        | string  | The number of arguments (the command itself counts for one).
 | tg_argvN       | string  | Argument #N (`+tg_argv0+` is the command itself, the others are command arguments).
 | tg_argv_eolN   | string  | From argument #N until end of arguments (`+tg_argv_eol0+` includes the command itself).
-// TRANSLATION MISSING
 | tg_shell_argc  | string  | The number of arguments with a split like the shell does (the command itself counts for one).
-// TRANSLATION MISSING
 | tg_shell_argvN | string  | Argument #N with a split like the shell does (`+tg_shell_argv0+` is the command itself, the others are command arguments).
 |===
 

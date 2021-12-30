@@ -4619,10 +4619,18 @@ Variables set using tags in message:
 | tg_tag_prefix_nick | string | Color of nick in prefix (from tag "prefix_nick_ccc").
 | tg_tag_host        | string | User name and host, format: username@host (from tag "host_xxx").
 | tg_tag_notify      | string | Notify level (_none_, _message_, _private_, _highlight_).
-| tg_tag_irc_xxx     | string | IRC message tag (key "xxx").
+| tg_tag_irc_xxx     | string | IRC message tag (key "xxx"). ^(1)^
 | tg_notify          | string | Notify level, if different from _none_.
 | tg_msg_pv          | string | "1" for a private message, otherwise "0".
 |===
+
+[NOTE]
+====
+^(1)^ Special chars are replaced in IRC tag:
+
+* key: `_` -> `-` and `,` -> `;`
+* value: `,` -> `;`
+====
 
 [[trigger_data_print]]
 ==== Print
@@ -4653,10 +4661,18 @@ Variables set using tags in message:
 | tg_tag_prefix_nick | string | Color of nick in prefix (from tag "prefix_nick_ccc").
 | tg_tag_host        | string | User name and host, format: username@host (from tag "host_xxx").
 | tg_tag_notify      | string | Notify level (_none_, _message_, _private_, _highlight_).
-| tg_tag_irc_xxx     | string | IRC message tag (key "xxx").
+| tg_tag_irc_xxx     | string | IRC message tag (key "xxx"). ^(1)^
 | tg_notify          | string | Notify level, if different from _none_.
 | tg_msg_pv          | string | "1" for a private message, otherwise "0".
 |===
+
+[NOTE]
+====
+^(1)^ Special chars are replaced in IRC tag:
+
+* key: `_` -> `-` and `,` -> `;`
+* value: `,` -> `;`
+====
 
 [[trigger_data_command]]
 ==== Command

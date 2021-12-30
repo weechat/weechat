@@ -4729,10 +4729,19 @@ Variablen die mittels Tags in der Nachricht gesetzt werden:
 | tg_tag_host        | string | Username und Host, Format: username@host (extrahiert aus Tag "host_xxx").
 | tg_tag_notify      | string | Benachrichtigungsstufe (_none_, _message_, _private_, _highlight_).
 // TRANSLATION MISSING
-| tg_tag_irc_xxx     | string | IRC message tag (key "xxx").
+| tg_tag_irc_xxx     | string | IRC message tag (key "xxx"). ^(1)^
 | tg_notify          | string | Benachrichtigungsstufe, falls von _none_ abweichend.
 | tg_msg_pv          | string | "1" für eine private Nachricht, andernfalls "0".
 |===
+
+// TRANSLATION MISSING
+[NOTE]
+====
+^(1)^ Special chars are replaced in IRC tag:
+
+* key: `_` -> `-` and `,` -> `;`
+* value: `,` -> `;`
+====
 
 [[trigger_data_print]]
 ==== Print
@@ -4764,10 +4773,19 @@ Variablen die mittels Tags in der Nachricht gesetzt werden:
 | tg_tag_host        | string | Username und Host, Format: username@host (extrahiert aus Tag "host_xxx").
 | tg_tag_notify      | string | Benachrichtigungsstufe (_none_, _message_, _private_, _highlight_).
 // TRANSLATION MISSING
-| tg_tag_irc_xxx     | string | IRC message tag (key "xxx").
+| tg_tag_irc_xxx     | string | IRC message tag (key "xxx"). ^(1)^
 | tg_notify          | string | Benachrichtigungsstufe, falls von _none_ abweichend.
 | tg_msg_pv          | string | "1" für eine private Nachricht, andernfalls "0".
 |===
+
+// TRANSLATION MISSING
+[NOTE]
+====
+^(1)^ Special chars are replaced in IRC tag:
+
+* key: `_` -> `-` and `,` -> `;`
+* value: `,` -> `;`
+====
 
 [[trigger_data_command]]
 ==== Command

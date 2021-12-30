@@ -4316,10 +4316,19 @@ ${buffer[${tg_signal_data}].full_name}
 | tg_tag_host        | стринг | Корисничко име и хост, формат: корисничкоиме@хост (из ознаке „host_xxx”).
 | tg_tag_notify      | стринг | Ниво обавештавања (_none_, _message_, _private_, _highlight_).
 // TRANSLATION MISSING
-| tg_tag_irc_xxx     | стринг | IRC message tag (key "xxx").
+| tg_tag_irc_xxx     | стринг | IRC message tag (key "xxx"). ^(1)^
 | tg_notify          | стринг | Ниво обавештавања, ако се разликује од _none_.
 | tg_msg_pv          | стринг | „1” за приватну поруку, у супротном „0”.
 |===
+
+// TRANSLATION MISSING
+[NOTE]
+====
+^(1)^ Special chars are replaced in IRC tag:
+
+* key: `_` -> `-` and `,` -> `;`
+* value: `,` -> `;`
+====
 
 [[trigger_data_print]]
 ==== Print
@@ -4351,10 +4360,19 @@ ${buffer[${tg_signal_data}].full_name}
 | tg_tag_host        | стринг | Корисничко име и хост, формат: корисничкоиме@хост (из ознаке „host_xxx”).
 | tg_tag_notify      | стринг | Ниво обавештавања (_none_, _message_, _private_, _highlight_).
 // TRANSLATION MISSING
-| tg_tag_irc_xxx     | стринг | IRC message tag (key "xxx").
+| tg_tag_irc_xxx     | стринг | IRC message tag (key "xxx"). ^(1)^
 | tg_notify          | стринг | Ниво обавештавања, ако се разликује од _none_.
 | tg_msg_pv          | стринг | „1” за приватну поруку, у супротном „0”.
 |===
+
+// TRANSLATION MISSING
+[NOTE]
+====
+^(1)^ Special chars are replaced in IRC tag:
+
+* key: `_` -> `-` and `,` -> `;`
+* value: `,` -> `;`
+====
 
 [[trigger_data_command]]
 ==== Команда
