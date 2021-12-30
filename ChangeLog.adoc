@@ -20,6 +20,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 New features::
 
+  * irc: add IRC message tags in messages displayed (issue #1680)
   * relay: add `zstd` (https://facebook.github.io/zstd/[Zstandard]) compression in weechat protocol, remove option `compression` from `init` command, rename option relay.network.compression_level to relay.network.compression
 
 Bug fixes::

@@ -36,6 +36,7 @@ extern const char *irc_ctcp_get_reply (struct t_irc_server *server,
                                        const char *ctcp);
 extern void irc_ctcp_display_reply_from_nick (struct t_irc_server *server,
                                               time_t date,
+                                              struct t_hashtable *tags,
                                               const char *command,
                                               const char *nick,
                                               const char *address,
@@ -43,7 +44,8 @@ extern void irc_ctcp_display_reply_from_nick (struct t_irc_server *server,
 extern char *irc_ctcp_replace_variables (struct t_irc_server *server,
                                          const char *format);
 extern void irc_ctcp_recv (struct t_irc_server *server, time_t date,
-                           const char *command, struct t_irc_channel *channel,
+                           struct t_hashtable *tags, const char *command,
+                           struct t_irc_channel *channel,
                            const char *address, const char *nick,
                            const char *remote_nick, const char *arguments,
                            const char *message);

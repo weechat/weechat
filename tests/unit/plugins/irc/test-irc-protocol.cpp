@@ -238,51 +238,91 @@ TEST(IrcProtocol, LogLevelForCommand)
 
 TEST(IrcProtocol, Tags)
 {
-    POINTERS_EQUAL(NULL, irc_protocol_tags (NULL, NULL, NULL, NULL));
+    struct t_hashtable *tags_empty, *tags_1, *tags_2;
+
+    tags_empty = hashtable_new (32,
+                                WEECHAT_HASHTABLE_STRING,
+                                WEECHAT_HASHTABLE_STRING,
+                                NULL, NULL);
+
+    tags_1 = hashtable_new (32,
+                            WEECHAT_HASHTABLE_STRING,
+                            WEECHAT_HASHTABLE_STRING,
+                            NULL, NULL);
+    hashtable_set (tags_1, "key1", "value1");
+
+    tags_2 = hashtable_new (32,
+                            WEECHAT_HASHTABLE_STRING,
+                            WEECHAT_HASHTABLE_STRING,
+                            NULL, NULL);
+    hashtable_set (tags_2, "key1", "value1");
+    hashtable_set (tags_2, "key_2,comma", "value2,comma");
+
+    POINTERS_EQUAL(NULL, irc_protocol_tags (NULL, NULL, NULL, NULL, NULL));
 
     /* command */
     STRCMP_EQUAL("irc_privmsg,log1",
-                 irc_protocol_tags ("privmsg", NULL, NULL, NULL));
+                 irc_protocol_tags ("privmsg", NULL, NULL, NULL, NULL));
     STRCMP_EQUAL("irc_join,log4",
-                 irc_protocol_tags ("join", NULL, NULL, NULL));
+                 irc_protocol_tags ("join", NULL, NULL, NULL, NULL));
 
-    /* command and empty tags */
+    /* command + irc_msg_tags */
     STRCMP_EQUAL("irc_privmsg,log1",
-                 irc_protocol_tags ("privmsg", "", NULL, NULL));
+                 irc_protocol_tags ("privmsg", tags_empty, NULL, NULL, NULL));
     STRCMP_EQUAL("irc_join,log4",
-                 irc_protocol_tags ("join", "", NULL, NULL));
+                 irc_protocol_tags ("join", tags_empty, NULL, NULL, NULL));
+    STRCMP_EQUAL("irc_privmsg,irc_tag_key1_value1,log1",
+                 irc_protocol_tags ("privmsg", tags_1, NULL, NULL, NULL));
+    STRCMP_EQUAL("irc_join,irc_tag_key1_value1,log4",
+                 irc_protocol_tags ("join", tags_1, NULL, NULL, NULL));
+    STRCMP_EQUAL("irc_privmsg,irc_tag_key1_value1,irc_tag_key-2;comma_value2;comma,log1",
+                 irc_protocol_tags ("privmsg", tags_2, NULL, NULL, NULL));
+    STRCMP_EQUAL("irc_join,irc_tag_key1_value1,irc_tag_key-2;comma_value2;comma,log4",
+                 irc_protocol_tags ("join", tags_2, NULL, NULL, NULL));
 
-    /* command and tags */
+    /* command + extra_tags */
+    STRCMP_EQUAL("irc_privmsg,log1",
+                 irc_protocol_tags ("privmsg", NULL, "", NULL, NULL));
+    STRCMP_EQUAL("irc_join,log4",
+                 irc_protocol_tags ("join", NULL, "", NULL, NULL));
     STRCMP_EQUAL("irc_privmsg,tag1,tag2,log1",
-                 irc_protocol_tags ("privmsg", "tag1,tag2", NULL, NULL));
+                 irc_protocol_tags ("privmsg", NULL, "tag1,tag2", NULL, NULL));
     STRCMP_EQUAL("irc_join,tag1,tag2,log4",
-                 irc_protocol_tags ("join", "tag1,tag2", NULL, NULL));
+                 irc_protocol_tags ("join", NULL, "tag1,tag2", NULL, NULL));
 
-    /* command, tags and empty nick */
-    STRCMP_EQUAL("irc_privmsg,tag1,tag2,log1",
-                 irc_protocol_tags ("privmsg", "tag1,tag2", "", NULL));
-    STRCMP_EQUAL("irc_join,tag1,tag2,log4",
-                 irc_protocol_tags ("join", "tag1,tag2", "", NULL));
+    /* command + irc_msg_tags + extra_tags + nick */
+    STRCMP_EQUAL("irc_privmsg,irc_tag_key1_value1,irc_tag_key-2;comma_value2;comma,"
+                 "tag1,tag2,log1",
+                 irc_protocol_tags ("privmsg", tags_2, "tag1,tag2", "", NULL));
+    STRCMP_EQUAL("irc_join,irc_tag_key1_value1,irc_tag_key-2;comma_value2;comma,"
+                 "tag1,tag2,log4",
+                 irc_protocol_tags ("join", tags_2, "tag1,tag2", "", NULL));
+    STRCMP_EQUAL("irc_privmsg,irc_tag_key1_value1,irc_tag_key-2;comma_value2;comma,"
+                 "tag1,tag2,nick_alice,log1",
+                 irc_protocol_tags ("privmsg", tags_2, "tag1,tag2", "alice", NULL));
+    STRCMP_EQUAL("irc_join,irc_tag_key1_value1,irc_tag_key-2;comma_value2;comma,"
+                 "tag1,tag2,nick_bob,log4",
+                 irc_protocol_tags ("join", tags_2, "tag1,tag2", "bob", NULL));
 
-    /* command, tags and nick */
-    STRCMP_EQUAL("irc_privmsg,tag1,tag2,nick_alice,log1",
-                 irc_protocol_tags ("privmsg", "tag1,tag2", "alice", NULL));
-    STRCMP_EQUAL("irc_join,tag1,tag2,nick_bob,log4",
-                 irc_protocol_tags ("join", "tag1,tag2", "bob", NULL));
-
-    /* command, tags, nick and empty address */
-    STRCMP_EQUAL("irc_privmsg,tag1,tag2,nick_alice,log1",
-                 irc_protocol_tags ("privmsg", "tag1,tag2", "alice", ""));
-    STRCMP_EQUAL("irc_join,tag1,tag2,nick_bob,log4",
-                 irc_protocol_tags ("join", "tag1,tag2", "bob", ""));
-
-    /* command, tags, nick and address */
-    STRCMP_EQUAL("irc_privmsg,tag1,tag2,nick_alice,host_example.com,log1",
-                 irc_protocol_tags ("privmsg", "tag1,tag2", "alice",
+    /* command + irc_msg_tags + extra_tags + nick + address */
+    STRCMP_EQUAL("irc_privmsg,irc_tag_key1_value1,irc_tag_key-2;comma_value2;comma,"
+                 "tag1,tag2,nick_alice,log1",
+                 irc_protocol_tags ("privmsg", tags_2, "tag1,tag2", "alice", ""));
+    STRCMP_EQUAL("irc_join,irc_tag_key1_value1,irc_tag_key-2;comma_value2;comma,"
+                 "tag1,tag2,nick_bob,log4",
+                 irc_protocol_tags ("join", tags_2, "tag1,tag2", "bob", ""));
+    STRCMP_EQUAL("irc_privmsg,irc_tag_key1_value1,irc_tag_key-2;comma_value2;comma,"
+                 "tag1,tag2,nick_alice,host_example.com,log1",
+                 irc_protocol_tags ("privmsg", tags_2, "tag1,tag2", "alice",
                                     "example.com"));
-    STRCMP_EQUAL("irc_join,tag1,tag2,nick_bob,host_example.com,log4",
-                 irc_protocol_tags ("join", "tag1,tag2", "bob",
+    STRCMP_EQUAL("irc_join,irc_tag_key1_value1,irc_tag_key-2;comma_value2;comma,"
+                 "tag1,tag2,nick_bob,host_example.com,log4",
+                 irc_protocol_tags ("join", tags_2, "tag1,tag2", "bob",
                                     "example.com"));
+
+    hashtable_free (tags_empty);
+    hashtable_free (tags_1);
+    hashtable_free (tags_2);
 }
 
 /*

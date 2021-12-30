@@ -93,8 +93,11 @@ struct t_irc_protocol_msg
     t_irc_recv_func *recv_function; /* function called when msg is received  */
 };
 
-extern const char *irc_protocol_tags (const char *command, const char *tags,
-                                      const char *nick, const char *address);
+extern const char *irc_protocol_tags (const char *command,
+                                      struct t_hashtable *irc_msg_tags,
+                                      const char *extra_tags,
+                                      const char *nick,
+                                      const char *address);
 extern time_t irc_protocol_parse_time (const char *time);
 extern void irc_protocol_recv_command (struct t_irc_server *server,
                                        const char *irc_message,
