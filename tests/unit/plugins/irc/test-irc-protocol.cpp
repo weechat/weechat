@@ -2976,16 +2976,21 @@ TEST(IrcProtocolWithServer, 344)
     RECV(":server 344 alice #test");
     CHECK_ERROR_PARAMS("344", 2, 3);
 
+    /* channel reop (IRCnet) */
     RECV(":server 344 alice #test nick!user@host");
     CHECK_SRV("-- Channel reop #test: nick!user@host");
     RECV(":server 344 alice #test :nick!user@host");
     CHECK_SRV("-- Channel reop #test: nick!user@host");
 
-    /* channel not found */
+    /* channel reop (IRCnet), channel not found */
     RECV(":server 344 alice #xyz nick!user@host");
     CHECK_SRV("-- Channel reop #xyz: nick!user@host");
     RECV(":server 344 alice #xyz :nick!user@host");
     CHECK_SRV("-- Channel reop #xyz: nick!user@host");
+
+    /* whois, geo info (UnrealIRCd) */
+    RECV(":server 344 alice bob FR :is connecting from France");
+    CHECK_SRV("-- [bob] FR is connecting from France");
 }
 
 /*

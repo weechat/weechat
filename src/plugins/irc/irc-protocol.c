@@ -3954,7 +3954,7 @@ IRC_PROTOCOL_CALLBACK(306)
  * Callback for the whois commands with nick and message.
  *
  * Command looks like:
- *   319 flashy FlashCode :some text here
+ *   319 mynick nick :some text here
  */
 
 IRC_PROTOCOL_CALLBACK(whois_nick_msg)
@@ -3989,7 +3989,7 @@ IRC_PROTOCOL_CALLBACK(whois_nick_msg)
  * Callback for the whowas commands with nick and message.
  *
  * Command looks like:
- *   369 flashy FlashCode :some text here
+ *   369 mynick nick :some text here
  */
 
 IRC_PROTOCOL_CALLBACK(whowas_nick_msg)
@@ -4945,10 +4945,13 @@ IRC_PROTOCOL_CALLBACK(341)
 }
 
 /*
- * Callback for the IRC command "344": channel reop.
+ * Callback for the IRC command "344": channel reop or whois geo info.
  *
- * Command looks like:
+ * Command looks like, on IRCnet:
  *   344 mynick #channel nick!user@host
+ *
+ * Command looks like, on UnrealIRCd:
+ *   344 mynick nick FR :is connecting from France
  */
 
 IRC_PROTOCOL_CALLBACK(344)
@@ -4957,22 +4960,31 @@ IRC_PROTOCOL_CALLBACK(344)
 
     IRC_PROTOCOL_MIN_PARAMS(3);
 
-    str_host = irc_protocol_string_params (params, 2, num_params - 1);
-
-    weechat_printf_date_tags (
-        irc_msgbuffer_get_target_buffer (server, NULL, command, "reop", NULL),
-        date,
-        irc_protocol_tags (command, tags, "irc_numeric", NULL, NULL),
-        _("%sChannel reop %s%s%s: %s%s"),
-        weechat_prefix ("network"),
-        IRC_COLOR_CHAT_CHANNEL,
-        params[1],
-        IRC_COLOR_RESET,
-        IRC_COLOR_CHAT_HOST,
-        str_host);
-
-    if (str_host)
-        free (str_host);
+    if (irc_channel_is_channel (server, params[1]))
+    {
+        /* channel reop (IRCnet) */
+        str_host = irc_protocol_string_params (params, 2, num_params - 1);
+        weechat_printf_date_tags (
+            irc_msgbuffer_get_target_buffer (server, NULL, command, "reop", NULL),
+            date,
+            irc_protocol_tags (command, tags, "irc_numeric", NULL, NULL),
+            _("%sChannel reop %s%s%s: %s%s"),
+            weechat_prefix ("network"),
+            IRC_COLOR_CHAT_CHANNEL,
+            params[1],
+            IRC_COLOR_RESET,
+            IRC_COLOR_CHAT_HOST,
+            str_host);
+        if (str_host)
+            free (str_host);
+    }
+    else
+    {
+        /* whois, geo info (UnrealIRCd) */
+        irc_protocol_cb_whois_nick_msg (server, date, irc_message, tags, nick,
+                                        address, host, command, ignored,
+                                        params, num_params);
+    }
 
     return WEECHAT_RC_OK;
 }
@@ -7146,7 +7158,7 @@ irc_protocol_recv_command (struct t_irc_server *server,
         IRCB(338, 1, 0, 338),            /* whois (host)                    */
         IRCB(341, 1, 0, 341),            /* inviting                        */
         IRCB(343, 1, 0, 330_343),        /* is opered as                    */
-        IRCB(344, 1, 0, 344),            /* channel reop                    */
+        IRCB(344, 1, 0, 344),            /* channel reop / whois (geo info) */
         IRCB(345, 1, 0, 345),            /* end of channel reop list        */
         IRCB(346, 1, 0, 346),            /* invite list                     */
         IRCB(347, 1, 0, 347),            /* end of invite list              */
