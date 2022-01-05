@@ -4881,34 +4881,44 @@ IRC_PROTOCOL_CALLBACK(333)
  *
  * Command looks like:
  *   338 mynick nick host :actually using host
+ *
+ * On Rizon server:
+ *   338 mynick nick :is actually user@host [ip]
  */
 
 IRC_PROTOCOL_CALLBACK(338)
 {
     char *str_text;
 
-    IRC_PROTOCOL_MIN_PARAMS(4);
+    IRC_PROTOCOL_MIN_PARAMS(3);
 
-    str_text = irc_protocol_string_params (params, 3, num_params - 1);
-
-    weechat_printf_date_tags (
-        irc_msgbuffer_get_target_buffer (
-            server, params[1], command, "whois", NULL),
-        date,
-        irc_protocol_tags (command, tags, "irc_numeric", NULL, NULL),
-        "%s%s[%s%s%s]%s %s %s%s",
-        weechat_prefix ("network"),
-        IRC_COLOR_CHAT_DELIMITERS,
-        irc_nick_color_for_msg (server, 1, NULL, params[1]),
-        params[1],
-        IRC_COLOR_CHAT_DELIMITERS,
-        IRC_COLOR_RESET,
-        str_text,
-        IRC_COLOR_CHAT_HOST,
-        params[2]);
-
-    if (str_text)
-        free (str_text);
+    if (num_params < 4)
+    {
+        irc_protocol_cb_whois_nick_msg (server, date, irc_message, tags, nick,
+                                        address, host, command, ignored,
+                                        params, num_params);
+    }
+    else
+    {
+        str_text = irc_protocol_string_params (params, 3, num_params - 1);
+        weechat_printf_date_tags (
+            irc_msgbuffer_get_target_buffer (
+                server, params[1], command, "whois", NULL),
+            date,
+            irc_protocol_tags (command, tags, "irc_numeric", NULL, NULL),
+            "%s%s[%s%s%s]%s %s %s%s",
+            weechat_prefix ("network"),
+            IRC_COLOR_CHAT_DELIMITERS,
+            irc_nick_color_for_msg (server, 1, NULL, params[1]),
+            params[1],
+            IRC_COLOR_CHAT_DELIMITERS,
+            IRC_COLOR_RESET,
+            str_text,
+            IRC_COLOR_CHAT_HOST,
+            params[2]);
+        if (str_text)
+            free (str_text);
+    }
 
     return WEECHAT_RC_OK;
 }

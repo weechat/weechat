@@ -2924,16 +2924,18 @@ TEST(IrcProtocolWithServer, 338)
 
     /* not enough parameters */
     RECV(":server 338");
-    CHECK_ERROR_PARAMS("338", 0, 4);
+    CHECK_ERROR_PARAMS("338", 0, 3);
     RECV(":server 338 alice");
-    CHECK_ERROR_PARAMS("338", 1, 4);
+    CHECK_ERROR_PARAMS("338", 1, 3);
     RECV(":server 338 alice bob");
-    CHECK_ERROR_PARAMS("338", 2, 4);
-    RECV(":server 338 alice bob hostname");
-    CHECK_ERROR_PARAMS("338", 3, 4);
+    CHECK_ERROR_PARAMS("338", 2, 3);
 
     RECV(":server 338 alice bob hostname :actually using host");
     CHECK_SRV("-- [bob] actually using host hostname");
+
+    /* on Rizon server */
+    RECV(":server 338 alice bob :is actually bob@example.com [1.2.3.4]");
+    CHECK_SRV("-- [bob] is actually bob@example.com [1.2.3.4]");
 }
 
 /*
