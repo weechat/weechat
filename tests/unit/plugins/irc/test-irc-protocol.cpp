@@ -2484,20 +2484,20 @@ TEST(IrcProtocolWithServer, 311)
 
     /* not enough parameters */
     RECV(":server 311");
-    CHECK_ERROR_PARAMS("311", 0, 6);
+    CHECK_ERROR_PARAMS("311", 0, 3);
     RECV(":server 311 alice");
-    CHECK_ERROR_PARAMS("311", 1, 6);
+    CHECK_ERROR_PARAMS("311", 1, 3);
     RECV(":server 311 alice bob");
-    CHECK_ERROR_PARAMS("311", 2, 6);
+    CHECK_ERROR_PARAMS("311", 2, 3);
     RECV(":server 311 alice bob user");
-    CHECK_ERROR_PARAMS("311", 3, 6);
-    RECV(":server 311 alice bob user host");
-    CHECK_ERROR_PARAMS("311", 4, 6);
-    RECV(":server 311 alice bob user host *");
-    CHECK_ERROR_PARAMS("311", 5, 6);
 
+    /* standard parameters */
     RECV(":server 311 alice bob user host * :real name");
     CHECK_SRV("-- [bob] (user@host): real name");
+
+    /* non-standard parameters (using default whois callback) */
+    RECV(":server 311 alice bob user");
+    CHECK_SRV("-- [bob] user");
 }
 
 /*
@@ -2511,16 +2511,19 @@ TEST(IrcProtocolWithServer, 312)
 
     /* not enough parameters */
     RECV(":server 312");
-    CHECK_ERROR_PARAMS("312", 0, 4);
+    CHECK_ERROR_PARAMS("312", 0, 3);
     RECV(":server 312 alice");
-    CHECK_ERROR_PARAMS("312", 1, 4);
+    CHECK_ERROR_PARAMS("312", 1, 3);
     RECV(":server 312 alice bob");
-    CHECK_ERROR_PARAMS("312", 2, 4);
-    RECV(":server 312 alice bob server");
-    CHECK_ERROR_PARAMS("312", 3, 4);
+    CHECK_ERROR_PARAMS("312", 2, 3);
 
+    /* standard parameters */
     RECV(":server 312 alice bob server :https://example.com/");
     CHECK_SRV("-- [bob] server (https://example.com/)");
+
+    /* non-standard parameters (using default whois callback) */
+    RECV(":server 312 alice bob server");
+    CHECK_SRV("-- [bob] server");
 }
 
 /*
@@ -2534,20 +2537,19 @@ TEST(IrcProtocolWithServer, 314)
 
     /* not enough parameters */
     RECV(":server 314");
-    CHECK_ERROR_PARAMS("314", 0, 6);
+    CHECK_ERROR_PARAMS("314", 0, 3);
     RECV(":server 314 alice");
-    CHECK_ERROR_PARAMS("314", 1, 6);
+    CHECK_ERROR_PARAMS("314", 1, 3);
     RECV(":server 314 alice bob");
-    CHECK_ERROR_PARAMS("314", 2, 6);
-    RECV(":server 314 alice bob user");
-    CHECK_ERROR_PARAMS("314", 3, 6);
-    RECV(":server 314 alice bob user host");
-    CHECK_ERROR_PARAMS("314", 4, 6);
-    RECV(":server 314 alice bob user host *");
-    CHECK_ERROR_PARAMS("314", 5, 6);
+    CHECK_ERROR_PARAMS("314", 2, 3);
 
+    /* standard parameters */
     RECV(":server 314 alice bob user host * :real name");
     CHECK_SRV("-- [bob] (user@host) was real name");
+
+    /* non-standard parameters (using default whowas callback) */
+    RECV(":server 314 alice bob user");
+    CHECK_SRV("-- [bob] user");
 }
 
 /*
@@ -2727,18 +2729,21 @@ TEST(IrcProtocolWithServer, 327)
 
     /* not enough parameters */
     RECV(":server 327");
-    CHECK_ERROR_PARAMS("327", 0, 4);
+    CHECK_ERROR_PARAMS("327", 0, 3);
     RECV(":server 327 alice");
-    CHECK_ERROR_PARAMS("327", 1, 4);
+    CHECK_ERROR_PARAMS("327", 1, 3);
     RECV(":server 327 alice bob");
-    CHECK_ERROR_PARAMS("327", 2, 4);
-    RECV(":server 327 alice bob host");
-    CHECK_ERROR_PARAMS("327", 3, 4);
+    CHECK_ERROR_PARAMS("327", 2, 3);
 
+    /* standard parameters */
     RECV(":server 327 alice bob host 1.2.3.4");
     CHECK_SRV("-- [bob] host 1.2.3.4");
     RECV(":server 327 alice bob host 1.2.3.4 :real name");
     CHECK_SRV("-- [bob] host 1.2.3.4 (real name)");
+
+    /* non-standard parameters (using default whois callback) */
+    RECV(":server 327 alice bob host");
+    CHECK_SRV("-- [bob] host");
 }
 
 /*
