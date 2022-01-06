@@ -3478,9 +3478,7 @@ IRC_PROTOCOL_CALLBACK(001)
     if (irc_server_strcasecmp (server, server->nick, params[0]) != 0)
         irc_server_set_nick (server, params[0]);
 
-    irc_protocol_cb_numeric (server, date, irc_message,
-                             tags, nick, address, host, command,
-                             ignored, params, num_params);
+    IRC_PROTOCOL_RUN_CALLBACK(numeric);
 
     /* connection to IRC server is OK! */
     server->is_connected = 1;
@@ -3600,9 +3598,7 @@ IRC_PROTOCOL_CALLBACK(005)
 
     IRC_PROTOCOL_MIN_PARAMS(2);
 
-    irc_protocol_cb_numeric (server, date, irc_message,
-                             tags, nick, address, host, command,
-                             ignored, params, num_params);
+    IRC_PROTOCOL_RUN_CALLBACK(numeric);
 
     arg_last = (strstr (irc_message, " :")) ? num_params - 2 : num_params - 1;
 
@@ -4894,9 +4890,7 @@ IRC_PROTOCOL_CALLBACK(338)
 
     if (num_params < 4)
     {
-        irc_protocol_cb_whois_nick_msg (server, date, irc_message, tags, nick,
-                                        address, host, command, ignored,
-                                        params, num_params);
+        IRC_PROTOCOL_RUN_CALLBACK(whois_nick_msg);
     }
     else
     {
@@ -4991,9 +4985,7 @@ IRC_PROTOCOL_CALLBACK(344)
     else
     {
         /* whois, geo info (UnrealIRCd) */
-        irc_protocol_cb_whois_nick_msg (server, date, irc_message, tags, nick,
-                                        address, host, command, ignored,
-                                        params, num_params);
+        IRC_PROTOCOL_RUN_CALLBACK(whois_nick_msg);
     }
 
     return WEECHAT_RC_OK;
@@ -6247,9 +6239,7 @@ IRC_PROTOCOL_CALLBACK(432)
     const char *alternate_nick;
     struct t_gui_buffer *ptr_buffer;
 
-    irc_protocol_cb_generic_error (server, date, irc_message,
-                                   tags, nick, address, host, command,
-                                   ignored, params, num_params);
+    IRC_PROTOCOL_RUN_CALLBACK(generic_error);
 
     if (!server->is_connected)
     {
@@ -6332,10 +6322,7 @@ IRC_PROTOCOL_CALLBACK(433)
     }
     else
     {
-        return irc_protocol_cb_generic_error (server, date, irc_message,
-                                              tags, nick, address, host,
-                                              command, ignored,
-                                              params, num_params);
+        IRC_PROTOCOL_RUN_CALLBACK(generic_error);
     }
 
     return WEECHAT_RC_OK;
@@ -6353,9 +6340,7 @@ IRC_PROTOCOL_CALLBACK(437)
     const char *alternate_nick;
     struct t_gui_buffer *ptr_buffer;
 
-    irc_protocol_cb_generic_error (server, date, irc_message,
-                                   tags, nick, address, host, command,
-                                   ignored, params, num_params);
+    IRC_PROTOCOL_RUN_CALLBACK(generic_error);
 
     if (!server->is_connected)
     {
@@ -6459,9 +6444,7 @@ IRC_PROTOCOL_CALLBACK(470)
     char *old_channel_lower, *new_channel_lower, *buffer_name;
     int lines_count;
 
-    irc_protocol_cb_generic_error (server, date, irc_message,
-                                   tags, nick, address, host, command,
-                                   ignored, params, num_params);
+    IRC_PROTOCOL_RUN_CALLBACK(generic_error);
 
     if ((num_params >= 3) && !irc_channel_search (server, params[1]))
     {
@@ -7003,9 +6986,7 @@ IRC_PROTOCOL_CALLBACK(901)
     }
     else
     {
-        irc_protocol_cb_numeric (server, date, irc_message,
-                                 tags, nick, address, host, command,
-                                 ignored, params, num_params);
+        IRC_PROTOCOL_RUN_CALLBACK(numeric);
     }
 
     return WEECHAT_RC_OK;
@@ -7027,9 +7008,7 @@ IRC_PROTOCOL_CALLBACK(sasl_end_ok)
         server->hook_timer_sasl = NULL;
     }
 
-    irc_protocol_cb_numeric (server, date, irc_message,
-                             tags, nick, address, host, command,
-                             ignored, params, num_params);
+    IRC_PROTOCOL_RUN_CALLBACK(numeric);
 
     if (!server->is_connected)
         irc_server_sendf (server, 0, NULL, "CAP END");
@@ -7056,9 +7035,7 @@ IRC_PROTOCOL_CALLBACK(sasl_end_fail)
         server->hook_timer_sasl = NULL;
     }
 
-    irc_protocol_cb_numeric (server, date, irc_message,
-                             tags, nick, address, host, command,
-                             ignored, params, num_params);
+    IRC_PROTOCOL_RUN_CALLBACK(numeric);
 
     sasl_fail = IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_SASL_FAIL);
     if (!server->is_connected

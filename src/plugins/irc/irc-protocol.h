@@ -35,6 +35,12 @@
                                  int ignored,                           \
                                  const char **params,                   \
                                  int num_params)
+
+#define IRC_PROTOCOL_RUN_CALLBACK(__name)                               \
+    irc_protocol_cb_##__name (server, date, irc_message, tags, nick,    \
+                              address, host, command, ignored, params,  \
+                              num_params)
+
 #define IRCB(__message, __decode_color, __keep_trailing_spaces,         \
              __func_cb)                                                 \
     { #__message,                                                       \
