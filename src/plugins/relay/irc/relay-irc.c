@@ -1713,6 +1713,13 @@ relay_irc_recv (struct t_relay_client *client, const char *data)
                                     weechat_hashtable_set (hash_redirect, "pattern",
                                                            "mode_channel_ban_exception");
                                 }
+                                else if ((strcmp (irc_argv[1], "R") == 0)
+                                         || (strcmp (irc_argv[1], "+R") == 0))
+                                {
+                                    redirect_msg = 1;
+                                    weechat_hashtable_set (hash_redirect, "pattern",
+                                                           "mode_channel_reop");
+                                }
                                 else if ((strcmp (irc_argv[1], "I") == 0)
                                          || (strcmp (irc_argv[1], "+I") == 0))
                                 {

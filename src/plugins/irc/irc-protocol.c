@@ -4982,27 +4982,57 @@ IRC_PROTOCOL_CALLBACK(341)
 
 IRC_PROTOCOL_CALLBACK(344)
 {
-    char *str_host;
+    struct t_irc_channel *ptr_channel;
+    struct t_gui_buffer *ptr_buffer;
+    struct t_irc_modelist *ptr_modelist;
+    char str_number[64];
 
     IRC_PROTOCOL_MIN_PARAMS(3);
 
     if (irc_channel_is_channel (server, params[1]))
     {
         /* channel reop (IRCnet) */
-        str_host = irc_protocol_string_params (params, 2, num_params - 1);
+        ptr_channel = irc_channel_search (server, params[1]);
+        ptr_buffer = (ptr_channel && ptr_channel->nicks) ?
+            ptr_channel->buffer : server->buffer;
+        ptr_modelist = irc_modelist_search (ptr_channel, 'R');
+
+        if (ptr_modelist)
+        {
+            /* start receiving new list */
+            if (ptr_modelist->state != IRC_MODELIST_STATE_RECEIVING)
+            {
+                irc_modelist_item_free_all (ptr_modelist);
+                ptr_modelist->state = IRC_MODELIST_STATE_RECEIVING;
+            }
+
+            snprintf (str_number, sizeof (str_number),
+                      "%s[%s%d%s] ",
+                      IRC_COLOR_CHAT_DELIMITERS,
+                      IRC_COLOR_RESET,
+                      ((ptr_modelist->last_item) ? ptr_modelist->last_item->number + 1 : 0) + 1,
+                      IRC_COLOR_CHAT_DELIMITERS);
+        }
+        else
+            str_number[0] = '\0';
+
+        if (ptr_modelist)
+            irc_modelist_item_new (ptr_modelist, params[2], NULL, 0);
         weechat_printf_date_tags (
-            irc_msgbuffer_get_target_buffer (server, NULL, command, "reop", NULL),
+            irc_msgbuffer_get_target_buffer (
+                server, NULL, command, "reoplist", ptr_buffer),
             date,
             irc_protocol_tags (command, tags, "irc_numeric", NULL, NULL),
-            _("%sChannel reop %s%s%s: %s%s"),
+            _("%s%s[%s%s%s] %s%s%s%s reop"),
             weechat_prefix ("network"),
+            IRC_COLOR_CHAT_DELIMITERS,
             IRC_COLOR_CHAT_CHANNEL,
             params[1],
-            IRC_COLOR_RESET,
+            IRC_COLOR_CHAT_DELIMITERS,
+            str_number,
             IRC_COLOR_CHAT_HOST,
-            str_host);
-        if (str_host)
-            free (str_host);
+            params[2],
+            IRC_COLOR_RESET);
     }
     else
     {
@@ -5023,21 +5053,45 @@ IRC_PROTOCOL_CALLBACK(344)
 IRC_PROTOCOL_CALLBACK(345)
 {
     char *str_params;
+    struct t_irc_channel *ptr_channel;
+    struct t_gui_buffer *ptr_buffer;
+    struct t_irc_modelist *ptr_modelist;
 
-    IRC_PROTOCOL_MIN_PARAMS(3);
+    IRC_PROTOCOL_MIN_PARAMS(2);
 
-    str_params = irc_protocol_string_params (params, 2, num_params - 1);
+    str_params = (num_params > 2) ?
+        irc_protocol_string_params (params, 2, num_params - 1) : NULL;
 
+    ptr_channel = irc_channel_search (server, params[1]);
+    ptr_buffer = (ptr_channel && ptr_channel->nicks) ?
+        ptr_channel->buffer : server->buffer;
+    ptr_modelist = irc_modelist_search (ptr_channel, 'R');
+    if (ptr_modelist)
+    {
+        if (ptr_modelist->state != IRC_MODELIST_STATE_RECEIVING)
+        {
+            /*
+             * remove all items if no reop was received before
+             * the end of reop list
+             */
+            irc_modelist_item_free_all (ptr_modelist);
+        }
+        ptr_modelist->state = IRC_MODELIST_STATE_RECEIVED;
+    }
     weechat_printf_date_tags (
-        irc_msgbuffer_get_target_buffer (server, NULL, command, "reop", NULL),
+        irc_msgbuffer_get_target_buffer (
+            server, NULL, command, "reoplist", ptr_buffer),
         date,
         irc_protocol_tags (command, tags, "irc_numeric", NULL, NULL),
-        "%s%s%s%s: %s",
+        "%s%s[%s%s%s]%s%s%s",
         weechat_prefix ("network"),
+        IRC_COLOR_CHAT_DELIMITERS,
         IRC_COLOR_CHAT_CHANNEL,
         params[1],
+        IRC_COLOR_CHAT_DELIMITERS,
         IRC_COLOR_RESET,
-        str_params);
+        (str_params) ? " " : "",
+        (str_params) ? str_params : "");
 
     if (str_params)
         free (str_params);
