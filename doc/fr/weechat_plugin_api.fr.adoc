@@ -64,6 +64,9 @@ WEECHAT_PLUGIN_NAME("name")::
 WEECHAT_PLUGIN_DESCRIPTION("description")::
     description courte de l'extension
 
+WEECHAT_PLUGIN_AUTHOR("author")::
+    nom de l'auteur
+
 WEECHAT_PLUGIN_VERSION("1.0")::
     version de l'extension
 
