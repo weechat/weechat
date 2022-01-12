@@ -12,7 +12,7 @@
 
 Übersetzer:
 
-* Nils Görs <weechatter@arcor.de>, 2010-2018
+* Nils Görs <weechatter@arcor.de>, 2010-2022
 
 
 Diese Anleitung beschreibt den WeeChat Chat Client und ist Teil von WeeChat.
@@ -35,7 +35,7 @@ wesentliche Merkmale:
 * Unterstützung verschiedener Protokolle (in der Hauptsache das IRC-Protokoll)
 * mehrere Server Verbindungen sind möglich (mittels SSL, IPv6, proxy)
 * klein, schnell und schlank
-* den eigenen persönlichen Bedürfnissen anpassbar und durch Erweiterungen und Skripten in der Funktionalität erweiterbar
+* den eigenen, persönlichen, Bedürfnissen anpassbar und durch Erweiterungen und Skripten in der Funktionalität erweiterbar
 * IRC RFCs konform
   https://tools.ietf.org/html/rfc1459[1459],
   https://tools.ietf.org/html/rfc2810[2810],
@@ -80,7 +80,7 @@ Binärpakete sind für folgende Distributionen erhältlich:
 
 zusätzliche Pakete können bzw. sollten installiert werden. Zum Beispiel: weechat-plugins.
 
-Für nicht aufgeführte Distributionen schauen Sie bitte dort in die jeweilige Anleitung,
+Für nicht aufgeführte Distributionen schauen Sie bitte in die jeweiligen Anleitung,
 wie man Pakete installiert.
 
 [[source_package]]
@@ -109,10 +109,8 @@ WeeChat *erforderlich* sind:
 | libcurl4-gnutls-dev    |               | URL Transfer.
 | libgcrypt20-dev        |               | Geschützte Daten, IRC SASL Authentifikation.
 | libgnutls28-dev        | ≥ 2.2.0 ^(3)^ | SSL Verbindung zu einem IRC Server, Unterstützung von SSL in der Relay-Erweiterung, IRC SASL Authentifikation (ECDSA-NIST256P-CHALLENGE).
-// TRANSLATION MISSING
-| zlib1g-dev             |               | Compression of messages (WeeChat -> client) with https://zlib.net/[zlib] in relay plugin (weechat protocol), Script-Erweiterung übertragen werden.
-// TRANSLATION MISSING
-| libzstd-dev            |               | Compression of messages (WeeChat -> client) with https://facebook.github.io/zstd/[Zstandard] in relay plugin (weechat protocol).
+| zlib1g-dev             |               | Kompression von Nachrichten (WeeChat -> client) mit https://zlib.net/[zlib] in relay Erweitertungen (weechat Protokoll), Skript-Erweiterung übertragen werden.
+| libzstd-dev            |               | Kompression von Nachrichten (WeeChat -> client) mit https://facebook.github.io/zstd/[Zstandard] in relay Erweiterung (weechat Protokoll).
 |===
 
 [NOTE]
@@ -325,7 +323,7 @@ $ ccmake ..
 
 [WARNING]
 Ausschließlich das Kompilieren mittels CMake wird offiziell unterstützt. Autotools
-sollte nur verwendet werden falls man keine Möglichkeit hat CMake zu nutzen. +
+sollte nur verwendet werden, falls man keine Möglichkeit hat CMake zu nutzen. +
 Für die Erstellung mittels autotools werden zusätzliche Pakete benötigt und es ist
 zeitintensiver als CMake.
 
@@ -424,7 +422,7 @@ $ cmake .. -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_FLAGS=-fsanitize=address -DCMAKE_C
 
 [WARNING]
 Sie sollten die Adressbereinigung nur aktivieren, wenn Sie versuchen, einen
-Absturz zu provozieren. Diese Funktion wird im produktivem Einsatz nicht empfohlen.
+Absturz zu provozieren. Diese Funktion wird im produktiven Einsatz nicht empfohlen.
 
 Nach dem Kompilieren und Installieren müssen Sie WeeChat folgendermaßen ausführen:
 
@@ -519,9 +517,9 @@ Diese Fehlermeldung senden Sie bitte an den Entwickler mit einer Beschreibung wa
 Danke für Ihre Mithilfe!
 
 [[debug_running_weechat]]
-==== Eine laufende Session von WeeChat debuggen
+==== Eine laufende Sitzung von WeeChat debuggen
 
-Um eine laufende Session von WeeChat zu debuggen (zum Beispiel wenn WeeChat nicht
+Um eine laufende Sitzung von WeeChat zu debuggen (zum Beispiel wenn WeeChat nicht
 mehr reagieren sollte) sollte man gdb mit der Prozess-ID starten (_12345_ muss durch
 die PID des laufenden weechat Prozesses ersetzt werden):
 
@@ -578,7 +576,7 @@ $ weechat --upgrade
 ==== Versionshinweise
 
 Nach einem Upgrade wird *dringend empfohlen* die,
-https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
+https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[Versionshinweise]
 zu lesen, denn dort sind wichtige Informationen zu Änderungen enthalten und ob
 eventuell ein manuelles Eingreifen erforderlich sein könnte.
 
@@ -4728,16 +4726,14 @@ Variablen die mittels Tags in der Nachricht gesetzt werden:
 | tg_tag_prefix_nick | string | Nickfarbe für Präfix (extrahier aus Tag "prefix_nick_ccc").
 | tg_tag_host        | string | Username und Host, Format: username@host (extrahiert aus Tag "host_xxx").
 | tg_tag_notify      | string | Benachrichtigungsstufe (_none_, _message_, _private_, _highlight_).
-// TRANSLATION MISSING
-| tg_tag_irc_xxx     | string | IRC message tag (key "xxx"). ^(1)^
+| tg_tag_irc_xxx     | string | Tag einer IRC Nachricht (Schlüssel "xxx"). ^(1)^
 | tg_notify          | string | Benachrichtigungsstufe, falls von _none_ abweichend.
 | tg_msg_pv          | string | "1" für eine private Nachricht, andernfalls "0".
 |===
 
-// TRANSLATION MISSING
 [NOTE]
 ====
-^(1)^ Special chars are replaced in IRC tag:
+^(1)^ Sonderzeichen werden im IRC Tag ersetzt:
 
 * key: `_` -> `-` and `,` -> `;`
 * value: `,` -> `;`
@@ -4772,16 +4768,14 @@ Variablen die mittels Tags in der Nachricht gesetzt werden:
 | tg_tag_prefix_nick | string | Nickfarbe für Präfix (extrahier aus Tag "prefix_nick_ccc").
 | tg_tag_host        | string | Username und Host, Format: username@host (extrahiert aus Tag "host_xxx").
 | tg_tag_notify      | string | Benachrichtigungsstufe (_none_, _message_, _private_, _highlight_).
-// TRANSLATION MISSING
-| tg_tag_irc_xxx     | string | IRC message tag (key "xxx"). ^(1)^
+| tg_tag_irc_xxx     | string | Tag einer IRC Nachricht (Schlüssel "xxx"). ^(1)^
 | tg_notify          | string | Benachrichtigungsstufe, falls von _none_ abweichend.
 | tg_msg_pv          | string | "1" für eine private Nachricht, andernfalls "0".
 |===
 
-// TRANSLATION MISSING
 [NOTE]
 ====
-^(1)^ Special chars are replaced in IRC tag:
+^(1)^ Sonderzeichen werden im IRC Tag ersetzt:
 
 * key: `_` -> `-` and `,` -> `;`
 * value: `,` -> `;`
@@ -4988,7 +4982,7 @@ und kompiliert ist. Unter GNU/Linux besitzt eine Erweiterung als Dateiendung ".s
 Windows ".dll".
 
 Erweiterungen die gefunden werden, werden beim Start von WeeChat automatisch geladen.
-Natürlich ist es möglich während einer laufenden Session von WeeChat Erweiterungen
+Natürlich ist es möglich während einer laufenden Sitzung von WeeChat Erweiterungen
 nachträglich zu laden oder zu entfernen.
 
 Mit dem Befehl `/plugin` kann eine Erweiterung geladen bzw. entfernt werden. Auch können
