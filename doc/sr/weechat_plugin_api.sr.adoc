@@ -521,19 +521,21 @@ str = weechat.ngettext("file", "files", num_files)
 
 ==== strndup
 
-Враћа дуплирани стринг, са макс _length_ карактера.
+// TRANSLATION MISSING
+Return duplicated string, with a max number of bytes.
 
 Прототип:
 
 [source, C]
 ----
-char *weechat_strndup (const char *string, int length);
+char *weechat_strndup (const char *string, int bytes);
 ----
 
 Аргументи:
 
 * _string_: стринг који се дуплира
-* _length_: макс број карактера који може да се дуплира
+// TRANSLATION MISSING
+* _bytes_: max bytes to duplicate
 
 Повратна вредност:
 

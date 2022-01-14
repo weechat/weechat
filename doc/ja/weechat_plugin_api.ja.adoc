@@ -556,19 +556,21 @@ str = weechat.ngettext("file", "files", num_files)
 
 ==== strndup
 
-複製した文字列を最大で _length_ 文字分返す。
+// TRANSLATION MISSING
+Return duplicated string, with a max number of bytes.
 
 プロトタイプ:
 
 [source,c]
 ----
-char *weechat_strndup (const char *string, int length);
+char *weechat_strndup (const char *string, int bytes);
 ----
 
 引数:
 
 * _string_: 複製元の文字列
-* _length_: 複製する文字列の最大文字数
+// TRANSLATION MISSING
+* _bytes_: max bytes to duplicate
 
 戻り値:
 

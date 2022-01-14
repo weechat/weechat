@@ -556,19 +556,19 @@ str = weechat.ngettext("file", "files", num_files)
 
 ==== strndup
 
-Retourner la chaîne dupliquée, avec au plus _length_ caractères.
+Retourner la chaîne dupliquée, avec un nombre maximum d'octets.
 
 Prototype :
 
 [source,c]
 ----
-char *weechat_strndup (const char *string, int length);
+char *weechat_strndup (const char *string, int bytes);
 ----
 
 Paramètres :
 
 * _string_ : chaîne à dupliquer
-* _length_ : nombre maximum de caractères à dupliquer
+* _bytes_ : nombre maximum d'octets à dupliquer
 
 Valeur de retour :
 

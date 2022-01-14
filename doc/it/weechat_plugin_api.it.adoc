@@ -577,20 +577,21 @@ str = weechat.ngettext("file", "files", num_files)
 
 ==== strndup
 
-Restituisce una stringa duplicata, con un massimo di caratteri
-impostato su _chars_.
+// TRANSLATION MISSING
+Return duplicated string, with a max number of bytes.
 
 Prototipo:
 
 [source,c]
 ----
-char *weechat_strndup (const char *string, int length);
+char *weechat_strndup (const char *string, int bytes);
 ----
 
 Argomenti:
 
 * _string_: stringa da duplicare
-* _length_: caratteri massimi da duplicare
+// TRANSLATION MISSING
+* _bytes_: max bytes to duplicate
 
 Valore restituito:
 

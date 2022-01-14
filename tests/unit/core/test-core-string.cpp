@@ -126,7 +126,7 @@ TEST_GROUP(CoreString)
  *   string_strndup
  */
 
-TEST(CoreString, Duplicate)
+TEST(CoreString, Strndup)
 {
     const char *str_test = "test";
     char *str;
