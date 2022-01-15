@@ -29,6 +29,7 @@ Bug fixes::
   * core: fix search of commands with UTF-8 chars in name when option weechat.look.command_incomplete is on (issue #1739)
   * core: fix display of hotlist in buflist after changing value of option weechat.look.hotlist_sort (issue #1733)
   * api: fix add of infolist items in hashtable when prefix contains UTF-8 chars in function hashtable_add_from_infolist (issue #1739)
+  * irc: fix completion of channel topic with UTF-8 chars (issue #1739)
   * irc: fix parsing of messages 311, 312, 327 (whois) and 314 (whowas) in case of missing parameters
   * irc: fix parsing of message 338 (whois, host) sent by Rizon server (issue #1737)
   * irc: fix display of message 344 received as whois geo info (issue #1736)
