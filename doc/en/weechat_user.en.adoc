@@ -101,9 +101,10 @@ WeeChat:
 | pkg-config             |               | Detect installed libraries.
 | libncursesw5-dev ^(2)^ |               | Ncurses interface.
 | libcurl4-gnutls-dev    |               | URL transfer.
-| zlib1g-dev             |               | Compression of packets in relay plugin (weechat protocol), script plugin.
 | libgcrypt20-dev        |               | Secured data, IRC SASL authentication.
 | libgnutls28-dev        | ≥ 2.2.0 ^(3)^ | SSL connection to IRC server, support of SSL in relay plugin, IRC SASL authentication (ECDSA-NIST256P-CHALLENGE).
+| zlib1g-dev             |               | Compression of messages (WeeChat -> client) with https://zlib.net/[zlib] in relay plugin (weechat protocol), script plugin.
+| libzstd-dev            |               | Compression of messages (WeeChat -> client) with https://facebook.github.io/zstd/[Zstandard] in relay plugin (weechat protocol).
 |===
 
 [NOTE]
@@ -199,13 +200,13 @@ List of commonly used options:
   config, data, cache, runtime.
 
 | ENABLE_ALIAS | `ON`, `OFF` | ON |
-  Compile <<alias_plugin,Alias plugin>>.
+  Compile <<command_aliases,Alias plugin>>.
 
 | ENABLE_BUFLIST | `ON`, `OFF` | ON |
-  Compile <<buflist_plugin,Buflist plugin>>.
+  Compile <<buflist,Buflist plugin>>.
 
 | ENABLE_CHARSET | `ON`, `OFF` | ON |
-  Compile <<charset_plugin,Charset plugin>>.
+  Compile <<charset,Charset plugin>>.
 
 | ENABLE_MAN | `ON`, `OFF` | OFF |
   Build man page.
@@ -214,34 +215,34 @@ List of commonly used options:
   Build HTML documentation.
 
 | ENABLE_ENCHANT | `ON`, `OFF` | OFF |
-  Compile <<spell_plugin,Spell plugin>> with Enchant.
+  Compile <<spell_checking,Spell plugin>> with Enchant.
 
 | ENABLE_EXEC | `ON`, `OFF` | ON |
-  Compile <<exec_plugin,Exec plugin>>.
+  Compile <<external_commands,Exec plugin>>.
 
 | ENABLE_FIFO | `ON`, `OFF` | ON |
-  Compile <<fifo_plugin,Fifo plugin>>.
+  Compile <<fifo_pipe,Fifo plugin>>.
 
 | ENABLE_FSET | `ON`, `OFF` | ON |
-  Compile <<fset_plugin,Fset plugin>>.
+  Compile <<fset,Fset plugin>>.
 
 | ENABLE_GUILE | `ON`, `OFF` | ON |
-  Compile <<scripts_plugins,Guile plugin>> (Scheme).
+  Compile <<scripting_plugins,Guile plugin>> (Scheme).
 
 | ENABLE_IRC | `ON`, `OFF` | ON |
-  Compile <<irc_plugin,IRC plugin>>.
+  Compile <<irc,IRC plugin>>.
 
 | ENABLE_JAVASCRIPT | `ON`, `OFF` | OFF |
-  Compile <<scripts_plugins,JavaScript plugin>>.
+  Compile <<scripting_plugins,JavaScript plugin>>.
 
 | ENABLE_LARGEFILE | `ON`, `OFF` | ON |
   Support of large files.
 
 | ENABLE_LOGGER | `ON`, `OFF` | ON |
-  Compile <<logger_plugin,Logger plugin>>.
+  Compile <<buffer_logging,Logger plugin>>.
 
 | ENABLE_LUA | `ON`, `OFF` | ON |
-  Compile <<scripts_plugins,Lua plugin>>.
+  Compile <<scripting_plugins,Lua plugin>>.
 
 | ENABLE_NCURSES | `ON`, `OFF` | ON |
   Compile Ncurses interface.
@@ -250,44 +251,44 @@ List of commonly used options:
   Enable NLS (translations).
 
 | ENABLE_PERL | `ON`, `OFF` | ON |
-  Compile <<scripts_plugins,Perl plugin>>.
+  Compile <<scripting_plugins,Perl plugin>>.
 
 | ENABLE_PHP | `ON`, `OFF` | ON |
-  Compile <<scripts_plugins,PHP plugin>>.
+  Compile <<scripting_plugins,PHP plugin>>.
 
 | ENABLE_PYTHON | `ON`, `OFF` | ON |
-  Compile <<scripts_plugins,Python plugin>>.
+  Compile <<scripting_plugins,Python plugin>>.
 
 | ENABLE_PYTHON2 | `ON`, `OFF` | OFF |
-  Compile <<scripts_plugins,Python plugin>> using Python 2 instead of Python 3.
+  Compile <<scripting_plugins,Python plugin>> using Python 2 instead of Python 3.
 
 | ENABLE_RELAY | `ON`, `OFF` | ON |
-  Compile <<relay_plugin,Relay plugin>>.
+  Compile <<relay,Relay plugin>>.
 
 | ENABLE_RUBY | `ON`, `OFF` | ON |
-  Compile <<scripts_plugins,Ruby plugin>>.
+  Compile <<scripting_plugins,Ruby plugin>>.
 
 | ENABLE_SCRIPT | `ON`, `OFF` | ON |
-  Compile <<scripts_plugins,Script plugin>>.
+  Compile <<script_manager,Script plugin>>.
 
 | ENABLE_SCRIPTS | `ON`, `OFF` | ON |
-  Compile <<scripts_plugins,script plugins>> (Python, Perl, Ruby, Lua, Tcl,
+  Compile <<scripting_plugins,script plugins>> (Python, Perl, Ruby, Lua, Tcl,
   Guile, JavaScript, PHP).
 
 | ENABLE_SPELL | `ON`, `OFF` | ON |
-  Compile <<spell_plugin,Spell plugin>>.
+  Compile <<spell_checking,Spell plugin>>.
 
 | ENABLE_TCL | `ON`, `OFF` | ON |
-  Compile <<scripts_plugins,Tcl plugin>>.
+  Compile <<scripting_plugins,Tcl plugin>>.
 
 | ENABLE_TRIGGER | `ON`, `OFF` | ON |
-  Compile <<trigger_plugin,Trigger plugin>>.
+  Compile <<trigger,Trigger plugin>>.
 
 | ENABLE_TYPING | `ON`, `OFF` | ON |
-  Compile <<typing_plugin,Typing plugin>>.
+  Compile <<typing_notifications,Typing plugin>>.
 
 | ENABLE_XFER | `ON`, `OFF` | ON |
-  Compile <<xfer_plugin,Xfer plugin>>.
+  Compile <<xfer,Xfer plugin>>.
 
 | ENABLE_TESTS | `ON`, `OFF` | OFF |
   Compile tests.
@@ -393,8 +394,8 @@ you have to:
 * Enable _core_ files on your system.
 * Install gdb.
 
-[[build_debug]]
-==== Build with debug options
+[[debug_build]]
+==== Debug build
 
 If you're compiling with CMake:
 
@@ -402,8 +403,8 @@ If you're compiling with CMake:
 $ cmake .. -DCMAKE_BUILD_TYPE=Debug
 ----
 
-[[build_debug_address_sanitizer]]
-==== Build with debug options and address sanitizer
+[[address_sanitizer]]
+==== Address sanitizer
 
 You can additionally enable the address sanitizer, which causes WeeChat to
 crash immediately in case of problem:
@@ -523,7 +524,7 @@ Then like for a crash, use command `bt full`:
 ----
 
 [[upgrade]]
-=== Upgrade
+== Upgrade
 
 If a new stable version of WeeChat is released, this is time for you to
 switch to this version.
@@ -534,7 +535,7 @@ required files are in the same paths. +
 This can be done while WeeChat is running.
 
 [[upgrade_command]]
-==== Upgrade command
+=== Upgrade command
 
 WeeChat can restart the new binary, in place, using the
 <<command_weechat_upgrade,/upgrade>> command: the buffer contents and non-SSL
@@ -559,10 +560,10 @@ $ weechat --upgrade
 ----
 
 [[restart_after_upgrade]]
-==== Restart after upgrade
+=== Restart after upgrade
 
 [[restart_release_notes]]
-===== Release notes
+==== Release notes
 
 After an upgrade, it is *strongly recommended* to read the
 https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
@@ -575,7 +576,7 @@ For example if you switch from version 3.0 to 3.2, you must read release notes
 of versions 3.1 and 3.2.
 
 [[restart_configuration_upgrade]]
-===== Configuration upgrade
+==== Configuration upgrade
 
 WeeChat has an automatic upgrade of configuration files (`*.conf`):
 
@@ -593,11 +594,8 @@ That means the option `sec.crypt.passphrase_file` has been removed, and you
 had value set to empty string, which was the default value in the previous version
 (in this case no manual action is required).
 
-[[usage]]
-== Usage
-
 [[running_weechat]]
-=== Running WeeChat
+== Running WeeChat
 
 To start WeeChat, issue this command:
 
@@ -610,15 +608,14 @@ created in _~/.config/weechat_ with default options and values
 (see <<files_and_directories,Files and directories>>).
 
 [[command_line_options]]
-==== Command line options
+=== Command line options
 
 include::includes/cmdline_options.en.adoc[tag=standard]
 
-[[extra_debug_options]]
-==== Extra debug options
+Some extra options are available for debug purposes only:
 
 [WARNING]
-These options are for debug purposes only, *DO NOT USE IN PRODUCTION!*
+Do *NOT* use any of these options in production!
 
 include::includes/cmdline_options.en.adoc[tag=debug]
 
@@ -634,6 +631,53 @@ Some environment variables are used by WeeChat if they are defined:
 | WEECHAT_PASSPHRASE   | The passphrase used to decrypt secured data.
 | WEECHAT_EXTRA_LIBDIR | An extra directory to load plugins (from the "plugins" directory in this path).
 |===
+
+[[colors_support]]
+=== Colors support
+
+WeeChat can use up to 32767 color pairs to display text in bars and chat area
+(your terminal must support 256 colors to use them in WeeChat).
+
+According to value of _TERM_ environment variable, you may have following limits
+for colors in WeeChat:
+
+[width="75%",cols="8,>3,>3",options="header"]
+|===
+| $TERM                                  | Colors | Pairs
+| "rxvt-unicode", "xterm", ...           |     88 | 32767
+| "rxvt-256color", "xterm-256color", ... |    256 | 32767
+| "screen"                               |      8 |    64
+| "screen-256color"                      |    256 | 32767
+| "tmux"                                 |      8 |    64
+| "tmux-256color"                        |    256 | 32767
+|===
+
+You can run `weechat --colors` or use command `/color` in WeeChat to
+display limits for your environment.
+
+Some recommended values for _TERM_ if you want 256 colors:
+
+* under screen: _screen-256color_
+* under tmux: _screen-256color_ or _tmux-256color_
+* outside screen/tmux: _xterm-256color_, _rxvt-256color_, _putty-256color_, ...
+
+[NOTE]
+You may have to install package "ncurses-term" to use these values in _TERM_
+variable.
+
+If you are using screen, you can add this line to your _~/.screenrc_:
+
+----
+term screen-256color
+----
+
+If your _TERM_ variable has wrong value and that WeeChat is already running,
+you can change it with these two commands:
+
+----
+/set env TERM screen-256color
+/upgrade
+----
 
 [[files_and_directories]]
 === Files and directories
@@ -739,6 +783,9 @@ and after any change you must run the command <<command_weechat_reload,/reload>>
 <<command_weechat_save,/save>>). +
 You can use the command <<command_weechat_set,/set>>, which checks the value
 and applies immediately the changes.
+
+[[interface]]
+== Interface
 
 [[screen_layout]]
 === Screen layout
@@ -874,7 +921,7 @@ Each aspect of the layout can be customized with the appropriate <<command_line,
 <<command_weechat_bar,`/bar`>> to customize the bars,
 <<command_weechat_buffer,/buffer>> and <<command_weechat_window,`/window`>>
 to customize <<buffers_and_windows,buffers and windows>>,
-and <<command_weechat_layot,/layout>> to name, save and restore the screen layout
+and <<command_weechat_layout,/layout>> to name, save and restore the screen layout
 and the association between windows and buffers.
 
 [[command_line]]
@@ -959,151 +1006,6 @@ kbd:[!]
 [NOTE]
 In irc plugin, you can remap these colors using option
 <<option_irc.color.mirc_remap,irc.color.mirc_remap>>.
-
-[[colors]]
-=== Colors
-
-WeeChat can use up to 32767 color pairs to display text in bars and chat area
-(your terminal must support 256 colors to use them in WeeChat).
-
-According to value of _TERM_ environment variable, you may have following limits
-for colors in WeeChat:
-
-[width="75%",cols="8,>3,>3",options="header"]
-|===
-| $TERM                                  | Colors | Pairs
-| "rxvt-unicode", "xterm", ...           |     88 | 32767
-| "rxvt-256color", "xterm-256color", ... |    256 | 32767
-| "screen"                               |      8 |    64
-| "screen-256color"                      |    256 | 32767
-| "tmux"                                 |      8 |    64
-| "tmux-256color"                        |    256 | 32767
-|===
-
-You can run `weechat --colors` or use command `/color` in WeeChat to
-display limits for your environment.
-
-Some recommended values for _TERM_ if you want 256 colors:
-
-* under screen: _screen-256color_
-* under tmux: _screen-256color_ or _tmux-256color_
-* outside screen/tmux: _xterm-256color_, _rxvt-256color_, _putty-256color_, ...
-
-[NOTE]
-You may have to install package "ncurses-term" to use these values in _TERM_
-variable.
-
-If you are using screen, you can add this line to your _~/.screenrc_:
-
-----
-term screen-256color
-----
-
-If your _TERM_ variable has wrong value and that WeeChat is already running,
-you can change it with these two commands:
-
-----
-/set env TERM screen-256color
-/upgrade
-----
-
-[[colors_basic]]
-==== Basic colors
-
-Basic colors in WeeChat are:
-
-[width="75%",cols="1m,4",options="header"]
-|===
-| Name         | Color
-| default      | Default terminal color (transparent for background)
-| black        | Black
-| darkgray     | Dark gray
-| red          | Dark red
-| lightred     | Light red
-| green        | Dark green
-| lightgreen   | Light green
-| brown        | Brown
-| yellow       | Yellow
-| blue         | Dark blue
-| lightblue    | Light blue
-| magenta      | Dark magenta
-| lightmagenta | Light magenta
-| cyan         | Dark cyan
-| lightcyan    | Light cyan
-| gray         | Gray
-| white        | White
-|===
-
-[[colors_extended]]
-==== Extended colors
-
-WeeChat dynamically allocates color pairs when colors are used on screen (to
-display buffers and bars).
-
-In addition to basic colors, you can use a color number between 1 and the limit
-of your terminal.
-
-Use command `/color` to see current colors and limits. With kbd:[Alt+c] you can
-temporarily switch to terminal colors to choose a color.
-
-For example if you want to display time in orange in buffer, do:
-
-----
-/set weechat.color.chat_time 214
-----
-
-Or if you want a very dark green background for status bar:
-
-----
-/set weechat.bar.status.color_bg 22
-----
-
-[[colors_aliases]]
-==== Aliases
-
-You can add color aliases with command `/color alias` and then use this alias
-in any color option.
-
-For example:
-
-----
-/color alias 214 orange
-/set weechat.color.chat_delimiters orange
-----
-
-[[colors_attributes]]
-==== Attributes
-
-It is possible to use some attributes for colors. One or more attributes can be
-added before color name or number:
-
-* `+*+`: bold text
-* `+!+`: reverse video
-* `+/+`: italic
-* `+_+`: underlined text
-* `+|+`: keep attributes: do not reset bold/reverse/italic/underlined when
-  changing color
-
-For example if you want self nick as white underlined, do:
-
-----
-/set weechat.color.chat_nick_self _white
-----
-
-Or if you want time in status bar as orange underlined with bold:
-
-----
-/set weechat.color.status_time *_214
-----
-
-To use an attribute with default terminal color (-1), you must use a number
-greater than last terminal color, for example max color in WeeChat: 99999.
-
-Example of bold with terminal foreground color:
-
-----
-/set weechat.color.status_time *99999
-----
 
 [[buffers_and_windows]]
 === Buffers and windows
@@ -1223,6 +1125,93 @@ Example of vertical + horizontal splits:
 └──────────────────────────────────────────────────────────────────────────────────────┘
                  ▲ window #1 (buffer #3)               ▲ window #2 (buffer #4)
 ....
+
+[[bare_display]]
+==== Bare display
+
+A special display, called "bare display" can be used for easy click on long URLs
+and selection of text (using the mouse).
+
+The bare display has following features:
+
+* It displays only the content of current buffer: no window split neither bars
+  (no title, nicklist, status, input, ...).
+* The WeeChat mouse support is disabled (if it was enabled): you can use your
+  mouse like you do in the terminal to click on URLs and select text.
+* Ncurses is not used, therefore URLs are not cut at the end of lines.
+
+The default key to enable bare display is kbd:[Alt+l] (`L`), and same key to exit
+(or by default anything changing the input will exit the bare display, see option
+<<option_weechat.look.bare_display_exit_on_input,weechat.look.bare_display_exit_on_input>>).
+
+The time format can be customized with the option
+<<option_weechat.look.bare_display_time_format,weechat.look.bare_display_time_format>>.
+
+The bare display can be enabled for a specific delay using the command
+<<command_weechat_window,/window>>.
+
+If WeeChat looks like that:
+
+....
+┌──────────────────────────────────────────────────────────────────────────────────────┐
+│1.libera │Welcome to #abc                                                             │
+│  weechat│12:52:27   --> | Flashy (flashcode@weechat.org) has joined #abc     │@Flashy│
+│2.  #test│12:52:27    -- | Nicks #abc: [@Flashy @joe +weebot peter]           │@joe   │
+│3.  #abc │12:52:27    -- | Channel #abc: 4 nicks (2 ops, 1 voice, 1 normal)   │+weebot│
+│4.  #def │12:52:27    -- | Channel created on Tue Jan 27 06:30:17 2009        │peter  │
+│5.  #ghi │12:54:15 peter | hey!                                               │       │
+│         │12:55:01  @joe | peter: hook_process: https://weechat.org/files/doc │       │
+│         │               | /devel/weechat_plugin_api.en.html#_weechat_hook_pr │       │
+│         │               | ocess                                              │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │[12:55] [5] [irc/libera] 3:#abc(+n){4}                                      │
+│         │[@Flashy(i)] hi peter!█                                                     │
+└──────────────────────────────────────────────────────────────────────────────────────┘
+....
+
+The screen will look like that in bare display:
+
+....
+┌──────────────────────────────────────────────────────────────────────────────────────┐
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│12:52 --> Flashy (flashcode@weechat.org) has joined #abc                              │
+│12:52 -- Nicks #abc: [@Flashy @joe +weebot peter]                                     │
+│12:52 -- Channel #abc: 4 nicks (2 ops, 1 voice, 1 normal)                             │
+│12:52 -- Channel created on Tue Jan 27 06:30:17 2009                                  │
+│12:54 <peter> hey!                                                                    │
+│12:55 <@joe> peter: hook_process: https://weechat.org/files/doc/devel/weechat_plugin_a│
+│pi.en.html#_weechat_hook_process                                                      │
+└──────────────────────────────────────────────────────────────────────────────────────┘
+....
+
+So you can click the URL from _joe_ without any problem in your terminal (of
+course this supposes that your terminal supports click on URLs).
 
 [[buffers]]
 === Buffers
@@ -1426,6 +1415,1201 @@ By default WeeChat and its default plugins interpret these variables:
 
 [NOTE]
 External plugins and scripts can define and use other local variables.
+
+[[buflist]]
+=== List of buffers
+
+Buflist plugin displays a list of buffers in a bar item called "buflist"
+(two other bar items "buflist2" and "buflist3" are available as well). +
+A default bar "buflist" is created on startup with this item.
+
+[[buflist_commands]]
+==== Commands
+
+include::includes/autogen_user_commands.en.adoc[tag=buflist_commands]
+
+[[buflist_options]]
+==== Options
+
+Sections in file _buflist.conf_:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section | Control command       | Description
+| format  | /set buflist.format.* | Formats used to display list of buffers.
+| look    | /set buflist.look.*   | Look and feel.
+|===
+
+Options:
+
+include::includes/autogen_user_options.en.adoc[tag=buflist_options]
+
+[[key_bindings]]
+== Key bindings
+
+WeeChat provides a lot of default key bindings, listed in the following chapters. +
+They can be changed and new ones can be added with the <<command_weechat_key,/key>> command.
+
+[[key_bindings_cmdline]]
+=== Command line
+
+[[key_bindings_cmdline_cursor_movement]]
+==== Cursor movement
+
+[width="100%",cols="^.^3,.^8,.^5",options="header"]
+|===
+| Key            | Description | Command
+| kbd:[←] +
+  kbd:[Ctrl+b]   | Go to previous char in command line. | `+/input move_previous_char+`
+| kbd:[→] +
+  kbd:[Ctrl+f]   | Go to next char in command line. | `+/input move_next_char+`
+| kbd:[Ctrl+←] +
+  kbd:[Alt+b]    | Go to previous word in command line. | `+/input move_previous_word+`
+| kbd:[Ctrl+→] +
+  kbd:[Alt+f]    | Go to next word in command line. | `+/input move_next_word+`
+| kbd:[Home] +
+  kbd:[Ctrl+a]   | Go to the beginning of command line. | `+/input move_beginning_of_line+`
+| kbd:[End] +
+  kbd:[Ctrl+e]   | Go to the end of command line. | `+/input move_end_of_line+`
+|===
+
+[[key_bindings_cmdline_editing]]
+==== Editing
+
+[width="100%",cols="^.^3,.^8,.^5",options="header"]
+|===
+| Key               | Description | Command
+| kbd:[Del] +
+  kbd:[Ctrl+d]      | Delete next char in command line. | `+/input delete_next_char+`
+| kbd:[Backspace] +
+  kbd:[Ctrl+h]      | Delete previous char in command line. | `+/input delete_previous_char+`
+| kbd:[Ctrl+k]      | Delete from cursor until end of command line (deleted string is copied to the internal clipboard). | `+/input delete_end_of_line+`
+| kbd:[Ctrl+t]      | Transpose chars. | `/input transpose_chars`
+| kbd:[Ctrl+u]      | Delete from cursor until beginning of command line (deleted string is copied to the internal clipboard). | `+/input delete_beginning_of_line+`
+| kbd:[Ctrl+w]      | Delete previous word of command line (deleted string is copied to the internal clipboard). | `+/input delete_previous_word+`
+| kbd:[Ctrl+y]      | Paste the internal clipboard content. | `+/input clipboard_paste+`
+| kbd:[Ctrl+_]      | Undo last action on command line. | `+/input undo+`
+| kbd:[Alt+_]       | Redo last action on command line. | `+/input redo+`
+| kbd:[Tab]         | Complete command or nick (kbd:[Tab] again: find next completion). | `+/input complete_next+`
+| kbd:[Shift+Tab]   | Without completion: do a partial completion, with pending completion: complete with previous completion. | `+/input complete_previous+`
+| kbd:[Enter] +
+  kbd:[Ctrl+j] +
+  kbd:[Ctrl+m]      | Execute command or send message (in search mode: stop search). | `+/input return+`
+| kbd:[Alt+Enter]   | Insert a newline. | `+/input insert \n+`
+| kbd:[Alt+d]       | Delete next word in command line (deleted string is copied to the internal clipboard). | `+/input delete_next_word+`
+| kbd:[Alt+k]       | Grab a key and insert its code (and command bound if key exists) in command line. | `+/input grab_key_command+`
+| kbd:[Alt+r]       | Delete entire command line. | `+/input delete_line+`
+|===
+
+[[key_bindings_cmdline_color_codes]]
+==== Color codes
+
+[width="100%",cols="^.^3,.^8,.^5",options="header"]
+|===
+| Key                   | Description | Command
+| kbd:[Ctrl+c], kbd:[b] | Insert code for bold text. | `+/input insert \x02+`
+| kbd:[Ctrl+c], kbd:[c] | Insert code for colored text. | `+/input insert \x03+`
+| kbd:[Ctrl+c], kbd:[i] | Insert code for italic text. | `+/input insert \x1D+`
+| kbd:[Ctrl+c], kbd:[o] | Insert code for color reset. | `+/input insert \x0F+`
+| kbd:[Ctrl+c], kbd:[v] | Insert code for reverse color. | `+/input insert \x16+`
+| kbd:[Ctrl+c], kbd:[_] | Insert code for underlined text. | `+/input insert \x1F+`
+|===
+
+[[key_bindings_cmdline_history]]
+==== Command history
+
+[width="100%",cols="^.^3,.^8,.^5",options="header"]
+|===
+| Key          | Description | Command
+| kbd:[↑]      | Call previous command/message (in search mode: search up). | `+/input history_previous+`
+| kbd:[↓]      | Call next command/message (in search mode: search down). | `+/input history_next+`
+| kbd:[Ctrl+↑] | Call previous command/message in global history (common for all buffers). | `+/input history_global_previous+`
+| kbd:[Ctrl+↓] | Call next command/message in global history (common for all buffers). | `+/input history_global_next+`
+|===
+
+[[key_bindings_buffers]]
+=== Buffers
+
+[width="100%",cols="^.^3,.^8,.^5",options="header"]
+|===
+| Key                            | Description | Command
+| kbd:[Ctrl+r]                   | Search for text in buffer history (see <<key_bindings_search_context,keys for search context>>). | `+/input search_text_here+`
+| kbd:[Ctrl+s], kbd:[Ctrl+u]     | Set unread marker on all buffers. | `+/input set_unread+`
+| kbd:[Ctrl+x]                   | Switch current buffer if buffers are merged with same number, for example switch to another IRC server buffer. | `+/input switch_active_buffer+`
+| kbd:[Alt+x]                    | Zoom on merged buffer (kbd:[Alt+x] again: display all merged buffers). | `+/input zoom_merged_buffer+`
+| kbd:[PgUp]                     | Scroll up one page in buffer history. | `+/window page_up+`
+| kbd:[PgDn]                     | Scroll down one page in buffer history. | `+/window page_down+`
+| kbd:[Alt+PgUp]                 | Scroll up a few lines in buffer history. | `+/window scroll_up+`
+| kbd:[Alt+PgDn]                 | Scroll down a few lines in buffer history. | `+/window scroll_down+`
+| kbd:[Alt+Home]                 | Scroll to top of buffer. | `+/window scroll_top+`
+| kbd:[Alt+End]                  | Scroll to bottom of buffer. | `+/window scroll_bottom+`
+| kbd:[Alt+←] +
+  kbd:[Alt+↑] +
+  kbd:[Ctrl+p] +
+  kbd:[F5]                       | Switch to previous buffer. | `+/buffer -1+`
+| kbd:[Alt+→] +
+  kbd:[Alt+↓] +
+  kbd:[Ctrl+n] +
+  kbd:[F6]                       | Switch to next buffer. | `+/buffer +1+`
+| kbd:[Alt+j], kbd:[Alt+f]       | Switch to first buffer. | `+/buffer -+`
+| kbd:[Alt+j], kbd:[Alt+l] (`L`) | Switch to last buffer. | `+/buffer ++`
+| kbd:[Alt+j], kbd:[Alt+r]       | Switch to IRC raw buffer. | `+/server raw+`
+| kbd:[Alt+j], kbd:[Alt+s]       | Switch to IRC server buffer. | `+/server jump+`
+| kbd:[Alt+0...9]                | Switch to buffer by number (0 = 10). | `+/buffer *N+`
+| kbd:[Alt+j], kbd:[01...99]     | Switch to buffer by number. | `+/buffer *NN+`
+| kbd:[Alt+n]                    | Scroll to next highlight. | `+/window scroll_next_highlight+`
+| kbd:[Alt+p]                    | Scroll to previous highlight. | `+/window scroll_previous_highlight+`
+| kbd:[Alt+u]                    | Scroll to first unread line in buffer. | `+/window scroll_unread+`
+| kbd:[Alt+<]                    | Switch to previous buffer in list of visited buffers. | `+/input jump_previously_visited_buffer+`
+| kbd:[Alt+>]                    | Switch to next buffer in list of visited buffers. | `+/input jump_next_visited_buffer+`
+| kbd:[Alt+/]                    | Switch to last buffer displayed (before last jump to a buffer). | `+/input jump_last_buffer_displayed+`
+|===
+
+[[key_bindings_windows]]
+=== Windows
+
+[width="100%",cols="^.^3,.^8,.^5",options="header"]
+|===
+| Key                      | Description | Command
+| kbd:[Ctrl+l] (`L`)       | Redraw whole window. | `+/window refresh+`
+| kbd:[Alt+l] (`L`)        | Toggle bare display. | `+/window bare+`
+| kbd:[F7]                 | Switch to previous window. | `+/window -1+`
+| kbd:[F8]                 | Switch to next window. | `+/window +1+`
+| kbd:[Alt+w], kbd:[Alt+↑] | Switch to window above. | `+/window up+`
+| kbd:[Alt+w], kbd:[Alt+↓] | Switch to window below. | `+/window down+`
+| kbd:[Alt+w], kbd:[Alt+←] | Switch to window on the left. | `+/window left+`
+| kbd:[Alt+w], kbd:[Alt+→] | Switch to window on the right. | `+/window right+`
+| kbd:[Alt+w], kbd:[Alt+b] | Balance the sizes of all windows. | `+/window balance+`
+| kbd:[Alt+w], kbd:[Alt+s] | Swap buffers of two windows. | `+/window swap+`
+| kbd:[Alt+z]              | Zoom on current window (kbd:[Alt+z] again: restore initial windows state, before zoom). | `+/window zoom+`
+|===
+
+[[key_bindings_bars]]
+=== Bars
+
+[width="100%",cols="^.^3,.^8,.^5",options="header"]
+|===
+| Key               | Description | Command
+| kbd:[F1] +
+  kbd:[Ctrl+F1]     | Scroll up one page in buflist. | `+/bar scroll buflist * -100%+`
+| kbd:[F2] +
+  kbd:[Ctrl+F2]     | Scroll down one page in buflist. | `+/bar scroll buflist * +100%+`
+| kbd:[Alt+F1]      | Go to the beginning of buflist. | `+/bar scroll buflist * b+`
+| kbd:[Alt+F2]      | Go to the end of buflist. | `+/bar scroll buflist * e+`
+| kbd:[F9]          | Scroll buffer's title on the left. | `+/bar scroll title * -30%+`
+| kbd:[F10]         | Scroll buffer's title on the right. | `+/bar scroll title * +30%+`
+| kbd:[F11] +
+  kbd:[Ctrl+F11]    | Scroll up one page in nicklist. | `+/bar scroll nicklist * -100%+`
+| kbd:[F12] +
+  kbd:[Ctrl+F12]    | Scroll down one page in nicklist. | `+/bar scroll nicklist * +100%+`
+| kbd:[Alt+F11]     | Go to the beginning of nicklist. | `+/bar scroll nicklist * b+`
+| kbd:[Alt+F12]     | Go to the end of nicklist. | `+/bar scroll nicklist * e+`
+| kbd:[Alt+Shift+B] | Toggle buflist. | `+/buflist toggle+`
+| kbd:[Alt+Shift+N] | Toggle nicklist bar. | `+/bar toggle nicklist+`
+|===
+
+[[key_bindings_hotlist]]
+=== Hotlist
+
+[width="100%",cols="^.^3,.^8,.^5",options="header"]
+|===
+| Key                            | Description | Command
+| kbd:[Alt+a]                    | Switch to next buffer with activity (with priority: highlight, message, other). | `+/input jump_smart+`
+| kbd:[Alt+h], kbd:[Alt+c]       | Clear hotlist (activity notification on buffers). | `+/input hotlist_clear+`
+| kbd:[Alt+h], kbd:[Alt+m]       | Remove current buffer from hotlist. | `+/input hotlist_remove_buffer+`
+| kbd:[Alt+h], kbd:[Alt+r]       | Restore latest hotlist removed in the current buffer. | `+/input hotlist_restore_buffer+`
+| kbd:[Alt+h], kbd:[Alt+Shift+R] | Restore latest hotlist removed in all buffers. | `+/input hotlist_restore_all+`
+|===
+
+[[key_bindings_toggle_keys]]
+=== Toggle keys
+
+[width="100%",cols="^.^3,.^8,.^5",options="header"]
+|===
+| Key         | Description | Command
+| kbd:[Alt+m] | Toggle mouse. | `+/mouse toggle+`
+| kbd:[Alt+s] | Toggle spell checker. | `+/mute spell toggle+`
+| kbd:[Alt+=] | Toggle filters. | `+/filter toggle+`
+| kbd:[Alt+-] | Toggle filters in current buffer. | `+/filter toggle @+`
+|===
+
+[[key_bindings_search_context]]
+=== Search context
+
+These keys are used in context "search" (when kbd:[Ctrl+r] is pressed to search
+text in buffer).
+
+[width="100%",cols="^.^3,.^8,.^5",options="header"]
+|===
+| Key            | Description | Command
+| kbd:[Ctrl+r]   | Switch search type: string (default), regular expression. | `+/input search_switch_regex+`
+| kbd:[Alt+c]    | Switch exact case for search. | `+/input search_switch_case+`
+| kbd:[Tab]      | Switch search in: messages (default), prefixes, prefixes + messages. | `+/input search_switch_where+`
+| kbd:[↑]        | Search previous line. | `+/input search_previous+`
+| kbd:[↓]        | Search next line. | `+/input search_next+`
+| kbd:[Enter] +
+  kbd:[Ctrl+j] +
+  kbd:[Ctrl+m]   | Stop search at current position. | `+/input search_stop_here+`
+| kbd:[Ctrl+q]   | Stop search and scroll to bottom of buffer. | `+/input search_stop+`
+|===
+
+[[key_bindings_cursor_context]]
+=== Cursor context
+
+These keys are used in context "cursor" (free movement of cursor on screen).
+
+[width="100%",cols="^.^3,^.^2,.^7,.^7",options="header"]
+|===
+| Key            | Area     | Description | Command
+| kbd:[↑]        | -        | Move cursor one line up. | `+/cursor move up+`
+| kbd:[↓]        | -        | Move cursor one line down. | `+/cursor move down+`
+| kbd:[←]        | -        | Move cursor one column left. | `+/cursor move left+`
+| kbd:[→]        | -        | Move cursor one column right. | `+/cursor move right+`
+| kbd:[Alt+↑]    | -        | Move cursor one area up. | `+/cursor move area_up+`
+| kbd:[Alt+↓]    | -        | Move cursor one area down. | `+/cursor move area_down+`
+| kbd:[Alt+←]    | -        | Move cursor one area left. | `+/cursor move area_left+`
+| kbd:[Alt+→]    | -        | Move cursor one area right. | `+/cursor move area_right+`
+| kbd:[m]        | chat     | Quote message. | `+hsignal:chat_quote_message;/cursor stop+`
+| kbd:[q]        | chat     | Quote prefix + message. | `+hsignal:chat_quote_prefix_message;/cursor stop+`
+| kbd:[Q]        | chat     | Quote time + prefix + message. | `+hsignal:chat_quote_time_prefix_message;/cursor stop+`
+| kbd:[b]        | nicklist | Ban nick. | `+/window ${_window_number};/ban ${nick}+`
+| kbd:[k]        | nicklist | Kick nick. | `+/window ${_window_number};/kick ${nick}+`
+| kbd:[K]        | nicklist | Kick and ban nick. | `+/window ${_window_number};/kickban ${nick}+`
+| kbd:[q]        | nicklist | Open query with nick. | `+/window ${_window_number};/query ${nick};/cursor stop+`
+| kbd:[w]        | nicklist | Do a whois on nick. | `+/window ${_window_number};/whois ${nick}+`
+| kbd:[Enter] +
+  kbd:[Ctrl+j] +
+  kbd:[Ctrl+m]   | -        | Stop cursor mode | `/cursor stop`
+|===
+
+[[key_bindings_mouse]]
+=== Mouse
+
+These mouse actions are possible only if mouse is enabled with key kbd:[Alt+m]
+(command: `+/mouse toggle+`).
+
+[width="100%",cols="^.^3,^.^3,^.^3,.^8,.^8",options="header"]
+|===
+| Button/Wheel ^(1)^ | Gesture      | Area                | Description | Command
+| ◾◽◽                | -            | chat                | Switch to window. | `+/window ${_window_number}+`
+| ◾◽◽                | left         | chat                | Switch to previous buffer. | `+/window ${_window_number};/buffer +1+`
+| ◾◽◽                | right        | chat                | Switch to next buffer. | `+/window ${_window_number};/buffer +1+`
+| ◾◽◽                | left (long)  | chat                | Switch to first buffer. | `+/window ${_window_number};/buffer 1+`
+| ◾◽◽                | right (long) | chat                | Switch to last buffer. | `+/window ${_window_number};/input jump_last_buffer+`
+| kbd:[▲]            | -            | chat                | Scroll up a few lines in buffer history. | `+/window scroll_up -window ${_window_number}+`
+| kbd:[▼]            | -            | chat                | Scroll down a few lines in buffer history. | `+/window scroll_down -window ${_window_number}+`
+| kbd:[Ctrl+▲]       | -            | chat                | Scroll horizontally to the left. | `+/window scroll_horiz -window ${_window_number} -10%+`
+| kbd:[Ctrl+▼]       | -            | chat                | Scroll horizontally to the right. | `+/window scroll_horiz -window ${_window_number} +10%+`
+| kbd:[▲]            | -            | chat: fset buffer   | Move five lines up in fset buffer. | `+/fset -up 5+`
+| kbd:[▼]            | -            | chat: fset buffer   | Move five lines down in fset buffer. | `+/fset -down 5+`
+| ◾◽◽                | -            | chat: fset buffer   | Select line in fset buffer. | `+/window ${_window_number};/fset -go ${_chat_line_y}+`
+| ◽◽◾                | -            | chat: fset buffer   | Toggle boolean (on/off) or edit the option value. | `+hsignal:fset_mouse+`
+| ◽◽◾                | left         | chat: fset buffer   | Decrease value for integer/color, set/append to value for other types. | `+hsignal:fset_mouse+`
+| ◽◽◾                | right        | chat: fset buffer   | Increase value for integer/color, set/append to value for other types. | `+hsignal:fset_mouse+`
+| ◽◽◾                | up / down    | chat: fset buffer   | Mark/unmark multiple options. | `+hsignal:fset_mouse+`
+| kbd:[▲]            | -            | chat: script buffer | Move five lines up in script buffer. | `+/script up 5+`
+| kbd:[▼]            | -            | chat: script buffer | Move five lines down in script buffer. | `+/script down 5+`
+| ◾◽◽                | -            | chat: script buffer | Select line in script buffer. | `+/script go ${_chat_line_y}+`
+| ◽◽◾                | -            | chat: script buffer | Install/remove script. | `+/script go ${_chat_line_y};/script installremove -q ${script_name_with_extension}+`
+| ◾◽◽                | up / left    | buflist             | Move buffer to a lower number. | Signal `+buflist_mouse+`.
+| ◾◽◽                | down / right | buflist             | Move buffer to a higher number. | Signal `+buflist_mouse+`.
+| ◾◽◽                | -            | buflist             | Switch to buffer (previously visited buffer if the buffer is the current one). | Signal `+buflist_mouse+`.
+| ◽◽◾                | -            | buflist             | Switch to next visited buffer if the buffer is the current one. | Signal `+buflist_mouse+`.
+| kbd:[Ctrl+▲]       | -            | buflist             | Switch to previous buffer. | Signal `+buflist_mouse+`.
+| kbd:[Ctrl+▼]       | -            | buflist             | Switch to next buffer. | Signal `+buflist_mouse+`.
+| ◾◽◽                | up           | nicklist            | Scroll up one page in nicklist. | `+/bar scroll nicklist ${_window_number} -100%+`
+| ◾◽◽                | down         | nicklist            | Scroll down one page in nicklist. | `+/bar scroll nicklist ${_window_number} +100%+`
+| ◾◽◽                | up (long)    | nicklist            | Go to the beginning of nicklist. | `+/bar scroll nicklist ${_window_number} b+`
+| ◾◽◽                | down (long)  | nicklist            | Go to the end of nicklist. | `+/bar scroll nicklist ${_window_number} e+`
+| ◾◽◽                | -            | nicklist            | Open query with nick. | `+/window ${_window_number};/query ${nick}+`
+| ◽◽◾                | -            | nicklist            | Do a whois on nick. | `+/window ${_window_number};/whois ${nick}+`
+| ◾◽◽                | left         | nicklist            | Kick nick. | `+/window ${_window_number};/kick ${nick}+`
+| ◾◽◽                | left (long)  | nicklist            | Kick and ban nick. | `+/window ${_window_number};/kickban ${nick}+`
+| ◽◽◾                | left         | nicklist            | Ban nick. | `+/window ${_window_number};/ban ${nick}+`
+| ◽◽◾                | -            | input               | Grab a mouse event and insert its code in command line. | `+/input grab_mouse_area+`
+| kbd:[▲]            | -            | any bar             | Scroll bar by -20%. | `+/bar scroll ${_bar_name} ${_window_number} -20%+`
+| kbd:[▼]            | -            | any bar             | Scroll bar by +20%. | `+/bar scroll ${_bar_name} ${_window_number} +20%+`
+| ◽◾◽                | -            | anywhere            | Start cursor mode at this point. | `+/cursor go ${_x},${_y}+`
+|===
+
+[NOTE]
+^(1)^ kbd:[▲] and kbd:[▼] are wheel up and down.
+
+[[key_bindings_fset_buffer]]
+=== Fset buffer
+
+These keys and actions are used on the fset buffer (see <<fset,Fset plugin>>).
+
+[width="100%",cols="^.^3,^.^2,.^8,.^5",options="header"]
+|===
+| Key                      | Action ^(1)^ | Description | Command
+| kbd:[↑]                  |              | Move one line up. | `+/fset -up+`
+| kbd:[↓]                  |              | Move one line down. | `+/fset -down+`
+| kbd:[PgUp]               |              | Move one page up. | `+/window page_up+`
+| kbd:[PgDn]               |              | Move one page down. | `+/window page_down+`
+| kbd:[Alt+Home]           | `pass:[<<]`  | Move to first line. | `+/fset -go 0+`
+| kbd:[Alt+End]            | `pass:[>>]`  | Move to last line. | `+/fset -go end+`
+| kbd:[F11]                | `pass:[<]`   | Scroll horizontally on the left. | `+/fset -left+`
+| kbd:[F12]                | `pass:[>]`   | Scroll horizontally on the right. | `+/fset -right+`
+| kbd:[Alt+Space]          | `t`          | Toggle boolean value. | `+/fset -toggle+`
+| kbd:[Alt+-]              | `-`          | Subtract 1 from value for integer/color, set value for other types. | `+/fset -add -1+`
+| kbd:[Alt++]              | `+`          | Add 1 to value for integer/color, append to value for other types. | `+/fset -add 1+`
+| kbd:[Alt+f], kbd:[Alt+r] | `r`          | Reset value. | `+/fset -reset+`
+| kbd:[Alt+f], kbd:[Alt+u] | `u`          | Unset value. | `+/fset -unset+`
+| kbd:[Alt+Enter]          | `s`          | Set value. | `+/fset -set+`
+| kbd:[Alt+f], kbd:[Alt+n] | `n`          | Set new value. | `+/fset -setnew+`
+| kbd:[Alt+f], kbd:[Alt+a] | `a`          | Append to value. | `+/fset -append+`
+| kbd:[Alt+,]              | `,`          | Mark/unmark option. | `+/fset -mark 1+`
+| kbd:[Shift+↑]            |              | Move one line up and mark/unmark option. | `+/fset -up; /fset -mark+`
+| kbd:[Shift+↓]            |              | Mark/unmark option and move one line down. | `+/fset -mark; /fset -down+`
+|                          | `m:xxx`      | Mark options displayed that are matching filter "xxx" (any filter on option or value is allowed, see <<command_fset_fset,fset command>>). |
+|                          | `u:xxx`      | Unmark options displayed that are matching filter "xxx" (any filter on option or value is allowed, see <<command_fset_fset,fset command>>). |
+| kbd:[Ctrl+l] (`L`)       |              | Refresh options and whole screen. | `+/fset -refresh+`
+|                          | `$`          | Refresh options (keep marked options). |
+|                          | `$$`         | Refresh options (unmark all options). |
+| kbd:[Alt+p]              |              | Toggle plugin description options (`pass:[plugins.desc.*]`). | `+/mute /set fset.look.show_plugins_desc toggle+`
+| kbd:[Alt+v]              |              | Toggle help bar. | `+/bar toggle fset+`
+|                          | `s:x,y`      | Sort options by fields x,y (see option <<option_fset.look.sort,fset.look.sort>>). | `+/mute /set fset.look.sort x,y+`
+|                          | `s:`         | Reset sort to its default value (see option <<option_fset.look.sort,fset.look.sort>>). | `+/mute /unset fset.look.sort+`
+|                          | `w:xxx`      | Export options in file "xxx". | `+/fset -export xxx+`
+|                          | `w-:xxx`     | Export options in file "xxx" without help. | `+/fset -export -nohelp xxx+`
+|                          | `w+:xxx`     | Export options in file "xxx" with help. | `+/fset -export -help xxx+`
+| kbd:[Ctrl+x]             | `x`          | Switch the format used to display options. | `+/fset -format+`
+|                          | `q`          | Close fset buffer. | `+/buffer close+`
+|===
+
+[NOTE]
+^(1)^ The action must be entered as input on the command line, followed by kbd:[Enter].
+
+[[key_bindings_script_buffer]]
+=== Script buffer
+
+These keys and actions are used on the script buffer (see <<script_manager,script manager>>).
+
+[width="100%",cols="^.^3,^.^2,.^8,.^5",options="header"]
+|===
+| Key               | Action ^(1)^ | Description | Command
+| kbd:[↑]           |              | Move one line up. | `+/script up+`
+| kbd:[↓]           |              | Move one line down. | `+/script down+`
+| kbd:[PgUp]        |              | Move one page up. | `+/window page_up+`
+| kbd:[PgDn]        |              | Move one page down. | `+/window page_down+`
+| kbd:[Alt+i]       | `i`          | Install script. | `+/script install+`
+| kbd:[Alt+r]       | `r`          | Remove script. | `+/script remove+`
+| kbd:[Alt+l] (`L`) | `l`          | Load script. | `+/script load+`
+| kbd:[Alt+u]       | `u`          | Unload script. | `+/script unload+`
+| kbd:[Alt+Shift+A] | `A`          | Autoload script. | `+/script toggleautoload+`
+| kbd:[Alt+h]       | `h`          | Hold/unhold script. | `+/script hold+`
+| kbd:[Alt+v]       | `v`          | View script. | `+/script show+`
+|===
+
+[NOTE]
+^(1)^ The action must be entered as input on the command line, followed by kbd:[Enter].
+
+[[configuration]]
+== Configuration
+
+[[fset]]
+=== Fset
+
+Fast Set plugin displays a list of options in a buffer, and helps to set WeeChat
+and plugin options.
+
+Example of fset buffer displaying options starting with `weechat.look` :
+
+[subs="quotes"]
+....
+┌──────────────────────────────────────────────────────────────────────────────────────┐
+│1.weechat│1/121 | Filter: weechat.look.* | Sort: ~name | Key(input): alt+space=toggle │
+│2.fset   │weechat.look.bare_display_exit_on_input: exit the bare display mode on any c│
+│         │hanges in input [default: on]                                               │
+│         │----------------------------------------------------------------------------│
+│         │  weechat.look.align_end_of_lines                   integer  message        │
+│         │  weechat.look.align_multiline_words                boolean  on             │
+│         │  weechat.look.bar_more_down                        string   "++"           │
+│         │  weechat.look.bar_more_left                        string   "<<"           │
+│         │  weechat.look.bar_more_right                       string   ">>"           │
+│         │  weechat.look.bar_more_up                          string   "--"           │
+│         │##  weechat.look.bare_display_exit_on_input           boolean  on             ##│
+│         │  weechat.look.bare_display_time_format             string   "%H:%M"        │
+│         │  weechat.look.buffer_auto_renumber                 boolean  on             │
+│         │  weechat.look.buffer_notify_default                integer  all            │
+│         │  weechat.look.buffer_position                      integer  end            │
+│         │  weechat.look.buffer_search_case_sensitive         boolean  off            │
+│         │  weechat.look.buffer_search_force_default          boolean  off            │
+│         │  weechat.look.buffer_search_regex                  boolean  off            │
+│         │  weechat.look.buffer_search_where                  integer  prefix_message │
+│         │  weechat.look.buffer_time_format                   string   "%H:%M:%S"     │
+│         │  weechat.look.buffer_time_same                     string   ""             │
+│         │[12:55] [2] [fset] 2:fset                                                   │
+│         │█                                                                           │
+└──────────────────────────────────────────────────────────────────────────────────────┘
+....
+
+[[fset_commands]]
+==== Commands
+
+include::includes/autogen_user_commands.en.adoc[tag=fset_commands]
+
+[[fset_options]]
+==== Options
+
+Sections in file _fset.conf_:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section | Control command    | Description
+| color   | /set fset.color.*  | Colors.
+| format  | /set fset.format.* | Formats used to display list of options.
+| look    | /set fset.look.*   | Look and feel.
+|===
+
+Options:
+
+include::includes/autogen_user_options.en.adoc[tag=fset_options]
+
+[[colors]]
+=== Colors
+
+[[colors_basic]]
+==== Basic colors
+
+Basic colors in WeeChat are:
+
+[width="75%",cols="1m,4",options="header"]
+|===
+| Name         | Color
+| default      | Default terminal color (transparent for background)
+| black        | Black
+| darkgray     | Dark gray
+| red          | Dark red
+| lightred     | Light red
+| green        | Dark green
+| lightgreen   | Light green
+| brown        | Brown
+| yellow       | Yellow
+| blue         | Dark blue
+| lightblue    | Light blue
+| magenta      | Dark magenta
+| lightmagenta | Light magenta
+| cyan         | Dark cyan
+| lightcyan    | Light cyan
+| gray         | Gray
+| white        | White
+|===
+
+[[colors_extended]]
+==== Extended colors
+
+WeeChat dynamically allocates color pairs when colors are used on screen (to
+display buffers and bars).
+
+In addition to basic colors, you can use a color number between 1 and the limit
+of your terminal.
+
+Use command `/color` to see current colors and limits. With kbd:[Alt+c] you can
+temporarily switch to terminal colors to choose a color.
+
+For example if you want to display time in orange in buffer, do:
+
+----
+/set weechat.color.chat_time 214
+----
+
+Or if you want a very dark green background for status bar:
+
+----
+/set weechat.bar.status.color_bg 22
+----
+
+[[colors_aliases]]
+==== Aliases
+
+You can add color aliases with command `/color alias` and then use this alias
+in any color option.
+
+For example:
+
+----
+/color alias 214 orange
+/set weechat.color.chat_delimiters orange
+----
+
+[[colors_attributes]]
+==== Attributes
+
+It is possible to use some attributes for colors. One or more attributes can be
+added before color name or number:
+
+* `+*+`: bold text
+* `+!+`: reverse video
+* `+/+`: italic
+* `+_+`: underlined text
+* `+|+`: keep attributes: do not reset bold/reverse/italic/underlined when
+  changing color
+
+For example if you want self nick as white underlined, do:
+
+----
+/set weechat.color.chat_nick_self _white
+----
+
+Or if you want time in status bar as orange underlined with bold:
+
+----
+/set weechat.color.status_time *_214
+----
+
+To use an attribute with default terminal color (-1), you must use a number
+greater than last terminal color, for example max color in WeeChat: 99999.
+
+Example of bold with terminal foreground color:
+
+----
+/set weechat.color.status_time *99999
+----
+
+[[charset]]
+=== Charset
+
+Charset plugin lets you decode or encode data using charsets.
+
+There is default charset for decode/encode, and specific charsets for buffers
+(or group of buffers).
+
+This plugin is optional, but recommended: if it's not loaded, WeeChat
+can only read/write UTF-8 data.
+
+Charset plugin should be autoloaded by WeeChat. To be sure plugin is loaded,
+try:
+
+----
+/charset
+----
+
+If command is not found, then load plugin with command:
+
+----
+/plugin load charset
+----
+
+If plugin is not found, then you should compile again WeeChat with
+plugins and Charset support.
+
+When Charset plugin starts, it displays terminal and internal charsets.
+Terminal charset depends on your locale, and internal is UTF-8.
+
+For example:
+
+....
+charset: terminal: ISO-8859-15, internal: UTF-8
+....
+
+[[charset_set]]
+==== Set charset
+
+To set global decode and encode charsets, use command `/set`.
+
+For example:
+
+----
+/set charset.default.decode ISO-8859-15
+/set charset.default.encode ISO-8859-15
+----
+
+If global decode charset is not set (for example during first
+load of Charset plugin), it will be automatically set to terminal
+charset (if it's different from UTF-8), or by default to _ISO-8859-1_.
+
+Default encode value is empty, so it sends by default with
+internal charset (UTF-8).
+
+To set IRC server charset, use command `/charset` on server buffer.
+If you give only charset, then it will set decoding and encoding values.
+
+For example:
+
+----
+/charset ISO-8859-15
+----
+
+It's equivalent to:
+
+----
+/charset decode ISO-8859-15
+/charset encode ISO-8859-15
+----
+
+To set IRC channel (or private) charset, use same commands as server,
+but on channel (or private) buffer.
+
+To set charset for all channels/privates of an IRC server:
+
+----
+/set charset.encode.irc.libera ISO-8859-15
+----
+
+To see all charsets used, use following command:
+
+----
+/set charset.*
+----
+
+[[charset_troubleshooting]]
+==== Troubleshooting
+
+For any problem with charsets, please look at
+link:weechat_faq.en.html#charset[WeeChat FAQ / Charset].
+
+[[charset_commands]]
+==== Commands
+
+include::includes/autogen_user_commands.en.adoc[tag=charset_commands]
+
+[[charset_options]]
+==== Options
+
+Sections in file _charset.conf_:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section | Control command                             | Description
+| default | /set charset.default.*                      | Default decoding/encoding charset.
+| decode  | <<command_charset_charset,/charset decode>> +
+            /set charset.decode.*                       | Decoding charset by buffer (options can be added/removed in section).
+| encode  | <<command_charset_charset,/charset encode>> +
+            /set charset.encode.*                       | Encoding charset by buffer (options can be added/removed in section).
+|===
+
+Options:
+
+include::includes/autogen_user_options.en.adoc[tag=charset_options]
+
+[[notify_levels]]
+=== Notify levels
+
+[[setup_notify_levels]]
+==== Setup notify levels
+
+Four levels are possible in messages displayed in buffers, from lower to higher:
+
+* _low_: message with low importance (for example irc join/part/quit)
+* _message_: message from a user
+* _private_: message in a private buffer
+* _highlight_: message with highlight
+
+Each buffer has a notify level, which is used to decide what messages will add
+buffer in hotlist.
+
+The default notify level can be set using option
+<<option_weechat.look.buffer_notify_default,weechat.look.buffer_notify_default>>,
+default is _all_.
+
+[width="75%",cols="2m,7",options="header"]
+|===
+| Notify level | Level of messages added to hotlist
+| none         | (none)
+| highlight    | _highlight_ + _private_
+| message      | _highlight_ + _private_ + _message_
+| all          | _highlight_ + _private_ + _message_ + _low_
+|===
+
+Notify level can be defined for a set of buffers, for example all buffers of
+irc server "libera":
+
+----
+/set weechat.notify.irc.libera message
+----
+
+Set notify level _highlight_ on channel "#weechat" only:
+
+----
+/set weechat.notify.irc.libera.#weechat highlight
+----
+
+The notify level for a buffer can be set with command `/buffer`:
+
+----
+/buffer notify highlight
+----
+
+[[max_hotlist_level_nicks]]
+==== Max hotlist level for nicks
+
+It is possible to set max hotlist level for some nicks, per buffer, or per group
+of buffers (like IRC servers).
+
+The buffer property "hotlist_max_level_nicks" can be set with a list of nicks
+and for each nick the max hotlist level to trigger, possible levels are:
+
+* -1: no hotlist changes for nick
+* 0: low priority (like join/part messages)
+* 1: message
+* 2: private message
+* 3: highlight (in fact useless, since it's already the default max for all messages)
+
+For example to disable highlights from "joe" and "mike" on current buffer:
+
+----
+/buffer set hotlist_max_level_nicks_add joe:2,mike:2
+----
+
+[NOTE]
+The buffer property "hotlist_max_level_nicks" is not saved in configuration. +
+You can easily save it with the script _buffer_autoset.py_: you can install it
+with `+/script install buffer_autoset.py+` and get help with
+`+/help buffer_autoset+`.
+
+[[highlights]]
+=== Highlights
+
+[[highlights_words]]
+==== Add words to highlight
+
+By default, WeeChat highlights messages from other users containing your nick,
+therefore the highlight depends on the buffer (the nick can be different from
+one buffer to another).
+
+You can add other words to highlight with the option
+<<option_weechat.look.highlight,weechat.look.highlight>>, for example to
+highlight your nick and "word1", "word2" and all words beginning with "test":
+
+----
+/set weechat.look.highlight word1,word2,test*
+----
+
+If you need a more specific rule for the word, you can use regular expressions
+with the option <<option_weechat.look.highlight_regex,weechat.look.highlight_regex>>,
+for example to highlight words "flashcode", "flashcöde" and "flashy":
+
+----
+/set weechat.look.highlight_regex flashc[oö]de|flashy
+----
+
+The delimiters around words to highlight can be customized with the option
+<<option_weechat.look.word_chars_highlight,weechat.look.word_chars_highlight>>.
+
+[[highlights_tags]]
+==== Add tags to highlight
+
+Lines displayed can contain "tags", which give some info about the origin of
+message or the message itself. +
+You can display tags with the command `/debug tags` (same command to hide them).
+
+You can add specific tags to highlight with the option
+<<option_weechat.look.highlight_tags,weechat.look.highlight_tags>>.
+Tags are separated by commas, and multiple tags can be separated by `+++` to do
+a logical "and" between them.
+
+For example to highlight all messages from nick "FlashCode" and all notices
+from nicks beginning with "toto":
+
+----
+/set weechat.look.highlight_tags "nick_flashcode,irc_notice+nick_toto*"
+----
+
+[[highlights_regex_buffer]]
+==== Set extra highlights on buffer
+
+You can force highlight using a regular expression with the buffer property
+"highlight_regex".
+
+For example to force the highlight on all messages in the current buffer:
+
+----
+/buffer set highlight_regex .*
+----
+
+[NOTE]
+The buffer property "highlight_regex" is not saved in configuration. +
+You can easily save it with the script _buffer_autoset.py_: you can install it
+with `+/script install buffer_autoset.py+` and get help with
+`+/help buffer_autoset+`.
+
+[[buffer_logging]]
+=== Buffer logging
+
+The Logger plugin lets you save content of buffers to files, with options
+about what and how it is saved.
+
+[[logger_log_levels]]
+==== Log levels
+
+Logging is made with a level for each buffer. Default level is 9 (log
+all messages displayed on buffer).
+You can change level for one buffer, or a group of buffers.
+
+Possible levels are 0 to 9. Zero means "do not log anything" and 9 means
+"log all messages".
+
+Plugins are using different levels for messages displayed.
+IRC plugin uses following levels:
+
+* level 1: message from user (on channel or private)
+* level 2: nick change (you or someone else)
+* level 3: any server message (except join/part/quit)
+* level 4: server message join/part/quit
+
+So if you set level 3 for an IRC channel, WeeChat will log all messages,
+but not join/part/quit.
+
+Some examples:
+
+* Set level 3 for IRC channel #weechat:
+
+----
+/set logger.level.irc.libera.#weechat 3
+----
+
+* Set level 3 for libera server buffer:
+
+----
+/set logger.level.irc.server.libera 3
+----
+
+* Set level 3 for all channels on server libera:
+
+----
+/set logger.level.irc.libera 3
+----
+
+* Set level 2 for all IRC buffers:
+
+----
+/set logger.level.irc 2
+----
+
+[[logger_filenames_masks]]
+==== Filenames masks
+
+It is possible to define a filename mask for each buffer, and use local buffer
+variables to build filename. To see available local variables for current buffer:
+
+----
+/buffer listvar
+----
+
+Masks will be matched on options in descending order of specificity on
+`logger.mask.$plugin.*`, with `logger.file.mask` as fallback option.
+
+For example, on buffer "irc.libera.#weechat", WeeChat will search a mask with
+option name, in this order:
+
+----
+logger.mask.irc.libera.#weechat
+logger.mask.irc.libera
+logger.mask.irc
+logger.file.mask
+----
+
+That means you can have masks specific for some IRC servers
+("logger.mask.irc.libera") or for a plugin ("logger.mask.irc").
+
+[[logger_files_by_date]]
+===== Log files by date
+
+To have log files by date, you can use date/time specifiers in mask (see
+`man strftime` for formats), for example:
+
+----
+/set logger.file.mask "%Y/%m/$plugin.$name.weechatlog"
+----
+
+You'll have following files:
+
+....
+~/.local/share/weechat
+└── logs
+    ├── 2010
+    │   ├── 11
+    │   │   ├── irc.server.libera.weechatlog
+    │   │   └── irc.libera.#weechat.weechatlog
+    │   └── 12
+    │       ├── irc.server.libera.weechatlog
+    │       └── irc.libera.#weechat.weechatlog
+    ├── 2011
+    │   ├── 01
+    │   │   ├── irc.server.libera.weechatlog
+    │   │   └── irc.libera.#weechat.weechatlog
+    │   ├── 02
+    ...
+....
+
+[[logger_irc_files_by_server_channel]]
+===== IRC log files by server and channel
+
+If you want one directory by IRC server and one file by channel inside:
+
+----
+/set logger.mask.irc "irc/$server/$channel.weechatlog"
+----
+
+You'll have following files:
+
+....
+~/.local/share/weechat
+└── logs
+    └── irc
+        ├── libera
+        │   ├── libera.weechatlog
+        │   ├── #weechat.weechatlog
+        │   └── #mychan.weechatlog
+        ├── oftc
+        │   ├── oftc.weechatlog
+        │   ├── #channel1.weechatlog
+        │   └── #channel2.weechatlog
+        ...
+....
+
+[[logger_commands]]
+==== Commands
+
+include::includes/autogen_user_commands.en.adoc[tag=logger_commands]
+
+[[logger_options]]
+==== Options
+
+Sections in file _logger.conf_:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section | Control command     | Description
+| look    | /set logger.look.*  | Look and feel.
+| color   | /set logger.color.* | Colors.
+| file    | /set logger.file.*  | Options for log files.
+| level   | /set logger.level.* | Log level by buffer (options can be added/removed in section).
+| mask    | /set logger.mask.*  | Filename mask by buffer (options can be added/removed in section).
+|===
+
+Options:
+
+include::includes/autogen_user_options.en.adoc[tag=logger_options]
+
+[[mouse]]
+=== Mouse support
+
+WeeChat supports mouse clicks and gestures. It is working with local terminal,
+and remotely via ssh connection with or without screen/tmux.
+
+[[mouse_enable]]
+==== Enable mouse
+
+To enable mouse at startup:
+
+----
+/set weechat.look.mouse on
+----
+
+To enable mouse now, press kbd:[Alt+m] or do following command:
+
+----
+/mouse enable
+----
+
+It is possible to temporarily disable mouse, and bind that on a key. For example
+key kbd:[Alt+%] to disable mouse for 10 seconds:
+
+----
+/key bind meta-% /mouse toggle 10
+----
+
+[IMPORTANT]
+When mouse is enabled in WeeChat, all mouse events are caught by WeeChat, so
+actions such as copy/paste or clicks on URLs are not sent to the terminal. +
+Using kbd:[Shift] key causes the events to be sent directly to the terminal,
+as if the mouse was disabled (on some terminals like iTerm, you have to use
+kbd:[Alt] instead of kbd:[Shift]).
+
+[NOTE]
+For any problem with mouse, please look at
+link:weechat_faq.en.html#mouse[WeeChat FAQ / Mouse].
+
+[[mouse_bind_events]]
+==== Bind mouse events to commands
+
+Many default mouse events are already defined by WeeChat (see
+<<key_bindings_mouse,mouse actions>>).
+
+You can change or add bindings with the command `/key` using context "mouse"
+(for syntax, see command <<command_weechat_key,/key>>).
+
+Event name consists of a modifier (optional), a button/wheel name and a gesture
+(optional). Different elements are separated by `+-+`.
+
+List of modifiers:
+
+[width="100%",cols="1m,4",options="header"]
+|===
+| Modifier | Description
+| ctrl     | Key kbd:[Ctrl]
+| alt      | Key kbd:[Alt]
+| ctrl-alt | Keys kbd:[Ctrl] + kbd:[Alt]
+|===
+
+List of buttons/wheel:
+
+[width="100%",cols="1m,4",options="header"]
+|===
+| Button/wheel        | Description
+| button1             | Click on left button
+| button2             | Click on right button
+| button3             | Click on middle button (often click on wheel)
+| button4 ... button9 | Click on extra buttons
+| wheelup             | Wheel (up)
+| wheeldown           | Wheel (down)
+|===
+
+List of gestures (only for buttons, not wheel):
+
+[width="100%",cols="1m,4",options="header"]
+|===
+| Gesture            | Distance
+| gesture-up         | 3 ... 19
+| gesture-up-long    | ≥ 20
+| gesture-down       | 3 ... 19
+| gesture-down-long  | ≥ 20
+| gesture-left       | 3 ... 39
+| gesture-left-long  | ≥ 40
+| gesture-right      | 3 ... 39
+| gesture-right-long | ≥ 40
+|===
+
+List of incomplete events (only for buttons, useful for plugins/scripts):
+
+[width="100%",cols="1m,4",options="header"]
+|===
+| Event      | Description
+| event-down | Button was pressed but not released yet
+| event-drag | Mouse was moved with button pressed down
+|===
+
+Example of events:
+
+* `button1`
+* `ctrl-button1`
+* `button1-gesture-right`
+* `button1-event-down`
+* `button1-event-drag`
+* `alt-button2-gesture-down-long`
+* `wheelup`
+* `ctrl-alt-wheeldown`
+* ...
+
+[TIP]
+When binding a key in context "mouse", it's possible to match many events using
+`+*+` at beginning or end of name, for example `+button1-gesture-*+` will match
+any gesture made using left button.
+
+[TIP]
+You can find an event name with command `+/input grab_mouse+` then doing event
+with mouse. This will insert event name on command line.
+
+[[spell_checking]]
+=== Spell checking
+
+Spell plugin lets you check spelling in command line. It is possible to use
+many languages by buffer.
+
+Spell checking is disabled by default and can be toggled with key kbd:[Alt+s].
+
+[[spell_dictionaries]]
+==== Dictionaries
+
+Before using spell checking, dictionaries must be defined, either globally or
+specific to buffers.
+
+Multiple dictionaries can be used at same time: WeeChat will check words in all
+dictionaries.
+
+For example to use English and French:
+
+----
+/set spell.check.default_dict "en,fr"
+----
+
+It is possible to use a different dictionary on a specific buffer, for example
+on a German channel:
+
+----
+/spell setdict de
+----
+
+You can also specify a dictionary for a group of buffers, for example English
+for all channels on libera IRC server:
+
+----
+/set spell.dict.irc.libera en
+----
+
+For more information, see the command <<command_spell_spell,/spell>>.
+
+[[spell_speller_options]]
+==== Speller options
+
+Speller options can be defined by adding options in section "option" of aspell
+configuration.
+
+The option name is an aspell configuration option. List of options can be found
+in a shell with following command:
+
+----
+$ aspell config
+----
+
+For example, to enable option "ignore-case":
+
+----
+/set spell.option.ignore-case "true"
+----
+
+[[spell_suggestions]]
+==== Suggestions
+
+Suggestions are displayed in a bar item called "spell_suggest". The number of
+suggestions is set in option _spell.check.suggestions_.
+
+To enable suggestions you must set option _spell.check.suggestions_ to an
+integer ≥ 0 and add the bar item "spell_suggest" to a bar, like _status_.
+
+Example of suggestions with English dictionary (`en`):
+
+....
+│[12:55] [6] [irc/libera] 3:#test(+n){4} [print,prone,prune]                      │
+│[@Flashy] prinr █                                                                │
+└─────────────────────────────────────────────────────────────────────────────────┘
+....
+
+Example of suggestions with English and French dictionaries (`en,fr`):
+
+....
+│[12:55] [6] [irc/libera] 3:#test(+n){4} [print,prone,prune/prime,primer,primé]   │
+│[@Flashy] prinr █                                                                │
+└─────────────────────────────────────────────────────────────────────────────────┘
+....
+
+[[spell_commands]]
+==== Commands
+
+include::includes/autogen_user_commands.en.adoc[tag=spell_commands]
+
+[[spell_options]]
+==== Options
+
+Sections in file _spell.conf_:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section    | Control command                        | Description
+| color      | /set spell.color.*                     | Colors.
+| check      | /set spell.check.*                     | Options to control spell checking.
+| dict       | <<command_spell_spell,/spell setdict>> +
+               /set spell.dict.*                      | Dictionaries used by buffer (options can be added/removed in section).
+| look       | /set spell.look.*                      | Look and feel.
+| option     | /set spell.option.*                    | <<spell_speller_options,Speller options>> (options can be added/removed in section).
+|===
+
+Options:
+
+include::includes/autogen_user_options.en.adoc[tag=spell_options]
 
 [[bars]]
 === Bars
@@ -1654,677 +2838,6 @@ Same condition, but always display nicklist on buffer _&bitlbee_
 /set weechat.bar.nicklist.conditions "${nicklist} && (${info:term_width} > 100 || ${buffer.full_name} == irc.bitlbee.&bitlbee)"
 ----
 
-[[bare_display]]
-=== Bare display
-
-A special display, called "bare display" can be used for easy click on long URLs
-and selection of text (using the mouse).
-
-The bare display has following features:
-
-* It displays only the content of current buffer: no window split neither bars
-  (no title, nicklist, status, input, ...).
-* The WeeChat mouse support is disabled (if it was enabled): you can use your
-  mouse like you do in the terminal to click on URLs and select text.
-* Ncurses is not used, therefore URLs are not cut at the end of lines.
-
-The default key to enable bare display is kbd:[Alt+l] (`L`), and same key to exit
-(or by default anything changing the input will exit the bare display, see option
-<<option_weechat.look.bare_display_exit_on_input,weechat.look.bare_display_exit_on_input>>).
-
-The time format can be customized with the option
-<<option_weechat.look.bare_display_time_format,weechat.look.bare_display_time_format>>.
-
-The bare display can be enabled for a specific delay using the command
-<<command_weechat_window,/window>>.
-
-If WeeChat looks like that:
-
-....
-┌──────────────────────────────────────────────────────────────────────────────────────┐
-│1.libera │Welcome to #abc                                                             │
-│  weechat│12:52:27   --> | Flashy (flashcode@weechat.org) has joined #abc     │@Flashy│
-│2.  #test│12:52:27    -- | Nicks #abc: [@Flashy @joe +weebot peter]           │@joe   │
-│3.  #abc │12:52:27    -- | Channel #abc: 4 nicks (2 ops, 1 voice, 1 normal)   │+weebot│
-│4.  #def │12:52:27    -- | Channel created on Tue Jan 27 06:30:17 2009        │peter  │
-│5.  #ghi │12:54:15 peter | hey!                                               │       │
-│         │12:55:01  @joe | peter: hook_process: https://weechat.org/files/doc │       │
-│         │               | /devel/weechat_plugin_api.en.html#_weechat_hook_pr │       │
-│         │               | ocess                                              │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │[12:55] [5] [irc/libera] 3:#abc(+n){4}                                      │
-│         │[@Flashy(i)] hi peter!█                                                     │
-└──────────────────────────────────────────────────────────────────────────────────────┘
-....
-
-The screen will look like that in bare display:
-
-....
-┌──────────────────────────────────────────────────────────────────────────────────────┐
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│12:52 --> Flashy (flashcode@weechat.org) has joined #abc                              │
-│12:52 -- Nicks #abc: [@Flashy @joe +weebot peter]                                     │
-│12:52 -- Channel #abc: 4 nicks (2 ops, 1 voice, 1 normal)                             │
-│12:52 -- Channel created on Tue Jan 27 06:30:17 2009                                  │
-│12:54 <peter> hey!                                                                    │
-│12:55 <@joe> peter: hook_process: https://weechat.org/files/doc/devel/weechat_plugin_a│
-│pi.en.html#_weechat_hook_process                                                      │
-└──────────────────────────────────────────────────────────────────────────────────────┘
-....
-
-So you can click the URL from _joe_ without any problem in your terminal (of
-course this supposes that your terminal supports click on URLs).
-
-[[notify_levels]]
-=== Notify levels
-
-[[setup_notify_levels]]
-==== Setup notify levels
-
-Four levels are possible in messages displayed in buffers, from lower to higher:
-
-* _low_: message with low importance (for example irc join/part/quit)
-* _message_: message from a user
-* _private_: message in a private buffer
-* _highlight_: message with highlight
-
-Each buffer has a notify level, which is used to decide what messages will add
-buffer in hotlist.
-
-The default notify level can be set using option
-<<option_weechat.look.buffer_notify_default,weechat.look.buffer_notify_default>>,
-default is _all_.
-
-[width="75%",cols="2m,7",options="header"]
-|===
-| Notify level | Level of messages added to hotlist
-| none         | (none)
-| highlight    | _highlight_ + _private_
-| message      | _highlight_ + _private_ + _message_
-| all          | _highlight_ + _private_ + _message_ + _low_
-|===
-
-Notify level can be defined for a set of buffers, for example all buffers of
-irc server "libera":
-
-----
-/set weechat.notify.irc.libera message
-----
-
-Set notify level _highlight_ on channel "#weechat" only:
-
-----
-/set weechat.notify.irc.libera.#weechat highlight
-----
-
-The notify level for a buffer can be set with command `/buffer`:
-
-----
-/buffer notify highlight
-----
-
-[[max_hotlist_level_nicks]]
-==== Max hotlist level for nicks
-
-It is possible to set max hotlist level for some nicks, per buffer, or per group
-of buffers (like IRC servers).
-
-The buffer property "hotlist_max_level_nicks" can be set with a list of nicks
-and for each nick the max hotlist level to trigger, possible levels are:
-
-* -1: no hotlist changes for nick
-* 0: low priority (like join/part messages)
-* 1: message
-* 2: private message
-* 3: highlight (in fact useless, since it's already the default max for all messages)
-
-For example to disable highlights from "joe" and "mike" on current buffer:
-
-----
-/buffer set hotlist_max_level_nicks_add joe:2,mike:2
-----
-
-[NOTE]
-The buffer property "hotlist_max_level_nicks" is not saved in configuration. +
-You can easily save it with the script _buffer_autoset.py_: you can install it
-with `+/script install buffer_autoset.py+` and get help with
-`+/help buffer_autoset+`.
-
-[[highlights]]
-=== Highlights
-
-[[highlights_words]]
-==== Add words to highlight
-
-By default, WeeChat highlights messages from other users containing your nick,
-therefore the highlight depends on the buffer (the nick can be different from
-one buffer to another).
-
-You can add other words to highlight with the option
-<<option_weechat.look.highlight,weechat.look.highlight>>, for example to
-highlight your nick and "word1", "word2" and all words beginning with "test":
-
-----
-/set weechat.look.highlight word1,word2,test*
-----
-
-If you need a more specific rule for the word, you can use regular expressions
-with the option <<option_weechat.look.highlight_regex,weechat.look.highlight_regex>>,
-for example to highlight words "flashcode", "flashcöde" and "flashy":
-
-----
-/set weechat.look.highlight_regex flashc[oö]de|flashy
-----
-
-The delimiters around words to highlight can be customized with the option
-<<option_weechat.look.word_chars_highlight,weechat.look.word_chars_highlight>>.
-
-[[highlights_tags]]
-==== Add tags to highlight
-
-Lines displayed can contain "tags", which give some info about the origin of
-message or the message itself. +
-You can display tags with the command `/debug tags` (same command to hide them).
-
-You can add specific tags to highlight with the option
-<<option_weechat.look.highlight_tags,weechat.look.highlight_tags>>.
-Tags are separated by commas, and multiple tags can be separated by `+++` to do
-a logical "and" between them.
-
-For example to highlight all messages from nick "FlashCode" and all notices
-from nicks beginning with "toto":
-
-----
-/set weechat.look.highlight_tags "nick_flashcode,irc_notice+nick_toto*"
-----
-
-[[highlights_regex_buffer]]
-==== Set extra highlights on buffer
-
-You can force highlight using a regular expression with the buffer property
-"highlight_regex".
-
-For example to force the highlight on all messages in the current buffer:
-
-----
-/buffer set highlight_regex .*
-----
-
-[NOTE]
-The buffer property "highlight_regex" is not saved in configuration. +
-You can easily save it with the script _buffer_autoset.py_: you can install it
-with `+/script install buffer_autoset.py+` and get help with
-`+/help buffer_autoset+`.
-
-[[key_bindings]]
-=== Default key bindings
-
-[[key_bindings_command_line]]
-==== Keys for command line
-
-[width="100%",cols="^.^3,.^8,.^5",options="header"]
-|===
-| Key             | Description | Command
-| kbd:[←] +
-  kbd:[Ctrl+b]    | Go to previous char in command line. | `+/input move_previous_char+`
-| kbd:[→] +
-  kbd:[Ctrl+f]    | Go to next char in command line. | `+/input move_next_char+`
-| kbd:[Ctrl+←] +
-  kbd:[Alt+b]     | Go to previous word in command line. | `+/input move_previous_word+`
-| kbd:[Ctrl+→] +
-  kbd:[Alt+f]     | Go to next word in command line. | `+/input move_next_word+`
-| kbd:[Home] +
-  kbd:[Ctrl+a]    | Go to the beginning of command line. | `+/input move_beginning_of_line+`
-| kbd:[End] +
-  kbd:[Ctrl+e]    | Go to the end of command line. | `+/input move_end_of_line+`
-| kbd:[Ctrl+c],
-  kbd:[b]         | Insert code for bold text. | `+/input insert \x02+`
-| kbd:[Ctrl+c],
-  kbd:[c]         | Insert code for colored text. | `+/input insert \x03+`
-| kbd:[Ctrl+c],
-  kbd:[i]         | Insert code for italic text. | `+/input insert \x1D+`
-| kbd:[Ctrl+c],
-  kbd:[o]         | Insert code for color reset. | `+/input insert \x0F+`
-| kbd:[Ctrl+c],
-  kbd:[v]         | Insert code for reverse color. | `+/input insert \x16+`
-| kbd:[Ctrl+c],
-  kbd:[_]         | Insert code for underlined text. | `+/input insert \x1F+`
-| kbd:[Del] +
-  kbd:[Ctrl+d]    | Delete next char in command line. | `+/input delete_next_char+`
-| kbd:[Backsp.] +
-  kbd:[Ctrl+h]    | Delete previous char in command line. | `+/input delete_previous_char+`
-| kbd:[Ctrl+k]    | Delete from cursor until end of command line (deleted string is copied to the internal clipboard). | `+/input delete_end_of_line+`
-| kbd:[Ctrl+r]    | Search for text in buffer history (see <<key_bindings_search_context,keys for search context>>). | `+/input search_text_here+`
-| kbd:[Ctrl+t]    | Transpose chars. | `/input transpose_chars`
-| kbd:[Ctrl+u]    | Delete from cursor until beginning of command line (deleted string is copied to the internal clipboard). | `+/input delete_beginning_of_line+`
-| kbd:[Ctrl+w]    | Delete previous word of command line (deleted string is copied to the internal clipboard). | `+/input delete_previous_word+`
-| kbd:[Ctrl+y]    | Paste the internal clipboard content. | `+/input clipboard_paste+`
-| kbd:[Ctrl+_]    | Undo last action on command line. | `+/input undo+`
-| kbd:[Alt+_]     | Redo last action on command line. | `+/input redo+`
-| kbd:[Tab]       | Complete command or nick (kbd:[Tab] again: find next completion). | `+/input complete_next+`
-| kbd:[Shift+Tab] | Without completion: do a partial completion, with pending completion: complete with previous completion. | `+/input complete_previous+`
-| kbd:[Enter] +
-  kbd:[Ctrl+j] +
-  kbd:[Ctrl+m]    | Execute command or send message (in search mode: stop search). | `+/input return+`
-| kbd:[Alt+Enter] | Insert a newline. | `+/input insert \n+`
-| kbd:[↑]         | Call previous command/message (in search mode: search up). | `+/input history_previous+`
-| kbd:[↓]         | Call next command/message (in search mode: search down). | `+/input history_next+`
-| kbd:[Ctrl+↑]    | Call previous command/message in global history (common for all buffers). | `+/input history_global_previous+`
-| kbd:[Ctrl+↓]    | Call next command/message in global history (common for all buffers). | `+/input history_global_next+`
-| kbd:[Alt+d]     | Delete next word in command line (deleted string is copied to the internal clipboard). | `+/input delete_next_word+`
-| kbd:[Alt+k]     | Grab a key and insert its code (and command bound if key exists) in command line. | `+/input grab_key_command+`
-| kbd:[Alt+r]     | Delete entire command line. | `+/input delete_line+`
-| kbd:[Alt+s]     | Toggle spell checker. | `+/mute spell toggle+`
-|===
-
-[[key_bindings_buffers_windows]]
-==== Keys for buffers / windows
-
-[width="100%",cols="^.^3,.^8,.^5",options="header"]
-|===
-| Key                | Description | Command
-| kbd:[Ctrl+l] (`L`) | Redraw whole window. | `+/window refresh+`
-| kbd:[Ctrl+s],
-  kbd:[Ctrl+u]       | Set unread marker on all buffers. | `+/input set_unread+`
-| kbd:[Ctrl+x]       | Switch current buffer if buffers are attached with same number. | `+/input switch_active_buffer+`
-| kbd:[Alt+x]        | Zoom on merged buffer (kbd:[Alt+x] again: display all merged buffers). | `+/input zoom_merged_buffer+`
-| kbd:[PgUp]         | Scroll up one page in buffer history. | `+/window page_up+`
-| kbd:[PgDn]         | Scroll down one page in buffer history. | `+/window page_down+`
-| kbd:[Alt+PgUp]     | Scroll up a few lines in buffer history. | `+/window scroll_up+`
-| kbd:[Alt+PgDn]     | Scroll down a few lines in buffer history. | `+/window scroll_down+`
-| kbd:[Alt+Home]     | Scroll to top of buffer. | `+/window scroll_top+`
-| kbd:[Alt+End]      | Scroll to bottom of buffer. | `+/window scroll_bottom+`
-| kbd:[F1] +
-  kbd:[Ctrl+F1]      | Scroll up one page in buflist. | `+/bar scroll buflist * -100%+`
-| kbd:[F2] +
-  kbd:[Ctrl+F2]      | Scroll down one page in buflist. | `+/bar scroll buflist * +100%+`
-| kbd:[Alt+F1]       | Go to the beginning of buflist. | `+/bar scroll buflist * b+`
-| kbd:[Alt+F2]       | Go to the end of buflist. | `+/bar scroll buflist * e+`
-| kbd:[Alt+←] +
-  kbd:[Alt+↑] +
-  kbd:[Ctrl+p] +
-  kbd:[F5]           | Switch to previous buffer. | `+/buffer -1+`
-| kbd:[Alt+→] +
-  kbd:[Alt+↓] +
-  kbd:[Ctrl+n] +
-  kbd:[F6]           | Switch to next buffer. | `+/buffer +1+`
-| kbd:[F7]           | Switch to previous window. | `+/window -1+`
-| kbd:[F8]           | Switch to next window. | `+/window +1+`
-| kbd:[F9]           | Scroll buffer's title on the left. | `+/bar scroll title * -30%+`
-| kbd:[F10]          | Scroll buffer's title on the right. | `+/bar scroll title * +30%+`
-| kbd:[F11] +
-  kbd:[Ctrl+F11]     | Scroll up one page in nicklist. | `+/bar scroll nicklist * -100%+`
-| kbd:[F12] +
-  kbd:[Ctrl+F12]     | Scroll down one page in nicklist. | `+/bar scroll nicklist * +100%+`
-| kbd:[Alt+F11]      | Go to the beginning of nicklist. | `+/bar scroll nicklist * b+`
-| kbd:[Alt+F12]      | Go to the end of nicklist. | `+/bar scroll nicklist * e+`
-| kbd:[Alt+a]        | Switch to next buffer with activity (with priority: highlight, message, other). | `+/input jump_smart+`
-| kbd:[Alt+Shift+B]  | Toggle buflist. | `+/buflist toggle+`
-| kbd:[Alt+h],
-  kbd:[Alt+c]        | Clear hotlist (activity notification on buffers). | `+/input hotlist_clear+`
-| kbd:[Alt+h],
-  kbd:[Alt+m]        | Remove current buffer from hotlist. | `+/input hotlist_remove_buffer+`
-| kbd:[Alt+h],
-  kbd:[Alt+r]        | Restore latest hotlist removed in the current buffer. | `+/input hotlist_restore_buffer+`
-| kbd:[Alt+h],
-  kbd:[Alt+Shift+R]  | Restore latest hotlist removed in all buffers. | `+/input hotlist_restore_all+`
-| kbd:[Alt+j],
-  kbd:[Alt+f]        | Switch to first buffer. | `+/buffer -+`
-| kbd:[Alt+j],
-  kbd:[Alt+l] (`L`)  | Switch to last buffer. | `+/buffer ++`
-| kbd:[Alt+j],
-  kbd:[Alt+r]        | Switch to IRC raw buffer. | `+/server raw+`
-| kbd:[Alt+j],
-  kbd:[Alt+s]        | Switch to IRC server buffer. | `+/server jump+`
-| kbd:[Alt+0...9]    | Switch to buffer by number (0 = 10). | `+/buffer *N+`
-| kbd:[Alt+j],
-  kbd:[01...99]      | Switch to buffer by number. | `+/buffer *NN+`
-| kbd:[Alt+l] (`L`)  | Toggle bare display. | `+/window bare+`
-| kbd:[Alt+m]        | Toggle mouse. | `+/mouse toggle+`
-| kbd:[Alt+n]        | Scroll to next highlight. | `+/window scroll_next_highlight+`
-| kbd:[Alt+Shift+N]  | Toggle nicklist bar. | `+/bar toggle nicklist+`
-| kbd:[Alt+p]        | Scroll to previous highlight. | `+/window scroll_previous_highlight+`
-| kbd:[Alt+u]        | Scroll to first unread line in buffer. | `+/window scroll_unread+`
-| kbd:[Alt+w],
-  kbd:[Alt+↑]        | Switch to window above. | `+/window up+`
-| kbd:[Alt+w],
-  kbd:[Alt+↓]        | Switch to window below. | `+/window down+`
-| kbd:[Alt+w],
-  kbd:[Alt+←]        | Switch to window on the left. | `+/window left+`
-| kbd:[Alt+w],
-  kbd:[Alt+→]        | Switch to window on the right. | `+/window right+`
-| kbd:[Alt+w],
-  kbd:[Alt+b]        | Balance the sizes of all windows. | `+/window balance+`
-| kbd:[Alt+w],
-  kbd:[Alt+s]        | Swap buffers of two windows. | `+/window swap+`
-| kbd:[Alt+z]        | Zoom on current window (kbd:[Alt+z] again: restore initial windows state, before zoom). | `+/window zoom+`
-| kbd:[Alt+<]        | Switch to previous buffer in list of visited buffers. | `+/input jump_previously_visited_buffer+`
-| kbd:[Alt+>]        | Switch to next buffer in list of visited buffers. | `+/input jump_next_visited_buffer+`
-| kbd:[Alt+/]        | Switch to last buffer displayed (before last jump to a buffer). | `+/input jump_last_buffer_displayed+`
-| kbd:[Alt+=]        | Toggle filters. | `+/filter toggle+`
-| kbd:[Alt+-]        | Toggle filters in current buffer. | `+/filter toggle @+`
-|===
-
-[[key_bindings_search_context]]
-==== Keys for "search" context
-
-These keys are used in context "search" (when kbd:[Ctrl+r] is pressed to search
-text in buffer).
-
-[width="100%",cols="^.^3,.^8,.^5",options="header"]
-|===
-| Key            | Description | Command
-| kbd:[Ctrl+r]   | Switch search type: string (default), regular expression. | `+/input search_switch_regex+`
-| kbd:[Alt+c]    | Switch exact case for search. | `+/input search_switch_case+`
-| kbd:[Tab]      | Switch search in: messages (default), prefixes, prefixes + messages. | `+/input search_switch_where+`
-| kbd:[↑]        | Search previous line. | `+/input search_previous+`
-| kbd:[↓]        | Search next line. | `+/input search_next+`
-| kbd:[Enter] +
-  kbd:[Ctrl+j] +
-  kbd:[Ctrl+m]   | Stop search at current position. | `+/input search_stop_here+`
-| kbd:[Ctrl+q]   | Stop search and scroll to bottom of buffer. | `+/input search_stop+`
-|===
-
-[[key_bindings_cursor_context]]
-==== Keys for "cursor" context
-
-These keys are used in context "cursor" (free movement of cursor on screen).
-
-[width="100%",cols="^.^3,^.^2,.^7,.^7",options="header"]
-|===
-| Key            | Area     | Description | Command
-| kbd:[↑]        | -        | Move cursor one line up. | `+/cursor move up+`
-| kbd:[↓]        | -        | Move cursor one line down. | `+/cursor move down+`
-| kbd:[←]        | -        | Move cursor one column left. | `+/cursor move left+`
-| kbd:[→]        | -        | Move cursor one column right. | `+/cursor move right+`
-| kbd:[Alt+↑]    | -        | Move cursor one area up. | `+/cursor move area_up+`
-| kbd:[Alt+↓]    | -        | Move cursor one area down. | `+/cursor move area_down+`
-| kbd:[Alt+←]    | -        | Move cursor one area left. | `+/cursor move area_left+`
-| kbd:[Alt+→]    | -        | Move cursor one area right. | `+/cursor move area_right+`
-| kbd:[m]        | chat     | Quote message. | `+hsignal:chat_quote_message;/cursor stop+`
-| kbd:[q]        | chat     | Quote prefix + message. | `+hsignal:chat_quote_prefix_message;/cursor stop+`
-| kbd:[Q]        | chat     | Quote time + prefix + message. | `+hsignal:chat_quote_time_prefix_message;/cursor stop+`
-| kbd:[b]        | nicklist | Ban nick. | `+/window ${_window_number};/ban ${nick}+`
-| kbd:[k]        | nicklist | Kick nick. | `+/window ${_window_number};/kick ${nick}+`
-| kbd:[K]        | nicklist | Kick and ban nick. | `+/window ${_window_number};/kickban ${nick}+`
-| kbd:[q]        | nicklist | Open query with nick. | `+/window ${_window_number};/query ${nick};/cursor stop+`
-| kbd:[w]        | nicklist | Do a whois on nick. | `+/window ${_window_number};/whois ${nick}+`
-| kbd:[Enter] +
-  kbd:[Ctrl+j] +
-  kbd:[Ctrl+m]   | -        | Stop cursor mode | `/cursor stop`
-|===
-
-[[key_bindings_mouse_context]]
-==== Keys for "mouse" context
-
-These keys are used in context "mouse", namely when a mouse event occurs.
-
-[width="100%",cols="^.^3,^.^3,^.^3,.^8,.^8",options="header"]
-|===
-| Button/Wheel ^(1)^ | Gesture      | Area                | Description | Command
-| ◾◽◽                | -            | chat                | Switch to window. | `+/window ${_window_number}+`
-| ◾◽◽                | left         | chat                | Switch to previous buffer. | `+/window ${_window_number};/buffer +1+`
-| ◾◽◽                | right        | chat                | Switch to next buffer. | `+/window ${_window_number};/buffer +1+`
-| ◾◽◽                | left (long)  | chat                | Switch to first buffer. | `+/window ${_window_number};/buffer 1+`
-| ◾◽◽                | right (long) | chat                | Switch to last buffer. | `+/window ${_window_number};/input jump_last_buffer+`
-| kbd:[▲]            | -            | chat                | Scroll up a few lines in buffer history. | `+/window scroll_up -window ${_window_number}+`
-| kbd:[▼]            | -            | chat                | Scroll down a few lines in buffer history. | `+/window scroll_down -window ${_window_number}+`
-| kbd:[Ctrl+▲]       | -            | chat                | Scroll horizontally to the left. | `+/window scroll_horiz -window ${_window_number} -10%+`
-| kbd:[Ctrl+▼]       | -            | chat                | Scroll horizontally to the right. | `+/window scroll_horiz -window ${_window_number} +10%+`
-| kbd:[▲]            | -            | chat: fset buffer   | Move five lines up in fset buffer. | `+/fset -up 5+`
-| kbd:[▼]            | -            | chat: fset buffer   | Move five lines down in fset buffer. | `+/fset -down 5+`
-| ◾◽◽                | -            | chat: fset buffer   | Select line in fset buffer. | `+/window ${_window_number};/fset -go ${_chat_line_y}+`
-| ◽◽◾                | -            | chat: fset buffer   | Toggle boolean (on/off) or edit the option value. | `+hsignal:fset_mouse+`
-| ◽◽◾                | left         | chat: fset buffer   | Decrease value for integer/color, set/append to value for other types. | `+hsignal:fset_mouse+`
-| ◽◽◾                | right        | chat: fset buffer   | Increase value for integer/color, set/append to value for other types. | `+hsignal:fset_mouse+`
-| ◽◽◾                | up / down    | chat: fset buffer   | Mark/unmark multiple options. | `+hsignal:fset_mouse+`
-| kbd:[▲]            | -            | chat: script buffer | Move five lines up in script buffer. | `+/script up 5+`
-| kbd:[▼]            | -            | chat: script buffer | Move five lines down in script buffer. | `+/script down 5+`
-| ◾◽◽                | -            | chat: script buffer | Select line in script buffer. | `+/script go ${_chat_line_y}+`
-| ◽◽◾                | -            | chat: script buffer | Install/remove script. | `+/script go ${_chat_line_y};/script installremove -q ${script_name_with_extension}+`
-| ◾◽◽                | up / left    | buflist             | Move buffer to a lower number. | Signal `+buflist_mouse+`.
-| ◾◽◽                | down / right | buflist             | Move buffer to a higher number. | Signal `+buflist_mouse+`.
-| ◾◽◽                | -            | buflist             | Switch to buffer (previously visited buffer if the buffer is the current one). | Signal `+buflist_mouse+`.
-| ◽◽◾                | -            | buflist             | Switch to next visited buffer if the buffer is the current one. | Signal `+buflist_mouse+`.
-| kbd:[Ctrl+▲]       | -            | buflist             | Switch to previous buffer. | Signal `+buflist_mouse+`.
-| kbd:[Ctrl+▼]       | -            | buflist             | Switch to next buffer. | Signal `+buflist_mouse+`.
-| ◾◽◽                | up           | nicklist            | Scroll up one page in nicklist. | `+/bar scroll nicklist ${_window_number} -100%+`
-| ◾◽◽                | down         | nicklist            | Scroll down one page in nicklist. | `+/bar scroll nicklist ${_window_number} +100%+`
-| ◾◽◽                | up (long)    | nicklist            | Go to the beginning of nicklist. | `+/bar scroll nicklist ${_window_number} b+`
-| ◾◽◽                | down (long)  | nicklist            | Go to the end of nicklist. | `+/bar scroll nicklist ${_window_number} e+`
-| ◾◽◽                | -            | nicklist            | Open query with nick. | `+/window ${_window_number};/query ${nick}+`
-| ◽◽◾                | -            | nicklist            | Do a whois on nick. | `+/window ${_window_number};/whois ${nick}+`
-| ◾◽◽                | left         | nicklist            | Kick nick. | `+/window ${_window_number};/kick ${nick}+`
-| ◾◽◽                | left (long)  | nicklist            | Kick and ban nick. | `+/window ${_window_number};/kickban ${nick}+`
-| ◽◽◾                | left         | nicklist            | Ban nick. | `+/window ${_window_number};/ban ${nick}+`
-| ◽◽◾                | -            | input               | Grab a mouse event and insert its code in command line. | `+/input grab_mouse_area+`
-| kbd:[▲]            | -            | any bar             | Scroll bar by -20%. | `+/bar scroll ${_bar_name} ${_window_number} -20%+`
-| kbd:[▼]            | -            | any bar             | Scroll bar by +20%. | `+/bar scroll ${_bar_name} ${_window_number} +20%+`
-| ◽◾◽                | -            | anywhere            | Start cursor mode at this point. | `+/cursor go ${_x},${_y}+`
-|===
-
-[NOTE]
-^(1)^ kbd:[▲] and kbd:[▼] are wheel up and down.
-
-[[key_bindings_fset_buffer]]
-==== Keys for fset buffer
-
-These keys and actions are used on the fset buffer (see <<fset_plugin,Fset plugin>>).
-
-[width="100%",cols="^.^3,^.^2,.^8,.^5",options="header"]
-|===
-| Key                | Action ^(1)^ | Description | Command
-| kbd:[↑]            |              | Move one line up. | `+/fset -up+`
-| kbd:[↓]            |              | Move one line down. | `+/fset -down+`
-| kbd:[PgUp]         |              | Move one page up. | `+/window page_up+`
-| kbd:[PgDn]         |              | Move one page down. | `+/window page_down+`
-| kbd:[Alt+Home]     | `pass:[<<]`  | Move to first line. | `+/fset -go 0+`
-| kbd:[Alt+End]      | `pass:[>>]`  | Move to last line. | `+/fset -go end+`
-| kbd:[F11]          | `pass:[<]`   | Scroll horizontally on the left. | `+/fset -left+`
-| kbd:[F12]          | `pass:[>]`   | Scroll horizontally on the right. | `+/fset -right+`
-| kbd:[Alt+Space]    | `t`          | Toggle boolean value. | `+/fset -toggle+`
-| kbd:[Alt+-]        | `-`          | Subtract 1 from value for integer/color, set value for other types. | `+/fset -add -1+`
-| kbd:[Alt++]        | `+`          | Add 1 to value for integer/color, append to value for other types. | `+/fset -add 1+`
-| kbd:[Alt+f],
-  kbd:[Alt+r]        | `r`          | Reset value. | `+/fset -reset+`
-| kbd:[Alt+f],
-  kbd:[Alt+u]        | `u`          | Unset value. | `+/fset -unset+`
-| kbd:[Alt+Enter]    | `s`          | Set value. | `+/fset -set+`
-| kbd:[Alt+f],
-  kbd:[Alt+n]        | `n`          | Set new value. | `+/fset -setnew+`
-| kbd:[Alt+f],
-  kbd:[Alt+a]        | `a`          | Append to value. | `+/fset -append+`
-| kbd:[Alt+,]        | `,`          | Mark/unmark option. | `+/fset -mark 1+`
-| kbd:[Shift+↑]      |              | Move one line up and mark/unmark option. | `+/fset -up; /fset -mark+`
-| kbd:[Shift+↓]      |              | Mark/unmark option and move one line down. | `+/fset -mark; /fset -down+`
-|                    | `m:xxx`      | Mark options displayed that are matching filter "xxx" (any filter on option or value is allowed, see <<command_fset_fset,fset command>>). |
-|                    | `u:xxx`      | Unmark options displayed that are matching filter "xxx" (any filter on option or value is allowed, see <<command_fset_fset,fset command>>). |
-| kbd:[Ctrl+l] (`L`) |              | Refresh options and whole screen. | `+/fset -refresh+`
-|                    | `$`          | Refresh options (keep marked options). |
-|                    | `$$`         | Refresh options (unmark all options). |
-| kbd:[Alt+p]        |              | Toggle plugin description options (`pass:[plugins.desc.*]`). | `+/mute /set fset.look.show_plugins_desc toggle+`
-| kbd:[Alt+v]        |              | Toggle help bar. | `+/bar toggle fset+`
-|                    | `s:x,y`      | Sort options by fields x,y (see option <<option_fset.look.sort,fset.look.sort>>). | `+/mute /set fset.look.sort x,y+`
-|                    | `s:`         | Reset sort to its default value (see option <<option_fset.look.sort,fset.look.sort>>). | `+/mute /unset fset.look.sort+`
-|                    | `w:xxx`      | Export options in file "xxx". | `+/fset -export xxx+`
-|                    | `w-:xxx`     | Export options in file "xxx" without help. | `+/fset -export -nohelp xxx+`
-|                    | `w+:xxx`     | Export options in file "xxx" with help. | `+/fset -export -help xxx+`
-| kbd:[Ctrl+x]       | `x`          | Switch the format used to display options. | `+/fset -format+`
-|                    | `q`          | Close fset buffer. | `+/buffer close+`
-|===
-
-[NOTE]
-^(1)^ The action must be entered as input on the command line, followed by kbd:[Enter].
-
-[[key_bindings_script_buffer]]
-==== Keys for script buffer
-
-These keys and actions are used on the script buffer (see <<scripts_plugins,Script plugin>>).
-
-[width="100%",cols="^.^3,^.^2,.^8,.^5",options="header"]
-|===
-| Key                | Action ^(1)^ | Description | Command
-| kbd:[↑]            |              | Move one line up. | `+/script up+`
-| kbd:[↓]            |              | Move one line down. | `+/script down+`
-| kbd:[PgUp]         |              | Move one page up. | `+/window page_up+`
-| kbd:[PgDn]         |              | Move one page down. | `+/window page_down+`
-| kbd:[Alt+i]        | `i`          | Install script. | `+/script install+`
-| kbd:[Alt+r]        | `r`          | Remove script. | `+/script remove+`
-| kbd:[Alt+l] (`L`)  | `l`          | Load script. | `+/script load+`
-| kbd:[Alt+u]        | `u`          | Unload script. | `+/script unload+`
-| kbd:[Alt+Shift+A]  | `A`          | Autoload script. | `+/script toggleautoload+`
-| kbd:[Alt+h]        | `h`          | Hold/unhold script. | `+/script hold+`
-| kbd:[Alt+v]        | `v`          | View script. | `+/script show+`
-|===
-
-[NOTE]
-^(1)^ The action must be entered as input on the command line, followed by kbd:[Enter].
-
-[[mouse]]
-=== Mouse support
-
-WeeChat supports mouse clicks and gestures. It is working with local terminal,
-and remotely via ssh connection with or without screen/tmux.
-
-[[mouse_enable]]
-==== Enable mouse
-
-To enable mouse at startup:
-
-----
-/set weechat.look.mouse on
-----
-
-To enable mouse now, press kbd:[Alt+m] or do following command:
-
-----
-/mouse enable
-----
-
-It is possible to temporarily disable mouse, and bind that on a key. For example
-key kbd:[Alt+%] to disable mouse for 10 seconds:
-
-----
-/key bind meta-% /mouse toggle 10
-----
-
-[IMPORTANT]
-When mouse is enabled in WeeChat, all mouse events are caught by WeeChat, so
-actions such as copy/paste or clicks on URLs are not sent to the terminal. +
-Using kbd:[Shift] key causes the events to be sent directly to the terminal,
-as if the mouse was disabled (on some terminals like iTerm, you have to use
-kbd:[Alt] instead of kbd:[Shift]).
-
-[NOTE]
-For any problem with mouse, please look at
-link:weechat_faq.en.html#mouse[WeeChat FAQ / Mouse].
-
-[[mouse_bind_events]]
-==== Bind mouse events to commands
-
-Many default mouse events are already defined by WeeChat (see
-<<key_bindings_mouse_context,keys for "mouse" context>>).
-
-You can change or add bindings with the command `/key` using context "mouse"
-(for syntax, see command <<command_weechat_key,/key>>).
-
-Event name consists of a modifier (optional), a button/wheel name and a gesture
-(optional). Different elements are separated by `+-+`.
-
-List of modifiers:
-
-[width="100%",cols="1m,4",options="header"]
-|===
-| Modifier | Description
-| ctrl     | Key kbd:[Ctrl]
-| alt      | Key kbd:[Alt]
-| ctrl-alt | Keys kbd:[Ctrl] + kbd:[Alt]
-|===
-
-List of buttons/wheel:
-
-[width="100%",cols="1m,4",options="header"]
-|===
-| Button/wheel        | Description
-| button1             | Click on left button
-| button2             | Click on right button
-| button3             | Click on middle button (often click on wheel)
-| button4 ... button9 | Click on extra buttons
-| wheelup             | Wheel (up)
-| wheeldown           | Wheel (down)
-|===
-
-List of gestures (only for buttons, not wheel):
-
-[width="100%",cols="1m,4",options="header"]
-|===
-| Gesture            | Distance
-| gesture-up         | 3 ... 19
-| gesture-up-long    | ≥ 20
-| gesture-down       | 3 ... 19
-| gesture-down-long  | ≥ 20
-| gesture-left       | 3 ... 39
-| gesture-left-long  | ≥ 40
-| gesture-right      | 3 ... 39
-| gesture-right-long | ≥ 40
-|===
-
-List of incomplete events (only for buttons, useful for plugins/scripts):
-
-[width="100%",cols="1m,4",options="header"]
-|===
-| Event      | Description
-| event-down | Button was pressed but not released yet
-| event-drag | Mouse was moved with button pressed down
-|===
-
-Example of events:
-
-* `button1`
-* `ctrl-button1`
-* `button1-gesture-right`
-* `button1-event-down`
-* `button1-event-drag`
-* `alt-button2-gesture-down-long`
-* `wheelup`
-* `ctrl-alt-wheeldown`
-* ...
-
-[TIP]
-When binding a key in context "mouse", it's possible to match many events using
-`+*+` at beginning or end of name, for example `+button1-gesture-*+` will match
-any gesture made using left button.
-
-[TIP]
-You can find an event name with command `+/input grab_mouse+` then doing event
-with mouse. This will insert event name on command line.
-
 [[secured_data]]
 === Secured data
 
@@ -2423,6 +2936,39 @@ To use the _libera_ password, for example with
 /set irc.server.libera.sasl_password "${sec.data.libera}"
 ----
 
+[[command_aliases]]
+=== Command aliases
+
+Alias plugin lets you create alias for commands (from WeeChat or other
+plugins).
+
+Some aliases are created by default, with name in upper case (to make them
+different from standard commands); commands are not case sensitive in WeeChat,
+so for example `/close` runs the alias `/CLOSE`.
+
+List of default aliases:
+
+include::includes/autogen_user_default_aliases.en.adoc[tag=default_aliases]
+
+[[alias_commands]]
+==== Commands
+
+include::includes/autogen_user_commands.en.adoc[tag=alias_commands]
+
+[[alias_options]]
+==== Options
+
+Sections in file _alias.conf_:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section    | Control command                | Description
+| cmd        | <<command_alias_alias,/alias>> +
+               /set alias.cmd.*               | Commands for aliases.
+| completion | <<command_alias_alias,/alias>> +
+               /set alias.completion.*        | Completions for aliases.
+|===
+
 [[commands_and_options]]
 === Commands and options
 
@@ -2484,379 +3030,16 @@ Options:
 
 include::includes/autogen_user_options.en.adoc[tag=weechat_options]
 
-[[plugins]]
-== Plugins
-
-A plugin is a dynamic library, written in C and compiled, which is loaded by
-WeeChat.
-Under GNU/Linux, the file has ".so" extension, ".dll" under Windows.
-
-Plugins found are automatically loaded when WeeChat is starting, and it is
-possible to load or unload plugins while WeeChat is running.
-
-It's important to make difference between a _plugin_ and a _script_: a
-_plugin_ is a binary file compiled and loaded with command `/plugin`, whereas
-a _script_ is a text file loaded with a plugin like _python_ with command
-`/python`.
-
-You can use command `/plugin` to load/unload a plugin, or list all loaded
-plugins.
-
-When a plugin is unloaded, WeeChat removes:
-
-* buffers
-* configuration options (options are written in files)
-* all hooks: commands, modifiers, process, etc.
-* infos and infolists
-* hdata
-* bar items.
-
-Examples to load, unload or list plugins:
-
-----
-/plugin load irc
-/plugin unload irc
-/plugin list
-----
-
-Default plugins are:
-
-[width="100%",cols="1,5",options="header"]
-|===
-| Plugin     | Description
-| alias      | Define alias for commands.
-| buflist    | Bar item with list of buffers.
-| charset    | Charset decoding/encoding for buffers.
-| exec       | Execution of external commands in WeeChat.
-| fifo       | FIFO pipe used to remotely send commands to WeeChat.
-| fset       | Fast set of WeeChat and plugins options.
-| irc        | IRC chat protocol.
-| logger     | Log buffers to files.
-| relay      | Relay data via network.
-| script     | Script manager.
-| python     | Python scripting API.
-| perl       | Perl scripting API.
-| ruby       | Ruby scripting API.
-| lua        | Lua scripting API.
-| tcl        | Tcl scripting API.
-| guile      | Guile (scheme) scripting API.
-| javascript | JavaScript scripting API.
-| php        | PHP scripting API.
-| spell      | Spell checking for command line.
-| trigger    | Text replacement and command execution on events triggered by WeeChat/plugins.
-| typing     | Display users currently writing messages.
-| xfer       | File transfer and direct chat.
-|===
-
-To learn more about plugin or script development (through API), please read the
-link:weechat_plugin_api.en.html[WeeChat plugin API reference] or the
-link:weechat_scripting.en.html[WeeChat scripting guide].
-
-[[alias_plugin]]
-=== Alias
-
-Alias plugin lets you create alias for commands (from WeeChat or other
-plugins).
-
-Some aliases are created by default, with name in upper case (to make them
-different from standard commands); commands are not case sensitive in WeeChat,
-so for example `/close` runs the alias `/CLOSE`.
-
-List of default aliases:
-
-include::includes/autogen_user_default_aliases.en.adoc[tag=default_aliases]
-
-[[alias_commands]]
-==== Commands
-
-include::includes/autogen_user_commands.en.adoc[tag=alias_commands]
-
-[[alias_options]]
-==== Options
-
-Sections in file _alias.conf_:
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Section    | Control command                | Description
-| cmd        | <<command_alias_alias,/alias>> +
-               /set alias.cmd.*               | Commands for aliases.
-| completion | <<command_alias_alias,/alias>> +
-               /set alias.completion.*        | Completions for aliases.
-|===
-
-[[buflist_plugin]]
-=== Buflist
-
-Buflist plugin displays a list of buffers in a bar item called "buflist"
-(two other bar items "buflist2" and "buflist3" are available as well). +
-A default bar "buflist" is created on startup with this item.
-
-[[buflist_commands]]
-==== Commands
-
-include::includes/autogen_user_commands.en.adoc[tag=buflist_commands]
-
-[[buflist_options]]
-==== Options
-
-Sections in file _buflist.conf_:
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Section | Control command       | Description
-| format  | /set buflist.format.* | Formats used to display list of buffers.
-| look    | /set buflist.look.*   | Look and feel.
-|===
-
-Options:
-
-include::includes/autogen_user_options.en.adoc[tag=buflist_options]
-
-[[charset_plugin]]
-=== Charset
-
-Charset plugin lets you decode or encode data using charsets.
-
-There is default charset for decode/encode, and specific charsets for buffers
-(or group of buffers).
-
-This plugin is optional, but recommended: if it's not loaded, WeeChat
-can only read/write UTF-8 data.
-
-Charset plugin should be autoloaded by WeeChat. To be sure plugin is loaded,
-try:
-
-----
-/charset
-----
-
-If command is not found, then load plugin with command:
-
-----
-/plugin load charset
-----
-
-If plugin is not found, then you should compile again WeeChat with
-plugins and Charset support.
-
-When Charset plugin starts, it displays terminal and internal charsets.
-Terminal charset depends on your locale, and internal is UTF-8.
-
-For example:
-
-....
-charset: terminal: ISO-8859-15, internal: UTF-8
-....
-
-[[charset_set]]
-==== Set charset
-
-To set global decode and encode charsets, use command `/set`.
-
-For example:
-
-----
-/set charset.default.decode ISO-8859-15
-/set charset.default.encode ISO-8859-15
-----
-
-If global decode charset is not set (for example during first
-load of Charset plugin), it will be automatically set to terminal
-charset (if it's different from UTF-8), or by default to _ISO-8859-1_.
-
-Default encode value is empty, so it sends by default with
-internal charset (UTF-8).
-
-To set IRC server charset, use command `/charset` on server buffer.
-If you give only charset, then it will set decoding and encoding values.
-
-For example:
-
-----
-/charset ISO-8859-15
-----
-
-It's equivalent to:
-
-----
-/charset decode ISO-8859-15
-/charset encode ISO-8859-15
-----
-
-To set IRC channel (or private) charset, use same commands as server,
-but on channel (or private) buffer.
-
-To set charset for all channels/privates of an IRC server:
-
-----
-/set charset.encode.irc.libera ISO-8859-15
-----
-
-To see all charsets used, use following command:
-
-----
-/set charset.*
-----
-
-[[charset_troubleshooting]]
-==== Troubleshooting
-
-For any problem with charsets, please look at
-link:weechat_faq.en.html#charset[WeeChat FAQ / Charset].
-
-[[charset_commands]]
-==== Commands
-
-include::includes/autogen_user_commands.en.adoc[tag=charset_commands]
-
-[[charset_options]]
-==== Options
-
-Sections in file _charset.conf_:
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Section | Control command                             | Description
-| default | /set charset.default.*                      | Default decoding/encoding charset.
-| decode  | <<command_charset_charset,/charset decode>> +
-            /set charset.decode.*                       | Decoding charset by buffer (options can be added/removed in section).
-| encode  | <<command_charset_charset,/charset encode>> +
-            /set charset.encode.*                       | Encoding charset by buffer (options can be added/removed in section).
-|===
-
-Options:
-
-include::includes/autogen_user_options.en.adoc[tag=charset_options]
-
-[[exec_plugin]]
-=== Exec
-
-The `/exec` command lets you execute external commands inside WeeChat and
-display the output locally, or send it to a buffer.
-
-[[exec_commands]]
-==== Commands
-
-include::includes/autogen_user_commands.en.adoc[tag=exec_commands]
-
-[[exec_options]]
-==== Options
-
-Sections in file _exec.conf_:
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Section | Control command     | Description
-| command | /set exec.command.* | Options for commands.
-| color   | /set exec.color.*   | Colors.
-|===
-
-Options:
-
-include::includes/autogen_user_options.en.adoc[tag=exec_options]
-
-[[fifo_plugin]]
-=== Fifo
-
-You can remote control WeeChat, by sending commands or text to a FIFO pipe (if
-option "fifo.file.enabled" is enabled, it is by default).
-
-The FIFO pipe is located in WeeChat runtime directory and is called
-_weechat_fifo_12345_ by default (where _12345_ is the WeeChat process id).
-
-Syntax for the FIFO pipe commands/text is one of following:
-
-....
-  plugin.buffer *text or command here
-  *text or command here
-....
-
-Some examples:
-
-* Change nick on IRC server libera to "newnick":
-
-----
-$ echo 'irc.server.libera */nick newnick' >/run/user/1000/weechat/weechat_fifo_12345
-----
-
-* Send a message on IRC #weechat channel:
-
-----
-$ echo 'irc.libera.#weechat *hello!' >/run/user/1000/weechat/weechat_fifo_12345
-----
-
-* Send a message on current buffer:
-
-----
-$ echo '*hello!' >/run/user/1000/weechat/weechat_fifo_12345
-----
-
-* Send two commands to unload/reload Python scripts (you have to separate them
-  with "\n"):
-
-----
-$ printf '%b' '*/python unload\n*/python autoload\n' >/run/user/1000/weechat/weechat_fifo_12345
-----
-
-[[fifo_commands]]
-==== Commands
-
-include::includes/autogen_user_commands.en.adoc[tag=fifo_commands]
-
-[[fifo_options]]
-==== Options
-
-Sections in file _fifo.conf_:
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Section | Control command  | Description
-| file    | /set fifo.file.* | FIFO pipe control.
-|===
-
-Options:
-
-include::includes/autogen_user_options.en.adoc[tag=fifo_options]
-
-[[fset_plugin]]
-=== Fset
-
-Fast Set plugin displays a list of options in a buffer, and helps to set WeeChat
-and plugin options.
-
-[[fset_commands]]
-==== Commands
-
-include::includes/autogen_user_commands.en.adoc[tag=fset_commands]
-
-[[fset_options]]
-==== Options
-
-Sections in file _fset.conf_:
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Section | Control command    | Description
-| color   | /set fset.color.*  | Colors.
-| format  | /set fset.format.* | Formats used to display list of options.
-| look    | /set fset.look.*   | Look and feel.
-|===
-
-Options:
-
-include::includes/autogen_user_options.en.adoc[tag=fset_options]
-
-[[irc_plugin]]
-=== IRC
+[[irc]]
+== IRC
 
 The IRC plugin is designed to chat through IRC protocol with other people.
 
 It is multi-servers, and offers all supported IRC commands including DCC chat
-and file transfer (via xfer plugin, see <<xfer_plugin,Xfer plugin>>).
+and file transfer (via xfer plugin, see <<xfer,Xfer plugin>>).
 
 [[irc_command_line_options]]
-==== Command line options
+=== Command line options
 
 It is possible to give URL for one or many IRC servers, as follow:
 
@@ -2872,10 +3055,10 @@ $ weechat irc://alice@irc.libera.chat/#weechat,#weechat-fr
 ----
 
 [[irc_servers]]
-==== Servers
+=== Servers
 
 [[irc_servers_add]]
-===== Add a server
+==== Add a server
 
 By default no servers are defined. You can add as many servers as you want with
 the <<command_irc_server,/server>> command.
@@ -2915,7 +3098,7 @@ to join. In this case, you can set a command delay:
 `/set irc.server.libera.command_delay 5`.
 
 [[irc_servers_options]]
-===== Server options
+==== Server options
 
 Server options are named `irc.server.<server>.<option>` where `<server>` is the
 internal name of the server and `<option>` the name of an option. +
@@ -2987,7 +3170,7 @@ value, which is now `on` instead of the default value `off`:
 ----
 
 [[irc_ssl_certificates]]
-===== SSL certificates
+==== SSL certificates
 
 When connecting to IRC server with SSL, WeeChat checks by default that the
 connection is fully trusted.
@@ -3016,7 +3199,7 @@ Option "ssl_verify" is on by default, so verification is strict and may fail,
 even if it was OK with versions prior to 0.3.1.
 
 [[irc_connect_oftc_with_certificate]]
-====== First example: connect to oftc and check certificate
+===== First example: connect to oftc and check certificate
 
 * Import certificate in shell:
 
@@ -3039,7 +3222,7 @@ It is possible to concatenate many certificates in file CAs.pem.
 ----
 
 [[irc_connect_oftc_with_certfp]]
-====== Second example: connect to oftc using CertFP
+===== Second example: connect to oftc using CertFP
 
 * Create certificate in shell:
 
@@ -3064,7 +3247,7 @@ which can also be for example `~/.weechat`.
 For more information, look at https://www.oftc.net/NickServ/CertFP
 
 [[irc_sasl_authentication]]
-===== SASL authentication
+==== SASL authentication
 
 WeeChat supports SASL authentication, using different mechanisms:
 
@@ -3086,7 +3269,7 @@ Options in servers are:
   _ecdsa-nist256p-challenge_)
 
 [[irc_sasl_ecdsa_nist256p_challenge]]
-====== SASL ECDSA-NIST256P-CHALLENGE
+===== SASL ECDSA-NIST256P-CHALLENGE
 
 You must generate a private key in order to authentify with the
 ECDSA-NIST256P-CHALLENGE mechanism (no password is required on connection).
@@ -3132,7 +3315,7 @@ Reconnect to the server:
 ----
 
 [[irc_servers_connection]]
-===== Connection
+==== Connection
 
 You can connect to server with the <<command_irc_connect,/connect>> command:
 
@@ -3163,7 +3346,7 @@ server buffers:
 ----
 
 [[irc_tor_sasl]]
-===== Connect with TOR and SASL
+==== Connect with TOR and SASL
 
 Some servers support connections with TOR (https://www.torproject.org/),
 a network of virtual tunnels that allows people and groups to improve their
@@ -3211,7 +3394,7 @@ And finally, connect to the server:
 ----
 
 [[irc_channels]]
-==== Channels
+=== Channels
 
 You can join channels with the <<command_irc_join,/join>> command:
 
@@ -3246,7 +3429,7 @@ for example if `#channel1` requires a key but not `#channel2`:
 For help on the format, see `/help irc.server.libera.autojoin`.
 
 [[irc_private_messages]]
-==== Private messages
+=== Private messages
 
 You can send a private message with the <<command_irc_query,/query>> command,
 which opens a separate buffer:
@@ -3268,7 +3451,7 @@ To close the private buffer, you can do this command on the private buffer:
 ----
 
 [[irc_smart_filter_join_part_quit]]
-==== Smart filter for join/part/quit messages
+=== Smart filter for join/part/quit messages
 
 A smart filter is available to filter join/part/quit messages when nick did not
 say something during past X minutes on channel.
@@ -3305,7 +3488,7 @@ If a nick did not speak during last 5 minutes, its join and/or part/quit will be
 hidden on channel.
 
 [[irc_ctcp_replies]]
-==== CTCP replies
+=== CTCP replies
 
 It is possible to customize CTCP replies, or block some CTCP queries (do not
 reply).
@@ -3380,7 +3563,7 @@ If CTCP options are not defined (by default), CTCP replies are:
 |===
 
 [[irc_target_buffer]]
-==== Target buffer for IRC messages
+=== Target buffer for IRC messages
 
 It is possible to customize target buffer for IRC messages (buffer used to
 display message) with options `+irc.msgbuffer.*+`.
@@ -3512,12 +3695,12 @@ Some examples:
 ----
 
 [[irc_commands]]
-==== Commands
+=== Commands
 
 include::includes/autogen_user_commands.en.adoc[tag=irc_commands]
 
 [[irc_options]]
-==== Options
+=== Options
 
 Sections in file _irc.conf_:
 
@@ -3539,182 +3722,143 @@ Options:
 
 include::includes/autogen_user_options.en.adoc[tag=irc_options]
 
-[[logger_plugin]]
-=== Logger
+[[xfer]]
+== Xfer
 
-The Logger plugin lets you save content of buffers to files, with options
-about what and how it is saved.
+Xfer plugin brings:
 
-[[logger_log_levels]]
-==== Log levels
+* direct chat (between two hosts, without server): for example "DCC Chat" via
+  IRC plugin
+* file transfer, for example "DCC" via IRC plugin
 
-Logging is made with a level for each buffer. Default level is 9 (log
-all messages displayed on buffer).
-You can change level for one buffer, or a group of buffers.
+[[xfer_commands]]
+=== Commands
 
-Possible levels are 0 to 9. Zero means "do not log anything" and 9 means
-"log all messages".
+include::includes/autogen_user_commands.en.adoc[tag=xfer_commands]
 
-Plugins are using different levels for messages displayed.
-IRC plugin uses following levels:
+[[xfer_options]]
+=== Options
 
-* level 1: message from user (on channel or private)
-* level 2: nick change (you or someone else)
-* level 3: any server message (except join/part/quit)
-* level 4: server message join/part/quit
-
-So if you set level 3 for an IRC channel, WeeChat will log all messages,
-but not join/part/quit.
-
-Some examples:
-
-* Set level 3 for IRC channel #weechat:
-
-----
-/set logger.level.irc.libera.#weechat 3
-----
-
-* Set level 3 for libera server buffer:
-
-----
-/set logger.level.irc.server.libera 3
-----
-
-* Set level 3 for all channels on server libera:
-
-----
-/set logger.level.irc.libera 3
-----
-
-* Set level 2 for all IRC buffers:
-
-----
-/set logger.level.irc 2
-----
-
-[[logger_filenames_masks]]
-==== Filenames masks
-
-It is possible to define a filename mask for each buffer, and use local buffer
-variables to build filename. To see available local variables for current buffer:
-
-----
-/buffer listvar
-----
-
-Masks will be matched on options in descending order of specificity on
-`logger.mask.$plugin.*`, with `logger.file.mask` as fallback option.
-
-For example, on buffer "irc.libera.#weechat", WeeChat will search a mask with
-option name, in this order:
-
-----
-logger.mask.irc.libera.#weechat
-logger.mask.irc.libera
-logger.mask.irc
-logger.file.mask
-----
-
-That means you can have masks specific for some IRC servers
-("logger.mask.irc.libera") or for a plugin ("logger.mask.irc").
-
-[[logger_files_by_date]]
-===== Log files by date
-
-To have log files by date, you can use date/time specifiers in mask (see
-`man strftime` for formats), for example:
-
-----
-/set logger.file.mask "%Y/%m/$plugin.$name.weechatlog"
-----
-
-You'll have following files:
-
-....
-~/.local/share/weechat
-└── logs
-    ├── 2010
-    │   ├── 11
-    │   │   ├── irc.server.libera.weechatlog
-    │   │   └── irc.libera.#weechat.weechatlog
-    │   └── 12
-    │       ├── irc.server.libera.weechatlog
-    │       └── irc.libera.#weechat.weechatlog
-    ├── 2011
-    │   ├── 01
-    │   │   ├── irc.server.libera.weechatlog
-    │   │   └── irc.libera.#weechat.weechatlog
-    │   ├── 02
-    ...
-....
-
-[[logger_irc_files_by_server_channel]]
-===== IRC log files by server and channel
-
-If you want one directory by IRC server and one file by channel inside:
-
-----
-/set logger.mask.irc "irc/$server/$channel.weechatlog"
-----
-
-You'll have following files:
-
-....
-~/.local/share/weechat
-└── logs
-    └── irc
-        ├── libera
-        │   ├── libera.weechatlog
-        │   ├── #weechat.weechatlog
-        │   └── #mychan.weechatlog
-        ├── oftc
-        │   ├── oftc.weechatlog
-        │   ├── #channel1.weechatlog
-        │   └── #channel2.weechatlog
-        ...
-....
-
-[[logger_commands]]
-==== Commands
-
-include::includes/autogen_user_commands.en.adoc[tag=logger_commands]
-
-[[logger_options]]
-==== Options
-
-Sections in file _logger.conf_:
+Sections in file _xfer.conf_:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
 | Section | Control command     | Description
-| look    | /set logger.look.*  | Look and feel.
-| color   | /set logger.color.* | Colors.
-| file    | /set logger.file.*  | Options for log files.
-| level   | /set logger.level.* | Log level by buffer (options can be added/removed in section).
-| mask    | /set logger.mask.*  | Filename mask by buffer (options can be added/removed in section).
+| look    | /set xfer.look.*    | Look and feel.
+| color   | /set xfer.color.*   | Colors.
+| network | /set xfer.network.* | Network options.
+| file    | /set xfer.file.*    | Options for files sent/received.
 |===
 
 Options:
 
-include::includes/autogen_user_options.en.adoc[tag=logger_options]
+include::includes/autogen_user_options.en.adoc[tag=xfer_options]
 
-[[relay_plugin]]
-=== Relay
+[[typing_notifications]]
+== Typing notifications
+
+The typing plugin is used to inform other users you are typing messages and
+show a list of users currently typing a message on the buffer.
+
+It is used by IRC plugin on channel and private buffers, when the "message-tags"
+capability is enabled (you can check with <<command_irc_cap,/cap>> command). +
+Under the hood, typing client tag is used, following this specification:
+https://ircv3.net/specs/client-tags/typing.html.
+
+[[typing_activation]]
+=== Activation
+
+For privacy considerations, the typing feature is disabled by default. +
+If you want to use it, you must enable options in both typing and irc plugins:
+
+----
+/set typing.look.enabled_nicks on
+/set typing.look.enabled_self on
+/set irc.look.typing_status_nicks on
+/set irc.look.typing_status_self on
+----
+
+The typing notifications are displayed at the end of the status bar.
+
+Example of status bar with the "typing" item: "bob" is typing a message and
+"alice" was typing a message but made a pause:
+
+....
+│[12:55] [6] [irc/libera] 3:#test(+n){4} [Typing: bob, (alice)]                   │
+│[@Flashy] █                                                                      │
+└─────────────────────────────────────────────────────────────────────────────────┘
+....
+
+[[typing_signals_sent]]
+=== Signals sent
+
+When you are typing a message (not a command starting with `/`), the typing
+plugin sends signals to inform other plugins (like IRC) that you are typing,
+and these plugins can then send typing notifications to other users.
+
+The following signals are sent when you are typing messages:
+
+[width="100%",cols="1,1,5",options="header"]
+|===
+| Signal              | Arguments        | Description
+| typing_self_typing  | Pointer: buffer. | You are typing a message.
+| typing_self_paused  | Pointer: buffer. | You made a pause while typing a message.
+| typing_self_cleared | Pointer: buffer. | You cleared the command line without sending the message.
+| typing_self_sent    | Pointer: buffer. | You sent the message to the buffer.
+|===
+
+[[typing_signals_caught]]
+=== Signals caught
+
+The typing plugin is catching some signals that can be sent by other plugins
+(like IRC), to update internal hashtables used to store the typing state of
+nicks on buffers. These hashtables are used to build the content of "typing"
+bar item.
+
+The following signals are caught by the typing plugin:
+
+[width="100%",cols="1,4,3",options="header"]
+|===
+| Signal | Arguments | Description
+
+| typing_set_nick |
+  String: buffer pointer + ";" + state (one of: "off", "typing", "paused",
+  "cleared") + ";" + nick. +
+  Example: "0x1234abcd;typing;alice". |
+  Set typing state for a nick on a buffer.
+
+| typing_reset_buffer |
+  Pointer: buffer. |
+  Remove typing state for all nicks on a buffer.
+|===
+
+[[typing_options]]
+=== Options
+
+Sections in file _typing.conf_:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section | Control command    | Description
+| look    | /set typing.look.* | Look and feel.
+|===
+
+Options:
+
+include::includes/autogen_user_options.en.adoc[tag=typing_options]
+
+[[relay]]
+== Relay
 
 The Relay plugin is used to relay data via network, using different protocols:
 
 * _irc_: IRC proxy: used to share connections to IRC servers with one or many
   other IRC clients
 * _weechat_: protocol used by remote interfaces to display and interact with
-  WeeChat, for example:
-** Glowing Bear (HTML5): https://www.glowing-bear.org/
-** QWeeChat (Qt): https://weechat.org/download
-** WeeChat-Android (Android): https://github.com/ubergeek42/weechat-android
-** weechat.el (Emacs): https://github.com/the-kenny/weechat.el
-** WeeCloud (JavaScript): https://github.com/eirikb/weecloud
+  WeeChat, see: https://weechat.org/about/interfaces
 
 [[relay_password]]
-==== Password
+=== Password
 
 It is highly recommended to set a password for relay, with these commands:
 
@@ -3726,7 +3870,7 @@ It is highly recommended to set a password for relay, with these commands:
 This password is used for _irc_ and _weechat_ protocols.
 
 [[relay_totp]]
-==== TOTP
+=== TOTP
 
 TOTP (Time-based One-Time Password) can be used as secondary authentication
 factor for _weechat_ protocol, in addition to the password.
@@ -3755,7 +3899,7 @@ for example:
 ----
 
 [[relay_ssl]]
-==== SSL
+=== SSL
 
 You can use SSL by creating a certificate and private key, and by using prefix
 "ssl." in the name of protocol.
@@ -3783,7 +3927,7 @@ with command:
 ----
 
 [[relay_irc_proxy]]
-==== IRC proxy
+=== IRC proxy
 
 The Relay plugin can act as an IRC proxy: it will simulate an IRC server, and
 you can connect to WeeChat with any other IRC client (including WeeChat itself).
@@ -3822,11 +3966,11 @@ commands:
 ----
 
 [[relay_weechat_protocol]]
-==== WeeChat protocol
+=== WeeChat protocol
 
 The Relay plugin can send data to remote interface using WeeChat protocol.
 
-You can connect with a remote interface, see the list in <<relay_plugin>>.
+You can connect with a remote interface, see: https://weechat.org/about/interfaces
 
 [IMPORTANT]
 WeeChat itself can NOT connect to another WeeChat with this protocol.
@@ -3841,7 +3985,7 @@ Now you can connect on port 9000 with a remote interface using password
 "mypassword".
 
 [[relay_websocket]]
-==== WebSocket
+=== WebSocket
 
 WebSocket protocol (https://tools.ietf.org/html/rfc6455[RFC 6455]) is supported
 in Relay plugin for all protocols.
@@ -3853,7 +3997,7 @@ WebSocket if required headers are found in handshake and if origin is allowed
 
 A WebSocket can be opened in a HTML5 with a single line of JavaScript:
 
-[source,js]
+[source,javascript]
 ----
 websocket = new WebSocket("ws://server.com:9000/weechat");
 ----
@@ -3862,7 +4006,7 @@ The port (9000 in example) is the port defined in Relay plugin.
 The URI must always end with "/weechat" (for _irc_ and _weechat_ protocols).
 
 [[relay_unix_socket]]
-==== UNIX domain sockets
+=== UNIX domain sockets
 
 Using the protocol option "unix" with the `/relay add` command, you can listen
 using any protocol on a UNIX domain socket at a given path. For example:
@@ -3885,12 +4029,12 @@ This redirects local relay clients connecting on port 9000 to the WeeChat
 instance running on "hostname".
 
 [[relay_commands]]
-==== Commands
+=== Commands
 
 include::includes/autogen_user_commands.en.adoc[tag=relay_commands]
 
 [[relay_options]]
-==== Options
+=== Options
 
 Sections in file _relay.conf_:
 
@@ -3909,312 +4053,98 @@ Options:
 
 include::includes/autogen_user_options.en.adoc[tag=relay_options]
 
-[[scripts_plugins]]
-=== Scripts
+[[external_commands]]
+== External commands
 
-WeeChat provides 8 scripting plugins: Python, Perl, Ruby, Lua, Tcl, Guile
-(scheme), JavaScript and PHP.
-These plugins can load, execute and unload scripts for these languages.
+The `/exec` command lets you execute external commands inside WeeChat and
+display the output locally, or send it to a buffer.
 
-Another plugin called "script" is a script manager and is used to load/unload
-scripts of any language, and install/remove scripts of WeeChat scripts
-repository, which are visible at this URL: https://weechat.org/scripts
+[[exec_commands]]
+=== Commands
 
-For more information about how to write scripts, or WeeChat API for
-scripts, please read the link:weechat_scripting.en.html[WeeChat scripting guide].
+include::includes/autogen_user_commands.en.adoc[tag=exec_commands]
 
-[[script_commands]]
-==== Script commands
+[[exec_options]]
+=== Options
 
-include::includes/autogen_user_commands.en.adoc[tag=script_commands]
-
-[[python_commands]]
-==== Python commands
-
-include::includes/autogen_user_commands.en.adoc[tag=python_commands]
-
-[[perl_commands]]
-==== Perl commands
-
-include::includes/autogen_user_commands.en.adoc[tag=perl_commands]
-
-[[ruby_commands]]
-==== Ruby commands
-
-include::includes/autogen_user_commands.en.adoc[tag=ruby_commands]
-
-[[lua_commands]]
-==== Lua commands
-
-include::includes/autogen_user_commands.en.adoc[tag=lua_commands]
-
-[[tcl_commands]]
-==== Tcl commands
-
-include::includes/autogen_user_commands.en.adoc[tag=tcl_commands]
-
-[[guile_commands]]
-==== Guile commands
-
-include::includes/autogen_user_commands.en.adoc[tag=guile_commands]
-
-[[javascript_commands]]
-==== JavaScript commands
-
-include::includes/autogen_user_commands.en.adoc[tag=javascript_commands]
-
-[[php_commands]]
-==== PHP commands
-
-include::includes/autogen_user_commands.en.adoc[tag=php_commands]
-
-[[script_options]]
-==== Script options
-
-Sections in file _script.conf_:
+Sections in file _exec.conf_:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
-| Section | Control command       | Description
-| look    | /set script.look.*    | Look and feel.
-| color   | /set script.color.*   | Colors.
-| scripts | /set script.scripts.* | Options for download of scripts.
+| Section | Control command     | Description
+| command | /set exec.command.* | Options for commands.
+| color   | /set exec.color.*   | Colors.
 |===
 
 Options:
 
-include::includes/autogen_user_options.en.adoc[tag=script_options]
+include::includes/autogen_user_options.en.adoc[tag=exec_options]
 
-[[python_options]]
-==== Python options
+[[fifo_pipe]]
+== FIFO pipe
 
-Sections in file _python.conf_:
+You can remote control WeeChat, by sending commands or text to a FIFO pipe (if
+option "fifo.file.enabled" is enabled, it is by default).
 
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Section | Control command    | Description
-| look    | /set python.look.* | Look and feel.
-|===
+The FIFO pipe is located in WeeChat runtime directory and is called
+_weechat_fifo_12345_ by default (where _12345_ is the WeeChat process id).
 
-Options:
+Syntax for the FIFO pipe commands/text is one of following:
 
-include::includes/autogen_user_options.en.adoc[tag=python_options]
+....
+  plugin.buffer *text or command here
+  *text or command here
+....
 
-[[perl_options]]
-==== Perl options
+Some examples:
 
-Sections in file _perl.conf_:
+* Change nick on IRC server libera to "newnick":
+
+----
+$ echo 'irc.server.libera */nick newnick' >/run/user/1000/weechat/weechat_fifo_12345
+----
+
+* Send a message on IRC #weechat channel:
+
+----
+$ echo 'irc.libera.#weechat *hello!' >/run/user/1000/weechat/weechat_fifo_12345
+----
+
+* Send a message on current buffer:
+
+----
+$ echo '*hello!' >/run/user/1000/weechat/weechat_fifo_12345
+----
+
+* Send two commands to unload/reload Python scripts (you have to separate them
+  with "\n"):
+
+----
+$ printf '%b' '*/python unload\n*/python autoload\n' >/run/user/1000/weechat/weechat_fifo_12345
+----
+
+[[fifo_commands]]
+=== Commands
+
+include::includes/autogen_user_commands.en.adoc[tag=fifo_commands]
+
+[[fifo_options]]
+=== Options
+
+Sections in file _fifo.conf_:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
 | Section | Control command  | Description
-| look    | /set perl.look.* | Look and feel.
+| file    | /set fifo.file.* | FIFO pipe control.
 |===
 
 Options:
 
-include::includes/autogen_user_options.en.adoc[tag=perl_options]
+include::includes/autogen_user_options.en.adoc[tag=fifo_options]
 
-[[ruby_options]]
-==== Ruby options
-
-Sections in file _ruby.conf_:
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Section | Control command  | Description
-| look    | /set ruby.look.* | Look and feel.
-|===
-
-Options:
-
-include::includes/autogen_user_options.en.adoc[tag=ruby_options]
-
-[[lua_options]]
-==== Lua options
-
-Sections in file _lua.conf_:
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Section | Control command | Description
-| look    | /set lua.look.* | Look and feel.
-|===
-
-Options:
-
-include::includes/autogen_user_options.en.adoc[tag=lua_options]
-
-[[tcl_options]]
-==== Tcl options
-
-Sections in file _tcl.conf_:
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Section | Control command | Description
-| look    | /set tcl.look.* | Look and feel.
-|===
-
-Options:
-
-include::includes/autogen_user_options.en.adoc[tag=tcl_options]
-
-[[guile_options]]
-==== Guile options
-
-Sections in file _guile.conf_:
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Section | Control command   | Description
-| look    | /set guile.look.* | Look and feel.
-|===
-
-Options:
-
-include::includes/autogen_user_options.en.adoc[tag=guile_options]
-
-[[javascript_options]]
-==== Javascript options
-
-Sections in file _javascript.conf_:
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Section | Control command        | Description
-| look    | /set javascript.look.* | Look and feel.
-|===
-
-Options:
-
-include::includes/autogen_user_options.en.adoc[tag=javascript_options]
-
-[[php_options]]
-==== PHP options
-
-Sections in file _php.conf_:
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Section | Control command | Description
-| look    | /set php.look.* | Look and feel.
-|===
-
-Options:
-
-include::includes/autogen_user_options.en.adoc[tag=php_options]
-
-[[spell_plugin]]
-=== Spell
-
-Spell plugin lets you check spelling in command line. It is possible to use
-many languages by buffer.
-
-Spell checking is disabled by default and can be toggled with key kbd:[Alt+s].
-
-[[spell_dictionaries]]
-==== Dictionaries
-
-Before using spell checking, dictionaries must be defined, either globally or
-specific to buffers.
-
-Multiple dictionaries can be used at same time: WeeChat will check words in all
-dictionaries.
-
-For example to use English and French:
-
-----
-/set spell.check.default_dict "en,fr"
-----
-
-It is possible to use a different dictionary on a specific buffer, for example
-on a German channel:
-
-----
-/spell setdict de
-----
-
-You can also specify a dictionary for a group of buffers, for example English
-for all channels on libera IRC server:
-
-----
-/set spell.dict.irc.libera en
-----
-
-For more information, see the command <<command_spell_spell,/spell>>.
-
-[[spell_speller_options]]
-==== Speller options
-
-Speller options can be defined by adding options in section "option" of aspell
-configuration.
-
-The option name is an aspell configuration option. List of options can be found
-in a shell with following command:
-
-----
-$ aspell config
-----
-
-For example, to enable option "ignore-case":
-
-----
-/set spell.option.ignore-case "true"
-----
-
-[[spell_suggestions]]
-==== Suggestions
-
-Suggestions are displayed in a bar item called "spell_suggest". The number of
-suggestions is set in option _spell.check.suggestions_.
-
-To enable suggestions you must set option _spell.check.suggestions_ to an
-integer ≥ 0 and add the bar item "spell_suggest" to a bar, like _status_.
-
-Example of suggestions with English dictionary (`en`):
-
-....
-│[12:55] [6] [irc/libera] 3:#test(+n){4} [print,prone,prune]                      │
-│[@Flashy] prinr █                                                                │
-└─────────────────────────────────────────────────────────────────────────────────┘
-....
-
-Example of suggestions with English and French dictionaries (`en,fr`):
-
-....
-│[12:55] [6] [irc/libera] 3:#test(+n){4} [print,prone,prune/prime,primer,primé]   │
-│[@Flashy] prinr █                                                                │
-└─────────────────────────────────────────────────────────────────────────────────┘
-....
-
-[[spell_commands]]
-==== Commands
-
-include::includes/autogen_user_commands.en.adoc[tag=spell_commands]
-
-[[spell_options]]
-==== Options
-
-Sections in file _spell.conf_:
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Section    | Control command                        | Description
-| color      | /set spell.color.*                     | Colors.
-| check      | /set spell.check.*                     | Options to control spell checking.
-| dict       | <<command_spell_spell,/spell setdict>> +
-               /set spell.dict.*                      | Dictionaries used by buffer (options can be added/removed in section).
-| look       | /set spell.look.*                      | Look and feel.
-| option     | /set spell.option.*                    | <<spell_speller_options,Speller options>> (options can be added/removed in section).
-|===
-
-Options:
-
-include::includes/autogen_user_options.en.adoc[tag=spell_options]
-
-[[trigger_plugin]]
-=== Trigger
+[[trigger]]
+== Trigger
 
 Trigger is the Swiss Army knife for WeeChat: it can hook many things (signal,
 modifier, print, etc.), change the content of data, and execute one or more
@@ -4226,7 +4156,7 @@ So you might consider reading the
 link:weechat_plugin_api.en.html#hooks[WeeChat plugin API reference / Hooks].
 
 [[trigger_default]]
-==== Default triggers
+=== Default triggers
 
 WeeChat creates 5 triggers by default, which can be disabled, updated or
 deleted:
@@ -4262,7 +4192,7 @@ List of default triggers:
 |===
 
 [[trigger_anatomy]]
-==== Anatomy of a trigger
+=== Anatomy of a trigger
 
 A trigger has the following options (names are
 `trigger.trigger.<name>.<option>`):
@@ -4319,7 +4249,7 @@ trigger.trigger.beep.post_action = none
 ----
 
 [[trigger_execution]]
-==== Execution
+=== Execution
 
 When a trigger callback is called, following actions are executed, in this
 order, if triggers are globally enabled and if the trigger itself is enabled:
@@ -4332,7 +4262,7 @@ order, if triggers are globally enabled and if the trigger itself is enabled:
 . perform post action (if different from `none`).
 
 [[trigger_hook_arguments]]
-==== Hook arguments
+=== Hook arguments
 
 The arguments depend on the hook used. They are separated by semicolons.
 
@@ -4442,7 +4372,7 @@ The arguments depend on the hook used. They are separated by semicolons.
 |===
 
 [[trigger_conditions]]
-==== Conditions
+=== Conditions
 
 The conditions are used to continue processing in trigger, or stop everything.
 
@@ -4458,7 +4388,7 @@ ${tg_displayed} && (${tg_highlight} || ${tg_msg_pv})
 ----
 
 [[trigger_regex]]
-==== Regular expression
+=== Regular expression
 
 The regular expression is used to change variables in callback hashtable.
 
@@ -4525,7 +4455,7 @@ In this example, the delimiter used is "==" because there is a "/" in the
 regular expression.
 
 [[trigger_command]]
-==== Command
+=== Command
 
 The command is executed after replacement of text with the regular expression.
 Many commands can be separated by semicolons.
@@ -4540,7 +4470,7 @@ Example: default _beep_ trigger uses this command to make a beep (BEL):
 ----
 
 [[trigger_callback_data]]
-==== Data in callbacks
+=== Data in callbacks
 
 Data received in callbacks are stored in hashtables (pointers and strings) and
 can be used in following options:
@@ -4567,7 +4497,7 @@ All callbacks set following variables in hashtable:
 |===
 
 [[trigger_data_signal]]
-===== Signal
+==== Signal
 
 The "signal" callback sets following variables in hashtable:
 
@@ -4609,7 +4539,7 @@ ${buffer[${tg_signal_data}].full_name}
 ----
 
 [[trigger_data_hsignal]]
-===== Hsignal
+==== Hsignal
 
 The "hsignal" callback sets following variables in hashtable:
 
@@ -4623,7 +4553,7 @@ The hashtable contains all keys/values from hashtable received (type:
 string/string).
 
 [[trigger_data_modifier]]
-===== Modifier
+==== Modifier
 
 The "modifier" callback sets following variables in hashtable:
 
@@ -4655,7 +4585,7 @@ If the modifier contains an IRC message, the message is parsed and extra data is
 added in hashtable (see <<trigger_data_signal,hook signal>>).
 
 [[trigger_data_line]]
-===== Line
+==== Line
 
 The "line" callback sets following variables in hashtable:
 
@@ -4689,12 +4619,21 @@ Variables set using tags in message:
 | tg_tag_prefix_nick | string | Color of nick in prefix (from tag "prefix_nick_ccc").
 | tg_tag_host        | string | User name and host, format: username@host (from tag "host_xxx").
 | tg_tag_notify      | string | Notify level (_none_, _message_, _private_, _highlight_).
+| tg_tag_irc_xxx     | string | IRC message tag (key "xxx"). ^(1)^
 | tg_notify          | string | Notify level, if different from _none_.
 | tg_msg_pv          | string | "1" for a private message, otherwise "0".
 |===
 
+[NOTE]
+====
+^(1)^ Special chars are replaced in IRC tag:
+
+* key: `_` -> `-` and `,` -> `;`
+* value: `,` -> `;`
+====
+
 [[trigger_data_print]]
-===== Print
+==== Print
 
 The "print" callback sets following variables in hashtable:
 
@@ -4722,12 +4661,21 @@ Variables set using tags in message:
 | tg_tag_prefix_nick | string | Color of nick in prefix (from tag "prefix_nick_ccc").
 | tg_tag_host        | string | User name and host, format: username@host (from tag "host_xxx").
 | tg_tag_notify      | string | Notify level (_none_, _message_, _private_, _highlight_).
+| tg_tag_irc_xxx     | string | IRC message tag (key "xxx"). ^(1)^
 | tg_notify          | string | Notify level, if different from _none_.
 | tg_msg_pv          | string | "1" for a private message, otherwise "0".
 |===
 
+[NOTE]
+====
+^(1)^ Special chars are replaced in IRC tag:
+
+* key: `_` -> `-` and `,` -> `;`
+* value: `,` -> `;`
+====
+
 [[trigger_data_command]]
-===== Command
+==== Command
 
 The "command" callback sets following variables in hashtable:
 
@@ -4743,7 +4691,7 @@ The "command" callback sets following variables in hashtable:
 |===
 
 [[trigger_data_command_run]]
-===== Command_run
+==== Command_run
 
 The "command_run" callback sets following variables in hashtable:
 
@@ -4755,7 +4703,7 @@ The "command_run" callback sets following variables in hashtable:
 |===
 
 [[trigger_data_timer]]
-===== Timer
+==== Timer
 
 The "timer" callback sets following variables in hashtable:
 
@@ -4767,7 +4715,7 @@ The "timer" callback sets following variables in hashtable:
 |===
 
 [[trigger_data_config]]
-===== Config
+==== Config
 
 The "config" callback sets following variables in hashtable:
 
@@ -4779,7 +4727,7 @@ The "config" callback sets following variables in hashtable:
 |===
 
 [[trigger_data_focus]]
-===== Focus
+==== Focus
 
 The "focus" callback sets following variables in hashtable:
 
@@ -4794,7 +4742,7 @@ The hashtable contains all keys/values from hashtable received (type:
 string/string).
 
 [[trigger_data_info]]
-===== Info
+==== Info
 
 The "info" callback sets following variables in hashtable:
 
@@ -4807,7 +4755,7 @@ The "info" callback sets following variables in hashtable:
 |===
 
 [[trigger_data_info_hashtable]]
-===== Info_hashtable
+==== Info_hashtable
 
 The "info_hashtable" callback sets following variables in hashtable:
 
@@ -4821,10 +4769,10 @@ The hashtable contains all keys/values from hashtable received (type:
 string/string).
 
 [[trigger_examples]]
-==== Examples
+=== Examples
 
 [[trigger_example_url_color]]
-===== Color for URLs
+==== Color for URLs
 
 Display URLs in green:
 
@@ -4837,7 +4785,7 @@ The simple regex used to detect URL may not catch well all URLs, but it is
 faster than a complex regex.
 
 [[trigger_example_auto_pong]]
-===== Auto pong on ping queries
+==== Auto pong on ping queries
 
 When someone sends a "ping" in a private buffer, this trigger will auto-reply
 with `pong`:
@@ -4847,7 +4795,7 @@ with `pong`:
 ----
 
 [[trigger_example_responsive_layout]]
-===== Responsive layout
+==== Responsive layout
 
 Following triggers can be used to customize things displayed when the size of
 terminal is changed:
@@ -4867,7 +4815,7 @@ In the example, when the terminal becomes small, the nicklist is hidden. And the
 bar is restored when the width is greater or equal to 100 chars.
 
 [[trigger_example_config_save]]
-===== Automatic save of configuration
+==== Automatic save of configuration
 
 You can automatically save configuration files (`+*.conf+`), for example each
 hour:
@@ -4886,12 +4834,12 @@ The command `/mute /save` will silently save configuration files (nothing
 displayed on core buffer).
 
 [[trigger_commands]]
-==== Commands
+=== Commands
 
 include::includes/autogen_user_commands.en.adoc[tag=trigger_commands]
 
 [[trigger_options]]
-==== Options
+=== Options
 
 Sections in file _trigger.conf_:
 
@@ -4909,130 +4857,326 @@ Options:
 
 include::includes/autogen_user_options.en.adoc[tag=trigger_options]
 
-[[typing_plugin]]
-=== Typing
+[[extending_weechat]]
+== Extending WeeChat
 
-The typing plugin is used to inform other users you are typing messages and
-show a list of users currently typing a message on the buffer.
+WeeChat has a modular design and can be extended with plugins and scripts.
 
-It is used by IRC plugin on channel and private buffers, when the "message-tags"
-capability is enabled (you can check with <<command_irc_cap,/cap>> command). +
-Under the hood, typing client tag is used, following this specification:
-https://ircv3.net/specs/client-tags/typing.html.
+It's important to make difference between a _plugin_ and a _script_: a
+_plugin_ is a binary file compiled and loaded with command `/plugin`, whereas
+a _script_ is a text file loaded with a plugin like _python_ with command
+`/python`.
 
-[[typing_activation]]
-==== Activation
+[[plugins]]
+=== Plugins
 
-For privacy considerations, the typing feature is disabled by default. +
-If you want to use it, you must enable options in both typing and irc plugins:
+A plugin is a dynamic library, written in C and compiled, which is loaded by
+WeeChat.
+Under GNU/Linux, the file has ".so" extension, ".dll" under Windows.
+
+Plugins found are automatically loaded when WeeChat is starting, and it is
+possible to load or unload plugins while WeeChat is running.
+
+You can use command `/plugin` to load/unload a plugin, or list all loaded
+plugins.
+
+When a plugin is unloaded, WeeChat removes:
+
+* buffers
+* configuration options (options are written in files)
+* all hooks: commands, modifiers, process, etc.
+* infos and infolists
+* hdata
+* bar items.
+
+Examples to load, unload or list plugins:
 
 ----
-/set typing.look.enabled_nicks on
-/set typing.look.enabled_self on
-/set irc.look.typing_status_nicks on
-/set irc.look.typing_status_self on
+/plugin load irc
+/plugin unload irc
+/plugin list
 ----
 
-The typing notifications are displayed at the end of the status bar.
+Default plugins are:
 
-Example of status bar with the "typing" item: "bob" is typing a message and
-"alice" was typing a message but made a pause:
+[width="100%",cols="1,5",options="header"]
+|===
+| Plugin     | Description
+| alias      | Define alias for commands.
+| buflist    | Bar item with list of buffers.
+| charset    | Charset decoding/encoding for buffers.
+| exec       | Execution of external commands in WeeChat.
+| fifo       | FIFO pipe used to remotely send commands to WeeChat.
+| fset       | Fast set of WeeChat and plugins options.
+| irc        | IRC chat protocol.
+| logger     | Log buffers to files.
+| relay      | Relay data via network.
+| script     | Script manager.
+| python     | Python scripting API.
+| perl       | Perl scripting API.
+| ruby       | Ruby scripting API.
+| lua        | Lua scripting API.
+| tcl        | Tcl scripting API.
+| guile      | Guile (scheme) scripting API.
+| javascript | JavaScript scripting API.
+| php        | PHP scripting API.
+| spell      | Spell checking for command line.
+| trigger    | Text replacement and command execution on events triggered by WeeChat/plugins.
+| typing     | Display users currently writing messages.
+| xfer       | File transfer and direct chat.
+|===
 
+To learn more about plugin or script development (through API), please read the
+link:weechat_plugin_api.en.html[WeeChat plugin API reference] or the
+link:weechat_scripting.en.html[WeeChat scripting guide].
+
+[[scripts]]
+=== Scripts
+
+WeeChat provides 8 scripting plugins: Python, Perl, Ruby, Lua, Tcl, Guile
+(scheme), JavaScript and PHP.
+These plugins can load, execute and unload scripts for these languages.
+
+For more information about how to write scripts, or WeeChat API for
+scripts, please read the link:weechat_scripting.en.html[WeeChat scripting guide].
+
+[[script_manager]]
+==== Script manager
+
+The script manager (command <<command_script_script,/script>>) is used to
+load/unload scripts of any language, and install/remove scripts of WeeChat
+scripts repository, which are visible at this URL: https://weechat.org/scripts
+
+For privacy considerations, the download of scripts is disabled by default. +
+To enable it, type this command:
+
+----
+/set script.scripts.download_enabled on
+----
+
+Then you can download the list of scripts and display them in a new buffer
+with the <<command_script_script,/script>> command:
+
+[subs="quotes,attributes"]
+:x: *
 ....
-│[12:55] [6] [irc/libera] 3:#test(+n){4} [Typing: bob, (alice)]                   │
-│[@Flashy] █                                                                      │
-└─────────────────────────────────────────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│1.weechat│368/368 scripts (filter: {x}) | Sort: i,p,n | Alt+key/input: i=install, r=remove, l=load, L=reload, u=│
+│2.scripts│{x}      autosort.py                 3.9     2020-10-11 | Automatically keep buffers grouped by server│
+│         │{x}      multiline.pl                0.6.3   2016-01-02 | Multi-line edit box, also supports editing o│
+│         │{x}      highmon.pl                  2.7     2020-06-21 | Adds a highlight monitor buffer.            │
+│         │##{x}ia r  grep.py               0.8.5 0.8.5   2021-05-11 | Search regular expression in buffers or log ##│
+│         │{x}      autojoin.py                 0.3.1   2019-10-06 | Configure autojoin for all servers according│
+│         │{x}      colorize_nicks.py           28      2021-03-06 | Use the weechat nick colors in the chat area│
+│         │{x}ia r  go.py                 2.7   2.7     2021-05-26 | Quick jump to buffers.                      │
+│         │{x}      text_item.py                0.9     2019-05-25 | Add bar items with plain text.              │
+│         │       aesthetic.py                1.0.6   2020-10-25 | Make messages more A E S T H E T I C A L L Y│
+│         │       aformat.py                  0.2     2018-06-21 | Alternate text formatting, useful for relays│
+│         │       alternatetz.py              0.3     2018-11-11 | Add an alternate timezone item.             │
+│         │       amarok2.pl                  0.7     2012-05-08 | Amarok 2 control and now playing script.    │
+│         │       amqp_notify.rb              0.1     2011-01-12 | Send private messages and highlights to an A│
+│         │       announce_url_title.py       19      2021-06-05 | Announce URL title to user or to channel.   │
+│         │       anotify.py                  1.0.2   2020-05-16 | Notifications of private messages, highlight│
+│         │       anti_password.py            1.2.1   2021-03-13 | Prevent a password from being accidentally s│
+│         │       apply_corrections.py        1.3     2018-06-21 | Display corrected text when user sends s/typ│
+│         │       arespond.py                 0.1.1   2020-10-11 | Simple autoresponder.                       │
+│         │       atcomplete.pl               0.001   2016-10-29 | Tab complete nicks when prefixed with "@".  │
+│         │       audacious.pl                0.3     2009-05-03 | Display which song Audacious is currently pl│
+│         │       auth.rb                     0.3     2014-05-30 | Automatically authenticate with NickServ usi│
+│         │       auto_away.py                0.4     2018-11-11 | A simple auto-away script.                  │
+│         │       autoauth.py                 1.3     2021-11-07 | Permits to auto-authenticate when changing n│
+│         │       autobump.py                 0.1.0   2019-06-14 | Bump buffers upon activity.                 │
+│         │       autoconf.py                 0.4     2021-05-11 | Auto save/load changed options in a .weerc f│
+│         │       autoconnect.py              0.3.3   2019-10-06 | Reopen servers and channels opened last time│
+│         │[12:55] [2] [script] 2:scripts                                                                      │
+│         │█                                                                                                   │
+└──────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
 ....
 
-[[typing_signals_sent]]
-==== Signals sent
+[[script_commands]]
+===== Script commands
 
-When you are typing a message (not a command starting with `/`), the typing
-plugin sends signals to inform other plugins (like IRC) that you are typing,
-and these plugins can then send typing notifications to other users.
+include::includes/autogen_user_commands.en.adoc[tag=script_commands]
 
-The following signals are sent when you are typing messages:
+[[script_options]]
+===== Script options
 
-[width="100%",cols="1,1,5",options="header"]
+Sections in file _script.conf_:
+
+[width="100%",cols="3m,6m,16",options="header"]
 |===
-| Signal              | Arguments        | Description
-| typing_self_typing  | Pointer: buffer. | You are typing a message.
-| typing_self_paused  | Pointer: buffer. | You made a pause while typing a message.
-| typing_self_cleared | Pointer: buffer. | You cleared the command line without sending the message.
-| typing_self_sent    | Pointer: buffer. | You sent the message to the buffer.
-|===
-
-[[typing_signals_caught]]
-==== Signals caught
-
-The typing plugin is catching some signals that can be sent by other plugins
-(like IRC), to update internal hashtables used to store the typing state of
-nicks on buffers. These hashtables are used to build the content of "typing"
-bar item.
-
-The following signals are caught by the typing plugin:
-
-[width="100%",cols="1,4,3",options="header"]
-|===
-| Signal | Arguments | Description
-
-| typing_set_nick |
-  String: buffer pointer + ";" + state (one of: "off", "typing", "paused",
-  "cleared") + ";" + nick. +
-  Example: "0x1234abcd;typing;alice". |
-  Set typing state for a nick on a buffer.
-
-| typing_reset_buffer |
-  Pointer: buffer. |
-  Remove typing state for all nicks on a buffer.
+| Section | Control command       | Description
+| look    | /set script.look.*    | Look and feel.
+| color   | /set script.color.*   | Colors.
+| scripts | /set script.scripts.* | Options for download of scripts.
 |===
 
-[[typing_options]]
-==== Options
+Options:
 
-Sections in file _typing.conf_:
+include::includes/autogen_user_options.en.adoc[tag=script_options]
+
+[[scripting_plugins]]
+==== Scripting plugins
+
+[[python_commands]]
+===== Python commands
+
+include::includes/autogen_user_commands.en.adoc[tag=python_commands]
+
+[[perl_commands]]
+===== Perl commands
+
+include::includes/autogen_user_commands.en.adoc[tag=perl_commands]
+
+[[ruby_commands]]
+===== Ruby commands
+
+include::includes/autogen_user_commands.en.adoc[tag=ruby_commands]
+
+[[lua_commands]]
+===== Lua commands
+
+include::includes/autogen_user_commands.en.adoc[tag=lua_commands]
+
+[[tcl_commands]]
+===== Tcl commands
+
+include::includes/autogen_user_commands.en.adoc[tag=tcl_commands]
+
+[[guile_commands]]
+===== Guile commands
+
+include::includes/autogen_user_commands.en.adoc[tag=guile_commands]
+
+[[javascript_commands]]
+===== JavaScript commands
+
+include::includes/autogen_user_commands.en.adoc[tag=javascript_commands]
+
+[[php_commands]]
+===== PHP commands
+
+include::includes/autogen_user_commands.en.adoc[tag=php_commands]
+
+[[python_options]]
+===== Python options
+
+Sections in file _python.conf_:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
 | Section | Control command    | Description
-| look    | /set typing.look.* | Look and feel.
+| look    | /set python.look.* | Look and feel.
 |===
 
 Options:
 
-include::includes/autogen_user_options.en.adoc[tag=typing_options]
+include::includes/autogen_user_options.en.adoc[tag=python_options]
 
-[[xfer_plugin]]
-=== Xfer
+[[perl_options]]
+===== Perl options
 
-Xfer plugin brings:
-
-* direct chat (between two hosts, without server): for example "DCC Chat" via
-  IRC plugin
-* file transfer, for example "DCC" via IRC plugin
-
-[[xfer_commands]]
-==== Commands
-
-include::includes/autogen_user_commands.en.adoc[tag=xfer_commands]
-
-[[xfer_options]]
-==== Options
-
-Sections in file _xfer.conf_:
+Sections in file _perl.conf_:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
-| Section | Control command     | Description
-| look    | /set xfer.look.*    | Look and feel.
-| color   | /set xfer.color.*   | Colors.
-| network | /set xfer.network.* | Network options.
-| file    | /set xfer.file.*    | Options for files sent/received.
+| Section | Control command  | Description
+| look    | /set perl.look.* | Look and feel.
 |===
 
 Options:
 
-include::includes/autogen_user_options.en.adoc[tag=xfer_options]
+include::includes/autogen_user_options.en.adoc[tag=perl_options]
+
+[[ruby_options]]
+===== Ruby options
+
+Sections in file _ruby.conf_:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section | Control command  | Description
+| look    | /set ruby.look.* | Look and feel.
+|===
+
+Options:
+
+include::includes/autogen_user_options.en.adoc[tag=ruby_options]
+
+[[lua_options]]
+===== Lua options
+
+Sections in file _lua.conf_:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section | Control command | Description
+| look    | /set lua.look.* | Look and feel.
+|===
+
+Options:
+
+include::includes/autogen_user_options.en.adoc[tag=lua_options]
+
+[[tcl_options]]
+===== Tcl options
+
+Sections in file _tcl.conf_:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section | Control command | Description
+| look    | /set tcl.look.* | Look and feel.
+|===
+
+Options:
+
+include::includes/autogen_user_options.en.adoc[tag=tcl_options]
+
+[[guile_options]]
+===== Guile options
+
+Sections in file _guile.conf_:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section | Control command   | Description
+| look    | /set guile.look.* | Look and feel.
+|===
+
+Options:
+
+include::includes/autogen_user_options.en.adoc[tag=guile_options]
+
+[[javascript_options]]
+===== Javascript options
+
+Sections in file _javascript.conf_:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section | Control command        | Description
+| look    | /set javascript.look.* | Look and feel.
+|===
+
+Options:
+
+include::includes/autogen_user_options.en.adoc[tag=javascript_options]
+
+[[php_options]]
+===== PHP options
+
+Sections in file _php.conf_:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section | Control command | Description
+| look    | /set php.look.* | Look and feel.
+|===
+
+Options:
+
+include::includes/autogen_user_options.en.adoc[tag=php_options]
 
 [[support]]
 == Support

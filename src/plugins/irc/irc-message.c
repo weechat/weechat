@@ -60,6 +60,7 @@ irc_message_parse_params (const char *parameters,
                           char ***params, int *num_params)
 {
     const char *ptr_params, *pos_end, *pos_next;
+    char **new_params;
     int alloc_params, trailing;
 
     if (!params && !num_params)
@@ -113,10 +114,11 @@ irc_message_parse_params (const char *parameters,
         if (params)
         {
             alloc_params++;
-            *params = realloc (*params,
-                               (alloc_params + 1) * sizeof ((*params)[0]));
-            if (!*params)
+            new_params = realloc (*params,
+                                  (alloc_params + 1) * sizeof ((*params)[0]));
+            if (!new_params)
                 return;
+            *params = new_params;
             (*params)[alloc_params - 1] = weechat_strndup (ptr_params,
                                                            pos_end - ptr_params);
             (*params)[alloc_params] = NULL;

@@ -104,9 +104,10 @@ Le tableau suivant liste les paquets *requis* pour compiler WeeChat :
 | pkg-config             |               | Détection des bibliothèques installées.
 | libncursesw5-dev ^(2)^ |               | Interface ncurses.
 | libcurl4-gnutls-dev    |               | Transfert d'URL.
-| zlib1g-dev             |               | Compression des paquets dans l'extension relay (protocole weechat), extension script.
 | libgcrypt20-dev        |               | Données sécurisées, authentification IRC SASL.
 | libgnutls28-dev        | ≥ 2.2.0 ^(3)^ | Connexion SSL au serveur IRC, support SSL dans l'extension relay, authentification IRC SASL (ECDSA-NIST256P-CHALLENGE).
+| zlib1g-dev             |               | Compression des messages (WeeChat -> client) avec https://zlib.net/[zlib] dans l'extension relay (protocole weechat), extension script.
+| libzstd-dev            |               | Compression des messages (WeeChat -> client) avec https://facebook.github.io/zstd/[Zstandard] dans l'extension relay (protocole weechat).
 |===
 
 [NOTE]
@@ -203,13 +204,13 @@ Liste des options couramment utilisées :
   config, data, cache, runtime.
 
 | ENABLE_ALIAS | `ON`, `OFF` | ON |
-  Compiler <<alias_plugin,l'extension Alias>>.
+  Compiler <<command_aliases,l'extension Alias>>.
 
 | ENABLE_BUFLIST | `ON`, `OFF` | ON |
-  Compiler <<buflist_plugin,l'extension Buflist>>.
+  Compiler <<buflist,l'extension Buflist>>.
 
 | ENABLE_CHARSET | `ON`, `OFF` | ON |
-  Compiler <<charset_plugin,l'extension Charset>>.
+  Compiler <<charset,l'extension Charset>>.
 
 | ENABLE_MAN | `ON`, `OFF` | OFF |
   Construire la page man.
@@ -218,34 +219,34 @@ Liste des options couramment utilisées :
   Construire la documentation HTML.
 
 | ENABLE_ENCHANT | `ON`, `OFF` | OFF |
-  Compiler <<spell_plugin,l'extension Spell>> avec Enchant.
+  Compiler <<spell_checking,l'extension Spell>> avec Enchant.
 
 | ENABLE_EXEC | `ON`, `OFF` | ON |
-  Compiler <<exec_plugin,l'extension Exec>>.
+  Compiler <<external_commands,l'extension Exec>>.
 
 | ENABLE_FIFO | `ON`, `OFF` | ON |
-  Compiler <<fifo_plugin,l'extension Fifo>>.
+  Compiler <<fifo_pipe,l'extension Fifo>>.
 
 | ENABLE_FSET | `ON`, `OFF` | ON |
-  Compiler <<fset_plugin,l'extension Fset>>.
+  Compiler <<fset,l'extension Fset>>.
 
 | ENABLE_GUILE | `ON`, `OFF` | ON |
-  Compiler <<scripts_plugins,l'extension Guile>> (Scheme).
+  Compiler <<scripting_plugins,l'extension Guile>> (Scheme).
 
 | ENABLE_IRC | `ON`, `OFF` | ON |
-  Compiler <<irc_plugin,l'extension IRC>>.
+  Compiler <<irc,l'extension IRC>>.
 
 | ENABLE_JAVASCRIPT | `ON`, `OFF` | OFF |
-  Compiler <<scripts_plugins,l'extension JavaScript>>.
+  Compiler <<scripting_plugins,l'extension JavaScript>>.
 
 | ENABLE_LARGEFILE | `ON`, `OFF` | ON |
   Support des gros fichiers.
 
 | ENABLE_LOGGER | `ON`, `OFF` | ON |
-  Compiler <<logger_plugin,l'extension Logger>>.
+  Compiler <<buffer_logging,l'extension Logger>>.
 
 | ENABLE_LUA | `ON`, `OFF` | ON |
-  Compiler <<scripts_plugins,l'extension Lua>>.
+  Compiler <<scripting_plugins,l'extension Lua>>.
 
 | ENABLE_NCURSES | `ON`, `OFF` | ON |
   Compiler l'interface Ncurses.
@@ -254,45 +255,45 @@ Liste des options couramment utilisées :
   Activer NLS (traductions).
 
 | ENABLE_PERL | `ON`, `OFF` | ON |
-  Compiler <<scripts_plugins,l'extension Perl>>.
+  Compiler <<scripting_plugins,l'extension Perl>>.
 
 | ENABLE_PHP | `ON`, `OFF` | ON |
-  Compiler <<scripts_plugins,l'extension PHP>>.
+  Compiler <<scripting_plugins,l'extension PHP>>.
 
 | ENABLE_PYTHON | `ON`, `OFF` | ON |
-  Compiler <<scripts_plugins,l'extension Python>>.
+  Compiler <<scripting_plugins,l'extension Python>>.
 
 | ENABLE_PYTHON2 | `ON`, `OFF` | OFF |
-  Compiler <<scripts_plugins,l'extension Python>> avec Python 2 au lieu de
+  Compiler <<scripting_plugins,l'extension Python>> avec Python 2 au lieu de
   Python 3.
 
 | ENABLE_RELAY | `ON`, `OFF` | ON |
-  Compiler <<relay_plugin,l'extension Relay>>.
+  Compiler <<relay,l'extension Relay>>.
 
 | ENABLE_RUBY | `ON`, `OFF` | ON |
-  Compiler <<scripts_plugins,l'extension Ruby>>.
+  Compiler <<scripting_plugins,l'extension Ruby>>.
 
 | ENABLE_SCRIPT | `ON`, `OFF` | ON |
-  Compiler <<scripts_plugins,l'extension Script>>.
+  Compiler <<script_manager,l'extension Script>>.
 
 | ENABLE_SCRIPTS | `ON`, `OFF` | ON |
-  Compiler <<scripts_plugins,les extensions de script>> (Python, Perl, Ruby,
+  Compiler <<scripting_plugins,les extensions de script>> (Python, Perl, Ruby,
   Lua, Tcl, Guile, JavaScript, PHP).
 
 | ENABLE_SPELL | `ON`, `OFF` | ON |
-  Compiler <<spell_plugin,l'extension Spell>>.
+  Compiler <<spell_checking,l'extension Spell>>.
 
 | ENABLE_TCL | `ON`, `OFF` | ON |
-  Compiler <<scripts_plugins,l'extension Tcl>>.
+  Compiler <<scripting_plugins,l'extension Tcl>>.
 
 | ENABLE_TRIGGER | `ON`, `OFF` | ON |
-  Compiler <<trigger_plugin,l'extension Trigger>>.
+  Compiler <<trigger,l'extension Trigger>>.
 
 | ENABLE_TYPING | `ON`, `OFF` | ON |
-  Compiler <<typing_plugin,l'extension Typing>>.
+  Compiler <<typing_notifications,l'extension Typing>>.
 
 | ENABLE_XFER | `ON`, `OFF` | ON |
-  Compiler <<xfer_plugin,l'extension Xfer>>.
+  Compiler <<xfer,l'extension Xfer>>.
 
 | ENABLE_TESTS | `ON`, `OFF` | OFF |
   Compiler les tests.
@@ -401,8 +402,8 @@ futur de WeeChat, vous devez :
 * Activer les fichiers _core_ sur votre système.
 * Installer gdb.
 
-[[build_debug]]
-==== Construction avec options de debug
+[[debug_build]]
+==== Construction en debug
 
 Si vous compilez avec CMake :
 
@@ -410,8 +411,8 @@ Si vous compilez avec CMake :
 $ cmake .. -DCMAKE_BUILD_TYPE=Debug
 ----
 
-[[build_debug_address_sanitizer]]
-==== Construction avec options de debug et vérification des adresses
+[[address_sanitizer]]
+==== Vérification des adresses
 
 Vous pouvez aussi activer la vérification des adresses (« address sanitizer »),
 ce qui provoquera immédiatement un plantage de WeeChat en cas de problème :
@@ -535,7 +536,7 @@ Ensuite comme pour un crash, utilisez la commande `bt full` :
 ----
 
 [[upgrade]]
-=== Mise à jour
+== Mise à jour
 
 Si une nouvelle version stable de WeeChat est disponible, il est temps pour vous
 de passer à cette version.
@@ -547,7 +548,7 @@ répertoires. +
 Cela peut être fait pendant que WeeChat tourne.
 
 [[upgrade_command]]
-==== Commande de mise à jour
+=== Commande de mise à jour
 
 WeeChat peut redémarrer le nouveau binaire avec la commande
 <<command_weechat_upgrade,/upgrade>> : le contenu des tampons et les connexions
@@ -572,10 +573,10 @@ $ weechat --upgrade
 ----
 
 [[restart_after_upgrade]]
-==== Redémarrage après mise à jour
+=== Redémarrage après mise à jour
 
 [[restart_release_notes]]
-===== Notes de version
+==== Notes de version
 
 Après une mise à jour, il est *fortement recommandé* de lire les
 https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[notes de version]
@@ -588,7 +589,7 @@ Par exemple si vous passez de la version 3.0 à 3.2, vous devez lire les notes
 des versions 3.1 et 3.2.
 
 [[restart_configuration_upgrade]]
-===== Mise à jour de la configuration
+==== Mise à jour de la configuration
 
 WeeChat a un système de mise à jour automatique des fichiers de configuration
 (`*.conf`) :
@@ -607,11 +608,8 @@ Cela signifie que l'option `sec.crypt.passphrase_file` a été supprimée, et vo
 aviez la valeur définie à une chaîne vide, ce qui était la valeur par défaut
 dans la version précédente (dans ce cas aucune action manuelle n'est nécessaire).
 
-[[usage]]
-== Utilisation
-
 [[running_weechat]]
-=== Lancement de WeeChat
+== Lancement de WeeChat
 
 Pour lancer WeeChat, tapez cette commande :
 
@@ -624,15 +622,14 @@ par défaut sont créés dans _~/.config/weechat_ avec les options et valeurs pa
 (voir <<files_and_directories,Fichiers et répertoires>>).
 
 [[command_line_options]]
-==== Options de ligne de commande
+=== Options de ligne de commande
 
 include::includes/cmdline_options.fr.adoc[tag=standard]
 
-[[extra_debug_options]]
-==== Options supplémentaires de debug
+Quelques options supplémentaires sont disponibles pour du debug seulement :
 
 [WARNING]
-Ces options sont pour du debug seulement, *NE PAS UTILISER EN PRODUCTION !*
+N'utilisez *AUCUNE* de ces options in production !
 
 include::includes/cmdline_options.fr.adoc[tag=debug]
 
@@ -648,6 +645,56 @@ Des variables d'environnement sont utilisées par WeeChat si elles sont définie
 | WEECHAT_PASSPHRASE   | La phrase secrète utilisée pour déchiffrer les données sécurisées.
 | WEECHAT_EXTRA_LIBDIR | Un répertoire supplémentaire pour charger les extensions (depuis le répertoire "plugins" sous ce chemin).
 |===
+
+[[colors_support]]
+=== Support des Couleurs
+
+WeeChat peut utiliser jusqu'à 32767 paires de couleur pour afficher le texte dans
+les barres et la zone de discussion (votre terminal doit supporter 256 couleurs
+pour pouvoir les utiliser dans WeeChat).
+
+Selon la valeur de la variable d'environnement _TERM_, vous pouvez avoir les
+limites suivantes pour les couleurs dans WeeChat :
+
+[width="75%",cols="8,>3,>3",options="header"]
+|===
+| $TERM                                  | Couleurs | Paires
+| "rxvt-unicode", "xterm", ...           |       88 |  32767
+| "rxvt-256color", "xterm-256color", ... |      256 |  32767
+| "screen"                               |        8 |     64
+| "screen-256color"                      |      256 |  32767
+| "tmux"                                 |        8 |     64
+| "tmux-256color"                        |      256 |  32767
+|===
+
+Vous pouvez lancer `weechat --colors` ou utiliser la commande `/color`
+dans WeeChat pour afficher les limites de votre environnement.
+
+Quelques valeurs recommandées pour _TERM_ si vous voulez 256 couleurs :
+
+* sous screen : _screen-256color_
+* sous tmux : _screen-256color_ ou _tmux-256color_
+* en dehors de screen/tmux : _xterm-256color_, _rxvt-256color_,
+  _putty-256color_, ...
+
+Si vous utilisez screen, vous pouvez ajouter cette ligne dans votre
+_~/.screenrc_ :
+
+[NOTE]
+Vous devrez peut-être installer le paquet "ncurses-term" pour utiliser ces
+valeurs dans la variable _TERM_.
+
+----
+term screen-256color
+----
+
+Si votre variable _TERM_ a une valeur erronée et que WeeChat est déjà lancé,
+vous pouvez la changer avec ces deux commandes :
+
+----
+/set env TERM screen-256color
+/upgrade
+----
 
 [[files_and_directories]]
 === Fichiers et répertoires
@@ -757,6 +804,9 @@ commande <<command_weechat_reload,/reload>> (avec le risque de perdre d'autres
 changements qui n'auraient pas été sauvés avec <<command_weechat_save,/save>>). +
 Vous pouvez utiliser la commande <<command_weechat_set,/set>>, qui vérifie la
 valeur et applique les changements immédiatement.
+
+[[interface]]
+== Interface
 
 [[screen_layout]]
 === Organisation de l'écran
@@ -893,7 +943,7 @@ Chaque aspect de la disposition peut être configuré par la <<command_line,comm
 <<command_weechat_bar,`/bar`>> pour configurer les barres,
 <<command_weechat_buffer,/buffer>> et <<command_weechat_window,`/window`>>
 pour configurer les <<buffers_and_windows,tampons et fenêtres>>,
-et <<command_weechat_layot,/layout>> pour nommer, sauver et restaurer la disposition
+et <<command_weechat_layout,/layout>> pour nommer, sauver et restaurer la disposition
 de l'écran et l'association entre les fenêtres et les tampons.
 
 [[command_line]]
@@ -980,157 +1030,6 @@ kbd:[Espace] kbd:[!]
 [NOTE]
 Dans l'extension irc, vous pouvez réassigner les couleurs en utilisant l'option
 <<option_irc.color.mirc_remap,irc.color.mirc_remap>>.
-
-[[colors]]
-=== Couleurs
-
-WeeChat peut utiliser jusqu'à 32767 paires de couleur pour afficher le texte dans
-les barres et la zone de discussion (votre terminal doit supporter 256 couleurs
-pour pouvoir les utiliser dans WeeChat).
-
-Selon la valeur de la variable d'environnement _TERM_, vous pouvez avoir les
-limites suivantes pour les couleurs dans WeeChat :
-
-[width="75%",cols="8,>3,>3",options="header"]
-|===
-| $TERM                                  | Couleurs | Paires
-| "rxvt-unicode", "xterm", ...           |       88 |  32767
-| "rxvt-256color", "xterm-256color", ... |      256 |  32767
-| "screen"                               |        8 |     64
-| "screen-256color"                      |      256 |  32767
-| "tmux"                                 |        8 |     64
-| "tmux-256color"                        |      256 |  32767
-|===
-
-Vous pouvez lancer `weechat --colors` ou utiliser la commande `/color`
-dans WeeChat pour afficher les limites de votre environnement.
-
-Quelques valeurs recommandées pour _TERM_ si vous voulez 256 couleurs :
-
-* sous screen : _screen-256color_
-* sous tmux : _screen-256color_ ou _tmux-256color_
-* en dehors de screen/tmux : _xterm-256color_, _rxvt-256color_,
-  _putty-256color_, ...
-
-Si vous utilisez screen, vous pouvez ajouter cette ligne dans votre
-_~/.screenrc_ :
-
-[NOTE]
-Vous devrez peut-être installer le paquet "ncurses-term" pour utiliser ces
-valeurs dans la variable _TERM_.
-
-----
-term screen-256color
-----
-
-Si votre variable _TERM_ a une valeur erronée et que WeeChat est déjà lancé,
-vous pouvez la changer avec ces deux commandes :
-
-----
-/set env TERM screen-256color
-/upgrade
-----
-
-[[colors_basic]]
-==== Couleurs de base
-
-Les couleurs de base dans WeeChat sont :
-
-[width="75%",cols="1m,4",options="header"]
-|===
-| Nom          | Couleur
-| default      | Couleur par défaut du terminal (transparent pour le fond)
-| black        | Noir
-| darkgray     | Gris foncé
-| red          | Rouge foncé
-| lightred     | Rouge clair
-| green        | Vert foncé
-| lightgreen   | Vert clair
-| brown        | Marron
-| yellow       | Jaune
-| blue         | Bleu foncé
-| lightblue    | Bleu clair
-| magenta      | Violet foncé
-| lightmagenta | Violet clair
-| cyan         | Cyan foncé
-| lightcyan    | Cyan clair
-| gray         | Gris
-| white        | Blanc
-|===
-
-[[colors_extended]]
-==== Couleurs étendues
-
-WeeChat alloue dynamiquement les paires de couleurs quand elles sont utilisées
-sur l'écran (pour afficher les tampons et les barres).
-
-En plus des couleurs de base, vous pouvez utiliser un numéro de couleur entre 1
-et la limite de votre terminal.
-
-Utilisez la commande `/color` pour voir les couleurs et les limites. Avec la
-touche kbd:[Alt+c], vous pouvez basculer temporairement vers les couleurs du
-terminal pour choisir une couleur.
-
-Par exemple si vous souhaitez afficher l'heure en orange dans le tampon,
-faites :
-
-----
-/set weechat.color.chat_time 214
-----
-
-Ou si vous voulez un fond vert très foncé pour la barre de statut :
-
-----
-/set weechat.bar.status.color_bg 22
-----
-
-[[colors_aliases]]
-==== Alias
-
-Vous pouvez ajouter des alias de couleur avec la commande `/color alias` puis
-utiliser cet alias dans n'importe quelle option de couleur.
-
-Par exemple :
-
-----
-/color alias 214 orange
-/set weechat.color.chat_delimiters orange
-----
-
-[[colors_attributes]]
-==== Attributs
-
-Il est possible d'utiliser des attributs pour les couleurs. Un ou plusieurs
-attributs peuvent être ajoutés avant le nom ou le numéro de la couleur :
-
-* `+*+` : texte gras
-* `+!+` : mode vidéo inverse
-* `+/+` : italique
-* `+_+` : texte souligné
-* `+|+` : garder les attributs : ne pas réinitialiser gras/inverse/souligné lors
-  du changement de couleur
-
-Par exemple si vous voulez votre pseudo en blanc souligné, faites :
-
-----
-/set weechat.color.chat_nick_self _white
-----
-
-Ou si vous voulez l'heure dans la barre de statut en orange souligné avec gras :
-
-----
-/set weechat.color.status_time *_214
-----
-
-Pour utiliser un attribut avec la couleur par défaut du terminal (-1), vous
-devez utiliser un nombre supérieur à la dernière couleur du terminal, par
-exemple la couleur maximum de WeeChat : 99999.
-
-Exemple de gras avec la couleur de texte du terminal :
-
-----
-/set weechat.color.status_time *99999
-----
 
 [[buffers_and_windows]]
 === Tampons et fenêtres
@@ -1253,6 +1152,96 @@ Exemple de découpage vertical + horizontal :
 └──────────────────────────────────────────────────────────────────────────────────────┘
                  ▲ fenêtre n°1 (tampon n°3)            ▲ fenêtre n°2 (tampon n°4)
 ....
+
+[[bare_display]]
+==== Affichage dépouillé
+
+Un affichage spécial, appelé "dépouillé" (_bare display_) peut être utilisé pour
+un clic facile sur les URLs longs et la sélection de texte (avec la souris).
+
+L'affichage dépouillé a les caractéristiques suivantes :
+
+* Il n'affiche que le contenu du tampon courant : pas de découpage de fenêtres
+  ni de barre (pas de titre, liste de pseudos, statut, ligne de commande, ...).
+* Le support souris de WeeChat est désactivé (s'il avait été activé) : vous
+  pouvez utiliser votre souris comme vous le faites dans le terminal pour
+  cliquer sur les URLs et sélectionner du texte.
+* Ncurses n'est pas utilisé, par conséquent les URLs ne sont pas coupés en fin
+  de ligne.
+
+La touche par défaut pour activer l'affichage dépouillé est kbd:[Alt+l] (`L`),
+et la même touche pour en sortir (ou par défaut tout changement dans la ligne de
+commande sortira de l'affichage dépouillé, voir l'option
+<<option_weechat.look.bare_display_exit_on_input,weechat.look.bare_display_exit_on_input>>).
+
+Le format de l'heure peut être personnalisé avec l'option
+<<option_weechat.look.bare_display_time_format,weechat.look.bare_display_time_format>>.
+
+L'affichage dépouillé peut être activé pour un temps donné en utilisant la
+commande <<command_weechat_window,/window>>.
+
+Si WeeChat ressemble à ceci :
+
+....
+┌──────────────────────────────────────────────────────────────────────────────────────┐
+│1.libera │Bienvenue sur #abc                                                          │
+│  weechat│12:52:27   --> | Flashy (flashcode@weechat.org) a rejoint #abc      │@Flashy│
+│2.  #test│12:52:27    -- | Pseudos #abc: [@Flashy @joe +weebot peter]         │@joe   │
+│3.  #abc │12:52:27    -- | Canal #abc: 4 pseudos (2 ops, 1 voice, 1 normal)   │+weebot│
+│4.  #def │12:52:27    -- | Canal créé le Tue Jan 27 06:30:17 2009             │peter  │
+│5.  #ghi │12:54:15 peter | bonjour !                                          │       │
+│         │12:55:01  @joe | peter: hook_process: https://weechat.org/files/doc │       │
+│         │               | /devel/weechat_plugin_api.en.html#_weechat_hook_pr │       │
+│         │               | ocess                                              │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │[12:55] [5] [irc/libera] 3:#abc(+n){4}                                      │
+│         │[@Flashy(i)] salut peter !█                                                 │
+└──────────────────────────────────────────────────────────────────────────────────────┘
+....
+
+L'écran ressemblera à ça en mode dépouillé :
+
+....
+┌──────────────────────────────────────────────────────────────────────────────────────┐
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│12:52 --> Flashy (flashcode@weechat.org) a rejoint #abc                               │
+│12:52 -- Pseudos #abc: [@Flashy @joe +weebot peter]                                   │
+│12:52 -- Canal #abc: 4 pseudos (2 ops, 1 voice, 1 normal)                             │
+│12:52 -- Canal créé le Tue Jan 27 06:30:17 2009                                       │
+│12:54 <peter> bonjour !                                                               │
+│12:55 <@joe> peter: hook_process: https://weechat.org/files/doc/devel/weechat_plugin_a│
+│pi.en.html#_weechat_hook_process                                                      │
+└──────────────────────────────────────────────────────────────────────────────────────┘
+....
+
+Donc vous pouvez cliquer l'URL de _joe_ sans problème dans votre terminal (bien
+entendu cela suppose que votre terminal permet le clic sur les URLs).
 
 [[buffers]]
 === Tampons
@@ -1466,6 +1455,1239 @@ Par défaut WeeChat et ses extensions par défaut interprètent ces variables :
 [NOTE]
 Les extensions et script externes peuvent définir et utiliser d'autres
 variables locales.
+
+[[buflist]]
+=== Liste des tampons
+
+L'extension Buflist affiche une liste des tampons dans un objet de barre appelé
+"buflist" (deux autres objets de barre "buflist2" et "buflist3" sont également
+disponibles). +
+Une barre par défaut "buflist" est créée au démarrage avec cet objet de barre.
+
+[[buflist_commands]]
+==== Commandes
+
+include::includes/autogen_user_commands.fr.adoc[tag=buflist_commands]
+
+[[buflist_options]]
+==== Options
+
+Sections dans le fichier _buflist.conf_ :
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section | Commande de contrôle  | Description
+| format  | /set buflist.format.* | Formats utilisés pour l'affichage de la liste des tampons.
+| look    | /set buflist.look.*   | Aspect/présentation.
+|===
+
+Options :
+
+include::includes/autogen_user_options.fr.adoc[tag=buflist_options]
+
+[[key_bindings]]
+== Raccourcis clavier
+
+WeeChat fournit beaucoup de raccourcis clavier par défaut, listés dans les chapitres
+suivants. +
+Ils peuvent être modifiés et de nouveaux peuvent être ajoutés avec la commande
+<<command_weechat_key,/key>>.
+
+[[key_bindings_cmdline]]
+=== Ligne de commande
+
+[[key_bindings_cmdline_cursor_movement]]
+==== Mouvement du curseur
+
+[width="100%",cols="^.^3,.^8,.^5",options="header"]
+|===
+| Touche         | Description | Commande
+| kbd:[←] +
+  kbd:[Ctrl+b]   | Aller au caractère précédent sur la ligne de commande. | `+/input move_previous_char+`
+| kbd:[→] +
+  kbd:[Ctrl+f]   | Aller au caractère suivant sur la ligne de commande. | `+/input move_next_char+`
+| kbd:[Ctrl+←] +
+  kbd:[Alt+b]    | Aller au mot précédent sur la ligne de commande. | `+/input move_previous_word+`
+| kbd:[Ctrl+→] +
+  kbd:[Alt+f]    | Aller au mot suivant sur la ligne de commande. | `+/input move_next_word+`
+| kbd:[Home] +
+  kbd:[Ctrl+a]   | Aller au début de la ligne de commande. | `+/input move_beginning_of_line+`
+| kbd:[End] +
+  kbd:[Ctrl+e]   | Aller à la fin de la ligne de commande. | `+/input move_end_of_line+`
+|===
+
+[[key_bindings_cmdline_editing]]
+==== Édition
+
+[width="100%",cols="^.^3,.^8,.^5",options="header"]
+|===
+| Touche            | Description | Commande
+| kbd:[Del] +
+  kbd:[Ctrl+d]      | Effacer le caractère suivant sur la ligne de commande. | `+/input delete_next_char+`
+| kbd:[Backspace] +
+  kbd:[Ctrl+h]      | Effacer le caractère précédent sur la ligne de commande. | `+/input delete_previous_char+`
+| kbd:[Ctrl+k]      | Effacer du curseur jusqu'à la fin de la ligne de commande (la chaîne supprimée est copiée dans le presse-papiers interne). | `+/input delete_end_of_line+`
+| kbd:[Ctrl+t]      | Inverser deux caractères. | `+/input transpose_chars+`
+| kbd:[Ctrl+u]      | Effacer du curseur jusqu'au début de la ligne de commande (la chaîne supprimée est copiée dans le presse-papiers interne). | `+/input delete_beginning_of_line+`
+| kbd:[Ctrl+w]      | Effacer le mot précédent sur la ligne de commande (la chaîne supprimée est copiée dans le presse-papiers interne). | `+/input delete_previous_word+`
+| kbd:[Ctrl+y]      | Coller le contenu du presse-papiers interne. | `+/input clipboard_paste+`
+| kbd:[Ctrl+_]      | Défaire la dernière action sur la ligne de commande. | `+/input undo+`
+| kbd:[Alt+_]       | Refaire la dernière action sur la ligne de commande. | `+/input redo+`
+| kbd:[Tab]         | Compléter la commande ou le pseudo (kbd:[Tab] de nouveau : trouver la complétion suivante). | `+/input complete_next+`
+| kbd:[Shift+Tab]   | Sans complétion, effectue une complétion partielle. Avec une complétion en cours, complète avec la complétion précédente. | `+/input complete_previous+`
+| kbd:[Enter] +
+  kbd:[Ctrl+j] +
+  kbd:[Ctrl+m]      | Exécuter la commande ou envoyer le message (en mode recherche : arrêter la recherche). | `+/input return+`
+| kbd:[Alt+Enter]   | Insérer une nouvelle ligne. | `+/input insert \n+`
+| kbd:[Alt+d]       | Effacer le mot suivant (la chaîne supprimée est copiée dans le presse-papiers interne). | `+/input delete_next_word+`
+| kbd:[Alt+k]       | Capturer une touche et insérer son code (et la commande associée si la commande existe) sur la ligne de commande. | `+/input grab_key_command+`
+| kbd:[Alt+r]       | Effacer entièrement la ligne de commande. | `+/input delete_line+`
+|===
+
+[[key_bindings_cmdline_color_codes]]
+==== Codes couleur
+
+[width="100%",cols="^.^3,.^8,.^5",options="header"]
+|===
+| Touche                | Description | Commande
+| kbd:[Ctrl+c], kbd:[b] | Insérer le code pour mettre le texte en gras. | `+/input insert \x02+`
+| kbd:[Ctrl+c], kbd:[c] | Insérer le code pour écrire en couleur. | `+/input insert \x03+`
+| kbd:[Ctrl+c], kbd:[i] | Insérer le code pour mettre le texte en italique. | `+/input insert \x1D+`
+| kbd:[Ctrl+c], kbd:[o] | Insérer le code pour réinitialiser la couleur. | `+/input insert \x0F+`
+| kbd:[Ctrl+c], kbd:[v] | Insérer le code pour écrire en couleur inversée. | `+/input insert \x16+`
+| kbd:[Ctrl+c], kbd:[_] | Insérer le code pour écrire en souligné. | `+/input insert \x1F+`
+|===
+
+[[key_bindings_cmdline_history]]
+==== Historique de commandes
+
+[width="100%",cols="^.^3,.^8,.^5",options="header"]
+|===
+| Touche       | Description | Commande
+| kbd:[↑]      | Rappeler la commande précédente (en mode recherche : chercher plus haut). | `+/input history_previous+`
+| kbd:[↓]      | Rappeler la commande suivante (en mode recherche : chercher plus bas). | `+/input history_next+`
+| kbd:[Ctrl+↑] | Rappeler la commande précédente dans l'historique global (commun à tous les tampons). | `+/input history_global_previous+`
+| kbd:[Ctrl+↓] | Rappeler la commande suivante dans l'historique global (commun à tous les tampons). | `+/input history_global_next+`
+|===
+
+[[key_bindings_buffers]]
+=== Tampons
+
+[width="100%",cols="^.^3,.^8,.^5",options="header"]
+|===
+| Touche                         | Description | Commande
+| kbd:[Ctrl+r]                   | Chercher du texte dans l'historique du tampon (voir <<key_bindings_search_context,les touches pour le contexte de recherche>>). | `+/input search_text_here+`
+| kbd:[Ctrl+s], kbd:[Ctrl+u]     | Positionner le marqueur de données non lues sur tous les tampons. | `+/input set_unread+`
+| kbd:[Ctrl+x]                   | Changer de tampon courant si plusieurs tampons sont mélangés avec le même numéro, par exemple basculer vers un autre tampon serveur IRC. | `+/input switch_active_buffer+`
+| kbd:[Alt+x]                    | Zoomer sur le tampon mélangé (kbd:[Alt+x] de nouveau : afficher tous les tampons mélangés). | `+/input zoom_merged_buffer+`
+| kbd:[PgUp]                     | Monter d'une page dans l'historique du tampon. | `+/window page_up+`
+| kbd:[PgDn]                     | Descendre d'une page dans l'historique du tampon. | `+/window page_down+`
+| kbd:[Alt+PgUp]                 | Monter de quelques lignes dans l'historique du tampon. | `+/window scroll_up+`
+| kbd:[Alt+PgDn]                 | Descendre de quelques lignes dans l'historique du tampon. | `+/window scroll_down+`
+| kbd:[Alt+Home]                 | Aller au début du tampon. | `+/window scroll_top+`
+| kbd:[Alt+End]                  | Aller à la fin du tampon. | `+/window scroll_bottom+`
+| kbd:[Alt+←] +
+  kbd:[Alt+↑] +
+  kbd:[Ctrl+p] +
+  kbd:[F5]                       | Aller au tampon précédent. | `+/buffer -1+`
+| kbd:[Alt+→] +
+  kbd:[Alt+↓] +
+  kbd:[Ctrl+n] +
+  kbd:[F6]                       | Aller au tampon suivant. | `+/buffer +1+`
+| kbd:[Alt+j], kbd:[Alt+f]       | Sauter au premier tampon. | `+/buffer -+`
+| kbd:[Alt+j], kbd:[Alt+l] (`L`) | Sauter au dernier tampon. | `+/buffer ++`
+| kbd:[Alt+j], kbd:[Alt+r]       | Sauter au tampon IRC de données brutes. | `+/server raw+`
+| kbd:[Alt+j], kbd:[Alt+s]       | Sauter au tampon IRC du serveur. | `+/server jump+`
+| kbd:[Alt+0...9]                | Sauter au tampon qui porte ce numéro (0 = 10). | `+/buffer *N+`
+| kbd:[Alt+j], kbd:[01...99]     | Sauter au tampon qui porte ce numéro. | `+/buffer *NN+`
+| kbd:[Alt+n]                    | Se positionner sur le highlight suivant. | `+/window scroll_next_highlight+`
+| kbd:[Alt+p]                    | Se positionner sur le highlight précédent. | `+/window scroll_previous_highlight+`
+| kbd:[Alt+u]                    | Se positionner sur la première ligne non lue du tampon. | `+/window scroll_unread+`
+| kbd:[Alt+<]                    | Sauter au tampon précédent dans la liste des tampons visités. | `+/input jump_previously_visited_buffer+`
+| kbd:[Alt+>]                    | Sauter au tampon suivant dans la liste des tampons visités. | `+/input jump_next_visited_buffer+`
+| kbd:[Alt+/]                    | Sauter au dernier tampon affiché (avant le dernier saut vers un tampon). | `+/input jump_last_buffer_displayed+`
+|===
+
+[[key_bindings_windows]]
+=== Fenêtres
+
+[width="100%",cols="^.^3,.^8,.^5",options="header"]
+|===
+| Touche                   | Description | Commande
+| kbd:[Ctrl+l] (`L`)       | Réafficher toute la fenêtre. | `+/window refresh+`
+| kbd:[Alt+l] (`L`)        | Activer/désactiver le mode d'affichage dépouillé. | `+/window bare+`
+| kbd:[F7]                 | Aller à la fenêtre précédente. | `+/window -1+`
+| kbd:[F8]                 | Aller à la fenêtre suivante. | `+/window +1+`
+| kbd:[Alt+w], kbd:[Alt+↑] | Sauter à la fenêtre au dessus. | `+/window up+`
+| kbd:[Alt+w], kbd:[Alt+↓] | Sauter à la fenêtre en dessous. | `+/window down+`
+| kbd:[Alt+w], kbd:[Alt+←] | Sauter à la fenêtre de gauche. | `+/window left+`
+| kbd:[Alt+w], kbd:[Alt+→] | Sauter à la fenêtre de droite. | `+/window right+`
+| kbd:[Alt+w], kbd:[Alt+b] | Équilibrer la taille de toutes les fenêtres. | `+/window balance+`
+| kbd:[Alt+w], kbd:[Alt+s] | Échanger les tampons de deux fenêtres. | `+/window swap+`
+| kbd:[Alt+z]              | Zoomer sur la fenêtre courante (kbd:[Alt+z] de nouveau : restaurer l'état initial des fenêtres, avant le zoom). | `+/window zoom+`
+|===
+
+[[key_bindings_bars]]
+=== Barres
+
+[width="100%",cols="^.^3,.^8,.^5",options="header"]
+|===
+| Touche            | Description | Commande
+| kbd:[F1] +
+  kbd:[Ctrl+F1]     | Monter d'une page dans la liste des tampons. | `+/bar scroll buflist * -100%+`
+| kbd:[F2] +
+  kbd:[Ctrl+F2]     | Descendre d'une page dans la liste des tampons. | `+/bar scroll buflist * +100%+`
+| kbd:[Alt+F1]      | Aller au début de la liste des tampons. | `+/bar scroll buflist * b+`
+| kbd:[Alt+F2]      | Aller à la fin de la liste des tampons. | `+/bar scroll buflist * e+`
+| kbd:[F9]          | Faire défiler le titre du tampon vers la gauche. | `+/bar scroll title * -30%+`
+| kbd:[F10]         | Faire défiler le titre du tampon vers la droite. | `+/bar scroll title * +30%+`
+| kbd:[F11] +
+  kbd:[Ctrl+F11]    | Monter d'une page dans la liste des pseudos. | `+/bar scroll nicklist * -100%+`
+| kbd:[F12] +
+  kbd:[Ctrl+F12]    | Descendre d'une page dans la liste des pseudos. | `+/bar scroll nicklist * +100%+`
+| kbd:[Alt+F11]     | Aller au début de la liste des pseudos. | `+/bar scroll nicklist * b+`
+| kbd:[Alt+F12]     | Aller à la fin de la liste des pseudos. | `+/bar scroll nicklist * e+`
+| kbd:[Alt+Shift+B] | Activer/désactiver buflist. | `+/buflist toggle+`
+| kbd:[Alt+Shift+N] | Activer/désactiver la barre nicklist. | `+/bar toggle nicklist+`
+|===
+
+[[key_bindings_hotlist]]
+=== Hotlist
+
+[width="100%",cols="^.^3,.^8,.^5",options="header"]
+|===
+| Touche                         | Description | Commande
+| kbd:[Alt+a]                    | Sauter au prochain tampon avec activité (avec priorité : highlight, message, autre). | `+/input jump_smart+`
+| kbd:[Alt+h], kbd:[Alt+c]       | Vider la hotlist (notification d'activité sur les tampons). | `+/input hotlist_clear+`
+| kbd:[Alt+h], kbd:[Alt+m]       | Supprimer le tampon courant de la hotlist. | `+/input hotlist_remove_buffer+`
+| kbd:[Alt+h], kbd:[Alt+r]       | Restaurer la dernière hotlist supprimée dans le tampon courant. | `+/input hotlist_restore_buffer+`
+| kbd:[Alt+h], kbd:[Alt+Shift+R] | Restaurer la dernière hotlist supprimée dans tous les tampons. | `+/input hotlist_restore_all+`
+|===
+
+[[key_bindings_toggle_keys]]
+=== Touches de bascule
+
+[width="100%",cols="^.^3,.^8,.^5",options="header"]
+|===
+| Touche      | Description | Commande
+| kbd:[Alt+m] | Activer/désactiver la souris. | `+/mouse toggle+`
+| kbd:[Alt+s] | Activer/désactiver la vérification de l'orthographe. | `+/mute spell toggle+`
+| kbd:[Alt+=] | Activer/désactiver les filtres. | `+/filter toggle+`
+| kbd:[Alt+-] | Activer/désactiver les filtres dans le tampon courant. | `+/filter toggle @+`
+|===
+
+[[key_bindings_search_context]]
+=== Contexte de recherche
+
+Ces touches sont utilisées dans le contexte "search" (lorsque kbd:[Ctrl+r] est
+pressé pour chercher du texte dans le tampon).
+
+[width="100%",cols="^.^3,.^8,.^5",options="header"]
+|===
+| Touche         | Description | Commande
+| kbd:[Ctrl+r]   | Basculer le type de recherche : chaîne (par défaut), expression régulière. | `+/input search_switch_regex+`
+| kbd:[Alt+c]    | Basculer la casse exacte pour la recherche. | `+/input search_switch_case+`
+| kbd:[Tab]      | Basculer la recherche dans : les messages (par défaut), les préfixes, les préfixes + messages. | `+/input search_switch_where+`
+| kbd:[↑]        | Chercher la ligne précédente. | `+/input search_previous+`
+| kbd:[↓]        | Chercher la ligne suivante. | `+/input search_next+`
+| kbd:[Enter] +
+  kbd:[Ctrl+j] +
+  kbd:[Ctrl+m]   | Arrêter la recherche à la position courante. | `+/input search_stop_here+`
+| kbd:[Ctrl+q]   | Arrêter la recherche et aller à la fin du tampon. | `+/input search_stop+`
+|===
+
+[[key_bindings_cursor_context]]
+=== Contexte curseur
+
+Ces touches sont utilisées dans le contexte "cursor" (mouvement libre du curseur
+à l'écran).
+
+[width="100%",cols="^.^3,^.^2,.^7,.^7",options="header"]
+|===
+| Touche         | Zone              | Description | Commande
+| kbd:[↑]        | -                 | Déplacer le curseur d'une ligne vers le haut. | `+/cursor move up+`
+| kbd:[↓]        | -                 | Déplacer le curseur d'une ligne vers le bas. | `+/cursor move down+`
+| kbd:[←]        | -                 | Déplacer le curseur d'une colonne vers la gauche. | `+/cursor move left+`
+| kbd:[→]        | -                 | Déplacer le curseur d'une colonne vers la droite. | `+/cursor move right+`
+| kbd:[Alt+↑]    | -                 | Déplacer le curseur vers la zone au dessus. | `+/cursor move area_up+`
+| kbd:[Alt+↓]    | -                 | Déplacer le curseur vers la zone en dessous. | `+/cursor move area_down+`
+| kbd:[Alt+←]    | -                 | Déplacer le curseur vers la zone sur la gauche. | `+/cursor move area_left+`
+| kbd:[Alt+→]    | -                 | Déplacer le curseur vers la zone sur la droite. | `+/cursor move area_right+`
+| kbd:[m]        | chat              | Citer le message. | `+hsignal:chat_quote_message;/cursor stop+`
+| kbd:[q]        | chat              | Citer le préfixe + le message. | `+hsignal:chat_quote_prefix_message;/cursor stop+`
+| kbd:[Q]        | chat              | Citer l'heure + le préfixe + le message. | `+hsignal:chat_quote_time_prefix_message;/cursor stop+`
+| kbd:[b]        | liste des pseudos | Bannir le pseudo. | `+/window ${_window_number};/ban ${nick}+`
+| kbd:[k]        | liste des pseudos | Retirer par la force le pseudo. | `+/window ${_window_number};/kick ${nick}+`
+| kbd:[K]        | liste des pseudos | Retirer par la force et bannir le pseudo. | `+/window ${_window_number};/kickban ${nick}+`
+| kbd:[q]        | liste des pseudos | Ouvrir une discussion avec le pseudo. | `+/window ${_window_number};/query ${nick};/cursor stop+`
+| kbd:[w]        | liste des pseudos | Effectuer un whois sur le pseudo. | `+/window ${_window_number};/whois ${nick}+`
+| kbd:[Enter] +
+  kbd:[Ctrl+j] +
+  kbd:[Ctrl+m]   | -                 | Arrêter le mode curseur ("cursor"). | `+/cursor stop+`
+|===
+
+[[key_bindings_mouse]]
+=== Souris
+
+Ces actions avec la souris sont possibles seulement si la souris est activée
+avec la touche kbd:[Alt+m] (commande : `+/mouse toggle+`).
+
+[width="100%",cols="^.^3,^.^3,^.^3,.^8,.^8",options="header"]
+|===
+| Bouton/Roulette ^(1)^ | Geste        | Zone                 | Description | Commande
+| ◾◽◽                   | -            | chat                 | Aller à la fenêtre. | `+/window ${_window_number}+`
+| ◾◽◽                   | left         | chat                 | Aller au tampon précédent. | `+/window ${_window_number};/buffer +1+`
+| ◾◽◽                   | right        | chat                 | Aller au tampon suivant. | `+/window ${_window_number};/buffer +1+`
+| ◾◽◽                   | left (long)  | chat                 | Aller au premier tampon. | `+/window ${_window_number};/buffer 1+`
+| ◾◽◽                   | right (long) | chat                 | Aller au dernier tampon. | `+/window ${_window_number};/input jump_last_buffer+`
+| kbd:[▲]               | -            | chat                 | Monter de quelques lignes dans l'historique du tampon. | `+/window scroll_up -window ${_window_number}+`
+| kbd:[▼]               | -            | chat                 | Descendre de quelques lignes dans l'historique du tampon. | `+/window scroll_down -window ${_window_number}+`
+| kbd:[Ctrl+▲]          | -            | chat                 | Faire défiler horizontalement vers la gauche. | `+/window scroll_horiz -window ${_window_number} -10%+`
+| kbd:[Ctrl+▼]          | -            | chat                 | Faire défiler horizontalement vers la droite. | `+/window scroll_horiz -window ${_window_number} +10%+`
+| kbd:[▲]               | -            | chat : tampon fset   | Monter de cinq lignes dans le tampon fset. | `+/fset -up 5+`
+| kbd:[▼]               | -            | chat : tampon fset   | Descendre de cinq lignes dans le tampon fset. | `+/fset -down 5+`
+| ◾◽◽                   | -            | chat : tampon fset   | Sélectionner la ligne dans le tampon fset. | `+/window ${_window_number};/fset -go ${_chat_line_y}+`
+| ◽◽◾                   | -            | chat : tampon fset   | Basculer le booléen (on/off) ou éditer la valeur de l'option. | `+hsignal:fset_mouse+`
+| ◽◽◾                   | left         | chat : tampon fset   | Décrémenter la valeur de l'entier/couleur, définir/ajouter à la valeur pour les autres types. | `+hsignal:fset_mouse+`
+| ◽◽◾                   | right        | chat : tampon fset   | Incrémenter la valeur de l'entier/couleur, définir/ajouter à la valeur pour les autres types. | `+hsignal:fset_mouse+`
+| ◽◽◾                   | up / down    | chat : tampon fset   | Marquer/démarquer de multiples options. | `+hsignal:fset_mouse+`
+| kbd:[▲]               | -            | chat : tampon script | Monter de 5 lignes dans le tampon script. | `+/script up 5+`
+| kbd:[▼]               | -            | chat : tampon script | Descendre de 5 lignes dans le tampon script. | `+/script down 5+`
+| ◾◽◽                   | -            | chat : tampon script | Sélectionner la ligne dans le tampon script. | `+/script go ${_chat_line_y}+`
+| ◽◽◾                   | -            | chat : tampon script | Installer/supprimer un script. | `+/script go ${_chat_line_y};/script installremove -q ${script_name_with_extension}+`
+| ◾◽◽                   | up / left    | buflist              | Déplacer le tampon vers un numéro inférieur. | Signal `+buflist_mouse+`.
+| ◾◽◽                   | down / right | buflist              | Déplacer le tampon vers un numéro supérieur. | Signal `+buflist_mouse+`.
+| ◾◽◽                   | -            | buflist              | Aller au tampon (tampon précédent dans la liste des tampons visités si le tampon est le courant). | Signal `+buflist_mouse+`.
+| ◽◽◾                   | -            | buflist              | Aller au tampon suivant dans la liste des tampons visités si le tampon est le courant. | Signal `+buflist_mouse+`.
+| kbd:[Ctrl+▲]          | -            | buflist              | Aller au tampon précédent. | Signal `+buflist_mouse+`.
+| kbd:[Ctrl+▼]          | -            | buflist              | Aller au tampon suivant. | Signal `+buflist_mouse+`.
+| ◾◽◽                   | up           | liste des pseudos    | Monter d'une page dans la liste des pseudos. | `+/bar scroll nicklist ${_window_number} -100%+`
+| ◾◽◽                   | down         | liste des pseudos    | Descendre d'une page dans la liste des pseudos. | `+/bar scroll nicklist ${_window_number} +100%+`
+| ◾◽◽                   | up (long)    | liste des pseudos    | Aller au début de la liste des pseudos. | `+/bar scroll nicklist ${_window_number} b+`
+| ◾◽◽                   | down (long)  | liste des pseudos    | Aller à la fin de la liste des pseudos. | `+/bar scroll nicklist ${_window_number} e+`
+| ◾◽◽                   | -            | liste des pseudos    | Ouvrir une discussion avec le pseudo. | `+/window ${_window_number};/query ${nick}+`
+| ◽◽◾                   | -            | liste des pseudos    | Effectuer un whois sur le pseudo. | `+/window ${_window_number};/whois ${nick}+`
+| ◾◽◽                   | left         | liste des pseudos    | Retirer par la force le pseudo. | `+/window ${_window_number};/kick ${nick}+`
+| ◾◽◽                   | left (long)  | liste des pseudos    | Retirer par la force et bannir le pseudo. | `+/window ${_window_number};/kickban ${nick}+`
+| ◽◽◾                   | left         | liste des pseudos    | Bannir le pseudo. | `+/window ${_window_number};/ban ${nick}+`
+| ◽◽◾                   | -            | ligne de commande    | Capturer un évènement de la souris et insérer son code sur la ligne de commande. | `+/input grab_mouse_area+`
+| kbd:[▲]               | -            | toute barre          | Faire défiler la barre de -20%. | `+/bar scroll ${_bar_name} ${_window_number} -20%+`
+| kbd:[▼]               | -            | toute barre          | Faire défiler la barre de +20%. | `+/bar scroll ${_bar_name} ${_window_number} +20%+`
+| ◽◾◽                   | -            | n'importe où         | Démarrer le mode curseur ("cursor") à ce point. | `+/cursor go ${_x},${_y}+`
+|===
+
+[NOTE]
+^(1)^ kbd:[▲] et kbd:[▼] sont la roulette vers le haut et le bas.
+
+[[key_bindings_fset_buffer]]
+=== Tampon fset
+
+Ces touches et actions sont utilisées sur le tampon fset
+(voir <<fset,l'extension Fset>>).
+
+[width="100%",cols="^.^3,^.^2,.^8,.^5",options="header"]
+|===
+| Touche                   | Action ^(1)^ | Description | Commande
+| kbd:[↑]                  |              | Monter d'une ligne. | `+/fset -up+`
+| kbd:[↓]                  |              | Descendre d'une ligne. | `+/fset -down+`
+| kbd:[PgUp]               |              | Monter d'une page. | `+/window page_up+`
+| kbd:[PgDn]               |              | Descendre d'une page. | `+/window page_down+`
+| kbd:[Alt+Home]           | `pass:[<<]`  | Aller à la première ligne. | `+/fset -go 0+`
+| kbd:[Alt+End]            | `pass:[>>]`  | Aller à la dernière ligne. | `+/fset -go end+`
+| kbd:[F11]                | `pass:[<]`   | Faire défiler horizontalement vers la gauche. | `+/fset -left+`
+| kbd:[F12]                | `pass:[>]`   | Faire défiler horizontalement vers la droite. | `+/fset -right+`
+| kbd:[Alt+Space]          | `t`          | Basculer la valeur booléenne. | `+/fset -toggle+`
+| kbd:[Alt+-]              | `-`          | Soustraire 1 de la valeur de l'entier/couleur, définir la valeur pour les autres types. | `+/fset -add -1+`
+| kbd:[Alt++]              | `+`          | Ajouter 1 à la valeur de l'entier/couleur, ajouter à la valeur pour les autres types. | `+/fset -add 1+`
+| kbd:[Alt+f], kbd:[Alt+r] | `r`          | Réinitialiser la valeur. | `+/fset -reset+`
+| kbd:[Alt+f], kbd:[Alt+u] | `u`          | Supprimer/réinitialiser la valeur. | `+/fset -unset+`
+| kbd:[Alt+Enter]          | `s`          | Définir la valeur. | `+/fset -set+`
+| kbd:[Alt+f], kbd:[Alt+n] | `n`          | Définir une nouvelle valeur. | `+/fset -setnew+`
+| kbd:[Alt+f], kbd:[Alt+a] | `a`          | Ajouter à la valeur. | `+/fset -append+`
+| kbd:[Alt+,]              | `,`          | Marquer/démarquer l'option. | `+/fset -mark 1+`
+| kbd:[Shift+↑]            |              | Se déplacer d'une ligne vers le haut et marquer/démarquer l'option. | `+/fset -up; /fset -mark+`
+| kbd:[Shift+↓]            |              | Marquer/démarquer l'option et se déplacer d'une ligne vers le bas. | `+/fset -mark; /fset -down+`
+|                          | `m:xxx`      | Marquer les options affichées qui correspondent au filtre "xxx" (tout filtre sur une option ou valeur est autorisé, voir la <<command_fset_fset,commande fset>>). |
+|                          | `u:xxx`      | Démarquer les options affichées qui correspondent au filtre "xxx" (tout filtre sur une option ou valeur est autorisé, voir la <<command_fset_fset,commande fset>>). |
+| kbd:[Ctrl+l] (`L`)       |              | Rafraîchir les options et l'écran entier. | `+/fset -refresh+`
+|                          | `$`          | Rafraîchir les options (garder les options marquées). |
+|                          | `$$`         | Rafraîchir les options (démarquer toutes les options). |
+| kbd:[Alt+p]              |              | Activer/désactiver la description des options d'extensions (`pass:[plugins.desc.*]`). | `+/mute /set fset.look.show_plugins_desc toggle+`
+| kbd:[Alt+v]              |              | Activer/désactiver la barre d'aide. | `+/bar toggle fset+`
+|                          | `s:x,y`      | Trier les options par les champs x,y (voir l'option <<option_fset.look.sort,fset.look.sort>>). | `+/mute /set fset.look.sort x,y+`
+|                          | `s:`         | Réinitialiser le tri à sa valeur par défaut (voir l'option <<option_fset.look.sort,fset.look.sort>>). | `+/mute /unset fset.look.sort+`
+|                          | `w:xxx`      | Exporter les options dans le fichier "xxx". | `+/fset -export xxx+`
+|                          | `w-:xxx`     | Exporter les options dans le fichier "xxx" sans aide. | `+/fset -export -nohelp xxx+`
+|                          | `w+:xxx`     | Exporter les options dans le fichier "xxx" avec aide. | `+/fset -export -help xxx+`
+| kbd:[Ctrl+x]             | `x`          | Basculer le format utilisé pour afficher les options. | `+/fset -format+`
+|                          | `q`          | Fermer le tampon fset. | `+/buffer close+`
+|===
+
+[NOTE]
+^(1)^ L'action doit être tapée comme entrée dans la ligne de commande, suivie de kbd:[Enter].
+
+[[key_bindings_script_buffer]]
+=== Tampon script
+
+Ces touches et actions sont utilisées sur le tampon script
+(voir <<script_manager,le gestionnaire de scripts>>).
+
+[width="100%",cols="^.^3,^.^2,.^8,.^5",options="header"]
+|===
+| Touche            | Action ^(1)^ | Description | Commande
+| kbd:[↑]           |              | Move one line up. | `+/script up+`
+| kbd:[↓]           |              | Move one line down. | `+/script down+`
+| kbd:[PgUp]        |              | Move one page up. | `+/window page_up+`
+| kbd:[PgDn]        |              | Move one page down. | `+/window page_down+`
+| kbd:[Alt+i]       | `i`          | Install script. | `+/script install+`
+| kbd:[Alt+r]       | `r`          | Remove script. | `+/script remove+`
+| kbd:[Alt+l] (`L`) | `l`          | Load script. | `+/script load+`
+| kbd:[Alt+u]       | `u`          | Unload script. | `+/script unload+`
+| kbd:[Alt+Shift+A] | `A`          | Autoload script. | `+/script toggleautoload+`
+| kbd:[Alt+h]       | `h`          | Hold/unhold script. | `+/script hold+`
+| kbd:[Alt+v]       | `v`          | View script. | `+/script show+`
+|===
+
+[NOTE]
+^(1)^ L'action doit être tapée comme entrée dans la ligne de commande, suivie de kbd:[Enter].
+
+[[configuration]]
+== Configuration
+
+[[fset]]
+=== Fset
+
+L'extension Fset affiche une liste des options dans un tampon et aide à définir
+les options de WeeChat et des extensions.
+
+Exemple de tampon fset affichant les options commençant par `weechat.look` :
+
+[subs="quotes"]
+....
+┌──────────────────────────────────────────────────────────────────────────────────────┐
+│1.weechat│1/121 | Filter: weechat.look.* | Sort: ~name | Key(input): alt+space=toggle │
+│2.fset   │weechat.look.bare_display_exit_on_input: exit the bare display mode on any c│
+│         │hanges in input [default: on]                                               │
+│         │----------------------------------------------------------------------------│
+│         │  weechat.look.align_end_of_lines                   integer  message        │
+│         │  weechat.look.align_multiline_words                boolean  on             │
+│         │  weechat.look.bar_more_down                        string   "++"           │
+│         │  weechat.look.bar_more_left                        string   "<<"           │
+│         │  weechat.look.bar_more_right                       string   ">>"           │
+│         │  weechat.look.bar_more_up                          string   "--"           │
+│         │##  weechat.look.bare_display_exit_on_input           boolean  on             ##│
+│         │  weechat.look.bare_display_time_format             string   "%H:%M"        │
+│         │  weechat.look.buffer_auto_renumber                 boolean  on             │
+│         │  weechat.look.buffer_notify_default                integer  all            │
+│         │  weechat.look.buffer_position                      integer  end            │
+│         │  weechat.look.buffer_search_case_sensitive         boolean  off            │
+│         │  weechat.look.buffer_search_force_default          boolean  off            │
+│         │  weechat.look.buffer_search_regex                  boolean  off            │
+│         │  weechat.look.buffer_search_where                  integer  prefix_message │
+│         │  weechat.look.buffer_time_format                   string   "%H:%M:%S"     │
+│         │  weechat.look.buffer_time_same                     string   ""             │
+│         │[12:55] [2] [fset] 2:fset                                                   │
+│         │█                                                                           │
+└──────────────────────────────────────────────────────────────────────────────────────┘
+....
+
+[[fset_commands]]
+==== Commandes
+
+include::includes/autogen_user_commands.fr.adoc[tag=fset_commands]
+
+[[fset_options]]
+==== Options
+
+Sections dans le fichier _fset.conf_ :
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section | Commande de contrôle | Description
+| color   | /set fset.color.*    | Couleurs.
+| format  | /set fset.format.*   | Formats utilisés pour afficher la liste des options.
+| look    | /set fset.look.*     | Aspect/présentation.
+|===
+
+Options :
+
+include::includes/autogen_user_options.fr.adoc[tag=fset_options]
+
+[[colors]]
+=== Couleurs
+
+[[colors_basic]]
+==== Couleurs de base
+
+Les couleurs de base dans WeeChat sont :
+
+[width="75%",cols="1m,4",options="header"]
+|===
+| Nom          | Couleur
+| default      | Couleur par défaut du terminal (transparent pour le fond)
+| black        | Noir
+| darkgray     | Gris foncé
+| red          | Rouge foncé
+| lightred     | Rouge clair
+| green        | Vert foncé
+| lightgreen   | Vert clair
+| brown        | Marron
+| yellow       | Jaune
+| blue         | Bleu foncé
+| lightblue    | Bleu clair
+| magenta      | Violet foncé
+| lightmagenta | Violet clair
+| cyan         | Cyan foncé
+| lightcyan    | Cyan clair
+| gray         | Gris
+| white        | Blanc
+|===
+
+[[colors_extended]]
+==== Couleurs étendues
+
+WeeChat alloue dynamiquement les paires de couleurs quand elles sont utilisées
+sur l'écran (pour afficher les tampons et les barres).
+
+En plus des couleurs de base, vous pouvez utiliser un numéro de couleur entre 1
+et la limite de votre terminal.
+
+Utilisez la commande `/color` pour voir les couleurs et les limites. Avec la
+touche kbd:[Alt+c], vous pouvez basculer temporairement vers les couleurs du
+terminal pour choisir une couleur.
+
+Par exemple si vous souhaitez afficher l'heure en orange dans le tampon,
+faites :
+
+----
+/set weechat.color.chat_time 214
+----
+
+Ou si vous voulez un fond vert très foncé pour la barre de statut :
+
+----
+/set weechat.bar.status.color_bg 22
+----
+
+[[colors_aliases]]
+==== Alias
+
+Vous pouvez ajouter des alias de couleur avec la commande `/color alias` puis
+utiliser cet alias dans n'importe quelle option de couleur.
+
+Par exemple :
+
+----
+/color alias 214 orange
+/set weechat.color.chat_delimiters orange
+----
+
+[[colors_attributes]]
+==== Attributs
+
+Il est possible d'utiliser des attributs pour les couleurs. Un ou plusieurs
+attributs peuvent être ajoutés avant le nom ou le numéro de la couleur :
+
+* `+*+` : texte gras
+* `+!+` : mode vidéo inverse
+* `+/+` : italique
+* `+_+` : texte souligné
+* `+|+` : garder les attributs : ne pas réinitialiser gras/inverse/souligné lors
+  du changement de couleur
+
+Par exemple si vous voulez votre pseudo en blanc souligné, faites :
+
+----
+/set weechat.color.chat_nick_self _white
+----
+
+Ou si vous voulez l'heure dans la barre de statut en orange souligné avec gras :
+
+----
+/set weechat.color.status_time *_214
+----
+
+Pour utiliser un attribut avec la couleur par défaut du terminal (-1), vous
+devez utiliser un nombre supérieur à la dernière couleur du terminal, par
+exemple la couleur maximum de WeeChat : 99999.
+
+Exemple de gras avec la couleur de texte du terminal :
+
+----
+/set weechat.color.status_time *99999
+----
+
+[[charset]]
+=== Charset
+
+L'extension Charset vous permet de décoder et encoder les données en utilisant
+un jeu de caractères.
+
+Il y a un jeu de caractère par défaut pour le décodage/encodage, et un
+spécifique pour les tampons (ou groupes de tampons).
+
+Cette extension est facultative, mais recommandée : si elle n'est pas chargée,
+WeeChat pourra uniquement lire/écrire des données UTF-8.
+
+L'extension Charset devrait être automatiquement chargée par WeeChat au
+démarrage. Pour s'assurer que l'extension est bien chargée, essayez :
+
+----
+/charset
+----
+
+Si la commande n'est pas trouvée, alors chargez l'extension avec la commande :
+
+----
+/plugin load charset
+----
+
+Si l'extension n'est pas trouvée, alors vous devriez recompiler WeeChat avec
+les extensions et le support de Charset.
+
+Lorsque l'extension Charset démarre, elle affiche le jeu de caractères du
+terminal et l'interne.
+Le jeu de caractères du terminal dépend de votre locale, et l'interne est
+UTF-8.
+
+Par exemple :
+
+....
+charset : terminal : ISO-8859-15, interne : UTF-8
+....
+
+[[charset_set]]
+==== Définir le jeu de caractère
+
+Pour modifier les jeux de caractères de décodage et d'encodage
+globaux, utilisez la commande `/set`.
+
+Par exemple :
+
+----
+/set charset.default.decode ISO-8859-15
+/set charset.default.encode ISO-8859-15
+----
+
+Si le jeu de caractères de décodage global n'est pas renseigné (par exemple
+pendant le premier chargement de Charset), il sera renseigné automatiquement
+avec le jeu de caractères du terminal (s'il est différent de UTF-8) ou par
+défaut à _ISO-8859-1_.
+
+La valeur d'encodage par défaut est vide, donc WeeChat envoie par défaut avec
+le jeu de caractères interne (UTF-8).
+
+Pour modifier le jeu de caractères d'un serveur IRC, utilisez la commande
+`/charset` sur le tampon serveur.
+Si vous donnez seulement le jeu de caractères, alors vous
+modifiez en même temps les valeurs de décodage et d'encodage.
+
+Par exemple :
+
+----
+/charset ISO-8859-15
+----
+
+Ce qui est équivalent à :
+
+----
+/charset decode ISO-8859-15
+/charset encode ISO-8859-15
+----
+
+Pour modifier le jeu de caractères d'un canal IRC (ou d'une conversation
+privée), utilisez la même commande que pour le serveur, mais sur le tampon du
+canal (ou du privé).
+
+Pour définir le jeu de caractères pour tous les canaux/privés d'un serveur IRC :
+
+----
+/set charset.encode.irc.libera ISO-8859-15
+----
+
+Pour voir tous les jeux de caractères utilisés, utilisez la commande suivante :
+
+----
+/set charset.*
+----
+
+[[charset_troubleshooting]]
+==== En cas de problème
+
+Pour tout problème avec les jeux de caractères, merci de consulter la
+link:weechat_faq.fr.html#charset[FAQ WeeChat / Accents].
+
+[[charset_commands]]
+==== Commandes
+
+include::includes/autogen_user_commands.fr.adoc[tag=charset_commands]
+
+[[charset_options]]
+==== Options
+
+Sections dans le fichier _charset.conf_ :
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section | Commande de contrôle                        | Description
+| default | /set charset.default.*                      | Jeu de caractère d'encodage/décodage par défaut.
+| decode  | <<command_charset_charset,/charset decode>> +
+            /set charset.decode.*                       | Jeu de caractère d'encodage par tampon (les options peuvent être ajoutées/supprimées dans la section).
+| encode  | <<command_charset_charset,/charset encode>> +
+            /set charset.encode.*                       | Jeu de caractère de décodage par tampon (les options peuvent être ajoutées/supprimées dans la section).
+|===
+
+Options :
+
+include::includes/autogen_user_options.fr.adoc[tag=charset_options]
+
+[[notify_levels]]
+=== Niveaux de notification
+
+[[setup_notify_levels]]
+==== Configurer les niveaux de notification
+
+Quatre niveaux sont possibles dans les messages affichés dans les tampons, du
+moins important au plus important :
+
+* _low_ : message avec faible importance (par exemple un join/part/quit irc)
+* _message_ : message d'un utilisateur
+* _private_ : message dans un tampon privé
+* _highlight_ : message avec highlight
+
+Chaque tampon a un niveau de notification, qui est utilisé pour décider quels
+messages ajouteront le tampon dans la hotlist.
+
+Le niveau de notification par défaut peut être défini avec l'option
+<<option_weechat.look.buffer_notify_default,weechat.look.buffer_notify_default>>,
+la valeur par défaut est _all_.
+
+[width="75%",cols="2m,7",options="header"]
+|===
+| Niveau de notification | Niveau des messages ajoutés à la hotlist
+| none                   | (aucun)
+| highlight              | _highlight_ + _private_
+| message                | _highlight_ + _private_ + _message_
+| all                    | _highlight_ + _private_ + _message_ + _low_
+|===
+
+Le niveau de notification peut être défini pour un ensemble de tampons, par
+exemple tous les tampons du serveur irc "libera" :
+
+----
+/set weechat.notify.irc.libera message
+----
+
+Définir le niveau de notification _highlight_ sur le canal "#weechat" seulement :
+
+----
+/set weechat.notify.irc.libera.#weechat highlight
+----
+
+Le niveau de notification pour un tampon peut aussi être défini avec la
+commande `/buffer` :
+
+----
+/buffer notify highlight
+----
+
+[[max_hotlist_level_nicks]]
+==== Niveau maximal de hotlist pour des pseudos
+
+Il est possible de définir un niveau maximal de hotlist pour certains pseudos,
+par tampon ou groupe de tampons (comme des serveurs IRC).
+
+La propriété de tampon "hotlist_max_level_nicks" peut être définie avec une
+liste de pseudos et pour chaque pseudo le niveau maximal de hotlist à déclencher,
+les niveaux possibles sont :
+
+* -1 : pas de changement dans la hotlist pour ce pseudo
+* 0 : faible priorité (comme les messages join/part)
+* 1 : message
+* 2 : message privé
+* 3 : highlight (en réalité inutile, car il s'agit déjà du niveau maximal par
+  défaut pour tous les messages)
+
+Par exemple pour désactiver les « highlights » de "joe" et "mike" sur le tampon
+courant :
+
+----
+/buffer set hotlist_max_level_nicks_add joe:2,mike:2
+----
+
+[NOTE]
+La propriété de tampon "hotlist_max_level_nicks" n'est pas sauvegardée dans la
+configuration. +
+Vous pouvez facilement la sauvegarder avec le script _buffer_autoset.py_ : vous
+pouvez l'installer avec `+/script install buffer_autoset.py+` et obtenir de l'aide
+avec `+/help buffer_autoset+`.
+
+[[highlights]]
+=== Highlights
+
+[[highlights_words]]
+==== Ajouter des mots pour le « highlight »
+
+Par défaut, WeeChat met en valeur les messages des autres utilisateurs qui
+contiennent votre pseudo, par conséquent le highlight dépend du tampon
+(le pseudo peut être différent d'un tampon à l'autre).
+
+Vous pouvez ajouter d'autres mots à mettre en valeur avec l'option
+<<option_weechat.look.highlight,weechat.look.highlight>>, par exemple pour mettre
+en valeur votre pseudo, "mot1", "mot2" et tous les mots commençants par "test" :
+
+----
+/set weechat.look.highlight mot1,mot2,test*
+----
+
+Si vous avez besoin d'une règle plus spécifique pour un mot, vous pouvez utiliser
+des expressions régulières avec l'option
+<<option_weechat.look.highlight_regex,weechat.look.highlight_regex>>,
+par exemple pour mettre en valeur les mots "flashcode", "flashcöde" et "flashy" :
+
+----
+/set weechat.look.highlight_regex flashc[oö]de|flashy
+----
+
+Les délimiteurs autour des mots à mettre en valeur peuvent être paramétrés avec
+l'option <<option_weechat.look.word_chars_highlight,weechat.look.word_chars_highlight>>.
+
+[[highlights_tags]]
+==== Ajouter des étiquettes pour le « highlight »
+
+Les lignes affichées contiennent des étiquettes (« tags »), qui donnent des
+informations sur l'origine du message ou le message lui-même. +
+Vous pouvez afficher les étiquettes avec la commande `/debug tags` (même commande
+pour les cacher).
+
+Vous pouvez ajouter des étiquettes à mettre en valeur avec l'option
+<<option_weechat.look.highlight_tags,weechat.look.highlight_tags>>.
+Les étiquettes sont séparées par des virgules, et plusieurs étiquettes peuvent
+être séparées par `+++` pour faire un "et" logique entre elles.
+
+Par exemple pour mettre en valeur tous les messages du pseudo "FlashCode" et
+toutes les notices des pseudos commençant par "toto" :
+
+----
+/set weechat.look.highlight_tags "nick_flashcode,irc_notice+nick_toto*"
+----
+
+[[highlights_regex_buffer]]
+==== Définir des highlights supplémentaires sur le tampon
+
+Vous pouvez forcer le highlight en utilisant une expression regulière avec la
+propriété de tampon "highlight_regex".
+
+Par exemple pour forcer le highlight sur tous les messages dans le canal
+courant :
+
+----
+/buffer set highlight_regex .*
+----
+
+[NOTE]
+La propriété de tampon "highlight_regex" n'est pas sauvegardée dans la
+configuration. +
+Vous pouvez facilement la sauvegarder avec le script _buffer_autoset.py_ : vous
+pouvez l'installer avec `+/script install buffer_autoset.py+` et obtenir de l'aide
+avec `+/help buffer_autoset+`.
+
+[[buffer_logging]]
+=== Enregistrement des tampons
+
+L'extension Logger permet de sauvegarder le contenu des tampons dans des
+fichiers, avec des options sur comment et quoi sauvegarder.
+
+[[logger_log_levels]]
+==== Niveaux d'enregistrement
+
+L'enregistrement est fait selon un niveau pour chaque tampon. Le niveau par
+défaut est 9 (enregistrer tous les messages affichés dans le tampon).
+Vous pouvez changer ce niveau pour un tampon, ou un groupe de tampons.
+
+Les niveaux possibles vont de 0 à 9. Zéro signifie "ne rien enregistrer" et 9
+signifie "enregistrer tous les messages".
+
+Les extensions utilisent différent niveaux pour les messages affichés.
+L'extension IRC utilise les niveaux suivants :
+
+* niveau 1 : message d'un utilisateur (sur un canal ou en privé)
+* niveau 2 : changement de pseudo (vous ou quelqu'un d'autre)
+* niveau 3 : tout message du serveur (sauf join/part/quit)
+* niveau 4 : message join/part/quit du serveur
+
+Donc si vous affectez le niveau 3 pour un canal IRC, WeeChat enregistrera
+tous les messages sauf les join/part/quit.
+
+Quelques exemples :
+
+* Affecter le niveau 3 pour le canal IRC #weechat :
+
+----
+/set logger.level.irc.libera.#weechat 3
+----
+
+* Affecter le niveau 3 pour le tampon serveur libera :
+
+----
+/set logger.level.irc.server.libera 3
+----
+
+* Affecter le niveau 3 pour tous les canaux sur le serveur libera :
+
+----
+/set logger.level.irc.libera 3
+----
+
+* Affecter le niveau 2 pour tous les tampons IRC :
+
+----
+/set logger.level.irc 2
+----
+
+[[logger_filenames_masks]]
+==== Masques de noms de fichiers
+
+Il est possible de définir un masque de nom de fichier pour chaque tampon, et
+d'utiliser les variables locales du tampon pour construire le nom de fichier.
+Pour voir les variables disponibles sur le tampon courant :
+
+----
+/buffer listvar
+----
+
+Les masques seront utilisés par ordre de priorité descendante sur
+`logger.mask.$plugin.*`, avec `logger.file.mask` comme option par défaut.
+
+Par exemple, sur le tampon "irc.libera.#weechat", WeeChat cherchera un masque
+avec le nom de l'option, dans cet ordre :
+
+----
+logger.mask.irc.libera.#weechat
+logger.mask.irc.libera
+logger.mask.irc
+logger.file.mask
+----
+
+Cela signifie que vous pouvez avoir un masque spécifique pour certaines
+serveurs IRC ("logger.mask.irc.libera") ou pour une extension
+("logger.mask.irc").
+
+[[logger_files_by_date]]
+===== Fichiers de log par date
+
+Pour avoir des fichiers de log par date, vous pouvez utiliser des marqueurs
+dans le masque (voir `man strftime` pour le format), par exemple :
+
+----
+/set logger.file.mask "%Y/%m/$plugin.$name.weechatlog"
+----
+
+Vous obtiendrez les fichiers suivants :
+
+....
+~/.local/share/weechat
+└── logs
+    ├── 2010
+    │   ├── 11
+    │   │   ├── irc.server.libera.weechatlog
+    │   │   └── irc.libera.#weechat.weechatlog
+    │   └── 12
+    │       ├── irc.server.libera.weechatlog
+    │       └── irc.libera.#weechat.weechatlog
+    ├── 2011
+    │   ├── 01
+    │   │   ├── irc.server.libera.weechatlog
+    │   │   └── irc.libera.#weechat.weechatlog
+    │   ├── 02
+    ...
+....
+
+[[logger_irc_files_by_server_channel]]
+===== Fichiers de log IRC par serveur et canal
+
+Si vous voulez un répertoire par serveur IRC et un fichier par canal dedans :
+
+----
+/set logger.mask.irc "irc/$server/$channel.weechatlog"
+----
+
+Vous obtiendrez les fichiers suivants :
+
+....
+~/.local/share/weechat
+└── logs
+    └── irc
+        ├── libera
+        │   ├── libera.weechatlog
+        │   ├── #weechat.weechatlog
+        │   └── #moncanal.weechatlog
+        ├── oftc
+        │   ├── oftc.weechatlog
+        │   ├── #canal1.weechatlog
+        │   └── #canal2.weechatlog
+        ...
+....
+
+[[logger_commands]]
+==== Commandes
+
+include::includes/autogen_user_commands.fr.adoc[tag=logger_commands]
+
+[[logger_options]]
+==== Options
+
+Sections dans le fichier _logger.conf_ :
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section | Commande de contrôle | Description
+| look    | /set logger.look.*   | Aspect/présentation.
+| color   | /set logger.color.*  | Couleurs.
+| file    | /set logger.file.*   | Options pour les fichiers de log.
+| level   | /set logger.level.*  | Niveau de log par tampon (les options peuvent être ajoutées/supprimées dans la section).
+| mask    | /set logger.mask.*   | Masque de nom de fichier par tampon (les options peuvent être ajoutées/supprimées dans la section).
+|===
+
+Options :
+
+include::includes/autogen_user_options.fr.adoc[tag=logger_options]
+
+[[mouse]]
+=== Support souris
+
+WeeChat supporte les clics et mouvements avec la souris. Cela fonctionne avec un
+terminal local, et à distance via une connexion ssh, avec ou sans screen/tmux.
+
+[[mouse_enable]]
+==== Activer la souris
+
+Pour activer la souris au démarrage :
+
+----
+/set weechat.look.mouse on
+----
+
+Pour activer la souris maintenant, appuyez sur kbd:[Alt+m] ou lancez la commande
+suivante :
+
+----
+/mouse enable
+----
+
+Il est possible de désactiver temporairement la souris, et associer ça à une
+touche. Par exemple la touche kbd:[Alt+%] pour désactiver la souris pendant 10
+secondes :
+
+----
+/key bind meta-% /mouse toggle 10
+----
+
+[IMPORTANT]
+Lorsque la souris est activée dans WeeChat, tous les évènements souris sont
+capturés par WeeChat, donc les actions comme le copier/coller et les clics sur
+les URLs ne sont pas envoyées au terminal. +
+Utiliser la touche kbd:[Shift] permet d'envoyer directement les évènements au
+terminal, comme si la souris était désactivée (sous certains terminaux comme
+iTerm, vous devez utiliser kbd:[Alt] au lieu de kbd:[Shift]).
+
+[NOTE]
+Pour tout problème avec la souris, merci de consulter la
+link:weechat_faq.fr.html#mouse[FAQ WeeChat / Souris].
+
+[[mouse_bind_events]]
+==== Associer des évènements souris à des commandes
+
+De nombreux évènements souris sont déjà définis par WeeChat (voir
+<<key_bindings_mouse,les actions souris>>).
+
+Vous pouvez modifier ou ajouter des associations avec la commande `/key` en
+utilisant le contexte "mouse" (pour la syntaxe voir la commande
+<<command_weechat_key,/key>>).
+
+Un nom d'évènement consiste en un modificateur (facultatif), un bouton/roulette
+et un geste (facultatif). Les différents éléments sont séparés par `+-+`.
+
+Liste des modificateurs :
+
+[width="100%",cols="1m,4",options="header"]
+|===
+| Modificateur | Description
+| ctrl         | Touche kbd:[Ctrl]
+| alt          | Touche kbd:[Alt]
+| ctrl-alt     | Touches kbd:[Ctrl] + kbd:[Alt]
+|===
+
+Liste des boutons/roulette :
+
+[width="100%",cols="1m,4",options="header"]
+|===
+| Bouton/roulette     | Description
+| button1             | Clic sur le bouton gauche
+| button2             | Clic sur le bouton droit
+| button3             | Clic sur le bouton du milieu (souvent clic sur la roulette)
+| button4 ... button9 | Clic sur un bouton additionnel
+| wheelup             | Roulette (haut)
+| wheeldown           | Roulette (bas)
+|===
+
+Liste des gestes (seulement pour les boutons, pas la roulette) :
+
+[width="100%",cols="1m,4",options="header"]
+|===
+| Geste              | Distance
+| gesture-up         | 3 ... 19
+| gesture-up-long    | ≥ 20
+| gesture-down       | 3 ... 19
+| gesture-down-long  | ≥ 20
+| gesture-left       | 3 ... 39
+| gesture-left-long  | ≥ 40
+| gesture-right      | 3 ... 39
+| gesture-right-long | ≥ 40
+|===
+
+Liste des évènements incomplets (seulement pour les boutons, pratique pour les
+extensions/scripts) :
+
+[width="100%",cols="1m,4",options="header"]
+|===
+| Évènement  | Description
+| event-down | Le bouton a été pressé mais pas encore relâché
+| event-drag | La souris a bougé avec le bouton pressé
+|===
+
+Exemples d'évènements :
+
+* `button1`
+* `ctrl-button1`
+* `button1-gesture-right`
+* `button1-event-down`
+* `button1-event-drag`
+* `alt-button2-gesture-down-long`
+* `wheelup`
+* `ctrl-alt-wheeldown`
+* ...
+
+[TIP]
+Lors de l'association d'une touche dans le contexte "mouse", il est possible
+d'adresser plusieurs évènements en utilisant `+*+` au début ou la fin du nom,
+par exemple `+button1-gesture-*+` qui correspond à n'importe quel geste
+effectué avec le bouton gauche.
+
+[TIP]
+Vous pouvez trouver le nom de l'évènement avec la commande `+/input grab_mouse+`
+puis en faisant l'action avec la souris. Cela insérera le nom de l'évènement
+sur la ligne de commande.
+
+[[spell_checking]]
+=== Vérification orthographique
+
+L'extension Spell permet de vérifier l'orthographe de la ligne de commande.
+Il est possible d'utiliser plusieurs langages par tampon.
+
+La vérification de l'orthographe est désactivée par défaut et peut être
+activée/désactivée avec la touche kbd:[Alt+s].
+
+[[spell_dictionaries]]
+==== Dictionnaires
+
+Avant d'utiliser la vérification de l'orthographe, les dictionnaires doivent
+être définis soit globalement, soit spécifiquement sur un tampon.
+
+Plusieurs dictionnaires peuvent être utilisés en même temps : WeeChat vérifiera
+les mots dans tous les dictionnaires.
+
+Par exemple pour utiliser l'anglais et le français :
+
+----
+/set spell.check.default_dict "en,fr"
+----
+
+Il est possible d'utiliser un dictionnaire différent sur un tampon spécifique,
+par exemple sur un canal allemand :
+
+----
+/spell setdict de
+----
+
+Vous pouvez aussi spécifier un dictionnaire pour un groupe de tampons, par
+exemple l'anglais pour tous les canaux du serveur IRC libera :
+
+----
+/set spell.dict.irc.libera en
+----
+
+Pour plus d'informations, voir la commande <<command_spell_spell,/spell>>.
+
+[[spell_speller_options]]
+==== Options du vérificateur d'orthographe
+
+Les options du vérificateur d'orthographe peuvent être définies en ajoutant des
+options dans la section "option" de la configuration aspell.
+
+Le nom de l'option est une option de configuration aspell. La liste des options
+peut être trouvée par la commande suivante sous le shell :
+
+----
+$ aspell config
+----
+
+Par exemple, pour activer l'option "ignore-case" :
+
+----
+/set spell.option.ignore-case "true"
+----
+
+[[spell_suggestions]]
+==== Suggestions
+
+Les suggestions sont affichées dans un objet de barre appelé "spell_suggest".
+Le nombre de suggestions est défini dans l'option _spell.check.suggestions_.
+
+Pour activer les suggestions, vous devez modifier l'option
+_spell.check.suggestions_ avec un entier ≥ 0 et ajouter l'objet de barre
+"spell_suggest" à une barre, par exemple _status_.
+
+Exemple de suggestions avec un dictionnaire anglais (`en`) :
+
+....
+│[12:55] [6] [irc/libera] 3:#test(+n){4} [print,prone,prune]                      │
+│[@Flashy] prinr █                                                                │
+└─────────────────────────────────────────────────────────────────────────────────┘
+....
+
+Exemple de suggestions avec des dictionnaires anglais et français (`en,fr`) :
+
+....
+│[12:55] [6] [irc/libera] 3:#test(+n){4} [print,prone,prune/prime,primer,primé]   │
+│[@Flashy] prinr █                                                                │
+└─────────────────────────────────────────────────────────────────────────────────┘
+....
+
+[[spell_commands]]
+==== Commandes
+
+include::includes/autogen_user_commands.fr.adoc[tag=spell_commands]
+
+[[spell_options]]
+==== Options
+
+Sections dans le fichier _spell.conf_ :
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section    | Commande de contrôle                   | Description
+| color      | /set spell.color.*                     | Couleurs.
+| check      | /set spell.check.*                     | Options pour contrôler la vérification orthographique.
+| dict       | <<command_spell_spell,/spell setdict>> +
+               /set spell.dict.*                      | Dictionnaires utilisés par tampon (les options peuvent être ajoutées/supprimées dans la section).
+| look       | /set spell.look.*                      | Aspect/présentation.
+| option     | /set spell.option.*                    | <<spell_speller_options,Options du vérificateur d'orthographe>> (les options peuvent être ajoutées/supprimées dans la section).
+|===
+
+Options :
+
+include::includes/autogen_user_options.fr.adoc[tag=spell_options]
 
 [[bars]]
 === Barres
@@ -1706,701 +2928,6 @@ _&bitlbee_ (même si le terminal est petit) :
 /set weechat.bar.nicklist.conditions "${nicklist} && (${info:term_width} > 100 || ${buffer.full_name} == irc.bitlbee.&bitlbee)"
 ----
 
-[[bare_display]]
-=== Affichage dépouillé
-
-Un affichage spécial, appelé "dépouillé" (_bare display_) peut être utilisé pour
-un clic facile sur les URLs longs et la sélection de texte (avec la souris).
-
-L'affichage dépouillé a les caractéristiques suivantes :
-
-* Il n'affiche que le contenu du tampon courant : pas de découpage de fenêtres
-  ni de barre (pas de titre, liste de pseudos, statut, ligne de commande, ...).
-* Le support souris de WeeChat est désactivé (s'il avait été activé) : vous
-  pouvez utiliser votre souris comme vous le faites dans le terminal pour
-  cliquer sur les URLs et sélectionner du texte.
-* Ncurses n'est pas utilisé, par conséquent les URLs ne sont pas coupés en fin
-  de ligne.
-
-La touche par défaut pour activer l'affichage dépouillé est kbd:[Alt+l] (`L`),
-et la même touche pour en sortir (ou par défaut tout changement dans la ligne de
-commande sortira de l'affichage dépouillé, voir l'option
-<<option_weechat.look.bare_display_exit_on_input,weechat.look.bare_display_exit_on_input>>).
-
-Le format de l'heure peut être personnalisé avec l'option
-<<option_weechat.look.bare_display_time_format,weechat.look.bare_display_time_format>>.
-
-L'affichage dépouillé peut être activé pour un temps donné en utilisant la
-commande <<command_weechat_window,/window>>.
-
-Si WeeChat ressemble à ceci :
-
-....
-┌──────────────────────────────────────────────────────────────────────────────────────┐
-│1.libera │Bienvenue sur #abc                                                          │
-│  weechat│12:52:27   --> | Flashy (flashcode@weechat.org) a rejoint #abc      │@Flashy│
-│2.  #test│12:52:27    -- | Pseudos #abc: [@Flashy @joe +weebot peter]         │@joe   │
-│3.  #abc │12:52:27    -- | Canal #abc: 4 pseudos (2 ops, 1 voice, 1 normal)   │+weebot│
-│4.  #def │12:52:27    -- | Canal créé le Tue Jan 27 06:30:17 2009             │peter  │
-│5.  #ghi │12:54:15 peter | bonjour !                                          │       │
-│         │12:55:01  @joe | peter: hook_process: https://weechat.org/files/doc │       │
-│         │               | /devel/weechat_plugin_api.en.html#_weechat_hook_pr │       │
-│         │               | ocess                                              │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │[12:55] [5] [irc/libera] 3:#abc(+n){4}                                      │
-│         │[@Flashy(i)] salut peter !█                                                 │
-└──────────────────────────────────────────────────────────────────────────────────────┘
-....
-
-L'écran ressemblera à ça en mode dépouillé :
-
-....
-┌──────────────────────────────────────────────────────────────────────────────────────┐
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│12:52 --> Flashy (flashcode@weechat.org) a rejoin #abc                                │
-│12:52 -- Pseudos #abc: [@Flashy @joe +weebot peter]                                   │
-│12:52 -- Canal #abc: 4 pseudos (2 ops, 1 voice, 1 normal)                             │
-│12:52 -- Canal créé le Tue Jan 27 06:30:17 2009                                       │
-│12:54 <peter> bonjour !                                                               │
-│12:55 <@joe> peter: hook_process: https://weechat.org/files/doc/devel/weechat_plugin_a│
-│pi.en.html#_weechat_hook_process                                                      │
-└──────────────────────────────────────────────────────────────────────────────────────┘
-....
-
-Donc vous pouvez cliquer l'URL de _joe_ sans problème dans votre terminal (bien
-entendu cela suppose que votre terminal permet le clic sur les URLs).
-
-[[notify_levels]]
-=== Niveaux de notification
-
-[[setup_notify_levels]]
-==== Configurer les niveaux de notification
-
-Quatre niveaux sont possibles dans les messages affichés dans les tampons, du
-moins important au plus important :
-
-* _low_ : message avec faible importance (par exemple un join/part/quit irc)
-* _message_ : message d'un utilisateur
-* _private_ : message dans un tampon privé
-* _highlight_ : message avec highlight
-
-Chaque tampon a un niveau de notification, qui est utilisé pour décider quels
-messages ajouteront le tampon dans la hotlist.
-
-Le niveau de notification par défaut peut être défini avec l'option
-<<option_weechat.look.buffer_notify_default,weechat.look.buffer_notify_default>>,
-la valeur par défaut est _all_.
-
-[width="75%",cols="2m,7",options="header"]
-|===
-| Niveau de notification | Niveau des messages ajoutés à la hotlist
-| none                   | (aucun)
-| highlight              | _highlight_ + _private_
-| message                | _highlight_ + _private_ + _message_
-| all                    | _highlight_ + _private_ + _message_ + _low_
-|===
-
-Le niveau de notification peut être défini pour un ensemble de tampons, par
-exemple tous les tampons du serveur irc "libera" :
-
-----
-/set weechat.notify.irc.libera message
-----
-
-Définir le niveau de notification _highlight_ sur le canal "#weechat" seulement :
-
-----
-/set weechat.notify.irc.libera.#weechat highlight
-----
-
-Le niveau de notification pour un tampon peut aussi être défini avec la
-commande `/buffer` :
-
-----
-/buffer notify highlight
-----
-
-[[max_hotlist_level_nicks]]
-==== Niveau maximal de hotlist pour des pseudos
-
-Il est possible de définir un niveau maximal de hotlist pour certains pseudos,
-par tampon ou groupe de tampons (comme des serveurs IRC).
-
-La propriété de tampon "hotlist_max_level_nicks" peut être définie avec une
-liste de pseudos et pour chaque pseudo le niveau maximal de hotlist à déclencher,
-les niveaux possibles sont :
-
-* -1 : pas de changement dans la hotlist pour ce pseudo
-* 0 : faible priorité (comme les messages join/part)
-* 1 : message
-* 2 : message privé
-* 3 : highlight (en réalité inutile, car il s'agit déjà du niveau maximal par
-  défaut pour tous les messages)
-
-Par exemple pour désactiver les « highlights » de "joe" et "mike" sur le tampon
-courant :
-
-----
-/buffer set hotlist_max_level_nicks_add joe:2,mike:2
-----
-
-[NOTE]
-La propriété de tampon "hotlist_max_level_nicks" n'est pas sauvegardée dans la
-configuration. +
-Vous pouvez facilement la sauvegarder avec le script _buffer_autoset.py_ : vous
-pouvez l'installer avec `+/script install buffer_autoset.py+` et obtenir de l'aide
-avec `+/help buffer_autoset+`.
-
-[[highlights]]
-=== Highlights
-
-[[highlights_words]]
-==== Ajouter des mots pour le « highlight »
-
-Par défaut, WeeChat met en valeur les messages des autres utilisateurs qui
-contiennent votre pseudo, par conséquent le highlight dépend du tampon
-(le pseudo peut être différent d'un tampon à l'autre).
-
-Vous pouvez ajouter d'autres mots à mettre en valeur avec l'option
-<<option_weechat.look.highlight,weechat.look.highlight>>, par exemple pour mettre
-en valeur votre pseudo, "mot1", "mot2" et tous les mots commençants par "test" :
-
-----
-/set weechat.look.highlight mot1,mot2,test*
-----
-
-Si vous avez besoin d'une règle plus spécifique pour un mot, vous pouvez utiliser
-des expressions régulières avec l'option
-<<option_weechat.look.highlight_regex,weechat.look.highlight_regex>>,
-par exemple pour mettre en valeur les mots "flashcode", "flashcöde" et "flashy" :
-
-----
-/set weechat.look.highlight_regex flashc[oö]de|flashy
-----
-
-Les délimiteurs autour des mots à mettre en valeur peuvent être paramétrés avec
-l'option <<option_weechat.look.word_chars_highlight,weechat.look.word_chars_highlight>>.
-
-[[highlights_tags]]
-==== Ajouter des étiquettes pour le « highlight »
-
-Les lignes affichées contiennent des étiquettes (« tags »), qui donnent des
-informations sur l'origine du message ou le message lui-même. +
-Vous pouvez afficher les étiquettes avec la commande `/debug tags` (même commande
-pour les cacher).
-
-Vous pouvez ajouter des étiquettes à mettre en valeur avec l'option
-<<option_weechat.look.highlight_tags,weechat.look.highlight_tags>>.
-Les étiquettes sont séparées par des virgules, et plusieurs étiquettes peuvent
-être séparées par `+++` pour faire un "et" logique entre elles.
-
-Par exemple pour mettre en valeur tous les messages du pseudo "FlashCode" et
-toutes les notices des pseudos commençant par "toto" :
-
-----
-/set weechat.look.highlight_tags "nick_flashcode,irc_notice+nick_toto*"
-----
-
-[[highlights_regex_buffer]]
-==== Définir des highlights supplémentaires sur le tampon
-
-Vous pouvez forcer le highlight en utilisant une expression regulière avec la
-propriété de tampon "highlight_regex".
-
-Par exemple pour forcer le highlight sur tous les messages dans le canal
-courant :
-
-----
-/buffer set highlight_regex .*
-----
-
-[NOTE]
-La propriété de tampon "highlight_regex" n'est pas sauvegardée dans la
-configuration. +
-Vous pouvez facilement la sauvegarder avec le script _buffer_autoset.py_ : vous
-pouvez l'installer avec `+/script install buffer_autoset.py+` et obtenir de l'aide
-avec `+/help buffer_autoset+`.
-
-[[key_bindings]]
-=== Raccourcis clavier par défaut
-
-[[key_bindings_command_line]]
-==== Touches pour la ligne de commande
-
-[width="100%",cols="^.^3,.^8,.^5",options="header"]
-|===
-| Touche          | Description | Commande
-| kbd:[←] +
-  kbd:[Ctrl+b]    | Aller au caractère précédent sur la ligne de commande. | `+/input move_previous_char+`
-| kbd:[→] +
-  kbd:[Ctrl+f]    | Aller au caractère suivant sur la ligne de commande. | `+/input move_next_char+`
-| kbd:[Ctrl+←] +
-  kbd:[Alt+b]     | Aller au mot précédent sur la ligne de commande. | `+/input move_previous_word+`
-| kbd:[Ctrl+→] +
-  kbd:[Alt+f]     | Aller au mot suivant sur la ligne de commande. | `+/input move_next_word+`
-| kbd:[Home] +
-  kbd:[Ctrl+a]    | Aller au début de la ligne de commande. | `+/input move_beginning_of_line+`
-| kbd:[End] +
-  kbd:[Ctrl+e]    | Aller à la fin de la ligne de commande. | `+/input move_end_of_line+`
-| kbd:[Ctrl+c],
-  kbd:[b]         | Insérer le code pour mettre le texte en gras. | `+/input insert \x02+`
-| kbd:[Ctrl+c],
-  kbd:[c]         | Insérer le code pour écrire en couleur. | `+/input insert \x03+`
-| kbd:[Ctrl+c],
-  kbd:[i]         | Insérer le code pour mettre le texte en italique. | `+/input insert \x1D+`
-| kbd:[Ctrl+c],
-  kbd:[o]         | Insérer le code pour réinitialiser la couleur. | `+/input insert \x0F+`
-| kbd:[Ctrl+c],
-  kbd:[v]         | Insérer le code pour écrire en couleur inversée. | `+/input insert \x16+`
-| kbd:[Ctrl+c],
-  kbd:[_]         | Insérer le code pour écrire en souligné. | `+/input insert \x1F+`
-| kbd:[Del] +
-  kbd:[Ctrl+d]    | Effacer le caractère suivant sur la ligne de commande. | `+/input delete_next_char+`
-| kbd:[Backsp.] +
-  kbd:[Ctrl+h]    | Effacer le caractère précédent sur la ligne de commande. | `+/input delete_previous_char+`
-| kbd:[Ctrl+k]    | Effacer du curseur jusqu'à la fin de la ligne de commande (la chaîne supprimée est copiée dans le presse-papiers interne). | `+/input delete_end_of_line+`
-| kbd:[Ctrl+r]    | Chercher du texte dans l'historique du tampon (voir <<key_bindings_search_context,les touches pour le contexte de recherche>>). | `+/input search_text_here+`
-| kbd:[Ctrl+t]    | Inverser deux caractères. | `+/input transpose_chars+`
-| kbd:[Ctrl+u]    | Effacer du curseur jusqu'au début de la ligne de commande (la chaîne supprimée est copiée dans le presse-papiers interne). | `+/input delete_beginning_of_line+`
-| kbd:[Ctrl+w]    | Effacer le mot précédent sur la ligne de commande (la chaîne supprimée est copiée dans le presse-papiers interne). | `+/input delete_previous_word+`
-| kbd:[Ctrl+y]    | Coller le contenu du presse-papiers interne. | `+/input clipboard_paste+`
-| kbd:[Ctrl+_]    | Défaire la dernière action sur la ligne de commande. | `+/input undo+`
-| kbd:[Alt+_]     | Refaire la dernière action sur la ligne de commande. | `+/input redo+`
-| kbd:[Tab]       | Compléter la commande ou le pseudo (kbd:[Tab] de nouveau : trouver la complétion suivante). | `+/input complete_next+`
-| kbd:[Shift+Tab] | Sans complétion, effectue une complétion partielle. Avec une complétion en cours, complète avec la complétion précédente. | `+/input complete_previous+`
-| kbd:[Enter] +
-  kbd:[Ctrl+j] +
-  kbd:[Ctrl+m]    | Exécuter la commande ou envoyer le message (en mode recherche : arrêter la recherche). | `+/input return+`
-| kbd:[Alt+Enter] | Insérer une nouvelle ligne. | `+/input insert \n+`
-| kbd:[↑]         | Rappeler la commande précédente (en mode recherche : chercher plus haut). | `+/input history_previous+`
-| kbd:[↓]         | Rappeler la commande suivante (en mode recherche : chercher plus bas). | `+/input history_next+`
-| kbd:[Ctrl+↑]    | Rappeler la commande précédente dans l'historique global (commun à tous les tampons). | `+/input history_global_previous+`
-| kbd:[Ctrl+↓]    | Rappeler la commande suivante dans l'historique global (commun à tous les tampons). | `+/input history_global_next+`
-| kbd:[Alt+d]     | Effacer le mot suivant (la chaîne supprimée est copiée dans le presse-papiers interne). | `+/input delete_next_word+`
-| kbd:[Alt+k]     | Capturer une touche et insérer son code (et la commande associée si la commande existe) sur la ligne de commande. | `+/input grab_key_command+`
-| kbd:[Alt+r]     | Effacer entièrement la ligne de commande. | `+/input delete_line+`
-| kbd:[Alt+s]     | Activer/désactiver la vérification de l'orthographe. | `+/mute spell toggle+`
-|===
-
-[[key_bindings_buffers_windows]]
-==== Touches pour les tampons / fenêtres
-
-[width="100%",cols="^.^3,.^8,.^5",options="header"]
-|===
-| Touche             | Description | Commande
-| kbd:[Ctrl+l] (`L`) | Réafficher toute la fenêtre. | `+/window refresh+`
-| kbd:[Ctrl+s],
-  kbd:[Ctrl+u]       | Positionner le marqueur de données non lues sur tous les tampons. | `+/input set_unread+`
-| kbd:[Ctrl+x]       | Changer de tampon courant si plusieurs tampons sont attachés avec le même numéro. | `+/input switch_active_buffer+`
-| kbd:[Alt+x]        | Zoomer sur le tampon mélangé (kbd:[Alt+x] de nouveau : afficher tous les tampons mélangés). | `+/input zoom_merged_buffer+`
-| kbd:[PgUp]         | Monter d'une page dans l'historique du tampon. | `+/window page_up+`
-| kbd:[PgDn]         | Descendre d'une page dans l'historique du tampon. | `+/window page_down+`
-| kbd:[Alt+PgUp]     | Monter de quelques lignes dans l'historique du tampon. | `+/window scroll_up+`
-| kbd:[Alt+PgDn]     | Descendre de quelques lignes dans l'historique du tampon. | `+/window scroll_down+`
-| kbd:[Alt+Home]     | Aller au début du tampon. | `+/window scroll_top+`
-| kbd:[Alt+End]      | Aller à la fin du tampon. | `+/window scroll_bottom+`
-| kbd:[F1] +
-  kbd:[Ctrl+F1]      | Monter d'une page dans la liste des tampons. | `+/bar scroll buflist * -100%+`
-| kbd:[F2] +
-  kbd:[Ctrl+F2]      | Descendre d'une page dans la liste des tampons. | `+/bar scroll buflist * +100%+`
-| kbd:[Alt+F1]       | Aller au début de la liste des tampons. | `+/bar scroll buflist * b+`
-| kbd:[Alt+F2]       | Aller à la fin de la liste des tampons. | `+/bar scroll buflist * e+`
-| kbd:[Alt+←] +
-  kbd:[Alt+↑] +
-  kbd:[Ctrl+p] +
-  kbd:[F5]           | Aller au tampon précédent. | `+/buffer -1+`
-| kbd:[Alt+→] +
-  kbd:[Alt+↓] +
-  kbd:[Ctrl+n] +
-  kbd:[F6]           | Aller au tampon suivant. | `+/buffer +1+`
-| kbd:[F7]           | Aller à la fenêtre précédente. | `+/window -1+`
-| kbd:[F8]           | Aller à la fenêtre suivante. | `+/window +1+`
-| kbd:[F9]           | Faire défiler le titre du tampon vers la gauche. | `+/bar scroll title * -30%+`
-| kbd:[F10]          | Faire défiler le titre du tampon vers la droite. | `+/bar scroll title * +30%+`
-| kbd:[F11] +
-  kbd:[Ctrl+F11]     | Monter d'une page dans la liste des pseudos. | `+/bar scroll nicklist * -100%+`
-| kbd:[F12] +
-  kbd:[Ctrl+F12]     | Descendre d'une page dans la liste des pseudos. | `+/bar scroll nicklist * +100%+`
-| kbd:[Alt+F11]      | Aller au début de la liste des pseudos. | `+/bar scroll nicklist * b+`
-| kbd:[Alt+F12]      | Aller à la fin de la liste des pseudos. | `+/bar scroll nicklist * e+`
-| kbd:[Alt+a]        | Sauter au prochain tampon avec activité (avec priorité : highlight, message, autre). | `+/input jump_smart+`
-| kbd:[Alt+Shift+B]  | Activer/désactiver buflist. | `+/buflist toggle+`
-| kbd:[Alt+h],
-  kbd:[Alt+c]        | Vider la hotlist (notification d'activité sur les tampons). | `+/input hotlist_clear+`
-| kbd:[Alt+h],
-  kbd:[Alt+m]        | Supprimer le tampon courant de la hotlist. | `+/input hotlist_remove_buffer+`
-| kbd:[Alt+h],
-  kbd:[Alt+r]        | Restaurer la dernière hotlist supprimée dans le tampon courant. | `+/input hotlist_restore_buffer+`
-| kbd:[Alt+h],
-  kbd:[Alt+Shift+R]  | Restaurer la dernière hotlist supprimée dans tous les tampons. | `+/input hotlist_restore_all+`
-| kbd:[Alt+j],
-  kbd:[Alt+f]        | Sauter au premier tampon. | `+/buffer -+`
-| kbd:[Alt+j],
-  kbd:[Alt+l] (`L`)  | Sauter au dernier tampon. | `+/buffer ++`
-| kbd:[Alt+j],
-  kbd:[Alt+r]        | Sauter au tampon IRC de données brutes. | `+/server raw+`
-| kbd:[Alt+j],
-  kbd:[Alt+s]        | Sauter au tampon IRC du serveur. | `+/server jump+`
-| kbd:[Alt+0...9]    | Sauter au tampon qui porte ce numéro (0 = 10). | `+/buffer *N+`
-| kbd:[Alt+j],
-  kbd:[01...99]      | Sauter au tampon qui porte ce numéro. | `+/buffer *NN+`
-| kbd:[Alt+l] (`L`)  | Activer/désactiver le mode d'affichage dépouillé. | `+/window bare+`
-| kbd:[Alt+m]        | Activer/désactiver la souris. | `+/mouse toggle+`
-| kbd:[Alt+n]        | Se positionner sur le highlight suivant. | `+/window scroll_next_highlight+`
-| kbd:[Alt+Shift+N]  | Activer/désactiver la barre nicklist. | `+/bar toggle nicklist+`
-| kbd:[Alt+p]        | Se positionner sur le highlight précédent. | `+/window scroll_previous_highlight+`
-| kbd:[Alt+u]        | Se positionner sur la première ligne non lue du tampon. | `+/window scroll_unread+`
-| kbd:[Alt+w],
-  kbd:[Alt+↑]        | Sauter à la fenêtre au dessus. | `+/window up+`
-| kbd:[Alt+w],
-  kbd:[Alt+↓]        | Sauter à la fenêtre en dessous. | `+/window down+`
-| kbd:[Alt+w],
-  kbd:[Alt+←]        | Sauter à la fenêtre de gauche. | `+/window left+`
-| kbd:[Alt+w],
-  kbd:[Alt+→]        | Sauter à la fenêtre de droite. | `+/window right+`
-| kbd:[Alt+w],
-  kbd:[Alt+b]        | Équilibrer la taille de toutes les fenêtres. | `+/window balance+`
-| kbd:[Alt+w],
-  kbd:[Alt+s]        | Échanger les tampons de deux fenêtres. | `+/window swap+`
-| kbd:[Alt+z]        | Zoomer sur la fenêtre courante (kbd:[Alt+z] de nouveau : restaurer l'état initial des fenêtres, avant le zoom). | `+/window zoom+`
-| kbd:[Alt+<]        | Sauter au tampon précédent dans la liste des tampons visités. | `+/input jump_previously_visited_buffer+`
-| kbd:[Alt+>]        | Sauter au tampon suivant dans la liste des tampons visités. | `+/input jump_next_visited_buffer+`
-| kbd:[Alt+/]        | Sauter au dernier tampon affiché (avant le dernier saut vers un tampon). | `+/input jump_last_buffer_displayed+`
-| kbd:[Alt+=]        | Activer/désactiver les filtres. | `+/filter toggle+`
-| kbd:[Alt+-]        | Activer/désactiver les filtres dans le tampon courant. | `+/filter toggle @+`
-|===
-
-[[key_bindings_search_context]]
-==== Touches pour le contexte "search"
-
-Ces touches sont utilisées dans le contexte "search" (lorsque kbd:[Ctrl+r] est
-pressé pour chercher du texte dans le tampon).
-
-[width="100%",cols="^.^3,.^8,.^5",options="header"]
-|===
-| Touche         | Description | Commande
-| kbd:[Ctrl+r]   | Basculer le type de recherche : chaîne (par défaut), expression régulière. | `+/input search_switch_regex+`
-| kbd:[Alt+c]    | Basculer la casse exacte pour la recherche. | `+/input search_switch_case+`
-| kbd:[Tab]      | Basculer la recherche dans : les messages (par défaut), les préfixes, les préfixes + messages. | `+/input search_switch_where+`
-| kbd:[↑]        | Chercher la ligne précédente. | `+/input search_previous+`
-| kbd:[↓]        | Chercher la ligne suivante. | `+/input search_next+`
-| kbd:[Enter] +
-  kbd:[Ctrl+j] +
-  kbd:[Ctrl+m]   | Arrêter la recherche à la position courante. | `+/input search_stop_here+`
-| kbd:[Ctrl+q]   | Arrêter la recherche et aller à la fin du tampon. | `+/input search_stop+`
-|===
-
-[[key_bindings_cursor_context]]
-==== Touches pour le contexte "cursor"
-
-Ces touches sont utilisées dans le contexte "cursor" (mouvement libre du curseur
-à l'écran).
-
-[width="100%",cols="^.^3,^.^2,.^7,.^7",options="header"]
-|===
-| Touche         | Zone              | Description | Commande
-| kbd:[↑]        | -                 | Déplacer le curseur d'une ligne vers le haut. | `+/cursor move up+`
-| kbd:[↓]        | -                 | Déplacer le curseur d'une ligne vers le bas. | `+/cursor move down+`
-| kbd:[←]        | -                 | Déplacer le curseur d'une colonne vers la gauche. | `+/cursor move left+`
-| kbd:[→]        | -                 | Déplacer le curseur d'une colonne vers la droite. | `+/cursor move right+`
-| kbd:[Alt+↑]    | -                 | Déplacer le curseur vers la zone au dessus. | `+/cursor move area_up+`
-| kbd:[Alt+↓]    | -                 | Déplacer le curseur vers la zone en dessous. | `+/cursor move area_down+`
-| kbd:[Alt+←]    | -                 | Déplacer le curseur vers la zone sur la gauche. | `+/cursor move area_left+`
-| kbd:[Alt+→]    | -                 | Déplacer le curseur vers la zone sur la droite. | `+/cursor move area_right+`
-| kbd:[m]        | chat              | Citer le message. | `+hsignal:chat_quote_message;/cursor stop+`
-| kbd:[q]        | chat              | Citer le préfixe + le message. | `+hsignal:chat_quote_prefix_message;/cursor stop+`
-| kbd:[Q]        | chat              | Citer l'heure + le préfixe + le message. | `+hsignal:chat_quote_time_prefix_message;/cursor stop+`
-| kbd:[b]        | liste des pseudos | Bannir le pseudo. | `+/window ${_window_number};/ban ${nick}+`
-| kbd:[k]        | liste des pseudos | Retirer par la force le pseudo. | `+/window ${_window_number};/kick ${nick}+`
-| kbd:[K]        | liste des pseudos | Retirer par la force et bannir le pseudo. | `+/window ${_window_number};/kickban ${nick}+`
-| kbd:[q]        | liste des pseudos | Ouvrir une discussion avec le pseudo. | `+/window ${_window_number};/query ${nick};/cursor stop+`
-| kbd:[w]        | liste des pseudos | Effectuer un whois sur le pseudo. | `+/window ${_window_number};/whois ${nick}+`
-| kbd:[Enter] +
-  kbd:[Ctrl+j] +
-  kbd:[Ctrl+m]   | -                 | Arrêter le mode curseur ("cursor"). | `+/cursor stop+`
-|===
-
-[[key_bindings_mouse_context]]
-==== Touches pour le contexte "mouse"
-
-Ces touches sont utilisées dans le contexte "mouse", c'est-à-dire lorsqu'un
-évènement de la souris se produit.
-
-[width="100%",cols="^.^3,^.^3,^.^3,.^8,.^8",options="header"]
-|===
-| Bouton/Roulette ^(1)^ | Geste        | Zone                 | Description | Commande
-| ◾◽◽                   | -            | chat                 | Aller à la fenêtre. | `+/window ${_window_number}+`
-| ◾◽◽                   | left         | chat                 | Aller au tampon précédent. | `+/window ${_window_number};/buffer +1+`
-| ◾◽◽                   | right        | chat                 | Aller au tampon suivant. | `+/window ${_window_number};/buffer +1+`
-| ◾◽◽                   | left (long)  | chat                 | Aller au premier tampon. | `+/window ${_window_number};/buffer 1+`
-| ◾◽◽                   | right (long) | chat                 | Aller au dernier tampon. | `+/window ${_window_number};/input jump_last_buffer+`
-| kbd:[▲]               | -            | chat                 | Monter de quelques lignes dans l'historique du tampon. | `+/window scroll_up -window ${_window_number}+`
-| kbd:[▼]               | -            | chat                 | Descendre de quelques lignes dans l'historique du tampon. | `+/window scroll_down -window ${_window_number}+`
-| kbd:[Ctrl+▲]          | -            | chat                 | Faire défiler horizontalement vers la gauche. | `+/window scroll_horiz -window ${_window_number} -10%+`
-| kbd:[Ctrl+▼]          | -            | chat                 | Faire défiler horizontalement vers la droite. | `+/window scroll_horiz -window ${_window_number} +10%+`
-| kbd:[▲]               | -            | chat : tampon fset   | Monter de cinq lignes dans le tampon fset. | `+/fset -up 5+`
-| kbd:[▼]               | -            | chat : tampon fset   | Descendre de cinq lignes dans le tampon fset. | `+/fset -down 5+`
-| ◾◽◽                   | -            | chat : tampon fset   | Sélectionner la ligne dans le tampon fset. | `+/window ${_window_number};/fset -go ${_chat_line_y}+`
-| ◽◽◾                   | -            | chat : tampon fset   | Basculer le booléen (on/off) ou éditer la valeur de l'option. | `+hsignal:fset_mouse+`
-| ◽◽◾                   | left         | chat : tampon fset   | Décrémenter la valeur de l'entier/couleur, définir/ajouter à la valeur pour les autres types. | `+hsignal:fset_mouse+`
-| ◽◽◾                   | right        | chat : tampon fset   | Incrémenter la valeur de l'entier/couleur, définir/ajouter à la valeur pour les autres types. | `+hsignal:fset_mouse+`
-| ◽◽◾                   | up / down    | chat : tampon fset   | Marquer/démarquer de multiples options. | `+hsignal:fset_mouse+`
-| kbd:[▲]               | -            | chat : tampon script | Monter de 5 lignes dans le tampon script. | `+/script up 5+`
-| kbd:[▼]               | -            | chat : tampon script | Descendre de 5 lignes dans le tampon script. | `+/script down 5+`
-| ◾◽◽                   | -            | chat : tampon script | Sélectionner la ligne dans le tampon script. | `+/script go ${_chat_line_y}+`
-| ◽◽◾                   | -            | chat : tampon script | Installer/supprimer un script. | `+/script go ${_chat_line_y};/script installremove -q ${script_name_with_extension}+`
-| ◾◽◽                   | up / left    | buflist              | Déplacer le tampon vers un numéro inférieur. | Signal `+buflist_mouse+`.
-| ◾◽◽                   | down / right | buflist              | Déplacer le tampon vers un numéro supérieur. | Signal `+buflist_mouse+`.
-| ◾◽◽                   | -            | buflist              | Aller au tampon (tampon précédent dans la liste des tampons visités si le tampon est le courant). | Signal `+buflist_mouse+`.
-| ◽◽◾                   | -            | buflist              | Aller au tampon suivant dans la liste des tampons visités si le tampon est le courant. | Signal `+buflist_mouse+`.
-| kbd:[Ctrl+▲]          | -            | buflist              | Aller au tampon précédent. | Signal `+buflist_mouse+`.
-| kbd:[Ctrl+▼]          | -            | buflist              | Aller au tampon suivant. | Signal `+buflist_mouse+`.
-| ◾◽◽                   | up           | liste des pseudos    | Monter d'une page dans la liste des pseudos. | `+/bar scroll nicklist ${_window_number} -100%+`
-| ◾◽◽                   | down         | liste des pseudos    | Descendre d'une page dans la liste des pseudos. | `+/bar scroll nicklist ${_window_number} +100%+`
-| ◾◽◽                   | up (long)    | liste des pseudos    | Aller au début de la liste des pseudos. | `+/bar scroll nicklist ${_window_number} b+`
-| ◾◽◽                   | down (long)  | liste des pseudos    | Aller à la fin de la liste des pseudos. | `+/bar scroll nicklist ${_window_number} e+`
-| ◾◽◽                   | -            | liste des pseudos    | Ouvrir une discussion avec le pseudo. | `+/window ${_window_number};/query ${nick}+`
-| ◽◽◾                   | -            | liste des pseudos    | Effectuer un whois sur le pseudo. | `+/window ${_window_number};/whois ${nick}+`
-| ◾◽◽                   | left         | liste des pseudos    | Retirer par la force le pseudo. | `+/window ${_window_number};/kick ${nick}+`
-| ◾◽◽                   | left (long)  | liste des pseudos    | Retirer par la force et bannir le pseudo. | `+/window ${_window_number};/kickban ${nick}+`
-| ◽◽◾                   | left         | liste des pseudos    | Bannir le pseudo. | `+/window ${_window_number};/ban ${nick}+`
-| ◽◽◾                   | -            | ligne de commande    | Capturer un évènement de la souris et insérer son code sur la ligne de commande. | `+/input grab_mouse_area+`
-| kbd:[▲]               | -            | toute barre          | Faire défiler la barre de -20%. | `+/bar scroll ${_bar_name} ${_window_number} -20%+`
-| kbd:[▼]               | -            | toute barre          | Faire défiler la barre de +20%. | `+/bar scroll ${_bar_name} ${_window_number} +20%+`
-| ◽◾◽                   | -            | n'importe où         | Démarrer le mode curseur ("cursor") à ce point. | `+/cursor go ${_x},${_y}+`
-|===
-
-[NOTE]
-^(1)^ kbd:[▲] et kbd:[▼] sont la roulette vers le haut et le bas.
-
-[[key_bindings_fset_buffer]]
-==== Touches pour le tampon fset
-
-Ces touches et actions sont utilisées sur le tampon fset
-(voir <<fset_plugin,l'extension Fset>>).
-
-[width="100%",cols="^.^3,^.^2,.^8,.^5",options="header"]
-|===
-| Touche             | Action ^(1)^ | Description | Commande
-| kbd:[↑]            |              | Monter d'une ligne. | `+/fset -up+`
-| kbd:[↓]            |              | Descendre d'une ligne. | `+/fset -down+`
-| kbd:[PgUp]         |              | Monter d'une page. | `+/window page_up+`
-| kbd:[PgDn]         |              | Descendre d'une page. | `+/window page_down+`
-| kbd:[Alt+Home]     | `pass:[<<]`  | Aller à la première ligne. | `+/fset -go 0+`
-| kbd:[Alt+End]      | `pass:[>>]`  | Aller à la dernière ligne. | `+/fset -go end+`
-| kbd:[F11]          | `pass:[<]`   | Faire défiler horizontalement vers la gauche. | `+/fset -left+`
-| kbd:[F12]          | `pass:[>]`   | Faire défiler horizontalement vers la droite. | `+/fset -right+`
-| kbd:[Alt+Space]    | `t`          | Basculer la valeur booléenne. | `+/fset -toggle+`
-| kbd:[Alt+-]        | `-`          | Soustraire 1 de la valeur de l'entier/couleur, définir la valeur pour les autres types. | `+/fset -add -1+`
-| kbd:[Alt++]        | `+`          | Ajouter 1 à la valeur de l'entier/couleur, ajouter à la valeur pour les autres types. | `+/fset -add 1+`
-| kbd:[Alt+f],
-  kbd:[Alt+r]        | `r`          | Réinitialiser la valeur. | `+/fset -reset+`
-| kbd:[Alt+f],
-  kbd:[Alt+u]        | `u`          | Supprimer/réinitialiser la valeur. | `+/fset -unset+`
-| kbd:[Alt+Enter]    | `s`          | Définir la valeur. | `+/fset -set+`
-| kbd:[Alt+f],
-  kbd:[Alt+n]        | `n`          | Définir une nouvelle valeur. | `+/fset -setnew+`
-| kbd:[Alt+f],
-  kbd:[Alt+a]        | `a`          | Ajouter à la valeur. | `+/fset -append+`
-| kbd:[Alt+,]        | `,`          | Marquer/démarquer l'option. | `+/fset -mark 1+`
-| kbd:[Shift+↑]      |              | Se déplacer d'une ligne vers le haut et marquer/démarquer l'option. | `+/fset -up; /fset -mark+`
-| kbd:[Shift+↓]      |              | Marquer/démarquer l'option et se déplacer d'une ligne vers le bas. | `+/fset -mark; /fset -down+`
-|                    | `m:xxx`      | Marquer les options affichées qui correspondent au filtre "xxx" (tout filtre sur une option ou valeur est autorisé, voir la <<command_fset_fset,commande fset>>). |
-|                    | `u:xxx`      | Démarquer les options affichées qui correspondent au filtre "xxx" (tout filtre sur une option ou valeur est autorisé, voir la <<command_fset_fset,commande fset>>). |
-| kbd:[Ctrl+l] (`L`) |              | Rafraîchir les options et l'écran entier. | `+/fset -refresh+`
-|                    | `$`          | Rafraîchir les options (garder les options marquées). |
-|                    | `$$`         | Rafraîchir les options (démarquer toutes les options). |
-| kbd:[Alt+p]        |              | Activer/désactiver la description des options d'extensions (`pass:[plugins.desc.*]`). | `+/mute /set fset.look.show_plugins_desc toggle+`
-| kbd:[Alt+v]        |              | Activer/désactiver la barre d'aide. | `+/bar toggle fset+`
-|                    | `s:x,y`      | Trier les options par les champs x,y (voir l'option <<option_fset.look.sort,fset.look.sort>>). | `+/mute /set fset.look.sort x,y+`
-|                    | `s:`         | Réinitialiser le tri à sa valeur par défaut (voir l'option <<option_fset.look.sort,fset.look.sort>>). | `+/mute /unset fset.look.sort+`
-|                    | `w:xxx`      | Exporter les options dans le fichier "xxx". | `+/fset -export xxx+`
-|                    | `w-:xxx`     | Exporter les options dans le fichier "xxx" sans aide. | `+/fset -export -nohelp xxx+`
-|                    | `w+:xxx`     | Exporter les options dans le fichier "xxx" avec aide. | `+/fset -export -help xxx+`
-| kbd:[Ctrl+x]       | `x`          | Basculer le format utilisé pour afficher les options. | `+/fset -format+`
-|                    | `q`          | Fermer le tampon fset. | `+/buffer close+`
-|===
-
-[NOTE]
-^(1)^ L'action doit être tapée comme entrée dans la ligne de commande, suivie de kbd:[Enter].
-
-[[key_bindings_script_buffer]]
-==== Touches pour le tampon script
-
-Ces touches et actions sont utilisées sur le tampon script
-(voir <<scripts_plugins,l'extension Script>>).
-
-[width="100%",cols="^.^3,^.^2,.^8,.^5",options="header"]
-|===
-| Touche             | Action ^(1)^ | Description | Commande
-| kbd:[↑]            |              | Move one line up. | `+/script up+`
-| kbd:[↓]            |              | Move one line down. | `+/script down+`
-| kbd:[PgUp]         |              | Move one page up. | `+/window page_up+`
-| kbd:[PgDn]         |              | Move one page down. | `+/window page_down+`
-| kbd:[Alt+i]        | `i`          | Install script. | `+/script install+`
-| kbd:[Alt+r]        | `r`          | Remove script. | `+/script remove+`
-| kbd:[Alt+l] (`L`)  | `l`          | Load script. | `+/script load+`
-| kbd:[Alt+u]        | `u`          | Unload script. | `+/script unload+`
-| kbd:[Alt+Shift+A]  | `A`          | Autoload script. | `+/script toggleautoload+`
-| kbd:[Alt+h]        | `h`          | Hold/unhold script. | `+/script hold+`
-| kbd:[Alt+v]        | `v`          | View script. | `+/script show+`
-|===
-
-[NOTE]
-^(1)^ L'action doit être tapée comme entrée dans la ligne de commande, suivie de kbd:[Enter].
-
-[[mouse]]
-=== Support souris
-
-WeeChat supporte les clics et mouvements avec la souris. Cela fonctionne avec un
-terminal local, et à distance via une connexion ssh, avec ou sans screen/tmux.
-
-[[mouse_enable]]
-==== Activer la souris
-
-Pour activer la souris au démarrage :
-
-----
-/set weechat.look.mouse on
-----
-
-Pour activer la souris maintenant, appuyez sur kbd:[Alt+m] ou lancez la commande
-suivante :
-
-----
-/mouse enable
-----
-
-Il est possible de désactiver temporairement la souris, et associer ça à une
-touche. Par exemple la touche kbd:[Alt+%] pour désactiver la souris pendant 10
-secondes :
-
-----
-/key bind meta-% /mouse toggle 10
-----
-
-[IMPORTANT]
-Lorsque la souris est activée dans WeeChat, tous les évènements souris sont
-capturés par WeeChat, donc les actions comme le copier/coller et les clics sur
-les URLs ne sont pas envoyées au terminal. +
-Utiliser la touche kbd:[Shift] permet d'envoyer directement les évènements au
-terminal, comme si la souris était désactivée (sous certains terminaux comme
-iTerm, vous devez utiliser kbd:[Alt] au lieu de kbd:[Shift]).
-
-[NOTE]
-Pour tout problème avec la souris, merci de consulter la
-link:weechat_faq.fr.html#mouse[FAQ WeeChat / Souris].
-
-[[mouse_bind_events]]
-==== Associer des évènements souris à des commandes
-
-De nombreux évènements souris sont déjà définis par WeeChat (voir
-<<key_bindings_mouse_context,les touches pour le contexte "mouse">>).
-
-Vous pouvez modifier ou ajouter des associations avec la commande `/key` en
-utilisant le contexte "mouse" (pour la syntaxe voir la commande
-<<command_weechat_key,/key>>).
-
-Un nom d'évènement consiste en un modificateur (facultatif), un bouton/roulette
-et un geste (facultatif). Les différents éléments sont séparés par `+-+`.
-
-Liste des modificateurs :
-
-[width="100%",cols="1m,4",options="header"]
-|===
-| Modificateur | Description
-| ctrl         | Touche kbd:[Ctrl]
-| alt          | Touche kbd:[Alt]
-| ctrl-alt     | Touches kbd:[Ctrl] + kbd:[Alt]
-|===
-
-Liste des boutons/roulette :
-
-[width="100%",cols="1m,4",options="header"]
-|===
-| Bouton/roulette     | Description
-| button1             | Clic sur le bouton gauche
-| button2             | Clic sur le bouton droit
-| button3             | Clic sur le bouton du milieu (souvent clic sur la roulette)
-| button4 ... button9 | Clic sur un bouton additionnel
-| wheelup             | Roulette (haut)
-| wheeldown           | Roulette (bas)
-|===
-
-Liste des gestes (seulement pour les boutons, pas la roulette) :
-
-[width="100%",cols="1m,4",options="header"]
-|===
-| Geste              | Distance
-| gesture-up         | 3 ... 19
-| gesture-up-long    | ≥ 20
-| gesture-down       | 3 ... 19
-| gesture-down-long  | ≥ 20
-| gesture-left       | 3 ... 39
-| gesture-left-long  | ≥ 40
-| gesture-right      | 3 ... 39
-| gesture-right-long | ≥ 40
-|===
-
-Liste des évènements incomplets (seulement pour les boutons, pratique pour les
-extensions/scripts) :
-
-[width="100%",cols="1m,4",options="header"]
-|===
-| Évènement  | Description
-| event-down | Le bouton a été pressé mais pas encore relâché
-| event-drag | La souris a bougé avec le bouton pressé
-|===
-
-Exemples d'évènements :
-
-* `button1`
-* `ctrl-button1`
-* `button1-gesture-right`
-* `button1-event-down`
-* `button1-event-drag`
-* `alt-button2-gesture-down-long`
-* `wheelup`
-* `ctrl-alt-wheeldown`
-* ...
-
-[TIP]
-Lors de l'association d'une touche dans le contexte "mouse", il est possible
-d'adresser plusieurs évènements en utilisant `+*+` au début ou la fin du nom,
-par exemple `+button1-gesture-*+` qui correspond à n'importe quel geste
-effectué avec le bouton gauche.
-
-[TIP]
-Vous pouvez trouver le nom de l'évènement avec la commande `+/input grab_mouse+`
-puis en faisant l'action avec la souris. Cela insérera le nom de l'évènement
-sur la ligne de commande.
-
 [[secured_data]]
 === Données sécurisées
 
@@ -2507,6 +3034,39 @@ Pour utiliser le mot de passe _libera_, par exemple avec
 /set irc.server.libera.sasl_password "${sec.data.libera}"
 ----
 
+[[command_aliases]]
+=== Alias de commandes
+
+L'extension Alias permet de définir des alias pour des commandes (WeeChat ou
+d'autres extensions).
+
+Des alias sont créés par défaut, avec le nom en lettres majuscules (pour les
+différencier des commandes standard) ; les commandes ne sont pas sensibles à la
+casse dans WeeChat, donc par exemple `/close` lance l'alias `/CLOSE`.
+
+Liste des alias par défaut :
+
+include::includes/autogen_user_default_aliases.fr.adoc[tag=default_aliases]
+
+[[alias_commands]]
+==== Commandes
+
+include::includes/autogen_user_commands.fr.adoc[tag=alias_commands]
+
+[[alias_options]]
+==== Options
+
+Sections dans le fichier _alias.conf_ :
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section    | Commande de contrôle           | Description
+| cmd        | <<command_alias_alias,/alias>> +
+               /set alias.cmd.*               | Commandes pour les alias.
+| completion | <<command_alias_alias,/alias>> +
+               /set alias.completion.*        | Complétions pour les alias.
+|===
+
 [[commands_and_options]]
 === Commandes et options
 
@@ -2568,394 +3128,18 @@ Options :
 
 include::includes/autogen_user_options.fr.adoc[tag=weechat_options]
 
-[[plugins]]
-== Extensions
-
-Une extension est une bibliothèque dynamique, écrite en C et compilée, qui est
-chargée par WeeChat.
-Sous GNU/Linux, ce fichier a une extension ".so", et ".dll" sous Windows.
-
-Les extensions trouvées sont automatiquement chargées par WeeChat lorsqu'il
-démarre, et il est possible de charger et décharger des extensions pendant que
-WeeChat tourne.
-
-Il est important de bien faire la différence entre une _extension_ et un
-_script_ : une _extension_ est un fichier binaire compilé et chargé avec la
-commande `/plugin`, tandis qu'un _script_ est un fichier texte chargé par une
-extension comme _python_ par la commande `/python`.
-
-Vous pouvez utiliser la commande `/plugin` pour charger/décharger une
-extension, ou afficher les extensions chargées.
-
-Quand une extension est déchargée, WeeChat supprime :
-
-* les tampons
-* les options de configuration (les options sont écrites dans les fichiers)
-* tous les "hooks" : commandes, modificateurs, processus, etc.
-* les infos et infolists
-* les "hdata"
-* les objets de barre.
-
-Exemples pour charger, décharger et afficher les extensions :
-
-----
-/plugin load irc
-/plugin unload irc
-/plugin list
-----
-
-Les extensions par défaut sont :
-
-[width="100%",cols="1,5",options="header"]
-|===
-| Extension  | Description
-| alias      | Définition d'alias pour les commandes.
-| buflist    | Objet de barre avec la liste des tampons.
-| charset    | Encodage/encodage avec jeu de caractère sur les tampons.
-| exec       | Exécution de commandes externes dans WeeChat.
-| fifo       | Tube FIFO pour envoyer des commandes à distance vers WeeChat.
-| fset       | Modification rapide des options de WeeChat et des extensions.
-| irc        | Discussion avec le protocole IRC.
-| logger     | Enregistrement des tampons dans des fichiers.
-| relay      | Relai de données via le réseau.
-| script     | Gestionnaire de scripts.
-| python     | Interface (API) pour scripts Python.
-| perl       | Interface (API) pour scripts Perl.
-| ruby       | Interface (API) pour scripts Ruby.
-| lua        | Interface (API) pour scripts Lua.
-| tcl        | Interface (API) pour scripts Tcl.
-| guile      | Interface (API) pour scripts Guile (scheme).
-| javascript | Interface (API) pour scripts JavaScript.
-| php        | Interface (API) pour scripts PHP.
-| spell      | Vérification orthographique de la ligne de commande.
-| trigger    | Remplacement de texte et exécution de commande sur des évènements de WeeChat ou des extensions.
-| typing     | Affichage des utilisateurs qui sont en train d'écrire des messages.
-| xfer       | Transfert de fichier et discussion directe.
-|===
-
-Pour en apprendre plus sur le développement d'extension ou de script (via
-l'API), merci de consulter la
-link:weechat_plugin_api.fr.html[Référence API extension WeeChat] ou le
-link:weechat_scripting.fr.html[Guide pour scripts WeeChat].
-
-[[alias_plugin]]
-=== Alias
-
-L'extension Alias permet de définir des alias pour des commandes (WeeChat ou
-d'autres extensions).
-
-Des alias sont créés par défaut, avec le nom en lettres majuscules (pour les
-différencier des commandes standard) ; les commandes ne sont pas sensibles à la
-casse dans WeeChat, donc par exemple `/close` lance l'alias `/CLOSE`.
-
-Liste des alias par défaut :
-
-include::includes/autogen_user_default_aliases.fr.adoc[tag=default_aliases]
-
-[[alias_commands]]
-==== Commandes
-
-include::includes/autogen_user_commands.fr.adoc[tag=alias_commands]
-
-[[alias_options]]
-==== Options
-
-Sections dans le fichier _alias.conf_ :
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Section    | Commande de contrôle           | Description
-| cmd        | <<command_alias_alias,/alias>> +
-               /set alias.cmd.*               | Commandes pour les alias.
-| completion | <<command_alias_alias,/alias>> +
-               /set alias.completion.*        | Complétions pour les alias.
-|===
-
-[[buflist_plugin]]
-=== Buflist
-
-L'extension Buflist affiche une liste des tampons dans un objet de barre appelé
-"buflist" (deux autres objets de barre "buflist2" et "buflist3" sont également
-disponibles). +
-Une barre par défaut "buflist" est créée au démarrage avec cet objet de barre.
-
-[[buflist_commands]]
-==== Commandes
-
-include::includes/autogen_user_commands.fr.adoc[tag=buflist_commands]
-
-[[buflist_options]]
-==== Options
-
-Sections dans le fichier _buflist.conf_ :
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Section | Commande de contrôle  | Description
-| format  | /set buflist.format.* | Formats utilisés pour l'affichage de la liste des tampons.
-| look    | /set buflist.look.*   | Aspect/présentation.
-|===
-
-Options :
-
-include::includes/autogen_user_options.fr.adoc[tag=buflist_options]
-
-[[charset_plugin]]
-=== Charset
-
-L'extension Charset vous permet de décoder et encoder les données en utilisant
-un jeu de caractères.
-
-Il y a un jeu de caractère par défaut pour le décodage/encodage, et un
-spécifique pour les tampons (ou groupes de tampons).
-
-Cette extension est facultative, mais recommandée : si elle n'est pas chargée,
-WeeChat pourra uniquement lire/écrire des données UTF-8.
-
-L'extension Charset devrait être automatiquement chargée par WeeChat au
-démarrage. Pour s'assurer que l'extension est bien chargée, essayez :
-
-----
-/charset
-----
-
-Si la commande n'est pas trouvée, alors chargez l'extension avec la commande :
-
-----
-/plugin load charset
-----
-
-Si l'extension n'est pas trouvée, alors vous devriez recompiler WeeChat avec
-les extensions et le support de Charset.
-
-Lorsque l'extension Charset démarre, elle affiche le jeu de caractères du
-terminal et l'interne.
-Le jeu de caractères du terminal dépend de votre locale, et l'interne est
-UTF-8.
-
-Par exemple :
-
-....
-charset : terminal : ISO-8859-15, interne : UTF-8
-....
-
-[[charset_set]]
-==== Définir le jeu de caractère
-
-Pour modifier les jeux de caractères de décodage et d'encodage
-globaux, utilisez la commande `/set`.
-
-Par exemple :
-
-----
-/set charset.default.decode ISO-8859-15
-/set charset.default.encode ISO-8859-15
-----
-
-Si le jeu de caractères de décodage global n'est pas renseigné (par exemple
-pendant le premier chargement de Charset), il sera renseigné automatiquement
-avec le jeu de caractères du terminal (s'il est différent de UTF-8) ou par
-défaut à _ISO-8859-1_.
-
-La valeur d'encodage par défaut est vide, donc WeeChat envoie par défaut avec
-le jeu de caractères interne (UTF-8).
-
-Pour modifier le jeu de caractères d'un serveur IRC, utilisez la commande
-`/charset` sur le tampon serveur.
-Si vous donnez seulement le jeu de caractères, alors vous
-modifiez en même temps les valeurs de décodage et d'encodage.
-
-Par exemple :
-
-----
-/charset ISO-8859-15
-----
-
-Ce qui est équivalent à :
-
-----
-/charset decode ISO-8859-15
-/charset encode ISO-8859-15
-----
-
-Pour modifier le jeu de caractères d'un canal IRC (ou d'une conversation
-privée), utilisez la même commande que pour le serveur, mais sur le tampon du
-canal (ou du privé).
-
-Pour définir le jeu de caractères pour tous les canaux/privés d'un serveur IRC :
-
-----
-/set charset.encode.irc.libera ISO-8859-15
-----
-
-Pour voir tous les jeux de caractères utilisés, utilisez la commande suivante :
-
-----
-/set charset.*
-----
-
-[[charset_troubleshooting]]
-==== En cas de problème
-
-Pour tout problème avec les jeux de caractères, merci de consulter la
-link:weechat_faq.fr.html#charset[FAQ WeeChat / Accents].
-
-[[charset_commands]]
-==== Commandes
-
-include::includes/autogen_user_commands.fr.adoc[tag=charset_commands]
-
-[[charset_options]]
-==== Options
-
-Sections dans le fichier _charset.conf_ :
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Section | Commande de contrôle                        | Description
-| default | /set charset.default.*                      | Jeu de caractère d'encodage/décodage par défaut.
-| decode  | <<command_charset_charset,/charset decode>> +
-            /set charset.decode.*                       | Jeu de caractère d'encodage par tampon (les options peuvent être ajoutées/supprimées dans la section).
-| encode  | <<command_charset_charset,/charset encode>> +
-            /set charset.encode.*                       | Jeu de caractère de décodage par tampon (les options peuvent être ajoutées/supprimées dans la section).
-|===
-
-Options :
-
-include::includes/autogen_user_options.fr.adoc[tag=charset_options]
-
-[[exec_plugin]]
-=== Exec
-
-La commande `/exec` vous permet de lancer des commandes externes dans WeeChat et
-d'afficher la sortie localement, ou de l'envoyer à un tampon.
-
-[[exec_commands]]
-==== Commandes
-
-include::includes/autogen_user_commands.fr.adoc[tag=exec_commands]
-
-[[exec_options]]
-==== Options
-
-Sections dans le fichier _exec.conf_ :
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Section | Commande de contrôle | Description
-| command | /set exec.command.*  | Options pour les commandes.
-| color   | /set exec.color.*    | Couleurs.
-|===
-
-Options :
-
-include::includes/autogen_user_options.fr.adoc[tag=exec_options]
-
-[[fifo_plugin]]
-=== Fifo
-
-Vous pouvez contrôler WeeChat à distance, en envoyant des commandes ou du
-texte dans un tube FIFO (si l'option _fifo.file.enabled_ est activée,
-elle l'est par défaut).
-
-Le tube FIFO est dans le répertoire WeeChat "runtime" et s'appelle
-_weechat_fifo_12345_ par défaut (où _12345_ est le process id de WeeChat).
-
-La syntaxe pour envoyer des commandes ou du texte dans le tube FIFO est une
-des suivantes :
-
-....
-  plugin.buffer *texte ou commande ici
-  *texte ou commande ici
-....
-
-Quelques exemples :
-
-* Changer le pseudo sur libera en "autrepseudo" :
-
-----
-$ echo 'irc.server.libera */nick autrepseudo' >/run/user/1000/weechat/weechat_fifo_12345
-----
-
-* Envoyer un message sur le canal IRC #weechat :
-
-----
-$ echo 'irc.libera.#weechat *bonjour !' >/run/user/1000/weechat/weechat_fifo_12345
-----
-
-* Envoyer un message sur le tampon courant :
-
-----
-$ echo '*bonjour !' >/run/user/1000/weechat/weechat_fifo_12345
-----
-
-* Envoyer deux commandes pour décharger/recharger les scripts Python (vous devez
-  les séparer par "\n") :
-
-----
-$ printf '%b' '*/python unload\n*/python autoload\n' >/run/user/1000/weechat/weechat_fifo_12345
-----
-
-[[fifo_commands]]
-==== Commandes
-
-include::includes/autogen_user_commands.fr.adoc[tag=fifo_commands]
-
-[[fifo_options]]
-==== Options
-
-Sections dans le fichier _fifo.conf_ :
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Section | Commande de contrôle | Description
-| file    | /set fifo.file.*     | Contrôle du tube FIFO.
-|===
-
-Options :
-
-include::includes/autogen_user_options.fr.adoc[tag=fifo_options]
-
-[[fset_plugin]]
-=== Fset
-
-L'extension Fset affiche une liste des options dans un tampon et aide à définir
-les options de WeeChat et des extensions.
-
-[[fset_commands]]
-==== Commandes
-
-include::includes/autogen_user_commands.fr.adoc[tag=fset_commands]
-
-[[fset_options]]
-==== Options
-
-Sections dans le fichier _fset.conf_ :
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Section | Commande de contrôle | Description
-| color   | /set fset.color.*    | Couleurs.
-| format  | /set fset.format.*   | Formats utilisés pour afficher la liste des options.
-| look    | /set fset.look.*     | Aspect/présentation.
-|===
-
-Options :
-
-include::includes/autogen_user_options.fr.adoc[tag=fset_options]
-
-[[irc_plugin]]
-=== IRC
+[[irc]]
+== IRC
 
 L'extension IRC permet de dialoguer avec d'autres personnes via le
 protocole IRC.
 
 Elle est multi-serveurs, et offre toutes les commandes IRC supportées, y
 compris la discussion directe (DCC chat) et le transfert de fichier DCC
-(via l'extension xfer, voir <<xfer_plugin,extension Xfer>>).
+(via l'extension xfer, voir <<xfer,extension Xfer>>).
 
 [[irc_command_line_options]]
-==== Options de ligne de commande
+=== Options de ligne de commande
 
 Il est possible de passer une URL pour un ou plusieurs serveurs, comme suit :
 
@@ -2971,10 +3155,10 @@ $ weechat irc://alice@irc.libera.chat/#weechat,#weechat-fr
 ----
 
 [[irc_servers]]
-==== Serveurs
+=== Serveurs
 
 [[irc_servers_add]]
-===== Ajout d'un serveur
+==== Ajout d'un serveur
 
 Par défaut aucun serveur n'est défini. Vous pouvez ajouter autant de serveurs
 que vous le souhaitez avec la commande <<command_irc_server,/server>>.
@@ -3017,7 +3201,7 @@ vous obligent à être authentifié pour les rejoindre. Dans ce cas, vous pouvez
 définir un délai après la commande : `/set irc.server.libera.command_delay 5`.
 
 [[irc_servers_options]]
-===== Options du serveur
+==== Options du serveur
 
 Les options du serveur sont nommées `irc.server.<serveur>.<option>` où `<serveur>`
 est le nom interne du serveur et `<option>` le nom de l'option. +
@@ -3089,7 +3273,7 @@ la valeur héritée, qui est maintenant `on` au lieu de la valeur par défaut `o
 ----
 
 [[irc_ssl_certificates]]
-===== Certificats SSL
+==== Certificats SSL
 
 Lors de la connexion à un serveur IRC avec SSL, WeeChat vérifie par défaut que
 la connexion est entièrement de confiance.
@@ -3120,7 +3304,7 @@ et peut échouer, même si cela pouvait être OK dans les versions inférieures 
 0.3.1.
 
 [[irc_connect_oftc_with_certificate]]
-====== Premier exemple : se connecter à oftc en vérifiant le certificat
+===== Premier exemple : se connecter à oftc en vérifiant le certificat
 
 * Importer le certificat sous le shell :
 
@@ -3143,7 +3327,7 @@ Il est possible de concaténer plusieurs certificats dans le fichier CAs.pem.
 ----
 
 [[irc_connect_oftc_with_certfp]]
-====== Second exemple : se connecter à oftc en utilisant CertFP
+===== Second exemple : se connecter à oftc en utilisant CertFP
 
 * Créer le certificat sous le shell :
 
@@ -3168,7 +3352,7 @@ config WeeChat qui peut aussi être par exemple `~/.weechat`.
 Pour plus d'informations, consulter https://www.oftc.net/NickServ/CertFP
 
 [[irc_sasl_authentication]]
-===== Authentification avec SASL
+==== Authentification avec SASL
 
 WeeChat supporte l'authentification avec SASL, en utilisant différents
 mécanismes :
@@ -3191,7 +3375,7 @@ Les options dans le serveur sont :
   _ecdsa-nist256p-challenge_)
 
 [[irc_sasl_ecdsa_nist256p_challenge]]
-====== SASL ECDSA-NIST256P-CHALLENGE
+===== SASL ECDSA-NIST256P-CHALLENGE
 
 Vous devez générer une clé privée pour vous authentifier avec le mécanisme
 ECDSA-NIST256P-CHALLENGE (aucun mot de passe n'est requis lors de la
@@ -3238,7 +3422,7 @@ Reconnectez-vous au serveur :
 ----
 
 [[irc_servers_connection]]
-===== Connexion
+==== Connexion
 
 Vous pouvez vous connecter au serveur avec la commande
 <<command_irc_connect,/connect>> :
@@ -3271,7 +3455,7 @@ un tampon distinct par serveur :
 ----
 
 [[irc_tor_sasl]]
-===== Connexion avec TOR et SASL
+==== Connexion avec TOR et SASL
 
 Quelques serveurs acceptent les connexions avec TOR (https://www.torproject.org/),
 un réseau de tunnels virtuels qui permet aux personnes et groupes d'améliorer
@@ -3320,7 +3504,7 @@ Et enfin, connectez-vous au serveur :
 ----
 
 [[irc_channels]]
-==== Canaux
+=== Canaux
 
 Vous pouvez rejoindre des canaux avec la commande <<command_irc_join,/join>> :
 
@@ -3356,7 +3540,7 @@ des clés, par exemple si `#canal1` requiert une clé mais pas `#canal2`:
 Pour de l'aide sur le format, voir `/help irc.server.libera.autojoin`.
 
 [[irc_private_messages]]
-==== Messages privés
+=== Messages privés
 
 Vous pouvez envoyer un message privé avec la commande <<command_irc_query,/query>>,
 qui ouvre un tampon séparé :
@@ -3380,7 +3564,7 @@ privé :
 ----
 
 [[irc_smart_filter_join_part_quit]]
-==== Filtre intelligent pour les messages join/part/quit
+=== Filtre intelligent pour les messages join/part/quit
 
 Un filtre intelligent est disponible pour filtrer les messages join/part/quit
 lorsque le pseudo n'a rien dit durant les X dernières minutes sur le canal.
@@ -3417,7 +3601,7 @@ Si le pseudo n'a pas parlé durant les 5 dernières minutes, ses join et/ou
 part/quit seront cachés sur le canal.
 
 [[irc_ctcp_replies]]
-==== Réponses CTCP
+=== Réponses CTCP
 
 Il est possible de personnaliser les réponses CTCP, ou de bloquer certaines
 demandes CTCP (ne pas y répondre).
@@ -3494,7 +3678,7 @@ Si les options CTCP ne sont pas définies (par défaut), les réponses CTCP sont
 |===
 
 [[irc_target_buffer]]
-==== Tampon cible pour les messages IRC
+=== Tampon cible pour les messages IRC
 
 Il est possible de personnaliser le tampon cible pour les messages IRC (le
 tampon utilisé pour afficher le message) avec les options `+irc.msgbuffer.*+`.
@@ -3628,12 +3812,12 @@ seulement :
 ----
 
 [[irc_commands]]
-==== Commandes
+=== Commandes
 
 include::includes/autogen_user_commands.fr.adoc[tag=irc_commands]
 
 [[irc_options]]
-==== Options
+=== Options
 
 Sections dans le fichier _irc.conf_ :
 
@@ -3655,184 +3839,150 @@ Options :
 
 include::includes/autogen_user_options.fr.adoc[tag=irc_options]
 
-[[logger_plugin]]
-=== Logger
+[[xfer]]
+== Xfer
 
-L'extension Logger permet de sauvegarder le contenu des tampons dans des
-fichiers, avec des options sur comment et quoi sauvegarder.
+L'extension Xfer permet :
 
-[[logger_log_levels]]
-==== Niveaux d'enregistrement
+* la discussion directe (entre deux machines, sans serveur), par exemple le
+  "DCC Chat" via l'extension IRC
+* le transfert de fichiers, par exemple le "DCC" via l'extension IRC
 
-L'enregistrement est fait selon un niveau pour chaque tampon. Le niveau par
-défaut est 9 (enregistrer tous les messages affichés dans le tampon).
-Vous pouvez changer ce niveau pour un tampon, ou un groupe de tampons.
+[[xfer_commands]]
+=== Commandes
 
-Les niveaux possibles vont de 0 à 9. Zéro signifie "ne rien enregistrer" et 9
-signifie "enregistrer tous les messages".
+include::includes/autogen_user_commands.fr.adoc[tag=xfer_commands]
 
-Les extensions utilisent différent niveaux pour les messages affichés.
-L'extension IRC utilise les niveaux suivants :
+[[xfer_options]]
+=== Options
 
-* niveau 1 : message d'un utilisateur (sur un canal ou en privé)
-* niveau 2 : changement de pseudo (vous ou quelqu'un d'autre)
-* niveau 3 : tout message du serveur (sauf join/part/quit)
-* niveau 4 : message join/part/quit du serveur
-
-Donc si vous affectez le niveau 3 pour un canal IRC, WeeChat enregistrera
-tous les messages sauf les join/part/quit.
-
-Quelques exemples :
-
-* Affecter le niveau 3 pour le canal IRC #weechat :
-
-----
-/set logger.level.irc.libera.#weechat 3
-----
-
-* Affecter le niveau 3 pour le tampon serveur libera :
-
-----
-/set logger.level.irc.server.libera 3
-----
-
-* Affecter le niveau 3 pour tous les canaux sur le serveur libera :
-
-----
-/set logger.level.irc.libera 3
-----
-
-* Affecter le niveau 2 pour tous les tampons IRC :
-
-----
-/set logger.level.irc 2
-----
-
-[[logger_filenames_masks]]
-==== Masques de noms de fichiers
-
-Il est possible de définir un masque de nom de fichier pour chaque tampon, et
-d'utiliser les variables locales du tampon pour construire le nom de fichier.
-Pour voir les variables disponibles sur le tampon courant :
-
-----
-/buffer listvar
-----
-
-Les masques seront utilisés par ordre de priorité descendante sur
-`logger.mask.$plugin.*`, avec `logger.file.mask` comme option par défaut.
-
-Par exemple, sur le tampon "irc.libera.#weechat", WeeChat cherchera un masque
-avec le nom de l'option, dans cet ordre :
-
-----
-logger.mask.irc.libera.#weechat
-logger.mask.irc.libera
-logger.mask.irc
-logger.file.mask
-----
-
-Cela signifie que vous pouvez avoir un masque spécifique pour certaines
-serveurs IRC ("logger.mask.irc.libera") ou pour une extension
-("logger.mask.irc").
-
-[[logger_files_by_date]]
-===== Fichiers de log par date
-
-Pour avoir des fichiers de log par date, vous pouvez utiliser des marqueurs
-dans le masque (voir `man strftime` pour le format), par exemple :
-
-----
-/set logger.file.mask "%Y/%m/$plugin.$name.weechatlog"
-----
-
-Vous obtiendrez les fichiers suivants :
-
-....
-~/.local/share/weechat
-└── logs
-    ├── 2010
-    │   ├── 11
-    │   │   ├── irc.server.libera.weechatlog
-    │   │   └── irc.libera.#weechat.weechatlog
-    │   └── 12
-    │       ├── irc.server.libera.weechatlog
-    │       └── irc.libera.#weechat.weechatlog
-    ├── 2011
-    │   ├── 01
-    │   │   ├── irc.server.libera.weechatlog
-    │   │   └── irc.libera.#weechat.weechatlog
-    │   ├── 02
-    ...
-....
-
-[[logger_irc_files_by_server_channel]]
-===== Fichiers de log IRC par serveur et canal
-
-Si vous voulez un répertoire par serveur IRC et un fichier par canal dedans :
-
-----
-/set logger.mask.irc "irc/$server/$channel.weechatlog"
-----
-
-Vous obtiendrez les fichiers suivants :
-
-....
-~/.local/share/weechat
-└── logs
-    └── irc
-        ├── libera
-        │   ├── libera.weechatlog
-        │   ├── #weechat.weechatlog
-        │   └── #moncanal.weechatlog
-        ├── oftc
-        │   ├── oftc.weechatlog
-        │   ├── #canal1.weechatlog
-        │   └── #canal2.weechatlog
-        ...
-....
-
-[[logger_commands]]
-==== Commandes
-
-include::includes/autogen_user_commands.fr.adoc[tag=logger_commands]
-
-[[logger_options]]
-==== Options
-
-Sections dans le fichier _logger.conf_ :
+Sections dans le fichier _xfer.conf_ :
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
 | Section | Commande de contrôle | Description
-| look    | /set logger.look.*   | Aspect/présentation.
-| color   | /set logger.color.*  | Couleurs.
-| file    | /set logger.file.*   | Options pour les fichiers de log.
-| level   | /set logger.level.*  | Niveau de log par tampon (les options peuvent être ajoutées/supprimées dans la section).
-| mask    | /set logger.mask.*   | Masque de nom de fichier par tampon (les options peuvent être ajoutées/supprimées dans la section).
+| look    | /set xfer.look.*     | Aspect/présentation.
+| color   | /set xfer.color.*    | Couleurs.
+| network | /set xfer.network.*  | Options réseau.
+| file    | /set xfer.file.*     | Options pour les fichiers envoyés/reçus.
 |===
 
 Options :
 
-include::includes/autogen_user_options.fr.adoc[tag=logger_options]
+include::includes/autogen_user_options.fr.adoc[tag=xfer_options]
 
-[[relay_plugin]]
-=== Relay
+[[typing_notifications]]
+== Notifications de saisie
+
+L'extension typing est utilisée pour informer les autres utilisateurs quand
+vous êtes en train d'écrire un message et afficher la liste des utilisateurs
+qui écrivent actuellement un message sur un tampon.
+
+Elle est utilisée par l'extension IRC sur les tampons de canaux et privés,
+lorsque la capacité "message-tags" est activée (vous pouvez vérifier avec la
+commande <<command_irc_cap,/cap>>). +
+Sous le capot, l'étiquette client typing est utilisée, en suivant cette
+spécification : https://ircv3.net/specs/client-tags/typing.html.
+
+[[typing_activation]]
+=== Activation
+
+Pour des considérations de confidentialité, la fonctionnalité typing est
+désactivée par défaut. +
+Si vous voulez l'utiliser, vous devez activer des options dans les extensions
+typing et irc :
+
+----
+/set typing.look.enabled_nicks on
+/set typing.look.enabled_self on
+/set irc.look.typing_status_nicks on
+/set irc.look.typing_status_self on
+----
+
+Les notifications "typing" sont affichées à la fin de la barre de statut.
+
+Exemple de barre de statut avec l'objet "typing" : "bob" écrit un message et
+"alice" était en train d'en écrire un mais a fait une pause :
+
+....
+│[12:55] [6] [irc/libera] 3:#test(+n){4} [Écrit : bob, (alice)]                   │
+│[@Flashy] █                                                                      │
+└─────────────────────────────────────────────────────────────────────────────────┘
+....
+
+[[typing_signals_sent]]
+=== Signaux envoyés
+
+Lorsque vous écrivez un message (pas une commande commençant par `/`), l'extension
+typing envoie des signaux pour informer les autres extensions (comme IRC) que
+vous êtes en train d'écrire, et ces extensions peuvent alors envoyer des
+notifications aux autres utilisateurs.
+
+Les signaux suivants sont envoyés quand vous écrivez des messages :
+
+[width="100%",cols="1,1,5",options="header"]
+|===
+| Signal              | Paramètres         | Description
+| typing_self_typing  | Pointeur : tampon. | Vous écrivez un message.
+| typing_self_paused  | Pointeur : tampon. | Vous avez fait une pause dans l'écriture d'un message.
+| typing_self_cleared | Pointeur : tampon. | Vous avez effacé la ligne de commande sans envoyée le message.
+| typing_self_sent    | Pointeur : tampon. | Vous avez envoyé le message au tampon.
+|===
+
+[[typing_signals_caught]]
+=== Signaux captés
+
+L'extension typing capte des signaux qui peuvent être envoyés par d'autres
+extensions (comme IRC), pour mettre à jour des tables de hachage internes
+qui sont utilisées pour sauvegarder l'état d'écriture de message des pseudos
+sur les tampons. Ces tables de hachages sont utilisées pour construire le
+contenu de l'objet de barre "typing".
+
+Les signaux suivants sont captés par l'extension typing :
+
+[width="100%",cols="1,4,3",options="header"]
+|===
+| Signal | Paramètres | Description
+
+| typing_set_nick |
+  Chaîne : pointeur tampon + ";" + état (un parmi ceux-ci : "off", "typing",
+  "paused", "cleared") + ";" + pseudo. +
+  Example: "0x1234abcd;typing;alice". |
+  Définir l'état de la saisie du pseudo sur le tampon.
+
+| typing_reset_buffer |
+  Pointeur : tampon. |
+  Supprimer l'état de saisir pour tous les pseudos d'un tampon.
+|===
+
+[[typing_options]]
+=== Options
+
+Sections dans le fichier _typing.conf_ :
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section | Commande de contrôle | Description
+| look    | /set typing.look.*   | Aspect/présentation.
+|===
+
+Options :
+
+include::includes/autogen_user_options.fr.adoc[tag=typing_options]
+
+[[relay]]
+== Relay
 
 L'extension Relay est utilisée pour relayer des données via le réseau, en
 utilisant divers protocoles :
 
 * _irc_ : proxy IRC : utilisé pour partager la connexions aux serveurs IRC avec
   un ou plusieurs autres clients IRC
-* _weechat_ : protocole utilisé par les interfaces distantes, par exemple :
-** Glowing Bear (HTML5) : https://www.glowing-bear.org/
-** QWeeChat (Qt) : https://weechat.org/download
-** WeeChat-Android (Android) : https://github.com/ubergeek42/weechat-android
-** weechat.el (Emacs) : https://github.com/the-kenny/weechat.el
-** WeeCloud (JavaScript) : https://github.com/eirikb/weecloud
+* _weechat_ : protocole utilisé par les interfaces distantes pour afficher et
+  interagir avec WeeChat, voir : https://weechat.org/about/interfaces
 
 [[relay_password]]
-==== Mot de passe
+=== Mot de passe
 
 Il est fortement recommandé de définir un mot de passe pour le relai, avec ces
 commandes :
@@ -3845,7 +3995,7 @@ commandes :
 Ce mot de passe sera utilisé pour les protocoles _irc_ et _weechat_.
 
 [[relay_totp]]
-==== TOTP
+=== TOTP
 
 TOTP (« Time-based One-Time Password » : mot de passe à usage unique basé sur le
 temps) peut être utilisé comme second facteur d'authentification pour le protocole
@@ -3876,7 +4026,7 @@ chiffres de 2 à 7, par exemple :
 ----
 
 [[relay_ssl]]
-==== SSL
+=== SSL
 
 Vous pouvez utiliser SSL en créant un certificat et clé privée et en utilisant
 le préfixe "ssl." dans le nom du protocole.
@@ -3904,7 +4054,7 @@ commande :
 ----
 
 [[relay_irc_proxy]]
-==== IRC proxy
+=== IRC proxy
 
 L'extension Relay peut agir comme un proxy IRC : elle simulera un serveur IRC,
 et vous pourrez vous connecter sur WeeChat avec n'importe quel autre client IRC
@@ -3947,13 +4097,13 @@ avec ces commandes :
 ----
 
 [[relay_weechat_protocol]]
-==== Protocole WeeChat
+=== Protocole WeeChat
 
 L'extension Relay peut envoyer les données à une interface distante en
 utilisant le protocole WeeChat.
 
-Vous pouvez vous connecter avec une interface distante, voir la liste dans
-<<relay_plugin>>.
+Vous pouvez vous connecter avec une interface distante, voir :
+https://weechat.org/about/interfaces
 
 [IMPORTANT]
 WeeChat lui-même ne peut PAS se connecter sur un autre WeeChat avec ce
@@ -3969,7 +4119,7 @@ Maintenant vous pouvez vous connecter sur le port 9000 avec une interface
 distante en utilisant le mot de passe "motdepasse".
 
 [[relay_websocket]]
-==== WebSocket
+=== WebSocket
 
 Le protocole WebSocket (https://tools.ietf.org/html/rfc6455[RFC 6455]) est
 supporté dans l'extension Relay pour tous les protocoles.
@@ -3982,7 +4132,7 @@ poignée de main et si l'origine est autorisée (voir l'option
 Un WebSocket peut être ouvert dans une page HTML5 avec une seule ligne de
 JavaScript :
 
-[source,js]
+[source,javascript]
 ----
 websocket = new WebSocket("ws://server.com:9000/weechat");
 ----
@@ -3992,7 +4142,7 @@ L'URI doit toujours se terminer par "/weechat" (pour les protocoles _irc_ et
 _weechat_).
 
 [[relay_unix_socket]]
-==== UNIX domain sockets
+=== UNIX domain sockets
 
 En utilisant l'option de protocole "unix" avec la commande `/relay add`,
 vous pouvez écouter avec n'importe quel protocole sur un socket UNIX et un
@@ -4017,12 +4167,12 @@ Cela redirige les clients relay locaux qui se connectent au port 9000 vers
 l'instance de WeeChat qui tourne sur "hostname".
 
 [[relay_commands]]
-==== Commandes
+=== Commandes
 
 include::includes/autogen_user_commands.fr.adoc[tag=relay_commands]
 
 [[relay_options]]
-==== Options
+=== Options
 
 Sections dans le fichier _relay.conf_ :
 
@@ -4041,317 +4191,100 @@ Options :
 
 include::includes/autogen_user_options.fr.adoc[tag=relay_options]
 
-[[scripts_plugins]]
-=== Scripts
+[[external_commands]]
+== Commandes externes
 
-WeeChat fournit 8 extensions pour scripts : Python, Perl, Ruby, Lua, Tcl,
-Guile (scheme), JavaScript et PHP.
-Ces extensions peuvent charger, exécuter et décharger des scripts pour ces
-langages.
+La commande `/exec` vous permet de lancer des commandes externes dans WeeChat et
+d'afficher la sortie localement, ou de l'envoyer à un tampon.
 
-Une autre extension appelée "script" est un gestionnaire de scripts et est
-utilisé pour charger/décharger des scripts pour n'importe quel langage, et
-installer/supprimer des scripts du dépôt WeeChat, qui sont visibles à cette
-URL : https://weechat.org/scripts
+[[exec_commands]]
+=== Commandes
 
-Pour plus d'informations sur comment écrire des scripts, ou sur l'API
-WeeChat pour les scripts, merci de lire le
-link:weechat_scripting.fr.html[Guide pour scripts WeeChat].
+include::includes/autogen_user_commands.fr.adoc[tag=exec_commands]
 
-[[script_commands]]
-==== Commandes Script
+[[exec_options]]
+=== Options
 
-include::includes/autogen_user_commands.fr.adoc[tag=script_commands]
-
-[[python_commands]]
-==== Commandes Python
-
-include::includes/autogen_user_commands.fr.adoc[tag=python_commands]
-
-[[perl_commands]]
-==== Commandes Perl
-
-include::includes/autogen_user_commands.fr.adoc[tag=perl_commands]
-
-[[ruby_commands]]
-==== Commandes Ruby
-
-include::includes/autogen_user_commands.fr.adoc[tag=ruby_commands]
-
-[[lua_commands]]
-==== Commandes Lua
-
-include::includes/autogen_user_commands.fr.adoc[tag=lua_commands]
-
-[[tcl_commands]]
-==== Commandes Tcl
-
-include::includes/autogen_user_commands.fr.adoc[tag=tcl_commands]
-
-[[guile_commands]]
-==== Commandes Guile
-
-include::includes/autogen_user_commands.fr.adoc[tag=guile_commands]
-
-[[javascript_commands]]
-==== Commandes JavaScript
-
-include::includes/autogen_user_commands.fr.adoc[tag=javascript_commands]
-
-[[php_commands]]
-==== Commandes PHP
-
-include::includes/autogen_user_commands.fr.adoc[tag=php_commands]
-
-[[script_options]]
-==== Options Script
-
-Sections dans le fichier _script.conf_ :
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Section | Commande de contrôle  | Description
-| look    | /set script.look.*    | Aspect/présentation.
-| color   | /set script.color.*   | Couleurs.
-| scripts | /set script.scripts.* | Options pour le téléchargement des scripts.
-|===
-
-Options :
-
-include::includes/autogen_user_options.fr.adoc[tag=script_options]
-
-[[python_options]]
-==== Options Python
-
-Sections dans le fichier _python.conf_ :
+Sections dans le fichier _exec.conf_ :
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
 | Section | Commande de contrôle | Description
-| look    | /set python.look.*   | Aspect/présentation.
+| command | /set exec.command.*  | Options pour les commandes.
+| color   | /set exec.color.*    | Couleurs.
 |===
 
 Options :
 
-include::includes/autogen_user_options.fr.adoc[tag=python_options]
+include::includes/autogen_user_options.fr.adoc[tag=exec_options]
 
-[[perl_options]]
-==== Options Perl
+[[fifo_pipe]]
+== Tube FIFO
 
-Sections dans le fichier _perl.conf_ :
+Vous pouvez contrôler WeeChat à distance, en envoyant des commandes ou du
+texte dans un tube FIFO (si l'option _fifo.file.enabled_ est activée,
+elle l'est par défaut).
 
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Section | Commande de contrôle | Description
-| look    | /set perl.look.*     | Aspect/présentation.
-|===
+Le tube FIFO est dans le répertoire WeeChat "runtime" et s'appelle
+_weechat_fifo_12345_ par défaut (où _12345_ est le process id de WeeChat).
 
-Options :
-
-include::includes/autogen_user_options.fr.adoc[tag=perl_options]
-
-[[ruby_options]]
-==== Options Ruby
-
-Sections dans le fichier _ruby.conf_ :
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Section | Commande de contrôle | Description
-| look    | /set ruby.look.*     | Aspect/présentation.
-|===
-
-Options :
-
-include::includes/autogen_user_options.fr.adoc[tag=ruby_options]
-
-[[lua_options]]
-==== Options Lua
-
-Sections dans le fichier _lua.conf_ :
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Section | Commande de contrôle | Description
-| look    | /set lua.look.*      | Aspect/présentation.
-|===
-
-Options :
-
-include::includes/autogen_user_options.fr.adoc[tag=lua_options]
-
-[[tcl_options]]
-==== Options Tcl
-
-Sections dans le fichier _tcl.conf_ :
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Section | Commande de contrôle | Description
-| look    | /set tcl.look.*      | Aspect/présentation.
-|===
-
-Options :
-
-include::includes/autogen_user_options.fr.adoc[tag=tcl_options]
-
-[[guile_options]]
-==== Options Guile
-
-Sections dans le fichier _guile.conf_ :
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Section | Commande de contrôle | Description
-| look    | /set guile.look.*    | Aspect/présentation.
-|===
-
-Options :
-
-include::includes/autogen_user_options.fr.adoc[tag=guile_options]
-
-[[javascript_options]]
-==== Options Javascript
-
-Sections dans le fichier _javascript.conf_ :
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Section | Commande de contrôle   | Description
-| look    | /set javascript.look.* | Aspect/présentation.
-|===
-
-Options :
-
-include::includes/autogen_user_options.fr.adoc[tag=javascript_options]
-
-[[php_options]]
-==== Options PHP
-
-Sections dans le fichier _php.conf_ :
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Section | Commande de contrôle | Description
-| look    | /set php.look.*      | Aspect/présentation.
-|===
-
-Options :
-
-include::includes/autogen_user_options.fr.adoc[tag=php_options]
-
-[[spell_plugin]]
-=== Spell
-
-L'extension Spell permet de vérifier l'orthographe de la ligne de commande.
-Il est possible d'utiliser plusieurs langages par tampon.
-
-La vérification de l'orthographe est désactivée par défaut et peut être
-activée/désactivée avec la touche kbd:[Alt+s].
-
-[[spell_dictionaries]]
-==== Dictionnaires
-
-Avant d'utiliser la vérification de l'orthographe, les dictionnaires doivent
-être définis soit globalement, soit spécifiquement sur un tampon.
-
-Plusieurs dictionnaires peuvent être utilisés en même temps : WeeChat vérifiera
-les mots dans tous les dictionnaires.
-
-Par exemple pour utiliser l'anglais et le français :
-
-----
-/set spell.check.default_dict "en,fr"
-----
-
-Il est possible d'utiliser un dictionnaire différent sur un tampon spécifique,
-par exemple sur un canal allemand :
-
-----
-/spell setdict de
-----
-
-Vous pouvez aussi spécifier un dictionnaire pour un groupe de tampons, par
-exemple l'anglais pour tous les canaux du serveur IRC libera :
-
-----
-/set spell.dict.irc.libera en
-----
-
-Pour plus d'informations, voir la commande <<command_spell_spell,/spell>>.
-
-[[spell_speller_options]]
-==== Options du vérificateur d'orthographe
-
-Les options du vérificateur d'orthographe peuvent être définies en ajoutant des
-options dans la section "option" de la configuration aspell.
-
-Le nom de l'option est une option de configuration aspell. La liste des options
-peut être trouvée par la commande suivante sous le shell :
-
-----
-$ aspell config
-----
-
-Par exemple, pour activer l'option "ignore-case" :
-
-----
-/set spell.option.ignore-case "true"
-----
-
-[[spell_suggestions]]
-==== Suggestions
-
-Les suggestions sont affichées dans un objet de barre appelé "spell_suggest".
-Le nombre de suggestions est défini dans l'option _spell.check.suggestions_.
-
-Pour activer les suggestions, vous devez modifier l'option
-_spell.check.suggestions_ avec un entier ≥ 0 et ajouter l'objet de barre
-"spell_suggest" à une barre, par exemple _status_.
-
-Exemple de suggestions avec un dictionnaire anglais (`en`) :
+La syntaxe pour envoyer des commandes ou du texte dans le tube FIFO est une
+des suivantes :
 
 ....
-│[12:55] [6] [irc/libera] 3:#test(+n){4} [print,prone,prune]                      │
-│[@Flashy] prinr █                                                                │
-└─────────────────────────────────────────────────────────────────────────────────┘
+  plugin.buffer *texte ou commande ici
+  *texte ou commande ici
 ....
 
-Exemple de suggestions avec des dictionnaires anglais et français (`en,fr`) :
+Quelques exemples :
 
-....
-│[12:55] [6] [irc/libera] 3:#test(+n){4} [print,prone,prune/prime,primer,primé]   │
-│[@Flashy] prinr █                                                                │
-└─────────────────────────────────────────────────────────────────────────────────┘
-....
+* Changer le pseudo sur libera en "autrepseudo" :
 
-[[spell_commands]]
-==== Commandes
+----
+$ echo 'irc.server.libera */nick autrepseudo' >/run/user/1000/weechat/weechat_fifo_12345
+----
 
-include::includes/autogen_user_commands.fr.adoc[tag=spell_commands]
+* Envoyer un message sur le canal IRC #weechat :
 
-[[spell_options]]
-==== Options
+----
+$ echo 'irc.libera.#weechat *bonjour !' >/run/user/1000/weechat/weechat_fifo_12345
+----
 
-Sections dans le fichier _spell.conf_ :
+* Envoyer un message sur le tampon courant :
+
+----
+$ echo '*bonjour !' >/run/user/1000/weechat/weechat_fifo_12345
+----
+
+* Envoyer deux commandes pour décharger/recharger les scripts Python (vous devez
+  les séparer par "\n") :
+
+----
+$ printf '%b' '*/python unload\n*/python autoload\n' >/run/user/1000/weechat/weechat_fifo_12345
+----
+
+[[fifo_commands]]
+=== Commandes
+
+include::includes/autogen_user_commands.fr.adoc[tag=fifo_commands]
+
+[[fifo_options]]
+=== Options
+
+Sections dans le fichier _fifo.conf_ :
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
-| Section    | Commande de contrôle                   | Description
-| color      | /set spell.color.*                     | Couleurs.
-| check      | /set spell.check.*                     | Options pour contrôler la vérification orthographique.
-| dict       | <<command_spell_spell,/spell setdict>> +
-               /set spell.dict.*                      | Dictionnaires utilisés par tampon (les options peuvent être ajoutées/supprimées dans la section).
-| look       | /set spell.look.*                      | Aspect/présentation.
-| option     | /set spell.option.*                    | <<spell_speller_options,Options du vérificateur d'orthographe>> (les options peuvent être ajoutées/supprimées dans la section).
+| Section | Commande de contrôle | Description
+| file    | /set fifo.file.*     | Contrôle du tube FIFO.
 |===
 
 Options :
 
-include::includes/autogen_user_options.fr.adoc[tag=spell_options]
+include::includes/autogen_user_options.fr.adoc[tag=fifo_options]
 
-[[trigger_plugin]]
-=== Trigger
+[[trigger]]
+== Trigger
 
 Trigger est le couteau suisse de WeeChat : il peut accrocher différentes choses
 (signal, modificateur, print, ...), changer le contenu des données, et exécuter
@@ -4363,7 +4296,7 @@ modificateurs, etc. Il peut être utile de lire la
 link:weechat_plugin_api.fr.html#hooks[Référence API extension WeeChat / Hooks].
 
 [[trigger_default]]
-==== Triggers par défaut
+=== Triggers par défaut
 
 WeeChat créé 5 triggers par défaut, qui peuvent être désactivés, mis à jour ou
 supprimés :
@@ -4399,7 +4332,7 @@ Liste des triggers par défaut :
 |===
 
 [[trigger_anatomy]]
-==== Anatomie d'un trigger
+=== Anatomie d'un trigger
 
 Un trigger a les options suivantes (les noms sont
 `trigger.trigger.<nom>.<option>`) :
@@ -4459,7 +4392,7 @@ trigger.trigger.beep.post_action = none
 ----
 
 [[trigger_execution]]
-==== Exécution
+=== Exécution
 
 Lorsque la fonction de rappel d'un trigger est appelée, les actions suivantes
 sont exécutées, dans cet ordre, si les triggers sont globalement activés et si
@@ -4473,7 +4406,7 @@ le trigger lui-même est activé :
 . effectuer l'action "post" (si différente de `none`).
 
 [[trigger_hook_arguments]]
-==== Paramètres du hook
+=== Paramètres du hook
 
 Les paramètres dépendent du type de "hook" utilisé. Ils sont séparés par des
 points-virgules.
@@ -4584,7 +4517,7 @@ points-virgules.
 |===
 
 [[trigger_conditions]]
-==== Conditions
+=== Conditions
 
 Les conditions sont utilisées pour continuer l'exécution du trigger, ou tout
 stopper.
@@ -4602,7 +4535,7 @@ ${tg_displayed} && (${tg_highlight} || ${tg_msg_pv})
 ----
 
 [[trigger_regex]]
-==== Expression régulière
+=== Expression régulière
 
 L'expression régulière est utilisée pour modifier des variables dans la table
 de hachage de la fonction de rappel.
@@ -4672,7 +4605,7 @@ Dans cet exemple, le séparateur utilisé est "==" car il y a "/" dans
 l'expression régulière.
 
 [[trigger_command]]
-==== Commande
+=== Commande
 
 La commande est exécutée après le remplacement du texte avec l'expression
 régulière.
@@ -4689,7 +4622,7 @@ beep (BEL) :
 ----
 
 [[trigger_callback_data]]
-==== Données dans les fonctions de rappel
+=== Données dans les fonctions de rappel
 
 Les données reçues dans les fonctions de rappel sont stockées dans des tables
 de hachage (pointeurs et chaînes) et peuvent être utilisées dans les options
@@ -4718,7 +4651,7 @@ de hachage :
 |===
 
 [[trigger_data_signal]]
-===== Signal
+==== Signal
 
 La fonction de rappel "signal" définit les variables suivantes dans la table de
 hachage :
@@ -4762,7 +4695,7 @@ ${buffer[${tg_signal_data}].full_name}
 ----
 
 [[trigger_data_hsignal]]
-===== Hsignal
+==== Hsignal
 
 La fonction de rappel "hsignal" définit les variables suivantes dans la table
 de hachage :
@@ -4777,7 +4710,7 @@ La table de hachage contient toutes les clés/valeurs de la table de hachage
 reçue (type : chaîne/chaîne).
 
 [[trigger_data_modifier]]
-===== Modifier
+==== Modifier
 
 La fonction de rappel "modifier" définit les variables suivantes dans la table
 de hachage :
@@ -4812,7 +4745,7 @@ données supplémentaires sont ajoutées dans la table de hachage (voir le
 <<trigger_data_signal,"hook" signal>>).
 
 [[trigger_data_line]]
-===== Line
+==== Line
 
 La fonction de rappel "line" définit les variables suivantes dans la table
 de hachage :
@@ -4847,12 +4780,21 @@ Variables définies avec les étiquettes du message :
 | tg_tag_prefix_nick | chaîne | Couleur du pseudo dans le préfixe (depuis l'étiquette "prefix_nick_ccc").
 | tg_tag_host        | chaîne | Nom d'utilisateur et hôte, format : utilisateur@hôte (depuis l'étiquette "host_xxx").
 | tg_tag_notify      | chaîne | Niveau de notification (_none_, _message_, _private_, _highlight_).
+| tg_tag_irc_xxx     | chaîne | Étiquette de message IRC (clé "xxx"). ^(1)^
 | tg_notify          | chaîne | Niveau de notification, si différent de _none_.
 | tg_msg_pv          | chaîne | "1" pour un message privé, sinon "0".
 |===
 
+[NOTE]
+====
+^(1)^ Des caractères spéciaux sont remplacés dans l'étiquette IRC :
+
+* clé : `_` -> `-` et `,` -> `;`
+* valeur : `,` -> `;`
+====
+
 [[trigger_data_print]]
-===== Print
+==== Print
 
 La fonction de rappel "print" définit les variables suivantes dans la table de
 hachage :
@@ -4881,12 +4823,21 @@ Variables définies avec les étiquettes du message :
 | tg_tag_prefix_nick | chaîne | Couleur du pseudo dans le préfixe (depuis l'étiquette "prefix_nick_ccc").
 | tg_tag_host        | chaîne | Nom d'utilisateur et hôte, format : utilisateur@hôte (depuis l'étiquette "host_xxx").
 | tg_tag_notify      | chaîne | Niveau de notification (_none_, _message_, _private_, _highlight_).
+| tg_tag_irc_xxx     | chaîne | Étiquette de message IRC (clé "xxx"). ^(1)^
 | tg_notify          | chaîne | Niveau de notification, si différent de _none_.
 | tg_msg_pv          | chaîne | "1" pour un message privé, sinon "0".
 |===
 
+[NOTE]
+====
+^(1)^ Des caractères spéciaux sont remplacés dans l'étiquette IRC :
+
+* clé : `_` -> `-` et `,` -> `;`
+* valeur : `,` -> `;`
+====
+
 [[trigger_data_command]]
-===== Command
+==== Command
 
 La fonction de rappel "command" définit les variables suivantes dans la table
 de hachage :
@@ -4903,7 +4854,7 @@ de hachage :
 |===
 
 [[trigger_data_command_run]]
-===== Command_run
+==== Command_run
 
 La fonction de rappel "command_run" définit les variables suivantes dans la
 table de hachage :
@@ -4916,7 +4867,7 @@ table de hachage :
 |===
 
 [[trigger_data_timer]]
-===== Timer
+==== Timer
 
 La fonction de rappel "timer" définit les variables suivantes dans la table de
 hachage :
@@ -4929,7 +4880,7 @@ hachage :
 |===
 
 [[trigger_data_config]]
-===== Config
+==== Config
 
 La fonction de rappel "config" définit les variables suivantes dans la table de
 hachage :
@@ -4942,7 +4893,7 @@ hachage :
 |===
 
 [[trigger_data_focus]]
-===== Focus
+==== Focus
 
 La fonction de rappel "focus" définit les variables suivantes dans la table de
 hachage :
@@ -4958,7 +4909,7 @@ La table de hachage contient toutes les clés/valeurs de la table de hachage
 reçue (type : chaîne/chaîne).
 
 [[trigger_data_info]]
-===== Info
+==== Info
 
 La fonction de rappel "info" définit les variables suivantes dans la table de
 hachage :
@@ -4972,7 +4923,7 @@ hachage :
 |===
 
 [[trigger_data_info_hashtable]]
-===== Info_hashtable
+==== Info_hashtable
 
 La fonction de rappel "info_hashtable" définit les variables suivantes dans la
 table de hachage :
@@ -4987,10 +4938,10 @@ La table de hachage contient toutes les clés/valeurs de la table de hachage
 reçue (type : chaîne/chaîne).
 
 [[trigger_examples]]
-==== Exemples
+=== Exemples
 
 [[trigger_example_url_color]]
-===== Couleur pour les URLs
+==== Couleur pour les URLs
 
 Afficher les URLs en vert :
 
@@ -5004,7 +4955,7 @@ correctement toutes les URLs, mais elle est plus rapide qu'une expression
 régulière complexe.
 
 [[trigger_example_auto_pong]]
-===== Pong auto sur les requêtes ping
+==== Pong auto sur les requêtes ping
 
 Lorsque quelqu'un envoie un "ping" dans un tampon privé, le trigger répondra
 automatiquement avec un `pong` :
@@ -5014,7 +4965,7 @@ automatiquement avec un `pong` :
 ----
 
 [[trigger_example_responsive_layout]]
-===== Disposition réceptive
+==== Disposition réceptive
 
 Les triggers suivants peuvent être utilisées pour personnaliser l'affichage
 lorsque la taille du terminal change :
@@ -5035,7 +4986,7 @@ Et la barre est restaurée lorsque la largeur du terminal est supérieure ou
 égale à 100 caractères.
 
 [[trigger_example_config_save]]
-===== Sauvegarde automatique de la configuration
+==== Sauvegarde automatique de la configuration
 
 Vous pouvez sauvegarder automatiquement les fichiers de configuration
 (`+*.conf+`), par example chaque heure :
@@ -5055,12 +5006,12 @@ La commande `/mute /save` sauvegarde silencieusement les fichiers de
 configuration (rien n'est affiché sur le tampon "core").
 
 [[trigger_commands]]
-==== Commandes
+=== Commandes
 
 include::includes/autogen_user_commands.fr.adoc[tag=trigger_commands]
 
 [[trigger_options]]
-==== Options
+=== Options
 
 Sections dans le fichier _trigger.conf_ :
 
@@ -5078,136 +5029,333 @@ Options :
 
 include::includes/autogen_user_options.fr.adoc[tag=trigger_options]
 
-[[typing_plugin]]
-=== Typing
+[[extending_weechat]]
+== Extension de WeeChat
 
-L'extension typing est utilisée pour informer les autres utilisateurs quand
-vous êtes en train d'écrire un message et afficher la liste des utilisateurs
-qui écrivent actuellement un message sur un tampon.
+WeeChat est conçu de manière modulaire et peut être étendu avec des extensions
+et des scripts.
 
-Elle est utilisée par l'extension IRC sur les tampons de canaux et privés,
-lorsque la capacité "message-tags" est activée (vous pouvez vérifier avec la
-commande <<command_irc_cap,/cap>>). +
-Sous le capot, l'étiquette client typing est utilisée, en suivant cette
-spécification : https://ircv3.net/specs/client-tags/typing.html.
+Il est important de bien faire la différence entre une _extension_ et un
+_script_ : une _extension_ est un fichier binaire compilé et chargé avec la
+commande `/plugin`, tandis qu'un _script_ est un fichier texte chargé par une
+extension comme _python_ par la commande `/python`.
 
-[[typing_activation]]
-==== Activation
+[[plugins]]
+=== Extensions
 
-Pour des considérations de confidentialité, la fonctionnalité typing est
-désactivée par défaut. +
-Si vous voulez l'utiliser, vous devez activer des options dans les extensions
-typing et irc :
+Une extension est une bibliothèque dynamique, écrite en C et compilée, qui est
+chargée par WeeChat.
+Sous GNU/Linux, ce fichier a une extension ".so", et ".dll" sous Windows.
+
+Les extensions trouvées sont automatiquement chargées par WeeChat lorsqu'il
+démarre, et il est possible de charger et décharger des extensions pendant que
+WeeChat tourne.
+
+Vous pouvez utiliser la commande `/plugin` pour charger/décharger une
+extension, ou afficher les extensions chargées.
+
+Quand une extension est déchargée, WeeChat supprime :
+
+* les tampons
+* les options de configuration (les options sont écrites dans les fichiers)
+* tous les "hooks" : commandes, modificateurs, processus, etc.
+* les infos et infolists
+* les "hdata"
+* les objets de barre.
+
+Exemples pour charger, décharger et afficher les extensions :
 
 ----
-/set typing.look.enabled_nicks on
-/set typing.look.enabled_self on
-/set irc.look.typing_status_nicks on
-/set irc.look.typing_status_self on
+/plugin load irc
+/plugin unload irc
+/plugin list
 ----
 
-Les notifications "typing" sont affichées à la fin de la barre de statut.
+Les extensions par défaut sont :
 
-Exemple de barre de statut avec l'objet "typing" : "bob" écrit un message et
-"alice" était en train d'en écrire un mais a fait une pause :
+[width="100%",cols="1,5",options="header"]
+|===
+| Extension  | Description
+| alias      | Définition d'alias pour les commandes.
+| buflist    | Objet de barre avec la liste des tampons.
+| charset    | Encodage/encodage avec jeu de caractère sur les tampons.
+| exec       | Exécution de commandes externes dans WeeChat.
+| fifo       | Tube FIFO pour envoyer des commandes à distance vers WeeChat.
+| fset       | Modification rapide des options de WeeChat et des extensions.
+| irc        | Discussion avec le protocole IRC.
+| logger     | Enregistrement des tampons dans des fichiers.
+| relay      | Relai de données via le réseau.
+| script     | Gestionnaire de scripts.
+| python     | Interface (API) pour scripts Python.
+| perl       | Interface (API) pour scripts Perl.
+| ruby       | Interface (API) pour scripts Ruby.
+| lua        | Interface (API) pour scripts Lua.
+| tcl        | Interface (API) pour scripts Tcl.
+| guile      | Interface (API) pour scripts Guile (scheme).
+| javascript | Interface (API) pour scripts JavaScript.
+| php        | Interface (API) pour scripts PHP.
+| spell      | Vérification orthographique de la ligne de commande.
+| trigger    | Remplacement de texte et exécution de commande sur des évènements de WeeChat ou des extensions.
+| typing     | Affichage des utilisateurs qui sont en train d'écrire des messages.
+| xfer       | Transfert de fichier et discussion directe.
+|===
 
+Pour en apprendre plus sur le développement d'extension ou de script (via
+l'API), merci de consulter la
+link:weechat_plugin_api.fr.html[Référence API extension WeeChat] ou le
+link:weechat_scripting.fr.html[Guide pour scripts WeeChat].
+
+[[scripts]]
+=== Scripts
+
+WeeChat fournit 8 extensions pour scripts : Python, Perl, Ruby, Lua, Tcl,
+Guile (scheme), JavaScript et PHP.
+Ces extensions peuvent charger, exécuter et décharger des scripts pour ces
+langages.
+
+Pour plus d'informations sur comment écrire des scripts, ou sur l'API
+WeeChat pour les scripts, merci de lire le
+link:weechat_scripting.fr.html[Guide pour scripts WeeChat].
+
+[[script_manager]]
+==== Gestionnaire de scripts
+
+Le gestionnaire de scripts (commands <<command_script_script,/script>>) est
+utilisé pour charger/décharger des scripts pour n'importe quel langage, et
+installer/supprimer des scripts du dépôt WeeChat, qui sont visibles à cette
+URL : https://weechat.org/scripts
+
+Pour des considérations de confidentialité, le téléchargement des scripts est
+désactivé par défaut. +
+Pour l'activer, tapez cette commande :
+
+----
+/set script.scripts.download_enabled on
+----
+
+Vous pouvez alors télécharger la liste des scripts et les afficher dans un tampon
+avec la commande <<command_script_script,/script>> :
+
+[subs="quotes,attributes"]
+:x: *
 ....
-│[12:55] [6] [irc/libera] 3:#test(+n){4} [Écrit : bob, (alice)]                   │
-│[@Flashy] █                                                                      │
-└─────────────────────────────────────────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│1.weechat│368/368 scripts (filter: {x}) | Sort: i,p,n | Alt+key/input: i=install, r=remove, l=load, L=reload, u=│
+│2.scripts│{x}      autosort.py                 3.9     2020-10-11 | Automatically keep buffers grouped by server│
+│         │{x}      multiline.pl                0.6.3   2016-01-02 | Multi-line edit box, also supports editing o│
+│         │{x}      highmon.pl                  2.7     2020-06-21 | Adds a highlight monitor buffer.            │
+│         │##{x}ia r  grep.py               0.8.5 0.8.5   2021-05-11 | Search regular expression in buffers or log ##│
+│         │{x}      autojoin.py                 0.3.1   2019-10-06 | Configure autojoin for all servers according│
+│         │{x}      colorize_nicks.py           28      2021-03-06 | Use the weechat nick colors in the chat area│
+│         │{x}ia r  go.py                 2.7   2.7     2021-05-26 | Quick jump to buffers.                      │
+│         │{x}      text_item.py                0.9     2019-05-25 | Add bar items with plain text.              │
+│         │       aesthetic.py                1.0.6   2020-10-25 | Make messages more A E S T H E T I C A L L Y│
+│         │       aformat.py                  0.2     2018-06-21 | Alternate text formatting, useful for relays│
+│         │       alternatetz.py              0.3     2018-11-11 | Add an alternate timezone item.             │
+│         │       amarok2.pl                  0.7     2012-05-08 | Amarok 2 control and now playing script.    │
+│         │       amqp_notify.rb              0.1     2011-01-12 | Send private messages and highlights to an A│
+│         │       announce_url_title.py       19      2021-06-05 | Announce URL title to user or to channel.   │
+│         │       anotify.py                  1.0.2   2020-05-16 | Notifications of private messages, highlight│
+│         │       anti_password.py            1.2.1   2021-03-13 | Prevent a password from being accidentally s│
+│         │       apply_corrections.py        1.3     2018-06-21 | Display corrected text when user sends s/typ│
+│         │       arespond.py                 0.1.1   2020-10-11 | Simple autoresponder.                       │
+│         │       atcomplete.pl               0.001   2016-10-29 | Tab complete nicks when prefixed with "@".  │
+│         │       audacious.pl                0.3     2009-05-03 | Display which song Audacious is currently pl│
+│         │       auth.rb                     0.3     2014-05-30 | Automatically authenticate with NickServ usi│
+│         │       auto_away.py                0.4     2018-11-11 | A simple auto-away script.                  │
+│         │       autoauth.py                 1.3     2021-11-07 | Permits to auto-authenticate when changing n│
+│         │       autobump.py                 0.1.0   2019-06-14 | Bump buffers upon activity.                 │
+│         │       autoconf.py                 0.4     2021-05-11 | Auto save/load changed options in a .weerc f│
+│         │       autoconnect.py              0.3.3   2019-10-06 | Reopen servers and channels opened last time│
+│         │[12:55] [2] [script] 2:scripts                                                                      │
+│         │█                                                                                                   │
+└──────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
 ....
 
-[[typing_signals_sent]]
-==== Signaux envoyés
+[[script_commands]]
+===== Commandes Script
 
-Lorsque vous écrivez un message (pas une commande commençant par `/`), l'extension
-typing envoie des signaux pour informer les autres extensions (comme IRC) que
-vous êtes en train d'écrire, et ces extensions peuvent alors envoyer des
-notifications aux autres utilisateurs.
+include::includes/autogen_user_commands.fr.adoc[tag=script_commands]
 
-Les signaux suivants sont envoyés quand vous écrivez des messages :
+[[script_options]]
+===== Options Script
 
-[width="100%",cols="1,1,5",options="header"]
-|===
-| Signal              | Paramètres         | Description
-| typing_self_typing  | Pointeur : tampon. | Vous écrivez un message.
-| typing_self_paused  | Pointeur : tampon. | Vous avez fait une pause dans l'écriture d'un message.
-| typing_self_cleared | Pointeur : tampon. | Vous avez effacé la ligne de commande sans envoyée le message.
-| typing_self_sent    | Pointeur : tampon. | Vous avez envoyé le message au tampon.
-|===
-
-[[typing_signals_caught]]
-==== Signaux captés
-
-L'extension typing capte des signaux qui peuvent être envoyés par d'autres
-extensions (comme IRC), pour mettre à jour des tables de hachage internes
-qui sont utilisées pour sauvegarder l'état d'écriture de message des pseudos
-sur les tampons. Ces tables de hachages sont utilisées pour construire le
-contenu de l'objet de barre "typing".
-
-Les signaux suivants sont captés par l'extension typing :
-
-[width="100%",cols="1,4,3",options="header"]
-|===
-| Signal | Paramètres | Description
-
-| typing_set_nick |
-  Chaîne : pointeur tampon + ";" + état (un parmi ceux-ci : "off", "typing",
-  "paused", "cleared") + ";" + pseudo. +
-  Example: "0x1234abcd;typing;alice". |
-  Définir l'état de la saisie du pseudo sur le tampon.
-
-| typing_reset_buffer |
-  Pointeur : tampon. |
-  Supprimer l'état de saisir pour tous les pseudos d'un tampon.
-|===
-
-[[typing_options]]
-==== Options
-
-Sections dans le fichier _typing.conf_ :
+Sections dans le fichier _script.conf_ :
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
-| Section | Commande de contrôle | Description
-| look    | /set typing.look.*   | Aspect/présentation.
+| Section | Commande de contrôle  | Description
+| look    | /set script.look.*    | Aspect/présentation.
+| color   | /set script.color.*   | Couleurs.
+| scripts | /set script.scripts.* | Options pour le téléchargement des scripts.
 |===
 
 Options :
 
-include::includes/autogen_user_options.fr.adoc[tag=typing_options]
+include::includes/autogen_user_options.fr.adoc[tag=script_options]
 
-[[xfer_plugin]]
-=== Xfer
+[[scripting_plugins]]
+==== Extensions pour les scripts
 
-L'extension Xfer permet :
+[[python_commands]]
+===== Commandes Python
 
-* la discussion directe (entre deux machines, sans serveur), par exemple le
-  "DCC Chat" via l'extension IRC
-* le transfert de fichiers, par exemple le "DCC" via l'extension IRC
+include::includes/autogen_user_commands.fr.adoc[tag=python_commands]
 
-[[xfer_commands]]
-==== Commandes
+[[perl_commands]]
+===== Commandes Perl
 
-include::includes/autogen_user_commands.fr.adoc[tag=xfer_commands]
+include::includes/autogen_user_commands.fr.adoc[tag=perl_commands]
 
-[[xfer_options]]
-==== Options
+[[ruby_commands]]
+===== Commandes Ruby
 
-Sections dans le fichier _xfer.conf_ :
+include::includes/autogen_user_commands.fr.adoc[tag=ruby_commands]
+
+[[lua_commands]]
+===== Commandes Lua
+
+include::includes/autogen_user_commands.fr.adoc[tag=lua_commands]
+
+[[tcl_commands]]
+===== Commandes Tcl
+
+include::includes/autogen_user_commands.fr.adoc[tag=tcl_commands]
+
+[[guile_commands]]
+===== Commandes Guile
+
+include::includes/autogen_user_commands.fr.adoc[tag=guile_commands]
+
+[[javascript_commands]]
+===== Commandes JavaScript
+
+include::includes/autogen_user_commands.fr.adoc[tag=javascript_commands]
+
+[[php_commands]]
+===== Commandes PHP
+
+include::includes/autogen_user_commands.fr.adoc[tag=php_commands]
+
+[[python_options]]
+===== Options Python
+
+Sections dans le fichier _python.conf_ :
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
 | Section | Commande de contrôle | Description
-| look    | /set xfer.look.*     | Aspect/présentation.
-| color   | /set xfer.color.*    | Couleurs.
-| network | /set xfer.network.*  | Options réseau.
-| file    | /set xfer.file.*     | Options pour les fichiers envoyés/reçus.
+| look    | /set python.look.*   | Aspect/présentation.
 |===
 
 Options :
 
-include::includes/autogen_user_options.fr.adoc[tag=xfer_options]
+include::includes/autogen_user_options.fr.adoc[tag=python_options]
+
+[[perl_options]]
+===== Options Perl
+
+Sections dans le fichier _perl.conf_ :
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section | Commande de contrôle | Description
+| look    | /set perl.look.*     | Aspect/présentation.
+|===
+
+Options :
+
+include::includes/autogen_user_options.fr.adoc[tag=perl_options]
+
+[[ruby_options]]
+===== Options Ruby
+
+Sections dans le fichier _ruby.conf_ :
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section | Commande de contrôle | Description
+| look    | /set ruby.look.*     | Aspect/présentation.
+|===
+
+Options :
+
+include::includes/autogen_user_options.fr.adoc[tag=ruby_options]
+
+[[lua_options]]
+===== Options Lua
+
+Sections dans le fichier _lua.conf_ :
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section | Commande de contrôle | Description
+| look    | /set lua.look.*      | Aspect/présentation.
+|===
+
+Options :
+
+include::includes/autogen_user_options.fr.adoc[tag=lua_options]
+
+[[tcl_options]]
+===== Options Tcl
+
+Sections dans le fichier _tcl.conf_ :
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section | Commande de contrôle | Description
+| look    | /set tcl.look.*      | Aspect/présentation.
+|===
+
+Options :
+
+include::includes/autogen_user_options.fr.adoc[tag=tcl_options]
+
+[[guile_options]]
+===== Options Guile
+
+Sections dans le fichier _guile.conf_ :
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section | Commande de contrôle | Description
+| look    | /set guile.look.*    | Aspect/présentation.
+|===
+
+Options :
+
+include::includes/autogen_user_options.fr.adoc[tag=guile_options]
+
+[[javascript_options]]
+===== Options Javascript
+
+Sections dans le fichier _javascript.conf_ :
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section | Commande de contrôle   | Description
+| look    | /set javascript.look.* | Aspect/présentation.
+|===
+
+Options :
+
+include::includes/autogen_user_options.fr.adoc[tag=javascript_options]
+
+[[php_options]]
+===== Options PHP
+
+Sections dans le fichier _php.conf_ :
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section | Commande de contrôle | Description
+| look    | /set php.look.*      | Aspect/présentation.
+|===
+
+Options :
+
+include::includes/autogen_user_options.fr.adoc[tag=php_options]
 
 [[support]]
 == Support

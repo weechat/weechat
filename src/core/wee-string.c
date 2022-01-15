@@ -75,22 +75,22 @@ struct t_hashtable *string_hashtable_shared = NULL;
  */
 
 char *
-string_strndup (const char *string, int length)
+string_strndup (const char *string, int bytes)
 {
     char *result;
 
-    if (!string || (length < 0))
+    if (!string || (bytes < 0))
         return NULL;
 
-    if ((int)strlen (string) < length)
+    if ((int)strlen (string) < bytes)
         return strdup (string);
 
-    result = malloc (length + 1);
+    result = malloc (bytes + 1);
     if (!result)
         return NULL;
 
-    memcpy (result, string, length);
-    result[length] = '\0';
+    memcpy (result, string, bytes);
+    result[bytes] = '\0';
 
     return result;
 }

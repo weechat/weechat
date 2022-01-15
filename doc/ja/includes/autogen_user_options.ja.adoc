@@ -3064,11 +3064,11 @@
 ** 値: -1 .. 43200
 ** デフォルト値: `+0+`
 
-* [[option_relay.network.compression_level]] *relay.network.compression_level*
-** 説明: pass:none[WeeChat プロトコルでクライアントに送信するパケットの圧縮レベル (0 = 圧縮しない、1 = 低圧縮 ... 9 = 高圧縮)]
+* [[option_relay.network.compression]] *relay.network.compression*
+** 説明: pass:none[compression of messages sent to clients with "weechat" protocol: 0 = disable compression, 1 = low compression / fast ... 100 = best compression / slow; the value is a percentage converted to 1-9 for zlib and 1-19 for zstd; the default value is recommended, it offers a good compromise between compression and speed]
 ** タイプ: 整数
-** 値: 0 .. 9
-** デフォルト値: `+6+`
+** 値: 0 .. 100
+** デフォルト値: `+20+`
 
 * [[option_relay.network.ipv6]] *relay.network.ipv6*
 ** 説明: pass:none[デフォルトで IPv6 ソケットをリッスン (デフォルトの IPv4 に加えて); 特定のプロトコルでプロトコルに IPv4 と IPv6 (個別または両方) を強制 (/help relay を参照してください)]

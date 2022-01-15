@@ -1089,6 +1089,14 @@ $ cd ~/.cache/weechat/script
 $ curl -O https://weechat.org/files/plugins.xml.gz
 ----
 
+Jeśli używasz macOS i pobrany plik ma wielkość 0 bajtów, spróbuj ustawić poniższą
+zmianną w inicjalizującym powłokę w terminalu lub z linii poleceń przed
+uruchomieniem WeeChat:
+
+----
+export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
+----
+
 [[spell_dictionaries]]
 === Zainstalowałem słowniki aspell w systemie, jak mogę ich użyć bez restartowania WeeChat?
 

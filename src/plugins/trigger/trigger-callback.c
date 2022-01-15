@@ -150,8 +150,8 @@ trigger_callback_set_tags (struct t_gui_buffer *buffer,
                            const char **tags, int tags_count,
                            struct t_hashtable *extra_vars)
 {
-    const char *localvar_type;
-    char str_temp[128];
+    const char *localvar_type, *pos;
+    char str_temp[1024], *key;
     int i;
 
     snprintf (str_temp, sizeof (str_temp), "%d", tags_count);
@@ -192,6 +192,28 @@ trigger_callback_set_tags (struct t_gui_buffer *buffer,
         else if (strncmp (tags[i], "host_", 5) == 0)
         {
             weechat_hashtable_set (extra_vars, "tg_tag_host", tags[i] + 5);
+        }
+        else if (strncmp (tags[i], "irc_tag_", 8) == 0)
+        {
+            /*
+             * example:
+             *   tag: "irc_tag_time_2021-12-30T21:02:50.038Z"
+             * is added in the hashtable like this:
+             *   key  : "tg_tag_irc_time"
+             *   value: "2021-12-30T21:02:50.038Z"
+             */
+            pos = strchr (tags[i] + 8, '_');
+            if (pos && pos > tags[i] + 8)
+            {
+                key = weechat_strndup (tags[i] + 8, pos - tags[i] - 8);
+                if (key)
+                {
+                    snprintf (str_temp, sizeof (str_temp),
+                              "tg_tag_irc_%s", key);
+                    weechat_hashtable_set (extra_vars, str_temp, pos + 1);
+                    free (key);
+                }
+            }
         }
     }
 

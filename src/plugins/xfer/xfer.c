@@ -560,7 +560,7 @@ xfer_alloc ()
 int
 xfer_nick_auto_accepted (const char *server, const char *nick)
 {
-    int rc, num_nicks, i;
+    int rc, i, num_nicks, num_chars;
     char **nicks, *pos;
 
     rc = 0;
@@ -581,7 +581,8 @@ xfer_nick_auto_accepted (const char *server, const char *nick)
             pos = strrchr (nicks[i], '.');
             if (pos)
             {
-                if ((weechat_strncasecmp (server, nicks[i], pos - nicks[i]) == 0)
+                num_chars = weechat_utf8_pos (nicks[i], pos - nicks[i]);
+                if ((weechat_strncasecmp (server, nicks[i], num_chars) == 0)
                     && (weechat_strcasecmp (nick, pos + 1) == 0))
                 {
                     rc = 1;

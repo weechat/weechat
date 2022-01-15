@@ -29,7 +29,6 @@ EXTRA_DIST = CMakeLists.txt \
              weechat_scripting.en.adoc \
              weechat_faq.en.adoc \
              weechat_quickstart.en.adoc \
-             weechat_tester.en.adoc \
              weechat_relay_protocol.en.adoc \
              weechat_dev.en.adoc \
              includes/autogen_api_completions.en.adoc \
@@ -58,7 +57,6 @@ if DOC
 		weechat_scripting.en.html \
 		weechat_faq.en.html \
 		weechat_quickstart.en.html \
-		weechat_tester.en.html \
 		weechat_relay_protocol.en.html \
 		weechat_dev.en.html
   doc_install = install-doc
@@ -91,10 +89,6 @@ weechat_faq.en.html: weechat_faq.en.adoc $(abs_top_srcdir)/doc/docinfo.html
 # quickstart
 weechat_quickstart.en.html: weechat_quickstart.en.adoc $(abs_top_srcdir)/doc/docinfo.html
 	$(ASCIIDOCTOR) $(ASCIIDOCTOR_ARGS) -a revnumber="$(VERSION)" -o weechat_quickstart.en.html $(abs_top_srcdir)/doc/en/weechat_quickstart.en.adoc
-
-# tester's guide
-weechat_tester.en.html: weechat_tester.en.adoc $(abs_top_srcdir)/doc/docinfo.html
-	$(ASCIIDOCTOR) $(ASCIIDOCTOR_ARGS) -a revnumber="$(VERSION)" -o weechat_tester.en.html $(abs_top_srcdir)/doc/en/weechat_tester.en.adoc
 
 # relay protocol
 weechat_relay_protocol.en.html: weechat_relay_protocol.en.adoc $(abs_top_srcdir)/doc/docinfo.html

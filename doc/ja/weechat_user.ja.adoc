@@ -108,9 +108,12 @@ WeeChat:
 | pkg-config             |                  | インストール済みライブラリを検出
 | libncursesw5-dev ^(2)^ |                  | ncurses インターフェース
 | libcurl4-gnutls-dev    |                  | URL 転送
-| zlib1g-dev             |                  | relay プラグインでパケットを圧縮 (weechat プロトコル)、スクリプトプラグイン
 | libgcrypt20-dev        |                  | 保護データ、IRC SASL 認証
 | libgnutls28-dev        | 2.2.0 以上 ^(3)^ | IRC サーバへの SSL 接続、IRC SASL 認証 (ECDSA-NIST256P-CHALLENGE)
+// TRANSLATION MISSING
+| zlib1g-dev             |                  | Compression of messages (WeeChat -> client) with https://zlib.net/[zlib] in relay plugin (weechat protocol), script plugin.
+// TRANSLATION MISSING
+| libzstd-dev            |                  | Compression of messages (WeeChat -> client) with https://facebook.github.io/zstd/[Zstandard] in relay plugin (weechat protocol).
 |===
 
 [NOTE]
@@ -209,13 +212,13 @@ CMake に対するオプションを指定するには、以下の書式を使�
   config, data, cache, runtime.
 
 | ENABLE_ALIAS | `ON`, `OFF` | ON |
-  <<alias_plugin,Alias プラグイン>>のコンパイル。
+  <<command_aliases,Alias プラグイン>>のコンパイル。
 
 | ENABLE_BUFLIST | `ON`, `OFF` | ON |
-  <<buflist_plugin,Buflist プラグイン>>のコンパイル。
+  <<buflist,Buflist プラグイン>>のコンパイル。
 
 | ENABLE_CHARSET | `ON`, `OFF` | ON |
-  <<charset_plugin,Charset プラグイン>>のコンパイル。
+  <<charset,Charset プラグイン>>のコンパイル。
 
 | ENABLE_MAN | `ON`, `OFF` | OFF |
   man ページのコンパイル。
@@ -224,34 +227,34 @@ CMake に対するオプションを指定するには、以下の書式を使�
   HTML 文書のコンパイル。
 
 | ENABLE_ENCHANT | `ON`, `OFF` | OFF |
-  Enchant と含めた <<spell_plugin,Spell プラグイン>>のコンパイル。
+  Enchant と含めた <<spell_checking,Spell プラグイン>>のコンパイル。
 
 | ENABLE_EXEC | `ON`, `OFF` | ON |
-  <<exec_plugin,Exec プラグイン>>のコンパイル。
+  <<external_commands,Exec プラグイン>>のコンパイル。
 
 | ENABLE_FIFO | `ON`, `OFF` | ON |
-  <<fifo_plugin,Fifo プラグイン>>のコンパイル。
+  <<fifo_pipe,Fifo プラグイン>>のコンパイル。
 
 | ENABLE_FSET | `ON`, `OFF` | ON |
-  <<fset_plugin,Fset プラグイン>>のコンパイル。
+  <<fset,Fset プラグイン>>のコンパイル。
 
 | ENABLE_GUILE | `ON`, `OFF` | ON |
-  <<scripts_plugins,Guile プラグイン>> (Scheme) のコンパイル。
+  <<scripting_plugins,Guile プラグイン>> (Scheme) のコンパイル。
 
 | ENABLE_IRC | `ON`, `OFF` | ON |
-  <<irc_plugin,IRC プラグイン>>のコンパイル
+  <<irc,IRC プラグイン>>のコンパイル
 
 | ENABLE_JAVASCRIPT | `ON`, `OFF` | OFF |
-  <<scripts_plugins,JavaScript プラグイン>>のコンパイル。
+  <<scripting_plugins,JavaScript プラグイン>>のコンパイル。
 
 | ENABLE_LARGEFILE | `ON`, `OFF` | ON |
   巨大ファイルのサポート。
 
 | ENABLE_LOGGER | `ON`, `OFF` | ON |
-  <<logger_plugin,Logger プラグイン>>のコンパイル。
+  <<buffer_logging,Logger プラグイン>>のコンパイル。
 
 | ENABLE_LUA | `ON`, `OFF` | ON |
-  <<scripts_plugins,Lua プラグイン>>のコンパイル。
+  <<scripting_plugins,Lua プラグイン>>のコンパイル。
 
 | ENABLE_NCURSES | `ON`, `OFF` | ON |
   Ncurses インターフェースのコンパイル。
@@ -260,45 +263,45 @@ CMake に対するオプションを指定するには、以下の書式を使�
   NLS の有効化 (多言語サポート)。
 
 | ENABLE_PERL | `ON`, `OFF` | ON |
-  <<scripts_plugins,Perl プラグイン>>のコンパイル。
+  <<scripting_plugins,Perl プラグイン>>のコンパイル。
 
 | ENABLE_PHP | `ON`, `OFF` | ON |
-  <<scripts_plugins,PHP プラグイン>>のコンパイル。
+  <<scripting_plugins,PHP プラグイン>>のコンパイル。
 
 | ENABLE_PYTHON | `ON`, `OFF` | ON |
-  <<scripts_plugins,Python プラグイン>>のコンパイル。
+  <<scripting_plugins,Python プラグイン>>のコンパイル。
 
 // TRANSLATION MISSING
 | ENABLE_PYTHON2 | `ON`, `OFF` | OFF |
-  Compile <<scripts_plugins,Python plugin>> using Python 2 instead of Python 3.
+  Compile <<scripting_plugins,Python plugin>> using Python 2 instead of Python 3.
 
 | ENABLE_RELAY | `ON`, `OFF` | ON |
-  <<relay_plugin,リレープラグイン>>のコンパイル。
+  <<relay,リレープラグイン>>のコンパイル。
 
 | ENABLE_RUBY | `ON`, `OFF` | ON |
-  <<scripts_plugins,Ruby プラグイン>>のコンパイル。
+  <<scripting_plugins,Ruby プラグイン>>のコンパイル。
 
 | ENABLE_SCRIPT | `ON`, `OFF` | ON |
-  <<scripts_plugins,スクリプトプラグイン>>のコンパイル。
+  <<script_manager,スクリプトプラグイン>>のコンパイル。
 
 | ENABLE_SCRIPTS | `ON`, `OFF` | ON |
-  すべての<<scripts_plugins,スクリプトプラグイン>>
+  すべての<<scripting_plugins,スクリプトプラグイン>>
   (Python、Perl、Ruby、Lua、Tcl、Guile、JavaScript、PHP) のコンパイル。
 
 | ENABLE_SPELL | `ON`, `OFF` | ON |
-  <<spell_plugin,Spell プラグイン>>のコンパイル。
+  <<spell_checking,Spell プラグイン>>のコンパイル。
 
 | ENABLE_TCL | `ON`, `OFF` | ON |
-  <<scripts_plugins,Tcl プラグイン>>のコンパイル。
+  <<scripting_plugins,Tcl プラグイン>>のコンパイル。
 
 | ENABLE_TRIGGER | `ON`, `OFF` | ON |
-  <<trigger_plugin,Trigger プラグイン>>のコンパイル。
+  <<trigger,Trigger プラグイン>>のコンパイル。
 
 | ENABLE_TYPING | `ON`, `OFF` | ON |
-  <<typing_plugin,Typing プラグイン>>のコンパイル。
+  <<typing_notifications,Typing プラグイン>>のコンパイル。
 
 | ENABLE_XFER | `ON`, `OFF` | ON |
-  <<xfer_plugin,Xfer プラグイン>>のコンパイル。
+  <<xfer,Xfer プラグイン>>のコンパイル。
 
 | ENABLE_TESTS | `ON`, `OFF` | OFF |
   コンパイルテスト。
@@ -406,8 +409,8 @@ WeeChat がクラッシュした場合、または WeeChat
 * gdb のインストール
 
 // TRANSLATION MISSING
-[[build_debug]]
-==== Build with debug options
+[[debug_build]]
+==== Debug build
 
 CMake でコンパイルする場合:
 
@@ -416,8 +419,8 @@ $ cmake .. -DCMAKE_BUILD_TYPE=Debug
 ----
 
 // TRANSLATION MISSING
-[[build_debug_address_sanitizer]]
-==== Build with debug options and address sanitizer
+[[address_sanitizer]]
+==== Address sanitizer
 
 // TRANSLATION MISSING
 You can additionally enable the address sanitizer, which causes WeeChat to
@@ -542,7 +545,7 @@ gdb /usr/bin/weechat 12345
 
 // TRANSLATION MISSING
 [[upgrade]]
-=== Upgrade
+== Upgrade
 
 If a new stable version of WeeChat is released, this is time for you to
 switch to this version.
@@ -554,7 +557,7 @@ This can be done while WeeChat is running.
 
 // TRANSLATION MISSING
 [[upgrade_command]]
-==== Upgrade command
+=== Upgrade command
 
 WeeChat can restart the new binary, in place, using the
 <<command_weechat_upgrade,/upgrade>> command: the buffer contents and non-SSL
@@ -580,10 +583,10 @@ $ weechat --upgrade
 
 // TRANSLATION MISSING
 [[restart_after_upgrade]]
-==== Restart after upgrade
+=== Restart after upgrade
 
 [[restart_release_notes]]
-===== Release notes
+==== Release notes
 
 After an upgrade, it is *strongly recommended* to read the
 https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
@@ -596,7 +599,7 @@ For example if you switch from version 3.0 to 3.2, you must read release notes
 of versions 3.1 and 3.2.
 
 [[restart_configuration_upgrade]]
-===== Configuration upgrade
+==== Configuration upgrade
 
 WeeChat has an automatic upgrade of configuration files (`*.conf`):
 
@@ -614,11 +617,8 @@ That means the option `sec.crypt.passphrase_file` has been removed, and you
 had value set to empty string, which was the default value in the previous version
 (in this case no manual action is required).
 
-[[usage]]
-== 使い方
-
 [[running_weechat]]
-=== WeeChat の起動
+== WeeChat の起動
 
 WeeChat を起動させるには、以下コマンドを実行:
 
@@ -631,15 +631,16 @@ _~/.config/weechat_ ディレクトリの中に作成されます
 (<<files_and_directories,ファイルとディレクトリ>>を参照してください)。
 
 [[command_line_options]]
-==== コマンドラインオプション
+=== コマンドラインオプション
 
 include::includes/cmdline_options.ja.adoc[tag=standard]
 
-[[extra_debug_options]]
-==== デバッグオプション
+// TRANSLATION MISSING
+Some extra options are available for debug purposes only:
 
+// TRANSLATION MISSING
 [WARNING]
-以下のオプションはデバッグ用です。*通常利用時には使わないでください!*
+Do *NOT* use any of these options in production!
 
 include::includes/cmdline_options.ja.adoc[tag=debug]
 
@@ -656,6 +657,54 @@ include::includes/cmdline_options.ja.adoc[tag=debug]
 | WEECHAT_PASSPHRASE   | 暗号化データを復号化するためのパスフレーズ
 | WEECHAT_EXTRA_LIBDIR | プラグインをロードするための追加ディレクトリパス (設定したパス内の "plugins" ディレクトリからロードします)
 |===
+
+// TRANSLATION MISSING
+[[colors_support]]
+=== Colors support
+
+WeeChat ではバーやチャットエリアにおけるテキスト表示に 32767 個の色ペアを利用できます
+(この機能を利用するには WeeChat が実行されている端末が 256 色表示に対応している必要があります)。
+
+_TERM_ 環境変数の値によって、WeeChat
+で利用できる色と色ペアに以下の制限があります:
+
+[width="75%",cols="8,>3,>3",options="header"]
+|===
+| $TERM                                  | 色     | ペア
+| "rxvt-unicode", "xterm", ...           |     88 | 32767
+| "rxvt-256color", "xterm-256color", ... |    256 | 32767
+| "screen"                               |      8 |    64
+| "screen-256color"                      |    256 | 32767
+| "tmux"                                 |      8 |    64
+| "tmux-256color"                        |    256 | 32767
+|===
+
+`weechat --colors` を実行するか、`/color` コマンドを WeeChat
+の中で実行することで、色表示の制限を確認できます。
+
+256 色を利用したい場合に推奨される _TERM_ 環境変数の値は:
+
+* screen 内の場合: _screen-256color_
+* tmux 内の場合: _screen-256color_、_tmux-256color_
+* screen および tmux の外の場合: _xterm-256color_、_rxvt-256color_、_putty-256color_、...
+
+[NOTE]
+_TERM_ 環境変数の値に上の値を設定するには、"ncurses-term"
+パッケージをインストールする必要があるかもしれません。
+
+screen を使っている場合、_~/.screenrc_ に以下の内容を追加してください:
+
+----
+term screen-256color
+----
+
+_TERM_ 変数が間違った値に設定された状態で WeeChat が起動完了している場合は、以下の
+2 つのコマンドを使って変数の値を変更してください:
+
+----
+/set env TERM screen-256color
+/upgrade
+----
 
 [[files_and_directories]]
 === ファイルとディレクトリ
@@ -771,6 +820,10 @@ WeeChat は常時 (例えば <<command_weechat_quit,/quit>> コマンドの実�
 を使って保存されていない変更を失うリスクがある) からです。 +
 設定を編集するには <<command_weechat_set,/set>>
 コマンドを使ってください。これは値を検査し、設定の変更をすぐに適用します。
+
+// TRANSLATION MISSING
+[[interface]]
+== Interface
 
 [[screen_layout]]
 === 画面レイアウト
@@ -920,7 +973,7 @@ Each aspect of the layout can be customized with the appropriate <<command_line,
 <<command_weechat_bar,`/bar`>> to customize the bars,
 <<command_weechat_buffer,/buffer>> and <<command_weechat_window,`/window`>>
 to customize <<buffers_and_windows,buffers and windows>>,
-and <<command_weechat_layot,/layout>> to name, save and restore the screen layout
+and <<command_weechat_layout,/layout>> to name, save and restore the screen layout
 and the association between windows and buffers.
 
 [[command_line]]
@@ -1009,151 +1062,6 @@ kbd:[!]
 [NOTE]
 irc プラグインでは、<<option_irc.color.mirc_remap,irc.color.mirc_remap>>
 を使ってこれらの色を別の色に対応付けることができます。
-
-[[colors]]
-=== 色
-
-WeeChat ではバーやチャットエリアにおけるテキスト表示に 32767 個の色ペアを利用できます
-(この機能を利用するには WeeChat が実行されている端末が 256 色表示に対応している必要があります)。
-
-_TERM_ 環境変数の値によって、WeeChat
-で利用できる色と色ペアに以下の制限があります:
-
-[width="75%",cols="8,>3,>3",options="header"]
-|===
-| $TERM                                  | 色     | ペア
-| "rxvt-unicode", "xterm", ...           |     88 | 32767
-| "rxvt-256color", "xterm-256color", ... |    256 | 32767
-| "screen"                               |      8 |    64
-| "screen-256color"                      |    256 | 32767
-| "tmux"                                 |      8 |    64
-| "tmux-256color"                        |    256 | 32767
-|===
-
-`weechat --colors` を実行するか、`/color` コマンドを WeeChat
-の中で実行することで、色表示の制限を確認できます。
-
-256 色を利用したい場合に推奨される _TERM_ 環境変数の値は:
-
-* screen 内の場合: _screen-256color_
-* tmux 内の場合: _screen-256color_、_tmux-256color_
-* screen および tmux の外の場合: _xterm-256color_、_rxvt-256color_、_putty-256color_、...
-
-[NOTE]
-_TERM_ 環境変数の値に上の値を設定するには、"ncurses-term"
-パッケージをインストールする必要があるかもしれません。
-
-screen を使っている場合、_~/.screenrc_ に以下の内容を追加してください:
-
-----
-term screen-256color
-----
-
-_TERM_ 変数が間違った値に設定された状態で WeeChat が起動完了している場合は、以下の
-2 つのコマンドを使って変数の値を変更してください:
-
-----
-/set env TERM screen-256color
-/upgrade
-----
-
-[[colors_basic]]
-==== 基本色
-
-WeeChat における基本色とは:
-
-[width="75%",cols="1m,4",options="header"]
-|===
-| 名前         | 色
-| default      | デフォルトの端末色 (背景色を透過色とする)
-| black        | 黒
-| darkgray     | 暗い灰色
-| red          | 暗い赤
-| lightred     | 明るい赤
-| green        | 暗い緑色
-| lightgreen   | 明るい緑色
-| brown        | 茶色
-| yellow       | 黄色
-| blue         | 暗い青
-| lightblue    | 明るい青
-| magenta      | 暗い赤紫色
-| lightmagenta | 明るい赤紫色
-| cyan         | 暗い青緑色
-| lightcyan    | 明るい青緑色
-| gray         | 灰色
-| white        | 白
-|===
-
-[[colors_extended]]
-==== 拡張色
-
-WeeChat は画面に色が表示された時点で色ペアを動的に割り当てます
-(バッファとバーを表示する時点で)。
-
-基本色に加えて、1 番
-から端末の対応状況に依存する番号までの色番号を利用できます。
-
-`/color` コマンドで現在の色と色制限を確認できます。kbd:[Alt+c]
-をタイプすることで、一時的に端末色を選択された色に変更できます。
-
-例えば、バッファ中のに表示される時刻をオレンジ色にしたい場合、以下のようにしてください:
-
-----
-/set weechat.color.chat_time 214
-----
-
-ステータスバーの色を非常に暗い緑色にしたい場合:
-
-----
-/set weechat.bar.status.color_bg 22
-----
-
-[[colors_aliases]]
-==== 別名
-
-`/color alias` コマンドを使えば色の別名を追加できます。
-追加後は任意の色関連オプションで別名を使えます。
-
-例:
-
-----
-/color alias 214 orange
-/set weechat.color.chat_delimiters orange
-----
-
-[[colors_attributes]]
-==== 属性
-
-色に対していくつかの属性を付加することができます。1
-つ以上の属性を色名または色番号の前に付加できます:
-
-* `+*+` : テキストを太字に
-* `+!+` : テキストを反転
-* `+/+` : テキストをイタリック体に
-* `+_+` : テキストに下線を引く
-* `+|+` : 属性を保持:
-  色を変えた際に太字/反転/下線属性をリセットしない
-
-例えば、自分自身のニックネームの表示色を白にして、下線を引きたい場合:
-
-----
-/set weechat.color.chat_nick_self _white
-----
-
-ステータスバーの時刻の表示色を橙色にして、下線を引いて、太字にしたい場合:
-
-----
-/set weechat.color.status_time *_214
-----
-
-デフォルト端末色 (-1) に対して属性を設定したい場合、端末色番号の最大値よりも大きな値を利用してください。例えば、WeeChat
-における色番号の最大値は 99999 です。
-
-端末の表示色に太字の属性を付加する例:
-
-----
-/set weechat.color.status_time *99999
-----
 
 [[buffers_and_windows]]
 === バッファとウィンドウ
@@ -1277,6 +1185,93 @@ Screen layouts and the association between windows and buffers can be
 └──────────────────────────────────────────────────────────────────────────────────────┘
                  ▲ ウィンドウ #1 (バッファ #3)         ▲ ウィンドウ #2 (バッファ #4)
 ....
+
+[[bare_display]]
+==== 最小限表示
+
+「最小限表示」と呼ばれる特殊な表示状態を使うことで、(マウスを使って) 長い
+URL を簡単にクリックしたり、テキストを簡単に選択できるようになっています。
+
+最小限表示は以下の機能を持っています:
+
+* 現在のバッファの内容だけを表示: 分割ウィンドウやバー等
+  (タイトル、ニックネームリスト、状態、入力、...) も表示しない
+* WeeChat マウスサポートを無効化 (有効化されていた場合):
+  端末でやるのと同じように URL をクリックしたりテキストを選択できます
+* ncurses を使わない、このため URL を行の最後で分断されることがなくなります。
+
+最小限表示を有効化するデフォルトキーは kbd:[Alt+l] (`L`) で、終了するには同じキーを押してください
+(また、デフォルトでは入力が変更された場合に最小限表示を終了します、<<option_weechat.look.bare_display_exit_on_input,weechat.look.bare_display_exit_on_input>>
+オプションを参照)。
+
+<<option_weechat.look.bare_display_time_format,weechat.look.bare_display_time_format>>
+オプションを使えば、時間書式を変更することも可能です。
+
+<<command_weechat_window,/window>>
+コマンドを使えば、指定秒後に最小限表示を有効化することができます。
+
+WeeChat が以下のような表示状態の場合:
+
+....
+┌──────────────────────────────────────────────────────────────────────────────────────┐
+│1.libera │Welcome to #abc                                                             │
+│  weechat│12:52:27   --> | Flashy (flashcode@weechat.org) has joined #abc     │@Flashy│
+│2.  #test│12:52:27    -- | Nicks #abc: [@Flashy @joe +weebot peter]           │@joe   │
+│3.  #abc │12:52:27    -- | Channel #abc: 4 nicks (2 ops, 1 voice, 1 normal)   │+weebot│
+│4.  #def │12:52:27    -- | Channel created on Tue Jan 27 06:30:17 2009        │peter  │
+│5.  #ghi │12:54:15 peter | hey!                                               │       │
+│         │12:55:01  @joe | peter: hook_process: https://weechat.org/files/doc │       │
+│         │               | /devel/weechat_plugin_api.en.html#_weechat_hook_pr │       │
+│         │               | ocess                                              │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │                                                                    │       │
+│         │[12:55] [5] [irc/libera] 3:#abc(+n){4}                                      │
+│         │[@Flashy(i)] hi peter!█                                                     │
+└──────────────────────────────────────────────────────────────────────────────────────┘
+....
+
+最小限表示では以下の様に表示されます:
+
+....
+┌──────────────────────────────────────────────────────────────────────────────────────┐
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│12:52 --> Flashy (flashcode@weechat.org) has joined #abc                              │
+│12:52 -- Nicks #abc: [@Flashy @joe +weebot peter]                                     │
+│12:52 -- Channel #abc: 4 nicks (2 ops, 1 voice, 1 normal)                             │
+│12:52 -- Channel created on Tue Jan 27 06:30:17 2009                                  │
+│12:54 <peter> hey!                                                                    │
+│12:55 <@joe> peter: hook_process: https://weechat.org/files/doc/devel/weechat_plugin_a│
+│pi.en.html#_weechat_hook_process                                                      │
+└──────────────────────────────────────────────────────────────────────────────────────┘
+....
+
+このため、端末で問題なく _joe_ さんからの URL をクリックできます
+(もちろん、使用中の端末で URL をクリックできるように設定されていなければいけませんが)。
 
 // TRANSLATION MISSING
 [[buffers]]
@@ -1487,6 +1482,1241 @@ By default WeeChat and its default plugins interpret these variables:
 
 [NOTE]
 External plugins and scripts can define and use other local variables.
+
+// TRANSLATION MISSING
+[[buflist]]
+=== List of buffers
+
+Buflist プラグインを使うことで、"buflist" と呼ばれるバー要素の中にバッファリストを表示させることが可能になります
+(それ以外に "buflist2" と "buflist3" と呼ばれるバー要素も利用可能です)。 +
+プラグインは開始時にバー要素 "buflist" を持つデフォルトバー "buflist" を作成します。
+
+[[buflist_commands]]
+==== コマンド
+
+include::includes/autogen_user_commands.ja.adoc[tag=buflist_commands]
+
+[[buflist_options]]
+==== オプション
+
+_buflist.conf_ ファイル内のセクション:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| セクション | 操作コマンド          | 説明
+| format     | /set buflist.format.* | バッファリストの表示書式
+| look       | /set buflist.look.*   | 外観
+|===
+
+オプション:
+
+include::includes/autogen_user_options.ja.adoc[tag=buflist_options]
+
+// TRANSLATION MISSING
+[[key_bindings]]
+== Key bindings
+
+// TRANSLATION MISSING
+WeeChat provides a lot of default key bindings, listed in the following chapters. +
+They can be changed and new ones can be added with the <<command_weechat_key,/key>> command.
+
+[[key_bindings_command_line]]
+=== コマンドライン用のキー
+
+// TRANSLATION MISSING
+[[key_bindings_cmdline_cursor_movement]]
+==== Cursor movement
+
+[width="100%",cols="^.^3,.^8,.^5",options="header"]
+|===
+| キー            | 説明 | コマンド
+| kbd:[←] +
+  kbd:[Ctrl+b]   | コマンドラインで前の文字に移動 | `+/input move_previous_char+`
+| kbd:[→] +
+  kbd:[Ctrl+f]   | コマンドラインで次の文字に移動 | `+/input move_next_char+`
+| kbd:[Ctrl+←] +
+  kbd:[Alt+b]    | コマンドラインで前の単語に移動 | `+/input move_previous_word+`
+| kbd:[Ctrl+→] +
+  kbd:[Alt+f]    | コマンドラインで次の単語に移動 | `+/input move_next_word+`
+| kbd:[Home] +
+  kbd:[Ctrl+a]   | コマンドラインで行頭に移動 | `+/input move_beginning_of_line+`
+| kbd:[End] +
+  kbd:[Ctrl+e]   | コマンドラインで行末に移動 | `+/input move_end_of_line+`
+|===
+
+// TRANSLATION MISSING
+[[key_bindings_cmdline_editing]]
+==== Editing
+
+[width="100%",cols="^.^3,.^8,.^5",options="header"]
+|===
+| キー               | 説明 | コマンド
+| kbd:[Del] +
+  kbd:[Ctrl+d]      | コマンドラインで次の文字を削除 | `+/input delete_next_char+`
+| kbd:[Backspace] +
+  kbd:[Ctrl+h]      | コマンドラインで前の文字を削除 | `+/input delete_previous_char+`
+| kbd:[Ctrl+k]      | コマンドラインでカーソルより後の文字列を削除 (削除された文字列は WeeChat 専用の内部クリップボードに保存) | `+/input delete_end_of_line+`
+| kbd:[Ctrl+t]      | 文字の入れ替え | `+/input transpose_chars+`
+| kbd:[Ctrl+u]      | コマンドラインでカーソルより前の文字列を削除 (削除された文字列は WeeChat 専用の内部クリップボードに保存) | `+/input delete_beginning_of_line+`
+| kbd:[Ctrl+w]      | コマンドラインで前の単語を削除 (削除された文字列は WeeChat 専用の内部クリップボードに保存) | `+/input delete_previous_word+`
+| kbd:[Ctrl+y]      | WeeChat 専用の内部クリップボードの内容をペースト | `+/input clipboard_paste+`
+| kbd:[Ctrl+_]      | コマンドラインの最後の動作をやり直す | `+/input undo+`
+| kbd:[Alt+_]       | コマンドラインの最後の動作を取り消す | `+/input redo+`
+| kbd:[Tab]         | コマンドやニックネームを補完 (再度 kbd:[Tab] することで次の補完候補を表示) | `+/input complete_next+`
+| kbd:[Shift+Tab]   | 補完候補が無い場合: 部分補完を行う、補完候補が有る場合: 前の補完候補を表示 | `+/input complete_previous+`
+| kbd:[Enter] +
+  kbd:[Ctrl+j] +
+  kbd:[Ctrl+m]      | コマンドを実行するか、メッセージを送信する (検索モードの場合: 検索の終了) | `+/input return+`
+// TRANSLATION MISSING
+| kbd:[Alt+Enter]   | Insert a newline. | `+/input insert \n+`
+| kbd:[Alt+d]       | コマンドラインで次の単語を削除 (削除された文字列は WeeChat 専用の内部クリップボードに保存) | `+/input delete_next_word+`
+| kbd:[Alt+k]       | キー入力を奪って、コマンドラインにコード (キーが割り当てられていればコマンド) を入力 | `+/input grab_key_command+`
+| kbd:[Alt+r]       | コマンドラインへの入力をすべて削除 | `+/input delete_line+`
+|===
+
+// TRANSLATION MISSING
+[[key_bindings_cmdline_color_codes]]
+==== Color codes
+
+[width="100%",cols="^.^3,.^8,.^5",options="header"]
+|===
+| キー                   | 説明 | コマンド
+| kbd:[Ctrl+c], kbd:[b] | テキストを太字化するコードの挿入 | `+/input insert \x02+`
+| kbd:[Ctrl+c], kbd:[c] | テキストに色をつけるコードの挿入 | `+/input insert \x03+`
+| kbd:[Ctrl+c], kbd:[i] | テキストをイタリック体にするコードの挿入 | `+/input insert \x1D+`
+| kbd:[Ctrl+c], kbd:[o] | テキスト色のリセットを行うコードの挿入 | `+/input insert \x0F+`
+| kbd:[Ctrl+c], kbd:[v] | テキスト色の反転を行うコードの挿入 | `+/input insert \x16+`
+| kbd:[Ctrl+c], kbd:[_] | テキストに下線を引くコードの挿入 | `+/input insert \x1F+`
+|===
+
+// TRANSLATION MISSING
+[[key_bindings_cmdline_history]]
+==== Command history
+
+[width="100%",cols="^.^3,.^8,.^5",options="header"]
+|===
+| キー          | 説明 | コマンド
+| kbd:[↑]      | 前のコマンド/メッセージを呼び出す (検索モードの場合: 上方向に検索) | `+/input history_previous+`
+| kbd:[↓]      | 次のコマンド/メッセージを呼び出す (検索モードの場合: 下方向に検索) | `+/input history_next+`
+| kbd:[Ctrl+↑] | グローバル履歴から前のコマンド/メッセージを呼び出す (すべてのバッファに対して共通の履歴) | `+/input history_global_previous+`
+| kbd:[Ctrl+↓] | グローバル履歴から次のコマンド/メッセージを呼び出す (すべてのバッファに対して共通の履歴) | `+/input history_global_next+`
+|===
+
+// TRANSLATION MISSING
+[[key_bindings_buffers]]
+=== Buffers
+
+[width="100%",cols="^.^3,.^8,.^5",options="header"]
+|===
+| キー                            | 説明 | コマンド
+| kbd:[Ctrl+r]                   | バッファ中の履歴からテキスト検索 (<<key_bindings_search_context,検索モード用のキー>>を参照) | `+/input search_text_here+`
+| kbd:[Ctrl+s], kbd:[Ctrl+u]     | すべてのバッファに未読マークをセット | `+/input set_unread+`
+// TRANSLATION MISSING
+| kbd:[Ctrl+x]                   | Switch current buffer if buffers are merged with same number, for example switch to another IRC server buffer. | `+/input switch_active_buffer+`
+| kbd:[Alt+x]                    | マージされたバッファに再ズーム (kbd:[Alt+x]: 全てのマージされたバッファを表示) | `+/input zoom_merged_buffer+`
+| kbd:[PgUp]                     | バッファ履歴を 1 ページ分上方向にスクロール | `+/window page_up+`
+| kbd:[PgDn]                     | バッファ履歴を 1 ページ分下方向にスクロール | `+/window page_down+`
+| kbd:[Alt+PgUp]                 | バッファ履歴を数行分上方向にスクロール | `+/window scroll_up+`
+| kbd:[Alt+PgDn]                 | バッファ履歴を数行分下方向にスクロール | `+/window scroll_down+`
+| kbd:[Alt+Home]                 | バッファ履歴を最初までスクロール | `+/window scroll_top+`
+| kbd:[Alt+End]                  | バッファ履歴を最後までスクロール | `+/window scroll_bottom+`
+| kbd:[Alt+←] +
+  kbd:[Alt+↑] +
+  kbd:[Ctrl+p] +
+  kbd:[F5]                       | 前のバッファに移動 | `+/buffer -1+`
+| kbd:[Alt+→] +
+  kbd:[Alt+↓] +
+  kbd:[Ctrl+n] +
+  kbd:[F6]                       | 後のバッファに移動 | `+/buffer +1+`
+| kbd:[Alt+j], kbd:[Alt+f]       | 最初のバッファに移動 | `+/buffer -+`
+| kbd:[Alt+j], kbd:[Alt+l] (`L`) | 最後のバッファに移動 | `+/buffer ++`
+| kbd:[Alt+j], kbd:[Alt+r]       | IRC 生バッファに移動 | `+/server raw+`
+| kbd:[Alt+j], kbd:[Alt+s]       | IRC サーババッファに移動 | `+/server jump+`
+| kbd:[Alt+0...9]                | 番号のバッファに移動 (0 = 10) | `+/buffer *N+`
+| kbd:[Alt+j], kbd:[01...99]     | 番号のバッファに移動 | `+/buffer *NN+`
+| kbd:[Alt+n]                    | 次のハイライトまでスクロール | `+/window scroll_next_highlight+`
+| kbd:[Alt+p]                    | 前のハイライトまでスクロール | `+/window scroll_previous_highlight+`
+| kbd:[Alt+u]                    | バッファを最初の未読行までスクロール | `+/window scroll_unread+`
+| kbd:[Alt+<]                    | バッファ訪問履歴で前のバッファに移動 | `+/input jump_previously_visited_buffer+`
+| kbd:[Alt+>]                    | バッファ訪問履歴で次のバッファに移動 | `+/input jump_next_visited_buffer+`
+| kbd:[Alt+/]                    | 最後に表示したバッファに移動 (バッファ移動前に表示していたウィンドウ) | `+/input jump_last_buffer_displayed+`
+|===
+
+// TRANSLATION MISSING
+[[key_bindings_windows]]
+=== Windows
+
+[width="100%",cols="^.^3,.^8,.^5",options="header"]
+|===
+| キー                      | 説明 | コマンド
+| kbd:[Ctrl+l] (`L`)       | 全ウィンドウを再描画 | `+/window refresh+`
+| kbd:[Alt+l] (`L`)        | 最小限表示の有効無効を切り替え | `+/window bare+`
+| kbd:[F7]                 | ウィンドウを前に移動 | `+/window -1+`
+| kbd:[F8]                 | ウィンドウを後に移動 | `+/window +1+`
+| kbd:[Alt+w], kbd:[Alt+↑] | 上のウィンドウに移動 | `+/window up+`
+| kbd:[Alt+w], kbd:[Alt+↓] | 下のウィンドウに移動 | `+/window down+`
+| kbd:[Alt+w], kbd:[Alt+←] | 左のウィンドウに移動 | `+/window left+`
+| kbd:[Alt+w], kbd:[Alt+→] | 右のウィンドウに移動 | `+/window right+`
+| kbd:[Alt+w], kbd:[Alt+b] | すべてのウィンドウサイズを均等に | `+/window balance+`
+| kbd:[Alt+w], kbd:[Alt+s] | 2 つのウィンドウを入れ替え | `+/window swap+`
+| kbd:[Alt+z]              | 現在のウィンドウを最大化 (再度 kbd:[Alt+z] することで: 最初のウィンドウ状態に戻す、最大化前の状態) | `+/window zoom+`
+|===
+
+// TRANSLATION MISSING
+[[key_bindings_bars]]
+=== Bars
+
+[width="100%",cols="^.^3,.^8,.^5",options="header"]
+|===
+| キー               | 説明 | コマンド
+| kbd:[F1] +
+  kbd:[Ctrl+F1]     | バッファリストを上方に 1 ページスクロール | `+/bar scroll buflist * -100%+`
+| kbd:[F2] +
+  kbd:[Ctrl+F2]     | バッファリストを下方に 1 ページスクロール | `+/bar scroll buflist * +100%+`
+| kbd:[Alt+F1]      | バッファリストを上端までスクロール | `+/bar scroll buflist * b+`
+| kbd:[Alt+F2]      | バッファリストを下端までスクロール | `+/bar scroll buflist * e+`
+| kbd:[F9]          | バッファタイトルを左方向にスクロール | `+/bar scroll title * -30%+`
+| kbd:[F10]         | バッファタイトルを右方向にスクロール | `+/bar scroll title * +30%+`
+| kbd:[F11] +
+  kbd:[Ctrl+F11]    | ニックネームリストを上方向にスクロール | `+/bar scroll nicklist * -100%+`
+| kbd:[F12] +
+  kbd:[Ctrl+F12]    | ニックネームリストを下方向にスクロール | `+/bar scroll nicklist * +100%+`
+| kbd:[Alt+F11]     | ニックネームリストを一番上にスクロール | `+/bar scroll nicklist * b+`
+| kbd:[Alt+F12]     | ニックネームリストを一番下にスクロール | `+/bar scroll nicklist * e+`
+// TRANSLATION MISSING
+| kbd:[Alt+Shift+B] | Toggle buflist. | `+/buflist toggle+`
+// TRANSLATION MISSING
+| kbd:[Alt+Shift+N] | Toggle nicklist bar. | `+/bar toggle nicklist+`
+|===
+
+// TRANSLATION MISSING
+[[key_bindings_hotlist]]
+=== Hotlist
+
+[width="100%",cols="^.^3,.^8,.^5",options="header"]
+|===
+| キー                            | 説明 | コマンド
+| kbd:[Alt+a]                    | 変更のあった次のバッファに移動 (優先順位: ハイライト、新規メッセージ、その他) | `+/input jump_smart+`
+// TRANSLATION MISSING
+| kbd:[Alt+h], kbd:[Alt+c]       | Clear hotlist (activity notification on buffers). | `+/input hotlist_clear+`
+// TRANSLATION MISSING
+| kbd:[Alt+h], kbd:[Alt+m]       | Remove current buffer from hotlist. | `+/input hotlist_remove_buffer+`
+// TRANSLATION MISSING
+| kbd:[Alt+h], kbd:[Alt+r]       | Restore latest hotlist removed in the current buffer. | `+/input hotlist_restore_buffer+`
+// TRANSLATION MISSING
+| kbd:[Alt+h], kbd:[Alt+Shift+R] | Restore latest hotlist removed in all buffers. | `+/input hotlist_restore_all+`
+|===
+
+// TRANSLATION MISSING
+[[key_bindings_toggle_keys]]
+=== Toggle keys
+
+[width="100%",cols="^.^3,.^8,.^5",options="header"]
+|===
+| キー         | 説明 | コマンド
+| kbd:[Alt+m] | マウスの有効無効を切り替え | `+/mouse toggle+`
+| kbd:[Alt+s] | スペルチェッカの有効無効を切り替え | `+/mute spell toggle+`
+| kbd:[Alt+=] | フィルタの有効無効を切り替え | `+/filter toggle+`
+| kbd:[Alt+-] | 現在のバッファのフィルタの有効無効を切り替え | `+/filter toggle @+`
+|===
+
+// TRANSLATION MISSING
+[[key_bindings_search_context]]
+=== Search context
+
+以下のキーは「検索」検索モード (バッファ内のテキスト検索用に
+kbd:[Ctrl+r] が押された状態) でのみ有効です。
+
+[width="100%",cols="^.^3,.^8,.^5",options="header"]
+|===
+| キー            | 説明 | コマンド
+| kbd:[Ctrl+r]   | 検索タイプを切り替え: 文字列 (デフォルト)、正規表現 | `+/input search_switch_regex+`
+| kbd:[Alt+c]    | 大文字小文字を区別して検索 | `+/input search_switch_case+`
+| kbd:[Tab]      | 検索範囲: メッセージ (デフォルト)、プレフィックス、プレフィックスとメッセージ | `+/input search_switch_where+`
+| kbd:[↑]        | 前のキーワードで検索 | `+/input search_previous+`
+| kbd:[↓]        | 次のキーワードで検索 | `+/input search_next+`
+| kbd:[Enter] +
+  kbd:[Ctrl+j] +
+  kbd:[Ctrl+m]   | 現在の位置で検索を終了 | `+/input search_stop_here+`
+| kbd:[Ctrl+q]   | 検索を終了してバッファの最後までスクロール | `+/input search_stop+`
+|===
+
+// TRANSLATION MISSING
+[[key_bindings_cursor_context]]
+=== Cursor context
+
+以下のキーは「カーソル」モード (画面上でカーソルを自由に動かせる状態) でのみ有効です。
+
+[width="100%",cols="^.^3,^.^2,.^7,.^7",options="header"]
+|===
+| キー            | エリア            | 説明 | コマンド
+| kbd:[↑]        | -                 | カーソルを上の行に移動 | `+/cursor move up+`
+| kbd:[↓]        | -                 | カーソルを下の行に移動 | `+/cursor move down+`
+| kbd:[←]        | -                 | カーソルを左の列に移動 | `+/cursor move left+`
+| kbd:[→]        | -                 | カーソルを右の列に移動 | `+/cursor move right+`
+| kbd:[Alt+↑]    | -                 | カーソルを上のエリアに移動 | `+/cursor move area_up+`
+| kbd:[Alt+↓]    | -                 | カーソルを下のエリアに移動 | `+/cursor move area_down+`
+| kbd:[Alt+←]    | -                 | カーソルを左のエリアに移動 | `+/cursor move area_left+`
+| kbd:[Alt+→]    | -                 | カーソルを右のエリアに移動 | `+/cursor move area_right+`
+| kbd:[m]        | チャット          | メッセージを引用 | `+hsignal:chat_quote_message;/cursor stop+`
+| kbd:[q]        | チャット          | プレフィックスとメッセージを引用 | `+hsignal:chat_quote_prefix_message;/cursor stop+`
+| kbd:[Q]        | チャット          | 時間、プレフィックス、メッセージを引用 | `+hsignal:chat_quote_time_prefix_message;/cursor stop+`
+| kbd:[b]        | ニックネームリスト| ニックネームをバンする | `+/window ${_window_number};/ban ${nick}+`
+| kbd:[k]        | ニックネームリスト| ニックネームをキックする | `+/window ${_window_number};/kick ${nick}+`
+| kbd:[K]        | ニックネームリスト| ニックネームをバンとキックする | `+/window ${_window_number};/kickban ${nick}+`
+| kbd:[q]        | ニックネームリスト| ニックネームに対するクエリを開く | `+/window ${_window_number};/query ${nick};/cursor stop+`
+| kbd:[w]        | ニックネームリスト| ニックネームに対して whois を行う | `+/window ${_window_number};/whois ${nick}+`
+| kbd:[Enter] +
+  kbd:[Ctrl+j] +
+  kbd:[Ctrl+m]   | -                 | カーソルモードを終了 | `+/cursor stop+`
+|===
+
+// TRANSLATION MISSING
+[[key_bindings_mouse]]
+=== Mouse
+
+// TRANSLATION MISSING
+These mouse actions are possible only if mouse is enabled with key kbd:[Alt+m]
+(command: `+/mouse toggle+`).
+
+[width="100%",cols="^.^3,^.^3,^.^3,.^8,.^8",options="header"]
+|===
+| ボタン/ホイール ^(1)^ | ジェスチャー | エリア                       | 説明 | コマンド
+| ◾◽◽                | -            | チャット                     | ウィンドウに移動 | `+/window ${_window_number}+`
+| ◾◽◽                | 左           | チャット                     | 前のバッファに移動 | `+/window ${_window_number};/buffer +1+`
+| ◾◽◽                | 右           | チャット                     | 次のバッファに移動 | `+/window ${_window_number};/buffer +1+`
+| ◾◽◽                | 左 (長く)    | チャット                     | 最初のバッファに移動 | `+/window ${_window_number};/buffer 1+`
+| ◾◽◽                | 右 (長く)    | チャット                     | 最後のバッファに移動 | `+/window ${_window_number};/input jump_last_buffer+`
+| kbd:[▲]            | -            | チャット                     | バッファ履歴を上方向にスクロール | `+/window scroll_up -window ${_window_number}+`
+| kbd:[▼]            | -            | チャット                     | バッファ履歴を下方向にスクロール | `+/window scroll_down -window ${_window_number}+`
+| kbd:[Ctrl+▲]       | -            | チャット                     | 水平左方向にスクロール | `+/window scroll_horiz -window ${_window_number} -10%+`
+| kbd:[Ctrl+▼]       | -            | チャット                     | 水平右方向にスクロール | `+/window scroll_horiz -window ${_window_number} +10%+`
+// TRANSLATION MISSING
+| kbd:[▲]            | -            | chat: fset buffer       | Move five lines up in fset buffer. | `+/fset -up 5+`
+// TRANSLATION MISSING
+| kbd:[▼]            | -            | chat: fset buffer       | Move five lines down in fset buffer. | `+/fset -down 5+`
+// TRANSLATION MISSING
+| ◾◽◽                | -            | chat: fset buffer       | Select line in fset buffer. | `+/window ${_window_number};/fset -go ${_chat_line_y}+`
+// TRANSLATION MISSING
+| ◽◽◾                | -            | chat: fset buffer       | Toggle boolean (on/off) or edit the option value. | `+hsignal:fset_mouse+`
+// TRANSLATION MISSING
+| ◽◽◾                | left         | chat: fset buffer       | Decrease value for integer/color, set/append to value for other types. | `+hsignal:fset_mouse+`
+// TRANSLATION MISSING
+| ◽◽◾                | right        | chat: fset buffer       | Increase value for integer/color, set/append to value for other types. | `+hsignal:fset_mouse+`
+// TRANSLATION MISSING
+| ◽◽◾                | up / down    | chat: fset buffer       | Mark/unmark multiple options. | `+hsignal:fset_mouse+`
+| kbd:[▲]            | -            | チャット: スクリプトバッファ | スクリプトバッファを 5 行上方向にスクロール | `+/script up 5+`
+| kbd:[▼]            | -            | チャット: スクリプトバッファ | スクリプトバッファで 5 行下方向にスクロール | `+/script down 5+`
+| ◾◽◽                | -            | チャット: スクリプトバッファ | スクリプトバッファで行選択 | `+/script go ${_chat_line_y}+`
+| ◽◽◾                | -            | チャット: スクリプトバッファ | スクリプトのインストール `+/ 削除 | /script go ${_chat_line_y};/script installremove ${script_name_with_extension}+`
+| ◾◽◽                | 上 / 左      | バッファリスト               | 指定したバッファを下の番号に移動 | `+buflist_mouse+` シグナル
+| ◾◽◽                | 下 / 右      | バッファリスト               | 指定したバッファを上の番号に移動 | `+buflist_mouse+` シグナル
+| ◾◽◽                | -            | バッファリスト               | 指定したバッファに切り替える (現在のバッファを指定した場合、バッファ切り替え履歴で前のバッファに切り替える) | `+buflist_mouse+` シグナル
+| ◽◽◾                | -            | バッファリスト               | 現在のバッファを指定した場合、バッファ切り替え履歴で次のバッファに切り替える | `+buflist_mouse+` シグナル
+| kbd:[Ctrl+▲]       | -            | バッファリスト               | バッファ切り替え履歴で前のバッファに切り替える | `+buflist_mouse+` シグナル
+| kbd:[Ctrl+▼]       | -            | バッファリスト               | バッファ切り替え履歴で次のバッファに切り替える | `+buflist_mouse+` シグナル
+| ◾◽◽                | 上           | ニックネームリスト           | ニックネームリストを 1 ページ分上方向にスクロール | `+/bar scroll nicklist ${_window_number} -100%+`
+| ◾◽◽                | 下           | ニックネームリスト           | ニックネームリストを 1 ページ分下方向にスクロール | `+/bar scroll nicklist ${_window_number} +100%+`
+| ◾◽◽                | 上 (長く)    | ニックネームリスト           | ニックネームリストの最初に移動 | `+/bar scroll nicklist ${_window_number} b+`
+| ◾◽◽                | 下 (長く)    | ニックネームリスト           | ニックネームリストの最後に移動 | `+/bar scroll nicklist ${_window_number} e+`
+| ◾◽◽                | -            | ニックネームリスト           | ニックネームに対するクエリを開く | `+/window ${_window_number};/query ${nick}+`
+| ◽◽◾                | -            | ニックネームリスト           | ニックネームに対する whois を行う | `+/window ${_window_number};/whois ${nick}+`
+| ◾◽◽                | 左           | ニックネームリスト           | ニックネームをキックする | `+/window ${_window_number};/kick ${nick}+`
+| ◾◽◽                | 左 (長く)    | ニックネームリスト           | ニックネームをキックとバンする | `+/window ${_window_number};/kickban ${nick}+`
+| ◽◽◾                | 左           | ニックネームリスト           | ニックネームをバンする | `+/window ${_window_number};/ban ${nick}+`
+| ◽◽◾                | -            | 入力                         | マウスイベントを奪ってコマンドラインにコードを入力 | `+/input grab_mouse_area+`
+| kbd:[▲]            | -            | 任意のバー                   | バーを -20% スクロール | `+/bar scroll ${_bar_name} ${_window_number} -20%+`
+| kbd:[▼]            | -            | 任意のバー                   | バーを +20% スクロール | `+/bar scroll ${_bar_name} ${_window_number} +20%+`
+| ◽◾◽                | -            | 任意の場所                   | この場所でカーソルモードを開始 | `+/cursor go ${_x},${_y}+`
+|===
+
+[NOTE]
+^(1)^ kbd:[▲] と kbd:[▼] はホイールの上方向回転と下方向回転に対応します。
+
+// TRANSLATION MISSING
+[[key_bindings_fset_buffer]]
+=== Fset buffer
+
+// TRANSLATION MISSING
+These keys and actions are used on the fset buffer (see <<fset,Fset plugin>>).
+
+// TRANSLATION MISSING
+[width="100%",cols="^.^3,^.^2,.^8,.^5",options="header"]
+|===
+| Key                      | Action ^(1)^ | Description | Command
+| kbd:[↑]                  |              | Move one line up. | `+/fset -up+`
+| kbd:[↓]                  |              | Move one line down. | `+/fset -down+`
+| kbd:[PgUp]               |              | Move one page up. | `+/window page_up+`
+| kbd:[PgDn]               |              | Move one page down. | `+/window page_down+`
+| kbd:[Alt+Home]           | `pass:[<<]`  | Move to first line. | `+/fset -go 0+`
+| kbd:[Alt+End]            | `pass:[>>]`  | Move to last line. | `+/fset -go end+`
+| kbd:[F11]                | `pass:[<]`   | Scroll horizontally on the left. | `+/fset -left+`
+| kbd:[F12]                | `pass:[>]`   | Scroll horizontally on the right. | `+/fset -right+`
+| kbd:[Alt+Space]          | `t`          | Toggle boolean value. | `+/fset -toggle+`
+| kbd:[Alt+-]              | `-`          | Subtract 1 from value for integer/color, set value for other types. | `+/fset -add -1+`
+| kbd:[Alt++]              | `+`          | Add 1 to value for integer/color, append to value for other types. | `+/fset -add 1+`
+| kbd:[Alt+f], kbd:[Alt+r] | `r`          | Reset value. | `+/fset -reset+`
+| kbd:[Alt+f], kbd:[Alt+u] | `u`          | Unset value. | `+/fset -unset+`
+| kbd:[Alt+Enter]          | `s`          | Set value. | `+/fset -set+`
+| kbd:[Alt+f], kbd:[Alt+n] | `n`          | Set new value. | `+/fset -setnew+`
+| kbd:[Alt+f], kbd:[Alt+a] | `a`          | Append to value. | `+/fset -append+`
+| kbd:[Alt+,]              | `,`          | Mark/unmark option. | `+/fset -mark 1+`
+| kbd:[Shift+↑]            |              | Move one line up and mark/unmark option. | `+/fset -up; /fset -mark+`
+| kbd:[Shift+↓]            |              | Mark/unmark option and move one line down. | `+/fset -mark; /fset -down+`
+|                          | `m:xxx`      | Mark options displayed that are matching filter "xxx" (any filter on option or value is allowed, see <<command_fset_fset,fset command>>). |
+|                          | `u:xxx`      | Unmark options displayed that are matching filter "xxx" (any filter on option or value is allowed, see <<command_fset_fset,fset command>>). |
+| kbd:[Ctrl+l] (`L`)       |              | Refresh options and whole screen. | `+/fset -refresh+`
+|                          | `$`          | Refresh options (keep marked options). |
+|                          | `$$`         | Refresh options (unmark all options). |
+| kbd:[Alt+p]              |              | Toggle plugin description options (`pass:[plugins.desc.*]`). | `+/mute /set fset.look.show_plugins_desc toggle+`
+| kbd:[Alt+v]              |              | Toggle help bar. | `+/bar toggle fset+`
+|                          | `s:x,y`      | Sort options by fields x,y (see option <<option_fset.look.sort,fset.look.sort>>). | `+/mute /set fset.look.sort x,y+`
+|                          | `s:`         | Reset sort to its default value (see option <<option_fset.look.sort,fset.look.sort>>). | `+/mute /unset fset.look.sort+`
+|                          | `w:xxx`      | Export options in file "xxx". | `+/fset -export xxx+`
+|                          | `w-:xxx`     | Export options in file "xxx" without help. | `+/fset -export -nohelp xxx+`
+|                          | `w+:xxx`     | Export options in file "xxx" with help. | `+/fset -export -help xxx+`
+| kbd:[Ctrl+x]             | `x`          | Switch the format used to display options. | `+/fset -format+`
+|                          | `q`          | Close fset buffer. | `+/buffer close+`
+|===
+
+// TRANSLATION MISSING
+[NOTE]
+^(1)^ The action must be entered as input on the command line, followed by kbd:[Enter].
+
+// TRANSLATION MISSING
+[[key_bindings_script_buffer]]
+=== Script buffer
+
+// TRANSLATION MISSING
+These keys and actions are used on the script buffer (see <<script_manager,script manager>>).
+
+// TRANSLATION MISSING
+[width="100%",cols="^.^3,^.^2,.^8,.^5",options="header"]
+|===
+| Key               | Action ^(1)^ | Description | Command
+| kbd:[↑]           |              | Move one line up. | `+/script up+`
+| kbd:[↓]           |              | Move one line down. | `+/script down+`
+| kbd:[PgUp]        |              | Move one page up. | `+/window page_up+`
+| kbd:[PgDn]        |              | Move one page down. | `+/window page_down+`
+| kbd:[Alt+i]       | `i`          | Install script. | `+/script install+`
+| kbd:[Alt+r]       | `r`          | Remove script. | `+/script remove+`
+| kbd:[Alt+l] (`L`) | `l`          | Load script. | `+/script load+`
+| kbd:[Alt+u]       | `u`          | Unload script. | `+/script unload+`
+| kbd:[Alt+Shift+A] | `A`          | Autoload script. | `+/script toggleautoload+`
+| kbd:[Alt+h]       | `h`          | Hold/unhold script. | `+/script hold+`
+| kbd:[Alt+v]       | `v`          | View script. | `+/script show+`
+|===
+
+// TRANSLATION MISSING
+[NOTE]
+^(1)^ The action must be entered as input on the command line, followed by kbd:[Enter].
+
+// TRANSLATION MISSING
+[[configuration]]
+== Configuration
+
+[[fset]]
+=== Fset
+
+fset (高速設定) プラグインはバッファ内にオプションのリストを表示し、WeeChat
+とプラグインのオプション設定を支援します。
+
+// TRANSLATION MISSING
+Example of fset buffer displaying options starting with `weechat.look` :
+
+[subs="quotes"]
+....
+┌──────────────────────────────────────────────────────────────────────────────────────┐
+│1.weechat│1/121 | Filter: weechat.look.* | Sort: ~name | Key(input): alt+space=toggle │
+│2.fset   │weechat.look.bare_display_exit_on_input: exit the bare display mode on any c│
+│         │hanges in input [default: on]                                               │
+│         │----------------------------------------------------------------------------│
+│         │  weechat.look.align_end_of_lines                   integer  message        │
+│         │  weechat.look.align_multiline_words                boolean  on             │
+│         │  weechat.look.bar_more_down                        string   "++"           │
+│         │  weechat.look.bar_more_left                        string   "<<"           │
+│         │  weechat.look.bar_more_right                       string   ">>"           │
+│         │  weechat.look.bar_more_up                          string   "--"           │
+│         │##  weechat.look.bare_display_exit_on_input           boolean  on             ##│
+│         │  weechat.look.bare_display_time_format             string   "%H:%M"        │
+│         │  weechat.look.buffer_auto_renumber                 boolean  on             │
+│         │  weechat.look.buffer_notify_default                integer  all            │
+│         │  weechat.look.buffer_position                      integer  end            │
+│         │  weechat.look.buffer_search_case_sensitive         boolean  off            │
+│         │  weechat.look.buffer_search_force_default          boolean  off            │
+│         │  weechat.look.buffer_search_regex                  boolean  off            │
+│         │  weechat.look.buffer_search_where                  integer  prefix_message │
+│         │  weechat.look.buffer_time_format                   string   "%H:%M:%S"     │
+│         │  weechat.look.buffer_time_same                     string   ""             │
+│         │[12:55] [2] [fset] 2:fset                                                   │
+│         │█                                                                           │
+└──────────────────────────────────────────────────────────────────────────────────────┘
+....
+
+[[fset_commands]]
+==== コマンド
+
+include::includes/autogen_user_commands.ja.adoc[tag=fset_commands]
+
+[[fset_options]]
+==== オプション
+
+_fset.conf_ ファイル内のセクション:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| セクション | 操作コマンド       | 説明
+| color      | /set fset.color.*  | 色
+| format     | /set fset.format.* | オプションリストの表示書式
+| look       | /set fset.look.*   | 外観
+|===
+
+オプション:
+
+include::includes/autogen_user_options.ja.adoc[tag=fset_options]
+
+// TRANSLATION MISSING
+[[colors]]
+=== Colors
+
+[[colors_basic]]
+==== 基本色
+
+WeeChat における基本色とは:
+
+[width="75%",cols="1m,4",options="header"]
+|===
+| 名前         | 色
+| default      | デフォルトの端末色 (背景色を透過色とする)
+| black        | 黒
+| darkgray     | 暗い灰色
+| red          | 暗い赤
+| lightred     | 明るい赤
+| green        | 暗い緑色
+| lightgreen   | 明るい緑色
+| brown        | 茶色
+| yellow       | 黄色
+| blue         | 暗い青
+| lightblue    | 明るい青
+| magenta      | 暗い赤紫色
+| lightmagenta | 明るい赤紫色
+| cyan         | 暗い青緑色
+| lightcyan    | 明るい青緑色
+| gray         | 灰色
+| white        | 白
+|===
+
+[[colors_extended]]
+==== 拡張色
+
+WeeChat は画面に色が表示された時点で色ペアを動的に割り当てます
+(バッファとバーを表示する時点で)。
+
+基本色に加えて、1 番
+から端末の対応状況に依存する番号までの色番号を利用できます。
+
+`/color` コマンドで現在の色と色制限を確認できます。kbd:[Alt+c]
+をタイプすることで、一時的に端末色を選択された色に変更できます。
+
+例えば、バッファ中のに表示される時刻をオレンジ色にしたい場合、以下のようにしてください:
+
+----
+/set weechat.color.chat_time 214
+----
+
+ステータスバーの色を非常に暗い緑色にしたい場合:
+
+----
+/set weechat.bar.status.color_bg 22
+----
+
+[[colors_aliases]]
+==== 別名
+
+`/color alias` コマンドを使えば色の別名を追加できます。
+追加後は任意の色関連オプションで別名を使えます。
+
+例:
+
+----
+/color alias 214 orange
+/set weechat.color.chat_delimiters orange
+----
+
+[[colors_attributes]]
+==== 属性
+
+色に対していくつかの属性を付加することができます。1
+つ以上の属性を色名または色番号の前に付加できます:
+
+* `+*+` : テキストを太字に
+* `+!+` : テキストを反転
+* `+/+` : テキストをイタリック体に
+* `+_+` : テキストに下線を引く
+* `+|+` : 属性を保持:
+  色を変えた際に太字/反転/下線属性をリセットしない
+
+例えば、自分自身のニックネームの表示色を白にして、下線を引きたい場合:
+
+----
+/set weechat.color.chat_nick_self _white
+----
+
+ステータスバーの時刻の表示色を橙色にして、下線を引いて、太字にしたい場合:
+
+----
+/set weechat.color.status_time *_214
+----
+
+デフォルト端末色 (-1) に対して属性を設定したい場合、端末色番号の最大値よりも大きな値を利用してください。例えば、WeeChat
+における色番号の最大値は 99999 です。
+
+端末の表示色に太字の属性を付加する例:
+
+----
+/set weechat.color.status_time *99999
+----
+
+[[charset]]
+=== Charset
+
+Charset プラグインを使うことで、文字コードに従ってデータのデコードとエンコードができます。
+
+デコード/エンコード用にデフォルトの文字コードが設定されていますが、それぞれのバッファ
+(バッファグループ) に対して個別に文字コードを設定することもできます。
+
+このプラグインの導入は任意ですが、導入を推奨します:
+このプラグインがロードされていない場合、WeeChat が読み書きできるデータは UTF-8 データのみになります。
+
+Charset プラグインは WeeChat
+によって自動的にロードされるべきです。プラグインがロードされていることを確認するには、以下のようにしてください:
+
+----
+/charset
+----
+
+コマンドが見つからない場合、以下のコマンドでプラグインをロードしてください:
+
+----
+/plugin load charset
+----
+
+プラグインが見つからない場合、文字コードサポートを有効化した状態で
+WeeChat を再コンパイルしてください。
+
+Charset プラグインがロードされた場合、端末文字コードと内部文字コードが表示されます。端末文字コードはロケールに依存し、内部文字コードは
+UTF-8 です。
+
+例:
+
+....
+charset: terminal: ISO-8859-15, internal: UTF-8
+....
+
+[[charset_set]]
+==== 文字コードの設定
+
+グローバルデコード文字コードとエンコード文字コードを設定するには、`/set` コマンドを使ってください。
+
+例:
+
+----
+/set charset.default.decode ISO-8859-15
+/set charset.default.encode ISO-8859-15
+----
+
+グローバルデコード文字コードが設定されていない場合 (例えば Charset
+プラグインを始めてロードした場合)、これは自動的に端末の文字コードか
+(UTF-8 でなければ)、デフォルトの _ISO-8859-1_ に設定されます。
+
+デフォルトのエンコード文字コードはありません。従って、内部文字コード
+(UTF-8) が使われます。
+
+IRC サーバの文字コードを設定するには、サーババッファで `/charset`
+コマンドを使ってください。文字コードのみを引数として与えた場合、この文字コードがデコードとエンコードに利用されます。
+
+例:
+
+----
+/charset ISO-8859-15
+----
+
+これは以下と等価です:
+
+----
+/charset decode ISO-8859-15
+/charset encode ISO-8859-15
+----
+
+IRC チャンネル (またはプライベートメッセージ) の文字コードを設定するには、サーバの文字コード設定と同様のコマンドをチャンネル
+(またはプライベートメッセージ) バッファで使ってください。
+
+IRC サーバの全てのチャンネルおよびプライベートバッファに対する文字コードを設定するには:
+
+----
+/set charset.encode.irc.libera ISO-8859-15
+----
+
+すべての文字コード設定を確認するには、以下のコマンドを利用してください:
+
+----
+/set charset.*
+----
+
+[[charset_troubleshooting]]
+==== トラブルシューティング
+
+文字コードに関する問題があれば、link:weechat_faq.ja.html#charset[WeeChat FAQ (よくある質問) / いくつかの文字が見えません。どうすれば良いですか。]を参照してください。
+
+[[charset_commands]]
+==== コマンド
+
+include::includes/autogen_user_commands.ja.adoc[tag=charset_commands]
+
+[[charset_options]]
+==== オプション
+
+_charset.conf_ ファイル内のセクション:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| セクション | 操作コマンド                                | 説明
+| default    | /set charset.default.*                      | デフォルトのデコード/エンコード文字セット
+| decode     | <<command_charset_charset,/charset decode>> +
+               /set charset.decode.*                       | バッファのデコード文字セット (オプションをセクションに追加/削除出来ます)
+| encode     | <<command_charset_charset,/charset encode>> +
+               /set charset.encode.*                       | バッファのエンコード文字セット (オプションをセクションに追加/削除出来ます)
+|===
+
+オプション:
+
+include::includes/autogen_user_options.ja.adoc[tag=charset_options]
+
+[[notify_levels]]
+=== 通知レベル
+
+[[setup_notify_levels]]
+==== 通知レベルの設定
+
+バッファに表示された各メッセージには 4 つのレベルが設定されています。レベルの低いものから順に:
+
+* _low_: 重要性の低いメッセージ (例えば irc の参加/退出/終了メッセージ)
+* _message_: ユーザからのメッセージ
+* _private_: プライベートバッファのメッセージ
+* _highlight_: ハイライトされたメッセージ
+
+それぞれのバッファには通知レベルが設定されており、通知レベルに対応するメッセージの数がホットリストに表示されます。
+
+デフォルトの通知レベルは
+<<option_weechat.look.buffer_notify_default,weechat.look.buffer_notify_default>>
+オプションで指定し、デフォルトは _all_ です。
+
+[width="75%",cols="2m,7",options="header"]
+|===
+| 通知レベル   | ホットリストに追加されるメッセージのレベル
+| none         | (無効)
+| highlight    | _highlight_ + _private_
+| message      | _highlight_ + _private_ + _message_
+| all          | _highlight_ + _private_ + _message_ + _low_
+|===
+
+通知レベルはバッファグループに対して設定することも可能で、例えば
+irc サーバ "libera" に含まれる全てのバッファに対して設定する場合:
+
+----
+/set weechat.notify.irc.libera message
+----
+
+"#weechat" チャンネルだけに対して、通知レベルを _highlight_ に設定する場合:
+
+----
+/set weechat.notify.irc.libera.#weechat highlight
+----
+
+`/buffer` コマンドで、あるバッファに対する通知レベルを設定できます:
+
+----
+/buffer notify highlight
+----
+
+[[max_hotlist_level_nicks]]
+==== ニックネームに対するホットリストレベルの最大値
+
+ニックネーム、バッファ、バッファグループ (IRC サーバなど)
+に対してホットリストレベルの最大値を設定することが可能です。
+
+あるニックネームのリストに対してバッファプロパティ "hotlist_max_level_nicks"
+を設定したり、各ニックネームに対してホットリストレベルの最大値を設定することも可能です。設定可能なレベルは以下です:
+
+* -1: ニックネームがホットリストを変更しない優先度
+* 0: 低優先度 (参加および退出メッセージなど)
+* 1: 通常メッセージ
+* 2: プライベートメッセージ
+* 3: ハイライト (これはすべてのメッセージのデフォルト最大値であるため、通常これを指定することはありません)
+
+例えば現在のバッファで "joe" と "mike" からのメッセージに対するハイライトを無効化するには以下のように設定します:
+
+----
+/buffer set hotlist_max_level_nicks_add joe:2,mike:2
+----
+
+[NOTE]
+バッファプロパティ "hotlist_max_level_nicks" は設定ファイルに保存されません。 +
+これを保存するには _buffer_autoset.py_ スクリプトを使ってください: このスクリプトをインストールするには
+`+/script install buffer_autoset.py+` コマンドを使い、ヘルプを見るには `+/help buffer_autoset+` コマンドを使ってください。
+
+[[highlights]]
+=== ハイライト
+
+[[highlights_words]]
+==== ハイライトする単語の追加
+
+デフォルトで WeeChat
+は自分のニックネームが含まれる他のユーザからのメッセージをハイライトします。このため、ハイライトはバッファに依存します
+(ニックネームはバッファごとに異なる場合があります)。
+
+他の単語を追加するには <<option_weechat.look.highlight,weechat.look.highlight>>
+オプションを使います。例えば自分のニックネーム、"word1"、"word2"、"test"
+から始まる任意の単語をハイライトするには以下のように設定します:
+
+----
+/set weechat.look.highlight word1,word2,test*
+----
+
+単語に対してさらに具体的なルールを設定する必要がある場合、<<option_weechat.look.highlight_regex,weechat.look.highlight_regex>>
+オプションを使って正規表現で指定することも可能です。例えば "flashcode"、"flashcöde"、"flashy"
+という単語をハイライトするには以下のように設定します:
+
+----
+/set weechat.look.highlight_regex flashc[oö]de|flashy
+----
+
+ハイライトする単語の区切りは <<option_weechat.look.word_chars_highlight,weechat.look.word_chars_highlight>>
+オプションを使って設定します。
+
+[[highlights_tags]]
+==== ハイライトするタグの追加
+
+表示される行には「タグ」を含めることが可能です。「タグ」とはメッセージの出自やメッセージ自身に関する情報を与えるものです。 +
+`/debug tags` コマンドでタグを表示することが可能です
+(タグを非表示にする場合も同じコマンドを使います)。
+
+ハイライトするタグを明示するには
+<<option_weechat.look.highlight_tags,weechat.look.highlight_tags>>
+オプションを使います。複数のタグを指定するにはコンマで区切り、複数のタグの論理
+"and" を表すには `+++` で区切ります。
+
+例えば "FlashCode" というニックネームからのすべてのメッセージと "toto"
+で始まるニックネームからのすべての通知メッセージをハイライトするには以下のように設定します:
+
+----
+/set weechat.look.highlight_tags "nick_flashcode,irc_notice+nick_toto*"
+----
+
+[[highlights_regex_buffer]]
+==== バッファに対する特別なハイライトの設定
+
+バッファプロパティ "highlight_regex"
+と正規表現を使ってハイライトを強制できます。
+
+例えば現在のバッファ宛のすべてのメッセージをハイライトするには以下のように設定します:
+
+----
+/buffer set highlight_regex .*
+----
+
+[NOTE]
+バッファプロパティ "highlight_regex" は設定ファイルに保存されません。 +
+これを保存するには _buffer_autoset.py_ スクリプトを使ってください: このスクリプトをインストールするには
+`+/script install buffer_autoset.py+` コマンドを使い、ヘルプを見るには `+/help buffer_autoset+` コマンドを使ってください。
+
+// TRANSLATION MISSING
+[[buffer_logging]]
+=== Buffer logging
+
+Logger
+プラグインを使うことで、バッファの内容をファイルに保存できます。保存形式とその方法をオプションで設定できます。
+
+[[logger_log_levels]]
+==== ログレベル
+
+ログ保存はそれぞれのバッファに対して設定されたログレベルに従って行われます。デフォルトのレベルは
+9 (バッファに表示されたメッセージをすべて保存)
+です。特定のバッファやバッファグループに対して個別にログレベルを設定できます。
+
+設定可能なレベルは 0 から 9 です。0 は "保存しない"、9
+は「すべてのメッセージを保存」を意味します。
+
+それぞれのプラグインでレベルの意味が変わります。IRC
+プラグインに対しては以下のレベルが利用されます:
+
+* レベル 1: ユーザからのメッセージ (チャンネルまたはプライベート)
+* レベル 2: ニックネームの変更 (自身と他のユーザ)
+* レベル 3: 任意のサーバメッセージ (参加/退出/終了メッセージを除く)
+* レベル 4: 参加/退出/終了メッセージ
+
+従って、IRC チャンネルに対してレベル 3 を設定した場合、WeeChat
+は参加/退出/終了メッセージを除いて全てのメッセージを保存します。
+
+例:
+
+* IRC チャンネル #weechat に対してレベル 3 を設定:
+
+----
+/set logger.level.irc.libera.#weechat 3
+----
+
+* libera サーババッファに対してレベル 3 を設定:
+
+----
+/set logger.level.irc.server.libera 3
+----
+
+* libera サーバの全てのチャンネルに対してレベル 3 を設定:
+
+----
+/set logger.level.irc.libera 3
+----
+
+* 全ての IRC バッファに対してレベル 2 を設定:
+
+----
+/set logger.level.irc 2
+----
+
+[[logger_filenames_masks]]
+==== ファイル名マスク
+
+// TRANSLATION MISSING
+It is possible to define a filename mask for each buffer, and use local buffer
+variables to build filename. To see available local variables for current buffer:
+
+----
+/buffer listvar
+----
+
+// TRANSLATION MISSING
+Masks will be matched on options in descending order of specificity on
+`logger.mask.$plugin.*`, with `logger.file.mask` as fallback option.
+
+例えば "irc.libera.#weechat" バッファの場合、WeeChat
+は以下の順番でオプションに設定されたファイル名マスクを検索します:
+
+----
+logger.mask.irc.libera.#weechat
+logger.mask.irc.libera
+logger.mask.irc
+logger.file.mask
+----
+
+特定の IRC サーバ ("logger.mask.irc.libera") またはプラグイン
+("logger.mask.irc") のグループに対して共通のマスクを適用できます。
+
+[[logger_files_by_date]]
+===== ログファイルに日付を利用する
+
+ログファイルに日付を使うには、マスクに日時/時間指定子を利用できます
+(書式に関しては `man strftime` を参照してください)。例えば:
+
+----
+/set logger.file.mask "%Y/%m/$plugin.$name.weechatlog"
+----
+
+以下のファイルが作成されます:
+
+....
+~/.local/share/weechat
+└── logs
+    ├── 2010
+    │   ├── 11
+    │   │   ├── irc.server.libera.weechatlog
+    │   │   └── irc.libera.#weechat.weechatlog
+    │   └── 12
+    │       ├── irc.server.libera.weechatlog
+    │       └── irc.libera.#weechat.weechatlog
+    ├── 2011
+    │   ├── 01
+    │   │   ├── irc.server.libera.weechatlog
+    │   │   └── irc.libera.#weechat.weechatlog
+    │   ├── 02
+    ...
+....
+
+[[logger_irc_files_by_server_channel]]
+===== IRC ログファイルにサーバとチャンネル名を利用する
+
+IRC サーバ名を使ったディレクトリに、チャンネル名を使ったファイルを作成する場合:
+
+----
+/set logger.mask.irc "irc/$server/$channel.weechatlog"
+----
+
+以下のファイルが作成されます:
+
+....
+~/.local/share/weechat
+└── logs
+    └── irc
+        ├── libera
+        │   ├── libera.weechatlog
+        │   ├── #weechat.weechatlog
+        │   └── #mychan.weechatlog
+        ├── oftc
+        │   ├── oftc.weechatlog
+        │   ├── #channel1.weechatlog
+        │   └── #channel2.weechatlog
+        ...
+....
+
+[[logger_commands]]
+==== コマンド
+
+include::includes/autogen_user_commands.ja.adoc[tag=logger_commands]
+
+[[logger_options]]
+==== オプション
+
+_logger.conf_ ファイル内のセクション:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| セクション | 操作コマンド        | 説明
+| look       | /set logger.look.*  | 外観
+| color      | /set logger.color.* | 色
+| file       | /set logger.file.*  | ログファイルのオプション
+| level      | /set logger.level.* | バッファのログレベル (オプションをセクションに追加/削除出来ます)
+| mask       | /set logger.mask.*  | バッファのファイル名マスク (オプションをセクションに追加/削除出来ます)
+|===
+
+オプション:
+
+include::includes/autogen_user_options.ja.adoc[tag=logger_options]
+
+[[mouse]]
+=== マウスサポート
+
+WeeChat はマウスクリックとマウスジェスチャーをサポートしています。
+ローカル端末と screen/tmux の有無にかかわらず ssh 接続経由で利用可能です。
+
+[[mouse_enable]]
+==== マウスの有効化
+
+起動時にマウスを有効化するには:
+
+----
+/set weechat.look.mouse on
+----
+
+マウスを有効化するには kbd:[Alt+m] を押すか、以下のコマンドを使います:
+
+----
+/mouse enable
+----
+
+キーにマウスの一時的な無効化を割り当てることができます。例えば、kbd:[Alt+%]
+キーにマウスを 10 秒間無効化する機能を割り当てるには:
+
+----
+/key bind meta-% /mouse toggle 10
+----
+
+[IMPORTANT]
+WeeChat でマウスを有効化した場合、すべてのマウスイベントは WeeChat
+によって捕捉されます。したがって、カット/ペーストなどの操作や URL
+のクリックなどは端末に送信されません。kbd:[Shift]
+キーを使えば、一時的にマウスを無効化して、端末へ直接イベントを送信する事が可能です
+(一部の端末、例えば iTerm などでは kbd:[Shift] の代わりに kbd:[Alt] を使ってください)。
+
+[NOTE]
+マウスに関するトラブルがあれば link:weechat_faq.ja.html#mouse[WeeChat FAQ (よくある質問) / マウス]を参照してください。
+
+[[mouse_bind_events]]
+==== コマンドに対してマウスイベントを割り当てる
+
+// TRANSLATION MISSING
+WeeChat はデフォルトマウスイベントの多くを定義しています
+(<<key_bindings_mouse,mouse actions>>を参照)。
+
+`/key` コマンドで "mouse" コンテキストを指定することで割り当てを追加、変更できます
+(詳しい使い方は <<command_weechat_key,/key>> コマンドを参照)。
+
+イベント名には修飾キー (任意)、ボタン/ホイール名、ジェスチャー (任意)
+を利用できます。異なるイベントは `+-+` で分割してください。
+
+修飾キーリスト:
+
+[width="100%",cols="1m,4",options="header"]
+|===
+| 修飾キー | 説明
+| ctrl     | kbd:[Ctrl] キー
+| alt      | kbd:[Alt] キー
+| ctrl-alt | kbd:[Ctrl] + kbd:[Alt] キー
+|===
+
+ボタン/ホイールのリスト:
+
+[width="100%",cols="1m,4",options="header"]
+|===
+| ボタン/ホイール     | 説明
+| button1             | 左ボタンクリック
+| button2             | 右ボタンクリック
+| button3             | 中ボタンクリック (多くの場合ホイールクリック)
+| button4 ... button9 | その他のボタンクリック
+| wheelup             | ホイール (上方向)
+| wheeldown           | ホイール (下方向)
+|===
+
+ジェスチャーのリスト (ボタンのみ対応、ホイール未対応):
+
+[width="100%",cols="1m,4",options="header"]
+|===
+| ジェスチャー       | 距離
+| gesture-up         | 3 から 19
+| gesture-up-long    | 20 以上
+| gesture-down       | 3 から 19
+| gesture-down-long  | 20 以上
+| gesture-left       | 3 から 39
+| gesture-left-long  | 40 以上
+| gesture-right      | 3 から 39
+| gesture-right-long | 40 以上
+|===
+
+未完了イベントのリスト (ボタンのみ、プラグイン/スクリプトで便利):
+
+[width="100%",cols="1m,4",options="header"]
+|===
+| イベント   | 説明
+| event-down | マウスボタンが押され、離されていない状態
+| event-drag | マウスボタンが押された状態でマウスが動かされた
+|===
+
+イベントの表記例:
+
+* `button1`
+* `ctrl-button1`
+* `button1-gesture-right`
+* `button1-event-down`
+* `button1-event-drag`
+* `alt-button2-gesture-down-long`
+* `wheelup`
+* `ctrl-alt-wheeldown`
+* ...
+
+[TIP]
+"mouse" イベントにキーを割り当てる場合、イベント名の最初または最後に `+*+`
+を使うことで複数のイベントにマッチさせることができます。例えば
+`+button1-gesture-*+` は左クリックを利用したすべてのジェスチャーにマッチします。
+
+[TIP]
+`+/input grab_mouse+`
+コマンドの後にマウスを動かすことでコマンドラインにマウスイベントが入力されます。これにより対応するイベントを確認できます。
+
+// TRANSLATION MISSING
+[[spell_checking]]
+=== Spell checking
+
+Spell
+プラグインを使うことで、コマンドラインに入力した文字列のスペルチェックができます。バッファごとに異なる言語に対するスペルチェックを実行できます。
+
+スペルチェック機能はデフォルトで無効化されています。kbd:[Alt+s] で有効無効を切り替える事が可能です。
+
+[[spell_dictionaries]]
+==== 辞書
+
+スペルチェック機能を使う前に、すべてのバッファまたは特定のバッファに対して辞書を定義しなければいけません。
+
+同時に複数の辞書を使用可能です:
+WeeChat はすべての辞書を使って単語をチェックします。
+
+英語とフランス語の辞書を使う例:
+
+----
+/set spell.check.default_dict "en,fr"
+----
+
+特定のバッファで使用する辞書を定義することも可能です。ドイツ語のチャンネルでドイツ語の辞書を使う例:
+
+----
+/spell setdict de
+----
+
+バッファグループに対して特定の辞書を指定することも可能です。libera
+IRC サーバに対して英語の辞書を使う例:
+
+----
+/set spell.dict.irc.libera en
+----
+
+詳しい情報はコマンド <<command_spell_spell,/spell>> を参照してください。
+
+[[spell_speller_options]]
+==== Speller オプション
+
+Speller オプションは aspell 設定の "option"
+セクションにあるオプションを追加して定義します。
+
+ここで利用するオプション名は aspell
+設定オプションと同じものです。オプションのリストはシェルで以下のコマンドを実行することで確認できます:
+
+----
+$ aspell config
+----
+
+例えば、"ignore-case" オプションを有効化するには:
+
+----
+/set spell.option.ignore-case "true"
+----
+
+[[spell_suggestions]]
+==== 修正候補
+
+"spell_suggest" バー要素内に修正候補が表示されます。修正候補の数は
+_spell.check.suggestions_ オプションで設定します。
+
+修正候補を利用するには、_spell.check.suggestions_ オプションをゼロ以上の整数に設定し、_status_
+バーなどに "spell_suggest" バー要素を追加してください。
+
+英語辞書 (`en`) を用いた修正候補の例:
+
+....
+│[12:55] [6] [irc/libera] 3:#test(+n){4} [print,prone,prune]                      │
+│[@Flashy] prinr █                                                                │
+└─────────────────────────────────────────────────────────────────────────────────┘
+....
+
+英語とフランス語辞書 (`en,fr`) を用いた修正候補の例:
+
+....
+│[12:55] [6] [irc/libera] 3:#test(+n){4} [print,prone,prune/prime,primer,primé]   │
+│[@Flashy] prinr █                                                                │
+└─────────────────────────────────────────────────────────────────────────────────┘
+....
+
+[[spell_commands]]
+==== コマンド
+
+include::includes/autogen_user_commands.ja.adoc[tag=spell_commands]
+
+[[spell_options]]
+==== オプション
+
+_spell.conf_ ファイル内のセクション:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| セクション | 操作コマンド                           | 説明
+| color      | /set spell.color.*                     | 色
+| check      | /set spell.check.*                     | スペルチェックの操作コマンド
+| dict       | <<command_spell_spell,/spell setdict>> +
+               /set spell.dict.*                      | バッファが利用するディレクトリ (オプションをセクションに追加/削除出来ます)
+| look       | /set spell.look.*                      | 外観
+| option     | /set spell.option.*                    | <<spell_speller_options,Speller オプション>> (オプションをセクションに追加/削除出来ます)
+|===
+
+オプション:
+
+include::includes/autogen_user_options.ja.adoc[tag=spell_options]
 
 [[bars]]
 === バー
@@ -1717,695 +2947,6 @@ Same condition, but always display nicklist on buffer _&bitlbee_
 /set weechat.bar.nicklist.conditions "${nicklist} && (${info:term_width} > 100 || ${buffer.full_name} == irc.bitlbee.&bitlbee)"
 ----
 
-[[bare_display]]
-=== 最小限表示
-
-「最小限表示」と呼ばれる特殊な表示状態を使うことで、(マウスを使って) 長い
-URL を簡単にクリックしたり、テキストを簡単に選択できるようになっています。
-
-最小限表示は以下の機能を持っています:
-
-* 現在のバッファの内容だけを表示: 分割ウィンドウやバー等
-  (タイトル、ニックネームリスト、状態、入力、...) も表示しない
-* WeeChat マウスサポートを無効化 (有効化されていた場合):
-  端末でやるのと同じように URL をクリックしたりテキストを選択できます
-* ncurses を使わない、このため URL を行の最後で分断されることがなくなります。
-
-最小限表示を有効化するデフォルトキーは kbd:[Alt+l] (`L`) で、終了するには同じキーを押してください
-(また、デフォルトでは入力が変更された場合に最小限表示を終了します、<<option_weechat.look.bare_display_exit_on_input,weechat.look.bare_display_exit_on_input>>
-オプションを参照)。
-
-<<option_weechat.look.bare_display_time_format,weechat.look.bare_display_time_format>>
-オプションを使えば、時間書式を変更することも可能です。
-
-<<command_weechat_window,/window>>
-コマンドを使えば、指定秒後に最小限表示を有効化することができます。
-
-WeeChat が以下のような表示状態の場合:
-
-....
-┌──────────────────────────────────────────────────────────────────────────────────────┐
-│1.libera │Welcome to #abc                                                             │
-│  weechat│12:52:27   --> | Flashy (flashcode@weechat.org) has joined #abc     │@Flashy│
-│2.  #test│12:52:27    -- | Nicks #abc: [@Flashy @joe +weebot peter]           │@joe   │
-│3.  #abc │12:52:27    -- | Channel #abc: 4 nicks (2 ops, 1 voice, 1 normal)   │+weebot│
-│4.  #def │12:52:27    -- | Channel created on Tue Jan 27 06:30:17 2009        │peter  │
-│5.  #ghi │12:54:15 peter | hey!                                               │       │
-│         │12:55:01  @joe | peter: hook_process: https://weechat.org/files/doc │       │
-│         │               | /devel/weechat_plugin_api.en.html#_weechat_hook_pr │       │
-│         │               | ocess                                              │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │                                                                    │       │
-│         │[12:55] [5] [irc/libera] 3:#abc(+n){4}                                      │
-│         │[@Flashy(i)] hi peter!█                                                     │
-└──────────────────────────────────────────────────────────────────────────────────────┘
-....
-
-最小限表示では以下の様に表示されます:
-
-....
-┌──────────────────────────────────────────────────────────────────────────────────────┐
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│                                                                                      │
-│12:52 --> Flashy (flashcode@weechat.org) has joined #abc                              │
-│12:52 -- Nicks #abc: [@Flashy @joe +weebot peter]                                     │
-│12:52 -- Channel #abc: 4 nicks (2 ops, 1 voice, 1 normal)                             │
-│12:52 -- Channel created on Tue Jan 27 06:30:17 2009                                  │
-│12:54 <peter> hey!                                                                    │
-│12:55 <@joe> peter: hook_process: https://weechat.org/files/doc/devel/weechat_plugin_a│
-│pi.en.html#_weechat_hook_process                                                      │
-└──────────────────────────────────────────────────────────────────────────────────────┘
-....
-
-このため、端末で問題なく _joe_ さんからの URL をクリックできます
-(もちろん、使用中の端末で URL をクリックできるように設定されていなければいけませんが)。
-
-[[notify_levels]]
-=== 通知レベル
-
-[[setup_notify_levels]]
-==== 通知レベルの設定
-
-バッファに表示された各メッセージには 4 つのレベルが設定されています。レベルの低いものから順に:
-
-* _low_: 重要性の低いメッセージ (例えば irc の参加/退出/終了メッセージ)
-* _message_: ユーザからのメッセージ
-* _private_: プライベートバッファのメッセージ
-* _highlight_: ハイライトされたメッセージ
-
-それぞれのバッファには通知レベルが設定されており、通知レベルに対応するメッセージの数がホットリストに表示されます。
-
-デフォルトの通知レベルは
-<<option_weechat.look.buffer_notify_default,weechat.look.buffer_notify_default>>
-オプションで指定し、デフォルトは _all_ です。
-
-[width="75%",cols="2m,7",options="header"]
-|===
-| 通知レベル   | ホットリストに追加されるメッセージのレベル
-| none         | (無効)
-| highlight    | _highlight_ + _private_
-| message      | _highlight_ + _private_ + _message_
-| all          | _highlight_ + _private_ + _message_ + _low_
-|===
-
-通知レベルはバッファグループに対して設定することも可能で、例えば
-irc サーバ "libera" に含まれる全てのバッファに対して設定する場合:
-
-----
-/set weechat.notify.irc.libera message
-----
-
-"#weechat" チャンネルだけに対して、通知レベルを _highlight_ に設定する場合:
-
-----
-/set weechat.notify.irc.libera.#weechat highlight
-----
-
-`/buffer` コマンドで、あるバッファに対する通知レベルを設定できます:
-
-----
-/buffer notify highlight
-----
-
-[[max_hotlist_level_nicks]]
-==== ニックネームに対するホットリストレベルの最大値
-
-ニックネーム、バッファ、バッファグループ (IRC サーバなど)
-に対してホットリストレベルの最大値を設定することが可能です。
-
-あるニックネームのリストに対してバッファプロパティ "hotlist_max_level_nicks"
-を設定したり、各ニックネームに対してホットリストレベルの最大値を設定することも可能です。設定可能なレベルは以下です:
-
-* -1: ニックネームがホットリストを変更しない優先度
-* 0: 低優先度 (参加および退出メッセージなど)
-* 1: 通常メッセージ
-* 2: プライベートメッセージ
-* 3: ハイライト (これはすべてのメッセージのデフォルト最大値であるため、通常これを指定することはありません)
-
-例えば現在のバッファで "joe" と "mike" からのメッセージに対するハイライトを無効化するには以下のように設定します:
-
-----
-/buffer set hotlist_max_level_nicks_add joe:2,mike:2
-----
-
-[NOTE]
-バッファプロパティ "hotlist_max_level_nicks" は設定ファイルに保存されません。 +
-これを保存するには _buffer_autoset.py_ スクリプトを使ってください: このスクリプトをインストールするには
-`+/script install buffer_autoset.py+` コマンドを使い、ヘルプを見るには `+/help buffer_autoset+` コマンドを使ってください。
-
-[[highlights]]
-=== ハイライト
-
-[[highlights_words]]
-==== ハイライトする単語の追加
-
-デフォルトで WeeChat
-は自分のニックネームが含まれる他のユーザからのメッセージをハイライトします。このため、ハイライトはバッファに依存します
-(ニックネームはバッファごとに異なる場合があります)。
-
-他の単語を追加するには <<option_weechat.look.highlight,weechat.look.highlight>>
-オプションを使います。例えば自分のニックネーム、"word1"、"word2"、"test"
-から始まる任意の単語をハイライトするには以下のように設定します:
-
-----
-/set weechat.look.highlight word1,word2,test*
-----
-
-単語に対してさらに具体的なルールを設定する必要がある場合、<<option_weechat.look.highlight_regex,weechat.look.highlight_regex>>
-オプションを使って正規表現で指定することも可能です。例えば "flashcode"、"flashcöde"、"flashy"
-という単語をハイライトするには以下のように設定します:
-
-----
-/set weechat.look.highlight_regex flashc[oö]de|flashy
-----
-
-ハイライトする単語の区切りは <<option_weechat.look.word_chars_highlight,weechat.look.word_chars_highlight>>
-オプションを使って設定します。
-
-[[highlights_tags]]
-==== ハイライトするタグの追加
-
-表示される行には「タグ」を含めることが可能です。「タグ」とはメッセージの出自やメッセージ自身に関する情報を与えるものです。 +
-`/debug tags` コマンドでタグを表示することが可能です
-(タグを非表示にする場合も同じコマンドを使います)。
-
-ハイライトするタグを明示するには
-<<option_weechat.look.highlight_tags,weechat.look.highlight_tags>>
-オプションを使います。複数のタグを指定するにはコンマで区切り、複数のタグの論理
-"and" を表すには `+++` で区切ります。
-
-例えば "FlashCode" というニックネームからのすべてのメッセージと "toto"
-で始まるニックネームからのすべての通知メッセージをハイライトするには以下のように設定します:
-
-----
-/set weechat.look.highlight_tags "nick_flashcode,irc_notice+nick_toto*"
-----
-
-[[highlights_regex_buffer]]
-==== バッファに対する特別なハイライトの設定
-
-バッファプロパティ "highlight_regex"
-と正規表現を使ってハイライトを強制できます。
-
-例えば現在のバッファ宛のすべてのメッセージをハイライトするには以下のように設定します:
-
-----
-/buffer set highlight_regex .*
-----
-
-[NOTE]
-バッファプロパティ "highlight_regex" は設定ファイルに保存されません。 +
-これを保存するには _buffer_autoset.py_ スクリプトを使ってください: このスクリプトをインストールするには
-`+/script install buffer_autoset.py+` コマンドを使い、ヘルプを見るには `+/help buffer_autoset+` コマンドを使ってください。
-
-[[key_bindings]]
-=== デフォルトのキー割り当て
-
-[[key_bindings_command_line]]
-==== コマンドライン用のキー
-
-[width="100%",cols="^.^3,.^8,.^5",options="header"]
-|===
-| キー            | 説明 | コマンド
-| kbd:[←] +
-  kbd:[Ctrl+b]    | コマンドラインで前の文字に移動 | `+/input move_previous_char+`
-| kbd:[→] +
-  kbd:[Ctrl+f]    | コマンドラインで次の文字に移動 | `+/input move_next_char+`
-| kbd:[Ctrl+←] +
-  kbd:[Alt+b]     | コマンドラインで前の単語に移動 | `+/input move_previous_word+`
-| kbd:[Ctrl+→] +
-  kbd:[Alt+f]     | コマンドラインで次の単語に移動 | `+/input move_next_word+`
-| kbd:[Home] +
-  kbd:[Ctrl+a]    | コマンドラインで行頭に移動 | `+/input move_beginning_of_line+`
-| kbd:[End] +
-  kbd:[Ctrl+e]    | コマンドラインで行末に移動 | `+/input move_end_of_line+`
-| kbd:[Ctrl+c],
-  kbd:[b]         | テキストを太字化するコードの挿入 | `+/input insert \x02+`
-| kbd:[Ctrl+c],
-  kbd:[c]         | テキストに色をつけるコードの挿入 | `+/input insert \x03+`
-| kbd:[Ctrl+c],
-  kbd:[i]         | テキストをイタリック体にするコードの挿入 | `+/input insert \x1D+`
-| kbd:[Ctrl+c],
-  kbd:[o]         | テキスト色のリセットを行うコードの挿入 | `+/input insert \x0F+`
-| kbd:[Ctrl+c],
-  kbd:[v]         | テキスト色の反転を行うコードの挿入 | `+/input insert \x16+`
-| kbd:[Ctrl+c],
-  kbd:[_]         | テキストに下線を引くコードの挿入 | `+/input insert \x1F+`
-| kbd:[Del] +
-  kbd:[Ctrl+d]    | コマンドラインで次の文字を削除 | `+/input delete_next_char+`
-| kbd:[Backsp.] +
-  kbd:[Ctrl+h]    | コマンドラインで前の文字を削除 | `+/input delete_previous_char+`
-| kbd:[Ctrl+k]    | コマンドラインでカーソルより後の文字列を削除 (削除された文字列は WeeChat 専用の内部クリップボードに保存) | `+/input delete_end_of_line+`
-| kbd:[Ctrl+r]    | バッファ中の履歴からテキスト検索 (<<key_bindings_search_context,検索モード用のキー>>を参照) | `+/input search_text_here+`
-| kbd:[Ctrl+t]    | 文字の入れ替え | `+/input transpose_chars+`
-| kbd:[Ctrl+u]    | コマンドラインでカーソルより前の文字列を削除 (削除された文字列は WeeChat 専用の内部クリップボードに保存) | `+/input delete_beginning_of_line+`
-| kbd:[Ctrl+w]    | コマンドラインで前の単語を削除 (削除された文字列は WeeChat 専用の内部クリップボードに保存) | `+/input delete_previous_word+`
-| kbd:[Ctrl+y]    | WeeChat 専用の内部クリップボードの内容をペースト | `+/input clipboard_paste+`
-| kbd:[Ctrl+_]    | コマンドラインの最後の動作をやり直す | `+/input undo+`
-| kbd:[Alt+_]     | コマンドラインの最後の動作を取り消す | `+/input redo+`
-| kbd:[Tab]       | コマンドやニックネームを補完 (再度 kbd:[Tab] することで次の補完候補を表示) | `+/input complete_next+`
-| kbd:[Shift+Tab] | 補完候補が無い場合: 部分補完を行う、補完候補が有る場合: 前の補完候補を表示 | `+/input complete_previous+`
-| kbd:[Enter] +
-  kbd:[Ctrl+j] +
-  kbd:[Ctrl+m]    | コマンドを実行するか、メッセージを送信する (検索モードの場合: 検索の終了) | `+/input return+`
-// TRANSLATION MISSING
-| kbd:[Alt+Enter] | Insert a newline. | `+/input insert \n+`
-| kbd:[↑]         | 前のコマンド/メッセージを呼び出す (検索モードの場合: 上方向に検索) | `+/input history_previous+`
-| kbd:[↓]         | 次のコマンド/メッセージを呼び出す (検索モードの場合: 下方向に検索) | `+/input history_next+`
-| kbd:[Ctrl+↑]    | グローバル履歴から前のコマンド/メッセージを呼び出す (すべてのバッファに対して共通の履歴) | `+/input history_global_previous+`
-| kbd:[Ctrl+↓]    | グローバル履歴から次のコマンド/メッセージを呼び出す (すべてのバッファに対して共通の履歴) | `+/input history_global_next+`
-| kbd:[Alt+d]     | コマンドラインで次の単語を削除 (削除された文字列は WeeChat 専用の内部クリップボードに保存) | `+/input delete_next_word+`
-| kbd:[Alt+k]     | キー入力を奪って、コマンドラインにコード (キーが割り当てられていればコマンド) を入力 | `+/input grab_key_command+`
-| kbd:[Alt+r]     | コマンドラインへの入力をすべて削除 | `+/input delete_line+`
-| kbd:[Alt+s]     | スペルチェッカの有効無効を切り替え | `+/mute spell toggle+`
-|===
-
-[[key_bindings_buffers_windows]]
-==== バッファ / ウィンドウ用のキー
-
-[width="100%",cols="^.^3,.^8,.^5",options="header"]
-|===
-| キー               | 説明 | コマンド
-| kbd:[Ctrl+l] (`L`) | 全ウィンドウを再描画 | `+/window refresh+`
-| kbd:[Ctrl+s],
-  kbd:[Ctrl+u]       | すべてのバッファに未読マークをセット | `+/input set_unread+`
-| kbd:[Ctrl+x]       | 同じ番号を持つバッファにアタッチされていた場合、現在のバッファに移動 | `+/input switch_active_buffer+`
-| kbd:[Alt+x]        | マージされたバッファに再ズーム (kbd:[Alt+x]: 全てのマージされたバッファを表示) | `+/input zoom_merged_buffer+`
-| kbd:[PgUp]         | バッファ履歴を 1 ページ分上方向にスクロール | `+/window page_up+`
-| kbd:[PgDn]         | バッファ履歴を 1 ページ分下方向にスクロール | `+/window page_down+`
-| kbd:[Alt+PgUp]     | バッファ履歴を数行分上方向にスクロール | `+/window scroll_up+`
-| kbd:[Alt+PgDn]     | バッファ履歴を数行分下方向にスクロール | `+/window scroll_down+`
-| kbd:[Alt+Home]     | バッファ履歴を最初までスクロール | `+/window scroll_top+`
-| kbd:[Alt+End]      | バッファ履歴を最後までスクロール | `+/window scroll_bottom+`
-| kbd:[F1] +
-  kbd:[Ctrl+F1]      | バッファリストを上方に 1 ページスクロール | `+/bar scroll buflist * -100%+`
-| kbd:[F2] +
-  kbd:[Ctrl+F2]      | バッファリストを下方に 1 ページスクロール | `+/bar scroll buflist * +100%+`
-| kbd:[Alt+F1]       | バッファリストを上端までスクロール | `+/bar scroll buflist * b+`
-| kbd:[Alt+F2]       | バッファリストを下端までスクロール | `+/bar scroll buflist * e+`
-| kbd:[Alt+←] +
-  kbd:[Alt+↑] +
-  kbd:[Ctrl+p] +
-  kbd:[F5]           | 前のバッファに移動 | `+/buffer -1+`
-| kbd:[Alt+→] +
-  kbd:[Alt+↓] +
-  kbd:[Ctrl+n] +
-  kbd:[F6]           | 後のバッファに移動 | `+/buffer +1+`
-| kbd:[F7]           | ウィンドウを前に移動 | `+/window -1+`
-| kbd:[F8]           | ウィンドウを後に移動 | `+/window +1+`
-| kbd:[F9]           | バッファタイトルを左方向にスクロール | `+/bar scroll title * -30%+`
-| kbd:[F10]          | バッファタイトルを右方向にスクロール | `+/bar scroll title * +30%+`
-| kbd:[F11] +
-  kbd:[Ctrl+F11]     | ニックネームリストを上方向にスクロール | `+/bar scroll nicklist * -100%+`
-| kbd:[F12] +
-  kbd:[Ctrl+F12]     | ニックネームリストを下方向にスクロール | `+/bar scroll nicklist * +100%+`
-| kbd:[Alt+F11]      | ニックネームリストを一番上にスクロール | `+/bar scroll nicklist * b+`
-| kbd:[Alt+F12]      | ニックネームリストを一番下にスクロール | `+/bar scroll nicklist * e+`
-| kbd:[Alt+a]        | 変更のあった次のバッファに移動 (優先順位: ハイライト、新規メッセージ、その他) | `+/input jump_smart+`
-// TRANSLATION MISSING
-| kbd:[Alt+Shift+B]  | Toggle buflist. | `+/buflist toggle+`
-// TRANSLATION MISSING
-| kbd:[Alt+h],
-  kbd:[Alt+c]        | Clear hotlist (activity notification on buffers). | `+/input hotlist_clear+`
-// TRANSLATION MISSING
-| kbd:[Alt+h],
-  kbd:[Alt+m]        | Remove current buffer from hotlist. | `+/input hotlist_remove_buffer+`
-// TRANSLATION MISSING
-| kbd:[Alt+h],
-  kbd:[Alt+r]        | Restore latest hotlist removed in the current buffer. | `+/input hotlist_restore_buffer+`
-// TRANSLATION MISSING
-| kbd:[Alt+h],
-  kbd:[Alt+Shift+R]  | Restore latest hotlist removed in all buffers. | `+/input hotlist_restore_all+`
-| kbd:[Alt+j],
-  kbd:[Alt+f]        | 最初のバッファに移動 | `+/buffer -+`
-| kbd:[Alt+j],
-  kbd:[Alt+l] (`L`)  | 最後のバッファに移動 | `+/buffer ++`
-| kbd:[Alt+j],
-  kbd:[Alt+r]        | IRC 生バッファに移動 | `+/server raw+`
-| kbd:[Alt+j],
-  kbd:[Alt+s]        | IRC サーババッファに移動 | `+/server jump+`
-| kbd:[Alt+0...9]    | 番号のバッファに移動 (0 = 10) | `+/buffer *N+`
-| kbd:[Alt+j],
-  kbd:[01...99]      | 番号のバッファに移動 | `+/buffer *NN+`
-| kbd:[Alt+l] (`L`)  | 最小限表示の有効無効を切り替え | `+/window bare+`
-| kbd:[Alt+m]        | マウスの有効無効を切り替え | `+/mouse toggle+`
-| kbd:[Alt+n]        | 次のハイライトまでスクロール | `+/window scroll_next_highlight+`
-// TRANSLATION MISSING
-| kbd:[Alt+Shift+N]  | Toggle nicklist bar. | `+/bar toggle nicklist+`
-| kbd:[Alt+p]        | 前のハイライトまでスクロール | `+/window scroll_previous_highlight+`
-| kbd:[Alt+u]        | バッファを最初の未読行までスクロール | `+/window scroll_unread+`
-| kbd:[Alt+w],
-  kbd:[Alt+↑]        | 上のウィンドウに移動 | `+/window up+`
-| kbd:[Alt+w],
-  kbd:[Alt+↓]        | 下のウィンドウに移動 | `+/window down+`
-| kbd:[Alt+w],
-  kbd:[Alt+←]        | 左のウィンドウに移動 | `+/window left+`
-| kbd:[Alt+w],
-  kbd:[Alt+→]        | 右のウィンドウに移動 | `+/window right+`
-| kbd:[Alt+w],
-  kbd:[Alt+b]        | すべてのウィンドウサイズを均等に | `+/window balance+`
-| kbd:[Alt+w],
-  kbd:[Alt+s]        | 2 つのウィンドウを入れ替え | `+/window swap+`
-| kbd:[Alt+z]        | 現在のウィンドウを最大化 (再度 kbd:[Alt+z] することで: 最初のウィンドウ状態に戻す、最大化前の状態) | `+/window zoom+`
-| kbd:[Alt+<]        | バッファ訪問履歴で前のバッファに移動 | `+/input jump_previously_visited_buffer+`
-| kbd:[Alt+>]        | バッファ訪問履歴で次のバッファに移動 | `+/input jump_next_visited_buffer+`
-| kbd:[Alt+/]        | 最後に表示したバッファに移動 (バッファ移動前に表示していたウィンドウ) | `+/input jump_last_buffer_displayed+`
-| kbd:[Alt+=]        | フィルタの有効無効を切り替え | `+/filter toggle+`
-| kbd:[Alt+-]        | 現在のバッファのフィルタの有効無効を切り替え | `+/filter toggle @+`
-|===
-
-[[key_bindings_search_context]]
-==== 「検索」モード用のキー
-
-以下のキーは「検索」検索モード (バッファ内のテキスト検索用に
-kbd:[Ctrl+r] が押された状態) でのみ有効です。
-
-[width="100%",cols="^.^3,.^8,.^5",options="header"]
-|===
-| キー           | 説明 | コマンド
-| kbd:[Ctrl+r]   | 検索タイプを切り替え: 文字列 (デフォルト)、正規表現 | `+/input search_switch_regex+`
-| kbd:[Alt+c]    | 大文字小文字を区別して検索 | `+/input search_switch_case+`
-| kbd:[Tab]      | 検索範囲: メッセージ (デフォルト)、プレフィックス、プレフィックスとメッセージ | `+/input search_switch_where+`
-| kbd:[↑]        | 前のキーワードで検索 | `+/input search_previous+`
-| kbd:[↓]        | 次のキーワードで検索 | `+/input search_next+`
-| kbd:[Enter] +
-  kbd:[Ctrl+j] +
-  kbd:[Ctrl+m]   | 現在の位置で検索を終了 | `+/input search_stop_here+`
-| kbd:[Ctrl+q]   | 検索を終了してバッファの最後までスクロール | `+/input search_stop+`
-|===
-
-[[key_bindings_cursor_context]]
-==== 「カーソル」モード用のキー
-
-以下のキーは「カーソル」モード (画面上でカーソルを自由に動かせる状態) でのみ有効です。
-
-[width="100%",cols="^.^3,^.^2,.^7,.^7",options="header"]
-|===
-| キー           | エリア            | 説明 | コマンド
-| kbd:[↑]        | -                 | カーソルを上の行に移動 | `+/cursor move up+`
-| kbd:[↓]        | -                 | カーソルを下の行に移動 | `+/cursor move down+`
-| kbd:[←]        | -                 | カーソルを左の列に移動 | `+/cursor move left+`
-| kbd:[→]        | -                 | カーソルを右の列に移動 | `+/cursor move right+`
-| kbd:[Alt+↑]    | -                 | カーソルを上のエリアに移動 | `+/cursor move area_up+`
-| kbd:[Alt+↓]    | -                 | カーソルを下のエリアに移動 | `+/cursor move area_down+`
-| kbd:[Alt+←]    | -                 | カーソルを左のエリアに移動 | `+/cursor move area_left+`
-| kbd:[Alt+→]    | -                 | カーソルを右のエリアに移動 | `+/cursor move area_right+`
-| kbd:[m]        | チャット          | メッセージを引用 | `+hsignal:chat_quote_message;/cursor stop+`
-| kbd:[q]        | チャット          | プレフィックスとメッセージを引用 | `+hsignal:chat_quote_prefix_message;/cursor stop+`
-| kbd:[Q]        | チャット          | 時間、プレフィックス、メッセージを引用 | `+hsignal:chat_quote_time_prefix_message;/cursor stop+`
-| kbd:[b]        | ニックネームリスト| ニックネームをバンする | `+/window ${_window_number};/ban ${nick}+`
-| kbd:[k]        | ニックネームリスト| ニックネームをキックする | `+/window ${_window_number};/kick ${nick}+`
-| kbd:[K]        | ニックネームリスト| ニックネームをバンとキックする | `+/window ${_window_number};/kickban ${nick}+`
-| kbd:[q]        | ニックネームリスト| ニックネームに対するクエリを開く | `+/window ${_window_number};/query ${nick};/cursor stop+`
-| kbd:[w]        | ニックネームリスト| ニックネームに対して whois を行う | `+/window ${_window_number};/whois ${nick}+`
-| kbd:[Enter] +
-  kbd:[Ctrl+j] +
-  kbd:[Ctrl+m]   | -                 | カーソルモードを終了 | `+/cursor stop+`
-|===
-
-[[key_bindings_mouse_context]]
-==== 「マウス」モード用のキー
-
-以下のキーは「マウス」モード (マウスイベントが発生したとき) でのみ有効です。
-
-[width="100%",cols="^.^3,^.^3,^.^3,.^8,.^8",options="header"]
-|===
-| ボタン/ホイール ^(1)^ | ジェスチャー | エリア                       | 説明 | コマンド
-| ◾◽◽               | -            | チャット                     | ウィンドウに移動 | `+/window ${_window_number}+`
-| ◾◽◽               | 左           | チャット                     | 前のバッファに移動 | `+/window ${_window_number};/buffer +1+`
-| ◾◽◽               | 右           | チャット                     | 次のバッファに移動 | `+/window ${_window_number};/buffer +1+`
-| ◾◽◽               | 左 (長く)    | チャット                     | 最初のバッファに移動 | `+/window ${_window_number};/buffer 1+`
-| ◾◽◽               | 右 (長く)    | チャット                     | 最後のバッファに移動 | `+/window ${_window_number};/input jump_last_buffer+`
-| kbd:[▲]           | -            | チャット                     | バッファ履歴を上方向にスクロール | `+/window scroll_up -window ${_window_number}+`
-| kbd:[▼]           | -            | チャット                     | バッファ履歴を下方向にスクロール | `+/window scroll_down -window ${_window_number}+`
-| kbd:[Ctrl+▲]      | -            | チャット                     | 水平左方向にスクロール | `+/window scroll_horiz -window ${_window_number} -10%+`
-| kbd:[Ctrl+▼]      | -            | チャット                     | 水平右方向にスクロール | `+/window scroll_horiz -window ${_window_number} +10%+`
-// TRANSLATION MISSING
-| kbd:[▲]           | -            | chat: fset buffer       | Move five lines up in fset buffer. | `+/fset -up 5+`
-// TRANSLATION MISSING
-| kbd:[▼]           | -            | chat: fset buffer       | Move five lines down in fset buffer. | `+/fset -down 5+`
-// TRANSLATION MISSING
-| ◾◽◽               | -            | chat: fset buffer       | Select line in fset buffer. | `+/window ${_window_number};/fset -go ${_chat_line_y}+`
-// TRANSLATION MISSING
-| ◽◽◾               | -            | chat: fset buffer       | Toggle boolean (on/off) or edit the option value. | `+hsignal:fset_mouse+`
-// TRANSLATION MISSING
-| ◽◽◾               | left         | chat: fset buffer       | Decrease value for integer/color, set/append to value for other types. | `+hsignal:fset_mouse+`
-// TRANSLATION MISSING
-| ◽◽◾               | right        | chat: fset buffer       | Increase value for integer/color, set/append to value for other types. | `+hsignal:fset_mouse+`
-// TRANSLATION MISSING
-| ◽◽◾               | up / down    | chat: fset buffer       | Mark/unmark multiple options. | `+hsignal:fset_mouse+`
-| kbd:[▲]           | -            | チャット: スクリプトバッファ | スクリプトバッファを 5 行上方向にスクロール | `+/script up 5+`
-| kbd:[▼]           | -            | チャット: スクリプトバッファ | スクリプトバッファで 5 行下方向にスクロール | `+/script down 5+`
-| ◾◽◽               | -            | チャット: スクリプトバッファ | スクリプトバッファで行選択 | `+/script go ${_chat_line_y}+`
-| ◽◽◾               | -            | チャット: スクリプトバッファ | スクリプトのインストール `+/ 削除 | /script go ${_chat_line_y};/script installremove ${script_name_with_extension}+`
-| ◾◽◽               | 上 / 左      | バッファリスト               | 指定したバッファを下の番号に移動 | `+buflist_mouse+` シグナル
-| ◾◽◽               | 下 / 右      | バッファリスト               | 指定したバッファを上の番号に移動 | `+buflist_mouse+` シグナル
-| ◾◽◽               | -            | バッファリスト               | 指定したバッファに切り替える (現在のバッファを指定した場合、バッファ切り替え履歴で前のバッファに切り替える) | `+buflist_mouse+` シグナル
-| ◽◽◾               | -            | バッファリスト               | 現在のバッファを指定した場合、バッファ切り替え履歴で次のバッファに切り替える | `+buflist_mouse+` シグナル
-| kbd:[Ctrl+▲]      | -            | バッファリスト               | バッファ切り替え履歴で前のバッファに切り替える | `+buflist_mouse+` シグナル
-| kbd:[Ctrl+▼]      | -            | バッファリスト               | バッファ切り替え履歴で次のバッファに切り替える | `+buflist_mouse+` シグナル
-| ◾◽◽               | 上           | ニックネームリスト           | ニックネームリストを 1 ページ分上方向にスクロール | `+/bar scroll nicklist ${_window_number} -100%+`
-| ◾◽◽               | 下           | ニックネームリスト           | ニックネームリストを 1 ページ分下方向にスクロール | `+/bar scroll nicklist ${_window_number} +100%+`
-| ◾◽◽               | 上 (長く)    | ニックネームリスト           | ニックネームリストの最初に移動 | `+/bar scroll nicklist ${_window_number} b+`
-| ◾◽◽               | 下 (長く)    | ニックネームリスト           | ニックネームリストの最後に移動 | `+/bar scroll nicklist ${_window_number} e+`
-| ◾◽◽               | -            | ニックネームリスト           | ニックネームに対するクエリを開く | `+/window ${_window_number};/query ${nick}+`
-| ◽◽◾               | -            | ニックネームリスト           | ニックネームに対する whois を行う | `+/window ${_window_number};/whois ${nick}+`
-| ◾◽◽               | 左           | ニックネームリスト           | ニックネームをキックする | `+/window ${_window_number};/kick ${nick}+`
-| ◾◽◽               | 左 (長く)    | ニックネームリスト           | ニックネームをキックとバンする | `+/window ${_window_number};/kickban ${nick}+`
-| ◽◽◾               | 左           | ニックネームリスト           | ニックネームをバンする | `+/window ${_window_number};/ban ${nick}+`
-| ◽◽◾               | -            | 入力                         | マウスイベントを奪ってコマンドラインにコードを入力 | `+/input grab_mouse_area+`
-| kbd:[▲]           | -            | 任意のバー                   | バーを -20% スクロール | `+/bar scroll ${_bar_name} ${_window_number} -20%+`
-| kbd:[▼]           | -            | 任意のバー                   | バーを +20% スクロール | `+/bar scroll ${_bar_name} ${_window_number} +20%+`
-| ◽◾◽               | -            | 任意の場所                   | この場所でカーソルモードを開始 | `+/cursor go ${_x},${_y}+`
-|===
-
-[NOTE]
-^(1)^ kbd:[▲] と kbd:[▼] はホイールの上方向回転と下方向回転に対応します。
-
-// TRANSLATION MISSING
-[[key_bindings_fset_buffer]]
-==== Keys for fset buffer
-
-// TRANSLATION MISSING
-These keys and actions are used on the fset buffer (see <<fset_plugin,Fset plugin>>).
-
-// TRANSLATION MISSING
-[width="100%",cols="^.^3,^.^2,.^8,.^5",options="header"]
-|===
-| Key                | Action ^(1)^ | Description | Command
-| kbd:[↑]            |              | Move one line up. | `+/fset -up+`
-| kbd:[↓]            |              | Move one line down. | `+/fset -down+`
-| kbd:[PgUp]         |              | Move one page up. | `+/window page_up+`
-| kbd:[PgDn]         |              | Move one page down. | `+/window page_down+`
-| kbd:[Alt+Home]     | `pass:[<<]`  | Move to first line. | `+/fset -go 0+`
-| kbd:[Alt+End]      | `pass:[>>]`  | Move to last line. | `+/fset -go end+`
-| kbd:[F11]          | `pass:[<]`   | Scroll horizontally on the left. | `+/fset -left+`
-| kbd:[F12]          | `pass:[>]`   | Scroll horizontally on the right. | `+/fset -right+`
-| kbd:[Alt+Space]    | `t`          | Toggle boolean value. | `+/fset -toggle+`
-| kbd:[Alt+-]        | `-`          | Subtract 1 from value for integer/color, set value for other types. | `+/fset -add -1+`
-| kbd:[Alt++]        | `+`          | Add 1 to value for integer/color, append to value for other types. | `+/fset -add 1+`
-| kbd:[Alt+f],
-  kbd:[Alt+r]        | `r`          | Reset value. | `+/fset -reset+`
-| kbd:[Alt+f],
-  kbd:[Alt+u]        | `u`          | Unset value. | `+/fset -unset+`
-| kbd:[Alt+Enter]    | `s`          | Set value. | `+/fset -set+`
-| kbd:[Alt+f],
-  kbd:[Alt+n]        | `n`          | Set new value. | `+/fset -setnew+`
-| kbd:[Alt+f],
-  kbd:[Alt+a]        | `a`          | Append to value. | `+/fset -append+`
-| kbd:[Alt+,]        | `,`          | Mark/unmark option. | `+/fset -mark 1+`
-| kbd:[Shift+↑]      |              | Move one line up and mark/unmark option. | `+/fset -up; /fset -mark+`
-| kbd:[Shift+↓]      |              | Mark/unmark option and move one line down. | `+/fset -mark; /fset -down+`
-|                    | `m:xxx`      | Mark options displayed that are matching filter "xxx" (any filter on option or value is allowed, see <<command_fset_fset,fset command>>). |
-|                    | `u:xxx`      | Unmark options displayed that are matching filter "xxx" (any filter on option or value is allowed, see <<command_fset_fset,fset command>>). |
-| kbd:[Ctrl+l] (`L`) |              | Refresh options and whole screen. | `+/fset -refresh+`
-|                    | `$`          | Refresh options (keep marked options). |
-|                    | `$$`         | Refresh options (unmark all options). |
-| kbd:[Alt+p]        |              | Toggle plugin description options (`pass:[plugins.desc.*]`). | `+/mute /set fset.look.show_plugins_desc toggle+`
-| kbd:[Alt+v]        |              | Toggle help bar. | `+/bar toggle fset+`
-|                    | `s:x,y`      | Sort options by fields x,y (see option <<option_fset.look.sort,fset.look.sort>>). | `+/mute /set fset.look.sort x,y+`
-|                    | `s:`         | Reset sort to its default value (see option <<option_fset.look.sort,fset.look.sort>>). | `+/mute /unset fset.look.sort+`
-|                    | `w:xxx`      | Export options in file "xxx". | `+/fset -export xxx+`
-|                    | `w-:xxx`     | Export options in file "xxx" without help. | `+/fset -export -nohelp xxx+`
-|                    | `w+:xxx`     | Export options in file "xxx" with help. | `+/fset -export -help xxx+`
-| kbd:[Ctrl+x]       | `x`          | Switch the format used to display options. | `+/fset -format+`
-|                    | `q`          | Close fset buffer. | `+/buffer close+`
-|===
-
-// TRANSLATION MISSING
-[NOTE]
-^(1)^ The action must be entered as input on the command line, followed by kbd:[Enter].
-
-// TRANSLATION MISSING
-[[key_bindings_script_buffer]]
-==== Keys for script buffer
-
-// TRANSLATION MISSING
-These keys and actions are used on the script buffer (see <<scripts_plugins,Script plugin>>).
-
-// TRANSLATION MISSING
-[width="100%",cols="^.^3,^.^2,.^8,.^5",options="header"]
-|===
-| Key                | Action ^(1)^ | Description | Command
-| kbd:[↑]            |              | Move one line up. | `+/script up+`
-| kbd:[↓]            |              | Move one line down. | `+/script down+`
-| kbd:[PgUp]         |              | Move one page up. | `+/window page_up+`
-| kbd:[PgDn]         |              | Move one page down. | `+/window page_down+`
-| kbd:[Alt+i]        | `i`          | Install script. | `+/script install+`
-| kbd:[Alt+r]        | `r`          | Remove script. | `+/script remove+`
-| kbd:[Alt+l] (`L`)  | `l`          | Load script. | `+/script load+`
-| kbd:[Alt+u]        | `u`          | Unload script. | `+/script unload+`
-| kbd:[Alt+Shift+A]  | `A`          | Autoload script. | `+/script toggleautoload+`
-| kbd:[Alt+h]        | `h`          | Hold/unhold script. | `+/script hold+`
-| kbd:[Alt+v]        | `v`          | View script. | `+/script show+`
-|===
-
-// TRANSLATION MISSING
-[NOTE]
-^(1)^ The action must be entered as input on the command line, followed by kbd:[Enter].
-
-[[mouse]]
-=== マウスサポート
-
-WeeChat はマウスクリックとマウスジェスチャーをサポートしています。
-ローカル端末と screen/tmux の有無にかかわらず ssh 接続経由で利用可能です。
-
-[[mouse_enable]]
-==== マウスの有効化
-
-起動時にマウスを有効化するには:
-
-----
-/set weechat.look.mouse on
-----
-
-マウスを有効化するには kbd:[Alt+m] を押すか、以下のコマンドを使います:
-
-----
-/mouse enable
-----
-
-キーにマウスの一時的な無効化を割り当てることができます。例えば、kbd:[Alt+%]
-キーにマウスを 10 秒間無効化する機能を割り当てるには:
-
-----
-/key bind meta-% /mouse toggle 10
-----
-
-[IMPORTANT]
-WeeChat でマウスを有効化した場合、すべてのマウスイベントは WeeChat
-によって捕捉されます。したがって、カット/ペーストなどの操作や URL
-のクリックなどは端末に送信されません。kbd:[Shift]
-キーを使えば、一時的にマウスを無効化して、端末へ直接イベントを送信する事が可能です
-(一部の端末、例えば iTerm などでは kbd:[Shift] の代わりに kbd:[Alt] を使ってください)。
-
-[NOTE]
-マウスに関するトラブルがあれば link:weechat_faq.ja.html#mouse[WeeChat FAQ (よくある質問) / マウス]を参照してください。
-
-[[mouse_bind_events]]
-==== コマンドに対してマウスイベントを割り当てる
-
-WeeChat はデフォルトマウスイベントの多くを定義しています
-(<<key_bindings_mouse_context,「マウス」モード用のキー>>を参照)。
-
-`/key` コマンドで "mouse" コンテキストを指定することで割り当てを追加、変更できます
-(詳しい使い方は <<command_weechat_key,/key>> コマンドを参照)。
-
-イベント名には修飾キー (任意)、ボタン/ホイール名、ジェスチャー (任意)
-を利用できます。異なるイベントは `+-+` で分割してください。
-
-修飾キーリスト:
-
-[width="100%",cols="1m,4",options="header"]
-|===
-| 修飾キー | 説明
-| ctrl     | kbd:[Ctrl] キー
-| alt      | kbd:[Alt] キー
-| ctrl-alt | kbd:[Ctrl] + kbd:[Alt] キー
-|===
-
-ボタン/ホイールのリスト:
-
-[width="100%",cols="1m,4",options="header"]
-|===
-| ボタン/ホイール     | 説明
-| button1             | 左ボタンクリック
-| button2             | 右ボタンクリック
-| button3             | 中ボタンクリック (多くの場合ホイールクリック)
-| button4 ... button9 | その他のボタンクリック
-| wheelup             | ホイール (上方向)
-| wheeldown           | ホイール (下方向)
-|===
-
-ジェスチャーのリスト (ボタンのみ対応、ホイール未対応):
-
-[width="100%",cols="1m,4",options="header"]
-|===
-| ジェスチャー       | 距離
-| gesture-up         | 3 から 19
-| gesture-up-long    | 20 以上
-| gesture-down       | 3 から 19
-| gesture-down-long  | 20 以上
-| gesture-left       | 3 から 39
-| gesture-left-long  | 40 以上
-| gesture-right      | 3 から 39
-| gesture-right-long | 40 以上
-|===
-
-未完了イベントのリスト (ボタンのみ、プラグイン/スクリプトで便利):
-
-[width="100%",cols="1m,4",options="header"]
-|===
-| イベント   | 説明
-| event-down | マウスボタンが押され、離されていない状態
-| event-drag | マウスボタンが押された状態でマウスが動かされた
-|===
-
-イベントの表記例:
-
-* `button1`
-* `ctrl-button1`
-* `button1-gesture-right`
-* `button1-event-down`
-* `button1-event-drag`
-* `alt-button2-gesture-down-long`
-* `wheelup`
-* `ctrl-alt-wheeldown`
-* ...
-
-[TIP]
-"mouse" イベントにキーを割り当てる場合、イベント名の最初または最後に `+*+`
-を使うことで複数のイベントにマッチさせることができます。例えば
-`+button1-gesture-*+` は左クリックを利用したすべてのジェスチャーにマッチします。
-
-[TIP]
-`+/input grab_mouse+`
-コマンドの後にマウスを動かすことでコマンドラインにマウスイベントが入力されます。これにより対応するイベントを確認できます。
-
 [[secured_data]]
 === 暗号化データ
 
@@ -2505,6 +3046,41 @@ IRC サーバのパスワードを設定する例:
 /set irc.server.libera.sasl_password "${sec.data.libera}"
 ----
 
+// TRANSLATION MISSING
+[[command_aliases]]
+=== Command aliases
+
+Alias プラグインを使うことで、コマンドの別名を定義できます (WeeChat
+だけでなく他のプラグインが提供するコマンドの別名を定義することもできます)。
+
+大文字の別名はデフォルトで定義されたものです (標準コマンドと区別するために大文字を使っています);
+WeeChat はコマンドの大文字小文字を区別しないので、コマンド
+`/close` は別名である `/CLOSE` を実行します。
+
+
+デフォルトで定義された別名のリスト:
+
+include::includes/autogen_user_default_aliases.ja.adoc[tag=default_aliases]
+
+[[alias_commands]]
+==== コマンド
+
+include::includes/autogen_user_commands.ja.adoc[tag=alias_commands]
+
+[[alias_options]]
+==== オプション
+
+_alias.conf_ ファイル内のセクション:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| セクション | 操作コマンド                   | 説明
+| cmd        | <<command_alias_alias,/alias>> +
+               /set alias.cmd.*               | 別名に割り当てたコマンド
+| completion | <<command_alias_alias,/alias>> +
+               /set alias.completion.*        | 別名に割り当てた補完
+|===
+
 [[commands_and_options]]
 === コマンドとオプション
 
@@ -2568,382 +3144,16 @@ _weechat.conf_ ファイル内のセクション:
 
 include::includes/autogen_user_options.ja.adoc[tag=weechat_options]
 
-[[plugins]]
-== プラグイン
-
-プラグインとは動的ライブラリのことで、C
-言語で書かれてコンパイルされています。プラグインは WeeChat によって読み込まれます。GNU/Linux
-の場合、プラグインファイルは ".so" という拡張子を持ち、Windows の場合、".dll" です。
-
-見つかったプラグインは WeeChat の起動時に自動的に読み込まれます。WeeChat
-の起動時にプラグインを読み込むか否かは選択可能です。
-
-_プラグイン_ と _スクリプト_ の違いを明らかにすることは重要です:
-_プラグイン_ とは `/plugin` コマンドで読み込まれるコンパイル済みバイナリファイルです。これに対して、
-_スクリプト_ とは `/python` 等のコマンドで _python_
-等のプラグインとともに読み込まれるテキストファイルです。
-
-`/plugin`
-コマンドを使うことで、プラグインのロード/アンロード、ロード済みプラグインの表示を行うことができます。
-
-// TRANSLATION MISSING
-When a plugin is unloaded, WeeChat removes:
-
-* buffers
-* configuration options (options are written in files)
-* all hooks: commands, modifiers, process, etc.
-* infos and infolists
-* hdata
-* bar items.
-
-プラグインをロード、アンロード、ロード済みプラグインを表示する例:
-
-----
-/plugin load irc
-/plugin unload irc
-/plugin list
-----
-
-デフォルトプラグインのリスト:
-
-[width="100%",cols="1,5",options="header"]
-|===
-| プラグイン | 説明
-| alias      | コマンドの別名を定義
-| buflist    | バッファリストを表示するためのバー要素
-| charset    | バッファの文字コードに従ってデコード/エンコード
-| exec       | WeeChat 内部から外部コマンドを実行
-| fifo       | 外部から WeeChat にコマンドを送信するための FIFO パイプ
-| fset       | WeeChat とプラグインのオプションを高速設定
-| irc        | IRC チャットプロトコル
-| logger     | バッファの内容をファイルに保存
-| relay      | ネットワーク経由でデータを中継
-| script     | スクリプトマネージャ
-| python     | Python スクリプト API
-| perl       | Perl スクリプト API
-| ruby       | Ruby スクリプト API
-| lua        | Lua スクリプト API
-| tcl        | Tcl スクリプト API
-| guile      | Guile (scheme) スクリプト API
-| javascript | JavaScript スクリプト API
-| php        | PHP スクリプト API
-| spell      | コマンドラインのスペルチェック
-| trigger    | WeeChat およびプラグインが発生させたイベントに対するテキスト置換とコマンド実行
-// TRANSLATION MISSING
-| typing     | Display users currently writing messages.
-| xfer       | ファイル転送とダイレクトチャット
-|===
-
-API を使ったプラグインやスクリプトの開発についてより詳しく学ぶには
-link:weechat_plugin_api.ja.html[WeeChat プラグイン API リファレンス]または
-link:weechat_scripting.ja.html[WeeChat スクリプト作成ガイド]を参照してください。
-
-[[alias_plugin]]
-=== Alias
-
-Alias プラグインを使うことで、コマンドの別名を定義できます (WeeChat
-だけでなく他のプラグインが提供するコマンドの別名を定義することもできます)。
-
-大文字の別名はデフォルトで定義されたものです (標準コマンドと区別するために大文字を使っています);
-WeeChat はコマンドの大文字小文字を区別しないので、コマンド
-`/close` は別名である `/CLOSE` を実行します。
-
-
-デフォルトで定義された別名のリスト:
-
-include::includes/autogen_user_default_aliases.ja.adoc[tag=default_aliases]
-
-[[alias_commands]]
-==== コマンド
-
-include::includes/autogen_user_commands.ja.adoc[tag=alias_commands]
-
-[[alias_options]]
-==== オプション
-
-_alias.conf_ ファイル内のセクション:
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| セクション | 操作コマンド                   | 説明
-| cmd        | <<command_alias_alias,/alias>> +
-               /set alias.cmd.*               | 別名に割り当てたコマンド
-| completion | <<command_alias_alias,/alias>> +
-               /set alias.completion.*        | 別名に割り当てた補完
-|===
-
-[[buflist_plugin]]
-=== Buflist
-
-Buflist プラグインを使うことで、"buflist" と呼ばれるバー要素の中にバッファリストを表示させることが可能になります
-(それ以外に "buflist2" と "buflist3" と呼ばれるバー要素も利用可能です)。 +
-プラグインは開始時にバー要素 "buflist" を持つデフォルトバー "buflist" を作成します。
-
-[[buflist_commands]]
-==== コマンド
-
-include::includes/autogen_user_commands.ja.adoc[tag=buflist_commands]
-
-[[buflist_options]]
-==== オプション
-
-_buflist.conf_ ファイル内のセクション:
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| セクション | 操作コマンド          | 説明
-| format     | /set buflist.format.* | バッファリストの表示書式
-| look       | /set buflist.look.*   | 外観
-|===
-
-オプション:
-
-include::includes/autogen_user_options.ja.adoc[tag=buflist_options]
-
-[[charset_plugin]]
-=== Charset
-
-Charset プラグインを使うことで、文字コードに従ってデータのデコードとエンコードができます。
-
-デコード/エンコード用にデフォルトの文字コードが設定されていますが、それぞれのバッファ
-(バッファグループ) に対して個別に文字コードを設定することもできます。
-
-このプラグインの導入は任意ですが、導入を推奨します:
-このプラグインがロードされていない場合、WeeChat が読み書きできるデータは UTF-8 データのみになります。
-
-Charset プラグインは WeeChat
-によって自動的にロードされるべきです。プラグインがロードされていることを確認するには、以下のようにしてください:
-
-----
-/charset
-----
-
-コマンドが見つからない場合、以下のコマンドでプラグインをロードしてください:
-
-----
-/plugin load charset
-----
-
-プラグインが見つからない場合、文字コードサポートを有効化した状態で
-WeeChat を再コンパイルしてください。
-
-Charset プラグインがロードされた場合、端末文字コードと内部文字コードが表示されます。端末文字コードはロケールに依存し、内部文字コードは
-UTF-8 です。
-
-例:
-
-....
-charset: terminal: ISO-8859-15, internal: UTF-8
-....
-
-[[charset_set]]
-==== 文字コードの設定
-
-グローバルデコード文字コードとエンコード文字コードを設定するには、`/set` コマンドを使ってください。
-
-例:
-
-----
-/set charset.default.decode ISO-8859-15
-/set charset.default.encode ISO-8859-15
-----
-
-グローバルデコード文字コードが設定されていない場合 (例えば Charset
-プラグインを始めてロードした場合)、これは自動的に端末の文字コードか
-(UTF-8 でなければ)、デフォルトの _ISO-8859-1_ に設定されます。
-
-デフォルトのエンコード文字コードはありません。従って、内部文字コード
-(UTF-8) が使われます。
-
-IRC サーバの文字コードを設定するには、サーババッファで `/charset`
-コマンドを使ってください。文字コードのみを引数として与えた場合、この文字コードがデコードとエンコードに利用されます。
-
-例:
-
-----
-/charset ISO-8859-15
-----
-
-これは以下と等価です:
-
-----
-/charset decode ISO-8859-15
-/charset encode ISO-8859-15
-----
-
-IRC チャンネル (またはプライベートメッセージ) の文字コードを設定するには、サーバの文字コード設定と同様のコマンドをチャンネル
-(またはプライベートメッセージ) バッファで使ってください。
-
-IRC サーバの全てのチャンネルおよびプライベートバッファに対する文字コードを設定するには:
-
-----
-/set charset.encode.irc.libera ISO-8859-15
-----
-
-すべての文字コード設定を確認するには、以下のコマンドを利用してください:
-
-----
-/set charset.*
-----
-
-[[charset_troubleshooting]]
-==== トラブルシューティング
-
-文字コードに関する問題があれば、link:weechat_faq.ja.html#charset[WeeChat FAQ (よくある質問) / いくつかの文字が見えません。どうすれば良いですか。]を参照してください。
-
-[[charset_commands]]
-==== コマンド
-
-include::includes/autogen_user_commands.ja.adoc[tag=charset_commands]
-
-[[charset_options]]
-==== オプション
-
-_charset.conf_ ファイル内のセクション:
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| セクション | 操作コマンド                                | 説明
-| default    | /set charset.default.*                      | デフォルトのデコード/エンコード文字セット
-| decode     | <<command_charset_charset,/charset decode>> +
-               /set charset.decode.*                       | バッファのデコード文字セット (オプションをセクションに追加/削除出来ます)
-| encode     | <<command_charset_charset,/charset encode>> +
-               /set charset.encode.*                       | バッファのエンコード文字セット (オプションをセクションに追加/削除出来ます)
-|===
-
-オプション:
-
-include::includes/autogen_user_options.ja.adoc[tag=charset_options]
-
-[[exec_plugin]]
-=== Exec
-
-`/exec` コマンドを使うことで WeeChat
-内部から外部コマンドを実行し、その結果を表示したりバッファに送信することが可能になります。
-
-[[exec_commands]]
-==== コマンド
-
-include::includes/autogen_user_commands.ja.adoc[tag=exec_commands]
-
-[[exec_options]]
-==== オプション
-
-_exec.conf_ ファイル内のセクション:
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| セクション | 操作コマンド     | 説明
-| command | /set exec.command.* | コマンドに対するオプション
-| color   | /set exec.color.*   | 色
-|===
-
-オプション:
-
-include::includes/autogen_user_options.ja.adoc[tag=exec_options]
-
-[[fifo_plugin]]
-=== Fifo
-
-外部から WeeChat を操作するには、FIFO パイプにコマンドやテキストを書き込んでください ("fifo.file.enabled"
-オプションが有効化されている必要がありますが、デフォルトで有効化されているはずです)。
-
-// TRANSLATION MISSING
-The FIFO pipe is located in WeeChat runtime directory and is called
-_weechat_fifo_12345_ by default (where _12345_ is the WeeChat process id).
-
-FIFO パイプに書き込むコマンド/テキストの文法は以下の例の一つです:
-
-....
-  plugin.buffer *テキストまたはコマンド
-  *テキストまたはコマンド
-....
-
-例:
-
-* IRC サーバ libera で使うニックネームを "newnick" に変更する:
-
-----
-$ echo 'irc.server.libera */nick newnick' >/run/user/1000/weechat/weechat_fifo_12345
-----
-
-* IRC チャンネル #weechat に対してテキストを送信:
-
-----
-$ echo 'irc.libera.#weechat *hello!' >/run/user/1000/weechat/weechat_fifo_12345
-----
-
-* 現在のバッファに対してテキストを送信:
-
-----
-$ echo '*hello!' >/run/user/1000/weechat/weechat_fifo_12345
-----
-
-* Python スクリプトのアンロードとロードを行う 2 つのコマンドを送信
-  (複数のコマンドは "\n" で分割してください):
-
-----
-$ printf '%b' '*/python unload\n*/python autoload\n' >/run/user/1000/weechat/weechat_fifo_12345
-----
-
-[[fifo_commands]]
-==== コマンド
-
-include::includes/autogen_user_commands.ja.adoc[tag=fifo_commands]
-
-[[fifo_options]]
-==== オプション
-
-_fifo.conf_ ファイル内のセクション:
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| セクション | 操作コマンド     | 説明
-| file       | /set fifo.file.* | FIFO パイプに関するオプション
-|===
-
-オプション:
-
-include::includes/autogen_user_options.ja.adoc[tag=fifo_options]
-
-[[fset_plugin]]
-=== Fset
-
-fset (高速設定) プラグインはバッファ内にオプションのリストを表示し、WeeChat
-とプラグインのオプション設定を支援します。
-
-[[fset_commands]]
-==== コマンド
-
-include::includes/autogen_user_commands.ja.adoc[tag=fset_commands]
-
-[[fset_options]]
-==== オプション
-
-_fset.conf_ ファイル内のセクション:
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| セクション | 操作コマンド       | 説明
-| color      | /set fset.color.*  | 色
-| format     | /set fset.format.* | オプションリストの表示書式
-| look       | /set fset.look.*   | 外観
-|===
-
-オプション:
-
-include::includes/autogen_user_options.ja.adoc[tag=fset_options]
-
-[[irc_plugin]]
-=== IRC
+[[irc]]
+== IRC
 
 IRC プラグインは IRC プロトコルに従って他の人と会話を行うために設計されています。
 
 マルチサーバに対応し、DCC チャットとファイル転送 (xfer
-プラグインを使います。<<xfer_plugin,Xfer プラグイン>>を参照) を含む全ての IRC コマンドをサポートしています。
+プラグインを使います。<<xfer,Xfer プラグイン>>を参照) を含む全ての IRC コマンドをサポートしています。
 
 [[irc_command_line_options]]
-==== コマンドラインオプション
+=== コマンドラインオプション
 
 以下のように 1 つ以上の IRC サーバに対応する URL を引数として与えることができます:
 
@@ -2960,10 +3170,10 @@ $ weechat irc://alice@irc.libera.chat/#weechat,#weechat-fr
 
 // TRANSLATION MISSING
 [[irc_servers]]
-==== Servers
+=== Servers
 
 [[irc_servers_add]]
-===== Add a server
+==== Add a server
 
 By default no servers are defined. You can add as many servers as you want with
 the <<command_irc_server,/server>> command.
@@ -3003,7 +3213,7 @@ to join. In this case, you can set a command delay:
 `/set irc.server.libera.command_delay 5`.
 
 [[irc_servers_options]]
-===== Server options
+==== Server options
 
 Server options are named `irc.server.<server>.<option>` where `<server>` is the
 internal name of the server and `<option>` the name of an option. +
@@ -3075,7 +3285,7 @@ value, which is now `on` instead of the default value `off`:
 ----
 
 [[irc_ssl_certificates]]
-===== SSL 証明書
+==== SSL 証明書
 
 SSL を使って IRC サーバに接続する場合、WeeChat
 はデフォルトで接続が完全に信頼できるものかどうかを確認します。
@@ -3106,7 +3316,7 @@ irc.server.xxx.ssl_verify::
 より前のバージョンでは信頼性の確認に成功していたものが失敗する場合もあります。
 
 [[irc_connect_oftc_with_certificate]]
-====== 最初の例: oftc に接続して、証明書を確認
+===== 最初の例: oftc に接続して、証明書を確認
 
 * シェルを使って証明書をインポート:
 
@@ -3130,7 +3340,7 @@ CAs.pem ファイル中で複数の証明書を連結することもできます
 ----
 
 [[irc_connect_oftc_with_certfp]]
-====== 2 番目の例: CertFP を使って oftc に接続
+===== 2 番目の例: CertFP を使って oftc に接続
 
 * シェルで証明書を作成:
 
@@ -3156,7 +3366,7 @@ which can also be for example `~/.weechat`.
 より詳しい情報は https://www.oftc.net/NickServ/CertFP を確認してください。
 
 [[irc_sasl_authentication]]
-===== SASL 認証
+==== SASL 認証
 
 WeeChat は SASL 認証をサポートします、以下の認証メカニズムを利用できます:
 
@@ -3181,7 +3391,7 @@ WeeChat は SASL 認証をサポートします、以下の認証メカニズム
   (_ecdsa-nist256p-challenge_ 用)
 
 [[irc_sasl_ecdsa_nist256p_challenge]]
-====== SASL ECDSA-NIST256P-CHALLENGE 認証
+===== SASL ECDSA-NIST256P-CHALLENGE 認証
 
 ECDSA-NIST256P-CHALLENGE を使って認証を行うためには、秘密鍵を作成してください
 (接続の際にパスワードは不要です)。
@@ -3229,7 +3439,7 @@ $ openssl ec -noout -text -conv_form compressed -in ~/.config/weechat/ecdsa.pem 
 
 // TRANSLATION MISSING
 [[irc_servers_connection]]
-===== Connection
+==== Connection
 
 You can connect to server with the <<command_irc_connect,/connect>> command:
 
@@ -3261,7 +3471,7 @@ server buffers:
 
 // TRANSLATION MISSING
 [[irc_tor_sasl]]
-===== Connect with TOR and SASL
+==== Connect with TOR and SASL
 
 // TRANSLATION MISSING
 Some servers support connections with TOR (https://www.torproject.org/),
@@ -3312,7 +3522,7 @@ And finally, connect to the server:
 
 // TRANSLATION MISSING
 [[irc_channels]]
-==== Channels
+=== Channels
 
 You can join channels with the <<command_irc_join,/join>> command:
 
@@ -3347,7 +3557,7 @@ for example if `#channel1` requires a key but not `#channel2`:
 For help on the format, see `/help irc.server.libera.autojoin`.
 
 [[irc_private_messages]]
-==== Private messages
+=== Private messages
 
 You can send a private message with the <<command_irc_query,/query>> command,
 which opens a separate buffer:
@@ -3369,7 +3579,7 @@ To close the private buffer, you can do this command on the private buffer:
 ----
 
 [[irc_smart_filter_join_part_quit]]
-==== 参加/退出/終了メッセージに対するスマートフィルタ
+=== 参加/退出/終了メッセージに対するスマートフィルタ
 
 チャンネル内での発言が過去 X
 分間なかった場合に参加/退出/終了メッセージをフィルタリングするスマートフィルタが利用できます。
@@ -3405,7 +3615,7 @@ To close the private buffer, you can do this command on the private buffer:
 分間あるニックネームからの発言が無かった場合、このニックネームに対する参加または退出/終了メッセージがチャンネルから隠されます。
 
 [[irc_ctcp_replies]]
-==== CTCP 応答
+=== CTCP 応答
 
 CTCP 応答をカスタマイズしたり、いくつかの CTCP
 要求をブロック (無応答) することができます。
@@ -3480,7 +3690,7 @@ CTCP オプションが設定されていない (デフォルトの) 場合、CT
 |===
 
 [[irc_target_buffer]]
-==== IRC メッセージのターゲットバッファ
+=== IRC メッセージのターゲットバッファ
 
 `+irc.msgbuffer.*+` オプションを使えば、IRC メッセージに対するターゲットバッファ
 (メッセージを表示するバッファ) をカスタマイズすることができます。
@@ -3612,12 +3822,12 @@ weechat::
 ----
 
 [[irc_commands]]
-==== コマンド
+=== コマンド
 
 include::includes/autogen_user_commands.ja.adoc[tag=irc_commands]
 
 [[irc_options]]
-==== オプション
+=== オプション
 
 _irc.conf_ ファイル内のセクション:
 
@@ -3639,184 +3849,144 @@ _irc.conf_ ファイル内のセクション:
 
 include::includes/autogen_user_options.ja.adoc[tag=irc_options]
 
-[[logger_plugin]]
-=== Logger
+[[xfer]]
+== Xfer
 
-Logger
-プラグインを使うことで、バッファの内容をファイルに保存できます。保存形式とその方法をオプションで設定できます。
+Xfer プラグインの機能:
 
-[[logger_log_levels]]
-==== ログレベル
+* ダイレクトチャット (サーバ不要の 2 ホスト間直接接続):
+  例えば IRC プラグイン経由の "DCC チャット"
+* ファイル転送、例えば IRC プラグイン経由の "DCC"
 
-ログ保存はそれぞれのバッファに対して設定されたログレベルに従って行われます。デフォルトのレベルは
-9 (バッファに表示されたメッセージをすべて保存)
-です。特定のバッファやバッファグループに対して個別にログレベルを設定できます。
+[[xfer_commands]]
+=== コマンド
 
-設定可能なレベルは 0 から 9 です。0 は "保存しない"、9
-は「すべてのメッセージを保存」を意味します。
+include::includes/autogen_user_commands.ja.adoc[tag=xfer_commands]
 
-それぞれのプラグインでレベルの意味が変わります。IRC
-プラグインに対しては以下のレベルが利用されます:
+[[xfer_options]]
+=== オプション
 
-* レベル 1: ユーザからのメッセージ (チャンネルまたはプライベート)
-* レベル 2: ニックネームの変更 (自身と他のユーザ)
-* レベル 3: 任意のサーバメッセージ (参加/退出/終了メッセージを除く)
-* レベル 4: 参加/退出/終了メッセージ
-
-従って、IRC チャンネルに対してレベル 3 を設定した場合、WeeChat
-は参加/退出/終了メッセージを除いて全てのメッセージを保存します。
-
-例:
-
-* IRC チャンネル #weechat に対してレベル 3 を設定:
-
-----
-/set logger.level.irc.libera.#weechat 3
-----
-
-* libera サーババッファに対してレベル 3 を設定:
-
-----
-/set logger.level.irc.server.libera 3
-----
-
-* libera サーバの全てのチャンネルに対してレベル 3 を設定:
-
-----
-/set logger.level.irc.libera 3
-----
-
-* 全ての IRC バッファに対してレベル 2 を設定:
-
-----
-/set logger.level.irc 2
-----
-
-[[logger_filenames_masks]]
-==== ファイル名マスク
-
-// TRANSLATION MISSING
-It is possible to define a filename mask for each buffer, and use local buffer
-variables to build filename. To see available local variables for current buffer:
-
-----
-/buffer listvar
-----
-
-// TRANSLATION MISSING
-Masks will be matched on options in descending order of specificity on
-`logger.mask.$plugin.*`, with `logger.file.mask` as fallback option.
-
-例えば "irc.libera.#weechat" バッファの場合、WeeChat
-は以下の順番でオプションに設定されたファイル名マスクを検索します:
-
-----
-logger.mask.irc.libera.#weechat
-logger.mask.irc.libera
-logger.mask.irc
-logger.file.mask
-----
-
-特定の IRC サーバ ("logger.mask.irc.libera") またはプラグイン
-("logger.mask.irc") のグループに対して共通のマスクを適用できます。
-
-[[logger_files_by_date]]
-===== ログファイルに日付を利用する
-
-ログファイルに日付を使うには、マスクに日時/時間指定子を利用できます
-(書式に関しては `man strftime` を参照してください)。例えば:
-
-----
-/set logger.file.mask "%Y/%m/$plugin.$name.weechatlog"
-----
-
-以下のファイルが作成されます:
-
-....
-~/.local/share/weechat
-└── logs
-    ├── 2010
-    │   ├── 11
-    │   │   ├── irc.server.libera.weechatlog
-    │   │   └── irc.libera.#weechat.weechatlog
-    │   └── 12
-    │       ├── irc.server.libera.weechatlog
-    │       └── irc.libera.#weechat.weechatlog
-    ├── 2011
-    │   ├── 01
-    │   │   ├── irc.server.libera.weechatlog
-    │   │   └── irc.libera.#weechat.weechatlog
-    │   ├── 02
-    ...
-....
-
-[[logger_irc_files_by_server_channel]]
-===== IRC ログファイルにサーバとチャンネル名を利用する
-
-IRC サーバ名を使ったディレクトリに、チャンネル名を使ったファイルを作成する場合:
-
-----
-/set logger.mask.irc "irc/$server/$channel.weechatlog"
-----
-
-以下のファイルが作成されます:
-
-....
-~/.local/share/weechat
-└── logs
-    └── irc
-        ├── libera
-        │   ├── libera.weechatlog
-        │   ├── #weechat.weechatlog
-        │   └── #mychan.weechatlog
-        ├── oftc
-        │   ├── oftc.weechatlog
-        │   ├── #channel1.weechatlog
-        │   └── #channel2.weechatlog
-        ...
-....
-
-[[logger_commands]]
-==== コマンド
-
-include::includes/autogen_user_commands.ja.adoc[tag=logger_commands]
-
-[[logger_options]]
-==== オプション
-
-_logger.conf_ ファイル内のセクション:
+_xfer.conf_ ファイル内のセクション:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
 | セクション | 操作コマンド        | 説明
-| look       | /set logger.look.*  | 外観
-| color      | /set logger.color.* | 色
-| file       | /set logger.file.*  | ログファイルのオプション
-| level      | /set logger.level.* | バッファのログレベル (オプションをセクションに追加/削除出来ます)
-| mask       | /set logger.mask.*  | バッファのファイル名マスク (オプションをセクションに追加/削除出来ます)
+| look       | /set xfer.look.*    | 外観
+| color      | /set xfer.color.*   | 色
+| network    | /set xfer.network.* | ネットワークオプション
+| file       | /set xfer.file.*    | ファイルの送信/受信に関するオプション
 |===
 
 オプション:
 
-include::includes/autogen_user_options.ja.adoc[tag=logger_options]
+include::includes/autogen_user_options.ja.adoc[tag=xfer_options]
 
-[[relay_plugin]]
-=== Relay
+// TRANSLATION MISSING
+[[typing_notifications]]
+== Typing notifications
+
+The typing plugin is used to inform other users you are typing messages and
+show a list of users currently typing a message on the buffer.
+
+It is used by IRC plugin on channel and private buffers, when the "message-tags"
+capability is enabled (you can check with <<command_irc_cap,/cap>> command). +
+Under the hood, typing client tag is used, following this specification:
+https://ircv3.net/specs/client-tags/typing.html.
+
+[[typing_activation]]
+=== Activation
+
+For privacy considerations, the typing feature is disabled by default. +
+If you want to use it, you must enable options in both typing and irc plugins:
+
+----
+/set typing.look.enabled_nicks on
+/set typing.look.enabled_self on
+/set irc.look.typing_status_nicks on
+/set irc.look.typing_status_self on
+----
+
+The typing notifications are displayed at the end of the status bar.
+
+Example of status bar with the "typing" item: "bob" is typing a message and
+"alice" was typing a message but made a pause:
+
+....
+│[12:55] [6] [irc/libera] 3:#test(+n){4} [Typing: bob, (alice)]                   │
+│[@Flashy] █                                                                      │
+└─────────────────────────────────────────────────────────────────────────────────┘
+....
+
+[[typing_signals_sent]]
+=== Signals sent
+
+When you are typing a message (not a command starting with `/`), the typing
+plugin sends signals to inform other plugins (like IRC) that you are typing,
+and these plugins can then send typing notifications to other users.
+
+The following signals are sent when you are typing messages:
+
+[width="100%",cols="1,1,5",options="header"]
+|===
+| Signal              | Arguments        | Description
+| typing_self_typing  | Pointer: buffer. | You are typing a message.
+| typing_self_paused  | Pointer: buffer. | You made a pause while typing a message.
+| typing_self_cleared | Pointer: buffer. | You cleared the command line without sending the message.
+| typing_self_sent    | Pointer: buffer. | You sent the message to the buffer.
+|===
+
+[[typing_signals_caught]]
+=== Signals caught
+
+The typing plugin is catching some signals that can be sent by other plugins
+(like IRC), to update internal hashtables used to store the typing state of
+nicks on buffers. These hashtables are used to build the content of "typing"
+bar item.
+
+The following signals are caught by the typing plugin:
+
+[width="100%",cols="1,4,3",options="header"]
+|===
+| Signal | Arguments | Description
+
+| typing_set_nick |
+  String: buffer pointer + ";" + state (one of: "off", "typing", "paused",
+  "cleared") + ";" + nick. +
+  Example: "0x1234abcd;typing;alice". |
+  Set typing state for a nick on a buffer.
+
+| typing_reset_buffer |
+  Pointer: buffer. |
+  Remove typing state for all nicks on a buffer.
+|===
+
+[[typing_options]]
+=== オプション
+
+_typing.conf_ ファイル内のセクション:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| セクション | 操作コマンド       | 説明
+| look       | /set typing.look.* | 外観
+|===
+
+オプション:
+
+include::includes/autogen_user_options.ja.adoc[tag=typing_options]
+
+[[relay]]
+== Relay
 
 Relay プラグインはネットワークを介して異なるプロトコルを用いてデータを中継するために利用します:
 
 * _irc_: IRC プロキシ: IRC サーバに対する接続を、単一または複数の IRC
   クライアントで共有するために用います。
-* _weechat_: リモートインターフェースを通じて WeeChat
-  を表示および操作する際に利用されるプロトコル。リモートインターフェースの一例:
-** Glowing Bear (HTML5): https://www.glowing-bear.org/
-** QWeeChat (Qt): https://weechat.org/download
-** WeeChat-Android (Android): https://github.com/ubergeek42/weechat-android
-** weechat.el (Emacs): https://github.com/the-kenny/weechat.el
-** WeeCloud (JavaScript): https://github.com/eirikb/weecloud
+* _weechat_: protocol used by remote interfaces to display and interact with
+  WeeChat, see: https://weechat.org/about/interfaces
 
 [[relay_password]]
-==== パスワード
+=== パスワード
 
 // TRANSLATION MISSING
 It is highly recommended to set a password for relay, with these commands:
@@ -3829,7 +3999,7 @@ secure set relay mypassword
 このパスワードは _irc_ と _weechat_ プロトコルで利用されます。
 
 [[relay_totp]]
-==== TOTP
+=== TOTP
 
 _weechat_ プロトコルでは、パスワードに加えて、二要素認証の
 TOTP (時間ベースのワンタイムパスワード) を使うことが可能です。
@@ -3858,7 +4028,7 @@ TOTP の secret は base32 でエンコードされた文字列
 ----
 
 [[relay_ssl]]
-==== SSL
+=== SSL
 
 証明書と秘密鍵を作り、プロトコル名の最初に "ssl." を付けることで
 SSL 経由でリレーを利用することができます。
@@ -3888,7 +4058,7 @@ WeeChat
 ----
 
 [[relay_irc_proxy]]
-==== IRC プロキシ
+=== IRC プロキシ
 
 Relay プラグインは IRC プロキシとしても使えます: Relay プラグインは IRC
 サーバのふりをして、他の IRC クライアント (WeeChat 自身も) は WeeChat に接続できます。
@@ -3930,11 +4100,12 @@ commands:
 ----
 
 [[relay_weechat_protocol]]
-==== WeeChat プロトコル
+=== WeeChat プロトコル
 
 Relay プラグインは WeeChat プロトコルを使ってリモートインターフェースに対してデータを送信できます。
 
-リモートインターフェースを使って接続できます、<<relay_plugin>> のリストを参照してください。
+// TRANSLATION MISSING
+You can connect with a remote interface, see: https://weechat.org/about/interfaces
 
 [IMPORTANT]
 このプロトコルを使った場合 WeeChat から他の WeeChat に接続することはできません。
@@ -3949,7 +4120,7 @@ Relay プラグインは WeeChat プロトコルを使ってリモートイン�
 番ポートに対して、パスワード "mypass" で接続することができます。
 
 [[relay_websocket]]
-==== WebSocket
+=== WebSocket
 
 Relay プラグインはすべてのプロトコルに対して WebSocket プロトコル
 (https://tools.ietf.org/html/rfc6455[RFC 6455]) をサポートします。
@@ -3961,7 +4132,7 @@ origin が許可されていれば WebSocket 用のソケットが準備され�
 
 HTML5 を使えばたった 1 行の JavaScript で WebSocket をオープンすることが可能です:
 
-[source,js]
+[source,javascript]
 ----
 websocket = new WebSocket("ws://server.com:9000/weechat");
 ----
@@ -3970,7 +4141,7 @@ websocket = new WebSocket("ws://server.com:9000/weechat");
 の最後には必ず "/weechat" をつけます (_irc_ と _weechat_ プロトコルの場合)。
 
 [[relay_unix_socket]]
-==== UNIX ドメインソケット
+=== UNIX ドメインソケット
 
 `/relay add` コマンドにプロトコルオプション "unix" をつけることで、指定したパスで動作する
 UNIX ドメインソケット上の任意のプロトコルをリッスンできます。例:
@@ -3993,12 +4164,12 @@ $ ssh -L 9000:.weechat/relay_socket user@hostname
 "hostname" 上で動作中の WeeChat インスタンスへ転送されます。
 
 [[relay_commands]]
-==== コマンド
+=== コマンド
 
 include::includes/autogen_user_commands.ja.adoc[tag=relay_commands]
 
 [[relay_options]]
-==== オプション
+=== オプション
 
 _relay.conf_ ファイル内のセクション:
 
@@ -4017,310 +4188,101 @@ _relay.conf_ ファイル内のセクション:
 
 include::includes/autogen_user_options.ja.adoc[tag=relay_options]
 
-[[scripts_plugins]]
-=== スクリプト
+// TRANSLATION MISSING
+[[external_commands]]
+== External commands
 
-WeeChat は 8 種類のスクリプトプラグインを備えています:
-Python、Perl、Ruby、Lua、Tcl、Guile
-(scheme)、JavaScript、PHP。これらのプラグインでそれぞれの言語で書かれたスクリプトのロード、実行、アンロードができます。
+`/exec` コマンドを使うことで WeeChat
+内部から外部コマンドを実行し、その結果を表示したりバッファに送信することが可能になります。
 
-スクリプトマネージャを使えば、任意の言語で書かれたスクリプトをロード/アンロードしたり、WeeChat
-スクリプトリポジトリ (https://weechat.org/scripts から参照可能)
-のスクリプトをインストール/削除したりする事が可能です。
+[[exec_commands]]
+=== コマンド
 
-スクリプトの書き方やスクリプト用の WeeChat API についての詳しい情報は
-link:weechat_scripting.ja.html[WeeChat スクリプト作成ガイド]を参照してください。
+include::includes/autogen_user_commands.ja.adoc[tag=exec_commands]
 
-[[script_commands]]
-==== Script コマンド
+[[exec_options]]
+=== オプション
 
-include::includes/autogen_user_commands.ja.adoc[tag=script_commands]
-
-[[python_commands]]
-==== Python コマンド
-
-include::includes/autogen_user_commands.ja.adoc[tag=python_commands]
-
-[[perl_commands]]
-==== Perl コマンド
-
-include::includes/autogen_user_commands.ja.adoc[tag=perl_commands]
-
-[[ruby_commands]]
-==== Ruby コマンド
-
-include::includes/autogen_user_commands.ja.adoc[tag=ruby_commands]
-
-[[lua_commands]]
-==== Lua コマンド
-
-include::includes/autogen_user_commands.ja.adoc[tag=lua_commands]
-
-[[tcl_commands]]
-==== Tcl コマンド
-
-include::includes/autogen_user_commands.ja.adoc[tag=tcl_commands]
-
-[[guile_commands]]
-==== Guile コマンド
-
-include::includes/autogen_user_commands.ja.adoc[tag=guile_commands]
-
-[[javascript_commands]]
-==== JavaScript コマンド
-
-include::includes/autogen_user_commands.ja.adoc[tag=javascript_commands]
-
-[[php_commands]]
-==== PHP コマンド
-
-include::includes/autogen_user_commands.ja.adoc[tag=php_commands]
-
-[[script_options]]
-==== スクリプトオプション
-
-_script.conf_ ファイル内のセクション:
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| セクション | 操作コマンド          | 説明
-| look       | /set script.look.*    | 外観
-| color      | /set script.color.*   | 色
-| scripts    | /set script.scripts.* | スクリプトのダウンロードに関するオプション
-|===
-
-オプション:
-
-include::includes/autogen_user_options.ja.adoc[tag=script_options]
-
-[[python_options]]
-==== Python オプション
-
-_python.conf_ ファイル内のセクション:
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| セクション | 操作コマンド       | 説明
-| look       | /set python.look.* | 外観
-|===
-
-オプション:
-
-include::includes/autogen_user_options.ja.adoc[tag=python_options]
-
-[[perl_options]]
-==== Perl オプション
-
-_perl.conf_ ファイル内のセクション:
+_exec.conf_ ファイル内のセクション:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
 | セクション | 操作コマンド     | 説明
-| look       | /set perl.look.* | 外観
+| command | /set exec.command.* | コマンドに対するオプション
+| color   | /set exec.color.*   | 色
 |===
 
 オプション:
 
-include::includes/autogen_user_options.ja.adoc[tag=perl_options]
+include::includes/autogen_user_options.ja.adoc[tag=exec_options]
 
-[[ruby_options]]
-==== Ruby オプション
+// TRANSLATION MISSING
+[[fifo_pipe]]
+== FIFO pipe
 
-_ruby.conf_ ファイル内のセクション:
+外部から WeeChat を操作するには、FIFO パイプにコマンドやテキストを書き込んでください ("fifo.file.enabled"
+オプションが有効化されている必要がありますが、デフォルトで有効化されているはずです)。
+
+// TRANSLATION MISSING
+The FIFO pipe is located in WeeChat runtime directory and is called
+_weechat_fifo_12345_ by default (where _12345_ is the WeeChat process id).
+
+FIFO パイプに書き込むコマンド/テキストの文法は以下の例の一つです:
+
+....
+  plugin.buffer *テキストまたはコマンド
+  *テキストまたはコマンド
+....
+
+例:
+
+* IRC サーバ libera で使うニックネームを "newnick" に変更する:
+
+----
+$ echo 'irc.server.libera */nick newnick' >/run/user/1000/weechat/weechat_fifo_12345
+----
+
+* IRC チャンネル #weechat に対してテキストを送信:
+
+----
+$ echo 'irc.libera.#weechat *hello!' >/run/user/1000/weechat/weechat_fifo_12345
+----
+
+* 現在のバッファに対してテキストを送信:
+
+----
+$ echo '*hello!' >/run/user/1000/weechat/weechat_fifo_12345
+----
+
+* Python スクリプトのアンロードとロードを行う 2 つのコマンドを送信
+  (複数のコマンドは "\n" で分割してください):
+
+----
+$ printf '%b' '*/python unload\n*/python autoload\n' >/run/user/1000/weechat/weechat_fifo_12345
+----
+
+[[fifo_commands]]
+=== コマンド
+
+include::includes/autogen_user_commands.ja.adoc[tag=fifo_commands]
+
+[[fifo_options]]
+=== オプション
+
+_fifo.conf_ ファイル内のセクション:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
 | セクション | 操作コマンド     | 説明
-| look       | /set ruby.look.* | 外観
+| file       | /set fifo.file.* | FIFO パイプに関するオプション
 |===
 
 オプション:
 
-include::includes/autogen_user_options.ja.adoc[tag=ruby_options]
+include::includes/autogen_user_options.ja.adoc[tag=fifo_options]
 
-[[lua_options]]
-==== Lua オプション
-
-_lua.conf_ ファイル内のセクション:
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| セクション | 操作コマンド    | 説明
-| look       | /set lua.look.* | 外観
-|===
-
-オプション:
-
-include::includes/autogen_user_options.ja.adoc[tag=lua_options]
-
-[[tcl_options]]
-==== Tcl オプション
-
-_tcl.conf_ ファイル内のセクション:
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| セクション | 操作コマンド    | 説明
-| look       | /set tcl.look.* | 外観
-|===
-
-オプション:
-
-include::includes/autogen_user_options.ja.adoc[tag=tcl_options]
-
-[[guile_options]]
-==== Guile オプション
-
-_guile.conf_ ファイル内のセクション:
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| セクション | 操作コマンド      | 説明
-| look       | /set guile.look.* | 外観
-|===
-
-オプション:
-
-include::includes/autogen_user_options.ja.adoc[tag=guile_options]
-
-[[javascript_options]]
-==== Javascript オプション
-
-_javascript.conf_ ファイル内のセクション:
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| セクション | 操作コマンド           | 説明
-| look       | /set javascript.look.* | 外観
-|===
-
-オプション:
-
-include::includes/autogen_user_options.ja.adoc[tag=javascript_options]
-
-[[php_options]]
-==== PHP オプション
-
-_php.conf_ ファイル内のセクション:
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| セクション | 操作コマンド    | 説明
-| look       | /set php.look.* | 外観
-|===
-
-オプション:
-
-include::includes/autogen_user_options.ja.adoc[tag=php_options]
-
-[[spell_plugin]]
-=== Spell
-
-Spell
-プラグインを使うことで、コマンドラインに入力した文字列のスペルチェックができます。バッファごとに異なる言語に対するスペルチェックを実行できます。
-
-スペルチェック機能はデフォルトで無効化されています。kbd:[Alt+s] で有効無効を切り替える事が可能です。
-
-[[spell_dictionaries]]
-==== 辞書
-
-スペルチェック機能を使う前に、すべてのバッファまたは特定のバッファに対して辞書を定義しなければいけません。
-
-同時に複数の辞書を使用可能です:
-WeeChat はすべての辞書を使って単語をチェックします。
-
-英語とフランス語の辞書を使う例:
-
-----
-/set spell.check.default_dict "en,fr"
-----
-
-特定のバッファで使用する辞書を定義することも可能です。ドイツ語のチャンネルでドイツ語の辞書を使う例:
-
-----
-/spell setdict de
-----
-
-バッファグループに対して特定の辞書を指定することも可能です。libera
-IRC サーバに対して英語の辞書を使う例:
-
-----
-/set spell.dict.irc.libera en
-----
-
-詳しい情報はコマンド <<command_spell_spell,/spell>> を参照してください。
-
-[[spell_speller_options]]
-==== Speller オプション
-
-Speller オプションは aspell 設定の "option"
-セクションにあるオプションを追加して定義します。
-
-ここで利用するオプション名は aspell
-設定オプションと同じものです。オプションのリストはシェルで以下のコマンドを実行することで確認できます:
-
-----
-$ aspell config
-----
-
-例えば、"ignore-case" オプションを有効化するには:
-
-----
-/set spell.option.ignore-case "true"
-----
-
-[[spell_suggestions]]
-==== 修正候補
-
-"spell_suggest" バー要素内に修正候補が表示されます。修正候補の数は
-_spell.check.suggestions_ オプションで設定します。
-
-修正候補を利用するには、_spell.check.suggestions_ オプションをゼロ以上の整数に設定し、_status_
-バーなどに "spell_suggest" バー要素を追加してください。
-
-英語辞書 (`en`) を用いた修正候補の例:
-
-....
-│[12:55] [6] [irc/libera] 3:#test(+n){4} [print,prone,prune]                      │
-│[@Flashy] prinr █                                                                │
-└─────────────────────────────────────────────────────────────────────────────────┘
-....
-
-英語とフランス語辞書 (`en,fr`) を用いた修正候補の例:
-
-....
-│[12:55] [6] [irc/libera] 3:#test(+n){4} [print,prone,prune/prime,primer,primé]   │
-│[@Flashy] prinr █                                                                │
-└─────────────────────────────────────────────────────────────────────────────────┘
-....
-
-[[spell_commands]]
-==== コマンド
-
-include::includes/autogen_user_commands.ja.adoc[tag=spell_commands]
-
-[[spell_options]]
-==== オプション
-
-_spell.conf_ ファイル内のセクション:
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| セクション | 操作コマンド                           | 説明
-| color      | /set spell.color.*                     | 色
-| check      | /set spell.check.*                     | スペルチェックの操作コマンド
-| dict       | <<command_spell_spell,/spell setdict>> +
-               /set spell.dict.*                      | バッファが利用するディレクトリ (オプションをセクションに追加/削除出来ます)
-| look       | /set spell.look.*                      | 外観
-| option     | /set spell.option.*                    | <<spell_speller_options,Speller オプション>> (オプションをセクションに追加/削除出来ます)
-|===
-
-オプション:
-
-include::includes/autogen_user_options.ja.adoc[tag=spell_options]
-
-[[trigger_plugin]]
-=== Trigger
+[[trigger]]
+== Trigger
 
 トリガは WeeChat の便利ツールです:
 様々なもの
@@ -4332,7 +4294,7 @@ include::includes/autogen_user_options.ja.adoc[tag=spell_options]
 link:weechat_plugin_api.ja.html#hooks[WeeChat プラグイン API リファレンス / フック]を読むことをお勧めします。
 
 [[trigger_default]]
-==== デフォルトトリガ
+=== デフォルトトリガ
 
 WeeChat はデフォルトで 5
 つのトリガを作成しますが、これらを無効化、更新、削除することも可能です:
@@ -4369,7 +4331,7 @@ WeeChat はデフォルトで 5
 |===
 
 [[trigger_anatomy]]
-==== トリガの構造
+=== トリガの構造
 
 トリガは以下のオプションをとります (名前は
 `trigger.trigger.<name>.<option>`):
@@ -4426,7 +4388,7 @@ trigger.trigger.beep.post_action = none
 ----
 
 [[trigger_execution]]
-==== 実行
+=== 実行
 
 トリガ機能が有効になっていてさらに対象のトリガが有効化されている場合に、トリガコールバックが呼び出されると、以下のアクションがこの順番で実行されます:
 
@@ -4438,7 +4400,7 @@ trigger.trigger.beep.post_action = none
 . トリガ実行後の処遇を適用 (`none` 以外の場合)。
 
 [[trigger_hook_arguments]]
-==== フック引数
+=== フック引数
 
 引数は使用するフックの種類に依存します。引数はセミコロンで区切ってください。
 
@@ -4549,7 +4511,7 @@ trigger.trigger.beep.post_action = none
 |===
 
 [[trigger_conditions]]
-==== 条件
+=== 条件
 
 条件を指定することで、トリガ内で処理を継続するか完全に止めるかを制御できます。
 
@@ -4565,7 +4527,7 @@ ${tg_displayed} && (${tg_highlight} || ${tg_msg_pv})
 ----
 
 [[trigger_regex]]
-==== 正規表現
+=== 正規表現
 
 正規表現はコールバックハッシュテーブル内の変数を変更するために使われます。
 
@@ -4632,7 +4594,7 @@ WeeChat によって使われる値に影響を及ぼします
 "/" を使うためです。
 
 [[trigger_command]]
-==== コマンド
+=== コマンド
 
 コマンドは正規表現を使ったテキスト置換の後に実行されます。複数のコマンドを実行するにはセミコロンで区切ってください。
 
@@ -4646,7 +4608,7 @@ WeeChat によって使われる値に影響を及ぼします
 ----
 
 [[trigger_callback_data]]
-==== コールバック内におけるデータ
+=== コールバック内におけるデータ
 
 コールバック内で受け取ったデータはハッシュテーブル (ポインタと文字列)
 の中に保存され、以下のオプションで使うことができます:
@@ -4674,7 +4636,7 @@ All callbacks set following variables in hashtable:
 |===
 
 [[trigger_data_signal]]
-===== Signal
+==== Signal
 
 "signal" コールバックは以下の変数をハッシュテーブルに格納します:
 
@@ -4716,7 +4678,7 @@ ${buffer[${tg_signal_data}].full_name}
 ----
 
 [[trigger_data_hsignal]]
-===== Hsignal
+==== Hsignal
 
 "hsignal" コールバックは以下の変数をハッシュテーブルに格納します:
 
@@ -4730,7 +4692,7 @@ ${buffer[${tg_signal_data}].full_name}
 string/string) が含まれています。
 
 [[trigger_data_modifier]]
-===== Modifier
+==== Modifier
 
 "modifier" コールバックは以下の変数をハッシュテーブルに格納します:
 
@@ -4762,7 +4724,7 @@ _weechat_print_ 修飾子では、メッセージタグを使う変数 (下の
 (<<trigger_data_signal,Signal>> を参照)。
 
 [[trigger_data_line]]
-===== Line
+==== Line
 
 "line" コールバックは以下の変数をハッシュテーブルに格納します:
 
@@ -4797,12 +4759,23 @@ _weechat_print_ 修飾子では、メッセージタグを使う変数 (下の
 | tg_tag_prefix_nick | string | プレフィックスで使うニックネームの色 ("prefix_nick_ccc" タグから)
 | tg_tag_host        | string | ユーザ名とホスト名、書式: username@host ("host_xxx" タグから)
 | tg_tag_notify      | string | 通知レベル (_none_、_message_、_private_、_highlight_)
+// TRANSLATION MISSING
+| tg_tag_irc_xxx     | string | IRC message tag (key "xxx"). ^(1)^
 | tg_notify          | string | 通知レベルが _none_ 以外の場合、その通知レベル
 | tg_msg_pv          | string | プライベートメッセージの場合 "1"、それ以外は "0"
 |===
 
+// TRANSLATION MISSING
+[NOTE]
+====
+^(1)^ Special chars are replaced in IRC tag:
+
+* key: `_` -> `-` and `,` -> `;`
+* value: `,` -> `;`
+====
+
 [[trigger_data_print]]
-===== Print
+==== Print
 
 "print" コールバックは以下の変数をハッシュテーブルに格納します:
 
@@ -4830,12 +4803,23 @@ _weechat_print_ 修飾子では、メッセージタグを使う変数 (下の
 | tg_tag_prefix_nick | string | プレフィックスで使うニックネームの色 ("prefix_nick_ccc" タグから)
 | tg_tag_host        | string | ユーザ名とホスト名、書式: username@host ("host_xxx" タグから)
 | tg_tag_notify      | string | 通知レベル (_none_、_message_、_private_、_highlight_)
+// TRANSLATION MISSING
+| tg_tag_irc_xxx     | string | IRC message tag (key "xxx"). ^(1)^
 | tg_notify          | string | 通知レベルが _none_ 以外の場合、その通知レベル
 | tg_msg_pv          | string | プライベートメッセージの場合 "1"、それ以外は "0"
 |===
 
+// TRANSLATION MISSING
+[NOTE]
+====
+^(1)^ Special chars are replaced in IRC tag:
+
+* key: `_` -> `-` and `,` -> `;`
+* value: `,` -> `;`
+====
+
 [[trigger_data_command]]
-===== Command
+==== Command
 
 "command" コールバックは以下の変数をハッシュテーブルに格納します:
 
@@ -4856,7 +4840,7 @@ _weechat_print_ 修飾子では、メッセージタグを使う変数 (下の
 |===
 
 [[trigger_data_command_run]]
-===== Command_run
+==== Command_run
 
 "command_run" コールバックは以下の変数をハッシュテーブルに格納します:
 
@@ -4868,7 +4852,7 @@ _weechat_print_ 修飾子では、メッセージタグを使う変数 (下の
 |===
 
 [[trigger_data_timer]]
-===== Timer
+==== Timer
 
 "timer" コールバックは以下の変数をハッシュテーブルに格納します:
 
@@ -4880,7 +4864,7 @@ _weechat_print_ 修飾子では、メッセージタグを使う変数 (下の
 |===
 
 [[trigger_data_config]]
-===== Config
+==== Config
 
 "config" コールバックは以下の変数をハッシュテーブルに格納します:
 
@@ -4892,7 +4876,7 @@ _weechat_print_ 修飾子では、メッセージタグを使う変数 (下の
 |===
 
 [[trigger_data_focus]]
-===== Focus
+==== Focus
 
 "focus" コールバックは以下の変数をハッシュテーブルに格納します:
 
@@ -4907,7 +4891,7 @@ _weechat_print_ 修飾子では、メッセージタグを使う変数 (下の
 string/string) が含まれています。
 
 [[trigger_data_info]]
-===== Info
+==== Info
 
 "info" コールバックは以下の変数をハッシュテーブルに格納します:
 
@@ -4920,7 +4904,7 @@ string/string) が含まれています。
 |===
 
 [[trigger_data_info_hashtable]]
-===== Info_hashtable
+==== Info_hashtable
 
 "info_hashtable" コールバックは以下の変数をハッシュテーブルに格納します:
 
@@ -4934,10 +4918,10 @@ string/string) が含まれています。
 string/string) が含まれています。
 
 [[trigger_examples]]
-==== 例
+=== 例
 
 [[trigger_example_url_color]]
-===== URL の色
+==== URL の色
 
 URL を緑色にする:
 
@@ -4950,7 +4934,7 @@ URL を緑色にする:
 をうまく検出するものではありませんが、複雑な正規表現を使うよりも高速です。
 
 [[trigger_example_auto_pong]]
-===== ping クエリに対する自動応答
+==== ping クエリに対する自動応答
 
 誰かがプライベートバッファで "ping" を送信した場合、このトリガは
 `pong` で自動的に応答します:
@@ -4960,7 +4944,7 @@ URL を緑色にする:
 ----
 
 [[trigger_example_responsive_layout]]
-===== レスポンシブレイアウト
+==== レスポンシブレイアウト
 
 以下のトリガは端末のサイズが変更されたときに表示されている内容をカスタマイズするものです:
 
@@ -4979,7 +4963,7 @@ WeeChat は SIGWINCH を受けとたった際 (端末のサイズが変更され
 100 文字幅以上になった場合、ニックネームリストを表示します。
 
 [[trigger_example_config_save]]
-===== 設定の自動保存
+==== 設定の自動保存
 
 例えば 1 時間ごとに、設定ファイル (`+*.conf+`)
 を自動的に保存することが可能です:
@@ -4998,12 +4982,12 @@ timer フックに対する引数は:
 (core バッファに対して何も表示しません)。
 
 [[trigger_commands]]
-==== コマンド
+=== コマンド
 
 include::includes/autogen_user_commands.ja.adoc[tag=trigger_commands]
 
 [[trigger_options]]
-==== オプション
+=== オプション
 
 _trigger.conf_ ファイル内のセクション:
 
@@ -5022,130 +5006,334 @@ _trigger.conf_ ファイル内のセクション:
 include::includes/autogen_user_options.ja.adoc[tag=trigger_options]
 
 // TRANSLATION MISSING
-[[typing_plugin]]
-=== Typing
+[[extending_weechat]]
+== Extending WeeChat
 
-The typing plugin is used to inform other users you are typing messages and
-show a list of users currently typing a message on the buffer.
+// TRANSLATION MISSING
+WeeChat has a modular design and can be extended with plugins and scripts.
 
-It is used by IRC plugin on channel and private buffers, when the "message-tags"
-capability is enabled (you can check with <<command_irc_cap,/cap>> command). +
-Under the hood, typing client tag is used, following this specification:
-https://ircv3.net/specs/client-tags/typing.html.
+_プラグイン_ と _スクリプト_ の違いを明らかにすることは重要です:
+_プラグイン_ とは `/plugin` コマンドで読み込まれるコンパイル済みバイナリファイルです。これに対して、
+_スクリプト_ とは `/python` 等のコマンドで _python_
+等のプラグインとともに読み込まれるテキストファイルです。
 
-[[typing_activation]]
-==== Activation
+[[plugins]]
+=== プラグイン
 
-For privacy considerations, the typing feature is disabled by default. +
-If you want to use it, you must enable options in both typing and irc plugins:
+プラグインとは動的ライブラリのことで、C
+言語で書かれてコンパイルされています。プラグインは WeeChat によって読み込まれます。GNU/Linux
+の場合、プラグインファイルは ".so" という拡張子を持ち、Windows の場合、".dll" です。
+
+見つかったプラグインは WeeChat の起動時に自動的に読み込まれます。WeeChat
+の起動時にプラグインを読み込むか否かは選択可能です。
+
+`/plugin`
+コマンドを使うことで、プラグインのロード/アンロード、ロード済みプラグインの表示を行うことができます。
+
+// TRANSLATION MISSING
+When a plugin is unloaded, WeeChat removes:
+
+* buffers
+* configuration options (options are written in files)
+* all hooks: commands, modifiers, process, etc.
+* infos and infolists
+* hdata
+* bar items.
+
+プラグインをロード、アンロード、ロード済みプラグインを表示する例:
 
 ----
-/set typing.look.enabled_nicks on
-/set typing.look.enabled_self on
-/set irc.look.typing_status_nicks on
-/set irc.look.typing_status_self on
+/plugin load irc
+/plugin unload irc
+/plugin list
 ----
 
-The typing notifications are displayed at the end of the status bar.
+デフォルトプラグインのリスト:
 
-Example of status bar with the "typing" item: "bob" is typing a message and
-"alice" was typing a message but made a pause:
+[width="100%",cols="1,5",options="header"]
+|===
+| プラグイン | 説明
+| alias      | コマンドの別名を定義
+| buflist    | バッファリストを表示するためのバー要素
+| charset    | バッファの文字コードに従ってデコード/エンコード
+| exec       | WeeChat 内部から外部コマンドを実行
+| fifo       | 外部から WeeChat にコマンドを送信するための FIFO パイプ
+| fset       | WeeChat とプラグインのオプションを高速設定
+| irc        | IRC チャットプロトコル
+| logger     | バッファの内容をファイルに保存
+| relay      | ネットワーク経由でデータを中継
+| script     | スクリプトマネージャ
+| python     | Python スクリプト API
+| perl       | Perl スクリプト API
+| ruby       | Ruby スクリプト API
+| lua        | Lua スクリプト API
+| tcl        | Tcl スクリプト API
+| guile      | Guile (scheme) スクリプト API
+| javascript | JavaScript スクリプト API
+| php        | PHP スクリプト API
+| spell      | コマンドラインのスペルチェック
+| trigger    | WeeChat およびプラグインが発生させたイベントに対するテキスト置換とコマンド実行
+// TRANSLATION MISSING
+| typing     | Display users currently writing messages.
+| xfer       | ファイル転送とダイレクトチャット
+|===
 
+API を使ったプラグインやスクリプトの開発についてより詳しく学ぶには
+link:weechat_plugin_api.ja.html[WeeChat プラグイン API リファレンス]または
+link:weechat_scripting.ja.html[WeeChat スクリプト作成ガイド]を参照してください。
+
+[[scripts]]
+=== スクリプト
+
+WeeChat は 8 種類のスクリプトプラグインを備えています:
+Python、Perl、Ruby、Lua、Tcl、Guile
+(scheme)、JavaScript、PHP。これらのプラグインでそれぞれの言語で書かれたスクリプトのロード、実行、アンロードができます。
+
+スクリプトの書き方やスクリプト用の WeeChat API についての詳しい情報は
+link:weechat_scripting.ja.html[WeeChat スクリプト作成ガイド]を参照してください。
+
+// TRANSLATION MISSING
+[[script_manager]]
+==== Script manager
+
+// TRANSLATION MISSING
+The script manager (command <<command_script_script,/script>>) is used to
+load/unload scripts of any language, and install/remove scripts of WeeChat
+scripts repository, which are visible at this URL: https://weechat.org/scripts
+
+// TRANSLATION MISSING
+For privacy considerations, the download of scripts is disabled by default. +
+To enable it, type this command:
+
+----
+/set script.scripts.download_enabled on
+----
+
+// TRANSLATION MISSING
+Then you can download the list of scripts and display them in a new buffer
+with the <<command_script_script,/script>> command:
+
+[subs="quotes,attributes"]
+:x: *
 ....
-│[12:55] [6] [irc/libera] 3:#test(+n){4} [Typing: bob, (alice)]                   │
-│[@Flashy] █                                                                      │
-└─────────────────────────────────────────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│1.weechat│368/368 scripts (filter: {x}) | Sort: i,p,n | Alt+key/input: i=install, r=remove, l=load, L=reload, u=│
+│2.scripts│{x}      autosort.py                 3.9     2020-10-11 | Automatically keep buffers grouped by server│
+│         │{x}      multiline.pl                0.6.3   2016-01-02 | Multi-line edit box, also supports editing o│
+│         │{x}      highmon.pl                  2.7     2020-06-21 | Adds a highlight monitor buffer.            │
+│         │##{x}ia r  grep.py               0.8.5 0.8.5   2021-05-11 | Search regular expression in buffers or log ##│
+│         │{x}      autojoin.py                 0.3.1   2019-10-06 | Configure autojoin for all servers according│
+│         │{x}      colorize_nicks.py           28      2021-03-06 | Use the weechat nick colors in the chat area│
+│         │{x}ia r  go.py                 2.7   2.7     2021-05-26 | Quick jump to buffers.                      │
+│         │{x}      text_item.py                0.9     2019-05-25 | Add bar items with plain text.              │
+│         │       aesthetic.py                1.0.6   2020-10-25 | Make messages more A E S T H E T I C A L L Y│
+│         │       aformat.py                  0.2     2018-06-21 | Alternate text formatting, useful for relays│
+│         │       alternatetz.py              0.3     2018-11-11 | Add an alternate timezone item.             │
+│         │       amarok2.pl                  0.7     2012-05-08 | Amarok 2 control and now playing script.    │
+│         │       amqp_notify.rb              0.1     2011-01-12 | Send private messages and highlights to an A│
+│         │       announce_url_title.py       19      2021-06-05 | Announce URL title to user or to channel.   │
+│         │       anotify.py                  1.0.2   2020-05-16 | Notifications of private messages, highlight│
+│         │       anti_password.py            1.2.1   2021-03-13 | Prevent a password from being accidentally s│
+│         │       apply_corrections.py        1.3     2018-06-21 | Display corrected text when user sends s/typ│
+│         │       arespond.py                 0.1.1   2020-10-11 | Simple autoresponder.                       │
+│         │       atcomplete.pl               0.001   2016-10-29 | Tab complete nicks when prefixed with "@".  │
+│         │       audacious.pl                0.3     2009-05-03 | Display which song Audacious is currently pl│
+│         │       auth.rb                     0.3     2014-05-30 | Automatically authenticate with NickServ usi│
+│         │       auto_away.py                0.4     2018-11-11 | A simple auto-away script.                  │
+│         │       autoauth.py                 1.3     2021-11-07 | Permits to auto-authenticate when changing n│
+│         │       autobump.py                 0.1.0   2019-06-14 | Bump buffers upon activity.                 │
+│         │       autoconf.py                 0.4     2021-05-11 | Auto save/load changed options in a .weerc f│
+│         │       autoconnect.py              0.3.3   2019-10-06 | Reopen servers and channels opened last time│
+│         │[12:55] [2] [script] 2:scripts                                                                      │
+│         │█                                                                                                   │
+└──────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
 ....
 
-[[typing_signals_sent]]
-==== Signals sent
+[[script_commands]]
+===== Script コマンド
 
-When you are typing a message (not a command starting with `/`), the typing
-plugin sends signals to inform other plugins (like IRC) that you are typing,
-and these plugins can then send typing notifications to other users.
+include::includes/autogen_user_commands.ja.adoc[tag=script_commands]
 
-The following signals are sent when you are typing messages:
+[[script_options]]
+===== スクリプトオプション
 
-[width="100%",cols="1,1,5",options="header"]
+_script.conf_ ファイル内のセクション:
+
+[width="100%",cols="3m,6m,16",options="header"]
 |===
-| Signal              | Arguments        | Description
-| typing_self_typing  | Pointer: buffer. | You are typing a message.
-| typing_self_paused  | Pointer: buffer. | You made a pause while typing a message.
-| typing_self_cleared | Pointer: buffer. | You cleared the command line without sending the message.
-| typing_self_sent    | Pointer: buffer. | You sent the message to the buffer.
-|===
-
-[[typing_signals_caught]]
-==== Signals caught
-
-The typing plugin is catching some signals that can be sent by other plugins
-(like IRC), to update internal hashtables used to store the typing state of
-nicks on buffers. These hashtables are used to build the content of "typing"
-bar item.
-
-The following signals are caught by the typing plugin:
-
-[width="100%",cols="1,4,3",options="header"]
-|===
-| Signal | Arguments | Description
-
-| typing_set_nick |
-  String: buffer pointer + ";" + state (one of: "off", "typing", "paused",
-  "cleared") + ";" + nick. +
-  Example: "0x1234abcd;typing;alice". |
-  Set typing state for a nick on a buffer.
-
-| typing_reset_buffer |
-  Pointer: buffer. |
-  Remove typing state for all nicks on a buffer.
+| セクション | 操作コマンド          | 説明
+| look       | /set script.look.*    | 外観
+| color      | /set script.color.*   | 色
+| scripts    | /set script.scripts.* | スクリプトのダウンロードに関するオプション
 |===
 
-[[typing_options]]
-==== オプション
+オプション:
 
-_typing.conf_ ファイル内のセクション:
+include::includes/autogen_user_options.ja.adoc[tag=script_options]
+
+// TRANSLATION MISSING
+[[scripting_plugins]]
+==== Scripting plugins
+
+[[python_commands]]
+===== Python コマンド
+
+include::includes/autogen_user_commands.ja.adoc[tag=python_commands]
+
+[[perl_commands]]
+===== Perl コマンド
+
+include::includes/autogen_user_commands.ja.adoc[tag=perl_commands]
+
+[[ruby_commands]]
+===== Ruby コマンド
+
+include::includes/autogen_user_commands.ja.adoc[tag=ruby_commands]
+
+[[lua_commands]]
+===== Lua コマンド
+
+include::includes/autogen_user_commands.ja.adoc[tag=lua_commands]
+
+[[tcl_commands]]
+===== Tcl コマンド
+
+include::includes/autogen_user_commands.ja.adoc[tag=tcl_commands]
+
+[[guile_commands]]
+===== Guile コマンド
+
+include::includes/autogen_user_commands.ja.adoc[tag=guile_commands]
+
+[[javascript_commands]]
+===== JavaScript コマンド
+
+include::includes/autogen_user_commands.ja.adoc[tag=javascript_commands]
+
+[[php_commands]]
+===== PHP コマンド
+
+include::includes/autogen_user_commands.ja.adoc[tag=php_commands]
+
+[[python_options]]
+===== Python オプション
+
+_python.conf_ ファイル内のセクション:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
 | セクション | 操作コマンド       | 説明
-| look       | /set typing.look.* | 外観
+| look       | /set python.look.* | 外観
 |===
 
 オプション:
 
-include::includes/autogen_user_options.ja.adoc[tag=typing_options]
+include::includes/autogen_user_options.ja.adoc[tag=python_options]
 
-[[xfer_plugin]]
-=== Xfer
+[[perl_options]]
+===== Perl オプション
 
-Xfer プラグインの機能:
-
-* ダイレクトチャット (サーバ不要の 2 ホスト間直接接続):
-  例えば IRC プラグイン経由の "DCC チャット"
-* ファイル転送、例えば IRC プラグイン経由の "DCC"
-
-[[xfer_commands]]
-==== コマンド
-
-include::includes/autogen_user_commands.ja.adoc[tag=xfer_commands]
-
-[[xfer_options]]
-==== オプション
-
-_xfer.conf_ ファイル内のセクション:
+_perl.conf_ ファイル内のセクション:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
-| セクション | 操作コマンド        | 説明
-| look       | /set xfer.look.*    | 外観
-| color      | /set xfer.color.*   | 色
-| network    | /set xfer.network.* | ネットワークオプション
-| file       | /set xfer.file.*    | ファイルの送信/受信に関するオプション
+| セクション | 操作コマンド     | 説明
+| look       | /set perl.look.* | 外観
 |===
 
 オプション:
 
-include::includes/autogen_user_options.ja.adoc[tag=xfer_options]
+include::includes/autogen_user_options.ja.adoc[tag=perl_options]
+
+[[ruby_options]]
+===== Ruby オプション
+
+_ruby.conf_ ファイル内のセクション:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| セクション | 操作コマンド     | 説明
+| look       | /set ruby.look.* | 外観
+|===
+
+オプション:
+
+include::includes/autogen_user_options.ja.adoc[tag=ruby_options]
+
+[[lua_options]]
+===== Lua オプション
+
+_lua.conf_ ファイル内のセクション:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| セクション | 操作コマンド    | 説明
+| look       | /set lua.look.* | 外観
+|===
+
+オプション:
+
+include::includes/autogen_user_options.ja.adoc[tag=lua_options]
+
+[[tcl_options]]
+===== Tcl オプション
+
+_tcl.conf_ ファイル内のセクション:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| セクション | 操作コマンド    | 説明
+| look       | /set tcl.look.* | 外観
+|===
+
+オプション:
+
+include::includes/autogen_user_options.ja.adoc[tag=tcl_options]
+
+[[guile_options]]
+===== Guile オプション
+
+_guile.conf_ ファイル内のセクション:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| セクション | 操作コマンド      | 説明
+| look       | /set guile.look.* | 外観
+|===
+
+オプション:
+
+include::includes/autogen_user_options.ja.adoc[tag=guile_options]
+
+[[javascript_options]]
+===== Javascript オプション
+
+_javascript.conf_ ファイル内のセクション:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| セクション | 操作コマンド           | 説明
+| look       | /set javascript.look.* | 外観
+|===
+
+オプション:
+
+include::includes/autogen_user_options.ja.adoc[tag=javascript_options]
+
+[[php_options]]
+===== PHP オプション
+
+_php.conf_ ファイル内のセクション:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| セクション | 操作コマンド    | 説明
+| look       | /set php.look.* | 外観
+|===
+
+オプション:
+
+include::includes/autogen_user_options.ja.adoc[tag=php_options]
 
 [[support]]
 == サポート

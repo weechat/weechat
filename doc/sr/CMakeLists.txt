@@ -122,19 +122,6 @@ if(ENABLE_DOC)
   add_custom_target(doc-quickstart-sr ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.sr.html)
   install(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.sr.html DESTINATION ${DATAROOTDIR}/doc/${PROJECT_NAME})
 
-  # tester's guide
-  add_custom_command(
-    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_tester.sr.html
-    COMMAND ${ASCIIDOCTOR_EXECUTABLE} ARGS ${ASCIIDOCTOR_ARGS} -o weechat_tester.sr.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_tester.sr.adoc
-    DEPENDS
-    ${CMAKE_CURRENT_SOURCE_DIR}/../docinfo.html
-    ${CMAKE_CURRENT_SOURCE_DIR}/weechat_tester.sr.adoc
-    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-    COMMENT "Building weechat_tester.sr.html"
-  )
-  add_custom_target(doc-tester-sr ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_tester.sr.html)
-  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_tester.sr.html DESTINATION ${DATAROOTDIR}/doc/${PROJECT_NAME})
-
   # relay protocol
   add_custom_command(
     OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_relay_protocol.sr.html

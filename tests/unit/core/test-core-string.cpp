@@ -126,7 +126,7 @@ TEST_GROUP(CoreString)
  *   string_strndup
  */
 
-TEST(CoreString, Duplicate)
+TEST(CoreString, Strndup)
 {
     const char *str_test = "test";
     char *str;
@@ -157,6 +157,23 @@ TEST(CoreString, Duplicate)
 /*
  * Tests functions:
  *   string_tolower
+ */
+
+TEST(CoreString, ToLower)
+{
+    char *str;
+
+    str = strdup ("ABC");
+
+    string_tolower (NULL);
+    string_tolower (str);
+    STRCMP_EQUAL("abc", str);
+
+    free (str);
+}
+
+/*
+ * Tests functions:
  *   string_toupper
  */
 
@@ -164,10 +181,9 @@ TEST(CoreString, Case)
 {
     char *str;
 
-    str = strdup ("ABC");
+    str = strdup ("abc");
 
-    string_tolower (str);
-    STRCMP_EQUAL("abc", str);
+    string_toupper (NULL);
     string_toupper (str);
     STRCMP_EQUAL("ABC", str);
 

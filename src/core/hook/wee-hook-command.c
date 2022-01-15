@@ -375,7 +375,7 @@ hook_command_exec (struct t_gui_buffer *buffer, int any_plugin,
                              0, NULL);
 
     ptr_command_name = utf8_next_char (argv[0]);
-    length_command_name = strlen (ptr_command_name);
+    length_command_name = utf8_strlen (ptr_command_name);
 
     hook_exec_start ();
 

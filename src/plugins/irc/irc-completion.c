@@ -531,7 +531,7 @@ irc_completion_channel_topic_cb (const void *pointer, void *data,
     {
         if (irc_server_strncasecmp (ptr_server, ptr_channel->topic,
                                     ptr_channel->name,
-                                    strlen (ptr_channel->name)) == 0)
+                                    weechat_utf8_strlen (ptr_channel->name)) == 0)
         {
             /*
              * if topic starts with channel name, add another channel name

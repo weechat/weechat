@@ -166,7 +166,7 @@ gui_hotlist_free_all (struct t_gui_hotlist **hotlist,
     /* remove all hotlists */
     while (*hotlist)
     {
-        gui_hotlist_free (hotlist, last_hotlist, *hotlist, 1);
+        gui_hotlist_free (hotlist, last_hotlist, *hotlist, 0);
     }
 }
 
@@ -504,10 +504,19 @@ gui_hotlist_resort ()
         gui_hotlist_add_hotlist (&new_hotlist, &last_new_hotlist, element);
     }
 
+    /* clear whole hotlist */
     gui_hotlist_free_all (&gui_hotlist, &last_gui_hotlist);
 
+    /* switch to new sorted hotlist */
     gui_hotlist = new_hotlist;
     last_gui_hotlist = last_new_hotlist;
+
+    /* reassign hotlist in buffers */
+    for (ptr_hotlist = gui_hotlist; ptr_hotlist;
+         ptr_hotlist = ptr_hotlist->next_hotlist)
+    {
+        ptr_hotlist->buffer->hotlist = ptr_hotlist;
+    }
 
     gui_hotlist_changed_signal (NULL);
 }

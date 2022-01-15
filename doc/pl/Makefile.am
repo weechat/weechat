@@ -28,7 +28,6 @@ EXTRA_DIST = CMakeLists.txt \
              weechat_scripting.pl.adoc \
              weechat_faq.pl.adoc \
              weechat_quickstart.pl.adoc \
-             weechat_tester.pl.adoc \
              includes/autogen_api_completions.pl.adoc \
              includes/autogen_api_hdata.pl.adoc \
              includes/autogen_api_infolists.pl.adoc \
@@ -53,8 +52,7 @@ if DOC
   doc_targets = weechat_user.pl.html \
 		weechat_scripting.pl.html \
 		weechat_faq.pl.html \
-		weechat_quickstart.pl.html \
-		weechat_tester.pl.html
+		weechat_quickstart.pl.html
   doc_install = install-doc
   doc_uninstall = uninstall-doc
 endif
@@ -81,10 +79,6 @@ weechat_faq.pl.html: weechat_faq.pl.adoc $(abs_top_srcdir)/doc/docinfo.html
 # quickstart
 weechat_quickstart.pl.html: weechat_quickstart.pl.adoc $(abs_top_srcdir)/doc/docinfo.html
 	$(ASCIIDOCTOR) $(ASCIIDOCTOR_ARGS) -a revnumber="$(VERSION)" -o weechat_quickstart.pl.html $(abs_top_srcdir)/doc/pl/weechat_quickstart.pl.adoc
-
-# tester's guide
-weechat_tester.pl.html: weechat_tester.pl.adoc $(abs_top_srcdir)/doc/docinfo.html
-	$(ASCIIDOCTOR) $(ASCIIDOCTOR_ARGS) -a revnumber="$(VERSION)" -o weechat_tester.pl.html $(abs_top_srcdir)/doc/pl/weechat_tester.pl.adoc
 
 # install man/docs
 

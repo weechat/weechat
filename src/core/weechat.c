@@ -174,7 +174,7 @@ weechat_display_usage ()
           "by colons (in this order: config, data, cache, runtime)\n"
           "                           (environment variable WEECHAT_HOME is "
           "read if this option is not given)\n"
-          "  -t, --temp-dir           create a temporary WeeChat home"
+          "  -t, --temp-dir           create a temporary WeeChat home "
           "directory and delete it on exit\n"
           "                           (incompatible with option \"-d\")\n"
           "  -h, --help               display this help\n"

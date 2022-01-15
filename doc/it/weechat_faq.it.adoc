@@ -1174,6 +1174,15 @@ $ curl -O https://weechat.org/files/plugins.xml.gz
 ----
 
 // TRANSLATION MISSING
+If you're running macOS and the downloaded file has a size of 0 bytes,
+try to set this variable in your shell initialization file or on command line,
+before starting WeeChat:
+
+----
+export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
+----
+
+// TRANSLATION MISSING
 [[spell_dictionaries]]
 === I installed aspell dictionaries on my system, how can I use them without restarting WeeChat?
 

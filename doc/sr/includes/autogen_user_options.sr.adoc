@@ -3064,11 +3064,11 @@
 ** вредности: -1 .. 43200
 ** подразумевана вредност: `+0+`
 
-* [[option_relay.network.compression_level]] *relay.network.compression_level*
-** опис: pass:none[ниво компресије за пакете који се шаљу клијенту WeeChat протоколом (0 = компресија је искључена, 1 = ниска компресија ... 9 = најбоља компресија)]
+* [[option_relay.network.compression]] *relay.network.compression*
+** опис: pass:none[compression of messages sent to clients with "weechat" protocol: 0 = disable compression, 1 = low compression / fast ... 100 = best compression / slow; the value is a percentage converted to 1-9 for zlib and 1-19 for zstd; the default value is recommended, it offers a good compromise between compression and speed]
 ** тип: целобројна
-** вредности: 0 .. 9
-** подразумевана вредност: `+6+`
+** вредности: 0 .. 100
+** подразумевана вредност: `+20+`
 
 * [[option_relay.network.ipv6]] *relay.network.ipv6*
 ** опис: pass:none[подразумевано се слуша на IPv6 сокету (уз IPv4 који је подразумеван); протоколи IPv4 и IPv6 могу да се форсирају (појединачно или заједно) у имену протокола (погледајте /help relay)]

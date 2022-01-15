@@ -63,7 +63,7 @@ struct t_config_option *relay_config_network_allowed_ips;
 struct t_config_option *relay_config_network_auth_timeout;
 struct t_config_option *relay_config_network_bind_address;
 struct t_config_option *relay_config_network_clients_purge_delay;
-struct t_config_option *relay_config_network_compression_level;
+struct t_config_option *relay_config_network_compression;
 struct t_config_option *relay_config_network_ipv6;
 struct t_config_option *relay_config_network_max_clients;
 struct t_config_option *relay_config_network_nonce_size;
@@ -1070,13 +1070,16 @@ relay_config_init ()
            "clients immediately, -1 = never purge)"),
         NULL, -1, 60 * 24 * 30, "0", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-    relay_config_network_compression_level = weechat_config_new_option (
+    relay_config_network_compression = weechat_config_new_option (
         relay_config_file, ptr_section,
-        "compression_level", "integer",
-        N_("compression level for packets sent to client with WeeChat protocol "
-           "(0 = disable compression, 1 = low compression ... 9 = best "
-           "compression)"),
-        NULL, 0, 9, "6", NULL, 0,
+        "compression", "integer",
+        N_("compression of messages sent to clients with \"weechat\" "
+           "protocol: 0 = disable compression, 1 = low compression / fast "
+           "... 100 = best compression / slow; the value is a percentage "
+           "converted to 1-9 for zlib and 1-19 for zstd; "
+           "the default value is recommended, it offers a good "
+           "compromise between compression and speed"),
+        NULL, 0, 100, "20", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     relay_config_network_ipv6 = weechat_config_new_option (
         relay_config_file, ptr_section,

@@ -33,6 +33,7 @@
 #include <gcrypt.h>
 #include <curl/curl.h>
 #include <zlib.h>
+#include <zstd.h>
 
 #include <gnutls/gnutls.h>
 
@@ -579,6 +580,12 @@ debug_libs_cb (const void *pointer, void *data,
 #else
     gui_chat_printf (NULL, "    zlib: (?)");
 #endif /* ZLIB_VERSION */
+
+    /* display zstd version */
+    gui_chat_printf (NULL, "    zstd: %d.%d.%d",
+                    ZSTD_VERSION_MAJOR,
+                    ZSTD_VERSION_MINOR,
+                    ZSTD_VERSION_RELEASE);
 
     return WEECHAT_RC_OK;
 }

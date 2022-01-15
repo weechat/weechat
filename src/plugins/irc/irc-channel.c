@@ -1442,6 +1442,7 @@ irc_channel_display_nick_back_in_pv (struct t_irc_server *server,
                     irc_protocol_tags (
                         "nick_back",
                         NULL,
+                        NULL,
                         (nick) ? nick->name : NULL,
                         (nick) ? nick->host : NULL),
                     _("%s%s%s %s(%s%s%s)%s is back on server"),

@@ -238,51 +238,91 @@ TEST(IrcProtocol, LogLevelForCommand)
 
 TEST(IrcProtocol, Tags)
 {
-    POINTERS_EQUAL(NULL, irc_protocol_tags (NULL, NULL, NULL, NULL));
+    struct t_hashtable *tags_empty, *tags_1, *tags_2;
+
+    tags_empty = hashtable_new (32,
+                                WEECHAT_HASHTABLE_STRING,
+                                WEECHAT_HASHTABLE_STRING,
+                                NULL, NULL);
+
+    tags_1 = hashtable_new (32,
+                            WEECHAT_HASHTABLE_STRING,
+                            WEECHAT_HASHTABLE_STRING,
+                            NULL, NULL);
+    hashtable_set (tags_1, "key1", "value1");
+
+    tags_2 = hashtable_new (32,
+                            WEECHAT_HASHTABLE_STRING,
+                            WEECHAT_HASHTABLE_STRING,
+                            NULL, NULL);
+    hashtable_set (tags_2, "key1", "value1");
+    hashtable_set (tags_2, "key_2,comma", "value2,comma");
+
+    POINTERS_EQUAL(NULL, irc_protocol_tags (NULL, NULL, NULL, NULL, NULL));
 
     /* command */
     STRCMP_EQUAL("irc_privmsg,log1",
-                 irc_protocol_tags ("privmsg", NULL, NULL, NULL));
+                 irc_protocol_tags ("privmsg", NULL, NULL, NULL, NULL));
     STRCMP_EQUAL("irc_join,log4",
-                 irc_protocol_tags ("join", NULL, NULL, NULL));
+                 irc_protocol_tags ("join", NULL, NULL, NULL, NULL));
 
-    /* command and empty tags */
+    /* command + irc_msg_tags */
     STRCMP_EQUAL("irc_privmsg,log1",
-                 irc_protocol_tags ("privmsg", "", NULL, NULL));
+                 irc_protocol_tags ("privmsg", tags_empty, NULL, NULL, NULL));
     STRCMP_EQUAL("irc_join,log4",
-                 irc_protocol_tags ("join", "", NULL, NULL));
+                 irc_protocol_tags ("join", tags_empty, NULL, NULL, NULL));
+    STRCMP_EQUAL("irc_privmsg,irc_tag_key1_value1,log1",
+                 irc_protocol_tags ("privmsg", tags_1, NULL, NULL, NULL));
+    STRCMP_EQUAL("irc_join,irc_tag_key1_value1,log4",
+                 irc_protocol_tags ("join", tags_1, NULL, NULL, NULL));
+    STRCMP_EQUAL("irc_privmsg,irc_tag_key1_value1,irc_tag_key-2;comma_value2;comma,log1",
+                 irc_protocol_tags ("privmsg", tags_2, NULL, NULL, NULL));
+    STRCMP_EQUAL("irc_join,irc_tag_key1_value1,irc_tag_key-2;comma_value2;comma,log4",
+                 irc_protocol_tags ("join", tags_2, NULL, NULL, NULL));
 
-    /* command and tags */
+    /* command + extra_tags */
+    STRCMP_EQUAL("irc_privmsg,log1",
+                 irc_protocol_tags ("privmsg", NULL, "", NULL, NULL));
+    STRCMP_EQUAL("irc_join,log4",
+                 irc_protocol_tags ("join", NULL, "", NULL, NULL));
     STRCMP_EQUAL("irc_privmsg,tag1,tag2,log1",
-                 irc_protocol_tags ("privmsg", "tag1,tag2", NULL, NULL));
+                 irc_protocol_tags ("privmsg", NULL, "tag1,tag2", NULL, NULL));
     STRCMP_EQUAL("irc_join,tag1,tag2,log4",
-                 irc_protocol_tags ("join", "tag1,tag2", NULL, NULL));
+                 irc_protocol_tags ("join", NULL, "tag1,tag2", NULL, NULL));
 
-    /* command, tags and empty nick */
-    STRCMP_EQUAL("irc_privmsg,tag1,tag2,log1",
-                 irc_protocol_tags ("privmsg", "tag1,tag2", "", NULL));
-    STRCMP_EQUAL("irc_join,tag1,tag2,log4",
-                 irc_protocol_tags ("join", "tag1,tag2", "", NULL));
+    /* command + irc_msg_tags + extra_tags + nick */
+    STRCMP_EQUAL("irc_privmsg,irc_tag_key1_value1,irc_tag_key-2;comma_value2;comma,"
+                 "tag1,tag2,log1",
+                 irc_protocol_tags ("privmsg", tags_2, "tag1,tag2", "", NULL));
+    STRCMP_EQUAL("irc_join,irc_tag_key1_value1,irc_tag_key-2;comma_value2;comma,"
+                 "tag1,tag2,log4",
+                 irc_protocol_tags ("join", tags_2, "tag1,tag2", "", NULL));
+    STRCMP_EQUAL("irc_privmsg,irc_tag_key1_value1,irc_tag_key-2;comma_value2;comma,"
+                 "tag1,tag2,nick_alice,log1",
+                 irc_protocol_tags ("privmsg", tags_2, "tag1,tag2", "alice", NULL));
+    STRCMP_EQUAL("irc_join,irc_tag_key1_value1,irc_tag_key-2;comma_value2;comma,"
+                 "tag1,tag2,nick_bob,log4",
+                 irc_protocol_tags ("join", tags_2, "tag1,tag2", "bob", NULL));
 
-    /* command, tags and nick */
-    STRCMP_EQUAL("irc_privmsg,tag1,tag2,nick_alice,log1",
-                 irc_protocol_tags ("privmsg", "tag1,tag2", "alice", NULL));
-    STRCMP_EQUAL("irc_join,tag1,tag2,nick_bob,log4",
-                 irc_protocol_tags ("join", "tag1,tag2", "bob", NULL));
-
-    /* command, tags, nick and empty address */
-    STRCMP_EQUAL("irc_privmsg,tag1,tag2,nick_alice,log1",
-                 irc_protocol_tags ("privmsg", "tag1,tag2", "alice", ""));
-    STRCMP_EQUAL("irc_join,tag1,tag2,nick_bob,log4",
-                 irc_protocol_tags ("join", "tag1,tag2", "bob", ""));
-
-    /* command, tags, nick and address */
-    STRCMP_EQUAL("irc_privmsg,tag1,tag2,nick_alice,host_example.com,log1",
-                 irc_protocol_tags ("privmsg", "tag1,tag2", "alice",
+    /* command + irc_msg_tags + extra_tags + nick + address */
+    STRCMP_EQUAL("irc_privmsg,irc_tag_key1_value1,irc_tag_key-2;comma_value2;comma,"
+                 "tag1,tag2,nick_alice,log1",
+                 irc_protocol_tags ("privmsg", tags_2, "tag1,tag2", "alice", ""));
+    STRCMP_EQUAL("irc_join,irc_tag_key1_value1,irc_tag_key-2;comma_value2;comma,"
+                 "tag1,tag2,nick_bob,log4",
+                 irc_protocol_tags ("join", tags_2, "tag1,tag2", "bob", ""));
+    STRCMP_EQUAL("irc_privmsg,irc_tag_key1_value1,irc_tag_key-2;comma_value2;comma,"
+                 "tag1,tag2,nick_alice,host_example.com,log1",
+                 irc_protocol_tags ("privmsg", tags_2, "tag1,tag2", "alice",
                                     "example.com"));
-    STRCMP_EQUAL("irc_join,tag1,tag2,nick_bob,host_example.com,log4",
-                 irc_protocol_tags ("join", "tag1,tag2", "bob",
+    STRCMP_EQUAL("irc_join,irc_tag_key1_value1,irc_tag_key-2;comma_value2;comma,"
+                 "tag1,tag2,nick_bob,host_example.com,log4",
+                 irc_protocol_tags ("join", tags_2, "tag1,tag2", "bob",
                                     "example.com"));
+
+    hashtable_free (tags_empty);
+    hashtable_free (tags_1);
+    hashtable_free (tags_2);
 }
 
 /*
@@ -2444,20 +2484,20 @@ TEST(IrcProtocolWithServer, 311)
 
     /* not enough parameters */
     RECV(":server 311");
-    CHECK_ERROR_PARAMS("311", 0, 6);
+    CHECK_ERROR_PARAMS("311", 0, 3);
     RECV(":server 311 alice");
-    CHECK_ERROR_PARAMS("311", 1, 6);
+    CHECK_ERROR_PARAMS("311", 1, 3);
     RECV(":server 311 alice bob");
-    CHECK_ERROR_PARAMS("311", 2, 6);
+    CHECK_ERROR_PARAMS("311", 2, 3);
     RECV(":server 311 alice bob user");
-    CHECK_ERROR_PARAMS("311", 3, 6);
-    RECV(":server 311 alice bob user host");
-    CHECK_ERROR_PARAMS("311", 4, 6);
-    RECV(":server 311 alice bob user host *");
-    CHECK_ERROR_PARAMS("311", 5, 6);
 
+    /* standard parameters */
     RECV(":server 311 alice bob user host * :real name");
     CHECK_SRV("-- [bob] (user@host): real name");
+
+    /* non-standard parameters (using default whois callback) */
+    RECV(":server 311 alice bob user");
+    CHECK_SRV("-- [bob] user");
 }
 
 /*
@@ -2471,16 +2511,19 @@ TEST(IrcProtocolWithServer, 312)
 
     /* not enough parameters */
     RECV(":server 312");
-    CHECK_ERROR_PARAMS("312", 0, 4);
+    CHECK_ERROR_PARAMS("312", 0, 3);
     RECV(":server 312 alice");
-    CHECK_ERROR_PARAMS("312", 1, 4);
+    CHECK_ERROR_PARAMS("312", 1, 3);
     RECV(":server 312 alice bob");
-    CHECK_ERROR_PARAMS("312", 2, 4);
-    RECV(":server 312 alice bob server");
-    CHECK_ERROR_PARAMS("312", 3, 4);
+    CHECK_ERROR_PARAMS("312", 2, 3);
 
+    /* standard parameters */
     RECV(":server 312 alice bob server :https://example.com/");
     CHECK_SRV("-- [bob] server (https://example.com/)");
+
+    /* non-standard parameters (using default whois callback) */
+    RECV(":server 312 alice bob server");
+    CHECK_SRV("-- [bob] server");
 }
 
 /*
@@ -2494,20 +2537,19 @@ TEST(IrcProtocolWithServer, 314)
 
     /* not enough parameters */
     RECV(":server 314");
-    CHECK_ERROR_PARAMS("314", 0, 6);
+    CHECK_ERROR_PARAMS("314", 0, 3);
     RECV(":server 314 alice");
-    CHECK_ERROR_PARAMS("314", 1, 6);
+    CHECK_ERROR_PARAMS("314", 1, 3);
     RECV(":server 314 alice bob");
-    CHECK_ERROR_PARAMS("314", 2, 6);
-    RECV(":server 314 alice bob user");
-    CHECK_ERROR_PARAMS("314", 3, 6);
-    RECV(":server 314 alice bob user host");
-    CHECK_ERROR_PARAMS("314", 4, 6);
-    RECV(":server 314 alice bob user host *");
-    CHECK_ERROR_PARAMS("314", 5, 6);
+    CHECK_ERROR_PARAMS("314", 2, 3);
 
+    /* standard parameters */
     RECV(":server 314 alice bob user host * :real name");
     CHECK_SRV("-- [bob] (user@host) was real name");
+
+    /* non-standard parameters (using default whowas callback) */
+    RECV(":server 314 alice bob user");
+    CHECK_SRV("-- [bob] user");
 }
 
 /*
@@ -2687,18 +2729,21 @@ TEST(IrcProtocolWithServer, 327)
 
     /* not enough parameters */
     RECV(":server 327");
-    CHECK_ERROR_PARAMS("327", 0, 4);
+    CHECK_ERROR_PARAMS("327", 0, 3);
     RECV(":server 327 alice");
-    CHECK_ERROR_PARAMS("327", 1, 4);
+    CHECK_ERROR_PARAMS("327", 1, 3);
     RECV(":server 327 alice bob");
-    CHECK_ERROR_PARAMS("327", 2, 4);
-    RECV(":server 327 alice bob host");
-    CHECK_ERROR_PARAMS("327", 3, 4);
+    CHECK_ERROR_PARAMS("327", 2, 3);
 
+    /* standard parameters */
     RECV(":server 327 alice bob host 1.2.3.4");
     CHECK_SRV("-- [bob] host 1.2.3.4");
     RECV(":server 327 alice bob host 1.2.3.4 :real name");
     CHECK_SRV("-- [bob] host 1.2.3.4 (real name)");
+
+    /* non-standard parameters (using default whois callback) */
+    RECV(":server 327 alice bob host");
+    CHECK_SRV("-- [bob] host");
 }
 
 /*
@@ -2884,16 +2929,18 @@ TEST(IrcProtocolWithServer, 338)
 
     /* not enough parameters */
     RECV(":server 338");
-    CHECK_ERROR_PARAMS("338", 0, 4);
+    CHECK_ERROR_PARAMS("338", 0, 3);
     RECV(":server 338 alice");
-    CHECK_ERROR_PARAMS("338", 1, 4);
+    CHECK_ERROR_PARAMS("338", 1, 3);
     RECV(":server 338 alice bob");
-    CHECK_ERROR_PARAMS("338", 2, 4);
-    RECV(":server 338 alice bob hostname");
-    CHECK_ERROR_PARAMS("338", 3, 4);
+    CHECK_ERROR_PARAMS("338", 2, 3);
 
     RECV(":server 338 alice bob hostname :actually using host");
     CHECK_SRV("-- [bob] actually using host hostname");
+
+    /* on Rizon server */
+    RECV(":server 338 alice bob :is actually bob@example.com [1.2.3.4]");
+    CHECK_SRV("-- [bob] is actually bob@example.com [1.2.3.4]");
 }
 
 /*
@@ -2936,16 +2983,21 @@ TEST(IrcProtocolWithServer, 344)
     RECV(":server 344 alice #test");
     CHECK_ERROR_PARAMS("344", 2, 3);
 
+    /* channel reop (IRCnet) */
     RECV(":server 344 alice #test nick!user@host");
     CHECK_SRV("-- Channel reop #test: nick!user@host");
     RECV(":server 344 alice #test :nick!user@host");
     CHECK_SRV("-- Channel reop #test: nick!user@host");
 
-    /* channel not found */
+    /* channel reop (IRCnet), channel not found */
     RECV(":server 344 alice #xyz nick!user@host");
     CHECK_SRV("-- Channel reop #xyz: nick!user@host");
     RECV(":server 344 alice #xyz :nick!user@host");
     CHECK_SRV("-- Channel reop #xyz: nick!user@host");
+
+    /* whois, geo info (UnrealIRCd) */
+    RECV(":server 344 alice bob FR :is connecting from France");
+    CHECK_SRV("-- [bob] FR is connecting from France");
 }
 
 /*

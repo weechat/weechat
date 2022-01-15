@@ -55,6 +55,10 @@ WEECHAT_PLUGIN_NAME("име")::
 WEECHAT_PLUGIN_DESCRIPTION("опис")::
     кратак опис додатка
 
+// TRANSLATION MISSING
+WEECHAT_PLUGIN_AUTHOR("author")::
+    the author name
+
 WEECHAT_PLUGIN_VERSION("1.0")::
     верзија додатка plugin version
 
@@ -517,19 +521,21 @@ str = weechat.ngettext("file", "files", num_files)
 
 ==== strndup
 
-Враћа дуплирани стринг, са макс _length_ карактера.
+// TRANSLATION MISSING
+Return duplicated string, with a max number of bytes.
 
 Прототип:
 
 [source, C]
 ----
-char *weechat_strndup (const char *string, int length);
+char *weechat_strndup (const char *string, int bytes);
 ----
 
 Аргументи:
 
 * _string_: стринг који се дуплира
-* _length_: макс број карактера који може да се дуплира
+// TRANSLATION MISSING
+* _bytes_: max bytes to duplicate
 
 Повратна вредност:
 
@@ -556,7 +562,7 @@ _WeeChat ≥ 3.3._
 
 Прототип:
 
-[source,C]
+[source,c]
 ----
 char *weechat_string_cut (const char *string, int length, int count_suffix, int screen, const char *cut_suffix);
 ----
@@ -575,7 +581,7 @@ char *weechat_string_cut (const char *string, int length, int count_suffix, int 
 
 C пример:
 
-[source,C]
+[source,c]
 ----
 char *str = weechat_string_cut ("this is a test", 5, 1, 1, "…");  /* result: "this…" */
 /* ... */
@@ -2457,12 +2463,11 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
   `+${raw:${info:version}}+` |
   `+${info:version}+`
 
-// TRANSLATION MISSING
-| `+${name}+` +
+| `+${име}+` +
   _(WeeChat ≥ 3.4)_ |
-  User variable (defined with `+${define:name,value}+`). |
-  `+${name}+` |
-  `+value+`
+  Корисничка променљива (дефинисана са `+${define:име,вредност}+`). |
+  `+${име}+` |
+  `+вредност+`
 
 | `+${име}+` |
   Променљива `name` из хеш табеле _extra_vars_. |
@@ -2753,11 +2758,10 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
   `+${translate:Plugin}+` |
   `+Extension+` (пример из француског)
 
-// TRANSLATION MISSING
 | `+${define:name,value}+` +
   _(WeeChat ≥ 3.4)_ |
-  Define a variable `name` set to `value`, which can then be used in the same
-  evaluated expression with `+${name}+`. |
+  Дефинисање променљиве `име` постављене на `вредност`, која онда може да се користи у истом
+  израчунатом изразу са `+${име}+`. |
   `+${define:len,${calc:5+3}}${len}x${len}+` |
   `+8x8+`
 
@@ -3867,7 +3871,7 @@ _WeeChat ≥ 3.3._
 
 Прототип:
 
-[source,C]
+[source,c]
 ----
 int weechat_file_copy (const char *from, const char *to);
 ----
@@ -3883,7 +3887,7 @@ int weechat_file_copy (const char *from, const char *to);
 
 C пример:
 
-[source,C]
+[source,c]
 ----
 if (weechat_file_copy ("/tmp/test.txt", "/path/to/test2.txt"))
 {
@@ -15891,35 +15895,32 @@ void weechat_hdata_new_var (struct t_hdata *hdata, const char *name, int offset,
 ** _*_: аутоматска величина: величина низа се израчунава гледањем у вредности, када се наиђе на прво NULL (само за тип стринг, показивач или хеш табелу)
 * _hdata_name_: име hdata (ако је то показивач на структуру са hdata)
 
-// TRANSLATION MISSING
-With WeeChat ≥ 3.4, the _array_size_ parameter can be prefixed with `*,` for
-pointer to dynamically allocated array (without this prefix, the array is
-considered static).
+Од WeeChat ≥ 3.4, испред _array_size_ параметра може да се постави `*,` што
+представља показивач на динамички алоциран низ (без овог префикса, низ се
+сматра статички).
 
-// TRANSLATION MISSING
-Examples of variables and the corresponding array size (_WeeChat ≥ 3.4_):
+Примери променљивих и одговарајуће величине низа (_WeeChat ≥ 3.4_):
 
-// TRANSLATION MISSING
 [width="100%",cols="3,3m,2,7",options="header"]
 |===
-| Variable declaration in C | Hdata type | Array size | Description
+| Декларација променљиве у C | Hdata тип | Величина низа | Опис
 
 | `+int *numbers;+` | WEECHAT_HDATA_INTEGER | `+*,2+` |
-  Allocated array of 2 integers.
+  Алоцирани низ од 2 цела броја.
 
 | `+int *numbers;+` | WEECHAT_HDATA_INTEGER | `+*,array_size+` |
-  Allocated array of integers, the size is stored in another variable called
+  Алоцирани низ целих бројева, величина се чува у другој променљивој под називом
   "array_size".
 
 | `+int numbers[3];+` | WEECHAT_HDATA_INTEGER | `+3+` |
-  Static array of 3 integers.
+  Статички низ од 3 цела броја.
 
 | `+char **words;+` | WEECHAT_HDATA_STRING | `+*,*+` |
-  Allocated array of strings, dynamic size (NULL pointer must be present after
-  last word).
+  Алоцирани низ стрингова, динамичке величине (иза последње речи мора да дође
+  NULL показивач).
 
 | `+char **words;+` | WEECHAT_HDATA_STRING | `+*,count_words+` |
-  Allocated array of strings, the size is stored in another variable called
+  Алоцирани низ стрингова, величина се чува у другој променљивој под називом
   "count_words".
 |===
 
@@ -16598,11 +16599,10 @@ void *weechat_hdata_search (struct t_hdata *hdata, void *pointer, const char *se
 * _options_: хеш табела за позив функције <<_string_eval_expression,string_eval_expression>>
 * _move_: број скок(а/ова) који треба да се изврши након неуспешне претраге (негативни или позитивни цео број, различит од 0)
 
-// TRANSLATION MISSING
 [IMPORTANT]
-You must ensure the _search_ expression is safe and does not include any
-user data. Such unsafe data must be given in the hashtable _extra_vars_ and
-referenced by `${xxx}` in the _search_ expression (see the example below).
+Морате обезбедити да је _search_ израз сигуран и да не садржи корисничке
+податке. Такви небезбедни подаци морају да се наведу у хеш табели _extra_vars_
+и да се на њих у _search_ изразу укаже са `${xxx}` (погледајте пример испод).
 
 Повратна вредност:
 

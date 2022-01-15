@@ -207,6 +207,7 @@ trigger_search_with_option (struct t_config_option *option)
     const char *ptr_name;
     char *pos_option;
     struct t_trigger *ptr_trigger;
+    int num_chars;
 
     if (!option)
         return NULL;
@@ -220,10 +221,12 @@ trigger_search_with_option (struct t_config_option *option)
     if (!pos_option)
         return NULL;
 
+    num_chars = weechat_utf8_pos (ptr_name, pos_option - ptr_name);
+
     for (ptr_trigger = triggers; ptr_trigger;
          ptr_trigger = ptr_trigger->next_trigger)
     {
-        if (weechat_strncasecmp (ptr_trigger->name, ptr_name, pos_option - ptr_name) == 0)
+        if (weechat_strncasecmp (ptr_trigger->name, ptr_name, num_chars) == 0)
             break;
     }
 

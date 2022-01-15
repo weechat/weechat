@@ -467,7 +467,6 @@ Fichiers de documentation :
 |       weechat_quickstart.XX.adoc              | link:weechat_quickstart.fr.html[Guide de démarrage].
 |       weechat_relay_protocol.XX.adoc          | link:weechat_relay_protocol.fr.html[Protocole Relay (pour les interfaces distantes)].
 |       weechat_scripting.XX.adoc               | link:weechat_scripting.fr.html[Guide pour scripts].
-|       weechat_tester.XX.adoc                  | link:weechat_tester.fr.html[Guide du testeur].
 |       weechat_user.XX.adoc                    | link:weechat_user.fr.html[Guide utilisateur].
 |       includes/                               | Fichiers inclus dans la documentation.
 |          autogen_api_completions.XX.adoc      | Fichier auto-généré pour la Référence API extension : complétions (ne *JAMAIS* mettre à jour manuellement !).
@@ -513,7 +512,7 @@ fichiers sont dans le répertoire _po/_ :
 
 Exemple en C :
 
-[source,C]
+[source,c]
 ----
 /*
  * weechat.c - core functions for WeeChat
@@ -554,7 +553,7 @@ Quelques règles basiques que vous *devez* suivre quand vous écrivez du code C�
 
 Exemple :
 
-[source,C]
+[source,c]
 ----
 /*
  * Checks if a string with boolean value is valid.
@@ -587,7 +586,7 @@ foo ()
 * Initialisez les variables locales après la déclaration, dans le corps de la
   fonction, exemple :
 
-[source,C]
+[source,c]
 ----
 void
 foo ()
@@ -607,7 +606,7 @@ foo ()
   nombre d'espaces utilisés sur la ligne au dessus de l'accolade ouvrante (le
   `if` dans l'exemple) :
 
-[source,C]
+[source,c]
 ----
 if (nicks_count == 1)
 {
@@ -618,7 +617,7 @@ if (nicks_count == 1)
 * Utilisez des lignes vides pour séparer différents blocs dans les fonctions, et
   si possible ajoutez un commentaire pour chacun, comme ceci :
 
-[source,C]
+[source,c]
 ----
 /*
  * Sends a message from out queue.
@@ -662,7 +661,7 @@ irc_server_outqueue_send (struct t_irc_server *server)
   conditions avec un opérateur (pas nécessaire pour un booléen simple), comme
   ceci :
 
-[source,C]
+[source,c]
 ----
 if (something)
 {
@@ -686,7 +685,7 @@ else
 
 * Indentez les `switch` comme ceci :
 
-[source,C]
+[source,c]
 ----
 switch (string[0])
 {
@@ -705,7 +704,7 @@ switch (string[0])
 * Utilisez `typedef` pur les prototypes de fonctions mais pas pour les
   structures :
 
-[source,C]
+[source,c]
 ----
 typedef int (t_hook_callback_fd)(void *data, int fd);
 
@@ -787,7 +786,7 @@ Les structures ont le nom _t_X_Y_ ou _t_X_Y_Z_ :
 
 Exemple : un pseudo IRC (de _src/plugins/irc/irc-nick.h_) :
 
-[source,C]
+[source,c]
 ----
 struct t_irc_nick
 {
@@ -817,7 +816,7 @@ _last_X_ (où _X_ est le nom de la variable, en utilisant le singulier).
 
 Exemple : fenêtres (de _src/gui/gui-window.c_) :
 
-[source,C]
+[source,c]
 ----
 struct t_gui_window *gui_windows = NULL;        /* first window             */
 struct t_gui_window *last_gui_window = NULL;    /* last window              */
@@ -837,7 +836,7 @@ La convention pour les noms des fonctions est le même que celui des
 
 Exemple : création d'une nouvelle fenêtre (de _src/gui/gui-window.c_) :
 
-[source,C]
+[source,c]
 ----
 /*
  * Creates a new window.
@@ -875,7 +874,7 @@ pointeur vers le nœud précédent/suivant.
 
 Exemple : liste des tampons (de _src/gui/gui-buffer.h_) :
 
-[source,C]
+[source,c]
 ----
 struct t_gui_buffer
 {
@@ -890,7 +889,7 @@ struct t_gui_buffer
 
 Et les deux pointeurs vers la tête et la fin de liste :
 
-[source,C]
+[source,c]
 ----
 struct t_gui_buffer *gui_buffers = NULL;           /* first buffer          */
 struct t_gui_buffer *last_gui_buffer = NULL;       /* last buffer           */
@@ -906,17 +905,9 @@ Tous les attributs/couleurs sont préfixés par un caractère dans la chaîne, q
 peuvent être :
 
 * _0x19_ : code couleur (suivi par un/des code(s) couleur)
-* _0x1A_ : activer un attribut (suivi par un attribut sur un caractère)
-* _0x1B_ : supprimer un attribut (suivi par un attribut sur un caractère)
+* _0x1A_ : activer un attribut (suivi par un attribut brut sur un caractère)
+* _0x1B_ : supprimer un attribut (suivi par un attribut brut sur un caractère)
 * _0x1C_ : réinitialiser (rien après)
-
-Les attributs autorisés sont (un ou plusieurs caractères) :
-
-* `+*+` : gras
-* `+!+` : vidéo inverse
-* `+/+` : italique
-* `+_+` : souligné
-* `+|+` : garder les attributs
 
 Les couleurs possibles sont :
 
@@ -926,47 +917,57 @@ Les couleurs possibles sont :
 Dans le tableau qui suit, les conventions suivantes sont utilisées :
 
 * `STD` : couleur standard (2 digits)
-* `(A)STD` : couleur standard avec des attributs facultatifs
+* `(ATTR)STD` : couleur standard avec des attributs facultatifs
   (attributs + 2 digits)
 * `EXT` : couleur étendue (`+@+` + 5 digits)
-* `(A)EXT` : couleur étendue avec des attributs facultatifs
+* `(ATTR)EXT` : couleur étendue avec des attributs facultatifs
   (`+@+` + attributs + 5 digits)
-* `ATTR` : un caractère d'attribut (`+*+`, `+!+`, `+/+`, `+_+` ou `+|+`)
+* `(ATTR)` : un ou plusieurs caractères d'attribut :
+** `+*+` : gras
+** `+!+` : vidéo inverse
+** `+/+` : italique
+** `+_+` : souligné
+** `+|+` : garder les attributs
+* `(a)` : un caractère d'attribut brut :
+** _0x01_ : gras
+** _0x02_ : vidéo inverse
+** _0x03_ : italique
+** _0x04_ : souligné
 
 Toutes les combinaisons sont résumées dans ce tableau :
 
-[width="100%",cols="4,2,2,8",options="header"]
+[width="100%",cols="4,3,2,8",options="header"]
 |===
-| Code                                       | Exemple                      | Aires         | Description
-| [hex]#19# + STD                            | [hex]#19# `+01+`             | chat + barres | Définir les attributs et la couleur en utilisant une option, voir le tableau ci-dessous.
-| [hex]#19# + EXT                            | [hex]#19# `+@00001+`         | chat          | Définir une couleur avec la paire ncurses (utilisé seulement sur le tampon `/color`).
-| [hex]#19# + "F" + (A)STD                   | [hex]#19# `+F*05+`           | chat + barres | Définir la couleur de texte (couleur WeeChat).
-| [hex]#19# + "F" + (A)EXT                   | [hex]#19# `+F@00214+`        | chat + barres | Définir la couleur de texte (couleur étendue).
-| [hex]#19# + "B" + STD                      | [hex]#19# `+B05+`            | chat + barres | Définir la couleur de fond (couleur WeeChat).
-| [hex]#19# + "B" + EXT                      | [hex]#19# `+B@00124+`        | chat + barres | Définir le couleur de fond (couleur étendue).
-| [hex]#19# + "*" + (A)STD                   | [hex]#19# `+*05+`            | chat + barres | Définir la couleur de texte (couleur WeeChat).
-| [hex]#19# + "*" + (A)EXT                   | [hex]#19# `+*@00214+`        | chat + barres | Définir la couleur de texte (couleur étendue).
-| [hex]#19# + "*" + (A)STD + "," + STD ^(1)^ | [hex]#19# `+*08,05+`         | chat + barres | Définir la couleur de texte/fond (couleurs WeeChat).
-| [hex]#19# + "*" + (A)STD + "," + EXT ^(1)^ | [hex]#19# `+*01,@00214+`     | chat + barres | Définir la couleur de texte (couleur WeeChat) et de fond (couleur étendue).
-| [hex]#19# + "*" + (A)EXT + "," + STD ^(1)^ | [hex]#19# `+*@00214,05+`     | chat + barres | Définir la couleur de texte (couleur étendue) et de fond (couleur WeeChat).
-| [hex]#19# + "*" + (A)EXT + "," + EXT ^(1)^ | [hex]#19# `+*@00214,@00017+` | chat + barres | Définir la couleur de texte/fond (couleurs étendues).
-| [hex]#19# + "*" + (A)STD + "~" + STD       | [hex]#19# `+*08~05+`         | chat + barres | Définir la couleur de texte/fond (couleurs WeeChat).
-| [hex]#19# + "*" + (A)STD + "~" + EXT       | [hex]#19# `+*01~@00214+`     | chat + barres | Définir la couleur de texte (couleur WeeChat) et de fond (couleur étendue).
-| [hex]#19# + "*" + (A)EXT + "~" + STD       | [hex]#19# `+*@00214~05+`     | chat + barres | Définir la couleur de texte (couleur étendue) et de fond (couleur WeeChat).
-| [hex]#19# + "*" + (A)EXT + "~" + EXT       | [hex]#19# `+*@00214~@00017+` | chat + barres | Définir la couleur de texte/fond (couleurs étendues).
-| [hex]#19# + "b" + "F"                      | [hex]#19# `+bF+`             | barres        | Définir la couleur de texte de la barre.
-| [hex]#19# + "b" + "D"                      | [hex]#19# `+bD+`             | barres        | Définir la couleur du délimiteur de la barre.
-| [hex]#19# + "b" + "B"                      | [hex]#19# `+bB+`             | barres        | Définir la couleur de fond de la barre.
-| [hex]#19# + "b" + "_"                      | [hex]#19# `+b_+`             | barre input   | Caractère de démarrage dans l'entrée (utilisé seulement dans l'objet "input_text").
-| [hex]#19# + "b" + "-"                      | [hex]#19# `+b-+`             | barre input   | Caractère de démarrage caché dans l'entrée (utilisé seulement dans l'objet "input_text").
-| [hex]#19# + "b" + "#"                      | [hex]#19# `+b#+`             | barre input   | Caractère de déplacement du curseur (utilisé seulement dans l'objet "input_text").
-| [hex]#19# + "b" + "i"                      | [hex]#19# `+bi+`             | barres        | Début d'objet.
-| [hex]#19# + "b" + "l" (lower L)            | [hex]#19# `+bl+`             | barres        | Ligne de démarrage d'objet.
-| [hex]#19# + "E"                            | [hex]#19# `+E+`              | chat + barres | Texte mis en valeur _(WeeChat ≥ 0.4.2)_.
-| [hex]#19# + [hex]#1C#                      | [hex]#19# [hex]#1C#          | chat + barres | Réinitialiser la couleur (garder les attributs).
-| [hex]#1A# + ATTR                           | [hex]#1A# `+*+`              | chat + barres | Activer un attribut.
-| [hex]#1B# + ATTR                           | [hex]#1B# `+*+`              | chat + barres | Supprimer un attribut.
-| [hex]#1C#                                  | [hex]#1C#                    | chat + barres | Réinitialiser les attributs et la couleur.
+| Code                                              | Exemple                      | Aires         | Description
+| [hex]#19# + `STD`                                 | [hex]#19# `+01+`             | chat + barres | Définir les attributs et la couleur en utilisant une option, voir le tableau ci-dessous.
+| [hex]#19# + `EXT`                                 | [hex]#19# `+@00001+`         | chat          | Définir une couleur avec la paire ncurses (utilisé seulement sur le tampon `/color`).
+| [hex]#19# + `F` + `(ATTR)STD`                     | [hex]#19# `+F*05+`           | chat + barres | Définir la couleur de texte (couleur WeeChat).
+| [hex]#19# + `F` + `(ATTR)EXT`                     | [hex]#19# `+F@00214+`        | chat + barres | Définir la couleur de texte (couleur étendue).
+| [hex]#19# + `B` + `STD`                           | [hex]#19# `+B05+`            | chat + barres | Définir la couleur de fond (couleur WeeChat).
+| [hex]#19# + `B` + `EXT`                           | [hex]#19# `+B@00124+`        | chat + barres | Définir le couleur de fond (couleur étendue).
+| [hex]#19# + `*` + `(ATTR)STD`                     | [hex]#19# `+*05+`            | chat + barres | Définir la couleur de texte (couleur WeeChat).
+| [hex]#19# + `*` + `(ATTR)EXT`                     | [hex]#19# `+*@00214+`        | chat + barres | Définir la couleur de texte (couleur étendue).
+| [hex]#19# + `*` + `(ATTR)STD` + `,` + `STD` ^(1)^ | [hex]#19# `+*08,05+`         | chat + barres | Définir la couleur de texte/fond (couleurs WeeChat).
+| [hex]#19# + `*` + `(ATTR)STD` + `,` + `EXT` ^(1)^ | [hex]#19# `+*01,@00214+`     | chat + barres | Définir la couleur de texte (couleur WeeChat) et de fond (couleur étendue).
+| [hex]#19# + `*` + `(ATTR)EXT` + `,` + `STD` ^(1)^ | [hex]#19# `+*@00214,05+`     | chat + barres | Définir la couleur de texte (couleur étendue) et de fond (couleur WeeChat).
+| [hex]#19# + `*` + `(ATTR)EXT` + `,` + `EXT` ^(1)^ | [hex]#19# `+*@00214,@00017+` | chat + barres | Définir la couleur de texte/fond (couleurs étendues).
+| [hex]#19# + `*` + `(ATTR)STD` + `~` + `STD`       | [hex]#19# `+*08~05+`         | chat + barres | Définir la couleur de texte/fond (couleurs WeeChat).
+| [hex]#19# + `*` + `(ATTR)STD` + `~` + `EXT`       | [hex]#19# `+*01~@00214+`     | chat + barres | Définir la couleur de texte (couleur WeeChat) et de fond (couleur étendue).
+| [hex]#19# + `*` + `(ATTR)EXT` + `~` + `STD`       | [hex]#19# `+*@00214~05+`     | chat + barres | Définir la couleur de texte (couleur étendue) et de fond (couleur WeeChat).
+| [hex]#19# + `*` + `(ATTR)EXT` + `~` + `EXT`       | [hex]#19# `+*@00214~@00017+` | chat + barres | Définir la couleur de texte/fond (couleurs étendues).
+| [hex]#19# + `b` + `F`                             | [hex]#19# `+bF+`             | barres        | Définir la couleur de texte de la barre.
+| [hex]#19# + `b` + `D`                             | [hex]#19# `+bD+`             | barres        | Définir la couleur du délimiteur de la barre.
+| [hex]#19# + `b` + `B`                             | [hex]#19# `+bB+`             | barres        | Définir la couleur de fond de la barre.
+| [hex]#19# + `b` + `_`                             | [hex]#19# `+b_+`             | barre input   | Caractère de démarrage dans l'entrée (utilisé seulement dans l'objet "input_text").
+| [hex]#19# + `b` + `-`                             | [hex]#19# `+b-+`             | barre input   | Caractère de démarrage caché dans l'entrée (utilisé seulement dans l'objet "input_text").
+| [hex]#19# + `b` + `#`                             | [hex]#19# `+b#+`             | barre input   | Caractère de déplacement du curseur (utilisé seulement dans l'objet "input_text").
+| [hex]#19# + `b` + `i`                             | [hex]#19# `+bi+`             | barres        | Début d'objet.
+| [hex]#19# + `b` + `l` (lower L)                   | [hex]#19# `+bl+`             | barres        | Ligne de démarrage d'objet.
+| [hex]#19# + `E`                                   | [hex]#19# `+E+`              | chat + barres | Texte mis en valeur _(WeeChat ≥ 0.4.2)_.
+| [hex]#19# + [hex]#1C#                             | [hex]#19# [hex]#1C#          | chat + barres | Réinitialiser la couleur (garder les attributs).
+| [hex]#1A# + `(a)`                                 | [hex]#1A# [hex]#01#          | chat + barres | Activer un attribut.
+| [hex]#1B# + `(a)`                                 | [hex]#1B# [hex]#01#          | chat + barres | Supprimer un attribut.
+| [hex]#1C#                                         | [hex]#1C#                    | chat + barres | Réinitialiser les attributs et la couleur.
 |===
 
 [NOTE]
@@ -1086,7 +1087,7 @@ Et puis des macros sont utilisées pour appeler ces fonctions.
 Par exemple, la fonction _hook_timer_ est définie dans la structure
 _t_weechat_plugin_ comme ceci :
 
-[source,C]
+[source,c]
 ----
 struct t_hook *(*hook_timer) (struct t_weechat_plugin *plugin,
                               long interval,
@@ -1099,7 +1100,7 @@ struct t_hook *(*hook_timer) (struct t_weechat_plugin *plugin,
 
 Et la macro utilisée pour appeler cette fonction est :
 
-[source,C]
+[source,c]
 ----
 #define weechat_hook_timer(__interval, __align_second, __max_calls,     \
                            __callback, __data)                          \
@@ -1110,7 +1111,7 @@ Et la macro utilisée pour appeler cette fonction est :
 
 Donc dans une extension, l'appel à cette fonction sera par exemple :
 
-[source,C]
+[source,c]
 ----
 server->hook_timer_sasl = weechat_hook_timer (timeout * 1000,
                                               0, 1,
@@ -1227,7 +1228,7 @@ _doc/en/_), puis travaillez dessus.
 Les traductions manquantes dans les fichiers sont indiquées par cette chaîne :
 
 ----
-// TRANSLATION MISSING
+// TRANSLATION MISSING
 ----
 
 Vous devez traduire tout le fichier sauf les liens et les mots-clés spéciaux
@@ -1244,7 +1245,7 @@ pour les notes, avertissements, ... Ces mots doivent être gardés tels quels :
 [CAUTION]
 ----
 
-Lorsqu'il y a un nom après `<<link_name>>`, alors vous devez le traduire :
+Lorsqu'il y a un nom après `+<<link_name>>+`, alors vous devez le traduire :
 
 ----
 <<link_name,ce texte doit être traduit>>

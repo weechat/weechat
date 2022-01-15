@@ -501,7 +501,7 @@ RUBY_VERSION=
 if test "x$enable_ruby" = "xyes" ; then
     RUBY_CFLAGS=""
     RUBY_LFLAGS=""
-    for v in "2.7" "2.6" "2.5" "2.4" "2.3" "2.2" "2.1" "2.0" "1.9" "1.8" ; do
+    for v in "3.0" "2.7" "2.6" "2.5" "2.4" "2.3" "2.2" "2.1" "2.0" "1.9" "1.8" ; do
         pkgconfig_ruby_found=`$PKGCONFIG --exists ruby-$v 2>/dev/null`
         if test "x$?" = "x0" ; then
             RUBY_VERSION=`$PKGCONFIG --modversion ruby-$v`
@@ -1176,6 +1176,27 @@ else
 fi
 
 # ------------------------------------------------------------------------------
+#                                     zstd
+# ------------------------------------------------------------------------------
+
+AC_CHECK_HEADER(zstd.h,ac_found_zstd_header="yes",ac_found_zstd_header="no")
+AC_CHECK_LIB(zstd,ZSTD_compress,ac_found_zstd_lib="yes",ac_found_zstd_lib="no")
+
+AC_MSG_CHECKING(for zstd headers and libraries)
+if test "x$ac_found_zstd_header" = "xno" -o "x$ac_found_zstd_lib" = "xno" ; then
+    AC_MSG_RESULT(no)
+    AC_MSG_ERROR([
+*** zstd was not found. You may want to get it from https://github.com/facebook/zstd
+*** or try to install it with your software package manager.])
+else
+    AC_MSG_RESULT(yes)
+    ZSTD_CFLAGS=`pkg-config libzstd --cflags`
+    ZSTD_LFLAGS=`pkg-config libzstd --libs`
+    AC_SUBST(ZSTD_CFLAGS)
+    AC_SUBST(ZSTD_LFLAGS)
+fi
+
+# ------------------------------------------------------------------------------
 #                                     curl
 # ------------------------------------------------------------------------------
 
@@ -1263,7 +1284,7 @@ if test "x$enable_man" = "xyes" -o "x$enable_doc" = "xyes"; then
         enable_man="no"
         enable_doc="no"
     fi
-    ASCIIDOCTOR_ARGS="-a experimental -a 'prewrap!' -a icons=font -a sectanchors -a source-highlighter=prettify"
+    ASCIIDOCTOR_ARGS="-a experimental -a reproducible -a 'prewrap!' -a 'webfonts!' -a icons=font -a sectanchors -a source-highlighter=pygments -a pygments-style=native"
     AC_SUBST(ASCIIDOCTOR)
     AC_SUBST(ASCIIDOCTOR_ARGS)
 fi
