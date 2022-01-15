@@ -34,6 +34,7 @@
 #include "wee-list.h"
 #include "wee-log.h"
 #include "wee-string.h"
+#include "wee-utf8.h"
 #include "../plugins/plugin.h"
 
 
@@ -1123,8 +1124,8 @@ hashtable_add_from_infolist (struct t_hashtable *hashtable,
                              const char *prefix)
 {
     struct t_infolist_var *ptr_name, *ptr_value;
-    char prefix_name[128], option_value[128];
-    int prefix_length;
+    char prefix_name[1024], option_value[1024];
+    int prefix_length, prefix_length_utf8;
 
     if (!hashtable || !infolist || !infolist->ptr_item || !prefix)
         return 0;
@@ -1135,12 +1136,13 @@ hashtable_add_from_infolist (struct t_hashtable *hashtable,
 
     snprintf (prefix_name, sizeof (prefix_name), "%s_name_", prefix);
     prefix_length = strlen (prefix_name);
+    prefix_length_utf8 = utf8_strlen (prefix_name);
 
     for (ptr_name = infolist->ptr_item->vars; ptr_name;
          ptr_name = ptr_name->next_var)
     {
         if (string_strncasecmp (ptr_name->name, prefix_name,
-                                prefix_length) == 0)
+                                prefix_length_utf8) == 0)
         {
             snprintf (option_value, sizeof (option_value),
                       "%s_value_%s", prefix, ptr_name->name + prefix_length);
