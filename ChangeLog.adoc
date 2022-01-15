@@ -35,6 +35,7 @@ Bug fixes::
   * irc: fix display of message 344 received as whois geo info (issue #1736)
   * irc: fix display of IRC numeric messages with no parameters
   * trigger: fix search of triggers with UTF-8 chars in name (issue #1739)
+  * xfer: fix auto-accept of server/nick when the server name contains UTF-8 chars (issue #1739)
 
 Tests::
 
