@@ -321,7 +321,7 @@ gui_completion_search_command (struct t_weechat_plugin *plugin,
 
     hook_for_other_plugin = NULL;
     hook_incomplete_command = NULL;
-    length_command = strlen (command);
+    length_command = utf8_strlen (command);
     count_incomplete_commands = 0;
     allow_incomplete_commands = CONFIG_BOOLEAN(config_look_command_incomplete);
 
