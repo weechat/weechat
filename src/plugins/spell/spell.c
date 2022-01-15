@@ -379,8 +379,10 @@ spell_string_is_url (const char *word)
     for (i = 0; spell_url_prefix[i]; i++)
     {
         if (weechat_strncasecmp (word, spell_url_prefix[i],
-                                 strlen (spell_url_prefix[i])) == 0)
+                                 weechat_utf8_strlen (spell_url_prefix[i])) == 0)
+        {
             return 1;
+        }
     }
 
     /* word is not an URL */
