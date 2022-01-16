@@ -1077,24 +1077,51 @@ Vous pouvez lancer un processus en tâche de fond avec `+hook_process+`. Votre
 fonction de rappel sera appelée quand des données seront prêtes. Elle peut être
 appelée plusieurs fois.
 
-Pour le dernier appel à votre fonction de rappel, _rc_ est positionné à 0 ou
-une valeur positive, c'est le code retour de la commande.
+Pour le dernier appel à votre fonction de rappel, _return_code_ est positionné
+à 0 ou une valeur positive, il s'agit du code retour de la commande.
 
 Exemple :
 
 [source,python]
 ----
-process_output = ""
-
-def my_process_cb(data, command, rc, out, err):
-    global process_output
-    if out != "":
-        process_output += out
-    if int(rc) >= 0:
-        weechat.prnt("", process_output)
+def my_process_cb(data, command, return_code, out, err):
+    if return_code == weechat.WEECHAT_HOOK_PROCESS_ERROR:
+        weechat.prnt("", "Erreur avec la commande '%s'" % command)
+        return weechat.WEECHAT_RC_OK
+    if return_code >= 0:
+        weechat.prnt("", "return_code = %d" % return_code)
+    if out:
+        weechat.prnt("", "stdout: %s" % out)
+    if err:
+        weechat.prnt("", "stderr: %s" % err)
     return weechat.WEECHAT_RC_OK
 
 weechat.hook_process("/bin/ls -l /etc", 10 * 1000, "my_process_cb", "")
+----
+
+Vous pouvez aussi appeler directement une fonction du script qui fait un appel
+bloquant, au lieu d'une commande externe :
+
+[source,python]
+----
+def get_status(data):
+    # faire quelque chose de bloquant...
+    # ...
+    return "ceci est le résultat"
+
+def my_process_cb(data, command, return_code, out, err):
+    if return_code == weechat.WEECHAT_HOOK_PROCESS_ERROR:
+        weechat.prnt("", "Error with command '%s'" % command)
+        return weechat.WEECHAT_RC_OK
+    if return_code >= 0:
+        weechat.prnt("", "return_code = %d" % return_code)
+    if out:
+        weechat.prnt("", "stdout: %s" % out)
+    if err:
+        weechat.prnt("", "stderr: %s" % err)
+    return weechat.WEECHAT_RC_OK
+
+hook = weechat.hook_process("func:get_status", 5000, "my_process_cb", "")
 ----
 
 [[url_transfer]]
@@ -1111,15 +1138,15 @@ dans la fonction de rappel (sortie standard du processus) :
 
 [source,python]
 ----
-# Afficher la version stable courante de WeeChat.
-weechat_version = ""
+# Afficher la dernière version stable de WeeChat.
+weechat_latest_version = ""
 
-def weechat_process_cb(data, command, rc, out, err):
-    global weechat_version
-    if out != "":
-        weechat_version += out
-    if int(rc) >= 0:
-        weechat.prnt("", "La version stable courante de WeeChat est : %s" % weechat_version)
+def weechat_process_cb(data, command, return_code, out, err):
+    global weechat_latest_version
+    if out:
+        weechat_latest_version += out
+    if return_code >= 0:
+        weechat.prnt("", "Dernière version de WeeChat : %s" % weechat_latest_version)
     return weechat.WEECHAT_RC_OK
 
 weechat.hook_process("url:https://weechat.org/dev/info/stable/",
@@ -1135,9 +1162,9 @@ développement WeeChat dans le fichier _/tmp/weechat-devel.tar.gz_ :
 
 [source,python]
 ----
-def my_process_cb(data, command, rc, out, err):
-    if int(rc) >= 0:
-        weechat.prnt("", "Fin du transfert (rc=%s)" % rc)
+def my_process_cb(data, command, return_code, out, err):
+    if return_code >= 0:
+        weechat.prnt("", "Fin du transfert (code retour = %d)" % return_code)
     return weechat.WEECHAT_RC_OK
 
 weechat.hook_process_hashtable("url:https://weechat.org/files/src/weechat-devel.tar.gz",

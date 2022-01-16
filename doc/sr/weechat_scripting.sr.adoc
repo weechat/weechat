@@ -999,23 +999,51 @@ weechat.hook_timer(60 * 1000, 60, 0, "timer_cb", "")
 
 Процес можете да покренете у позадини са `+hook_process+`. Ваша функција повратног позива ће се позвати онда када подаци буду спремни. Може да се позива више пута.
 
-У последњем позиву ваше функције повратног позива, _rc_ се поставља на 0 или позитивну вредност, то је повратни кôд команде.
+У последњем позиву ваше функције повратног позива, _return_code_ се поставља на 0 или позитивну вредност, то је повратни кôд команде.
 
 Пример:
 
 [source, python]
 ----
-process_output = ""
-
-def my_process_cb(data, command, rc, out, err):
-    global process_output
-    if out != "":
-        process_output += out
-    if int(rc) >= 0:
-        weechat.prnt("", process_output)
+def my_process_cb(data, command, return_code, out, err):
+    if return_code == weechat.WEECHAT_HOOK_PROCESS_ERROR:
+        weechat.prnt("", "Error with command '%s'" % command)
+        return weechat.WEECHAT_RC_OK
+    if return_code >= 0:
+        weechat.prnt("", "return_code = %d" % return_code)
+    if out:
+        weechat.prnt("", "stdout: %s" % out)
+    if err:
+        weechat.prnt("", "stderr: %s" % err)
     return weechat.WEECHAT_RC_OK
 
 weechat.hook_process("/bin/ls -l /etc", 10 * 1000, "my_process_cb", "")
+----
+
+// TRANSLATION MISSING
+You can also call directly a script function that does something blocking,
+instead of an external command:
+
+[source,python]
+----
+def get_status(data):
+    # do something blocking...
+    # ...
+    return "this is the result"
+
+def my_process_cb(data, command, return_code, out, err):
+    if return_code == weechat.WEECHAT_HOOK_PROCESS_ERROR:
+        weechat.prnt("", "Error with command '%s'" % command)
+        return weechat.WEECHAT_RC_OK
+    if return_code >= 0:
+        weechat.prnt("", "return_code = %d" % return_code)
+    if out:
+        weechat.prnt("", "stdout: %s" % out)
+    if err:
+        weechat.prnt("", "stderr: %s" % err)
+    return weechat.WEECHAT_RC_OK
+
+hook = weechat.hook_process("func:get_status", 5000, "my_process_cb", "")
 ----
 
 [[url_transfer]]
@@ -1027,17 +1055,18 @@ _Ново у верзији 0.3.7._
 
 Пример URL преноса без опције: HTML страница ће се примити као „out” у функцији повратног позива (стандардни излаз процеса):
 
+// TRANSLATION MISSING
 [source, python]
 ----
-# Приказ тренутне стабилне верзије програма WeeChat.
-weechat_version = ""
+# Display latest stable version of WeeChat.
+weechat_latest_version = ""
 
-def weechat_process_cb(data, command, rc, out, err):
-    global weechat_version
-    if out != "":
-        weechat_version += out
-    if int(rc) >= 0:
-        weechat.prnt("", "Тренутна стабилна WeeChat верзија је: %s" % weechat_version)
+def weechat_process_cb(data, command, return_code, out, err):
+    global weechat_latest_version
+    if out:
+        weechat_latest_version += out
+    if return_code >= 0:
+        weechat.prnt("", "Latest WeeChat version: %s" % weechat_latest_version)
     return weechat.WEECHAT_RC_OK
 
 weechat.hook_process("url:https://weechat.org/dev/info/stable/",
@@ -1051,9 +1080,9 @@ weechat.hook_process("url:https://weechat.org/dev/info/stable/",
 
 [source, python]
 ----
-def my_process_cb(data, command, rc, out, err):
-    if int(rc) >= 0:
-        weechat.prnt("", "Крај преноса (rc=%s)" % rc)
+def my_process_cb(data, command, return_code, out, err):
+    if return_code >= 0:
+        weechat.prnt("", "Крај преноса (return code = %d)" % return_code)
     return weechat.WEECHAT_RC_OK
 
 weechat.hook_process_hashtable("url:https://weechat.org/files/src/weechat-devel.tar.gz",
