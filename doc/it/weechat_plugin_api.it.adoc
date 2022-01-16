@@ -9644,9 +9644,9 @@ def my_process_cb(data, command, return_code, out, err):
         return weechat.WEECHAT_RC_OK
     if return_code >= 0:
         weechat.prnt("", "return_code = %d" % return_code)
-    if out != "":
+    if out:
         weechat.prnt("", "stdout: %s" % out)
-    if err != "":
+    if err:
         weechat.prnt("", "stderr: %s" % err)
     return weechat.WEECHAT_RC_OK
 
@@ -9664,9 +9664,9 @@ def my_process_cb(data, command, return_code, out, err):
         return weechat.WEECHAT_RC_OK
     if return_code >= 0:
         weechat.prnt("", "return_code = %d" % return_code)
-    if out != "":
+    if out:
         weechat.prnt("", "stdout: %s" % out)
-    if err != "":
+    if err:
         weechat.prnt("", "stderr: %s" % err)
     return weechat.WEECHAT_RC_OK
 
@@ -9877,9 +9877,9 @@ def my_process_cb(data, command, return_code, out, err):
         return weechat.WEECHAT_RC_OK
     if return_code >= 0:
         weechat.prnt("", "return_code = %d" % return_code)
-    if out != "":
+    if out:
         weechat.prnt("", "stdout: %s" % out)
-    if err != "":
+    if err:
         weechat.prnt("", "stderr: %s" % err)
     return weechat.WEECHAT_RC_OK
 
@@ -13266,7 +13266,7 @@ def buffer_clear(buffer: str) -> int: ...
 
 # esempio
 buffer = weechat.buffer_search("my_plugin", "my_buffer")
-if buffer != "":
+if buffer:
     weechat.buffer_clear(buffer)
 ----
 
