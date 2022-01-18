@@ -299,7 +299,6 @@ struct t_config_option *config_network_proxy_curl;
 /* config, plugin section */
 
 struct t_config_option *config_plugin_autoload;
-struct t_config_option *config_plugin_debug;
 struct t_config_option *config_plugin_extension;
 struct t_config_option *config_plugin_path;
 struct t_config_option *config_plugin_save_config_on_unload;
@@ -4560,13 +4559,6 @@ config_weechat_init_options ()
            "wildcard \"*\" is allowed in names (examples: \"*\" or "
            "\"*,!lua,!tcl\")"),
         NULL, 0, 0, "*", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-    config_plugin_debug = config_file_new_option (
-        weechat_config_file, ptr_section,
-        "debug", "boolean",
-        N_("enable debug messages by default in all plugins (option disabled "
-           "by default, which is highly recommended)"),
-        NULL, 0, 0, "off", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_plugin_extension = config_file_new_option (
         weechat_config_file, ptr_section,
