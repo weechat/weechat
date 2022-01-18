@@ -1095,9 +1095,8 @@ def my_process_cb(data, command, return_code, out, err):
 weechat.hook_process("/bin/ls -l /etc", 10 * 1000, "my_process_cb", "")
 ----
 
-// TRANSLATION MISSING
-You can also call directly a script function that does something blocking,
-instead of an external command:
+Sie können statt eines externen Befehls auch direkt eine
+Skriptfunktion aufrufen, die Weechat blockieren würde:
 
 [source,python]
 ----
@@ -1133,7 +1132,6 @@ einen URL Transfer, kommt die Funktion `+hook_process_hashtable+` zum Einsatz.
 Beispiel eines URL Transfers, ohne zusätzliche Optionen: Die HTML Seite wird
 dabei in der Callback-Variable "out" gesichert (Standardausgabe des Prozesses):
 
-// TRANSLATION MISSING
 [source,python]
 ----
 # Display latest stable version of WeeChat.
