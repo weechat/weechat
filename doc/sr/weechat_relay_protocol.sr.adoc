@@ -97,8 +97,7 @@ _клијенти_ су повезани са _релејем_ као што ј�
 [[command_handshake]]
 === handshake
 
-// TRANSLATION MISSING
-_WeeChat ≥ 2.9, updated in version 3.5._
+_WeeChat ≥ 2.9, ажурирано у верзији 3.5._
 
 Извршава руковање између клијента и програма WeeChat: ово је у већини случајева неопходно како би се сазнале поставке сесије и припремила аутентификација командом _init_.
 
@@ -119,15 +118,14 @@ _WeeChat ≥ 2.9, updated in version 3.5._
 *** _sha512_: лозинка засољена и хеширана SHA512 алгоритмом
 *** _pbkdf2+sha256_: лозинка засољена и хеширана PBKDF2 алгоритмом (користећи SHA256 хеш)
 *** _pbkdf2+sha512_: лозинка засољена и хеширана PBKDF2 алгоритмом (користећи SHA512 хеш)
-// TRANSLATION MISSING
-** _compression_: list of supported compression types supported by the client
-   (separated by colons and sorted from most important to the fallback value);
-   if compression is enabled, messages from _relay_ to client are compressed
-   to save bandwidth; allowed values are:
-*** _off_: no compression (default if option is not given)
-*** _zlib_: compress with https://zlib.net/[zlib] _(WeeChat ≥ 0.3.7)_
-*** _zstd_: compress with https://facebook.github.io/zstd/[Zstandard]: better
-    compression and much faster than _zlib_ for both compression and decompression
+** _compression_: листа типова компресије које клијент подржава (раздвојених
+   двотачкама и сортираних од најважнијег до вредности у крајњој нужди);
+   ако је компресија укључена, поруке од _релеја_ ка клијетну се компресују
+   у циљу штедње пропусног опсега; дозвољене су следеће вредности:
+*** _off_: без компресије (подразумевано ако се опција не наведе)
+*** _zlib_: компресија са https://zlib.net/[zlib] _(WeeChat ≥ 0.3.7)_
+*** _zstd_: компресија са https://facebook.github.io/zstd/[Zstandard]: боља
+    компресија, као и много бржа компресија и декомпресија у односу на _zlib_
     _(WeeChat ≥ 3.5)_
 
 Напомене у вези опције _password_hash_algo_:
@@ -231,9 +229,7 @@ htb: {
 init password_hash=pbkdf2+sha256:85b1ee00695a5b254e14f4885538df0da4b73207f5aae4:100000:ba7facc3edb89cd06ae810e29ced85980ff36de2bb596fcf513aaab626876440
 ----
 
-// TRANSLATION MISSING
-* Клијент подржава само „sha256” и „sha512”, компресије се искључује,
-enable zstd (preferred) or zlib compression:
+* Клијент подржава само „sha256” и „sha512”, укључује се zstd (пожељније) или zlib компресија:
 
 ----
 (handshake) handshake password_hash_algo=sha256:sha512,compression=zstd:zlib
@@ -1309,10 +1305,9 @@ quit
 [[message_compression]]
 === Компресија
 
-// TRANSLATION MISSING
-If flag _compression_ is equal to 0x01 or 0x02, then *all* data after is compressed
-with https://zlib.net/[zlib] or https://facebook.github.io/zstd/[Zstandard],
-and therefore must be uncompressed before being processed.
+Ако заставица _compression_ има вредност 0x01 или 0x02, онда се *сви* подаци након ње
+компресују са https://zlib.net/[zlib] или https://facebook.github.io/zstd/[Zstandard],
+па стога морају бити некомпресовани пре обраде.
 
 [[message_identifier]]
 === Идентификатор

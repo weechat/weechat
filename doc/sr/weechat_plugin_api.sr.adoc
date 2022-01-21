@@ -55,9 +55,8 @@ WEECHAT_PLUGIN_NAME("име")::
 WEECHAT_PLUGIN_DESCRIPTION("опис")::
     кратак опис додатка
 
-// TRANSLATION MISSING
 WEECHAT_PLUGIN_AUTHOR("author")::
-    the author name
+    име аутора
 
 WEECHAT_PLUGIN_VERSION("1.0")::
     верзија додатка plugin version
@@ -521,8 +520,7 @@ str = weechat.ngettext("file", "files", num_files)
 
 ==== strndup
 
-// TRANSLATION MISSING
-Return duplicated string, with a max number of bytes.
+Враћа дуплирани стринг, са максималним бројем бајтова.
 
 Прототип:
 
@@ -534,8 +532,7 @@ char *weechat_strndup (const char *string, int bytes);
 Аргументи:
 
 * _string_: стринг који се дуплира
-// TRANSLATION MISSING
-* _bytes_: max bytes to duplicate
+* _bytes_: максимални број бајтова који може да се дуплира
 
 Повратна вредност:
 
