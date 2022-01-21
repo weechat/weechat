@@ -1020,9 +1020,8 @@ def my_process_cb(data, command, return_code, out, err):
 weechat.hook_process("/bin/ls -l /etc", 10 * 1000, "my_process_cb", "")
 ----
 
-// TRANSLATION MISSING
-You can also call directly a script function that does something blocking,
-instead of an external command:
+Уместо спољне команде, такође можете директно да позовете скрипт функцију
+која ради нешто што блокира:
 
 [source,python]
 ----
@@ -1055,10 +1054,9 @@ _Ново у верзији 0.3.7._
 
 Пример URL преноса без опције: HTML страница ће се примити као „out” у функцији повратног позива (стандардни излаз процеса):
 
-// TRANSLATION MISSING
 [source, python]
 ----
-# Display latest stable version of WeeChat.
+# Приказује последњу стабилну верзију WeeChat.
 weechat_latest_version = ""
 
 def weechat_process_cb(data, command, return_code, out, err):
@@ -1066,7 +1064,7 @@ def weechat_process_cb(data, command, return_code, out, err):
     if out:
         weechat_latest_version += out
     if return_code >= 0:
-        weechat.prnt("", "Latest WeeChat version: %s" % weechat_latest_version)
+        weechat.prnt("", "Последња WeeChat верзија: %s" % weechat_latest_version)
     return weechat.WEECHAT_RC_OK
 
 weechat.hook_process("url:https://weechat.org/dev/info/stable/",
