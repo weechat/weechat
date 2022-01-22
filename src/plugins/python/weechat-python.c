@@ -480,6 +480,7 @@ weechat_python_exec (struct t_plugin_script *script,
     old_python_current_script = python_current_script;
     python_current_script = script;
     old_interpreter = NULL;
+
     if (script->interpreter)
     {
         old_interpreter = PyThreadState_Swap (NULL);
@@ -487,6 +488,12 @@ weechat_python_exec (struct t_plugin_script *script,
     }
 
     evMain = PyImport_AddModule ((char *) "__main__");
+    /*
+     * FIXME: sometimes NULL is returned with nested calls of hook callbacks,
+     * to prevent any crash, we just skip execution of the function
+     */
+    if (!evMain)
+        goto end;
     evDict = PyModule_GetDict (evMain);
     evFunc = PyDict_GetItemString (evDict, function);
 
@@ -506,26 +513,38 @@ weechat_python_exec (struct t_plugin_script *script,
         {
             if (i < argc)
             {
-                argv2[i] = argv[i];
-                if (format[i] == 's')
+                switch (format[i])
                 {
+                    case 's': /* string */
+                        argv2[i] = argv[i];
 #if PY_MAJOR_VERSION >= 3
-                    if (weechat_utf8_is_valid (argv2[i], -1, NULL))
-                        format2[i] = 's';  /* Python 3: str */
-                    else
-                        format2[i] = 'y';  /* Python 3: bytes */
+                        if (weechat_utf8_is_valid (argv2[i], -1, NULL))
+                            format2[i] = 's';  /* Python 3: str */
+                        else
+                            format2[i] = 'y';  /* Python 3: bytes */
 #else
-                    format2[i] = 's';  /* Python 2: str */
+                        format2[i] = 's';  /* Python 2: str */
 #endif
-                }
-                else
-                {
-                    format2[i] = format[i];
+                        break;
+                    case 'i': /* integer */
+                        argv2[i] = PyLong_FromLong ((long)(*((int *)argv[i])));
+                        format2[i] = 'O';
+                        break;
+                    case 'h': /* hash */
+                        argv2[i] = weechat_python_hashtable_to_dict (
+                            (struct t_hashtable *)argv[i]);
+                        format2[i] = 'O';
+                        break;
+                    case 'O': /* object */
+                        argv2[i] = argv[i];
+                        format2[i] = 'O';
+                        break;
                 }
             }
             else
             {
                 argv2[i] = NULL;
+                format2[i] = '\0';
             }
         }
         format2[argc] = '\0';
@@ -539,6 +558,12 @@ weechat_python_exec (struct t_plugin_script *script,
                                     argv2[10], argv2[11],
                                     argv2[12], argv2[13],
                                     argv2[14], argv2[15]);
+
+        for (i = 0; i < argc; i++)
+        {
+            if (argv2[i] && (format2[i] == 'O'))
+                Py_XDECREF((PyObject *)argv2[i]);
+        }
     }
     else
     {
