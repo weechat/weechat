@@ -1092,28 +1092,33 @@ gui_chat_printf_y (struct t_gui_buffer *buffer, int y, const char *message, ...)
             free (new_line);
         }
     }
-    else if (gui_init_ok)
+    else
     {
-        /* delete line */
-        last_y = (new_line->data->buffer->own_lines->last_line) ?
-            new_line->data->buffer->own_lines->last_line->data->y : 0;
-        if (y <= last_y)
+        if (gui_init_ok)
         {
-            for (ptr_line = new_line->data->buffer->own_lines->first_line;
-                 ptr_line; ptr_line = ptr_line->next_line)
+            /* delete line */
+            last_y = (new_line->data->buffer->own_lines->last_line) ?
+                new_line->data->buffer->own_lines->last_line->data->y : 0;
+            if (y <= last_y)
             {
-                if (ptr_line->data->y >= y)
-                    break;
-            }
-            if (ptr_line && (ptr_line->data->y == y))
-            {
-                if (ptr_line->next_line)
-                    gui_line_clear (ptr_line);
-                else
-                    gui_line_free (new_line->data->buffer, ptr_line);
-                gui_buffer_ask_chat_refresh (new_line->data->buffer, 2);
+                for (ptr_line = new_line->data->buffer->own_lines->first_line;
+                     ptr_line; ptr_line = ptr_line->next_line)
+                {
+                    if (ptr_line->data->y >= y)
+                        break;
+                }
+                if (ptr_line && (ptr_line->data->y == y))
+                {
+                    if (ptr_line->next_line)
+                        gui_line_clear (ptr_line);
+                    else
+                        gui_line_free (new_line->data->buffer, ptr_line);
+                    gui_buffer_ask_chat_refresh (new_line->data->buffer, 2);
+                }
             }
         }
+        gui_line_free_data (new_line);
+        free (new_line);
     }
 
 end:
