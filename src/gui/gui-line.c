@@ -1788,9 +1788,10 @@ void
 gui_line_clear (struct t_gui_line *line)
 {
     if (line->data->prefix)
+    {
         string_shared_free (line->data->prefix);
-    line->data->prefix = (char *)string_shared_get ("");
-
+        line->data->prefix = NULL;
+    }
     if (line->data->message)
         free (line->data->message);
     line->data->message = strdup ("");
