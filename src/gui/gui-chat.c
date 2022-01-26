@@ -138,6 +138,9 @@ gui_chat_prefix_build ()
 int
 gui_chat_utf_char_valid (const char *utf_char)
 {
+    if (!utf_char)
+        return 0;
+
     /* chars below 32 are not valid (except TAB) */
     if (((unsigned char)utf_char[0] < 32) && (utf_char[0] != '\t'))
         return 0;
@@ -159,6 +162,9 @@ gui_chat_utf_char_valid (const char *utf_char)
 int
 gui_chat_char_size_screen (const char *utf_char)
 {
+    if (!utf_char)
+        return 0;
+
     /* if char is invalid, it will be displayed as one space on screen */
     if (!gui_chat_utf_char_valid (utf_char))
         return 1;
