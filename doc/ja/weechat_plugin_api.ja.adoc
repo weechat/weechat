@@ -2410,18 +2410,19 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
 条件に使える論理演算子のリスト
 (上から優先順位の高い順):
 
-[width="100%",cols="2,8,4,4",options="header"]
+[width="100%",cols="2,1,8,4,4",options="header"]
 |===
-| 演算子 | 説明 | 例 | 結果
+// TRANSLATION MISSING
+| 演算子 | Min WeeChat | 説明 | 例 | 結果
 
-| `+&&+` |
+| `+&&+` | |
   論理積 |
   `+25 && 77+` +
   `+25 && 0+` |
   `+1+` +
   `+0+`
 
-| `+\|\|+` |
+| `+\|\|+` | |
   論理和 |
   `+25 \|\| 0+` +
   `+0 \|\| 0+` |
@@ -2432,18 +2433,19 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
 条件に使える比較演算子のリスト
 (上から優先順位の高い順):
 
-[width="100%",cols="2,8,4,4",options="header"]
+[width="100%",cols="2,1,8,4,4",options="header"]
 |===
-| 演算子 | 説明 | 例 | 結果
+// TRANSLATION MISSING
+| 演算子 | Min WeeChat | 説明 | 例 | 結果
 
-| `+=~+` |
+| `+=~+` | |
   POSIX 拡張正規表現にマッチ (任意でフラグを指定することも可能です、関数 <<_string_regcomp,string_regcomp>> を確認してください) |
   `+abc def =~ ab.*ef+` +
   `+abc def =~ y.*z+` |
   `+1+` +
   `+0+`
 
-| `+!~+` |
+| `+!~+` | |
   POSIX 拡張正規表現にマッチしない (任意でフラグを指定することも可能です、関数 <<_string_regcomp,string_regcomp>> を確認してください) |
   `+abc def !~ ab.*ef+` +
   `+abc def !~ y.*z+` |
@@ -2451,92 +2453,84 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
   `+1+`
 
 // TRANSLATION MISSING
-| `+==*+` |
-  Is matching mask where "*" is allowed, case sensitive (see function <<_string_match,string_match>>) +
-  _(WeeChat ≥ 2.9)_ |
+| `+==*+` | 2.9 |
+  Is matching mask where "*" is allowed, case sensitive (see function <<_string_match,string_match>>) |
   `+abc def ==* a*f+` +
   `+abc def ==* y*z+` |
   `+1+` +
   `+0+`
 
 // TRANSLATION MISSING
-| `+!!*+` |
-  Is NOT wildcard mask where "*" is allowed, case sensitive (see function <<_string_match,string_match>>) +
-  _(WeeChat ≥ 2.9)_ |
+| `+!!*+` | 2.9 |
+  Is NOT wildcard mask where "*" is allowed, case sensitive (see function <<_string_match,string_match>>) |
   `+abc def !!* a*f+` +
   `+abc def !!* y*z+` |
   `+0+` +
   `+1+`
 
 // TRANSLATION MISSING
-| `+=*+` |
-  Is matching mask where "*" is allowed, case insensitive (see function <<_string_match,string_match>>) +
-  _(WeeChat ≥ 1.8)_ |
+| `+=*+` | 1.8 |
+  Is matching mask where "*" is allowed, case insensitive (see function <<_string_match,string_match>>) |
   `+abc def =* A*F+` +
   `+abc def =* Y*Z+` |
   `+1+` +
   `+0+`
 
 // TRANSLATION MISSING
-| `+!*+` |
-  Is NOT wildcard mask where "*" is allowed, case insensitive (see function <<_string_match,string_match>>) +
-  _(WeeChat ≥ 1.8)_ |
+| `+!*+` | 1.8 |
+  Is NOT wildcard mask where "*" is allowed, case insensitive (see function <<_string_match,string_match>>) |
   `+abc def !* A*F+` +
   `+abc def !* Y*Z+` |
   `+0+` +
   `+1+`
 
 // TRANSLATION MISSING
-| `+==-+` |
-  Is included, case sensitive +
-  _(WeeChat ≥ 2.9)_ |
+| `+==-+` | 2.9 |
+  Is included, case sensitive |
   `+abc def ==- bc+` +
   `+abc def ==- xyz+` |
   `+1+` +
   `+0+`
 
 // TRANSLATION MISSING
-| `+!!-+` |
-  Is NOT included, case sensitive +
-  _(WeeChat ≥ 2.9)_ |
+| `+!!-+` | 2.9 |
+  Is NOT included, case sensitive |
   `+abc def !!- bc+` +
   `+abc def !!- xyz+` |
   `+0+` +
   `+1+`
 
 // TRANSLATION MISSING
-| `+=-+` |
-  Is included, case insensitive +
-  _(WeeChat ≥ 2.9)_ |
+| `+=-+` | 2.9 |
+  Is included, case insensitive |
   `+abc def =- BC+` +
   `+abc def =- XYZ+` |
   `+1+` +
   `+0+`
 
 // TRANSLATION MISSING
-| `+!-+` |
-  Is NOT included, case insensitive +
-  _(WeeChat ≥ 2.9)_ |
+| `+!-+` | 2.9 |
+  Is NOT included, case insensitive |
   `+abc def !- BC+` +
   `+abc def !- XYZ+` |
   `+0+` +
   `+1+`
 
-| `+==+` |
+| `+==+` | |
   等しい |
   `+test == test+` +
   `+test == string+` |
   `+1+` +
   `+0+`
 
-| `+!=+` |
+| `+!=+` | |
   等しくない |
   `+test != test+` +
   `+test != string+` |
   `+0+` +
   `+1+`
 
-| `+<=+` |
+| `+<=+` | |
   以下 |
   `+abc <= defghi+` +
   `+abc <= abc+` +
@@ -2547,7 +2541,7 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
   `+0+` +
   `+0+`
 
-| `+<+` |
+| `+<+` | |
   より小さい |
   `+abc < defghi+` +
   `+abc < abc+` +
@@ -2558,7 +2552,7 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
   `+0+` +
   `+0+`
 
-| `+>=+` |
+| `+>=+` | |
   以上 |
   `+defghi >= abc+` +
   `+abc >= abc+` +
@@ -2569,7 +2563,7 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
   `+0+` +
   `+1+`
 
-| `+>+` |
+| `+>+` | |
   より大きい |
   `+defghi > abc+` +
   `+abc > abc+` +
@@ -2598,31 +2592,30 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
 式中で展開される変数のリスト
 (優先度の高い順、展開順の早いものを上に遅いものを下に):
 
-[width="100%",cols="2,8,4,4",options="header"]
+[width="100%",cols="2,1,8,4,4",options="header"]
 |===
-| 書式 | 説明 | 例 | 結果
+// TRANSLATION MISSING
+| 書式 | Min WeeChat | 説明 | 例 | 結果
 
 // TRANSLATION MISSING
-| `+${raw:xxx}+` +
-  _(WeeChat ≥ 3.1)_ |
+| `+${raw:xxx}+` | 3.1 |
   Raw string (not evaluated). |
   `+${raw:${info:version}}+` |
   `+${info:version}+`
 
 // TRANSLATION MISSING
-| `+${name}+` +
-  _(WeeChat ≥ 3.4)_ |
+| `+${name}+` | 3.4 |
   User variable (defined with `+${define:name,value}+`). |
   `+${name}+` |
   `+value+`
 
-| `+${name}+` |
+| `+${name}+` | |
   _extra_vars_ の変数 `name` の値に展開 |
   `+${name}+` |
   `+value+`
 
 // TRANSLATION MISSING
-| `+${weechat_xxx_dir}+` |
+| `+${weechat_xxx_dir}+` | 3.2 |
   A WeeChat directory: `+${weechat_config_dir}+`, `+${weechat_data_dir}+`,
   `+${weechat_cache_dir}+` or `+${weechat_runtime_dir}+`. |
   `+${weechat_config_dir}+` +
@@ -2634,38 +2627,33 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
   `+/home/user/.cache/weechat+` +
   `+/run/user/1000/weechat+`
 
-| `+${eval:xxx}+` +
-  _(WeeChat バージョン 1.3 以上で利用可)_ |
+| `+${eval:xxx}+` | 1.3 |
   評価する文字列 |
   `+${eval:${date:${weechat.look.buffer_time_format}}}+` |
  `+19:02:45+` (オプション weechat.look.buffer_time_format
  内に色コードが存在する場合色付き)
 
 // TRANSLATION MISSING
-| `+${eval_cond:xxx}+` +
-  _(WeeChat バージョン 3.1 以上で利用可)_ |
+| `+${eval_cond:xxx}+` | 3.1 |
   String to evaluate as condition. |
   `+${eval_cond:${window.win_width} > 100}+` |
  `+1+`
 
 | `+${esc:xxx}+` +
-  `+${\xxx}+` +
-  _(WeeChat バージョン 1.0 以上で利用可)_ |
+  `+${\xxx}+` | 1.0 |
   エスケープ文字を含む文字列 |
   `+${esc:prefix\tmessage}+` +
   `+${\ua9}+` |
   `+prefix<TAB>message+` +
   `+©+`
 
-| `+${hide:x,string}+` +
-  (_WeeChat バージョン 1.1 以上で利用可_) |
+| `+${hide:x,string}+` | 1.1 |
   隠す文字を含むテキスト (`string` に含まれる文字をすべて `x` で置換) |
   `+${hide:*,password}+` |
  `+********+`
 
 | `+${cut:max,suffix,string}+` +
-  `+${cut:+max,suffix,string}+` +
-  _(WeeChat バージョン 1.8 以上で利用可)_ |
+  `+${cut:+max,suffix,string}+` | 1.8 |
   `string` の先頭 `max` 文字とオプションの `suffix` 文字 (`string` の文字数が `max` 文字を超える場合) +
   `+max` を使った場合、`max` 文字にはサフィックスの文字数も含まれます。|
   `+${cut:4,…,this is a test}+` +
@@ -2676,8 +2664,7 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
   `+こん>>+`
 
 | `+${cutscr:max,suffix,string}+` +
-  `+${cutscr:+max,suffix,string}+` +
-  _(WeeChat バージョン 1.8 以上で利用可)_ |
+  `+${cutscr:+max,suffix,string}+` | 1.8 |
   `string` の先頭 `max` 文字 (半角文字幅換算) とオプションの `suffix` 文字 (`string` の文字数が `max` 文字を超える場合) +
   `+max` を使った場合、`max` 文字にはサフィックスの文字数も含まれます。|
   `+${cutscr:4,…,this is a test}+` +
@@ -2688,8 +2675,7 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
   `+こ>>+`
 
 // TRANSLATION MISSING
-| `+${rev:xxx}+` +
-  _(WeeChat バージョン 2.2 以上で利用可)_ |
+| `+${rev:xxx}+` | 2.2 |
   Reversed string (color codes are reversed, so the string should not contain
   color codes). |
   `+${rev:Hello, world!}+` +
@@ -2698,23 +2684,20 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
   `+!dlrow30F ,olleH+` (no color, the color code is reversed)
 
 // TRANSLATION MISSING
-| `+${revscr:xxx}+` +
-  _(WeeChat バージョン 2.7 以上で利用可)_ |
+| `+${revscr:xxx}+` | 2.7 |
   Reversed string for screen, color codes are not reversed. |
   `+${revscr:Hello, world!}+` +
   `+${revscr:Hello, ${color:red}world!}+` |
   `+!dlrow ,olleH+` +
   `+!dlrow ,olleH+` (`pass:[ ,olleH]` in red)
 
-| `+${repeat:count,string}+` +
-  _(WeeChat バージョン 2.3 以上で利用可)_ |
+| `+${repeat:count,string}+` | 2.3 |
   繰り返し文字列。|
   `+${repeat:5,-}+` |
   `+-----+`
 
 // TRANSLATION MISSING
-| `+${length:xxx}+` +
-  _(WeeChat バージョン 2.7 以上で利用可)_ |
+| `+${length:xxx}+` | 2.7 |
   Length of string (number of UTF-8 chars), color codes are ignored. |
   `+${length:test}+` +
   `+${length:こんにちは世界}+` |
@@ -2722,8 +2705,7 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
   `+7+`
 
 // TRANSLATION MISSING
-| `+${lengthscr:xxx}+` +
-  _(WeeChat バージョン 2.7 以上で利用可)_ |
+| `+${lengthscr:xxx}+` | 2.7 |
   Length of string displayed on screen, color codes are ignored. |
   `+${lengthscr:test}+` +
   `+${lengthscr:こんにちは世界}+` |
@@ -2731,8 +2713,7 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
   `+14+`
 
 // TRANSLATION MISSING
-| `+${split:number,seps,flags,xxx}+` +
-  _(WeeChat ≥ 3.3)_ |
+| `+${split:number,seps,flags,xxx}+` | 3.3 |
   Split string, and return, according to `number`: +
   - `count`: the number of items after split +
   - `random`: a random item +
@@ -2766,8 +2747,7 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
   `+is a test+`
 
 // TRANSLATION MISSING
-| `+${split_shell:number,xxx}+` +
-  _(WeeChat ≥ 3.3)_ |
+| `+${split_shell:number,xxx}+` | 3.3 |
   Split shell arguments, and return, according to `number`: +
   - `count`: the number of arguments after split +
   - `random`: a random argument +
@@ -2783,8 +2763,7 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
   `+arg2+`
 
 // TRANSLATION MISSING
-| `+${re:xxx}+` +
-  _(WeeChat ≥ 1.1)_ |
+| `+${re:xxx}+` | 1.1 |
   Regex data: +
   `0` = whole string matching, +
   `1` to `99` = group captured, +
@@ -2804,8 +2783,7 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
   `+2+` +
   `+1+`
 
-| `+${color:name}+` +
-  _(WeeChat バージョン 0.4.2 以上で利用可)_ |
+| `+${color:name}+` | 0.4.2 |
   WeeChat 色コード (色名部分はオプション属性をとることも可能です),
   書式を確認するには関数 <<_color,color>> をご確認ください |
   `+${color:red}red text+` +
@@ -2814,8 +2792,7 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
   `+bold orange text+` (太字オレンジ色で)
 
 // TRANSLATION MISSING
-| `+${modifier:name,data,string}+` +
-  _(WeeChat バージョン 2.7 以上で利用可)_ |
+| `+${modifier:name,data,string}+` | 2.7 |
   Result of a modifier, see function
   <<_hook_modifier_exec,hook_modifier_exec>>. |
   `+${modifier:eval_path_home,,~}+` +
@@ -2824,8 +2801,7 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
   `+/home/user/.config/weechat/weechat.conf+`
 
 | `+${info:name}+` +
-  `+${info:name,arguments}+` +
-  _(WeeChat バージョン 0.4.3 以上で利用可)_ |
+  `+${info:name,arguments}+` | 0.4.3 |
   WeeChat またはプラグインのインフォ、<<_info_get,info_get>>
   を参照 |
   `+${info:version}+` +
@@ -2834,8 +2810,7 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
   `+lightblue+`
 
 // TRANSLATION MISSING
-| `+${base_encode:base,xxx}+` +
-  _(WeeChat バージョン 2.9 以上で利用可)_ |
+| `+${base_encode:base,xxx}+` | 2.9 |
   String encoded in base 16, 32 or 64. |
   `+${base_encode:16,test string}+` +
   `+${base_encode:32,test string}+` +
@@ -2845,8 +2820,7 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
   `+dGVzdCBzdHJpbmc=+`
 
 // TRANSLATION MISSING
-| `+${base_decode:base,xxx}+` +
-  _(WeeChat バージョン 2.9 以上で利用可)_ |
+| `+${base_decode:base,xxx}+` | 2.9 |
   String decoded from base 16, 32 or 64. |
   `+${base_decode:16,7465737420737472696E67}+` +
   `+${base_decode:32,ORSXG5BAON2HE2LOM4======}+` +
@@ -2856,8 +2830,7 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
   `+test string+`
 
 | `+${date}+` +
-  `+${date:xxx}+` +
-  _(WeeChat バージョン 1.3 以上で利用可)_ |
+  `+${date:xxx}+` | 1.3 |
   現在の日付/時刻、カスタム書式を使うことも可能です (`man strftime` を参照)、
   デフォルト書式は `%F %T` |
   `+${date}+` +
@@ -2865,16 +2838,14 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
   `+2015-06-30 19:02:45+` +
   `+19:02:45+`
 
-| `+${env:NAME}+` +
-  _(WeeChat バージョン 1.2 以上で利用可)_ |
+| `+${env:NAME}+` | 1.2 |
   環境変数 `NAME` の値 |
   `+${env:HOME}+` |
   `+/home/user+`
 
 | `+${if:condition}+` +
   `+${if:condition?true}+`
-  `+${if:condition?true:false}+` +
-  _(WeeChat バージョン 1.8 以上で利用可)_ |
+  `+${if:condition?true:false}+` | 1.8 |
   条件、条件が真の場合の値 (任意)、条件が偽の場合の値 (任意)
   からなる三項演算子。値を指定しなかった場合、条件の評価結果に応じて
   "1" または "0" が返されます |
@@ -2882,8 +2853,7 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
   `+big+`
 
 // TRANSLATION MISSING
-| `+${calc:xxx}+` +
-  _(WeeChat バージョン 2.7 以上で利用可)_ |
+| `+${calc:xxx}+` | 2.7 |
   Result of expression, where parentheses and the following operators are
   supported: +
   `+++`: addition +
@@ -2907,50 +2877,47 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
   `+65536+`
 
 // TRANSLATION MISSING
-| `+${random:min,max}+` +
-  _(WeeChat ≥ 3.3)_ |
+| `+${random:min,max}+` | 3.3 |
   Random integer number in the range from `min` to `max` (inclusive). |
   `+${random:0,10}+` |
   `+3+`
 
 // TRANSLATION MISSING
-| `+${translate:xxx}+` +
-  _(WeeChat ≥ 3.2)_ |
+| `+${translate:xxx}+` | 3.2 |
   Translated string (depends on the language used by WeeChat to display messages). |
   `+${translate:Plugin}+` |
   `+Extension+` (example in French)
 
 // TRANSLATION MISSING
-| `+${define:name,value}+` +
-  _(WeeChat ≥ 3.4)_ |
+| `+${define:name,value}+` | 3.4 |
   Define a variable `name` set to `value`, which can then be used in the same
   evaluated expression with `+${name}+`. |
   `+${define:len,${calc:5+3}}${len}x${len}+` |
   `+8x8+`
 
-| `+${sec.data.name}+` |
+| `+${sec.data.name}+` | |
   セキュアデータ `name` の値 |
   `+${sec.data.libera_pass}+` |
   `+my_password+`
 
-| `+${file.section.option}+` |
+| `+${file.section.option}+` | |
   オプションの値 |
   `+${weechat.look.buffer_time_format}+` |
   `+%H:%M:%S+`
 
-| `+${name}+` |
+| `+${name}+` | |
   バッファに対するローカル変数 `name` の値 |
   `+${nick}+` |
   `+FlashCode+`
 
-| `+${pointer}+` |
+| `+${pointer}+` | |
   _pointers_ の変数 `pointer` の値に展開 |
   `+${buffer}+` |
   `+0x1234abcd+`
 
 // TRANSLATION MISSING
 | `+${hdata.var1.var2...}+` +
-  `+${hdata[list].var1.var2...}+` |
+  `+${hdata[list].var1.var2...}+` | |
   hdata の値 (`window` と `buffer`
   ポインタはデフォルトで現在のウィンドウ/バッファに設定されます),
   `list` can be a list name (example: "gui_buffers"), a pointer

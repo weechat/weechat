@@ -2272,18 +2272,18 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
 
 Листа логичких оператора који могу да се користе у условима (по редоследу приоритета, од првог до последњег):
 
-[width="100%", cols="2,8,4,4", options="header"]
+[width="100%", cols="2,1,8,4,4", options="header"]
 |===
-| Оператор | Опис | Примери | Резултати
+| Оператор | Мин WeeChat | Опис | Примери | Резултати
 
-| `+&&+` |
+| `+&&+` | |
   Логичко „и” |
   `+25 && 77+` +
   `+25 && 0+` |
   `+1+` +
   `+0+`
 
-| `+\|\|+` |
+| `+\|\|+` | |
   Логичко „или” |
   `+25 \|\| 0+` +
   `+0 \|\| 0+` |
@@ -2293,103 +2293,95 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
 
 Листа оператора поређења који могу да се користе у условима (према редоследу приоритета, од првог до последњег):
 
-[width="100%", cols="2,8,4,4", options="header"]
+[width="100%", cols="2,1,8,4,4", options="header"]
 |===
-| Оператор | Опис | Примери | Резултат
+| Оператор | Мин WeeChat | Опис | Примери | Резултат
 
-| `+=~+` |
+| `+=~+` | |
   Подудара се са POSIX проширеним регуларним изразом (дозвољене су необавезне заставице, погледајте функцију <<_string_regcomp,string_regcomp>>) |
   `+abc def =~ ab.*ef+` +
   `+abc def =~ y.*z+` |
   `+1+` +
   `+0+`
 
-| `+!~+` |
+| `+!~+` | |
   НЕ подудара се са POSIX проширеним регуларним изразом (дозвољене су необавезне заставице, погледајте функцију <<_string_regcomp,string_regcomp>>) |
   `+abc def !~ ab.*ef+` +
   `+abc def !~ y.*z+` |
   `+0+` +
   `+1+`
 
-| `+==*+` |
-  Подудара се са маском где је дозвољено „*”, разликује величину слова (погледајте функцију <<_string_match,string_match>>) +
-  _(WeeChat ≥ 2.9)_ |
+| `+==*+` | 2.9 |
+  Подудара се са маском где је дозвољено „*”, разликује величину слова (погледајте функцију <<_string_match,string_match>>) |
   `+abc def ==* a*f+` +
   `+abc def ==* y*z+` |
   `+1+` +
   `+0+`
 
-| `+!!*+` |
-  НИЈЕ џокер маска у којој је дозвољено „*”, разликује величину слова (погледајте функцију <<_string_match,string_match>>) +
-  _(WeeChat ≥ 2.9)_ |
+| `+!!*+` | 2.9 |
+  НИЈЕ џокер маска у којој је дозвољено „*”, разликује величину слова (погледајте функцију <<_string_match,string_match>>) |
   `+abc def !!* a*f+` +
   `+abc def !!* y*z+` |
   `+0+` +
   `+1+`
 
-| `+=*+` |
-  Подудара се са маском где је дозвољено „*”, не разликује величину слова (погледајте функцију <<_string_match,string_match>>) +
-  _(WeeChat ≥ 1.8)_ |
+| `+=*+` | 1.8 |
+  Подудара се са маском где је дозвољено „*”, не разликује величину слова (погледајте функцију <<_string_match,string_match>>) |
   `+abc def =* A*F+` +
   `+abc def =* Y*Z+` |
   `+1+` +
   `+0+`
 
-| `+!*+` |
-  НИЈЕ џокер маска у којој је дозвољено „*”, не разликује величину слова (погледајте функцију <<_string_match,string_match>>) +
-  _(WeeChat ≥ 1.8)_ |
+| `+!*+` | 1.8 |
+  НИЈЕ џокер маска у којој је дозвољено „*”, не разликује величину слова (погледајте функцију <<_string_match,string_match>>) |
   `+abc def !* A*F+` +
   `+abc def !* Y*Z+` |
   `+0+` +
   `+1+`
 
-| `+==-+` |
-  Је укључено, разликује величину слова +
-  _(WeeChat ≥ 2.9)_ |
+| `+==-+` | 2.9 |
+  Је укључено, разликује величину слова |
   `+abc def ==- bc+` +
   `+abc def ==- xyz+` |
   `+1+` +
   `+0+`
 
-| `+!!-+` |
-  НИЈЕ укључено, разликује величину слова +
-  _(WeeChat ≥ 2.9)_ |
+| `+!!-+` | 2.9 |
+  НИЈЕ укључено, разликује величину слова |
   `+abc def !!- bc+` +
   `+abc def !!- xyz+` |
   `+0+` +
   `+1+`
 
-| `+=-+` |
-  Је укључено, не разликује величину слова +
-  _(WeeChat ≥ 2.9)_ |
+| `+=-+` | 2.9 |
+  Је укључено, не разликује величину слова |
   `+abc def =- BC+` +
   `+abc def =- XYZ+` |
   `+1+` +
   `+0+`
 
-| `+!-+` |
-  НИЈЕ укључено, не разликује величину слова +
-  _(WeeChat ≥ 2.9)_ |
+| `+!-+` | 2.9 |
+  НИЈЕ укључено, не разликује величину слова |
   `+abc def !- BC+` +
   `+abc def !- XYZ+` |
   `+0+` +
   `+1+`
 
-| `+==+` |
+| `+==+` | |
   Једнако |
   `+test == test+` +
   `+test == string+` |
   `+1+` +
   `+0+`
 
-| `+!=+` |
+| `+!=+` | |
   Није једнако |
   `+test != test+` +
   `+test != string+` |
   `+0+` +
   `+1+`
 
-| `+<=+` |
+| `+<=+` | |
   Мање или једнако |
   `+abc <= defghi+` +
   `+abc <= abc+` +
@@ -2400,7 +2392,7 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
   `+0+` +
   `+0+`
 
-| `+<+` |
+| `+<+` | |
   Мање |
   `+abc < defghi+` +
   `+abc < abc+` +
@@ -2411,7 +2403,7 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
   `+0+` +
   `+0+`
 
-| `+>=+` |
+| `+>=+` | |
   Веће или једнако |
   `+defghi >= abc+` +
   `+abc >= abc+` +
@@ -2422,7 +2414,7 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
   `+0+` +
   `+1+`
 
-| `+>+` |
+| `+>+` | |
   Веће |
   `+defghi > abc+` +
   `+abc > abc+` +
@@ -2450,28 +2442,26 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
 
 Листа развијених променљивих у изразу (према редоследу приоритета, од прве развијене, до последње):
 
-[width="100%", cols="2,8,4,4", options="header"]
+[width="100%", cols="2,1,8,4,4", options="header"]
 |===
-| Формат | Опис | Примери | Резултати
+| Формат | Мин WeeChat | Опис | Примери | Резултати
 
-| `+${raw:xxx}+` +
-  _(WeeChat ≥ 3.1)_ |
+| `+${raw:xxx}+` | 3.1 |
   Сирови стринг (не израчунава се). |
   `+${raw:${info:version}}+` |
   `+${info:version}+`
 
-| `+${име}+` +
-  _(WeeChat ≥ 3.4)_ |
+| `+${име}+` | 3.4 |
   Корисничка променљива (дефинисана са `+${define:име,вредност}+`). |
   `+${име}+` |
   `+вредност+`
 
-| `+${име}+` |
+| `+${име}+` | |
   Променљива `name` из хеш табеле _extra_vars_. |
   `+${име}+` |
   `+вредност+`
 
-| `+${weechat_xxx_dir}+` |
+| `+${weechat_xxx_dir}+` | 3.2 |
   WeeChat директоријум: `+${weechat_config_dir}+`, `+${weechat_data_dir}+`,
   `+${weechat_cache_dir}+` или `+${weechat_runtime_dir}+`. |
   `+${weechat_config_dir}+` +
@@ -2483,37 +2473,32 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
   `+/home/user/.cache/weechat+` +
   `+/run/user/1000/weechat+`
 
-| `+${eval:xxx}+` +
-  _(WeeChat ≥ 1.3)_ |
+| `+${eval:xxx}+` | 1.3 |
   Стринг који се израчунава. |
   `+${eval:${date:${weechat.look.buffer_time_format}}}+` |
   `+19:02:45+` (са бојама, ако у опцији weechat.look.buffer_time_format
   постоје боје)
 
-| `+${eval_cond:xxx}+` +
-  _(WeeChat ≥ 3.1)_ |
+| `+${eval_cond:xxx}+` | 3.1 |
   Стринг који се израчунава као услов. |
   `+${eval_cond:${window.win_width} > 100}+` |
   `+1+`
 
 | `+${esc:xxx}+` +
-  `+${\xxx}+` +
-  _(WeeChat ≥ 1.0)_ |
+  `+${\xxx}+` | 1.0 |
   Стринг са означеним карактерима. |
   `+${esc:prefix\tmessage}+` +
   `+${\ua9}+` |
   `+prefix<TAB>message+` +
   `+©+`
 
-| `+${hide:x,стринг}+` +
-  _(WeeChat ≥ 1.1)_ |
+| `+${hide:x,стринг}+` | 1.1 |
   Стринг са скривеним карактерима (сви карактери у `стринг` се замењују са `x`). |
   `+${hide:*,password}+` |
   `+********+`
 
 | `+${cut:макс,суфикс,стринг}+` +
-  `+${cut:+макс,суфикс,стринг}+` +
-  _(WeeChat ≥ 1.8)_ |
+  `+${cut:+макс,суфикс,стринг}+` | 1.8 |
   Стринг са `макс` карактера и необавезним `суфикс` ако се стринг сече. +
   У формату `+макс`, суфикс се рачуна у максималну дужину. |
   `+${cut:4,…,this is a test}+` +
@@ -2524,8 +2509,7 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
   `+こん>>+`
 
 | `+${cutscr:макс,суфикс,стринг}+` +
-  `+${cutscr:+макс,суфикс,стринг}+` +
-  _(WeeChat ≥ 1.8)_ |
+  `+${cutscr:+макс,суфикс,стринг}+` | 1.8 |
   Стринг са `макс` карактера приказаних на екрану, и необавезним `суфикс` ако се стринг сече.
   У формату `+макс`, суфикс се рачуна у максималну дужину. |
   `+${cutscr:4,…,this is a test}+` +
@@ -2535,8 +2519,7 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
   `+thi…+` +
   `+こ>>+`
 
-| `+${rev:xxx}+` +
-  _(WeeChat ≥ 2.2)_ |
+| `+${rev:xxx}+` | 2.2 |
   Обрнути стринг (и кодови боја се обрћу, тако да стринг не би требало да садржи
   кодове боја). |
   `+${rev:Hello, world!}+` +
@@ -2544,38 +2527,33 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
   `+!dlrow ,olleH+` +
   `+!dlrow30F ,olleH+` (нема боје, кôд боје је обрнут)
 
-| `+${revscr:xxx}+` +
-  _(WeeChat ≥ 2.7)_ |
+| `+${revscr:xxx}+` | 2.7 |
   Обрнути стринг за екран, кодови боја се не обрћу. |
   `+${revscr:Hello, world!}+` +
   `+${revscr:Hello, ${color:red}world!}+` |
   `+!dlrow ,olleH+` +
   `+!dlrow ,olleH+` (`pass:[ ,olleH]` у црвеној боји)
 
-| `+${repeat:број,стринг}+` +
-  _(WeeChat ≥ 2.3)_ |
+| `+${repeat:број,стринг}+` | 2.3 |
   Поновљени стринг. |
   `+${repeat:5,-}+` |
   `+-----+`
 
-| `+${length:xxx}+` +
-  _(WeeChat ≥ 2.7)_ |
+| `+${length:xxx}+` | 2.7 |
   Дужина стринга (број UTF-8 карактера), кодови боја се игноришу. |
   `+${length:test}+` +
   `+${length:こんにちは世界}+` |
   `+4+` +
   `+7+`
 
-| `+${lengthscr:xxx}+` +
-  _(WeeChat ≥ 2.7)_ |
+| `+${lengthscr:xxx}+` | 2.7 |
   Дужина стринга приказаног на екрану, кодови боја се игноришу. |
   `+${lengthscr:test}+` +
   `+${lengthscr:こんにちは世界}+` |
   `+4+` +
   `+14+`
 
-| `+${split:number,seps,flags,xxx}+` +
-  _(WeeChat ≥ 3.3)_ |
+| `+${split:number,seps,flags,xxx}+` | 3.3 |
  Дели стринг и враћа сагласно са `number`: +
   - `count`: број ставки након поделе +
   - `random`: произвољну ставку +
@@ -2608,8 +2586,7 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
   `+is+` +
   `+is a test+`
 
-| `+${split_shell:number,xxx}+` +
-  _(WeeChat ≥ 3.3)_ |
+| `+${split_shell:number,xxx}+` | 3.3 |
   Дели аргументе љуске и враћа сагласно са `number`: +
   - `count`: број аргумената након поделе +
   - `random`: произвољни аргумент +
@@ -2624,8 +2601,7 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
   `+2+` +
   `+arg2+`
 
-| `+${re:xxx}+` +
-  _(WeeChat ≥ 1.1)_ |
+| `+${re:xxx}+` | 1.1 |
   Подаци регуларног израза: +
   `0` = цео подударени стринг, +
   `1` до `99` = ухваћена група, +
@@ -2645,8 +2621,7 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
   `+2+` +
   `+1+`
 
-| `+${color:име}+` +
-  _(WeeChat ≥ 0.4.2)_ |
+| `+${color:име}+` | 0.4.2 |
   Кôд WeeChat боје (име боје има и необавезне атрибуте), погледајте
   функцију <<_color,color>> у вези подржаних формата. |
   `+${color:red}red text+` +
@@ -2654,8 +2629,7 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
   `+red text+` (у црвеној) +
   `+bold orange text+` (подебљано наранџасто)
 
-| `+${modifier:име,подаци,стринг}+` +
-  _(WeeChat ≥ 2.7)_ |
+| `+${modifier:име,подаци,стринг}+` | 2.7 |
   Резултат модификатора, погледајте функцију
   <<_hook_modifier_exec,hook_modifier_exec>>. |
   `+${modifier:eval_path_home,,~}+` +
@@ -2664,8 +2638,7 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
   `+/home/user/.config/weechat/weechat.conf+`
 
 | `+${info:име}+` +
-  `+${info:име,аргументи}+` +
-  _(WeeChat ≥ 0.4.3)_ |
+  `+${info:име,аргументи}+` | 0.4.3 |
   Инфо из програма WeeChat или додатка, погледајте функцију
   <<_info_get,info_get>>. |
   `+${info:version}+` +
@@ -2673,8 +2646,7 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
   `+1.0+` +
   `+lightblue+`
 
-| `+${base_encode:base,xxx}+` +
-  _(WeeChat ≥ 2.9)_ |
+| `+${base_encode:base,xxx}+` | 2.9 |
   Стринг кодиран у base 16, 32 или 64. |
   `+${base_encode:16,test string}+` +
   `+${base_encode:32,test string}+` +
@@ -2683,8 +2655,7 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
   `+ORSXG5BAON2HE2LOM4======+` +
   `+dGVzdCBzdHJpbmc=+`
 
-| `+${base_decode:base,xxx}+` +
-  _(WeeChat ≥ 2.9)_ |
+| `+${base_decode:base,xxx}+` | 2.9 |
   Декодиран стринг из base 16, 32 или 64. |
   `+${base_decode:16,7465737420737472696E67}+` +
   `+${base_decode:32,ORSXG5BAON2HE2LOM4======}+` +
@@ -2694,8 +2665,7 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
   `+test string+`
 
 | `+${date}+` +
-  `+${date:xxx}+` +
-  _(WeeChat ≥ 1.3)_ |
+  `+${date:xxx}+` | 1.3 |
   Текући датум/време, у прилагођеном формату (погледајте `man strftime`),
   подразумевани формат је `%F %T`. |
   `+${date}+` +
@@ -2703,24 +2673,21 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
   `+2015-06-30 19:02:45+` +
   `+19:02:45+`
 
-| `+${env:ИМЕ}+` +
-  _(WeeChat ≥ 1.2)_ |
+| `+${env:ИМЕ}+` | 1.2 |
   Име променљиве окружења `ИМЕ`. |
   `+${env:HOME}+` |
   `+/home/user+`
 
 | `+${if:condition}+` +
   `+${if:condition?true}+`
-  `+${if:condition?true:false}+`
-  _(WeeChat ≥ 1.8)_ |
+  `+${if:condition?true:false}+| 1.8 |
   Тернарни оператор са условом, вредност када је услов истинит (није обавезна) и
   друга вредност када је услов неистинит (није обавезна). Ако се вредности не
   задају, враћа се „1” или „0”, у зависности од резултата услова. |
   `+${if:${info:term_width}>80?big:small}+` |
   `+big+`
 
-| `+${calc:xxx}+` +
-  _(WeeChat ≥ 2.7)_ |
+| `+${calc:xxx}+` | 2.7 |
   Резултат израза, у коме су подржане заграде и следећи
   оператори: +
   `+++`: сабирање +
@@ -2743,47 +2710,44 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
   `+0.2+` +
   `+65536+`
 
-| `+${random:min,max}+` +
-  _(WeeChat ≥ 3.3)_ |
+| `+${random:min,max}+` | 3.3 |
   Случајни цео број из опсега `min` до `max` (укључујући и њих). |
   `+${random:0,10}+` |
   `+3+`
 
-| `+${translate:xxx}+` +
-  _(WeeChat ≥ 3.2)_ |
+| `+${translate:xxx}+` | 3.2 |
   Преведени стринг (зависи од језика који програм WeeChat користи за приказ порука). |
   `+${translate:Plugin}+` |
   `+Extension+` (пример из француског)
 
-| `+${define:name,value}+` +
-  _(WeeChat ≥ 3.4)_ |
+| `+${define:name,value}+` | 3.4 |
   Дефинисање променљиве `име` постављене на `вредност`, која онда може да се користи у истом
   израчунатом изразу са `+${име}+`. |
   `+${define:len,${calc:5+3}}${len}x${len}+` |
   `+8x8+`
 
-| `+${sec.data.име}+` |
+| `+${sec.data.име}+` | |
   Вредност обезбеђених података `име`. |
   `+${sec.data.libera_pass}+` |
   `+my_password+`
 
-| `+${фајл.одељак.опција}+` |
+| `+${фајл.одељак.опција}+` | |
   Вредност опције. |
   `+${weechat.look.buffer_time_format}+` |
   `+%H:%M:%S+`
 
-| `+${име}+` |
+| `+${име}+` | |
   Вредност локалне променљиве `име` у баферу. |
   `+${nick}+` |
   `+FlashCode+`
 
-| `+${pointer}+` |
+| `+${pointer}+` | |
   Променљива `pointer` из хеш табеле _pointers_. |
   `+${buffer}+` |
   `+0x1234abcd+`
 
 | `+${hdata.пром1.пром2...}+` +
-  `+${hdata[листа].пром1.пром2...}+` |
+  `+${hdata[листа].пром1.пром2...}+` | |
   Hdata вредност (показивачи `window` и `buffer` се подразумевано постављају на текући
   прозор/бафер), `листа` може бити име листе (пример: „gui_buffers”), показивач
   (пример: „0x1234abcd”) или име показивача (пример: „my_pointer”). |
