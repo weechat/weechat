@@ -2385,159 +2385,185 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
 List of logical operators that can be used in conditions (by order of priority,
 from first used to last):
 
-[width="100%",cols="2,1,8,4,4",options="header"]
+[width="100%",cols="2,1,5,5",options="header"]
 |===
-| Operator | Min WeeChat | Description | Examples | Results
+| Operator | Min WeeChat | Description | Examples
 
 | `+&&+` | |
   Logical "and" |
-  `+25 && 77+` +
-  `+25 && 0+` |
-  `+1+` +
-  `+0+`
+  >> `+25 && 77+` +
+  == `+1+` +
+  +
+  >> `+25 && 0+` +
+  == `+0+`
 
 | `+\|\|+` | |
   Logical "or" |
-  `+25 \|\| 0+` +
-  `+0 \|\| 0+` |
-  `+1+` +
-  `+0+`
+  >> `+25 \|\| 0+` +
+  == `+1+` +
+  +
+  >> `+0 \|\| 0+` +
+  == `+0+`
 |===
 
 List of comparison operators that can be used in conditions (by order of priority,
 from first used to last):
 
-[width="100%",cols="2,1,8,4,4",options="header"]
+[width="100%",cols="2,1,5,5",options="header"]
 |===
-| Operator | Min WeeChat | Description | Examples | Results
+| Operator | Min WeeChat | Description | Examples
 
 | `+=~+` | |
   Is matching POSIX extended regex (optional flags are allowed, see function <<_string_regcomp,string_regcomp>>) |
-  `+abc def =~ ab.*ef+` +
-  `+abc def =~ y.*z+` |
-  `+1+` +
-  `+0+`
+  >> `+abc def =~ ab.*ef+` +
+  == `+1+` +
+  +
+  >> `+abc def =~ y.*z+` +
+  == `+0+`
 
 | `+!~+` | |
   Is NOT matching POSIX extended regex (optional flags are allowed, see function <<_string_regcomp,string_regcomp>>) |
-  `+abc def !~ ab.*ef+` +
-  `+abc def !~ y.*z+` |
-  `+0+` +
-  `+1+`
+  >> `+abc def !~ ab.*ef+` +
+  == `+0+` +
+  +
+  >> `+abc def !~ y.*z+` +
+  == `+1+`
 
 | `+==*+` | 2.9 |
   Is matching mask where "*" is allowed, case sensitive (see function <<_string_match,string_match>>) |
-  `+abc def ==* a*f+` +
-  `+abc def ==* y*z+` |
-  `+1+` +
-  `+0+`
+  >> `+abc def ==* a*f+` +
+  == `+1+` +
+  +
+  >> `+abc def ==* y*z+` +
+  == `+0+`
 
 | `+!!*+` | 2.9 |
   Is NOT wildcard mask where "*" is allowed, case sensitive (see function <<_string_match,string_match>>) |
-  `+abc def !!* a*f+` +
-  `+abc def !!* y*z+` |
-  `+0+` +
-  `+1+`
+  >> `+abc def !!* a*f+` +
+  == `+0+` +
+  +
+  >> `+abc def !!* y*z+` +
+  == `+1+`
 
 | `+=*+` | 1.8 |
   Is matching mask where "*" is allowed, case insensitive (see function <<_string_match,string_match>>) |
-  `+abc def =* A*F+` +
-  `+abc def =* Y*Z+` |
-  `+1+` +
-  `+0+`
+  >> `+abc def =* A*F+` +
+  == `+1+` +
+  +
+  >> `+abc def =* Y*Z+` +
+  == `+0+`
 
 | `+!*+` | 1.8 |
   Is NOT wildcard mask where "*" is allowed, case insensitive (see function <<_string_match,string_match>>) |
-  `+abc def !* A*F+` +
-  `+abc def !* Y*Z+` |
-  `+0+` +
-  `+1+`
+  >> `+abc def !* A*F+` +
+  == `+0+` +
+  +
+  >> `+abc def !* Y*Z+` +
+  == `+1+`
 
 | `+==-+` | 2.9 |
   Is included, case sensitive |
-  `+abc def ==- bc+` +
-  `+abc def ==- xyz+` |
-  `+1+` +
-  `+0+`
+  >> `+abc def ==- bc+` +
+  == `+1+` +
+  +
+  >> `+abc def ==- xyz+` +
+  == `+0+`
 
 | `+!!-+` | 2.9 |
   Is NOT included, case sensitive |
-  `+abc def !!- bc+` +
-  `+abc def !!- xyz+` |
-  `+0+` +
-  `+1+`
+  >> `+abc def !!- bc+` +
+  == `+0+` +
+  +
+  >> `+abc def !!- xyz+` +
+  == `+1+`
 
 | `+=-+` | 2.9 |
   Is included, case insensitive |
-  `+abc def =- BC+` +
-  `+abc def =- XYZ+` |
-  `+1+` +
-  `+0+`
+  >> `+abc def =- BC+` +
+  == `+1+` +
+  +
+  >> `+abc def =- XYZ+` +
+  == `+0+`
 
 | `+!-+` | 2.9 |
   Is NOT included, case insensitive |
-  `+abc def !- BC+` +
-  `+abc def !- XYZ+` |
-  `+0+` +
-  `+1+`
+  >> `+abc def !- BC+` +
+  == `+0+` +
+  +
+  >> `+abc def !- XYZ+` +
+  == `+1+`
 
 | `+==+` | |
   Equal |
-  `+test == test+` +
-  `+test == string+` |
-  `+1+` +
-  `+0+`
+  >> `+test == test+` +
+  == `+1+` +
+  +
+  >> `+test == string+` +
+  == `+0+`
 
 | `+!=+` | |
   Not equal |
-  `+test != test+` +
-  `+test != string+` |
-  `+0+` +
-  `+1+`
+  >> `+test != test+` +
+  == `+0+` +
+  +
+  >> `+test != string+` +
+  == `+1+`
 
 | `+<=+` | |
   Less or equal |
-  `+abc <= defghi+` +
-  `+abc <= abc+` +
-  `+defghi <= abc+` +
-  `+15 <= 2+` |
-  `+1+` +
-  `+1+` +
-  `+0+` +
-  `+0+`
+  >> `+abc <= defghi+` +
+  == `+1+` +
+  +
+  >> `+abc <= abc+` +
+  == `+1+` +
+  +
+  >> `+defghi <= abc+` +
+  == `+0+` +
+  +
+  >> `+15 <= 2+` +
+  == `+0+`
 
 | `+<+` | |
   Less |
-  `+abc < defghi+` +
-  `+abc < abc+` +
-  `+defghi < abc+` +
-  `+15 < 2+` |
-  `+1+` +
-  `+0+` +
-  `+0+` +
-  `+0+`
+  >> `+abc < defghi+` +
+  == `+1+` +
+  +
+  >> `+abc < abc+` +
+  == `+0+` +
+  +
+  >> `+defghi < abc+` +
+  == `+0+` +
+  +
+  >> `+15 < 2+` +
+  == `+0+`
 
 | `+>=+` | |
   Greater or equal |
-  `+defghi >= abc+` +
-  `+abc >= abc+` +
-  `+abc >= defghi+` +
-  `+15 >= 2+` |
-  `+1+` +
-  `+1+` +
-  `+0+` +
-  `+1+`
+  >> `+defghi >= abc+` +
+  == `+1+` +
+  +
+  >> `+abc >= abc+` +
+  == `+1+` +
+  +
+  >> `+abc >= defghi+` +
+  == `+0+` +
+  +
+  >> `+15 >= 2+` +
+  == `+1+`
 
 | `+>+` | |
   Greater |
-  `+defghi > abc+` +
-  `+abc > abc+` +
-  `+abc > defghi+` +
-  `+15 > 2+` |
-  `+1+` +
-  `+0+` +
-  `+0+` +
-  `+1+`
+  >> `+defghi > abc+` +
+  == `+1+` +
+  +
+  >> `+abc > abc+` +
+  == `+0+` +
+  +
+  >> `+abc > defghi+` +
+  == `+0+` +
+  +
+  >> `+15 > 2+` +
+  == `+1+`
 |===
 
 The comparison is made using floating point numbers if the two expressions are
@@ -2559,116 +2585,134 @@ for example:
 List of variables expanded in expression (by order of priority, from first
 expanded to last):
 
-[width="100%",cols="2,1,8,4,4",options="header"]
+[width="100%",cols="2,1,5,5",options="header"]
 |===
-| Format | Min WeeChat | Description | Examples | Results
+| Format | Min WeeChat | Description | Examples
 
 | `+${raw:xxx}+` | 3.1 |
   Raw string (not evaluated). |
-  `+${raw:${info:version}}+` |
-  `+${info:version}+`
+  >> `+${raw:${info:version}}+` +
+  == `+${info:version}+`
 
 | `+${name}+` | 3.4 |
   User variable (defined with `+${define:name,value}+`). |
-  `+${name}+` |
-  `+value+`
+  >> `+${name}+` +
+  == `+value+`
 
 | `+${name}+` | |
   Variable `name` from hashtable _extra_vars_. |
-  `+${name}+` |
-  `+value+`
+  >> `+${name}+` +
+  == `+value+`
 
 | `+${weechat_xxx_dir}+` | 3.2 |
   A WeeChat directory: `+${weechat_config_dir}+`, `+${weechat_data_dir}+`,
   `+${weechat_cache_dir}+` or `+${weechat_runtime_dir}+`. |
-  `+${weechat_config_dir}+` +
-  `+${weechat_data_dir}+` +
-  `+${weechat_cache_dir}+` +
-  `+${weechat_runtime_dir}+` |
-  `+/home/user/.config/weechat+` +
-  `+/home/user/.local/share/weechat+` +
-  `+/home/user/.cache/weechat+` +
-  `+/run/user/1000/weechat+`
+  >> `+${weechat_config_dir}+` +
+  == `+/home/user/.config/weechat+` +
+  +
+  >> `+${weechat_data_dir}+` +
+  == `+/home/user/.local/share/weechat+` +
+  +
+  >> `+${weechat_cache_dir}+` +
+  == `+/home/user/.cache/weechat+` +
+  +
+  >> `+${weechat_runtime_dir}+` +
+  == `+/run/user/1000/weechat+`
 
 | `+${eval:xxx}+` | 1.3 |
   String to evaluate. |
-  `+${eval:${date:${weechat.look.buffer_time_format}}}+` |
-  `+19:02:45+` (with colors if there are color codes in the option
-  weechat.look.buffer_time_format)
+  >> `+${eval:${date:${weechat.look.buffer_time_format}}}+` +
+  == `+19:02:45+` ^(1)^ +
+  +
+  ^(1)^ With colors if there are color codes in the option
+  weechat.look.buffer_time_format
 
 | `+${eval_cond:xxx}+` | 3.1 |
   String to evaluate as condition. |
-  `+${eval_cond:${window.win_width} > 100}+` |
-  `+1+`
+  >> `+${eval_cond:${window.win_width} > 100}+` +
+  == `+1+`
 
 | `+${esc:xxx}+` +
   `+${\xxx}+` | 1.0 |
   String with escaped chars. |
-  `+${esc:prefix\tmessage}+` +
-  `+${\ua9}+` |
-  `+prefix<TAB>message+` +
-  `+©+`
+  >> `+${esc:prefix\tmessage}+` +
+  == `+prefix<TAB>message+` +
+  +
+  >> `+${\ua9}+` +
+  == `+©+`
 
 | `+${hide:x,string}+` | 1.1 |
   String with hidden chars (all chars in `string` replaced by `x`). |
-  `+${hide:*,password}+` |
-  `+********+`
+  >> `+${hide:*,password}+` +
+  >> `+********+`
 
 | `+${cut:max,suffix,string}+` +
   `+${cut:+max,suffix,string}+` | 1.8 |
   String with `max` chars, and optional `suffix` if string is cut. +
   With the format `+max`, the suffix is counted in max length. |
-  `+${cut:4,…,this is a test}+` +
-  `+${cut:+4,…,this is a test}+` +
-  `+${cut:2,>>,こんにちは世界}+` |
-  `+this…+` +
-  `+t…+` +
-  `+こん>>+`
+  >> `+${cut:4,…,this is a test}+` +
+  == `+this…+` +
+  +
+  >> `+${cut:+4,…,this is a test}+` +
+  == `+t…+` +
+  +
+  >> `+${cut:2,>>,こんにちは世界}+` +
+  == `+こん>>+`
 
 | `+${cutscr:max,suffix,string}+` +
   `+${cutscr:+max,suffix,string}+` | 1.8 |
   String with `max` chars displayed on screen, and optional `suffix` if string is cut. +
   With the format `+max`, the suffix is counted in max length. |
-  `+${cutscr:4,…,this is a test}+` +
-  `+${cutscr:+4,…,this is a test}+` +
-  `+${cutscr:2,>>,こんにちは世界}+` |
-  `+this…+` +
-  `+thi…+` +
-  `+こ>>+`
+  >> `+${cutscr:4,…,this is a test}+` +
+  == `+this…+` +
+  +
+  >> `+${cutscr:+4,…,this is a test}+` +
+  == `+thi…+` +
+  +
+  >> `+${cutscr:2,>>,こんにちは世界}+` +
+  == `+こ>>+`
 
 | `+${rev:xxx}+` | 2.2 |
   Reversed string (color codes are reversed, so the string should not contain
   color codes). |
-  `+${rev:Hello, world!}+` +
-  `+${rev:Hello, ${color:red}world!}+` |
-  `+!dlrow ,olleH+` +
-  `+!dlrow30F ,olleH+` (no color, the color code is reversed)
+  >> `+${rev:Hello, world!}+` +
+  == `+!dlrow ,olleH+` +
+  +
+  >> `+${rev:Hello, ${color:red}world!}+` +
+  == `+!dlrow30F ,olleH+` ^(1)^ +
+  +
+  ^(1)^ No color, the color code is reversed
 
 | `+${revscr:xxx}+` | 2.7 |
   Reversed string for screen, color codes are not reversed. |
-  `+${revscr:Hello, world!}+` +
-  `+${revscr:Hello, ${color:red}world!}+` |
-  `+!dlrow ,olleH+` +
-  `+!dlrow ,olleH+` (`pass:[ ,olleH]` in red)
+  >> `+${revscr:Hello, world!}+` +
+  == `+!dlrow ,olleH+` +
+  +
+  >> `+${revscr:Hello, ${color:red}world!}+` +
+  == `+!dlrow ,olleH+` ^(1)^ +
+  +
+  ^(1)^ `pass:[ ,olleH]` in red
 
 | `+${repeat:count,string}+` | 2.3 |
   Repeated string. |
-  `+${repeat:5,-}+` |
-  `+-----+`
+  >> `+${repeat:5,-}+` +
+  == `+-----+`
 
 | `+${length:xxx}+` | 2.7 |
   Length of string (number of UTF-8 chars), color codes are ignored. |
-  `+${length:test}+` +
-  `+${length:こんにちは世界}+` |
-  `+4+` +
-  `+7+`
+  >> `+${length:test}+` +
+  == `+4+` +
+  +
+  >> `+${length:こんにちは世界}+` +
+  == `+7+`
 
 | `+${lengthscr:xxx}+` | 2.7 |
   Length of string displayed on screen, color codes are ignored. |
-  `+${lengthscr:test}+` +
-  `+${lengthscr:こんにちは世界}+` |
-  `+4+` +
-  `+14+`
+  >> `+${lengthscr:test}+` +
+  == `+4+` +
+  +
+  >> `+${lengthscr:こんにちは世界}+` +
+  == `+14+`
 
 | `+${split:number,seps,flags,xxx}+` | 3.3 |
   Split string, and return, according to `number`: +
@@ -2684,24 +2728,32 @@ expanded to last):
   - `keep_eol`: keep end of line for each value +
   - `strip_items=xyz`: strip chars `x`, `y` and `z` from beginning/end of items +
   - `max_items=N`: return max N items |
-  `+${split:1,,,abc,def,ghi}+` +
-  `+${split:-1,,,abc,def,ghi}+` +
-  `+${split:count,,,abc,def,ghi}+` +
-  `+${split:random,,,abc,def,ghi}+` +
-  `+${split:3,,collapse_seps,abc,,,def,,,ghi}+` +
-  `+${split:3,,strip_items=-_,_-abc-_,_-def-_,_-ghi-_}+` +
-  `+${split:2, ,,this is a test}+` +
-  `+${split:2, ,strip_left+strip_right, this is a test }+` +
-  `+${split:2, ,keep_eol,this is a test}+` |
-  `+abc+` +
-  `+ghi+` +
-  `+3+` +
-  `+def+` +
-  `+ghi+` +
-  `+ghi+` +
-  `+is+` +
-  `+is+` +
-  `+is a test+`
+  >> `+${split:1,,,abc,def,ghi}+` +
+  == `+abc+` +
+  +
+  >> `+${split:-1,,,abc,def,ghi}+` +
+  == `+ghi+` +
+  +
+  >> `+${split:count,,,abc,def,ghi}+` +
+  == `+3+` +
+  +
+  >> `+${split:random,,,abc,def,ghi}+` +
+  == `+def+` +
+  +
+  >> `+${split:3,,collapse_seps,abc,,,def,,,ghi}+` +
+  == `+ghi+` +
+  +
+  >> `+${split:3,,strip_items=-_,_-abc-_,_-def-_,_-ghi-_}+` +
+  == `+ghi+` +
+  +
+  >> `+${split:2, ,,this is a test}+` +
+  == `+is+` +
+  +
+  >> `+${split:2, ,strip_left+strip_right, this is a test }+` +
+  == `+is+` +
+  +
+  >> `+${split:2, ,keep_eol,this is a test}+` +
+  == `+is a test+`
 
 | `+${split_shell:number,xxx}+` | 3.3 |
   Split shell arguments, and return, according to `number`: +
@@ -2709,14 +2761,17 @@ expanded to last):
   - `random`: a random argument +
   - integer ≥ 1: the argument by index (1 = first argument) +
   - integer ≤ -1: the argument by index from the end (-1 = last argument, -2 = penultimate argument, etc.) |
-  `+${split_shell:1,"first arg" arg2}+` +
-  `+${split_shell:-1,"first arg" arg2}+` +
-  `+${split_shell:count,"first arg" arg2}+` +
-  `+${split_shell:random,"first arg" arg2}+` |
-  `+first arg+` +
-  `+arg2+` +
-  `+2+` +
-  `+arg2+`
+  >> `+${split_shell:1,"first arg" arg2}+` +
+  == `+first arg+` +
+  +
+  >> `+${split_shell:-1,"first arg" arg2}+` +
+  == `+arg2+` +
+  +
+  >> `+${split_shell:count,"first arg" arg2}+` +
+  == `+2+` +
+  +
+  >> `+${split_shell:random,"first arg" arg2}+` +
+  == `+arg2+`
 
 | `+${re:xxx}+` | 1.1 |
   Regex data: +
@@ -2725,75 +2780,91 @@ expanded to last):
   `+++` = last group captured, +
   `#` = index of last group captured _(WeeChat ≥ 1.8)_, +
   `repl_index` = index of replacement being done (starts to 1) _(WeeChat ≥ 3.3)_. |
-  `+${re:0}+` +
-  `+${re:1}+` +
-  `+${re:2}+` +
-  `+${re:+}+` +
-  `+${re:#}+` +
-  `+${re:repl_index}+` |
-  `+test1 test2+` +
-  `+test1+` +
-  `+test2+` +
-  `+test2+` +
-  `+2+` +
-  `+1+`
+  >> `+${re:0}+` +
+  == `+test1 test2+` +
+  +
+  >> `+${re:1}+` +
+  == `+test1+` +
+  +
+  >> `+${re:2}+` +
+  == `+test2+` +
+  +
+  >> `+${re:+}+` +
+  == `+test2+` +
+  +
+  >> `+${re:#}+` +
+  == `+2+` +
+  +
+  >> `+${re:repl_index}+` +
+  == `+1+`
 
 | `+${color:name}+` | 0.4.2 |
   WeeChat color code (the name of color has optional attributes),
   see function <<_color,color>> for supported formats. |
-  `+${color:red}red text+` +
-  `+${color:*214}bold orange text+` |
-  `+red text+` (in red) +
-  `+bold orange text+` (in bold orange)
+  >> `+${color:red}red text+` +
+  == `+red text+` ^(1)^ +
+  +
+  >> `+${color:*214}bold orange text+` +
+  == `+bold orange text+` ^(2)^ +
+  +
+  ^(1)^ In red +
+  ^(2)^ In bold orange
 
 | `+${modifier:name,data,string}+` | 2.7 |
   Result of a modifier, see function
   <<_hook_modifier_exec,hook_modifier_exec>>. |
-  `+${modifier:eval_path_home,,~}+` +
-  `+${modifier:eval_path_home,directory=config,%h/weechat.conf}+` |
-  `+/home/user+` +
-  `+/home/user/.config/weechat/weechat.conf+`
+  >> `+${modifier:eval_path_home,,~}+` +
+  == `+/home/user+` +
+  +
+  >> `+${modifier:eval_path_home,directory=config,%h/irc.conf}+` +
+  == `+/home/user/.config/weechat/irc.conf+`
 
 | `+${info:name}+` +
   `+${info:name,arguments}+` | 0.4.3 |
   Info from WeeChat or a plugin, see function
   <<_info_get,info_get>>. |
-  `+${info:version}+` +
-  `+${info:nick_color_name,foo}+` |
-  `+1.0+` +
-  `+lightblue+`
+  >> `+${info:version}+` +
+  == `+1.0+` +
+  +
+  >> `+${info:nick_color_name,foo}+` +
+  == `+lightblue+`
 
 | `+${base_encode:base,xxx}+` | 2.9 |
   String encoded in base 16, 32 or 64. |
-  `+${base_encode:16,test string}+` +
-  `+${base_encode:32,test string}+` +
-  `+${base_encode:64,test string}+` |
-  `+7465737420737472696E67+` +
-  `+ORSXG5BAON2HE2LOM4======+` +
-  `+dGVzdCBzdHJpbmc=+`
+  >> `+${base_encode:16,test string}+` +
+  == `+7465737420737472696E67+` +
+  +
+  >> `+${base_encode:32,test string}+` +
+  == `+ORSXG5BAON2HE2LOM4======+` +
+  +
+  >> `+${base_encode:64,test string}+` +
+  == `+dGVzdCBzdHJpbmc=+`
 
 | `+${base_decode:base,xxx}+` | 2.9 |
   String decoded from base 16, 32 or 64. |
-  `+${base_decode:16,7465737420737472696E67}+` +
-  `+${base_decode:32,ORSXG5BAON2HE2LOM4======}+` +
-  `+${base_decode:64,dGVzdCBzdHJpbmc=}+` |
-  `+test string+` +
-  `+test string+` +
-  `+test string+`
+  >> `+${base_decode:16,7465737420737472696E67}+` +
+  == `+test string+` +
+  +
+  >> `+${base_decode:32,ORSXG5BAON2HE2LOM4======}+` +
+  == `+test string+` +
+  +
+  >> `+${base_decode:64,dGVzdCBzdHJpbmc=}+` +
+  == `+test string+`
 
 | `+${date}+` +
   `+${date:xxx}+` | 1.3 |
   Current date/time, with custom format (see `man strftime`),
   default format is `%F %T`. |
-  `+${date}+` +
-  `+${date:%H:%M:%S}+` |
-  `+2015-06-30 19:02:45+` +
-  `+19:02:45+`
+  >> `+${date}+` +
+  == `+2015-06-30 19:02:45+` +
+  +
+  >> `+${date:%H:%M:%S}+` +
+  == `+19:02:45+`
 
 | `+${env:NAME}+` | 1.2 |
   Value of the environment variable `NAME`. |
-  `+${env:HOME}+` |
-  `+/home/user+`
+  >> `+${env:HOME}+` +
+  == `+/home/user+`
 
 | `+${if:condition}+` +
   `+${if:condition?true}+`
@@ -2801,8 +2872,8 @@ expanded to last):
   Ternary operator with a condition, a value if the condition is true (optional)
   and another value if the condition is false (optional). If values are not
   given, "1" or "0" are returned, according to the result of the condition. |
-  `+${if:${info:term_width}>80?big:small}+` |
-  `+big+`
+  >> `+${if:${info:term_width}>80?big:small}+` +
+  == `+big+`
 
 | `+${calc:xxx}+` | 2.7 |
   Result of expression, where parentheses and the following operators are
@@ -2814,65 +2885,75 @@ expanded to last):
   `+//+`: result of division without fractional part +
   `+%+`: remainder of division +
   `+**+`: power. |
-  `+${calc:5+2*3}+` +
-  `+${calc:(5+2)*3}+` +
-  `+${calc:10/4}+` +
-  `+${calc:10//4}+` +
-  `+${calc:9.2%3}+` +
-  `+${calc:2**16}+` |
-  `+11+` +
-  `+21+` +
-  `+2.5+` +
-  `+2+` +
-  `+0.2+` +
-  `+65536+`
+  >> `+${calc:5+2*3}+` +
+  == `+11+` +
+  +
+  >> `+${calc:(5+2)*3}+` +
+  == `+21+` +
+  +
+  >> `+${calc:10/4}+` +
+  == `+2.5+` +
+  +
+  >> `+${calc:10//4}+` +
+  == `+2+` +
+  +
+  >> `+${calc:9.2%3}+` +
+  == `+0.2+` +
+  +
+  >> `+${calc:2**16}+` +
+  == `+65536+`
 
 | `+${random:min,max}+` | 3.3 |
   Random integer number in the range from `min` to `max` (inclusive). |
-  `+${random:0,10}+` |
-  `+3+`
+  >> `+${random:0,10}+` +
+  == `+3+`
 
 | `+${translate:xxx}+` | 3.2 |
   Translated string (depends on the language used by WeeChat to display messages). |
-  `+${translate:Plugin}+` |
-  `+Extension+` (example in French)
+  >> `+${translate:Plugin}+` +
+  == `+Extension+` ^(1)^ +
+  +
+  ^(1)^ Example in French
 
 | `+${define:name,value}+` | 3.4 |
   Define a variable `name` set to `value`, which can then be used in the same
   evaluated expression with `+${name}+`. |
-  `+${define:len,${calc:5+3}}${len}x${len}+` |
-  `+8x8+`
+  >> `+${define:len,${calc:5+3}}${len}x${len}+` +
+  == `+8x8+`
 
 | `+${sec.data.name}+` | |
   Value of the secured data `name`. |
-  `+${sec.data.libera_pass}+` |
-  `+my_password+`
+  >> `+${sec.data.libera_pass}+` +
+  == `+my_password+`
 
 | `+${file.section.option}+` | |
   Value of the option. |
-  `+${weechat.look.buffer_time_format}+` |
-  `+%H:%M:%S+`
+  >> `+${weechat.look.buffer_time_format}+` +
+  == `+%H:%M:%S+`
 
 | `+${name}+` | |
   Value of local variable `name` in buffer. |
-  `+${nick}+` |
-  `+FlashCode+`
+  >> `+${nick}+` +
+  == `+FlashCode+`
 
 | `+${pointer}+` | |
   Variable `pointer` from hashtable _pointers_. |
-  `+${buffer}+` |
-  `+0x1234abcd+`
+  >> `+${buffer}+` +
+  == `+0x1234abcd+`
 
 | `+${hdata.var1.var2...}+` +
   `+${hdata[list].var1.var2...}+` | |
   Hdata value (pointers `window` and `buffer` are set by default with current
   window/buffer), `list` can be a list name (example: "gui_buffers"), a pointer
   (example: "0x1234abcd") or a pointer name (example: "my_pointer"). |
-  `+${buffer[gui_buffers].full_name}+` +
-  `+${buffer[my_buffer_pointer].full_name}+` +
-  `+${window.buffer.number}+` |
-  `+core.weechat+` +
-  `+1+`
+  >> `+${buffer[gui_buffers].full_name}+` +
+  == `+core.weechat+` +
+  +
+  >> `+${buffer[my_buffer_pointer].full_name}+` +
+  == `+core.weechat+` +
+  +
+  >> `+${window.buffer.number}+` +
+  == `+1+`
 |===
 
 ==== string_dyn_alloc

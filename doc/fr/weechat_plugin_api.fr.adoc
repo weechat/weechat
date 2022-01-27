@@ -2429,159 +2429,185 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
 Liste des opérateurs logiques qui peuvent être utilisés dans les conditions
 (par ordre de priorité, du premier utilisé au dernier) :
 
-[width="100%",cols="2,1,8,4,4",options="header"]
+[width="100%",cols="2,1,5,5",options="header"]
 |===
-| Opérateur | WeeChat mini | Description | Exemples | Résultats
+| Opérateur | WeeChat mini | Description | Exemples
 
 | `+&&+` | |
   "Et" logique |
-  `+25 && 77+` +
-  `+25 && 0+` |
-  `+1+` +
-  `+0+`
+  >> `+25 && 77+` +
+  == `+1+` +
+  +
+  >> `+25 && 0+` +
+  == `+0+`
 
 | `+\|\|+` | |
   "Ou" logique |
-  `+25 \|\| 0+` +
-  `+0 \|\| 0+` |
-  `+1+` +
-  `+0+`
+  >> `+25 \|\| 0+` +
+  == `+1+` +
+  +
+  >> `+0 \|\| 0+` +
+  ==   `+0+`
 |===
 
 Liste des opérateurs de comparaison qui peuvent être utilisés dans les conditions
 (par ordre de priorité, du premier utilisé au dernier) :
 
-[width="100%",cols="2,1,8,4,4",options="header"]
+[width="100%",cols="2,1,5,5",options="header"]
 |===
-| Opérateur | WeeChat mini | Description | Exemples | Résultats
+| Opérateur | WeeChat mini | Description | Exemples
 
 | `+=~+` | |
   Correspond à l'expression régulière POSIX étendue (des "flags" facultatifs sont autorisés, voir la fonction <<_string_regcomp,string_regcomp>>) |
-  `+abc def =~ ab.*ef+` +
-  `+abc def =~ y.*z+` |
-  `+1+` +
-  `+0+`
+  >> `+abc def =~ ab.*ef+` +
+  == `+1+` +
+  +
+  >> `+abc def =~ y.*z+` +
+  == `+0+`
 
 | `+!~+` | |
   Ne correspond PAS à l'expression régulière POSIX étendue (des "flags" facultatifs sont autorisés, voir la fonction <<_string_regcomp,string_regcomp>>) |
-  `+abc def !~ ab.*ef+` +
-  `+abc def !~ y.*z+` |
-  `+0+` +
-  `+1+`
+  >> `+abc def !~ ab.*ef+` +
+  == `+0+` +
+  +
+  >> `+abc def !~ y.*z+` +
+  == `+1+`
 
 | `+==*+` | 2.9 |
   Correspond au masque où le caractère joker "*" est autorisé, sensible à la casse (voir la fonction <<_string_match,string_match>>) |
-  `+abc def ==* a*f+` +
-  `+abc def ==* y*z+` |
-  `+1+` +
-  `+0+`
+  >> `+abc def ==* a*f+` +
+  == `+1+` +
+  +
+  >> `+abc def ==* y*z+` +
+  == `+0+`
 
 | `+!!*+` | 2.9 |
   Ne correspond PAS au masque où le caractère joker "*" est autorisé, sensible à la casse (voir la fonction <<_string_match,string_match>>) |
-  `+abc def !!* a*f+` +
-  `+abc def !!* y*z+` |
-  `+0+` +
-  `+1+`
+  >> `+abc def !!* a*f+` +
+  == `+0+` +
+  +
+  >> `+abc def !!* y*z+` +
+  == `+1+`
 
 | `+=*+` | 1.8 |
   Correspond au masque où le caractère joker "*" est autorisé, insensible à la casse (voir la fonction <<_string_match,string_match>>) |
-  `+abc def =* A*F+` +
-  `+abc def =* Y*Z+` |
-  `+1+` +
-  `+0+`
+  >> `+abc def =* A*F+` +
+  == `+1+` +
+  +
+  >> `+abc def =* Y*Z+` +
+  == `+0+`
 
 | `+!*+` | 1.8 |
   Ne correspond PAS au masque où le caractère joker "*" est autorisé, insensible à la casse (voir la fonction <<_string_match,string_match>>) |
-  `+abc def !* A*F+` +
-  `+abc def !* Y*Z+` |
-  `+0+` +
-  `+1+`
+  >> `+abc def !* A*F+` +
+  == `+0+` +
+  +
+  >> `+abc def !* Y*Z+` +
+  == `+1+`
 
 | `+==-+` | 2.9 |
   Est inclus, sensible à la casse |
-  `+abc def ==- bc+` +
-  `+abc def ==- xyz+` |
-  `+1+` +
-  `+0+`
+  >> `+abc def ==- bc+` +
+  == `+1+` +
+  +
+  >> `+abc def ==- xyz+` +
+  == `+0+`
 
 | `+!!-+` | 2.9 |
   N'est PAS inclus, sensible à la casse |
-  `+abc def !!- bc+` +
-  `+abc def !!- xyz+` |
-  `+0+` +
-  `+1+`
+  >> `+abc def !!- bc+` +
+  == `+0+` +
+  +
+  >> `+abc def !!- xyz+` +
+  == `+1+`
 
 | `+=-+` | 2.9 |
   Est inclus, insensible à la casse |
-  `+abc def =- BC+` +
-  `+abc def =- XYZ+` |
-  `+1+` +
-  `+0+`
+  >> `+abc def =- BC+` +
+  == `+1+` +
+  +
+  >> `+abc def =- XYZ+` +
+  == `+0+`
 
 | `+!-+` | 2.9 |
   N'est PAS inclus, insensible à la casse |
-  `+abc def !- BC+` +
-  `+abc def !- XYZ+` |
-  `+0+` +
-  `+1+`
+  >> `+abc def !- BC+` +
+  == `+0+` +
+  +
+  >> `+abc def !- XYZ+` +
+  == `+1+`
 
 | `+==+` | |
   Égal |
-  `+test == test+` +
-  `+test == string+` |
-  `+1+` +
-  `+0+`
+  >> `+test == test+` +
+  == `+1+` +
+  +
+  >> `+test == string+` +
+  == `+0+`
 
 | `+!=+` | |
   Non égal |
-  `+test != test+` +
-  `+test != string+` |
-  `+0+` +
-  `+1+`
+  >> `+test != test+` +
+  == `+0+` +
+  +
+  >> `+test != string+` +
+  == `+1+`
 
 | `+<=+` | |
   Plus petit ou égal |
-  `+abc <= defghi+` +
-  `+abc <= abc+` +
-  `+defghi <= abc+` +
-  `+15 <= 2+` |
-  `+1+` +
-  `+1+` +
-  `+0+` +
-  `+0+`
+  >> `+abc <= defghi+` +
+  == `+1+` +
+  +
+  >> `+abc <= abc+` +
+  == `+1+` +
+  +
+  >> `+defghi <= abc+` +
+  == `+0+` +
+  +
+  >> `+15 <= 2+` +
+  == `+0+`
 
 | `+<+` | |
   Plus petit |
-  `+abc < defghi+` +
-  `+abc < abc+` +
-  `+defghi < abc+` +
-  `+15 < 2+` |
-  `+1+` +
-  `+0+` +
-  `+0+` +
-  `+0+`
+  >> `+abc < defghi+` +
+  == `+1+` +
+  +
+  >> `+abc < abc+` +
+  == `+0+` +
+  +
+  >> `+defghi < abc+` +
+  == `+0+` +
+  +
+  >> `+15 < 2+` +
+  == `+0+`
 
 | `+>=+` | |
   Plus grand ou égal |
-  `+defghi >= abc+` +
-  `+abc >= abc+` +
-  `+abc >= defghi+` +
-  `+15 >= 2+` |
-  `+1+` +
-  `+1+` +
-  `+0+` +
-  `+1+`
+  >> `+defghi >= abc+` +
+  == `+1+` +
+  +
+  >> `+abc >= abc+` +
+  == `+1+` +
+  +
+  >> `+abc >= defghi+` +
+  == `+0+` +
+  +
+  >> `+15 >= 2+` +
+  == `+1+`
 
 | `+>+` | |
   Plus grand |
-  `+defghi > abc+` +
-  `+abc > abc+` +
-  `+abc > defghi+` +
-  `+15 > 2+` |
-  `+1+` +
-  `+0+` +
-  `+0+` +
-  `+1+`
+  >> `+defghi > abc+` +
+  == `+1+` +
+  +
+  >> `+abc > abc+` +
+  == `+0+` +
+  +
+  >> `+abc > defghi+` +
+  == `+0+` +
+  +
+  >> `+15 > 2+` +
+  == `+1+`
 |===
 
 La comparaison est faite en utilisant des nombres à virgule si les deux expressions
@@ -2603,118 +2629,136 @@ de chaque expression, par exemple :
 Liste des variables étendues dans l'expression (par ordre de priorité, de la
 première étendue à la dernière) :
 
-[width="100%",cols="2,1,8,4,4",options="header"]
+[width="100%",cols="2,1,5,5",options="header"]
 |===
-| Format | WeeChat mini | Description | Exemples | Résultats
+| Format | WeeChat mini | Description | Exemples
 
 | `+${raw:xxx}+` | 3.1 |
   Chaîne brute (non évaluée). |
-  `+${raw:${info:version}}+` |
-  `+${info:version}+`
+  >> `+${raw:${info:version}}+` +
+  == `+${info:version}+`
 
 | `+${nom}+` | 3.4 |
   Variable définie par l'utilisateur (avec `+${define:nom,valeur}+`). |
-  `+${nom}+` |
-  `+valeur+`
+  >> `+${nom}+` +
+  == `+valeur+`
 
 | `+${nom}+` | |
   Variable `nom` de la table de hachage _extra_vars_. |
-  `+${nom}+` |
-  `+valeur+`
+  >> `+${nom}+` +
+  == `+valeur+`
 
 | `+${weechat_xxx_dir}+` | 3.2 |
   Un répertoire WeeChat : `+${weechat_config_dir}+`, `+${weechat_data_dir}+`,
   `+${weechat_cache_dir}+` ou `+${weechat_runtime_dir}+`. |
-  `+${weechat_config_dir}+` +
-  `+${weechat_data_dir}+` +
-  `+${weechat_cache_dir}+` +
-  `+${weechat_runtime_dir}+` |
-  `+/home/user/.config/weechat+` +
-  `+/home/user/.local/share/weechat+` +
-  `+/home/user/.cache/weechat+` +
-  `+/run/user/1000/weechat+`
+  >> `+${weechat_config_dir}+` +
+  == `+/home/user/.config/weechat+` +
+  +
+  >> `+${weechat_data_dir}+` +
+  == `+/home/user/.local/share/weechat+` +
+  +
+  >> `+${weechat_cache_dir}+` +
+  == `+/home/user/.cache/weechat+` +
+  +
+  >> `+${weechat_runtime_dir}+` +
+  == `+/run/user/1000/weechat+`
 
 | `+${eval:xxx}+` | 1.3 |
   Chaîne à évaluer. |
-  `+${eval:${date:${weechat.look.buffer_time_format}}}+` |
-  `+19:02:45+` (avec des couleurs s'il y a des codes couleur dans l'option
-  weechat.look.buffer_time_format)
+  >> `+${eval:${date:${weechat.look.buffer_time_format}}}+` +
+  == `+19:02:45+` ^(1)^ +
+  +
+  ^(1)^ Avec des couleurs s'il y a des codes couleur dans l'option
+  weechat.look.buffer_time_format
 
 | `+${eval_cond:xxx}+` | 3.1 |
   Chaîne à évaluer comme condition. |
-  `+${eval_cond:${window.win_width} > 100}+` |
-  `+1+`
+  >> `+${eval_cond:${window.win_width} > 100}+` +
+  == `+1+`
 
 | `+${esc:xxx}+` +
   `+${\xxx}+` | 1.0 |
   Chaîne avec caractères échappés. |
-  `+${esc:préfixe\tmessage}+` +
-  `+${\ua9}+` |
-  `+préfixe<TAB>message+` +
-  `+©+`
+  >> `+${esc:préfixe\tmessage}+` +
+  == `+préfixe<TAB>message+` +
+  +
+  >> `+${\ua9}+` +
+  == `+©+`
 
 | `+${hide:x,chaîne}+` | 1.1 |
   Chaîne avec les caractères masqués (tous les caractères dans `chaîne`
   remplacés par `x`). |
-  `+${hide:*,mot_de_passe}+` |
-  `+************+`
+  >> `+${hide:*,mot_de_passe}+` +
+  == `+************+`
 
 | `+${cut:max,suffixe,chaîne}+` +
   `+${cut:+max,suffixe,chaîne}+` | 1.8 |
   Chaîne avec `max` caractères, et un `suffixe` facultatif si la chaîne est coupée. +
   Avec le format `+max`, le suffixe est compté dans la longueur maximale. |
-  `+${cut:4,…,ceci est un test}+` +
-  `+${cut:+4,…,ceci est un test}+` +
-  `+${cut:2,>>,こんにちは世界}+` |
-  `+ceci…+` +
-  `+c…+` +
-  `+こん>>+`
+  >> `+${cut:4,…,ceci est un test}+` +
+  == `+ceci…+` +
+  +
+  >> `+${cut:+4,…,ceci est un test}+` +
+  == `+c…+` +
+  +
+  >> `+${cut:2,>>,こんにちは世界}+` +
+  == `+こん>>+`
 
 | `+${cutscr:max,suffixe,chaîne}+` +
   `+${cutscr:+max,suffixe,chaîne}+` | 1.8 |
   Chaîne avec `max` caractères affichés à l'écran, et un `suffixe` facultatif si la chaîne est coupée. +
   Avec le format `+max`, le suffixe est compté dans la longueur maximale. |
-  `+${cutscr:4,…,ceci est un test}+` +
-  `+${cutscr:+4,…,ceci est un test}+` +
-  `+${cutscr:2,>>,こんにちは世界}+` |
-  `+ceci…+` +
-  `+cec…+` +
-  `+こ>>+`
+  >> `+${cutscr:4,…,ceci est un test}+` +
+  == `+ceci…+` +
+  +
+  >> `+${cutscr:+4,…,ceci est un test}+` +
+  == `+cec…+` +
+  +
+  >> `+${cutscr:2,>>,こんにちは世界}+` +
+  == `+こ>>+`
 
 | `+${rev:xxx}+` | 2.2 |
   Chaîne inversée (les codes couleurs sont inversés, donc la chaîne ne devrait
   pas contenir de codes couleurs). |
-  `+${rev:Bonjour, le monde !}+` +
-  `+${rev:Bonjour, ${color:red}le monde !}+` |
-  `+! ednom el ,ruojnoB+` +
-  `+! ednom el30F ,ruojnoB+` (pas de couleur, le code couleur est inversé)
+  >> `+${rev:Bonjour, le monde !}+` +
+  == `+! ednom el ,ruojnoB+` +
+  +
+  >> `+${rev:Bonjour, ${color:red}le monde !}+` +
+  == `+! ednom el30F ,ruojnoB+` ^(1)^ +
+  +
+  ^(1)^ Pas de couleur, le code couleur est inversé
 
 | `+${revscr:xxx}+` | 2.7 |
   Chaîne inversée pour l'écran : les codes couleurs ne sont pas inversés. |
-  `+${revscr:Bonjour, le monde !}+` +
-  `+${revscr:Bonjour, ${color:red}le monde !}+` |
-  `+! ednom el ,ruojnoB+` +
-  `+! ednom el ,ruojnoB+` (`pass:[ ,ruojnoB]` en rouge)
+  >> `+${revscr:Bonjour, le monde !}+` +
+  == `+! ednom el ,ruojnoB+` +
+  +
+  >> `+${revscr:Bonjour, ${color:red}le monde !}+` +
+  == `+! ednom el ,ruojnoB+` ^(1)^ +
+  +
+  ^(1)^ (`pass:[ ,ruojnoB]` en rouge
 
 | `+${repeat:nombre,chaîne}+` | 2.3 |
   Chaîne répétée. |
-  `+${repeat:5,-}+` |
-  `+-----+`
+  >> `+${repeat:5,-}+` +
+  == `+-----+`
 
 | `+${length:xxx}+` | 2.7 |
   Longueur de la chaîne (nombre de caractères UTF-8), les codes couleurs sont
   ignorés. |
-  `+${length:test}+` +
-  `+${length:こんにちは世界}+` |
-  `+4+` +
-  `+7+`
+  >> `+${length:test}+` +
+  == `+4+` +
+  +
+  >> `+${length:こんにちは世界}+` +
+  == `+7+`
 
 | `+${lengthscr:xxx}+` | 2.7 |
   Longueur de la chaîne affichée à l'écran, les codes couleurs sont ignorés. |
-  `+${lengthscr:test}+` +
-  `+${lengthscr:こんにちは世界}+` |
-  `+4+` +
-  `+14+`
+  >> `+${lengthscr:test}+` +
+  == `+4+` +
+  +
+  >> `+${lengthscr:こんにちは世界}+` +
+  == `+14+`
 
 | `+${split:number,seps,flags,xxx}+` | 3.3 |
   Chaîne découpée, et retour, selon `number` : +
@@ -2730,24 +2774,32 @@ première étendue à la dernière) :
   - `keep_eol` : garder jusqu'à la fin de la ligne pour chaque valeur +
   - `strip_items=xyz` : supprimer les caractères `x`, `y` et `z` au début/fin des éléments +
   - `max_items=N` : retourner au plus N éléments |
-  `+${split:1,,,abc,def,ghi}+` +
-  `+${split:-1,,,abc,def,ghi}+` +
-  `+${split:count,,,abc,def,ghi}+` +
-  `+${split:random,,,abc,def,ghi}+` +
-  `+${split:3,,collapse_seps,abc,,,def,,,ghi}+` +
-  `+${split:3,,strip_items=-_,_-abc-_,_-def-_,_-ghi-_}+` +
-  `+${split:2, ,,this is a test}+` +
-  `+${split:2, ,strip_left+strip_right, this is a test }+` +
-  `+${split:2, ,keep_eol,this is a test}+` |
-  `+abc+` +
-  `+ghi+` +
-  `+3+` +
-  `+def+` +
-  `+ghi+` +
-  `+ghi+` +
-  `+is+` +
-  `+is+` +
-  `+is a test+`
+  >> `+${split:1,,,abc,def,ghi}+` +
+  == `+abc+` +
+  +
+  >> `+${split:-1,,,abc,def,ghi}+` +
+  == `+ghi+` +
+  +
+  >> `+${split:count,,,abc,def,ghi}+` +
+  == `+3+` +
+  +
+  >> `+${split:random,,,abc,def,ghi}+` +
+  == `+def+` +
+  +
+  >> `+${split:3,,collapse_seps,abc,,,def,,,ghi}+` +
+  == `+ghi+` +
+  +
+  >> `+${split:3,,strip_items=-_,_-abc-_,_-def-_,_-ghi-_}+` +
+  == `+ghi+` +
+  +
+  >> `+${split:2, ,,this is a test}+` +
+  == `+is+` +
+  +
+  >> `+${split:2, ,strip_left+strip_right, this is a test }+` +
+  == `+is+` +
+  +
+  >> `+${split:2, ,keep_eol,this is a test}+` +
+  == `+is a test+`
 
 | `+${split_shell:number,xxx}+` | 3.3 |
   Paramètres shells découpés, et retour, selon `number` : +
@@ -2755,14 +2807,17 @@ première étendue à la dernière) :
   - `random` : un paramètre au hasard +
   - entier ≥ 1 : le paramètre par son index (1 = premier paramètre) +
   - entier ≤ -1 : le paramètre par son index en partant de la fin (-1 = dernier paramètre, -2 = avant-dernier paramètre, etc.) |
-  `+${split_shell:1,"first arg" arg2}+` +
-  `+${split_shell:-1,"first arg" arg2}+` +
-  `+${split_shell:count,"first arg" arg2}+` +
-  `+${split_shell:random,"first arg" arg2}+` |
-  `+first arg+` +
-  `+arg2+` +
-  `+2+` +
-  `+arg2+`
+  >> `+${split_shell:1,"first arg" arg2}+` +
+  == `+first arg+` +
+  +
+  >> `+${split_shell:-1,"first arg" arg2}+` +
+  == `+arg2+` +
+  +
+  >> `+${split_shell:count,"first arg" arg2}+` +
+  == `+2+` +
+  +
+  >> `+${split_shell:random,"first arg" arg2}+` +
+  == `+arg2+`
 
 | `+${re:xxx}+` | 1.1 |
   Données sur l'expression régulière : +
@@ -2771,74 +2826,90 @@ première étendue à la dernière) :
   `+++` = dernier groupe capturé, +
   `#` = index du dernier groupe capturé _(WeeChat ≥ 1.8)_ +
   `repl_index` = index du remplacement en cours (démarre à 1) _(WeeChat ≥ 3.3)_. |
-  `+${re:0}+` +
-  `+${re:1}+` +
-  `+${re:2}+` +
-  `+${re:+}+` +
-  `+${re:#}+` +
-  `+${re:repl_index}+` |
-  `+test1 test2+` +
-  `+test1+` +
-  `+test2+` +
-  `+test2+` +
-  `+2+` +
-  `+1+`
+  >> `+${re:0}+` +
+  == `+test1 test2+` +
+  +
+  >> `+${re:1}+` +
+  == `+test1+` +
+  +
+  >> `+${re:2}+` +
+  == `+test2+` +
+  +
+  >> `+${re:+}+` +
+  == `+test2+` +
+  +
+  >> `+${re:#}+` +
+  == `+2+` +
+  +
+  >> `+${re:repl_index}+` +
+  == `+1+`
 
 | `+${color:nom}+` | 0.4.2 |
   Code couleur WeeChat (le nom de couleur a des attributs facultatifs),
   voir la fonction <<_color,color>> pour les formats supportés. |
-  `+${color:red}texte rouge+` +
-  `+${color:*214}texte orange gras+` |
-  `+texte rouge+` (en rouge) +
-  `+texte orange gras+` (en orange gras)
+  >> `+${color:red}texte rouge+` +
+  == `+texte rouge+` ^(1)^ +
+  +
+  >> `+${color:*214}texte orange gras+` +
+  == `+texte orange gras+` ^(2)^ +
+  +
+  ^(1)^ En rouge +
+  ^(2)^ En orange gras
 
 | `+${modifier:name,data,string}+` | 2.7 |
   Résultat d'un modificateur, voir la fonction
   <<_hook_modifier_exec,hook_modifier_exec>>. |
-  `+${modifier:eval_path_home,,~}+` +
-  `+${modifier:eval_path_home,directory=config,%h/weechat.conf}+` |
-  `+/home/user+` +
-  `+/home/user/.config/weechat/weechat.conf+`
+  >> `+${modifier:eval_path_home,,~}+` +
+  == `+/home/user+` +
+  +
+  >> `+${modifier:eval_path_home,directory=config,%h/irc.conf}+` +
+  == `+/home/user/.config/weechat/irc.conf+`
 
 | `+${info:nom}+` +
   `+${info:nom,paramètres}+` | 0.4.3 |
   Info de WeeChat ou d'une extension, voir la fonction <<_info_get,info_get>>. |
-  `+${info:version}+` +
-  `+${info:nick_color_name,foo}+` |
-  `+1.0+` +
-  `+lightblue+`
+  >> `+${info:version}+` +
+  == `+1.0+` +
+  +
+  >> `+${info:nick_color_name,foo}+` +
+  == `+lightblue+`
 
 | `+${base_encode:base,xxx}+` | 2.9 |
   Chaîne encodée en base 16, 32 ou 64. |
-  `+${base_encode:16,test string}+` +
-  `+${base_encode:32,test string}+` +
-  `+${base_encode:64,test string}+` |
-  `+7465737420737472696E67+` +
-  `+ORSXG5BAON2HE2LOM4======+` +
-  `+dGVzdCBzdHJpbmc=+`
+  >> `+${base_encode:16,test string}+` +
+  == `+7465737420737472696E67+` +
+  +
+  >> `+${base_encode:32,test string}+` +
+  == `+ORSXG5BAON2HE2LOM4======+` +
+  +
+  >> `+${base_encode:64,test string}+` +
+  == `+dGVzdCBzdHJpbmc=+`
 
 | `+${base_decode:base,xxx}+` | 2.9 |
   Chaîne décodée depuis base 16, 32 ou 64. |
-  `+${base_decode:16,7465737420737472696E67}+` +
-  `+${base_decode:32,ORSXG5BAON2HE2LOM4======}+` +
-  `+${base_decode:64,dGVzdCBzdHJpbmc=}+` |
-  `+test string+` +
-  `+test string+` +
-  `+test string+`
+  >> `+${base_decode:16,7465737420737472696E67}+` +
+  == `+test string+` +
+  +
+  >> `+${base_decode:32,ORSXG5BAON2HE2LOM4======}+` +
+  == `+test string+` +
+  +
+  >> `+${base_decode:64,dGVzdCBzdHJpbmc=}+` +
+  == `+test string+`
 
 | `+${date}+` +
   `+${date:xxx}+` | 1.3 |
   La date/heure courante, avec un format personnalisé (voir `man strftime`),
   le format par défaut est `%F %T`. |
-  `+${date}+` +
-  `+${date:%H:%M:%S}+` |
-  `+2015-06-30 19:02:45+` +
-  `+19:02:45+`
+  >> `+${date}+` +
+  == `+2015-06-30 19:02:45+` +
+  +
+  >> `+${date:%H:%M:%S}+` +
+  == `+19:02:45+`
 
 | `+${env:NOM}+` | 1.2 |
   Valeur de la variable d'environnement `NOM`. |
-  `+${env:HOME}+` |
-  `+/home/user+`
+  >> `+${env:HOME}+` +
+  == `+/home/user+`
 
 | `+${if:condition}+` +
   `+${if:condition?vrai}+`
@@ -2847,8 +2918,8 @@ première étendue à la dernière) :
   (optionnelle) et une autre valeur si la condition est fausse (optionnelle).
   Si les valeurs ne sont pas données, "1" ou "0" est retourné, selon le résultat
   de la condition. |
-  `+${if:${info:term_width}>80?grand:petit}+` |
-  `+grand+`
+  >> `+${if:${info:term_width}>80?grand:petit}+` +
+  == `+grand+`
 
 | `+${calc:xxx}+` | 2.7 |
   Résultat de l'expression, où les parenthèses et les opérateurs suivants sont
@@ -2860,55 +2931,62 @@ première étendue à la dernière) :
   `+//+` : résultat de la division sans la partie décimale +
   `+%+` : reste de la division +
   `+**+`: puissance. |
-  `+${calc:5+2*3}+` +
-  `+${calc:(5+2)*3}+` +
-  `+${calc:10/4}+` +
-  `+${calc:10//4}+` +
-  `+${calc:9.2%3}+` +
-  `+${calc:2**16}+` |
-  `+11+` +
-  `+21+` +
-  `+2.5+` +
-  `+2+` +
-  `+0.2+` +
-  `+65536+`
+  >> `+${calc:5+2*3}+` +
+  == `+11+` +
+  +
+  >> `+${calc:(5+2)*3}+` +
+  == `+21+` +
+  +
+  >> `+${calc:10/4}+` +
+  == `+2.5+` +
+  +
+  >> `+${calc:10//4}+` +
+  == `+2+` +
+  +
+  >> `+${calc:9.2%3}+` +
+  == `+0.2+` +
+  +
+  >> `+${calc:2**16}+` +
+  == `+65536+`
 
 | `+${random:min,max}+` | 3.3 |
   Nombre entier aléatoire dans l'intervalle de `min` à `max` (inclus). |
-  `+${random:0,10}+` |
-  `+3+`
+  >> `+${random:0,10}+` +
+  == `+3+`
 
 | `+${translate:xxx}+` | 3.2 |
   Chaîne traduite (dépend de la langue utilisée par WeeChat pour afficher les
   messages). |
-  `+${translate:Plugin}+` |
-  `+Extension+` (exemple en Français)
+  >> `+${translate:Plugin}+` +
+  == `+Extension+` ^(1)^ +
+  +
+  ^(1)^ Exemple en Français
 
 | `+${define:nom,valeur}+` | 3.4 |
   Définir une variable `nom` à `valeur`, qui peut être utilisée dans la même
   expression évaluée avec `+${nom}+`. |
-  `+${define:len,${calc:5+3}}${len}x${len}+` |
-  `+8x8+`
+  >> `+${define:len,${calc:5+3}}${len}x${len}+` +
+  == `+8x8+`
 
 | `+${sec.data.nom}+` | |
   Valeur de la donnée sécurisée `nom`. |
-  `+${sec.data.libera_pass}+` |
-  `+mon_mot_de_passe+`
+  >> `+${sec.data.libera_pass}+` +
+  == `+mon_mot_de_passe+`
 
 | `+${fichier.section.option}+` | |
   Valeur de l'option. |
-  `+${weechat.look.buffer_time_format}+` |
-  `+%H:%M:%S+`
+  >> `+${weechat.look.buffer_time_format}+` +
+  == `+%H:%M:%S+`
 
 | `+${nom}+` | |
   Valeur de la variable locale `nom` dans le tampon. |
-  `+${nick}+` |
-  `+FlashCode+`
+  >> `+${nick}+` +
+  == `+FlashCode+`
 
 | `+${pointeur}+` | |
   Variable `pointeur` de la table de hachage _pointers_. |
-  `+${buffer}+` |
-  `+0x1234abcd+`
+  >> `+${buffer}+` +
+  == `+0x1234abcd+`
 
 | `+${hdata.var1.var2...}+` +
   `+${hdata[list].var1.var2...}+` | |
@@ -2916,11 +2994,14 @@ première étendue à la dernière) :
   avec la fenêtre et tampon courants), `list` peut être le nom d'une liste
   (exemple : "gui_buffers"), un pointeur (exemple : "0x1234abcd") ou un nom
   de pointeur (exemple : "mon_pointeur"). |
-  `+${buffer[gui_buffers].full_name}+` +
-  `+${buffer[mon_pointeur_buffer].full_name}+` +
-  `+${window.buffer.number}+` |
-  `+core.weechat+` +
-  `+1+`
+  >> `+${buffer[gui_buffers].full_name}+` +
+  == `+core.weechat+` +
+  +
+  >> `+${buffer[mon_pointeur_buffer].full_name}+` +
+  == `+core.weechat+` +
+  +
+  >> `+${window.buffer.number}+` +
+  == `+1+`
 |===
 
 ==== string_dyn_alloc
