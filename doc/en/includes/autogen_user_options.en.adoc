@@ -1290,12 +1290,6 @@
 ** values: any string
 ** default value: `+"*"+`
 
-* [[option_weechat.plugin.debug]] *weechat.plugin.debug*
-** description: pass:none[enable debug messages by default in all plugins (option disabled by default, which is highly recommended)]
-** type: boolean
-** values: on, off
-** default value: `+off+`
-
 * [[option_weechat.plugin.extension]] *weechat.plugin.extension*
 ** description: pass:none[comma separated list of file name extensions for plugins]
 ** type: string

@@ -1290,12 +1290,6 @@
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+"*"+`
 
-* [[option_weechat.plugin.debug]] *weechat.plugin.debug*
-** Beschreibung: pass:none[aktiviert Debug-Nachrichten für alle Erweiterungen (diese Einstellung ist standardmäßig deaktiviert und das ist auch gut so)]
-** Typ: boolesch
-** Werte: on, off
-** Standardwert: `+off+`
-
 * [[option_weechat.plugin.extension]] *weechat.plugin.extension*
 ** Beschreibung: pass:none[durch Kommata getrennte Liste von Dateinamenserweiterungen, welche für die Erweiterungen genutzt werden sollen]
 ** Typ: Zeichenkette

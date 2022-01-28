@@ -1290,12 +1290,6 @@
 ** 値: 未制約文字列
 ** デフォルト値: `+"*"+`
 
-* [[option_weechat.plugin.debug]] *weechat.plugin.debug*
-** 説明: pass:none[全てのプラグインに対してデバッグメッセージを有効化 (デフォルトでは無効、無効を推奨)]
-** タイプ: ブール
-** 値: on, off
-** デフォルト値: `+off+`
-
 * [[option_weechat.plugin.extension]] *weechat.plugin.extension*
 ** 説明: pass:none[プラグインのファイル拡張子のコンマ区切りリスト]
 ** タイプ: 文字列

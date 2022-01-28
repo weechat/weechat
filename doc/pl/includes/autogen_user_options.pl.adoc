@@ -1290,12 +1290,6 @@
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+"*"+`
 
-* [[option_weechat.plugin.debug]] *weechat.plugin.debug*
-** opis: pass:none[włącz wiadomości debugujące domyślnie we wszystkich wtyczkach (opcja domyślnie wyłączona, co jest wysoce zalecane)]
-** typ: bool
-** wartości: on, off
-** domyślna wartość: `+off+`
-
 * [[option_weechat.plugin.extension]] *weechat.plugin.extension*
 ** opis: pass:none[oddzielona przecinkami lista rozszerzeń nazw plików dla wtyczek]
 ** typ: ciąg

@@ -1290,12 +1290,6 @@
 ** valori: qualsiasi stringa
 ** valore predefinito: `+"*"+`
 
-* [[option_weechat.plugin.debug]] *weechat.plugin.debug*
-** descrizione: pass:none[abilita come predefinito il debug per tutti i plugin (opzione disabilita di default, caldamente raccomandato)]
-** tipo: bool
-** valori: on, off
-** valore predefinito: `+off+`
-
 * [[option_weechat.plugin.extension]] *weechat.plugin.extension*
 ** descrizione: pass:none[elenco separato da virgole di estensioni dei nomi file per i plugin]
 ** tipo: stringa
