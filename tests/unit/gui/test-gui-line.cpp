@@ -27,10 +27,29 @@ extern "C"
 #include "src/core/wee-config.h"
 #include "src/core/wee-string.h"
 #include "src/gui/gui-buffer.h"
+#include "src/gui/gui-color.h"
 #include "src/gui/gui-filter.h"
 #include "src/gui/gui-hotlist.h"
 #include "src/gui/gui-line.h"
 }
+
+#define WEE_BUILD_STR_PREFIX_MSG(__result, __prefix, __message)         \
+    line = gui_line_new (gui_buffers, -1, 0, 0, "tag1,tag2",            \
+                         __prefix, __message);                          \
+    str = gui_line_build_string_prefix_message (line);                  \
+    STRCMP_EQUAL(__result, str);                                        \
+    free (str);                                                         \
+    gui_line_free_data (line);                                          \
+    free (line);
+
+#define WEE_BUILD_STR_MSG_TAGS(__tags, __message)                       \
+    line = gui_line_new (gui_buffers, -1, 0, 0, __tags,                 \
+                         NULL, __message);                              \
+    str = gui_line_build_string_message_tags (line);                    \
+    STRCMP_EQUAL(str_result, str);                                      \
+    free (str);                                                         \
+    gui_line_free_data (line);                                          \
+    free (line);
 
 #define WEE_LINE_MATCH_TAGS(__result, __line_tags, __tags)              \
     gui_line_tags_alloc (&line_data, __line_tags);                      \
@@ -159,6 +178,68 @@ TEST(GuiLine, GetPrefixForDisplay)
 TEST(GuiLine, GetAlign)
 {
     /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   gui_line_build_string_prefix_message
+ */
+
+TEST(GuiLine, BuildStringPrefixMessage)
+{
+    struct t_gui_line *line;
+    char *str, str_prefix[256], str_message[256];
+
+    WEE_BUILD_STR_PREFIX_MSG("\tmessage", NULL, "message");
+    WEE_BUILD_STR_PREFIX_MSG("\tmessage", "", "message");
+    WEE_BUILD_STR_PREFIX_MSG("prefix\tmessage", "prefix", "message");
+
+    snprintf (str_prefix, sizeof (str_prefix),
+              "%sblue prefix",
+              gui_color_get_custom ("blue"));
+    snprintf (str_message, sizeof (str_message),
+              "%sred message",
+              gui_color_get_custom ("red"));
+    WEE_BUILD_STR_PREFIX_MSG("blue prefix\tred message", str_prefix, str_message);
+}
+
+/*
+ * Tests functions:
+ *   gui_line_build_string_message_tags
+ */
+
+TEST(GuiLine, BuildStringMessageTags)
+{
+    struct t_gui_line *line;
+    char *str, str_result[256];
+
+    snprintf (str_result, sizeof (str_result),
+              "message%s [%s%s]",
+              GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+              GUI_COLOR(GUI_COLOR_CHAT_TAGS),
+              GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
+    WEE_BUILD_STR_MSG_TAGS(NULL, "message");
+
+    snprintf (str_result, sizeof (str_result),
+              "message%s [%s%s]",
+              GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+              GUI_COLOR(GUI_COLOR_CHAT_TAGS),
+              GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
+    WEE_BUILD_STR_MSG_TAGS("", "message");
+
+    snprintf (str_result, sizeof (str_result),
+              "message%s [%stag1%s]",
+              GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+              GUI_COLOR(GUI_COLOR_CHAT_TAGS),
+              GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
+    WEE_BUILD_STR_MSG_TAGS("tag1", "message");
+
+    snprintf (str_result, sizeof (str_result),
+              "message%s [%stag1,tag2,tag3%s]",
+              GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+              GUI_COLOR(GUI_COLOR_CHAT_TAGS),
+              GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
+    WEE_BUILD_STR_MSG_TAGS("tag1,tag2,tag3", "message");
 }
 
 /*
