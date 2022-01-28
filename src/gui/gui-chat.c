@@ -613,39 +613,35 @@ gui_chat_build_string_prefix_message (struct t_gui_line *line)
  * Note: result must be freed after use.
  */
 
-
 char *
 gui_chat_build_string_message_tags (struct t_gui_line *line)
 {
-    int i, length;
-    char *buf;
+    int i;
+    char **string, *result;
 
-    length = 64 + 2;
+    string = string_dyn_alloc (256);
+    if (!string)
+        return NULL;
+
     if (line->data->message)
-        length += strlen (line->data->message);
+        string_dyn_concat (string, line->data->message, -1);
+    string_dyn_concat (string, GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS), -1);
+    string_dyn_concat (string, " [", -1);
+    string_dyn_concat (string, GUI_COLOR(GUI_COLOR_CHAT_TAGS), -1);
     for (i = 0; i < line->data->tags_count; i++)
     {
-        length += strlen (line->data->tags_array[i]) + 1;
-    }
-    length += 2;
-
-    buf = malloc (length);
-    buf[0] = '\0';
-    if (line->data->message)
-        strcat (buf, line->data->message);
-    strcat (buf, GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
-    strcat (buf, " [");
-    strcat (buf, GUI_COLOR(GUI_COLOR_CHAT_TAGS));
-    for (i = 0; i < line->data->tags_count; i++)
-    {
-        strcat (buf, line->data->tags_array[i]);
+        string_dyn_concat (string, line->data->tags_array[i], -1);
         if (i < line->data->tags_count - 1)
-            strcat (buf, ",");
+            string_dyn_concat (string, ",", -1);
     }
-    strcat (buf, GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
-    strcat (buf, "]");
+    string_dyn_concat (string, GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS), -1);
+    string_dyn_concat (string, "]", -1);
 
-    return buf;
+    result = strdup (*string);
+
+    string_dyn_free (string, 1);
+
+    return result;
 }
 
 /*
