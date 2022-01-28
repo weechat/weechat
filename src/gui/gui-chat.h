@@ -85,8 +85,6 @@ extern void gui_chat_get_word_info (struct t_gui_window *window,
 extern char *gui_chat_get_time_string (time_t date);
 extern int gui_chat_get_time_length ();
 extern void gui_chat_change_time_format ();
-extern char *gui_chat_build_string_prefix_message (struct t_gui_line *line);
-extern char *gui_chat_build_string_message_tags (struct t_gui_line *line);
 extern int gui_chat_buffer_valid (struct t_gui_buffer *buffer,
                                   int buffer_type);
 extern void gui_chat_printf_date_tags (struct t_gui_buffer *buffer,

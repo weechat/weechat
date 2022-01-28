@@ -1421,7 +1421,7 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
     if (line->data->message && line->data->message[0])
     {
         message_with_tags = (gui_chat_display_tags) ?
-            gui_chat_build_string_message_tags (line) : NULL;
+            gui_line_build_string_message_tags (line) : NULL;
         ptr_data = (message_with_tags) ?
             message_with_tags : line->data->message;
         message_with_search = NULL;

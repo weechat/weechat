@@ -373,6 +373,71 @@ gui_line_get_align (struct t_gui_buffer *buffer, struct t_gui_line *line,
 }
 
 /*
+ * Builds a string with prefix and message.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+gui_line_build_string_prefix_message (struct t_gui_line *line)
+{
+    char **string, *string_without_colors;
+
+    string = string_dyn_alloc (256);
+    if (!string)
+        return NULL;
+
+    if (line->data->prefix)
+        string_dyn_concat (string, line->data->prefix, -1);
+    string_dyn_concat (string, "\t", -1);
+    if (line->data->message)
+        string_dyn_concat (string, line->data->message, -1);
+
+    string_without_colors = gui_color_decode (*string, NULL);
+
+    string_dyn_free (string, 1);
+
+    return string_without_colors;
+}
+
+/*
+ * Builds a string with message and tags.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+gui_line_build_string_message_tags (struct t_gui_line *line)
+{
+    int i;
+    char **string, *result;
+
+    string = string_dyn_alloc (256);
+    if (!string)
+        return NULL;
+
+    if (line->data->message)
+        string_dyn_concat (string, line->data->message, -1);
+    string_dyn_concat (string, GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS), -1);
+    string_dyn_concat (string, " [", -1);
+    string_dyn_concat (string, GUI_COLOR(GUI_COLOR_CHAT_TAGS), -1);
+    for (i = 0; i < line->data->tags_count; i++)
+    {
+        string_dyn_concat (string, line->data->tags_array[i], -1);
+        if (i < line->data->tags_count - 1)
+            string_dyn_concat (string, ",", -1);
+    }
+    string_dyn_concat (string, GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS), -1);
+    string_dyn_concat (string, "]", -1);
+
+    result = strdup (*string);
+
+    string_dyn_free (string, 1);
+
+    return result;
+}
+
+/*
  * Checks if a line is displayed (no filter on line or filters disabled).
  *
  * Returns:
@@ -1623,7 +1688,7 @@ gui_line_add (struct t_gui_line *line)
                                     GUI_HOTLIST_HIGHLIGHT, NULL);
             if (!weechat_upgrading)
             {
-                message_for_signal = gui_chat_build_string_prefix_message (line);
+                message_for_signal = gui_line_build_string_prefix_message (line);
                 if (message_for_signal)
                 {
                     (void) hook_signal_send ("weechat_highlight",
@@ -1638,7 +1703,7 @@ gui_line_add (struct t_gui_line *line)
             if (!weechat_upgrading
                 && (line->data->notify_level == GUI_HOTLIST_PRIVATE))
             {
-                message_for_signal = gui_chat_build_string_prefix_message (line);
+                message_for_signal = gui_line_build_string_prefix_message (line);
                 if (message_for_signal)
                 {
                     (void) hook_signal_send ("weechat_pv",

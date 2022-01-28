@@ -80,6 +80,8 @@ extern void gui_line_get_prefix_for_display (struct t_gui_line *line,
 extern int gui_line_get_align (struct t_gui_buffer *buffer,
                                struct t_gui_line *line,
                                int with_suffix, int first_line);
+extern char *gui_line_build_string_prefix_message (struct t_gui_line *line);
+extern char *gui_line_build_string_message_tags (struct t_gui_line *line);
 extern int gui_line_is_displayed (struct t_gui_line *line);
 extern struct t_gui_line *gui_line_get_first_displayed (struct t_gui_buffer *buffer);
 extern struct t_gui_line *gui_line_get_last_displayed (struct t_gui_buffer *buffer);
