@@ -588,39 +588,23 @@ gui_chat_change_time_format ()
 char *
 gui_chat_build_string_prefix_message (struct t_gui_line *line)
 {
-    char *string, *string_without_colors;
-    int length;
+    char **string, *string_without_colors;
 
-    length = 0;
+    string = string_dyn_alloc (256);
+    if (!string)
+        return NULL;
+
     if (line->data->prefix)
-        length += strlen (line->data->prefix);
-    length++;
+        string_dyn_concat (string, line->data->prefix, -1);
+    string_dyn_concat (string, "\t", -1);
     if (line->data->message)
-        length += strlen (line->data->message);
-    length++;
+        string_dyn_concat (string, line->data->message, -1);
 
-    string = malloc (length);
-    if (string)
-    {
-        string[0] = '\0';
-        if (line->data->prefix)
-            strcat (string, line->data->prefix);
-        strcat (string, "\t");
-        if (line->data->message)
-            strcat (string, line->data->message);
-    }
+    string_without_colors = gui_color_decode (*string, NULL);
 
-    if (string)
-    {
-        string_without_colors = gui_color_decode (string, NULL);
-        if (string_without_colors)
-        {
-            free (string);
-            string = string_without_colors;
-        }
-    }
+    string_dyn_free (string, 1);
 
-    return string;
+    return string_without_colors;
 }
 
 /*
