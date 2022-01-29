@@ -1140,11 +1140,20 @@ component: fix a problem (closes #123)
 
 Où _component_ est :
 
-* pour le cœur WeeChat : _core_ (les fichiers dans le répertoire racine, _po/_
-  et _src/_, sauf _src/plugins/_)
-* fichiers de documentation : _doc_ (fichiers dans le répertoire _doc/_)
-* nom d'une extension : _irc_, _python_, _relay_, ... (fichiers dans le
-  répertoire _src/plugins/_)
+* cœur de WeeChat : `core`
+  (les fichiers dans le répertoire racine, _po/_ et _src/_, sauf _src/plugins/_)
+* documentation :
+** `doc` : mise à jour générales sur la documentation, par exemple la construction
+** `doc/man` : pages de manuel
+** `doc/faq` : questions fréquemment posées (FAQ)
+** `doc/quickstart` : guide de démarrage rapide
+** `doc/user` : guide utilisateur
+** `doc/scripting` : guide pour scripts
+** `doc/api` : référence extension API
+** `doc/relay` : protocole relay
+** `doc/dev` : guide du développeur
+* extensions : `irc`, `python`, `relay`, ...
+  (fichiers dans le répertoire _src/plugins/_)
 
 Quelques règles à suivre :
 

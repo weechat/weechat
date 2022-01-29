@@ -1087,9 +1087,19 @@ Git репозиторијум се налази на следећој URL ад�
 
 Где је _компонента_ једно од следећег:
 
-* WeeChat језгро: _core_ (фајлови у кореном директоријуму, _po/_ и _src/_, осим _src/plugins/_)
-* фајлови документације: _doc_ (фајлови у директоријуму _doc/_)
-* име додатка: _irc_, _python_, _relay_, ... (фајлови у директоријуму _src/plugins/_)
+// TRANSLATION MISSING
+* WeeChat core: `core` (files in root directory, _po/_ and _src/_, except _src/plugins/_)
+* documentation:
+** `doc`: general doc updates, for example build
+** `doc/man`: man pages
+** `doc/faq`: frequently asked questions (FAQ)
+** `doc/quickstart`: quickstart guide
+** `doc/user`: user's guide
+** `doc/scripting`: scripting guide
+** `doc/api`: plugin API reference
+** `doc/relay`: relay protocol
+** `doc/dev`: developer's guide
+* plugins: `irc`, `python`, `relay`, ... (files in directory _src/plugins/_)
 
 Нека правила која треба да поштујете:
 

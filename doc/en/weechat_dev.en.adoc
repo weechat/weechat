@@ -1120,11 +1120,18 @@ component: fix a problem (closes #123)
 
 Where _component_ is one of following:
 
-* WeeChat core: _core_ (files in root directory, _po/_ and _src/_,
-  except _src/plugins/_)
-* documentation files: _doc_ (files in directory _doc/_)
-* name of a plugin: _irc_, _python_, _relay_, ... (files in directory
-  _src/plugins/_)
+* WeeChat core: `core` (files in root directory, _po/_ and _src/_, except _src/plugins/_)
+* documentation:
+** `doc`: general doc updates, for example build
+** `doc/man`: man pages
+** `doc/faq`: frequently asked questions (FAQ)
+** `doc/quickstart`: quickstart guide
+** `doc/user`: user's guide
+** `doc/scripting`: scripting guide
+** `doc/api`: plugin API reference
+** `doc/relay`: relay protocol
+** `doc/dev`: developer's guide
+* plugins: `irc`, `python`, `relay`, ... (files in directory _src/plugins/_)
 
 Some rules to follow:
 
@@ -1138,6 +1145,7 @@ Examples of commit messages:
 ----
 core: add callback "nickcmp" for nick comparison in buffers
 core: update Japanese translations
+doc/user: add chapter on typing extension
 irc: add command /unquiet (closes #36)
 python: fix crash when unloading a script without pointer to interpreter
 ruby: add detection of ruby version 1.9.3 in CMake

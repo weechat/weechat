@@ -1172,10 +1172,19 @@ component: fix a problem (closes #123)
 
 _component_ には以下から 1 つ選んで記入してください:
 
-* WeeChat コア: _core_ (ルートディレクトリ、_po/_ ディレクトリ、_src/_
-  ディレクトリに含まれるファイル、ただし _src/plugins/_ 内のファイルを除く)
-* 文書ファイル: _doc_ (_doc/_ ディレクトリに含まれるファイル)
-* プラグインの名前: _irc_、_python_、_relay_、... (_src/plugins/_ ディレクトリに含まれるファイル)
+// TRANSLATION MISSING
+* WeeChat core: `core` (files in root directory, _po/_ and _src/_, except _src/plugins/_)
+* documentation:
+** `doc`: general doc updates, for example build
+** `doc/man`: man pages
+** `doc/faq`: frequently asked questions (FAQ)
+** `doc/quickstart`: quickstart guide
+** `doc/user`: user's guide
+** `doc/scripting`: scripting guide
+** `doc/api`: plugin API reference
+** `doc/relay`: relay protocol
+** `doc/dev`: developer's guide
+* plugins: `irc`, `python`, `relay`, ... (files in directory _src/plugins/_)
 
 以下のルールに従ってください:
 
