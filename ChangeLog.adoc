@@ -42,6 +42,7 @@ Bug fixes::
 
 Tests::
 
+  * core: add tests on GUI chat functions
   * core: add build of Debian packages in CI
 
 [[v3.4]]
