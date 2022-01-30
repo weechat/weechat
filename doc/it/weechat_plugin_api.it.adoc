@@ -8856,7 +8856,7 @@ Script (Python):
 [source,python]
 ----
 # prototipo
-def prnt_date_tags(buffer: str, date: str, tags: str, message: str) -> int: ...
+def prnt_date_tags(buffer: str, date: int, tags: str, message: str) -> int: ...
 
 # esempio
 time = int(time.time())

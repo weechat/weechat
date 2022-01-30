@@ -8606,7 +8606,7 @@ weechat_printf_date_tags (NULL, time (NULL) - 120, "notify_message",
 [source,python]
 ----
 # プロトタイプ
-def prnt_date_tags(buffer: str, date: str, tags: str, message: str) -> int: ...
+def prnt_date_tags(buffer: str, date: int, tags: str, message: str) -> int: ...
 
 # 例
 time = int(time.time())

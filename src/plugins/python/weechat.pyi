@@ -434,7 +434,7 @@ def prnt(buffer: str, message: str) -> int:
     ...
 
 
-def prnt_date_tags(buffer: str, date: str, tags: str, message: str) -> int:
+def prnt_date_tags(buffer: str, date: int, tags: str, message: str) -> int:
     """`prnt_date_tags in WeeChat plugin API reference <https://weechat.org/doc/api#_prnt_date_tags>`_"""
     ...
 
