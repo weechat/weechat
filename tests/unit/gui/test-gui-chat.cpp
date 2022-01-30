@@ -365,17 +365,17 @@ TEST(GuiChat, PrintDateTags)
 
     /* invalid buffer */
     ptr_last_line = gui_buffers->own_lines->last_line;
-    gui_chat_printf ((struct t_gui_buffer *)0x1, "test");
+    gui_chat_printf_date_tags ((struct t_gui_buffer *)0x1, 0, NULL, "test");
     POINTERS_EQUAL(ptr_last_line, gui_buffers->own_lines->last_line);
 
     /* NULL message */
     ptr_last_line = gui_buffers->own_lines->last_line;
-    gui_chat_printf (gui_buffers, NULL);
+    gui_chat_printf_date_tags (gui_buffers, 0, NULL, NULL);
     POINTERS_EQUAL(ptr_last_line, gui_buffers->own_lines->last_line);
 
     /* empty message */
     ptr_last_line = gui_buffers->own_lines->last_line;
-    gui_chat_printf (gui_buffers, "");
+    gui_chat_printf_date_tags (gui_buffers, 0, NULL, "");
     CHECK(ptr_last_line != gui_buffers->own_lines->last_line);
     ptr_data = gui_buffers->own_lines->last_line->data;
     CHECK(ptr_data);
@@ -396,7 +396,7 @@ TEST(GuiChat, PrintDateTags)
 
     /* message (no prefix) */
     ptr_last_line = gui_buffers->own_lines->last_line;
-    gui_chat_printf (gui_buffers, "this is a test");
+    gui_chat_printf_date_tags (gui_buffers, 0, NULL, "this is a test");
     CHECK(ptr_last_line != gui_buffers->own_lines->last_line);
     ptr_data = gui_buffers->own_lines->last_line->data;
     CHECK(ptr_data);
@@ -417,7 +417,7 @@ TEST(GuiChat, PrintDateTags)
 
     /* message with prefix */
     ptr_last_line = gui_buffers->own_lines->last_line;
-    gui_chat_printf (gui_buffers, "nick\tthis is a test");
+    gui_chat_printf_date_tags (gui_buffers, 0, NULL, "nick\tthis is a test");
     CHECK(ptr_last_line != gui_buffers->own_lines->last_line);
     ptr_data = gui_buffers->own_lines->last_line->data;
     CHECK(ptr_data);
@@ -438,7 +438,7 @@ TEST(GuiChat, PrintDateTags)
 
     /* message with prefix */
     ptr_last_line = gui_buffers->own_lines->last_line;
-    gui_chat_printf (gui_buffers, "nick\tthis is a test");
+    gui_chat_printf_date_tags (gui_buffers, 0, NULL, "nick\tthis is a test");
     CHECK(ptr_last_line != gui_buffers->own_lines->last_line);
     ptr_data = gui_buffers->own_lines->last_line->data;
     CHECK(ptr_data);
@@ -459,7 +459,7 @@ TEST(GuiChat, PrintDateTags)
 
     /* message with ignored prefix (space + tab) */
     ptr_last_line = gui_buffers->own_lines->last_line;
-    gui_chat_printf (gui_buffers, " \tthis is a test");
+    gui_chat_printf_date_tags (gui_buffers, 0, NULL, " \tthis is a test");
     CHECK(ptr_last_line != gui_buffers->own_lines->last_line);
     ptr_data = gui_buffers->own_lines->last_line->data;
     CHECK(ptr_data);
@@ -480,7 +480,7 @@ TEST(GuiChat, PrintDateTags)
 
     /* message with no time displayed (two tabs) */
     ptr_last_line = gui_buffers->own_lines->last_line;
-    gui_chat_printf (gui_buffers, "\t\tthis is a test");
+    gui_chat_printf_date_tags (gui_buffers, 0, NULL, "\t\tthis is a test");
     CHECK(ptr_last_line != gui_buffers->own_lines->last_line);
     ptr_data = gui_buffers->own_lines->last_line->data;
     CHECK(ptr_data);
@@ -497,6 +497,51 @@ TEST(GuiChat, PrintDateTags)
     LONGS_EQUAL(0, ptr_data->refresh_needed);
     POINTERS_EQUAL(NULL, ptr_data->prefix);
     LONGS_EQUAL(0, ptr_data->prefix_length);
+    STRCMP_EQUAL("this is a test", ptr_data->message);
+
+    /* message with past date */
+    ptr_last_line = gui_buffers->own_lines->last_line;
+    gui_chat_printf_date_tags (gui_buffers, 946681200, NULL, "nick\tthis is a test");
+    CHECK(ptr_last_line != gui_buffers->own_lines->last_line);
+    ptr_data = gui_buffers->own_lines->last_line->data;
+    CHECK(ptr_data);
+    POINTERS_EQUAL(gui_buffers, ptr_data->buffer);
+    LONGS_EQUAL(-1, ptr_data->y);
+    LONGS_EQUAL(946681200, ptr_data->date);
+    CHECK(ptr_data->date < ptr_data->date_printed);
+    CHECK(ptr_data->str_time && ptr_data->str_time[0]);
+    LONGS_EQUAL(0, ptr_data->tags_count);
+    POINTERS_EQUAL(NULL, ptr_data->tags_array);
+    LONGS_EQUAL(1, ptr_data->displayed);
+    LONGS_EQUAL(0, ptr_data->notify_level);
+    LONGS_EQUAL(0, ptr_data->highlight);
+    LONGS_EQUAL(0, ptr_data->refresh_needed);
+    STRCMP_EQUAL("nick", ptr_data->prefix);
+    LONGS_EQUAL(4, ptr_data->prefix_length);
+    STRCMP_EQUAL("this is a test", ptr_data->message);
+
+    /* message with 3 tags */
+    ptr_last_line = gui_buffers->own_lines->last_line;
+    gui_chat_printf_date_tags (gui_buffers, 0, "tag1,tag2,tag3", "nick\tthis is a test");
+    CHECK(ptr_last_line != gui_buffers->own_lines->last_line);
+    ptr_data = gui_buffers->own_lines->last_line->data;
+    CHECK(ptr_data);
+    POINTERS_EQUAL(gui_buffers, ptr_data->buffer);
+    LONGS_EQUAL(-1, ptr_data->y);
+    CHECK(ptr_data->date > 0);
+    CHECK(ptr_data->date == ptr_data->date_printed);
+    CHECK(ptr_data->str_time && ptr_data->str_time[0]);
+    LONGS_EQUAL(3, ptr_data->tags_count);
+    CHECK(ptr_data->tags_array);
+    STRCMP_EQUAL("tag1", ptr_data->tags_array[0]);
+    STRCMP_EQUAL("tag2", ptr_data->tags_array[1]);
+    STRCMP_EQUAL("tag3", ptr_data->tags_array[2]);
+    LONGS_EQUAL(1, ptr_data->displayed);
+    LONGS_EQUAL(0, ptr_data->notify_level);
+    LONGS_EQUAL(0, ptr_data->highlight);
+    LONGS_EQUAL(0, ptr_data->refresh_needed);
+    STRCMP_EQUAL("nick", ptr_data->prefix);
+    LONGS_EQUAL(4, ptr_data->prefix_length);
     STRCMP_EQUAL("this is a test", ptr_data->message);
 }
 
