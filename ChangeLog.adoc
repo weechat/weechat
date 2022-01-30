@@ -20,6 +20,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 New features::
 
+  * core: search in message tags when tags are displayed with /debug tags
   * core: add support of date and tags in messages displayed in buffers with free content, add function printf_y_date_tags (issue #1746)
   * irc: add IRC message tags in messages displayed (issue #1680)
   * relay: add `zstd` (https://facebook.github.io/zstd/[Zstandard]) compression in weechat protocol, remove option `compression` from `init` command, rename option relay.network.compression_level to relay.network.compression

@@ -403,15 +403,21 @@ gui_line_build_string_prefix_message (const char *prefix, const char *message)
 /*
  * Builds a string with message and tags.
  *
+ * If colors == 1, keep colors in message and use color for delimiters around
+ * tags.
+ * If colors == 0, strip colors from message and do not use color for
+ * delimiters around tags.
+ *
  * Note: result must be freed after use.
  */
 
 char *
 gui_line_build_string_message_tags (const char *message,
-                                    int tags_count, char **tags_array)
+                                    int tags_count, char **tags_array,
+                                    int colors)
 {
     int i;
-    char **string, *result;
+    char **string, *message_no_colors, *result;
 
     if ((tags_count < 0) || ((tags_count > 0) && !tags_array))
         return NULL;
@@ -421,17 +427,34 @@ gui_line_build_string_message_tags (const char *message,
         return NULL;
 
     if (message)
-        string_dyn_concat (string, message, -1);
-    string_dyn_concat (string, GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS), -1);
+    {
+        if (colors)
+        {
+            string_dyn_concat (string, message, -1);
+        }
+        else
+        {
+            message_no_colors = gui_color_decode (message, NULL);
+            if (message_no_colors)
+            {
+                string_dyn_concat (string, message_no_colors, -1);
+                free (message_no_colors);
+            }
+        }
+    }
+    if (colors)
+        string_dyn_concat (string, GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS), -1);
     string_dyn_concat (string, " [", -1);
-    string_dyn_concat (string, GUI_COLOR(GUI_COLOR_CHAT_TAGS), -1);
+    if (colors)
+        string_dyn_concat (string, GUI_COLOR(GUI_COLOR_CHAT_TAGS), -1);
     for (i = 0; i < tags_count; i++)
     {
         string_dyn_concat (string, tags_array[i], -1);
         if (i < tags_count - 1)
             string_dyn_concat (string, ",", -1);
     }
-    string_dyn_concat (string, GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS), -1);
+    if (colors)
+        string_dyn_concat (string, GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS), -1);
     string_dyn_concat (string, "]", -1);
 
     result = strdup (*string);
@@ -595,7 +618,18 @@ gui_line_search_text (struct t_gui_buffer *buffer, struct t_gui_line *line)
 
     if (!rc && (buffer->text_search_where & GUI_TEXT_SEARCH_IN_MESSAGE))
     {
-        message = gui_color_decode (line->data->message, NULL);
+        if (gui_chat_display_tags)
+        {
+            message = gui_line_build_string_message_tags (
+                line->data->message,
+                line->data->tags_count,
+                line->data->tags_array,
+                0);
+        }
+        else
+        {
+            message = gui_color_decode (line->data->message, NULL);
+        }
         if (message)
         {
             if (buffer->text_search_regex)

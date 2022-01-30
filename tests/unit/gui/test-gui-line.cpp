@@ -43,12 +43,13 @@ extern "C"
     gui_line_free_data (line);                                          \
     free (line);
 
-#define WEE_BUILD_STR_MSG_TAGS(__tags, __message)                       \
+#define WEE_BUILD_STR_MSG_TAGS(__tags, __message, __colors)             \
     line = gui_line_new (gui_buffers, -1, 0, 0, __tags,                 \
                          NULL, __message);                              \
     str = gui_line_build_string_message_tags (line->data->message,      \
                                               line->data->tags_count,   \
-                                              line->data->tags_array);  \
+                                              line->data->tags_array,   \
+                                              __colors);                \
     STRCMP_EQUAL(str_result, str);                                      \
     free (str);                                                         \
     gui_line_free_data (line);                                          \
@@ -214,17 +215,19 @@ TEST(GuiLine, BuildStringPrefixMessage)
 TEST(GuiLine, BuildStringMessageTags)
 {
     struct t_gui_line *line;
-    char *str, str_result[256];
+    char *str, str_message[256], str_result[256];
 
     line = gui_line_new (gui_buffers, -1, 0, 0, "tag1,tag2", NULL, "test");
     POINTERS_EQUAL(NULL,
                    gui_line_build_string_message_tags (line->data->message,
                                                        -1,
-                                                       line->data->tags_array));
+                                                       line->data->tags_array,
+                                                       1));
     POINTERS_EQUAL(NULL,
                    gui_line_build_string_message_tags (line->data->message,
                                                        1,
-                                                       NULL));
+                                                       NULL,
+                                                       1));
     gui_line_free_data (line);
     free (line);
 
@@ -233,28 +236,46 @@ TEST(GuiLine, BuildStringMessageTags)
               GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
               GUI_COLOR(GUI_COLOR_CHAT_TAGS),
               GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
-    WEE_BUILD_STR_MSG_TAGS(NULL, "message");
+    WEE_BUILD_STR_MSG_TAGS(NULL, "message", 1);
 
     snprintf (str_result, sizeof (str_result),
               "message%s [%s%s]",
               GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
               GUI_COLOR(GUI_COLOR_CHAT_TAGS),
               GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
-    WEE_BUILD_STR_MSG_TAGS("", "message");
+    WEE_BUILD_STR_MSG_TAGS("", "message", 1);
 
     snprintf (str_result, sizeof (str_result),
               "message%s [%stag1%s]",
               GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
               GUI_COLOR(GUI_COLOR_CHAT_TAGS),
               GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
-    WEE_BUILD_STR_MSG_TAGS("tag1", "message");
+    WEE_BUILD_STR_MSG_TAGS("tag1", "message", 1);
 
     snprintf (str_result, sizeof (str_result),
               "message%s [%stag1,tag2,tag3%s]",
               GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
               GUI_COLOR(GUI_COLOR_CHAT_TAGS),
               GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
-    WEE_BUILD_STR_MSG_TAGS("tag1,tag2,tag3", "message");
+    WEE_BUILD_STR_MSG_TAGS("tag1,tag2,tag3", "message", 1);
+
+    snprintf (str_message, sizeof (str_message),
+              "message %sin red",
+              gui_color_get_custom ("red"));
+    snprintf (str_result, sizeof (str_result),
+              "message %sin red%s [%stag1,tag2,tag3%s]",
+              gui_color_get_custom ("red"),
+              GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+              GUI_COLOR(GUI_COLOR_CHAT_TAGS),
+              GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
+    WEE_BUILD_STR_MSG_TAGS("tag1,tag2,tag3", str_message, 1);
+
+    snprintf (str_message, sizeof (str_message),
+              "message %sin red",
+              gui_color_get_custom ("red"));
+    snprintf (str_result, sizeof (str_result),
+              "message in red [tag1,tag2,tag3]");
+    WEE_BUILD_STR_MSG_TAGS("tag1,tag2,tag3", str_message, 0);
 }
 
 /*
