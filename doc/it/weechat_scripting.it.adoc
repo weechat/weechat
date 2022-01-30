@@ -676,6 +676,8 @@ Elenco di funzioni nelle API per gli script:
   print_date_tags (for python: prnt_date_tags) +
 // TRANSLATION MISSING
   print_y (for python: prnt_y) +
+// TRANSLATION MISSING
+  print_y_date_tags (for python: prnt_y_date_tags) +
   log_print
 
 | hook |

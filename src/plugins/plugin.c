@@ -772,7 +772,7 @@ plugin_load (const char *filename, int init_plugin, int argc, char **argv)
         new_plugin->prefix = &plugin_api_prefix;
         new_plugin->color = &plugin_api_color;
         new_plugin->printf_date_tags = &gui_chat_printf_date_tags;
-        new_plugin->printf_y = &gui_chat_printf_y;
+        new_plugin->printf_y_date_tags = &gui_chat_printf_y_date_tags;
         new_plugin->log_printf = &log_printf;
 
         new_plugin->hook_command = &hook_command;

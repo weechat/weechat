@@ -1930,6 +1930,31 @@ API_FUNC(prnt_y)
     API_RETURN_OK;
 }
 
+API_FUNC(prnt_y_date_tags)
+{
+    char *buffer, *tags, *message;
+    int y, date;
+
+    API_INIT_FUNC(1, "prnt_y_date_tags", API_RETURN_ERROR);
+    buffer = NULL;
+    y = 0;
+    date = 0;
+    tags = NULL;
+    message = NULL;
+    if (!PyArg_ParseTuple (args, "siiss", &buffer, &y, &date, &tags, &message))
+        API_WRONG_ARGS(API_RETURN_ERROR);
+
+    plugin_script_api_printf_y_date_tags (weechat_python_plugin,
+                                          python_current_script,
+                                          API_STR2PTR(buffer),
+                                          y,
+                                          date,
+                                          tags,
+                                          "%s", message);
+
+    API_RETURN_OK;
+}
+
 API_FUNC(log_print)
 {
     char *message;
@@ -5279,6 +5304,7 @@ PyMethodDef weechat_python_funcs[] =
     API_DEF_FUNC(prnt),
     API_DEF_FUNC(prnt_date_tags),
     API_DEF_FUNC(prnt_y),
+    API_DEF_FUNC(prnt_y_date_tags),
     API_DEF_FUNC(log_print),
     API_DEF_FUNC(hook_command),
     API_DEF_FUNC(hook_completion),

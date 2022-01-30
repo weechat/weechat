@@ -1812,6 +1812,29 @@ API_FUNC(print_y)
     API_RETURN_OK;
 }
 
+API_FUNC(print_y_date_tags)
+{
+    int y, date;
+
+    API_INIT_FUNC(1, "print_y_date_tags", "siiss", API_RETURN_ERROR);
+
+    v8::String::Utf8Value buffer(args[0]);
+    y = args[1]->IntegerValue();
+    date = args[2]->IntegerValue();
+    v8::String::Utf8Value tags(args[3]);
+    v8::String::Utf8Value message(args[4]);
+
+    plugin_script_api_printf_y_date_tags (weechat_js_plugin,
+                                          js_current_script,
+                                          (struct t_gui_buffer *)API_STR2PTR(*buffer),
+                                          y,
+                                          date,
+                                          *tags,
+                                          "%s", *message);
+
+    API_RETURN_OK;
+}
+
 API_FUNC(log_print)
 {
     API_INIT_FUNC(1, "log_print", "s", API_RETURN_ERROR);
@@ -5051,6 +5074,7 @@ WeechatJsV8::loadLibs()
     API_DEF_FUNC(print);
     API_DEF_FUNC(print_date_tags);
     API_DEF_FUNC(print_y);
+    API_DEF_FUNC(print_y_date_tags);
     API_DEF_FUNC(log_print);
     API_DEF_FUNC(hook_command);
     API_DEF_FUNC(hook_completion);

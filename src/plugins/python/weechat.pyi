@@ -444,6 +444,11 @@ def prnt_y(buffer: str, y: int, message: str) -> int:
     ...
 
 
+def prnt_y_date_tags(buffer: str, y: int, date: int, tags: str, message: str) -> int:
+    """`prnt_y_date_tags in WeeChat plugin API reference <https://weechat.org/doc/api#_prnt_y_date_tags>`_"""
+    ...
+
+
 def log_print(message: str) -> int:
     """`log_print in WeeChat plugin API reference <https://weechat.org/doc/api#_log_print>`_"""
     ...

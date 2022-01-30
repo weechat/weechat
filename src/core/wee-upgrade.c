@@ -659,7 +659,10 @@ upgrade_weechat_read_buffer_line (struct t_infolist *infolist)
         case GUI_BUFFER_TYPE_FREE:
             new_line = gui_line_new (upgrade_current_buffer,
                                      infolist_integer (infolist, "y"),
-                                     0, 0, NULL, NULL,
+                                     infolist_time (infolist, "date"),
+                                     infolist_time (infolist, "date_printed"),
+                                     infolist_string (infolist, "tags"),
+                                     NULL,
                                      infolist_string (infolist, "message"));
             if (new_line)
                 gui_line_add_y (new_line);

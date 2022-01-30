@@ -1421,7 +1421,9 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
     if (line->data->message && line->data->message[0])
     {
         message_with_tags = (gui_chat_display_tags) ?
-            gui_line_build_string_message_tags (line) : NULL;
+            gui_line_build_string_message_tags (line->data->message,
+                                                line->data->tags_count,
+                                                line->data->tags_array) : NULL;
         ptr_data = (message_with_tags) ?
             message_with_tags : line->data->message;
         message_with_search = NULL;
@@ -1639,7 +1641,10 @@ void
 gui_chat_display_line_y (struct t_gui_window *window, struct t_gui_line *line,
                          int y)
 {
-    char *ptr_data, *message_with_search;
+    char *ptr_data, *message_with_search, *message_with_tags;
+
+    message_with_search = NULL;
+    message_with_tags = NULL;
 
     /* reset color & style for a new line */
     gui_chat_reset_style (window, line, 0, 1,
@@ -1653,9 +1658,9 @@ gui_chat_display_line_y (struct t_gui_window *window, struct t_gui_line *line,
 
     gui_chat_clrtoeol (window);
 
-    /* emphasize text (if searching text) */
     ptr_data = line->data->message;
-    message_with_search = NULL;
+
+    /* emphasize text (if searching text) */
     if ((window->buffer->text_search != GUI_TEXT_SEARCH_DISABLED)
         && (window->buffer->text_search_where & GUI_TEXT_SEARCH_IN_MESSAGE)
         && (!window->buffer->text_search_regex
@@ -1669,6 +1674,17 @@ gui_chat_display_line_y (struct t_gui_window *window, struct t_gui_line *line,
             ptr_data = message_with_search;
     }
 
+    /* add tags if debug of tags is enabled */
+    if (gui_chat_display_tags)
+    {
+        message_with_tags = gui_line_build_string_message_tags (
+            ptr_data,
+            line->data->tags_count,
+            line->data->tags_array);
+        if (message_with_tags)
+            ptr_data = message_with_tags;
+    }
+
     /* display the line */
     if (gui_chat_display_word_raw (window, line, ptr_data,
                                    window->win_chat_width, 0,
@@ -1680,6 +1696,8 @@ gui_chat_display_line_y (struct t_gui_window *window, struct t_gui_line *line,
 
     if (message_with_search)
         free (message_with_search);
+    if (message_with_tags)
+        free (message_with_tags);
 }
 
 /*

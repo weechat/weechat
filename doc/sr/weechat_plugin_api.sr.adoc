@@ -8377,6 +8377,51 @@ weechat.prnt_y("", 2, "My message on third line")
 [NOTE]
 У скриптама се функција зове „print_y” („prnt_y” у језику Python).
 
+==== printf_y_date_tags
+
+_WeeChat ≥ 3.5._
+
+// TRANSLATION MISSING
+Display a message on a line of a buffer with free content, using a custom
+date and tags.
+
+Прототип:
+
+[source,c]
+----
+void weechat_printf_y_date_tags (struct t_gui_buffer *buffer, int y, time_t date,
+                                 const char *tags, const char *message, ...);
+----
+
+Аргументи:
+
+* _buffer_: показивач на бафер
+* _y_: број линије (прва линија је 0); негативна вредност додаје линију иза последње приказане линије: апсолутна вредност _y_ је број линија након последње линије (на пример -1 је непосредно након последње линије, -2 је 2 линије након последње линије)
+* _date_: датум за поруку (0 значи текући датум/време)
+* _tags_: листа ознака раздвојених запетама (NULL значи да нема ознака)
+* _message_: порука која треба да се прикаже
+
+C пример:
+
+[source,c]
+----
+weechat_printf_y_date_tags (buffer, 2, 0, "my_tag", "My message on third line with a tag");
+----
+
+Скрипта (Python):
+
+[source,python]
+----
+# прототип
+def prnt_y_date_tags(buffer: str, y: int, date: int, tags: str, message: str) -> int: ...
+
+# пример
+weechat.prnt_y_date_tags("", 2, 0, "my_tag", "My message on third line with a tag")
+----
+
+[NOTE]
+У скриптама се функција зове „print_y_date_tags” („prnt_y_date_tags” у језику Python).
+
 ==== log_printf
 
 Уписује поруку у WeeChat лог фајл (weechat.log).

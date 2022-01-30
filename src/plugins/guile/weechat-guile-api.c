@@ -1923,6 +1923,27 @@ weechat_guile_api_print_y (SCM buffer, SCM y, SCM message)
 }
 
 SCM
+weechat_guile_api_print_y_date_tags (SCM buffer, SCM y, SCM date, SCM tags,
+                                     SCM message)
+{
+    API_INIT_FUNC(1, "print_y_date_tags", API_RETURN_ERROR);
+    if (!scm_is_string (buffer) || !scm_is_integer (y)
+        || !scm_is_integer (date) || !scm_is_string (tags)
+        || !scm_is_string (message))
+        API_WRONG_ARGS(API_RETURN_ERROR);
+
+    plugin_script_api_printf_y_date_tags (weechat_guile_plugin,
+                                          guile_current_script,
+                                          API_STR2PTR(API_SCM_TO_STRING(buffer)),
+                                          scm_to_int (y),
+                                          scm_to_int (date),
+                                          API_SCM_TO_STRING(tags),
+                                          "%s", API_SCM_TO_STRING(message));
+
+    API_RETURN_OK;
+}
+
+SCM
 weechat_guile_api_log_print (SCM message)
 {
     API_INIT_FUNC(1, "log_print", API_RETURN_ERROR);
@@ -5121,6 +5142,7 @@ weechat_guile_api_module_init (void *data)
     API_DEF_FUNC(print, 2);
     API_DEF_FUNC(print_date_tags, 4);
     API_DEF_FUNC(print_y, 3);
+    API_DEF_FUNC(print_y_date_tags, 5);
     API_DEF_FUNC(log_print, 1);
     API_DEF_FUNC(hook_command, 7);
     API_DEF_FUNC(hook_completion, 4);

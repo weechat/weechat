@@ -8659,6 +8659,53 @@ weechat.prnt_y("", 2, "My message on third line")
 [NOTE]
 この関数をスクリプトの中で実行するには "print_y" (Python の場合は "prnt_y") と書きます。
 
+==== printf_y_date_tags
+
+_WeeChat ≥ 3.5._
+
+// TRANSLATION MISSING
+Display a message on a line of a buffer with free content, using a custom
+date and tags.
+
+プロトタイプ:
+
+[source,c]
+----
+void weechat_printf_y_date_tags (struct t_gui_buffer *buffer, int y, time_t date,
+                                 const char *tags, const char *message, ...);
+----
+
+引数:
+
+* _buffer_: バッファへのポインタ
+* _y_: 行番号 (1 行目は 0); 負数の場合は表示された最後の行の後に行を追加する:
+  _y_ の絶対値で最後の行の後に追加する行数を指定 (例えば
+  -1 は最後の行のすぐ後、-2 は 最後の行の 2 行後)
+* _date_: メッセージの日付 (0 は現在の日付/時間を意味する)
+* _tags_: タグのコンマ区切りリスト (タグを指定しない場合は NULL)
+* _message_: 表示するメッセージ
+
+C 言語での使用例:
+
+[source,c]
+----
+weechat_printf_y_date_tags (buffer, 2, 0, "my_tag", "My message on third line with a tag");
+----
+
+スクリプト (Python) での使用例:
+
+[source,python]
+----
+# プロトタイプ
+def prnt_y_date_tags(buffer: str, y: int, date: int, tags: str, message: str) -> int: ...
+
+# 例
+weechat.prnt_y_date_tags("", 2, 0, "my_tag", "My message on third line with a tag")
+----
+
+[NOTE]
+この関数をスクリプトの中で実行するには "print_y_date_tags" (Python の場合は "prnt_y_date_tags") と書きます。
+
 ==== log_printf
 
 WeeChat ログファイル (weechat.log) にメッセージを書き込む。

@@ -941,9 +941,11 @@ gui_chat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
  */
 
 void
-gui_chat_printf_y (struct t_gui_buffer *buffer, int y, const char *message, ...)
+gui_chat_printf_y_date_tags (struct t_gui_buffer *buffer, int y, time_t date,
+                           const char *tags, const char *message, ...)
 {
     struct t_gui_line *ptr_line, *new_line, *new_line_empty;
+    time_t date_printed;
     int i, last_y, num_lines_to_add;
 
     if (gui_init_ok && !gui_chat_buffer_valid (buffer, GUI_BUFFER_TYPE_FREE))
@@ -962,7 +964,12 @@ gui_chat_printf_y (struct t_gui_buffer *buffer, int y, const char *message, ...)
 
     utf8_normalize (vbuffer, '?');
 
-    new_line = gui_line_new (buffer, y, 0, 0, NULL, NULL, vbuffer);
+    date_printed = time (NULL);
+    if (date <= 0)
+        date = date_printed;
+
+    new_line = gui_line_new (buffer, y, date, date_printed, tags,
+                             NULL, vbuffer);
     if (!new_line)
         goto end;
 

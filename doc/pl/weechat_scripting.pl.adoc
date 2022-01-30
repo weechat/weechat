@@ -649,6 +649,7 @@ Lista funkcji w API skryptów:
   print (dla pythona: prnt) +
   print_date_tags (dla pythona: prnt_date_tags) +
   print_y (dla pythona: prnt_y) +
+  print_y_date_tags (dla pythona: prnt_y_date_tags) +
   log_print
 
 | hooks |

@@ -68,7 +68,7 @@ struct timeval;
  * please change the date with current one; for a second change at same
  * date, increment the 01, otherwise please keep 01.
  */
-#define WEECHAT_PLUGIN_API_VERSION "20211106-01"
+#define WEECHAT_PLUGIN_API_VERSION "20220130-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -653,8 +653,9 @@ struct t_weechat_plugin
     const char *(*color) (const char *color_name);
     void (*printf_date_tags) (struct t_gui_buffer *buffer, time_t date,
                               const char *tags, const char *message, ...);
-    void (*printf_y) (struct t_gui_buffer *buffer, int y,
-                      const char *message, ...);
+    void (*printf_y_date_tags) (struct t_gui_buffer *buffer, int y,
+                                time_t date, const char *tags,
+                                const char *message, ...);
     void (*log_printf) (const char *message, ...);
 
     /* hooks */
@@ -1689,7 +1690,12 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     (weechat_plugin->printf_date_tags)(__buffer, __date, __tags,        \
                                        __message, ##__argz)
 #define weechat_printf_y(__buffer, __y, __message, __argz...)           \
-    (weechat_plugin->printf_y)(__buffer, __y, __message, ##__argz)
+    (weechat_plugin->printf_y_date_tags)(__buffer, __y, 0, NULL,        \
+                                         __message, ##__argz)
+#define weechat_printf_y_date_tags(__buffer, __y, __date, __tags,       \
+                                   __message, __argz...)                \
+    (weechat_plugin->printf_y_date_tags)(__buffer, __y, __date, __tags, \
+                                         __message, ##__argz)
 #define weechat_log_printf(__message, __argz...)                        \
     (weechat_plugin->log_printf)(__message, ##__argz)
 

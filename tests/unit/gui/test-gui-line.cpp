@@ -36,7 +36,8 @@ extern "C"
 #define WEE_BUILD_STR_PREFIX_MSG(__result, __prefix, __message)         \
     line = gui_line_new (gui_buffers, -1, 0, 0, "tag1,tag2",            \
                          __prefix, __message);                          \
-    str = gui_line_build_string_prefix_message (line);                  \
+    str = gui_line_build_string_prefix_message (line->data->prefix,     \
+                                                line->data->message);   \
     STRCMP_EQUAL(__result, str);                                        \
     free (str);                                                         \
     gui_line_free_data (line);                                          \
@@ -45,7 +46,9 @@ extern "C"
 #define WEE_BUILD_STR_MSG_TAGS(__tags, __message)                       \
     line = gui_line_new (gui_buffers, -1, 0, 0, __tags,                 \
                          NULL, __message);                              \
-    str = gui_line_build_string_message_tags (line);                    \
+    str = gui_line_build_string_message_tags (line->data->message,      \
+                                              line->data->tags_count,   \
+                                              line->data->tags_array);  \
     STRCMP_EQUAL(str_result, str);                                      \
     free (str);                                                         \
     gui_line_free_data (line);                                          \
@@ -212,6 +215,18 @@ TEST(GuiLine, BuildStringMessageTags)
 {
     struct t_gui_line *line;
     char *str, str_result[256];
+
+    line = gui_line_new (gui_buffers, -1, 0, 0, "tag1,tag2", NULL, "test");
+    POINTERS_EQUAL(NULL,
+                   gui_line_build_string_message_tags (line->data->message,
+                                                       -1,
+                                                       line->data->tags_array));
+    POINTERS_EQUAL(NULL,
+                   gui_line_build_string_message_tags (line->data->message,
+                                                       1,
+                                                       NULL));
+    gui_line_free_data (line);
+    free (line);
 
     snprintf (str_result, sizeof (str_result),
               "message%s [%s%s]",

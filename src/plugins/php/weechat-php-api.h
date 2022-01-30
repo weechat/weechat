@@ -126,6 +126,7 @@ PHP_FUNCTION(weechat_color);
 PHP_FUNCTION(weechat_print);
 PHP_FUNCTION(weechat_print_date_tags);
 PHP_FUNCTION(weechat_print_y);
+PHP_FUNCTION(weechat_print_y_date_tags);
 PHP_FUNCTION(weechat_log_print);
 PHP_FUNCTION(weechat_hook_command);
 PHP_FUNCTION(weechat_hook_completion);

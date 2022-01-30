@@ -89,8 +89,11 @@ TEST_GROUP(Scripts)
                 api_tests_errors++;
             else if (strstr (message, "TESTS END"))
                 api_tests_end++;
-            else if ((message[0] != '>') && (message[0] != ' '))
+            else if ((message[0] != '>') && (message[0] != ' ')
+                     && (strncmp (message, "## ", 3) != 0))
+            {
                 api_tests_other++;
+            }
         }
 
         return WEECHAT_RC_OK;

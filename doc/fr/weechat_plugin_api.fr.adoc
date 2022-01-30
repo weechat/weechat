@@ -8773,6 +8773,55 @@ weechat.prnt_y("", 2, "Mon message sur la 3ème ligne")
 [NOTE]
 La fonction s'appelle "print_y" dans les scripts ("prnt_y" en Python).
 
+==== printf_y_date_tags
+
+_WeeChat ≥ 3.5._
+
+Afficher un message sur une ligne d'un tampon avec contenu libre, en utilisant
+une date et des étiquettes personnalisées.
+
+Prototype :
+
+[source,c]
+----
+void weechat_printf_y_date_tags (struct t_gui_buffer *buffer, int y, time_t date,
+                                 const char *tags, const char *message, ...);
+----
+
+Paramètres :
+
+* _buffer_ : pointeur vers le tampon
+* _y_ : numéro de ligne (la première ligne est 0); une valeur négative affiche
+  une ligne après la dernière ligne affichée : la valeur absolue de _y_ est le
+  nombre de lignes après la dernière ligne (par exemple -1 est immédiatement
+  après la dernière ligne, -2 est 2 lignes après la dernière ligne)
+* _date_ : date pour le message (0 signifie la date/heure courante)
+* _tags_ : liste d'étiquettes séparées par des virgules (NULL signifie aucune
+  étiquette)
+* _message_ : message à afficher
+
+Exemple en C :
+
+[source,c]
+----
+weechat_printf_y_date_tags (buffer, 2, 0, "mon_etiquette", "Mon message sur la 3ème ligne avec une étiquette");
+----
+
+Script (Python) :
+
+[source,python]
+----
+# prototype
+def prnt_y_date_tags(buffer: str, y: int, date: int, tags: str, message: str) -> int: ...
+
+# exemple
+weechat.prnt_y_date_tags("", 2, 0, "mon_etiquette", "Mon message sur la 3ème ligne avec une étiquette")
+----
+
+[NOTE]
+La fonction s'appelle "print_y_date_tags" dans les scripts ("prnt_y_date_tags"
+en Python).
+
 ==== log_printf
 
 Écrire un message dans le fichier de log WeeChat (weechat.log).

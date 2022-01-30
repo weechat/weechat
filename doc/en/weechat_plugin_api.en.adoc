@@ -8637,6 +8637,52 @@ weechat.prnt_y("", 2, "My message on third line")
 [NOTE]
 Function is called "print_y" in scripts ("prnt_y" in Python).
 
+==== printf_y_date_tags
+
+_WeeChat ≥ 3.5._
+
+Display a message on a line of a buffer with free content, using a custom
+date and tags.
+
+Prototype:
+
+[source,c]
+----
+void weechat_printf_y_date_tags (struct t_gui_buffer *buffer, int y, time_t date,
+                                 const char *tags, const char *message, ...);
+----
+
+Arguments:
+
+* _buffer_: buffer pointer
+* _y_: line number (first line is 0); a negative value adds a line after last
+  line displayed: absolute value of _y_ is the number of lines after last line
+  (for example -1 is immediately after last line, -2 is 2 lines after last line)
+* _date_: date for message (0 means current date/time)
+* _tags_: comma separated list of tags (NULL means no tags)
+* _message_: message to display
+
+C example:
+
+[source,c]
+----
+weechat_printf_y_date_tags (buffer, 2, 0, "my_tag", "My message on third line with a tag");
+----
+
+Script (Python):
+
+[source,python]
+----
+# prototype
+def prnt_y_date_tags(buffer: str, y: int, date: int, tags: str, message: str) -> int: ...
+
+# example
+weechat.prnt_y_date_tags("", 2, 0, "my_tag", "My message on third line with a tag")
+----
+
+[NOTE]
+Function is called "print_y_date_tags" in scripts ("prnt_y_date_tags" in Python).
+
 ==== log_printf
 
 Write a message in WeeChat log file (weechat.log).

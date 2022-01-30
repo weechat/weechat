@@ -164,6 +164,8 @@ ZEND_END_ARG_INFO()
 
 #define arginfo_weechat_print_y arginfo_weechat_register
 
+#define arginfo_weechat_print_y_date_tags arginfo_weechat_register
+
 #define arginfo_weechat_log_print arginfo_weechat_register
 
 #define arginfo_weechat_hook_command arginfo_weechat_register

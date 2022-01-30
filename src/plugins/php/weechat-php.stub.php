@@ -87,6 +87,7 @@ function weechat_color(): mixed {}
 function weechat_print(): mixed {}
 function weechat_print_date_tags(): mixed {}
 function weechat_print_y(): mixed {}
+function weechat_print_y_date_tags(): mixed {}
 function weechat_log_print(): mixed {}
 function weechat_hook_command(): mixed {}
 function weechat_hook_completion(): mixed {}

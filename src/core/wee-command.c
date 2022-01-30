@@ -5170,10 +5170,10 @@ COMMAND_CALLBACK(print)
         {
             if (free_content)
             {
-                gui_chat_printf_y (ptr_buffer, y,
-                                   "%s%s",
-                                   (prefix) ? prefix : "",
-                                   text2);
+                gui_chat_printf_y_date_tags (ptr_buffer, y, date, tags,
+                                             "%s%s",
+                                             (prefix) ? prefix : "",
+                                             text2);
             }
             else
             {

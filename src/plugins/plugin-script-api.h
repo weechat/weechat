@@ -119,6 +119,12 @@ extern void plugin_script_api_printf_y (struct t_weechat_plugin *weechat_plugin,
                                         struct t_plugin_script *script,
                                         struct t_gui_buffer *buffer,
                                         int y, const char *format, ...);
+extern void plugin_script_api_printf_y_date_tags (struct t_weechat_plugin *weechat_plugin,
+                                                  struct t_plugin_script *script,
+                                                  struct t_gui_buffer *buffer,
+                                                  int y, time_t date,
+                                                  const char *tags,
+                                                  const char *format, ...);
 extern void plugin_script_api_log_printf (struct t_weechat_plugin *weechat_plugin,
                                           struct t_plugin_script *script,
                                           const char *format, ...);

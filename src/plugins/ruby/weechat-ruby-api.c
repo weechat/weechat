@@ -2388,6 +2388,42 @@ weechat_ruby_api_print_y (VALUE class, VALUE buffer, VALUE y, VALUE message)
 }
 
 static VALUE
+weechat_ruby_api_print_y_date_tags (VALUE class, VALUE buffer, VALUE y,
+                                    VALUE date, VALUE tags, VALUE message)
+{
+    char *c_buffer, *c_tags, *c_message;
+    int c_y;
+    time_t c_date;
+
+    API_INIT_FUNC(1, "print_y_date_tags", API_RETURN_ERROR);
+    if (NIL_P (buffer) || NIL_P (y) || NIL_P (date) || NIL_P (tags)
+        || NIL_P (message))
+        API_WRONG_ARGS(API_RETURN_ERROR);
+
+    Check_Type (buffer, T_STRING);
+    CHECK_INTEGER(y);
+    CHECK_INTEGER(date);
+    Check_Type (tags, T_STRING);
+    Check_Type (message, T_STRING);
+
+    c_buffer = StringValuePtr (buffer);
+    c_y = NUM2INT (y);
+    c_date = NUM2ULONG (date);
+    c_tags = StringValuePtr (tags);
+    c_message = StringValuePtr (message);
+
+    plugin_script_api_printf_y_date_tags (weechat_ruby_plugin,
+                                          ruby_current_script,
+                                          API_STR2PTR(c_buffer),
+                                          c_y,
+                                          c_date,
+                                          c_tags,
+                                          "%s", c_message);
+
+    API_RETURN_OK;
+}
+
+static VALUE
 weechat_ruby_api_log_print (VALUE class, VALUE message)
 {
     char *c_message;
@@ -6540,6 +6576,7 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     API_DEF_FUNC(print, 2);
     API_DEF_FUNC(print_date_tags, 4);
     API_DEF_FUNC(print_y, 3);
+    API_DEF_FUNC(print_y_date_tags, 5);
     API_DEF_FUNC(log_print, 1);
     API_DEF_FUNC(hook_command, 7);
     API_DEF_FUNC(hook_completion, 4);

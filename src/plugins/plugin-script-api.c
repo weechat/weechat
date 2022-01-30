@@ -326,7 +326,7 @@ plugin_script_api_printf (struct t_weechat_plugin *weechat_plugin,
 }
 
 /*
- * Prints a message with optional date and tags.
+ * Prints a message, with optional date and tags.
  */
 
 void
@@ -371,6 +371,33 @@ plugin_script_api_printf_y (struct t_weechat_plugin *weechat_plugin,
     buf2 = (script && script->charset && script->charset[0]) ?
         weechat_iconv_to_internal (script->charset, vbuffer) : NULL;
     weechat_printf_y (buffer, y, "%s", (buf2) ? buf2 : vbuffer);
+    if (buf2)
+        free (buf2);
+
+    free (vbuffer);
+}
+
+/*
+ * Prints a message on a buffer with free content, with optional date and tags.
+ */
+
+void
+plugin_script_api_printf_y_date_tags (struct t_weechat_plugin *weechat_plugin,
+                                      struct t_plugin_script *script,
+                                      struct t_gui_buffer *buffer, int y,
+                                      time_t date, const char *tags,
+                                      const char *format, ...)
+{
+    char *buf2;
+
+    weechat_va_format (format);
+    if (!vbuffer)
+        return;
+
+    buf2 = (script && script->charset && script->charset[0]) ?
+        weechat_iconv_to_internal (script->charset, vbuffer) : NULL;
+    weechat_printf_y_date_tags (buffer, y, date, tags,
+                                "%s", (buf2) ? buf2 : vbuffer);
     if (buf2)
         free (buf2);
 

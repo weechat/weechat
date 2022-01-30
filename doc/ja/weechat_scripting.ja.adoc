@@ -665,6 +665,7 @@ link:weechat_plugin_api.ja.html[WeeChat プラグイン API リファレンス]�
   print (python では prnt) +
   print_date_tags (python では prnt_date_tags) +
   print_y (python では prnt_y) +
+  print_y_date_tags (python では prnt_y_date_tags) +
   log_print
 
 | フック |

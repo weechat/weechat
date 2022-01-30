@@ -379,7 +379,7 @@ gui_line_get_align (struct t_gui_buffer *buffer, struct t_gui_line *line,
  */
 
 char *
-gui_line_build_string_prefix_message (struct t_gui_line *line)
+gui_line_build_string_prefix_message (const char *prefix, const char *message)
 {
     char **string, *string_without_colors;
 
@@ -387,11 +387,11 @@ gui_line_build_string_prefix_message (struct t_gui_line *line)
     if (!string)
         return NULL;
 
-    if (line->data->prefix)
-        string_dyn_concat (string, line->data->prefix, -1);
+    if (prefix)
+        string_dyn_concat (string, prefix, -1);
     string_dyn_concat (string, "\t", -1);
-    if (line->data->message)
-        string_dyn_concat (string, line->data->message, -1);
+    if (message)
+        string_dyn_concat (string, message, -1);
 
     string_without_colors = gui_color_decode (*string, NULL);
 
@@ -407,24 +407,28 @@ gui_line_build_string_prefix_message (struct t_gui_line *line)
  */
 
 char *
-gui_line_build_string_message_tags (struct t_gui_line *line)
+gui_line_build_string_message_tags (const char *message,
+                                    int tags_count, char **tags_array)
 {
     int i;
     char **string, *result;
+
+    if ((tags_count < 0) || ((tags_count > 0) && !tags_array))
+        return NULL;
 
     string = string_dyn_alloc (256);
     if (!string)
         return NULL;
 
-    if (line->data->message)
-        string_dyn_concat (string, line->data->message, -1);
+    if (message)
+        string_dyn_concat (string, message, -1);
     string_dyn_concat (string, GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS), -1);
     string_dyn_concat (string, " [", -1);
     string_dyn_concat (string, GUI_COLOR(GUI_COLOR_CHAT_TAGS), -1);
-    for (i = 0; i < line->data->tags_count; i++)
+    for (i = 0; i < tags_count; i++)
     {
-        string_dyn_concat (string, line->data->tags_array[i], -1);
-        if (i < line->data->tags_count - 1)
+        string_dyn_concat (string, tags_array[i], -1);
+        if (i < tags_count - 1)
             string_dyn_concat (string, ",", -1);
     }
     string_dyn_concat (string, GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS), -1);
@@ -1434,11 +1438,10 @@ gui_line_new (struct t_gui_buffer *buffer, int y, time_t date,
     else
     {
         new_line->data->y = y;
-        new_line->data->date = 0;
-        new_line->data->date_printed = 0;
+        new_line->data->date = date;
+        new_line->data->date_printed = date_printed;
         new_line->data->str_time = NULL;
-        new_line->data->tags_count = 0;
-        new_line->data->tags_array = NULL;
+        gui_line_tags_alloc (new_line->data, tags);
         new_line->data->refresh_needed = 1;
         new_line->data->prefix = NULL;
         new_line->data->prefix_length = 0;
@@ -1688,7 +1691,8 @@ gui_line_add (struct t_gui_line *line)
                                     GUI_HOTLIST_HIGHLIGHT, NULL);
             if (!weechat_upgrading)
             {
-                message_for_signal = gui_line_build_string_prefix_message (line);
+                message_for_signal = gui_line_build_string_prefix_message (
+                    line->data->prefix, line->data->message);
                 if (message_for_signal)
                 {
                     (void) hook_signal_send ("weechat_highlight",
@@ -1703,7 +1707,8 @@ gui_line_add (struct t_gui_line *line)
             if (!weechat_upgrading
                 && (line->data->notify_level == GUI_HOTLIST_PRIVATE))
             {
-                message_for_signal = gui_line_build_string_prefix_message (line);
+                message_for_signal = gui_line_build_string_prefix_message (
+                    line->data->prefix, line->data->message);
                 if (message_for_signal)
                 {
                     (void) hook_signal_send ("weechat_pv",
@@ -1852,11 +1857,22 @@ gui_line_add_y (struct t_gui_line *line)
 void
 gui_line_clear (struct t_gui_line *line)
 {
+    line->data->date = 0;
+    line->data->date_printed = 0;
+    if (line->data->str_time)
+    {
+        free (line->data->str_time);
+        line->data->str_time = NULL;
+    }
+    gui_line_tags_free (line->data);
     if (line->data->prefix)
     {
         string_shared_free (line->data->prefix);
         line->data->prefix = NULL;
     }
+    line->data->prefix_length = 0;
+    line->data->notify_level = 0;
+    line->data->highlight = 0;
     if (line->data->message)
         free (line->data->message);
     line->data->message = strdup ("");

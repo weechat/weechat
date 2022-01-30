@@ -111,6 +111,7 @@ class WeechatScript(object):  # pylint: disable=too-many-instance-attributes
             'prnt': 'print',
             'prnt_date_tags': 'print_date_tags',
             'prnt_y': 'print_y',
+            'prnt_y_date_tags': 'print_y_date_tags',
         }
         for node in ast.walk(self.tree):
             if isinstance(node, ast.Call) and \

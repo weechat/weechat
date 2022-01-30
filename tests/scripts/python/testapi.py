@@ -148,6 +148,16 @@ def test_key():
     check(weechat.key_unbind('mouse', 'quiet:area:chat(plugin.test)') == 3)
 
 
+def buffer_input_cb(data, buffer, input_data):
+    """Buffer input callback."""
+    return weechat.WEECHAT_RC_OK
+
+
+def buffer_close_cb(data, buffer):
+    """Buffer close callback."""
+    return weechat.WEECHAT_RC_OK
+
+
 def test_display():
     """Test display functions."""
     check(weechat.prefix('action') != '')
@@ -158,6 +168,12 @@ def test_display():
     check(weechat.prefix('unknown') == '')
     check(weechat.color('green') != '')
     check(weechat.color('unknown') == '')
+    weechat.prnt('', '## test prnt')
+    weechat.prnt_date_tags('', 946681200, 'tag1,tag2', '## test prnt_date_tags')
+    buffer = weechat.buffer_new('test_free', 'buffer_input_cb', '', 'buffer_close_cb', '')
+    weechat.prnt_y(buffer, 0, '## test prnt_y')
+    weechat.prnt_y_date_tags(buffer, 0, 946681200, 'tag1,tag2', '## test prnt_y_date_tags')
+    weechat.buffer_close(buffer)
 
 
 def completion_cb(data, completion_item, buf, completion):
