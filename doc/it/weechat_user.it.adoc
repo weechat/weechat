@@ -112,23 +112,22 @@ WeeChat:
 
 [width="100%",cols="5,^3,.^15",options="header"]
 |===
-| Pacchetto ^(1)^        | Versione      | Caratteristica
+| Pacchetto ^(1)^          | Versione      | Caratteristica
 // TRANSLATION MISSING
-| C compiler
-  (gcc, clang, ...)      |               | Build.
-| cmake                  | ≥ 3.0         | Compilazione (ancora possibile con autotools, ma si raccomanda CMake).
+| C compiler (gcc / clang) |               | Build.
+| cmake                    | ≥ 3.0         | Compilazione (ancora possibile con autotools, ma si raccomanda CMake).
 // TRANSLATION MISSING
-| pkg-config             |               | Detect installed libraries.
-| libncursesw5-dev ^(2)^ |               | Interfaccia ncurses.
-| libcurl4-gnutls-dev    |               | Trasferimento URL.
+| pkg-config               |               | Detect installed libraries.
+| libncursesw5-dev ^(2)^   |               | Interfaccia ncurses.
+| libcurl4-gnutls-dev      |               | Trasferimento URL.
 // TRANSLATION MISSING
-| libgcrypt20-dev        |               | Secured data, IRC SASL authentication.
+| libgcrypt20-dev          |               | Secured data, IRC SASL authentication.
 // TRANSLATION MISSING
-| libgnutls28-dev        | ≥ 2.2.0 ^(3)^ | Connessione SSL al server IRC, support of SSL in relay plugin, IRC SASL authentication (ECDSA-NIST256P-CHALLENGE).
+| libgnutls28-dev          | ≥ 2.2.0 ^(3)^ | Connessione SSL al server IRC, support of SSL in relay plugin, IRC SASL authentication (ECDSA-NIST256P-CHALLENGE).
 // TRANSLATION MISSING
-| zlib1g-dev             |               | Compression of messages (WeeChat -> client) with https://zlib.net/[zlib] in relay plugin (weechat protocol), script plugin.
+| zlib1g-dev               |               | Compression of messages (WeeChat -> client) with https://zlib.net/[zlib] in relay plugin (weechat protocol), script plugin.
 // TRANSLATION MISSING
-| libzstd-dev            |               | Compression of messages (WeeChat -> client) with https://facebook.github.io/zstd/[Zstandard] in relay plugin (weechat protocol).
+| libzstd-dev              |               | Compression of messages (WeeChat -> client) with https://facebook.github.io/zstd/[Zstandard] in relay plugin (weechat protocol).
 |===
 
 [NOTE]
@@ -148,30 +147,30 @@ WeeChat:
 
 [width="100%",cols="5,^3,.^15",options="header"]
 |===
-| Pacchetto              | Versione | Caratteristica
+| Pacchetto                             | Versione | Caratteristica
 // TRANSLATION MISSING
-| C++ compiler           |          | Build and run tests, plugin JavaScript.
-| gettext                |          | Internazionalizzazione (traduzione dei messaggi; la lingua base è l'inglese).
-| ca-certificates        |          | Certificati per le connessioni SSL.
-| libaspell-dev
-  ∥ libenchant-dev       |          | Plugin spell.
-| python3-dev ^(1)^      |          | Plugin python.
-| libperl-dev            |          | Plugin perl.
-| ruby2.5, ruby2.5-dev   | ≥ 1.9.1  | Plugin ruby.
-| liblua5.3-dev          |          | Plugin lua.
-| tcl-dev                | ≥ 8.5    | Plugin tcl.
-| guile-2.0-dev          | ≥ 2.0    | Plugin guile (scheme).
-| libv8-dev              | ≤ 3.24.3 | Plugin javascript.
-| php-dev, libphp-embed  | ≥ 7.0    | Plugin php.
-| libxml2-dev            |          | Plugin php.
+| {cpp} compiler (pass:[g++ / clang++]) |          | Build and run tests, plugin JavaScript.
+| gettext                               |          | Internazionalizzazione (traduzione dei messaggi; la lingua base è l'inglese).
+| ca-certificates                       |          | Certificati per le connessioni SSL.
+| libaspell-dev / libenchant-dev        |          | Plugin spell.
+| python3-dev ^(1)^                     |          | Plugin python.
+| libperl-dev                           |          | Plugin perl.
+| ruby2.5, ruby2.5-dev                  | ≥ 1.9.1  | Plugin ruby.
+| liblua5.3-dev                         |          | Plugin lua.
+| tcl-dev                               | ≥ 8.5    | Plugin tcl.
+| guile-2.0-dev                         | ≥ 2.0    | Plugin guile (scheme).
+| libv8-dev                             | ≤ 3.24.3 | Plugin javascript.
+| php-dev                               | ≥ 7.0    | Plugin php.
+| libphp-embed                          | ≥ 7.0    | Plugin php.
+| libxml2-dev                           |          | Plugin php.
 // TRANSLATION MISSING
-| libargon2-0-dev        |          | Plugin php (if PHP ≥ 7.2).
+| libargon2-0-dev                       |          | Plugin php (if PHP ≥ 7.2).
 // TRANSLATION MISSING
-| libsodium-dev          |          | Plugin php (if PHP ≥ 7.2).
+| libsodium-dev                         |          | Plugin php (if PHP ≥ 7.2).
 // TRANSLATION MISSING
-| asciidoctor            | ≥ 1.5.4  | Build man page and documentation.
+| asciidoctor                           | ≥ 1.5.4  | Build man page and documentation.
 // TRANSLATION MISSING
-| libcpputest-dev        | ≥ 3.4    | Build and run tests.
+| libcpputest-dev                       | ≥ 3.4    | Build and run tests.
 |===
 
 [NOTE]

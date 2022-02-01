@@ -97,17 +97,16 @@ Le tableau suivant liste les paquets *requis* pour compiler WeeChat :
 
 [width="100%",cols="5,^3,.^15",options="header"]
 |===
-| Paquet ^(1)^           | Version       | Fonctionnalité
-| compilateur C
-  (gcc, clang, ...)      |               | Construction.
-| cmake                  | ≥ 3.0         | Construction (autotools toujours possible, mais CMake est recommandé).
-| pkg-config             |               | Détection des bibliothèques installées.
-| libncursesw5-dev ^(2)^ |               | Interface ncurses.
-| libcurl4-gnutls-dev    |               | Transfert d'URL.
-| libgcrypt20-dev        |               | Données sécurisées, authentification IRC SASL.
-| libgnutls28-dev        | ≥ 2.2.0 ^(3)^ | Connexion SSL au serveur IRC, support SSL dans l'extension relay, authentification IRC SASL (ECDSA-NIST256P-CHALLENGE).
-| zlib1g-dev             |               | Compression des messages (WeeChat -> client) avec https://zlib.net/[zlib] dans l'extension relay (protocole weechat), extension script.
-| libzstd-dev            |               | Compression des messages (WeeChat -> client) avec https://facebook.github.io/zstd/[Zstandard] dans l'extension relay (protocole weechat).
+| Paquet ^(1)^                | Version       | Fonctionnalité
+| compilateur C (gcc / clang) |               | Construction.
+| cmake                       | ≥ 3.0         | Construction (autotools toujours possible, mais CMake est recommandé).
+| pkg-config                  |               | Détection des bibliothèques installées.
+| libncursesw5-dev ^(2)^      |               | Interface ncurses.
+| libcurl4-gnutls-dev         |               | Transfert d'URL.
+| libgcrypt20-dev             |               | Données sécurisées, authentification IRC SASL.
+| libgnutls28-dev             | ≥ 2.2.0 ^(3)^ | Connexion SSL au serveur IRC, support SSL dans l'extension relay, authentification IRC SASL (ECDSA-NIST256P-CHALLENGE).
+| zlib1g-dev                  |               | Compression des messages (WeeChat -> client) avec https://zlib.net/[zlib] dans l'extension relay (protocole weechat), extension script.
+| libzstd-dev                 |               | Compression des messages (WeeChat -> client) avec https://facebook.github.io/zstd/[Zstandard] dans l'extension relay (protocole weechat).
 |===
 
 [NOTE]
@@ -124,25 +123,25 @@ Le tableau suivant liste les paquets optionnels pour compiler WeeChat :
 
 [width="100%",cols="5,^3,.^15",options="header"]
 |===
-| Paquet                 | Version  | Fonctionnalité
-| compilateur C++        |          | Construction et lancement des tests, extension JavaScript.
-| gettext                |          | Internationalisation (traduction des messages ; la langue de base est l'anglais).
-| ca-certificates        |          | Certificats pour les connexions SSL.
-| libaspell-dev
-  ∥ libenchant-dev       |          | Extension spell.
-| python3-dev ^(1)^      |          | Extension python.
-| libperl-dev            |          | Extension perl.
-| ruby2.5, ruby2.5-dev   | ≥ 1.9.1  | Extension ruby.
-| liblua5.3-dev          |          | Extension lua.
-| tcl-dev                | ≥ 8.5    | Extension tcl.
-| guile-2.0-dev          | ≥ 2.0    | Extension guile (scheme).
-| libv8-dev              | ≤ 3.24.3 | Extension javascript.
-| php-dev, libphp-embed  | ≥ 7.0    | Extension PHP.
-| libxml2-dev            |          | Extension PHP.
-| libargon2-0-dev        |          | Extension PHP (si PHP ≥ 7.2).
-| libsodium-dev          |          | Extension PHP (si PHP ≥ 7.2).
-| asciidoctor            | ≥ 1.5.4  | Construction de la page man et de la documentation.
-| libcpputest-dev        | ≥ 3.4    | Construction et lancement des tests.
+| Paquet                                   | Version  | Fonctionnalité
+| compilateur {cpp} (pass:[g++ / clang++]) |          | Construction et lancement des tests, extension JavaScript.
+| gettext                                  |          | Internationalisation (traduction des messages ; la langue de base est l'anglais).
+| ca-certificates                          |          | Certificats pour les connexions SSL.
+| libaspell-dev / libenchant-dev           |          | Extension spell.
+| python3-dev ^(1)^                        |          | Extension python.
+| libperl-dev                              |          | Extension perl.
+| ruby2.5, ruby2.5-dev                     | ≥ 1.9.1  | Extension ruby.
+| liblua5.3-dev                            |          | Extension lua.
+| tcl-dev                                  | ≥ 8.5    | Extension tcl.
+| guile-2.0-dev                            | ≥ 2.0    | Extension guile (scheme).
+| libv8-dev                                | ≤ 3.24.3 | Extension javascript.
+| php-dev                                  | ≥ 7.0    | Extension PHP.
+| libphp-embed                             | ≥ 7.0    | Extension PHP.
+| libxml2-dev                              |          | Extension PHP.
+| libargon2-0-dev                          |          | Extension PHP (si PHP ≥ 7.2).
+| libsodium-dev                            |          | Extension PHP (si PHP ≥ 7.2).
+| asciidoctor                              | ≥ 1.5.4  | Construction de la page man et de la documentation.
+| libcpputest-dev                          | ≥ 3.4    | Construction et lancement des tests.
 |===
 
 [NOTE]

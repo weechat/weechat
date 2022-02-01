@@ -101,19 +101,18 @@ WeeChat:
 
 [width="100%",cols="5,^3,.^15",options="header"]
 |===
-| パッケージ ^(1)^       | バージョン       | 機能
-| C コンパイラ
-  (gcc, clang, ...)      |                  | ビルド
-| cmake                  | ≥ 3.0            | ビルド (autotools でも可能ですが、CMake を推奨します)
-| pkg-config             |                  | インストール済みライブラリを検出
-| libncursesw5-dev ^(2)^ |                  | ncurses インターフェース
-| libcurl4-gnutls-dev    |                  | URL 転送
-| libgcrypt20-dev        |                  | 保護データ、IRC SASL 認証
-| libgnutls28-dev        | 2.2.0 以上 ^(3)^ | IRC サーバへの SSL 接続、IRC SASL 認証 (ECDSA-NIST256P-CHALLENGE)
+| パッケージ ^(1)^           | バージョン       | 機能
+| C コンパイラ (gcc / clang) |                  | ビルド
+| cmake                      | ≥ 3.0            | ビルド (autotools でも可能ですが、CMake を推奨します)
+| pkg-config                 |                  | インストール済みライブラリを検出
+| libncursesw5-dev ^(2)^     |                  | ncurses インターフェース
+| libcurl4-gnutls-dev        |                  | URL 転送
+| libgcrypt20-dev            |                  | 保護データ、IRC SASL 認証
+| libgnutls28-dev            | 2.2.0 以上 ^(3)^ | IRC サーバへの SSL 接続、IRC SASL 認証 (ECDSA-NIST256P-CHALLENGE)
 // TRANSLATION MISSING
-| zlib1g-dev             |                  | Compression of messages (WeeChat -> client) with https://zlib.net/[zlib] in relay plugin (weechat protocol), script plugin.
+| zlib1g-dev                 |                  | Compression of messages (WeeChat -> client) with https://zlib.net/[zlib] in relay plugin (weechat protocol), script plugin.
 // TRANSLATION MISSING
-| libzstd-dev            |                  | Compression of messages (WeeChat -> client) with https://facebook.github.io/zstd/[Zstandard] in relay plugin (weechat protocol).
+| libzstd-dev                |                  | Compression of messages (WeeChat -> client) with https://facebook.github.io/zstd/[Zstandard] in relay plugin (weechat protocol).
 |===
 
 [NOTE]
@@ -131,25 +130,25 @@ WeeChat:
 
 [width="100%",cols="5,^3,.^15",options="header"]
 |===
-| パッケージ             | バージョン  | 機能
-| C++ コンパイラ         |             | ビルドとテストの実行、JavaScript プラグイン
-| gettext                |             | 国際化 (メッセージの翻訳; ベース言語は英語です)
-| ca-certificates        |             | SSL 接続に必要な証明書、relay プラグインで SSL サポート
-| libaspell-dev
-  ∥ libenchant-dev       |             | spell プラグイン
-| python3-dev ^(1)^      |             | python プラグイン
-| libperl-dev            |             | perl プラグイン
-| ruby2.5, ruby2.5-dev   | 1.9.1 以上  | ruby プラグイン
-| liblua5.3-dev          |             | lua プラグイン
-| tcl-dev                | 8.5 以上    | tcl プラグイン
-| guile-2.0-dev          | 2.0 以上    | guile (scheme) プラグイン
-| libv8-dev              | 3.24.3 以下 | javascript プラグイン
-| php-dev, libphp-embed  | 7.0 以上    | PHP プラグイン
-| libxml2-dev            |             | PHP プラグイン
-| libargon2-0-dev        |             | PHP プラグイン (PHP 7.2 以上の場合)
-| libsodium-dev          |             | PHP プラグイン (PHP 7.2 以上の場合)
-| asciidoctor            | 1.5.4 以上  | man ページと文書のビルド
-| libcpputest-dev        | 3.4 以上    | ビルドとテストの実行
+| パッケージ                              | バージョン  | 機能
+| {cpp} コンパイラ (pass:[g++ / clang++]) |             | ビルドとテストの実行、JavaScript プラグイン
+| gettext                                 |             | 国際化 (メッセージの翻訳; ベース言語は英語です)
+| ca-certificates                         |             | SSL 接続に必要な証明書、relay プラグインで SSL サポート
+| libaspell-dev / libenchant-dev          |             | spell プラグイン
+| python3-dev ^(1)^                       |             | python プラグイン
+| libperl-dev                             |             | perl プラグイン
+| ruby2.5, ruby2.5-dev                    | 1.9.1 以上  | ruby プラグイン
+| liblua5.3-dev                           |             | lua プラグイン
+| tcl-dev                                 | 8.5 以上    | tcl プラグイン
+| guile-2.0-dev                           | 2.0 以上    | guile (scheme) プラグイン
+| libv8-dev                               | 3.24.3 以下 | javascript プラグイン
+| php-dev                                 | 7.0 以上    | PHP プラグイン
+| libphp-embed                            | 7.0 以上    | PHP プラグイン
+| libxml2-dev                             |             | PHP プラグイン
+| libargon2-0-dev                         |             | PHP プラグイン (PHP 7.2 以上の場合)
+| libsodium-dev                           |             | PHP プラグイン (PHP 7.2 以上の場合)
+| asciidoctor                             | 1.5.4 以上  | man ページと文書のビルド
+| libcpputest-dev                         | 3.4 以上    | ビルドとテストの実行
 |===
 
 [NOTE]

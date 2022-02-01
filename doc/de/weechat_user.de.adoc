@@ -100,17 +100,16 @@ WeeChat *erforderlich* sind:
 
 [width="100%",cols="5,^3,.^15",options="header"]
 |===
-| Paket ^(1)^            | Version       | Funktion
-| C compiler
-  (gcc, clang, ...)      |               | zum Erstellen der Binärdatei.
-| cmake                  | ≥ 3.0         | zum kompilieren (autotools ist möglich. CMake wird aber empfohlen).
-| pkg-config             |               | entdeckt installierte Bibliotheken.
-| libncursesw5-dev ^(2)^ |               | Ncurses Oberfläche.
-| libcurl4-gnutls-dev    |               | URL Transfer.
-| libgcrypt20-dev        |               | Geschützte Daten, IRC SASL Authentifikation.
-| libgnutls28-dev        | ≥ 2.2.0 ^(3)^ | SSL Verbindung zu einem IRC Server, Unterstützung von SSL in der Relay-Erweiterung, IRC SASL Authentifikation (ECDSA-NIST256P-CHALLENGE).
-| zlib1g-dev             |               | Kompression von Nachrichten (WeeChat -> client) mit https://zlib.net/[zlib] in relay Erweitertungen (weechat Protokoll), Skript-Erweiterung übertragen werden.
-| libzstd-dev            |               | Kompression von Nachrichten (WeeChat -> client) mit https://facebook.github.io/zstd/[Zstandard] in relay Erweiterung (weechat Protokoll).
+| Paket ^(1)^              | Version       | Funktion
+| C compiler (gcc / clang) |               | zum Erstellen der Binärdatei.
+| cmake                    | ≥ 3.0         | zum kompilieren (autotools ist möglich. CMake wird aber empfohlen).
+| pkg-config               |               | entdeckt installierte Bibliotheken.
+| libncursesw5-dev ^(2)^   |               | Ncurses Oberfläche.
+| libcurl4-gnutls-dev      |               | URL Transfer.
+| libgcrypt20-dev          |               | Geschützte Daten, IRC SASL Authentifikation.
+| libgnutls28-dev          | ≥ 2.2.0 ^(3)^ | SSL Verbindung zu einem IRC Server, Unterstützung von SSL in der Relay-Erweiterung, IRC SASL Authentifikation (ECDSA-NIST256P-CHALLENGE).
+| zlib1g-dev               |               | Kompression von Nachrichten (WeeChat -> client) mit https://zlib.net/[zlib] in relay Erweitertungen (weechat Protokoll), Skript-Erweiterung übertragen werden.
+| libzstd-dev              |               | Kompression von Nachrichten (WeeChat -> client) mit https://facebook.github.io/zstd/[Zstandard] in relay Erweiterung (weechat Protokoll).
 |===
 
 [NOTE]
@@ -128,25 +127,25 @@ WeeChat optional sind:
 
 [width="100%",cols="5,^3,.^15",options="header"]
 |===
-| Paket                  | Version  | Funktion
-| C++ compiler           |          | zum Erstellen der Binärdatei und um Test auszuführen, JavaScript Erweiterung.
-| gettext                |          | Internationalisierung (Übersetzung der Mitteilungen; Hauptsprache ist englisch).
-| ca-certificates        |          | Zertifikate für SSL Verbindungen.
-| libaspell-dev
-  ∥ libenchant-dev       |          | Spell Erweiterung.
-| python3-dev ^(1)^      |          | Python Erweiterung.
-| libperl-dev            |          | Perl Erweiterung.
-| ruby2.5, ruby2.5-dev   | ≥ 1.9.1  | Ruby Erweiterung.
-| liblua5.3-dev          |          | Lua Erweiterung.
-| tcl-dev                | ≥ 8.5    | Tcl Erweiterung.
-| guile-2.0-dev          | ≥ 2.0    | Guile (scheme) Erweiterung.
-| libv8-dev              | ≤ 3.24.3 | JavaScript Erweiterung.
-| php-dev, libphp-embed  | ≥ 7.0    | PHP Erweiterung.
-| libxml2-dev            |          | PHP Erweiterung.
-| libargon2-0-dev        |          | PHP Erweiterung (wenn PHP ≥ 7.2).
-| libsodium-dev          |          | PHP Erweiterung (wenn PHP ≥ 7.2).
-| asciidoctor            | ≥ 1.5.4  | zum Erstellen der man page und der Dokumentation.
-| libcpputest-dev        | ≥ 3.4    | zum Erstellen und um Test auszuführen.
+| Paket                                 | Version  | Funktion
+| {cpp} compiler (pass:[g++ / clang++]) |          | zum Erstellen der Binärdatei und um Test auszuführen, JavaScript Erweiterung.
+| gettext                               |          | Internationalisierung (Übersetzung der Mitteilungen; Hauptsprache ist englisch).
+| ca-certificates                       |          | Zertifikate für SSL Verbindungen.
+| libaspell-dev / libenchant-dev        |          | Spell Erweiterung.
+| python3-dev ^(1)^                     |          | Python Erweiterung.
+| libperl-dev                           |          | Perl Erweiterung.
+| ruby2.5, ruby2.5-dev                  | ≥ 1.9.1  | Ruby Erweiterung.
+| liblua5.3-dev                         |          | Lua Erweiterung.
+| tcl-dev                               | ≥ 8.5    | Tcl Erweiterung.
+| guile-2.0-dev                         | ≥ 2.0    | Guile (scheme) Erweiterung.
+| libv8-dev                             | ≤ 3.24.3 | JavaScript Erweiterung.
+| php-dev                               | ≥ 7.0    | PHP Erweiterung.
+| libphp-embed                          | ≥ 7.0    | PHP Erweiterung.
+| libxml2-dev                           |          | PHP Erweiterung.
+| libargon2-0-dev                       |          | PHP Erweiterung (wenn PHP ≥ 7.2).
+| libsodium-dev                         |          | PHP Erweiterung (wenn PHP ≥ 7.2).
+| asciidoctor                           | ≥ 1.5.4  | zum Erstellen der man page und der Dokumentation.
+| libcpputest-dev                       | ≥ 3.4    | zum Erstellen und um Test auszuführen.
 |===
 
 [NOTE]
