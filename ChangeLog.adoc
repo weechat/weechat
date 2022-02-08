@@ -47,6 +47,10 @@ Tests::
   * core: add tests on GUI chat functions
   * core: add build of Debian packages in CI
 
+Build::
+
+  * ruby: add detection of Ruby 3.1
+
 [[v3.4]]
 == Version 3.4 (2021-12-18)
 

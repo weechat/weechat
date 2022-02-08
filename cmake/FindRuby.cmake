@@ -37,7 +37,7 @@ if(PKG_CONFIG_FOUND)
     # set specific search path for macOS
     set(ENV{PKG_CONFIG_PATH} "$ENV{PKG_CONFIG_PATH}:/usr/local/opt/ruby/lib/pkgconfig")
   endif()
-  pkg_search_module(RUBY ruby-3.0 ruby-2.7 ruby-2.6 ruby-2.5 ruby-2.4 ruby-2.3 ruby-2.2 ruby-2.1 ruby-2.0 ruby-1.9 ruby)
+  pkg_search_module(RUBY ruby-3.1 ruby-3.0 ruby-2.7 ruby-2.6 ruby-2.5 ruby-2.4 ruby-2.3 ruby-2.2 ruby-2.1 ruby-2.0 ruby-1.9 ruby)
   if(RUBY_FOUND AND ${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     # FIXME: weird hack: hardcoding the Ruby lib location on macOS
     set(RUBY_LDFLAGS "${RUBY_LDFLAGS} -L/usr/local/opt/ruby/lib")
