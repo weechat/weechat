@@ -420,8 +420,7 @@ WeeChat „језгро” се налази у следећим директо�
 |          test-core-utf8.cpp         | Тестови: UTF-8.
 |          test-core-util.cpp         | Тестови: помоћне функције.
 |       gui/                          | Корен unit тестова интерфејса.
-// TRANSLATION MISSING
-|          test-gui-chat.cpp          | Tests: chat functions.
+|          test-gui-chat.cpp          | Тестови: чет функције.
 |          test-gui-color.cpp         | Тестови: боје.
 |          test-gui-line.cpp          | Тестови: линије.
 |          test-gui-nick.cpp          | Тестови: надимци.
@@ -1089,19 +1088,18 @@ Git репозиторијум се налази на следећој URL ад�
 
 Где је _компонента_ једно од следећег:
 
-// TRANSLATION MISSING
-* WeeChat core: `core` (files in root directory, _po/_ and _src/_, except _src/plugins/_)
-* documentation:
-** `doc`: general doc updates, for example build
-** `doc/man`: man pages
-** `doc/faq`: frequently asked questions (FAQ)
-** `doc/quickstart`: quickstart guide
-** `doc/user`: user's guide
-** `doc/scripting`: scripting guide
-** `doc/api`: plugin API reference
-** `doc/relay`: relay protocol
-** `doc/dev`: developer's guide
-* plugins: `irc`, `python`, `relay`, ... (files in directory _src/plugins/_)
+* WeeChat језгро: `core` (фајлови у кореном директоријуму, _po/_ и _src/_, осим _src/plugins/_)
+* документација:
+** `doc`: општа ажурирања документације, на пример изградња
+** `doc/man`: man странице
+** `doc/faq`: често постављана питања (ЧПП)
+** `doc/quickstart`: водич за брзи почетак
+** `doc/user`: корисничко упутство
+** `doc/scripting`: водич за скриптовање
+** `doc/api`: референтни приручник API додатака
+** `doc/relay`: релеј протокол
+** `doc/dev`: водич за програмере
+* додаци: `irc`, `python`, `relay`, ... (фајлови у директоријуму _src/plugins/_)
 
 Нека правила која треба да поштујете:
 

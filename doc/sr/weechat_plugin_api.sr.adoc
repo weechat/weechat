@@ -8381,9 +8381,8 @@ weechat.prnt_y("", 2, "My message on third line")
 
 _WeeChat ≥ 3.5._
 
-// TRANSLATION MISSING
-Display a message on a line of a buffer with free content, using a custom
-date and tags.
+Приказује поруку на линији бафера са произвољним садржајем, користећи
+прилагођене ознаке времена и датума.
 
 Прототип:
 
