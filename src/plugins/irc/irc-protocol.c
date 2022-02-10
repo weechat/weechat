@@ -3951,32 +3951,44 @@ IRC_PROTOCOL_CALLBACK(306)
  *
  * Command looks like:
  *   319 mynick nick :some text here
+ *
+ * On InspIRCd server (not a whois reply):
+ *   223 mynick :EXEMPT #help
  */
 
 IRC_PROTOCOL_CALLBACK(whois_nick_msg)
 {
     char *str_params;
 
-    IRC_PROTOCOL_MIN_PARAMS(3);
+    IRC_PROTOCOL_MIN_PARAMS(2);
 
-    str_params = irc_protocol_string_params (params, 2, num_params - 1);
-
-    weechat_printf_date_tags (
-        irc_msgbuffer_get_target_buffer (
-            server, params[1], command, "whois", NULL),
-        date,
-        irc_protocol_tags (command, tags, "irc_numeric", NULL, NULL),
-        "%s%s[%s%s%s] %s%s",
-        weechat_prefix ("network"),
-        IRC_COLOR_CHAT_DELIMITERS,
-        irc_nick_color_for_msg (server, 1, NULL, params[1]),
-        params[1],
-        IRC_COLOR_CHAT_DELIMITERS,
-        IRC_COLOR_RESET,
-        str_params);
-
-    if (str_params)
-        free (str_params);
+    if (num_params >= 3)
+    {
+        str_params = irc_protocol_string_params (params, 2, num_params - 1);
+        weechat_printf_date_tags (
+            irc_msgbuffer_get_target_buffer (
+                server, params[1], command, "whois", NULL),
+            date,
+            irc_protocol_tags (command, tags, "irc_numeric", NULL, NULL),
+            "%s%s[%s%s%s] %s%s",
+            weechat_prefix ("network"),
+            IRC_COLOR_CHAT_DELIMITERS,
+            irc_nick_color_for_msg (server, 1, NULL, params[1]),
+            params[1],
+            IRC_COLOR_CHAT_DELIMITERS,
+            IRC_COLOR_RESET,
+            str_params);
+        if (str_params)
+            free (str_params);
+    }
+    else
+    {
+        /*
+         * not enough parameters: this should not be a whois command so we
+         * display the arguments as-is
+         */
+        IRC_PROTOCOL_RUN_CALLBACK(numeric);
+    }
 
     return WEECHAT_RC_OK;
 }
@@ -3992,26 +4004,35 @@ IRC_PROTOCOL_CALLBACK(whowas_nick_msg)
 {
     char *str_params;
 
-    IRC_PROTOCOL_MIN_PARAMS(3);
+    IRC_PROTOCOL_MIN_PARAMS(2);
 
-    str_params = irc_protocol_string_params (params, 2, num_params - 1);
-
-    weechat_printf_date_tags (
-        irc_msgbuffer_get_target_buffer (
-            server, params[1], command, "whowas", NULL),
-        date,
-        irc_protocol_tags (command, tags, "irc_numeric", NULL, NULL),
-        "%s%s[%s%s%s] %s%s",
-        weechat_prefix ("network"),
-        IRC_COLOR_CHAT_DELIMITERS,
-        irc_nick_color_for_msg (server, 1, NULL, params[1]),
-        params[1],
-        IRC_COLOR_CHAT_DELIMITERS,
-        IRC_COLOR_RESET,
-        str_params);
-
-    if (str_params)
-        free (str_params);
+    if (num_params >= 3)
+    {
+        str_params = irc_protocol_string_params (params, 2, num_params - 1);
+        weechat_printf_date_tags (
+            irc_msgbuffer_get_target_buffer (
+                server, params[1], command, "whowas", NULL),
+            date,
+            irc_protocol_tags (command, tags, "irc_numeric", NULL, NULL),
+            "%s%s[%s%s%s] %s%s",
+            weechat_prefix ("network"),
+            IRC_COLOR_CHAT_DELIMITERS,
+            irc_nick_color_for_msg (server, 1, NULL, params[1]),
+            params[1],
+            IRC_COLOR_CHAT_DELIMITERS,
+            IRC_COLOR_RESET,
+            str_params);
+        if (str_params)
+            free (str_params);
+    }
+    else
+    {
+        /*
+         * not enough parameters: this should not be a whowas command so we
+         * display the arguments as-is
+         */
+        IRC_PROTOCOL_RUN_CALLBACK(numeric);
+    }
 
     return WEECHAT_RC_OK;
 }
