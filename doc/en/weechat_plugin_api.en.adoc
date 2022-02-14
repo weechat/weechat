@@ -537,7 +537,7 @@ Script (Python):
 [source,python]
 ----
 # prototype
-def ngettext(string: str, plural: str, count) -> str: ...
+def ngettext(string: str, plural: str, count: int) -> str: ...
 
 # example
 num_files = 2

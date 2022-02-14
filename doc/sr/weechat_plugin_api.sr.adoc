@@ -511,7 +511,7 @@ char *str = weechat_ngettext ("file", "files", num_files);
 [source, python]
 ----
 # прототип
-def ngettext(string: str, plural: str, count) -> str: ...
+def ngettext(string: str, plural: str, count: int) -> str: ...
 
 # пример
 num_files = 2

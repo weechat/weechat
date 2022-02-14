@@ -59,7 +59,7 @@ def gettext(string: str) -> str:
     ...
 
 
-def ngettext(string: str, plural: str, count) -> str:
+def ngettext(string: str, plural: str, count: int) -> str:
     """`ngettext in WeeChat plugin API reference <https://weechat.org/doc/api#_ngettext>`_"""
     ...
 
