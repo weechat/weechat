@@ -206,8 +206,10 @@ Bug fix and maintenance release.
 [[v3.2_xdg_directories]]
 === XDG directories
 
-Support of XDG directories has been added. For compatibility, if the directory
-`~/.weechat` exists, WeeChat will still use it for all files.
+Support of XDG directories has been added.
+
+For compatibility, if the XDG directories are not found but `~/.weechat` exists,
+this single directory is used for all files.
 
 If you want to switch to XDG directories, you must create and move manually
 all files in the appropriate directories. +
