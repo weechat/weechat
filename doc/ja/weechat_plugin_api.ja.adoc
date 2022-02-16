@@ -6209,6 +6209,7 @@ def config_new_section(config_file: str, name: str,
                        user_can_add_options: int, user_can_delete_options: int,
                        callback_read: str, callback_read_data: str,
                        callback_write: str, callback_write_data: str,
+                       callback_write_default: str, callback_write_default_data: str,
                        callback_create_option: str, callback_create_option_data: str,
                        callback_delete_option: str, callback_delete_option_data: str) -> str: ...
 
