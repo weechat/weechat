@@ -141,10 +141,34 @@ TEST(CoreString, Strndup)
     STRCMP_EQUAL(str, "");
     free (str);
 
+    str = string_strndup (str_test, 1);
+    CHECK(str);
+    CHECK(str != str_test);
+    STRCMP_EQUAL(str, "t");
+    free (str);
+
     str = string_strndup (str_test, 2);
     CHECK(str);
     CHECK(str != str_test);
     STRCMP_EQUAL(str, "te");
+    free (str);
+
+    str = string_strndup (str_test, 3);
+    CHECK(str);
+    CHECK(str != str_test);
+    STRCMP_EQUAL(str, "tes");
+    free (str);
+
+    str = string_strndup (str_test, 4);
+    CHECK(str);
+    CHECK(str != str_test);
+    STRCMP_EQUAL(str, "test");
+    free (str);
+
+    str = string_strndup (str_test, 5);
+    CHECK(str);
+    CHECK(str != str_test);
+    STRCMP_EQUAL(str, "test");
     free (str);
 
     str = string_strndup (str_test, 500);
