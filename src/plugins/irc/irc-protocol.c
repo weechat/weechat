@@ -891,8 +891,8 @@ IRC_PROTOCOL_CALLBACK(cap)
                 pos_value = strstr (caps_supported[j], "=");
                 if (pos_value)
                 {
-                    str_name = strndup (caps_supported[j],
-                                        pos_value - caps_supported[j]);
+                    str_name = weechat_strndup (caps_supported[j],
+                                                pos_value - caps_supported[j]);
                     if (str_name)
                     {
                         weechat_hashtable_set (server->cap_ls,
@@ -971,8 +971,8 @@ IRC_PROTOCOL_CALLBACK(cap)
                 pos_value = strstr (caps_enabled[j], "=");
                 if (pos_value)
                 {
-                    str_name = strndup (caps_enabled[j],
-                                        pos_value - caps_enabled[j]);
+                    str_name = weechat_strndup (caps_enabled[j],
+                                                pos_value - caps_enabled[j]);
                     if (str_name)
                     {
                         weechat_hashtable_set (server->cap_list,
@@ -1152,8 +1152,8 @@ IRC_PROTOCOL_CALLBACK(cap)
                 pos_value = strstr (caps_added[j], "=");
                 if (pos_value)
                 {
-                    str_name = strndup (caps_added[j],
-                                        pos_value - caps_added[j]);
+                    str_name = weechat_strndup (caps_added[j],
+                                                pos_value - caps_added[j]);
                     if (str_name)
                     {
                         weechat_hashtable_set (server->cap_ls,
