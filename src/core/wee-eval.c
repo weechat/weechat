@@ -343,7 +343,7 @@ eval_string_cut (const char *text, int screen)
     if (!pos2)
         return strdup ("");
 
-    tmp = strndup (text, pos - text);
+    tmp = string_strndup (text, pos - text);
     if (!tmp)
         return strdup ("");
 
@@ -355,7 +355,7 @@ eval_string_cut (const char *text, int screen)
     }
     free (tmp);
 
-    tmp = strndup (pos + 1, pos2 - pos - 1);
+    tmp = string_strndup (pos + 1, pos2 - pos - 1);
     if (!tmp)
         return strdup ("");
 
@@ -383,7 +383,7 @@ eval_string_repeat (const char *text)
     if (!pos)
         return strdup ("");
 
-    tmp = strndup (text, pos - text);
+    tmp = string_strndup (text, pos - text);
     if (!tmp)
         return strdup ("");
 
@@ -950,7 +950,7 @@ eval_string_if (const char *text, struct t_eval_context *eval_context)
         (char *)eval_strstr_level (pos + 1, ":",
                                    eval_context, NULL, NULL, 1) : NULL;
     condition = (pos) ?
-        strndup (text, pos - text) : strdup (text);
+        string_strndup (text, pos - text) : strdup (text);
     if (!condition)
         return strdup ("");
     tmp = eval_expression_condition (condition, eval_context);
@@ -966,7 +966,7 @@ eval_string_if (const char *text, struct t_eval_context *eval_context)
         if (pos)
         {
             tmp = (pos2) ?
-                strndup (pos + 1, pos2 - pos - 1) : strdup (pos + 1);
+                string_strndup (pos + 1, pos2 - pos - 1) : strdup (pos + 1);
             if (tmp)
             {
                 value = eval_replace_vars (tmp, eval_context);
@@ -1018,7 +1018,7 @@ eval_string_random (const char *text)
     if (!pos)
         goto error;
 
-    tmp = strndup (text, pos - text);
+    tmp = string_strndup (text, pos - text);
     if (!tmp)
         goto error;
     min_number = strtoll (tmp, &error, 10);
@@ -1082,7 +1082,7 @@ eval_string_define (const char *text, struct t_eval_context *eval_context)
     if (!pos)
         return;
 
-    name = strndup (text, pos - text);
+    name = string_strndup (text, pos - text);
     if (!name)
         return;
 
