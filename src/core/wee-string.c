@@ -82,7 +82,7 @@ string_strndup (const char *string, int bytes)
     if (!string || (bytes < 0))
         return NULL;
 
-    if ((int)strlen (string) < bytes)
+    if ((int)strlen (string) <= bytes)
         return strdup (string);
 
     result = malloc (bytes + 1);
