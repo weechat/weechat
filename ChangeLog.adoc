@@ -50,6 +50,7 @@ Tests::
 
 Build::
 
+  * debian: change dependency libargon2-0-dev to libargon2-dev (debian #1005703)
   * ruby: add detection of Ruby 3.1
 
 [[v3.4]]

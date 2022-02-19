@@ -135,7 +135,7 @@ WeeChat:
 | php-dev                               | ≥ 7.0    | PHP plugin.
 | libphp-embed                          | ≥ 7.0    | PHP plugin.
 | libxml2-dev                           |          | PHP plugin.
-| libargon2-0-dev                       |          | PHP plugin (if PHP ≥ 7.2).
+| libargon2-dev                         |          | PHP plugin (if PHP ≥ 7.2).
 | libsodium-dev                         |          | PHP plugin (if PHP ≥ 7.2).
 | asciidoctor                           | ≥ 1.5.4  | Build man page and documentation.
 | libcpputest-dev                       | ≥ 3.4    | Build and run tests.

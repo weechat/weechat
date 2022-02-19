@@ -138,7 +138,7 @@ Le tableau suivant liste les paquets optionnels pour compiler WeeChat :
 | php-dev                                  | ≥ 7.0    | Extension PHP.
 | libphp-embed                             | ≥ 7.0    | Extension PHP.
 | libxml2-dev                              |          | Extension PHP.
-| libargon2-0-dev                          |          | Extension PHP (si PHP ≥ 7.2).
+| libargon2-dev                            |          | Extension PHP (si PHP ≥ 7.2).
 | libsodium-dev                            |          | Extension PHP (si PHP ≥ 7.2).
 | asciidoctor                              | ≥ 1.5.4  | Construction de la page man et de la documentation.
 | libcpputest-dev                          | ≥ 3.4    | Construction et lancement des tests.

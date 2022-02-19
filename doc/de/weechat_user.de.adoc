@@ -142,7 +142,7 @@ WeeChat optional sind:
 | php-dev                               | ≥ 7.0    | PHP Erweiterung.
 | libphp-embed                          | ≥ 7.0    | PHP Erweiterung.
 | libxml2-dev                           |          | PHP Erweiterung.
-| libargon2-0-dev                       |          | PHP Erweiterung (wenn PHP ≥ 7.2).
+| libargon2-dev                         |          | PHP Erweiterung (wenn PHP ≥ 7.2).
 | libsodium-dev                         |          | PHP Erweiterung (wenn PHP ≥ 7.2).
 | asciidoctor                           | ≥ 1.5.4  | zum Erstellen der man page und der Dokumentation.
 | libcpputest-dev                       | ≥ 3.4    | zum Erstellen und um Test auszuführen.

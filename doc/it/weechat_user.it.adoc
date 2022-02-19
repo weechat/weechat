@@ -164,7 +164,7 @@ WeeChat:
 | libphp-embed                          | ≥ 7.0    | Plugin php.
 | libxml2-dev                           |          | Plugin php.
 // TRANSLATION MISSING
-| libargon2-0-dev                       |          | Plugin php (if PHP ≥ 7.2).
+| libargon2-dev                         |          | Plugin php (if PHP ≥ 7.2).
 // TRANSLATION MISSING
 | libsodium-dev                         |          | Plugin php (if PHP ≥ 7.2).
 // TRANSLATION MISSING
