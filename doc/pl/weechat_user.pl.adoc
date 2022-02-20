@@ -146,6 +146,8 @@ WeeChat:
 | libargon2-dev                           |          | Wtyczka PHP (jeśli PHP ≥ 7.2).
 | libsodium-dev                           |          | Wtyczka PHP (jeśli PHP ≥ 7.2).
 | asciidoctor                             | ≥ 1.5.4  | Tworzenie strony man i dokumentacji.
+// TRANSLATION MISSING
+| ruby-pygments.rb                        |          | Build documentation.
 | libcpputest-dev                         | ≥ 3.4    | Kompilacja i uruchamianie testów.
 |===
 

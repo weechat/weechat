@@ -125,6 +125,8 @@ WeeChat почетна страница се налази на адреси: htt
 | libargon2-dev                          |          | PHP додатак (ако је PHP ≥ 7.2).
 | libsodium-dev                          |          | PHP додатак (ако је PHP ≥ 7.2).
 | asciidoctor                            | ≥ 1.5.4  | Изградњу man странице и документације.
+// TRANSLATION MISSING
+| ruby-pygments.rb                       |          | Build documentation.
 | libcpputest-dev                        | ≥ 3.4    | Изградњу и покретање тестова.
 |===
 

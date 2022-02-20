@@ -145,6 +145,8 @@ WeeChat optional sind:
 | libargon2-dev                         |          | PHP Erweiterung (wenn PHP ≥ 7.2).
 | libsodium-dev                         |          | PHP Erweiterung (wenn PHP ≥ 7.2).
 | asciidoctor                           | ≥ 1.5.4  | zum Erstellen der man page und der Dokumentation.
+// TRANSLATION MISSING
+| ruby-pygments.rb                      |          | Build documentation.
 | libcpputest-dev                       | ≥ 3.4    | zum Erstellen und um Test auszuführen.
 |===
 

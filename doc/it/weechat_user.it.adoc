@@ -170,6 +170,8 @@ WeeChat:
 // TRANSLATION MISSING
 | asciidoctor                           | ≥ 1.5.4  | Build man page and documentation.
 // TRANSLATION MISSING
+| ruby-pygments.rb                      |          | Build documentation.
+// TRANSLATION MISSING
 | libcpputest-dev                       | ≥ 3.4    | Build and run tests.
 |===
 

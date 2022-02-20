@@ -148,6 +148,8 @@ WeeChat:
 | libargon2-dev                           |             | PHP プラグイン (PHP 7.2 以上の場合)
 | libsodium-dev                           |             | PHP プラグイン (PHP 7.2 以上の場合)
 | asciidoctor                             | 1.5.4 以上  | man ページと文書のビルド
+// TRANSLATION MISSING
+| ruby-pygments.rb                        |          | Build documentation.
 | libcpputest-dev                         | 3.4 以上    | ビルドとテストの実行
 |===
 
