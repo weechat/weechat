@@ -1121,18 +1121,95 @@ component: fix a problem (closes #123)
 
 Where _component_ is one of following:
 
-* WeeChat core: `core` (files in root directory, _po/_ and _src/_, except _src/plugins/_)
-* documentation:
-** `doc`: general doc updates, for example build
-** `doc/man`: man pages
-** `doc/faq`: frequently asked questions (FAQ)
-** `doc/quickstart`: quickstart guide
-** `doc/user`: user's guide
-** `doc/scripting`: scripting guide
-** `doc/api`: plugin API reference
-** `doc/relay`: relay protocol
-** `doc/dev`: developer's guide
-* plugins: `irc`, `python`, `relay`, ... (files in directory _src/plugins/_)
+[width="100%",cols="1m,4m,5",options="header"]
+|===
+| Component | Files | Description
+
+| core |
+  AUTHORS.adoc +
+  ChangeLog.adoc +
+  Contributing.adoc +
+  .github/FUNDING.yml +
+  .github/ISSUE_TEMPLATE/* +
+  icons/* +
+  po/* +
+  README.adoc +
+  ReleaseNotes.adoc +
+  src/core/* +
+  src/gui/* +
+  version.sh +
+  weechat.desktop |
+  WeeChat core
+
+| build |
+  autogen.sh +
+  CMakeLists.txt +
+  cmake/* +
+  configure.ac +
+  Makefile.am +
+  tools/* +
+  weechat.cygport.in +
+  weechat.spec |
+  Build
+
+| ci |
+  .github/workflows/* |
+  Continuous integration
+
+| debian |
+  debian-devel/* +
+  debian-stable/* |
+  Debian packaging
+
+| tests |
+  tests/* |
+  Tests
+
+| doc |
+  doc/* |
+  General doc updates, for example build
+
+| doc/man |
+  doc/xx/weechat.1.xx.adoc +
+  doc/xx/weechat-headless.1.xx.adoc |
+  Man pages
+
+| doc/faq |
+  doc/xx/weechat_faq.xx.adoc |
+  Frequently asked questions (FAQ)
+
+| doc/quickstart |
+  doc/xx/weechat_quickstart.xx.adoc |
+  Quickstart guide
+
+| doc/user |
+  doc/xx/weechat_user.xx.adoc |
+  User's guide
+
+| doc/scripting |
+  doc/xx/weechat_scripting.xx.adoc |
+  Scripting guide
+
+| doc/api |
+  doc/xx/weechat_plugin_api.xx.adoc |
+  Plugin API reference
+
+| doc/relay |
+  doc/xx/weechat_relay_protocol.xx.adoc |
+  Relay protocol
+
+| doc/dev |
+  doc/xx/weechat_dev.en.adoc |
+  Developer's guide
+
+| irc +
+  python +
+  relay +
+  … |
+  src/plugins/<name>/* |
+  Plugin
+
+|===
 
 Some rules to follow:
 

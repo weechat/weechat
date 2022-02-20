@@ -1174,19 +1174,111 @@ component: fix a problem (closes #123)
 
 _component_ には以下から 1 つ選んで記入してください:
 
+[width="100%",cols="1m,4m,5",options="header"]
+|===
 // TRANSLATION MISSING
-* WeeChat core: `core` (files in root directory, _po/_ and _src/_, except _src/plugins/_)
-* documentation:
-** `doc`: general doc updates, for example build
-** `doc/man`: man pages
-** `doc/faq`: frequently asked questions (FAQ)
-** `doc/quickstart`: quickstart guide
-** `doc/user`: user's guide
-** `doc/scripting`: scripting guide
-** `doc/api`: plugin API reference
-** `doc/relay`: relay protocol
-** `doc/dev`: developer's guide
-* plugins: `irc`, `python`, `relay`, ... (files in directory _src/plugins/_)
+| Component | Files | Description
+
+| core |
+  AUTHORS.adoc +
+  ChangeLog.adoc +
+  Contributing.adoc +
+  .github/FUNDING.yml +
+  .github/ISSUE_TEMPLATE/* +
+  icons/* +
+  po/* +
+  README.adoc +
+  ReleaseNotes.adoc +
+  src/core/* +
+  src/gui/* +
+  version.sh +
+  weechat.desktop |
+// TRANSLATION MISSING
+  WeeChat core
+
+| build |
+  autogen.sh +
+  CMakeLists.txt +
+  cmake/* +
+  configure.ac +
+  Makefile.am +
+  tools/* +
+  weechat.cygport.in +
+  weechat.spec |
+// TRANSLATION MISSING
+  Build
+
+| ci |
+  .github/workflows/* |
+// TRANSLATION MISSING
+  Continuous integration
+
+| debian |
+  debian-devel/* +
+  debian-stable/* |
+// TRANSLATION MISSING
+  Debian packaging
+
+| tests |
+  tests/* |
+// TRANSLATION MISSING
+  Tests
+
+| doc |
+  doc/* |
+// TRANSLATION MISSING
+  General doc updates, for example build
+
+| doc/man |
+  doc/xx/weechat.1.xx.adoc +
+  doc/xx/weechat-headless.1.xx.adoc |
+// TRANSLATION MISSING
+  Man pages
+
+| doc/faq |
+  doc/xx/weechat_faq.xx.adoc |
+// TRANSLATION MISSING
+  Frequently asked questions (FAQ)
+
+| doc/quickstart |
+  doc/xx/weechat_quickstart.xx.adoc |
+// TRANSLATION MISSING
+  Quickstart guide
+
+| doc/user |
+  doc/xx/weechat_user.xx.adoc |
+// TRANSLATION MISSING
+  User's guide
+
+| doc/scripting |
+  doc/xx/weechat_scripting.xx.adoc |
+// TRANSLATION MISSING
+  Scripting guide
+
+| doc/api |
+  doc/xx/weechat_plugin_api.xx.adoc |
+// TRANSLATION MISSING
+  Plugin API reference
+
+| doc/relay |
+  doc/xx/weechat_relay_protocol.xx.adoc |
+// TRANSLATION MISSING
+  Relay protocol
+
+| doc/dev |
+  doc/xx/weechat_dev.en.adoc |
+// TRANSLATION MISSING
+  Developer's guide
+
+| irc +
+  python +
+  relay +
+  … |
+  src/plugins/<name>/* |
+// TRANSLATION MISSING
+  Plugin
+
+|===
 
 以下のルールに従ってください:
 

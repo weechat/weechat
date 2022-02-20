@@ -1088,18 +1088,111 @@ Git репозиторијум се налази на следећој URL ад�
 
 Где је _компонента_ једно од следећег:
 
-* WeeChat језгро: `core` (фајлови у кореном директоријуму, _po/_ и _src/_, осим _src/plugins/_)
-* документација:
-** `doc`: општа ажурирања документације, на пример изградња
-** `doc/man`: man странице
-** `doc/faq`: често постављана питања (ЧПП)
-** `doc/quickstart`: водич за брзи почетак
-** `doc/user`: корисничко упутство
-** `doc/scripting`: водич за скриптовање
-** `doc/api`: референтни приручник API додатака
-** `doc/relay`: релеј протокол
-** `doc/dev`: водич за програмере
-* додаци: `irc`, `python`, `relay`, ... (фајлови у директоријуму _src/plugins/_)
+[width="100%",cols="1m,4m,5",options="header"]
+|===
+// TRANSLATION MISSING
+| Component | Files | Description
+
+| core |
+  AUTHORS.adoc +
+  ChangeLog.adoc +
+  Contributing.adoc +
+  .github/FUNDING.yml +
+  .github/ISSUE_TEMPLATE/* +
+  icons/* +
+  po/* +
+  README.adoc +
+  ReleaseNotes.adoc +
+  src/core/* +
+  src/gui/* +
+  version.sh +
+  weechat.desktop |
+// TRANSLATION MISSING
+  WeeChat core
+
+| build |
+  autogen.sh +
+  CMakeLists.txt +
+  cmake/* +
+  configure.ac +
+  Makefile.am +
+  tools/* +
+  weechat.cygport.in +
+  weechat.spec |
+// TRANSLATION MISSING
+  Build
+
+| ci |
+  .github/workflows/* |
+// TRANSLATION MISSING
+  Continuous integration
+
+| debian |
+  debian-devel/* +
+  debian-stable/* |
+// TRANSLATION MISSING
+  Debian packaging
+
+| tests |
+  tests/* |
+// TRANSLATION MISSING
+  Tests
+
+| doc |
+  doc/* |
+// TRANSLATION MISSING
+  General doc updates, for example build
+
+| doc/man |
+  doc/xx/weechat.1.xx.adoc +
+  doc/xx/weechat-headless.1.xx.adoc |
+// TRANSLATION MISSING
+  Man pages
+
+| doc/faq |
+  doc/xx/weechat_faq.xx.adoc |
+// TRANSLATION MISSING
+  Frequently asked questions (FAQ)
+
+| doc/quickstart |
+  doc/xx/weechat_quickstart.xx.adoc |
+// TRANSLATION MISSING
+  Quickstart guide
+
+| doc/user |
+  doc/xx/weechat_user.xx.adoc |
+// TRANSLATION MISSING
+  User's guide
+
+| doc/scripting |
+  doc/xx/weechat_scripting.xx.adoc |
+// TRANSLATION MISSING
+  Scripting guide
+
+| doc/api |
+  doc/xx/weechat_plugin_api.xx.adoc |
+// TRANSLATION MISSING
+  Plugin API reference
+
+| doc/relay |
+  doc/xx/weechat_relay_protocol.xx.adoc |
+// TRANSLATION MISSING
+  Relay protocol
+
+| doc/dev |
+  doc/xx/weechat_dev.en.adoc |
+// TRANSLATION MISSING
+  Developer's guide
+
+| irc +
+  python +
+  relay +
+  … |
+  src/plugins/<name>/* |
+// TRANSLATION MISSING
+  Plugin
+
+|===
 
 Нека правила која треба да поштујете:
 

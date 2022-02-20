@@ -1136,25 +1136,100 @@ Le format du message de commit est le suivant (avec fermeture automatique
 du bug GitHub) :
 
 ----
-component: fix a problem (closes #123)
+composant: fix a problem (closes #123)
 ----
 
-Où _component_ est :
+Où _composant_ est :
 
-* cœur de WeeChat : `core`
-  (les fichiers dans le répertoire racine, _po/_ et _src/_, sauf _src/plugins/_)
-* documentation :
-** `doc` : mise à jour générales sur la documentation, par exemple la construction
-** `doc/man` : pages de manuel
-** `doc/faq` : questions fréquemment posées (FAQ)
-** `doc/quickstart` : guide de démarrage rapide
-** `doc/user` : guide utilisateur
-** `doc/scripting` : guide pour scripts
-** `doc/api` : référence extension API
-** `doc/relay` : protocole relay
-** `doc/dev` : guide du développeur
-* extensions : `irc`, `python`, `relay`, ...
-  (fichiers dans le répertoire _src/plugins/_)
+[width="100%",cols="1m,4m,5",options="header"]
+|===
+| Composant | Fichiers | Description
+
+| core |
+  AUTHORS.adoc +
+  ChangeLog.adoc +
+  Contributing.adoc +
+  .github/FUNDING.yml +
+  .github/ISSUE_TEMPLATE/* +
+  icons/* +
+  po/* +
+  README.adoc +
+  ReleaseNotes.adoc +
+  src/core/* +
+  src/gui/* +
+  version.sh +
+  weechat.desktop |
+  cœur de WeeChat
+
+| build |
+  autogen.sh +
+  CMakeLists.txt +
+  cmake/* +
+  configure.ac +
+  Makefile.am +
+  tools/* +
+  weechat.cygport.in +
+  weechat.spec |
+  Construction
+
+| ci |
+  .github/workflows/* |
+  Intégration continue
+
+| debian |
+  debian-devel/* +
+  debian-stable/* |
+  Empaquetage Debian
+
+| tests |
+  tests/* |
+  Tests
+
+| doc |
+  doc/* |
+  Mises à jour générales sur la documentation, par exemple la construction
+
+| doc/man |
+  doc/xx/weechat.1.xx.adoc +
+  doc/xx/weechat-headless.1.xx.adoc |
+  Pages de manuel
+
+| doc/faq |
+  doc/xx/weechat_faq.xx.adoc |
+  Questions fréquemment posées (FAQ)
+
+| doc/quickstart |
+  doc/xx/weechat_quickstart.xx.adoc |
+  Guide de démarrage rapide
+
+| doc/user |
+  doc/xx/weechat_user.xx.adoc |
+  Guide utilisateur
+
+| doc/scripting |
+  doc/xx/weechat_scripting.xx.adoc |
+  Guide pour scripts
+
+| doc/api |
+  doc/xx/weechat_plugin_api.xx.adoc |
+  Référence extension API
+
+| doc/relay |
+  doc/xx/weechat_relay_protocol.xx.adoc |
+  Protocole relay
+
+| doc/dev |
+  doc/xx/weechat_dev.en.adoc |
+  Guide du développeur
+
+| irc +
+  python +
+  relay +
+  … |
+  src/plugins/<name>/* |
+  Extension
+
+|===
 
 Quelques règles à suivre :
 
