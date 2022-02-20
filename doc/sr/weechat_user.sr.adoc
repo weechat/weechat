@@ -99,7 +99,9 @@ WeeChat почетна страница се налази на адреси: htt
 |===
 
 [NOTE]
-^(1)^ Име долази из Debian GNU/Linux дистрибуције, верзије и имена пакета могу да се разликују у различитим дистрибуцијама и верзијама. +
+// TRANSLATION MISSING
+^(1)^ Name comes from the Debian GNU/Linux Bullseye distribution, version and
+name can be different in other distributions. +
 ^(2)^ Препоручује се компајлирање са libncurses**w**5-dev (битно је *w*). Програм WeeChat може да се компајлира са libncurses5-dev, али се то *НЕ* препоручује: можете имати багове код приказа широких карактера. +
 ^(3)^ GnuTLS ≥ 3.0.21 је неопходан за IRC SASL аутентификацију механизмом ECDSA-NIST256P-CHALLENGE.
 
@@ -107,17 +109,17 @@ WeeChat почетна страница се налази на адреси: htt
 
 [width="100%", cols="5,^3,.^15", options="header"]
 |===
-| Пакет                                  | Верзија  | Служи за
+| Пакет ^(1)^                            | Верзија  | Служи за
 | {cpp} компајлер (pass:[g++ / clang++]) |          | Изградњу и покретање тестова, JavaScript додатак.
 | gettext                                |          | Интернационализацију (превод порука; основни језик је енглески).
 | ca-certificates                        |          | Сертификате за SSL везе.
 | libaspell-dev / libenchant-dev         |          | Spell додатак.
-| python3-dev ^(1)^                      |          | Python додатак.
+| python3-dev ^(2)^                      |          | Python додатак.
 | libperl-dev                            |          | Perl додатак.
-| ruby2.5, ruby2.5-dev                   | ≥ 1.9.1  | Ruby додатак.
-| liblua5.3-dev                          |          | Lua додатак.
+| ruby2.7, ruby2.7-dev                   | ≥ 1.9.1  | Ruby додатак.
+| liblua5.4-dev                          |          | Lua додатак.
 | tcl-dev                                | ≥ 8.5    | Tcl додатак.
-| guile-2.0-dev                          | ≥ 2.0    | Guile (scheme) додатак.
+| guile-2.2-dev                          | ≥ 2.0    | Guile (scheme) додатак.
 | libv8-dev                              | ≤ 3.24.3 | JavaScript додатак.
 | php-dev                                | ≥ 7.0    | PHP додатак.
 | libphp-embed                           | ≥ 7.0    | PHP додатак.
@@ -131,7 +133,10 @@ WeeChat почетна страница се налази на адреси: htt
 |===
 
 [NOTE]
-^(1)^ Подразумевано се користи Python 3.x. Ако укључите опцију `+ENABLE_PYTHON2+` (погледајте испод), препоручује се само верзија 2.7 језика Python.
+// TRANSLATION MISSING
+^(1)^ Name comes from the Debian GNU/Linux Bullseye distribution, version and
+name can be different in other distributions. +
+^(2)^ Подразумевано се користи Python 3.x. Ако укључите опцију `+ENABLE_PYTHON2+` (погледајте испод), препоручује се само верзија 2.7 језика Python.
 
 Ако користите дистрибуцију базирану на Debian/Ubuntu и ако имате неке „deb-src” изворне ставке у фајлу _/etc/apt/sources.list_, можете инсталирати све зависности командом:
 

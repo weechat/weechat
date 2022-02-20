@@ -107,8 +107,8 @@ WeeChat:
 |===
 
 [NOTE]
-^(1)^ Name comes from the Debian GNU/Linux distribution, versions and package
-names may be different in different distributions and versions. +
+^(1)^ Name comes from the Debian GNU/Linux Bullseye distribution, version and
+name can be different in other distributions. +
 ^(2)^ It is recommended to compile with libncurses**w**5-dev (the *w* is
 important). WeeChat can compile with libncurses5-dev, but it is *NOT* recommended:
 you may experience display bugs with wide chars. +
@@ -120,17 +120,17 @@ WeeChat:
 
 [width="100%",cols="5,^3,.^15",options="header"]
 |===
-| Package                               | Version  | Feature
+| Package ^(1)^                         | Version  | Feature
 | {cpp} compiler (pass:[g++ / clang++]) |          | Build and run tests, JavaScript plugin.
 | gettext                               |          | Internationalization (translation of messages; base language is English).
 | ca-certificates                       |          | Certificates for SSL connections.
 | libaspell-dev / libenchant-dev        |          | Spell plugin.
-| python3-dev ^(1)^                     |          | Python plugin.
+| python3-dev ^(2)^                     |          | Python plugin.
 | libperl-dev                           |          | Perl plugin.
-| ruby2.5, ruby2.5-dev                  | ≥ 1.9.1  | Ruby plugin.
-| liblua5.3-dev                         |          | Lua plugin.
+| ruby2.7, ruby2.7-dev                  | ≥ 1.9.1  | Ruby plugin.
+| liblua5.4-dev                         |          | Lua plugin.
 | tcl-dev                               | ≥ 8.5    | Tcl plugin.
-| guile-2.0-dev                         | ≥ 2.0    | Guile (scheme) plugin.
+| guile-2.2-dev                         | ≥ 2.0    | Guile (scheme) plugin.
 | libv8-dev                             | ≤ 3.24.3 | JavaScript plugin.
 | php-dev                               | ≥ 7.0    | PHP plugin.
 | libphp-embed                          | ≥ 7.0    | PHP plugin.
@@ -143,7 +143,9 @@ WeeChat:
 |===
 
 [NOTE]
-^(1)^ By default Python 3.x is used. If you enable option `+ENABLE_PYTHON2+`
+^(1)^ Name comes from the Debian GNU/Linux Bullseye distribution, version and
+name can be different in other distributions. +
+^(2)^ By default Python 3.x is used. If you enable option `+ENABLE_PYTHON2+`
 (see below), only the version 2.7 of Python is recommended.
 
 If you are using a Debian/Ubuntu based distribution, and if you have some

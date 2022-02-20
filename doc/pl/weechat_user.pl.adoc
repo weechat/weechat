@@ -115,8 +115,9 @@ WeeChat:
 |===
 
 [NOTE]
-^(1)^ Nazwy pochodzą z dystrybucji Debian GNU/Linux, wersje i nazwy pakietów
-mogą być inne w innych dystrybucjach. +
+// TRANSLATION MISSING
+^(1)^ Name comes from the Debian GNU/Linux Bullseye distribution, version and
+name can be different in other distributions. +
 ^(2)^ Zaleca się kompilację z użyciem libncurses**w**5-dev (*w* jest istotne).
 WeeChat można skompilowac używając libncurses5-dev, ale *NIE* jest to zalecane:
 możesz doświadczyć błędów wyświetlania. +
@@ -128,17 +129,17 @@ WeeChat:
 
 [width="100%",cols="5,^3,.^15",options="header"]
 |===
-| Pakiet                                  | Wersja   | Opis
+| Pakiet ^(1)^                            | Wersja   | Opis
 | kompilator {cpp} (pass:[g++ / clang++]) |          | Kompilacja i uruchamianie testów, wtyczka JavaScript.
 | gettext                                 |          | Internacjonalizacja (tłumaczenie wiadomości; język bazowy to Angielski).
 | ca-certificates                         |          | Certyfikaty dla połączeń SSL.
 | libaspell-dev / libenchant-dev          |          | Wtyczka spell.
-| python3-dev ^(1)^                       |          | Wtyczka python.
+| python3-dev ^(2)^                       |          | Wtyczka python.
 | libperl-dev                             |          | Wtyczka perl.
-| ruby2.5, ruby2.5-dev                    | ≥ 1.9.1  | Wtyczka ruby.
-| liblua5.3-dev                           |          | Wtyczka lua.
+| ruby2.7, ruby2.7-dev                    | ≥ 1.9.1  | Wtyczka ruby.
+| liblua5.4-dev                           |          | Wtyczka lua.
 | tcl-dev                                 | ≥ 8.5    | Wtyczka tcl.
-| guile-2.0-dev                           | ≥ 2.0    | Wtyczka guile (scheme).
+| guile-2.2-dev                           | ≥ 2.0    | Wtyczka guile (scheme).
 | libv8-dev                               | ≤ 3.24.3 | Wtyczka javascript.
 | php-dev                                 | ≥ 7.0    | Wtyczka PHP.
 | libphp-embed                            | ≥ 7.0    | Wtyczka PHP.
@@ -152,7 +153,10 @@ WeeChat:
 |===
 
 [NOTE]
-^(1)^ Domyślnie używany jest Pythin 3.x. Chyba że włączysz opcję `+ENABLE_PYTHON2+`
+// TRANSLATION MISSING
+^(1)^ Name comes from the Debian GNU/Linux Bullseye distribution, version and
+name can be different in other distributions. +
+^(2)^ Domyślnie używany jest Pythin 3.x. Chyba że włączysz opcję `+ENABLE_PYTHON2+`
 (zobacz niżej), zaleca się uzywania wersji 2.7 Pythona.
 
 Jeśli używasz dystrybujci bazującej na Debianie/Ubuntu, oraz jeśli posiadasz wpisy

@@ -116,8 +116,9 @@ WeeChat:
 |===
 
 [NOTE]
-^(1)^ Debian GNU/Linux
-ディストリビューションにおけるパッケージ名です。他のディストリビューションではバージョンとパッケージ名が異なるかもしれません。 +
+// TRANSLATION MISSING
+^(1)^ Name comes from the Debian GNU/Linux Bullseye distribution, version and
+name can be different in other distributions. +
 ^(2)^ WeeChat は libncurses**w**5-dev でコンパイルすることを推奨します
 (*w* が重要です)。libncurses5-dev でもコンパイル可能ですが、これは推奨
 *されません* (ワイドキャラクタの表示にバグを生じるでしょう)。 +
@@ -130,17 +131,17 @@ WeeChat:
 
 [width="100%",cols="5,^3,.^15",options="header"]
 |===
-| パッケージ                              | バージョン  | 機能
+| パッケージ ^(1)^                        | バージョン  | 機能
 | {cpp} コンパイラ (pass:[g++ / clang++]) |             | ビルドとテストの実行、JavaScript プラグイン
 | gettext                                 |             | 国際化 (メッセージの翻訳; ベース言語は英語です)
 | ca-certificates                         |             | SSL 接続に必要な証明書、relay プラグインで SSL サポート
 | libaspell-dev / libenchant-dev          |             | spell プラグイン
-| python3-dev ^(1)^                       |             | python プラグイン
+| python3-dev ^(2)^                       |             | python プラグイン
 | libperl-dev                             |             | perl プラグイン
-| ruby2.5, ruby2.5-dev                    | 1.9.1 以上  | ruby プラグイン
-| liblua5.3-dev                           |             | lua プラグイン
+| ruby2.7, ruby2.7-dev                    | 1.9.1 以上  | ruby プラグイン
+| liblua5.4-dev                           |             | lua プラグイン
 | tcl-dev                                 | 8.5 以上    | tcl プラグイン
-| guile-2.0-dev                           | 2.0 以上    | guile (scheme) プラグイン
+| guile-2.2-dev                           | 2.0 以上    | guile (scheme) プラグイン
 | libv8-dev                               | 3.24.3 以下 | javascript プラグイン
 | php-dev                                 | 7.0 以上    | PHP プラグイン
 | libphp-embed                            | 7.0 以上    | PHP プラグイン
@@ -155,7 +156,10 @@ WeeChat:
 
 [NOTE]
 // TRANSLATION MISSING
-^(1)^ By default Python 3.x is used. If you enable option `+ENABLE_PYTHON2+` (see
+^(1)^ Name comes from the Debian GNU/Linux Bullseye distribution, version and
+name can be different in other distributions. +
+// TRANSLATION MISSING
+^(2)^ By default Python 3.x is used. If you enable option `+ENABLE_PYTHON2+` (see
 below), only the version 2.7 of Python is recommended.
 
 Debian および Ubuntu

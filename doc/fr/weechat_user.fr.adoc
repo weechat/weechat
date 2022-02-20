@@ -110,8 +110,8 @@ Le tableau suivant liste les paquets *requis* pour compiler WeeChat :
 |===
 
 [NOTE]
-^(1)^ Le nom provient de la distribution GNU/Linux Debian, la version dans le
-nom du paquet peut être différente. +
+^(1)^ Le nom provient de la distribution GNU/Linux Debian Bullseye, la version
+et le nom peuvent être différents dans les autres distributions.
 ^(2)^ Il est recommandé de compiler avec libncurses**w**5-dev (le *w* est
 important). WeeChat peut compiler avec libncurses5-dev, mais ce n'est *PAS*
 recommandé : vous pourriez avoir des problèmes d'affichage avec les caractères
@@ -123,17 +123,17 @@ Le tableau suivant liste les paquets optionnels pour compiler WeeChat :
 
 [width="100%",cols="5,^3,.^15",options="header"]
 |===
-| Paquet                                   | Version  | Fonctionnalité
+| Paquet ^(1)^                             | Version  | Fonctionnalité
 | compilateur {cpp} (pass:[g++ / clang++]) |          | Construction et lancement des tests, extension JavaScript.
 | gettext                                  |          | Internationalisation (traduction des messages ; la langue de base est l'anglais).
 | ca-certificates                          |          | Certificats pour les connexions SSL.
 | libaspell-dev / libenchant-dev           |          | Extension spell.
-| python3-dev ^(1)^                        |          | Extension python.
+| python3-dev ^(2)^                        |          | Extension python.
 | libperl-dev                              |          | Extension perl.
-| ruby2.5, ruby2.5-dev                     | ≥ 1.9.1  | Extension ruby.
-| liblua5.3-dev                            |          | Extension lua.
+| ruby2.7, ruby2.7-dev                     | ≥ 1.9.1  | Extension ruby.
+| liblua5.4-dev                            |          | Extension lua.
 | tcl-dev                                  | ≥ 8.5    | Extension tcl.
-| guile-2.0-dev                            | ≥ 2.0    | Extension guile (scheme).
+| guile-2.2-dev                            | ≥ 2.0    | Extension guile (scheme).
 | libv8-dev                                | ≤ 3.24.3 | Extension javascript.
 | php-dev                                  | ≥ 7.0    | Extension PHP.
 | libphp-embed                             | ≥ 7.0    | Extension PHP.
@@ -146,7 +146,9 @@ Le tableau suivant liste les paquets optionnels pour compiler WeeChat :
 |===
 
 [NOTE]
-^(1)^ Par défaut Python 3.x est utilisé. Si vous activez l'option
+^(1)^ Le nom provient de la distribution GNU/Linux Debian Bullseye, la version
+et le nom peuvent être différents dans les autres distributions.
+^(2)^ Par défaut Python 3.x est utilisé. Si vous activez l'option
 `+ENABLE_PYTHON2+` (voir ci-dessous), seule la version 2.7 de Python est
 recommandée.
 

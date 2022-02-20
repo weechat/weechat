@@ -131,8 +131,9 @@ WeeChat:
 |===
 
 [NOTE]
-^(1)^ Il nome viene dalla distribuzione Debian GNU/Linux, nomi e versioni dei pacchetti
-potrebbero essere differenti in versioni e distribuzioni differenti. +
+// TRANSLATION MISSING
+^(1)^ Name comes from the Debian GNU/Linux Bullseye distribution, version and
+name can be different in other distributions. +
 // TRANSLATION MISSING
 ^(2)^ It is recommended to compile with libncurses**w**5-dev (the *w* is
 important). WeeChat can compile with libncurses5-dev, but it is *NOT* recommended:
@@ -147,18 +148,18 @@ WeeChat:
 
 [width="100%",cols="5,^3,.^15",options="header"]
 |===
-| Pacchetto                             | Versione | Caratteristica
+| Pacchetto ^(1)^                       | Versione | Caratteristica
 // TRANSLATION MISSING
 | {cpp} compiler (pass:[g++ / clang++]) |          | Build and run tests, plugin JavaScript.
 | gettext                               |          | Internazionalizzazione (traduzione dei messaggi; la lingua base è l'inglese).
 | ca-certificates                       |          | Certificati per le connessioni SSL.
 | libaspell-dev / libenchant-dev        |          | Plugin spell.
-| python3-dev ^(1)^                     |          | Plugin python.
+| python3-dev ^(2)^                     |          | Plugin python.
 | libperl-dev                           |          | Plugin perl.
-| ruby2.5, ruby2.5-dev                  | ≥ 1.9.1  | Plugin ruby.
-| liblua5.3-dev                         |          | Plugin lua.
+| ruby2.7, ruby2.7-dev                  | ≥ 1.9.1  | Plugin ruby.
+| liblua5.4-dev                         |          | Plugin lua.
 | tcl-dev                               | ≥ 8.5    | Plugin tcl.
-| guile-2.0-dev                         | ≥ 2.0    | Plugin guile (scheme).
+| guile-2.2-dev                         | ≥ 2.0    | Plugin guile (scheme).
 | libv8-dev                             | ≤ 3.24.3 | Plugin javascript.
 | php-dev                               | ≥ 7.0    | Plugin php.
 | libphp-embed                          | ≥ 7.0    | Plugin php.
@@ -177,7 +178,10 @@ WeeChat:
 
 [NOTE]
 // TRANSLATION MISSING
-^(1)^ By default Python 3.x is used. If you enable option `+ENABLE_PYTHON2+` (see
+^(1)^ Name comes from the Debian GNU/Linux Bullseye distribution, version and
+name can be different in other distributions. +
+// TRANSLATION MISSING
+^(2)^ By default Python 3.x is used. If you enable option `+ENABLE_PYTHON2+` (see
 below), only the version 2.7 of Python is recommended.
 
 // TRANSLATION MISSING
