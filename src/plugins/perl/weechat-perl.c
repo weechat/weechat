@@ -663,10 +663,14 @@ weechat_perl_load (const char *filename, const char *code)
 void
 weechat_perl_load_cb (void *data, const char *filename)
 {
+    const char *pos_dot;
+
     /* make C compiler happy */
     (void) data;
 
-    weechat_perl_load (filename, NULL);
+    pos_dot = strrchr (filename, '.');
+    if (pos_dot && (strcmp (pos_dot, ".pl") == 0))
+        weechat_perl_load (filename, NULL);
 }
 
 /*
