@@ -21,8 +21,6 @@
 #define WEECHAT_PLUGIN_LOGGER_BACKLOG_H
 
 extern int logger_backlog_check_conditions (struct t_gui_buffer *buffer);
-extern void logger_backlog (struct t_gui_buffer *buffer, const char *filename,
-                            int lines);
 extern int logger_backlog_signal_cb (const void *pointer, void *data,
                                      const char *signal,
                                      const char *type_data, void *signal_data);
