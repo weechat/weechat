@@ -84,7 +84,7 @@ Fields are:
 
 List of available commands (detail in next chapters):
 
-[width="100%",cols="^3m,14",options="header"]
+[width="100%",cols="1m,8",options="header"]
 |===
 | Command    | Description
 | handshake  | Handshake: prepare client authentication and set options, before _init_ command.
@@ -993,7 +993,7 @@ Arguments:
 
 WeeChat replies with a hdata:
 
-[width="100%",cols="3m,2,10",options="header"]
+[width="100%",cols="2m,3,14",options="header"]
 |===
 | Name      | Type             | Description
 | context   | string           | Completion context: "null" (no completion), "command", "command_arg", "auto".
@@ -1261,24 +1261,24 @@ Syntax:
 
 Returned objects (in this order):
 
-[width="100%",cols="^3,3m,5m",options="header"]
+[width="80%",cols="1m,2,6m",options="header"]
 |===
-| Type              | Type (in message) | Value
-| char              | chr               | 65 ("A")
-| integer           | int               | 123456
-| integer           | int               | -123456
-| long              | lon               | 1234567890
-| long              | lon               | -1234567890
-| string            | str               | "a string"
-| string            | str               | ""
-| string            | str               | NULL
-| buffer            | buf               | "buffer"
-| buffer            | buf               | NULL
-| pointer           | ptr               | 0x1234abcd
-| pointer           | ptr               | NULL
-| time              | tim               | 1321993456
-| array of strings  | arr str           | [ "abc", "de" ]
-| array of integers | arr int           | [ 123, 456, 789 ]
+| Type    | Description       | Value
+| chr     | char              | 65 ("A")
+| int     | integer           | 123456
+| int     | integer           | -123456
+| lon     | long              | 1234567890
+| lon     | long              | -1234567890
+| str     | string            | "a string"
+| str     | string            | ""
+| str     | string            | NULL
+| buf     | buffer            | "buffer"
+| buf     | buffer            | NULL
+| ptr     | pointer           | 0x1234abcd
+| ptr     | pointer           | NULL
+| tim     | time              | 1321993456
+| arr str | array of strings  | [ "abc", "de" ]
+| arr int | array of integers | [ 123, 456, 789 ]
 |===
 
 [IMPORTANT]
@@ -2334,7 +2334,7 @@ commands sent on startup after the _init_.
 
 Objects are identified by 3 letters, called _type_. Following types are used:
 
-[width="100%",cols="^2m,5,10",options="header"]
+[width="100%",cols="1m,2,8",options="header"]
 |===
 | Type | Value                | Length
 | chr  | Signed char          | 1 byte

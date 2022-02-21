@@ -88,7 +88,7 @@ Les champs sont :
 
 Liste des commandes disponibles (détail dans les chapitres suivants) :
 
-[width="100%",cols="^3m,14",options="header"]
+[width="100%",cols="1m,8",options="header"]
 |===
 | Commande   | Description
 | handshake  | Poignée de main : préparer l'authentification du client et définir des options, avant la commande _init_.
@@ -1007,7 +1007,7 @@ Paramètres :
 
 WeeChat répond avec un hdata :
 
-[width="100%",cols="3m,2,10",options="header"]
+[width="100%",cols="2m,3,14",options="header"]
 |===
 | Nom       | Type               | Description
 | context   | chaîne             | Contexte de complétion : "null" (pas de complétion), "command", "command_arg", "auto".
@@ -1280,24 +1280,24 @@ Syntaxe :
 
 Objets retournés (dans cet ordre) :
 
-[width="100%",cols="^3,3m,5m",options="header"]
+[width="100%",cols="1m,2,6m",options="header"]
 |===
-| Type               | Type (dans le message) | Valeur
-| caractère          | chr                    | 65 ("A")
-| entier             | int                    | 123456
-| entier             | int                    | -123456
-| long               | lon                    | 1234567890
-| long               | lon                    | -1234567890
-| chaîne             | str                    | "a string"
-| chaîne             | str                    | ""
-| chaîne             | str                    | NULL
-| tampon de données  | buf                    | "buffer"
-| tampon de données  | buf                    | NULL
-| pointeur           | ptr                    | 0x1234abcd
-| pointeur           | ptr                    | NULL
-| date/heure         | tim                    | 1321993456
-| tableau de chaînes | arr str                | [ "abc", "de" ]
-| tableau d'entiers  | arr int                | [ 123, 456, 789 ]
+| Type    | Description        | Valeur
+| chr     | caractère          | 65 ("A")
+| int     | entier             | 123456
+| int     | entier             | -123456
+| lon     | long               | 1234567890
+| lon     | long               | -1234567890
+| str     | chaîne             | "a string"
+| str     | chaîne             | ""
+| str     | chaîne             | NULL
+| buf     | tampon de données  | "buffer"
+| buf     | tampon de données  | NULL
+| ptr     | pointeur           | 0x1234abcd
+| ptr     | pointeur           | NULL
+| tim     | date/heure         | 1321993456
+| arr str | tableau de chaînes | [ "abc", "de" ]
+| arr int | tableau d'entiers  | [ 123, 456, 789 ]
 |===
 
 [IMPORTANT]
@@ -2363,7 +2363,7 @@ envoyer à nouveau les commandes envoyées au démarrage après _init_.
 Les objets sont identifiés par 3 lettres, appelées _type_. Les types suivants
 sont utilisés :
 
-[width="100%",cols="^2m,5,10",options="header"]
+[width="100%",cols="1m,2,8",options="header"]
 |===
 | Type | Valeur                | Longueur
 | chr  | Caractère signé       | 1 octet

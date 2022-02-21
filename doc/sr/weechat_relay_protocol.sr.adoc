@@ -78,7 +78,7 @@ _клијенти_ су повезани са _релејем_ као што ј�
 
 Листа доступних команди (детаљи су у наредним поглављима):
 
-[width="100%", cols="^3m,14", options="header"]
+[width="100%", cols="1m,8", options="header"]
 |===
 | Команда    | Опис
 | handshake  | Руковање: припрема за аутентификацију клијента и постављање опција, пре _init_ команде.
@@ -935,7 +935,7 @@ _WeeChat ≥ 2.9._
 
 Програм WeeChat одговара са hdata:
 
-[width="100%", cols="3m,2,10", options="header"]
+[width="100%", cols="2m,3,14", options="header"]
 |===
 | Име       | Тип              | Опис
 | context   | стринг           | Контекст довршавања: „null” (без довршавања), „command”, „command_arg”, „auto”.
@@ -1181,24 +1181,25 @@ desync irc.libera.#weechat
 
 Враћају се следећи објекти (у наведеном редоследу):
 
-[width="100%", cols="^3,3m,5m", options="header"]
+// TRANSLATION MISSING
+[width="100%", cols="1m,2,6m", options="header"]
 |===
-| Тип               | Тип (у поруци)    | Вредност
-| char              | chr               | 65 ("A")
-| integer           | int               | 123456
-| integer           | int               | -123456
-| long              | lon               | 1234567890
-| long              | lon               | -1234567890
-| string            | str               | "a string"
-| string            | str               | ""
-| string            | str               | NULL
-| buffer            | buf               | "buffer"
-| buffer            | buf               | NULL
-| pointer           | ptr               | 0x1234abcd
-| pointer           | ptr               | NULL
-| time              | tim               | 1321993456
-| array of strings  | arr str           | [ "abc", "de" ]
-| array of integers | arr int           | [ 123, 456, 789 ]
+| Тип     | Description       | Вредност
+| chr     | char              | 65 ("A")
+| int     | integer           | 123456
+| int     | integer           | -123456
+| lon     | long              | 1234567890
+| lon     | long              | -1234567890
+| str     | string            | "a string"
+| str     | string            | ""
+| str     | string            | NULL
+| buf     | buffer            | "buffer"
+| buf     | buffer            | NULL
+| ptr     | pointer           | 0x1234abcd
+| ptr     | pointer           | NULL
+| tim     | time              | 1321993456
+| arr str | array of strings  | [ "abc", "de" ]
+| arr int | array of integers | [ 123, 456, 789 ]
 |===
 
 [IMPORTANT]
@@ -2217,7 +2218,7 @@ _WeeChat ≥ 0.3.8._
 
 Објекти се идентификују са 3 слова, која се зову _тип_. Користе се следећи типови:
 
-[width="100%", cols="^2m,5,10", options="header"]
+[width="100%", cols="1m,2,8", options="header"]
 |===
 | Тип  | Вредност                     | Дужина
 | chr  | Означени карактер            | 1 бајт

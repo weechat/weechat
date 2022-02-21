@@ -90,7 +90,7 @@ _リレー_ プラグインは _IRC プロキシ_ のように振舞います (�
 
 利用可能なコマンドのリスト (詳しくは次の章を参照):
 
-[width="100%",cols="^3m,14",options="header"]
+[width="100%",cols="1m,8",options="header"]
 |===
 | コマンド   | 説明
 // TRANSLATION MISSING
@@ -1017,7 +1017,7 @@ a string for a given buffer.
 
 WeeChat replies with a hdata:
 
-[width="100%",cols="3m,2,10",options="header"]
+[width="100%",cols="2m,3,14",options="header"]
 |===
 | Name      | Type             | Description
 | context   | string           | Completion context: "null" (no completion), "command", "command_arg", "auto".
@@ -1289,24 +1289,25 @@ desync irc.libera.#weechat
 
 返されるオブジェクト (以下の順番):
 
-[width="100%",cols="^3,3m,5m",options="header"]
+// TRANSLATION MISSING
+[width="100%",cols="1m,2,6m",options="header"]
 |===
-| 型                | 型 (メッセージ中) | 値
-| char              | chr               | 65 ("A")
-| integer           | int               | 123456
-| integer           | int               | -123456
-| long              | lon               | 1234567890
-| long              | lon               | -1234567890
-| string            | str               | "a string"
-| string            | str               | ""
-| string            | str               | NULL
-| buffer            | buf               | "buffer"
-| buffer            | buf               | NULL
-| pointer           | ptr               | 0x1234abcd
-| pointer           | ptr               | NULL
-| time              | tim               | 1321993456
-| string の配列     | arr str           | [ "abc", "de" ]
-| integer の配列    | arr int           | [ 123, 456, 789 ]
+| 型      | Description    | 値
+| chr     | char           | 65 ("A")
+| int     | integer        | 123456
+| int     | integer        | -123456
+| lon     | long           | 1234567890
+| lon     | long           | -1234567890
+| str     | string         | "a string"
+| str     | string         | ""
+| str     | string         | NULL
+| buf     | buffer         | "buffer"
+| buf     | buffer         | NULL
+| ptr     | pointer        | 0x1234abcd
+| ptr     | pointer        | NULL
+| tim     | time           | 1321993456
+| arr str | string の配列  | [ "abc", "de" ]
+| arr int | integer の配列 | [ 123, 456, 789 ]
 |===
 
 [IMPORTANT]
@@ -2365,7 +2366,7 @@ _WeeChat バージョン 0.3.8 以上で利用可。_
 
 オブジェクトは _type_ と呼ばれる 3 文字で特定されます。以下の種類が使われます:
 
-[width="100%",cols="^2m,5,10",options="header"]
+[width="100%",cols="1m,2,8",options="header"]
 |===
 | 型   | 値                    | 長さ
 | chr  | 符号付文字            | 1 バイト
