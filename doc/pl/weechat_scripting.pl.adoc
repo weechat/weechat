@@ -549,7 +549,7 @@ link:weechat_plugin_api.en.html[Opisu API wtyczek WeeChat] (Angielski).
 
 Lista funkcji w API skryptów:
 
-[width="100%",cols="1,3",options="header"]
+[width="100%",cols="1,5",options="header"]
 |===
 | Kategoria | Funkcje
 
@@ -798,7 +798,7 @@ Lista funkcji w API skryptów:
 
 Lista stałych w API skryptów:
 
-[width="100%",cols="1,3",options="header"]
+[width="100%",cols="1,5",options="header"]
 |===
 | Kategoria | Stałe
 

@@ -560,7 +560,7 @@ lesen Sie bitte link:weechat_plugin_api.en.html[WeeChat Plugin API Reference] (E
 
 Liste der Skript API Funktionen:
 
-[width="100%",cols="1,3",options="header"]
+[width="100%",cols="1,5",options="header"]
 |===
 | Kategorie | Funktionen
 
@@ -809,7 +809,7 @@ Liste der Skript API Funktionen:
 
 Liste der Konstanten in Skript API:
 
-[width="100%",cols="1,3",options="header"]
+[width="100%",cols="1,5",options="header"]
 |===
 | Kategorie | Konstanten
 
