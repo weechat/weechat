@@ -84,6 +84,10 @@ tests_irc = unit/plugins/irc/test-irc-buffer.cpp \
             unit/plugins/irc/test-irc-tag.cpp
 endif
 
+if PLUGIN_LOGGER
+tests_logger = unit/plugins/logger/test-logger-backlog.cpp
+endif
+
 if PLUGIN_RELAY
 tests_relay = unit/plugins/relay/test-relay-auth.cpp
 endif
@@ -100,6 +104,7 @@ endif
 
 lib_weechat_unit_tests_plugins_la_SOURCES = unit/plugins/test-plugins.cpp \
                                             $(tests_irc) \
+                                            $(tests_logger) \
                                             $(tests_relay) \
                                             $(tests_trigger) \
                                             $(tests_typing)
