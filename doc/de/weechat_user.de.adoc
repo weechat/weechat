@@ -113,9 +113,8 @@ WeeChat *erforderlich* sind:
 |===
 
 [NOTE]
-// TRANSLATION MISSING
-^(1)^ Name comes from the Debian GNU/Linux Bullseye distribution, version and
-name can be different in other distributions. +
+^(1)^ Der Name stammt von der Debian GNU/Linux Bullseye-Distribution,
+Version und Name können in anderen Distributionen anders lauten. +
 ^(2)^ Es wird empfohlen WeeChat mit libncurses**w**5-dev (das *w* ist
 entscheidend) zu kompilieren. Eine Kompilierung kann auch mit libncurses5-dev erfolgen,
 aber dies wird *NICHT* empfohlen:
@@ -146,15 +145,13 @@ WeeChat optional sind:
 | libargon2-dev                         |          | PHP Erweiterung (wenn PHP ≥ 7.2).
 | libsodium-dev                         |          | PHP Erweiterung (wenn PHP ≥ 7.2).
 | asciidoctor                           | ≥ 1.5.4  | zum Erstellen der man page und der Dokumentation.
-// TRANSLATION MISSING
-| ruby-pygments.rb                      |          | Build documentation.
+| ruby-pygments.rb                      |          | Build Dokumentation.
 | libcpputest-dev                       | ≥ 3.4    | zum Erstellen und um Test auszuführen.
 |===
 
 [NOTE]
-// TRANSLATION MISSING
-^(1)^ Name comes from the Debian GNU/Linux Bullseye distribution, version and
-name can be different in other distributions. +
+^(1)^ Der Name stammt von der Debian GNU/Linux Bullseye-Distribution,
+Version und Name können in anderen Distributionen anders lauten. +
 ^(2)^ standardmäßig wird Python 3.x verwendet. Wird die Option `+ENABLE_PYTHON2+` aktiviert
 (siehe unten), sollte die Version 2.7 von Python genutzt werden.
 
