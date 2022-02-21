@@ -1348,7 +1348,7 @@ Pour supprimer la variable locale "completion_default_template" :
 
 Par défaut WeeChat et ses extensions par défaut interprètent ces variables :
 
-[width="100%",cols="^2m,2,5",options="header"]
+[width="100%",cols="2m,2,5",options="header"]
 |===
 | Nom | Valeur | Description
 
@@ -2168,9 +2168,9 @@ la valeur par défaut est _all_.
 |===
 | Niveau de notification | Niveau des messages ajoutés à la hotlist
 | none                   | (aucun)
-| highlight              | _highlight_ + _private_
-| message                | _highlight_ + _private_ + _message_
-| all                    | _highlight_ + _private_ + _message_ + _low_
+| highlight              | highlight + private
+| message                | highlight + private + message
+| all                    | highlight + private + message + low
 |===
 
 Le niveau de notification peut être défini pour un ensemble de tampons, par

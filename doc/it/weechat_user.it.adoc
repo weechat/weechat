@@ -1430,7 +1430,7 @@ To remove the local variable "completion_default_template":
 
 By default WeeChat and its default plugins interpret these variables:
 
-[width="100%",cols="^2m,2,5",options="header"]
+[width="100%",cols="2m,2,5",options="header"]
 |===
 | Name | Value | Description
 
@@ -2318,9 +2318,9 @@ il valore predefinito è _all_.
 |===
 | Livello di notifica | Livello del messaggio aggiunto alla hotlist
 | none                | (nessuno)
-| highlight           | _highlight_ + _private_
-| message             | _highlight_ + _private_ + _message_
-| all                 | _highlight_ + _private_ + _message_ + _low_
+| highlight           | highlight + private
+| message             | highlight + private + message
+| all                 | highlight + private + message + low
 |===
 
 Il livello di notifica può essere definito per un set di buffer, ad esempio

@@ -1386,7 +1386,7 @@ To remove the local variable "completion_default_template":
 
 By default WeeChat and its default plugins interpret these variables:
 
-[width="100%",cols="^2m,2,5",options="header"]
+[width="100%",cols="2m,2,5",options="header"]
 |===
 | Name | Value | Description
 
@@ -2220,9 +2220,9 @@ include::includes/autogen_user_options.ja.adoc[tag=charset_options]
 |===
 | 通知レベル   | ホットリストに追加されるメッセージのレベル
 | none         | (無効)
-| highlight    | _highlight_ + _private_
-| message      | _highlight_ + _private_ + _message_
-| all          | _highlight_ + _private_ + _message_ + _low_
+| highlight    | highlight + private
+| message      | highlight + private + message
+| all          | highlight + private + message + low
 |===
 
 通知レベルはバッファグループに対して設定することも可能で、例えば

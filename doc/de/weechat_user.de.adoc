@@ -1334,7 +1334,7 @@ So entfernen Sie die lokale Variable "completion_default_template":
 
 Standardmäßig interpretieren WeeChat und seine Standard-Erweitertungen diese Variablen:
 
-[width="100%",cols="^2m,2,5",options="header"]
+[width="100%",cols="2m,2,5",options="header"]
 |===
 | Name | Wert | Beschreibung
 
@@ -2137,9 +2137,9 @@ Der Standardwert ist _all_.
 |===
 | Benachrichtigungsstufe | Welche Nachrichten Berücksichtigung in der Hotlist finden
 | none                   | (keine)
-| highlight              | _highlight_ + _private Nachrichten_
-| message                | _highlight_ + _private Nachrichten_ + _normale Nachrichten_
-| all                    | _highlight_ + _private Nachrichten_ + _normal Nachrichten_ + _Nachrichten mit einer niedrigen Priorität_
+| highlight              | highlight + private Nachrichten
+| message                | highlight + private Nachrichten + normale Nachrichten
+| all                    | highlight + private Nachrichten + normal Nachrichten + Nachrichten mit einer niedrigen Priorität
 |===
 
 Benachrichtigungsstufen können für mehrere Buffer definiert werden. Zum Beispiel

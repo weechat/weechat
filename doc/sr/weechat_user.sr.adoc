@@ -1223,7 +1223,7 @@ _прозор_ је површина екрана која приказује б
 
 Програм WeeChat и његови додаци подразумевано интерпретирају следеће променљиве:
 
-[width="100%", cols="^2m,2,5", options="header"]
+[width="100%", cols="2m,2,5", options="header"]
 |===
 | Име | Вредност | Опис
 
@@ -1993,9 +1993,9 @@ include::includes/autogen_user_options.sr.adoc[tag=charset_options]
 |===
 | Ниво обавештавања | Ниво порука које се додају на врућу листу
 | none              | (ниједна)
-| highlight         | _highlight_ + _private_
-| message           | _highlight_ + _private_ + _message_
-| all               | _highlight_ + _private_ + _message_ + _low_
+| highlight         | highlight + private
+| message           | highlight + private + message
+| all               | highlight + private + message + low
 |===
 
 Ниво обавештавања може да се дефинише за скуп бафера, на пример за све бафере irc сервера „libera”:

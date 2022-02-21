@@ -1330,7 +1330,7 @@ Usunięcie zmiennej lokalnej „completion_default_template”:
 
 WeeChat i jego wtyczki domyślnie tworzą następujące zmienne:
 
-[width="100%",cols="^2m,2,5",options="header"]
+[width="100%",cols="2m,2,5",options="header"]
 |===
 | Nazwa | Wartość | Opis
 
@@ -2132,9 +2132,9 @@ domyślna wartość to _all_.
 |===
 | Poziom powiadomień | Poziom wiadomości dodawanej do hotlisty
 | none               | (brak)
-| highlight          | _highlight_ + _private_
-| message            | _highlight_ + _private_ + _message_
-| all                | _highlight_ + _private_ + _message_ + _low_
+| highlight          | highlight + private
+| message            | highlight + private + message
+| all                | highlight + private + message + low
 |===
 
 Poziom powiadomień może być definiowany dla zestawu buforów, na przykład dla
