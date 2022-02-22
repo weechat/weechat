@@ -1090,8 +1090,7 @@ Git репозиторијум се налази на следећој URL ад�
 
 [width="100%",cols="1m,4m,5",options="header"]
 |===
-// TRANSLATION MISSING
-| Component | Files | Description
+| Компонента | Фајлови | Опис
 
 | core |
   AUTHORS.adoc +
@@ -1107,8 +1106,7 @@ Git репозиторијум се налази на следећој URL ад�
   src/gui/* +
   version.sh +
   weechat.desktop |
-// TRANSLATION MISSING
-  WeeChat core
+  WeeChat језгро
 
 | build |
   autogen.sh +
@@ -1119,78 +1117,64 @@ Git репозиторијум се налази на следећој URL ад�
   tools/* +
   weechat.cygport.in +
   weechat.spec |
-// TRANSLATION MISSING
-  Build
+  Изградња
 
 | ci |
   .github/workflows/* |
-// TRANSLATION MISSING
-  Continuous integration
+  Непрекидна интеграција
 
 | debian |
   debian-devel/* +
   debian-stable/* |
-// TRANSLATION MISSING
-  Debian packaging
+  Debian паковање
 
 | tests |
   tests/* |
-// TRANSLATION MISSING
-  Tests
+  Тестови
 
 | doc |
   doc/* |
-// TRANSLATION MISSING
-  General doc updates, for example build
+  Општа ажурирања документације, на пример за изградњу
 
 | doc/man |
   doc/xx/weechat.1.xx.adoc +
   doc/xx/weechat-headless.1.xx.adoc |
-// TRANSLATION MISSING
-  Man pages
+  Man странице
 
 | doc/faq |
   doc/xx/weechat_faq.xx.adoc |
-// TRANSLATION MISSING
-  Frequently asked questions (FAQ)
+  Често постављана питања (ЧПП)
 
 | doc/quickstart |
   doc/xx/weechat_quickstart.xx.adoc |
-// TRANSLATION MISSING
-  Quickstart guide
+  Водич за брзи почетак
 
 | doc/user |
   doc/xx/weechat_user.xx.adoc |
-// TRANSLATION MISSING
-  User's guide
+  Корисничко упутство
 
 | doc/scripting |
   doc/xx/weechat_scripting.xx.adoc |
-// TRANSLATION MISSING
-  Scripting guide
+  Водич за скриптовање
 
 | doc/api |
   doc/xx/weechat_plugin_api.xx.adoc |
-// TRANSLATION MISSING
-  Plugin API reference
+  Референтни приручник API додатака
 
 | doc/relay |
   doc/xx/weechat_relay_protocol.xx.adoc |
-// TRANSLATION MISSING
-  Relay protocol
+  Релеј протокол
 
 | doc/dev |
   doc/xx/weechat_dev.en.adoc |
-// TRANSLATION MISSING
-  Developer's guide
+  Водич за програмере
 
 | irc +
   python +
   relay +
   … |
-  src/plugins/<name>/* |
-// TRANSLATION MISSING
-  Plugin
+  src/plugins/<име>/* |
+  Додатак
 
 |===
 

@@ -1181,25 +1181,24 @@ desync irc.libera.#weechat
 
 Враћају се следећи објекти (у наведеном редоследу):
 
-// TRANSLATION MISSING
 [width="100%", cols="1m,2,6m", options="header"]
 |===
-| Тип     | Description       | Вредност
-| chr     | char              | 65 ("A")
-| int     | integer           | 123456
-| int     | integer           | -123456
-| lon     | long              | 1234567890
-| lon     | long              | -1234567890
-| str     | string            | "a string"
-| str     | string            | ""
-| str     | string            | NULL
-| buf     | buffer            | "buffer"
-| buf     | buffer            | NULL
-| ptr     | pointer           | 0x1234abcd
-| ptr     | pointer           | NULL
-| tim     | time              | 1321993456
-| arr str | array of strings  | [ "abc", "de" ]
-| arr int | array of integers | [ 123, 456, 789 ]
+| Тип     | Опис              | Вредност
+| chr     | карактер          | 65 ("A")
+| int     | целобројни        | 123456
+| int     | целобројни        | -123456
+| lon     | дугачки           | 1234567890
+| lon     | дугачки           | -1234567890
+| str     | стринг            | "a string"
+| str     | стринг            | ""
+| str     | стринг            | NULL
+| buf     | бафер             | "buffer"
+| buf     | бафер             | NULL
+| ptr     | показивач         | 0x1234abcd
+| ptr     | показивач         | NULL
+| tim     | време             | 1321993456
+| arr str | низ стрингова     | [ "abc", "de" ]
+| arr int | низ целобројних   | [ 123, 456, 789 ]
 |===
 
 [IMPORTANT]

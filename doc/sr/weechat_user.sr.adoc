@@ -99,9 +99,8 @@ WeeChat почетна страница се налази на адреси: htt
 |===
 
 [NOTE]
-// TRANSLATION MISSING
-^(1)^ Name comes from the Debian GNU/Linux Bullseye distribution, version and
-name can be different in other distributions. +
+^(1)^ Име долази из Debian GNU/Linux Bullseye дистрибуције, верзија и
+име могу да буду другачији у осталим дитрибуцијама. +
 ^(2)^ Препоручује се компајлирање са libncurses**w**5-dev (битно је *w*). Програм WeeChat може да се компајлира са libncurses5-dev, али се то *НЕ* препоручује: можете имати багове код приказа широких карактера. +
 ^(3)^ GnuTLS ≥ 3.0.21 је неопходан за IRC SASL аутентификацију механизмом ECDSA-NIST256P-CHALLENGE.
 
@@ -127,15 +126,13 @@ name can be different in other distributions. +
 | libargon2-dev                          |          | PHP додатак (ако је PHP ≥ 7.2).
 | libsodium-dev                          |          | PHP додатак (ако је PHP ≥ 7.2).
 | asciidoctor                            | ≥ 1.5.4  | Изградњу man странице и документације.
-// TRANSLATION MISSING
-| ruby-pygments.rb                       |          | Build documentation.
+| ruby-pygments.rb                       |          | Документација изградње.
 | libcpputest-dev                        | ≥ 3.4    | Изградњу и покретање тестова.
 |===
 
 [NOTE]
-// TRANSLATION MISSING
-^(1)^ Name comes from the Debian GNU/Linux Bullseye distribution, version and
-name can be different in other distributions. +
+^(1)^ Име долази из Debian GNU/Linux Bullseye дистрибуције, верзија и
+име могу да буду другачији у осталим дистрибуцијама. +
 ^(2)^ Подразумевано се користи Python 3.x. Ако укључите опцију `+ENABLE_PYTHON2+` (погледајте испод), препоручује се само верзија 2.7 језика Python.
 
 Ако користите дистрибуцију базирану на Debian/Ubuntu и ако имате неке „deb-src” изворне ставке у фајлу _/etc/apt/sources.list_, можете инсталирати све зависности командом:
