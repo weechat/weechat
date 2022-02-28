@@ -4074,7 +4074,7 @@ TEST(IrcProtocolWithServer, 900)
 
 /*
  * Tests functions:
- *   irc_protocol_cb_901 (you are now logged in)
+ *   irc_protocol_cb_901 (you are now logged out)
  */
 
 TEST(IrcProtocolWithServer, 901)
@@ -4083,18 +4083,16 @@ TEST(IrcProtocolWithServer, 901)
 
     /* not enough parameters */
     RECV(":server 901");
-    CHECK_ERROR_PARAMS("901", 0, 4);
+    CHECK_ERROR_PARAMS("901", 0, 3);
     RECV(":server 901 alice");
-    CHECK_ERROR_PARAMS("901", 1, 4);
-    RECV(":server 901 alice user");
-    CHECK_ERROR_PARAMS("901", 2, 4);
-    RECV(":server 901 alice user host");
-    CHECK_ERROR_PARAMS("901", 3, 4);
+    CHECK_ERROR_PARAMS("901", 1, 3);
+    RECV(":server 901 alice nick!user@host");
+    CHECK_ERROR_PARAMS("901", 2, 3);
 
-    RECV(":server 901 alice nick user host logged");
+    RECV(":server 901 alice nick!user@host logged");
     CHECK_SRV("-- logged");
-    RECV(":server 901 alice nick user host :You are now logged in as nick");
-    CHECK_SRV("-- You are now logged in as nick");
+    RECV(":server 901 alice nick!user@host :You are now logged out");
+    CHECK_SRV("-- You are now logged out");
 }
 
 /*

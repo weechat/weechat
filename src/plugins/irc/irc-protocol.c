@@ -7002,35 +7002,23 @@ IRC_PROTOCOL_CALLBACK(900)
 }
 
 /*
- * Callback for the IRC command "901": you are now logged in.
+ * Callback for the IRC command "901": you are now logged out.
  *
  * Command looks like:
- *   901 mynick nick user host :You are now logged in. (id nick, username user, hostname host)
+ *   901 mynick nick!user@host :You are now logged out.
  */
 
 IRC_PROTOCOL_CALLBACK(901)
 {
-    char *str_params;
+    IRC_PROTOCOL_MIN_PARAMS(3);
 
-    IRC_PROTOCOL_MIN_PARAMS(4);
-
-    if (num_params >= 5)
-    {
-        str_params = irc_protocol_string_params (params, 4, num_params - 1);
-        weechat_printf_date_tags (
-            irc_msgbuffer_get_target_buffer (server, NULL, command, NULL, NULL),
-            date,
-            irc_protocol_tags (command, tags, "irc_numeric", NULL, NULL),
-            "%s%s",
-            weechat_prefix ("network"),
-            str_params);
-        if (str_params)
-            free (str_params);
-    }
-    else
-    {
-        IRC_PROTOCOL_RUN_CALLBACK(numeric);
-    }
+    weechat_printf_date_tags (
+        irc_msgbuffer_get_target_buffer (server, NULL, command, NULL, NULL),
+        date,
+        irc_protocol_tags (command, tags, "irc_numeric", NULL, NULL),
+        "%s%s",
+        weechat_prefix ("network"),
+        params[2]);
 
     return WEECHAT_RC_OK;
 }
@@ -7266,7 +7254,7 @@ irc_protocol_recv_command (struct t_irc_server *server,
         IRCB(733, 1, 0, 733),            /* end of monitor list             */
         IRCB(734, 1, 0, 734),            /* monitor list is full            */
         IRCB(900, 1, 0, 900),            /* logged in as (SASL)             */
-        IRCB(901, 1, 0, 901),            /* you are now logged in           */
+        IRCB(901, 1, 0, 901),            /* you are now logged out          */
         IRCB(902, 1, 0, sasl_end_fail),  /* SASL auth failed (acc. locked)  */
         IRCB(903, 1, 0, sasl_end_ok),    /* SASL auth successful            */
         IRCB(904, 1, 0, sasl_end_fail),  /* SASL auth failed                */
