@@ -1255,7 +1255,7 @@ API_FUNC(config_new_option)
     data_change = NULL;
     function_delete = NULL;
     data_delete = NULL;
-    if (!PyArg_ParseTuple (args, "ssssssiississssss", &config_file, &section, &name,
+    if (!PyArg_ParseTuple (args, "ssssssiizzissssss", &config_file, &section, &name,
                            &type, &description, &string_values, &min, &max,
                            &default_value, &value, &null_value_allowed,
                            &function_check_value, &data_check_value,

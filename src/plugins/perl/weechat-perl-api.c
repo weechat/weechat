@@ -1259,8 +1259,8 @@ API_FUNC(config_new_option)
     type = SvPV_nolen (ST (3));
     description = SvPV_nolen (ST (4));
     string_values = SvPV_nolen (ST (5));
-    default_value = SvPV_nolen (ST (8));
-    value = SvPV_nolen (ST (9));
+    default_value = SvOK (ST (8)) ? SvPV_nolen (ST (8)) : NULL;
+    value = SvOK (ST (9)) ? SvPV_nolen (ST (9)) : NULL;
     function_check_value = SvPV_nolen (ST (11));
     data_check_value = SvPV_nolen (ST (12));
     function_change = SvPV_nolen (ST (13));

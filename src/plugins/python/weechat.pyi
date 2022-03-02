@@ -242,7 +242,7 @@ def config_search_section(config_file: str, section_name: str) -> str:
 
 def config_new_option(config_file: str, section: str, name: str, type: str, description: str,
                       string_values: str, min: int, max: int,
-                      default_value: str, value: str, null_value_allowed: int,
+                      default_value: str | None, value: str | None, null_value_allowed: int,
                       callback_check_value: str, callback_check_value_data: str,
                       callback_change: str, callback_change_data: str,
                       callback_delete: str, callback_delete_data: str) -> str:

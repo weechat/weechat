@@ -35,6 +35,14 @@
 #include "weechat-tcl.h"
 
 
+/* Magic value to indicate NULL since Tcl only has string types. The value is
+ * \uFFFF\uFFFF\uFFFFWEECHAT_NULL\uFFFF\uFFFF\uFFFF. \uFFFF is used because
+ * it's reserved in Unicode as not a character, so this string is very unlikely
+ * to appear unintentionally since it's not valid text. */
+#define WEECHAT_NULL_STRING \
+    "\xef\xbf\xbf\xef\xbf\xbf\xef\xbf\xbfWEECHAT_NULL\xef\xbf\xbf\xef\xbf\xbf\xef\xbf\xbf"
+
+
 #define API_DEF_FUNC(__name)                                            \
     Tcl_CreateObjCommand (interp, "weechat::" #__name,                  \
                           weechat_tcl_api_##__name,                     \
@@ -1461,7 +1469,11 @@ API_FUNC(config_new_option)
     description = Tcl_GetStringFromObj (objv[5], &i);
     string_values = Tcl_GetStringFromObj (objv[6], &i);
     default_value = Tcl_GetStringFromObj (objv[9], &i);
+    if (strcmp (default_value, WEECHAT_NULL_STRING) == 0)
+        default_value = NULL;
     value = Tcl_GetStringFromObj (objv[10], &i);
+    if (strcmp (value, WEECHAT_NULL_STRING) == 0)
+        value = NULL;
     function_check_value = Tcl_GetStringFromObj (objv[12], &i);
     data_check_value = Tcl_GetStringFromObj (objv[13], &i);
     function_change = Tcl_GetStringFromObj (objv[14], &i);
@@ -5709,6 +5721,9 @@ void weechat_tcl_api_init (Tcl_Interp *interp)
     Tcl_SetVar (interp, "weechat::WEECHAT_RC_OK_EAT", Tcl_GetStringFromObj (objp, &i), 0);
     Tcl_SetIntObj (objp, WEECHAT_RC_ERROR);
     Tcl_SetVar (interp, "weechat::WEECHAT_RC_ERROR", Tcl_GetStringFromObj (objp, &i), 0);
+
+    Tcl_SetStringObj (objp, WEECHAT_NULL_STRING, -1);
+    Tcl_SetVar (interp, "weechat::WEECHAT_NULL", Tcl_GetStringFromObj (objp, &i), 0);
 
     Tcl_SetIntObj (objp, WEECHAT_CONFIG_READ_OK);
     Tcl_SetVar (interp, "weechat::WEECHAT_CONFIG_READ_OK", Tcl_GetStringFromObj (objp, &i), 0);

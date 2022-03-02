@@ -1295,7 +1295,7 @@ API_FUNC(config_new_option)
 
     API_INIT_FUNC(1, "config_new_option", API_RETURN_EMPTY);
     if (zend_parse_parameters (
-            ZEND_NUM_ARGS(), "SSSSSSllSSlzSzSzS", &z_config_file, &z_section,
+            ZEND_NUM_ARGS(), "SSSSSSllS!S!lzSzSzS", &z_config_file, &z_section,
             &z_name, &z_type, &z_description, &z_string_values, &z_min, &z_max,
             &z_default_value, &z_value, &z_null_value_allowed,
             &z_callback_check_value, &z_data_check_value, &z_callback_change,
@@ -1310,8 +1310,8 @@ API_FUNC(config_new_option)
     string_values = ZSTR_VAL(z_string_values);
     min = (int)z_min;
     max = (int)z_max;
-    default_value = ZSTR_VAL(z_default_value);
-    value = ZSTR_VAL(z_value);
+    default_value = z_default_value ? ZSTR_VAL(z_default_value) : NULL;
+    value = z_value ? ZSTR_VAL(z_value) : NULL;
     null_value_allowed = (int)z_null_value_allowed;
     weechat_php_get_function_name (z_callback_check_value,
                                    callback_check_value_name);

@@ -1489,8 +1489,7 @@ weechat_ruby_api_config_new_option (VALUE class, VALUE config_file,
     API_INIT_FUNC(1, "config_new_option", API_RETURN_EMPTY);
     if (NIL_P (config_file) || NIL_P (section) || NIL_P (name) || NIL_P (type)
         || NIL_P (description) || NIL_P (string_values) || NIL_P (min)
-        || NIL_P (max) || NIL_P (default_value) || NIL_P (value)
-        || NIL_P (null_value_allowed) || NIL_P (callbacks))
+        || NIL_P (max) || NIL_P (null_value_allowed) || NIL_P (callbacks))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     Check_Type (config_file, T_STRING);
@@ -1501,8 +1500,10 @@ weechat_ruby_api_config_new_option (VALUE class, VALUE config_file,
     Check_Type (string_values, T_STRING);
     CHECK_INTEGER(min);
     CHECK_INTEGER(max);
-    Check_Type (default_value, T_STRING);
-    Check_Type (value, T_STRING);
+    if (!NIL_P (default_value))
+        Check_Type (default_value, T_STRING);
+    if (!NIL_P (value))
+        Check_Type (value, T_STRING);
     CHECK_INTEGER(null_value_allowed);
     Check_Type (callbacks, T_ARRAY);
 
@@ -1528,8 +1529,8 @@ weechat_ruby_api_config_new_option (VALUE class, VALUE config_file,
     c_string_values = StringValuePtr (string_values);
     c_min = NUM2INT (min);
     c_max = NUM2INT (max);
-    c_default_value = StringValuePtr (default_value);
-    c_value = StringValuePtr (value);
+    c_default_value = NIL_P (default_value) ? NULL : StringValuePtr (default_value);
+    c_value = NIL_P (value) ? NULL : StringValuePtr (value);
     c_null_value_allowed = NUM2INT (null_value_allowed);
     c_function_check_value = StringValuePtr (function_check_value);
     c_data_check_value = StringValuePtr (data_check_value);
