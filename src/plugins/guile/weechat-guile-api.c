@@ -114,6 +114,9 @@ char *
 weechat_guile_api_scm_to_string (SCM str,
                                  char *guile_strings[], int *guile_num_strings)
 {
+    if (scm_is_null (str))
+        return NULL;
+
     /*
      * if array is full, just return string without using length
      * (this should never happen, the array should be large enough for any API
@@ -1302,7 +1305,8 @@ weechat_guile_api_config_new_option (SCM args)
         || !scm_is_string (name) || !scm_is_string (type)
         || !scm_is_string (description) || !scm_is_string (string_values)
         || !scm_is_integer (min) || !scm_is_integer (max)
-        || !scm_is_string (default_value) || !scm_is_string (value)
+        || !(scm_is_null (default_value) || scm_is_string (default_value))
+        || !(scm_is_null (value) || scm_is_string (value))
         || !scm_is_integer (null_value_allowed)
         || !scm_is_string (function_check_value)
         || !scm_is_string (data_check_value)

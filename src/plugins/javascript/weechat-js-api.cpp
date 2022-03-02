@@ -73,6 +73,8 @@ extern "C"
     for (num = 0; num < js_args_len; num++)                             \
     {                                                                   \
         if (((js_args[num] == 's') && (!args[num]->IsString()))         \
+            || ((js_args[num] == 'S') && (!(args[num]->IsString()       \
+                  || args[num]->IsNull() || args[num]->IsUndefined()))) \
             || ((js_args[num] == 'i') && (!args[num]->IsInt32()))       \
             || ((js_args[num] == 'n') && (!args[num]->IsNumber()))      \
             || ((js_args[num] == 'h') && (!args[num]->IsObject())))     \
@@ -1188,9 +1190,10 @@ weechat_js_api_config_option_delete_cb (const void *pointer, void *data,
 API_FUNC(config_new_option)
 {
     int min, max, null_value_allowed;
+    char *default_value, *value;
     const char *result;
 
-    API_INIT_FUNC(1, "config_new_option", "ssssssiississssss", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "config_new_option", "ssssssiiSSissssss", API_RETURN_EMPTY);
 
     v8::String::Utf8Value config_file(args[0]);
     v8::String::Utf8Value section(args[1]);
@@ -1200,8 +1203,19 @@ API_FUNC(config_new_option)
     v8::String::Utf8Value string_values(args[5]);
     min = args[6]->IntegerValue();
     max = args[7]->IntegerValue();
-    v8::String::Utf8Value default_value(args[8]);
-    v8::String::Utf8Value value(args[9]);
+
+    v8::String::Utf8Value v8_default_value(args[8]);
+    if (args[8]->IsNull() || args[8]->IsUndefined())
+        default_value = NULL;
+    else
+        default_value = *v8_default_value;
+
+    v8::String::Utf8Value v8_value(args[9]);
+    if (args[8]->IsNull() || args[8]->IsUndefined())
+        value = NULL;
+    else
+        value = *v8_value;
+
     null_value_allowed = args[10]->IntegerValue();
     v8::String::Utf8Value function_check_value(args[11]);
     v8::String::Utf8Value data_check_value(args[12]);
@@ -1222,8 +1236,8 @@ API_FUNC(config_new_option)
             *string_values,
             min,
             max,
-            *default_value,
-            *value,
+            default_value,
+            value,
             null_value_allowed,
             &weechat_js_api_config_option_check_value_cb,
             *function_check_value,
