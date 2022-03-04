@@ -56,7 +56,21 @@ TEST(IrcServer, Valid)
 
 TEST(IrcServer, Search)
 {
-    /* TODO: write tests */
+    struct t_irc_server *server1, *server2;
+
+    server1 = irc_server_alloc ("srv1");
+    server2 = irc_server_alloc ("abc");
+
+    POINTERS_EQUAL(NULL, irc_server_search (NULL));
+    POINTERS_EQUAL(NULL, irc_server_search ("does_not_exist"));
+    POINTERS_EQUAL(NULL, irc_server_search ("SRV1"));
+    POINTERS_EQUAL(NULL, irc_server_search ("ABC"));
+
+    POINTERS_EQUAL(server1, irc_server_search ("srv1"));
+    POINTERS_EQUAL(server2, irc_server_search ("abc"));
+
+    irc_server_free (server1);
+    irc_server_free (server2);
 }
 
 /*
@@ -66,7 +80,22 @@ TEST(IrcServer, Search)
 
 TEST(IrcServer, CaseSearch)
 {
-    /* TODO: write tests */
+    struct t_irc_server *server1, *server2;
+
+    server1 = irc_server_alloc ("srv1");
+    server2 = irc_server_alloc ("abc");
+
+    POINTERS_EQUAL(NULL, irc_server_casesearch (NULL));
+    POINTERS_EQUAL(NULL, irc_server_casesearch ("does_not_exist"));
+
+    POINTERS_EQUAL(server1, irc_server_casesearch ("SRV1"));
+    POINTERS_EQUAL(server2, irc_server_casesearch ("ABC"));
+
+    POINTERS_EQUAL(server1, irc_server_casesearch ("srv1"));
+    POINTERS_EQUAL(server2, irc_server_casesearch ("abc"));
+
+    irc_server_free (server1);
+    irc_server_free (server2);
 }
 
 /*
