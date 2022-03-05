@@ -46,7 +46,17 @@ TEST_GROUP(IrcServer)
 
 TEST(IrcServer, Valid)
 {
-    /* TODO: write tests */
+    struct t_irc_server *server;
+
+    server = irc_server_alloc ("server1");
+
+    LONGS_EQUAL(0, irc_server_valid (NULL));
+    LONGS_EQUAL(0, irc_server_valid ((struct t_irc_server *)0x1));
+    LONGS_EQUAL(0, irc_server_valid (server + 1));
+
+    LONGS_EQUAL(1, irc_server_valid (server));
+
+    irc_server_free (server);
 }
 
 /*
