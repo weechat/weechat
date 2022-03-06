@@ -855,6 +855,21 @@ commande et le join des canaux) :
 [[edit_autojoin]]
 === Comment puis-je ajouter/supprimer des canaux de l'option autojoin ?
 
+Avec WeeChat ≥ 3.5, vous pouvez automatiquement enregistrer les canaux que
+vous rejoignez et quittez manuellement dans l'option "autojoin" du serveur.
+
+Pour tous les serveurs :
+
+----
+/set irc.server_default.autojoin_record on
+----
+
+Pour un seul serveur :
+
+----
+/set irc.server.libera.autojoin_record on
+----
+
 Vous pouvez utiliser la commande `/set` pour éditer la liste des canaux de
 l'autojoin, par exemple pour le serveur libera :
 

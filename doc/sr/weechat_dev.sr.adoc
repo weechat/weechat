@@ -284,6 +284,8 @@ WeeChat „језгро” се налази у следећим директо�
 |       irc-ignore.c                | IRC Ignore.
 |       irc-info.c                  | IRC info/infolists/hdata.
 |       irc-input.c                 | Унос команди/текста.
+// TRANSLATION MISSING
+|       irc-join.c                  | Functions for list of channels to join.
 |       irc-message.c               | Функције за манипулисање IRC порукама.
 |       irc-mode.c                  | Функције у вези режима канала/надимка.
 |       irc-modelist.c              | Листе режима IRC канала (+b, +e, +I, ...).
@@ -431,6 +433,8 @@ WeeChat „језгро” се налази у следећим директо�
 |             test-irc-color.cpp      | Тестови: IRC боје.
 |             test-irc-config.cpp     | Тестови: IRC конфигурација.
 |             test-irc-ignore.cpp     | Тестови: IRC игнорисања.
+// TRANSLATION MISSING
+|             test-irc-join.cpp       | Tests: IRC join functions.
 |             test-irc-message.cpp    | Тестови: IRC поруке.
 |             test-irc-mode.cpp       | Тестови: IRC режими.
 |             test-irc-nick.cpp       | Тестови: IRC надимци.

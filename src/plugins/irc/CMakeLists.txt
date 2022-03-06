@@ -31,6 +31,7 @@ add_library(irc MODULE
   irc-ignore.c irc-ignore.h
   irc-info.c irc-info.h
   irc-input.c irc-input.h
+  irc-join.c irc-join.h
   irc-message.c irc-message.h
   irc-mode.c irc-mode.h
   irc-modelist.c irc-modelist.h

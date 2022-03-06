@@ -832,6 +832,24 @@ unirse a los canales):
 [[edit_autojoin]]
 === ¿Cómo puedo añadir/eliminar canales de la opción autojoin?
 
+// TRANSLATION MISSING
+With WeeChat ≥ 3.5, you can automatically record the channels you manually
+join and part in the "autojoin" server option.
+
+// TRANSLATION MISSING
+For all servers:
+
+----
+/set irc.server_default.autojoin_record on
+----
+
+// TRANSLATION MISSING
+For a single server:
+
+----
+/set irc.server.libera.autojoin_record on
+----
+
 Puede utilizar el comando `/set` para editar la lista de canales con autojoin,
 por ejemplo, para el servidor "libera":
 

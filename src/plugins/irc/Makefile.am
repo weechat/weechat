@@ -49,6 +49,8 @@ irc_la_SOURCES = irc.c \
                  irc-info.h \
                  irc-input.c \
                  irc-input.h \
+                 irc-join.c \
+                 irc-join.h \
                  irc-message.c \
                  irc-message.h \
                  irc-mode.c \

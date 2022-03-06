@@ -726,6 +726,24 @@ oauth је једноставно лозинка која има вреднос�
 [[edit_autojoin]]
 === Како да додам/уклоним канале из autojoin опције?
 
+// TRANSLATION MISSING
+With WeeChat ≥ 3.5, you can automatically record the channels you manually
+join and part in the "autojoin" server option.
+
+// TRANSLATION MISSING
+For all servers:
+
+----
+/set irc.server_default.autojoin_record on
+----
+
+// TRANSLATION MISSING
+For a single server:
+
+----
+/set irc.server.libera.autojoin_record on
+----
+
 Можете да употребите команду `/set` и да уредите листу autojoin канала, на пример за „libera” сервер:
 
 ----

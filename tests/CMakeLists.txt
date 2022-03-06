@@ -60,6 +60,7 @@ if(ENABLE_IRC)
     unit/plugins/irc/test-irc-color.cpp
     unit/plugins/irc/test-irc-config.cpp
     unit/plugins/irc/test-irc-ignore.cpp
+    unit/plugins/irc/test-irc-join.cpp
     unit/plugins/irc/test-irc-message.cpp
     unit/plugins/irc/test-irc-mode.cpp
     unit/plugins/irc/test-irc-nick.cpp

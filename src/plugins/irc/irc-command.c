@@ -41,6 +41,7 @@
 #include "irc-config.h"
 #include "irc-ignore.h"
 #include "irc-input.h"
+#include "irc-join.h"
 #include "irc-message.h"
 #include "irc-mode.h"
 #include "irc-modelist.h"
@@ -2632,8 +2633,8 @@ irc_command_join_server (struct t_irc_server *server, const char *arguments,
                          int manual_join, int noswitch)
 {
     char *new_args, **channels, **keys, *pos_space, *pos_keys, *pos_channel;
-    char *channel_name;
-    int i, num_channels, num_keys, length;
+    char *channel_name, *ptr_key;
+    int i, num_channels, num_keys, length, record;
     time_t time_now;
     struct t_irc_channel *ptr_channel;
 
@@ -2645,6 +2646,8 @@ irc_command_join_server (struct t_irc_server *server, const char *arguments,
             weechat_prefix ("error"), IRC_PLUGIN_NAME, "join");
         return;
     }
+
+    record = IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_AUTOJOIN_RECORD);
 
     /* split channels and keys */
     channels = NULL;
@@ -2733,8 +2736,10 @@ irc_command_join_server (struct t_irc_server *server, const char *arguments,
                         free (channel_name);
                     }
                 }
+                ptr_key = NULL;
                 if (keys && (i < num_keys))
                 {
+                    ptr_key = keys[i];
                     ptr_channel = irc_channel_search (server, pos_channel);
                     if (ptr_channel)
                     {
@@ -2749,16 +2754,24 @@ irc_command_join_server (struct t_irc_server *server, const char *arguments,
                     }
                 }
                 if (manual_join
-                    && weechat_config_boolean (irc_config_look_buffer_open_before_join)
                     && !irc_channel_search (server, pos_channel)
                     && (strcmp (pos_channel, "0") != 0))
                 {
-                    /*
-                     * open the channel buffer immediately (do not wait for the
-                     * JOIN sent by server)
-                     */
-                    irc_channel_create_buffer (
-                        server, IRC_CHANNEL_TYPE_CHANNEL, pos_channel, 1, 1);
+                    if (weechat_config_boolean (irc_config_look_buffer_open_before_join))
+                    {
+                        /*
+                         * open the channel buffer immediately (do not wait
+                         * for the JOIN sent by server)
+                         */
+                        irc_channel_create_buffer (
+                            server, IRC_CHANNEL_TYPE_CHANNEL, pos_channel,
+                            1, 1);
+                    }
+                    if (record)
+                    {
+                        irc_join_add_channel_to_autojoin (server, pos_channel,
+                                                          ptr_key);
+                    }
                 }
             }
             if (pos_space)
@@ -4070,7 +4083,8 @@ irc_command_part_channel (struct t_irc_server *server, const char *channel_name,
 
 IRC_COMMAND_CALLBACK(part)
 {
-    char *channel_name, *pos_args;
+    char *channel_name, *pos_args, **channels;
+    int i, num_channels;
 
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
     IRC_COMMAND_CHECK_SERVER("part", 1, 1);
@@ -4128,6 +4142,23 @@ IRC_COMMAND_CALLBACK(part)
     }
 
     irc_command_part_channel (ptr_server, channel_name, pos_args);
+
+    if (IRC_SERVER_OPTION_BOOLEAN(ptr_server, IRC_SERVER_OPTION_AUTOJOIN_RECORD))
+    {
+        channels = weechat_string_split (channel_name, ",", NULL,
+                                         WEECHAT_STRING_SPLIT_STRIP_LEFT
+                                         | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                                         | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                                         0, &num_channels);
+        if (channels)
+        {
+            for (i = 0; i < num_channels; i++)
+            {
+                irc_join_remove_channel_from_autojoin (ptr_server, channels[i]);
+            }
+            weechat_string_free_split (channels);
+        }
+    }
 
     return WEECHAT_RC_OK;
 }
@@ -5104,6 +5135,18 @@ irc_command_display_server (struct t_irc_server *server, int with_detail)
             weechat_printf (NULL, "  autojoin . . . . . . : %s'%s'",
                             IRC_COLOR_CHAT_VALUE,
                             weechat_config_string (server->options[IRC_SERVER_OPTION_AUTOJOIN]));
+
+        /* autojoin_record */
+        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_AUTOJOIN_RECORD]))
+            weechat_printf (NULL, "  autojoin_record. . . :   (%s)",
+                            (IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_AUTOJOIN_RECORD)) ?
+                            _("on") : _("off"));
+        else
+            weechat_printf (NULL, "  autojoin_record. . . : %s%s",
+                            IRC_COLOR_CHAT_VALUE,
+                            (weechat_config_boolean (server->options[IRC_SERVER_OPTION_AUTOJOIN_RECORD])) ?
+                            _("on") : _("off"));
+
         /* autorejoin */
         if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_AUTOREJOIN]))
             weechat_printf (NULL, "  autorejoin . . . . . :   (%s)",

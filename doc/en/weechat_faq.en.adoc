@@ -829,6 +829,21 @@ join of channels):
 [[edit_autojoin]]
 === How can I add/remove channels from autojoin option?
 
+With WeeChat ≥ 3.5, you can automatically record the channels you manually
+join and part in the "autojoin" server option.
+
+For all servers:
+
+----
+/set irc.server_default.autojoin_record on
+----
+
+For a single server:
+
+----
+/set irc.server.libera.autojoin_record on
+----
+
 You can use the `/set` command to edit the list of autojoin channels,
 for example for the "libera" server:
 

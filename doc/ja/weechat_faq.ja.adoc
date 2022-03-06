@@ -834,6 +834,24 @@ SASL を利用する方が良いです。例えば:
 [[edit_autojoin]]
 === どうすれば自動参加オプションにチャンネルを追加/削除できますか。
 
+// TRANSLATION MISSING
+With WeeChat ≥ 3.5, you can automatically record the channels you manually
+join and part in the "autojoin" server option.
+
+// TRANSLATION MISSING
+For all servers:
+
+----
+/set irc.server_default.autojoin_record on
+----
+
+// TRANSLATION MISSING
+For a single server:
+
+----
+/set irc.server.libera.autojoin_record on
+----
+
 `/set` コマンドを使って、自動参加チャンネルのリストを編集してください。"libera"
 サーバに対してこれを実行するには以下のようにします:
 

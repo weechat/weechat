@@ -295,6 +295,8 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |       irc-ignore.c                | IRC 無視
 |       irc-info.c                  | IRC の情報/インフォリスト/hdata
 |       irc-input.c                 | コマンドおよびテキストの入力
+// TRANSLATION MISSING
+|       irc-join.c                  | Functions for list of channels to join.
 |       irc-message.c               | IRC メッセージを操作する関数
 |       irc-mode.c                  | チャンネルおよびニックネームのモードを操作する関数
 |       irc-modelist.c              | IRC チャンネルモードリスト (+b、+e、+I、...).
@@ -462,6 +464,8 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |             test-irc-config.cpp     | テスト: IRC 設定
 // TRANSLATION MISSING
 |             test-irc-ignore.cpp     | Tests: IRC ignores.
+// TRANSLATION MISSING
+|             test-irc-join.cpp       | Tests: IRC join functions.
 // TRANSLATION MISSING
 |             test-irc-message.cpp    | Tests: IRC messages.
 // TRANSLATION MISSING
