@@ -21,9 +21,10 @@
 
 #include "CppUTest/TestHarness.h"
 
+#include "tests/tests.h"
+
 extern "C"
 {
-#include "tests/tests.h"
 #include "src/core/wee-arraylist.h"
 #include "src/core/wee-config-file.h"
 #include "src/plugins/irc/irc-channel.h"
@@ -409,6 +410,42 @@ TEST(IrcJoin, AddRemoveChannelsAutojoin)
     STRCMP_EQUAL(
         "#abc,#xyz,#def,#ghi key_abc,key_xyz",
         CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
+
+    record_start ();
+    irc_join_remove_channel_from_autojoin (server, "#xyz", 1);
+    STRCMP_EQUAL(
+        "#abc,#def,#ghi key_abc",
+        CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
+    CHECK(record_search ("core.weechat",
+                         "Autojoin changed from "
+                         "\"#abc,#xyz,#def,#ghi key_abc,key_xyz\" to "
+                         "\"#abc,#def,#ghi key_abc\""));
+    record_stop ();
+
+    record_start ();
+    irc_join_add_channel_to_autojoin (server, "#xyz", NULL, 1);
+    STRCMP_EQUAL(
+        "#abc,#def,#ghi,#xyz key_abc",
+        CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
+    CHECK(record_search ("core.weechat",
+                         "Autojoin changed from "
+                         "\"#abc,#def,#ghi key_abc\" to "
+                         "\"#abc,#def,#ghi,#xyz key_abc\""));
+    record_stop ();
+
+    irc_join_remove_channel_from_autojoin (server, "#abc", 0);
+    irc_join_remove_channel_from_autojoin (server, "#def", 0);
+    irc_join_remove_channel_from_autojoin (server, "#ghi", 0);
+    irc_join_remove_channel_from_autojoin (server, "#xyz", 0);
+
+    record_start ();
+    irc_join_add_channel_to_autojoin (server, "#abc", NULL, 1);
+    STRCMP_EQUAL(
+        "#abc",
+        CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
+    CHECK(record_search ("core.weechat",
+                         "Autojoin changed from empty value to \"#abc\""));
+    record_stop ();
 
     irc_server_free (server);
 }
