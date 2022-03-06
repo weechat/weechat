@@ -93,6 +93,28 @@ irc_join_free_cb (void *data, struct t_arraylist *arraylist, void *pointer)
 }
 
 /*
+ * Removes all occurrences of a channel from the array list then adds the
+ * join channel (channel + key).
+ */
+
+void
+irc_join_arraylist_add (struct t_arraylist *arraylist,
+                        void *pointer)
+{
+    int index;
+
+    while (1)
+    {
+        weechat_arraylist_search (arraylist, pointer, &index, NULL);
+        if (index < 0)
+            break;
+        weechat_arraylist_remove (arraylist, index);
+    }
+
+    weechat_arraylist_add (arraylist, pointer);
+}
+
+/*
  * Splits join string and returns an array list with a list of
  * channels/keys.
  *
@@ -159,7 +181,7 @@ irc_join_split (struct t_irc_server *server, const char *join)
         new_channel = (struct t_irc_join_channel *)malloc (sizeof (*new_channel));
         new_channel->name = strdup (channels[i]);
         new_channel->key = (i < count_keys) ? strdup (keys[i]) : NULL;
-        weechat_arraylist_add (arraylist, new_channel);
+        irc_join_arraylist_add (arraylist, new_channel);
     }
 
 end:
@@ -267,7 +289,7 @@ irc_join_add_channel (struct t_irc_server *server,
     join_chan = (struct t_irc_join_channel *)malloc (sizeof (*join_chan));
     join_chan->name = strdup (channel_name);
     join_chan->key = (key && key[0]) ? strdup (key) : NULL;
-    weechat_arraylist_add (arraylist, join_chan);
+    irc_join_arraylist_add (arraylist, join_chan);
 
     new_join = irc_join_build_string (arraylist);
 
@@ -318,7 +340,7 @@ irc_join_add_channels (struct t_irc_server *server,
         join_chan->name = strdup (ptr_join_chan->name);
         join_chan->key = (ptr_join_chan->key && ptr_join_chan->key[0]) ?
             strdup (ptr_join_chan->key) : NULL;
-        weechat_arraylist_add (arraylist, join_chan);
+        irc_join_arraylist_add (arraylist, join_chan);
     }
 
     new_join = irc_join_build_string (arraylist);
@@ -525,7 +547,7 @@ irc_join_save_channels_to_autojoin (struct t_irc_server *server, int verbose)
             join_chan->name = strdup (ptr_channel->name);
             join_chan->key = (ptr_channel->key && ptr_channel->key[0]) ?
                 strdup (ptr_channel->key) : NULL;
-            weechat_arraylist_add (arraylist, join_chan);
+            irc_join_arraylist_add (arraylist, join_chan);
         }
     }
 

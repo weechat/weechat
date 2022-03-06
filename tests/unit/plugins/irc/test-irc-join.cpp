@@ -280,6 +280,9 @@ TEST(IrcJoin, AddChannels)
     WEE_CHECK_ADD_CHANNELS("#abc,#xyz key_abc", "#xyz", "#abc key_abc");
 
     WEE_CHECK_ADD_CHANNELS("#abc,#xyz,#def key_abc", "#xyz,#def", "#abc key_abc");
+
+    WEE_CHECK_ADD_CHANNELS("#abc,#chan1,#chan2,#xyz,#chan3 key_abc,key1,key2",
+                           "#abc,#xyz,#chan2 key_abc", "#chan1,#chan2,#chan3 key1,key2");
 }
 
 /*
