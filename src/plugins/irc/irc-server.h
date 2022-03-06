@@ -79,7 +79,7 @@ enum t_irc_server_option
     IRC_SERVER_OPTION_COMMAND,       /* command to run once connected        */
     IRC_SERVER_OPTION_COMMAND_DELAY, /* delay after execution of command     */
     IRC_SERVER_OPTION_AUTOJOIN,      /* channels to automatically join       */
-    IRC_SERVER_OPTION_AUTOJOIN_RECORD, /* auto set autojoin option           */
+    IRC_SERVER_OPTION_AUTOJOIN_DYNAMIC, /* auto set autojoin option          */
     IRC_SERVER_OPTION_AUTOREJOIN,    /* auto rejoin channels when kicked     */
     IRC_SERVER_OPTION_AUTOREJOIN_DELAY,     /* delay before auto rejoin      */
     IRC_SERVER_OPTION_CONNECTION_TIMEOUT,   /* timeout for connection        */

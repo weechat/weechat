@@ -107,7 +107,7 @@ char *irc_server_options[IRC_SERVER_NUM_OPTIONS][2] =
   { "command",              ""                        },
   { "command_delay",        "0"                       },
   { "autojoin",             ""                        },
-  { "autojoin_record",      "off"                     },
+  { "autojoin_dynamic",     "off"                     },
   { "autorejoin",           "off"                     },
   { "autorejoin_delay",     "30"                      },
   { "connection_timeout",   "60"                      },
@@ -6290,8 +6290,8 @@ irc_server_add_to_infolist (struct t_infolist *infolist,
     if (!weechat_infolist_new_var_string (ptr_item, "autojoin",
                                           IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_AUTOJOIN)))
         return 0;
-    if (!weechat_infolist_new_var_integer (ptr_item, "autojoin_record",
-                                          IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_AUTOJOIN_RECORD)))
+    if (!weechat_infolist_new_var_integer (ptr_item, "autojoin_dynamic",
+                                          IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_AUTOJOIN_DYNAMIC)))
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "autorejoin",
                                            IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_AUTOREJOIN)))
@@ -6652,14 +6652,14 @@ irc_server_print_log ()
         else
             weechat_log_printf ("  autojoin. . . . . . . . . : '%s'",
                                 weechat_config_string (ptr_server->options[IRC_SERVER_OPTION_AUTOJOIN]));
-        /* autojoin_record */
-        if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_AUTOJOIN_RECORD]))
-            weechat_log_printf ("  autojoin_record . . . . . : null (%s)",
-                                (IRC_SERVER_OPTION_BOOLEAN(ptr_server, IRC_SERVER_OPTION_AUTOJOIN_RECORD)) ?
+        /* autojoin_dynamic */
+        if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_AUTOJOIN_DYNAMIC]))
+            weechat_log_printf ("  autojoin_dynamic. . . . . : null (%s)",
+                                (IRC_SERVER_OPTION_BOOLEAN(ptr_server, IRC_SERVER_OPTION_AUTOJOIN_DYNAMIC)) ?
                                 "on" : "off");
         else
-            weechat_log_printf ("  autojoin_record . . . . . : %s",
-                                (weechat_config_boolean (ptr_server->options[IRC_SERVER_OPTION_AUTOJOIN_RECORD])) ?
+            weechat_log_printf ("  autojoin_dynamic. . . . . : %s",
+                                (weechat_config_boolean (ptr_server->options[IRC_SERVER_OPTION_AUTOJOIN_DYNAMIC])) ?
                                 "on" : "off");
         /* autorejoin */
         if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_AUTOREJOIN]))

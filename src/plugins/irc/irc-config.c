@@ -2217,7 +2217,7 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 callback_change_data,
                 NULL, NULL, NULL);
             break;
-        case IRC_SERVER_OPTION_AUTOJOIN_RECORD:
+        case IRC_SERVER_OPTION_AUTOJOIN_DYNAMIC:
             new_option = weechat_config_new_option (
                 config_file, section,
                 option_name, "boolean",

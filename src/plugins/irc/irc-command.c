@@ -2732,7 +2732,7 @@ irc_command_join_server (struct t_irc_server *server, const char *arguments,
 {
     char *new_args, **channels, **keys, *pos_space, *pos_keys, *pos_channel;
     char *channel_name, *ptr_key;
-    int i, num_channels, num_keys, length, record;
+    int i, num_channels, num_keys, length, save_autojoin;
     time_t time_now;
     struct t_irc_channel *ptr_channel;
 
@@ -2745,7 +2745,8 @@ irc_command_join_server (struct t_irc_server *server, const char *arguments,
         return;
     }
 
-    record = IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_AUTOJOIN_RECORD);
+    save_autojoin = IRC_SERVER_OPTION_BOOLEAN(server,
+                                              IRC_SERVER_OPTION_AUTOJOIN_DYNAMIC);
 
     /* split channels and keys */
     channels = NULL;
@@ -2865,7 +2866,7 @@ irc_command_join_server (struct t_irc_server *server, const char *arguments,
                             server, IRC_CHANNEL_TYPE_CHANNEL, pos_channel,
                             1, 1);
                     }
-                    if (record)
+                    if (save_autojoin)
                     {
                         irc_join_add_channel_to_autojoin (server, pos_channel,
                                                           ptr_key, 0);
@@ -4241,7 +4242,7 @@ IRC_COMMAND_CALLBACK(part)
 
     irc_command_part_channel (ptr_server, channel_name, pos_args);
 
-    if (IRC_SERVER_OPTION_BOOLEAN(ptr_server, IRC_SERVER_OPTION_AUTOJOIN_RECORD))
+    if (IRC_SERVER_OPTION_BOOLEAN(ptr_server, IRC_SERVER_OPTION_AUTOJOIN_DYNAMIC))
     {
         channels = weechat_string_split (channel_name, ",", NULL,
                                          WEECHAT_STRING_SPLIT_STRIP_LEFT
@@ -5235,15 +5236,15 @@ irc_command_display_server (struct t_irc_server *server, int with_detail)
                             IRC_COLOR_CHAT_VALUE,
                             weechat_config_string (server->options[IRC_SERVER_OPTION_AUTOJOIN]));
 
-        /* autojoin_record */
-        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_AUTOJOIN_RECORD]))
-            weechat_printf (NULL, "  autojoin_record. . . :   (%s)",
-                            (IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_AUTOJOIN_RECORD)) ?
+        /* autojoin_dynamic */
+        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_AUTOJOIN_DYNAMIC]))
+            weechat_printf (NULL, "  autojoin_dynamic . . :   (%s)",
+                            (IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_AUTOJOIN_DYNAMIC)) ?
                             _("on") : _("off"));
         else
-            weechat_printf (NULL, "  autojoin_record. . . : %s%s",
+            weechat_printf (NULL, "  autojoin_dynamic . . : %s%s",
                             IRC_COLOR_CHAT_VALUE,
-                            (weechat_config_boolean (server->options[IRC_SERVER_OPTION_AUTOJOIN_RECORD])) ?
+                            (weechat_config_boolean (server->options[IRC_SERVER_OPTION_AUTOJOIN_DYNAMIC])) ?
                             _("on") : _("off"));
 
         /* autorejoin */
