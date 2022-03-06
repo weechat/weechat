@@ -21,6 +21,8 @@
 
 #include "CppUTest/TestHarness.h"
 
+#include "tests/tests.h"
+
 extern "C"
 {
 #include <stdio.h>
@@ -33,9 +35,6 @@ extern "C"
 extern void logger_backlog_display_line (struct t_gui_buffer *buffer,
                                          const char *line);
 }
-
-#include "tests/tests.h"
-
 
 TEST_GROUP(LoggerBacklog)
 {

@@ -21,6 +21,8 @@
 
 #include "CppUTest/TestHarness.h"
 
+#include "tests/tests.h"
+
 extern "C"
 {
 #ifndef HAVE_CONFIG_H
@@ -31,7 +33,6 @@ extern "C"
 #include <stdio.h>
 #include <string.h>
 #include <regex.h>
-#include "tests/tests.h"
 #include "src/core/weechat.h"
 #include "src/core/wee-config.h"
 #include "src/core/wee-string.h"

@@ -21,14 +21,14 @@
 
 #include "CppUTest/TestHarness.h"
 
+#include "tests/tests.h"
+
 extern "C"
 {
 #include <stdio.h>
 #include "src/core/wee-hook.h"
 #include "src/plugins/trigger/trigger.h"
 }
-
-#include "tests/tests.h"
 
 #define WEE_CHECK_MODIFIER(__result, __modifier, __string)              \
     WEE_TEST_STR(                                                       \

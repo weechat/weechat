@@ -21,6 +21,8 @@
 
 #include "CppUTest/TestHarness.h"
 
+#include "tests/tests.h"
+
 extern "C"
 {
 #include <stdio.h>
@@ -29,8 +31,6 @@ extern "C"
 #include "src/plugins/plugin.h"
 #include "src/plugins/trigger/trigger.h"
 }
-
-#include "tests/tests.h"
 
 #define WEE_CHECK_REGEX_SPLIT(__rc, __ret_regex_count, __str_regex)     \
     trigger_regex_free (&regex_count, &regex);                          \

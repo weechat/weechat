@@ -21,13 +21,14 @@
 
 #include "CppUTest/TestHarness.h"
 
+#include "tests/tests.h"
+
 extern "C"
 {
 #include <unistd.h>
 #include <stdio.h>
 #include <string.h>
 #include <signal.h>
-#include "tests/tests.h"
 #include "src/core/wee-signal.h"
 }
 

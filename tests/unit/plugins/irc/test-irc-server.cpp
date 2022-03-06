@@ -21,6 +21,8 @@
 
 #include "CppUTest/TestHarness.h"
 
+#include "tests/tests.h"
+
 extern "C"
 {
 #include <stdio.h>
@@ -30,8 +32,6 @@ extern "C"
 
 extern char *irc_server_build_autojoin (struct t_irc_server *server);
 }
-
-#include "tests/tests.h"
 
 #define IRC_FAKE_SERVER "fake"
 

@@ -21,6 +21,8 @@
 
 #include "CppUTest/TestHarness.h"
 
+#include "tests/tests.h"
+
 extern "C"
 {
 #ifndef HAVE_CONFIG_H
@@ -36,8 +38,6 @@ extern "C"
 #include "src/core/wee-util.h"
 #include "src/plugins/plugin.h"
 }
-
-#include "tests/tests.h"
 
 struct t_hook *api_hook_print = NULL;
 int api_tests_ok = 0;

@@ -21,9 +21,10 @@
 
 #include "CppUTest/TestHarness.h"
 
+#include "tests/tests.h"
+
 extern "C"
 {
-#include "tests/tests.h"
 #include "src/plugins/irc/irc-buffer.h"
 }
 

@@ -21,12 +21,13 @@
 
 #include "CppUTest/TestHarness.h"
 
+#include "tests/tests.h"
+
 extern "C"
 {
 #include <stdio.h>
 #include <string.h>
 #include <wctype.h>
-#include "tests/tests.h"
 #include "src/core/wee-utf8.h"
 #include "src/core/wee-config.h"
 }

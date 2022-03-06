@@ -21,13 +21,12 @@
 
 #include "CppUTest/TestHarness.h"
 
+#include "tests/tests.h"
+
 extern "C"
 {
 #include "src/plugins/typing/typing.h"
 }
-
-#include "tests/tests.h"
-
 
 TEST_GROUP(Typing)
 {

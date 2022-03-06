@@ -21,6 +21,8 @@
 
 #include "CppUTest/TestHarness.h"
 
+#include "tests/tests.h"
+
 extern "C"
 {
 #include <stdio.h>
@@ -53,8 +55,6 @@ extern char *irc_protocol_string_params (const char **params,
 extern char *irc_protocol_cap_to_enable (const char *capabilities,
                                          int sasl_requested);
 }
-
-#include "tests/tests.h"
 
 #define IRC_FAKE_SERVER "fake"
 #define IRC_MSG_005 "PREFIX=(ohv)@%+ MAXLIST=bqeI:100 MODES=4 "         \

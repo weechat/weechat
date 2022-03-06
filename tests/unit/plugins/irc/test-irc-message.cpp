@@ -21,10 +21,11 @@
 
 #include "CppUTest/TestHarness.h"
 
+#include "tests/tests.h"
+
 extern "C"
 {
 #include "string.h"
-#include "tests/tests.h"
 #include "src/core/wee-config-file.h"
 #include "src/core/wee-hashtable.h"
 #include "src/core/wee-hook.h"
