@@ -26,12 +26,26 @@ extern "C"
 #include "tests/tests.h"
 #include "src/core/wee-arraylist.h"
 #include "src/core/wee-config-file.h"
+#include "src/plugins/irc/irc-channel.h"
 #include "src/plugins/irc/irc-join.h"
 #include "src/plugins/irc/irc-server.h"
 }
 
 #define WEE_CHECK_ADD_CHANNEL(__result, __join, __channel, __key)       \
     str = irc_join_add_channel (NULL, __join, __channel, __key);        \
+    if (__result == NULL)                                               \
+    {                                                                   \
+        POINTERS_EQUAL(NULL, str);                                      \
+    }                                                                   \
+    else                                                                \
+    {                                                                   \
+        STRCMP_EQUAL(__result, str);                                    \
+    }                                                                   \
+    if (str)                                                            \
+        free (str);
+
+#define WEE_CHECK_ADD_CHANNELS(__result, __join, __join2)               \
+    str = irc_join_add_channels (NULL, __join, __join2);                \
     if (__result == NULL)                                               \
     {                                                                   \
         POINTERS_EQUAL(NULL, str);                                      \
@@ -245,6 +259,31 @@ TEST(IrcJoin, AddChannel)
 
 /*
  * Tests functions:
+ *   irc_join_add_channels
+ */
+
+TEST(IrcJoin, AddChannels)
+{
+    char *str;
+
+    WEE_CHECK_ADD_CHANNELS("", NULL, NULL);
+    WEE_CHECK_ADD_CHANNELS("", "", NULL);
+    WEE_CHECK_ADD_CHANNELS("", "", "");
+    WEE_CHECK_ADD_CHANNELS("", NULL, "");
+
+    WEE_CHECK_ADD_CHANNELS("#abc", NULL, "#abc");
+    WEE_CHECK_ADD_CHANNELS("#abc", "", "#abc");
+    WEE_CHECK_ADD_CHANNELS("#abc key_abc", NULL, "#abc key_abc");
+    WEE_CHECK_ADD_CHANNELS("#ABC key_ABC", NULL, "#ABC key_ABC");
+
+    WEE_CHECK_ADD_CHANNELS("#xyz,#abc", "#xyz", "#abc");
+    WEE_CHECK_ADD_CHANNELS("#abc,#xyz key_abc", "#xyz", "#abc key_abc");
+
+    WEE_CHECK_ADD_CHANNELS("#abc,#xyz,#def key_abc", "#xyz,#def", "#abc key_abc");
+}
+
+/*
+ * Tests functions:
  *   irc_join_remove_channel
  */
 
@@ -282,78 +321,117 @@ TEST(IrcJoin, RemoveChannel)
 /*
  * Tests functions:
  *   irc_join_add_channel_to_autojoin
+ *   irc_join_add_channels_to_autojoin
  *   irc_join_remove_channel_from_autojoin
  */
 
-TEST(IrcJoin, AddRemoveChannelAutojoin)
+TEST(IrcJoin, AddRemoveChannelsAutojoin)
 {
     struct t_irc_server *server;
 
     server = irc_server_alloc ("my_ircd");
+    CHECK(server);
 
-    irc_join_remove_channel_from_autojoin (server, "#xyz");
+    irc_join_remove_channel_from_autojoin (server, "#xyz", 0);
     STRCMP_EQUAL(
         "",
         CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
 
-    irc_join_add_channel_to_autojoin (server, "#xyz", NULL);
+    irc_join_add_channel_to_autojoin (server, "#xyz", NULL, 0);
     STRCMP_EQUAL(
         "#xyz",
         CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
 
-    irc_join_add_channel_to_autojoin (server, NULL, NULL);
+    irc_join_add_channel_to_autojoin (server, NULL, NULL, 0);
     STRCMP_EQUAL(
         "#xyz",
         CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
 
-    irc_join_add_channel_to_autojoin (server, "#abc", "key_abc");
+    irc_join_add_channel_to_autojoin (server, "#abc", "key_abc", 0);
     STRCMP_EQUAL(
         "#abc,#xyz key_abc",
         CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
 
-    irc_join_add_channel_to_autojoin (server, "#def", "key_def");
+    irc_join_add_channel_to_autojoin (server, "#def", "key_def", 0);
     STRCMP_EQUAL(
         "#abc,#def,#xyz key_abc,key_def",
         CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
 
-    irc_join_add_channel_to_autojoin (server, "#ghi", NULL);
+    irc_join_add_channel_to_autojoin (server, "#ghi", NULL, 0);
     STRCMP_EQUAL(
         "#abc,#def,#xyz,#ghi key_abc,key_def",
         CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
 
-    irc_join_add_channel_to_autojoin (server, "#jkl", "");
+    irc_join_add_channel_to_autojoin (server, "#jkl", "", 0);
     STRCMP_EQUAL(
         "#abc,#def,#xyz,#ghi,#jkl key_abc,key_def",
         CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
 
-    irc_join_remove_channel_from_autojoin (server, "#def");
+    irc_join_remove_channel_from_autojoin (server, "#def", 0);
     STRCMP_EQUAL(
         "#abc,#xyz,#ghi,#jkl key_abc",
         CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
 
-    irc_join_remove_channel_from_autojoin (server, "#ghi");
+    irc_join_remove_channel_from_autojoin (server, "#ghi", 0);
     STRCMP_EQUAL(
         "#abc,#xyz,#jkl key_abc",
         CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
 
-    irc_join_remove_channel_from_autojoin (server, "#abc");
+    irc_join_remove_channel_from_autojoin (server, "#abc", 0);
     STRCMP_EQUAL(
         "#xyz,#jkl",
         CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
 
-    irc_join_remove_channel_from_autojoin (server, "#jkl");
+    irc_join_remove_channel_from_autojoin (server, "#jkl", 0);
     STRCMP_EQUAL(
         "#xyz",
         CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
 
-    irc_join_remove_channel_from_autojoin (server, "#xyz");
+    irc_join_remove_channel_from_autojoin (server, "#xyz", 0);
     STRCMP_EQUAL(
         "",
         CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
 
-    irc_join_remove_channel_from_autojoin (server, NULL);
+    irc_join_remove_channel_from_autojoin (server, NULL, 0);
     STRCMP_EQUAL(
         "",
+        CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
+
+    irc_join_add_channels_to_autojoin (server, "#abc,#def key_abc", 0);
+    STRCMP_EQUAL(
+        "#abc,#def key_abc",
+        CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
+
+    irc_join_add_channels_to_autojoin (server, "#xyz,#ghi key_xyz", 0);
+    STRCMP_EQUAL(
+        "#abc,#xyz,#def,#ghi key_abc,key_xyz",
+        CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
+
+    irc_server_free (server);
+}
+
+/*
+ * Tests functions:
+ *   irc_join_save_channels_to_autojoin
+ */
+
+TEST(IrcJoin, SaveChannelsToAutojoin)
+{
+    struct t_irc_server *server;
+    struct t_irc_channel *channel;
+
+    server = irc_server_alloc ("my_ircd");
+    CHECK(server);
+
+    irc_channel_new (server, IRC_CHANNEL_TYPE_CHANNEL,
+                                "#test1", 0, 0);
+    channel = irc_channel_new (server, IRC_CHANNEL_TYPE_CHANNEL,
+                               "#test2", 0, 0);
+    channel->key = strdup ("key2");
+
+    irc_join_save_channels_to_autojoin (server, 0);
+    STRCMP_EQUAL(
+        "#test2,#test1 key2",
         CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
 
     irc_server_free (server);

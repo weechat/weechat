@@ -31,6 +31,7 @@
 #include "irc-completion.h"
 #include "irc-config.h"
 #include "irc-ignore.h"
+#include "irc-join.h"
 #include "irc-modelist.h"
 #include "irc-nick.h"
 #include "irc-notify.h"
@@ -635,6 +636,53 @@ irc_completion_channels_cb (const void *pointer, void *data,
 }
 
 /*
+ * Adds channels automatically joined on the current server
+ * (option "autojoin").
+ */
+
+int
+irc_completion_channels_autojoin_cb (const void *pointer, void *data,
+                                     const char *completion_item,
+                                     struct t_gui_buffer *buffer,
+                                     struct t_gui_completion *completion)
+{
+    struct t_arraylist *arraylist;
+    struct t_irc_join_channel *ptr_join_chan;
+    int i, size;
+
+    IRC_BUFFER_GET_SERVER(buffer);
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) completion_item;
+
+    if (!ptr_server)
+        return WEECHAT_RC_OK;
+
+    arraylist = irc_join_split (
+        ptr_server,
+        IRC_SERVER_OPTION_STRING(ptr_server, IRC_SERVER_OPTION_AUTOJOIN));
+    if (!arraylist)
+        return WEECHAT_RC_OK;
+
+    size = weechat_arraylist_size (arraylist);
+    for (i = 0; i < size; i++)
+    {
+        ptr_join_chan = (struct t_irc_join_channel *)weechat_arraylist_get (
+            arraylist, i);
+        weechat_completion_list_add (completion,
+                                     ptr_join_chan->name,
+                                     0,
+                                     WEECHAT_LIST_POS_END);
+    }
+
+    weechat_arraylist_free (arraylist);
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Adds privates of all servers to completion list.
  */
 
@@ -915,6 +963,10 @@ irc_completion_init ()
     weechat_hook_completion ("irc_channels",
                              N_("channels on all IRC servers"),
                              &irc_completion_channels_cb, NULL, NULL);
+    weechat_hook_completion ("irc_channels_autojoin",
+                             N_("channels automatically joined on the current "
+                                "server (option \"autojoin\")"),
+                             &irc_completion_channels_autojoin_cb, NULL, NULL);
     weechat_hook_completion ("irc_privates",
                              N_("privates on all IRC servers"),
                              &irc_completion_privates_cb, NULL, NULL);

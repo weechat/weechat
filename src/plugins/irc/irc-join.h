@@ -34,13 +34,20 @@ extern char *irc_join_build_string (struct t_arraylist *arraylist);
 extern char *irc_join_add_channel (struct t_irc_server *server,
                                    const char *join, const char *channel_name,
                                    const char *key);
-void irc_join_add_channel_to_autojoin (struct t_irc_server *server,
-                                       const char *channel_name,
-                                       const char *key);
+extern char *irc_join_add_channels (struct t_irc_server *server,
+                                    const char *join, const char *join2);
+extern void irc_join_add_channel_to_autojoin (struct t_irc_server *server,
+                                              const char *channel_name,
+                                              const char *key, int verbose);
+extern void irc_join_add_channels_to_autojoin (struct t_irc_server *server,
+                                               const char *join, int verbose);
 extern char *irc_join_remove_channel (struct t_irc_server *server,
                                       const char *join,
                                       const char *channel_name);
-void irc_join_remove_channel_from_autojoin (struct t_irc_server *server,
-                                            const char *channel_name);
+extern void irc_join_remove_channel_from_autojoin (struct t_irc_server *server,
+                                                   const char *channel_name,
+                                                   int verbose);
+extern void irc_join_save_channels_to_autojoin (struct t_irc_server *server,
+                                                int verbose);
 
 #endif /* WEECHAT_PLUGIN_IRC_JOIN_H */

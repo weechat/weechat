@@ -897,6 +897,104 @@ IRC_COMMAND_CALLBACK(auth)
 }
 
 /*
+ * Callback for command "/autojoin": configure the server option "autojoin".
+ */
+
+IRC_COMMAND_CALLBACK(autojoin)
+{
+    struct t_irc_channel *ptr_channel2;
+    int i;
+
+    IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
+    IRC_COMMAND_CHECK_SERVER("autojoin", 1, 1);
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+
+    WEECHAT_COMMAND_MIN_ARGS(2, "");
+
+    /* add channel(s) */
+    if (weechat_strcasecmp (argv[1], "add") == 0)
+    {
+        if (argc < 3)
+        {
+            /* add current channel */
+            if (!ptr_channel || (ptr_channel->type != IRC_CHANNEL_TYPE_CHANNEL))
+            {
+                weechat_printf (
+                    ptr_server->buffer,
+                    _("%s%s: \"%s\" command can only be executed in a channel "
+                      "buffer"),
+                    weechat_prefix ("error"), IRC_PLUGIN_NAME, "autojoin add");
+                return WEECHAT_RC_OK;
+            }
+            irc_join_add_channel_to_autojoin (ptr_server, ptr_channel->name,
+                                              ptr_channel->key, 1);
+        }
+        for (i = 2; i < argc; i++)
+        {
+            ptr_channel2 = irc_channel_search (ptr_server, argv[i]);
+            if (ptr_channel2)
+            {
+                irc_join_add_channel_to_autojoin (ptr_server,
+                                                  ptr_channel2->name,
+                                                  ptr_channel2->key,
+                                                  1);
+            }
+            else
+            {
+                irc_join_add_channel_to_autojoin (ptr_server, argv[i], NULL, 1);
+            }
+        }
+        return WEECHAT_RC_OK;
+    }
+
+    /* add raw channel(s) */
+    if (weechat_strcasecmp (argv[1], "addraw") == 0)
+    {
+        WEECHAT_COMMAND_MIN_ARGS(3, "addraw");
+        irc_join_add_channels_to_autojoin (ptr_server, argv_eol[2], 1);
+        return WEECHAT_RC_OK;
+    }
+
+    /* delete channel(s) */
+    if (weechat_strcasecmp (argv[1], "del") == 0)
+    {
+        if (argc < 3)
+        {
+            /* delete current channel */
+            if (!ptr_channel || (ptr_channel->type != IRC_CHANNEL_TYPE_CHANNEL))
+            {
+                weechat_printf (
+                    ptr_server->buffer,
+                    _("%s%s: \"%s\" command can only be executed in a channel "
+                      "buffer"),
+                    weechat_prefix ("error"), IRC_PLUGIN_NAME, "autojoin add");
+                return WEECHAT_RC_OK;
+            }
+            irc_join_remove_channel_from_autojoin (ptr_server,
+                                                   ptr_channel->name,
+                                                   1);
+        }
+        for (i = 2; i < argc; i++)
+        {
+            irc_join_remove_channel_from_autojoin (ptr_server, argv[i], 1);
+        }
+        return WEECHAT_RC_OK;
+    }
+
+    /* save currently joined channels */
+    if (weechat_strcasecmp (argv[1], "save") == 0)
+    {
+        irc_join_save_channels_to_autojoin (ptr_server, 1);
+        return WEECHAT_RC_OK;
+    }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Displays a ctcp action on a channel.
  */
 
@@ -2770,7 +2868,7 @@ irc_command_join_server (struct t_irc_server *server, const char *arguments,
                     if (record)
                     {
                         irc_join_add_channel_to_autojoin (server, pos_channel,
-                                                          ptr_key);
+                                                          ptr_key, 0);
                     }
                 }
             }
@@ -4154,7 +4252,8 @@ IRC_COMMAND_CALLBACK(part)
         {
             for (i = 0; i < num_channels; i++)
             {
-                irc_join_remove_channel_from_autojoin (ptr_server, channels[i]);
+                irc_join_remove_channel_from_autojoin (ptr_server,
+                                                       channels[i], 0);
             }
             weechat_string_free_split (channels);
         }
@@ -6652,6 +6751,37 @@ irc_command_init ()
            "ecdsa-nist256p-challenge:\n"
            "    /auth user2 ${weechat_config_dir}/ecdsa2.pem"),
         NULL, &irc_command_auth, NULL, NULL);
+    weechat_hook_command (
+        "autojoin",
+        N_("configure the \"autojoin\" server option"),
+        N_("add [<channel> [<channel>...]]"
+           " || addraw <channel>[,<channel>...] [<key>[,<key>...]]"
+           " || del [<channel> [<channel>...]]"
+           " || save"),
+        N_("    add: add current channel or a list of channels (with optional "
+           "keys) to the autojoin option; if the channel is joined and the "
+           "key is not provided, the key is read in the channel\n"
+           " addraw: use the IRC raw format (same as /join command): all "
+           "channels separated by commas, optional keys separated by commas\n"
+           "    del: delete current channel or a list of channels from the "
+           "autojoin option\n"
+           "channel: channel name (like #test)\n"
+           "    key: key for the channel\n"
+           "   save: save currently joined channels in the autojoin option\n"
+           "\n"
+           "Examples:\n"
+           "  /autojoin add\n"
+           "  /autojoin add #test\n"
+           "  /autojoin add #chan1 #chan2\n"
+           "  /autojoin addraw #chan1,#chan2,#chan3 key1,key2\n"
+           "  /autojoin del\n"
+           "  /autojoin del #chan1\n"
+           "  /autojoin save"),
+        "add %(irc_channels)|%*"
+        " || addraw %(irc_channels) %-"
+        " || del %(irc_channels_autojoin)|%*"
+        " || save",
+        &irc_command_autojoin, NULL, NULL);
     weechat_hook_command_run ("/away", &irc_command_run_away, NULL, NULL);
     weechat_hook_command (
         "ban",
