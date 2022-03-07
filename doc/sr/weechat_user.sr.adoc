@@ -3735,7 +3735,7 @@ PASS сервер:лозинка
 
 ВебСокет може да се отвори у HTML5 једном једином линијом JavaScript кода:
 
-[source, js]
+[source,javascript]
 ----
 websocket = new WebSocket("ws://server.com:9000/weechat");
 ----

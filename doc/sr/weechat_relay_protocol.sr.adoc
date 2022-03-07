@@ -171,7 +171,7 @@ _WeeChat ≥ 2.9, ажурирано у верзији 3.5._
 
 Одговор:
 
-[source, python]
+[source,python]
 ----
 id: 'handshake'
 htb: {
@@ -191,7 +191,7 @@ htb: {
 
 Одговор:
 
-[source, python]
+[source,python]
 ----
 id: 'handshake'
 htb: {
@@ -211,7 +211,7 @@ htb: {
 
 Одговор:
 
-[source, python]
+[source,python]
 ----
 id: 'handshake'
 htb: {
@@ -237,7 +237,7 @@ init password_hash=pbkdf2+sha256:85b1ee00695a5b254e14f4885538df0da4b73207f5aae4:
 
 Одговор:
 
-[source, python]
+[source,python]
 ----
 id: 'handshake'
 htb: {
@@ -372,7 +372,7 @@ init password_hash=pbkdf2+sha256:85b1ee00695a5b254e14f4885538df0da4b73207f5aae4:
 
 Одговор:
 
-[source, python]
+[source,python]
 ----
 id: 'hdata_buffers'
 hda:
@@ -403,7 +403,7 @@ hda:
 
 Одговор:
 
-[source, python]
+[source,python]
 ----
 id: 'hdata_lines'
 hda:
@@ -466,7 +466,7 @@ hda:
 
 Одговор:
 
-[source, python]
+[source,python]
 ----
 id: 'hdata_hotlist'
 hda:
@@ -517,7 +517,7 @@ hda:
 
 Одговор:
 
-[source, python]
+[source,python]
 ----
 id: 'info_version'
 inf: ('version', '2.9-dev')
@@ -531,7 +531,7 @@ inf: ('version', '2.9-dev')
 
 Одговор:
 
-[source, python]
+[source,python]
 ----
 id: 'info_version_number'
 inf: ('version_number', '34144256')
@@ -545,7 +545,7 @@ inf: ('version_number', '34144256')
 
 Одговор:
 
-[source, python]
+[source,python]
 ----
 id: 'info_weechat_config_dir'
 inf: ('weechat_config_dir', '/home/user/.config/weechat')
@@ -581,7 +581,7 @@ inf: ('weechat_config_dir', '/home/user/.config/weechat')
 
 Одговор:
 
-[source, python]
+[source,python]
 ----
 id: 'infolist_buffer'
 inl:
@@ -660,7 +660,7 @@ inl:
 
 Одговор:
 
-[source, python]
+[source,python]
 ----
 id: 'infolist_window'
 inl:
@@ -708,7 +708,7 @@ inl:
 
 Одговор:
 
-[source, python]
+[source,python]
 ----
 id: 'nicklist_all'
 hda:
@@ -813,7 +813,7 @@ hda:
 
 Одговор:
 
-[source, python]
+[source,python]
 ----
 id: 'nicklist_weechat'
 hda:
@@ -959,7 +959,7 @@ _WeeChat ≥ 2.9._
 
 Одговор:
 
-[source, python]
+[source,python]
 ----
 id: 'completion_help'
 hda:
@@ -995,7 +995,7 @@ hda:
 
 Одговор:
 
-[source, python]
+[source,python]
 ----
 id: 'completion_query'
 hda:
@@ -1026,7 +1026,7 @@ hda:
 
 Одговор:
 
-[source, python]
+[source,python]
 ----
 id: 'completion_abcdefghijkl'
 hda:
@@ -1057,7 +1057,7 @@ hda:
 
 Одговор:
 
-[source, python]
+[source,python]
 ----
 id: 'completion_help'
 hda:
@@ -1407,7 +1407,7 @@ WeeChat резервисани идентификатори:
 
 Пример: приступљено каналу _#weechat_ на libera, нови бафер _irc.libera.#weechat_:
 
-[source, python]
+[source,python]
 ----
 id: '_buffer_opened'
 hda:
@@ -1455,7 +1455,7 @@ hda:
 
 Пример: бафер _irc.libera.#weechat_ је померен на број 2:
 
-[source, python]
+[source,python]
 ----
 id: '_buffer_moved'
 hda:
@@ -1492,7 +1492,7 @@ hda:
 
 Пример: бафер _irc.libera.#weechat_ је спојен са бафером #2:
 
-[source, python]
+[source,python]
 ----
 id: '_buffer_merged'
 hda:
@@ -1529,7 +1529,7 @@ hda:
 
 Пример: бафер _irc.libera.#weechat_ је раздвојен:
 
-[source, python]
+[source,python]
 ----
 id: '_buffer_unmerged'
 hda:
@@ -1568,7 +1568,7 @@ _WeeChat ≥ 1.0._
 
 Пример: бафер _irc.libera.#weechat_ је скривен:
 
-[source, python]
+[source,python]
 ----
 id: '_buffer_hidden'
 hda:
@@ -1607,7 +1607,7 @@ _WeeChat ≥ 1.0._
 
 Пример: бафер _irc.libera.#weechat_ је откривен:
 
-[source, python]
+[source,python]
 ----
 id: '_buffer_unhidden'
 hda:
@@ -1644,7 +1644,7 @@ hda:
 
 Пример: име приватног бафера је промењено са _FlashCode_ у _Flash2_:
 
-[source, python]
+[source,python]
 ----
 id: '_buffer_renamed'
 hda:
@@ -1687,7 +1687,7 @@ hda:
 
 Пример: измењена је тема на каналу _#weechat_:
 
-[source, python]
+[source,python]
 ----
 id: '_buffer_title_changed'
 hda:
@@ -1722,7 +1722,7 @@ _WeeChat ≥ 1.0._
 
 Пример: очишћен је бафер _irc.libera.#weechat_:
 
-[source, python]
+[source,python]
 ----
 id: '_buffer_cleared'
 hda:
@@ -1754,7 +1754,7 @@ hda:
 
 Пример: промењен је тип бафера _script.scripts_ са форматирани (0) на слободни садржај (1):
 
-[source, python]
+[source,python]
 ----
 id: '_buffer_type_changed'
 hda:
@@ -1788,7 +1788,7 @@ hda:
 
 Пример: локална променљива _test_ је додата у бафер _irc.libera.#weechat_:
 
-[source, python]
+[source,python]
 ----
 id='_buffer_localvar_added', objects:
 hda:
@@ -1830,7 +1830,7 @@ hda:
 
 Пример: ажурирана је локална променљива _test_ у баферу _irc.libera.#weechat_:
 
-[source, python]
+[source,python]
 ----
 id='_buffer_localvar_changed', objects:
 hda:
@@ -1872,7 +1872,7 @@ hda:
 
 Пример: локална променљива _test_ је уклоњена из бафера _irc.libera.#weechat_:
 
-[source, python]
+[source,python]
 ----
 id: '_buffer_localvar_removed'
 hda:
@@ -1919,7 +1919,7 @@ hda:
 
 Пример: нова порука _здраво!_ од надимка _FlashCode_ у баферу _irc.libera.#weechat_:
 
-[source, python]
+[source,python]
 ----
 id: '_buffer_line_added'
 hda:
@@ -1970,7 +1970,7 @@ hda:
 
 Пример: програм WeeChat затвара бафер _irc.libera.#weechat_:
 
-[source, python]
+[source,python]
 ----
 id: '_buffer_closing'
 hda:
@@ -2008,7 +2008,7 @@ hda:
 
 Пример: листа надимака за бафер _irc.libera.#weechat_:
 
-[source, python]
+[source,python]
 ----
 id: '_nicklist'
 hda:
@@ -2109,7 +2109,7 @@ _WeeChat ≥ 0.4.1._
 
 Примр: надимак _master_ је додат у групу _000|o_ (опови неког IRC канала) надимци _nick1_ и _nick2_ су додати у групу _999|..._ (стандардни корисници IRC канала):
 
-[source, python]
+[source,python]
 ----
 id: '_nicklist_diff'
 hda:

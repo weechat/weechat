@@ -509,7 +509,7 @@ WeeChat „језгро” се налази у следећим директо�
 
 Пример у језику C:
 
-[source, C]
+[source,c]
 ----
 /*
  * weechat.c - core functions for WeeChat
@@ -545,7 +545,7 @@ WeeChat „језгро” се налази у следећим директо�
 
 Пример:
 
-[source, C]
+[source,c]
 ----
 /*
  * Checks if a string with boolean value is valid.
@@ -575,7 +575,7 @@ foo ()
 * Користите експлицитна имена променљивих, на пример „nicks_count” уместо „n” или „nc”. Изузетак: у `for` петљама су променљиве као што су „i” или „n” ОК.
 * Након декларације, у телу функције иницијализујте локалне променљиве, пример:
 
-[source, C]
+[source,c]
 ----
 void
 foo ()
@@ -591,7 +591,7 @@ foo ()
 * Употребите заграде да експлицитно покажете како се израз израчунава, чак и када нису неопходне, на пример: write `+x + (y * z)+` уместо `+x + y * z+`.
 * Постављајте витичасте заграде `+{ }+` саме у линије, и увуците их за број размака који се користио у линији изнад отворене витичасте заграде (`if` у примеру):
 
-[source, C]
+[source,c]
 ----
 if (nicks_count == 1)
 {
@@ -601,7 +601,7 @@ if (nicks_count == 1)
 
 * За раздвајање више различитих блокова унутар функција, употребите празне линије, а ако је могуће, додајте и коментар за сваку. Овако:
 
-[source, C]
+[source,c]
 ----
 /*
  * Sends a message from out queue.
@@ -643,7 +643,7 @@ irc_server_outqueue_send (struct t_irc_server *server)
 
 * Увлачите `if` услове у употребљавајте заграде око услова са оператором (није потребно само за једну логичку вредност). Овако:
 
-[source, C]
+[source,c]
 ----
 if (нешто)
 {
@@ -667,7 +667,7 @@ else
 
 * Увлачите `switch` наредбе на следећи начин:
 
-[source, C]
+[source,c]
 ----
 switch (string[0])
 {
@@ -685,7 +685,7 @@ switch (string[0])
 
 * Користите `typedef` за прототипе функција, али не и за структуре:
 
-[source, C]
+[source,c]
 ----
 typedef int (t_hook_callback_fd)(void *data, int fd);
 
@@ -707,7 +707,7 @@ new_hook_fd = malloc (sizeof (*new_hook_fd));
 
 * Ако користите Emacs као текст едитор, за исправно увлачење можете у свом _~/.emacs.el_ употребити Lisp кôд који следи:
 
-[source, lisp]
+[source,lisp]
 ----
 (add-hook 'c-mode-common-hook
           '(lambda ()
@@ -762,7 +762,7 @@ new_hook_fd = malloc (sizeof (*new_hook_fd));
 
 Пример: IRC надимак (из _src/plugins/irc/irc-nick.h_):
 
-[source, C]
+[source,c]
 ----
 struct t_irc_nick
 {
@@ -791,7 +791,7 @@ struct t_irc_nick
 
 Пример: прозори (from _src/gui/gui-window.c_):
 
-[source, C]
+[source,c]
 ----
 struct t_gui_window *gui_windows = NULL;        /* first window             */
 struct t_gui_window *last_gui_window = NULL;    /* last window              */
@@ -808,7 +808,7 @@ struct t_gui_window *gui_current_window = NULL; /* current window           */
 
 Пример: креирање новог прозора (из _src/gui/gui-window.c_):
 
-[source, C]
+[source,c]
 ----
 /*
  * Creates a new window.
@@ -841,7 +841,7 @@ gui_window_new (struct t_gui_window *parent_window, struct t_gui_buffer *buffer,
 
 Пример: листа бафера (из _src/gui/gui-buffer.h_):
 
-[source, C]
+[source,c]
 ----
 struct t_gui_buffer
 {
@@ -856,7 +856,7 @@ struct t_gui_buffer
 
 Затим, сва показивача листе, на чело и на реп листе:
 
-[source, C]
+[source,c]
 ----
 struct t_gui_buffer *gui_buffers = NULL;           /* first buffer          */
 struct t_gui_buffer *last_gui_buffer = NULL;       /* last buffer           */
@@ -1038,7 +1038,7 @@ struct t_gui_buffer *last_gui_buffer = NULL;       /* last buffer           */
 
 На пример, функција _hook_timer_ је дефинисана у структури _t_weechat_plugin_ на следећи начин:
 
-[source, C]
+[source,c]
 ----
 struct t_hook *(*hook_timer) (struct t_weechat_plugin *plugin,
                               long interval,
@@ -1051,7 +1051,7 @@ struct t_hook *(*hook_timer) (struct t_weechat_plugin *plugin,
 
 А макро који се користи за позивање ове функције је:
 
-[source, C]
+[source,c]
 ----
 #define weechat_hook_timer(__interval, __align_second, __max_calls,     \
                            __callback, __data)                          \
@@ -1062,7 +1062,7 @@ struct t_hook *(*hook_timer) (struct t_weechat_plugin *plugin,
 
 Тако да ће у додатку позив функције изгледати овако:
 
-[source, C]
+[source,c]
 ----
 server->hook_timer_sasl = weechat_hook_timer (timeout * 1000,
                                               0, 1,
