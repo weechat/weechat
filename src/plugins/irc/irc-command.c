@@ -903,6 +903,8 @@ IRC_COMMAND_CALLBACK(auth)
 IRC_COMMAND_CALLBACK(autojoin)
 {
     struct t_irc_channel *ptr_channel2;
+    const char *ptr_autojoin;
+    char *old_autojoin;
     int i;
 
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
@@ -913,6 +915,10 @@ IRC_COMMAND_CALLBACK(autojoin)
     (void) data;
 
     WEECHAT_COMMAND_MIN_ARGS(2, "");
+
+    ptr_autojoin = IRC_SERVER_OPTION_STRING(ptr_server,
+                                            IRC_SERVER_OPTION_AUTOJOIN);
+    old_autojoin = strdup ((ptr_autojoin) ? ptr_autojoin : "");
 
     /* add channel(s) */
     if (weechat_strcasecmp (argv[1], "add") == 0)
@@ -927,10 +933,10 @@ IRC_COMMAND_CALLBACK(autojoin)
                     _("%s%s: \"%s\" command can only be executed in a channel "
                       "buffer"),
                     weechat_prefix ("error"), IRC_PLUGIN_NAME, "autojoin add");
-                return WEECHAT_RC_OK;
+                goto end;
             }
             irc_join_add_channel_to_autojoin (ptr_server, ptr_channel->name,
-                                              ptr_channel->key, 1);
+                                              ptr_channel->key);
         }
         for (i = 2; i < argc; i++)
         {
@@ -939,23 +945,22 @@ IRC_COMMAND_CALLBACK(autojoin)
             {
                 irc_join_add_channel_to_autojoin (ptr_server,
                                                   ptr_channel2->name,
-                                                  ptr_channel2->key,
-                                                  1);
+                                                  ptr_channel2->key);
             }
             else
             {
-                irc_join_add_channel_to_autojoin (ptr_server, argv[i], NULL, 1);
+                irc_join_add_channel_to_autojoin (ptr_server, argv[i], NULL);
             }
         }
-        return WEECHAT_RC_OK;
+        goto end;
     }
 
     /* add raw channel(s) */
     if (weechat_strcasecmp (argv[1], "addraw") == 0)
     {
         WEECHAT_COMMAND_MIN_ARGS(3, "addraw");
-        irc_join_add_channels_to_autojoin (ptr_server, argv_eol[2], 1);
-        return WEECHAT_RC_OK;
+        irc_join_add_channels_to_autojoin (ptr_server, argv_eol[2]);
+        goto end;
     }
 
     /* delete channel(s) */
@@ -971,25 +976,47 @@ IRC_COMMAND_CALLBACK(autojoin)
                     _("%s%s: \"%s\" command can only be executed in a channel "
                       "buffer"),
                     weechat_prefix ("error"), IRC_PLUGIN_NAME, "autojoin add");
-                return WEECHAT_RC_OK;
+                goto end;
             }
             irc_join_remove_channel_from_autojoin (ptr_server,
-                                                   ptr_channel->name,
-                                                   1);
+                                                   ptr_channel->name);
         }
         for (i = 2; i < argc; i++)
         {
-            irc_join_remove_channel_from_autojoin (ptr_server, argv[i], 1);
+            irc_join_remove_channel_from_autojoin (ptr_server, argv[i]);
         }
-        return WEECHAT_RC_OK;
+        goto end;
     }
 
     /* save currently joined channels */
     if (weechat_strcasecmp (argv[1], "save") == 0)
     {
-        irc_join_save_channels_to_autojoin (ptr_server, 1);
-        return WEECHAT_RC_OK;
+        irc_join_save_channels_to_autojoin (ptr_server);
+        goto end;
     }
+
+end:
+    ptr_autojoin = IRC_SERVER_OPTION_STRING(ptr_server,
+                                            IRC_SERVER_OPTION_AUTOJOIN);
+    if ((old_autojoin && !ptr_autojoin) || (!old_autojoin && ptr_autojoin)
+        || (strcmp (old_autojoin, ptr_autojoin) != 0))
+    {
+        if (old_autojoin && old_autojoin[0])
+        {
+            weechat_printf (ptr_server->buffer,
+                            _("Autojoin changed from \"%s\" to \"%s\""),
+                            old_autojoin,
+                            ptr_autojoin);
+        }
+        else
+        {
+            weechat_printf (ptr_server->buffer,
+                            _("Autojoin changed from empty value to \"%s\""),
+                            ptr_autojoin);
+        }
+    }
+    if (old_autojoin)
+        free (old_autojoin);
 
     return WEECHAT_RC_OK;
 }
@@ -2869,7 +2896,7 @@ irc_command_join_server (struct t_irc_server *server, const char *arguments,
                     if (save_autojoin)
                     {
                         irc_join_add_channel_to_autojoin (server, pos_channel,
-                                                          ptr_key, 0);
+                                                          ptr_key);
                     }
                 }
             }
@@ -4253,8 +4280,7 @@ IRC_COMMAND_CALLBACK(part)
         {
             for (i = 0; i < num_channels; i++)
             {
-                irc_join_remove_channel_from_autojoin (ptr_server,
-                                                       channels[i], 0);
+                irc_join_remove_channel_from_autojoin (ptr_server, channels[i]);
             }
             weechat_string_free_split (channels);
         }

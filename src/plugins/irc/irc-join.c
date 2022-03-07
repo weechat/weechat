@@ -352,58 +352,12 @@ irc_join_add_channels (struct t_irc_server *server,
 }
 
 /*
- * Sets server autojoin option.
- *
- * If verbose == 1, displays a message on the server buffer with old and new
- * autojoin value.
- */
-
-void
-irc_join_set_autojoin (struct t_irc_server *server, const char *autojoin,
-                       int verbose)
-{
-    const char *ptr_old_autojoin;
-    char *old_autojoin;
-
-    if (!server)
-        return;
-
-    ptr_old_autojoin = IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_AUTOJOIN);
-    old_autojoin = (ptr_old_autojoin && ptr_old_autojoin[0]) ?
-        strdup (ptr_old_autojoin) : NULL;
-
-    weechat_config_option_set (server->options[IRC_SERVER_OPTION_AUTOJOIN],
-                               autojoin, 1);
-
-    if (verbose)
-    {
-        if (old_autojoin)
-        {
-            weechat_printf (server->buffer,
-                            _("Autojoin changed from \"%s\" to \"%s\""),
-                            old_autojoin,
-                            autojoin);
-        }
-        else
-        {
-            weechat_printf (server->buffer,
-                            _("Autojoin changed from empty value to \"%s\""),
-                            autojoin);
-        }
-    }
-
-    if (old_autojoin)
-        free (old_autojoin);
-}
-
-/*
  * Adds a channel with optional key to the autojoin option of a server.
  */
 
 void
 irc_join_add_channel_to_autojoin (struct t_irc_server *server,
-                                  const char *channel_name, const char *key,
-                                  int verbose)
+                                  const char *channel_name, const char *key)
 {
     char *new_autojoin;
 
@@ -417,7 +371,8 @@ irc_join_add_channel_to_autojoin (struct t_irc_server *server,
         key);
     if (new_autojoin)
     {
-        irc_join_set_autojoin (server, new_autojoin, verbose);
+        weechat_config_option_set (server->options[IRC_SERVER_OPTION_AUTOJOIN],
+                                   new_autojoin, 1);
         free (new_autojoin);
     }
 }
@@ -428,7 +383,7 @@ irc_join_add_channel_to_autojoin (struct t_irc_server *server,
 
 void
 irc_join_add_channels_to_autojoin (struct t_irc_server *server,
-                                   const char *join, int verbose)
+                                   const char *join)
 {
     char *new_autojoin;
 
@@ -438,7 +393,8 @@ irc_join_add_channels_to_autojoin (struct t_irc_server *server,
         join);
     if (new_autojoin)
     {
-        irc_join_set_autojoin (server, new_autojoin, verbose);
+        weechat_config_option_set (server->options[IRC_SERVER_OPTION_AUTOJOIN],
+                                   new_autojoin, 1);
         free (new_autojoin);
     }
 }
@@ -496,8 +452,7 @@ irc_join_remove_channel (struct t_irc_server *server,
 
 void
 irc_join_remove_channel_from_autojoin (struct t_irc_server *server,
-                                       const char *channel_name,
-                                       int verbose)
+                                       const char *channel_name)
 {
     char *new_autojoin;
 
@@ -510,7 +465,8 @@ irc_join_remove_channel_from_autojoin (struct t_irc_server *server,
         channel_name);
     if (new_autojoin)
     {
-        irc_join_set_autojoin (server, new_autojoin, verbose);
+        weechat_config_option_set (server->options[IRC_SERVER_OPTION_AUTOJOIN],
+                                   new_autojoin, 1);
         free (new_autojoin);
     }
 }
@@ -520,7 +476,7 @@ irc_join_remove_channel_from_autojoin (struct t_irc_server *server,
  */
 
 void
-irc_join_save_channels_to_autojoin (struct t_irc_server *server, int verbose)
+irc_join_save_channels_to_autojoin (struct t_irc_server *server)
 {
     struct t_arraylist *arraylist;
     struct t_irc_channel *ptr_channel;
@@ -554,7 +510,8 @@ irc_join_save_channels_to_autojoin (struct t_irc_server *server, int verbose)
     new_autojoin = irc_join_build_string (arraylist);
     if (new_autojoin)
     {
-        irc_join_set_autojoin (server, new_autojoin, verbose);
+        weechat_config_option_set (server->options[IRC_SERVER_OPTION_AUTOJOIN],
+                                   new_autojoin, 1);
         free (new_autojoin);
     }
 
