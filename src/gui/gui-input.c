@@ -690,8 +690,8 @@ gui_input_search_switch_where (struct t_gui_buffer *buffer)
     window = gui_window_search_with_buffer (buffer);
     if (window && (window->buffer->text_search != GUI_TEXT_SEARCH_DISABLED))
     {
-        /* it's not possible to change that in a buffer with free content */
-        if (window->buffer->type == GUI_BUFFER_TYPE_FREE)
+        /* it's not possible to change that in a buffer not "formatted" */
+        if (window->buffer->type != GUI_BUFFER_TYPE_FORMATTED)
             return;
 
         if (window->buffer->text_search_where == GUI_TEXT_SEARCH_IN_MESSAGE)

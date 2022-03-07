@@ -1257,20 +1257,32 @@ gui_color_buffer_assign ()
 void
 gui_color_buffer_open ()
 {
+    struct t_hashtable *properties;
+
     if (!gui_color_buffer)
     {
-        gui_color_buffer = gui_buffer_new (
-            NULL, GUI_COLOR_BUFFER_NAME,
+        properties = hashtable_new (
+            32,
+            WEECHAT_HASHTABLE_STRING,
+            WEECHAT_HASHTABLE_STRING,
+            NULL, NULL);
+        if (properties)
+        {
+            hashtable_set (properties, "type", "free");
+            hashtable_set (properties, "localvar_set_no_log", "1");
+            hashtable_set (properties, "key_bind_meta-c", "/color switch");
+        }
+
+        gui_color_buffer = gui_buffer_new_props (
+            NULL, GUI_COLOR_BUFFER_NAME, properties,
             &gui_color_buffer_input_cb, NULL, NULL,
             &gui_color_buffer_close_cb, NULL, NULL);
-        if (gui_color_buffer)
-        {
-            if (!gui_color_buffer->short_name)
-                gui_color_buffer->short_name = strdup (GUI_COLOR_BUFFER_NAME);
-            gui_buffer_set (gui_color_buffer, "type", "free");
-            gui_buffer_set (gui_color_buffer, "localvar_set_no_log", "1");
-            gui_buffer_set (gui_color_buffer, "key_bind_meta-c", "/color switch");
-        }
+
+        if (gui_color_buffer && !gui_color_buffer->short_name)
+            gui_color_buffer->short_name = strdup (GUI_COLOR_BUFFER_NAME);
+
+        if (properties)
+            hashtable_free (properties);
     }
 
     if (!gui_color_buffer)

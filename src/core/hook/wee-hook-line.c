@@ -71,7 +71,7 @@ hook_line (struct t_weechat_plugin *plugin, const char *buffer_type,
     new_hook->hook_data = new_hook_line;
     new_hook_line->callback = callback;
     if (!buffer_type || !buffer_type[0])
-        new_hook_line->buffer_type = GUI_BUFFER_TYPE_FORMATTED;
+        new_hook_line->buffer_type = GUI_BUFFER_TYPE_DEFAULT;
     else if (strcmp (buffer_type, "*") == 0)
         new_hook_line->buffer_type = -1;
     else

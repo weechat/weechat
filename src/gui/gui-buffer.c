@@ -79,6 +79,9 @@ char *gui_buffer_reserved_names[] =
   NULL
 };
 
+int gui_buffer_set_signals = 1;        /* 0 to disable signals sent in      */
+                                       /* function gui_buffer_set           */
+
 char *gui_buffer_type_string[GUI_BUFFER_NUM_TYPES] =
 { "formatted", "free" };
 
@@ -630,25 +633,43 @@ gui_buffer_is_reserved_name (const char *name)
 }
 
 /*
- * Creates a new buffer in current window.
+ * Applies buffer properties (callback of hashtable_map).
+ */
+
+void
+gui_buffer_apply_properties_cb (void *data,
+                                struct t_hashtable *hashtable,
+                                const void *key, const void *value)
+{
+    /* make C compiler happy */
+    (void) hashtable;
+
+    gui_buffer_set ((struct t_gui_buffer *)data,
+                    (const char *)key,
+                    (const char *)value);
+}
+
+/*
+ * Creates a new buffer in current window with some optional properties.
  *
  * Returns pointer to new buffer, NULL if error.
  */
 
 struct t_gui_buffer *
-gui_buffer_new (struct t_weechat_plugin *plugin,
-                const char *name,
-                int (*input_callback)(const void *pointer,
-                                      void *data,
-                                      struct t_gui_buffer *buffer,
-                                      const char *input_data),
-                const void *input_callback_pointer,
-                void *input_callback_data,
-                int (*close_callback)(const void *pointer,
-                                      void *data,
-                                      struct t_gui_buffer *buffer),
-                const void *close_callback_pointer,
-                void *close_callback_data)
+gui_buffer_new_props (struct t_weechat_plugin *plugin,
+                      const char *name,
+                      struct t_hashtable *properties,
+                      int (*input_callback)(const void *pointer,
+                                            void *data,
+                                            struct t_gui_buffer *buffer,
+                                            const char *input_data),
+                      const void *input_callback_pointer,
+                      void *input_callback_data,
+                      int (*close_callback)(const void *pointer,
+                                            void *data,
+                                            struct t_gui_buffer *buffer),
+                      const void *close_callback_pointer,
+                      void *close_callback_data)
 {
     struct t_gui_buffer *new_buffer;
     int first_buffer_creation;
@@ -694,7 +715,7 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
     new_buffer->old_full_name = NULL;
     gui_buffer_build_full_name (new_buffer);
     new_buffer->short_name = NULL;
-    new_buffer->type = GUI_BUFFER_TYPE_FORMATTED;
+    new_buffer->type = GUI_BUFFER_TYPE_DEFAULT;
     new_buffer->notify = CONFIG_INTEGER(config_look_buffer_notify_default);
     new_buffer->num_displayed = 0;
     new_buffer->active = 1;
@@ -823,6 +844,10 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
     /* assign this buffer to windows of layout */
     gui_layout_window_assign_buffer (new_buffer);
 
+    /* apply properties */
+    if (properties)
+        hashtable_map (properties, &gui_buffer_apply_properties_cb, new_buffer);
+
     if (first_buffer_creation)
     {
         gui_buffer_visited_add (new_buffer);
@@ -834,6 +859,35 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
     }
 
     return new_buffer;
+}
+
+/*
+ * Creates a new buffer in current window.
+ *
+ * Returns pointer to new buffer, NULL if error.
+ */
+
+struct t_gui_buffer *
+gui_buffer_new (struct t_weechat_plugin *plugin,
+                const char *name,
+                int (*input_callback)(const void *pointer,
+                                      void *data,
+                                      struct t_gui_buffer *buffer,
+                                      const char *input_data),
+                const void *input_callback_pointer,
+                void *input_callback_data,
+                int (*close_callback)(const void *pointer,
+                                      void *data,
+                                      struct t_gui_buffer *buffer),
+                const void *close_callback_pointer,
+                void *close_callback_data)
+{
+    return gui_buffer_new_props (
+        plugin,
+        name,
+        NULL,  /* properties */
+        input_callback, input_callback_pointer, input_callback_data,
+        close_callback, close_callback_pointer, close_callback_data);
 }
 
 /*
@@ -863,15 +917,32 @@ gui_buffer_user_input_cb (const void *pointer, void *data,
  */
 
 struct t_gui_buffer *
-gui_buffer_new_user (const char *name)
+gui_buffer_new_user (const char *name, enum t_gui_buffer_type buffer_type)
 {
+    struct t_hashtable *properties;
     struct t_gui_buffer *new_buffer;
 
-    new_buffer = gui_buffer_new (NULL, name,
-                                 &gui_buffer_user_input_cb, NULL, NULL,
-                                 NULL, NULL, NULL);
-    if (new_buffer)
-        gui_buffer_set (new_buffer, "localvar_set_type", "user");
+    properties = hashtable_new (
+        32,
+        WEECHAT_HASHTABLE_STRING,
+        WEECHAT_HASHTABLE_STRING,
+        NULL, NULL);
+    if (properties)
+    {
+        if (buffer_type != GUI_BUFFER_TYPE_DEFAULT)
+        {
+            hashtable_set (properties,
+                           "type", gui_buffer_type_string[buffer_type]);
+        }
+        hashtable_set (properties, "localvar_set_type", "user");
+    }
+
+    new_buffer = gui_buffer_new_props (NULL, name, properties,
+                                       &gui_buffer_user_input_cb, NULL, NULL,
+                                       NULL, NULL, NULL);
+
+    if (properties)
+        hashtable_free (properties);
 
     return new_buffer;
 }

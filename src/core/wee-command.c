@@ -628,9 +628,9 @@ COMMAND_CALLBACK(buffer)
         ptr_buffer = gui_buffer_search_by_name (PLUGIN_CORE, argv[arg_name]);
         if (!ptr_buffer)
         {
-            ptr_buffer = gui_buffer_new_user (argv[arg_name]);
-            if (ptr_buffer && type_free)
-                gui_buffer_set (ptr_buffer, "type", "free");
+            ptr_buffer = gui_buffer_new_user (
+                argv[arg_name],
+                (type_free) ? GUI_BUFFER_TYPE_FREE : GUI_BUFFER_TYPE_DEFAULT);
         }
         if (ptr_buffer && switch_to_buffer)
             gui_window_switch_to_buffer (gui_current_window, ptr_buffer, 1);
@@ -5137,9 +5137,9 @@ COMMAND_CALLBACK(print)
                                                 argv[arg_new_buffer_name]);
         if (!ptr_buffer)
         {
-            ptr_buffer = gui_buffer_new_user (argv[arg_new_buffer_name]);
-            if (ptr_buffer && new_buffer_type_free)
-                gui_buffer_set (ptr_buffer, "type", "free");
+            ptr_buffer = gui_buffer_new_user (
+                argv[arg_new_buffer_name],
+                (new_buffer_type_free) ? GUI_BUFFER_TYPE_FREE : GUI_BUFFER_TYPE_DEFAULT);
         }
     }
     else
