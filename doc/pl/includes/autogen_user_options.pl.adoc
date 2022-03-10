@@ -2690,6 +2690,12 @@
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+""+`
 
+* [[option_irc.server_default.autojoin_dynamic]] *irc.server_default.autojoin_dynamic*
+** opis: pass:none[set automatically the "autojoin" option according to the channels you manually join and part with commands /join and /part]
+** typ: bool
+** wartości: on, off
+** domyślna wartość: `+off+`
+
 * [[option_irc.server_default.autoreconnect]] *irc.server_default.autoreconnect*
 ** opis: pass:none[automatycznie połącz się z serwerem po rozłączeniu]
 ** typ: bool

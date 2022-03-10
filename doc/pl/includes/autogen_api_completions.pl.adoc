@@ -26,6 +26,8 @@
 
 | irc | irc_channels | kanały na wszystkich serwerach IRC
 
+| irc | irc_channels_autojoin | channels automatically joined on the current server (option "autojoin")
+
 | irc | irc_ignores_numbers | numery zdefiniowanych ignorów
 
 | irc | irc_modelist_masks | maski modlisty obecnego kanału IRC; wymagany argument: modelist mode

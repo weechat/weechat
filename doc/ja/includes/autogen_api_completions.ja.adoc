@@ -26,6 +26,8 @@
 
 | irc | irc_channels | 全ての IRC サーバのチャンネル
 
+| irc | irc_channels_autojoin | channels automatically joined on the current server (option "autojoin")
+
 | irc | irc_ignores_numbers | 無視エントリの数
 
 | irc | irc_modelist_masks | 現在の IRC チャンネルのモードリストマスク; 必須の引数: modelist mode

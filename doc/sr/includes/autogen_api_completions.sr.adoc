@@ -26,6 +26,8 @@
 
 | irc | irc_channels | канали на свим IRC серверима
 
+| irc | irc_channels_autojoin | channels automatically joined on the current server (option "autojoin")
+
 | irc | irc_ignores_numbers | бројеви за дефинисана игнорисања
 
 | irc | irc_modelist_masks | modelist маске текућег IRC канала; обавезни аргумент: modelist режим

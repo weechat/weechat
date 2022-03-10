@@ -2690,6 +2690,12 @@
 ** вредности: било који стринг
 ** подразумевана вредност: `+""+`
 
+* [[option_irc.server_default.autojoin_dynamic]] *irc.server_default.autojoin_dynamic*
+** опис: pass:none[set automatically the "autojoin" option according to the channels you manually join and part with commands /join and /part]
+** тип: логичка
+** вредности: on, off
+** подразумевана вредност: `+off+`
+
 * [[option_irc.server_default.autoreconnect]] *irc.server_default.autoreconnect*
 ** опис: pass:none[аутоматско поновно повезивање са сервером када се веза прекине]
 ** тип: логичка

@@ -2690,6 +2690,12 @@
 ** valeurs: toute chaîne
 ** valeur par défaut: `+""+`
 
+* [[option_irc.server_default.autojoin_dynamic]] *irc.server_default.autojoin_dynamic*
+** description: pass:none[définir automatiquement l'option "autojoin" selon les canaux que vous rejoignez ou quittez manuellement avec les commandes /join et /part]
+** type: booléen
+** valeurs: on, off
+** valeur par défaut: `+off+`
+
 * [[option_irc.server_default.autoreconnect]] *irc.server_default.autoreconnect*
 ** description: pass:none[reconnexion automatique au serveur après une déconnexion]
 ** type: booléen

@@ -123,6 +123,32 @@ Examples:
     /auth user2 ${weechat_config_dir}/ecdsa2.pem
 ----
 
+[[command_irc_autojoin]]
+* `+autojoin+`: configure the "autojoin" server option
+
+----
+/autojoin  add [<channel1> [<channel2>...]]
+           addraw <channel1>[,<channel2>...] [<key1>[,<key2>...]]
+           del [<channel1> [<channel2>...]]
+           save
+
+    add: add current channel or a list of channels (with optional keys) to the autojoin option; if you are on the channel and the key is not provided, the key is read in the channel
+ addraw: use the IRC raw format (same as /join command): all channels separated by commas, optional keys separated by commas
+    del: delete current channel or a list of channels from the autojoin option
+channel: channel name
+    key: key for the channel
+   save: save currently joined channels in the autojoin option
+
+Examples:
+  /autojoin add
+  /autojoin add #test
+  /autojoin add #chan1 #chan2
+  /autojoin addraw #chan1,#chan2,#chan3 key1,key2
+  /autojoin del
+  /autojoin del #chan1
+  /autojoin save
+----
+
 [[command_irc_ban]]
 * `+ban+`: banna nick oppure host
 

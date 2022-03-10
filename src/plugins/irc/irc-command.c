@@ -6781,18 +6781,18 @@ irc_command_init ()
     weechat_hook_command (
         "autojoin",
         N_("configure the \"autojoin\" server option"),
-        N_("add [<channel> [<channel>...]]"
-           " || addraw <channel>[,<channel>...] [<key>[,<key>...]]"
-           " || del [<channel> [<channel>...]]"
+        N_("add [<channel1> [<channel2>...]]"
+           " || addraw <channel1>[,<channel2>...] [<key1>[,<key2>...]]"
+           " || del [<channel1> [<channel2>...]]"
            " || save"),
         N_("    add: add current channel or a list of channels (with optional "
-           "keys) to the autojoin option; if the channel is joined and the "
+           "keys) to the autojoin option; if you are on the channel and the "
            "key is not provided, the key is read in the channel\n"
            " addraw: use the IRC raw format (same as /join command): all "
            "channels separated by commas, optional keys separated by commas\n"
            "    del: delete current channel or a list of channels from the "
            "autojoin option\n"
-           "channel: channel name (like #test)\n"
+           "channel: channel name\n"
            "    key: key for the channel\n"
            "   save: save currently joined channels in the autojoin option\n"
            "\n"

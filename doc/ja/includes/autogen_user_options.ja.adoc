@@ -2690,6 +2690,12 @@
 ** 値: 未制約文字列
 ** デフォルト値: `+""+`
 
+* [[option_irc.server_default.autojoin_dynamic]] *irc.server_default.autojoin_dynamic*
+** 説明: pass:none[set automatically the "autojoin" option according to the channels you manually join and part with commands /join and /part]
+** タイプ: ブール
+** 値: on, off
+** デフォルト値: `+off+`
+
 * [[option_irc.server_default.autoreconnect]] *irc.server_default.autoreconnect*
 ** 説明: pass:none[接続が切れたときに自動的に再接続]
 ** タイプ: ブール

@@ -26,6 +26,8 @@
 
 | irc | irc_channels | canaux sur tous les serveurs IRC
 
+| irc | irc_channels_autojoin | canaux automatiquement rejoints sur le serveur courant (option "autojoin")
+
 | irc | irc_ignores_numbers | numéros pour les ignores définis
 
 | irc | irc_modelist_masks | masques de la liste de modes du canal IRC courant ; argument obligatoire : mode de la liste de modes
