@@ -25,6 +25,7 @@
 
 extern "C"
 {
+#include <string.h>
 #include "src/core/wee-arraylist.h"
 #include "src/core/wee-config-file.h"
 #include "src/plugins/irc/irc-channel.h"
