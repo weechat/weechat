@@ -995,6 +995,13 @@ IRC_COMMAND_CALLBACK(autojoin)
         goto end;
     }
 
+    /* sort channels */
+    if (weechat_strcasecmp (argv[1], "sort") == 0)
+    {
+        irc_join_sort_autojoin (ptr_server);
+        goto end;
+    }
+
 end:
     ptr_autojoin = IRC_SERVER_OPTION_STRING(ptr_server,
                                             IRC_SERVER_OPTION_AUTOJOIN);
@@ -6784,7 +6791,8 @@ irc_command_init ()
         N_("add [<channel1> [<channel2>...]]"
            " || addraw <channel1>[,<channel2>...] [<key1>[,<key2>...]]"
            " || del [<channel1> [<channel2>...]]"
-           " || save"),
+           " || save"
+           " || sort"),
         N_("    add: add current channel or a list of channels (with optional "
            "keys) to the autojoin option; if you are on the channel and the "
            "key is not provided, the key is read in the channel\n"
@@ -6795,6 +6803,7 @@ irc_command_init ()
            "channel: channel name\n"
            "    key: key for the channel\n"
            "   save: save currently joined channels in the autojoin option\n"
+           "   sort: sort alphabetically channels in the autojoin option\n"
            "\n"
            "Examples:\n"
            "  /autojoin add\n"
@@ -6803,11 +6812,13 @@ irc_command_init ()
            "  /autojoin addraw #chan1,#chan2,#chan3 key1,key2\n"
            "  /autojoin del\n"
            "  /autojoin del #chan1\n"
-           "  /autojoin save"),
+           "  /autojoin save\n"
+           "  /autojoin sort"),
         "add %(irc_channels)|%*"
         " || addraw %(irc_channels) %-"
         " || del %(irc_channels_autojoin)|%*"
-        " || save",
+        " || save"
+        " || sort",
         &irc_command_autojoin, NULL, NULL);
     weechat_hook_command_run ("/away", &irc_command_run_away, NULL, NULL);
     weechat_hook_command (

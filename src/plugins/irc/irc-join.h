@@ -29,7 +29,8 @@ struct t_irc_join_channel
 };
 
 extern struct t_arraylist *irc_join_split (struct t_irc_server *server,
-                                           const char *join);
+                                           const char *join,
+                                           int sort);
 extern char *irc_join_build_string (struct t_arraylist *arraylist);
 extern char *irc_join_add_channel (struct t_irc_server *server,
                                    const char *join, const char *channel_name,
@@ -47,5 +48,8 @@ extern char *irc_join_remove_channel (struct t_irc_server *server,
 extern void irc_join_remove_channel_from_autojoin (struct t_irc_server *server,
                                                    const char *channel_name);
 extern void irc_join_save_channels_to_autojoin (struct t_irc_server *server);
+extern char *irc_join_sort_channels (struct t_irc_server *server,
+                                     const char *join);
+extern void irc_join_sort_autojoin (struct t_irc_server *server);
 
 #endif /* WEECHAT_PLUGIN_IRC_JOIN_H */

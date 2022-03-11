@@ -662,7 +662,8 @@ irc_completion_channels_autojoin_cb (const void *pointer, void *data,
 
     arraylist = irc_join_split (
         ptr_server,
-        IRC_SERVER_OPTION_STRING(ptr_server, IRC_SERVER_OPTION_AUTOJOIN));
+        IRC_SERVER_OPTION_STRING(ptr_server, IRC_SERVER_OPTION_AUTOJOIN),
+        0);
     if (!arraylist)
         return WEECHAT_RC_OK;
 

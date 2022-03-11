@@ -33,7 +33,7 @@
 
 
 /*
- * Compares two join channels.
+ * Compares two join channels (no sort, keyed channels first).
  */
 
 int
@@ -68,6 +68,44 @@ irc_join_compare_cb (void *data, struct t_arraylist *arraylist,
         return 1;
 
     return 1;
+}
+
+/*
+ * Compares two join channels (alphabetic sort, keyed channels first).
+ */
+
+int
+irc_join_compare_sort_cb (void *data, struct t_arraylist *arraylist,
+                          void *pointer1, void *pointer2)
+{
+    struct t_irc_server *server;
+    struct t_irc_join_channel *ptr_join_chan1, *ptr_join_chan2;
+    int rc;
+
+    /* make C compiler happy */
+    (void) arraylist;
+
+    server = (struct t_irc_server *)data;
+
+    ptr_join_chan1 = (struct t_irc_join_channel *)pointer1;
+    ptr_join_chan2 = (struct t_irc_join_channel *)pointer2;
+
+    /*
+     * if channel is the same, always consider it's the same, even if the key
+     * is different
+     */
+    rc = irc_server_strcasecmp (server, ptr_join_chan1->name,
+                                ptr_join_chan2->name);
+    if (rc == 0)
+        return 0;
+
+    /* channels with a key are first in list */
+    if (ptr_join_chan1->key && !ptr_join_chan2->key)
+        return -1;
+    if (!ptr_join_chan1->key && ptr_join_chan2->key)
+        return 1;
+
+    return rc;
 }
 
 /*
@@ -122,10 +160,14 @@ irc_join_arraylist_add (struct t_arraylist *arraylist,
  * command (channels with key first in list), for example:
  *
  *   #channel1,#channel2,#channel3 key1,key2
+ *
+ * If sort == 1, channels are sorted alphabetically, otherwise in the order
+ * they are received.
+ * In all cases, keyed channels are first in list.
  */
 
 struct t_arraylist *
-irc_join_split (struct t_irc_server *server, const char *join)
+irc_join_split (struct t_irc_server *server, const char *join, int sort)
 {
     struct t_arraylist *arraylist;
     char **items, **channels, **keys;
@@ -171,8 +213,10 @@ irc_join_split (struct t_irc_server *server, const char *join)
 
     arraylist = weechat_arraylist_new (
         16, 1, 0,
-        &irc_join_compare_cb, server,
-        &irc_join_free_cb, NULL);
+        (sort) ? &irc_join_compare_sort_cb : &irc_join_compare_cb,
+        server,
+        &irc_join_free_cb,
+        NULL);
     if (!arraylist)
         goto end;
 
@@ -282,7 +326,7 @@ irc_join_add_channel (struct t_irc_server *server,
     if (!channel_name)
         return NULL;
 
-    arraylist = irc_join_split (server, join);
+    arraylist = irc_join_split (server, join, 0);
     if (!arraylist)
         return NULL;
 
@@ -320,11 +364,11 @@ irc_join_add_channels (struct t_irc_server *server,
     char *new_join;
     int i, size;
 
-    arraylist = irc_join_split (server, join);
+    arraylist = irc_join_split (server, join, 0);
     if (!arraylist)
         return NULL;
 
-    arraylist2 = irc_join_split (server, join2);
+    arraylist2 = irc_join_split (server, join2, 0);
     if (!arraylist2)
     {
         weechat_arraylist_free (arraylist);
@@ -424,7 +468,7 @@ irc_join_remove_channel (struct t_irc_server *server,
     if (!channel_name)
         return NULL;
 
-    arraylist = irc_join_split (server, join);
+    arraylist = irc_join_split (server, join, 0);
     if (!arraylist)
         return NULL;
 
@@ -516,4 +560,54 @@ irc_join_save_channels_to_autojoin (struct t_irc_server *server)
     }
 
     weechat_arraylist_free (arraylist);
+}
+
+/*
+ * Sorts channels.
+ */
+
+char *
+irc_join_sort_channels (struct t_irc_server *server, const char *join)
+{
+    struct t_arraylist *arraylist;
+    char *new_join;
+
+    arraylist = irc_join_split (server, join, 1);
+    if (!arraylist)
+        return NULL;
+
+    new_join = irc_join_build_string (arraylist);
+
+    weechat_arraylist_free (arraylist);
+
+    return new_join;
+}
+
+/*
+ * Sorts channels in autojoin option of a server.
+ */
+
+void
+irc_join_sort_autojoin (struct t_irc_server *server)
+{
+    const char *ptr_autojoin;
+    char *new_autojoin;
+
+    if (!server)
+        return;
+
+    ptr_autojoin = IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_AUTOJOIN);
+
+    if (!ptr_autojoin || !ptr_autojoin[0])
+        return;
+
+    new_autojoin = irc_join_sort_channels (
+        server,
+        IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_AUTOJOIN));
+    if (new_autojoin)
+    {
+        weechat_config_option_set (server->options[IRC_SERVER_OPTION_AUTOJOIN],
+                                   new_autojoin, 1);
+        free (new_autojoin);
+    }
 }
