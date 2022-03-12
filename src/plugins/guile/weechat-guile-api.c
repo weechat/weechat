@@ -3347,6 +3347,45 @@ weechat_guile_api_buffer_new (SCM name, SCM function_input, SCM data_input,
 }
 
 SCM
+weechat_guile_api_buffer_new_props (SCM name, SCM properties,
+                                    SCM function_input, SCM data_input,
+                                    SCM function_close, SCM data_close)
+{
+    struct t_hashtable *c_properties;
+    const char *result;
+    SCM return_value;
+
+    API_INIT_FUNC(1, "buffer_new_props", API_RETURN_EMPTY);
+    if (!scm_is_string (name) || !scm_list_p (properties)
+        || !scm_is_string (function_input) || !scm_is_string (data_input)
+        || !scm_is_string (function_close) || !scm_is_string (data_close))
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    c_properties = weechat_guile_alist_to_hashtable (properties,
+                                                     WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                                     WEECHAT_HASHTABLE_STRING,
+                                                     WEECHAT_HASHTABLE_STRING);
+
+    result = API_PTR2STR(
+        plugin_script_api_buffer_new_props (
+            weechat_guile_plugin,
+            guile_current_script,
+            API_SCM_TO_STRING(name),
+            c_properties,
+            &weechat_guile_api_buffer_input_data_cb,
+            API_SCM_TO_STRING(function_input),
+            API_SCM_TO_STRING(data_input),
+            &weechat_guile_api_buffer_close_cb,
+            API_SCM_TO_STRING(function_close),
+            API_SCM_TO_STRING(data_close)));
+
+    if (c_properties)
+        weechat_hashtable_free (c_properties);
+
+    API_RETURN_STRING(result);
+}
+
+SCM
 weechat_guile_api_buffer_search (SCM plugin, SCM name)
 {
     const char *result;
@@ -5175,6 +5214,7 @@ weechat_guile_api_module_init (void *data)
     API_DEF_FUNC(unhook, 1);
     API_DEF_FUNC(unhook_all, 0);
     API_DEF_FUNC(buffer_new, 5);
+    API_DEF_FUNC(buffer_new_props, 6);
     API_DEF_FUNC(buffer_search, 2);
     API_DEF_FUNC(buffer_search_main, 0);
     API_DEF_FUNC(current_buffer, 0);

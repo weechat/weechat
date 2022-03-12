@@ -116,6 +116,7 @@ function weechat_hook_set(): mixed {}
 function weechat_unhook(): mixed {}
 function weechat_unhook_all(): mixed {}
 function weechat_buffer_new(): mixed {}
+function weechat_buffer_new_props(): mixed {}
 function weechat_buffer_search(): mixed {}
 function weechat_buffer_search_main(): mixed {}
 function weechat_current_buffer(): mixed {}

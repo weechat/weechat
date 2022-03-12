@@ -12856,6 +12856,13 @@ _Mis à jour dans la 1.5._
 
 Ouvrir un nouveau tampon.
 
+[NOTE]
+Si vous souhaitez définir immédiatement des propriétés du tampon (type de tampon,
+variables locales, touches de raccourci, etc.), alors il vaut mieux utiliser
+la fonction <<_buffer_new_props,buffer_new_props>> qui définit ces propriétés
+durant la création du tampon, avant d'envoyer le signal
+<<hook_signal_buffer_opened,buffer_opened>>.
+
 Prototype :
 
 [source,c]
@@ -12954,6 +12961,134 @@ def my_close_cb(data, buffer):
     return weechat.WEECHAT_RC_OK
 
 buffer = weechat.buffer_new("mon_buffer", "my_input_cb", "", "my_close_cb", "")
+----
+
+==== buffer_new_props
+
+_WeeChat ≥ 3.5._
+
+Ouvrir un nouveau tampon et appliquer des propriétés.
+
+Prototype :
+
+[source,c]
+----
+struct t_gui_buffer *weechat_buffer_new_props (const char *name,
+                                               struct t_hashtable *properties,
+                                               int (*input_callback)(const void *pointer,
+                                                                     void *data,
+                                                                     struct t_gui_buffer *buffer,
+                                                                     const char *input_data),
+                                               const void *input_callback_pointer,
+                                               void *input_callback_data,
+                                               int (*close_callback)(const void *pointer,
+                                                                     void *data,
+                                                                     struct t_gui_buffer *buffer),
+                                               const void *close_callback_pointer,
+                                               void *close_callback_data);
+----
+
+Paramètres :
+
+* _name_ : nom du tampon (doit être unique pour l'extension)
+* _properties_ : propriétés à appliquer
+  (voir la fonction <<_buffer_set,buffer_set>> pour les propriétés autorisées)
+* _input_callback_ : fonction appelée lorsque du texte saisi est envoyé au
+  tampon, paramètres et valeur de retour :
+** _const void *pointer_ : pointeur
+** _void *data_ : pointeur
+** _struct t_gui_buffer *buffer_ : pointeur vers le tampon
+** _const char *input_data_ : données en entrée
+** valeur de retour :
+*** _WEECHAT_RC_OK_
+*** _WEECHAT_RC_ERROR_
+* _input_callback_pointer_ : pointeur donné à la fonction de rappel lorsqu'elle
+  est appelée par WeeChat
+* _input_callback_data_ : pointeur donné à la fonction de rappel lorsqu'elle
+  est appelée par WeeChat; si non NULL, doit avoir été alloué par malloc (ou
+  une fonction similaire) et est automatiquement libéré (par free) lorsque le
+  tampon est fermé
+* _close_callback_ : fonction appelée lorsque le tampon est fermé, paramètres et
+  valeur de retour :
+** _const void *pointer_ : pointeur
+** _void *data_ : pointeur
+** _struct t_gui_buffer *buffer_ : pointeur vers le tampon
+** valeur de retour :
+*** _WEECHAT_RC_OK_
+*** _WEECHAT_RC_ERROR_
+* _close_callback_pointer_ : pointeur donné à la fonction de rappel lorsqu'elle
+  est appelée par WeeChat
+* _close_callback_data_ : pointeur donné à la fonction de rappel lorsqu'elle
+  est appelée par WeeChat; si non NULL, doit avoir été alloué par malloc (ou
+  une fonction similaire) et est automatiquement libéré (par free) lorsque le
+  tampon est fermé
+
+Valeur de retour :
+
+* pointeur vers le nouveau tampon, NULL en cas d'erreur
+
+Exemple en C :
+
+[source,c]
+----
+int
+my_input_cb (const void *pointer, void *data,
+             struct t_gui_buffer *buffer, const char *input_data)
+{
+    weechat_printf (buffer, "Texte : %s", input_data);
+    return WEECHAT_RC_OK;
+}
+
+int
+my_close_cb (const void *pointer, void *data, struct t_gui_buffer *buffer)
+{
+    weechat_printf (NULL, "Le tampon '%s' va être fermé !",
+                    weechat_buffer_get_string (buffer, "name"));
+    return WEECHAT_RC_OK;
+}
+
+struct t_hashtable *properties = weechat_hashtable_new (8,
+                                                        WEECHAT_HASHTABLE_STRING,
+                                                        WEECHAT_HASHTABLE_STRING,
+                                                        NULL,
+                                                        NULL);
+/* tampon avec contenu libre */
+weechat_hashtable_set (properties, "type", "free");
+/* pas d'enregistrement sur ce tampon */
+weechat_hashtable_set (properties, "localvar_set_no_log", "1");
+/* associer la touche alt-c sur ce tampon */
+weechat_hashtable_set (properties, "key_bind_meta-c", "/ma_commande");
+
+struct t_gui_buffer *my_buffer = weechat_buffer_new_props ("mon_buffer",
+                                                           properties,
+                                                           &my_input_cb, NULL, NULL,
+                                                           &my_close_cb, NULL, NULL);
+----
+
+Script (Python) :
+
+[source,python]
+----
+# prototype
+def buffer_new_props(name: str, properties: Dict[str, str],
+                     input_callback: str, input_callback_data: str,
+                     close_callback: str, close_callback_data: str) -> str: ...
+
+# exemple
+def my_input_cb(data, buffer, input_data):
+    weechat.prnt(buffer, "Texte : %s" % input_data)
+    return weechat.WEECHAT_RC_OK
+
+def my_close_cb(data, buffer):
+    weechat.prnt("", "Le tampon '%s' va être fermé !" % weechat.buffer_get_string(buffer, "name"))
+    return weechat.WEECHAT_RC_OK
+
+properties = {
+    "type": "free",                     # tampon avec contenu libre
+    "localvar_set_no_log": "1",         # pas d'enregistrement sur ce tampon
+    "key_bind_meta-c": "/ma_commande",  # associer la touche alt-c sur ce tampon
+}
+buffer = weechat.buffer_new_props("mon_buffer", properties, "my_input_cb", "", "my_close_cb", "")
 ----
 
 ==== current_buffer

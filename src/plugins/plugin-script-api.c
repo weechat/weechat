@@ -1192,24 +1192,25 @@ plugin_script_api_hook_focus (struct t_weechat_plugin *weechat_plugin,
 }
 
 /*
- * Creates a new buffer.
+ * Creates a new buffer with optional properties.
  */
 
 struct t_gui_buffer *
-plugin_script_api_buffer_new (struct t_weechat_plugin *weechat_plugin,
-                              struct t_plugin_script *script,
-                              const char *name,
-                              int (*input_callback)(const void *pointer,
-                                                    void *data,
-                                                    struct t_gui_buffer *buffer,
-                                                    const char *input_data),
-                              const char *function_input,
-                              const char *data_input,
-                              int (*close_callback)(const void *pointer,
-                                                    void *data,
-                                                    struct t_gui_buffer *buffer),
-                              const char *function_close,
-                              const char *data_close)
+plugin_script_api_buffer_new_props (struct t_weechat_plugin *weechat_plugin,
+                                    struct t_plugin_script *script,
+                                    const char *name,
+                                    struct t_hashtable *properties,
+                                    int (*input_callback)(const void *pointer,
+                                                          void *data,
+                                                          struct t_gui_buffer *buffer,
+                                                          const char *input_data),
+                                    const char *function_input,
+                                    const char *data_input,
+                                    int (*close_callback)(const void *pointer,
+                                                          void *data,
+                                                          struct t_gui_buffer *buffer),
+                                    const char *function_close,
+                                    const char *data_close)
 {
     char *function_and_data_input, *function_and_data_close;
     struct t_gui_buffer *new_buffer;
@@ -1222,8 +1223,9 @@ plugin_script_api_buffer_new (struct t_weechat_plugin *weechat_plugin,
     function_and_data_close = plugin_script_build_function_and_data (
         function_close, data_close);
 
-    new_buffer = weechat_buffer_new (
+    new_buffer = weechat_buffer_new_props (
         name,
+        properties,
         (function_and_data_input) ? input_callback : NULL,
         script,
         function_and_data_input,
@@ -1254,6 +1256,39 @@ plugin_script_api_buffer_new (struct t_weechat_plugin *weechat_plugin,
     }
 
     return new_buffer;
+}
+
+/*
+ * Creates a new buffer.
+ */
+
+struct t_gui_buffer *
+plugin_script_api_buffer_new (struct t_weechat_plugin *weechat_plugin,
+                              struct t_plugin_script *script,
+                              const char *name,
+                              int (*input_callback)(const void *pointer,
+                                                    void *data,
+                                                    struct t_gui_buffer *buffer,
+                                                    const char *input_data),
+                              const char *function_input,
+                              const char *data_input,
+                              int (*close_callback)(const void *pointer,
+                                                    void *data,
+                                                    struct t_gui_buffer *buffer),
+                              const char *function_close,
+                              const char *data_close)
+{
+    return plugin_script_api_buffer_new_props (
+        weechat_plugin,
+        script,
+        name,
+        NULL,  /* properties */
+        input_callback,
+        function_input,
+        data_input,
+        close_callback,
+        function_close,
+        data_close);
 }
 
 /*

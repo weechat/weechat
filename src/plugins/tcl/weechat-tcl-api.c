@@ -3738,6 +3738,47 @@ API_FUNC(buffer_new)
     API_RETURN_STRING(result);
 }
 
+API_FUNC(buffer_new_props)
+{
+    Tcl_Obj *objp;
+    char *name, *function_input, *data_input, *function_close, *data_close;
+    struct t_hashtable *properties;
+    const char *result;
+    int i;
+
+    API_INIT_FUNC(1, "buffer_new_props", API_RETURN_EMPTY);
+    if (objc < 7)
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    name = Tcl_GetStringFromObj (objv[1], &i);
+    properties = weechat_tcl_dict_to_hashtable (interp, objv[2],
+                                                WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                                WEECHAT_HASHTABLE_STRING,
+                                                WEECHAT_HASHTABLE_STRING);
+    function_input = Tcl_GetStringFromObj (objv[3], &i);
+    data_input = Tcl_GetStringFromObj (objv[4], &i);
+    function_close = Tcl_GetStringFromObj (objv[5], &i);
+    data_close = Tcl_GetStringFromObj (objv[6], &i);
+
+    result = API_PTR2STR(
+        plugin_script_api_buffer_new_props (
+            weechat_tcl_plugin,
+            tcl_current_script,
+            name,
+            properties,
+            &weechat_tcl_api_buffer_input_data_cb,
+            function_input,
+            data_input,
+            &weechat_tcl_api_buffer_close_cb,
+            function_close,
+            data_close));
+
+    if (properties)
+        weechat_hashtable_free (properties);
+
+    API_RETURN_STRING(result);
+}
+
 API_FUNC(buffer_search)
 {
     Tcl_Obj *objp;
@@ -5918,6 +5959,7 @@ void weechat_tcl_api_init (Tcl_Interp *interp)
     API_DEF_FUNC(unhook);
     API_DEF_FUNC(unhook_all);
     API_DEF_FUNC(buffer_new);
+    API_DEF_FUNC(buffer_new_props);
     API_DEF_FUNC(buffer_search);
     API_DEF_FUNC(buffer_search_main);
     API_DEF_FUNC(current_buffer);

@@ -804,6 +804,7 @@ plugin_load (const char *filename, int init_plugin, int argc, char **argv)
         new_plugin->unhook_all = &unhook_all_plugin;
 
         new_plugin->buffer_new = &gui_buffer_new;
+        new_plugin->buffer_new_props = &gui_buffer_new_props;
         new_plugin->buffer_search = &gui_buffer_search_by_name;
         new_plugin->buffer_search_main = &gui_buffer_search_main;
         new_plugin->buffer_clear = &gui_buffer_clear;

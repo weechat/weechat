@@ -68,7 +68,7 @@ struct timeval;
  * please change the date with current one; for a second change at same
  * date, increment the 01, otherwise please keep 01.
  */
-#define WEECHAT_PLUGIN_API_VERSION "20220130-01"
+#define WEECHAT_PLUGIN_API_VERSION "20220312-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -893,6 +893,20 @@ struct t_weechat_plugin
                                                               struct t_gui_buffer *buffer),
                                         const void *close_callback_pointer,
                                         void *close_callback_data);
+    struct t_gui_buffer *(*buffer_new_props) (struct t_weechat_plugin *plugin,
+                                              const char *name,
+                                              struct t_hashtable *properties,
+                                              int (*input_callback)(const void *pointer,
+                                                                    void *data,
+                                                                    struct t_gui_buffer *buffer,
+                                                                    const char *input_data),
+                                              const void *input_callback_pointer,
+                                              void *input_callback_data,
+                                              int (*close_callback)(const void *pointer,
+                                                                    void *data,
+                                                                    struct t_gui_buffer *buffer),
+                                              const void *close_callback_pointer,
+                                              void *close_callback_data);
     struct t_gui_buffer *(*buffer_search) (const char *plugin, const char *name);
     struct t_gui_buffer *(*buffer_search_main) ();
     void (*buffer_clear) (struct t_gui_buffer *buffer);
@@ -1835,19 +1849,38 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     (weechat_plugin->unhook_all)(weechat_plugin, __subplugin)
 
 /* buffers */
-#define weechat_buffer_new(__name, __input_callback,                    \
+#define weechat_buffer_new(__name,                                      \
+                           __input_callback,                            \
                            __input_callback_pointer,                    \
                            __input_callback_data,                       \
                            __close_callback,                            \
                            __close_callback_pointer,                    \
                            __close_callback_data)                       \
-    (weechat_plugin->buffer_new)(weechat_plugin, __name,                \
+    (weechat_plugin->buffer_new)(weechat_plugin,                        \
+                                 __name,                                \
                                  __input_callback,                      \
                                  __input_callback_pointer,              \
                                  __input_callback_data,                 \
                                  __close_callback,                      \
                                  __close_callback_pointer,              \
                                  __close_callback_data)
+#define weechat_buffer_new_props(__name,                                \
+                                 __properties,                          \
+                                 __input_callback,                      \
+                                 __input_callback_pointer,              \
+                                 __input_callback_data,                 \
+                                 __close_callback,                      \
+                                 __close_callback_pointer,              \
+                                 __close_callback_data)                 \
+    (weechat_plugin->buffer_new_props)(weechat_plugin,                  \
+                                       __name,                          \
+                                       __properties,                    \
+                                       __input_callback,                \
+                                       __input_callback_pointer,        \
+                                       __input_callback_data,           \
+                                       __close_callback,                \
+                                       __close_callback_pointer,        \
+                                       __close_callback_data)
 #define weechat_buffer_search(__plugin, __name)                         \
     (weechat_plugin->buffer_search)(__plugin, __name)
 #define weechat_buffer_search_main()                                    \

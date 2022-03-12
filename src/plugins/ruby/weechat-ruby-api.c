@@ -4102,6 +4102,58 @@ weechat_ruby_api_buffer_new (VALUE class, VALUE name, VALUE function_input,
 }
 
 static VALUE
+weechat_ruby_api_buffer_new_props (VALUE class, VALUE name, VALUE properties,
+                                   VALUE function_input,
+                                   VALUE data_input, VALUE function_close,
+                                   VALUE data_close)
+{
+    char *c_name, *c_function_input, *c_data_input, *c_function_close;
+    char *c_data_close;
+    struct t_hashtable *c_properties;
+    const char *result;
+
+    API_INIT_FUNC(1, "buffer_new_props", API_RETURN_EMPTY);
+    if (NIL_P (name) || NIL_P (properties) || NIL_P (function_input)
+        || NIL_P (data_input) || NIL_P (function_close) || NIL_P (data_close))
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    Check_Type (name, T_STRING);
+    Check_Type (properties, T_HASH);
+    Check_Type (function_input, T_STRING);
+    Check_Type (data_input, T_STRING);
+    Check_Type (function_close, T_STRING);
+    Check_Type (data_close, T_STRING);
+
+    c_name = StringValuePtr (name);
+    c_properties = weechat_ruby_hash_to_hashtable (properties,
+                                                   WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                                   WEECHAT_HASHTABLE_STRING,
+                                                   WEECHAT_HASHTABLE_STRING);
+    c_function_input = StringValuePtr (function_input);
+    c_data_input = StringValuePtr (data_input);
+    c_function_close = StringValuePtr (function_close);
+    c_data_close = StringValuePtr (data_close);
+
+    result = API_PTR2STR(
+        plugin_script_api_buffer_new_props (
+            weechat_ruby_plugin,
+            ruby_current_script,
+            c_name,
+            c_properties,
+            &weechat_ruby_api_buffer_input_data_cb,
+            c_function_input,
+            c_data_input,
+            &weechat_ruby_api_buffer_close_cb,
+            c_function_close,
+            c_data_close));
+
+    if (c_properties)
+        weechat_hashtable_free (c_properties);
+
+    API_RETURN_STRING(result);
+}
+
+static VALUE
 weechat_ruby_api_buffer_search (VALUE class, VALUE plugin, VALUE name)
 {
     char *c_plugin, *c_name;
@@ -6606,6 +6658,7 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     API_DEF_FUNC(unhook, 1);
     API_DEF_FUNC(unhook_all, 0);
     API_DEF_FUNC(buffer_new, 5);
+    API_DEF_FUNC(buffer_new_props, 6);
     API_DEF_FUNC(buffer_search, 2);
     API_DEF_FUNC(buffer_search_main, 0);
     API_DEF_FUNC(current_buffer, 0);

@@ -155,6 +155,7 @@ PHP_FUNCTION(weechat_hook_set);
 PHP_FUNCTION(weechat_unhook);
 PHP_FUNCTION(weechat_unhook_all);
 PHP_FUNCTION(weechat_buffer_new);
+PHP_FUNCTION(weechat_buffer_new_props);
 PHP_FUNCTION(weechat_buffer_search);
 PHP_FUNCTION(weechat_buffer_search_main);
 PHP_FUNCTION(weechat_current_buffer);

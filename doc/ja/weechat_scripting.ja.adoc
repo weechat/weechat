@@ -703,6 +703,7 @@ link:weechat_plugin_api.ja.html[WeeChat プラグイン API リファレンス]�
 
 | バッファ |
   buffer_new +
+  buffer_new_props +
   current_buffer +
   buffer_search +
   buffer_search_main +

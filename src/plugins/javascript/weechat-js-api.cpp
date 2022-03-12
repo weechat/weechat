@@ -3270,6 +3270,43 @@ API_FUNC(buffer_new)
     API_RETURN_STRING(result);
 }
 
+API_FUNC(buffer_new_props)
+{
+    struct t_hashtable *properties;
+    const char *result;
+
+    API_INIT_FUNC(1, "buffer_new_props", "shssss", API_RETURN_EMPTY);
+
+    v8::String::Utf8Value name(args[0]);
+    properties = weechat_js_object_to_hashtable (
+        args[1]->ToObject(),
+        WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+        WEECHAT_HASHTABLE_STRING,
+        WEECHAT_HASHTABLE_STRING);
+    v8::String::Utf8Value function_input(args[2]);
+    v8::String::Utf8Value data_input(args[3]);
+    v8::String::Utf8Value function_close(args[4]);
+    v8::String::Utf8Value data_close(args[5]);
+
+    result = API_PTR2STR(
+        plugin_script_api_buffer_new_props (
+            weechat_js_plugin,
+            js_current_script,
+            *name,
+            properties,
+            &weechat_js_api_buffer_input_data_cb,
+            *function_input,
+            *data_input,
+            &weechat_js_api_buffer_close_cb,
+            *function_close,
+            *data_close));
+
+    if (properties)
+        weechat_hashtable_free (properties);
+
+    API_RETURN_STRING(result);
+}
+
 API_FUNC(buffer_search)
 {
     const char *result;
@@ -5117,6 +5154,7 @@ WeechatJsV8::loadLibs()
     API_DEF_FUNC(unhook);
     API_DEF_FUNC(unhook_all);
     API_DEF_FUNC(buffer_new);
+    API_DEF_FUNC(buffer_new_props);
     API_DEF_FUNC(buffer_search);
     API_DEF_FUNC(buffer_search_main);
     API_DEF_FUNC(current_buffer);

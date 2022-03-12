@@ -3412,6 +3412,46 @@ API_FUNC(buffer_new)
     API_RETURN_STRING(result);
 }
 
+API_FUNC(buffer_new_props)
+{
+    char *name, *function_input, *data_input, *function_close, *data_close;
+    struct t_hashtable *properties;
+    const char *result;
+    dXSARGS;
+
+    API_INIT_FUNC(1, "buffer_new_props", API_RETURN_EMPTY);
+    if (items < 6)
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    name = SvPV_nolen (ST (0));
+    properties = weechat_perl_hash_to_hashtable (ST (1),
+                                                 WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                                 WEECHAT_HASHTABLE_STRING,
+                                                 WEECHAT_HASHTABLE_STRING);
+    function_input = SvPV_nolen (ST (2));
+    data_input = SvPV_nolen (ST (3));
+    function_close = SvPV_nolen (ST (4));
+    data_close = SvPV_nolen (ST (5));
+
+    result = API_PTR2STR(
+        plugin_script_api_buffer_new_props (
+            weechat_perl_plugin,
+            perl_current_script,
+            name,
+            properties,
+            &weechat_perl_api_buffer_input_data_cb,
+            function_input,
+            data_input,
+            &weechat_perl_api_buffer_close_cb,
+            function_close,
+            data_close));
+
+    if (properties)
+        weechat_hashtable_free (properties);
+
+    API_RETURN_STRING(result);
+}
+
 API_FUNC(buffer_search)
 {
     char *plugin, *name;
@@ -5423,6 +5463,7 @@ weechat_perl_api_init (pTHX)
     API_DEF_FUNC(unhook);
     API_DEF_FUNC(unhook_all);
     API_DEF_FUNC(buffer_new);
+    API_DEF_FUNC(buffer_new_props);
     API_DEF_FUNC(buffer_search);
     API_DEF_FUNC(buffer_search_main);
     API_DEF_FUNC(current_buffer);

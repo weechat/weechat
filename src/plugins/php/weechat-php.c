@@ -213,6 +213,7 @@ const zend_function_entry weechat_functions[] = {
     PHP_FE(weechat_unhook, arginfo_weechat_unhook)
     PHP_FE(weechat_unhook_all, arginfo_weechat_unhook_all)
     PHP_FE(weechat_buffer_new, arginfo_weechat_buffer_new)
+    PHP_FE(weechat_buffer_new_props, arginfo_weechat_buffer_new_props)
     PHP_FE(weechat_buffer_search, arginfo_weechat_buffer_search)
     PHP_FE(weechat_buffer_search_main, arginfo_weechat_buffer_search_main)
     PHP_FE(weechat_current_buffer, arginfo_weechat_current_buffer)

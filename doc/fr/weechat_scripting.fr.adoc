@@ -701,6 +701,7 @@ Liste des fonctions de l'API script :
 
 | tampons |
   buffer_new +
+  buffer_new_props +
   current_buffer +
   buffer_search +
   buffer_search_main +

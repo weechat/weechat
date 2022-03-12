@@ -714,6 +714,7 @@ Elenco di funzioni nelle API per gli script:
 
 | buffer |
   buffer_new +
+  buffer_new_props +
   current_buffer +
   buffer_search +
   buffer_search_main +

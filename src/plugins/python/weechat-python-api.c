@@ -3413,6 +3413,48 @@ API_FUNC(buffer_new)
     API_RETURN_STRING(result);
 }
 
+API_FUNC(buffer_new_props)
+{
+    char *name, *function_input, *data_input, *function_close, *data_close;
+    struct t_hashtable *properties;
+    PyObject *dict;
+    const char *result;
+
+    API_INIT_FUNC(1, "buffer_new_props", API_RETURN_EMPTY);
+    name = NULL;
+    dict = NULL;
+    function_input = NULL;
+    data_input = NULL;
+    function_close = NULL;
+    data_close = NULL;
+    if (!PyArg_ParseTuple (args, "sOssss", &name, &dict,
+                           &function_input, &data_input,
+                           &function_close, &data_close))
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    properties = weechat_python_dict_to_hashtable (dict,
+                                                   WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                                   WEECHAT_HASHTABLE_STRING,
+                                                   WEECHAT_HASHTABLE_STRING);
+    result = API_PTR2STR(
+        plugin_script_api_buffer_new_props (
+            weechat_python_plugin,
+            python_current_script,
+            name,
+            properties,
+            &weechat_python_api_buffer_input_data_cb,
+            function_input,
+            data_input,
+            &weechat_python_api_buffer_close_cb,
+            function_close,
+            data_close));
+
+    if (properties)
+        weechat_hashtable_free (properties);
+
+    API_RETURN_STRING(result);
+}
+
 API_FUNC(buffer_search)
 {
     char *plugin, *name;
@@ -5333,6 +5375,7 @@ PyMethodDef weechat_python_funcs[] =
     API_DEF_FUNC(unhook),
     API_DEF_FUNC(unhook_all),
     API_DEF_FUNC(buffer_new),
+    API_DEF_FUNC(buffer_new_props),
     API_DEF_FUNC(buffer_search),
     API_DEF_FUNC(buffer_search_main),
     API_DEF_FUNC(current_buffer),

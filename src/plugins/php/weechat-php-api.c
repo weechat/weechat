@@ -3332,6 +3332,50 @@ API_FUNC(buffer_new)
     API_RETURN_STRING(result);
 }
 
+API_FUNC(buffer_new_props)
+{
+    zend_string *z_name, *z_data_input, *z_data_close;
+    zval *z_properties, *z_input_callback, *z_close_callback;
+    char *name, *data_input, *data_close;
+    struct t_hashtable *properties;
+    const char *result;
+
+    API_INIT_FUNC(1, "buffer_new_props", API_RETURN_EMPTY);
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SazSzS", &z_name,
+                               &z_properties, &z_input_callback, &z_data_input,
+                               &z_close_callback, &z_data_close) == FAILURE)
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    name = ZSTR_VAL(z_name);
+    properties = weechat_php_array_to_hashtable (
+        z_properties,
+        WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+        WEECHAT_HASHTABLE_STRING,
+        WEECHAT_HASHTABLE_STRING);
+    weechat_php_get_function_name (z_input_callback, input_callback_name);
+    data_input = ZSTR_VAL(z_data_input);
+    weechat_php_get_function_name (z_close_callback, close_callback_name);
+    data_close = ZSTR_VAL(z_data_close);
+
+    result = API_PTR2STR(
+        plugin_script_api_buffer_new_props (
+            weechat_php_plugin,
+            php_current_script,
+            (const char *)name,
+            properties,
+            &weechat_php_api_buffer_input_data_cb,
+            (const char *)input_callback_name,
+            (const char *)data_input,
+            &weechat_php_api_buffer_close_cb,
+            (const char *)close_callback_name,
+            (const char *)data_close));
+
+    if (properties)
+        weechat_hashtable_free (properties);
+
+    API_RETURN_STRING(result);
+}
+
 API_FUNC(buffer_search)
 {
     zend_string *z_plugin, *z_name;

@@ -33,6 +33,7 @@ Bug fixes::
   * core: remove obsolete option weechat.plugin.debug (issue #1744)
   * core: fix search of commands with UTF-8 chars in name when option weechat.look.command_incomplete is on (issue #1739)
   * core: fix display of hotlist in buflist after changing value of option weechat.look.hotlist_sort (issue #1733)
+  * api: add function buffer_new_props (issue #1759)
   * api: fix add of infolist items in hashtable when prefix contains UTF-8 chars in function hashtable_add_from_infolist (issue #1739)
   * guile: remove disabling of guile gmp allocator with Guile ≥ 3.0.8
   * irc: fix completion of channel topic with UTF-8 chars (issue #1739)

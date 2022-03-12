@@ -3505,6 +3505,46 @@ API_FUNC(buffer_new)
     API_RETURN_STRING(result);
 }
 
+API_FUNC(buffer_new_props)
+{
+    const char *name, *function_input, *data_input, *function_close;
+    const char *data_close;
+    struct t_hashtable *properties;
+    const char *result;
+
+    API_INIT_FUNC(1, "buffer_new_props", API_RETURN_EMPTY);
+    if (lua_gettop (L) < 6)
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    name = lua_tostring (L, -6);
+    properties = weechat_lua_tohashtable (L, -5,
+                                          WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                          WEECHAT_HASHTABLE_STRING,
+                                          WEECHAT_HASHTABLE_STRING);
+    function_input = lua_tostring (L, -4);
+    data_input = lua_tostring (L, -3);
+    function_close = lua_tostring (L, -2);
+    data_close = lua_tostring (L, -1);
+
+    result = API_PTR2STR(
+        plugin_script_api_buffer_new_props (
+            weechat_lua_plugin,
+            lua_current_script,
+            name,
+            properties,
+            &weechat_lua_api_buffer_input_data_cb,
+            function_input,
+            data_input,
+            &weechat_lua_api_buffer_close_cb,
+            function_close,
+            data_close));
+
+    if (properties)
+        weechat_hashtable_free (properties);
+
+    API_RETURN_STRING(result);
+}
+
 API_FUNC(buffer_search)
 {
     const char *plugin, *name;
@@ -5470,6 +5510,7 @@ const struct luaL_Reg weechat_lua_api_funcs[] = {
     API_DEF_FUNC(unhook),
     API_DEF_FUNC(unhook_all),
     API_DEF_FUNC(buffer_new),
+    API_DEF_FUNC(buffer_new_props),
     API_DEF_FUNC(buffer_search),
     API_DEF_FUNC(buffer_search_main),
     API_DEF_FUNC(current_buffer),

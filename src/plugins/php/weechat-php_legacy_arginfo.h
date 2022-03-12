@@ -222,6 +222,8 @@ ZEND_END_ARG_INFO()
 
 #define arginfo_weechat_buffer_new arginfo_weechat_register
 
+#define arginfo_weechat_buffer_new_props arginfo_weechat_register
+
 #define arginfo_weechat_buffer_search arginfo_weechat_register
 
 #define arginfo_weechat_buffer_search_main arginfo_weechat_register

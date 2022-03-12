@@ -12638,6 +12638,13 @@ _WeeChat バージョン 1.5 で更新。_
 
 新しいバッファを開く。
 
+// TRANSLATION MISSING
+[NOTE]
+If you want to immediately set buffer properties (buffer type, local variables,
+key bindings, etc.), then better use the function <<_buffer_new_props,buffer_new_props>>
+which sets these properties during the buffer creation, before sending signal
+<<hook_signal_buffer_opened,buffer_opened>>.
+
 プロトタイプ:
 
 [source,c]
@@ -12733,6 +12740,135 @@ def my_close_cb(data, buffer):
     return weechat.WEECHAT_RC_OK
 
 buffer = weechat.buffer_new("my_buffer", "my_input_cb", "", "my_close_cb", "")
+----
+
+==== buffer_new_props
+
+_WeeChat ≥ 3.5_
+
+// TRANSLATION MISSING
+Open a new buffer and apply properties.
+
+プロトタイプ:
+
+[source,c]
+----
+struct t_gui_buffer *weechat_buffer_new_props (const char *name,
+                                               struct t_hashtable *properties,
+                                               int (*input_callback)(const void *pointer,
+                                                                     void *data,
+                                                                     struct t_gui_buffer *buffer,
+                                                                     const char *input_data),
+                                               const void *input_callback_pointer,
+                                               void *input_callback_data,
+                                               int (*close_callback)(const void *pointer,
+                                                                     void *data,
+                                                                     struct t_gui_buffer *buffer),
+                                               const void *close_callback_pointer,
+                                               void *close_callback_data);
+----
+
+引数:
+
+* _name_: バッファの名前 (プラグインに対して固有)
+// TRANSLATION MISSING
+* _properties_: properties to apply
+  (see function <<_buffer_set,buffer_set>> for the allowed properties)
+* _input_callback_:
+  入力テキストをバッファに挿入する際に呼び出すコールバック関数、引数と戻り値:
+** _const void *pointer_: ポインタ
+** _void *data_: ポインタ
+** _struct t_gui_buffer *buffer_: バッファポインタ
+** _const char *input_data_: 入力データ
+** 戻り値:
+*** _WEECHAT_RC_OK_
+*** _WEECHAT_RC_ERROR_
+* _input_callback_pointer_: WeeChat が _input_callback_ コールバックを呼び出す際にコールバックに渡すポインタ
+* _input_callback_data_: WeeChat が _input_callback_ コールバックを呼び出す際にコールバックに渡すポインタ;
+  このポインタが NULL でない場合、このポインタは malloc (または類似の関数)
+  によって割り当てられたものでなければいけません。さらに、このポインタはここで作成したバッファが閉じられた時点で自動的に開放されます
+* _close_callback_:
+  バッファを閉じる際に呼び出すコールバック関数、引数と戻り値:
+** _const void *pointer_: ポインタ
+** _void *data_: ポインタ
+** _struct t_gui_buffer *buffer_: バッファポインタ
+** 戻り値:
+*** _WEECHAT_RC_OK_
+*** _WEECHAT_RC_ERROR_
+* _close_callback_pointer_: WeeChat が _close_callback_
+  コールバックを呼び出す際にコールバックに渡すポインタ
+* _close_callback_data_: WeeChat が _close_callback_ コールバックを呼び出す際にコールバックに渡すポインタ;
+  このポインタが NULL でない場合、このポインタは malloc (または類似の関数)
+  によって割り当てられたものでなければいけません。さらに、このポインタはここで作成したバッファが閉じられた時点で自動的に開放されます
+
+戻り値:
+
+* 新しいバッファへのポインタ、エラーが起きた場合は NULL
+
+C 言語での使用例:
+
+// TRANSLATION MISSING
+[source,c]
+----
+int
+my_input_cb (const void *pointer, void *data,
+             struct t_gui_buffer *buffer, const char *input_data)
+{
+    weechat_printf (buffer, "Text: %s", input_data);
+    return WEECHAT_RC_OK;
+}
+
+int
+my_close_cb (const void *pointer, void *data, struct t_gui_buffer *buffer)
+{
+    weechat_printf (NULL, "Buffer _%s_ will be closed!",
+                    weechat_buffer_get_string (buffer, "name"));
+    return WEECHAT_RC_OK;
+}
+
+struct t_hashtable *properties = weechat_hashtable_new (8,
+                                                        WEECHAT_HASHTABLE_STRING,
+                                                        WEECHAT_HASHTABLE_STRING,
+                                                        NULL,
+                                                        NULL);
+/* buffer with free content */
+weechat_hashtable_set (properties, "type", "free");
+/* no logging on this buffer */
+weechat_hashtable_set (properties, "localvar_set_no_log", "1");
+/* bind key alt-c on this buffer */
+weechat_hashtable_set (properties, "key_bind_meta-c", "/my_command");
+
+struct t_gui_buffer *my_buffer = weechat_buffer_new_props ("my_buffer",
+                                                           properties,
+                                                           &my_input_cb, NULL, NULL,
+                                                           &my_close_cb, NULL, NULL);
+----
+
+スクリプト (Python) での使用例:
+
+// TRANSLATION MISSING
+[source,python]
+----
+# プロトタイプ
+def buffer_new_props(name: str, properties: Dict[str, str],
+                     input_callback: str, input_callback_data: str,
+                     close_callback: str, close_callback_data: str) -> str: ...
+
+# 例
+def my_input_cb(data, buffer, input_data):
+    weechat.prnt(buffer, "Text: %s" % input_data)
+    return weechat.WEECHAT_RC_OK
+
+def my_close_cb(data, buffer):
+    weechat.prnt("", "Buffer _%s_ will be closed!" % weechat.buffer_get_string(buffer, "name"))
+    return weechat.WEECHAT_RC_OK
+
+properties = {
+    "type": "free",                    # buffer with free content
+    "localvar_set_no_log": "1",        # no logging on this buffer
+    "key_bind_meta-c": "/my_command",  # bind key alt-c on this buffer
+}
+buffer = weechat.buffer_new_props("my_buffer", properties, "my_input_cb", "", "my_close_cb", "")
 ----
 
 ==== current_buffer

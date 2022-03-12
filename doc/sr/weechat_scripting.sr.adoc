@@ -640,6 +640,7 @@ weechat_hook_timer(1000, 0, 1, $timer_cb, 'test');
 
 | бафери |
   buffer_new +
+  buffer_new_props +
   current_buffer +
   buffer_search +
   buffer_search_main +
