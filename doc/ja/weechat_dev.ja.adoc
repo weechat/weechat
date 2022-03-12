@@ -310,6 +310,8 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |       irc-server.c                | IRC サーバとの入出力通信
 // TRANSLATION MISSING
 |       irc-tag.c                   | Functions to manipulate IRC message tags.
+// TRANSLATION MISSING
+|       irc-typing.c                | Typing status.
 |       irc-upgrade.c               | WeeChat をアップグレードする際の IRC データの保存およびロード
 |    javascript/                    | JavaScript プラグイン
 |       weechat-js.cpp              | JavaScript の主要関数 (スクリプトのロード/アンロード、JavaScript コードの実行)

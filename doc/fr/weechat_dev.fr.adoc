@@ -299,6 +299,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |       irc-sasl.c                  | Authentification SASL avec le serveur IRC.
 |       irc-server.c                | Communication avec le serveur IRC.
 |       irc-tag.c                   | Fonctions pour manipuler les étiquettes de message IRC.
+|       irc-typing.c                | Statut d'écriture.
 |       irc-upgrade.c               | Sauvegarde/restauration des données IRC lors de la mise à jour de WeeChat.
 |    javascript/                    | Extension JavaScript.
 |       weechat-js.cpp              | Fonctions principales pour JavaScript (chargement/déchargement des scripts, exécution de code JavaScript).
