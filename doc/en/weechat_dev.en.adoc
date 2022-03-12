@@ -439,6 +439,8 @@ WeeChat "core" is located in following directories:
 |             test-irc-protocol.cpp   | Tests: IRC protocol.
 |             test-irc-sasl.cpp       | Tests: SASL authentication with IRC protocol.
 |             test-irc-server.cpp     | Tests: IRC server.
+|          logger/                    | Root of unit tests for logger plugin.
+|             test-logger-backlog.cpp | Tests: logger backlog.
 |          trigger/                   | Root of unit tests for trigger plugin.
 |             test-trigger.cpp        | Tests: triggers.
 |             test-trigger-config.cpp | Tests: trigger configuration.
