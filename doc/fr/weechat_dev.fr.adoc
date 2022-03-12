@@ -442,6 +442,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |             test-irc-protocol.cpp   | Tests : protocole IRC.
 |             test-irc-sasl.cpp       | Tests : authentification SASL avec le protocole IRC.
 |             test-irc-server.cpp     | Tests : serveur IRC.
+|             test-irc-tag.cpp        | Tests : étiquettes des messages IRC.
 |          logger/                    | Racine des tests unitaires pour l'extension logger.
 |             test-logger-backlog.cpp | Tests : backlog logger.
 |          trigger/                   | Racine des tests unitaires pour l'extension trigger.
