@@ -43,7 +43,9 @@ Bug fixes::
   * irc: fix display of message 901 (you are now logged out) (issue #1758)
   * irc: fix display of IRC numeric messages with no parameters
   * python: fix crash in hook callbacks after script loading failure (issue #1740)
+  * scripts: allow NULL in parameters "default_value" and "value" of function config_new_option (issue #1761)
   * scripts: auto-load scripts with supported extensions only (issue #1698)
+  * tcl: add constant `$::weechat::WEECHAT_NULL` (issue #1761)
   * trigger: fix search of triggers with UTF-8 chars in name (issue #1739)
   * xfer: fix auto-accept of server/nick when the server name contains UTF-8 chars (issue #1739)
 
