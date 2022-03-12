@@ -28,6 +28,7 @@ extern "C"
 #include <string.h>
 #include "src/core/wee-arraylist.h"
 #include "src/core/wee-config-file.h"
+#include "src/gui/gui-buffer.h"
 #include "src/plugins/irc/irc-channel.h"
 #include "src/plugins/irc/irc-join.h"
 #include "src/plugins/irc/irc-server.h"
@@ -479,21 +480,24 @@ TEST(IrcJoin, AddRemoveChannelsAutojoin)
 TEST(IrcJoin, SaveChannelsToAutojoin)
 {
     struct t_irc_server *server;
-    struct t_irc_channel *channel;
+    struct t_irc_channel *channel1, *channel2;
 
     server = irc_server_alloc ("my_ircd");
     CHECK(server);
 
-    irc_channel_new (server, IRC_CHANNEL_TYPE_CHANNEL,
+    channel1 = irc_channel_new (server, IRC_CHANNEL_TYPE_CHANNEL,
                                 "#test1", 0, 0);
-    channel = irc_channel_new (server, IRC_CHANNEL_TYPE_CHANNEL,
-                               "#test2", 0, 0);
-    channel->key = strdup ("key2");
+    channel2 = irc_channel_new (server, IRC_CHANNEL_TYPE_CHANNEL,
+                                "#test2", 0, 0);
+    channel2->key = strdup ("key2");
 
     irc_join_save_channels_to_autojoin (server);
     STRCMP_EQUAL(
         "#test2,#test1 key2",
         CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
+
+    gui_buffer_close (channel1->buffer);
+    gui_buffer_close (channel2->buffer);
 
     irc_server_free (server);
 }
