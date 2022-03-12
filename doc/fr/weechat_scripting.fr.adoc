@@ -210,7 +210,7 @@ donner comme paramètre quand une fonctionne accepte des valeurs nulles.
 Pour surmonter cela vous pouvez utiliser la constante `$::weechat::WEECHAT_NULL`
 qui agit comme la valeur nulle. Cette constante est définie avec la valeur
 `\uFFFF\uFFFF\uFFFFWEECHAT_NULL\uFFFF\uFFFF\uFFFF`, il est donc très peu probable
-qu'elle apparaisse intentionnellement.
+qu'elle apparaisse de manière non intentionnelle.
 
 [[language_guile]]
 ==== Guile (Scheme)
