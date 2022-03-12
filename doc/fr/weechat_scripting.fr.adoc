@@ -205,6 +205,13 @@ Les fonctions sont appelées par `+weechat.xxx(arg1, arg2, ...)+`.
 
 Les fonctions sont appelées par `+weechat::xxx arg1 arg2 ...+`.
 
+Étant donné que Tcl n'a que des types "string", il n'y a pas de type null à
+donner comme paramètre quand une fonctionne accepte des valeurs nulles.
+Pour surmonter cela vous pouvez utiliser la constante `$::weechat::WEECHAT_NULL`
+qui agit comme la valeur nulle. Cette constante est définie avec la valeur
+`\uFFFF\uFFFF\uFFFFWEECHAT_NULL\uFFFF\uFFFF\uFFFF`, il est donc très peu probable
+qu'elle apparaisse intentionnellement.
+
 [[language_guile]]
 ==== Guile (Scheme)
 
