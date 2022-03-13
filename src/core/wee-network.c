@@ -92,6 +92,27 @@ network_init_gcrypt ()
 }
 
 /*
+ * Allocates credentials structure.
+ */
+
+void
+network_allocate_credentials ()
+{
+    gnutls_certificate_allocate_credentials (&gnutls_xcred);
+#if LIBGNUTLS_VERSION_NUMBER >= 0x02090a /* 2.9.10 */
+    gnutls_certificate_set_verify_function (gnutls_xcred,
+                                            &hook_connect_gnutls_verify_certificates);
+#endif /* LIBGNUTLS_VERSION_NUMBER >= 0x02090a */
+#if LIBGNUTLS_VERSION_NUMBER >= 0x020b00 /* 2.11.0 */
+    gnutls_certificate_set_retrieve_function (gnutls_xcred,
+                                              &hook_connect_gnutls_set_certificates);
+#else
+    gnutls_certificate_client_set_retrieve_function (gnutls_xcred,
+                                                     &hook_connect_gnutls_set_certificates);
+#endif /* LIBGNUTLS_VERSION_NUMBER >= 0x020b00 */
+}
+
+/*
  * Loads system's default trusted certificate authorities.
  *
  * Returns the number of certificates loaded.
@@ -259,9 +280,7 @@ network_reload_ca_files (int force_display)
                              network_num_certs),
                          network_num_certs);
     }
-
-    gnutls_certificate_allocate_credentials (&gnutls_xcred);
-
+    network_allocate_credentials ();
     network_load_ca_files (force_display);
 }
 
@@ -275,19 +294,8 @@ network_init_gnutls ()
     if (!weechat_no_gnutls)
     {
         gnutls_global_init ();
-        gnutls_certificate_allocate_credentials (&gnutls_xcred);
+        network_allocate_credentials ();
         network_load_ca_files (0);
-#if LIBGNUTLS_VERSION_NUMBER >= 0x02090a /* 2.9.10 */
-        gnutls_certificate_set_verify_function (gnutls_xcred,
-                                                &hook_connect_gnutls_verify_certificates);
-#endif /* LIBGNUTLS_VERSION_NUMBER >= 0x02090a */
-#if LIBGNUTLS_VERSION_NUMBER >= 0x020b00 /* 2.11.0 */
-        gnutls_certificate_set_retrieve_function (gnutls_xcred,
-                                                  &hook_connect_gnutls_set_certificates);
-#else
-        gnutls_certificate_client_set_retrieve_function (gnutls_xcred,
-                                                         &hook_connect_gnutls_set_certificates);
-#endif /* LIBGNUTLS_VERSION_NUMBER >= 0x020b00 */
     }
 
     network_init_gnutls_ok = 1;
