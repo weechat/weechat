@@ -45,7 +45,12 @@ TEST_GROUP(GuiBuffer)
 
 TEST(GuiBuffer, SearchType)
 {
-    /* TODO: write tests */
+    LONGS_EQUAL(-1, gui_buffer_search_type (NULL));
+    LONGS_EQUAL(-1, gui_buffer_search_type (""));
+    LONGS_EQUAL(-1, gui_buffer_search_type ("invalid"));
+
+    LONGS_EQUAL(GUI_BUFFER_TYPE_FORMATTED, gui_buffer_search_type ("formatted"));
+    LONGS_EQUAL(GUI_BUFFER_TYPE_FREE, gui_buffer_search_type ("free"));
 }
 
 /*
@@ -55,7 +60,14 @@ TEST(GuiBuffer, SearchType)
 
 TEST(GuiBuffer, SearchNotify)
 {
-    /* TODO: write tests */
+    LONGS_EQUAL(-1, gui_buffer_search_notify (NULL));
+    LONGS_EQUAL(-1, gui_buffer_search_notify (""));
+    LONGS_EQUAL(-1, gui_buffer_search_notify ("invalid"));
+
+    LONGS_EQUAL(GUI_BUFFER_NOTIFY_NONE, gui_buffer_search_notify ("none"));
+    LONGS_EQUAL(GUI_BUFFER_NOTIFY_HIGHLIGHT, gui_buffer_search_notify ("highlight"));
+    LONGS_EQUAL(GUI_BUFFER_NOTIFY_MESSAGE, gui_buffer_search_notify ("message"));
+    LONGS_EQUAL(GUI_BUFFER_NOTIFY_ALL, gui_buffer_search_notify ("all"));
 }
 
 /*
