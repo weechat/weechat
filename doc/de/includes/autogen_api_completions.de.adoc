@@ -26,7 +26,7 @@
 
 | irc | irc_channels | Kanäle auf allen IRC Servern
 
-| irc | irc_channels_autojoin | channels automatically joined on the current server (option "autojoin")
+| irc | irc_channels_autojoin | Kanäle, die automatisch auf dem aktuellen Server betreten werden (Option "autojoin")
 
 | irc | irc_ignores_numbers | Anzahl für festgelegte Ignorierungen
 

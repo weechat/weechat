@@ -2691,7 +2691,7 @@
 ** Standardwert: `+""+`
 
 * [[option_irc.server_default.autojoin_dynamic]] *irc.server_default.autojoin_dynamic*
-** Beschreibung: pass:none[set automatically the "autojoin" option according to the channels you manually join and part with commands /join and /part]
+** Beschreibung: pass:none[Setze automatisch die "autojoin"-Option entsprechend den Kanälen, die du manuell beitrittst bzw. verlässt, mit den Befehlen /join und /part]
 ** Typ: boolesch
 ** Werte: on, off
 ** Standardwert: `+off+`

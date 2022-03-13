@@ -124,7 +124,7 @@ Beispiele:
 ----
 
 [[command_irc_autojoin]]
-* `+autojoin+`: configure the "autojoin" server option
+* `+autojoin+`: Konfigurieren der Serveroption "autojoin"
 
 ----
 /autojoin  add [<channel1> [<channel2>...]]
@@ -133,15 +133,15 @@ Beispiele:
            save
            sort
 
-    add: add current channel or a list of channels (with optional keys) to the autojoin option; if you are on the channel and the key is not provided, the key is read in the channel
- addraw: use the IRC raw format (same as /join command): all channels separated by commas, optional keys separated by commas
-    del: delete current channel or a list of channels from the autojoin option
-channel: channel name
-    key: key for the channel
-   save: save currently joined channels in the autojoin option
-   sort: sort alphabetically channels in the autojoin option
+    add: Hinzufügen des aktuellen Kanals oder einer Liste von Kanälen (mit optionalen Schlüsseln) zur autojoin-Option; Wenn Sie sich in dem Kanal befinden und der Schlüssel nicht übergeben wird, wird der Schlüssel im Kanal gelesen
+ addraw: das IRC Roh-Format wird genutzt (wie beim /join Befehl): alle Kanäle werden durch Kommata voneinander getrennt und optional werden die Schlüssel durch Kommata separiert
+    del: Löschen des aktuellen Kanals oder eine Liste von Kanälen aus der autoJoin-Option
+channel: Kanalname
+    key: Schlüssel für den Kanal
+   save: Speichert die aktuell besuchten Kanäle in der autojoin-Option
+   sort: sortiert die Kanäle alphabetisch in der autojoin Option
 
-Examples:
+Beispiele:
   /autojoin add
   /autojoin add #test
   /autojoin add #chan1 #chan2
