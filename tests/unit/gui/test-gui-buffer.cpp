@@ -504,7 +504,19 @@ TEST(GuiBuffer, StringReplaceLocalVar)
 
 TEST(GuiBuffer, MatchList)
 {
-    /* TODO: write tests */
+    LONGS_EQUAL(0, gui_buffer_match_list (NULL, NULL));
+    LONGS_EQUAL(0, gui_buffer_match_list (gui_buffers, NULL));
+    LONGS_EQUAL(0, gui_buffer_match_list (gui_buffers, ""));
+    LONGS_EQUAL(0, gui_buffer_match_list (NULL, "*"));
+
+    LONGS_EQUAL(1, gui_buffer_match_list (gui_buffers, "*"));
+    LONGS_EQUAL(1, gui_buffer_match_list (gui_buffers, "core.*"));
+    LONGS_EQUAL(1, gui_buffer_match_list (gui_buffers, "*.wee*"));
+    LONGS_EQUAL(1, gui_buffer_match_list (gui_buffers, "*,!*test*"));
+    LONGS_EQUAL(1, gui_buffer_match_list (gui_buffers, "*,!*test*,!*abc*"));
+
+    LONGS_EQUAL(0, gui_buffer_match_list (gui_buffers, "*,!*wee*"));
+    LONGS_EQUAL(0, gui_buffer_match_list (gui_buffers, "*,!*abc*,!*wee*"));
 }
 
 /*
