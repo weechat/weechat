@@ -29,6 +29,7 @@ New features::
 
 Bug fixes::
 
+  * core: set again TLS verification functions after options weechat.network.gnutls_ca_system and weechat.network.gnutls_ca_user are changed (issue #1763)
   * core: fix memory leak when removing a line on a buffer with free content
   * core: remove obsolete option weechat.plugin.debug (issue #1744)
   * core: fix search of commands with UTF-8 chars in name when option weechat.look.command_incomplete is on (issue #1739)
