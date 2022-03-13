@@ -62,6 +62,7 @@ WeeChat почетна страница се налази на адреси: htt
 * Debian/Ubuntu (или било која Debian компатибилна дистрибуција): `apt-get install weechat-curses weechat-plugins` +
 За најновије верзије и ноћне изградње: https://weechat.org/download/debian
 * Fedora Core: `dnf install weechat`
+* FreeBSD: `pkg install weechat`
 * Gentoo: `emerge weechat`
 * Mandriva/RedHat (или било која RPM компатибилна дистрибуција): `rpm -i /путања//до/weechat-x.y.z-1.i386.rpm`
 * openSUSE: `zypper in weechat`

@@ -80,6 +80,7 @@ I pacchetti binari sono disponibili per molte distribuzioni, incluse:
   `apt-get install weechat-curses weechat-plugins` +
   For latest versions and nightly builds: https://weechat.org/download/debian
 * Fedora Core: `dnf install weechat`
+* FreeBSD: `pkg install weechat`
 * Gentoo: `emerge weechat`
 * Mandriva/RedHat (o qualunque distribuzione compatibile con RPM):
   `rpm -i /path/per/weechat-x.y.z-1.i386.rpm`
