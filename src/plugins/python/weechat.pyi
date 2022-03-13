@@ -586,6 +586,13 @@ def buffer_new(name: str, input_callback: str, input_callback_data: str,
     ...
 
 
+def buffer_new_props(name: str, properties: Dict[str, str],
+                     input_callback: str, input_callback_data: str,
+                     close_callback: str, close_callback_data: str) -> str:
+    """`buffer_new_props in WeeChat plugin API reference <https://weechat.org/doc/api#_buffer_new_props>`_"""
+    ...
+
+
 def current_buffer() -> str:
     """`current_buffer in WeeChat plugin API reference <https://weechat.org/doc/api#_current_buffer>`_"""
     ...
