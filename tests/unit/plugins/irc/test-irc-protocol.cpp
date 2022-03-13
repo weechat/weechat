@@ -32,6 +32,7 @@ extern "C"
 #include "src/core/wee-hashtable.h"
 #include "src/core/wee-hook.h"
 #include "src/core/wee-string.h"
+#include "src/gui/gui-buffer.h"
 #include "src/gui/gui-color.h"
 #include "src/plugins/plugin.h"
 #include "src/plugins/irc/irc-ctcp.h"
@@ -42,6 +43,7 @@ extern "C"
 #include "src/plugins/irc/irc-server.h"
 #include "src/plugins/typing/typing-config.h"
 #include "src/plugins/typing/typing-status.h"
+#include "src/plugins/xfer/xfer-buffer.h"
 
 extern int irc_protocol_is_numeric_command (const char *str);
 extern int irc_protocol_log_level_for_command (const char *command);
@@ -1755,6 +1757,10 @@ TEST(IrcProtocolWithServer, privmsg)
     CHECK_CORE("xfer: incoming file from bob (0.0.0.1, irc." IRC_FAKE_SERVER
                "), name: file.txt, 3 bytes (protocol: dcc)");
     CHECK_SENT(NULL);
+
+    /* close xfer buffer */
+    if (xfer_buffer)
+        gui_buffer_close (xfer_buffer);
 }
 
 /*
