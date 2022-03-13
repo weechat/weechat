@@ -887,19 +887,16 @@ um sich vor dem Betreten von Channels bei "nickserv" zu identifizieren:
 [[edit_autojoin]]
 === Wie kann ich Channels zur autojoin Option entfernen/hinzufügen?
 
-// TRANSLATION MISSING
-With WeeChat ≥ 3.5, you can automatically record the channels you manually
-join and part in the "autojoin" server option.
+Ab WeeChat ≥ 3.5 können Sie die Kanäle, denen Sie manuell betreten und verlassen,
+automatisch aufzeichnen und die Serveroption „autojoin“ entsprechend anpassen.
 
-// TRANSLATION MISSING
-For all servers:
+Für alle Server:
 
 ----
 /set irc.server_default.autojoin_record on
 ----
 
-// TRANSLATION MISSING
-For a single server:
+Für einen einzelnen Server:
 
 ----
 /set irc.server.libera.autojoin_record on

@@ -205,12 +205,11 @@ Funktionen werden aufgerufen mittels `+weechat.xxx(arg1, arg2, ...)+`.
 
 Funktionen werden aufgerufen mittels `+weechat::xxx arg1 arg2 ...+`.
 
-// TRANSLATION MISSING
-Since Tcl only has string types, there's no null type to pass as an argument
-when a function accepts null values. To overcome this you can use the constant
-`$::weechat::WEECHAT_NULL` which acts as a null value. This constant is defined
-as `\uFFFF\uFFFF\uFFFFWEECHAT_NULL\uFFFF\uFFFF\uFFFF`, so it's very unlikely to
-appear unintentionally.
+Da Tcl nur String-Typen hat, gibt es keinen Null-Typ, der als Argument übergeben werden kann
+wenn eine Funktion Nullwerte akzeptiert. Um dies zu überwinden, können Sie die Konstante
+`$::weechat::WEECHAT_NULL` verwenden, das als Nullwert fungiert. Diese Konstante ist definiert
+als `\uFFFF\uFFFF\uFFFFWEECHAT_NULL\uFFFF\uFFFF\uFFFF`, es ist somit sehr unwahrscheinlich
+das es ungewollt verwendet wird.
 
 [[language_guile]]
 ==== Guile (Scheme)
