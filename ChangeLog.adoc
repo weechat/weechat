@@ -29,7 +29,6 @@ New features::
 
 Bug fixes::
 
-  * core: set again TLS verification functions after options weechat.network.gnutls_ca_system and weechat.network.gnutls_ca_user are changed (issue #1763)
   * core: fix memory leak when removing a line on a buffer with free content
   * core: remove obsolete option weechat.plugin.debug (issue #1744)
   * core: fix search of commands with UTF-8 chars in name when option weechat.look.command_incomplete is on (issue #1739)
@@ -60,6 +59,13 @@ Build::
 
   * debian: change dependency libargon2-0-dev to libargon2-dev (debian #1005703)
   * ruby: add detection of Ruby 3.1
+
+[[v3.4.1]]
+== Version 3.4.1 (2022-03-13)
+
+Bug fixes::
+
+  * core: set again TLS verification functions after options weechat.network.gnutls_ca_system and weechat.network.gnutls_ca_user are changed (issue #1763)
 
 [[v3.4]]
 == Version 3.4 (2021-12-18)

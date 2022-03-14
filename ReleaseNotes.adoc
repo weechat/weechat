@@ -42,6 +42,11 @@ and is now a percentage between `0` and `100`:
 * `1`: low compression (fast)
 * `100`: best compression (slow)
 
+[[v3.4.1]]
+== Version 3.4.1 (2022-03-13)
+
+Bug fix and maintenance release.
+
 [[v3.4]]
 == Version 3.4 (2021-12-18)
 
