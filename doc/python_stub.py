@@ -38,16 +38,14 @@ STUB_HEADER = """\
 from typing import Dict
 """
 
-CONSTANT_RE = r"""\
-  `(?P<constant>WEECHAT_[A-Z0-9_]+)` \((?P<type>(string|integer))\)(?: \+)?\
-"""
+CONSTANT_RE = (
+    r"""  `(?P<constant>WEECHAT_[A-Z0-9_]+)` \((?P<type>(string|integer))\)(?: \+)?"""
+)
 
-FUNCTION_RE = r"""\
-\[source,python\]
+FUNCTION_RE = r"""\[source,python\]
 ----
 # prototype
-def (?P<function>\w+)(?P<args>[^)]*)(?P<return>\) -> [^:]+:) \.\.\.\
-"""
+def (?P<function>\w+)(?P<args>[^)]*)(?P<return>\) -> [^:]+:) \.\.\."""
 
 
 def print_stub_constants() -> None:
