@@ -39,7 +39,8 @@ from typing import Dict
 """
 
 CONSTANT_RE = (
-    r"""  `(?P<constant>WEECHAT_[A-Z0-9_]+)` \((?P<type>(string|integer))\)(?: \+)?"""
+    r"  `(?P<constant>WEECHAT_[A-Z0-9_]+)` "
+    r"\((?P<type>(string|integer))\)(?: \+)?"
 )
 
 FUNCTION_RE = r"""\[source,python\]
