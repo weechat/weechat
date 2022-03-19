@@ -958,7 +958,12 @@ IRC_COMMAND_CALLBACK(autojoin)
     /* add raw channel(s) */
     if (weechat_strcasecmp (argv[1], "addraw") == 0)
     {
-        WEECHAT_COMMAND_MIN_ARGS(3, "addraw");
+        if (argc < 3)
+        {
+            if (old_autojoin)
+                free (old_autojoin);
+            WEECHAT_COMMAND_MIN_ARGS(3, "addraw");
+        }
         irc_join_add_channels_to_autojoin (ptr_server, argv_eol[2]);
         goto end;
     }
