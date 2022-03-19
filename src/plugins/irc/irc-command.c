@@ -1006,7 +1006,8 @@ end:
     ptr_autojoin = IRC_SERVER_OPTION_STRING(ptr_server,
                                             IRC_SERVER_OPTION_AUTOJOIN);
     if ((old_autojoin && !ptr_autojoin) || (!old_autojoin && ptr_autojoin)
-        || (strcmp (old_autojoin, ptr_autojoin) != 0))
+        || (old_autojoin && ptr_autojoin
+            && (strcmp (old_autojoin, ptr_autojoin) != 0)))
     {
         if (old_autojoin && old_autojoin[0])
         {
