@@ -729,7 +729,7 @@ Bug fixes::
   * lua: fix macros used to return values
   * php: fix return code of functions config_write_option and config_write_line
   * php: fix memory leak in 72 functions returning allocated strings
-  * python: fix crash when loading a script with Python >= 3.7 (issue #1219)
+  * python: fix crash when loading a script with Python ≥ 3.7 (issue #1219)
   * relay: fix socket creation for relay server on OpenBSD (issue #1213)
   * ruby: fix memory leak in 7 functions returning allocated strings
   * script: fix memory leak in case of invalid XML content in list of scripts
@@ -962,7 +962,7 @@ Bug fixes::
   * irc: fix close of server channels which are waiting for the JOIN when the server buffer is closed (issue #873)
   * irc: fix buffer switching on manual join for forwarded channels (issue #876)
   * irc: add missing tags on CTCP message sent
-  * lua: fix integers returned in Lua >= 5.3 (issue #834)
+  * lua: fix integers returned in Lua ≥ 5.3 (issue #834)
   * relay: make HTTP headers case-insensitive for WebSocket connections (issue #888)
   * relay: set status to "authentication failed" and close immediately connection in case of authentication failure in weechat and irc protocols (issue #825)
   * script: reload a script after upgrade only if it was loaded, set autoload only if the script was auto-loaded (issue #855)
@@ -1299,7 +1299,7 @@ Bug fixes::
 Build::
 
   * core: fix compilation of man pages with autotools in source directory
-  * core: fix compilation of plugins with CMake >= 3.1 (issue #287)
+  * core: fix compilation of plugins with CMake ≥ 3.1 (issue #287)
   * lua: add detection of Lua 5.2
   * python: fix Python detection with Homebrew (issue #217)
   * tests: fix compilation of tests with clang (issue #275)
@@ -1331,7 +1331,7 @@ Build::
 
   * aspell: fix compilation with Enchant < 1.6.0 (issue #192)
   * guile: fix compilation with Guile < 2.0.4 (issue #198)
-  * perl: fix detection of Perl >= 5.20 with autotools
+  * perl: fix detection of Perl ≥ 5.20 with autotools
   * tests: fix build of tests when the build directory is outside source tree (issue #178)
 
 [[v1.0]]
@@ -1513,7 +1513,7 @@ New features::
   * core: add infos "term_width" and "term_height"
   * core: add bar item "buffer_zoom", add signals "buffer_{zoomed|unzoomed}" (patch #8204)
   * core: add default keys kbd:[Alt+Home] / kbd:[Alt+End] (`meta2-1;3H` / `meta2-1;3F`) and kbd:[Alt+F11] / kbd:[Alt+F12] (`meta2-23;3~` / `meta2-24;3~`) for xterm
-  * core: add support of italic text (requires ncurses >= 5.9 patch 20130831)
+  * core: add support of italic text (requires ncurses ≥ 5.9 patch 20130831)
   * core: add options to customize default text search in buffers: weechat.look.buffer_search_{case_sensitive|force_default|regex|where}
   * core: add support of UTF-8 chars in horizontal/vertical separators (options weechat.look.separator_{horizontal|vertical})
   * core: add support of logical and/or for argument "tags" in function hook_print
@@ -1579,9 +1579,9 @@ Bug fixes::
   * logger: fix memory leaks in backlog
   * logger: replace backslashs in name by logger replacement char under Cygwin (bug #41207)
   * lua: fix crash on calls to callbacks during load of script
-  * python: fix load of scripts with Python >= 3.3
+  * python: fix load of scripts with Python ≥ 3.3
   * relay: fix memory leak on unload of relay plugin
-  * ruby: fix ruby init with Ruby >= 2.0 (bug #41115)
+  * ruby: fix ruby init with Ruby ≥ 2.0 (bug #41115)
   * scripts: fix script interpreter used after register during load of script in python/perl/ruby/lua/guile plugins (bug #41345)
   * xfer: use same infolist for hook and signals (patch #7974)
 
@@ -1728,7 +1728,7 @@ Bug fixes::
   * api: allow hashtable with keys that are not strings in function hashtable_add_to_infolist
   * api: fix function string_mask_to_regex: escape all special chars used in regex (bug #38398)
   * guile: fix crash in function hdata_move
-  * guile: fix arguments given to callbacks (separate arguments instead of one list with arguments inside), Guile >= 2.0 is now required (bug #38350)
+  * guile: fix arguments given to callbacks (separate arguments instead of one list with arguments inside), Guile ≥ 2.0 is now required (bug #38350)
   * guile: fix crash on calls to callbacks during load of script (bug #38343)
   * irc: fix name of server buffer after `/server rename` (set name "server.name" instead of "name")
   * irc: fix uncontrolled format string when sending unknown irc commands (if option irc.network.send_unknown_commands is on)
@@ -1817,7 +1817,7 @@ Bug fixes::
   * core: use high priority (50000) for commands `/command` and `/input` so that an alias will not take precedence over these commands (bug #36353)
   * core: execute command with higher priority when many commands with same name are found with different priorities
   * core: fix display of combining chars (bug #37775)
-  * core: fix display of zoomed/merged buffer (with number >= 2) after switching to it (bug #37593)
+  * core: fix display of zoomed/merged buffer (with number ≥ 2) after switching to it (bug #37593)
   * core: fix display problem when option weechat.look.prefix_same_nick is set (problem with nick displayed in first line of screen) (bug #37556)
   * core: fix wrapping of words with wide chars (the break was made before the correct position)
   * api: do not call shell to execute command in hook_process (fix security problem when a plugin/script gives untrusted command) (bug #37764)
@@ -1986,7 +1986,7 @@ Bug fixes::
   * core: fix display bug with prefix when length is greater than max and prefix is ending with a wide char (bug #36032)
   * core: fix lost scroll when switching to a buffer with a pending search
   * core: fix display of wide chars on last column of chat area (patch #7733)
-  * api: display warning in scripts when invalid pointers (malformed strings) are given to plugin API functions (warning displayed if debug for plugin is >= 1)
+  * api: display warning in scripts when invalid pointers (malformed strings) are given to plugin API functions (warning displayed if debug for plugin is ≥ 1)
   * scripts: fix type of argument "rc" in callback of hook_process (from string to integer)
   * guile: fix crash on ARM when loading guile plugin (bug #36479)
   * guile: add missing function hook_process_hashtable in API
@@ -2152,7 +2152,7 @@ Bug fixes::
   * core: fix display of background color in chat area after line feed
   * core: fix paste detection (problem with end of lines)
   * core: fix display of paste multi-line prompt with a root input bar (bug #34305)
-  * core: replace deprecated GnuTLS function gnutls_certificate_client_set_retrieve_function by new function gnutls_certificate_set_retrieve_function (GnuTLS >= 2.11.0)
+  * core: replace deprecated GnuTLS function gnutls_certificate_client_set_retrieve_function by new function gnutls_certificate_set_retrieve_function (GnuTLS ≥ 2.11.0)
   * core: use dynamic buffer size for calls to vsnprintf
   * core: fix memory leak in unhook of hook_connect
   * core: fix memory leak in display of empty bar items
@@ -2373,7 +2373,7 @@ Bug fixes::
   * core: fix display bug with attributes like underlined in bars (bug #29889)
   * api: fix bug with replacement char in function string_remove_color (bug #30296)
   * irc: fix bug in parser when no argument is received after command, no callback was called, and message was silently ignored (bug #30640)
-  * irc: fix import of certificates created by OpenSSL >= 1.0.0 (bug #30316)
+  * irc: fix import of certificates created by OpenSSL ≥ 1.0.0 (bug #30316)
   * irc: fix display of local SSL certificate when it is sent to server (patch #7218)
   * irc: use empty real name by default in config, instead of reading real name in /etc/passwd (bug #30111)
   * irc: fix bug with command line option "irc://" (bug #29990), new format for port and channels
@@ -2519,7 +2519,7 @@ Bug fixes::
 Build::
 
   * core: fix CMake directories: let user customize lib, share, locale and include directories (patch #6922)
-  * ruby: add support of Ruby >= 1.9.1 (patch #6989)
+  * ruby: add support of Ruby ≥ 1.9.1 (patch #6989)
 
 [[v0.3.0]]
 == Version 0.3.0 (2009-09-06)
@@ -2781,7 +2781,7 @@ Bug fixes::
   * fix bug with ignore: now any IRC command is allowed
   * fix crash with kbd:[Ctrl+t] (transpose) and one char on line (bug #18153)
   * fix bug on ignore with "mode" IRC command (bug #18058)
-  * fix crash when loading ruby script if file does not exist, with Ruby >= 1.9 only (bug #18064)
+  * fix crash when loading ruby script if file does not exist, with Ruby ≥ 1.9 only (bug #18064)
   * mode changes with `/op`, `/deop`, `/voice`, `/devoice`, `/halfop`, `/dehalfop` are now sent in one mode command to server (task #5968)
   * fix bug with `/alias` and arguments (like $1), now text after argument(s) is used (bug #17944)
   * fix minor display bug with special chars on some arch like PPC
