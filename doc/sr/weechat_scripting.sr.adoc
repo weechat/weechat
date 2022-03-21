@@ -177,12 +177,11 @@ Weechat.bar_new("name", "off", "0", "window", "", "left", "vertical", "vertical"
 
 Функције се позивају са `+weechat::xxx арг1 арг2 ...+`.
 
-// TRANSLATION MISSING
-Since Tcl only has string types, there's no null type to pass as an argument
-when a function accepts null values. To overcome this you can use the constant
-`$::weechat::WEECHAT_NULL` which acts as a null value. This constant is defined
-as `\uFFFF\uFFFF\uFFFFWEECHAT_NULL\uFFFF\uFFFF\uFFFF`, so it's very unlikely to
-appear unintentionally.
+Пошто Tcl има само стринг типове, не постоји null тип који се прослеђује као
+аргумент када функција прихвата null вредности. Ако то желите да заобиђете,
+употребите константу `$::weechat::WEECHAT_NULL` која се има улогу null вредности.
+Ова константа је дефинисана као `\uFFFF\uFFFF\uFFFFWEECHAT_NULL\uFFFF\uFFFF\uFFFF`,
+тако да је скоро немогуће да се појави без намере.
 
 [[language_guile]]
 ==== Guile (Scheme)

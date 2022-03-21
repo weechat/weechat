@@ -284,8 +284,7 @@ WeeChat „језгро” се налази у следећим директо�
 |       irc-ignore.c                | IRC Ignore.
 |       irc-info.c                  | IRC info/infolists/hdata.
 |       irc-input.c                 | Унос команди/текста.
-// TRANSLATION MISSING
-|       irc-join.c                  | Functions for list of channels to join.
+|       irc-join.c                  | Функције за листе канала којима се приступа.
 |       irc-message.c               | Функције за манипулисање IRC порукама.
 |       irc-mode.c                  | Функције у вези режима канала/надимка.
 |       irc-modelist.c              | Листе режима IRC канала (+b, +e, +I, ...).
@@ -298,8 +297,7 @@ WeeChat „језгро” се налази у следећим директо�
 |       irc-sasl.c                  | SASL аутентификација са IRC сервером.
 |       irc-server.c                | У/И комуникација са IRC сервером.
 |       irc-tag.c                   | Функције за манипулацију ознакама IRC порука.
-// TRANSLATION MISSING
-|       irc-typing.c                | Typing status.
+|       irc-typing.c                | Статус куцања.
 |       irc-upgrade.c               | Чување/обнављање IRC података када се ажурира програм WeeChat.
 |    javascript/                    | JavaScript додатак.
 |       weechat-js.cpp              | Главне JavaScript функције (учитавање/уклањање скрипти, извршавање JavaScript кода).
@@ -424,8 +422,7 @@ WeeChat „језгро” се налази у следећим директо�
 |          test-core-utf8.cpp         | Тестови: UTF-8.
 |          test-core-util.cpp         | Тестови: помоћне функције.
 |       gui/                          | Корен unit тестова интерфејса.
-// TRANSLATION MISSING
-|          test-gui-buffer.cpp        | Tests: buffer functions.
+|          test-gui-buffer.cpp        | Тестови: бафер функције.
 |          test-gui-chat.cpp          | Тестови: чет функције.
 |          test-gui-color.cpp         | Тестови: боје.
 |          test-gui-line.cpp          | Тестови: линије.
@@ -437,20 +434,16 @@ WeeChat „језгро” се налази у следећим директо�
 |             test-irc-color.cpp      | Тестови: IRC боје.
 |             test-irc-config.cpp     | Тестови: IRC конфигурација.
 |             test-irc-ignore.cpp     | Тестови: IRC игнорисања.
-// TRANSLATION MISSING
-|             test-irc-join.cpp       | Tests: IRC join functions.
+|             test-irc-join.cpp       | Тестови: IRC функције приступања.
 |             test-irc-message.cpp    | Тестови: IRC поруке.
 |             test-irc-mode.cpp       | Тестови: IRC режими.
 |             test-irc-nick.cpp       | Тестови: IRC надимци.
 |             test-irc-protocol.cpp   | Тестови: IRC протокол.
 |             test-irc-sasl.cpp       | Тестови: SASL аутентификација са IRC протоколом.
 |             test-irc-server.cpp     | Тестови: IRC сервер.
-// TRANSLATION MISSING
-|             test-irc-tag.cpp        | Tests: IRC message tags.
-// TRANSLATION MISSING
-|          logger/                    | Root of unit tests for logger plugin.
-// TRANSLATION MISSING
-|             test-logger-backlog.cpp | Tests: logger backlog.
+|             test-irc-tag.cpp        | Тестови: IRC ознаке порука.
+|          logger/                    | Корен unit тестива за logger додатак.
+|             test-logger-backlog.cpp | Тестови: logger заостатак.
 |          trigger/                   | Корен unit тестова за окидач додатак.
 |             test-trigger.cpp        | Тестови: окидачи.
 |             test-trigger-config.cpp | Тестови: конфигурација окидача.
