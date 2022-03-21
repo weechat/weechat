@@ -12124,11 +12124,10 @@ _Ажурирано у верзији 1.5._
 
 Отвара нови бафер.
 
-// TRANSLATION MISSING
 [NOTE]
-If you want to immediately set buffer properties (buffer type, local variables,
-key bindings, etc.), then better use the function <<_buffer_new_props,buffer_new_props>>
-which sets these properties during the buffer creation, before sending signal
+Ако желите да тренутно поставите особине бафера (тип бафера, локалне променљиве, тастерске
+пречице, итд.), онда је боље да упторебите функцију <<_buffer_new_props,buffer_new_props>>
+која ове особине поставља током креирања бафера, пре слања сигнала
 <<hook_signal_buffer_opened,buffer_opened>>.
 
 Прототип:
@@ -12225,8 +12224,7 @@ buffer = weechat.buffer_new("my_buffer", "my_input_cb", "", "my_close_cb", "")
 
 _WeeChat ≥ 3.5._
 
-// TRANSLATION MISSING
-Open a new buffer and apply properties.
+Отвара нови бафер и поставља особине.
 
 Прототип:
 
@@ -12250,9 +12248,8 @@ struct t_gui_buffer *weechat_buffer_new_props (const char *name,
 Аргументи:
 
 * _name_: име бафера (мора бити јединствено за додатак)
-// TRANSLATION MISSING
-* _properties_: properties to apply
-  (see function <<_buffer_set,buffer_set>> for the allowed properties)
+* _properties_: особине које треба да се примене
+  (за дозвољене особине погледајте функцију <<_buffer_set,buffer_set>>)
 * _input_callback_: функција која се позива када се унесе текст уноса за бафер, аргументи и повратна вредност су:
 ** _const void *pointer_: показивач
 ** _void *data_: показивач
@@ -12279,7 +12276,6 @@ struct t_gui_buffer *weechat_buffer_new_props (const char *name,
 
 C пример:
 
-// TRANSLATION MISSING
 [source,c]
 ----
 int
@@ -12303,11 +12299,11 @@ struct t_hashtable *properties = weechat_hashtable_new (8,
                                                         WEECHAT_HASHTABLE_STRING,
                                                         NULL,
                                                         NULL);
-/* buffer with free content */
+/* бафер са произвољним садржајем */
 weechat_hashtable_set (properties, "type", "free");
-/* no logging on this buffer */
+/* овај бафер се не логује */
 weechat_hashtable_set (properties, "localvar_set_no_log", "1");
-/* bind key alt-c on this buffer */
+/* везивање пречице alt-c за овај бафер */
 weechat_hashtable_set (properties, "key_bind_meta-c", "/my_command");
 
 struct t_gui_buffer *my_buffer = weechat_buffer_new_props ("my_buffer",
@@ -12318,7 +12314,6 @@ struct t_gui_buffer *my_buffer = weechat_buffer_new_props ("my_buffer",
 
 Скрипта (Python):
 
-// TRANSLATION MISSING
 [source,python]
 ----
 # прототип
@@ -12336,9 +12331,9 @@ def my_close_cb(data, buffer):
     return weechat.WEECHAT_RC_OK
 
 properties = {
-    "type": "free",                    # buffer with free content
-    "localvar_set_no_log": "1",        # no logging on this buffer
-    "key_bind_meta-c": "/my_command",  # bind key alt-c on this buffer
+    "type": "free",                    # бафер са произвољним садржајем
+    "localvar_set_no_log": "1",        # овај бафер се не логује
+    "key_bind_meta-c": "/my_command",  # везивање пречице alt-c за овај бафер
 }
 buffer = weechat.buffer_new_props("my_buffer", properties, "my_input_cb", "", "my_close_cb", "")
 ----
