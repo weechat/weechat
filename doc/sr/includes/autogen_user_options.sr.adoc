@@ -2691,7 +2691,7 @@
 ** подразумевана вредност: `+""+`
 
 * [[option_irc.server_default.autojoin_dynamic]] *irc.server_default.autojoin_dynamic*
-** опис: pass:none[set automatically the "autojoin" option according to the channels you manually join and part with commands /join and /part]
+** опис: pass:none[аутоматско постављање опције „autojoin” према каналима којима ручно приступате и које науштате командама /join и /part]
 ** тип: логичка
 ** вредности: on, off
 ** подразумевана вредност: `+off+`

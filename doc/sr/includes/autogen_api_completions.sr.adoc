@@ -26,7 +26,7 @@
 
 | irc | irc_channels | канали на свим IRC серверима
 
-| irc | irc_channels_autojoin | channels automatically joined on the current server (option "autojoin")
+| irc | irc_channels_autojoin | канали на текућем серверу којима се аутоматски приступа (опција „autojoin”)
 
 | irc | irc_ignores_numbers | бројеви за дефинисана игнорисања
 
