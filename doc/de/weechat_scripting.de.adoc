@@ -901,7 +901,7 @@ Beispiele:
 weechat.prnt("", "Hallo")
 
 # Gibt den Text "Hallo" im Core Buffer aus, schreibt diesen aber nicht in die Protokolldatei
-# (nur Version >= 0.3.3)
+# (nur Version ≥ 0.3.3)
 weechat.prnt_date_tags("", 0, "no_log", "hello")
 
 # Gibt den Präfix "==>" gefolgt von dem Text "Hallo" im aktuellen Buffer aus

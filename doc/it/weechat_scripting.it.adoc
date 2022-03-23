@@ -926,7 +926,7 @@ Esempi:
 weechat.prnt("", "hello")
 
 # visualizza "hello" sul buffer core, ma non salva sul file di log
-# (solo versioni >= 0.3.3)
+# (solo versioni ≥ 0.3.3)
 weechat.prnt_date_tags("", 0, "no_log", "hello")
 
 # visualizza il prefisso "==>" ed il messaggio "hello" sul buffer corrente

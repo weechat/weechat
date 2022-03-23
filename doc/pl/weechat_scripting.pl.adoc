@@ -889,7 +889,7 @@ Przykłady:
 weechat.prnt("", "witaj")
 
 # wyświetl "witaj" w głównym buforze, ale nie zapisuj tego do pliku z logiem
-# (tylko wersje >= 0.3.3)
+# (tylko wersje ≥ 0.3.3)
 weechat.prnt_date_tags("", 0, "no_log", "witaj")
 
 # wyświetl "==>" przed wiadomością "witaj" w obecnym buforze

@@ -9315,7 +9315,7 @@ struct t_hook *weechat_hook_process (const char *command,
 ** _void *data_: ポインタ
 ** _const char *command_: 子プロセスが実行するコマンド
 ** _int return_code_: リターンコード:
-*** _>= 0_: コマンドを実行した子プロセスのまたは URL に対するリターンコード。URL の場合に取り得る値は:
+*** _≥ 0_: コマンドを実行した子プロセスのまたは URL に対するリターンコード。URL の場合に取り得る値は:
 **** _0_: 転送に成功
 **** _1_: 無効な URL
 **** _2_: 転送エラー
@@ -15641,7 +15641,7 @@ int weechat_network_connect_to (const char *proxy,
 
 戻り値:
 
-* 接続が確立した場合はソケット番号 (>= 0)、エラーが起きた場合は -1
+* 接続が確立した場合はソケット番号 (≥ 0)、エラーが起きた場合は -1
 
 C 言語での使用例:
 

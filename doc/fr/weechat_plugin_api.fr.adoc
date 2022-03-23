@@ -5129,7 +5129,7 @@ Paramètres :
 
 Valeur de retour :
 
-* index du nouvel élément (>= 0), -1 si erreur.
+* index du nouvel élément (≥ 0), -1 si erreur.
 
 Exemple en C :
 
@@ -5161,7 +5161,7 @@ Paramètres :
 
 Valeur de retour :
 
-* index du nouvel élément (>= 0), -1 si erreur.
+* index du nouvel élément (≥ 0), -1 si erreur.
 
 Exemple en C :
 
@@ -9453,7 +9453,7 @@ Paramètres :
 ** _void *data_ : pointeur
 ** _const char *command_ : commande exécutée par le fils
 ** _int return_code_ : code retour :
-*** _>= 0_ : code retour du fils pour une commande, et pour l'URL, les valeurs
+*** _≥ 0_ : code retour du fils pour une commande, et pour l'URL, les valeurs
     possibles sont :
 **** _0_ : transfert ok
 **** _1_ : URL invalide
@@ -15902,7 +15902,7 @@ Paramètres :
 
 Valeur de retour :
 
-* numéro de socket (>= 0) si la connexion est OK, -1 en cas d'erreur
+* numéro de socket (≥ 0) si la connexion est OK, -1 en cas d'erreur
 
 Exemple en C :
 
