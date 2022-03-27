@@ -409,7 +409,10 @@ gui_main_loop ()
 
     /* catch SIGWINCH signal: redraw screen */
     if (!weechat_headless)
+    {
+        gui_signal_sigwinch_received = 1;
         signal_catch (SIGWINCH, &gui_main_signal_sigwinch);
+    }
 
     /* hook stdin (read keyboard) */
     if (weechat_headless)
