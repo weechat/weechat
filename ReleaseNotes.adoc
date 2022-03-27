@@ -18,7 +18,7 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 
 
 [[v3.5]]
-== Version 3.5 (under dev)
+== Version 3.5 (2022-03-27)
 
 [[v3.5_relay_weechat_compression_zstd]]
 === Compression "zstandard" in relay
