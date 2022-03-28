@@ -78,6 +78,14 @@ Some additional packages may be useful, like weechat-plugins.
 For other distributions, please look at your manual for installation
 instructions.
 
+[[containers]]
+=== Containers
+
+Containers with WeeChat can be built or installed directly from the
+https://hub.docker.com/r/weechat/weechat[Docker Hub]. +
+For more information, see the README in this repository:
+https://github.com/weechat/weechat-container.
+
 [[source_package]]
 === Source package
 
