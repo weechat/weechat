@@ -9,10 +9,10 @@ diff --git a/debian-devel/control b/debian-devel/control
 index 9dbbe1fb0..b044f7b44 100644
 --- a/debian-devel/control
 +++ b/debian-devel/control
-@@ -4,7 +4,7 @@ Priority: optional
- Maintainer: Sébastien Helleu <flashcode@flashtux.org>
+@@ -5,7 +5,7 @@ Priority: optional
  Build-Depends:
      asciidoctor (>= 1.5.4),
+     ruby-pygments.rb,
 -    debhelper (>= 12),
 +    debhelper (>= 11),
      cmake, pkg-config,
@@ -38,10 +38,10 @@ diff --git a/debian-stable/control b/debian-stable/control
 index ea31b52d4..fd4aad73a 100644
 --- a/debian-stable/control
 +++ b/debian-stable/control
-@@ -4,7 +4,7 @@ Priority: optional
- Maintainer: Emmanuel Bouthenot <kolter@debian.org>
+@@ -5,7 +5,7 @@ Priority: optional
  Build-Depends:
      asciidoctor (>= 1.5.4),
+     ruby-pygments.rb,
 -    debhelper (>= 12),
 +    debhelper (>= 11),
      cmake, pkg-config,
