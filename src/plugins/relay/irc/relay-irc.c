@@ -1600,7 +1600,21 @@ relay_irc_recv (struct t_relay_client *client, const char *data)
     }
     else
     {
-        if (irc_command && weechat_strcasecmp (irc_command, "ping") == 0)
+        if (irc_command && weechat_strcasecmp (irc_command, "join") == 0)
+        {
+            relay_irc_input_send (client, NULL,
+                                  "priority_high",
+                                  "/join %s",
+                                  irc_args);
+        }
+        else if (irc_command && weechat_strcasecmp (irc_command, "part") == 0)
+        {
+            relay_irc_input_send (client, NULL,
+                                  "priority_high",
+                                  "/part %s",
+                                  irc_args);
+        }
+        else if (irc_command && weechat_strcasecmp (irc_command, "ping") == 0)
         {
             relay_irc_sendf (client,
                              ":%s PONG %s :%s",
