@@ -6580,6 +6580,41 @@ IRC_PROTOCOL_CALLBACK(470)
 }
 
 /*
+ * Callback for the IRC commands "704", "705", and "706": help reply.
+ *
+ * Commands look like:
+ *   704 mynick topic :First help line of <topic>
+ *   705 mynick topic :The <topic> is blah blah
+ *   705 mynick topic :and this
+ *   705 mynick topic :and that.
+ *   706 mynick topic :Last help line of <topic>
+ */
+IRC_PROTOCOL_CALLBACK(help)
+{
+    char *str_message;
+
+    IRC_PROTOCOL_MIN_PARAMS(2);
+
+    if (ignored)
+        return WEECHAT_RC_OK;
+
+    str_message = irc_protocol_string_params (params, num_params - 1, num_params - 1);
+
+    weechat_printf_date_tags (
+        irc_msgbuffer_get_target_buffer (server, nick, command, NULL, NULL),
+        date,
+        irc_protocol_tags (command, tags, "notify_private", nick, address),
+        _("%s%s"),
+        weechat_prefix ("network"),
+        str_message);
+
+    if (str_message)
+        free (str_message);
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Callback for the IRC command "728": quietlist.
  *
  * Command looks like:
@@ -7245,6 +7280,9 @@ irc_protocol_recv_command (struct t_irc_server *server,
         IRCB(501, 1, 0, generic_error),  /* unknown mode flag               */
         IRCB(502, 1, 0, generic_error),  /* can't chg mode for other users  */
         IRCB(671, 1, 0, whois_nick_msg), /* whois (secure connection)       */
+        IRCB(704, 1, 0, help),           /* start of HELP/HELPOP reply      */
+        IRCB(705, 1, 0, help),           /* main HELP/HELPOP reply          */
+        IRCB(706, 1, 0, help),           /* end of HELP/HELPOP reply        */
         IRCB(728, 1, 0, 728),            /* quietlist                       */
         IRCB(729, 1, 0, 729),            /* end of quietlist                */
         IRCB(730, 1, 0, 730),            /* monitored nicks online          */
