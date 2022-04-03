@@ -20,7 +20,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 Bug fixes::
 
-  * core: set again TLS verification functions after options weechat.network.gnutls_ca_system and weechat.network.gnutls_ca_user are changed (issue #1763)
+  * core: set again TLS verification functions after options weechat.network.gnutls_ca_system and weechat.network.gnutls_ca_user are changed (issue #1763, CVE-2022-28352)
 
 [[v3.4]]
 == Version 3.4 (2021-12-18)
