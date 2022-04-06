@@ -6581,7 +6581,7 @@ IRC_PROTOCOL_CALLBACK(470)
 }
 
 /*
- * Callback for the IRC commands "704", "705", and "706": help reply.
+ * Callback for the IRC commands "524", "704", "705", and "706": help reply.
  *
  * Commands look like:
  *   704 mynick topic :First help line of <topic>
@@ -6589,6 +6589,9 @@ IRC_PROTOCOL_CALLBACK(470)
  *   705 mynick topic :and this
  *   705 mynick topic :and that.
  *   706 mynick topic :Last help line of <topic>
+ *
+ * Or:
+ *   524 mynick topic :help not found
  */
 IRC_PROTOCOL_CALLBACK(help)
 {
@@ -7280,6 +7283,7 @@ irc_protocol_recv_command (struct t_irc_server *server,
         IRCB(491, 1, 0, generic_error),  /* no O-lines for your host        */
         IRCB(501, 1, 0, generic_error),  /* unknown mode flag               */
         IRCB(502, 1, 0, generic_error),  /* can't chg mode for other users  */
+        IRCB(524, 1, 0, help),           /* HELP/HELPOP reply (help not found) */
         IRCB(671, 1, 0, whois_nick_msg), /* whois (secure connection)       */
         IRCB(704, 1, 0, help),           /* start of HELP/HELPOP reply      */
         IRCB(705, 1, 0, help),           /* main HELP/HELPOP reply          */
