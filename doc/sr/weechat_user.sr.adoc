@@ -72,14 +72,12 @@ WeeChat почетна страница се налази на адреси: htt
 
 За остале дистрибуције, молимо вас да погледајте своје упутство у вези начина за инсталирање.
 
-// TRANSLATION MISSING
 [[containers]]
-=== Containers
+=== Контејнери
 
-// TRANSLATION MISSING
-Containers with WeeChat can be built or installed directly from the
+Можете да изградите контејнере са WeeChat или да их инсталирате директно са
 https://hub.docker.com/r/weechat/weechat[Docker Hub]. +
-For more information, see the README in this repository:
+За више информација погледајте README фајл у следећем репозиторијуму:
 https://github.com/weechat/weechat-container.
 
 [[source_package]]
