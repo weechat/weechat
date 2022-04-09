@@ -79,6 +79,9 @@ WeeChat をインストールするには、以下のものが必要です:
   `rpm -i /path/to/weechat-x.y.z-1.i386.rpm`
 * openSUSE: `zypper in weechat`
 * Sourcemage: `cast weechat`
+// TRANSLATION MISSING
+* macOS (with https://brew.sh/[Homebrew]): `brew install weechat`
+  (for help: `brew info weechat`)
 
 例えば weechat-plugins 等の追加パッケージを使うとさらに便利になるかもしれません。
 
@@ -101,7 +104,7 @@ WeeChat は CMake または autotools を使ってコンパイルできます (C
 
 [NOTE]
 macOS では https://brew.sh/[Homebrew] を使ってください:
-`brew install weechat` (ヘルプを見るには: `brew info weechat`)。
+`brew install --build-from-source weechat`。
 
 [[dependencies]]
 ==== 依存関係

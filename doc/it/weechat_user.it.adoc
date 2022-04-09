@@ -86,6 +86,9 @@ I pacchetti binari sono disponibili per molte distribuzioni, incluse:
   `rpm -i /path/per/weechat-x.y.z-1.i386.rpm`
 * openSUSE: `zypper in weechat`
 * Sourcemage: `cast weechat`
+// TRANSLATION MISSING
+* macOS (with https://brew.sh/[Homebrew]): `brew install weechat`
+  (for help: `brew info weechat`)
 
 Potrebbero risultare utili alcuni pacchetti addizionali, come
 weechat-plugins.
@@ -112,7 +115,7 @@ WeeChat può essere compilato con CMake oppure autotools
 // TRANSLATION MISSING
 [NOTE]
 On macOS, you can use https://brew.sh/[Homebrew]:
-`brew install weechat` (for help: `brew info weechat`).
+`brew install --build-from-source weechat`.
 
 [[dependencies]]
 ==== Dipendenze

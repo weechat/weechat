@@ -67,6 +67,9 @@ WeeChat почетна страница се налази на адреси: htt
 * Mandriva/RedHat (или било која RPM компатибилна дистрибуција): `rpm -i /путања//до/weechat-x.y.z-1.i386.rpm`
 * openSUSE: `zypper in weechat`
 * Sourcemage: `cast weechat`
+// TRANSLATION MISSING
+* macOS (with https://brew.sh/[Homebrew]): `brew install weechat`
+  (for help: `brew info weechat`)
 
 Још неки пакети вам могу бити од користи, као што је weechat-plugins.
 
@@ -86,7 +89,7 @@ https://github.com/weechat/weechat-container.
 Програм WeeChat може да се компајлира са CMake или са autotools (CMake је препоручени начин).
 
 [NOTE]
-На macOS можете да употребите https://brew.sh/[Homebrew]: `brew install weechat` (за помоћ: `brew info weechat`).
+На macOS можете да употребите https://brew.sh/[Homebrew]: `brew install --build-from-source weechat`.
 
 [[dependencies]]
 ==== Зависности
