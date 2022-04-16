@@ -323,6 +323,8 @@ buflist_config_change_sort (const void *pointer, void *data,
             free (sort);
     }
 
+    weechat_hashtable_free (hashtable_pointers);
+
     buflist_bar_item_update (0);
 }
 

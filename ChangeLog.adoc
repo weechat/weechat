@@ -21,6 +21,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 Bug fixes::
 
   * core: fix bad window size on startup with some terminals like https://github.com/kovidgoyal/kitty[kitty] (issue #1769)
+  * buflist: fix memory leak when reading config and changing option buflist.look.sort
   * relay: fix save of channels in autojoin option when JOIN and PART commands are received from an IRC relay client (issue #1771)
 
 [[v3.5]]
