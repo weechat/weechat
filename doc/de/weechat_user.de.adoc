@@ -78,23 +78,20 @@ Binärpakete sind für folgende Distributionen erhältlich:
   `rpm -i /path/to/weechat-x.y.z-1.i386.rpm`
 * openSUSE: `zypper in weechat`
 * Sourcemage: `cast weechat`
-// TRANSLATION MISSING
-* macOS (with https://brew.sh/[Homebrew]): `brew install weechat`
-  (for help: `brew info weechat`)
+* macOS (mittels https://brew.sh/[Homebrew]): `brew install weechat`
+  (für Hilfe siehe: `brew info weechat`)
 
 zusätzliche Pakete können bzw. sollten installiert werden. Zum Beispiel: weechat-plugins.
 
 Für nicht aufgeführte Distributionen schauen Sie bitte in die jeweiligen Anleitung,
 wie man Pakete installiert.
 
-// TRANSLATION MISSING
 [[containers]]
-=== Containers
+=== Container
 
-// TRANSLATION MISSING
-Containers with WeeChat can be built or installed directly from the
+Container mit WeeChat können direkt erstellt oder installiert werden von
 https://hub.docker.com/r/weechat/weechat[Docker Hub]. +
-For more information, see the README in this repository:
+Für weitere Informationen siehe das README im Repositorium:
 https://github.com/weechat/weechat-container.
 
 [[source_package]]
@@ -2773,21 +2770,20 @@ Beispiel einer Bar mit den Items,
 └───────────────────────────────────────────────────────────────────────────┘
 ....
 
-// TRANSLATION MISSING
 [[item_spacer]]
-===== Spacer item
+===== Spacer Item
 
-An item called `spacer` can be used to align items (left, center, right).
+Ein Item namens `spacer` (Abstandshalter) kann verwendet werden, um Items auszurichten (links, mittig, rechts).
 
-When at least one `spacer` item is used in a bar, the whole bar width is used:
-the spacers auto expand with the same size (or almost). +
-When the bar is not large enough for all items, spacers are not displayed.
+Wenn mindestens ein `spacer` in einer Bar verwendung findet, wird die gesamte Breite der Bar verwendet:
+Die Abstandshalter werden automatisch mit der gleichen Größe (oder fast) erweitert.+
+Falls eine Bar nicht groß genug für alle Elemente ist, werden keine Abstandshalter angezeigt.
 
 [NOTE]
-The `spacer` bar item can be used only in bars with position `top` or `bottom`,
-filling `horizontal` and size `1`.
+Ein `spacer` Bar-Item kann nur in Bars verwendet werden die die Position `top` oder `bottom` besitzen,
+sowie eine `horizontal` Ausrichtung haben, sowie eine Größe von `1`.
 
-Example of bar with items
+Beipiel einer Bar mit den Items
 "[time],spacer,buffer_number+:+buffer_plugin+.+buffer_name,spacer,[buffer_last_number]":
 
 ....
@@ -2796,7 +2792,6 @@ Example of bar with items
 └───────────────────────────────────────────────────────────────────────────┘
 ....
 
-// TRANSLATION MISSING
 [[item_force_buffer]]
 ===== Force buffer
 
