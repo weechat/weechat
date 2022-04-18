@@ -18,6 +18,10 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 [[v3.6]]
 == Version 3.6 (under dev)
 
+New features::
+
+  * core: add bar item "spacer" (issue #1700)
+
 Bug fixes::
 
   * core: fix bad window size on startup with some terminals like https://github.com/kovidgoyal/kitty[kitty] (issue #1769)
