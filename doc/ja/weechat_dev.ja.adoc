@@ -450,6 +450,8 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |          test-core-util.cpp         | テスト: ユーティリティ関数
 |       gui/                          | インターフェースの単体テストを収める最上位ディレクトリ
 // TRANSLATION MISSING
+|          test-gui-bar-window.cpp    | Tests: bar window functions.
+// TRANSLATION MISSING
 |          test-gui-buffer.cpp        | Tests: buffer functions.
 // TRANSLATION MISSING
 |          test-gui-chat.cpp          | Tests: chat functions.

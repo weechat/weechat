@@ -292,6 +292,7 @@ gui_chat_string_next_char (struct t_gui_window *window, struct t_gui_line *line,
                             case GUI_COLOR_BAR_MOVE_CURSOR_CHAR:
                             case GUI_COLOR_BAR_START_ITEM:
                             case GUI_COLOR_BAR_START_LINE_ITEM:
+                            case GUI_COLOR_BAR_SPACER:
                                 string++;
                                 break;
                         }

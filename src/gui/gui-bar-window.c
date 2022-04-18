@@ -668,15 +668,37 @@ gui_bar_window_content_get (struct t_gui_bar_window *bar_window,
 }
 
 /*
+ * Checks if the item content is a spacer (bar item "spacer").
+ *
+ * Returns:
+ *    1: item is a spacer
+ *    1: item is not a spacer
+ */
+
+int
+gui_bar_window_item_is_spacer (const char *item)
+{
+    return (item
+            && (item[0] == GUI_COLOR_COLOR_CHAR)
+            && (item[1] == GUI_COLOR_BAR_CHAR)
+            && (item[2] == GUI_COLOR_BAR_SPACER)
+            && !item[3]);
+}
+
+/*
  * Gets content of a bar window, formatted for display, according to filling
  * for bar position.
+ *
+ * The integer variable *num_spacers is set with the number of spacers found
+ * (bar item "spacer").
  *
  * Note: result must be freed after use.
  */
 
 char *
 gui_bar_window_content_get_with_filling (struct t_gui_bar_window *bar_window,
-                                         struct t_gui_window *window)
+                                         struct t_gui_window *window,
+                                         int *num_spacers)
 {
     enum t_gui_bar_filling filling;
     const char *ptr_content;
@@ -689,6 +711,9 @@ gui_bar_window_content_get_with_filling (struct t_gui_bar_window *bar_window,
     int length_reinit_color, length_reinit_color_space, length_start_item;
     int length, max_length, max_length_screen;
     int total_items, columns, lines;
+    int item_is_spacer;
+
+    *num_spacers = 0;
 
     if (!bar_window
         || !bar_window->items_subcount || !bar_window->items_content
@@ -757,7 +782,10 @@ gui_bar_window_content_get_with_filling (struct t_gui_bar_window *bar_window,
                         {
                             item_value = NULL;
                         }
-                        if (at_least_one_item && first_sub_item)
+                        item_is_spacer = gui_bar_window_item_is_spacer (
+                            (item_value) ? item_value : ptr_content);
+                        if (at_least_one_item && first_sub_item
+                            && !item_is_spacer)
                         {
                             /* first sub item: insert space after last item */
                             if (filling == GUI_BAR_FILLING_HORIZONTAL)
@@ -788,7 +816,10 @@ gui_bar_window_content_get_with_filling (struct t_gui_bar_window *bar_window,
                         first_sub_item = 0;
                         if (item_value)
                             free (item_value);
-                        at_least_one_item = 1;
+                        if (item_is_spacer)
+                            (*num_spacers)++;
+                        else
+                            at_least_one_item = 1;
                     }
                     else
                     {
@@ -960,6 +991,80 @@ gui_bar_window_content_get_with_filling (struct t_gui_bar_window *bar_window,
     string_dyn_free (content, 0);
 
     return content2;
+}
+
+/*
+ * Checks if spacer can be used in the bar according to its position, filling
+ * and size.
+ *
+ * Returns:
+ *   1: spacers can be used
+ *   0: spacers can not be used
+ */
+
+int
+gui_bar_window_can_use_spacer (struct t_gui_bar_window *bar_window)
+{
+    int position, filling, bar_size;
+    int pos_ok, filling_ok, size_ok;
+
+    if (!bar_window)
+        return 0;
+
+    position = CONFIG_INTEGER(bar_window->bar->options[GUI_BAR_OPTION_POSITION]);
+    filling = gui_bar_get_filling (bar_window->bar);
+    bar_size = CONFIG_INTEGER(bar_window->bar->options[GUI_BAR_OPTION_SIZE]);
+
+    pos_ok = ((position == GUI_BAR_POSITION_TOP)
+              || (position == GUI_BAR_POSITION_BOTTOM));
+    filling_ok = (filling == GUI_BAR_FILLING_HORIZONTAL);
+    size_ok = (bar_size == 1);
+
+    return pos_ok && filling_ok && size_ok;
+}
+
+/*
+ * Computes size of each spacer in the bar.
+ *
+ * Note: result must be freed after use.
+ */
+
+int *
+gui_bar_window_compute_spacers_size (int length_on_screen,
+                                     int bar_window_width,
+                                     int num_spacers)
+{
+    int *spacers, spacer_size, i;
+
+    if ((length_on_screen < 0) || (bar_window_width < 1) || (num_spacers <= 0))
+        return NULL;
+
+    /* if not enough space for spacers, ignore them all */
+    if (length_on_screen >= bar_window_width)
+        return NULL;
+
+    spacers = malloc (num_spacers * sizeof (spacers[0]));
+    if (!spacers)
+        return NULL;
+
+    spacer_size = (bar_window_width - length_on_screen) / num_spacers;
+
+    for (i = 0; i < num_spacers; i++)
+    {
+        spacers[i] = spacer_size;
+    }
+
+    length_on_screen += num_spacers * spacer_size;
+
+    i = 0;
+    while ((length_on_screen < bar_window_width) && (i < num_spacers))
+    {
+        spacers[i]++;
+        i++;
+        length_on_screen++;
+    }
+
+    return spacers;
 }
 
 /*

@@ -2740,13 +2740,41 @@ Przed i za nazwą elementu można używać znaków (nie będących alfanumeryczn
 `+-+` lub `+_+`). Będą one wyświetlane przed/za elementem z kolorem separatorów
 zdefiniowanych dla paska (opcja _color_delim_).
 
-Przykład paska z elementami "[time],buffer_number+:+buffer_plugin+.+buffer_name":
+Przykład paska z elementami
+"[time],buffer_number+:+buffer_plugin+.+buffer_name,[buffer_last_number]":
 
 ....
 ┌───────────────────────────────────────────────────────────────────────────┐
-│[12:55] 3:irc/libera.#weechat                                              │
+│[12:55] 3:irc/libera.#weechat [9]                                          │
 └───────────────────────────────────────────────────────────────────────────┘
 ....
+
+// TRANSLATION MISSING
+[[item_spacer]]
+===== Spacer item
+
+An item called `spacer` can be used to align items (left, center, right).
+
+When at least one `spacer` item is used in a bar, the whole bar width is used:
+the spacers auto expand with the same size (or almost). +
+When the bar is not large enough for all items, spacers are not displayed.
+
+[NOTE]
+The `spacer` bar item can be used only in bars with position `top` or `bottom`,
+filling `horizontal` and size `1`.
+
+Example of bar with items
+"[time],spacer,buffer_number+:+buffer_plugin+.+buffer_name,spacer,[buffer_last_number]":
+
+....
+┌───────────────────────────────────────────────────────────────────────────┐
+│[12:55]                      3:irc/libera.#weechat                      [9]│
+└───────────────────────────────────────────────────────────────────────────┘
+....
+
+// TRANSLATION MISSING
+[[item_force_buffer]]
+===== Force buffer
 
 Specjalna składnia może zostać użyta, żeby wymusić bufor używany do wyświetlenia
 elementów paska: "@bufor:element" (gdzie "bufor" to pełna nazwa bufora i "element"

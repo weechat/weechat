@@ -47,6 +47,7 @@ enum t_gui_bar_item_weechat
     GUI_BAR_ITEM_WINDOW_NUMBER,
     GUI_BAR_ITEM_MOUSE_STATUS,
     GUI_BAR_ITEM_AWAY,
+    GUI_BAR_ITEM_SPACER,
     /* number of bar items */
     GUI_BAR_NUM_ITEMS,
 };

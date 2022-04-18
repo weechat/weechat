@@ -2947,13 +2947,41 @@ Before or after item name, you can use chars (that are not alphanumeric, `+-+`
 or `+_+`). They will be displayed before/after item with the delimiters color
 defined in bar (option _color_delim_).
 
-Example of bar with items "[time],buffer_number+:+buffer_plugin+.+buffer_name":
+Example of bar with items
+"[time],buffer_number+:+buffer_plugin+.+buffer_name,[buffer_last_number]":
 
 ....
 ┌───────────────────────────────────────────────────────────────────────────┐
-│[12:55] 3:irc/libera.#weechat                                              │
+│[12:55] 3:irc/libera.#weechat [9]                                          │
 └───────────────────────────────────────────────────────────────────────────┘
 ....
+
+// TRANSLATION MISSING
+[[item_spacer]]
+===== Spacer item
+
+An item called `spacer` can be used to align items (left, center, right).
+
+When at least one `spacer` item is used in a bar, the whole bar width is used:
+the spacers auto expand with the same size (or almost). +
+When the bar is not large enough for all items, spacers are not displayed.
+
+[NOTE]
+The `spacer` bar item can be used only in bars with position `top` or `bottom`,
+filling `horizontal` and size `1`.
+
+Example of bar with items
+"[time],spacer,buffer_number+:+buffer_plugin+.+buffer_name,spacer,[buffer_last_number]":
+
+....
+┌───────────────────────────────────────────────────────────────────────────┐
+│[12:55]                      3:irc/libera.#weechat                      [9]│
+└───────────────────────────────────────────────────────────────────────────┘
+....
+
+// TRANSLATION MISSING
+[[item_force_buffer]]
+===== Force buffer
 
 // TRANSLATION MISSING
 A special syntax can be used to force the buffer used when displaying the bar

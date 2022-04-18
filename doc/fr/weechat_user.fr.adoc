@@ -2797,13 +2797,41 @@ l'objet de barre avec la couleur des délimiteurs définie dans la barre (option
 _color_delim_).
 
 Exemple de barre avec les objets
-"[time],buffer_number+:+buffer_plugin+.+buffer_name" :
+"[time],buffer_number+:+buffer_plugin+.+buffer_name,[buffer_last_number]" :
 
 ....
 ┌───────────────────────────────────────────────────────────────────────────┐
-│[12:55] 3:irc/libera.#weechat                                              │
+│[12:55] 3:irc/libera.#weechat [9]                                          │
 └───────────────────────────────────────────────────────────────────────────┘
 ....
+
+[[item_spacer]]
+===== Objet d'espacement
+
+Un objet appelé `spacer` peut être utilisé pour aligner les objets
+(gauche, centre, droite).
+
+Lorsqu'au moins un objet `spacer` est utilisé dans une barre, la largeur totale
+de la barre est utilisée : les espacements sont automatiquement étendus avec la
+même taille (ou presque). +
+Lorsque la barre n'est pas assez large pour afficher tous les objets, les
+espacements ne sont pas affichés.
+
+[NOTE]
+L'objet de barre `spacer` ne peut être utilisé que dans les barres avec position
+`top` ou `bottom`, remplissage `horizontal` et taille `1`.
+
+Exemple de barre avec les objets
+"[time],spacer,buffer_number+:+buffer_plugin+.+buffer_name,spacer,[buffer_last_number]" :
+
+....
+┌───────────────────────────────────────────────────────────────────────────┐
+│[12:55]                      3:irc/libera.#weechat                      [9]│
+└───────────────────────────────────────────────────────────────────────────┘
+....
+
+[[item_force_buffer]]
+===== Tampon forcé
 
 Une syntaxe spéciale peut être utilisée pour forcer le tampon utilisé lors de
 l'affichage de l'objet de barre : "@tampon:objet" (où "tampon" est le nom

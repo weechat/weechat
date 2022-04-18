@@ -134,6 +134,7 @@ enum t_gui_color_enum
 #define GUI_COLOR_BAR_MOVE_CURSOR_CHAR        '#'
 #define GUI_COLOR_BAR_START_ITEM              'i'
 #define GUI_COLOR_BAR_START_LINE_ITEM         'l'
+#define GUI_COLOR_BAR_SPACER                  's'
 
 #define GUI_COLOR_EXTENDED_FLAG               0x0100000
 #define GUI_COLOR_EXTENDED_BOLD_FLAG          0x0200000

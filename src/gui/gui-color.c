@@ -707,6 +707,7 @@ gui_color_code_size (const char *string)
                         case GUI_COLOR_BAR_MOVE_CURSOR_CHAR:
                         case GUI_COLOR_BAR_START_ITEM:
                         case GUI_COLOR_BAR_START_LINE_ITEM:
+                        case GUI_COLOR_BAR_SPACER:
                             ptr_string++;
                             break;
                     }
@@ -892,6 +893,7 @@ gui_color_decode (const char *string, const char *replacement)
                             case GUI_COLOR_BAR_MOVE_CURSOR_CHAR:
                             case GUI_COLOR_BAR_START_ITEM:
                             case GUI_COLOR_BAR_START_LINE_ITEM:
+                            case GUI_COLOR_BAR_SPACER:
                                 ptr_string++;
                                 break;
                         }
@@ -1518,6 +1520,7 @@ gui_color_encode_ansi (const char *string)
                             case GUI_COLOR_BAR_MOVE_CURSOR_CHAR:
                             case GUI_COLOR_BAR_START_ITEM:
                             case GUI_COLOR_BAR_START_LINE_ITEM:
+                            case GUI_COLOR_BAR_SPACER:
                                 ptr_string++;
                                 break;
                         }

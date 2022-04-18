@@ -63,7 +63,8 @@ char *gui_bar_item_names[GUI_BAR_NUM_ITEMS] =
   "buffer_name", "buffer_short_name", "buffer_modes", "buffer_filter",
   "buffer_zoom", "buffer_nicklist_count", "buffer_nicklist_count_groups",
   "buffer_nicklist_count_all", "scroll", "hotlist", "completion",
-  "buffer_title", "buffer_nicklist", "window_number", "mouse_status", "away"
+  "buffer_title", "buffer_nicklist", "window_number", "mouse_status", "away",
+  "spacer"
 };
 char *gui_bar_items_default_for_bars[][2] =
 { { GUI_BAR_DEFAULT_NAME_INPUT,
@@ -1989,6 +1990,35 @@ gui_bar_item_away_cb (const void *pointer, void *data,
 }
 
 /*
+ * Bar item with spacer.
+ */
+
+char *
+gui_bar_item_spacer_cb (const void *pointer, void *data,
+                        struct t_gui_bar_item *item,
+                        struct t_gui_window *window,
+                        struct t_gui_buffer *buffer,
+                        struct t_hashtable *extra_info)
+{
+    char str_spacer[16];
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) item;
+    (void) window;
+    (void) buffer;
+    (void) extra_info;
+
+    snprintf (str_spacer, sizeof (str_spacer), "%c%c%c",
+              GUI_COLOR_COLOR_CHAR,
+              GUI_COLOR_BAR_CHAR,
+              GUI_COLOR_BAR_SPACER);
+
+    return strdup (str_spacer);
+}
+
+/*
  * Focus on nicklist.
  */
 
@@ -2436,6 +2466,11 @@ gui_bar_item_init ()
                       &gui_bar_item_away_cb, NULL, NULL);
     gui_bar_item_hook_signal ("buffer_localvar_*",
                               gui_bar_item_names[GUI_BAR_ITEM_AWAY]);
+
+    /* spacer */
+    gui_bar_item_new (NULL,
+                      gui_bar_item_names[GUI_BAR_ITEM_SPACER],
+                      &gui_bar_item_spacer_cb, NULL, NULL);
 }
 
 /*
