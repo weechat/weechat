@@ -21,6 +21,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 New features::
 
   * core: add bar item "spacer" (issue #1700)
+  * core: add case conversion in evaluation of expressions with `lower:string` and `upper:string` (issue #1778)
 
 Bug fixes::
 

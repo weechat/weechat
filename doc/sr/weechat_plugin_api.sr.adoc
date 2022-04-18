@@ -2162,7 +2162,7 @@ str3 = weechat.string_input_for_buffer("//test")  # "/test"
 
 ==== string_eval_expression
 
-_WeeChat ≥ 0.4.0, ажурирано у верзијама 0.4.2, 0.4.3, 1.0, 1.1, 1.2, 1.3, 1.6, 1.8, 2.0, 2.2, 2.3, 2.7, 2.9, 3.1, 3.2, 3.3 и 3.4._
+_WeeChat ≥ 0.4.0, ажурирано у верзијама 0.4.2, 0.4.3, 1.0, 1.1, 1.2, 1.3, 1.6, 1.8, 2.0, 2.2, 2.3, 2.7, 2.9, 3.1, 3.2, 3.3, 3.4 и 3.6._
 
 Израчунава израз и враћа вредност као стринг. Специјалне променљиве у формату `+${променљива}+` се развијају (погледајте табелу испод).
 
@@ -2522,6 +2522,18 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
   +
   >> `+${\ua9}+` +
   == `+©+`
+
+// TRANSLATION MISSING
+| `+${lower:string}+` | 3.6 |
+  String converted to lower case. |
+  >> `+${lower:TEST}+` +
+  >> `+test+`
+
+// TRANSLATION MISSING
+| `+${upper:string}+` | 3.6 |
+  String converted to upper case. |
+  >> `+${upper:test}+` +
+  >> `+TEST+`
 
 | `+${hide:x,стринг}+` | 1.1 |
   Стринг са скривеним карактерима (сви карактери у `стринг` се замењују са `x`). |

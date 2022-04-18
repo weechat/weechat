@@ -1408,28 +1408,30 @@ Des variables sont remplacées dans l'expression, en utilisant le format ${varia
   3. une sous-chaîne évaluée (format : "eval:xxx")
   4. une condition évaluée (format : "eval_cond:xxx")
   5. une chaîne avec les caractères échappés (format : "esc:xxx" ou "\xxx")
-  6. une chaîne avec des caractères à cacher (format : "hide:caractère,chaîne")
-  7. une chaîne avec un maximum de caractères (format : "cut:max,suffixe,chaîne" ou "cut:+max,suffixe,chaîne")
+  6. une chaîne convertie en minuscules (format : "lower:xxx")
+  7. une chaîne convertie en majuscules (format : "upper:xxx")
+  8. une chaîne avec des caractères à cacher (format : "hide:caractère,chaîne")
+  9. une chaîne avec un maximum de caractères (format : "cut:max,suffixe,chaîne" ou "cut:+max,suffixe,chaîne")
      ou un maximum de caractères affichés à l'écran (format : "cutscr:max,suffixe,chaîne" ou "cutscr:+max,suffixe,chaîne")
-  8. une chaîne inversée (format : "rev:xxx" ou "revscr:xxx")
-  9. une chaîne répétée (format : "repeat:nombre,chaîne")
-  10. longueur d'une chaîne (format : "length:xxx" ou "lengthscr:xxx")
-  11. découpage d'une chaîne (format : "split:nombre,séparateurs,flags,xxx")
-  12. découpage de paramètres shell (format : "split_shell:nombre,xxx")
-  13. une couleur (format : "color:xxx", voir la "Référence API extension", fonction "color")
-  14. un modificateur (format : "modifier:nom,données,chaîne")
-  15. une info (format : "info:nom,paramètres", les paramètres sont optionnels)
-  16. une chaîne encodée/decodée en base 16, 32 ou 64 (format : "base_encode:base,xxx" ou "base_decode:base,xxx")
-  17. la date/heure courante (format : "date" ou "date:format")
-  18. une variable d'environnement (format : "env:XXX")
-  19. un opérateur ternaire (format : "if:condition?valeur_si_vrai:valeur_si_faux")
-  20. le résultat d'une expression avec parenthèses et les opérateurs + - * / // % ** (format : "calc:xxx")
-  21. un nombre entier aléatoire (format : "random:min,max")
-  22. une chaîne traduite (format : "translate:xxx")
-  23. déclaration d'une variable utilisateur (format : "define:nom,valeur")
-  24. une option (format : "fichier.section.option")
-  25. une variable locale du tampon
-  26. un hdata/variable (la valeur est automatiquement convertie en chaîne), par défaut "window" et "buffer" pointent vers la fenêtre et le tampon courants.
+  10. une chaîne inversée (format : "rev:xxx" ou "revscr:xxx")
+  11. une chaîne répétée (format : "repeat:nombre,chaîne")
+  12. longueur d'une chaîne (format : "length:xxx" ou "lengthscr:xxx")
+  13. découpage d'une chaîne (format : "split:nombre,séparateurs,flags,xxx")
+  14. découpage de paramètres shell (format : "split_shell:nombre,xxx")
+  15. une couleur (format : "color:xxx", voir la "Référence API extension", fonction "color")
+  16. un modificateur (format : "modifier:nom,données,chaîne")
+  17. une info (format : "info:nom,paramètres", les paramètres sont optionnels)
+  18. une chaîne encodée/decodée en base 16, 32 ou 64 (format : "base_encode:base,xxx" ou "base_decode:base,xxx")
+  19. la date/heure courante (format : "date" ou "date:format")
+  20. une variable d'environnement (format : "env:XXX")
+  21. un opérateur ternaire (format : "if:condition?valeur_si_vrai:valeur_si_faux")
+  22. le résultat d'une expression avec parenthèses et les opérateurs + - * / // % ** (format : "calc:xxx")
+  23. un nombre entier aléatoire (format : "random:min,max")
+  24. une chaîne traduite (format : "translate:xxx")
+  25. déclaration d'une variable utilisateur (format : "define:nom,valeur")
+  26. une option (format : "fichier.section.option")
+  27. une variable locale du tampon
+  28. un hdata/variable (la valeur est automatiquement convertie en chaîne), par défaut "window" et "buffer" pointent vers la fenêtre et le tampon courants.
 Le format du hdata peut être le suivant :
   hdata.var1.var2... : démarrer avec un hdata (le pointeur doit être connu), et demander les variables l'une après l'autre (d'autres hdata peuvent être suivis)
   hdata[liste].var1.var2... : démarrer avec un hdata en utilisant une liste/pointeur/nom de pointeur, par exemple :
@@ -1452,6 +1454,8 @@ Exemples (chaînes simples) :
   /eval -n ${window.buffer.full_name}             ==> core.weechat
   /eval -n ${window.buffer.number}                ==> 1
   /eval -n ${\t}                                  ==> <tab>
+  /eval -n ${lower:TEST}                          ==> test
+  /eval -n ${upper:test}                          ==> TEST
   /eval -n ${hide:-,${relay.network.password}}    ==> --------
   /eval -n ${cut:3,+,test}                        ==> tes+
   /eval -n ${cut:+3,+,test}                       ==> te+

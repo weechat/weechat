@@ -274,6 +274,46 @@ eval_string_eval_cond (const char *text, struct t_eval_context *eval_context)
 }
 
 /*
+ * Converts string to lower case.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+eval_string_lower (const char *text)
+{
+    char *tmp;
+
+    tmp = strdup (text);
+    if (!tmp)
+        return strdup ("");
+
+    string_tolower (tmp);
+
+    return tmp;
+}
+
+/*
+ * Converts string to upper case.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+eval_string_upper (const char *text)
+{
+    char *tmp;
+
+    tmp = strdup (text);
+    if (!tmp)
+        return strdup ("");
+
+    string_toupper (tmp);
+
+    return tmp;
+}
+
+/*
  * Hides chars in a string.
  *
  * Note: result must be freed after use.
@@ -1381,37 +1421,40 @@ end:
  *   4. a string to evaluate (format: eval:xxx)
  *   5. a condition to evaluate (format: eval_cond:xxx)
  *   6. a string with escaped chars (format: esc:xxx or \xxx)
- *   7. a string with chars to hide (format: hide:char,string)
- *   8. a string with max chars (format: cut:max,suffix,string or
+ *   7. a string converted to lower case (format: lower:xxx)
+ *   8. a string converted to upper case (format: upper:xxx)
+ *   9. a string with chars to hide (format: hide:char,string)
+ *  10. a string with max chars (format: cut:max,suffix,string or
  *      cut:+max,suffix,string) or max chars on screen
  *      (format: cutscr:max,suffix,string or cutscr:+max,suffix,string)
- *   9. a reversed string (format: rev:xxx) or reversed string for screen,
+ *  11. a reversed string (format: rev:xxx) or reversed string for screen,
  *      color codes are not reversed (format: revscr:xxx)
- *  10. a repeated string (format: repeat:count,string)
- *  11. length of a string (format: length:xxx) or length of a string on screen
+ *  12. a repeated string (format: repeat:count,string)
+ *  13. length of a string (format: length:xxx) or length of a string on screen
  *      (format: lengthscr:xxx); color codes are ignored
- *  12. split string (format: split:number,separators,flags,xxx
+ *  14. split string (format: split:number,separators,flags,xxx
  *      or split:count,separators,flags,xxx
  *      or split:random,separators,flags,xxx)
- *  13. split shell arguments (format: split:number,xxx or split:count,xxx
+ *  15. split shell arguments (format: split:number,xxx or split:count,xxx
  *      or split:random,xxx)
- *  14. a regex group captured (format: re:N (0.99) or re:+)
- *  15. a color (format: color:xxx)
- *  16. a modifier (format: modifier:name,data,xxx)
- *  17. an info (format: info:name,arguments)
- *  18. a base 16/32/64 encoded/decoded string (format: base_encode:base,xxx
+ *  16. a regex group captured (format: re:N (0.99) or re:+)
+ *  17. a color (format: color:xxx)
+ *  18. a modifier (format: modifier:name,data,xxx)
+ *  19. an info (format: info:name,arguments)
+ *  20. a base 16/32/64 encoded/decoded string (format: base_encode:base,xxx
  *      or base_decode:base,xxx)
- *  19. current date/time (format: date or date:xxx)
- *  20. an environment variable (format: env:XXX)
- *  21. a ternary operator (format: if:condition?value_if_true:value_if_false)
- *  22. calculate result of an expression (format: calc:xxx)
- *  23. a random integer number in the range from "min" to "max"
+ *  21. current date/time (format: date or date:xxx)
+ *  22. an environment variable (format: env:XXX)
+ *  23. a ternary operator (format: if:condition?value_if_true:value_if_false)
+ *  24. calculate result of an expression (format: calc:xxx)
+ *  25. a random integer number in the range from "min" to "max"
  *      (format: random:min,max)
- *  24. a translated string (format: translate:xxx)
- *  25. an option (format: file.section.option)
- *  26. a buffer local variable
- *  27. a pointer name from hashtable "pointers"
- *  28. a hdata variable (format: hdata.var1.var2 or hdata[list].var1.var2
+ *  26. a translated string (format: translate:xxx)
+ *  27. define a new variable (format: define:name,value)
+ *  28. an option (format: file.section.option)
+ *  29. a buffer local variable
+ *  30. a pointer name from hashtable "pointers"
+ *  31. a hdata variable (format: hdata.var1.var2 or hdata[list].var1.var2
  *                        or hdata[ptr].var1.var2 or hdata[ptr_name].var1.var2)
  *
  * See /help in WeeChat for examples.
@@ -1529,7 +1572,21 @@ eval_replace_vars_cb (void *data, const char *text)
         goto end;
     }
 
-    /* 7. hide chars: replace all chars by a given char/string */
+    /* 7. convert to lower case */
+    if (strncmp (text, "lower:", 6) == 0)
+    {
+        value = eval_string_lower (text + 6);
+        goto end;
+    }
+
+    /* 8. convert to upper case */
+    if (strncmp (text, "upper:", 6) == 0)
+    {
+        value = eval_string_upper (text + 6);
+        goto end;
+    }
+
+    /* 9. hide chars: replace all chars by a given char/string */
     if (strncmp (text, "hide:", 5) == 0)
     {
         value = eval_string_hide (text + 5);
@@ -1537,7 +1594,7 @@ eval_replace_vars_cb (void *data, const char *text)
     }
 
     /*
-     * 8. cut chars:
+     * 10. cut chars:
      *   cut: max number of chars, and add an optional suffix when the
      *        string is cut
      *   cutscr: max number of chars displayed on screen, and add an optional
@@ -1554,7 +1611,7 @@ eval_replace_vars_cb (void *data, const char *text)
         goto end;
     }
 
-    /* 9. reverse string */
+    /* 11. reverse string */
     if (strncmp (text, "rev:", 4) == 0)
     {
         value = string_reverse (text + 4);
@@ -1566,7 +1623,7 @@ eval_replace_vars_cb (void *data, const char *text)
         goto end;
     }
 
-    /* 10. repeated string */
+    /* 12. repeated string */
     if (strncmp (text, "repeat:", 7) == 0)
     {
         value = eval_string_repeat (text + 7);
@@ -1574,7 +1631,7 @@ eval_replace_vars_cb (void *data, const char *text)
     }
 
     /*
-     * 11. length of string:
+     * 13. length of string:
      *   length: number of chars
      *   lengthscr: number of chars displayed on screen
      */
@@ -1593,49 +1650,49 @@ eval_replace_vars_cb (void *data, const char *text)
         goto end;
     }
 
-    /* 12: split string */
+    /* 14: split string */
     if (strncmp (text, "split:", 6) == 0)
     {
         value = eval_string_split (text + 6);
         goto end;
     }
 
-    /* 13: split shell */
+    /* 15: split shell */
     if (strncmp (text, "split_shell:", 12) == 0)
     {
         value = eval_string_split_shell (text + 12);
         goto end;
     }
 
-    /* 14. regex group captured */
+    /* 16. regex group captured */
     if (strncmp (text, "re:", 3) == 0)
     {
         value = eval_string_regex_group (text + 3, eval_context);
         goto end;
     }
 
-    /* 15. color code */
+    /* 17. color code */
     if (strncmp (text, "color:", 6) == 0)
     {
         value = eval_string_color (text + 6);
         goto end;
     }
 
-    /* 16. modifier */
+    /* 18. modifier */
     if (strncmp (text, "modifier:", 9) == 0)
     {
         value = eval_string_modifier (text + 9);
         goto end;
     }
 
-    /* 17. info */
+    /* 19. info */
     if (strncmp (text, "info:", 5) == 0)
     {
         value = eval_string_info (text + 5);
         goto end;
     }
 
-    /* 18. base_encode/base_decode */
+    /* 20. base_encode/base_decode */
     if (strncmp (text, "base_encode:", 12) == 0)
     {
         value = eval_string_base_encode (text + 12);
@@ -1647,14 +1704,14 @@ eval_replace_vars_cb (void *data, const char *text)
         goto end;
     }
 
-    /* 19. current date/time */
+    /* 21. current date/time */
     if ((strncmp (text, "date", 4) == 0) && (!text[4] || (text[4] == ':')))
     {
         value = eval_string_date (text + 4);
         goto end;
     }
 
-    /* 20. environment variable */
+    /* 22. environment variable */
     if (strncmp (text, "env:", 4) == 0)
     {
         ptr_value = getenv (text + 4);
@@ -1662,7 +1719,7 @@ eval_replace_vars_cb (void *data, const char *text)
         goto end;
     }
 
-    /* 21: ternary operator: if:condition?value_if_true:value_if_false */
+    /* 23: ternary operator: if:condition?value_if_true:value_if_false */
     if (strncmp (text, "if:", 3) == 0)
     {
         value = eval_string_if (text + 3, eval_context);
@@ -1670,7 +1727,7 @@ eval_replace_vars_cb (void *data, const char *text)
     }
 
     /*
-     * 22. calculate the result of an expression
+     * 24. calculate the result of an expression
      * (with number, operators and parentheses)
      */
     if (strncmp (text, "calc:", 5) == 0)
@@ -1680,7 +1737,7 @@ eval_replace_vars_cb (void *data, const char *text)
     }
 
     /*
-     * 23. random number
+     * 25. random number
      */
     if (strncmp (text, "random:", 7) == 0)
     {
@@ -1689,7 +1746,7 @@ eval_replace_vars_cb (void *data, const char *text)
     }
 
     /*
-     * 24. translated text
+     * 26. translated text
      */
     if (strncmp (text, "translate:", 10) == 0)
     {
@@ -1697,7 +1754,7 @@ eval_replace_vars_cb (void *data, const char *text)
         goto end;
     }
 
-    /* 25. define a variable */
+    /* 27. define a variable */
     if (strncmp (text, "define:", 7) == 0)
     {
         eval_string_define (text + 7, eval_context);
@@ -1705,7 +1762,7 @@ eval_replace_vars_cb (void *data, const char *text)
         goto end;
     }
 
-    /* 25. option: if found, return this value */
+    /* 28. option: if found, return this value */
     if (strncmp (text, "sec.data.", 9) == 0)
     {
         ptr_value = hashtable_get (secure_hashtable_data, text + 9);
@@ -1748,7 +1805,7 @@ eval_replace_vars_cb (void *data, const char *text)
         }
     }
 
-    /* 26. local variable in buffer */
+    /* 29. local variable in buffer */
     ptr_buffer = hashtable_get (eval_context->pointers, "buffer");
     if (ptr_buffer)
     {
@@ -1760,7 +1817,7 @@ eval_replace_vars_cb (void *data, const char *text)
         }
     }
 
-    /* 27. hdata */
+    /* 30. hdata */
     value = eval_string_hdata (text, eval_context);
 
 end:
