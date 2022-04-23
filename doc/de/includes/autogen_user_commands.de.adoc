@@ -1332,7 +1332,7 @@ Beispiele:
 /debug  list
         set <plugin> <level>
         dump [<plugin>]
-        buffer|color|infolists|libs|certs|memory|tags|term|windows
+        buffer|certs|color|dirs|hooks|infolists|libs|memory|tags|term|windows
         mouse|cursor [verbose]
         hdata [free]
         time <command>
@@ -1343,6 +1343,7 @@ Beispiele:
     level: Debuglevel der Erweiterung (0 = deaktiviert Debug)
      dump: Speicherabbild in die WeeChat Protokolldatei schreiben (wie bei einem Programmabsturz)
    buffer: speichert den Bufferinhalt als hexadezimale Ausgabe in die Protokolldatei
+    certs: gibt die Anzahl geladener vertrauenswürdiger Zertifizierungsstellen aus
     color: zeigt Informationen über die aktuellen Farbpaarungen an
    cursor: schaltet den debug-Modus für den Cursor-Modus ein/aus
      dirs: Verzeichnisse werden angezeigt
@@ -1350,7 +1351,6 @@ Beispiele:
     hooks: zeigt die aktiven Hooks an
 infolists: zeigt Information über die Infolists an
      libs: zeigt an welche externen Bibliotheken verwendet werden
-    certs: gibt die Anzahl geladener vertrauenswürdiger Zertifizierungsstellen aus
    memory: gibt Informationen über den genutzten Speicher aus
     mouse: schaltet den debug-Modus für den Maus-Modus ein/aus
      tags: zeigt für jede einzelne Zeile die dazugehörigen Schlagwörter an

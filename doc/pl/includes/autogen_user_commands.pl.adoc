@@ -1331,7 +1331,7 @@ Przykłady:
 /debug  list
         set <wtyczka> <poziom>
         dump [<wtyczka>]
-        buffer|color|infolists|libs|certs|memory|tags|term|windows
+        buffer|certs|color|dirs|hooks|infolists|libs|memory|tags|term|windows
         mouse|cursor [verbose]
         hdata [free]
         time <komenda>
@@ -1342,6 +1342,7 @@ Przykłady:
     poziom: poziom debugowania wtyczki (0 = wyłączony)
      dump: zachowuje zrzut pamięci w pliku z logiem WeeChat (taki sam zrzut jest zapisywany podczas awarii WeeChat)
    buffer: zrzuca zawartość bufora z wartościami heksadecymalnymi do pliku z logiem
+    certs: wyświetla ilość załadowanych zaufanych centrów certyfikacyjnych
     color: wyświetla informacje na temat obecnych par kolorów
    cursor: przełącza debugowanie dla trybu kursora
      dirs: wyświetla katalogi
@@ -1349,7 +1350,6 @@ Przykłady:
     hooks: wyświetla informacje o hooks
 infolists: wyświetla informacje o infolistach
      libs: wyświetla informacje o użytych zewnętrznych bibliotekach
-    certs: wyświetla ilość załadowanych zaufanych centrów certyfikacyjnych
    memory: wyświetla informacje o zużyciu pamięci
     mouse: przełącza debugowanie myszy
      tags: wyświetla tagi dla linii

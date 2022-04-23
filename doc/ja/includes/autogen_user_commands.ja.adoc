@@ -1332,7 +1332,7 @@ Examples:
 /debug  list
         set <plugin> <level>
         dump [<plugin>]
-        buffer|color|infolists|libs|certs|memory|tags|term|windows
+        buffer|certs|color|dirs|hooks|infolists|libs|memory|tags|term|windows
         mouse|cursor [verbose]
         hdata [free]
         time <command>
@@ -1343,6 +1343,7 @@ Examples:
     level: debug level for plugin (0 = disable debug)
      dump: save memory dump in WeeChat log file (same dump is written when WeeChat crashes)
    buffer: dump buffer content with hexadecimal values in log file
+    certs: display number of loaded trusted certificate authorities
     color: display infos about current color pairs
    cursor: toggle debug for cursor mode
      dirs: display directories
@@ -1350,7 +1351,6 @@ Examples:
     hooks: display infos about hooks
 infolists: display infos about infolists
      libs: display infos about external libraries used
-    certs: display number of loaded trusted certificate authorities
    memory: display infos about memory usage
     mouse: toggle debug for mouse
      tags: display tags for lines
