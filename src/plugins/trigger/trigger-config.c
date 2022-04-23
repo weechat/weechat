@@ -59,12 +59,16 @@ char *trigger_config_default_list[][1 + TRIGGER_NUM_OPTIONS] =
      *       - message is a highlight
      *         OR:
      *       - message is a message in a private buffer
+     *     AND:
+     *   - buffer notify is NOT "none"
      */
     { "beep", "on",
       "print",
       "",
-      "${tg_displayed} && ${tg_tags} !!- ,notify_none, "
-      "&& (${tg_highlight} || ${tg_msg_pv})",
+      "${tg_displayed} "
+      "&& ${tg_tags} !!- ,notify_none, "
+      "&& (${tg_highlight} || ${tg_msg_pv}) "
+      "&& ${buffer.notify} > 0",
       "",
       "/print -beep",
       "ok",

@@ -17,6 +17,21 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 (file _ChangeLog.adoc_ in sources).
 
 
+[[v3.6]]
+== Version 3.6 (under dev)
+
+[[v3.6_trigger_beep]]
+=== Default trigger "beep"
+
+The command of "beep" trigger is now executed only if the buffer notify is NOT
+set to `none` (in addition to existing conditions).
+
+You can restore the default trigger "beep" with the following command:
+
+----
+/trigger restore beep
+----
+
 [[v3.5]]
 == Version 3.5 (2022-03-27)
 
