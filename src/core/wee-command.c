@@ -7627,7 +7627,8 @@ command_init ()
         N_("list"
            " || set <plugin> <level>"
            " || dump [<plugin>]"
-           " || buffer|color|infolists|libs|certs|memory|tags|term|windows"
+           " || buffer|certs|color|dirs|hooks|infolists|libs|memory|tags|"
+           "term|windows"
            " || mouse|cursor [verbose]"
            " || hdata [free]"
            " || time <command>"),
@@ -7638,6 +7639,7 @@ command_init ()
            "     dump: save memory dump in WeeChat log file (same dump is "
            "written when WeeChat crashes)\n"
            "   buffer: dump buffer content with hexadecimal values in log file\n"
+           "    certs: display number of loaded trusted certificate authorities\n"
            "    color: display infos about current color pairs\n"
            "   cursor: toggle debug for cursor mode\n"
            "     dirs: display directories\n"
@@ -7646,7 +7648,6 @@ command_init ()
            "    hooks: display infos about hooks\n"
            "infolists: display infos about infolists\n"
            "     libs: display infos about external libraries used\n"
-           "    certs: display number of loaded trusted certificate authorities\n"
            "   memory: display infos about memory usage\n"
            "    mouse: toggle debug for mouse\n"
            "     tags: display tags for lines\n"
@@ -7658,6 +7659,7 @@ command_init ()
         " || set %(plugins_names)|" PLUGIN_CORE
         " || dump %(plugins_names)|" PLUGIN_CORE
         " || buffer"
+        " || certs"
         " || color"
         " || cursor verbose"
         " || dirs"
@@ -7665,7 +7667,6 @@ command_init ()
         " || hooks"
         " || infolists"
         " || libs"
-        " || certs"
         " || memory"
         " || mouse verbose"
         " || tags"
