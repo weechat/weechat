@@ -31,9 +31,42 @@
 #include "../wee-infolist.h"
 #include "../wee-log.h"
 #include "../wee-string.h"
+#include "../../gui/gui-buffer.h"
 #include "../../gui/gui-color.h"
 #include "../../gui/gui-line.h"
 
+
+/*
+ * Returns description of hook.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+hook_print_get_description (struct t_hook *hook)
+{
+    char str_desc[1024];
+
+    if (HOOK_PRINT(hook, buffer))
+    {
+        snprintf (str_desc, sizeof (str_desc),
+                  "buffer: %s, message: %s%s%s",
+                  HOOK_PRINT(hook, buffer)->name,
+                  (HOOK_PRINT(hook, message)) ? "\"" : "",
+                  (HOOK_PRINT(hook, message)) ? HOOK_PRINT(hook, message) : "(none)",
+                  (HOOK_PRINT(hook, message)) ? "\"" : "");
+    }
+    else
+    {
+        snprintf (str_desc, sizeof (str_desc),
+                  "message: %s%s%s",
+                  (HOOK_PRINT(hook, message)) ? "\"" : "",
+                  (HOOK_PRINT(hook, message)) ? HOOK_PRINT(hook, message) : "(none)",
+                  (HOOK_PRINT(hook, message)) ? "\"" : "");
+    }
+
+    return strdup (str_desc);
+}
 
 /*
  * Hooks a message printed by WeeChat.

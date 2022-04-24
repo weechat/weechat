@@ -34,6 +34,18 @@
 
 
 /*
+ * Returns description of hook.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+hook_modifier_get_description (struct t_hook *hook)
+{
+    return strdup (HOOK_MODIFIER(hook, modifier));
+}
+
+/*
  * Hooks a modifier.
  *
  * Returns pointer to new hook, NULL if error.

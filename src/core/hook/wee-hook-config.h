@@ -35,6 +35,7 @@ struct t_hook_config
                                        /* (NULL = hook for all options)     */
 };
 
+extern char *hook_config_get_description (struct t_hook *hook);
 extern struct t_hook *hook_config (struct t_weechat_plugin *plugin,
                                    const char *option,
                                    t_hook_callback_config *callback,

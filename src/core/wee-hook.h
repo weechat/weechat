@@ -20,6 +20,8 @@
 #ifndef WEECHAT_HOOK_H
 #define WEECHAT_HOOK_H
 
+struct t_hook;
+
 #include "hook/wee-hook-command-run.h"
 #include "hook/wee-hook-command.h"
 #include "hook/wee-hook-completion.h"
@@ -39,7 +41,6 @@
 #include "hook/wee-hook-signal.h"
 #include "hook/wee-hook-timer.h"
 
-struct t_hook;
 struct t_gui_bar;
 struct t_gui_buffer;
 struct t_gui_line;
@@ -83,6 +84,7 @@ enum t_hook_type
 #define HOOK_PRIORITY_DEFAULT   1000
 
 typedef void (t_callback_hook)(struct t_hook *hook);
+typedef char *(t_callback_hook_get_desc)(struct t_hook *hook);
 typedef int (t_callback_hook_infolist)(struct t_infolist_item *item,
                                        struct t_hook *hook);
 
@@ -130,6 +132,7 @@ extern void hook_init_data (struct t_hook *hook,
 extern int hook_valid (struct t_hook *hook);
 extern void hook_exec_start ();
 extern void hook_exec_end ();
+extern char *hook_get_description (struct t_hook *hook);
 extern void hook_set (struct t_hook *hook, const char *property,
                       const char *value);
 extern void unhook (struct t_hook *hook);

@@ -36,6 +36,7 @@ struct t_hook_hsignal
                                        /* with "*", "*" == any signal)      */
 };
 
+extern char *hook_hsignal_get_description (struct t_hook *hook);
 extern struct t_hook *hook_hsignal (struct t_weechat_plugin *plugin,
                                     const char *signal,
                                     t_hook_callback_hsignal *callback,

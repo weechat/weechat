@@ -40,6 +40,7 @@ struct t_hook_infolist
     char *args_description;             /* description of arguments         */
 };
 
+extern char *hook_infolist_get_description (struct t_hook *hook);
 extern struct t_hook *hook_infolist (struct t_weechat_plugin *plugin,
                                      const char *infolist_name,
                                      const char *description,

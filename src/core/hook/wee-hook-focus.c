@@ -36,6 +36,18 @@
 
 
 /*
+ * Returns description of hook.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+hook_focus_get_description (struct t_hook *hook)
+{
+    return strdup (HOOK_FOCUS(hook, area));
+}
+
+/*
  * Hooks a focus.
  *
  * Returns pointer to new hook, NULL if error.

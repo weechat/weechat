@@ -39,6 +39,7 @@ struct t_hook_info_hashtable
     char *output_description;          /* description of output (hashtable) */
 };
 
+extern char *hook_info_hashtable_get_description (struct t_hook *hook);
 extern struct t_hook *hook_info_hashtable (struct t_weechat_plugin *plugin,
                                            const char *info_name,
                                            const char *description,

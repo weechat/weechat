@@ -34,6 +34,18 @@
 
 
 /*
+ * Returns description of hook.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+hook_config_get_description (struct t_hook *hook)
+{
+    return strdup (HOOK_CONFIG(hook, option));
+}
+
+/*
  * Hooks a configuration option.
  *
  * Returns pointer to new hook, NULL if error.

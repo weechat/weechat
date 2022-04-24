@@ -71,6 +71,16 @@ t_callback_hook *hook_callback_free_data[HOOK_NUM_TYPES] =
   &hook_modifier_free_data, &hook_info_free_data,
   &hook_info_hashtable_free_data, &hook_infolist_free_data,
   &hook_hdata_free_data, &hook_focus_free_data };
+t_callback_hook_get_desc *hook_callback_get_desc[HOOK_NUM_TYPES] =
+{ &hook_command_get_description, &hook_command_run_get_description,
+  &hook_timer_get_description, &hook_fd_get_description,
+  &hook_process_get_description, &hook_connect_get_description,
+  &hook_line_get_description, &hook_print_get_description,
+  &hook_signal_get_description, &hook_hsignal_get_description,
+  &hook_config_get_description, &hook_completion_get_description,
+  &hook_modifier_get_description, &hook_info_get_description,
+  &hook_info_hashtable_get_description, &hook_infolist_get_description,
+  &hook_hdata_get_description, &hook_focus_get_description };
 t_callback_hook_infolist *hook_callback_add_to_infolist[HOOK_NUM_TYPES] =
 { &hook_command_add_to_infolist, &hook_command_run_add_to_infolist,
   &hook_timer_add_to_infolist, &hook_fd_add_to_infolist,
@@ -456,6 +466,18 @@ hook_exec_end ()
 
     if (hook_exec_recursion == 0)
         hook_remove_deleted ();
+}
+
+/*
+ * Returns description of hook.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+hook_get_description (struct t_hook *hook)
+{
+    return (hook_callback_get_desc[hook->type]) (hook);
 }
 
 /*

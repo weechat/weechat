@@ -36,6 +36,18 @@
 
 
 /*
+ * Returns description of hook.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+hook_command_run_get_description (struct t_hook *hook)
+{
+    return strdup (HOOK_COMMAND_RUN(hook, command));
+}
+
+/*
  * Hooks a command when it's run by WeeChat.
  *
  * Returns pointer to new hook, NULL if error.

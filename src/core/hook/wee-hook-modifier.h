@@ -36,6 +36,7 @@ struct t_hook_modifier
     char *modifier;                     /* name of modifier                 */
 };
 
+extern char *hook_modifier_get_description (struct t_hook *hook);
 extern struct t_hook *hook_modifier (struct t_weechat_plugin *plugin,
                                      const char *modifier,
                                      t_hook_callback_modifier *callback,

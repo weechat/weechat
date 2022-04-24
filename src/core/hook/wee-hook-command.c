@@ -39,6 +39,18 @@
 
 
 /*
+ * Returns description of hook.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+hook_command_get_description (struct t_hook *hook)
+{
+    return strdup (HOOK_COMMAND(hook, command));
+}
+
+/*
  * Searches for a command hook in list.
  *
  * Returns pointer to hook found, NULL if not found.

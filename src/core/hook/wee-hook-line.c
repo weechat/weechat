@@ -38,6 +38,26 @@
 
 
 /*
+ * Returns description of hook.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+hook_line_get_description (struct t_hook *hook)
+{
+    char str_desc[1024];
+
+    snprintf (str_desc, sizeof (str_desc),
+              "buffer type: %d, %d buffers, %d tags",
+              HOOK_LINE(hook, buffer_type),
+              HOOK_LINE(hook, num_buffers),
+              HOOK_LINE(hook, tags_count));
+
+    return strdup (str_desc);
+}
+
+/*
  * Hooks a line added in a buffer.
  *
  * Returns pointer to new hook, NULL if error.

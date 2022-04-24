@@ -37,6 +37,7 @@ struct t_hook_info
     char *args_description;            /* description of arguments          */
 };
 
+extern char *hook_info_get_description (struct t_hook *hook);
 extern struct t_hook *hook_info (struct t_weechat_plugin *plugin,
                                  const char *info_name,
                                  const char *description,

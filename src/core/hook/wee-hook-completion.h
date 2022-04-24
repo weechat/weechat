@@ -39,6 +39,7 @@ struct t_hook_completion
     char *description;                    /* description                    */
 };
 
+extern char *hook_completion_get_description (struct t_hook *hook);
 extern struct t_hook *hook_completion (struct t_weechat_plugin *plugin,
                                        const char *completion_item,
                                        const char *description,

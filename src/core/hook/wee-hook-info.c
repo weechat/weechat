@@ -34,6 +34,18 @@
 
 
 /*
+ * Returns description of hook.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+hook_info_get_description (struct t_hook *hook)
+{
+    return strdup (HOOK_INFO(hook, info_name));
+}
+
+/*
  * Hooks an info.
  *
  * Returns pointer to new hook, NULL if error.

@@ -35,6 +35,18 @@
 
 
 /*
+ * Returns description of hook.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+hook_signal_get_description (struct t_hook *hook)
+{
+    return strdup (HOOK_SIGNAL(hook, signal));
+}
+
+/*
  * Hooks a signal.
  *
  * Returns pointer to new hook, NULL if error.

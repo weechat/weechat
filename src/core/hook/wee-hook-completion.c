@@ -35,6 +35,18 @@
 
 
 /*
+ * Returns description of hook.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+hook_completion_get_description (struct t_hook *hook)
+{
+    return strdup (HOOK_COMPLETION(hook, completion_item));
+}
+
+/*
  * Hooks a completion.
  *
  * Returns pointer to new hook, NULL if error.

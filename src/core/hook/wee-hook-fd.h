@@ -41,6 +41,7 @@ struct t_hook_fd
                                        /* with fd                           */
 };
 
+extern char *hook_fd_get_description (struct t_hook *hook);
 extern void hook_fd_add_cb (struct t_hook *hook);
 extern void hook_fd_remove_cb (struct t_hook *hook);
 extern struct t_hook *hook_fd (struct t_weechat_plugin *plugin, int fd,

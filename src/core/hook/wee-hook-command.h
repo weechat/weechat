@@ -65,6 +65,7 @@ struct t_hook_command
     char **cplt_template_args_concat;  /* concatenated arguments            */
 };
 
+extern char *hook_command_get_description (struct t_hook *hook);
 extern struct t_hook *hook_command (struct t_weechat_plugin *plugin,
                                     const char *command,
                                     const char *description,

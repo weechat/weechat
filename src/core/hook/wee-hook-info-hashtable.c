@@ -34,6 +34,18 @@
 
 
 /*
+ * Returns description of hook.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+hook_info_hashtable_get_description (struct t_hook *hook)
+{
+    return strdup (HOOK_INFO_HASHTABLE(hook, info_name));
+}
+
+/*
  * Hooks an info using hashtable.
  *
  * Returns pointer to new hook, NULL if error.

@@ -35,6 +35,18 @@
 
 
 /*
+ * Returns description of hook.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+hook_hdata_get_description (struct t_hook *hook)
+{
+    return strdup (HOOK_HDATA(hook, hdata_name));
+}
+
+/*
  * Hooks a hdata.
  *
  * Returns pointer to new hook, NULL if error.
