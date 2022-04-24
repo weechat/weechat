@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2022-04-23 19:04+0200\n"
-"PO-Revision-Date: 2022-04-23 19:12+0200\n"
+"POT-Creation-Date: 2022-04-24 10:10+0200\n"
+"PO-Revision-Date: 2022-04-24 10:20+0200\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: sr\n"
@@ -716,98 +716,6 @@ msgstr "Учитани додаци:"
 msgid "  written by \"%s\", license: %s"
 msgstr "  написао „%s”, лиценца: %s"
 
-msgid "    commands hooked:"
-msgstr "    прикачене команде:"
-
-msgid "    command_run hooked:"
-msgstr "    прикачене command_run:"
-
-msgid "    timers hooked:"
-msgstr "    прикачени тајмери:"
-
-#, c-format
-msgid "      %d %s (%d calls remaining)"
-msgstr "      %d %s (преостаје %d позива)"
-
-msgid "second"
-msgid_plural "seconds"
-msgstr[0] "секунда"
-msgstr[1] "секунде"
-msgstr[2] "секунди"
-
-msgid "millisecond"
-msgid_plural "milliseconds"
-msgstr[0] "милисекунда"
-msgstr[1] "милисекунде"
-msgstr[2] "милисекунди"
-
-#, c-format
-msgid "      %d %s (no call limit)"
-msgstr "      %d %s (нема ограничења позива)"
-
-msgid "    fd hooked:"
-msgstr "    прикачени fd:"
-
-#, c-format
-msgid "      %d (flags: 0x%x:%s%s%s)"
-msgstr "      %d (заставице: 0x%x:%s%s%s)"
-
-msgid " read"
-msgstr " читања"
-
-msgid " write"
-msgstr " уписа"
-
-msgid " exception"
-msgstr " изузетака"
-
-msgid "    process hooked:"
-msgstr "    прикачени process:"
-
-#, c-format
-msgid "      command: '%s', child pid: %d"
-msgstr "      команда: ’%s’, pid дете процеса: %d"
-
-msgid "    connect hooked:"
-msgstr "    прикачени connect:"
-
-#, c-format
-msgid "      socket: %d, address: %s, port: %d, child pid: %d"
-msgstr "      сокет: %d, адреса: %s, порт: %d, pid дете процеса: %d"
-
-msgid "    prints hooked:"
-msgstr "    прикачени исписи:"
-
-#, c-format
-msgid "      buffer: %s, message: \"%s\""
-msgstr "      бафер: %s, порука: „%s”"
-
-msgid "(none)"
-msgstr "(ништа)"
-
-#, c-format
-msgid "      message: \"%s\""
-msgstr "      порука: „%s”"
-
-msgid "    signals hooked:"
-msgstr "    прикачени сигнали:"
-
-#, c-format
-msgid "      signal: %s"
-msgstr "      сигнал: %s"
-
-msgid "(all)"
-msgstr "(све)"
-
-msgid "    configuration options hooked:"
-msgstr "    прикачене конфигурационе опције:"
-
-msgid "    completions hooked:"
-msgstr "    прикачена довршавања:"
-
-msgid "    modifiers hooked:"
-msgstr "    прикачени модификатори:"
-
 msgid "No plugin found"
 msgstr "Није пронађен ниједан додатак"
 
@@ -823,6 +731,9 @@ msgstr "Листа проксија:"
 #, c-format
 msgid "  %s%s%s: %s, %s/%d (%s), username: %s, password: %s"
 msgstr "  %s%s%s: %s, %s/%d (%s), корисничко име: %s, лозинка: %s"
+
+msgid "(none)"
+msgstr "(ништа)"
 
 msgid "No proxy defined"
 msgstr "Није дефинисан ниједан прокси"
@@ -1578,14 +1489,15 @@ msgid "debug functions"
 msgstr "дибаг функције"
 
 msgid ""
-"list || set <plugin> <level> || dump [<plugin>] || buffer|certs|color|dirs|"
-"hooks|infolists|libs|memory|tags|term|windows || mouse|cursor [verbose] || "
+"list || set <plugin> <level> || dump|hooks [<plugin>] || buffer|certs|color|"
+"dirs|infolists|libs|memory|tags|term|windows || mouse|cursor [verbose] || "
 "hdata [free] || time <command>"
 msgstr ""
-"list || set <додатак> <ниво> || dump [<додатак>] || buffer|certs|color|dirs|"
-"hooks|infolists|libs|memory|tags|term|windows || mouse|cursor [verbose] || "
+"list || set <додатак> <ниво> || dump|hooks [<додатак>] || buffer|certs|color|"
+"dirs|infolists|libs|memory|tags|term|windows || mouse|cursor [verbose] || "
 "hdata [free] || time <команда>"
 
+#, fuzzy
 msgid ""
 "     list: list plugins with debug levels\n"
 "      set: set debug level for plugin\n"
@@ -1593,6 +1505,8 @@ msgid ""
 "    level: debug level for plugin (0 = disable debug)\n"
 "     dump: save memory dump in WeeChat log file (same dump is written when "
 "WeeChat crashes)\n"
+"    hooks: display infos about hooks (with a plugin: display detailed info "
+"about hooks created by the plugin)\n"
 "   buffer: dump buffer content with hexadecimal values in log file\n"
 "    certs: display number of loaded trusted certificate authorities\n"
 "    color: display infos about current color pairs\n"
@@ -1600,7 +1514,6 @@ msgid ""
 "     dirs: display directories\n"
 "    hdata: display infos about hdata (with free: remove all hdata in "
 "memory)\n"
-"    hooks: display infos about hooks\n"
 "infolists: display infos about infolists\n"
 "     libs: display infos about external libraries used\n"
 "   memory: display infos about memory usage\n"
@@ -1617,13 +1530,13 @@ msgstr ""
 "     ниво: дибаг ниво за додатак (0 = искључује дибаг)\n"
 "     dump: чува садржај меморије у WeeChat лог фајл (исти садржај се "
 "записује када се програм WeeChat сруши)\n"
+"    hooks: исписује инфо о кукама\n"
 "   buffer: уписује у лог фајл садржај бафера као хексадецималне вредности\n"
 "    certs: приказује број учитаних ауторитета сертификата којима се верује\n"
 "    color: приказује инфо о тренутним паровима боја\n"
 "   cursor: пребацује дибаг за режим померања курсора\n"
 "     dirs: исписује директоријуме\n"
 "    hdata: исписује инфо о hdata (са free: уклања све hdata из меморије)\n"
-"    hooks: исписује инфо о кукама\n"
 "infolists: исписује инфо о инфолистама\n"
 "     libs: исписује инфо о коришћеним спољним библиотекама\n"
 "   memory: исписује инфо о употреби меморије\n"
@@ -8022,6 +7935,12 @@ msgstr "није повезан"
 #. TRANSLATORS: "fake IRC server"
 msgid " (fake)"
 msgstr " (лажни)"
+
+msgid "second"
+msgid_plural "seconds"
+msgstr[0] "секунда"
+msgstr[1] "секунде"
+msgstr[2] "секунди"
 
 msgid "minute"
 msgid_plural "minutes"

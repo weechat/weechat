@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2022-04-23 19:04+0200\n"
-"PO-Revision-Date: 2022-01-28 09:35+0100\n"
+"POT-Creation-Date: 2022-04-24 10:10+0200\n"
+"PO-Revision-Date: 2022-04-24 10:19+0200\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: cs\n"
@@ -701,98 +701,6 @@ msgstr "Načtené pluginy:"
 msgid "  written by \"%s\", license: %s"
 msgstr "  napsal \"%s\", licence: %s"
 
-msgid "    commands hooked:"
-msgstr "    napojené příkazy:"
-
-msgid "    command_run hooked:"
-msgstr "    napojení command_run:"
-
-msgid "    timers hooked:"
-msgstr "    napojené časovače:"
-
-#, c-format
-msgid "      %d %s (%d calls remaining)"
-msgstr "      %d %s (%d zbývajících volání)"
-
-msgid "second"
-msgid_plural "seconds"
-msgstr[0] "sekunda"
-msgstr[1] "sekundy"
-msgstr[2] "sekund"
-
-msgid "millisecond"
-msgid_plural "milliseconds"
-msgstr[0] "milisekunda"
-msgstr[1] "milisekundy"
-msgstr[2] "milisekund"
-
-#, c-format
-msgid "      %d %s (no call limit)"
-msgstr "      %d %s (žádný limit počtu volání)"
-
-msgid "    fd hooked:"
-msgstr "    napojené popisovače souborů:"
-
-#, c-format
-msgid "      %d (flags: 0x%x:%s%s%s)"
-msgstr "      %d (příznaky: 0x%x:%s%s%s)"
-
-msgid " read"
-msgstr " čtení"
-
-msgid " write"
-msgstr " zápis"
-
-msgid " exception"
-msgstr " vyjímka"
-
-msgid "    process hooked:"
-msgstr "    napojené procesy:"
-
-#, c-format
-msgid "      command: '%s', child pid: %d"
-msgstr "      příkaz: '%s', pid potomka: %d"
-
-msgid "    connect hooked:"
-msgstr "    napojené spojení:"
-
-#, c-format
-msgid "      socket: %d, address: %s, port: %d, child pid: %d"
-msgstr "      soket: %d, adresa: %s, port: %d, pid potomka: %d"
-
-msgid "    prints hooked:"
-msgstr "    napojené tisky:"
-
-#, c-format
-msgid "      buffer: %s, message: \"%s\""
-msgstr "      buffer: %s, zpráva: \"%s\""
-
-msgid "(none)"
-msgstr "(žádné)"
-
-#, c-format
-msgid "      message: \"%s\""
-msgstr "      zpráva: \"%s\""
-
-msgid "    signals hooked:"
-msgstr "    napojené signály:"
-
-#, c-format
-msgid "      signal: %s"
-msgstr "      signál: %s"
-
-msgid "(all)"
-msgstr "(všechny)"
-
-msgid "    configuration options hooked:"
-msgstr "    napojené konfigurační možnosti:"
-
-msgid "    completions hooked:"
-msgstr "    napojené doplňování:"
-
-msgid "    modifiers hooked:"
-msgstr "    napojené modifikátory:"
-
 msgid "No plugin found"
 msgstr "Plugin nenalezen"
 
@@ -810,6 +718,9 @@ msgstr "Seznam proxy:"
 #, c-format
 msgid "  %s%s%s: %s, %s/%d (%s), username: %s, password: %s"
 msgstr "  %s%s%s: %s, %s/%d (%s), uživatelské jméno: %s, heslo: %s"
+
+msgid "(none)"
+msgstr "(žádné)"
 
 msgid "No proxy defined"
 msgstr "Proxy nejsou definovány"
@@ -1494,8 +1405,8 @@ msgstr "ladící funkce"
 
 #, fuzzy
 msgid ""
-"list || set <plugin> <level> || dump [<plugin>] || buffer|certs|color|dirs|"
-"hooks|infolists|libs|memory|tags|term|windows || mouse|cursor [verbose] || "
+"list || set <plugin> <level> || dump|hooks [<plugin>] || buffer|certs|color|"
+"dirs|infolists|libs|memory|tags|term|windows || mouse|cursor [verbose] || "
 "hdata [free] || time <command>"
 msgstr ""
 "list || set <plugin> <level> || dump [<plugin>] || buffer|color|memory|term|"
@@ -1509,6 +1420,8 @@ msgid ""
 "    level: debug level for plugin (0 = disable debug)\n"
 "     dump: save memory dump in WeeChat log file (same dump is written when "
 "WeeChat crashes)\n"
+"    hooks: display infos about hooks (with a plugin: display detailed info "
+"about hooks created by the plugin)\n"
 "   buffer: dump buffer content with hexadecimal values in log file\n"
 "    certs: display number of loaded trusted certificate authorities\n"
 "    color: display infos about current color pairs\n"
@@ -1516,7 +1429,6 @@ msgid ""
 "     dirs: display directories\n"
 "    hdata: display infos about hdata (with free: remove all hdata in "
 "memory)\n"
-"    hooks: display infos about hooks\n"
 "infolists: display infos about infolists\n"
 "     libs: display infos about external libraries used\n"
 "   memory: display infos about memory usage\n"
@@ -6561,6 +6473,12 @@ msgstr "nepřipojen"
 #. TRANSLATORS: "fake IRC server"
 msgid " (fake)"
 msgstr ""
+
+msgid "second"
+msgid_plural "seconds"
+msgstr[0] "sekunda"
+msgstr[1] "sekundy"
+msgstr[2] "sekund"
 
 msgid "minute"
 msgid_plural "minutes"

@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2022-04-23 19:04+0200\n"
-"PO-Revision-Date: 2022-04-23 19:12+0200\n"
+"POT-Creation-Date: 2022-04-24 10:10+0200\n"
+"PO-Revision-Date: 2022-04-24 10:20+0200\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: tr\n"
@@ -709,94 +709,6 @@ msgstr "Yüklü eklentiler:"
 msgid "  written by \"%s\", license: %s"
 msgstr "  \"%s\" tarafından yazıldı, lisans: %s"
 
-msgid "    commands hooked:"
-msgstr "    kancalanan komutlar:"
-
-msgid "    command_run hooked:"
-msgstr "    kancalanan command_run:"
-
-msgid "    timers hooked:"
-msgstr "    kancalanan zamanlayıcılar:"
-
-#, c-format
-msgid "      %d %s (%d calls remaining)"
-msgstr "      %d %s (%d kalan çağrı)"
-
-msgid "second"
-msgid_plural "seconds"
-msgstr[0] "saniye"
-
-msgid "millisecond"
-msgid_plural "milliseconds"
-msgstr[0] "milisaniye"
-
-#, c-format
-msgid "      %d %s (no call limit)"
-msgstr "      %d %s (çağrı limiti yok)"
-
-msgid "    fd hooked:"
-msgstr "    kancalanan fd:"
-
-#, c-format
-msgid "      %d (flags: 0x%x:%s%s%s)"
-msgstr "      %d (bayraklar: 0x%x:%s%s%s)"
-
-msgid " read"
-msgstr " okuma"
-
-msgid " write"
-msgstr " yazma"
-
-msgid " exception"
-msgstr " istisna"
-
-msgid "    process hooked:"
-msgstr "    kancalanan işlem:"
-
-#, c-format
-msgid "      command: '%s', child pid: %d"
-msgstr "      komut: '%s', alt pid: %d"
-
-msgid "    connect hooked:"
-msgstr "    kancalanan bağlantı:"
-
-#, c-format
-msgid "      socket: %d, address: %s, port: %d, child pid: %d"
-msgstr "      soket: %d, adres: %s, kapı: %d, alt pid: %d"
-
-msgid "    prints hooked:"
-msgstr "    kancalanan yazdırmalar:"
-
-#, c-format
-msgid "      buffer: %s, message: \"%s\""
-msgstr "      arabellek: %s, ileti: \"%s\""
-
-msgid "(none)"
-msgstr "(hiçbiri)"
-
-#, c-format
-msgid "      message: \"%s\""
-msgstr "      ileti: \"%s\""
-
-msgid "    signals hooked:"
-msgstr "    kancalanan sinyaller:"
-
-#, c-format
-msgid "      signal: %s"
-msgstr "      sinyal: %s"
-
-msgid "(all)"
-msgstr "(tümü)"
-
-msgid "    configuration options hooked:"
-msgstr "    kancalanan yapılandırma seçenekleri:"
-
-msgid "    completions hooked:"
-msgstr "    kancalanan tamamlamalar:"
-
-msgid "    modifiers hooked:"
-msgstr "    kancalanan değiştiriciler:"
-
 msgid "No plugin found"
 msgstr "Eklenti bulunamadı"
 
@@ -812,6 +724,9 @@ msgstr "Vekiller listesi:"
 #, c-format
 msgid "  %s%s%s: %s, %s/%d (%s), username: %s, password: %s"
 msgstr "  %s%s%s: %s, %s/%d (%s), kullanıcı adı: %s, parola: %s"
+
+msgid "(none)"
+msgstr "(hiçbiri)"
 
 msgid "No proxy defined"
 msgstr "Hiçbir vekil tanımlanmadı"
@@ -1553,14 +1468,15 @@ msgid "debug functions"
 msgstr "hata ayıklama işlevleri"
 
 msgid ""
-"list || set <plugin> <level> || dump [<plugin>] || buffer|certs|color|dirs|"
-"hooks|infolists|libs|memory|tags|term|windows || mouse|cursor [verbose] || "
+"list || set <plugin> <level> || dump|hooks [<plugin>] || buffer|certs|color|"
+"dirs|infolists|libs|memory|tags|term|windows || mouse|cursor [verbose] || "
 "hdata [free] || time <command>"
 msgstr ""
-"list || set <eklenti> <düzey> || dump [<eklenti>] || buffer|certs|color|dirs|"
-"hooks|infolists|libs|memory|tags|term|windows || mouse|cursor [verbose] || "
-"hdata [free] || time <komut>"
+"list || set <eklenti> <düzey> || dump|hooks [<eklenti>] || buffer|certs|"
+"color|dirs|infolists|libs|memory|tags|term|windows || mouse|cursor [verbose] "
+"|| hdata [free] || time <komut>"
 
+#, fuzzy
 msgid ""
 "     list: list plugins with debug levels\n"
 "      set: set debug level for plugin\n"
@@ -1568,6 +1484,8 @@ msgid ""
 "    level: debug level for plugin (0 = disable debug)\n"
 "     dump: save memory dump in WeeChat log file (same dump is written when "
 "WeeChat crashes)\n"
+"    hooks: display infos about hooks (with a plugin: display detailed info "
+"about hooks created by the plugin)\n"
 "   buffer: dump buffer content with hexadecimal values in log file\n"
 "    certs: display number of loaded trusted certificate authorities\n"
 "    color: display infos about current color pairs\n"
@@ -1575,7 +1493,6 @@ msgid ""
 "     dirs: display directories\n"
 "    hdata: display infos about hdata (with free: remove all hdata in "
 "memory)\n"
-"    hooks: display infos about hooks\n"
 "infolists: display infos about infolists\n"
 "     libs: display infos about external libraries used\n"
 "   memory: display infos about memory usage\n"
@@ -1592,6 +1509,7 @@ msgstr ""
 "    düzey: eklenti için hata ayıklama düzeyi (0 = hata ayıklama kapat)\n"
 "     dump: bellek dökümünü WeeChat günlüğe kaydet (çöktüğünde de aynısı "
 "yazılır)\n"
+"    hooks: kancalar hakkında bilgi görüntüle\n"
 "   buffer: onaltılı değer içeren döküm içeriğini günlük dosyasına yaz\n"
 "    certs: yüklü güvenilen sertifika otoritesini görüntüle\n"
 "    color: geçerli renk eşleri için bilgi görüntüle\n"
@@ -1599,7 +1517,6 @@ msgstr ""
 "     dirs: dizinleri görüntüle\n"
 "    hdata: hdata hakkında bilgi görüntüle (free: bellekteki tüm hdata'yı "
 "kaldır\n"
-"    hooks: kancalar hakkında bilgi görüntüle\n"
 "infolists: bilgi listeleri hakkında bilgi görüntüle\n"
 "     libs: kullanılan kitaplıklar için bilgi görüntüle\n"
 "   memory: bellek kullanımı hakkında bilgi görüntüle\n"
@@ -7894,6 +7811,10 @@ msgstr "bağlanmadı"
 #. TRANSLATORS: "fake IRC server"
 msgid " (fake)"
 msgstr " (sahte)"
+
+msgid "second"
+msgid_plural "seconds"
+msgstr[0] "saniye"
 
 msgid "minute"
 msgid_plural "minutes"

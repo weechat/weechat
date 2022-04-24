@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2022-04-23 19:04+0200\n"
-"PO-Revision-Date: 2021-12-03 12:02+0100\n"
+"POT-Creation-Date: 2022-04-24 10:10+0200\n"
+"PO-Revision-Date: 2022-04-24 10:20+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: hu\n"
@@ -699,111 +699,6 @@ msgid "  written by \"%s\", license: %s"
 msgstr ""
 
 #, fuzzy
-msgid "    commands hooked:"
-msgstr "     parancskezelők:\n"
-
-#, fuzzy
-msgid "    command_run hooked:"
-msgstr "     parancskezelők:\n"
-
-#, fuzzy
-msgid "    timers hooked:"
-msgstr "     időkezelők:\n"
-
-#, c-format
-msgid "      %d %s (%d calls remaining)"
-msgstr ""
-
-#, fuzzy
-msgid "second"
-msgid_plural "seconds"
-msgstr[0] "másodperc"
-msgstr[1] "másodperc"
-
-#, fuzzy
-msgid "millisecond"
-msgid_plural "milliseconds"
-msgstr[0] "másodperc"
-msgstr[1] "másodperc"
-
-#, c-format
-msgid "      %d %s (no call limit)"
-msgstr ""
-
-#, fuzzy
-msgid "    fd hooked:"
-msgstr "     parancskezelők:\n"
-
-#, fuzzy, c-format
-msgid "      %d (flags: 0x%x:%s%s%s)"
-msgstr "       %d másodperc\n"
-
-msgid " read"
-msgstr ""
-
-msgid " write"
-msgstr ""
-
-#, fuzzy
-msgid " exception"
-msgstr "  . leírás : %s\n"
-
-#, fuzzy
-msgid "    process hooked:"
-msgstr "     időkezelők:\n"
-
-#, fuzzy, c-format
-msgid "      command: '%s', child pid: %d"
-msgstr "       IRC(%s)\n"
-
-#, fuzzy
-msgid "    connect hooked:"
-msgstr "     parancskezelők:\n"
-
-#, c-format
-msgid "      socket: %d, address: %s, port: %d, child pid: %d"
-msgstr ""
-
-#, fuzzy
-msgid "    prints hooked:"
-msgstr "     időkezelők:\n"
-
-#, fuzzy, c-format
-msgid "      buffer: %s, message: \"%s\""
-msgstr "       (nincs üzenetkezelő)\n"
-
-#, fuzzy
-msgid "(none)"
-msgstr "(ismeretlen)"
-
-#, fuzzy, c-format
-msgid "      message: \"%s\""
-msgstr "       (nincs üzenetkezelő)\n"
-
-#, fuzzy
-msgid "    signals hooked:"
-msgstr "     üzenetkezelők:\n"
-
-#, fuzzy, c-format
-msgid "      signal: %s"
-msgstr "       IRC(%s)\n"
-
-msgid "(all)"
-msgstr ""
-
-#, fuzzy
-msgid "    configuration options hooked:"
-msgstr "konfigurációs paraméterek beállítása"
-
-#, fuzzy
-msgid "    completions hooked:"
-msgstr "     parancskezelők:\n"
-
-#, fuzzy
-msgid "    modifiers hooked:"
-msgstr "     időkezelők:\n"
-
-#, fuzzy
 msgid "No plugin found"
 msgstr "Nem található modul.\n"
 
@@ -822,6 +717,10 @@ msgstr "Aliaszok listája:\n"
 #, c-format
 msgid "  %s%s%s: %s, %s/%d (%s), username: %s, password: %s"
 msgstr ""
+
+#, fuzzy
+msgid "(none)"
+msgstr "(ismeretlen)"
 
 #, fuzzy
 msgid "No proxy defined"
@@ -1418,8 +1317,8 @@ msgstr ""
 
 #, fuzzy
 msgid ""
-"list || set <plugin> <level> || dump [<plugin>] || buffer|certs|color|dirs|"
-"hooks|infolists|libs|memory|tags|term|windows || mouse|cursor [verbose] || "
+"list || set <plugin> <level> || dump|hooks [<plugin>] || buffer|certs|color|"
+"dirs|infolists|libs|memory|tags|term|windows || mouse|cursor [verbose] || "
 "hdata [free] || time <command>"
 msgstr "dump | buffer | windows"
 
@@ -1431,6 +1330,8 @@ msgid ""
 "    level: debug level for plugin (0 = disable debug)\n"
 "     dump: save memory dump in WeeChat log file (same dump is written when "
 "WeeChat crashes)\n"
+"    hooks: display infos about hooks (with a plugin: display detailed info "
+"about hooks created by the plugin)\n"
 "   buffer: dump buffer content with hexadecimal values in log file\n"
 "    certs: display number of loaded trusted certificate authorities\n"
 "    color: display infos about current color pairs\n"
@@ -1438,7 +1339,6 @@ msgid ""
 "     dirs: display directories\n"
 "    hdata: display infos about hdata (with free: remove all hdata in "
 "memory)\n"
-"    hooks: display infos about hooks\n"
 "infolists: display infos about infolists\n"
 "     libs: display infos about external libraries used\n"
 "   memory: display infos about memory usage\n"
@@ -6138,6 +6038,12 @@ msgstr "nincs csatlakozva"
 #. TRANSLATORS: "fake IRC server"
 msgid " (fake)"
 msgstr ""
+
+#, fuzzy
+msgid "second"
+msgid_plural "seconds"
+msgstr[0] "másodperc"
+msgstr[1] "másodperc"
 
 #, fuzzy
 msgid "minute"

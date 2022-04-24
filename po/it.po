@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2022-04-23 19:04+0200\n"
-"PO-Revision-Date: 2022-01-28 09:35+0100\n"
+"POT-Creation-Date: 2022-04-24 10:10+0200\n"
+"PO-Revision-Date: 2022-04-24 10:20+0200\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: it\n"
@@ -678,96 +678,6 @@ msgstr "Plugin caricati:"
 msgid "  written by \"%s\", license: %s"
 msgstr "  scritto da \"%s\", licenza: %s"
 
-msgid "    commands hooked:"
-msgstr "    hook sui comandi:"
-
-msgid "    command_run hooked:"
-msgstr "    hook su command_run:"
-
-msgid "    timers hooked:"
-msgstr "    hook sui timer:"
-
-#, c-format
-msgid "      %d %s (%d calls remaining)"
-msgstr "      %d %s (%d chiamate rimaste)"
-
-msgid "second"
-msgid_plural "seconds"
-msgstr[0] "secondo"
-msgstr[1] "secondi"
-
-msgid "millisecond"
-msgid_plural "milliseconds"
-msgstr[0] "millisecondo"
-msgstr[1] "millisecondi"
-
-#, c-format
-msgid "      %d %s (no call limit)"
-msgstr "      %d %s (nessun limite per la chiamata)"
-
-msgid "    fd hooked:"
-msgstr "    hook su descrittore file:"
-
-#, c-format
-msgid "      %d (flags: 0x%x:%s%s%s)"
-msgstr "      %d (flag: 0x%x:%s%s%s)"
-
-msgid " read"
-msgstr " lettura"
-
-msgid " write"
-msgstr " scrittura"
-
-msgid " exception"
-msgstr " eccezione"
-
-msgid "    process hooked:"
-msgstr "    hook sul processo:"
-
-#, c-format
-msgid "      command: '%s', child pid: %d"
-msgstr "      comando: '%s', pid figlio: %d"
-
-msgid "    connect hooked:"
-msgstr "    hook sulla connessione:"
-
-#, c-format
-msgid "      socket: %d, address: %s, port: %d, child pid: %d"
-msgstr "      socket: %d, indirizzo: %s, porta: %d, pid figlio: %d"
-
-msgid "    prints hooked:"
-msgstr "    hook sulle stampe:"
-
-#, c-format
-msgid "      buffer: %s, message: \"%s\""
-msgstr "      buffer: %s, messaggio: \"%s\""
-
-msgid "(none)"
-msgstr "(nessuno)"
-
-#, c-format
-msgid "      message: \"%s\""
-msgstr "      messaggio: \"%s\""
-
-msgid "    signals hooked:"
-msgstr "    hook sui segnali:"
-
-#, c-format
-msgid "      signal: %s"
-msgstr "      segnale: %s"
-
-msgid "(all)"
-msgstr "(tutti)"
-
-msgid "    configuration options hooked:"
-msgstr "    hook sulle opzioni di configurazione:"
-
-msgid "    completions hooked:"
-msgstr "    hook sui completamenti:"
-
-msgid "    modifiers hooked:"
-msgstr "    hook sui modificatori:"
-
 msgid "No plugin found"
 msgstr "Nessun plugin trovato"
 
@@ -785,6 +695,9 @@ msgstr "Elenco di proxy:"
 #, c-format
 msgid "  %s%s%s: %s, %s/%d (%s), username: %s, password: %s"
 msgstr "  %s%s%s: %s, %s/%d (%s), utente: %s, password. %s"
+
+msgid "(none)"
+msgstr "(nessuno)"
 
 msgid "No proxy defined"
 msgstr "Nessun proxy definito"
@@ -1494,8 +1407,8 @@ msgstr ""
 
 #, fuzzy
 msgid ""
-"list || set <plugin> <level> || dump [<plugin>] || buffer|certs|color|dirs|"
-"hooks|infolists|libs|memory|tags|term|windows || mouse|cursor [verbose] || "
+"list || set <plugin> <level> || dump|hooks [<plugin>] || buffer|certs|color|"
+"dirs|infolists|libs|memory|tags|term|windows || mouse|cursor [verbose] || "
 "hdata [free] || time <command>"
 msgstr ""
 "list || set <plugin> <livello> || dump [<plugin>] || buffer|color|infolists|"
@@ -1509,6 +1422,8 @@ msgid ""
 "    level: debug level for plugin (0 = disable debug)\n"
 "     dump: save memory dump in WeeChat log file (same dump is written when "
 "WeeChat crashes)\n"
+"    hooks: display infos about hooks (with a plugin: display detailed info "
+"about hooks created by the plugin)\n"
 "   buffer: dump buffer content with hexadecimal values in log file\n"
 "    certs: display number of loaded trusted certificate authorities\n"
 "    color: display infos about current color pairs\n"
@@ -1516,7 +1431,6 @@ msgid ""
 "     dirs: display directories\n"
 "    hdata: display infos about hdata (with free: remove all hdata in "
 "memory)\n"
-"    hooks: display infos about hooks\n"
 "infolists: display infos about infolists\n"
 "     libs: display infos about external libraries used\n"
 "   memory: display infos about memory usage\n"
@@ -6908,6 +6822,11 @@ msgstr "non connesso"
 #. TRANSLATORS: "fake IRC server"
 msgid " (fake)"
 msgstr ""
+
+msgid "second"
+msgid_plural "seconds"
+msgstr[0] "secondo"
+msgstr[1] "secondi"
 
 msgid "minute"
 msgid_plural "minutes"

@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2022-04-23 19:04+0200\n"
-"PO-Revision-Date: 2021-12-03 12:02+0100\n"
+"POT-Creation-Date: 2022-04-24 10:10+0200\n"
+"PO-Revision-Date: 2022-04-24 10:20+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: ru\n"
@@ -711,113 +711,6 @@ msgid "  written by \"%s\", license: %s"
 msgstr "  автор \"%s\", лицензия: %s"
 
 #, fuzzy
-msgid "    commands hooked:"
-msgstr "     обработчики команд:\n"
-
-#, fuzzy
-msgid "    command_run hooked:"
-msgstr "     обработчики команд:\n"
-
-#, fuzzy
-msgid "    timers hooked:"
-msgstr "     обработчики таймера:\n"
-
-#, c-format
-msgid "      %d %s (%d calls remaining)"
-msgstr "      %d %s (%d вызовов осталось)"
-
-#, fuzzy
-msgid "second"
-msgid_plural "seconds"
-msgstr[0] "секунда"
-msgstr[1] "секунда"
-msgstr[2] "секунда"
-
-#, fuzzy
-msgid "millisecond"
-msgid_plural "milliseconds"
-msgstr[0] "секунда"
-msgstr[1] "секунда"
-msgstr[2] "секунда"
-
-#, c-format
-msgid "      %d %s (no call limit)"
-msgstr "      %d %s (без ограничений)"
-
-#, fuzzy
-msgid "    fd hooked:"
-msgstr "     обработчики команд:\n"
-
-#, fuzzy, c-format
-msgid "      %d (flags: 0x%x:%s%s%s)"
-msgstr "       %d секунд\n"
-
-msgid " read"
-msgstr " чтение"
-
-msgid " write"
-msgstr " запись"
-
-#, fuzzy
-msgid " exception"
-msgstr "  . описание: %s\n"
-
-#, fuzzy
-msgid "    process hooked:"
-msgstr "     обработчики таймера:\n"
-
-#, fuzzy, c-format
-msgid "      command: '%s', child pid: %d"
-msgstr "       IRC(%s)\n"
-
-#, fuzzy
-msgid "    connect hooked:"
-msgstr "     обработчики команд:\n"
-
-#, c-format
-msgid "      socket: %d, address: %s, port: %d, child pid: %d"
-msgstr "      соккет: %d, адрес: %s, порт: %d, child pid: %d"
-
-#, fuzzy
-msgid "    prints hooked:"
-msgstr "     обработчики таймера:\n"
-
-#, fuzzy, c-format
-msgid "      buffer: %s, message: \"%s\""
-msgstr "       (нет обработчика сообщений)\n"
-
-#, fuzzy
-msgid "(none)"
-msgstr "(неизвестен)"
-
-#, fuzzy, c-format
-msgid "      message: \"%s\""
-msgstr "       (нет обработчика сообщений)\n"
-
-#, fuzzy
-msgid "    signals hooked:"
-msgstr "     обработчики сообщений:\n"
-
-#, fuzzy, c-format
-msgid "      signal: %s"
-msgstr "       IRC(%s)\n"
-
-msgid "(all)"
-msgstr "(все)"
-
-#, fuzzy
-msgid "    configuration options hooked:"
-msgstr "настроить параметры конфигурации"
-
-#, fuzzy
-msgid "    completions hooked:"
-msgstr "     обработчики команд:\n"
-
-#, fuzzy
-msgid "    modifiers hooked:"
-msgstr "     обработчики таймера:\n"
-
-#, fuzzy
 msgid "No plugin found"
 msgstr "Plugin не найден\n"
 
@@ -836,6 +729,10 @@ msgstr "Список сокращений:\n"
 #, c-format
 msgid "  %s%s%s: %s, %s/%d (%s), username: %s, password: %s"
 msgstr "  %s%s%s: %s, %s/%d (%s), имя пользователя: %s, пароль: %s"
+
+#, fuzzy
+msgid "(none)"
+msgstr "(неизвестен)"
 
 #, fuzzy
 msgid "No proxy defined"
@@ -1440,8 +1337,8 @@ msgstr ""
 
 #, fuzzy
 msgid ""
-"list || set <plugin> <level> || dump [<plugin>] || buffer|certs|color|dirs|"
-"hooks|infolists|libs|memory|tags|term|windows || mouse|cursor [verbose] || "
+"list || set <plugin> <level> || dump|hooks [<plugin>] || buffer|certs|color|"
+"dirs|infolists|libs|memory|tags|term|windows || mouse|cursor [verbose] || "
 "hdata [free] || time <command>"
 msgstr "dump | buffer | windows"
 
@@ -1453,6 +1350,8 @@ msgid ""
 "    level: debug level for plugin (0 = disable debug)\n"
 "     dump: save memory dump in WeeChat log file (same dump is written when "
 "WeeChat crashes)\n"
+"    hooks: display infos about hooks (with a plugin: display detailed info "
+"about hooks created by the plugin)\n"
 "   buffer: dump buffer content with hexadecimal values in log file\n"
 "    certs: display number of loaded trusted certificate authorities\n"
 "    color: display infos about current color pairs\n"
@@ -1460,7 +1359,6 @@ msgid ""
 "     dirs: display directories\n"
 "    hdata: display infos about hdata (with free: remove all hdata in "
 "memory)\n"
-"    hooks: display infos about hooks\n"
 "infolists: display infos about infolists\n"
 "     libs: display infos about external libraries used\n"
 "   memory: display infos about memory usage\n"
@@ -6178,6 +6076,13 @@ msgstr "отключен"
 #. TRANSLATORS: "fake IRC server"
 msgid " (fake)"
 msgstr ""
+
+#, fuzzy
+msgid "second"
+msgid_plural "seconds"
+msgstr[0] "секунда"
+msgstr[1] "секунда"
+msgstr[2] "секунда"
 
 #, fuzzy
 msgid "minute"

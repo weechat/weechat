@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2022-04-23 19:04+0200\n"
+"POT-Creation-Date: 2022-04-24 10:10+0200\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -638,96 +638,6 @@ msgstr ""
 msgid "  written by \"%s\", license: %s"
 msgstr ""
 
-msgid "    commands hooked:"
-msgstr ""
-
-msgid "    command_run hooked:"
-msgstr ""
-
-msgid "    timers hooked:"
-msgstr ""
-
-#, c-format
-msgid "      %d %s (%d calls remaining)"
-msgstr ""
-
-msgid "second"
-msgid_plural "seconds"
-msgstr[0] ""
-msgstr[1] ""
-
-msgid "millisecond"
-msgid_plural "milliseconds"
-msgstr[0] ""
-msgstr[1] ""
-
-#, c-format
-msgid "      %d %s (no call limit)"
-msgstr ""
-
-msgid "    fd hooked:"
-msgstr ""
-
-#, c-format
-msgid "      %d (flags: 0x%x:%s%s%s)"
-msgstr ""
-
-msgid " read"
-msgstr ""
-
-msgid " write"
-msgstr ""
-
-msgid " exception"
-msgstr ""
-
-msgid "    process hooked:"
-msgstr ""
-
-#, c-format
-msgid "      command: '%s', child pid: %d"
-msgstr ""
-
-msgid "    connect hooked:"
-msgstr ""
-
-#, c-format
-msgid "      socket: %d, address: %s, port: %d, child pid: %d"
-msgstr ""
-
-msgid "    prints hooked:"
-msgstr ""
-
-#, c-format
-msgid "      buffer: %s, message: \"%s\""
-msgstr ""
-
-msgid "(none)"
-msgstr ""
-
-#, c-format
-msgid "      message: \"%s\""
-msgstr ""
-
-msgid "    signals hooked:"
-msgstr ""
-
-#, c-format
-msgid "      signal: %s"
-msgstr ""
-
-msgid "(all)"
-msgstr ""
-
-msgid "    configuration options hooked:"
-msgstr ""
-
-msgid "    completions hooked:"
-msgstr ""
-
-msgid "    modifiers hooked:"
-msgstr ""
-
 msgid "No plugin found"
 msgstr ""
 
@@ -742,6 +652,9 @@ msgstr ""
 
 #, c-format
 msgid "  %s%s%s: %s, %s/%d (%s), username: %s, password: %s"
+msgstr ""
+
+msgid "(none)"
 msgstr ""
 
 msgid "No proxy defined"
@@ -1279,8 +1192,8 @@ msgid "debug functions"
 msgstr ""
 
 msgid ""
-"list || set <plugin> <level> || dump [<plugin>] || buffer|certs|color|dirs|"
-"hooks|infolists|libs|memory|tags|term|windows || mouse|cursor [verbose] || "
+"list || set <plugin> <level> || dump|hooks [<plugin>] || buffer|certs|color|"
+"dirs|infolists|libs|memory|tags|term|windows || mouse|cursor [verbose] || "
 "hdata [free] || time <command>"
 msgstr ""
 
@@ -1291,6 +1204,8 @@ msgid ""
 "    level: debug level for plugin (0 = disable debug)\n"
 "     dump: save memory dump in WeeChat log file (same dump is written when "
 "WeeChat crashes)\n"
+"    hooks: display infos about hooks (with a plugin: display detailed info "
+"about hooks created by the plugin)\n"
 "   buffer: dump buffer content with hexadecimal values in log file\n"
 "    certs: display number of loaded trusted certificate authorities\n"
 "    color: display infos about current color pairs\n"
@@ -1298,7 +1213,6 @@ msgid ""
 "     dirs: display directories\n"
 "    hdata: display infos about hdata (with free: remove all hdata in "
 "memory)\n"
-"    hooks: display infos about hooks\n"
 "infolists: display infos about infolists\n"
 "     libs: display infos about external libraries used\n"
 "   memory: display infos about memory usage\n"
@@ -5646,6 +5560,11 @@ msgstr ""
 #. TRANSLATORS: "fake IRC server"
 msgid " (fake)"
 msgstr ""
+
+msgid "second"
+msgid_plural "seconds"
+msgstr[0] ""
+msgstr[1] ""
 
 msgid "minute"
 msgid_plural "minutes"

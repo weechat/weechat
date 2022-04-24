@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2022-04-23 19:04+0200\n"
-"PO-Revision-Date: 2022-01-28 09:35+0100\n"
+"POT-Creation-Date: 2022-04-24 10:10+0200\n"
+"PO-Revision-Date: 2022-04-24 10:20+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
 "translation/ja_JP>\n"
@@ -716,94 +716,6 @@ msgstr "ロード済みプラグイン:"
 msgid "  written by \"%s\", license: %s"
 msgstr "  作者 \"%s\"、ライセンス: %s"
 
-msgid "    commands hooked:"
-msgstr "    フックされたコマンド:"
-
-msgid "    command_run hooked:"
-msgstr "    フックされた command_run:"
-
-msgid "    timers hooked:"
-msgstr "    フックされたタイマー:"
-
-#, c-format
-msgid "      %d %s (%d calls remaining)"
-msgstr "      %d %s (残り %d 回の呼び出し)"
-
-msgid "second"
-msgid_plural "seconds"
-msgstr[0] "秒"
-
-msgid "millisecond"
-msgid_plural "milliseconds"
-msgstr[0] "ミリ秒"
-
-#, c-format
-msgid "      %d %s (no call limit)"
-msgstr "      %d %s (呼び出し回数制限なし)"
-
-msgid "    fd hooked:"
-msgstr "    フックされた fd:"
-
-#, c-format
-msgid "      %d (flags: 0x%x:%s%s%s)"
-msgstr "      %d (フラグ: 0x%x:%s%s%s)"
-
-msgid " read"
-msgstr " 読み"
-
-msgid " write"
-msgstr " 書き"
-
-msgid " exception"
-msgstr " 例外"
-
-msgid "    process hooked:"
-msgstr "    フックされたプロセス:"
-
-#, c-format
-msgid "      command: '%s', child pid: %d"
-msgstr "      コマンド: '%s', 子プロセス id: %d"
-
-msgid "    connect hooked:"
-msgstr "    フックされた接続:"
-
-#, c-format
-msgid "      socket: %d, address: %s, port: %d, child pid: %d"
-msgstr "      ソケット: %d、アドレス: %s、ポート: %d、子プロセス id: %d"
-
-msgid "    prints hooked:"
-msgstr "    フックされた表示:"
-
-#, c-format
-msgid "      buffer: %s, message: \"%s\""
-msgstr "      バッファ: %s、メッセージ: \"%s\""
-
-msgid "(none)"
-msgstr "(無し)"
-
-#, c-format
-msgid "      message: \"%s\""
-msgstr "      メッセージ: \"%s\""
-
-msgid "    signals hooked:"
-msgstr "    フックされたシグナル:"
-
-#, c-format
-msgid "      signal: %s"
-msgstr "      シグナル: %s"
-
-msgid "(all)"
-msgstr "(全て)"
-
-msgid "    configuration options hooked:"
-msgstr "    フックされた設定オプション:"
-
-msgid "    completions hooked:"
-msgstr "    フックされた補完:"
-
-msgid "    modifiers hooked:"
-msgstr "    フックされた修飾:"
-
 msgid "No plugin found"
 msgstr "プラグインが見つかりません"
 
@@ -821,6 +733,9 @@ msgstr "プロキシリスト:"
 #, c-format
 msgid "  %s%s%s: %s, %s/%d (%s), username: %s, password: %s"
 msgstr "  %s%s%s: %s、%s/%d (%s)、ユーザ名: %s、パスワード: %s"
+
+msgid "(none)"
+msgstr "(無し)"
 
 msgid "No proxy defined"
 msgstr "プロキシが定義されていません"
@@ -1553,8 +1468,8 @@ msgstr "デバッグ関数"
 #| "memory|tags|term|windows || mouse|cursor [verbose] || hdata [free] || "
 #| "time <command>"
 msgid ""
-"list || set <plugin> <level> || dump [<plugin>] || buffer|certs|color|dirs|"
-"hooks|infolists|libs|memory|tags|term|windows || mouse|cursor [verbose] || "
+"list || set <plugin> <level> || dump|hooks [<plugin>] || buffer|certs|color|"
+"dirs|infolists|libs|memory|tags|term|windows || mouse|cursor [verbose] || "
 "hdata [free] || time <command>"
 msgstr ""
 "list || set <plugin> <level> || dump [<plugin>] || buffer|color|infolists|"
@@ -1592,6 +1507,8 @@ msgid ""
 "    level: debug level for plugin (0 = disable debug)\n"
 "     dump: save memory dump in WeeChat log file (same dump is written when "
 "WeeChat crashes)\n"
+"    hooks: display infos about hooks (with a plugin: display detailed info "
+"about hooks created by the plugin)\n"
 "   buffer: dump buffer content with hexadecimal values in log file\n"
 "    certs: display number of loaded trusted certificate authorities\n"
 "    color: display infos about current color pairs\n"
@@ -1599,7 +1516,6 @@ msgid ""
 "     dirs: display directories\n"
 "    hdata: display infos about hdata (with free: remove all hdata in "
 "memory)\n"
-"    hooks: display infos about hooks\n"
 "infolists: display infos about infolists\n"
 "     libs: display infos about external libraries used\n"
 "   memory: display infos about memory usage\n"
@@ -7721,6 +7637,10 @@ msgstr "未接続"
 #. TRANSLATORS: "fake IRC server"
 msgid " (fake)"
 msgstr ""
+
+msgid "second"
+msgid_plural "seconds"
+msgstr[0] "秒"
 
 msgid "minute"
 msgid_plural "minutes"

@@ -434,6 +434,103 @@ debug_hooks ()
 }
 
 /*
+ * Displays info about hooks for a specific plugin.
+ */
+
+void
+debug_hooks_plugin (const char *plugin_name)
+{
+    struct t_weechat_plugin *ptr_plugin;
+    struct t_hook *ptr_hook;
+    char *desc, **result, **result_type, str_type[128];
+    int i, count_total, count_type;
+
+    if (!plugin_name)
+        return;
+
+    if (strcmp (plugin_name, PLUGIN_CORE) == 0)
+    {
+        ptr_plugin = NULL;
+    }
+    else
+    {
+        ptr_plugin = plugin_search (plugin_name);
+        if (!ptr_plugin)
+        {
+            gui_chat_printf (NULL, "%sPlugin \"%s\" not found",
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             plugin_name);
+            return;
+        }
+    }
+
+    result = string_dyn_alloc (1024);
+    if (!result)
+        return;
+
+    result_type = string_dyn_alloc (1024);
+    if (!result_type)
+    {
+        string_dyn_free (result, 1);
+        return;
+    }
+
+    count_total = 0;
+
+    for (i = 0; i < HOOK_NUM_TYPES; i++)
+    {
+        count_type = 0;
+        string_dyn_copy (result_type, NULL);
+
+        for (ptr_hook = weechat_hooks[i]; ptr_hook;
+             ptr_hook = ptr_hook->next_hook)
+        {
+            if (ptr_hook->deleted || (ptr_hook->plugin != ptr_plugin))
+                continue;
+
+            desc = hook_get_description (ptr_hook);
+            if (desc)
+            {
+                string_dyn_concat (result_type, "    ", -1);
+                string_dyn_concat (result_type, desc, -1);
+                string_dyn_concat (result_type, "\n", -1);
+                free (desc);
+            }
+            count_type++;
+        }
+
+        snprintf (str_type, sizeof (str_type),
+                  "  %s (%d)%s\n",
+                  hook_type_string[i],
+                  count_type,
+                  (count_type > 0) ? ":" : "");
+        string_dyn_concat (result, str_type, -1);
+
+        if (count_type > 0)
+            string_dyn_concat (result, *result_type, -1);
+
+        count_total += count_type;
+    }
+
+    if (count_total > 0)
+    {
+        gui_chat_printf (NULL, "");
+        gui_chat_printf (NULL,
+                         "hooks in plugin \"%s\" (%d)%s",
+                         plugin_name,
+                         count_total,
+                         (count_total > 0) ? ":" : "");
+        gui_chat_printf (NULL, *result);
+    }
+    else
+    {
+        gui_chat_printf (NULL, "No hooks in plugin \"%s\"", plugin_name);
+    }
+    string_dyn_free (result, 1);
+    string_dyn_free (result_type, 1);
+}
+
+/*
  * Displays a list of infolists in memory.
  */
 
