@@ -2893,10 +2893,10 @@ irc_command_join_server (struct t_irc_server *server, const char *arguments,
                     }
                 }
                 if (manual_join
-                    && !irc_channel_search (server, pos_channel)
                     && (strcmp (pos_channel, "0") != 0))
                 {
-                    if (weechat_config_boolean (irc_config_look_buffer_open_before_join))
+                    if (!irc_channel_search (server, pos_channel)
+                        && weechat_config_boolean (irc_config_look_buffer_open_before_join))
                     {
                         /*
                          * open the channel buffer immediately (do not wait
