@@ -10282,7 +10282,7 @@ hook = weechat.hook_print("", "", "", 1, "my_print_cb", "")
 
 ==== hook_signal
 
-_Updated in 1.5._
+_Updated in 1.5, 3.6._
 
 Hook a signal.
 
@@ -10302,7 +10302,8 @@ struct t_hook *weechat_hook_signal (const char *signal,
 
 Arguments:
 
-* _signal_: signal to catch, wildcard `+*+` is allowed
+* _signal_: signal to catch, wildcard `+*+` is allowed; multiple signals can
+  be separated by semi-colons
   (priority allowed, see note about <<hook_priority,priority>>)
   (see table below)
 * _callback_: function called when signal is received, arguments and return
@@ -10982,8 +10983,8 @@ my_signal_cb (const void *pointer, void *data, const char *signal,
     return WEECHAT_RC_OK;
 }
 
-/* catch signal "quit" */
-struct t_hook *my_signal_hook = weechat_hook_signal ("quit",
+/* catch signals "quit" and "upgrade" */
+struct t_hook *my_signal_hook = weechat_hook_signal ("quit;upgrade",
                                                      &my_signal_cb, NULL, NULL);
 ----
 
@@ -10999,8 +11000,8 @@ def my_signal_cb(data, signal, signal_data):
     # ...
     return weechat.WEECHAT_RC_OK
 
-# catch signal "quit"
-hook = weechat.hook_signal("quit", "my_signal_cb", "")
+# catch signals "quit" and "upgrade"
+hook = weechat.hook_signal("quit;upgrade", "my_signal_cb", "")
 ----
 
 ==== hook_signal_send
@@ -11204,7 +11205,7 @@ weechat.hook_signal_send("irc_input_send", weechat.WEECHAT_HOOK_SIGNAL_STRING,
 
 ==== hook_hsignal
 
-_WeeChat ≥ 0.3.4, updated in 1.5._
+_WeeChat ≥ 0.3.4, updated in 1.5, 3.6._
 
 Hook a hsignal (signal with hashtable).
 
@@ -11223,7 +11224,8 @@ struct t_hook *weechat_hook_hsignal (const char *signal,
 
 Arguments:
 
-* _signal_: signal to catch, wildcard `+*+` is allowed
+* _signal_: signal to catch, wildcard `+*+` is allowed; multiple signals can
+  be separated by semi-colons
   (priority allowed, see note about <<hook_priority,priority>>)
   (see table below)
 * _callback_: function called when signal is received, arguments and return

@@ -82,11 +82,9 @@ gui_chat_init ()
     }
 
     /* some hsignals */
-    hook_hsignal (NULL, "chat_quote_time_prefix_message",
-                  &gui_chat_hsignal_quote_line_cb, NULL, NULL);
-    hook_hsignal (NULL, "chat_quote_prefix_message",
-                  &gui_chat_hsignal_quote_line_cb, NULL, NULL);
-    hook_hsignal (NULL, "chat_quote_message",
+    hook_hsignal (NULL,
+                  "chat_quote_time_prefix_message;chat_quote_prefix_message;"
+                  "chat_quote_message",
                   &gui_chat_hsignal_quote_line_cb, NULL, NULL);
 }
 

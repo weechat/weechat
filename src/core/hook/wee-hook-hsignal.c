@@ -43,7 +43,8 @@
 char *
 hook_hsignal_get_description (struct t_hook *hook)
 {
-    return strdup (HOOK_HSIGNAL(hook, signal));
+    return string_build_with_split_string (
+        (const char **)(HOOK_HSIGNAL(hook, signals)), ";");
 }
 
 /*
@@ -82,11 +83,41 @@ hook_hsignal (struct t_weechat_plugin *plugin, const char *signal,
 
     new_hook->hook_data = new_hook_hsignal;
     new_hook_hsignal->callback = callback;
-    new_hook_hsignal->signal = strdup ((ptr_signal) ? ptr_signal : signal);
+    new_hook_hsignal->signals = string_split (
+        (ptr_signal) ? ptr_signal : signal,
+        ";",
+        NULL,
+        WEECHAT_STRING_SPLIT_STRIP_LEFT
+        | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+        | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+        0, &new_hook_hsignal->num_signals);
 
     hook_add_to_list (new_hook);
 
     return new_hook;
+}
+
+/*
+ * Checks if a hooked hsignal matches a signal sent: it matches if at least
+ * one of the signal masks are matching the signal sent.
+ *
+ * Returns:
+ *   1: hook matches signal sent
+ *   0: hook does not match signal sent
+ */
+
+int
+hook_hsignal_match (const char *signal, struct t_hook *hook)
+{
+    int i;
+
+    for (i = 0; i < HOOK_HSIGNAL(hook, num_signals); i++)
+    {
+        if (string_match (signal, HOOK_HSIGNAL(hook, signals)[i], 0))
+            return 1;
+    }
+
+    return 0;
 }
 
 /*
@@ -110,7 +141,7 @@ hook_hsignal_send (const char *signal, struct t_hashtable *hashtable)
 
         if (!ptr_hook->deleted
             && !ptr_hook->running
-            && (string_match (signal, HOOK_HSIGNAL(ptr_hook, signal), 0)))
+            && (hook_hsignal_match (signal, ptr_hook)))
         {
             ptr_hook->running = 1;
             rc = (HOOK_HSIGNAL(ptr_hook, callback))
@@ -142,11 +173,12 @@ hook_hsignal_free_data (struct t_hook *hook)
     if (!hook || !hook->hook_data)
         return;
 
-    if (HOOK_HSIGNAL(hook, signal))
+    if (HOOK_HSIGNAL(hook, signals))
     {
-        free (HOOK_HSIGNAL(hook, signal));
-        HOOK_HSIGNAL(hook, signal) = NULL;
+        string_free_split (HOOK_HSIGNAL(hook, signals));
+        HOOK_HSIGNAL(hook, signals) = NULL;
     }
+    HOOK_HSIGNAL(hook, num_signals) = 0;
 
     free (hook->hook_data);
     hook->hook_data = NULL;
@@ -164,12 +196,24 @@ int
 hook_hsignal_add_to_infolist (struct t_infolist_item *item,
                               struct t_hook *hook)
 {
+    int i;
+    char option_name[64];
+
     if (!item || !hook || !hook->hook_data)
         return 0;
 
     if (!infolist_new_var_pointer (item, "callback", HOOK_HSIGNAL(hook, callback)))
         return 0;
-    if (!infolist_new_var_string (item, "signal", HOOK_HSIGNAL(hook, signal)))
+    i = 0;
+    for (i = 0; i < HOOK_HSIGNAL(hook, num_signals); i++)
+    {
+        snprintf (option_name, sizeof (option_name), "signal_%05d", i);
+        if (!infolist_new_var_string (item, option_name,
+                                      HOOK_HSIGNAL(hook, signals)[i]))
+            return 0;
+    }
+    if (!infolist_new_var_integer (item, "num_signals",
+                                   HOOK_HSIGNAL(hook, num_signals)))
         return 0;
 
     return 1;
@@ -182,10 +226,16 @@ hook_hsignal_add_to_infolist (struct t_infolist_item *item,
 void
 hook_hsignal_print_log (struct t_hook *hook)
 {
+    int i;
+
     if (!hook || !hook->hook_data)
         return;
 
     log_printf ("  signal data:");
     log_printf ("    callback. . . . . . . : 0x%lx", HOOK_HSIGNAL(hook, callback));
-    log_printf ("    signal. . . . . . . . : '%s'", HOOK_HSIGNAL(hook, signal));
+    log_printf ("    signals:");
+    for (i = 0; i < HOOK_HSIGNAL(hook, num_signals); i++)
+    {
+        log_printf ("      '%s'", HOOK_HSIGNAL(hook, signals)[i]);
+    }
 }

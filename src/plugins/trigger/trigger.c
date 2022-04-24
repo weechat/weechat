@@ -301,34 +301,28 @@ trigger_hook (struct t_trigger *trigger)
         case TRIGGER_HOOK_SIGNAL:
             if (argv && (argc >= 1))
             {
-                trigger->hooks = malloc (argc * sizeof (trigger->hooks[0]));
+                trigger->hooks = malloc (sizeof (trigger->hooks[0]));
                 if (trigger->hooks)
                 {
-                    trigger->hooks_count = argc;
-                    for (i = 0; i < argc; i++)
-                    {
-                        trigger->hooks[i] = weechat_hook_signal (
-                            argv[i],
-                            &trigger_callback_signal_cb,
-                            trigger, NULL);
-                    }
+                    trigger->hooks_count = 1;
+                    trigger->hooks[0] = weechat_hook_signal (
+                        weechat_config_string (trigger->options[TRIGGER_OPTION_ARGUMENTS]),
+                        &trigger_callback_signal_cb,
+                        trigger, NULL);
                 }
             }
             break;
         case TRIGGER_HOOK_HSIGNAL:
             if (argv && (argc >= 1))
             {
-                trigger->hooks = malloc (argc * sizeof (trigger->hooks[0]));
+                trigger->hooks = malloc (sizeof (trigger->hooks[0]));
                 if (trigger->hooks)
                 {
-                    trigger->hooks_count = argc;
-                    for (i = 0; i < argc; i++)
-                    {
-                        trigger->hooks[i] = weechat_hook_hsignal (
-                            argv[i],
-                            &trigger_callback_hsignal_cb,
-                            trigger, NULL);
-                    }
+                    trigger->hooks_count = 1;
+                    trigger->hooks[0] = weechat_hook_hsignal (
+                        weechat_config_string (trigger->options[TRIGGER_OPTION_ARGUMENTS]),
+                        &trigger_callback_hsignal_cb,
+                        trigger, NULL);
                 }
             }
             break;

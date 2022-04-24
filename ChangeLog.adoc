@@ -23,6 +23,7 @@ New features::
   * core: add bar item "spacer" (issue #1700)
   * core: add case conversion in evaluation of expressions with `lower:string` and `upper:string` (issue #1778)
   * core: move detailed list of hooks from command `/plugin listfull` to `/debug hooks <plugin>`
+  * api: allow to catch multiple signals in functions hook_signal and hook_hsignal (issue #1780)
 
 Bug fixes::
 

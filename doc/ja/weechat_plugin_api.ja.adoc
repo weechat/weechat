@@ -10311,7 +10311,7 @@ hook = weechat.hook_print("", "", "", 1, "my_print_cb", "")
 
 ==== hook_signal
 
-_WeeChat バージョン 1.5 で更新。_
+_WeeChat バージョン 1.5, 3.6 で更新。_
 
 シグナルをフックする。
 
@@ -10331,7 +10331,9 @@ struct t_hook *weechat_hook_signal (const char *signal,
 
 引数:
 
-* _signal_: キャッチするシグナル、ワイルドカード `+*+` を使うことができます
+// TRANSLATION MISSING
+* _signal_: キャッチするシグナル、ワイルドカード `+*+` を使うことができます,
+  multiple signals can be separated by semi-colons
   (優先度の設定が可能、<<hook_priority,フックの優先度>>に関する注意を参照)
   (以下の表を参照)
 * _callback_:
@@ -11024,8 +11026,8 @@ my_signal_cb (const void *pointer, void *data, const char *signal,
     return WEECHAT_RC_OK;
 }
 
-/* catch signal "quit" */
-struct t_hook *my_signal_hook = weechat_hook_signal ("quit",
+/* catch signals "quit" and "upgrade" */
+struct t_hook *my_signal_hook = weechat_hook_signal ("quit;upgrade",
                                                      &my_signal_cb, NULL, NULL);
 ----
 
@@ -11041,8 +11043,8 @@ def my_signal_cb(data, signal, signal_data):
     # ...
     return weechat.WEECHAT_RC_OK
 
-# catch signal "quit"
-hook = weechat.hook_signal("quit", "my_signal_cb", "")
+# catch signals "quit" and "upgrade"
+hook = weechat.hook_signal("quit;upgrade", "my_signal_cb", "")
 ----
 
 ==== hook_signal_send
@@ -11247,7 +11249,7 @@ weechat.hook_signal_send("irc_input_send", weechat.WEECHAT_HOOK_SIGNAL_STRING,
 
 ==== hook_hsignal
 
-_WeeChat バージョン 0.3.4 以上で利用可、バージョン 1.5 で更新。_
+_WeeChat バージョン 0.3.4 以上で利用可、バージョン 1.5, 3.6 で更新。_
 
 hsignal (ハッシュテーブルを持つシグナル) をフック。
 
@@ -11266,7 +11268,9 @@ struct t_hook *weechat_hook_hsignal (const char *signal,
 
 引数:
 
-* _signal_: キャッチするシグナル、ワイルドカード `+*+` を使うことができます
+// TRANSLATION MISSING
+* _signal_: キャッチするシグナル、ワイルドカード `+*+` を使うことができます,
+  multiple signals can be separated by semi-colons
   (優先度の設定が可能、<<hook_priority,フックの優先度>>に関する注意を参照)
   (以下の表を参照)
 * _callback_:

@@ -1307,9 +1307,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     plugin_script_display_short_list (weechat_perl_plugin,
                                       perl_scripts);
 
-    weechat_hook_signal ("quit",
-                         &weechat_perl_signal_quit_upgrade_cb, NULL, NULL);
-    weechat_hook_signal ("upgrade",
+    weechat_hook_signal ("quit;upgrade",
                          &weechat_perl_signal_quit_upgrade_cb, NULL, NULL);
 
     /* init OK */

@@ -10487,7 +10487,7 @@ hook = weechat.hook_print("", "", "", 1, "my_print_cb", "")
 
 ==== hook_signal
 
-_Mis à jour dans la 1.5._
+_Mis à jour dans la 1.5, 3.6._
 
 S'accrocher à un signal.
 
@@ -10507,7 +10507,8 @@ struct t_hook *weechat_hook_signal (const char *signal,
 
 Paramètres :
 
-* _signal_ : signal à intercepter, le caractère joker `+*+` est autorisé
+* _signal_ : signal à intercepter, le caractère joker `+*+` est autorisé,
+  plusieurs signaux peuvent être séparés par des point-virgules
   (priorité autorisée, voir la note sur la <<hook_priority,priorité>>)
   (voir le tableau ci-dessous)
 * _callback_ : fonction appelée quand le signal est reçu, paramètres et valeur
@@ -11201,8 +11202,8 @@ my_signal_cb (const void *pointer, void *data, const char *signal,
     return WEECHAT_RC_OK;
 }
 
-/* intercepter le signal "quit" */
-struct t_hook *my_signal_hook = weechat_hook_signal ("quit",
+/* intercepter les signaux "quit" et "upgrade" */
+struct t_hook *my_signal_hook = weechat_hook_signal ("quit;upgrade",
                                                      &my_signal_cb, NULL, NULL);
 ----
 
@@ -11218,8 +11219,8 @@ def my_signal_cb(data, signal, signal_data):
     # ...
     return weechat.WEECHAT_RC_OK
 
-# intercepter le signal "quit"
-hook = weechat.hook_signal("quit", "my_signal_cb", "")
+# intercepter les signaux "quit" et "upgrade"
+hook = weechat.hook_signal("quit;upgrade", "my_signal_cb", "")
 ----
 
 ==== hook_signal_send
@@ -11431,7 +11432,7 @@ weechat.hook_signal_send("irc_input_send", weechat.WEECHAT_HOOK_SIGNAL_STRING,
 
 ==== hook_hsignal
 
-_WeeChat ≥ 0.3.4, mis à jour dans la 1.5._
+_WeeChat ≥ 0.3.4, mis à jour dans la 1.5, 3.6._
 
 S'accrocher à un hsignal (signal avec une table de hachage).
 
@@ -11450,7 +11451,8 @@ struct t_hook *weechat_hook_hsignal (const char *signal,
 
 Paramètres :
 
-* _signal_ : signal à intercepter, le caractère joker `+*+` est autorisé
+* _signal_ : signal à intercepter, le caractère joker `+*+` est autorisé,
+  plusieurs signaux peuvent être séparés par des point-virgules
   (priorité autorisée, voir la note sur la <<hook_priority,priorité>>)
   (voir le tableau ci-dessous)
 * _callback_ : fonction appelée quand le signal est reçu, paramètres et valeur

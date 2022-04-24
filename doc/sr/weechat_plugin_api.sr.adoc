@@ -9912,7 +9912,7 @@ hook = weechat.hook_print("", "", "", 1, "my_print_cb", "")
 
 ==== hook_signal
 
-_Ажурирано у верзији 1.5._
+_Ажурирано у верзији 1.5, 3.6._
 
 Качи се на сигнал.
 
@@ -9932,7 +9932,10 @@ struct t_hook *weechat_hook_signal (const char *signal,
 
 Аргументи:
 
-* _signal_: сигнал који се хвата, дозвољава се џокер `+*+` (дозвољен је приоритет, погледајте напомену о <<hook_priority,приоритетима>>) (погледајте табелу испод)
+// TRANSLATION MISSING
+* _signal_: сигнал који се хвата, дозвољава се џокер `+*+`, multiple signals can
+  be separated by semi-colons
+  (дозвољен је приоритет, погледајте напомену о <<hook_priority,приоритетима>>) (погледајте табелу испод)
 * _callback_: функција која се позива када се прими сигнал, аргументи и повратна вредност су:
 ** _const void *pointer_: показивач
 ** _void *data_: показивач
@@ -10596,6 +10599,7 @@ struct t_hook *weechat_hook_signal (const char *signal,
 
 C пример:
 
+// TRANSLATION MISSING
 [source,c]
 ----
 int
@@ -10606,13 +10610,14 @@ my_signal_cb (const void *pointer, void *data, const char *signal,
     return WEECHAT_RC_OK;
 }
 
-/* хвата сигнал "quit" */
-struct t_hook *my_signal_hook = weechat_hook_signal ("quit",
+/* catch signals "quit" and "upgrade" */
+struct t_hook *my_signal_hook = weechat_hook_signal ("quit;upgrade",
                                                      &my_signal_cb, NULL, NULL);
 ----
 
 Скрипта (Python):
 
+// TRANSLATION MISSING
 [source,python]
 ----
 # прототип
@@ -10623,8 +10628,8 @@ def my_signal_cb(data, signal, signal_data):
     # ...
     return weechat.WEECHAT_RC_OK
 
-# хвата сигнал "quit"
-hook = weechat.hook_signal("quit", "my_signal_cb", "")
+# catch signals "quit" and "upgrade"
+hook = weechat.hook_signal("quit;upgrade", "my_signal_cb", "")
 ----
 
 ==== hook_signal_send
@@ -10820,7 +10825,7 @@ weechat.hook_signal_send("irc_input_send", weechat.WEECHAT_HOOK_SIGNAL_STRING,
 
 ==== hook_hsignal
 
-_WeeChat ≥ 0.3.4, ажурирано у верзији 1.5._
+_WeeChat ≥ 0.3.4, ажурирано у верзији 1.5, 3.6._
 
 Качи се на hsignal (сигнал са хеш табелом).
 
@@ -10839,7 +10844,9 @@ struct t_hook *weechat_hook_hsignal (const char *signal,
 
 Аргументи:
 
-* _signal_: сигнал који се хвата, дозвољава се џокер `+*+` (дозвољен је приоритет, погледајте напомену о <<hook_priority,приоритетима>>) (погледајте табелу испод)
+* _signal_: сигнал који се хвата, дозвољава се џокер `+*+`, multiple signals can
+  be separated by semi-colons
+  (дозвољен је приоритет, погледајте напомену о <<hook_priority,приоритетима>>) (погледајте табелу испод)
 * _callback_: функција која се позива када се прими сигнал, аргументи и повратна вредност су:
 ** _const void *pointer_: показивач
 ** _void *data_: показивач

@@ -32,8 +32,10 @@ typedef int (t_hook_callback_signal)(const void *pointer, void *data,
 struct t_hook_signal
 {
     t_hook_callback_signal *callback;  /* signal callback                   */
-    char *signal;                      /* signal selected (may begin or end */
-                                       /* with "*", "*" == any signal)      */
+    char **signals;                    /* signals selected; each one may    */
+                                       /* begin or end with "*",            */
+                                       /* "*" == any signal                 */
+    int num_signals;                   /* number of signals                 */
 };
 
 extern char *hook_signal_get_description (struct t_hook *hook);

@@ -10610,7 +10610,7 @@ hook = weechat.hook_print("", "", "", 1, "my_print_cb", "")
 ==== hook_signal
 
 // TRANSLATION MISSING
-_Updated in 1.5._
+_Updated in 1.5, 3.6._
 
 Hook su un segnale.
 
@@ -10631,7 +10631,8 @@ struct t_hook *weechat_hook_signal (const char *signal,
 Argomenti:
 
 // TRANSLATION MISSING
-* _signal_: segnale da catturare, wildcard `+*+` is allowed
+* _signal_: segnale da catturare, wildcard `+*+` is allowed, multiple signals
+  can be separated by semi-colons
   (priorità consentita, consultare la nota riguardo la
   <<hook_priority,priority>>), see table below
 * _callback_: funzione chiamata a segnale ricevuto, argomenti e valore
@@ -11402,6 +11403,7 @@ List of signals sent by WeeChat and plugins:
 
 Esempio in C:
 
+// TRANSLATION MISSING
 [source,c]
 ----
 int
@@ -11412,13 +11414,14 @@ my_signal_cb (const void *pointer, void *data, const char *signal,
     return WEECHAT_RC_OK;
 }
 
-/* cattura il segnale "quit" */
-struct t_hook *my_signal_hook = weechat_hook_signal ("quit",
+/* catch signals "quit" and "upgrade" */
+struct t_hook *my_signal_hook = weechat_hook_signal ("quit;upgrade",
                                                      &my_signal_cb, NULL, NULL);
 ----
 
 Script (Python):
 
+// TRANLSATION MISSING
 [source,python]
 ----
 # prototipo
@@ -11429,8 +11432,8 @@ def my_signal_cb(data, signal, signal_data):
     # ...
     return weechat.WEECHAT_RC_OK
 
-# cattura il segnale "quit"
-hook = weechat.hook_signal("quit", "my_signal_cb", "")
+# catch signals "quit" and "upgrade"
+hook = weechat.hook_signal("quit;upgrade", "my_signal_cb", "")
 ----
 
 ==== hook_signal_send
@@ -11648,7 +11651,7 @@ weechat.hook_signal_send("irc_input_send", weechat.WEECHAT_HOOK_SIGNAL_STRING,
 
 ==== hook_hsignal
 
-_WeeChat ≥ 0.3.4, updated in 1.5._
+_WeeChat ≥ 0.3.4, updated in 1.5, 3.6._
 
 Hook su hsignal (segnale con tabella hash).
 
@@ -11668,7 +11671,8 @@ struct t_hook *weechat_hook_hsignal (const char *signal,
 Argomenti:
 
 // TRANSLATION MISSING
-* _signal_: segnale da catturare, wildcard `+*+` is allowed
+* _signal_: segnale da catturare, wildcard `+*+` is allowed, multiple signals can
+  be separated by semi-colons
   (priorità consentita, consultare la nota a proposito di <<hook_priority,priority>>),
   see table below
 * _callback_: funzione chiamata a segnale ricevuto, argomenti e valore
