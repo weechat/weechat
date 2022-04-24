@@ -58,7 +58,8 @@ struct t_weechat_plugin *weechat_irc_plugin = NULL;
 
 struct t_hook *irc_hook_timer = NULL;
 
-int irc_signal_upgrade_received = 0;   /* signal "upgrade" received ?       */
+int irc_signal_quit_received = 0;      /* signal "quit" received?           */
+int irc_signal_upgrade_received = 0;   /* signal "upgrade" received?        */
 
 
 /*
@@ -76,6 +77,8 @@ irc_signal_quit_cb (const void *pointer, void *data,
     (void) pointer;
     (void) data;
     (void) signal;
+
+    irc_signal_quit_received = 1;
 
     if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_STRING) == 0)
     {

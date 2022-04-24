@@ -30,6 +30,7 @@
 #include "irc-channel.h"
 #include "irc-command.h"
 #include "irc-config.h"
+#include "irc-join.h"
 #include "irc-raw.h"
 #include "irc-server.h"
 
@@ -181,6 +182,20 @@ irc_buffer_close_cb (const void *pointer, void *data,
     {
         if (ptr_channel)
         {
+            /*
+             * remove channel from autojoin if autojoin_dynamic is set,
+             * still connected to server and not quitting/upgrading WeeChat
+             */
+            if (ptr_server
+                && IRC_SERVER_OPTION_BOOLEAN(ptr_server,
+                                             IRC_SERVER_OPTION_AUTOJOIN_DYNAMIC)
+                && ptr_server->is_connected
+                && !irc_signal_quit_received
+                && !irc_signal_upgrade_received)
+            {
+                irc_join_remove_channel_from_autojoin (ptr_server,
+                                                       ptr_channel->name);
+            }
             /* send PART for channel if its buffer is closed */
             if ((ptr_channel->type == IRC_CHANNEL_TYPE_CHANNEL)
                 && (ptr_channel->nicks))

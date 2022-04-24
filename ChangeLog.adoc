@@ -29,6 +29,7 @@ Bug fixes::
 
   * core: fix bad window size on startup with some terminals like https://github.com/kovidgoyal/kitty[kitty] (issue #1769)
   * buflist: fix memory leak when reading config and changing option buflist.look.sort
+  * irc: remove channel from autojoin option when manually closing a buffer with `/buffer close` or `/close`
   * irc: fix add of channel to autojoin option when joining a channel with a buffer still opened
   * relay: fix save of channels in autojoin option when JOIN and PART commands are received from an IRC relay client (issue #1771)
   * trigger: add `${buffer.notify} > 0` in conditions of default trigger "beep"
