@@ -2256,7 +2256,7 @@ str3 = weechat.string_input_for_buffer("//test")  # "/test"
 ==== string_eval_expression
 
 _WeeChat ≥ 0.4.0, updated in 0.4.2, 0.4.3, 1.0, 1.1, 1.2, 1.3, 1.6, 1.8, 2.0,
-2.2, 2.3, 2.7, 2.9, 3.1, 3.2, 3.3, 3.4 and 3.6._
+2.2, 2.3, 2.7, 2.9, 3.1, 3.2, 3.3, 3.4, 3.6._
 
 Evaluate an expression and return result as a string.
 Special variables with format `+${variable}+` are expanded (see table below).
@@ -16580,7 +16580,7 @@ The only way to update data is to call function
 
 ==== hdata_new
 
-_WeeChat ≥ 0.3.6, updated in 0.3.9 and 0.4.0._
+_WeeChat ≥ 0.3.6, updated in 0.3.9, 0.4.0._
 
 Create a new hdata.
 
@@ -16645,7 +16645,7 @@ This function is not available in scripting API.
 
 ==== hdata_new_var
 
-_WeeChat ≥ 0.3.6, updated in 0.3.7, 0.3.9, 0.4.3 and 3.4._
+_WeeChat ≥ 0.3.6, updated in 0.3.7, 0.3.9, 0.4.3, 3.4._
 
 Create a new variable in hdata.
 
