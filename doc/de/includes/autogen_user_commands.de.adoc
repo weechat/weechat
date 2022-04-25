@@ -1337,26 +1337,26 @@ Beispiele:
         hdata [free]
         time <command>
 
-     list: list plugins with debug levels
-      set: set debug level for plugin
-   plugin: name of plugin ("core" for WeeChat core)
-    level: debug level for plugin (0 = disable debug)
-     dump: save memory dump in WeeChat log file (same dump is written when WeeChat crashes)
-    hooks: display infos about hooks (with a plugin: display detailed info about hooks created by the plugin)
-   buffer: dump buffer content with hexadecimal values in log file
-    certs: display number of loaded trusted certificate authorities
-    color: display infos about current color pairs
-   cursor: toggle debug for cursor mode
-     dirs: display directories
-    hdata: display infos about hdata (with free: remove all hdata in memory)
-infolists: display infos about infolists
-     libs: display infos about external libraries used
-   memory: display infos about memory usage
-    mouse: toggle debug for mouse
-     tags: display tags for lines
-     term: display infos about terminal
-  windows: display windows tree
-     time: measure time to execute a command or to send text to the current buffer
+     list: zeigt alle Erweiterungen mit Debuglevel an
+      set: setzt den Level der Protokollierung für eine Erweiterung
+   plugin: Name der Erweiterung ("core" für den WeeChat Kern)
+    level: Debuglevel der Erweiterung (0 = deaktiviert Debug)
+     dump: Speicherabbild in die WeeChat Protokolldatei schreiben (wie bei einem Programmabsturz)
+    hooks: zeigt die aktiven Hooks an (bei einer Erweiterung: detaillierte Informationen über Hooks werden angezeigt, die von der Erweiterung erstellt wurden)
+   buffer: speichert den Bufferinhalt als hexadezimale Ausgabe in die Protokolldatei
+    certs: gibt die Anzahl geladener vertrauenswürdiger Zertifizierungsstellen aus
+    color: zeigt Informationen über die aktuellen Farbpaarungen an
+   cursor: schaltet den debug-Modus für den Cursor-Modus ein/aus
+     dirs: Verzeichnisse werden angezeigt
+    hdata: zeigt Informationen zu hdata an (mittels free werden alle hdata Informationen aus dem Speicher entfernt)
+infolists: zeigt Information über die Infolists an
+     libs: zeigt an welche externen Bibliotheken verwendet werden
+   memory: gibt Informationen über den genutzten Speicher aus
+    mouse: schaltet den debug-Modus für den Maus-Modus ein/aus
+     tags: zeigt für jede einzelne Zeile die dazugehörigen Schlagwörter an
+     term: zeigt Informationen über das Terminal an
+  windows: zeigt die Fensterstruktur an
+     time: misst die Zeit um einen Befehl auszuführen oder um einen Text in den aktuellen Buffer zu senden
 ----
 
 [[command_weechat_eval]]
@@ -1366,130 +1366,130 @@ infolists: display infos about infolists
 /eval  [-n|-s] [-d] <expression>
        [-n] [-d [-d]] -c <expression1> <operator> <expression2>
 
-        -n: display result without sending it to buffer (debug mode)
-        -s: split expression before evaluating it (many commands can be separated by semicolons)
-        -d: display debug output after evaluation (with two -d: more verbose debug)
-        -c: evaluate as condition: use operators and parentheses, return a boolean value ("0" or "1")
-expression: expression to evaluate, variables with format ${variable} are replaced (see below); many commands can be separated by semicolons
-  operator: a logical or comparison operator:
-            - logical operators:
-                &&   boolean "and"
-                ||   boolean "or"
-            - comparison operators:
-                ==   equal
-                !=   not equal
-                <=   less or equal
-                <    less
-                >=   greater or equal
-                >    greater
-                =~   is matching POSIX extended regex
-                !~   is NOT matching POSIX extended regex
-                ==*  is matching mask, case sensitive (wildcard "*" is allowed)
-                !!*  is NOT matching mask, case sensitive (wildcard "*" is allowed)
-                =*   is matching mask, case insensitive (wildcard "*" is allowed)
-                !*   is NOT matching mask, case insensitive (wildcard "*" is allowed)
-                ==-  is included, case sensitive
-                !!-  is NOT included, case sensitive
-                =-   is included, case insensitive
-                !-   is NOT included, case insensitive
+        -n: gibt das Ergebnis aus, ohne dass dieses in den Buffer gesendet wird (debug Modus)
+        -s: teilt Ausdrücke, bevor sie evaluiert werden (mehrere Befehle können durch Semikolon getrennt werden)
+        -d: eine Debug-Ausgabe nach Auswertung anzeigen (Nutzung von zwei -d: ausführliche Debug-Ausgabe)
+        -c: Auswertung als Bedingung: nutzt Operatoren und runde Klammern, Rückgabewert als Boolean-Wert ("0" oder "1")
+expression: Ausdruck welcher verarbeitet werden soll. Variablen im Format ${variable} werden ersetzt (siehe unten); mehrere Befehle werden durch ein Semikolon voneinander getrennt
+  operator: ein logischer oder vergleichender Operand:
+            - logische Operanden:
+                &&  boolean "und"
+                ||  boolean "oder"
+            - vergleichende Operanden:
+                ==  gleich
+                !=  ungleich
+                <=  kleiner oder gleich
+                <   kleiner
+                >=  größer oder gleich
+                >   größer
+                =~  stimmt mit regulärem POSIX Ausdruck überein
+                !~  stimmt NICHT mit regulärem POSIX Ausdruck überein
+                ==*  stimmt mit Maske überein (Platzhalter "*" ist erlaubt)
+                !!*  stimmt mit Maske NICHT überein (Platzhalter "*" ist erlaubt)
+                =*   stimmt mit Maske überein, Groß- und Kleinschreibung wird nicht beachtet (Platzhalter "*" ist erlaubt)
+                !*   stimmt mit Maske NICHT überein, Groß- und Kleinschreibung wird nicht beachtet (Platzhalter "*" ist erlaubt)
+                ==-  ist enthalten, Groß- und Kleinschreibung wird beachtet
+                !!-  ist NICHT enthalten, Groß- und Kleinschreibung wird beachtet
+                =-   ist enthalten, Groß- und Kleinschreibung wird nicht beachtet
+                !-   ist NICHT enthalten, Groß- und Kleinschreibung wird nicht beachtet
 
-An expression is considered as "true" if it is not NULL, not empty, and different from "0".
-The comparison is made using floating point numbers if the two expressions are valid numbers, with one of the following formats:
-  - integer (examples: 5, -7)
-  - floating point number (examples: 5.2, -7.5, 2.83e-2)
-  - hexadecimal number (examples: 0xA3, -0xA3)
-To force a string comparison, you can add double quotes around each expression, for example:
+Ein Ausdruck gilt als "wahr" sofern das Ergebnis weder NULL, nicht leer und von "0" abweichend ist.
+Für einen Vergleich werden Fließkommazahlen genutzt, insofern es sich bei beiden Ausdrücken um gültige Zahlen handelt, folgende Formate werden unterstützt:
+  - Integer (Beispiele: 5, -7)
+  - Fließkommazahl (Beispiele: 5.2, -7.5, 2.83e-2)
+  - hexadezimale Zahl (Beispiele: 0xA3, -0xA3)
+Um einen Vergleich zwischen zwei Zeichenketten zu erzwingen, müssen die Ausdrücke in Anführungszeichen gesetzt werden, zum Beispiel:
   50 > 100      ==> 0
   "50" > "100"  ==> 1
 
-Some variables are replaced in expression, using the format ${variable}, variable can be, by order of priority:
-  1. the string itself without evaluation (format: "raw:xxx")
-  2. a user-defined variable (format: "name")
-  3. an evaluated sub-string (format: "eval:xxx")
-  4. an evaluated condition (format: "eval_cond:xxx")
-  5. a string with escaped chars (format: "esc:xxx" or "\xxx")
-  6. a string converted to lower case (format: "lower:xxx")
-  7. a string converted to upper case (format: "upper:xxx")
-  8. a string with chars to hide (format: "hide:char,string")
-  9. a string with max chars (format: "cut:max,suffix,string" or "cut:+max,suffix,string")
-     or max chars displayed on screen (format: "cutscr:max,suffix,string" or "cutscr:+max,suffix,string")
-  10. a reversed string (format: "rev:xxx" or "revscr:xxx")
-  11. a repeated string (format: "repeat:count,string")
-  12. length of a string (format: "length:xxx" or "lengthscr:xxx")
-  13. split of a string (format: "split:number,separators,flags,xxx")
-  14. split of shell argmuents (format: "split_shell:number,xxx")
-  15. a color (format: "color:xxx", see "Plugin API reference", function "color")
-  16. a modifier (format: "modifier:name,data,string")
-  17. an info (format: "info:name,arguments", arguments are optional)
-  18. a base 16/32/64 encoded/decoded string (format: "base_encode:base,xxx" or "base_decode:base,xxx")
-  19. current date/time (format: "date" or "date:format")
-  20. an environment variable (format: "env:XXX")
-  21. a ternary operator (format: "if:condition?value_if_true:value_if_false")
-  22. result of an expression with parentheses and operators + - * / // % ** (format: "calc:xxx")
-  23. a random integer number (format: "random:min,max")
-  24. a translated string (format: "translate:xxx")
-  25. define a user variable (format: "define:name,value")
-  26. an option (format: "file.section.option")
-  27. a local variable in buffer
-  28. a hdata name/variable (the value is automatically converted to string), by default "window" and "buffer" point to current window/buffer.
-Format for hdata can be one of following:
-  hdata.var1.var2...: start with a hdata (pointer must be known), and ask variables one after one (other hdata can be followed)
-  hdata[list].var1.var2...: start with a hdata using a list/pointer/pointer name, for example:
-    ${buffer[gui_buffers].full_name}: full name of first buffer in linked list of buffers
-    ${plugin[weechat_plugins].name}: name of first plugin in linked list of plugins
-  hdata[pointer].var1.var2...: start with a hdata using a pointer, for example:
-    ${buffer[0x1234abcd].full_name}: full name of the buffer with this pointer (can be used in triggers)
-    ${buffer[my_pointer].full_name}: full name of the buffer with this pointer name (can be used in triggers)
-For name of hdata and variables, please look at "Plugin API reference", function "weechat_hdata_get".
+Einige Variablen werden im Ausdruck mittels der Formatierung ${variable} ersetzt. Mögliche Variablen sind, nach Reihenfolge ihrer Priorität:
+  1. die Zeichenfolge selbst ohne Auswertung (Format: "raw:xxx")
+  2. eine benutzerdefinierte Variable (Format: "name")
+  3. eine evaluierte Teilzeichenkette (Format: "eval:xxx")
+  4. eine evaluierte Bedingung (Format: "eval_cond:xxx")
+  5. eine Zeichenkette mit Escapesequenzen (Format: "esc:xxx" oder "\xxx")
+  6. eine Zeichenfolge, die in Kleinbuchstaben umgewandelt wird (Format: "lower:xxx")
+  7. eine Zeichenfolge, die in Großbuchstaben umgewandelt wird (Format: "upper:xxx")
+  8. Zeichen, die in einer Zeichenkette nicht dargestellt werden sollen (Format: "hide:Zeichen,Zeichenkette")
+  9. eine Zeichenkette mit einer maximalen Anzahl an Zeichen (Format: "cut:max,suffix,string" oder "cut:+max,suffix,string")
+     oder maximale Anzahl an Zeichen die auf dem Bildschirm angezeigt werden sollen (Format: "cutscr:Max,Suffix,Zeichenkette oder "cutscr:+Max,Suffix,Zeichenkette")
+  10. eine Zeichenkette umkehren (Format: "rev:xxx" oder "revscr:xxx")
+  11. eine Zeichenkette wiederholen (Format: "repeat:Anzahl,Zeichenkette")
+  12. Länge einer Zeichenkette (Format: "length:xxx" oder "lengthscr:xxx")
+  13. Aufteilen einer Zeichenkette (Format: "split:Anzahl,Trennzeichen,Flags,xxx")
+  14. Aufteilen von Shell-Argumenten (Format: "split_shell:Anzahl,xxx")
+  15. eine Farbe (Format: "color:xxx", siehe "Anleitung für API Erweiterung", Funktion "color")
+  16. zum modifizieren (Format: "modifier:name,data,string")
+  17. eine Info (Format: "Info:Name,Argumente", Argumente sind optional)
+  18. eine Basis 16/32/64 kodierte / dekodierte Zeichenfolge (Format: "base_encode:base,xxx" oder "base_decode:base,xxx")
+  19. aktuelles Datum/Uhrzeit (Format: "date" oder "date:format")
+  20. eine Umgebungsvariable (Format: "env:XXX")
+  21. ein Dreifachoperand (Format: "if:Bedingung?Wert_falls_wahr:Wert_falls_unwahr")
+  22. Ergebnis eines Ausdrucks mit Klammern und Operatoren + - * / // % ** (Format: "calc:xxx")
+  23. eine zufällige ganze Zahl (Format: "random:min,max")
+  24. eine übersetzte Zeichenkette (Format: "translate:xxx")
+  25. eine Benutzervariable definieren (Format: "define:Name,Wert")
+  26. eine Option (Format: "file.section.option")
+  27. eine lokale Variable eines Buffers
+  28. ein(e) hdata - Name/Variable (der Wert wird automatisch in eine Zeichenkette konvertiert), standardmäßig wird für "window" und "buffer" das aktuelle Fenster/Buffer verwendet.
+Das Format für hdata kann wie folgt aufgebaut sein:
+  hdata.var1.var2...: startet mit hdata (der Pointer muss bekannt sein) und fragt eine Variable nach der anderen ab (weitere hdata können folgen)
+  hdata[list].var1.var2...: startet hdata mittels einer Liste, zum Beispiel:
+    ${buffer[gui_buffers].full_name}: der vollständige Name des ersten Buffers, in der verknüpften Liste aller Buffer
+    ${plugin[weechat_plugins].name}: Name der ersten Erweiterung, in der verknüpften Liste aller Erweiterungen
+  hdata[pointer].var1.var2...: startet hdata mittels einem Pointer, zum Beispiel:
+    ${buffer[0x1234abcd].full_name}: vollständiger Name eines Buffers und des dazugehörigen Pointers (kann in triggern benutzt werden)
+    ${buffer[my_pointer].full_name}: vollständiger Name des Buffers mit dem entsprechenden Pointernamen (kann in Triggern verwendet werden)
+Die vorhandenen Namen für hdata und Variablen sind in der "Anleitung für API Erweiterung", Bereich "weechat_hdata_get". beschrieben
 
-Examples (simple strings):
-  /eval -n ${raw:${info:version}}                 ==> ${info:version}
-  /eval -n ${eval_cond:${window.win_width}>100}   ==> 1
-  /eval -n ${info:version}                        ==> 0.4.3
-  /eval -n ${env:HOME}                            ==> /home/user
-  /eval -n ${weechat.look.scroll_amount}          ==> 3
-  /eval -n ${sec.data.password}                   ==> secret
-  /eval -n ${window}                              ==> 0x2549aa0
-  /eval -n ${window.buffer}                       ==> 0x2549320
-  /eval -n ${window.buffer.full_name}             ==> core.weechat
-  /eval -n ${window.buffer.number}                ==> 1
-  /eval -n ${\t}                                  ==> <tab>
+Beispiele (einfache Zeichenketten):
+  /eval -n ${raw:${info:version}}                ==> ${info:version}
+  /eval -n ${eval_cond:${window.win_width}>100}  ==> 1
+  /eval -n ${info:version}                       ==> 0.4.3
+  /eval -n ${env:HOME}                           ==> /home/user
+  /eval -n ${weechat.look.scroll_amount}         ==> 3
+  /eval -n ${sec.data.password}                  ==> geheim
+  /eval -n ${window}                             ==> 0x2549aa0
+  /eval -n ${window.buffer}                      ==> 0x2549320
+  /eval -n ${window.buffer.full_name}            ==> core.weechat
+  /eval -n ${window.buffer.number}               ==> 1
+  /eval -n ${\t}                                 ==> <tab>
   /eval -n ${lower:TEST}                          ==> test
   /eval -n ${upper:test}                          ==> TEST
-  /eval -n ${hide:-,${relay.network.password}}    ==> --------
-  /eval -n ${cut:3,+,test}                        ==> tes+
-  /eval -n ${cut:+3,+,test}                       ==> te+
-  /eval -n ${date:%H:%M:%S}                       ==> 07:46:40
-  /eval -n ${if:${info:term_width}>80?big:small}  ==> big
-  /eval -n ${rev:Hello}                           ==> olleH
-  /eval -n ${repeat:5,-}                          ==> -----
-  /eval -n ${length:test}                         ==> 4
-  /eval -n ${split:1,,,abc,def,ghi}               ==> abc
-  /eval -n ${split:-1,,,abc,def,ghi}              ==> ghi
-  /eval -n ${split:count,,,abc,def,ghi}           ==> 3
-  /eval -n ${split:random,,,abc,def,ghi}          ==> def
-  /eval -n ${split_shell:1,"arg 1" arg2}          ==> arg 1
-  /eval -n ${split_shell:-1,"arg 1" arg2}         ==> arg2
-  /eval -n ${split_shell:count,"arg 1" arg2}      ==> 2
-  /eval -n ${split_shell:random,"arg 1" arg2}     ==> arg2
-  /eval -n ${calc:(5+2)*3}                        ==> 21
-  /eval -n ${random:0,10}                         ==> 3
-  /eval -n ${base_encode:64,test}                 ==> dGVzdA==
-  /eval -n ${base_decode:64,dGVzdA==}             ==> test
-  /eval -n ${translate:Plugin}                    ==> Extension
+  /eval -n ${hide:-,${relay.network.password}}   ==> --------
+  /eval -n ${cut:3,+,test}                       ==> tes+
+  /eval -n ${cut:+3,+,test}                      ==> te+
+  /eval -n ${date:%H:%M:%S}                      ==> 07:46:40
+  /eval -n ${if:${info:term_width}>80?big:small} ==> big
+  /eval -n ${rev:Hello}                          ==> olleH
+  /eval -n ${repeat:5,-}                         ==> -----
+  /eval -n ${length:test}                        ==> 4
+  /eval -n ${split:1,,,abc,def,ghi}              ==> abc
+  /eval -n ${split:-1,,,abc,def,ghi}             ==> ghi
+  /eval -n ${split:count,,,abc,def,ghi}          ==> 3
+  /eval -n ${split:random,,,abc,def,ghi}         ==> def
+  /eval -n ${split_shell:1,"arg 1" arg2}         ==> arg 1
+  /eval -n ${split_shell:-1,"arg 1" arg2}        ==> arg2
+  /eval -n ${split_shell:count,"arg 1" arg2}     ==> 2
+  /eval -n ${split_shell:random,"arg 1" arg2}    ==> arg2
+  /eval -n ${calc:(5+2)*3}                       ==> 21
+  /eval -n ${random:0,10}                        ==> 3
+  /eval -n ${base_encode:64,test}                ==> dGVzdA==
+  /eval -n ${base_decode:64,dGVzdA==}            ==> test
+  /eval -n ${translate:Plugin}                   ==> Erweiterung
   /eval -n ${define:len,${calc:5+3}}${len}x${len} ==> 8x8
 
-Examples (conditions):
-  /eval -n -c ${window.buffer.number} > 2 ==> 0
-  /eval -n -c ${window.win_width} > 100   ==> 1
-  /eval -n -c (8 > 12) || (5 > 2)         ==> 1
-  /eval -n -c (8 > 12) && (5 > 2)         ==> 0
-  /eval -n -c abcd =~ ^ABC                ==> 1
-  /eval -n -c abcd =~ (?-i)^ABC           ==> 0
-  /eval -n -c abcd =~ (?-i)^abc           ==> 1
-  /eval -n -c abcd !~ abc                 ==> 0
-  /eval -n -c abcd =* a*d                 ==> 1
-  /eval -n -c abcd =- bc                  ==> 1
+Beispiele (Bedingungen):
+  /eval -n -c ${window.buffer.number} > 2  ==> 0
+  /eval -n -c ${window.win_width} > 100    ==> 1
+  /eval -n -c (8 > 12) || (5 > 2)          ==> 1
+  /eval -n -c (8 > 12) && (5 > 2)          ==> 0
+  /eval -n -c abcd =~ ^ABC                 ==> 1
+  /eval -n -c abcd =~ (?-i)^ABC            ==> 0
+  /eval -n -c abcd =~ (?-i)^abc            ==> 1
+  /eval -n -c abcd !~ abc                  ==> 0
+  /eval -n -c abcd =* a*d                  ==> 1
+  /eval -n -c abcd =- bc                   ==> 1
 ----
 
 [[command_weechat_filter]]
