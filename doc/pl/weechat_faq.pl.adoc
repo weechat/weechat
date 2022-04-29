@@ -841,14 +841,14 @@ join and part in the "autojoin" server option.
 For all servers:
 
 ----
-/set irc.server_default.autojoin_record on
+/set irc.server_default.autojoin_dynamic on
 ----
 
 // TRANSLATION MISSING
 For a single server:
 
 ----
-/set irc.server.libera.autojoin_record on
+/set irc.server.libera.autojoin_dynamic on
 ----
 
 Możesz użyć komendy `/set` do edytowania tej listy, na przykład dla serwera

@@ -893,13 +893,13 @@ automatisch aufzeichnen und die Serveroption „autojoin“ entsprechend anpasse
 Für alle Server:
 
 ----
-/set irc.server_default.autojoin_record on
+/set irc.server_default.autojoin_dynamic on
 ----
 
 Für einen einzelnen Server:
 
 ----
-/set irc.server.libera.autojoin_record on
+/set irc.server.libera.autojoin_dynamic on
 ----
 
 Um die Liste der autojoin Channels zu editieren,

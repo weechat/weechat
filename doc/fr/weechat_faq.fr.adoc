@@ -861,13 +861,13 @@ vous rejoignez et quittez manuellement dans l'option "autojoin" du serveur.
 Pour tous les serveurs :
 
 ----
-/set irc.server_default.autojoin_record on
+/set irc.server_default.autojoin_dynamic on
 ----
 
 Pour un seul serveur :
 
 ----
-/set irc.server.libera.autojoin_record on
+/set irc.server.libera.autojoin_dynamic on
 ----
 
 Vous pouvez utiliser la commande `/set` pour éditer la liste des canaux de

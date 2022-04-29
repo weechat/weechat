@@ -732,13 +732,13 @@ oauth је једноставно лозинка која има вреднос�
 За све сервере:
 
 ----
-/set irc.server_default.autojoin_record on
+/set irc.server_default.autojoin_dynamic on
 ----
 
 За један сервер:
 
 ----
-/set irc.server.libera.autojoin_record on
+/set irc.server.libera.autojoin_dynamic on
 ----
 
 Можете да употребите команду `/set` и да уредите листу autojoin канала, на пример за „libera” сервер:
