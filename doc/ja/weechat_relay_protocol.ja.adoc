@@ -289,7 +289,7 @@ htb: {
 === init
 
 // TRANSLATION MISSING
-_Updated in versions 2.4, 2.8, 2.9._
+_Updated in versions 2.4, 2.8, 2.9, 3.5._
 
 // TRANSLATION MISSING
 Authenticate with _relay_.

@@ -287,7 +287,7 @@ htb: {
 [[command_init]]
 === init
 
-_Mis à jour dans les versions 2.4, 2.8, 2.9._
+_Mis à jour dans les versions 2.4, 2.8, 2.9, 3.5._
 
 S'authentifier avec _relay_.
 
