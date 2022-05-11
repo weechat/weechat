@@ -1501,7 +1501,7 @@ Exemples (conditions) :
          add|addreplace <nom> <tampon>[,<tampon>...] <étiquettes> <regex>
          rename <nom> <nouveau_nom>
          recreate <nom>
-         del <nom>|-all
+         del <nom>|-all [<nom>...]
 
       list : lister tous les filtres
     enable : activer les filtres (par défaut les filtres sont activés)

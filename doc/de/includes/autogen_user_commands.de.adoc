@@ -1501,7 +1501,7 @@ Beispiele (Bedingungen):
          add|addreplace <name> <buffer>[,<buffer>...] <tags> <regex>
          rename <name> <new_name>
          recreate <name>
-         del <name>|-all
+         del <name>|-all [<name>...]
 
       list: alle Filter auflisten
     enable: Filter wird aktiviert (Filter werden standardmäßig aktiviert)

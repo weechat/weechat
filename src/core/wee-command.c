@@ -2282,7 +2282,7 @@ COMMAND_CALLBACK(filter)
 {
     struct t_gui_filter *ptr_filter;
     char str_command[4096], str_pos[16];
-    int update;
+    int i, update;
 
     /* make C compiler happy */
     (void) pointer;
@@ -2603,24 +2603,28 @@ COMMAND_CALLBACK(filter)
         }
         else
         {
-            ptr_filter = gui_filter_search_by_name (argv[2]);
-            if (ptr_filter)
+            for (i = 2; i < argc; i++)
             {
-                /* disable filter and apply before removing it */
-                ptr_filter->enabled = 0;
-                gui_filter_all_buffers (ptr_filter);
-                gui_filter_free (ptr_filter);
-                gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
-                                           _("Filter \"%s\" deleted"),
-                                           argv[2]);
-            }
-            else
-            {
-                gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
-                                           _("%sFilter \"%s\" not found"),
-                                           gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                           argv[2]);
-                return WEECHAT_RC_OK;
+                ptr_filter = gui_filter_search_by_name (argv[i]);
+                if (ptr_filter)
+                {
+                    /* disable filter and apply before removing it */
+                    ptr_filter->enabled = 0;
+                    gui_filter_all_buffers (ptr_filter);
+                    gui_filter_free (ptr_filter);
+                    gui_chat_printf_date_tags (
+                        NULL, 0, GUI_FILTER_TAG_NO_FILTER,
+                        _("Filter \"%s\" deleted"),
+                        argv[i]);
+                }
+                else
+                {
+                    gui_chat_printf_date_tags (
+                        NULL, 0, GUI_FILTER_TAG_NO_FILTER,
+                        _("%sFilter \"%s\" not found"),
+                        gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                        argv[i]);
+                }
             }
         }
         return WEECHAT_RC_OK;
@@ -7625,7 +7629,7 @@ command_init ()
            " || add|addreplace <name> <buffer>[,<buffer>...] <tags> <regex>"
            " || rename <name> <new_name>"
            " || recreate <name>"
-           " || del <name>|-all"),
+           " || del <name>|-all [<name>...]"),
         N_("      list: list all filters\n"
            "    enable: enable filters (filters are enabled by default)\n"
            "   disable: disable filters\n"
@@ -7704,7 +7708,7 @@ command_init ()
         " || add|addreplace %(filters_names) %(buffers_plugins_names)|*"
         " || rename %(filters_names) %(filters_names)"
         " || recreate %(filters_names)"
-        " || del %(filters_names)|-all",
+        " || del %(filters_names)|-all %(filters_names)|%*",
         &command_filter, NULL, NULL);
     hook_command (
         NULL, "help",

@@ -1497,11 +1497,11 @@ Examples (conditions):
 
 ----
 /filter  list
-         enable|disable|toggle [<име>|@]
-         add|addreplace <име> <бафер>[,<бафер>...] <ознаке> <регуларни_израз>
-         rename <име> <ново_име>
-         recreate <име>
-         del <име>|-all
+         enable|disable|toggle [<name>|@]
+         add|addreplace <name> <buffer>[,<buffer>...] <tags> <regex>
+         rename <name> <new_name>
+         recreate <name>
+         del <name>|-all [<name>...]
 
       list: исписује све филтере
     enable: укључује филтере (филтери су подразумевано укључени)
