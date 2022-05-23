@@ -470,6 +470,9 @@ gui_bar_search_with_option_name (const char *option_name)
     char *bar_name, *pos_option;
     struct t_gui_bar *ptr_bar;
 
+    if (!option_name)
+        return NULL;
+
     ptr_bar = NULL;
 
     pos_option = strchr (option_name, '.');
@@ -1562,24 +1565,24 @@ gui_bar_alloc (const char *name)
     int i;
 
     new_bar = malloc (sizeof (*new_bar));
-    if (new_bar)
+    if (!new_bar)
+        return NULL;
+
+    new_bar->name = strdup (name);
+    for (i = 0; i < GUI_BAR_NUM_OPTIONS; i++)
     {
-        new_bar->name = strdup (name);
-        for (i = 0; i < GUI_BAR_NUM_OPTIONS; i++)
-        {
-            new_bar->options[i] = NULL;
-        }
-        new_bar->items_count = 0;
-        new_bar->items_array = NULL;
-        new_bar->items_buffer = NULL;
-        new_bar->items_prefix = NULL;
-        new_bar->items_name = NULL;
-        new_bar->items_suffix = NULL;
-        new_bar->bar_window = NULL;
-        new_bar->bar_refresh_needed = 0;
-        new_bar->prev_bar = NULL;
-        new_bar->next_bar = NULL;
+        new_bar->options[i] = NULL;
     }
+    new_bar->items_count = 0;
+    new_bar->items_array = NULL;
+    new_bar->items_buffer = NULL;
+    new_bar->items_prefix = NULL;
+    new_bar->items_name = NULL;
+    new_bar->items_suffix = NULL;
+    new_bar->bar_window = NULL;
+    new_bar->bar_refresh_needed = 0;
+    new_bar->prev_bar = NULL;
+    new_bar->next_bar = NULL;
 
     return new_bar;
 }

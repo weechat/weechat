@@ -66,6 +66,7 @@
 #include "wee-version.h"
 #include "../gui/gui-bar.h"
 #include "../gui/gui-bar-item.h"
+#include "../gui/gui-bar-item-custom.h"
 #include "../gui/gui-buffer.h"
 #include "../gui/gui-chat.h"
 #include "../gui/gui-color.h"
@@ -3385,6 +3386,195 @@ COMMAND_CALLBACK(input)
     }
 
     return WEECHAT_RC_OK;
+}
+
+/*
+ * Callback for command "/item": manages custom bar items
+ */
+
+COMMAND_CALLBACK(item)
+{
+    struct t_gui_bar_item_custom *ptr_bar_item_custom;
+    char str_command[4096], str_pos[16];
+    int i, update;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+
+    if ((argc == 1)
+        || ((argc == 2) && (string_strcasecmp (argv[1], "list") == 0)))
+    {
+        /* display all custom bar items */
+        if (gui_custom_bar_items)
+        {
+            gui_chat_printf (NULL, "");
+            gui_chat_printf (NULL,
+                             _("Custom bar items:"));
+            for (ptr_bar_item_custom = gui_custom_bar_items; ptr_bar_item_custom;
+                 ptr_bar_item_custom = ptr_bar_item_custom->next_item)
+            {
+                gui_chat_printf (
+                    NULL, "  %s -> \"%s\"",
+                    ptr_bar_item_custom->bar_item->name,
+                    CONFIG_STRING(ptr_bar_item_custom->options[GUI_BAR_ITEM_CUSTOM_OPTION_CONTENT]));
+            }
+        }
+        else
+        {
+            gui_chat_printf (NULL, _("No custom bar item defined"));
+        }
+
+        return WEECHAT_RC_OK;
+    }
+
+    /* add (or add/replace) a custom bar item */
+    if ((string_strcasecmp (argv[1], "add") == 0)
+        || (string_strcasecmp (argv[1], "addreplace") == 0))
+    {
+        COMMAND_MIN_ARGS(4, argv[1]);
+
+        update = 0;
+        if (string_strcasecmp (argv[1], "addreplace") == 0)
+        {
+            ptr_bar_item_custom = gui_bar_item_custom_search (argv[2]);
+            if (ptr_bar_item_custom)
+            {
+                gui_bar_item_custom_free (ptr_bar_item_custom);
+                update = 1;
+            }
+        }
+
+        ptr_bar_item_custom = gui_bar_item_custom_new (argv[2], argv_eol[3]);
+        if (ptr_bar_item_custom)
+        {
+            gui_chat_printf (NULL,
+                             (update) ?
+                             _("Custom bar item \"%s\" updated") :
+                             _("Custom bar item \"%s\" added"),
+                             argv[2]);
+        }
+        else
+        {
+            gui_chat_printf (NULL,
+                             _("%sUnable to add custom bar item \"%s\""),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             argv[2]);
+        }
+
+        return WEECHAT_RC_OK;
+    }
+
+    /* refresh bar items */
+    if (string_strcasecmp (argv[1], "refresh") == 0)
+    {
+        for (i = 2; i < argc; i++)
+        {
+            gui_bar_item_update (argv[i]);
+        }
+        return WEECHAT_RC_OK;
+    }
+
+    /* recreate a custom bar item */
+    if (string_strcasecmp (argv[1], "recreate") == 0)
+    {
+        COMMAND_MIN_ARGS(3, "recreate");
+        ptr_bar_item_custom = gui_bar_item_custom_search (argv[2]);
+        if (ptr_bar_item_custom)
+        {
+            snprintf (str_command, sizeof (str_command),
+                      "/item addreplace %s %s",
+                      ptr_bar_item_custom->bar_item->name,
+                      CONFIG_STRING(ptr_bar_item_custom->options[GUI_BAR_ITEM_CUSTOM_OPTION_CONTENT]));
+            gui_buffer_set (buffer, "input", str_command);
+            snprintf (str_pos, sizeof (str_pos),
+                      "%d", utf8_strlen (str_command));
+            gui_buffer_set (buffer, "input_pos", str_pos);
+        }
+        else
+        {
+            gui_chat_printf (NULL,
+                             _("%sCustom bar item \"%s\" not found"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             argv[2]);
+        }
+        return WEECHAT_RC_OK;
+    }
+
+    /* rename a custom bar item */
+    if (string_strcasecmp (argv[1], "rename") == 0)
+    {
+        COMMAND_MIN_ARGS(4, "rename");
+        ptr_bar_item_custom = gui_bar_item_custom_search (argv[2]);
+        if (ptr_bar_item_custom)
+        {
+            if (gui_bar_item_custom_rename (ptr_bar_item_custom, argv[3]))
+            {
+                gui_chat_printf (NULL,
+                                 _("Custom bar item \"%s\" renamed to \"%s\""),
+                                 argv[2], argv[3]);
+            }
+            else
+            {
+                gui_chat_printf (NULL,
+                                 _("%sUnable to rename custom bar item "
+                                   "\"%s\" to \"%s\""),
+                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                 argv[2], argv[3]);
+            }
+        }
+        else
+        {
+            gui_chat_printf (NULL,
+                             _("%sCustom bar item \"%s\" not found"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             argv[2]);
+        }
+        return WEECHAT_RC_OK;
+    }
+
+    /* delete a custom bar item */
+    if (string_strcasecmp (argv[1], "del") == 0)
+    {
+        COMMAND_MIN_ARGS(3, "del");
+        if (string_strcasecmp (argv[2], "-all") == 0)
+        {
+            if (gui_custom_bar_items)
+            {
+                gui_bar_item_custom_free_all ();
+                gui_chat_printf (NULL,
+                                 _("All custom bar items have been deleted"));
+            }
+            else
+            {
+                gui_chat_printf (NULL, _("No custom bar item defined"));
+            }
+        }
+        else
+        {
+            for (i = 2; i < argc; i++)
+            {
+                ptr_bar_item_custom = gui_bar_item_custom_search (argv[i]);
+                if (ptr_bar_item_custom)
+                {
+                    gui_bar_item_custom_free (ptr_bar_item_custom);
+                    gui_chat_printf (NULL,
+                                     _("Custom bar item \"%s\" deleted"),
+                                     argv[i]);
+                }
+                else
+                {
+                    gui_chat_printf (NULL,
+                                     _("%sCustom bar item \"%s\" not found"),
+                                     gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                     argv[i]);
+                }
+            }
+        }
+        return WEECHAT_RC_OK;
+    }
+
+    COMMAND_ERROR;
 }
 
 /*
@@ -7827,6 +8017,41 @@ command_init ()
         "switch_active_buffer || switch_active_buffer_previous || "
         "zoom_merged_buffer || insert || send || paste_start || paste_stop",
         &command_input, NULL, NULL);
+    hook_command (
+        NULL, "item",
+        N_("manage custom bar items"),
+        N_("list"
+           " || add|addreplace <name> <content>"
+           " || rename <name> <new_name>"
+           " || refresh <name> [<name>...]"
+           " || recreate <name>"
+           " || del <name>|-all"),
+        N_("      list: list all custom bar items\n"
+           "       add: add a custom bar item\n"
+           "addreplace: add or replace an existing custom bar item\n"
+           "      name: custom bar item name\n"
+           "   content: content (evaluated, see /help eval)\n"
+           "    rename: rename a custom bar item\n"
+           "   refresh: update content of item in all bars where the item is "
+           "displayed; any item can be refreshed: default/plugin/custom "
+           "bar items\n"
+           "  recreate: set input with the command used to edit the custom "
+           "bar item\n"
+           "       del: delete a custom bar item\n"
+           "      -all: delete all custom bar items\n"
+           "\n"
+           "Examples:\n"
+           "  /item add terminfo term:${info:term_width}x${info:term_height}\n"
+           "  /item add bufinfo ${buffer.number}:${buffer.name}"
+           "${if:${buffer.zoomed}?(Z)}"),
+        "list"
+        " || add %(custom_bar_items_names)"
+        " || addreplace %(custom_bar_items_names) %(custom_bar_item_content)"
+        " || rename %(custom_bar_items_names) %(custom_bar_items_names)"
+        " || refresh %(custom_bar_items_names)|%*"
+        " || recreate %(custom_bar_items_names)"
+        " || del %(custom_bar_items_names)|-all",
+        &command_item, NULL, NULL);
     hook_command (
         NULL, "key",
         N_("bind/unbind keys"),

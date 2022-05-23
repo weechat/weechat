@@ -42,6 +42,8 @@ set(LIB_WEECHAT_UNIT_TESTS_CORE_SRC
   unit/core/test-core-url.cpp
   unit/core/test-core-utf8.cpp
   unit/core/test-core-util.cpp
+  unit/gui/test-gui-bar-item.cpp
+  unit/gui/test-gui-bar-item-custom.cpp
   unit/gui/test-gui-bar-window.cpp
   unit/gui/test-gui-buffer.cpp
   unit/gui/test-gui-chat.cpp

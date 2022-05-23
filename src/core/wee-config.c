@@ -50,6 +50,7 @@
 #include "wee-version.h"
 #include "../gui/gui-bar.h"
 #include "../gui/gui-bar-item.h"
+#include "../gui/gui-bar-item-custom.h"
 #include "../gui/gui-buffer.h"
 #include "../gui/gui-chat.h"
 #include "../gui/gui-color.h"
@@ -70,6 +71,7 @@ struct t_config_section *weechat_config_section_debug = NULL;
 struct t_config_section *weechat_config_section_color = NULL;
 struct t_config_section *weechat_config_section_proxy = NULL;
 struct t_config_section *weechat_config_section_bar = NULL;
+struct t_config_section *weechat_config_section_custom_bar_item = NULL;
 struct t_config_section *weechat_config_section_notify = NULL;
 
 /* config, startup section */
@@ -1435,6 +1437,8 @@ config_weechat_init_after_read ()
         gui_bar_create_default ();
     }
 
+    gui_bar_item_custom_use_temp_items ();
+
     /* if no key was found configuration file, then we use default bindings */
     for (i = 0; i < GUI_KEY_NUM_CONTEXTS; i++)
     {
@@ -1926,6 +1930,86 @@ config_weechat_bar_read_cb (const void *pointer, void *data,
     }
 
     free (bar_name);
+
+    return WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+}
+
+/*
+ * Reads a custom bar item option in WeeChat configuration file.
+ */
+
+int
+config_weechat_bar_item_read_cb (const void *pointer, void *data,
+                                 struct t_config_file *config_file,
+                                 struct t_config_section *section,
+                                 const char *option_name, const char *value)
+{
+    char *pos_option, *item_name;
+    struct t_gui_bar_item_custom *ptr_temp_item;
+    int index_option;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) config_file;
+    (void) section;
+
+    if (!option_name)
+        return WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+
+    pos_option = strchr (option_name, '.');
+    if (!pos_option)
+        return WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+
+    item_name = string_strndup (option_name, pos_option - option_name);
+    if (!item_name)
+        return WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+
+    pos_option++;
+
+    /* search temporary custom bar item */
+    for (ptr_temp_item = gui_temp_custom_bar_items; ptr_temp_item;
+         ptr_temp_item = ptr_temp_item->next_item)
+    {
+        if (strcmp (ptr_temp_item->name, item_name) == 0)
+            break;
+    }
+    if (!ptr_temp_item)
+    {
+        /* create new temporary custom bar item */
+        ptr_temp_item = gui_bar_item_custom_alloc (item_name);
+        if (ptr_temp_item)
+        {
+            /* add new custom bar item at the end */
+            ptr_temp_item->prev_item = last_gui_temp_custom_bar_item;
+            ptr_temp_item->next_item = NULL;
+            if (last_gui_temp_custom_bar_item)
+                last_gui_temp_custom_bar_item->next_item = ptr_temp_item;
+            else
+                gui_temp_custom_bar_items = ptr_temp_item;
+            last_gui_temp_custom_bar_item = ptr_temp_item;
+        }
+    }
+
+    if (ptr_temp_item)
+    {
+        index_option = gui_bar_item_custom_search_option (pos_option);
+        if (index_option >= 0)
+        {
+            gui_bar_item_custom_create_option_temp (ptr_temp_item, index_option,
+                                                  value);
+        }
+        else
+        {
+            gui_chat_printf (NULL,
+                             _("%sWarning: unknown option for section \"%s\": "
+                               "%s (value: \"%s\")"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             section->name, option_name, value);
+        }
+    }
+
+    free (item_name);
 
     return WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
 }
@@ -4657,6 +4741,24 @@ config_weechat_init_options ()
     }
 
     weechat_config_section_bar = ptr_section;
+
+    /* custom bar items */
+    ptr_section = config_file_new_section (
+        weechat_config_file, "custom_bar_item",
+        0, 0,
+        &config_weechat_bar_item_read_cb, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL);
+    if (!ptr_section)
+    {
+        config_file_free (weechat_config_file);
+        weechat_config_file = NULL;
+        return 0;
+    }
+
+    weechat_config_section_custom_bar_item = ptr_section;
 
     /* layout */
     ptr_section = config_file_new_section (

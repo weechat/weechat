@@ -117,6 +117,8 @@ SET(WEECHAT_SOURCES
 ./src/gui/gui-bar.h
 ./src/gui/gui-bar-item.c
 ./src/gui/gui-bar-item.h
+./src/gui/gui-bar-item-custom.c
+./src/gui/gui-bar-item-custom.h
 ./src/gui/gui-bar-window.c
 ./src/gui/gui-bar-window.h
 ./src/gui/gui-buffer.c
