@@ -720,6 +720,8 @@ trigger_command_trigger (const void *pointer, void *data,
             weechat_buffer_set (buffer, "input_pos", "13");
             free (input);
         }
+        if (items)
+            weechat_string_free_split (items);
         goto end;
     }
 
