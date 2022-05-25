@@ -27,7 +27,8 @@ struct t_weechat_plugin;
 
 enum t_gui_bar_item_custom_option
 {
-    GUI_BAR_ITEM_CUSTOM_OPTION_CONTENT = 0,  /* item content                */
+    GUI_BAR_ITEM_CUSTOM_OPTION_CONDITIONS = 0, /* condition(s) to display   */
+    GUI_BAR_ITEM_CUSTOM_OPTION_CONTENT,        /* item content              */
     /* number of bar options */
     GUI_BAR_ITEM_CUSTOM_NUM_OPTIONS,
 };
@@ -60,6 +61,7 @@ extern void gui_bar_item_custom_create_option_temp (struct t_gui_bar_item_custom
                                                     const char *value);
 extern struct t_gui_bar_item_custom *gui_bar_item_custom_alloc (const char *name);
 extern struct t_gui_bar_item_custom *gui_bar_item_custom_new (const char *name,
+                                                              const char *conditions,
                                                               const char *content);
 extern void gui_bar_item_custom_use_temp_items ();
 extern int gui_bar_item_custom_rename (struct t_gui_bar_item_custom *item,

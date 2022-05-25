@@ -39,7 +39,10 @@
 
 
 char *gui_bar_item_custom_option_string[GUI_BAR_ITEM_CUSTOM_NUM_OPTIONS] =
-{ "content" };
+{ "conditions", "content" };
+char *gui_bar_item_custom_option_default[GUI_BAR_ITEM_CUSTOM_NUM_OPTIONS] =
+{ "", "" };
+
 
 struct t_gui_bar_item_custom *gui_custom_bar_items = NULL;
 struct t_gui_bar_item_custom *last_gui_custom_bar_item = NULL;
@@ -47,7 +50,6 @@ struct t_gui_bar_item_custom *last_gui_custom_bar_item = NULL;
 /* custom bar items used when reading config */
 struct t_gui_bar_item_custom *gui_temp_custom_bar_items = NULL;
 struct t_gui_bar_item_custom *last_gui_temp_custom_bar_item = NULL;
-
 
 
 /*
@@ -163,12 +165,12 @@ gui_bar_item_custom_search_with_option_name (const char *option_name)
 }
 
 /*
- * Callback called when option "content" is changed.
+ * Callback called when option "conditions" or "content" is changed.
  */
 
 void
-gui_bar_item_custom_config_change_content (const void *pointer, void *data,
-                                           struct t_config_option *option)
+gui_bar_item_custom_config_change (const void *pointer, void *data,
+                                   struct t_config_option *option)
 {
     struct t_gui_bar_item_custom *ptr_item;
 
@@ -208,6 +210,17 @@ gui_bar_item_custom_create_option (const char *item_name, int index_option,
 
     switch (index_option)
     {
+        case GUI_BAR_ITEM_CUSTOM_OPTION_CONDITIONS:
+            ptr_option = config_file_new_option (
+                weechat_config_file, weechat_config_section_custom_bar_item,
+                option_name, "string",
+                N_("condition(s) to display the bar item "
+                   "(evaluated, see /help eval)"),
+                NULL, 0, 0, value, NULL, 0,
+                NULL, NULL, NULL,
+                &gui_bar_item_custom_config_change, NULL, NULL,
+                NULL, NULL, NULL);
+            break;
         case GUI_BAR_ITEM_CUSTOM_OPTION_CONTENT:
             ptr_option = config_file_new_option (
                 weechat_config_file, weechat_config_section_custom_bar_item,
@@ -215,7 +228,7 @@ gui_bar_item_custom_create_option (const char *item_name, int index_option,
                 N_("content of bar item (evaluated, see /help eval)"),
                 NULL, 0, 0, value, NULL, 0,
                 NULL, NULL, NULL,
-                &gui_bar_item_custom_config_change_content, NULL, NULL,
+                &gui_bar_item_custom_config_change, NULL, NULL,
                 NULL, NULL, NULL);
             break;
         case GUI_BAR_ITEM_CUSTOM_NUM_OPTIONS:
@@ -263,13 +276,17 @@ gui_bar_item_custom_callback (const void *pointer,
                               struct t_hashtable *extra_info)
 {
     struct t_gui_bar_item_custom *ptr_item;
-    struct t_hashtable *pointers;
+    struct t_hashtable *pointers, *options;
+    const char *ptr_conditions;
     char *result;
+    int rc;
 
     /* make C compiler happy */
     (void) data;
     (void) item;
     (void) extra_info;
+
+    result = NULL;
 
     ptr_item = (struct t_gui_bar_item_custom *)pointer;
     if (!ptr_item)
@@ -286,12 +303,41 @@ gui_bar_item_custom_callback (const void *pointer,
         hashtable_set (pointers, "buffer", buffer);
     }
 
+    options = hashtable_new (32,
+                             WEECHAT_HASHTABLE_STRING,
+                             WEECHAT_HASHTABLE_STRING,
+                             NULL,
+                             NULL);
+    if (options)
+        hashtable_set (options, "type", "condition");
+
+    /* check conditions */
+    ptr_conditions = CONFIG_STRING(ptr_item->options[GUI_BAR_ITEM_CUSTOM_OPTION_CONDITIONS]);
+    if (ptr_conditions && ptr_conditions[0])
+    {
+        result = eval_expression (
+            CONFIG_STRING(ptr_item->options[GUI_BAR_ITEM_CUSTOM_OPTION_CONDITIONS]),
+            pointers, NULL, options);
+        rc = eval_is_true (result);
+        if (result)
+        {
+            free (result);
+            result = NULL;
+        }
+        if (!rc)
+            goto end;
+    }
+
+    /* evaluate content */
     result = eval_expression (
         CONFIG_STRING(ptr_item->options[GUI_BAR_ITEM_CUSTOM_OPTION_CONTENT]),
         pointers, NULL, NULL);
 
+end:
     if (pointers)
         hashtable_free (pointers);
+    if (options)
+        hashtable_free (options);
 
     return result;
 }
@@ -349,6 +395,7 @@ gui_bar_item_custom_create_bar_item (struct t_gui_bar_item_custom *item)
 
 struct t_gui_bar_item_custom *
 gui_bar_item_custom_new_with_options (const char *name,
+                                      struct t_config_option *conditions,
                                       struct t_config_option *content)
 {
     struct t_gui_bar_item_custom *new_bar_item_custom;
@@ -358,6 +405,7 @@ gui_bar_item_custom_new_with_options (const char *name,
     if (!new_bar_item_custom)
         return NULL;
 
+    new_bar_item_custom->options[GUI_BAR_ITEM_CUSTOM_OPTION_CONDITIONS] = conditions;
     new_bar_item_custom->options[GUI_BAR_ITEM_CUSTOM_OPTION_CONTENT] = content;
     new_bar_item_custom->bar_item = NULL;
 
@@ -380,9 +428,10 @@ gui_bar_item_custom_new_with_options (const char *name,
  */
 
 struct t_gui_bar_item_custom *
-gui_bar_item_custom_new (const char *name, const char *content)
+gui_bar_item_custom_new (const char *name, const char *conditions,
+                         const char *content)
 {
-    struct t_config_option *option_content;
+    struct t_config_option *option_conditions, *option_content;
     struct t_gui_bar_item_custom *new_bar_item_custom;
 
     if (!gui_bar_item_custom_name_valid (name))
@@ -391,13 +440,19 @@ gui_bar_item_custom_new (const char *name, const char *content)
     if (gui_bar_item_custom_search (name))
         return NULL;
 
+    option_conditions = gui_bar_item_custom_create_option (
+        name,
+        GUI_BAR_ITEM_CUSTOM_OPTION_CONDITIONS,
+        conditions);
     option_content = gui_bar_item_custom_create_option (
         name,
         GUI_BAR_ITEM_CUSTOM_OPTION_CONTENT,
         content);
 
-    new_bar_item_custom = gui_bar_item_custom_new_with_options (name,
-                                                                option_content);
+    new_bar_item_custom = gui_bar_item_custom_new_with_options (
+        name,
+        option_conditions,
+        option_content);
     if (new_bar_item_custom)
     {
         gui_bar_item_custom_create_bar_item (new_bar_item_custom);
@@ -405,6 +460,8 @@ gui_bar_item_custom_new (const char *name, const char *content)
     }
     else
     {
+        if (option_conditions)
+            config_file_option_free (option_conditions, 0);
         if (option_content)
             config_file_option_free (option_content, 0);
     }
@@ -420,10 +477,21 @@ void
 gui_bar_item_custom_use_temp_items ()
 {
     struct t_gui_bar_item_custom *ptr_temp_item;
+    int i;
 
     for (ptr_temp_item = gui_temp_custom_bar_items; ptr_temp_item;
          ptr_temp_item = ptr_temp_item->next_item)
     {
+        for (i = 0; i < GUI_BAR_ITEM_CUSTOM_NUM_OPTIONS; i++)
+        {
+            if (!ptr_temp_item->options[i])
+            {
+                ptr_temp_item->options[i] = gui_bar_item_custom_create_option (
+                    ptr_temp_item->name,
+                    i,
+                    gui_bar_item_custom_option_default[i]);
+            }
+        }
         gui_bar_item_custom_create_bar_item (ptr_temp_item);
     }
 

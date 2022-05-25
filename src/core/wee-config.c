@@ -1939,10 +1939,10 @@ config_weechat_bar_read_cb (const void *pointer, void *data,
  */
 
 int
-config_weechat_bar_item_read_cb (const void *pointer, void *data,
-                                 struct t_config_file *config_file,
-                                 struct t_config_section *section,
-                                 const char *option_name, const char *value)
+config_weechat_custom_bar_item_read_cb (const void *pointer, void *data,
+                                        struct t_config_file *config_file,
+                                        struct t_config_section *section,
+                                        const char *option_name, const char *value)
 {
     char *pos_option, *item_name;
     struct t_gui_bar_item_custom *ptr_temp_item;
@@ -1997,7 +1997,7 @@ config_weechat_bar_item_read_cb (const void *pointer, void *data,
         if (index_option >= 0)
         {
             gui_bar_item_custom_create_option_temp (ptr_temp_item, index_option,
-                                                  value);
+                                                    value);
         }
         else
         {
@@ -4746,7 +4746,7 @@ config_weechat_init_options ()
     ptr_section = config_file_new_section (
         weechat_config_file, "custom_bar_item",
         0, 0,
-        &config_weechat_bar_item_read_cb, NULL, NULL,
+        &config_weechat_custom_bar_item_read_cb, NULL, NULL,
         NULL, NULL, NULL,
         NULL, NULL, NULL,
         NULL, NULL, NULL,

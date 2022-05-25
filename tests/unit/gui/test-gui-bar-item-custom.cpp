@@ -82,7 +82,8 @@ TEST(GuiBarItemCustom, SearchOption)
     LONGS_EQUAL(-1, gui_bar_item_custom_search_option (""));
     LONGS_EQUAL(-1, gui_bar_item_custom_search_option ("zzz"));
 
-    LONGS_EQUAL(0, gui_bar_item_custom_search_option ("content"));
+    LONGS_EQUAL(0, gui_bar_item_custom_search_option ("conditions"));
+    LONGS_EQUAL(1, gui_bar_item_custom_search_option ("content"));
 }
 
 /*
@@ -94,10 +95,12 @@ TEST(GuiBarItemCustom, Search)
 {
     struct t_gui_bar_item_custom *new_item, *new_item2, *ptr_item;
 
-    new_item = gui_bar_item_custom_new ("test", "some content");
+    new_item = gui_bar_item_custom_new ("test", "${buffer.number} == 1",
+                                        "some content");
     CHECK(new_item);
 
-    new_item2 = gui_bar_item_custom_new ("test2", "some content 2");
+    new_item2 = gui_bar_item_custom_new ("test2", "${buffer.number} == 2",
+                                         "some content 2");
     CHECK(new_item2);
 
     POINTERS_EQUAL(NULL, gui_bar_item_custom_search (NULL));
@@ -107,6 +110,8 @@ TEST(GuiBarItemCustom, Search)
     ptr_item = gui_bar_item_custom_search ("test");
     POINTERS_EQUAL(new_item, ptr_item);
     STRCMP_EQUAL("test", ptr_item->name);
+    STRCMP_EQUAL("${buffer.number} == 1",
+                 CONFIG_STRING(ptr_item->options[GUI_BAR_ITEM_CUSTOM_OPTION_CONDITIONS]));
     STRCMP_EQUAL("some content",
                  CONFIG_STRING(ptr_item->options[GUI_BAR_ITEM_CUSTOM_OPTION_CONTENT]));
     CHECK(ptr_item->bar_item);
@@ -119,6 +124,8 @@ TEST(GuiBarItemCustom, Search)
     ptr_item = gui_bar_item_custom_search ("test2");
     POINTERS_EQUAL(new_item2, ptr_item);
     STRCMP_EQUAL("test2", ptr_item->name);
+    STRCMP_EQUAL("${buffer.number} == 2",
+                 CONFIG_STRING(ptr_item->options[GUI_BAR_ITEM_CUSTOM_OPTION_CONDITIONS]));
     STRCMP_EQUAL("some content 2",
                  CONFIG_STRING(ptr_item->options[GUI_BAR_ITEM_CUSTOM_OPTION_CONTENT]));
     CHECK(ptr_item->bar_item);
@@ -141,19 +148,25 @@ TEST(GuiBarItemCustom, SearchWithOptionName)
 {
     struct t_gui_bar_item_custom *new_item, *new_item2;
 
-    new_item = gui_bar_item_custom_new ("test", "some content");
+    new_item = gui_bar_item_custom_new ("test", "${buffer.number} == 1",
+                                        "some content");
     CHECK(new_item);
 
-    new_item2 = gui_bar_item_custom_new ("test2", "some content 2");
+    new_item2 = gui_bar_item_custom_new ("test2", "${buffer.number} == 2",
+                                         "some content 2");
     CHECK(new_item2);
 
     POINTERS_EQUAL(NULL, gui_bar_item_custom_search_with_option_name (NULL));
     POINTERS_EQUAL(NULL, gui_bar_item_custom_search_with_option_name (""));
     POINTERS_EQUAL(NULL, gui_bar_item_custom_search_with_option_name ("test"));
     POINTERS_EQUAL(NULL, gui_bar_item_custom_search_with_option_name ("test2"));
+    POINTERS_EQUAL(NULL, gui_bar_item_custom_search_with_option_name ("conditions"));
     POINTERS_EQUAL(NULL, gui_bar_item_custom_search_with_option_name ("content"));
 
+    POINTERS_EQUAL(new_item, gui_bar_item_custom_search_with_option_name ("test.conditions"));
     POINTERS_EQUAL(new_item, gui_bar_item_custom_search_with_option_name ("test.content"));
+
+    POINTERS_EQUAL(new_item2, gui_bar_item_custom_search_with_option_name ("test2.conditions"));
     POINTERS_EQUAL(new_item2, gui_bar_item_custom_search_with_option_name ("test2.content"));
 
     gui_bar_item_custom_free (new_item);
@@ -162,21 +175,28 @@ TEST(GuiBarItemCustom, SearchWithOptionName)
 
 /*
  * Tests functions:
- *   gui_bar_item_custom_config_change_content
+ *   gui_bar_item_custom_config_change
  */
 
-TEST(GuiBarItemCustom, ConfigChangeContent)
+TEST(GuiBarItemCustom, ConfigChange)
 {
     struct t_gui_bar_item_custom *new_item;
 
-    new_item = gui_bar_item_custom_new ("test", "some content");
+    new_item = gui_bar_item_custom_new ("test", "${buffer.number} == 1",
+                                        "some content");
     CHECK(new_item);
+    STRCMP_EQUAL("${buffer.number} == 1",
+                 CONFIG_STRING(new_item->options[GUI_BAR_ITEM_CUSTOM_OPTION_CONDITIONS]));
     STRCMP_EQUAL("some content",
                  CONFIG_STRING(new_item->options[GUI_BAR_ITEM_CUSTOM_OPTION_CONTENT]));
 
+    config_file_option_set (new_item->options[GUI_BAR_ITEM_CUSTOM_OPTION_CONDITIONS],
+                            "${buffer.number} == 2", 1);
+    STRCMP_EQUAL("${buffer.number} == 2",
+                 CONFIG_STRING(new_item->options[GUI_BAR_ITEM_CUSTOM_OPTION_CONDITIONS]));
+
     config_file_option_set (new_item->options[GUI_BAR_ITEM_CUSTOM_OPTION_CONTENT],
                             "new content", 1);
-
     STRCMP_EQUAL("new content",
                  CONFIG_STRING(new_item->options[GUI_BAR_ITEM_CUSTOM_OPTION_CONTENT]));
 
@@ -198,12 +218,18 @@ TEST(GuiBarItemCustom, CreateOptionTemp)
     new_item = gui_bar_item_custom_alloc ("test");
     CHECK(new_item);
 
+    POINTERS_EQUAL(NULL, new_item->options[GUI_BAR_ITEM_CUSTOM_OPTION_CONDITIONS]);
     POINTERS_EQUAL(NULL, new_item->options[GUI_BAR_ITEM_CUSTOM_OPTION_CONTENT]);
+
+    gui_bar_item_custom_create_option_temp (new_item,
+                                            GUI_BAR_ITEM_CUSTOM_OPTION_CONDITIONS,
+                                            "${buffer.number} == 1");
+    STRCMP_EQUAL("${buffer.number} == 1",
+                 CONFIG_STRING(new_item->options[GUI_BAR_ITEM_CUSTOM_OPTION_CONDITIONS]));
 
     gui_bar_item_custom_create_option_temp (new_item,
                                             GUI_BAR_ITEM_CUSTOM_OPTION_CONTENT,
                                             "some content");
-
     STRCMP_EQUAL("some content",
                  CONFIG_STRING(new_item->options[GUI_BAR_ITEM_CUSTOM_OPTION_CONTENT]));
 
@@ -222,6 +248,7 @@ TEST(GuiBarItemCustom, Callback)
 
     new_item = gui_bar_item_custom_new (
         "test",
+        "${buffer.number} == 1",
         "${buffer.number} >> ${buffer.full_name}");
     CHECK(new_item);
 
@@ -235,6 +262,15 @@ TEST(GuiBarItemCustom, Callback)
                                             gui_windows, gui_buffers, NULL);
     STRCMP_EQUAL("1 >> core.weechat", content);
     free (content);
+
+    /* change conditions so that it becomes false on first buffer */
+    config_file_option_set (new_item->options[GUI_BAR_ITEM_CUSTOM_OPTION_CONDITIONS],
+                            "${buffer.number} == 2", 1);
+    POINTERS_EQUAL(NULL,
+                   gui_bar_item_custom_callback (new_item, NULL,
+                                                 new_item->bar_item,
+                                                 gui_windows, gui_buffers,
+                                                 NULL));
 
     gui_bar_item_custom_free (new_item);
 }
@@ -290,12 +326,18 @@ TEST(GuiBarItemCustom, New)
 
     /* invalid name: contains a space */
     POINTERS_EQUAL(NULL,
-                   gui_bar_item_custom_new ("test item", "some content"));
+                   gui_bar_item_custom_new ("test item",
+                                            "${buffer.number} == 1",
+                                            "some content"));
 
-    new_item = gui_bar_item_custom_new ("test", "some content");
+    new_item = gui_bar_item_custom_new ("test", "${buffer.number} == 1",
+                                        "some content");
     CHECK(new_item);
 
     STRCMP_EQUAL("test", new_item->name);
+    STRCMP_EQUAL(
+        "${buffer.number} == 1",
+        CONFIG_STRING(new_item->options[GUI_BAR_ITEM_CUSTOM_OPTION_CONDITIONS]));
     STRCMP_EQUAL(
         "some content",
         CONFIG_STRING(new_item->options[GUI_BAR_ITEM_CUSTOM_OPTION_CONTENT]));
@@ -310,16 +352,22 @@ TEST(GuiBarItemCustom, New)
     POINTERS_EQUAL(NULL, new_item->next_item);
 
     /* invalid name: already exists */
-    POINTERS_EQUAL(NULL, gui_bar_item_custom_new ("test", "some content"));
+    POINTERS_EQUAL(NULL, gui_bar_item_custom_new ("test",
+                                                  "${buffer.number} == 1",
+                                                  "some content"));
 
     /* add another item */
-    new_item2 = gui_bar_item_custom_new ("test2", "some content 2");
+    new_item2 = gui_bar_item_custom_new ("test2", "${buffer.number} == 2",
+                                         "some content 2");
     CHECK(new_item2);
 
     POINTERS_EQUAL(NULL, new_item->prev_item);
     POINTERS_EQUAL(new_item2, new_item->next_item);
 
     STRCMP_EQUAL("test2", new_item2->name);
+    STRCMP_EQUAL(
+        "${buffer.number} == 2",
+        CONFIG_STRING(new_item2->options[GUI_BAR_ITEM_CUSTOM_OPTION_CONDITIONS]));
     STRCMP_EQUAL(
         "some content 2",
         CONFIG_STRING(new_item2->options[GUI_BAR_ITEM_CUSTOM_OPTION_CONTENT]));
@@ -379,8 +427,10 @@ TEST(GuiBarItemCustom, Rename)
 {
     struct t_gui_bar_item_custom *new_item, *new_item2;
 
-    new_item = gui_bar_item_custom_new ("test", "some content");
-    new_item2 = gui_bar_item_custom_new ("test2", "some content 2");
+    new_item = gui_bar_item_custom_new ("test", "${buffer.number} == 1",
+                                        "some content");
+    new_item2 = gui_bar_item_custom_new ("test2", "${buffer.number} == 2",
+                                         "some content 2");
 
     CHECK(new_item);
     STRCMP_EQUAL("test", new_item->name);
@@ -424,11 +474,13 @@ TEST(GuiBarItemCustom, Free)
 
     gui_bar_item_custom_free (NULL);
 
-    new_item = gui_bar_item_custom_new ("test", "some content");
+    new_item = gui_bar_item_custom_new ("test", "${buffer.number} == 1",
+                                        "some content");
     POINTERS_EQUAL(new_item, gui_custom_bar_items);
     POINTERS_EQUAL(new_item, last_gui_custom_bar_item);
 
-    new_item2 = gui_bar_item_custom_new ("test2", "some content 2");
+    new_item2 = gui_bar_item_custom_new ("test2", "${buffer.number} == 2",
+                                         "some content 2");
     POINTERS_EQUAL(new_item, gui_custom_bar_items);
     POINTERS_EQUAL(new_item2, last_gui_custom_bar_item);
 
@@ -440,8 +492,10 @@ TEST(GuiBarItemCustom, Free)
     POINTERS_EQUAL(NULL, gui_custom_bar_items);
     POINTERS_EQUAL(NULL, last_gui_custom_bar_item);
 
-    new_item = gui_bar_item_custom_new ("test", "some content");
-    new_item2 = gui_bar_item_custom_new ("test2", "some content 2");
+    new_item = gui_bar_item_custom_new ("test", "${buffer.number} == 1",
+                                        "some content");
+    new_item2 = gui_bar_item_custom_new ("test2", "${buffer.number} == 2",
+                                         "some content 2");
     POINTERS_EQUAL(new_item, gui_custom_bar_items);
     POINTERS_EQUAL(new_item2, last_gui_custom_bar_item);
 
@@ -450,8 +504,10 @@ TEST(GuiBarItemCustom, Free)
     POINTERS_EQUAL(NULL, last_gui_custom_bar_item);
 
     /* remove items in reverse order */
-    new_item = gui_bar_item_custom_new ("test", "some content");
-    new_item2 = gui_bar_item_custom_new ("test2", "some content 2");
+    new_item = gui_bar_item_custom_new ("test", "${buffer.number} == 1",
+                                        "some content");
+    new_item2 = gui_bar_item_custom_new ("test2", "${buffer.number} == 2",
+                                         "some content 2");
     gui_bar_item_custom_free (new_item2);
     gui_bar_item_custom_free (new_item);
 }

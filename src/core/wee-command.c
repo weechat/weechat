@@ -3395,8 +3395,8 @@ COMMAND_CALLBACK(input)
 COMMAND_CALLBACK(item)
 {
     struct t_gui_bar_item_custom *ptr_bar_item_custom;
-    char str_command[4096], str_pos[16];
-    int i, update;
+    char str_command[4096], str_pos[16], **sargv;
+    int i, update, sargc;
 
     /* make C compiler happy */
     (void) pointer;
@@ -3415,9 +3415,19 @@ COMMAND_CALLBACK(item)
                  ptr_bar_item_custom = ptr_bar_item_custom->next_item)
             {
                 gui_chat_printf (
-                    NULL, "  %s -> \"%s\"",
-                    ptr_bar_item_custom->bar_item->name,
-                    CONFIG_STRING(ptr_bar_item_custom->options[GUI_BAR_ITEM_CUSTOM_OPTION_CONTENT]));
+                    NULL, "  %s:", ptr_bar_item_custom->bar_item->name);
+                gui_chat_printf (NULL, _("    conditions: %s\"%s%s%s\"%s"),
+                                 GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                                 GUI_COLOR(GUI_COLOR_CHAT),
+                                 CONFIG_STRING(ptr_bar_item_custom->options[GUI_BAR_ITEM_CUSTOM_OPTION_CONDITIONS]),
+                                 GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                                 GUI_COLOR(GUI_COLOR_CHAT));
+                gui_chat_printf (NULL, _("    content: %s\"%s%s%s\"%s"),
+                                 GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                                 GUI_COLOR(GUI_COLOR_CHAT),
+                                 CONFIG_STRING(ptr_bar_item_custom->options[GUI_BAR_ITEM_CUSTOM_OPTION_CONTENT]),
+                                 GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                                 GUI_COLOR(GUI_COLOR_CHAT));
             }
         }
         else
@@ -3432,12 +3442,18 @@ COMMAND_CALLBACK(item)
     if ((string_strcasecmp (argv[1], "add") == 0)
         || (string_strcasecmp (argv[1], "addreplace") == 0))
     {
-        COMMAND_MIN_ARGS(4, argv[1]);
+        sargv = string_split_shell (argv_eol[2], &sargc);
+        if (!sargv || (sargc < 3))
+        {
+            if (sargv)
+                string_free_split (sargv);
+            COMMAND_ERROR;
+        }
 
         update = 0;
         if (string_strcasecmp (argv[1], "addreplace") == 0)
         {
-            ptr_bar_item_custom = gui_bar_item_custom_search (argv[2]);
+            ptr_bar_item_custom = gui_bar_item_custom_search (sargv[0]);
             if (ptr_bar_item_custom)
             {
                 gui_bar_item_custom_free (ptr_bar_item_custom);
@@ -3445,22 +3461,25 @@ COMMAND_CALLBACK(item)
             }
         }
 
-        ptr_bar_item_custom = gui_bar_item_custom_new (argv[2], argv_eol[3]);
+        ptr_bar_item_custom = gui_bar_item_custom_new (sargv[0], sargv[1],
+                                                       sargv[2]);
         if (ptr_bar_item_custom)
         {
             gui_chat_printf (NULL,
                              (update) ?
                              _("Custom bar item \"%s\" updated") :
                              _("Custom bar item \"%s\" added"),
-                             argv[2]);
+                             sargv[0]);
         }
         else
         {
             gui_chat_printf (NULL,
                              _("%sUnable to add custom bar item \"%s\""),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                             argv[2]);
+                             sargv[0]);
         }
+
+        string_free_split (sargv);
 
         return WEECHAT_RC_OK;
     }
@@ -3483,8 +3502,9 @@ COMMAND_CALLBACK(item)
         if (ptr_bar_item_custom)
         {
             snprintf (str_command, sizeof (str_command),
-                      "/item addreplace %s %s",
+                      "/item addreplace %s \"%s\" \"%s\"",
                       ptr_bar_item_custom->bar_item->name,
+                      CONFIG_STRING(ptr_bar_item_custom->options[GUI_BAR_ITEM_CUSTOM_OPTION_CONDITIONS]),
                       CONFIG_STRING(ptr_bar_item_custom->options[GUI_BAR_ITEM_CUSTOM_OPTION_CONTENT]));
             gui_buffer_set (buffer, "input", str_command);
             snprintf (str_pos, sizeof (str_pos),
@@ -8021,7 +8041,7 @@ command_init ()
         NULL, "item",
         N_("manage custom bar items"),
         N_("list"
-           " || add|addreplace <name> <content>"
+           " || add|addreplace <name> \"<conditions>\" \"<content>\""
            " || rename <name> <new_name>"
            " || refresh <name> [<name>...]"
            " || recreate <name>"
@@ -8030,6 +8050,8 @@ command_init ()
            "       add: add a custom bar item\n"
            "addreplace: add or replace an existing custom bar item\n"
            "      name: custom bar item name\n"
+           "conditions: evaluated conditions to display the bar item "
+           "(for example to display the bar item only in specific buffers)\n"
            "   content: content (evaluated, see /help eval)\n"
            "    rename: rename a custom bar item\n"
            "   refresh: update content of item in all bars where the item is "
@@ -8041,9 +8063,10 @@ command_init ()
            "      -all: delete all custom bar items\n"
            "\n"
            "Examples:\n"
-           "  /item add terminfo term:${info:term_width}x${info:term_height}\n"
-           "  /item add bufinfo ${buffer.number}:${buffer.name}"
-           "${if:${buffer.zoomed}?(Z)}"),
+           "  /item add terminfo \"${buffer.number} == 1\" "
+           "\"term:${info:term_width}x${info:term_height}\"\n"
+           "  /item add bufinfo \"\" \"${buffer.number}:${buffer.name}"
+           "${if:${buffer.zoomed}?(Z)}\""),
         "list"
         " || add %(custom_bar_items_names)"
         " || addreplace %(custom_bar_items_names) %(custom_bar_item_content)"
