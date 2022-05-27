@@ -35,6 +35,7 @@ Bug fixes::
   * irc: fix add of channel to autojoin option when joining a channel with a buffer still opened
   * relay: fix save of channels in autojoin option when JOIN and PART commands are received from an IRC relay client (issue #1771)
   * trigger: add `${buffer.notify} > 0` in conditions of default trigger "beep"
+  * trigger: fix completion of command `/trigger add` when there are spaces in the following arguments
   * trigger: fix memory leak in command `/trigger addinput`
 
 [[v3.5]]

@@ -1271,10 +1271,7 @@ trigger_command_init ()
            "name starts with \"resize\":\n"
            "    /trigger monitor @modifier,resize*"),
         "list|listfull|listdefault"
-        " || add|addoff|addreplace %(trigger_names) %(trigger_hooks) "
-        "%(trigger_hook_arguments) %(trigger_hook_conditions) "
-        "%(trigger_hook_regex) %(trigger_hook_command) %(trigger_hook_rc) "
-        "%(trigger_post_action)"
+        " || add|addoff|addreplace %(trigger_add_arguments)|%*"
         " || addinput %(trigger_hooks)"
         " || input|output|recreate %(trigger_names)"
         " || set %(trigger_names) %(trigger_options)|name %(trigger_option_value)"
