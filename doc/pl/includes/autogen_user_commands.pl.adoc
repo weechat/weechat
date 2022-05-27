@@ -1649,6 +1649,49 @@ lista akcji:
 Ta komenda jest używana do przypisywania klawiszy lub przez wtyczki.
 ----
 
+[[command_weechat_item]]
+* `+item+`: manage custom bar items
+
+----
+/item  list
+       add|addreplace <name> "<conditions>" "<content>"
+       rename <name> <new_name>
+       refresh <name> [<name>...]
+       recreate <name>
+       del <name>|-all
+
+      list: list all custom bar items
+       add: add a custom bar item
+addreplace: add or replace an existing custom bar item
+      name: custom bar item name
+conditions: evaluated conditions to display the bar item (for example to display the bar item only in specific buffers)
+   content: content (evaluated, see /help eval)
+    rename: rename a custom bar item
+   refresh: update content of item in all bars where the item is displayed; any item can be refreshed: default/plugin/custom bar items
+  recreate: set input with the command used to edit the custom bar item
+       del: delete a custom bar item
+      -all: delete all custom bar items
+
+Examples:
+  add item with terminal size, displayed only in buffers with number = 1:
+    /item add terminfo "${buffer.number} == 1" "term:${info:term_width}x${info:term_height}"
+  add item with buffer info:
+    /item add bufinfo "" "${buffer.number}:${buffer.name}${if:${buffer.zoomed}?(Z)}"
+  add item with date/time using format "Dec 25, 12:34 +0100", refreshed every minute:
+    /item add datetime "" "${date:%b %d, %H:%M %z}"
+    /trigger add datetime_refresh timer "60000;60" "" "" "/item refresh datetime"
+  add item with number of lines in buffer (displayed/total), refreshed each time a new line is displayed or if filtered lines have changed:
+    /item add lines_count "" "${calc:${buffer.lines.lines_count}-${buffer.lines.lines_hidden}}/${buffer.lines.lines_count} lines"
+    /trigger add lines_count_refresh_print print "" "" "" "/item refresh lines_count"
+    /trigger add lines_count_refresh_signal signal "window_switch;buffer_switch;buffer_lines_hidden;filters_*" "" "" "/item refresh lines_count"
+  force refresh of item "lines_count":
+    /item refresh lines_count
+  recreate item "lines_count" with different conditions or content:
+    /item recreate lines_count
+  delete item "lines_count":
+    /item del lines_count
+----
+
 [[command_weechat_key]]
 * `+key+`: dodaj/usuń przypisanie klawiszy
 

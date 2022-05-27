@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2022-05-11 21:20+0200\n"
+"POT-Creation-Date: 2022-05-27 22:21+0200\n"
 "PO-Revision-Date: 2022-04-24 10:20+0200\n"
 "Last-Translator: Érico Nogueira <ericonr@disroot.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -567,6 +567,61 @@ msgstr "%sAjuda indisponível, \"%s\" não é um comando ou uma opção"
 
 msgid "Buffer command history:"
 msgstr "Histórico de comandos do buffer:"
+
+#, fuzzy
+#| msgid "List of bar items:"
+msgid "Custom bar items:"
+msgstr "Lista de itens da barra:"
+
+#, fuzzy, c-format
+msgid "    conditions: %s\"%s%s%s\"%s"
+msgstr "opções %s%s%s"
+
+#, fuzzy, c-format
+#| msgid "New key binding (context \"%s\"): %s%s => %s%s"
+msgid "    content: %s\"%s%s%s\"%s"
+msgstr "Novo atalho de teclado (contexto \"%s\"): %s%s => %s%s"
+
+#, fuzzy
+#| msgid "No bar item defined"
+msgid "No custom bar item defined"
+msgstr "Nenhum item da barra definido"
+
+#, fuzzy, c-format
+#| msgid "Bar \"%s\" updated"
+msgid "Custom bar item \"%s\" updated"
+msgstr "Barra \"%s\" atualizada"
+
+#, fuzzy, c-format
+msgid "Custom bar item \"%s\" added"
+msgstr "item da barra \"%s\""
+
+#, fuzzy, c-format
+msgid "%sUnable to add custom bar item \"%s\""
+msgstr "%sErro: não foi possível rolar a barra \"%s\""
+
+#, fuzzy, c-format
+msgid "%sCustom bar item \"%s\" not found"
+msgstr "%sErro: contexto \"%s\" não encontrado"
+
+#, fuzzy, c-format
+#| msgid "Filter \"%s\" renamed to \"%s\""
+msgid "Custom bar item \"%s\" renamed to \"%s\""
+msgstr "Filtro \"%s\" renomeado para \"%s\""
+
+#, fuzzy, c-format
+msgid "%sUnable to rename custom bar item \"%s\" to \"%s\""
+msgstr "%sErro: não foi possível renomear filtro \"%s\" para \"%s\""
+
+#, fuzzy
+#| msgid "All bars have been deleted"
+msgid "All custom bar items have been deleted"
+msgstr "Todas as barras foram excluídas"
+
+#, fuzzy, c-format
+#| msgid "Bar \"%s\" deleted"
+msgid "Custom bar item \"%s\" deleted"
+msgstr "Barra \"%s\" excluída"
 
 msgid "default command:"
 msgstr "comando padrão:"
@@ -2005,6 +2060,64 @@ msgstr ""
 "\n"
 "Este comando é usado por atalhos de teclado ou plugins."
 
+#, fuzzy
+#| msgid "list of bar items"
+msgid "manage custom bar items"
+msgstr "lista de itens da barra"
+
+#, fuzzy
+msgid ""
+"list || add|addreplace <name> \"<conditions>\" \"<content>\" || rename "
+"<name> <new_name> || refresh <name> [<name>...] || recreate <name> || del "
+"<name>|-all"
+msgstr ""
+"list || enable|disable|toggle [<nome>] || add <nome> <buffer>[,<buffer>...] "
+"<tags> <regex> || del <nome>|-all"
+
+msgid ""
+"      list: list all custom bar items\n"
+"       add: add a custom bar item\n"
+"addreplace: add or replace an existing custom bar item\n"
+"      name: custom bar item name\n"
+"conditions: evaluated conditions to display the bar item (for example to "
+"display the bar item only in specific buffers)\n"
+"   content: content (evaluated, see /help eval)\n"
+"    rename: rename a custom bar item\n"
+"   refresh: update content of item in all bars where the item is displayed; "
+"any item can be refreshed: default/plugin/custom bar items\n"
+"  recreate: set input with the command used to edit the custom bar item\n"
+"       del: delete a custom bar item\n"
+"      -all: delete all custom bar items\n"
+"\n"
+"Examples:\n"
+"  add item with terminal size, displayed only in buffers with number = 1:\n"
+"    /item add terminfo \"${buffer.number} == 1\" \"term:${info:term_width}"
+"x${info:term_height}\"\n"
+"  add item with buffer info:\n"
+"    /item add bufinfo \"\" \"${buffer.number}:${buffer.name}${if:${buffer."
+"zoomed}?(Z)}\"\n"
+"  add item with date/time using format \"Dec 25, 12:34 +0100\", refreshed "
+"every minute:\n"
+"    /item add datetime \"\" \"${date:%b %d, %H:%M %z}\"\n"
+"    /trigger add datetime_refresh timer \"60000;60\" \"\" \"\" \"/item "
+"refresh datetime\"\n"
+"  add item with number of lines in buffer (displayed/total), refreshed each "
+"time a new line is displayed or if filtered lines have changed:\n"
+"    /item add lines_count \"\" \"${calc:${buffer.lines.lines_count}-${buffer."
+"lines.lines_hidden}}/${buffer.lines.lines_count} lines\"\n"
+"    /trigger add lines_count_refresh_print print \"\" \"\" \"\" \"/item "
+"refresh lines_count\"\n"
+"    /trigger add lines_count_refresh_signal signal \"window_switch;"
+"buffer_switch;buffer_lines_hidden;filters_*\" \"\" \"\" \"/item refresh "
+"lines_count\"\n"
+"  force refresh of item \"lines_count\":\n"
+"    /item refresh lines_count\n"
+"  recreate item \"lines_count\" with different conditions or content:\n"
+"    /item recreate lines_count\n"
+"  delete item \"lines_count\":\n"
+"    /item del lines_count"
+msgstr ""
+
 msgid "bind/unbind keys"
 msgstr "vincular/desvincular teclas"
 
@@ -3076,6 +3189,24 @@ msgstr ""
 
 msgid "names of bars"
 msgstr "nomes das barras"
+
+#, fuzzy
+#| msgid "names of bars"
+msgid "names of custom bar items"
+msgstr "nomes das barras"
+
+#, fuzzy
+#| msgid "functions for command line"
+msgid "conditions for custom bar item"
+msgstr "funções para linha de comando"
+
+msgid "contents for custom bar item"
+msgstr ""
+
+msgid ""
+"arguments for command that adds a custom bar item: item name, conditions, "
+"content"
+msgstr ""
 
 msgid "values for a configuration option"
 msgstr "valores para uma opção de configuração"
@@ -4948,6 +5079,12 @@ msgid "%s-MORE(%d)-"
 msgstr "%s-MORE(%d)-"
 
 msgid "away"
+msgstr ""
+
+msgid "condition(s) to display the bar item (evaluated, see /help eval)"
+msgstr ""
+
+msgid "content of bar item (evaluated, see /help eval)"
 msgstr ""
 
 #, c-format
@@ -12675,6 +12812,12 @@ msgid "default return codes for hook callback"
 msgstr "cor padrão do texto para a barra"
 
 msgid "trigger post actions"
+msgstr ""
+
+msgid ""
+"arguments for command that adds a trigger: trigger name, hooks, hook "
+"arguments, hook conditions, hook regex, hook command, hook return code, post "
+"actions"
 msgstr ""
 
 #, c-format

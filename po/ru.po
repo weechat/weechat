@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2022-05-11 21:20+0200\n"
+"POT-Creation-Date: 2022-05-27 22:21+0200\n"
 "PO-Revision-Date: 2022-04-24 10:20+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -557,6 +557,54 @@ msgstr "Справка недоступна, \"%s\" не является ком
 #, fuzzy
 msgid "Buffer command history:"
 msgstr "показать историю буфера команд"
+
+#, fuzzy
+msgid "Custom bar items:"
+msgstr "Список сокращений:\n"
+
+#, fuzzy, c-format
+msgid "    conditions: %s\"%s%s%s\"%s"
+msgstr "Ники %s%s%s: %s["
+
+#, fuzzy, c-format
+msgid "    content: %s\"%s%s%s\"%s"
+msgstr "%sСервер: %s%s\n"
+
+#, fuzzy
+msgid "No custom bar item defined"
+msgstr "Сокращения не заданы.\n"
+
+#, fuzzy, c-format
+msgid "Custom bar item \"%s\" updated"
+msgstr "Сокращение \"%s\" => \"%s\" создано\n"
+
+#, fuzzy, c-format
+msgid "Custom bar item \"%s\" added"
+msgstr "Список сокращений:\n"
+
+#, fuzzy, c-format
+msgid "%sUnable to add custom bar item \"%s\""
+msgstr "%s не могу сохранить конфигурационный файл pluginов\n"
+
+#, fuzzy, c-format
+msgid "%sCustom bar item \"%s\" not found"
+msgstr "%s plugin \"%s\" не найден\n"
+
+#, fuzzy, c-format
+msgid "Custom bar item \"%s\" renamed to \"%s\""
+msgstr "команда users отключена"
+
+#, fuzzy, c-format
+msgid "%sUnable to rename custom bar item \"%s\" to \"%s\""
+msgstr "%s неизвестный параметр для команды \"%s\"\n"
+
+#, fuzzy
+msgid "All custom bar items have been deleted"
+msgstr "команда users отключена"
+
+#, fuzzy, c-format
+msgid "Custom bar item \"%s\" deleted"
+msgstr "команда users отключена"
 
 #, fuzzy
 msgid "default command:"
@@ -1724,6 +1772,66 @@ msgid ""
 "This command is used by key bindings or plugins."
 msgstr ""
 
+#, fuzzy
+msgid "manage custom bar items"
+msgstr "Список сокращений:\n"
+
+#, fuzzy
+msgid ""
+"list || add|addreplace <name> \"<conditions>\" \"<content>\" || rename "
+"<name> <new_name> || refresh <name> [<name>...] || recreate <name> || del "
+"<name>|-all"
+msgstr ""
+"[list [сервер]] | [listfull [сервер]] | [add сервер адрес [-port порт] [-"
+"temp] [-auto | -noauto] [-ipv6] [-ssl] [-pwd пароль] [-nicks ник1 ник2 ник3] "
+"[-username имя_пользователя] [-realname реальное_имя] [-command команда] [-"
+"autojoin канал[,канал]] ] | [copy сервер новый_сервер] | [rename сервер "
+"новое_имя] | [keep сервер] | [del сервер]"
+
+msgid ""
+"      list: list all custom bar items\n"
+"       add: add a custom bar item\n"
+"addreplace: add or replace an existing custom bar item\n"
+"      name: custom bar item name\n"
+"conditions: evaluated conditions to display the bar item (for example to "
+"display the bar item only in specific buffers)\n"
+"   content: content (evaluated, see /help eval)\n"
+"    rename: rename a custom bar item\n"
+"   refresh: update content of item in all bars where the item is displayed; "
+"any item can be refreshed: default/plugin/custom bar items\n"
+"  recreate: set input with the command used to edit the custom bar item\n"
+"       del: delete a custom bar item\n"
+"      -all: delete all custom bar items\n"
+"\n"
+"Examples:\n"
+"  add item with terminal size, displayed only in buffers with number = 1:\n"
+"    /item add terminfo \"${buffer.number} == 1\" \"term:${info:term_width}"
+"x${info:term_height}\"\n"
+"  add item with buffer info:\n"
+"    /item add bufinfo \"\" \"${buffer.number}:${buffer.name}${if:${buffer."
+"zoomed}?(Z)}\"\n"
+"  add item with date/time using format \"Dec 25, 12:34 +0100\", refreshed "
+"every minute:\n"
+"    /item add datetime \"\" \"${date:%b %d, %H:%M %z}\"\n"
+"    /trigger add datetime_refresh timer \"60000;60\" \"\" \"\" \"/item "
+"refresh datetime\"\n"
+"  add item with number of lines in buffer (displayed/total), refreshed each "
+"time a new line is displayed or if filtered lines have changed:\n"
+"    /item add lines_count \"\" \"${calc:${buffer.lines.lines_count}-${buffer."
+"lines.lines_hidden}}/${buffer.lines.lines_count} lines\"\n"
+"    /trigger add lines_count_refresh_print print \"\" \"\" \"\" \"/item "
+"refresh lines_count\"\n"
+"    /trigger add lines_count_refresh_signal signal \"window_switch;"
+"buffer_switch;buffer_lines_hidden;filters_*\" \"\" \"\" \"/item refresh "
+"lines_count\"\n"
+"  force refresh of item \"lines_count\":\n"
+"    /item refresh lines_count\n"
+"  recreate item \"lines_count\" with different conditions or content:\n"
+"    /item recreate lines_count\n"
+"  delete item \"lines_count\":\n"
+"    /item del lines_count"
+msgstr ""
+
 msgid "bind/unbind keys"
 msgstr "установить/снять клавиши"
 
@@ -2547,6 +2655,22 @@ msgstr ""
 #, fuzzy
 msgid "names of bars"
 msgstr "Список сокращений:\n"
+
+#, fuzzy
+msgid "names of custom bar items"
+msgstr "Список сокращений:\n"
+
+#, fuzzy
+msgid "conditions for custom bar item"
+msgstr "вставить строку в поле ввода"
+
+msgid "contents for custom bar item"
+msgstr ""
+
+msgid ""
+"arguments for command that adds a custom bar item: item name, conditions, "
+"content"
+msgstr ""
 
 #, fuzzy
 msgid "values for a configuration option"
@@ -4337,6 +4461,12 @@ msgid "%s-MORE(%d)-"
 msgstr "-ДАЛЬШЕ-"
 
 msgid "away"
+msgstr ""
+
+msgid "condition(s) to display the bar item (evaluated, see /help eval)"
+msgstr ""
+
+msgid "content of bar item (evaluated, see /help eval)"
 msgstr ""
 
 #, fuzzy, c-format
@@ -12200,6 +12330,12 @@ msgid "default return codes for hook callback"
 msgstr "цвет текста информационной панели"
 
 msgid "trigger post actions"
+msgstr ""
+
+msgid ""
+"arguments for command that adds a trigger: trigger name, hooks, hook "
+"arguments, hook conditions, hook regex, hook command, hook return code, post "
+"actions"
 msgstr ""
 
 #, c-format

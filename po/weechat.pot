@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2022-05-11 21:20+0200\n"
+"POT-Creation-Date: 2022-05-27 22:21+0200\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -497,6 +497,51 @@ msgid "%sNo help available, \"%s\" is not a command or an option"
 msgstr ""
 
 msgid "Buffer command history:"
+msgstr ""
+
+msgid "Custom bar items:"
+msgstr ""
+
+#, c-format
+msgid "    conditions: %s\"%s%s%s\"%s"
+msgstr ""
+
+#, c-format
+msgid "    content: %s\"%s%s%s\"%s"
+msgstr ""
+
+msgid "No custom bar item defined"
+msgstr ""
+
+#, c-format
+msgid "Custom bar item \"%s\" updated"
+msgstr ""
+
+#, c-format
+msgid "Custom bar item \"%s\" added"
+msgstr ""
+
+#, c-format
+msgid "%sUnable to add custom bar item \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%sCustom bar item \"%s\" not found"
+msgstr ""
+
+#, c-format
+msgid "Custom bar item \"%s\" renamed to \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%sUnable to rename custom bar item \"%s\" to \"%s\""
+msgstr ""
+
+msgid "All custom bar items have been deleted"
+msgstr ""
+
+#, c-format
+msgid "Custom bar item \"%s\" deleted"
 msgstr ""
 
 msgid "default command:"
@@ -1567,6 +1612,59 @@ msgid ""
 "This command is used by key bindings or plugins."
 msgstr ""
 
+msgid "manage custom bar items"
+msgstr ""
+
+msgid ""
+"list || add|addreplace <name> \"<conditions>\" \"<content>\" || rename "
+"<name> <new_name> || refresh <name> [<name>...] || recreate <name> || del "
+"<name>|-all"
+msgstr ""
+
+msgid ""
+"      list: list all custom bar items\n"
+"       add: add a custom bar item\n"
+"addreplace: add or replace an existing custom bar item\n"
+"      name: custom bar item name\n"
+"conditions: evaluated conditions to display the bar item (for example to "
+"display the bar item only in specific buffers)\n"
+"   content: content (evaluated, see /help eval)\n"
+"    rename: rename a custom bar item\n"
+"   refresh: update content of item in all bars where the item is displayed; "
+"any item can be refreshed: default/plugin/custom bar items\n"
+"  recreate: set input with the command used to edit the custom bar item\n"
+"       del: delete a custom bar item\n"
+"      -all: delete all custom bar items\n"
+"\n"
+"Examples:\n"
+"  add item with terminal size, displayed only in buffers with number = 1:\n"
+"    /item add terminfo \"${buffer.number} == 1\" \"term:${info:term_width}"
+"x${info:term_height}\"\n"
+"  add item with buffer info:\n"
+"    /item add bufinfo \"\" \"${buffer.number}:${buffer.name}${if:${buffer."
+"zoomed}?(Z)}\"\n"
+"  add item with date/time using format \"Dec 25, 12:34 +0100\", refreshed "
+"every minute:\n"
+"    /item add datetime \"\" \"${date:%b %d, %H:%M %z}\"\n"
+"    /trigger add datetime_refresh timer \"60000;60\" \"\" \"\" \"/item "
+"refresh datetime\"\n"
+"  add item with number of lines in buffer (displayed/total), refreshed each "
+"time a new line is displayed or if filtered lines have changed:\n"
+"    /item add lines_count \"\" \"${calc:${buffer.lines.lines_count}-${buffer."
+"lines.lines_hidden}}/${buffer.lines.lines_count} lines\"\n"
+"    /trigger add lines_count_refresh_print print \"\" \"\" \"\" \"/item "
+"refresh lines_count\"\n"
+"    /trigger add lines_count_refresh_signal signal \"window_switch;"
+"buffer_switch;buffer_lines_hidden;filters_*\" \"\" \"\" \"/item refresh "
+"lines_count\"\n"
+"  force refresh of item \"lines_count\":\n"
+"    /item refresh lines_count\n"
+"  recreate item \"lines_count\" with different conditions or content:\n"
+"    /item recreate lines_count\n"
+"  delete item \"lines_count\":\n"
+"    /item del lines_count"
+msgstr ""
+
 msgid "bind/unbind keys"
 msgstr ""
 
@@ -2312,6 +2410,20 @@ msgid ""
 msgstr ""
 
 msgid "names of bars"
+msgstr ""
+
+msgid "names of custom bar items"
+msgstr ""
+
+msgid "conditions for custom bar item"
+msgstr ""
+
+msgid "contents for custom bar item"
+msgstr ""
+
+msgid ""
+"arguments for command that adds a custom bar item: item name, conditions, "
+"content"
 msgstr ""
 
 msgid "values for a configuration option"
@@ -3936,6 +4048,12 @@ msgid "%s-MORE(%d)-"
 msgstr ""
 
 msgid "away"
+msgstr ""
+
+msgid "condition(s) to display the bar item (evaluated, see /help eval)"
+msgstr ""
+
+msgid "content of bar item (evaluated, see /help eval)"
 msgstr ""
 
 #, c-format
@@ -11019,6 +11137,12 @@ msgid "default return codes for hook callback"
 msgstr ""
 
 msgid "trigger post actions"
+msgstr ""
+
+msgid ""
+"arguments for command that adds a trigger: trigger name, hooks, hook "
+"arguments, hook conditions, hook regex, hook command, hook return code, post "
+"actions"
 msgstr ""
 
 #, c-format

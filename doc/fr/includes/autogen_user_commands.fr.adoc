@@ -1650,6 +1650,49 @@ liste des actions :
 Cette commande est utilisé par les associations de touches ou les extensions.
 ----
 
+[[command_weechat_item]]
+* `+item+`: gestion des objets de barre personnalisés
+
+----
+/item  list
+       add|addreplace <nom> "<conditions>" "<contenu>"
+       rename <nom> <nouveau_nom>
+       refresh <nom> [<nom>...]
+       recreate <nom>
+       del <nom>|-all
+
+      list : lister tous les objets de barre personnalisés
+       add : ajouter un objet de barre personnalisé
+addreplace : ajouter ou remplacer un objet de barre personnalisé existant
+       nom : nom de l'objet de barre personnalisé
+conditions : conditions évaluées pour afficher l'objet de barre (par exemple pour afficher l'objet de barre seulement sur certains tampons)
+   contenu : contenu (évalué, voir /help eval)
+    rename : renommer un objet de barre personnalisé
+   refresh : mettre à jour le contenu d'un objet de barre personnalisé dans toutes les barres où l'objet est affiché ; tout objet peut être rafraîchi : défaut/extension/objets de barre personnalisés
+  recreate : définir la ligne de commande utilisée pour éditer l'objet de barre personnalisé
+       del : supprimer un objet de barre personnalisé
+      -all : supprimer tous les objets de barre personnalisés
+
+Exemples :
+  ajouter un objet avec la taille du terminal, affiché seulement sur les tampons avec numéro = 1 :
+    /item add terminfo "${buffer.number} == 1" "term:${info:term_width}x${info:term_height}"
+  ajouter un objet avec des informations sur le tampon :
+    /item add bufinfo "" "${buffer.number}:${buffer.name}${if:${buffer.zoomed}?(Z)}"
+  ajouter un objet avec la date/heure en utilisant le format "Dec 25, 12:34 +0100", rafraîchi chaque minute :
+    /item add datetime "" "${date:%b %d, %H:%M %z}"
+    /trigger add datetime_refresh timer "60000;60" "" "" "/item refresh datetime"
+  ajouter un objet avec le nombre de lignes dans le tampon (affichées/total), rafraîchi à chaque nouvelle ligne affichée ou si les lignes filtrées ont changé :
+    /item add lines_count "" "${calc:${buffer.lines.lines_count}-${buffer.lines.lines_hidden}}/${buffer.lines.lines_count} lines"
+    /trigger add lines_count_refresh_print print "" "" "" "/item refresh lines_count"
+    /trigger add lines_count_refresh_signal signal "window_switch;buffer_switch;buffer_lines_hidden;filters_*" "" "" "/item refresh lines_count"
+  forcer le rafraîchissement de l'objet "lines_count" :
+    /item refresh lines_count
+  recréer l'objet "lines_count" avec différentes conditions ou contenu :
+    /item recreate lines_count
+  supprimer l'objet "lines_count" :
+    /item del lines_count
+----
+
 [[command_weechat_key]]
 * `+key+`: associer/libérer des touches
 

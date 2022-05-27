@@ -94,6 +94,8 @@
 
 | tcl | tcl_script | スクリプトのリスト
 
+| trigger | trigger_add_arguments | arguments for command that adds a trigger: trigger name, hooks, hook arguments, hook conditions, hook regex, hook command, hook return code, post actions
+
 | trigger | trigger_hook_arguments | フックに対するデフォルト引数
 
 | trigger | trigger_hook_command | フックに対するデフォルトコマンド
@@ -147,6 +149,14 @@
 | weechat | config_options | 設定オプション
 
 | weechat | cursor_areas | カーソルを自由に動かせるエリア ("chat" またはバーの名前)
+
+| weechat | custom_bar_item_add_arguments | arguments for command that adds a custom bar item: item name, conditions, content
+
+| weechat | custom_bar_item_conditions | conditions for custom bar item
+
+| weechat | custom_bar_item_contents | contents for custom bar item
+
+| weechat | custom_bar_items_names | names of custom bar items
 
 | weechat | env_value | 環境変数の値
 

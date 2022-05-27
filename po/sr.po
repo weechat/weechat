@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2022-05-11 21:20+0200\n"
+"POT-Creation-Date: 2022-05-27 22:21+0200\n"
 "PO-Revision-Date: 2022-04-24 10:20+0200\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -570,6 +570,66 @@ msgstr "%sНе постоји помоћ, „%s” није команда ил�
 
 msgid "Buffer command history:"
 msgstr "Историја команди у баферу:"
+
+#, fuzzy
+#| msgid "List of bar items:"
+msgid "Custom bar items:"
+msgstr "Листа ставки на траци:"
+
+#, fuzzy, c-format
+#| msgid "options %s%s%s"
+msgid "    conditions: %s\"%s%s%s\"%s"
+msgstr "опције %s%s%s"
+
+#, fuzzy, c-format
+#| msgid "%s    error: %s%s%s%s"
+msgid "    content: %s\"%s%s%s\"%s"
+msgstr "%s    грешка: %s%s%s%s"
+
+#, fuzzy
+#| msgid "No bar item defined"
+msgid "No custom bar item defined"
+msgstr "Није дефинисана ниједна ставка траке"
+
+#, fuzzy, c-format
+#| msgid "Bar \"%s\" updated"
+msgid "Custom bar item \"%s\" updated"
+msgstr "Ажурирана је „%s”"
+
+#, fuzzy, c-format
+#| msgid "bar item \"%s\""
+msgid "Custom bar item \"%s\" added"
+msgstr "ставка траке „%s”"
+
+#, fuzzy, c-format
+#| msgid "%sUnable to scroll bar \"%s\""
+msgid "%sUnable to add custom bar item \"%s\""
+msgstr "%sТрака „%s” не може да се скролује"
+
+#, fuzzy, c-format
+#| msgid "%sContext \"%s\" not found"
+msgid "%sCustom bar item \"%s\" not found"
+msgstr "%sНије пронађен контекст „%s”"
+
+#, fuzzy, c-format
+#| msgid "Filter \"%s\" renamed to \"%s\""
+msgid "Custom bar item \"%s\" renamed to \"%s\""
+msgstr "Филтеру „%s” је промењено име на „%s”"
+
+#, fuzzy, c-format
+#| msgid "%sUnable to rename filter \"%s\" to \"%s\""
+msgid "%sUnable to rename custom bar item \"%s\" to \"%s\""
+msgstr "%sНије успела промена име филтера „%s” на „%s”"
+
+#, fuzzy
+#| msgid "All bars have been deleted"
+msgid "All custom bar items have been deleted"
+msgstr "Обрисане су све траке"
+
+#, fuzzy, c-format
+#| msgid "Bar \"%s\" deleted"
+msgid "Custom bar item \"%s\" deleted"
+msgstr "Обрисана је трака „%s”"
 
 msgid "default command:"
 msgstr "подразумевана команда:"
@@ -2343,6 +2403,69 @@ msgstr ""
 "\n"
 "Ову команду користе тастерске пречице или додаци."
 
+#, fuzzy
+#| msgid "list of bar items"
+msgid "manage custom bar items"
+msgstr "листа ставки траке"
+
+#, fuzzy
+#| msgid ""
+#| "list || enable|disable|toggle [<name>|@] || add|addreplace <name> "
+#| "<buffer>[,<buffer>...] <tags> <regex> || rename <name> <new_name> || "
+#| "recreate <name> || del <name>|-all"
+msgid ""
+"list || add|addreplace <name> \"<conditions>\" \"<content>\" || rename "
+"<name> <new_name> || refresh <name> [<name>...] || recreate <name> || del "
+"<name>|-all"
+msgstr ""
+"list || enable|disable|toggle [<име>|@] || add|addreplace <име> <бафер>[,"
+"<бафер>...] <ознаке> <регуларни_израз> || rename <име> <ново_име> || "
+"recreate <име> || del <име>|-all"
+
+msgid ""
+"      list: list all custom bar items\n"
+"       add: add a custom bar item\n"
+"addreplace: add or replace an existing custom bar item\n"
+"      name: custom bar item name\n"
+"conditions: evaluated conditions to display the bar item (for example to "
+"display the bar item only in specific buffers)\n"
+"   content: content (evaluated, see /help eval)\n"
+"    rename: rename a custom bar item\n"
+"   refresh: update content of item in all bars where the item is displayed; "
+"any item can be refreshed: default/plugin/custom bar items\n"
+"  recreate: set input with the command used to edit the custom bar item\n"
+"       del: delete a custom bar item\n"
+"      -all: delete all custom bar items\n"
+"\n"
+"Examples:\n"
+"  add item with terminal size, displayed only in buffers with number = 1:\n"
+"    /item add terminfo \"${buffer.number} == 1\" \"term:${info:term_width}"
+"x${info:term_height}\"\n"
+"  add item with buffer info:\n"
+"    /item add bufinfo \"\" \"${buffer.number}:${buffer.name}${if:${buffer."
+"zoomed}?(Z)}\"\n"
+"  add item with date/time using format \"Dec 25, 12:34 +0100\", refreshed "
+"every minute:\n"
+"    /item add datetime \"\" \"${date:%b %d, %H:%M %z}\"\n"
+"    /trigger add datetime_refresh timer \"60000;60\" \"\" \"\" \"/item "
+"refresh datetime\"\n"
+"  add item with number of lines in buffer (displayed/total), refreshed each "
+"time a new line is displayed or if filtered lines have changed:\n"
+"    /item add lines_count \"\" \"${calc:${buffer.lines.lines_count}-${buffer."
+"lines.lines_hidden}}/${buffer.lines.lines_count} lines\"\n"
+"    /trigger add lines_count_refresh_print print \"\" \"\" \"\" \"/item "
+"refresh lines_count\"\n"
+"    /trigger add lines_count_refresh_signal signal \"window_switch;"
+"buffer_switch;buffer_lines_hidden;filters_*\" \"\" \"\" \"/item refresh "
+"lines_count\"\n"
+"  force refresh of item \"lines_count\":\n"
+"    /item refresh lines_count\n"
+"  recreate item \"lines_count\" with different conditions or content:\n"
+"    /item recreate lines_count\n"
+"  delete item \"lines_count\":\n"
+"    /item del lines_count"
+msgstr ""
+
 msgid "bind/unbind keys"
 msgstr "везивање/развезивање тастера"
 
@@ -3611,6 +3734,24 @@ msgstr ""
 
 msgid "names of bars"
 msgstr "имена трака"
+
+#, fuzzy
+#| msgid "names of bars"
+msgid "names of custom bar items"
+msgstr "имена трака"
+
+#, fuzzy
+#| msgid "functions for command line"
+msgid "conditions for custom bar item"
+msgstr "функције за командну линију"
+
+msgid "contents for custom bar item"
+msgstr ""
+
+msgid ""
+"arguments for command that adds a custom bar item: item name, conditions, "
+"content"
+msgstr ""
 
 msgid "values for a configuration option"
 msgstr "вредности за опцију конфигурације"
@@ -5707,6 +5848,22 @@ msgstr "%s-ЈОШ(%d)-"
 
 msgid "away"
 msgstr "одсутан"
+
+#, fuzzy
+#| msgid ""
+#| "filename; optional argument: default path (evaluated, see /help eval)"
+msgid "condition(s) to display the bar item (evaluated, see /help eval)"
+msgstr ""
+"имефајла; необавезни аргумент: подразумевана путања (израчунато, погледајте /"
+"help eval)"
+
+#, fuzzy
+#| msgid ""
+#| "filename; optional argument: default path (evaluated, see /help eval)"
+msgid "content of bar item (evaluated, see /help eval)"
+msgstr ""
+"имефајла; необавезни аргумент: подразумевана путања (израчунато, погледајте /"
+"help eval)"
 
 #, c-format
 msgid "Notify changed for \"%s%s%s\": \"%s%s%s\" to \"%s%s%s\""
@@ -14864,6 +15021,12 @@ msgstr "подразумевани повратни кодови за функц
 
 msgid "trigger post actions"
 msgstr "пост акције окидача"
+
+msgid ""
+"arguments for command that adds a trigger: trigger name, hooks, hook "
+"arguments, hook conditions, hook regex, hook command, hook return code, post "
+"actions"
+msgstr ""
 
 #, c-format
 msgid ""
