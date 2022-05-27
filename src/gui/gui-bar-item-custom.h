@@ -20,6 +20,9 @@
 #ifndef WEECHAT_GUI_BAR_ITEM_CUSTOM_H
 #define WEECHAT_GUI_BAR_ITEM_CUSTOM_H
 
+#define GUI_BAR_ITEM_CUSTOM_DEFAULT_CONDITIONS "${...}"
+#define GUI_BAR_ITEM_CUSTOM_DEFAULT_CONTENTS "${...}"
+
 struct t_gui_buffer;
 struct t_gui_window;
 struct t_hashtable;

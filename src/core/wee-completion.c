@@ -63,6 +63,28 @@ extern char **environ;
 
 
 /*
+ * Adds a word with quotes around to completion list.
+ */
+
+void
+completion_list_add_quoted_word (struct t_gui_completion *completion,
+                                 const char *word)
+{
+    char *temp;
+    int length;
+
+    length = 1 + strlen (word) + 1 + 1;
+    temp = malloc (length);
+    if (!temp)
+        return;
+
+    snprintf (temp, length, "\"%s\"", word);
+    gui_completion_list_add (completion, temp, 0, WEECHAT_LIST_POS_END);
+
+    free (temp);
+}
+
+/*
  * Adds bar names to completion list.
  */
 
@@ -118,51 +140,119 @@ completion_list_add_custom_bar_items_names_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds value of custom bar item content to completion list.
- *
- * The item name is read in previous argument.
+ * Adds custom bar item conditions to completion list.
  */
 
 int
-completion_list_add_custom_bar_item_content_cb (const void *pointer, void *data,
-                                                const char *completion_item,
-                                                struct t_gui_buffer *buffer,
-                                                struct t_gui_completion *completion)
+completion_list_add_custom_bar_item_conditions_cb (const void *pointer, void *data,
+                                                   const char *completion_item,
+                                                   struct t_gui_buffer *buffer,
+                                                   struct t_gui_completion *completion)
 {
-    char **argv;
-    int argc;
-    struct t_gui_bar_item_custom *ptr_item;
-
     /* make C compiler happy */
     (void) pointer;
     (void) data;
     (void) completion_item;
     (void) buffer;
 
+    gui_completion_list_add (completion,
+                             "\"" GUI_BAR_ITEM_CUSTOM_DEFAULT_CONDITIONS "\"",
+                             0,
+                             WEECHAT_LIST_POS_END);
+    gui_completion_list_add (completion, "\"\"", 0, WEECHAT_LIST_POS_END);
+
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * Adds custom bar item contents to completion list.
+ */
+
+int
+completion_list_add_custom_bar_item_contents_cb (const void *pointer, void *data,
+                                                 const char *completion_item,
+                                                 struct t_gui_buffer *buffer,
+                                                 struct t_gui_completion *completion)
+{
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) completion_item;
+    (void) buffer;
+
+    gui_completion_list_add (completion,
+                             "\"" GUI_BAR_ITEM_CUSTOM_DEFAULT_CONTENTS "\"",
+                             0,
+                             WEECHAT_LIST_POS_END);
+    gui_completion_list_add (completion, "\"\"", 0, WEECHAT_LIST_POS_END);
+
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * Adds arguments for commands that add a custom bar item.
+ */
+
+int
+completion_list_add_custom_bar_item_add_arguments_cb (const void *pointer, void *data,
+                                                      const char *completion_item,
+                                                      struct t_gui_buffer *buffer,
+                                                      struct t_gui_completion *completion)
+{
+    char **sargv;
+    int sargc, arg_complete;
+    struct t_gui_bar_item_custom *ptr_item;
+
     if (!completion->args)
         return WEECHAT_RC_OK;
 
-    argv = string_split (completion->args, " ", NULL,
-                         WEECHAT_STRING_SPLIT_STRIP_LEFT
-                         | WEECHAT_STRING_SPLIT_STRIP_RIGHT
-                         | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
-                         0, &argc);
-    if (!argv)
+    sargv = string_split_shell (completion->args, &sargc);
+    if (!sargv)
         return WEECHAT_RC_OK;
 
-    if (argc > 1)
+    ptr_item = (sargc > 1) ? gui_bar_item_custom_search (sargv[1]) : NULL;
+
+    arg_complete = sargc;
+    if (completion->base_word && completion->base_word[0])
+        arg_complete--;
+
+    switch (arg_complete)
     {
-        ptr_item = gui_bar_item_custom_search (argv[1]);
-        if (ptr_item)
-        {
-            gui_completion_list_add (
-                completion,
-                CONFIG_STRING(ptr_item->options[GUI_BAR_ITEM_CUSTOM_OPTION_CONTENT]),
-                0,
-                WEECHAT_LIST_POS_SORT);
-        }
+        case 1:
+            completion_list_add_custom_bar_items_names_cb (pointer, data,
+                                                           completion_item,
+                                                           buffer, completion);
+
+            break;
+        case 2:
+            if (ptr_item)
+            {
+                completion_list_add_quoted_word (
+                    completion,
+                    CONFIG_STRING(ptr_item->options[GUI_BAR_ITEM_CUSTOM_OPTION_CONDITIONS]));
+            }
+            else
+            {
+                completion_list_add_custom_bar_item_conditions_cb (
+                    pointer, data, completion_item, buffer, completion);
+            }
+            break;
+        case 3:
+            if (ptr_item)
+            {
+                completion_list_add_quoted_word (
+                    completion,
+                    CONFIG_STRING(ptr_item->options[GUI_BAR_ITEM_CUSTOM_OPTION_CONTENT]));
+            }
+            else
+            {
+                completion_list_add_custom_bar_item_contents_cb (
+                    pointer, data, completion_item, buffer, completion);
+            }
+            break;
     }
-    string_free_split (argv);
+
+    string_free_split (sargv);
 
     return WEECHAT_RC_OK;
 }
@@ -1948,9 +2038,16 @@ completion_init ()
     hook_completion (NULL, "custom_bar_items_names",
                      N_("names of custom bar items"),
                      &completion_list_add_custom_bar_items_names_cb, NULL, NULL);
-    hook_completion (NULL, "custom_bar_item_content",
-                     N_("content of custom bar item"),
-                     &completion_list_add_custom_bar_item_content_cb, NULL, NULL);
+    hook_completion (NULL, "custom_bar_item_conditions",
+                     N_("conditions for custom bar item"),
+                     &completion_list_add_custom_bar_item_conditions_cb, NULL, NULL);
+    hook_completion (NULL, "custom_bar_item_contents",
+                     N_("contents for custom bar item"),
+                     &completion_list_add_custom_bar_item_contents_cb, NULL, NULL);
+    hook_completion (NULL, "custom_bar_item_add_arguments",
+                     N_("arguments for command that adds a custom bar item: "
+                        "item name, conditions, content"),
+                     &completion_list_add_custom_bar_item_add_arguments_cb, NULL, NULL);
     hook_completion (NULL, "config_option_values", /* formerly "%v" */
                      N_("values for a configuration option"),
                      &completion_list_add_config_option_values_cb, NULL, NULL);

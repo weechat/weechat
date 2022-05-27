@@ -8094,8 +8094,7 @@ command_init ()
            "  delete item \"lines_count\":\n"
            "    /item del lines_count"),
         "list"
-        " || add %(custom_bar_items_names)"
-        " || addreplace %(custom_bar_items_names) %(custom_bar_item_content)"
+        " || add|addreplace %(custom_bar_item_add_arguments)|%*"
         " || rename %(custom_bar_items_names) %(custom_bar_items_names)"
         " || refresh %(custom_bar_items_names)|%*"
         " || recreate %(custom_bar_items_names)"
