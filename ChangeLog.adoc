@@ -20,7 +20,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 New features::
 
-  * core: add command /item to create custom bar items (issue #808)
+  * core: add command `/item` to create custom bar items (issue #808)
   * core: add bar item "spacer" (issue #1700)
   * core: add case conversion in evaluation of expressions with `lower:string` and `upper:string` (issue #1778)
   * core: move detailed list of hooks from command `/plugin listfull` to `/debug hooks <plugin>`
