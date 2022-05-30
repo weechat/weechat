@@ -1048,7 +1048,7 @@ Beispiele von Buffern:
 
 Ein _Fenster_ ist ein Bildschirmbereich der Buffer darstellt. Es ist möglich
 den Bildschirm in mehrere Fenster aufzuteilen (Beispiele:
-<<window_split_examples,below>>, siehe den Befehl <<command_weechat_window,/window command>>
+<<window_split_examples,below>>, siehe den Befehl <<command_weechat_window,/window>>
 für weitere Details).
 
 Jedes Fenster stellt einen Buffer dar. Ein Buffer kann unsichtbar sein (er wird
@@ -1792,8 +1792,8 @@ Diese Tasten und Aktionen werden im fset-Buffer verwendet (siehe <<fset,Fset Erw
 | kbd:[Alt+,]              | `,`          | markieren/demarkieren einer Option. | `+/fset -mark 1+`
 | kbd:[Shift+↑]            |              | eine Zeile nach oben und markiert/demarkiert Option. | `+/fset -up; /fset -mark+`
 | kbd:[Shift+↓]            |              | markiert/demarkiert Option und geht eine Zeile nach unten. | `+/fset -mark; /fset -down+`
-|                          | `m:xxx`      | markiert Optionen welche angezeigt werden und auf die der Filter "xxx" zutrifft (jeder Filter für Option oder Wert ist erlaubt, siehe <<command_fset_fset,fset command>>). |
-|                          | `u:xxx`      | demarkiert Optionen welche angezeigt werden und auf die der Filter "xxx" zutrifft (jeder Filter für Option oder Wert ist erlaubt, siehe <<command_fset_fset,fset command>>). |
+|                          | `m:xxx`      | markiert Optionen welche angezeigt werden und auf die der Filter "xxx" zutrifft (jeder Filter für Option oder Wert ist erlaubt, siehe Befehl <<command_fset_fset,/fset>>). |
+|                          | `u:xxx`      | demarkiert Optionen welche angezeigt werden und auf die der Filter "xxx" zutrifft (jeder Filter für Option oder Wert ist erlaubt, siehe Befehl <<command_fset_fset,/fset>>). |
 | kbd:[Ctrl+l] (`L`)       |              | der Bildschirm wird neu gezeichnet. | `+/fset -refresh+`
 |                          | `$`          | Optionen neu einlesen (markierte Optionen werden beibehalten). |
 |                          | `$$`         | Optionen neu einlesen (Markierungen von Optionen werden dabei gelöscht). |

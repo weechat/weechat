@@ -1059,8 +1059,8 @@ Exemples de tampons :
 
 Une fenêtre (_window_) est une zone de l'écran affichant un tampon. Il est
 possible de découper l'écran horizontalement ou verticalement en plusieurs
-fenêtres (exemples <<window_split_examples,ci-dessous>>, voir la
-<<command_weechat_window,commande /window>> pour plus d'informations).
+fenêtres (exemples <<window_split_examples,ci-dessous>>, voir la commande
+<<command_weechat_window,/window>> pour plus d'informations).
 
 Chaque fenêtre affiche un tampon. Un tampon peut être caché (affiché par
 aucune fenêtre) ou affiché par une ou plusieurs fenêtres.
@@ -1820,8 +1820,8 @@ Ces touches et actions sont utilisées sur le tampon fset
 | kbd:[Alt+,]              | `,`          | Marquer/démarquer l'option. | `+/fset -mark 1+`
 | kbd:[Shift+↑]            |              | Se déplacer d'une ligne vers le haut et marquer/démarquer l'option. | `+/fset -up; /fset -mark+`
 | kbd:[Shift+↓]            |              | Marquer/démarquer l'option et se déplacer d'une ligne vers le bas. | `+/fset -mark; /fset -down+`
-|                          | `m:xxx`      | Marquer les options affichées qui correspondent au filtre "xxx" (tout filtre sur une option ou valeur est autorisé, voir la <<command_fset_fset,commande fset>>). |
-|                          | `u:xxx`      | Démarquer les options affichées qui correspondent au filtre "xxx" (tout filtre sur une option ou valeur est autorisé, voir la <<command_fset_fset,commande fset>>). |
+|                          | `m:xxx`      | Marquer les options affichées qui correspondent au filtre "xxx" (tout filtre sur une option ou valeur est autorisé, voir la commande <<command_fset_fset,/fset>>). |
+|                          | `u:xxx`      | Démarquer les options affichées qui correspondent au filtre "xxx" (tout filtre sur une option ou valeur est autorisé, voir la commande <<command_fset_fset,/fset>>). |
 | kbd:[Ctrl+l] (`L`)       |              | Rafraîchir les options et l'écran entier. | `+/fset -refresh+`
 |                          | `$`          | Rafraîchir les options (garder les options marquées). |
 |                          | `$$`         | Rafraîchir les options (démarquer toutes les options). |

@@ -1050,7 +1050,7 @@ Przykłady buforów:
 
 _Okno_ to obszar ekranu, w którym wyświetlane są bufory. Nie jest możliwe
 podzielenie ekranu na kilka okien (przykłady <<window_split_examples,poniżej>>,
-szczegóły <<command_weechat_window,komenda /window>>).
+szczegóły komenda <<command_weechat_window,/window>>).
 
 Każde okno wyświetla jeden bufor. Bufor może zostać ukryty (nie wyświetlany w
 oknie) lub wyświetlany w jednym lub więcej oknach.
@@ -1796,8 +1796,8 @@ Poniższe skróty i akcje mogą zostać użyte w buforze fset (zobacz <<fset,wty
 | kbd:[Alt+,]              | `,`          | Zaznacz/odznacz opcję. | `+/fset -mark 1+`
 | kbd:[Shift+↑]            |              | Przejdź do linii wyżej oraz zaznacz/odznacz opcję. | `+/fset -up; /fset -mark+`
 | kbd:[Shift+↓]            |              | Przejdź do linii niżej oraz zaznacz/odznacz opcję. | `+/fset -mark; /fset -down+`
-|                          | `m:xxx`      | Zaznacz wyświetlane opcje pasujące do filtra "xxx" (dowolny filtr na opcję albo wartość, zobacz <<command_fset_fset,komenda fset>>). |
-|                          | `u:xxx`      | Odznacz zaznaczone opcje pasujące do filtra "xxx" (dowolny filtr an opcję lub wartość, zobacz <<command_fset_fset,komenda fset>>). |
+|                          | `m:xxx`      | Zaznacz wyświetlane opcje pasujące do filtra "xxx" (dowolny filtr na opcję albo wartość, zobacz komenda <<command_fset_fset,/fset>>). |
+|                          | `u:xxx`      | Odznacz zaznaczone opcje pasujące do filtra "xxx" (dowolny filtr an opcję lub wartość, zobacz komenda <<command_fset_fset,/fset>>). |
 | kbd:[Ctrl+l] (`L`)       |              | Odświerz opcje i cały ekran. | `+/fset -refresh+`
 |                          | `$`          | Odświerz opcje (zachowuje zaznaczone opcje). |
 |                          | `$$`         | Odświerz opcje (odznacza zaznaczone kompilację). |

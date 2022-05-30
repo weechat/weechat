@@ -1136,8 +1136,8 @@ Esempi di buffer:
 // TRANSLATION MISSING
 Una _finestra_ (o window) è un'area dello schermo in cui viene visualizzato
 un buffer. È possibile dividere lo schermo in più finestre (examples
-<<window_split_examples,below>>, see the <<command_weechat_window,/window command>>
-for details).
+<<window_split_examples,below>>, see the <<command_weechat_window,/window>>
+command for details).
 
 Ogni finestra visualizza un buffer. Un buffer può essere nascosto (non visualizzato
 da una finestra) o visualizzato da una o più finestre.
@@ -1960,8 +1960,8 @@ These keys and actions are used on the fset buffer (see <<fset,Fset plugin>>).
 | kbd:[Alt+,]              | `,`          | Mark/unmark option. | `+/fset -mark 1+`
 | kbd:[Shift+↑]            |              | Move one line up and mark/unmark option. | `+/fset -up; /fset -mark+`
 | kbd:[Shift+↓]            |              | Mark/unmark option and move one line down. | `+/fset -mark; /fset -down+`
-|                          | `m:xxx`      | Mark options displayed that are matching filter "xxx" (any filter on option or value is allowed, see <<command_fset_fset,fset command>>). |
-|                          | `u:xxx`      | Unmark options displayed that are matching filter "xxx" (any filter on option or value is allowed, see <<command_fset_fset,fset command>>). |
+|                          | `m:xxx`      | Mark options displayed that are matching filter "xxx" (any filter on option or value is allowed, see <<command_fset_fset,/fset>> command). |
+|                          | `u:xxx`      | Unmark options displayed that are matching filter "xxx" (any filter on option or value is allowed, see <<command_fset_fset,/fset>> command). |
 | kbd:[Ctrl+l] (`L`)       |              | Refresh options and whole screen. | `+/fset -refresh+`
 |                          | `$`          | Refresh options (keep marked options). |
 |                          | `$$`         | Refresh options (unmark all options). |

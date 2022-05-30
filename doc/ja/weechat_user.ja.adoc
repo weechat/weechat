@@ -1099,7 +1099,7 @@ _バッファ_ は番号、名前、表示された行
 _window_
 はバッファを表示する画面エリアのことです。画面を複数のウィンドウに分割することができます
 (examples <<window_split_examples,below>>, see the
-<<command_weechat_window,/window command>> for details).
+<<command_weechat_window,/window>> command for details).
 
 それぞれのウィンドウは 1 つのバッファを表示します。バッファは隠したり
 (ウィンドウに表示しない)、複数のウィンドウに表示することできます。
@@ -1882,8 +1882,8 @@ These keys and actions are used on the fset buffer (see <<fset,Fset plugin>>).
 | kbd:[Alt+,]              | `,`          | Mark/unmark option. | `+/fset -mark 1+`
 | kbd:[Shift+↑]            |              | Move one line up and mark/unmark option. | `+/fset -up; /fset -mark+`
 | kbd:[Shift+↓]            |              | Mark/unmark option and move one line down. | `+/fset -mark; /fset -down+`
-|                          | `m:xxx`      | Mark options displayed that are matching filter "xxx" (any filter on option or value is allowed, see <<command_fset_fset,fset command>>). |
-|                          | `u:xxx`      | Unmark options displayed that are matching filter "xxx" (any filter on option or value is allowed, see <<command_fset_fset,fset command>>). |
+|                          | `m:xxx`      | Mark options displayed that are matching filter "xxx" (any filter on option or value is allowed, see <<command_fset_fset,/fset>> command). |
+|                          | `u:xxx`      | Unmark options displayed that are matching filter "xxx" (any filter on option or value is allowed, see <<command_fset_fset,/fset>> command). |
 | kbd:[Ctrl+l] (`L`)       |              | Refresh options and whole screen. | `+/fset -refresh+`
 |                          | `$`          | Refresh options (keep marked options). |
 |                          | `$$`         | Refresh options (unmark all options). |
