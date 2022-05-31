@@ -1651,7 +1651,7 @@ Dieser Befehl wird sinnvollerweise mittels Tastenbelegungen oder Erweiterungen g
 ----
 
 [[command_weechat_item]]
-* `+item+`: manage custom bar items
+* `+item+`: Verwalten von benutzerdefinierten Bar-Items
 
 ----
 /item  list
@@ -1661,35 +1661,35 @@ Dieser Befehl wird sinnvollerweise mittels Tastenbelegungen oder Erweiterungen g
        recreate <name>
        del <name>|-all
 
-      list: list all custom bar items
-       add: add a custom bar item
-addreplace: add or replace an existing custom bar item
-      name: custom bar item name
-conditions: evaluated conditions to display the bar item (for example to display the bar item only in specific buffers)
-   content: content (evaluated, see /help eval)
-    rename: rename a custom bar item
-   refresh: update content of item in all bars where the item is displayed; any item can be refreshed: default/plugin/custom bar items
-  recreate: set input with the command used to edit the custom bar item
-       del: delete a custom bar item
-      -all: delete all custom bar items
+      list: zeigt eine Liste aller benutzerdefinierten Bar-Items
+       add: fügt ein benutzerdefiniertes Bar-Item hinzu
+addreplace: erzeugt neues Bar-Item oder ersetzt ein schon existierendes Bar-Item
+      name: benutzerdefinierter Name des Bar-Items
+conditions: evaluierte Bedingungen um ein Bar-Item anzuzeigen (zum Beispiel um ein Bar-Item nur in einem bestimmten Buffer anzuzeigen)
+   content: Inhalt (evaluiert, siehe /help eval)
+    rename: Umbenennen eines benutzerdefinierten Bar-Items
+   refresh: aktualisiert den Inhalt des Items in allen Bars, in denen das Item angezeigt wird; jedes Item kann aktualisiert werden: standard/Erweiterung/benutzerdefiniertes Bar-Item
+  recreate: kopiert den Befehl in die Eingabezeile um das benutzerdefinierte Bar-Item zu editieren
+       del: entfernt ein benutzerdefiniertes Bar-Item
+      -all: entfernt alle benutzerdefinierten Bar-Items
 
-Examples:
-  add item with terminal size, displayed only in buffers with number = 1:
+Beispiele:
+  Item welches die Terminalgröße anzeigt wird hinzugefügt, aber nur in Buffern mit Nummer angezeigt = 1:
     /item add terminfo "${buffer.number} == 1" "term:${info:term_width}x${info:term_height}"
-  add item with buffer info:
+  fügt ein Item hinzu, welches Informationen über den Buffer anzeigt:
     /item add bufinfo "" "${buffer.number}:${buffer.name}${if:${buffer.zoomed}?(Z)}"
-  add item with date/time using format "Dec 25, 12:34 +0100", refreshed every minute:
+  fügt ein Item mit Datum/Uhrzeit hinzu, dabei wird das Format "Dec 25, 12:34 +0100" verwendet, aktualisiert, jede Minute:
     /item add datetime "" "${date:%b %d, %H:%M %z}"
     /trigger add datetime_refresh timer "60000;60" "" "" "/item refresh datetime"
-  add item with number of lines in buffer (displayed/total), refreshed each time a new line is displayed or if filtered lines have changed:
+  fügt ein Item mit der Anzahl der Zeilen in dem Buffer hinzu (sichtbar/total), jeweils aktualisiertwenn eine neue Zeile dargestellt wird oder wenn sich der Status der gefilterten Zeilen geändert hat:
     /item add lines_count "" "${calc:${buffer.lines.lines_count}-${buffer.lines.lines_hidden}}/${buffer.lines.lines_count} lines"
     /trigger add lines_count_refresh_print print "" "" "" "/item refresh lines_count"
     /trigger add lines_count_refresh_signal signal "window_switch;buffer_switch;buffer_lines_hidden;filters_*" "" "" "/item refresh lines_count"
-  force refresh of item "lines_count":
+  erzwingt die Aktualisierung des Items "lines_count":
     /item refresh lines_count
-  recreate item "lines_count" with different conditions or content:
+  erstellt das Item "lines_count", mit anderen Bedingungen oder Inhalten, neu:
     /item recreate lines_count
-  delete item "lines_count":
+  entfernt das Item "lines_count":
     /item del lines_count
 ----
 
