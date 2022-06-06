@@ -918,8 +918,23 @@ For a single server:
 ----
 
 // TRANSLATION MISSING
-You can use the `/set` command to edit the list of autojoin channels,
-for example for the "libera" server:
+With WeeChat ≥ 3.5, you can also add the current channel in the "autojoin"
+server option using the `/autojoin` command:
+
+----
+/autojoin add
+----
+
+// TRANSLATION MISSING
+Or another channel:
+
+----
+/autojoin add #test
+----
+
+// TRANSLATION MISSING
+With WeeChat ≤ 3.4, you can use the `/set` command to edit the list of autojoin
+channels, for example for the "libera" server:
 
 ----
 /set irc.server.libera.autojoin [TAB]
@@ -939,7 +954,7 @@ You can also use the `/fset` command to edit the list of channels:
 ----
 
 // TRANSLATION MISSING
-Another solution is to use a script:
+With WeeChat ≤ 3.4, another solution is to use a script:
 
 ----
 /script search autojoin

@@ -850,8 +850,24 @@ For a single server:
 /set irc.server.libera.autojoin_dynamic on
 ----
 
-Puede utilizar el comando `/set` para editar la lista de canales con autojoin,
-por ejemplo, para el servidor "libera":
+// TRANSLATION MISSING
+With WeeChat ≥ 3.5, you can also add the current channel in the "autojoin"
+server option using the `/autojoin` command:
+
+----
+/autojoin add
+----
+
+// TRANSLATION MISSING
+Or another channel:
+
+----
+/autojoin add #test
+----
+
+// TRANSLATION MISSING
+With WeeChat ≤ 3.4, puede utilizar el comando `/set` para editar la lista de
+canales con autojoin, por ejemplo, para el servidor "libera":
 
 ----
 /set irc.server.libera.autojoin [TAB]
@@ -868,7 +884,8 @@ También puede utilizar el comando `/fset` para editar la lista de canales:
 /fset autojoin
 ----
 
-Otra solución es utilizar un script:
+// TRANSLATION MISSING
+With WeeChat ≤ 3.4, otra solución es utilizar un script:
 
 ----
 /script search autojoin

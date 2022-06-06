@@ -902,7 +902,23 @@ Für einen einzelnen Server:
 /set irc.server.libera.autojoin_dynamic on
 ----
 
-Um die Liste der autojoin Channels zu editieren,
+// TRANSLATION MISSING
+With WeeChat ≥ 3.5, you can also add the current channel in the server
+autojoin option using the `/autojoin` command:
+
+----
+/autojoin add
+----
+
+// TRANSLATION MISSING
+Or another channel:
+
+----
+/autojoin add #test
+----
+
+// TRANSLATION MISSING
+With WeeChat ≤ 3.4, um die Liste der autojoin Channels zu editieren,
 kann der Befehl `/set` genutzt werden.
 In folgendem Beispiel wird der "libera"-Server angepasst:
 
@@ -923,7 +939,8 @@ zu editieren:
 /fset autojoin
 ----
 
-oder man nutzt ein Skript:
+// TRANSLATION MISSING
+With WeeChat ≤ 3.4, oder man nutzt ein Skript:
 
 ----
 /script search autojoin

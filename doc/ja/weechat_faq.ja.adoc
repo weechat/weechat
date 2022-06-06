@@ -852,7 +852,23 @@ For a single server:
 /set irc.server.libera.autojoin_dynamic on
 ----
 
-`/set` コマンドを使って、自動参加チャンネルのリストを編集してください。"libera"
+// TRANSLATION MISSING
+With WeeChat ≥ 3.5, you can also add the current channel in the "autojoin"
+server option using the `/autojoin` command:
+
+----
+/autojoin add
+----
+
+// TRANSLATION MISSING
+Or another channel:
+
+----
+/autojoin add #test
+----
+
+// TRANSLATION MISSING
+With WeeChat ≤ 3.4, `/set` コマンドを使って、自動参加チャンネルのリストを編集してください。"libera"
 サーバに対してこれを実行するには以下のようにします:
 
 ----
@@ -870,7 +886,8 @@ kbd:[Tab] キーを使うことで、オプションの名前と値を補完で�
 /fset autojoin
 ----
 
-専用のスクリプトを使うこともできます:
+// TRANSLATION MISSING
+With WeeChat ≤ 3.4, 専用のスクリプトを使うこともできます:
 
 ----
 /script search autojoin

@@ -741,7 +741,23 @@ oauth је једноставно лозинка која има вреднос�
 /set irc.server.libera.autojoin_dynamic on
 ----
 
-Можете да употребите команду `/set` и да уредите листу autojoin канала, на пример за „libera” сервер:
+// TRANSLATION MISSING
+With WeeChat ≥ 3.5, you can also add the current channel in the "autojoin"
+server option using the `/autojoin` command:
+
+----
+/autojoin add
+----
+
+// TRANSLATION MISSING
+Or another channel:
+
+----
+/autojoin add #test
+----
+
+// TRANSLATION MISSING
+With WeeChat ≤ 3.4, можете да употребите команду `/set` и да уредите листу autojoin канала, на пример за „libera” сервер:
 
 ----
 /set irc.server.libera.autojoin [TAB]
@@ -757,7 +773,8 @@ oauth је једноставно лозинка која има вреднос�
 /fset autojoin
 ----
 
-Друго решење је да употребите скрипту:
+// TRANSLATION MISSING
+With WeeChat ≤ 3.4, друго решење је да употребите скрипту:
 
 ----
 /script search autojoin
