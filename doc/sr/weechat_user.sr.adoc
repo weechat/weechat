@@ -2582,6 +2582,42 @@ Example of bar with items
 /set weechat.bar.bitlist.items "@irc.bitlbee.&bitlbee:buffer_nicklist"
 ----
 
+// TRANSLATION MISSING
+[[custom_bar_items]]
+===== Custom bar items
+
+Custom bar items can be added with the <<command_weechat_item,/item>> command,
+each new item having two properties defined via configuration options:
+
+* `conditions`: evaluated conditions to display the bar item, for example to
+  restrict the bar item to some specific buffers (if empty, the bar item is
+  displayed everywhere)
+* `content`: evaluated content of bar item.
+
+In both options, the following variables can be used:
+
+* `window`: pointer to the window where the bar is displayed (`NULL` for root bars)
+* `buffer`: pointer to buffer where the bar is displayed (current buffer for root bars).
+
+Examples of conditions:
+
+[width="100%",cols="2,10",options="header"]
+|===
+| Condition | Description
+| `${window}` | Displayed in window bars only
+| `${buffer.number} == 1` | Displayed in all buffers with number = 1
+| `${buffer.plugin.name} == irc` | Displayed in all IRC buffers
+| `${type} == channel` | Displayed in all buffers where local variable `type` is set to `channel` (example: all IRC channels)
+| `${type} == private` | Displayed in all buffers where local variable `type` is set to `private` (example: all IRC private buffers)
+|===
+
+[NOTE]
+There's no builtin way to refresh the custom bar items. You can use the
+<<trigger,Trigger>> plugin to force the refresh, for example via one or more
+signals received.
+
+For more information and examples, see the <<command_weechat_item,/item>> command.
+
 [[bar_filling]]
 ==== Испуна
 

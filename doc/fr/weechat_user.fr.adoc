@@ -2848,6 +2848,44 @@ s'appelle _bitlist_ et si le serveur bitlbee s'appelle _bitlbee_) :
 /set weechat.bar.bitlist.items "@irc.bitlbee.&bitlbee:buffer_nicklist"
 ----
 
+[[custom_bar_items]]
+===== Objets de barre personnalisés
+
+Des objets de barre personnalisés peuvent être ajoutés avec la commande
+<<command_weechat_item,/item>>, chaque nouvel objet ayant deux propriétés
+définies via des options de configuration :
+
+* `conditions` : conditions évaluées pour afficher l'objet de barre, par exemple
+  pour restreindre l'objet de barre à certains tampons (si vide, l'objet de barre
+  est affiché partout)
+* `content` : contenu évalué de l'objet de barre.
+
+Dans chacune des options, les variables suivantes peuvent être utilisées :
+
+* `window` : pointeur vers la fenêtre où la barre est affichée  (`NULL` pour une
+  barre de type "root")
+* `buffer` : pointeur vers le tampon où la barre est affichée (tampon courant
+  pour les barres de type "root").
+
+Exemples de conditions :
+
+[width="100%",cols="2,10",options="header"]
+|===
+| Condition | Description
+| `${window}` | Affiché seulement dans les barres de type "window"
+| `${buffer.number} == 1` | Affiché dans tous les tampons avec "number" = 1
+| `${buffer.plugin.name} == irc` | Affiché dans tous les tampons IRC
+| `${type} == channel` | Affiché dans tous les tampons où la variable locale `type` est `channel` (exemple : tous les canaux IRC)
+| `${type} == private` | Affiché dans tous les tampons où la variable locale `type` est `private` (exemple : tous les tampons privés IRC)
+|===
+
+[NOTE]
+Il n'y a pas de moyen intégré de rafraîchir les objets de barre personnalisés.
+Vous pouvez utiliser l'extension <<trigger,Trigger>> pour forcer un rafraîchissement,
+par exemple sur un ou plusieurs signaux reçus.
+
+Pour plus d'informations et des exemples, voir la commande <<command_weechat_item,/item>>.
+
 [[bar_filling]]
 ==== Remplissage
 
