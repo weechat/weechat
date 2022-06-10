@@ -2810,7 +2810,7 @@ In both options, the following variables can be used:
 
 Examples of conditions:
 
-[width="100%",cols="2,10",options="header"]
+[width="100%",cols="3,10",options="header"]
 |===
 | Condition | Description
 | `${window}` | Displayed in window bars only

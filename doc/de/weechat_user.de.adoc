@@ -2829,7 +2829,7 @@ In beiden Optionen können die folgenden Variablen verwendet werden:
 
 Beispiele für Bedingungen:
 
-[width="100%",cols="2,10",options="header"]
+[width="100%",cols="3,10",options="header"]
 |===
 | Bedingung | Beschreibung
 | `${window}` | Wird nur in Fenster-Bars angezeigt

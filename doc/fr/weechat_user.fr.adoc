@@ -2869,7 +2869,7 @@ Dans chacune des options, les variables suivantes peuvent être utilisées :
 
 Exemples de conditions :
 
-[width="100%",cols="2,10",options="header"]
+[width="100%",cols="3,10",options="header"]
 |===
 | Condition | Description
 | `${window}` | Affiché seulement dans les barres de type "window"
