@@ -2810,41 +2810,41 @@ heißt hierbei _bitlist_ und der Name des bitlbee Servers _bitlbee_):
 /set weechat.bar.bitlist.items "@irc.bitlbee.&bitlbee:buffer_nicklist"
 ----
 
-// TRANSLATION MISSING
 [[custom_bar_items]]
-===== Custom bar items
+===== Benutzerdefinierte Bar-Items
 
-Custom bar items can be added with the <<command_weechat_item,/item>> command,
-each new item having two properties defined via configuration options:
+Benutzerdefinierte Bar-Items können mit dem <<command_weechat_item,/item>> Befehl
+angelegt werden. Dabei hat jedes neue Element zwei Eigenschaften, die über
+Konfigurationsoptionen definiert werden:
 
-* `conditions`: evaluated conditions to display the bar item, for example to
-  restrict the bar item to some specific buffers (if empty, the bar item is
-  displayed everywhere)
-* `content`: evaluated content of bar item.
+* `conditions`: evaluierte Bedingung um das Element anzuzeigen. Zum Beispiel um das
+  Element nur in bestimmten Buffern anzuzeigen (falls leer, wird das Element in allen
+  Buffern angezeigt)
+* `content`: evaluierter Inhalt des Elements.
 
-In both options, the following variables can be used:
+In beiden Optionen können die folgenden Variablen verwendet werden:
 
-* `window`: pointer to the window where the bar is displayed (`NULL` for root bars)
-* `buffer`: pointer to buffer where the bar is displayed (current buffer for root bars).
+* `window`: Zeiger auf das Fenster, in dem die Bar angezeigt wird (`NULL` für root-Bars).
+* `buffer`: Zeiger auf den Buffer, in dem die Bar angezeigt wird (aktueller Bar für root-Bars.
 
-Examples of conditions:
+Beispiele für Bedingungen:
 
 [width="100%",cols="2,10",options="header"]
 |===
-| Condition | Description
-| `${window}` | Displayed in window bars only
-| `${buffer.number} == 1` | Displayed in all buffers with number = 1
-| `${buffer.plugin.name} == irc` | Displayed in all IRC buffers
-| `${type} == channel` | Displayed in all buffers where local variable `type` is set to `channel` (example: all IRC channels)
-| `${type} == private` | Displayed in all buffers where local variable `type` is set to `private` (example: all IRC private buffers)
+| Bedingung | Beschreibung
+| `${window}` | Wird nur in Fenster-Bars angezeigt
+| `${buffer.number} == 1` | Wird in allem Buffern angezeigt, wo die Nummer =1 ist
+| `${buffer.plugin.name} == irc` | Wird in allen IRC Buffern angezeigt
+| `${type} == channel` | Element wird in den Buffern angezeigt wo die lokale Variable `type` vom Typ `channel` gesetzt ist (Beispiel: alle IRC Kanäle)
+| `${type} == private` | Element wird in den Buffern angezeigt wo die lokale Variable `type` vom Typ `private` gesetzt ist (Beispiel: alle privaten IRC Buffer)
 |===
 
 [NOTE]
-There's no builtin way to refresh the custom bar items. You can use the
-<<trigger,Trigger>> plugin to force the refresh, for example via one or more
-signals received.
+Es gibt keine integrierte Möglichkeit, die benutzerdefinierten Elemente zu aktualisieren.
+Dazu muss die  <<trigger,Trigger>> Erweitertung genutzt werden,  beispielsweise über einen
+oder mehrere Signale die abgefragt werden.
 
-For more information and examples, see the <<command_weechat_item,/item>> command.
+Weitere Informationen und Beispiele finden Sie unter dem Befehl <<command_weechat_item,/item>>.
 
 [[bar_filling]]
 ==== Darstellung innerhalb einer Bar

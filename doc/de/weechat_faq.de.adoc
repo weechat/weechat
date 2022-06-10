@@ -865,7 +865,7 @@ ersetzt werden:
 ----
 
 [[irc_sasl]]
-=== Wie kann ich mich vor dem Betreten von Channels identifizieren?
+=== Wie kann ich mich vor dem Betreten von Kanälen identifizieren?
 
 Sollte der Server SASL unterstützen,
 ist es ratsam auf diese Funktion zurückzugreifen
@@ -878,14 +878,14 @@ und sich nicht mittels "nickserv" zu authentifizieren:
 
 Unterstützt der Server keine SASL Authentifizierung,
 kann eine Verzögerung aktiviert werden,
-um sich vor dem Betreten von Channels bei "nickserv" zu identifizieren:
+um sich vor dem Betreten von Kanälen bei "nickserv" zu identifizieren:
 
 ----
 /set irc.server.libera.command_delay 5
 ----
 
 [[edit_autojoin]]
-=== Wie kann ich Channels zur autojoin Option entfernen/hinzufügen?
+=== Wie kann ich Kanäle zur autojoin Option hinzufügen oder entfernen?
 
 Ab WeeChat ≥ 3.5 können Sie die Kanäle, denen Sie manuell betreten und verlassen,
 automatisch aufzeichnen und die Serveroption „autojoin“ entsprechend anpassen.
@@ -902,25 +902,22 @@ Für einen einzelnen Server:
 /set irc.server.libera.autojoin_dynamic on
 ----
 
-// TRANSLATION MISSING
-With WeeChat ≥ 3.5, you can also add the current channel in the server
-autojoin option using the `/autojoin` command:
+Ab WeeChat ≥ 3.5 kann man mit dem `/autojoin` Befehl den
+aktuellen Kanal in die Serveroption autojoin hinzufügen:
 
 ----
 /autojoin add
 ----
 
-// TRANSLATION MISSING
-Or another channel:
+oder einen beliebigen Kanal:
 
 ----
 /autojoin add #test
 ----
 
-// TRANSLATION MISSING
-With WeeChat ≤ 3.4, um die Liste der autojoin Channels zu editieren,
-kann der Befehl `/set` genutzt werden.
-In folgendem Beispiel wird der "libera"-Server angepasst:
+Bis WeeChat ≤ 3.4, wird der `/set` Befehl verwendet, um die
+Liste der autojoin-Kanäle zu editieren. In folgendem Beispiel
+wird der "libera"-Server angepasst:
 
 ----
 /set irc.server.libera.autojoin [TAB]
@@ -930,17 +927,16 @@ In folgendem Beispiel wird der "libera"-Server angepasst:
 Man kann den Namen oder den Wert einer Option mit kbd:[Tab] vervollständigen
 oder mittels kbd:[Shift+Tab] eine teilweise Vervollständigung durchführen,
 was bei Namen sinnvoll ist, denn so braucht nicht die komplette Liste
-der Channels neu geschrieben werden.
+der Kanäle neu geschrieben werden.
 
-Es kann auch der `/fset` Befehl verwendet werden, um die Liste der Channels
+Es kann auch der `/fset` Befehl verwendet werden, um die Liste der Kanäle
 zu editieren:
 
 ----
 /fset autojoin
 ----
 
-// TRANSLATION MISSING
-With WeeChat ≤ 3.4, oder man nutzt ein Skript:
+Bis WeeChat ≤ 3.4 kann man auch ein Skript nutzen:
 
 ----
 /script search autojoin
@@ -950,9 +946,9 @@ With WeeChat ≤ 3.4, oder man nutzt ein Skript:
 === Was ist der Unterschied zwischen dem Befehl /ignore und /filter?
 
 Der Befehl `/ignore` ist ein (clientseitiger) IRC-Befehl und beeinflusst direkt,
-welche vom Server empfangenen Nachrichten im IRC-Buffer (Server und Channel) landen.
+welche vom Server empfangenen Nachrichten im IRC-Buffer (Server und Kanäle) landen.
 Durch diesen Befehl können bestimmte Nicks oder Hostnamen von bestimmten Servern
-oder Channels ignoriert werden.
+oder Kanäle ignoriert werden.
 Der Befehl wird nicht auf den Inhalt eines IRC-Buffers angewandt.
 Zutreffende Meldungen werden, bevor sie dem Buffer zugeführt werden,
 von der "irc"-Erweiterung gelöscht. Es gibt somit keine Möglichkeit,
@@ -973,7 +969,7 @@ Die voreingestellte Tastenkombination zum Aktivieren bzw. Deaktivieren
 aller Filter ist kbd:[Alt+-].
 
 [[filter_irc_join_part_quit]]
-=== Wie kann ich join/part/quit Meldungen in den IRC Channels filtern/unterdrücken?
+=== Wie kann ich join/part/quit Meldungen in den IRC Kanälen filtern/unterdrücken?
 
 Zum einen mit dem Smart-Filter.
 Bei dessen Anwendung werden join/part/quit-Meldungen von Usern angezeigt,
@@ -996,16 +992,16 @@ Für weitere Hilfe: `/help filter`, `+/help irc.look.smart_filter+` und
 link:weechat_user.de.html#irc_smart_filter_join_part_quit[Benutzerhandbuch / einfacher Filter für join/part/quit Nachrichten].
 
 [[filter_irc_join_channel_messages]]
-=== Wie kann ich Server-Nachrichten filtern, wenn ich einen IRC Channel betrete?
+=== Wie kann ich Server-Nachrichten filtern, wenn ich einen IRC Kanal betrete?
 
 Ab WeeChat ≥ 0.4.1 kann man auswählen, welche Server-Nachrichten beim Betreten
-eines Channels angezeigt und welche verborgen werden sollen. Dazu nutzt man
+eines Kanals angezeigt und welche verborgen werden sollen. Dazu nutzt man
 die Option _irc.look.display_join_message_ (für weitere Informationen, siehe
 `+/help irc.look.display_join_message+`).
 
 Um Nachrichten visuell zu verbergen, können diese gefiltert werden.
 Dazu wird der Befehl `/filter` auf bestimmte Nachrichten-Tags angewandt.
-Das Tag _irc_329_ kennzeichnet beispielsweise das Erstellungsdatum des Channels.
+Das Tag _irc_329_ kennzeichnet beispielsweise das Erstellungsdatum des Kanals.
 Siehe `/help filter`, um weitere Informationen über die Filterfunktion zu
 erhalten.
 
@@ -1020,13 +1016,13 @@ da diese dazu genutzt werden um den Abwesenheitsstatus anderer User anzuzeigen
 und man nicht von diesen Mitteilungen überflutet werden möchte,
 kann man WeeChat anweisen, abwesende Nicks in einer anderen Farbe darzustellen.
 
-Nutzt man Bitlbee ≥ 3, sollte man im _&bitlbee_ Channel folgendes eingeben:
+Nutzt man Bitlbee ≥ 3, sollte man im _&bitlbee_ Kanal folgendes eingeben:
 
 ----
 channel set show_users online,away
 ----
 
-für ältere Versionen von Bitlbee gibt man im _&bitlbee_ Channel ein:
+für ältere Versionen von Bitlbee gibt man im _&bitlbee_ Kanal ein:
 
 ----
 set away_devoice false
@@ -1052,12 +1048,12 @@ in welchem Zeitintervall die Überprüfungen auf Abwesenheit stattfinden sollen.
 Die Angabe des Wertes erfolgt in Minuten.
 
 Mit der Option _irc.server_default.away_check_max_nicks_ kann festgelegt werden,
-in welchen Channels eine Überprüfung stattfinden soll.
-Hierbei stellt der angegebene Wert die maximale Anzahl an Nicks in einem Channel dar,
-die den Channel gleichzeitig besuchen dürfen.
+in welchen Kanälen eine Überprüfung stattfinden soll.
+Hierbei stellt der angegebene Wert die maximale Anzahl an Nicks in einem Kanal dar,
+die den Kanal gleichzeitig besuchen dürfen.
 
 Im folgenden Beispiel wird der Abwesenheitsstatus alle fünf Minuten überprüft.
-Dabei werden aber nur solche Channels berücksichtigt, die nicht mehr als 25
+Dabei werden aber nur solche Kanäle berücksichtigt, die nicht mehr als 25
 Teilnehmer haben:
 
 ----
@@ -1070,7 +1066,7 @@ Für WeeChat ≤ 0.3.3, lauten die Optionen _irc.network.away_check_ und
 _irc.network.away_check_max_nicks_.
 
 [[highlight_notification]]
-=== Wie kann ich mich benachrichtigen lassen, falls mich jemand in einem Channel direkt anspricht (highlight)?
+=== Wie kann ich mich benachrichtigen lassen, falls mich jemand in einem Kanal direkt anspricht (highlight)?
 
 Seit WeeChat ≥ 1.0 gibt es standardmäßig den Trigger "beep",
 der an das Terminal ein _BEL_ Signal schickt,
@@ -1123,7 +1119,7 @@ das Skript _buffer_autoset.py_ nutzen:
 /script install buffer_autoset.py
 ----
 
-Um zum Beispiel Highlights (Hervorhebungen) von Nick "mike" im Channel
+Um zum Beispiel Highlights (Hervorhebungen) von Nick "mike" im Kanal
 #weechat auf dem IRC Server libera zu deaktivieren:
 
 ----
