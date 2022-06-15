@@ -26,6 +26,7 @@ New features::
   * core: move detailed list of hooks from command `/plugin listfull` to `/debug hooks <plugin>`
   * core: allow to remove multiple filters at once with command `/filter del`
   * api: allow to catch multiple signals in functions hook_signal and hook_hsignal (issue #1780)
+  * irc: rename option `save` to `apply` in command `/autojoin`
 
 Bug fixes::
 
