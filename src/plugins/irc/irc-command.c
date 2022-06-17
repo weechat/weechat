@@ -6815,6 +6815,7 @@ irc_command_init ()
            "  /autojoin add\n"
            "  /autojoin add #test\n"
            "  /autojoin add #chan1 #chan2\n"
+           "  /allchan /autojoin add\n"
            "  /autojoin addraw #chan1,#chan2,#chan3 key1,key2\n"
            "  /autojoin del\n"
            "  /autojoin del #chan1\n"
