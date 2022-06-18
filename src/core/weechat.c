@@ -433,7 +433,7 @@ weechat_startup_message ()
               "If you are discovering WeeChat, it is recommended to read at "
               "least the quickstart guide, and the user's guide if you have "
               "some time; they explain main WeeChat concepts.\n"
-              "All WeeChat docs are available at: https://weechat.org/doc\n"
+              "All WeeChat docs are available at: https://weechat.org/doc/\n"
               "\n"
               "Moreover, there is inline help with /help on all commands and "
               "options (use Tab key to complete the name).\n"

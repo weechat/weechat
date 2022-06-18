@@ -2544,7 +2544,7 @@ config_file_write_internal (struct t_config_file *config_file,
             "#\n"
             "# Use commands like /set or /fset to change settings in WeeChat.\n"
             "#\n"
-            "# For more info, see: https://weechat.org/doc/quickstart\n"
+            "# For more info, see: https://weechat.org/doc/quickstart/\n"
             "#\n",
             version_get_name (),
             config_file->filename))
