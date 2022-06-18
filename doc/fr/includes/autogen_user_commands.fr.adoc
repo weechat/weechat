@@ -130,7 +130,7 @@ Exemples :
 /autojoin  add [<canal1> [<canal2>...]]
            addraw <canal1>[,<canal2>...] [<clé1>[,<clé2>...]]
            del [<canal1> [<canal2>...]]
-           save
+           apply
            sort
 
     add : ajouter le canal courant ou une liste de canaux (avec clés facultatives) dans l'option autojoin ; si vous êtes sur le canal et que la clé n'est pas fournie, la clé est lue sur ce canal
@@ -138,17 +138,18 @@ Exemples :
     del : supprimer le canal courant ou une liste de canaux de l'option autojoin
 channel : nom du canal
     key : clé pour le canal
-   save : sauver les canaux actuellement joints dans l'option autojoin
+  apply : définir les canaux actuellement joints dans l'option autojoin
    sort : trier les canaux de l'option autojoin par ordre alphabétique
 
 Exemples :
   /autojoin add
   /autojoin add #test
   /autojoin add #chan1 #chan2
+  /allchan /autojoin add
   /autojoin addraw #chan1,#chan2,#chan3 key1,key2
   /autojoin del
   /autojoin del #chan1
-  /autojoin save
+  /autojoin apply
   /autojoin sort
 ----
 
