@@ -3448,6 +3448,7 @@ irc.server.libera.anti_flood_prio_high  integer  null -> 2
 irc.server.libera.anti_flood_prio_low   integer  null -> 2
 irc.server.libera.autoconnect           boolean  on
 irc.server.libera.autojoin              string   null -> ""
+irc.server.libera.autojoin_dynamic      boolean  null -> off
 irc.server.libera.autoreconnect         boolean  null -> on
 irc.server.libera.autoreconnect_delay   integer  null -> 10
 irc.server.libera.autorejoin            boolean  null -> off
