@@ -18,7 +18,7 @@
 Diese Anleitung beschreibt den WeeChat Chat Client und ist Teil von WeeChat.
 
 Die aktuelle Version dieser Anleitung finden Sie auf:
-https://weechat.org/doc
+https://weechat.org/doc/
 
 
 [[introduction]]
@@ -70,7 +70,7 @@ Binärpakete sind für folgende Distributionen erhältlich:
 * Cygwin (Windows): wähle das WeeChat Paket in setup.exe aus
 * Debian/Ubuntu (oder Debian kompatible Distribution):
   `apt-get install weechat-curses weechat-plugins` +
-  Für neueste Versionen und nächtliche Builds: https://weechat.org/download/debian
+  Für neueste Versionen und nächtliche Builds: https://weechat.org/download/debian/
 * Fedora Core: `dnf install weechat`
 * FreeBSD: `pkg install weechat`
 * Gentoo: `emerge weechat`
@@ -3384,7 +3384,7 @@ das auch beispielsweise `~/.weechat` sein kann.
 /msg nickserv cert add
 ----
 
-Für weiterreichende Informationen lesen Sie bitte: https://www.oftc.net/NickServ/CertFP
+Für weiterreichende Informationen lesen Sie bitte: https://www.oftc.net/NickServ/CertFP/
 
 [[irc_sasl_authentication]]
 ==== SASL Authentifizierung
@@ -3693,7 +3693,7 @@ mit dem entsprechenden Wert ersetzt:
 | $compilation | Datum der Kompilierung              | `+Dec 16 2012+`
 | $osinfo      | Info über das genutzte OS           | `+Linux 2.6.32-5-amd64 / x86_64+`
 | $site        | WeeChat Seite                       | `+https://weechat.org/+`
-| $download    | WeeChat, Download Seite             | `+https://weechat.org/download+`
+| $download    | WeeChat, Download Seite             | `+https://weechat.org/download/+`
 | $time        | Aktuelle Uhrzeit/Datum              | `+Sun, 16 Dec 2012 10:40:48 +0100+`
 | $username    | Username beim IRC Server            | `+Name+`
 | $realname    | Realname beim IRC Server            | `+John Doe+`
@@ -3711,7 +3711,7 @@ Falls CTCP Optionen nicht festgelegt sind, lauten die CTCP Antworten:
 | CTCP       | Antwortformat                          | Beispiel
 | CLIENTINFO | `+$clientinfo+`                        | `+ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION+`
 | FINGER     | `+WeeChat $versiongit+`                | `+WeeChat 0.4.0-dev (git: v0.3.9-104-g7eb5cc4)+`
-| SOURCE     | `+$download+`                          | `+https://weechat.org/download+`
+| SOURCE     | `+$download+`                          | `+https://weechat.org/download/+`
 | TIME       | `+$time+`                              | `+Sun, 16 Dec 2012 10:40:48 +0100+`
 | USERINFO   | `+$username ($realname)+`              | `+Name (John Doe)+`
 | VERSION    | `+WeeChat $versiongit ($compilation)+` | `+WeeChat 0.4.0-dev (git: v0.3.9-104-g7eb5cc4) (Dec 16 2012)+`
@@ -4016,7 +4016,7 @@ Die Relay-Erweiterung wird genutzt um Daten, mittels unterschiedlicher Protokoll
 * _irc_: IRC Proxy: um mittels einem oder mehreren IRC-Clients eine Verbindung zu
   IRC Servern zu unterhalten.
 * _weechat_: protocol used by remote interfaces to display and interact with
-  WeeChat, see: https://weechat.org/about/interfaces
+  WeeChat, see: https://weechat.org/about/interfaces/
 
 [[relay_password]]
 === Passwort
@@ -4138,7 +4138,7 @@ folgenden Befehlen einrichten:
 Die Relay-Erweiterung kann Daten, mittels dem WeeChat Protokoll, an eine
 externe Oberfläche senden.
 
-Sie können eine Verbindung mit einer Remote-Schnittstelle herstellen, siehe: https://weechat.org/about/interfaces
+Sie können eine Verbindung mit einer Remote-Schnittstelle herstellen, siehe: https://weechat.org/about/interfaces/
 
 [IMPORTANT]
 Eine WeeChat Instanz kann sich NICHT mit einer anderen WeeChat Instanz über
@@ -5130,7 +5130,7 @@ bitte die link:weechat_scripting.de.html[WeeChat scripting Guide].
 Der Skriptmanager (Befehl <<command_script_script,/script>>) wird verwendet, um
 Skripte zu laden/stoppen. Dies ist unabhängig von der Skriptsprache. Ausserdem
 können Skripte installiert und wieder entfernt werden, dazu wird das Skript-Repository
-verwendet, welches man unter folgender URL findet: https://weechat.org/scripts
+verwendet, welches man unter folgender URL findet: https://weechat.org/scripts/
 
 Aus Datenschutzgründen ist das Herunterladen von Skripten standardmäßig deaktiviert. +
 Um es zu aktivieren, geben Sie diesen Befehl ein:
@@ -5378,4 +5378,4 @@ Unterstützung im IRC findet man auf dem Server _irc.libera.chat_:
 ** _#weechat-de_ (deutsch)
 ** _#weechat-fi_ (finnisch)
 
-Weitere Möglichkeiten, um mit den Entwicklern in Kontakt zu treten, siehe: https://weechat.org/about/support
+Weitere Möglichkeiten, um mit den Entwicklern in Kontakt zu treten, siehe: https://weechat.org/about/support/

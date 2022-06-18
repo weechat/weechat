@@ -43,11 +43,11 @@ which allows better compression and is much faster than zlib for both compressio
 
 The new compression type is `zstd`, and the default compression is now `off`
 instead of `zlib`: the compression must now be explicitly given in the
-link:https://weechat.org/doc/relay#command_handshake[handshake] command.
+link:https://weechat.org/doc/relay/#command_handshake[handshake] command.
 
-The option `compression` in link:https://weechat.org/doc/relay#command_handshake[init]
+The option `compression` in link:https://weechat.org/doc/relay/#command_handshake[init]
 command has been removed, it is now ignored and must be given in the
-link:https://weechat.org/doc/relay#command_handshake[handshake] command
+link:https://weechat.org/doc/relay/#command_handshake[handshake] command
 (it was deprecated since WeeChat 2.9).
 
 The option relay.network.compression_level has been renamed to relay.network.compression
@@ -82,11 +82,11 @@ You can restore the default triggers with the following command:
 === New parameters in function hdata_search
 
 New parameters have been added in function
-link:https://weechat.org/doc/plugin#_hdata_search[hdata_search], used for the
+link:https://weechat.org/doc/plugin/#_hdata_search[hdata_search], used for the
 evaluation of expression.
 
 New parameters are the same as function
-link:https://weechat.org/doc/plugin#_string_eval_expression[string_eval_expression]:
+link:https://weechat.org/doc/plugin/#_string_eval_expression[string_eval_expression]:
 
 * pointers: hashtable with pointers (pointers)
 * extra_vars: hashtable with extra variables (strings)
@@ -108,7 +108,7 @@ WeeChat versions:
 
 Support of static array in hdata has been added.
 For pointers to arrays, a prefix `*,` must be added in parameter `array_size`
-of API function link:https://weechat.org/doc/plugin#_hdata_new_var[hdata_new_var].
+of API function link:https://weechat.org/doc/plugin/#_hdata_new_var[hdata_new_var].
 
 [[v3.3]]
 == Version 3.3 (2021-09-19)
@@ -533,7 +533,7 @@ bars, so if you want to use the new default settings, you can do:
 If you changed the option "color_bg" in some bars, you should also adjust
 the new option "color_bg_inactive", depending on your needs.
 
-The function link:https://weechat.org/doc/plugin#_bar_new[bar_new] in API is updated,
+The function link:https://weechat.org/doc/plugin/#_bar_new[bar_new] in API is updated,
 so this is an incompatible change: all plugins and scripts calling this function must be updated.
 
 The following scripts are updated consequently to be compatible with all
@@ -599,8 +599,8 @@ plugins/scripts to complete a string, without using the buffer input.
 Therefore two functions have been renamed in API and moved to the new
 "completion" category:
 
-* hook_completion_get_string => link:https://weechat.org/doc/plugin#_completion_get_string[completion_get_string]
-* hook_completion_list_add => link:https://weechat.org/doc/plugin#_completion_list_add[completion_list_add]
+* hook_completion_get_string => link:https://weechat.org/doc/plugin/#_completion_get_string[completion_get_string]
+* hook_completion_list_add => link:https://weechat.org/doc/plugin/#_completion_list_add[completion_list_add]
 
 [NOTE]
 The old names are still valid for compatibility reasons, but it is recommended
@@ -698,7 +698,7 @@ A `handshake` command has been added in weechat relay protocol. +
 The client should send this command before the `init` to negotiate the way to
 authenticate with the relay server.
 
-See the link:https://weechat.org/doc/relay#command_handshake[handshake command]
+See the link:https://weechat.org/doc/relay/#command_handshake[handshake command]
 in Relay protocol doc for more information.
 
 ==== Server "nonce"
@@ -716,7 +716,7 @@ So the hash is computed on: (`server nonce` + `client nonce` + `password`).
 This salt is now mandatory even for algorithms `SHA256` and `SHA512`; this is
 a breaking change in protocol, needed for security reasons.
 
-See the link:https://weechat.org/doc/relay#command_init[init command]
+See the link:https://weechat.org/doc/relay/#command_init[init command]
 in Relay protocol doc for more information.
 
 [[v2.8]]
@@ -727,7 +727,7 @@ in Relay protocol doc for more information.
 
 The command line option `-a` (or `--no-connect`), which can also be used in the
 `/plugin` command, is now used to set a new info called `auto_connect`
-(see the function link:https://weechat.org/doc/plugin#_info_get[info_get] in the Plugin API reference).
+(see the function link:https://weechat.org/doc/plugin/#_info_get[info_get] in the Plugin API reference).
 
 Therefore, the option is not sent any more to the function `weechat_plugin_init`
 of plugins. +
@@ -989,8 +989,8 @@ base 16, 32, and 64.
 
 New functions in C API, supporting base 16, 32, and 64:
 
-* link:https://weechat.org/doc/plugin#_string_base_encode[string_base_encode]
-* link:https://weechat.org/doc/plugin#_string_base_decode[string_base_decode]
+* link:https://weechat.org/doc/plugin/#_string_base_encode[string_base_encode]
+* link:https://weechat.org/doc/plugin/#_string_base_decode[string_base_decode]
 
 Functions removed from C API:
 
@@ -1066,7 +1066,7 @@ See issue #787 for more information.
 
 [NOTE]
 It is recommended for plugins and scripts to use the WeeChat IRC parser:
-see the function link:https://weechat.org/doc/plugin#_info_get_hashtable[info_get_hashtable]
+see the function link:https://weechat.org/doc/plugin/#_info_get_hashtable[info_get_hashtable]
 in the Plugin API reference.
 
 Now the whole IRC message is received by the signal callback, for example:
@@ -1387,33 +1387,33 @@ reduce memory usage).
 
 Following functions are changed in the C API:
 
-* link:https://weechat.org/doc/plugin#_exec_on_files[exec_on_files]
-* link:https://weechat.org/doc/plugin#_config_new[config_new]
-* link:https://weechat.org/doc/plugin#_config_new_section[config_new_section]
-* link:https://weechat.org/doc/plugin#_config_new_option[config_new_option]
-* link:https://weechat.org/doc/plugin#_hook_command[hook_command]
-* link:https://weechat.org/doc/plugin#_hook_command_run[hook_command_run]
-* link:https://weechat.org/doc/plugin#_hook_timer[hook_timer]
-* link:https://weechat.org/doc/plugin#_hook_fd[hook_fd]
-* link:https://weechat.org/doc/plugin#_hook_process[hook_process]
-* link:https://weechat.org/doc/plugin#_hook_process_hashtable[hook_process_hashtable]
-* link:https://weechat.org/doc/plugin#_hook_connect[hook_connect]
-* link:https://weechat.org/doc/plugin#_hook_print[hook_print]
-* link:https://weechat.org/doc/plugin#_hook_signal[hook_signal]
-* link:https://weechat.org/doc/plugin#_hook_hsignal[hook_hsignal]
-* link:https://weechat.org/doc/plugin#_hook_config[hook_config]
-* link:https://weechat.org/doc/plugin#_hook_completion[hook_completion]
-* link:https://weechat.org/doc/plugin#_hook_modifier[hook_modifier]
-* link:https://weechat.org/doc/plugin#_hook_info[hook_info]
-* link:https://weechat.org/doc/plugin#_hook_info_hashtable[hook_info_hashtable]
-* link:https://weechat.org/doc/plugin#_hook_infolist[hook_infolist]
-* link:https://weechat.org/doc/plugin#_hook_hdata[hook_hdata]
-* link:https://weechat.org/doc/plugin#_hook_focus[hook_focus]
-* link:https://weechat.org/doc/plugin#_unhook_all[unhook_all]
-* link:https://weechat.org/doc/plugin#_buffer_new[buffer_new]
-* link:https://weechat.org/doc/plugin#_bar_item_new[bar_item_new]
-* link:https://weechat.org/doc/plugin#_upgrade_new[upgrade_new]
-* link:https://weechat.org/doc/plugin#_upgrade_read[upgrade_read]
+* link:https://weechat.org/doc/plugin/#_exec_on_files[exec_on_files]
+* link:https://weechat.org/doc/plugin/#_config_new[config_new]
+* link:https://weechat.org/doc/plugin/#_config_new_section[config_new_section]
+* link:https://weechat.org/doc/plugin/#_config_new_option[config_new_option]
+* link:https://weechat.org/doc/plugin/#_hook_command[hook_command]
+* link:https://weechat.org/doc/plugin/#_hook_command_run[hook_command_run]
+* link:https://weechat.org/doc/plugin/#_hook_timer[hook_timer]
+* link:https://weechat.org/doc/plugin/#_hook_fd[hook_fd]
+* link:https://weechat.org/doc/plugin/#_hook_process[hook_process]
+* link:https://weechat.org/doc/plugin/#_hook_process_hashtable[hook_process_hashtable]
+* link:https://weechat.org/doc/plugin/#_hook_connect[hook_connect]
+* link:https://weechat.org/doc/plugin/#_hook_print[hook_print]
+* link:https://weechat.org/doc/plugin/#_hook_signal[hook_signal]
+* link:https://weechat.org/doc/plugin/#_hook_hsignal[hook_hsignal]
+* link:https://weechat.org/doc/plugin/#_hook_config[hook_config]
+* link:https://weechat.org/doc/plugin/#_hook_completion[hook_completion]
+* link:https://weechat.org/doc/plugin/#_hook_modifier[hook_modifier]
+* link:https://weechat.org/doc/plugin/#_hook_info[hook_info]
+* link:https://weechat.org/doc/plugin/#_hook_info_hashtable[hook_info_hashtable]
+* link:https://weechat.org/doc/plugin/#_hook_infolist[hook_infolist]
+* link:https://weechat.org/doc/plugin/#_hook_hdata[hook_hdata]
+* link:https://weechat.org/doc/plugin/#_hook_focus[hook_focus]
+* link:https://weechat.org/doc/plugin/#_unhook_all[unhook_all]
+* link:https://weechat.org/doc/plugin/#_buffer_new[buffer_new]
+* link:https://weechat.org/doc/plugin/#_bar_item_new[bar_item_new]
+* link:https://weechat.org/doc/plugin/#_upgrade_new[upgrade_new]
+* link:https://weechat.org/doc/plugin/#_upgrade_read[upgrade_read]
 
 The function `unhook_all` has a new argument `const char *subplugin` to remove
 only hooks created by this "subplugin" (script).
@@ -1584,7 +1584,7 @@ You can restore the default "beep" trigger with the following command:
 [[v1.1_commands_return_code]]
 === Return code of commands
 
-The API function link:https://weechat.org/doc/plugin#_command[command]
+The API function link:https://weechat.org/doc/plugin/#_command[command]
 now sends the value returned return by command callback.
 
 WeeChat does not display any more an error when a command returns
@@ -1647,9 +1647,9 @@ the old behavior in command `/connect`:
 The API functions using timeval are now using or returning microseconds,
 instead of milliseconds:
 
-* function link:https://weechat.org/doc/plugin#_util_timeval_diff[util_timeval_diff]:
+* function link:https://weechat.org/doc/plugin/#_util_timeval_diff[util_timeval_diff]:
   returns microseconds
-* function link:https://weechat.org/doc/plugin#_util_timeval_add[util_timeval_add]:
+* function link:https://weechat.org/doc/plugin/#_util_timeval_add[util_timeval_add]:
   the argument "interval" is now expressed in microseconds.
 
 [[v1.0.1]]
@@ -2146,7 +2146,7 @@ disable IPv6 in relay if you don't plan to use it at all:
 == Version 0.3.9.2 (2012-11-18)
 
 This version fixes a security vulnerability when a plugin/script gives
-untrusted command to API function link:https://weechat.org/doc/plugin#_hook_process[hook_process].
+untrusted command to API function link:https://weechat.org/doc/plugin/#_hook_process[hook_process].
 
 [[v0.3.9.1]]
 == Version 0.3.9.1 (2012-11-09)

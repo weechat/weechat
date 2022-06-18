@@ -36,7 +36,7 @@ no se aplican a WeeChat!).
 
 Porque WeeChat es muy ligero y ofrece funcionalidades innovadoras.
 
-Más información de las funcionalidades de WeeChat en la página: https://weechat.org/about/features
+Más información de las funcionalidades de WeeChat en la página: https://weechat.org/about/features/
 
 [[compilation_install]]
 == Compilación / instalación
@@ -45,7 +45,7 @@ Más información de las funcionalidades de WeeChat en la página: https://weech
 === ¿He oido que hay muchas interfaces gráficas de susuario (GUI) para WeeChat. ¿Cómo puedo compilarlas o usarlas?
 
 Hay disponibles algunas GUIs, eche un vistazo a la página de interfaces remotas:
-https://weechat.org/about/interfaces
+https://weechat.org/about/interfaces/
 
 [[compile_git]]
 === No puedo compilar WeeChat después de haber clonado el repositorio git, ¿por qué?
@@ -1257,7 +1257,7 @@ para más información relacionada con los archivos de configuración.
 [[bug_task_patch]]
 === ¿Cómo podría informar de errores, pedir nuevas funcionalidades o enviar parches?
 
-Vea: https://weechat.org/about/support
+Vea: https://weechat.org/about/support/
 
 [[gdb_error_threads]]
 === Cuando ejecuto WeeChat bajo gdb, hay un error con la muestra de las conversaciones, ¿qué puedo hacer?
@@ -1294,10 +1294,10 @@ algunos sistemas operativos en los que no podemos probar WeeChat.
 Hay muchas tareas que hacer (probar, escribir código, documentación, etc.)
 
 Por favor, contacte con nosotros mediante IRC o correo electrónico, eche un vistazo a la página de soporte:
-https://weechat.org/about/support
+https://weechat.org/about/support/
 
 [[donate]]
 === ¿Puedo donar dinero u otras cosas a las personas que desarrollan WeeChat?
 
 Puede donar dinero para ayudar en el desarrollo.
-Más detalles en https://weechat.org/donate
+Más detalles en https://weechat.org/donate/

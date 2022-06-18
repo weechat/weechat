@@ -11,7 +11,7 @@
 This manual documents WeeChat chat client, it is part of WeeChat.
 
 Latest version of this document can be found on this page:
-https://weechat.org/doc
+https://weechat.org/doc/
 
 
 [[introduction]]

@@ -16,7 +16,7 @@
 
 Ово упутство описује WeeChat чет клијент и део је програма WeeChat.
 
-Последња верзија овог документа може да се нађе на следећој страници: https://weechat.org/doc
+Последња верзија овог документа може да се нађе на следећој страници: https://weechat.org/doc/
 
 
 [[introduction]]
@@ -60,7 +60,7 @@ WeeChat почетна страница се налази на адреси: htt
 * Arch Linux: `pacman -S weechat`
 * Cygwin (Windows): изаберите WeeChat пакете у setup.exe
 * Debian/Ubuntu (или било која Debian компатибилна дистрибуција): `apt-get install weechat-curses weechat-plugins` +
-За најновије верзије и ноћне изградње: https://weechat.org/download/debian
+За најновије верзије и ноћне изградње: https://weechat.org/download/debian/
 * Fedora Core: `dnf install weechat`
 * FreeBSD: `pkg install weechat`
 * Gentoo: `emerge weechat`
@@ -3107,7 +3107,7 @@ $ openssl req -nodes -newkey rsa:2048 -keyout nick.pem -x509 -days 365 -out nick
 /msg nickserv cert add
 ----
 
-За више информација, погледајте https://www.oftc.net/NickServ/CertFP
+За више информација, погледајте https://www.oftc.net/NickServ/CertFP/
 
 [[irc_sasl_authentication]]
 ==== SASL аутентификација
@@ -3383,7 +3383,7 @@ CTCP може да се прилагоди само за један сервер
 | $compilation | Датум компајлирања програма WeeChat | `+Dec 16 2012+`
 | $osinfo      | Инфо о ОС                           | `+Linux 2.6.32-5-amd64 / x86_64+`
 | $site        | WeeChat вебсајт                     | `+https://weechat.org/+`
-| $download    | WeeChat сајт, страна за преузимање  | `+https://weechat.org/download+`
+| $download    | WeeChat сајт, страна за преузимање  | `+https://weechat.org/download/+`
 | $time        | Текући датум/време                  | `+Sun, 16 Dec 2012 10:40:48 +0100+`
 | $username    | Корисничко име на IRC серверу       | `+name+`
 | $realname    | Реално име на IRC серверу           | `+John Doe+`
@@ -3399,7 +3399,7 @@ CTCP може да се прилагоди само за један сервер
 | CTCP       | Формат одговора                        | Пример
 | CLIENTINFO | `+$clientinfo+`                        | `+ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION+`
 | FINGER     | `+WeeChat $versiongit+`                | `+WeeChat 0.4.0-dev (git: v0.3.9-104-g7eb5cc4)+`
-| SOURCE     | `+$download+`                          | `+https://weechat.org/download+`
+| SOURCE     | `+$download+`                          | `+https://weechat.org/download/+`
 | TIME       | `+$time+`                              | `+нед, 16 дец 2012 10:40:48 +0100+`
 | USERINFO   | `+$username ($realname)+`              | `+име (Пера Перић)+`
 | VERSION    | `+WeeChat $versiongit ($compilation)+` | `+WeeChat 0.4.0-dev (git: v0.3.9-104-g7eb5cc4) (Dec 16 2012)+`
@@ -3692,7 +3692,7 @@ include::includes/autogen_user_options.sr.adoc[tag=typing_options]
 
 * _irc_: IRC прокси: користи се за дељење веза са IRC серверима са једним или више других клијената
 * _weechat_: protocol used by remote interfaces to display and interact with
-  WeeChat, see: https://weechat.org/about/interfaces
+  WeeChat, see: https://weechat.org/about/interfaces/
 
 [[relay_password]]
 === Лозинка
@@ -3790,7 +3790,7 @@ PASS сервер:лозинка
 
 Релеј додатак може да шаље податке удаљеном интерфејсу користећи WeeChat протокол.
 
-Можете се повезати помоћу удаљеног интерфејса, погледајте: https://weechat.org/about/interfaces
+Можете се повезати помоћу удаљеног интерфејса, погледајте: https://weechat.org/about/interfaces/
 
 [IMPORTANT]
 Сам програм WeeChat НЕ може да се повеже на други програм WeeChat преко овог протокола.
@@ -4696,7 +4696,7 @@ include::includes/autogen_user_options.sr.adoc[tag=trigger_options]
 
 Менаџер скрипти (команда <<command_script_script,/script>>) се користи за
 учитавање/уклањање из меморије скрипти на било ком језику, и за инсталирање/уклањање скрипти из WeeChat
-репозиторијума скрипти, који се налази на URL адреси: https://weechat.org/scripts
+репозиторијума скрипти, који се налази на URL адреси: https://weechat.org/scripts/
 
 Из разлога приватности, преузимање скрипти је подразумевано искључено. +
 Ако желите да га укључите, откуцајте следећу команду:
@@ -4943,4 +4943,4 @@ include::includes/autogen_user_options.sr.adoc[tag=php_options]
 ** _#weechat-de_ (немачки)
 ** _#weechat-fi_ (фински)
 
-За остале начине подршке, погледајте: https://weechat.org/about/support
+За остале начине подршке, погледајте: https://weechat.org/about/support/

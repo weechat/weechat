@@ -73,4 +73,4 @@ include::includes/man.it.adoc[tag=copyright]
 == SUPPORT / REPORTING BUGS
 
 // TRANSLATION MISSING
-For help or a bug report: https://weechat.org/about/support
+For help or a bug report: https://weechat.org/about/support/

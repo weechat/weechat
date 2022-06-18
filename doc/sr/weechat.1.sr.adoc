@@ -55,4 +55,4 @@ include::includes/man.sr.adoc[tag=copyright]
 
 == ПОДРШКА / ПРИЈАВА БАГОВА
 
-За помоћ или пријаву бага: https://weechat.org/about/support
+За помоћ или пријаву бага: https://weechat.org/about/support/

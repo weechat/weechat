@@ -377,12 +377,12 @@ WeeChat では多くの外部スクリプト (貢献者の作った)
 より詳しい情報を参照するには `/help script` を使ってください。
 
 スクリプトの一覧を参照するには WeeChat から `/script` を実行するか、以下の URL にアクセスしてください:
-https://weechat.org/scripts
+https://weechat.org/scripts/
 
 [[more_doc]]
 == 詳しいドキュメント情報
 
 FAQ やその他の質問に関するドキュメントはこちらで参照できます:
-https://weechat.org/doc
+https://weechat.org/doc/
 
 WeeChat をお楽しみください!

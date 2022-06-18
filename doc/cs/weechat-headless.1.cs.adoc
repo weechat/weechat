@@ -67,4 +67,4 @@ include::includes/man.cs.adoc[tag=copyright]
 
 == PODPORA / HLÁŠENÍ CHYB
 
-Pro pomoc nebo hlášení chyb https://weechat.org/about/support
+Pro pomoc nebo hlášení chyb https://weechat.org/about/support/

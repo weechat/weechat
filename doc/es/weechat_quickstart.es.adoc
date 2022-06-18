@@ -391,12 +391,12 @@ por ejemplo:
 Vea `/help script` para obtener más información.
 
 Hay una lista de scripts disponibles en WeeChat mediante el comando `/script` o en este enlace:
-https://weechat.org/scripts
+https://weechat.org/scripts/
 
 [[more_doc]]
 == Más documentación
 
 Ahora puede usar WeeChat y leer las FAQ/documentación para cada pregunta
-en: https://weechat.org/doc
+en: https://weechat.org/doc/
 
 ¡Disfrute de WeeChat!

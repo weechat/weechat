@@ -57,4 +57,4 @@ include::includes/man.en.adoc[tag=copyright]
 
 == SUPPORT / REPORTING BUGS
 
-For help or a bug report: https://weechat.org/about/support
+For help or a bug report: https://weechat.org/about/support/

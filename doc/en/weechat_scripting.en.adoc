@@ -12,7 +12,7 @@
 This manual documents WeeChat chat client, it is part of WeeChat.
 
 Latest version of this document can be found on this page:
-https://weechat.org/doc
+https://weechat.org/doc/
 
 
 [[introduction]]
@@ -1133,7 +1133,7 @@ weechat.hook_process("url:https://weechat.org/dev/info/stable/",
 ----
 
 [TIP]
-All infos available about WeeChat are on page https://weechat.org/dev/info
+All infos available about WeeChat are on page https://weechat.org/dev/info/
 
 Example of URL transfer with an option: download latest WeeChat development
 package in file _/tmp/weechat-devel.tar.gz_:

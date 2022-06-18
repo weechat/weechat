@@ -1,6 +1,6 @@
 // tag::plugin_options[]
 For complete doc on plugin options, please look at plugins documentation in
-https://weechat.org/doc[WeeChat user's guide].
+https://weechat.org/doc/[WeeChat user's guide].
 
 With irc plugin, you can connect to temporary server with an URL like:
 

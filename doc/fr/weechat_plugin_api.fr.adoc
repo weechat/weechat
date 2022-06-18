@@ -14,7 +14,7 @@ Ce manuel documente le client de messagerie instantanée WeeChat, il fait
 partie de WeeChat.
 
 La dernière version de ce document peut être téléchargée sur cette page :
-https://weechat.org/doc
+https://weechat.org/doc/
 
 
 [[introduction]]
@@ -9517,7 +9517,7 @@ d'une commande externe).
 [TIP]
 Si vous souhaitez récupérer des infos à propos de WeeChat (comme la version
 stable actuelle, le dernier commit git, etc.), vous pouvez utiliser les URLs
-sur la page https://weechat.org/dev/info
+sur la page https://weechat.org/dev/info/
 
 [NOTE]
 La taille du tampon pour l'envoi des données à la fonction de rappel est de

@@ -20,7 +20,7 @@ Questo manuale documenta il client di chat WeeChat, ed è parte
 del programma stesso.
 
 È possibile trovare l'ultima versione di questo documento qui:
-https://weechat.org/doc
+https://weechat.org/doc/
 
 
 [[introduction]]
@@ -78,7 +78,7 @@ I pacchetti binari sono disponibili per molte distribuzioni, incluse:
 // TRANSLATION MISSING
 * Debian/Ubuntu (o qualunque distribuzione compatibile):
   `apt-get install weechat-curses weechat-plugins` +
-  For latest versions and nightly builds: https://weechat.org/download/debian
+  For latest versions and nightly builds: https://weechat.org/download/debian/
 * Fedora Core: `dnf install weechat`
 * FreeBSD: `pkg install weechat`
 * Gentoo: `emerge weechat`
@@ -3588,7 +3588,7 @@ which can also be for example `~/.weechat`.
 /msg nickserv cert add
 ----
 
-Per maggiori informazioni consultare https://www.oftc.net/NickServ/CertFP
+Per maggiori informazioni consultare https://www.oftc.net/NickServ/CertFP/
 
 [[irc_sasl_authentication]]
 ==== Autenticazione SASL
@@ -3905,7 +3905,7 @@ automaticamente da WeeChat quando si risponde alle CTCP
 | $compilation | Data di compilazione di WeeChat         | `+Dec 16 2012+`
 | $osinfo      | Informazioni sull'OS                    | `+Linux 2.6.32-5-amd64 / x86_64+`
 | $site        | Sito di WeeChat                         | `+https://weechat.org/+`
-| $download    | Sito di WeeChat, pagina di download     | `+https://weechat.org/download+`
+| $download    | Sito di WeeChat, pagina di download     | `+https://weechat.org/download/+`
 | $time        | Data/ora correnti                       | `+Sun, 16 Dec 2012 10:40:48 +0100+`
 | $username    | Nome utente sul server IRC              | `+name+`
 | $realname    | Nome reale sul server IRC               | `+John Doe+`
@@ -3925,7 +3925,7 @@ le risposte CTCP sono:
 | CTCP       | Formato risposta                       | Esempio
 | CLIENTINFO | `+$clientinfo+`                        | `+ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION+`
 | FINGER     | `+WeeChat $versiongit+`                | `+WeeChat 0.4.0-dev (git: v0.3.9-104-g7eb5cc4)+`
-| SOURCE     | `+$download+`                          | `+https://weechat.org/download+`
+| SOURCE     | `+$download+`                          | `+https://weechat.org/download/+`
 | TIME       | `+$time+`                              | `+Sun, 16 Dec 2012 10:40:48 +0100+`
 | USERINFO   | `+$username ($realname)+`              | `+name (John Doe)+`
 | VERSION    | `+WeeChat $versiongit ($compilation)+` | `+WeeChat 0.4.0-dev (git: v0.3.9-104-g7eb5cc4) (Dec 16 2012)+`
@@ -4241,7 +4241,7 @@ protocolli differenti:
 * _irc_: proxy IRC: usato per condividere le connessioni ai server IRC con uno
   o più client IRC
 * _weechat_: protocol used by remote interfaces to display and interact with
-  WeeChat, see: https://weechat.org/about/interfaces
+  WeeChat, see: https://weechat.org/about/interfaces/
 
 // TRANSLATION MISSING
 [[relay_password]]
@@ -4363,7 +4363,7 @@ Il plugin Relay può inviare dati alle interfacce remote usando il protocollo
 WeeChat.
 
 // TRANSLATION MISSING
-You can connect with a remote interface, see: https://weechat.org/about/interfaces
+You can connect with a remote interface, see: https://weechat.org/about/interfaces/
 
 [IMPORTANT]
 // TRANSLATION MISSING
@@ -5367,7 +5367,7 @@ per gli script, consultare la link:weechat_scripting.it.html[Guida allo Scriptin
 // TRANSLATION MISSING
 The script manager (command <<command_script_script,/script>>) is used to
 load/unload scripts of any language, and install/remove scripts of WeeChat
-scripts repository, which are visible at this URL: https://weechat.org/scripts
+scripts repository, which are visible at this URL: https://weechat.org/scripts/
 
 // TRANSLATION MISSING
 For privacy considerations, the download of scripts is disabled by default. +
@@ -5657,4 +5657,4 @@ For support with IRC, on server _irc.libera.chat_:
 ** _#weechat-fi_ (Finlandese)
 
 // TRANSLATION MISSING
-For other ways of support, see: https://weechat.org/about/support
+For other ways of support, see: https://weechat.org/about/support/

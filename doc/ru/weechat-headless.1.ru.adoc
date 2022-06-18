@@ -68,4 +68,4 @@ include::includes/man.ru.adoc[tag=copyright]
 
 == ПОДДЕРЖКА / СООБЩЕНИЯ ОБ ОШИБКАХ
 
-Получить помощь или сообщить об ошибке: https://weechat.org/about/support
+Получить помощь или сообщить об ошибке: https://weechat.org/about/support/

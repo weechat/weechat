@@ -391,12 +391,12 @@ Zkuste `/help script` pro více informací.
 
 
 A seznam skriptů je dostupný v WeeChatu s příkazem `/script` nebo na této
-adrese https://weechat.org/scripts
+adrese https://weechat.org/scripts/
 
 [[more_doc]]
 == Další dokumentace
 
 Nyní jste schopni používat WeeChat a můžete si přečíst FAQ/dokumentaci pro
-jakékoliv další otázky: https://weechat.org/doc
+jakékoliv další otázky: https://weechat.org/doc/
 
 Ať máte radost z použití WeeChatu!

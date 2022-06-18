@@ -381,12 +381,12 @@ par exemple :
 Voir `/help script` pour plus d'infos.
 
 Une liste des scripts est disponible avec `/script` ou à cette URL :
-https://weechat.org/scripts
+https://weechat.org/scripts/
 
 [[more_doc]]
 == Plus de documentation
 
 Vous pouvez maintenant utiliser WeeChat et lire la FAQ/documentation pour
-toute autre question : https://weechat.org/doc
+toute autre question : https://weechat.org/doc/
 
 Bon WeeChat !

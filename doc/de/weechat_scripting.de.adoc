@@ -18,7 +18,7 @@
 Diese Anleitung beschreibt den WeeChat Chat Client und ist Teil von WeeChat.
 
 Die aktuelle Version dieser Anleitung finden Sie auf:
-https://weechat.org/doc
+https://weechat.org/doc/
 
 
 [[introduction]]
@@ -1158,7 +1158,7 @@ weechat.hook_process("url:https://weechat.org/dev/info/stable/",
 ----
 
 [TIP]
-Alle Informationen die WeeChat betreffen findet man auf: https://weechat.org/dev/info
+Alle Informationen die WeeChat betreffen findet man auf: https://weechat.org/dev/info/
 
 Beispiel eines URL Transfers, mit zusätzliche Optionen: Es wird das neuste
 WeeChat Entwicklerpaket in die Datei _/tmp/weechat-devel.tar.gz_ gesichert:

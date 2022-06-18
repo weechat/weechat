@@ -14,7 +14,7 @@ Ce manuel documente le client de messagerie instantanée WeeChat, il fait
 partie de WeeChat.
 
 La dernière version de ce document peut être téléchargée sur cette page :
-https://weechat.org/doc
+https://weechat.org/doc/
 
 
 [[introduction]]
@@ -1164,7 +1164,7 @@ weechat.hook_process("url:https://weechat.org/dev/info/stable/",
 
 [TIP]
 Toutes les infos disponibles à propos de WeeChat sont sur la page
-https://weechat.org/dev/info
+https://weechat.org/dev/info/
 
 Exemple de transfert d'URL avec une option : télécharger le dernier paquet de
 développement WeeChat dans le fichier _/tmp/weechat-devel.tar.gz_ :

@@ -397,13 +397,13 @@ _foo_):
 Для получения дополнительной информации введите команду `/help script`.
 
 Список скриптов, доступных в WeeChat, можно просмотреть, введя команду `/script`, или на сайте:
-https://weechat.org/scripts
+https://weechat.org/scripts/
 
 [[more_doc]]
 == Документация для дальнейшего чтения
 
 Теперь вы можете пользоваться WeeChat и консультироваться с FAQ/documentation
 по возникающим вопросам:
-https://weechat.org/doc
+https://weechat.org/doc/
 
 Приятной работы с WeeChat!

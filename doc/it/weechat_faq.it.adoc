@@ -40,7 +40,7 @@ non c'entra con WeeChat!).
 Because WeeChat is very light and brings innovating features.
 
 // TRANSLATION MISSING
-More info on the WeeChat features page: https://weechat.org/about/features
+More info on the WeeChat features page: https://weechat.org/about/features/
 
 [[compilation_install]]
 == Compilazione / installazione
@@ -50,7 +50,7 @@ More info on the WeeChat features page: https://weechat.org/about/features
 
 // TRANSLATION MISSING
 Some remote GUIs are available, see the remote interfaces page:
-https://weechat.org/about/interfaces
+https://weechat.org/about/interfaces/
 
 [[compile_git]]
 === Non è possibile compilare WeeChat dopo aver clonato il repository git, perché?
@@ -1359,7 +1359,7 @@ for more information about configuration files.
 === Come posso segnalare bug, richiedere nuove funzionalità o inviare patch?
 
 // TRANSLATION MISSING
-See: https://weechat.org/about/support
+See: https://weechat.org/about/support/
 
 [[gdb_error_threads]]
 === Quando eseguo WeeChat in gdb, c'è un errore riguardo ai thread, cosa posso fare?
@@ -1398,10 +1398,10 @@ per gli OS che non abbiamo, e su cui testare WeeChat, è ben accetto.
 Ci sono molti compiti da fare (testing, scrittura del codice, documentazione, ...)
 
 Per favore contattateci su IRC o via mail e consultate la pagina di supporto:
-https://weechat.org/about/support
+https://weechat.org/about/support/
 
 [[donate]]
 === Posso donare denaro o altre cose agli sviluppatori di WeeChat?
 
 È possibile donare denaro per aiutare lo sviluppo.
-Maggiori dettagli su https://weechat.org/donate
+Maggiori dettagli su https://weechat.org/donate/

@@ -59,4 +59,4 @@ include::includes/man.pl.adoc[tag=copyright]
 
 == WSPARCIE / ZGŁASZANIE BŁĘDÓW
 
-W celu uzyskania pomocy, lub zgłoszenia błędu zajrzyj na: https://weechat.org/about/support
+W celu uzyskania pomocy, lub zgłoszenia błędu zajrzyj na: https://weechat.org/about/support/

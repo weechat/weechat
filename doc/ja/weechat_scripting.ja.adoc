@@ -18,7 +18,7 @@
 このマニュアルは WeeChat チャットクライアントについて説明しており、WeeChat の一部です。
 
 このマニュアルの最新版は以下のページを参照してください:
-https://weechat.org/doc
+https://weechat.org/doc/
 
 
 [[introduction]]
@@ -1165,7 +1165,7 @@ weechat.hook_process("url:https://weechat.org/dev/info/stable/",
 ----
 
 [TIP]
-WeeChat に関して利用できる情報は全て https://weechat.org/dev/info にあります
+WeeChat に関して利用できる情報は全て https://weechat.org/dev/info/ にあります
 
 オプション有りの URL 転送の例: 最新の WeeChat 開発パッケージをファイル
 _/tmp/weechat-devel.tar.gz_ にダウンロード:

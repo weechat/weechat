@@ -20,7 +20,7 @@ Questo manuale documenta il client di chat WeeChat, ed è parte
 del programma stesso.
 
 La versione più recente di questo documento si trova qui:
-https://weechat.org/doc
+https://weechat.org/doc/
 
 
 [[introduction]]
@@ -1186,7 +1186,7 @@ weechat.hook_process("url:https://weechat.org/dev/info/stable/",
 
 [TIP]
 Tutte le informazioni disponibili su WeeChat sono sulla pagina
-https://weechat.org/dev/info
+https://weechat.org/dev/info/
 
 Esempio di trasferimento di un URL con un'opzione: scaricare l'ultimo pacchetto
 di sviluppo di WeeChat nel file _/tmp/weechat-devel.tar.gz_:

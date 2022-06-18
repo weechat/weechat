@@ -18,7 +18,7 @@
 このマニュアルは WeeChat チャットクライアントについての文書で、これは WeeChat の一部です。
 
 この文書の最新版は以下のページにあります:
-https://weechat.org/doc
+https://weechat.org/doc/
 
 
 [[introduction]]
@@ -71,7 +71,7 @@ WeeChat をインストールするには、以下のものが必要です:
 // TRANSLATION MISSING
 * Debian/Ubuntu (または Debian 互換ディストリビューション):
   `apt-get install weechat-curses weechat-plugins` +
-  For latest versions and nightly builds: https://weechat.org/download/debian
+  For latest versions and nightly builds: https://weechat.org/download/debian/
 * Fedora Core: `dnf install weechat`
 * FreeBSD: `pkg install weechat`
 * Gentoo: `emerge weechat`
@@ -3447,7 +3447,7 @@ which can also be for example `~/.weechat`.
 /msg nickserv cert add
 ----
 
-より詳しい情報は https://www.oftc.net/NickServ/CertFP を確認してください。
+より詳しい情報は https://www.oftc.net/NickServ/CertFP/ を確認してください。
 
 [[irc_sasl_authentication]]
 ==== SASL 認証
@@ -3750,7 +3750,7 @@ CTCP 応答時に自動的に WeeChat によって展開されます:
 | $compilation | WeeChat コンパイル日時                    | `+Dec 16 2012+`
 | $osinfo      | OS に関する情報                           | `+Linux 2.6.32-5-amd64 / x86_64+`
 | $site        | WeeChat ウェブサイト                      | `+https://weechat.org/+`
-| $download    | WeeChat ウェブサイトのダウンロードページ  | `+https://weechat.org/download+`
+| $download    | WeeChat ウェブサイトのダウンロードページ  | `+https://weechat.org/download/+`
 | $time        | 現在の日時                                | `+Sun, 16 Dec 2012 10:40:48 +0100+`
 | $username    | IRC サーバ上で使うユーザ名                | `+name+`
 | $realname    | IRC サーバ上で使う実名                    | `+John Doe+`
@@ -3767,7 +3767,7 @@ CTCP オプションが設定されていない (デフォルトの) 場合、CT
 | CTCP       | 応答書式                               | 例
 | CLIENTINFO | `+$clientinfo+`                        | `+ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION+`
 | FINGER     | `+WeeChat $versiongit+`                | `+WeeChat 0.4.0-dev (git: v0.3.9-104-g7eb5cc4)+`
-| SOURCE     | `+$download+`                          | `+https://weechat.org/download+`
+| SOURCE     | `+$download+`                          | `+https://weechat.org/download/+`
 | TIME       | `+$time+`                              | `+Sun, 16 Dec 2012 10:40:48 +0100+`
 | USERINFO   | `+$username ($realname)+`              | `+name (John Doe)+`
 | VERSION    | `+WeeChat $versiongit ($compilation)+` | `+WeeChat 0.4.0-dev (git: v0.3.9-104-g7eb5cc4) (Dec 16 2012)+`
@@ -4067,7 +4067,7 @@ Relay プラグインはネットワークを介して異なるプロトコル�
 * _irc_: IRC プロキシ: IRC サーバに対する接続を、単一または複数の IRC
   クライアントで共有するために用います。
 * _weechat_: protocol used by remote interfaces to display and interact with
-  WeeChat, see: https://weechat.org/about/interfaces
+  WeeChat, see: https://weechat.org/about/interfaces/
 
 [[relay_password]]
 === パスワード
@@ -4189,7 +4189,7 @@ commands:
 Relay プラグインは WeeChat プロトコルを使ってリモートインターフェースに対してデータを送信できます。
 
 // TRANSLATION MISSING
-You can connect with a remote interface, see: https://weechat.org/about/interfaces
+You can connect with a remote interface, see: https://weechat.org/about/interfaces/
 
 [IMPORTANT]
 このプロトコルを使った場合 WeeChat から他の WeeChat に接続することはできません。
@@ -5183,7 +5183,7 @@ link:weechat_scripting.ja.html[WeeChat スクリプト作成ガイド]を参照�
 // TRANSLATION MISSING
 The script manager (command <<command_script_script,/script>>) is used to
 load/unload scripts of any language, and install/remove scripts of WeeChat
-scripts repository, which are visible at this URL: https://weechat.org/scripts
+scripts repository, which are visible at this URL: https://weechat.org/scripts/
 
 // TRANSLATION MISSING
 For privacy considerations, the download of scripts is disabled by default. +
@@ -5434,4 +5434,4 @@ IRC を使ったサポート窓口は _irc.libera.chat_ サーバにあります
 ** _#weechat-de_ (ドイツ語)
 ** _#weechat-fi_ (フィンランド語)
 
-他の方法でサポートを受けるには、以下のページを参照してください: https://weechat.org/about/support
+他の方法でサポートを受けるには、以下のページを参照してください: https://weechat.org/about/support/

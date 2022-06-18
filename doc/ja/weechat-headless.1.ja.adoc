@@ -62,4 +62,4 @@ include::includes/man.ja.adoc[tag=copyright]
 
 == サポート / バグ報告
 
-手助けを受けたりバグを報告するには: https://weechat.org/about/support
+手助けを受けたりバグを報告するには: https://weechat.org/about/support/

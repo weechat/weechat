@@ -18,7 +18,7 @@
 このマニュアルは WeeChat チャットクライアントについての文書で、WeeChat の一部です。
 
 この文書の最新版を見るには以下のページを確認して下さい:
-https://weechat.org/doc
+https://weechat.org/doc/
 
 
 [[introduction]]
@@ -9370,7 +9370,7 @@ _callback_ コールバックに送られます (関数の戻り値は外部コ�
 
 [TIP]
 WeeChat に関する情報 (例えば現在の安定版、最新の git コミット、...)
-が欲しい場合、https://weechat.org/dev/info に書かれている URL を使ってください
+が欲しい場合、https://weechat.org/dev/info/ に書かれている URL を使ってください
 
 [NOTE]
 コールバックにデータを送信するバッファのサイズは 64KB (バッファは 2

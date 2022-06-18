@@ -18,7 +18,7 @@ Tłumaczenie:
 Ten dokument opisuje klienta rozmów WeeChat, który jest częścią WeeChat.
 
 Najnowsza wersja tego dokumentu znajduje się na tej stronie:
-https://weechat.org/doc
+https://weechat.org/doc/
 
 
 [[introduction]]
@@ -1141,7 +1141,7 @@ weechat.hook_process("url:https://weechat.org/dev/info/stable/",
 ----
 
 [TIP]
-Wszystkie informacje o WeeChat dostępne są na stronie https://weechat.org/dev/info
+Wszystkie informacje o WeeChat dostępne są na stronie https://weechat.org/dev/info/
 
 Przykładowy transfer URL z opcją: pobranie najnowszej wersji rozwojowej WeeChat
 do pliku _/tmp/weechat-devel.tar.gz_:
