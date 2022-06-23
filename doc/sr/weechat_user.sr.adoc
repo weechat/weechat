@@ -184,116 +184,116 @@ $ make install
 |===
 | Опција | Вредности | Подразумевана вредност | Опис
 
-| CMAKE_BUILD_TYPE | `Debug`, `Release`, `RelWithDebInfo`, `MinSizeRel` | |
-  Тип изградње: `Debug` (или `RelWithDebInfo`) се препоручује ако покрећете
+| CMAKE_BUILD_TYPE | `Debug`, `Release`, `RelWithDebInfo`, `MinSizeRel` |
+| Тип изградње: `Debug` (или `RelWithDebInfo`) се препоручује ако покрећете
   развојну верзију програма WeeChat.
 
-| CMAKE_INSTALL_PREFIX | директоријум | /usr/local |
-  Директоријум у који ће се инсталирати програм WeeChat.
+| CMAKE_INSTALL_PREFIX | директоријум | /usr/local
+| Директоријум у који ће се инсталирати програм WeeChat.
 
-| WEECHAT_HOME | директоријум | (празан стринг) |
-  Подразумевани почетни директоријум када се извршава програм WeeChat. +
+| WEECHAT_HOME | директоријум | (празан стринг)
+| Подразумевани почетни директоријум када се извршава програм WeeChat. +
   Са празном вредности (подразумевано), подразумевано се користе XDG директоријуми.
   Ако није празна, за све фајлове се користи један директоријум.
   Вредност такође може да буде и 4 директоријума раздвојена са две тачке, у следећем редоследу:
   config, data, cache, runtime.
 
-| ENABLE_ALIAS | `ON`, `OFF` | ON |
-  Компајлира <<command_aliases,Alias додатак>>.
+| ENABLE_ALIAS | `ON`, `OFF` | ON
+| Компајлира <<command_aliases,Alias додатак>>.
 
-| ENABLE_BUFLIST | `ON`, `OFF` | ON |
-  Компајлира <<buflist,Buflist додатак>>.
+| ENABLE_BUFLIST | `ON`, `OFF` | ON
+| Компајлира <<buflist,Buflist додатак>>.
 
-| ENABLE_CHARSET | `ON`, `OFF` | ON |
-  Компајлира <<charset,Charset додатак>>.
+| ENABLE_CHARSET | `ON`, `OFF` | ON
+| Компајлира <<charset,Charset додатак>>.
 
-| ENABLE_MAN | `ON`, `OFF` | OFF |
-  Изграђује man страницу.
+| ENABLE_MAN | `ON`, `OFF` | OFF
+| Изграђује man страницу.
 
-| ENABLE_DOC | `ON`, `OFF` | OFF |
-  Изграђује HTML документацију.
+| ENABLE_DOC | `ON`, `OFF` | OFF
+| Изграђује HTML документацију.
 
-| ENABLE_ENCHANT | `ON`, `OFF` | OFF |
-  Компајлира <<spell_checking,Spell додатак>> са Enchant.
+| ENABLE_ENCHANT | `ON`, `OFF` | OFF
+| Компајлира <<spell_checking,Spell додатак>> са Enchant.
 
-| ENABLE_EXEC | `ON`, `OFF` | ON |
-  Компајлира <<external_commands,Exec додатак>>.
+| ENABLE_EXEC | `ON`, `OFF` | ON
+| Компајлира <<external_commands,Exec додатак>>.
 
-| ENABLE_FIFO | `ON`, `OFF` | ON |
-  Компајлира <<fifo_pipe,Fifo додатак>>.
+| ENABLE_FIFO | `ON`, `OFF` | ON
+| Компајлира <<fifo_pipe,Fifo додатак>>.
 
-| ENABLE_FSET | `ON`, `OFF` | ON |
-  Компајлира <<fset,Fset додатак>>.
+| ENABLE_FSET | `ON`, `OFF` | ON
+| Компајлира <<fset,Fset додатак>>.
 
-| ENABLE_GUILE | `ON`, `OFF` | ON |
-  Компајлира <<scripting_plugins,Guile додатак>> (Scheme).
+| ENABLE_GUILE | `ON`, `OFF` | ON
+| Компајлира <<scripting_plugins,Guile додатак>> (Scheme).
 
-| ENABLE_IRC | `ON`, `OFF` | ON |
-  Компајлира <<irc,IRC додатак>>.
+| ENABLE_IRC | `ON`, `OFF` | ON
+| Компајлира <<irc,IRC додатак>>.
 
-| ENABLE_JAVASCRIPT | `ON`, `OFF` | OFF |
-  Компајлира <<scripting_plugins,JavaScript додатак>>.
+| ENABLE_JAVASCRIPT | `ON`, `OFF` | OFF
+| Компајлира <<scripting_plugins,JavaScript додатак>>.
 
-| ENABLE_LARGEFILE | `ON`, `OFF` | ON |
-  Подршка за велике фајлове.
+| ENABLE_LARGEFILE | `ON`, `OFF` | ON
+| Подршка за велике фајлове.
 
-| ENABLE_LOGGER | `ON`, `OFF` | ON |
-  Компајлира <<buffer_logging,Logger додатак>>.
+| ENABLE_LOGGER | `ON`, `OFF` | ON
+| Компајлира <<buffer_logging,Logger додатак>>.
 
-| ENABLE_LUA | `ON`, `OFF` | ON |
-  Компајлира <<scripting_plugins,Lua додатак>>.
+| ENABLE_LUA | `ON`, `OFF` | ON
+| Компајлира <<scripting_plugins,Lua додатак>>.
 
-| ENABLE_NCURSES | `ON`, `OFF` | ON |
-  Компајлира Ncurses интерфејс.
+| ENABLE_NCURSES | `ON`, `OFF` | ON
+| Компајлира Ncurses интерфејс.
 
-| ENABLE_NLS | `ON`, `OFF` | ON |
-  Укључује NLS (преводе).
+| ENABLE_NLS | `ON`, `OFF` | ON
+| Укључује NLS (преводе).
 
-| ENABLE_PERL | `ON`, `OFF` | ON |
-  Компајлира <<scripting_plugins,Perl додатак>>.
+| ENABLE_PERL | `ON`, `OFF` | ON
+| Компајлира <<scripting_plugins,Perl додатак>>.
 
-| ENABLE_PHP | `ON`, `OFF` | ON |
-  Компајлира <<scripting_plugins,PHP додатак>>.
+| ENABLE_PHP | `ON`, `OFF` | ON
+| Компајлира <<scripting_plugins,PHP додатак>>.
 
-| ENABLE_PYTHON | `ON`, `OFF` | ON |
-  Компајлира <<scripting_plugins,Python додатак>>.
+| ENABLE_PYTHON | `ON`, `OFF` | ON
+| Компајлира <<scripting_plugins,Python додатак>>.
 
-| ENABLE_PYTHON2 | `ON`, `OFF` | OFF |
-  Компајлира <<scripting_plugins,Python додатак>> користећи Python 2 уместо Python 3.
+| ENABLE_PYTHON2 | `ON`, `OFF` | OFF
+| Компајлира <<scripting_plugins,Python додатак>> користећи Python 2 уместо Python 3.
 
-| ENABLE_RELAY | `ON`, `OFF` | ON |
-  Компајлира <<relay,Relay додатак>>.
+| ENABLE_RELAY | `ON`, `OFF` | ON
+| Компајлира <<relay,Relay додатак>>.
 
-| ENABLE_RUBY | `ON`, `OFF` | ON |
-  Компајлира <<scripting_plugins,Ruby додатак>>.
+| ENABLE_RUBY | `ON`, `OFF` | ON
+| Компајлира <<scripting_plugins,Ruby додатак>>.
 
-| ENABLE_SCRIPT | `ON`, `OFF` | ON |
-  Компајлира <<script_manager,Script додатак>>.
+| ENABLE_SCRIPT | `ON`, `OFF` | ON
+| Компајлира <<script_manager,Script додатак>>.
 
-| ENABLE_SCRIPTS | `ON`, `OFF` | ON |
-  Компајлира <<scripting_plugins,script додатке>> (Python, Perl, Ruby, Lua, Tcl,
+| ENABLE_SCRIPTS | `ON`, `OFF` | ON
+| Компајлира <<scripting_plugins,script додатке>> (Python, Perl, Ruby, Lua, Tcl,
   Guile, JavaScript, PHP).
 
-| ENABLE_SPELL | `ON`, `OFF` | ON |
-  Компајлира <<spell_checking,Spell додатак>>.
+| ENABLE_SPELL | `ON`, `OFF` | ON
+| Компајлира <<spell_checking,Spell додатак>>.
 
-| ENABLE_TCL | `ON`, `OFF` | ON |
-  Компајлира <<scripting_plugins,Tcl додатак>>.
+| ENABLE_TCL | `ON`, `OFF` | ON
+| Компајлира <<scripting_plugins,Tcl додатак>>.
 
-| ENABLE_TRIGGER | `ON`, `OFF` | ON |
-  Компајлира <<trigger,Trigger додатак>>.
+| ENABLE_TRIGGER | `ON`, `OFF` | ON
+| Компајлира <<trigger,Trigger додатак>>.
 
-| ENABLE_TYPING | `ON`, `OFF` | ON |
-  Компајлира <<typing_notifications,Typing додатак>>.
+| ENABLE_TYPING | `ON`, `OFF` | ON
+| Компајлира <<typing_notifications,Typing додатак>>.
 
-| ENABLE_XFER | `ON`, `OFF` | ON |
-  Компајлира <<xfer,Xfer додатак>>.
+| ENABLE_XFER | `ON`, `OFF` | ON
+| Компајлира <<xfer,Xfer додатак>>.
 
-| ENABLE_TESTS | `ON`, `OFF` | OFF |
-  Компајлира тестове.
+| ENABLE_TESTS | `ON`, `OFF` | OFF
+| Компајлира тестове.
 
-| ENABLE_CODE_COVERAGE | `ON`, `OFF` | OFF |
-  Компајлира са опцијама за покривеност кода. +
+| ENABLE_CODE_COVERAGE | `ON`, `OFF` | OFF
+| Компајлира са опцијама за покривеност кода. +
   Ова опција би требало да се се користи само за тестирање, да се измери покривеност теста.
 |===
 
@@ -1236,87 +1236,87 @@ _прозор_ је површина екрана која приказује б
 |===
 | Име | Вредност | Опис
 
-| away |
-  било који стринг |
-  Порука о одсутности на серверу, поставља је irc додатак.
+| away
+| било који стринг
+| Порука о одсутности на серверу, поставља је irc додатак.
 
-| channel |
-  било који стринг |
-  Име канала, постављају је irc/xfer додаци и дибаг бафер релеј/окидач додатака.
+| channel
+| било који стринг
+| Име канала, постављају је irc/xfer додаци и дибаг бафер релеј/окидач додатака.
 
-| charset_modifier |
-  било који стринг |
-  Модификатор скупа карактера за серверски бафер, поставља је irc додатак.
+| charset_modifier
+| било који стринг
+| Модификатор скупа карактера за серверски бафер, поставља је irc додатак.
 
-| completion_default_template |
-  било који стринг |
-  Подразумевани шаблон за довршавање у баферу, премошћава опцију
+| completion_default_template
+| било који стринг
+| Подразумевани шаблон за довршавање у баферу, премошћава опцију
   `weechat.completion.default_template`.
 
-| filter |
-  било који стринг |
-  Филтер дефинисан за неке бафере, као што су `/fset`, `/server raw` (irc) и `/script`.
+| filter
+| било који стринг
+| Филтер дефинисан за неке бафере, као што су `/fset`, `/server raw` (irc) и `/script`.
 
-| host |
-  било који стринг |
-  Име вашег хоста (ако је познато), поставља је irc додатак.
+| host
+| било који стринг
+| Име вашег хоста (ако је познато), поставља је irc додатак.
 
-| lag |
-  било који стринг |
-  Кашњење у комуникацији са сервером, поставља је irc додатак.
+| lag
+| било који стринг
+| Кашњење у комуникацији са сервером, поставља је irc додатак.
 
-| name |
-  било који стринг |
-  Име бафера (пазите, ово није пуно име и није довољно за идентификацију
+| name
+| било који стринг
+| Име бафера (пазите, ово није пуно име и није довољно за идентификацију
   или претрагу бафера).
 
-| nick |
-  било који стринг |
-  Ваш надимак, постављају је irc и xfer додаци.
+| nick
+| било који стринг
+| Ваш надимак, постављају је irc и xfer додаци.
 
-| no_log |
-  `1` (или неки непразни стринг) |
-  Ако је постављена, logger додатак уопште не логује овај бафер.
+| no_log
+| `1` (или неки непразни стринг)
+| Ако је постављена, logger додатак уопште не логује овај бафер.
 
-| plugin |
-  било који стринг |
-  Име додатка који је креирао бафер (`core` за WeeChat бафере).
+| plugin
+| било који стринг
+| Име додатка који је креирао бафер (`core` за WeeChat бафере).
 
-| script_close_cb |
-  било који стринг |
-  Функција повратног позива за затварање бафера коју је дефинисала скрипта.
+| script_close_cb
+| било који стринг
+| Функција повратног позива за затварање бафера коју је дефинисала скрипта.
 
-| script_close_cb_data |
-  било који стринг |
-  Подаци за функцију повратног позива затварања бафера коју је дефинисала скрипта.
+| script_close_cb_data
+| било који стринг
+| Подаци за функцију повратног позива затварања бафера коју је дефинисала скрипта.
 
-| script_input_cb |
-  било који стринг |
-  Функција повратног позива за унос у бафер коју је дефинисала скрипта.
+| script_input_cb
+| било који стринг
+| Функција повратног позива за унос у бафер коју је дефинисала скрипта.
 
-| script_input_cb_data |
-  било који стринг |
-  Подаци за функцију повратног позива за унос у бафер коју је дефинисала скрипта.
+| script_input_cb_data
+| било који стринг
+| Подаци за функцију повратног позива за унос у бафер коју је дефинисала скрипта.
 
-| script_name |
-  било који стринг |
-  Име скрипте која је креирала бафер.
+| script_name
+| било који стринг
+| Име скрипте која је креирала бафер.
 
-| server |
-  било који стринг |
-  Име сервера, поставља је irc додатак и дибаг бафер релеј/окидач додатака.
+| server
+| било који стринг
+| Име сервера, поставља је irc додатак и дибаг бафер релеј/окидач додатака.
 
-| spell_suggest |
-  било који стринг |
-  Неисправно написана реч и предлози (формат: „неисправна:предлози”), поставља
+| spell_suggest
+| било који стринг
+| Неисправно написана реч и предлози (формат: „неисправна:предлози”), поставља
   је spell додатак.
 
-| trigger_filter |
-  било који стринг |
-  Филтер окидача, поставља је окидач додатак.
+| trigger_filter
+| било који стринг
+| Филтер окидача, поставља је окидач додатак.
 
-| type |
-  било који стринг, на пример:
+| type
+| било који стринг, на пример:
   `channel`,
   `debug`,
   `exec`,
@@ -1326,8 +1326,8 @@ _прозор_ је површина екрана која приказује б
   `script`,
   `server`,
   `user`,
-  `xfer` |
-  Тип бафера, поставља је програм WeeChat и многи додаци.
+  `xfer`
+| Тип бафера, поставља је програм WeeChat и многи додаци.
 
 |===
 
@@ -2465,65 +2465,65 @@ _трака_ је површина уз разговор која може да 
 |===
 | Опција | Вредности | Опис
 
-| type | `root`, `window` |
-  Трака типа `root` се приказује тачно једном на екрану, ван свих прозора.
+| type | `root`, `window`
+| Трака типа `root` се приказује тачно једном на екрану, ван свих прозора.
   Тип подразумеване траке _buflist_ је `root`. +
   Трака са типом `window` се приказује у сваком прозору, на пример ако поделите
   једном екран (са `/window splith` или `/window splitv`), имаћете
   једну траку у сваком прозору. Подразумеване траке _title_, _status_,
   _input_ и _nicklist_ су типа `window`.
 
-| position | `top`, `bottom`, `left`, `right` |
-  Позиција траке: изнад/испод разговора, са леве/десне стране.
+| position | `top`, `bottom`, `left`, `right`
+| Позиција траке: изнад/испод разговора, са леве/десне стране.
 
-| priority | цео број ≥ 0 |
-  Приоритет за приказ траке: ово се користи за ређање трака на екрану када
+| priority | цео број ≥ 0
+| Приоритет за приказ траке: ово се користи за ређање трака на екрану када
   више трака имају исти тип и исту позицију. +
   Траке се приказују од ивице екрана према центру. Виши приоритет значи да
   ће се трака приказивати на почетку, дакле, ближе ивици. +
   Пример: _input_ трака има приоритет 1000, тако да се приказује испред _status_
   траке, која има приоритет 500.
 
-| size | цео број ≥ 0 |
-  Величина траке: број колона за позицију left/right, број линија за
+| size | цео број ≥ 0
+| Величина траке: број колона за позицију left/right, број линија за
   позицију top/bottom. Величина `0` значи аутоматски, тако да ће се
   величина израчунати у зависности од садржаја који се приказује у траци.
 
-| size_max | цео број ≥ 0 |
-  Максимална величина траке, `0` = нема ограничења (ова опција се користи
+| size_max | цео број ≥ 0
+| Максимална величина траке, `0` = нема ограничења (ова опција се користи
   само ако је `size` = `0`).
 
-| color_bg | боја |
-  Подразумевана боја позадине траке.
+| color_bg | боја
+| Подразумевана боја позадине траке.
 
-| color_fg | боја |
-  Подразумевана боја текста у траци.
+| color_fg | боја
+| Подразумевана боја текста у траци.
 
-| color_delim | боја |
-  Боја граничника у траци.
+| color_delim | боја
+| Боја граничника у траци.
 
-| hidden | `on`, `off` |
-  Када је ова опција `on`, трака је скривена. +
+| hidden | `on`, `off`
+| Када је ова опција `on`, трака је скривена. +
   Напомена: уместо да мењате ову опцију, боље је да користите команду `/bar`,
   на пример: `/bar toggle nicklist` (погледајте команду <<command_weechat_bar,/bar>>).
 
-| separator | `on`, `off` |
-  Када је ова опција `on`, између ове траке и осталих (или разговора) се
+| separator | `on`, `off`
+| Када је ова опција `on`, између ове траке и осталих (или разговора) се
   приказује граничник (линија).
 
-| items | стринг |
-  Листа _items_ (погледајте <<bar_items,ставке>> за више информација).
+| items | стринг
+| Листа _items_ (погледајте <<bar_items,ставке>> за више информација).
 
-| filling_left_right | `+horizontal+`, `+vertical+`, `+columns_horizontal+`, `+columns_vertical+` |
-  Тип испуне за траку која има позицију `left` или `right` (погледајте
+| filling_left_right | `+horizontal+`, `+vertical+`, `+columns_horizontal+`, `+columns_vertical+`
+| Тип испуне за траку која има позицију `left` или `right` (погледајте
   <<bar_filling,испуну>> за више информација).
 
-| filling_top_bottom | `+horizontal+`, `+vertical+`, `+columns_horizontal+`, `+columns_vertical+` |
-  Тип испуне за траку која има позицију `top` или `bottom` (погледајте
+| filling_top_bottom | `+horizontal+`, `+vertical+`, `+columns_horizontal+`, `+columns_vertical+`
+| Тип испуне за траку која има позицију `top` или `bottom` (погледајте
   <<bar_filling,испуну>> за више информација).
 
-| conditions | стринг |
-  Услови под којима се трака приказује (погледајте <<bar_conditions,услове>> за
+| conditions | стринг
+| Услови под којима се трака приказује (погледајте <<bar_conditions,услове>> за
   више информација).
 |===
 
@@ -3659,15 +3659,15 @@ Typing додатак хвата следеће сигнале:
 |===
 | Сигнал | Аргументи | Опис
 
-| typing_set_nick |
-  Стринг: показивач на бафер + ";" + стање (једнос од: "off", "typing", "paused",
+| typing_set_nick
+| Стринг: показивач на бафер + ";" + стање (једнос од: "off", "typing", "paused",
   "cleared") + ";" + надимак. +
-  Пример: "0x1234abcd;typing;alice". |
-  Поставља стање куцања за надимак у баферу.
+  Пример: "0x1234abcd;typing;alice".
+| Поставља стање куцања за надимак у баферу.
 
-| typing_reset_buffer |
-  Показивач: бафер. |
-  Уклања стање куцања за све надимке у баферу.
+| typing_reset_buffer
+| Показивач: бафер.
+| Уклања стање куцања за све надимке у баферу.
 |===
 
 [[typing_options]]
@@ -3970,25 +3970,25 @@ include::includes/autogen_user_options.sr.adoc[tag=fifo_options]
 |===
 | Име | Кука | Опис
 
-| beep | испис |
-  Звучни сигнал у случају истакнуте/приватне поруке.
+| beep | испис
+| Звучни сигнал у случају истакнуте/приватне поруке.
 
-| cmd_pass | модификатор |
-  Сакрива лозинку у командама:
+| cmd_pass | модификатор
+| Сакрива лозинку у командама:
   `pass:[/msg nickserv id\|identify\|set password\|ghost\|release\|regain\|recover]`,
   `pass:[/oper]`,
   `pass:[/quote pass]`,
   `pass:[/secure passphrase\|decrypt\|set]`.
 
-| cmd_pass_register | модификатор |
-  Сакрива лозинку у команди `pass:[/msg nickserv register]`.
+| cmd_pass_register | модификатор
+| Сакрива лозинку у команди `pass:[/msg nickserv register]`.
 
-| msg_auth | модификатор |
-  Сакрива лозинку у IRC auth поруци која се приказује (порука која се прими од
+| msg_auth | модификатор
+| Сакрива лозинку у IRC auth поруци која се приказује (порука која се прими од
   сервера након што корисник зада команду).
 
-| server_pass | модификатор |
-  Сакрива лозинку сервера у командама `/server` и `/connect`.
+| server_pass | модификатор
+| Сакрива лозинку сервера у командама `/server` и `/connect`.
 |===
 
 [[trigger_anatomy]]
@@ -4000,36 +4000,36 @@ include::includes/autogen_user_options.sr.adoc[tag=fifo_options]
 |===
 | Опција | Вредности | Опис
 
-| enabled | `on`, `off` |
-  Када је опција `off`, окидач је искључен и акције се више не изводе.
+| enabled | `on`, `off`
+| Када је опција `off`, окидач је искључен и акције се више не изводе.
 
 | hook | `+signal+`, `+hsignal+`, `+modifier+`, `+line+`, `+print+`, `+command+`,
-  `+command_run+`, `+timer+`, `+config+`, `+focus+`, `+info+`, `+info_hashtable+` |
-  Кука која се користи у окидачу. За више информација, погледајте
+  `+command_run+`, `+timer+`, `+config+`, `+focus+`, `+info+`, `+info_hashtable+`
+| Кука која се користи у окидачу. За више информација, погледајте
   link:weechat_plugin_api.sr.html#hooks[WeeChat референтни приручник API додатака / Куке].
 
-| arguments | стринг |
-  Аргументи за куку, зависе од врсте куке која се користи.
+| arguments | стринг
+| Аргументи за куку, зависе од врсте куке која се користи.
 
-| conditions | стринг |
-  Услови под којима се окидач извршава; они се израчунавају (погледајте команду
+| conditions | стринг
+| Услови под којима се окидач извршава; они се израчунавају (погледајте команду
   <<command_weechat_eval,/eval>>).
 
-| regex | стринг |
-  Један или више POSIX проширених регуларних израза за измену примљених података у
+| regex | стринг
+| Један или више POSIX проширених регуларних израза за измену примљених података у
   функцији повратног позива куке (и још понешто што додаје окидач додатак), погледајте
   <<trigger_regex,регуларни израз>>.
 
-| command | стринг |
-  Команда која треба да се изврши (више команди може да се раздвоји тачка запетама);
+| command | стринг
+| Команда која треба да се изврши (више команди може да се раздвоји тачка запетама);
   стринг се израчунава (погледајте команду <<command_weechat_eval,/eval>>).
 
-| return_code | `+ok+`, `+ok_eat+`, `+error+` |
-  Повратни кôд функције повратног позива (подразумевани је `ok`, што би и требало
+| return_code | `+ok+`, `+ok_eat+`, `+error+`
+| Повратни кôд функције повратног позива (подразумевани је `ok`, што би и требало
   да се користи у скоро свим окидачима, остале вредности се ретко користе).
 
-| post_action | `none`, `disable`, `delete` |
-  Акција која се врши над окидачем након његовог извршавања (подразумевано је `none`
+| post_action | `none`, `disable`, `delete`
+| Акција која се врши над окидачем након његовог извршавања (подразумевано је `none`
   што би требало да се користи у скоро свим окидачима, остале вредности се ретко користе).
 |===
 
@@ -4066,8 +4066,8 @@ trigger.trigger.beep.post_action = none
 |===
 | Кука | Аргументи | Примери | Документација (API)
 
-| signal |
-  1. име сигнала (дозвољава се приоритет) (обавезан) +
+| signal
+| 1. име сигнала (дозвољава се приоритет) (обавезан) +
   2. име сигнала (дозвољава се приоритет) +
   3. ... |
 `+*,irc_in_privmsg+` +
@@ -4075,23 +4075,23 @@ trigger.trigger.beep.post_action = none
 `+signal_sigwinch+` |
 link:weechat_plugin_api.sr.html#_hook_signal[hook_signal]
 
-| hsignal |
-  1. име сигнала (дозвољава се приоритет) (обавезан) +
+| hsignal
+| 1. име сигнала (дозвољава се приоритет) (обавезан) +
   2. име сигнала (дозвољава се приоритет) +
   3. ... |
 `+nicklist_nick_added+` |
 link:weechat_plugin_api.sr.html#_hook_hsignal[hook_hsignal]
 
-| modifier |
-  1. име модификатора (дозвољава се приоритет) (обавезан) +
+| modifier
+| 1. име модификатора (дозвољава се приоритет) (обавезан) +
   2. име мофидикатора (дозвољава се приоритет) +
   3. ... |
 `+weechat_print+` +
 `+5000\|input_text_display;5000\|history_add+` |
 link:weechat_plugin_api.sr.html#_hook_modifier[hook_modifier]
 
-| line |
-  1. тип бафера +
+| line
+| 1. тип бафера +
   2. име бафера +
   3. ознаке |
 `+formatted+` +
@@ -4101,8 +4101,8 @@ link:weechat_plugin_api.sr.html#_hook_modifier[hook_modifier]
 `+formatted;irc.libera.#weechat;irc_notice+` |
 link:weechat_plugin_api.sr.html#_hook_line[hook_line]
 
-| print |
-  1. име бафера +
+| print
+| 1. име бафера +
   2. ознаке +
   3. порука +
   4. уклањање боја (0/1) |
@@ -4112,8 +4112,8 @@ link:weechat_plugin_api.sr.html#_hook_line[hook_line]
 `+*;;;1+` |
 link:weechat_plugin_api.sr.html#_hook_print[hook_print]
 
-| command |
-  1. име команде (дозвољава се приоритет) (обавезан) +
+| command
+| 1. име команде (дозвољава се приоритет) (обавезан) +
   2. опис (израчунава се, погледајте команду <<command_weechat_eval,/eval>>) +
   3. аргументи (израчунава се, погледајте команду <<command_weechat_eval,/eval>>) +
   4. опис аргумената (израчунава се, погледајте команду <<command_weechat_eval,/eval>>) +
@@ -4123,48 +4123,48 @@ link:weechat_plugin_api.sr.html#_hook_print[hook_print]
 `+test;test command;arg1 arg2;arg1: description 1${\n}arg2: description 2+` |
 link:weechat_plugin_api.sr.html#_hook_command[hook_command]
 
-| command_run |
-  1. команда (дозвољава се приоритет) (обавезан) +
+| command_run
+| 1. команда (дозвољава се приоритет) (обавезан) +
   2. команда (дозвољава се приоритет) +
   3. ... |
 `+/cmd arguments+` |
 link:weechat_plugin_api.sr.html#_hook_command_run[hook_command_run]
 
-| timer |
-  1. интервал у милисекундама (обавезан) +
+| timer
+| 1. интервал у милисекундама (обавезан) +
   2. поравнање на секунду (подразумевано: 0) +
   3. макс број позива (подразумевано: 0, што значи „нема краја”) |
 `+3600000+` +
 `+60000;0;5+` |
 link:weechat_plugin_api.sr.html#_hook_timer[hook_timer]
 
-| config |
-  1. име опције (дозвољава се приоритет) (обавезан) +
+| config
+| 1. име опције (дозвољава се приоритет) (обавезан) +
   2. име опције (дозвољава се приоритет) +
   3. ... |
 `+weechat.look.*+` |
 link:weechat_plugin_api.sr.html#_hook_config[hook_config]
 
-| focus |
-  1. име површине (дозвољава се приоритет) (обавезан) +
+| focus
+| 1. име површине (дозвољава се приоритет) (обавезан) +
   2. име површине (дозвољава се приоритет) +
   3. ... |
 `+buffer_nicklist+` |
 link:weechat_plugin_api.sr.html#_hook_focus[hook_focus]
 
-| info |
-  1. инфо име (дозвољава се приоритет) (обавезан) +
+| info
+| 1. инфо име (дозвољава се приоритет) (обавезан) +
   2. инфо име (дозвољава се приоритет) +
   3. ... |
 `+my_info+` |
 link:weechat_plugin_api.sr.html#_hook_info[hook_info]
 
-| info_hashtable |
-  1. инфо име (дозвољава се приоритет) (обавезан) +
+| info_hashtable
+| 1. инфо име (дозвољава се приоритет) (обавезан) +
   2. инфо име (дозвољава се приоритет) +
-  3. ... |
-  `+my_info+` |
-  link:weechat_plugin_api.sr.html#_hook_info_hashtable[hook_info_hashtable]
+  3. ...
+| `+my_info+`
+| link:weechat_plugin_api.sr.html#_hook_info_hashtable[hook_info_hashtable]
 |===
 
 [[trigger_conditions]]

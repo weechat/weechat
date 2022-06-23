@@ -1133,8 +1133,8 @@ Where _component_ is one of following:
 |===
 | Component | Files | Description
 
-| core |
-  AUTHORS.adoc +
+| core
+| AUTHORS.adoc +
   ChangeLog.adoc +
   Contributing.adoc +
   .github/FUNDING.yml +
@@ -1146,76 +1146,76 @@ Where _component_ is one of following:
   src/core/* +
   src/gui/* +
   version.sh +
-  weechat.desktop |
-  WeeChat core
+  weechat.desktop
+| WeeChat core
 
-| build |
-  autogen.sh +
+| build
+| autogen.sh +
   CMakeLists.txt +
   cmake/* +
   configure.ac +
   Makefile.am +
   tools/* +
   weechat.cygport.in +
-  weechat.spec |
-  Build
+  weechat.spec
+| Build
 
-| ci |
-  .github/workflows/* |
-  Continuous integration
+| ci
+| .github/workflows/*
+| Continuous integration
 
-| debian |
-  debian-devel/* +
-  debian-stable/* |
-  Debian packaging
+| debian
+| debian-devel/* +
+  debian-stable/*
+| Debian packaging
 
-| tests |
-  tests/* |
-  Tests
+| tests
+| tests/*
+| Tests
 
-| doc |
-  doc/* |
-  General doc updates, for example build
+| doc
+| doc/*
+| General doc updates, for example build
 
-| doc/man |
-  doc/xx/weechat.1.xx.adoc +
-  doc/xx/weechat-headless.1.xx.adoc |
-  Man pages
+| doc/man
+| doc/xx/weechat.1.xx.adoc +
+  doc/xx/weechat-headless.1.xx.adoc
+| Man pages
 
-| doc/faq |
-  doc/xx/weechat_faq.xx.adoc |
-  Frequently asked questions (FAQ)
+| doc/faq
+| doc/xx/weechat_faq.xx.adoc
+| Frequently asked questions (FAQ)
 
-| doc/quickstart |
-  doc/xx/weechat_quickstart.xx.adoc |
-  Quickstart guide
+| doc/quickstart
+| doc/xx/weechat_quickstart.xx.adoc
+| Quickstart guide
 
-| doc/user |
-  doc/xx/weechat_user.xx.adoc |
-  User's guide
+| doc/user
+| doc/xx/weechat_user.xx.adoc
+| User's guide
 
-| doc/scripting |
-  doc/xx/weechat_scripting.xx.adoc |
-  Scripting guide
+| doc/scripting
+| doc/xx/weechat_scripting.xx.adoc
+| Scripting guide
 
-| doc/api |
-  doc/xx/weechat_plugin_api.xx.adoc |
-  Plugin API reference
+| doc/api
+| doc/xx/weechat_plugin_api.xx.adoc
+| Plugin API reference
 
-| doc/relay |
-  doc/xx/weechat_relay_protocol.xx.adoc |
-  Relay protocol
+| doc/relay
+| doc/xx/weechat_relay_protocol.xx.adoc
+| Relay protocol
 
-| doc/dev |
-  doc/xx/weechat_dev.en.adoc |
-  Developer's guide
+| doc/dev
+| doc/xx/weechat_dev.en.adoc
+| Developer's guide
 
 | irc +
   python +
   relay +
-  … |
-  src/plugins/<name>/* |
-  Plugin
+  …
+| src/plugins/<name>/*
+| Plugin
 
 |===
 

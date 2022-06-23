@@ -202,117 +202,117 @@ Liste des options couramment utilisées :
 |===
 | Option | Valeurs | Valeur par défaut | Description
 
-| CMAKE_BUILD_TYPE | `Debug`, `Release`, `RelWithDebInfo`, `MinSizeRel` | |
-  Type de construction : `Debug` (ou `RelWithDebInfo`) est recommandé si vous
+| CMAKE_BUILD_TYPE | `Debug`, `Release`, `RelWithDebInfo`, `MinSizeRel` |
+| Type de construction : `Debug` (ou `RelWithDebInfo`) est recommandé si vous
   utilisez une version de développement de WeeChat.
 
-| CMAKE_INSTALL_PREFIX | répertoire | /usr/local |
-  Le répertoire dans lequel WeeChat sera installé.
+| CMAKE_INSTALL_PREFIX | répertoire | /usr/local
+| Le répertoire dans lequel WeeChat sera installé.
 
-| WEECHAT_HOME | répertoire | (chaîne vide) |
-  Le répertoire "maison" par défaut lors du lancement de WeeChat. +
+| WEECHAT_HOME | répertoire | (chaîne vide)
+| Le répertoire "maison" par défaut lors du lancement de WeeChat. +
   Avec une valeur vide (recommandé), les répertoires XDG sont utilisés par défaut.
   Si non vide, un répertoire unique est utilisé pour tous les fichiers.
   La valeur peut aussi être 4 répertoires séparés par ":", dans cet ordre :
   config, data, cache, runtime.
 
-| ENABLE_ALIAS | `ON`, `OFF` | ON |
-  Compiler <<command_aliases,l'extension Alias>>.
+| ENABLE_ALIAS | `ON`, `OFF` | ON
+| Compiler <<command_aliases,l'extension Alias>>.
 
-| ENABLE_BUFLIST | `ON`, `OFF` | ON |
-  Compiler <<buflist,l'extension Buflist>>.
+| ENABLE_BUFLIST | `ON`, `OFF` | ON
+| Compiler <<buflist,l'extension Buflist>>.
 
-| ENABLE_CHARSET | `ON`, `OFF` | ON |
-  Compiler <<charset,l'extension Charset>>.
+| ENABLE_CHARSET | `ON`, `OFF` | ON
+| Compiler <<charset,l'extension Charset>>.
 
-| ENABLE_MAN | `ON`, `OFF` | OFF |
-  Construire la page man.
+| ENABLE_MAN | `ON`, `OFF` | OFF
+| Construire la page man.
 
-| ENABLE_DOC | `ON`, `OFF` | OFF |
-  Construire la documentation HTML.
+| ENABLE_DOC | `ON`, `OFF` | OFF
+| Construire la documentation HTML.
 
-| ENABLE_ENCHANT | `ON`, `OFF` | OFF |
-  Compiler <<spell_checking,l'extension Spell>> avec Enchant.
+| ENABLE_ENCHANT | `ON`, `OFF` | OFF
+| Compiler <<spell_checking,l'extension Spell>> avec Enchant.
 
-| ENABLE_EXEC | `ON`, `OFF` | ON |
-  Compiler <<external_commands,l'extension Exec>>.
+| ENABLE_EXEC | `ON`, `OFF` | ON
+| Compiler <<external_commands,l'extension Exec>>.
 
-| ENABLE_FIFO | `ON`, `OFF` | ON |
-  Compiler <<fifo_pipe,l'extension Fifo>>.
+| ENABLE_FIFO | `ON`, `OFF` | ON
+| Compiler <<fifo_pipe,l'extension Fifo>>.
 
-| ENABLE_FSET | `ON`, `OFF` | ON |
-  Compiler <<fset,l'extension Fset>>.
+| ENABLE_FSET | `ON`, `OFF` | ON
+| Compiler <<fset,l'extension Fset>>.
 
-| ENABLE_GUILE | `ON`, `OFF` | ON |
-  Compiler <<scripting_plugins,l'extension Guile>> (Scheme).
+| ENABLE_GUILE | `ON`, `OFF` | ON
+| Compiler <<scripting_plugins,l'extension Guile>> (Scheme).
 
-| ENABLE_IRC | `ON`, `OFF` | ON |
-  Compiler <<irc,l'extension IRC>>.
+| ENABLE_IRC | `ON`, `OFF` | ON
+| Compiler <<irc,l'extension IRC>>.
 
-| ENABLE_JAVASCRIPT | `ON`, `OFF` | OFF |
-  Compiler <<scripting_plugins,l'extension JavaScript>>.
+| ENABLE_JAVASCRIPT | `ON`, `OFF` | OFF
+| Compiler <<scripting_plugins,l'extension JavaScript>>.
 
-| ENABLE_LARGEFILE | `ON`, `OFF` | ON |
-  Support des gros fichiers.
+| ENABLE_LARGEFILE | `ON`, `OFF` | ON
+| Support des gros fichiers.
 
-| ENABLE_LOGGER | `ON`, `OFF` | ON |
-  Compiler <<buffer_logging,l'extension Logger>>.
+| ENABLE_LOGGER | `ON`, `OFF` | ON
+| Compiler <<buffer_logging,l'extension Logger>>.
 
-| ENABLE_LUA | `ON`, `OFF` | ON |
-  Compiler <<scripting_plugins,l'extension Lua>>.
+| ENABLE_LUA | `ON`, `OFF` | ON
+| Compiler <<scripting_plugins,l'extension Lua>>.
 
-| ENABLE_NCURSES | `ON`, `OFF` | ON |
-  Compiler l'interface Ncurses.
+| ENABLE_NCURSES | `ON`, `OFF` | ON
+| Compiler l'interface Ncurses.
 
-| ENABLE_NLS | `ON`, `OFF` | ON |
-  Activer NLS (traductions).
+| ENABLE_NLS | `ON`, `OFF` | ON
+| Activer NLS (traductions).
 
-| ENABLE_PERL | `ON`, `OFF` | ON |
-  Compiler <<scripting_plugins,l'extension Perl>>.
+| ENABLE_PERL | `ON`, `OFF` | ON
+| Compiler <<scripting_plugins,l'extension Perl>>.
 
-| ENABLE_PHP | `ON`, `OFF` | ON |
-  Compiler <<scripting_plugins,l'extension PHP>>.
+| ENABLE_PHP | `ON`, `OFF` | ON
+| Compiler <<scripting_plugins,l'extension PHP>>.
 
-| ENABLE_PYTHON | `ON`, `OFF` | ON |
-  Compiler <<scripting_plugins,l'extension Python>>.
+| ENABLE_PYTHON | `ON`, `OFF` | ON
+| Compiler <<scripting_plugins,l'extension Python>>.
 
-| ENABLE_PYTHON2 | `ON`, `OFF` | OFF |
-  Compiler <<scripting_plugins,l'extension Python>> avec Python 2 au lieu de
+| ENABLE_PYTHON2 | `ON`, `OFF` | OFF
+| Compiler <<scripting_plugins,l'extension Python>> avec Python 2 au lieu de
   Python 3.
 
-| ENABLE_RELAY | `ON`, `OFF` | ON |
-  Compiler <<relay,l'extension Relay>>.
+| ENABLE_RELAY | `ON`, `OFF` | ON
+| Compiler <<relay,l'extension Relay>>.
 
-| ENABLE_RUBY | `ON`, `OFF` | ON |
-  Compiler <<scripting_plugins,l'extension Ruby>>.
+| ENABLE_RUBY | `ON`, `OFF` | ON
+| Compiler <<scripting_plugins,l'extension Ruby>>.
 
-| ENABLE_SCRIPT | `ON`, `OFF` | ON |
-  Compiler <<script_manager,l'extension Script>>.
+| ENABLE_SCRIPT | `ON`, `OFF` | ON
+| Compiler <<script_manager,l'extension Script>>.
 
-| ENABLE_SCRIPTS | `ON`, `OFF` | ON |
-  Compiler <<scripting_plugins,les extensions de script>> (Python, Perl, Ruby,
+| ENABLE_SCRIPTS | `ON`, `OFF` | ON
+| Compiler <<scripting_plugins,les extensions de script>> (Python, Perl, Ruby,
   Lua, Tcl, Guile, JavaScript, PHP).
 
-| ENABLE_SPELL | `ON`, `OFF` | ON |
-  Compiler <<spell_checking,l'extension Spell>>.
+| ENABLE_SPELL | `ON`, `OFF` | ON
+| Compiler <<spell_checking,l'extension Spell>>.
 
-| ENABLE_TCL | `ON`, `OFF` | ON |
-  Compiler <<scripting_plugins,l'extension Tcl>>.
+| ENABLE_TCL | `ON`, `OFF` | ON
+| Compiler <<scripting_plugins,l'extension Tcl>>.
 
-| ENABLE_TRIGGER | `ON`, `OFF` | ON |
-  Compiler <<trigger,l'extension Trigger>>.
+| ENABLE_TRIGGER | `ON`, `OFF` | ON
+| Compiler <<trigger,l'extension Trigger>>.
 
-| ENABLE_TYPING | `ON`, `OFF` | ON |
-  Compiler <<typing_notifications,l'extension Typing>>.
+| ENABLE_TYPING | `ON`, `OFF` | ON
+| Compiler <<typing_notifications,l'extension Typing>>.
 
-| ENABLE_XFER | `ON`, `OFF` | ON |
-  Compiler <<xfer,l'extension Xfer>>.
+| ENABLE_XFER | `ON`, `OFF` | ON
+| Compiler <<xfer,l'extension Xfer>>.
 
-| ENABLE_TESTS | `ON`, `OFF` | OFF |
-  Compiler les tests.
+| ENABLE_TESTS | `ON`, `OFF` | OFF
+| Compiler les tests.
 
-| ENABLE_CODE_COVERAGE | `ON`, `OFF` | OFF |
-  Compiler avec les options de couverture de code. +
+| ENABLE_CODE_COVERAGE | `ON`, `OFF` | OFF
+| Compiler avec les options de couverture de code. +
   Cette option ne devrait être utilisée que pour les tests, pour mesurer la
   couverture de tests.
 |===
@@ -1363,94 +1363,94 @@ Par défaut WeeChat et ses extensions par défaut interprètent ces variables :
 |===
 | Nom | Valeur | Description
 
-| away |
-  toute chaîne |
-  Message d'absence sur le serveur, défini par l'extension irc.
+| away
+| toute chaîne
+| Message d'absence sur le serveur, défini par l'extension irc.
 
-| channel |
-  toute chaîne |
-  Nom du canal, défini par les extensions irc/xfer et le tampon de debug des
+| channel
+| toute chaîne
+| Nom du canal, défini par les extensions irc/xfer et le tampon de debug des
   extensions relay/trigger.
 
-| charset_modifier |
-  toute chaîne |
-  Modificateur de charset du tampon serveur, défini par l'extension irc.
+| charset_modifier
+| toute chaîne
+| Modificateur de charset du tampon serveur, défini par l'extension irc.
 
-| completion_default_template |
-  toute chaîne |
-  Modèle de complétion par défaut pour le tampon, qui remplace l'option
+| completion_default_template
+| toute chaîne
+| Modèle de complétion par défaut pour le tampon, qui remplace l'option
   `weechat.completion.default_template`.
 
-| filter |
-  toute chaîne |
-  Filtre défini sur certains tampons comme `/fset`, `/server raw` (irc) et
+| filter
+| toute chaîne
+| Filtre défini sur certains tampons comme `/fset`, `/server raw` (irc) et
   `/script`.
 
-| host |
-  toute chaîne |
-  Nom d'hôte personnel (si connu), défini par l'extension irc.
+| host
+| toute chaîne
+| Nom d'hôte personnel (si connu), défini par l'extension irc.
 
-| lag |
-  toute chaîne |
-  Lag sur le serveur, défini par l'extension irc.
+| lag
+| toute chaîne
+| Lag sur le serveur, défini par l'extension irc.
 
-| name |
-  toute chaîne |
-  Nom du tampon (attention, ce n'est pas le nom complet du tampon et ce nom
+| name
+| toute chaîne
+| Nom du tampon (attention, ce n'est pas le nom complet du tampon et ce nom
   n'est pas suffisant pour identifier ou chercher un tampon).
 
-| nick |
-  toute chaîne |
-  Pseudo personnel, défini par les extensions irc et xfer.
+| nick
+| toute chaîne
+| Pseudo personnel, défini par les extensions irc et xfer.
 
-| no_log |
-  `1` (or any non-empty string) |
-  Si défini, l'extension logger n'écrira pas le "log" du tampon sur disque.
+| no_log
+| `1` (or any non-empty string)
+| Si défini, l'extension logger n'écrira pas le "log" du tampon sur disque.
 
-| plugin |
-  toute chaîne |
-  Nom de l'extension qui a créé le tampon (`core` pour les tampons WeeChat).
+| plugin
+| toute chaîne
+| Nom de l'extension qui a créé le tampon (`core` pour les tampons WeeChat).
 
-| script_close_cb |
-  toute chaîne |
-  Nom de la fonction de rappel pour la fermeture,
+| script_close_cb
+| toute chaîne
+| Nom de la fonction de rappel pour la fermeture,
   défini par un script pour le tampon.
 
-| script_close_cb_data |
-  toute chaîne |
-  Données pour la fonction de rappel pour la fermeture,
+| script_close_cb_data
+| toute chaîne
+| Données pour la fonction de rappel pour la fermeture,
   définies par un script pour le tampon.
 
-| script_input_cb |
-  toute chaîne |
-  Nom de la fonction de rappel d'entrée,
+| script_input_cb
+| toute chaîne
+| Nom de la fonction de rappel d'entrée,
   défini par un script pour le tampon.
 
-| script_input_cb_data |
-  toute chaîne |
-  Données pour la fonction de rappel d'entrée,
+| script_input_cb_data
+| toute chaîne
+| Données pour la fonction de rappel d'entrée,
   définies par un script pour le tampon.
 
-| script_name |
-  toute chaîne |
-  Nom du script qui a créé le tampon.
+| script_name
+| toute chaîne
+| Nom du script qui a créé le tampon.
 
-| server |
-  toute chaîne |
-  Nom du serveur, défini par l'extension irc et le tampon de debug des extensions
+| server
+| toute chaîne
+| Nom du serveur, défini par l'extension irc et le tampon de debug des extensions
   relay/trigger.
 
-| spell_suggest |
-  toute chaîne |
-  Mot mal orthographié et ses suggestions (format : "mot:suggestions"), défini
+| spell_suggest
+| toute chaîne
+| Mot mal orthographié et ses suggestions (format : "mot:suggestions"), défini
   par l'extension spell.
 
-| trigger_filter |
-  toute chaîne |
-  Filtre trigger, défini par l'extension trigger.
+| trigger_filter
+| toute chaîne
+| Filtre trigger, défini par l'extension trigger.
 
-| type |
-  toute chaîne, par exemple :
+| type
+| toute chaîne, par exemple :
   `channel`,
   `debug`,
   `exec`,
@@ -1460,8 +1460,8 @@ Par défaut WeeChat et ses extensions par défaut interprètent ces variables :
   `script`,
   `server`,
   `user`,
-  `xfer` |
-  Type de tampon, défini par WeeChat et plusieurs extensions.
+  `xfer`
+| Type de tampon, défini par WeeChat et plusieurs extensions.
 
 |===
 
@@ -2717,8 +2717,8 @@ Liste des options de barre :
 |===
 | Option | Valeurs | Description
 
-| type | `root`, `window` |
-  Une barre avec le type `root` est affichée exactement une fois à l'écran, en
+| type | `root`, `window`
+| Une barre avec le type `root` est affichée exactement une fois à l'écran, en
   dehors de toutes les fenêtres. La barre par défaut _buflist_ est de type
   `root`. +
   Une barre avec le type `window` est affichée dans chaque fenêtre, par exemple
@@ -2726,60 +2726,60 @@ Liste des options de barre :
   aurez une barre dans chaque fenêtre. Les barres par défaut _title_, _status_,
   _input_ et _nicklist_ sont de type `window`.
 
-| position | `top`, `bottom`, `left`, `right` |
-  Position de la barre : au dessus/en dessous de la discussion, sur la
+| position | `top`, `bottom`, `left`, `right`
+| Position de la barre : au dessus/en dessous de la discussion, sur la
   gauche/droite.
 
-| priority | entier ≥ 0 |
-  Priorité de la barre : elle est utilisée pour ordonner les barres à l'écran,
+| priority | entier ≥ 0
+| Priorité de la barre : elle est utilisée pour ordonner les barres à l'écran,
   quand plusieurs barres utilisent le même type et position. +
   Les barres sont affichées depuis le bord de l'écran vers le centre. Une
   priorité plus haute affichera la barre au début, donc près du bord. +
   Exemple : la barre _input_ a une priorité de 1000, donc elle est affichée
   avant la barre _status_, qui a une priorité de 500.
 
-| size | entier ≥ 0 |
-  La taille de la barre : nombre de colonnes pour une position left/right,
+| size | entier ≥ 0
+| La taille de la barre : nombre de colonnes pour une position left/right,
   nombre de lignes pour une position top/bottom. Une taille de `0` signifie
   automatique, donc la taille sera calculée en fonction du contenu affiché dans
   la barre.
 
-| size_max | entier ≥ 0 |
-  La taille maximum pour la barre, `0` = pas de limite (cette option est
+| size_max | entier ≥ 0
+| La taille maximum pour la barre, `0` = pas de limite (cette option est
   utilisée seulement si `size` = `0`).
 
-| color_bg | couleur |
-  La couleur par défaut du fond de la barre.
+| color_bg | couleur
+| La couleur par défaut du fond de la barre.
 
-| color_fg | couleur |
-  La couleur par défaut du texte dans la barre.
+| color_fg | couleur
+| La couleur par défaut du texte dans la barre.
 
-| color_delim | couleur |
-  La couleur des délimiteurs dans la barre.
+| color_delim | couleur
+| La couleur des délimiteurs dans la barre.
 
-| hidden | `on`, `off` |
-  Lorsque l'option est `on`, la barre est cachée. +
+| hidden | `on`, `off`
+| Lorsque l'option est `on`, la barre est cachée. +
   Note : plutôt que de changer cette option, il est préférable d'utiliser la
   commande `/bar`, par exemple : `/bar toggle nicklist` (voir la commande
   <<command_weechat_bar,/bar>>).
 
-| separator | `on`, `off` |
-  Lorsque l'option est `on`, un séparateur (ligne) est affiché entre la barre et
+| separator | `on`, `off`
+| Lorsque l'option est `on`, un séparateur (ligne) est affiché entre la barre et
   les autres barres (ou la discussion).
 
-| items | chaîne |
-  Une liste d'objets (voir <<bar_items,objets>> pour plus d'infos).
+| items | chaîne
+| Une liste d'objets (voir <<bar_items,objets>> pour plus d'infos).
 
-| filling_left_right | `+horizontal+`, `+vertical+`, `+columns_horizontal+`, `+columns_vertical+` |
-  Type de remplissage pour la barre lorsqu'elle a une position `left` ou
+| filling_left_right | `+horizontal+`, `+vertical+`, `+columns_horizontal+`, `+columns_vertical+`
+| Type de remplissage pour la barre lorsqu'elle a une position `left` ou
   `right` (voir <<bar_filling,remplissage>> pour plus d'infos).
 
-| filling_top_bottom | `+horizontal+`, `+vertical+`, `+columns_horizontal+`, `+columns_vertical+` |
-  Type de remplissage pour la barre lorsqu'elle a une position `top` ou `bottom`
+| filling_top_bottom | `+horizontal+`, `+vertical+`, `+columns_horizontal+`, `+columns_vertical+`
+| Type de remplissage pour la barre lorsqu'elle a une position `top` ou `bottom`
   (voir <<bar_filling,remplissage>> pour plus d'infos).
 
-| conditions | chaîne |
-  Les conditions pour afficher la barre (voir <<bar_conditions,conditions>> pour
+| conditions | chaîne
+| Les conditions pour afficher la barre (voir <<bar_conditions,conditions>> pour
   plus d'infos).
 |===
 
@@ -4024,15 +4024,15 @@ Les signaux suivants sont captés par l'extension typing :
 |===
 | Signal | Paramètres | Description
 
-| typing_set_nick |
-  Chaîne : pointeur tampon + ";" + état (un parmi ceux-ci : "off", "typing",
+| typing_set_nick
+| Chaîne : pointeur tampon + ";" + état (un parmi ceux-ci : "off", "typing",
   "paused", "cleared") + ";" + pseudo. +
-  Example: "0x1234abcd;typing;alice". |
-  Définir l'état de la saisie du pseudo sur le tampon.
+  Example: "0x1234abcd;typing;alice".
+| Définir l'état de la saisie du pseudo sur le tampon.
 
-| typing_reset_buffer |
-  Pointeur : tampon. |
-  Supprimer l'état de saisir pour tous les pseudos d'un tampon.
+| typing_reset_buffer
+| Pointeur : tampon.
+| Supprimer l'état de saisir pour tous les pseudos d'un tampon.
 |===
 
 [[typing_options]]
@@ -4390,25 +4390,25 @@ Liste des triggers par défaut :
 |===
 | Nom | Hook | Description
 
-| beep | print |
-  Faire un bip sur un message de highlight ou privé.
+| beep | print
+| Faire un bip sur un message de highlight ou privé.
 
-| cmd_pass | modifier |
-  Cacher le mot de passe dans les commandes :
+| cmd_pass | modifier
+| Cacher le mot de passe dans les commandes :
   `pass:[/msg nickserv id\|identify\|set password\|ghost\|release\|regain\|recover]`,
   `pass:[/oper]`,
   `pass:[/quote pass]`,
   `pass:[/secure passphrase\|decrypt\|set]`.
 
-| cmd_pass_register | modifier |
-  Cacher le mot de passe dans la commande `pass:[/msg nickserv register]`.
+| cmd_pass_register | modifier
+| Cacher le mot de passe dans la commande `pass:[/msg nickserv register]`.
 
-| msg_auth | modifier |
-  Cacher le mot de passe dans le message d'authentification IRC affiché
+| msg_auth | modifier
+| Cacher le mot de passe dans le message d'authentification IRC affiché
   (message reçu du serveur après l'envoi de la commande par l'utilisateur).
 
-| server_pass | modifier |
-  Cacher le mot de passe du serveur dans les commandes `/server` et `/connect`.
+| server_pass | modifier
+| Cacher le mot de passe du serveur dans les commandes `/server` et `/connect`.
 |===
 
 [[trigger_anatomy]]
@@ -4421,39 +4421,39 @@ Un trigger a les options suivantes (les noms sont
 |===
 | Option | Valeurs | Description
 
-| enabled | `on`, `off` |
-  Lorsque l'option est `off`, le trigger est désactivé et les actions ne sont
+| enabled | `on`, `off`
+| Lorsque l'option est `off`, le trigger est désactivé et les actions ne sont
   plus exécutées.
 
 | hook | `+signal+`, `+hsignal+`, `+modifier+`, `+line+`, `+print+`, `+command+`,
-  `+command_run+`, `+timer+`, `+config+`, `+focus+`, `+info+`, `+info_hashtable+` |
-  Le "hook" utilisé dans le trigger. Pour plus d'information, voir la
+  `+command_run+`, `+timer+`, `+config+`, `+focus+`, `+info+`, `+info_hashtable+`
+| Le "hook" utilisé dans le trigger. Pour plus d'information, voir la
   link:weechat_plugin_api.fr.html#hooks[Référence API extension WeeChat / Hooks].
 
-| arguments | chaîne |
-  Les paramètres pour le "hook", ils dépendent du type de hook utilisé.
+| arguments | chaîne
+| Les paramètres pour le "hook", ils dépendent du type de hook utilisé.
 
-| conditions | chaîne |
-  Conditions pour exécuter le trigger : elles sont évaluées (voir la commande
+| conditions | chaîne
+| Conditions pour exécuter le trigger : elles sont évaluées (voir la commande
   <<command_weechat_eval,/eval>>).
 
-| regex | chaîne |
-  Une ou plusieurs expressions régulières POSIX étendues, pour modifier les
+| regex | chaîne
+| Une ou plusieurs expressions régulières POSIX étendues, pour modifier les
   données reçues dans la fonction de rappel du "hook" (et d'autres choses
   ajoutées par l'extension trigger), voir <<trigger_regex,expression régulière>>.
 
-| command | chaîne |
-  Commande à exécuter (plusieurs commandes peuvent être séparées par des
+| command | chaîne
+| Commande à exécuter (plusieurs commandes peuvent être séparées par des
   points-virgules) ; elle est évaluée (voir la commande
   <<command_weechat_eval,/eval>>).
 
-| return_code | `+ok+`, `+ok_eat+`, `+error+` |
-  Le code retour de la fonction de rappel (`ok` par défaut, qui devrait être
+| return_code | `+ok+`, `+ok_eat+`, `+error+`
+| Le code retour de la fonction de rappel (`ok` par défaut, qui devrait être
   utilisé dans quasiment tous les triggers, les autres valeurs sont rarement
   utilisées).
 
-| post_action | `none`, `disable`, `delete` |
-  Action à effectuer sur le trigger après l'exécution (`none` par défaut, qui
+| post_action | `none`, `disable`, `delete`
+| Action à effectuer sur le trigger après l'exécution (`none` par défaut, qui
   devrait être utilisé dans quasiment tous les triggers, les autres valeurs sont
   rarement utilisées).
 |===
@@ -4495,105 +4495,105 @@ points-virgules.
 |===
 | Hook | Paramètres | Exemples | Documentation (API)
 
-| signal |
-  1. nom de signal (priorité autorisée) (obligatoire) +
+| signal
+| 1. nom de signal (priorité autorisée) (obligatoire) +
   2. nom de signal (priorité autorisée) +
-  3. ... |
-  `+*,irc_in_privmsg+` +
+  3. ...
+| `+*,irc_in_privmsg+` +
   `+*,irc_in_privmsg;*,irc_in_notice+` +
-  `+signal_sigwinch+` |
-  link:weechat_plugin_api.fr.html#_hook_signal[hook_signal]
+  `+signal_sigwinch+`
+| link:weechat_plugin_api.fr.html#_hook_signal[hook_signal]
 
-| hsignal |
-  1. nom de signal (priorité autorisée) (obligatoire) +
+| hsignal
+| 1. nom de signal (priorité autorisée) (obligatoire) +
   2. nom de signal (priorité autorisée) +
-  3. ... |
-  `+nicklist_nick_added+` |
-  link:weechat_plugin_api.fr.html#_hook_hsignal[hook_hsignal]
+  3. ...
+| `+nicklist_nick_added+`
+| link:weechat_plugin_api.fr.html#_hook_hsignal[hook_hsignal]
 
-| modifier |
-  1. nom de modificateur (priorité autorisée) (obligatoire) +
+| modifier
+| 1. nom de modificateur (priorité autorisée) (obligatoire) +
   2. nom de modificateur (priorité autorisée) +
-  3. ... |
-  `+weechat_print+` +
-  `+5000\|input_text_display;5000\|history_add+` |
-  link:weechat_plugin_api.fr.html#_hook_modifier[hook_modifier]
+  3. ...
+| `+weechat_print+` +
+  `+5000\|input_text_display;5000\|history_add+`
+| link:weechat_plugin_api.fr.html#_hook_modifier[hook_modifier]
 
-| line |
-  1. type de tampon +
+| line
+| 1. type de tampon +
   2. nom de tampon +
-  3. étiquettes |
-  `+formatted+` +
+  3. étiquettes
+| `+formatted+` +
   `+free+` +
   `+*;irc.libera.*+` +
   `+*;irc.libera.#weechat+` +
-  `+formatted;irc.libera.#weechat;irc_notice+` |
-  link:weechat_plugin_api.en.html#_hook_line[hook_line]
+  `+formatted;irc.libera.#weechat;irc_notice+`
+| link:weechat_plugin_api.en.html#_hook_line[hook_line]
 
-| print |
-  1. nom de tampon +
+| print
+| 1. nom de tampon +
   2. étiquettes +
   3. message +
-  4. suppression des couleurs (0/1) |
-  `+irc.libera.*+` +
+  4. suppression des couleurs (0/1)
+| `+irc.libera.*+` +
   `+irc.libera.#weechat+` +
   `+irc.libera.#weechat;irc_notice+` +
-  `+*;;;1+` |
-  link:weechat_plugin_api.fr.html#_hook_print[hook_print]
+  `+*;;;1+`
+| link:weechat_plugin_api.fr.html#_hook_print[hook_print]
 
-| command |
-  1. nom de commande (priorité autorisée) (obligatoire) +
+| command
+| 1. nom de commande (priorité autorisée) (obligatoire) +
   2. description (évalué, voir la commande <<command_weechat_eval,/eval>>) +
   3. paramètres (évalué, voir la commande <<command_weechat_eval,/eval>>) +
   4. description des paramètres (évalué, voir la commande <<command_weechat_eval,/eval>>) +
-  5. complétion (évalué, voir la commande <<command_weechat_eval,/eval>>) |
-  `+test+` +
+  5. complétion (évalué, voir la commande <<command_weechat_eval,/eval>>)
+| `+test+` +
   `+5000\|test+` +
-  `+test;commande de test;arg1 arg2;arg1: description 1${\n}arg2: description 2+` |
-  link:weechat_plugin_api.fr.html#_hook_command[hook_command]
+  `+test;commande de test;arg1 arg2;arg1: description 1${\n}arg2: description 2+`
+| link:weechat_plugin_api.fr.html#_hook_command[hook_command]
 
-| command_run |
-  1. commande (priorité autorisée) (obligatoire) +
+| command_run
+| 1. commande (priorité autorisée) (obligatoire) +
   2. commande (priorité autorisée) +
-  3. ... |
-  `+/cmd paramètres+` |
-  link:weechat_plugin_api.fr.html#_hook_command_run[hook_command_run]
+  3. ...
+| `+/cmd paramètres+`
+| link:weechat_plugin_api.fr.html#_hook_command_run[hook_command_run]
 
-| timer |
-  1. intervalle, en millisecondes (obligatoire) +
+| timer
+| 1. intervalle, en millisecondes (obligatoire) +
   2. alignement sur la seconde (par défaut : 0) +
-  3. nombre maximum d'appels (par défaut : 0, qui signifie "sans fin") |
-  `+3600000+` +
-  `+60000;0;5+` |
-  link:weechat_plugin_api.fr.html#_hook_timer[hook_timer]
+  3. nombre maximum d'appels (par défaut : 0, qui signifie "sans fin")
+| `+3600000+` +
+  `+60000;0;5+`
+| link:weechat_plugin_api.fr.html#_hook_timer[hook_timer]
 
-| config |
-  1. nom d'option (priorité autorisée) (obligatoire) +
+| config
+| 1. nom d'option (priorité autorisée) (obligatoire) +
   2. nom d'option (priorité autorisée) +
-  3. ... |
-  `+weechat.look.*+` |
-  link:weechat_plugin_api.fr.html#_hook_config[hook_config]
+  3. ...
+| `+weechat.look.*+`
+| link:weechat_plugin_api.fr.html#_hook_config[hook_config]
 
-| focus |
-  1. nom d'aire (priorité autorisée) (obligatoire) +
+| focus
+| 1. nom d'aire (priorité autorisée) (obligatoire) +
   2. nom d'aire (priorité autorisée) +
-  3. ... |
-  `+buffer_nicklist+` |
-  link:weechat_plugin_api.fr.html#_hook_focus[hook_focus]
+  3. ...
+| `+buffer_nicklist+`
+| link:weechat_plugin_api.fr.html#_hook_focus[hook_focus]
 
-| info |
-  1. nom de l'info (priorité autorisée) (obligatoire) +
+| info
+| 1. nom de l'info (priorité autorisée) (obligatoire) +
   2. nom de l'info (priorité autorisée) +
-  3. ... |
-  `+mon_info+` |
-  link:weechat_plugin_api.fr.html#_hook_info[hook_info]
+  3. ...
+| `+mon_info+`
+| link:weechat_plugin_api.fr.html#_hook_info[hook_info]
 
-| info_hashtable |
-  1. nom de l'info (priorité autorisée) (obligatoire) +
+| info_hashtable
+| 1. nom de l'info (priorité autorisée) (obligatoire) +
   2. nom de l'info (priorité autorisée) +
-  3. ... |
-  `+mon_info+` |
-  link:weechat_plugin_api.fr.html#_hook_info_hashtable[hook_info_hashtable]
+  3. ...
+| `+mon_info+`
+| link:weechat_plugin_api.fr.html#_hook_info_hashtable[hook_info_hashtable]
 |===
 
 [[trigger_conditions]]

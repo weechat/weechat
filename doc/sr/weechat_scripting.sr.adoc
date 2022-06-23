@@ -87,11 +87,11 @@ Python стаб за WeeChat API је соступан у репозиториј
 |===
 | API фунцкија | Аргументи | Примери | Опис
 
-| hook_modifier |
-  irc_in_yyy |
-  pass:[irc_in_privmsg] +
-  pass:[irc_in_notice] |
-  Порука која се прими у IRC додатку, пре него што се декодира у UTF-8 (користи
+| hook_modifier
+| irc_in_yyy
+| pass:[irc_in_privmsg] +
+  pass:[irc_in_notice]
+| Порука која се прими у IRC додатку, пре него што се декодира у UTF-8 (користи
   се интерно). +
   +
   Препоручује се да се уместо ње користи модификатор `+irc_in2_yyy+`, примљени
@@ -99,14 +99,14 @@ Python стаб за WeeChat API је соступан у репозиториј
   Погледајте функцију `+hook_modifier+` у
   link:weechat_plugin_api.sr.html#_hook_modifier[WeeChat референтном приручнику API додатака].
 
-| hook_signal |
-  xxx,irc_out_yyy +
-  xxx,irc_outtags_yyy |
-  pass:[*,irc_out_privmsg] +
+| hook_signal
+| xxx,irc_out_yyy +
+  xxx,irc_outtags_yyy
+| pass:[*,irc_out_privmsg] +
   pass:[*,irc_out_notice] +
   pass:[*,irc_outtags_privmsg] +
-  pass:[*,irc_outtags_notice] |
-  Порука коју шаље IRC додатак, након што се кодира у `encode` скуп карактера
+  pass:[*,irc_outtags_notice]
+| Порука коју шаље IRC додатак, након што се кодира у `encode` скуп карактера
   који је дефинисао корисник (у случају да се разликује од подразумеваног `UTF-8`). +
   +
   Препоручује се да се уместо њега користи сигнал `+xxx,irc_out1_yyy+`, стринг који
@@ -115,10 +115,10 @@ Python стаб за WeeChat API је соступан у репозиториј
   link:weechat_plugin_api.sr.html#_hook_signal[WeeChat референтном приручнику API додатака].
 
 | hook_process +
-  hook_process_hashtable |
-  - |
-  - |
-  Излаз команде који се шаље функцији повратног позива може да садржи неважеће UTF-8 податке.
+  hook_process_hashtable
+| -
+| -
+| Излаз команде који се шаље функцији повратног позива може да садржи неважеће UTF-8 податке.
 
 |===
 
@@ -512,14 +512,14 @@ weechat_hook_timer(1000, 0, 1, $timer_cb, 'test');
 |===
 | Категорија | Функције
 
-| опште |
-  register
+| опште
+| register
 
-| додаци |
-  plugin_get_name
+| додаци
+| plugin_get_name
 
-| стрингови |
-  charset_set +
+| стрингови
+| charset_set +
   iconv_to_internal +
   iconv_from_internal +
   gettext +
@@ -538,13 +538,13 @@ weechat_hook_timer(1000, 0, 1, $timer_cb, 'test');
   string_eval_expression +
   string_eval_path_home
 
-| директоријуми |
-  mkdir_home +
+| директоријуми
+| mkdir_home +
   mkdir +
   mkdir_parents
 
-| сортиране листе |
-  list_new +
+| сортиране листе
+| list_new +
   list_add +
   list_search +
   list_search_pos +
@@ -560,8 +560,8 @@ weechat_hook_timer(1000, 0, 1, $timer_cb, 'test');
   list_remove_all +
   list_free
 
-| кофнигурациони фајлови |
-  config_new +
+| кофнигурациони фајлови
+| config_new +
   config_new_section +
   config_search_section +
   config_new_option +
@@ -598,12 +598,12 @@ weechat_hook_timer(1000, 0, 1, $timer_cb, 'test');
   config_set_desc_plugin +
   config_unset_plugin
 
-| тастерске пречице |
-  key_bind +
+| тастерске пречице
+| key_bind +
   key_unbind
 
-| приказ |
-  prefix +
+| приказ
+| prefix +
   color +
   print (за python: prnt) +
   print_date_tags (за python: prnt_date_tags) +
@@ -611,8 +611,8 @@ weechat_hook_timer(1000, 0, 1, $timer_cb, 'test');
   print_y_date_tags (за python: prnt_y_date_tags) +
   log_print
 
-| куке |
-  hook_command +
+| куке
+| hook_command +
   hook_command_run +
   hook_timer +
   hook_fd +
@@ -637,8 +637,8 @@ weechat_hook_timer(1000, 0, 1, $timer_cb, 'test');
   unhook +
   unhook_all
 
-| бафери |
-  buffer_new +
+| бафери
+| buffer_new +
   buffer_new_props +
   current_buffer +
   buffer_search +
@@ -654,16 +654,16 @@ weechat_hook_timer(1000, 0, 1, $timer_cb, 'test');
   buffer_string_replace_local_var +
   buffer_match_list
 
-| прозори |
-  current_window +
+| прозори
+| current_window +
   window_search_with_buffer +
   window_get_integer +
   window_get_string +
   window_get_pointer +
   window_set_title
 
-| листа надимака |
-  nicklist_add_group +
+| листа надимака
+| nicklist_add_group +
   nicklist_search_group +
   nicklist_add_nick +
   nicklist_search_nick +
@@ -679,8 +679,8 @@ weechat_hook_timer(1000, 0, 1, $timer_cb, 'test');
   nicklist_nick_get_pointer +
   nicklist_nick_set
 
-| траке |
-  bar_item_search +
+| траке
+| bar_item_search +
   bar_item_new +
   bar_item_update +
   bar_item_remove +
@@ -690,23 +690,23 @@ weechat_hook_timer(1000, 0, 1, $timer_cb, 'test');
   bar_update +
   bar_remove
 
-| команде |
-  command +
+| команде
+| command +
   command_options
 
-| довршавање |
-  completion_new +
+| довршавање
+| completion_new +
   completion_search +
   completion_get_string +
   completion_list_add +
   completion_free
 
-| infos |
-  info_get +
+| infos
+| info_get +
   info_get_hashtable
 
-| infolists |
-  infolist_new +
+| infolists
+| infolist_new +
   infolist_new_item +
   infolist_new_var_integer +
   infolist_new_var_string +
@@ -724,8 +724,8 @@ weechat_hook_timer(1000, 0, 1, $timer_cb, 'test');
   infolist_time +
   infolist_free
 
-| hdata |
-  hdata_get +
+| hdata
+| hdata_get +
   hdata_get_var_offset +
   hdata_get_var_type_string +
   hdata_get_var_array_size +
@@ -746,8 +746,8 @@ weechat_hook_timer(1000, 0, 1, $timer_cb, 'test');
   hdata_update +
   hdata_get_string
 
-| ажурирање |
-  upgrade_new +
+| ажурирање
+| upgrade_new +
   upgrade_write_object +
   upgrade_read +
   upgrade_close
@@ -762,13 +762,13 @@ weechat_hook_timer(1000, 0, 1, $timer_cb, 'test');
 |===
 | Категорија | Константе
 
-| повратни кодови |
-  `WEECHAT_RC_OK` (цео број) +
+| повратни кодови
+| `WEECHAT_RC_OK` (цео број) +
   `WEECHAT_RC_OK_EAT` (цео број) +
   `WEECHAT_RC_ERROR` (цео број)
 
-| конфигурациони фајлови |
-  `WEECHAT_CONFIG_READ_OK` (цео број) +
+| конфигурациони фајлови
+| `WEECHAT_CONFIG_READ_OK` (цео број) +
   `WEECHAT_CONFIG_READ_MEMORY_ERROR` (цео број) +
   `WEECHAT_CONFIG_READ_FILE_NOT_FOUND` (цео број) +
   `WEECHAT_CONFIG_WRITE_OK` (цео број) +
@@ -783,23 +783,23 @@ weechat_hook_timer(1000, 0, 1, $timer_cb, 'test');
   `WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED` (цео број) +
   `WEECHAT_CONFIG_OPTION_UNSET_ERROR` (цео број)
 
-| сортиране листе |
-  `WEECHAT_LIST_POS_SORT` (стринг) +
+| сортиране листе
+| `WEECHAT_LIST_POS_SORT` (стринг) +
   `WEECHAT_LIST_POS_BEGINNING` (стринг) +
   `WEECHAT_LIST_POS_END` (стринг)
 
-| врућа листа |
-  `WEECHAT_HOTLIST_LOW` (стринг) +
+| врућа листа
+| `WEECHAT_HOTLIST_LOW` (стринг) +
   `WEECHAT_HOTLIST_MESSAGE` (стринг) +
   `WEECHAT_HOTLIST_PRIVATE` (стринг) +
   `WEECHAT_HOTLIST_HIGHLIGHT` (стринг)
 
-| кука process |
-  `WEECHAT_HOOK_PROCESS_RUNNING` (цео број) +
+| кука process
+| `WEECHAT_HOOK_PROCESS_RUNNING` (цео број) +
   `WEECHAT_HOOK_PROCESS_ERROR` (цео број)
 
-| кука connect |
-  `WEECHAT_HOOK_CONNECT_OK` (цео број) +
+| кука connect
+| `WEECHAT_HOOK_CONNECT_OK` (цео број) +
   `WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND` (цео број) +
   `WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND` (цео број) +
   `WEECHAT_HOOK_CONNECT_CONNECTION_REFUSED` (цео број) +
@@ -811,8 +811,8 @@ weechat_hook_timer(1000, 0, 1, $timer_cb, 'test');
   `WEECHAT_HOOK_CONNECT_TIMEOUT` (цео број) +
   `WEECHAT_HOOK_CONNECT_SOCKET_ERROR` (цео број)
 
-| кука signal |
-  `WEECHAT_HOOK_SIGNAL_STRING` (стринг) +
+| кука signal
+| `WEECHAT_HOOK_SIGNAL_STRING` (стринг) +
   `WEECHAT_HOOK_SIGNAL_INT` (стринг) +
   `WEECHAT_HOOK_SIGNAL_POINTER` (стринг)
 |===
@@ -1243,61 +1243,61 @@ IRC поруку можете да парсирате са info_hashtable под
 |===
 | Кључ | Од WeeChat ^(1)^ | Опис | Пример
 
-| tags | 0.4.0 |
-  Ознаке у поруци (може бити празно). |
-  `+time=2015-06-27T16:40:35.000Z+`
+| tags | 0.4.0
+| Ознаке у поруци (може бити празно).
+| `+time=2015-06-27T16:40:35.000Z+`
 
-| tag_xxx | 3.3 |
-  Неозначена вредност ознаке "xxx" (један кључ по ознаци). |
-  `+2015-06-27T16:40:35.000Z+`
+| tag_xxx | 3.3
+| Неозначена вредност ознаке "xxx" (један кључ по ознаци).
+| `+2015-06-27T16:40:35.000Z+`
 
-| message_without_tags | 0.4.0 |
-  Порука без ознака (иста као оригинална ако нема ознака у њој). |
-  `+:nick!user@host PRIVMSG #weechat :здраво!+`
+| message_without_tags | 0.4.0
+| Порука без ознака (иста као оригинална ако нема ознака у њој).
+| `+:nick!user@host PRIVMSG #weechat :здраво!+`
 
-| nick | 0.3.4 |
-  Надимак порекла. |
-  `+nick+`
+| nick | 0.3.4
+| Надимак порекла.
+| `+nick+`
 
-| user | 2.7 |
-  Корисник порекла. |
-  `+user+`
+| user | 2.7
+| Корисник порекла.
+| `+user+`
 
-| host | 0.3.4 |
-  Хост порекла (укључујући и надимак). |
-  `+nick!user@host+`
+| host | 0.3.4
+| Хост порекла (укључујући и надимак).
+| `+nick!user@host+`
 
-| command | 0.3.4 |
-  Команда (_PRIVMSG_, _NOTICE_, ...). |
-  `+PRIVMSG+`
+| command | 0.3.4
+| Команда (_PRIVMSG_, _NOTICE_, ...).
+| `+PRIVMSG+`
 
-| channel | 0.3.4 |
-  Циљни канал. |
-  `+#weechat+`
+| channel | 0.3.4
+| Циљни канал.
+| `+#weechat+`
 
-| arguments | 0.3.4 |
-  Аргументи команде (укључујући и канал). |
-  `+#weechat :здраво!+`
+| arguments | 0.3.4
+| Аргументи команде (укључујући и канал).
+| `+#weechat :здраво!+`
 
-| text | 1.3 |
-  Текст (на пример, корисникова порука). |
-  `+здраво!+`
+| text | 1.3
+| Текст (на пример, корисникова порука).
+| `+здраво!+`
 
-| pos_command | 1.3 |
-  Индекс _command_ у поруци („-1” ако се _command_ не пронађе). |
-  `+47+`
+| pos_command | 1.3
+| Индекс _command_ у поруци („-1” ако се _command_ не пронађе).
+| `+47+`
 
-| pos_arguments | 1.3 |
-  Индекс _arguments_ у поруци („-1” ако се _arguments_ не пронађе). |
-  `+55+`
+| pos_arguments | 1.3
+| Индекс _arguments_ у поруци („-1” ако се _arguments_ не пронађе).
+| `+55+`
 
-| pos_channel | 1.3 |
-  Индекс _channel_ у поруци („-1” ако се _channel_ не пронађе). |
-  `+55+`
+| pos_channel | 1.3
+| Индекс _channel_ у поруци („-1” ако се _channel_ не пронађе).
+| `+55+`
 
-| pos_text | 1.3 |
-  Индекс _text_ у поруци („-1” ако се  _text_ не пронађе). |
-  `+65+`
+| pos_text | 1.3
+| Индекс _text_ у поруци („-1” ако се  _text_ не пронађе).
+| `+65+`
 |===
 
 [NOTE]

@@ -111,11 +111,11 @@ receive a string of type `str` or `bytes` (this list is not exhaustive):
 |===
 | API function | Arguments | Examples | Description
 
-| hook_modifier |
-  irc_in_yyy |
-  pass:[irc_in_privmsg] +
-  pass:[irc_in_notice] |
-  A message received in IRC plugin, before it is decoded to UTF-8 (used
+| hook_modifier
+| irc_in_yyy
+| pass:[irc_in_privmsg] +
+  pass:[irc_in_notice]
+| A message received in IRC plugin, before it is decoded to UTF-8 (used
   internally). +
   +
   It is recommended to use modifier `+irc_in2_yyy+` instead, the string received
@@ -123,14 +123,14 @@ receive a string of type `str` or `bytes` (this list is not exhaustive):
   See function `+hook_modifier+` in the
   link:weechat_plugin_api.it.html#_hook_modifier[WeeChat plugin API reference].
 
-| hook_signal |
-  xxx,irc_out_yyy +
-  xxx,irc_outtags_yyy |
-  pass:[*,irc_out_privmsg] +
+| hook_signal
+| xxx,irc_out_yyy +
+  xxx,irc_outtags_yyy
+| pass:[*,irc_out_privmsg] +
   pass:[*,irc_out_notice] +
   pass:[*,irc_outtags_privmsg] +
-  pass:[*,irc_outtags_notice] |
-  A message sent by IRC plugin, after it is encoded to the `encode` charset
+  pass:[*,irc_outtags_notice]
+| A message sent by IRC plugin, after it is encoded to the `encode` charset
   defined by the user (if different from the default `UTF-8`). +
   +
   It is recommended to use signal `+xxx,irc_out1_yyy+` instead, the string received
@@ -139,10 +139,10 @@ receive a string of type `str` or `bytes` (this list is not exhaustive):
   link:weechat_plugin_api.it.html#_hook_signal[WeeChat plugin API reference].
 
 | hook_process +
-  hook_process_hashtable |
-  - |
-  - |
-  Output of the command, sent to the callback, can contain invalid UTF-8 data.
+  hook_process_hashtable
+| -
+| -
+| Output of the command, sent to the callback, can contain invalid UTF-8 data.
 
 |===
 
@@ -583,14 +583,14 @@ Elenco di funzioni nelle API per gli script:
 |===
 | Categoria | Funzioni
 
-| generale |
-  register
+| generale
+| register
 
-| plugin |
-  plugin_get_name
+| plugin
+| plugin_get_name
 
-| stringhe |
-  charset_set +
+| stringhe
+| charset_set +
   iconv_to_internal +
   iconv_from_internal +
   gettext +
@@ -609,13 +609,13 @@ Elenco di funzioni nelle API per gli script:
   string_eval_expression +
   string_eval_path_home
 
-| directory |
-  mkdir_home +
+| directory
+| mkdir_home +
   mkdir +
   mkdir_parents
 
-| liste ordinate |
-  list_new +
+| liste ordinate
+| list_new +
   list_add +
   list_search +
   list_search_pos +
@@ -631,8 +631,8 @@ Elenco di funzioni nelle API per gli script:
   list_remove_all +
   list_free
 
-| file di configurazione |
-  config_new +
+| file di configurazione
+| config_new +
   config_new_section +
   config_search_section +
   config_new_option +
@@ -669,12 +669,12 @@ Elenco di funzioni nelle API per gli script:
   config_set_desc_plugin +
   config_unset_plugin
 
-| combinazione tasti |
-  key_bind +
+| combinazione tasti
+| key_bind +
   key_unbind
 
-| visualizzazione |
-  prefix +
+| visualizzazione
+| prefix +
   color +
 // TRANSLATION MISSING
   print (for python: prnt) +
@@ -686,8 +686,8 @@ Elenco di funzioni nelle API per gli script:
   print_y_date_tags (for python: prnt_y_date_tags) +
   log_print
 
-| hook |
-  hook_command +
+| hook
+| hook_command +
   hook_command_run +
   hook_timer +
   hook_fd +
@@ -712,8 +712,8 @@ Elenco di funzioni nelle API per gli script:
   unhook +
   unhook_all
 
-| buffer |
-  buffer_new +
+| buffer
+| buffer_new +
   buffer_new_props +
   current_buffer +
   buffer_search +
@@ -729,16 +729,16 @@ Elenco di funzioni nelle API per gli script:
   buffer_string_replace_local_var +
   buffer_match_list
 
-| finestre |
-  current_window +
+| finestre
+| current_window +
   window_search_with_buffer +
   window_get_integer +
   window_get_string +
   window_get_pointer +
   window_set_title
 
-| lista nick |
-  nicklist_add_group +
+| lista nick
+| nicklist_add_group +
   nicklist_search_group +
   nicklist_add_nick +
   nicklist_search_nick +
@@ -754,8 +754,8 @@ Elenco di funzioni nelle API per gli script:
   nicklist_nick_get_pointer +
   nicklist_nick_set
 
-| barre |
-  bar_item_search +
+| barre
+| bar_item_search +
   bar_item_new +
   bar_item_update +
   bar_item_remove +
@@ -765,24 +765,24 @@ Elenco di funzioni nelle API per gli script:
   bar_update +
   bar_remove
 
-| comandi |
-  command +
+| comandi
+| command +
   command_options
 
 // TRANSLATION MISSING
-| completion |
-  completion_new +
+| completion
+| completion_new +
   completion_search +
   completion_get_string +
   completion_list_add +
   completion_free
 
-| info |
-  info_get +
+| info
+| info_get +
   info_get_hashtable
 
-| liste info |
-  infolist_new +
+| liste info
+| infolist_new +
   infolist_new_item +
   infolist_new_var_integer +
   infolist_new_var_string +
@@ -800,8 +800,8 @@ Elenco di funzioni nelle API per gli script:
   infolist_time +
   infolist_free
 
-| hdata |
-  hdata_get +
+| hdata
+| hdata_get +
   hdata_get_var_offset +
   hdata_get_var_type_string +
   hdata_get_var_array_size +
@@ -822,8 +822,8 @@ Elenco di funzioni nelle API per gli script:
   hdata_update +
   hdata_get_string
 
-| aggiornamento |
-  upgrade_new +
+| aggiornamento
+| upgrade_new +
   upgrade_write_object +
   upgrade_read +
   upgrade_close
@@ -839,14 +839,14 @@ Elenco di costanti nelle API per gli script:
 | Categoria | Costanti
 
 // TRANSLATION MISSING
-| codici restituiti |
-  `WEECHAT_RC_OK` (integer) +
+| codici restituiti
+| `WEECHAT_RC_OK` (integer) +
   `WEECHAT_RC_OK_EAT` (integer) +
   `WEECHAT_RC_ERROR` (integer)
 
 // TRANSLATION MISSING
-| file di configurazione |
-  `WEECHAT_CONFIG_READ_OK` (integer) +
+| file di configurazione
+| `WEECHAT_CONFIG_READ_OK` (integer) +
   `WEECHAT_CONFIG_READ_MEMORY_ERROR` (integer) +
   `WEECHAT_CONFIG_READ_FILE_NOT_FOUND` (integer) +
   `WEECHAT_CONFIG_WRITE_OK` (integer) +
@@ -862,26 +862,26 @@ Elenco di costanti nelle API per gli script:
   `WEECHAT_CONFIG_OPTION_UNSET_ERROR` (integer)
 
 // TRANSLATION MISSING
-| liste ordinate |
-  `WEECHAT_LIST_POS_SORT` (string) +
+| liste ordinate
+| `WEECHAT_LIST_POS_SORT` (string) +
   `WEECHAT_LIST_POS_BEGINNING` (string) +
   `WEECHAT_LIST_POS_END` (string)
 
 // TRANSLATION MISSING
-| hotlist |
-  `WEECHAT_HOTLIST_LOW` (string) +
+| hotlist
+| `WEECHAT_HOTLIST_LOW` (string) +
   `WEECHAT_HOTLIST_MESSAGE` (string) +
   `WEECHAT_HOTLIST_PRIVATE` (string) +
   `WEECHAT_HOTLIST_HIGHLIGHT` (string)
 
 // TRANSLATION MISSING
-| hook su processo |
-  `WEECHAT_HOOK_PROCESS_RUNNING` (integer) +
+| hook su processo
+| `WEECHAT_HOOK_PROCESS_RUNNING` (integer) +
   `WEECHAT_HOOK_PROCESS_ERROR` (integer)
 
 // TRANSLATION MISSING
-| hook su connessione |
-  `WEECHAT_HOOK_CONNECT_OK` (integer) +
+| hook su connessione
+| `WEECHAT_HOOK_CONNECT_OK` (integer) +
   `WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND` (integer) +
   `WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND` (integer) +
   `WEECHAT_HOOK_CONNECT_CONNECTION_REFUSED` (integer) +
@@ -894,8 +894,8 @@ Elenco di costanti nelle API per gli script:
   `WEECHAT_HOOK_CONNECT_SOCKET_ERROR` (integer)
 
 // TRANSLATION MISSING
-| hook su segnale |
-  `WEECHAT_HOOK_SIGNAL_STRING` (string) +
+| hook su segnale
+| `WEECHAT_HOOK_SIGNAL_STRING` (string) +
   `WEECHAT_HOOK_SIGNAL_INT` (string) +
   `WEECHAT_HOOK_SIGNAL_POINTER` (string)
 |===
@@ -1374,63 +1374,63 @@ The result is a hashtable with following keys
 |===
 | Key | Since WeeChat ^(1)^ | Description | Example
 
-| tags | 0.4.0 |
-  The tags in message (can be empty). |
-  `+time=2015-06-27T16:40:35.000Z+`
+| tags | 0.4.0
+| The tags in message (can be empty).
+| `+time=2015-06-27T16:40:35.000Z+`
 
 // TRANSLATION MISSING
-| tag_xxx | 3.3 |
-  Unescaped value of tag "xxx" (one key per tag). |
-  `+2015-06-27T16:40:35.000Z+`
+| tag_xxx | 3.3
+| Unescaped value of tag "xxx" (one key per tag).
+| `+2015-06-27T16:40:35.000Z+`
 
-| message_without_tags | 0.4.0 |
-  The message without the tags (the same as message if there are no tags). |
-  `+:nick!user@host PRIVMSG #weechat :hello!+`
+| message_without_tags | 0.4.0
+| The message without the tags (the same as message if there are no tags).
+| `+:nick!user@host PRIVMSG #weechat :hello!+`
 
-| nick | 0.3.4 |
-  The origin nick. |
-  `+nick+`
+| nick | 0.3.4
+| The origin nick.
+| `+nick+`
 
 // TRANSLATION MISSING
-| user | 2.7 |
-  The origin user. |
-  `+user+`
+| user | 2.7
+| The origin user.
+| `+user+`
 
-| host | 0.3.4 |
-  The origin host (includes the nick). |
-  `+nick!user@host+`
+| host | 0.3.4
+| The origin host (includes the nick).
+| `+nick!user@host+`
 
-| command | 0.3.4 |
-  The command (_PRIVMSG_, _NOTICE_, ...). |
-  `+PRIVMSG+`
+| command | 0.3.4
+| The command (_PRIVMSG_, _NOTICE_, ...).
+| `+PRIVMSG+`
 
-| channel | 0.3.4 |
-  The target channel. |
-  `+#weechat+`
+| channel | 0.3.4
+| The target channel.
+| `+#weechat+`
 
-| arguments | 0.3.4 |
-  The command arguments (includes the channel). |
-  `+#weechat :hello!+`
+| arguments | 0.3.4
+| The command arguments (includes the channel).
+| `+#weechat :hello!+`
 
-| text | 1.3 |
-  The text (for example user message). |
-  `+hello!+`
+| text | 1.3
+| The text (for example user message).
+| `+hello!+`
 
-| pos_command | 1.3 |
-  The index of _command_ in message ("-1" if _command_ was not found). |
-  `+47+`
+| pos_command | 1.3
+| The index of _command_ in message ("-1" if _command_ was not found).
+| `+47+`
 
-| pos_arguments | 1.3 |
-  The index of _arguments_ in message ("-1" if _arguments_ was not found). |
-  `+55+`
+| pos_arguments | 1.3
+| The index of _arguments_ in message ("-1" if _arguments_ was not found).
+| `+55+`
 
-| pos_channel | 1.3 |
-  The index of _channel_ in message ("-1" if _channel_ was not found). |
-  `+55+`
+| pos_channel | 1.3
+| The index of _channel_ in message ("-1" if _channel_ was not found).
+| `+55+`
 
-| pos_text | 1.3 |
-  The index of _text_ in message ("-1" if _text_ was not found). |
-  `+65+`
+| pos_text | 1.3
+| The index of _text_ in message ("-1" if _text_ was not found).
+| `+65+`
 |===
 
 // TRANSLATION MISSING

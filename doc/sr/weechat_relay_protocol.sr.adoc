@@ -1321,68 +1321,68 @@ WeeChat резервисани идентификатори:
 
 [width="100%", cols="5m,5,3,4,7", options="header"]
 |===
-| Идентификатор | Примљен са _sync_ | Послати подаци |
-  Опис | Препоручена акција у клијенту
+| Идентификатор | Примљен са _sync_ | Послати подаци
+| Опис | Препоручена акција у клијенту
 
-| _buffer_opened | buffers / buffer | hdata: buffer |
-  Бафер је отворен. | Отварање бафера.
+| _buffer_opened | buffers / buffer | hdata: buffer
+| Бафер је отворен. | Отварање бафера.
 
-| _buffer_type_changed | buffers / buffer | hdata: buffer |
-  Промењен је тип бафера. | Измена типа бафера.
+| _buffer_type_changed | buffers / buffer | hdata: buffer
+| Промењен је тип бафера. | Измена типа бафера.
 
-| _buffer_moved | buffers / buffer | hdata: buffer |
-  Buffer је премештен. | Премештање бафера.
+| _buffer_moved | buffers / buffer | hdata: buffer
+| Buffer је премештен. | Премештање бафера.
 
-| _buffer_merged | buffers / buffer | hdata: buffer |
-  Buffer је спојен. | Спајање бафера.
+| _buffer_merged | buffers / buffer | hdata: buffer
+| Buffer је спојен. | Спајање бафера.
 
-| _buffer_unmerged | buffers / buffer | hdata: buffer |
-  Бафер је раздвојен. | Раздвајање бафера.
+| _buffer_unmerged | buffers / buffer | hdata: buffer
+| Бафер је раздвојен. | Раздвајање бафера.
 
-| _buffer_hidden | buffers / buffer | hdata: buffer |
-  Бафер је сакривен. | Скривање бафера.
+| _buffer_hidden | buffers / buffer | hdata: buffer
+| Бафер је сакривен. | Скривање бафера.
 
-| _buffer_unhidden | buffers / buffer | hdata: buffer |
-  Бафер је откривен. | Откривање бафера.
+| _buffer_unhidden | buffers / buffer | hdata: buffer
+| Бафер је откривен. | Откривање бафера.
 
-| _buffer_renamed | buffers / buffer | hdata: buffer |
-  Баферу је промењено име. | Промена имена бафера.
+| _buffer_renamed | buffers / buffer | hdata: buffer
+| Баферу је промењено име. | Промена имена бафера.
 
-| _buffer_title_changed | buffers / buffer | hdata: buffer |
-  Промењен је наслов бафера. | Промена наслова бафера.
+| _buffer_title_changed | buffers / buffer | hdata: buffer
+| Промењен је наслов бафера. | Промена наслова бафера.
 
-| _buffer_localvar_added | buffers / buffer | hdata: buffer |
-  Додата је локална променљива. | Додавање локалне променљиве.
+| _buffer_localvar_added | buffers / buffer | hdata: buffer
+| Додата је локална променљива. | Додавање локалне променљиве.
 
-| _buffer_localvar_changed | buffers / buffer | hdata: buffer |
-  Локална променљива је измењена. | Измена локалне променљиве у баферу.
+| _buffer_localvar_changed | buffers / buffer | hdata: buffer
+| Локална променљива је измењена. | Измена локалне променљиве у баферу.
 
-| _buffer_localvar_removed | buffers / buffer | hdata: buffer |
-  Уклоњена је локална променљива. | Уклањање локалне променљиве из бафера.
+| _buffer_localvar_removed | buffers / buffer | hdata: buffer
+| Уклоњена је локална променљива. | Уклањање локалне променљиве из бафера.
 
-| _buffer_closing | buffers / buffer | hdata: buffer |
-  Бафер је затворен. | Затварање бафера.
+| _buffer_closing | buffers / buffer | hdata: buffer
+| Бафер је затворен. | Затварање бафера.
 
-| _buffer_cleared | buffer | hdata: buffer |
-  Бафер је очишћен. | Чишћење бафера.
+| _buffer_cleared | buffer | hdata: buffer
+| Бафер је очишћен. | Чишћење бафера.
 
-| _buffer_line_added | buffer | hdata: line |
-  У бафер је додата линија. | Приказ линије у баферу.
+| _buffer_line_added | buffer | hdata: line
+| У бафер је додата линија. | Приказ линије у баферу.
 
-| _nicklist | nicklist | hdata: nicklist_item |
-  Листа надимака за бафер. | Замена листе надимака.
+| _nicklist | nicklist | hdata: nicklist_item
+| Листа надимака за бафер. | Замена листе надимака.
 
-| _nicklist_diff | nicklist | hdata: nicklist_item |
-  Разлике листе надимака за бафер. | Ажурирање листе надимака.
+| _nicklist_diff | nicklist | hdata: nicklist_item
+| Разлике листе надимака за бафер. | Ажурирање листе надимака.
 
-| _pong | (always) | стринг: ping аргументи |
-  Одговор на „ping”. | Мерење времена одговора.
+| _pong | (always) | стринг: ping аргументи
+| Одговор на „ping”. | Мерење времена одговора.
 
-| _upgrade | upgrade | (празно) |
-  Програм WeeChat се ажурира. | Десинхронизација са програмом WeeChat (или прекид везе).
+| _upgrade | upgrade | (празно)
+| Програм WeeChat се ажурира. | Десинхронизација са програмом WeeChat (или прекид везе).
 
-| _upgrade_ended | upgrade | (празно) |
-  Завршено је ажурирање програма WeeChat. | Синхро/ресинхро са програмом WeeChat.
+| _upgrade_ended | upgrade | (празно)
+| Завршено је ажурирање програма WeeChat. | Синхро/ресинхро са програмом WeeChat.
 |===
 
 [[message_buffer_opened]]

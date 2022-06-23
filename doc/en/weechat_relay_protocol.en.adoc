@@ -1408,68 +1408,68 @@ WeeChat reserved identifiers:
 
 [width="100%",cols="5m,5,3,4,7",options="header"]
 |===
-| Identifier | Received with _sync_ | Data sent |
-  Description | Recommended action in client
+| Identifier | Received with _sync_ | Data sent
+| Description | Recommended action in client
 
-| _buffer_opened | buffers / buffer | hdata: buffer |
-  Buffer opened. | Open buffer.
+| _buffer_opened | buffers / buffer | hdata: buffer
+| Buffer opened. | Open buffer.
 
-| _buffer_type_changed | buffers / buffer | hdata: buffer |
-  Type of buffer changed. | Change type of buffer.
+| _buffer_type_changed | buffers / buffer | hdata: buffer
+| Type of buffer changed. | Change type of buffer.
 
-| _buffer_moved | buffers / buffer | hdata: buffer |
-  Buffer moved. | Move buffer.
+| _buffer_moved | buffers / buffer | hdata: buffer
+| Buffer moved. | Move buffer.
 
-| _buffer_merged | buffers / buffer | hdata: buffer |
-  Buffer merged. | Merge buffer.
+| _buffer_merged | buffers / buffer | hdata: buffer
+| Buffer merged. | Merge buffer.
 
-| _buffer_unmerged | buffers / buffer | hdata: buffer |
-  Buffer unmerged. | Unmerge buffer.
+| _buffer_unmerged | buffers / buffer | hdata: buffer
+| Buffer unmerged. | Unmerge buffer.
 
-| _buffer_hidden | buffers / buffer | hdata: buffer |
-  Buffer hidden. | Hide buffer.
+| _buffer_hidden | buffers / buffer | hdata: buffer
+| Buffer hidden. | Hide buffer.
 
-| _buffer_unhidden | buffers / buffer | hdata: buffer |
-  Buffer unhidden. | Unhide buffer.
+| _buffer_unhidden | buffers / buffer | hdata: buffer
+| Buffer unhidden. | Unhide buffer.
 
-| _buffer_renamed | buffers / buffer | hdata: buffer |
-  Buffer renamed. | Rename buffer.
+| _buffer_renamed | buffers / buffer | hdata: buffer
+| Buffer renamed. | Rename buffer.
 
-| _buffer_title_changed | buffers / buffer | hdata: buffer |
-  Title of buffer changed. | Change title of buffer.
+| _buffer_title_changed | buffers / buffer | hdata: buffer
+| Title of buffer changed. | Change title of buffer.
 
-| _buffer_localvar_added | buffers / buffer | hdata: buffer |
-  Local variable added. | Add local variable in buffer.
+| _buffer_localvar_added | buffers / buffer | hdata: buffer
+| Local variable added. | Add local variable in buffer.
 
-| _buffer_localvar_changed | buffers / buffer | hdata: buffer |
-  Local variable changed. | Change local variable in buffer.
+| _buffer_localvar_changed | buffers / buffer | hdata: buffer
+| Local variable changed. | Change local variable in buffer.
 
-| _buffer_localvar_removed | buffers / buffer | hdata: buffer |
-  Local variable removed. | Remove local variable from buffer.
+| _buffer_localvar_removed | buffers / buffer | hdata: buffer
+| Local variable removed. | Remove local variable from buffer.
 
-| _buffer_closing | buffers / buffer | hdata: buffer |
-  Buffer closing. | Close buffer.
+| _buffer_closing | buffers / buffer | hdata: buffer
+| Buffer closing. | Close buffer.
 
-| _buffer_cleared | buffer | hdata: buffer |
-  Buffer cleared. | Clear buffer.
+| _buffer_cleared | buffer | hdata: buffer
+| Buffer cleared. | Clear buffer.
 
-| _buffer_line_added | buffer | hdata: line |
-  Line added in buffer. | Display line in buffer.
+| _buffer_line_added | buffer | hdata: line
+| Line added in buffer. | Display line in buffer.
 
-| _nicklist | nicklist | hdata: nicklist_item |
-  Nicklist for a buffer. | Replace nicklist.
+| _nicklist | nicklist | hdata: nicklist_item
+| Nicklist for a buffer. | Replace nicklist.
 
-| _nicklist_diff | nicklist | hdata: nicklist_item |
-  Nicklist diffs for a buffer . | Update nicklist.
+| _nicklist_diff | nicklist | hdata: nicklist_item
+| Nicklist diffs for a buffer . | Update nicklist.
 
-| _pong | (always) | string: ping arguments |
-  Answer to a "ping". | Measure response time.
+| _pong | (always) | string: ping arguments
+| Answer to a "ping". | Measure response time.
 
-| _upgrade | upgrade | (empty) |
-  WeeChat is upgrading. | Desync from WeeChat (or disconnect).
+| _upgrade | upgrade | (empty)
+| WeeChat is upgrading. | Desync from WeeChat (or disconnect).
 
-| _upgrade_ended | upgrade | (empty) |
-  Upgrade of WeeChat done. | Sync/resync with WeeChat.
+| _upgrade_ended | upgrade | (empty)
+| Upgrade of WeeChat done. | Sync/resync with WeeChat.
 |===
 
 [[message_buffer_opened]]

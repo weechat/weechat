@@ -1195,8 +1195,8 @@ _component_ には以下から 1 つ選んで記入してください:
 // TRANSLATION MISSING
 | Component | Files | Description
 
-| core |
-  AUTHORS.adoc +
+| core
+| AUTHORS.adoc +
   ChangeLog.adoc +
   Contributing.adoc +
   .github/FUNDING.yml +
@@ -1212,8 +1212,8 @@ _component_ には以下から 1 つ選んで記入してください:
 // TRANSLATION MISSING
   WeeChat core
 
-| build |
-  autogen.sh +
+| build
+| autogen.sh +
   CMakeLists.txt +
   cmake/* +
   configure.ac +
@@ -1224,73 +1224,73 @@ _component_ には以下から 1 つ選んで記入してください:
 // TRANSLATION MISSING
   Build
 
-| ci |
-  .github/workflows/* |
+| ci
+| .github/workflows/* |
 // TRANSLATION MISSING
   Continuous integration
 
-| debian |
-  debian-devel/* +
+| debian
+| debian-devel/* +
   debian-stable/* |
 // TRANSLATION MISSING
   Debian packaging
 
-| tests |
-  tests/* |
+| tests
+| tests/* |
 // TRANSLATION MISSING
   Tests
 
-| doc |
-  doc/* |
+| doc
+| doc/* |
 // TRANSLATION MISSING
   General doc updates, for example build
 
-| doc/man |
-  doc/xx/weechat.1.xx.adoc +
+| doc/man
+| doc/xx/weechat.1.xx.adoc +
   doc/xx/weechat-headless.1.xx.adoc |
 // TRANSLATION MISSING
   Man pages
 
-| doc/faq |
-  doc/xx/weechat_faq.xx.adoc |
+| doc/faq
+| doc/xx/weechat_faq.xx.adoc |
 // TRANSLATION MISSING
   Frequently asked questions (FAQ)
 
-| doc/quickstart |
-  doc/xx/weechat_quickstart.xx.adoc |
+| doc/quickstart
+| doc/xx/weechat_quickstart.xx.adoc |
 // TRANSLATION MISSING
   Quickstart guide
 
-| doc/user |
-  doc/xx/weechat_user.xx.adoc |
+| doc/user
+| doc/xx/weechat_user.xx.adoc |
 // TRANSLATION MISSING
   User's guide
 
-| doc/scripting |
-  doc/xx/weechat_scripting.xx.adoc |
+| doc/scripting
+| doc/xx/weechat_scripting.xx.adoc |
 // TRANSLATION MISSING
   Scripting guide
 
-| doc/api |
-  doc/xx/weechat_plugin_api.xx.adoc |
+| doc/api
+| doc/xx/weechat_plugin_api.xx.adoc |
 // TRANSLATION MISSING
   Plugin API reference
 
-| doc/relay |
-  doc/xx/weechat_relay_protocol.xx.adoc |
+| doc/relay
+| doc/xx/weechat_relay_protocol.xx.adoc |
 // TRANSLATION MISSING
   Relay protocol
 
-| doc/dev |
-  doc/xx/weechat_dev.en.adoc |
+| doc/dev
+| doc/xx/weechat_dev.en.adoc |
 // TRANSLATION MISSING
   Developer's guide
 
 | irc +
   python +
   relay +
-  … |
-  src/plugins/<name>/* |
+  …
+| src/plugins/<name>/* |
 // TRANSLATION MISSING
   Plugin
 

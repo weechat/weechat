@@ -2389,17 +2389,17 @@ from first used to last):
 |===
 | Operator | Min WeeChat | Description | Examples
 
-| `+&&+` | |
-  Logical "and" |
-  >> `+25 && 77+` +
+| `+&&+` |
+| Logical "and"
+| >> `+25 && 77+` +
   == `+1+` +
   +
   >> `+25 && 0+` +
   == `+0+`
 
-| `+\|\|+` | |
-  Logical "or" |
-  >> `+25 \|\| 0+` +
+| `+\|\|+` |
+| Logical "or"
+| >> `+25 \|\| 0+` +
   == `+1+` +
   +
   >> `+0 \|\| 0+` +
@@ -2413,105 +2413,105 @@ from first used to last):
 |===
 | Operator | Min WeeChat | Description | Examples
 
-| `+=~+` | |
-  Is matching POSIX extended regex (optional flags are allowed, see function <<_string_regcomp,string_regcomp>>) |
-  >> `+abc def =~ ab.*ef+` +
+| `+=~+` |
+| Is matching POSIX extended regex (optional flags are allowed, see function <<_string_regcomp,string_regcomp>>)
+| >> `+abc def =~ ab.*ef+` +
   == `+1+` +
   +
   >> `+abc def =~ y.*z+` +
   == `+0+`
 
-| `+!~+` | |
-  Is NOT matching POSIX extended regex (optional flags are allowed, see function <<_string_regcomp,string_regcomp>>) |
-  >> `+abc def !~ ab.*ef+` +
+| `+!~+` |
+| Is NOT matching POSIX extended regex (optional flags are allowed, see function <<_string_regcomp,string_regcomp>>)
+| >> `+abc def !~ ab.*ef+` +
   == `+0+` +
   +
   >> `+abc def !~ y.*z+` +
   == `+1+`
 
-| `+==*+` | 2.9 |
-  Is matching mask where "*" is allowed, case sensitive (see function <<_string_match,string_match>>) |
-  >> `+abc def ==* a*f+` +
+| `+==*+` | 2.9
+| Is matching mask where "*" is allowed, case sensitive (see function <<_string_match,string_match>>)
+| >> `+abc def ==* a*f+` +
   == `+1+` +
   +
   >> `+abc def ==* y*z+` +
   == `+0+`
 
-| `+!!*+` | 2.9 |
-  Is NOT wildcard mask where "*" is allowed, case sensitive (see function <<_string_match,string_match>>) |
-  >> `+abc def !!* a*f+` +
+| `+!!*+` | 2.9
+| Is NOT wildcard mask where "*" is allowed, case sensitive (see function <<_string_match,string_match>>)
+| >> `+abc def !!* a*f+` +
   == `+0+` +
   +
   >> `+abc def !!* y*z+` +
   == `+1+`
 
-| `+=*+` | 1.8 |
-  Is matching mask where "*" is allowed, case insensitive (see function <<_string_match,string_match>>) |
-  >> `+abc def =* A*F+` +
+| `+=*+` | 1.8
+| Is matching mask where "*" is allowed, case insensitive (see function <<_string_match,string_match>>)
+| >> `+abc def =* A*F+` +
   == `+1+` +
   +
   >> `+abc def =* Y*Z+` +
   == `+0+`
 
-| `+!*+` | 1.8 |
-  Is NOT wildcard mask where "*" is allowed, case insensitive (see function <<_string_match,string_match>>) |
-  >> `+abc def !* A*F+` +
+| `+!*+` | 1.8
+| Is NOT wildcard mask where "*" is allowed, case insensitive (see function <<_string_match,string_match>>)
+| >> `+abc def !* A*F+` +
   == `+0+` +
   +
   >> `+abc def !* Y*Z+` +
   == `+1+`
 
-| `+==-+` | 2.9 |
-  Is included, case sensitive |
-  >> `+abc def ==- bc+` +
+| `+==-+` | 2.9
+| Is included, case sensitive
+| >> `+abc def ==- bc+` +
   == `+1+` +
   +
   >> `+abc def ==- xyz+` +
   == `+0+`
 
-| `+!!-+` | 2.9 |
-  Is NOT included, case sensitive |
-  >> `+abc def !!- bc+` +
+| `+!!-+` | 2.9
+| Is NOT included, case sensitive
+| >> `+abc def !!- bc+` +
   == `+0+` +
   +
   >> `+abc def !!- xyz+` +
   == `+1+`
 
-| `+=-+` | 2.9 |
-  Is included, case insensitive |
-  >> `+abc def =- BC+` +
+| `+=-+` | 2.9
+| Is included, case insensitive
+| >> `+abc def =- BC+` +
   == `+1+` +
   +
   >> `+abc def =- XYZ+` +
   == `+0+`
 
-| `+!-+` | 2.9 |
-  Is NOT included, case insensitive |
-  >> `+abc def !- BC+` +
+| `+!-+` | 2.9
+| Is NOT included, case insensitive
+| >> `+abc def !- BC+` +
   == `+0+` +
   +
   >> `+abc def !- XYZ+` +
   == `+1+`
 
-| `+==+` | |
-  Equal |
-  >> `+test == test+` +
+| `+==+` |
+| Equal
+| >> `+test == test+` +
   == `+1+` +
   +
   >> `+test == string+` +
   == `+0+`
 
-| `+!=+` | |
-  Not equal |
-  >> `+test != test+` +
+| `+!=+` |
+| Not equal
+| >> `+test != test+` +
   == `+0+` +
   +
   >> `+test != string+` +
   == `+1+`
 
-| `+<=+` | |
-  Less or equal |
-  >> `+abc <= defghi+` +
+| `+<=+` |
+| Less or equal
+| >> `+abc <= defghi+` +
   == `+1+` +
   +
   >> `+abc <= abc+` +
@@ -2523,9 +2523,9 @@ from first used to last):
   >> `+15 <= 2+` +
   == `+0+`
 
-| `+<+` | |
-  Less |
-  >> `+abc < defghi+` +
+| `+<+` |
+| Less
+| >> `+abc < defghi+` +
   == `+1+` +
   +
   >> `+abc < abc+` +
@@ -2537,9 +2537,9 @@ from first used to last):
   >> `+15 < 2+` +
   == `+0+`
 
-| `+>=+` | |
-  Greater or equal |
-  >> `+defghi >= abc+` +
+| `+>=+` |
+| Greater or equal
+| >> `+defghi >= abc+` +
   == `+1+` +
   +
   >> `+abc >= abc+` +
@@ -2551,9 +2551,9 @@ from first used to last):
   >> `+15 >= 2+` +
   == `+1+`
 
-| `+>+` | |
-  Greater |
-  >> `+defghi > abc+` +
+| `+>+` |
+| Greater
+| >> `+defghi > abc+` +
   == `+1+` +
   +
   >> `+abc > abc+` +
@@ -2589,25 +2589,25 @@ expanded to last):
 |===
 | Format | Min WeeChat | Description | Examples
 
-| `+${raw:xxx}+` | 3.1 |
-  Raw string (not evaluated). |
-  >> `+${raw:${info:version}}+` +
+| `+${raw:xxx}+` | 3.1
+| Raw string (not evaluated).
+| >> `+${raw:${info:version}}+` +
   == `+${info:version}+`
 
-| `+${name}+` | 3.4 |
-  User variable (defined with `+${define:name,value}+`). |
-  >> `+${name}+` +
+| `+${name}+` | 3.4
+| User variable (defined with `+${define:name,value}+`).
+| >> `+${name}+` +
   == `+value+`
 
-| `+${name}+` | |
-  Variable `name` from hashtable _extra_vars_. |
-  >> `+${name}+` +
+| `+${name}+` |
+| Variable `name` from hashtable _extra_vars_.
+| >> `+${name}+` +
   == `+value+`
 
-| `+${weechat_xxx_dir}+` | 3.2 |
-  A WeeChat directory: `+${weechat_config_dir}+`, `+${weechat_data_dir}+`,
-  `+${weechat_cache_dir}+` or `+${weechat_runtime_dir}+`. |
-  >> `+${weechat_config_dir}+` +
+| `+${weechat_xxx_dir}+` | 3.2
+| A WeeChat directory: `+${weechat_config_dir}+`, `+${weechat_data_dir}+`,
+  `+${weechat_cache_dir}+` or `+${weechat_runtime_dir}+`.
+| >> `+${weechat_config_dir}+` +
   == `+/home/user/.config/weechat+` +
   +
   >> `+${weechat_data_dir}+` +
@@ -2619,48 +2619,48 @@ expanded to last):
   >> `+${weechat_runtime_dir}+` +
   == `+/run/user/1000/weechat+`
 
-| `+${eval:xxx}+` | 1.3 |
-  String to evaluate. |
-  >> `+${eval:${date:${weechat.look.buffer_time_format}}}+` +
+| `+${eval:xxx}+` | 1.3
+| String to evaluate.
+| >> `+${eval:${date:${weechat.look.buffer_time_format}}}+` +
   == `+19:02:45+` ^(1)^ +
   +
   ^(1)^ With colors if there are color codes in the option
   weechat.look.buffer_time_format
 
-| `+${eval_cond:xxx}+` | 3.1 |
-  String to evaluate as condition. |
-  >> `+${eval_cond:${window.win_width} > 100}+` +
+| `+${eval_cond:xxx}+` | 3.1
+| String to evaluate as condition.
+| >> `+${eval_cond:${window.win_width} > 100}+` +
   == `+1+`
 
 | `+${esc:xxx}+` +
-  `+${\xxx}+` | 1.0 |
-  String with escaped chars. |
-  >> `+${esc:prefix\tmessage}+` +
+  `+${\xxx}+` | 1.0
+| String with escaped chars.
+| >> `+${esc:prefix\tmessage}+` +
   == `+prefix<TAB>message+` +
   +
   >> `+${\ua9}+` +
   == `+©+`
 
-| `+${lower:string}+` | 3.6 |
-  String converted to lower case. |
-  >> `+${lower:TEST}+` +
+| `+${lower:string}+` | 3.6
+| String converted to lower case.
+| >> `+${lower:TEST}+` +
   >> `+test+`
 
-| `+${upper:string}+` | 3.6 |
-  String converted to upper case. |
-  >> `+${upper:test}+` +
+| `+${upper:string}+` | 3.6
+| String converted to upper case.
+| >> `+${upper:test}+` +
   >> `+TEST+`
 
-| `+${hide:x,string}+` | 1.1 |
-  String with hidden chars (all chars in `string` replaced by `x`). |
-  >> `+${hide:*,password}+` +
+| `+${hide:x,string}+` | 1.1
+| String with hidden chars (all chars in `string` replaced by `x`).
+| >> `+${hide:*,password}+` +
   >> `+********+`
 
 | `+${cut:max,suffix,string}+` +
-  `+${cut:+max,suffix,string}+` | 1.8 |
-  String with `max` chars, and optional `suffix` if string is cut. +
-  With the format `+max`, the suffix is counted in max length. |
-  >> `+${cut:4,…,this is a test}+` +
+  `+${cut:+max,suffix,string}+` | 1.8
+| String with `max` chars, and optional `suffix` if string is cut. +
+  With the format `+max`, the suffix is counted in max length.
+| >> `+${cut:4,…,this is a test}+` +
   == `+this…+` +
   +
   >> `+${cut:+4,…,this is a test}+` +
@@ -2670,10 +2670,10 @@ expanded to last):
   == `+こん>>+`
 
 | `+${cutscr:max,suffix,string}+` +
-  `+${cutscr:+max,suffix,string}+` | 1.8 |
-  String with `max` chars displayed on screen, and optional `suffix` if string is cut. +
-  With the format `+max`, the suffix is counted in max length. |
-  >> `+${cutscr:4,…,this is a test}+` +
+  `+${cutscr:+max,suffix,string}+` | 1.8
+| String with `max` chars displayed on screen, and optional `suffix` if string is cut. +
+  With the format `+max`, the suffix is counted in max length.
+| >> `+${cutscr:4,…,this is a test}+` +
   == `+this…+` +
   +
   >> `+${cutscr:+4,…,this is a test}+` +
@@ -2682,10 +2682,10 @@ expanded to last):
   >> `+${cutscr:2,>>,こんにちは世界}+` +
   == `+こ>>+`
 
-| `+${rev:xxx}+` | 2.2 |
-  Reversed string (color codes are reversed, so the string should not contain
-  color codes). |
-  >> `+${rev:Hello, world!}+` +
+| `+${rev:xxx}+` | 2.2
+| Reversed string (color codes are reversed, so the string should not contain
+  color codes).
+| >> `+${rev:Hello, world!}+` +
   == `+!dlrow ,olleH+` +
   +
   >> `+${rev:Hello, ${color:red}world!}+` +
@@ -2693,9 +2693,9 @@ expanded to last):
   +
   ^(1)^ No color, the color code is reversed
 
-| `+${revscr:xxx}+` | 2.7 |
-  Reversed string for screen, color codes are not reversed. |
-  >> `+${revscr:Hello, world!}+` +
+| `+${revscr:xxx}+` | 2.7
+| Reversed string for screen, color codes are not reversed.
+| >> `+${revscr:Hello, world!}+` +
   == `+!dlrow ,olleH+` +
   +
   >> `+${revscr:Hello, ${color:red}world!}+` +
@@ -2703,29 +2703,29 @@ expanded to last):
   +
   ^(1)^ `pass:[ ,olleH]` in red
 
-| `+${repeat:count,string}+` | 2.3 |
-  Repeated string. |
-  >> `+${repeat:5,-}+` +
+| `+${repeat:count,string}+` | 2.3
+| Repeated string.
+| >> `+${repeat:5,-}+` +
   == `+-----+`
 
-| `+${length:xxx}+` | 2.7 |
-  Length of string (number of UTF-8 chars), color codes are ignored. |
-  >> `+${length:test}+` +
+| `+${length:xxx}+` | 2.7
+| Length of string (number of UTF-8 chars), color codes are ignored.
+| >> `+${length:test}+` +
   == `+4+` +
   +
   >> `+${length:こんにちは世界}+` +
   == `+7+`
 
-| `+${lengthscr:xxx}+` | 2.7 |
-  Length of string displayed on screen, color codes are ignored. |
-  >> `+${lengthscr:test}+` +
+| `+${lengthscr:xxx}+` | 2.7
+| Length of string displayed on screen, color codes are ignored.
+| >> `+${lengthscr:test}+` +
   == `+4+` +
   +
   >> `+${lengthscr:こんにちは世界}+` +
   == `+14+`
 
-| `+${split:number,seps,flags,xxx}+` | 3.3 |
-  Split string, and return, according to `number`: +
+| `+${split:number,seps,flags,xxx}+` | 3.3
+| Split string, and return, according to `number`: +
   - `count`: the number of items after split +
   - `random`: a random item +
   - integer ≥ 1: the item by index (1 = first item) +
@@ -2737,8 +2737,8 @@ expanded to last):
   - `collapse_seps`: collapse multiple consecutive separators into a single one +
   - `keep_eol`: keep end of line for each value +
   - `strip_items=xyz`: strip chars `x`, `y` and `z` from beginning/end of items +
-  - `max_items=N`: return max N items |
-  >> `+${split:1,,,abc,def,ghi}+` +
+  - `max_items=N`: return max N items
+| >> `+${split:1,,,abc,def,ghi}+` +
   == `+abc+` +
   +
   >> `+${split:-1,,,abc,def,ghi}+` +
@@ -2765,13 +2765,13 @@ expanded to last):
   >> `+${split:2, ,keep_eol,this is a test}+` +
   == `+is a test+`
 
-| `+${split_shell:number,xxx}+` | 3.3 |
-  Split shell arguments, and return, according to `number`: +
+| `+${split_shell:number,xxx}+` | 3.3
+| Split shell arguments, and return, according to `number`: +
   - `count`: the number of arguments after split +
   - `random`: a random argument +
   - integer ≥ 1: the argument by index (1 = first argument) +
-  - integer ≤ -1: the argument by index from the end (-1 = last argument, -2 = penultimate argument, etc.) |
-  >> `+${split_shell:1,"first arg" arg2}+` +
+  - integer ≤ -1: the argument by index from the end (-1 = last argument, -2 = penultimate argument, etc.)
+| >> `+${split_shell:1,"first arg" arg2}+` +
   == `+first arg+` +
   +
   >> `+${split_shell:-1,"first arg" arg2}+` +
@@ -2783,14 +2783,14 @@ expanded to last):
   >> `+${split_shell:random,"first arg" arg2}+` +
   == `+arg2+`
 
-| `+${re:xxx}+` | 1.1 |
-  Regex data: +
+| `+${re:xxx}+` | 1.1
+| Regex data: +
   `0` = whole string matching, +
   `1` to `99` = group captured, +
   `+++` = last group captured, +
   `#` = index of last group captured _(WeeChat ≥ 1.8)_, +
-  `repl_index` = index of replacement being done (starts to 1) _(WeeChat ≥ 3.3)_. |
-  >> `+${re:0}+` +
+  `repl_index` = index of replacement being done (starts to 1) _(WeeChat ≥ 3.3)_.
+| >> `+${re:0}+` +
   == `+test1 test2+` +
   +
   >> `+${re:1}+` +
@@ -2808,10 +2808,10 @@ expanded to last):
   >> `+${re:repl_index}+` +
   == `+1+`
 
-| `+${color:name}+` | 0.4.2 |
-  WeeChat color code (the name of color has optional attributes),
-  see function <<_color,color>> for supported formats. |
-  >> `+${color:red}red text+` +
+| `+${color:name}+` | 0.4.2
+| WeeChat color code (the name of color has optional attributes),
+  see function <<_color,color>> for supported formats.
+| >> `+${color:red}red text+` +
   == `+red text+` ^(1)^ +
   +
   >> `+${color:*214}bold orange text+` +
@@ -2820,28 +2820,28 @@ expanded to last):
   ^(1)^ In red +
   ^(2)^ In bold orange
 
-| `+${modifier:name,data,string}+` | 2.7 |
-  Result of a modifier, see function
-  <<_hook_modifier_exec,hook_modifier_exec>>. |
-  >> `+${modifier:eval_path_home,,~}+` +
+| `+${modifier:name,data,string}+` | 2.7
+| Result of a modifier, see function
+  <<_hook_modifier_exec,hook_modifier_exec>>.
+| >> `+${modifier:eval_path_home,,~}+` +
   == `+/home/user+` +
   +
   >> `+${modifier:eval_path_home,directory=config,%h/irc.conf}+` +
   == `+/home/user/.config/weechat/irc.conf+`
 
 | `+${info:name}+` +
-  `+${info:name,arguments}+` | 0.4.3 |
-  Info from WeeChat or a plugin, see function
-  <<_info_get,info_get>>. |
-  >> `+${info:version}+` +
+  `+${info:name,arguments}+` | 0.4.3
+| Info from WeeChat or a plugin, see function
+  <<_info_get,info_get>>.
+| >> `+${info:version}+` +
   == `+1.0+` +
   +
   >> `+${info:nick_color_name,foo}+` +
   == `+lightblue+`
 
-| `+${base_encode:base,xxx}+` | 2.9 |
-  String encoded in base 16, 32 or 64. |
-  >> `+${base_encode:16,test string}+` +
+| `+${base_encode:base,xxx}+` | 2.9
+| String encoded in base 16, 32 or 64.
+| >> `+${base_encode:16,test string}+` +
   == `+7465737420737472696E67+` +
   +
   >> `+${base_encode:32,test string}+` +
@@ -2850,9 +2850,9 @@ expanded to last):
   >> `+${base_encode:64,test string}+` +
   == `+dGVzdCBzdHJpbmc=+`
 
-| `+${base_decode:base,xxx}+` | 2.9 |
-  String decoded from base 16, 32 or 64. |
-  >> `+${base_decode:16,7465737420737472696E67}+` +
+| `+${base_decode:base,xxx}+` | 2.9
+| String decoded from base 16, 32 or 64.
+| >> `+${base_decode:16,7465737420737472696E67}+` +
   == `+test string+` +
   +
   >> `+${base_decode:32,ORSXG5BAON2HE2LOM4======}+` +
@@ -2862,31 +2862,31 @@ expanded to last):
   == `+test string+`
 
 | `+${date}+` +
-  `+${date:xxx}+` | 1.3 |
-  Current date/time, with custom format (see `man strftime`),
-  default format is `%F %T`. |
-  >> `+${date}+` +
+  `+${date:xxx}+` | 1.3
+| Current date/time, with custom format (see `man strftime`),
+  default format is `%F %T`.
+| >> `+${date}+` +
   == `+2015-06-30 19:02:45+` +
   +
   >> `+${date:%H:%M:%S}+` +
   == `+19:02:45+`
 
-| `+${env:NAME}+` | 1.2 |
-  Value of the environment variable `NAME`. |
-  >> `+${env:HOME}+` +
+| `+${env:NAME}+` | 1.2
+| Value of the environment variable `NAME`.
+| >> `+${env:HOME}+` +
   == `+/home/user+`
 
 | `+${if:condition}+` +
   `+${if:condition?true}+`
-  `+${if:condition?true:false}+` | 1.8 |
-  Ternary operator with a condition, a value if the condition is true (optional)
+  `+${if:condition?true:false}+` | 1.8
+| Ternary operator with a condition, a value if the condition is true (optional)
   and another value if the condition is false (optional). If values are not
-  given, "1" or "0" are returned, according to the result of the condition. |
-  >> `+${if:${info:term_width}>80?big:small}+` +
+  given, "1" or "0" are returned, according to the result of the condition.
+| >> `+${if:${info:term_width}>80?big:small}+` +
   == `+big+`
 
-| `+${calc:xxx}+` | 2.7 |
-  Result of expression, where parentheses and the following operators are
+| `+${calc:xxx}+` | 2.7
+| Result of expression, where parentheses and the following operators are
   supported: +
   `+++`: addition +
   `+-+`: subtraction +
@@ -2894,8 +2894,8 @@ expanded to last):
   `+/+`: division +
   `+//+`: result of division without fractional part +
   `+%+`: remainder of division +
-  `+**+`: power. |
-  >> `+${calc:5+2*3}+` +
+  `+**+`: power.
+| >> `+${calc:5+2*3}+` +
   == `+11+` +
   +
   >> `+${calc:(5+2)*3}+` +
@@ -2913,50 +2913,50 @@ expanded to last):
   >> `+${calc:2**16}+` +
   == `+65536+`
 
-| `+${random:min,max}+` | 3.3 |
-  Random integer number in the range from `min` to `max` (inclusive). |
-  >> `+${random:0,10}+` +
+| `+${random:min,max}+` | 3.3
+| Random integer number in the range from `min` to `max` (inclusive).
+| >> `+${random:0,10}+` +
   == `+3+`
 
-| `+${translate:xxx}+` | 3.2 |
-  Translated string (depends on the language used by WeeChat to display messages). |
-  >> `+${translate:Plugin}+` +
+| `+${translate:xxx}+` | 3.2
+| Translated string (depends on the language used by WeeChat to display messages).
+| >> `+${translate:Plugin}+` +
   == `+Extension+` ^(1)^ +
   +
   ^(1)^ Example in French
 
-| `+${define:name,value}+` | 3.4 |
-  Define a variable `name` set to `value`, which can then be used in the same
-  evaluated expression with `+${name}+`. |
-  >> `+${define:len,${calc:5+3}}${len}x${len}+` +
+| `+${define:name,value}+` | 3.4
+| Define a variable `name` set to `value`, which can then be used in the same
+  evaluated expression with `+${name}+`.
+| >> `+${define:len,${calc:5+3}}${len}x${len}+` +
   == `+8x8+`
 
-| `+${sec.data.name}+` | |
-  Value of the secured data `name`. |
-  >> `+${sec.data.libera_pass}+` +
+| `+${sec.data.name}+` |
+| Value of the secured data `name`.
+| >> `+${sec.data.libera_pass}+` +
   == `+my_password+`
 
-| `+${file.section.option}+` | |
-  Value of the option. |
-  >> `+${weechat.look.buffer_time_format}+` +
+| `+${file.section.option}+` |
+| Value of the option.
+| >> `+${weechat.look.buffer_time_format}+` +
   == `+%H:%M:%S+`
 
-| `+${name}+` | |
-  Value of local variable `name` in buffer. |
-  >> `+${nick}+` +
+| `+${name}+` |
+| Value of local variable `name` in buffer.
+| >> `+${nick}+` +
   == `+FlashCode+`
 
-| `+${pointer}+` | |
-  Variable `pointer` from hashtable _pointers_. |
-  >> `+${buffer}+` +
+| `+${pointer}+` |
+| Variable `pointer` from hashtable _pointers_.
+| >> `+${buffer}+` +
   == `+0x1234abcd+`
 
 | `+${hdata.var1.var2...}+` +
-  `+${hdata[list].var1.var2...}+` | |
-  Hdata value (pointers `window` and `buffer` are set by default with current
+  `+${hdata[list].var1.var2...}+` |
+| Hdata value (pointers `window` and `buffer` are set by default with current
   window/buffer), `list` can be a list name (example: "gui_buffers"), a pointer
-  (example: "0x1234abcd") or a pointer name (example: "my_pointer"). |
-  >> `+${buffer[gui_buffers].full_name}+` +
+  (example: "0x1234abcd") or a pointer name (example: "my_pointer").
+| >> `+${buffer[gui_buffers].full_name}+` +
   == `+core.weechat+` +
   +
   >> `+${buffer[my_buffer_pointer].full_name}+` +
@@ -9518,22 +9518,22 @@ available:
 |===
 | Option | Min WeeChat | Value | Default | Description
 
-| argN (N ≥ 1) | 0.4.0 | any string | no arguments |
-  Arguments for command; if no argument is given with these options,
+| argN (N ≥ 1) | 0.4.0 | any string | no arguments
+| Arguments for command; if no argument is given with these options,
   the command is automatically split like the shell does (and then command
   arguments are read in the _command_ argument).
 
-| stdin | 0.4.3 | (not used) | no stdin |
-  Create a pipe for writing data on standard input (stdin) of child process
+| stdin | 0.4.3 | (not used) | no stdin
+| Create a pipe for writing data on standard input (stdin) of child process
   (see function <<_hook_set,hook_set>>).
 
-| buffer_flush | 1.0 | number of bytes | 65536 |
-  Minimum number of bytes to flush stdout/stderr (to send output to callback),
+| buffer_flush | 1.0 | number of bytes | 65536
+| Minimum number of bytes to flush stdout/stderr (to send output to callback),
   between 1 and 65536. With the value 1, the output is sent immediately to the
   callback.
 
-| detached | 1.0 | (not used) | not detached |
-  Run the process in a detached mode: stdout and stderr are redirected to
+| detached | 1.0 | (not used) | not detached
+| Run the process in a detached mode: stdout and stderr are redirected to
   _/dev/null_.
 |===
 
@@ -9966,88 +9966,88 @@ Line data sent to the callback is a hashtable, with following values
 |===
 | Key | Value (formatted buffer) | Value (free buffer) | Examples
 
-| buffer |
-  Buffer pointer. |
-  Buffer pointer. |
-  `+0x1234abcd+`
+| buffer
+| Buffer pointer.
+| Buffer pointer.
+| `+0x1234abcd+`
 
-| buffer_name |
-  Buffer name. |
-  Buffer name. |
-  `+core.weechat+` +
+| buffer_name
+| Buffer name.
+| Buffer name.
+| `+core.weechat+` +
   `+irc.server.libera+` +
   `+irc.libera.#weechat+`
 
-| buffer_type |
-  "formatted" |
-  "free" |
-  `+formatted+` +
+| buffer_type
+| "formatted"
+| "free"
+| `+formatted+` +
   `+free+`
 
-| y |
-  N/A ("-1"). |
-  Line number (≥ "0"). |
-  `+-1+` +
+| y
+| N/A ("-1").
+| Line number (≥ "0").
+| `+-1+` +
   `+8+`
 
-| date |
-  Line date (timestamp). |
-  N/A ("0"). |
-  `+1533792000+`
+| date
+| Line date (timestamp).
+| N/A ("0").
+| `+1533792000+`
 
-| date_printed |
-  Date when line was displayed (timestamp). |
-  N/A ("0"). |
-  `+1533792012+`
+| date_printed
+| Date when line was displayed (timestamp).
+| N/A ("0").
+| `+1533792012+`
 
-| str_time |
-  Date for display (possible color codes inside). |
-  N/A (empty string). |
-  `+09:07:20+`
+| str_time
+| Date for display (possible color codes inside).
+| N/A (empty string).
+| `+09:07:20+`
 
-| tags_count |
-  Number of tags in the line (≥ "0"). |
-  N/A ("0"). |
-  `+2+`
+| tags_count
+| Number of tags in the line (≥ "0").
+| N/A ("0").
+| `+2+`
 
-| tags |
-  Comma-separated list of tags. |
-  N/A (empty string). |
-  `+irc_join,nick_test+`
+| tags
+| Comma-separated list of tags.
+| N/A (empty string).
+| `+irc_join,nick_test+`
 
-| displayed |
-  "0" = line is filtered (hidden) +
-  "1" = line is not filtered (displayed). |
-  "0" = line is filtered (hidden) +
-  "1" = line is not filtered (displayed). |
-  `+0+` +
+| displayed
+| "0" = line is filtered (hidden) +
+  "1" = line is not filtered (displayed).
+| "0" = line is filtered (hidden) +
+  "1" = line is not filtered (displayed).
+| `+0+` +
   `+1+`
 
-| notify_level |
-  "-1" = no notify +
+| notify_level
+| "-1" = no notify +
   "0" = low level +
   "1" = message +
   "2" = private message +
-  "3" = highlight |
-  N/A ("0"). |
-  `+2+`
+  "3" = highlight
+| N/A ("0").
+| `+2+`
 
-| highlight |
-  "0" = no highlight +
-  "1" = line has highlight. |
-  N/A ("0"). |
-  `+0+` +
+| highlight
+| "0" = no highlight +
+  "1" = line has highlight.
+| N/A ("0").
+| `+0+` +
   `+1+`
 
-| prefix |
-  Prefix of the line. |
-  N/A (empty string). |
-  `+-->+`
+| prefix
+| Prefix of the line.
+| N/A (empty string).
+| `+-->+`
 
-| message |
-  Message of the line. |
-  Message of the line. |
-  `+test (~test@example.com) has joined #channel+`
+| message
+| Message of the line.
+| Message of the line.
+| `+test (~test@example.com) has joined #channel+`
 |===
 
 The callback can return a hashtable with some fields to update the line.
@@ -10060,73 +10060,73 @@ in this hashtable):
 |===
 | Key | Allowed value (formatted buffer) | Allowed value (free buffer) | Result
 
-| buffer |
-  Pointer of a buffer with formatted content. |
-  Pointer of a buffer with free content. |
-  The line is displayed on this buffer. +
+| buffer
+| Pointer of a buffer with formatted content.
+| Pointer of a buffer with free content.
+| The line is displayed on this buffer. +
   If the value is empty, the line is deleted (anything else in the hashtable
   is then ignored); the next hooks of type "line" are not called.
 
-| buffer_name |
-  Name of a buffer with formatted content. |
-  Name of a buffer with free content. |
-  The line is displayed on this buffer. +
+| buffer_name
+| Name of a buffer with formatted content.
+| Name of a buffer with free content.
+| The line is displayed on this buffer. +
   If `buffer` is also set, the value of `+buffer_name+` has higher priority and is used. +
   If the value is empty, the line is deleted (anything else in the hashtable
   is then ignored); the next hooks of type "line" are not called.
 
-| y |
-  N/A. |
-  Integer (≥ "0"). |
-  The line number is set to this value.
+| y
+| N/A.
+| Integer (≥ "0").
+| The line number is set to this value.
 
-| date |
-  Timestamp. |
-  N/A. |
-  The date is set to this value. +
+| date
+| Timestamp.
+| N/A.
+| The date is set to this value. +
   The value of `+str_time+` is updated accordingly.
 
-| date_printed |
-  Timestamp. |
-  N/A. |
-  The printed date is set to this timestamp (not displayed).
+| date_printed
+| Timestamp.
+| N/A.
+| The printed date is set to this timestamp (not displayed).
 
-| str_time |
-  String. |
-  N/A. |
-  This string is used to display the date line. +
+| str_time
+| String.
+| N/A.
+| This string is used to display the date line. +
   If `date` is also set, the value of `+str_time+` has higher priority and is used.
 
-| tags |
-  String. |
-  N/A. |
-  The line tags are replaced with this comma-separated list of tags. +
+| tags
+| String.
+| N/A.
+| The line tags are replaced with this comma-separated list of tags. +
   The values of `+notify_level+` and `highlight` are updated accordingly.
 
-| notify_level |
-  Integer ("-1" to "3"). |
-  N/A. |
-  The notify level is set to this value. The hotlist will be updated
+| notify_level
+| Integer ("-1" to "3").
+| N/A.
+| The notify level is set to this value. The hotlist will be updated
   accordingly once the line is added in the buffer. +
   The value of `highlight` is updated accordingly. +
   If `tags` is also set, the value of `+notify_level+` has higher priority and is used.
 
-| highlight |
-  Integer ("0" or "1"). |
-  N/A. |
-  "0" disables highlight on the line, "1" forces a highlight on the line. +
+| highlight
+| Integer ("0" or "1").
+| N/A.
+| "0" disables highlight on the line, "1" forces a highlight on the line. +
   If `tags` or `+notify_level+` are set, the value of `highlight` has higher
   priority and is used.
 
-| prefix |
-  String. |
-  N/A. |
-  The line prefix is set to this value.
+| prefix
+| String.
+| N/A.
+| The line prefix is set to this value.
 
-| message |
-  String. |
-  String. |
-  The line message is set to this value.
+| message
+| String.
+| String.
+| The line message is set to this value.
 |===
 
 C example:
@@ -10336,636 +10336,636 @@ List of signals sent by WeeChat and plugins:
 |===
 | Plugin | Signal | Min WeeChat | Arguments | Description
 
-| guile | [[hook_signal_guile_script_loaded]] guile_script_loaded | 0.3.9 |
-  String: path to script. |
-  Scheme script loaded.
+| guile | [[hook_signal_guile_script_loaded]] guile_script_loaded | 0.3.9
+| String: path to script.
+| Scheme script loaded.
 
-| guile | [[hook_signal_guile_script_unloaded]] guile_script_unloaded | 0.3.9 |
-  String: path to script. |
-  Scheme script unloaded.
+| guile | [[hook_signal_guile_script_unloaded]] guile_script_unloaded | 0.3.9
+| String: path to script.
+| Scheme script unloaded.
 
-| guile | [[hook_signal_guile_script_installed]] guile_script_installed | 0.3.9 |
-  String: comma-separated list of paths to scripts installed. |
-  Scheme script(s) installed.
+| guile | [[hook_signal_guile_script_installed]] guile_script_installed | 0.3.9
+| String: comma-separated list of paths to scripts installed.
+| Scheme script(s) installed.
 
-| guile | [[hook_signal_guile_script_removed]] guile_script_removed | 0.3.9 |
-  String: comma-separated list of scripts removed. |
-  Scheme script(s) removed.
+| guile | [[hook_signal_guile_script_removed]] guile_script_removed | 0.3.9
+| String: comma-separated list of scripts removed.
+| Scheme script(s) removed.
 
-| irc | [[hook_signal_xxx_irc_in_yyy]] xxx,irc_in_yyy ^(1)^ | |
-  String: message. |
-  IRC message from server (before irc plugin uses it,
+| irc | [[hook_signal_xxx_irc_in_yyy]] xxx,irc_in_yyy ^(1)^ |
+| String: message.
+| IRC message from server (before irc plugin uses it,
   signal sent only if message is *not* ignored). +
   Since version 2.2, the whole IRC message is sent, including tags. +
   If the return code of a callback is _WEECHAT_RC_OK_EAT_, then the IRC message
   is immediately destroyed and not processed _(WeeChat ≥ 3.3)_.
 
-| irc | [[hook_signal_xxx_irc_in2_yyy]] xxx,irc_in2_yyy ^(1)^ | |
-  String: message. |
-  IRC message from server (after irc plugin uses it,
+| irc | [[hook_signal_xxx_irc_in2_yyy]] xxx,irc_in2_yyy ^(1)^ |
+| String: message.
+| IRC message from server (after irc plugin uses it,
   signal sent only if message is *not* ignored). +
   Since version 2.2, the whole IRC message is sent, including tags.
 
-| irc | [[hook_signal_xxx_irc_raw_in_yyy]] xxx,irc_raw_in_yyy ^(1)^ | 0.3.2 |
-  String: message. |
-  IRC message from server (before irc plugin uses it,
+| irc | [[hook_signal_xxx_irc_raw_in_yyy]] xxx,irc_raw_in_yyy ^(1)^ | 0.3.2
+| String: message.
+| IRC message from server (before irc plugin uses it,
   signal sent even if message is ignored). +
   Since version 2.2, the whole IRC message is sent, including tags. +
   If the return code of a callback is _WEECHAT_RC_OK_EAT_, then the IRC message
   is immediately destroyed and not processed _(WeeChat ≥ 3.3)_.
 
-| irc | [[hook_signal_xxx_irc_raw_in2_yyy]] xxx,irc_raw_in2_yyy ^(1)^ | 0.3.2 |
-  String: message. |
-  IRC message from server (after irc plugin uses it,
+| irc | [[hook_signal_xxx_irc_raw_in2_yyy]] xxx,irc_raw_in2_yyy ^(1)^ | 0.3.2
+| String: message.
+| IRC message from server (after irc plugin uses it,
   signal sent even if message is ignored). +
   Since version 2.2, the whole IRC message is sent, including tags.
 
-| irc | [[hook_signal_xxx_irc_out1_yyy]] xxx,irc_out1_yyy ^(1)^ | 0.3.7 |
-  String: message. |
-  IRC message sent to server before automatic split
+| irc | [[hook_signal_xxx_irc_out1_yyy]] xxx,irc_out1_yyy ^(1)^ | 0.3.7
+| String: message.
+| IRC message sent to server before automatic split
   (to fit in 512 bytes by default).
 
-| irc | [[hook_signal_xxx_irc_out_yyy]] xxx,irc_out_yyy ^(1)^ | |
-  String: message. |
-  IRC message sent to server after automatic split
+| irc | [[hook_signal_xxx_irc_out_yyy]] xxx,irc_out_yyy ^(1)^ |
+| String: message.
+| IRC message sent to server after automatic split
   (to fit in 512 bytes by default). +
   *Warning:* the string may contain invalid UTF-8 data.
   Signal "xxx,irc_out1_yyy" is recommended instead.
 
-| irc | [[hook_signal_xxx_irc_outtags_yyy]] xxx,irc_outtags_yyy ^(1)^ | 0.3.4 |
-  String: tags + ";" + message. |
-  Tags + IRC message sent to server. +
+| irc | [[hook_signal_xxx_irc_outtags_yyy]] xxx,irc_outtags_yyy ^(1)^ | 0.3.4
+| String: tags + ";" + message.
+| Tags + IRC message sent to server. +
   *Warning:* the string may contain invalid UTF-8 data.
   Signal "xxx,irc_out1_yyy" is recommended instead.
 
-| irc | [[hook_signal_irc_ctcp]] irc_ctcp | |
-  String: message. |
-  CTCP received.
-
-| irc | [[hook_signal_irc_dcc]] irc_dcc | |
-  String: message. |
-  New DCC.
-
-| irc | [[hook_signal_irc_pv]] irc_pv | |
-  String: message. |
-  Private message received.
-
-| irc | [[hook_signal_irc_channel_opened]] irc_channel_opened | |
-  Pointer: buffer. |
-  Channel opened.
-
-| irc | [[hook_signal_irc_pv_opened]] irc_pv_opened | |
-  Pointer: buffer. |
-  Private opened.
-
-| irc | [[hook_signal_irc_server_opened]] irc_server_opened | 0.3.7 |
-  Pointer: buffer. |
-  Server buffer opened.
-
-| irc | [[hook_signal_irc_server_connecting]] irc_server_connecting | |
-  String: server name. |
-  Connecting to server.
-
-| irc | [[hook_signal_irc_server_connected]] irc_server_connected | |
-  String: server name. |
-  Connected to server.
-
-| irc | [[hook_signal_irc_server_disconnected]] irc_server_disconnected | |
-  String: server name. |
-  Disconnected from server.
-
-| irc | [[hook_signal_irc_server_lag_changed]] irc_server_lag_changed | 1.8 |
-  String: server name. |
-  Lag changed on the server.
-
-| irc | [[hook_signal_irc_ignore_removing]] irc_ignore_removing | |
-  Pointer: ignore. |
-  Removing ignore.
-
-| irc | [[hook_signal_irc_ignore_removed]] irc_ignore_removed | |
-  - |
-  Ignore removed.
-
-| irc | [[hook_signal_irc_notify_join]] irc_notify_join | 0.3.8 |
-  String: server name + "," + nick. |
-  A nick in notify list has joined server.
-
-| irc | [[hook_signal_irc_notify_quit]] irc_notify_quit | 0.3.8 |
-  String: server name + "," + nick. |
-  A nick in notify list has quit server.
-
-| irc | [[hook_signal_irc_notify_away]] irc_notify_away | 0.3.8 |
-  String: server name + "," + nick + "," + away message. |
-  A nick in notify list is now away on server.
-
-| irc | [[hook_signal_irc_notify_still_away]] irc_notify_still_away | 0.3.8 |
-  String: server name + "," + nick + "," + away message. |
-  A nick in notify list is still away on server (away message has changed).
-
-| irc | [[hook_signal_irc_notify_back]] irc_notify_back | 0.3.8 |
-  String: server name + "," + nick. |
-  A nick in notify list is back (away status removed).
-
-| javascript | [[hook_signal_javascript_script_loaded]] javascript_script_loaded | 1.2 |
-  String: path to script. |
-  JavaScript script loaded.
-
-| javascript | [[hook_signal_javascript_script_unloaded]] javascript_script_unloaded | 1.2 |
-  String: path to script. |
-  JavaScript script unloaded.
-
-| javascript | [[hook_signal_javascript_script_installed]] javascript_script_installed | 1.2 |
-  String: comma-separated list of paths to scripts installed. |
-  JavaScript script(s) installed.
-
-| javascript | [[hook_signal_javascript_script_removed]] javascript_script_removed | 1.2 |
-  String: comma-separated list of scripts removed. |
-  JavaScript script(s) removed.
-
-| logger | [[hook_signal_logger_start]] logger_start | |
-  Pointer: buffer. |
-  Start logging for buffer.
-
-| logger | [[hook_signal_logger_stop]] logger_stop | |
-  Pointer: buffer. |
-  Stop logging for buffer.
-
-| logger | [[hook_signal_logger_backlog]] logger_backlog | |
-  Pointer: buffer. |
-  Display backlog for buffer.
-
-| lua | [[hook_signal_lua_script_loaded]] lua_script_loaded | 0.3.9 |
-  String: path to script. |
-  Lua script loaded.
-
-| lua | [[hook_signal_lua_script_unloaded]] lua_script_unloaded | 0.3.9 |
-  String: path to script. |
-  Lua script unloaded.
-
-| lua | [[hook_signal_lua_script_installed]] lua_script_installed | 0.3.9 |
-  String: comma-separated list of paths to scripts installed. |
-  Lua script(s) installed.
-
-| lua | [[hook_signal_lua_script_removed]] lua_script_removed | 0.3.9 |
-  String: comma-separated list of scripts removed. |
-  Lua script(s) removed.
-
-| perl | [[hook_signal_perl_script_loaded]] perl_script_loaded | 0.3.9 |
-  String: path to script. |
-  Perl script loaded.
-
-| perl | [[hook_signal_perl_script_unloaded]] perl_script_unloaded | 0.3.9 |
-  String: path to script. |
-  Perl script unloaded.
-
-| perl | [[hook_signal_perl_script_installed]] perl_script_installed | 0.3.9 |
-  String: comma-separated list of paths to scripts installed. |
-  Perl script(s) installed.
-
-| perl | [[hook_signal_perl_script_removed]] perl_script_removed | 0.3.9 |
-  String: comma-separated list of scripts removed. |
-  Perl script(s) removed.
-
-| php | [[hook_signal_php_script_loaded]] php_script_loaded | 2.0 |
-  String: path to script. |
-  PHP script loaded.
-
-| php | [[hook_signal_php_script_unloaded]] php_script_unloaded | 2.0 |
-  String: path to script. |
-  PHP script unloaded.
-
-| php | [[hook_signal_php_script_installed]] php_script_installed | 2.0 |
-  String: comma-separated list of paths to scripts installed. |
-  PHP script(s) installed.
-
-| php | [[hook_signal_php_script_removed]] php_script_removed | 2.0 |
-  String: comma-separated list of scripts removed. |
-  PHP script(s) removed.
-
-| python | [[hook_signal_python_script_loaded]] python_script_loaded | 0.3.9 |
-  String: path to script. |
-  Python script loaded.
-
-| python | [[hook_signal_python_script_unloaded]] python_script_unloaded | 0.3.9 |
-  String: path to script. |
-  Python script unloaded.
-
-| python | [[hook_signal_python_script_installed]] python_script_installed | 0.3.9 |
-  String: comma-separated list of paths to scripts installed. |
-  Python script(s) installed.
-
-| python | [[hook_signal_python_script_removed]] python_script_removed | 0.3.9 |
-  String: comma-separated list of scripts removed. |
-  Python script(s) removed.
-
-| relay | [[hook_signal_relay_client_connecting]] relay_client_connecting | 1.0 |
-  Pointer: relay client. |
-  A relay client is connecting.
-
-| relay | [[hook_signal_relay_client_waiting_auth]] relay_client_waiting_auth | 1.0 |
-  Pointer: relay client. |
-  Waiting for authentication from a relay client.
-
-| relay | [[hook_signal_relay_client_auth_ok]] relay_client_auth_ok | 1.0 |
-  Pointer: relay client. |
-  Successful authentication from a relay client.
-
-| relay | [[hook_signal_relay_client_connected]] relay_client_connected | 1.0 |
-  Pointer: relay client. |
-  A relay client is connected.
-
-| relay | [[hook_signal_relay_client_auth_failed]] relay_client_auth_failed | 1.0 |
-  Pointer: relay client. |
-  Authentication of a relay client has failed.
-
-| relay | [[hook_signal_relay_client_disconnected]] relay_client_disconnected | 1.0 |
-  Pointer: relay client. |
-  A relay client is disconnected.
-
-| ruby | [[hook_signal_ruby_script_loaded]] ruby_script_loaded | 0.3.9 |
-  String: path to script. |
-  Ruby script loaded.
-
-| ruby | [[hook_signal_ruby_script_unloaded]] ruby_script_unloaded | 0.3.9 |
-  String: path to script. |
-  Ruby script unloaded.
-
-| ruby | [[hook_signal_ruby_script_installed]] ruby_script_installed | 0.3.9 |
-  String: comma-separated list of paths to scripts installed. |
-  Ruby script(s) installed.
-
-| ruby | [[hook_signal_ruby_script_removed]] ruby_script_removed | 0.3.9 |
-  String: comma-separated list of scripts removed. |
-  Ruby script(s) removed.
-
-| spell | [[hook_signal_spell_suggest]] spell_suggest | 2.4 |
-  Pointer: buffer. |
-  New suggestions for a misspelled word.
-
-| tcl | [[hook_signal_tcl_script_loaded]] tcl_script_loaded | 0.3.9 |
-  String: path to script. |
-  Tcl script loaded.
-
-| tcl | [[hook_signal_tcl_script_unloaded]] tcl_script_unloaded | 0.3.9 |
-  String: path to script. |
-  Tcl script unloaded.
-
-| tcl | [[hook_signal_tcl_script_installed]] tcl_script_installed | 0.3.9 |
-  String: comma-separated list of paths to scripts installed. |
-  Tcl script(s) installed.
-
-| tcl | [[hook_signal_tcl_script_removed]] tcl_script_removed | 0.3.9 |
-  String: comma-separated list of scripts removed. |
-  Tcl script(s) removed.
-
-| typing | [[hook_signal_typing_self_typing]] typing_self_typing | 3.3 |
-  Pointer: buffer. |
-  User is typing a message (sent by typing plugin, used by irc plugin).
-
-| typing | [[hook_signal_typing_self_paused]] typing_self_paused | 3.3 |
-  Pointer: buffer. |
-  User paused during typing (sent by typing plugin, used by irc plugin).
-
-| typing | [[hook_signal_typing_self_cleared]] typing_self_cleared | 3.3 |
-  Pointer: buffer. |
-  User cleared the input without sending the message (sent by typing plugin, used by irc plugin).
-
-| typing | [[hook_signal_typing_self_sent]] typing_self_sent | 3.3 |
-  Pointer: buffer. |
-  Message (not a command) sent to the buffer (sent by typing plugin, used by irc plugin).
-
-| typing | [[hook_signal_typing_set_nick]] typing_set_nick | 3.3 |
-  String: buffer pointer + ";" + state (one of: "off", "typing", "paused",
-  "cleared") + ";" + nick. |
-  Set typing state for a nick on a buffer (sent by irc plugin, handled by typing plugin).
-
-| typing | [[hook_signal_typing_reset_buffer]] typing_reset_buffer | 3.3 |
-  Pointer: buffer. |
-  Remove typing state for all nicks on a buffer (sent by irc plugin, handled by typing plugin).
-
-| weechat | [[hook_signal_buffer_opened]] buffer_opened | |
-  Pointer: buffer. |
-  Buffer opened.
-
-| weechat | [[hook_signal_buffer_closing]] buffer_closing | |
-  Pointer: buffer. |
-  Closing buffer.
-
-| weechat | [[hook_signal_buffer_closed]] buffer_closed | |
-  Pointer: buffer. |
-  Buffer closed.
-
-| weechat | [[hook_signal_buffer_cleared]] buffer_cleared | |
-  Pointer: buffer. |
-  Buffer cleared.
-
-| weechat | [[hook_signal_buffer_filters_enabled]] buffer_filters_enabled | 2.0 |
-  Pointer: buffer. |
-  Filters enabled in buffer.
-
-| weechat | [[hook_signal_buffer_filters_disabled]] buffer_filters_disabled | 2.0 |
-  Pointer: buffer. |
-  Filters disabled in buffer.
-
-| weechat | [[hook_signal_buffer_hidden]] buffer_hidden | |
-  Pointer: buffer. |
-  Buffer hidden.
-
-| weechat | [[hook_signal_buffer_unhidden]] buffer_unhidden | |
-  Pointer: buffer. |
-  Buffer unhidden.
-
-| weechat | [[hook_signal_buffer_line_added]] buffer_line_added | 0.3.7 |
-  Pointer: line. |
-  Line added in a buffer.
-
-| weechat | [[hook_signal_buffer_lines_hidden]] buffer_lines_hidden | |
-  Pointer: buffer. |
-  Lines hidden in buffer.
-
-| weechat | [[hook_signal_buffer_localvar_added]] buffer_localvar_added | |
-  Pointer: buffer. |
-  Local variable has been added.
-
-| weechat | [[hook_signal_buffer_localvar_changed]] buffer_localvar_changed | |
-  Pointer: buffer. |
-  Local variable has changed.
-
-| weechat | [[hook_signal_buffer_localvar_removed]] buffer_localvar_removed | |
-  Pointer: buffer. |
-  Local variable has been removed.
-
-| weechat | [[hook_signal_buffer_merged]] buffer_merged | |
-  Pointer: buffer. |
-  Buffer merged.
-
-| weechat | [[hook_signal_buffer_unmerged]] buffer_unmerged | |
-  Pointer: buffer. |
-  Buffer unmerged.
-
-| weechat | [[hook_signal_buffer_moved]] buffer_moved | |
-  Pointer: buffer. |
-  Buffer moved.
-
-| weechat | [[hook_signal_buffer_renamed]] buffer_renamed | |
-  Pointer: buffer. |
-  Buffer renamed.
-
-| weechat | [[hook_signal_buffer_switch]] buffer_switch | |
-  Pointer: buffer. |
-  Switching buffer.
-
-| weechat | [[hook_signal_buffer_title_changed]] buffer_title_changed | |
-  Pointer: buffer. |
-  Title of buffer changed.
-
-| weechat | [[hook_signal_buffer_type_changed]] buffer_type_changed | |
-  Pointer: buffer. |
-  Type of buffer changed.
-
-| weechat | [[hook_signal_buffer_zoomed]] buffer_zoomed | 0.4.3 |
-  Pointer: buffer. |
-  Merged buffer zoomed.
-
-| weechat | [[hook_signal_buffer_unzoomed]] buffer_unzoomed | 0.4.3 |
-  Pointer: buffer. |
-  Merged buffer unzoomed.
-
-| weechat | [[hook_signal_cursor_start]] cursor_start | 3.2 |
-  - |
-  Start cursor mode.
-
-| weechat | [[hook_signal_cursor_end]] cursor_end | 3.2 |
-  - |
-  End cursor mode.
-
-| weechat | [[hook_signal_day_changed]] day_changed | 0.3.2 |
-  String: new date, format: "2010-01-31". |
-  Day of system date has changed.
-
-| weechat | [[hook_signal_debug_dump]] debug_dump | |
-  String: plugin name. |
-  Dump request.
-
-| weechat | [[hook_signal_debug_libs]] debug_libs | |
-  - |
-  Display external libraries used.
-
-| weechat | [[hook_signal_filter_added]] filter_added | |
-  Pointer: filter. |
-  Filter added.
-
-| weechat | [[hook_signal_filter_removing]] filter_removing | |
-  Pointer: filter. |
-  Removing filter.
-
-| weechat | [[hook_signal_filter_removed]] filter_removed | |
-  - |
-  Filter removed.
-
-| weechat | [[hook_signal_filters_enabled]] filters_enabled | |
-  - |
-  Filters enabled.
-
-| weechat | [[hook_signal_filters_disabled]] filters_disabled | |
-  - |
-  Filters disabled.
-
-| weechat | [[hook_signal_hotlist_changed]] hotlist_changed | |
-  Pointer: buffer (can be NULL). |
-  Hotlist changed.
-
-| weechat | [[hook_signal_input_paste_pending]] input_paste_pending | |
-  - |
-  Paste pending.
-
-| weechat | [[hook_signal_input_search]] input_search | |
-  Pointer: buffer. |
-  Text search in buffer.
-
-| weechat | [[hook_signal_input_text_changed]] input_text_changed | |
-  Pointer: buffer. |
-  Input text changed.
-
-| weechat | [[hook_signal_input_text_cursor_moved]] input_text_cursor_moved | |
-  Pointer: buffer. |
-  Input text cursor moved.
-
-| weechat | [[hook_signal_key_bind]] key_bind | |
-  String: key. |
-  Key added.
-
-| weechat | [[hook_signal_key_unbind]] key_unbind | |
-  String: key. |
-  Key removed.
-
-| weechat | [[hook_signal_key_pressed]] key_pressed | |
-  String: key pressed. |
-  Key pressed.
-
-| weechat | [[hook_signal_key_combo_default]] key_combo_default | 1.0 |
-  String: key combo. |
-  Key combo in _default_ context.
-
-| weechat | [[hook_signal_key_combo_search]] key_combo_search | 1.0 |
-  String: key combo. |
-  Key combo in _search_ context.
-
-| weechat | [[hook_signal_key_combo_cursor]] key_combo_cursor | 1.0 |
-  String: key combo. |
-  Key combo in _cursor_ context.
-
-| weechat | [[hook_signal_mouse_enabled]] mouse_enabled | 1.1 |
-  - |
-  Mouse enabled.
-
-| weechat | [[hook_signal_mouse_disabled]] mouse_disabled | 1.1 |
-  - |
-  Mouse disabled.
-
-| weechat | [[hook_signal_nicklist_group_added]] nicklist_group_added | 0.3.2 |
-  String: buffer pointer + "," + group name. |
-  Group added in nicklist.
-
-| weechat | [[hook_signal_nicklist_group_changed]] nicklist_group_changed | 0.3.4 |
-  String: buffer pointer + "," + group name. |
-  Group changed in nicklist.
-
-| weechat | [[hook_signal_nicklist_group_removing]] nicklist_group_removing | 0.4.1 |
-  String: buffer pointer + "," + group name. |
-  Removing group from nicklist.
-
-| weechat | [[hook_signal_nicklist_group_removed]] nicklist_group_removed | 0.3.2 |
-  String: buffer pointer + "," + group name. |
-  Group removed from nicklist.
-
-| weechat | [[hook_signal_nicklist_nick_added]] nicklist_nick_added | 0.3.2 |
-  String: buffer pointer + "," + nick name. |
-  Nick added in nicklist.
-
-| weechat | [[hook_signal_nicklist_nick_changed]] nicklist_nick_changed | 0.3.4 |
-  String: buffer pointer + "," + nick name. |
-  Nick changed in nicklist.
-
-| weechat | [[hook_signal_nicklist_nick_removing]] nicklist_nick_removing | 0.4.1 |
-  String: buffer pointer + "," + nick name. |
-  Removing nick from nicklist.
-
-| weechat | [[hook_signal_nicklist_nick_removed]] nicklist_nick_removed | 0.3.2 |
-  String: buffer pointer + "," + nick name. |
-  Nick removed from nicklist.
-
-| weechat | [[hook_signal_partial_completion]] partial_completion | |
-  - |
-  Partial completion happened.
-
-| weechat | [[hook_signal_plugin_loaded]] plugin_loaded | 0.3.9 |
-  String: path to plugin loaded. |
-  Plugin loaded.
-
-| weechat | [[hook_signal_plugin_unloaded]] plugin_unloaded | 0.3.9 |
-  String: name of plugin unloaded (example: "irc"). |
-  Plugin unloaded.
-
-| weechat | [[hook_signal_quit]] quit | |
-  String: arguments for /quit. |
-  Command `/quit` issued by user.
-
-| weechat | [[hook_signal_signal_sighup]] signal_sighup | 1.3 |
-  - |
-  Signal SIGHUP received.
-
-| weechat | [[hook_signal_signal_sigquit]] signal_sigquit | 1.2 |
-  - |
-  Signal SIGQUIT received (quit request with core dump).
-
-| weechat | [[hook_signal_signal_sigterm]] signal_sigterm | 1.2 |
-  - |
-  Signal SIGTERM received (graceful termination of WeeChat process).
-
-| weechat | [[hook_signal_signal_sigwinch]] signal_sigwinch | 0.4.3 |
-  - |
-  Signal SIGWINCH received (terminal was resized).
-
-| weechat | [[hook_signal_upgrade]] upgrade | |
-  String: "quit" if "-quit" argument was given for /upgrade, otherwise NULL. |
-  Command `/upgrade` issued by user.
-
-| weechat | [[hook_signal_upgrade_ended]] upgrade_ended | 0.3.4 |
-  - |
-  End of upgrade process (command `/upgrade`).
-
-| weechat | [[hook_signal_weechat_highlight]] weechat_highlight | |
-  String: message with prefix. |
-  Highlight happened.
-
-| weechat | [[hook_signal_weechat_pv]] weechat_pv | |
-  String: message with prefix. |
-  Private message displayed.
-
-| weechat | [[hook_signal_window_closing]] window_closing | 0.3.6 |
-  Pointer: window. |
-  Closing window.
-
-| weechat | [[hook_signal_window_closed]] window_closed | 0.3.6 |
-  Pointer: window. |
-  Window closed.
-
-| weechat | [[hook_signal_window_opened]] window_opened | 0.4.1 |
-  Pointer: window. |
-  Window opened.
-
-| weechat | [[hook_signal_window_scrolled]] window_scrolled | |
-  Pointer: window. |
-  Scroll in window.
-
-| weechat | [[hook_signal_window_switch]] window_switch | 0.3.7 |
-  Pointer: window. |
-  Switching window.
-
-| weechat | [[hook_signal_window_zoom]] window_zoom | |
-  Pointer: current window. |
-  Zooming window.
-
-| weechat | [[hook_signal_window_zoomed]] window_zoomed | |
-  Pointer: current window. |
-  Window zoomed.
-
-| weechat | [[hook_signal_window_unzoom]] window_unzoom | |
-  Pointer: current window. |
-  Unzooming window.
-
-| weechat | [[hook_signal_window_unzoomed]] window_unzoomed | |
-  Pointer: current window. |
-  Window unzoomed.
-
-| xfer | [[hook_signal_xfer_add]] xfer_add | |
-  Pointer: infolist with xfer info. |
-  New xfer.
-
-| xfer | [[hook_signal_xfer_send_ready]] xfer_send_ready | |
-  Pointer: infolist with xfer info. |
-  Xfer ready.
-
-| xfer | [[hook_signal_xfer_accept_resume]] xfer_accept_resume | |
-  Pointer: infolist with xfer info. |
-  Accept xfer resume.
-
-| xfer | [[hook_signal_xfer_send_accept_resume]] xfer_send_accept_resume | |
-  Pointer: infolist with xfer info. |
-  Xfer resumed.
-
-| xfer | [[hook_signal_xfer_start_resume]] xfer_start_resume | |
-  Pointer: infolist with xfer info. |
-  Start resume.
-
-| xfer | [[hook_signal_xfer_resume_ready]] xfer_resume_ready | |
-  Pointer: infolist with xfer info. |
-  Xfer resume ready.
-
-| xfer | [[hook_signal_xfer_ended]] xfer_ended | 0.3.2 |
-  Pointer: infolist with xfer info. |
-  Xfer has ended.
+| irc | [[hook_signal_irc_ctcp]] irc_ctcp |
+| String: message.
+| CTCP received.
+
+| irc | [[hook_signal_irc_dcc]] irc_dcc |
+| String: message.
+| New DCC.
+
+| irc | [[hook_signal_irc_pv]] irc_pv |
+| String: message.
+| Private message received.
+
+| irc | [[hook_signal_irc_channel_opened]] irc_channel_opened |
+| Pointer: buffer.
+| Channel opened.
+
+| irc | [[hook_signal_irc_pv_opened]] irc_pv_opened |
+| Pointer: buffer.
+| Private opened.
+
+| irc | [[hook_signal_irc_server_opened]] irc_server_opened | 0.3.7
+| Pointer: buffer.
+| Server buffer opened.
+
+| irc | [[hook_signal_irc_server_connecting]] irc_server_connecting |
+| String: server name.
+| Connecting to server.
+
+| irc | [[hook_signal_irc_server_connected]] irc_server_connected |
+| String: server name.
+| Connected to server.
+
+| irc | [[hook_signal_irc_server_disconnected]] irc_server_disconnected |
+| String: server name.
+| Disconnected from server.
+
+| irc | [[hook_signal_irc_server_lag_changed]] irc_server_lag_changed | 1.8
+| String: server name.
+| Lag changed on the server.
+
+| irc | [[hook_signal_irc_ignore_removing]] irc_ignore_removing |
+| Pointer: ignore.
+| Removing ignore.
+
+| irc | [[hook_signal_irc_ignore_removed]] irc_ignore_removed |
+| -
+| Ignore removed.
+
+| irc | [[hook_signal_irc_notify_join]] irc_notify_join | 0.3.8
+| String: server name + "," + nick.
+| A nick in notify list has joined server.
+
+| irc | [[hook_signal_irc_notify_quit]] irc_notify_quit | 0.3.8
+| String: server name + "," + nick.
+| A nick in notify list has quit server.
+
+| irc | [[hook_signal_irc_notify_away]] irc_notify_away | 0.3.8
+| String: server name + "," + nick + "," + away message.
+| A nick in notify list is now away on server.
+
+| irc | [[hook_signal_irc_notify_still_away]] irc_notify_still_away | 0.3.8
+| String: server name + "," + nick + "," + away message.
+| A nick in notify list is still away on server (away message has changed).
+
+| irc | [[hook_signal_irc_notify_back]] irc_notify_back | 0.3.8
+| String: server name + "," + nick.
+| A nick in notify list is back (away status removed).
+
+| javascript | [[hook_signal_javascript_script_loaded]] javascript_script_loaded | 1.2
+| String: path to script.
+| JavaScript script loaded.
+
+| javascript | [[hook_signal_javascript_script_unloaded]] javascript_script_unloaded | 1.2
+| String: path to script.
+| JavaScript script unloaded.
+
+| javascript | [[hook_signal_javascript_script_installed]] javascript_script_installed | 1.2
+| String: comma-separated list of paths to scripts installed.
+| JavaScript script(s) installed.
+
+| javascript | [[hook_signal_javascript_script_removed]] javascript_script_removed | 1.2
+| String: comma-separated list of scripts removed.
+| JavaScript script(s) removed.
+
+| logger | [[hook_signal_logger_start]] logger_start |
+| Pointer: buffer.
+| Start logging for buffer.
+
+| logger | [[hook_signal_logger_stop]] logger_stop |
+| Pointer: buffer.
+| Stop logging for buffer.
+
+| logger | [[hook_signal_logger_backlog]] logger_backlog |
+| Pointer: buffer.
+| Display backlog for buffer.
+
+| lua | [[hook_signal_lua_script_loaded]] lua_script_loaded | 0.3.9
+| String: path to script.
+| Lua script loaded.
+
+| lua | [[hook_signal_lua_script_unloaded]] lua_script_unloaded | 0.3.9
+| String: path to script.
+| Lua script unloaded.
+
+| lua | [[hook_signal_lua_script_installed]] lua_script_installed | 0.3.9
+| String: comma-separated list of paths to scripts installed.
+| Lua script(s) installed.
+
+| lua | [[hook_signal_lua_script_removed]] lua_script_removed | 0.3.9
+| String: comma-separated list of scripts removed.
+| Lua script(s) removed.
+
+| perl | [[hook_signal_perl_script_loaded]] perl_script_loaded | 0.3.9
+| String: path to script.
+| Perl script loaded.
+
+| perl | [[hook_signal_perl_script_unloaded]] perl_script_unloaded | 0.3.9
+| String: path to script.
+| Perl script unloaded.
+
+| perl | [[hook_signal_perl_script_installed]] perl_script_installed | 0.3.9
+| String: comma-separated list of paths to scripts installed.
+| Perl script(s) installed.
+
+| perl | [[hook_signal_perl_script_removed]] perl_script_removed | 0.3.9
+| String: comma-separated list of scripts removed.
+| Perl script(s) removed.
+
+| php | [[hook_signal_php_script_loaded]] php_script_loaded | 2.0
+| String: path to script.
+| PHP script loaded.
+
+| php | [[hook_signal_php_script_unloaded]] php_script_unloaded | 2.0
+| String: path to script.
+| PHP script unloaded.
+
+| php | [[hook_signal_php_script_installed]] php_script_installed | 2.0
+| String: comma-separated list of paths to scripts installed.
+| PHP script(s) installed.
+
+| php | [[hook_signal_php_script_removed]] php_script_removed | 2.0
+| String: comma-separated list of scripts removed.
+| PHP script(s) removed.
+
+| python | [[hook_signal_python_script_loaded]] python_script_loaded | 0.3.9
+| String: path to script.
+| Python script loaded.
+
+| python | [[hook_signal_python_script_unloaded]] python_script_unloaded | 0.3.9
+| String: path to script.
+| Python script unloaded.
+
+| python | [[hook_signal_python_script_installed]] python_script_installed | 0.3.9
+| String: comma-separated list of paths to scripts installed.
+| Python script(s) installed.
+
+| python | [[hook_signal_python_script_removed]] python_script_removed | 0.3.9
+| String: comma-separated list of scripts removed.
+| Python script(s) removed.
+
+| relay | [[hook_signal_relay_client_connecting]] relay_client_connecting | 1.0
+| Pointer: relay client.
+| A relay client is connecting.
+
+| relay | [[hook_signal_relay_client_waiting_auth]] relay_client_waiting_auth | 1.0
+| Pointer: relay client.
+| Waiting for authentication from a relay client.
+
+| relay | [[hook_signal_relay_client_auth_ok]] relay_client_auth_ok | 1.0
+| Pointer: relay client.
+| Successful authentication from a relay client.
+
+| relay | [[hook_signal_relay_client_connected]] relay_client_connected | 1.0
+| Pointer: relay client.
+| A relay client is connected.
+
+| relay | [[hook_signal_relay_client_auth_failed]] relay_client_auth_failed | 1.0
+| Pointer: relay client.
+| Authentication of a relay client has failed.
+
+| relay | [[hook_signal_relay_client_disconnected]] relay_client_disconnected | 1.0
+| Pointer: relay client.
+| A relay client is disconnected.
+
+| ruby | [[hook_signal_ruby_script_loaded]] ruby_script_loaded | 0.3.9
+| String: path to script.
+| Ruby script loaded.
+
+| ruby | [[hook_signal_ruby_script_unloaded]] ruby_script_unloaded | 0.3.9
+| String: path to script.
+| Ruby script unloaded.
+
+| ruby | [[hook_signal_ruby_script_installed]] ruby_script_installed | 0.3.9
+| String: comma-separated list of paths to scripts installed.
+| Ruby script(s) installed.
+
+| ruby | [[hook_signal_ruby_script_removed]] ruby_script_removed | 0.3.9
+| String: comma-separated list of scripts removed.
+| Ruby script(s) removed.
+
+| spell | [[hook_signal_spell_suggest]] spell_suggest | 2.4
+| Pointer: buffer.
+| New suggestions for a misspelled word.
+
+| tcl | [[hook_signal_tcl_script_loaded]] tcl_script_loaded | 0.3.9
+| String: path to script.
+| Tcl script loaded.
+
+| tcl | [[hook_signal_tcl_script_unloaded]] tcl_script_unloaded | 0.3.9
+| String: path to script.
+| Tcl script unloaded.
+
+| tcl | [[hook_signal_tcl_script_installed]] tcl_script_installed | 0.3.9
+| String: comma-separated list of paths to scripts installed.
+| Tcl script(s) installed.
+
+| tcl | [[hook_signal_tcl_script_removed]] tcl_script_removed | 0.3.9
+| String: comma-separated list of scripts removed.
+| Tcl script(s) removed.
+
+| typing | [[hook_signal_typing_self_typing]] typing_self_typing | 3.3
+| Pointer: buffer.
+| User is typing a message (sent by typing plugin, used by irc plugin).
+
+| typing | [[hook_signal_typing_self_paused]] typing_self_paused | 3.3
+| Pointer: buffer.
+| User paused during typing (sent by typing plugin, used by irc plugin).
+
+| typing | [[hook_signal_typing_self_cleared]] typing_self_cleared | 3.3
+| Pointer: buffer.
+| User cleared the input without sending the message (sent by typing plugin, used by irc plugin).
+
+| typing | [[hook_signal_typing_self_sent]] typing_self_sent | 3.3
+| Pointer: buffer.
+| Message (not a command) sent to the buffer (sent by typing plugin, used by irc plugin).
+
+| typing | [[hook_signal_typing_set_nick]] typing_set_nick | 3.3
+| String: buffer pointer + ";" + state (one of: "off", "typing", "paused",
+  "cleared") + ";" + nick.
+| Set typing state for a nick on a buffer (sent by irc plugin, handled by typing plugin).
+
+| typing | [[hook_signal_typing_reset_buffer]] typing_reset_buffer | 3.3
+| Pointer: buffer.
+| Remove typing state for all nicks on a buffer (sent by irc plugin, handled by typing plugin).
+
+| weechat | [[hook_signal_buffer_opened]] buffer_opened |
+| Pointer: buffer.
+| Buffer opened.
+
+| weechat | [[hook_signal_buffer_closing]] buffer_closing |
+| Pointer: buffer.
+| Closing buffer.
+
+| weechat | [[hook_signal_buffer_closed]] buffer_closed |
+| Pointer: buffer.
+| Buffer closed.
+
+| weechat | [[hook_signal_buffer_cleared]] buffer_cleared |
+| Pointer: buffer.
+| Buffer cleared.
+
+| weechat | [[hook_signal_buffer_filters_enabled]] buffer_filters_enabled | 2.0
+| Pointer: buffer.
+| Filters enabled in buffer.
+
+| weechat | [[hook_signal_buffer_filters_disabled]] buffer_filters_disabled | 2.0
+| Pointer: buffer.
+| Filters disabled in buffer.
+
+| weechat | [[hook_signal_buffer_hidden]] buffer_hidden |
+| Pointer: buffer.
+| Buffer hidden.
+
+| weechat | [[hook_signal_buffer_unhidden]] buffer_unhidden |
+| Pointer: buffer.
+| Buffer unhidden.
+
+| weechat | [[hook_signal_buffer_line_added]] buffer_line_added | 0.3.7
+| Pointer: line.
+| Line added in a buffer.
+
+| weechat | [[hook_signal_buffer_lines_hidden]] buffer_lines_hidden |
+| Pointer: buffer.
+| Lines hidden in buffer.
+
+| weechat | [[hook_signal_buffer_localvar_added]] buffer_localvar_added |
+| Pointer: buffer.
+| Local variable has been added.
+
+| weechat | [[hook_signal_buffer_localvar_changed]] buffer_localvar_changed |
+| Pointer: buffer.
+| Local variable has changed.
+
+| weechat | [[hook_signal_buffer_localvar_removed]] buffer_localvar_removed |
+| Pointer: buffer.
+| Local variable has been removed.
+
+| weechat | [[hook_signal_buffer_merged]] buffer_merged |
+| Pointer: buffer.
+| Buffer merged.
+
+| weechat | [[hook_signal_buffer_unmerged]] buffer_unmerged |
+| Pointer: buffer.
+| Buffer unmerged.
+
+| weechat | [[hook_signal_buffer_moved]] buffer_moved |
+| Pointer: buffer.
+| Buffer moved.
+
+| weechat | [[hook_signal_buffer_renamed]] buffer_renamed |
+| Pointer: buffer.
+| Buffer renamed.
+
+| weechat | [[hook_signal_buffer_switch]] buffer_switch |
+| Pointer: buffer.
+| Switching buffer.
+
+| weechat | [[hook_signal_buffer_title_changed]] buffer_title_changed |
+| Pointer: buffer.
+| Title of buffer changed.
+
+| weechat | [[hook_signal_buffer_type_changed]] buffer_type_changed |
+| Pointer: buffer.
+| Type of buffer changed.
+
+| weechat | [[hook_signal_buffer_zoomed]] buffer_zoomed | 0.4.3
+| Pointer: buffer.
+| Merged buffer zoomed.
+
+| weechat | [[hook_signal_buffer_unzoomed]] buffer_unzoomed | 0.4.3
+| Pointer: buffer.
+| Merged buffer unzoomed.
+
+| weechat | [[hook_signal_cursor_start]] cursor_start | 3.2
+| -
+| Start cursor mode.
+
+| weechat | [[hook_signal_cursor_end]] cursor_end | 3.2
+| -
+| End cursor mode.
+
+| weechat | [[hook_signal_day_changed]] day_changed | 0.3.2
+| String: new date, format: "2010-01-31".
+| Day of system date has changed.
+
+| weechat | [[hook_signal_debug_dump]] debug_dump |
+| String: plugin name.
+| Dump request.
+
+| weechat | [[hook_signal_debug_libs]] debug_libs |
+| -
+| Display external libraries used.
+
+| weechat | [[hook_signal_filter_added]] filter_added |
+| Pointer: filter.
+| Filter added.
+
+| weechat | [[hook_signal_filter_removing]] filter_removing |
+| Pointer: filter.
+| Removing filter.
+
+| weechat | [[hook_signal_filter_removed]] filter_removed |
+| -
+| Filter removed.
+
+| weechat | [[hook_signal_filters_enabled]] filters_enabled |
+| -
+| Filters enabled.
+
+| weechat | [[hook_signal_filters_disabled]] filters_disabled |
+| -
+| Filters disabled.
+
+| weechat | [[hook_signal_hotlist_changed]] hotlist_changed |
+| Pointer: buffer (can be NULL).
+| Hotlist changed.
+
+| weechat | [[hook_signal_input_paste_pending]] input_paste_pending |
+| -
+| Paste pending.
+
+| weechat | [[hook_signal_input_search]] input_search |
+| Pointer: buffer.
+| Text search in buffer.
+
+| weechat | [[hook_signal_input_text_changed]] input_text_changed |
+| Pointer: buffer.
+| Input text changed.
+
+| weechat | [[hook_signal_input_text_cursor_moved]] input_text_cursor_moved |
+| Pointer: buffer.
+| Input text cursor moved.
+
+| weechat | [[hook_signal_key_bind]] key_bind |
+| String: key.
+| Key added.
+
+| weechat | [[hook_signal_key_unbind]] key_unbind |
+| String: key.
+| Key removed.
+
+| weechat | [[hook_signal_key_pressed]] key_pressed |
+| String: key pressed.
+| Key pressed.
+
+| weechat | [[hook_signal_key_combo_default]] key_combo_default | 1.0
+| String: key combo.
+| Key combo in _default_ context.
+
+| weechat | [[hook_signal_key_combo_search]] key_combo_search | 1.0
+| String: key combo.
+| Key combo in _search_ context.
+
+| weechat | [[hook_signal_key_combo_cursor]] key_combo_cursor | 1.0
+| String: key combo.
+| Key combo in _cursor_ context.
+
+| weechat | [[hook_signal_mouse_enabled]] mouse_enabled | 1.1
+| -
+| Mouse enabled.
+
+| weechat | [[hook_signal_mouse_disabled]] mouse_disabled | 1.1
+| -
+| Mouse disabled.
+
+| weechat | [[hook_signal_nicklist_group_added]] nicklist_group_added | 0.3.2
+| String: buffer pointer + "," + group name.
+| Group added in nicklist.
+
+| weechat | [[hook_signal_nicklist_group_changed]] nicklist_group_changed | 0.3.4
+| String: buffer pointer + "," + group name.
+| Group changed in nicklist.
+
+| weechat | [[hook_signal_nicklist_group_removing]] nicklist_group_removing | 0.4.1
+| String: buffer pointer + "," + group name.
+| Removing group from nicklist.
+
+| weechat | [[hook_signal_nicklist_group_removed]] nicklist_group_removed | 0.3.2
+| String: buffer pointer + "," + group name.
+| Group removed from nicklist.
+
+| weechat | [[hook_signal_nicklist_nick_added]] nicklist_nick_added | 0.3.2
+| String: buffer pointer + "," + nick name.
+| Nick added in nicklist.
+
+| weechat | [[hook_signal_nicklist_nick_changed]] nicklist_nick_changed | 0.3.4
+| String: buffer pointer + "," + nick name.
+| Nick changed in nicklist.
+
+| weechat | [[hook_signal_nicklist_nick_removing]] nicklist_nick_removing | 0.4.1
+| String: buffer pointer + "," + nick name.
+| Removing nick from nicklist.
+
+| weechat | [[hook_signal_nicklist_nick_removed]] nicklist_nick_removed | 0.3.2
+| String: buffer pointer + "," + nick name.
+| Nick removed from nicklist.
+
+| weechat | [[hook_signal_partial_completion]] partial_completion |
+| -
+| Partial completion happened.
+
+| weechat | [[hook_signal_plugin_loaded]] plugin_loaded | 0.3.9
+| String: path to plugin loaded.
+| Plugin loaded.
+
+| weechat | [[hook_signal_plugin_unloaded]] plugin_unloaded | 0.3.9
+| String: name of plugin unloaded (example: "irc").
+| Plugin unloaded.
+
+| weechat | [[hook_signal_quit]] quit |
+| String: arguments for /quit.
+| Command `/quit` issued by user.
+
+| weechat | [[hook_signal_signal_sighup]] signal_sighup | 1.3
+| -
+| Signal SIGHUP received.
+
+| weechat | [[hook_signal_signal_sigquit]] signal_sigquit | 1.2
+| -
+| Signal SIGQUIT received (quit request with core dump).
+
+| weechat | [[hook_signal_signal_sigterm]] signal_sigterm | 1.2
+| -
+| Signal SIGTERM received (graceful termination of WeeChat process).
+
+| weechat | [[hook_signal_signal_sigwinch]] signal_sigwinch | 0.4.3
+| -
+| Signal SIGWINCH received (terminal was resized).
+
+| weechat | [[hook_signal_upgrade]] upgrade |
+| String: "quit" if "-quit" argument was given for /upgrade, otherwise NULL.
+| Command `/upgrade` issued by user.
+
+| weechat | [[hook_signal_upgrade_ended]] upgrade_ended | 0.3.4
+| -
+| End of upgrade process (command `/upgrade`).
+
+| weechat | [[hook_signal_weechat_highlight]] weechat_highlight |
+| String: message with prefix.
+| Highlight happened.
+
+| weechat | [[hook_signal_weechat_pv]] weechat_pv |
+| String: message with prefix.
+| Private message displayed.
+
+| weechat | [[hook_signal_window_closing]] window_closing | 0.3.6
+| Pointer: window.
+| Closing window.
+
+| weechat | [[hook_signal_window_closed]] window_closed | 0.3.6
+| Pointer: window.
+| Window closed.
+
+| weechat | [[hook_signal_window_opened]] window_opened | 0.4.1
+| Pointer: window.
+| Window opened.
+
+| weechat | [[hook_signal_window_scrolled]] window_scrolled |
+| Pointer: window.
+| Scroll in window.
+
+| weechat | [[hook_signal_window_switch]] window_switch | 0.3.7
+| Pointer: window.
+| Switching window.
+
+| weechat | [[hook_signal_window_zoom]] window_zoom |
+| Pointer: current window.
+| Zooming window.
+
+| weechat | [[hook_signal_window_zoomed]] window_zoomed |
+| Pointer: current window.
+| Window zoomed.
+
+| weechat | [[hook_signal_window_unzoom]] window_unzoom |
+| Pointer: current window.
+| Unzooming window.
+
+| weechat | [[hook_signal_window_unzoomed]] window_unzoomed |
+| Pointer: current window.
+| Window unzoomed.
+
+| xfer | [[hook_signal_xfer_add]] xfer_add |
+| Pointer: infolist with xfer info.
+| New xfer.
+
+| xfer | [[hook_signal_xfer_send_ready]] xfer_send_ready |
+| Pointer: infolist with xfer info.
+| Xfer ready.
+
+| xfer | [[hook_signal_xfer_accept_resume]] xfer_accept_resume |
+| Pointer: infolist with xfer info.
+| Accept xfer resume.
+
+| xfer | [[hook_signal_xfer_send_accept_resume]] xfer_send_accept_resume |
+| Pointer: infolist with xfer info.
+| Xfer resumed.
+
+| xfer | [[hook_signal_xfer_start_resume]] xfer_start_resume |
+| Pointer: infolist with xfer info.
+| Start resume.
+
+| xfer | [[hook_signal_xfer_resume_ready]] xfer_resume_ready |
+| Pointer: infolist with xfer info.
+| Xfer resume ready.
+
+| xfer | [[hook_signal_xfer_ended]] xfer_ended | 0.3.2
+| Pointer: infolist with xfer info.
+| Xfer has ended.
 |===
 
 [NOTE]
@@ -11254,45 +11254,45 @@ List of hsignals:
 |===
 | Plugin | Signal | Min WeeChat | Arguments | Description
 
-| irc | [[hook_hsignal_irc_redirection_xxx_yyy]] irc_redirection_xxx_yyy ^(1)^ | 0.3.4 |
-  See <<hsignal_irc_redirect_command,hsignal_irc_redirect_command>> |
-  Redirection output.
+| irc | [[hook_hsignal_irc_redirection_xxx_yyy]] irc_redirection_xxx_yyy ^(1)^ | 0.3.4
+| See <<hsignal_irc_redirect_command,hsignal_irc_redirect_command>>
+| Redirection output.
 
-| weechat | [[hook_hsignal_nicklist_group_added]] nicklist_group_added | 0.4.1 |
-  _buffer_ (_struct t_gui_buffer *_): buffer +
+| weechat | [[hook_hsignal_nicklist_group_added]] nicklist_group_added | 0.4.1
+| _buffer_ (_struct t_gui_buffer *_): buffer +
   _parent_group_ (_struct t_gui_nick_group *_): parent group +
-  _group_ (_struct t_gui_nick_group *_): group |
-  Group added in nicklist.
+  _group_ (_struct t_gui_nick_group *_): group
+| Group added in nicklist.
 
-| weechat | [[hook_hsignal_nicklist_nick_added]] nicklist_nick_added | 0.4.1 |
-  _buffer_ (_struct t_gui_buffer *_): buffer +
+| weechat | [[hook_hsignal_nicklist_nick_added]] nicklist_nick_added | 0.4.1
+| _buffer_ (_struct t_gui_buffer *_): buffer +
   _parent_group_ (_struct t_gui_nick_group *_): parent group +
-  _nick_ (_struct t_gui_nick *_): nick |
-  Nick added in nicklist.
+  _nick_ (_struct t_gui_nick *_): nick
+| Nick added in nicklist.
 
-| weechat | [[hook_hsignal_nicklist_group_removing]] nicklist_group_removing | 0.4.1 |
-  _buffer_ (_struct t_gui_buffer *_): buffer +
+| weechat | [[hook_hsignal_nicklist_group_removing]] nicklist_group_removing | 0.4.1
+| _buffer_ (_struct t_gui_buffer *_): buffer +
   _parent_group_ (_struct t_gui_nick_group *_): parent group +
-  _group_ (_struct t_gui_nick_group *_): group |
-  Removing group from nicklist.
+  _group_ (_struct t_gui_nick_group *_): group
+| Removing group from nicklist.
 
-| weechat | [[hook_hsignal_nicklist_nick_removing]] nicklist_nick_removing | 0.4.1 |
-  _buffer_ (_struct t_gui_buffer *_): buffer +
+| weechat | [[hook_hsignal_nicklist_nick_removing]] nicklist_nick_removing | 0.4.1
+| _buffer_ (_struct t_gui_buffer *_): buffer +
   _parent_group_ (_struct t_gui_nick_group *_): parent group +
-  _nick_ (_struct t_gui_nick *_): nick |
-  Removing nick from nicklist.
+  _nick_ (_struct t_gui_nick *_): nick
+| Removing nick from nicklist.
 
-| weechat | [[hook_hsignal_nicklist_group_changed]] nicklist_group_changed | 0.4.1 |
-  _buffer_ (_struct t_gui_buffer *_): buffer +
+| weechat | [[hook_hsignal_nicklist_group_changed]] nicklist_group_changed | 0.4.1
+| _buffer_ (_struct t_gui_buffer *_): buffer +
   _parent_group_ (_struct t_gui_nick_group *_): parent group +
-  _group_ (_struct t_gui_nick_group *_): group |
-  Group changed in nicklist.
+  _group_ (_struct t_gui_nick_group *_): group
+| Group changed in nicklist.
 
-| weechat | [[hook_hsignal_nicklist_nick_changed]] nicklist_nick_changed | 0.4.1 |
-  _buffer_ (_struct t_gui_buffer *_): buffer +
+| weechat | [[hook_hsignal_nicklist_nick_changed]] nicklist_nick_changed | 0.4.1
+| _buffer_ (_struct t_gui_buffer *_): buffer +
   _parent_group_ (_struct t_gui_nick_group *_): parent group +
-  _nick_ (_struct t_gui_nick *_): nick |
-  Nick changed in nicklist.
+  _nick_ (_struct t_gui_nick *_): nick
+| Nick changed in nicklist.
 |===
 
 [NOTE]
@@ -11684,65 +11684,65 @@ List of modifiers used by WeeChat and plugins:
 |===
 | Modifier | Min WeeChat | Modifier data | String | Output
 
-| [[hook_modifier_irc_in_xxx]] irc_in_xxx ^(1)^ | |
-  Server name |
-  Content of message received from IRC server (before charset decoding). +
+| [[hook_modifier_irc_in_xxx]] irc_in_xxx ^(1)^ |
+| Server name
+| Content of message received from IRC server (before charset decoding). +
   *Warning:* the string may contain invalid UTF-8 data; use only for raw
   operations on a message.
-  Modifier <<hook_modifier_irc_in2_xxx,irc_in2_xxx>> is recommended instead. |
-  New content of message.
+  Modifier <<hook_modifier_irc_in2_xxx,irc_in2_xxx>> is recommended instead.
+| New content of message.
 
-| [[hook_modifier_irc_in2_xxx]] irc_in2_xxx ^(1)^ | 0.3.5 |
-  Server name |
-  Content of message received from IRC server (after charset decoding). |
-  New content of message.
+| [[hook_modifier_irc_in2_xxx]] irc_in2_xxx ^(1)^ | 0.3.5
+| Server name
+| Content of message received from IRC server (after charset decoding).
+| New content of message.
 
-| [[hook_modifier_irc_out1_xxx]] irc_out1_xxx ^(1)^ | 0.3.7 |
-  Server name |
-  Content of message about to be sent to IRC server before automatic split
-  (to fit in 512 bytes by default). |
-  New content of message.
+| [[hook_modifier_irc_out1_xxx]] irc_out1_xxx ^(1)^ | 0.3.7
+| Server name
+| Content of message about to be sent to IRC server before automatic split
+  (to fit in 512 bytes by default).
+| New content of message.
 
-| [[hook_modifier_irc_out_xxx]] irc_out_xxx ^(1)^ | |
-  Server name |
-  Content of message about to be sent to IRC server after automatic split
-  (to fit in 512 bytes by default). |
-  New content of message.
+| [[hook_modifier_irc_out_xxx]] irc_out_xxx ^(1)^ |
+| Server name
+| Content of message about to be sent to IRC server after automatic split
+  (to fit in 512 bytes by default).
+| New content of message.
 
-| [[hook_modifier_bar_condition_yyy]] bar_condition_yyy ^(2)^ | |
-  String with window pointer (eg: "0x1234abcd") |
-  Empty string. |
-  "1" to display bar, "0" to hide it.
+| [[hook_modifier_bar_condition_yyy]] bar_condition_yyy ^(2)^ |
+| String with window pointer (eg: "0x1234abcd")
+| Empty string.
+| "1" to display bar, "0" to hide it.
 
-| [[hook_modifier_history_add]] history_add | 0.3.2 |
-  String with buffer pointer (eg: "0x1234abcd") |
-  Content of command line to add in command history (buffer and global). |
-  String added to command history.
+| [[hook_modifier_history_add]] history_add | 0.3.2
+| String with buffer pointer (eg: "0x1234abcd")
+| Content of command line to add in command history (buffer and global).
+| String added to command history.
 
-| [[hook_modifier_input_text_content]] input_text_content | |
-  String with buffer pointer (eg: "0x1234abcd") |
-  Content of command line. |
-  New content of command line.
+| [[hook_modifier_input_text_content]] input_text_content |
+| String with buffer pointer (eg: "0x1234abcd")
+| Content of command line.
+| New content of command line.
 
-| [[hook_modifier_input_text_display]] input_text_display | |
-  String with buffer pointer (eg: "0x1234abcd") |
-  Content of command line, without cursor tag. |
-  New string, for display only (command line is not changed).
+| [[hook_modifier_input_text_display]] input_text_display |
+| String with buffer pointer (eg: "0x1234abcd")
+| Content of command line, without cursor tag.
+| New string, for display only (command line is not changed).
 
-| [[hook_modifier_input_text_display_with_cursor]] input_text_display_with_cursor | |
-  String with buffer pointer (eg: "0x1234abcd") |
-  Content of command line, with cursor tag. |
-  New string, for display only (command line is not changed).
+| [[hook_modifier_input_text_display_with_cursor]] input_text_display_with_cursor |
+| String with buffer pointer (eg: "0x1234abcd")
+| Content of command line, with cursor tag.
+| New string, for display only (command line is not changed).
 
-| [[hook_modifier_input_text_for_buffer]] input_text_for_buffer | 0.3.7 |
-  String with buffer pointer (eg: "0x1234abcd") |
-  Content of command line sent to buffer (text or command). |
-  New content of command line sent to buffer.
+| [[hook_modifier_input_text_for_buffer]] input_text_for_buffer | 0.3.7
+| String with buffer pointer (eg: "0x1234abcd")
+| Content of command line sent to buffer (text or command).
+| New content of command line sent to buffer.
 
-| [[hook_modifier_weechat_print]] weechat_print | |
-  buffer pointer (eg: "0x1234abcd") + ";" + tags ^(3)^ |
-  Message printed. |
-  New message printed. +
+| [[hook_modifier_weechat_print]] weechat_print |
+| buffer pointer (eg: "0x1234abcd") + ";" + tags ^(3)^
+| Message printed.
+| New message printed. +
   For more information on the hooks called when a line is printed, see
   <<_hook_line,hook_line>>.
 |===
@@ -11825,67 +11825,67 @@ List of modifiers defined by WeeChat and plugins that can be used:
 |===
 | Modifier | Min WeeChat | Modifier data | String | Output
 
-| [[hook_modifier_charset_decode]] charset_decode | |
-  plugin.buffer_name |
-  Any string. |
-  String decoded from charset found for plugin/buffer to UTF-8.
+| [[hook_modifier_charset_decode]] charset_decode |
+| plugin.buffer_name
+| Any string.
+| String decoded from charset found for plugin/buffer to UTF-8.
 
-| [[hook_modifier_charset_encode]] charset_encode | |
-  plugin.buffer_name |
-  Any string. |
-  String encoded from UTF-8 to charset found for plugin/buffer.
+| [[hook_modifier_charset_encode]] charset_encode |
+| plugin.buffer_name
+| Any string.
+| String encoded from UTF-8 to charset found for plugin/buffer.
 
-| [[hook_modifier_irc_color_decode]] irc_color_decode | |
-  "1" to keep colors, "0" to remove colors |
-  Any string. |
-  String with IRC colors converted to WeeChat colors (or IRC colors removed).
+| [[hook_modifier_irc_color_decode]] irc_color_decode |
+| "1" to keep colors, "0" to remove colors
+| Any string.
+| String with IRC colors converted to WeeChat colors (or IRC colors removed).
 
-| [[hook_modifier_irc_color_encode]] irc_color_encode | |
-  "1" to keep colors, "0" to remove colors |
-  Any string. |
-  String with IRC colors (or IRC colors removed).
+| [[hook_modifier_irc_color_encode]] irc_color_encode |
+| "1" to keep colors, "0" to remove colors
+| Any string.
+| String with IRC colors (or IRC colors removed).
 
-| [[hook_modifier_irc_color_decode_ansi]] irc_color_decode_ansi | 1.0 |
-  "1" to keep colors, "0" to remove colors |
-  Any string. |
-  String with ANSI colors converted to IRC colors (or ANSI colors removed).
+| [[hook_modifier_irc_color_decode_ansi]] irc_color_decode_ansi | 1.0
+| "1" to keep colors, "0" to remove colors
+| Any string.
+| String with ANSI colors converted to IRC colors (or ANSI colors removed).
 
-| [[hook_modifier_irc_command_auth]] irc_command_auth | 0.4.1 |
-  Server name |
-  Authentication command (for example: `+/msg nickserv identify password+`). |
-  command with hidden password (for example: `+/msg nickserv identify ********+`).
+| [[hook_modifier_irc_command_auth]] irc_command_auth | 0.4.1
+| Server name
+| Authentication command (for example: `+/msg nickserv identify password+`).
+| command with hidden password (for example: `+/msg nickserv identify ********+`).
 
-| [[hook_modifier_irc_message_auth]] irc_message_auth | 0.4.1 |
-  Server name |
-  Message displayed after `/msg` sent to nickserv. |
-  Message with hidden password.
+| [[hook_modifier_irc_message_auth]] irc_message_auth | 0.4.1
+| Server name
+| Message displayed after `/msg` sent to nickserv.
+| Message with hidden password.
 
-| [[hook_modifier_irc_tag_escape_value]] irc_tag_escape_value | 3.3 |
-  - |
-  Any string. |
-  String with IRC tag value escaped,
+| [[hook_modifier_irc_tag_escape_value]] irc_tag_escape_value | 3.3
+| -
+| Any string.
+| String with IRC tag value escaped,
   see: https://ircv3.net/specs/extensions/message-tags#escaping-values.
 
-| [[hook_modifier_irc_tag_unescape_value]] irc_tag_unescape_value | 3.3 |
-  - |
-  Any string. |
-  String with IRC tag value unescaped,
+| [[hook_modifier_irc_tag_unescape_value]] irc_tag_unescape_value | 3.3
+| -
+| Any string.
+| String with IRC tag value unescaped,
   see: https://ircv3.net/specs/extensions/message-tags#escaping-values.
 
-| [[hook_modifier_color_decode_ansi]] color_decode_ansi | 1.0 |
-  "1" to keep colors, "0" to remove colors |
-  Any string. |
-  String with ANSI colors converted to WeeChat colors (or ANSI colors removed).
+| [[hook_modifier_color_decode_ansi]] color_decode_ansi | 1.0
+| "1" to keep colors, "0" to remove colors
+| Any string.
+| String with ANSI colors converted to WeeChat colors (or ANSI colors removed).
 
-| [[hook_modifier_color_encode_ansi]] color_encode_ansi | 2.7 |
-  - |
-  Any string. |
-  String with WeeChat colors converted to ANSI colors.
+| [[hook_modifier_color_encode_ansi]] color_encode_ansi | 2.7
+| -
+| Any string.
+| String with WeeChat colors converted to ANSI colors.
 
-| [[hook_modifier_eval_path_home]] eval_path_home | 2.7 |
-  Optional: `directory=xxx` where `xxx` can be: `config`, `data`, `cache`, `runtime` |
-  Any string. |
-  Evaluated path, result of the function
+| [[hook_modifier_eval_path_home]] eval_path_home | 2.7
+| Optional: `directory=xxx` where `xxx` can be: `config`, `data`, `cache`, `runtime`
+| Any string.
+| Evaluated path, result of the function
   <<_string_eval_path_home,string_eval_path_home>>.
 |===
 
@@ -12277,98 +12277,98 @@ Content of hashtable sent to callback (keys and values are of type "string"):
 |===
 | Key ^(1)^ | Description | Value examples | Value if N/A
 
-| _x | Column on screen. |
-  "0" ... "n" |
+| _x | Column on screen.
+| "0" ... "n" |
 
-| _y | Line on screen. |
-  "0" ... "n" |
+| _y | Line on screen.
+| "0" ... "n" |
 
-| _key | Key or mouse event. |
-  "button1", "button2-gesture-left", ... |
+| _key | Key or mouse event.
+| "button1", "button2-gesture-left", ... |
 
-| _window | Pointer to window. |
-  "0x1234abcd" | ""
+| _window | Pointer to window.
+| "0x1234abcd" | ""
 
-| _window_number | Number of window . |
-  "1" ... "n" | "*"
+| _window_number | Number of window .
+| "1" ... "n" | "*"
 
-| _buffer | Pointer to buffer. |
-  "0x1234abcd" | ""
+| _buffer | Pointer to buffer.
+| "0x1234abcd" | ""
 
-| _buffer_number | Number of buffer. |
-  "1" ... "n" | "-1"
+| _buffer_number | Number of buffer.
+| "1" ... "n" | "-1"
 
-| _buffer_plugin | Plugin name of buffer. |
-  "core", "irc", ... | ""
+| _buffer_plugin | Plugin name of buffer.
+| "core", "irc", ... | ""
 
-| _buffer_name | Name of buffer. |
-  "weechat", "libera.#weechat", ... | ""
+| _buffer_name | Name of buffer.
+| "weechat", "libera.#weechat", ... | ""
 
-| _buffer_full_name  | Full name of buffer. |
-  "core.weechat", "irc.libera.#weechat", ... | ""
+| _buffer_full_name  | Full name of buffer.
+| "core.weechat", "irc.libera.#weechat", ... | ""
 
-| _buffer_localvar_XXX ^(2)^ | Local variables of buffer. |
-  any value | not set
+| _buffer_localvar_XXX ^(2)^ | Local variables of buffer.
+| any value | not set
 
-| _chat | Chat area indicator. |
-  "0" or "1" | "0"
+| _chat | Chat area indicator.
+| "0" or "1" | "0"
 
-| _chat_line | Pointer to line _(WeeChat ≥ 1.2)_. |
-  "0x1234abcd" | ""
+| _chat_line | Pointer to line _(WeeChat ≥ 1.2)_.
+| "0x1234abcd" | ""
 
-| _chat_line_x | Column in line ^(3)^. |
-  "0" ... "n" | "-1"
+| _chat_line_x | Column in line ^(3)^.
+| "0" ... "n" | "-1"
 
-| _chat_line_y | Line number ^(3)^. |
-  "0" ... "n" | "-1"
+| _chat_line_y | Line number ^(3)^.
+| "0" ... "n" | "-1"
 
-| _chat_line_date | Line date/time. |
-  "1313237175" | "0"
+| _chat_line_date | Line date/time.
+| "1313237175" | "0"
 
-| _chat_line_date_printed | Line date/time ^(4)^. |
-  "1313237175" | "0"
+| _chat_line_date_printed | Line date/time ^(4)^.
+| "1313237175" | "0"
 
-| _chat_line_time | Time displayed. |
-  "14:06:15" | ""
+| _chat_line_time | Time displayed.
+| "14:06:15" | ""
 
-| _chat_line_tags | Tags of line. |
-  "irc_privmsg,nick_flashy,log1" | ""
+| _chat_line_tags | Tags of line.
+| "irc_privmsg,nick_flashy,log1" | ""
 
-| _chat_line_nick | Nick of line. |
-  "FlashCode" | ""
+| _chat_line_nick | Nick of line.
+| "FlashCode" | ""
 
-| _chat_line_prefix | Prefix of line. |
-  "@FlashCode" | ""
+| _chat_line_prefix | Prefix of line.
+| "@FlashCode" | ""
 
-| _chat_line_message | Message of line. |
-  "Hello world!" | ""
+| _chat_line_message | Message of line.
+| "Hello world!" | ""
 
-| _chat_word | Word at (x,y). |
-  "Hello" | ""
+| _chat_word | Word at (x,y).
+| "Hello" | ""
 
-| _chat_bol | Text from beginning of line to (x-1, y). |
-  "He" | ""
+| _chat_bol | Text from beginning of line to (x-1, y).
+| "He" | ""
 
-| _chat_eol | Text from (x, y) to the end of line. |
-  "llo world!" | ""
+| _chat_eol | Text from (x, y) to the end of line.
+| "llo world!" | ""
 
-| _bar_name | Name of bar. |
-  "title", "nicklist", ... | ""
+| _bar_name | Name of bar.
+| "title", "nicklist", ... | ""
 
-| _bar_filling | Filling of bar. |
-  "horizontal", "vertical", ... | ""
+| _bar_filling | Filling of bar.
+| "horizontal", "vertical", ... | ""
 
-| _bar_item_name | Name of bar item. |
-  "buffer_nicklist", "hotlist", ... | ""
+| _bar_item_name | Name of bar item.
+| "buffer_nicklist", "hotlist", ... | ""
 
-| _bar_item_line | Line in bar item. |
-  "0" ... "n" | "-1"
+| _bar_item_line | Line in bar item.
+| "0" ... "n" | "-1"
 
-| _bar_item_col | Column in bar item. |
-  "0" ... "n" | "-1"
+| _bar_item_col | Column in bar item.
+| "0" ... "n" | "-1"
 
-| _bar_window | Pointer to bar window _(WeeChat ≥ 2.9)_. |
-  "0x1234abcd" | ""
+| _bar_window | Pointer to bar window _(WeeChat ≥ 2.9)_.
+| "0x1234abcd" | ""
 |===
 
 [NOTE]
@@ -12461,23 +12461,23 @@ Properties:
 |===
 | Name | Min WeeChat | Hook type | Value | Description
 
-| subplugin | | any type |
-  any string |
-  Name of sub plugin (commonly script name, which is displayed in
+| subplugin | | any type
+| any string
+| Name of sub plugin (commonly script name, which is displayed in
   `/help command` for a hook of type _command_).
 
-| stdin | 0.4.3 | _process_, _process_hashtable_ |
-  any string |
-  Send data on standard input (_stdin_) of child process.
+| stdin | 0.4.3 | _process_, _process_hashtable_
+| any string
+| Send data on standard input (_stdin_) of child process.
 
-| stdin_close | 0.4.3 | _process_, _process_hashtable_ |
-  (not used) |
-  Close pipe used to send data on standard input (_stdin_) of child process.
+| stdin_close | 0.4.3 | _process_, _process_hashtable_
+| (not used)
+| Close pipe used to send data on standard input (_stdin_) of child process.
 
-| signal | 1.0 | _process_, _process_hashtable_ |
-  signal number or one of these names: `hup`, `int`, `quit`, `kill`, `term`,
-  `usr1`, `usr2` |
-  Send a signal to the child process.
+| signal | 1.0 | _process_, _process_hashtable_
+| signal number or one of these names: `hup`, `int`, `quit`, `kill`, `term`,
+  `usr1`, `usr2`
+| Send a signal to the child process.
 |===
 
 C example:
@@ -13310,150 +13310,150 @@ Properties:
 | Name | Min WeeChat | Value | Description
 
 | hotlist | | "+", "-", WEECHAT_HOTLIST_LOW, WEECHAT_HOTLIST_MESSAGE,
-  WEECHAT_HOTLIST_PRIVATE, WEECHAT_HOTLIST_HIGHLIGHT, "-1" |
-  "+": enable hotlist (global setting, buffer pointer is not used) +
+  WEECHAT_HOTLIST_PRIVATE, WEECHAT_HOTLIST_HIGHLIGHT, "-1"
+| "+": enable hotlist (global setting, buffer pointer is not used) +
   "-": disable hotlist (global setting, buffer pointer is not used) +
   priority: add buffer to hotlist with this priority +
   "-1": remove buffer from hotlist _(WeeChat ≥ 1.0)_.
 
-| completion_freeze | | "0" or "1" |
-  "0": no freeze of completion (default value)
+| completion_freeze | | "0" or "1"
+| "0": no freeze of completion (default value)
   (global setting, buffer pointer is not used) +
   "1": do not stop completion when command line is updated
   (global setting, buffer pointer is not used).
 
-| unread | | - |
-  Set unread marker after last line of buffer.
+| unread | | -
+| Set unread marker after last line of buffer.
 
-| display | | "1" or "auto" |
-  "1": switch to this buffer in current window +
+| display | | "1" or "auto"
+| "1": switch to this buffer in current window +
   "auto": switch to this buffer in current window, read marker is not reset.
 
-| hidden | 1.0 | "0" or "1" |
-  "0": unhide the buffer +
+| hidden | 1.0 | "0" or "1"
+| "0": unhide the buffer +
   "1": hide the buffer.
 
-| number | | number |
-  Move buffer to this number.
+| number | | number
+| Move buffer to this number.
 
-| name | | any string |
-  Set new name for buffer.
+| name | | any string
+| Set new name for buffer.
 
-| short_name | | any string |
-  Set new short name for buffer.
+| short_name | | any string
+| Set new short name for buffer.
 
-| type | | "formatted" or "free" |
-  Set type for buffer: "formatted" (for printing chat messages), or "free" (for
+| type | | "formatted" or "free"
+| Set type for buffer: "formatted" (for printing chat messages), or "free" (for
   free content); when the value is "free", the property _clear_ is forced to "0"
   _(WeeChat ≥ 1.0)_.
 
-| notify | | "0", "1", "2", "3" |
-  Set notify level for buffer: "0" = never add to hotlist, "1" = add for
+| notify | | "0", "1", "2", "3"
+| Set notify level for buffer: "0" = never add to hotlist, "1" = add for
   highlights only, "2" = add for highlights and messages, "3" = add for all
   messages.
 
-| print_hooks_enabled | | "0" or "1" |
-  "0" to disable print hooks, "1" to enable them (default for a new buffer).
+| print_hooks_enabled | | "0" or "1"
+| "0" to disable print hooks, "1" to enable them (default for a new buffer).
 
-| day_change | 0.4.3 | "0" or "1" |
-  "0" to hide messages for the day change, "1" to see them
+| day_change | 0.4.3 | "0" or "1"
+| "0" to hide messages for the day change, "1" to see them
   (default for a new buffer).
 
-| clear | 1.0 | "0" or "1" |
-  "0" to prevent user from clearing buffer with the command `/buffer clear`,
+| clear | 1.0 | "0" or "1"
+| "0" to prevent user from clearing buffer with the command `/buffer clear`,
   "1" to let user clear the buffer (default for a new buffer)
    (note: even when it is set to "0", the buffer can still be cleared with
    the function <<_buffer_clear,buffer_clear>>).
 
-| filter | 1.0 | "0" or "1" |
-  "0": disable filters on buffer +
+| filter | 1.0 | "0" or "1"
+| "0": disable filters on buffer +
   "1": enable filters on buffer.
 
-| title | | any string |
-  Set new title for buffer.
+| title | | any string
+| Set new title for buffer.
 
-| time_for_each_line | | "0" or "1" |
-  "0" to hide time for all lines in buffer, "1" to see time for all lines
+| time_for_each_line | | "0" or "1"
+| "0" to hide time for all lines in buffer, "1" to see time for all lines
   (default for a new buffer).
 
-| nicklist | | "0" or "1" |
-  "0" to remove nicklist for buffer, "1" to add nicklist for buffer.
+| nicklist | | "0" or "1"
+| "0" to remove nicklist for buffer, "1" to add nicklist for buffer.
 
-| nicklist_case_sensitive | | "0" or "1" |
-  "0" to have case insensitive nicklist, "1" to have case sensitive nicklist.
+| nicklist_case_sensitive | | "0" or "1"
+| "0" to have case insensitive nicklist, "1" to have case sensitive nicklist.
 
-| nicklist_display_groups | | "0" or "1" |
-  "0" to hide nicklist groups, "1" to display nicklist groups.
+| nicklist_display_groups | | "0" or "1"
+| "0" to hide nicklist groups, "1" to display nicklist groups.
 
-| highlight_words | | "-" or comma separated list of words |
-  "-" is a special value to disable any highlight on this buffer, or comma
+| highlight_words | | "-" or comma separated list of words
+| "-" is a special value to disable any highlight on this buffer, or comma
   separated list of words to highlight in this buffer, for example:
   "abc,def,ghi".
 
-| highlight_words_add | | comma separated list of words |
-  Comma separated list of words to highlight in this buffer, these words are
+| highlight_words_add | | comma separated list of words
+| Comma separated list of words to highlight in this buffer, these words are
   added to existing highlighted words in buffer.
 
-| highlight_words_del | | comma separated list of words |
-  Comma separated list of words to remove from highlighted words on buffer.
+| highlight_words_del | | comma separated list of words
+| Comma separated list of words to remove from highlighted words on buffer.
 
-| highlight_regex | | any string |
-  POSIX extended regular expression for highlight.
+| highlight_regex | | any string
+| POSIX extended regular expression for highlight.
 
-| highlight_tags_restrict | | comma separated list of tags |
-  Restrict highlights to messages with these tags in this buffer
+| highlight_tags_restrict | | comma separated list of tags
+| Restrict highlights to messages with these tags in this buffer
   (it is possible to combine many tags as a logical "and" with separator "+",
    for example: "nick_toto+irc_action").
 
-| highlight_tags | | comma separated list of tags |
-  Force highlight on messages with these tags in this buffer
+| highlight_tags | | comma separated list of tags
+| Force highlight on messages with these tags in this buffer
   (it is possible to combine many tags as a logical "and" with separator "+",
    for example: "nick_toto+irc_action").
 
-| hotlist_max_level_nicks | | comma separated list of "nick:level" |
-  Comma separated list of nicks with max level for hotlist on this buffer
+| hotlist_max_level_nicks | | comma separated list of "nick:level"
+| Comma separated list of nicks with max level for hotlist on this buffer
   (level can be: -1: never in hotlist, 0: low, 1: message, 2: private,
   3: highlight), for example: "joe:2,mike:-1,robert:-1" (joe will never produce
   highlight on buffer, mike and robert will never change hotlist).
 
-| hotlist_max_level_nicks_add | | comma separated list of "nick:level" |
-  Comma separated list of nicks with level for hotlist, these nicks are
+| hotlist_max_level_nicks_add | | comma separated list of "nick:level"
+| Comma separated list of nicks with level for hotlist, these nicks are
   added to existing nicks in buffer.
 
-| hotlist_max_level_nicks_del | | comma separated list of nicks |
-  Comma separated list of nicks to remove from hotlist max levels.
+| hotlist_max_level_nicks_del | | comma separated list of nicks
+| Comma separated list of nicks to remove from hotlist max levels.
 
-| key_bind_xxx | | any string |
-  Bind a new key _xxx_, specific to this buffer, value is command to execute
+| key_bind_xxx | | any string
+| Bind a new key _xxx_, specific to this buffer, value is command to execute
   for this key.
 
-| key_unbind_xxx | | - |
-  Unbind key _xxx_ for this buffer.
+| key_unbind_xxx | | -
+| Unbind key _xxx_ for this buffer.
 
-| input | | any string |
-  Set new value for buffer input.
+| input | | any string
+| Set new value for buffer input.
 
-| input_pos | | position |
-  Set cursor position in buffer input.
+| input_pos | | position
+| Set cursor position in buffer input.
 
-| input_get_unknown_commands | | "0" or "1" |
-  "0" to disable unknown commands on this buffer (default behavior), "1" to
+| input_get_unknown_commands | | "0" or "1"
+| "0" to disable unknown commands on this buffer (default behavior), "1" to
   get unknown commands, for example if user type "/unknowncmd", buffer will
   receive it (no error about unknown command).
 
-| input_get_empty | | "0" or "1" |
-  "0" to disable empty input on this buffer (default behavior), "1" to get empty input.
+| input_get_empty | | "0" or "1"
+| "0" to disable empty input on this buffer (default behavior), "1" to get empty input.
 
-| input_multiline | | "0" or "1" |
-  "0" to send each line separately to this buffer (default behavior), "1" to
+| input_multiline | | "0" or "1"
+| "0" to send each line separately to this buffer (default behavior), "1" to
   send multiple lines as a single message.
 
-| localvar_set_xxx | | any string |
-  Set new value for local variable _xxx_ (variable is created if it does not
+| localvar_set_xxx | | any string
+| Set new value for local variable _xxx_ (variable is created if it does not
   exist).
 
-| localvar_del_xxx | | - |
-  Remove local variable _xxx_.
+| localvar_del_xxx | | -
+| Remove local variable _xxx_.
 |===
 
 C example:
@@ -14457,11 +14457,11 @@ Properties:
 |===
 | Name | Value | Description
 
-| color | WeeChat color option name |
-  See argument "color" of function <<_nicklist_add_group,nicklist_add_group>>.
+| color | WeeChat color option name
+| See argument "color" of function <<_nicklist_add_group,nicklist_add_group>>.
 
-| visible | "0", "1" |
-  "0" = hidden group, "1" = visible group.
+| visible | "0", "1"
+| "0" = hidden group, "1" = visible group.
 |===
 
 C examples:
@@ -14661,17 +14661,17 @@ Properties:
 |===
 | Name | Value | Description
 
-| color | WeeChat color option name |
-  See argument "color" of function <<_nicklist_add_nick,nicklist_add_nick>>.
+| color | WeeChat color option name
+| See argument "color" of function <<_nicklist_add_nick,nicklist_add_nick>>.
 
-| prefix | any string |
-  Prefix of nick.
+| prefix | any string
+| Prefix of nick.
 
-| prefix_color | WeeChat color option name |
-  See argument "prefix_color" of function <<_nicklist_add_nick,nicklist_add_nick>>.
+| prefix_color | WeeChat color option name
+| See argument "prefix_color" of function <<_nicklist_add_nick,nicklist_add_nick>>.
 
-| visible | "0", "1" |
-  "0" = hidden nick, "1" = visible nick.
+| visible | "0", "1"
+| "0" = hidden nick, "1" = visible nick.
 |===
 
 C examples:
@@ -16695,22 +16695,22 @@ Examples of variables and the corresponding array size (_WeeChat ≥ 3.4_):
 |===
 | Variable declaration in C | Hdata type | Array size | Description
 
-| `+int *numbers;+` | WEECHAT_HDATA_INTEGER | `+*,2+` |
-  Allocated array of 2 integers.
+| `+int *numbers;+` | WEECHAT_HDATA_INTEGER | `+*,2+`
+| Allocated array of 2 integers.
 
-| `+int *numbers;+` | WEECHAT_HDATA_INTEGER | `+*,array_size+` |
-  Allocated array of integers, the size is stored in another variable called
+| `+int *numbers;+` | WEECHAT_HDATA_INTEGER | `+*,array_size+`
+| Allocated array of integers, the size is stored in another variable called
   "array_size".
 
-| `+int numbers[3];+` | WEECHAT_HDATA_INTEGER | `+3+` |
-  Static array of 3 integers.
+| `+int numbers[3];+` | WEECHAT_HDATA_INTEGER | `+3+`
+| Static array of 3 integers.
 
-| `+char **words;+` | WEECHAT_HDATA_STRING | `+*,*+` |
-  Allocated array of strings, dynamic size (NULL pointer must be present after
+| `+char **words;+` | WEECHAT_HDATA_STRING | `+*,*+`
+| Allocated array of strings, dynamic size (NULL pointer must be present after
   last word).
 
-| `+char **words;+` | WEECHAT_HDATA_STRING | `+*,count_words+` |
-  Allocated array of strings, the size is stored in another variable called
+| `+char **words;+` | WEECHAT_HDATA_STRING | `+*,count_words+`
+| Allocated array of strings, the size is stored in another variable called
   "count_words".
 |===
 

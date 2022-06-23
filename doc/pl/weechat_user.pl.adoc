@@ -212,116 +212,116 @@ Lista popularnych opcji:
 |===
 | Opcja  | Wartość | Wartość domyślna | Opis
 
-| CMAKE_BUILD_TYPE | `Debug`, `Release`, `RelWithDebInfo`, `MinSizeRel` | |
-  Typ budowania pakietu: `Debug` (lub `RelWithDebInfo`) jest zalecany dla
+| CMAKE_BUILD_TYPE | `Debug`, `Release`, `RelWithDebInfo`, `MinSizeRel` |
+| Typ budowania pakietu: `Debug` (lub `RelWithDebInfo`) jest zalecany dla
   wersjrozwojowej WeeChat.
 
-| CMAKE_INSTALL_PREFIX | katalog | /usr/local |
-  Katalog, do którego zostanie zainstalowany WeeChat.
+| CMAKE_INSTALL_PREFIX | katalog | /usr/local
+| Katalog, do którego zostanie zainstalowany WeeChat.
 
-| WEECHAT_HOME | katalog | (pusty ciąg) |
-  Domyślny katalog domowy dla WeeChat. +
+| WEECHAT_HOME | katalog | (pusty ciąg)
+| Domyślny katalog domowy dla WeeChat. +
   Bez ustawionej wartości (zalecane) domyślnie zostaną użyte wartości XDG.
   Jeśli wartość nie jest pusta zostanie użyty jeden katalog dla wszystkich plików.
   Wartością mogą być również 4 katalogi oddzielone dwukropkami, w takiej
   kolejności: config, data, cache, runtime.
 
-| ENABLE_ALIAS | `ON`, `OFF` | ON |
-  Kompilacja <<command_aliases,wtyczki alias>>.
+| ENABLE_ALIAS | `ON`, `OFF` | ON
+| Kompilacja <<command_aliases,wtyczki alias>>.
 
-| ENABLE_BUFLIST | `ON`, `OFF` | ON |
-  Kompilacja <<buflist,wtyczki buflist>>.
+| ENABLE_BUFLIST | `ON`, `OFF` | ON
+| Kompilacja <<buflist,wtyczki buflist>>.
 
-| ENABLE_CHARSET | `ON`, `OFF` | ON |
-  Kompilacja <<charset,wtyczki charset>>.
+| ENABLE_CHARSET | `ON`, `OFF` | ON
+| Kompilacja <<charset,wtyczki charset>>.
 
-| ENABLE_MAN | `ON`, `OFF` | OFF |
-  Generowanie strony manuala.
+| ENABLE_MAN | `ON`, `OFF` | OFF
+| Generowanie strony manuala.
 
-| ENABLE_DOC | `ON`, `OFF` | OFF |
-  Generowanie dokumentacji HTML.
+| ENABLE_DOC | `ON`, `OFF` | OFF
+| Generowanie dokumentacji HTML.
 
-| ENABLE_ENCHANT | `ON`, `OFF` | OFF |
-  Kompilacja <<spell_checking,wtyczki spell>> z Enchant.
+| ENABLE_ENCHANT | `ON`, `OFF` | OFF
+| Kompilacja <<spell_checking,wtyczki spell>> z Enchant.
 
-| ENABLE_EXEC | `ON`, `OFF` | ON |
-  Kompilacja <<external_commands,wtyczki exec>>.
+| ENABLE_EXEC | `ON`, `OFF` | ON
+| Kompilacja <<external_commands,wtyczki exec>>.
 
-| ENABLE_FIFO | `ON`, `OFF` | ON |
-  Kompilacja <<fifo_pipe,wtyczki fifo>>.
+| ENABLE_FIFO | `ON`, `OFF` | ON
+| Kompilacja <<fifo_pipe,wtyczki fifo>>.
 
-| ENABLE_FSET | `ON`, `OFF` | ON |
-  Kompilacja <<fset,wtyczki fset>>.
+| ENABLE_FSET | `ON`, `OFF` | ON
+| Kompilacja <<fset,wtyczki fset>>.
 
-| ENABLE_GUILE | `ON`, `OFF` | ON |
-  Kompilacja <<scripting_plugins,wtyczki guile>> (Scheme).
+| ENABLE_GUILE | `ON`, `OFF` | ON
+| Kompilacja <<scripting_plugins,wtyczki guile>> (Scheme).
 
-| ENABLE_IRC | `ON`, `OFF` | ON |
-  Kompilacja <<irc,wtyczki IRC>>.
+| ENABLE_IRC | `ON`, `OFF` | ON
+| Kompilacja <<irc,wtyczki IRC>>.
 
-| ENABLE_JAVASCRIPT | `ON`, `OFF` | OFF |
-  Kompilacja <<scripting_plugins,wtyczki javascript>>.
+| ENABLE_JAVASCRIPT | `ON`, `OFF` | OFF
+| Kompilacja <<scripting_plugins,wtyczki javascript>>.
 
-| ENABLE_LARGEFILE | `ON`, `OFF` | ON |
-  Wsparcie dla dużych plików.
+| ENABLE_LARGEFILE | `ON`, `OFF` | ON
+| Wsparcie dla dużych plików.
 
-| ENABLE_LOGGER | `ON`, `OFF` | ON |
-  Kompilacja <<buffer_logging,wtyczki logger>>.
+| ENABLE_LOGGER | `ON`, `OFF` | ON
+| Kompilacja <<buffer_logging,wtyczki logger>>.
 
-| ENABLE_LUA | `ON`, `OFF` | ON |
-  Kompilacja <<scripting_plugins,wtyczki lua>>.
+| ENABLE_LUA | `ON`, `OFF` | ON
+| Kompilacja <<scripting_plugins,wtyczki lua>>.
 
-| ENABLE_NCURSES | `ON`, `OFF` | ON |
-  Kompilacja interfejsu Ncurses.
+| ENABLE_NCURSES | `ON`, `OFF` | ON
+| Kompilacja interfejsu Ncurses.
 
-| ENABLE_NLS | `ON`, `OFF` | ON |
-  Włączenie NLS (tłumaczenia).
+| ENABLE_NLS | `ON`, `OFF` | ON
+| Włączenie NLS (tłumaczenia).
 
-| ENABLE_PERL | `ON`, `OFF` | ON |
-  Kompilacja <<scripting_plugins,wtyczki perl>>.
+| ENABLE_PERL | `ON`, `OFF` | ON
+| Kompilacja <<scripting_plugins,wtyczki perl>>.
 
-| ENABLE_PHP | `ON`, `OFF` | ON |
-  Kompilacja <<scripting_plugins,wtyczki PHP>>.
+| ENABLE_PHP | `ON`, `OFF` | ON
+| Kompilacja <<scripting_plugins,wtyczki PHP>>.
 
-| ENABLE_PYTHON | `ON`, `OFF` | ON |
-  Kompilacja <<scripting_plugins,wtyczki Python>>.
+| ENABLE_PYTHON | `ON`, `OFF` | ON
+| Kompilacja <<scripting_plugins,wtyczki Python>>.
 
-| ENABLE_PYTHON2 | `ON`, `OFF` | OFF |
-  Kompilacja <<scripting_plugins,wtyczki Python>> z użyciem Pythona 2 zamiast Pythona 3.
+| ENABLE_PYTHON2 | `ON`, `OFF` | OFF
+| Kompilacja <<scripting_plugins,wtyczki Python>> z użyciem Pythona 2 zamiast Pythona 3.
 
-| ENABLE_RELAY | `ON`, `OFF` | ON |
-  Kompilacja <<relay,wtyczki relay>>.
+| ENABLE_RELAY | `ON`, `OFF` | ON
+| Kompilacja <<relay,wtyczki relay>>.
 
-| ENABLE_RUBY | `ON`, `OFF` | ON |
-  Kompilacja <<scripting_plugins,wtyczki ruby>>.
+| ENABLE_RUBY | `ON`, `OFF` | ON
+| Kompilacja <<scripting_plugins,wtyczki ruby>>.
 
-| ENABLE_SCRIPT | `ON`, `OFF` | ON |
-  Kompilacja <<script_manager,wtyczki script>>.
+| ENABLE_SCRIPT | `ON`, `OFF` | ON
+| Kompilacja <<script_manager,wtyczki script>>.
 
-| ENABLE_SCRIPTS | `ON`, `OFF` | ON |
-  Kompilacja <<scripting_plugins,wtyczek skryptowych>> (Python, Perl, Ruby, Lua,
+| ENABLE_SCRIPTS | `ON`, `OFF` | ON
+| Kompilacja <<scripting_plugins,wtyczek skryptowych>> (Python, Perl, Ruby, Lua,
   Tcl, Guile, JavaScript, PHP).
 
-| ENABLE_SPELL | `ON`, `OFF` | ON |
-  Kompilacja <<spell_checking,wtyczki spell>>.
+| ENABLE_SPELL | `ON`, `OFF` | ON
+| Kompilacja <<spell_checking,wtyczki spell>>.
 
-| ENABLE_TCL | `ON`, `OFF` | ON |
-  Kompilacja <<scripting_plugins,wtyczki tcl>>.
+| ENABLE_TCL | `ON`, `OFF` | ON
+| Kompilacja <<scripting_plugins,wtyczki tcl>>.
 
-| ENABLE_TRIGGER | `ON`, `OFF` | ON |
-  Kompilacja <<trigger,wtyczki trigger>>.
+| ENABLE_TRIGGER | `ON`, `OFF` | ON
+| Kompilacja <<trigger,wtyczki trigger>>.
 
-| ENABLE_TYPING | `ON`, `OFF` | ON |
-  Kompilacja <<typing_notifications,wtyczki typing>>.
+| ENABLE_TYPING | `ON`, `OFF` | ON
+| Kompilacja <<typing_notifications,wtyczki typing>>.
 
-| ENABLE_XFER | `ON`, `OFF` | ON |
-  Kompilacja <<xfer,wtyczki xfer>>.
+| ENABLE_XFER | `ON`, `OFF` | ON
+| Kompilacja <<xfer,wtyczki xfer>>.
 
-| ENABLE_TESTS | `ON`, `OFF` | OFF |
-  Kompiluje testy.
+| ENABLE_TESTS | `ON`, `OFF` | OFF
+| Kompiluje testy.
 
-| ENABLE_CODE_COVERAGE | `ON`, `OFF` | OFF |
-  Kompilacja z opcja pokrycia kodu. +
+| ENABLE_CODE_COVERAGE | `ON`, `OFF` | OFF
+| Kompilacja z opcja pokrycia kodu. +
   Ta opcja powinna być używana tylko dla testów, w celu pomiaru pokrycia kodu.
 |===
 
@@ -1348,89 +1348,89 @@ WeeChat i jego wtyczki domyślnie tworzą następujące zmienne:
 |===
 | Nazwa | Wartość | Opis
 
-| away |
-  dowolny ciąg |
-  Powód nieobecności na serwerze, ustawiane przez wtyczkę irc.
+| away
+| dowolny ciąg
+| Powód nieobecności na serwerze, ustawiane przez wtyczkę irc.
 
-| channel |
-  dowolny ciąg |
-  Nazwa kanału, ustawiana przez wtyczki irc/xfer i bufory z
+| channel
+| dowolny ciąg
+| Nazwa kanału, ustawiana przez wtyczki irc/xfer i bufory z
   informacjami do debugowania wtyczek relay/trigger.
 
-| charset_modifier |
-  dowolny ciąg |
-  Modyfikacja kodowania używanego na kanale, ustawiane przez wtyczkę irc.
+| charset_modifier
+| dowolny ciąg
+| Modyfikacja kodowania używanego na kanale, ustawiane przez wtyczkę irc.
 
-| completion_default_template |
-  dowolny ciąg |
-  Domyślny szablon dopełnień dla bufora, nadpisuje zmienną
+| completion_default_template
+| dowolny ciąg
+| Domyślny szablon dopełnień dla bufora, nadpisuje zmienną
   `weechat.completion.default_template`.
 
-| filter |
-  dowolny ciąg |
-  Filtry zdefiniowane dla buforów jak `/fset`, `/server raw` (irc) i `/script`.
+| filter
+| dowolny ciąg
+| Filtry zdefiniowane dla buforów jak `/fset`, `/server raw` (irc) i `/script`.
 
-| host |
-  dowolny ciąg |
-  Własny host (jeśli jest znany), ustawiane przez wtyczkę irc.
+| host
+| dowolny ciąg
+| Własny host (jeśli jest znany), ustawiane przez wtyczkę irc.
 
-| lag |
-  dowolny ciąg |
-  Opóźnienie serwera, ustawiane przez wtyczkę irc.
+| lag
+| dowolny ciąg
+| Opóźnienie serwera, ustawiane przez wtyczkę irc.
 
-| name |
-  dowolny ciąg |
-  Nazwa bufora (uważaj, nie jest to pełna nazwa i nie wystarczy ona do
+| name
+| dowolny ciąg
+| Nazwa bufora (uważaj, nie jest to pełna nazwa i nie wystarczy ona do
   zidentyfikowania i wyszukania bufora).
 
-| nick |
-  dowolny ciąg |
-  Nazwa użytkownika, ustawiane przez wtyczki irc i xfer.
+| nick
+| dowolny ciąg
+| Nazwa użytkownika, ustawiane przez wtyczki irc i xfer.
 
-| no_log |
-  `1` (lub dowolny niepusty ciąg) |
-  Jeśli jest ustawiona, wiadomości z bufora nie są logowane.
+| no_log
+| `1` (lub dowolny niepusty ciąg)
+| Jeśli jest ustawiona, wiadomości z bufora nie są logowane.
 
-| plugin |
-  dowolny ciąg |
-  Nazwa wtyczki, która stworzyła bufor (`core` dla buforów WeeChat).
+| plugin
+| dowolny ciąg
+| Nazwa wtyczki, która stworzyła bufor (`core` dla buforów WeeChat).
 
-| script_close_cb |
-  dowolny ciąg |
-  Callback zamykania bufora zdefiniowany przez skrypt.
+| script_close_cb
+| dowolny ciąg
+| Callback zamykania bufora zdefiniowany przez skrypt.
 
-| script_close_cb_data |
-  dowolny ciąg |
-  Dane dla callbacka zamykania bufora zdefiniowane przez skrypt.
+| script_close_cb_data
+| dowolny ciąg
+| Dane dla callbacka zamykania bufora zdefiniowane przez skrypt.
 
-| script_input_cb |
-  dowolny ciąg |
-  Callback wprowadzania danych w buforze zdefiniowany przez skrypt.
+| script_input_cb
+| dowolny ciąg
+| Callback wprowadzania danych w buforze zdefiniowany przez skrypt.
 
-| script_input_cb_data |
-  dowolny ciąg |
-  Dane dla callbacka wprowadzania danych w buforze zdefiniowane przez skrypt.
+| script_input_cb_data
+| dowolny ciąg
+| Dane dla callbacka wprowadzania danych w buforze zdefiniowane przez skrypt.
 
-| script_name |
-  dowolny ciąg |
-  Nazwa skryptu, który stworzył bufor.
+| script_name
+| dowolny ciąg
+| Nazwa skryptu, który stworzył bufor.
 
-| server |
-  dowolny ciąg |
-  Nazwa serwera ustawiana przez wtyczkę irc albo bufor z informacjami do
+| server
+| dowolny ciąg
+| Nazwa serwera ustawiana przez wtyczkę irc albo bufor z informacjami do
   debugowania wtyczki relay/trigger.
 
-| spell_suggest |
-  dowolny ciąg |
-  Źle napisane słowo i sugestie (format: "słowo:sugestie"), ustawiane przez
+| spell_suggest
+| dowolny ciąg
+| Źle napisane słowo i sugestie (format: "słowo:sugestie"), ustawiane przez
   wtyczkę spell.
 
-| trigger_filter |
-  dowolny ciąg |
-  Filtr triggerów, ustawiany przez wtyczkę trigger.
+| trigger_filter
+| dowolny ciąg
+| Filtr triggerów, ustawiany przez wtyczkę trigger.
 
-| type |
-  dowolny ciąg, na przykład:
+| type
+| dowolny ciąg, na przykład:
   `channel`,
   `debug`,
   `exec`,
@@ -1440,8 +1440,8 @@ WeeChat i jego wtyczki domyślnie tworzą następujące zmienne:
   `script`,
   `server`,
   `user`,
-  `xfer` |
-  Typ bufora ustawiany przez WeeChat i wiele wtyczek.
+  `xfer`
+| Typ bufora ustawiany przez WeeChat i wiele wtyczek.
 
 |===
 
@@ -2665,66 +2665,66 @@ Lista opcji dla pasków:
 |===
 | Opcja | Wartości | Opis
 
-| type | `root`, `window` |
-  Pasek z typem `root` jest wyświetlany dokładnie jeden raz na ekranie, poza
+| type | `root`, `window`
+| Pasek z typem `root` jest wyświetlany dokładnie jeden raz na ekranie, poza
   wszystkimi oknami. Domyślny pasek _buflist_ ma typ `root`. +
   Pasek z typem `window` wyświetlany jest w każdym oknie, na przykład jeśli
   podzielisz jednorazowo ekran (używając `/window splith` lun `/window splitv`)
   otrzymasz po jednym pasku w każdym oknie. Domyślnie paski _title_, _status_,
   _input_ i _nicklist_ mają typ `window`.
 
-| position | `top`, `bottom`, `left`, `right` |
-  Pozycja paska: powyżej/poniżej ekranu rozmowy, po jego lewej/prawej stronie.
+| position | `top`, `bottom`, `left`, `right`
+| Pozycja paska: powyżej/poniżej ekranu rozmowy, po jego lewej/prawej stronie.
 
-| priority | integer ≥ 0 |
-  Priorytet wyświetlania paska: jest on używany do uporządkowania pasków na
+| priority | integer ≥ 0
+| Priorytet wyświetlania paska: jest on używany do uporządkowania pasków na
   ekranie, kiedy więcej niż jeden pasek posiada ten sam typ i położenie. +
   Paski są wyświetlane od brzegu do środka ekranu. Paski z wyższym priorytetem
   zostaną wyświetlone na początku, czyli bliżej krawędzi. +
   Przykład: pasek _input_ ma priorytet 1000, dlatego jest wyświetlany przed
   paskiem _status_, który ma priorytet 500.
 
-| size | integer ≥ 0 |
-  Rozmiar paska:  ilość kolumn dla pozycji lewo/prawo, numer linii dla pozycji
+| size | integer ≥ 0
+| Rozmiar paska:  ilość kolumn dla pozycji lewo/prawo, numer linii dla pozycji
   góra/dół. Rozmiar `0` oznacza automatyczny - rozmiar zostanie wyliczony zgodnie
   z wyświetlaną zawartością.
 
-| size_max | integer ≥ 0 |
-  Maksymalny rozmiar paska, `0` = brak limitu (opcja ta jest używana tylko jeśli
+| size_max | integer ≥ 0
+| Maksymalny rozmiar paska, `0` = brak limitu (opcja ta jest używana tylko jeśli
   `size` = 0).
 
-| color_bg | color |
-  Domyślny kolor tła paska.
+| color_bg | color
+| Domyślny kolor tła paska.
 
-| color_fg | color |
-  Domyślny kolor tekstu na pasku.
+| color_fg | color
+| Domyślny kolor tekstu na pasku.
 
-| color_delim | color |
-  Kolor separatorów na pasku.
+| color_delim | color
+| Kolor separatorów na pasku.
 
-| hidden | `on`, `off` |
-  Kiedy ta opcja jest ustawiona na `on`, pasek jest ukrywany. +
+| hidden | `on`, `off`
+| Kiedy ta opcja jest ustawiona na `on`, pasek jest ukrywany. +
   Uwaga: zamiast zmiany tej opcji zaleca się użycie komendy `/bar`, na przykład:
   `/bar toggle nicklist` (zobacz komendę <<command_weechat_bar,/bar>> po więcej
   informacji).
 
-| separator | `on`, `off` |
-  Kiedy ta opcja jest ustawiona na `on`, separator (linia) jest wyświetlany
+| separator | `on`, `off`
+| Kiedy ta opcja jest ustawiona na `on`, separator (linia) jest wyświetlany
   pomiędzy tym paskiem a pozostałymi (lub oknem rozmowy).
 
-| items | string |
-  Lista _elementów_ (zobacz <<bar_items,elementy>> po więcej informacji).
+| items | string
+| Lista _elementów_ (zobacz <<bar_items,elementy>> po więcej informacji).
 
-| filling_left_right | `+horizontal+`, `+vertical+`, `+columns_horizontal+`, `+columns_vertical+` |
-  Typ wypełnienia paska dla pozycji o pozycji `left` lub `right` (zobacz
+| filling_left_right | `+horizontal+`, `+vertical+`, `+columns_horizontal+`, `+columns_vertical+`
+| Typ wypełnienia paska dla pozycji o pozycji `left` lub `right` (zobacz
   <<bar_filling,wypełnienie>> po więcej informacji).
 
-| filling_top_bottom | `+horizontal+`, `+vertical+`, `+columns_horizontal+`, `+columns_vertical+` |
-  Typ wypełnienia paska dla pozycji o pozycji `top` lub `bottom` (zobacz
+| filling_top_bottom | `+horizontal+`, `+vertical+`, `+columns_horizontal+`, `+columns_vertical+`
+| Typ wypełnienia paska dla pozycji o pozycji `top` lub `bottom` (zobacz
   <<bar_filling,wypełnienie>> po więcej informacji).
 
-| conditions | string |
-  Warunki wyświetlania paska (zobacz <<bar_conditions,warunki>> po więcej
+| conditions | string
+| Warunki wyświetlania paska (zobacz <<bar_conditions,warunki>> po więcej
   informacji).
 |===
 
@@ -3939,15 +3939,15 @@ Następujące sygnały są przechwytywane przez wtyczke typing:
 |===
 | Sygnal | Argumenty | Opis
 
-| typing_set_nick |
-  Ciąg: wskaźnik bufora + ";" + stan (jeden z: "off", "typing", "paused",
+| typing_set_nick
+| Ciąg: wskaźnik bufora + ";" + stan (jeden z: "off", "typing", "paused",
   "cleared") + ";" + nick. +
-  Przykład: "0x1234abcd;typing;alice". |
-  Ustawia stan pisania dla nicka w buforze.
+  Przykład: "0x1234abcd;typing;alice".
+| Ustawia stan pisania dla nicka w buforze.
 
-| typing_reset_buffer |
-  Wskaźnik: bufor. |
-  Usuwa status pisania dla nicków w buforze.
+| typing_reset_buffer
+| Wskaźnik: bufor.
+| Usuwa status pisania dla nicków w buforze.
 |===
 
 [[typing_options]]
@@ -4293,25 +4293,25 @@ Lista domyśłnych triggerów:
 |===
 | Nazwa | Hook | Opis
 
-| beep | print |
-  Powiadamiaj o podświetleniach/prywatnej wiadomości.
+| beep | print
+| Powiadamiaj o podświetleniach/prywatnej wiadomości.
 
-| cmd_pass | modifier |
-  Ukrywa hasło w komendach:
+| cmd_pass | modifier
+| Ukrywa hasło w komendach:
   `pass:[/msg nickserv id\|identify\|set password\|ghost\|release\|regain\|recover]`,
   `pass:[/oper]`,
   `pass:[/quote pass]`,
   `pass:[/secure passphrase\|decrypt\|set]`.
 
-| cmd_pass_register | modifier |
-  Ukrywa hasło w komendzie `pass:[/msg nickserv register]`.
+| cmd_pass_register | modifier
+| Ukrywa hasło w komendzie `pass:[/msg nickserv register]`.
 
-| msg_auth | modifier |
-  Ukrywa hasło w wiadomości IRC auth (wiadomość otrzymana od serwera po
+| msg_auth | modifier
+| Ukrywa hasło w wiadomości IRC auth (wiadomość otrzymana od serwera po
   wykonaniu komendy przez użytkownika).
 
-| server_pass | modifier |
-  Ukrywa hasło serwera w komendach `/server` i `/connect`.
+| server_pass | modifier
+| Ukrywa hasło serwera w komendach `/server` i `/connect`.
 |===
 
 [[trigger_anatomy]]
@@ -4323,37 +4323,37 @@ Trigger posiada następujące opcje (nazwy to `trigger.trigger.<nazwa>.<opcja>`)
 |===
 | Opcja | Wartość | Opis
 
-| enabled | `on`, `off` |
-  Kiedy wartość ustawiona jest na `off`, trigger jest wyłączony i akcje nie będą
+| enabled | `on`, `off`
+| Kiedy wartość ustawiona jest na `off`, trigger jest wyłączony i akcje nie będą
   więcej wykonywane.
 
 | hook | `+signal+`, `+hsignal+`, `+modifier+`, `+line+`, `+print+`, `+command+`,
-  `+command_run+`, `+timer+`, `+config+`, `+focus+`, `+info+`, `+info_hashtable+` |
-  Zdarzenia używane przez trigger. Więcej informacji można znaleźć w
+  `+command_run+`, `+timer+`, `+config+`, `+focus+`, `+info+`, `+info_hashtable+`
+| Zdarzenia używane przez trigger. Więcej informacji można znaleźć w
   link:weechat_plugin_api.en.html#hooks[WeeChat Plugin API Reference / Hooks] (Angielski).
 
-| arguments | string |
-  Argumenty dla zdarzenia, zależą od jego typu.
+| arguments | string
+| Argumenty dla zdarzenia, zależą od jego typu.
 
-| conditions | string |
-  Waruki do wykonania triggera; są one przetwarzane (zobacz komendę
+| conditions | string
+| Waruki do wykonania triggera; są one przetwarzane (zobacz komendę
   <<command_weechat_eval,/eval>>).
 
-| regex | string |
-  Jedno lub więcej rozszerzonych wyrażeń regularnych POSIX, do zamiany danych
+| regex | string
+| Jedno lub więcej rozszerzonych wyrażeń regularnych POSIX, do zamiany danych
   otrzymanych w odpowiedzi od podpiętego zdarzenia (i trochę rzeczy dodanych
   przez wtyczkę trigger) zobacz <<trigger_regex,wyrażenia regularne>>.
 
-| command | string |
-  Komenda do wykonania (wiele komend należy oddzielić średnikiem); jest to
+| command | string
+| Komenda do wykonania (wiele komend należy oddzielić średnikiem); jest to
   przetwarzane (zobacz komendę <<command_weechat_eval,/eval>>).
 
-| return_code | `+ok+`, `+ok_eat+`, `+error+` |
-  Kod wiadomości zwrotnej (domyślnie jest to `ok`, które powinno być używane dla
+| return_code | `+ok+`, `+ok_eat+`, `+error+`
+| Kod wiadomości zwrotnej (domyślnie jest to `ok`, które powinno być używane dla
   większości triggerów, pozostałe wartości są sporadycznie używane).
 
-| post_action | `none`, `disable`, `delete` |
-  Akcja wykonywana na triggerze po jego wykonaniu (domyślna wartość `none` powinna
+| post_action | `none`, `disable`, `delete`
+| Akcja wykonywana na triggerze po jego wykonaniu (domyślna wartość `none` powinna
   być użyta dla wszystkich triggerów, pozostałe wartości są sporadycznie używane).
 |===
 
@@ -4392,105 +4392,105 @@ Argumenty zależą od rodzaju uchwytu. Są oddzielane średnikami.
 |===
 | Uchwyt | Argumenty | Przykłady | Dokumentacja (API)
 
-| signal |
-  1. nazwa sygnału (dozwolony priorytet) (wymagane) +
+| signal
+| 1. nazwa sygnału (dozwolony priorytet) (wymagane) +
   2. nazwa sygnału (dozwolony priorytet) +
-  3. ... |
-  `+*,irc_in_privmsg+` +
+  3. ...
+| `+*,irc_in_privmsg+` +
   `+*,irc_in_privmsg;*,irc_in_notice+` +
-  `+signal_sigwinch+` |
-  link:weechat_plugin_api.en.html#_hook_signal[hook_signal] (Angielski)
+  `+signal_sigwinch+`
+| link:weechat_plugin_api.en.html#_hook_signal[hook_signal] (Angielski)
 
-| hsignal |
-  1. nazwa sygnału (dozwolony priorytet) (wymagane) +
+| hsignal
+| 1. nazwa sygnału (dozwolony priorytet) (wymagane) +
   2. nazwa sygnału (dozwolony priorytet) +
-  3. ... |
-  `+nicklist_nick_added+` |
-  link:weechat_plugin_api.en.html#_hook_hsignal[hook_hsignal] (Angielski)
+  3. ...
+| `+nicklist_nick_added+`
+| link:weechat_plugin_api.en.html#_hook_hsignal[hook_hsignal] (Angielski)
 
-| modifier |
-  1. nazwa modyfikatora (dozwolony priorytet) (wymagane) +
+| modifier
+| 1. nazwa modyfikatora (dozwolony priorytet) (wymagane) +
   2. nazwa modyfikatora (dozwolony priorytet) +
-  3. ... |
-  `+weechat_print+` +
-  `+5000\|input_text_display;5000\|history_add+` |
-  link:weechat_plugin_api.en.html#_hook_modifier[hook_modifier] (Angielski)
+  3. ...
+| `+weechat_print+` +
+  `+5000\|input_text_display;5000\|history_add+`
+| link:weechat_plugin_api.en.html#_hook_modifier[hook_modifier] (Angielski)
 
-| line |
-  1. typ bufora +
+| line
+| 1. typ bufora +
   2. nazwa bufora +
-  3. tagi |
-  `+formatted+` +
+  3. tagi
+| `+formatted+` +
   `+free+` +
   `+*;irc.libera.*+` +
   `+*;irc.libera.#weechat+` +
-  `+formatted;irc.libera.#weechat;irc_notice+` |
-  link:weechat_plugin_api.en.html#_hook_line[hook_line]
+  `+formatted;irc.libera.#weechat;irc_notice+`
+| link:weechat_plugin_api.en.html#_hook_line[hook_line]
 
-| print |
-  1. nazwa buforu +
+| print
+| 1. nazwa buforu +
   2. tagi +
   3. wiadomość +
-  4. odrzucić kolory (0/1) |
-  `+irc.libera.*+` +
+  4. odrzucić kolory (0/1)
+| `+irc.libera.*+` +
   `+irc.libera.#weechat+` +
   `+irc.libera.#weechat;irc_notice+` +
-  `+*;;;1+` |
-  link:weechat_plugin_api.en.html#_hook_print[hook_print] (Angielski)
+  `+*;;;1+`
+| link:weechat_plugin_api.en.html#_hook_print[hook_print] (Angielski)
 
-| command |
-  1. nazwa komendy dozwolony priorytet) (wymagane) +
+| command
+| 1. nazwa komendy dozwolony priorytet) (wymagane) +
   2. opis (przetwarzane, zobacz komendę <<command_weechat_eval,/eval>>) +
   3. argumenty (przetwarzane, zobacz komendę <<command_weechat_eval,/eval>>) +
   4. opis argumentów (przetwarzane, zobacz komendę <<command_weechat_eval,/eval>>) +
-  5. dopełnienie (przetwarzane, zobacz komendę <<command_weechat_eval,/eval>>) |
-  `+test+` +
+  5. dopełnienie (przetwarzane, zobacz komendę <<command_weechat_eval,/eval>>)
+| `+test+` +
   `+5000\|test+` +
-  `+test;test command;arg1 arg2;arg1: description 1${\n}arg2: description 2+` |
-  link:weechat_plugin_api.en.html#_hook_command[hook_command] (Angielski)
+  `+test;test command;arg1 arg2;arg1: description 1${\n}arg2: description 2+`
+| link:weechat_plugin_api.en.html#_hook_command[hook_command] (Angielski)
 
-| command_run |
-  1. komenda (dozwolony priorytet) (wymagane) +
+| command_run
+| 1. komenda (dozwolony priorytet) (wymagane) +
   2. komenda (dozwolony priorytet) +
-  3. ... |
-  `+/cmd argumenty+` |
-  link:weechat_plugin_api.en.html#_hook_command_run[hook_command_run] (Angielski)
+  3. ...
+| `+/cmd argumenty+`
+| link:weechat_plugin_api.en.html#_hook_command_run[hook_command_run] (Angielski)
 
-| timer |
-  1. interwał w milisekundach (wymagane) +
+| timer
+| 1. interwał w milisekundach (wymagane) +
   2. wyrównanie na sekundę (domyślnie: 0) +
-  3. maksymalna ilość wywołań (domyślnie: 0, co oznacza "brak końca") |
-  `+3600000+` +
-  `+60000;0;5+` |
-  link:weechat_plugin_api.en.html#_hook_timer[hook_timer] (Angielski)
+  3. maksymalna ilość wywołań (domyślnie: 0, co oznacza "brak końca")
+| `+3600000+` +
+  `+60000;0;5+`
+| link:weechat_plugin_api.en.html#_hook_timer[hook_timer] (Angielski)
 
-| config |
-  1. nazwa opcji (dozwolony priorytet) (wymagane) +
+| config
+| 1. nazwa opcji (dozwolony priorytet) (wymagane) +
   2. nazwa opcji (dozwolony priorytet) +
-  3. ... |
-  `+weechat.look.*+` |
-  link:weechat_plugin_api.en.html#_hook_config[hook_config] (Angielski)
+  3. ...
+| `+weechat.look.*+`
+| link:weechat_plugin_api.en.html#_hook_config[hook_config] (Angielski)
 
-| focus |
-  1. nazwa obszaru (dozwolony priorytet) (wymagane) +
+| focus
+| 1. nazwa obszaru (dozwolony priorytet) (wymagane) +
   2. nazwa obszaru (dozwolony priorytet) +
-  3. ... |
-  `+buffer_nicklist+` |
-  link:weechat_plugin_api.en.html#_hook_focus[hook_focus] (Angielski)
+  3. ...
+| `+buffer_nicklist+`
+| link:weechat_plugin_api.en.html#_hook_focus[hook_focus] (Angielski)
 
-| info |
-  1. info name (dozwolony priorytet) (wymagane) +
+| info
+| 1. info name (dozwolony priorytet) (wymagane) +
   2. info name (dozwolony priorytet) +
-  3. ... |
-  `+my_info+` |
-  link:weechat_plugin_api.en.html#_hook_info[hook_info] (Angielski)
+  3. ...
+| `+my_info+`
+| link:weechat_plugin_api.en.html#_hook_info[hook_info] (Angielski)
 
-| info_hashtable |
-  1. info name (dozwolony priorytet) (wymagane) +
+| info_hashtable
+| 1. info name (dozwolony priorytet) (wymagane) +
   2. info name (dozwolony priorytet) +
-  3. ... |
-  `+my_info+` |
-  link:weechat_plugin_api.en.html#_hook_info_hashtable[hook_info_hashtable] (Angielski)
+  3. ...
+| `+my_info+`
+| link:weechat_plugin_api.en.html#_hook_info_hashtable[hook_info_hashtable] (Angielski)
 |===
 
 [[trigger_conditions]]

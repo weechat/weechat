@@ -1101,8 +1101,8 @@ Git репозиторијум се налази на следећој URL ад�
 |===
 | Компонента | Фајлови | Опис
 
-| core |
-  AUTHORS.adoc +
+| core
+| AUTHORS.adoc +
   ChangeLog.adoc +
   Contributing.adoc +
   .github/FUNDING.yml +
@@ -1114,76 +1114,76 @@ Git репозиторијум се налази на следећој URL ад�
   src/core/* +
   src/gui/* +
   version.sh +
-  weechat.desktop |
-  WeeChat језгро
+  weechat.desktop
+| WeeChat језгро
 
-| build |
-  autogen.sh +
+| build
+| autogen.sh +
   CMakeLists.txt +
   cmake/* +
   configure.ac +
   Makefile.am +
   tools/* +
   weechat.cygport.in +
-  weechat.spec |
-  Изградња
+  weechat.spec
+| Изградња
 
-| ci |
-  .github/workflows/* |
-  Непрекидна интеграција
+| ci
+| .github/workflows/*
+| Непрекидна интеграција
 
-| debian |
-  debian-devel/* +
-  debian-stable/* |
-  Debian паковање
+| debian
+| debian-devel/* +
+  debian-stable/*
+| Debian паковање
 
-| tests |
-  tests/* |
-  Тестови
+| tests
+| tests/*
+| Тестови
 
-| doc |
-  doc/* |
-  Општа ажурирања документације, на пример за изградњу
+| doc
+| doc/*
+| Општа ажурирања документације, на пример за изградњу
 
-| doc/man |
-  doc/xx/weechat.1.xx.adoc +
-  doc/xx/weechat-headless.1.xx.adoc |
-  Man странице
+| doc/man
+| doc/xx/weechat.1.xx.adoc +
+  doc/xx/weechat-headless.1.xx.adoc
+| Man странице
 
-| doc/faq |
-  doc/xx/weechat_faq.xx.adoc |
-  Често постављана питања (ЧПП)
+| doc/faq
+| doc/xx/weechat_faq.xx.adoc
+| Често постављана питања (ЧПП)
 
-| doc/quickstart |
-  doc/xx/weechat_quickstart.xx.adoc |
-  Водич за брзи почетак
+| doc/quickstart
+| doc/xx/weechat_quickstart.xx.adoc
+| Водич за брзи почетак
 
-| doc/user |
-  doc/xx/weechat_user.xx.adoc |
-  Корисничко упутство
+| doc/user
+| doc/xx/weechat_user.xx.adoc
+| Корисничко упутство
 
-| doc/scripting |
-  doc/xx/weechat_scripting.xx.adoc |
-  Водич за скриптовање
+| doc/scripting
+| doc/xx/weechat_scripting.xx.adoc
+| Водич за скриптовање
 
-| doc/api |
-  doc/xx/weechat_plugin_api.xx.adoc |
-  Референтни приручник API додатака
+| doc/api
+| doc/xx/weechat_plugin_api.xx.adoc
+| Референтни приручник API додатака
 
-| doc/relay |
-  doc/xx/weechat_relay_protocol.xx.adoc |
-  Релеј протокол
+| doc/relay
+| doc/xx/weechat_relay_protocol.xx.adoc
+| Релеј протокол
 
-| doc/dev |
-  doc/xx/weechat_dev.en.adoc |
-  Водич за програмере
+| doc/dev
+| doc/xx/weechat_dev.en.adoc
+| Водич за програмере
 
 | irc +
   python +
   relay +
-  … |
-  src/plugins/<име>/* |
-  Додатак
+  …
+| src/plugins/<име>/*
+| Додатак
 
 |===
 

@@ -1440,68 +1440,68 @@ WeeChat の予約識別子:
 
 [width="100%",cols="5m,5,3,4,7",options="header"]
 |===
-| 識別子 | _sync_ で受信 | 送信されるデータ |
-  説明 | 推奨するクライアントの挙動
+| 識別子 | _sync_ で受信 | 送信されるデータ
+| 説明 | 推奨するクライアントの挙動
 
-| _buffer_opened | buffers / buffer | hdata: buffer |
-  バッファのオープン | バッファを開く
+| _buffer_opened | buffers / buffer | hdata: buffer
+| バッファのオープン | バッファを開く
 
-| _buffer_type_changed | buffers / buffer | hdata: buffer |
-  バッファの種類変更 | バッファの種類を変更
+| _buffer_type_changed | buffers / buffer | hdata: buffer
+| バッファの種類変更 | バッファの種類を変更
 
-| _buffer_moved | buffers / buffer | hdata: buffer |
-  バッファの移動 | バッファを移動
+| _buffer_moved | buffers / buffer | hdata: buffer
+| バッファの移動 | バッファを移動
 
-| _buffer_merged | buffers / buffer | hdata: buffer |
-  バッファのマージ | バッファをマージ
+| _buffer_merged | buffers / buffer | hdata: buffer
+| バッファのマージ | バッファをマージ
 
-| _buffer_unmerged | buffers / buffer | hdata: buffer |
-  バッファのアンマージ | バッファをアンマージ
+| _buffer_unmerged | buffers / buffer | hdata: buffer
+| バッファのアンマージ | バッファをアンマージ
 
-| _buffer_hidden | buffers / buffer | hdata: buffer |
-  バッファを隠す | バッファを隠す
+| _buffer_hidden | buffers / buffer | hdata: buffer
+| バッファを隠す | バッファを隠す
 
-| _buffer_unhidden | buffers / buffer | hdata: buffer |
-  バッファを隠すことを止める | バッファを隠すことを止める
+| _buffer_unhidden | buffers / buffer | hdata: buffer
+| バッファを隠すことを止める | バッファを隠すことを止める
 
-| _buffer_renamed | buffers / buffer | hdata: buffer |
-  バッファのリネーム | バッファをリネーム
+| _buffer_renamed | buffers / buffer | hdata: buffer
+| バッファのリネーム | バッファをリネーム
 
-| _buffer_title_changed | buffers / buffer | hdata: buffer |
-  バッファのタイトル変更 | バッファのタイトルを変更
+| _buffer_title_changed | buffers / buffer | hdata: buffer
+| バッファのタイトル変更 | バッファのタイトルを変更
 
-| _buffer_localvar_added | buffers / buffer | hdata: buffer |
-  ローカル変数の追加 | バッファに対するローカル変数を追加
+| _buffer_localvar_added | buffers / buffer | hdata: buffer
+| ローカル変数の追加 | バッファに対するローカル変数を追加
 
-| _buffer_localvar_changed | buffers / buffer | hdata: buffer |
-  ローカル変数の変更 | バッファに対するローカル変数を変更
+| _buffer_localvar_changed | buffers / buffer | hdata: buffer
+| ローカル変数の変更 | バッファに対するローカル変数を変更
 
-| _buffer_localvar_removed | buffers / buffer | hdata: buffer |
-  ローカル変数を削除 | バッファからローカル変数を削除
+| _buffer_localvar_removed | buffers / buffer | hdata: buffer
+| ローカル変数を削除 | バッファからローカル変数を削除
 
-| _buffer_closing | buffers / buffer | hdata: buffer |
-  バッファのクローズ | バッファを閉じる
+| _buffer_closing | buffers / buffer | hdata: buffer
+| バッファのクローズ | バッファを閉じる
 
-| _buffer_cleared | buffer | hdata: buffer |
-  バッファのクリア | バッファをクリア
+| _buffer_cleared | buffer | hdata: buffer
+| バッファのクリア | バッファをクリア
 
-| _buffer_line_added | buffer | hdata: line |
-  バッファへの行追加 | バッファに行を表示
+| _buffer_line_added | buffer | hdata: line
+| バッファへの行追加 | バッファに行を表示
 
-| _nicklist | nicklist | hdata: nicklist_item |
-  バッファのニックネームリスト | ニックネームリストを置換
+| _nicklist | nicklist | hdata: nicklist_item
+| バッファのニックネームリスト | ニックネームリストを置換
 
-| _nicklist_diff | nicklist | hdata: nicklist_item |
-  バッファに対するニックネームの差分  | ニックネームリストを更新
+| _nicklist_diff | nicklist | hdata: nicklist_item
+| バッファに対するニックネームの差分  | ニックネームリストを更新
 
-| _pong | (常に) | string: ping arguments |
-  "ping" に対する応答 | 応答時間の測定
+| _pong | (常に) | string: ping arguments
+| "ping" に対する応答 | 応答時間の測定
 
-| _upgrade | upgrade | (空) |
-  WeeChat のアップグレード中 | WeeChat との同期を中止 (または切断)
+| _upgrade | upgrade | (空)
+| WeeChat のアップグレード中 | WeeChat との同期を中止 (または切断)
 
-| _upgrade_ended | upgrade | (空) |
-  WeeChat のアップグレード終了 | WeeChat との同期および再同期
+| _upgrade_ended | upgrade | (空)
+| WeeChat のアップグレード終了 | WeeChat との同期および再同期
 |===
 
 [[message_buffer_opened]]

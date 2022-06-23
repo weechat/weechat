@@ -1431,68 +1431,68 @@ Les identifiants réservés par WeeChat :
 
 [width="100%",cols="5m,5,3,4,7",options="header"]
 |===
-| Identifiant | Reçu avec _sync_ | Données envoyées |
-  Description | Action recommandée dans le client
+| Identifiant | Reçu avec _sync_ | Données envoyées
+| Description | Action recommandée dans le client
 
-| _buffer_opened | buffers / buffer | hdata : buffer |
-  Tampon ouvert. | Ouvrir le tampon.
+| _buffer_opened | buffers / buffer | hdata : buffer
+| Tampon ouvert. | Ouvrir le tampon.
 
-| _buffer_type_changed | buffers / buffer | hdata : buffer |
-  Type de tampon changé. | Changer le type de tampon.
+| _buffer_type_changed | buffers / buffer | hdata : buffer
+| Type de tampon changé. | Changer le type de tampon.
 
-| _buffer_moved | buffers / buffer | hdata : buffer |
-  Tampon déplacé. | Déplacer le tampon.
+| _buffer_moved | buffers / buffer | hdata : buffer
+| Tampon déplacé. | Déplacer le tampon.
 
-| _buffer_merged | buffers / buffer | hdata : buffer |
-  Tampon mélangé. | Mélanger le tampon.
+| _buffer_merged | buffers / buffer | hdata : buffer
+| Tampon mélangé. | Mélanger le tampon.
 
-| _buffer_unmerged | buffers / buffer | hdata : buffer |
-  Tampon sorti du mélange. | Sortir le tampon du mélange.
+| _buffer_unmerged | buffers / buffer | hdata : buffer
+| Tampon sorti du mélange. | Sortir le tampon du mélange.
 
-| _buffer_hidden | buffers / buffer | hdata : buffer |
-  Tampon masqué. | Masquer le le tampon.
+| _buffer_hidden | buffers / buffer | hdata : buffer
+| Tampon masqué. | Masquer le le tampon.
 
-| _buffer_unmerged | buffers / buffer | hdata : buffer |
-  Tampon démasqué. | Démasquer le tampon.
+| _buffer_unmerged | buffers / buffer | hdata : buffer
+| Tampon démasqué. | Démasquer le tampon.
 
-| _buffer_renamed | buffers / buffer | hdata : buffer |
-  Tampon renommé. | Renommer le tampon.
+| _buffer_renamed | buffers / buffer | hdata : buffer
+| Tampon renommé. | Renommer le tampon.
 
-| _buffer_title_changed | buffers / buffer | hdata : buffer |
-  Titre du tampon changé. | Changer le titre du tampon.
+| _buffer_title_changed | buffers / buffer | hdata : buffer
+| Titre du tampon changé. | Changer le titre du tampon.
 
-| _buffer_localvar_added | buffers / buffer | hdata : buffer |
-  Variable locale ajoutée. | Ajouter la variable locale dans le tampon.
+| _buffer_localvar_added | buffers / buffer | hdata : buffer
+| Variable locale ajoutée. | Ajouter la variable locale dans le tampon.
 
-| _buffer_localvar_changed | buffers / buffer | hdata : buffer |
-  Variable locale changée. | Changer la variable locale dans le tampon.
+| _buffer_localvar_changed | buffers / buffer | hdata : buffer
+| Variable locale changée. | Changer la variable locale dans le tampon.
 
-| _buffer_localvar_removed | buffers / buffer | hdata : buffer |
-  Variable locale supprimée. | Supprimer la variable locale du tampon.
+| _buffer_localvar_removed | buffers / buffer | hdata : buffer
+| Variable locale supprimée. | Supprimer la variable locale du tampon.
 
-| _buffer_closing | buffers / buffer | hdata : buffer |
-  Tampon qui se ferme. | Fermer le tampon.
+| _buffer_closing | buffers / buffer | hdata : buffer
+| Tampon qui se ferme. | Fermer le tampon.
 
-| _buffer_cleared | buffer | hdata : buffer |
-  Tampon qui est vidé. | Vider le tampon.
+| _buffer_cleared | buffer | hdata : buffer
+| Tampon qui est vidé. | Vider le tampon.
 
-| _buffer_line_added | buffer | hdata : line |
-  Ligne ajoutée dans le tampon. | Afficher la ligne dans le tampon.
+| _buffer_line_added | buffer | hdata : line
+| Ligne ajoutée dans le tampon. | Afficher la ligne dans le tampon.
 
-| _nicklist | nicklist | hdata : nicklist_item |
-  Liste de pseudos pour un tampon. | Remplacer la liste de pseudos.
+| _nicklist | nicklist | hdata : nicklist_item
+| Liste de pseudos pour un tampon. | Remplacer la liste de pseudos.
 
-| _nicklist_diff | nicklist | hdata : nicklist_item |
-  Différence de liste de pseudos pour un tampon . | Mettre à jour la liste de pseudos.
+| _nicklist_diff | nicklist | hdata : nicklist_item
+| Différence de liste de pseudos pour un tampon . | Mettre à jour la liste de pseudos.
 
-| _pong | (always) | chaîne : paramètres du ping |
-  Réponse à un "ping". | Mesurer le temps de réponse.
+| _pong | (always) | chaîne : paramètres du ping
+| Réponse à un "ping". | Mesurer le temps de réponse.
 
-| _upgrade | upgrade | (vide) |
-  WeeChat se met à jour. | Se désynchroniser de WeeChat (ou quitter).
+| _upgrade | upgrade | (vide)
+| WeeChat se met à jour. | Se désynchroniser de WeeChat (ou quitter).
 
-| _upgrade_ended | upgrade | (vide) |
-  WeeChat a été mis à jour. | (Re)synchroniser avec WeeChat.
+| _upgrade_ended | upgrade | (vide)
+| WeeChat a été mis à jour. | (Re)synchroniser avec WeeChat.
 |===
 
 [[message_buffer_opened]]
