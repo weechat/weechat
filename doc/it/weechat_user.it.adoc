@@ -3590,6 +3590,277 @@ which can also be for example `~/.weechat`.
 
 Per maggiori informazioni consultare https://www.oftc.net/NickServ/CertFP/
 
+// TRANSLATION MISSING
+[[irc_ircv3_support]]
+==== IRCv3 support
+
+WeeChat supports the following https://ircv3.net/irc/[IRCv3 extensions]:
+
+* <<irc_ircv3_account_notify,account-notify>>
+* <<irc_ircv3_account_tag,account-tag>>
+* <<irc_ircv3_away_notify,away-notify>>
+* <<irc_ircv3_cap_notify,cap-notify>>
+* <<irc_ircv3_chghost,chghost>>
+* <<irc_ircv3_extended_join,extended-join>>
+* <<irc_ircv3_invite_notify,invite-notify>>
+* <<irc_ircv3_message_tags,message-tags>>
+* <<irc_ircv3_monitor,monitor>>
+* <<irc_ircv3_multi_prefix,multi-prefix>>
+* <<irc_ircv3_sasl,SASL v3.2>>
+* <<irc_ircv3_server_time,server-time>>
+* <<irc_ircv3_setname,setname>>
+* <<irc_ircv3_typing,typing>>
+* <<irc_ircv3_userhost_in_names,userhost-in-names>>
+* <<irc_ircv3_whox,WHOX>>
+
+By default all capabilities supported by the server and WeeChat are
+automatically enabled
+(see option <<option_irc.server_default.capabilities,irc.server_default.capabilities>>).
+
+Tables with comparison of different IRC clients, including WeeChat, are available
+on this page: https://ircv3.net/software/clients.
+
+[[irc_ircv3_account_notify]]
+===== account-notify
+
+Specification: https://ircv3.net/specs/extensions/account-notify
+
+This capability allows the server to send messages when users identify or
+unidentify on the server. +
+WeeChat displays such messages if the option
+<<option_irc.look.display_account_message,irc.look.display_account_message>>
+is enabled (default value).
+
+Examples:
+
+....
+-- alice has identified as Alice01
+
+-- alice has unidentified
+....
+
+[[irc_ircv3_account_tag]]
+===== account-tag
+
+Specification: https://ircv3.net/specs/extensions/account-tag
+
+This capability allows the server to send account as message tag to commands
+sent to the client. +
+WeeChat parses this tag and saves it in the message, but it is not used or
+displayed. It can be used in <<command_filter,/filter>> command to filter
+messages matching specific accounts.
+
+Example of raw IRC message received:
+
+....
+@account=Alice01 :user@example.com PRIVMSG #test :Hello!
+....
+
+Message displayed in channel:
+
+....
+<alice> Hello!
+....
+
+Message with tags:
+
+....
+<alice> Hello! [irc_privmsg,irc_tag_account_Alice01,notify_message,prefix_nick_lightcyan,nick_alice,host_user@example.com,log1]
+....
+
+[[irc_ircv3_away_notify]]
+===== away-notify
+
+Specification: https://ircv3.net/specs/extensions/away-notify
+
+This capability allows the server to send away notifications for users present
+on the same channels as you.
+
+When the away status is changed for a user (away or back), this is reflected
+with a specific color in the nicklist, using the following options:
+
+* <<option_irc.server_default.away_check,irc.server_default.away_check>>
+* <<option_irc.server_default.away_check_max_nicks,irc.server_default.away_check_max_nicks>>
+* <<option_weechat.look.item_away_message,weechat.look.item_away_message>>
+
+[[irc_ircv3_cap_notify]]
+===== cap-notify
+
+Specification: https://ircv3.net/specs/extensions/capability-negotiation#the-cap-new-subcommand
+
+This capability allows the server to advertise on new or removed capabilities
+on the server (via `CAP NEW` and `CAP DEL` commands).
+
+Examples:
+
+....
+-- irc: client capability, now available: sasl
+
+-- irc: client capability, removed: sasl
+....
+
+[[irc_ircv3_chghost]]
+===== chghost
+
+Specification: https://ircv3.net/specs/extensions/chghost
+
+This capability allows the server to send messages when users change name or host. +
+When the option <<option_irc.look.smart_filter_chghost,irc.look.smart_filter_chghost>>
+is enabled (default value), the host changes are automatically hidden if the nick
+has not spoken for several minutes. +
+The color of the change host message is controlled by the option
+<<option_irc.color.message_chghost,irc.color.message_chghost>>.
+
+Example:
+
+....
+-- alice (user@example.com) has changed host to test.com
+....
+
+[[irc_ircv3_extended_join]]
+===== extended-join
+
+Specification: https://ircv3.net/specs/extensions/extended-join
+
+This capability allows the server to send account and real name when users
+join channels. +
+WeeChat displays this additional information in join messages if the option
+<<option_irc.look.display_extended_join,irc.look.display_extended_join>>
+is enabled (default value).
+
+Example:
+
+....
+--> john [John01] (John Doe) (~user@example.com) has joined #test
+....
+
+[[irc_ircv3_invite_notify]]
+===== invite-notify
+
+Specification: https://ircv3.net/specs/extensions/invite-notify
+
+This capability allows the server to send invite messages when users are
+invited to channels.
+
+Example:
+
+....
+-- alice ha invitato bob in #test
+....
+
+[[irc_ircv3_message_tags]]
+===== message-tags
+
+Specification: https://ircv3.net/specs/extensions/message-tags
+
+This capability allows to add metadata in messages. +
+These tags can be displayed using the command `/debug tags`.
+
+It must be enabled to use <<typing_notifications,typing notifications>>.
+
+[[irc_ircv3_monitor]]
+===== monitor
+
+Specification: https://ircv3.net/specs/extensions/monitor
+
+This capability allows the server to send notifications when clients become
+online/offline. +
+WeeChat automatically uses this extension if available when using the
+<<command_irc_notify,/notify>> command.
+
+[[irc_ircv3_multi_prefix]]
+===== multi-prefix
+
+Specification: https://ircv3.net/specs/extensions/multi-prefix
+
+This capability allows the server to send all user modes at once in
+<<command_irc_names,/names>> and <<command_irc_whois,/whois>> responses. +
+
+////
+Example: output of `/names`:
+
+....
+-- Nick #test: [@%+alice bob +carol]
+....
+////
+
+[NOTE]
+For now, WeeChat doesn't display all prefixes in the `/names` output, even if
+they are received and properly saved internally.
+
+Example: output of `/whois alice`:
+
+....
+-- [alice] @%+#test
+....
+
+[[irc_ircv3_sasl]]
+===== SASL
+
+Specification: https://ircv3.net/specs/extensions/sasl-3.2
+
+See the dedicated chapter <<irc_sasl_authentication,SASL authentication>>.
+
+[[irc_ircv3_server_time]]
+===== server-time
+
+Specification: https://ircv3.net/specs/extensions/server-time
+
+This capability allows the server to send time for messages as message tag. +
+When the time is received in a message, WeeChat uses it to display the message
+(it can then be displayed with a past date).
+
+The <<relay_irc_proxy,IRC proxy>> in Relay plugin supports this capability,
+so any IRC client of Relay should enable it to display the real message time
+in the backlog sent upon connection.
+
+[[irc_ircv3_setname]]
+===== setname
+
+Specification: https://ircv3.net/specs/extensions/setname
+
+This capability lets you change your real name by using the
+<<command_irc_setname,/setname>> command.
+
+[[irc_ircv3_typing]]
+===== typing
+
+Specification: https://ircv3.net/specs/client-tags/typing
+
+See the dedicated chapter <<typing_notifications,Typing notifications>>.
+
+[[irc_ircv3_userhost_in_names]]
+===== userhost-in-names
+
+Specification: https://ircv3.net/specs/extensions/userhost-in-names
+
+This capability allows the server to send hostnames in <<command_irc_names,/names>>
+responses.
+
+[NOTE]
+WeeChat doesn't display hostnames in the `/names` output.
+
+Example of raw IRC messages received without the capability:
+
+....
+:irc.server 353 alice = #test :@alice bob +carol
+....
+
+Example of raw IRC messages received with the capability:
+
+....
+:irc.server 353 alice = #test :@alice!user1@host1 bob!user2@host2 +carol!user3@host3
+....
+
+[[irc_ircv3_whox]]
+===== WHOX
+
+Specification: https://ircv3.net/specs/extensions/whox
+
+This capability lets you request additional fields in the WHO response
+(via the <<command_irc_who,/who>> command). +
+WeeChat displays all additional information received in the WHO output.
+
 [[irc_sasl_authentication]]
 ==== Autenticazione SASL
 
@@ -4148,7 +4419,7 @@ show a list of users currently typing a message on the buffer.
 It is used by IRC plugin on channel and private buffers, when the "message-tags"
 capability is enabled (you can check with <<command_irc_cap,/cap>> command). +
 Under the hood, typing client tag is used, following this specification:
-https://ircv3.net/specs/client-tags/typing.html.
+https://ircv3.net/specs/client-tags/typing.
 
 [[typing_activation]]
 === Activation
