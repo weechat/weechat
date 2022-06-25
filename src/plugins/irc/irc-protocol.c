@@ -1212,8 +1212,7 @@ IRC_PROTOCOL_CALLBACK(cap)
 
 /*
  * Callback for the IRC command "CHGHOST": user/host change of a nick (with
- * capability "chghost"):
- * https://ircv3.net/specs/extensions/chghost-3.2.html
+ * capability "chghost"): https://ircv3.net/specs/extensions/chghost
  *
  * Command looks like:
  *   CHGHOST user new.host.goes.here

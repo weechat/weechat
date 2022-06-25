@@ -1489,8 +1489,7 @@ IRC_COMMAND_CALLBACK(ban)
  *
  * Docs on capability negotiation:
  *   https://tools.ietf.org/html/draft-mitchell-irc-capabilities-01
- *   https://ircv3.net/specs/core/capability-negotiation-3.1.html
- *   https://ircv3.net/specs/core/capability-negotiation-3.2.html
+ *   https://ircv3.net/specs/extensions/capability-negotiation
  */
 
 IRC_COMMAND_CALLBACK(cap)
