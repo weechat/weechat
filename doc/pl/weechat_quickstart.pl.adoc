@@ -375,13 +375,16 @@ i zainstalować za pomocą komendy `/script`, na przykład:
 
 Więcej informacji można uzyskać wykonując komendę `/help script`.
 
-Listę skryptów dostepnych dla WeeChat można uzyskać wywołując komendę `/script`
-lub pod adresem https://weechat.org/scripts/
+// TRANSLATION MISSING
+A list of scripts is available in WeeChat with `/script` or on
+https://weechat.org/scripts/[this page ^↗^,window=_blank].
 
 [[more_doc]]
 == Więcej dokumentacji
 
-Możesz teraz używać WeeChat oraz przeczytać FAQ/dokumentację w razie innych pytań:
-https://weechat.org/doc/
+// TRANSLATION MISSING
+You can now use WeeChat and read
+https://weechat.org/doc/[FAQ/documentation ^↗^,window=_blank]
+for any other questions.
 
 Miłej pracy z WeeChat!

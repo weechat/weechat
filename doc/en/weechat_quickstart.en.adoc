@@ -370,13 +370,14 @@ for example:
 
 See `/help script` for more info.
 
-A list of scripts is available in WeeChat with `/script` or at this URL:
-https://weechat.org/scripts/
+A list of scripts is available in WeeChat with `/script` or on
+https://weechat.org/scripts/[this page ^↗^,window=_blank].
 
 [[more_doc]]
 == More documentation
 
-You can now use WeeChat and read FAQ/documentation for any other questions:
-https://weechat.org/doc/
+You can now use WeeChat and read
+https://weechat.org/doc/[FAQ/documentation ^↗^,window=_blank]
+for any other questions.
 
 Enjoy using WeeChat!

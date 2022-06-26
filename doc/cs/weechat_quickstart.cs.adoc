@@ -389,14 +389,16 @@ například:
 
 Zkuste `/help script` pro více informací.
 
-
-A seznam skriptů je dostupný v WeeChatu s příkazem `/script` nebo na této
-adrese https://weechat.org/scripts/
+// TRANSLATION MISSING
+A list of scripts is available in WeeChat with `/script` or on
+https://weechat.org/scripts/[this page ^↗^,window=_blank].
 
 [[more_doc]]
 == Další dokumentace
 
-Nyní jste schopni používat WeeChat a můžete si přečíst FAQ/dokumentaci pro
-jakékoliv další otázky: https://weechat.org/doc/
+// TRANSLATION MISSING
+You can now use WeeChat and read
+https://weechat.org/doc/[FAQ/documentation ^↗^,window=_blank]
+for any other questions.
 
 Ať máte radost z použití WeeChatu!

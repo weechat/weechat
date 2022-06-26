@@ -396,14 +396,16 @@ _foo_):
 
 Для получения дополнительной информации введите команду `/help script`.
 
-Список скриптов, доступных в WeeChat, можно просмотреть, введя команду `/script`, или на сайте:
-https://weechat.org/scripts/
+// TRANSLATION MISSING
+A list of scripts is available in WeeChat with `/script` or on
+https://weechat.org/scripts/[this page ^↗^,window=_blank].
 
 [[more_doc]]
 == Документация для дальнейшего чтения
 
-Теперь вы можете пользоваться WeeChat и консультироваться с FAQ/documentation
-по возникающим вопросам:
-https://weechat.org/doc/
+// TRANSLATION MISSING
+You can now use WeeChat and read
+https://weechat.org/doc/[FAQ/documentation ^↗^,window=_blank]
+for any other questions.
 
 Приятной работы с WeeChat!

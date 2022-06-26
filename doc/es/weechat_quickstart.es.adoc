@@ -390,13 +390,16 @@ por ejemplo:
 
 Vea `/help script` para obtener más información.
 
-Hay una lista de scripts disponibles en WeeChat mediante el comando `/script` o en este enlace:
-https://weechat.org/scripts/
+// TRANSLATION MISSING
+A list of scripts is available in WeeChat with `/script` or on
+https://weechat.org/scripts/[this page ^↗^,window=_blank].
 
 [[more_doc]]
 == Más documentación
 
-Ahora puede usar WeeChat y leer las FAQ/documentación para cada pregunta
-en: https://weechat.org/doc/
+// TRANSLATION MISSING
+You can now use WeeChat and read
+https://weechat.org/doc/[FAQ/documentation ^↗^,window=_blank]
+for any other questions.
 
 ¡Disfrute de WeeChat!

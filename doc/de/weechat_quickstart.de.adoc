@@ -431,14 +431,16 @@ Zeige eine liste aller verfügbaren Skripten:
 /script
 ----
 
-Auf *weechat.org* von Drittanbietern bereitgestellte Scripten: https://weechat.org/scripts/
+// TRANSLATION MISSING
+A list of scripts is available in WeeChat with `/script` or on
+https://weechat.org/scripts/[this page ^↗^,window=_blank].
 
 [[more_doc]]
 == Weitere Dokumentation
 
-Mit dieser Quickstart-Anleitung wurden dir die wesentlichen
-Bedienungswerkzeuge von WeeChat nähergebracht.
-Für das eingehende Studium aller verfügbaren Funktionalitäten
-sei dir unsere ausführliche FAQ/Dokumentation ans Herz gelegt: https://weechat.org/doc/
+// TRANSLATION MISSING
+You can now use WeeChat and read
+https://weechat.org/doc/[FAQ/documentation ^↗^,window=_blank]
+for any other questions.
 
 Viel Spass mit WeeChat!
