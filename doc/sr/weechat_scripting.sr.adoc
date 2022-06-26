@@ -16,7 +16,9 @@
 
 Ово упутство описује WeeChat чет клијент и део је програма WeeChat.
 
-Последња верзија овог документа може да се нађе на следећој страници: https://weechat.org/doc/
+// TRANSLATION MISSING
+Latest version of this document can be found on
+https://weechat.org/doc/[this page ^↗^,window=_blank].
 
 
 [[introduction]]
@@ -55,7 +57,7 @@ Almost all examples in this doc are written in Python, but API is the same for o
 
 [IMPORTANT]
 Скрипта *НИКАДА* не сме да се рачва или да креира нити без употребе одговарајуће API функције, то може да сруши програм WeeChat. +
-Ако нешто мора да се извршава у позадини, употребите функцију `+hook_process+`. Погледајте пример у поглављу <<hook_process,Покретање процеса у позадини>> као и документацију функције `+hook_process+` у link:weechat_plugin_api.sr.html#_hook_process[WeeChat референтном приручнику API додатака].
+Ако нешто мора да се извршава у позадини, употребите функцију `+hook_process+`. Погледајте пример у поглављу <<hook_process,Покретање процеса у позадини>> као и документацију функције `+hook_process+` у link:weechat_plugin_api.sr.html#_hook_process[WeeChat референтном приручнику API додатака ^↗^,window=_blank].
 
 [[languages_specificities]]
 === Језичке специфичности
@@ -67,7 +69,7 @@ Almost all examples in this doc are written in Python, but API is the same for o
 ===== Модул
 
 Програм WeeChat дефинише `weechat` модул који мора да се увезе командом `import weechat`. +
-Python стаб за WeeChat API је соступан у репозиторијуму: https://raw.githubusercontent.com/weechat/weechat/master/src/plugins/python/weechat.pyi[weechat.pyi].
+Python стаб за WeeChat API је соступан у репозиторијуму: https://raw.githubusercontent.com/weechat/weechat/master/src/plugins/python/weechat.pyi[weechat.pyi ^↗^,window=_blank].
 
 [[python_functions]]
 ===== Функције
@@ -97,7 +99,7 @@ Python стаб за WeeChat API је соступан у репозиториј
   Препоручује се да се уместо ње користи модификатор `+irc_in2_yyy+`, примљени
   стринг је увек валидан UTF-8. +
   Погледајте функцију `+hook_modifier+` у
-  link:weechat_plugin_api.sr.html#_hook_modifier[WeeChat референтном приручнику API додатака].
+  link:weechat_plugin_api.sr.html#_hook_modifier[WeeChat референтном приручнику API додатака ^↗^,window=_blank].
 
 | hook_signal
 | xxx,irc_out_yyy +
@@ -112,7 +114,7 @@ Python стаб за WeeChat API је соступан у репозиториј
   Препоручује се да се уместо њега користи сигнал `+xxx,irc_out1_yyy+`, стринг који
   се прима је увек валидан UTF-8. +
   Погледајте функцију `+hook_signal+` у
-  link:weechat_plugin_api.sr.html#_hook_signal[WeeChat референтном приручнику API додатака].
+  link:weechat_plugin_api.sr.html#_hook_signal[WeeChat референтном приручнику API додатака ^↗^,window=_blank].
 
 | hook_process +
   hook_process_hashtable
@@ -501,7 +503,7 @@ weechat_hook_timer(1000, 0, 1, $timer_cb, 'test');
 [[script_api]]
 == API скриптовања
 
-За више информација о функцијама које постоје у API, молимо вас да прочитате link:weechat_plugin_api.sr.html[WeeChat референтни приручник API додатака].
+За више информација о функцијама које постоје у API, молимо вас да прочитате link:weechat_plugin_api.sr.html[WeeChat референтни приручник API додатака ^↗^,window=_blank].
 
 [[script_api_functions]]
 === Функције
@@ -820,7 +822,7 @@ weechat_hook_timer(1000, 0, 1, $timer_cb, 'test');
 [[common_tasks]]
 == Уобичајени задаци
 
-Ово поглавље приказује неке уобичајене задатке, уз примере. Овде се користе само делимичне ствари из API, за потпуно упутство, погледајте link:weechat_plugin_api.sr.html[WeeChat референтни приручник API додатака].
+Ово поглавље приказује неке уобичајене задатке, уз примере. Овде се користе само делимичне ствари из API, за потпуно упутство, погледајте link:weechat_plugin_api.sr.html[WeeChat референтни приручник API додатака ^↗^,window=_blank].
 
 [[buffers]]
 === Бафери
@@ -1080,7 +1082,9 @@ weechat.hook_process("url:https://weechat.org/dev/info/stable/",
 ----
 
 [TIP]
-Све доступне информације у вези програма WeeChat се налазе на страници https://weechat.org/dev/info/
+// TRANSLATION MISSING
+All infos available about WeeChat are on
+https://weechat.org/dev/info/[this page ^↗^,window=_blank].
 
 Пример URL преноса са опцијом: преузимање најновијег WeeChat развојног пакета у фајл _/tmp/weechat-devel.tar.gz_:
 
@@ -1096,7 +1100,7 @@ weechat.hook_process_hashtable("url:https://weechat.org/files/src/weechat-devel.
                                30 * 1000, "my_process_cb", "")
 ----
 
-За више информација у вези URL преноса, као и за доступне опције, погледајте функције `+hook_process+` и `+hook_process_hashtable+` у link:weechat_plugin_api.sr.html#_hook_process[WeeChat референтни приручник API додатака].
+За више информација у вези URL преноса, као и за доступне опције, погледајте функције `+hook_process+` и `+hook_process_hashtable+` у link:weechat_plugin_api.sr.html#_hook_process[WeeChat референтни приручник API додатака ^↗^,window=_blank].
 
 [[config_options]]
 === Конфигурација / опције
