@@ -16,7 +16,9 @@
 
 Ово упутство описује WeeChat чет клијент и део је програма WeeChat.
 
-Последња верзија овог документа може да се нађе на следећој страници: https://weechat.org/doc/
+// TRANSLATION MISSING
+Latest version of this document can be found on
+https://weechat.org/doc/[this page ^↗^,window=_blank].
 
 
 [[introduction]]
@@ -266,7 +268,7 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
 
 Регистрација скрипте.
 
-За више информација, погледајте link:weechat_plugin_api.sr.html[WeeChat водич за скриптовање].
+За више информација, погледајте link:weechat_plugin_api.sr.html[WeeChat водич за скриптовање ^↗^,window=_blank].
 
 Скрипта (Python):
 
@@ -1642,7 +1644,10 @@ _WeeChat ≥ 1.0._
 
 Дели стринг на начин на који командно окружење дели команду са аргументима.
 
-Ова функција је C конверзија Python класе „shlex” (фајл: Lib/shlex.py у Python репозиторијуму), погледајте: https://docs.python.org/3/library/shlex.html.
+// TRANSLATION MISSING
+This function is a C conversion of Python class "shlex" (file: Lib/shlex.py in
+Python repository), see
+https://docs.python.org/3/library/shlex.html[this page ^↗^,window=_blank].
 
 Прототип:
 
@@ -6296,7 +6301,7 @@ option5 = weechat.config_new_option(config_file, section, "option5", "color",
 ----
 
 [NOTE]
-У језику Ruby, 3 функције повратног позива + подаци (6 стрингова) морају да се наведу у низу од 6 стрингова (услед Ruby ограничења од 15 аргумената по функцији), за више информација, погледајте link:++weechat_scripting.sr.html#_ruby++[WeeChat водич за скриптовање] _(исправљено у верзији 0.4.1)_.
+У језику Ruby, 3 функције повратног позива + подаци (6 стрингова) морају да се наведу у низу од 6 стрингова (услед Ruby ограничења од 15 аргумената по функцији), за више информација, погледајте link:++weechat_scripting.sr.html#_ruby++[WeeChat водич за скриптовање ^↗^,window=_blank] _(исправљено у верзији 0.4.1)_.
 
 ==== config_search_option
 
@@ -8325,7 +8330,7 @@ void weechat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
 * _tags_: листа ознака раздвојених запетама (NULL значи да нема ознака)
 * _message_: порука која треба да се прикаже
 
-За листу ознака које се уобичјаено користе у програму WeeChat, погледајте link:weechat_user.sr.html#lines_tags[Корисничко упутство / Ознаке линија].
+За листу ознака које се уобичјаено користе у програму WeeChat, погледајте link:weechat_user.sr.html#lines_tags[Корисничко упутство / Ознаке линија ^↗^,window=_blank].
 
 C пример:
 
@@ -9022,7 +9027,10 @@ struct t_hook *weechat_hook_process (const char *command,
 У API скриптовања, функција _име_ се директно позива и њен резултат (стринг) се прослеђује функцији повратног позива (као и излаз спољне команде.)
 
 [TIP]
-Ако желите да сазнате инфо у вези програма WeeChat (као што је тренутна стабилна верзија, последњи git комит, итд.), можете да употребите URL адресе на страници https://weechat.org/dev/info/
+// TRANSLATION MISSING
+If you want to retrieve infos about WeeChat (like current stable version,
+latest git commit, etc.), you can use URLs on
+https://weechat.org/dev/info/[this page ^↗^,window=_blank].
 
 [NOTE]
 Величина бафера за слање података је 64KB (постоји 2 бафера: један за stdout и једна за stderr). Ако је излаз из дете процеса (stdout или stderr) дужи од 64KB, функција повратног позива ће се позивати више пута.
@@ -11453,14 +11461,16 @@ char *weechat_hook_modifier_exec (const char *modifier,
 | [[hook_modifier_irc_tag_escape_value]] irc_tag_escape_value | 3.3
 | -
 | Било који стринг.
-| Стринг са означеном вредности IRC ознаке,
-  погледајте: https://ircv3.net/specs/extensions/message-tags#escaping-values.
+// TRANSLATION MISSING
+| String with IRC tag value escaped,
+  see https://ircv3.net/specs/extensions/message-tags#escaping-values[this page ^↗^,window=_blank].
 
 | [[hook_modifier_irc_tag_unescape_value]] irc_tag_unescape_value | 3.3
 | -
 | Било који стринг.
-| Стринг са неозначеном вредности IRC ознаке,
-  погледајте: https://ircv3.net/specs/extensions/message-tags#escaping-values.
+// TRANSLATION MISSING
+| String with IRC tag value unescaped,
+  see https://ircv3.net/specs/extensions/message-tags#escaping-values[this page ^↗^,window=_blank].
 
 | [[hook_modifier_color_decode_ansi]] color_decode_ansi | 1.0
 | "1" да се боје задрже, "0" да се боје уклоне
@@ -14481,7 +14491,7 @@ struct t_gui_bar *weechat_bar_new (const char *name,
 ** _active_: трака се приказује само у активном прозору
 ** _inactive_: трака се приказује само у неактивним прозорима
 ** _nicklist_: трака се приказује у прозорима са листом надимака
-** израчунати услови: погледајте link:weechat_user.sr.html#bar_conditions[WeeChat Корисничко упутство / Услови трака].
+** израчунати услови: погледајте link:weechat_user.sr.html#bar_conditions[WeeChat Корисничко упутство / Услови трака ^↗^,window=_blank].
 * _position_: _top_, _bottom_, _left_ или _right_
 * _filling_top_bottom_:
 ** _horizontal_: ставке се попуњавају хоризонтално (размак након сваке ставке)
@@ -14546,7 +14556,7 @@ bar = weechat.bar_new("mybar", "off", "100", "window", "", "top", "horizontal", 
 ----
 
 [NOTE]
-У програму WeeChat верзије ≥ 2.9, у језику Ruby, 4 боје (color_fg, color_delim, color_bg, color_bg_inactive) морају да се наведу у низу од 4 стринга (услед ограничења језика Ruby од 15 аргумената по функцији), за више информација погледајте link:++weechat_scripting.sr.html#_ruby++[WeeChat водич за скриптовање].
+У програму WeeChat верзије ≥ 2.9, у језику Ruby, 4 боје (color_fg, color_delim, color_bg, color_bg_inactive) морају да се наведу у низу од 4 стринга (услед ограничења језика Ruby од 15 аргумената по функцији), за више информација погледајте link:++weechat_scripting.sr.html#_ruby++[WeeChat водич за скриптовање ^↗^,window=_blank].
 
 ==== bar_set
 
@@ -15221,7 +15231,7 @@ if (hashtable_in)
 ----
 
 [NOTE]
-Погледајте link:weechat_scripting.sr.html#irc_message_parse[WeeChat водич за скриптовање / Парсирање поруке] за више информација у вези излаза „irc_message_parse”.
+Погледајте link:weechat_scripting.sr.html#irc_message_parse[WeeChat водич за скриптовање / Парсирање поруке ^↗^,window=_blank] за више информација у вези излаза „irc_message_parse”.
 
 Скрипта (Python):
 
@@ -16822,7 +16832,7 @@ void *weechat_hdata_search (struct t_hdata *hdata, void *pointer, const char *se
 
 * _hdata_: показивач на hdata
 * _pointer_: показивач на објекат програма WeeChat/додатка
-* _search_: израз који се израчунава, подразумевани показивач у изразу је име hdata (и овај показивач се мења за сваки елемент у листи); за помоћ у вези израза, погледајте link:weechat_user.sr.html#command_weechat_eval[WeeChat корисничко упутство / Команда /eval]
+* _search_: израз који се израчунава, подразумевани показивач у изразу је име hdata (и овај показивач се мења за сваки елемент у листи); за помоћ у вези израза, погледајте link:weechat_user.sr.html#command_weechat_eval[WeeChat корисничко упутство / Команда /eval ^↗^,window=_blank]
 * _pointers_: хеш табела за позив функције <<_string_eval_expression,string_eval_expression>>
 * _extra_vars_: хеш табела за позив функције <<_string_eval_expression,string_eval_expression>>
 * _options_: хеш табела за позив функције <<_string_eval_expression,string_eval_expression>>

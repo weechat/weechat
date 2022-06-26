@@ -19,8 +19,9 @@ Translators:
 Questo manuale documenta il client di chat WeeChat, ed è parte
 del programma stesso.
 
-La versione più recente di questo documento si trova qui:
-https://weechat.org/doc/
+// TRANSLATION MISSING
+Latest version of this document can be found on
+https://weechat.org/doc/[this page ^↗^,window=_blank].
 
 
 [[introduction]]
@@ -309,7 +310,7 @@ Functions to register a script: used only by scripting API, not the C API.
 Register the script.
 
 For more information, see the
-link:weechat_scripting.it.html#register_function[WeeChat scripting guide].
+link:weechat_scripting.it.html#register_function[WeeChat scripting guide ^↗^,window=_blank].
 
 Script (Python):
 
@@ -1802,7 +1803,8 @@ Split a string like the shell does for a command with arguments.
 
 // TRANSLATION MISSING
 This function is a C conversion of Python class "shlex" (file: Lib/shlex.py in
-Python repository), see: https://docs.python.org/3/library/shlex.html.
+Python repository), see
+https://docs.python.org/3/library/shlex.html[this page ^↗^,window=_blank].
 
 Prototipo:
 
@@ -6736,8 +6738,8 @@ option5 = weechat.config_new_option(config_file, section, "option5", "color",
 [NOTE]
 In Ruby, the 3 callbacks + data (6 strings) must be given in an array of 6
 strings (due to a Ruby limitation of 15 arguments by function), see the
-link:++weechat_scripting.it.html#_ruby++[WeeChat Scripting Guide] for more info
-_(fixed in version 0.4.1)_.
+link:++weechat_scripting.it.html#_ruby++[WeeChat Scripting Guide ^↗^,window=_blank]
+for more info _(fixed in version 0.4.1)_.
 
 ==== config_search_option
 
@@ -8853,7 +8855,7 @@ Argomenti:
 * _message_: messaggio da visualizzare
 
 // TRANSLATION MISSING
-See the link:weechat_user.it.html#lines_tags[WeeChat user's guide / Lines tags]
+See the link:weechat_user.it.html#lines_tags[WeeChat user's guide / Lines tags ^↗^,window=_blank]
 for a list of commonly used tags in WeeChat.
 
 Esempio in C:
@@ -9638,10 +9640,11 @@ process (after fork). +
 In scripting API, the function _name_ is called directly and its result
 (string) is sent to the callback (like the output of an external command).
 
-// TRANSLATION MISSING
 [TIP]
+// TRANSLATION MISSING
 If you want to retrieve infos about WeeChat (like current stable version,
-latest git commit, ...), you can use URLs on page https://weechat.org/dev/info/
+latest git commit, etc.), you can use URLs on
+https://weechat.org/dev/info/[this page ^↗^,window=_blank].
 
 [NOTE]
 La dimensione del buffer per l'invio dei dati alla callback è di 64KB (ci sono
@@ -12355,14 +12358,14 @@ List of modifiers defined by WeeChat and plugins that can be used:
 | -
 | Any string.
 | String with IRC tag value escaped,
-  see: https://ircv3.net/specs/extensions/message-tags#escaping-values.
+  see https://ircv3.net/specs/extensions/message-tags#escaping-values[this page ^↗^,window=_blank].
 
 // TRANSLATION MISSING
 | [[hook_modifier_irc_tag_unescape_value]] irc_tag_unescape_value | 3.3
 | -
 | Any string.
 | String with IRC tag value unescaped,
-  see: https://ircv3.net/specs/extensions/message-tags#escaping-values.
+  see https://ircv3.net/specs/extensions/message-tags#escaping-values[this page ^↗^,window=_blank].
 
 // TRANSLATION MISSING
 | [[hook_modifier_color_decode_ansi]] color_decode_ansi | 1.0
@@ -15613,7 +15616,7 @@ Argomenti:
 ** _nicklist_: la barra viene visualizzata nelle finestre con liste nick
 // TRANSLATION MISSING
 ** evaluated expression: see the
-   link:weechat_user.it.html#bar_conditions[WeeChat user's guide / Bar conditions]
+   link:weechat_user.it.html#bar_conditions[WeeChat user's guide / Bar conditions ^↗^,window=_blank]
 * _position_: _top_, _bottom_, _left_ o _right_
 * _filling_top_bottom_:
 ** _horizontal_: gli elementi sono posizionati in orizzontale
@@ -15695,7 +15698,8 @@ bar = weechat.bar_new("mybar", "off", "100", "window", "", "top", "horizontal", 
 With WeeChat ≥ 2.9, in Ruby, the 4 colors (color_fg, color_delim, color_bg,
 color_bg_inactive) must be given in an array of 4 strings (due to a Ruby
 limitation of 15 arguments by function), see the
-link:++weechat_scripting.en.html#_ruby++[WeeChat scripting guide] for more info.
+link:++weechat_scripting.en.html#_ruby++[WeeChat scripting guide ^↗^,window=_blank]
+for more info.
 
 ==== bar_set
 
@@ -16413,7 +16417,7 @@ if (hashtable_in)
 
 // TRANSLATION MISSING
 [NOTE]
-See the link:weechat_scripting.it.html#irc_message_parse[Guida allo Scripting di WeeChat / Verifica messaggio]
+See the link:weechat_scripting.it.html#irc_message_parse[Guida allo Scripting di WeeChat / Verifica messaggio ^↗^,window=_blank]
 for more info about "irc_message_parse" output.
 
 Script (Python):
@@ -18102,7 +18106,7 @@ Argomenti:
 * _search_: expression to evaluate, default pointer in expression is the name of
   hdata (and this pointer changes for each element in list); for help on
   expression, see the
-  link:weechat_user.it.html#command_weechat_eval[WeeChat user's guide / Command /eval]
+  link:weechat_user.it.html#command_weechat_eval[WeeChat user's guide / Command /eval ^↗^,window=_blank]
 // TRANSLATION MISSING
 * _pointers_: hashtable for call to function
   <<_string_eval_expression,string_eval_expression>>

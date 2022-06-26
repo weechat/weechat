@@ -13,8 +13,8 @@
 Ce manuel documente le client de messagerie instantanée WeeChat, il fait
 partie de WeeChat.
 
-La dernière version de ce document peut être téléchargée sur cette page :
-https://weechat.org/doc/
+La dernière version de ce document peut être téléchargée sur
+https://weechat.org/doc/[cette page ^↗^,window=_blank].
 
 
 [[introduction]]
@@ -294,7 +294,7 @@ pas l'API C.
 Enregistrer le script.
 
 Pour plus d'informations, voir le
-link:weechat_scripting.fr.html#register_function[Guide pour scripts WeeChat].
+link:weechat_scripting.fr.html#register_function[Guide pour scripts WeeChat ^↗^,window=_blank].
 
 Script (Python) :
 
@@ -1751,8 +1751,8 @@ Découper une chaîne comme le shell le fait pour une commande avec ses
 paramètres.
 
 Cette fonction est une conversion en C de la classe Python "shlex" (fichier :
-Lib/shlex.py dans le dépôt Python), voir :
-https://docs.python.org/3/library/shlex.html.
+Lib/shlex.py dans le dépôt Python), voir
+https://docs.python.org/3/library/shlex.html[cette page ^↗^,window=_blank].
 
 Prototype :
 
@@ -6615,8 +6615,8 @@ option5 = weechat.config_new_option(config_file, section, "option5", "color",
 En Ruby, les 3 fonctions de rappel + "data" (6 chaînes) doivent être données
 dans un tableau de 6 chaînes de caractères (en raison d'une limitation de Ruby
 à 15 paramètres par fonction), voir le
-link:++weechat_scripting.fr.html#_ruby++[Guide pour scripts WeeChat] pour plus
-d'infos _(corrigé dans la version 0.4.1)_.
+link:++weechat_scripting.fr.html#_ruby++[Guide pour scripts WeeChat ^↗^,window=_blank]
+pour plus d'infos _(corrigé dans la version 0.4.1)_.
 
 ==== config_search_option
 
@@ -8713,7 +8713,7 @@ Paramètres :
   étiquette)
 * _message_ : message à afficher
 
-Voir le link:weechat_user.fr.html#lines_tags[Guide utilisateur WeeChat / Étiquettes des lignes]
+Voir le link:weechat_user.fr.html#lines_tags[Guide utilisateur WeeChat / Étiquettes des lignes ^↗^,window=_blank]
 pour une liste des étiquettes couramment utilisées dans WeeChat.
 
 Exemple en C :
@@ -9517,7 +9517,7 @@ d'une commande externe).
 [TIP]
 Si vous souhaitez récupérer des infos à propos de WeeChat (comme la version
 stable actuelle, le dernier commit git, etc.), vous pouvez utiliser les URLs
-sur la page https://weechat.org/dev/info/
+sur https://weechat.org/dev/info/[cette page ^↗^,window=_blank].
 
 [NOTE]
 La taille du tampon pour l'envoi des données à la fonction de rappel est de
@@ -12119,13 +12119,13 @@ utilisés :
 | -
 | Toute chaîne.
 | Chaîne avec la valeur de l'étiquette IRC échappée,
-  voir : https://ircv3.net/specs/extensions/message-tags#escaping-values.
+  voir https://ircv3.net/specs/extensions/message-tags#escaping-values[cette page ^↗^,window=_blank].
 
 | [[hook_modifier_irc_tag_unescape_value]] irc_tag_unescape_value | 3.3
 | -
 | Toute chaîne.
 | Chaîne avec la valeur de l'étiquette IRC sans échappements,
-  voir : https://ircv3.net/specs/extensions/message-tags#escaping-values.
+  voir https://ircv3.net/specs/extensions/message-tags#escaping-values[cette page ^↗^,window=_blank].
 
 | [[hook_modifier_color_decode_ansi]] color_decode_ansi | 1.0
 | "1" pour garder les couleurs, "0" pour les supprimer
@@ -15313,7 +15313,7 @@ Paramètres :
 ** _nicklist_ : la barre est affichée dans les fenêtres possédant une liste des
    pseudos
 ** expression évaluée : voir le
-   link:weechat_user.fr.html#bar_conditions[Guide utilisateur WeeChat / Conditions de barres]
+   link:weechat_user.fr.html#bar_conditions[Guide utilisateur WeeChat / Conditions de barres ^↗^,window=_blank]
 * _position_ : _top_ (en haut), _bottom_ (en bas), _left_ (à gauche) ou _right_
   (à droite)
 * _filling_top_bottom_ :
@@ -15392,8 +15392,8 @@ bar = weechat.bar_new("mybar", "off", "100", "window", "", "top", "horizontal", 
 Avec WeeChat ≥ 2.9, en Ruby, les 4 couleurs (color_fg, color_delim, color_bg,
 color_bg_inactive) doivent être données dans un tableau de 4 chaînes de caractères
 (en raison d'une limitation de Ruby à 15 paramètres par fonction), voir le
-link:++weechat_scripting.fr.html#_ruby++[Guide pour scripts WeeChat] pour plus
-d'infos.
+link:++weechat_scripting.fr.html#_ruby++[Guide pour scripts WeeChat ^↗^,window=_blank]
+pour plus d'infos.
 
 ==== bar_set
 
@@ -16085,7 +16085,7 @@ if (hashtable_in)
 ----
 
 [NOTE]
-Voir le link:weechat_scripting.fr.html#irc_message_parse[Guide pour scripts WeeChat / Analyser un message]
+Voir le link:weechat_scripting.fr.html#irc_message_parse[Guide pour scripts WeeChat / Analyser un message ^↗^,window=_blank]
 pour plus d'infos sur la sortie de "irc_message_parse".
 
 Script (Python) :
@@ -17754,7 +17754,7 @@ Paramètres :
 * _search_ : expression à évaluer, le pointeur par défaut dans l'expression est
   le nom du hdata (et ce pointeur change pour chaque élément dans la liste);
   pour l'aide sur l'expression, voir le
-  link:weechat_user.fr.html#command_weechat_eval[Guide utilisateur WeeChat / Commande /eval]
+  link:weechat_user.fr.html#command_weechat_eval[Guide utilisateur WeeChat / Commande /eval ^↗^,window=_blank]
 * _pointers_ : table de hachage pour l'appel à la fonction
   <<_string_eval_expression,string_eval_expression>>
 * _extra_vars_ : table de hachage pour l'appel à la fonction
