@@ -16,8 +16,9 @@
 
 このマニュアルは WeeChat チャットクライアントについての文書で、これは WeeChat の一部です。
 
-この文書の最新版は以下のページにあります:
-https://weechat.org/doc/
+// TRANSLATION MISSING
+Latest version of this document can be found on
+https://weechat.org/doc/[this page ^↗^,window=_blank].
 
 
 [[introduction]]
@@ -37,8 +38,7 @@ WeeChat (Wee Enhanced Environment for Chat)
 [[repositories]]
 == リポジトリ
 
-WeeChat リポジトリは GitHub organization の "weechat" にあります:
-https://github.com/weechat
+WeeChat リポジトリは GitHub organization の https://github.com/weechat[weechat ^↗^,window=_blank] にあります:
 
 リポジトリのリスト:
 
@@ -48,8 +48,9 @@ weechat::
 scripts::
     weechat.org に投稿された _公式_ スクリプト
 
+// TRANSLATION MISSING
 weechat.org::
-    WeeChat ウェブサイトのソースコード: https://weechat.org/
+    source of https://weechat.org/[WeeChat website ^↗^,window=_blank]
 
 weercd::
     IRC テストサーバ
@@ -521,13 +522,13 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |    docgen.py                                  | Python script to build auto-generated files in _includes/_ directory (see below).
 |    XX/                                        | 言語コード XX (言語コード: en、fr、de、it、...) 用のディレクトリ
 |       weechat.1.XX.adoc                       | man ページ (`man weechat`)
-|       weechat_dev.XX.adoc                     | link:weechat_dev.ja.html[開発者リファレンス] (この文書)
-|       weechat_faq.XX.adoc                     | link:weechat_faq.ja.html[FAQ]
-|       weechat_plugin_api.XX.adoc              | link:weechat_plugin_api.ja.html[プラグイン API リファレンス]
-|       weechat_quickstart.XX.adoc              | link:weechat_quickstart.ja.html[クイックスタートガイド]
-|       weechat_relay_protocol.XX.adoc          | link:weechat_relay_protocol.ja.html[リレープロトコル] (リモートインターフェース用)
-|       weechat_scripting.XX.adoc               | link:weechat_scripting.ja.html[スクリプト作成ガイド]
-|       weechat_user.XX.adoc                    | link:weechat_user.ja.html[ユーザーズガイド]
+|       weechat_dev.XX.adoc                     | link:weechat_dev.ja.html[開発者リファレンス ^↗^,window=_blank] (この文書)
+|       weechat_faq.XX.adoc                     | link:weechat_faq.ja.html[FAQ ^↗^,window=_blank]
+|       weechat_plugin_api.XX.adoc              | link:weechat_plugin_api.ja.html[プラグイン API リファレンス ^↗^,window=_blank]
+|       weechat_quickstart.XX.adoc              | link:weechat_quickstart.ja.html[クイックスタートガイド ^↗^,window=_blank]
+|       weechat_relay_protocol.XX.adoc          | link:weechat_relay_protocol.ja.html[リレープロトコル ^↗^,window=_blank] (リモートインターフェース用)
+|       weechat_scripting.XX.adoc               | link:weechat_scripting.ja.html[スクリプト作成ガイド ^↗^,window=_blank]
+|       weechat_user.XX.adoc                    | link:weechat_user.ja.html[ユーザーズガイド ^↗^,window=_blank]
 // TRANSLATION MISSING
 |       includes/                               | Files included in documentation.
 |          autogen_api_completions.XX.adoc      | Auto-generated file for Plugin API reference: completions (do *NEVER* update manually!).
@@ -791,7 +792,7 @@ new_hook_fd = malloc (sizeof (*new_hook_fd));
 [[coding_python_style]]
 === Python スタイル
 
-https://www.python.org/dev/peps/pep-0008/ を参照
+https://www.python.org/dev/peps/pep-0008/[PEP 8 ^↗^,window=_blank] を参照
 
 [[core_internals]]
 == コアの構造
@@ -1175,7 +1176,8 @@ server->hook_timer_sasl = weechat_hook_timer (timeout * 1000,
 [[git_repository]]
 === Git リポジトリ
 
-Git リポジトリはこの URL にあります: https://github.com/weechat/weechat
+// TRANSLATION MISSING
+Git repository is on https://github.com/weechat/weechat[GitHub ^↗^,window=_blank].
 
 バグや新機能のパッチは必ず master ブランチに対して適用できるものを作成し、GitHub の pull
 リクエストを使って提出することを推奨します。パッチは電子メールで送信することも可能です
@@ -1342,8 +1344,9 @@ $ make translations && make update-po
 
 その後翻訳できるならば .po ファイルを編集します。
 
-翻訳が完了したら、*必ず* _msgcheck.py_ (https://github.com/flashcode/msgcheck)
-スクリプトを使ってファイルの内容を確認してください:
+// TRANSLATION MISSING
+When done, you *have* to check your file with
+https://github.com/flashcode/msgcheck[msgcheck ^↗^,window=_blank]:
 
 ----
 $ msgcheck.py xx.po

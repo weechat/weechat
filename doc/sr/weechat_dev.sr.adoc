@@ -15,7 +15,9 @@
 
 Ово упутство описује WeeChat чет клијент и део је програма WeeChat.
 
-Последња верзија овог документа може да се нађе на следећој страници: https://weechat.org/doc/
+// TRANSLATION MISSING
+Latest version of this document can be found on
+https://weechat.org/doc/[this page ^↗^,window=_blank].
 
 
 [[introduction]]
@@ -34,7 +36,8 @@ WeeChat (Wee Enhanced Environment for Chat) је бесплатни чет кл�
 [[repositories]]
 == Репозиторијуми
 
-WeeChat репозиторијуми се налазе на GitHub организацији „weechat”: https://github.com/weechat
+WeeChat репозиторијуми се налазе на GitHub организацији
+https://github.com/weechat[weechat ^↗^,window=_blank].
 
 Листа репозиторијума:
 
@@ -44,8 +47,9 @@ weechat::
 scripts::
     _званичне_ скрипте које су предате на weechat.org
 
+// TRANSLATION MISSING
 weechat.org::
-    извор WeeChat веб сајта: https://weechat.org/
+    source of https://weechat.org/[WeeChat website ^↗^,window=_blank]
 
 weercd::
     IRC сервер за тестирање
@@ -469,13 +473,13 @@ WeeChat „језгро” се налази у следећим директо�
 |    docgen.py                                  | Python скрипта која изграђује ауто-генерисане фајлу у директоријуму _includes/_ (погледајте ниже).
 |    XX/                                        | Документација за језик XX (језици: en, fr, de, it, ...).
 |       weechat.1.XX.adoc                       | Man страница(`man weechat`).
-|       weechat_dev.XX.adoc                     | link:weechat_dev.sr.html[Водич за програмере] (овај документ).
-|       weechat_faq.XX.adoc                     | link:weechat_faq.sr.html[ЧПП].
-|       weechat_plugin_api.XX.adoc              | link:weechat_plugin_api.sr.html[Референца за API додатака].
-|       weechat_quickstart.XX.adoc              | link:weechat_quickstart.sr.html[Водич за брзи почетак].
-|       weechat_relay_protocol.XX.adoc          | link:weechat_relay_protocol.sr.html[Релеј протокол] (за удаљене интерфејсе).
-|       weechat_scripting.XX.adoc               | link:weechat_scripting.sr.html[Водич за скриптовање].
-|       weechat_user.XX.adoc                    | link:weechat_user.sr.html[Корисничко упутство].
+|       weechat_dev.XX.adoc                     | link:weechat_dev.sr.html[Водич за програмере ^↗^,window=_blank] (овај документ).
+|       weechat_faq.XX.adoc                     | link:weechat_faq.sr.html[ЧПП ^↗^,window=_blank].
+|       weechat_plugin_api.XX.adoc              | link:weechat_plugin_api.sr.html[Референца за API додатака ^↗^,window=_blank].
+|       weechat_quickstart.XX.adoc              | link:weechat_quickstart.sr.html[Водич за брзи почетак ^↗^,window=_blank].
+|       weechat_relay_protocol.XX.adoc          | link:weechat_relay_protocol.sr.html[Релеј протокол ^↗^,window=_blank] (за удаљене интерфејсе).
+|       weechat_scripting.XX.adoc               | link:weechat_scripting.sr.html[Водич за скриптовање ^↗^,window=_blank].
+|       weechat_user.XX.adoc                    | link:weechat_user.sr.html[Корисничко упутство ^↗^,window=_blank].
 |       includes/                               | Фајлови укључени у документацију.
 |          autogen_api_completions.XX.adoc      | Ауто-генерисани фајл за Референцу API додатака: довршавања (*НИКАДА* не ажурирајте ручно!).
 |          autogen_api_hdata.XX.adoc            | Ауто-генерисани фајл за Референцу API додатака: hdata (*НИКАДА* не ажурирајте ручно!).
@@ -730,7 +734,7 @@ new_hook_fd = malloc (sizeof (*new_hook_fd));
 [[coding_python_style]]
 === Python стил
 
-Погледајте https://www.python.org/dev/peps/pep-0008/
+Погледајте https://www.python.org/dev/peps/pep-0008/[PEP 8 ^↗^,window=_blank].
 
 [[core_internals]]
 == Интерне ствари језгра
@@ -1085,7 +1089,8 @@ server->hook_timer_sasl = weechat_hook_timer (timeout * 1000,
 [[git_repository]]
 === Git репозиторијум
 
-Git репозиторијум се налази на следећој URL адреси: https://github.com/weechat/weechat
+// TRANSLATION MISSING
+Git repository is on https://github.com/weechat/weechat[GitHub ^↗^,window=_blank].
 
 Било каква закрпа бага или нова могућност мора да да се уради над мастер граном, пожељно је преко GitHub pull захтева. Закрпа такође може да се пошаље и имејлом (направљена са `git diff` или `git format-patch`).
 
@@ -1228,7 +1233,9 @@ $ make translations && make update-po
 
 Затим можете да уређујте .po фајлове (ако можете да преводите на језик).
 
-Када завршите, *морате* да проверите свој фајл скриптом _msgcheck.py_ (https://github.com/flashcode/msgcheck):
+// TRANSLATION MISSING
+When done, you *have* to check your file with
+https://github.com/flashcode/msgcheck[msgcheck ^↗^,window=_blank]:
 
 ----
 $ msgcheck.py xx.po
