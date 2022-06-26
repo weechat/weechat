@@ -142,8 +142,8 @@ Arguments:
    if compression is enabled, messages from _relay_ to client are compressed
    to save bandwidth; allowed values are:
 *** _off_: no compression (default if option is not given)
-*** _zlib_: compress with https://zlib.net/[zlib] _(WeeChat ≥ 0.3.7)_
-*** _zstd_: compress with https://facebook.github.io/zstd/[Zstandard]: better
+*** _zlib_: compress with https://zlib.net/[zlib ^↗^,window=_blank] _(WeeChat ≥ 0.3.7)_
+*** _zstd_: compress with https://facebook.github.io/zstd/[Zstandard ^↗^,window=_blank]: better
     compression and much faster than _zlib_ for both compression and decompression
     _(WeeChat ≥ 3.5)_
 
@@ -185,8 +185,8 @@ WeeChat replies with a hashtable containing the following keys and values:
   in the password hash algorithm)
 * _compression_: compression type:
 ** _off_: messages are not compressed
-** _zlib_: messages are compressed with https://zlib.net/[zlib]
-** _zstd_: messages are compressed with https://facebook.github.io/zstd/[Zstandard]
+** _zlib_: messages are compressed with https://zlib.net/[zlib ^↗^,window=_blank]
+** _zstd_: messages are compressed with https://facebook.github.io/zstd/[Zstandard ^↗^,window=_blank]
 
 [TIP]
 With WeeChat ≤ 2.8, the command _handshake_ is not implemented, WeeChat silently
@@ -1411,8 +1411,8 @@ quit
   (このフィールドを含む)
 * _compression_ (バイト型): フラグ:
 ** _0x00_: これ以降のデータは圧縮されていません
-** _0x01_: これ以降のデータは https://zlib.net/[zlib] で圧縮されています
-** _0x02_: これ以降のデータは https://facebook.github.io/zstd/[Zstandard] で圧縮されています
+** _0x01_: これ以降のデータは https://zlib.net/[zlib ^↗^,window=_blank] で圧縮されています
+** _0x02_: これ以降のデータは https://facebook.github.io/zstd/[Zstandard ^↗^,window=_blank] で圧縮されています
 * _id_ (文字列型、4 バイト + 内容): クライアントが送信した識別子 (コマンド名の前につけられる);
   コマンドに識別子が含まれない場合は空文字列でも可
   (内容を含まない長さゼロの文字列)
@@ -1424,7 +1424,8 @@ quit
 
 // TRANSLATION MISSING
 If flag _compression_ is equal to 0x01 or 0x02, then *all* data after is compressed
-with https://zlib.net/[zlib] or https://facebook.github.io/zstd/[Zstandard],
+with https://zlib.net/[zlib ^↗^,window=_blank] or
+https://facebook.github.io/zstd/[Zstandard ^↗^,window=_blank],
 and therefore must be uncompressed before being processed.
 
 [[message_identifier]]

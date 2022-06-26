@@ -139,8 +139,8 @@ Paramètres :
    le client sont compressés pour économiser de la bande passante ;
    les valeurs autorisées sont :
 *** _off_ : pas de compression (par défaut si l'option n'est pas donnée)
-*** _zlib_ : compresser avec https://zlib.net/[zlib] _(WeeChat ≥ 0.3.7)_
-*** _zstd_ : compresser avec https://facebook.github.io/zstd/[Zstandard] :
+*** _zlib_ : compresser avec https://zlib.net/[zlib ^↗^,window=_blank] _(WeeChat ≥ 0.3.7)_
+*** _zstd_ : compresser avec https://facebook.github.io/zstd/[Zstandard ^↗^,window=_blank] :
     meilleure compression et bien plus rapide que _zlib_ pour la compression et
     la décompression _(WeeChat ≥ 3.5)_
 
@@ -185,8 +185,8 @@ suivantes :
   hachage du mot de passe)
 * _compression_ : type de compression :
 ** _off_ : les messages ne sont pas compressés
-** _zlib_ : les messages sont compressés avec https://zlib.net/[zlib]
-** _zstd_ : les messages sont compressés avec https://facebook.github.io/zstd/[Zstandard]
+** _zlib_ : les messages sont compressés avec https://zlib.net/[zlib ^↗^,window=_blank]
+** _zstd_ : les messages sont compressés avec https://facebook.github.io/zstd/[Zstandard ^↗^,window=_blank]
 
 [TIP]
 Avec WeeChat ≤ 2.8, la commande _handshake_ n'est pas implémentée, WeeChat ignore
@@ -1401,8 +1401,8 @@ suivant (avec la taille en octets) :
   (en incluant ce champ)
 * _compression_ (octet) : drapeau :
 ** _0x00_ : les données qui suivent ne sont pas compressées
-** _0x01_ : les données qui suivent sont compressées avec https://zlib.net/[zlib]
-** _0x02_ : les données qui suivent sont compressées avec https://facebook.github.io/zstd/[Zstandard]
+** _0x01_ : les données qui suivent sont compressées avec https://zlib.net/[zlib ^↗^,window=_blank]
+** _0x02_ : les données qui suivent sont compressées avec https://facebook.github.io/zstd/[Zstandard ^↗^,window=_blank]
 * _id_ (chaîne, 4 octets + contenu) : l'identifiant envoyé par le client
   (avant le nom de la commande) ; il peut être vide (chaîne avec une longueur
   de zéro sans contenu) si l'identifiant n'était pas donné dans la commande
@@ -1413,7 +1413,8 @@ suivant (avec la taille en octets) :
 === Compression
 
 Si le drapeau de _compression_ est égal à 0x01 ou 0x02, alors *toutes* les données
-après sont compressées avec https://zlib.net/[zlib] ou https://facebook.github.io/zstd/[Zstandard],
+après sont compressées avec https://zlib.net/[zlib ^↗^,window=_blank] ou
+https://facebook.github.io/zstd/[Zstandard ^↗^,window=_blank],
 et par conséquent doivent être décompressées avant d'être utilisées.
 
 [[message_identifier]]
