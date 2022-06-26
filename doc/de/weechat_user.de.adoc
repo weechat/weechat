@@ -3762,20 +3762,20 @@ um unabhängige Serverbuffer zu haben:
 ----
 
 [[irc_tor_sasl]]
-==== Connect with TOR and SASL
+==== Connect with Tor and SASL
 
-Einige Server unterstützen eine Verbindungen mittels TOR (https://www.torproject.org/),
+Einige Server unterstützen eine Verbindungen mittels Tor (https://www.torproject.org/),
 dies ist ein Netzwerk mit virtueller Tunneln, durch welchen Personen und Gruppen ihre
 Privatsphäre und Sicherheit im Internet verbessern können.
 
-Im ersten Schritt muss TOR installiert werden. Für Debian (und Derivate):
+Im ersten Schritt muss Tor installiert werden. Für Debian (und Derivate):
 
 ----
 $ sudo apt-get install tor
 ----
 
-In WeeChat muss nun ein socks5-Proxy für den TOR Service erstellt werden (Hostname/IP
-und Port müssen dabei an die eigene TOR Konfiguration angepasst werden):
+In WeeChat muss nun ein socks5-Proxy für den Tor Service erstellt werden (Hostname/IP
+und Port müssen dabei an die eigene Tor Konfiguration angepasst werden):
 
 ----
 /proxy add tor socks5 127.0.0.1 9050
@@ -3788,7 +3788,7 @@ und die Adresse durch gültige Werte):
 /server add irc-tor hier.ist.die.addresse.onion
 ----
 
-Nun einen Proxy für TOR anlegen:
+Nun einen Proxy für Tor anlegen:
 
 ----
 /set irc.server.irc-tor.proxy "tor"

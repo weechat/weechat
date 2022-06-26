@@ -3826,21 +3826,21 @@ server buffers:
 
 // TRANSLATION MISSING
 [[irc_tor_sasl]]
-==== Connect with TOR and SASL
+==== Connect with Tor and SASL
 
 // TRANSLATION MISSING
-Some servers support connections with TOR (https://www.torproject.org/),
+Some servers support connections with Tor (https://www.torproject.org/),
 a network of virtual tunnels that allows people and groups to improve their
 privacy and security on the Internet.
 
-最初に、TOR をインストールしてください。Debian (とその派生ディストリビューション) の場合:
+最初に、Tor をインストールしてください。Debian (とその派生ディストリビューション) の場合:
 
 ----
 $ sudo apt-get install tor
 ----
 
-WeeChat で TOR サービスを使った socks5 プロキシを作成してください
-(ホスト名/IP アドレス、ポート番号は TOR の設定に依存します):
+WeeChat で Tor サービスを使った socks5 プロキシを作成してください
+(ホスト名/IP アドレス、ポート番号は Tor の設定に依存します):
 
 ----
 /proxy add tor socks5 127.0.0.1 9050
@@ -3853,7 +3853,7 @@ Now, add a new server (replace server name "irc-tor" and the address by a valid 
 /server add irc-tor this.is.the.address.onion
 ----
 
-TOR プロキシを設定:
+Tor プロキシを設定:
 
 ----
 /set irc.server.irc-tor.proxy "tor"

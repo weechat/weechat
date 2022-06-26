@@ -3973,21 +3973,21 @@ server buffers:
 
 // TRANSLATION MISSING
 [[irc_tor_sasl]]
-==== Connect with TOR and SASL
+==== Connect with Tor and SASL
 
 // TRANSLATION MISSING
-Some servers support connections with TOR (https://www.torproject.org/),
+Some servers support connections with Tor (https://www.torproject.org/),
 a network of virtual tunnels that allows people and groups to improve their
 privacy and security on the Internet.
 
-Il primo passo consiste nell'installare TOR. Per Debian (e derivate):
+Il primo passo consiste nell'installare Tor. Per Debian (e derivate):
 
 ----
 $ sudo apt-get install tor
 ----
 
-In WeeChat è necessario creare un proxy socks5 per il servizio TOR (nome
-host/IP e porta dipendono dalla propria configurazione di TOR):
+In WeeChat è necessario creare un proxy socks5 per il servizio Tor (nome
+host/IP e porta dipendono dalla propria configurazione di Tor):
 
 ----
 /proxy add tor socks5 127.0.0.1 9050
@@ -4000,7 +4000,7 @@ Now, add a new server (replace server name "irc-tor" and the address by a valid 
 /server add irc-tor this.is.the.address.onion
 ----
 
-Impostare il proxy per TOR:
+Impostare il proxy per Tor:
 
 ----
 /set irc.server.irc-tor.proxy "tor"

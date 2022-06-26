@@ -3728,20 +3728,20 @@ oddzielnych buforów dla serwerów:
 ----
 
 [[irc_tor_sasl]]
-==== Połączenie za pomocą TORa i SASL
+==== Połączenie za pomocą Tora i SASL
 
-Niekróre serwery wspierają połączenia z sieci TOR (https://www.torproject.org/),
+Niekróre serwery wspierają połączenia z sieci Tor (https://www.torproject.org/),
 sieci wirtualnych tuneli, które umożliwają poprawienie swojej prywatności
 i bezpieczeństwa w Internecie.
 
-Pierwszym krokiem jest instalacja TORa. Dla Debiana (i pochodnych):
+Pierwszym krokiem jest instalacja Tora. Dla Debiana (i pochodnych):
 
 ----
 $ sudo apt-get install tor
 ----
 
-W WeeChat należy stworzyć proxy socks5 dla serwisu TOR (nazwa hosta/IP i port
-zależą od twojej konfiguracji TORa):
+W WeeChat należy stworzyć proxy socks5 dla serwisu Tor (nazwa hosta/IP i port
+zależą od twojej konfiguracji Tora):
 
 ----
 /proxy add tor socks5 127.0.0.1 9050
@@ -3754,7 +3754,7 @@ wartościami):
 /server add irc-tor adres.serwera.onion
 ----
 
-Ustaw proxy dla TOR:
+Ustaw proxy dla Tor:
 
 ----
 /set irc.server.irc-tor.proxy "tor"

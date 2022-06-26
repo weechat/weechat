@@ -3809,20 +3809,20 @@ un tampon distinct par serveur :
 ----
 
 [[irc_tor_sasl]]
-==== Connexion avec TOR et SASL
+==== Connexion avec Tor et SASL
 
-Quelques serveurs acceptent les connexions avec TOR (https://www.torproject.org/),
+Quelques serveurs acceptent les connexions avec Tor (https://www.torproject.org/),
 un réseau de tunnels virtuels qui permet aux personnes et groupes d'améliorer
 leur vie privée et sécurité sur Internet.
 
-En premier lieu, installez TOR. Pour Debian (et dérivés) :
+En premier lieu, installez Tor. Pour Debian (et dérivés) :
 
 ----
 $ sudo apt-get install tor
 ----
 
-Sous WeeChat vous devez ajouter un proxy socks5 pour le service TOR (le nom/IP
-et port dépend de votre configuration de TOR) :
+Sous WeeChat vous devez ajouter un proxy socks5 pour le service Tor (le nom/IP
+et port dépend de votre configuration de Tor) :
 
 ----
 /proxy add tor socks5 127.0.0.1 9050
@@ -3835,7 +3835,7 @@ l'adresse par une valide) :
 /server add irc-tor this.is.the.address.onion
 ----
 
-Définissez le proxy pour TOR :
+Définissez le proxy pour Tor :
 
 ----
 /set irc.server.irc-tor.proxy "tor"
