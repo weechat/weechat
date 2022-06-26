@@ -19,8 +19,9 @@ Translators:
 Questo manuale documenta il client di chat WeeChat, ed è parte
 del programma stesso.
 
-È possibile trovare l'ultima versione di questo documento qui:
-https://weechat.org/doc/
+// TRANSLATION MISSING
+Latest version of this document can be found on
+https://weechat.org/doc/[this page ^↗^,window=_blank].
 
 
 [[introduction]]
@@ -40,17 +41,19 @@ Le principali caratteristiche:
 * piccolo, veloce e leggero
 * personalizzabile ed estensibile con plugin e script
 * conforme alle RFC di IRC
-  https://tools.ietf.org/html/rfc1459[1459],
-  https://tools.ietf.org/html/rfc2810[2810],
-  https://tools.ietf.org/html/rfc2811[2811],
-  https://tools.ietf.org/html/rfc2812[2812] e
-  https://tools.ietf.org/html/rfc2813[2813]
+  https://datatracker.ietf.org/doc/html/rfc1459[1459 ^↗^,window=_blank],
+  https://datatracker.ietf.org/doc/html/rfc2810[2810 ^↗^,window=_blank],
+  https://datatracker.ietf.org/doc/html/rfc2811[2811 ^↗^,window=_blank],
+  https://datatracker.ietf.org/doc/html/rfc2812[2812 ^↗^,window=_blank] e
+  https://datatracker.ietf.org/doc/html/rfc2813[2813 ^↗^,window=_blank]
 // TRANSLATION MISSING
 * IRC proxy and relay for remote interfaces
 * multi-piattaforma (GNU/Linux, *BSD, macOS, Windows ed altre)
 * 100% GPL, software libero
 
-La home page di WeeChat si trova qui: https://weechat.org/
+// TRANSLATION MISSING
+The list of all features can be found on
+https://weechat.org/about/features/[this page ^↗^,window=_blank].
 
 [[prerequisites]]
 === Requisiti
@@ -78,7 +81,8 @@ I pacchetti binari sono disponibili per molte distribuzioni, incluse:
 // TRANSLATION MISSING
 * Debian/Ubuntu (o qualunque distribuzione compatibile):
   `apt-get install weechat-curses weechat-plugins` +
-  For latest versions and nightly builds: https://weechat.org/download/debian/
+  For latest versions and nightly builds:
+  https://weechat.org/download/debian/[Debian repositories ^↗^,window=_blank]
 * Fedora Core: `dnf install weechat`
 * FreeBSD: `pkg install weechat`
 * Gentoo: `emerge weechat`
@@ -87,7 +91,7 @@ I pacchetti binari sono disponibili per molte distribuzioni, incluse:
 * openSUSE: `zypper in weechat`
 * Sourcemage: `cast weechat`
 // TRANSLATION MISSING
-* macOS (with https://brew.sh/[Homebrew]): `brew install weechat`
+* macOS (with https://brew.sh/[Homebrew ^↗^,window=_blank]): `brew install weechat`
   (for help: `brew info weechat`)
 
 Potrebbero risultare utili alcuni pacchetti addizionali, come
@@ -102,9 +106,10 @@ installazione.
 
 // TRANSLATION MISSING
 Containers with WeeChat can be built or installed directly from the
-https://hub.docker.com/r/weechat/weechat[Docker Hub]. +
-For more information, see the README in this repository:
-https://github.com/weechat/weechat-container.
+https://hub.docker.com/r/weechat/weechat[Docker Hub ^↗^,window=_blank]. +
+For more information, see the README in the
+https://github.com/weechat/weechat-container[weechat-container ^↗^,window=_blank]
+repository.
 
 [[source_package]]
 === Sorgenti
@@ -114,7 +119,7 @@ WeeChat può essere compilato con CMake oppure autotools
 
 // TRANSLATION MISSING
 [NOTE]
-On macOS, you can use https://brew.sh/[Homebrew]:
+On macOS, you can use https://brew.sh/[Homebrew ^↗^,window=_blank]:
 `brew install --build-from-source weechat`.
 
 [[dependencies]]
@@ -139,9 +144,9 @@ WeeChat:
 // TRANSLATION MISSING
 | libgnutls28-dev          | ≥ 2.2.0 ^(3)^ | Connessione SSL al server IRC, support of SSL in relay plugin, IRC SASL authentication (ECDSA-NIST256P-CHALLENGE).
 // TRANSLATION MISSING
-| zlib1g-dev               |               | Compression of messages (WeeChat -> client) with https://zlib.net/[zlib] in relay plugin (weechat protocol), script plugin.
+| zlib1g-dev               |               | Compression of messages (WeeChat -> client) with https://zlib.net/[zlib ^↗^,window=_blank] in relay plugin (weechat protocol), script plugin.
 // TRANSLATION MISSING
-| libzstd-dev              |               | Compression of messages (WeeChat -> client) with https://facebook.github.io/zstd/[Zstandard] in relay plugin (weechat protocol).
+| libzstd-dev              |               | Compression of messages (WeeChat -> client) with https://facebook.github.io/zstd/[Zstandard ^↗^,window=_blank] in relay plugin (weechat protocol).
 |===
 
 [NOTE]
@@ -537,7 +542,8 @@ Questo file viene creato nella directory in cui è in esecuzione WeeChat (e
 [NOTE]
 On some systems like Archlinux, core dumps could be in another directory like
 _/var/lib/systemd/coredump_ and you must use the command `coredumpctl` to read it. +
-For more information, see this wiki page: https://wiki.archlinux.org/index.php/Core_dump
+For more information, see this
+https://wiki.archlinux.org/title/Core_dump[wiki page ^↗^,window=_blank].
 
 Ad esempio, se _weechat_ è installato in _/usr/bin/_ ed il file _core_
 si trova in _/home/user/_, allora eseguire gdb con questo comando:
@@ -646,7 +652,7 @@ $ weechat --upgrade
 ==== Release notes
 
 After an upgrade, it is *strongly recommended* to read the
-https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
+https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes ^↗^,window=_blank]
 which contain important information about breaking changes and some
 manual actions that could be required.
 
@@ -776,8 +782,8 @@ you can change it with these two commands:
 [[xdg_directories]]
 ==== XDG directories
 
-WeeChat uses XDG directories by default
-(according to the https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html[XDG Base Directory Specification]). +
+WeeChat uses XDG directories by default (according to the
+https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html[XDG Base Directory Specification ^↗^,window=_blank]). +
 A single home directory for all files can be forced by CMake option `WEECHAT_HOME`,
 the environment variable `WEECHAT_HOME` or the command-line option `-d` / `--dir`.
 
@@ -2276,7 +2282,7 @@ Per visualizzare tutti i set caratteri utilizzati, utilizzare il comando seguent
 ==== Risoluzione problemi
 
 Per qualunque problema con i set caratteri, per favore consultare
-le link:weechat_faq.it.html#charset[Domande Frequenti di WeeChat / Charset].
+le link:weechat_faq.it.html#charset[Domande Frequenti di WeeChat / Charset ^↗^,window=_blank].
 
 [[charset_commands]]
 ==== Comandi
@@ -2654,7 +2660,7 @@ kbd:[Alt] instead of kbd:[Shift]).
 
 [NOTE]
 Per qualunque problema con il mouse, consultare
-link:weechat_faq.it.html#mouse[FAQ di WeeChat / Mouse].
+link:weechat_faq.it.html#mouse[FAQ di WeeChat / Mouse ^↗^,window=_blank].
 
 [[mouse_bind_events]]
 ==== Associare gli eventi del mouse a comandi
@@ -3397,7 +3403,8 @@ $ weechat irc://alice@irc.libera.chat/#weechat,#weechat-fr
 By default no servers are defined. You can add as many servers as you want with
 the <<command_irc_server,/server>> command.
 
-For example to connect to https://libera.chat/[libera.chat] with SSL (encrypted trafic):
+For example to connect to https://libera.chat/[libera.chat ^↗^,window=_blank]
+with SSL (encrypted trafic):
 
 ----
 /server add libera irc.libera.chat/6697 -ssl
@@ -3588,13 +3595,15 @@ which can also be for example `~/.weechat`.
 /msg nickserv cert add
 ----
 
-Per maggiori informazioni consultare https://www.oftc.net/NickServ/CertFP/
+// TRANSLATION MISSING
+For more information, please look at
+https://www.oftc.net/NickServ/CertFP/[this page ^↗^,window=_blank].
 
 // TRANSLATION MISSING
 [[irc_ircv3_support]]
 ==== IRCv3 support
 
-WeeChat supports the following https://ircv3.net/irc/[IRCv3 extensions]:
+WeeChat supports the following https://ircv3.net/irc/[IRCv3 extensions ^↗^,window=_blank]:
 
 * <<irc_ircv3_account_notify,account-notify>>
 * <<irc_ircv3_account_tag,account-tag>>
@@ -3618,12 +3627,12 @@ automatically enabled
 (see option <<option_irc.server_default.capabilities,irc.server_default.capabilities>>).
 
 Tables with comparison of different IRC clients, including WeeChat, are available
-on this page: https://ircv3.net/software/clients.
+on https://ircv3.net/software/clients[this page ^↗^,window=_blank].
 
 [[irc_ircv3_account_notify]]
 ===== account-notify
 
-Specification: https://ircv3.net/specs/extensions/account-notify
+Specification: https://ircv3.net/specs/extensions/account-notify[account-notify ^↗^,window=_blank]
 
 This capability allows the server to send messages when users identify or
 unidentify on the server. +
@@ -3642,7 +3651,7 @@ Examples:
 [[irc_ircv3_account_tag]]
 ===== account-tag
 
-Specification: https://ircv3.net/specs/extensions/account-tag
+Specification: https://ircv3.net/specs/extensions/account-tag[account-tag ^↗^,window=_blank]
 
 This capability allows the server to send account as message tag to commands
 sent to the client. +
@@ -3671,7 +3680,7 @@ Message with tags:
 [[irc_ircv3_away_notify]]
 ===== away-notify
 
-Specification: https://ircv3.net/specs/extensions/away-notify
+Specification: https://ircv3.net/specs/extensions/away-notify[away-notify ^↗^,window=_blank]
 
 This capability allows the server to send away notifications for users present
 on the same channels as you.
@@ -3686,7 +3695,7 @@ with a specific color in the nicklist, using the following options:
 [[irc_ircv3_cap_notify]]
 ===== cap-notify
 
-Specification: https://ircv3.net/specs/extensions/capability-negotiation#the-cap-new-subcommand
+Specification: https://ircv3.net/specs/extensions/capability-negotiation#the-cap-new-subcommand[cap-notify ^↗^,window=_blank]
 
 This capability allows the server to advertise on new or removed capabilities
 on the server (via `CAP NEW` and `CAP DEL` commands).
@@ -3702,7 +3711,7 @@ Examples:
 [[irc_ircv3_chghost]]
 ===== chghost
 
-Specification: https://ircv3.net/specs/extensions/chghost
+Specification: https://ircv3.net/specs/extensions/chghost[chghost ^↗^,window=_blank]
 
 This capability allows the server to send messages when users change name or host. +
 When the option <<option_irc.look.smart_filter_chghost,irc.look.smart_filter_chghost>>
@@ -3720,7 +3729,7 @@ Example:
 [[irc_ircv3_extended_join]]
 ===== extended-join
 
-Specification: https://ircv3.net/specs/extensions/extended-join
+Specification: https://ircv3.net/specs/extensions/extended-join[extended-join ^↗^,window=_blank]
 
 This capability allows the server to send account and real name when users
 join channels. +
@@ -3737,7 +3746,7 @@ Example:
 [[irc_ircv3_invite_notify]]
 ===== invite-notify
 
-Specification: https://ircv3.net/specs/extensions/invite-notify
+Specification: https://ircv3.net/specs/extensions/invite-notify[invite-notify ^↗^,window=_blank]
 
 This capability allows the server to send invite messages when users are
 invited to channels.
@@ -3751,7 +3760,7 @@ Example:
 [[irc_ircv3_message_tags]]
 ===== message-tags
 
-Specification: https://ircv3.net/specs/extensions/message-tags
+Specification: https://ircv3.net/specs/extensions/message-tags[message-tags ^↗^,window=_blank]
 
 This capability allows to add metadata in messages. +
 These tags can be displayed using the command `/debug tags`.
@@ -3761,7 +3770,7 @@ It must be enabled to use <<typing_notifications,typing notifications>>.
 [[irc_ircv3_monitor]]
 ===== monitor
 
-Specification: https://ircv3.net/specs/extensions/monitor
+Specification: https://ircv3.net/specs/extensions/monitor[monitor ^↗^,window=_blank]
 
 This capability allows the server to send notifications when clients become
 online/offline. +
@@ -3771,7 +3780,7 @@ WeeChat automatically uses this extension if available when using the
 [[irc_ircv3_multi_prefix]]
 ===== multi-prefix
 
-Specification: https://ircv3.net/specs/extensions/multi-prefix
+Specification: https://ircv3.net/specs/extensions/multi-prefix[multi-prefix ^↗^,window=_blank]
 
 This capability allows the server to send all user modes at once in
 <<command_irc_names,/names>> and <<command_irc_whois,/whois>> responses. +
@@ -3797,14 +3806,14 @@ Example: output of `/whois alice`:
 [[irc_ircv3_sasl]]
 ===== SASL
 
-Specification: https://ircv3.net/specs/extensions/sasl-3.2
+Specification: https://ircv3.net/specs/extensions/sasl-3.2[SASL 3.2 ^↗^,window=_blank]
 
 See the dedicated chapter <<irc_sasl_authentication,SASL authentication>>.
 
 [[irc_ircv3_server_time]]
 ===== server-time
 
-Specification: https://ircv3.net/specs/extensions/server-time
+Specification: https://ircv3.net/specs/extensions/server-time[server-time ^↗^,window=_blank]
 
 This capability allows the server to send time for messages as message tag. +
 When the time is received in a message, WeeChat uses it to display the message
@@ -3817,7 +3826,7 @@ in the backlog sent upon connection.
 [[irc_ircv3_setname]]
 ===== setname
 
-Specification: https://ircv3.net/specs/extensions/setname
+Specification: https://ircv3.net/specs/extensions/setname[setname ^↗^,window=_blank]
 
 This capability lets you change your real name by using the
 <<command_irc_setname,/setname>> command.
@@ -3825,14 +3834,14 @@ This capability lets you change your real name by using the
 [[irc_ircv3_typing]]
 ===== typing
 
-Specification: https://ircv3.net/specs/client-tags/typing
+Specification: https://ircv3.net/specs/client-tags/typing[typing ^↗^,window=_blank]
 
 See the dedicated chapter <<typing_notifications,Typing notifications>>.
 
 [[irc_ircv3_userhost_in_names]]
 ===== userhost-in-names
 
-Specification: https://ircv3.net/specs/extensions/userhost-in-names
+Specification: https://ircv3.net/specs/extensions/userhost-in-names[userhost-in-names ^↗^,window=_blank]
 
 This capability allows the server to send hostnames in <<command_irc_names,/names>>
 responses.
@@ -3855,7 +3864,7 @@ Example of raw IRC messages received with the capability:
 [[irc_ircv3_whox]]
 ===== WHOX
 
-Specification: https://ircv3.net/specs/extensions/whox
+Specification: https://ircv3.net/specs/extensions/whox[WHOX ^↗^,window=_blank]
 
 This capability lets you request additional fields in the WHO response
 (via the <<command_irc_who,/who>> command). +
@@ -3976,7 +3985,7 @@ server buffers:
 ==== Connect with Tor and SASL
 
 // TRANSLATION MISSING
-Some servers support connections with Tor (https://www.torproject.org/),
+Some servers support connections with https://www.torproject.org/[Tor ^↗^,window=_blank],
 a network of virtual tunnels that allows people and groups to improve their
 privacy and security on the Internet.
 
@@ -4418,8 +4427,8 @@ show a list of users currently typing a message on the buffer.
 
 It is used by IRC plugin on channel and private buffers, when the "message-tags"
 capability is enabled (you can check with <<command_irc_cap,/cap>> command). +
-Under the hood, typing client tag is used, following this specification:
-https://ircv3.net/specs/client-tags/typing.
+Under the hood, typing client tag is used, following
+https://ircv3.net/specs/client-tags/typing[this specification ^↗^,window=_blank].
 
 [[typing_activation]]
 === Activation
@@ -4511,8 +4520,9 @@ protocolli differenti:
 
 * _irc_: proxy IRC: usato per condividere le connessioni ai server IRC con uno
   o più client IRC
+// TRANSLATION MISSING
 * _weechat_: protocol used by remote interfaces to display and interact with
-  WeeChat, see: https://weechat.org/about/interfaces/
+  WeeChat, see https://weechat.org/about/interfaces/[this page ^↗^,window=_blank].
 
 // TRANSLATION MISSING
 [[relay_password]]
@@ -4539,12 +4549,12 @@ This is optional and increases the security level.
 One-time passwords can be generated with applications, for example:
 
 * FreeOTP:
-  https://play.google.com/store/apps/details?id=org.fedorahosted.freeotp[Android],
-  https://itunes.apple.com/fr/app/freeotp-authenticator/id872559395[iOS]
-  (https://freeotp.github.io/[website])
+  https://play.google.com/store/apps/details?id=org.fedorahosted.freeotp[Android ^↗^,window=_blank],
+  https://apps.apple.com/fr/app/freeotp-authenticator/id872559395[iOS ^↗^,window=_blank]
+  (https://freeotp.github.io/[website ^↗^,window=_blank])
 * Google Authenticator:
-  https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2[Android],
-  https://itunes.apple.com/fr/app/google-authenticator/id388497605[iOS]
+  https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2[Android ^↗^,window=_blank],
+  https://apps.apple.com/fr/app/google-authenticator/id388497605[iOS ^↗^,window=_blank]
 
 The TOTP secret must be set in WeeChat and the application used to generate
 one-time passwords.
@@ -4634,7 +4644,8 @@ Il plugin Relay può inviare dati alle interfacce remote usando il protocollo
 WeeChat.
 
 // TRANSLATION MISSING
-You can connect with a remote interface, see: https://weechat.org/about/interfaces/
+You can connect with a remote interface, see
+https://weechat.org/about/interfaces/[this page ^↗^,window=_blank].
 
 [IMPORTANT]
 // TRANSLATION MISSING
@@ -4653,8 +4664,8 @@ password "miapass".
 [[relay_websocket]]
 === WebSocket
 
-WebSocket protocol (https://tools.ietf.org/html/rfc6455[RFC 6455]) is supported
-in Relay plugin for all protocols.
+WebSocket protocol (https://datatracker.ietf.org/doc/html/rfc6455[RFC 6455 ^↗^,window=_blank])
+is supported in Relay plugin for all protocols.
 
 The WebSocket handshake is automatically detected and socket becomes ready for
 WebSocket if required headers are found in handshake and if origin is allowed
@@ -4834,7 +4845,7 @@ circumstances.
 
 Using triggers require you to know how the signals, modifiers, ... are working.
 So you might consider reading the
-link:weechat_plugin_api.it.html#hooks[WeeChat plugin API reference / Hooks].
+link:weechat_plugin_api.it.html#hooks[WeeChat plugin API reference / Hooks ^↗^,window=_blank].
 
 [[trigger_default]]
 === Default triggers
@@ -4889,7 +4900,7 @@ A trigger has the following options (names are
 | hook | `+signal+`, `+hsignal+`, `+modifier+`, `+line+`, `+print+`, `+command+`,
   `+command_run+`, `+timer+`, `+config+`, `+focus+`, `+info+`, `+info_hashtable+`
 | The hook used in trigger. For more information, see
-  link:weechat_plugin_api.it.html#hooks[WeeChat plugin API reference / Hooks].
+  link:weechat_plugin_api.it.html#hooks[WeeChat plugin API reference / Hooks ^↗^,window=_blank].
 
 | arguments | string
 | The arguments for the hook, it depends on the hook type used.
@@ -4958,14 +4969,14 @@ The arguments depend on the hook used. They are separated by semicolons.
 | `+*,irc_in_privmsg+` +
   `+*,irc_in_privmsg;*,irc_in_notice+` +
   `+signal_sigwinch+`
-| link:weechat_plugin_api.it.html#_hook_signal[hook_signal]
+| link:weechat_plugin_api.it.html#_hook_signal[hook_signal ^↗^,window=_blank]
 
 | hsignal
 | 1. signal name (priority allowed) (required) +
   2. signal name (priority allowed) +
   3. ...
 | `+nicklist_nick_added+`
-| link:weechat_plugin_api.it.html#_hook_hsignal[hook_hsignal]
+| link:weechat_plugin_api.it.html#_hook_hsignal[hook_hsignal ^↗^,window=_blank]
 
 | modifier
 | 1. modifier name (priority allowed) (required) +
@@ -4973,7 +4984,7 @@ The arguments depend on the hook used. They are separated by semicolons.
   3. ...
 | `+weechat_print+` +
   `+5000\|input_text_display;5000\|history_add+`
-| link:weechat_plugin_api.it.html#_hook_modifier[hook_modifier]
+| link:weechat_plugin_api.it.html#_hook_modifier[hook_modifier ^↗^,window=_blank]
 
 | line
 | 1. buffer type +
@@ -4984,7 +4995,7 @@ The arguments depend on the hook used. They are separated by semicolons.
   `+*;irc.libera.*+` +
   `+*;irc.libera.#weechat+` +
   `+formatted;irc.libera.#weechat;irc_notice+`
-| link:weechat_plugin_api.en.html#_hook_line[hook_line]
+| link:weechat_plugin_api.en.html#_hook_line[hook_line ^↗^,window=_blank]
 
 | print
 | 1. buffer name +
@@ -4995,7 +5006,7 @@ The arguments depend on the hook used. They are separated by semicolons.
   `+irc.libera.#weechat+` +
   `+irc.libera.#weechat;irc_notice+` +
   `+*;;;1+`
-| link:weechat_plugin_api.it.html#_hook_print[hook_print]
+| link:weechat_plugin_api.it.html#_hook_print[hook_print ^↗^,window=_blank]
 
 | command
 | 1. command name (priority allowed) (required) +
@@ -5006,14 +5017,14 @@ The arguments depend on the hook used. They are separated by semicolons.
 | `+test+` +
   `+5000\|test+` +
   `+test;test command;arg1 arg2;arg1: description 1${\n}arg2: description 2+`
-| link:weechat_plugin_api.it.html#_hook_command[hook_command]
+| link:weechat_plugin_api.it.html#_hook_command[hook_command ^↗^,window=_blank]
 
 | command_run
 | 1. command (priority allowed) (required) +
   2. command (priority allowed) +
   3. ...
 | `+/cmd arguments+`
-| link:weechat_plugin_api.it.html#_hook_command_run[hook_command_run]
+| link:weechat_plugin_api.it.html#_hook_command_run[hook_command_run ^↗^,window=_blank]
 
 | timer
 | 1. interval in milliseconds (required) +
@@ -5021,35 +5032,35 @@ The arguments depend on the hook used. They are separated by semicolons.
   3. max number of calls (default: 0, which means "no end")
 | `+3600000+` +
   `+60000;0;5+`
-| link:weechat_plugin_api.it.html#_hook_timer[hook_timer]
+| link:weechat_plugin_api.it.html#_hook_timer[hook_timer ^↗^,window=_blank]
 
 | config
 | 1. option name (priority allowed) (required) +
   2. option name (priority allowed) +
   3. ...
 | `+weechat.look.*+`
-| link:weechat_plugin_api.it.html#_hook_config[hook_config]
+| link:weechat_plugin_api.it.html#_hook_config[hook_config ^↗^,window=_blank]
 
 | focus
 | 1. area name (priority allowed) (required) +
   2. area name (priority allowed) +
   3. ...
 | `+buffer_nicklist+`
-| link:weechat_plugin_api.it.html#_hook_focus[hook_focus]
+| link:weechat_plugin_api.it.html#_hook_focus[hook_focus ^↗^,window=_blank]
 
 | info
 | 1. info name (priority allowed) (required) +
   2. info name (priority allowed) +
   3. ...
 | `+my_info+`
-| link:weechat_plugin_api.it.html#_hook_info[hook_info]
+| link:weechat_plugin_api.it.html#_hook_info[hook_info ^↗^,window=_blank]
 
 | info_hashtable
 | 1. info name (priority allowed) (required) +
   2. info name (priority allowed) +
   3. ...
 | `+my_info+`
-| link:weechat_plugin_api.it.html#_hook_info_hashtable[hook_info_hashtable]
+| link:weechat_plugin_api.it.html#_hook_info_hashtable[hook_info_hashtable ^↗^,window=_blank]
 |===
 
 [[trigger_conditions]]
@@ -5616,8 +5627,8 @@ I plugin predefiniti sono:
 |===
 
 Per saperne di più riguardo lo sviluppo di plugin o script (tramite le API), per
-favore consultare link:weechat_plugin_api.it.html[Riferimento API dei Plugin per WeeChat]
-oppure link:weechat_scripting.it.html[Guida allo Scripting di WeeChat].
+favore consultare link:weechat_plugin_api.it.html[Riferimento API dei Plugin per WeeChat ^↗^,window=_blank]
+oppure link:weechat_scripting.it.html[Guida allo Scripting di WeeChat ^↗^,window=_blank].
 
 // TRANSLATION MISSING
 [[scripts]]
@@ -5629,7 +5640,7 @@ Questi plugin possono caricare, eseguire e scaricare gli script per questi
 linguaggi.
 
 Per maggiori informazioni su come scrivere gli script, o le API WeeChat
-per gli script, consultare la link:weechat_scripting.it.html[Guida allo Scripting di WeeChat].
+per gli script, consultare la link:weechat_scripting.it.html[Guida allo Scripting di WeeChat ^↗^,window=_blank].
 
 // TRANSLATION MISSING
 [[script_manager]]
@@ -5638,7 +5649,8 @@ per gli script, consultare la link:weechat_scripting.it.html[Guida allo Scriptin
 // TRANSLATION MISSING
 The script manager (command <<command_script_script,/script>>) is used to
 load/unload scripts of any language, and install/remove scripts of WeeChat
-scripts repository, which are visible at this URL: https://weechat.org/scripts/
+scripts repository, which are visible on
+https://weechat.org/scripts/[this page ^↗^,window=_blank].
 
 // TRANSLATION MISSING
 For privacy considerations, the download of scripts is disabled by default. +
@@ -5928,4 +5940,5 @@ For support with IRC, on server _irc.libera.chat_:
 ** _#weechat-fi_ (Finlandese)
 
 // TRANSLATION MISSING
-For other ways of support, see: https://weechat.org/about/support/
+For other ways of support, see
+https://weechat.org/about/support/[this page ^↗^,window=_blank].
