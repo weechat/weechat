@@ -37,7 +37,9 @@ WeeChat とは関係ありませんよ!)。
 
 WeeChat は非常に軽く、革新的な機能を備えているからです。
 
-WeeChat の機能に関するより詳しい情報: https://weechat.org/about/features/
+// TRANSLATION MISSING
+More info on the WeeChat
+https://weechat.org/about/features/[features page ^↗^,window=_blank].
 
 [[compilation_install]]
 == コンパイル / インストール
@@ -45,16 +47,17 @@ WeeChat の機能に関するより詳しい情報: https://weechat.org/about/fe
 [[gui]]
 === WeeChat には多くの GUI があると聞きました。コンパイル/利用方法を教えてください。
 
-いくつかのリモート GUI が利用可能です、以下のリモートインターフェースに関するページを参照してください:
-https://weechat.org/about/interfaces/
+// TRANSLATION MISSING
+Some remote GUIs are available, see the
+https://weechat.org/about/interfaces/[remote interfaces page ^↗^,window=_blank].
 
 [[compile_git]]
 === git リポジトリをクローンした後に WeeChat をコンパイルできません。
 
-WeeChat をコンパイルするには link:weechat_user.ja.html#compile_with_cmake[CMake]
+WeeChat をコンパイルするには link:weechat_user.ja.html#compile_with_cmake[CMake ^↗^,window=_blank]
 を使うことが推奨されています。
 
-link:weechat_user.ja.html#compile_with_autotools[autotools] を使って (CMake を使わずに)
+link:weechat_user.ja.html#compile_with_autotools[autotools ^↗^,window=_blank] を使って (CMake を使わずに)
 コンパイルする場合、最新の autoconf と automake を使ってください。
 
 他には「開発パッケージ」をインストール方法があります。この場合、インストールするのに必要なパッケージの数が減ります。このパッケージは
@@ -65,7 +68,7 @@ git をクローンする方法よりも不便であることに注意してく�
 [[compile_macos]]
 === どうすれば macOS に WeeChat をインストールできますか?
 
-https://brew.sh/[Homebrew] を使うことをお勧めします、ヘルプを見るには:
+https://brew.sh/[Homebrew ^↗^,window=_blank] を使うことをお勧めします、ヘルプを見るには:
 
 ----
 brew info weechat
@@ -81,9 +84,9 @@ brew install weechat
 === WeeChat を起動しました。でも何をすればいいかわかりません。
 
 ヘルプを見るには、`/help` と入力してください。コマンドに関するヘルプを見るには、`/help command`
-と入力してください。link:weechat_user.ja.html#key_bindings[キー]とlink:weechat_user.ja.html#commands_and_options[コマンド]は文書中で説明されています。
+と入力してください。link:weechat_user.ja.html#key_bindings[キー ^↗^,window=_blank]とlink:weechat_user.ja.html#commands_and_options[コマンド ^↗^,window=_blank]は文書中で説明されています。
 
-新しいユーザはlink:weechat_quickstart.ja.html[クイックスタートガイド]を読むことをお勧めします
+新しいユーザはlink:weechat_quickstart.ja.html[クイックスタートガイド ^↗^,window=_blank]を読むことをお勧めします
 
 [[display]]
 == 表示
@@ -109,7 +112,7 @@ brew install weechat
    rxvt-unicode を推奨)
 ** screen を使っている場合は、UTF-8 モードで起動されていることを確認
    (~/.screenrc に "`defutf8 on`" の記述があるかまたは `screen -U` のようにして起動)。
-* link:weechat_user.ja.html#option_weechat.look.eat_newline_glitch[_weechat.look.eat_newline_glitch_]
+* link:weechat_user.ja.html#option_weechat.look.eat_newline_glitch[_weechat.look.eat_newline_glitch_ ^↗^,window=_blank]
   オプションが off であることを確認してください (このオプションは表示上のバグを引き起こす可能性があります)
 
 [NOTE]
@@ -124,10 +127,11 @@ WeeChat は UTF-8 ロケールを推奨します。ISO
 で修正されているはずです (使用中のディストリビューションではまだ提供されていないかもしれません)
 
 次の回避方法を使えば、修正済みの _wcwidth_ 関数を使う事が可能です:
-https://blog.nytsoi.net/2015/05/04/emoji-support-for-weechat
+https://blog.nytsoi.net/2015/05/04/emoji-support-for-weechat[https://blog.nytsoi.net/2015/05/04/emoji-support-for-weechat ^↗^,window=_blank].
 
-より詳しい情報を得るにはバグ報告を参照してください:
-https://github.com/weechat/weechat/issues/79
+// TRANSLATION MISSING
+See this https://github.com/weechat/weechat/issues/79[bug report ^↗^,window=_blank]
+for more information.
 
 [[bars_background]]
 === タイトルやステータスバー等の背景色が行末ではなくテキストの最後で終わってしまいます。
@@ -184,7 +188,7 @@ _ウィンドウ_
 [[buffers_list]]
 === どうすれば左側にバッファリストを表示できますか。
 
-WeeChat バージョン 1.8 以上の場合、link:weechat_user.ja.html#buflist_plugin[buflist]
+WeeChat バージョン 1.8 以上の場合、link:weechat_user.ja.html#buflist[buflist ^↗^,window=_blank]
 プラグインがロードされ、デフォルトで有効化されます。
 
 バージョン 1.8 よりも古い WeeChat をお使いなら、以下の方法で _buffers.pl_ スクリプトをインストールしてください:
@@ -253,8 +257,8 @@ like `237` for dark gray.
 The buflist plugin provides lot of options that you can customize, please read
 the help on each option.
 
-There's also a wiki page with examples of advanced buflist configuration:
-https://github.com/weechat/weechat/wiki/buflist
+There's also a https://github.com/weechat/weechat/wiki/buflist[wiki page ^↗^,window=_blank]
+with examples of advanced buflist configuration.
 
 [[customize_prefix]]
 === どうすればチャットエリア内のニックネームの最大長さを短く、またはニックネーム整列機能を無効化できますか。
@@ -295,7 +299,7 @@ https://github.com/weechat/weechat/wiki/buflist
 および __weechat.color.status_count_*__ オプション (カウンタ) を設定します。 +
 その他のホットリスト関連オプションは __weechat.look.hotlist_*__ オプションを使って変更します。
 
-ホットリストに関する詳しい情報はlink:weechat_user.ja.html#screen_layout[ユーザーズガイド / 画面レイアウト]を参照してください
+ホットリストに関する詳しい情報はlink:weechat_user.ja.html#screen_layout[ユーザーズガイド / 画面レイアウト ^↗^,window=_blank]を参照してください
 
 [[input_bar_size]]
 === コマンドラインの行数を増やすにはどうすればいいですか。
@@ -464,7 +468,7 @@ WeeChat バージョン 0.3.4 の場合、新しい色を追加するには `/co
 WeeChat バージョン 0.3.5 以上の場合、任意の色番号を利用できます (オプション:
 色の別名を追加するには `/color` コマンドを使ってください)。
 
-色管理に関するより詳しい情報はlink:weechat_user.ja.html#colors[ユーザーズガイド / 色]を参照してください
+色管理に関するより詳しい情報はlink:weechat_user.ja.html#colors[ユーザーズガイド / 色 ^↗^,window=_blank]を参照してください
 
 [[search_text]]
 === どうすればバッファ内の文字列を検索できますか (irssi の /lastlog の様に)。
@@ -472,7 +476,7 @@ WeeChat バージョン 0.3.5 以上の場合、任意の色番号を利用で�
 デフォルトのキーは kbd:[Ctrl+r] です (コマンドは: `+/input search_text_here+`)。
 ハイライト部分へのジャンプは: kbd:[Alt+p] / kbd:[Alt+n]
 
-この機能に関するより詳しい情報はlink:weechat_user.ja.html#key_bindings[ユーザーズガイド / デフォルトのキー割り当て]を参照してください
+この機能に関するより詳しい情報はlink:weechat_user.ja.html#key_bindings[ユーザーズガイド / デフォルトのキー割り当て ^↗^,window=_blank]を参照してください
 
 [[terminal_focus]]
 === どうすれば端末にフォーカスが合った時や外れた時にコマンドを実行できますか。
@@ -648,7 +652,7 @@ macOS のターミナル.app を使っている場合、設定メニューのキ
 /key bind meta-q /buffer *11
 ----
 
-デフォルトキー割り当てのリストはlink:weechat_user.ja.html#key_bindings[ユーザーズガイド / デフォルトのキー割り当て]を参照してください
+デフォルトキー割り当てのリストはlink:weechat_user.ja.html#key_bindings[ユーザーズガイド / デフォルトのキー割り当て ^↗^,window=_blank]を参照してください
 
 番号 100 以上のバッファにジャンプするには、以下のトリガを定義してください。こうすることでコマンド
 `/123` でバッファ #123 にジャンプできるようになります:
@@ -927,7 +931,7 @@ WeeChat
 
 [NOTE]
 ヘルプを見るには `/help filter`、`+/help irc.look.smart_filter+`、link:weechat_user.ja.html#irc_smart_filter_join_part_quit[ユーザーズガイド
-/ 参加/退出/終了メッセージに対するスマートフィルタ] を使ってください。
+/ 参加/退出/終了メッセージに対するスマートフィルタ ^↗^,window=_blank] を使ってください。
 
 [[filter_irc_join_channel_messages]]
 === どうすれば IRC チャンネルに参加した際に表示される一部のメッセージをフィルタできますか。
@@ -1024,7 +1028,7 @@ _launcher.pl_ の場合、コマンドの設定が必要です:
 [[disable_highlights_for_specific_nicks]]
 === 特定のニックネームのみハイライトを無効化する方法を教えてください。
 
-WeeChat バージョン 0.3.4 以上の場合、link:weechat_user.en.html#max_hotlist_level_nicks[hotlist_max_level_nicks_add]
+WeeChat バージョン 0.3.4 以上の場合、link:weechat_user.en.html#max_hotlist_level_nicks[hotlist_max_level_nicks_add ^↗^,window=_blank]
 バッファプロパティを使うことで、ニックネーム単位、バッファ単位、バッファグループ単位
 (IRC サーバ単位) でホットリストレベルの最大値を設定できます。
 
@@ -1231,7 +1235,7 @@ IRC の退出および終了メッセージを無効化します:
 パスフレーズを定義してパスワードなどの保護したいデータの使用時は常にセキュアデータを使います:
 `/help secure` およびセキュアデータを使用したいオプションの `/help` を参照してください
 (セキュアデータを使うことが可能なオプションのヘルプにはこの点が明記されています)。
-link:weechat_user.ja.html#secured_data[ユーザーズガイド / 暗号化データ] を参照してください。
+link:weechat_user.ja.html#secured_data[ユーザーズガイド / 暗号化データ ^↗^,window=_blank] を参照してください。
 
 例:
 
@@ -1254,7 +1258,7 @@ contains your passwords ciphered with your passphrase.
 Some other files may contain sensitive info like passwords (if they are not
 stored in _sec.conf_ with the `/secure` command).
 
-設定ファイルに関する詳しい情報はlink:weechat_user.ja.html#files_and_directories[ユーザーズガイド / ファイルとディレクトリ]を参照してください。
+設定ファイルに関する詳しい情報はlink:weechat_user.ja.html#files_and_directories[ユーザーズガイド / ファイルとディレクトリ ^↗^,window=_blank]を参照してください。
 
 [[development]]
 == 開発
@@ -1262,7 +1266,8 @@ stored in _sec.conf_ with the `/secure` command).
 [[bug_task_patch]]
 === どのようにバグ報告、新機能のリクエスト、パッチ送信すればよいですか。
 
-以下のページを参照してください: https://weechat.org/about/support/
+// TRANSLATION MISSING
+See https://weechat.org/about/support/[this page ^↗^,window=_blank].
 
 [[gdb_error_threads]]
 === gdb で WeeChat を実行する場合、スレッドに関するエラーが発生します。
@@ -1299,11 +1304,13 @@ OS で WeeChat をテストすることを歓迎します。
 
 多くの課題があります (テスト、コード、ドキュメント作成、...)。
 
-IRC かメールで連絡を取り、サポートページを確認してください:
-https://weechat.org/about/support/
+// TRANSLATION MISSING
+Please contact us via IRC or mail, look at
+https://weechat.org/about/support/[support page ^↗^,window=_blank].
 
 [[donate]]
 === WeeChat 開発者にお金か何かを贈りたいのですが。
 
-開発補助のためお金を贈ることができます。詳しいことは
-https://weechat.org/donate/ に載っています。
+// TRANSLATION MISSING
+You can give us money to help development.
+Details on https://weechat.org/donate/[donation page ^↗^,window=_blank].

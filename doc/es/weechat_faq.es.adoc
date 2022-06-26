@@ -36,7 +36,9 @@ no se aplican a WeeChat!).
 
 Porque WeeChat es muy ligero y ofrece funcionalidades innovadoras.
 
-Más información de las funcionalidades de WeeChat en la página: https://weechat.org/about/features/
+// TRANSLATION MISSING
+More info on the WeeChat
+https://weechat.org/about/features/[features page ^↗^,window=_blank].
 
 [[compilation_install]]
 == Compilación / instalación
@@ -44,16 +46,17 @@ Más información de las funcionalidades de WeeChat en la página: https://weech
 [[gui]]
 === ¿He oido que hay muchas interfaces gráficas de susuario (GUI) para WeeChat. ¿Cómo puedo compilarlas o usarlas?
 
-Hay disponibles algunas GUIs, eche un vistazo a la página de interfaces remotas:
-https://weechat.org/about/interfaces/
+// TRANSLATION MISSING
+Some remote GUIs are available, see the
+https://weechat.org/about/interfaces/[remote interfaces page ^↗^,window=_blank].
 
 [[compile_git]]
 === No puedo compilar WeeChat después de haber clonado el repositorio git, ¿por qué?
 
 La manera recomendada para compilar WeeChat es con
-link:weechat_user.en.html#compile_with_cmake[CMake].
+link:weechat_user.en.html#compile_with_cmake[CMake ^↗^,window=_blank].
 
-Si lo está compilando con link:weechat_user.en.html#compile_with_autotools[autotools]
+Si lo está compilando con link:weechat_user.en.html#compile_with_autotools[autotools ^↗^,window=_blank]
 (y no con CMake), compruebe que tiene la versión más reciente de autoconf y automake.
 
 Otra forma es instalar "devel package", que necesita menos dependencias.
@@ -64,7 +67,8 @@ que la opción de clonar el repositorio de git a la hora de instalar actualizaci
 [[compile_macos]]
 === ¿Cómo puedo instalar WeeChat en macOS?
 
-Se recomienda utilizar https://brew.sh/[Homebrew], puede obtener ayuda con el comando:
+Se recomienda utilizar https://brew.sh/[Homebrew ^↗^,window=_blank],
+puede obtener ayuda con el comando:
 
 ----
 brew info weechat
@@ -80,12 +84,12 @@ brew install weechat
 === He lanzado WeeChat, pero estoy perdido, ¿qué puedo hacer?
 
 Para consultar la ayuda, escriba `/help`. Para buscar ayuda con un comando, escriba `/help comando`.
-link:weechat_user.en.html#key_bindings[Las teclas] y
-link:weechat_user.en.html#commands_and_options[comandos] aparecen listados
+link:weechat_user.en.html#key_bindings[Las teclas ^↗^,window=_blank] y
+link:weechat_user.en.html#commands_and_options[comandos ^↗^,window=_blank] aparecen listados
 en la documentación.
 
 Se recomienda a las personas recién llegadas leer la
-link:weechat_quickstart.es.html[guía rápida].
+link:weechat_quickstart.es.html[guía rápida ^↗^,window=_blank].
 
 [[display]]
 == Visualización
@@ -113,7 +117,7 @@ Es un problema común con una variedad de causas, por favor lea detenidamente y 
 ** Si está utilizando el multiplexador screen, compruebe que lo está ejecuando con el modo UTF-8
    ("`defutf8 on`" en ~/.screenrc o `screen -U` al ejecutar screen).
 * Compruebe si la opción
-  link:weechat_user.en.html#option_weechat.look.eat_newline_glitch[_weechat.look.eat_newline_glitch_]
+  link:weechat_user.en.html#option_weechat.look.eat_newline_glitch[_weechat.look.eat_newline_glitch_ ^↗^,window=_blank]
   está en off (esta opción puede causar errores a la hora de mostrar el texto).
 
 [NOTE]
@@ -128,10 +132,11 @@ Esto puede estar causado por un error en libc en la función _wcwidth_, que debe
 en glibc 2.22 (quizás todavía no está disponible en su distribución).
 
 Hay una solución temporal que es utilizar una función de _wcwidth_ sin ese error:
-https://blog.nytsoi.net/2015/05/04/emoji-support-for-weechat
+https://blog.nytsoi.net/2015/05/04/emoji-support-for-weechat[https://blog.nytsoi.net/2015/05/04/emoji-support-for-weechat ^↗^,window=_blank].
 
-Vea este reporte de error para más información:
-https://github.com/weechat/weechat/issues/79
+// TRANSLATION MISSING
+See this https://github.com/weechat/weechat/issues/79[bug report ^↗^,window=_blank]
+for more information.
 
 [[bars_background]]
 === Las barras del título y de estado no aparecen rellenadas, el color de fondo desaparece después del texto, ¿por qué?
@@ -188,7 +193,7 @@ ventanas.
 [[buffers_list]]
 === ¿Cómo mostrar un listado de los buffers en la parte izquierda?
 
-Con WeeChat ≥ 1.8, el complemento link:weechat_user.en.html#buflist_plugin[buflist]
+Con WeeChat ≥ 1.8, el complemento link:weechat_user.en.html#buflist[buflist ^↗^,window=_blank]
 está cargado y habilitado de manera predeterminada.
 
 Con versiones anteriores, puede instalar el script _buffers.pl_:
@@ -256,8 +261,9 @@ como `237` para gris oscuro.
 El complemento del listado de buffers _buflist_ ofrece múltiples opciones que puede configurar, por favor lea
 la ayuda de cada opción.
 
-También hay una página wiki con ejemplos de configuraciones más completas:
-https://github.com/weechat/weechat/wiki/buflist
+// TRANSLATION MISSING
+There's also a https://github.com/weechat/weechat/wiki/buflist[wiki page ^↗^,window=_blank]
+with examples of advanced buflist configuration.
 
 [[customize_prefix]]
 === ¿Cómo puedo reducir la longitud de los apodos o eliminar la alineación de los apodos en el área del chat?
@@ -300,7 +306,7 @@ Estos colores pueden ser cambiados con las opciones __weechat.color.status_data_
 (buffers) y __weechat.color.status_count_*__ (contadores). +
 Otras opciones de la lista rápida o _hotlist_ pueden ser cambiadas con las opciones __weechat.look.hotlist_*__.
 
-Vea la link:weechat_user.en.html#screen_layout[Guía de usuario / diseño de la pantalla] para
+Vea la link:weechat_user.en.html#screen_layout[Guía de usuario / diseño de la pantalla ^↗^,window=_blank] para
 más información sobre este tema.
 
 [[input_bar_size]]
@@ -465,7 +471,7 @@ Para la versión 0.3.4, deberá utilizar el comando `/color` para añadir nuevos
 Para versiones ≥ 0.3.5, puede utilizar cualquier número de color en las opciones (opcional: puede
 añadir alias al color con el comando `/color`).
 
-Por favor lea la link:weechat_user.en.html#colors[Guía del usuario / Colores] para más
+Por favor lea la link:weechat_user.en.html#colors[Guía del usuario / Colores ^↗^,window=_blank] para más
 información sobre la gestión de los colores.
 
 [[search_text]]
@@ -474,8 +480,8 @@ información sobre la gestión de los colores.
 La tecla predeterminada es kbd:[Ctrl+r] (el comando es: `+/input texto_a_buscar_aquí+`).
 Y para saltar a los textos resaltados: kbd:[Alt+p] / kbd:[Alt+n].
 
-Vea la link:weechat_user.en.html#key_bindings[Guía del usuario / Atajos de teclado] para más
-información sobre esta funcionalidad.
+Vea la link:weechat_user.en.html#key_bindings[Guía del usuario / Atajos de teclado ^↗^,window=_blank]
+para más información sobre esta funcionalidad.
 
 [[terminal_focus]]
 === ¿Cómo puedo ejecutar comandos cuando la terminal tiene o pierde el foco?
@@ -648,7 +654,7 @@ Puede crear un atajo de teclado, por ejemplo:
 ----
 
 Tiene una lista de las teclas predeterminadas en la
-link:weechat_user.en.html#key_bindings[Guía del usuario / Atajos de teclado].
+link:weechat_user.en.html#key_bindings[Guía del usuario / Atajos de teclado ^↗^,window=_blank].
 
 Para saltar a un buffer mayor de 100, podría definir un disparador y después utilizar
 comandos como `/123` para saltar al buffer #123:
@@ -925,7 +931,7 @@ Con un filtro global (oculta *todos* los mensajes join/part/quit):
 
 [NOTE]
 Para más ayuda: `/help filter`, `+/help irc.look.smart_filter+` y vea la
-link:weechat_user.en.html#irc_smart_filter_join_part_quit[Guía del usuario / Filtros inteligente para mensajes join/part/quit].
+link:weechat_user.en.html#irc_smart_filter_join_part_quit[Guía del usuario / Filtros inteligente para mensajes join/part/quit ^↗^,window=_blank].
 
 [[filter_irc_join_channel_messages]]
 === ¿Cómo puedo filtrar algunos mensajes mostrados cuando me uno a un canal IRC?
@@ -1023,7 +1029,7 @@ Otros scripts para este tema:
 === ¿Cómo puedo inhabilitar las menciones de unos apodos específicos?
 
 Con WeeChat ≥ 0.3.4 puede utilizar
-link:weechat_user.en.html#max_hotlist_level_nicks[hotlist_max_level_nicks_add]
+link:weechat_user.en.html#max_hotlist_level_nicks[hotlist_max_level_nicks_add ^↗^,window=_blank]
 esta propiedad del buffer para configurar el nivel máximo de la hotlist para algunos apodos, por buffer,
 o por grupo de buffers (como servidores IRC).
 
@@ -1227,7 +1233,7 @@ Elimine de la memoria e inhabilite la carga automática del complemento "xfer" (
 Defina una frase de paso y utilice datos seguros cada vez que pueda para datos sensibles
 como contraseñas: vea `/help secure` y `/help` en las opciones
 (si puede utilice datos seguros, está escrito en la ayuda).
-Ver también link:weechat_user.en.html#secured_data[Guía del usuario / Datos seguros].
+Ver también link:weechat_user.en.html#secured_data[Guía del usuario / Datos seguros ^↗^,window=_blank].
 
 Por ejemplo:
 
@@ -1248,7 +1254,7 @@ contiene sus contraseñas cifradas con su frase de paso.
 Algunos otros archivos pueden contener información sensible como contraseñas (si no están
 almacenadas en _sec.conf_ con el comando `/secure`).
 
-Vea la link:weechat_user.en.html#files_and_directories[Guía del usuario / Archivos y directorios]
+Vea la link:weechat_user.en.html#files_and_directories[Guía del usuario / Archivos y directorios ^↗^,window=_blank]
 para más información relacionada con los archivos de configuración.
 
 [[development]]
@@ -1257,7 +1263,8 @@ para más información relacionada con los archivos de configuración.
 [[bug_task_patch]]
 === ¿Cómo podría informar de errores, pedir nuevas funcionalidades o enviar parches?
 
-Vea: https://weechat.org/about/support/
+// TRANSLATION MISSING
+See https://weechat.org/about/support/[this page ^↗^,window=_blank].
 
 [[gdb_error_threads]]
 === Cuando ejecuto WeeChat bajo gdb, hay un error con la muestra de las conversaciones, ¿qué puedo hacer?
@@ -1293,11 +1300,13 @@ algunos sistemas operativos en los que no podemos probar WeeChat.
 
 Hay muchas tareas que hacer (probar, escribir código, documentación, etc.)
 
-Por favor, contacte con nosotros mediante IRC o correo electrónico, eche un vistazo a la página de soporte:
-https://weechat.org/about/support/
+// TRANSLATION MISSING
+Please contact us via IRC or mail, look at
+https://weechat.org/about/support/[support page ^↗^,window=_blank].
 
 [[donate]]
 === ¿Puedo donar dinero u otras cosas a las personas que desarrollan WeeChat?
 
-Puede donar dinero para ayudar en el desarrollo.
-Más detalles en https://weechat.org/donate/
+// TRANSLATION MISSING
+You can give us money to help development.
+Details on https://weechat.org/donate/[donation page ^↗^,window=_blank].
