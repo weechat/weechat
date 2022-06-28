@@ -200,10 +200,17 @@ Aby automatycznie wejść na kanały po połączeniu z serwerem:
 /set irc.server.libera.autojoin "#kanał1,#kanał2"
 ----
 
-[TIP]
-Możesz dopełnić nazwę lub wartość opzji za pomocą klawisza kbd:[Tab] oraz
-kbd:[Shift+Tab] dla częściowego dopełnienia (przydatne dla długich nazw jak
-nazwy opcji).
+// TRANSLATION MISSING
+The `/autojoin` command lets you configure the _autojoin_ option easily
+(see `/help autojoin`).
+
+// TRANSLATION MISSING
+You can also configure WeeChat to automatically update the _autojoin_ option
+when you join or leave channels:
+
+----
+/set irc.server_default.autojoin_dynamic on
+----
 
 Aby usunąć wartość dla opcji serwera, używając w zamian wartości domyślnej,
 na przykład, aby używać domyślnych nicków (irc.server_default.nicks):
@@ -218,6 +225,11 @@ nazwa opcji):
 ----
 /set irc.server.libera.xxx wartość
 ----
+
+[TIP]
+Możesz dopełnić nazwę lub wartość opzji za pomocą klawisza kbd:[Tab] oraz
+kbd:[Shift+Tab] dla częściowego dopełnienia (przydatne dla długich nazw jak
+nazwy opcji).
 
 [[connect_to_irc_server]]
 == Łączenie z serwerem IRC

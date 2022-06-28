@@ -175,8 +175,17 @@ IRC сервер можете додати командом `/server`, на пр
 /set irc.server.libera.autojoin "#канал1,#канал2"
 ----
 
-[TIP]
-Име и вредност опција можете да довршите тастером kbd:[Tab] и kbd:[Shift+Tab] за делимично довршавање (корисно је за дугачке речи као што је име опције).
+// TRANSLATION MISSING
+The `/autojoin` command lets you configure the _autojoin_ option easily
+(see `/help autojoin`).
+
+// TRANSLATION MISSING
+You can also configure WeeChat to automatically update the _autojoin_ option
+when you join or leave channels:
+
+----
+/set irc.server_default.autojoin_dynamic on
+----
 
 Ако желите да уклоните вредност опције сервера и да уместо ње користите подразумевану вредност, на пример, да се користе подразумевани надимци (irc.server_default.nicks):
 
@@ -189,6 +198,9 @@ IRC сервер можете додати командом `/server`, на пр
 ----
 /set irc.server.libera.xxx вредност
 ----
+
+[TIP]
+Име и вредност опција можете да довршите тастером kbd:[Tab] и kbd:[Shift+Tab] за делимично довршавање (корисно је за дугачке речи као што је име опције).
 
 [[connect_to_irc_server]]
 == Повезивање са IRC сервером

@@ -222,10 +222,16 @@ al server:
 ----
 
 // TRANSLATION MISSING
-[TIP]
-You can complete name and value of options with the kbd:[Tab] key
-and kbd:[Shift+Tab] for a partial completion (useful for long words like
-the name of option).
+The `/autojoin` command lets you configure the _autojoin_ option easily
+(see `/help autojoin`).
+
+// TRANSLATION MISSING
+You can also configure WeeChat to automatically update the _autojoin_ option
+when you join or leave channels:
+
+----
+/set irc.server_default.autojoin_dynamic on
+----
 
 Per eliminare il valore di un'opzione del server, e usare invece il valore
 predefinito, per esempio per utilizzare i nick predefiniti
@@ -241,6 +247,12 @@ Altre opzioni: è possibile impostare altre opzioni con il seguente comando
 ----
 /set irc.server.libera.xxx value
 ----
+
+// TRANSLATION MISSING
+[TIP]
+You can complete name and value of options with the kbd:[Tab] key
+and kbd:[Shift+Tab] for a partial completion (useful for long words like
+the name of option).
 
 [[connect_to_irc_server]]
 == Connessione al server IRC
