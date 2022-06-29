@@ -5446,6 +5446,9 @@ API_FUNC(upgrade_close)
 static void
 forget_hash_entry (HashTable *ht, INTERNAL_FUNCTION_PARAMETERS)
 {
+#if PHP_VERSION_ID >= 80000
+    RETURN_FALSE;
+#else
     zend_string *class_name;
     zend_string *lc_name;
     int re;
@@ -5469,6 +5472,7 @@ forget_hash_entry (HashTable *ht, INTERNAL_FUNCTION_PARAMETERS)
         RETURN_TRUE;
     }
     RETURN_FALSE;
+#endif
 }
 
 PHP_FUNCTION(forget_class)
