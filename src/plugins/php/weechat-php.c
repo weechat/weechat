@@ -1237,7 +1237,11 @@ weechat_php_signal_script_action_cb (const void *pointer, void *data,
 int
 php_weechat_startup (sapi_module_struct *sapi_module)
 {
+#if PHP_VERSION_ID >= 80200
+    return php_module_startup (sapi_module, &weechat_module_entry);
+#else
     return php_module_startup (sapi_module, &weechat_module_entry, 1);
+#endif
 }
 
 size_t
