@@ -5447,6 +5447,10 @@ static void
 forget_hash_entry (HashTable *ht, INTERNAL_FUNCTION_PARAMETERS)
 {
 #if PHP_VERSION_ID >= 80000
+    /* make C compiler happy */
+    (void) ht;
+    (void) execute_data;
+
     RETURN_FALSE;
 #else
     zend_string *class_name;
