@@ -3872,6 +3872,91 @@ TEST(IrcProtocolWithServer, 470)
 
 /*
  * Tests functions:
+ *   irc_protocol_cb_524 (help not found)
+ */
+
+TEST(IrcProtocolWithServer, 524)
+{
+    SRV_INIT;
+
+    /* not enough parameters */
+    RECV(":server 524");
+    CHECK_ERROR_PARAMS("524", 0, 2);
+    RECV(":server 524 alice");
+    CHECK_ERROR_PARAMS("524", 1, 2);
+
+    RECV(":server 524 alice UNKNOWN");
+    CHECK_SRV("--");
+    RECV(":server 524 alice UNKNOWN :Help not found");
+    CHECK_SRV("-- Help not found");
+}
+
+/*
+ * Tests functions:
+ *   irc_protocol_cb_704 (start of HELP/HELPOP)
+ */
+
+TEST(IrcProtocolWithServer, 704)
+{
+    SRV_INIT;
+
+    /* not enough parameters */
+    RECV(":server 704");
+    CHECK_ERROR_PARAMS("704", 0, 2);
+    RECV(":server 704 alice");
+    CHECK_ERROR_PARAMS("704", 1, 2);
+
+    RECV(":server 704 alice MODE");
+    CHECK_SRV("--");
+    RECV(":server 704 alice MODE "
+         ":MODE <target> [<modestring> [<mode arguments>...]]");
+    CHECK_SRV("-- MODE <target> [<modestring> [<mode arguments>...]]");
+}
+
+/*
+ * Tests functions:
+ *   irc_protocol_cb_705 (body of HELP/HELPOP)
+ */
+
+TEST(IrcProtocolWithServer, 705)
+{
+    SRV_INIT;
+
+    /* not enough parameters */
+    RECV(":server 705");
+    CHECK_ERROR_PARAMS("705", 0, 2);
+    RECV(":server 705 alice");
+    CHECK_ERROR_PARAMS("705", 1, 2);
+
+    RECV(":server 705 alice MODE");
+    CHECK_SRV("--");
+    RECV(":server 705 alice MODE :Sets and removes modes from the given target.");
+    CHECK_SRV("-- Sets and removes modes from the given target.");
+}
+
+/*
+ * Tests functions:
+ *   irc_protocol_cb_706 (end of HELP/HELPOP)
+ */
+
+TEST(IrcProtocolWithServer, 706)
+{
+    SRV_INIT;
+
+    /* not enough parameters */
+    RECV(":server 706");
+    CHECK_ERROR_PARAMS("706", 0, 2);
+    RECV(":server 706 alice");
+    CHECK_ERROR_PARAMS("706", 1, 2);
+
+    RECV(":server 706 alice MODE");
+    CHECK_SRV("--");
+    RECV(":server 706 alice MODE :End of /HELPOP");
+    CHECK_SRV("-- End of /HELPOP");
+}
+
+/*
+ * Tests functions:
  *   irc_protocol_cb_728 (quietlist)
  */
 
