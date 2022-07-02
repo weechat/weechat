@@ -6602,7 +6602,7 @@ IRC_PROTOCOL_CALLBACK(help)
     if (ignored)
         return WEECHAT_RC_OK;
 
-    str_message = irc_protocol_string_params (params, num_params - 1, num_params - 1);
+    str_message = irc_protocol_string_params (params, 2, num_params - 1);
 
     weechat_printf_date_tags (
         irc_msgbuffer_get_target_buffer (server, nick, command, NULL, NULL),
