@@ -6608,7 +6608,7 @@ IRC_PROTOCOL_CALLBACK(help)
         irc_msgbuffer_get_target_buffer (server, nick, command, NULL, NULL),
         date,
         irc_protocol_tags (command, tags, "notify_private", nick, address),
-        _("%s%s"),
+        "%s%s",
         weechat_prefix ("network"),
         str_message);
 
