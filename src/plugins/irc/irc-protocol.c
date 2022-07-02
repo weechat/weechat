@@ -6587,11 +6587,12 @@ IRC_PROTOCOL_CALLBACK(470)
  *   705 mynick topic :The <topic> is blah blah
  *   705 mynick topic :and this
  *   705 mynick topic :and that.
- *   706 mynick topic :Last help line of <topic>
+ *   706 mynick topic :End of /HELPOP
  *
  * Or:
  *   524 mynick topic :help not found
  */
+
 IRC_PROTOCOL_CALLBACK(help)
 {
     char *str_message;
@@ -7282,11 +7283,11 @@ irc_protocol_recv_command (struct t_irc_server *server,
         IRCB(491, 1, 0, generic_error),  /* no O-lines for your host        */
         IRCB(501, 1, 0, generic_error),  /* unknown mode flag               */
         IRCB(502, 1, 0, generic_error),  /* can't chg mode for other users  */
-        IRCB(524, 1, 0, help),           /* HELP/HELPOP reply (help not found) */
+        IRCB(524, 1, 0, help),           /* HELP/HELPOP (help not found)    */
         IRCB(671, 1, 0, whois_nick_msg), /* whois (secure connection)       */
-        IRCB(704, 1, 0, help),           /* start of HELP/HELPOP reply      */
-        IRCB(705, 1, 0, help),           /* main HELP/HELPOP reply          */
-        IRCB(706, 1, 0, help),           /* end of HELP/HELPOP reply        */
+        IRCB(704, 1, 0, help),           /* start of HELP/HELPOP            */
+        IRCB(705, 1, 0, help),           /* body of HELP/HELPOP             */
+        IRCB(706, 1, 0, help),           /* end of HELP/HELPOP              */
         IRCB(728, 1, 0, 728),            /* quietlist                       */
         IRCB(729, 1, 0, 729),            /* end of quietlist                */
         IRCB(730, 1, 0, 730),            /* monitored nicks online          */
