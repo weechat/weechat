@@ -2048,7 +2048,7 @@ TEST(IrcProtocolWithServer, 001_empty)
     CHECK_ERROR_PARAMS("001", 0, 1);
 
     RECV(":server 001 alice");
-    CHECK_NO_MSG;
+    CHECK_SRV("--");
     LONGS_EQUAL(1, ptr_server->is_connected);
     STRCMP_EQUAL("alice", ptr_server->nick);
 }
@@ -2693,7 +2693,7 @@ TEST(IrcProtocolWithServer, 323)
     CHECK_ERROR_PARAMS("323", 0, 1);
 
     RECV(":server 323 alice");
-    CHECK_NO_MSG;
+    CHECK_SRV("--");
     RECV(":server 323 alice end");
     CHECK_SRV("-- end");
     RECV(":server 323 alice :End of /LIST");
@@ -3999,7 +3999,7 @@ TEST(IrcProtocolWithServer, 732)
     CHECK_ERROR_PARAMS("732", 0, 1);
 
     RECV(":server 732 alice");
-    CHECK_NO_MSG;
+    CHECK_SRV("--");
     RECV(":server 732 alice :nick1!user1@host1,nick2!user2@host2");
     CHECK_SRV("-- nick1!user1@host1,nick2!user2@host2");
 }
@@ -4018,7 +4018,7 @@ TEST(IrcProtocolWithServer, 733)
     CHECK_ERROR_PARAMS("733", 0, 1);
 
     RECV(":server 733 alice");
-    CHECK_NO_MSG;
+    CHECK_SRV("--");
     RECV(":server 733 alice end");
     CHECK_SRV("-- end");
     RECV(":server 733 alice :End of MONITOR list");

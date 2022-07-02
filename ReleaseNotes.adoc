@@ -20,6 +20,15 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 [[v3.6]]
 == Version 3.6 (under dev)
 
+[[v3.6_hook_print_empty_messages]]
+=== Hook print on empty messages
+
+The "hook_print" callback is now called even when an empty message is displayed
+(with or without prefix).
+
+This was a bug, but is mentioned here just in case some scripts callbacks
+would be surprised to be called with such empty messages.
+
 [[v3.6_trigger_beep]]
 === Default trigger "beep"
 

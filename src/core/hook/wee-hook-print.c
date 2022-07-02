@@ -126,7 +126,7 @@ hook_print_exec (struct t_gui_buffer *buffer, struct t_gui_line *line)
     if (!weechat_hooks[HOOK_TYPE_PRINT])
         return;
 
-    if (!line->data->message || !line->data->message[0])
+    if (!line->data->message)
         return;
 
     prefix_no_color = (line->data->prefix) ?

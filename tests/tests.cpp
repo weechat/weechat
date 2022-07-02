@@ -140,7 +140,7 @@ test_print_cb (const void *pointer, void *data, struct t_gui_buffer *buffer,
                   "%s: \"%s%s%s\"",
                   buffer_full_name,
                   (prefix && prefix[0]) ? prefix : "",
-                  (prefix && prefix[0]) ? " " : "",
+                  (prefix && prefix[0] && message && message[0]) ? " " : "",
                   (message && message[0]) ? message : "");
         arraylist_add (recorded_messages, strdup (str_recorded));
     }
@@ -150,7 +150,7 @@ test_print_cb (const void *pointer, void *data, struct t_gui_buffer *buffer,
     {
         printf ("%s%s%s\n",  /* with color: "\33[34m%s%s%s\33[0m\n" */
                 (prefix && prefix[0]) ? prefix : "",
-                (prefix && prefix[0]) ? " " : "",
+                (prefix && prefix[0] && message && message[0]) ? " " : "",
                 (message && message[0]) ? message : "");
     }
 

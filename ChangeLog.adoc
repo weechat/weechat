@@ -33,6 +33,7 @@ New features::
 Bug fixes::
 
   * core: fix bad window size on startup with some terminals like https://github.com/kovidgoyal/kitty[kitty] (issue #1769)
+  * api: run hook_print callback also on empty messages
   * buflist: fix memory leak when reading config and changing option buflist.look.sort
   * irc: remove channel from autojoin option when manually closing a buffer with `/buffer close` or `/close`
   * irc: fix add of channel to autojoin option when joining a channel with a buffer still opened
