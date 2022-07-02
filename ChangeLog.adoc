@@ -27,6 +27,7 @@ New features::
   * core: allow to remove multiple filters at once with command `/filter del`
   * api: allow to catch multiple signals in functions hook_signal and hook_hsignal (issue #1780)
   * irc: rename option `save` to `apply` in command `/autojoin`
+  * irc: add support of RPL_HELPSTART, RPL_HELPTXT and RPL_ENDOFHELP (messages 524, 704, 705, 706) (issue #1772)
   * php: add support of PHP 8.2 (issue #1787)
 
 Bug fixes::
