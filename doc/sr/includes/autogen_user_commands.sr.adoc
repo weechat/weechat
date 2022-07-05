@@ -127,19 +127,19 @@
 * `+autojoin+`: конфигурисање „autojoin” (аутоприступ) серверске опције
 
 ----
-/autojoin  add [<channel1> [<channel2>...]]
-           addraw <channel1>[,<channel2>...] [<key1>[,<key2>...]]
-           del [<channel1> [<channel2>...]]
+/autojoin  add [<канал1> [<канал2>...]]
+           addraw <канал1>[,<канал2>...] [<кључ1>[,<кључ2>...]]
+           del [<кључ1> [<кључ2>...]]
            apply
            sort
 
-    add: add current channel or a list of channels (with optional keys) to the autojoin option; if you are on the channel and the key is not provided, the key is read in the channel
- addraw: use the IRC raw format (same as /join command): all channels separated by commas, optional keys separated by commas
-    del: delete current channel or a list of channels from the autojoin option
-channel: channel name
-    key: key for the channel
-  apply: set currently joined channels in the autojoin option
-   sort: sort alphabetically channels in the autojoin option
+   add: додаје текући канал или листу канала ( са необавезним кључевима) у autojoin опцију; ако се налазите на каналу и не наведете кључ, он се чита са канала
+addraw: користи се IRC сирови формат (исто као за /join команду): сви канали су раздвојени запетама, небавезни кључеви су раздвојени запетама
+   del: брише текући канал или листу канала из autojoin опције
+ канал: име канала
+  кључ: кључ за канал
+ apply: поставља канале на које сте тренутно пријављени у autojoin опцију
+  sort: сортира по абецеди канале у autojoin опцији
 
 Examples:
   /autojoin add
@@ -1338,26 +1338,26 @@ stop: зауставља режим померања курсора
         hdata [free]
         time <команда>
 
-     list: list plugins with debug levels
-      set: set debug level for plugin
-   plugin: name of plugin ("core" for WeeChat core)
-    level: debug level for plugin (0 = disable debug)
-     dump: save memory dump in WeeChat log file (same dump is written when WeeChat crashes)
-    hooks: display infos about hooks (with a plugin: display detailed info about hooks created by the plugin)
-   buffer: dump buffer content with hexadecimal values in log file
-    certs: display number of loaded trusted certificate authorities
-    color: display infos about current color pairs
-   cursor: toggle debug for cursor mode
-     dirs: display directories
-    hdata: display infos about hdata (with free: remove all hdata in memory)
-infolists: display infos about infolists
-     libs: display infos about external libraries used
-   memory: display infos about memory usage
-    mouse: toggle debug for mouse
-     tags: display tags for lines
-     term: display infos about terminal
-  windows: display windows tree
-     time: measure time to execute a command or to send text to the current buffer
+     list: исписује додатке са дибаг нивоима
+      set: поставља дибаг ниво за додатак
+  додатак: име додатка („core” за WeeChat језгро)
+     ниво: дибаг ниво за додатак (0 = искључује дибаг)
+     dump: чува садржај меморије у WeeChat лог фајл (исти садржај се записује када се програм WeeChat сруши)
+    hooks: исписује инфо о кукама (са додатком: приказује детаљне информације о кукама које креира додатак)
+   buffer: уписује у лог фајл садржај бафера као хексадецималне вредности
+    certs: приказује број учитаних ауторитета сертификата којима се верује
+    color: приказује инфо о тренутним паровима боја
+   cursor: пребацује дибаг за режим померања курсора
+     dirs: исписује директоријуме
+    hdata: исписује инфо о hdata (са free: уклања све hdata из меморије)
+infolists: исписује инфо о инфолистама
+     libs: исписује инфо о коришћеним спољним библиотекама
+   memory: исписује инфо о употреби меморије
+    mouse: пребацује дибаг за миша
+     tags: исписује ознаке за линије
+     term: исписује инфо о терминалу
+  windows: исписује стабло прозора
+     time: мери време извршавања команде или слања текста текућем баферу
 ----
 
 [[command_weechat_eval]]
@@ -1367,83 +1367,83 @@ infolists: display infos about infolists
 /eval  [-n|-s] [-d] <израз>
        [-n] [-d [-d]] -c <израз1> <оператор> <израз2>
 
-        -n: display result without sending it to buffer (debug mode)
-        -s: split expression before evaluating it (many commands can be separated by semicolons)
-        -d: display debug output after evaluation (with two -d: more verbose debug)
-        -c: evaluate as condition: use operators and parentheses, return a boolean value ("0" or "1")
-expression: expression to evaluate, variables with format ${variable} are replaced (see below); many commands can be separated by semicolons
-  operator: a logical or comparison operator:
-            - logical operators:
-                &&   boolean "and"
-                ||   boolean "or"
-            - comparison operators:
-                ==   equal
-                !=   not equal
-                <=   less or equal
-                <    less
-                >=   greater or equal
-                >    greater
-                =~   is matching POSIX extended regex
-                !~   is NOT matching POSIX extended regex
-                ==*  is matching mask, case sensitive (wildcard "*" is allowed)
-                !!*  is NOT matching mask, case sensitive (wildcard "*" is allowed)
-                =*   is matching mask, case insensitive (wildcard "*" is allowed)
-                !*   is NOT matching mask, case insensitive (wildcard "*" is allowed)
-                ==-  is included, case sensitive
-                !!-  is NOT included, case sensitive
-                =-   is included, case insensitive
-                !-   is NOT included, case insensitive
+        -n: приказује резултат и не шаље га у бафер (дибаг режим)
+        -s: дели израз пре израчунавања (многе команде могу да се раздвоје са тачка зарезима)
+        -d: приказује дибаг излаз након израчунавања (са два -d: детаљнији дибаг)
+        -c: израчунава као услов: користе се оператори и заграде, враћа логичку вредност („0” или „1”)
+     израз: израз који се израчунава, променљиве у формату ${променљива} се замењују (погледајте испод); више команди може да се раздвоји са тачка зарезима
+  оператор: логички или оператор поређења:
+            - логички оператори:
+                &&   логичко „и”
+                ||   логичко „или”
+            - оператори поређења:
+                ==   једнако
+                !=   није једнако
+                <=   мање или једнако
+                <    мање
+                >=   веће или једнако
+                >    веће
+                =~   подудара се са POSIX проширеним регуларним изразом
+                !~   НЕ подудара се са POSIX проширеним регуларним изразом
+                ==*  је маска подударања, разликује величину слова (дозвољен је џокер „*”)
+                !!*  НИЈЕ маска подударања, разликује величину слова (дозвољен је џокер „*”)
+                =*   је маска подударања, не разликује величину слова (дозвољен је џокер „*”)
+                !*   НИЈЕ маска подударања, не разликује величину слова (дозвољен је џокер „*”)
+                ==-  је укључено, разликује величину слова
+                !!-  НИЈЕ укључено, разликује величину слова
+                =-   је укључено, не разликује величину слова
+                !-   НИЈЕ укључено, не разликује величину слова
 
-An expression is considered as "true" if it is not NULL, not empty, and different from "0".
-The comparison is made using floating point numbers if the two expressions are valid numbers, with one of the following formats:
-  - integer (examples: 5, -7)
-  - floating point number (examples: 5.2, -7.5, 2.83e-2)
-  - hexadecimal number (examples: 0xA3, -0xA3)
-To force a string comparison, you can add double quotes around each expression, for example:
+Сматра се да је израз „true” ако није NULL, није празан и различит је од „0”.
+Поређење се врши употребом бројева у покретном зарезу ако су два израза важећи бројеви, у једном од следећих формата:
+  - целобројни (примери: 5, -7)
+  - број у покретном зарезу (примери: 5.2, -7.5, 2.83e-2)
+  - хексадецимални број (примери: 0xA3, -0xA3)
+Ако желите да форсирате поређење стрингова, можете да додате знаке навода око сваког израза, на пример:
   50 > 100      ==> 0
   "50" > "100"  ==> 1
 
-Some variables are replaced in expression, using the format ${variable}, variable can be, by order of priority:
-  1. the string itself without evaluation (format: "raw:xxx")
-  2. a user-defined variable (format: "name")
-  3. an evaluated sub-string (format: "eval:xxx")
-  4. an evaluated condition (format: "eval_cond:xxx")
-  5. a string with escaped chars (format: "esc:xxx" or "\xxx")
-  6. a string converted to lower case (format: "lower:xxx")
-  7. a string converted to upper case (format: "upper:xxx")
-  8. a string with chars to hide (format: "hide:char,string")
-  9. a string with max chars (format: "cut:max,suffix,string" or "cut:+max,suffix,string")
-     or max chars displayed on screen (format: "cutscr:max,suffix,string" or "cutscr:+max,suffix,string")
-  10. a reversed string (format: "rev:xxx" or "revscr:xxx")
-  11. a repeated string (format: "repeat:count,string")
-  12. length of a string (format: "length:xxx" or "lengthscr:xxx")
-  13. split of a string (format: "split:number,separators,flags,xxx")
-  14. split of shell argmuents (format: "split_shell:number,xxx")
-  15. a color (format: "color:xxx", see "Plugin API reference", function "color")
-  16. a modifier (format: "modifier:name,data,string")
-  17. an info (format: "info:name,arguments", arguments are optional)
-  18. a base 16/32/64 encoded/decoded string (format: "base_encode:base,xxx" or "base_decode:base,xxx")
-  19. current date/time (format: "date" or "date:format")
-  20. an environment variable (format: "env:XXX")
-  21. a ternary operator (format: "if:condition?value_if_true:value_if_false")
-  22. result of an expression with parentheses and operators + - * / // % ** (format: "calc:xxx")
-  23. a random integer number (format: "random:min,max")
-  24. a translated string (format: "translate:xxx")
-  25. define a user variable (format: "define:name,value")
-  26. an option (format: "file.section.option")
-  27. a local variable in buffer
-  28. a hdata name/variable (the value is automatically converted to string), by default "window" and "buffer" point to current window/buffer.
-Format for hdata can be one of following:
-  hdata.var1.var2...: start with a hdata (pointer must be known), and ask variables one after one (other hdata can be followed)
-  hdata[list].var1.var2...: start with a hdata using a list/pointer/pointer name, for example:
-    ${buffer[gui_buffers].full_name}: full name of first buffer in linked list of buffers
-    ${plugin[weechat_plugins].name}: name of first plugin in linked list of plugins
-  hdata[pointer].var1.var2...: start with a hdata using a pointer, for example:
-    ${buffer[0x1234abcd].full_name}: full name of the buffer with this pointer (can be used in triggers)
-    ${buffer[my_pointer].full_name}: full name of the buffer with this pointer name (can be used in triggers)
-For name of hdata and variables, please look at "Plugin API reference", function "weechat_hdata_get".
+У изразима се замењују неке променљиве, користећи формат ${променљива}, променљива може да буде, према редоследу приоритета:
+  1. сам стринг без израчунавања (формат: „raw:xxx”)
+  2. кориснички дефинисана променљива (формат: „име”)
+  3. израчунати под-стринг (формат: „eval:xxx”)
+  4. израчунати услов (формат: „eval_cond:xxx”)
+  5. стринг са означеним карактерима (формат: „esc:xxx” или „\xxx”)
+  6. стринг конвертован у мала слова (формат: "lower:xxx")
+  7. стринг конвертован у велика слова (формат: "upper:xxx")
+  8. стринг са карактерима за сакривање (формат: „hide:кар,стринг”)
+  9. стринг са највише карактера (формат: „cut:макс,суфикс,стринг” или „cut:+макс,суфикс,стринг")
+     или макс број карактера који се приказује на екрану (формат: „cutscr:макс,суфикс,стринг” или „cutscr:+макс,суфикс,стринг”)
+  10. обрнути стринг (формат: „rev:xxx” или „revscr:xxx”)
+  11. поновљени стринг (формат: „repeat:број,стринг”)
+  12. дужина стринга (формат: „length:xxx” или „lengthscr:xxx”)
+  13. подела стринга (формат: „split:број,сепаратори,заставице,xxx”)
+  14. подела аргумената љуске (формат: „split_shell:број,xxx”)
+  15. боја (формат: „color:xxx”, погледајте „Референтни приручник API додатака”, функција „color”)
+  16. модификатор (формат: „modifier:име,подаци,стринг”)
+  17. инфо (формат: „info:име,аргументи”, аргументи нису обавезни)
+  18. base 16/32/64 шифриран/дешифрован стринг (формат: „base_encode:основа, xxx” или „base_decode:основа,xxx”)
+  19. текући датум/време (формат: „date” или „date:формат”)
+  20. променљива окружења (формат: „env:XXX”)
+  21. тернарни оператор (формат: „if:услов?вредност_ако_је_тачно:вредност_ако_је_нетачно”)
+  22. резултат израза са заградама и операторима + - * / // % ** (формат: „calc:xxx”)
+  23. случајни целобројни број (формат: „random:мин,макс”)
+  24. преведени стринг (формат: „translate:xxx”)
+  25. дефиниција корисничке промонљиве (формат: „define:име,вредност”)
+  26. опција (формат: „фајл.секција.опција”)
+  27. локална променљива у баферу
+  28. hdata име/променљива (вредност се аутоматски конвертује у стринг), „window” и „buffer” подразумевано показују на текући прозор/бафер.
+Формат за hdata може да буде једно од следећег:
+  hdata.пром1.пром2...: почиње са hdata (показивач мора да буде познат), и пита променљиве једну за другом (могу да следе и остала hdata)
+  hdata[листа].пром1.пром2...: почиње са hdata користећи листу/показивач/име показивача, на пример:
+    ${buffer[gui_buffers].full_name}: пуно име првог бафера у увезаној листи бафера
+    ${plugin[weechat_plugins].name}: име првог бафера у увезаној листи додатака
+  hdata[показивач].пром1.пром2...: почиње са hdata користећи показивач, на пример:
+    ${buffer[0x1234abcd].full_name}: пуно име бафера са овим показивачем (може да се користи у окидачима)
+    ${buffer[my_pointer].full_name}: пуно име бафера са овим именом показивача (може да се користи у окидачима)
+У вези имена hdata и променљивих, молим вас да погледате „Референтни приручник API додатака”, функцију „weechat_hdata_get”.
 
-Examples (simple strings):
+Примери (једноставни стрингови):
   /eval -n ${raw:${info:version}}                 ==> ${info:version}
   /eval -n ${eval_cond:${window.win_width}>100}   ==> 1
   /eval -n ${info:version}                        ==> 0.4.3
@@ -1480,7 +1480,7 @@ Examples (simple strings):
   /eval -n ${translate:Plugin}                    ==> Extension
   /eval -n ${define:len,${calc:5+3}}${len}x${len} ==> 8x8
 
-Examples (conditions):
+Примери (услови):
   /eval -n -c ${window.buffer.number} > 2 ==> 0
   /eval -n -c ${window.win_width} > 100   ==> 1
   /eval -n -c (8 > 12) || (5 > 2)         ==> 1
@@ -1498,11 +1498,11 @@ Examples (conditions):
 
 ----
 /filter  list
-         enable|disable|toggle [<name>|@]
-         add|addreplace <name> <buffer>[,<buffer>...] <tags> <regex>
-         rename <name> <new_name>
-         recreate <name>
-         del <name>|-all [<name>...]
+         enable|disable|toggle [<име>|@]
+         add|addreplace <име> <бафер>[,<бафер>...] <ознаке> <регуларни_израз>
+         rename <име> <ново_име>
+         recreate <име>
+         del <име>|-all [<име>...]
 
       list: исписује све филтере
     enable: укључује филтере (филтери су подразумевано укључени)
@@ -1652,45 +1652,45 @@ addreplace: додаје или замењује постојећи филтер
 ----
 
 [[command_weechat_item]]
-* `+item+`: manage custom bar items
+* `+item+`: управљање прилагођеним ставкама траке
 
 ----
 /item  list
-       add|addreplace <name> "<conditions>" "<content>"
-       rename <name> <new_name>
-       refresh <name> [<name>...]
-       recreate <name>
-       del <name>|-all
+       add|addreplace <име> "<услови>" "<садржај>"
+       rename <име> <ново_име>
+       refresh <име> [<име>...]
+       recreate <име>
+       del <име>|-all
 
-      list: list all custom bar items
-       add: add a custom bar item
-addreplace: add or replace an existing custom bar item
-      name: custom bar item name
-conditions: evaluated conditions to display the bar item (for example to display the bar item only in specific buffers)
-   content: content (evaluated, see /help eval)
-    rename: rename a custom bar item
-   refresh: update content of item in all bars where the item is displayed; any item can be refreshed: default/plugin/custom bar items
-  recreate: set input with the command used to edit the custom bar item
-       del: delete a custom bar item
-      -all: delete all custom bar items
+      list: приказује све прилагођене ставке траке
+       add: додаје прилагођену ставку траке
+addreplace: додаје или мења постојећу прилагођену ставку траке
+       име: име прилагођене ставке траке
+    услови: израчунати услови под којима се ставка траке приказује (на пример да се ставка траке прикаже само у одређеним баферима)
+   садржај: садржај (израчунат, погледајте /help eval)
+    rename: мења име прилагођене ставке траке
+   refresh: ажурира садржај ставке у свим тракама у којима се ставка приказује; може да се освежи било која ставка: подразумеване ставке/ставке додатака/прилагођене ставке
+  recreate: поставља унос командом која је употребљена да се уреди прилагођена ставка траке
+       del: брише прилагођену ставку траке
+      -all: брише све прилагођене ставке траке
 
-Examples:
-  add item with terminal size, displayed only in buffers with number = 1:
+Примери:
+  додавање ставке са величином терминала, приказаном само у баферу чији је број = 1:
     /item add terminfo "${buffer.number} == 1" "term:${info:term_width}x${info:term_height}"
-  add item with buffer info:
+  додавање ставке са информацијама о баферу:
     /item add bufinfo "" "${buffer.number}:${buffer.name}${if:${buffer.zoomed}?(Z)}"
-  add item with date/time using format "Dec 25, 12:34 +0100", refreshed every minute:
+  додавање ставке са датумом/временом у формату „Дец 25, 12:34 +0100”, која се освежава сваки минут:
     /item add datetime "" "${date:%b %d, %H:%M %z}"
     /trigger add datetime_refresh timer "60000;60" "" "" "/item refresh datetime"
-  add item with number of lines in buffer (displayed/total), refreshed each time a new line is displayed or if filtered lines have changed:
+  додавање ставке са бројем линија у баферу (приказаних/укупно), која се освежава сваки пут када се прикаже нова линија или ако се промене филтриране линије:
     /item add lines_count "" "${calc:${buffer.lines.lines_count}-${buffer.lines.lines_hidden}}/${buffer.lines.lines_count} lines"
     /trigger add lines_count_refresh_print print "" "" "" "/item refresh lines_count"
     /trigger add lines_count_refresh_signal signal "window_switch;buffer_switch;buffer_lines_hidden;filters_*" "" "" "/item refresh lines_count"
-  force refresh of item "lines_count":
+  форсирано освежавање ставке „lines_count”:
     /item refresh lines_count
-  recreate item "lines_count" with different conditions or content:
+  рекреирање ставке „lines_count” са другачијим условима или садржајем:
     /item recreate lines_count
-  delete item "lines_count":
+  брисање ставке „lines_count”:
     /item del lines_count
 ----
 
