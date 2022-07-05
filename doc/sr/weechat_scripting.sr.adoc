@@ -16,9 +16,8 @@
 
 Ово упутство описује WeeChat чет клијент и део је програма WeeChat.
 
-// TRANSLATION MISSING
-Latest version of this document can be found on
-https://weechat.org/doc/[this page ^↗^,window=_blank].
+Последња верзија овог документа се налази на
+https://weechat.org/doc/[овој страници ^↗^,window=_blank].
 
 
 [[introduction]]
@@ -1082,9 +1081,8 @@ weechat.hook_process("url:https://weechat.org/dev/info/stable/",
 ----
 
 [TIP]
-// TRANSLATION MISSING
-All infos available about WeeChat are on
-https://weechat.org/dev/info/[this page ^↗^,window=_blank].
+Све информације у вези програма WeeChat се налазе на
+https://weechat.org/dev/info/[овој страници ^↗^,window=_blank].
 
 Пример URL преноса са опцијом: преузимање најновијег WeeChat развојног пакета у фајл _/tmp/weechat-devel.tar.gz_:
 

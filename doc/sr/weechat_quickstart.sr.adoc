@@ -175,13 +175,11 @@ IRC сервер можете додати командом `/server`, на пр
 /set irc.server.libera.autojoin "#канал1,#канал2"
 ----
 
-// TRANSLATION MISSING
-The `/autojoin` command lets you configure the _autojoin_ option easily
-(see `/help autojoin`).
+`/autojoin` команда вам омогућава да једноставно конфигуришете _autojoin_ опцију
+(погледајте `/help autojoin`).
 
-// TRANSLATION MISSING
-You can also configure WeeChat to automatically update the _autojoin_ option
-when you join or leave channels:
+WeeChat такође можете подесити да аутоматски ажурира _autojoin_ опцију када
+приступите каналу, или када га напустите:
 
 ----
 /set irc.server_default.autojoin_dynamic on
@@ -341,16 +339,14 @@ when you join or leave channels:
 
 За више детаља погледајте `/help script`.
 
-// TRANSLATION MISSING
-A list of scripts is available in WeeChat with `/script` or on
-https://weechat.org/scripts/[this page ^↗^,window=_blank].
+Листа скрипти је доступна у WeeChat са `/script` или на
+https://weechat.org/scripts/[овој страници ^↗^,window=_blank].
 
 [[more_doc]]
 == Још документације
 
-// TRANSLATION MISSING
-You can now use WeeChat and read
-https://weechat.org/doc/[FAQ/documentation ^↗^,window=_blank]
-for any other questions.
+Сада можете почети да користите WeeChat и ако имате било каквих питања
+прочитате
+https://weechat.org/doc/[ЧПП/документацију ^↗^,window=_blank].
 
 Уживајте у коришћењу програма WeeChat!
