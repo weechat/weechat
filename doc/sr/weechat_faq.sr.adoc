@@ -34,9 +34,8 @@ toc::[]
 
 Јер WeeChat уопште не оптерећује систем и доноси иновативне могућности.
 
-// TRANSLATION MISSING
-More info on the WeeChat
-https://weechat.org/about/features/[features page ^↗^,window=_blank].
+Више информација у вези са WeeChat је на
+https://weechat.org/about/features/[страници са могућностима ^↗^,window=_blank].
 
 [[compilation_install]]
 == Компајлирање / инсталација
@@ -44,9 +43,8 @@ https://weechat.org/about/features/[features page ^↗^,window=_blank].
 [[gui]]
 === Чуо сам о многим ГКИ за WeeChat. Како да их компајлирам/користим?
 
-// TRANSLATION MISSING
-Some remote GUIs are available, see the
-https://weechat.org/about/interfaces/[remote interfaces page ^↗^,window=_blank].
+Доступни су неки удаљени ГКИ, погледајте
+https://weechat.org/about/interfaces/[страницу са удаљеним ГКИ ^↗^,window=_blank].
 
 [[compile_git]]
 === Након клонирања git репозиторијума не могу да компајлирам програм WeeChat, зашто?
@@ -107,9 +105,7 @@ brew install weechat
 
 Постоји решење да се користи исправљена _wcwidth_ функција: https://blog.nytsoi.net/2015/05/04/emoji-support-for-weechat[https://blog.nytsoi.net/2015/05/04/emoji-support-for-weechat ^↗^,window=_blank].
 
-// TRANSLATION MISSING
-See this https://github.com/weechat/weechat/issues/79[bug report ^↗^,window=_blank]
-for more information.
+За више информација, погледајте овај https://github.com/weechat/weechat/issues/79[извештај о багу ^↗^,window=_blank].
 
 [[bars_background]]
 === Траке као што су насловна и статусна нису испуњене, боја позадине се прекида након текста, зашто?
@@ -210,9 +206,8 @@ _прозор_ је површина екрана која приказује б
 
 Додатак buflist обезбеђује доста опција које можете да прилагодите својим потребама, молимо вас да прочитате помоћ у вези сваке опције.
 
-// TRANSLATION MISSING
-There's also a https://github.com/weechat/weechat/wiki/buflist[wiki page ^↗^,window=_blank]
-with examples of advanced buflist configuration.
+Такође постоји и https://github.com/weechat/weechat/wiki/buflist[вики страница ^↗^,window=_blank]
+са примерима напредне конфигурације додатка buflist.
 
 [[customize_prefix]]
 === Како да скратим дужину надимака или да уклоним поравнање надимка у простору за разговор?
@@ -749,23 +744,20 @@ oauth је једноставно лозинка која има вреднос�
 /set irc.server.libera.autojoin_dynamic on
 ----
 
-// TRANSLATION MISSING
-With WeeChat ≥ 3.5, you can also add the current channel in the "autojoin"
-server option using the `/autojoin` command:
+Са WeeChat ≥ 3.5, текући канал можете да додате у „autojoin” серверску опцију и
+употребом `/autojoin` команде:
 
 ----
 /autojoin add
 ----
 
-// TRANSLATION MISSING
-Or another channel:
+Или неки други канал:
 
 ----
 /autojoin add #test
 ----
 
-// TRANSLATION MISSING
-With WeeChat ≤ 3.4, можете да употребите команду `/set` и да уредите листу autojoin канала, на пример за „libera” сервер:
+Са WeeChat ≤ 3.4, можете да употребите команду `/set` и да уредите листу autojoin канала, на пример за „libera” сервер:
 
 ----
 /set irc.server.libera.autojoin [TAB]
@@ -781,8 +773,7 @@ With WeeChat ≤ 3.4, можете да употребите команду `/se
 /fset autojoin
 ----
 
-// TRANSLATION MISSING
-With WeeChat ≤ 3.4, друго решење је да употребите скрипту:
+Са WeeChat ≤ 3.4, друго решење је да употребите скрипту:
 
 ----
 /script search autojoin
@@ -1100,8 +1091,7 @@ export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
 [[bug_task_patch]]
 === Како би требало да пријавим багове, тражим нове могућности, или пошаљем закрпе?
 
-// TRANSLATION MISSING
-See https://weechat.org/about/support/[this page ^↗^,window=_blank].
+Погледајте https://weechat.org/about/support/[ови страницу ^↗^,window=_blank].
 
 [[gdb_error_threads]]
 === Када програм WeeChat покренем под gdb, појави се грешка везана за нити, шта могу да урадим?
@@ -1134,13 +1124,11 @@ WeeChat се лепо извршава на већини Linux/BSD дистри�
 
 Постоји много задатака који могу да се ураде (тестирање, програмирање, документација, итд.)
 
-// TRANSLATION MISSING
-Please contact us via IRC or mail, look at
-https://weechat.org/about/support/[support page ^↗^,window=_blank].
+Молимо вас да нас контактирате преко IRC или мејла, погледајте
+https://weechat.org/about/support/[страницу подршке ^↗^,window=_blank].
 
 [[donate]]
 === Могу ли програмерима програма WeeChat да дам новац или нешто друго?
 
-// TRANSLATION MISSING
-You can give us money to help development.
-Details on https://weechat.org/donate/[donation page ^↗^,window=_blank].
+Можете нам послати новац и помогнете развој програма.
+Детаљи се налазе на https://weechat.org/donate/[страници донација ^↗^,window=_blank].

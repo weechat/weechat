@@ -16,9 +16,8 @@
 
 Ово упутство описује WeeChat чет клијент и део је програма WeeChat.
 
-// TRANSLATION MISSING
-Latest version of this document can be found on
-https://weechat.org/doc/[this page ^↗^,window=_blank].
+Последња верзија овог документа се налази на
+https://weechat.org/doc/[овој страници ^↗^,window=_blank].
 
 
 [[introduction]]
@@ -1644,10 +1643,9 @@ _WeeChat ≥ 1.0._
 
 Дели стринг на начин на који командно окружење дели команду са аргументима.
 
-// TRANSLATION MISSING
-This function is a C conversion of Python class "shlex" (file: Lib/shlex.py in
-Python repository), see
-https://docs.python.org/3/library/shlex.html[this page ^↗^,window=_blank].
+Ова функција је C конверзија Python класе "shlex" (фајл: Lib/shlex.py у
+Python репозиторијуму), погледајте
+https://docs.python.org/3/library/shlex.html[ову страницу ^↗^,window=_blank].
 
 Прототип:
 
@@ -2528,15 +2526,13 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
   >> `+${\ua9}+` +
   == `+©+`
 
-// TRANSLATION MISSING
 | `+${lower:string}+` | 3.6
-| String converted to lower case.
+| Стринг конвертован у мала слова.
 | >> `+${lower:TEST}+` +
   >> `+test+`
 
-// TRANSLATION MISSING
 | `+${upper:string}+` | 3.6
-| String converted to upper case.
+| Стринг конвертован у велика слова.
 | >> `+${upper:test}+` +
   >> `+TEST+`
 
@@ -9027,10 +9023,9 @@ struct t_hook *weechat_hook_process (const char *command,
 У API скриптовања, функција _име_ се директно позива и њен резултат (стринг) се прослеђује функцији повратног позива (као и излаз спољне команде.)
 
 [TIP]
-// TRANSLATION MISSING
-If you want to retrieve infos about WeeChat (like current stable version,
-latest git commit, etc.), you can use URLs on
-https://weechat.org/dev/info/[this page ^↗^,window=_blank].
+Ако желите да добијете информације у вези са WeeChat (као што је текућа стабилна верзија,
+последњи гит комит, итд.), можете да употребите URL адресе на
+https://weechat.org/dev/info/[овој страници ^↗^,window=_blank].
 
 [NOTE]
 Величина бафера за слање података је 64KB (постоји 2 бафера: један за stdout и једна за stderr). Ако је излаз из дете процеса (stdout или stderr) дужи од 64KB, функција повратног позива ће се позивати више пута.
@@ -9940,9 +9935,8 @@ struct t_hook *weechat_hook_signal (const char *signal,
 
 Аргументи:
 
-// TRANSLATION MISSING
-* _signal_: сигнал који се хвата, дозвољава се џокер `+*+`, multiple signals can
-  be separated by semi-colons
+* _signal_: сигнал који се хвата, дозвољава се џокер `+*+`, више сигнала може
+  да се раздвоји тачка запетама
   (дозвољен је приоритет, погледајте напомену о <<hook_priority,приоритетима>>) (погледајте табелу испод)
 * _callback_: функција која се позива када се прими сигнал, аргументи и повратна вредност су:
 ** _const void *pointer_: показивач
@@ -10607,7 +10601,6 @@ struct t_hook *weechat_hook_signal (const char *signal,
 
 C пример:
 
-// TRANSLATION MISSING
 [source,c]
 ----
 int
@@ -10618,14 +10611,13 @@ my_signal_cb (const void *pointer, void *data, const char *signal,
     return WEECHAT_RC_OK;
 }
 
-/* catch signals "quit" and "upgrade" */
+/* хвата сигнале „quit” и „upgrade” */
 struct t_hook *my_signal_hook = weechat_hook_signal ("quit;upgrade",
                                                      &my_signal_cb, NULL, NULL);
 ----
 
 Скрипта (Python):
 
-// TRANSLATION MISSING
 [source,python]
 ----
 # прототип
@@ -10636,7 +10628,7 @@ def my_signal_cb(data, signal, signal_data):
     # ...
     return weechat.WEECHAT_RC_OK
 
-# catch signals "quit" and "upgrade"
+# хвата сигнале „quit” и „upgrade”
 hook = weechat.hook_signal("quit;upgrade", "my_signal_cb", "")
 ----
 
@@ -11461,16 +11453,14 @@ char *weechat_hook_modifier_exec (const char *modifier,
 | [[hook_modifier_irc_tag_escape_value]] irc_tag_escape_value | 3.3
 | -
 | Било који стринг.
-// TRANSLATION MISSING
-| String with IRC tag value escaped,
-  see https://ircv3.net/specs/extensions/message-tags#escaping-values[this page ^↗^,window=_blank].
+| Стринг са означеном вредности IRC ознаке,
+  погледајте https://ircv3.net/specs/extensions/message-tags#escaping-values[ову страницу ^↗^,window=_blank].
 
 | [[hook_modifier_irc_tag_unescape_value]] irc_tag_unescape_value | 3.3
 | -
 | Било који стринг.
-// TRANSLATION MISSING
-| String with IRC tag value unescaped,
-  see https://ircv3.net/specs/extensions/message-tags#escaping-values[this page ^↗^,window=_blank].
+| Стринг са неозначеном вредности IRC ознаке,
+  погледајте https://ircv3.net/specs/extensions/message-tags#escaping-values[ову страницу ^↗^,window=_blank].
 
 | [[hook_modifier_color_decode_ansi]] color_decode_ansi | 1.0
 | "1" да се боје задрже, "0" да се боје уклоне

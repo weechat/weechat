@@ -15,9 +15,8 @@
 
 Ово упутство описује WeeChat чет клијент и део је програма WeeChat.
 
-// TRANSLATION MISSING
-Latest version of this document can be found on
-https://weechat.org/doc/[this page ^↗^,window=_blank].
+Последња верзија овог документа може да се пронађе на
+https://weechat.org/doc/[овој страници ^↗^,window=_blank].
 
 
 [[introduction]]
@@ -47,9 +46,8 @@ weechat::
 scripts::
     _званичне_ скрипте које су предате на weechat.org
 
-// TRANSLATION MISSING
 weechat.org::
-    source of https://weechat.org/[WeeChat website ^↗^,window=_blank]
+    изворни кôд https://weechat.org/[WeeChat вебсајта ^↗^,window=_blank]
 
 weercd::
     IRC сервер за тестирање
@@ -426,8 +424,7 @@ WeeChat „језгро” се налази у следећим директо�
 |          test-core-utf8.cpp         | Тестови: UTF-8.
 |          test-core-util.cpp         | Тестови: помоћне функције.
 |       gui/                          | Корен unit тестова интерфејса.
-// TRANSLATION MISSING
-|          test-gui-bar-window.cpp    | Tests: bar window functions.
+|          test-gui-bar-window.cpp    | Тестови: функције прозора траке.
 |          test-gui-buffer.cpp        | Тестови: бафер функције.
 |          test-gui-chat.cpp          | Тестови: чет функције.
 |          test-gui-color.cpp         | Тестови: боје.
@@ -1089,8 +1086,7 @@ server->hook_timer_sasl = weechat_hook_timer (timeout * 1000,
 [[git_repository]]
 === Git репозиторијум
 
-// TRANSLATION MISSING
-Git repository is on https://github.com/weechat/weechat[GitHub ^↗^,window=_blank].
+Гит репозиторијум се налази на https://github.com/weechat/weechat[GitHub ^↗^,window=_blank].
 
 Било каква закрпа бага или нова могућност мора да да се уради над мастер граном, пожељно је преко GitHub pull захтева. Закрпа такође може да се пошаље и имејлом (направљена са `git diff` или `git format-patch`).
 
@@ -1233,8 +1229,7 @@ $ make translations && make update-po
 
 Затим можете да уређујте .po фајлове (ако можете да преводите на језик).
 
-// TRANSLATION MISSING
-When done, you *have* to check your file with
+Када завршите, *морате* да проверите свој фајл са
 https://github.com/flashcode/msgcheck[msgcheck ^↗^,window=_blank]:
 
 ----
