@@ -17,8 +17,7 @@
 
 Diese Anleitung beschreibt den WeeChat Chat Client und ist Teil von WeeChat.
 
-// TRANSLATION MISSING
-Latest version of this document can be found on
+Die neueste Version dieses Dokuments finden Sie unter
 https://weechat.org/doc/[this page ^↗^,window=_blank].
 
 
@@ -1159,8 +1158,7 @@ weechat.hook_process("url:https://weechat.org/dev/info/stable/",
 ----
 
 [TIP]
-// TRANSLATION MISSING
-All infos available about WeeChat are on
+Alle verfügbaren Informationen über WeeChat findet man unter
 https://weechat.org/dev/info/[this page ^↗^,window=_blank].
 
 Beispiel eines URL Transfers, mit zusätzliche Optionen: Es wird das neuste

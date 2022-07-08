@@ -17,8 +17,7 @@
 
 Diese Anleitung beschreibt den WeeChat Chat Client und ist Teil von WeeChat.
 
-// TRANSLATION MISSING
-Latest version of this document can be found on
+Die neueste Version dieses Dokuments finden Sie unter
 https://weechat.org/doc/[this page ^↗^,window=_blank].
 
 
@@ -47,8 +46,7 @@ wesentliche Merkmale:
 * Betriebssystemunabhängig (GNU/Linux, *BSD, macOS, Windows und weitere)
 * 100% GPL, freie Software
 
-// TRANSLATION MISSING
-The list of all features can be found on
+Die Liste aller Funktionen finden Sie unter
 https://weechat.org/about/features/[this page ^↗^,window=_blank].
 
 [[prerequisites]]
@@ -71,7 +69,6 @@ Binärpakete sind für folgende Distributionen erhältlich:
 
 * Arch Linux: `pacman -S weechat`
 * Cygwin (Windows): wähle das WeeChat Paket in setup.exe aus
-// TRANSLATION MISSING
 * Debian/Ubuntu (oder Debian kompatible Distribution):
   `apt-get install weechat-curses weechat-plugins` +
   Für neueste Versionen und nächtliche Builds:
@@ -88,7 +85,7 @@ Binärpakete sind für folgende Distributionen erhältlich:
 
 zusätzliche Pakete können bzw. sollten installiert werden. Zum Beispiel: weechat-plugins.
 
-Für nicht aufgeführte Distributionen schauen Sie bitte in die jeweiligen Anleitung,
+Für nicht aufgeführte Distributionen schauen Sie bitte in die jeweiligen Anleitung der Distribution,
 wie man Pakete installiert.
 
 [[containers]]
@@ -96,10 +93,9 @@ wie man Pakete installiert.
 
 Container mit WeeChat können direkt erstellt oder installiert werden von
 https://hub.docker.com/r/weechat/weechat[Docker Hub ^↗^,window=_blank]. +
-// TRANSLATION MISSING
-For more information, see the README in the
+Weitere Informationen finden Sie in der README in dem
 https://github.com/weechat/weechat-container[weechat-container ^↗^,window=_blank]
-repository.
+Repositorium.
 
 [[source_package]]
 === Quellpakete
@@ -491,8 +487,7 @@ Diese Core-Datei wird in dem Verzeichnis erzeugt aus welchem WeeChat gestartet w
 Auf einigen Systemen wie Archlinux, kann sich die Core-Datei in einem anderen Verzeichnis
 befinden, z.B. _/var/lib/systemd/coredump_ und es muss der `coredumpctl` Befehl genutzt
 werden um die Datei zu lesen. +
-// TRANSLATION MISSING
-For more information, see this
+Weitere Informationen finden Sie hier
 https://wiki.archlinux.org/title/Core_dump[wiki page ^↗^,window=_blank].
 
 Beispiel: _weechat_ ist in _/usr/bin/_ installiert und die _core_ Datei befindet sich
@@ -781,7 +776,7 @@ Folgende Dateien befinden sich im WeeChat-Heimatverzeichnis:
 [width="100%",cols="1m,3,6",options="header"]
 |===
 | Datei           | Beschreibung                               | sensible Daten
-| weechat.conf    | Hauptkonfiguration von WeeChat             | möglich (Beispiel: Auflistung der Channels im Buffers-Layout).
+| weechat.conf    | Hauptkonfiguration von WeeChat             | möglich (Beispiel: Auflistung der Kanäle im Buffers-Layout).
 | sec.conf        | Konfigurationsdatei mit sensiblen Daten    | *Ja, hoch sensibel*: diese Datei sollte niemals weitergegeben werden.
 | plugins.conf    | Konfigurationsdatei für Erweiterungen      | möglich, hängt von der Erweiterung/Skript ab.
 | alias.conf      | Konfigurationsdatei: Alias-Erweiterung     | möglich, hängt von den Aliases ab.
@@ -791,7 +786,7 @@ Folgende Dateien befinden sich im WeeChat-Heimatverzeichnis:
 | fifo.conf       | Konfiguration für _fifo_-Erweiterung       | Nein.
 | fset.conf       | Konfiguration für _fset_-Erweiterung       | Nein.
 | guile.conf      | Konfiguration für _guile_-Erweiterung      | Nein.
-| irc.conf        | Konfiguration für _irc_-Erweiterung        | *Ja*: Datei kann Passwörter für Server, Nickserv oder Channels enthalten (sofern diese nicht in `sec.conf` gesichert sind).
+| irc.conf        | Konfiguration für _irc_-Erweiterung        | *Ja*: Datei kann Passwörter für Server, Nickserv oder Kanäle enthalten (sofern diese nicht in `sec.conf` gesichert sind).
 | javascript.conf | Konfiguration für _javascript_-Erweiterung | Nein.
 | logger.conf     | Konfiguration für _logger_-Erweiterung     | Nein.
 | lua.conf        | Konfiguration für _lua_-Erweiterung        | Nein.
@@ -892,13 +887,13 @@ Die _status_-Bar besitzt als Standardeinträge:
 | buffer_plugin         | `[irc/libera]`        | Erweiterung des aktuellen Buffers (IRC Erweiterung setzt den IRC Servername für den Buffer).
 | buffer_number         | `2`                   | Aktuelle Nummer des Buffers.
 | buffer_name           | `#test`               | Name des aktuellen Buffers.
-| buffer_modes          | `+n`                  | IRC Channel-Modi.
+| buffer_modes          | `+n`                  | IRC Kanal-Modi.
 | buffer_nicklist_count | `{4}`                 | Anzahl der Nicks die in der Nickliste angezeigt werden.
 | buffer_zoom           | !                     | `!` bedeutet, dass ein zusammengefügter Buffer gezoomed (nur dieser Buffer wird angezeigt) wird.
 | buffer_filter         | `+*+`                 | Filteranzeige: `+*+` bedeutet das Zeilen gefiltert (unterdrückt) werden. Ein leerer Eintrag zeigt an, dass alle Zeilen dargestellt werden.
 | scroll                | `-MORE(50)-`          | Scroll Indikator, zeigt an wie viele Zeilen unterhalb der zur Zeit dargestellten Zeile vorhanden sind.
 | lag                   | `[Lag: 2.5]`          | Verzögerungsanzeige, in Sekunden (keine Anzeige falls Verzögerung gering).
-| hotlist               | `[H: 3:#abc(2,5), 5]` | Liste der Buffer mit Aktivität (ungelesene Nachrichten) (für das Beispiel: 2 Highlights und 5 ungelesene Nachrichten im Channel _#abc_, eine ungelesene Nachricht in Buffer #5).
+| hotlist               | `[H: 3:#abc(2,5), 5]` | Liste der Buffer mit Aktivität (ungelesene Nachrichten) (für das Beispiel: 2 Highlights und 5 ungelesene Nachrichten im Kanal _#abc_, eine ungelesene Nachricht in Buffer #5).
 | completion            | `abc(2) def(5)`       | Liste von Wörtern für Vervollständigung, die Zahl zeigt an wie viele Varianten möglich sind.
 |===
 
@@ -935,12 +930,12 @@ andere Items die zur Verfügung stehen (die aber nicht standardmäßig in einer 
 | buflist2                     | `1.weechat`              | List der Buffer, zweites Bar-Item (siehe Option <<option_buflist.look.use_items,buflist.look.use_items>>).
 | buflist3                     | `1.weechat`              | List der Buffer, drittes Bar-Item (siehe Option <<option_buflist.look.use_items,buflist.look.use_items>>).
 | fset                         | `+buflist.look.sort: …+` | Hilfstext zur aktuell ausgewählten Option im Fset-Buffer.
-| irc_channel                  | `#test`                  | aktueller IRC Channelname.
+| irc_channel                  | `#test`                  | aktueller Name des IRC Kanals.
 | irc_host                     | `+user@host.com+`        | aktueller IRC Host.
 | irc_nick                     | `+Flashy+`               | aktueller IRC Nick.
 | irc_nick_host                | `+Flashy!user@host.com+` | aktueller IRC Nick und Host.
 | irc_nick_modes               | `i`                      | IRC Modi für den eigenen Nick.
-| irc_nick_prefix              | `@`                      | IRC Nick-Präfix für den Channel.
+| irc_nick_prefix              | `@`                      | IRC Nick-Präfix für den Kanal.
 | mouse_status                 | `M`                      | Status der Maus (keine Anzeige, falls Maus deaktiviert).
 | spell_dict                   | `de,en`                  | zeigt an welche Wörterbücher für die Rechtschreibung im aktuellen Buffer genutzt werden.
 | spell_suggest                | `Glück,Glocke,Block`     | Vorschläge für ein falsch geschriebenes Wort.
@@ -1052,7 +1047,7 @@ Beispiele von Buffern:
 
 * Core Buffer (wird durch WeeChat beim Programmstart erstellt und kann nicht geschlossen werden!)
 * IRC Server  (hier werden die Nachrichten ausgegeben die der Server verschickt)
-* IRC Channel
+* IRC Kanal
 * IRC Privat  (wird auch Query-Buffer genannt)
 
 Ein _Fenster_ ist ein Bildschirmbereich der Buffer darstellt. Es ist möglich
@@ -1364,7 +1359,7 @@ Standardmäßig interpretieren WeeChat und seine Standard-Erweitertungen diese V
 
 | channel
 | beliebige Zeichenkette
-| Channel-Name, wird durch irc/xfer Erweiterung und dem Debug-Buffer von relay/trigger Erweiterung genutzt.
+| Name des Kanals, wird durch irc/xfer Erweiterung und dem Debug-Buffer von relay/trigger Erweiterung genutzt.
 
 | charset_modifier
 | beliebige Zeichenkette
@@ -2086,10 +2081,10 @@ ist identisch mit den Befehlen:
 /charset encode ISO-8859-15
 ----
 
-Um den Zeichensatz in einem IRC-Channel (oder in einem privaten Buffer) zu ändern
+Um den Zeichensatz in einem IRC-Kanal (oder in einem privaten Buffer) zu ändern
 wird der selbe Befehl im entsprechenden Buffer genutzt.
 
-Um die Zeichenkodierung für alle Channels und privaten Buffer eines IRC Server zu ändern:
+Um die Zeichenkodierung für alle Kanäle und privaten Buffer eines IRC Server zu ändern:
 
 ----
 /set charset.encode.irc.libera ISO-8859-15
@@ -2169,7 +2164,7 @@ für alle Buffer des IRC Servers "libera":
 /set weechat.notify.irc.libera message
 ----
 
-Setzt die Benachrichtigungsstufe ausschließlich für den Channel "#weechat",
+Setzt die Benachrichtigungsstufe ausschließlich für den Kanal "#weechat",
 auf die Stufe _highlight_:
 
 ----
@@ -2301,18 +2296,18 @@ statt und neun, dass alle Nachrichten protokolliert werden.
 Erweiterungen nutzen unterschiedliche Level um Nachrichten anzuzeigen.
 Die IRC Erweiterung nutzt folgende Level:
 
-* Level 1: Nachrichten eines Users (im Channel oder privat)
+* Level 1: Nachrichten eines Users (im Kanal oder privat)
 * Level 2: Nick wurde geändert (der eigene oder von einer anderen Person)
 * Level 3: jedwede Server Nachricht (ausgenommen join/part/quit)
 * Level 4: Server Nachrichten join/part/quit
 
-Setzen Sie also den Grad der Protokollierung für einen IRC Channel auf "3"
+Setzen Sie also den Grad der Protokollierung für einen IRC Kanal auf "3"
 wird WeeChat alle Nachrichten protokollieren, ausgenommen join/part/quit
 Nachrichten.
 
 weitere Beispiele:
 
-* Level 3 für IRC Channel #weechat nutzen:
+* Level 3 für IRC Kanal #weechat nutzen:
 
 ----
 /set logger.level.irc.libera.#weechat 3
@@ -2324,7 +2319,7 @@ weitere Beispiele:
 /set logger.level.irc.server.libera 3
 ----
 
-* Level 3 für alle Channels auf dem Server libera nutzen:
+* Level 3 für alle Kanäle auf dem Server libera nutzen:
 
 ----
 /set logger.level.irc.libera 3
@@ -2396,10 +2391,10 @@ Erstellt eine Struktur in folgender Form:
 ....
 
 [[logger_irc_files_by_server_channel]]
-===== Protokolldateien nach Server und Channel
+===== Protokolldateien nach Server und Kanälen
 
 Soll für jeden IRC Server ein Verzeichnis erstellt werden mit jeweils
-einer Protokolldatei für jeden Channel:
+einer Protokolldatei für jeden Kanal:
 
 ----
 /set logger.mask.irc "irc/$server/$channel.weechatlog"
@@ -2594,14 +2589,14 @@ Um zum Beispiel Englisch und Deutsch zu nutzen:
 ----
 
 Es ist möglich ein anderes Wörterbuch für einen speziellen Buffer zu verwenden, zum
-Beispiel in einem französischen Channel:
+Beispiel in einem französischen Kanal:
 
 ----
 /spell setdict fr
 ----
 
 Um einer Gruppe von Buffern das selbe Wörterbuch zuzuordnen, zum Beispiel das
-deutsche Wörterbuch für alle Channels auf dem libera IRC Server:
+deutsche Wörterbuch für alle Kanäle auf dem libera IRC Server:
 
 ----
 /set spell.dict.irc.libera de
@@ -3191,7 +3186,7 @@ irc[6][s]://[nick[:password]@]irc.example.org[:port][/channel][,channel[...]]
 ----
 
 Beispiel: Anmelden beim Server _irc.libera.chat_ mit dem Nick _alice_ und betreten
-der Channels _#weechat_ und _#weechat-fr_ (Standardport (6667) wird genutzt):
+der Kanäle _#weechat_ und _#weechat-fr_ (Standardport (6667) wird genutzt):
 
 ----
 $ weechat irc://alice@irc.libera.chat/#weechat,#weechat-fr
@@ -3393,15 +3388,13 @@ das auch beispielsweise `~/.weechat` sein kann.
 /msg nickserv cert add
 ----
 
-// TRANSLATION MISSING
-For more information, please look at
+Weitere Informationen finden Sie unter
 https://www.oftc.net/NickServ/CertFP/[this page ^↗^,window=_blank].
 
-// TRANSLATION MISSING
 [[irc_ircv3_support]]
 ==== IRCv3 support
 
-WeeChat supports the following https://ircv3.net/irc/[IRCv3 extensions ^↗^,window=_blank]:
+WeeChat unterstützt folgende https://ircv3.net/irc/[IRCv3 extensions ^↗^,window=_blank]:
 
 * <<irc_ircv3_account_notify,account-notify>>
 * <<irc_ircv3_account_tag,account-tag>>
@@ -3420,25 +3413,24 @@ WeeChat supports the following https://ircv3.net/irc/[IRCv3 extensions ^↗^,wi
 * <<irc_ircv3_userhost_in_names,userhost-in-names>>
 * <<irc_ircv3_whox,WHOX>>
 
-By default all capabilities supported by the server and WeeChat are
-automatically enabled
-(see option <<option_irc.server_default.capabilities,irc.server_default.capabilities>>).
+Standardmäßig werden alle vom Server und WeeChat unterstützten Funktionen automatisch aktiviert
+(siehe Option <<option_irc.server_default.capabilities,irc.server_default.capabilities>>).
 
-Tables with comparison of different IRC clients, including WeeChat, are available
-on https://ircv3.net/software/clients[this page ^↗^,window=_blank].
+Mehrere Tabellen mit Auflistung verschiedener IRC-Clients, einschließlich WeeChat, sind verfügbar
+auf https://ircv3.net/software/clients[this page ^↗^,window=_blank].
 
 [[irc_ircv3_account_notify]]
 ===== account-notify
 
-Specification: https://ircv3.net/specs/extensions/account-notify[account-notify ^↗^,window=_blank]
+Spezifikation: https://ircv3.net/specs/extensions/account-notify[account-notify ^↗^,window=_blank]
 
-This capability allows the server to send messages when users identify or
-unidentify on the server. +
-WeeChat displays such messages if the option
+Diese Funktion ermöglicht es dem Server, Nachrichten zu senden, wenn Benutzer sich auf dem
+Server identifizieren oder diese zurück ziehen. +
+WeeChat zeigt solche Nachrichten an, wenn die Option
 <<option_irc.look.display_account_message,irc.look.display_account_message>>
-is enabled (default value).
+aktiviert ist (Standardwert).
 
-Examples:
+Beispiele:
 
 ....
 -- alice wurde identifiziert als Alice01
@@ -3449,27 +3441,27 @@ Examples:
 [[irc_ircv3_account_tag]]
 ===== account-tag
 
-Specification: https://ircv3.net/specs/extensions/account-tag[account-tag ^↗^,window=_blank]
+Spezifikation: https://ircv3.net/specs/extensions/account-tag[account-tag ^↗^,window=_blank]
 
-This capability allows the server to send account as message tag to commands
-sent to the client. +
-WeeChat parses this tag and saves it in the message, but it is not used or
-displayed. It can be used in <<command_filter,/filter>> command to filter
-messages matching specific accounts.
+Diese Fähigkeit ermöglicht es dem Server, einen Account als Nachrichten-Tag an Befehle zu hängen,
+die an den Client gesendet werden. +
+WeeChat analysiert dieses Tag und speichert es in der Nachricht, aber es wird nicht verwendet oder
+angezeigt. Mit dem <<command_filter,/filter>> Befehl kann man diese Nachrichten explizit filtern,
+in dem die Accounts nutzt.
 
-Example of raw IRC message received:
+Beispiel einer empfangenen IRC-Rohnachricht:
 
 ....
 @account=Alice01 :user@example.com PRIVMSG #test :Hello!
 ....
 
-Message displayed in channel:
+Nachricht wie sie im Kanal angezeigt wird:
 
 ....
 <alice> Hello!
 ....
 
-Message with tags:
+Nachricht, mit Tags:
 
 ....
 <alice> Hello! [irc_privmsg,irc_tag_account_Alice01,notify_message,prefix_nick_lightcyan,nick_alice,host_user@example.com,log1]
@@ -3478,13 +3470,13 @@ Message with tags:
 [[irc_ircv3_away_notify]]
 ===== away-notify
 
-Specification: https://ircv3.net/specs/extensions/away-notify[away-notify ^↗^,window=_blank]
+Spezifikation: https://ircv3.net/specs/extensions/away-notify[away-notify ^↗^,window=_blank]
 
-This capability allows the server to send away notifications for users present
-on the same channels as you.
+Diese Funktion ermöglicht es dem Server, Abwesenheits-Benachrichtigungen für Benutzer zu versenden,
+die die selben Kanälen besuchen, wie Sie.
 
-When the away status is changed for a user (away or back), this is reflected
-with a specific color in the nicklist, using the following options:
+Wenn der Abwesenheitsstatus für einen Benutzer geändert wird (abwesend oder zurück), wird dies mit
+einer bestimmten Farbe in der Nickliste dargestellt. Siehe folgende Optionen:
 
 * <<option_irc.server_default.away_check,irc.server_default.away_check>>
 * <<option_irc.server_default.away_check_max_nicks,irc.server_default.away_check_max_nicks>>
@@ -3493,12 +3485,12 @@ with a specific color in the nicklist, using the following options:
 [[irc_ircv3_cap_notify]]
 ===== cap-notify
 
-Specification: https://ircv3.net/specs/extensions/capability-negotiation#the-cap-new-subcommand[cap-notify ^↗^,window=_blank]
+Spezifikation: https://ircv3.net/specs/extensions/capability-negotiation#the-cap-new-subcommand[cap-notify ^↗^,window=_blank]
 
-This capability allows the server to advertise on new or removed capabilities
-on the server (via `CAP NEW` and `CAP DEL` commands).
+Diese Fähigkeit ermöglicht es dem Server, neue oder entfernte Fähigkeiten anzubieten, über die
+der Server verfügt (mittels der Befehle `CAP NEW` und `CAP DEL`).
 
-Examples:
+Beispiele:
 
 ....
 -- irc: Clientfähigkeit, nicht verfügbar: sasl
@@ -3509,16 +3501,17 @@ Examples:
 [[irc_ircv3_chghost]]
 ===== chghost
 
-Specification: https://ircv3.net/specs/extensions/chghost[chghost ^↗^,window=_blank]
+Spezifikation: https://ircv3.net/specs/extensions/chghost[chghost ^↗^,window=_blank]
 
-This capability allows the server to send messages when users change name or host. +
-When the option <<option_irc.look.smart_filter_chghost,irc.look.smart_filter_chghost>>
-is enabled (default value), the host changes are automatically hidden if the nick
-has not spoken for several minutes. +
-The color of the change host message is controlled by the option
-<<option_irc.color.message_chghost,irc.color.message_chghost>>.
+Diese Funktion ermöglicht es dem Server, Nachrichten zu senden, wenn Benutzer den Namen oder den Host ändern. +
+Wenn die Option <<option_irc.look.smart_filter_chghost,irc.look.smart_filter_chghost>>
+aktiviert ist (Standardwert), werden die Host-Änderungen automatisch ausgeblendet, falls der Nick
+mehrere Minuten nicht aktiv gewesen ist. +
+Die Farbe der Change-Host-Meldung wird durch die Option
+<<option_irc.color.message_chghost,irc.color.message_chghost>>
+kontrolliert.
 
-Example:
+Beispiele:
 
 ....
 -- alice (user@example.com) hat den Host nach test.com geändert
@@ -3527,15 +3520,15 @@ Example:
 [[irc_ircv3_extended_join]]
 ===== extended-join
 
-Specification: https://ircv3.net/specs/extensions/extended-join[extended-join ^↗^,window=_blank]
+Spezifikation: https://ircv3.net/specs/extensions/extended-join[extended-join ^↗^,window=_blank]
 
-This capability allows the server to send account and real name when users
-join channels. +
-WeeChat displays this additional information in join messages if the option
+Diese Funktion ermöglicht es dem Server, sowohl Account und den Realnamen des Users zu senden,
+wenn diese einen Kanal betreten. +
+WeeChat zeigt diese zusätzlichen Informationen in Join-Nachrichten an, wenn die Option
 <<option_irc.look.display_extended_join,irc.look.display_extended_join>>
-is enabled (default value).
+aktiviert ist (Standardwert).
 
-Example:
+Beispiele:
 
 ....
 --> john [John01] (John Doe) (~user@example.com) hat den Kanal #test betreten
@@ -3544,12 +3537,12 @@ Example:
 [[irc_ircv3_invite_notify]]
 ===== invite-notify
 
-Specification: https://ircv3.net/specs/extensions/invite-notify[invite-notify ^↗^,window=_blank]
+Spezifikation: https://ircv3.net/specs/extensions/invite-notify[invite-notify ^↗^,window=_blank]
 
-This capability allows the server to send invite messages when users are
-invited to channels.
+Diese Funktion ermöglicht es dem Server, Einladungsnachrichten zu senden, wenn Benutzer zu
+Kanälen eingeladen werden.
 
-Example:
+Beispiele:
 
 ....
 -- alice hat bob in den Kanal #test eingeladen
@@ -3558,33 +3551,33 @@ Example:
 [[irc_ircv3_message_tags]]
 ===== message-tags
 
-Specification: https://ircv3.net/specs/extensions/message-tags[message-tags ^↗^,window=_blank]
+Spezifikation: https://ircv3.net/specs/extensions/message-tags[message-tags ^↗^,window=_blank]
 
-This capability allows to add metadata in messages. +
-These tags can be displayed using the command `/debug tags`.
+Diese Funktion ermöglicht das Hinzufügen von Metadaten zu Nachrichten. +
+Diese Tags können mit dem Befehl `/debug tags` angezeigt werden.
 
-It must be enabled to use <<typing_notifications,typing notifications>>.
+Um diese Funktion zu verwenden, muss sie aktiviert werden: <<typing_notifications,typing notifications>>.
 
 [[irc_ircv3_monitor]]
 ===== monitor
 
-Specification: https://ircv3.net/specs/extensions/monitor[monitor ^↗^,window=_blank]
+Spezifikation: https://ircv3.net/specs/extensions/monitor[monitor ^↗^,window=_blank]
 
-This capability allows the server to send notifications when clients become
-online/offline. +
-WeeChat automatically uses this extension if available when using the
-<<command_irc_notify,/notify>> command.
+Diese Funktion ermöglicht es dem Server, Benachrichtigungen zu senden, wenn Clients
+Online/Offline gehen. +
+WeeChat verwendet diese Erweiterung automatisch, sofern verfügbar, wenn der
+<<command_irc_notify,/notify>> Befehl genutzt wird.
 
 [[irc_ircv3_multi_prefix]]
 ===== multi-prefix
 
-Specification: https://ircv3.net/specs/extensions/multi-prefix[multi-prefix ^↗^,window=_blank]
+Spezifikation: https://ircv3.net/specs/extensions/multi-prefix[multi-prefix ^↗^,window=_blank]
 
-This capability allows the server to send all user modes at once in
-<<command_irc_names,/names>> and <<command_irc_whois,/whois>> responses. +
+Diese Fähigkeit ermöglicht es dem Server, alle Benutzermodi auf einmal zu senden, wenn
+die Befehle <<command_irc_names,/names>> und <<command_irc_whois,/whois>> genutzt werden. +
 
 ////
-Example: output of `/names`:
+Beispiele: Ausgabe von `/names`:
 
 ....
 -- Nicks #test: [@%+alice bob +carol]
@@ -3592,10 +3585,10 @@ Example: output of `/names`:
 ////
 
 [NOTE]
-For now, WeeChat doesn't display all prefixes in the `/names` output, even if
-they are received and properly saved internally.
+Momentan zeigt WeeChat nicht alle Präfixe in der Ausgabe von `/names` an, selbst wenn
+diese empfangen und intern ordnungsgemäß verarbeitet werden.
 
-Example: output of `/whois alice`:
+Beispiele: Ausgabe von `/whois alice`:
 
 ....
 -- [alice] @%+#test
@@ -3604,56 +3597,55 @@ Example: output of `/whois alice`:
 [[irc_ircv3_sasl]]
 ===== SASL
 
-Specification: https://ircv3.net/specs/extensions/sasl-3.2[SASL 3.2 ^↗^,window=_blank]
+Spezifikation: https://ircv3.net/specs/extensions/sasl-3.2[SASL 3.2 ^↗^,window=_blank]
 
-See the dedicated chapter <<irc_sasl_authentication,SASL authentication>>.
+Siehe das entsprechende Kapitel <<irc_sasl_authentication,SASL authentication>>.
 
 [[irc_ircv3_server_time]]
 ===== server-time
 
-Specification: https://ircv3.net/specs/extensions/server-time[server-time ^↗^,window=_blank]
+Spezifikation: https://ircv3.net/specs/extensions/server-time[server-time ^↗^,window=_blank]
 
-This capability allows the server to send time for messages as message tag. +
-When the time is received in a message, WeeChat uses it to display the message
-(it can then be displayed with a past date).
+Diese Fähigkeit ermöglicht es dem Server, die Zeit für Nachrichten als Nachrichten-Tag zu senden. +
+Wenn die Zeit in einer Nachricht empfangen wird, verwendet WeeChat diese, um die Nachricht anzuzeigen
+(diese Nachricht kann dann mit einem zurückliegenden Datum angezeigt werden).
 
-The <<relay_irc_proxy,IRC proxy>> in Relay plugin supports this capability,
-so any IRC client of Relay should enable it to display the real message time
-in the backlog sent upon connection.
+Der <<relay_irc_proxy,IRC-Proxy>> der Relay-Erweiterung unterstützt diese Funktion,
+deshalb sollte jeder IRC-Client der mit dem Relay verbunden ist, diese Funktion aktivieren,
+um die korrekte Uhrzeit der Nachricht im Verlaufsspeicher anzuzeigen.
 
 [[irc_ircv3_setname]]
 ===== setname
 
-Specification: https://ircv3.net/specs/extensions/setname[setname ^↗^,window=_blank]
+Spezifikation: https://ircv3.net/specs/extensions/setname[setname ^↗^,window=_blank]
 
-This capability lets you change your real name by using the
-<<command_irc_setname,/setname>> command.
+Mit dieser Funktion können Sie Ihren richtigen Namen ändern, indem Sie den
+<<command_irc_setname,/setname>> Befehl nutzen.
 
 [[irc_ircv3_typing]]
 ===== typing
 
-Specification: https://ircv3.net/specs/client-tags/typing[typing ^↗^,window=_blank]
+Spezifikation: https://ircv3.net/specs/client-tags/typing[typing ^↗^,window=_blank]
 
-See the dedicated chapter <<typing_notifications,Typing notifications>>.
+Siehe das entsprechende Kapitel <<typing_notifications,Typing notifications>>.
 
 [[irc_ircv3_userhost_in_names]]
 ===== userhost-in-names
 
-Specification: https://ircv3.net/specs/extensions/userhost-in-names[userhost-in-names ^↗^,window=_blank]
+Spezifikation: https://ircv3.net/specs/extensions/userhost-in-names[userhost-in-names ^↗^,window=_blank]
 
-This capability allows the server to send hostnames in <<command_irc_names,/names>>
-responses.
+Diese Funktion ermöglicht es dem Server, Hostnamen bei <<command_irc_names,/names>> zu senden.
 
 [NOTE]
-WeeChat doesn't display hostnames in the `/names` output.
+WeeChat zeigt keine Hostnamen in der Aushabe des `/names` Befehls an.
 
-Example of raw IRC messages received without the capability:
+Beispiel für unverarbeitete IRC-Nachrichten, die ohne die Fähigkeit empfangen wurden:
 
 ....
 :irc.server 353 alice = #test :@alice bob +carol
 ....
 
-Example of raw IRC messages received with the capability:
+Beispiel für unverarbeitete IRC-Nachrichten, die mit der Funktion empfangen wurden:
 
 ....
 :irc.server 353 alice = #test :@alice!user1@host1 bob!user2@host2 +carol!user3@host3
@@ -3662,11 +3654,11 @@ Example of raw IRC messages received with the capability:
 [[irc_ircv3_whox]]
 ===== WHOX
 
-Specification: https://ircv3.net/specs/extensions/whox[WHOX ^↗^,window=_blank]
+Spezifikation: https://ircv3.net/specs/extensions/whox[WHOX ^↗^,window=_blank]
 
-This capability lets you request additional fields in the WHO response
-(via the <<command_irc_who,/who>> command). +
-WeeChat displays all additional information received in the WHO output.
+Mit dieser Funktion können Sie zusätzliche Felder in der WHO-Antwort anfordern
+(mit dem Befehl <<command_irc_who,/who>>). +
+WeeChat zeigt alle empfangenen Zusatzinformationen in der WHO-Ausgabe an.
 
 [[irc_sasl_authentication]]
 ==== SASL Authentifizierung
@@ -4202,8 +4194,7 @@ Es wird von der IRC-Erweiterung für Kanäle- und private Buffern verwendet, sof
 die "message-tags"-Fähigkeit aktiviert ist (dies kann mit folgendenen Befehl,
 wie folgt überprüfen werden <<command_irc_cap,/cap>>). +
 
-// TRANSLATION MISSING
-Under the hood, typing client tag is used, following
+Unter der Haube wird das Typing-Client-Tag folgendermaßen verwendet
 https://ircv3.net/specs/client-tags/typing[this specification ^↗^,window=_blank].
 
 [[typing_activation]]
@@ -4298,9 +4289,8 @@ Die Relay-Erweiterung wird genutzt um Daten, mittels unterschiedlicher Protokoll
 
 * _irc_: IRC Proxy: um mittels einem oder mehreren IRC-Clients eine Verbindung zu
   IRC Servern zu unterhalten.
-// TRANSLATION MISSING
-* _weechat_: protocol used by remote interfaces to display and interact with
-  WeeChat, see https://weechat.org/about/interfaces/[this page ^↗^,window=_blank].
+* _weechat_: Protokoll, das von Remote-Schnittstellen zur Anzeige und Interaktion verwendet wird
+  WeeChat, siehe https://weechat.org/about/interfaces/[this page ^↗^,window=_blank].
 
 [[relay_password]]
 === Passwort
@@ -4422,8 +4412,7 @@ folgenden Befehlen einrichten:
 Die Relay-Erweiterung kann Daten, mittels dem WeeChat Protokoll, an eine
 externe Oberfläche senden.
 
-// TRANSLATION MISSING
-You can connect with a remote interface, see
+Sie können eine Verbindung mit einer Remote-Schnittstelle herstellen, siehe
 https://weechat.org/about/interfaces/[this page ^↗^,window=_blank].
 
 [IMPORTANT]
@@ -5425,10 +5414,9 @@ bitte die link:weechat_scripting.de.html[WeeChat scripting Guide ^↗^,window=_
 [[script_manager]]
 ==== Skriptmanager
 
-// TRANSLATION MISSING
-The script manager (command <<command_script_script,/script>>) is used to
-load/unload scripts of any language, and install/remove scripts of WeeChat
-scripts repository, which are visible on
+Der Skriptmanager (Befehl <<command_script_script,/script>>) wird benutzt um
+Skripte jeder Sprache zu starten/beenden, sowie Skripte aus dem WeeChat
+Skriptrepositorium zu installieren/entfernen, diese sind aufgelistet auf
 https://weechat.org/scripts/[this page ^↗^,window=_blank].
 
 Aus Datenschutzgründen ist das Herunterladen von Skripten standardmäßig deaktiviert. +
@@ -5670,13 +5658,12 @@ Dokumentation als auch die FAQ gelesen hat, welche mit WeeChat bereitgestellt wi
 
 Unterstützung im IRC findet man auf dem Server _irc.libera.chat_:
 
-* offizielle Channel (Entwickler vertreten):
+* offizielle Kanäle (Entwickler vertreten):
 ** _#weechat_ (englisch)
 ** _#weechat-fr_ (französisch)
-* kein offizieller Channel:
+* keine offiziellen Kanäle:
 ** _#weechat-de_ (deutsch)
 ** _#weechat-fi_ (finnisch)
 
-// TRANSLATION MISSING
-For other ways of support, see
+Weitere Möglichkeiten der Unterstützung finden Sie unter
 https://weechat.org/about/support/[this page ^↗^,window=_blank].

@@ -38,8 +38,7 @@ Aber diese Bedeutung trifft nicht auf WeeChat zu!)
 
 WeeChat ist sehr speicherschonend und besticht durch innovative Funktionen.
 
-// TRANSLATION MISSING
-More info on the WeeChat
+Weitere Infomationen über Weechat
 https://weechat.org/about/features/[features page ^↗^,window=_blank].
 
 [[compilation_install]]
@@ -48,8 +47,7 @@ https://weechat.org/about/features/[features page ^↗^,window=_blank].
 [[gui]]
 === Ich habe gehört es gibt verschiedene GUIs für WeeChat. Wie kann ich diese kompilieren bzw. nutzen?
 
-// TRANSLATION MISSING
-Some remote GUIs are available, see the
+Einige Remote-GUIs sind verfügbar, siehe
 https://weechat.org/about/interfaces/[remote interfaces page ^↗^,window=_blank].
 
 [[compile_git]]
@@ -146,9 +144,8 @@ verwendeten Distributionen noch nicht verfügbar).
 Es gibt folgende Übergangslösung, um das Problem mit der _wcwidth_ zu umgehen:
 https://blog.nytsoi.net/2015/05/04/emoji-support-for-weechat[https://blog.nytsoi.net/2015/05/04/emoji-support-for-weechat ^↗^,window=_blank].
 
-// TRANSLATION MISSING
-See this https://github.com/weechat/weechat/issues/79[bug report ^↗^,window=_blank]
-for more information.
+Siehe https://github.com/weechat/weechat/issues/79[bug report ^↗^,window=_blank]
+für weitere Informationen.
 
 [[bars_background]]
 === Weshalb haben Bars, z.B. Titel und Status, keine Hintergrundfarbe bzw. diese endet direkt nach dem Text?
@@ -275,9 +272,8 @@ Es kann auch eine beliebige numerische Farbe anstelle von "Rot" verwendet werden
 
 Die Buflist-Erweiterung bietet viele Optionen, zum individualisieren. Bitte lesen Sie dazu die Hilfe von jeder Option.
 
-// TRANSLATION MISSING
-There's also a https://github.com/weechat/weechat/wiki/buflist[wiki page ^↗^,window=_blank]
-with examples of advanced buflist configuration.
+Es gibt zusätzlich die https://github.com/weechat/weechat/wiki/buflist[wiki page ^↗^,window=_blank]
+mit Beispielen für die erweiterte buflist Konfiguration.
 
 [[customize_prefix]]
 === Wie kann ich die Länge eines Nicknamens begrenzen oder die Ausrichtung des Nicks im Chatbereich entfernen?
@@ -1347,8 +1343,7 @@ für weitere Informationen über Konfigurationsdateien.
 [[bug_task_patch]]
 === Was kann ich machen, falls ich einen Fehler gefunden habe, mich nach neuen Funktionen erkundigen oder Patches einsenden möchte?
 
-// TRANSLATION MISSING
-See https://weechat.org/about/support/[this page ^↗^,window=_blank].
+siehe https://weechat.org/about/support/[this page ^↗^,window=_blank].
 
 [[gdb_error_threads]]
 === Wenn man WeeChat in gdb startet, kann ein Thread-Fehler auftreten. Was beudeutet das?
@@ -1386,13 +1381,11 @@ Das Gleiche gilt für Systeme, zu denen wir keinen Zugang haben.
 
 Es gibt einiges zu tun - z.B. testen, programmieren, dokumentieren, ...
 
-// TRANSLATION MISSING
-Please contact us via IRC or mail, look at
+Bitte kontaktieren Sie uns per IRC oder Mail, siehe
 https://weechat.org/about/support/[support page ^↗^,window=_blank].
 
 [[donate]]
 === Kann ich Geld oder anderes an die WeeChat Entwickler spenden?
 
-// TRANSLATION MISSING
-You can give us money to help development.
-Details on https://weechat.org/donate/[donation page ^↗^,window=_blank].
+Sie können uns Geld spenden, um die Entwicklung zu unterstützen.
+Details dazu, unter https://weechat.org/donate/[donation page ^↗^,window=_blank].

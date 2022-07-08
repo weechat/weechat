@@ -223,13 +223,11 @@ in folgender Option erreicht werden:
 /set irc.server.libera.autojoin "#channel1,#channel2"
 ----
 
-// TRANSLATION MISSING
-The `/autojoin` command lets you configure the _autojoin_ option easily
-(see `/help autojoin`).
+Mit dem `/autojoin` Befehl können die _autojoin_ Optionen einfach konfiguriert werden.
+(siehe `/help autojoin`).
 
-// TRANSLATION MISSING
-You can also configure WeeChat to automatically update the _autojoin_ option
-when you join or leave channels:
+WeeChat kann auch konfigurieren werden, dass die _autojoin_ Optionen automatisch aktualisiert werden
+sobald man Kanäle betritt oder verlässt:
 
 ----
 /set irc.server_default.autojoin_dynamic on
@@ -443,16 +441,14 @@ Zeige eine liste aller verfügbaren Skripten:
 /script
 ----
 
-// TRANSLATION MISSING
-A list of scripts is available in WeeChat with `/script` or on
-https://weechat.org/scripts/[this page ^↗^,window=_blank].
+Eine Liste von Skripten ist in WeeChat mittels `/script` oder auf
+https://weechat.org/scripts/[this page ^↗^,window=_blank] verfügbar.
 
 [[more_doc]]
 == Weitere Dokumentation
 
-// TRANSLATION MISSING
-You can now use WeeChat and read
+WeeChat kann nun verwendet werden und lesen Sie
 https://weechat.org/doc/[FAQ/documentation ^↗^,window=_blank]
-for any other questions.
+falls Sie weitere Fragen haben.
 
 Viel Spass mit WeeChat!
