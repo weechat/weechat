@@ -104,6 +104,22 @@ struct t_irc_redirect_pattern irc_redirect_patterns_default[] =
       NULL,
       NULL, NULL,
     },
+    { "mode_channel_reop", 0, 0, /* mode #channel R */
+      /*
+       * mode_channel_reop: start: 344: reop
+       *                     stop: 345: end of reop list
+       *                           403: no such channel
+       *                           442: not on channel
+       *                           472: unknown mode char to me
+       *                           479: cannot join channel (illegal name)
+       *                           482: you're not channel operator
+       *                    extra: -
+       */
+      "344:1",
+      "345:1,403:1,442:1,472,479:1,482:1",
+      NULL,
+      NULL, NULL,
+    },
     { "mode_channel_invite", 0, 0, /* mode #channel I */
       /*
        * mode_channel_invite: start: 346: invite
