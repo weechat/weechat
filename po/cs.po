@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2022-06-18 16:05+0200\n"
+"POT-Creation-Date: 2022-07-10 12:31+0200\n"
 "PO-Revision-Date: 2022-06-18 16:11+0200\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -10658,6 +10658,13 @@ msgstr "WeeChat uptime (formát: \"dny:hh:mm:ss\")"
 
 msgid "\"days\" (number of days) or \"seconds\" (number of seconds) (optional)"
 msgstr ""
+
+#, fuzzy
+#| msgid "WeeChat uptime (format: \"days:hh:mm:ss\")"
+msgid ""
+"WeeChat uptime for the current process only (upgrades with /upgrade command "
+"are ignored) (format: \"days:hh:mm:ss\")"
+msgstr "WeeChat uptime (formát: \"dny:hh:mm:ss\")"
 
 msgid "generate a Time-based One-Time Password (TOTP)"
 msgstr ""

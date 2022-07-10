@@ -128,6 +128,8 @@
 
 | weechat | uptime | WeeChat 連続稼働時間 (書式: "days:hh:mm:ss") | "days" (日数) または "seconds" (秒数) (任意)
 
+| weechat | uptime_current | WeeChat uptime for the current process only (upgrades with /upgrade command are ignored) (format: "days:hh:mm:ss") | "days" (日数) または "seconds" (秒数) (任意)
+
 | weechat | version | WeeChat のバージョン | -
 
 | weechat | version_git | WeeChat の git バージョン (開発バージョンではコマンド "git describe" の出力、安定版リリースでは空文字が出力されます) | -

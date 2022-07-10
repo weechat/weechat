@@ -128,6 +128,8 @@
 
 | weechat | uptime | Laufzeit von WeeChat (Format: "days:hh:mm:ss") | "days" (Anzahl der Tage) oder "seconds" (Anzahl der Sekunden) (optional)
 
+| weechat | uptime_current | WeeChat uptime for the current process only (upgrades with /upgrade command are ignored) (format: "days:hh:mm:ss") | "days" (Anzahl der Tage) oder "seconds" (Anzahl der Sekunden) (optional)
+
 | weechat | version | WeeChat-Version | -
 
 | weechat | version_git | WeeChat Git Version (Ausgabe des Befehls "git describe", ausschließlich für eine Entwicklerversion. Eine stabile Version gibt keine Information zurück) | -

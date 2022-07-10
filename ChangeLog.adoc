@@ -15,6 +15,13 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 (file _ReleaseNotes.adoc_ in sources).
 
 
+[[v3.7]]
+== Version 3.7 (under dev)
+
+New features::
+
+  * api: add info "uptime_current"
+
 [[v3.6]]
 == Version 3.6 (2022-07-10)
 

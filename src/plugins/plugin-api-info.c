@@ -800,27 +800,20 @@ plugin_api_info_nick_color_name_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns WeeChat info "uptime".
+ * Returns uptime according to the start date and arguments.
  */
 
 char *
-plugin_api_info_uptime_cb (const void *pointer, void *data,
-                           const char *info_name,
-                           const char *arguments)
+plugin_api_info_build_uptime (time_t start_time, const char *arguments)
 {
     char value[128];
     time_t total_seconds;
     int days, hours, minutes, seconds;
 
-    /* make C compiler happy */
-    (void) pointer;
-    (void) data;
-    (void) info_name;
-
     if (!arguments || !arguments[0])
     {
         /* return uptime with format: "days:hh:mm:ss" */
-        util_get_time_diff (weechat_first_start_time, time (NULL),
+        util_get_time_diff (start_time, time (NULL),
                             NULL, &days, &hours, &minutes, &seconds);
         snprintf (value, sizeof (value), "%d:%02d:%02d:%02d",
                   days, hours, minutes, seconds);
@@ -830,7 +823,7 @@ plugin_api_info_uptime_cb (const void *pointer, void *data,
     if (strcmp (arguments, "days") == 0)
     {
         /* return the number of days */
-        util_get_time_diff (weechat_first_start_time, time (NULL),
+        util_get_time_diff (start_time, time (NULL),
                             NULL, &days, NULL, NULL, NULL);
         snprintf (value, sizeof (value), "%d", days);
         return strdup (value);
@@ -839,13 +832,50 @@ plugin_api_info_uptime_cb (const void *pointer, void *data,
     if (strcmp (arguments, "seconds") == 0)
     {
         /* return the number of seconds */
-        util_get_time_diff (weechat_first_start_time, time (NULL),
+        util_get_time_diff (start_time, time (NULL),
                             &total_seconds, NULL, NULL, NULL, NULL);
         snprintf (value, sizeof (value), "%lld", (long long)total_seconds);
         return strdup (value);
     }
 
     return NULL;
+}
+
+/*
+ * Returns WeeChat info "uptime".
+ */
+
+char *
+plugin_api_info_uptime_cb (const void *pointer, void *data,
+                           const char *info_name,
+                           const char *arguments)
+{
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) info_name;
+
+    return plugin_api_info_build_uptime (weechat_first_start_time, arguments);
+}
+
+/*
+ * Returns WeeChat info "uptime_current" (current run: from last start,
+ * upgrades are ignored).
+ */
+
+char *
+plugin_api_info_uptime_current_cb (const void *pointer, void *data,
+                                   const char *info_name,
+                                   const char *arguments)
+{
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) info_name;
+
+    return plugin_api_info_build_uptime (
+        (time_t)weechat_current_start_timeval.tv_sec,
+        arguments);
 }
 
 /*
@@ -1976,6 +2006,12 @@ plugin_api_info_init ()
                N_("\"days\" (number of days) or \"seconds\" (number of "
                   "seconds) (optional)"),
                &plugin_api_info_uptime_cb, NULL, NULL);
+    hook_info (NULL, "uptime_current",
+               N_("WeeChat uptime for the current process only (upgrades with "
+                  "/upgrade command are ignored) (format: \"days:hh:mm:ss\")"),
+               N_("\"days\" (number of days) or \"seconds\" (number of "
+                  "seconds) (optional)"),
+               &plugin_api_info_uptime_current_cb, NULL, NULL);
     hook_info (NULL, "totp_generate",
                N_("generate a Time-based One-Time Password (TOTP)"),
                N_("secret (in base32), timestamp (optional, current time by "

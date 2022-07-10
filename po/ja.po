@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2022-06-18 16:05+0200\n"
+"POT-Creation-Date: 2022-07-10 12:31+0200\n"
 "PO-Revision-Date: 2022-06-18 16:12+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -12102,6 +12102,13 @@ msgstr "WeeChat 連続稼働時間 (書式: \"days:hh:mm:ss\")"
 
 msgid "\"days\" (number of days) or \"seconds\" (number of seconds) (optional)"
 msgstr "\"days\" (日数) または \"seconds\" (秒数) (任意)"
+
+#, fuzzy
+#| msgid "WeeChat uptime (format: \"days:hh:mm:ss\")"
+msgid ""
+"WeeChat uptime for the current process only (upgrades with /upgrade command "
+"are ignored) (format: \"days:hh:mm:ss\")"
+msgstr "WeeChat 連続稼働時間 (書式: \"days:hh:mm:ss\")"
 
 msgid "generate a Time-based One-Time Password (TOTP)"
 msgstr "時間ベースのワンタイムパスワード (TOTP) を生成"
