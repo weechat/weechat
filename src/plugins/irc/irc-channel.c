@@ -780,30 +780,18 @@ irc_channel_check_whox (struct t_irc_server *server,
 {
     if ((channel->type == IRC_CHANNEL_TYPE_CHANNEL) && channel->nicks)
     {
-        if (weechat_hashtable_has_key (server->cap_list, "away-notify")
-            || weechat_hashtable_has_key (server->cap_list, "account-notify")
-            || ((IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_AWAY_CHECK) > 0)
-                && ((IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_AWAY_CHECK_MAX_NICKS) == 0)
-                    || (channel->nicks_count <= IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_AWAY_CHECK_MAX_NICKS)))))
+        channel->checking_whox++;
+        if (irc_server_get_isupport_value (server, "WHOX"))
         {
-            channel->checking_whox++;
-            if (irc_server_get_isupport_value (server, "WHOX"))
-            {
-                /* WHOX is supported */
-                irc_server_sendf (server, IRC_SERVER_SEND_OUTQ_PRIO_LOW, NULL,
-                                  "WHO %s %%cuhsnfdar", channel->name);
-            }
-            else
-            {
-                /* WHOX is NOT supported */
-                irc_server_sendf (server, IRC_SERVER_SEND_OUTQ_PRIO_LOW, NULL,
-                                  "WHO %s", channel->name);
-            }
+            /* WHOX is supported */
+            irc_server_sendf (server, IRC_SERVER_SEND_OUTQ_PRIO_LOW, NULL,
+                              "WHO %s %%cuhsnfdar", channel->name);
         }
         else
         {
-            irc_channel_remove_account (server, channel);
-            irc_channel_remove_away (server, channel);
+            /* WHOX is NOT supported */
+            irc_server_sendf (server, IRC_SERVER_SEND_OUTQ_PRIO_LOW, NULL,
+                              "WHO %s", channel->name);
         }
     }
 }
