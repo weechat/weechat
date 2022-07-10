@@ -23,7 +23,7 @@
 #
 
 %define name weechat
-%define version 3.5
+%define version 3.6
 %define release 1
 
 Name:      %{name}
@@ -82,6 +82,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/share/icons/hicolor/512x512/apps/weechat.png
 
 %changelog
+* Sun Jul 10 2022 Sébastien Helleu <flashcode@flashtux.org> 3.6-1
+- Released version 3.6
 * Sun Mar 27 2022 Sébastien Helleu <flashcode@flashtux.org> 3.5-1
 - Released version 3.5
 * Sun Mar 13 2022 Sébastien Helleu <flashcode@flashtux.org> 3.4.1-1

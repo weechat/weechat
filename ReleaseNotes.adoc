@@ -18,7 +18,7 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 
 
 [[v3.6]]
-== Version 3.6 (under dev)
+== Version 3.6 (2022-07-10)
 
 [[v3.6_hook_print_empty_messages]]
 === Hook print on empty messages
