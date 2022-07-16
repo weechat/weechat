@@ -33,6 +33,32 @@
 
 
 /*
+ * Compares two join channels: name and key.
+ */
+
+int
+irc_join_compare_join_channel (struct t_irc_server *server,
+                               struct t_irc_join_channel *join_channel1,
+                               struct t_irc_join_channel *join_channel2)
+{
+    int rc;
+
+    rc = irc_server_strcasecmp (server,
+                                join_channel1->name, join_channel2->name);
+    if (rc != 0)
+        return rc;
+
+    if (!join_channel1->key && !join_channel2->key)
+        return 0;
+    if (join_channel1->key && !join_channel2->key)
+        return -1;
+    if (!join_channel1->key && join_channel2->key)
+        return 1;
+
+    return strcmp (join_channel1->key, join_channel2->key);
+}
+
+/*
  * Compares two join channels (no sort, keyed channels first).
  */
 
@@ -113,6 +139,21 @@ irc_join_compare_sort_cb (void *data, struct t_arraylist *arraylist,
  */
 
 void
+irc_join_free_join_channel (struct t_irc_join_channel *join_channel)
+{
+    if (join_channel->name)
+        free (join_channel->name);
+    if (join_channel->key)
+        free (join_channel->key);
+
+    free (join_channel);
+}
+
+/*
+ * Callback called to free a join channel.
+ */
+
+void
 irc_join_free_cb (void *data, struct t_arraylist *arraylist, void *pointer)
 {
     struct t_irc_join_channel *ptr_join_chan;
@@ -122,34 +163,74 @@ irc_join_free_cb (void *data, struct t_arraylist *arraylist, void *pointer)
     (void) arraylist;
 
     ptr_join_chan = (struct t_irc_join_channel *)pointer;
-
-    if (ptr_join_chan->name)
-        free (ptr_join_chan->name);
-    if (ptr_join_chan->key)
-        free (ptr_join_chan->key);
-    free (ptr_join_chan);
+    irc_join_free_join_channel (ptr_join_chan);
 }
 
 /*
  * Removes all occurrences of a channel from the array list then adds the
  * join channel (channel + key).
+ *
+ * Returns:
+ *   1: join channel added to the list
+ *   0: join channel NOT added to the list
+ *      (the caller must then free it if needed)
  */
 
-void
+int
 irc_join_arraylist_add (struct t_arraylist *arraylist,
-                        void *pointer)
+                        struct t_irc_server *server,
+                        struct t_irc_join_channel *join_channel)
 {
-    int index;
+    struct t_irc_join_channel *ptr_join_chan, *ptr_join_chan_exact;
+    int index, removed;
 
-    while (1)
+    index = 0;
+    ptr_join_chan_exact = NULL;
+    while (index < weechat_arraylist_size (arraylist))
     {
-        weechat_arraylist_search (arraylist, pointer, &index, NULL);
-        if (index < 0)
-            break;
-        weechat_arraylist_remove (arraylist, index);
+        ptr_join_chan = weechat_arraylist_get (arraylist, index);
+        removed = 0;
+        if (ptr_join_chan)
+        {
+            if (irc_join_compare_join_channel (server,
+                                               ptr_join_chan,
+                                               join_channel) == 0)
+            {
+                if (ptr_join_chan_exact)
+                {
+                    weechat_arraylist_remove (arraylist, index);
+                    removed = 1;
+                }
+                else
+                {
+                    ptr_join_chan_exact = ptr_join_chan;
+                }
+            }
+            else if (irc_server_strcasecmp (server, ptr_join_chan->name,
+                                            join_channel->name) == 0)
+            {
+                weechat_arraylist_remove (arraylist, index);
+                removed = 1;
+            }
+        }
+        if (!removed)
+            index++;
     }
 
-    weechat_arraylist_add (arraylist, pointer);
+    if (ptr_join_chan_exact)
+    {
+        free (ptr_join_chan_exact->name);
+        ptr_join_chan_exact->name = strdup (join_channel->name);
+        if (ptr_join_chan_exact->key)
+            free (ptr_join_chan_exact->key);
+        ptr_join_chan_exact->key = (join_channel->key) ?
+            strdup (join_channel->key) : NULL;
+        return 0;
+    }
+
+    weechat_arraylist_add (arraylist, join_channel);
+
+    return 1;
 }
 
 /*
@@ -225,7 +306,8 @@ irc_join_split (struct t_irc_server *server, const char *join, int sort)
         new_channel = (struct t_irc_join_channel *)malloc (sizeof (*new_channel));
         new_channel->name = strdup (channels[i]);
         new_channel->key = (i < count_keys) ? strdup (keys[i]) : NULL;
-        irc_join_arraylist_add (arraylist, new_channel);
+        if (!irc_join_arraylist_add (arraylist, server, new_channel))
+            irc_join_free_join_channel (new_channel);
     }
 
 end:
@@ -333,7 +415,8 @@ irc_join_add_channel (struct t_irc_server *server,
     join_chan = (struct t_irc_join_channel *)malloc (sizeof (*join_chan));
     join_chan->name = strdup (channel_name);
     join_chan->key = (key && key[0]) ? strdup (key) : NULL;
-    irc_join_arraylist_add (arraylist, join_chan);
+    if (!irc_join_arraylist_add (arraylist, server, join_chan))
+        irc_join_free_join_channel (join_chan);
 
     new_join = irc_join_build_string (arraylist);
 
@@ -384,7 +467,8 @@ irc_join_add_channels (struct t_irc_server *server,
         join_chan->name = strdup (ptr_join_chan->name);
         join_chan->key = (ptr_join_chan->key && ptr_join_chan->key[0]) ?
             strdup (ptr_join_chan->key) : NULL;
-        irc_join_arraylist_add (arraylist, join_chan);
+        if (!irc_join_arraylist_add (arraylist, server, join_chan))
+            irc_join_free_join_channel (join_chan);
     }
 
     new_join = irc_join_build_string (arraylist);
@@ -547,7 +631,8 @@ irc_join_save_channels_to_autojoin (struct t_irc_server *server)
             join_chan->name = strdup (ptr_channel->name);
             join_chan->key = (ptr_channel->key && ptr_channel->key[0]) ?
                 strdup (ptr_channel->key) : NULL;
-            irc_join_arraylist_add (arraylist, join_chan);
+            if (!irc_join_arraylist_add (arraylist, server, join_chan))
+                irc_join_free_join_channel (join_chan);
         }
     }
 
