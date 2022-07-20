@@ -333,40 +333,11 @@ irc_protocol_parse_time (const char *time)
 char *
 irc_protocol_string_params (const char **params, int arg_start, int arg_end)
 {
-    int i, length;
     char *result;
 
-    if (!params || (arg_start < 0) || (arg_end < arg_start))
-        return strdup ("");
-
-    length = 0;
-    for (i = 0; params[i]; i++)
-    {
-        if (i > arg_end)
-            break;
-        if (i >= arg_start)
-            length += strlen (params[i]) + 1;
-    }
-
-    if (length == 0)
-        return strdup ("");
-
-    result = malloc (length + 1);
-    if (!result)
-        return NULL;
-
-    result[0] = '\0';
-
-    for (i = arg_start; params[i]; i++)
-    {
-        if (i > arg_end)
-            break;
-        strcat (result, params[i]);
-        if ((i + 1 <= arg_end) && params[i + 1])
-            strcat (result, " ");
-    }
-
-    return result;
+    result = weechat_string_rebuild_split_string (params, " ",
+                                                  arg_start, arg_end);
+    return (result) ? result : strdup ("");
 }
 
 /*
