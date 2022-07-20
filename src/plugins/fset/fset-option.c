@@ -571,7 +571,7 @@ fset_option_set_values (struct t_fset_option *fset_option,
     if (ptr_string_values)
     {
         fset_option->string_values = weechat_string_rebuild_split_string (
-            ptr_string_values, ",");
+            ptr_string_values, ",", 0, -1);
     }
     else
     {

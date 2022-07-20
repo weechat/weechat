@@ -593,7 +593,8 @@ gui_filter_add_to_infolist (struct t_infolist *infolist,
     {
         snprintf (option_name, sizeof (option_name), "tag_%05d", i + 1);
         tags = string_rebuild_split_string ((const char **)filter->tags_array[i],
-                                            "+");
+                                            "+",
+                                            0, -1);
         if (tags)
         {
             if (!infolist_new_var_string (ptr_item, option_name, tags))

@@ -4703,7 +4703,8 @@ gui_buffer_dump_hexa (struct t_gui_buffer *buffer)
         if (message_without_colors)
             free (message_without_colors);
         tags = string_rebuild_split_string ((const char **)ptr_line->data->tags_array,
-                                            ",");
+                                            ",",
+                                            0, -1);
         log_printf ("  tags: '%s', displayed: %d, highlight: %d",
                     (tags) ? tags : "(none)",
                     ptr_line->data->displayed,
@@ -4921,7 +4922,8 @@ gui_buffer_print_log ()
         {
             num--;
             tags = string_rebuild_split_string ((const char **)ptr_line->data->tags_array,
-                                                ",");
+                                                ",",
+                                                0, -1);
             log_printf ("       line N-%05d: y:%d, str_time:'%s', tags:'%s', "
                         "displayed:%d, highlight:%d, refresh_needed:%d, "
                         "prefix:'%s'",

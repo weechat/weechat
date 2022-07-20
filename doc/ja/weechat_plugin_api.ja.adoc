@@ -1811,21 +1811,33 @@ weechat_string_free_split (argv);
 
 ==== string_rebuild_split_string
 
-分割文字列から文字列を作る。
+_WeeChat バージョン 3.7 で更新。_
+
+// TRANSLATION MISSING
+Rebuild a string with a split string, using optional separator and index of
+first/last string to use.
 
 プロトタイプ:
 
 [source,c]
 ----
 char *weechat_string_rebuild_split_string (char **split_string,
-                                           const char *separator);
+                                           const char *separator,
+                                           int index_start, int index_end);
 ----
 
 引数:
 
 * _split_string_: 関数 <<_string_split,string_split>>
   が返した分割文字列の配列
-* _separator_: 文字列を分割する区切り文字
+// TRANSLATION MISSING
+* _separator_: string used to separate strings (can be NULL or empty string)
+// TRANSLATION MISSING
+* _index_start_: index of first string to use (≥ 0)
+// TRANSLATION MISSING
+* _index_end_: index of last string to use
+  (must be ≥ _index_start_; special value -1 can be used to use all arguments
+  until NULL is found)
 
 戻り値:
 
@@ -1838,7 +1850,7 @@ C 言語での使用例:
 char **argv;
 int argc;
 argv = weechat_string_split ("abc def ghi", " ", 0, 0, &argc);
-char *str = weechat_string_rebuild_split_string (argv, ";");
+char *str = weechat_string_rebuild_split_string (argv, ";", 0, -1);
 /* str == "abc;def;ghi" */
 /* ... */
 free (str);

@@ -69,7 +69,7 @@ irc_mode_get_arguments (const char *arguments)
     argv2[argc] = NULL;
 
     new_arguments = weechat_string_rebuild_split_string (
-        (const char **)argv2, " ");
+        (const char **)argv2, " ", 0, -1);
 
     weechat_string_free_split (argv);
     free (argv2);

@@ -2445,39 +2445,58 @@ string_free_split_shared (char **split_string)
 }
 
 /*
- * Rebuilds a split string using a delimiter.
+ * Rebuilds a split string using a delimiter and optional index of start/end
+ * string.
+ *
+ * If index_end < 0, then all arguments are used until NULL is found.
+ * If NULL is found before index_end, then the build stops there (at NULL).
  *
  * Note: result must be free after use.
  */
 
 char *
 string_rebuild_split_string (const char **split_string,
-                             const char *separator)
+                             const char *separator,
+                             int index_start, int index_end)
 {
     int i, length, length_separator;
     char *result;
 
-    if (!split_string)
+    if (!split_string || (index_start < 0)
+        || ((index_end >= 0) && (index_end < index_start)))
+    {
         return NULL;
+    }
 
     length = 0;
     length_separator = (separator) ? strlen (separator) : 0;
 
     for (i = 0; split_string[i]; i++)
     {
-        length += strlen (split_string[i]) + length_separator;
+        if ((index_end >= 0) && (i > index_end))
+            break;
+        if (i >= index_start)
+            length += strlen (split_string[i]) + length_separator;
     }
 
-    result = malloc (length + 1);
-    if (result)
-    {
-        result[0] = '\0';
+    if (length == 0)
+        return strdup ("");
 
-        for (i = 0; split_string[i]; i++)
+    result = malloc (length + 1);
+    if (!result)
+        return NULL;
+
+    result[0] = '\0';
+
+    for (i = index_start; split_string[i]; i++)
+    {
+        if ((index_end >= 0) && (i > index_end))
+            break;
+        strcat (result, split_string[i]);
+        if (separator && ((index_end < 0) || (i + 1 <= index_end))
+            && split_string[i + 1])
         {
-            strcat (result, split_string[i]);
-            if (separator && split_string[i + 1])
-                strcat (result, separator);
+            strcat (result, separator);
         }
     }
 

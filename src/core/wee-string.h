@@ -97,7 +97,8 @@ extern char **string_split_shell (const char *string, int *num_items);
 extern void string_free_split (char **split_string);
 extern void string_free_split_shared (char **split_string);
 extern char *string_rebuild_split_string (const char **split_string,
-                                          const char *separator);
+                                          const char *separator,
+                                          int index_start, int index_end);
 extern char **string_split_command (const char *command, char separator);
 extern void string_free_split_command (char **split_command);
 extern char ***string_split_tags (const char *tags, int *num_tags);

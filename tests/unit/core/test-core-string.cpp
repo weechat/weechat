@@ -1708,7 +1708,7 @@ TEST(CoreString, RebuildSplitString)
     char **argv, *str;
     int argc, flags;
 
-    str = string_rebuild_split_string (NULL, NULL);
+    str = string_rebuild_split_string (NULL, NULL, 0, -1);
     POINTERS_EQUAL(NULL, str);
 
     flags = WEECHAT_STRING_SPLIT_STRIP_LEFT
@@ -1716,16 +1716,94 @@ TEST(CoreString, RebuildSplitString)
         | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS;
     argv = string_split (" abc de  fghi ", " ", NULL, flags, 0, &argc);
 
-    str = string_rebuild_split_string ((const char **)argv, NULL);
+    /* invalid index_end, which is < index_start */
+    str = string_rebuild_split_string ((const char **)argv, NULL, 1, 0);
+    POINTERS_EQUAL(NULL, str);
+    str = string_rebuild_split_string ((const char **)argv, NULL, 2, 1);
+    POINTERS_EQUAL(NULL, str);
+
+    str = string_rebuild_split_string ((const char **)argv, NULL, 0, -1);
     STRCMP_EQUAL("abcdefghi", str);
     free (str);
 
-    str = string_rebuild_split_string ((const char **)argv, "");
+    str = string_rebuild_split_string ((const char **)argv, NULL, 0, 0);
+    STRCMP_EQUAL("abc", str);
+    free (str);
+
+    str = string_rebuild_split_string ((const char **)argv, NULL, 0, 1);
+    STRCMP_EQUAL("abcde", str);
+    free (str);
+
+    str = string_rebuild_split_string ((const char **)argv, NULL, 0, 2);
     STRCMP_EQUAL("abcdefghi", str);
     free (str);
 
-    str = string_rebuild_split_string ((const char **)argv, ";;");
+    str = string_rebuild_split_string ((const char **)argv, NULL, 0, 3);
+    STRCMP_EQUAL("abcdefghi", str);
+    free (str);
+
+    str = string_rebuild_split_string ((const char **)argv, NULL, 1, 1);
+    STRCMP_EQUAL("de", str);
+    free (str);
+
+    str = string_rebuild_split_string ((const char **)argv, NULL, 1, 2);
+    STRCMP_EQUAL("defghi", str);
+    free (str);
+
+    str = string_rebuild_split_string ((const char **)argv, NULL, 1, 3);
+    STRCMP_EQUAL("defghi", str);
+    free (str);
+
+    str = string_rebuild_split_string ((const char **)argv, NULL, 2, 2);
+    STRCMP_EQUAL("fghi", str);
+    free (str);
+
+    str = string_rebuild_split_string ((const char **)argv, NULL, 2, 3);
+    STRCMP_EQUAL("fghi", str);
+    free (str);
+
+    str = string_rebuild_split_string ((const char **)argv, "", 0, -1);
+    STRCMP_EQUAL("abcdefghi", str);
+    free (str);
+
+    str = string_rebuild_split_string ((const char **)argv, ";;", 0, -1);
     STRCMP_EQUAL("abc;;de;;fghi", str);
+    free (str);
+
+    str = string_rebuild_split_string ((const char **)argv, ";;", 0, 0);
+    STRCMP_EQUAL("abc", str);
+    free (str);
+
+    str = string_rebuild_split_string ((const char **)argv, ";;", 0, 1);
+    STRCMP_EQUAL("abc;;de", str);
+    free (str);
+
+    str = string_rebuild_split_string ((const char **)argv, ";;", 0, 2);
+    STRCMP_EQUAL("abc;;de;;fghi", str);
+    free (str);
+
+    str = string_rebuild_split_string ((const char **)argv, ";;", 0, 3);
+    STRCMP_EQUAL("abc;;de;;fghi", str);
+    free (str);
+
+    str = string_rebuild_split_string ((const char **)argv, ";;", 1, 1);
+    STRCMP_EQUAL("de", str);
+    free (str);
+
+    str = string_rebuild_split_string ((const char **)argv, ";;", 1, 2);
+    STRCMP_EQUAL("de;;fghi", str);
+    free (str);
+
+    str = string_rebuild_split_string ((const char **)argv, ";;", 1, 3);
+    STRCMP_EQUAL("de;;fghi", str);
+    free (str);
+
+    str = string_rebuild_split_string ((const char **)argv, ";;", 2, 2);
+    STRCMP_EQUAL("fghi", str);
+    free (str);
+
+    str = string_rebuild_split_string ((const char **)argv, ";;", 2, 3);
+    STRCMP_EQUAL("fghi", str);
     free (str);
 
     string_free_split (argv);

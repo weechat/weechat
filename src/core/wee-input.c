@@ -428,7 +428,7 @@ input_data_delayed (struct t_gui_buffer *buffer, const char *data,
     else if (input_commands_allowed)
     {
         new_commands_allowed = string_rebuild_split_string (
-            (const char **)input_commands_allowed, ",");
+            (const char **)input_commands_allowed, ",", 0, -1);
     }
     else
     {

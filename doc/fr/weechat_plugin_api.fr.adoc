@@ -1822,20 +1822,29 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== string_rebuild_split_string
 
-Reconstruire une chaîne à partir d'une chaîne découpée.
+_Mis à jour dans la 3.7._
+
+Reconstruire une chaîne à partir d'une chaîne découpée, d'un séparateur facultatif
+et d'un index de première/dernière chaîne à utiliser.
 
 Prototype :
 
 [source,c]
 ----
-char *weechat_string_rebuild_split_string (char **split_string
-                                           const char *separator);
+char *weechat_string_rebuild_split_string (char **split_string,
+                                           const char *separator,
+                                           int index_start, int index_end);
 ----
 
 Paramètres :
 
 * _split_string_ : chaîne découpée par la fonction <<_string_split,string_split>>
-* _separator_ : chaîne utilisée pour séparer les différentes chaînes
+* _separator_ : chaîne utilisée pour séparer les différentes chaînes (peut être
+  NULL ou une chaîne vide)
+* _index_start_ : index de la première chaîne à utiliser (≥ 0)
+* _index_end_ : index de la dernière chaîne à utiliser (doit être ≥ _index_start_ ;
+  la valeur spéciale -1 peut être utilisée pour utiliser toutes les chaînes
+  jusqu'à ce que NULL soit trouvé)
 
 Valeur de retour :
 
@@ -1849,7 +1858,7 @@ Exemple en C :
 char **argv;
 int argc;
 argv = weechat_string_split ("abc def ghi", " ", 0, 0, &argc);
-char *str = weechat_string_rebuild_split_string (argv, ";");
+char *str = weechat_string_rebuild_split_string (argv, ";", 0, -1);
 /* str == "abc;def;ghi" */
 /* ... */
 free (str);

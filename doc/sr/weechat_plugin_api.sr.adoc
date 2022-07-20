@@ -1713,20 +1713,32 @@ weechat_string_free_split (argv);
 
 ==== string_rebuild_split_string
 
-Изграђује стринг од подељеног стринга.
+_Ажурирано у верзији 3.7._
+
+// TRANSLATION MISSING
+Rebuild a string with a split string, using optional separator and index of
+first/last string to use.
 
 Прототип:
 
 [source,c]
 ----
 char *weechat_string_rebuild_split_string (char **split_string,
-                                           const char *separator);
+                                           const char *separator,
+                                           int index_start, int index_end);
 ----
 
 Аргументи:
 
 * _split_string_: стринг подељен функцијом <<_string_split,string_split>>
-* _separator_: стринг који се користи за раздвајање стрингова
+// TRANSLATION MISSING
+* _separator_: string used to separate strings (can be NULL or empty string)
+// TRANSLATION MISSING
+* _index_start_: index of first string to use (≥ 0)
+// TRANSLATION MISSING
+* _index_end_: index of last string to use
+  (must be ≥ _index_start_; special value -1 can be used to use all arguments
+  until NULL is found)
 
 Повратна вредност:
 
@@ -1739,7 +1751,7 @@ C пример:
 char **argv;
 int argc;
 argv = weechat_string_split ("abc def ghi", " ", 0, 0, &argc);
-char *str = weechat_string_rebuild_split_string (argv, ";");
+char *str = weechat_string_rebuild_split_string (argv, ";", 0, -1);
 /* str == "abc;def;ghi" */
 /* ... */
 free (str);

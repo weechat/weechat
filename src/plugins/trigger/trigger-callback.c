@@ -1030,7 +1030,7 @@ trigger_callback_print_cb  (const void *pointer, void *data,
         free (str_no_color);
     }
 
-    str_tags = weechat_string_rebuild_split_string (tags, ",");
+    str_tags = weechat_string_rebuild_split_string (tags, ",", 0, -1);
     if (str_tags)
     {
         /* build string with tags and commas around: ",tag1,tag2,tag3," */

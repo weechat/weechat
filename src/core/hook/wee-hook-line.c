@@ -167,7 +167,7 @@ hook_line_exec (struct t_gui_line *line)
             HASHTABLE_SET_STR_NOT_NULL("str_time", line->data->str_time);
             HASHTABLE_SET_INT("tags_count", line->data->tags_count);
             str_tags = string_rebuild_split_string (
-                (const char **)line->data->tags_array, ",");
+                (const char **)line->data->tags_array, ",", 0, -1);
             HASHTABLE_SET_STR_NOT_NULL("tags", str_tags);
             if (str_tags)
                 free (str_tags);

@@ -17,6 +17,22 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 (file _ChangeLog.adoc_ in sources).
 
 
+[[v3.7]]
+== Version 3.7 (under dev)
+
+[[v3.7_api_string_rebuild_split_string]]
+=== Function string_rebuild_split_string
+
+The API function string_build_with_split_string has been renamed to
+link:https://weechat.org/doc/plugin/#_string_rebuild_split_string[string_rebuild_split_string]
+and two new arguments have been added: _index_start_ and _index_end_.
+
+To stay compatible, the existing calls to the function must be done with the
+new function name and these values:
+
+* _index_start_: `0`
+* _index_end_: `-1`
+
 [[v3.6]]
 == Version 3.6 (2022-07-10)
 

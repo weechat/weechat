@@ -44,7 +44,7 @@ char *
 hook_signal_get_description (struct t_hook *hook)
 {
     return string_rebuild_split_string (
-        (const char **)(HOOK_SIGNAL(hook, signals)), ";");
+        (const char **)(HOOK_SIGNAL(hook, signals)), ";", 0, -1);
 }
 
 /*
