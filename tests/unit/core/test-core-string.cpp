@@ -1700,15 +1700,15 @@ TEST(CoreString, SplitTags)
 
 /*
  * Tests functions:
- *    string_build_with_split_string
+ *    string_rebuild_split_string
  */
 
-TEST(CoreString, SplitBuildWithSplitString)
+TEST(CoreString, RebuildSplitString)
 {
     char **argv, *str;
     int argc, flags;
 
-    str = string_build_with_split_string (NULL, NULL);
+    str = string_rebuild_split_string (NULL, NULL);
     POINTERS_EQUAL(NULL, str);
 
     flags = WEECHAT_STRING_SPLIT_STRIP_LEFT
@@ -1716,15 +1716,15 @@ TEST(CoreString, SplitBuildWithSplitString)
         | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS;
     argv = string_split (" abc de  fghi ", " ", NULL, flags, 0, &argc);
 
-    str = string_build_with_split_string ((const char **)argv, NULL);
+    str = string_rebuild_split_string ((const char **)argv, NULL);
     STRCMP_EQUAL("abcdefghi", str);
     free (str);
 
-    str = string_build_with_split_string ((const char **)argv, "");
+    str = string_rebuild_split_string ((const char **)argv, "");
     STRCMP_EQUAL("abcdefghi", str);
     free (str);
 
-    str = string_build_with_split_string ((const char **)argv, ";;");
+    str = string_rebuild_split_string ((const char **)argv, ";;");
     STRCMP_EQUAL("abc;;de;;fghi", str);
     free (str);
 

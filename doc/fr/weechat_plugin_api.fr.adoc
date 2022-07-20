@@ -1820,16 +1820,16 @@ weechat_string_free_split (argv);
 [NOTE]
 Cette fonction n'est pas disponible dans l'API script.
 
-==== string_build_with_split_string
+==== string_rebuild_split_string
 
-Construire une chaîne à partir d'une chaîne découpée.
+Reconstruire une chaîne à partir d'une chaîne découpée.
 
 Prototype :
 
 [source,c]
 ----
-char *weechat_string_build_with_split_string (char **split_string
-                                              const char *separator);
+char *weechat_string_rebuild_split_string (char **split_string
+                                           const char *separator);
 ----
 
 Paramètres :
@@ -1839,7 +1839,7 @@ Paramètres :
 
 Valeur de retour :
 
-* chaîne construite avec la chaîne découpée (doit être supprimée par un appel à
+* chaîne reconstruite avec la chaîne découpée (doit être supprimée par un appel à
   "free" après utilisation)
 
 Exemple en C :
@@ -1849,7 +1849,7 @@ Exemple en C :
 char **argv;
 int argc;
 argv = weechat_string_split ("abc def ghi", " ", 0, 0, &argc);
-char *str = weechat_string_build_with_split_string (argv, ";");
+char *str = weechat_string_rebuild_split_string (argv, ";");
 /* str == "abc;def;ghi" */
 /* ... */
 free (str);

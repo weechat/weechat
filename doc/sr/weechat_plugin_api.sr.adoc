@@ -1711,7 +1711,7 @@ weechat_string_free_split (argv);
 [NOTE]
 Ова функција није доступна у API скриптовања.
 
-==== string_build_with_split_string
+==== string_rebuild_split_string
 
 Изграђује стринг од подељеног стринга.
 
@@ -1719,8 +1719,8 @@ weechat_string_free_split (argv);
 
 [source,c]
 ----
-char *weechat_string_build_with_split_string (char **split_string,
-                                              const char *separator);
+char *weechat_string_rebuild_split_string (char **split_string,
+                                           const char *separator);
 ----
 
 Аргументи:
@@ -1739,7 +1739,7 @@ C пример:
 char **argv;
 int argc;
 argv = weechat_string_split ("abc def ghi", " ", 0, 0, &argc);
-char *str = weechat_string_build_with_split_string (argv, ";");
+char *str = weechat_string_rebuild_split_string (argv, ";");
 /* str == "abc;def;ghi" */
 /* ... */
 free (str);

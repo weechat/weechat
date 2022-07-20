@@ -2445,14 +2445,14 @@ string_free_split_shared (char **split_string)
 }
 
 /*
- * Builds a string with a split string.
+ * Rebuilds a split string using a delimiter.
  *
  * Note: result must be free after use.
  */
 
 char *
-string_build_with_split_string (const char **split_string,
-                                const char *separator)
+string_rebuild_split_string (const char **split_string,
+                             const char *separator)
 {
     int i, length, length_separator;
     char *result;

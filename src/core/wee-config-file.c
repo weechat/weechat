@@ -3387,7 +3387,7 @@ config_file_add_option_to_infolist (struct t_infolist *infolist,
     {
         goto error;
     }
-    string_values = string_build_with_split_string (
+    string_values = string_rebuild_split_string (
         (const char **)option->string_values, "|");
     if (!infolist_new_var_string (ptr_item, "string_values", string_values))
     {

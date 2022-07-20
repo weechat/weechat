@@ -1809,7 +1809,7 @@ weechat_string_free_split (argv);
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== string_build_with_split_string
+==== string_rebuild_split_string
 
 分割文字列から文字列を作る。
 
@@ -1817,8 +1817,8 @@ weechat_string_free_split (argv);
 
 [source,c]
 ----
-char *weechat_string_build_with_split_string (char **split_string,
-                                              const char *separator);
+char *weechat_string_rebuild_split_string (char **split_string,
+                                           const char *separator);
 ----
 
 引数:
@@ -1838,7 +1838,7 @@ C 言語での使用例:
 char **argv;
 int argc;
 argv = weechat_string_split ("abc def ghi", " ", 0, 0, &argc);
-char *str = weechat_string_build_with_split_string (argv, ";");
+char *str = weechat_string_rebuild_split_string (argv, ";");
 /* str == "abc;def;ghi" */
 /* ... */
 free (str);

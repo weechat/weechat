@@ -43,7 +43,7 @@
 char *
 hook_signal_get_description (struct t_hook *hook)
 {
-    return string_build_with_split_string (
+    return string_rebuild_split_string (
         (const char **)(HOOK_SIGNAL(hook, signals)), ";");
 }
 

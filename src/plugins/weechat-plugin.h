@@ -68,7 +68,7 @@ struct timeval;
  * please change the date with current one; for a second change at same
  * date, increment the 01, otherwise please keep 01.
  */
-#define WEECHAT_PLUGIN_API_VERSION "20220312-01"
+#define WEECHAT_PLUGIN_API_VERSION "20220720-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -332,8 +332,8 @@ struct t_weechat_plugin
                             int num_items_max, int *num_items);
     char **(*string_split_shell) (const char *string, int *num_items);
     void (*string_free_split) (char **split_string);
-    char *(*string_build_with_split_string) (const char **split_string,
-                                             const char *separator);
+    char *(*string_rebuild_split_string) (const char **split_string,
+                                          const char *separator);
     char **(*string_split_command) (const char *command, char separator);
     void (*string_free_split_command) (char **split_command);
     char *(*string_format_size) (unsigned long long size);
@@ -1285,10 +1285,10 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     (weechat_plugin->string_split_shell)(__string, __num_items)
 #define weechat_string_free_split(__split_string)                       \
     (weechat_plugin->string_free_split)(__split_string)
-#define weechat_string_build_with_split_string(__split_string,          \
-                                               __separator)             \
-    (weechat_plugin->string_build_with_split_string)(__split_string,    \
-                                                     __separator)
+#define weechat_string_rebuild_split_string(__split_string,             \
+                                            __separator)                \
+    (weechat_plugin->string_rebuild_split_string)(__split_string,       \
+                                                  __separator)
 #define weechat_string_split_command(__command, __separator)            \
     (weechat_plugin->string_split_command)(__command, __separator)
 #define weechat_string_free_split_command(__split_command)              \

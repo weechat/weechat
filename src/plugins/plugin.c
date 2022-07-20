@@ -629,7 +629,7 @@ plugin_load (const char *filename, int init_plugin, int argc, char **argv)
         new_plugin->string_split = &string_split;
         new_plugin->string_split_shell = &string_split_shell;
         new_plugin->string_free_split = &string_free_split;
-        new_plugin->string_build_with_split_string = &string_build_with_split_string;
+        new_plugin->string_rebuild_split_string = &string_rebuild_split_string;
         new_plugin->string_split_command = &string_split_command;
         new_plugin->string_free_split_command = &string_free_split_command;
         new_plugin->string_format_size = &string_format_size;

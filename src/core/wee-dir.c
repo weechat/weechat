@@ -1036,5 +1036,5 @@ dir_get_string_home_dirs ()
     dirs[3] = weechat_runtime_dir;
     dirs[4] = NULL;
 
-    return string_build_with_split_string ((const char **)dirs, ":");
+    return string_rebuild_split_string ((const char **)dirs, ":");
 }

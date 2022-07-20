@@ -1788,16 +1788,16 @@ weechat_string_free_split (argv);
 [NOTE]
 This function is not available in scripting API.
 
-==== string_build_with_split_string
+==== string_rebuild_split_string
 
-Build a string with a split string.
+Rebuild a string with a split string.
 
 Prototype:
 
 [source,c]
 ----
-char *weechat_string_build_with_split_string (char **split_string,
-                                              const char *separator);
+char *weechat_string_rebuild_split_string (char **split_string,
+                                           const char *separator);
 ----
 
 Arguments:
@@ -1807,7 +1807,7 @@ Arguments:
 
 Return value:
 
-* string built with split string (must be freed by calling "free" after use)
+* string rebuilt with split string (must be freed by calling "free" after use)
 
 C example:
 
@@ -1816,7 +1816,7 @@ C example:
 char **argv;
 int argc;
 argv = weechat_string_split ("abc def ghi", " ", 0, 0, &argc);
-char *str = weechat_string_build_with_split_string (argv, ";");
+char *str = weechat_string_rebuild_split_string (argv, ";");
 /* str == "abc;def;ghi" */
 /* ... */
 free (str);

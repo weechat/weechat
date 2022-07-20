@@ -5582,7 +5582,7 @@ COMMAND_CALLBACK(repeat)
             repeat_args[0] = strdup (buffer->full_name);
             repeat_args[1] = strdup (argv_eol[arg_count + 1]);
             repeat_args[2] = (input_commands_allowed) ?
-                string_build_with_split_string (
+                string_rebuild_split_string (
                     (const char **)input_commands_allowed, ",") : NULL;
             hook_timer (NULL, interval, 0, count - 1,
                         &command_repeat_timer_cb, repeat_args, NULL);

@@ -20,6 +20,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 New features::
 
+  * api: rename function string_build_with_split_string to string_rebuild_split_string
   * api: add info "uptime_current"
 
 Bug fixes::
