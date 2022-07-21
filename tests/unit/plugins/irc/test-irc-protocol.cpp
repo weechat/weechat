@@ -1966,6 +1966,11 @@ TEST(IrcProtocolWithServer, topic)
     CHECK_CHAN("-- alice has unset topic for #test");
     POINTERS_EQUAL(NULL, ptr_channel->topic);
 
+    /* empty topic (with empty trailing parameter) */
+    RECV(":alice!user@host TOPIC #test :");
+    CHECK_CHAN("-- alice has unset topic for #test");
+    POINTERS_EQUAL(NULL, ptr_channel->topic);
+
     /* new topic */
     RECV(":alice!user@host TOPIC #test :new topic ");
     CHECK_CHAN("-- alice has changed topic for #test to \"new topic \"");

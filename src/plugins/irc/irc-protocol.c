@@ -3258,7 +3258,7 @@ IRC_PROTOCOL_CALLBACK(topic)
     if (ptr_channel)
         irc_channel_join_smart_filtered_unmask (ptr_channel, nick);
 
-    if (str_topic)
+    if (str_topic && str_topic[0])
     {
         topic_color = irc_color_decode (
             str_topic,
@@ -3361,7 +3361,10 @@ IRC_PROTOCOL_CALLBACK(topic)
     }
 
     if (ptr_channel)
-        irc_channel_set_topic (ptr_channel, str_topic);
+    {
+        irc_channel_set_topic (ptr_channel,
+                               (str_topic && str_topic[0]) ? str_topic : NULL);
+    }
 
     if (str_topic)
         free (str_topic);
