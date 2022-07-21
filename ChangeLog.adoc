@@ -26,6 +26,7 @@ New features::
 Bug fixes::
 
   * irc: fix duplicated channels in autojoin option when autojoin_dynamic is enabled (issue #1795)
+  * relay: fix parsing of IRC messages received from clients (issue #1796)
 
 [[v3.6]]
 == Version 3.6 (2022-07-10)
