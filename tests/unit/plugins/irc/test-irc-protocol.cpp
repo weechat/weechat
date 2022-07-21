@@ -1551,14 +1551,23 @@ TEST(IrcProtocolWithServer, part)
     CHECK(ptr_server->channels->nicks);
     LONGS_EQUAL(0, ptr_server->channels->part);
 
+    /* without part message */
     RECV(":alice!user@host PART #test");
     CHECK_CHAN("<-- alice (user@host) has left #test");
     STRCMP_EQUAL("#test", ptr_server->channels->name);
     POINTERS_EQUAL(NULL, ptr_server->channels->nicks);
     LONGS_EQUAL(1, ptr_server->channels->part);
 
+    /* without part message (but empty trailing parameter) */
     RECV(":alice!user@host JOIN #test");
+    RECV(":alice!user@host PART #test :");
+    CHECK_CHAN("<-- alice (user@host) has left #test");
+    STRCMP_EQUAL("#test", ptr_server->channels->name);
+    POINTERS_EQUAL(NULL, ptr_server->channels->nicks);
+    LONGS_EQUAL(1, ptr_server->channels->part);
 
+    /* with part message */
+    RECV(":alice!user@host JOIN #test");
     RECV(":alice!user@host PART #test :part message ");
     CHECK_CHAN("<-- alice (user@host) has left #test (part message )");
     STRCMP_EQUAL("#test", ptr_server->channels->name);
@@ -1783,26 +1792,24 @@ TEST(IrcProtocolWithServer, quit)
 
     ptr_channel = ptr_server->channels;
 
-    RECV(":bob!user@host JOIN #test");
-    CHECK_CHAN("--> bob (user@host) has joined #test");
-    LONGS_EQUAL(2, ptr_channel->nicks_count);
-    STRCMP_EQUAL("alice", ptr_channel->nicks->name);
-    STRCMP_EQUAL("bob", ptr_channel->last_nick->name);
-
     /* without quit message */
+    RECV(":bob!user@host JOIN #test");
     RECV(":bob!user@host QUIT");
     CHECK_CHAN("<-- bob (user@host) has quit");
     LONGS_EQUAL(1, ptr_channel->nicks_count);
     STRCMP_EQUAL("alice", ptr_channel->nicks->name);
     POINTERS_EQUAL(NULL, ptr_channel->nicks->next_nick);
 
+    /* without quit message (but empty trailing parameter) */
     RECV(":bob!user@host JOIN #test");
-    CHECK_CHAN("--> bob (user@host) has joined #test");
-    LONGS_EQUAL(2, ptr_channel->nicks_count);
+    RECV(":bob!user@host QUIT :");
+    CHECK_CHAN("<-- bob (user@host) has quit");
+    LONGS_EQUAL(1, ptr_channel->nicks_count);
     STRCMP_EQUAL("alice", ptr_channel->nicks->name);
-    STRCMP_EQUAL("bob", ptr_channel->last_nick->name);
+    POINTERS_EQUAL(NULL, ptr_channel->nicks->next_nick);
 
     /* with quit message */
+    RECV(":bob!user@host JOIN #test");
     RECV(":bob!user@host QUIT :quit message ");
     CHECK_CHAN("<-- bob (user@host) has quit (quit message )");
     LONGS_EQUAL(1, ptr_channel->nicks_count);

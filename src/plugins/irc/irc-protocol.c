@@ -2939,7 +2939,7 @@ IRC_PROTOCOL_CALLBACK(quit)
                     ptr_channel->has_quit_server = 1;
                 }
                 display_host = weechat_config_boolean (irc_config_look_display_host_quit);
-                if (str_quit_msg)
+                if (str_quit_msg && str_quit_msg[0])
                 {
                     weechat_printf_date_tags (
                         irc_msgbuffer_get_target_buffer (
