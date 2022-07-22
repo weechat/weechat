@@ -1344,7 +1344,7 @@ Le résultat est une table de hachage avec les clés suivantes
 
 [width="100%",cols="3,^2,10,7",options="header"]
 |===
-| Clé | Depuis WeeChat ^(1)^ | Description | Exemple
+| Clé | Depuis WeeChat ^(1)^ | Description | Exemple
 
 | tags | 0.4.0
 | Les étiquettes dans le message (peut être vide).

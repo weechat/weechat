@@ -782,7 +782,7 @@ class AutogenDoc():
         self.write('// tag::url_options[]')
         self.write('[width="100%",cols="2,^1,7",options="header"]')
         self.write('|===')
-        self.write('| %s | %s ^(1)^ | %s ^(2)^\n',
+        self.write('| %s | %s ^(1)^ | %s ^(2)^\n',
                    _('Option'), _('Type'), _('Constants'))
         for option in url_options:
             constants = option['constants']

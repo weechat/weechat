@@ -1350,7 +1350,7 @@ _WeeChat バージョン 0.3.4 以上で利用可。_
 [width="100%",cols="3,^2,10,7",options="header"]
 |===
 // TRANSLATION MISSING
-| キー | Since WeeChat ^(1)^ | 説明 | 例
+| キー | Since WeeChat ^(1)^ | 説明 | 例
 
 | tags | 0.4.0
 | メッセージに付けられたタグ (空にすることも可)

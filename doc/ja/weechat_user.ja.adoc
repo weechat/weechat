@@ -120,14 +120,14 @@ WeeChat:
 
 [width="100%",cols="5,^3,.^15",options="header"]
 |===
-| パッケージ ^(1)^           | バージョン       | 機能
+| パッケージ ^(1)^           | バージョン       | 機能
 | C コンパイラ (gcc / clang) |                  | ビルド
 | cmake                      | ≥ 3.0            | ビルド (autotools でも可能ですが、CMake を推奨します)
 | pkg-config                 |                  | インストール済みライブラリを検出
-| libncursesw5-dev ^(2)^     |                  | ncurses インターフェース
+| libncursesw5-dev ^(2)^     |                  | ncurses インターフェース
 | libcurl4-gnutls-dev        |                  | URL 転送
 | libgcrypt20-dev            |                  | 保護データ、IRC SASL 認証
-| libgnutls28-dev            | 2.2.0 以上 ^(3)^ | IRC サーバへの SSL 接続、IRC SASL 認証 (ECDSA-NIST256P-CHALLENGE)
+| libgnutls28-dev            | 2.2.0 以上 ^(3)^ | IRC サーバへの SSL 接続、IRC SASL 認証 (ECDSA-NIST256P-CHALLENGE)
 // TRANSLATION MISSING
 | zlib1g-dev                 |                  | Compression of messages (WeeChat -> client) with https://zlib.net/[zlib ^↗^,window=_blank] in relay plugin (weechat protocol), script plugin.
 // TRANSLATION MISSING
@@ -150,12 +150,12 @@ WeeChat:
 
 [width="100%",cols="5,^3,.^15",options="header"]
 |===
-| パッケージ ^(1)^                        | バージョン  | 機能
+| パッケージ ^(1)^                        | バージョン  | 機能
 | {cpp} コンパイラ (pass:[g++ / clang++]) |             | ビルドとテストの実行、JavaScript プラグイン
 | gettext                                 |             | 国際化 (メッセージの翻訳; ベース言語は英語です)
 | ca-certificates                         |             | SSL 接続に必要な証明書、relay プラグインで SSL サポート
 | libaspell-dev / libenchant-dev          |             | spell プラグイン
-| python3-dev ^(2)^                       |             | python プラグイン
+| python3-dev ^(2)^                       |             | python プラグイン
 | libperl-dev                             |             | perl プラグイン
 | ruby2.7, ruby2.7-dev                    | 1.9.1 以上  | ruby プラグイン
 | liblua5.4-dev                           |             | lua プラグイン
@@ -767,28 +767,28 @@ The WeeChat directories are:
 [width="100%",cols="1m,3",options="header"]
 |===
 // TRANSLATION MISSING
-| Path ^(1)^              | 説明
+| Path ^(1)^              | 説明
 // TRANSLATION MISSING
 | ~/.config/weechat/      | WeeChat configuration files: `*.conf`, certificates, etc.
 // TRANSLATION MISSING
 | ~/.local/share/weechat/ | WeeChat data files: logs, scripts, scripts data, xfer files, etc.
 |    logs/                | ログファイル (バッファごとに 1 つのファイル)
 |    python/              | Python スクリプト
-|       autoload/         | 起動時に自動ロードされる Python スクリプト ^(2)^
+|       autoload/         | 起動時に自動ロードされる Python スクリプト ^(2)^
 |    perl/                | Perl スクリプト
-|       autoload/         | 起動時に自動ロードされる Perl スクリプト ^(2)^
+|       autoload/         | 起動時に自動ロードされる Perl スクリプト ^(2)^
 |    ruby/                | Ruby スクリプト
-|       autoload/         | 起動時に自動ロードされる Ruby スクリプト ^(2)^
+|       autoload/         | 起動時に自動ロードされる Ruby スクリプト ^(2)^
 |    lua/                 | Lua スクリプト
-|       autoload/         | 起動時に自動ロードされる Lua スクリプト ^(2)^
+|       autoload/         | 起動時に自動ロードされる Lua スクリプト ^(2)^
 |    tcl/                 | Tcl スクリプト
-|       autoload/         | 起動時に自動ロードされる Tcl スクリプト ^(2)^
+|       autoload/         | 起動時に自動ロードされる Tcl スクリプト ^(2)^
 |    guile/               | Guile スクリプト
-|       autoload/         | 起動時に自動ロードされる Guile スクリプト ^(2)^
+|       autoload/         | 起動時に自動ロードされる Guile スクリプト ^(2)^
 |    javascript/          | JavaScript スクリプト
-|       autoload/         | 起動時に自動ロードされる JavaScript スクリプト ^(2)^
+|       autoload/         | 起動時に自動ロードされる JavaScript スクリプト ^(2)^
 |    php/                 | PHP スクリプト
-|       autoload/         | 起動時に自動ロードされる PHP スクリプト ^(2)^
+|       autoload/         | 起動時に自動ロードされる PHP スクリプト ^(2)^
 // TRANSLATION MISSING
 | ~/.cache/weechat/       | WeeChat cache files: scripts cache.
 // TRANSLATION MISSING
@@ -1344,13 +1344,13 @@ WeeChat は様々な目的で各行にタグを付けます:
 | no_log           | ログファイルに書き込まれない行
 | log0 … log9      | 行に対するログレベル (`/help logger` を参照)
 // TRANSLATION MISSING
-| notify_none      | The line must not be added to hotlist. ^(1)^
+| notify_none      | The line must not be added to hotlist. ^(1)^
 // TRANSLATION MISSING
-| notify_message   | The line is a user message. ^(1)^
+| notify_message   | The line is a user message. ^(1)^
 // TRANSLATION MISSING
-| notify_private   | The line is a private message. ^(1)^
+| notify_private   | The line is a private message. ^(1)^
 // TRANSLATION MISSING
-| notify_highlight | The line is a message with highlight. ^(1)^
+| notify_highlight | The line is a message with highlight. ^(1)^
 | self_msg         | 自分のメッセージ
 | nick_xxx         | ニックネーム "xxx" からのメッセージ
 | prefix_nick_ccc  | プレフィックスを色 "ccc" のニックネームにします
@@ -1806,7 +1806,7 @@ These mouse actions are possible only if mouse is enabled with key kbd:[Alt+m]
 
 [width="100%",cols="^.^3,^.^3,^.^3,.^8,.^8",options="header"]
 |===
-| ボタン/ホイール ^(1)^ | ジェスチャー | エリア                       | 説明 | コマンド
+| ボタン/ホイール ^(1)^ | ジェスチャー | エリア                       | 説明 | コマンド
 | ◾◽◽                | -            | チャット                     | ウィンドウに移動 | `+/window ${_window_number}+`
 | ◾◽◽                | 左           | チャット                     | 前のバッファに移動 | `+/window ${_window_number};/buffer +1+`
 | ◾◽◽                | 右           | チャット                     | 次のバッファに移動 | `+/window ${_window_number};/buffer +1+`
@@ -1868,7 +1868,7 @@ These keys and actions are used on the fset buffer (see <<fset,Fset plugin>>).
 // TRANSLATION MISSING
 [width="100%",cols="^.^3,^.^2,.^8,.^5",options="header"]
 |===
-| Key                      | Action ^(1)^ | Description | Command
+| Key                      | Action ^(1)^ | Description | Command
 | kbd:[↑]                  |              | Move one line up. | `+/fset -up+`
 | kbd:[↓]                  |              | Move one line down. | `+/fset -down+`
 | kbd:[PgUp]               |              | Move one page up. | `+/window page_up+`
@@ -1918,7 +1918,7 @@ These keys and actions are used on the script buffer (see <<script_manager,scrip
 // TRANSLATION MISSING
 [width="100%",cols="^.^3,^.^2,.^8,.^5",options="header"]
 |===
-| Key               | Action ^(1)^ | Description | Command
+| Key               | Action ^(1)^ | Description | Command
 | kbd:[↑]           |              | Move one line up. | `+/script up+`
 | kbd:[↓]           |              | Move one line down. | `+/script down+`
 | kbd:[PgUp]        |              | Move one page up. | `+/window page_up+`
@@ -4025,8 +4025,8 @@ CTCP 応答時に自動的に WeeChat によって展開されます:
 | コード       | 説明                                      | 値/例
 | $clientinfo  | サポートしている CTCP オプションのリスト  | `+ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION+`
 | $version     | WeeChat バージョン                        | `+0.4.0-dev+`
-| $versiongit  | WeeChat バージョン + Git バージョン ^(1)^ | `+0.4.0-dev (git: v0.3.9-104-g7eb5cc4)+`
-| $git         | Git バージョン ^(1)^                      | `+v0.3.9-104-g7eb5cc4+`
+| $versiongit  | WeeChat バージョン + Git バージョン ^(1)^ | `+0.4.0-dev (git: v0.3.9-104-g7eb5cc4)+`
+| $git         | Git バージョン ^(1)^                      | `+v0.3.9-104-g7eb5cc4+`
 | $compilation | WeeChat コンパイル日時                    | `+Dec 16 2012+`
 | $osinfo      | OS に関する情報                           | `+Linux 2.6.32-5-amd64 / x86_64+`
 | $site        | WeeChat ウェブサイト                      | `+https://weechat.org/+`
@@ -4908,7 +4908,7 @@ _var_
 
 [width="100%",cols="2,3,7",options="header"]
 |===
-| フック         | デフォルト変数     | 更新が許可Update allowed ^(1)^
+| フック         | デフォルト変数     | 更新が許可Update allowed ^(1)^
 | signal         | tg_signal_data     |
 | hsignal        |                    |
 | modifier       | tg_string          | tg_string
@@ -5126,7 +5126,7 @@ _weechat_print_ 修飾子では、メッセージタグを使う変数 (下の
 | tg_tag_host        | string | ユーザ名とホスト名、書式: username@host ("host_xxx" タグから)
 | tg_tag_notify      | string | 通知レベル (_none_、_message_、_private_、_highlight_)
 // TRANSLATION MISSING
-| tg_tag_irc_xxx     | string | IRC message tag (key "xxx"). ^(1)^
+| tg_tag_irc_xxx     | string | IRC message tag (key "xxx"). ^(1)^
 | tg_notify          | string | 通知レベルが _none_ 以外の場合、その通知レベル
 | tg_msg_pv          | string | プライベートメッセージの場合 "1"、それ以外は "0"
 |===
@@ -5170,7 +5170,7 @@ _weechat_print_ 修飾子では、メッセージタグを使う変数 (下の
 | tg_tag_host        | string | ユーザ名とホスト名、書式: username@host ("host_xxx" タグから)
 | tg_tag_notify      | string | 通知レベル (_none_、_message_、_private_、_highlight_)
 // TRANSLATION MISSING
-| tg_tag_irc_xxx     | string | IRC message tag (key "xxx"). ^(1)^
+| tg_tag_irc_xxx     | string | IRC message tag (key "xxx"). ^(1)^
 | tg_notify          | string | 通知レベルが _none_ 以外の場合、その通知レベル
 | tg_msg_pv          | string | プライベートメッセージの場合 "1"、それ以外は "0"
 |===

@@ -120,14 +120,14 @@ WeeChat:
 
 [width="100%",cols="5,^3,.^15",options="header"]
 |===
-| Pakiet ^(1)^               | Wersja        | Opis
+| Pakiet ^(1)^               | Wersja        | Opis
 | kompilator C (gcc / clang) |               | Kompilacja.
 | cmake                      | ≥ 3.0         | Kompilacja (możliwe jest użycie autotools, jednak CMake jest zalecany).
 | pkg-config                 |               | Wykrywa zainstalowane biblioteki.
-| libncursesw5-dev ^(2)^     |               | Interfejs ncurses.
+| libncursesw5-dev ^(2)^     |               | Interfejs ncurses.
 | libcurl4-gnutls-dev        |               | Transfer URL.
 | libgcrypt20-dev            |               | Zabezpieczone dane, uwierzytelnianie IRC SASL.
-| libgnutls28-dev            | ≥ 2.2.0 ^(3)^ | Połączenia SSL z serwerami IRC, wsparcie dla SSL we wtyczce relay, uwierzytelnianie IRC SASL (ECDSA-NIST256P-CHALLENGE).
+| libgnutls28-dev            | ≥ 2.2.0 ^(3)^ | Połączenia SSL z serwerami IRC, wsparcie dla SSL we wtyczce relay, uwierzytelnianie IRC SASL (ECDSA-NIST256P-CHALLENGE).
 // TRANSLATION MISSING
 | zlib1g-dev                 |               | Compression of messages (WeeChat -> client) with https://zlib.net/[zlib ^↗^,window=_blank] in relay plugin (weechat protocol), script plugin.
 // TRANSLATION MISSING
@@ -149,12 +149,12 @@ WeeChat:
 
 [width="100%",cols="5,^3,.^15",options="header"]
 |===
-| Pakiet ^(1)^                            | Wersja   | Opis
+| Pakiet ^(1)^                            | Wersja   | Opis
 | kompilator {cpp} (pass:[g++ / clang++]) |          | Kompilacja i uruchamianie testów, wtyczka JavaScript.
 | gettext                                 |          | Internacjonalizacja (tłumaczenie wiadomości; język bazowy to Angielski).
 | ca-certificates                         |          | Certyfikaty dla połączeń SSL.
 | libaspell-dev / libenchant-dev          |          | Wtyczka spell.
-| python3-dev ^(2)^                       |          | Wtyczka python.
+| python3-dev ^(2)^                       |          | Wtyczka python.
 | libperl-dev                             |          | Wtyczka perl.
 | ruby2.7, ruby2.7-dev                    | ≥ 1.9.1  | Wtyczka ruby.
 | liblua5.4-dev                           |          | Wtyczka lua.
@@ -748,26 +748,26 @@ Katalogi używane przez WeeChat to:
 
 [width="100%",cols="1m,3",options="header"]
 |===
-| Ścieżka ^(1)^           | Opis
+| Ścieżka ^(1)^           | Opis
 | ~/.config/weechat/      | Pliki konfiguracyjne WeeChat: `*.conf`, certifikaty, itp.
 | ~/.local/share/weechat/ | Pliki z danymi WeeChat: logi, skrypty, dane skryptów, pliki xfer, itp.
 |    logs/                | Pliki z logami (jeden na bufor).
 |    python/              | Skrypty pythonowe.
-|       autoload/         | Skrypty pythonowe automatycznie ładowane przy starcie ^(2)^.
+|       autoload/         | Skrypty pythonowe automatycznie ładowane przy starcie ^(2)^.
 |    perl/                | Skrypty perlowe.
-|       autoload/         | Skrypty perlowe automatycznie ładowane przy starcie ^(2)^.
+|       autoload/         | Skrypty perlowe automatycznie ładowane przy starcie ^(2)^.
 |    ruby/                | Skrypty ruby.
-|       autoload/         | Skrypty ruby automatycznie ładowane przy starcie ^(2)^.
+|       autoload/         | Skrypty ruby automatycznie ładowane przy starcie ^(2)^.
 |    lua/                 | Skrypty lua.
-|       autoload/         | Skrypty lua automatycznie ładowane przy starcie ^(2)^.
+|       autoload/         | Skrypty lua automatycznie ładowane przy starcie ^(2)^.
 |    tcl/                 | Skrypty tcl.
-|       autoload/         | Skrypty tcl automatycznie ładowane przy starcie ^(2)^.
+|       autoload/         | Skrypty tcl automatycznie ładowane przy starcie ^(2)^.
 |    guile/               | Skrypty guile.
-|       autoload/         | Skrypry guile automatycznie ładowane przy starcie ^(2)^.
+|       autoload/         | Skrypry guile automatycznie ładowane przy starcie ^(2)^.
 |    javascript/          | Skrypty JavaScript.
-|       autoload/         | Skrypty JavaScript automatycznie ładowane przy starcie ^(2)^.
+|       autoload/         | Skrypty JavaScript automatycznie ładowane przy starcie ^(2)^.
 |    php/                 | Skrypty PHP.
-|       autoload/         | Skrypty PHP automatycznie ładowane przy starcie ^(2)^.
+|       autoload/         | Skrypty PHP automatycznie ładowane przy starcie ^(2)^.
 | ~/.cache/weechat/       | Pliki pamięci podręcznej WeeChat: pliki pamięci podręcznej skryptów.
 | /run/user/1000/weechat/ | Pliki uruchomieniowe WeeChat: kolejki FIFO, Gniazda UNIX pośrednika.
 |===
@@ -1294,10 +1294,10 @@ Popularnie używane tagi (niepełna lista):
 | no_highlight     | Podświetlenia nie są dozwolone w tej linii.
 | no_log           | Linia nie jest zapisywana w logu.
 | log0 … log9      | Poziom logowania dla linii (zobacz `/help logger`).
-| notify_none      | Linia nie może być dodana do hotlisty. ^(1)^
-| notify_message   | Linia jest wiasomością użytkownika. ^(1)^
-| notify_private   | Linia jest wiadomością prywatną. ^(1)^
-| notify_highlight | Linia jest wiadomością z podświetleniem. ^(1)^
+| notify_none      | Linia nie może być dodana do hotlisty. ^(1)^
+| notify_message   | Linia jest wiasomością użytkownika. ^(1)^
+| notify_private   | Linia jest wiadomością prywatną. ^(1)^
+| notify_highlight | Linia jest wiadomością z podświetleniem. ^(1)^
 | self_msg         | Własna wiadomość.
 | nick_xxx         | Wiadomość od nicku "xxx".
 | prefix_nick_ccc  | Prefiks to nick o kolorze "ccc".
@@ -1732,7 +1732,7 @@ za pomocą skrótu kbd:[Alt+m] (komenda: `+/mouse toggle+`).
 
 [width="100%",cols="^.^3,^.^3,^.^3,.^8,.^8",options="header"]
 |===
-| Klawisz/Wheel ^(1)^ | Gest          | Obszar               | Opis | Komenda
+| Klawisz/Wheel ^(1)^ | Gest          | Obszar               | Opis | Komenda
 | ◾◽◽                 | -             | chat                 | Przełącz na okno. | `+/window ${_window_number}+`
 | ◾◽◽                 | lewo          | chat                 | Przełącz na poprzedni bufor. | `+/window ${_window_number};/buffer +1+`
 | ◾◽◽                 | prawo         | chat                 | Przełącz na następny bufor. | `+/window ${_window_number};/buffer +1+`
@@ -1784,7 +1784,7 @@ Poniższe skróty i akcje mogą zostać użyte w buforze fset (zobacz <<fset,wty
 
 [width="100%",cols="^.^3,^.^2,.^8,.^5",options="header"]
 |===
-| Skrót                    | Akcja ^(1)^  | Opis | Komenda
+| Skrót                    | Akcja ^(1)^  | Opis | Komenda
 | kbd:[↑]                  |              | Przejdź linię wyżej. | `+/fset -up+`
 | kbd:[↓]                  |              | Przejdź linię niżej. | `+/fset -down+`
 | kbd:[PgUp]               |              | Przejdź stronę do góry. | `+/window page_up+`
@@ -1830,7 +1830,7 @@ Te skróty klawiszowe i akcje mogą zostać użyte w buforze skryptów (zobacz <
 
 [width="100%",cols="^.^3,^.^2,.^8,.^5",options="header"]
 |===
-| Skrót             | Akcja ^(1)^  | Opis | Komenda
+| Skrót             | Akcja ^(1)^  | Opis | Komenda
 | kbd:[↑]           |              | Przejdź linię wyżej. | `+/script up+`
 | kbd:[↓]           |              | Przejdź linię niżej. | `+/script down+`
 | kbd:[PgUp]        |              | Przewiń stronę do góry. | `+/window page_up+`
@@ -3933,8 +3933,8 @@ przez WeeChat podczas odpowiedzi na CTCP:
 | Kod          | Opis                              | Wartość/Przykład
 | $clientinfo  | Lista wspieranych CTCP            | `+ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION+`
 | $version     | Wersja WeeChat                    | `+0.4.0-dev+`
-| $versiongit  | Wersja WeeChat + wersja Git ^(1)^ | `+0.4.0-dev (git: v0.3.9-104-g7eb5cc4)+`
-| $git         | Wersja git ^(1)^                  | `+v0.3.9-104-g7eb5cc4+`
+| $versiongit  | Wersja WeeChat + wersja Git ^(1)^ | `+0.4.0-dev (git: v0.3.9-104-g7eb5cc4)+`
+| $git         | Wersja git ^(1)^                  | `+v0.3.9-104-g7eb5cc4+`
 | $compilation | Data kompilacji WeeChat           | `+Dec 16 2012+`
 | $osinfo      | Informacje o systemie operacyjnym | `+Linux 2.6.32-5-amd64 / x86_64+`
 | $site        | Strona WeeChat                    | `+https://weechat.org/+`
@@ -4825,7 +4825,7 @@ od typu uchwytu:
 
 [width="100%",cols="2,3,7",options="header"]
 |===
-| Uchwyt         | Domyślna zmienna   | Dozwolona aktualizacja ^(1)^
+| Uchwyt         | Domyślna zmienna   | Dozwolona aktualizacja ^(1)^
 | signal         | tg_signal_data     |
 | hsignal        |                    |
 | modifier       | tg_string          | tg_string
@@ -5040,7 +5040,7 @@ Zmienne ustawiane za pomocą tagów w wiadomościach:
 | tg_tag_host        | ciąg | Nazwa użytkownika i host, format: username@host (z tagu "host_xxx").
 | tg_tag_notify      | ciąg | Poziom powiadomień (_none_, _message_, _private_, _highlight_).
 // TRANSLATION MISSING
-| tg_tag_irc_xxx     | ciąg | IRC message tag (key "xxx"). ^(1)^
+| tg_tag_irc_xxx     | ciąg | IRC message tag (key "xxx"). ^(1)^
 | tg_notify          | ciąg | Poziom powiadomień, jeśli różny od _none_.
 | tg_msg_pv          | ciąg | "1" dla prywatnej wiadomości, inaczej "0".
 |===
@@ -5084,7 +5084,7 @@ Zmienne ustawiane za pomocą tagów w wiadomościach:
 | tg_tag_host        | ciąg | Nazwa użytkownika i host, format: username@host (z tagu "host_xxx").
 | tg_tag_notify      | ciąg | Poziom powiadomień (_none_, _message_, _private_, _highlight_).
 // TRANSLATION MISSING
-| tg_tag_irc_xxx     | ciąg | IRC message tag (key "xxx"). ^(1)^
+| tg_tag_irc_xxx     | ciąg | IRC message tag (key "xxx"). ^(1)^
 | tg_notify          | ciąg | Poziom powiadomień, jeśli różny od _none_.
 | tg_msg_pv          | ciąg | "1" dla prywatnej wiadomości, inaczej "0".
 |===

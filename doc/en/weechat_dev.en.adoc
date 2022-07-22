@@ -940,10 +940,10 @@ All combinations are summarized in this table:
 | [hex]#19# + `B` + `EXT`                           | [hex]#19# `+B@00124+`        | chat + bars | Set background (extended color).
 | [hex]#19# + `*` + `(ATTR)STD`                     | [hex]#19# `+*05+`            | chat + bars | Set foreground (WeeChat color).
 | [hex]#19# + `*` + `(ATTR)EXT`                     | [hex]#19# `+*@00214+`        | chat + bars | Set foreground (extended color).
-| [hex]#19# + `*` + `(ATTR)STD` + `,` + `STD` ^(1)^ | [hex]#19# `+*08,05+`         | chat + bars | Set foreground/background (WeeChat colors).
-| [hex]#19# + `*` + `(ATTR)STD` + `,` + `EXT` ^(1)^ | [hex]#19# `+*01,@00214+`     | chat + bars | Set foreground (WeeChat color) and background (extended color).
-| [hex]#19# + `*` + `(ATTR)EXT` + `,` + `STD` ^(1)^ | [hex]#19# `+*@00214,05+`     | chat + bars | Set foreground (extended color) and background (WeeChat color).
-| [hex]#19# + `*` + `(ATTR)EXT` + `,` + `EXT` ^(1)^ | [hex]#19# `+*@00214,@00017+` | chat + bars | Set foreground/background (extended colors).
+| [hex]#19# + `*` + `(ATTR)STD` + `,` + `STD` ^(1)^ | [hex]#19# `+*08,05+`         | chat + bars | Set foreground/background (WeeChat colors).
+| [hex]#19# + `*` + `(ATTR)STD` + `,` + `EXT` ^(1)^ | [hex]#19# `+*01,@00214+`     | chat + bars | Set foreground (WeeChat color) and background (extended color).
+| [hex]#19# + `*` + `(ATTR)EXT` + `,` + `STD` ^(1)^ | [hex]#19# `+*@00214,05+`     | chat + bars | Set foreground (extended color) and background (WeeChat color).
+| [hex]#19# + `*` + `(ATTR)EXT` + `,` + `EXT` ^(1)^ | [hex]#19# `+*@00214,@00017+` | chat + bars | Set foreground/background (extended colors).
 | [hex]#19# + `*` + `(ATTR)STD` + `~` + `STD`       | [hex]#19# `+*08~05+`         | chat + bars | Set foreground/background (WeeChat colors).
 | [hex]#19# + `*` + `(ATTR)STD` + `~` + `EXT`       | [hex]#19# `+*01~@00214+`     | chat + bars | Set foreground (WeeChat color) and background (extended color).
 | [hex]#19# + `*` + `(ATTR)EXT` + `~` + `STD`       | [hex]#19# `+*@00214~05+`     | chat + bars | Set foreground (extended color) and background (WeeChat color).

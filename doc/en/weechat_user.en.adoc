@@ -108,14 +108,14 @@ WeeChat:
 
 [width="100%",cols="5,^3,.^15",options="header"]
 |===
-| Package ^(1)^            | Version       | Feature
+| Package ^(1)^            | Version       | Feature
 | C compiler (gcc / clang) |               | Build.
 | cmake                    | ≥ 3.0         | Build (autotools still possible, but CMake is recommended).
 | pkg-config               |               | Detect installed libraries.
-| libncursesw5-dev ^(2)^   |               | Ncurses interface.
+| libncursesw5-dev ^(2)^   |               | Ncurses interface.
 | libcurl4-gnutls-dev      |               | URL transfer.
 | libgcrypt20-dev          |               | Secured data, IRC SASL authentication.
-| libgnutls28-dev          | ≥ 2.2.0 ^(3)^ | SSL connection to IRC server, support of SSL in relay plugin, IRC SASL authentication (ECDSA-NIST256P-CHALLENGE).
+| libgnutls28-dev          | ≥ 2.2.0 ^(3)^ | SSL connection to IRC server, support of SSL in relay plugin, IRC SASL authentication (ECDSA-NIST256P-CHALLENGE).
 | zlib1g-dev               |               | Compression of messages (WeeChat -> client) with https://zlib.net/[zlib ^↗^,window=_blank] in relay plugin (weechat protocol), script plugin.
 | libzstd-dev              |               | Compression of messages (WeeChat -> client) with https://facebook.github.io/zstd/[Zstandard ^↗^,window=_blank] in relay plugin (weechat protocol).
 |===
@@ -134,12 +134,12 @@ WeeChat:
 
 [width="100%",cols="5,^3,.^15",options="header"]
 |===
-| Package ^(1)^                         | Version  | Feature
+| Package ^(1)^                         | Version  | Feature
 | {cpp} compiler (pass:[g++ / clang++]) |          | Build and run tests, JavaScript plugin.
 | gettext                               |          | Internationalization (translation of messages; base language is English).
 | ca-certificates                       |          | Certificates for SSL connections.
 | libaspell-dev / libenchant-dev        |          | Spell plugin.
-| python3-dev ^(2)^                     |          | Python plugin.
+| python3-dev ^(2)^                     |          | Python plugin.
 | libperl-dev                           |          | Perl plugin.
 | ruby2.7, ruby2.7-dev                  | ≥ 1.9.1  | Ruby plugin.
 | liblua5.4-dev                         |          | Lua plugin.
@@ -728,26 +728,26 @@ The WeeChat directories are:
 
 [width="100%",cols="1m,3",options="header"]
 |===
-| Path ^(1)^              | Description
+| Path ^(1)^              | Description
 | ~/.config/weechat/      | WeeChat configuration files: `*.conf`, certificates, etc.
 | ~/.local/share/weechat/ | WeeChat data files: logs, scripts, scripts data, xfer files, etc.
 |    logs/                | Log files (one file per buffer).
 |    python/              | Python scripts.
-|       autoload/         | Python scripts auto-loaded on startup ^(2)^.
+|       autoload/         | Python scripts auto-loaded on startup ^(2)^.
 |    perl/                | Perl scripts.
-|       autoload/         | Perl scripts auto-loaded on startup ^(2)^.
+|       autoload/         | Perl scripts auto-loaded on startup ^(2)^.
 |    ruby/                | Ruby scripts.
-|       autoload/         | Ruby scripts auto-loaded on startup ^(2)^.
+|       autoload/         | Ruby scripts auto-loaded on startup ^(2)^.
 |    lua/                 | Lua scripts.
-|       autoload/         | Lua scripts auto-loaded on startup ^(2)^.
+|       autoload/         | Lua scripts auto-loaded on startup ^(2)^.
 |    tcl/                 | Tcl scripts.
-|       autoload/         | Tcl scripts auto-loaded on startup ^(2)^.
+|       autoload/         | Tcl scripts auto-loaded on startup ^(2)^.
 |    guile/               | Guile scripts.
-|       autoload/         | Guile scripts auto-loaded on startup ^(2)^.
+|       autoload/         | Guile scripts auto-loaded on startup ^(2)^.
 |    javascript/          | JavaScript scripts.
-|       autoload/         | JavaScript scripts auto-loaded on startup ^(2)^.
+|       autoload/         | JavaScript scripts auto-loaded on startup ^(2)^.
 |    php/                 | PHP scripts.
-|       autoload/         | PHP scripts auto-loaded on startup ^(2)^.
+|       autoload/         | PHP scripts auto-loaded on startup ^(2)^.
 | ~/.cache/weechat/       | WeeChat cache files: scripts cache.
 | /run/user/1000/weechat/ | WeeChat runtime files: FIFO pipe, Relay UNIX sockets.
 |===
@@ -1274,10 +1274,10 @@ Tags commonly used (non-exhaustive list):
 | no_highlight     | No highlight is possible on line.
 | no_log           | Line is not written in log file.
 | log0 … log9      | Level of log for line (see `/help logger`).
-| notify_none      | The line must not be added to hotlist. ^(1)^
-| notify_message   | The line is a user message. ^(1)^
-| notify_private   | The line is a private message. ^(1)^
-| notify_highlight | The line is a message with highlight. ^(1)^
+| notify_none      | The line must not be added to hotlist. ^(1)^
+| notify_message   | The line is a user message. ^(1)^
+| notify_private   | The line is a private message. ^(1)^
+| notify_highlight | The line is a message with highlight. ^(1)^
 | self_msg         | Self message.
 | nick_xxx         | Message is from nick "xxx".
 | prefix_nick_ccc  | Prefix is a nick with color "ccc".
@@ -1707,7 +1707,7 @@ These mouse actions are possible only if mouse is enabled with key kbd:[Alt+m]
 
 [width="100%",cols="^.^3,^.^3,^.^3,.^8,.^8",options="header"]
 |===
-| Button/Wheel ^(1)^ | Gesture      | Area                | Description | Command
+| Button/Wheel ^(1)^ | Gesture      | Area                | Description | Command
 | ◾◽◽                | -            | chat                | Switch to window. | `+/window ${_window_number}+`
 | ◾◽◽                | left         | chat                | Switch to previous buffer. | `+/window ${_window_number};/buffer +1+`
 | ◾◽◽                | right        | chat                | Switch to next buffer. | `+/window ${_window_number};/buffer +1+`
@@ -1759,7 +1759,7 @@ These keys and actions are used on the fset buffer (see <<fset,Fset plugin>>).
 
 [width="100%",cols="^.^3,^.^2,.^8,.^5",options="header"]
 |===
-| Key                      | Action ^(1)^ | Description | Command
+| Key                      | Action ^(1)^ | Description | Command
 | kbd:[↑]                  |              | Move one line up. | `+/fset -up+`
 | kbd:[↓]                  |              | Move one line down. | `+/fset -down+`
 | kbd:[PgUp]               |              | Move one page up. | `+/window page_up+`
@@ -1805,7 +1805,7 @@ These keys and actions are used on the script buffer (see <<script_manager,scrip
 
 [width="100%",cols="^.^3,^.^2,.^8,.^5",options="header"]
 |===
-| Key               | Action ^(1)^ | Description | Command
+| Key               | Action ^(1)^ | Description | Command
 | kbd:[↑]           |              | Move one line up. | `+/script up+`
 | kbd:[↓]           |              | Move one line down. | `+/script down+`
 | kbd:[PgUp]        |              | Move one page up. | `+/window page_up+`
@@ -3885,8 +3885,8 @@ when replying to CTCP:
 | Code         | Description                         | Value/example
 | $clientinfo  | List of supported CTCP              | `+ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION+`
 | $version     | WeeChat version                     | `+0.4.0-dev+`
-| $versiongit  | WeeChat version + Git version ^(1)^ | `+0.4.0-dev (git: v0.3.9-104-g7eb5cc4)+`
-| $git         | Git version ^(1)^                   | `+v0.3.9-104-g7eb5cc4+`
+| $versiongit  | WeeChat version + Git version ^(1)^ | `+0.4.0-dev (git: v0.3.9-104-g7eb5cc4)+`
+| $git         | Git version ^(1)^                   | `+v0.3.9-104-g7eb5cc4+`
 | $compilation | WeeChat compilation date            | `+Dec 16 2012+`
 | $osinfo      | Info about OS                       | `+Linux 2.6.32-5-amd64 / x86_64+`
 | $site        | WeeChat site                        | `+https://weechat.org/+`
@@ -4755,7 +4755,7 @@ type:
 
 [width="100%",cols="2,3,7",options="header"]
 |===
-| Hook           | Default variable   | Update allowed ^(1)^
+| Hook           | Default variable   | Update allowed ^(1)^
 | signal         | tg_signal_data     |
 | hsignal        |                    |
 | modifier       | tg_string          | tg_string
@@ -4971,7 +4971,7 @@ Variables set using tags in message:
 | tg_tag_prefix_nick | string | Color of nick in prefix (from tag "prefix_nick_ccc").
 | tg_tag_host        | string | User name and host, format: username@host (from tag "host_xxx").
 | tg_tag_notify      | string | Notify level (_none_, _message_, _private_, _highlight_).
-| tg_tag_irc_xxx     | string | IRC message tag (key "xxx"). ^(1)^
+| tg_tag_irc_xxx     | string | IRC message tag (key "xxx"). ^(1)^
 | tg_notify          | string | Notify level, if different from _none_.
 | tg_msg_pv          | string | "1" for a private message, otherwise "0".
 |===
@@ -5013,7 +5013,7 @@ Variables set using tags in message:
 | tg_tag_prefix_nick | string | Color of nick in prefix (from tag "prefix_nick_ccc").
 | tg_tag_host        | string | User name and host, format: username@host (from tag "host_xxx").
 | tg_tag_notify      | string | Notify level (_none_, _message_, _private_, _highlight_).
-| tg_tag_irc_xxx     | string | IRC message tag (key "xxx"). ^(1)^
+| tg_tag_irc_xxx     | string | IRC message tag (key "xxx"). ^(1)^
 | tg_notify          | string | Notify level, if different from _none_.
 | tg_msg_pv          | string | "1" for a private message, otherwise "0".
 |===

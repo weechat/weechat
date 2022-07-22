@@ -2631,7 +2631,7 @@ expanded to last):
 | `+${eval:xxx}+` | 1.3
 | String to evaluate.
 | >> `+${eval:${date:${weechat.look.buffer_time_format}}}+` +
-  == `+19:02:45+` ^(1)^ +
+  == `+19:02:45+` ^(1)^ +
   +
   ^(1)^ With colors if there are color codes in the option
   weechat.look.buffer_time_format
@@ -2698,7 +2698,7 @@ expanded to last):
   == `+!dlrow ,olleH+` +
   +
   >> `+${rev:Hello, ${color:red}world!}+` +
-  == `+!dlrow30F ,olleH+` ^(1)^ +
+  == `+!dlrow30F ,olleH+` ^(1)^ +
   +
   ^(1)^ No color, the color code is reversed
 
@@ -2708,7 +2708,7 @@ expanded to last):
   == `+!dlrow ,olleH+` +
   +
   >> `+${revscr:Hello, ${color:red}world!}+` +
-  == `+!dlrow ,olleH+` ^(1)^ +
+  == `+!dlrow ,olleH+` ^(1)^ +
   +
   ^(1)^ `pass:[ ,olleH]` in red
 
@@ -2821,10 +2821,10 @@ expanded to last):
 | WeeChat color code (the name of color has optional attributes),
   see function <<_color,color>> for supported formats.
 | >> `+${color:red}red text+` +
-  == `+red text+` ^(1)^ +
+  == `+red text+` ^(1)^ +
   +
   >> `+${color:*214}bold orange text+` +
-  == `+bold orange text+` ^(2)^ +
+  == `+bold orange text+` ^(2)^ +
   +
   ^(1)^ In red +
   ^(2)^ In bold orange
@@ -2930,7 +2930,7 @@ expanded to last):
 | `+${translate:xxx}+` | 3.2
 | Translated string (depends on the language used by WeeChat to display messages).
 | >> `+${translate:Plugin}+` +
-  == `+Extension+` ^(1)^ +
+  == `+Extension+` ^(1)^ +
   +
   ^(1)^ Example in French
 
@@ -10362,7 +10362,7 @@ List of signals sent by WeeChat and plugins:
 | String: comma-separated list of scripts removed.
 | Scheme script(s) removed.
 
-| irc | [[hook_signal_xxx_irc_in_yyy]] xxx,irc_in_yyy ^(1)^ |
+| irc | [[hook_signal_xxx_irc_in_yyy]] xxx,irc_in_yyy ^(1)^ |
 | String: message.
 | IRC message from server (before irc plugin uses it,
   signal sent only if message is *not* ignored). +
@@ -10370,13 +10370,13 @@ List of signals sent by WeeChat and plugins:
   If the return code of a callback is _WEECHAT_RC_OK_EAT_, then the IRC message
   is immediately destroyed and not processed _(WeeChat ≥ 3.3)_.
 
-| irc | [[hook_signal_xxx_irc_in2_yyy]] xxx,irc_in2_yyy ^(1)^ |
+| irc | [[hook_signal_xxx_irc_in2_yyy]] xxx,irc_in2_yyy ^(1)^ |
 | String: message.
 | IRC message from server (after irc plugin uses it,
   signal sent only if message is *not* ignored). +
   Since version 2.2, the whole IRC message is sent, including tags.
 
-| irc | [[hook_signal_xxx_irc_raw_in_yyy]] xxx,irc_raw_in_yyy ^(1)^ | 0.3.2
+| irc | [[hook_signal_xxx_irc_raw_in_yyy]] xxx,irc_raw_in_yyy ^(1)^ | 0.3.2
 | String: message.
 | IRC message from server (before irc plugin uses it,
   signal sent even if message is ignored). +
@@ -10384,25 +10384,25 @@ List of signals sent by WeeChat and plugins:
   If the return code of a callback is _WEECHAT_RC_OK_EAT_, then the IRC message
   is immediately destroyed and not processed _(WeeChat ≥ 3.3)_.
 
-| irc | [[hook_signal_xxx_irc_raw_in2_yyy]] xxx,irc_raw_in2_yyy ^(1)^ | 0.3.2
+| irc | [[hook_signal_xxx_irc_raw_in2_yyy]] xxx,irc_raw_in2_yyy ^(1)^ | 0.3.2
 | String: message.
 | IRC message from server (after irc plugin uses it,
   signal sent even if message is ignored). +
   Since version 2.2, the whole IRC message is sent, including tags.
 
-| irc | [[hook_signal_xxx_irc_out1_yyy]] xxx,irc_out1_yyy ^(1)^ | 0.3.7
+| irc | [[hook_signal_xxx_irc_out1_yyy]] xxx,irc_out1_yyy ^(1)^ | 0.3.7
 | String: message.
 | IRC message sent to server before automatic split
   (to fit in 512 bytes by default).
 
-| irc | [[hook_signal_xxx_irc_out_yyy]] xxx,irc_out_yyy ^(1)^ |
+| irc | [[hook_signal_xxx_irc_out_yyy]] xxx,irc_out_yyy ^(1)^ |
 | String: message.
 | IRC message sent to server after automatic split
   (to fit in 512 bytes by default). +
   *Warning:* the string may contain invalid UTF-8 data.
   Signal "xxx,irc_out1_yyy" is recommended instead.
 
-| irc | [[hook_signal_xxx_irc_outtags_yyy]] xxx,irc_outtags_yyy ^(1)^ | 0.3.4
+| irc | [[hook_signal_xxx_irc_outtags_yyy]] xxx,irc_outtags_yyy ^(1)^ | 0.3.4
 | String: tags + ";" + message.
 | Tags + IRC message sent to server. +
   *Warning:* the string may contain invalid UTF-8 data.
@@ -11264,7 +11264,7 @@ List of hsignals:
 |===
 | Plugin | Signal | Min WeeChat | Arguments | Description
 
-| irc | [[hook_hsignal_irc_redirection_xxx_yyy]] irc_redirection_xxx_yyy ^(1)^ | 0.3.4
+| irc | [[hook_hsignal_irc_redirection_xxx_yyy]] irc_redirection_xxx_yyy ^(1)^ | 0.3.4
 | See <<hsignal_irc_redirect_command,hsignal_irc_redirect_command>>
 | Redirection output.
 
@@ -11694,7 +11694,7 @@ List of modifiers used by WeeChat and plugins:
 |===
 | Modifier | Min WeeChat | Modifier data | String | Output
 
-| [[hook_modifier_irc_in_xxx]] irc_in_xxx ^(1)^ |
+| [[hook_modifier_irc_in_xxx]] irc_in_xxx ^(1)^ |
 | Server name
 | Content of message received from IRC server (before charset decoding). +
   *Warning:* the string may contain invalid UTF-8 data; use only for raw
@@ -11702,24 +11702,24 @@ List of modifiers used by WeeChat and plugins:
   Modifier <<hook_modifier_irc_in2_xxx,irc_in2_xxx>> is recommended instead.
 | New content of message.
 
-| [[hook_modifier_irc_in2_xxx]] irc_in2_xxx ^(1)^ | 0.3.5
+| [[hook_modifier_irc_in2_xxx]] irc_in2_xxx ^(1)^ | 0.3.5
 | Server name
 | Content of message received from IRC server (after charset decoding).
 | New content of message.
 
-| [[hook_modifier_irc_out1_xxx]] irc_out1_xxx ^(1)^ | 0.3.7
+| [[hook_modifier_irc_out1_xxx]] irc_out1_xxx ^(1)^ | 0.3.7
 | Server name
 | Content of message about to be sent to IRC server before automatic split
   (to fit in 512 bytes by default).
 | New content of message.
 
-| [[hook_modifier_irc_out_xxx]] irc_out_xxx ^(1)^ |
+| [[hook_modifier_irc_out_xxx]] irc_out_xxx ^(1)^ |
 | Server name
 | Content of message about to be sent to IRC server after automatic split
   (to fit in 512 bytes by default).
 | New content of message.
 
-| [[hook_modifier_bar_condition_yyy]] bar_condition_yyy ^(2)^ |
+| [[hook_modifier_bar_condition_yyy]] bar_condition_yyy ^(2)^ |
 | String with window pointer (eg: "0x1234abcd")
 | Empty string.
 | "1" to display bar, "0" to hide it.
@@ -11750,7 +11750,7 @@ List of modifiers used by WeeChat and plugins:
 | New content of command line sent to buffer.
 
 | [[hook_modifier_weechat_print]] weechat_print |
-| buffer pointer (eg: "0x1234abcd") + ";" + tags ^(3)^
+| buffer pointer (eg: "0x1234abcd") + ";" + tags ^(3)^
 | Message printed.
 | New message printed. +
   For more information on the hooks called when a line is printed, see
@@ -12285,7 +12285,7 @@ Content of hashtable sent to callback (keys and values are of type "string"):
 
 [width="100%",cols="5,5,8,3",options="header"]
 |===
-| Key ^(1)^ | Description | Value examples | Value if N/A
+| Key ^(1)^ | Description | Value examples | Value if N/A
 
 | _x | Column on screen.
 | "0" ... "n" |
@@ -12317,7 +12317,7 @@ Content of hashtable sent to callback (keys and values are of type "string"):
 | _buffer_full_name  | Full name of buffer.
 | "core.weechat", "irc.libera.#weechat", ... | ""
 
-| _buffer_localvar_XXX ^(2)^ | Local variables of buffer.
+| _buffer_localvar_XXX ^(2)^ | Local variables of buffer.
 | any value | not set
 
 | _chat | Chat area indicator.
@@ -12326,16 +12326,16 @@ Content of hashtable sent to callback (keys and values are of type "string"):
 | _chat_line | Pointer to line _(WeeChat ≥ 1.2)_.
 | "0x1234abcd" | ""
 
-| _chat_line_x | Column in line ^(3)^.
+| _chat_line_x | Column in line ^(3)^.
 | "0" ... "n" | "-1"
 
-| _chat_line_y | Line number ^(3)^.
+| _chat_line_y | Line number ^(3)^.
 | "0" ... "n" | "-1"
 
 | _chat_line_date | Line date/time.
 | "1313237175" | "0"
 
-| _chat_line_date_printed | Line date/time ^(4)^.
+| _chat_line_date_printed | Line date/time ^(4)^.
 | "1313237175" | "0"
 
 | _chat_line_time | Time displayed.
@@ -12394,7 +12394,7 @@ Extra info for bar item "buffer_nicklist":
 
 [width="100%",cols="^1,^1,5",options="header"]
 |===
-| Plugin ^(1)^ | Key      | Description
+| Plugin ^(1)^ | Key      | Description
 | irc          | irc_nick | Pointer to IRC nick _(WeeChat ≥ 3.0)_.
 | irc          | irc_host | Host for nick (if known).
 | weechat      | nick     | Nick name.

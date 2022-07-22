@@ -2520,7 +2520,7 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
 | `+${eval:xxx}+` | 1.3
 | Стринг који се израчунава.
 | >> `+${eval:${date:${weechat.look.buffer_time_format}}}+` +
-  == `+19:02:45+` ^(1)^ +
+  == `+19:02:45+` ^(1)^ +
   +
   ^(1)^ са бојама, ако у опцији weechat.look.buffer_time_format постоје боје
 
@@ -2586,7 +2586,7 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
   == `+!dlrow ,olleH+` +
   +
   >> `+${rev:Hello, ${color:red}world!}+` +
-  == `+!dlrow30F ,olleH+` ^(1)^ +
+  == `+!dlrow30F ,olleH+` ^(1)^ +
   +
   ^(1)^ нема боје, кôд боје је обрнут
 
@@ -2596,7 +2596,7 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
   == `+!dlrow ,olleH+` +
   +
   >> `+${revscr:Hello, ${color:red}world!}+` +
-  == `+!dlrow ,olleH+` ^(1)^ +
+  == `+!dlrow ,olleH+` ^(1)^ +
   +
   ^(1)^ `pass:[ ,olleH]` у црвеној боји
 
@@ -2709,10 +2709,10 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
 | Кôд WeeChat боје (име боје има и необавезне атрибуте), погледајте
   функцију <<_color,color>> у вези подржаних формата.
 | >> `+${color:red}red text+` +
-  == `+red text+` ^(1)^ +
+  == `+red text+` ^(1)^ +
   +
   >> `+${color:*214}bold orange text+` +
-  == `+bold orange text+` ^(2)^ +
+  == `+bold orange text+` ^(2)^ +
   +
   ^(1)^ у црвеној +
   ^(2)^ подебљано наранџасто
@@ -2818,7 +2818,7 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
 | `+${translate:xxx}+` | 3.2
 | Преведени стринг (зависи од језика који програм WeeChat користи за приказ порука).
 | >> `+${translate:Plugin}+` +
-  == `+Extension+` ^(1)^ +
+  == `+Extension+` ^(1)^ +
   +
   ^(1)^ пример из француског
 
@@ -9992,7 +9992,7 @@ struct t_hook *weechat_hook_signal (const char *signal,
 | Стринг: листа уклоњених скрипти раздвојених запетама.
 | Уклоњен(а/е) Scheme скрипт(а/е).
 
-| irc | [[hook_signal_xxx_irc_in_yyy]] xxx,irc_in_yyy ^(1)^ |
+| irc | [[hook_signal_xxx_irc_in_yyy]] xxx,irc_in_yyy ^(1)^ |
 | Стринг: порука.
 | IRC порука од сервера (пре него што је употреби irc додатак,
   сигнал се шаље само ако се порука *не* игнорише). +
@@ -10000,13 +10000,13 @@ struct t_hook *weechat_hook_signal (const char *signal,
   Ако је повратни код функције повратног позива _WEECHAT_RC_OK_EAT_, онда се IRC
   порука одмах брише и не обрађује се _(WeeChat ≥ 3.3)_.
 
-| irc | [[hook_signal_xxx_irc_in2_yyy]] xxx,irc_in2_yyy ^(1)^ |
+| irc | [[hook_signal_xxx_irc_in2_yyy]] xxx,irc_in2_yyy ^(1)^ |
 | Стринг: порука.
 | IRC порука од сервера (након што је употреби irc додатак,
   сигнал се шаље само ако се порука *не* игнорише). +
   Почевши од верзије 2.2, шаље се комплетна IRC порука, заједно са ознакама.
 
-| irc | [[hook_signal_xxx_irc_raw_in_yyy]] xxx,irc_raw_in_yyy ^(1)^ | 0.3.2
+| irc | [[hook_signal_xxx_irc_raw_in_yyy]] xxx,irc_raw_in_yyy ^(1)^ | 0.3.2
 | Стринг: порука.
 | IRC порука од сервера (пре него што је употреби irc додатак,
   сигнал се шаље чак и када се порука игнорише). +
@@ -10014,25 +10014,25 @@ struct t_hook *weechat_hook_signal (const char *signal,
   Ако је повратни кôд функције повратног позива _WEECHAT_RC_OK_EAT_, онда се IRC
   порука одмах брише и обрађује се _(WeeChat ≥ 3.3)_.
 
-| irc | [[hook_signal_xxx_irc_raw_in2_yyy]] xxx,irc_raw_in2_yyy ^(1)^ | 0.3.2
+| irc | [[hook_signal_xxx_irc_raw_in2_yyy]] xxx,irc_raw_in2_yyy ^(1)^ | 0.3.2
 | Стринг: порука.
 | IRC порука од сервера (након што је употреби irc додатак,
   сигнал се шаље чак и када се порука игнорише). +
   Почевши од верзије 2.2, шаље се комплетна IRC порука, заједно са ознакама.
 
-| irc | [[hook_signal_xxx_irc_out1_yyy]] xxx,irc_out1_yyy ^(1)^ | 0.3.7
+| irc | [[hook_signal_xxx_irc_out1_yyy]] xxx,irc_out1_yyy ^(1)^ | 0.3.7
 | Стринг: порука.
 | IRC порука која се шаље серверу пре аутоматске поделе
   (да стане у 512 бајтова, подразумевано).
 
-| irc | [[hook_signal_xxx_irc_out_yyy]] xxx,irc_out_yyy ^(1)^ |
+| irc | [[hook_signal_xxx_irc_out_yyy]] xxx,irc_out_yyy ^(1)^ |
 | Стринг: порука.
 | IRC порука која се шаље серверу након аутоматске поделе
   (да стане у 512 бајтова, подразумевано).
   *Упозорење:* стринг може да садржи неважеће UTF-8 податке.
   Уместо овог, препоручује се употреба сигнала „xxx,irc_out1_yyy”.
 
-| irc | [[hook_signal_xxx_irc_outtags_yyy]] xxx,irc_outtags_yyy ^(1)^ | 0.3.4
+| irc | [[hook_signal_xxx_irc_outtags_yyy]] xxx,irc_outtags_yyy ^(1)^ | 0.3.4
 | Стринг: ознаке + „;” + порука.
 | Ознаке + IRC порука која се шаље серверу. +
   *Упозорење:* стринг може да садржи неважеће UTF-8 податке.
@@ -10881,7 +10881,7 @@ struct t_hook *weechat_hook_hsignal (const char *signal,
 |===
 | Додатак | Сигнал | Мин WeeChat | Аргументи | Опис
 
-| irc | [[hook_hsignal_irc_redirection_xxx_yyy]] irc_redirection_xxx_yyy ^(1)^ | 0.3.4
+| irc | [[hook_hsignal_irc_redirection_xxx_yyy]] irc_redirection_xxx_yyy ^(1)^ | 0.3.4
 | Погледајте <<hsignal_irc_redirect_command,hsignal_irc_redirect_command>>
 | Преусмеравање излаза.
 
@@ -11286,7 +11286,7 @@ struct t_hook *weechat_hook_modifier (const char *modifier,
 |===
 | Модификатор | Мин WeeChat | Подаци модификатора | Стринг | Излаз
 
-| [[hook_modifier_irc_in_xxx]] irc_in_xxx ^(1)^ |
+| [[hook_modifier_irc_in_xxx]] irc_in_xxx ^(1)^ |
 | Име сервера
 | Садржај поруке примљене са IRC сервера (пре декодирања скупа карактера). +
   *Упозорење:* стринг може да садржи неважеће UTF-8 податке; користите га само
@@ -11294,24 +11294,24 @@ struct t_hook *weechat_hook_modifier (const char *modifier,
   Уместо њега се препоручује употреба <<hook_modifier_irc_in2_xxx,irc_in2_xxx>>.
 | Нови садржај поруке.
 
-| [[hook_modifier_irc_in2_xxx]] irc_in2_xxx ^(1)^ | 0.3.5
+| [[hook_modifier_irc_in2_xxx]] irc_in2_xxx ^(1)^ | 0.3.5
 | Име сервера
 | Садржај поруке примљене са IRC сервера (након декодирања скупа карактера).
 | Нови садржај поруке.
 
-| [[hook_modifier_irc_out1_xxx]] irc_out1_xxx ^(1)^ | 0.3.7
+| [[hook_modifier_irc_out1_xxx]] irc_out1_xxx ^(1)^ | 0.3.7
 | Име сервера
 | Садржај поруке које треба да се пошаље IRC серверу пре аутоматске поделе
   (да стане у 512 подразумевано).
 | Нови садржај поруке.
 
-| [[hook_modifier_irc_out_xxx]] irc_out_xxx ^(1)^ |
+| [[hook_modifier_irc_out_xxx]] irc_out_xxx ^(1)^ |
 | Име сервера
 | Садржај поруке које треба да се пошаље IRC серверу након аутоматске поделе
   (да стане у 512 подразумевано).
 | Нови садржај поруке.
 
-| [[hook_modifier_bar_condition_yyy]] bar_condition_yyy ^(2)^ |
+| [[hook_modifier_bar_condition_yyy]] bar_condition_yyy ^(2)^ |
 | Стринг са показивачем на прозор (нпр: "0x1234abcd")
 | Празан стринг.
 | "1" да се прикаже трака, "0" да се сакрије.
@@ -11342,7 +11342,7 @@ struct t_hook *weechat_hook_modifier (const char *modifier,
 | Нови садржај командне линије који се шаље у бафер.
 
 | [[hook_modifier_weechat_print]] weechat_print |
-| показивач на бафер (нпр: "0x1234abcd") + ";" + ознаке ^(3)^
+| показивач на бафер (нпр: "0x1234abcd") + ";" + ознаке ^(3)^
 | Порука која се исписује.
 | Нова порука која се исписује. +
   За више информација о кукама које се позивају када се линија исписује,
@@ -11847,7 +11847,7 @@ struct t_hook *weechat_hook_focus (const char *area,
 
 [width="100%", cols="5,5,8,3", options="header"]
 |===
-| Кључ ^(1)^ | Опис | Примери вредности | Вредност ако нема
+| Кључ ^(1)^ | Опис | Примери вредности | Вредност ако нема
 
 | _x | Колона на екрану.
 | "0" ... "n" |
@@ -11879,7 +11879,7 @@ struct t_hook *weechat_hook_focus (const char *area,
 | _buffer_full_name  | Пуно име бафера.
 | "core.weechat", "irc.libera.#weechat", ... | ""
 
-| _buffer_localvar_XXX ^(2)^ | Локалне променљиве бафера.
+| _buffer_localvar_XXX ^(2)^ | Локалне променљиве бафера.
 | any value | not set
 
 | _chat | Индикатор површине разговора.
@@ -11888,16 +11888,16 @@ struct t_hook *weechat_hook_focus (const char *area,
 | _chat_line | Показивач на линију _(WeeChat ≥ 1.2)_.
 | "0x1234abcd" | ""
 
-| _chat_line_x | Колона у линији ^(3)^.
+| _chat_line_x | Колона у линији ^(3)^.
 | "0" ... "n" | "-1"
 
-| _chat_line_y | Број линије ^(3)^.
+| _chat_line_y | Број линије ^(3)^.
 | "0" ... "n" | "-1"
 
 | _chat_line_date | Датум/време линије.
 | "1313237175" | "0"
 
-| _chat_line_date_printed | Датум/време линије ^(4)^.
+| _chat_line_date_printed | Датум/време линије ^(4)^.
 | "1313237175" | "0"
 
 | _chat_line_time | Приказано време.
@@ -11953,7 +11953,7 @@ struct t_hook *weechat_hook_focus (const char *area,
 
 [width="100%", cols="^1,^1,5", options="header"]
 |===
-| Додатак ^(1)^ | Кључ     | Опис
+| Додатак ^(1)^ | Кључ     | Опис
 | irc           | irc_nick | Показивач на IRC надимак _(WeeChat ≥ 3.0)_.
 | irc           | irc_host | Хост за надимак (ако се зна).
 | weechat       | nick     | Име надимка.

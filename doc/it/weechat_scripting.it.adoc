@@ -1374,7 +1374,7 @@ The result is a hashtable with following keys
 
 [width="100%",cols="3,^2,10,7",options="header"]
 |===
-| Key | Since WeeChat ^(1)^ | Description | Example
+| Key | Since WeeChat ^(1)^ | Description | Example
 
 | tags | 0.4.0
 | The tags in message (can be empty).

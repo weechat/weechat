@@ -6,7 +6,7 @@
 // tag::url_options[]
 [width="100%",cols="2,^1,7",options="header"]
 |===
-| Opzione | Tipo ^(1)^ | Costanti ^(2)^
+| Opzione | Tipo ^(1)^ | Costanti ^(2)^
 
 | verbose | long |
 

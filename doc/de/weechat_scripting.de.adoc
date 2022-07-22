@@ -1334,7 +1334,7 @@ Das Ergebnis ist eine Hashtabelle mit folgenden Schlüsseln
 
 [width="100%",cols="3,^2,10,7",options="header"]
 |===
-| Schlüssel | Seit WeeChat ^(1)^ | Beschreibung | Beispiel
+| Schlüssel | Seit WeeChat ^(1)^ | Beschreibung | Beispiel
 
 | Tags | 0.4.0
 | Tags in der Nachricht (kann leer sein).

@@ -956,10 +956,10 @@ Toutes les combinaisons sont résumées dans ce tableau :
 | [hex]#19# + `B` + `EXT`                           | [hex]#19# `+B@00124+`        | chat + barres | Définir le couleur de fond (couleur étendue).
 | [hex]#19# + `*` + `(ATTR)STD`                     | [hex]#19# `+*05+`            | chat + barres | Définir la couleur de texte (couleur WeeChat).
 | [hex]#19# + `*` + `(ATTR)EXT`                     | [hex]#19# `+*@00214+`        | chat + barres | Définir la couleur de texte (couleur étendue).
-| [hex]#19# + `*` + `(ATTR)STD` + `,` + `STD` ^(1)^ | [hex]#19# `+*08,05+`         | chat + barres | Définir la couleur de texte/fond (couleurs WeeChat).
-| [hex]#19# + `*` + `(ATTR)STD` + `,` + `EXT` ^(1)^ | [hex]#19# `+*01,@00214+`     | chat + barres | Définir la couleur de texte (couleur WeeChat) et de fond (couleur étendue).
-| [hex]#19# + `*` + `(ATTR)EXT` + `,` + `STD` ^(1)^ | [hex]#19# `+*@00214,05+`     | chat + barres | Définir la couleur de texte (couleur étendue) et de fond (couleur WeeChat).
-| [hex]#19# + `*` + `(ATTR)EXT` + `,` + `EXT` ^(1)^ | [hex]#19# `+*@00214,@00017+` | chat + barres | Définir la couleur de texte/fond (couleurs étendues).
+| [hex]#19# + `*` + `(ATTR)STD` + `,` + `STD` ^(1)^ | [hex]#19# `+*08,05+`         | chat + barres | Définir la couleur de texte/fond (couleurs WeeChat).
+| [hex]#19# + `*` + `(ATTR)STD` + `,` + `EXT` ^(1)^ | [hex]#19# `+*01,@00214+`     | chat + barres | Définir la couleur de texte (couleur WeeChat) et de fond (couleur étendue).
+| [hex]#19# + `*` + `(ATTR)EXT` + `,` + `STD` ^(1)^ | [hex]#19# `+*@00214,05+`     | chat + barres | Définir la couleur de texte (couleur étendue) et de fond (couleur WeeChat).
+| [hex]#19# + `*` + `(ATTR)EXT` + `,` + `EXT` ^(1)^ | [hex]#19# `+*@00214,@00017+` | chat + barres | Définir la couleur de texte/fond (couleurs étendues).
 | [hex]#19# + `*` + `(ATTR)STD` + `~` + `STD`       | [hex]#19# `+*08~05+`         | chat + barres | Définir la couleur de texte/fond (couleurs WeeChat).
 | [hex]#19# + `*` + `(ATTR)STD` + `~` + `EXT`       | [hex]#19# `+*01~@00214+`     | chat + barres | Définir la couleur de texte (couleur WeeChat) et de fond (couleur étendue).
 | [hex]#19# + `*` + `(ATTR)EXT` + `~` + `STD`       | [hex]#19# `+*@00214~05+`     | chat + barres | Définir la couleur de texte (couleur étendue) et de fond (couleur WeeChat).

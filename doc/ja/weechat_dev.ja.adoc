@@ -1000,10 +1000,10 @@ WeeChat は文字列中に独自の色コードを使うことで、属性
 | [hex]#19# + `B` + `EXT`                           | [hex]#19# `+B@00124+`        | chat + bars | 背景色 (拡張色) を設定
 | [hex]#19# + `*` + `(ATTR)STD`                     | [hex]#19# `+*05+`            | chat + bars | 文字色(WeeChat 色) を設定
 | [hex]#19# + `*` + `(ATTR)EXT`                     | [hex]#19# `+*@00214+`        | chat + bars | 文字色 (拡張色) を設定
-| [hex]#19# + `*` + `(ATTR)STD` + `,` + `STD` ^(1)^ | [hex]#19# `+*08,05+`         | chat + bars | 文字色および背景色 (WeeChat 色) を設定
-| [hex]#19# + `*` + `(ATTR)STD` + `,` + `EXT` ^(1)^ | [hex]#19# `+*01,@00214+`     | chat + bars | 文字色 (WeeChat 色) と背景色 (拡張色) を設定
-| [hex]#19# + `*` + `(ATTR)EXT` + `,` + `STD` ^(1)^ | [hex]#19# `+*@00214,05+`     | chat + bars | 文字色 (拡張色) と背景色 (WeeChat 色) を設定
-| [hex]#19# + `*` + `(ATTR)EXT` + `,` + `EXT` ^(1)^ | [hex]#19# `+*@00214,@00017+` | chat + bars | 文字色および背景色 (拡張色) を設定
+| [hex]#19# + `*` + `(ATTR)STD` + `,` + `STD` ^(1)^ | [hex]#19# `+*08,05+`         | chat + bars | 文字色および背景色 (WeeChat 色) を設定
+| [hex]#19# + `*` + `(ATTR)STD` + `,` + `EXT` ^(1)^ | [hex]#19# `+*01,@00214+`     | chat + bars | 文字色 (WeeChat 色) と背景色 (拡張色) を設定
+| [hex]#19# + `*` + `(ATTR)EXT` + `,` + `STD` ^(1)^ | [hex]#19# `+*@00214,05+`     | chat + bars | 文字色 (拡張色) と背景色 (WeeChat 色) を設定
+| [hex]#19# + `*` + `(ATTR)EXT` + `,` + `EXT` ^(1)^ | [hex]#19# `+*@00214,@00017+` | chat + bars | 文字色および背景色 (拡張色) を設定
 | [hex]#19# + `*` + `(ATTR)STD` + `~` + `STD`       | [hex]#19# `+*08~05+`         | chat + bars | 文字色および背景色 (WeeChat 色) を設定
 | [hex]#19# + `*` + `(ATTR)STD` + `~` + `EXT`       | [hex]#19# `+*01~@00214+`     | chat + bars | 文字色 (WeeChat 色) と背景色 (拡張色) を設定
 | [hex]#19# + `*` + `(ATTR)EXT` + `~` + `STD`       | [hex]#19# `+*@00214~05+`     | chat + bars | 文字色 (拡張色) と背景色 (WeeChat 色) を設定

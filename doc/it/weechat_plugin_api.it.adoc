@@ -2737,7 +2737,7 @@ expanded to last):
 | `+${eval:xxx}+` | 1.3
 | String to evaluate.
 | >> `+${eval:${date:${weechat.look.buffer_time_format}}}+` +
-  == `+19:02:45+` ^(1)^ +
+  == `+19:02:45+` ^(1)^ +
   +
   ^(1)^ With colors if there are color codes in the option
   weechat.look.buffer_time_format
@@ -2806,7 +2806,7 @@ expanded to last):
   == `+!dlrow ,olleH+` +
   +
   >> `+${rev:Hello, ${color:red}world!}+` +
-  == `+!dlrow30F ,olleH+` ^(1)^ +
+  == `+!dlrow30F ,olleH+` ^(1)^ +
   +
   ^(1)^ No color, the color code is reversed
 
@@ -2816,7 +2816,7 @@ expanded to last):
   == `+!dlrow ,olleH+` +
   +
   >> `+${revscr:Hello, ${color:red}world!}+` +
-  == `+!dlrow ,olleH+` ^(1)^ +
+  == `+!dlrow ,olleH+` ^(1)^ +
   +
   ^(1)^ `pass:[ ,olleH]` in red
 
@@ -2929,10 +2929,10 @@ expanded to last):
 | WeeChat color code (the name of color has optional attributes),
   see function <<_color,color>> for supported formats.
 | >> `+${color:red}red text+` +
-  == `+red text+` ^(1)^ +
+  == `+red text+` ^(1)^ +
   +
   >> `+${color:*214}bold orange text+` +
-  == `+bold orange text+` ^(2)^ +
+  == `+bold orange text+` ^(2)^ +
   +
   ^(1)^ In red +
   ^(2)^ In bold orange
@@ -3037,7 +3037,7 @@ expanded to last):
 | `+${translate:xxx}+` | 3.2
 | Translated string (depends on the language used by WeeChat to display messages).
 | >> `+${translate:Plugin}+` +
-  == `+Extension+` ^(1)^ +
+  == `+Extension+` ^(1)^ +
   +
   ^(1)^ Example in French
 
@@ -10706,7 +10706,7 @@ List of signals sent by WeeChat and plugins:
 | Scheme script(s) removed.
 
 // TRANSLATION MISSING
-| irc | [[hook_signal_xxx_irc_in_yyy]] xxx,irc_in_yyy ^(1)^ |
+| irc | [[hook_signal_xxx_irc_in_yyy]] xxx,irc_in_yyy ^(1)^ |
 | String: messaggio.
 | Messaggio IRC dal server (prima di essere utilizzato
   dal plugin irc, il segnale viene inviato solo se il
@@ -10716,7 +10716,7 @@ List of signals sent by WeeChat and plugins:
   is immediately destroyed and not processed _(WeeChat ≥ 3.3)_.
 
 // TRANSLATION MISSING
-| irc | [[hook_signal_xxx_irc_in2_yyy]] xxx,irc_in2_yyy ^(1)^ |
+| irc | [[hook_signal_xxx_irc_in2_yyy]] xxx,irc_in2_yyy ^(1)^ |
 | String: messaggio.
 | Messaggio IRC dal server (dopo essere stato
   utilizzato dal plugin irc, il segnale viene inviato
@@ -10724,7 +10724,7 @@ List of signals sent by WeeChat and plugins:
   Since version 2.2, the whole IRC message is sent, including tags.
 
 // TRANSLATION MISSING
-| irc | [[hook_signal_xxx_irc_raw_in_yyy]] xxx,irc_raw_in_yyy ^(1)^ | 0.3.2
+| irc | [[hook_signal_xxx_irc_raw_in_yyy]] xxx,irc_raw_in_yyy ^(1)^ | 0.3.2
 | String: messaggio.
 | Messaggio IRC dal server (prima di essere utilizzato
   dal plugin irc, il segnale viene inviato anche se il
@@ -10734,7 +10734,7 @@ List of signals sent by WeeChat and plugins:
   is immediately destroyed and not processed _(WeeChat ≥ 3.3)_.
 
 // TRANSLATION MISSING
-| irc | [[hook_signal_xxx_irc_raw_in2_yyy]] xxx,irc_raw_in2_yyy ^(1)^ | 0.3.2
+| irc | [[hook_signal_xxx_irc_raw_in2_yyy]] xxx,irc_raw_in2_yyy ^(1)^ | 0.3.2
 | String: messaggio.
 | Messaggio IRC dal server (dopo essere stato
   utilizzato dal plugin irc, il segnale viene inviato
@@ -10742,13 +10742,13 @@ List of signals sent by WeeChat and plugins:
   Since version 2.2, the whole IRC message is sent, including tags.
 
 // TRANSLATION MISSING
-| irc | [[hook_signal_xxx_irc_out1_yyy]] xxx,irc_out1_yyy ^(1)^ | 0.3.7
+| irc | [[hook_signal_xxx_irc_out1_yyy]] xxx,irc_out1_yyy ^(1)^ | 0.3.7
 | String: messaggio.
 | IRC message sent to server before automatic split
   (to fit in 512 bytes by default).
 
 // TRANSLATION MISSING
-| irc | [[hook_signal_xxx_irc_out_yyy]] xxx,irc_out_yyy ^(1)^ |
+| irc | [[hook_signal_xxx_irc_out_yyy]] xxx,irc_out_yyy ^(1)^ |
 | String: messaggio.
 | IRC message sent to server after automatic split
   (to fit in 512 bytes by default). +
@@ -10756,7 +10756,7 @@ List of signals sent by WeeChat and plugins:
   Signal "xxx,irc_out1_yyy" is recommended instead.
 
 // TRANSLATION MISSING
-| irc | [[hook_signal_xxx_irc_outtags_yyy]] xxx,irc_outtags_yyy ^(1)^ | 0.3.4
+| irc | [[hook_signal_xxx_irc_outtags_yyy]] xxx,irc_outtags_yyy ^(1)^ | 0.3.4
 | Stringa: tag + ";" + messaggio.
 | Tag + messaggio IRC inviato al server. +
   *Warning:* the string may contain invalid UTF-8 data.
@@ -11721,7 +11721,7 @@ List of hsignals sent by WeeChat and plugins:
 // TRANSLATION MISSING
 | Plugin | Segnale | Min WeeChat | Argomenti | Descrizione
 
-| irc | [[hook_hsignal_irc_redirection_xxx_yyy]] irc_redirection_xxx_yyy ^(1)^ | 0.3.4
+| irc | [[hook_hsignal_irc_redirection_xxx_yyy]] irc_redirection_xxx_yyy ^(1)^ | 0.3.4
 | Consultare <<hsignal_irc_redirect_command,hsignal_irc_redirect_command>>
 | Redirection output.
 
@@ -12174,7 +12174,7 @@ List of modifiers used by WeeChat and plugins:
 | Modificatore | Min WeeChat | Dati modificatore | Stringa | Output
 
 // TRANSLATION MISSING
-| [[hook_modifier_irc_in_xxx]] irc_in_xxx ^(1)^ |
+| [[hook_modifier_irc_in_xxx]] irc_in_xxx ^(1)^ |
 | Nome server
 | Contenuto del messaggio ricevuto dal server IRC (prima della codifica del set caratteri). +
   *Warning:* the string may contain invalid UTF-8 data; use only for raw
@@ -12182,27 +12182,27 @@ List of modifiers used by WeeChat and plugins:
   Modifier <<hook_modifier_irc_in2_xxx,irc_in2_xxx>> is recommended instead.
 | Nuovo contenuto del messaggio.
 
-| [[hook_modifier_irc_in2_xxx]] irc_in2_xxx ^(1)^ | 0.3.5
+| [[hook_modifier_irc_in2_xxx]] irc_in2_xxx ^(1)^ | 0.3.5
 | Nome server
 | Contenuto del messaggio ricevuto dal server IRC (dopo la codifica del set caratteri).
 | Nuovo contenuto del messaggio.
 
 // TRANSLATION MISSING
-| [[hook_modifier_irc_out1_xxx]] irc_out1_xxx ^(1)^ | 0.3.7
+| [[hook_modifier_irc_out1_xxx]] irc_out1_xxx ^(1)^ | 0.3.7
 | Nome server
 | Content of message about to be sent to IRC server before automatic split
   (to fit in 512 bytes by default).
 | Nuovo contenuto del messaggio.
 
 // TRANSLATION MISSING
-| [[hook_modifier_irc_out_xxx]] irc_out_xxx ^(1)^ |
+| [[hook_modifier_irc_out_xxx]] irc_out_xxx ^(1)^ |
 | Nome server
 | Content of message about to be sent to IRC server after automatic split
   (to fit in 512 bytes by default).
 | Nuovo contenuto del messaggio.
 
 // TRANSLATION MISSING
-| [[hook_modifier_bar_condition_yyy]] bar_condition_yyy ^(2)^ |
+| [[hook_modifier_bar_condition_yyy]] bar_condition_yyy ^(2)^ |
 | Stringa con puntatore alla finestra (eg: "0x1234abcd")
 | Stringa vuota.
 | "1" per visualizzare la barra, "0" per nasconderla.
@@ -12239,7 +12239,7 @@ List of modifiers used by WeeChat and plugins:
 
 // TRANSLATION MISSING
 | [[hook_modifier_weechat_print]] weechat_print |
-| buffer pointer (eg: "0x1234abcd") + ";" + tags ^(3)^
+| buffer pointer (eg: "0x1234abcd") + ";" + tags ^(3)^
 | Messaggio stampato.
 | Nuovo messaggio stampato. +
   For more information on the hooks called when a line is printed, see
@@ -12804,7 +12804,7 @@ Contenuto della tabella hash inviata alla callback (tasti e valori sono di tipo
 
 [width="100%",cols="5,5,8,3",options="header"]
 |===
-| Key ^(1)^ | Descrizione | Valori di esempio | Valore se N/D
+| Key ^(1)^ | Descrizione | Valori di esempio | Valore se N/D
 
 | _x | Colonna sullo schermo.
 | "0" ... "n" |
@@ -12836,7 +12836,7 @@ Contenuto della tabella hash inviata alla callback (tasti e valori sono di tipo
 | _buffer_full_name | Nome completo del buffer.
 | "core.weechat", "irc.libera.#weechat", ... | ""
 
-| _buffer_localvar_XXX ^(2)^ | Variabili locali del buffer.
+| _buffer_localvar_XXX ^(2)^ | Variabili locali del buffer.
 | qualsiasi valore | non impostato
 
 | _chat | Indicatore area di chat.
@@ -12846,16 +12846,16 @@ Contenuto della tabella hash inviata alla callback (tasti e valori sono di tipo
 | _chat_line | Pointer to line _(WeeChat ≥ 1.2)_.
 | "0x1234abcd" | ""
 
-| _chat_line_x | Colonna nella riga ^(3)^.
+| _chat_line_x | Colonna nella riga ^(3)^.
 | "0" ... "n" | "-1"
 
-| _chat_line_y | Numero della riga ^(3)^.
+| _chat_line_y | Numero della riga ^(3)^.
 | "0" ... "n" | "-1"
 
 | _chat_line_date | Riga con data/ora.
 | "1313237175" | "0"
 
-| _chat_line_date_printed | Riga con data/ora ^(4)^.
+| _chat_line_date_printed | Riga con data/ora ^(4)^.
 | "1313237175" | "0"
 
 | _chat_line_time | Ora visualizzata.
@@ -12917,7 +12917,7 @@ Informazioni aggiuntive per l'elemento barra "buffer_nicklist":
 
 [width="100%",cols="^1,^1,5",options="header"]
 |===
-| Plugin ^(1)^ | Chiave   | Descrizione
+| Plugin ^(1)^ | Chiave   | Descrizione
 // TRANSLATION MISSING
 | irc          | irc_nick | Pointer to IRC nick _(WeeChat ≥ 3.0)_.
 | irc          | irc_host | Host per il nick (se conosciuto).

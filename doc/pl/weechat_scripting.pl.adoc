@@ -1319,7 +1319,7 @@ Wynik jest tabela hashy z następującymi kluczami
 
 [width="100%",cols="3,^2,10,7",options="header"]
 |===
-| Klucz | Od wersji ^(1)^ | Opis | Przykład
+| Klucz | Od wersji ^(1)^ | Opis | Przykład
 
 | tags | 0.4.0
 | Tagi w wiadomości (mogą byc puste).

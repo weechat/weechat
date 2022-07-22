@@ -109,14 +109,14 @@ Le tableau suivant liste les paquets *requis* pour compiler WeeChat :
 
 [width="100%",cols="5,^3,.^15",options="header"]
 |===
-| Paquet ^(1)^                | Version       | Fonctionnalité
+| Paquet ^(1)^                | Version       | Fonctionnalité
 | compilateur C (gcc / clang) |               | Construction.
 | cmake                       | ≥ 3.0         | Construction (autotools toujours possible, mais CMake est recommandé).
 | pkg-config                  |               | Détection des bibliothèques installées.
-| libncursesw5-dev ^(2)^      |               | Interface ncurses.
+| libncursesw5-dev ^(2)^      |               | Interface ncurses.
 | libcurl4-gnutls-dev         |               | Transfert d'URL.
 | libgcrypt20-dev             |               | Données sécurisées, authentification IRC SASL.
-| libgnutls28-dev             | ≥ 2.2.0 ^(3)^ | Connexion SSL au serveur IRC, support SSL dans l'extension relay, authentification IRC SASL (ECDSA-NIST256P-CHALLENGE).
+| libgnutls28-dev             | ≥ 2.2.0 ^(3)^ | Connexion SSL au serveur IRC, support SSL dans l'extension relay, authentification IRC SASL (ECDSA-NIST256P-CHALLENGE).
 | zlib1g-dev                  |               | Compression des messages (WeeChat -> client) avec https://zlib.net/[zlib ^↗^,window=_blank] dans l'extension relay (protocole weechat), extension script.
 | libzstd-dev                 |               | Compression des messages (WeeChat -> client) avec https://facebook.github.io/zstd/[Zstandard ^↗^,window=_blank] dans l'extension relay (protocole weechat).
 |===
@@ -135,12 +135,12 @@ Le tableau suivant liste les paquets optionnels pour compiler WeeChat :
 
 [width="100%",cols="5,^3,.^15",options="header"]
 |===
-| Paquet ^(1)^                             | Version  | Fonctionnalité
+| Paquet ^(1)^                             | Version  | Fonctionnalité
 | compilateur {cpp} (pass:[g++ / clang++]) |          | Construction et lancement des tests, extension JavaScript.
 | gettext                                  |          | Internationalisation (traduction des messages ; la langue de base est l'anglais).
 | ca-certificates                          |          | Certificats pour les connexions SSL.
 | libaspell-dev / libenchant-dev           |          | Extension spell.
-| python3-dev ^(2)^                        |          | Extension python.
+| python3-dev ^(2)^                        |          | Extension python.
 | libperl-dev                              |          | Extension perl.
 | ruby2.7, ruby2.7-dev                     | ≥ 1.9.1  | Extension ruby.
 | liblua5.4-dev                            |          | Extension lua.
@@ -745,26 +745,26 @@ Les répertoires de WeeChat sont :
 
 [width="100%",cols="1m,3",options="header"]
 |===
-| Chemin ^(1)^            | Description
+| Chemin ^(1)^            | Description
 | ~/.config/weechat/      | Fichiers de configuration WeeChat : `*.conf`, certificats, etc.
 | ~/.local/share/weechat/ | Fichiers de données WeeChat : logs, scripts, données des scripts, fichiers xfer, etc.
 |    logs/                | Fichiers de log (un fichier par tampon).
 |    python/              | Scripts Python.
-|       autoload/         | Scripts Python chargés automatiquement au démarrage ^(2)^.
+|       autoload/         | Scripts Python chargés automatiquement au démarrage ^(2)^.
 |    perl/                | Scripts Perl.
-|       autoload/         | Scripts Perl chargés automatiquement au démarrage ^(2)^.
+|       autoload/         | Scripts Perl chargés automatiquement au démarrage ^(2)^.
 |    ruby/                | Scripts Ruby.
-|       autoload/         | Scripts Ruby chargés automatiquement au démarrage ^(2)^.
+|       autoload/         | Scripts Ruby chargés automatiquement au démarrage ^(2)^.
 |    lua/                 | Scripts Lua.
-|       autoload/         | Scripts Lua chargés automatiquement au démarrage ^(2)^.
+|       autoload/         | Scripts Lua chargés automatiquement au démarrage ^(2)^.
 |    tcl/                 | Scripts Tcl.
-|       autoload/         | Scripts Tcl chargés automatiquement au démarrage ^(2)^.
+|       autoload/         | Scripts Tcl chargés automatiquement au démarrage ^(2)^.
 |    guile/               | Scripts Guile.
-|       autoload/         | Scripts Guile chargés automatiquement au démarrage ^(2)^.
+|       autoload/         | Scripts Guile chargés automatiquement au démarrage ^(2)^.
 |    javascript/          | Scripts JavaScript.
-|       autoload/         | Scripts JavaScript chargés automatiquement au démarrage ^(2)^.
+|       autoload/         | Scripts JavaScript chargés automatiquement au démarrage ^(2)^.
 |    php/                 | Scripts PHP.
-|       autoload/         | Scripts PHP chargés automatiquement au démarrage ^(2)^.
+|       autoload/         | Scripts PHP chargés automatiquement au démarrage ^(2)^.
 | ~/.cache/weechat/       | Fichiers de cache WeeChat : cache des scripts.
 | /run/user/1000/weechat/ | Fichiers "runtime" WeeChat : tube FIFO, sockets UNIX Relay.
 |===
@@ -1303,10 +1303,10 @@ Les étiquettes couramment utilisées (liste non exhaustive) :
 | no_highlight     | Aucun highlight n'est possible sur cette ligne.
 | no_log           | La ligne n'est pas écrite dans le fichier de log.
 | log0 … log9      | Niveau de log pour la ligne (voir `/help logger`).
-| notify_none      | La ligne ne doit pas être ajoutée à la "hotlist". ^(1)^
-| notify_message   | La ligne est un message utilisateur. ^(1)^
-| notify_private   | La ligne est un message privé. ^(1)^
-| notify_highlight | La ligne est un message avec un highlight. ^(1)^
+| notify_none      | La ligne ne doit pas être ajoutée à la "hotlist". ^(1)^
+| notify_message   | La ligne est un message utilisateur. ^(1)^
+| notify_private   | La ligne est un message privé. ^(1)^
+| notify_highlight | La ligne est un message avec un highlight. ^(1)^
 | self_msg         | Message de soi-même.
 | nick_xxx         | Le message vient du pseudo "xxx".
 | prefix_nick_ccc  | Le préfixe est un pseudo avec la couleur "ccc".
@@ -1749,7 +1749,7 @@ avec la touche kbd:[Alt+m] (commande : `+/mouse toggle+`).
 
 [width="100%",cols="^.^3,^.^3,^.^3,.^8,.^8",options="header"]
 |===
-| Bouton/Roulette ^(1)^ | Geste        | Zone                 | Description | Commande
+| Bouton/Roulette ^(1)^ | Geste        | Zone                 | Description | Commande
 | ◾◽◽                   | -            | chat                 | Aller à la fenêtre. | `+/window ${_window_number}+`
 | ◾◽◽                   | left         | chat                 | Aller au tampon précédent. | `+/window ${_window_number};/buffer +1+`
 | ◾◽◽                   | right        | chat                 | Aller au tampon suivant. | `+/window ${_window_number};/buffer +1+`
@@ -1802,7 +1802,7 @@ Ces touches et actions sont utilisées sur le tampon fset
 
 [width="100%",cols="^.^3,^.^2,.^8,.^5",options="header"]
 |===
-| Touche                   | Action ^(1)^ | Description | Commande
+| Touche                   | Action ^(1)^ | Description | Commande
 | kbd:[↑]                  |              | Monter d'une ligne. | `+/fset -up+`
 | kbd:[↓]                  |              | Descendre d'une ligne. | `+/fset -down+`
 | kbd:[PgUp]               |              | Monter d'une page. | `+/window page_up+`
@@ -1849,7 +1849,7 @@ Ces touches et actions sont utilisées sur le tampon script
 
 [width="100%",cols="^.^3,^.^2,.^8,.^5",options="header"]
 |===
-| Touche            | Action ^(1)^ | Description | Commande
+| Touche            | Action ^(1)^ | Description | Commande
 | kbd:[↑]           |              | Move one line up. | `+/script up+`
 | kbd:[↓]           |              | Move one line down. | `+/script down+`
 | kbd:[PgUp]        |              | Move one page up. | `+/window page_up+`
@@ -4006,8 +4006,8 @@ automatiquement remplacées par WeeChat lors de la réponse au CTCP :
 | Code         | Description                            | Valeur / exemple
 | $clientinfo  | Liste des CTCP supportés               | `+ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION+`
 | $version     | Version de WeeChat                     | `+0.4.0-dev+`
-| $versiongit  | Version de WeeChat + version Git ^(1)^ | `+0.4.0-dev (git: v0.3.9-104-g7eb5cc4)+`
-| $git         | Version Git ^(1)^                      | `+v0.3.9-104-g7eb5cc4+`
+| $versiongit  | Version de WeeChat + version Git ^(1)^ | `+0.4.0-dev (git: v0.3.9-104-g7eb5cc4)+`
+| $git         | Version Git ^(1)^                      | `+v0.3.9-104-g7eb5cc4+`
 | $compilation | Date de compilation WeeChat            | `+Dec 16 2012+`
 | $osinfo      | Information sur l'OS                   | `+Linux 2.6.32-5-amd64 / x86_64+`
 | $site        | Site WeeChat                           | `+https://weechat.org/+`
@@ -4910,7 +4910,7 @@ du type de hook :
 
 [width="100%",cols="2,3,7",options="header"]
 |===
-| Hook           | Variable par défaut | Mise à jour autorisée ^(1)^
+| Hook           | Variable par défaut | Mise à jour autorisée ^(1)^
 | signal         | tg_signal_data      |
 | hsignal        |                     |
 | modifier       | tg_string           | tg_string
@@ -5139,7 +5139,7 @@ Variables définies avec les étiquettes du message :
 | tg_tag_prefix_nick | chaîne | Couleur du pseudo dans le préfixe (depuis l'étiquette "prefix_nick_ccc").
 | tg_tag_host        | chaîne | Nom d'utilisateur et hôte, format : utilisateur@hôte (depuis l'étiquette "host_xxx").
 | tg_tag_notify      | chaîne | Niveau de notification (_none_, _message_, _private_, _highlight_).
-| tg_tag_irc_xxx     | chaîne | Étiquette de message IRC (clé "xxx"). ^(1)^
+| tg_tag_irc_xxx     | chaîne | Étiquette de message IRC (clé "xxx"). ^(1)^
 | tg_notify          | chaîne | Niveau de notification, si différent de _none_.
 | tg_msg_pv          | chaîne | "1" pour un message privé, sinon "0".
 |===
@@ -5182,7 +5182,7 @@ Variables définies avec les étiquettes du message :
 | tg_tag_prefix_nick | chaîne | Couleur du pseudo dans le préfixe (depuis l'étiquette "prefix_nick_ccc").
 | tg_tag_host        | chaîne | Nom d'utilisateur et hôte, format : utilisateur@hôte (depuis l'étiquette "host_xxx").
 | tg_tag_notify      | chaîne | Niveau de notification (_none_, _message_, _private_, _highlight_).
-| tg_tag_irc_xxx     | chaîne | Étiquette de message IRC (clé "xxx"). ^(1)^
+| tg_tag_irc_xxx     | chaîne | Étiquette de message IRC (clé "xxx"). ^(1)^
 | tg_notify          | chaîne | Niveau de notification, si différent de _none_.
 | tg_msg_pv          | chaîne | "1" pour un message privé, sinon "0".
 |===
