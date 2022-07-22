@@ -1285,6 +1285,16 @@ IRC поруку можете да парсирате са info_hashtable под
 | Текст (на пример, корисникова порука).
 | `+здраво!+`
 
+// TRANSLATION MISSING
+| paramN | 3.4
+| Command parameter (from 1 to N).
+| `+#weechat+`
+
+// TRANSLATION MISSING
+| num_params | 3.4
+| Number of command parameters.
+| `+2+`
+
 | pos_command | 1.3
 | Индекс _command_ у поруци („-1” ако се _command_ не пронађе).
 | `+47+`
@@ -1323,6 +1333,9 @@ dict = weechat.info_get_hashtable(
 #     "channel": "#weechat",
 #     "arguments": "#weechat :здраво!",
 #     "text": "hello!",
+#     "param1": "#weechat",
+#     "param2": "hello!",
+#     "num_params": "2",
 #     "pos_command": "65",
 #     "pos_arguments": "73",
 #     "pos_channel": "73",

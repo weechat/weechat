@@ -1387,6 +1387,14 @@ Le résultat est une table de hachage avec les clés suivantes
 | Le texte (par exemple un message utilisateur).
 | `+hello!+`
 
+| paramN | 3.4
+| Paramètre de commande (de 1 à N).
+| `+#weechat+`
+
+| num_params | 3.4
+| Nombre de paramètres de commande.
+| `+2+`
+
 | pos_command | 1.3
 | La position de _command_ dans le message ("-1" si _command_ n'a pas été trouvé).
 | `+47+`
@@ -1425,6 +1433,9 @@ dict = weechat.info_get_hashtable(
 #     "channel": "#weechat",
 #     "arguments": "#weechat :hello!",
 #     "text": "hello!",
+#     "param1": "#weechat",
+#     "param2": "hello!",
+#     "num_params": "2",
 #     "pos_command": "65",
 #     "pos_arguments": "73",
 #     "pos_channel": "73",

@@ -1376,6 +1376,16 @@ Das Ergebnis ist eine Hashtabelle mit folgenden Schlüsseln
 | der Text (zum Beispiel eine Nachricht eines Users).
 | `+hello!+`
 
+// TRANSLATION MISSING
+| paramN | 3.4
+| Command parameter (from 1 to N).
+| `+#weechat+`
+
+// TRANSLATION MISSING
+| num_params | 3.4
+| Number of command parameters.
+| `+2+`
+
 | pos_command | 1.3
 | Index von _command_ innerhalb einer Nachricht ("-1" falls _command_ nicht gefunden wird).
 | `+47+`
@@ -1414,6 +1424,9 @@ dict = weechat.info_get_hashtable(
 #     "channel": "#weechat",
 #     "arguments": "#weechat :hello!",
 #     "text": "hello!",
+#     "param1": "#weechat",
+#     "param2": "hello!",
+#     "num_params": "2",
 #     "pos_command": "65",
 #     "pos_arguments": "73",
 #     "pos_channel": "73",
