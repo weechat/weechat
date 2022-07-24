@@ -204,7 +204,6 @@ hook_hsignal_add_to_infolist (struct t_infolist_item *item,
 
     if (!infolist_new_var_pointer (item, "callback", HOOK_HSIGNAL(hook, callback)))
         return 0;
-    i = 0;
     for (i = 0; i < HOOK_HSIGNAL(hook, num_signals); i++)
     {
         snprintf (option_name, sizeof (option_name), "signal_%05d", i);

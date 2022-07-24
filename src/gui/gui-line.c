@@ -867,12 +867,13 @@ gui_line_has_highlight (struct t_gui_line *line)
     const char *ptr_nick;
     regmatch_t regex_match;
 
-    rc = 0;
-
     /* remove color codes from line message */
     msg_no_color = gui_color_decode (line->data->message, NULL);
     if (!msg_no_color)
-        return 0;
+    {
+        rc = 0;
+        goto end;
+    }
     ptr_msg_no_color = msg_no_color;
 
     /*
@@ -1047,7 +1048,8 @@ gui_line_has_highlight (struct t_gui_line *line)
     }
 
 end:
-    free (msg_no_color);
+    if (msg_no_color)
+        free (msg_no_color);
 
     return rc;
 }
