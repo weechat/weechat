@@ -373,8 +373,7 @@ gui_bar_item_get_value (struct t_gui_bar *bar, struct t_gui_window *window,
                         int item, int subitem)
 {
     char *item_value, delimiter_color[32], bar_color[32];
-    char *result, str_attr[8];
-    int length;
+    char **result, str_attr[8];
     struct t_gui_buffer *buffer;
     struct t_gui_bar_item *ptr_item;
 
@@ -415,86 +414,86 @@ gui_bar_item_get_value (struct t_gui_bar *bar, struct t_gui_window *window,
             return NULL;
     }
 
-    length = 0;
-    if (bar->items_prefix[item][subitem])
-        length += 64 + strlen (bar->items_prefix[item][subitem]) + 1; /* color + prefix + color */
-    if (item_value && item_value[0])
-        length += strlen (item_value) + 1;
-    if (bar->items_suffix[item][subitem])
-        length += 32 + strlen (bar->items_suffix[item][subitem]) + 1; /* color + suffix */
-
-    result = NULL;
-    if (length > 0)
+    result = string_dyn_alloc (128);
+    if (!result)
     {
-        result = malloc (length);
-        if (result)
-        {
-            delimiter_color[0] = '\0';
-            bar_color[0] = '\0';
-            if (bar->items_prefix[item][subitem]
-                || bar->items_suffix[item][subitem])
-            {
-                /* color for text in bar */
-                gui_color_attr_build_string (CONFIG_COLOR(bar->options[GUI_BAR_OPTION_COLOR_FG]),
-                                             str_attr);
-                if (CONFIG_COLOR(bar->options[GUI_BAR_OPTION_COLOR_FG]) & GUI_COLOR_EXTENDED_FLAG)
-                {
-                    snprintf (bar_color, sizeof (bar_color),
-                              "%c%c%c%s%05d",
-                              GUI_COLOR_COLOR_CHAR,
-                              GUI_COLOR_FG_CHAR,
-                              GUI_COLOR_EXTENDED_CHAR,
-                              str_attr,
-                              CONFIG_COLOR(bar->options[GUI_BAR_OPTION_COLOR_FG]) & GUI_COLOR_EXTENDED_MASK);
-                }
-                else
-                {
-                    snprintf (bar_color, sizeof (bar_color),
-                              "%c%c%s%02d",
-                              GUI_COLOR_COLOR_CHAR,
-                              GUI_COLOR_FG_CHAR,
-                              str_attr,
-                              CONFIG_COLOR(bar->options[GUI_BAR_OPTION_COLOR_FG]) & GUI_COLOR_EXTENDED_MASK);
-                }
+        if (item_value)
+            free (item_value);
+        return NULL;
+    }
 
-                /* color for bar delimiters */
-                gui_color_attr_build_string (CONFIG_COLOR(bar->options[GUI_BAR_OPTION_COLOR_DELIM]),
-                                             str_attr);
-                if (CONFIG_COLOR(bar->options[GUI_BAR_OPTION_COLOR_DELIM]) & GUI_COLOR_EXTENDED_FLAG)
-                {
-                    snprintf (delimiter_color, sizeof (delimiter_color),
-                              "%c%c%c%s%05d",
-                              GUI_COLOR_COLOR_CHAR,
-                              GUI_COLOR_FG_CHAR,
-                              GUI_COLOR_EXTENDED_CHAR,
-                              str_attr,
-                              CONFIG_COLOR(bar->options[GUI_BAR_OPTION_COLOR_DELIM]) & GUI_COLOR_EXTENDED_MASK);
-                }
-                else
-                {
-                    snprintf (delimiter_color, sizeof (delimiter_color),
-                              "%c%c%s%02d",
-                              GUI_COLOR_COLOR_CHAR,
-                              GUI_COLOR_FG_CHAR,
-                              str_attr,
-                              CONFIG_COLOR(bar->options[GUI_BAR_OPTION_COLOR_DELIM]) & GUI_COLOR_EXTENDED_MASK);
-                }
-            }
-            snprintf (result, length,
-                      "%s%s%s%s%s%s",
-                      (bar->items_prefix[item][subitem]) ? delimiter_color : "",
-                      (bar->items_prefix[item][subitem]) ? bar->items_prefix[item][subitem] : "",
-                      (bar->items_prefix[item][subitem]) ? bar_color : "",
-                      (item_value) ? item_value : "",
-                      (bar->items_suffix[item][subitem]) ? delimiter_color : "",
-                      (bar->items_suffix[item][subitem]) ? bar->items_suffix[item][subitem] : "");
+    delimiter_color[0] = '\0';
+    bar_color[0] = '\0';
+    if (bar->items_prefix[item][subitem]
+        || bar->items_suffix[item][subitem])
+    {
+        /* color for text in bar */
+        gui_color_attr_build_string (CONFIG_COLOR(bar->options[GUI_BAR_OPTION_COLOR_FG]),
+                                     str_attr);
+        if (CONFIG_COLOR(bar->options[GUI_BAR_OPTION_COLOR_FG]) & GUI_COLOR_EXTENDED_FLAG)
+        {
+            snprintf (bar_color, sizeof (bar_color),
+                      "%c%c%c%s%05d",
+                      GUI_COLOR_COLOR_CHAR,
+                      GUI_COLOR_FG_CHAR,
+                      GUI_COLOR_EXTENDED_CHAR,
+                      str_attr,
+                      CONFIG_COLOR(bar->options[GUI_BAR_OPTION_COLOR_FG]) & GUI_COLOR_EXTENDED_MASK);
         }
+        else
+        {
+            snprintf (bar_color, sizeof (bar_color),
+                      "%c%c%s%02d",
+                      GUI_COLOR_COLOR_CHAR,
+                      GUI_COLOR_FG_CHAR,
+                      str_attr,
+                      CONFIG_COLOR(bar->options[GUI_BAR_OPTION_COLOR_FG]) & GUI_COLOR_EXTENDED_MASK);
+        }
+
+        /* color for bar delimiters */
+        gui_color_attr_build_string (CONFIG_COLOR(bar->options[GUI_BAR_OPTION_COLOR_DELIM]),
+                                     str_attr);
+        if (CONFIG_COLOR(bar->options[GUI_BAR_OPTION_COLOR_DELIM]) & GUI_COLOR_EXTENDED_FLAG)
+        {
+            snprintf (delimiter_color, sizeof (delimiter_color),
+                      "%c%c%c%s%05d",
+                      GUI_COLOR_COLOR_CHAR,
+                      GUI_COLOR_FG_CHAR,
+                      GUI_COLOR_EXTENDED_CHAR,
+                      str_attr,
+                      CONFIG_COLOR(bar->options[GUI_BAR_OPTION_COLOR_DELIM]) & GUI_COLOR_EXTENDED_MASK);
+        }
+        else
+        {
+            snprintf (delimiter_color, sizeof (delimiter_color),
+                      "%c%c%s%02d",
+                      GUI_COLOR_COLOR_CHAR,
+                      GUI_COLOR_FG_CHAR,
+                      str_attr,
+                      CONFIG_COLOR(bar->options[GUI_BAR_OPTION_COLOR_DELIM]) & GUI_COLOR_EXTENDED_MASK);
+        }
+    }
+
+    if (bar->items_prefix[item][subitem])
+    {
+        string_dyn_concat (result, delimiter_color, -1);
+        string_dyn_concat (result, bar->items_prefix[item][subitem], -1);
+        string_dyn_concat (result, bar_color, -1);
+    }
+    if (item_value)
+    {
+        string_dyn_concat (result, item_value, -1);
+    }
+    if (bar->items_suffix[item][subitem])
+    {
+        string_dyn_concat (result, delimiter_color, -1);
+        string_dyn_concat (result, bar->items_suffix[item][subitem], -1);
     }
 
     if (item_value)
         free (item_value);
 
-    return result;
+    return string_dyn_free (result, 0);
 }
 
 /*
