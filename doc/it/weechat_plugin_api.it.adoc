@@ -13785,6 +13785,8 @@ Argomenti:
 ** _text_search_input_: input salvato prima della ricerca nel testo
 ** _highlight_words_: elenco di parole da evidenziare
 // TRANSLATION MISSING
+** _highlight_disable_regex_: POSIX extended regular expression for disabling highlight
+// TRANSLATION MISSING
 ** _highlight_regex_: POSIX extended regular expression for highlight
 // TRANSLATION MISSING
 ** _highlight_tags_restrict_: restrict highlights to messages with these tags
@@ -13838,6 +13840,7 @@ Argomenti:
 * _property_: nome proprietà:
 ** _plugin_: puntatore al plugin che ha creato questo buffer (NULL
    per il buffer principale di WeeChat)
+** _highlight_disable_regex_compiled_: espressione regolare _highlight_disable_regex_ compilata
 ** _highlight_regex_compiled_: espressione regolare _highlight_regex_ compilata
 
 Valore restituito:
@@ -13994,6 +13997,10 @@ Properties:
 | highlight_words_del | | elenco di parole separate da virgole
 | Elenco di parole separate da virgole da rimuovere dalle
   parole evidenziate nel buffer.
+
+// TRANSLATION MISSING
+| highlight_disable_regex | | any string
+| POSIX extended regular expression for disabling highlight.
 
 // TRANSLATION MISSING
 | highlight_regex | | qualsiasi stringa

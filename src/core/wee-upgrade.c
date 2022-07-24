@@ -557,6 +557,8 @@ upgrade_weechat_read_buffer (struct t_infolist *infolist)
     /* highlight options */
     gui_buffer_set_highlight_words (
         ptr_buffer, infolist_string (infolist, "highlight_words"));
+    gui_buffer_set_highlight_disable_regex (
+        ptr_buffer, infolist_string (infolist, "highlight_disable_regex"));
     gui_buffer_set_highlight_regex (
         ptr_buffer, infolist_string (infolist, "highlight_regex"));
     if (infolist_search_var (infolist,

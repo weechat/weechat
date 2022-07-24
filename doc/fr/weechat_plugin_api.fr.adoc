@@ -13502,6 +13502,8 @@ Paramètres :
 ** _input_ : texte saisi
 ** _text_search_input_ : texte saisi sauvegardé avant la recherche de texte
 ** _highlight_words_ : liste des mots pour le highlight
+** _highlight_disable_regex_ : expression régulière POSIX étendue pour désactiver
+   le highlight
 ** _highlight_regex_ : expression régulière POSIX étendue pour le highlight
 ** _highlight_tags_restrict_ : restreindre les highlights aux messages
    comportant ces étiquettes
@@ -13555,6 +13557,7 @@ Paramètres :
 * _property_ : nom de la propriété :
 ** _plugin_ : pointeur vers l'extension qui a créé le tampon (NULL pour le
    tampon principal WeeChat)
+** _highlight_disable_regex_compiled_ : expression régulière _highlight_disable_regex_ compilée
 ** _highlight_regex_compiled_ : expression régulière _highlight_regex_ compilée
 
 Valeur de retour :
@@ -13699,6 +13702,9 @@ Propriétés :
 | highlight_words_del | | liste de mots séparés par des virgules
 | Liste de mots à supprimer de la liste des mots à mettre en valeur dans ce
   tampon.
+
+| highlight_disable_regex | | any string
+| Expression régulière POSIX étendue pour désactiver le highlight.
 
 | highlight_regex | | toute chaîne
 | Expression régulière POSIX étendue pour le highlight.

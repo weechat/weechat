@@ -2240,6 +2240,38 @@ avec `+/help buffer_autoset+`.
 [[highlights]]
 === Highlights
 
+// TRANSLATION MISSING
+[[highlights_disable]]
+==== Désactiver les highlights
+
+Vous pouvez désactiver les highlights avec l'option
+<<option_weechat.look.highlight_disable_regex,weechat.look.highlight_disable_regex>>
+(expression régulière). +
+Lorsqu'un highlight est désactivé avec cette option, les autres options de
+highlight sont ignorées.
+
+Par exemple pour désactiver tout highlight sur les messages avec un mot
+commençant par "flash" entre chevrons :
+
+----
+/set weechat.look.highlight_regex "<flash.*>"
+----
+
+Ceci peut aussi être défini avec la propriété de tampon "highlight_disable_regex".
+
+Même exemple, spécifique au tampon courant :
+
+----
+/buffer set highlight_disable_regex <flash.*>
+----
+
+[NOTE]
+La propriété de tampon "highlight_disable_regex" n'est pas sauvegardée dans la
+configuration. +
+Vous pouvez facilement la sauvegarder avec le script _buffer_autoset.py_ : vous
+pouvez l'installer avec `+/script install buffer_autoset.py+` et obtenir de l'aide
+avec `+/help buffer_autoset+`.
+
 [[highlights_words]]
 ==== Ajouter des mots pour le « highlight »
 
@@ -2252,7 +2284,7 @@ Vous pouvez ajouter d'autres mots à mettre en valeur avec l'option
 en valeur votre pseudo, "mot1", "mot2" et tous les mots commençants par "test" :
 
 ----
-/set weechat.look.highlight mot1,mot2,test*
+/set weechat.look.highlight "mot1,mot2,test*"
 ----
 
 Si vous avez besoin d'une règle plus spécifique pour un mot, vous pouvez utiliser
@@ -2261,7 +2293,7 @@ des expressions régulières avec l'option
 par exemple pour mettre en valeur les mots "flashcode", "flashcöde" et "flashy" :
 
 ----
-/set weechat.look.highlight_regex flashc[oö]de|flashy
+/set weechat.look.highlight_regex "flashc[oö]de|flashy"
 ----
 
 Les délimiteurs autour des mots à mettre en valeur peuvent être paramétrés avec

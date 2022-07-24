@@ -2208,6 +2208,37 @@ und um eine Hilfe zu erhalten wie man es nutzt: `+/help buffer_autoset+`.
 [[highlights]]
 === Highlights
 
+// TRANSLATION MISSING
+[[highlights_disable]]
+==== Disable highlights
+
+You can disable highlights with option
+<<option_weechat.look.highlight_disable_regex,weechat.look.highlight_disable_regex>>
+(regular expression). +
+When a highlight is disabled with this option, the other highlight options are
+ignored.
+
+For example to disable any highlight on messages with a word beginning
+with "flash" between chevrons:
+
+----
+/set weechat.look.highlight_regex "<flash.*>"
+----
+
+This can also be set with the buffer property "highlight_disable_regex".
+
+Same example, specific to the current buffer:
+
+----
+/buffer set highlight_disable_regex <flash.*>
+----
+
+[NOTE]
+Die Buffer-Eigenschaft "highlight_disable_regex" ist keine permanente Einstellung und wird nicht
+in der Konfigurationsdatei gesichert. + Um diese Einstellung persistent zu machen benötigt man
+das Skript _buffer_autoset.py_: Um das Skript zu installieren `+/script install buffer_autoset.py+`
+und um eine Hilfe zu erhalten wie man es nutzt: `+/help buffer_autoset+`.
+
 [[highlights_words]]
 ==== Worte als Highlights hinzufügen
 
@@ -2221,7 +2252,7 @@ neben dem eigenen Nick auch die Wörter "Wort1","Wort2" und alle Wörter die mit
 "Test" beginnen zu highlighten:
 
 ----
-/set weechat.look.highlight Wort1,Wort2,Test*
+/set weechat.look.highlight "Wort1,Wort2,Test*"
 ----
 
 Wird eine spezielle Regel benötigt, dann können reguläre Ausdrücke
@@ -2231,7 +2262,7 @@ um zum Beispiel die Wörter "flashcode", "flashcöde" und "flashy"
 zu highlighten:
 
 ----
-/set weechat.look.highlight_regex flashc[oö]de|flashy
+/set weechat.look.highlight_regex "flashc[oö]de|flashy"
 ----
 
 Die Trennzeichen die Wörter umschließen können angepasst werden, mit der

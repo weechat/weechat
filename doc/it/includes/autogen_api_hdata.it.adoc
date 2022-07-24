@@ -631,6 +631,8 @@ _text_search_input_   (string) +
 _highlight_words_   (string) +
 _highlight_regex_   (string) +
 _highlight_regex_compiled_   (pointer) +
+_highlight_disable_regex_   (string) +
+_highlight_disable_regex_compiled_   (pointer) +
 _highlight_tags_restrict_   (string) +
 _highlight_tags_restrict_count_   (integer) +
 _highlight_tags_restrict_array_   (pointer, array_size: "highlight_tags_restrict_count") +

@@ -704,6 +704,8 @@ inl:
         text_search_found: 0
         text_search_input: None
         highlight_words: None
+        highlight_disable_regex: None
+        highlight_disable_regex_compiled: '0x0'
         highlight_regex: None
         highlight_regex_compiled: '0x0'
         highlight_tags_restrict: None

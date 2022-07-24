@@ -121,6 +121,7 @@ struct t_config_option *config_look_day_change_message_2dates;
 struct t_config_option *config_look_eat_newline_glitch;
 struct t_config_option *config_look_emphasized_attributes;
 struct t_config_option *config_look_highlight;
+struct t_config_option *config_look_highlight_disable_regex;
 struct t_config_option *config_look_highlight_regex;
 struct t_config_option *config_look_highlight_tags;
 struct t_config_option *config_look_hotlist_add_conditions;
@@ -321,6 +322,7 @@ int config_length_prefix_same_nick_middle = 0;
 struct t_hook *config_day_change_timer = NULL;
 int config_day_change_old_day = -1;
 int config_emphasized_attributes = 0;
+regex_t *config_highlight_disable_regex = NULL;
 regex_t *config_highlight_regex = NULL;
 char ***config_highlight_tags = NULL;
 int config_num_highlight_tags = 0;
@@ -910,6 +912,43 @@ config_change_emphasized_attributes (const void *pointer, void *data,
     }
 
     gui_window_ask_refresh (1);
+}
+
+/*
+ * Callback for changes on option "weechat.look.highlight_disable_regex".
+ */
+
+void
+config_change_highlight_disable_regex (const void *pointer, void *data,
+                                       struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) option;
+
+    if (config_highlight_disable_regex)
+    {
+        regfree (config_highlight_disable_regex);
+        free (config_highlight_disable_regex);
+        config_highlight_disable_regex = NULL;
+    }
+
+    if (CONFIG_STRING(config_look_highlight_disable_regex)
+        && CONFIG_STRING(config_look_highlight_disable_regex)[0])
+    {
+        config_highlight_disable_regex = malloc (sizeof (*config_highlight_disable_regex));
+        if (config_highlight_disable_regex)
+        {
+            if (string_regcomp (config_highlight_disable_regex,
+                                CONFIG_STRING(config_look_highlight_disable_regex),
+                                REG_EXTENDED | REG_ICASE) != 0)
+            {
+                free (config_highlight_disable_regex);
+                config_highlight_disable_regex = NULL;
+            }
+        }
+    }
 }
 
 /*
@@ -3035,6 +3074,20 @@ config_weechat_init_options ()
            "example: \"test,(?-i)*toto*,flash*\""),
         NULL, 0, 0, "", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    config_look_highlight_disable_regex = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "highlight_disable_regex", "string",
+        N_("POSIX extended regular expression used to prevent any highlight "
+           "from a message: this option has higher priority over other "
+           "highlight options (if the string is found in the message, the "
+           "highlight is disabled and the other options are ignored), "
+           "regular expression is case insensitive (use \"(?-i)\" at beginning "
+           "to make it case sensitive), examples: "
+           "\"<flash.*>\", \"(?-i)<Flash.*>\""),
+        NULL, 0, 0, "", NULL, 0,
+        NULL, NULL, NULL,
+        &config_change_highlight_disable_regex, NULL, NULL,
+        NULL, NULL, NULL);
     config_look_highlight_regex = config_file_new_option (
         weechat_config_file, ptr_section,
         "highlight_regex", "string",
@@ -4876,6 +4929,8 @@ config_weechat_init ()
                                               &config_day_change_timer_cb,
                                               NULL, NULL);
     }
+    if (!config_highlight_disable_regex)
+        config_change_highlight_disable_regex (NULL, NULL, NULL);
     if (!config_highlight_regex)
         config_change_highlight_regex (NULL, NULL, NULL);
     if (!config_highlight_tags)
@@ -4936,6 +4991,13 @@ void
 config_weechat_free ()
 {
     config_file_free (weechat_config_file);
+
+    if (config_highlight_disable_regex)
+    {
+        regfree (config_highlight_disable_regex);
+        free (config_highlight_disable_regex);
+        config_highlight_disable_regex = NULL;
+    }
 
     if (config_highlight_regex)
     {

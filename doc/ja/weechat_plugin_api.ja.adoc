@@ -13291,6 +13291,8 @@ const char *weechat_buffer_get_string (struct t_gui_buffer *buffer,
 ** _input_: 入力テキスト
 ** _text_search_input_: テキスト検索前に保存した入力テキスト
 ** _highlight_words_: ハイライトする単語のリスト
+// TRANSLATION MISSING
+** _highlight_disable_regex_: POSIX extended regular expression for disabling highlight
 ** _highlight_regex_: ハイライト用の POSIX 拡張正規表現
 ** _highlight_tags_restrict_: これらのタグを付けられたメッセージだけにハイライトを制限する
 ** _highlight_tags_: これらのタグを付けられたメッセージを強制的にハイライトする
@@ -13342,6 +13344,7 @@ void *weechat_buffer_pointer (struct t_gui_buffer *buffer,
 * _property_: プロパティ名:
 ** _plugin_: このバッファを作ったプラグインへのポインタ
    (WeeChat メインバッファの場合は NULL)
+** _highlight_disable_regex_compiled_: コンパイル済みの正規表現 _highlight_disable_regex_
 ** _highlight_regex_compiled_: コンパイル済みの正規表現 _highlight_regex_
 
 戻り値:
@@ -13478,6 +13481,10 @@ void weechat_buffer_set (struct t_gui_buffer *buffer, const char *property,
 
 | highlight_words_del | | 単語のコンマ区切りリスト
 | 指定したバッファ内でハイライトする単語から削除する単語のコンマ区切りリスト
+
+// TRANSLATION MISSING
+| highlight_disable_regex | | any string
+| POSIX extended regular expression for disabling highlight.
 
 | highlight_regex | | 任意の文字列
 | ハイライトする POSIX 拡張正規表現

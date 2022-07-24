@@ -2061,6 +2061,35 @@ include::includes/autogen_user_options.sr.adoc[tag=charset_options]
 [[highlights]]
 === Истицања
 
+// TRANSLATION MISSING
+[[highlights_disable]]
+==== Disable highlights
+
+You can disable highlights with option
+<<option_weechat.look.highlight_disable_regex,weechat.look.highlight_disable_regex>>
+(regular expression). +
+When a highlight is disabled with this option, the other highlight options are
+ignored.
+
+For example to disable any highlight on messages with a word beginning
+with "flash" between chevrons:
+
+----
+/set weechat.look.highlight_regex "<flash.*>"
+----
+
+This can also be set with the buffer property "highlight_disable_regex".
+
+Same example, specific to the current buffer:
+
+----
+/buffer set highlight_disable_regex <flash.*>
+----
+
+[NOTE]
+Особина бафера „highlight_disable_regex” се не чува у конфигурацији. +
+Лако можете да је сачувате скриптом _buffer_autoset.py_: инсталирате је командом `+/script install buffer_autoset.py+`, а помоћ добијате са `+/help buffer_autoset+`.
+
 [[highlights_words]]
 ==== Додавање речи које се истичу
 
@@ -2069,13 +2098,13 @@ include::includes/autogen_user_options.sr.adoc[tag=charset_options]
 Остале речи моожете да додате опцијом <<option_weechat.look.highlight,weechat.look.highlight>>, на пример ако желите да се истиче ваш надимак и „реч1”, „реч2”, као и све речи које почињу са „test”:
 
 ----
-/set weechat.look.highlight реч1,реч2,test*
+/set weechat.look.highlight "реч1,реч2,test*"
 ----
 
 Ако вам је потребно одређеније правило за реч, можете да употребите регуларне изразе опцијом <<option_weechat.look.highlight_regex,weechat.look.highlight_regex>>, на пример да истакнете речи „flashcode”, „flashcöde” и „flashy”:
 
 ----
-/set weechat.look.highlight_regex flashc[oö]de|flashy
+/set weechat.look.highlight_regex "flashc[oö]de|flashy"
 ----
 
 Граничници око речи које се истичу могу да се прилагоде опцијом <<option_weechat.look.word_chars_highlight,weechat.look.word_chars_highlight>>.

@@ -27,6 +27,7 @@
 #include <stddef.h>
 #include <string.h>
 #include <time.h>
+#include <regex.h>
 
 #include "../core/weechat.h"
 #include "../core/wee-config.h"
@@ -861,9 +862,18 @@ gui_line_get_nick_tag (struct t_gui_line *line)
 int
 gui_line_has_highlight (struct t_gui_line *line)
 {
-    int rc, i, no_highlight, action, length;
+    int rc, rc_regex, i, no_highlight, action, length;
     char *msg_no_color, *ptr_msg_no_color, *highlight_words;
     const char *ptr_nick;
+    regmatch_t regex_match;
+
+    rc = 0;
+
+    /* remove color codes from line message */
+    msg_no_color = gui_color_decode (line->data->message, NULL);
+    if (!msg_no_color)
+        return 0;
+    ptr_msg_no_color = msg_no_color;
 
     /*
      * highlights are disabled on this buffer? (special value "-" means that
@@ -871,7 +881,10 @@ gui_line_has_highlight (struct t_gui_line *line)
      */
     if (line->data->buffer->highlight_words
         && (strcmp (line->data->buffer->highlight_words, "-") == 0))
-        return 0;
+    {
+        rc = 0;
+        goto end;
+    }
 
     /*
      * check if highlight is disabled for line; also check if the line is an
@@ -898,49 +911,10 @@ gui_line_has_highlight (struct t_gui_line *line)
         }
     }
     if (no_highlight)
-        return 0;
-
-    /*
-     * check if highlight is forced by a tag
-     * (with global option "weechat.look.highlight_tags")
-     */
-    if (config_highlight_tags
-        && gui_line_match_tags (line->data,
-                                config_num_highlight_tags,
-                                config_highlight_tags))
     {
-        return 1;
+        rc = 0;
+        goto end;
     }
-
-    /*
-     * check if highlight is forced by a tag
-     * (with buffer property "highlight_tags")
-     */
-    if (line->data->buffer->highlight_tags
-        && gui_line_match_tags (line->data,
-                                line->data->buffer->highlight_tags_count,
-                                line->data->buffer->highlight_tags_array))
-    {
-        return 1;
-    }
-
-    /*
-     * check that line matches highlight tags, if any (if no tag is specified,
-     * then any tag is allowed)
-     */
-    if (line->data->buffer->highlight_tags_restrict_count > 0)
-    {
-        if (!gui_line_match_tags (line->data,
-                                  line->data->buffer->highlight_tags_restrict_count,
-                                  line->data->buffer->highlight_tags_restrict_array))
-            return 0;
-    }
-
-    /* remove color codes from line message */
-    msg_no_color = gui_color_decode (line->data->message, NULL);
-    if (!msg_no_color)
-        return 0;
-    ptr_msg_no_color = msg_no_color;
 
     /*
      * if the line is an action message and that we know the nick, we skip
@@ -964,6 +938,77 @@ gui_line_has_highlight (struct t_gui_line *line)
     }
 
     /*
+     * check if highlight is disabled by a regex
+     * (with global option "weechat.look.highlight_disable_regex")
+     */
+    if (config_highlight_disable_regex)
+    {
+        rc_regex = regexec (config_highlight_disable_regex,
+                            ptr_msg_no_color, 1, &regex_match, 0);
+        if ((rc_regex == 0) && (regex_match.rm_so >= 0) && (regex_match.rm_eo > 0))
+        {
+            rc = 0;
+            goto end;
+        }
+    }
+
+    /*
+     * check if highlight is disabled by a regex
+     * (with buffer property "highlight_disable_regex")
+     */
+    if (line->data->buffer->highlight_disable_regex_compiled)
+    {
+        rc_regex = regexec (line->data->buffer->highlight_disable_regex_compiled,
+                            ptr_msg_no_color, 1, &regex_match, 0);
+        if ((rc_regex == 0) && (regex_match.rm_so >= 0) && (regex_match.rm_eo > 0))
+        {
+            rc = 0;
+            goto end;
+        }
+    }
+
+    /*
+     * check if highlight is forced by a tag
+     * (with global option "weechat.look.highlight_tags")
+     */
+    if (config_highlight_tags
+        && gui_line_match_tags (line->data,
+                                config_num_highlight_tags,
+                                config_highlight_tags))
+    {
+        rc = 1;
+        goto end;
+    }
+
+    /*
+     * check if highlight is forced by a tag
+     * (with buffer property "highlight_tags")
+     */
+    if (line->data->buffer->highlight_tags
+        && gui_line_match_tags (line->data,
+                                line->data->buffer->highlight_tags_count,
+                                line->data->buffer->highlight_tags_array))
+    {
+        rc = 1;
+        goto end;
+    }
+
+    /*
+     * check that line matches highlight tags, if any (if no tag is specified,
+     * then any tag is allowed)
+     */
+    if (line->data->buffer->highlight_tags_restrict_count > 0)
+    {
+        if (!gui_line_match_tags (line->data,
+                                  line->data->buffer->highlight_tags_restrict_count,
+                                  line->data->buffer->highlight_tags_restrict_array))
+        {
+            rc = 0;
+            goto end;
+        }
+    }
+
+    /*
      * there is highlight on line if one of buffer highlight words matches line
      * or one of global highlight words matches line
      */
@@ -974,30 +1019,34 @@ gui_line_has_highlight (struct t_gui_line *line)
                                highlight_words : line->data->buffer->highlight_words);
     if (highlight_words)
         free (highlight_words);
+    if (rc)
+        goto end;
 
-    if (!rc)
-    {
-        highlight_words = gui_buffer_string_replace_local_var (line->data->buffer,
-                                                               CONFIG_STRING(config_look_highlight));
-        rc = string_has_highlight (ptr_msg_no_color,
-                                   (highlight_words) ?
-                                   highlight_words : CONFIG_STRING(config_look_highlight));
-        if (highlight_words)
-            free (highlight_words);
-    }
+    highlight_words = gui_buffer_string_replace_local_var (line->data->buffer,
+                                                           CONFIG_STRING(config_look_highlight));
+    rc = string_has_highlight (ptr_msg_no_color,
+                               (highlight_words) ?
+                               highlight_words : CONFIG_STRING(config_look_highlight));
+    if (highlight_words)
+        free (highlight_words);
+    if (rc)
+        goto end;
 
-    if (!rc && config_highlight_regex)
+    if (config_highlight_regex)
     {
         rc = string_has_highlight_regex_compiled (ptr_msg_no_color,
                                                   config_highlight_regex);
     }
+    if (rc)
+        goto end;
 
-    if (!rc && line->data->buffer->highlight_regex_compiled)
+    if (line->data->buffer->highlight_regex_compiled)
     {
         rc = string_has_highlight_regex_compiled (ptr_msg_no_color,
                                                   line->data->buffer->highlight_regex_compiled);
     }
 
+end:
     free (msg_no_color);
 
     return rc;

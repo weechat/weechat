@@ -2293,6 +2293,36 @@ irc サーバ "libera" に含まれる全てのバッファに対して設定す
 [[highlights]]
 === ハイライト
 
+// TRANSLATION MISSING
+[[highlights_disable]]
+==== Disable highlights
+
+You can disable highlights with option
+<<option_weechat.look.highlight_disable_regex,weechat.look.highlight_disable_regex>>
+(regular expression). +
+When a highlight is disabled with this option, the other highlight options are
+ignored.
+
+For example to disable any highlight on messages with a word beginning
+with "flash" between chevrons:
+
+----
+/set weechat.look.highlight_regex "<flash.*>"
+----
+
+This can also be set with the buffer property "highlight_disable_regex".
+
+Same example, specific to the current buffer:
+
+----
+/buffer set highlight_disable_regex <flash.*>
+----
+
+[NOTE]
+バッファプロパティ "highlight_disable_regex" は設定ファイルに保存されません。 +
+これを保存するには _buffer_autoset.py_ スクリプトを使ってください: このスクリプトをインストールするには
+`+/script install buffer_autoset.py+` コマンドを使い、ヘルプを見るには `+/help buffer_autoset+` コマンドを使ってください。
+
 [[highlights_words]]
 ==== ハイライトする単語の追加
 
@@ -2305,7 +2335,7 @@ irc サーバ "libera" に含まれる全てのバッファに対して設定す
 から始まる任意の単語をハイライトするには以下のように設定します:
 
 ----
-/set weechat.look.highlight word1,word2,test*
+/set weechat.look.highlight "word1,word2,test*"
 ----
 
 単語に対してさらに具体的なルールを設定する必要がある場合、<<option_weechat.look.highlight_regex,weechat.look.highlight_regex>>
@@ -2313,7 +2343,7 @@ irc サーバ "libera" に含まれる全てのバッファに対して設定す
 という単語をハイライトするには以下のように設定します:
 
 ----
-/set weechat.look.highlight_regex flashc[oö]de|flashy
+/set weechat.look.highlight_regex "flashc[oö]de|flashy"
 ----
 
 ハイライトする単語の区切りは <<option_weechat.look.word_chars_highlight,weechat.look.word_chars_highlight>>

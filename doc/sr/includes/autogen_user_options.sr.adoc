@@ -750,6 +750,12 @@
 ** вредности: било који стринг
 ** подразумевана вредност: `+""+`
 
+* [[option_weechat.look.highlight_disable_regex]] *weechat.look.highlight_disable_regex*
+** опис: pass:none[POSIX extended regular expression used to prevent any highlight from a message: this option has higher priority over other highlight options (if the string is found in the message, the highlight is disabled and the other options are ignored), regular expression is case insensitive (use "(?-i)" at beginning to make it case sensitive), examples: "<flash.*>", "(?-i)<Flash.*>"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+""+`
+
 * [[option_weechat.look.highlight_regex]] *weechat.look.highlight_regex*
 ** опис: pass:none[POSIX проширени регуларни израз који се користи за проверу да ли порука садржи истицање или не, барем једно подударање мора бити окружено граничницима (карактери који се разликују од: алфанумерика, „-”, „_” и „|”), регуларни израз не прави разлику у величини слова (употребите „(?-i)” не почетку ако желите да се величина слова узима у обзир), примери: „flashcode|flashy”, „(?-i)FlashCode|flashy”]
 ** тип: стринг

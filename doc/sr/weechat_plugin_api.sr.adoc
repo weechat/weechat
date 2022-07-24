@@ -12736,6 +12736,8 @@ const char *weechat_buffer_get_string (struct t_gui_buffer *buffer,
 ** _input_: текст уноса
 ** _text_search_input_: сачувани унос пре претраге текста
 ** _highlight_words_: листа речи које се истичу
+// TRANSLATION MISSING
+** _highlight_disable_regex_: POSIX extended regular expression for disabling highlight
 ** _highlight_regex_: POSIX проширени регуларни израз за истицање
 ** _highlight_tags_restrict_: ограничава истицање само на поруке са наведеним ознакама
 ** _highlight_tags_: истицање се форсира за поруке са наведеним ознакама
@@ -12785,6 +12787,7 @@ void *weechat_buffer_pointer (struct t_gui_buffer *buffer,
 * _buffer_: показивач на бафер
 * _property_: име особине:
 ** _plugin_: показивач на додатак који је креирао овај бафер (NULL за главни бафер програма WeeChat)
+** _highlight_disable_regex_compiled_: компајлиран регуларни израз _highlight_disable_regex_
 ** _highlight_regex_compiled_: компајлиран регуларни израз _highlight_regex_
 
 Повратна вредност:
@@ -12922,6 +12925,10 @@ void weechat_buffer_set (struct t_gui_buffer *buffer, const char *property,
 
 | highlight_words_del | | листа речи раздвојених запетама
 | Лист речи раздвојених запетама које треба да се уклоне из речи које се истичу у овом баферу.
+
+// TRANSLATION MISSING
+| highlight_disable_regex | | any string
+| POSIX extended regular expression for disabling highlight.
 
 | highlight_regex | | било који стринг
 | POSIX проширени регуларни израз за истицање.
