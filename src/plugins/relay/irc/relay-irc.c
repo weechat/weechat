@@ -1361,15 +1361,14 @@ relay_irc_recv (struct t_relay_client *client, const char *data)
     if (num_params > 0)
     {
         params = malloc ((num_params + 1) * sizeof (params[0]));
-        if (params)
+        if (!params)
+            goto end;
+        for (i = 0; i < num_params; i++)
         {
-            for (i = 0; i < num_params; i++)
-            {
-                snprintf (str_param, sizeof (str_param), "param%d", i + 1);
-                params[i] = weechat_hashtable_get (hash_parsed, str_param);
-            }
-            params[num_params] = NULL;
+            snprintf (str_param, sizeof (str_param), "param%d", i + 1);
+            params[i] = weechat_hashtable_get (hash_parsed, str_param);
         }
+        params[num_params] = NULL;
     }
 
     /*
