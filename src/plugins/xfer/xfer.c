@@ -1443,7 +1443,7 @@ xfer_add_cb (const void *pointer, void *data,
     if (short_filename)
         free (short_filename);
     weechat_infolist_reset_item_cursor (infolist);
-    return WEECHAT_RC_OK;
+    return WEECHAT_RC_OK_EAT;
 
 error:
     if (filename2)

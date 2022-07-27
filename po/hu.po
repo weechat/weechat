@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2022-07-24 22:18+0200\n"
+"POT-Creation-Date: 2022-07-27 21:18+0200\n"
 "PO-Revision-Date: 2022-04-24 10:20+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6036,6 +6036,15 @@ msgstr "%s \"%s\" parancs nem futtatható a szerverablakban\n"
 #, fuzzy, c-format
 msgid "%s%s: unable to resolve local address of server socket: error %d %s"
 msgstr "%s DCC: nem sikerült 'nonblock' opciót beállítani a csatornán\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to create DCC"
+msgstr "%s nem sikerült a szervert létrehozni\n"
+
+#, c-format
+msgid ""
+"%s%s: unable to create DCC, please check that the \"xfer\" plugin is loaded"
+msgstr ""
 
 #, fuzzy, c-format
 msgid "%s%s: not connected to server \"%s\"!"

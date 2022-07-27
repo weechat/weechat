@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2022-07-24 22:18+0200\n"
+"POT-Creation-Date: 2022-07-27 21:18+0200\n"
 "PO-Revision-Date: 2022-04-24 10:20+0200\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6837,6 +6837,16 @@ msgid "%s%s: unable to resolve local address of server socket: error %d %s"
 msgstr ""
 "%s%s: impossibile impostare l'opzione \"nonblock\" per il socket: errore %d "
 "%s"
+
+#, fuzzy, c-format
+#| msgid "%s%s: unable to create socket"
+msgid "%s%s: unable to create DCC"
+msgstr "%s%s: impossibile creare il socket"
+
+#, c-format
+msgid ""
+"%s%s: unable to create DCC, please check that the \"xfer\" plugin is loaded"
+msgstr ""
 
 #, c-format
 msgid "%s%s: not connected to server \"%s\"!"

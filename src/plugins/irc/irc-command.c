@@ -2072,13 +2072,13 @@ IRC_COMMAND_CALLBACK(dcc)
                 weechat_infolist_new_var_string (item, "filename", argv_eol[3]);
                 weechat_infolist_new_var_string (item, "local_address", str_address);
                 weechat_infolist_new_var_integer (item, "socket", ptr_server->sock);
-                (void) weechat_hook_signal_send ("xfer_add",
-                                                 WEECHAT_HOOK_SIGNAL_POINTER,
-                                                 infolist);
+                rc = weechat_hook_signal_send ("xfer_add",
+                                               WEECHAT_HOOK_SIGNAL_POINTER,
+                                               infolist);
             }
             weechat_infolist_free (infolist);
         }
-        return WEECHAT_RC_OK;
+        goto end;
     }
 
     /* DCC CHAT */
@@ -2100,16 +2100,38 @@ IRC_COMMAND_CALLBACK(dcc)
                           "irc.%s.%s", ptr_server->name, argv[2]);
                 weechat_infolist_new_var_string (item, "charset_modifier", charset_modifier);
                 weechat_infolist_new_var_string (item, "local_address", str_address);
-                (void) weechat_hook_signal_send ("xfer_add",
-                                                 WEECHAT_HOOK_SIGNAL_POINTER,
-                                                 infolist);
+                rc = weechat_hook_signal_send ("xfer_add",
+                                               WEECHAT_HOOK_SIGNAL_POINTER,
+                                               infolist);
             }
             weechat_infolist_free (infolist);
         }
-        return WEECHAT_RC_OK;
+        goto end;
     }
 
     WEECHAT_COMMAND_ERROR;
+
+end:
+    switch (rc)
+    {
+        case WEECHAT_RC_OK_EAT:
+            /* signal has been properly handled by the xfer plugin */
+            break;
+        case WEECHAT_RC_ERROR:
+            weechat_printf (
+                ptr_server->buffer,
+                _("%s%s: unable to create DCC"),
+                weechat_prefix ("error"), IRC_PLUGIN_NAME);
+            break;
+        default:
+            weechat_printf (
+                ptr_server->buffer,
+                _("%s%s: unable to create DCC, please check that "
+                  "the \"xfer\" plugin is loaded"),
+                weechat_prefix ("error"), IRC_PLUGIN_NAME);
+            break;
+    }
+    return WEECHAT_RC_OK;
 }
 
 /*

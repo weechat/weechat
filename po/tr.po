@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2022-07-24 22:18+0200\n"
+"POT-Creation-Date: 2022-07-27 21:18+0200\n"
 "PO-Revision-Date: 2022-06-18 16:13+0200\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7853,6 +7853,16 @@ msgstr "%s%s: \"%s\" komutu, bir sunucu arabelleğinde çalıştırılamaz"
 #, c-format
 msgid "%s%s: unable to resolve local address of server socket: error %d %s"
 msgstr "%s%s: Sunucu soketinin yerel adresi çözülemiyor: Hata %d %s"
+
+#, fuzzy, c-format
+#| msgid "%s%s: unable to create socket"
+msgid "%s%s: unable to create DCC"
+msgstr "%s%s: Soket oluşturulamıyor"
+
+#, c-format
+msgid ""
+"%s%s: unable to create DCC, please check that the \"xfer\" plugin is loaded"
+msgstr ""
 
 #, c-format
 msgid "%s%s: not connected to server \"%s\"!"

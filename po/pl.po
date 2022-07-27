@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2022-07-24 22:18+0200\n"
+"POT-Creation-Date: 2022-07-27 21:18+0200\n"
 "PO-Revision-Date: 2022-06-18 16:12+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
@@ -7990,6 +7990,16 @@ msgstr "%s%s: komenda \"%s\" nie można być wykonana w buforze serwera"
 msgid "%s%s: unable to resolve local address of server socket: error %d %s"
 msgstr ""
 "%s%s: nie można odczytać lokalnego adresu serwera dla gniazda: błąd %d %s"
+
+#, fuzzy, c-format
+#| msgid "%s%s: unable to create socket"
+msgid "%s%s: unable to create DCC"
+msgstr "%s%s: nie można utworzyć gniazda"
+
+#, c-format
+msgid ""
+"%s%s: unable to create DCC, please check that the \"xfer\" plugin is loaded"
+msgstr ""
 
 #, c-format
 msgid "%s%s: not connected to server \"%s\"!"

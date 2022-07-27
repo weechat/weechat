@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2022-07-24 22:18+0200\n"
-"PO-Revision-Date: 2022-07-24 22:19+0200\n"
+"POT-Creation-Date: 2022-07-27 21:18+0200\n"
+"PO-Revision-Date: 2022-07-27 21:41+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -8040,6 +8040,17 @@ msgstr ""
 msgid "%s%s: unable to resolve local address of server socket: error %d %s"
 msgstr ""
 "%s%s : impossible de résoudre l'adresse locale du socket : erreur %d %s"
+
+#, c-format
+msgid "%s%s: unable to create DCC"
+msgstr "%s%s : impossible de créer le DCC"
+
+#, c-format
+msgid ""
+"%s%s: unable to create DCC, please check that the \"xfer\" plugin is loaded"
+msgstr ""
+"%s%s : impossible de créer le DCC, merci de vérifier que l'extension "
+"\"xfer\" est bien chargée"
 
 #, c-format
 msgid "%s%s: not connected to server \"%s\"!"
