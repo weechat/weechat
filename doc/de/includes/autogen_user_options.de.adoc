@@ -751,7 +751,7 @@
 ** Standardwert: `+""+`
 
 * [[option_weechat.look.highlight_disable_regex]] *weechat.look.highlight_disable_regex*
-** Beschreibung: pass:none[POSIX extended regular expression used to prevent any highlight from a message: this option has higher priority over other highlight options (if the string is found in the message, the highlight is disabled and the other options are ignored), regular expression is case insensitive (use "(?-i)" at beginning to make it case sensitive), examples: "<flash.*>", "(?-i)<Flash.*>"]
+** Beschreibung: pass:none[Erweiterter regulärer POSIX-Ausdruck, der verwendet wird, um jede Hervorhebung von einer Nachricht zu verhindern: Diese Option hat eine höhere Priorität als andere Hervorhebungsoptionen (sofern die Zeichenkette in der Nachricht gefunden wird, die Hervorhebung deaktiviert ist und die andereOptionen ignoriert werden), bei regulären Ausdrücken wird die Groß-/Kleinschreibung nicht beachtet (verwenden Sie "(?-i)" am Anfang, um Groß- und Kleinschreibung zu beachten), Beispiele: "<flash.*>", "(?-i)<Flash.*>"]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+""+`

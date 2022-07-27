@@ -128,7 +128,7 @@
 
 | weechat | uptime | Laufzeit von WeeChat (Format: "days:hh:mm:ss") | "days" (Anzahl der Tage) oder "seconds" (Anzahl der Sekunden) (optional)
 
-| weechat | uptime_current | WeeChat uptime for the current process only (upgrades with /upgrade command are ignored) (format: "days:hh:mm:ss") | "days" (Anzahl der Tage) oder "seconds" (Anzahl der Sekunden) (optional)
+| weechat | uptime_current | WeeChat-Betriebszeit für den aktuellen Prozess (Upgrades mit /upgrade Befehlwerden ignoriert) (Format: "Tage:hh:mm:ss") | "days" (Anzahl der Tage) oder "seconds" (Anzahl der Sekunden) (optional)
 
 | weechat | version | WeeChat-Version | -
 
