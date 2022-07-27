@@ -965,8 +965,6 @@ xfer_free (struct t_xfer *xfer)
         free (xfer->remote_address);
     if (xfer->remote_address_str)
         free (xfer->remote_address_str);
-    if (xfer->buffer)
-        free (xfer->buffer);
     if (xfer->remote_nick_color)
         free (xfer->remote_nick_color);
     if (xfer->hook_fd)
