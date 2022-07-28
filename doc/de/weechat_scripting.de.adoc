@@ -1376,14 +1376,12 @@ Das Ergebnis ist eine Hashtabelle mit folgenden Schlüsseln
 | der Text (zum Beispiel eine Nachricht eines Users).
 | `+hello!+`
 
-// TRANSLATION MISSING
 | paramN | 3.4
-| Command parameter (from 1 to N).
+| Befehlsparameter (von 1 bis N).
 | `+#weechat+`
 
-// TRANSLATION MISSING
 | num_params | 3.4
-| Number of command parameters.
+| Anzahl der Befehlsparameter.
 | `+2+`
 
 | pos_command | 1.3

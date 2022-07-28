@@ -2206,28 +2206,27 @@ das Skript _buffer_autoset.py_: Um das Skript zu installieren `+/script install 
 und um eine Hilfe zu erhalten wie man es nutzt: `+/help buffer_autoset+`.
 
 [[highlights]]
-=== Highlights
+=== Hervorhebungen
 
-// TRANSLATION MISSING
 [[highlights_disable]]
-==== Disable highlights
+==== Hervorhebungen deaktivieren
 
-You can disable highlights with option
+Hervorhebungen können mit der Option
 <<option_weechat.look.highlight_disable_regex,weechat.look.highlight_disable_regex>>
-(regular expression). +
-When a highlight is disabled with this option, the other highlight options are
-ignored.
+(regulärer Ausdruck) deaktiviert werden. +
+Wenn eine Hervorhebung mit dieser Option deaktiviert wird, werden die anderen
+Hervorhebungsoptionen ignoriert.
 
-For example to disable any highlight on messages with a word beginning
-with "flash" between chevrons:
+Zum Beispiel, Nachrichten die eine Hervorhebung besitzen, wo die Nachricht
+mit "flash" zwischen spitzen Klammern beginnt:
 
 ----
 /set weechat.look.highlight_regex "<flash.*>"
 ----
 
-This can also be set with the buffer property "highlight_disable_regex".
+Dies kann auch mit der Buffereigenschaft „highlight_disable_regex“ eingestellt werden.
 
-Same example, specific to the current buffer:
+Gleiches Beispiel, spezifisch für den aktuellen Buffer:
 
 ----
 /buffer set highlight_disable_regex <flash.*>
