@@ -167,6 +167,8 @@ buflist_command_init ()
            "    - ${hotlist}: the raw hotlist\n"
            "    - ${hotlist_priority}: \"none\", \"low\", \"message\", "
            "\"private\" or \"highlight\"\n"
+           "    - ${hotlist_priority_number}: -1 = none, 0 = low, 1 = message, "
+           "2 = private, 3 = highlight\n"
            "    - ${format_lag}: the lag for an IRC server buffer, empty if "
            "there's no lag (evaluation of option buflist.format.lag)\n"
            "    - ${format_tls_version}: indicator of TLS version for a server "

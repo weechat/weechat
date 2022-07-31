@@ -23,6 +23,7 @@ New features::
   * core: add option weechat.look.highlight_disable_regex and buffer property "highlight_disable_regex" (issue #1798)
   * api: rename function string_build_with_split_string to string_rebuild_split_string, add arguments "index_start" and "index_end"
   * api: add info "uptime_current"
+  * buflist: add variable `${hotlist_priority_number}` (integer version of `${hotlist_priority}`)
   * irc: display an error message when using command /dcc without xfer plugin loaded
 
 Bug fixes::

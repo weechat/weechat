@@ -2328,6 +2328,7 @@ Les variables suivantes peuvent être utilisées dans ces options :
     - ${format_hotlist} : la hotlist formatée (évaluation de l'option buflist.format.hotlist)
     - ${hotlist} : la hotlist brute
     - ${hotlist_priority} : "none", "low", "message", "private" ou "highlight"
+    - ${hotlist_priority_number} : -1 = none, 0 = low, 1 = message, 2 = private, 3 = highlight
     - ${format_lag} : le lag pour un tampon de serveur IRC, vide s'il n'y a pas de lag (évaluation de l'option buflist.format.lag)
     - ${format_tls_version}: indicateur de la version de TLS pour le serveur courant, vide pour les canaux (évaluation de l'option buflist.format.tls_version)
 ----
