@@ -255,7 +255,7 @@ Bug fixes::
   * core: set server name when connecting to server with TLS (SNI extension) only if it's not an IPV4/IPv6 (issue #1635)
   * core: use function mallinfo2 instead of mallinfo when available (issue #1636)
   * core: display a warning when the file with certificate authorities is not found (option weechat.network.gnutls_ca_file)
-  * core: evaluate left/right part of comparison after split on the comparison operator in ${if:xxx} (issue #1627)
+  * core: evaluate left/right part of comparison after split on the comparison operator in `${if:xxx}` (issue #1627)
   * core: prevent switching to start of visited buffers when jumping to next (issue #1591, issue #1592)
   * core: recreate buflist and fset bars on `/reload` when WeeChat is started without configuration files (issue #1618)
   * buflist: fix comparison of hotlists in option buflist.look.sort (issue #1621)
@@ -664,7 +664,7 @@ New features::
   * api: add functions string_base_encode and string_base_decode, remove functions string_encode_base64 and string_decode_base64
   * api: add support of Time-based One-Time Password (TOTP), add infos "totp_generate" and "totp_validate"
   * buflist: add default keys kbd:[Ctrl+F1]/kbd:[Ctrl+F2] to scroll up/down one page in buflist (same action as kbd:[F1]/kbd:[F2])
-  * buflist: add variable ${number2}, always set with the indented buffer number
+  * buflist: add variable `${number2}`, always set with the indented buffer number
   * exec: add option exec.command.shell to customize the shell used with `/exec -sh`
   * relay: add support of close frame in websocket connection (issue #1281)
   * relay: add support of Time-based One-Time Password (TOTP) as second authentication factor in weechat protocol
@@ -811,7 +811,7 @@ New features::
   * api: add hashtable with variables in plugin structure
   * api: add time in info "date" (WeeChat compilation date/time) (issue #1138)
   * irc: add server option "split_msg_max_length"
-  * irc: allow ${irc_server.xxx} and ${server} in server evaluated options (issue #1144)
+  * irc: allow `${irc_server.xxx}` and `${server}` in server evaluated options (issue #1144)
   * logger: add option logger.file.fsync (issue #1145)
   * logger: add option logger.look.backlog_conditions (issue #1132)
   * script: change default value of option script.look.sort from "p,n" to "i,p,n"
