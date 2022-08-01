@@ -4305,10 +4305,10 @@ API_FUNC(infolist_new_var_pointer)
 
 API_FUNC(infolist_new_var_time)
 {
-    int value;
+    long value;
     const char *result;
 
-    API_INIT_FUNC(1, "infolist_new_var_time", "ssi", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "infolist_new_var_time", "ssn", API_RETURN_EMPTY);
 
     v8::String::Utf8Value item(args[0]);
     v8::String::Utf8Value name(args[1]);
@@ -4318,7 +4318,7 @@ API_FUNC(infolist_new_var_time)
         weechat_infolist_new_var_time (
             (struct t_infolist_item *)API_STR2PTR(*item),
             *name,
-            value));
+            (time_t)value));
 
     API_RETURN_STRING(result);
 }

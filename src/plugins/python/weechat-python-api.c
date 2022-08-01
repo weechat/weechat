@@ -4540,18 +4540,18 @@ API_FUNC(infolist_new_var_time)
 {
     char *item, *name;
     const char *result;
-    int value;
+    long value;
 
     API_INIT_FUNC(1, "infolist_new_var_time", API_RETURN_EMPTY);
     item = NULL;
     name = NULL;
     value = 0;
-    if (!PyArg_ParseTuple (args, "ssi", &item, &name, &value))
+    if (!PyArg_ParseTuple (args, "ssl", &item, &name, &value))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     result = API_PTR2STR(weechat_infolist_new_var_time (API_STR2PTR(item),
                                                         name,
-                                                        value));
+                                                        (time_t)value));
 
     API_RETURN_STRING(result);
 }

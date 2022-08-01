@@ -4658,7 +4658,7 @@ API_FUNC(infolist_new_var_time)
 {
     const char *item, *name;
     const char *result;
-    int value;
+    long value;
 
     API_INIT_FUNC(1, "infolist_new_var_time", API_RETURN_EMPTY);
     if (lua_gettop (L) < 3)
@@ -4670,7 +4670,7 @@ API_FUNC(infolist_new_var_time)
 
     result = API_PTR2STR(weechat_infolist_new_var_time (API_STR2PTR(item),
                                                         name,
-                                                        value));
+                                                        (time_t)value));
 
     API_RETURN_STRING(result);
 }

@@ -4594,7 +4594,7 @@ API_FUNC(infolist_new_var_time)
 
     result = API_PTR2STR(weechat_infolist_new_var_time (API_STR2PTR(item),
                                                         name,
-                                                        SvIV (ST (2)))); /* value */
+                                                        (time_t)SvIV (ST (2)))); /* value */
 
     API_RETURN_STRING(result);
 }

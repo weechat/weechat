@@ -4413,7 +4413,7 @@ weechat_guile_api_infolist_new_var_time (SCM item, SCM name, SCM value)
 
     result = API_PTR2STR(weechat_infolist_new_var_time (API_STR2PTR(API_SCM_TO_STRING(item)),
                                                         API_SCM_TO_STRING(name),
-                                                        scm_to_int (value)));
+                                                        (time_t)scm_to_long (value)));
 
     API_RETURN_STRING(result);
 }

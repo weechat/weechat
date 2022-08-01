@@ -4953,18 +4953,19 @@ API_FUNC(infolist_new_var_time)
 {
     Tcl_Obj *objp;
     const char *result;
-    int i, value;
+    int i;
+    long value;
 
     API_INIT_FUNC(1, "infolist_new_var_time", API_RETURN_EMPTY);
     if (objc < 4)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
-    if (Tcl_GetIntFromObj (interp, objv[3], &value) != TCL_OK)
+    if (Tcl_GetLongFromObj (interp, objv[3], &value) != TCL_OK)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     result = API_PTR2STR(weechat_infolist_new_var_time (API_STR2PTR(Tcl_GetStringFromObj (objv[1], &i)), /* item */
                                                         Tcl_GetStringFromObj (objv[2], &i), /* name */
-                                                        value));
+                                                        (time_t)value));
 
     API_RETURN_STRING(result);
 }
