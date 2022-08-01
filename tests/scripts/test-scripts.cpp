@@ -135,7 +135,7 @@ TEST(Scripts, API)
         { "ruby",       "rb"  },
         { "lua",        "lua" },
         { "tcl",        "tcl" },
-        { "scm",        "scm" },
+        { "guile",      "scm" },
         { "javascript", "js"  },
         { "php",        "php" },
         { NULL,         NULL  }

@@ -33,6 +33,10 @@ Bug fixes::
   * relay: fix parsing of IRC messages received from clients (issue #1796)
   * xfer: fix crash when closing DCC chat buffer
 
+Tests::
+
+  * scripts: fix run of Guile test script
+
 [[v3.6]]
 == Version 3.6 (2022-07-10)
 
