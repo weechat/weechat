@@ -116,7 +116,7 @@ extern "C"
 #define API_RETURN_INT(__int)                                           \
     return v8::Integer::New(__int)
 #define API_RETURN_LONG(__int)                                          \
-    return v8::Integer::New(__int)
+    return v8::Number::New(__int)
 
 
 /*
