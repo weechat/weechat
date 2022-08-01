@@ -5,7 +5,7 @@ on:
   - pull_request
 
 env:
-  WEECHAT_DEPENDENCIES: devscripts equivs python3-pip libenchant-dev autopoint cmake ninja-build lcov pkg-config libncursesw5-dev gem2deb libperl-dev python2-dev python3-dev libaspell-dev liblua5.3-dev tcl8.6-dev guile-2.2-dev libv8-dev libcurl4-gnutls-dev libgcrypt20-dev libgnutls28-dev libzstd-dev zlib1g-dev curl libcpputest-dev php8.0-dev libphp8.0-embed libargon2-dev libsodium-dev pylint python3-bandit asciidoctor ruby-pygments.rb
+  WEECHAT_DEPENDENCIES: devscripts equivs python3-pip autopoint cmake ninja-build lcov pkg-config libncursesw5-dev gem2deb libperl-dev python2-dev python3-dev libaspell-dev liblua5.3-dev tcl8.6-dev guile-2.2-dev libv8-dev libcurl4-gnutls-dev libgcrypt20-dev libgnutls28-dev libzstd-dev zlib1g-dev curl libcpputest-dev php8.0-dev libphp8.0-embed libargon2-dev libsodium-dev pylint python3-bandit asciidoctor ruby-pygments.rb
 
 jobs:
 
@@ -14,7 +14,7 @@ jobs:
     strategy:
       matrix:
         os:
-          - ubuntu-20.04
+          - ubuntu-22.04
         config:
           - { name: "cmake_gcc", cc: "gcc", cxx: "g++", tool: "cmake", args: "" }
           - { name: "cmake_gcc_ninja", cc: "gcc", cxx: "g++", tool: "cmake", args: "-G Ninja" }
@@ -133,7 +133,7 @@ jobs:
     strategy:
       matrix:
         os:
-          - ubuntu-20.04
+          - ubuntu-22.04
 
     name: "Build Debian on ${{ matrix.os }}"
     runs-on: ${{ matrix.os }}
