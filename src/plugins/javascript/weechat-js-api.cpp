@@ -2148,10 +2148,11 @@ weechat_js_api_hook_timer_cb (const void *pointer, void *data,
 
 API_FUNC(hook_timer)
 {
-    int interval, align_second, max_calls;
+    long interval;
+    int align_second, max_calls;
     const char *result;
 
-    API_INIT_FUNC(1, "hook_timer", "iiiss", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hook_timer", "niiss", API_RETURN_EMPTY);
 
     interval = args[0]->IntegerValue();
     align_second = args[1]->IntegerValue();

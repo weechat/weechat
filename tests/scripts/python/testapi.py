@@ -219,6 +219,11 @@ def command_run_cb(data, buf, command):
     return weechat.WEECHAT_RC_OK
 
 
+def timer_cb(data, remaining_calls):
+    """Timer callback."""
+    return weechat.WEECHAT_RC_OK
+
+
 def test_hooks():
     """Test function hook_command."""
     # hook_completion / hook_completion_args / and hook_command
@@ -237,6 +242,15 @@ def test_hooks():
     weechat.unhook(hook_cmd_run)
     weechat.unhook(hook_cmd)
     weechat.unhook(hook_cmplt)
+    # hook_timer
+    hook_timer = weechat.hook_timer(5000111000, 0, 1,
+                                    'timer_cb', 'timer_cb_data')
+    ptr_infolist = weechat.infolist_get('hook', hook_timer, '')
+    check(ptr_infolist != '')
+    check(weechat.infolist_next(ptr_infolist) == 1)
+    check(weechat.infolist_string(ptr_infolist, 'interval') == '5000111000')
+    weechat.infolist_free(ptr_infolist)
+    weechat.unhook(hook_timer)
 
 
 def test_command():

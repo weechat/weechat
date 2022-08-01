@@ -151,7 +151,7 @@ extern struct t_hook *plugin_script_api_hook_command_run (struct t_weechat_plugi
                                                           const char *data);
 extern struct t_hook *plugin_script_api_hook_timer (struct t_weechat_plugin *weechat_plugin,
                                                     struct t_plugin_script *script,
-                                                    int interval, int align_second,
+                                                    long interval, int align_second,
                                                     int max_calls,
                                                     int (*callback)(const void *pointer,
                                                                     void *data,

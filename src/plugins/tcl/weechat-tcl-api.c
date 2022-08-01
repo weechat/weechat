@@ -2554,13 +2554,14 @@ API_FUNC(hook_timer)
 {
     Tcl_Obj *objp;
     const char *result;
-    int i, interval, align_second, max_calls;
+    long interval;
+    int i, align_second, max_calls;
 
     API_INIT_FUNC(1, "hook_timer", API_RETURN_EMPTY);
     if (objc < 6)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
-    if ((Tcl_GetIntFromObj (interp, objv[1], &interval) != TCL_OK)
+    if ((Tcl_GetLongFromObj (interp, objv[1], &interval) != TCL_OK)
         || (Tcl_GetIntFromObj (interp, objv[2], &align_second) != TCL_OK)
         || (Tcl_GetIntFromObj (interp, objv[3], &max_calls) != TCL_OK))
         API_WRONG_ARGS(API_RETURN_EMPTY);

@@ -2264,7 +2264,8 @@ weechat_python_api_hook_timer_cb (const void *pointer, void *data,
 
 API_FUNC(hook_timer)
 {
-    int interval, align_second, max_calls;
+    long interval;
+    int align_second, max_calls;
     char *function, *data;
     const char *result;
 
@@ -2274,7 +2275,7 @@ API_FUNC(hook_timer)
     max_calls = 0;
     function = NULL;
     data = NULL;
-    if (!PyArg_ParseTuple (args, "iiiss", &interval, &align_second, &max_calls,
+    if (!PyArg_ParseTuple (args, "liiss", &interval, &align_second, &max_calls,
                            &function, &data))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 

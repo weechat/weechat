@@ -2782,7 +2782,8 @@ static VALUE
 weechat_ruby_api_hook_timer (VALUE class, VALUE interval, VALUE align_second,
                              VALUE max_calls, VALUE function, VALUE data)
 {
-    int c_interval, c_align_second, c_max_calls;
+    long c_interval;
+    int c_align_second, c_max_calls;
     char *c_function, *c_data;
     const char *result;
 
@@ -2797,7 +2798,7 @@ weechat_ruby_api_hook_timer (VALUE class, VALUE interval, VALUE align_second,
     Check_Type (function, T_STRING);
     Check_Type (data, T_STRING);
 
-    c_interval = NUM2INT (interval);
+    c_interval = NUM2LONG (interval);
     c_align_second = NUM2INT (align_second);
     c_max_calls = NUM2INT (max_calls);
     c_function = StringValuePtr (function);

@@ -2361,7 +2361,8 @@ weechat_lua_api_hook_timer_cb (const void *pointer, void *data,
 
 API_FUNC(hook_timer)
 {
-    int interval, align_second, max_calls;
+    long interval;
+    int align_second, max_calls;
     const char *function, *data;
     const char *result;
 

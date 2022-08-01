@@ -2376,7 +2376,8 @@ API_FUNC(hook_timer)
     zend_long z_interval, z_align_second, z_max_calls;
     zval *z_callback;
     zend_string *z_data;
-    int interval, align_second, max_calls;
+    long interval;
+    int align_second, max_calls;
     char *data;
     const char *result;
 
@@ -2386,7 +2387,7 @@ API_FUNC(hook_timer)
                                &z_data) == FAILURE)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
-    interval = (int)z_interval;
+    interval = (long)z_interval;
     align_second = (int)z_align_second;
     max_calls = (int)z_max_calls;
     weechat_php_get_function_name (z_callback, callback_name);

@@ -2255,7 +2255,7 @@ weechat_guile_api_hook_timer (SCM interval, SCM align_second, SCM max_calls,
 
     result = API_PTR2STR(plugin_script_api_hook_timer (weechat_guile_plugin,
                                                        guile_current_script,
-                                                       scm_to_int (interval),
+                                                       scm_to_long (interval),
                                                        scm_to_int (align_second),
                                                        scm_to_int (max_calls),
                                                        &weechat_guile_api_hook_timer_cb,
