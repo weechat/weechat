@@ -23,6 +23,8 @@ Unparse AST tree to generate scripts in all supported languages
 """
 
 # pylint: disable=too-many-lines,unnecessary-pass,useless-object-inheritance
+# pylint: disable=consider-using-f-string
+# pylint: disable=super-with-arguments
 
 from __future__ import print_function
 import argparse

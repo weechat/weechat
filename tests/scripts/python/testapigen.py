@@ -31,6 +31,10 @@ It uses the following scripts:
 
 # pylint: disable=wrong-import-order,wrong-import-position
 # pylint: disable=useless-object-inheritance
+# pylint: disable=consider-using-f-string
+# pylint: disable=super-with-arguments
+# pylint: disable=consider-using-with
+# pylint: disable=unspecified-encoding
 
 from __future__ import print_function
 import argparse
