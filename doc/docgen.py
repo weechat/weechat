@@ -487,7 +487,8 @@ class AutogenDoc():
             f'autogen_{name}.{self.locale[:2]}.adoc',
         )
         self.filename_tmp = f'{self.filename}.tmp'
-        self._file = open(self.filename_tmp, 'w')
+        # pylint: disable=consider-using-with
+        self._file = open(self.filename_tmp, 'w', encoding='utf-8')
 
     def write_autogen_files(self, weechat_doc):
         """Write auto-generated files."""
