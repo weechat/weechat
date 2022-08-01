@@ -1902,7 +1902,7 @@ weechat_guile_api_print_date_tags (SCM buffer, SCM date, SCM tags, SCM message)
     plugin_script_api_printf_date_tags (weechat_guile_plugin,
                                         guile_current_script,
                                         API_STR2PTR(API_SCM_TO_STRING(buffer)),
-                                        scm_to_int (date),
+                                        (time_t)scm_to_long (date),
                                         API_SCM_TO_STRING(tags),
                                         "%s", API_SCM_TO_STRING(message));
 
@@ -1940,7 +1940,7 @@ weechat_guile_api_print_y_date_tags (SCM buffer, SCM y, SCM date, SCM tags,
                                           guile_current_script,
                                           API_STR2PTR(API_SCM_TO_STRING(buffer)),
                                           scm_to_int (y),
-                                          scm_to_int (date),
+                                          (time_t)scm_to_long (date),
                                           API_SCM_TO_STRING(tags),
                                           "%s", API_SCM_TO_STRING(message));
 

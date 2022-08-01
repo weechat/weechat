@@ -1787,9 +1787,9 @@ API_FUNC(print)
 
 API_FUNC(print_date_tags)
 {
-    int date;
+    long date;
 
-    API_INIT_FUNC(1, "print_date_tags", "siss", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "print_date_tags", "snss", API_RETURN_ERROR);
 
     v8::String::Utf8Value buffer(args[0]);
     date = args[1]->IntegerValue();
@@ -1800,7 +1800,7 @@ API_FUNC(print_date_tags)
         weechat_js_plugin,
         js_current_script,
         (struct t_gui_buffer *)API_STR2PTR(*buffer),
-        date,
+        (time_t)date,
         *tags,
         "%s", *message);
 
@@ -1828,9 +1828,10 @@ API_FUNC(print_y)
 
 API_FUNC(print_y_date_tags)
 {
-    int y, date;
+    int y;
+    long date;
 
-    API_INIT_FUNC(1, "print_y_date_tags", "siiss", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "print_y_date_tags", "sinss", API_RETURN_ERROR);
 
     v8::String::Utf8Value buffer(args[0]);
     y = args[1]->IntegerValue();
@@ -1842,7 +1843,7 @@ API_FUNC(print_y_date_tags)
                                           js_current_script,
                                           (struct t_gui_buffer *)API_STR2PTR(*buffer),
                                           y,
-                                          date,
+                                          (time_t)date,
                                           *tags,
                                           "%s", *message);
 

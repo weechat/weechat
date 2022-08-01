@@ -1981,7 +1981,7 @@ API_FUNC(print)
 API_FUNC(print_date_tags)
 {
     const char *buffer, *tags, *message;
-    int date;
+    long date;
 
     API_INIT_FUNC(1, "print_date_tags", API_RETURN_ERROR);
     if (lua_gettop (L) < 4)
@@ -1995,7 +1995,7 @@ API_FUNC(print_date_tags)
     plugin_script_api_printf_date_tags (weechat_lua_plugin,
                                         lua_current_script,
                                         API_STR2PTR(buffer),
-                                        date,
+                                        (time_t)date,
                                         tags,
                                         "%s", message);
 
@@ -2027,7 +2027,8 @@ API_FUNC(print_y)
 API_FUNC(print_y_date_tags)
 {
     const char *buffer, *tags, *message;
-    int y, date;
+    int y;
+    long date;
 
     API_INIT_FUNC(1, "print_y_date_tags", API_RETURN_ERROR);
     if (lua_gettop (L) < 5)
@@ -2043,7 +2044,7 @@ API_FUNC(print_y_date_tags)
                                           lua_current_script,
                                           API_STR2PTR(buffer),
                                           y,
-                                          date,
+                                          (time_t)date,
                                           tags,
                                           "%s", message);
 

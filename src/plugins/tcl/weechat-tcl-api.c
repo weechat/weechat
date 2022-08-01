@@ -2146,13 +2146,14 @@ API_FUNC(print_date_tags)
 {
     Tcl_Obj *objp;
     char *buffer, *tags, *message;
-    int i, date;
+    int i;
+    long date;
 
     API_INIT_FUNC(1, "print_date_tags", API_RETURN_ERROR);
     if (objc < 5)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
-    if (Tcl_GetIntFromObj (interp, objv[2], &date) != TCL_OK)
+    if (Tcl_GetLongFromObj (interp, objv[2], &date) != TCL_OK)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
     buffer = Tcl_GetStringFromObj (objv[1], &i);
@@ -2162,7 +2163,7 @@ API_FUNC(print_date_tags)
     plugin_script_api_printf_date_tags (weechat_tcl_plugin,
                                         tcl_current_script,
                                         API_STR2PTR(buffer),
-                                        date,
+                                        (time_t)date,
                                         tags,
                                         "%s", message);
 
@@ -2198,7 +2199,8 @@ API_FUNC(print_y_date_tags)
 {
     Tcl_Obj *objp;
     char *buffer, *tags, *message;
-    int i, y, date;
+    int i, y;
+    long date;
 
     API_INIT_FUNC(1, "print_y_date_tags", API_RETURN_ERROR);
     if (objc < 6)
@@ -2207,7 +2209,7 @@ API_FUNC(print_y_date_tags)
     if (Tcl_GetIntFromObj (interp, objv[2], &y) != TCL_OK)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
-    if (Tcl_GetIntFromObj (interp, objv[3], &date) != TCL_OK)
+    if (Tcl_GetLongFromObj (interp, objv[3], &date) != TCL_OK)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
     buffer = Tcl_GetStringFromObj (objv[1], &i);
@@ -2218,7 +2220,7 @@ API_FUNC(print_y_date_tags)
                                           tcl_current_script,
                                           API_STR2PTR(buffer),
                                           y,
-                                          date,
+                                          (time_t)date,
                                           tags,
                                           "%s", message);
 

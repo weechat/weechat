@@ -1889,20 +1889,20 @@ API_FUNC(prnt)
 API_FUNC(prnt_date_tags)
 {
     char *buffer, *tags, *message;
-    int date;
+    long date;
 
     API_INIT_FUNC(1, "prnt_date_tags", API_RETURN_ERROR);
     buffer = NULL;
     date = 0;
     tags = NULL;
     message = NULL;
-    if (!PyArg_ParseTuple (args, "siss", &buffer, &date, &tags, &message))
+    if (!PyArg_ParseTuple (args, "slss", &buffer, &date, &tags, &message))
         API_WRONG_ARGS(API_RETURN_ERROR);
 
     plugin_script_api_printf_date_tags (weechat_python_plugin,
                                         python_current_script,
                                         API_STR2PTR(buffer),
-                                        date,
+                                        (time_t)date,
                                         tags,
                                         "%s", message);
 
@@ -1933,7 +1933,8 @@ API_FUNC(prnt_y)
 API_FUNC(prnt_y_date_tags)
 {
     char *buffer, *tags, *message;
-    int y, date;
+    int y;
+    long date;
 
     API_INIT_FUNC(1, "prnt_y_date_tags", API_RETURN_ERROR);
     buffer = NULL;
@@ -1941,14 +1942,14 @@ API_FUNC(prnt_y_date_tags)
     date = 0;
     tags = NULL;
     message = NULL;
-    if (!PyArg_ParseTuple (args, "siiss", &buffer, &y, &date, &tags, &message))
+    if (!PyArg_ParseTuple (args, "silss", &buffer, &y, &date, &tags, &message))
         API_WRONG_ARGS(API_RETURN_ERROR);
 
     plugin_script_api_printf_y_date_tags (weechat_python_plugin,
                                           python_current_script,
                                           API_STR2PTR(buffer),
                                           y,
-                                          date,
+                                          (time_t)date,
                                           tags,
                                           "%s", message);
 
