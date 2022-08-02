@@ -697,14 +697,15 @@ class UnparseTcl(UnparsePython):
 
     def _ast_assign(self, node):
         """Add an AST Assign in output."""
+        exclude_types = (ast.Dict, ast.Str, ast.Subscript)
         self.add(
             self.fill,
             'set ',
             node.targets[0],
             ' ',
-            '[' if not isinstance(node.value, ast.Str) else '',
+            '[' if not isinstance(node.value, exclude_types) else '',
             node.value,
-            ']' if not isinstance(node.value, ast.Str) else '',
+            ']' if not isinstance(node.value, exclude_types) else '',
         )
 
     def _ast_attribute(self, node):
