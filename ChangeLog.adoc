@@ -41,6 +41,7 @@ Bug fixes::
 
 Tests::
 
+  * scripts: add tests on hdata functions
   * scripts: fix run of Guile test script
 
 [[v3.6]]

@@ -296,6 +296,114 @@ def test_infolist():
     weechat.unhook(hook_infolist)
 
 
+def test_hdata():
+    """Test hdata functions."""
+    buffer = weechat.buffer_search_main()
+    # get hdata
+    hdata_buffer = weechat.hdata_get('buffer')
+    check(hdata_buffer != '')
+    hdata_lines = weechat.hdata_get('lines')
+    check(hdata_lines != '')
+    hdata_line = weechat.hdata_get('line')
+    check(hdata_line != '')
+    hdata_line_data = weechat.hdata_get('line_data')
+    check(hdata_line_data != '')
+    hdata_key = weechat.hdata_get('key')
+    check(hdata_key != '')
+    hdata_hotlist = weechat.hdata_get('hotlist')
+    check(hdata_hotlist != '')
+    hdata_irc_server = weechat.hdata_get('irc_server')
+    check(hdata_irc_server != '')
+    # create a test buffer with 3 messages
+    buffer2 = weechat.buffer_new('test', 'buffer_input_cb', '', 'buffer_close_cb', '')
+    weechat.prnt_date_tags(buffer2, 5680744830, 'tag1,tag2', 'prefix1\t## msg1')
+    weechat.prnt_date_tags(buffer2, 5680744831, 'tag3,tag4', 'prefix2\t## msg2')
+    weechat.prnt_date_tags(buffer2, 5680744832, 'tag5,tag6', 'prefix3\t## msg3')
+    own_lines = weechat.hdata_pointer(hdata_buffer, buffer2, 'own_lines')
+    line1 = weechat.hdata_pointer(hdata_lines, own_lines, 'first_line')
+    line1_data = weechat.hdata_pointer(hdata_line, line1, 'data')
+    line2 = weechat.hdata_pointer(hdata_line, line1, 'next_line')
+    line3 = weechat.hdata_pointer(hdata_line, line2, 'next_line')
+    # hdata_get_var_offset
+    check(weechat.hdata_get_var_offset(hdata_buffer, 'plugin') == 0)
+    check(weechat.hdata_get_var_offset(hdata_buffer, 'number') > 0)
+    # hdata_get_var_type_string
+    check(weechat.hdata_get_var_type_string(hdata_buffer, 'plugin') == 'pointer')
+    check(weechat.hdata_get_var_type_string(hdata_buffer, 'number') == 'integer')
+    check(weechat.hdata_get_var_type_string(hdata_buffer, 'name') == 'string')
+    check(weechat.hdata_get_var_type_string(hdata_buffer, 'local_variables') == 'hashtable')
+    check(weechat.hdata_get_var_type_string(hdata_line_data, 'displayed') == 'char')
+    check(weechat.hdata_get_var_type_string(hdata_line_data, 'prefix') == 'shared_string')
+    check(weechat.hdata_get_var_type_string(hdata_line_data, 'date') == 'time')
+    check(weechat.hdata_get_var_type_string(hdata_hotlist, 'creation_time.tv_usec') == 'long')
+    check(weechat.hdata_get_var_type_string(hdata_irc_server, 'gnutls_sess') == 'other')
+    # hdata_get_var_array_size
+    check(weechat.hdata_get_var_array_size(hdata_buffer, buffer2, 'name') == -1)
+    check(weechat.hdata_get_var_array_size(hdata_buffer, buffer2, 'highlight_tags_array') >= 0)
+    # hdata_get_var_array_size_string
+    check(weechat.hdata_get_var_array_size_string(hdata_buffer, buffer2, 'name') == '')
+    check(weechat.hdata_get_var_array_size_string(hdata_buffer, buffer2, 'highlight_tags_array') == 'highlight_tags_count')
+    # hdata_get_var_hdata
+    check(weechat.hdata_get_var_hdata(hdata_buffer, 'plugin') == 'plugin')
+    check(weechat.hdata_get_var_hdata(hdata_buffer, 'own_lines') == 'lines')
+    check(weechat.hdata_get_var_hdata(hdata_buffer, 'name') == '')
+    # hdata_get_list
+    check(weechat.hdata_get_list(hdata_buffer, 'gui_buffers') == buffer)
+    # hdata_check_pointer
+    check(weechat.hdata_check_pointer(hdata_buffer, buffer, buffer) == 1)
+    check(weechat.hdata_check_pointer(hdata_buffer, buffer, buffer2) == 1)
+    check(weechat.hdata_check_pointer(hdata_buffer, buffer, own_lines) == 0)
+    # hdata_move
+    check(weechat.hdata_move(hdata_line, line1, 1) == line2)
+    check(weechat.hdata_move(hdata_line, line1, 2) == line3)
+    check(weechat.hdata_move(hdata_line, line3, -1) == line2)
+    check(weechat.hdata_move(hdata_line, line3, -2) == line1)
+    check(weechat.hdata_move(hdata_line, line1, -1) == '')
+    # hdata_search
+    check(weechat.hdata_search(hdata_buffer, buffer, '${name} == test', {}, {}, {}, 1) == buffer2)
+    check(weechat.hdata_search(hdata_buffer, buffer, '${name} == xxx', {}, {}, {}, 1) == '')
+    # hdata_char
+    check(weechat.hdata_char(hdata_line_data, line1_data, 'displayed') == 1)
+    # hdata_integer
+    check(weechat.hdata_char(hdata_buffer, buffer2, 'number') == 2)
+    # hdata_long
+    weechat.buffer_set(buffer, 'hotlist', weechat.WEECHAT_HOTLIST_MESSAGE)
+    gui_hotlist = weechat.hdata_get_list(hdata_hotlist, 'gui_hotlist')
+    check(weechat.hdata_long(hdata_hotlist, gui_hotlist, 'creation_time.tv_usec') >= 0)
+    # hdata_string
+    check(weechat.hdata_string(hdata_buffer, buffer2, 'name') == 'test')
+    # hdata_pointer
+    check(weechat.hdata_pointer(hdata_buffer, buffer2, 'own_lines') == own_lines)
+    # hdata_time
+    check(weechat.hdata_time(hdata_line_data, line1_data, 'date') > 1659430030)
+    # hdata_hashtable
+    local_vars = weechat.hdata_hashtable(hdata_buffer, buffer2, 'local_variables')
+    value = local_vars['name']
+    check(value == 'test')
+    # hdata_compare
+    check(weechat.hdata_compare(hdata_buffer, buffer, buffer2, 'name', 0) > 0)
+    check(weechat.hdata_compare(hdata_buffer, buffer2, buffer, 'name', 0) < 0)
+    check(weechat.hdata_compare(hdata_buffer, buffer, buffer, 'name', 0) == 0)
+    # hdata_update
+    check(weechat.hdata_time(hdata_line_data, line1_data, 'date') == 5680744830)
+    check(weechat.hdata_string(hdata_line_data, line1_data, 'prefix') == 'prefix1')
+    check(weechat.hdata_string(hdata_line_data, line1_data, 'message') == '## msg1')
+    update = {
+        'date': '5680744835',
+        'prefix': 'new_prefix1',
+        'message': 'new_message1'
+    }
+    check(weechat.hdata_update(hdata_line_data, line1_data, update) == 3)
+    check(weechat.hdata_time(hdata_line_data, line1_data, 'date') == 5680744835)
+    check(weechat.hdata_string(hdata_line_data, line1_data, 'prefix') == 'new_prefix1')
+    check(weechat.hdata_string(hdata_line_data, line1_data, 'message') == 'new_message1')
+    # hdata_get_string
+    check(weechat.hdata_get_string(hdata_line, 'var_prev') == 'prev_line')
+    check(weechat.hdata_get_string(hdata_line, 'var_next') == 'next_line')
+    # destroy test buffer
+    weechat.buffer_close(buffer2)
+
+
 def cmd_test_cb(data, buf, args):
     """Run all the tests."""
     weechat.prnt('', '>>>')
@@ -310,6 +418,7 @@ def cmd_test_cb(data, buf, args):
     test_hooks()
     test_command()
     test_infolist()
+    test_hdata()
     weechat.prnt('', '  > TESTS END')
     return weechat.WEECHAT_RC_OK
 
