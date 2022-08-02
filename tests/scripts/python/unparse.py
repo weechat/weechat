@@ -523,6 +523,13 @@ class UnparseRuby(UnparsePython):
             node.attr,
         )
 
+    def _ast_constant(self, node):
+        """Add an AST Constant in output."""
+        if isinstance(node.value, str):
+            self.add('"%s"' % node.s.replace('#{', '\\#{'))
+        else:
+            self.add(repr(node.s))
+
     def _ast_dict(self, node):
         """Add an AST Dict in output."""
         self.add(
