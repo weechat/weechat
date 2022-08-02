@@ -255,6 +255,11 @@ class UnparsePython(object):
                 self.unindent,
             )
 
+    def _ast_index(self, node):
+        """Add an AST Subscript in output."""
+        # note: deprecated since Python 3.9
+        self.add(node.value)
+
     def _ast_import(self, node):
         """Add an AST Import in output."""
         # ignore import
@@ -272,7 +277,7 @@ class UnparsePython(object):
     def _ast_num(self, node):
         """Add an AST Num in output."""
         # note: deprecated since Python 3.8, replaced by ast.Constant
-        self.add(repr(node.n))
+        self._ast_constant(node)
 
     def _ast_pass(self, node):  # pylint: disable=unused-argument
         """Add an AST Pass in output."""
@@ -287,7 +292,7 @@ class UnparsePython(object):
     def _ast_str(self, node):
         """Add an AST Str in output."""
         # note: deprecated since Python 3.8, replaced by ast.Constant
-        self.add(repr(node.s))
+        self._ast_constant(node)
 
     def _ast_subscript(self, node):
         """Add an AST Subscript in output."""
