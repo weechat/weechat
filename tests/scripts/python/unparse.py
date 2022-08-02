@@ -74,7 +74,7 @@ class UnparsePython(object):
         }
         self.unaryop = {
             'Invert': '~',
-            'Not': 'not',
+            'Not': 'not ',
             'UAdd': '+',
             'USub': '-',
         }
@@ -301,11 +301,8 @@ class UnparsePython(object):
     def _ast_unaryop(self, node):
         """Add an AST UnaryOp in output."""
         self.add(
-            '(',
             self.unaryop[node.op.__class__.__name__],
-            ' ',
             node.operand,
-            ')',
         )
 
 
