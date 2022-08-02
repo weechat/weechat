@@ -329,7 +329,7 @@ class UnparsePerl(UnparsePython):
         """Add an AST Assign in output."""
         self.add(
             self.fill,
-            (self.prefix, '%' if isinstance(node.value, ast.Dict) else '$'),
+            (self.prefix, '$'),
             [[target, ' = '] for target in node.targets],
             (self.prefix, None),
             node.value,
