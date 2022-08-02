@@ -5279,7 +5279,7 @@ API_FUNC(hdata_compare)
     hdata = (struct t_hdata *)API_STR2PTR(ZSTR_VAL(z_hdata));
     pointer1 = (void *)API_STR2PTR(ZSTR_VAL(z_pointer1));
     pointer2 = (void *)API_STR2PTR(ZSTR_VAL(z_pointer2));
-    name = (void *)API_STR2PTR(ZSTR_VAL(z_name));
+    name = ZSTR_VAL(z_name);
     case_sensitive = (int)z_case_sensitive;
 
     result = weechat_hdata_compare (hdata, pointer1, pointer2, name,
