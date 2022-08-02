@@ -6352,8 +6352,7 @@ weechat_ruby_api_hdata_get_string (VALUE class, VALUE hdata, VALUE property)
     c_hdata = StringValuePtr (hdata);
     c_property = StringValuePtr (property);
 
-    result = weechat_hdata_get_var_type_string (API_STR2PTR(c_hdata),
-                                                c_property);
+    result = weechat_hdata_get_string (API_STR2PTR(c_hdata), c_property);
 
     API_RETURN_STRING(result);
 }

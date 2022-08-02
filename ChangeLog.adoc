@@ -34,6 +34,7 @@ Bug fixes::
   * javascript: fix return of long value in functions infolist_time, hdata_long and hdata_time
   * php: fix function hdata_compare
   * relay: fix parsing of IRC messages received from clients (issue #1796)
+  * ruby: fix function hdata_get_string
   * scripts: fix issue with year ≥ 2038 in functions infolist_new_var_time, print_date_tags and print_y_date_tags (plugins: python/lua/tcl/guile/javascript)
   * scripts: fix issue with long interval in function hook_timer (plugins: python/ruby/lua/tcl/guile/javascript/php)
   * xfer: fix crash when closing DCC chat buffer
