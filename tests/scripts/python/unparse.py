@@ -289,6 +289,15 @@ class UnparsePython(object):
         # note: deprecated since Python 3.8, replaced by ast.Constant
         self.add(repr(node.s))
 
+    def _ast_subscript(self, node):
+        """Add an AST Subscript in output."""
+        self.add(
+            node.value,
+            '[',
+            node.slice,
+            ']',
+        )
+
     def _ast_tuple(self, node):
         """Add an AST Tuple in output."""
         self.add(
@@ -483,6 +492,17 @@ class UnparsePerl(UnparsePython):
         """Add an AST Str in output."""
         # note: deprecated since Python 3.8, replaced by ast.Constant
         self.add('"%s"' % node.s.replace('$', '\\$').replace('@', '\\@'))
+
+    def _ast_subscript(self, node):
+        """Add an AST Subscript in output."""
+        self.add(
+            (self.prefix, '$'),
+            node.value,
+            (self.prefix, None),
+            '->{',
+            node.slice,
+            '}',
+        )
 
 
 class UnparseRuby(UnparsePython):
@@ -821,6 +841,18 @@ class UnparseTcl(UnparsePython):
         # note: deprecated since Python 3.8, replaced by ast.Constant
         self.add('"%s"' % node.s.replace('$', '\\$'))
 
+    def _ast_subscript(self, node):
+        """Add an AST Subscript in output."""
+        self.add(
+            '[dict get ',
+            (self.prefix, '$'),
+            node.value,
+            (self.prefix, None),
+            ' ',
+            node.slice,
+            ']',
+        )
+
 
 class UnparseGuile(UnparsePython):
     """
@@ -1006,6 +1038,16 @@ class UnparseGuile(UnparsePython):
         """Add an AST Str in output."""
         # note: deprecated since Python 3.8, replaced by ast.Constant
         self.add('"%s"' % node.s)
+
+    def _ast_subscript(self, node):
+        """Add an AST Subscript in output."""
+        self.add(
+            '(assoc-ref ',
+            node.value,
+            ' ',
+            node.slice,
+            ')',
+        )
 
 
 class UnparseJavascript(UnparsePython):
@@ -1221,6 +1263,16 @@ class UnparsePhp(UnparsePython):
         """Add an AST Str in output."""
         # note: deprecated since Python 3.8, replaced by ast.Constant
         self.add('"%s"' % node.s.replace('$', '\\$'))
+
+    def _ast_subscript(self, node):
+        """Add an AST Subscript in output."""
+        self.add(
+            '$',
+            node.value,
+            '[',
+            node.slice,
+            ']',
+        )
 
 
 def get_languages():
