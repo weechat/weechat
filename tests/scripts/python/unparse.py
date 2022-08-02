@@ -277,7 +277,7 @@ class UnparsePython(object):
     def _ast_num(self, node):
         """Add an AST Num in output."""
         # note: deprecated since Python 3.8, replaced by ast.Constant
-        self._ast_constant(node)
+        self.add(repr(node.n))
 
     def _ast_pass(self, node):  # pylint: disable=unused-argument
         """Add an AST Pass in output."""
