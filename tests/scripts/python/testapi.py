@@ -25,7 +25,8 @@ to generate scripts in all supported languages (Python, Perl, Ruby, ...).
 The resulting scripts can be loaded in WeeChat to test the scripting API.
 """
 
-# pylint: disable=line-too-long,no-value-for-parameter
+# pylint: disable=line-too-long,no-value-for-parameter,too-many-locals
+# pylint: disable=too-many-statements
 
 import weechat  # pylint: disable=import-error
 
