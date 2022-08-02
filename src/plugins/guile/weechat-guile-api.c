@@ -4954,8 +4954,8 @@ weechat_guile_api_hdata_get_string (SCM hdata, SCM property)
     if (!scm_is_string (hdata) || !scm_is_string (property))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
-    result = weechat_hdata_get_var_type_string (API_STR2PTR(API_SCM_TO_STRING(hdata)),
-                                                API_SCM_TO_STRING(property));
+    result = weechat_hdata_get_string (API_STR2PTR(API_SCM_TO_STRING(hdata)),
+                                       API_SCM_TO_STRING(property));
 
     API_RETURN_STRING(result);
 }
