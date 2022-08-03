@@ -176,7 +176,7 @@ Sans paramètre, cette commande affiche la liste des bannissements pour le canal
 
    ls : lister les capacités supportées par le serveur
  list : lister les capacités actuellement activées
-  req : demander une capacité
+  req : demander une nouvelle capacité ou supprimer une capacité (si elle commence par "-", par exemple : "-multi-prefix")
   ack : accuser réception de capacités qui nécessitent un accusé de réception du client
   end : terminer la négociation de capacité
 
@@ -187,8 +187,14 @@ Les capacités supportées par WeeChat sont : account-notify, away-notify, cap-
 Les capacités à activer automatiquement sur les serveurs peuvent être définies dans l'option irc.server_default.capabilities (ou par serveur dans l'option irc.server.xxx.capabilities).
 
 Exemples :
-   /cap
-   /cap req multi-prefix away-notify
+  afficher les capacités supportées et activées :
+    /cap
+  demander les capacités multi-prefix et away-notify :
+    /cap req multi-prefix away-notify
+  demander la capacité extended-join, supprimer la capacité multi-prefix :
+    /cap req extended-join -multi-prefix
+  supprimer la capacité away-notify :
+    /cap req -away-notify
 ----
 
 [[command_irc_connect]]

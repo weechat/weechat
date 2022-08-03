@@ -174,21 +174,27 @@ Bez podania argumentu komenda wyświetla listę banów na obecnym kanale.
       req|ack [<opcja> [<opcja>...]]
       end
 
-   ls: wyświetla opcje wspierane przez serwer
- list: wyświetla obecnie włączone opcje
-  req: żądanie opcji
-  ack: potwierdzenie opcji wymagających potwierdzenia po stronie klienta
-  end: kończy negocjacje opcji
+   ls: list the capabilities supported by the server
+ list: list the capabilities currently enabled
+  req: request a new capability or remove a capability (if starting with "-", for example: "-multi-prefix")
+  ack: acknowledge capabilities which require client-side acknowledgement
+  end: end the capability negotiation
 
-Bez argumentu, wysyłane są "ls" i "list".
+Without argument, "ls" and "list" are sent.
 
-Opcje wspierane przez WeeChat to: account-notify, away-notify, cap-notify, chghost, extended-join, invite-notify, message-tags, multi-prefix, server-time, setname, userhost-in-names.
+Capabilities supported by WeeChat are: account-notify, away-notify, cap-notify, chghost, extended-join, invite-notify, message-tags, multi-prefix, server-time, setname, userhost-in-names.
 
-Opcje automatycznie włączane na serwerach można ustawić za pomocą opcji irc.server_default.capabilities (albo dla konkretnego serwera, opcja irc.server.xxx.capabilities).
+The capabilities to automatically enable on servers can be set in option irc.server_default.capabilities (or by server in option irc.server.xxx.capabilities).
 
-Przykłady:
-   /cap
-   /cap req multi-prefix away-notify
+Examples:
+  display supported and enabled capabilities:
+    /cap
+  request capabilities multi-prefix and away-notify:
+    /cap req multi-prefix away-notify
+  request capability extended-join, remove capability multi-prefix:
+    /cap req extended-join -multi-prefix
+  remove capability away-notify:
+    /cap req -away-notify
 ----
 
 [[command_irc_connect]]

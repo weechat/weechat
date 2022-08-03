@@ -174,21 +174,27 @@ Examples:
       req|ack [<могућност> [<могућност>...]]
       end
 
-   ls: исписује могућности које подржава сервер
- list: исписује могућности које су тренутно укључене
-  req: захтева могућност
-  ack: прихвата могућности које захтевају потврду са клијентске стране
-  end: завршава преговарање о могућностима
+   ls: list the capabilities supported by the server
+ list: list the capabilities currently enabled
+  req: request a new capability or remove a capability (if starting with "-", for example: "-multi-prefix")
+  ack: acknowledge capabilities which require client-side acknowledgement
+  end: end the capability negotiation
 
-Без аргумента се шаљу „ls” и „list”.
+Without argument, "ls" and "list" are sent.
 
-Програм WeeChat подржава следеће могућности: account-notify, away-notify, cap-notify, chghost, extended-join, invite-notify, multi-prefix, server-time, setname, userhost-in-names.
+Capabilities supported by WeeChat are: account-notify, away-notify, cap-notify, chghost, extended-join, invite-notify, message-tags, multi-prefix, server-time, setname, userhost-in-names.
 
-Могућности које се аутоматски укључују на серверима могу да се поставе у опцији irc.server_default.capabilities (или посебно за сваки сервер у опцији irc.server.xxx.capabilities).
+The capabilities to automatically enable on servers can be set in option irc.server_default.capabilities (or by server in option irc.server.xxx.capabilities).
 
-Примери:
-   /cap
-   /cap req multi-prefix away-notify
+Examples:
+  display supported and enabled capabilities:
+    /cap
+  request capabilities multi-prefix and away-notify:
+    /cap req multi-prefix away-notify
+  request capability extended-join, remove capability multi-prefix:
+    /cap req extended-join -multi-prefix
+  remove capability away-notify:
+    /cap req -away-notify
 ----
 
 [[command_irc_connect]]

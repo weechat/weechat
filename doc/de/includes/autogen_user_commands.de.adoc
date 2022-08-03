@@ -174,21 +174,27 @@ Ohne Angabe von Argumenten wird die Ban-Liste für den aktuellen Kanal angezeigt
       req|ack [<capability> [<capability>...]]
       end
 
-   ls: führt alle Fähigkeiten auf die vom Server unterstützt werden
- list: führt alle Fähigkeiten auf die aktuell genutzt werden
-  req: fordert eine Fähigkeit an
-  ack: bestätigt eine Fähigkeit die von Serverseite eine Bestätigung erfordert
-  end: beendet die Übertragung von Fähigkeiten
+   ls: list the capabilities supported by the server
+ list: list the capabilities currently enabled
+  req: request a new capability or remove a capability (if starting with "-", for example: "-multi-prefix")
+  ack: acknowledge capabilities which require client-side acknowledgement
+  end: end the capability negotiation
 
-Ohne Angaben von Argumenten werden "ls" und "list" gesendet.
+Without argument, "ls" and "list" are sent.
 
-Fähigkeiten die von WeeChat unterstützt werden: account-notify, away-notify, cap-notify, chghost, extended-join, invite-notify, message-tags, multi-prefix, server-time, setname, userhost-in-names..
+Capabilities supported by WeeChat are: account-notify, away-notify, cap-notify, chghost, extended-join, invite-notify, message-tags, multi-prefix, server-time, setname, userhost-in-names.
 
-Fähigkeiten die standardmäßig genutzt werden sollen, können mit der Option irc.server_default.capabilities gesetzt werden (oder individuell für jeden Server mit der Option irc.server.xxx.capabilities).
+The capabilities to automatically enable on servers can be set in option irc.server_default.capabilities (or by server in option irc.server.xxx.capabilities).
 
-Beispiele:
-   /cap
-   /cap req multi-prefix away-notify
+Examples:
+  display supported and enabled capabilities:
+    /cap
+  request capabilities multi-prefix and away-notify:
+    /cap req multi-prefix away-notify
+  request capability extended-join, remove capability multi-prefix:
+    /cap req extended-join -multi-prefix
+  remove capability away-notify:
+    /cap req -away-notify
 ----
 
 [[command_irc_connect]]

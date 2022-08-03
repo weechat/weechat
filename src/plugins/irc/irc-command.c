@@ -6866,7 +6866,8 @@ irc_command_init ()
            " || end"),
         N_("   ls: list the capabilities supported by the server\n"
            " list: list the capabilities currently enabled\n"
-           "  req: request a capability\n"
+           "  req: request a new capability or remove a capability "
+           "(if starting with \"-\", for example: \"-multi-prefix\")\n"
            "  ack: acknowledge capabilities which require client-side "
            "acknowledgement\n"
            "  end: end the capability negotiation\n"
@@ -6883,8 +6884,14 @@ irc_command_init ()
            "option irc.server.xxx.capabilities).\n"
            "\n"
            "Examples:\n"
-           "   /cap\n"
-           "   /cap req multi-prefix away-notify"),
+           "  display supported and enabled capabilities:\n"
+           "    /cap\n"
+           "  request capabilities multi-prefix and away-notify:\n"
+           "    /cap req multi-prefix away-notify\n"
+           "  request capability extended-join, remove capability multi-prefix:\n"
+           "    /cap req extended-join -multi-prefix\n"
+           "  remove capability away-notify:\n"
+           "    /cap req -away-notify"),
         "ls"
         " || list"
         " || req " IRC_COMMAND_CAP_SUPPORTED_COMPLETION "|%*"
