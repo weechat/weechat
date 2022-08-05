@@ -186,7 +186,15 @@ Fähigkeiten die von WeeChat unterstützt werden: account-notify, away-notify, c
 
 Fähigkeiten die standardmäßig genutzt werden sollen, können mit der Option irc.server_default.capabilities gesetzt werden (oder individuell für jeden Server mit der Option irc.server.xxx.capabilities).
 
-Beispiele:  zeigt unterstützte und aktivierte Funktionen an:    /cap  Fähigkeiten multi-prefix und away-notify anfordern:    /cap req multi-prefix away-notify  Fähigkeit extended-join anfordern, Fähigkeit multi-prefix entfernen:    /cap req extended-join -multi-prefix  Fähigkeit away-notify entfernen:    /cap req -away-notify
+Beispiele:
+  zeigt unterstützte und aktivierte Funktionen an:
+    /cap
+  Fähigkeiten multi-prefix und away-notify anfordern:
+    /cap req multi-prefix away-notify
+  Fähigkeit extended-join anfordern, Fähigkeit multi-prefix entfernen:
+    /cap req extended-join -multi-prefix
+  Fähigkeit away-notify entfernen
+    /cap req -away-notify
 ----
 
 [[command_irc_connect]]
