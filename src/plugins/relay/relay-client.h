@@ -165,7 +165,8 @@ extern void relay_client_free_all ();
 extern void relay_client_disconnect (struct t_relay_client *client);
 extern void relay_client_disconnect_all ();
 extern int relay_client_add_to_infolist (struct t_infolist *infolist,
-                                         struct t_relay_client *client);
+                                         struct t_relay_client *client,
+                                         int force_disconnected_state);
 extern void relay_client_print_log ();
 
 #endif /* WEECHAT_PLUGIN_RELAY_CLIENT_H */

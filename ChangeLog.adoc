@@ -20,6 +20,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 New features::
 
+  * core: add option `-save` in command `/upgrade` (issue #1630)
   * core: add option weechat.look.highlight_disable_regex and buffer property "highlight_disable_regex" (issue #1798)
   * api: rename function string_build_with_split_string to string_rebuild_split_string, add arguments "index_start" and "index_end"
   * api: add info "uptime_current"

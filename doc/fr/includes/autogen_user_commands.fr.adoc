@@ -2122,19 +2122,22 @@ Exemples :
 ----
 
 [[command_weechat_upgrade]]
-* `+upgrade+`: relancer le binaire WeeChat sans se déconnecter des serveurs
+* `+upgrade+`: sauvegarder la session WeeChat et relancer le binaire WeeChat sans se déconnecter des serveurs
 
 ----
-/upgrade  [-yes] [<chemin_vers_binaire>|-quit]
+/upgrade  [-yes] [<chemin_vers_binaire>|-save|-quit]
 
                -yes : requis si l'option "weechat.look.confirm_upgrade" est activée
 chemin_vers_binaire : chemin vers le binaire WeeChat (par défaut le binaire courant)
              -dummy : ne rien faire (option utilisée pour éviter une complétion accidentelle avec "-quit")
-              -quit : fermer *TOUTES* les connexions, sauver la session et quitter, ce qui rend possible une restauration différée (voir ci-dessous)
+              -save : sauvegarder seulement la session, ne pas quitter ni relancer WeeChat ; les fichiers de configuration ne sont pas sauvegardés (si besoin vous pouvez utiliser /save avant cette commande)
+              -quit : fermer *TOUTES* les connexions, sauvegarder la session et quitter, ce qui rend possible une restauration différée (voir ci-dessous)
 
 Cette commande met à jour et recharge une session de WeeChat qui tourne. Le nouveau binaire WeeChat doit avoir été compilé ou installé via un gestionnaire de paquet avant de lancer cette commande.
 
 Note : les connexions SSL sont perdues durant la mise à jour, car le rechargement de session SSL n'est pas possible actuellement avec GnuTLS. Il y a une reconnexion automatique après la mise à jour.
+
+Important : l'utilisation de l'option -save peut être dangereuse, il est recommandé d'utiliser seulement /upgrade (ou avec -quit) pour une mise à jour standard et un redémarrage ; l'option -save peut être utilisée pour sauvegarder régulièrement la session et la restaurer en cas de sortie anormale (panne de courant, crash, etc.).
 
 Le processus de mise à jour comporte 4 étapes :
   1. sauvegarder la session pour le cœur et les extensions (tampons, historique, ...)
@@ -2142,14 +2145,18 @@ Le processus de mise à jour comporte 4 étapes :
   3. sauvegarder la configuration WeeChat (weechat.conf)
   4. exécuter le nouveau binaire WeeChat et recharger la session.
 
-Avec l'option "-quit", le processus est légèrement différent :
+Avec l'option "-quit", le processus est le suivant :
   1. fermer *TOUTES* les connexions
   2. sauvegarder la session (fichiers *.upgrade)
   3. décharger les extensions
   4. sauvegarder la configuration WeeChat
   5. quitter WeeChat
-Et plus tard vous pouvez restaurer la session avec la commande : weechat --upgrade
-IMPORTANT : vous devez restaurer la session avec exactement la même configuration (fichiers *.conf).
+
+Avec l'option "-save", le processus est le suivant :
+  1. sauvegarder la session (fichiers *.upgrade) avec un état déconnecté pour les serveurs IRC et les clients Relay (mais aucune déconnexion n'est faite)
+
+Avec "-quit" ou "-save", vous pouvez restaurer la session plus tard avec cette commande : weechat --upgrade
+IMPORTANT : vous devez restaurer la session avec exactement la même configuration (fichiers *.conf) et si possible la même version de WeeChat (ou une plus récente).
 Il est également possible de restaurer la session WeeChat sur une autre machine si vous y copiez le contenu des répertoires personnels de WeeChat (voir /debug dirs).
 ----
 
@@ -3191,8 +3198,10 @@ Exemples (vous pouvez aussi regarder les triggers par défaut avec /trigger list
   cacher la barre de pseudos sur les petits terminaux :
     /trigger add resize_small signal signal_sigwinch "${info:term_width} < 100" "" "/bar hide nicklist"
     /trigger add resize_big signal signal_sigwinch "${info:term_width} >= 100" "" "/bar show nicklist"
-  sauver la configuration chaque heure (de manière silencieuse) :
+  sauver silencieusement la configuration chaque heure :
     /trigger add cfgsave timer 3600000;0;0 "" "" "/mute /save"
+  sauver silencieusement la session WeeChat à minuit (voir /help upgrade) :
+    /trigger add session_save signal day_changed "" "" "/mute /upgrade -save"
   ouvrir le tampon moniteur des triggers et afficher seulement les modificateurs et les triggers dont le nom commence par "resize" :
     /trigger monitor @modifier,resize*
 ----

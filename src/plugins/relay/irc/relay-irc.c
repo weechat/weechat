@@ -1957,6 +1957,10 @@ relay_irc_free (struct t_relay_client *client)
 /*
  * Adds client IRC data in an infolist.
  *
+ * If force_disconnected_state == 1, the infolist contains the client
+ * in a disconnected state (but the client is unchanged, still connected if it
+ * was).
+ *
  * Returns:
  *   1: OK
  *   0: error
@@ -1964,11 +1968,22 @@ relay_irc_free (struct t_relay_client *client)
 
 int
 relay_irc_add_to_infolist (struct t_infolist_item *item,
-                           struct t_relay_client *client)
+                           struct t_relay_client *client,
+                           int force_disconnected_state)
 {
     if (!item || !client)
         return 0;
 
+    if (!RELAY_CLIENT_HAS_ENDED(client) && force_disconnected_state)
+    {
+        if (!weechat_infolist_new_var_integer (item, "connected", 0))
+            return 0;
+    }
+    else
+    {
+        if (!weechat_infolist_new_var_integer (item, "connected", RELAY_IRC_DATA(client, connected)))
+            return 0;
+    }
     if (!weechat_infolist_new_var_string (item, "address", RELAY_IRC_DATA(client, address)))
         return 0;
     if (!weechat_infolist_new_var_integer (item, "password_ok", RELAY_IRC_DATA(client, password_ok)))
@@ -1980,8 +1995,6 @@ relay_irc_add_to_infolist (struct t_infolist_item *item,
     if (!weechat_infolist_new_var_integer (item, "cap_ls_received", RELAY_IRC_DATA(client, cap_ls_received)))
         return 0;
     if (!weechat_infolist_new_var_integer (item, "cap_end_received", RELAY_IRC_DATA(client, cap_end_received)))
-        return 0;
-    if (!weechat_infolist_new_var_integer (item, "connected", RELAY_IRC_DATA(client, connected)))
         return 0;
     if (!weechat_infolist_new_var_integer (item, "server_capabilities", RELAY_IRC_DATA(client, server_capabilities)))
         return 0;

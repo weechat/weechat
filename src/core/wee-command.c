@@ -6537,6 +6537,24 @@ COMMAND_CALLBACK(upgrade)
         return WEECHAT_RC_OK;
     }
 
+    if ((argc > index_args)
+        && (string_strcasecmp (argv[index_args], "-save") == 0))
+    {
+        /* send "upgrade" signal to plugins */
+        (void) hook_signal_send ("upgrade", WEECHAT_HOOK_SIGNAL_STRING,
+                                 "save");
+        /* save WeeChat session */
+        if (!upgrade_weechat_save())
+        {
+            gui_chat_printf (NULL,
+                             _("%sUnable to save WeeChat session "
+                               "(files *.upgrade)"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+        }
+        gui_chat_printf (NULL, _("WeeChat session saved (files *.upgrade)"));
+        return WEECHAT_RC_OK;
+    }
+
     /*
      * it is forbidden to upgrade while there are some background process
      * (hook type "process" or "connect")
@@ -6623,7 +6641,8 @@ COMMAND_CALLBACK(upgrade)
     if (!upgrade_weechat_save ())
     {
         gui_chat_printf (NULL,
-                         _("%sUnable to save session in file"),
+                         _("%sUnable to save WeeChat session "
+                           "(files *.upgrade)"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
         if (ptr_binary)
             free (ptr_binary);
@@ -8614,13 +8633,17 @@ command_init ()
         &command_unset, NULL, NULL);
     hook_command (
         NULL, "upgrade",
-        N_("reload the WeeChat binary without disconnecting from servers"),
-        N_("[-yes] [<path_to_binary>|-quit]"),
+        N_("save WeeChat session and reload the WeeChat binary without "
+           "disconnecting from servers"),
+        N_("[-yes] [<path_to_binary>|-save|-quit]"),
         N_("          -yes: required if option \"weechat.look.confirm_upgrade\" "
            "is enabled\n"
            "path_to_binary: path to WeeChat binary (default is current binary)\n"
            "        -dummy: do nothing (option used to prevent accidental "
            "completion with \"-quit\")\n"
+           "         -save: only save the session, do not quit nor reload "
+           "WeeChat; the configuration files are not saved (if needed you can "
+           "use /save before this command)\n"
            "         -quit: close *ALL* connections, save session and quit "
            "WeeChat, which makes possible a delayed restoration (see below)\n"
            "\n"
@@ -8628,9 +8651,15 @@ command_init ()
            "new WeeChat binary must have been compiled or installed with a "
            "package manager before running this command.\n"
            "\n"
-           "Note: SSL connections are lost during upgrade, because reload of "
-           "SSL sessions is currently not possible with GnuTLS. There is "
-           "automatic reconnection after upgrade.\n"
+           "Note: SSL connections are lost during upgrade (except with -save), "
+           "because the reload of SSL sessions is currently not possible with "
+           "GnuTLS. There is automatic reconnection after upgrade.\n"
+           "\n"
+           "Important: use of option -save can be dangerous, it is recommended "
+           "to use only /upgrade (or with -quit) for a standard upgrade and "
+           "a restart; the option -save can be used to save the session "
+           "regularly and restore it in case of after abnormal exit "
+           "(power outage, crash, etc.)\n"
            "\n"
            "Upgrade process has 4 steps:\n"
            "  1. save session into files for core and plugins (buffers, "
@@ -8640,18 +8669,25 @@ command_init ()
            "  3. save WeeChat configuration (weechat.conf)\n"
            "  4. execute new WeeChat binary and reload session.\n"
            "\n"
-           "With option \"-quit\", the process is slightly different:\n"
+           "With option \"-quit\", the process is:\n"
            "  1. close *ALL* connections (irc, xfer, relay, ...)\n"
            "  2. save session into files (*.upgrade)\n"
            "  3. unload all plugins\n"
            "  4. save WeeChat configuration\n"
            "  5. quit WeeChat\n"
-           "Then later you can restore session with command: weechat --upgrade\n"
+           "\n"
+           "With option \"-save\", the process is:\n"
+           "  1. save session into files (*.upgrade) with a disconnected state "
+           "for IRC servers and Relay clients (but no disconnection is made)\n"
+           "\n"
+           "With -quit or -save, you can restore the session later with "
+           "this command: weechat --upgrade\n"
            "IMPORTANT: you must restore the session with exactly same "
-           "configuration (files *.conf).\n"
+           "configuration (files *.conf) and if possible the same WeeChat "
+           "version (or a more recent one).\n"
            "It is possible to restore WeeChat session on another machine if you "
            "copy the content of WeeChat home directories (see /debug dirs)."),
-        "%(filename)|-dummy|-quit",
+        "%(filename)|-dummy|-save|-quit",
         &command_upgrade, NULL, NULL);
     hook_command (
         NULL, "uptime",

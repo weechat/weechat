@@ -1267,6 +1267,9 @@ trigger_command_init ()
            "\"${info:term_width} >= 100\" \"\" \"/bar show nicklist\"\n"
            "  silently save config each hour:\n"
            "    /trigger add cfgsave timer 3600000;0;0 \"\" \"\" \"/mute /save\"\n"
+           "  silently save WeeChat session at midnight (see /help upgrade):\n"
+           "    /trigger add session_save signal day_changed \"\" \"\" "
+           "\"/mute /upgrade -save\"\n"
            "  open trigger monitor and show only modifiers and triggers whose "
            "name starts with \"resize\":\n"
            "    /trigger monitor @modifier,resize*"),

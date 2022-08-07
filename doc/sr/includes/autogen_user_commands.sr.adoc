@@ -2122,35 +2122,42 @@ passphrase: измена тајне реченице (без passphrase, под�
 ----
 
 [[command_weechat_upgrade]]
-* `+upgrade+`: поновно учитавање WeeChat бинарног фајла без прекидања конекције са серверима
+* `+upgrade+`: save WeeChat session and reload the WeeChat binary without disconnecting from servers
 
 ----
-/upgrade  [-yes] [<путања_до_бинарног>|-quit]
+/upgrade  [-yes] [<path_to_binary>|-save|-quit]
 
-              -yes: обавезно ако је укључена опција „weechat.look.confirm_upgrade”
-путања_до_бинарног: путања до WeeChat бинарног фајла (подразумевано је текући бинарни фајл)
-            -dummy: не ради ништа (опција која се користи за спречавање нехотичног довршавања са „-quit”)
-             -quit: затвара *СВЕ* конекције, чува сесију и напушта програм WeeChat, чиме се омогућава закашњена рестаурација (погледајте испод)
+          -yes: required if option "weechat.look.confirm_upgrade" is enabled
+path_to_binary: path to WeeChat binary (default is current binary)
+        -dummy: do nothing (option used to prevent accidental completion with "-quit")
+         -save: only save the session, do not quit nor reload WeeChat; the configuration files are not saved (if needed you can use /save before this command)
+         -quit: close *ALL* connections, save session and quit WeeChat, which makes possible a delayed restoration (see below)
 
-Ова команда ажурира и поновно учитава WeeChat сесију која се извршава. Нови WeeChat бинарни фајл мора бити компајлиран или инсталиран менаџером пакета пре покретања ове команде.
+This command upgrades and reloads a running WeeChat session. The new WeeChat binary must have been compiled or installed with a package manager before running this command.
 
-Напомена: SSL конекције се губе током ажурирања, јер тренутно са GnuTLS није могуће поновно учитавање SSL сесија. Постоји аутоматско поновно успостављање конекције након ажурирања.
+Note: SSL connections are lost during upgrade (except with -save), because the reload of SSL sessions is currently not possible with GnuTLS. There is automatic reconnection after upgrade.
 
-Процес ажурирања има 4 корака:
-  1. чување сесије у фајлове за језгро и додатке (бафери, историја, ..)
-  2. уклањање свих додатака из меморије (конфигурациони фајлови (*.conf) се уписују на диск)
-  3. чување WeeChat конфигурације (weechat.conf)
-  4. извршавање новог WeeChat бинарног фајла и поновно учитавање сесије.
+Important: use of option -save can be dangerous, it is recommended to use only /upgrade (or with -quit) for a standard upgrade and a restart; the option -save can be used to save the session regularly and restore it in case of after abnormal exit (power outage, crash, etc.)
 
-Са опцијом „-quit”, процес је малко другачији:
-  1. затварање *СВИХ* конекција (irc, xfer, relay, ...)
-  2. чување сесије у фајлове (*.upgrade)
-  3. уклањање свих додатака из меморије
-  4. чување WeeChat конфигурације
-  5. напуштање програма WeeChat
-Затим касније можете да обновите сесију командом: weechat --upgrade
-ВАЖНО: сесију морате да обновите са потпуно истом конфигурацијом (фајлови *.conf).
-WeeChat сесија може да се обнови на другој машини ако копирате садржај WeeChat почетних директоријума (погледајте /debug dirs).
+Upgrade process has 4 steps:
+  1. save session into files for core and plugins (buffers, history, ..)
+  2. unload all plugins (configuration files (*.conf) are written on disk)
+  3. save WeeChat configuration (weechat.conf)
+  4. execute new WeeChat binary and reload session.
+
+With option "-quit", the process is:
+  1. close *ALL* connections (irc, xfer, relay, ...)
+  2. save session into files (*.upgrade)
+  3. unload all plugins
+  4. save WeeChat configuration
+  5. quit WeeChat
+
+With option "-save", the process is:
+  1. save session into files (*.upgrade) with a disconnected state for IRC servers and Relay clients (but no disconnection is made)
+
+With -quit or -save, you can restore the session later with this command: weechat --upgrade
+IMPORTANT: you must restore the session with exactly same configuration (files *.conf) and if possible the same WeeChat version (or a more recent one).
+It is possible to restore WeeChat session on another machine if you copy the content of WeeChat home directories (see /debug dirs).
 ----
 
 [[command_weechat_uptime]]
@@ -3130,70 +3137,72 @@ autoload: учитавање свих скрипти из „autoload” дир�
           default -yes
           monitor [<филтер>]
 
-       list: листа окидача (без аргумента се приказује ова листа)
-   listfull: листа окидача са детаљним инфо о сваком окидачу
-listdefault: листа подразумеваних окидача
-        add: додавање окидача
-     addoff: додавање окидача (искљученог)
- addreplace: додавање или замена постојећег окидача
-        име: име окидача
-       кука: signal, hsignal, modifier, line, print, command, command_run, timer, config, focus, info, info_hashtable
-  аргументи: аргументи за куку, у зависности од куке (раздвојени тачка запетама):
-             signal: име(на) signal-а (обавезно)
-             hsignal: име(на) hsignal-а (обавезно)
-             modifier: име(на) modifier-а (обавезно)
-             line: тип бафера („formatted”, „free” или „*”), листа маски бафера, ознака
-             print: бафер, ознаке, порука, уклањање боја
-             command: команда (обавезна), опис, аргументи, опис аргумената, довршавање (сви аргументи осим command се израчунавају, „${tg_trigger_name}” се замењује именом окидача, погледајте /help eval)
-             command_run: команд(а/е) (обавезно)
-             timer: интервал (обавезан), поравнање на секунди, макс позива
-             config: име(на) опције (обавезно)
-             focus: име(на) површине (обавезно)
-             info: име(на) информације (обавезно)
-             info_hashtable: име(на) информације (обавезно)
-     услови: израчунати услови за окидач
-   регизраз: један или више регуларних израза за замену стрингова у променљивама
-    команда: команда која треба да се изврши (више команди може да се раздвоји са „;”)
-   повр_кôд: повратни кôд у функцији повратног позива (ok (подраз), ok_eat, error)
-пост_акција: акција која се покреће након извршавања (none (подраз), disable, delete)
-   addinput: постављање улаза на подразумеване аргументе да се креира окидач
-      input: постављање улаза на команду која је употребљена за креирање окидача
-     output: слање команде за креирање окидача у бафер
-   recreate: исто као „input”, са опцијом „addreplace” уместо „add”
-        set: постављање опције у окидачу
-     опција: име опције: name, hook, arguments, conditions, regex, command, return_code
-             (за помоћ у вези опције, можете да откуцате: /help trigger.trigger.<име>.<опција>)
-   вредност: нова вредност опције
-     rename: промена имена окидача
-       copy: копирање окидача
-     enable: укључивање окидача (без аргумената: окидачи се укључују глобално)
-    disable: искључивање окидача (без аргумената: окидачи се искључују глобално)
-     toggle: пребацивање окидача (без аргумената: окидачи се пребацују глобално)
-    restart: поновно покретање окидача (куке се поново креирају)
-       show: приказ детаљних информација о окидачу (са мало статистике)
-        del: брисање окидача
-       -all: извршавање акције над свим окидачима
-    restore: обнављање окидача са подразумеваним вредностима (функционише само за подразумеване окидаче)
-    default: брисање свих окидача и обнављање подразумеваних
-    monitor: отварање бафера за праћење окидача, са необавезним филтером:
-     филтер: филтрирање кука/окидача који се приказују (кука мора да почиње са „@”, на пример „@signal”), више филтера може да се раздвоји запетама; дозвољен је џокер „*” у сваком имену окидача
+       list: list triggers (without argument, this list is displayed)
+   listfull: list triggers with detailed info for each trigger
+listdefault: list default triggers
+        add: add a trigger
+     addoff: add a trigger (disabled)
+ addreplace: add or replace an existing trigger
+       name: name of trigger
+       hook: signal, hsignal, modifier, line, print, command, command_run, timer, config, focus, info, info_hashtable
+  arguments: arguments for the hook, depending on hook (separated by semicolons):
+             signal: name(s) of signal (required)
+             hsignal: name(s) of hsignal (required)
+             modifier: name(s) of modifier (required)
+             line: buffer type ("formatted", "free" or "*"), list of buffer masks, tags
+             print: buffer, tags, message, strip colors
+             command: command (required), description, arguments, description of arguments, completion (all arguments except command are evaluated, "${tg_trigger_name}" is replaced by the trigger name, see /help eval)
+             command_run: command(s) (required)
+             timer: interval (required), align on second, max calls
+             config: name(s) of option (required)
+             focus: name(s) of area (required)
+             info: name(s) of info (required)
+             info_hashtable: name(s) of info (required)
+ conditions: evaluated conditions for the trigger
+      regex: one or more regular expressions to replace strings in variables
+    command: command to execute (many commands can be separated by ";")
+return_code: return code in callback (ok (default), ok_eat, error)
+post_action: action to take after execution (none (default), disable, delete)
+   addinput: set input with default arguments to create a trigger
+      input: set input with the command used to create the trigger
+     output: send the command to create the trigger on the buffer
+   recreate: same as "input", with option "addreplace" instead of "add"
+        set: set an option in a trigger
+     option: name of option: name, hook, arguments, conditions, regex, command, return_code
+             (for help on option, you can type: /help trigger.trigger.<name>.<option>)
+      value: new value for the option
+     rename: rename a trigger
+       copy: copy a trigger
+     enable: enable trigger(s) (without arguments: enable triggers globally)
+    disable: disable trigger(s) (without arguments: disable triggers globally)
+     toggle: toggle trigger(s) (without arguments: toggle triggers globally)
+    restart: restart trigger(s) (recreate the hooks)
+       show: show detailed info on a trigger (with some stats)
+        del: delete a trigger
+       -all: do action on all triggers
+    restore: restore trigger(s) with the default values (works only for default triggers)
+    default: delete all triggers and restore default ones
+    monitor: open the trigger monitor buffer, with optional filter:
+     filter: filter hooks/triggers to display (a hook must start with "@", for example "@signal"), many filters can be separated by commas; wildcard "*" is allowed in each trigger name
 
-Када се позове функција повратног позива окидача, извршавају се следеће акције, у наведеном редоследу:
-  1. провера услова; ако је нетачно, напушта се
-  2. замена текста употребом POSIX проширених регуларних израза (ако су дефинисани у окидачу)
-  3. извршавање команд(е/и) (ако су дефинисане у окидачу)
-  4. излазак са повратним кодом (осим за modifier, line, focus, info и info_hashtable)
-  5. извршавање пост акције
+When a trigger callback is called, following actions are performed, in this order:
+  1. check conditions; if false, exit
+  2. replace text using POSIX extended regular expression(s) (if defined in trigger)
+  3. execute command(s) (if defined in trigger)
+  4. exit with a return code (except for modifier, line, focus, info and info_hashtable)
+  5. perform post action
 
-Примери (такође можете да погледате садржај подразумеваних окидача са /trigger listdefault):
-  додавање текст атрибута *подебљано*, _подвучено и /курзив/ (само у корисничким порукама):
-    /trigger add effects modifier weechat_print „${tg_tag_nick}” "==\*([^ ]+)\*==*${color:bold}${re:1}${color:-bold}*== ==_([^ ]+)_==_${color:underline}${re:1}${color:-underline}_== ==/([^ ]+)/==/${color:italic}${re:1}${color:-italic}/"
-  сакривање траке листе надимака на малим терминалима:
+Examples (you can also look at default triggers with /trigger listdefault):
+  add text attributes *bold*, _underline_ and /italic/ (only in user messages):
+    /trigger add effects modifier weechat_print "${tg_tag_nick}" "==\*([^ ]+)\*==*${color:bold}${re:1}${color:-bold}*== ==_([^ ]+)_==_${color:underline}${re:1}${color:-underline}_== ==/([^ ]+)/==/${color:italic}${re:1}${color:-italic}/"
+  hide nicklist bar on small terminals:
     /trigger add resize_small signal signal_sigwinch "${info:term_width} < 100" "" "/bar hide nicklist"
     /trigger add resize_big signal signal_sigwinch "${info:term_width} >= 100" "" "/bar show nicklist"
-  чување конфигурације на сваки сат, у тишини:
+  silently save config each hour:
     /trigger add cfgsave timer 3600000;0;0 "" "" "/mute /save"
-  отварање монитора окидача и приказ само модификатора и окидача чије име почиње са „resize”:
+  silently save WeeChat session at midnight (see /help upgrade):
+    /trigger add session_save signal day_changed "" "" "/mute /upgrade -save"
+  open trigger monitor and show only modifiers and triggers whose name starts with "resize":
     /trigger monitor @modifier,resize*
 ----
 // end::trigger_commands[]

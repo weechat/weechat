@@ -10947,8 +10947,10 @@ WeeChat とプラグインが送信するシグナルのリスト:
 | -
 | SIGWINCH シグナルを受信しました (端末サイズが変更されました)
 
+// TRANSLATION MISSING
 | weechat | [[hook_signal_upgrade]] upgrade |
-| String: /upgrade に "-quit" 引数が与えられた場合は "quit"、それ以外は NULL
+| String: "quit" if "-quit" argument was given for /upgrade, "save" if "-save"
+  if "-save" argument was given for /upgrade, otherwise NULL.
 | ユーザがコマンド `/upgrade` を実行
 
 | weechat | [[hook_signal_upgrade_ended]] upgrade_ended | 0.3.4

@@ -1228,7 +1228,8 @@ weechat_perl_signal_quit_upgrade_cb (const void *pointer, void *data,
     (void) type_data;
     (void) signal_data;
 
-    perl_quit_or_upgrade = 1;
+    if (!signal_data || (strcmp (signal_data, "save") != 0))
+        perl_quit_or_upgrade = 1;
 
     return WEECHAT_RC_OK;
 }

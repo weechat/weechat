@@ -128,6 +128,13 @@ xfer_signal_upgrade_cb (const void *pointer, void *data,
     (void) signal;
     (void) type_data;
 
+    /* only save session and continue? */
+    if (signal_data && (strcmp (signal_data, "save") == 0))
+    {
+        xfer_upgrade_save ();
+        return WEECHAT_RC_OK;
+    }
+
     xfer_signal_upgrade_received = 1;
 
     /*

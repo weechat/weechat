@@ -73,7 +73,8 @@ extern void relay_irc_alloc_with_infolist (struct t_relay_client *client,
 extern enum t_relay_status relay_irc_get_initial_status (struct t_relay_client *client);
 extern void relay_irc_free (struct t_relay_client *client);
 extern int relay_irc_add_to_infolist (struct t_infolist_item *item,
-                                      struct t_relay_client *client);
+                                      struct t_relay_client *client,
+                                      int force_disconnected_state);
 extern void relay_irc_print_log (struct t_relay_client *client);
 
 #endif /* WEECHAT_PLUGIN_RELAY_IRC_H */

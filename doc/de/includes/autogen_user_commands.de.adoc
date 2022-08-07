@@ -2122,35 +2122,42 @@ Beispiele:
 ----
 
 [[command_weechat_upgrade]]
-* `+upgrade+`: WeeChat Binärdatei neu laden, ohne die Verbindung zum Server zu trennen
+* `+upgrade+`: save WeeChat session and reload the WeeChat binary without disconnecting from servers
 
 ----
-/upgrade  [-yes] [<path_to_binary>|-quit]
+/upgrade  [-yes] [<path_to_binary>|-save|-quit]
 
-          -yes: wird benötigt, sobald Option "weechat.look.confirm_upgrade" aktiviert ist
-path_to_binary: Pfad zu einer ausführbaren WeeChat Binärdatei (Standardeinstellung ist die aktuell ausführbare Datei)
-        -dummy: ohne Funktion (dient lediglich dazu, um nicht versehentlich die "-quit" Funktion auszuführen)
-         -quit: trennt *ALLE* Verbindungen, speichert die aktuelle Sitzung und beendet WeeChat, um den aktuellen Zustand später wiederherstellen (siehe unten)
+          -yes: required if option "weechat.look.confirm_upgrade" is enabled
+path_to_binary: path to WeeChat binary (default is current binary)
+        -dummy: do nothing (option used to prevent accidental completion with "-quit")
+         -save: only save the session, do not quit nor reload WeeChat; the configuration files are not saved (if needed you can use /save before this command)
+         -quit: close *ALL* connections, save session and quit WeeChat, which makes possible a delayed restoration (see below)
 
-Dieser Befehl führt ein Upgrade von WeeChat durch und startet die laufende Sitzung neu. Bevor dieser Befehl ausgeführt wird, sollte eine neue Version von WeeChat entweder vorab kompiliert, oder mit einem Paketmanager installiert worden sein.
+This command upgrades and reloads a running WeeChat session. The new WeeChat binary must have been compiled or installed with a package manager before running this command.
 
-Hinweis: SSL Verbindungen werden während eines Upgrades unterbrochen, da diese Verbindungen zur Zeit nicht mit GnuTLS gehalten werden können. Nach einem erfolgten Upgrade findet eine automatische Verbindung zu diesen Servern statt.
+Note: SSL connections are lost during upgrade (except with -save), because the reload of SSL sessions is currently not possible with GnuTLS. There is automatic reconnection after upgrade.
 
-Der Upgrade Vorgang besteht aus vier Schritten:
-  1. Sicherung der Sitzung, in Dateien für Core und Erweiterungen (buffers, history, ..)
-  2. alle Erweiterungen werden ausgeschaltet (Konfigurationen *.conf werden gesichert)
-  3. Sicherung der WeeChat Konfiguration (weechat.conf)
-  4. ausführen der neuen Version von WeeChat und wiederherstellen der Sitzung.
+Important: use of option -save can be dangerous, it is recommended to use only /upgrade (or with -quit) for a standard upgrade and a restart; the option -save can be used to save the session regularly and restore it in case of after abnormal exit (power outage, crash, etc.)
 
-Nutzt man die "-quit" Funktion ist die Abfolge geringfügig anders:
-  1. es werden *ALLE* Verbindungen getrennt (irc,xfer,relay, ...)
-  2. die Sitzung wird in Dateien gesichert (*.upgrade)
-  3. alle Erweiterungen werden ausgeschaltet
-  4. die WeeChat Konfiguration wird gesichert
-  5. WeeChat wird beendet
-Die Sitzung kann zu einem späteren Zeitpunkt wiederhergestellt werden: weechat --upgrade
-WICHTIG: Die Sitzung muss mit exakt den selben Konfigurationsdateien wiederhergestellt werden (*.conf)
-Es ist möglich, die WeeChat-Sitzung auf einem anderen Computer wiederherzustellen, wenn Sie den Inhalt der WeeChat Verzeichnisse kopieren (siehe / debug dirs).
+Upgrade process has 4 steps:
+  1. save session into files for core and plugins (buffers, history, ..)
+  2. unload all plugins (configuration files (*.conf) are written on disk)
+  3. save WeeChat configuration (weechat.conf)
+  4. execute new WeeChat binary and reload session.
+
+With option "-quit", the process is:
+  1. close *ALL* connections (irc, xfer, relay, ...)
+  2. save session into files (*.upgrade)
+  3. unload all plugins
+  4. save WeeChat configuration
+  5. quit WeeChat
+
+With option "-save", the process is:
+  1. save session into files (*.upgrade) with a disconnected state for IRC servers and Relay clients (but no disconnection is made)
+
+With -quit or -save, you can restore the session later with this command: weechat --upgrade
+IMPORTANT: you must restore the session with exactly same configuration (files *.conf) and if possible the same WeeChat version (or a more recent one).
+It is possible to restore WeeChat session on another machine if you copy the content of WeeChat home directories (see /debug dirs).
 ----
 
 [[command_weechat_uptime]]
@@ -3130,70 +3137,72 @@ Ohne Angabe eines Argumentes listet dieser Befehl alle geladenen Skripten auf.
           default -yes
           monitor [<filter>]
 
-       list: zeigt eine Liste aller Trigger (ohne Angabe von Argumente wird diese Liste standardmäßig ausgegeben)
-   listfull: zeigt eine detaillierte Liste, mit zusätzlichen Informationen, aller Trigger an
-listdefault: zeigt die standardmäßig genutzten Trigger an
-        add: fügt einen Trigger hinzu
-     addoff: fügt einen Trigger hinzu (deaktiviert)
- addreplace: erzeugt neuen Trigger oder ersetzt einen schon existierenden Trigger
-       name: Name des Trigger
+       list: list triggers (without argument, this list is displayed)
+   listfull: list triggers with detailed info for each trigger
+listdefault: list default triggers
+        add: add a trigger
+     addoff: add a trigger (disabled)
+ addreplace: add or replace an existing trigger
+       name: name of trigger
        hook: signal, hsignal, modifier, line, print, command, command_run, timer, config, focus, info, info_hashtable
-  arguments: Argumente für den Hook, abhängig vom genutzten Hook (getrennt durch Semikolon):
-             signal: Name(en) des signals (erforderlich)
-             hsignal: Name(en) des hsignal (erforderlich)
-             modifier: Name(en) des modifier (erforderlich)
-             line: Buffertyp ("formatted", "free" oder "*"), Liste von Buffermasken, Tags
-             print: Buffer, Tags, Nachricht, Farben entfernen
-             command: Befehl (erforderlich), Beschreibung, Argumente, Beschreibung der Argumente, Vervollständigung (alle Argumente, außer dem Befehl werden ausgewertet, "${tg_trigger_name}" wird durch den Triggernamen ersetzt, siehe /help eval)
-             command_run: Befehl(e) (erforderlich)
-             timer: Intervall (erforderlich), Anpassung an Sekunden (erforderlich), maximale Anzahl an Aufrufen
-             config: Name der Einstellung (erforderlich)
-             focus: Name(n) für sichtbaren Bereich (erforderlich) (z.B. "chat" für Chatbereich)
-             info: Name(n) der Information (erforderlich)
-             info_hashtable: Name(n) der Information (erforderlich)
- conditions: evaluierte Bedingungen für den Trigger
-      regex: einer oder mehrere reguläre Ausdrücke um Zeichenketten in Variablen zu ersetzen
-    command: Befehl welcher ausgeführt werden soll (mehrere Befehle müssen durch ";" voneinander getrennt werden)
-return_code: Rückgabewert für Callback (ok (standard), ok_eat, error)
-post_action: Aktion welche nach der Abarbeitung des Triggers ausgeführt werden soll (none (Standardwert), disable, delete)
-   addinput: erstellt einen Trigger mit einer standardmäßigen Mustervorlage
-      input: kopiert den kompletten Trigger-Befehl in die Eingabezeile
-     output: schickt den Trigger-Befehl als Text in den Buffer
-   recreate: wie "input", allerdings wird die Einstellung "addreplace" anstelle von "add" genutzt
-        set: definiert, innerhalb eines Triggers, eine Einstellung neu
-     option: Name einer Einstellung: name, hook, arguments, conditions, regex, command, return_code
-             (um Hilfe über eine Einstellung zu erhalten: /help trigger.trigger.<name>.<option>)
-      value: neuer Wert für Einstellung
-     rename: benennt einen Trigger um
-       copy: kopiert einen Trigger
-     enable: aktiviert Trigger (ohne Angabe von Argumenten: aktiviert alle Trigger)
-    disable: deaktiviert Trigger (ohne Angabe von Argumenten: deaktiviert alle Trigger)
-     toggle: de-/aktiviert Trigger (ohne Angabe von Argumenten: de-/aktiviert alle Trigger)
-    restart: startet Trigger neu (Hook(s) werden neu erstellt)
-       show: zeigt detaillierte Informationen zu einem Trigger (inklusive einer kleinen Statistik)
-        del: entfernt einen Trigger
-       -all: führt eine Aktion aus, die alle Trigger beinhaltet
-    restore: stellt Trigger mit Standardwerten wieder her (funktioniert nur bei vorgegebenen Triggern)
-    default: stellt die standardmäßigen Trigger wieder her
-    monitor: öffnet den Trigger Monitor-Buffer, mit optionaler Filterfunktion:
-     filter: filtert Hooks/Trigger zum Anzeigen (ein Hook muss mit "@" beginnen, zum Beispiel "@signal"), mehrere Filter können durch Kommata voneinander getrennt werden; Platzhalter "*" kann im Namen des Trigger verwendet werden
+  arguments: arguments for the hook, depending on hook (separated by semicolons):
+             signal: name(s) of signal (required)
+             hsignal: name(s) of hsignal (required)
+             modifier: name(s) of modifier (required)
+             line: buffer type ("formatted", "free" or "*"), list of buffer masks, tags
+             print: buffer, tags, message, strip colors
+             command: command (required), description, arguments, description of arguments, completion (all arguments except command are evaluated, "${tg_trigger_name}" is replaced by the trigger name, see /help eval)
+             command_run: command(s) (required)
+             timer: interval (required), align on second, max calls
+             config: name(s) of option (required)
+             focus: name(s) of area (required)
+             info: name(s) of info (required)
+             info_hashtable: name(s) of info (required)
+ conditions: evaluated conditions for the trigger
+      regex: one or more regular expressions to replace strings in variables
+    command: command to execute (many commands can be separated by ";")
+return_code: return code in callback (ok (default), ok_eat, error)
+post_action: action to take after execution (none (default), disable, delete)
+   addinput: set input with default arguments to create a trigger
+      input: set input with the command used to create the trigger
+     output: send the command to create the trigger on the buffer
+   recreate: same as "input", with option "addreplace" instead of "add"
+        set: set an option in a trigger
+     option: name of option: name, hook, arguments, conditions, regex, command, return_code
+             (for help on option, you can type: /help trigger.trigger.<name>.<option>)
+      value: new value for the option
+     rename: rename a trigger
+       copy: copy a trigger
+     enable: enable trigger(s) (without arguments: enable triggers globally)
+    disable: disable trigger(s) (without arguments: disable triggers globally)
+     toggle: toggle trigger(s) (without arguments: toggle triggers globally)
+    restart: restart trigger(s) (recreate the hooks)
+       show: show detailed info on a trigger (with some stats)
+        del: delete a trigger
+       -all: do action on all triggers
+    restore: restore trigger(s) with the default values (works only for default triggers)
+    default: delete all triggers and restore default ones
+    monitor: open the trigger monitor buffer, with optional filter:
+     filter: filter hooks/triggers to display (a hook must start with "@", for example "@signal"), many filters can be separated by commas; wildcard "*" is allowed in each trigger name
 
-Wenn ein Trigger-Callback aufgerufen wird, dann wird folgende Befehlskette ausgeführt:
-  1. Überprüfung von Bedingungen; falls unwahr, beenden
-  2. ersetze Text mittels einem oder mehreren erweiterten regulären POSIX Ausdrücken (sofern im Trigger definiert)
-  3. ein oder mehrere Befehle werden ausgeführt (sofern im Trigger definiert)
-  4. Beendigung mit einem Rückgabewert (ausgenommen sind modifiers, line, focus, info und info_hashtable)
-  5. Aktion welche nach der Abarbeitung des Triggers ausgeführt werden soll
+When a trigger callback is called, following actions are performed, in this order:
+  1. check conditions; if false, exit
+  2. replace text using POSIX extended regular expression(s) (if defined in trigger)
+  3. execute command(s) (if defined in trigger)
+  4. exit with a return code (except for modifier, line, focus, info and info_hashtable)
+  5. perform post action
 
-Beispiele (die standardmäßig verfügbaren Trigger kann man sich mit "/trigger listdefault" anzeigen lassen):
-  fügt einer Nachricht die Textattribute *fett*, _unterstrichen_ und /kursiv/ hinzu:
+Examples (you can also look at default triggers with /trigger listdefault):
+  add text attributes *bold*, _underline_ and /italic/ (only in user messages):
     /trigger add effects modifier weechat_print "${tg_tag_nick}" "==\*([^ ]+)\*==*${color:bold}${re:1}${color:-bold}*== ==_([^ ]+)_==_${color:underline}${re:1}${color:-underline}_== ==/([^ ]+)/==/${color:italic}${re:1}${color:-italic}/"
-  verbirgt die Nicklist auf kleineren Terminals:
+  hide nicklist bar on small terminals:
     /trigger add resize_small signal signal_sigwinch "${info:term_width} < 100" "" "/bar hide nicklist"
     /trigger add resize_big signal signal_sigwinch "${info:term_width} >= 100" "" "/bar show nicklist"
-  speichert die Konfiguration jede Stunde ab:
+  silently save config each hour:
     /trigger add cfgsave timer 3600000;0;0 "" "" "/mute /save"
-  öffnet den Trigger Monitor und zeigt ausschließlich modifier und Trigger an, die mit "resize" im Namen beginnen:
+  silently save WeeChat session at midnight (see /help upgrade):
+    /trigger add session_save signal day_changed "" "" "/mute /upgrade -save"
+  open trigger monitor and show only modifiers and triggers whose name starts with "resize":
     /trigger monitor @modifier,resize*
 ----
 // end::trigger_commands[]

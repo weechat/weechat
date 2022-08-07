@@ -112,9 +112,21 @@ irc_signal_upgrade_cb (const void *pointer, void *data,
     (void) signal;
     (void) type_data;
 
+    /* only save session and continue? */
+    if (signal_data && (strcmp (signal_data, "save") == 0))
+    {
+        /*
+         * save session with a disconnected state in servers and a scheduled
+         * reconnection
+         */
+        irc_upgrade_save (1);
+        return WEECHAT_RC_OK;
+    }
+
     irc_signal_upgrade_received = 1;
 
     quit = (signal_data && (strcmp (signal_data, "quit") == 0));
+
     ssl_disconnected = 0;
 
     for (ptr_server = irc_servers; ptr_server;
@@ -142,8 +154,10 @@ irc_signal_upgrade_cb (const void *pointer, void *data,
              * after restart
              */
             ptr_server->index_current_address = 0;
-            ptr_server->reconnect_delay = IRC_SERVER_OPTION_INTEGER(ptr_server, IRC_SERVER_OPTION_AUTORECONNECT_DELAY);
-            ptr_server->reconnect_start = time (NULL) - ptr_server->reconnect_delay - 1;
+            ptr_server->reconnect_delay = IRC_SERVER_OPTION_INTEGER(
+                ptr_server, IRC_SERVER_OPTION_AUTORECONNECT_DELAY);
+            ptr_server->reconnect_start = time (NULL) -
+                ptr_server->reconnect_delay - 1;
         }
     }
     if (ssl_disconnected > 0)
@@ -293,7 +307,7 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
     if (irc_signal_upgrade_received)
     {
         irc_config_write (1);
-        irc_upgrade_save ();
+        irc_upgrade_save (0);
     }
     else
     {

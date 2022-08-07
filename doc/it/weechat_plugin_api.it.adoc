@@ -11329,7 +11329,8 @@ List of signals sent by WeeChat and plugins:
 
 // TRANSLATION MISSING
 | weechat | [[hook_signal_upgrade]] upgrade |
-| String: "quit" if "-quit" argument was given for /upgrade, otherwise NULL.
+| String: "quit" if "-quit" argument was given for /upgrade, "save" if "-save"
+  if "-save" argument was given for /upgrade, otherwise NULL.
 | Comando `/upgrade` digitato dall'utente.
 
 | weechat | [[hook_signal_upgrade_ended]] upgrade_ended | 0.3.4

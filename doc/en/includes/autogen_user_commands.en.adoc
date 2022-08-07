@@ -2122,19 +2122,22 @@ Examples:
 ----
 
 [[command_weechat_upgrade]]
-* `+upgrade+`: reload the WeeChat binary without disconnecting from servers
+* `+upgrade+`: save WeeChat session and reload the WeeChat binary without disconnecting from servers
 
 ----
-/upgrade  [-yes] [<path_to_binary>|-quit]
+/upgrade  [-yes] [<path_to_binary>|-save|-quit]
 
           -yes: required if option "weechat.look.confirm_upgrade" is enabled
 path_to_binary: path to WeeChat binary (default is current binary)
         -dummy: do nothing (option used to prevent accidental completion with "-quit")
+         -save: only save the session, do not quit nor reload WeeChat; the configuration files are not saved (if needed you can use /save before this command)
          -quit: close *ALL* connections, save session and quit WeeChat, which makes possible a delayed restoration (see below)
 
 This command upgrades and reloads a running WeeChat session. The new WeeChat binary must have been compiled or installed with a package manager before running this command.
 
-Note: SSL connections are lost during upgrade, because reload of SSL sessions is currently not possible with GnuTLS. There is automatic reconnection after upgrade.
+Note: SSL connections are lost during upgrade (except with -save), because the reload of SSL sessions is currently not possible with GnuTLS. There is automatic reconnection after upgrade.
+
+Important: use of option -save can be dangerous, it is recommended to use only /upgrade (or with -quit) for a standard upgrade and a restart; the option -save can be used to save the session regularly and restore it in case of after abnormal exit (power outage, crash, etc.)
 
 Upgrade process has 4 steps:
   1. save session into files for core and plugins (buffers, history, ..)
@@ -2142,14 +2145,18 @@ Upgrade process has 4 steps:
   3. save WeeChat configuration (weechat.conf)
   4. execute new WeeChat binary and reload session.
 
-With option "-quit", the process is slightly different:
+With option "-quit", the process is:
   1. close *ALL* connections (irc, xfer, relay, ...)
   2. save session into files (*.upgrade)
   3. unload all plugins
   4. save WeeChat configuration
   5. quit WeeChat
-Then later you can restore session with command: weechat --upgrade
-IMPORTANT: you must restore the session with exactly same configuration (files *.conf).
+
+With option "-save", the process is:
+  1. save session into files (*.upgrade) with a disconnected state for IRC servers and Relay clients (but no disconnection is made)
+
+With -quit or -save, you can restore the session later with this command: weechat --upgrade
+IMPORTANT: you must restore the session with exactly same configuration (files *.conf) and if possible the same WeeChat version (or a more recent one).
 It is possible to restore WeeChat session on another machine if you copy the content of WeeChat home directories (see /debug dirs).
 ----
 
@@ -3193,6 +3200,8 @@ Examples (you can also look at default triggers with /trigger listdefault):
     /trigger add resize_big signal signal_sigwinch "${info:term_width} >= 100" "" "/bar show nicklist"
   silently save config each hour:
     /trigger add cfgsave timer 3600000;0;0 "" "" "/mute /save"
+  silently save WeeChat session at midnight (see /help upgrade):
+    /trigger add session_save signal day_changed "" "" "/mute /upgrade -save"
   open trigger monitor and show only modifiers and triggers whose name starts with "resize":
     /trigger monitor @modifier,resize*
 ----

@@ -10527,8 +10527,10 @@ struct t_hook *weechat_hook_signal (const char *signal,
 | - |
 Примљен је сигнал SIGWINCH (промењена је величина терминала).
 
+// TRANSLATION MISSING
 | weechat | [[hook_signal_upgrade]] upgrade |
-| Стринг: "quit" ако је за /upgrade наведен аргумент „-quit”, у супротном NULL.
+| String: "quit" if "-quit" argument was given for /upgrade, "save" if "-save"
+  if "-save" argument was given for /upgrade, otherwise NULL.
 | Корисник је задао команду `/upgrade`.
 
 | weechat | [[hook_signal_upgrade_ended]] upgrade_ended | 0.3.4

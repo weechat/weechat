@@ -424,7 +424,8 @@ extern struct t_hdata *irc_server_hdata_server_cb (const void *pointer,
                                                    void *data,
                                                    const char *hdata_name);
 extern int irc_server_add_to_infolist (struct t_infolist *infolist,
-                                       struct t_irc_server *server);
+                                       struct t_irc_server *server,
+                                       int force_disconnected_state);
 extern void irc_server_print_log ();
 
 #endif /* WEECHAT_PLUGIN_IRC_SERVER_H */

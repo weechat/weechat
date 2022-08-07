@@ -52,7 +52,8 @@ struct t_irc_modelist *irc_upgrade_current_modelist = NULL;
  */
 
 int
-irc_upgrade_save_all_data (struct t_upgrade_file *upgrade_file)
+irc_upgrade_save_all_data (struct t_upgrade_file *upgrade_file,
+                           int force_disconnected_state)
 {
     struct t_infolist *infolist;
     struct t_irc_server *ptr_server;
@@ -73,7 +74,8 @@ irc_upgrade_save_all_data (struct t_upgrade_file *upgrade_file)
         infolist = weechat_infolist_new ();
         if (!infolist)
             return 0;
-        if (!irc_server_add_to_infolist (infolist, ptr_server))
+        if (!irc_server_add_to_infolist (infolist, ptr_server,
+                                         force_disconnected_state))
         {
             weechat_infolist_free (infolist);
             return 0;
@@ -105,63 +107,66 @@ irc_upgrade_save_all_data (struct t_upgrade_file *upgrade_file)
             if (!rc)
                 return 0;
 
-            for (ptr_nick = ptr_channel->nicks; ptr_nick;
-                 ptr_nick = ptr_nick->next_nick)
+            if (!force_disconnected_state)
             {
-                /* save nick */
-                infolist = weechat_infolist_new ();
-                if (!infolist)
-                    return 0;
-                if (!irc_nick_add_to_infolist (infolist, ptr_nick))
+                for (ptr_nick = ptr_channel->nicks; ptr_nick;
+                     ptr_nick = ptr_nick->next_nick)
                 {
-                    weechat_infolist_free (infolist);
-                    return 0;
-                }
-                rc = weechat_upgrade_write_object (upgrade_file,
-                                                   IRC_UPGRADE_TYPE_NICK,
-                                                   infolist);
-                weechat_infolist_free (infolist);
-                if (!rc)
-                    return 0;
-            }
-
-            for (ptr_modelist = ptr_channel->modelists; ptr_modelist;
-                 ptr_modelist = ptr_modelist->next_modelist)
-            {
-                /* save modelist */
-                infolist = weechat_infolist_new ();
-                if (!infolist)
-                    return 0;
-                if (!irc_modelist_add_to_infolist (infolist, ptr_modelist))
-                {
-                    weechat_infolist_free (infolist);
-                    return 0;
-                }
-                rc = weechat_upgrade_write_object (upgrade_file,
-                                                   IRC_UPGRADE_TYPE_MODELIST,
-                                                   infolist);
-                weechat_infolist_free (infolist);
-                if (!rc)
-                    return 0;
-
-                for (ptr_item = ptr_modelist->items; ptr_item;
-                     ptr_item = ptr_item->next_item)
-                {
-                    /* save modelist item */
+                    /* save nick */
                     infolist = weechat_infolist_new ();
                     if (!infolist)
                         return 0;
-                    if (!irc_modelist_item_add_to_infolist (infolist, ptr_item))
+                    if (!irc_nick_add_to_infolist (infolist, ptr_nick))
                     {
                         weechat_infolist_free (infolist);
                         return 0;
                     }
                     rc = weechat_upgrade_write_object (upgrade_file,
-                                                       IRC_UPGRADE_TYPE_MODELIST_ITEM,
+                                                       IRC_UPGRADE_TYPE_NICK,
                                                        infolist);
                     weechat_infolist_free (infolist);
                     if (!rc)
                         return 0;
+                }
+
+                for (ptr_modelist = ptr_channel->modelists; ptr_modelist;
+                     ptr_modelist = ptr_modelist->next_modelist)
+                {
+                    /* save modelist */
+                    infolist = weechat_infolist_new ();
+                    if (!infolist)
+                        return 0;
+                    if (!irc_modelist_add_to_infolist (infolist, ptr_modelist))
+                    {
+                        weechat_infolist_free (infolist);
+                        return 0;
+                    }
+                    rc = weechat_upgrade_write_object (upgrade_file,
+                                                       IRC_UPGRADE_TYPE_MODELIST,
+                                                       infolist);
+                    weechat_infolist_free (infolist);
+                    if (!rc)
+                        return 0;
+
+                    for (ptr_item = ptr_modelist->items; ptr_item;
+                         ptr_item = ptr_item->next_item)
+                    {
+                        /* save modelist item */
+                        infolist = weechat_infolist_new ();
+                        if (!infolist)
+                            return 0;
+                        if (!irc_modelist_item_add_to_infolist (infolist, ptr_item))
+                        {
+                            weechat_infolist_free (infolist);
+                            return 0;
+                        }
+                        rc = weechat_upgrade_write_object (upgrade_file,
+                                                           IRC_UPGRADE_TYPE_MODELIST_ITEM,
+                                                           infolist);
+                        weechat_infolist_free (infolist);
+                        if (!rc)
+                            return 0;
+                    }
                 }
             }
         }
@@ -263,7 +268,7 @@ irc_upgrade_save_all_data (struct t_upgrade_file *upgrade_file)
  */
 
 int
-irc_upgrade_save ()
+irc_upgrade_save (int force_disconnected_state)
 {
     int rc;
     struct t_upgrade_file *upgrade_file;
@@ -273,7 +278,7 @@ irc_upgrade_save ()
     if (!upgrade_file)
         return 0;
 
-    rc = irc_upgrade_save_all_data (upgrade_file);
+    rc = irc_upgrade_save_all_data (upgrade_file, force_disconnected_state);
 
     weechat_upgrade_close (upgrade_file);
 

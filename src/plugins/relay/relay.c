@@ -96,6 +96,14 @@ relay_signal_upgrade_cb (const void *pointer, void *data,
     (void) type_data;
     (void) signal_data;
 
+    /* only save session and continue? */
+    if (signal_data && (strcmp (signal_data, "save") == 0))
+    {
+        /* save session with a disconnected state in clients */
+        relay_upgrade_save (1);
+        return WEECHAT_RC_OK;
+    }
+
     relay_signal_upgrade_received = 1;
 
     /* close socket for relay servers */
@@ -235,7 +243,9 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
     relay_config_write ();
 
     if (relay_signal_upgrade_received)
-        relay_upgrade_save ();
+    {
+        relay_upgrade_save (0);
+    }
     else
     {
         relay_raw_message_free_all ();

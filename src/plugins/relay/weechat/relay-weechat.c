@@ -141,6 +141,13 @@ relay_weechat_recv (struct t_relay_client *client, const char *data)
 void
 relay_weechat_close_connection (struct t_relay_client *client)
 {
+    /*
+     * IMPORTANT: if changes are made in this function or sub-functions called,
+     * please also update the function relay_weechat_add_to_infolist:
+     * when the flag force_disconnected_state is set to 1 we simulate
+     * a disconnected state for client in infolist (used on /upgrade -save)
+     */
+
     relay_weechat_unhook_signals (client);
 }
 
@@ -319,6 +326,10 @@ relay_weechat_free (struct t_relay_client *client)
 /*
  * Adds client WeeChat data in an infolist.
  *
+ * If force_disconnected_state == 1, the infolist contains the client
+ * in a disconnected state (but the client is unchanged, still connected if it
+ * was).
+ *
  * Returns:
  *   1: OK
  *   0: error
@@ -326,10 +337,14 @@ relay_weechat_free (struct t_relay_client *client)
 
 int
 relay_weechat_add_to_infolist (struct t_infolist_item *item,
-                               struct t_relay_client *client)
+                               struct t_relay_client *client,
+                               int force_disconnected_state)
 {
     if (!item || !client)
         return 0;
+
+    /* parameter not used today, it may be in future */
+    (void) force_disconnected_state;
 
     if (!weechat_infolist_new_var_integer (item, "handshake_done", RELAY_WEECHAT_DATA(client, handshake_done)))
         return 0;

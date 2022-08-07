@@ -41,7 +41,8 @@
  */
 
 int
-relay_upgrade_save_all_data (struct t_upgrade_file *upgrade_file)
+relay_upgrade_save_all_data (struct t_upgrade_file *upgrade_file,
+                             int force_disconnected_state)
 {
     struct t_infolist *infolist;
     struct t_relay_server *ptr_server;
@@ -76,7 +77,8 @@ relay_upgrade_save_all_data (struct t_upgrade_file *upgrade_file)
         infolist = weechat_infolist_new ();
         if (!infolist)
             return 0;
-        if (!relay_client_add_to_infolist (infolist, ptr_client))
+        if (!relay_client_add_to_infolist (infolist, ptr_client,
+                                           force_disconnected_state))
         {
             weechat_infolist_free (infolist);
             return 0;
@@ -121,7 +123,7 @@ relay_upgrade_save_all_data (struct t_upgrade_file *upgrade_file)
  */
 
 int
-relay_upgrade_save ()
+relay_upgrade_save (int force_disconnected_state)
 {
     int rc;
     struct t_upgrade_file *upgrade_file;
@@ -131,7 +133,7 @@ relay_upgrade_save ()
     if (!upgrade_file)
         return 0;
 
-    rc = relay_upgrade_save_all_data (upgrade_file);
+    rc = relay_upgrade_save_all_data (upgrade_file, force_disconnected_state);
 
     weechat_upgrade_close (upgrade_file);
 

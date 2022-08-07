@@ -11116,7 +11116,8 @@ Liste des signaux envoyés par WeeChat et les extensions :
 | Signal SIGWINCH reçu (le terminal a été redimensionné).
 
 | weechat | [[hook_signal_upgrade]] upgrade |
-| Chaîne : "quit" si le paramètre "-quit" a été donné pour /upgrade, sinon NULL.
+| Chaîne : "quit" si le paramètre "-quit" a été donné pour /upgrade, "-save"
+  si le paramètre "-save" a été donné pour /upgrade, sinon NULL.
 | La commande `/upgrade` a été exécutée par l'utilisateur.
 
 | weechat | [[hook_signal_upgrade_ended]] upgrade_ended | 0.3.4

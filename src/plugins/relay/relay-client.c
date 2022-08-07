@@ -1610,6 +1610,13 @@ relay_client_set_status (struct t_relay_client *client,
 {
     struct t_relay_server *ptr_server;
 
+    /*
+     * IMPORTANT: if changes are made in this function or sub-functions called,
+     * please also update the function relay_client_add_to_infolist:
+     * when the flag force_disconnected_state is set to 1 we simulate
+     * a disconnected state for client in infolist (used on /upgrade -save)
+     */
+
     client->status = status;
 
     if (client->status == RELAY_STATUS_CONNECTED)
@@ -1821,6 +1828,10 @@ relay_client_disconnect_all ()
 /*
  * Adds a client in an infolist.
  *
+ * If force_disconnected_state == 1, the infolist contains the client
+ * in a disconnected state (but the client is unchanged, still connected if it
+ * was).
+ *
  * Returns:
  *   1: OK
  *   0: error
@@ -1828,7 +1839,8 @@ relay_client_disconnect_all ()
 
 int
 relay_client_add_to_infolist (struct t_infolist *infolist,
-                              struct t_relay_client *client)
+                              struct t_relay_client *client,
+                              int force_disconnected_state)
 {
     struct t_infolist_item *ptr_item;
     char value[128];
@@ -1844,23 +1856,45 @@ relay_client_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "desc", client->desc))
         return 0;
-    if (!weechat_infolist_new_var_integer (ptr_item, "sock", client->sock))
-        return 0;
+    if (!RELAY_CLIENT_HAS_ENDED(client) && force_disconnected_state)
+    {
+        if (!weechat_infolist_new_var_integer (ptr_item, "sock", -1))
+            return 0;
+        if (!weechat_infolist_new_var_pointer (ptr_item, "hook_timer_handshake", NULL))
+            return 0;
+        if (!weechat_infolist_new_var_integer (ptr_item, "gnutls_handshake_ok", 0))
+            return 0;
+        if (!weechat_infolist_new_var_integer (ptr_item, "status", RELAY_STATUS_DISCONNECTED))
+            return 0;
+        if (!weechat_infolist_new_var_time (ptr_item, "end_time", time (NULL)))
+            return 0;
+        if (!weechat_infolist_new_var_string (ptr_item, "partial_message", NULL))
+            return 0;
+    }
+    else
+    {
+        if (!weechat_infolist_new_var_integer (ptr_item, "sock", client->sock))
+            return 0;
+        if (!weechat_infolist_new_var_pointer (ptr_item, "hook_timer_handshake", client->hook_timer_handshake))
+            return 0;
+        if (!weechat_infolist_new_var_integer (ptr_item, "gnutls_handshake_ok", client->gnutls_handshake_ok))
+            return 0;
+        if (!weechat_infolist_new_var_integer (ptr_item, "status", client->status))
+            return 0;
+        if (!weechat_infolist_new_var_time (ptr_item, "end_time", client->end_time))
+            return 0;
+        if (!weechat_infolist_new_var_string (ptr_item, "partial_message", client->partial_message))
+            return 0;
+    }
     if (!weechat_infolist_new_var_integer (ptr_item, "server_port", client->server_port))
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "ssl", client->ssl))
-        return 0;
-    if (!weechat_infolist_new_var_pointer (ptr_item, "hook_timer_handshake", client->hook_timer_handshake))
-        return 0;
-    if (!weechat_infolist_new_var_integer (ptr_item, "gnutls_handshake_ok", client->gnutls_handshake_ok))
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "websocket", client->websocket))
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "address", client->address))
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "real_ip", client->real_ip))
-        return 0;
-    if (!weechat_infolist_new_var_integer (ptr_item, "status", client->status))
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "status_string", relay_client_status_string[client->status]))
         return 0;
@@ -1882,8 +1916,6 @@ relay_client_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!weechat_infolist_new_var_time (ptr_item, "start_time", client->start_time))
         return 0;
-    if (!weechat_infolist_new_var_time (ptr_item, "end_time", client->end_time))
-        return 0;
     if (!weechat_infolist_new_var_pointer (ptr_item, "hook_fd", client->hook_fd))
         return 0;
     if (!weechat_infolist_new_var_pointer (ptr_item, "hook_timer_send", client->hook_timer_send))
@@ -1900,16 +1932,16 @@ relay_client_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "send_data_type", client->send_data_type))
         return 0;
-    if (!weechat_infolist_new_var_string (ptr_item, "partial_message", client->partial_message))
-        return 0;
 
     switch (client->protocol)
     {
         case RELAY_PROTOCOL_WEECHAT:
-            relay_weechat_add_to_infolist (ptr_item, client);
+            relay_weechat_add_to_infolist (ptr_item, client,
+                                           force_disconnected_state);
             break;
         case RELAY_PROTOCOL_IRC:
-            relay_irc_add_to_infolist (ptr_item, client);
+            relay_irc_add_to_infolist (ptr_item, client,
+                                       force_disconnected_state);
             break;
         case RELAY_NUM_PROTOCOLS:
             break;
