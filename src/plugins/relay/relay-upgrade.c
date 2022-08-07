@@ -250,5 +250,7 @@ relay_upgrade_load ()
 
     weechat_upgrade_close (upgrade_file);
 
+    relay_buffer_refresh (NULL);
+
     return rc;
 }

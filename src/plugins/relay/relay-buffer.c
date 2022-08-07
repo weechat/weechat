@@ -49,104 +49,104 @@ relay_buffer_refresh (const char *hotlist)
     int i, length, line;
     struct tm *date_tmp;
 
-    if (relay_buffer)
+    if (!relay_buffer)
+        return;
+
+    weechat_buffer_clear (relay_buffer);
+    line = 0;
+    client_selected = relay_client_search_by_number (relay_buffer_selected_line);
+    weechat_printf_y (relay_buffer, 0,
+                      "%s%s%s%s%s%s%s",
+                      weechat_color ("green"),
+                      _("Actions (letter+enter):"),
+                      weechat_color ("lightgreen"),
+                      /* disconnect */
+                      (client_selected
+                       && !RELAY_CLIENT_HAS_ENDED(client_selected)) ?
+                      _("  [D] Disconnect") : "",
+                      /* remove */
+                      (client_selected
+                       && RELAY_CLIENT_HAS_ENDED(client_selected)) ?
+                      _("  [R] Remove") : "",
+                      /* purge old */
+                      _("  [P] Purge finished"),
+                      /* quit */
+                      _("  [Q] Close this buffer"));
+    for (ptr_client = relay_clients; ptr_client;
+         ptr_client = ptr_client->next_client)
     {
-        weechat_buffer_clear (relay_buffer);
-        line = 0;
-        client_selected = relay_client_search_by_number (relay_buffer_selected_line);
-        weechat_printf_y (relay_buffer, 0,
-                          "%s%s%s%s%s%s%s",
-                          weechat_color ("green"),
-                          _("Actions (letter+enter):"),
-                          weechat_color ("lightgreen"),
-                          /* disconnect */
-                          (client_selected
-                           && !RELAY_CLIENT_HAS_ENDED(client_selected)) ?
-                          _("  [D] Disconnect") : "",
-                          /* remove */
-                          (client_selected
-                           && RELAY_CLIENT_HAS_ENDED(client_selected)) ?
-                          _("  [R] Remove") : "",
-                          /* purge old */
-                          _("  [P] Purge finished"),
-                          /* quit */
-                          _("  [Q] Close this buffer"));
-        for (ptr_client = relay_clients; ptr_client;
-             ptr_client = ptr_client->next_client)
+        snprintf (str_color, sizeof (str_color),
+                  "%s,%s",
+                  (line == relay_buffer_selected_line) ?
+                  weechat_config_string (relay_config_color_text_selected) :
+                  weechat_config_string (relay_config_color_text),
+                  weechat_config_string (relay_config_color_text_bg));
+
+        snprintf (str_status, sizeof (str_status),
+                  "%s", _(relay_client_status_string[ptr_client->status]));
+        length = weechat_utf8_strlen_screen (str_status);
+        if (length < 20)
         {
-            snprintf (str_color, sizeof (str_color),
-                      "%s,%s",
-                      (line == relay_buffer_selected_line) ?
-                      weechat_config_string (relay_config_color_text_selected) :
-                      weechat_config_string (relay_config_color_text),
-                      weechat_config_string (relay_config_color_text_bg));
-
-            snprintf (str_status, sizeof (str_status),
-                      "%s", _(relay_client_status_string[ptr_client->status]));
-            length = weechat_utf8_strlen_screen (str_status);
-            if (length < 20)
+            for (i = 0; i < 20 - length; i++)
             {
-                for (i = 0; i < 20 - length; i++)
-                {
-                    strcat (str_status, " ");
-                }
+                strcat (str_status, " ");
             }
+        }
 
-            str_date_start[0] = '\0';
-            date_tmp = localtime (&(ptr_client->start_time));
+        str_date_start[0] = '\0';
+        date_tmp = localtime (&(ptr_client->start_time));
+        if (date_tmp)
+        {
+            if (strftime (str_date_start, sizeof (str_date_start),
+                          "%a, %d %b %Y %H:%M:%S", date_tmp) == 0)
+                str_date_start[0] = '\0';
+        }
+        str_date_end[0] = '-';
+        str_date_end[1] = '\0';
+        if (ptr_client->end_time > 0)
+        {
+            date_tmp = localtime (&(ptr_client->end_time));
             if (date_tmp)
             {
-                if (strftime (str_date_start, sizeof (str_date_start),
+                if (strftime (str_date_end, sizeof (str_date_end),
                               "%a, %d %b %Y %H:%M:%S", date_tmp) == 0)
-                    str_date_start[0] = '\0';
+                    str_date_end[0] = '\0';
             }
-            str_date_end[0] = '-';
-            str_date_end[1] = '\0';
-            if (ptr_client->end_time > 0)
-            {
-                date_tmp = localtime (&(ptr_client->end_time));
-                if (date_tmp)
-                {
-                    if (strftime (str_date_end, sizeof (str_date_end),
-                                  "%a, %d %b %Y %H:%M:%S", date_tmp) == 0)
-                        str_date_end[0] = '\0';
-                }
-            }
-
-            str_recv = weechat_string_format_size (ptr_client->bytes_recv);
-            str_sent = weechat_string_format_size (ptr_client->bytes_sent);
-
-            /* first line with status, description and bytes recv/sent */
-            weechat_printf_y (relay_buffer, (line * 2) + 2,
-                              _("%s%s[%s%s%s%s] %s, received: %s, sent: %s"),
-                              weechat_color (str_color),
-                              (line == relay_buffer_selected_line) ? "*** " : "    ",
-                              weechat_color (weechat_config_string (relay_config_color_status[ptr_client->status])),
-                              str_status,
-                              weechat_color ("reset"),
-                              weechat_color (str_color),
-                              ptr_client->desc,
-                              (str_recv) ? str_recv : "?",
-                              (str_sent) ? str_sent : "?");
-
-            /* second line with start/end time */
-            weechat_printf_y (relay_buffer, (line * 2) + 3,
-                              _("%s%-26s started on: %s, ended on: %s"),
-                              weechat_color (str_color),
-                              " ",
-                              str_date_start,
-                              str_date_end);
-
-            if (str_recv)
-                free (str_recv);
-            if (str_sent)
-                free (str_sent);
-
-            line++;
         }
-        if (hotlist)
-            weechat_buffer_set (relay_buffer, "hotlist", hotlist);
+
+        str_recv = weechat_string_format_size (ptr_client->bytes_recv);
+        str_sent = weechat_string_format_size (ptr_client->bytes_sent);
+
+        /* first line with status, description and bytes recv/sent */
+        weechat_printf_y (relay_buffer, (line * 2) + 2,
+                          _("%s%s[%s%s%s%s] %s, received: %s, sent: %s"),
+                          weechat_color (str_color),
+                          (line == relay_buffer_selected_line) ? "*** " : "    ",
+                          weechat_color (weechat_config_string (relay_config_color_status[ptr_client->status])),
+                          str_status,
+                          weechat_color ("reset"),
+                          weechat_color (str_color),
+                          ptr_client->desc,
+                          (str_recv) ? str_recv : "?",
+                          (str_sent) ? str_sent : "?");
+
+        /* second line with start/end time */
+        weechat_printf_y (relay_buffer, (line * 2) + 3,
+                          _("%s%-26s started on: %s, ended on: %s"),
+                          weechat_color (str_color),
+                          " ",
+                          str_date_start,
+                          str_date_end);
+
+        if (str_recv)
+            free (str_recv);
+        if (str_sent)
+            free (str_sent);
+
+        line++;
     }
+    if (hotlist)
+        weechat_buffer_set (relay_buffer, "hotlist", hotlist);
 }
 
 /*
