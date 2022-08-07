@@ -148,5 +148,7 @@ xfer_upgrade_load ()
 
     weechat_upgrade_close (upgrade_file);
 
+    xfer_buffer_refresh (NULL);
+
     return rc;
 }
