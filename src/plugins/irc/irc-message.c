@@ -59,7 +59,7 @@ void
 irc_message_parse_params (const char *parameters,
                           char ***params, int *num_params)
 {
-    const char *ptr_params, *pos_end, *pos_next;
+    const char *ptr_params, *pos_end;
     char **new_params;
     int alloc_params, trailing;
 
@@ -104,13 +104,6 @@ irc_message_parse_params (const char *parameters,
         }
         if (!pos_end)
             pos_end = ptr_params + strlen (ptr_params);
-        pos_next = pos_end;
-        while (pos_next[0] == ' ')
-        {
-            pos_next++;
-        }
-        if (!pos_next[0])
-            pos_end = pos_next;
         if (params)
         {
             alloc_params++;

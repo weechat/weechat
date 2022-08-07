@@ -31,6 +31,7 @@ Bug fixes::
 
   * irc: fix duplicated channels in autojoin option when autojoin_dynamic is enabled (issue #1795)
   * irc: fix display of TOPIC and QUIT messages with an empty trailing parameter (issue #1797)
+  * irc: fix parsing of messages with trailing spaces and no trailing parameter (issue #1803)
   * guile: fix function hdata_get_string
   * javascript: fix return of long value in functions infolist_time, hdata_long and hdata_time
   * php: fix function hdata_compare

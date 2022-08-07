@@ -2003,7 +2003,7 @@ TEST(IrcProtocolWithServer, wallops)
     CHECK_ERROR_PARAMS("wallops", 0, 1);
 
     RECV(":alice!user@host WALLOPS message ");
-    CHECK_SRV("-- Wallops from alice (user@host): message ");
+    CHECK_SRV("-- Wallops from alice (user@host): message");
 
     RECV(":alice!user@host WALLOPS :message from admin ");
     CHECK_SRV("-- Wallops from alice (user@host): message from admin ");
