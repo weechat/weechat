@@ -130,8 +130,13 @@ xfer_signal_upgrade_cb (const void *pointer, void *data,
 
     xfer_signal_upgrade_received = 1;
 
-    if (signal_data && (strcmp (signal_data, "quit") == 0))
-        xfer_disconnect_all ();
+    /*
+     * TODO: do not disconnect here in case of upgrade when the save of xfers
+     * in upgrade file will be implemented
+     * (see function xfer_upgrade_save_xfers in xfer-upgrade.c)
+     */
+    /*if (signal_data && (strcmp (signal_data, "quit") == 0))*/
+    xfer_disconnect_all ();
 
     return WEECHAT_RC_OK;
 }
@@ -418,7 +423,9 @@ xfer_disconnect_all ()
                                     ptr_xfer->filename,
                                     ptr_xfer->remote_nick);
             }
-            xfer_close (ptr_xfer, XFER_STATUS_FAILED);
+            xfer_close (ptr_xfer,
+                        (XFER_IS_CHAT(ptr_xfer->type)) ?
+                        XFER_STATUS_ABORTED : XFER_STATUS_FAILED);
         }
     }
 }
@@ -1922,8 +1929,8 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
 
     if (xfer_signal_upgrade_received)
         xfer_upgrade_save ();
-    else
-        xfer_disconnect_all ();
+
+    xfer_disconnect_all ();
 
     xfer_free_all ();
 
