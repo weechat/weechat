@@ -365,7 +365,7 @@ relay_client_recv_text (struct t_relay_client *client, const char *data)
                     lines[i][length - 1] = '\0';
 
                 /* if websocket is initializing */
-                if (client->websocket == 1)
+                if (client->websocket == RELAY_CLIENT_WEBSOCKET_INITIALIZING)
                 {
                     if (lines[i][0])
                     {
@@ -392,7 +392,7 @@ relay_client_recv_text (struct t_relay_client *client, const char *data)
                                                    handshake,
                                                    strlen (handshake), NULL);
                                 free (handshake);
-                                client->websocket = 2;
+                                client->websocket = RELAY_CLIENT_WEBSOCKET_READY;
                             }
                         }
                         else
@@ -524,7 +524,7 @@ relay_client_recv_text_buffer (struct t_relay_client *client,
          * in case of websocket, we can receive PING from client:
          * trace this PING in raw buffer and answer with a PONG
          */
-        if (client->websocket == 2)
+        if (client->websocket == RELAY_CLIENT_WEBSOCKET_READY)
         {
             msg_type = (unsigned char)buffer[index];
             if (msg_type == RELAY_CLIENT_MSG_PING)
@@ -623,7 +623,7 @@ relay_client_recv_cb (const void *pointer, void *data, int fd)
                  * (we will check later with "http_headers" if web socket is
                  * valid or not)
                  */
-                client->websocket = 1;
+                client->websocket = RELAY_CLIENT_WEBSOCKET_INITIALIZING;
                 client->http_headers = weechat_hashtable_new (
                     32,
                     WEECHAT_HASHTABLE_STRING,
@@ -634,7 +634,7 @@ relay_client_recv_cb (const void *pointer, void *data, int fd)
 
         client->bytes_recv += num_read;
 
-        if (client->websocket == 2)
+        if (client->websocket == RELAY_CLIENT_WEBSOCKET_READY)
         {
             /* websocket used, decode message */
             rc = relay_websocket_decode_frame ((unsigned char *)buffer,
@@ -672,7 +672,7 @@ relay_client_recv_cb (const void *pointer, void *data, int fd)
             length_buffer = decoded_length;
         }
 
-        if ((client->websocket == 1)
+        if ((client->websocket == RELAY_CLIENT_WEBSOCKET_INITIALIZING)
             || (client->recv_data_type == RELAY_CLIENT_DATA_TEXT))
         {
             /* websocket initializing or text data for this client */
@@ -1056,7 +1056,7 @@ relay_client_send (struct t_relay_client *client,
             raw_msg[1] = data;
             raw_size[1] = data_size;
             raw_flags[1] |= RELAY_RAW_FLAG_BINARY;
-            if ((client->websocket == 1)
+            if ((client->websocket == RELAY_CLIENT_WEBSOCKET_INITIALIZING)
                 || (client->send_data_type == RELAY_CLIENT_DATA_TEXT))
             {
                 raw_size[1]--;
@@ -1075,13 +1075,13 @@ relay_client_send (struct t_relay_client *client,
         if ((msg_type == RELAY_CLIENT_MSG_PING)
             || (msg_type == RELAY_CLIENT_MSG_PONG)
             || (msg_type == RELAY_CLIENT_MSG_CLOSE)
-            || ((client->websocket != 1)
+            || ((client->websocket != RELAY_CLIENT_WEBSOCKET_INITIALIZING)
                 && (client->send_data_type == RELAY_CLIENT_DATA_BINARY)))
         {
             /*
              * set binary flag if we send binary to client
-             * (except if websocket == 1, which means that websocket is
-             * initializing, and then we are sending HTTP data, as text)
+             * (except if websocket is initializing and then we are sending
+             * HTTP data, as text)
              */
             raw_flags[0] |= RELAY_RAW_FLAG_BINARY;
         }
@@ -1093,7 +1093,7 @@ relay_client_send (struct t_relay_client *client,
     }
 
     /* if websocket is initialized, encode data in a websocket frame */
-    if (client->websocket == 2)
+    if (client->websocket == RELAY_CLIENT_WEBSOCKET_READY)
     {
         switch (msg_type)
         {
@@ -1306,7 +1306,7 @@ relay_client_new (int sock, const char *address, struct t_relay_server *server)
         new_client->ssl = server->ssl;
         new_client->hook_timer_handshake = NULL;
         new_client->gnutls_handshake_ok = 0;
-        new_client->websocket = 0;
+        new_client->websocket = RELAY_CLIENT_WEBSOCKET_NOT_USED;
         new_client->http_headers = NULL;
         new_client->address = strdup ((address && address[0]) ?
                                       address : "local");
