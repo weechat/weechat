@@ -107,12 +107,17 @@ tests_typing = unit/plugins/typing/test-typing.cpp \
                unit/plugins/typing/test-typing-status.cpp
 endif
 
+if PLUGIN_XFER
+tests_xfer = unit/plugins/xfer/test-xfer-file.cpp
+endif
+
 lib_weechat_unit_tests_plugins_la_SOURCES = unit/plugins/test-plugins.cpp \
                                             $(tests_irc) \
                                             $(tests_logger) \
                                             $(tests_relay) \
                                             $(tests_trigger) \
-                                            $(tests_typing)
+                                            $(tests_typing) \
+                                            $(tests_xfer)
 
 lib_weechat_unit_tests_plugins_la_LDFLAGS = -module -no-undefined
 

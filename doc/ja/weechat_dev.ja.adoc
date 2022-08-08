@@ -506,6 +506,10 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |          relay/                     | Root of unit tests for Relay plugin.
 // TRANSLATION MISSING
 |             test-relay-auth.cpp     | Tests: clients authentication.
+// TRANSLATION MISSING
+|          xfer/                      | Root of unit tests for Xfer plugin.
+// TRANSLATION MISSING
+|             test-xfer-file.cpp      | Tests: file functions.
 |===
 
 [[documentation_translations]]

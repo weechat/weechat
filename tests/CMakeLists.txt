@@ -101,6 +101,12 @@ if(ENABLE_TYPING)
   )
 endif()
 
+if(ENABLE_XFER)
+  list(APPEND LIB_WEECHAT_UNIT_TESTS_PLUGINS_SRC
+    unit/plugins/xfer/test-xfer-file.cpp
+  )
+endif()
+
 add_library(weechat_unit_tests_plugins MODULE ${LIB_WEECHAT_UNIT_TESTS_PLUGINS_SRC})
 
 if(ICONV_LIBRARY)

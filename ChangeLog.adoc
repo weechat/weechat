@@ -50,6 +50,7 @@ Tests::
   * core: remove macOS 10.15, add macOS 12 in CI
   * scripts: add tests on hdata functions
   * scripts: fix run of Guile test script
+  * xfer: add tests on file functions
 
 [[v3.6]]
 == Version 3.6 (2022-07-10)
