@@ -37,6 +37,59 @@
 
 
 /*
+ * Searches CRC32 in a filename.
+ *
+ * If more than one CRC32 are found, the last one is returned
+ * (with the higher index in filename).
+ *
+ * The chars before/after CRC32 must be either beginning/end of string or
+ * non-hexadecimal chars.
+ *
+ * Examples:
+ *
+ *   test_filename     => NULL (not found: no CRC32)
+ *   test_1234abcd     => "1234abcd"
+ *   1234abcd_test     => "1234abcd"
+ *   1234abcd_12345678 => "12345678"
+ *   123456781234abcd  => NULL (not found: missing delimiter around CRC32)
+ *
+ * Returns pointer to last CRC32 in string, NULL if no CRC32 was found.
+ */
+
+const char *
+xfer_file_search_crc32 (const char *filename)
+{
+    int length;
+    const char *ptr_string, *ptr_crc32;
+
+    length = 0;
+    ptr_crc32 = NULL;
+
+    ptr_string = filename;
+    while (ptr_string && ptr_string[0])
+    {
+        if (((ptr_string[0] >= '0') && (ptr_string[0] <= '9'))
+            || ((ptr_string[0] >= 'A') && (ptr_string[0] <= 'F'))
+            || ((ptr_string[0] >= 'a') && (ptr_string[0] <= 'f')))
+        {
+            length++;
+        }
+        else
+        {
+            if (length == 8)
+                ptr_crc32 = ptr_string - 8;
+            length = 0;
+        }
+
+        ptr_string = weechat_utf8_next_char (ptr_string);
+    }
+    if (length == 8)
+        ptr_crc32 = ptr_string - 8;
+
+    return ptr_crc32;
+}
+
+/*
  * Resumes a download.
  *
  * Returns:
