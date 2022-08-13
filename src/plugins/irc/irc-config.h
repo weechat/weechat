@@ -150,6 +150,7 @@ extern struct t_config_option *irc_config_look_smart_filter_join_unmask;
 extern struct t_config_option *irc_config_look_smart_filter_mode;
 extern struct t_config_option *irc_config_look_smart_filter_nick;
 extern struct t_config_option *irc_config_look_smart_filter_quit;
+extern struct t_config_option *irc_config_look_smart_filter_setname;
 extern struct t_config_option *irc_config_look_temporary_servers;
 extern struct t_config_option *irc_config_look_topic_strip_colors;
 
@@ -166,6 +167,7 @@ extern struct t_config_option *irc_config_color_message_chghost;
 extern struct t_config_option *irc_config_color_message_join;
 extern struct t_config_option *irc_config_color_message_kick;
 extern struct t_config_option *irc_config_color_message_quit;
+extern struct t_config_option *irc_config_color_message_setname;
 extern struct t_config_option *irc_config_color_mirc_remap;
 extern struct t_config_option *irc_config_color_nick_prefixes;
 extern struct t_config_option *irc_config_color_notice;

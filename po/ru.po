@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2022-08-13 18:51+0200\n"
+"POT-Creation-Date: 2022-08-13 22:39+0200\n"
 "PO-Revision-Date: 2022-04-24 10:20+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8478,6 +8478,11 @@ msgstr "цвет  текущего окна с сообщениями"
 msgid "enable smart filter for \"part\" and \"quit\" messages"
 msgstr ""
 
+#. TRANSLATORS: please do not translate "setname"
+#, fuzzy
+msgid "enable smart filter for \"setname\" messages"
+msgstr "цвет  текущего окна с сообщениями"
+
 msgid "enable automatic addition of temporary servers with command /connect"
 msgstr ""
 
@@ -8520,8 +8525,9 @@ msgstr "строка, вставляемая после автодополнен
 msgid "color for text in account messages"
 msgstr "цвет  текущего окна с сообщениями"
 
+#. TRANSLATORS: please do not translate "chghost"
 #, fuzzy
-msgid "color for text in chghost messages"
+msgid "color for text in \"chghost\" messages"
 msgstr "цвет  текущего окна с сообщениями"
 
 #, fuzzy
@@ -8535,6 +8541,11 @@ msgstr "цвет  текущего окна с сообщениями"
 #, fuzzy
 msgid "color for text in part/quit messages"
 msgstr "сообщение о выходе по-умолчанию"
+
+#. TRANSLATORS: please do not translate "setname"
+#, fuzzy
+msgid "color for text in \"setname\" messages"
+msgstr "цвет  текущего окна с сообщениями"
 
 #. TRANSLATORS: please do not translate the list of WeeChat color names at the end of string
 msgid ""
@@ -9106,11 +9117,11 @@ msgid "%s%s%s%s%s%s%s%s%s%s has quit"
 msgstr "%s%s %s(%s%s%s)%s вышел"
 
 #, fuzzy, c-format
-msgid "%sYour real name has been set to \"%s\""
-msgstr "%s не могу сохранить конфигурационный файл pluginов\n"
+msgid "%s%s%s%s has changed real name to %s\"%s%s%s\"%s"
+msgstr "%s%s%s сменил тему %s%s%s на:"
 
 #, fuzzy, c-format
-msgid "%sReal name of %s%s%s has been set to \"%s\""
+msgid "%s%sYour real name has been set to %s\"%s%s%s\"%s"
 msgstr "%s не могу сохранить конфигурационный файл pluginов\n"
 
 #, fuzzy, c-format
@@ -12974,6 +12985,10 @@ msgstr "%s нет аргумента для параметра \"%s\"\n"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s DCC: не могу соединиться с отправителем\n"
+
+#, fuzzy, c-format
+#~ msgid "%sReal name of %s%s%s has been set to \"%s\""
+#~ msgstr "%s не могу сохранить конфигурационный файл pluginов\n"
 
 #, fuzzy
 #~ msgid "WeeChat session saved"

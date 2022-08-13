@@ -1847,7 +1847,7 @@ TEST(IrcProtocolWithServer, setname_without_setname_cap)
 
     /* real name of "bob" has changed */
     RECV(":bob!user@host SETNAME :new bob realname ");
-    CHECK_SRV("-- Real name of bob has been set to \"new bob realname \"");
+    CHECK_CHAN("-- bob has changed real name to \"new bob realname \"");
     POINTERS_EQUAL(NULL, ptr_nick->realname);
 
     /* self real name has changed */
@@ -1863,21 +1863,29 @@ TEST(IrcProtocolWithServer, setname_without_setname_cap)
 
 TEST(IrcProtocolWithServer, setname_with_setname_cap)
 {
-    struct t_irc_nick *ptr_nick;
+    struct t_irc_nick *ptr_nick, *ptr_nick2;
 
     /* assume "setname" capability is enabled in server */
     hashtable_set (ptr_server->cap_list, "setname", NULL);
 
-    SRV_INIT_JOIN;
+    SRV_INIT_JOIN2;
 
     ptr_nick = ptr_server->channels->nicks;
+    ptr_nick2 = ptr_server->channels->last_nick;
 
     POINTERS_EQUAL(NULL, ptr_nick->realname);
 
+    /* real name of "bob" has changed */
+    RECV(":bob!user@host SETNAME :new bob realname ");
+    CHECK_CHAN("-- bob has changed real name to \"new bob realname \"");
+    STRCMP_EQUAL("new bob realname ", ptr_nick2->realname);
+
+    /* self real name has changed */
     RECV(":alice!user@host SETNAME :new realname");
     CHECK_SRV("-- Your real name has been set to \"new realname\"");
     STRCMP_EQUAL("new realname", ptr_nick->realname);
 
+    /* self real name has changed */
     RECV(":alice!user@host SETNAME :new realname2");
     CHECK_SRV("-- Your real name has been set to \"new realname2\"");
     STRCMP_EQUAL("new realname2", ptr_nick->realname);

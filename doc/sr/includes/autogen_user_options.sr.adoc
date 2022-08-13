@@ -2133,7 +2133,7 @@
 ** подразумевана вредност: `+cyan+`
 
 * [[option_irc.color.message_chghost]] *irc.color.message_chghost*
-** опис: pass:none[боја за текст у chghost порукама]
+** опис: pass:none[color for text in "chghost" messages]
 ** тип: боја
 ** вредности: име WeeChat боје (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), број terminal боје или алијас; испред боје су дозвољени атрибути (само за боју текста, не и за позадину): „*” за подебљано, „!” за обрнуто, „/” за курзив, „_” за подвучено
 ** подразумевана вредност: `+brown+`
@@ -2155,6 +2155,12 @@
 ** тип: боја
 ** вредности: име WeeChat боје (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), број terminal боје или алијас; испред боје су дозвољени атрибути (само за боју текста, не и за позадину): „*” за подебљано, „!” за обрнуто, „/” за курзив, „_” за подвучено
 ** подразумевана вредност: `+red+`
+
+* [[option_irc.color.message_setname]] *irc.color.message_setname*
+** опис: pass:none[color for text in "setname" messages]
+** тип: боја
+** вредности: име WeeChat боје (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), број terminal боје или алијас; испред боје су дозвољени атрибути (само за боју текста, не и за позадину): „*” за подебљано, „!” за обрнуто, „/” за курзив, „_” за подвучено
+** подразумевана вредност: `+brown+`
 
 * [[option_irc.color.mirc_remap]] *irc.color.mirc_remap*
 ** опис: pass:none[ремапирање mirc боја у порукама користећи хеш табелу: кључеви су „fg,bg” као цели бројеви између -1 (није наведена) и 15, вредности су WeeChat имена или бројеви боја (формат је: „1,-1:боја1;2,7:боја2”), пример: „1,-1:darkgray;1,2:white,blue” да се црна ремапира на „darkgray” и црна на плавој позадини у „white,blue”; подразумеване WeeChat боје за IRC кодове: 0=white, 1=black, 2=blue, 3=green, 4=lightred, 5=red, 6=magenta, 7=brown, 8=yellow, 9=lightgreen, 10=cyan, 11=lightcyan, 12=lightblue, 13=lightmagenta, 14=darkgray, 15=gray]
@@ -2548,6 +2554,12 @@
 
 * [[option_irc.look.smart_filter_quit]] *irc.look.smart_filter_quit*
 ** опис: pass:none[укључивање паметног филтера за „part” и „quit” поруке]
+** тип: логичка
+** вредности: on, off
+** подразумевана вредност: `+on+`
+
+* [[option_irc.look.smart_filter_setname]] *irc.look.smart_filter_setname*
+** опис: pass:none[enable smart filter for "setname" messages]
 ** тип: логичка
 ** вредности: on, off
 ** подразумевана вредност: `+on+`

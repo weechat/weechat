@@ -25,6 +25,7 @@ New features::
   * api: rename function string_build_with_split_string to string_rebuild_split_string, add arguments "index_start" and "index_end"
   * api: add info "uptime_current"
   * buflist: add variable `${hotlist_priority_number}` (integer version of `${hotlist_priority}`)
+  * irc: display SETNAME command in channels and private buffers, add options irc.color.message_setname and irc.look.smart_filter_setname (issue #1805)
   * irc: display an error message when using command /dcc without xfer plugin loaded
 
 Bug fixes::

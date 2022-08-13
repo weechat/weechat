@@ -110,6 +110,7 @@ struct t_config_option *irc_config_look_smart_filter_join_unmask;
 struct t_config_option *irc_config_look_smart_filter_mode;
 struct t_config_option *irc_config_look_smart_filter_nick;
 struct t_config_option *irc_config_look_smart_filter_quit;
+struct t_config_option *irc_config_look_smart_filter_setname;
 struct t_config_option *irc_config_look_temporary_servers;
 struct t_config_option *irc_config_look_topic_strip_colors;
 
@@ -129,6 +130,7 @@ struct t_config_option *irc_config_color_message_chghost;
 struct t_config_option *irc_config_color_message_join;
 struct t_config_option *irc_config_color_message_kick;
 struct t_config_option *irc_config_color_message_quit;
+struct t_config_option *irc_config_color_message_setname;
 struct t_config_option *irc_config_color_mirc_remap;
 struct t_config_option *irc_config_color_nick_prefixes;
 struct t_config_option *irc_config_color_notice;
@@ -3234,6 +3236,13 @@ irc_config_init ()
         N_("enable smart filter for \"part\" and \"quit\" messages"),
         NULL, 0, 0, "on", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    irc_config_look_smart_filter_setname = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "smart_filter_setname", "boolean",
+        /* TRANSLATORS: please do not translate "setname" */
+        N_("enable smart filter for \"setname\" messages"),
+        NULL, 0, 0, "on", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_look_temporary_servers = weechat_config_new_option (
         irc_config_file, ptr_section,
         "temporary_servers", "boolean",
@@ -3339,7 +3348,8 @@ irc_config_init ()
     irc_config_color_message_chghost = weechat_config_new_option (
         irc_config_file, ptr_section,
         "message_chghost", "color",
-        N_("color for text in chghost messages"),
+        /* TRANSLATORS: please do not translate "chghost" */
+        N_("color for text in \"chghost\" messages"),
         NULL, -1, 0, "brown", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_color_message_join = weechat_config_new_option (
@@ -3359,6 +3369,13 @@ irc_config_init ()
         "message_quit", "color",
         N_("color for text in part/quit messages"),
         NULL, -1, 0, "red", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    irc_config_color_message_setname = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "message_setname", "color",
+        /* TRANSLATORS: please do not translate "setname" */
+        N_("color for text in \"setname\" messages"),
+        NULL, -1, 0, "brown", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_color_mirc_remap = weechat_config_new_option (
         irc_config_file, ptr_section,

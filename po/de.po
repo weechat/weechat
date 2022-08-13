@@ -25,7 +25,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2022-08-13 18:51+0200\n"
+"POT-Creation-Date: 2022-08-13 22:39+0200\n"
 "PO-Revision-Date: 2022-08-08 10:21+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -11137,6 +11137,12 @@ msgid "enable smart filter for \"part\" and \"quit\" messages"
 msgstr ""
 "aktiviert einen intelligenten Filter für \"part\" und \"quit\" Nachrichten"
 
+#. TRANSLATORS: please do not translate "setname"
+#, fuzzy
+#| msgid "enable smart filter for \"join\" messages"
+msgid "enable smart filter for \"setname\" messages"
+msgstr "aktiviert einen intelligenten Filter für \"join\" Nachrichten"
+
 msgid "enable automatic addition of temporary servers with command /connect"
 msgstr ""
 "aktiviert die Erstellung von temporären Servern mit dem Befehl /connect"
@@ -11189,7 +11195,10 @@ msgstr ""
 msgid "color for text in account messages"
 msgstr "Textfarbe für \"account\" Nachrichten"
 
-msgid "color for text in chghost messages"
+#. TRANSLATORS: please do not translate "chghost"
+#, fuzzy
+#| msgid "color for text in chghost messages"
+msgid "color for text in \"chghost\" messages"
 msgstr "Textfarbe in der chghost Nachrichten dargestellt werden"
 
 msgid "color for text in join messages"
@@ -11206,6 +11215,14 @@ msgid "color for text in part/quit messages"
 msgstr ""
 "Textfarbe in der die Meldungen für das Verlassen/Beenden eines Kanals "
 "angezeigt werden soll"
+
+#. TRANSLATORS: please do not translate "setname"
+#, fuzzy
+#| msgid "color for text in join messages"
+msgid "color for text in \"setname\" messages"
+msgstr ""
+"Textfarbe in der die Meldungen für das Betreten eines Kanals angezeigt "
+"werden soll"
 
 #. TRANSLATORS: please do not translate the list of WeeChat color names at the end of string
 msgid ""
@@ -11813,13 +11830,15 @@ msgstr "%s%s%s%s%s%s%s%s%s%s hat den IRC verlassen %s(%s%s%s)"
 msgid "%s%s%s%s%s%s%s%s%s%s has quit"
 msgstr "%s%s%s%s%s%s%s%s%s%s hat den IRC verlassen"
 
-#, c-format
-msgid "%sYour real name has been set to \"%s\""
-msgstr "%sRealname wurde gesetzt auf: %s"
+#, fuzzy, c-format
+#| msgid "%s%s%s%s has changed topic for %s%s%s to \"%s%s%s\""
+msgid "%s%s%s%s has changed real name to %s\"%s%s%s\"%s"
+msgstr "%s%s%s%s hat das Thema für den Kanal %s%s%s auf \"%s%s%s\" gesetzt"
 
-#, c-format
-msgid "%sReal name of %s%s%s has been set to \"%s\""
-msgstr "%sRealname von %s%s%s wurde auf \"%s\" gesetzt"
+#, fuzzy, c-format
+#| msgid "%sYour real name has been set to \"%s\""
+msgid "%s%sYour real name has been set to %s\"%s%s%s\"%s"
+msgstr "%sRealname wurde gesetzt auf: %s"
 
 #, c-format
 msgid "%s%s: \"%s\" command received without channel"
@@ -16416,6 +16435,10 @@ msgstr "%s%s: Zeitüberschreitung für \"%s\" mit %s"
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr ""
 "%s%s: Verbindung konnte nicht hergestellt werden: unerwarteter Fehler (%d)"
+
+#, c-format
+#~ msgid "%sReal name of %s%s%s has been set to \"%s\""
+#~ msgstr "%sRealname von %s%s%s wurde auf \"%s\" gesetzt"
 
 #, fuzzy
 #~| msgid "WeeChat version"

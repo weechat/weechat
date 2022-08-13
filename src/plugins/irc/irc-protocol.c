@@ -3059,9 +3059,10 @@ IRC_PROTOCOL_CALLBACK(quit)
 
 IRC_PROTOCOL_CALLBACK(setname)
 {
-    int local_setname;
+    int local_setname, setname_enabled, smart_filter;
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
+    struct t_irc_channel_speaking *ptr_nick_speaking;
     char *str_realname, *realname_color;
 
     IRC_PROTOCOL_MIN_PARAMS(1);
@@ -3073,52 +3074,104 @@ IRC_PROTOCOL_CALLBACK(setname)
     if (!str_realname)
         return WEECHAT_RC_ERROR;
 
-    if (weechat_hashtable_has_key (server->cap_list, "setname"))
+    realname_color = irc_color_decode (
+        str_realname,
+        weechat_config_boolean (irc_config_network_colors_receive));
+
+    setname_enabled = (weechat_hashtable_has_key (server->cap_list, "setname"));
+
+    for (ptr_channel = server->channels; ptr_channel;
+            ptr_channel = ptr_channel->next_channel)
     {
-        for (ptr_channel = server->channels; ptr_channel;
-             ptr_channel = ptr_channel->next_channel)
+        switch (ptr_channel->type)
         {
-            ptr_nick = irc_nick_search (server, ptr_channel, nick);
-            if (ptr_nick)
-            {
-                if (ptr_nick->realname)
-                    free (ptr_nick->realname);
-                ptr_nick->realname = strdup (str_realname);
-            }
+            case IRC_CHANNEL_TYPE_PRIVATE:
+                if (!ignored
+                    && !local_setname
+                    && (irc_server_strcasecmp (server,
+                                               ptr_channel->name, nick) == 0))
+                {
+                    weechat_printf_date_tags (
+                        irc_msgbuffer_get_target_buffer (
+                            server, NULL, command, NULL, ptr_channel->buffer),
+                        date,
+                        irc_protocol_tags (command, tags, NULL, NULL, NULL),
+                        _("%s%s%s%s has changed real name to %s\"%s%s%s\"%s"),
+                        weechat_prefix ("network"),
+                        irc_nick_color_for_msg (server, 1, NULL, nick),
+                        nick,
+                        IRC_COLOR_MESSAGE_SETNAME,
+                        IRC_COLOR_CHAT_DELIMITERS,
+                        IRC_COLOR_RESET,
+                        (realname_color) ? realname_color : "",
+                        IRC_COLOR_CHAT_DELIMITERS,
+                        IRC_COLOR_RESET);
+                }
+                break;
+            case IRC_CHANNEL_TYPE_CHANNEL:
+                ptr_nick = irc_nick_search (server, ptr_channel, nick);
+                if (ptr_nick)
+                {
+                    if (!ignored && !local_setname)
+                    {
+                        ptr_nick_speaking = ((weechat_config_boolean (irc_config_look_smart_filter))
+                                             && (weechat_config_boolean (irc_config_look_smart_filter_setname))) ?
+                            irc_channel_nick_speaking_time_search (server, ptr_channel, nick, 1) : NULL;
+                        smart_filter = (!local_setname
+                                        && weechat_config_boolean (irc_config_look_smart_filter)
+                                        && weechat_config_boolean (irc_config_look_smart_filter_setname)
+                                        && !ptr_nick_speaking);
+
+                        weechat_printf_date_tags (
+                            irc_msgbuffer_get_target_buffer (
+                                server, NULL, command, NULL, ptr_channel->buffer),
+                            date,
+                            irc_protocol_tags (
+                                command,
+                                tags,
+                                smart_filter ? "irc_smart_filter" : NULL,
+                                NULL,
+                                NULL),
+                            _("%s%s%s%s has changed real name to %s\"%s%s%s\"%s"),
+                            weechat_prefix ("network"),
+                            irc_nick_color_for_msg (server, 1, NULL, nick),
+                            nick,
+                            IRC_COLOR_MESSAGE_SETNAME,
+                            IRC_COLOR_CHAT_DELIMITERS,
+                            IRC_COLOR_RESET,
+                            (realname_color) ? realname_color : "",
+                            IRC_COLOR_CHAT_DELIMITERS,
+                            IRC_COLOR_RESET);
+                    }
+                    if (setname_enabled)
+                    {
+                        if (ptr_nick->realname)
+                            free (ptr_nick->realname);
+                        ptr_nick->realname = strdup (str_realname);
+                    }
+                }
+                break;
         }
     }
 
-    if (!ignored)
+    if (!ignored && local_setname)
     {
-        realname_color = irc_color_decode (
-            str_realname,
-            weechat_config_boolean (irc_config_network_colors_receive));
-        if (local_setname)
-        {
-            weechat_printf_date_tags (
-                irc_msgbuffer_get_target_buffer (server, NULL, command, NULL, NULL),
-                date,
-                irc_protocol_tags (command, tags, NULL, NULL, NULL),
-                _("%sYour real name has been set to \"%s\""),
-                weechat_prefix ("network"),
-                (realname_color) ? realname_color : "");
-        }
-        else
-        {
-            weechat_printf_date_tags (
-                irc_msgbuffer_get_target_buffer (server, NULL, command, NULL, NULL),
-                date,
-                irc_protocol_tags (command, tags, NULL, NULL, NULL),
-                _("%sReal name of %s%s%s has been set to \"%s\""),
-                weechat_prefix ("network"),
-                irc_nick_color_for_msg (server, 1, NULL, nick),
-                nick,
-                IRC_COLOR_RESET,
-                (realname_color) ? realname_color : "");
-        }
-        if (realname_color)
-            free (realname_color);
+        weechat_printf_date_tags (
+            irc_msgbuffer_get_target_buffer (server, NULL, command, NULL, NULL),
+            date,
+            irc_protocol_tags (command, tags, NULL, NULL, NULL),
+            _("%s%sYour real name has been set to %s\"%s%s%s\"%s"),
+            weechat_prefix ("network"),
+            IRC_COLOR_MESSAGE_SETNAME,
+            IRC_COLOR_CHAT_DELIMITERS,
+            IRC_COLOR_RESET,
+            (realname_color) ? realname_color : "",
+            IRC_COLOR_CHAT_DELIMITERS,
+            IRC_COLOR_RESET);
     }
+
+    if (realname_color)
+        free (realname_color);
 
     free (str_realname);
 

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2022-08-13 18:51+0200\n"
+"POT-Creation-Date: 2022-08-13 22:39+0200\n"
 "PO-Revision-Date: 2022-07-27 23:00+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -10550,6 +10550,12 @@ msgstr ""
 msgid "enable smart filter for \"part\" and \"quit\" messages"
 msgstr "\"part\" ve \"quit\" iletileri için akıllı süzgeci etkinleştir"
 
+#. TRANSLATORS: please do not translate "setname"
+#, fuzzy
+#| msgid "enable smart filter for \"join\" messages"
+msgid "enable smart filter for \"setname\" messages"
+msgstr "\"join\" iletileri için akıllı süzgeci etkinleştir"
+
 msgid "enable automatic addition of temporary servers with command /connect"
 msgstr ""
 "/connect komutu ile geçici sunucuların kendiliğinden eklenmesini etkinleştir"
@@ -10590,7 +10596,10 @@ msgstr ""
 msgid "color for text in account messages"
 msgstr "hesap iletilerindeki metin rengi"
 
-msgid "color for text in chghost messages"
+#. TRANSLATORS: please do not translate "chghost"
+#, fuzzy
+#| msgid "color for text in chghost messages"
+msgid "color for text in \"chghost\" messages"
 msgstr "chghost iletilerindeki metin rengi"
 
 msgid "color for text in join messages"
@@ -10601,6 +10610,12 @@ msgstr "kov/öldür iletilerindeki metin rengi"
 
 msgid "color for text in part/quit messages"
 msgstr "ayrılma/çıkış iletisindeki metin için renk"
+
+#. TRANSLATORS: please do not translate "setname"
+#, fuzzy
+#| msgid "color for text in join messages"
+msgid "color for text in \"setname\" messages"
+msgstr "Bağlanma iletisi metni için renk"
 
 #. TRANSLATORS: please do not translate the list of WeeChat color names at the end of string
 msgid ""
@@ -11178,13 +11193,15 @@ msgstr "%s%s%s%s%s%s%s%s%s%s, çıktı %s(%s%s%s)"
 msgid "%s%s%s%s%s%s%s%s%s%s has quit"
 msgstr "%s%s%s%s%s%s%s%s%s%s, çıktı"
 
-#, c-format
-msgid "%sYour real name has been set to \"%s\""
-msgstr "%sGerçek adınız \"%s\" olarak ayarlandı"
+#, fuzzy, c-format
+#| msgid "%s%s%s%s has changed topic for %s%s%s to \"%s%s%s\""
+msgid "%s%s%s%s has changed real name to %s\"%s%s%s\"%s"
+msgstr "%s%s%s%s, %s%s%s için konuyu \"%s%s%s\" olarak değiştirdi"
 
-#, c-format
-msgid "%sReal name of %s%s%s has been set to \"%s\""
-msgstr "%s%s%s%s kullanıcısının gerçek adı \"%s\" olarak ayarlandı"
+#, fuzzy, c-format
+#| msgid "%sYour real name has been set to \"%s\""
+msgid "%s%sYour real name has been set to %s\"%s%s%s\"%s"
+msgstr "%sGerçek adınız \"%s\" olarak ayarlandı"
 
 #, c-format
 msgid "%s%s: \"%s\" command received without channel"
@@ -15549,6 +15566,10 @@ msgstr "%s%s: \"%s\" için %s ile zaman aşımı"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: Bağlanılamıyor: Beklenmedik hata (%d)"
+
+#, c-format
+#~ msgid "%sReal name of %s%s%s has been set to \"%s\""
+#~ msgstr "%s%s%s%s kullanıcısının gerçek adı \"%s\" olarak ayarlandı"
 
 #, fuzzy
 #~| msgid "WeeChat version"

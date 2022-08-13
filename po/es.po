@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2022-08-13 18:51+0200\n"
+"POT-Creation-Date: 2022-08-13 22:39+0200\n"
 "PO-Revision-Date: 2022-06-18 16:11+0200\n"
 "Last-Translator: Santiago Forero <santiago@forero.xyz>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -9572,6 +9572,12 @@ msgstr "habilitar el filtro inteligente para mensajes \"nick\""
 msgid "enable smart filter for \"part\" and \"quit\" messages"
 msgstr "habilitar el filtro inteligente para mensajes \"part\" y \"quit\""
 
+#. TRANSLATORS: please do not translate "setname"
+#, fuzzy
+#| msgid "enable smart filter for \"join\" messages"
+msgid "enable smart filter for \"setname\" messages"
+msgstr "habilitar el filtro inteligente para mensajes \"join\""
+
 #, fuzzy
 msgid "enable automatic addition of temporary servers with command /connect"
 msgstr ""
@@ -9623,8 +9629,9 @@ msgstr ""
 msgid "color for text in account messages"
 msgstr "color para el texto en mensajes de unión"
 
+#. TRANSLATORS: please do not translate "chghost"
 #, fuzzy
-msgid "color for text in chghost messages"
+msgid "color for text in \"chghost\" messages"
 msgstr "color para el texto en mensajes de unión"
 
 msgid "color for text in join messages"
@@ -9636,6 +9643,12 @@ msgstr "color para el texto en mensajes de unión"
 
 msgid "color for text in part/quit messages"
 msgstr "color para el texto en mensajes de salida/abandono"
+
+#. TRANSLATORS: please do not translate "setname"
+#, fuzzy
+#| msgid "color for text in join messages"
+msgid "color for text in \"setname\" messages"
+msgstr "color para el texto en mensajes de unión"
 
 #. TRANSLATORS: please do not translate the list of WeeChat color names at the end of string
 #, fuzzy
@@ -10215,11 +10228,12 @@ msgid "%s%s%s%s%s%s%s%s%s%s has quit"
 msgstr "%s%s%s%s%s%s%s%s%s%s ha salido"
 
 #, fuzzy, c-format
-msgid "%sYour real name has been set to \"%s\""
-msgstr "%sNo se pudo deshacer la opción \"%s\""
+#| msgid "%s%s%s%s has changed topic for %s%s%s to \"%s%s%s\""
+msgid "%s%s%s%s has changed real name to %s\"%s%s%s\"%s"
+msgstr "%s%s%s%s ha cambiado el tema para %s%s%s a \"%s%s%s\""
 
 #, fuzzy, c-format
-msgid "%sReal name of %s%s%s has been set to \"%s\""
+msgid "%s%sYour real name has been set to %s\"%s%s%s\"%s"
 msgstr "%sNo se pudo deshacer la opción \"%s\""
 
 #, c-format
@@ -14192,6 +14206,10 @@ msgstr "%s%s: tiempo de espera máximo para \"%s\" con %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: no es posible conectarse: error (%d)"
+
+#, fuzzy, c-format
+#~ msgid "%sReal name of %s%s%s has been set to \"%s\""
+#~ msgstr "%sNo se pudo deshacer la opción \"%s\""
 
 #, fuzzy
 #~| msgid "WeeChat version"

@@ -2133,7 +2133,7 @@
 ** デフォルト値: `+cyan+`
 
 * [[option_irc.color.message_chghost]] *irc.color.message_chghost*
-** 説明: pass:none[chghost メッセージの色]
+** 説明: pass:none[color for text in "chghost" messages]
 ** タイプ: 色
 ** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
 ** デフォルト値: `+brown+`
@@ -2155,6 +2155,12 @@
 ** タイプ: 色
 ** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
 ** デフォルト値: `+red+`
+
+* [[option_irc.color.message_setname]] *irc.color.message_setname*
+** 説明: pass:none[color for text in "setname" messages]
+** タイプ: 色
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+brown+`
 
 * [[option_irc.color.mirc_remap]] *irc.color.mirc_remap*
 ** 説明: pass:none[メッセージに含まれる mirc の定義する色に対するマッピングをハッシュテーブルで変更: キーは "fg,bg" で -1 (指定無し) から 15 までの整数、値は WeeChat 色名か色番号 (書式: "1,-1:color1;2,7:color2")、例: "1,-1:darkgray;1,2:white,blue" はテキスト色が黒のものを "darkgray" に、背景色が青でテキスト色が黒のものを "white,blue" に変更; IRC コードに対するデフォルトの WeeChat 色は、0=白、1=黒、2=青、3=緑、4=ライトレッド、5=赤、6=赤紫、7=茶色、8=黄色、9=ライトグリーン、10=シアン、11=ライトシアン、12=ライトブルー、13=ライトマゼンタ、14=暗い灰色、15=灰色]
@@ -2548,6 +2554,12 @@
 
 * [[option_irc.look.smart_filter_quit]] *irc.look.smart_filter_quit*
 ** 説明: pass:none["part" と "quit" メッセージのスマートフィルタを有効化]
+** タイプ: ブール
+** 値: on, off
+** デフォルト値: `+on+`
+
+* [[option_irc.look.smart_filter_setname]] *irc.look.smart_filter_setname*
+** 説明: pass:none[enable smart filter for "setname" messages]
 ** タイプ: ブール
 ** 値: on, off
 ** デフォルト値: `+on+`

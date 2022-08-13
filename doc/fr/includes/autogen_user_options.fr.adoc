@@ -2133,7 +2133,7 @@
 ** valeur par défaut: `+cyan+`
 
 * [[option_irc.color.message_chghost]] *irc.color.message_chghost*
-** description: pass:none[couleur pour le texte dans les messages chghost]
+** description: pass:none[couleur pour le texte dans les messages "chghost"]
 ** type: couleur
 ** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné
 ** valeur par défaut: `+brown+`
@@ -2155,6 +2155,12 @@
 ** type: couleur
 ** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné
 ** valeur par défaut: `+red+`
+
+* [[option_irc.color.message_setname]] *irc.color.message_setname*
+** description: pass:none[couleur pour le texte dans les messages "setname"]
+** type: couleur
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné
+** valeur par défaut: `+brown+`
 
 * [[option_irc.color.mirc_remap]] *irc.color.mirc_remap*
 ** description: pass:none[réassigner les couleurs mirc dans les messages en utilisant une table de hachage : les clés sont "fg,bg" sous forme d'entiers entre -1 (non spécifié) et 15, les valeurs sont des noms de couleur WeeChat ou nombres (le format est : "1,-1:couleur1;2,7:couleur2"), exemple : "1,-1:darkgray;1,2:white,blue" pour réassigner le noir en "darkgray" et le noir sur bleu en "white,blue" ; les couleurs WeeChat par défaut pour les codes IRC sont : 0=white, 1=black, 2=blue, 3=green, 4=lightred, 5=red, 6=magenta, 7=brown, 8=yellow, 9=lightgreen, 10=cyan, 11=lightcyan, 12=lightblue, 13=lightmagenta, 14=darkgray, 15=gray]
@@ -2548,6 +2554,12 @@
 
 * [[option_irc.look.smart_filter_quit]] *irc.look.smart_filter_quit*
 ** description: pass:none[activer le filtre intelligent pour les messages "part" et "quit"]
+** type: booléen
+** valeurs: on, off
+** valeur par défaut: `+on+`
+
+* [[option_irc.look.smart_filter_setname]] *irc.look.smart_filter_setname*
+** description: pass:none[activer le filtre intelligent pour les messages "setname"]
 ** type: booléen
 ** valeurs: on, off
 ** valeur par défaut: `+on+`

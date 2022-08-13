@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2022-08-13 18:51+0200\n"
+"POT-Creation-Date: 2022-08-13 22:39+0200\n"
 "PO-Revision-Date: 2022-06-18 16:12+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -10361,6 +10361,12 @@ msgstr ""
 msgid "enable smart filter for \"part\" and \"quit\" messages"
 msgstr "\"part\" と \"quit\" メッセージのスマートフィルタを有効化"
 
+#. TRANSLATORS: please do not translate "setname"
+#, fuzzy
+#| msgid "enable smart filter for \"join\" messages"
+msgid "enable smart filter for \"setname\" messages"
+msgstr "\"join\" メッセージのスマートフィルタを有効化"
+
 msgid "enable automatic addition of temporary servers with command /connect"
 msgstr "/connect コマンドによる一時的なサーバの自動追加を有効化する"
 
@@ -10403,7 +10409,10 @@ msgstr "\"input_prompt\" バー要素内のニックネームモードに付け�
 msgid "color for text in account messages"
 msgstr "参加メッセージの色"
 
-msgid "color for text in chghost messages"
+#. TRANSLATORS: please do not translate "chghost"
+#, fuzzy
+#| msgid "color for text in chghost messages"
+msgid "color for text in \"chghost\" messages"
 msgstr "chghost メッセージの色"
 
 msgid "color for text in join messages"
@@ -10415,6 +10424,12 @@ msgstr "参加メッセージの色"
 
 msgid "color for text in part/quit messages"
 msgstr "退出/終了 メッセージの色"
+
+#. TRANSLATORS: please do not translate "setname"
+#, fuzzy
+#| msgid "color for text in join messages"
+msgid "color for text in \"setname\" messages"
+msgstr "参加メッセージの色"
 
 #. TRANSLATORS: please do not translate the list of WeeChat color names at the end of string
 msgid ""
@@ -10995,11 +11010,12 @@ msgid "%s%s%s%s%s%s%s%s%s%s has quit"
 msgstr "%s%s%s%s%s%s%s%s%s%s が終了"
 
 #, fuzzy, c-format
-msgid "%sYour real name has been set to \"%s\""
-msgstr "%sオプション \"%s\" の無効化に失敗しました"
+#| msgid "%s%s%s%s has changed topic for %s%s%s to \"%s%s%s\""
+msgid "%s%s%s%s has changed real name to %s\"%s%s%s\"%s"
+msgstr "%s%s%s%s が %s%s%s のトピックを変更、\"%s%s%s\" になりました"
 
 #, fuzzy, c-format
-msgid "%sReal name of %s%s%s has been set to \"%s\""
+msgid "%s%sYour real name has been set to %s\"%s%s%s\"%s"
 msgstr "%sオプション \"%s\" の無効化に失敗しました"
 
 #, c-format
@@ -15215,6 +15231,10 @@ msgstr "%s%s: \"%s\" のタイムアウト %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: 接続できません: 未定義のエラー (%d)"
+
+#, fuzzy, c-format
+#~ msgid "%sReal name of %s%s%s has been set to \"%s\""
+#~ msgstr "%sオプション \"%s\" の無効化に失敗しました"
 
 #, fuzzy
 #~| msgid "WeeChat version"

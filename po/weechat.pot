@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2022-08-13 18:51+0200\n"
+"POT-Creation-Date: 2022-08-13 22:39+0200\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7567,6 +7567,10 @@ msgstr ""
 msgid "enable smart filter for \"part\" and \"quit\" messages"
 msgstr ""
 
+#. TRANSLATORS: please do not translate "setname"
+msgid "enable smart filter for \"setname\" messages"
+msgstr ""
+
 msgid "enable automatic addition of temporary servers with command /connect"
 msgstr ""
 
@@ -7602,7 +7606,8 @@ msgstr ""
 msgid "color for text in account messages"
 msgstr ""
 
-msgid "color for text in chghost messages"
+#. TRANSLATORS: please do not translate "chghost"
+msgid "color for text in \"chghost\" messages"
 msgstr ""
 
 msgid "color for text in join messages"
@@ -7612,6 +7617,10 @@ msgid "color for text in kick/kill messages"
 msgstr ""
 
 msgid "color for text in part/quit messages"
+msgstr ""
+
+#. TRANSLATORS: please do not translate "setname"
+msgid "color for text in \"setname\" messages"
 msgstr ""
 
 #. TRANSLATORS: please do not translate the list of WeeChat color names at the end of string
@@ -8134,11 +8143,11 @@ msgid "%s%s%s%s%s%s%s%s%s%s has quit"
 msgstr ""
 
 #, c-format
-msgid "%sYour real name has been set to \"%s\""
+msgid "%s%s%s%s has changed real name to %s\"%s%s%s\"%s"
 msgstr ""
 
 #, c-format
-msgid "%sReal name of %s%s%s has been set to \"%s\""
+msgid "%s%sYour real name has been set to %s\"%s%s%s\"%s"
 msgstr ""
 
 #, c-format

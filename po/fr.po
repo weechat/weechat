@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2022-08-13 18:51+0200\n"
-"PO-Revision-Date: 2022-08-07 16:40+0200\n"
+"POT-Creation-Date: 2022-08-13 22:39+0200\n"
+"PO-Revision-Date: 2022-08-13 22:43+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -10917,6 +10917,10 @@ msgstr ""
 msgid "enable smart filter for \"part\" and \"quit\" messages"
 msgstr "activer le filtre intelligent pour les messages \"part\" et \"quit\""
 
+#. TRANSLATORS: please do not translate "setname"
+msgid "enable smart filter for \"setname\" messages"
+msgstr "activer le filtre intelligent pour les messages \"setname\""
+
 msgid "enable automatic addition of temporary servers with command /connect"
 msgstr ""
 "activer l'ajout automatique des serveurs temporaires avec la commande /"
@@ -10966,8 +10970,9 @@ msgstr ""
 msgid "color for text in account messages"
 msgstr "couleur pour le texte dans les messages account"
 
-msgid "color for text in chghost messages"
-msgstr "couleur pour le texte dans les messages chghost"
+#. TRANSLATORS: please do not translate "chghost"
+msgid "color for text in \"chghost\" messages"
+msgstr "couleur pour le texte dans les messages \"chghost\""
 
 msgid "color for text in join messages"
 msgstr "couleur pour le texte dans les messages join"
@@ -10977,6 +10982,10 @@ msgstr "couleur pour le texte dans les messages kick/kill"
 
 msgid "color for text in part/quit messages"
 msgstr "couleur pour le texte dans les messages part/quit"
+
+#. TRANSLATORS: please do not translate "setname"
+msgid "color for text in \"setname\" messages"
+msgstr "couleur pour le texte dans les messages \"setname\""
 
 #. TRANSLATORS: please do not translate the list of WeeChat color names at the end of string
 msgid ""
@@ -11568,12 +11577,12 @@ msgid "%s%s%s%s%s%s%s%s%s%s has quit"
 msgstr "%s%s%s%s%s%s%s%s%s%s a quitté"
 
 #, c-format
-msgid "%sYour real name has been set to \"%s\""
-msgstr "%sVotre nom réel a été défini à \"%s\""
+msgid "%s%s%s%s has changed real name to %s\"%s%s%s\"%s"
+msgstr "%s%s%s%s a changé le nom réel en %s\"%s%s%s\"%s"
 
 #, c-format
-msgid "%sReal name of %s%s%s has been set to \"%s\""
-msgstr "%sLe nom réel de %s%s%s a été défini à \"%s\""
+msgid "%s%sYour real name has been set to %s\"%s%s%s\"%s"
+msgstr "%s%sVotre nom réel a été défini à %s\"%s%s%s\"%s"
 
 #, c-format
 msgid "%s%s: \"%s\" command received without channel"
@@ -16005,6 +16014,10 @@ msgstr "%s%s : délai d'attente dépassé pour \"%s\" avec %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s : impossible de se connecter : erreur inattendue (%d)"
+
+#, c-format
+#~ msgid "%sReal name of %s%s%s has been set to \"%s\""
+#~ msgstr "%sLe nom réel de %s%s%s a été défini à \"%s\""
 
 #~ msgid "WeeChat session saved"
 #~ msgstr "Session WeeChat sauvegardée"

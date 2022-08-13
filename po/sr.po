@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2022-08-13 18:51+0200\n"
+"POT-Creation-Date: 2022-08-13 22:39+0200\n"
 "PO-Revision-Date: 2022-07-06 08:29+0400\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -10767,6 +10767,12 @@ msgstr "укључивање паметног филтера за „nick” п�
 msgid "enable smart filter for \"part\" and \"quit\" messages"
 msgstr "укључивање паметног филтера за „part” и „quit” поруке"
 
+#. TRANSLATORS: please do not translate "setname"
+#, fuzzy
+#| msgid "enable smart filter for \"join\" messages"
+msgid "enable smart filter for \"setname\" messages"
+msgstr "укључивање паметног филтера за „join” поруке"
+
 msgid "enable automatic addition of temporary servers with command /connect"
 msgstr "укључивање аутоматског додавања привремених сервера командом /connect"
 
@@ -10805,7 +10811,10 @@ msgstr "боја за више подржане TLS верзије у ставк
 msgid "color for text in account messages"
 msgstr "боја за текст у account порукама"
 
-msgid "color for text in chghost messages"
+#. TRANSLATORS: please do not translate "chghost"
+#, fuzzy
+#| msgid "color for text in chghost messages"
+msgid "color for text in \"chghost\" messages"
 msgstr "боја за текст у chghost порукама"
 
 msgid "color for text in join messages"
@@ -10816,6 +10825,12 @@ msgstr "боја за текст у kick/kill порукама"
 
 msgid "color for text in part/quit messages"
 msgstr "боја за текст у part/quit порукама"
+
+#. TRANSLATORS: please do not translate "setname"
+#, fuzzy
+#| msgid "color for text in join messages"
+msgid "color for text in \"setname\" messages"
+msgstr "боја за текст у join порукама"
 
 #. TRANSLATORS: please do not translate the list of WeeChat color names at the end of string
 msgid ""
@@ -11396,13 +11411,15 @@ msgstr "%s%s%s%s%s%s%s%s%s%s је прекинуо %s(%s%s%s)"
 msgid "%s%s%s%s%s%s%s%s%s%s has quit"
 msgstr "%s%s%s%s%s%s%s%s%s%s је прекинуо"
 
-#, c-format
-msgid "%sYour real name has been set to \"%s\""
-msgstr "%sВаше право име је постављено на „%s”"
+#, fuzzy, c-format
+#| msgid "%s%s%s%s has changed topic for %s%s%s to \"%s%s%s\""
+msgid "%s%s%s%s has changed real name to %s\"%s%s%s\"%s"
+msgstr "%s%s%s%s је променио тему за канал %s%s%s на „%s%s%s”"
 
-#, c-format
-msgid "%sReal name of %s%s%s has been set to \"%s\""
-msgstr "%sРеално име за %s%s%s је постављено на „%s”"
+#, fuzzy, c-format
+#| msgid "%sYour real name has been set to \"%s\""
+msgid "%s%sYour real name has been set to %s\"%s%s%s\"%s"
+msgstr "%sВаше право име је постављено на „%s”"
 
 #, c-format
 msgid "%s%s: \"%s\" command received without channel"
@@ -15820,6 +15837,10 @@ msgstr "%s%s: тајмаут за „%s” са %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: повезивање није успело: неочекивана грешка (%d)"
+
+#, c-format
+#~ msgid "%sReal name of %s%s%s has been set to \"%s\""
+#~ msgstr "%sРеално име за %s%s%s је постављено на „%s”"
 
 #, fuzzy
 #~| msgid "WeeChat version"

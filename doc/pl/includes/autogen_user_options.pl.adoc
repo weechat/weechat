@@ -2133,7 +2133,7 @@
 ** domyślna wartość: `+cyan+`
 
 * [[option_irc.color.message_chghost]] *irc.color.message_chghost*
-** opis: pass:none[kolor tekstu w wiadomościach o zmianie hosta]
+** opis: pass:none[color for text in "chghost" messages]
 ** typ: kolor
 ** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie
 ** domyślna wartość: `+brown+`
@@ -2155,6 +2155,12 @@
 ** typ: kolor
 ** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie
 ** domyślna wartość: `+red+`
+
+* [[option_irc.color.message_setname]] *irc.color.message_setname*
+** opis: pass:none[color for text in "setname" messages]
+** typ: kolor
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie
+** domyślna wartość: `+brown+`
 
 * [[option_irc.color.mirc_remap]] *irc.color.mirc_remap*
 ** opis: pass:none[zamień kolory mirca w wiadomościach używając tablicy hashy: klucze to  "fg,bg" przyjmują one wartości pomiędzy -1 (nie określono) a 15, wartości to nazwy lub numery kolorów WeeChat (format: "1,-1:kolor1;2,7:kolor2"), przykład: "1,-1:darkgray;1,2:white,blue" w celu przemapowania czarnego na "darkgray" oraz czarnego na niebieskim tle na "white,blue"; domyślne kolory WeeChat dla kodów IRC: 0=white, 1=black, 2=blue, 3=green, 4=lightred, 5=red, 6=magenta, 7=brown, 8=yellow, 9=lightgreen, 10=cyan, 11=lightcyan, 12=lightblue, 13=lightmagenta, 14=darkgray, 15=gray]
@@ -2548,6 +2554,12 @@
 
 * [[option_irc.look.smart_filter_quit]] *irc.look.smart_filter_quit*
 ** opis: pass:none[włącza inteligentne filtrowanie dla wiadomości "part" oraz "quit"]
+** typ: bool
+** wartości: on, off
+** domyślna wartość: `+on+`
+
+* [[option_irc.look.smart_filter_setname]] *irc.look.smart_filter_setname*
+** opis: pass:none[enable smart filter for "setname" messages]
 ** typ: bool
 ** wartości: on, off
 ** domyślna wartość: `+on+`
