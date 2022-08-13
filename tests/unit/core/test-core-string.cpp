@@ -2465,4 +2465,23 @@ TEST(CoreString, Dyn)
     STRCMP_EQUAL("abcdxxyxyz", str_ptr);
 
     free (str_ptr);
+
+    str_ptr = NULL;
+    str = &str_ptr;
+
+    /* test copy to NULL */
+    LONGS_EQUAL(0, string_dyn_copy (NULL, NULL));
+    LONGS_EQUAL(0, string_dyn_copy (NULL, "a"));
+    LONGS_EQUAL(0, string_dyn_copy (str, NULL));
+    LONGS_EQUAL(0, string_dyn_copy (str, "a"));
+
+    /* test concat to NULL */
+    LONGS_EQUAL(0, string_dyn_concat (NULL, NULL, 1));
+    LONGS_EQUAL(0, string_dyn_concat (NULL, "a", 1));
+    LONGS_EQUAL(0, string_dyn_concat (str, NULL, 1));
+    LONGS_EQUAL(0, string_dyn_concat (str, "a", 1));
+
+    /* test free of NULL */
+    string_dyn_free (NULL, 0);
+    string_dyn_free (str, 0);
 }
