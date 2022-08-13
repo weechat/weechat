@@ -1403,7 +1403,7 @@
 ** デフォルト値: `+default+`
 
 * [[option_logger.file.auto_log]] *logger.file.auto_log*
-** 説明: pass:none[バッファの内容をファイルに自動的に保存 (バッファのログ保存が無効化されていない限り)]
+** 説明: pass:none[automatically save content of buffers to files (unless a buffer disables log); if disabled, logging is disabled on all buffers]
 ** タイプ: ブール
 ** 値: on, off
 ** デフォルト値: `+on+`

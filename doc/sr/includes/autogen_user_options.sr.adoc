@@ -1403,7 +1403,7 @@
 ** подразумевана вредност: `+default+`
 
 * [[option_logger.file.auto_log]] *logger.file.auto_log*
-** опис: pass:none[аутоматско чување садржаја бафера у фајлове (осим у случају да бафер искључује логовање)]
+** опис: pass:none[automatically save content of buffers to files (unless a buffer disables log); if disabled, logging is disabled on all buffers]
 ** тип: логичка
 ** вредности: on, off
 ** подразумевана вредност: `+on+`

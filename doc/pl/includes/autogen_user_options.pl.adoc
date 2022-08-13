@@ -1403,7 +1403,7 @@
 ** domyślna wartość: `+default+`
 
 * [[option_logger.file.auto_log]] *logger.file.auto_log*
-** opis: pass:none[automatycznie zapisuj zawartość buforów do plików (chyba, że bufor ma wyłączone logowanie)]
+** opis: pass:none[automatically save content of buffers to files (unless a buffer disables log); if disabled, logging is disabled on all buffers]
 ** typ: bool
 ** wartości: on, off
 ** domyślna wartość: `+on+`

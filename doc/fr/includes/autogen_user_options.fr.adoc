@@ -1403,7 +1403,7 @@
 ** valeur par défaut: `+default+`
 
 * [[option_logger.file.auto_log]] *logger.file.auto_log*
-** description: pass:none[sauve automatiquement le contenu des tampons dans des fichiers (sauf si un tampon désactive le log)]
+** description: pass:none[sauve automatiquement le contenu des tampons dans des fichiers (sauf si un tampon désactive le log) ; si désactivé, l'enregistrement est désactivé sur tous les tampons]
 ** type: booléen
 ** valeurs: on, off
 ** valeur par défaut: `+on+`

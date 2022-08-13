@@ -1403,7 +1403,7 @@
 ** valore predefinito: `+default+`
 
 * [[option_logger.file.auto_log]] *logger.file.auto_log*
-** descrizione: pass:none[salva automaticamente il contenuto dei buffer su file (a meno che un buffer disabiliti il log)]
+** descrizione: pass:none[automatically save content of buffers to files (unless a buffer disables log); if disabled, logging is disabled on all buffers]
 ** tipo: bool
 ** valori: on, off
 ** valore predefinito: `+on+`

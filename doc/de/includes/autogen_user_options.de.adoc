@@ -1403,7 +1403,7 @@
 ** Standardwert: `+default+`
 
 * [[option_logger.file.auto_log]] *logger.file.auto_log*
-** Beschreibung: pass:none[speichert automatisch den Inhalt eines Buffers in eine Datei (sofern das Protokollieren für den Buffer nicht deaktiviert sein sollte)]
+** Beschreibung: pass:none[automatically save content of buffers to files (unless a buffer disables log); if disabled, logging is disabled on all buffers]
 ** Typ: boolesch
 ** Werte: on, off
 ** Standardwert: `+on+`
