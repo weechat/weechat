@@ -151,6 +151,8 @@ endif()
 
 add_definitions(-DHAVE_CONFIG_H)
 
+include(FindPkgConfig)
+
 include(CheckIncludeFiles)
 include(CheckFunctionExists)
 include(CheckSymbolExists)
@@ -198,7 +200,6 @@ list(APPEND EXTRA_LIBS gnutls)
 find_package(ZLIB REQUIRED)
 
 # Check for zstd
-include(FindPkgConfig)
 pkg_check_modules(LIBZSTD REQUIRED libzstd)
 
 # Check for iconv
