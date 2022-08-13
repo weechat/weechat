@@ -162,11 +162,12 @@ irc_protocol_tags (const char *command, struct t_hashtable *irc_msg_tags,
                    const char *address)
 {
     static char string[4096];
-    int log_level, has_irc_tags;
+    int log_level, is_numeric, has_irc_tags;
     char str_log_level[32], **str_irc_tags;
 
     str_log_level[0] = '\0';
 
+    is_numeric = irc_protocol_is_numeric_command (command);
     has_irc_tags = (irc_msg_tags
                     && weechat_hashtable_get_integer (irc_msg_tags,
                                                       "items_count") > 0);
@@ -196,9 +197,11 @@ irc_protocol_tags (const char *command, struct t_hashtable *irc_msg_tags,
     }
 
     snprintf (string, sizeof (string),
-              "%s%s%s%s%s%s%s%s%s%s%s",
+              "%s%s%s%s%s%s%s%s%s%s%s%s%s",
               (command && command[0]) ? "irc_" : "",
               (command && command[0]) ? command : "",
+              (is_numeric) ? "," : "",
+              (is_numeric) ? "irc_numeric" : "",
               (str_irc_tags && *str_irc_tags[0]) ? "," : "",
               (str_irc_tags && *str_irc_tags[0]) ? *str_irc_tags : "",
               (extra_tags && extra_tags[0]) ? "," : "",
@@ -3174,7 +3177,7 @@ IRC_PROTOCOL_CALLBACK(server_mode_reason)
     weechat_printf_date_tags (
             irc_msgbuffer_get_target_buffer (server, NULL, command, NULL, NULL),
             date,
-            irc_protocol_tags (command, tags, "irc_numeric", NULL, NULL),
+            irc_protocol_tags (command, tags, NULL, NULL, NULL),
             "%s%s%s%s",
             weechat_prefix ("network"),
             pos_mode,
@@ -3209,7 +3212,7 @@ IRC_PROTOCOL_CALLBACK(numeric)
         weechat_printf_date_tags (
             irc_msgbuffer_get_target_buffer (server, NULL, command, NULL, NULL),
             date,
-            irc_protocol_tags (command, tags, "irc_numeric", NULL, NULL),
+            irc_protocol_tags (command, tags, NULL, NULL, NULL),
             "%s%s",
             weechat_prefix ("network"),
             str_params);
@@ -3706,7 +3709,7 @@ IRC_PROTOCOL_CALLBACK(008)
     weechat_printf_date_tags (
         irc_msgbuffer_get_target_buffer (server, params[0], command, NULL, NULL),
         date,
-        irc_protocol_tags (command, tags, "irc_numeric", NULL, address),
+        irc_protocol_tags (command, tags, NULL, NULL, address),
         _("%sServer notice mask for %s%s%s: %s"),
         weechat_prefix ("network"),
         irc_nick_color_for_msg (server, 1, NULL, params[0]),
@@ -3738,7 +3741,7 @@ IRC_PROTOCOL_CALLBACK(221)
     weechat_printf_date_tags (
         irc_msgbuffer_get_target_buffer (server, params[0], command, NULL, NULL),
         date,
-        irc_protocol_tags (command, tags, "irc_numeric", NULL, address),
+        irc_protocol_tags (command, tags, NULL, NULL, address),
         _("%sUser mode for %s%s%s is %s[%s%s%s]"),
         weechat_prefix ("network"),
         irc_nick_color_for_msg (server, 1, NULL, params[0]),
@@ -3795,7 +3798,7 @@ IRC_PROTOCOL_CALLBACK(301)
             irc_msgbuffer_get_target_buffer (
                 server, params[1], command, "whois", ptr_buffer),
             date,
-            irc_protocol_tags (command, tags, "irc_numeric", NULL, address),
+            irc_protocol_tags (command, tags, NULL, NULL, address),
             _("%s%s[%s%s%s]%s is away: %s"),
             weechat_prefix ("network"),
             IRC_COLOR_CHAT_DELIMITERS,
@@ -3835,7 +3838,7 @@ IRC_PROTOCOL_CALLBACK(303)
     weechat_printf_date_tags (
         irc_msgbuffer_get_target_buffer (server, NULL, command, NULL, NULL),
         date,
-        irc_protocol_tags (command, tags, "irc_numeric", NULL, NULL),
+        irc_protocol_tags (command, tags, NULL, NULL, NULL),
         _("%sUsers online: %s%s"),
         weechat_prefix ("network"),
         IRC_COLOR_CHAT_NICK,
@@ -3867,7 +3870,7 @@ IRC_PROTOCOL_CALLBACK(305)
             irc_msgbuffer_get_target_buffer (
                 server, NULL, command, "unaway", NULL),
             date,
-            irc_protocol_tags (command, tags, "irc_numeric", NULL, NULL),
+            irc_protocol_tags (command, tags, NULL, NULL, NULL),
             "%s%s",
             weechat_prefix ("network"),
             str_away_msg);
@@ -3903,7 +3906,7 @@ IRC_PROTOCOL_CALLBACK(306)
             irc_msgbuffer_get_target_buffer (
                 server, NULL, command, "away", NULL),
             date,
-            irc_protocol_tags (command, tags, "irc_numeric", NULL, NULL),
+            irc_protocol_tags (command, tags, NULL, NULL, NULL),
             "%s%s",
             weechat_prefix ("network"),
             str_away_msg);
@@ -3942,7 +3945,7 @@ IRC_PROTOCOL_CALLBACK(whois_nick_msg)
             irc_msgbuffer_get_target_buffer (
                 server, params[1], command, "whois", NULL),
             date,
-            irc_protocol_tags (command, tags, "irc_numeric", NULL, NULL),
+            irc_protocol_tags (command, tags, NULL, NULL, NULL),
             "%s%s[%s%s%s] %s%s",
             weechat_prefix ("network"),
             IRC_COLOR_CHAT_DELIMITERS,
@@ -3986,7 +3989,7 @@ IRC_PROTOCOL_CALLBACK(whowas_nick_msg)
             irc_msgbuffer_get_target_buffer (
                 server, params[1], command, "whowas", NULL),
             date,
-            irc_protocol_tags (command, tags, "irc_numeric", NULL, NULL),
+            irc_protocol_tags (command, tags, NULL, NULL, NULL),
             "%s%s[%s%s%s] %s%s",
             weechat_prefix ("network"),
             IRC_COLOR_CHAT_DELIMITERS,
@@ -4034,7 +4037,7 @@ IRC_PROTOCOL_CALLBACK(311)
             irc_msgbuffer_get_target_buffer (
                 server, params[1], command, "whois", NULL),
             date,
-            irc_protocol_tags (command, tags, "irc_numeric", NULL, NULL),
+            irc_protocol_tags (command, tags, NULL, NULL, NULL),
             "%s%s[%s%s%s] (%s%s@%s%s)%s: %s",
             weechat_prefix ("network"),
             IRC_COLOR_CHAT_DELIMITERS,
@@ -4078,7 +4081,7 @@ IRC_PROTOCOL_CALLBACK(312)
             irc_msgbuffer_get_target_buffer (
                 server, params[1], command, "whois", NULL),
             date,
-            irc_protocol_tags (command, tags, "irc_numeric", NULL, NULL),
+            irc_protocol_tags (command, tags, NULL, NULL, NULL),
             "%s%s[%s%s%s] %s%s %s(%s%s%s)",
             weechat_prefix ("network"),
             IRC_COLOR_CHAT_DELIMITERS,
@@ -4122,7 +4125,7 @@ IRC_PROTOCOL_CALLBACK(314)
             irc_msgbuffer_get_target_buffer (
                 server, params[1], command, "whowas", NULL),
             date,
-            irc_protocol_tags (command, tags, "irc_numeric", NULL, NULL),
+            irc_protocol_tags (command, tags, NULL, NULL, NULL),
             _("%s%s[%s%s%s] (%s%s@%s%s)%s was %s"),
             weechat_prefix ("network"),
             IRC_COLOR_CHAT_DELIMITERS,
@@ -4168,7 +4171,7 @@ IRC_PROTOCOL_CALLBACK(315)
             irc_msgbuffer_get_target_buffer (
                 server, NULL, command, "who", NULL),
             date,
-            irc_protocol_tags (command, tags, "irc_numeric", NULL, NULL),
+            irc_protocol_tags (command, tags, NULL, NULL, NULL),
             "%s%s[%s%s%s]%s %s",
             weechat_prefix ("network"),
             IRC_COLOR_CHAT_DELIMITERS,
@@ -4215,7 +4218,7 @@ IRC_PROTOCOL_CALLBACK(317)
         weechat_printf_date_tags (
             ptr_buffer,
             date,
-            irc_protocol_tags (command, tags, "irc_numeric", NULL, NULL),
+            irc_protocol_tags (command, tags, NULL, NULL, NULL),
             _("%s%s[%s%s%s]%s idle: %s%d %s%s, %s%02d %s%s %s%02d %s%s %s%02d "
               "%s%s, signon at: %s%s"),
             weechat_prefix ("network"),
@@ -4248,7 +4251,7 @@ IRC_PROTOCOL_CALLBACK(317)
         weechat_printf_date_tags (
             ptr_buffer,
             date,
-            irc_protocol_tags (command, tags, "irc_numeric", NULL, NULL),
+            irc_protocol_tags (command, tags, NULL, NULL, NULL),
             _("%s%s[%s%s%s]%s idle: %s%02d %s%s %s%02d %s%s %s%02d %s%s, "
               "signon at: %s%s"),
             weechat_prefix ("network"),
@@ -4295,7 +4298,7 @@ IRC_PROTOCOL_CALLBACK(321)
         irc_msgbuffer_get_target_buffer (
             server, NULL, command, "list", NULL),
         date,
-        irc_protocol_tags (command, tags, "irc_numeric", NULL, NULL),
+        irc_protocol_tags (command, tags, NULL, NULL, NULL),
         "%s%s%s%s",
         weechat_prefix ("network"),
         params[1],
@@ -4329,7 +4332,7 @@ IRC_PROTOCOL_CALLBACK(322)
             irc_msgbuffer_get_target_buffer (
                 server, NULL, command, "list", NULL),
             date,
-            irc_protocol_tags (command, tags, "irc_numeric", NULL, NULL),
+            irc_protocol_tags (command, tags, NULL, NULL, NULL),
             "%s%s%s%s(%s%s%s)%s%s%s",
             weechat_prefix ("network"),
             IRC_COLOR_CHAT_CHANNEL,
@@ -4366,7 +4369,7 @@ IRC_PROTOCOL_CALLBACK(323)
     weechat_printf_date_tags (
         irc_msgbuffer_get_target_buffer (server, NULL, command, "list", NULL),
         date,
-        irc_protocol_tags (command, tags, "irc_numeric", NULL, NULL),
+        irc_protocol_tags (command, tags, NULL, NULL, NULL),
         "%s%s",
         weechat_prefix ("network"),
         str_params);
@@ -4415,7 +4418,7 @@ IRC_PROTOCOL_CALLBACK(324)
                 server, NULL, command, NULL,
                 (ptr_channel) ? ptr_channel->buffer : NULL),
             date,
-            irc_protocol_tags (command, tags, "irc_numeric", NULL, address),
+            irc_protocol_tags (command, tags, NULL, NULL, address),
             _("%sMode %s%s %s[%s%s%s]"),
             weechat_prefix ("network"),
             IRC_COLOR_CHAT_CHANNEL,
@@ -4468,7 +4471,7 @@ IRC_PROTOCOL_CALLBACK(327)
             weechat_printf_date_tags (
                 ptr_buffer,
                 date,
-                irc_protocol_tags (command, tags, "irc_numeric", NULL, NULL),
+                irc_protocol_tags (command, tags, NULL, NULL, NULL),
                 "%s%s[%s%s%s] %s%s %s %s(%s%s%s)",
                 weechat_prefix ("network"),
                 IRC_COLOR_CHAT_DELIMITERS,
@@ -4488,7 +4491,7 @@ IRC_PROTOCOL_CALLBACK(327)
             weechat_printf_date_tags (
                 ptr_buffer,
                 date,
-                irc_protocol_tags (command, tags, "irc_numeric", NULL, NULL),
+                irc_protocol_tags (command, tags, NULL, NULL, NULL),
                 "%s%s[%s%s%s] %s%s %s",
                 weechat_prefix ("network"),
                 IRC_COLOR_CHAT_DELIMITERS,
@@ -4529,7 +4532,7 @@ IRC_PROTOCOL_CALLBACK(328)
             irc_msgbuffer_get_target_buffer (
                 server, NULL, command, NULL, ptr_channel->buffer),
             date,
-            irc_protocol_tags (command, tags, "irc_numeric", NULL, NULL),
+            irc_protocol_tags (command, tags, NULL, NULL, NULL),
             _("%sURL for %s%s%s: %s"),
             weechat_prefix ("network"),
             IRC_COLOR_CHAT_CHANNEL,
@@ -4570,7 +4573,7 @@ IRC_PROTOCOL_CALLBACK(329)
                 irc_msgbuffer_get_target_buffer (
                     server, NULL, command, NULL, ptr_channel->buffer),
                 date,
-                irc_protocol_tags (command, tags, "irc_numeric",
+                irc_protocol_tags (command, tags, NULL,
                                    NULL, NULL),
                 /* TRANSLATORS: "%s" after "created on" is a date */
                 _("%sChannel created on %s"),
@@ -4583,7 +4586,7 @@ IRC_PROTOCOL_CALLBACK(329)
         weechat_printf_date_tags (
             irc_msgbuffer_get_target_buffer (server, NULL, command, NULL, NULL),
             date,
-            irc_protocol_tags (command, tags, "irc_numeric", NULL, NULL),
+            irc_protocol_tags (command, tags, NULL, NULL, NULL),
             /* TRANSLATORS: "%s" after "created on" is a date */
             _("%sChannel %s%s%s created on %s"),
             weechat_prefix ("network"),
@@ -4624,7 +4627,7 @@ IRC_PROTOCOL_CALLBACK(330_343)
             irc_msgbuffer_get_target_buffer (
                 server, params[1], command, "whois", NULL),
             date,
-            irc_protocol_tags (command, tags, "irc_numeric", NULL, NULL),
+            irc_protocol_tags (command, tags, NULL, NULL, NULL),
             "%s%s[%s%s%s] %s%s %s%s",
             weechat_prefix ("network"),
             IRC_COLOR_CHAT_DELIMITERS,
@@ -4648,7 +4651,7 @@ IRC_PROTOCOL_CALLBACK(330_343)
             irc_msgbuffer_get_target_buffer (
                 server, params[1], command, "whois", ptr_buffer),
             date,
-            irc_protocol_tags (command, tags, "irc_numeric", NULL, NULL),
+            irc_protocol_tags (command, tags, NULL, NULL, NULL),
             "%s%s[%s%s%s] %s%s",
             weechat_prefix ("network"),
             IRC_COLOR_CHAT_DELIMITERS,
@@ -4684,7 +4687,7 @@ IRC_PROTOCOL_CALLBACK(331)
         irc_msgbuffer_get_target_buffer (
             server, params[1], command, NULL, ptr_buffer),
         date,
-        irc_protocol_tags (command, tags, "irc_numeric", NULL, NULL),
+        irc_protocol_tags (command, tags, NULL, NULL, NULL),
         _("%sNo topic set for channel %s%s"),
         weechat_prefix ("network"),
         IRC_COLOR_CHAT_CHANNEL,
@@ -4745,7 +4748,7 @@ IRC_PROTOCOL_CALLBACK(332)
             irc_msgbuffer_get_target_buffer (
                 server, NULL, command, NULL, ptr_buffer),
             date,
-            irc_protocol_tags (command, tags, "irc_numeric", NULL, NULL),
+            irc_protocol_tags (command, tags, NULL, NULL, NULL),
             _("%sTopic for %s%s%s is \"%s%s%s\""),
             weechat_prefix ("network"),
             IRC_COLOR_CHAT_CHANNEL,
@@ -4810,7 +4813,7 @@ IRC_PROTOCOL_CALLBACK(333)
                     irc_msgbuffer_get_target_buffer (
                         server, NULL, command, NULL, ptr_channel->buffer),
                     date,
-                    irc_protocol_tags (command, tags, "irc_numeric", NULL, NULL),
+                    irc_protocol_tags (command, tags, NULL, NULL, NULL),
                     /* TRANSLATORS: "%s" after "on" is a date */
                     _("%sTopic set by %s%s%s%s%s%s%s%s%s on %s"),
                     weechat_prefix ("network"),
@@ -4831,7 +4834,7 @@ IRC_PROTOCOL_CALLBACK(333)
                     irc_msgbuffer_get_target_buffer (
                         server, NULL, command, NULL, ptr_channel->buffer),
                     date,
-                    irc_protocol_tags (command, tags, "irc_numeric", NULL, NULL),
+                    irc_protocol_tags (command, tags, NULL, NULL, NULL),
                     /* TRANSLATORS: "%s" after "on" is a date */
                     _("%sTopic set on %s"),
                     weechat_prefix ("network"),
@@ -4847,7 +4850,7 @@ IRC_PROTOCOL_CALLBACK(333)
                 irc_msgbuffer_get_target_buffer (
                     server, NULL, command, NULL, NULL),
                 date,
-                irc_protocol_tags (command, tags, "irc_numeric", NULL, NULL),
+                irc_protocol_tags (command, tags, NULL, NULL, NULL),
                 /* TRANSLATORS: "%s" after "on" is a date */
                 _("%sTopic for %s%s%s set by %s%s%s%s%s%s%s%s%s on %s"),
                 weechat_prefix ("network"),
@@ -4871,7 +4874,7 @@ IRC_PROTOCOL_CALLBACK(333)
                 irc_msgbuffer_get_target_buffer (
                     server, NULL, command, NULL, NULL),
                 date,
-                irc_protocol_tags (command, tags, "irc_numeric", NULL, NULL),
+                irc_protocol_tags (command, tags, NULL, NULL, NULL),
                 /* TRANSLATORS: "%s" after "on" is a date */
                 _("%sTopic for %s%s%s set on %s"),
                 weechat_prefix ("network"),
@@ -4915,7 +4918,7 @@ IRC_PROTOCOL_CALLBACK(338)
             irc_msgbuffer_get_target_buffer (
                 server, params[1], command, "whois", NULL),
             date,
-            irc_protocol_tags (command, tags, "irc_numeric", NULL, NULL),
+            irc_protocol_tags (command, tags, NULL, NULL, NULL),
             "%s%s[%s%s%s]%s %s %s%s",
             weechat_prefix ("network"),
             IRC_COLOR_CHAT_DELIMITERS,
@@ -4948,7 +4951,7 @@ IRC_PROTOCOL_CALLBACK(341)
     weechat_printf_date_tags (
         irc_msgbuffer_get_target_buffer (server, params[0], command, NULL, NULL),
         date,
-        irc_protocol_tags (command, tags, "irc_numeric", params[0], address),
+        irc_protocol_tags (command, tags, NULL, params[0], address),
         _("%s%s%s%s has invited %s%s%s to %s%s%s"),
         weechat_prefix ("network"),
         irc_nick_color_for_msg (server, 1, NULL, params[0]),
@@ -4987,7 +4990,7 @@ IRC_PROTOCOL_CALLBACK(344)
         weechat_printf_date_tags (
             irc_msgbuffer_get_target_buffer (server, NULL, command, "reop", NULL),
             date,
-            irc_protocol_tags (command, tags, "irc_numeric", NULL, NULL),
+            irc_protocol_tags (command, tags, NULL, NULL, NULL),
             _("%sChannel reop %s%s%s: %s%s"),
             weechat_prefix ("network"),
             IRC_COLOR_CHAT_CHANNEL,
@@ -5025,7 +5028,7 @@ IRC_PROTOCOL_CALLBACK(345)
     weechat_printf_date_tags (
         irc_msgbuffer_get_target_buffer (server, NULL, command, "reop", NULL),
         date,
-        irc_protocol_tags (command, tags, "irc_numeric", NULL, NULL),
+        irc_protocol_tags (command, tags, NULL, NULL, NULL),
         "%s%s%s%s: %s",
         weechat_prefix ("network"),
         IRC_COLOR_CHAT_CHANNEL,
@@ -5096,7 +5099,7 @@ IRC_PROTOCOL_CALLBACK(346)
                 irc_msgbuffer_get_target_buffer (
                     server, NULL, command, "invitelist", ptr_buffer),
                 date,
-                irc_protocol_tags (command, tags, "irc_numeric", NULL, NULL),
+                irc_protocol_tags (command, tags, NULL, NULL, NULL),
                 /* TRANSLATORS: "%s" after "on" is a date */
                 _("%s%s[%s%s%s] %s%s%s%s invited by %s on %s"),
                 weechat_prefix ("network"),
@@ -5119,7 +5122,7 @@ IRC_PROTOCOL_CALLBACK(346)
                 irc_msgbuffer_get_target_buffer (
                     server, NULL, command, "invitelist", ptr_buffer),
                 date,
-                irc_protocol_tags (command, tags, "irc_numeric", NULL, NULL),
+                irc_protocol_tags (command, tags, NULL, NULL, NULL),
                 _("%s%s[%s%s%s] %s%s%s%s invited by %s"),
                 weechat_prefix ("network"),
                 IRC_COLOR_CHAT_DELIMITERS,
@@ -5141,7 +5144,7 @@ IRC_PROTOCOL_CALLBACK(346)
             irc_msgbuffer_get_target_buffer (
                 server, NULL, command, "invitelist", ptr_buffer),
             date,
-            irc_protocol_tags (command, tags, "irc_numeric", NULL, NULL),
+            irc_protocol_tags (command, tags, NULL, NULL, NULL),
             _("%s%s[%s%s%s] %s%s%s%s invited"),
             weechat_prefix ("network"),
             IRC_COLOR_CHAT_DELIMITERS,
@@ -5196,7 +5199,7 @@ IRC_PROTOCOL_CALLBACK(347)
         irc_msgbuffer_get_target_buffer (
             server, NULL, command, "invitelist", ptr_buffer),
         date,
-        irc_protocol_tags (command, tags, "irc_numeric", NULL, NULL),
+        irc_protocol_tags (command, tags, NULL, NULL, NULL),
         "%s%s[%s%s%s]%s%s%s",
         weechat_prefix ("network"),
         IRC_COLOR_CHAT_DELIMITERS,
@@ -5269,7 +5272,7 @@ IRC_PROTOCOL_CALLBACK(348)
                 irc_msgbuffer_get_target_buffer (
                     server, NULL, command, "exceptionlist", ptr_buffer),
                 date,
-                irc_protocol_tags (command, tags, "irc_numeric", NULL, NULL),
+                irc_protocol_tags (command, tags, NULL, NULL, NULL),
                 /* TRANSLATORS: "%s" after "on" is a date */
                 _("%s%s[%s%s%s]%s%s exception %s%s%s by %s on %s"),
                 weechat_prefix ("network"),
@@ -5293,7 +5296,7 @@ IRC_PROTOCOL_CALLBACK(348)
                 irc_msgbuffer_get_target_buffer (
                     server, NULL, command, "exceptionlist", ptr_buffer),
                 date,
-                irc_protocol_tags (command, tags, "irc_numeric", NULL, NULL),
+                irc_protocol_tags (command, tags, NULL, NULL, NULL),
                 _("%s%s[%s%s%s]%s%s exception %s%s%s by %s"),
                 weechat_prefix ("network"),
                 IRC_COLOR_CHAT_DELIMITERS,
@@ -5316,7 +5319,7 @@ IRC_PROTOCOL_CALLBACK(348)
             irc_msgbuffer_get_target_buffer (
                 server, NULL, command, "exceptionlist", ptr_buffer),
             date,
-            irc_protocol_tags (command, tags, "irc_numeric", NULL, NULL),
+            irc_protocol_tags (command, tags, NULL, NULL, NULL),
             _("%s%s[%s%s%s]%s%s exception %s%s"),
             weechat_prefix ("network"),
             IRC_COLOR_CHAT_DELIMITERS,
@@ -5371,7 +5374,7 @@ IRC_PROTOCOL_CALLBACK(349)
         irc_msgbuffer_get_target_buffer (
             server, NULL, command, "exceptionlist", ptr_buffer),
         date,
-        irc_protocol_tags (command, tags, "irc_numeric", NULL, NULL),
+        irc_protocol_tags (command, tags, NULL, NULL, NULL),
         "%s%s[%s%s%s]%s%s%s",
         weechat_prefix ("network"),
         IRC_COLOR_CHAT_DELIMITERS,
@@ -5411,7 +5414,7 @@ IRC_PROTOCOL_CALLBACK(351)
         weechat_printf_date_tags (
             ptr_buffer,
             date,
-            irc_protocol_tags (command, tags, "irc_numeric", NULL, NULL),
+            irc_protocol_tags (command, tags, NULL, NULL, NULL),
             "%s%s %s (%s)",
             weechat_prefix ("network"),
             params[1],
@@ -5425,7 +5428,7 @@ IRC_PROTOCOL_CALLBACK(351)
         weechat_printf_date_tags (
             ptr_buffer,
             date,
-            irc_protocol_tags (command, tags, "irc_numeric", NULL, NULL),
+            irc_protocol_tags (command, tags, NULL, NULL, NULL),
             "%s%s %s",
             weechat_prefix ("network"),
             params[1],
@@ -5517,7 +5520,7 @@ IRC_PROTOCOL_CALLBACK(352)
             irc_msgbuffer_get_target_buffer (
                 server, NULL, command, "who", NULL),
             date,
-            irc_protocol_tags (command, tags, "irc_numeric", NULL, NULL),
+            irc_protocol_tags (command, tags, NULL, NULL, NULL),
             "%s%s[%s%s%s] %s%s %s(%s%s@%s%s)%s %s%s%s%s%s(%s%s%s)",
             weechat_prefix ("network"),
             IRC_COLOR_CHAT_DELIMITERS,
@@ -5689,7 +5692,7 @@ IRC_PROTOCOL_CALLBACK(353)
             irc_msgbuffer_get_target_buffer (
                 server, NULL, command, "names", NULL),
             date,
-            irc_protocol_tags (command, tags, "irc_numeric", NULL, NULL),
+            irc_protocol_tags (command, tags, NULL, NULL, NULL),
             _("%sNicks %s%s%s: %s[%s%s%s]"),
             weechat_prefix ("network"),
             IRC_COLOR_CHAT_CHANNEL,
@@ -5743,7 +5746,7 @@ IRC_PROTOCOL_CALLBACK(354)
                 irc_msgbuffer_get_target_buffer (
                     server, NULL, command, "who", NULL),
                 date,
-                irc_protocol_tags (command, tags, "irc_numeric", NULL, NULL),
+                irc_protocol_tags (command, tags, NULL, NULL, NULL),
                 "%s%s[%s%s%s]%s%s%s",
                 weechat_prefix ("network"),
                 IRC_COLOR_CHAT_DELIMITERS,
@@ -5814,7 +5817,7 @@ IRC_PROTOCOL_CALLBACK(354)
             irc_msgbuffer_get_target_buffer (
                 server, NULL, command, "who", NULL),
             date,
-            irc_protocol_tags (command, tags, "irc_numeric", NULL, NULL),
+            irc_protocol_tags (command, tags, NULL, NULL, NULL),
             "%s%s[%s%s%s] %s%s %s[%s%s%s] (%s%s@%s%s)%s %s %s %s(%s%s%s)",
             weechat_prefix ("network"),
             IRC_COLOR_CHAT_DELIMITERS,
@@ -5945,7 +5948,7 @@ IRC_PROTOCOL_CALLBACK(366)
                         ptr_channel->buffer),
                     date,
                     irc_protocol_tags (
-                        command, tags, "irc_numeric", NULL, NULL),
+                        command, tags, NULL, NULL, NULL),
                     _("%sNicks %s%s%s: %s[%s%s]"),
                     weechat_prefix ("network"),
                     IRC_COLOR_CHAT_CHANNEL,
@@ -6012,7 +6015,7 @@ IRC_PROTOCOL_CALLBACK(366)
                 irc_msgbuffer_get_target_buffer (
                     server, NULL, command, "names", ptr_channel->buffer),
                 date,
-                irc_protocol_tags (command, tags, "irc_numeric", NULL, NULL),
+                irc_protocol_tags (command, tags, NULL, NULL, NULL),
                 _("%sChannel %s%s%s: %s%d%s %s %s(%s%s)"),
                 weechat_prefix ("network"),
                 IRC_COLOR_CHAT_CHANNEL,
@@ -6042,7 +6045,7 @@ IRC_PROTOCOL_CALLBACK(366)
             irc_msgbuffer_get_target_buffer (
                 server, NULL, command, "names", NULL),
             date,
-            irc_protocol_tags (command, tags, "irc_numeric", NULL, NULL),
+            irc_protocol_tags (command, tags, NULL, NULL, NULL),
             "%s%s%s%s: %s",
             weechat_prefix ("network"),
             IRC_COLOR_CHAT_CHANNEL,
@@ -6123,7 +6126,7 @@ IRC_PROTOCOL_CALLBACK(367)
                 irc_msgbuffer_get_target_buffer (
                     server, NULL, command, "banlist", ptr_buffer),
                 date,
-                irc_protocol_tags (command, tags, "irc_numeric", NULL, NULL),
+                irc_protocol_tags (command, tags, NULL, NULL, NULL),
                 /* TRANSLATORS: "%s" after "on" is a date */
                 _("%s%s[%s%s%s] %s%s%s%s banned by %s on %s"),
                 weechat_prefix ("network"),
@@ -6146,7 +6149,7 @@ IRC_PROTOCOL_CALLBACK(367)
                 irc_msgbuffer_get_target_buffer (
                     server, NULL, command, "banlist", ptr_buffer),
                 date,
-                irc_protocol_tags (command, tags, "irc_numeric", NULL, NULL),
+                irc_protocol_tags (command, tags, NULL, NULL, NULL),
                 _("%s%s[%s%s%s] %s%s%s%s banned by %s"),
                 weechat_prefix ("network"),
                 IRC_COLOR_CHAT_DELIMITERS,
@@ -6168,7 +6171,7 @@ IRC_PROTOCOL_CALLBACK(367)
             irc_msgbuffer_get_target_buffer (
                 server, NULL, command, "banlist", ptr_buffer),
             date,
-            irc_protocol_tags (command, tags, "irc_numeric", NULL, NULL),
+            irc_protocol_tags (command, tags, NULL, NULL, NULL),
             _("%s%s[%s%s%s] %s%s%s%s banned"),
             weechat_prefix ("network"),
             IRC_COLOR_CHAT_DELIMITERS,
@@ -6226,7 +6229,7 @@ IRC_PROTOCOL_CALLBACK(368)
         irc_msgbuffer_get_target_buffer (
             server, NULL, command, "banlist", ptr_buffer),
         date,
-        irc_protocol_tags (command, tags, "irc_numeric", NULL, NULL),
+        irc_protocol_tags (command, tags, NULL, NULL, NULL),
         "%s%s[%s%s%s]%s%s%s",
         weechat_prefix ("network"),
         IRC_COLOR_CHAT_DELIMITERS,
@@ -6421,7 +6424,7 @@ IRC_PROTOCOL_CALLBACK(438)
         weechat_printf_date_tags (
             ptr_buffer,
             date,
-            irc_protocol_tags (command, tags, "irc_numeric", NULL, NULL),
+            irc_protocol_tags (command, tags, NULL, NULL, NULL),
             "%s%s (%s => %s)",
             weechat_prefix ("network"),
             str_params,
@@ -6435,7 +6438,7 @@ IRC_PROTOCOL_CALLBACK(438)
         weechat_printf_date_tags (
             ptr_buffer,
             date,
-            irc_protocol_tags (command, tags, "irc_numeric", NULL, NULL),
+            irc_protocol_tags (command, tags, NULL, NULL, NULL),
             "%s%s %s",
             weechat_prefix ("network"),
             params[0],
@@ -6651,7 +6654,7 @@ IRC_PROTOCOL_CALLBACK(728)
                 irc_msgbuffer_get_target_buffer (
                     server, NULL, command, "quietlist", ptr_buffer),
                 date,
-                irc_protocol_tags (command, tags, "irc_numeric", NULL, NULL),
+                irc_protocol_tags (command, tags, NULL, NULL, NULL),
                 /* TRANSLATORS: "%s" after "on" is a date */
                 _("%s%s[%s%s%s] %s%s%s%s quieted by %s on %s"),
                 weechat_prefix ("network"),
@@ -6674,7 +6677,7 @@ IRC_PROTOCOL_CALLBACK(728)
                 irc_msgbuffer_get_target_buffer (
                     server, NULL, command, "quietlist", ptr_buffer),
                 date,
-                irc_protocol_tags (command, tags, "irc_numeric", NULL, NULL),
+                irc_protocol_tags (command, tags, NULL, NULL, NULL),
                 _("%s%s[%s%s%s] %s%s%s%s quieted by %s"),
                 weechat_prefix ("network"),
                 IRC_COLOR_CHAT_DELIMITERS,
@@ -6696,7 +6699,7 @@ IRC_PROTOCOL_CALLBACK(728)
             irc_msgbuffer_get_target_buffer (
                 server, NULL, command, "quietlist", ptr_buffer),
             date,
-            irc_protocol_tags (command, tags, "irc_numeric", NULL, NULL),
+            irc_protocol_tags (command, tags, NULL, NULL, NULL),
             _("%s%s[%s%s%s] %s%s%s%s quieted"),
             weechat_prefix ("network"),
             IRC_COLOR_CHAT_DELIMITERS,
@@ -6754,7 +6757,7 @@ IRC_PROTOCOL_CALLBACK(729)
         irc_msgbuffer_get_target_buffer (
             server, NULL, command, "quietlist", ptr_buffer),
         date,
-        irc_protocol_tags (command, tags, "irc_numeric", NULL, NULL),
+        irc_protocol_tags (command, tags, NULL, NULL, NULL),
         "%s%s[%s%s%s]%s%s%s",
         weechat_prefix ("network"),
         IRC_COLOR_CHAT_DELIMITERS,
@@ -6887,7 +6890,7 @@ IRC_PROTOCOL_CALLBACK(732)
         irc_msgbuffer_get_target_buffer (
             server, NULL, command, "monitor", NULL),
         date,
-        irc_protocol_tags (command, tags, "irc_numeric", NULL, NULL),
+        irc_protocol_tags (command, tags, NULL, NULL, NULL),
         "%s%s",
         weechat_prefix ("network"),
         (str_nicks) ? str_nicks : "");
@@ -6918,7 +6921,7 @@ IRC_PROTOCOL_CALLBACK(733)
         irc_msgbuffer_get_target_buffer (
             server, NULL, command, "monitor", NULL),
         date,
-        irc_protocol_tags (command, tags, "irc_numeric", NULL, NULL),
+        irc_protocol_tags (command, tags, NULL, NULL, NULL),
         "%s%s",
         weechat_prefix ("network"),
         (str_params) ? str_params : "");
@@ -6949,7 +6952,7 @@ IRC_PROTOCOL_CALLBACK(734)
         irc_msgbuffer_get_target_buffer (
             server, NULL, command, "monitor", NULL),
         date,
-        irc_protocol_tags (command, tags, "irc_numeric", NULL, NULL),
+        irc_protocol_tags (command, tags, NULL, NULL, NULL),
         "%s%s (%s)",
         weechat_prefix ("error"),
         (str_params) ? str_params : "",
@@ -6985,7 +6988,7 @@ IRC_PROTOCOL_CALLBACK(900)
         weechat_printf_date_tags (
             irc_msgbuffer_get_target_buffer (server, NULL, command, NULL, NULL),
             date,
-            irc_protocol_tags (command, tags, "irc_numeric", NULL, NULL),
+            irc_protocol_tags (command, tags, NULL, NULL, NULL),
             "%s%s %s(%s%s%s)",
             weechat_prefix ("network"),
             str_params,
@@ -6999,7 +7002,7 @@ IRC_PROTOCOL_CALLBACK(900)
         weechat_printf_date_tags (
             irc_msgbuffer_get_target_buffer (server, NULL, command, NULL, NULL),
             date,
-            irc_protocol_tags (command, tags, "irc_numeric", NULL, NULL),
+            irc_protocol_tags (command, tags, NULL, NULL, NULL),
             "%s%s",
             weechat_prefix ("network"),
             str_params);
@@ -7027,7 +7030,7 @@ IRC_PROTOCOL_CALLBACK(901)
     weechat_printf_date_tags (
         irc_msgbuffer_get_target_buffer (server, NULL, command, NULL, NULL),
         date,
-        irc_protocol_tags (command, tags, "irc_numeric", NULL, NULL),
+        irc_protocol_tags (command, tags, NULL, NULL, NULL),
         "%s%s",
         weechat_prefix ("network"),
         params[2]);
