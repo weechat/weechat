@@ -486,7 +486,7 @@ logger_config_init ()
         logger_config_file, ptr_section,
         "auto_log", "boolean",
         N_("automatically save content of buffers to files (unless a buffer "
-           "disables log)"),
+           "disables log); if disabled, logging is disabled on all buffers"),
         NULL, 0, 0, "on", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     logger_config_file_color_lines = weechat_config_new_option (
