@@ -879,6 +879,8 @@ TEST(IrcProtocolWithServer, chghost)
 
     SRV_INIT_JOIN2;
 
+    RECV(":bob!user@host PRIVMSG alice :hi Alice!");
+
     ptr_nick = ptr_server->channels->nicks;
     ptr_nick2 = ptr_server->channels->last_nick;
 
@@ -913,6 +915,7 @@ TEST(IrcProtocolWithServer, chghost)
     RECV(":bob!user@host CHGHOST user_bob_2 host_bob_2");
     CHECK_CHAN("-- bob (user@host) has changed host to user_bob_2@host_bob_2");
     STRCMP_EQUAL("user_bob_2@host_bob_2", ptr_nick2->host);
+    CHECK_PV("bob", "-- bob (user@host) has changed host to user_bob_2@host_bob_2");
 }
 
 /*
