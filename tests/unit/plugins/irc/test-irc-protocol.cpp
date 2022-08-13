@@ -662,32 +662,38 @@ TEST(IrcProtocolWithServer, account_without_account_notify_cap)
 {
     struct t_irc_nick *ptr_nick;
 
-    SRV_INIT_JOIN;
+    SRV_INIT_JOIN2;
 
-    ptr_nick = ptr_server->channels->nicks;
+    RECV(":bob!user@host PRIVMSG alice :hi Alice!");
+
+    ptr_nick = ptr_server->channels->last_nick;
 
     POINTERS_EQUAL(NULL, ptr_nick->account);
 
     /* not enough parameters */
-    RECV(":alice!user@host ACCOUNT");
+    RECV(":bob!user@host ACCOUNT");
     CHECK_ERROR_PARAMS("account", 0, 1);
 
     POINTERS_EQUAL(NULL, ptr_nick->account);
 
-    RECV(":alice!user@host ACCOUNT *");
-    CHECK_CHAN("-- alice has unidentified");
+    RECV(":bob!user@host ACCOUNT *");
+    CHECK_CHAN("-- bob has unidentified");
+    CHECK_PV("bob", "-- bob has unidentified");
     POINTERS_EQUAL(NULL, ptr_nick->account);
 
-    RECV(":alice!user@host ACCOUNT :*");
-    CHECK_CHAN("-- alice has unidentified");
+    RECV(":bob!user@host ACCOUNT :*");
+    CHECK_CHAN("-- bob has unidentified");
+    CHECK_PV("bob", "-- bob has unidentified");
     POINTERS_EQUAL(NULL, ptr_nick->account);
 
-    RECV(":alice!user@host ACCOUNT new_account");
-    CHECK_CHAN("-- alice has identified as new_account");
+    RECV(":bob!user@host ACCOUNT new_account");
+    CHECK_CHAN("-- bob has identified as new_account");
+    CHECK_PV("bob", "-- bob has identified as new_account");
     POINTERS_EQUAL(NULL, ptr_nick->account);
 
-    RECV(":alice!user@host ACCOUNT :new_account");
-    CHECK_CHAN("-- alice has identified as new_account");
+    RECV(":bob!user@host ACCOUNT :new_account");
+    CHECK_CHAN("-- bob has identified as new_account");
+    CHECK_PV("bob", "-- bob has identified as new_account");
     POINTERS_EQUAL(NULL, ptr_nick->account);
 }
 

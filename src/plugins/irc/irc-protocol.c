@@ -437,41 +437,68 @@ IRC_PROTOCOL_CALLBACK(account)
     for (ptr_channel = server->channels; ptr_channel;
          ptr_channel = ptr_channel->next_channel)
     {
-        ptr_nick = irc_nick_search (server, ptr_channel, nick);
-        if (ptr_nick)
+        switch (ptr_channel->type)
         {
-            if (!ignored
-                && weechat_config_boolean (irc_config_look_display_account_message))
-            {
-                ptr_nick_speaking = ((weechat_config_boolean (irc_config_look_smart_filter))
-                                     && (weechat_config_boolean (irc_config_look_smart_filter_account))) ?
-                    irc_channel_nick_speaking_time_search (server, ptr_channel, nick, 1) : NULL;
-                smart_filter = (!local_account
-                                && weechat_config_boolean (irc_config_look_smart_filter)
-                                && weechat_config_boolean (irc_config_look_smart_filter_account)
-                                && !ptr_nick_speaking);
+            case IRC_CHANNEL_TYPE_PRIVATE:
+                if (!ignored
+                    && weechat_config_boolean (irc_config_look_display_account_message)
+                    && (irc_server_strcasecmp (server,
+                                               ptr_channel->name, nick) == 0))
+                {
+                    weechat_printf_date_tags (
+                        irc_msgbuffer_get_target_buffer (
+                            server, NULL, command, NULL, ptr_channel->buffer),
+                        date,
+                        irc_protocol_tags (
+                            command,
+                            tags,
+                            NULL,
+                            nick, address),
+                        (pos_account) ? _("%s%s%s%s has identified as %s") : _("%s%s%s%s has unidentified"),
+                        weechat_prefix ("network"),
+                        irc_nick_color_for_msg (server, 1, ptr_nick, nick),
+                        nick,
+                        IRC_COLOR_MESSAGE_ACCOUNT,
+                        (pos_account) ? str_account : NULL);
+                }
+                break;
+            case IRC_CHANNEL_TYPE_CHANNEL:
+                ptr_nick = irc_nick_search (server, ptr_channel, nick);
+                if (ptr_nick)
+                {
+                    if (!ignored
+                        && weechat_config_boolean (irc_config_look_display_account_message))
+                    {
+                        ptr_nick_speaking = ((weechat_config_boolean (irc_config_look_smart_filter))
+                                             && (weechat_config_boolean (irc_config_look_smart_filter_account))) ?
+                            irc_channel_nick_speaking_time_search (server, ptr_channel, nick, 1) : NULL;
+                        smart_filter = (!local_account
+                                        && weechat_config_boolean (irc_config_look_smart_filter)
+                                        && weechat_config_boolean (irc_config_look_smart_filter_account)
+                                        && !ptr_nick_speaking);
 
-                weechat_printf_date_tags (
-                    irc_msgbuffer_get_target_buffer (
-                        server, NULL, command, NULL, ptr_channel->buffer),
-                    date,
-                    irc_protocol_tags (
-                        command,
-                        tags,
-                        smart_filter ? "irc_smart_filter" : NULL,
-                        nick, address),
-                    (pos_account) ? _("%s%s%s%s has identified as %s") : _("%s%s%s%s has unidentified"),
-                    weechat_prefix ("network"),
-                    irc_nick_color_for_msg (server, 1, ptr_nick, nick),
-                    nick,
-                    IRC_COLOR_MESSAGE_ACCOUNT,
-                    (pos_account) ? str_account : NULL);
-            }
-
-            if (ptr_nick->account)
-                free (ptr_nick->account);
-            ptr_nick->account = (cap_account_notify && pos_account) ?
-                strdup (pos_account) : NULL;
+                        weechat_printf_date_tags (
+                            irc_msgbuffer_get_target_buffer (
+                                server, NULL, command, NULL, ptr_channel->buffer),
+                            date,
+                            irc_protocol_tags (
+                                command,
+                                tags,
+                                (smart_filter) ? "irc_smart_filter" : NULL,
+                                nick, address),
+                            (pos_account) ? _("%s%s%s%s has identified as %s") : _("%s%s%s%s has unidentified"),
+                            weechat_prefix ("network"),
+                            irc_nick_color_for_msg (server, 1, ptr_nick, nick),
+                            nick,
+                            IRC_COLOR_MESSAGE_ACCOUNT,
+                            (pos_account) ? str_account : NULL);
+                    }
+                    if (ptr_nick->account)
+                        free (ptr_nick->account);
+                    ptr_nick->account = (cap_account_notify && pos_account) ?
+                        strdup (pos_account) : NULL;
+                }
+                break;
         }
     }
 
@@ -1272,7 +1299,7 @@ IRC_PROTOCOL_CALLBACK(chghost)
                             irc_protocol_tags (
                                 command,
                                 tags,
-                                smart_filter ? "irc_smart_filter" : NULL,
+                                (smart_filter) ? "irc_smart_filter" : NULL,
                                 nick, address),
                             _("%s%s%s%s (%s%s%s)%s has changed host to %s%s"),
                             weechat_prefix ("network"),
@@ -1616,7 +1643,7 @@ IRC_PROTOCOL_CALLBACK(join)
             date,
             irc_protocol_tags (command,
                                tags,
-                               smart_filter ? "irc_smart_filter" : NULL,
+                               (smart_filter) ? "irc_smart_filter" : NULL,
                                nick, address),
             _("%s%s%s%s%s%s%s%s%s%s%s%s has joined %s%s%s"),
             weechat_prefix ("join"),
@@ -3129,7 +3156,7 @@ IRC_PROTOCOL_CALLBACK(setname)
                             irc_protocol_tags (
                                 command,
                                 tags,
-                                smart_filter ? "irc_smart_filter" : NULL,
+                                (smart_filter) ? "irc_smart_filter" : NULL,
                                 NULL,
                                 NULL),
                             _("%s%s%s%s has changed real name to %s\"%s%s%s\"%s"),
