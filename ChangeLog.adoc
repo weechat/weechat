@@ -36,6 +36,7 @@ Bug fixes::
   * irc: add missing tag "irc_numeric" in all numeric IRC commands (issue #1804)
   * irc: display an error message when using command /dcc without xfer plugin loaded
   * irc: display ACCOUNT and CHGHOST commands in private buffers
+  * irc: fix extract of isupport value when it is last in list and without value (issue #1807)
   * guile: fix function hdata_get_string
   * javascript: fix return of long value in functions infolist_time, hdata_long and hdata_time
   * php: fix function hdata_compare

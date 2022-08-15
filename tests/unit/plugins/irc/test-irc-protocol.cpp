@@ -2155,8 +2155,7 @@ TEST(IrcProtocolWithServer, 005_full)
     STRCMP_EQUAL("#", ptr_server->chantypes);
     STRCMP_EQUAL("eIbq,k,flj,CFLMPQScgimnprstuz", ptr_server->chanmodes);
     LONGS_EQUAL(100, ptr_server->monitor);
-    CHECK(ptr_server->isupport[0] == ' ');
-    STRCMP_EQUAL(IRC_MSG_005, ptr_server->isupport + 1);
+    STRCMP_EQUAL(IRC_MSG_005, ptr_server->isupport);
 
     /* check that realloc of info is OK if we receive the message again */
     RECV(":server 005 alice " IRC_MSG_005 " :are supported");
@@ -2171,8 +2170,7 @@ TEST(IrcProtocolWithServer, 005_full)
     STRCMP_EQUAL("#", ptr_server->chantypes);
     STRCMP_EQUAL("eIbq,k,flj,CFLMPQScgimnprstuz", ptr_server->chanmodes);
     LONGS_EQUAL(100, ptr_server->monitor);
-    CHECK(ptr_server->isupport[0] == ' ');
-    STRCMP_EQUAL(IRC_MSG_005 " " IRC_MSG_005, ptr_server->isupport + 1);
+    STRCMP_EQUAL(IRC_MSG_005 " " IRC_MSG_005, ptr_server->isupport);
 }
 
 /*
@@ -2193,12 +2191,12 @@ TEST(IrcProtocolWithServer, 005_multiple_messages)
     CHECK_SRV("-- PREFIX=(ohv)@%+ are supported");
     STRCMP_EQUAL("ohv", ptr_server->prefix_modes);
     STRCMP_EQUAL("@%+", ptr_server->prefix_chars);
-    STRCMP_EQUAL(" PREFIX=(ohv)@%+", ptr_server->isupport);
+    STRCMP_EQUAL("PREFIX=(ohv)@%+", ptr_server->isupport);
 
     RECV(":server 005 alice HOSTLEN=24 :are supported");
     CHECK_SRV("-- HOSTLEN=24 are supported");
     LONGS_EQUAL(24, ptr_server->host_max_length);
-    STRCMP_EQUAL(" PREFIX=(ohv)@%+ HOSTLEN=24", ptr_server->isupport);
+    STRCMP_EQUAL("PREFIX=(ohv)@%+ HOSTLEN=24", ptr_server->isupport);
 }
 
 /*

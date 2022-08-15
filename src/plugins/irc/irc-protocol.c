@@ -3676,7 +3676,7 @@ IRC_PROTOCOL_CALLBACK(001)
 
 IRC_PROTOCOL_CALLBACK(005)
 {
-    char *str_info, *error, *isupport2, *pos_start;
+    char *str_info, *error, *isupport2;
     int i, arg_last, length_isupport, length, casemapping, utf8mapping;
     long value;
 
@@ -3764,7 +3764,6 @@ IRC_PROTOCOL_CALLBACK(005)
     str_info = irc_protocol_string_params (params, 1, arg_last);
     if (str_info && str_info[0])
     {
-        pos_start = NULL;
         length = strlen (str_info);
         if (server->isupport)
         {
@@ -3777,20 +3776,13 @@ IRC_PROTOCOL_CALLBACK(005)
             if (isupport2)
             {
                 server->isupport = isupport2;
-                pos_start = server->isupport + length_isupport;
+                strcat (server->isupport, " ");
+                strcat (server->isupport, str_info);
             }
         }
         else
         {
-            server->isupport = malloc (1 + length + 1);
-            if (server->isupport)
-                pos_start = server->isupport;
-        }
-        if (pos_start)
-        {
-            pos_start[0] = ' ';
-            memcpy (pos_start + 1, str_info, length);
-            pos_start[length + 1] = '\0';
+            server->isupport = strdup (str_info);
         }
     }
     if (str_info)

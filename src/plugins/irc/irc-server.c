@@ -986,40 +986,51 @@ irc_server_get_alternate_nick (struct t_irc_server *server)
 const char *
 irc_server_get_isupport_value (struct t_irc_server *server, const char *feature)
 {
-    char feature2[64], *pos_feature, *pos_equal, *pos_space;
-    int length;
+    const char *ptr_string, *pos_space;
+    int length, length_feature;
     static char value[256];
 
-    if (!server || !server->isupport || !feature)
+    if (!server || !server->isupport || !feature || !feature[0])
         return NULL;
 
-    /* search feature with value */
-    snprintf (feature2, sizeof (feature2), " %s=", feature);
-    pos_feature = strstr (server->isupport, feature2);
-    if (pos_feature)
-    {
-        /* feature found with value, return value */
-        pos_feature++;
-        pos_equal = strchr (pos_feature, '=');
-        pos_space = strchr (pos_feature, ' ');
-        if (pos_space)
-            length = pos_space - pos_equal - 1;
-        else
-            length = strlen (pos_equal) + 1;
-        if (length > (int)sizeof (value) - 1)
-            length = (int)sizeof (value) - 1;
-        memcpy (value, pos_equal + 1, length);
-        value[length] = '\0';
-        return value;
-    }
+    length_feature = strlen (feature);
 
-    /* search feature without value */
-    feature2[strlen (feature2) - 1] = ' ';
-    pos_feature = strstr (server->isupport, feature2);
-    if (pos_feature)
+    ptr_string = server->isupport;
+    while (ptr_string && ptr_string[0])
     {
-        value[0] = '\0';
-        return value;
+        if (strncmp (ptr_string, feature, length_feature) == 0)
+        {
+            switch (ptr_string[length_feature])
+            {
+                case '=':
+                    /* feature found with value, return value */
+                    ptr_string += length_feature + 1;
+                    pos_space = strchr (ptr_string, ' ');
+                    if (pos_space)
+                        length = pos_space - ptr_string;
+                    else
+                        length = strlen (ptr_string);
+                    if (length > (int)sizeof (value) - 1)
+                        length = (int)sizeof (value) - 1;
+                    memcpy (value, ptr_string, length);
+                    value[length] = '\0';
+                    return value;
+                case ' ':
+                case '\0':
+                    /* feature found without value, return empty string */
+                    value[0] = '\0';
+                    return value;
+            }
+        }
+        /* find start of next item */
+        pos_space = strchr (ptr_string, ' ');
+        if (!pos_space)
+            break;
+        ptr_string = pos_space + 1;
+        while (ptr_string[0] == ' ')
+        {
+            ptr_string++;
+        }
     }
 
     /* feature not found in isupport */

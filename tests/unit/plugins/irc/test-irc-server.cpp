@@ -275,7 +275,77 @@ TEST(IrcServer, GetAlternateNick)
 
 TEST(IrcServer, GetIsupportValue)
 {
-    /* TODO: write tests */
+    struct t_irc_server *server;
+
+    server = irc_server_alloc ("test_clienttagdeny");
+    CHECK(server);
+
+    if (server->isupport)
+        free (server->isupport);
+    server->isupport = strdup ("");
+
+    POINTERS_EQUAL(NULL, irc_server_get_isupport_value (server, NULL));
+    POINTERS_EQUAL(NULL, irc_server_get_isupport_value (server, ""));
+    POINTERS_EQUAL(NULL, irc_server_get_isupport_value (server, "TEST"));
+
+    if (server->isupport)
+        free (server->isupport);
+    server->isupport = strdup ("AWAYLEN=307 BOT=B CASEMAPPING=ascii "
+                               "CHANLIMIT=#:10 EMPTY= INVEX KICKLEN=307 WHOX");
+
+    POINTERS_EQUAL(NULL, irc_server_get_isupport_value (server, NULL));
+    POINTERS_EQUAL(NULL, irc_server_get_isupport_value (server, ""));
+    POINTERS_EQUAL(NULL, irc_server_get_isupport_value (server, "xxx"));
+    POINTERS_EQUAL(NULL, irc_server_get_isupport_value (server, "AWAYLE"));
+    POINTERS_EQUAL(NULL, irc_server_get_isupport_value (server, "WHO"));
+
+    STRCMP_EQUAL("307", irc_server_get_isupport_value (server, "AWAYLEN"));
+    STRCMP_EQUAL("B", irc_server_get_isupport_value (server, "BOT"));
+    STRCMP_EQUAL("ascii", irc_server_get_isupport_value (server, "CASEMAPPING"));
+    STRCMP_EQUAL("#:10", irc_server_get_isupport_value (server, "CHANLIMIT"));
+    STRCMP_EQUAL("", irc_server_get_isupport_value (server, "EMPTY"));
+    STRCMP_EQUAL("", irc_server_get_isupport_value (server, "INVEX"));
+    STRCMP_EQUAL("307", irc_server_get_isupport_value (server, "KICKLEN"));
+    STRCMP_EQUAL("", irc_server_get_isupport_value (server, "WHOX"));
+
+    if (server->isupport)
+        free (server->isupport);
+    server->isupport = strdup ("TEST SECOND");
+
+    POINTERS_EQUAL(NULL, irc_server_get_isupport_value (server, "T"));
+    POINTERS_EQUAL(NULL, irc_server_get_isupport_value (server, "TES"));
+    POINTERS_EQUAL(NULL, irc_server_get_isupport_value (server, "EST"));
+    POINTERS_EQUAL(NULL, irc_server_get_isupport_value (server, "TESTT"));
+    POINTERS_EQUAL(NULL, irc_server_get_isupport_value (server, "SEC"));
+    POINTERS_EQUAL(NULL, irc_server_get_isupport_value (server, "COND"));
+    POINTERS_EQUAL(NULL, irc_server_get_isupport_value (server, "SECONDD"));
+
+    STRCMP_EQUAL("", irc_server_get_isupport_value (server, "TEST"));
+    STRCMP_EQUAL("", irc_server_get_isupport_value (server, "SECOND"));
+
+    if (server->isupport)
+        free (server->isupport);
+    server->isupport = strdup ("TEST=abc");
+
+    POINTERS_EQUAL(NULL, irc_server_get_isupport_value (server, "T"));
+    POINTERS_EQUAL(NULL, irc_server_get_isupport_value (server, "TES"));
+    POINTERS_EQUAL(NULL, irc_server_get_isupport_value (server, "EST"));
+    POINTERS_EQUAL(NULL, irc_server_get_isupport_value (server, "TESTT"));
+
+    STRCMP_EQUAL("abc", irc_server_get_isupport_value (server, "TEST"));
+
+    if (server->isupport)
+        free (server->isupport);
+    server->isupport = strdup ("  TEST=abc  ");
+
+    POINTERS_EQUAL(NULL, irc_server_get_isupport_value (server, "T"));
+    POINTERS_EQUAL(NULL, irc_server_get_isupport_value (server, "TES"));
+    POINTERS_EQUAL(NULL, irc_server_get_isupport_value (server, "EST"));
+    POINTERS_EQUAL(NULL, irc_server_get_isupport_value (server, "TESTT"));
+
+    STRCMP_EQUAL("abc", irc_server_get_isupport_value (server, "TEST"));
+
+    irc_server_free (server);
 }
 
 /*
