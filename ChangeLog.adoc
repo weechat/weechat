@@ -26,7 +26,6 @@ New features::
   * api: add info "uptime_current"
   * buflist: add variable `${hotlist_priority_number}` (integer version of `${hotlist_priority}`)
   * irc: display SETNAME command in channels and private buffers, add options irc.color.message_setname and irc.look.smart_filter_setname (issue #1805)
-  * irc: display an error message when using command /dcc without xfer plugin loaded
   * trigger: add elapsed time for trigger execution on monitor buffer when trigger debug is set, add option trigger.color.identifier (issue #1806)
 
 Bug fixes::
@@ -35,6 +34,7 @@ Bug fixes::
   * irc: fix display of TOPIC and QUIT messages with an empty trailing parameter (issue #1797)
   * irc: fix parsing of messages with trailing spaces and no trailing parameter (issue #1803)
   * irc: add missing tag "irc_numeric" in all numeric IRC commands (issue #1804)
+  * irc: display an error message when using command /dcc without xfer plugin loaded
   * irc: display ACCOUNT and CHGHOST commands in private buffers
   * guile: fix function hdata_get_string
   * javascript: fix return of long value in functions infolist_time, hdata_long and hdata_time
