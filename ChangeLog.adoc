@@ -43,6 +43,7 @@ Bug fixes::
   * ruby: fix function hdata_get_string
   * scripts: fix issue with year ≥ 2038 in functions infolist_new_var_time, print_date_tags and print_y_date_tags (plugins: python/lua/tcl/guile/javascript)
   * scripts: fix issue with long interval in function hook_timer (plugins: python/ruby/lua/tcl/guile/javascript/php)
+  * trigger: fix error on monitor buffer creation when trigger debug is >= 1 and monitor buffer is closed
   * xfer: fix crash when closing DCC chat buffer
   * xfer: disconnect all active DCC chats and files on `/upgrade`
   * xfer: fix refresh of xfer buffer after `/upgrade`

@@ -200,10 +200,13 @@ trigger_buffer_open (const char *filter, int switch_to_buffer)
 {
     if (!trigger_buffer)
     {
-        trigger_buffer = weechat_buffer_new (
-            TRIGGER_BUFFER_NAME,
-            &trigger_buffer_input_cb, NULL, NULL,
-            &trigger_buffer_close_cb, NULL, NULL);
+        if (!weechat_buffer_search (TRIGGER_PLUGIN_NAME, TRIGGER_BUFFER_NAME))
+        {
+            trigger_buffer = weechat_buffer_new (
+                TRIGGER_BUFFER_NAME,
+                &trigger_buffer_input_cb, NULL, NULL,
+                &trigger_buffer_close_cb, NULL, NULL);
+        }
 
         /* failed to create buffer ? then return */
         if (!trigger_buffer)
