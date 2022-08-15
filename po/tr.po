@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2022-08-13 22:39+0200\n"
+"POT-Creation-Date: 2022-08-15 11:20+0200\n"
 "PO-Revision-Date: 2022-07-27 23:00+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -14469,9 +14469,16 @@ msgstr "değişken yok"
 msgid "creating variable"
 msgstr "değişken oluşturuluyor"
 
-#, c-format
-msgid "%s  running command %s\"%s%s%s\"%s on buffer %s%s%s"
+#, fuzzy, c-format
+#| msgid "%s  running command %s\"%s%s%s\"%s on buffer %s%s%s"
+msgid "%s%lu%s  running command %s\"%s%s%s\"%s on buffer %s%s%s"
 msgstr "%s %s\"%s%s%s\"%s komutu %s%s%s arabelleğinde çalıştırılıyor"
+
+#, c-format
+msgid ""
+"%s%lu%s  elapsed: init=%.6fs, conditions=%.6fs, regex=%.6fs, command=%.6fs, "
+"total=%.6fs"
+msgstr ""
 
 msgid "Triggers enabled"
 msgstr "Tetikler etkin"
@@ -15060,6 +15067,11 @@ msgstr "dönüş kodu metin rengi (/trigger list içinde)"
 
 msgid "text color for post action flag (in /trigger list)"
 msgstr "eylem gönderim bayrağı metin rengi (/trigger list içinde)"
+
+#, fuzzy
+#| msgid "hooks for triggers (for filter in monitor buffer)"
+msgid "text color for trigger context identifier in monitor buffer"
+msgstr "tetik kancaları (ekran arabelleğinde süzmek için)"
 
 msgid "text color for regular expressions"
 msgstr "düzenli ifade metin rengi"

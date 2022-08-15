@@ -21,23 +21,36 @@
 #define WEECHAT_PLUGIN_TRIGGER_CALLBACK_H
 
 #include <time.h>
+#include <sys/time.h>
+
+struct t_trigger_context
+{
+    unsigned long id;
+    struct t_gui_buffer *buffer;
+    struct t_hashtable *pointers;
+    struct t_hashtable *extra_vars;
+    struct t_weelist *vars_updated;
+    struct timeval start_exec;
+    struct timeval start_check_conditions;
+    struct timeval start_replace_regex;
+    struct timeval start_run_command;
+    struct timeval end_exec;
+};
 
 #define TRIGGER_CALLBACK_CB_INIT(__rc)                          \
     struct t_trigger *trigger;                                  \
-    struct t_hashtable *pointers, *extra_vars;                  \
-    struct t_weelist *vars_updated;                             \
+    struct t_trigger_context ctx;                               \
     int trigger_rc;                                             \
-    pointers = NULL;                                            \
-    extra_vars = NULL;                                          \
-    vars_updated = NULL;                                        \
     (void) data;                                                \
-    (void) vars_updated;                                        \
     (void) trigger_rc;                                          \
     if (!trigger_enabled)                                       \
         return __rc;                                            \
     trigger = (struct t_trigger *)pointer;                      \
     if (!trigger || trigger->hook_running)                      \
         return __rc;                                            \
+    memset (&ctx, 0, sizeof (ctx));                             \
+    if (weechat_trigger_plugin->debug >= 1)                     \
+        gettimeofday (&(ctx.start_exec), NULL);                 \
     trigger->hook_count_cb++;                                   \
     trigger->hook_running = 1;                                  \
     trigger_rc = trigger_return_code[                           \
@@ -45,35 +58,35 @@
             trigger->options[TRIGGER_OPTION_RETURN_CODE])];
 
 #define TRIGGER_CALLBACK_CB_NEW_POINTERS                        \
-    pointers = weechat_hashtable_new (                          \
+    ctx.pointers = weechat_hashtable_new (                      \
         32,                                                     \
         WEECHAT_HASHTABLE_STRING,                               \
         WEECHAT_HASHTABLE_POINTER,                              \
         NULL, NULL);                                            \
-    if (!pointers)                                              \
+    if (!ctx.pointers)                                          \
         goto end;
 
 #define TRIGGER_CALLBACK_CB_NEW_EXTRA_VARS                      \
-    extra_vars = weechat_hashtable_new (                        \
+    ctx.extra_vars = weechat_hashtable_new (                    \
         32,                                                     \
         WEECHAT_HASHTABLE_STRING,                               \
         WEECHAT_HASHTABLE_STRING,                               \
         NULL, NULL);                                            \
-    if (!extra_vars)                                            \
+    if (!ctx.extra_vars)                                        \
         goto end;
 
 #define TRIGGER_CALLBACK_CB_NEW_VARS_UPDATED                    \
-    vars_updated = weechat_list_new ();                         \
-    if (!vars_updated)                                          \
+    ctx.vars_updated = weechat_list_new ();                     \
+    if (!ctx.vars_updated)                                      \
         goto end;
 
 #define TRIGGER_CALLBACK_CB_END(__rc)                           \
-    if (pointers)                                               \
-        weechat_hashtable_free (pointers);                      \
-    if (extra_vars)                                             \
-        weechat_hashtable_free (extra_vars);                    \
-    if (vars_updated)                                           \
-        weechat_list_free (vars_updated);                       \
+    if (ctx.pointers)                                           \
+        weechat_hashtable_free (ctx.pointers);                  \
+    if (ctx.extra_vars)                                         \
+        weechat_hashtable_free (ctx.extra_vars);                \
+    if (ctx.vars_updated)                                       \
+        weechat_list_free (ctx.vars_updated);                   \
     trigger->hook_running = 0;                                  \
     switch (weechat_config_integer (                            \
                 trigger->options[TRIGGER_OPTION_POST_ACTION]))  \

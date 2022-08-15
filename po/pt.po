@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2022-08-13 22:39+0200\n"
+"POT-Creation-Date: 2022-08-15 11:20+0200\n"
 "PO-Revision-Date: 2022-06-18 16:12+0200\n"
 "Last-Translator: Vasco Almeida <vascomalmeida@sapo.pt>\n"
 "Language-Team: Portuguese <>\n"
@@ -14078,9 +14078,16 @@ msgstr "nenhum variável"
 msgid "creating variable"
 msgstr "leitura - variável"
 
-#, c-format
-msgid "%s  running command %s\"%s%s%s\"%s on buffer %s%s%s"
+#, fuzzy, c-format
+#| msgid "%s  running command %s\"%s%s%s\"%s on buffer %s%s%s"
+msgid "%s%lu%s  running command %s\"%s%s%s\"%s on buffer %s%s%s"
 msgstr "%s  a executar o comando %s\"%s%s%s\"%s no buffer %s%s%s"
+
+#, c-format
+msgid ""
+"%s%lu%s  elapsed: init=%.6fs, conditions=%.6fs, regex=%.6fs, command=%.6fs, "
+"total=%.6fs"
+msgstr ""
 
 msgid "Triggers enabled"
 msgstr "Acionadores ativado"
@@ -14572,6 +14579,11 @@ msgstr "cor do texto para o indicador de código de retorno (em /trigger list)"
 
 msgid "text color for post action flag (in /trigger list)"
 msgstr "cor do texto para o indicador de ação posterior (em /trigger list)"
+
+#, fuzzy
+#| msgid "hooks for triggers (for filter in monitor buffer)"
+msgid "text color for trigger context identifier in monitor buffer"
+msgstr "hooks de acionadores (de filtros no buffer monitor)"
 
 msgid "text color for regular expressions"
 msgstr "cor do texto para expressões regulares"

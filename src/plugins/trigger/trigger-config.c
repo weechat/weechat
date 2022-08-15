@@ -43,6 +43,7 @@ struct t_config_option *trigger_config_color_flag_conditions;
 struct t_config_option *trigger_config_color_flag_regex;
 struct t_config_option *trigger_config_color_flag_return_code;
 struct t_config_option *trigger_config_color_flag_post_action;
+struct t_config_option *trigger_config_color_identifier;
 struct t_config_option *trigger_config_color_regex;
 struct t_config_option *trigger_config_color_replace;
 struct t_config_option *trigger_config_color_trigger;
@@ -763,6 +764,12 @@ trigger_config_init ()
         "flag_post_action", "color",
         N_("text color for post action flag (in /trigger list)"),
         NULL, 0, 0, "lightblue", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    trigger_config_color_identifier = weechat_config_new_option (
+        trigger_config_file, ptr_section,
+        "identifier", "color",
+        N_("text color for trigger context identifier in monitor buffer"),
+        NULL, 0, 0, "cyan", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     trigger_config_color_regex = weechat_config_new_option (
         trigger_config_file, ptr_section,

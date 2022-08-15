@@ -1550,6 +1550,12 @@
 ** вредности: име WeeChat боје (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), број terminal боје или алијас; испред боје су дозвољени атрибути (само за боју текста, не и за позадину): „*” за подебљано, „!” за обрнуто, „/” за курзив, „_” за подвучено
 ** подразумевана вредност: `+lightmagenta+`
 
+* [[option_trigger.color.identifier]] *trigger.color.identifier*
+** опис: pass:none[text color for trigger context identifier in monitor buffer]
+** тип: боја
+** вредности: име WeeChat боје (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), број terminal боје или алијас; испред боје су дозвољени атрибути (само за боју текста, не и за позадину): „*” за подебљано, „!” за обрнуто, „/” за курзив, „_” за подвучено
+** подразумевана вредност: `+cyan+`
+
 * [[option_trigger.color.regex]] *trigger.color.regex*
 ** опис: pass:none[боја текста за регуларне изразе]
 ** тип: боја

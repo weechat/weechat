@@ -34,6 +34,7 @@ extern struct t_config_option *trigger_config_color_flag_conditions;
 extern struct t_config_option *trigger_config_color_flag_regex;
 extern struct t_config_option *trigger_config_color_flag_return_code;
 extern struct t_config_option *trigger_config_color_flag_post_action;
+extern struct t_config_option *trigger_config_color_identifier;
 extern struct t_config_option *trigger_config_color_regex;
 extern struct t_config_option *trigger_config_color_replace;
 extern struct t_config_option *trigger_config_color_trigger;

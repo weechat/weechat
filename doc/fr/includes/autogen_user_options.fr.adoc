@@ -1550,6 +1550,12 @@
 ** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné
 ** valeur par défaut: `+lightmagenta+`
 
+* [[option_trigger.color.identifier]] *trigger.color.identifier*
+** description: pass:none[couleur du texte pour l'identifiant de contexte du trigger dans le tampon moniteur]
+** type: couleur
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné
+** valeur par défaut: `+cyan+`
+
 * [[option_trigger.color.regex]] *trigger.color.regex*
 ** description: pass:none[couleur du texte pour les expressions régulières]
 ** type: couleur

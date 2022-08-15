@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2022-08-13 22:39+0200\n"
+"POT-Creation-Date: 2022-08-15 11:20+0200\n"
 "PO-Revision-Date: 2022-07-06 08:29+0400\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -14725,9 +14725,16 @@ msgstr "нема променљиве"
 msgid "creating variable"
 msgstr "креира се променљива"
 
-#, c-format
-msgid "%s  running command %s\"%s%s%s\"%s on buffer %s%s%s"
+#, fuzzy, c-format
+#| msgid "%s  running command %s\"%s%s%s\"%s on buffer %s%s%s"
+msgid "%s%lu%s  running command %s\"%s%s%s\"%s on buffer %s%s%s"
 msgstr "%s  извршава се команда %s„%s%s%s”%s у баферу %s%s%s"
+
+#, c-format
+msgid ""
+"%s%lu%s  elapsed: init=%.6fs, conditions=%.6fs, regex=%.6fs, command=%.6fs, "
+"total=%.6fs"
+msgstr ""
 
 msgid "Triggers enabled"
 msgstr "Окидачи су укључени"
@@ -15323,6 +15330,11 @@ msgstr "боја текста за заставицу повратног код�
 
 msgid "text color for post action flag (in /trigger list)"
 msgstr "боја текста за заставицу пост акције (у /trigger list)"
+
+#, fuzzy
+#| msgid "hooks for triggers (for filter in monitor buffer)"
+msgid "text color for trigger context identifier in monitor buffer"
+msgstr "куке за окидаче (за филтере у монитор баферу)"
 
 msgid "text color for regular expressions"
 msgstr "боја текста за регуларне изразе"

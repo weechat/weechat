@@ -26,6 +26,7 @@
 #include "../weechat-plugin.h"
 #include "trigger.h"
 #include "trigger-buffer.h"
+#include "trigger-callback.h"
 #include "trigger-config.h"
 
 
@@ -250,12 +251,14 @@ trigger_buffer_hashtable_map_cb (void *data,
                                  struct t_hashtable *hashtable,
                                  const void *key, const void *value)
 {
+    struct t_trigger_context *context;
     const char *value_type;
     char *value_no_color;
 
     /* make C compiler happy */
-    (void) data;
     (void) hashtable;
+
+    context = (struct t_trigger_context *)data;
 
     value_type = weechat_hashtable_get_string (hashtable, "type_values");
     if (!value_type)
@@ -267,7 +270,9 @@ trigger_buffer_hashtable_map_cb (void *data,
             weechat_string_remove_color ((const char *)value, NULL) : NULL;
         weechat_printf_date_tags (
             trigger_buffer, 0, "no_trigger",
-            "\t    %s: %s\"%s%s%s\"",
+            "%s%lu\t    %s: %s\"%s%s%s\"",
+            weechat_color (weechat_config_string (trigger_config_color_identifier)),
+            context->id,
             (char *)key,
             weechat_color ("chat_delimiters"),
             weechat_color ("reset"),
@@ -278,10 +283,13 @@ trigger_buffer_hashtable_map_cb (void *data,
     }
     else if (strcmp (value_type, "pointer") == 0)
     {
-        weechat_printf_date_tags (trigger_buffer, 0, "no_trigger",
-                                  "\t    %s: 0x%lx",
-                                  (char *)key,
-                                  value);
+        weechat_printf_date_tags (
+            trigger_buffer, 0, "no_trigger",
+            "%s%lu\t    %s: 0x%lx",
+            weechat_color (weechat_config_string (trigger_config_color_identifier)),
+            context->id,
+            (char *)key,
+            value);
     }
 }
 
@@ -290,15 +298,22 @@ trigger_buffer_hashtable_map_cb (void *data,
  */
 
 void
-trigger_buffer_display_hashtable (const char *name,
+trigger_buffer_display_hashtable (struct t_trigger_context *context,
+                                  const char *name,
                                   struct t_hashtable *hashtable)
 {
     if (!trigger_buffer)
         return;
 
-    weechat_printf_date_tags (trigger_buffer, 0, "no_trigger", "  %s:", name);
+    weechat_printf_date_tags (
+        trigger_buffer, 0, "no_trigger",
+        "%s%lu\t  %s:",
+        weechat_color (weechat_config_string (trigger_config_color_identifier)),
+        context->id,
+        name);
 
-    weechat_hashtable_map (hashtable, &trigger_buffer_hashtable_map_cb, NULL);
+    weechat_hashtable_map (hashtable,
+                           &trigger_buffer_hashtable_map_cb, context);
 }
 
 /*
@@ -311,9 +326,7 @@ trigger_buffer_display_hashtable (const char *name,
 
 int
 trigger_buffer_display_trigger (struct t_trigger *trigger,
-                                struct t_gui_buffer *buffer,
-                                struct t_hashtable *pointers,
-                                struct t_hashtable *extra_vars)
+                                struct t_trigger_context *context)
 {
     if (!trigger_buffer)
         return 0;
@@ -324,26 +337,37 @@ trigger_buffer_display_trigger (struct t_trigger *trigger,
 
     weechat_printf_date_tags (
         trigger_buffer, 0, "no_trigger",
-        "%s\t%s%s %s(%s%s%s)",
+        "--> %s%lu\t%s: %s%s %s(%s%s%s)%s",
+        weechat_color (weechat_config_string (trigger_config_color_identifier)),
+        context->id,
         trigger_hook_type_string[weechat_config_integer (trigger->options[TRIGGER_OPTION_HOOK])],
         weechat_color (weechat_config_string (trigger_config_color_trigger)),
         trigger->name,
         weechat_color ("chat_delimiters"),
         weechat_color ("reset"),
         weechat_config_string (trigger->options[TRIGGER_OPTION_ARGUMENTS]),
-        weechat_color ("chat_delimiters"));
-    if (buffer)
+        weechat_color ("chat_delimiters"),
+        weechat_color ("reset"));
+    if (context->buffer)
     {
         weechat_printf_date_tags (
             trigger_buffer, 0, "no_trigger",
-            "\t  buffer: %s%s",
+            "%s%lu\t  buffer: %s%s",
+            weechat_color (weechat_config_string (trigger_config_color_identifier)),
+            context->id,
             weechat_color ("chat_buffer"),
-            weechat_buffer_get_string (buffer, "full_name"));
+            weechat_buffer_get_string (context->buffer, "full_name"));
     }
-    if (pointers)
-        trigger_buffer_display_hashtable ("pointers", pointers);
-    if (extra_vars)
-        trigger_buffer_display_hashtable ("extra_vars", extra_vars);
+    if (context->pointers)
+    {
+        trigger_buffer_display_hashtable (context,
+                                          "pointers", context->pointers);
+    }
+    if (context->extra_vars)
+    {
+        trigger_buffer_display_hashtable (context,
+                                          "extra_vars", context->extra_vars);
+    }
 
     return 1;
 }
