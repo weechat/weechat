@@ -529,7 +529,11 @@ buflist_config_init ()
     buflist_config_look_enabled = weechat_config_new_option (
         buflist_config_file, ptr_section,
         "enabled", "boolean",
-        N_("enable buflist"),
+        N_("enable buflist; it is recommended to use this option instead of "
+           "just hiding the bar because it also removes some internal hooks "
+           "that are not needed any more when the bar is hidden; you can "
+           "also use the command \"/buflist toggle\" or use the default key "
+           "alt+shift+b"),
         NULL, 0, 0, "on", NULL, 0,
         NULL, NULL, NULL,
         &buflist_config_change_enabled, NULL, NULL,

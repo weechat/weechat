@@ -1783,7 +1783,7 @@
 ** valeur par défaut: `+"${buffer.hidden}==0"+`
 
 * [[option_buflist.look.enabled]] *buflist.look.enabled*
-** description: pass:none[activer buflist]
+** description: pass:none[activer buflist ; il est recommandé d'utiliser cette option plutôt que de juste cacher la barre car cela supprime également des hooks internes qui ne sont plus nécessaires lorsque la barre est cachée ; vous pouvez aussi utiliser la commande "/buflist toggle" ou la touche par défaut key alt+shift+b]
 ** type: booléen
 ** valeurs: on, off
 ** valeur par défaut: `+on+`

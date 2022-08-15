@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2022-08-15 11:20+0200\n"
+"POT-Creation-Date: 2022-08-15 14:42+0200\n"
 "PO-Revision-Date: 2022-06-18 16:12+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -6052,8 +6052,12 @@ msgstr ""
 "\"${buffer.hidden}==0 && ((${type}!=server && ${buffer.full_name}!=core."
 "weechat) || ${buffer.active}==1)\""
 
-msgid "enable buflist"
-msgstr "buflist を有効化します"
+msgid ""
+"enable buflist; it is recommended to use this option instead of just hiding "
+"the bar because it also removes some internal hooks that are not needed any "
+"more when the bar is hidden; you can also use the command \"/buflist "
+"toggle\" or use the default key alt+shift+b"
+msgstr ""
 
 msgid ""
 "if enabled, clicks with left/right buttons on the line with current buffer "
@@ -15243,6 +15247,9 @@ msgstr "%s%s: \"%s\" のタイムアウト %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: 接続できません: 未定義のエラー (%d)"
+
+#~ msgid "enable buflist"
+#~ msgstr "buflist を有効化します"
 
 #, fuzzy, c-format
 #~ msgid "%sReal name of %s%s%s has been set to \"%s\""
