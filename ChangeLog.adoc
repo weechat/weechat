@@ -24,6 +24,7 @@ New features::
   * core: add option weechat.look.highlight_disable_regex and buffer property "highlight_disable_regex" (issue #1798)
   * api: rename function string_build_with_split_string to string_rebuild_split_string, add arguments "index_start" and "index_end"
   * api: add info "uptime_current"
+  * api: add function crypto_hash_file
   * buflist: add variable `${hotlist_priority_number}` (integer version of `${hotlist_priority}`)
   * irc: display SETNAME command in channels and private buffers, add options irc.color.message_setname and irc.look.smart_filter_setname (issue #1805)
   * trigger: add elapsed time for trigger execution on monitor buffer when trigger debug is set, add option trigger.color.identifier (issue #1806)

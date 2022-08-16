@@ -23,6 +23,8 @@
 
 extern "C"
 {
+#include <unistd.h>
+#include <stdio.h>
 #include <string.h>
 #include <ctype.h>
 #include <gcrypt.h>
@@ -105,6 +107,27 @@ extern "C"
     LONGS_EQUAL(__result_code,                                          \
                 weecrypto_hash (__data, __data_size, __hash_algo,       \
                                 hash, &hash_size));                     \
+    if (__result_hash)                                                  \
+    {                                                                   \
+        MEMCMP_EQUAL(hash_expected, hash, hash_size);                   \
+    }                                                                   \
+    LONGS_EQUAL(hash_size_expected, hash_size);
+
+#define WEE_CHECK_HASH_FILE(__result_code, __result_hash,               \
+                            __filename, __hash_algo)                    \
+    if (__result_hash)                                                  \
+    {                                                                   \
+        hash_size_expected = string_base16_decode (__result_hash,       \
+                                                   hash_expected);      \
+    }                                                                   \
+    else                                                                \
+    {                                                                   \
+        hash_size_expected = 0;                                         \
+    }                                                                   \
+    hash_size = -1;                                                     \
+    LONGS_EQUAL(__result_code,                                          \
+                weecrypto_hash_file (__filename, __hash_algo,           \
+                                     hash, &hash_size));                \
     if (__result_hash)                                                  \
     {                                                                   \
         MEMCMP_EQUAL(hash_expected, hash, hash_size);                   \
@@ -223,8 +246,8 @@ TEST(CoreCrypto, Hash)
 
     data_size = strlen (data);
 
-    WEE_CHECK_HASH(0, NULL, NULL, 0, 0);
-    WEE_CHECK_HASH(0, NULL, "test", 0, 0);
+    WEE_CHECK_HASH(0, NULL, NULL, 0, GCRY_MD_SHA256);
+    WEE_CHECK_HASH(0, NULL, "test", 0, GCRY_MD_SHA256);
 
     LONGS_EQUAL (0, weecrypto_hash (data, data_size, GCRY_MD_SHA256,
                                     NULL, NULL));
@@ -242,6 +265,48 @@ TEST(CoreCrypto, Hash)
     WEE_CHECK_HASH(1, DATA_HASH_SHA3_384, data, data_size, GCRY_MD_SHA3_384);
     WEE_CHECK_HASH(1, DATA_HASH_SHA3_512, data, data_size, GCRY_MD_SHA3_512);
 #endif
+}
+
+/*
+ * Tests functions:
+ *   weecrypto_hash_file
+ */
+
+TEST(CoreCrypto, HashFile)
+{
+    const char *data = DATA_HASH_MSG;
+    char *filename, hash_expected[4096], hash[4096];
+    FILE *file;
+    int hash_size_expected, hash_size;
+
+    filename = string_eval_path_home ("${weechat_data_dir}/test_file.txt",
+                                      NULL, NULL, NULL);
+    file = fopen (filename, "w");
+    fwrite (data, 1, strlen (data), file);
+    fflush (file);
+    fclose (file);
+
+    WEE_CHECK_HASH_FILE(0, NULL, NULL, GCRY_MD_SHA256);
+
+    LONGS_EQUAL (0, weecrypto_hash_file (filename, GCRY_MD_SHA256,
+                                         NULL, NULL));
+
+    WEE_CHECK_HASH_FILE(1, DATA_HASH_CRC32, filename, GCRY_MD_CRC32);
+    WEE_CHECK_HASH_FILE(1, DATA_HASH_MD5, filename, GCRY_MD_MD5);
+    WEE_CHECK_HASH_FILE(1, DATA_HASH_SHA1, filename, GCRY_MD_SHA1);
+    WEE_CHECK_HASH_FILE(1, DATA_HASH_SHA224, filename, GCRY_MD_SHA224);
+    WEE_CHECK_HASH_FILE(1, DATA_HASH_SHA256, filename, GCRY_MD_SHA256);
+    WEE_CHECK_HASH_FILE(1, DATA_HASH_SHA384, filename, GCRY_MD_SHA384);
+    WEE_CHECK_HASH_FILE(1, DATA_HASH_SHA512, filename, GCRY_MD_SHA512);
+#if GCRYPT_VERSION_NUMBER >= 0x010700
+    WEE_CHECK_HASH_FILE(1, DATA_HASH_SHA3_224, filename, GCRY_MD_SHA3_224);
+    WEE_CHECK_HASH_FILE(1, DATA_HASH_SHA3_256, filename, GCRY_MD_SHA3_256);
+    WEE_CHECK_HASH_FILE(1, DATA_HASH_SHA3_384, filename, GCRY_MD_SHA3_384);
+    WEE_CHECK_HASH_FILE(1, DATA_HASH_SHA3_512, filename, GCRY_MD_SHA3_512);
+#endif
+
+    unlink (filename);
+    free (filename);
 }
 
 /*

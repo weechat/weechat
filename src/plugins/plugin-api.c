@@ -128,6 +128,36 @@ plugin_api_crypto_hash (const void *data, int data_size, const char *hash_algo,
 }
 
 /*
+ * Computes hash of a file using the given algorithm.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
+ */
+
+int
+plugin_api_crypto_hash_file (const char *filename, const char *hash_algo,
+                             void *hash, int *hash_size)
+{
+    int algo;
+
+    if (!hash)
+        return 0;
+
+    if (hash_size)
+        *hash_size = 0;
+
+    if (!filename || !filename[0] || !hash_algo)
+        return 0;
+
+    algo = weecrypto_get_hash_algo (hash_algo);
+    if (algo == GCRY_MD_NONE)
+        return 0;
+
+    return weecrypto_hash_file (filename, algo, hash, hash_size);
+}
+
+/*
  * Computes PKCS#5 Passphrase Based Key Derivation Function number 2 (PBKDF2)
  * hash of data.
  *

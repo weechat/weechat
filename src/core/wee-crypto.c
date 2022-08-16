@@ -26,6 +26,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdint.h>
+#include <sys/stat.h>
 #include <time.h>
 #include <math.h>
 #include <gcrypt.h>
@@ -159,6 +160,105 @@ hash_end:
     return rc;
 }
 
+/*
+ * Computes hash of file using the given hash algorithm.
+ *
+ * The hash size depends on the algorithm, common ones are:
+ *
+ *   GCRY_MD_CRC32      32 bits ==  4 bytes
+ *   GCRY_MD_MD5       128 bits == 16 bytes
+ *   GCRY_MD_SHA1      160 bits == 20 bytes
+ *   GCRY_MD_SHA224    224 bits == 28 bytes
+ *   GCRY_MD_SHA256    256 bits == 32 bytes
+ *   GCRY_MD_SHA384    384 bits == 48 bytes
+ *   GCRY_MD_SHA512    512 bits == 64 bytes
+ *   GCRY_MD_SHA3_224  224 bits == 28 bytes (libgcrypt ≥ 1.7.0)
+ *   GCRY_MD_SHA3_256  256 bits == 32 bytes (libgcrypt ≥ 1.7.0)
+ *   GCRY_MD_SHA3_384  384 bits == 48 bytes (libgcrypt ≥ 1.7.0)
+ *   GCRY_MD_SHA3_512  512 bits == 64 bytes (libgcrypt ≥ 1.7.0)
+ *
+ * The result hash is stored in "hash" (the buffer must be large enough).
+ *
+ * If hash_size is not NULL, the length of hash is stored in *hash_size
+ * (in bytes).
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
+ */
+
+int
+weecrypto_hash_file (const char *filename, int hash_algo,
+                     void *hash, int *hash_size)
+{
+    gcry_md_hd_t *hd_md;
+    struct stat st;
+    FILE *file;
+    size_t num_read;
+    int rc, hd_md_opened, algo_size;
+    unsigned char *ptr_hash;
+    char buffer[4096];
+
+    rc = 0;
+    hd_md = NULL;
+    hd_md_opened = 0;
+    file = NULL;
+
+    if (!hash)
+        goto hash_end;
+
+    if (hash_size)
+        *hash_size = 0;
+
+    if (!filename || !filename[0] || !hash)
+        goto hash_end;
+
+    if (stat (filename, &st) == -1)
+        goto hash_end;
+
+    file = fopen (filename, "r");
+    if (!file)
+        goto hash_end;
+
+    hd_md = malloc (sizeof (gcry_md_hd_t));
+    if (!hd_md)
+        goto hash_end;
+
+    if (gcry_md_open (hd_md, hash_algo, 0) != 0)
+        goto hash_end;
+
+    hd_md_opened = 1;
+
+    while (!feof (file))
+    {
+        num_read = fread (buffer, 1, sizeof (buffer), file);
+        if (num_read == 0)
+            break;
+        gcry_md_write (*hd_md, buffer, num_read);
+    }
+
+    ptr_hash = gcry_md_read (*hd_md, hash_algo);
+    if (!ptr_hash)
+        goto hash_end;
+
+    algo_size = gcry_md_get_algo_dlen (hash_algo);
+    memcpy (hash, ptr_hash, algo_size);
+    if (hash_size)
+        *hash_size = algo_size;
+
+    rc = 1;
+
+hash_end:
+    if (hd_md)
+    {
+        if (hd_md_opened)
+            gcry_md_close (*hd_md);
+        free (hd_md);
+    }
+    if (file)
+        fclose (file);
+    return rc;
+}
 /*
  * Computes PKCS#5 Passphrase Based Key Derivation Function number 2 (PBKDF2)
  * hash of data.

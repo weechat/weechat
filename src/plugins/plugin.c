@@ -665,6 +665,7 @@ plugin_load (const char *filename, int init_plugin, int argc, char **argv)
         new_plugin->utf8_strndup = &utf8_strndup;
 
         new_plugin->crypto_hash = &plugin_api_crypto_hash;
+        new_plugin->crypto_hash_file = &plugin_api_crypto_hash_file;
         new_plugin->crypto_hash_pbkdf2 = &plugin_api_crypto_hash_pbkdf2;
         new_plugin->crypto_hmac = &plugin_api_crypto_hmac;
 

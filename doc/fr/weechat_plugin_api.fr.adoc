@@ -3812,6 +3812,50 @@ rc = weechat_crypto_hash (data, strlen (data), "sha256", hash, &hash_size);
 [NOTE]
 Cette fonction n'est pas disponible dans l'API script.
 
+==== crypto_hash_file
+
+_WeeChat ≥ 3.7._
+
+Calculer le hachage d'un fichier.
+
+Prototype :
+
+[source,c]
+----
+int weechat_crypto_hash_file (const char *filename, const char *hash_algo,
+                              void *hash, int *hash_size);
+----
+
+Paramètres :
+
+* _filename_ : chemin et nom du fichier
+* _hash_algo_ : l'algorithme de hachage, voir le tableau de la fonction
+  <<crypto_hash_algorithms,crypto_hash>>
+* _hash_ : pointeur vers la variable de hachage, qui est utilisée pour stocker
+  le résultat du hachage (le tampon doit être suffisamment grand, selon
+  l'algorithme, voir le tableau de la fonction
+  <<crypto_hash_algorithms,crypto_hash>>)
+* _hash_size_ : pointeur vers une variable utiliser pour stocker la longueur
+  du résultat du hachage (en octets) (peut être NULL)
+
+Valeur de retour :
+
+* 1 si OK, 0 si erreur
+
+Exemple en C :
+
+[source,c]
+----
+char hash[256 / 8];
+int rc, hash_size;
+rc = weechat_crypto_hash_file ("/chemin/vers/fichier", "sha256", hash, &hash_size);
+/* rc == 1, hash_size == 32 et hash est un tampon avec :
+   71 c4 80 df 93 d6 ae 2f 1e fa d1 44 7c 66 c9 52 5e 31 62 18 cf 51 fc 8d 9e d8 32 f2 da f1 8b 73 */
+----
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
 ==== crypto_hash_pbkdf2
 
 _WeeChat ≥ 2.8._
