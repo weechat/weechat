@@ -41,6 +41,7 @@ char *alias_default[][3] =
   { "CLOSE",   "buffer close",         NULL            },
   { "CHAT",    "dcc chat",             NULL            },
   { "EXIT",    "quit",                 NULL            },
+  { "GHOST",   "msg NickServ GHOST $1 $2", NULL        },
   { "IG",      "ignore",               NULL            },
   { "J",       "join",                 NULL            },
   { "K",       "kick",                 NULL            },
