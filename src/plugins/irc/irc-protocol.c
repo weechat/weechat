@@ -1361,14 +1361,16 @@ IRC_PROTOCOL_CALLBACK(error)
  * command "ERROR").
  *
  * Command looks like:
+ *   401 nick nick2 :No such nick/channel
+ *   402 nick server :No such server
  *   404 nick #channel :Cannot send to channel
  */
 
 IRC_PROTOCOL_CALLBACK(generic_error)
 {
     int arg_error;
-    char *str_error;
-    const char *pos_chan_nick;
+    char *str_error, str_target[512];
+    const char *pos_channel, *pos_nick;
     struct t_irc_channel *ptr_channel;
     struct t_gui_buffer *ptr_buffer;
 
@@ -1377,17 +1379,35 @@ IRC_PROTOCOL_CALLBACK(generic_error)
     arg_error = (irc_server_strcasecmp (server, params[0], server->nick) == 0) ?
         1 : 0;
 
-    pos_chan_nick = NULL;
-    if (params[arg_error + 1]
-        && irc_channel_is_channel (server, params[arg_error]))
-    {
-        pos_chan_nick = params[arg_error];
-        arg_error++;
-    }
-
+    pos_channel = NULL;
     ptr_channel = NULL;
-    if (pos_chan_nick)
-        ptr_channel = irc_channel_search (server, pos_chan_nick);
+    pos_nick = NULL;
+    str_target[0] = '\0';
+
+    if (params[arg_error + 1])
+    {
+        if (irc_channel_is_channel (server, params[arg_error]))
+        {
+            pos_channel = params[arg_error];
+            ptr_channel = irc_channel_search (server, pos_channel);
+            snprintf (str_target, sizeof (str_target),
+                      "%s%s%s: ",
+                      IRC_COLOR_CHAT_CHANNEL,
+                      pos_channel,
+                      IRC_COLOR_RESET);
+            arg_error++;
+        }
+        else if (strcmp (params[arg_error], "*") != 0)
+        {
+            pos_nick = params[arg_error];
+            snprintf (str_target, sizeof (str_target),
+                      "%s%s%s: ",
+                      irc_nick_color_for_msg (server, 1, NULL, pos_nick),
+                      pos_nick,
+                      IRC_COLOR_RESET);
+            arg_error++;
+        }
+    }
 
     ptr_buffer = (ptr_channel) ? ptr_channel->buffer : server->buffer;
 
@@ -1395,21 +1415,15 @@ IRC_PROTOCOL_CALLBACK(generic_error)
 
     weechat_printf_date_tags (
         irc_msgbuffer_get_target_buffer (
-            server, NULL, command,
+            server, pos_nick, command,
             ((strcmp (command, "401") == 0)
              || (strcmp (command, "402") == 0)) ? "whois" : NULL,
             ptr_buffer),
         date,
         irc_protocol_tags (command, tags, NULL, NULL, NULL),
-        "%s%s%s%s%s%s",
+        "%s%s%s",
         weechat_prefix ("network"),
-        (ptr_channel && pos_chan_nick
-         && (irc_server_strcasecmp (server, pos_chan_nick,
-                                    ptr_channel->name) == 0)) ?
-        IRC_COLOR_CHAT_CHANNEL : "",
-        (pos_chan_nick) ? pos_chan_nick : "",
-        IRC_COLOR_RESET,
-        (pos_chan_nick) ? ": " : "",
+        str_target,
         str_error);
 
     if (str_error)

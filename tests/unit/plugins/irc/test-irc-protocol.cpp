@@ -3717,6 +3717,71 @@ TEST(IrcProtocolWithServer, 368)
 
 /*
  * Tests functions:
+ *   irc_protocol_cb_401 (no such nick/channel)
+ */
+
+TEST(IrcProtocolWithServer, 401)
+{
+    SRV_INIT_JOIN;
+
+    /* not enough parameters */
+    RECV(":server 401");
+    CHECK_ERROR_PARAMS("401", 0, 2);
+    RECV(":server 401 alice");
+    CHECK_ERROR_PARAMS("401", 1, 2);
+
+    RECV(":server 401 alice bob");
+    CHECK_SRV("-- bob");
+    RECV(":server 401 alice bob :No such nick/channel");
+    CHECK_SRV("-- bob: No such nick/channel");
+}
+
+/*
+ * Tests functions:
+ *   irc_protocol_cb_402 (no such server)
+ */
+
+TEST(IrcProtocolWithServer, 402)
+{
+    SRV_INIT_JOIN;
+
+    /* not enough parameters */
+    RECV(":server 402");
+    CHECK_ERROR_PARAMS("402", 0, 2);
+    RECV(":server 402 alice");
+    CHECK_ERROR_PARAMS("402", 1, 2);
+
+    RECV(":server 402 alice server");
+    CHECK_SRV("-- server");
+    RECV(":server 402 alice server :No such server");
+    CHECK_SRV("-- server: No such server");
+}
+
+/*
+ * Tests functions:
+ *   irc_protocol_cb_404 (cannot send to channel)
+ */
+
+TEST(IrcProtocolWithServer, 404)
+{
+    SRV_INIT_JOIN;
+
+    /* not enough parameters */
+    RECV(":server 404");
+    CHECK_ERROR_PARAMS("404", 0, 2);
+    RECV(":server 404 alice");
+    CHECK_ERROR_PARAMS("404", 1, 2);
+
+    RECV(":server 404 alice #test");
+    CHECK_SRV("-- #test");
+    RECV(":server 404 alice #test :Cannot send to channel");
+    CHECK_CHAN("-- #test: Cannot send to channel");
+    RECV(":server 404 alice #test2 :Cannot send to channel");
+    CHECK_SRV("-- #test2: Cannot send to channel");
+}
+
+/*
+ * Tests functions:
  *   irc_protocol_cb_432 (erroneous nickname, not connected)
  */
 
