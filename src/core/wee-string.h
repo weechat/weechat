@@ -36,7 +36,7 @@ struct t_string_dyn
 
 struct t_hashtable;
 
-extern char *string_strndup (const char *string, int length);
+extern char *string_strndup (const char *string, int bytes);
 extern char *string_cut (const char *string, int length, int count_suffix,
                          int screen, const char *cut_suffix);
 extern char *string_reverse (const char *string);

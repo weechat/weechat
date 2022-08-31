@@ -284,7 +284,7 @@ struct t_weechat_plugin
     char *(*iconv_from_internal) (const char *charset, const char *string);
     const char *(*gettext) (const char *string);
     const char *(*ngettext) (const char *single, const char *plural, int count);
-    char *(*strndup) (const char *string, int length);
+    char *(*strndup) (const char *string, int bytes);
     char *(*string_cut) (const char *string, int length, int count_suffix,
                          int screen, const char *cut_suffix);
     void (*string_tolower) (char *string);
@@ -1213,8 +1213,8 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
 #define weechat_gettext(string) (weechat_plugin->gettext)(string)
 #define weechat_ngettext(single,plural,number)                          \
     (weechat_plugin->ngettext)(single, plural, number)
-#define weechat_strndup(__string, __length)                             \
-    (weechat_plugin->strndup)(__string, __length)
+#define weechat_strndup(__string, __bytes)                              \
+    (weechat_plugin->strndup)(__string, __bytes)
 #define weechat_string_cut(__string, __length, __count_suffix,          \
                            __screen, __cut_suffix)                      \
     (weechat_plugin->string_cut)(__string, __length, __count_suffix,    \
