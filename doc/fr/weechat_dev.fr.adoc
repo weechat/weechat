@@ -457,6 +457,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |             test-relay-auth.cpp     | Tests : authentification des clients.
 |          xfer/                      | Racine des tests unitaires pour l'extension Xfer.
 |             test-xfer-file.cpp      | Tests : fonctions sur les fichiers.
+|             test-xfer-network.cpp   | Tests : fonctions réseau.
 |===
 
 [[documentation_translations]]

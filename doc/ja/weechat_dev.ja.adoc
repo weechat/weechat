@@ -510,6 +510,8 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |          xfer/                      | Root of unit tests for Xfer plugin.
 // TRANSLATION MISSING
 |             test-xfer-file.cpp      | Tests: file functions.
+// TRANSLATION MISSING
+|             test-xfer-network.cpp   | Tests: network functions.
 |===
 
 [[documentation_translations]]

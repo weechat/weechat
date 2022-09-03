@@ -108,7 +108,8 @@ tests_typing = unit/plugins/typing/test-typing.cpp \
 endif
 
 if PLUGIN_XFER
-tests_xfer = unit/plugins/xfer/test-xfer-file.cpp
+tests_xfer = unit/plugins/xfer/test-xfer-file.cpp \
+             unit/plugins/xfer/test-xfer-network.cpp
 endif
 
 lib_weechat_unit_tests_plugins_la_SOURCES = unit/plugins/test-plugins.cpp \

@@ -51,6 +51,7 @@ Bug fixes::
   * xfer: fix crash when closing DCC chat buffer
   * xfer: disconnect all active DCC chats and files on `/upgrade`
   * xfer: fix refresh of xfer buffer after `/upgrade`
+  * xfer: fix DCC file receive on Termux (issue #1811)
 
 Tests::
 

@@ -28,10 +28,7 @@
 #include <sys/stat.h>
 #include <time.h>
 #include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/nameser.h>
 #include <netdb.h>
-#include <resolv.h>
 #include <gcrypt.h>
 #include <arpa/inet.h>
 
@@ -971,59 +968,6 @@ xfer_free_all ()
 }
 
 /*
- * Resolves address.
- *
- * Returns:
- *   1: OK
- *   0: error
- */
-
-int
-xfer_resolve_addr (const char *str_address, const char *str_port,
-                   struct sockaddr *addr, socklen_t *addr_len, int ai_flags)
-{
-    struct addrinfo *ainfo, hints;
-    int rc;
-
-    memset (&hints, 0, sizeof (struct addrinfo));
-    hints.ai_flags = ai_flags;
-    hints.ai_family = AF_UNSPEC;
-    hints.ai_socktype = SOCK_STREAM;
-    hints.ai_protocol = 0;
-    hints.ai_canonname = NULL;
-    hints.ai_addr = NULL;
-    hints.ai_next = NULL;
-
-    res_init ();
-    rc = getaddrinfo (str_address, str_port, &hints, &ainfo);
-    if ((rc == 0) && ainfo && ainfo->ai_addr)
-    {
-        if (ainfo->ai_addrlen > *addr_len)
-        {
-            weechat_printf (NULL,
-                            _("%s%s: address \"%s\" resolved to a larger "
-                              "sockaddr than expected"),
-                            weechat_prefix ("error"), XFER_PLUGIN_NAME,
-                            str_address);
-            freeaddrinfo (ainfo);
-            return 0;
-        }
-        memcpy (addr, ainfo->ai_addr, ainfo->ai_addrlen);
-        *addr_len = ainfo->ai_addrlen;
-        freeaddrinfo (ainfo);
-        return 1;
-    }
-
-    weechat_printf (NULL,
-                    _("%s%s: invalid address \"%s\": error %d %s"),
-                    weechat_prefix ("error"), XFER_PLUGIN_NAME,
-                    str_address, rc, gai_strerror (rc));
-    if ((rc == 0) && ainfo)
-        freeaddrinfo (ainfo);
-    return 0;
-}
-
-/*
  * Callback for signal "xfer_add".
  */
 
@@ -1208,9 +1152,9 @@ xfer_add_cb (const void *pointer, void *data,
         snprintf (str_port_temp, sizeof (str_port_temp), "%d", port);
         str_port = str_port_temp;
         length = sizeof (addr);
-        if (!xfer_resolve_addr (str_address, str_port,
-                                (struct sockaddr*)&addr, &length,
-                                AI_NUMERICSERV | AI_NUMERICHOST))
+        if (!xfer_network_resolve_addr (str_address, str_port,
+                                        (struct sockaddr*)&addr, &length,
+                                        AI_NUMERICSERV | AI_NUMERICHOST))
         {
             goto error;
         }
@@ -1227,9 +1171,10 @@ xfer_add_cb (const void *pointer, void *data,
             str_address = weechat_config_string (xfer_config_network_own_ip);
             length = sizeof (own_ip_addr);
 
-            if (!xfer_resolve_addr (str_address, NULL,
-                                    (struct sockaddr*)&own_ip_addr, &length,
-                                    AI_NUMERICSERV))
+            if (!xfer_network_resolve_addr (str_address, NULL,
+                                            (struct sockaddr*)&own_ip_addr,
+                                            &length,
+                                            AI_NUMERICSERV))
             {
                 goto error;
             }
@@ -1245,9 +1190,9 @@ xfer_add_cb (const void *pointer, void *data,
             /* no own_ip, so bind_addr's family comes from irc connection  */
             str_address = weechat_infolist_string (infolist, "local_address");
             length = sizeof (addr);
-            if (!xfer_resolve_addr (str_address, NULL,
-                                    (struct sockaddr*)&addr, &length,
-                                    AI_NUMERICSERV | AI_NUMERICHOST))
+            if (!xfer_network_resolve_addr (str_address, NULL,
+                                            (struct sockaddr*)&addr, &length,
+                                            AI_NUMERICSERV | AI_NUMERICHOST))
             {
                 goto error;
             }

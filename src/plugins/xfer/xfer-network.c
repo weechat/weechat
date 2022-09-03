@@ -29,9 +29,11 @@
 #include <sys/wait.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
+#include <arpa/nameser.h>
+#include <netdb.h>
+#include <resolv.h>
 #include <signal.h>
 #include <time.h>
-#include <netdb.h>
 
 #include "../weechat-plugin.h"
 #include "xfer.h"
@@ -41,6 +43,110 @@
 #include "xfer-dcc.h"
 #include "xfer-file.h"
 
+
+/*
+ * Converts integer address (as string) to IPv4 string using notation
+ * "a.b.c.d".
+ *
+ * For example: "3232235778" -> "192.168.1.2"
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+xfer_network_convert_integer_to_ipv4 (const char *str_address)
+{
+    char *error, result[64];
+    long number;
+
+    if (!str_address || !str_address[0])
+        return NULL;
+
+    number = strtol (str_address, &error, 10);
+    if (!error || error[0] || (number <= 0))
+        return NULL;
+
+    snprintf (result, sizeof (result),
+              "%ld.%ld.%ld.%ld",
+              (number >> 24) & 0xFF,
+              (number >> 16) & 0xFF,
+              (number >> 8) & 0xFF,
+              number & 0xFF);
+
+    return strdup (result);
+}
+
+/*
+ * Resolves address.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
+ */
+
+int
+xfer_network_resolve_addr (const char *str_address, const char *str_port,
+                           struct sockaddr *addr, socklen_t *addr_len,
+                           int ai_flags)
+{
+    struct addrinfo *ainfo, hints;
+    char *converted_address;
+    int rc;
+
+    memset (&hints, 0, sizeof (struct addrinfo));
+    hints.ai_flags = ai_flags;
+    hints.ai_family = AF_UNSPEC;
+    hints.ai_socktype = SOCK_STREAM;
+    hints.ai_protocol = 0;
+    hints.ai_canonname = NULL;
+    hints.ai_addr = NULL;
+    hints.ai_next = NULL;
+
+    res_init ();
+
+    rc = getaddrinfo (str_address, str_port, &hints, &ainfo);
+
+    /*
+     * workaround for termux where an IP address as integer is not supported:
+     * it returns an error EAI_NONAME (8); in this case we manually convert
+     * the integer to IPv4 string, for example: 3232235778 -> 192.168.1.2
+     */
+    if (rc == EAI_NONAME)
+    {
+        converted_address = xfer_network_convert_integer_to_ipv4 (str_address);
+        if (converted_address)
+        {
+            rc = getaddrinfo (converted_address, str_port, &hints, &ainfo);
+            free (converted_address);
+        }
+    }
+
+    if ((rc == 0) && ainfo && ainfo->ai_addr)
+    {
+        if (ainfo->ai_addrlen > *addr_len)
+        {
+            weechat_printf (NULL,
+                            _("%s%s: address \"%s\" resolved to a larger "
+                              "sockaddr than expected"),
+                            weechat_prefix ("error"), XFER_PLUGIN_NAME,
+                            str_address);
+            freeaddrinfo (ainfo);
+            return 0;
+        }
+        memcpy (addr, ainfo->ai_addr, ainfo->ai_addrlen);
+        *addr_len = ainfo->ai_addrlen;
+        freeaddrinfo (ainfo);
+        return 1;
+    }
+
+    weechat_printf (NULL,
+                    _("%s%s: invalid address \"%s\": error %d %s"),
+                    weechat_prefix ("error"), XFER_PLUGIN_NAME,
+                    str_address, rc, gai_strerror (rc));
+    if ((rc == 0) && ainfo)
+        freeaddrinfo (ainfo);
+    return 0;
+}
 
 /*
  * Creates pipe for communication with child process.
