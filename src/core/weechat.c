@@ -445,7 +445,6 @@ weechat_startup_message ()
         gui_chat_printf (NULL, "---");
         gui_chat_printf (NULL, "");
     }
-    gui_chat_printf (NULL, "TEST SEB xfer termux");
 }
 
 /*
