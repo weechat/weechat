@@ -2061,26 +2061,24 @@ include::includes/autogen_user_options.sr.adoc[tag=charset_options]
 [[highlights]]
 === Истицања
 
-// TRANSLATION MISSING
 [[highlights_disable]]
-==== Disable highlights
+==== Искључивање истицања
 
-You can disable highlights with option
+Истицања можете искључити опцијом
 <<option_weechat.look.highlight_disable_regex,weechat.look.highlight_disable_regex>>
-(regular expression). +
-When a highlight is disabled with this option, the other highlight options are
-ignored.
+(регуларни израз). +
+Када се овом опцијом искључи истицање, остале опције истицања се игноришу.
 
-For example to disable any highlight on messages with a word beginning
-with "flash" between chevrons:
+На пример, ако желите да искључите било какво истицање у порукама које садрже реч која
+почиње на „flash” унутар угластих заграда:
 
 ----
 /set weechat.look.highlight_regex "<flash.*>"
 ----
 
-This can also be set with the buffer property "highlight_disable_regex".
+Ово такође може да се постави и са особином бафера „highlight_disable_regex”.
 
-Same example, specific to the current buffer:
+Исти пример, који функционише само на текућем баферу:
 
 ----
 /buffer set highlight_disable_regex <flash.*>
