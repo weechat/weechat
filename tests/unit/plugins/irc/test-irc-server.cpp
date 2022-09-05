@@ -26,6 +26,7 @@
 extern "C"
 {
 #include <stdio.h>
+#include <string.h>
 #include "src/plugins/plugin.h"
 #include "src/plugins/irc/irc-channel.h"
 #include "src/plugins/irc/irc-server.h"
