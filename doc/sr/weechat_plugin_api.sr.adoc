@@ -1715,9 +1715,8 @@ weechat_string_free_split (argv);
 
 _Ажурирано у верзији 3.7._
 
-// TRANSLATION MISSING
-Rebuild a string with a split string, using optional separator and index of
-first/last string to use.
+Поново изграђује стринг уз помоћ стринга за поделу, користећи необавезни граничник и индекс
+први/последњи.
 
 Прототип:
 
@@ -1731,14 +1730,11 @@ char *weechat_string_rebuild_split_string (char **split_string,
 Аргументи:
 
 * _split_string_: стринг подељен функцијом <<_string_split,string_split>>
-// TRANSLATION MISSING
-* _separator_: string used to separate strings (can be NULL or empty string)
-// TRANSLATION MISSING
-* _index_start_: index of first string to use (≥ 0)
-// TRANSLATION MISSING
-* _index_end_: index of last string to use
-  (must be ≥ _index_start_; special value -1 can be used to use all arguments
-  until NULL is found)
+* _separator_: стринг који се користи за раздвајање стрингова (Може да буде NULL или празан стринг)
+* _index_start_: индекст првог стринга који треба да се користи (≥ 0)
+* _index_end_: индекс последњег стринга који треба да се користи
+  (мора бити ≥ _index_start_; може да се користи специјална вредност -1 да се употребе сви аргументи
+  док се не наиђе на NULL)
 
 Повратна вредност:
 
@@ -3628,8 +3624,7 @@ rc = weechat_crypto_hash (data, strlen (data), "sha256", hash, &hash_size);
 
 _WeeChat ≥ 3.7._
 
-// TRANSLATION MISSING
-Compute hash of a file.
+Израчунава хеш фајла.
 
 Прототип:
 
@@ -3642,13 +3637,11 @@ int weechat_crypto_hash_file (const char *filename, const char *hash_algo,
 Аргументи:
 
 * _filename_: путања и име фајла
-// TRANSLATION MISSING
-* _hash_algo_: the hash algorithm, see table in function
+* _hash_algo_: хеш алгоритам, погледајте табелу у функцији
   <<crypto_hash_algorithms,crypto_hash>>
-// TRANSLATION MISSING
-* _hash_: pointer to the hash variable, which is used to store the resulting hash
-  (the buffer must be large enough, according to the algorithm, see table in
-  function <<crypto_hash_algorithms,crypto_hash>>)
+* _hash_: показивач на хеш променљиву која се користи за чување резултата хеширања
+  (бафер мора бити довољне величине која зависи од алгоритма, погледајте табелу у
+  функцији <<crypto_hash_algorithms,crypto_hash>>)
 * _hash_size_: показивач на променљиву која се користи за чување величине израчунатог хеша (у бајтовима) (може да буде NULL)
 
 Повратна вредност:
@@ -3657,7 +3650,6 @@ int weechat_crypto_hash_file (const char *filename, const char *hash_algo,
 
 C пример:
 
-// TRANSLATION MISSING
 [source,c]
 ----
 char hash[256 / 8];
@@ -10598,10 +10590,9 @@ struct t_hook *weechat_hook_signal (const char *signal,
 | - |
 Примљен је сигнал SIGWINCH (промењена је величина терминала).
 
-// TRANSLATION MISSING
 | weechat | [[hook_signal_upgrade]] upgrade |
-| String: "quit" if "-quit" argument was given for /upgrade, "save" if "-save"
-  if "-save" argument was given for /upgrade, otherwise NULL.
+| Стринг: „quit” ако је уз /upgrade наведен аргумент „-quit”, „save”
+  ако је уз /upgrade  наведен аргумент „-save”, у супротном NULL. 
 | Корисник је задао команду `/upgrade`.
 
 | weechat | [[hook_signal_upgrade_ended]] upgrade_ended | 0.3.4
@@ -12819,8 +12810,7 @@ const char *weechat_buffer_get_string (struct t_gui_buffer *buffer,
 ** _input_: текст уноса
 ** _text_search_input_: сачувани унос пре претраге текста
 ** _highlight_words_: листа речи које се истичу
-// TRANSLATION MISSING
-** _highlight_disable_regex_: POSIX extended regular expression for disabling highlight
+** _highlight_disable_regex_: POSIX прооширени регуларни израз за искључивање истицања
 ** _highlight_regex_: POSIX проширени регуларни израз за истицање
 ** _highlight_tags_restrict_: ограничава истицање само на поруке са наведеним ознакама
 ** _highlight_tags_: истицање се форсира за поруке са наведеним ознакама
@@ -13009,9 +12999,8 @@ void weechat_buffer_set (struct t_gui_buffer *buffer, const char *property,
 | highlight_words_del | | листа речи раздвојених запетама
 | Лист речи раздвојених запетама које треба да се уклоне из речи које се истичу у овом баферу.
 
-// TRANSLATION MISSING
-| highlight_disable_regex | | any string
-| POSIX extended regular expression for disabling highlight.
+| highlight_disable_regex | | било који стринг
+| POSIX проширени регуларни израз за искључивање истицања.
 
 | highlight_regex | | било који стринг
 | POSIX проширени регуларни израз за истицање.

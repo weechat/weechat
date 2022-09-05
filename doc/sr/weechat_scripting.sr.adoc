@@ -1285,14 +1285,12 @@ IRC поруку можете да парсирате са info_hashtable под
 | Текст (на пример, корисникова порука).
 | `+здраво!+`
 
-// TRANSLATION MISSING
 | paramN | 3.4
-| Command parameter (from 1 to N).
+| Параметар команде (од 1 до N).
 | `+#weechat+`
 
-// TRANSLATION MISSING
 | num_params | 3.4
-| Number of command parameters.
+| Број параметара команде.
 | `+2+`
 
 | pos_command | 1.3
