@@ -5506,6 +5506,67 @@ IRC_PROTOCOL_CALLBACK(349)
 }
 
 /*
+ * Callback for the IRC command "312": whois, gateway.
+ *
+ * Command looks like:
+ *   350 mynick nick * * :is connected via the WebIRC gateway
+ *   350 mynick nick real_hostname real_ip :is connected via the WebIRC gateway
+ */
+
+IRC_PROTOCOL_CALLBACK(350)
+{
+    char *str_params, str_host[1024];
+    int has_real_hostmask, has_real_ip;
+
+    IRC_PROTOCOL_MIN_PARAMS(2);
+
+    if (num_params >= 5)
+    {
+        str_host[0] = '\0';
+        has_real_hostmask = (strcmp (params[2], "*") != 0);
+        has_real_ip = (strcmp (params[3], "*") != 0);
+        if (has_real_hostmask || has_real_ip)
+        {
+            snprintf (str_host, sizeof (str_host),
+                      "%s(%s%s%s%s%s%s%s) ",
+                      IRC_COLOR_CHAT_DELIMITERS,
+                      IRC_COLOR_CHAT_HOST,
+                      (has_real_hostmask) ? params[2] : "",
+                      (has_real_hostmask && has_real_ip) ? IRC_COLOR_CHAT_DELIMITERS : "",
+                      (has_real_hostmask && has_real_ip) ? ", " : "",
+                      (has_real_hostmask && has_real_ip) ? IRC_COLOR_CHAT_HOST : "",
+                      (has_real_ip) ? params[3] : "",
+                      IRC_COLOR_CHAT_DELIMITERS);
+        }
+        str_params = irc_protocol_string_params (params, 4, num_params - 1);
+        weechat_printf_date_tags (
+            irc_msgbuffer_get_target_buffer (
+                server, params[1], command, "whois", NULL),
+            date,
+            irc_protocol_tags (command, tags, NULL, NULL, NULL),
+            "%s%s[%s%s%s] %s%s%s",
+            weechat_prefix ("network"),
+            IRC_COLOR_CHAT_DELIMITERS,
+            irc_nick_color_for_msg (server, 1, NULL, params[1]),
+            params[1],
+            IRC_COLOR_CHAT_DELIMITERS,
+            str_host,
+            IRC_COLOR_RESET,
+            str_params);
+        if (str_params)
+            free (str_params);
+
+    }
+    else
+    {
+        /* not enough parameters: display with the default whois callback */
+        IRC_PROTOCOL_RUN_CALLBACK(whois_nick_msg);
+    }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Callback for the IRC command "351": server version.
  *
  * Command looks like:
@@ -7311,6 +7372,7 @@ irc_protocol_recv_command (struct t_irc_server *server,
         IRCB(347, 1, 0, 347),            /* end of invite list              */
         IRCB(348, 1, 0, 348),            /* channel exception list          */
         IRCB(349, 1, 0, 349),            /* end of channel exception list   */
+        IRCB(350, 1, 0, 350),            /* whois (gateway)                 */
         IRCB(351, 1, 0, 351),            /* server version                  */
         IRCB(352, 1, 0, 352),            /* who                             */
         IRCB(353, 1, 0, 353),            /* list of nicks on channel        */

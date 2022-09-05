@@ -2526,13 +2526,13 @@ TEST(IrcProtocolWithServer, 311)
     CHECK_ERROR_PARAMS("311", 2, 3);
     RECV(":server 311 alice bob user");
 
-    /* standard parameters */
-    RECV(":server 311 alice bob user host * :real name");
-    CHECK_SRV("-- [bob] (user@host): real name");
-
     /* non-standard parameters (using default whois callback) */
     RECV(":server 311 alice bob user");
     CHECK_SRV("-- [bob] user");
+
+    /* standard parameters */
+    RECV(":server 311 alice bob user host * :real name");
+    CHECK_SRV("-- [bob] (user@host): real name");
 }
 
 /*
@@ -2552,13 +2552,13 @@ TEST(IrcProtocolWithServer, 312)
     RECV(":server 312 alice bob");
     CHECK_ERROR_PARAMS("312", 2, 3);
 
-    /* standard parameters */
-    RECV(":server 312 alice bob server :https://example.com/");
-    CHECK_SRV("-- [bob] server (https://example.com/)");
-
     /* non-standard parameters (using default whois callback) */
     RECV(":server 312 alice bob server");
     CHECK_SRV("-- [bob] server");
+
+    /* standard parameters */
+    RECV(":server 312 alice bob server :https://example.com/");
+    CHECK_SRV("-- [bob] server (https://example.com/)");
 }
 
 /*
@@ -2578,13 +2578,13 @@ TEST(IrcProtocolWithServer, 314)
     RECV(":server 314 alice bob");
     CHECK_ERROR_PARAMS("314", 2, 3);
 
-    /* standard parameters */
-    RECV(":server 314 alice bob user host * :real name");
-    CHECK_SRV("-- [bob] (user@host) was real name");
-
     /* non-standard parameters (using default whowas callback) */
     RECV(":server 314 alice bob user");
     CHECK_SRV("-- [bob] user");
+
+    /* standard parameters */
+    RECV(":server 314 alice bob user host * :real name");
+    CHECK_SRV("-- [bob] (user@host) was real name");
 }
 
 /*
@@ -2770,15 +2770,15 @@ TEST(IrcProtocolWithServer, 327)
     RECV(":server 327 alice bob");
     CHECK_ERROR_PARAMS("327", 2, 3);
 
+    /* non-standard parameters (using default whois callback) */
+    RECV(":server 327 alice bob host");
+    CHECK_SRV("-- [bob] host");
+
     /* standard parameters */
     RECV(":server 327 alice bob host 1.2.3.4");
     CHECK_SRV("-- [bob] host 1.2.3.4");
     RECV(":server 327 alice bob host 1.2.3.4 :real name");
     CHECK_SRV("-- [bob] host 1.2.3.4 (real name)");
-
-    /* non-standard parameters (using default whois callback) */
-    RECV(":server 327 alice bob host");
-    CHECK_SRV("-- [bob] host");
 }
 
 /*
@@ -3198,6 +3198,43 @@ TEST(IrcProtocolWithServer, 349)
     CHECK_SRV("-- [#xyz] end");
     RECV(":server 349 alice #xyz :End of Channel Exception List");
     CHECK_SRV("-- [#xyz] End of Channel Exception List");
+}
+
+
+/*
+ * Tests functions:
+ *   irc_protocol_cb_350 (whois, gateway)
+ */
+
+TEST(IrcProtocolWithServer, 350)
+{
+    SRV_INIT_JOIN;
+
+    /* not enough parameters */
+    RECV(":server 350");
+    CHECK_ERROR_PARAMS("350", 0, 2);
+    RECV(":server 350 alice");
+    CHECK_ERROR_PARAMS("350", 1, 2);
+
+    /* non-standard parameters (using whois_nick_msg callback) */
+    RECV(":server 350 alice bob :something here");
+    CHECK_SRV("-- [bob] something here");
+    RECV(":server 350 alice bob * :something here");
+    CHECK_SRV("-- [bob] * something here");
+
+    /* non-standard parameters (using default whois callback) */
+    RECV(":server 350 alice bob");
+    CHECK_SRV("-- bob");
+
+    /* standard parameters */
+    RECV(":server 350 alice bob * * :is connected via the WebIRC gateway");
+    CHECK_SRV("-- [bob] is connected via the WebIRC gateway");
+    RECV(":server 350 alice bob example.com * :is connected via the WebIRC gateway");
+    CHECK_SRV("-- [bob] (example.com) is connected via the WebIRC gateway");
+    RECV(":server 350 alice bob * 1.2.3.4 :is connected via the WebIRC gateway");
+    CHECK_SRV("-- [bob] (1.2.3.4) is connected via the WebIRC gateway");
+    RECV(":server 350 alice bob example.com 1.2.3.4 :is connected via the WebIRC gateway");
+    CHECK_SRV("-- [bob] (example.com, 1.2.3.4) is connected via the WebIRC gateway");
 }
 
 /*
