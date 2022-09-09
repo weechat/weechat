@@ -56,7 +56,7 @@
 char *
 xfer_network_convert_integer_to_ipv4 (const char *str_address)
 {
-    char *error, result[64];
+    char *error, result[128];
     long number;
 
     if (!str_address || !str_address[0])
