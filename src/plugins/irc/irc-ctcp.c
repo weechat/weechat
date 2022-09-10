@@ -270,15 +270,32 @@ irc_ctcp_reply_to_nick (struct t_irc_server *server,
 {
     struct t_hashtable *hashtable;
     int number;
-    char hash_key[32];
+    char hash_key[32], *str_args_color, *dup_ctcp, *dup_args;
     const char *str_args;
-    char *str_args_color, *ctcp_upper;
 
-    ctcp_upper = strdup (ctcp);
-    if (!ctcp_upper)
-        return;
+    dup_ctcp = NULL;
+    dup_args = NULL;
+    hashtable = NULL;
 
-    weechat_string_toupper (ctcp_upper);
+    /*
+     * replace any "\01" by a space to prevent any firewall attack via
+     * nf_conntrack_irc (CVE-2022-2663)
+     */
+    dup_ctcp = weechat_string_replace (ctcp, "\01", " ");
+    if (!dup_ctcp)
+        goto end;
+    weechat_string_toupper (dup_ctcp);
+
+    if (arguments)
+    {
+        /*
+         * replace any "\01" by a space to prevent any firewall attack via
+         * nf_conntrack_irc (CVE-2022-2663)
+         */
+        dup_args = weechat_string_replace (arguments, "\01", " ");
+        if (!dup_args)
+            goto end;
+    }
 
     hashtable = irc_server_sendf (
         server,
@@ -286,53 +303,57 @@ irc_ctcp_reply_to_nick (struct t_irc_server *server,
         NULL,
         "NOTICE %s :\01%s%s%s\01",
         nick,
-        ctcp_upper,
-        (arguments) ? " " : "",
-        (arguments) ? arguments : "");
+        dup_ctcp,
+        (dup_args) ? " " : "",
+        (dup_args) ? dup_args : "");
+    if (!hashtable)
+        goto end;
 
-    if (hashtable)
+    if (weechat_config_boolean (irc_config_look_display_ctcp_reply))
     {
-        if (weechat_config_boolean (irc_config_look_display_ctcp_reply))
+        number = 1;
+        while (1)
         {
-            number = 1;
-            while (1)
-            {
-                snprintf (hash_key, sizeof (hash_key), "args%d", number);
-                str_args = weechat_hashtable_get (hashtable, hash_key);
-                if (!str_args)
-                    break;
-                str_args_color = irc_color_decode (str_args, 1);
-                if (!str_args_color)
-                    break;
-                weechat_printf_date_tags (
-                    irc_msgbuffer_get_target_buffer (
-                        server, nick, NULL, "ctcp",
-                        (channel) ? channel->buffer : NULL),
-                    0,
-                    irc_protocol_tags (
-                        command,
-                        tags,
-                        "irc_ctcp,irc_ctcp_reply,self_msg,notify_none,"
-                        "no_highlight",
-                        NULL, NULL),
-                    _("%sCTCP reply to %s%s%s: %s%s%s%s%s"),
-                    weechat_prefix ("network"),
-                    irc_nick_color_for_msg (server, 0, NULL, nick),
-                    nick,
-                    IRC_COLOR_RESET,
-                    IRC_COLOR_CHAT_CHANNEL,
-                    ctcp_upper,
-                    (str_args_color[0]) ? IRC_COLOR_RESET : "",
-                    (str_args_color[0]) ? " " : "",
-                    str_args_color);
-                free (str_args_color);
-                number++;
-            }
+            snprintf (hash_key, sizeof (hash_key), "args%d", number);
+            str_args = weechat_hashtable_get (hashtable, hash_key);
+            if (!str_args)
+                break;
+            str_args_color = irc_color_decode (str_args, 1);
+            if (!str_args_color)
+                break;
+            weechat_printf_date_tags (
+                irc_msgbuffer_get_target_buffer (
+                    server, nick, NULL, "ctcp",
+                    (channel) ? channel->buffer : NULL),
+                0,
+                irc_protocol_tags (
+                    command,
+                    tags,
+                    "irc_ctcp,irc_ctcp_reply,self_msg,notify_none,"
+                    "no_highlight",
+                    NULL, NULL),
+                _("%sCTCP reply to %s%s%s: %s%s%s%s%s"),
+                weechat_prefix ("network"),
+                irc_nick_color_for_msg (server, 0, NULL, nick),
+                nick,
+                IRC_COLOR_RESET,
+                IRC_COLOR_CHAT_CHANNEL,
+                dup_ctcp,
+                (str_args_color[0]) ? IRC_COLOR_RESET : "",
+                (str_args_color[0]) ? " " : "",
+                str_args_color);
+            free (str_args_color);
+            number++;
         }
-        weechat_hashtable_free (hashtable);
     }
 
-    free (ctcp_upper);
+end:
+    if (dup_ctcp)
+        free (dup_ctcp);
+    if (dup_args)
+        free (dup_args);
+    if (hashtable)
+        weechat_hashtable_free (hashtable);
 }
 
 /*

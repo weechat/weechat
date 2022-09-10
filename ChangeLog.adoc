@@ -40,6 +40,7 @@ Bug fixes::
   * irc: fix extract of isupport value when it is last in list and without value (issue #1807)
   * irc: fix target buffer of generic errors when they contain a target nick (issue #1814)
   * irc: fix display of message 350 (whois, gateway) (issue #1815)
+  * irc: replace chars "\01" by spaces in CTCP replies (issue #1819)
   * guile: fix function hdata_get_string
   * javascript: fix return of long value in functions infolist_time, hdata_long and hdata_time
   * php: fix function hdata_compare
