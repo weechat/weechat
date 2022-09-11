@@ -8983,7 +8983,7 @@ struct t_hook *weechat_hook_command (const char *command,
 Paramètres :
 
 * _command_ : nom de la commande
-  (priorité autorisée, voir la note sur la <<hook_priority,priorité>>)
+  (une priorité est autorisée avant la commande, voir la note sur la <<hook_priority,priorité>>)
 * _description_ : description de la commande (affiché avec `/help command`)
 * _args_ : paramètres pour la commande (affichés avec `/help command`)
 * _args_description_ : description des paramètres (affichée avec
@@ -9139,7 +9139,8 @@ Paramètres :
 * _completion_item_ : nom de l'objet de complétion, après vous pouvez utiliser
   _%(nom)_ (ou _%(nom:paramètres)_ avec WeeChat ≥ 1.7) dans une commande
   (paramètre _completion_)
-  (priorité autorisée, voir la note sur la <<hook_priority,priorité>>)
+  (une priorité est autorisée avant le nom de l'objet de complétion,
+  voir la note sur la <<hook_priority,priorité>>)
 * _description_ : description de la complétion
 * _callback_ : fonction appelée lorsque la complétion est utilisée
   (l'utilisateur est en train de compléter quelque chose qui fait appel à cette
@@ -9250,7 +9251,7 @@ struct t_hook *weechat_hook_command_run (const char *command,
 Paramètres :
 
 * _command_ : commande à intercepter (le caractère joker `+*+` est autorisé)
-  (priorité autorisée, voir la note sur la <<hook_priority,priorité>>)
+  (une priorité est autorisée avant la commande, voir la note sur la <<hook_priority,priorité>>)
 * _callback_ : fonction appelée lorsque la commande est exécutée, paramètres et
   valeur de retour :
 ** _const void *pointer_ : pointeur
@@ -10562,7 +10563,7 @@ Paramètres :
 
 * _signal_ : signal à intercepter, le caractère joker `+*+` est autorisé,
   plusieurs signaux peuvent être séparés par des point-virgules
-  (priorité autorisée, voir la note sur la <<hook_priority,priorité>>)
+  (une priorité est autorisée avant le ou les signaux, voir la note sur la <<hook_priority,priorité>>)
   (voir le tableau ci-dessous)
 * _callback_ : fonction appelée quand le signal est reçu, paramètres et valeur
   de retour :
@@ -11507,7 +11508,7 @@ Paramètres :
 
 * _signal_ : signal à intercepter, le caractère joker `+*+` est autorisé,
   plusieurs signaux peuvent être séparés par des point-virgules
-  (priorité autorisée, voir la note sur la <<hook_priority,priorité>>)
+  (une priorité est autorisée avant le ou les signaux, voir la note sur la <<hook_priority,priorité>>)
   (voir le tableau ci-dessous)
 * _callback_ : fonction appelée quand le signal est reçu, paramètres et valeur
   de retour :
@@ -11878,8 +11879,8 @@ Paramètres :
 
 * _option_ : option, le format est le nom complet, celui utilisé avec la
   commande `/set` (par exemple : `+weechat.look.item_time_format+`), le caractère
-  joker `+*+` est autorisé (priorité autorisée, voir la note sur la
-  <<hook_priority,priorité>>)
+  joker `+*+` est autorisé
+  (une priorité est autorisée avant l'option, voir la note sur la <<hook_priority,priorité>>)
 * _callback_ : fonction appelée lorsque l'option de configuration est modifiée,
   paramètres et valeur de retour :
 ** _const void *pointer_ : pointeur
@@ -11955,9 +11956,8 @@ struct t_hook *weechat_hook_modifier (const char *modifier,
 
 Paramètres :
 
-* _modifier_ : nom du modificateur, liste des modificateurs utilisés par WeeChat
-  ou des extensions
-  (priorité autorisée, voir la note sur la <<hook_priority,priorité>>)
+* _modifier_ : nom du modificateur
+  (une priorité est autorisée avant le modificateur, voir la note sur la <<hook_priority,priorité>>)
   (voir le tableau ci-dessous)
 * _callback_ : fonction appelée lorsque le modificateur est utilisé, paramètres
   et valeur de retour :
@@ -12242,7 +12242,7 @@ struct t_hook *weechat_hook_info (const char *info_name,
 Paramètres :
 
 * _info_name_ : nom de l'information
-  (priorité autorisée, voir la note sur la <<hook_priority,priorité>>)
+  (une priorité est autorisée avant le nom de l'information, voir la note sur la <<hook_priority,priorité>>)
 * _description_ : description
 * _args_description_ : description des paramètres (optionnel, peut être NULL)
 * _callback_ : fonction appelée quand l'information est demandée, paramètres et
@@ -12329,7 +12329,7 @@ struct t_hook *weechat_hook_info_hashtable (const char *info_name,
 Paramètres :
 
 * _info_name_ : nom de l'information
-  (priorité autorisée, voir la note sur la <<hook_priority,priorité>>)
+  (une priorité est autorisée avant le nom de l'information, voir la note sur la <<hook_priority,priorité>>)
 * _description_ : description
 * _args_description_ : description de la table de hachage attendue
   (optionnel, peut être NULL)
@@ -12419,7 +12419,7 @@ struct t_hook *weechat_hook_infolist (const char *infolist_name,
 Paramètres :
 
 * _infolist_name_ : nom de l'infolist
-  (priorité autorisée, voir la note sur la <<hook_priority,priorité>>)
+  (une priorité est autorisée avant le nom de l'infolist, voir la note sur la <<hook_priority,priorité>>)
 * _description_ : description
 * _pointer_description_ : description du pointeur (optionnel, peut être NULL)
 * _args_description_ : description des paramètres (optionnel, peut être NULL)
@@ -12509,7 +12509,7 @@ struct t_hook *weechat_hook_hdata (const char *hdata_name,
 Paramètres :
 
 * _hdata_name_ : nom du hdata
-  (priorité autorisée, voir la note sur la <<hook_priority,priorité>>)
+  (une priorité est autorisée avant le nom du hdata, voir la note sur la <<hook_priority,priorité>>)
 * _description_ : description
 * _callback_ : fonction appelée quand le hdata est demandé, paramètres et valeur
   de retour :
@@ -12574,7 +12574,7 @@ struct t_hook *weechat_hook_focus (const char *area,
 Paramètres :
 
 * _area_ : "chat" pour la zone de discussion, ou un nom d'objet de barre
-  (priorité autorisée, voir la note sur la <<hook_priority,priorité>>)
+  (une priorité est autorisée avant la zone, voir la note sur la <<hook_priority,priorité>>)
 * _callback_ : fonction appelée quand le focus est fait, paramètres et valeur de
   retour :
 ** _const void *pointer_ : pointeur

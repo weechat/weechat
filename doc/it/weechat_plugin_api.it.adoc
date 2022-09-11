@@ -9129,8 +9129,9 @@ struct t_hook *weechat_hook_command (const char *command,
 
 Argomenti:
 
+// TRANSLATION MISSING
 * _command_: nome del comando
-  (priorità consentita, consultare la nota riguardo la <<hook_priority,priority>>)
+  (a priority is allowed before the command, see note about <<hook_priority,priority>>)
 * _description_: descrizione per il comando (visualizzata con `/help comando`)
 * _args_: argomenti per il comando (visualizzati con `/help command`)
 * _args_description_: descrizione degli argomenti (visualizzata con `/help command`)
@@ -9266,10 +9267,10 @@ struct t_hook *weechat_hook_completion (const char *completion_item,
 
 Argomenti:
 
+// TRANSLATION MISSING
 * _completion_item_: nome dell'elemento del completamento, è possibile usare
   in seguito _%(name)_ in un comando con un hook (argomento _completion_)
-  (priorità consentita, consultare la nota riguardo la
-  <<hook_priority,priority>>)
+  (a priority is allowed before the completion item, see note about <<hook_priority,priority>>)
 * _callback_: funzione chiamata quando viene usato l'elemento completamento
   (l'utente sta completando qualcosa usando questo elemento), argomenti e valore
   restituito:
@@ -9380,8 +9381,7 @@ Argomenti:
 
 // TRANSLATION MISSING
 * _command_: comando su cui eseguire l'hook (wildcard `+*+` is allowed)
-  (priorità consentita, consultare la nota riguardo la
-  <<hook_priority,priority>>)
+  (a priority is allowed before the command, see note about <<hook_priority,priority>>)
 * _callback_: funzione chiamata quando il comando è in esecuzione, argomenti e
   valore restituito:
 ** _const void *pointer_: puntatore
@@ -10693,8 +10693,8 @@ Argomenti:
 // TRANSLATION MISSING
 * _signal_: segnale da catturare, wildcard `+*+` is allowed, multiple signals
   can be separated by semi-colons
-  (priorità consentita, consultare la nota riguardo la
-  <<hook_priority,priority>>), see table below
+  (a priority is allowed before one or more signals, see note about <<hook_priority,priority>>)
+  (see table below)
 * _callback_: funzione chiamata a segnale ricevuto, argomenti e valore
   restituito:
 ** _const void *pointer_: puntatore
@@ -11734,8 +11734,8 @@ Argomenti:
 // TRANSLATION MISSING
 * _signal_: segnale da catturare, wildcard `+*+` is allowed, multiple signals can
   be separated by semi-colons
-  (priorità consentita, consultare la nota a proposito di <<hook_priority,priority>>),
-  see table below
+  (a priority is allowed before one or more signals, see note about <<hook_priority,priority>>)
+  (see table below)
 * _callback_: funzione chiamata a segnale ricevuto, argomenti e valore
   restituito:
 ** _const void *pointer_: puntatore
@@ -12111,8 +12111,7 @@ Argomenti:
 // TRANSLATION MISSING
 * _option_: opzione, il formato è il nome completo, come usato con il comando
   `/set` (ad esempio: `+weechat.look.item_time_format+`), wildcard `+*+` is allowed
-  (priorità consentita, consultare la note riguardo la
-  <<hook_priority,priority>>)
+  (a priority is allowed before the option, see note about <<hook_priority,priority>>)
 * _callback_: funzione chiamata quando l'opzione di configurazione è cambiata,
   argomenti e valore restituito:
 ** _const void *pointer_: puntatore
@@ -12189,10 +12188,9 @@ struct t_hook *weechat_hook_modifier (const char *modifier,
 Argomenti:
 
 // TRANSLATION MISSING
-* _modifier_: nome modificatore, lista di modificatori utilizzati da
-  WeeChat o dai plugin
-  (priorità consentita, consultare la nota riguardo la
-  <<hook_priority,priority>>), see table below
+* _modifier_: nome modificatore
+  (a priority is allowed before the modifier, see note about <<hook_priority,priority>>)
+  (see table below)
 * _callback_: funzione chiamata quando viene usato il modificatore,
   argomenti e valore restituito:
 ** _const void *pointer_: puntatore
@@ -12488,9 +12486,9 @@ struct t_hook *weechat_hook_info (const char *info_name,
 
 Argomenti:
 
+// TRANSLATION MISSING
 * _info_name_: nome della info
-  (priorità consentita, consultare la nota riguardo la
-  <<hook_priority,priority>>)
+  (a priority is allowed before the info name, see note about <<hook_priority,priority>>)
 * _description_: descrizione
 * _args_description_: descrizione degli argomenti
 * _callback_: funzione chiamata alla richiesta di una info, argomenti e valore
@@ -12575,9 +12573,9 @@ struct t_hook *weechat_hook_info_hashtable (const char *info_name,
 
 Argomenti:
 
+// TRANSLATION MISSING
 * _info_name_: nome della info
-  (priorità consentita, consultare la nota riguardo la
-  <<hook_priority,priority>>)
+  (a priority is allowed before the info name, see note about <<hook_priority,priority>>)
 * _description_: descrizione
 * _args_description_: descrizione della tabella hash attesa (opzionale, può
   essere NULL)
@@ -12665,9 +12663,9 @@ struct t_hook *weechat_hook_infolist (const char *infolist_name,
 
 Argomenti:
 
+// TRANSLATION MISSING
 * _infolist_name_: nome della lista info
-  (priotità consentita, consultare la nota riguardo la
-  <<hook_priority,priority>>)
+  (a priority is allowed before the infolist name, see note about <<hook_priority,priority>>)
 * _description_: descrizione
 * _pointer_description_: descrizione del puntatore (opzionale, può essere NULL)
 * _args_description_: descrizione degli argomenti (opzionale, può essere NULL)
@@ -12755,8 +12753,9 @@ struct t_hook *weechat_hook_hdata (const char *hdata_name,
 
 Argomenti:
 
+// TRANSLATION MISSING
 * _hdata_name_: nome dell'hdata
-  (priorità consentita, consultare la nota a proposito di <<hook_priority,priority>>)
+  (a priority is allowed before the hdata name, see note about <<hook_priority,priority>>)
 * _description_: descrizione
 * _callback_: funzione chiamata alla richiesta di hdata, argomenti e valore restituito:
 ** _const void *pointer_: puntatore
@@ -12819,8 +12818,9 @@ struct t_hook *weechat_hook_focus (const char *area,
 
 Argomenti:
 
+// TRANSLATION MISSING
 * _area_: "chat" per la zona di chat, o il nome di un elemento barra
-  (priorità consentita, consultare la nota a riguardo di <<hook_priority,priority>>)
+  (a priority is allowed before the area, see note about <<hook_priority,priority>>)
 * _callback_: funzione chiamata al momento del focus, argomenti e valore restituito:
 ** _const void *pointer_: puntatore
 ** _void *data_: puntatore

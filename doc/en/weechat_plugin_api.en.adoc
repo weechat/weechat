@@ -8841,7 +8841,7 @@ struct t_hook *weechat_hook_command (const char *command,
 Arguments:
 
 * _command_: command name
-  (priority allowed, see note about <<hook_priority,priority>>)
+  (a priority is allowed before the command, see note about <<hook_priority,priority>>)
 * _description_: description for command (displayed with `/help command`)
 * _args_: arguments for command (displayed with `/help command`)
 * _args_description_: description of arguments (displayed with `/help command`)
@@ -8992,7 +8992,7 @@ Arguments:
 * _completion_item_: name of completion item, after you can use _%(name)_
   (or _%(name:arguments)_ with WeeChat ≥ 1.7) in a command hooked
   (argument _completion_)
-  (priority allowed, see note about <<hook_priority,priority>>)
+  (a priority is allowed before the completion item, see note about <<hook_priority,priority>>)
 * _description_: description of completion
 * _callback_: function called when completion item is used (user is completing
   something using this item), arguments and return value:
@@ -9098,7 +9098,7 @@ struct t_hook *weechat_hook_command_run (const char *command,
 Arguments:
 
 * _command_: command to hook (wildcard `+*+` is allowed)
-  (priority allowed, see note about <<hook_priority,priority>>)
+  (a priority is allowed before the command, see note about <<hook_priority,priority>>)
 * _callback_: function called when command is run, arguments and return value:
 ** _const void *pointer_: pointer
 ** _void *data_: pointer
@@ -10357,7 +10357,7 @@ Arguments:
 
 * _signal_: signal to catch, wildcard `+*+` is allowed; multiple signals can
   be separated by semi-colons
-  (priority allowed, see note about <<hook_priority,priority>>)
+  (a priority is allowed before one or more signals, see note about <<hook_priority,priority>>)
   (see table below)
 * _callback_: function called when signal is received, arguments and return
   value:
@@ -11280,7 +11280,7 @@ Arguments:
 
 * _signal_: signal to catch, wildcard `+*+` is allowed; multiple signals can
   be separated by semi-colons
-  (priority allowed, see note about <<hook_priority,priority>>)
+  (a priority is allowed before one or more signals, see note about <<hook_priority,priority>>)
   (see table below)
 * _callback_: function called when signal is received, arguments and return
   value:
@@ -11639,7 +11639,7 @@ Arguments:
 
 * _option_: option, format is full name, as used with command `/set` (for
   example: `+weechat.look.item_time_format+`), wildcard `+*+` is allowed
-  (priority allowed, see note about <<hook_priority,priority>>)
+  (a priority is allowed before the option, see note about <<hook_priority,priority>>)
 * _callback_: function called when configuration option is changed, arguments
   and return value:
 ** _const void *pointer_: pointer
@@ -11713,8 +11713,8 @@ struct t_hook *weechat_hook_modifier (const char *modifier,
 
 Arguments:
 
-* _modifier_: modifier name, list of modifiers used by WeeChat or plugins
-  (priority allowed, see note about <<hook_priority,priority>>)
+* _modifier_: modifier name
+  (a priority is allowed before the modifier, see note about <<hook_priority,priority>>)
   (see table below)
 * _callback_: function called when modifier is used, arguments and return value:
 ** _const void *pointer_: pointer
@@ -11986,7 +11986,7 @@ struct t_hook *weechat_hook_info (const char *info_name,
 Arguments:
 
 * _info_name_: name of info
-  (priority allowed, see note about <<hook_priority,priority>>)
+  (a priority is allowed before the info name, see note about <<hook_priority,priority>>)
 * _description_: description
 * _args_description_: description of arguments (optional, can be NULL)
 * _callback_: function called when info is asked, arguments and return value:
@@ -12068,7 +12068,7 @@ struct t_hook *weechat_hook_info_hashtable (const char *info_name,
 Arguments:
 
 * _info_name_: name of info
-  (priority allowed, see note about <<hook_priority,priority>>)
+  (a priority is allowed before the info name, see note about <<hook_priority,priority>>)
 * _description_: description
 * _args_description_: description of expected hashtable (optional, can be NULL)
 * _output_description_: description of hashtable returned by callback
@@ -12152,7 +12152,7 @@ struct t_hook *weechat_hook_infolist (const char *infolist_name,
 Arguments:
 
 * _infolist_name_: name of infolist
-  (priority allowed, see note about <<hook_priority,priority>>)
+  (a priority is allowed before the infolist name, see note about <<hook_priority,priority>>)
 * _description_: description
 * _pointer_description_: description of pointer (optional, can be NULL)
 * _args_description_: description of arguments (optional, can be NULL)
@@ -12239,7 +12239,7 @@ struct t_hook *weechat_hook_hdata (const char *hdata_name,
 Arguments:
 
 * _hdata_name_: name of hdata
-  (priority allowed, see note about <<hook_priority,priority>>)
+  (a priority is allowed before the hdata name, see note about <<hook_priority,priority>>)
 * _description_: description
 * _callback_: function called when hdata is asked, arguments and return
   value:
@@ -12302,7 +12302,7 @@ struct t_hook *weechat_hook_focus (const char *area,
 Arguments:
 
 * _area_: "chat" for chat area, or name of bar item
-  (priority allowed, see note about <<hook_priority,priority>>)
+  (a priority is allowed before the area, see note about <<hook_priority,priority>>)
 * _callback_: function called when focus is made, arguments and return
   value:
 ** _const void *pointer_: pointer

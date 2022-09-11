@@ -8581,7 +8581,8 @@ struct t_hook *weechat_hook_command (const char *command,
 
 Аргументи:
 
-* _command_: име команде (приоритет је дозвољен, погледајте напомену о <<hook_priority,приоритету>>)
+// TRANSLATION MISSING
+* _command_: име команде (a priority is allowed before the command, see note about <<hook_priority,приоритетима>>)
 * _description_: опис команде (приказује се са `/help команда`)
 * _args_: аргументи за команду (приказује се са `/help команда`)
 * _args_description_: опис аргумената (приказује се са `/help команда`)
@@ -8721,7 +8722,8 @@ struct t_hook *weechat_hook_completion (const char *completion_item,
 
 Аргументи:
 
-* _completion_item_: име ставке довршавања, након ње у закаченој команди (аргумент _completion_) можете да користите _%(име)_ (или _%(име:аргументи)_ у WeeChat ≥ 1.7) (дозвољава се приоритет, погледајте напомену о <<hook_priority,приоритетима>>)
+// TRANSLATION MISSING
+* _completion_item_: име ставке довршавања, након ње у закаченој команди (аргумент _completion_) можете да користите _%(име)_ (или _%(име:аргументи)_ у WeeChat ≥ 1.7) (a priority is allowed before the completion item, see note about <<hook_priority,приоритетима>>)
 * _description_: опис довршавања
 * _callback_: функција се позива када се употреби ставка довршавања (корисник нешто довршава употребом ове ставке), аргументи и повратна вредност су:
 ** _const void *pointer_: показивач
@@ -8815,7 +8817,8 @@ struct t_hook *weechat_hook_command_run (const char *command,
 
 Аргументи:
 
-* _command_: команда која се качи (дозвољен је џокер `+*+`) (дозвољава се приоритет, погледајте напомену о <<hook_priority,приоритетима>>)
+// TRANSLATION MISSING
+* _command_: команда која се качи (дозвољен је џокер `+*+`) (a priority is allowed before the command, see note about <<hook_priority,приоритетима>>)
 * _callback_: функција која се позива када се команда покрене, аргументи и повратна вредност су:
 ** _const void *pointer_: показивач
 ** _void *data_: показивач
@@ -9993,9 +9996,11 @@ struct t_hook *weechat_hook_signal (const char *signal,
 
 Аргументи:
 
+// TRANSLATION MISSING
 * _signal_: сигнал који се хвата, дозвољава се џокер `+*+`, више сигнала може
   да се раздвоји тачка запетама
-  (дозвољен је приоритет, погледајте напомену о <<hook_priority,приоритетима>>) (погледајте табелу испод)
+  (a priority is allowed before one or more signals, see note about <<hook_priority,приоритетима>>)
+  (погледајте табелу испод)
 * _callback_: функција која се позива када се прими сигнал, аргументи и повратна вредност су:
 ** _const void *pointer_: показивач
 ** _void *data_: показивач
@@ -10904,9 +10909,11 @@ struct t_hook *weechat_hook_hsignal (const char *signal,
 
 Аргументи:
 
+// TRANSLATION MISSING
 * _signal_: сигнал који се хвата, дозвољава се џокер `+*+`, multiple signals can
   be separated by semi-colons
-  (дозвољен је приоритет, погледајте напомену о <<hook_priority,приоритетима>>) (погледајте табелу испод)
+  (a priority is allowed before one or more signals, see note about <<hook_priority,приоритетима>>)
+  (погледајте табелу испод)
 * _callback_: функција која се позива када се прими сигнал, аргументи и повратна вредност су:
 ** _const void *pointer_: показивач
 ** _void *data_: показивач
@@ -11242,7 +11249,8 @@ struct t_hook *weechat_hook_config (const char *option,
 
 Аргументи:
 
-* _option_: опција, формат је пуно име, као што се користи у команди `/set` на пример: `+weechat.look.item_time_format+`), дозвољава се џокер `+*+` (дозвољена је употреба приоритета, погледајте напомену о <<hook_priority,приоритетима>>)
+// TRANSLATION MISSING
+* _option_: опција, формат је пуно име, као што се користи у команди `/set` на пример: `+weechat.look.item_time_format+`), дозвољава се џокер `+*+` (a priority is allowed before the option, see note about <<hook_priority,приоритетима>>)
 * _callback_: функција која се позива када се измени опција конфигурације, аргументи и повратна вредност су:
 ** _const void *pointer_: показивач
 ** _void *data_: показивач
@@ -11313,7 +11321,9 @@ struct t_hook *weechat_hook_modifier (const char *modifier,
 
 Аргументи:
 
-* _modifier_: име модификатора, листа модификатора које користе програм WeeChat или додаци (дозвољава се приоритет, погледајте напомену о <<hook_priority,приоритетима>>) (погледајте табелу испод)
+// TRANSLATION MISSING
+* _modifier_: modifier name (a priority is allowed before the modifier, see note about <<hook_priority,приоритетима>>)
+  (погледајте табелу испод)
 * _callback_: функција која се позива када се употреби модификатор, аргументи и повратна вредност су:
 ** _const void *pointer_: показивач
 ** _void *data_: показивач
@@ -11581,7 +11591,8 @@ struct t_hook *weechat_hook_info (const char *info_name,
 
 Аргументи:
 
-* _info_name_: име инфо (дозвољава се приоритет, погледајте напомену о <<hook_priority,приоритетима>>)
+// TRANSLATION MISSING
+* _info_name_: име инфо (a priority is allowed before the info name, see note about <<hook_priority,приоритетима>>)
 * _description_: опис
 * _args_description_: опис аргумената (није обавезан, може да буде NULL)
 * _callback_: функција која се позива када се затражи инфо, аргументи и повратна вредност су:
@@ -11659,7 +11670,8 @@ struct t_hook *weechat_hook_info_hashtable (const char *info_name,
 
 Аргументи:
 
-* _info_name_: име инфо (дозвољава се приоритет, погледајте напомену о <<hook_priority,приоритетима>>)
+// TRANSLATION MISSING
+* _info_name_: име инфо (a priority is allowed before the info name, see note about <<hook_priority,приоритетима>>)
 * _description_: опис
 * _args_description_: опис очекиване хеш табеле (није обавезан, може да буде NULL)
 * _output_description_: опис хеш табеле коју враћа функција повратног позива (није обавезно, може да буде NULL)
@@ -11739,7 +11751,8 @@ struct t_hook *weechat_hook_infolist (const char *infolist_name,
 
 Аргументи:
 
-* _infolist_name_: име инфолисте (дозвољава се приоритет, погледајте напомену о <<hook_priority,приоритетима>>)
+// TRANSLATION MISSING
+* _infolist_name_: име инфолисте (a priority is allowed before the infolist name, see note about <<hook_priority,приоритетима>>)
 * _description_: опис
 * _pointer_description_: опис показивача (није обавезно, може да буде NULL)
 * _args_description_: опис аргумената (није обавезан, може да буде NULL)
@@ -11821,7 +11834,8 @@ struct t_hook *weechat_hook_hdata (const char *hdata_name,
 
 Аргументи:
 
-* _hdata_name_: име hdata (дозвољавају се приоритети, погледајте напомену о <<hook_priority,приоритетима>>)
+// TRANSLATION MISSING
+* _hdata_name_: име hdata (a priority is allowed before the hdata name, see note about <<hook_priority,приоритетима>>)
 * _description_: опис
 * _callback_: функција која се позива када се затражи hdata, аргументи и повратна вредност су:
 ** _const void *pointer_: показивач
@@ -11879,7 +11893,8 @@ struct t_hook *weechat_hook_focus (const char *area,
 
 Аргументи:
 
-* _area_: „chat” за површину чета (разговора), или име ставке траке (дозвољава се приоритет, погледајте напомену о <<hook_priority,приоритетима>>)
+// TRANSLATION MISSING
+* _area_: „chat” за површину чета (разговора), или име ставке траке (a priority is allowed before the area, see note about <<hook_priority,приоритетима>>)
 * _callback_: функција која се позива када се направи фокус, аргументи и повратна вредност су:
 ** _const void *pointer_: показивач
 ** _void *data_: показивач

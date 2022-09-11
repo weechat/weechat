@@ -8870,8 +8870,9 @@ struct t_hook *weechat_hook_command (const char *command,
 
 引数:
 
+// TRANSLATION MISSING
 * _command_: コマンド名
-  (優先度の設定が可能、<<hook_priority,フックの優先度>>に関する注意を参照)
+  (a priority is allowed before the command, see note about <<hook_priority,priority>>)
 * _description_: コマンドの説明 (`/help command` で表示されます)
 * _args_: コマンドの引数 (`/help command` で表示されます)
 * _args_description_: 引数の説明 (`/help command` で表示されます)
@@ -9019,10 +9020,11 @@ struct t_hook *weechat_hook_completion (const char *completion_item,
 
 引数:
 
+// TRANSLATION MISSING
 * _completion_item_: 補完候補テンプレートの名前、これ以降コマンドフックの
   _completion_ 引数で _%(name)_ という補完候補テンプレートを使えます
   (WeeChat バージョン 1.7 以上の場合 _%(name:arguments)_ も使えます)
-  (優先度の設定が可能、<<hook_priority,フックの優先度>>に関する注意を参照)
+  (a priority is allowed before the completion item, see note about <<hook_priority,priority>>)
 * _description_: 補完候補テンプレートの説明
 * _callback_: 補完候補テンプレート (ユーザはこの関数を使って何かを補完します)
   が使われた場合に呼び出すコールバック関数、引数と戻り値:
@@ -9131,8 +9133,9 @@ struct t_hook *weechat_hook_command_run (const char *command,
 
 引数:
 
+// TRANSLATION MISSING
 * _command_: フックするコマンド (ワイルドカード `+*+` を使うことができます)
-  (優先度の設定が可能、<<hook_priority,フックの優先度>>に関する注意を参照)
+  (a priority is allowed before the command, see note about <<hook_priority,priority>>)
 * _callback_: コマンドが実行される際に呼び出すコールバック関数、引数と戻り値:
 ** _const void *pointer_: ポインタ
 ** _void *data_: ポインタ
@@ -10395,7 +10398,7 @@ struct t_hook *weechat_hook_signal (const char *signal,
 // TRANSLATION MISSING
 * _signal_: キャッチするシグナル、ワイルドカード `+*+` を使うことができます,
   multiple signals can be separated by semi-colons
-  (優先度の設定が可能、<<hook_priority,フックの優先度>>に関する注意を参照)
+  (a priority is allowed before one or more signals, see note about <<hook_priority,priority>>)
   (以下の表を参照)
 * _callback_:
   シグナルを受信した際に呼び出すコールバック関数、引数と戻り値:
@@ -11334,7 +11337,7 @@ struct t_hook *weechat_hook_hsignal (const char *signal,
 // TRANSLATION MISSING
 * _signal_: キャッチするシグナル、ワイルドカード `+*+` を使うことができます,
   multiple signals can be separated by semi-colons
-  (優先度の設定が可能、<<hook_priority,フックの優先度>>に関する注意を参照)
+  (a priority is allowed before one or more signals, see note about <<hook_priority,priority>>)
   (以下の表を参照)
 * _callback_:
   シグナルを受信した際に呼び出すコールバック関数、引数と戻り値:
@@ -11691,9 +11694,10 @@ struct t_hook *weechat_hook_config (const char *option,
 
 引数:
 
+// TRANSLATION MISSING
 * _option_: オプション、書式は完全な名前、コマンド `/set` で使うのと同じ
   (例: `+weechat.look.item_time_format+`)、ワイルドカード `+*+` を使うことができます
-  (優先度の設定が可能、<<hook_priority,フックの優先度>>に関する注意を参照)
+  (a priority is allowed before the option, see note about <<hook_priority,priority>>)
 * _callback_:
   設定オプションが変更されたら呼び出すコールバック関数、引数と戻り値:
 ** _const void *pointer_: ポインタ
@@ -11767,8 +11771,9 @@ struct t_hook *weechat_hook_modifier (const char *modifier,
 
 引数:
 
-* _modifier_: 修飾子名、WeeChat またはプラグインが使う修飾子のリスト
-  (優先度の設定が可能、<<hook_priority,フックの優先度>>に関する注意を参照)
+// TRANSLATION MISSING
+* _modifier_: modifier name
+  (a priority is allowed before the modifier, see note about <<hook_priority,priority>>)
   (以下の表を参照)
 * _callback_: 修飾子が使われた際に呼び出すコールバック関数、引数と戻り値:
 ** _const void *pointer_: ポインタ
@@ -12054,8 +12059,9 @@ struct t_hook *weechat_hook_info (const char *info_name,
 
 引数:
 
+// TRANSLATION MISSING
 * _info_name_: インフォの名前
-  (優先度の設定が可能、<<hook_priority,フックの優先度>>に関する注意を参照)
+  (a priority is allowed before the info name, see note about <<hook_priority,priority>>)
 * _description_: 説明
 * _args_description_: 引数の説明 (任意、NULL にすることも可)
 * _callback_: インフォが要求されたら呼び出すコールバック関数、引数と戻り値:
@@ -12136,8 +12142,9 @@ struct t_hook *weechat_hook_info_hashtable (const char *info_name,
 
 引数:
 
+// TRANSLATION MISSING
 * _info_name_: インフォの名前
-  (優先度の設定が可能、<<hook_priority,フックの優先度>>に関する注意を参照)
+  (a priority is allowed before the info name, see note about <<hook_priority,priority>>)
 * _description_: 説明
 * _args_description_: 引数ハッシュテーブルの説明 (任意、NULL でも可)
 * _output_description_: コールバックが返すハッシュテーブルの説明
@@ -12220,8 +12227,9 @@ struct t_hook *weechat_hook_infolist (const char *infolist_name,
 
 引数:
 
+// TRANSLATION MISSING
 * _infolist_name_: インフォリストの名前
-  (優先度の設定が可能、<<hook_priority,フックの優先度>>に関する注意を参照)
+  (a priority is allowed before the infolist name, see note about <<hook_priority,priority>>)
 * _description_: 説明
 * _pointer_description_: ポインタの説明 (任意、NULL でも可)
 * _args_description_: 引数の説明 (任意、NULL でも可)
@@ -12307,8 +12315,9 @@ struct t_hook *weechat_hook_hdata (const char *hdata_name,
 
 引数:
 
+// TRANSLATION MISSING
 * _hdata_name_: hdata の名前
-  (優先度の設定が可能、<<hook_priority,フックの優先度>>に関する注意を参照)
+  (a priority is allowed before the hdata name, see note about <<hook_priority,priority>>)
 * _description_: 説明
 * _callback_:
   hdata が要求された際に呼び出すコールバック関数、引数と戻り値:
@@ -12370,8 +12379,9 @@ struct t_hook *weechat_hook_focus (const char *area,
 
 引数:
 
+// TRANSLATION MISSING
 * _area_: チャットエリアの場合は "chat"、またはバー要素の名前
-  (優先度の設定が可能、<<hook_priority,フックの優先度>>に関する注意を参照)
+  (a priority is allowed before the area, see note about <<hook_priority,priority>>)
 * _callback_:
   フォーカスが当たったら呼び出すコールバック関数、引数と戻り値:
 ** _const void *pointer_: ポインタ
