@@ -174,26 +174,26 @@ Examples:
       req|ack [<могућност> [<могућност>...]]
       end
 
-   ls: list the capabilities supported by the server
- list: list the capabilities currently enabled
-  req: request a new capability or remove a capability (if starting with "-", for example: "-multi-prefix")
-  ack: acknowledge capabilities which require client-side acknowledgement
-  end: end the capability negotiation
+   ls: исписује могућности које подржава сервер
+ list: исписује могућности које су тренутно укључене
+  req: захтева нову могућност или уклања могућност (ако почиње са „-”, на пример: „-multi-prefix”)
+  ack: прихвата могућности које захтевају потврду са клијентске стране
+  end: завршава преговарање о могућностима
 
-Without argument, "ls" and "list" are sent.
+Без аргумента се шаљу „ls” и „list”.
 
-Capabilities supported by WeeChat are: account-notify, away-notify, cap-notify, chghost, extended-join, invite-notify, message-tags, multi-prefix, server-time, setname, userhost-in-names.
+Програм WeeChat подржава следеће могућности: account-notify, away-notify, cap-notify, chghost, extended-join, invite-notify, multi-prefix, server-time, setname, userhost-in-names.
 
-The capabilities to automatically enable on servers can be set in option irc.server_default.capabilities (or by server in option irc.server.xxx.capabilities).
+Могућности које се аутоматски укључују на серверима могу да се поставе у опцији irc.server_default.capabilities (или посебно за сваки сервер у опцији irc.server.xxx.capabilities).
 
-Examples:
-  display supported and enabled capabilities:
-    /cap
-  request capabilities multi-prefix and away-notify:
+Примери:
+  приказ подржаних и укључених могућности:
+   /cap
+  захтев за могућности multi-prefix и away-notify:
     /cap req multi-prefix away-notify
-  request capability extended-join, remove capability multi-prefix:
+  захтев за могућност extended-join, улањање могућности multi-prefix:
     /cap req extended-join -multi-prefix
-  remove capability away-notify:
+  уклањање могућности away-notify:
     /cap req -away-notify
 ----
 
@@ -2122,42 +2122,42 @@ passphrase: измена тајне реченице (без passphrase, под�
 ----
 
 [[command_weechat_upgrade]]
-* `+upgrade+`: save WeeChat session and reload the WeeChat binary without disconnecting from servers
+* `+upgrade+`: чува WeeChat сесију и поновно учитава WeeChat бинарни фајл без прекидања прекидања конекције са серверима
 
 ----
-/upgrade  [-yes] [<path_to_binary>|-save|-quit]
+/upgrade  [-yes] [<путања_до_бинарног>|-save|-quit]
 
-          -yes: required if option "weechat.look.confirm_upgrade" is enabled
-path_to_binary: path to WeeChat binary (default is current binary)
-        -dummy: do nothing (option used to prevent accidental completion with "-quit")
-         -save: only save the session, do not quit nor reload WeeChat; the configuration files are not saved (if needed you can use /save before this command)
-         -quit: close *ALL* connections, save session and quit WeeChat, which makes possible a delayed restoration (see below)
+              -yes: обавезно ако је укључена опција „weechat.look.confirm_upgrade”
+путања_до_бинарног: путања до WeeChat бинарног фајла (подразумевано је текући бинарни фајл)
+            -dummy: не ради ништа (опција која се користи за спречавање нехотичног довршавања са „-quit”)
+             -quit: затвара *СВЕ* конекције, чува сесију и напушта програм WeeChat, чиме се омогућава закашњена рестаурација (погледајте испод)
+             -save: only save the session, do not quit nor reload WeeChat; фајлови конфигурације се не чувају (ако је потребно, пре ове команде можете да употребите команду /save)
 
-This command upgrades and reloads a running WeeChat session. The new WeeChat binary must have been compiled or installed with a package manager before running this command.
+Ова команда ажурира и поновно учитава WeeChat сесију која се извршава. Нови WeeChat бинарни фајл мора бити компајлиран или инсталиран менаџером пакета пре покретања ове команде.
 
-Note: SSL connections are lost during upgrade (except with -save), because the reload of SSL sessions is currently not possible with GnuTLS. There is automatic reconnection after upgrade.
+Напомена: SSL конекције се губе током ажурирања (осим када се употреби -save), јер тренутно са GnuTLS није могуће поновно учитавање SSL сесија. Постоји аутоматско поновно успостављање конекције након ажурирања.
 
-Important: use of option -save can be dangerous, it is recommended to use only /upgrade (or with -quit) for a standard upgrade and a restart; the option -save can be used to save the session regularly and restore it in case of after abnormal exit (power outage, crash, etc.)
+Важно: употреба опције -save може бити опасна, препоручује се да за стандардно ажурирање и рестарт користите само /upgrade (или са -quit); опција -save може да се користи за редовно чување сесије и опоравак у случају да је дошло до неуобичајеног завршетка рада програма (нестанак напајања, крах програма, итд.)
 
-Upgrade process has 4 steps:
-  1. save session into files for core and plugins (buffers, history, ..)
-  2. unload all plugins (configuration files (*.conf) are written on disk)
-  3. save WeeChat configuration (weechat.conf)
-  4. execute new WeeChat binary and reload session.
+Процес ажурирања има 4 корака:
+  1. чување сесије у фајлове за језгро и додатке (бафери, историја, ..)
+  2. уклањање свих додатака из меморије (конфигурациони фајлови (*.conf) се уписују на диск)
+  3. чување WeeChat конфигурације (weechat.conf)
+  4. извршавање новог WeeChat бинарног фајла и поновно учитавање сесије.
 
-With option "-quit", the process is:
-  1. close *ALL* connections (irc, xfer, relay, ...)
-  2. save session into files (*.upgrade)
-  3. unload all plugins
-  4. save WeeChat configuration
-  5. quit WeeChat
+Процес са опцијом „-quit” је следећи:
+  1. затварање *СВИХ* конекција (irc, xfer, relay, ...)
+  2. чување сесије у фајлове (*.upgrade)
+  3. уклањање свих додатака из меморије
+  4. чување WeeChat конфигурације
+  5. напуштање програма WeeChat
 
-With option "-save", the process is:
-  1. save session into files (*.upgrade) with a disconnected state for IRC servers and Relay clients (but no disconnection is made)
+За опцију „-save” процес је следећи:
+  1. чување сесије у фајлове (*.upgrade) у стању прекинуте везе за IRC сервере и Релеј клијенте (али се не прекида ниједна веза)
 
-With -quit or -save, you can restore the session later with this command: weechat --upgrade
-IMPORTANT: you must restore the session with exactly same configuration (files *.conf) and if possible the same WeeChat version (or a more recent one).
-It is possible to restore WeeChat session on another machine if you copy the content of WeeChat home directories (see /debug dirs).
+У случају -quit или -save, сесију касније можете опоравити следећом командом: weechat --upgrade
+ВАЖНО: сесију морате да обновите са потпуно истом конфигурацијом (фајлови *.conf) и ако је то могуће, са истом (или новијом) верзијом програма WeeChat.
+WeeChat сесија може да се обнови на другој машини ако копирате садржај WeeChat почетних директоријума (погледајте /debug dirs).
 ----
 
 [[command_weechat_uptime]]
@@ -2298,52 +2298,52 @@ scroll_unread: скролује на непрочитани маркер
           bar
           refresh
 
- enable: enable buflist
-disable: disable buflist
- toggle: toggle buflist
-    bar: add the "buflist" bar
-refresh: force the refresh of the bar items (buflist, buflist2 and buflist3)
+ enable: укључује buflist
+disable: искључује buflist
+ toggle: пребацује buflist
+    bar: додаје „buflist” траку
+refresh: форсира освежавање ставки траке (buflist, buflist2 и buflist3)
 
-The lines with buffers are displayed using string evaluation (see /help eval for the format), with these options:
-  - buflist.look.display_conditions: conditions to display a buffer in the list
-  - buflist.format.buffer: format for a buffer which is not current buffer
-  - buflist.format.buffer_current: format for the current buffer
+Линије са баферима се приказују употребом израчунавања стринга (погледајте /help eval за формат), са следећим опцијама:
+  - buflist.look.display_conditions: услови под којима се бафер приказује у листи
+  - buflist.format.buffer: формат за бафер који није текући бафер
+  - buflist.format.buffer_current: формат за текући бафер
 
-The following variables can be used in these options:
-  - bar item data (see hdata "bar_item" in API doc for a complete list), for example:
+У овим опцијама је могуће коришћење следећих променљивих:
+  - подаци ставке траке (погледајте hdata „bar_item” у документацији API за комплетну листу), на пример:
     - ${bar_item.name}
-  - window data, where the bar item is displayed (there's no window in root bars, see hdata "window" in API doc for a complete list), for example:
+  - подаци о прозору, у коме се трака приказује (не постоји прозор у кореним тракама, погледајте hdata „window” у документацији API за комплетну листу), на пример:
     - ${window.number}
     - ${window.buffer.full_name}
-  - buffer data (see hdata "buffer" in API doc for a complete list), for example:
+  - подаци о баферу (погледајте hdata „buffer” у API доку за комплетну листу), на пример:
     - ${buffer.number}
     - ${buffer.name}
     - ${buffer.full_name}
     - ${buffer.short_name}
     - ${buffer.nicklist_nicks_count}
-  - irc_server: IRC server data, defined only on an IRC buffer (see hdata "irc_server" in API doc)
-  - irc_channel: IRC channel data, defined only on an IRC channel buffer (see hdata "irc_channel" in API doc)
-  - extra variables added by buflist for convenience:
-    - ${format_buffer}: the evaluated value of option buflist.format.buffer; this can be used in option buflist.format.buffer_current to just change the background color for example
-    - ${current_buffer}: a boolean ("0" or "1"), "1" if this is the current buffer; it can be used in a condition: ${if:${current_buffer}?...:...}
-    - ${merged}: a boolean ("0" or "1"), "1" if the buffer is merged with at least another buffer; it can be used in a condition: ${if:${merged}?...:...}
-    - ${format_number}: indented number with separator (evaluation of option buflist.format.number)
-    - ${number}: indented number, for example " 1" if there are between 10 and 99 buffers; for merged buffers, this variable is set with number for the first buffer and spaces for the next buffers with same number
-    - ${number2}: indented number, for example " 1" if there are between 10 and 99 buffers
-    - ${number_displayed}: "1" if the number is displayed, otherwise "0"
-    - ${indent}: indentation for name (channel and private buffers are indented) (evaluation of option buflist.format.indent)
-    - ${format_nick_prefix}: colored nick prefix for a channel (evaluation of option buflist.format.nick_prefix)
-    - ${color_nick_prefix}: color of nick prefix for a channel (set only if the option buflist.look.nick_prefix is enabled)
-    - ${nick_prefix}: nick prefix for a channel (set only if the option buflist.look.nick_prefix is enabled)
-    - ${format_name}: formatted name (evaluation of option buflist.format.name)
-    - ${name}: the short name (if set), with a fallback on the name
-    - ${color_hotlist}: the color depending on the highest hotlist level for the buffer (evaluation of option buflist.format.hotlist_xxx where xxx is the level)
-    - ${format_hotlist}: the formatted hotlist (evaluation of option buflist.format.hotlist)
-    - ${hotlist}: the raw hotlist
-    - ${hotlist_priority}: "none", "low", "message", "private" or "highlight"
+  - irc_server: подаци о IRC серверу, дефинисани су само за IRC бафер (погледајте hdata „irc_server” у документацији API)
+  - irc_channel: подаци о IRC каналу, дефинисани су само за бафер IRC канала (погледајте hdata „irc_channel” у документацији API)
+  - buflist додаје још неке променљиве како би се олакшала употреба:
+    - ${format_buffer}: израчуната вредност опције buflist.format.buffer; ово може да се користи у опцији buflist.format.buffer_current да би се, на пример, променила само боја позадине
+    - ${current_buffer}: логичка вредност („0” или „1”), „1” ако је ово текући бафер; може да се користи у услову: ${if:${current_buffer}?...:...}
+    - ${merged}: логичка вредност („0” или „1”), „1” ако је бафер спојен са барем још једним другим бафером; може да се користи у услову: ${if:${merged}?...:...}
+    - ${format_number}: увучени број са граничником (израчуната вредност опције buflist.format.number)
+    - ${number}: увучени број, на пример „1” ако постоји између 10 и 99 бафера; заспојене бафере, ова променљива се поставља на број првог бафера и размаке за наредне бафере са под истим бројем
+    - ${number2}: увучени број, на пример „ 1” ако постоји између 10 и 99 бафера
+    - ${number_displayed}: „1” ако се број приказује, у супротном „0”
+    - ${indent}: увлачење за име (бафери канала и приватни бафери се увлаче) (израчуната вредност опције buflist.format.indent)
+    - ${format_nick_prefix}: обојени префикс надимка за канал (израчуната вредност опције buflist.format.nick_prefix)
+    - ${color_nick_prefix}: боја префикса надимка за канал (постављена је само ако је опција buflist.look.nick_prefix укључена)
+    - ${nick_prefix}: префикс надимка за канал (постављена је само ако је опција buflist.look.nick_prefix укључена)
+    - ${format_name}: форматирано име (израчуната вредност опције buflist.format.name)
+    - ${name}: кратко име (ако је постављено), има вредност имена ако није постављено
+    - ${color_hotlist}: боја која зависи ид највишег нивоа бафера у врућој листи (израчуната вредност опције buflist.format.hotlist_xxx где је xxx ниво)
+    - ${format_hotlist}: форматирана врућа листа (израчуната вредност опције buflist.format.hotlist)
+    - ${hotlist}: сирова врућа листа
+    - ${hotlist_priority}: „none”, „low”, „message”, „private” или „highlight”
     - ${hotlist_priority_number}: -1 = none, 0 = low, 1 = message, 2 = private, 3 = highlight
-    - ${format_lag}: the lag for an IRC server buffer, empty if there's no lag (evaluation of option buflist.format.lag)
-    - ${format_tls_version}: indicator of TLS version for a server buffer, empty for channels (evaluation of option buflist.format.tls_version)
+    - ${format_lag}: кашњење за бафер IRC сервера, празна у случају да нема кашњења (израчуната вредност опције buflist.format.lag)
+    - ${format_tls_version}: индикатор TLS верзије за серверски бафер, празно за канале (резултат израчунавања опције buflist.format.tls_version)
 ----
 // end::buflist_commands[]
 
@@ -3137,72 +3137,72 @@ autoload: учитавање свих скрипти из „autoload” дир�
           default -yes
           monitor [<филтер>]
 
-       list: list triggers (without argument, this list is displayed)
-   listfull: list triggers with detailed info for each trigger
-listdefault: list default triggers
-        add: add a trigger
-     addoff: add a trigger (disabled)
- addreplace: add or replace an existing trigger
-       name: name of trigger
-       hook: signal, hsignal, modifier, line, print, command, command_run, timer, config, focus, info, info_hashtable
-  arguments: arguments for the hook, depending on hook (separated by semicolons):
-             signal: name(s) of signal (required)
-             hsignal: name(s) of hsignal (required)
-             modifier: name(s) of modifier (required)
-             line: buffer type ("formatted", "free" or "*"), list of buffer masks, tags
-             print: buffer, tags, message, strip colors
-             command: command (required), description, arguments, description of arguments, completion (all arguments except command are evaluated, "${tg_trigger_name}" is replaced by the trigger name, see /help eval)
-             command_run: command(s) (required)
-             timer: interval (required), align on second, max calls
-             config: name(s) of option (required)
-             focus: name(s) of area (required)
-             info: name(s) of info (required)
-             info_hashtable: name(s) of info (required)
- conditions: evaluated conditions for the trigger
-      regex: one or more regular expressions to replace strings in variables
-    command: command to execute (many commands can be separated by ";")
-return_code: return code in callback (ok (default), ok_eat, error)
-post_action: action to take after execution (none (default), disable, delete)
-   addinput: set input with default arguments to create a trigger
-      input: set input with the command used to create the trigger
-     output: send the command to create the trigger on the buffer
-   recreate: same as "input", with option "addreplace" instead of "add"
-        set: set an option in a trigger
-     option: name of option: name, hook, arguments, conditions, regex, command, return_code
-             (for help on option, you can type: /help trigger.trigger.<name>.<option>)
-      value: new value for the option
-     rename: rename a trigger
-       copy: copy a trigger
-     enable: enable trigger(s) (without arguments: enable triggers globally)
-    disable: disable trigger(s) (without arguments: disable triggers globally)
-     toggle: toggle trigger(s) (without arguments: toggle triggers globally)
-    restart: restart trigger(s) (recreate the hooks)
-       show: show detailed info on a trigger (with some stats)
-        del: delete a trigger
-       -all: do action on all triggers
-    restore: restore trigger(s) with the default values (works only for default triggers)
-    default: delete all triggers and restore default ones
-    monitor: open the trigger monitor buffer, with optional filter:
-     filter: filter hooks/triggers to display (a hook must start with "@", for example "@signal"), many filters can be separated by commas; wildcard "*" is allowed in each trigger name
+       list: листа окидача (без аргумента се приказује ова листа)
+   listfull: листа окидача са детаљним инфо о сваком окидачу
+listdefault: листа подразумеваних окидача
+        add: додавање окидача
+     addoff: додавање окидача (искљученог)
+ addreplace: додавање или замена постојећег окидача
+        име: име окидача
+       кука: signal, hsignal, modifier, line, print, command, command_run, timer, config, focus, info, info_hashtable
+  аргументи: аргументи за куку, у зависности од куке (раздвојени тачка запетама):
+             signal: име(на) signal-а (обавезно)
+             hsignal: име(на) hsignal-а (обавезно)
+             modifier: име(на) modifier-а (обавезно)
+             line: тип бафера („formatted”, „free” или „*”), листа маски бафера, ознака
+             print: бафер, ознаке, порука, уклањање боја
+             command: команда (обавезна), опис, аргументи, опис аргумената, довршавање (сви аргументи осим command се израчунавају, „${tg_trigger_name}” се замењује именом окидача, погледајте /help eval)
+             command_run: команд(а/е) (обавезно)
+             timer: интервал (обавезан), поравнање на секунди, макс позива
+             config: име(на) опције (обавезно)
+             focus: име(на) површине (обавезно)
+             info: име(на) информације (обавезно)
+             info_hashtable: име(на) информације (обавезно)
+     услови: израчунати услови за окидач
+   регизраз: један или више регуларних израза за замену стрингова у променљивама
+    команда: команда која треба да се изврши (више команди може да се раздвоји са „;”)
+   повр_кôд: повратни кôд у функцији повратног позива (ok (подраз), ok_eat, error)
+пост_акција: акција која се покреће након извршавања (none (подраз), disable, delete)
+   addinput: постављање улаза на подразумеване аргументе да се креира окидач
+      input: постављање улаза на команду која је употребљена за креирање окидача
+     output: слање команде за креирање окидача у бафер
+   recreate: исто као „input”, са опцијом „addreplace” уместо „add”
+        set: постављање опције у окидачу
+     опција: име опције: name, hook, arguments, conditions, regex, command, return_code
+             (за помоћ у вези опције, можете да откуцате: /help trigger.trigger.<име>.<опција>)
+   вредност: нова вредност опције
+     rename: промена имена окидача
+       copy: копирање окидача
+     enable: укључивање окидача (без аргумената: окидачи се укључују глобално)
+    disable: искључивање окидача (без аргумената: окидачи се искључују глобално)
+     toggle: пребацивање окидача (без аргумената: окидачи се пребацују глобално)
+    restart: поновно покретање окидача (куке се поново креирају)
+       show: приказ детаљних информација о окидачу (са мало статистике)
+        del: брисање окидача
+       -all: извршавање акције над свим окидачима
+    restore: обнављање окидача са подразумеваним вредностима (функционише само за подразумеване окидаче)
+    default: брисање свих окидача и обнављање подразумеваних
+    monitor: отварање бафера за праћење окидача, са необавезним филтером:
+     филтер: филтрирање кука/окидача који се приказују (кука мора да почиње са „@”, на пример „@signal”), више филтера може да се раздвоји запетама; дозвољен је џокер „*” у сваком имену окидача
 
-When a trigger callback is called, following actions are performed, in this order:
-  1. check conditions; if false, exit
-  2. replace text using POSIX extended regular expression(s) (if defined in trigger)
-  3. execute command(s) (if defined in trigger)
-  4. exit with a return code (except for modifier, line, focus, info and info_hashtable)
-  5. perform post action
+Када се позове функција повратног позива окидача, извршавају се следеће акције, у наведеном редоследу:
+  1. провера услова; ако је нетачно, напушта се
+  2. замена текста употребом POSIX проширених регуларних израза (ако су дефинисани у окидачу)
+  3. извршавање команд(е/и) (ако су дефинисане у окидачу)
+  4. излазак са повратним кодом (осим за modifier, line, focus, info и info_hashtable)
+  5. извршавање пост акције
 
-Examples (you can also look at default triggers with /trigger listdefault):
-  add text attributes *bold*, _underline_ and /italic/ (only in user messages):
-    /trigger add effects modifier weechat_print "${tg_tag_nick}" "==\*([^ ]+)\*==*${color:bold}${re:1}${color:-bold}*== ==_([^ ]+)_==_${color:underline}${re:1}${color:-underline}_== ==/([^ ]+)/==/${color:italic}${re:1}${color:-italic}/"
-  hide nicklist bar on small terminals:
+Примери (такође можете да погледате садржај подразумеваних окидача са /trigger listdefault):
+  додавање текст атрибута *подебљано*, _подвучено и /курзив/ (само у корисничким порукама):
+    /trigger add effects modifier weechat_print „${tg_tag_nick}” "==\*([^ ]+)\*==*${color:bold}${re:1}${color:-bold}*== ==_([^ ]+)_==_${color:underline}${re:1}${color:-underline}_== ==/([^ ]+)/==/${color:italic}${re:1}${color:-italic}/"
+  сакривање траке листе надимака на малим терминалима:
     /trigger add resize_small signal signal_sigwinch "${info:term_width} < 100" "" "/bar hide nicklist"
     /trigger add resize_big signal signal_sigwinch "${info:term_width} >= 100" "" "/bar show nicklist"
-  silently save config each hour:
+  чување конфигурације на сваки сат, у тишини:
     /trigger add cfgsave timer 3600000;0;0 "" "" "/mute /save"
-  silently save WeeChat session at midnight (see /help upgrade):
+  у тишини чува WeeChat сесију у поноћ (погледајте /help upgrade):
     /trigger add session_save signal day_changed "" "" "/mute /upgrade -save"
-  open trigger monitor and show only modifiers and triggers whose name starts with "resize":
+  отварање монитора окидача и приказ само модификатора и окидача чије име почиње са „resize”:
     /trigger monitor @modifier,resize*
 ----
 // end::trigger_commands[]

@@ -751,7 +751,7 @@
 ** подразумевана вредност: `+""+`
 
 * [[option_weechat.look.highlight_disable_regex]] *weechat.look.highlight_disable_regex*
-** опис: pass:none[POSIX extended regular expression used to prevent any highlight from a message: this option has higher priority over other highlight options (if the string is found in the message, the highlight is disabled and the other options are ignored), regular expression is case insensitive (use "(?-i)" at beginning to make it case sensitive), examples: "<flash.*>", "(?-i)<Flash.*>"]
+** опис: pass:none[POSIX проширени регуларни израз који се користи за спречавање било каквог истицања у поруци: ова опција има виши приоритет у односу на све осталеопције истицања (ако се стринг пронађе у поруци, истицање се исључује и све остале опције се игноришу), регуларни израз не прави разлику у величини слова (употребите „(?-i)” на почетку да се величина слова не узима у обзир), примери: „<flash.*>”, „(?-i)<Flash.*>”]
 ** тип: стринг
 ** вредности: било који стринг
 ** подразумевана вредност: `+""+`
@@ -1403,7 +1403,7 @@
 ** подразумевана вредност: `+default+`
 
 * [[option_logger.file.auto_log]] *logger.file.auto_log*
-** опис: pass:none[automatically save content of buffers to files (unless a buffer disables log); if disabled, logging is disabled on all buffers]
+** опис: pass:none[аутоматско чување садржаја бафера у фајлове (осим у случају да бафер искључује логовање); ако је искључена, логовање се искључује у свим баферима]
 ** тип: логичка
 ** вредности: on, off
 ** подразумевана вредност: `+on+`
@@ -1551,7 +1551,7 @@
 ** подразумевана вредност: `+lightmagenta+`
 
 * [[option_trigger.color.identifier]] *trigger.color.identifier*
-** опис: pass:none[text color for trigger context identifier in monitor buffer]
+** опис: pass:none[боја текста за идентификатор контекста окидача у монитор баферу]
 ** тип: боја
 ** вредности: име WeeChat боје (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), број terminal боје или алијас; испред боје су дозвољени атрибути (само за боју текста, не и за позадину): „*” за подебљано, „!” за обрнуто, „/” за курзив, „_” за подвучено
 ** подразумевана вредност: `+cyan+`
@@ -1783,7 +1783,7 @@
 ** подразумевана вредност: `+"${buffer.hidden}==0"+`
 
 * [[option_buflist.look.enabled]] *buflist.look.enabled*
-** опис: pass:none[enable buflist; it is recommended to use this option instead of just hiding the bar because it also removes some internal hooks that are not needed any more when the bar is hidden; you can also use the command "/buflist toggle" or use the default key alt+shift+b]
+** опис: pass:none[enable buflist; препроручује се да се уместо простог скривања траке употреби ова опција јер она уклања и неке интерне куке које више нису потребне када трака сакрије; такође можете да употребите и команду „/buflist toggle” или подразумевани тастер alt+shift+b]
 ** тип: логичка
 ** вредности: on, off
 ** подразумевана вредност: `+on+`
@@ -2139,7 +2139,7 @@
 ** подразумевана вредност: `+cyan+`
 
 * [[option_irc.color.message_chghost]] *irc.color.message_chghost*
-** опис: pass:none[color for text in "chghost" messages]
+** опис: pass:none[боја за текст у „chghost” порукама]
 ** тип: боја
 ** вредности: име WeeChat боје (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), број terminal боје или алијас; испред боје су дозвољени атрибути (само за боју текста, не и за позадину): „*” за подебљано, „!” за обрнуто, „/” за курзив, „_” за подвучено
 ** подразумевана вредност: `+brown+`
@@ -2163,7 +2163,7 @@
 ** подразумевана вредност: `+red+`
 
 * [[option_irc.color.message_setname]] *irc.color.message_setname*
-** опис: pass:none[color for text in "setname" messages]
+** опис: pass:none[боја за текст у „setname” порукама]
 ** тип: боја
 ** вредности: име WeeChat боје (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), број terminal боје или алијас; испред боје су дозвољени атрибути (само за боју текста, не и за позадину): „*” за подебљано, „!” за обрнуто, „/” за курзив, „_” за подвучено
 ** подразумевана вредност: `+brown+`
@@ -2565,7 +2565,7 @@
 ** подразумевана вредност: `+on+`
 
 * [[option_irc.look.smart_filter_setname]] *irc.look.smart_filter_setname*
-** опис: pass:none[enable smart filter for "setname" messages]
+** опис: pass:none[укључивање паметног филтера за „setname” поруке]
 ** тип: логичка
 ** вредности: on, off
 ** подразумевана вредност: `+on+`

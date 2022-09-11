@@ -1403,7 +1403,7 @@
 ** Standardwert: `+default+`
 
 * [[option_logger.file.auto_log]] *logger.file.auto_log*
-** Beschreibung: pass:none[automatically save content of buffers to files (unless a buffer disables log); if disabled, logging is disabled on all buffers]
+** Beschreibung: pass:none[speichert automatisch den Inhalt eines Buffers in eine Datei (sofern das Protokollieren für den Buffer nicht deaktiviert sein sollte); Falls deaktiviert, wird die Protokollierung für alle Buffer deaktiviert]
 ** Typ: boolesch
 ** Werte: on, off
 ** Standardwert: `+on+`
@@ -1551,7 +1551,7 @@
 ** Standardwert: `+lightmagenta+`
 
 * [[option_trigger.color.identifier]] *trigger.color.identifier*
-** Beschreibung: pass:none[text color for trigger context identifier in monitor buffer]
+** Beschreibung: pass:none[Textfarbe für Trigger-Kontextkennung im Monitorbuffer]
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
 ** Standardwert: `+cyan+`
@@ -1783,7 +1783,7 @@
 ** Standardwert: `+"${buffer.hidden}==0"+`
 
 * [[option_buflist.look.enabled]] *buflist.look.enabled*
-** Beschreibung: pass:none[enable buflist; it is recommended to use this option instead of just hiding the bar because it also removes some internal hooks that are not needed any more when the bar is hidden; you can also use the command "/buflist toggle" or use the default key alt+shift+b]
+** Beschreibung: pass:none[Buflist aktivieren; Es wird empfohlen, diese Option zu verwenden, anstatt nur die Bar zu verstecken, da hiermit auch interne Hooks entfernt werden, die nicht benötigt werden, falls die Leiste ausgeblendet wird; Sie können auch den Befehl "/buflist toggle" verwenden oder die Standardtastenbelegung alt+shift+b]
 ** Typ: boolesch
 ** Werte: on, off
 ** Standardwert: `+on+`
@@ -2139,7 +2139,7 @@
 ** Standardwert: `+cyan+`
 
 * [[option_irc.color.message_chghost]] *irc.color.message_chghost*
-** Beschreibung: pass:none[color for text in "chghost" messages]
+** Beschreibung: pass:none[Textfarbe in der "chghost" Nachrichten dargestellt werden]
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
 ** Standardwert: `+brown+`
@@ -2163,7 +2163,7 @@
 ** Standardwert: `+red+`
 
 * [[option_irc.color.message_setname]] *irc.color.message_setname*
-** Beschreibung: pass:none[color for text in "setname" messages]
+** Beschreibung: pass:none[Textfarbe in der "setname" Nachrichten dargestellt werden]
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
 ** Standardwert: `+brown+`
@@ -2565,7 +2565,7 @@
 ** Standardwert: `+on+`
 
 * [[option_irc.look.smart_filter_setname]] *irc.look.smart_filter_setname*
-** Beschreibung: pass:none[enable smart filter for "setname" messages]
+** Beschreibung: pass:none[aktiviert einen intelligenten Filter für "setname" Nachrichten]
 ** Typ: boolesch
 ** Werte: on, off
 ** Standardwert: `+on+`

@@ -128,7 +128,7 @@
 
 | weechat | uptime | WeeChat време извршавања (формат: „дана:чч:мм:сс”) | „days” (број дана) или „seconds” (број секунди) (није обавезно)
 
-| weechat | uptime_current | WeeChat uptime for the current process only (upgrades with /upgrade command are ignored) (format: "days:hh:mm:ss") | „days” (број дана) или „seconds” (број секунди) (није обавезно)
+| weechat | uptime_current | WeeChat време извршавања само за текући процес (ажурирања помоћу команде /upgrade се игноришу) (формат: „дана:чч:мм:сс”) | „days” (број дана) или „seconds” (број секунди) (није обавезно)
 
 | weechat | version | верзија програма WeeChat | -
 
