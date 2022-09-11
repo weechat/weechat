@@ -8958,11 +8958,11 @@ weechat_hook_signal ("3000|quit;upgrade", &signal_cb, NULL, NULL);
 Les types de "hooks" suivants autorisent une priorité :
 
 * <<_hook_command,command>>
+* <<_hook_completion,completion>>
 * <<_hook_command_run,command_run>>
 * <<_hook_signal,signal>>
 * <<_hook_hsignal,hsignal>>
 * <<_hook_config,config>>
-* <<_hook_completion,completion>>
 * <<_hook_modifier,modifier>>
 * <<_hook_info,info>>
 * <<_hook_info_hashtable,info_hashtable>>
