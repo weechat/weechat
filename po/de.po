@@ -26,7 +26,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2022-08-15 14:42+0200\n"
-"PO-Revision-Date: 2022-08-08 10:21+0200\n"
+"PO-Revision-Date: 2022-09-11 16:24+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
@@ -6529,6 +6529,12 @@ msgid ""
 "more when the bar is hidden; you can also use the command \"/buflist "
 "toggle\" or use the default key alt+shift+b"
 msgstr ""
+"Buflist aktivieren; Es wird empfohlen, diese Option zu verwenden, anstatt nur"
+" die Bar zu verstecken, "
+"da hiermit auch interne Hooks entfernt werden, die nicht benötigt werden,"
+" falls die Leiste ausgeblendet "
+"wird; Sie können auch den Befehl \"/buflist toggle\" verwenden oder die"
+" Standardtastenbelegung alt+shift+b"
 
 msgid ""
 "if enabled, clicks with left/right buttons on the line with current buffer "
@@ -11142,10 +11148,9 @@ msgstr ""
 "aktiviert einen intelligenten Filter für \"part\" und \"quit\" Nachrichten"
 
 #. TRANSLATORS: please do not translate "setname"
-#, fuzzy
 #| msgid "enable smart filter for \"join\" messages"
 msgid "enable smart filter for \"setname\" messages"
-msgstr "aktiviert einen intelligenten Filter für \"join\" Nachrichten"
+msgstr "aktiviert einen intelligenten Filter für \"setname\" Nachrichten"
 
 msgid "enable automatic addition of temporary servers with command /connect"
 msgstr ""
@@ -11200,10 +11205,9 @@ msgid "color for text in account messages"
 msgstr "Textfarbe für \"account\" Nachrichten"
 
 #. TRANSLATORS: please do not translate "chghost"
-#, fuzzy
 #| msgid "color for text in chghost messages"
 msgid "color for text in \"chghost\" messages"
-msgstr "Textfarbe in der chghost Nachrichten dargestellt werden"
+msgstr "Textfarbe in der \"chghost\" Nachrichten dargestellt werden"
 
 msgid "color for text in join messages"
 msgstr ""
@@ -11221,12 +11225,9 @@ msgstr ""
 "angezeigt werden soll"
 
 #. TRANSLATORS: please do not translate "setname"
-#, fuzzy
 #| msgid "color for text in join messages"
 msgid "color for text in \"setname\" messages"
-msgstr ""
-"Textfarbe in der die Meldungen für das Betreten eines Kanals angezeigt "
-"werden soll"
+msgstr "Textfarbe in der \"setname\" Nachrichten dargestellt werden"
 
 #. TRANSLATORS: please do not translate the list of WeeChat color names at the end of string
 msgid ""
@@ -11834,15 +11835,15 @@ msgstr "%s%s%s%s%s%s%s%s%s%s hat den IRC verlassen %s(%s%s%s)"
 msgid "%s%s%s%s%s%s%s%s%s%s has quit"
 msgstr "%s%s%s%s%s%s%s%s%s%s hat den IRC verlassen"
 
-#, fuzzy, c-format
+#, c-format
 #| msgid "%s%s%s%s has changed topic for %s%s%s to \"%s%s%s\""
 msgid "%s%s%s%s has changed real name to %s\"%s%s%s\"%s"
-msgstr "%s%s%s%s hat das Thema für den Kanal %s%s%s auf \"%s%s%s\" gesetzt"
+msgstr "%s%s%s%s hat den Realnamen auf %s\"%s%s%s\"%s geändert"
 
-#, fuzzy, c-format
+#, c-format
 #| msgid "%sYour real name has been set to \"%s\""
 msgid "%s%sYour real name has been set to %s\"%s%s%s\"%s"
-msgstr "%sRealname wurde gesetzt auf: %s"
+msgstr "%s%sIhr richtiger Name wurde auf %s\"%s%s%s\"%s gesetzt"
 
 #, c-format
 msgid "%s%s: \"%s\" command received without channel"
@@ -12665,7 +12666,6 @@ msgstr ""
 "Farbe der Zeilen des Verlaufspeichers; wird nur dann angewandt, wenn die "
 "Option logger.file.color_lines = off ist"
 
-#, fuzzy
 #| msgid ""
 #| "automatically save content of buffers to files (unless a buffer disables "
 #| "log)"
@@ -12674,7 +12674,8 @@ msgid ""
 "log); if disabled, logging is disabled on all buffers"
 msgstr ""
 "speichert automatisch den Inhalt eines Buffers in eine Datei (sofern das "
-"Protokollieren für den Buffer nicht deaktiviert sein sollte)"
+"Protokollieren für den Buffer nicht deaktiviert sein sollte); Falls"
+" deaktiviert, wird die Protokollierung für alle Buffer deaktiviert"
 
 msgid ""
 "use ANSI color codes in lines written in log files and display backlog lines "
@@ -15285,16 +15286,19 @@ msgstr "keine Variable"
 msgid "creating variable"
 msgstr "erstelle Variable"
 
-#, fuzzy, c-format
+#, c-format
 #| msgid "%s  running command %s\"%s%s%s\"%s on buffer %s%s%s"
 msgid "%s%lu%s  running command %s\"%s%s%s\"%s on buffer %s%s%s"
-msgstr "%s  auszuführender Befehl %s\"%s%s%s\"%s in Buffer %s%s%s"
+msgstr "%s%lu%s führe Befehl %s\"%s%s%s\"%s für Buffer %s%s%s aus"
 
 #, c-format
 msgid ""
 "%s%lu%s  elapsed: init=%.6fs, conditions=%.6fs, regex=%.6fs, command=%.6fs, "
 "total=%.6fs"
 msgstr ""
+"%s%lu%s  verstrichen: init=%.6fs, Bedingungen=%.6fs, regex=%.6fs, Befehl="
+"%.6fs, "
+"Total=%.6fs"
 
 msgid "Triggers enabled"
 msgstr "Trigger aktiviert"
@@ -15446,7 +15450,8 @@ msgstr "verwaltet Trigger, das Schweizer Armeemesser für WeeChat"
 
 msgid ""
 "list|listfull|listdefault || add|addoff|addreplace <name> <hook> "
-"[\"<arguments>\" [\"<conditions>\" [\"<regex>\" [\"<command>\" [\"<return_code>\" [\"<post_action>\"]]]]]] "
+"[\"<arguments>\" [\"<conditions>\" [\"<regex>\" [\"<command>\" [\"<"
+"return_code>\" [\"<post_action>\"]]]]]] "
 "|| addinput [<hook>] || input|output|recreate <name> || set <name> <option> "
 "<value> || rename|copy <name> <new_name> || enable|disable|toggle [<name>|-"
 "all [<name>...]] || restart <name>|-all [<name>...] || show <name> || del "
@@ -15454,14 +15459,14 @@ msgid ""
 "monitor [<filter>]"
 msgstr ""
 "list|listfull|listdefault || add|addoff|addreplace <name> <hook> "
-"[\"<arguments>\" [\"<conditions>\" [\"<regex>\" [\"<command>\" [\"<return_code>\" [\"<post_action>\"]]]]]] "
+"[\"<arguments>\" [\"<conditions>\" [\"<regex>\" [\"<command>\" [\"<"
+"return_code>\" [\"<post_action>\"]]]]]] "
 "|| addinput [<hook>] || input|output|recreate <name> || set <name> <option> "
 "<value> || rename|copy <name> <new_name> || enable|disable|toggle [<name>|-"
 "all [<name>...]] || restart <name>|-all [<name>...] || show <name> || del "
 "<name>|-all [<name>...] || restore <name> [<name>...] || default -yes || "
 "monitor [<filter>]"
 
-#, fuzzy
 #| msgid ""
 #| "       list: list triggers (without argument, this list is displayed)\n"
 #| "   listfull: list triggers with detailed info for each trigger\n"
@@ -15717,7 +15722,7 @@ msgstr ""
 "       show: zeigt detaillierte Informationen zu einem Trigger (inklusive "
 "einer kleinen Statistik)\n"
 "        del: entfernt einen Trigger\n"
-"       -all: führt eine Aktion aus, die alle Trigger beinhaltet\n"
+"       -all: führt eine Aktion aus, die alle Trigger betrifft\n"
 "    restore: stellt Trigger mit Standardwerten wieder her (funktioniert nur "
 "bei vorgegebenen Triggern)\n"
 "    default: stellt die standardmäßigen Trigger wieder her\n"
@@ -15911,10 +15916,9 @@ msgstr ""
 "Textfarbe für das Flag welches anzeigt welche nachfolgende Aktion ausgeführt "
 "werden soll (in /trigger list)"
 
-#, fuzzy
 #| msgid "hooks for triggers (for filter in monitor buffer)"
 msgid "text color for trigger context identifier in monitor buffer"
-msgstr "Hooks für Trigger (definiert den Filter für den Monitor-Buffer)"
+msgstr "Textfarbe für Trigger-Kontextkennung im Monitorbuffer"
 
 msgid "text color for regular expressions"
 msgstr "Textfarbe für reguläre Ausdrücke"
