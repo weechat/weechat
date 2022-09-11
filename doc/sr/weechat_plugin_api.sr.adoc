@@ -8540,19 +8540,39 @@ _WeeChat ≥ 0.3.4._
 
 У неким кукама можете да поставите приоритет. Кука са вишим приоритетом се налази при почетку листе кука, тако да ће се пронаћи и извршити пре осталих кука. Корисно је за модификаторе, јер је за њих битан редослед извршавања.
 
-Да бисте поставили приоритет, морате да користите следећу синтаксу за аргумент за који је дозвољен приоритет: „nnn|име” где је „nnn” позитиван цео број са приоритетом, а „име” је име аргумента (приоритет се не појављује у имену, он се аутоматски уклања из стринга).
+Да бисте поставили приоритет, морате да користите следећу синтаксу за аргумент за који је дозвољен приоритет: `nnn|име` где је `nnn` позитиван цео број са приоритетом, а `име` је име аргумента (приоритет се не појављује у имену, он се аутоматски уклања из стринга). +
+// TRANSLATION MISSING
+Only a single priority per hook is allowed.
 
 Подразумевани приоритет је 1000.
 
-C пример:
+// TRANSLATION MISSING
+C examples:
 
+// TRANSLATION MISSING
 [source,c]
 ----
 /* модификатор кука са приоритетом = 2000 */
 weechat_hook_modifier ("2000|input_text_display", &modifier_cb, NULL, NULL);
+
+/* hook two signals with priority = 3000 */
+weechat_hook_signal ("3000|quit;upgrade", &signal_cb, NULL, NULL);
 ----
 
-Приоритет дозвољавају следећи типови кука: command, command_run, signal, hsignal, config, completion, modifier, info, info_hashtable, infolist, hdata, focus.
+Приоритет дозвољавају следећи типови кука:
+
+* <<_hook_command,command>>
+* <<_hook_command_run,command_run>>
+* <<_hook_signal,signal>>
+* <<_hook_hsignal,hsignal>>
+* <<_hook_config,config>>
+* <<_hook_completion,completion>>
+* <<_hook_modifier,modifier>>
+* <<_hook_info,info>>
+* <<_hook_info_hashtable,info_hashtable>>
+* <<_hook_infolist,infolist>>
+* <<_hook_hdata,hdata>>
+* <<_hook_focus,focus>>
 
 ==== hook_command
 

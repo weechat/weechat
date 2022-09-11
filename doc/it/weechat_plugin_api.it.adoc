@@ -9083,23 +9083,41 @@ prima di altri. Può risultare utile per i modificatori, data l'importanza
 nell'ordine di esecuzione.
 
 Per impostare la priorità, è necessario usare questa sintassi per gli
-argomenti dove è consentita la priorità: "nnn|nome" dove "nnn" è un intero non
-negativo con la priorità e "nome" è il nome per l'argomenti (la priorità non
-compare nel nome, viene rimossa automaticamente dalla stringa).
+argomenti dove è consentita la priorità: `nnn|nome` dove `nnn` è un intero non
+negativo con la priorità e `nome` è il nome per l'argomenti (la priorità non
+compare nel nome, viene rimossa automaticamente dalla stringa). +
+// TRANSLATION MISSING
+Only a single priority per hook is allowed.
 
 La priorità predefinita è 1000.
 
-Esempio in C:
+// TRANSLATION MISSING
+C examples:
 
+// TRANSLATION MISSING
 [source,c]
 ----
 /* hook per il modificatore con priorità = 2000 */
 weechat_hook_modifier ("2000|input_text_display", &modifier_cb, NULL, NULL);
+
+/* hook two signals with priority = 3000 */
+weechat_hook_signal ("3000|quit;upgrade", &signal_cb, NULL, NULL);
 ----
 
-I tipi di hook che seguono consentono la priorità: command, command_run,
-signal, hsignal, config, completion, modifier, info, info_hashtable, infolist,
-hdata, focus.
+I tipi di hook che seguono consentono la priorità:
+
+* <<_hook_command,command>>
+* <<_hook_command_run,command_run>>
+* <<_hook_signal,signal>>
+* <<_hook_hsignal,hsignal>>
+* <<_hook_config,config>>
+* <<_hook_completion,completion>>
+* <<_hook_modifier,modifier>>
+* <<_hook_info,info>>
+* <<_hook_info_hashtable,info_hashtable>>
+* <<_hook_infolist,infolist>>
+* <<_hook_hdata,hdata>>
+* <<_hook_focus,focus>>
 
 ==== hook_command
 

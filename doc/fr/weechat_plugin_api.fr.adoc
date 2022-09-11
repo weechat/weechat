@@ -8937,23 +8937,38 @@ trouvé et exécuté avant les autres "hooks". Cela est pratique pour les
 modificateurs, car l'ordre d'exécution est important.
 
 Pour définir une priorité, vous devez utiliser cette syntaxe, pour un paramètre
-où la priorité est autorisée : "nnn|nom" où "nnn" est un entier positif ou nul
-avec la priorité et "nom" le nom pour le paramètre (la priorité n'apparaît pas
-dans le nom, elle est automatiquement retirée de la chaîne).
+où la priorité est autorisée : `nnn|nom` où `nnn` est un entier positif ou nul
+avec la priorité et `nom` le nom pour le paramètre (la priorité n'apparaît pas
+dans le nom, elle est automatiquement retirée de la chaîne). +
+Une seule priorité par "hook" est autorisée.
 
 La priorité par défaut est 1000.
 
-Exemple en C :
+Exemples en C :
 
 [source,c]
 ----
-/* accroche un modificateur avec priorité = 2000 */
+/* accrocher un modificateur avec priorité = 2000 */
 weechat_hook_modifier ("2000|input_text_display", &modifier_cb, NULL, NULL);
+
+/* accrocher deux signaux avec priorité = 3000 */
+weechat_hook_signal ("3000|quit;upgrade", &signal_cb, NULL, NULL);
 ----
 
-Les types de "hooks" suivants autorisent une priorité : command, command_run,
-signal, hsignal, config, completion, modifier, info, info_hashtable, infolist,
-hdata, focus.
+Les types de "hooks" suivants autorisent une priorité :
+
+* <<_hook_command,command>>
+* <<_hook_command_run,command_run>>
+* <<_hook_signal,signal>>
+* <<_hook_hsignal,hsignal>>
+* <<_hook_config,config>>
+* <<_hook_completion,completion>>
+* <<_hook_modifier,modifier>>
+* <<_hook_info,info>>
+* <<_hook_info_hashtable,info_hashtable>>
+* <<_hook_infolist,infolist>>
+* <<_hook_hdata,hdata>>
+* <<_hook_focus,focus>>
 
 ==== hook_command
 

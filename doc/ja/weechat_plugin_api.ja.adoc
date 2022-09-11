@@ -8826,22 +8826,41 @@ _WeeChat バージョン 0.3.4 以上で利用可。_
 一部のフックに対して優先度を設定することができます。フックリストは優先度の高い順にフックが並べられ、高い優先度を持つフックはそれよりも低い優先度を持つフックが実行される前に実行されます。これは実行順序が重要となる修飾子で便利です。
 
 優先度が指定できる引数に優先度を設定するには、必ず以下の構文を使ってください:
-"nnn|name" ここで "nnn" は優先度を示すゼロおよび正の整数で
-"name" は引数の名前です
-(優先度は自動的に文字列から削除され、フックの名前になります)。
+`nnn|name` ここで `nnn` は優先度を示すゼロおよび正の整数で
+`name` は引数の名前です
+(優先度は自動的に文字列から削除され、フックの名前になります)。 +
+// TRANSLATION MISSING
+Only a single priority per hook is allowed.
 
 デフォルトの優先度は 1000 です。
 
-C 言語での使用例:
+// TRANSLATION MISSING
+C examples:
 
+// TRANSLATION MISSING
 [source,c]
 ----
 /* hook modifier with priority = 2000 */
 weechat_hook_modifier ("2000|input_text_display", &modifier_cb, NULL, NULL);
+
+/* hook two signals with priority = 3000 */
+weechat_hook_signal ("3000|quit;upgrade", &signal_cb, NULL, NULL);
 ----
 
 以下のフック型に対して優先度を設定できます:
-command、command_run、signal、hsignal、config、completion、modifier、info、info_hashtable、infolist、hdata、focus。
+
+* <<_hook_command,command>>
+* <<_hook_command_run,command_run>>
+* <<_hook_signal,signal>>
+* <<_hook_hsignal,hsignal>>
+* <<_hook_config,config>>
+* <<_hook_completion,completion>>
+* <<_hook_modifier,modifier>>
+* <<_hook_info,info>>
+* <<_hook_info_hashtable,info_hashtable>>
+* <<_hook_infolist,infolist>>
+* <<_hook_hdata,hdata>>
+* <<_hook_focus,focus>>
 
 ==== hook_command
 

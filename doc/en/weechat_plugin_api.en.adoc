@@ -8796,22 +8796,38 @@ beginning of hooks list, so it will be found and executed before other hooks.
 It's useful for modifiers, because execution order is important.
 
 To set a priority, you must use this syntax, for argument where priority is
-allowed: "nnn|name" where "nnn" is non-negative integer with priority and "name"
+allowed: `nnn|name` where `nnn` is non-negative integer with priority and `name`
 the name for argument (priority does not appear in name, it is automatically
-removed from string).
+removed from string). +
+Only a single priority per hook is allowed.
 
 Default priority is 1000.
 
-C example:
+C examples:
 
 [source,c]
 ----
 /* hook modifier with priority = 2000 */
 weechat_hook_modifier ("2000|input_text_display", &modifier_cb, NULL, NULL);
+
+/* hook two signals with priority = 3000 */
+weechat_hook_signal ("3000|quit;upgrade", &signal_cb, NULL, NULL);
 ----
 
-Following hook types allow priority: command, command_run, signal, hsignal,
-config, completion, modifier, info, info_hashtable, infolist, hdata, focus.
+Following hook types allow priority:
+
+* <<_hook_command,command>>
+* <<_hook_command_run,command_run>>
+* <<_hook_signal,signal>>
+* <<_hook_hsignal,hsignal>>
+* <<_hook_config,config>>
+* <<_hook_completion,completion>>
+* <<_hook_modifier,modifier>>
+* <<_hook_info,info>>
+* <<_hook_info_hashtable,info_hashtable>>
+* <<_hook_infolist,infolist>>
+* <<_hook_hdata,hdata>>
+* <<_hook_focus,focus>>
 
 ==== hook_command
 
