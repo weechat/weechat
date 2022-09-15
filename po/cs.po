@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2022-08-15 14:42+0200\n"
+"POT-Creation-Date: 2022-09-14 21:38+0200\n"
 "PO-Revision-Date: 2022-06-18 16:11+0200\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8689,6 +8689,11 @@ msgstr ""
 "zobrazit v soukromém okně zprávu po tom co se uživatel vráti (po odpojení od "
 "serveru)"
 
+#, fuzzy
+#| msgid "use same nick color for channel and private"
+msgid "display nick change in private"
+msgstr "použít stejnou barvu přezdívky pro kanál a soukromý rozhovor"
+
 msgid ""
 "display a warning in private buffer if the address of remote nick has "
 "changed; this option is disabled by default because servers like bitlbee are "
@@ -13269,14 +13274,6 @@ msgid "%s: file %s (local filename: %s) will be resumed at position %llu"
 msgstr "%s: soubor %s (lokální jméno souboru: %s) bude obnoven na pozici %llu"
 
 #, c-format
-msgid "%s%s: address \"%s\" resolved to a larger sockaddr than expected"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "%s%s: invalid address \"%s\": error %d %s"
-msgstr "%s%s: nevalidní bind adresa \"%s\" pro %s"
-
-#, c-format
 msgid "%s%s: missing arguments (%s)"
 msgstr "%s%s: chybí argumenty (%s)"
 
@@ -13535,6 +13532,14 @@ msgstr "seznam xfer"
 
 msgid "xfer pointer (optional)"
 msgstr "ukazatel xfer (volitelné)"
+
+#, c-format
+msgid "%s%s: address \"%s\" resolved to a larger sockaddr than expected"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: invalid address \"%s\": error %d %s"
+msgstr "%s%s: nevalidní bind adresa \"%s\" pro %s"
 
 #, fuzzy, c-format
 msgid "%s%s: unable to create pipe: error %d %s"

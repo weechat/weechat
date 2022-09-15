@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2022-08-15 14:42+0200\n"
+"POT-Creation-Date: 2022-09-14 21:38+0200\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7356,6 +7356,9 @@ msgstr ""
 msgid "display a message in private when user is back (after quit on server)"
 msgstr ""
 
+msgid "display nick change in private"
+msgstr ""
+
 msgid ""
 "display a warning in private buffer if the address of remote nick has "
 "changed; this option is disabled by default because servers like bitlbee are "
@@ -11452,14 +11455,6 @@ msgid "%s: file %s (local filename: %s) will be resumed at position %llu"
 msgstr ""
 
 #, c-format
-msgid "%s%s: address \"%s\" resolved to a larger sockaddr than expected"
-msgstr ""
-
-#, c-format
-msgid "%s%s: invalid address \"%s\": error %d %s"
-msgstr ""
-
-#, c-format
 msgid "%s%s: missing arguments (%s)"
 msgstr ""
 
@@ -11680,6 +11675,14 @@ msgid "list of xfer"
 msgstr ""
 
 msgid "xfer pointer (optional)"
+msgstr ""
+
+#, c-format
+msgid "%s%s: address \"%s\" resolved to a larger sockaddr than expected"
+msgstr ""
+
+#, c-format
+msgid "%s%s: invalid address \"%s\": error %d %s"
 msgstr ""
 
 #, c-format

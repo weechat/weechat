@@ -2007,7 +2007,7 @@ IRC_PROTOCOL_CALLBACK(nick)
 {
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick, *ptr_nick_found;
-    char *old_color, str_tags[512], *buffer_name;
+    char *old_color, *new_color, str_tags[512], *buffer_name;
     int local_nick, smart_filter;
     struct t_irc_channel_speaking *ptr_nick_speaking;
 
@@ -2081,6 +2081,48 @@ IRC_PROTOCOL_CALLBACK(nick)
                                         ptr_channel->name);
                     if (buffer_name)
                         free (buffer_name);
+                    if (weechat_config_boolean (irc_config_look_display_pv_nick_change))
+                    {
+                        if (weechat_config_boolean (irc_config_look_color_nicks_in_server_messages))
+                        {
+                            if (weechat_config_boolean (irc_config_look_color_pv_nick_like_channel))
+                            {
+                                old_color = irc_nick_find_color (nick);
+                                new_color = irc_nick_find_color (params[0]);
+                            }
+                            else
+                            {
+                                old_color = strdup (IRC_COLOR_CHAT_NICK_OTHER);
+                                new_color = strdup (IRC_COLOR_CHAT_NICK_OTHER);
+                            }
+                        }
+                        else
+                        {
+                            old_color = strdup (IRC_COLOR_CHAT_NICK);
+                            new_color = strdup (IRC_COLOR_CHAT_NICK);
+                        }
+                        snprintf (str_tags, sizeof (str_tags),
+                                  "irc_nick1_%s,irc_nick2_%s",
+                                  nick,
+                                  params[0]);
+                        weechat_printf_date_tags (
+                            ptr_channel->buffer,
+                            date,
+                            irc_protocol_tags (command, tags, str_tags,
+                                               NULL, address),
+                            _("%s%s%s%s is now known as %s%s%s"),
+                            weechat_prefix ("network"),
+                            old_color,
+                            nick,
+                            IRC_COLOR_RESET,
+                            new_color,
+                            params[0],
+                            IRC_COLOR_RESET);
+                        if (old_color)
+                            free (old_color);
+                        if (new_color)
+                            free (new_color);
+                    }
                 }
                 break;
             case IRC_CHANNEL_TYPE_CHANNEL:

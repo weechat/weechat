@@ -1354,11 +1354,13 @@ TEST(IrcProtocolWithServer, nick)
     /* new nick for bob */
     RECV(":bob!user@host NICK bob_away");
     CHECK_CHAN("-- bob is now known as bob_away");
+    CHECK_PV("bob_away", "-- bob is now known as bob_away");
     STRCMP_EQUAL("bob_away", ptr_nick2->name);
 
     /* new nick for bob_away (with ":") */
     RECV(":bob_away!user@host NICK :bob2");
     CHECK_CHAN("-- bob_away is now known as bob2");
+    CHECK_PV("bob2", "-- bob_away is now known as bob2");
     STRCMP_EQUAL("bob2", ptr_nick2->name);
 
     STRCMP_EQUAL("bob2", ptr_server->last_channel->name);

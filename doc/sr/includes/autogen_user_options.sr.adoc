@@ -2348,6 +2348,12 @@
 ** вредности: on, off
 ** подразумевана вредност: `+on+`
 
+* [[option_irc.look.display_pv_nick_change]] *irc.look.display_pv_nick_change*
+** опис: pass:none[display nick change in private]
+** тип: логичка
+** вредности: on, off
+** подразумевана вредност: `+on+`
+
 * [[option_irc.look.display_pv_warning_address]] *irc.look.display_pv_warning_address*
 ** опис: pass:none[приказ упозорења у приватном баферу ако се промени адреса удаљеног надимка; ова опција је подразумевано искључена јер сервери као што је bitlbee чине да се ово упозорење прикаже и онда када се то не очекује (адреса удаљеног надимка се током пријављивања мења више пута)]
 ** тип: логичка

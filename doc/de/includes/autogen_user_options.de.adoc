@@ -2348,6 +2348,12 @@
 ** Werte: on, off
 ** Standardwert: `+on+`
 
+* [[option_irc.look.display_pv_nick_change]] *irc.look.display_pv_nick_change*
+** Beschreibung: pass:none[display nick change in private]
+** Typ: boolesch
+** Werte: on, off
+** Standardwert: `+on+`
+
 * [[option_irc.look.display_pv_warning_address]] *irc.look.display_pv_warning_address*
 ** Beschreibung: pass:none[zeigt eine Warnung in einem privaten Buffer an, sobald sich die Adresse eines Remote-Nick geändert hat; diese Option ist standardmäßig ausgeschaltet, da Server wie bitlbee eine solche Warnung unvermittelt auslösen (die Adresse des Remote-Nick ändert sich während eines Login mehrfach)]
 ** Typ: boolesch

@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2022-08-15 14:42+0200\n"
+"POT-Creation-Date: 2022-09-14 21:38+0200\n"
 "PO-Revision-Date: 2022-04-24 10:20+0200\n"
 "Last-Translator: Érico Nogueira <ericonr@disroot.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8700,6 +8700,11 @@ msgstr ""
 msgid "display a message in private when user is back (after quit on server)"
 msgstr ""
 
+#, fuzzy
+#| msgid "use same nick color for channel and private"
+msgid "display nick change in private"
+msgstr "utilizar a mesma cor de apelido para canal e privado"
+
 msgid ""
 "display a warning in private buffer if the address of remote nick has "
 "changed; this option is disabled by default because servers like bitlbee are "
@@ -13155,14 +13160,6 @@ msgstr ""
 "%s arquivo %s (arquivo local: %s) vai ser retomado a partir da posição %llu"
 
 #, c-format
-msgid "%s%s: address \"%s\" resolved to a larger sockaddr than expected"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "%s%s: invalid address \"%s\": error %d %s"
-msgstr "%s%s: charset inválido: \"%s\""
-
-#, c-format
 msgid "%s%s: missing arguments (%s)"
 msgstr "%s%s: faltando argumentos (%s)"
 
@@ -13419,6 +13416,14 @@ msgstr "lista de transferência"
 
 msgid "xfer pointer (optional)"
 msgstr "ponteiro de transferência (opcional)"
+
+#, c-format
+msgid "%s%s: address \"%s\" resolved to a larger sockaddr than expected"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: invalid address \"%s\": error %d %s"
+msgstr "%s%s: charset inválido: \"%s\""
 
 #, fuzzy, c-format
 msgid "%s%s: unable to create pipe: error %d %s"

@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2022-08-15 14:42+0200\n"
+"POT-Creation-Date: 2022-09-14 21:38+0200\n"
 "PO-Revision-Date: 2022-04-24 10:20+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8258,6 +8258,10 @@ msgstr "отображать уведомление об отсутствии е
 msgid "display a message in private when user is back (after quit on server)"
 msgstr ""
 
+#, fuzzy
+msgid "display nick change in private"
+msgstr "цвет ника собеседника в окне привата"
+
 msgid ""
 "display a warning in private buffer if the address of remote nick has "
 "changed; this option is disabled by default because servers like bitlbee are "
@@ -12667,14 +12671,6 @@ msgid "%s: file %s (local filename: %s) will be resumed at position %llu"
 msgstr ""
 "DCC: файл %s%s%s (локальное имя файла: %s%s%s) будет продолжен с позиции %u\n"
 
-#, c-format
-msgid "%s%s: address \"%s\" resolved to a larger sockaddr than expected"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "%s%s: invalid address \"%s\": error %d %s"
-msgstr "Не могу записать лог-файл \"%s\"\n"
-
 #, fuzzy, c-format
 msgid "%s%s: missing arguments (%s)"
 msgstr "%s нет аргумента для параметра \"%s\"\n"
@@ -12933,6 +12929,14 @@ msgstr "Список сокращений:\n"
 
 msgid "xfer pointer (optional)"
 msgstr ""
+
+#, c-format
+msgid "%s%s: address \"%s\" resolved to a larger sockaddr than expected"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: invalid address \"%s\": error %d %s"
+msgstr "Не могу записать лог-файл \"%s\"\n"
 
 #, fuzzy, c-format
 msgid "%s%s: unable to create pipe: error %d %s"

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2022-08-15 14:42+0200\n"
+"POT-Creation-Date: 2022-09-14 21:38+0200\n"
 "PO-Revision-Date: 2022-06-18 16:12+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -10056,6 +10056,11 @@ msgstr ""
 "ユーザが戻ったら、プライベートウィンドウにメッセージを表示 (サーバとの切断を"
 "挟んで)"
 
+#, fuzzy
+#| msgid "use same nick color for channel and private"
+msgid "display nick change in private"
+msgstr "チャンネルとプライベートバッファで同じニックネーム色を利用"
+
 msgid ""
 "display a warning in private buffer if the address of remote nick has "
 "changed; this option is disabled by default because servers like bitlbee are "
@@ -14915,14 +14920,6 @@ msgid "%s: file %s (local filename: %s) will be resumed at position %llu"
 msgstr "%s: ファイル %s (ローカルファイル名: %s) を位置 %llu から再開します"
 
 #, c-format
-msgid "%s%s: address \"%s\" resolved to a larger sockaddr than expected"
-msgstr "%s%s: アドレス \"%s\" は予想以上に大きな sockaddr に解決されました"
-
-#, c-format
-msgid "%s%s: invalid address \"%s\": error %d %s"
-msgstr "%s%s: \"%s\" は無効なアドレスです: エラー %d %s"
-
-#, c-format
 msgid "%s%s: missing arguments (%s)"
 msgstr "%s%s: 引数がありません (%s)"
 
@@ -15179,6 +15176,14 @@ msgstr "xfer のリスト"
 
 msgid "xfer pointer (optional)"
 msgstr "xfer ポインタ (任意)"
+
+#, c-format
+msgid "%s%s: address \"%s\" resolved to a larger sockaddr than expected"
+msgstr "%s%s: アドレス \"%s\" は予想以上に大きな sockaddr に解決されました"
+
+#, c-format
+msgid "%s%s: invalid address \"%s\": error %d %s"
+msgstr "%s%s: \"%s\" は無効なアドレスです: エラー %d %s"
 
 #, c-format
 msgid "%s%s: unable to create pipe: error %d %s"

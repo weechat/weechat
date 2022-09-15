@@ -27,6 +27,7 @@ New features::
   * api: add function crypto_hash_file
   * buflist: add variable `${hotlist_priority_number}` (integer version of `${hotlist_priority}`)
   * irc: display SETNAME command in channels and private buffers, add options irc.color.message_setname and irc.look.smart_filter_setname (issue #1805)
+  * irc: add option irc.look.display_pv_nick_change
   * trigger: add elapsed time for trigger execution on monitor buffer when trigger debug is set, add option trigger.color.identifier (issue #1806)
 
 Bug fixes::

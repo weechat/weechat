@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2022-08-15 14:42+0200\n"
+"POT-Creation-Date: 2022-09-14 21:38+0200\n"
 "PO-Revision-Date: 2022-06-18 16:12+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
@@ -10601,6 +10601,11 @@ msgstr ""
 msgid "display a message in private when user is back (after quit on server)"
 msgstr "pokaż prywatną wiadomość, kiedy użytkownik wróci na serwer"
 
+#, fuzzy
+#| msgid "use same nick color for channel and private"
+msgid "display nick change in private"
+msgstr "użyj takiego samego koloru nicka na kanałach i prywatnych rozmowach"
+
 msgid ""
 "display a warning in private buffer if the address of remote nick has "
 "changed; this option is disabled by default because servers like bitlbee are "
@@ -15669,14 +15674,6 @@ msgid "%s: file %s (local filename: %s) will be resumed at position %llu"
 msgstr "%s: plik %s (lokalna nazwa: %s) zostanie wznowiony od pozycji%llu"
 
 #, c-format
-msgid "%s%s: address \"%s\" resolved to a larger sockaddr than expected"
-msgstr "%s%s: adres \"%s\" wskazuje na większy sockaddr niż przypuszczano"
-
-#, c-format
-msgid "%s%s: invalid address \"%s\": error %d %s"
-msgstr "%s%s: niewłaściwy adres \"%s\": błąd %d %s"
-
-#, c-format
 msgid "%s%s: missing arguments (%s)"
 msgstr "%s%s: brakujące argumenty (%s)"
 
@@ -15943,6 +15940,14 @@ msgstr "lista xfer"
 
 msgid "xfer pointer (optional)"
 msgstr "wskaźnik xfer (opcjonalny)"
+
+#, c-format
+msgid "%s%s: address \"%s\" resolved to a larger sockaddr than expected"
+msgstr "%s%s: adres \"%s\" wskazuje na większy sockaddr niż przypuszczano"
+
+#, c-format
+msgid "%s%s: invalid address \"%s\": error %d %s"
+msgstr "%s%s: niewłaściwy adres \"%s\": błąd %d %s"
 
 #, c-format
 msgid "%s%s: unable to create pipe: error %d %s"

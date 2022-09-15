@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2022-08-15 14:42+0200\n"
+"POT-Creation-Date: 2022-09-14 21:38+0200\n"
 "PO-Revision-Date: 2022-04-24 10:20+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8226,6 +8226,10 @@ msgstr "privát beszélgetésben a másik fél távollétét csak egyszer jelezz
 msgid "display a message in private when user is back (after quit on server)"
 msgstr ""
 
+#, fuzzy
+msgid "display nick change in private"
+msgstr "másik fél nevének színe privát beszélgetésben"
+
 msgid ""
 "display a warning in private buffer if the address of remote nick has "
 "changed; this option is disabled by default because servers like bitlbee are "
@@ -12634,14 +12638,6 @@ msgid "%s: file %s (local filename: %s) will be resumed at position %llu"
 msgstr ""
 "DCC: a %s%s%s fájl (helyi fájlnév: %s%s%s) a(z) %u pozíción fog visszatérni\n"
 
-#, c-format
-msgid "%s%s: address \"%s\" resolved to a larger sockaddr than expected"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "%s%s: invalid address \"%s\": error %d %s"
-msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
-
 #, fuzzy, c-format
 msgid "%s%s: missing arguments (%s)"
 msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
@@ -12897,6 +12893,14 @@ msgstr "Aliaszok listája:\n"
 
 msgid "xfer pointer (optional)"
 msgstr ""
+
+#, c-format
+msgid "%s%s: address \"%s\" resolved to a larger sockaddr than expected"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: invalid address \"%s\": error %d %s"
+msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
 
 #, fuzzy, c-format
 msgid "%s%s: unable to create pipe: error %d %s"

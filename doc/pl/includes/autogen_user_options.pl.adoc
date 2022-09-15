@@ -2348,6 +2348,12 @@
 ** wartości: on, off
 ** domyślna wartość: `+on+`
 
+* [[option_irc.look.display_pv_nick_change]] *irc.look.display_pv_nick_change*
+** opis: pass:none[display nick change in private]
+** typ: bool
+** wartości: on, off
+** domyślna wartość: `+on+`
+
 * [[option_irc.look.display_pv_warning_address]] *irc.look.display_pv_warning_address*
 ** opis: pass:none[wyświetl ostrzeżenie w prywatnym buforze jeśli adres zdalnego nicka uległ zmianie; ta opcja jest domyślnie wyłączona ponieważ serwery jak bitlbee powodują wyświetlanie tego ostrzeżenia, kiedy nie powinny (adres zdalnego nicka zmienia się wiele razy przy logowaniu)]
 ** typ: bool

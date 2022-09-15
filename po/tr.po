@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2022-08-15 14:42+0200\n"
+"POT-Creation-Date: 2022-09-14 21:38+0200\n"
 "PO-Revision-Date: 2022-07-27 23:00+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -10239,6 +10239,11 @@ msgstr ""
 "kullanıcı geri döndüğünde özel olarak bir ileti görüntüle (sunucudan "
 "çıktıktan sonra)"
 
+#, fuzzy
+#| msgid "use same nick color for channel and private"
+msgid "display nick change in private"
+msgstr "kanal ve özel arabellekler için aynı takma ad rengini kullan"
+
 msgid ""
 "display a warning in private buffer if the address of remote nick has "
 "changed; this option is disabled by default because servers like bitlbee are "
@@ -15248,14 +15253,6 @@ msgid "%s: file %s (local filename: %s) will be resumed at position %llu"
 msgstr "%s: %s dosyası (yerel dosya adı: %s) %llu konumunda sürdürülecek"
 
 #, c-format
-msgid "%s%s: address \"%s\" resolved to a larger sockaddr than expected"
-msgstr "%s%s: \"%s\" adresi beklenenden daha büyük bir soket adresine çözüldü"
-
-#, c-format
-msgid "%s%s: invalid address \"%s\": error %d %s"
-msgstr "%s%s: Geçersiz adres \"%s\": Hata %d %s"
-
-#, c-format
 msgid "%s%s: missing arguments (%s)"
 msgstr "%s%s: Eksik argümanlar (%s)"
 
@@ -15514,6 +15511,14 @@ msgstr "xfer listesi"
 
 msgid "xfer pointer (optional)"
 msgstr "xfer işaretleyicisi (isteğe bağlı)"
+
+#, c-format
+msgid "%s%s: address \"%s\" resolved to a larger sockaddr than expected"
+msgstr "%s%s: \"%s\" adresi beklenenden daha büyük bir soket adresine çözüldü"
+
+#, c-format
+msgid "%s%s: invalid address \"%s\": error %d %s"
+msgstr "%s%s: Geçersiz adres \"%s\": Hata %d %s"
 
 #, c-format
 msgid "%s%s: unable to create pipe: error %d %s"
