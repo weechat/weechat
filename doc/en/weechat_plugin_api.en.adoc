@@ -8808,10 +8808,16 @@ C examples:
 [source,c]
 ----
 /* hook modifier with priority = 2000 */
+/* high priority: called before other modifier calbacks */
 weechat_hook_modifier ("2000|input_text_display", &modifier_cb, NULL, NULL);
 
 /* hook two signals with priority = 3000 */
+/* high priority: called before other signal callbacks */
 weechat_hook_signal ("3000|quit;upgrade", &signal_cb, NULL, NULL);
+
+/* hook lines printed in formatted buffers with priority = 500 */
+/* low priority: called after other line callbacks */
+weechat_hook_line ("500|formatted", "*", NULL, &line_cb, NULL, NULL);
 ----
 
 Following hook types allow priority:
@@ -8819,6 +8825,7 @@ Following hook types allow priority:
 * <<_hook_command,command>>
 * <<_hook_completion,completion>>
 * <<_hook_command_run,command_run>>
+* <<_hook_line,line>>
 * <<_hook_signal,signal>>
 * <<_hook_hsignal,hsignal>>
 * <<_hook_config,config>>
@@ -9967,7 +9974,7 @@ hook = weechat.hook_connect("", "my.server.org", 1234, 1, 0, "",
 
 ==== hook_line
 
-_WeeChat ≥ 2.3._
+_WeeChat ≥ 2.3, updated in 3.7._
 
 Hook a line to be printed in a buffer.
 
@@ -10001,7 +10008,8 @@ struct t_hook *weechat_hook_line (const char *buffer_type,
 Arguments:
 
 * _buffer_type_: catch lines on the given buffer type (if NULL or empty string,
-  _formatted_ is the default):
+  _formatted_ is the default)
+  (a priority is allowed before the buffer type, see note about <<hook_priority,priority>>):
 ** _formatted_: catch lines on formatted buffers only (default)
 ** _free_: catch lines on buffers with free content only
 ** _*_: catch lines on all buffer types

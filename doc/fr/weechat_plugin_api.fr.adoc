@@ -8949,10 +8949,16 @@ Exemples en C :
 [source,c]
 ----
 /* accrocher un modificateur avec priorité = 2000 */
+/* haute priorité : appelé avant les autres fonctions de rappel "modifier" */
 weechat_hook_modifier ("2000|input_text_display", &modifier_cb, NULL, NULL);
 
 /* accrocher deux signaux avec priorité = 3000 */
+/* haute priorité : appelé avant les autres fonctions de rappel "signal" */
 weechat_hook_signal ("3000|quit;upgrade", &signal_cb, NULL, NULL);
+
+/* accrocher les lignes affichées dans les tampons formatés avec priorité = 500 */
+/* basse priorité : appelé après les autres fonctions de rappel "line" */
+weechat_hook_line ("500|formatted", "*", NULL, &line_cb, NULL, NULL);
 ----
 
 Les types de "hooks" suivants autorisent une priorité :
@@ -8960,6 +8966,7 @@ Les types de "hooks" suivants autorisent une priorité :
 * <<_hook_command,command>>
 * <<_hook_completion,completion>>
 * <<_hook_command_run,command_run>>
+* <<_hook_line,line>>
 * <<_hook_signal,signal>>
 * <<_hook_hsignal,hsignal>>
 * <<_hook_config,config>>
@@ -10154,7 +10161,7 @@ hook = weechat.hook_connect("", "my.server.org", 1234, 1, 0, "",
 
 ==== hook_line
 
-_WeeChat ≥ 2.3._
+_WeeChat ≥ 2.3, mis à jour dans la 3.7._
 
 Intercepter une ligne sur le point d'être affichée dans un tampon.
 
@@ -10170,8 +10177,8 @@ appelés dans cet ordre :
   "hook").
 
 [NOTE]
-The "line" hook is the only one among these three hooks that can work on
-buffers with free content.
+Le "hook" "line" est le seul parmi ces trois "hooks" qui peut fonctionner sur
+un tampon avec contenu libre.
 
 Prototype :
 
@@ -10190,7 +10197,8 @@ struct t_hook *weechat_hook_line (const char *buffer_type,
 Paramètres :
 
 * _buffer_type_ : intercepter les lignes affichées sur ce type de tampon
-  (si NULL ou chaîne vide, _formatted_ est utilisé par défaut) :
+  (si NULL ou chaîne vide, _formatted_ est utilisé par défaut)
+  (une priorité est autorisée avant le type de tampon, voir la note sur la <<hook_priority,priorité>>) :
 ** _formatted_ : intercepter les lignes sur un tampon avec contenu formaté
    seulement (par défaut)
 ** _free_ : intercepter les lignes sur un tampon avec contenu libre seulement

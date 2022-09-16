@@ -25,6 +25,7 @@ New features::
   * api: rename function string_build_with_split_string to string_rebuild_split_string, add arguments "index_start" and "index_end"
   * api: add info "uptime_current"
   * api: add function crypto_hash_file
+  * api: add support of priority in function hook_line (issue #1821)
   * buflist: add variable `${hotlist_priority_number}` (integer version of `${hotlist_priority}`)
   * irc: display SETNAME command in channels and private buffers, add options irc.color.message_setname and irc.look.smart_filter_setname (issue #1805)
   * irc: add option irc.look.display_pv_nick_change

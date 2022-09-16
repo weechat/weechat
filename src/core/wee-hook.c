@@ -362,6 +362,9 @@ hook_get_priority_and_name (const char *string,
     if (name)
         *name = string;
 
+    if (!string)
+        return;
+
     pos = strchr (string, '|');
     if (pos)
     {

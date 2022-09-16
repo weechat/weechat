@@ -8545,10 +8545,16 @@ C examples:
 [source,c]
 ----
 /* модификатор кука са приоритетом = 2000 */
+/* high priority: called before other modifier calbacks */
 weechat_hook_modifier ("2000|input_text_display", &modifier_cb, NULL, NULL);
 
 /* hook two signals with priority = 3000 */
+/* high priority: called before other signal callbacks */
 weechat_hook_signal ("3000|quit;upgrade", &signal_cb, NULL, NULL);
+
+/* hook lines printed in formatted buffers with priority = 500 */
+/* low priority: called after other line callbacks */
+weechat_hook_line ("500|formatted", "*", NULL, &line_cb, NULL, NULL);
 ----
 
 Приоритет дозвољавају следећи типови кука:
@@ -8556,6 +8562,7 @@ weechat_hook_signal ("3000|quit;upgrade", &signal_cb, NULL, NULL);
 * <<_hook_command,command>>
 * <<_hook_completion,completion>>
 * <<_hook_command_run,command_run>>
+* <<_hook_line,line>>
 * <<_hook_signal,signal>>
 * <<_hook_hsignal,hsignal>>
 * <<_hook_config,config>>
@@ -9632,7 +9639,8 @@ hook = weechat.hook_connect("", "my.server.org", 1234, 1, 0, "",
 
 ==== hook_line
 
-_WeeChat ≥ 2.3._
+// TRANSLATION MISSING
+_WeeChat ≥ 2.3, updated in 3.7._
 
 Качи се на линију која треба да се испише у бафер.
 
@@ -9661,7 +9669,9 @@ struct t_hook *weechat_hook_line (const char *buffer_type,
 
 Аргументи:
 
-* _buffer_type_: хвата линије у наведеном типу бафера (ако је NULL или празан стринг, подразумева се _formatted_):
+// TRANSLATION MISSING
+* _buffer_type_: хвата линије у наведеном типу бафера (ако је NULL или празан стринг, подразумева се _formatted_)
+  (a priority is allowed before the buffer type, see note about <<hook_priority,приоритетима>>):
 ** _formatted_: хвата линије само у форматираним баферима (подразумевано)
 ** _free_: хвата линије само у баферима са слободним садржајем
 ** _*_: хвата линије у баферима свих типова

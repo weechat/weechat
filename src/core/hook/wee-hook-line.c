@@ -71,6 +71,8 @@ hook_line (struct t_weechat_plugin *plugin, const char *buffer_type,
 {
     struct t_hook *new_hook;
     struct t_hook_line *new_hook_line;
+    int priority;
+    const char *ptr_buffer_type;
 
     if (!callback)
         return NULL;
@@ -85,17 +87,18 @@ hook_line (struct t_weechat_plugin *plugin, const char *buffer_type,
         return NULL;
     }
 
-    hook_init_data (new_hook, plugin, HOOK_TYPE_LINE, HOOK_PRIORITY_DEFAULT,
+    hook_get_priority_and_name (buffer_type, &priority, &ptr_buffer_type);
+    hook_init_data (new_hook, plugin, HOOK_TYPE_LINE, priority,
                     callback_pointer, callback_data);
 
     new_hook->hook_data = new_hook_line;
     new_hook_line->callback = callback;
-    if (!buffer_type || !buffer_type[0])
+    if (!ptr_buffer_type || !ptr_buffer_type[0])
         new_hook_line->buffer_type = GUI_BUFFER_TYPE_DEFAULT;
-    else if (strcmp (buffer_type, "*") == 0)
+    else if (strcmp (ptr_buffer_type, "*") == 0)
         new_hook_line->buffer_type = -1;
     else
-        new_hook_line->buffer_type = gui_buffer_search_type (buffer_type);
+        new_hook_line->buffer_type = gui_buffer_search_type (ptr_buffer_type);
     new_hook_line->buffers = string_split (
         (buffer_name && buffer_name[0]) ? buffer_name : "*",
         ",",
