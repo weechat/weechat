@@ -2349,7 +2349,7 @@
 ** Standardwert: `+on+`
 
 * [[option_irc.look.display_pv_nick_change]] *irc.look.display_pv_nick_change*
-** Beschreibung: pass:none[display nick change in private]
+** Beschreibung: pass:none[Nickänderung im privaten Buffer anzeigen]
 ** Typ: boolesch
 ** Werte: on, off
 ** Standardwert: `+on+`
