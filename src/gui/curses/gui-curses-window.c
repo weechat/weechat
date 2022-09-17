@@ -2418,6 +2418,10 @@ gui_window_refresh_screen (int full_refresh)
         refresh ();
         gui_window_read_terminal_size ();
         refresh ();
+        gui_window_set_title (
+            (CONFIG_STRING(config_look_window_title)
+            && CONFIG_STRING(config_look_window_title)[0]) ?
+            CONFIG_STRING(config_look_window_title) : NULL);
     }
 
     gui_window_refresh_windows ();
