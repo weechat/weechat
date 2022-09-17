@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2022-09-17 09:34+0200\n"
+"POT-Creation-Date: 2022-09-17 12:09+0200\n"
 "PO-Revision-Date: 2022-06-18 16:12+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
@@ -12000,8 +12000,9 @@ msgstr "%s%s: przekroczono czas połączenia (nie otrzymano wiadomości 001)"
 msgid "%s%s: SASL authentication timeout"
 msgstr "%s%s: przekroczono czas uwierzytelniania SASL"
 
-#, c-format
-msgid "%s%s: lag is high, reconnecting to server %s%s%s"
+#, fuzzy, c-format
+#| msgid "%s%s: lag is high, reconnecting to server %s%s%s"
+msgid "%s%s: lag is high, disconnecting from server %s%s%s"
 msgstr "%s%s: za duże opóźnienie, łączę ponownie z serwerem %s%s%s"
 
 #, c-format

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2022-09-17 09:34+0200\n"
+"POT-Creation-Date: 2022-09-17 12:09+0200\n"
 "PO-Revision-Date: 2022-07-27 23:00+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -11625,8 +11625,9 @@ msgstr "%s%s: Bağlantı zaman aşımı (001 iletisi alınmadı)"
 msgid "%s%s: SASL authentication timeout"
 msgstr "%s%s: SASL kimlik doğrulama zaman aşımı"
 
-#, c-format
-msgid "%s%s: lag is high, reconnecting to server %s%s%s"
+#, fuzzy, c-format
+#| msgid "%s%s: lag is high, reconnecting to server %s%s%s"
+msgid "%s%s: lag is high, disconnecting from server %s%s%s"
 msgstr "%s%s: Gecikme çok yüksek, %s%s%s sunucusuna yeniden bağlanılıyor"
 
 #, c-format

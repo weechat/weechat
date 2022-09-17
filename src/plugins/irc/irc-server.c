@@ -3831,7 +3831,7 @@ irc_server_timer_cb (const void *pointer, void *data, int remaining_calls)
                 {
                     weechat_printf (
                         ptr_server->buffer,
-                        _("%s%s: lag is high, reconnecting to server %s%s%s"),
+                        _("%s%s: lag is high, disconnecting from server %s%s%s"),
                         weechat_prefix ("network"),
                         IRC_PLUGIN_NAME,
                         IRC_COLOR_CHAT_SERVER,

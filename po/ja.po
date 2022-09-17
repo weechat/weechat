@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2022-09-17 09:34+0200\n"
+"POT-Creation-Date: 2022-09-17 12:09+0200\n"
 "PO-Revision-Date: 2022-06-18 16:12+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -11457,8 +11457,9 @@ msgstr "%s%s: 接続タイムアウト (メッセージ 001 が受信されま�
 msgid "%s%s: SASL authentication timeout"
 msgstr "%s%s: SASL 認証タイムアウト"
 
-#, c-format
-msgid "%s%s: lag is high, reconnecting to server %s%s%s"
+#, fuzzy, c-format
+#| msgid "%s%s: lag is high, reconnecting to server %s%s%s"
+msgid "%s%s: lag is high, disconnecting from server %s%s%s"
 msgstr "%s%s: 遅延が長いので、サーバ %s%s%s に再接続します"
 
 #, c-format
