@@ -10053,7 +10053,8 @@ struct t_hook *weechat_hook_line (const char *buffer_type,
 
 * _buffer_type_: ここで指定したバッファ型の行をフックします (NULL または空文字列の場合、
   _formatted_ を指定したことになります)
-  (a priority is allowed before the buffer type, see note about <<hook_priority,priority>>):
+  (_WeeChat ≥ 3.7_: a priority is allowed before the buffer type,
+  see note about <<hook_priority,priority>>):
 ** _formatted_: フォーマット済み内容バッファの行のみをフックします (デフォルト)
 ** _free_: 自由内容バッファの行のみをフックします
 ** _*_: すべてのバッファの行をフックします

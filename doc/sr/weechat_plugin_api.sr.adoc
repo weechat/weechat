@@ -9671,7 +9671,8 @@ struct t_hook *weechat_hook_line (const char *buffer_type,
 
 // TRANSLATION MISSING
 * _buffer_type_: хвата линије у наведеном типу бафера (ако је NULL или празан стринг, подразумева се _formatted_)
-  (a priority is allowed before the buffer type, see note about <<hook_priority,приоритетима>>):
+  (_WeeChat ≥ 3.7_: a priority is allowed before the buffer type,
+  see note about <<hook_priority,приоритетима>>):
 ** _formatted_: хвата линије само у форматираним баферима (подразумевано)
 ** _free_: хвата линије само у баферима са слободним садржајем
 ** _*_: хвата линије у баферима свих типова

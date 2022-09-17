@@ -10198,7 +10198,8 @@ Paramètres :
 
 * _buffer_type_ : intercepter les lignes affichées sur ce type de tampon
   (si NULL ou chaîne vide, _formatted_ est utilisé par défaut)
-  (une priorité est autorisée avant le type de tampon, voir la note sur la <<hook_priority,priorité>>) :
+  (_WeeChat ≥ 3.7_ : une priorité est autorisée avant le type de tampon,
+  voir la note sur la <<hook_priority,priorité>>) :
 ** _formatted_ : intercepter les lignes sur un tampon avec contenu formaté
    seulement (par défaut)
 ** _free_ : intercepter les lignes sur un tampon avec contenu libre seulement
