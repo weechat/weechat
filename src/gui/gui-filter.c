@@ -278,6 +278,26 @@ gui_filter_new_error (const char *name, const char *error)
 }
 
 /*
+ * Searches for position of filter in list (to keep filters sorted by name).
+ */
+
+struct t_gui_filter *
+gui_filter_find_pos (struct t_gui_filter *filter)
+{
+    struct t_gui_filter *ptr_filter;
+
+    for (ptr_filter = gui_filters; ptr_filter;
+         ptr_filter = ptr_filter->next_filter)
+    {
+        if (string_strcasecmp (filter->name, ptr_filter->name) < 0)
+            return ptr_filter;
+    }
+
+    /* position not found */
+    return NULL;
+}
+
+/*
  * Creates a new filter.
  *
  * Returns pointer to new filter, NULL if error.
@@ -287,7 +307,7 @@ struct t_gui_filter *
 gui_filter_new (int enabled, const char *name, const char *buffer_name,
                 const char *tags, const char *regex)
 {
-    struct t_gui_filter *new_filter;
+    struct t_gui_filter *new_filter, *pos_filter;
     regex_t *regex1, *regex2;
     char *pos_tab, *regex_prefix, buf[512], str_error[512];
     const char *ptr_start_regex, *pos_regex_message;
@@ -412,13 +432,29 @@ gui_filter_new (int enabled, const char *name, const char *buffer_name,
         new_filter->regex_message = regex2;
 
         /* add filter to filters list */
-        new_filter->prev_filter = last_gui_filter;
-        if (last_gui_filter)
-            last_gui_filter->next_filter = new_filter;
+        pos_filter = gui_filter_find_pos (new_filter);
+        if (pos_filter)
+        {
+            /* add filter before "pos_filter" */
+            new_filter->prev_filter = pos_filter->prev_filter;
+            new_filter->next_filter = pos_filter;
+            if (pos_filter->prev_filter)
+                (pos_filter->prev_filter)->next_filter = new_filter;
+            else
+                gui_filters = new_filter;
+            pos_filter->prev_filter = new_filter;
+        }
         else
-            gui_filters = new_filter;
-        last_gui_filter = new_filter;
-        new_filter->next_filter = NULL;
+        {
+            /* add filter to end of list */
+            new_filter->prev_filter = last_gui_filter;
+            new_filter->next_filter = NULL;
+            if (last_gui_filter)
+                last_gui_filter->next_filter = new_filter;
+            else
+                gui_filters = new_filter;
+            last_gui_filter = new_filter;
+        }
 
         (void) hook_signal_send ("filter_added",
                                  WEECHAT_HOOK_SIGNAL_POINTER, new_filter);
