@@ -65,6 +65,7 @@ Tests::
 
   * core: switch from Ubuntu 20.04 to 22.04 in CI
   * core: remove macOS 10.15, add macOS 12 in CI
+  * core: add tests on filter functions
   * scripts: add tests on hdata functions
   * scripts: fix run of Guile test script
   * xfer: add tests on file functions

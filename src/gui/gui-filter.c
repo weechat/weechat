@@ -251,6 +251,9 @@ gui_filter_search_by_name (const char *name)
 {
     struct t_gui_filter *ptr_filter;
 
+    if (!name)
+        return NULL;
+
     for (ptr_filter = gui_filters; ptr_filter;
          ptr_filter = ptr_filter->next_filter)
     {

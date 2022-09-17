@@ -45,6 +45,7 @@ lib_weechat_unit_tests_core_a_SOURCES = unit/core/test-core-arraylist.cpp \
                                         unit/gui/test-gui-buffer.cpp \
                                         unit/gui/test-gui-chat.cpp \
                                         unit/gui/test-gui-color.cpp \
+                                        unit/gui/test-gui-filter.cpp \
                                         unit/gui/test-gui-line.cpp \
                                         unit/gui/test-gui-nick.cpp \
                                         scripts/test-scripts.cpp
