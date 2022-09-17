@@ -255,7 +255,9 @@ spell_config_dict_create_option (const void *pointer, void *data,
                 ptr_option = weechat_config_new_option (
                     config_file, section,
                     option_name, "string",
-                    _("comma separated list of dictionaries to use on this buffer"),
+                    _("comma separated list of dictionaries to use on this "
+                      "buffer (special value \"-\" disables spell checking "
+                      "on this buffer)"),
                     NULL, 0, 0, "", value, 0,
                     NULL, NULL, NULL,
                     &spell_config_dict_change, NULL, NULL,

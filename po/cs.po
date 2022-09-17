@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2022-09-14 21:38+0200\n"
+"POT-Creation-Date: 2022-09-17 09:34+0200\n"
 "PO-Revision-Date: 2022-06-18 16:11+0200\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -12457,6 +12457,11 @@ msgstr ""
 msgid "%s dictionaries list:"
 msgstr "seznam slovníků %s:"
 
+#, fuzzy
+#| msgid "Spell checking is disabled"
+msgid "spell checking disabled"
+msgstr "Kontrola  pravopisu je vypnuta"
+
 #, c-format
 msgid "%s: \"%s\" removed"
 msgstr "%s: \"%s\" odebrán"
@@ -12520,7 +12525,7 @@ msgstr "konfigurace pluginu aspell"
 
 #, fuzzy
 msgid ""
-"enable|disable|toggle || listdict || setdict <dict>[,<dict>...] || deldict "
+"enable|disable|toggle || listdict || setdict -|<dict>[,<dict>...] || deldict "
 "|| addword [<dict>] <word>"
 msgstr "dictlist || enable <jazyk> || disable || addword [<jazyk>] <slovo>"
 
@@ -12531,7 +12536,8 @@ msgid ""
 "  toggle: toggle spell checker\n"
 "listdict: show installed dictionaries\n"
 " setdict: set dictionary for current buffer (multiple dictionaries can be "
-"separated by a comma)\n"
+"separated by a comma, the special value \"-\" disables spell checking on "
+"current buffer)\n"
 " deldict: delete dictionary used on current buffer\n"
 " addword: add a word in personal dictionary\n"
 "\n"
@@ -12562,7 +12568,11 @@ msgstr "seznam všech podporovaných jazyků aspellem"
 msgid "list of installed dictionaries"
 msgstr "seznam instalovaných slovníků aspellu"
 
-msgid "comma separated list of dictionaries to use on this buffer"
+#, fuzzy
+#| msgid "comma separated list of dictionaries to use on this buffer"
+msgid ""
+"comma separated list of dictionaries to use on this buffer (special value \"-"
+"\" disables spell checking on this buffer)"
 msgstr "čárkami oddělený seznam slovníků, které použít pro tento buffer"
 
 #, fuzzy, c-format

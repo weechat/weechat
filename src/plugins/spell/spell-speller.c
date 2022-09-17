@@ -97,6 +97,13 @@ spell_speller_check_dictionaries (const char *dict_list)
     char **argv;
     int argc, i;
 
+    if (!dict_list)
+        return;
+
+    /* special value "-" is used to disable spell checking on a buffer */
+    if (strcmp (dict_list, "-") == 0)
+        return;
+
     if (dict_list)
     {
         argv = weechat_string_split (dict_list, ",", NULL,
@@ -381,7 +388,7 @@ spell_speller_buffer_new (struct t_gui_buffer *buffer)
     new_speller_buffer->modifier_result = NULL;
 
     buffer_dicts = spell_get_dict (buffer);
-    if (buffer_dicts)
+    if (buffer_dicts && (strcmp (buffer_dicts, "-") != 0))
     {
         dicts = weechat_string_split (buffer_dicts, ",", NULL,
                                       WEECHAT_STRING_SPLIT_STRIP_LEFT

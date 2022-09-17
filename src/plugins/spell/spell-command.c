@@ -216,6 +216,7 @@ void
 spell_command_set_dict (struct t_gui_buffer *buffer, const char *value)
 {
     char *name;
+    int disabled;
 
     name = spell_build_option_name (buffer);
     if (!name)
@@ -224,8 +225,16 @@ spell_command_set_dict (struct t_gui_buffer *buffer, const char *value)
     if (spell_config_set_dict (name, value) > 0)
     {
         if (value && value[0])
-            weechat_printf (NULL, "%s: \"%s\" => %s",
-                            SPELL_PLUGIN_NAME, name, value);
+        {
+            disabled = (strcmp (value, "-") == 0);
+            weechat_printf (NULL, "%s: \"%s\" => %s%s%s%s",
+                            SPELL_PLUGIN_NAME,
+                            name,
+                            value,
+                            (disabled) ? " (" : "",
+                            (disabled) ? _("spell checking disabled") : "",
+                            (disabled) ? ")" : "");
+        }
         else
             weechat_printf (NULL, _("%s: \"%s\" removed"),
                             SPELL_PLUGIN_NAME, name);
@@ -472,7 +481,7 @@ spell_command_init ()
         N_("spell plugin configuration"),
         N_("enable|disable|toggle"
            " || listdict"
-           " || setdict <dict>[,<dict>...]"
+           " || setdict -|<dict>[,<dict>...]"
            " || deldict"
            " || addword [<dict>] <word>"),
         N_("  enable: enable spell checker\n"
@@ -480,7 +489,8 @@ spell_command_init ()
            "  toggle: toggle spell checker\n"
            "listdict: show installed dictionaries\n"
            " setdict: set dictionary for current buffer (multiple dictionaries "
-           "can be separated by a comma)\n"
+           "can be separated by a comma, the special value \"-\" disables "
+           "spell checking on current buffer)\n"
            " deldict: delete dictionary used on current buffer\n"
            " addword: add a word in personal dictionary\n"
            "\n"

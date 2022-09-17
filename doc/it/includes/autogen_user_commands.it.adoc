@@ -3063,15 +3063,15 @@ Examples:
 ----
 /spell  enable|disable|toggle
         listdict
-        setdict <dizionario>[,<dizionario>...]
+        setdict -|<dict>[,<dict>...]
         deldict
-        addword [<dizionario>] <parola>
+        addword [<dict>] <word>
 
   enable: enable spell checker
  disable: disable spell checker
   toggle: toggle spell checker
 listdict: show installed dictionaries
- setdict: set dictionary for current buffer (multiple dictionaries can be separated by a comma)
+ setdict: set dictionary for current buffer (multiple dictionaries can be separated by a comma, the special value "-" disables spell checking on current buffer)
  deldict: delete dictionary used on current buffer
  addword: add a word in personal dictionary
 

@@ -3063,7 +3063,7 @@ Exemples :
 ----
 /spell  enable|disable|toggle
         listdict
-        setdict <dict>[,<dict>...]
+        setdict -|<dict>[,<dict>...]
         deldict
         addword [<dict>] <mot>
 
@@ -3071,7 +3071,7 @@ Exemples :
  disable : désactiver le vérificateur d'orthographe
   toggle : activer/désactiver le vérificateur d'orthographe
 listdict : afficher les dictionnaires installés
- setdict : définir le dictionnaire pour le tampon courant (plusieurs dictionnaires peuvent être séparés par une virgule)
+ setdict : définir le dictionnaire pour le tampon courant (plusieurs dictionnaires peuvent être séparés par une virgule, la valeur spéciale "-" désactive la vérification orthographique sur le tampon courant)
  deldict : supprimer le dictionnaire utilisé sur le tampon courant
  addword : ajouter un mot dans le dictionnaire personnel
 

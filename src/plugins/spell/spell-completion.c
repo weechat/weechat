@@ -116,6 +116,9 @@ spell_completion_dicts_cb (const void *pointer, void *data,
                                      0, WEECHAT_LIST_POS_SORT);
     }
 
+    weechat_completion_list_add (completion, "-",
+                                 0, WEECHAT_LIST_POS_BEGINNING);
+
     delete_aspell_dict_info_enumeration (elements);
     delete_aspell_config (config);
 #endif /* USE_ENCHANT */

@@ -3063,27 +3063,27 @@ toggleautoload: пребацивање аутоматског учитавања
 ----
 /spell  enable|disable|toggle
         listdict
-        setdict <речн>[,<речн>...]
+        setdict -|<dict>[,<dict>...]
         deldict
-        addword [<речн>] <реч>
+        addword [<dict>] <word>
 
-  enable: укључивање програма за проверу правописа
- disable: искључивање програма за проверу правописа
-  toggle: пребацивање програма за проверу правописа
-listdict: приказ инсталираних речника
- setdict: постављање речника за текући бафер (више речника може да се раздвоји запетама)
- deldict: брисање речника који се користи за текући бафер
- addword: додавање речи у лични речник
+  enable: enable spell checker
+ disable: disable spell checker
+  toggle: toggle spell checker
+listdict: show installed dictionaries
+ setdict: set dictionary for current buffer (multiple dictionaries can be separated by a comma, the special value "-" disables spell checking on current buffer)
+ deldict: delete dictionary used on current buffer
+ addword: add a word in personal dictionary
 
-Линије уноса које почињу са ’/’ се не проверавају, осим за неке команде (погледајте /set spell.check.commands).
+Input line beginning with a '/' is not checked, except for some commands (see /set spell.check.commands).
 
-Ако желите да укључите програм за проверу правописа у свим баферима, употребите опцију „default_dict”, па затим укључите програм за проверу правописа, на пример:
-  /set spell.check.default_dict „en”
+To enable spell checker on all buffers, use option "default_dict", then enable spell checker, for example:
+  /set spell.check.default_dict "en"
   /spell enable
 
-Ако желите да се у траци прикаже листа предлога, употребите ставку „spell_suggest”.
+To display a list of suggestions in a bar, use item "spell_suggest".
 
-Подразумевани тастер за пребацивање програма за проверу правописа је alt-s.
+Default key to toggle spell checker is alt-s.
 ----
 // end::spell_commands[]
 
