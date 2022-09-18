@@ -491,6 +491,17 @@ trigger_command_build_string (const char *format, ...)
 }
 
 /*
+ * Returns escaped argument for input by adding a backslash before each double
+ * quote.
+ */
+
+char *
+trigger_command_escape_argument (const char *argument)
+{
+    return weechat_string_replace (argument, "\"", "\\\"");
+}
+
+/*
  * Callback for command "/trigger": manage triggers.
  */
 
@@ -502,6 +513,8 @@ trigger_command_trigger (const void *pointer, void *data,
     struct t_trigger *ptr_trigger, *ptr_trigger2;
     struct t_trigger_regex *regex;
     char *value, **sargv, **items, *input, str_pos[16];
+    char *arg_arguments, *arg_conditions, *arg_regex, *arg_command;
+    char *arg_return_code, *arg_post_action;
     int rc, i, j, type, count, index_option, enable, sargc, num_items, add_rc;
     int regex_count, regex_rc;
 
@@ -748,17 +761,42 @@ trigger_command_trigger (const void *pointer, void *data,
             goto end;
         }
         add_rc = trigger_hook_default_rc[weechat_config_integer (ptr_trigger->options[TRIGGER_OPTION_HOOK])][0];
+        arg_arguments = trigger_command_escape_argument (
+            weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_ARGUMENTS]));
+        arg_conditions = trigger_command_escape_argument (
+            weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_CONDITIONS]));
+        arg_regex = trigger_command_escape_argument (
+            weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_REGEX]));
+        arg_command = trigger_command_escape_argument (
+            weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_COMMAND]));
+        arg_return_code = trigger_command_escape_argument (
+            (add_rc) ?
+            weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_RETURN_CODE]) : "");
+        arg_post_action = trigger_command_escape_argument (
+            weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_POST_ACTION]));
         input = trigger_command_build_string (
             "//trigger %s %s %s \"%s\" \"%s\" \"%s\" \"%s\" \"%s\" \"%s\"",
             (weechat_strcasecmp (argv[1], "recreate") == 0) ? "addreplace" : "add",
             ptr_trigger->name,
             weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_HOOK]),
-            weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_ARGUMENTS]),
-            weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_CONDITIONS]),
-            weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_REGEX]),
-            weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_COMMAND]),
-            (add_rc) ? weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_RETURN_CODE]) : "",
-            weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_POST_ACTION]));
+            arg_arguments,
+            arg_conditions,
+            arg_regex,
+            arg_command,
+            arg_return_code,
+            arg_post_action);
+        if (arg_arguments)
+            free (arg_arguments);
+        if (arg_conditions)
+            free (arg_conditions);
+        if (arg_regex)
+            free (arg_regex);
+        if (arg_command)
+            free (arg_command);
+        if (arg_return_code)
+            free (arg_return_code);
+        if (arg_post_action)
+            free (arg_post_action);
         if (input)
         {
             if (weechat_strcasecmp (argv[1], "output") == 0)
