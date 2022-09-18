@@ -1623,33 +1623,35 @@ They can be changed and new ones can be added with the <<command_weechat_key,/ke
 
 [width="100%",cols="^.^3,.^8,.^5",options="header"]
 |===
-| Tasti             | Descrizione | Comando
+| Tasti               | Descrizione | Comando
 | kbd:[Del] +
-  kbd:[Ctrl+d]      | Elimina il carattere successivo nella riga di comando. | `+/input delete_next_char+`
+  kbd:[Ctrl+d]        | Elimina il carattere successivo nella riga di comando. | `+/input delete_next_char+`
 | kbd:[Backspace] +
-  kbd:[Ctrl+h]      | Elimina il carattere precedente nella riga di comando. | `+/input delete_previous_char+`
+  kbd:[Ctrl+h]        | Elimina il carattere precedente nella riga di comando. | `+/input delete_previous_char+`
 // TRANSLATION MISSING
-| kbd:[Ctrl+k]      | Elimina dal cursore fino alla fine della riga di comando (deleted string is copied to the internal clipboard). | `+/input delete_end_of_line+`
-| kbd:[Ctrl+t]      | Inverti caratteri. | `+/input transpose_chars+`
+| kbd:[Ctrl+k]        | Elimina dal cursore fino alla fine della riga di comando (deleted string is copied to the internal clipboard). | `+/input delete_end_of_line+`
+| kbd:[Ctrl+t]        | Inverti caratteri. | `+/input transpose_chars+`
 // TRANSLATION MISSING
-| kbd:[Ctrl+u]      | Elimina dal cursore fino all'inizio della riga di comando (deleted string is copied to the internal clipboard). | `+/input delete_beginning_of_line+`
+| kbd:[Ctrl+u]        | Elimina dal cursore fino all'inizio della riga di comando (deleted string is copied to the internal clipboard). | `+/input delete_beginning_of_line+`
 // TRANSLATION MISSING
-| kbd:[Ctrl+w]      | Elimina la parola precedente nella riga di comando (deleted string is copied to the internal clipboard). | `+/input delete_previous_word+`
+| kbd:[Alt+Backspace] | Elimina la parola precedente nella riga di comando (deleted string is copied to the internal clipboard). | `+/input delete_previous_word+`
 // TRANSLATION MISSING
-| kbd:[Ctrl+y]      | Paste the internal clipboard content. | `+/input clipboard_paste+`
-| kbd:[Ctrl+_]      | Annulla l'ultima azione sulla riga di comando. | `+/input undo+`
-| kbd:[Alt+_]       | Ripete l'ultima azione sulla riga di comando. | `+/input redo+`
-| kbd:[Tab]         | Completa comando o nick (kbd:[Tab] di nuovo: trova prossimo completamento). | `+/input complete_next+`
-| kbd:[Shift+Tab]   | Senza completamento: effettua un completamento parziale, con completamento in sospeso: completa con il completamento precedente. | `+/input complete_previous+`
+| kbd:[Ctrl+w]        | Delete previous word of command line until whitespace (deleted string is copied to the internal clipboard). | `+/input delete_previous_word_whitespace+`
+// TRANSLATION MISSING
+| kbd:[Ctrl+y]        | Paste the internal clipboard content. | `+/input clipboard_paste+`
+| kbd:[Ctrl+_]        | Annulla l'ultima azione sulla riga di comando. | `+/input undo+`
+| kbd:[Alt+_]         | Ripete l'ultima azione sulla riga di comando. | `+/input redo+`
+| kbd:[Tab]           | Completa comando o nick (kbd:[Tab] di nuovo: trova prossimo completamento). | `+/input complete_next+`
+| kbd:[Shift+Tab]     | Senza completamento: effettua un completamento parziale, con completamento in sospeso: completa con il completamento precedente. | `+/input complete_previous+`
 | kbd:[Invio] +
   kbd:[Ctrl+j] +
-  kbd:[Ctrl+m]      | Esegue comando o invia messaggio (in modalità ricerca: ferma ricerca). | `+/input return+`
+  kbd:[Ctrl+m]        | Esegue comando o invia messaggio (in modalità ricerca: ferma ricerca). | `+/input return+`
 // TRANSLATION MISSING
-| kbd:[Alt+Enter]   | Insert a newline. | `+/input insert \n+`
+| kbd:[Alt+Enter]     | Insert a newline. | `+/input insert \n+`
 // TRANSLATION MISSING
-| kbd:[Alt+d]       | Elimina la parola successiva nella riga di comando (deleted string is copied to the internal clipboard). | `+/input delete_next_word+`
-| kbd:[Alt+k]       | Cattura un tasto ed inserisce il suo codice (e il comando associato se il tasto esiste) nella riga di comando. | `+/input grab_key_command+`
-| kbd:[Alt+r]       | Elimina l'intera riga di comando. | `+/input delete_line+`
+| kbd:[Alt+d]         | Elimina la parola successiva nella riga di comando (deleted string is copied to the internal clipboard). | `+/input delete_next_word+`
+| kbd:[Alt+k]         | Cattura un tasto ed inserisce il suo codice (e il comando associato se il tasto esiste) nella riga di comando. | `+/input grab_key_command+`
+| kbd:[Alt+r]         | Elimina l'intera riga di comando. | `+/input delete_line+`
 |===
 
 // TRANSLATION MISSING

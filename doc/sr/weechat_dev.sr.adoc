@@ -430,6 +430,8 @@ WeeChat „језгро” се налази у следећим директо�
 |          test-gui-color.cpp         | Тестови: боје.
 // TRANSLATION MISSING
 |          test-gui-filter.cpp        | Тестови: filters.
+// TRANSLATION MISSING
+|          test-gui-input.cpp         | Tests: input functions.
 |          test-gui-line.cpp          | Тестови: линије.
 |          test-gui-nick.cpp          | Тестови: надимци.
 |       plugins/                      | Корен unit тестова додатака.

@@ -1614,6 +1614,7 @@ liste des actions :
   delete_previous_char : effacer le caractère précédent
   delete_next_char : effacer le caractère suivant
   delete_previous_word : effacer le mot précédent
+  delete_previous_word_whitespace : effacer le mot précédent (jusqu'à un espace)
   delete_next_word : effacer le mot suivant
   delete_beginning_of_line : effacer du début de la ligne jusqu'au curseur
   delete_end_of_line : effacer du curseur jusqu'à la fin de la ligne

@@ -933,6 +933,21 @@ TEST(CoreString, ConvertEscapedChars)
 
 /*
  * Tests functions:
+ *   string_is_whitespace_char
+ */
+
+TEST(CoreString, IsWhitespaceChar)
+{
+    LONGS_EQUAL(0, string_is_whitespace_char (NULL));
+    LONGS_EQUAL(0, string_is_whitespace_char (""));
+    LONGS_EQUAL(0, string_is_whitespace_char ("abc def"));
+
+    LONGS_EQUAL(1, string_is_whitespace_char (" abc def"));
+    LONGS_EQUAL(1, string_is_whitespace_char ("\tabc def"));
+}
+
+/*
+ * Tests functions:
  *   string_is_word_char_highlight
  *   string_is_word_char_input
  */

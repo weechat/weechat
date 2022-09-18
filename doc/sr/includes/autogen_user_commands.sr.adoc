@@ -1598,63 +1598,64 @@ addreplace: додаје или замењује постојећи филтер
 ----
 /input  <акција> [<аргументи>]
 
-листа акција:
-  return: симулира притисак на тастер „ентер”
-  complete_next: довршава реч са наредним довршавањем
-  complete_previous: довршава реч са претходним довршавањем
-  search_text_here: претражује текст у баферу почевши од текуће позиције
-  search_text: претражује текст у баферу
-  search_switch_case: укључује употребу тачне величине слова код претраге
-  search_switch_regex: мења тип претраге: стринг/регуларни израз
-  search_switch_where: укључује претрагу у порукама/префиксима
-  search_previous: претрага у претходној линији
-  search_next: претрага у наредној линији
-  search_stop_here: зауставља претрагу на текућој позицији
-  search_stop: зауставља претрагу
-  delete_previous_char: брише претходни карактер
-  delete_next_char: брише наредни карактер
-  delete_previous_word: брише претходну реч
-  delete_next_word: брише наредну реч
-  delete_beginning_of_line: брише од почетка линије до позиције курсора
-  delete_end_of_line: брише од позиције курсора до краја линије
-  delete_line: брише комплетну линију
-  clipboard_paste: налепљује из интерног клипборда
-  transpose_chars: транспонује два карактера (замењују места)
-  undo: поништава последњу акцију командне линије
-  redo: обнавља последње поништену акцију команде линије
-  move_beginning_of_line: помера курсор на почетак линије
-  move_end_of_line: помера курсор на крај линије
-  move_previous_char: помера курсор на претходни карактер
-  move_next_char: помера курсор на наредни карактер
-  move_previous_word: помера курсор на претходну реч
-  move_next_word: помера курсор на наредну реч
-  history_previous: позива претходну команду из историје команди текућег бафера
-  history_next: позива наредну команду из историје команди текућег бафера
-  history_global_previous: позива претходну команду из глобалне историје команди
-  history_global_next: позива наредну команду из глобалне историје команди
-  jump_smart: скаче на наредни бафер у коме постоји активност
-  jump_last_buffer_displayed: скаче на последњи приказани бафер (пре последњег скока на бафер)
-  jump_previously_visited_buffer: скаче на претходно посећени бафер
-  jump_next_visited_buffer: скаче на наредни посећени бафер
-  hotlist_clear: брише врућу листу (необавезни аргументи: „lowest” за брисање само најнижег нивоа у врућој листи, „highest” за брисање само највишег нивоа у врућој листи, или маска нивоа: целобројна вредност која представља комбинацију 1=join/part, 2=порука, 4=приватно, 8=истицање)
-  hotlist_remove_buffer: уклања текући бафер из вруће листе
-  hotlist_restore_buffer: враћа последњу уклоњену врућу листу у текући бафер
-  hotlist_restore_all: враћа последњу уклоњену врућу листу у све бафере
-  grab_key: преузима тастер (необавезни аргумент: кашњење за крај преузимања, подразумевано је 500 милисекунди)
-  grab_key_command: преузима тастер са својом придруженом командом (необавезни аргумент: кашњење за крај преузимања, подразумевано је 500 милисекунди)
-  grab_mouse: преузима кôд догађаја миша
-  grab_mouse_area: преузима кôд догађаја миша заједно са површином
-  set_unread: поставља маркер непрочитан за све бафере
-  set_unread_current_buffer: поставља маркер непрочитан за текући бафер
-  switch_active_buffer: прелази на наредни спојени бафер
-  switch_active_buffer_previous: прелази на претходни спојени бафер
-  zoom_merged_buffer: зумира на спојени бафер
-  insert: умеће текст у командну линију (дозвољени су означени карактери, погледајте /help print)
-  send: шаље текст баферу
-  paste_start: започиње налепљивање (режим ограђеног налепљивања)
-  paste_stop: зауставља налепљивање (режим ограђеног налепљивања)
+list of actions:
+  return: simulate key "enter"
+  complete_next: complete word with next completion
+  complete_previous: complete word with previous completion
+  search_text_here: search text in buffer at current position
+  search_text: search text in buffer
+  search_switch_case: switch exact case for search
+  search_switch_regex: switch search type: string/regular expression
+  search_switch_where: switch search in messages/prefixes
+  search_previous: search previous line
+  search_next: search next line
+  search_stop_here: stop search at current position
+  search_stop: stop search
+  delete_previous_char: delete previous char
+  delete_next_char: delete next char
+  delete_previous_word: delete previous word
+  delete_previous_word_whitespace: delete previous word (until whitespace)
+  delete_next_word: delete next word
+  delete_beginning_of_line: delete from beginning of line until cursor
+  delete_end_of_line: delete from cursor until end of line
+  delete_line: delete entire line
+  clipboard_paste: paste from the internal clipboard
+  transpose_chars: transpose two chars
+  undo: undo last command line action
+  redo: redo last command line action
+  move_beginning_of_line: move cursor to beginning of line
+  move_end_of_line: move cursor to end of line
+  move_previous_char: move cursor to previous char
+  move_next_char: move cursor to next char
+  move_previous_word: move cursor to previous word
+  move_next_word: move cursor to next word
+  history_previous: recall previous command in current buffer history
+  history_next: recall next command in current buffer history
+  history_global_previous: recall previous command in global history
+  history_global_next: recall next command in global history
+  jump_smart: jump to next buffer with activity
+  jump_last_buffer_displayed: jump to last buffer displayed (before last jump to a buffer)
+  jump_previously_visited_buffer: jump to previously visited buffer
+  jump_next_visited_buffer: jump to next visited buffer
+  hotlist_clear: clear hotlist (optional argument: "lowest" to clear only lowest level in hotlist, "highest" to clear only highest level in hotlist, or level mask: integer which is a combination of 1=join/part, 2=message, 4=private, 8=highlight)
+  hotlist_remove_buffer: remove current buffer from hotlist
+  hotlist_restore_buffer: restore latest hotlist removed in the current buffer
+  hotlist_restore_all: restore latest hotlist removed in all buffers
+  grab_key: grab a key (optional argument: delay for end of grab, default is 500 milliseconds)
+  grab_key_command: grab a key with its associated command (optional argument: delay for end of grab, default is 500 milliseconds)
+  grab_mouse: grab mouse event code
+  grab_mouse_area: grab mouse event code with area
+  set_unread: set unread marker for all buffers
+  set_unread_current_buffer: set unread marker for current buffer
+  switch_active_buffer: switch to next merged buffer
+  switch_active_buffer_previous: switch to previous merged buffer
+  zoom_merged_buffer: zoom on merged buffer
+  insert: insert text in command line (escaped chars are allowed, see /help print)
+  send: send text to the buffer
+  paste_start: start paste (bracketed paste mode)
+  paste_stop: stop paste (bracketed paste mode)
 
-Ову команду користе тастерске пречице или додаци.
+This command is used by key bindings or plugins.
 ----
 
 [[command_weechat_item]]

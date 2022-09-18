@@ -1575,28 +1575,30 @@ They can be changed and new ones can be added with the <<command_weechat_key,/ke
 
 [width="100%",cols="^.^3,.^8,.^5",options="header"]
 |===
-| キー               | 説明 | コマンド
+| キー                | 説明 | コマンド
 | kbd:[Del] +
-  kbd:[Ctrl+d]      | コマンドラインで次の文字を削除 | `+/input delete_next_char+`
+  kbd:[Ctrl+d]        | コマンドラインで次の文字を削除 | `+/input delete_next_char+`
 | kbd:[Backspace] +
-  kbd:[Ctrl+h]      | コマンドラインで前の文字を削除 | `+/input delete_previous_char+`
-| kbd:[Ctrl+k]      | コマンドラインでカーソルより後の文字列を削除 (削除された文字列は WeeChat 専用の内部クリップボードに保存) | `+/input delete_end_of_line+`
-| kbd:[Ctrl+t]      | 文字の入れ替え | `+/input transpose_chars+`
-| kbd:[Ctrl+u]      | コマンドラインでカーソルより前の文字列を削除 (削除された文字列は WeeChat 専用の内部クリップボードに保存) | `+/input delete_beginning_of_line+`
-| kbd:[Ctrl+w]      | コマンドラインで前の単語を削除 (削除された文字列は WeeChat 専用の内部クリップボードに保存) | `+/input delete_previous_word+`
-| kbd:[Ctrl+y]      | WeeChat 専用の内部クリップボードの内容をペースト | `+/input clipboard_paste+`
-| kbd:[Ctrl+_]      | コマンドラインの最後の動作をやり直す | `+/input undo+`
-| kbd:[Alt+_]       | コマンドラインの最後の動作を取り消す | `+/input redo+`
-| kbd:[Tab]         | コマンドやニックネームを補完 (再度 kbd:[Tab] することで次の補完候補を表示) | `+/input complete_next+`
-| kbd:[Shift+Tab]   | 補完候補が無い場合: 部分補完を行う、補完候補が有る場合: 前の補完候補を表示 | `+/input complete_previous+`
+  kbd:[Ctrl+h]        | コマンドラインで前の文字を削除 | `+/input delete_previous_char+`
+| kbd:[Ctrl+k]        | コマンドラインでカーソルより後の文字列を削除 (削除された文字列は WeeChat 専用の内部クリップボードに保存) | `+/input delete_end_of_line+`
+| kbd:[Ctrl+t]        | 文字の入れ替え | `+/input transpose_chars+`
+| kbd:[Ctrl+u]        | コマンドラインでカーソルより前の文字列を削除 (削除された文字列は WeeChat 専用の内部クリップボードに保存) | `+/input delete_beginning_of_line+`
+| kbd:[Alt+Backspace] | コマンドラインで前の単語を削除 (削除された文字列は WeeChat 専用の内部クリップボードに保存) | `+/input delete_previous_word+`
+// TRANSLATION MISSING
+| kbd:[Ctrl+w]        | Delete previous word of command line until whitespace (deleted string is copied to the internal clipboard). | `+/input delete_previous_word_whitespace+`
+| kbd:[Ctrl+y]        | WeeChat 専用の内部クリップボードの内容をペースト | `+/input clipboard_paste+`
+| kbd:[Ctrl+_]        | コマンドラインの最後の動作をやり直す | `+/input undo+`
+| kbd:[Alt+_]         | コマンドラインの最後の動作を取り消す | `+/input redo+`
+| kbd:[Tab]           | コマンドやニックネームを補完 (再度 kbd:[Tab] することで次の補完候補を表示) | `+/input complete_next+`
+| kbd:[Shift+Tab]     | 補完候補が無い場合: 部分補完を行う、補完候補が有る場合: 前の補完候補を表示 | `+/input complete_previous+`
 | kbd:[Enter] +
   kbd:[Ctrl+j] +
-  kbd:[Ctrl+m]      | コマンドを実行するか、メッセージを送信する (検索モードの場合: 検索の終了) | `+/input return+`
+  kbd:[Ctrl+m]        | コマンドを実行するか、メッセージを送信する (検索モードの場合: 検索の終了) | `+/input return+`
 // TRANSLATION MISSING
-| kbd:[Alt+Enter]   | Insert a newline. | `+/input insert \n+`
-| kbd:[Alt+d]       | コマンドラインで次の単語を削除 (削除された文字列は WeeChat 専用の内部クリップボードに保存) | `+/input delete_next_word+`
-| kbd:[Alt+k]       | キー入力を奪って、コマンドラインにコード (キーが割り当てられていればコマンド) を入力 | `+/input grab_key_command+`
-| kbd:[Alt+r]       | コマンドラインへの入力をすべて削除 | `+/input delete_line+`
+| kbd:[Alt+Enter]     | Insert a newline. | `+/input insert \n+`
+| kbd:[Alt+d]         | コマンドラインで次の単語を削除 (削除された文字列は WeeChat 専用の内部クリップボードに保存) | `+/input delete_next_word+`
+| kbd:[Alt+k]         | キー入力を奪って、コマンドラインにコード (キーが割り当てられていればコマンド) を入力 | `+/input grab_key_command+`
+| kbd:[Alt+r]         | コマンドラインへの入力をすべて削除 | `+/input delete_line+`
 |===
 
 // TRANSLATION MISSING

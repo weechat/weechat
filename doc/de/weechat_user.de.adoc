@@ -1512,27 +1512,29 @@ Sie können mit dem Befehl <<command_weechat_key,/key>> geändert und neue hinzu
 
 [width="100%",cols="^.^3,.^8,.^5",options="header"]
 |===
-| Taste             | Beschreibung | Befehl
+| Taste               | Beschreibung | Befehl
 | kbd:[Del] +
-  kbd:[Ctrl+d]      | entfernt in der Befehlszeile das nächste Zeichen. | `+/input delete_next_char+`
+  kbd:[Ctrl+d]        | entfernt in der Befehlszeile das nächste Zeichen. | `+/input delete_next_char+`
 | kbd:[Backspace] +
-  kbd:[Ctrl+h]      | entfernt in der Befehlszeile das vorherige Zeichen. | `+/input delete_previous_char+`
-| kbd:[Ctrl+k]      | entfernt alle Zeichen vom Cursor bis zum Ende der Zeile (die Zeichenkette wird dabei in die interne Zwischenablage kopiert). | `+/input delete_end_of_line+`
-| kbd:[Ctrl+t]      | Zeichen austauschen. | `+/input transpose_chars+`
-| kbd:[Ctrl+u]      | entfernt alle Zeichen vom Cursor bis zum Anfang der Zeile (die Zeichenkette wird dabei in die interne Zwischenablage kopiert). | `+/input delete_beginning_of_line+`
-| kbd:[Ctrl+w]      | entfernt das Wort links vom Cursor (die Zeichenkette wird dabei in die interne Zwischenablage kopiert). | `+/input delete_previous_word+`
-| kbd:[Ctrl+y]      | fügt den Inhalt der internen Zwischenablage ein. | `+/input clipboard_paste+`
-| kbd:[Ctrl+_]      | Rückgängig machen der letzten Aktion, in der Befehlszeile. | `+/input undo+`
-| kbd:[Alt+_]       | Wiederherstellen der letzten Aktion, in der Befehlszeile. | `+/input redo+`
-| kbd:[Tab]         | Vervollständigung von Befehlen oder Nicks (nochmaliges kbd:[Tab]: findet nächste Vervollständigung). | `+/input complete_next+`
-| kbd:[Shift+Tab]   | ohne Vervollständigung: führt eine teilweise Vervollständigung durch. Bei unerledigter Vervollständigung : wird die vorherige Vervollständigung genutzt. | `+/input complete_previous+`
+  kbd:[Ctrl+h]        | entfernt in der Befehlszeile das vorherige Zeichen. | `+/input delete_previous_char+`
+| kbd:[Ctrl+k]        | entfernt alle Zeichen vom Cursor bis zum Ende der Zeile (die Zeichenkette wird dabei in die interne Zwischenablage kopiert). | `+/input delete_end_of_line+`
+| kbd:[Ctrl+t]        | Zeichen austauschen. | `+/input transpose_chars+`
+| kbd:[Ctrl+u]        | entfernt alle Zeichen vom Cursor bis zum Anfang der Zeile (die Zeichenkette wird dabei in die interne Zwischenablage kopiert). | `+/input delete_beginning_of_line+`
+| kbd:[Alt+Backspace] | entfernt das Wort links vom Cursor (die Zeichenkette wird dabei in die interne Zwischenablage kopiert). | `+/input delete_previous_word+`
+// TRANSLATION MISSING
+| kbd:[Ctrl+w]        | Delete previous word of command line until whitespace (deleted string is copied to the internal clipboard). | `+/input delete_previous_word_whitespace+`
+| kbd:[Ctrl+y]        | fügt den Inhalt der internen Zwischenablage ein. | `+/input clipboard_paste+`
+| kbd:[Ctrl+_]        | Rückgängig machen der letzten Aktion, in der Befehlszeile. | `+/input undo+`
+| kbd:[Alt+_]         | Wiederherstellen der letzten Aktion, in der Befehlszeile. | `+/input redo+`
+| kbd:[Tab]           | Vervollständigung von Befehlen oder Nicks (nochmaliges kbd:[Tab]: findet nächste Vervollständigung). | `+/input complete_next+`
+| kbd:[Shift+Tab]     | ohne Vervollständigung: führt eine teilweise Vervollständigung durch. Bei unerledigter Vervollständigung : wird die vorherige Vervollständigung genutzt. | `+/input complete_previous+`
 | kbd:[Enter] +
   kbd:[Ctrl+j] +
-  kbd:[Ctrl+m]      | führt einen Befehl aus oder sendet den Text  (im Such-Modus: stoppt Suche). | `+/input return+`
-| kbd:[Alt+Enter]   | Zeilenvorschub einfügen. | `+/input insert \n+`
-| kbd:[Alt+d]       | löscht das Wort rechts vom Cursor (die Zeichenkette wird dabei in die interne Zwischenablage kopiert). | `+/input delete_next_word+`
-| kbd:[Alt+k]       | zeigt den Tastencode, einschließlich des eingebundenen Befehls, einer Tastenkombination an und fügt diesen in die Befehlszeile ein. | `+/input grab_key_command+`
-| kbd:[Alt+r]       | komplette Eingabezeile lösche.n| `+/input delete_line+`
+  kbd:[Ctrl+m]        | führt einen Befehl aus oder sendet den Text  (im Such-Modus: stoppt Suche). | `+/input return+`
+| kbd:[Alt+Enter]     | Zeilenvorschub einfügen. | `+/input insert \n+`
+| kbd:[Alt+d]         | löscht das Wort rechts vom Cursor (die Zeichenkette wird dabei in die interne Zwischenablage kopiert). | `+/input delete_next_word+`
+| kbd:[Alt+k]         | zeigt den Tastencode, einschließlich des eingebundenen Befehls, einer Tastenkombination an und fügt diesen in die Befehlszeile ein. | `+/input grab_key_command+`
+| kbd:[Alt+r]         | komplette Eingabezeile lösche.n| `+/input delete_line+`
 |===
 
 [[key_bindings_cmdline_color_codes]]

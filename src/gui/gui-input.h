@@ -56,6 +56,7 @@ extern void gui_input_search_stop (struct t_gui_buffer *buffer);
 extern void gui_input_delete_previous_char (struct t_gui_buffer *buffer);
 extern void gui_input_delete_next_char (struct t_gui_buffer *buffer);
 extern void gui_input_delete_previous_word (struct t_gui_buffer *buffer);
+extern void gui_input_delete_previous_word_whitespace (struct t_gui_buffer *buffer);
 extern void gui_input_delete_next_word (struct t_gui_buffer *buffer);
 extern void gui_input_delete_beginning_of_line (struct t_gui_buffer *buffer);
 extern void gui_input_delete_end_of_line (struct t_gui_buffer *buffer);

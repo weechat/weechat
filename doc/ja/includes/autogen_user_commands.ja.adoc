@@ -1614,6 +1614,7 @@ list of actions:
   delete_previous_char: delete previous char
   delete_next_char: delete next char
   delete_previous_word: delete previous word
+  delete_previous_word_whitespace: delete previous word (until whitespace)
   delete_next_word: delete next word
   delete_beginning_of_line: delete from beginning of line until cursor
   delete_end_of_line: delete from cursor until end of line

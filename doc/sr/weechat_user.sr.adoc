@@ -1404,27 +1404,29 @@ WeeChat нуди доста подразумеваних тастерских п
 
 [width="100%", cols="^.^3,.^8,.^5", options="header"]
 |===
-| Тастер            | Опис | Команда
+| Тастер              | Опис | Команда
 | kbd:[Del] +
-  kbd:[Ctrl+d]      | Брисање наредног карактера у командној линији. | `+/input delete_next_char+`
+  kbd:[Ctrl+d]        | Брисање наредног карактера у командној линији. | `+/input delete_next_char+`
 | kbd:[Backspace] +
-  kbd:[Ctrl+h]      | Брисање претходног карактера у командној линији. | `+/input delete_previous_char+`
-| kbd:[Ctrl+k]      | Брисање од курсора до краја командне линије (обрисани стринг се копира у интерни клипборд). | `+/input delete_end_of_line+`
-| kbd:[Ctrl+t]      | Транспозиција карактера. | `/input transpose_chars`
-| kbd:[Ctrl+u]      | Брисање од курсора до почетка командне линије (обрисани стринг се копира у интерни клипборд). | `+/input delete_beginning_of_line+`
-| kbd:[Ctrl+w]      | Брисање претходне речи командне линије (обрисани стринг се копира у интерни клипборд). | `+/input delete_previous_word+`
-| kbd:[Ctrl+y]      | Налепљивање садржаја интерног клипборда. | `+/input clipboard_paste+`
-| kbd:[Ctrl+_]      | Поништавање последње акције у командној линији. | `+/input undo+`
-| kbd:[Alt+_]       | Враћање последње поништене акције у командној линији. | `+/input redo+`
-| kbd:[Tab]         | Довршавање команде или надимка (kbd:[Tab] поново: проналажење наредног довршавања). | `+/input complete_next+`
-| kbd:[Shift+Tab]   | Без довршавања: обављање парцијалног довршавања, са довршавањем на чекању: довршавање са претходно пронађеним појмом. | `+/input complete_previous+`
+  kbd:[Ctrl+h]        | Брисање претходног карактера у командној линији. | `+/input delete_previous_char+`
+| kbd:[Ctrl+k]        | Брисање од курсора до краја командне линије (обрисани стринг се копира у интерни клипборд). | `+/input delete_end_of_line+`
+| kbd:[Ctrl+t]        | Транспозиција карактера. | `/input transpose_chars`
+| kbd:[Ctrl+u]        | Брисање од курсора до почетка командне линије (обрисани стринг се копира у интерни клипборд). | `+/input delete_beginning_of_line+`
+| kbd:[Alt+Backspace] | Брисање претходне речи командне линије (обрисани стринг се копира у интерни клипборд). | `+/input delete_previous_word+`
+// TRANSLATION MISSING
+| kbd:[Ctrl+w]        | Delete previous word of command line until whitespace (deleted string is copied to the internal clipboard). | `+/input delete_previous_word_whitespace+`
+| kbd:[Ctrl+y]        | Налепљивање садржаја интерног клипборда. | `+/input clipboard_paste+`
+| kbd:[Ctrl+_]        | Поништавање последње акције у командној линији. | `+/input undo+`
+| kbd:[Alt+_]         | Враћање последње поништене акције у командној линији. | `+/input redo+`
+| kbd:[Tab]           | Довршавање команде или надимка (kbd:[Tab] поново: проналажење наредног довршавања). | `+/input complete_next+`
+| kbd:[Shift+Tab]     | Без довршавања: обављање парцијалног довршавања, са довршавањем на чекању: довршавање са претходно пронађеним појмом. | `+/input complete_previous+`
 | kbd:[Enter] +
   kbd:[Ctrl+j] +
-  kbd:[Ctrl+m]      | Извршавање команде или слање поруке (у режиму претраге: заустављање претраге). | `+/input return+`
-| kbd:[Alt+Enter]   | Умеће прелом реда. | `+/input insert \n+`
-| kbd:[Alt+d]       | Брисање наредне речи у командној линији (обрисани стринг се копира у интерни клипборд). | `+/input delete_next_word+`
-| kbd:[Alt+k]       | Хвата тастер и умеће његов кôд (и комадну везану за њега, ако постоји таква пречица) у командну линију. | `+/input grab_key_command+`
-| kbd:[Alt+r]       | Брише комплетну командну линију. | `+/input delete_line+`
+  kbd:[Ctrl+m]        | Извршавање команде или слање поруке (у режиму претраге: заустављање претраге). | `+/input return+`
+| kbd:[Alt+Enter]     | Умеће прелом реда. | `+/input insert \n+`
+| kbd:[Alt+d]         | Брисање наредне речи у командној линији (обрисани стринг се копира у интерни клипборд). | `+/input delete_next_word+`
+| kbd:[Alt+k]         | Хвата тастер и умеће његов кôд (и комадну везану за њега, ако постоји таква пречица) у командну линију. | `+/input grab_key_command+`
+| kbd:[Alt+r]         | Брише комплетну командну линију. | `+/input delete_line+`
 |===
 
 [[key_bindings_cmdline_color_codes]]

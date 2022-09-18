@@ -93,7 +93,8 @@ gui_key_default_bindings (int context)
         BIND(/* m-_           */ "meta-_",             "/input redo");
         BIND(/* <del>         */ "meta2-3~",           "/input delete_next_char");
         BIND(/* ^D            */ "ctrl-D",             "/input delete_next_char");
-        BIND(/* ^W            */ "ctrl-W",             "/input delete_previous_word");
+        BIND(/* ^W            */ "ctrl-W",             "/input delete_previous_word_whitespace");
+        BIND(/* m-<backspace> */ "meta-ctrl-?",        "/input delete_previous_word");
         BIND(/* ^X            */ "ctrl-X",             "/input switch_active_buffer");
         BIND(/* m-x           */ "meta-x",             "/input zoom_merged_buffer");
         BIND(/* m-d           */ "meta-d",             "/input delete_next_word");

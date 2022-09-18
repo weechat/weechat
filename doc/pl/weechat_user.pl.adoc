@@ -1518,27 +1518,29 @@ Można je zmienić oraz dodać nowe za pomocą komendy <<command_weechat_key,/ke
 
 [width="100%",cols="^.^3,.^8,.^5",options="header"]
 |===
-| Skrót             | Opis | Komenda
+| Skrót               | Opis | Komenda
 | kbd:[Del] +
-  kbd:[Ctrl+d]      | Usuń następny znak w linii poleceń. | `+/input delete_next_char+`
+  kbd:[Ctrl+d]        | Usuń następny znak w linii poleceń. | `+/input delete_next_char+`
 | kbd:[Backspace] +
-  kbd:[Ctrl+h]      | Usuń poprzedni znak w linii poleceń. | `+/input delete_previous_char+`
-| kbd:[Ctrl+k]      | Usuń od znacznika kursora do końca linii poleceń (usuwany ciąg jest kopiowany do wewnętrznego schowka). | `+/input delete_end_of_line+`
-| kbd:[Ctrl+t]      | Przestaw znaki. | `+/input transpose_chars+`
-| kbd:[Ctrl+u]      | Usuń od znaku kursora do początku linii poleceń (usuwany ciąg jest kopiowany do wewnętrznego schowka). | `+/input delete_beginning_of_line+`
-| kbd:[Ctrl+w]      | Usuń poprzednie słowo w linii poleceń (usuwany ciąg jest kopiowany do wewnętrznego schowka). | `+/input delete_previous_word+`
-| kbd:[Ctrl+y]      | Wkleja zawartość wewnętrznego schowka. | `+/input clipboard_paste+`
-| kbd:[Ctrl+_]      | Cofnij poprzednia akcję w linii poleceń. | `+/input undo+`
-| kbd:[Alt+_]       | Powtórz ostatnią akcję w linii poleceń. | `+/input redo+`
-| kbd:[Tab]         | Dopełnij komendę lub nick (ponowne wciśnięcie kbd:[Tab]: znajdź następne dopełnienie). | `+/input complete_next+`
-| kbd:[Shift+Tab]   | Bez dopełnienia: wykonaj częściowe dopełnienie, z oczekującym dopełnieniem: dopełnij z poprzednim dopełnieniem. | `+/input complete_previous+`
+  kbd:[Ctrl+h]        | Usuń poprzedni znak w linii poleceń. | `+/input delete_previous_char+`
+| kbd:[Ctrl+k]        | Usuń od znacznika kursora do końca linii poleceń (usuwany ciąg jest kopiowany do wewnętrznego schowka). | `+/input delete_end_of_line+`
+| kbd:[Ctrl+t]        | Przestaw znaki. | `+/input transpose_chars+`
+| kbd:[Ctrl+u]        | Usuń od znaku kursora do początku linii poleceń (usuwany ciąg jest kopiowany do wewnętrznego schowka). | `+/input delete_beginning_of_line+`
+| kbd:[Alt+Backspace] | Usuń poprzednie słowo w linii poleceń (usuwany ciąg jest kopiowany do wewnętrznego schowka). | `+/input delete_previous_word+`
+// TRANSLATION MISSING
+| kbd:[Ctrl+w]        | Delete previous word of command line until whitespace (deleted string is copied to the internal clipboard). | `+/input delete_previous_word_whitespace+`
+| kbd:[Ctrl+y]        | Wkleja zawartość wewnętrznego schowka. | `+/input clipboard_paste+`
+| kbd:[Ctrl+_]        | Cofnij poprzednia akcję w linii poleceń. | `+/input undo+`
+| kbd:[Alt+_]         | Powtórz ostatnią akcję w linii poleceń. | `+/input redo+`
+| kbd:[Tab]           | Dopełnij komendę lub nick (ponowne wciśnięcie kbd:[Tab]: znajdź następne dopełnienie). | `+/input complete_next+`
+| kbd:[Shift+Tab]     | Bez dopełnienia: wykonaj częściowe dopełnienie, z oczekującym dopełnieniem: dopełnij z poprzednim dopełnieniem. | `+/input complete_previous+`
 | kbd:[Enter] +
   kbd:[Ctrl+j] +
-  kbd:[Ctrl+m]      | Wykonaj komendę lub wyślij wiadomość (w trybie wyszukiwania: przerwij wyszukiwanie). | `+/input return+`
-| kbd:[Alt+Enter]   | Wstawia nową linię. | `+/input insert \n+`
-| kbd:[Alt+d]       | Usuń następne słowo w linii poleceń (usuwany ciąg jest kopiowany do wewnętrznego schowka). | `+/input delete_next_word+`
-| kbd:[Alt+k]       | Przechwyć wciśnięte klawisze i zwróć ich kod (i przypisaną komendę, jeśli istnieje) w linii poleceń. | `+/input grab_key_command+`
-| kbd:[Alt+r]       | Usuń całą zawartość linii poleceń. | `+/input delete_line+`
+  kbd:[Ctrl+m]        | Wykonaj komendę lub wyślij wiadomość (w trybie wyszukiwania: przerwij wyszukiwanie). | `+/input return+`
+| kbd:[Alt+Enter]     | Wstawia nową linię. | `+/input insert \n+`
+| kbd:[Alt+d]         | Usuń następne słowo w linii poleceń (usuwany ciąg jest kopiowany do wewnętrznego schowka). | `+/input delete_next_word+`
+| kbd:[Alt+k]         | Przechwyć wciśnięte klawisze i zwróć ich kod (i przypisaną komendę, jeśli istnieje) w linii poleceń. | `+/input grab_key_command+`
+| kbd:[Alt+r]         | Usuń całą zawartość linii poleceń. | `+/input delete_line+`
 |===
 
 [[key_bindings_cmdline_color_codes]]

@@ -95,7 +95,7 @@ gui_input_replace_input (struct t_gui_buffer *buffer, const char *new_input)
     int size, length;
     char *input_utf8;
 
-    input_utf8 = strdup (new_input);
+    input_utf8 = strdup ((new_input) ? new_input : "");
     if (input_utf8)
     {
         utf8_normalize (input_utf8, '?');
@@ -838,13 +838,44 @@ gui_input_delete_next_char (struct t_gui_buffer *buffer)
 }
 
 /*
- * Deletes previous word (default key: ctrl-W).
+ * Delete the range between two positions and copy the content to the
+ * clipboard.
+ */
+
+void
+gui_input_delete_range (struct t_gui_buffer *buffer,
+                        char *start,
+                        char *end)
+{
+    int size_deleted, length_deleted;
+
+    size_deleted = utf8_next_char (end) - start;
+    length_deleted = utf8_strnlen (start, size_deleted);
+
+    gui_input_clipboard_copy (start, size_deleted);
+
+    memmove (start, start + size_deleted, strlen (start + size_deleted));
+
+    if (gui_input_optimize_size (
+            buffer,
+            buffer->input_buffer_size - size_deleted,
+            buffer->input_buffer_length - length_deleted))
+    {
+        buffer->input_buffer[buffer->input_buffer_size] = '\0';
+        buffer->input_buffer_pos -= length_deleted;
+    }
+    gui_input_text_changed_modifier_and_signal (buffer,
+                                                1, /* save undo */
+                                                1); /* stop completion */
+}
+
+/*
+ * Deletes previous word (default key: alt-backspace).
  */
 
 void
 gui_input_delete_previous_word (struct t_gui_buffer *buffer)
 {
-    int length_deleted, size_deleted;
     char *start, *string;
 
     if (buffer->input && (buffer->input_buffer_pos > 0))
@@ -872,24 +903,45 @@ gui_input_delete_previous_word (struct t_gui_buffer *buffer)
         else
             string = buffer->input_buffer;
 
-        size_deleted = utf8_next_char (start) - string;
-        length_deleted = utf8_strnlen (string, size_deleted);
+        gui_input_delete_range (buffer, string, start);
+    }
+}
 
-        gui_input_clipboard_copy (string, size_deleted);
+/*
+ * Deletes previous word until whitespace (default key: ctrl-W).
+ */
 
-        memmove (string, string + size_deleted, strlen (string + size_deleted));
+void
+gui_input_delete_previous_word_whitespace (struct t_gui_buffer *buffer)
+{
+    char *start, *string;
 
-        if (gui_input_optimize_size (
-                buffer,
-                buffer->input_buffer_size - size_deleted,
-                buffer->input_buffer_length - length_deleted))
+    if (buffer->input && (buffer->input_buffer_pos > 0))
+    {
+        gui_buffer_undo_snap (buffer);
+        start = (char *)utf8_add_offset (buffer->input_buffer,
+                                         buffer->input_buffer_pos - 1);
+        string = start;
+        /* move to the left, skipping whitespace */
+        while (string && string_is_whitespace_char (string))
         {
-            buffer->input_buffer[buffer->input_buffer_size] = '\0';
-            buffer->input_buffer_pos -= length_deleted;
+            string = (char *)utf8_prev_char (buffer->input_buffer, string);
         }
-        gui_input_text_changed_modifier_and_signal (buffer,
-                                                    1, /* save undo */
-                                                    1); /* stop completion */
+        /* move to the left until we reach a char which is not whitespace */
+        if (string)
+        {
+            while (string && !string_is_whitespace_char (string))
+            {
+                string = (char *)utf8_prev_char (buffer->input_buffer, string);
+            }
+        }
+
+        if (string)
+            string = (char *)utf8_next_char (string);
+        else
+            string = buffer->input_buffer;
+
+        gui_input_delete_range (buffer, string, start);
     }
 }
 

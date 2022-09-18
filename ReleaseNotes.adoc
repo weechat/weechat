@@ -20,6 +20,28 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 [[v3.7]]
 == Version 3.7 (under dev)
 
+[[v3.7_delete_previous_word_whitespace]]
+=== Delete previous word until whitespace
+
+A new parameter `delete_previous_word_whitespace` has been added in `/input`
+command to delete previous word until backspace. +
+This is now bound by default to the key kbd:[Ctrl+w] (see issue #559).
+
+A new key kbd:[Alt+Backspace] has been added to delete word, like kbd:[Ctrl+w]
+did in previous releases.
+
+You can get the new behavior for kbd:[Ctrl+w] with this command:
+
+----
+/key bind ctrl-W /input delete_previous_word_whitespace
+----
+
+And add the new key kbd:[Alt+Backspace] with this command:
+
+----
+/key missing
+----
+
 [[v3.7_api_string_rebuild_split_string]]
 === Function string_rebuild_split_string
 

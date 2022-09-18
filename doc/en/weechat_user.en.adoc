@@ -1495,27 +1495,28 @@ They can be changed and new ones can be added with the <<command_weechat_key,/ke
 
 [width="100%",cols="^.^3,.^8,.^5",options="header"]
 |===
-| Key               | Description | Command
+| Key                 | Description | Command
 | kbd:[Del] +
-  kbd:[Ctrl+d]      | Delete next char in command line. | `+/input delete_next_char+`
+  kbd:[Ctrl+d]        | Delete next char in command line. | `+/input delete_next_char+`
 | kbd:[Backspace] +
-  kbd:[Ctrl+h]      | Delete previous char in command line. | `+/input delete_previous_char+`
-| kbd:[Ctrl+k]      | Delete from cursor until end of command line (deleted string is copied to the internal clipboard). | `+/input delete_end_of_line+`
-| kbd:[Ctrl+t]      | Transpose chars. | `/input transpose_chars`
-| kbd:[Ctrl+u]      | Delete from cursor until beginning of command line (deleted string is copied to the internal clipboard). | `+/input delete_beginning_of_line+`
-| kbd:[Ctrl+w]      | Delete previous word of command line (deleted string is copied to the internal clipboard). | `+/input delete_previous_word+`
-| kbd:[Ctrl+y]      | Paste the internal clipboard content. | `+/input clipboard_paste+`
-| kbd:[Ctrl+_]      | Undo last action on command line. | `+/input undo+`
-| kbd:[Alt+_]       | Redo last action on command line. | `+/input redo+`
-| kbd:[Tab]         | Complete command or nick (kbd:[Tab] again: find next completion). | `+/input complete_next+`
-| kbd:[Shift+Tab]   | Without completion: do a partial completion, with pending completion: complete with previous completion. | `+/input complete_previous+`
+  kbd:[Ctrl+h]        | Delete previous char in command line. | `+/input delete_previous_char+`
+| kbd:[Ctrl+k]        | Delete from cursor until end of command line (deleted string is copied to the internal clipboard). | `+/input delete_end_of_line+`
+| kbd:[Ctrl+t]        | Transpose chars. | `/input transpose_chars`
+| kbd:[Ctrl+u]        | Delete from cursor until beginning of command line (deleted string is copied to the internal clipboard). | `+/input delete_beginning_of_line+`
+| kbd:[Alt+Backspace] | Delete previous word of command line (deleted string is copied to the internal clipboard). | `+/input delete_previous_word+`
+| kbd:[Ctrl+w]        | Delete previous word of command line until whitespace (deleted string is copied to the internal clipboard). | `+/input delete_previous_word_whitespace+`
+| kbd:[Ctrl+y]        | Paste the internal clipboard content. | `+/input clipboard_paste+`
+| kbd:[Ctrl+_]        | Undo last action on command line. | `+/input undo+`
+| kbd:[Alt+_]         | Redo last action on command line. | `+/input redo+`
+| kbd:[Tab]           | Complete command or nick (kbd:[Tab] again: find next completion). | `+/input complete_next+`
+| kbd:[Shift+Tab]     | Without completion: do a partial completion, with pending completion: complete with previous completion. | `+/input complete_previous+`
 | kbd:[Enter] +
   kbd:[Ctrl+j] +
-  kbd:[Ctrl+m]      | Execute command or send message (in search mode: stop search). | `+/input return+`
-| kbd:[Alt+Enter]   | Insert a newline. | `+/input insert \n+`
-| kbd:[Alt+d]       | Delete next word in command line (deleted string is copied to the internal clipboard). | `+/input delete_next_word+`
-| kbd:[Alt+k]       | Grab a key and insert its code (and command bound if key exists) in command line. | `+/input grab_key_command+`
-| kbd:[Alt+r]       | Delete entire command line. | `+/input delete_line+`
+  kbd:[Ctrl+m]        | Execute command or send message (in search mode: stop search). | `+/input return+`
+| kbd:[Alt+Enter]     | Insert a newline. | `+/input insert \n+`
+| kbd:[Alt+d]         | Delete next word in command line (deleted string is copied to the internal clipboard). | `+/input delete_next_word+`
+| kbd:[Alt+k]         | Grab a key and insert its code (and command bound if key exists) in command line. | `+/input grab_key_command+`
+| kbd:[Alt+r]         | Delete entire command line. | `+/input delete_line+`
 |===
 
 [[key_bindings_cmdline_color_codes]]

@@ -3294,6 +3294,8 @@ COMMAND_CALLBACK(input)
         gui_input_delete_next_char (buffer);
     else if (string_strcasecmp (argv[1], "delete_previous_word") == 0)
         gui_input_delete_previous_word (buffer);
+    else if (string_strcasecmp (argv[1], "delete_previous_word_whitespace") == 0)
+        gui_input_delete_previous_word_whitespace (buffer);
     else if (string_strcasecmp (argv[1], "delete_next_word") == 0)
         gui_input_delete_next_word (buffer);
     else if (string_strcasecmp (argv[1], "delete_beginning_of_line") == 0)
@@ -7985,6 +7987,8 @@ command_init ()
            "  delete_previous_char: delete previous char\n"
            "  delete_next_char: delete next char\n"
            "  delete_previous_word: delete previous word\n"
+           "  delete_previous_word_whitespace: delete previous word "
+           "(until whitespace)\n"
            "  delete_next_word: delete next word\n"
            "  delete_beginning_of_line: delete from beginning of line until "
            "cursor\n"
@@ -8041,7 +8045,8 @@ command_init ()
         "search_text || search_switch_case || search_switch_regex || "
         "search_switch_where || search_previous || search_next || "
         "search_stop_here || search_stop || delete_previous_char || "
-        "delete_next_char || delete_previous_word || delete_next_word || "
+        "delete_next_char || delete_previous_word || "
+        "delete_previous_word_whitespace || delete_next_word || "
         "delete_beginning_of_line || delete_end_of_line || delete_line || "
         "clipboard_paste || transpose_chars || undo || redo || "
         "move_beginning_of_line || move_end_of_line || move_previous_char || "

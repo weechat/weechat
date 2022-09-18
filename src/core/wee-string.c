@@ -1110,6 +1110,20 @@ string_convert_escaped_chars (const char *string)
 }
 
 /*
+ * Checks if first char of string is a whitespace (space or tab).
+ *
+ * Returns:
+ *   1: first char is whitespace
+ *   0: first char is not whitespace
+ */
+
+int
+string_is_whitespace_char (const char *string)
+{
+    return (string && ((string[0] == ' ') || string[0] == '\t')) ? 1 : 0;
+}
+
+/*
  * Checks if first char of string is a "word char".
  *
  * The word chars are customizable with options "weechat.look.word_chars_*".
