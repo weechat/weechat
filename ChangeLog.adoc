@@ -40,7 +40,7 @@ Bug fixes::
   * irc: fix display of TOPIC and QUIT messages with an empty trailing parameter (issue #1797)
   * irc: fix parsing of messages with trailing spaces and no trailing parameter (issue #1803)
   * irc: add missing tag "irc_numeric" in all numeric IRC commands (issue #1804)
-  * irc: display an error message when using command /dcc without xfer plugin loaded
+  * irc: display an error message when using command `/dcc` without xfer plugin loaded
   * irc: display ACCOUNT and CHGHOST commands in private buffers
   * irc: fix extract of isupport value when it is last in list and without value (issue #1807)
   * irc: fix target buffer of generic errors when they contain a target nick (issue #1814)
