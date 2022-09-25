@@ -2006,9 +2006,9 @@ unsigned long long weechat_string_parse_size (const char *size);
 
 Paramètres :
 
-* _size_ : la taille sous forme de chaîne : nombre décimal suivi par des espaces
-  optionnels et une unité optionnelle (en minuscules ou majuscules), qui est une
-  des suivantes :
+* _size_ : la taille sous forme de chaîne : nombre entier positif suivi par des
+  espaces optionnels et une unité optionnelle (en minuscules ou majuscules),
+  qui est une des suivantes :
 ** _b_ : octets
 ** _k_ : kilo-octets (1k = 1000 octets)
 ** _m_ : méga-octets (1m = 1000k = 1 000 000 octets)

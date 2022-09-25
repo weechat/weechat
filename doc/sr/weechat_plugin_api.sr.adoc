@@ -1891,8 +1891,8 @@ unsigned long long weechat_string_parse_size (const char *size);
 
 Аргументи:
 
-* _size_: the size as string: float number followed optional spaces and optional
-  unit (lower or upper case), which is one of:
+* _size_: the size as string: positive integer number followed by optional
+  spaces and optional unit (lower or upper case), which is one of:
 ** _b_: bytes
 ** _k_: kilobytes (1k = 1000 bytes)
 ** _m_: megabytes (1m = 1000k = 1,000,000 bytes)

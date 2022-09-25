@@ -1942,11 +1942,6 @@ TEST(CoreString, ParseSize)
     CHECK(string_parse_size ("42b") == 42ULL);
     CHECK(string_parse_size ("42B") == 42ULL);
 
-    /* decimals ignored for bytes */
-    CHECK(string_parse_size ("42.9") == 42ULL);
-    CHECK(string_parse_size ("42.9b") == 42ULL);
-    CHECK(string_parse_size ("42.9B") == 42ULL);
-
     CHECK(string_parse_size ("999") == 999ULL);
     CHECK(string_parse_size ("999b") == 999ULL);
     CHECK(string_parse_size ("999B") == 999ULL);
@@ -1958,29 +1953,26 @@ TEST(CoreString, ParseSize)
     CHECK(string_parse_size ("1k") == 1000ULL);
     CHECK(string_parse_size ("1K") == 1000ULL);
 
-    CHECK(string_parse_size ("1.34k") == 1340ULL);
-    CHECK(string_parse_size ("1.34K") == 1340ULL);
-
-    CHECK(string_parse_size ("14.08k") == 14080ULL);
-    CHECK(string_parse_size ("14.08K") == 14080ULL);
+    CHECK(string_parse_size ("12k") == 12000ULL);
+    CHECK(string_parse_size ("12K") == 12000ULL);
 
     CHECK(string_parse_size ("1m") == 1000000ULL);
     CHECK(string_parse_size ("1M") == 1000000ULL);
 
-    CHECK(string_parse_size ("1.5m") == 1500000ULL);
-    CHECK(string_parse_size ("1.5M") == 1500000ULL);
+    CHECK(string_parse_size ("30m") == 30000000ULL);
+    CHECK(string_parse_size ("30M") == 30000000ULL);
 
     CHECK(string_parse_size ("1g") == 1000000000ULL);
     CHECK(string_parse_size ("1G") == 1000000000ULL);
 
-    CHECK(string_parse_size ("1.2345g") == 1234500000ULL);
-    CHECK(string_parse_size ("1.2345G") == 1234500000ULL);
+    CHECK(string_parse_size ("1234m") == 1234000000ULL);
+    CHECK(string_parse_size ("1234m") == 1234000000ULL);
 
-    CHECK(string_parse_size ("1t") == 1000000000000ULL);
-    CHECK(string_parse_size ("1T") == 1000000000000ULL);
+    CHECK(string_parse_size ("15g") == 15000000000ULL);
+    CHECK(string_parse_size ("15G") == 15000000000ULL);
 
-    CHECK(string_parse_size ("1.23456789t") == 1234567890000ULL);
-    CHECK(string_parse_size ("1.23456789T") == 1234567890000ULL);
+    CHECK(string_parse_size ("8t") == 8000000000000ULL);
+    CHECK(string_parse_size ("8T") == 8000000000000ULL);
 }
 
 /*
