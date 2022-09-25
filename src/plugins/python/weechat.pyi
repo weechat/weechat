@@ -122,6 +122,11 @@ def string_format_size(size: int) -> str:
     ...
 
 
+def string_parse_size(size: str) -> int:
+    """`string_parse_size in WeeChat plugin API reference <https://weechat.org/doc/api/#_string_parse_size>`_"""
+    ...
+
+
 def string_color_code_size(string: str) -> int:
     """`string_color_code_size in WeeChat plugin API reference <https://weechat.org/doc/api/#_string_color_code_size>`_"""
     ...

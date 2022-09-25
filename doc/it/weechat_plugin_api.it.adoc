@@ -2044,6 +2044,52 @@ def string_format_size(size: int) -> str: ...
 str = weechat.string_format_size(15200)  # == "15.2 KB"
 ----
 
+// TRANSLATION MISSING
+==== string_parse_size
+
+_WeeChat ≥ 3.7._
+
+Parse a string with a size and optional unit and return the size in bytes.
+
+Prototipo:
+
+[source,c]
+----
+unsigned long long weechat_string_parse_size (const char *size);
+----
+
+Argomenti:
+
+* _size_: the size as string: float number followed optional spaces and optional
+  unit (lower or upper case), which is one of:
+** _b_: bytes
+** _k_: kilobytes (1k = 1000 bytes)
+** _m_: megabytes (1m = 1000k = 1,000,000 bytes)
+** _g_: gigabytes (1g = 1000m = 1,000,000,000 bytes)
+** _t_: terabytes (1t = 1000g = 1,000,000,000,000 bytes)
+
+Valore restituito:
+
+* size in bytes, 0 if error
+
+Esempio in C:
+
+[source,c]
+----
+unsigned long long size = weechat_parse_size ("1.34m");  /* size == 1340000 */
+----
+
+Script (Python):
+
+[source,python]
+----
+# prototipo
+def string_parse_size(size: str) -> int: ...
+
+# esempio
+size = weechat.string_parse_size("1.34m")  # 1340000
+----
+
 ==== string_color_code_size
 
 _WeeChat ≥ 3.0._

@@ -2979,6 +2979,97 @@ string_format_size (unsigned long long size)
 }
 
 /*
+ * Parses a string with a size and returns the size in bytes.
+ *
+ * The format is "123" or "123X" or "123 X"  where 123 is any positive number
+ * as a float (for example: 123 or 4.56) and X the unit, which can be one of
+ * (lower or upper case are accepted):
+ *
+ *   b  bytes (default if unit is missing)
+ *   k  kilobytes (1k = 1000 bytes)
+ *   m  megabytes (1m = 1000k = 1,000,000 bytes)
+ *   g  gigabytes (1g = 1000m = 1,000,000,000 bytes)
+ *   t  terabytes (1t = 1000g = 1,000,000,000,000 bytes)
+ *
+ * Note: decimals of the float number are ignored if the unit is bytes
+ * (eg: "5.9" or "5.9B" returns 5).
+ *
+ * Returns the parsed size, 0 if error.
+ */
+
+unsigned long long
+string_parse_size (const char *size)
+{
+    const char *pos;
+    char *str_number, *error;
+    double number;
+    unsigned long long result;
+
+    str_number = NULL;
+    result = 0;
+
+    if (!size || !size[0])
+        goto end;
+
+    pos = size;
+    while ((pos[0] == '.') || isdigit (pos[0]))
+    {
+        pos++;
+    }
+
+    if (pos == size)
+        goto end;
+
+    str_number = string_strndup (size, pos - size);
+    if (!str_number)
+        goto end;
+
+    number = strtod (str_number, &error);
+    if (!error || error[0])
+        goto end;
+
+    while (pos[0] == ' ')
+    {
+        pos++;
+    }
+
+    if (pos[0] && pos[1])
+        goto end;
+
+    switch (pos[0])
+    {
+        case '\0':
+            result = number;
+            break;
+        case 'b':
+        case 'B':
+            result = number;
+            break;
+        case 'k':
+        case 'K':
+            result = number * 1000.0;
+            break;
+        case 'm':
+        case 'M':
+            result = number * 1000.0 * 1000.0;
+            break;
+        case 'g':
+        case 'G':
+            result = number * 1000.0 * 1000.0 * 1000.0;
+            break;
+        case 't':
+        case 'T':
+            result = number * 1000.0 * 1000.0 * 1000.0 * 1000.0;
+            break;
+    }
+
+end:
+    if (str_number)
+        free (str_number);
+    return result;
+}
+
+/*
  * Encodes a string in base16 (hexadecimal).
  *
  * Argument "length" is number of bytes in "from" to convert (commonly

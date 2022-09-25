@@ -1907,6 +1907,84 @@ TEST(CoreString, FormatSize)
 
 /*
  * Tests functions:
+ *    string_parse_size
+ */
+
+TEST(CoreString, ParseSize)
+{
+    CHECK(string_parse_size (NULL) == 0ULL);
+
+    CHECK(string_parse_size ("") == 0ULL);
+    CHECK(string_parse_size ("*") == 0ULL);
+    CHECK(string_parse_size ("b") == 0ULL);
+    CHECK(string_parse_size ("k") == 0ULL);
+    CHECK(string_parse_size ("m") == 0ULL);
+    CHECK(string_parse_size ("g") == 0ULL);
+    CHECK(string_parse_size ("t") == 0ULL);
+    CHECK(string_parse_size ("z") == 0ULL);
+    CHECK(string_parse_size ("0z") == 0ULL);
+
+    CHECK(string_parse_size ("0") == 0ULL);
+    CHECK(string_parse_size ("0b") == 0ULL);
+    CHECK(string_parse_size ("0B") == 0ULL);
+
+    CHECK(string_parse_size ("1") == 1ULL);
+    CHECK(string_parse_size ("1b") == 1ULL);
+    CHECK(string_parse_size ("1B") == 1ULL);
+    CHECK(string_parse_size ("1 b") == 1ULL);
+    CHECK(string_parse_size ("1 B") == 1ULL);
+
+    CHECK(string_parse_size ("2") == 2ULL);
+    CHECK(string_parse_size ("2b") == 2ULL);
+    CHECK(string_parse_size ("2B") == 2ULL);
+
+    CHECK(string_parse_size ("42") == 42ULL);
+    CHECK(string_parse_size ("42b") == 42ULL);
+    CHECK(string_parse_size ("42B") == 42ULL);
+
+    /* decimals ignored for bytes */
+    CHECK(string_parse_size ("42.9") == 42ULL);
+    CHECK(string_parse_size ("42.9b") == 42ULL);
+    CHECK(string_parse_size ("42.9B") == 42ULL);
+
+    CHECK(string_parse_size ("999") == 999ULL);
+    CHECK(string_parse_size ("999b") == 999ULL);
+    CHECK(string_parse_size ("999B") == 999ULL);
+
+    CHECK(string_parse_size ("1200") == 1200ULL);
+    CHECK(string_parse_size ("1200b") == 1200ULL);
+    CHECK(string_parse_size ("1200B") == 1200ULL);
+
+    CHECK(string_parse_size ("1k") == 1000ULL);
+    CHECK(string_parse_size ("1K") == 1000ULL);
+
+    CHECK(string_parse_size ("1.34k") == 1340ULL);
+    CHECK(string_parse_size ("1.34K") == 1340ULL);
+
+    CHECK(string_parse_size ("14.08k") == 14080ULL);
+    CHECK(string_parse_size ("14.08K") == 14080ULL);
+
+    CHECK(string_parse_size ("1m") == 1000000ULL);
+    CHECK(string_parse_size ("1M") == 1000000ULL);
+
+    CHECK(string_parse_size ("1.5m") == 1500000ULL);
+    CHECK(string_parse_size ("1.5M") == 1500000ULL);
+
+    CHECK(string_parse_size ("1g") == 1000000000ULL);
+    CHECK(string_parse_size ("1G") == 1000000000ULL);
+
+    CHECK(string_parse_size ("1.2345g") == 1234500000ULL);
+    CHECK(string_parse_size ("1.2345G") == 1234500000ULL);
+
+    CHECK(string_parse_size ("1t") == 1000000000000ULL);
+    CHECK(string_parse_size ("1T") == 1000000000000ULL);
+
+    CHECK(string_parse_size ("1.23456789t") == 1234567890000ULL);
+    CHECK(string_parse_size ("1.23456789T") == 1234567890000ULL);
+}
+
+/*
+ * Tests functions:
  *    string_base16_encode
  *    string_base16_decode
  */

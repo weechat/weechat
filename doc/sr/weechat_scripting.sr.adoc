@@ -532,6 +532,7 @@ weechat_hook_timer(1000, 0, 1, $timer_cb, 'test');
   string_has_highlight_regex +
   string_mask_to_regex +
   string_format_size +
+  string_parse_size +
   string_color_code_size +
   string_remove_color +
   string_is_command_char +

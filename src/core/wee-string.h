@@ -111,6 +111,7 @@ extern char *string_iconv_from_internal (const char *charset,
                                          const char *string);
 extern int string_fprintf (FILE *file, const char *data, ...);
 extern char *string_format_size (unsigned long long size);
+extern unsigned long long string_parse_size (const char *size);
 extern int string_base16_encode (const char *from, int length, char *to);
 extern int string_base16_decode (const char *from, char *to);
 extern int string_base32_encode (const char *from, int length, char *to);

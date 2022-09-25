@@ -369,6 +369,21 @@ API_FUNC(string_format_size)
     API_RETURN_STRING_FREE(result);
 }
 
+API_FUNC(string_parse_size)
+{
+    char *size;
+    unsigned long long value;
+
+    API_INIT_FUNC(1, "string_parse_size", API_RETURN_LONG(0));
+    size = NULL;
+    if (!PyArg_ParseTuple (args, "s", &size))
+        API_WRONG_ARGS(API_RETURN_LONG(0));
+
+    value = weechat_string_parse_size (size);
+
+    API_RETURN_LONG(value);
+}
+
 API_FUNC(string_color_code_size)
 {
     char *string;
@@ -5281,6 +5296,7 @@ PyMethodDef weechat_python_funcs[] =
     API_DEF_FUNC(string_has_highlight_regex),
     API_DEF_FUNC(string_mask_to_regex),
     API_DEF_FUNC(string_format_size),
+    API_DEF_FUNC(string_parse_size),
     API_DEF_FUNC(string_color_code_size),
     API_DEF_FUNC(string_remove_color),
     API_DEF_FUNC(string_is_command_char),

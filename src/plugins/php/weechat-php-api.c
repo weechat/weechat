@@ -496,6 +496,23 @@ API_FUNC(string_format_size)
     API_RETURN_STRING_FREE(result);
 }
 
+API_FUNC(string_parse_size)
+{
+    zend_string *z_size;
+    char *size;
+    unsigned long long value;
+
+    API_INIT_FUNC(1, "string_parse_size", API_RETURN_LONG(0));
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "S", &z_size) == FAILURE)
+        API_WRONG_ARGS(API_RETURN_LONG(0));
+
+    size = ZSTR_VAL(z_size);
+
+    value = weechat_string_parse_size ((const char *)size);
+
+    API_RETURN_LONG(value);
+}
+
 API_FUNC(string_color_code_size)
 {
     zend_string *z_string;

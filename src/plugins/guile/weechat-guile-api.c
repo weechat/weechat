@@ -432,6 +432,20 @@ weechat_guile_api_string_format_size (SCM size)
 }
 
 SCM
+weechat_guile_api_string_parse_size (SCM size)
+{
+    unsigned long long value;
+
+    API_INIT_FUNC(1, "string_parse_size", API_RETURN_LONG(0));
+    if (!scm_is_string (size))
+        API_WRONG_ARGS(API_RETURN_LONG(0));
+
+    value = weechat_string_parse_size (API_SCM_TO_STRING(size));
+
+    API_RETURN_LONG(value);
+}
+
+SCM
 weechat_guile_api_string_color_code_size (SCM string)
 {
     int size;
@@ -5118,6 +5132,7 @@ weechat_guile_api_module_init (void *data)
     API_DEF_FUNC(string_has_highlight_regex, 2);
     API_DEF_FUNC(string_mask_to_regex, 1);
     API_DEF_FUNC(string_format_size, 1);
+    API_DEF_FUNC(string_parse_size, 1);
     API_DEF_FUNC(string_color_code_size, 1);
     API_DEF_FUNC(string_remove_color, 2);
     API_DEF_FUNC(string_is_command_char, 1);

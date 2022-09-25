@@ -1990,6 +1990,53 @@ def string_format_size(size: int) -> str: ...
 str = weechat.string_format_size(15200)  # == "15.2 Ko"
 ----
 
+==== string_parse_size
+
+_WeeChat ≥ 3.7._
+
+Analyser une chaîne avec une taille et une unité optionnelle et retourner
+la taille en octets.
+
+Prototype :
+
+[source,c]
+----
+unsigned long long weechat_string_parse_size (const char *size);
+----
+
+Paramètres :
+
+* _size_ : la taille sous forme de chaîne : nombre décimal suivi par des espaces
+  optionnels et une unité optionnelle (en minuscules ou majuscules), qui est une
+  des suivantes :
+** _b_ : octets
+** _k_ : kilo-octets (1k = 1000 octets)
+** _m_ : méga-octets (1m = 1000k = 1 000 000 octets)
+** _g_ : giga-octets (1g = 1000m = 1 000 000 000 octets)
+** _t_ : tera-octets (1t = 1000g = 1 000 000 000 000 octets)
+
+Valeur de retour :
+
+* taille en octets, 0 si erreur
+
+Exemple en C :
+
+[source,c]
+----
+unsigned long long size = weechat_parse_size ("1.34m");  /* size == 1340000 */
+----
+
+Script (Python) :
+
+[source,python]
+----
+# prototype
+def string_parse_size(size: str) -> int: ...
+
+# exemple
+size = weechat.string_parse_size("1.34m")  # 1340000
+----
+
 ==== string_color_code_size
 
 _WeeChat ≥ 3.0._

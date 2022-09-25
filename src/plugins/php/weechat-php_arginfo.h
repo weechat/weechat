@@ -57,6 +57,8 @@ ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_weechat_string_format_size, 0, 1
 	ZEND_ARG_TYPE_INFO(0, p0, IS_LONG, 0)
 ZEND_END_ARG_INFO()
 
+#define arginfo_weechat_string_parse_size arginfo_weechat_charset_set
+
 #define arginfo_weechat_string_color_code_size arginfo_weechat_charset_set
 
 #define arginfo_weechat_string_remove_color arginfo_weechat_iconv_to_internal

@@ -25,6 +25,7 @@ function weechat_string_has_highlight(string $p0, string $p1): int {}
 function weechat_string_has_highlight_regex(string $p0, string $p1): int {}
 function weechat_string_mask_to_regex(string $p0): string {}
 function weechat_string_format_size(int $p0): string {}
+function weechat_string_parse_size(string $p0): int {}
 function weechat_string_color_code_size(string $p0): int {}
 function weechat_string_remove_color(string $p0, string $p1): string {}
 function weechat_string_is_command_char(string $p0): int {}
