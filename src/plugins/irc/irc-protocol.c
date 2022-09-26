@@ -456,7 +456,7 @@ IRC_PROTOCOL_CALLBACK(account)
                             nick, address),
                         (pos_account) ? _("%s%s%s%s has identified as %s") : _("%s%s%s%s has unidentified"),
                         weechat_prefix ("network"),
-                        irc_nick_color_for_msg (server, 1, ptr_nick, nick),
+                        irc_nick_color_for_msg (server, 1, NULL, nick),
                         nick,
                         IRC_COLOR_MESSAGE_ACCOUNT,
                         (pos_account) ? str_account : NULL);
@@ -1267,7 +1267,7 @@ IRC_PROTOCOL_CALLBACK(chghost)
                         irc_protocol_tags (command, tags, NULL, nick, address),
                         _("%s%s%s%s (%s%s%s)%s has changed host to %s%s"),
                         weechat_prefix ("network"),
-                        irc_nick_color_for_msg (server, 1, ptr_nick, nick),
+                        irc_nick_color_for_msg (server, 1, NULL, nick),
                         nick,
                         IRC_COLOR_CHAT_DELIMITERS,
                         IRC_COLOR_CHAT_HOST,
