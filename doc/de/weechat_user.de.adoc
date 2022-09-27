@@ -1521,8 +1521,7 @@ Sie können mit dem Befehl <<command_weechat_key,/key>> geändert und neue hinzu
 | kbd:[Ctrl+t]        | Zeichen austauschen. | `+/input transpose_chars+`
 | kbd:[Ctrl+u]        | entfernt alle Zeichen vom Cursor bis zum Anfang der Zeile (die Zeichenkette wird dabei in die interne Zwischenablage kopiert). | `+/input delete_beginning_of_line+`
 | kbd:[Alt+Backspace] | entfernt das Wort links vom Cursor (die Zeichenkette wird dabei in die interne Zwischenablage kopiert). | `+/input delete_previous_word+`
-// TRANSLATION MISSING
-| kbd:[Ctrl+w]        | Delete previous word of command line until whitespace (deleted string is copied to the internal clipboard). | `+/input delete_previous_word_whitespace+`
+| kbd:[Ctrl+w]        | Vorheriges Wort der Befehlszeile löschen bis zum Leerzeichen (gelöschte Zeichenfolge wird in die interne Zwischenablage kopiert). | `+/input delete_previous_word_whitespace+`
 | kbd:[Ctrl+y]        | fügt den Inhalt der internen Zwischenablage ein. | `+/input clipboard_paste+`
 | kbd:[Ctrl+_]        | Rückgängig machen der letzten Aktion, in der Befehlszeile. | `+/input undo+`
 | kbd:[Alt+_]         | Wiederherstellen der letzten Aktion, in der Befehlszeile. | `+/input redo+`
@@ -1936,23 +1935,23 @@ Basisfarben in WeeChat sind:
 [[colors_extended]]
 ==== erweiterte Farbpalette
 
-WeeChat belegt die Farbpaare dynamisch, sobald die Farbe genutzt werden sollte. Zum Beispiel
+WeeChat belegt Farbpaarungen dynamisch, sobald die Farbe genutzt werden soll. Zum Beispiel,
 um mit einer Farbe Buffer oder Bars zu nutzen.
 
 Zu den Basisfarben können zusätzlich Farben zwischen eins und der maximalen Anzahl an Farben
-genutzt werden die vom jeweiligen Terminal zur Verfügung gestellt werden.
+genutzt werden, die vom jeweiligen Terminal zur Verfügung gestellt werden.
 
 Mit dem `/color` Befehl kann man sich sowohl die aktuelle Farbpalette anzeigen lassen als
 auch die Anzahl der zu nutzenden Farben. Mit kbd:[Alt+c] kann man vorübergehend zu den
-Terminalfarben wechseln um eine Farbe auszuwählen.
+Terminalfarben wechseln, um eine Farbe auszuwählen.
 
-Um zum Beispiel die Uhrzeit in einem Buffer in einem schönen Orange darzustellen:
+Um zum Beispiel die Uhrzeit in einem Buffer in einem schönen Orange darstellen zu lassen:
 
 ----
 /set weechat.color.chat_time 214
 ----
 
-oder falls man den Hintergrund der Statusbar in einm sehr dunklen Grün haben möchte:
+oder falls man den Hintergrund der Statusleiste in einm sehr dunklen Grün haben möchte:
 
 ----
 /set weechat.bar.status.color_bg 22
@@ -1961,7 +1960,7 @@ oder falls man den Hintergrund der Statusbar in einm sehr dunklen Grün haben m�
 [[colors_aliases]]
 ==== Alias
 
-Man kann einer Farbe einen Alias zuordnen um diesen Alias anstelle einer Zahl in
+Man kann einer Farbe einen Alias zuordnen um diesen Alias anstelle der Farbzahl in
 die Optionen einzutragen. Um einen Alias zu definieren nutzt man den Befehl
 `/color alias`.
 
@@ -1991,7 +1990,7 @@ zuzuordnen:
 /set weechat.color.chat_nick_self _white
 ----
 
-oder um die Zeitanzeige in der Statusbar orange, fett und unterstrichen
+oder um die Zeitanzeige in der Statuszeile orange, fett und unterstrichen
 darzustellen:
 
 ----
@@ -2011,7 +2010,7 @@ Um der Vordergrundfarbe des Terminals das Attribut "fett" zuzuordnen:
 [[charset]]
 === Charset
 
-Die Charset Erweiterung übernimmt das de-/kodieren der Zeichensätze.
+Die Charset-Erweiterung übernimmt das de-/kodieren der Zeichensätze.
 
 Es existiert ein Standardzeichensatz zum de-/kodieren und spezielle Zeichensätze
 für Buffer (oder Gruppen von Buffern).
@@ -2101,7 +2100,7 @@ Um sich alle genutzten Zeichensätze anzeigen zu lassen wird folgender Befehl ge
 [[charset_troubleshooting]]
 ==== Fehlersuche
 
-sollten Probleme bei der Zeichensatzdarstellung auftreten dann werfen Sie bitte
+Sollten Probleme bei der Zeichensatzdarstellung auftreten dann werfen Sie bitte
 einen Blick in die link:weechat_faq.de.html#charset[WeeChat FAQ / Charset ^↗^,window=_blank].
 
 [[charset_commands]]
@@ -2244,8 +2243,8 @@ und um eine Hilfe zu erhalten wie man es nutzt: `+/help buffer_autoset+`.
 ==== Worte als Highlights hinzufügen
 
 Standardmäßig werden in WeeChat alle Nachrichten von anderen Personen als highlight
-deklariert wenn diese den eigenen Nick beinhalten, deshalb ist ein highlight abhängig
-vom jeweiligen Buffer (ein Nick kann in je nach Buffer unterschiedlich sein)
+deklariert, falls diese den eigenen Nick beinhalten. Deshalb ist ein highlight abhängig
+vom jeweiligen Buffer (ein Nick kann je nach Buffer unterschiedlich sein)
 
 Es können weitere Wörter zu den highlights hinzugefügt werden, mit der Option
 <<option_weechat.look.highlight,weechat.look.highlight>>,  zum Beispiel um
@@ -2292,7 +2291,7 @@ von Nicks die mit "toto" beginnen zu highlighten:
 [[highlights_regex_buffer]]
 ==== Highlights mit regulärem Ausdruck für einen Buffer nutzen
 
-Man kann reguläre Ausdrücke für Highlights in einem Buffer nutzen indem man
+Man kann reguläre Ausdrücke für Highlights in einem Buffer nutzen, indem man
 die Eigenschaft des Buffers mittels "highlight_regex" anpasst.
 
 Um zum Beispiel jede Nachricht im aktuellen Buffer als Highlight-Nachricht einzustufen:
