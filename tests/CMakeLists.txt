@@ -137,6 +137,8 @@ target_link_libraries(tests
   weechat_core
   ${EXTRA_LIBS}
   ${CURL_LIBRARIES}
+  ${ZLIB_LIBRARY}
+  ${LIBZSTD_LDFLAGS}
   ${CPPUTEST_LIBRARIES}
   -rdynamic
 )

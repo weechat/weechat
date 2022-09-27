@@ -44,6 +44,8 @@
 #include <unistd.h>
 #include <dirent.h>
 #include <ftw.h>
+#include <zlib.h>
+#include <zstd.h>
 
 #include "weechat.h"
 #include "wee-config.h"
@@ -291,324 +293,6 @@ dir_rmtree (const char *directory)
     rc = nftw (directory, dir_unlink_cb, 64, FTW_DEPTH | FTW_PHYS);
 
     return (rc == 0) ? 1 : 0;
-}
-
-/*
- * Finds files in a directory and executes a function on each file.
- */
-
-void
-dir_exec_on_files (const char *directory, int recurse_subdirs,
-                    int hidden_files,
-                    void (*callback)(void *data, const char *filename),
-                    void *callback_data)
-{
-    char complete_filename[PATH_MAX];
-    DIR *dir;
-    struct dirent *entry;
-    struct stat statbuf;
-
-    if (!directory || !callback)
-        return;
-
-    dir = opendir (directory);
-    if (dir)
-    {
-        while ((entry = readdir (dir)))
-        {
-            if (hidden_files || (entry->d_name[0] != '.'))
-            {
-                snprintf (complete_filename, sizeof (complete_filename),
-                          "%s/%s", directory, entry->d_name);
-                lstat (complete_filename, &statbuf);
-                if (S_ISDIR(statbuf.st_mode))
-                {
-                    if (recurse_subdirs
-                        && (strcmp (entry->d_name, ".") != 0)
-                        && (strcmp (entry->d_name, "..") != 0))
-                    {
-                        dir_exec_on_files (complete_filename, 1, hidden_files,
-                                           callback, callback_data);
-                    }
-                }
-                else
-                {
-                    (*callback) (callback_data, complete_filename);
-                }
-            }
-        }
-        closedir (dir);
-    }
-}
-
-/*
- * Searches for the full name of a WeeChat library with name and extension
- * (searches first in WeeChat user's dir, then WeeChat global lib directory).
- *
- * Returns name of library found, NULL if not found.
- *
- * Note: result must be freed after use (if not NULL).
- */
-
-char *
-dir_search_full_lib_name_ext (const char *filename, const char *extension,
-                              const char *plugins_dir)
-{
-    char *name_with_ext, *final_name, *extra_libdir;
-    int length;
-    struct stat st;
-
-    length = strlen (filename) + strlen (extension) + 1;
-    name_with_ext = malloc (length);
-    if (!name_with_ext)
-        return NULL;
-    snprintf (name_with_ext, length,
-              "%s%s",
-              filename,
-              (strchr (filename, '.')) ? "" : extension);
-
-    /* try libdir from environment variable WEECHAT_EXTRA_LIBDIR */
-    extra_libdir = getenv (WEECHAT_EXTRA_LIBDIR);
-    if (extra_libdir && extra_libdir[0])
-    {
-        length = strlen (extra_libdir) + strlen (name_with_ext) +
-            strlen (plugins_dir) + 16;
-        final_name = malloc (length);
-        if (!final_name)
-        {
-            free (name_with_ext);
-            return NULL;
-        }
-        snprintf (final_name, length,
-                  "%s%s%s%s%s",
-                  extra_libdir,
-                  DIR_SEPARATOR,
-                  plugins_dir,
-                  DIR_SEPARATOR,
-                  name_with_ext);
-        if ((stat (final_name, &st) == 0) && (st.st_size > 0))
-        {
-            free (name_with_ext);
-            return final_name;
-        }
-        free (final_name);
-    }
-
-    /* try WeeChat user's dir */
-    length = strlen (weechat_data_dir) + strlen (name_with_ext) +
-        strlen (plugins_dir) + 16;
-    final_name = malloc (length);
-    if (!final_name)
-    {
-        free (name_with_ext);
-        return NULL;
-    }
-    snprintf (final_name, length,
-              "%s%s%s%s%s",
-              weechat_data_dir,
-              DIR_SEPARATOR,
-              plugins_dir,
-              DIR_SEPARATOR,
-              name_with_ext);
-    if ((stat (final_name, &st) == 0) && (st.st_size > 0))
-    {
-        free (name_with_ext);
-        return final_name;
-    }
-    free (final_name);
-
-    /* try WeeChat global lib dir */
-    length = strlen (WEECHAT_LIBDIR) + strlen (name_with_ext) +
-        strlen (plugins_dir) + 16;
-    final_name = malloc (length);
-    if (!final_name)
-    {
-        free (name_with_ext);
-        return NULL;
-    }
-    snprintf (final_name, length,
-              "%s%s%s%s%s",
-              WEECHAT_LIBDIR,
-              DIR_SEPARATOR,
-              plugins_dir,
-              DIR_SEPARATOR,
-              name_with_ext);
-    if ((stat (final_name, &st) == 0) && (st.st_size > 0))
-    {
-        free (name_with_ext);
-        return final_name;
-    }
-    free (final_name);
-
-    free (name_with_ext);
-
-    return NULL;
-}
-
-/*
- * Searches for the full name of a WeeChat library with name.
- *
- * All extensions listed in option "weechat.plugin.extension" are tested.
- *
- * Note: result must be freed after use (if not NULL).
- */
-
-char *
-dir_search_full_lib_name (const char *filename, const char *plugins_dir)
-{
-    char *filename2, *full_name;
-    int i;
-
-    /* expand home in filename */
-    filename2 = string_expand_home (filename);
-    if (!filename2)
-        return NULL;
-
-    /* if full path, return it */
-    if (strchr (filename2, '/') || strchr (filename2, '\\'))
-        return filename2;
-
-    if (config_plugin_extensions)
-    {
-        for (i = 0; i < config_num_plugin_extensions; i++)
-        {
-            full_name = dir_search_full_lib_name_ext (
-                filename2,
-                config_plugin_extensions[i],
-                plugins_dir);
-            if (full_name)
-            {
-                free (filename2);
-                return full_name;
-            }
-        }
-    }
-    else
-    {
-        full_name = dir_search_full_lib_name_ext (filename2, "", plugins_dir);
-        if (full_name)
-        {
-            free (filename2);
-            return full_name;
-        }
-    }
-
-    free (filename2);
-
-    return strdup (filename);
-}
-
-/*
- * Reads content of a file.
- *
- * Returns an allocated buffer with the content of file, NULL if error.
- *
- * Note: result must be freed after use.
- */
-
-char *
-dir_file_get_content (const char *filename)
-{
-    char *buffer, *buffer2;
-    FILE *f;
-    size_t count, fp;
-
-    if (!filename)
-        return NULL;
-
-    buffer = NULL;
-    fp = 0;
-
-    f = fopen (filename, "r");
-    if (!f)
-        goto error;
-
-    while (!feof (f))
-    {
-        if (fp > SIZE_MAX - (1024 * sizeof (char)))
-            goto error;
-        buffer2 = (char *) realloc (buffer, (fp + (1024 * sizeof (char))));
-        if (!buffer2)
-            goto error;
-        buffer = buffer2;
-        count = fread (&buffer[fp], sizeof (char), 1024, f);
-        if (count <= 0)
-            goto error;
-        fp += count;
-    }
-    if (fp > SIZE_MAX - sizeof (char))
-        goto error;
-    buffer2 = (char *) realloc (buffer, fp + sizeof (char));
-    if (!buffer2)
-        goto error;
-    buffer = buffer2;
-    buffer[fp] = '\0';
-    fclose (f);
-
-    return buffer;
-
-error:
-    if (buffer)
-	free (buffer);
-    if (f)
-	fclose (f);
-    return NULL;
-}
-
-/*
- * Copies a file to another location.
- *
- * Returns:
- *   1: OK
- *   0: error
- */
-
-int
-dir_file_copy (const char *from, const char *to)
-{
-    FILE *src, *dst;
-    char *buffer;
-    int rc;
-    size_t count;
-
-    rc = 0;
-    buffer = NULL;
-    src = NULL;
-    dst = NULL;
-
-    if (!from || !from[0] || !to || !to[0])
-        goto end;
-
-    buffer = malloc (65536);
-    if (!buffer)
-        goto end;
-
-    src = fopen (from, "rb");
-    if (!src)
-        goto end;
-    dst = fopen (to, "wb");
-    if (!dst)
-        goto end;
-
-    while (!feof (src))
-    {
-        count = fread (buffer, 1, 65536, src);
-        if (count <= 0)
-            goto end;
-        if (fwrite (buffer, 1, count, dst) <= 0)
-            goto end;
-    }
-
-    rc = 1;
-
-end:
-    if (buffer)
-	free (buffer);
-    if (src)
-        fclose (src);
-    if (dst)
-        fclose (dst);
-    return rc;
 }
 
 /*
@@ -1037,4 +721,590 @@ dir_get_string_home_dirs ()
     dirs[4] = NULL;
 
     return string_rebuild_split_string ((const char **)dirs, ":", 0, -1);
+}
+
+/*
+ * Finds files in a directory and executes a function on each file.
+ */
+
+void
+dir_exec_on_files (const char *directory, int recurse_subdirs,
+                    int hidden_files,
+                    void (*callback)(void *data, const char *filename),
+                    void *callback_data)
+{
+    char complete_filename[PATH_MAX];
+    DIR *dir;
+    struct dirent *entry;
+    struct stat statbuf;
+
+    if (!directory || !callback)
+        return;
+
+    dir = opendir (directory);
+    if (dir)
+    {
+        while ((entry = readdir (dir)))
+        {
+            if (hidden_files || (entry->d_name[0] != '.'))
+            {
+                snprintf (complete_filename, sizeof (complete_filename),
+                          "%s/%s", directory, entry->d_name);
+                lstat (complete_filename, &statbuf);
+                if (S_ISDIR(statbuf.st_mode))
+                {
+                    if (recurse_subdirs
+                        && (strcmp (entry->d_name, ".") != 0)
+                        && (strcmp (entry->d_name, "..") != 0))
+                    {
+                        dir_exec_on_files (complete_filename, 1, hidden_files,
+                                           callback, callback_data);
+                    }
+                }
+                else
+                {
+                    (*callback) (callback_data, complete_filename);
+                }
+            }
+        }
+        closedir (dir);
+    }
+}
+
+/*
+ * Searches for the full name of a WeeChat library with name and extension
+ * (searches first in WeeChat user's dir, then WeeChat global lib directory).
+ *
+ * Returns name of library found, NULL if not found.
+ *
+ * Note: result must be freed after use (if not NULL).
+ */
+
+char *
+dir_search_full_lib_name_ext (const char *filename, const char *extension,
+                              const char *plugins_dir)
+{
+    char *name_with_ext, *final_name, *extra_libdir;
+    int length;
+    struct stat st;
+
+    length = strlen (filename) + strlen (extension) + 1;
+    name_with_ext = malloc (length);
+    if (!name_with_ext)
+        return NULL;
+    snprintf (name_with_ext, length,
+              "%s%s",
+              filename,
+              (strchr (filename, '.')) ? "" : extension);
+
+    /* try libdir from environment variable WEECHAT_EXTRA_LIBDIR */
+    extra_libdir = getenv (WEECHAT_EXTRA_LIBDIR);
+    if (extra_libdir && extra_libdir[0])
+    {
+        length = strlen (extra_libdir) + strlen (name_with_ext) +
+            strlen (plugins_dir) + 16;
+        final_name = malloc (length);
+        if (!final_name)
+        {
+            free (name_with_ext);
+            return NULL;
+        }
+        snprintf (final_name, length,
+                  "%s%s%s%s%s",
+                  extra_libdir,
+                  DIR_SEPARATOR,
+                  plugins_dir,
+                  DIR_SEPARATOR,
+                  name_with_ext);
+        if ((stat (final_name, &st) == 0) && (st.st_size > 0))
+        {
+            free (name_with_ext);
+            return final_name;
+        }
+        free (final_name);
+    }
+
+    /* try WeeChat user's dir */
+    length = strlen (weechat_data_dir) + strlen (name_with_ext) +
+        strlen (plugins_dir) + 16;
+    final_name = malloc (length);
+    if (!final_name)
+    {
+        free (name_with_ext);
+        return NULL;
+    }
+    snprintf (final_name, length,
+              "%s%s%s%s%s",
+              weechat_data_dir,
+              DIR_SEPARATOR,
+              plugins_dir,
+              DIR_SEPARATOR,
+              name_with_ext);
+    if ((stat (final_name, &st) == 0) && (st.st_size > 0))
+    {
+        free (name_with_ext);
+        return final_name;
+    }
+    free (final_name);
+
+    /* try WeeChat global lib dir */
+    length = strlen (WEECHAT_LIBDIR) + strlen (name_with_ext) +
+        strlen (plugins_dir) + 16;
+    final_name = malloc (length);
+    if (!final_name)
+    {
+        free (name_with_ext);
+        return NULL;
+    }
+    snprintf (final_name, length,
+              "%s%s%s%s%s",
+              WEECHAT_LIBDIR,
+              DIR_SEPARATOR,
+              plugins_dir,
+              DIR_SEPARATOR,
+              name_with_ext);
+    if ((stat (final_name, &st) == 0) && (st.st_size > 0))
+    {
+        free (name_with_ext);
+        return final_name;
+    }
+    free (final_name);
+
+    free (name_with_ext);
+
+    return NULL;
+}
+
+/*
+ * Searches for the full name of a WeeChat library with name.
+ *
+ * All extensions listed in option "weechat.plugin.extension" are tested.
+ *
+ * Note: result must be freed after use (if not NULL).
+ */
+
+char *
+dir_search_full_lib_name (const char *filename, const char *plugins_dir)
+{
+    char *filename2, *full_name;
+    int i;
+
+    /* expand home in filename */
+    filename2 = string_expand_home (filename);
+    if (!filename2)
+        return NULL;
+
+    /* if full path, return it */
+    if (strchr (filename2, '/') || strchr (filename2, '\\'))
+        return filename2;
+
+    if (config_plugin_extensions)
+    {
+        for (i = 0; i < config_num_plugin_extensions; i++)
+        {
+            full_name = dir_search_full_lib_name_ext (
+                filename2,
+                config_plugin_extensions[i],
+                plugins_dir);
+            if (full_name)
+            {
+                free (filename2);
+                return full_name;
+            }
+        }
+    }
+    else
+    {
+        full_name = dir_search_full_lib_name_ext (filename2, "", plugins_dir);
+        if (full_name)
+        {
+            free (filename2);
+            return full_name;
+        }
+    }
+
+    free (filename2);
+
+    return strdup (filename);
+}
+
+/*
+ * Reads content of a file.
+ *
+ * Returns an allocated buffer with the content of file, NULL if error.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+dir_file_get_content (const char *filename)
+{
+    char *buffer, *buffer2;
+    FILE *f;
+    size_t count, fp;
+
+    if (!filename)
+        return NULL;
+
+    buffer = NULL;
+    fp = 0;
+
+    f = fopen (filename, "r");
+    if (!f)
+        goto error;
+
+    while (!feof (f))
+    {
+        if (fp > SIZE_MAX - (1024 * sizeof (char)))
+            goto error;
+        buffer2 = (char *) realloc (buffer, (fp + (1024 * sizeof (char))));
+        if (!buffer2)
+            goto error;
+        buffer = buffer2;
+        count = fread (&buffer[fp], sizeof (char), 1024, f);
+        if (count <= 0)
+            goto error;
+        fp += count;
+    }
+    if (fp > SIZE_MAX - sizeof (char))
+        goto error;
+    buffer2 = (char *) realloc (buffer, fp + sizeof (char));
+    if (!buffer2)
+        goto error;
+    buffer = buffer2;
+    buffer[fp] = '\0';
+    fclose (f);
+
+    return buffer;
+
+error:
+    if (buffer)
+	free (buffer);
+    if (f)
+	fclose (f);
+    return NULL;
+}
+
+/*
+ * Copies a file to another location.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
+ */
+
+int
+dir_file_copy (const char *from, const char *to)
+{
+    FILE *src, *dst;
+    char *buffer;
+    int rc;
+    size_t count;
+
+    rc = 0;
+    buffer = NULL;
+    src = NULL;
+    dst = NULL;
+
+    if (!from || !from[0] || !to || !to[0])
+        goto end;
+
+    buffer = malloc (65536);
+    if (!buffer)
+        goto end;
+
+    src = fopen (from, "rb");
+    if (!src)
+        goto end;
+    dst = fopen (to, "wb");
+    if (!dst)
+        goto end;
+
+    while (!feof (src))
+    {
+        count = fread (buffer, 1, 65536, src);
+        if (count <= 0)
+            goto end;
+        if (fwrite (buffer, 1, count, dst) <= 0)
+            goto end;
+    }
+
+    rc = 1;
+
+end:
+    if (buffer)
+	free (buffer);
+    if (src)
+        fclose (src);
+    if (dst)
+        fclose (dst);
+    return rc;
+}
+
+/*
+ * Compresses a file with gzip.
+ *
+ * The output file must not exist.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
+ */
+
+int
+dir_file_compress_gzip (const char *from, const char *to,
+                        int compression_level)
+{
+    FILE *source, *dest;
+    z_stream strm;
+    unsigned char *buffer_in, *buffer_out;
+    int rc, ret, flush;
+    size_t buffer_size, have;
+
+    source = NULL;
+    dest = NULL;
+    buffer_size = 256 * 1024;
+    buffer_in = NULL;
+    buffer_out = NULL;
+    rc = 0;
+
+    if (!from || !to || (compression_level < 1) || (compression_level > 9))
+        goto end;
+
+    if (access (to, F_OK) == 0)
+        goto end;
+
+    buffer_in = malloc (buffer_size);
+    if (!buffer_in)
+        goto end;
+    buffer_out = malloc (buffer_size);
+    if (!buffer_out)
+        goto end;
+
+    source = fopen (from, "rb");
+    if (!source)
+        goto end;
+    dest = fopen (to, "wb");
+    if (!dest)
+        goto end;
+
+    strm.zalloc = Z_NULL;
+    strm.zfree = Z_NULL;
+    strm.opaque = Z_NULL;
+
+    ret = deflateInit2 (
+        &strm,
+        compression_level,
+        Z_DEFLATED,           /* method */
+        15 + 16,              /* + 16 = gzip instead of zlib */
+        8,                    /* memLevel */
+        Z_DEFAULT_STRATEGY);  /* strategy */
+    if (ret != Z_OK)
+        goto end;
+
+    do
+    {
+        strm.avail_in = fread (buffer_in, 1, buffer_size, source);
+        if (ferror (source))
+            goto error;
+
+        flush = feof (source) ? Z_FINISH : Z_NO_FLUSH;
+        strm.next_in = buffer_in;
+
+        do
+        {
+            strm.avail_out = buffer_size;
+            strm.next_out = buffer_out;
+            ret = deflate (&strm, flush);
+            if (ret == Z_STREAM_ERROR)
+                goto error;
+            have = buffer_size - strm.avail_out;
+            if (fwrite (buffer_out, 1, have, dest) != have || ferror (dest))
+                goto error;
+        } while (strm.avail_out == 0);
+        if (strm.avail_in != 0)
+            goto error;
+    } while (flush != Z_FINISH);
+
+    if (ret != Z_STREAM_END)
+        goto error;
+
+    (void) deflateEnd (&strm);
+
+    rc = 1;
+    goto end;
+
+error:
+    (void) deflateEnd (&strm);
+    unlink (to);
+
+end:
+    if (buffer_in)
+        free (buffer_in);
+    if (buffer_out)
+        free (buffer_out);
+    if (source)
+        fclose (source);
+    if (dest)
+        fclose (dest);
+
+    return rc;
+}
+
+/*
+ * Compresses a file with zstandard.
+ *
+ * The output file must not exist.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
+ */
+
+int
+dir_file_compress_zstd (const char *from, const char *to,
+                        int compression_level)
+{
+    FILE *source, *dest;
+    void *buffer_in, *buffer_out;
+    size_t buffer_in_size, buffer_out_size, num_read, remaining;
+    int rc, finished, last_chunk;
+    ZSTD_CCtx *cctx;
+    ZSTD_EndDirective mode;
+    ZSTD_inBuffer input;
+    ZSTD_outBuffer output;
+
+    source = NULL;
+    dest = NULL;
+    buffer_in = NULL;
+    buffer_out = NULL;
+    cctx = NULL;
+    rc = 0;
+
+    if (!from || !to || (compression_level < 1) || (compression_level > 19))
+        goto end;
+
+    if (access (to, F_OK) == 0)
+        goto end;
+
+    buffer_in_size = ZSTD_CStreamInSize ();
+    buffer_in = malloc (buffer_in_size);
+    if (!buffer_in)
+        goto end;
+    buffer_out_size = ZSTD_CStreamOutSize ();
+    buffer_out = malloc (buffer_out_size);
+    if (!buffer_out)
+        goto end;
+
+    source = fopen (from, "rb");
+    if (!source)
+        goto end;
+    dest = fopen (to, "wb");
+    if (!dest)
+        goto end;
+
+    cctx = ZSTD_createCCtx ();
+    if (!cctx)
+        goto end;
+
+    ZSTD_CCtx_setParameter (cctx, ZSTD_c_compressionLevel, compression_level);
+
+    while (1)
+    {
+        num_read = fread (buffer_in, 1, buffer_in_size, source);
+        if (ferror (source))
+            goto error;
+        last_chunk = (num_read < buffer_in_size);
+        mode = (last_chunk) ? ZSTD_e_end : ZSTD_e_continue;
+        input.src = buffer_in;
+        input.size = num_read;
+        input.pos = 0;
+        finished = 0;
+        while (!finished)
+        {
+            output.dst = buffer_out;
+            output.size = buffer_out_size;
+            output.pos = 0;
+            remaining = ZSTD_compressStream2(cctx, &output , &input, mode);
+            if (ZSTD_isError (remaining))
+                goto error;
+            fwrite (buffer_out, 1, output.pos, dest);
+            finished = (last_chunk) ? (remaining == 0) : (input.pos == input.size);
+        };
+        if (input.pos != input.size)
+            goto error;
+        if (last_chunk)
+            break;
+    }
+
+    rc = 1;
+    goto end;
+
+error:
+    if (cctx)
+    {
+        ZSTD_freeCCtx (cctx);
+        cctx = NULL;
+    }
+    unlink (to);
+
+end:
+    if (cctx)
+        ZSTD_freeCCtx (cctx);
+    if (buffer_in)
+        free (buffer_in);
+    if (buffer_out)
+        free (buffer_out);
+    if (source)
+        fclose (source);
+    if (dest)
+        fclose (dest);
+
+    return rc;
+}
+
+/*
+ * Compresses a file with gzip or zstandard.
+ *
+ * The output file must not exist.
+ *
+ * Supported values for parameter "compressor":
+ *   - "gzip": gzip compression (via zlib)
+ *   - "zstd": zstandard compression
+ *
+ * Parameter "compression_level" is the compression level as percentage:
+ * from 1 (fast, low compression) to 100 (slow, best compression).
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
+ */
+
+int
+dir_file_compress (const char *filename_input,
+                   const char *filename_output,
+                   const char *compressor,
+                   int compression_level)
+{
+    int level;
+
+    if (!compressor || (compression_level < 1) || (compression_level > 100))
+        return 0;
+
+    if (strcmp (compressor, "gzip") == 0)
+    {
+        /* convert percent to zlib compression level (1-9) */
+        level = (((compression_level - 1) * 9) / 100) + 1;
+        return dir_file_compress_gzip (filename_input, filename_output, level);
+    }
+    else if (strcmp (compressor, "zstd") == 0)
+    {
+        /* convert percent to zstd compression level (1-19) */
+        level = (((compression_level - 1) * 19) / 100) + 1;
+        return dir_file_compress_zstd (filename_input, filename_output, level);
+    }
+    else
+    {
+        return 0;
+    }
 }

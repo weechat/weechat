@@ -4258,6 +4258,47 @@ if (weechat_file_copy ("/tmp/test.txt", "/path/to/test2.txt"))
 [NOTE]
 Cette fonction n'est pas disponible dans l'API script.
 
+==== file_compress
+
+_WeeChat ≥ 3.7._
+
+Compresser un fichier avec gzip ou zstd.
+
+Prototype :
+
+[source,c]
+----
+int weechat_file_compress (const char *from, const char *to,
+                           const char *compressor, int compression_level);
+----
+
+Paramètres :
+
+* _from_ : fichier source
+* _to_ : fichier cible
+* _compressor_ : le compresseur à utiliser, un parmi :
+** _gzip_ : compression gzip
+** _zstd_ : compression zstandard
+* _compression_level_ : niveau de compression, entre 1 (rapide, peu de
+  compression) à 100 (lent, meilleure compression)
+
+Valeur de retour :
+
+* 1 si OK, 0 si erreur
+
+Exemple en C :
+
+[source,c]
+----
+if (weechat_file_compress ("/tmp/test.txt", "/tmp/test.txt.zst", "zstd", 50))
+{
+    /* OK */
+}
+----
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
 [[util]]
 === Util
 

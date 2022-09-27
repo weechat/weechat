@@ -29,6 +29,7 @@ New features::
   * api: add function crypto_hash_file
   * api: add support of priority in function hook_line (issue #1821)
   * api: add function string_parse_size
+  * api: add function file_compress
   * buflist: add variable `${hotlist_priority_number}` (integer version of `${hotlist_priority}`)
   * irc: display SETNAME command in channels and private buffers, add options irc.color.message_setname and irc.look.smart_filter_setname (issue #1805)
   * irc: add option irc.look.display_pv_nick_change

@@ -17,7 +17,7 @@
 # along with WeeChat.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-AM_CPPFLAGS = -DLOCALEDIR=\"$(datadir)/locale\" $(GCRYPT_CFLAGS) $(GNUTLS_CFLAGS) $(CURL_CFLAGS)
+AM_CPPFLAGS = -DLOCALEDIR=\"$(datadir)/locale\" $(GCRYPT_CFLAGS) $(GNUTLS_CFLAGS) $(CURL_CFLAGS) $(ZLIB_CFLAGS) $(ZSTD_CFLAGS)
 
 noinst_LIBRARIES = lib_weechat_core.a
 

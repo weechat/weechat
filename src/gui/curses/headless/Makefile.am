@@ -48,6 +48,8 @@ weechat_headless_LDADD = ./../../../core/lib_weechat_core.a \
                          $(GCRYPT_LFLAGS) \
                          $(GNUTLS_LFLAGS) \
                          $(CURL_LFLAGS) \
+                         $(ZLIB_LFLAGS) \
+                         $(ZSTD_LFLAGS) \
                          -lm
 
 weechat_headless_SOURCES = main.c

@@ -4258,6 +4258,48 @@ if (weechat_file_copy ("/tmp/test.txt", "/path/to/test2.txt"))
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
+// TRANSLATION MISSING
+==== file_compress
+
+_WeeChat ≥ 3.7._
+
+Compress a file with gzip or zstd.
+
+プロトタイプ:
+
+[source,c]
+----
+int weechat_file_compress (const char *from, const char *to,
+                           const char *compressor, int compression_level);
+----
+
+引数:
+
+* _from_: source file
+* _to_: destination file
+* _compressor_: the compressor to use, one of:
+** _gzip_: gzip compression
+** _zstd_: zstandard compression
+* _compression_level_: compression level, between 1 (fast, low compression) to
+  100 (slow, best compression)
+
+戻り値:
+
+* 1 if OK, 0 if error
+
+C 言語での使用例:
+
+[source,c]
+----
+if (weechat_file_compress ("/tmp/test.txt", "/tmp/test.txt.zst", "zstd", 50))
+{
+    /* OK */
+}
+----
+
+[NOTE]
+スクリプト API ではこの関数を利用できません。
+
 [[util]]
 === ユーティリティ
 

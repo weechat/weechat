@@ -88,6 +88,8 @@ include_directories(${GNUTLS_INCLUDE_PATH})
 
 include_directories(${CURL_INCLUDE_DIRS})
 
+include_directories(${ZSTD_INCLUDE_DIRS})
+
 include_directories(${CMAKE_BINARY_DIR})
 add_library(weechat_core STATIC ${LIB_CORE_SRC})
 target_link_libraries(weechat_core coverage_config)

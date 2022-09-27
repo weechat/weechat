@@ -676,6 +676,7 @@ plugin_load (const char *filename, int init_plugin, int argc, char **argv)
         new_plugin->exec_on_files = &dir_exec_on_files;
         new_plugin->file_get_content = &dir_file_get_content;
         new_plugin->file_copy = &dir_file_copy;
+        new_plugin->file_compress = &dir_file_compress;
 
         new_plugin->util_timeval_cmp = &util_timeval_cmp;
         new_plugin->util_timeval_diff = &util_timeval_diff;

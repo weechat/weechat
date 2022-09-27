@@ -66,6 +66,8 @@ tests_LDADD = ./../src/core/lib_weechat_core.a \
               $(GCRYPT_LFLAGS) \
               $(GNUTLS_LFLAGS) \
               $(CURL_LFLAGS) \
+              $(ZLIB_LFLAGS) \
+              $(ZSTD_LFLAGS) \
               $(CPPUTEST_LFLAGS) \
               -lm
 tests_LDFLAGS = -rdynamic
