@@ -9775,6 +9775,7 @@ Argomenti:
 **** _WEECHAT_HOOK_PROCESS_ERROR_: errore nella esecuzione del comando
 // TRANSLATION MISSING
 **** _WEECHAT_HOOK_PROCESS_CHILD_: callback is called in the child process
+     (used only in C API, not scripting API)
 ** _out_: output standard del comando (stdout)
 ** _err_: output di errore del comando (stderr)
 ** valore restituito:

@@ -9639,7 +9639,7 @@ Paramètres :
      toujours
 **** _WEECHAT_HOOK_PROCESS_ERROR_ : erreur en lançant la commande
 **** _WEECHAT_HOOK_PROCESS_CHILD_: la fonction de rappel est appelée dans le
-     processus fils
+     processus fils (utilisé seulement dans l'API C, pas l'API script)
 ** _out_ : sortie standard de la commande (stdout)
 ** _err_ : erreurs de la commande (stderr)
 ** valeur de retour :

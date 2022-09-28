@@ -9168,7 +9168,9 @@ struct t_hook *weechat_hook_process (const char *command,
 *** _< 0_:
 **** _WEECHAT_HOOK_PROCESS_RUNNING_: подаци су доступни, али се дете још увек извршава
 **** _WEECHAT_HOOK_PROCESS_ERROR_: грешка приликом покретања команде
+// TRANSLATION MISSING
 **** _WEECHAT_HOOK_PROCESS_CHILD_: у дете процесу је позвана функција повратног позива
+     (used only in C API, not scripting API)
 ** _out_: стандардни излаз команде (stdout)
 ** _err_: излаз грешака команде (stderr)
 ** повратна вредност:

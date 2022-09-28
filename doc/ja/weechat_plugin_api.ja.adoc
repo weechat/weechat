@@ -9512,7 +9512,9 @@ struct t_hook *weechat_hook_process (const char *command,
 *** _< 0_:
 **** _WEECHAT_HOOK_PROCESS_RUNNING_: データは利用可能だが子プロセスは終了していない
 **** _WEECHAT_HOOK_PROCESS_ERROR_: コマンドの起動中にエラー
+// TRANSLATION MISSING
 **** _WEECHAT_HOOK_PROCESS_CHILD_: 子プロセスからコールバックが呼び出された
+     (used only in C API, not scripting API)
 ** _out_: コマンドの標準出力 (stdout)
 ** _err_: コマンドの標準エラー出力 (stderr)
 ** 戻り値:

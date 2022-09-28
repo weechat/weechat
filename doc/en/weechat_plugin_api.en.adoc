@@ -9471,6 +9471,7 @@ Arguments:
 **** _WEECHAT_HOOK_PROCESS_RUNNING_: data available, but child still running
 **** _WEECHAT_HOOK_PROCESS_ERROR_: error when launching command
 **** _WEECHAT_HOOK_PROCESS_CHILD_: callback is called in the child process
+     (used only in C API, not scripting API)
 ** _out_: standard output of command (stdout)
 ** _err_: error output of command (stderr)
 ** return value:
