@@ -878,7 +878,8 @@ Elenco di costanti nelle API per gli script:
 // TRANSLATION MISSING
 | hook su processo
 | `WEECHAT_HOOK_PROCESS_RUNNING` (integer) +
-  `WEECHAT_HOOK_PROCESS_ERROR` (integer)
+| `WEECHAT_HOOK_PROCESS_ERROR` (integer) +
+  `WEECHAT_HOOK_PROCESS_CHILD` (integer)
 
 // TRANSLATION MISSING
 | hook su connessione

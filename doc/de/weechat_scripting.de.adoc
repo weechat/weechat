@@ -854,7 +854,8 @@ Liste der Konstanten in Skript API:
 
 | hook Prozesse
 | `WEECHAT_HOOK_PROCESS_RUNNING` (integer) +
-  `WEECHAT_HOOK_PROCESS_ERROR` (integer)
+| `WEECHAT_HOOK_PROCESS_ERROR` (integer) +
+  `WEECHAT_HOOK_PROCESS_CHILD` (integer)
 
 | hook Connect
 | `WEECHAT_HOOK_CONNECT_OK` (integer) +

@@ -838,7 +838,8 @@ List of constants in script API:
 
 | hook process
 | `WEECHAT_HOOK_PROCESS_RUNNING` (integer) +
-  `WEECHAT_HOOK_PROCESS_ERROR` (integer)
+| `WEECHAT_HOOK_PROCESS_ERROR` (integer) +
+  `WEECHAT_HOOK_PROCESS_CHILD` (integer)
 
 | hook connect
 | `WEECHAT_HOOK_CONNECT_OK` (integer) +

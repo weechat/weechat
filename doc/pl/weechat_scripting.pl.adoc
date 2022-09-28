@@ -845,7 +845,8 @@ Lista stałych w API skryptów:
 
 | hook process
 | `WEECHAT_HOOK_PROCESS_RUNNING` (liczba całkowita) +
-  `WEECHAT_HOOK_PROCESS_ERROR` (liczba całkowita)
+| `WEECHAT_HOOK_PROCESS_ERROR` (liczba całkowita) +
+  `WEECHAT_HOOK_PROCESS_CHILD` (liczba całkowita)
 
 | hook connect
 | `WEECHAT_HOOK_CONNECT_OK` (liczba całkowita) +

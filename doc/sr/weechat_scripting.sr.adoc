@@ -797,7 +797,8 @@ weechat_hook_timer(1000, 0, 1, $timer_cb, 'test');
 
 | кука process
 | `WEECHAT_HOOK_PROCESS_RUNNING` (цео број) +
-  `WEECHAT_HOOK_PROCESS_ERROR` (цео број)
+| `WEECHAT_HOOK_PROCESS_ERROR` (цео број) +
+  `WEECHAT_HOOK_PROCESS_CHILD` (цео број)
 
 | кука connect
 | `WEECHAT_HOOK_CONNECT_OK` (цео број) +

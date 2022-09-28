@@ -859,7 +859,8 @@ Liste des constantes de l'API script :
 
 | hook process
 | `WEECHAT_HOOK_PROCESS_RUNNING` (entier) +
-  `WEECHAT_HOOK_PROCESS_ERROR` (entier)
+| `WEECHAT_HOOK_PROCESS_ERROR` (entier) +
+  `WEECHAT_HOOK_PROCESS_CHILD` (entier)
 
 | hook connect
 | `WEECHAT_HOOK_CONNECT_OK` (entier) +

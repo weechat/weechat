@@ -867,7 +867,8 @@ link:weechat_plugin_api.ja.html[WeeChat プラグイン API リファレンス 
 // TRANSLATION MISSING
 | プロセスのフック
 | `WEECHAT_HOOK_PROCESS_RUNNING` (integer) +
-  `WEECHAT_HOOK_PROCESS_ERROR` (integer)
+| `WEECHAT_HOOK_PROCESS_ERROR` (integer) +
+  `WEECHAT_HOOK_PROCESS_CHILD` (integer)
 
 // TRANSLATION MISSING
 | 接続のフック
