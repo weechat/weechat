@@ -9635,10 +9635,10 @@ Paramètres :
 **** _3_ : pas assez de mémoire
 **** _4_ : erreur avec un fichier
 *** _< 0_ :
-**** _WEECHAT_HOOK_PROCESS_RUNNING_ : données disponibles, mais le fils tourne
+**** _WEECHAT_HOOK_PROCESS_RUNNING_ (-1) : données disponibles, mais le fils tourne
      toujours
-**** _WEECHAT_HOOK_PROCESS_ERROR_ : erreur en lançant la commande
-**** _WEECHAT_HOOK_PROCESS_CHILD_: la fonction de rappel est appelée dans le
+**** _WEECHAT_HOOK_PROCESS_ERROR_ (-2) : erreur en lançant la commande
+**** _WEECHAT_HOOK_PROCESS_CHILD_ (-3) : la fonction de rappel est appelée dans le
      processus fils (utilisé seulement dans l'API C, pas l'API script)
 ** _out_ : sortie standard de la commande (stdout)
 ** _err_ : erreurs de la commande (stderr)

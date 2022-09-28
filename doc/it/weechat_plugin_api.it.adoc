@@ -9770,11 +9770,11 @@ Argomenti:
 **** _3_: memoria non sufficiente
 **** _4_: errore con un file
 *** _< 0_:
-**** _WEECHAT_HOOK_PROCESS_RUNNING_: dati disponibili, ma figlio ancora in
+**** _WEECHAT_HOOK_PROCESS_RUNNING_ (-1): dati disponibili, ma figlio ancora in
      esecuzione
-**** _WEECHAT_HOOK_PROCESS_ERROR_: errore nella esecuzione del comando
+**** _WEECHAT_HOOK_PROCESS_ERROR_ (-2): errore nella esecuzione del comando
 // TRANSLATION MISSING
-**** _WEECHAT_HOOK_PROCESS_CHILD_: callback is called in the child process
+**** _WEECHAT_HOOK_PROCESS_CHILD_ (-3): callback is called in the child process
      (used only in C API, not scripting API)
 ** _out_: output standard del comando (stdout)
 ** _err_: output di errore del comando (stderr)
