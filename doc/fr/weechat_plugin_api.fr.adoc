@@ -6172,7 +6172,7 @@ Script (Python) :
 def config_new(name: str, callback_reload: str, callback_reload_data: str) -> str: ...
 
 # exemple
-def my_config_reload_cb(data, config_file):
+def my_config_reload_cb(data: str, config_file: str) -> int:
     # ...
     return weechat.WEECHAT_RC_OK
 
@@ -6443,26 +6443,26 @@ def config_new_section(config_file: str, name: str,
                        callback_delete_option: str, callback_delete_option_data: str) -> str: ...
 
 # exemple
-def my_section_read_cb(data, config_file, section, option_name, value):
+def my_section_read_cb(data: str, config_file: str, section: str, option_name: str, value: str) -> int:
     # ...
     return weechat.WEECHAT_CONFIG_OPTION_SET_OK_CHANGED
     # return weechat.WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE
     # return weechat.WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND
     # return weechat.WEECHAT_CONFIG_OPTION_SET_ERROR
 
-def my_section_write_cb(data, config_file, section_name):
+def my_section_write_cb(data: str, config_file: str, section_name: str) -> int:
     # ...
     return weechat.WEECHAT_CONFIG_WRITE_OK
 
-def my_section_write_default_cb(data, config_file, section_name):
+def my_section_write_default_cb(data: str, config_file: str, section_name: str) -> int:
     # ...
     return weechat.WEECHAT_CONFIG_WRITE_OK
 
-def my_section_create_option_cb(data, config_file, section, option_name, value):
+def my_section_create_option_cb(data: str, config_file: str, section: str, option_name: str, value: str) -> int:
     # ...
     return weechat.WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE
 
-def my_section_delete_option_cb(data, config_file, section, option):
+def my_section_delete_option_cb(data: str, config_file: str, section: str, option: str) -> int:
     # ...
     return weechat.WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED
 
@@ -6704,15 +6704,15 @@ def config_new_option(config_file: str, section: str, name: str, type: str, desc
                       callback_delete: str, callback_delete_data: str) -> str: ...
 
 # exemple
-def option4_check_value_cb(data, option, value):
+def option4_check_value_cb(data: str, option: str, value: str) -> int:
     # ...
     return 1
     # return 0
 
-def option4_change_cb(data, option):
+def option4_change_cb(data: str, option: str) -> int:
     # ...
 
-def option4_delete_cb(data, option):
+def option4_delete_cb(data: str, option: str) -> int:
     # ...
 
 option1 = weechat.config_new_option(config_file, section, "option1", "boolean",
@@ -7823,7 +7823,7 @@ Script (Python) :
 def config_write_option(config_file: str, option: str) -> int: ...
 
 # exemple
-def my_section_write_cb(data, config_file, section_name):
+def my_section_write_cb(data: str, config_file: str, section_name: str) -> int:
     weechat.config_write_line(config_file, "ma_section", "")
     weechat.config_write_option(config_file, option)
     return weechat.WEECHAT_RC_OK
@@ -7877,7 +7877,7 @@ Script (Python) :
 def config_write_line(config_file: str, option_name: str, value: str) -> int: ...
 
 # exemple
-def my_section_write_cb(data, config_file, section_name):
+def my_section_write_cb(data: str, config_file: str, section_name: str) -> int:
     weechat.config_write_line(config_file, "ma_section", "")
     weechat.config_write_line(config_file, "option", "valeur")
     return weechat.WEECHAT_RC_OK
@@ -9207,7 +9207,7 @@ def hook_command(command: str, description: str, args: str, args_description: st
                  completion: str, callback: str, callback_data: str) -> str: ...
 
 # exemple
-def my_command_cb(data, buffer, args):
+def my_command_cb(data: str, buffer: str, args: str) -> int:
     # ...
     return weechat.WEECHAT_RC_OK
 
@@ -9318,7 +9318,7 @@ Script (Python) :
 def hook_completion(completion_item: str, description: str, callback: str, callback_data: str) -> str: ...
 
 # exemple
-def my_completion_cb(data, completion_item, buffer, completion):
+def my_completion_cb(data: str, completion_item: str, buffer: str, completion: str) -> int:
     weechat.completion_list_add(completion, "mot1", 0, weechat.WEECHAT_LIST_POS_SORT)
     weechat.completion_list_add(completion, "test_mot2", 0, weechat.WEECHAT_LIST_POS_SORT)
     return weechat.WEECHAT_RC_OK
@@ -9409,7 +9409,7 @@ Script (Python) :
 def hook_command_run(command: str, callback: str, callback_data: str) -> str: ...
 
 # exemple
-def my_command_run_cb(data, buffer, command):
+def my_command_run_cb(data: str, buffer: str, command: str) -> int:
     weechat.prnt("", "Je mange la complétion !")
     return weechat.WEECHAT_RC_OK_EAT
 
@@ -9489,7 +9489,7 @@ Script (Python) :
 def hook_timer(interval: int, align_second: int, max_calls: int, callback: str, callback_data: str) -> str: ...
 
 # exemple
-def my_timer_cb(data, remaining_calls):
+def my_timer_cb(data: str, remaining_calls: str) -> int:
     # ...
     return weechat.WEECHAT_RC_OK
 
@@ -9575,7 +9575,7 @@ Script (Python) :
 def hook_fd(fd: int, flag_read: int, flag_write: int, flag_exception: int, callback: str, callback_data: str) -> str: ...
 
 # exemple
-def my_fd_cb(data, fd):
+def my_fd_cb(data: str, fd: int) -> int:
     # ...
     return weechat.WEECHAT_RC_OK
 
@@ -9786,7 +9786,7 @@ Script (Python) :
 def hook_process(command: str, timeout: int, callback: str, callback_data: str) -> str: ...
 
 # exemple avec une commande externe
-def my_process_cb(data, command, return_code, out, err):
+def my_process_cb(data: str, command: str, return_code: int, out: str, err: str) -> int:
     if return_code == weechat.WEECHAT_HOOK_PROCESS_ERROR:
         weechat.prnt("", "Erreur avec la commande '%s'" % command)
         return weechat.WEECHAT_RC_OK
@@ -9801,12 +9801,12 @@ def my_process_cb(data, command, return_code, out, err):
 hook = weechat.hook_process("ls", 5000, "my_process_cb", "")
 
 # exemple avec une fonction du script
-def get_status(data):
+def get_status(data: str) -> str:
     # faire quelque chose de bloquant...
     # ...
     return "ceci est le résultat"
 
-def my_process_cb(data, command, return_code, out, err):
+def my_process_cb(data: str, command: str, return_code: int, out: str, err: str) -> int:
     if return_code == weechat.WEECHAT_HOOK_PROCESS_ERROR:
         weechat.prnt("", "Erreur avec la commande '%s'" % command)
         return weechat.WEECHAT_RC_OK
@@ -10013,7 +10013,7 @@ Script (Python) :
 def hook_process_hashtable(command: str, options: Dict[str, str], timeout: int, callback: str, callback_data: str) -> str: ...
 
 # exemple
-def my_process_cb(data, command, return_code, out, err):
+def my_process_cb(data: str, command: str, return_code: int, out: str, err: str) -> int:
     if return_code == weechat.WEECHAT_HOOK_PROCESS_ERROR:
         weechat.prnt("", "Erreur avec la commande '%s'" % command)
         return weechat.WEECHAT_RC_OK
@@ -10218,7 +10218,7 @@ def hook_connect(proxy: str, address: str, port: int, ipv6: int, retry: int, loc
                  callback: str, callback_data: str) -> str: ...
 
 # exemple
-def my_connect_cb(data, status, gnutls_rc, sock, error, ip_address):
+def my_connect_cb(data: str, status: int, gnutls_rc: int, sock: int, error: str, ip_address: str) -> int:
     if status == WEECHAT_HOOK_CONNECT_OK:
         # ...
     elif status == WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND:
@@ -10526,7 +10526,7 @@ Script (Python) :
 def hook_line(buffer_type: str, buffer_name: str, tags: str, callback: str, callback_data: str) -> str: ...
 
 # exemple
-def my_line_cb(data, line):
+def my_line_cb(data: str, line: Dict[str, str]) -> Dict[str, str]:
     # forcer un highlight sur la ligne
     return {"highlight": "1"}
 
@@ -10642,7 +10642,7 @@ Script (Python) :
 def hook_print(buffer: str, tags: str, message: str, strip_colors: int, callback: str, callback_data: str) -> str: ...
 
 # exemple
-def my_print_cb(data, buffer, date, tags, displayed, highlight, prefix, message):
+def my_print_cb(data: str, buffer: str, date: str, tags: str, displayed: int, highlight: int, prefix: str, message: str) -> int:
     if int(highlight):
         # ...
     return weechat.WEECHAT_RC_OK
@@ -11382,7 +11382,7 @@ Script (Python) :
 def hook_signal(signal: str, callback: str, callback_data: str) -> str: ...
 
 # exemple
-def my_signal_cb(data, signal, signal_data):
+def my_signal_cb(data: str, signal: str, signal_data: str) -> int:
     # ...
     return weechat.WEECHAT_RC_OK
 
@@ -11719,7 +11719,7 @@ Script (Python) :
 def hook_hsignal(signal: str, callback: str, callback_data: str) -> str: ...
 
 # exemple
-def my_hsignal_cb(data, signal, hashtable):
+def my_hsignal_cb(data: str, signal: str, hashtable: Dict[str, str]) -> int:
     # ...
     return weechat.WEECHAT_RC_OK
 
@@ -11878,7 +11878,7 @@ Script (Python) :
 
 [source,python]
 ----
-def test_whois_cb(data, signal, hashtable):
+def test_whois_cb(data: str, signal: str, hashtable: Dict[str, str]) -> int:
     weechat.prnt("", "erreur = %s" % hashtable["error"])
     weechat.prnt("", "sortie = %s" % hashtable["output"])
     return weechat.WEECHAT_RC_OK
@@ -12038,7 +12038,7 @@ Script (Python) :
 def hook_config(option: str, callback: str, callback_data: str) -> str: ...
 
 # exemple
-def my_config_cb(data, option, value):
+def my_config_cb(data: str, option: str, value: str) -> int:
     # ...
     return weechat.WEECHAT_RC_OK
 
@@ -12206,7 +12206,7 @@ Script (Python) :
 def hook_modifier(modifier: str, callback: str, callback_data: str) -> str: ...
 
 # exemple
-def my_modifier_cb(data, modifier, modifier_data, string):
+def my_modifier_cb(data: str, modifier: str, modifier_data: str, string: str) -> str:
     return "%s xxx" % string
 
 hook = weechat.hook_modifier("weechat_print", "my_modifier_cb", "")
@@ -12408,7 +12408,7 @@ def hook_info(info_name: str, description: str, args_description: str,
               callback: str, callback_data: str) -> str: ...
 
 # exemple
-def my_info_cb(data, info_name, arguments):
+def my_info_cb(data: str, info_name: str, arguments: str) -> str:
     return "some_info"
 
 hook = weechat.hook_info("mon_info", "Une information", "Info sur les paramètres",
@@ -12495,7 +12495,7 @@ def hook_info_hashtable(info_name: str, description: str, args_description: str,
                         output_description: str, callback: str, callback_data: str) -> str: ...
 
 # exemple
-def my_info_hashtable_cb(data, info_name, hashtable):
+def my_info_hashtable_cb(data: str, info_name: str, hashtable: Dict[str, str]) -> Dict[str, str]:
     return {"test_cle": "test_valeur"}
 
 hook = weechat.hook_info_hashtable("mon_info_hashtable", "Une information",
@@ -12588,7 +12588,7 @@ def hook_infolist(infolist_name: str, description: str, pointer_description: str
                   args_description: str, callback: str, callback_data: str) -> str: ...
 
 # exemple
-def my_infolist_cb(data, infolist_name, pointer, arguments):
+def my_infolist_cb(data: str, infolist_name: str, pointer: str, arguments: str) -> str:
     # construction de l'infolist
     # ...
     return my_infolist
@@ -12871,7 +12871,7 @@ Script (Python) :
 def hook_focus(area: str, callback: str, callback_data: str) -> str: ...
 
 # exemple
-def my_focus_nicklist_cb(data, info):
+def my_focus_nicklist_cb(data: str, info: Dict[str, str]) -> Dict[str, str]:
     # construction du dict
     # ...
     return my_dict
@@ -12942,7 +12942,7 @@ Script (Python) :
 def hook_set(hook: str, property: str, value: str) -> int: ...
 
 # exemple
-def my_process_cb(data, command, return_code, out, err):
+def my_process_cb(data: str, command: str, return_code: int, out: str, err: str) -> int:
     # ...
     return weechat.WEECHAT_RC_OK
 
@@ -13130,11 +13130,11 @@ def buffer_new(name: str, input_callback: str, input_callback_data: str,
                close_callback: str, close_callback_data: str) -> str: ...
 
 # exemple
-def my_input_cb(data, buffer, input_data):
+def my_input_cb(data: str, buffer: str, input_data: str) -> int:
     weechat.prnt(buffer, "Texte : %s" % input_data)
     return weechat.WEECHAT_RC_OK
 
-def my_close_cb(data, buffer):
+def my_close_cb(data: str, buffer: str) -> int:
     weechat.prnt("", "Le tampon '%s' va être fermé !" % weechat.buffer_get_string(buffer, "name"))
     return weechat.WEECHAT_RC_OK
 
@@ -13253,11 +13253,11 @@ def buffer_new_props(name: str, properties: Dict[str, str],
                      close_callback: str, close_callback_data: str) -> str: ...
 
 # exemple
-def my_input_cb(data, buffer, input_data):
+def my_input_cb(data: str, buffer: str, input_data: str) -> int:
     weechat.prnt(buffer, "Texte : %s" % input_data)
     return weechat.WEECHAT_RC_OK
 
-def my_close_cb(data, buffer):
+def my_close_cb(data: str, buffer: str) -> int:
     weechat.prnt("", "Le tampon '%s' va être fermé !" % weechat.buffer_get_string(buffer, "name"))
     return weechat.WEECHAT_RC_OK
 
@@ -15325,13 +15325,13 @@ dans WeeChat ≥ 0.4.2).
 def bar_item_new(name: str, build_callback: str, build_callback_data: str) -> str: ...
 
 # exemple (fonction de rappel sans "buffer" et "extra_info")
-def my_build_callback(data, item, window):
+def my_build_callback(data: str, item: str, window: str) -> str:
     return "mon contenu"
 
 bar_item = weechat.bar_item_new("myitem", "my_build_callback", "")
 
 # exemple (fonction de rappel avec tous les paramètres, pour WeeChat ≥ 0.4.2)
-def my_build_callback2(data, item, window, buffer, extra_info):
+def my_build_callback2(data: str, item: str, window: str, buffer: str, extra_info: Dict[str, str]) -> str:
     return "mon contenu"
 
 bar_item2 = weechat.bar_item_new("(extra)myitem2", "my_build_callback2", "")  # WeeChat ≥ 0.4.2
@@ -15927,7 +15927,7 @@ Script (Python) :
 def completion_get_string(completion: str, property: str) -> str: ...
 
 # exemple
-def my_completion_cb(data, completion_item, buffer, completion):
+def my_completion_cb(data: str, completion_item: str, buffer: str, completion: str) -> int:
     # récupère les paramètres de la commande
     args = weechat.completion_get_string(completion, "args")
     # complétion selon les paramètres
