@@ -9166,7 +9166,7 @@ struct t_hook *weechat_hook_process (const char *command,
 **** _3_: нема довољно слободне меморије
 **** _4_: грешка са фајлом
 *** _< 0_:
-**** _WEECHAT_HOOK_PROCESS_RUNNING_: подаци су доступни, али се дете још увек извршава)
+**** _WEECHAT_HOOK_PROCESS_RUNNING_: подаци су доступни, али се дете још увек извршава
 **** _WEECHAT_HOOK_PROCESS_ERROR_: грешка приликом покретања команде
 **** _WEECHAT_HOOK_PROCESS_CHILD_: у дете процесу је позвана функција повратног позива
 ** _out_: стандардни излаз команде (stdout)

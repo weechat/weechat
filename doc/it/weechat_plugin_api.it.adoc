@@ -9771,7 +9771,7 @@ Argomenti:
 **** _4_: errore con un file
 *** _< 0_:
 **** _WEECHAT_HOOK_PROCESS_RUNNING_: dati disponibili, ma figlio ancora in
-     esecuzione)
+     esecuzione
 **** _WEECHAT_HOOK_PROCESS_ERROR_: errore nella esecuzione del comando
 // TRANSLATION MISSING
 **** _WEECHAT_HOOK_PROCESS_CHILD_: callback is called in the child process

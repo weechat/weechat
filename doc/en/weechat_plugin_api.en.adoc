@@ -9468,7 +9468,7 @@ Arguments:
 **** _3_: not enough memory
 **** _4_: error with a file
 *** _< 0_:
-**** _WEECHAT_HOOK_PROCESS_RUNNING_: data available, but child still running)
+**** _WEECHAT_HOOK_PROCESS_RUNNING_: data available, but child still running
 **** _WEECHAT_HOOK_PROCESS_ERROR_: error when launching command
 **** _WEECHAT_HOOK_PROCESS_CHILD_: callback is called in the child process
 ** _out_: standard output of command (stdout)
