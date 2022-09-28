@@ -10437,7 +10437,7 @@ def hook_print(buffer: str, tags: str, message: str, strip_colors: int, callback
 
 # example
 def my_print_cb(data: str, buffer: str, date: str, tags: str, displayed: int, highlight: int, prefix: str, message: str) -> int:
-    if int(highlight):
+    if highlight:
         # ...
     return weechat.WEECHAT_RC_OK
 
