@@ -109,16 +109,38 @@ Le tableau suivant liste les paquets *requis* pour compiler WeeChat :
 
 [width="100%",cols="5,^3,.^15",options="header"]
 |===
-| Paquet ^(1)^                | Version       | Fonctionnalité
-| compilateur C (gcc / clang) |               | Construction.
-| cmake                       | ≥ 3.0         | Construction (autotools toujours possible, mais CMake est recommandé).
-| pkg-config                  |               | Détection des bibliothèques installées.
-| libncursesw5-dev ^(2)^      |               | Interface ncurses.
-| libcurl4-gnutls-dev         |               | Transfert d'URL.
-| libgcrypt20-dev             |               | Données sécurisées, authentification IRC SASL.
-| libgnutls28-dev             | ≥ 2.2.0 ^(3)^ | Connexion SSL au serveur IRC, support SSL dans l'extension relay, authentification IRC SASL (ECDSA-NIST256P-CHALLENGE).
-| zlib1g-dev                  |               | Compression des messages (WeeChat -> client) avec https://zlib.net/[zlib ^↗^,window=_blank] dans l'extension relay (protocole weechat), extension script.
-| libzstd-dev                 |               | Compression des messages (WeeChat -> client) avec https://facebook.github.io/zstd/[Zstandard ^↗^,window=_blank] dans l'extension relay (protocole weechat).
+| Paquet ^(1)^ | Version | Fonctionnalités
+
+| compilateur C (gcc / clang) |
+| Construction.
+
+| cmake | ≥ 3.0
+| Construction (autotools toujours possible, mais CMake est recommandé).
+
+| pkg-config |
+| Détection des bibliothèques installées.
+
+| libncursesw5-dev ^(2)^ |
+| Interface ncurses.
+
+| libcurl4-gnutls-dev |
+| Transfert d'URL.
+
+| libgcrypt20-dev |
+| Données sécurisées, authentification IRC SASL.
+
+| libgnutls28-dev | ≥ 2.2.0 ^(3)^
+| Extension IRC : support des connexions TLS, authentification IRC SASL (ECDSA-NIST256P-CHALLENGE). +
+  Extension Relay : support des connexions TLS.
+
+| zlib1g-dev |
+| Extension Logger : compression des fichiers de log qui tournent (gzip). +
+  Extention Relay : compression des messages (WeeChat -> client) avec https://zlib.net/[zlib ^↗^,window=_blank] (protocole weechat). +
+  Extension Script : lecture du fichier d'index du dépôt (gzip).
+
+| libzstd-dev |
+| Extension Logger : compression des fichiers de log qui tournent. +
+  Extension Relay : compression des messages (WeeChat -> client) avec https://facebook.github.io/zstd/[Zstandard ^↗^,window=_blank] (protocole weechat).
 |===
 
 [NOTE]
@@ -135,7 +157,7 @@ Le tableau suivant liste les paquets optionnels pour compiler WeeChat :
 
 [width="100%",cols="5,^3,.^15",options="header"]
 |===
-| Paquet ^(1)^                             | Version  | Fonctionnalité
+| Paquet ^(1)^                             | Version  | Fonctionnalités
 | compilateur {cpp} (pass:[g++ / clang++]) |          | Construction et lancement des tests, extension JavaScript.
 | gettext                                  |          | Internationalisation (traduction des messages ; la langue de base est l'anglais).
 | ca-certificates                          |          | Certificats pour les connexions SSL.

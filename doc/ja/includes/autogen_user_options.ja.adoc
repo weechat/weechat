@@ -1468,6 +1468,24 @@
 ** 値: 未制約文字列
 ** デフォルト値: `+"_"+`
 
+* [[option_logger.file.rotation_compression_level]] *logger.file.rotation_compression_level*
+** 説明: pass:none[compression level for rotated log files (with extension ".1", ".2", etc.), if option logger.file.rotation_compression_type is enabled: 1 = low compression / fast ... 100 = best compression / slow; the value is a percentage converted to 1-9 for gzip and 1-19 for zstd; the default value is recommended, it offers a good compromise between compression and speed]
+** タイプ: 整数
+** 値: 1 .. 100
+** デフォルト値: `+20+`
+
+* [[option_logger.file.rotation_compression_type]] *logger.file.rotation_compression_type*
+** 説明: pass:none[compression type for rotated log files; if set to "none", rotated log files are not compressed; WARNING: if rotation was enabled with another type of compression (or no compression), you must first unload the logger plugin, compress files with the new type (or decompress files), then change the option in logger.conf, then load the logger plugin]
+** タイプ: 整数
+** 値: none, gzip, zstd
+** デフォルト値: `+none+`
+
+* [[option_logger.file.rotation_size_max]] *logger.file.rotation_size_max*
+** 説明: pass:none[when this size is reached, a rotation of log files is performed: the existing rotated log files are renamed (.1 becomes .2, .2 becomes .3, etc.) and the current file is renamed with extension .1; an integer number with a suffix is allowed: b = bytes (default if no unit given), k = kilobytes, m = megabytes, g = gigabytes, t = terabytes; example: "2g" causes a rotation if the file size is > 2,000,000,000 bytes; if set to "0", no rotation is performed (unlimited log size); WARNING: before changing this option, you should first set the compression type via option logger.file.rotation_compression_type]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"0"+`
+
 * [[option_logger.file.time_format]] *logger.file.time_format*
 ** 説明: pass:none[ログファイルで使用するタイムスタンプ (日付/時間指定子は strftime の man 参照)]
 ** タイプ: 文字列

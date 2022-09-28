@@ -244,7 +244,7 @@ logger_backlog_signal_cb (const void *pointer, void *data,
     if (ptr_logger_buffer && ptr_logger_buffer->log_enabled)
     {
         if (!ptr_logger_buffer->log_filename)
-            logger_set_log_filename (ptr_logger_buffer);
+            logger_buffer_set_log_filename (ptr_logger_buffer);
         if (ptr_logger_buffer->log_filename)
         {
             ptr_logger_buffer->log_enabled = 0;

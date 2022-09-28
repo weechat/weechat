@@ -1468,6 +1468,24 @@
 ** valori: qualsiasi stringa
 ** valore predefinito: `+"_"+`
 
+* [[option_logger.file.rotation_compression_level]] *logger.file.rotation_compression_level*
+** descrizione: pass:none[compression level for rotated log files (with extension ".1", ".2", etc.), if option logger.file.rotation_compression_type is enabled: 1 = low compression / fast ... 100 = best compression / slow; the value is a percentage converted to 1-9 for gzip and 1-19 for zstd; the default value is recommended, it offers a good compromise between compression and speed]
+** tipo: intero
+** valori: 1 .. 100
+** valore predefinito: `+20+`
+
+* [[option_logger.file.rotation_compression_type]] *logger.file.rotation_compression_type*
+** descrizione: pass:none[compression type for rotated log files; if set to "none", rotated log files are not compressed; WARNING: if rotation was enabled with another type of compression (or no compression), you must first unload the logger plugin, compress files with the new type (or decompress files), then change the option in logger.conf, then load the logger plugin]
+** tipo: intero
+** valori: none, gzip, zstd
+** valore predefinito: `+none+`
+
+* [[option_logger.file.rotation_size_max]] *logger.file.rotation_size_max*
+** descrizione: pass:none[when this size is reached, a rotation of log files is performed: the existing rotated log files are renamed (.1 becomes .2, .2 becomes .3, etc.) and the current file is renamed with extension .1; an integer number with a suffix is allowed: b = bytes (default if no unit given), k = kilobytes, m = megabytes, g = gigabytes, t = terabytes; example: "2g" causes a rotation if the file size is > 2,000,000,000 bytes; if set to "0", no rotation is performed (unlimited log size); WARNING: before changing this option, you should first set the compression type via option logger.file.rotation_compression_type]
+** tipo: stringa
+** valori: qualsiasi stringa
+** valore predefinito: `+"0"+`
+
 * [[option_logger.file.time_format]] *logger.file.time_format*
 ** descrizione: pass:none[data e ora usati nei file di log (consultare man strftime per gli specificatori di data/ora)]
 ** tipo: stringa

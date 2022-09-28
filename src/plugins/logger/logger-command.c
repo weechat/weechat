@@ -143,7 +143,7 @@ logger_command_cb (const void *pointer, void *data,
 
     if (weechat_strcasecmp (argv[1], "flush") == 0)
     {
-        logger_flush ();
+        logger_buffer_flush ();
         return WEECHAT_RC_OK;
     }
 

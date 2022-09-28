@@ -20,11 +20,13 @@
  */
 
 #include <stdlib.h>
+#include <string.h>
 #include <limits.h>
 
 #include "../weechat-plugin.h"
 #include "logger.h"
 #include "logger-config.h"
+#include "logger-buffer.h"
 
 
 struct t_config_file *logger_config_file = NULL;
@@ -56,7 +58,14 @@ struct t_config_option *logger_config_file_nick_prefix;
 struct t_config_option *logger_config_file_nick_suffix;
 struct t_config_option *logger_config_file_path;
 struct t_config_option *logger_config_file_replacement_char;
+struct t_config_option *logger_config_file_rotation_compression_level;
+struct t_config_option *logger_config_file_rotation_compression_type;
+struct t_config_option *logger_config_file_rotation_size_max;
 struct t_config_option *logger_config_file_time_format;
+
+/* other */
+
+unsigned long long logger_config_rotation_size_max = 0;
 
 
 /*
@@ -74,7 +83,7 @@ logger_config_change_file_option_restart_log (const void *pointer, void *data,
     (void) option;
 
     if (!logger_config_loading)
-        logger_adjust_log_filenames ();
+        logger_buffer_adjust_log_filenames ();
 }
 
 /*
@@ -148,6 +157,59 @@ logger_config_flush_delay_change (const void *pointer, void *data,
 }
 
 /*
+ * Callback called when option "logger.file.rotation_size_max" is changed,
+ * to check if value is valid.
+ *
+ * Returns:
+ *   1: value is OK
+ *   0: value is invalid
+ */
+
+int
+logger_config_rotation_size_max_check (const void *pointer, void *data,
+                                       struct t_config_option *option,
+                                       const char *value)
+{
+    unsigned long long size;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) option;
+
+    if (!value || !value[0])
+        return 0;
+
+    if (strcmp (value, "0") == 0)
+        return 1;
+
+    size = weechat_string_parse_size (value);
+
+    return (size > 0) ? 1 : 0;
+}
+
+/*
+ * Callback called when option "logger.file.rotation_size_max" is changed.
+ *
+ * Returns:
+ *   1: value is OK
+ *   0: value is invalid
+ */
+
+void
+logger_config_rotation_size_max_change (const void *pointer, void *data,
+                                        struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) option;
+
+    logger_config_rotation_size_max = weechat_string_parse_size (
+        weechat_config_string (logger_config_file_rotation_size_max));
+}
+
+/*
  * Callback for changes on a level option.
  */
 
@@ -161,7 +223,7 @@ logger_config_level_change (const void *pointer, void *data,
     (void) option;
 
     if (!logger_config_loading)
-        logger_start_buffer_all (1);
+        logger_buffer_start_all (1);
 }
 
 /*
@@ -182,7 +244,7 @@ logger_config_level_delete_option (const void *pointer, void *data,
 
     weechat_config_option_free (option);
 
-    logger_start_buffer_all (1);
+    logger_buffer_start_all (1);
 
     return WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED;
 }
@@ -243,7 +305,7 @@ logger_config_level_create_option (const void *pointer, void *data,
     }
 
     if (!logger_config_loading)
-        logger_start_buffer_all (1);
+        logger_buffer_start_all (1);
 
     return rc;
 }
@@ -288,7 +350,7 @@ logger_config_mask_change (const void *pointer, void *data,
     (void) option;
 
     if (!logger_config_loading)
-        logger_adjust_log_filenames ();
+        logger_buffer_adjust_log_filenames ();
 }
 
 /*
@@ -309,7 +371,7 @@ logger_config_mask_delete_option (const void *pointer, void *data,
 
     weechat_config_option_free (option);
 
-    logger_adjust_log_filenames ();
+    logger_buffer_adjust_log_filenames ();
 
     return WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED;
 }
@@ -370,7 +432,7 @@ logger_config_mask_create_option (const void *pointer, void *data,
     }
 
     if (!logger_config_loading)
-        logger_adjust_log_filenames ();
+        logger_buffer_adjust_log_filenames ();
 
     return rc;
 }
@@ -576,6 +638,45 @@ logger_config_init ()
         NULL, 0, 0, "_", NULL, 0,
         NULL, NULL, NULL,
         &logger_config_change_file_option_restart_log, NULL, NULL,
+        NULL, NULL, NULL);
+    logger_config_file_rotation_compression_level = weechat_config_new_option (
+        logger_config_file, ptr_section,
+        "rotation_compression_level", "integer",
+        N_("compression level for rotated log files (with extension \".1\", "
+           "\".2\", etc.), if option logger.file.rotation_compression_type is "
+           "enabled: 1 = low compression / fast ... 100 = best compression / "
+           "slow; the value is a percentage converted to 1-9 for gzip and "
+           "1-19 for zstd; the default value is recommended, it offers a good "
+           "compromise between compression and speed"),
+        NULL, 1, 100, "20", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    logger_config_file_rotation_compression_type = weechat_config_new_option (
+        logger_config_file, ptr_section,
+        "rotation_compression_type", "integer",
+        N_("compression type for rotated log files; if set to \"none\", "
+           "rotated log files are not compressed; WARNING: if rotation was "
+           "enabled with another type of compression (or no compression), "
+           "you must first unload the logger plugin, compress files with the "
+           "new type (or decompress files), then change the option in "
+           "logger.conf, then load the logger plugin"),
+        "none|gzip|zstd", 0, 0, "none", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    logger_config_file_rotation_size_max = weechat_config_new_option (
+        logger_config_file, ptr_section,
+        "rotation_size_max", "string",
+        N_("when this size is reached, a rotation of log files is performed: "
+           "the existing rotated log files are renamed (.1 becomes .2, .2 "
+           "becomes .3, etc.) and the current file is renamed with extension "
+           ".1; an integer number with a suffix is allowed: b = bytes "
+           "(default if no unit given), k = kilobytes, m = megabytes, "
+           "g = gigabytes, t = terabytes; example: \"2g\" causes a rotation "
+           "if the file size is > 2,000,000,000 bytes; if set to \"0\", "
+           "no rotation is performed (unlimited log size); WARNING: before "
+           "changing this option, you should first set the compression type "
+           "via option logger.file.rotation_compression_type"),
+        NULL, 0, 0, "0", NULL, 0,
+        &logger_config_rotation_size_max_check, NULL, NULL,
+        &logger_config_rotation_size_max_change, NULL, NULL,
         NULL, NULL, NULL);
     logger_config_file_time_format = weechat_config_new_option (
         logger_config_file, ptr_section,

@@ -1468,6 +1468,24 @@
 ** valeurs: toute chaîne
 ** valeur par défaut: `+"_"+`
 
+* [[option_logger.file.rotation_compression_level]] *logger.file.rotation_compression_level*
+** description: pass:none[niveau de compression pour les fichiers de log qui tournent (avec extension ".1", ".2", etc.), si l'option logger.file.rotation_compression_type est activée ; 1 = peu de compression / rapide ... 100 = meilleure compression / lent ; la valeur est un pourcentage converti de 1 à 9 pour gzip et de 1 à 19 pour zstd ; la valeur par défaut est recommandée, elle offre un bon compromis compression/vitesse]
+** type: entier
+** valeurs: 1 .. 100
+** valeur par défaut: `+20+`
+
+* [[option_logger.file.rotation_compression_type]] *logger.file.rotation_compression_type*
+** description: pass:none[type de compression pour les fichiers de log qui tournent ; si défini à "none", les fichiers de logs qui tournent ne sont pas compressés ; ATTENTION : si la rotation est activée avec un autre type de compression (ou pas de compression), vous devez d'abord décharger l'extension logger, compresser les fichiers avec le nouveau type (ou décompresser les fichiers), puis changer l'option dans logger.conf, puis charger l'extension logger]
+** type: entier
+** valeurs: none, gzip, zstd
+** valeur par défaut: `+none+`
+
+* [[option_logger.file.rotation_size_max]] *logger.file.rotation_size_max*
+** description: pass:none[lorsque cette taille est atteinte, une rotation des fichiers est effectuée : les fichiers de log existants sont renommés (.1 devient .2, .2 devient .3, etc.) et le fichier courant est renommé avec l'extension .1 ; un nombre entier avec un suffixe est accepté : b = octets (par défaut si pas d'unité spécifiée), k = kilo-octets, m = méga-octets, g = giga-octets, t = téra-octets ; exemple : "2g" provoque une rotation si la taille du fichier est > 2 000 000 000 octets ; si défini à "0", aucune rotation n'est effectuée (taille de log illimitée) ; ATTENTION : avant de changer cette option, vous devriez d'abord définir le type de compression via l'option logger.file.rotation_compression_type]
+** type: chaîne
+** valeurs: toute chaîne
+** valeur par défaut: `+"0"+`
+
 * [[option_logger.file.time_format]] *logger.file.time_format*
 ** description: pass:none[format de date/heure utilisé dans les fichiers log (voir man strftime pour le format de date/heure)]
 ** type: chaîne

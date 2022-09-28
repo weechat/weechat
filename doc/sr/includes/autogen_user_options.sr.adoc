@@ -1468,6 +1468,24 @@
 ** вредности: било који стринг
 ** подразумевана вредност: `+"_"+`
 
+* [[option_logger.file.rotation_compression_level]] *logger.file.rotation_compression_level*
+** опис: pass:none[compression level for rotated log files (with extension ".1", ".2", etc.), if option logger.file.rotation_compression_type is enabled: 1 = low compression / fast ... 100 = best compression / slow; the value is a percentage converted to 1-9 for gzip and 1-19 for zstd; the default value is recommended, it offers a good compromise between compression and speed]
+** тип: целобројна
+** вредности: 1 .. 100
+** подразумевана вредност: `+20+`
+
+* [[option_logger.file.rotation_compression_type]] *logger.file.rotation_compression_type*
+** опис: pass:none[compression type for rotated log files; if set to "none", rotated log files are not compressed; WARNING: if rotation was enabled with another type of compression (or no compression), you must first unload the logger plugin, compress files with the new type (or decompress files), then change the option in logger.conf, then load the logger plugin]
+** тип: целобројна
+** вредности: none, gzip, zstd
+** подразумевана вредност: `+none+`
+
+* [[option_logger.file.rotation_size_max]] *logger.file.rotation_size_max*
+** опис: pass:none[when this size is reached, a rotation of log files is performed: the existing rotated log files are renamed (.1 becomes .2, .2 becomes .3, etc.) and the current file is renamed with extension .1; an integer number with a suffix is allowed: b = bytes (default if no unit given), k = kilobytes, m = megabytes, g = gigabytes, t = terabytes; example: "2g" causes a rotation if the file size is > 2,000,000,000 bytes; if set to "0", no rotation is performed (unlimited log size); WARNING: before changing this option, you should first set the compression type via option logger.file.rotation_compression_type]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"0"+`
+
 * [[option_logger.file.time_format]] *logger.file.time_format*
 ** опис: pass:none[временска ознака која се користи у лог фајловима (погледајте man strftime за спецификаторе датума/времена)]
 ** тип: стринг

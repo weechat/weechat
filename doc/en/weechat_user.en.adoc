@@ -108,16 +108,38 @@ WeeChat:
 
 [width="100%",cols="5,^3,.^15",options="header"]
 |===
-| Package ^(1)^            | Version       | Feature
-| C compiler (gcc / clang) |               | Build.
-| cmake                    | ≥ 3.0         | Build (autotools still possible, but CMake is recommended).
-| pkg-config               |               | Detect installed libraries.
-| libncursesw5-dev ^(2)^   |               | Ncurses interface.
-| libcurl4-gnutls-dev      |               | URL transfer.
-| libgcrypt20-dev          |               | Secured data, IRC SASL authentication.
-| libgnutls28-dev          | ≥ 2.2.0 ^(3)^ | SSL connection to IRC server, support of SSL in relay plugin, IRC SASL authentication (ECDSA-NIST256P-CHALLENGE).
-| zlib1g-dev               |               | Compression of messages (WeeChat -> client) with https://zlib.net/[zlib ^↗^,window=_blank] in relay plugin (weechat protocol), script plugin.
-| libzstd-dev              |               | Compression of messages (WeeChat -> client) with https://facebook.github.io/zstd/[Zstandard ^↗^,window=_blank] in relay plugin (weechat protocol).
+| Package ^(1)^ | Version | Features
+
+| C compiler (gcc / clang) |
+| Build.
+
+| cmake | ≥ 3.0
+| Build (autotools still possible, but CMake is recommended).
+
+| pkg-config |
+| Detect installed libraries.
+
+| libncursesw5-dev ^(2)^ |
+| Ncurses interface.
+
+| libcurl4-gnutls-dev |
+| URL transfer.
+
+| libgcrypt20-dev |
+| Secured data, IRC SASL authentication.
+
+| libgnutls28-dev | ≥ 2.2.0 ^(3)^
+| IRC plugin: support of TLS connections, IRC SASL authentication (ECDSA-NIST256P-CHALLENGE). +
+  Relay plugin: support of TLS connections.
+
+| zlib1g-dev |
+| Logger plugin: compression of rotated log files (gzip). +
+  Relay plugin: compression of messages (WeeChat -> client) with https://zlib.net/[zlib ^↗^,window=_blank] (weechat protocol). +
+  Script plugin: read of repository index file (gzip).
+
+| libzstd-dev |
+| Logger plugin: compression of rotated log files. +
+  Relay plugin: compression of messages (WeeChat -> client) with https://facebook.github.io/zstd/[Zstandard ^↗^,window=_blank] (weechat protocol).
 |===
 
 [NOTE]
@@ -134,7 +156,7 @@ WeeChat:
 
 [width="100%",cols="5,^3,.^15",options="header"]
 |===
-| Package ^(1)^                         | Version  | Feature
+| Package ^(1)^                         | Version  | Features
 | {cpp} compiler (pass:[g++ / clang++]) |          | Build and run tests, JavaScript plugin.
 | gettext                               |          | Internationalization (translation of messages; base language is English).
 | ca-certificates                       |          | Certificates for SSL connections.

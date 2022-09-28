@@ -106,16 +106,42 @@ https://github.com/weechat/weechat-container[weechat-container ^↗^,window=_bl
 
 [width="100%", cols="5,^3,.^15", options="header"]
 |===
-| Пакет ^(1)^               | Верзија       | Служи за
-| C компајлер (gcc / clang) |               | Изградњу.
-| cmake                     | ≥ 3.0         | Изградњу (може да се користи и autotools, али се препоручује CMake).
-| pkg-config                |               | Детекција инсталираних библиотека.
-| libncursesw5-dev ^(2)^    |               | Ncurses интерфејс.
-| libcurl4-gnutls-dev       |               | URL пренос.
-| libgcrypt20-dev           |               | Обезбеђени подаци, IRC SASL аутентификација.
-| libgnutls28-dev           | ≥ 2.2.0 ^(3)^ | SSL веза са IRC сервером, подршка за SSL у релеј додатку, IRC SASL аутентификација (ECDSA-NIST256P-CHALLENGE).
-| zlib1g-dev                |               | Компресија порука (WeeChat -> клијент) са https://zlib.net/[zlib ^↗^,window=_blank] у релеј додатку (weechat протокол), скрипт додатак.
-| libzstd-dev               |               | Компресија порука (WeeChat -> клијент) са https://facebook.github.io/zstd/[Zstandard ^↗^,window=_blank] у релеј додатку (weechat протокол).
+// TRANSLATION MISSING
+| Пакет ^(1)^ | Верзија | Features
+
+| C компајлер (gcc / clang) |
+| Изградњу.
+
+| cmake | ≥ 3.0
+| Изградњу (може да се користи и autotools, али се препоручује CMake).
+
+| pkg-config |
+| Детекција инсталираних библиотека.
+
+| libncursesw5-dev ^(2)^ |
+| Ncurses интерфејс.
+
+| libcurl4-gnutls-dev |
+| URL пренос.
+
+| libgcrypt20-dev |
+| Обезбеђени подаци, IRC SASL аутентификација.
+
+// TRANSLATION MISSING
+| libgnutls28-dev | ≥ 2.2.0 ^(3)^
+| IRC plugin: support of TLS connections, IRC SASL authentication (ECDSA-NIST256P-CHALLENGE). +
+  Relay plugin: support of TLS connections.
+
+// TRANSLATION MISSING
+| zlib1g-dev |
+| Logger plugin: compression of rotated log files (gzip). +
+  Relay plugin: compression of messages (WeeChat -> client) with https://zlib.net/[zlib ^↗^,window=_blank] (weechat protocol). +
+  Script plugin: read of repository index file (gzip).
+
+// TRANSLATION MISSING
+| libzstd-dev |
+| Logger plugin: compression of rotated log files. +
+  Relay plugin: compression of messages (WeeChat -> client) with https://facebook.github.io/zstd/[Zstandard ^↗^,window=_blank] (weechat protocol).
 |===
 
 [NOTE]
@@ -128,7 +154,8 @@ https://github.com/weechat/weechat-container[weechat-container ^↗^,window=_bl
 
 [width="100%", cols="5,^3,.^15", options="header"]
 |===
-| Пакет ^(1)^                            | Верзија  | Служи за
+// TRANSLATION MISSING
+| Пакет ^(1)^                            | Верзија  | Features
 | {cpp} компајлер (pass:[g++ / clang++]) |          | Изградњу и покретање тестова, JavaScript додатак.
 | gettext                                |          | Интернационализацију (превод порука; основни језик је енглески).
 | ca-certificates                        |          | Сертификате за SSL везе.

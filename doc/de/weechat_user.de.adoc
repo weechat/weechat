@@ -114,16 +114,42 @@ WeeChat *erforderlich* sind:
 
 [width="100%",cols="5,^3,.^15",options="header"]
 |===
-| Paket ^(1)^              | Version       | Funktion
-| C compiler (gcc / clang) |               | zum Erstellen der Binärdatei.
-| cmake                    | ≥ 3.0         | zum kompilieren (autotools ist möglich. CMake wird aber empfohlen).
-| pkg-config               |               | entdeckt installierte Bibliotheken.
-| libncursesw5-dev ^(2)^   |               | Ncurses Oberfläche.
-| libcurl4-gnutls-dev      |               | URL Transfer.
-| libgcrypt20-dev          |               | Geschützte Daten, IRC SASL Authentifikation.
-| libgnutls28-dev          | ≥ 2.2.0 ^(3)^ | SSL Verbindung zu einem IRC Server, Unterstützung von SSL in der Relay-Erweiterung, IRC SASL Authentifikation (ECDSA-NIST256P-CHALLENGE).
-| zlib1g-dev               |               | Kompression von Nachrichten (WeeChat -> client) mit https://zlib.net/[zlib ^↗^,window=_blank] in relay Erweitertungen (weechat Protokoll), Skript-Erweiterung übertragen werden.
-| libzstd-dev              |               | Kompression von Nachrichten (WeeChat -> client) mit https://facebook.github.io/zstd/[Zstandard ^↗^,window=_blank] in relay Erweiterung (weechat Protokoll).
+// TRANSLATION MISSING
+| Paket ^(1)^ | Version | Features
+
+| C compiler (gcc / clang) |
+| zum Erstellen der Binärdatei.
+
+| cmake | ≥ 3.0
+| zum kompilieren (autotools ist möglich. CMake wird aber empfohlen).
+
+| pkg-config |
+| entdeckt installierte Bibliotheken.
+
+| libncursesw5-dev ^(2)^ |
+| Ncurses Oberfläche.
+
+| libcurl4-gnutls-dev |
+| URL Transfer.
+
+| libgcrypt20-dev |
+| Geschützte Daten, IRC SASL Authentifikation.
+
+// TRANSLATION MISSING
+| libgnutls28-dev | ≥ 2.2.0 ^(3)^
+| IRC plugin: support of TLS connections, IRC SASL authentication (ECDSA-NIST256P-CHALLENGE). +
+  Relay plugin: support of TLS connections.
+
+// TRANSLATION MISSING
+| zlib1g-dev |
+| Logger plugin: compression of rotated log files (gzip). +
+  Relay plugin: compression of messages (WeeChat -> client) with https://zlib.net/[zlib ^↗^,window=_blank] (weechat protocol). +
+  Script plugin: read of repository index file (gzip).
+
+// TRANSLATION MISSING
+| libzstd-dev |
+| Logger plugin: compression of rotated log files. +
+  Relay plugin: compression of messages (WeeChat -> client) with https://facebook.github.io/zstd/[Zstandard ^↗^,window=_blank] (weechat protocol).
 |===
 
 [NOTE]
@@ -141,7 +167,8 @@ WeeChat optional sind:
 
 [width="100%",cols="5,^3,.^15",options="header"]
 |===
-| Paket ^(1)^                           | Version  | Funktion
+// TRANSLATION MISSING
+| Paket ^(1)^                           | Version  | Features
 | {cpp} compiler (pass:[g++ / clang++]) |          | zum Erstellen der Binärdatei und um Test auszuführen, JavaScript Erweiterung.
 | gettext                               |          | Internationalisierung (Übersetzung der Mitteilungen; Hauptsprache ist englisch).
 | ca-certificates                       |          | Zertifikate für SSL Verbindungen.
