@@ -6110,7 +6110,7 @@ struct t_config_file *config_file = weechat_config_new ("test",
 def config_new(name: str, callback_reload: str, callback_reload_data: str) -> str: ...
 
 # 例
-def my_config_reload_cb(data, config_file):
+def my_config_reload_cb(data: str, config_file: str) -> int:
     # ...
     return weechat.WEECHAT_RC_OK
 
@@ -6373,26 +6373,26 @@ def config_new_section(config_file: str, name: str,
                        callback_delete_option: str, callback_delete_option_data: str) -> str: ...
 
 # 例
-def my_section_read_cb(data, config_file, section, option_name, value):
+def my_section_read_cb(data: str, config_file: str, section: str, option_name: str, value: str) -> int:
     # ...
     return weechat.WEECHAT_CONFIG_OPTION_SET_OK_CHANGED
     # return weechat.WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE
     # return weechat.WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND
     # return weechat.WEECHAT_CONFIG_OPTION_SET_ERROR
 
-def my_section_write_cb(data, config_file, section_name):
+def my_section_write_cb(data: str, config_file: str, section_name: str) -> int:
     # ...
     return weechat.WEECHAT_CONFIG_WRITE_OK
 
-def my_section_write_default_cb(data, config_file, section_name):
+def my_section_write_default_cb(data: str, config_file: str, section_name: str) -> int:
     # ...
     return weechat.WEECHAT_CONFIG_WRITE_OK
 
-def my_section_create_option_cb(data, config_file, section, option_name, value):
+def my_section_create_option_cb(data: str, config_file: str, section: str, option_name: str, value: str) -> int:
     # ...
     return weechat.WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE
 
-def my_section_delete_option_cb(data, config_file, section, option):
+def my_section_delete_option_cb(data: str, config_file: str, section: str, option: str) -> int:
     # ...
     return weechat.WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED
 
@@ -6629,15 +6629,15 @@ def config_new_option(config_file: str, section: str, name: str, type: str, desc
                       callback_delete: str, callback_delete_data: str) -> str: ...
 
 # 例
-def option4_check_value_cb(data, option, value):
+def option4_check_value_cb(data: str, option: str, value: str) -> int:
     # ...
     return 1
     # return 0
 
-def option4_change_cb(data, option):
+def option4_change_cb(data: str, option: str) -> int:
     # ...
 
-def option4_delete_cb(data, option):
+def option4_delete_cb(data: str, option: str) -> int:
     # ...
 
 option1 = weechat.config_new_option(config_file, section, "option1", "boolean",
@@ -7738,7 +7738,7 @@ my_section_write_cb (const void *pointer, void *data,
 def config_write_option(config_file: str, option: str) -> int: ...
 
 # 例
-def my_section_write_cb(data, config_file, section_name):
+def my_section_write_cb(data: str, config_file: str, section_name: str) -> int:
     weechat.config_write_line(config_file, "my_section", "")
     weechat.config_write_option(config_file, option)
     return weechat.WEECHAT_RC_OK
@@ -7791,7 +7791,7 @@ my_section_write_cb (const void *pointer, void *data,
 def config_write_line(config_file: str, option_name: str, value: str) -> int: ...
 
 # 例
-def my_section_write_cb(data, config_file, section_name):
+def my_section_write_cb(data: str, config_file: str, section_name: str) -> int:
     weechat.config_write_line(config_file, "my_section", "")
     weechat.config_write_line(config_file, "option", "value")
     return weechat.WEECHAT_RC_OK
@@ -9095,7 +9095,7 @@ def hook_command(command: str, description: str, args: str, args_description: st
                  completion: str, callback: str, callback_data: str) -> str: ...
 
 # 例
-def my_command_cb(data, buffer, args):
+def my_command_cb(data: str, buffer: str, args: str) -> int:
     # ...
     return weechat.WEECHAT_RC_OK
 
@@ -9203,7 +9203,7 @@ struct t_hook *my_completion_hook = weechat_hook_completion ("plugin_item",
 def hook_completion(completion_item: str, description: str, callback: str, callback_data: str) -> str: ...
 
 # 例
-def my_completion_cb(data, completion_item, buffer, completion):
+def my_completion_cb(data: str, completion_item: str, buffer: str, completion: str) -> int:
     weechat.completion_list_add(completion, "word1", 0, weechat.WEECHAT_LIST_POS_SORT)
     weechat.completion_list_add(completion, "test_word2", 0, weechat.WEECHAT_LIST_POS_SORT)
     return weechat.WEECHAT_RC_OK
@@ -9293,7 +9293,7 @@ struct t_hook *my_command_run_hook =
 def hook_command_run(command: str, callback: str, callback_data: str) -> str: ...
 
 # 例
-def my_command_run_cb(data, buffer, command):
+def my_command_run_cb(data: str, buffer: str, command: str) -> int:
     weechat.prnt("", "I'm eating the completion!")
     return weechat.WEECHAT_RC_OK_EAT
 
@@ -9367,7 +9367,7 @@ struct t_hook *my_timer_hook =
 def hook_timer(interval: int, align_second: int, max_calls: int, callback: str, callback_data: str) -> str: ...
 
 # 例
-def my_timer_cb(data, remaining_calls):
+def my_timer_cb(data: str, remaining_calls: str) -> int:
     # ...
     return weechat.WEECHAT_RC_OK
 
@@ -9451,7 +9451,7 @@ struct t_hook *my_fd_hook = weechat_hook_fd (sock, 1, 0, 0, &my_fd_cb, NULL, NUL
 def hook_fd(fd: int, flag_read: int, flag_write: int, flag_exception: int, callback: str, callback_data: str) -> str: ...
 
 # 例
-def my_fd_cb(data, fd):
+def my_fd_cb(data: str, fd: int) -> int:
     # ...
     return weechat.WEECHAT_RC_OK
 
@@ -9654,7 +9654,7 @@ struct t_hook *my_process_hook = weechat_hook_process ("func:get_status", 5000,
 def hook_process(command: str, timeout: int, callback: str, callback_data: str) -> str: ...
 
 # 外部コマンドを実行する例
-def my_process_cb(data, command, return_code, out, err):
+def my_process_cb(data: str, command: str, return_code: int, out: str, err: str) -> int:
     if return_code == weechat.WEECHAT_HOOK_PROCESS_ERROR:
         weechat.prnt("", "Error with command '%s'" % command)
         return weechat.WEECHAT_RC_OK
@@ -9669,12 +9669,12 @@ def my_process_cb(data, command, return_code, out, err):
 hook = weechat.hook_process("ls", 5000, "my_process_cb", "")
 
 # スクリプト関数を実行する例
-def get_status(data):
+def get_status(data: str) -> str:
     # 何かブロックを生じさせるようなことを実行...
     # ...
     return "this is the result"
 
-def my_process_cb(data, command, return_code, out, err):
+def my_process_cb(data: str, command: str, return_code: int, out: str, err: str) -> int:
     if return_code == weechat.WEECHAT_HOOK_PROCESS_ERROR:
         weechat.prnt("", "Error with command '%s'" % command)
         return weechat.WEECHAT_RC_OK
@@ -9878,7 +9878,7 @@ if (options_cmd2)
 def hook_process_hashtable(command: str, options: Dict[str, str], timeout: int, callback: str, callback_data: str) -> str: ...
 
 # 例
-def my_process_cb(data, command, return_code, out, err):
+def my_process_cb(data: str, command: str, return_code: int, out: str, err: str) -> int:
     if return_code == weechat.WEECHAT_HOOK_PROCESS_ERROR:
         weechat.prnt("", "Error with command '%s'" % command)
         return weechat.WEECHAT_RC_OK
@@ -10076,7 +10076,7 @@ def hook_connect(proxy: str, address: str, port: int, ipv6: int, retry: int, loc
                  callback: str, callback_data: str) -> str: ...
 
 # 例
-def my_connect_cb(data, status, gnutls_rc, sock, error, ip_address):
+def my_connect_cb(data: str, status: int, gnutls_rc: int, sock: int, error: str, ip_address: str) -> int:
     if status == WEECHAT_HOOK_CONNECT_OK:
         # ...
     elif status == WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND:
@@ -10374,7 +10374,7 @@ struct t_hook *my_line_hook =
 def hook_line(buffer_type: str, buffer_name: str, tags: str, callback: str, callback_data: str) -> str: ...
 
 # 例
-def my_line_cb(data, line):
+def my_line_cb(data: str, line: Dict[str, str]) -> Dict[str, str]:
     # この行のハイライトを強制
     return {"highlight": "1"}
 
@@ -10483,7 +10483,7 @@ struct t_hook *my_print_hook =
 def hook_print(buffer: str, tags: str, message: str, strip_colors: int, callback: str, callback_data: str) -> str: ...
 
 # 例
-def my_print_cb(data, buffer, date, tags, displayed, highlight, prefix, message):
+def my_print_cb(data: str, buffer: str, date: str, tags: str, displayed: int, highlight: int, prefix: str, message: str) -> int:
     if int(highlight):
         # ...
     return weechat.WEECHAT_RC_OK
@@ -11224,7 +11224,7 @@ struct t_hook *my_signal_hook = weechat_hook_signal ("quit;upgrade",
 def hook_signal(signal: str, callback: str, callback_data: str) -> str: ...
 
 # 例
-def my_signal_cb(data, signal, signal_data):
+def my_signal_cb(data: str, signal: str, signal_data: str) -> int:
     # ...
     return weechat.WEECHAT_RC_OK
 
@@ -11554,7 +11554,7 @@ struct t_hook *my_hsignal_hook = weechat_hook_hsignal ("test",
 def hook_hsignal(signal: str, callback: str, callback_data: str) -> str: ...
 
 # 例
-def my_hsignal_cb(data, signal, hashtable):
+def my_hsignal_cb(data: str, signal: str, hashtable: Dict[str, str]) -> int:
     # ...
     return weechat.WEECHAT_RC_OK
 
@@ -11708,7 +11708,7 @@ if (hashtable)
 
 [source,python]
 ----
-def test_whois_cb(data, signal, hashtable):
+def test_whois_cb(data: str, signal: str, hashtable: Dict[str, str]) -> int:
     weechat.prnt("", "error = %s" % hashtable["error"])
     weechat.prnt("", "output = %s" % hashtable["output"])
     return weechat.WEECHAT_RC_OK
@@ -11860,7 +11860,7 @@ struct t_hook *my_config_hook = weechat_hook_config ("weechat.look.item_time_for
 def hook_config(option: str, callback: str, callback_data: str) -> str: ...
 
 # 例
-def my_config_cb(data, option, value):
+def my_config_cb(data: str, option: str, value: str) -> int:
     # ...
     return weechat.WEECHAT_RC_OK
 
@@ -12032,7 +12032,7 @@ struct t_hook *my_modifier_hook = weechat_hook_modifier ("weechat_print",
 def hook_modifier(modifier: str, callback: str, callback_data: str) -> str: ...
 
 # 例
-def my_modifier_cb(data, modifier, modifier_data, string):
+def my_modifier_cb(data: str, modifier: str, modifier_data: str, string: str) -> str:
     return "%s xxx" % string
 
 hook = weechat.hook_modifier("weechat_print", "my_modifier_cb", "")
@@ -12230,7 +12230,7 @@ def hook_info(info_name: str, description: str, args_description: str,
               callback: str, callback_data: str) -> str: ...
 
 # 例
-def my_info_cb(data, info_name, arguments):
+def my_info_cb(data: str, info_name: str, arguments: str) -> str:
     return "some_info"
 
 hook = weechat.hook_info("my_info", "Some info", "Info about arguments",
@@ -12312,7 +12312,7 @@ def hook_info_hashtable(info_name: str, description: str, args_description: str,
                         output_description: str, callback: str, callback_data: str) -> str: ...
 
 # 例
-def my_info_hashtable_cb(data, info_name, hashtable):
+def my_info_hashtable_cb(data: str, info_name: str, hashtable: Dict[str, str]) -> Dict[str, str]:
     return {"test_key": "test_value"}
 
 hook = weechat.hook_info_hashtable("my_info_hashtable", "Some info",
@@ -12403,7 +12403,7 @@ def hook_infolist(infolist_name: str, description: str, pointer_description: str
                   args_description: str, callback: str, callback_data: str) -> str: ...
 
 # 例
-def my_infolist_cb(data, infolist_name, pointer, arguments):
+def my_infolist_cb(data: str, infolist_name: str, pointer: str, arguments: str) -> str:
     # build infolist
     # ...
     return my_infolist
@@ -12683,7 +12683,7 @@ struct t_hook *my_focus = weechat_hook_focus ("buffer_nicklist",
 def hook_focus(area: str, callback: str, callback_data: str) -> str: ...
 
 # 例
-def my_focus_nicklist_cb(data, info):
+def my_focus_nicklist_cb(data: str, info: Dict[str, str]) -> Dict[str, str]:
     # build dict
     # ...
     return my_dict
@@ -12754,7 +12754,7 @@ weechat_hook_set (my_command_hook, "subplugin", "test");
 def hook_set(hook: str, property: str, value: str) -> int: ...
 
 # 例
-def my_process_cb(data, command, return_code, out, err):
+def my_process_cb(data: str, command: str, return_code: int, out: str, err: str) -> int:
     # ...
     return weechat.WEECHAT_RC_OK
 
@@ -12939,11 +12939,11 @@ def buffer_new(name: str, input_callback: str, input_callback_data: str,
                close_callback: str, close_callback_data: str) -> str: ...
 
 # 例
-def my_input_cb(data, buffer, input_data):
+def my_input_cb(data: str, buffer: str, input_data: str) -> int:
     weechat.prnt(buffer, "Text: %s" % input_data)
     return weechat.WEECHAT_RC_OK
 
-def my_close_cb(data, buffer):
+def my_close_cb(data: str, buffer: str) -> int:
     weechat.prnt("", "Buffer _%s_ will be closed!" % weechat.buffer_get_string(buffer, "name"))
     return weechat.WEECHAT_RC_OK
 
@@ -13063,11 +13063,11 @@ def buffer_new_props(name: str, properties: Dict[str, str],
                      close_callback: str, close_callback_data: str) -> str: ...
 
 # 例
-def my_input_cb(data, buffer, input_data):
+def my_input_cb(data: str, buffer: str, input_data: str) -> int:
     weechat.prnt(buffer, "Text: %s" % input_data)
     return weechat.WEECHAT_RC_OK
 
-def my_close_cb(data, buffer):
+def my_close_cb(data: str, buffer: str) -> int:
     weechat.prnt("", "Buffer _%s_ will be closed!" % weechat.buffer_get_string(buffer, "name"))
     return weechat.WEECHAT_RC_OK
 
@@ -15101,13 +15101,13 @@ WeeChat バージョン 0.4.1 以下に対する互換性のために、デフ�
 def bar_item_new(name: str, build_callback: str, build_callback_data: str) -> str: ...
 
 # 例 (コールバックに "buffer" と "extra_info" を除いた引数を渡す)
-def my_build_callback(data, item, window):
+def my_build_callback(data: str, item: str, window: str) -> str:
     return "my content"
 
 bar_item = weechat.bar_item_new("myitem", "my_build_callback", "")
 
 # 例 (コールバックに全ての引数を渡す、WeeChat バージョン 0.4.2 以上で利用可)
-def my_build_callback2(data, item, window, buffer, extra_info):
+def my_build_callback2(data: str, item: str, window: str, buffer: str, extra_info: Dict[str, str]) -> str:
     return "my content"
 
 bar_item2 = weechat.bar_item_new("(extra)myitem2", "my_build_callback2", "")  # WeeChat バージョン 0.4.2 以上で利用可
@@ -15696,7 +15696,7 @@ my_completion_cb (const void *pointer, void *data, const char *completion_item,
 def completion_get_string(completion: str, property: str) -> str: ...
 
 # 例
-def my_completion_cb(data, completion_item, buffer, completion):
+def my_completion_cb(data: str, completion_item: str, buffer: str, completion: str) -> int:
     # get arguments of command
     args = weechat.completion_get_string(completion, "args")
     # completion depending on args
