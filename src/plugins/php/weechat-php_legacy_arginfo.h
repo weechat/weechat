@@ -46,6 +46,8 @@ ZEND_END_ARG_INFO()
 
 #define arginfo_weechat_string_format_size arginfo_weechat_plugin_get_name
 
+#define arginfo_weechat_string_parse_size arginfo_weechat_charset_set
+
 #define arginfo_weechat_string_color_code_size arginfo_weechat_plugin_get_name
 
 #define arginfo_weechat_string_remove_color arginfo_weechat_iconv_to_internal
