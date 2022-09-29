@@ -138,7 +138,7 @@ Le tableau suivant liste les paquets *requis* pour compiler WeeChat :
   Extention Relay : compression des messages (WeeChat -> client) avec https://zlib.net/[zlib ^↗^,window=_blank] (protocole weechat). +
   Extension Script : lecture du fichier d'index du dépôt (gzip).
 
-| libzstd-dev |
+| libzstd-dev | ≥ 0.8.1
 | Extension Logger : compression des fichiers de log qui tournent. +
   Extension Relay : compression des messages (WeeChat -> client) avec https://facebook.github.io/zstd/[Zstandard ^↗^,window=_blank] (protocole weechat).
 |===

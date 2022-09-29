@@ -143,7 +143,7 @@ WeeChat *erforderlich* sind:
   Relay-Erweiterung: Kompression von Nachrichten (WeeChat -> client) with https://zlib.net/[zlib ^↗^,window=_blank] (weechat protocol). +
   Script-Erweiterung: Lesen der Repository-Indexdatei (gzip).
 
-| libzstd-dev |
+| libzstd-dev | ≥ 0.8.1
 | Logger-Erweiterung: Kompression von rotierenden Protokolldateien. +
   Relay-Erweiterung: Kompression von Nachrichten (WeeChat -> client) with https://facebook.github.io/zstd/[Zstandard ^↗^,window=_blank] (weechat protocol).
 |===

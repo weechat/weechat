@@ -139,7 +139,7 @@ https://github.com/weechat/weechat-container[weechat-container ^↗^,window=_bl
   Script plugin: read of repository index file (gzip).
 
 // TRANSLATION MISSING
-| libzstd-dev |
+| libzstd-dev | ≥ 0.8.1
 | Logger plugin: compression of rotated log files. +
   Relay plugin: compression of messages (WeeChat -> client) with https://facebook.github.io/zstd/[Zstandard ^↗^,window=_blank] (weechat protocol).
 |===

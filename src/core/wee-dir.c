@@ -1044,7 +1044,9 @@ end:
 /*
  * Compresses a file with gzip.
  *
- * The output file must not exist.
+ * Notes:
+ *   - the output file must not exist
+ *   - compression_level is an integer between 1 and 9
  *
  * Returns:
  *   1: OK
@@ -1119,7 +1121,7 @@ dir_file_compress_gzip (const char *from, const char *to,
             if (ret == Z_STREAM_ERROR)
                 goto error;
             have = buffer_size - strm.avail_out;
-            if (fwrite (buffer_out, 1, have, dest) != have || ferror (dest))
+            if ((fwrite (buffer_out, 1, have, dest) != have) || ferror (dest))
                 goto error;
         } while (strm.avail_out == 0);
         if (strm.avail_in != 0)
@@ -1154,7 +1156,9 @@ end:
 /*
  * Compresses a file with zstandard.
  *
- * The output file must not exist.
+ * Notes:
+ *   - the output file must not exist
+ *   - compression_level is an integer between 1 and 19
  *
  * Returns:
  *   1: OK
@@ -1168,9 +1172,15 @@ dir_file_compress_zstd (const char *from, const char *to,
     FILE *source, *dest;
     void *buffer_in, *buffer_out;
     size_t buffer_in_size, buffer_out_size, num_read, remaining;
-    int rc, finished, last_chunk;
-    ZSTD_CCtx *cctx;
+    int rc;
+#if ZSTD_VERSION_NUMBER >= 10400  /* zstd ≥ 1.4.0 */
+    ZSTD_CCtx *cctx = NULL;
     ZSTD_EndDirective mode;
+    int finished, last_chunk;
+#else  /* zstd < 1.4.0 */
+    ZSTD_CStream *cstream = NULL;
+    size_t result, to_read;
+#endif
     ZSTD_inBuffer input;
     ZSTD_outBuffer output;
 
@@ -1178,7 +1188,6 @@ dir_file_compress_zstd (const char *from, const char *to,
     dest = NULL;
     buffer_in = NULL;
     buffer_out = NULL;
-    cctx = NULL;
     rc = 0;
 
     if (!from || !to || (compression_level < 1) || (compression_level > 19))
@@ -1203,10 +1212,10 @@ dir_file_compress_zstd (const char *from, const char *to,
     if (!dest)
         goto end;
 
+#if ZSTD_VERSION_NUMBER >= 10400  /* zstd ≥ 1.4.0 */
     cctx = ZSTD_createCCtx ();
     if (!cctx)
-        goto end;
-
+        goto error;
     ZSTD_CCtx_setParameter (cctx, ZSTD_c_compressionLevel, compression_level);
 
     while (1)
@@ -1228,7 +1237,11 @@ dir_file_compress_zstd (const char *from, const char *to,
             remaining = ZSTD_compressStream2(cctx, &output , &input, mode);
             if (ZSTD_isError (remaining))
                 goto error;
-            fwrite (buffer_out, 1, output.pos, dest);
+            if ((fwrite (buffer_out, 1, output.pos, dest) != output.pos)
+                || ferror (dest))
+            {
+                goto error;
+            }
             finished = (last_chunk) ? (remaining == 0) : (input.pos == input.size);
         };
         if (input.pos != input.size)
@@ -1236,21 +1249,78 @@ dir_file_compress_zstd (const char *from, const char *to,
         if (last_chunk)
             break;
     }
+#else  /* zstd < 1.4.0 */
+    cstream = ZSTD_createCStream ();
+    if (!cstream)
+        goto error;
+    result = ZSTD_initCStream (cstream, compression_level);
+    if (ZSTD_isError (result))
+        goto error;
+    to_read = buffer_in_size;
+    while ((num_read = fread (buffer_in, 1, buffer_in_size, source)))
+    {
+        input.src = buffer_in;
+        input.size = num_read;
+        input.pos = 0;
+        while (input.pos < input.size)
+        {
+            output.dst = buffer_out;
+            output.size = buffer_out_size;
+            output.pos = 0;
+            to_read = ZSTD_compressStream (cstream, &output , &input);
+            if (ZSTD_isError (to_read))
+                goto error;
+            if (to_read > buffer_in_size)
+                to_read = buffer_in_size;
+            if ((fwrite (buffer_out, 1, output.pos, dest) != output.pos)
+                || ferror (dest))
+            {
+                goto error;
+            }
+        }
+    }
+
+    output.dst = buffer_out;
+    output.size = buffer_out_size;
+    output.pos = 0;
+    remaining = ZSTD_endStream (cstream, &output);
+    if (remaining)
+        goto error;
+    if ((fwrite (buffer_out, 1, output.pos, dest) != output.pos)
+        || ferror (dest))
+    {
+        goto error;
+    }
+#endif
 
     rc = 1;
     goto end;
 
 error:
+#if ZSTD_VERSION_NUMBER >= 10400  /* zstd ≥ 1.4.0 */
     if (cctx)
     {
         ZSTD_freeCCtx (cctx);
         cctx = NULL;
     }
+#else  /* zstd < 1.4.0 */
+    if (cstream)
+    {
+        ZSTD_freeCStream (cstream);
+        cstream = NULL;
+    }
+#endif
     unlink (to);
 
 end:
+#if ZSTD_VERSION_NUMBER >= 10400  /* zstd ≥ 1.4.0 */
     if (cctx)
         ZSTD_freeCCtx (cctx);
+#else  /* zstd < 1.4.0 */
+    if (cstream)
+        ZSTD_freeCStream (cstream);
+#endif
+
     if (buffer_in)
         free (buffer_in);
     if (buffer_out)

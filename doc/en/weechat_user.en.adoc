@@ -137,7 +137,7 @@ WeeChat:
   Relay plugin: compression of messages (WeeChat -> client) with https://zlib.net/[zlib ^↗^,window=_blank] (weechat protocol). +
   Script plugin: read of repository index file (gzip).
 
-| libzstd-dev |
+| libzstd-dev | ≥ 0.8.1
 | Logger plugin: compression of rotated log files. +
   Relay plugin: compression of messages (WeeChat -> client) with https://facebook.github.io/zstd/[Zstandard ^↗^,window=_blank] (weechat protocol).
 |===
