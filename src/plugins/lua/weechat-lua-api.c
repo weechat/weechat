@@ -2341,7 +2341,7 @@ weechat_lua_api_hook_timer_cb (const void *pointer, void *data,
 {
     struct t_plugin_script *script;
     void *func_argv[2];
-    char str_remaining_calls[32], empty_arg[1] = { '\0' };
+    char empty_arg[1] = { '\0' };
     const char *ptr_function, *ptr_data;
     int *rc, ret;
 
@@ -2350,16 +2350,13 @@ weechat_lua_api_hook_timer_cb (const void *pointer, void *data,
 
     if (ptr_function && ptr_function[0])
     {
-        snprintf (str_remaining_calls, sizeof (str_remaining_calls),
-                  "%d", remaining_calls);
-
         func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
-        func_argv[1] = str_remaining_calls;
+        func_argv[1] = &remaining_calls;
 
         rc = (int *) weechat_lua_exec (script,
                                        WEECHAT_SCRIPT_EXEC_INT,
                                        ptr_function,
-                                       "ss", func_argv);
+                                       "si", func_argv);
 
         if (!rc)
             ret = WEECHAT_RC_ERROR;

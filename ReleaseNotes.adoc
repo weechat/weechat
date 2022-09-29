@@ -20,6 +20,21 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 [[v3.7]]
 == Version 3.7 (under dev)
 
+[[v3.7_hook_timer_callback_remaining_calls]]
+=== Argument "remaining_calls" in callback of hook_timer
+
+In all script languages (except PHP), the argument "remaining_calls" sent to the
+callback of "hook_timer" is now an integer (it was a string in older releases).
+
+To be compatible with all versions, it is recommended to convert the argument
+to integer before testing it, for example in Python:
+
+[source,python]
+----
+if int(remaining_calls) > 0:
+    # ...
+----
+
 [[v3.7_delete_previous_word_whitespace]]
 === Delete previous word until whitespace
 
@@ -1804,9 +1819,16 @@ between your current keys and WeeChat default keys.
 === Function hook_print
 
 In scripts, the arguments "displayed" and "highlight" sent to the callback of
-"hook_print" are now integers (they were strings in older releases). +
+"hook_print" are now integers (they were strings in older releases).
+
 To be compatible with all versions, it is recommended to convert the argument
-to integer before testing it, for example in Python: `if int(highlight):`.
+to integer before testing it, for example in Python:
+
+[source,python]
+----
+if int(highlight):
+    # ...
+----
 
 [[v0.4.3]]
 == Version 0.4.3 (2014-02-09)

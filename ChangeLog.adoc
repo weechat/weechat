@@ -40,6 +40,7 @@ New features::
 Bug fixes::
 
   * core: fix wrong terminal title on terminal resize (issue #1702)
+  * api: change type of argument remaining_calls in hook_timer callback from string to integer (in scripts)
   * irc: fix duplicated channels in autojoin option when autojoin_dynamic is enabled (issue #1795)
   * irc: fix display of TOPIC and QUIT messages with an empty trailing parameter (issue #1797)
   * irc: fix parsing of messages with trailing spaces and no trailing parameter (issue #1803)
