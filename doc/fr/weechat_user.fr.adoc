@@ -2263,7 +2263,6 @@ avec `+/help buffer_autoset+`.
 [[highlights]]
 === Highlights
 
-// TRANSLATION MISSING
 [[highlights_disable]]
 ==== Désactiver les highlights
 
