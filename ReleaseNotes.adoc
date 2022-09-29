@@ -20,6 +20,21 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 [[v3.7]]
 == Version 3.7 (under dev)
 
+[[v3.7_upgrade_new_callback_object_id]]
+=== Argument "object_id" in callback of upgrade_new
+
+In all script languages (except PHP), the argument "object_id" sent to the
+callback of "upgrade_new" is now an integer (it was a string in older releases).
+
+To be compatible with all versions, it is recommended to convert the argument
+to integer before testing it, for example in Python:
+
+[source,python]
+----
+if int(object_id) == 1:
+    # ...
+----
+
 [[v3.7_hook_timer_callback_remaining_calls]]
 === Argument "remaining_calls" in callback of hook_timer
 
