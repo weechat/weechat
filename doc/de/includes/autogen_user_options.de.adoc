@@ -1469,19 +1469,19 @@
 ** Standardwert: `+"_"+`
 
 * [[option_logger.file.rotation_compression_level]] *logger.file.rotation_compression_level*
-** Beschreibung: pass:none[compression level for rotated log files (with extension ".1", ".2", etc.), if option logger.file.rotation_compression_type is enabled: 1 = low compression / fast ... 100 = best compression / slow; the value is a percentage converted to 1-9 for gzip and 1-19 for zstd; the default value is recommended, it offers a good compromise between compression and speed]
+** Beschreibung: pass:none[Komprimierungsstufe für rotierende Protokolldateien (mit Dateierweiterung „.1“, „.2“,etc.), falls die Option logger.file.rotation_compression_type aktiviert ist: 1 = niedrigeKomprimierung / schnell ... 100 = beste Komprimierung / langsam; Der Wert des Prozentsatzes wird umgewandelt in 1-9 für gzip und 1-19 für zstd; der Standardwert wird hierbeiempfohlen, denn er bietet einen guten Kompromiss zwischen Komprimierung und Geschwindigkeit]
 ** Typ: integer
 ** Werte: 1 .. 100
 ** Standardwert: `+20+`
 
 * [[option_logger.file.rotation_compression_type]] *logger.file.rotation_compression_type*
-** Beschreibung: pass:none[compression type for rotated log files; if set to "none", rotated log files are not compressed; WARNING: if rotation was enabled with another type of compression (or no compression), you must first unload the logger plugin, compress files with the new type (or decompress files), then change the option in logger.conf, then load the logger plugin]
+** Beschreibung: pass:none[Komprimierungstyp für rotierende Protokolldateien; wenn "none" genutzt wird, findet keine Komprimierung der Protokolldateien statt; WARNUNG: wenn die Rotation mit einer anderen Stufe der Komprimierung (oder gar keiner Komprimierung) aktiviert wurde, muss zuerst die Logger-Erweiterung beendet werden., dann de-komprimieren Sie die Dateien mit dem neuen Typ, danach muss die Option in der Datei logger.conf angepasst werden, bevor die Logger-Erweiterung neu geladen wird]
 ** Typ: integer
 ** Werte: none, gzip, zstd
 ** Standardwert: `+none+`
 
 * [[option_logger.file.rotation_size_max]] *logger.file.rotation_size_max*
-** Beschreibung: pass:none[when this size is reached, a rotation of log files is performed: the existing rotated log files are renamed (.1 becomes .2, .2 becomes .3, etc.) and the current file is renamed with extension .1; an integer number with a suffix is allowed: b = bytes (default if no unit given), k = kilobytes, m = megabytes, g = gigabytes, t = terabytes; example: "2g" causes a rotation if the file size is > 2,000,000,000 bytes; if set to "0", no rotation is performed (unlimited log size); WARNING: before changing this option, you should first set the compression type via option logger.file.rotation_compression_type]
+** Beschreibung: pass:none[Wenn diese Größe erreicht ist, wird eine Rotation der Protokolldateien durchgeführt: dievorhandene rotierte Protokolldateien werden umbenannt (.1 wird zu .2, .2 wird zu .3 usw.).Die aktuelle Datei erhält wird umbenannt und erhält .1 als Erweiterung; eine ganze Zahl mitSuffix ist erlaubt: b = Bytes (Standard, wenn keine Einheit angegeben ist), k = Kilobytes, m =Megabyte, g = Gigabyte, t = Terabyte; Beispiel: "2g" bewirkt eine Rotationsobald die Dateigröße > 2.000.000.000 Byte ist; wenn auf „0“ gesetzt, erfolgt keine Rotationder Dateien (unbegrenzte Protokollgröße); WARNUNG: Bevor Sie diese Option ändern,sollte sie zuerst den Komprimierungstyp über die Option logger.file festlegen.rotation_compression_type]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+"0"+`
