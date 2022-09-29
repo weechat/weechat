@@ -2550,6 +2550,49 @@ IRC サーバ名を使ったディレクトリに、チャンネル名を使っ�
         ...
 ....
 
+// TRANSLATION MISSING
+[[logger_rotation_compression]]
+==== Rotation and compression
+
+It is possible to define a max size for log files, and when it is reached,
+there is automatic rotation of log file.
+
+The rotated log files can be compressed with gzip or
+https://facebook.github.io/zstd/[zstd ^↗^,window=_blank].
+
+[NOTE]
+As the compression of a file can take some time, it is performed in background.
+
+Example with a max size of 2GB and compression with gzip, using good compression
+level (slower than default one):
+
+----
+/set logger.file.rotation_compression_type gzip
+/set logger.file.rotation_compression_level 80
+/set logger.file.rotation_size_max "2g"
+----
+
+If you want to use a decimal number, you can use the unit below and multiply
+by 1000, for example to set max size to 2.5GB:
+
+----
+/set logger.file.rotation_size_max "2500m"
+----
+
+With these settings, you'll end with files like these ones (in this example
+there is rotation only for the log of #weechat channel):
+
+....
+~/.local/share/weechat
+└── logs
+    ├── core.weechat.weechatlog
+    ├── irc.server.libera.weechatlog
+    ├── irc.libera.#weechat.weechatlog
+    ├── irc.libera.#weechat.weechatlog.1.gz
+    ├── irc.libera.#weechat.weechatlog.2.gz
+    └── irc.libera.#weechat.weechatlog.3.gz
+....
+
 [[logger_commands]]
 ==== コマンド
 
