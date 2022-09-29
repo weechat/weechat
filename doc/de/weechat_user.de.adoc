@@ -114,8 +114,7 @@ WeeChat *erforderlich* sind:
 
 [width="100%",cols="5,^3,.^15",options="header"]
 |===
-// TRANSLATION MISSING
-| Paket ^(1)^ | Version | Features
+| Paket ^(1)^ | Version | Funktionen
 
 | C compiler (gcc / clang) |
 | zum Erstellen der Binärdatei.
@@ -135,21 +134,18 @@ WeeChat *erforderlich* sind:
 | libgcrypt20-dev |
 | Geschützte Daten, IRC SASL Authentifikation.
 
-// TRANSLATION MISSING
 | libgnutls28-dev | ≥ 2.2.0 ^(3)^
-| IRC plugin: support of TLS connections, IRC SASL authentication (ECDSA-NIST256P-CHALLENGE). +
-  Relay plugin: support of TLS connections.
+| IRC-Erweiterung: Unterstützung von TLS Verbindungen, IRC SASL Authentifikation (ECDSA-NIST256P-CHALLENGE). +
+  Relay-Erweiterung: Untersützung von TLS Verbindungen.
 
-// TRANSLATION MISSING
 | zlib1g-dev |
-| Logger plugin: compression of rotated log files (gzip). +
-  Relay plugin: compression of messages (WeeChat -> client) with https://zlib.net/[zlib ^↗^,window=_blank] (weechat protocol). +
-  Script plugin: read of repository index file (gzip).
+| Logger-Erweitertung: Kompression von rotierenden Protokolldateien (gzip). +
+  Relay-Erweiterung: Kompression von Nachrichten (WeeChat -> client) with https://zlib.net/[zlib ^↗^,window=_blank] (weechat protocol). +
+  Script-Erweiterung: Lesen der Repository-Indexdatei (gzip).
 
-// TRANSLATION MISSING
 | libzstd-dev |
-| Logger plugin: compression of rotated log files. +
-  Relay plugin: compression of messages (WeeChat -> client) with https://facebook.github.io/zstd/[Zstandard ^↗^,window=_blank] (weechat protocol).
+| Logger-Erweiterung: Kompression von rotierenden Protokolldateien. +
+  Relay-Erweiterung: Kompression von Nachrichten (WeeChat -> client) with https://facebook.github.io/zstd/[Zstandard ^↗^,window=_blank] (weechat protocol).
 |===
 
 [NOTE]
@@ -167,8 +163,7 @@ WeeChat optional sind:
 
 [width="100%",cols="5,^3,.^15",options="header"]
 |===
-// TRANSLATION MISSING
-| Paket ^(1)^                           | Version  | Features
+| Paket ^(1)^                           | Version  | Funktionen
 | {cpp} compiler (pass:[g++ / clang++]) |          | zum Erstellen der Binärdatei und um Test auszuführen, JavaScript Erweiterung.
 | gettext                               |          | Internationalisierung (Übersetzung der Mitteilungen; Hauptsprache ist englisch).
 | ca-certificates                       |          | Zertifikate für SSL Verbindungen.
@@ -2475,21 +2470,21 @@ Erstellt eine Struktur in folgender Form:
         ...
 ....
 
-// TRANSLATION MISSING
 [[logger_rotation_compression]]
-==== Rotation and compression
+==== Rotation und Kompressions
 
-It is possible to define a max size for log files, and when it is reached,
-there is automatic rotation of log file.
+Es ist möglich, eine maximale Größe für Protokolldateien zu definieren, und wenn diese
+erreicht ist, findet eine automatische Rotation der Protokolldatei statt.
 
-The rotated log files can be compressed with gzip or
+Die rotierenden Protokolldateien können mit gzip kompromiert werden oder mit
 https://facebook.github.io/zstd/[zstd ^↗^,window=_blank].
 
 [NOTE]
-As the compression of a file can take some time, it is performed in background.
+Da die Komprimierung einer Datei einige Zeit in Anspruch nehmen kann, wird diese Aktion
+im Hintergrund durchgeführt.
 
-Example with a max size of 2GB and compression with gzip, using good compression
-level (slower than default one):
+Beispiel mit einer maximalen Größe von 2 GB und einer Komprimierung mittels gzip
+unter Verwendung einer guten Komprimierungsstufe (langsamer als die Standardeinstellung):
 
 ----
 /set logger.file.rotation_compression_type gzip
@@ -2497,15 +2492,15 @@ level (slower than default one):
 /set logger.file.rotation_size_max "2g"
 ----
 
-If you want to use a decimal number, you can use the unit below and multiply
-by 1000, for example to set max size to 2.5GB:
+Wenn Sie eine Dezimalzahl verwenden möchten, können Sie die unten stehende Einheit verwenden
+und mit 1000 multiplizieren, um beispielsweise die maximale Größe auf 2,5 GB festzulegen:
 
 ----
 /set logger.file.rotation_size_max "2500m"
 ----
 
-With these settings, you'll end with files like these ones (in this example
-there is rotation only for the log of #weechat channel):
+Mit diesen Einstellungen erhalten Sie eine Dateisktruktur wie die folgende (in diesem Beispiel
+gibt es nur eine Rotation für das Protokoll des #weechat-Kanals):
 
 ....
 ~/.local/share/weechat
