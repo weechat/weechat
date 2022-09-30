@@ -144,6 +144,10 @@ trigger_callback_set_common_vars (struct t_trigger *trigger,
         return;
 
     weechat_hashtable_set (hashtable, "tg_trigger_name", trigger->name);
+    weechat_hashtable_set (
+        hashtable, "tg_hook_type",
+        trigger_hook_type_string[
+            weechat_config_integer (trigger->options[TRIGGER_OPTION_HOOK])]);
 }
 
 /*

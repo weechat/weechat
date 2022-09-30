@@ -5104,6 +5104,7 @@ de hachage :
 |===
 | Variable        | Type   | Description
 | tg_trigger_name | chaîne | Nom du trigger.
+| tg_hook_type    | chaîne | Type de hook : "signal", "command", etc.
 |===
 
 [[trigger_data_signal]]

@@ -36,6 +36,7 @@ New features::
   * logger: add options to rotate and compress log files: logger.file.rotation_compression_level, logger.file.rotation_compression_type and logger.file.rotation_size_max (issue #314)
   * spell: allow special dict value "-" to disable spell checking on a specific buffer (issue #1699)
   * trigger: add elapsed time for trigger execution on monitor buffer when trigger debug is set, add option trigger.color.identifier (issue #1806)
+  * trigger: add variable `${tg_hook_type}` (issue #1765)
 
 Bug fixes::
 
