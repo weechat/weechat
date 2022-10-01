@@ -423,6 +423,7 @@ irc_raw_set_filter (const char *filter)
         free (irc_raw_filter);
     irc_raw_filter = (filter && (strcmp (filter, "*") != 0)) ?
         strdup (filter) : NULL;
+    irc_raw_set_localvar_filter ();
 }
 
 /*
