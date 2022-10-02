@@ -28,6 +28,7 @@ from pathlib import Path
 import re
 
 DOC_DIR = Path(__file__).resolve().parent / "en"
+SRC_DIR = Path(__file__).resolve().parent.parent / "src"
 
 STUB_HEADER = """\
 #
@@ -56,11 +57,19 @@ def print_stub_constants() -> None:
         "string": "str",
     }
     constant_pattern = re.compile(CONSTANT_RE)
-    with open(DOC_DIR / "weechat_scripting.en.adoc",
-              encoding="utf-8") as scripting_file:
+    with open(
+        DOC_DIR / "weechat_scripting.en.adoc", encoding="utf-8"
+    ) as scripting_file, open(
+        SRC_DIR / "plugins" / "weechat-plugin.h", encoding="utf-8"
+    ) as plugin_header_file:
         scripting = scripting_file.read()
+        plugin_header = plugin_header_file.read()
         for match in constant_pattern.finditer(scripting):
-            print(f'{match["constant"]}: {types[match["type"]]}')
+            value_re = rf'^#define {match["constant"]} +(?P<value>[\w"-]+)$'
+            value_match = re.search(value_re, plugin_header, re.MULTILINE)
+            value = f' = {value_match["value"]}' if value_match else ""
+
+            print(f'{match["constant"]}: {types[match["type"]]}{value}')
 
 
 def print_stub_functions() -> None:
