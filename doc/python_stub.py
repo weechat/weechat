@@ -24,6 +24,7 @@ This script requires Python 3.6+.
 """
 
 from pathlib import Path
+from textwrap import indent
 
 import re
 
@@ -46,7 +47,8 @@ CONSTANT_RE = (
 FUNCTION_RE = r"""\[source,python\]
 ----
 # prototype
-def (?P<function>\w+)(?P<args>[^)]*)(?P<return>\) -> [^:]+:) \.\.\."""
+def (?P<function>\w+)(?P<args>[^)]*)(?P<return>\) -> [^:]+:) \.\.\.(?P<example>.*?)
+----"""
 
 
 def print_stub_constants() -> None:
@@ -71,10 +73,16 @@ def print_stub_functions() -> None:
         api_doc = api_doc_file.read()
         for match in function_pattern.finditer(api_doc):
             url = f'https://weechat.org/doc/api/#_{match["function"]}'
+            example = (
+                f'\n    ::\n\n{indent(match["example"].lstrip(), " " * 8)}'
+                if match["example"]
+                else ""
+            )
             print(
                 f"""\n
 def {match["function"]}{match["args"]}{match["return"]}
-    \"""`{match["function"]} in WeeChat plugin API reference <{url}>`_\"""
+    \"""`{match["function"]} in WeeChat plugin API reference <{url}>`_{example}
+    \"""
     ..."""
             )
 

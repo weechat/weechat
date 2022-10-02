@@ -48,202 +48,436 @@ WEECHAT_HOOK_SIGNAL_POINTER: str
 
 
 def register(name: str, author: str, version: str, license: str, description: str, shutdown_function: str, charset: str) -> int:
-    """`register in WeeChat plugin API reference <https://weechat.org/doc/api/#_register>`_"""
+    """`register in WeeChat plugin API reference <https://weechat.org/doc/api/#_register>`_
+    """
     ...
 
 
 def plugin_get_name(plugin: str) -> str:
-    """`plugin_get_name in WeeChat plugin API reference <https://weechat.org/doc/api/#_plugin_get_name>`_"""
+    """`plugin_get_name in WeeChat plugin API reference <https://weechat.org/doc/api/#_plugin_get_name>`_
+    ::
+
+        # example
+        plugin = weechat.buffer_get_pointer(weechat.current_buffer(), "plugin")
+        name = weechat.plugin_get_name(plugin)
+    """
     ...
 
 
 def charset_set(charset: str) -> int:
-    """`charset_set in WeeChat plugin API reference <https://weechat.org/doc/api/#_charset_set>`_"""
+    """`charset_set in WeeChat plugin API reference <https://weechat.org/doc/api/#_charset_set>`_
+    ::
+
+        # example
+        weechat.charset_set("iso-8859-1")
+    """
     ...
 
 
 def iconv_to_internal(charset: str, string: str) -> str:
-    """`iconv_to_internal in WeeChat plugin API reference <https://weechat.org/doc/api/#_iconv_to_internal>`_"""
+    """`iconv_to_internal in WeeChat plugin API reference <https://weechat.org/doc/api/#_iconv_to_internal>`_
+    ::
+
+        # example
+        str = weechat.iconv_to_internal("iso-8859-1", "iso string: é à")
+    """
     ...
 
 
 def iconv_from_internal(charset: str, string: str) -> str:
-    """`iconv_from_internal in WeeChat plugin API reference <https://weechat.org/doc/api/#_iconv_from_internal>`_"""
+    """`iconv_from_internal in WeeChat plugin API reference <https://weechat.org/doc/api/#_iconv_from_internal>`_
+    ::
+
+        # example
+        str = weechat.iconv_from_internal("iso-8859-1", "utf-8 string: é à")
+    """
     ...
 
 
 def gettext(string: str) -> str:
-    """`gettext in WeeChat plugin API reference <https://weechat.org/doc/api/#_gettext>`_"""
+    """`gettext in WeeChat plugin API reference <https://weechat.org/doc/api/#_gettext>`_
+    ::
+
+        # example
+        str = weechat.gettext("hello")
+    """
     ...
 
 
 def ngettext(string: str, plural: str, count: int) -> str:
-    """`ngettext in WeeChat plugin API reference <https://weechat.org/doc/api/#_ngettext>`_"""
+    """`ngettext in WeeChat plugin API reference <https://weechat.org/doc/api/#_ngettext>`_
+    ::
+
+        # example
+        num_files = 2
+        str = weechat.ngettext("file", "files", num_files)
+    """
     ...
 
 
 def strlen_screen(string: str) -> int:
-    """`strlen_screen in WeeChat plugin API reference <https://weechat.org/doc/api/#_strlen_screen>`_"""
+    """`strlen_screen in WeeChat plugin API reference <https://weechat.org/doc/api/#_strlen_screen>`_
+    ::
+
+        # example
+        length = weechat.strlen_screen("é")  # 1
+    """
     ...
 
 
 def string_match(string: str, mask: str, case_sensitive: int) -> int:
-    """`string_match in WeeChat plugin API reference <https://weechat.org/doc/api/#_string_match>`_"""
+    """`string_match in WeeChat plugin API reference <https://weechat.org/doc/api/#_string_match>`_
+    ::
+
+        # examples
+        match1 = weechat.string_match("abcdef", "abc*", 0)   # == 1
+        match2 = weechat.string_match("abcdef", "*dd*", 0)   # == 0
+        match3 = weechat.string_match("abcdef", "*def", 0)   # == 1
+        match4 = weechat.string_match("abcdef", "*de*", 0)   # == 1
+        match5 = weechat.string_match("abcdef", "*b*d*", 0)  # == 1
+    """
     ...
 
 
 def string_match_list(string: str, masks: str, case_sensitive: int) -> int:
-    """`string_match_list in WeeChat plugin API reference <https://weechat.org/doc/api/#_string_match_list>`_"""
+    """`string_match_list in WeeChat plugin API reference <https://weechat.org/doc/api/#_string_match_list>`_
+    ::
+
+        # examples
+        match1 = weechat.string_match("abc", "*,!abc*", 0)     # == 0
+        match2 = weechat.string_match("abcdef", "*,!abc*", 0)  # == 0
+        match3 = weechat.string_match("def", "*,!abc*", 0)     # == 1
+    """
     ...
 
 
 def string_eval_path_home(path: str, pointers: Dict[str, str], extra_vars: Dict[str, str], options: Dict[str, str]) -> str:
-    """`string_eval_path_home in WeeChat plugin API reference <https://weechat.org/doc/api/#_string_eval_path_home>`_"""
+    """`string_eval_path_home in WeeChat plugin API reference <https://weechat.org/doc/api/#_string_eval_path_home>`_
+    ::
+
+        # example
+        path = weechat.string_eval_path_home("${weechat_config_dir}/test.conf", {}, {}, {})
+        # path == "/home/user/.config/weechat/test.conf"
+    """
     ...
 
 
 def string_mask_to_regex(mask: str) -> str:
-    """`string_mask_to_regex in WeeChat plugin API reference <https://weechat.org/doc/api/#_string_mask_to_regex>`_"""
+    """`string_mask_to_regex in WeeChat plugin API reference <https://weechat.org/doc/api/#_string_mask_to_regex>`_
+    ::
+
+        # example
+        regex = weechat.string_mask_to_regex("test*mask")  # "test.*mask"
+    """
     ...
 
 
 def string_has_highlight(string: str, highlight_words: str) -> int:
-    """`string_has_highlight in WeeChat plugin API reference <https://weechat.org/doc/api/#_string_has_highlight>`_"""
+    """`string_has_highlight in WeeChat plugin API reference <https://weechat.org/doc/api/#_string_has_highlight>`_
+    ::
+
+        # example
+        highlight = weechat.string_has_highlight("my test string", "test,word2")  # 1
+    """
     ...
 
 
 def string_has_highlight_regex(string: str, regex: str) -> int:
-    """`string_has_highlight_regex in WeeChat plugin API reference <https://weechat.org/doc/api/#_string_has_highlight_regex>`_"""
+    """`string_has_highlight_regex in WeeChat plugin API reference <https://weechat.org/doc/api/#_string_has_highlight_regex>`_
+    ::
+
+        # example
+        highlight = weechat.string_has_highlight_regex("my test string", "test|word2")  # 1
+    """
     ...
 
 
 def string_format_size(size: int) -> str:
-    """`string_format_size in WeeChat plugin API reference <https://weechat.org/doc/api/#_string_format_size>`_"""
+    """`string_format_size in WeeChat plugin API reference <https://weechat.org/doc/api/#_string_format_size>`_
+    ::
+
+        # example
+        str = weechat.string_format_size(15200)  # == "15.2 KB"
+    """
     ...
 
 
 def string_parse_size(size: str) -> int:
-    """`string_parse_size in WeeChat plugin API reference <https://weechat.org/doc/api/#_string_parse_size>`_"""
+    """`string_parse_size in WeeChat plugin API reference <https://weechat.org/doc/api/#_string_parse_size>`_
+    ::
+
+        # example
+        size = weechat.string_parse_size("1.34m")  # 1340000
+    """
     ...
 
 
 def string_color_code_size(string: str) -> int:
-    """`string_color_code_size in WeeChat plugin API reference <https://weechat.org/doc/api/#_string_color_code_size>`_"""
+    """`string_color_code_size in WeeChat plugin API reference <https://weechat.org/doc/api/#_string_color_code_size>`_
+    ::
+
+        # examples
+        size = weechat.string_color_code_size("test")  # size == 0
+        size = weechat.string_color_code_size(weechat.color("bold"))  # size == 2
+        size = weechat.string_color_code_size(weechat.color("yellow,red"))  # size == 7
+    """
     ...
 
 
 def string_remove_color(string: str, replacement: str) -> str:
-    """`string_remove_color in WeeChat plugin API reference <https://weechat.org/doc/api/#_string_remove_color>`_"""
+    """`string_remove_color in WeeChat plugin API reference <https://weechat.org/doc/api/#_string_remove_color>`_
+    ::
+
+        # example
+        str = weechat.string_remove_color(my_string, "?")
+    """
     ...
 
 
 def string_is_command_char(string: str) -> int:
-    """`string_is_command_char in WeeChat plugin API reference <https://weechat.org/doc/api/#_string_is_command_char>`_"""
+    """`string_is_command_char in WeeChat plugin API reference <https://weechat.org/doc/api/#_string_is_command_char>`_
+    ::
+
+        # examples
+        command_char1 = weechat.string_is_command_char("/test")  # == 1
+        command_char2 = weechat.string_is_command_char("test")   # == 0
+    """
     ...
 
 
 def string_input_for_buffer(string: str) -> str:
-    """`string_input_for_buffer in WeeChat plugin API reference <https://weechat.org/doc/api/#_string_input_for_buffer>`_"""
+    """`string_input_for_buffer in WeeChat plugin API reference <https://weechat.org/doc/api/#_string_input_for_buffer>`_
+    ::
+
+        # examples
+        str1 = weechat.string_input_for_buffer("test")    # "test"
+        str2 = weechat.string_input_for_buffer("/test")   # ""
+        str3 = weechat.string_input_for_buffer("//test")  # "/test"
+    """
     ...
 
 
 def string_eval_expression(expr: str, pointers: Dict[str, str], extra_vars: Dict[str, str], options: Dict[str, str]) -> str:
-    """`string_eval_expression in WeeChat plugin API reference <https://weechat.org/doc/api/#_string_eval_expression>`_"""
+    """`string_eval_expression in WeeChat plugin API reference <https://weechat.org/doc/api/#_string_eval_expression>`_
+    ::
+
+        # examples
+
+        # conditions
+        str1 = weechat.string_eval_expression("${window.win_width} > 100", {}, {}, {"type": "condition"})  # "1"
+        str2 = weechat.string_eval_expression("abc =~ def", {}, {}, {"type": "condition"})                 # "0"
+
+        # simple expression
+        str3 = weechat.string_eval_expression("${buffer.full_name}", {}, {}, {}) # "core.weechat"
+
+        # replace with regex: add brackets around URLs
+        options = {
+            "regex": "[a-zA-Z0-9_]+://[^ ]+",
+            "regex_replace": "[ ${re:0} ]",
+        }
+        str4 = weechat.string_eval_expression("test: https://weechat.org", {}, {}, options)  # "test: [ https://weechat.org ]"
+
+        # replace with regex: hide passwords
+        options = {
+            "regex": "(password=)([^ ]+)",
+            "regex_replace": "${re:1}${hide:*,${re:2}}",
+        }
+        str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, options)  # "password=*** password=***"
+    """
     ...
 
 
 def mkdir_home(directory: str, mode: int) -> int:
-    """`mkdir_home in WeeChat plugin API reference <https://weechat.org/doc/api/#_mkdir_home>`_"""
+    """`mkdir_home in WeeChat plugin API reference <https://weechat.org/doc/api/#_mkdir_home>`_
+    ::
+
+        # example
+        weechat.mkdir_home("${weechat_cache_dir}/temp", 0755)
+    """
     ...
 
 
 def mkdir(directory: str, mode: int) -> int:
-    """`mkdir in WeeChat plugin API reference <https://weechat.org/doc/api/#_mkdir>`_"""
+    """`mkdir in WeeChat plugin API reference <https://weechat.org/doc/api/#_mkdir>`_
+    ::
+
+        # example
+        weechat.mkdir("/tmp/mydir", 0755)
+    """
     ...
 
 
 def mkdir_parents(directory: str, mode: int) -> int:
-    """`mkdir_parents in WeeChat plugin API reference <https://weechat.org/doc/api/#_mkdir_parents>`_"""
+    """`mkdir_parents in WeeChat plugin API reference <https://weechat.org/doc/api/#_mkdir_parents>`_
+    ::
+
+        # example
+        weechat.mkdir_parents("/tmp/my/dir", 0755)
+    """
     ...
 
 
 def list_new() -> str:
-    """`list_new in WeeChat plugin API reference <https://weechat.org/doc/api/#_list_new>`_"""
+    """`list_new in WeeChat plugin API reference <https://weechat.org/doc/api/#_list_new>`_
+    ::
+
+        # example
+        list = weechat.list_new()
+    """
     ...
 
 
 def list_add(list: str, data: str, where: str, user_data: str) -> str:
-    """`list_add in WeeChat plugin API reference <https://weechat.org/doc/api/#_list_add>`_"""
+    """`list_add in WeeChat plugin API reference <https://weechat.org/doc/api/#_list_add>`_
+    ::
+
+        # example
+        item = weechat.list_add(list, "my data", weechat.WEECHAT_LIST_POS_SORT, "")
+    """
     ...
 
 
 def list_search(list: str, data: str) -> str:
-    """`list_search in WeeChat plugin API reference <https://weechat.org/doc/api/#_list_search>`_"""
+    """`list_search in WeeChat plugin API reference <https://weechat.org/doc/api/#_list_search>`_
+    ::
+
+        # example
+        item = weechat.list_search(list, "my data")
+    """
     ...
 
 
 def list_search_pos(list: str, data: str) -> int:
-    """`list_search_pos in WeeChat plugin API reference <https://weechat.org/doc/api/#_list_search_pos>`_"""
+    """`list_search_pos in WeeChat plugin API reference <https://weechat.org/doc/api/#_list_search_pos>`_
+    ::
+
+        # example
+        pos_item = weechat.list_search_pos(list, "my data")
+    """
     ...
 
 
 def list_casesearch(list: str, data: str) -> str:
-    """`list_casesearch in WeeChat plugin API reference <https://weechat.org/doc/api/#_list_casesearch>`_"""
+    """`list_casesearch in WeeChat plugin API reference <https://weechat.org/doc/api/#_list_casesearch>`_
+    ::
+
+        # example
+        item = weechat.list_casesearch(list, "my data")
+    """
     ...
 
 
 def list_casesearch_pos(list: str, data: str) -> int:
-    """`list_casesearch_pos in WeeChat plugin API reference <https://weechat.org/doc/api/#_list_casesearch_pos>`_"""
+    """`list_casesearch_pos in WeeChat plugin API reference <https://weechat.org/doc/api/#_list_casesearch_pos>`_
+    ::
+
+        # example
+        pos_item = weechat.list_casesearch_pos(list, "my data")
+    """
     ...
 
 
 def list_get(list: str, position: int) -> str:
-    """`list_get in WeeChat plugin API reference <https://weechat.org/doc/api/#_list_get>`_"""
+    """`list_get in WeeChat plugin API reference <https://weechat.org/doc/api/#_list_get>`_
+    ::
+
+        # example
+        item = weechat.list_get(list, 0)
+    """
     ...
 
 
 def list_set(item: str, value: str) -> int:
-    """`list_set in WeeChat plugin API reference <https://weechat.org/doc/api/#_list_set>`_"""
+    """`list_set in WeeChat plugin API reference <https://weechat.org/doc/api/#_list_set>`_
+    ::
+
+        # example
+        weechat.list_set(item, "new data")
+    """
     ...
 
 
 def list_next(item: str) -> str:
-    """`list_next in WeeChat plugin API reference <https://weechat.org/doc/api/#_list_next>`_"""
+    """`list_next in WeeChat plugin API reference <https://weechat.org/doc/api/#_list_next>`_
+    ::
+
+        # example
+        item = weechat.list_next(item)
+    """
     ...
 
 
 def list_prev(item: str) -> str:
-    """`list_prev in WeeChat plugin API reference <https://weechat.org/doc/api/#_list_prev>`_"""
+    """`list_prev in WeeChat plugin API reference <https://weechat.org/doc/api/#_list_prev>`_
+    ::
+
+        # example
+        item = weechat.list_prev(item)
+    """
     ...
 
 
 def list_string(item: str) -> str:
-    """`list_string in WeeChat plugin API reference <https://weechat.org/doc/api/#_list_string>`_"""
+    """`list_string in WeeChat plugin API reference <https://weechat.org/doc/api/#_list_string>`_
+    ::
+
+        # example
+        weechat.prnt("", "value of item: %s" % weechat.list_string(item))
+    """
     ...
 
 
 def list_size(list: str) -> int:
-    """`list_size in WeeChat plugin API reference <https://weechat.org/doc/api/#_list_size>`_"""
+    """`list_size in WeeChat plugin API reference <https://weechat.org/doc/api/#_list_size>`_
+    ::
+
+        # example
+        weechat.prnt("", "size of list: %d" % weechat.list_size(list))
+    """
     ...
 
 
 def list_remove(list: str, item: str) -> int:
-    """`list_remove in WeeChat plugin API reference <https://weechat.org/doc/api/#_list_remove>`_"""
+    """`list_remove in WeeChat plugin API reference <https://weechat.org/doc/api/#_list_remove>`_
+    ::
+
+        # example
+        weechat.list_remove(list, item)
+    """
     ...
 
 
 def list_remove_all(list: str) -> int:
-    """`list_remove_all in WeeChat plugin API reference <https://weechat.org/doc/api/#_list_remove_all>`_"""
+    """`list_remove_all in WeeChat plugin API reference <https://weechat.org/doc/api/#_list_remove_all>`_
+    ::
+
+        # example
+        weechat.list_remove_all(list)
+    """
     ...
 
 
 def list_free(list: str) -> int:
-    """`list_free in WeeChat plugin API reference <https://weechat.org/doc/api/#_list_free>`_"""
+    """`list_free in WeeChat plugin API reference <https://weechat.org/doc/api/#_list_free>`_
+    ::
+
+        # example
+        weechat.list_free(list)
+    """
     ...
 
 
 def config_new(name: str, callback_reload: str, callback_reload_data: str) -> str:
-    """`config_new in WeeChat plugin API reference <https://weechat.org/doc/api/#_config_new>`_"""
+    """`config_new in WeeChat plugin API reference <https://weechat.org/doc/api/#_config_new>`_
+    ::
+
+        # example
+        def my_config_reload_cb(data: str, config_file: str) -> int:
+            # ...
+            return weechat.WEECHAT_RC_OK
+
+        config_file = weechat.config_new("test", "my_config_reload_cb", "")
+    """
     ...
 
 
@@ -254,12 +488,50 @@ def config_new_section(config_file: str, name: str,
                        callback_write_default: str, callback_write_default_data: str,
                        callback_create_option: str, callback_create_option_data: str,
                        callback_delete_option: str, callback_delete_option_data: str) -> str:
-    """`config_new_section in WeeChat plugin API reference <https://weechat.org/doc/api/#_config_new_section>`_"""
+    """`config_new_section in WeeChat plugin API reference <https://weechat.org/doc/api/#_config_new_section>`_
+    ::
+
+        # example
+        def my_section_read_cb(data: str, config_file: str, section: str, option_name: str, value: str) -> int:
+            # ...
+            return weechat.WEECHAT_CONFIG_OPTION_SET_OK_CHANGED
+            # return weechat.WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE
+            # return weechat.WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND
+            # return weechat.WEECHAT_CONFIG_OPTION_SET_ERROR
+
+        def my_section_write_cb(data: str, config_file: str, section_name: str) -> int:
+            # ...
+            return weechat.WEECHAT_CONFIG_WRITE_OK
+
+        def my_section_write_default_cb(data: str, config_file: str, section_name: str) -> int:
+            # ...
+            return weechat.WEECHAT_CONFIG_WRITE_OK
+
+        def my_section_create_option_cb(data: str, config_file: str, section: str, option_name: str, value: str) -> int:
+            # ...
+            return weechat.WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE
+
+        def my_section_delete_option_cb(data: str, config_file: str, section: str, option: str) -> int:
+            # ...
+            return weechat.WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED
+
+        section = weechat.config_new_section(config_file, "section1", 1, 1,
+            "my_section_read_cb", "",
+            "my_section_write_cb", "",
+            "my_section_write_default_cb", "",
+            "my_section_create_option_cb", "",
+            "my_section_delete_option_cb", "")
+    """
     ...
 
 
 def config_search_section(config_file: str, section_name: str) -> str:
-    """`config_search_section in WeeChat plugin API reference <https://weechat.org/doc/api/#_config_search_section>`_"""
+    """`config_search_section in WeeChat plugin API reference <https://weechat.org/doc/api/#_config_search_section>`_
+    ::
+
+        # example
+        section = weechat.config_search_section(config_file, "section")
+    """
     ...
 
 
@@ -269,545 +541,1497 @@ def config_new_option(config_file: str, section: str, name: str, type: str, desc
                       callback_check_value: str, callback_check_value_data: str,
                       callback_change: str, callback_change_data: str,
                       callback_delete: str, callback_delete_data: str) -> str:
-    """`config_new_option in WeeChat plugin API reference <https://weechat.org/doc/api/#_config_new_option>`_"""
+    """`config_new_option in WeeChat plugin API reference <https://weechat.org/doc/api/#_config_new_option>`_
+    ::
+
+        # example
+        def option4_check_value_cb(data: str, option: str, value: str) -> int:
+            # ...
+            return 1
+            # return 0
+
+        def option4_change_cb(data: str, option: str) -> int:
+            # ...
+
+        def option4_delete_cb(data: str, option: str) -> int:
+            # ...
+
+        option1 = weechat.config_new_option(config_file, section, "option1", "boolean",
+            "My option, type boolean",
+            "", 0, 0, "on", "on", 0,
+            "", "",
+            "", "",
+            "", "")
+
+        option2 = weechat.config_new_option(config_file, section, "option2", "integer",
+            "My option, type integer",
+            "", 0, 100, "15", "15", 0,
+            "", "",
+            "", "",
+            "", "")
+
+        option3 = weechat.config_new_option(config_file, section, "option3", "integer",
+            "My option, type integer (with string values)",
+            "top|bottom|left|right",
+            0, 0, "bottom", "bottom", 0,
+            "", "",
+            "", "",
+            "", "")
+
+        option4 = weechat.config_new_option(config_file, section, "option4", "string",
+            "My option, type string",
+            "", 0, 0, "test", "test", 1,
+            "option4_check_value_cb", "",
+            "option4_change_cb", "",
+            "option4_delete_cb", "")
+
+        option5 = weechat.config_new_option(config_file, section, "option5", "color",
+            "My option, type color",
+            "", 0, 0, "lightblue", "lightblue", 0,
+            "", "",
+            "", "",
+            "", "")
+    """
     ...
 
 
 def config_search_option(config_file: str, section: str, option_name: str) -> str:
-    """`config_search_option in WeeChat plugin API reference <https://weechat.org/doc/api/#_config_search_option>`_"""
+    """`config_search_option in WeeChat plugin API reference <https://weechat.org/doc/api/#_config_search_option>`_
+    ::
+
+        # example
+        option = weechat.config_search_option(config_file, section, "option")
+    """
     ...
 
 
 def config_string_to_boolean(text: str) -> int:
-    """`config_string_to_boolean in WeeChat plugin API reference <https://weechat.org/doc/api/#_config_string_to_boolean>`_"""
+    """`config_string_to_boolean in WeeChat plugin API reference <https://weechat.org/doc/api/#_config_string_to_boolean>`_
+    ::
+
+        # example
+        if weechat.config_string_to_boolean(text):
+            # ...
+    """
     ...
 
 
 def config_option_reset(option: str, run_callback: int) -> int:
-    """`config_option_reset in WeeChat plugin API reference <https://weechat.org/doc/api/#_config_option_reset>`_"""
+    """`config_option_reset in WeeChat plugin API reference <https://weechat.org/doc/api/#_config_option_reset>`_
+    ::
+
+        # example
+        rc = weechat.config_option_reset(option, 1)
+        if rc == weechat.WEECHAT_CONFIG_OPTION_SET_OK_CHANGED:
+            # ...
+        elif rc == weechat.WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE:
+            # ...
+        elif rc == weechat.WEECHAT_CONFIG_OPTION_SET_ERROR:
+            # ...
+    """
     ...
 
 
 def config_option_set(option: str, value: str, run_callback: int) -> int:
-    """`config_option_set in WeeChat plugin API reference <https://weechat.org/doc/api/#_config_option_set>`_"""
+    """`config_option_set in WeeChat plugin API reference <https://weechat.org/doc/api/#_config_option_set>`_
+    ::
+
+        # example
+        rc = weechat.config_option_set(option, "new_value", 1)
+        if rc == weechat.WEECHAT_CONFIG_OPTION_SET_OK_CHANGED:
+            # ...
+        elif rc == weechat.WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE:
+            # ...
+        elif rc == weechat.WEECHAT_CONFIG_OPTION_SET_ERROR:
+            # ...
+    """
     ...
 
 
 def config_option_set_null(option: str, run_callback: int) -> int:
-    """`config_option_set_null in WeeChat plugin API reference <https://weechat.org/doc/api/#_config_option_set_null>`_"""
+    """`config_option_set_null in WeeChat plugin API reference <https://weechat.org/doc/api/#_config_option_set_null>`_
+    ::
+
+        # example
+        rc = weechat.config_option_set_null(option, 1)
+        if rc == weechat.WEECHAT_CONFIG_OPTION_SET_OK_CHANGED:
+            # ...
+        elif rc == weechat.WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE:
+            # ...
+        elif rc == weechat.WEECHAT_CONFIG_OPTION_SET_ERROR:
+            # ...
+    """
     ...
 
 
 def config_option_unset(option: str) -> int:
-    """`config_option_unset in WeeChat plugin API reference <https://weechat.org/doc/api/#_config_option_unset>`_"""
+    """`config_option_unset in WeeChat plugin API reference <https://weechat.org/doc/api/#_config_option_unset>`_
+    ::
+
+        # example
+        rc = weechat.config_option_unset(option)
+        if rc == weechat.WEECHAT_CONFIG_OPTION_UNSET_OK_NO_RESET:
+            # ...
+        elif rc == weechat.WEECHAT_CONFIG_OPTION_UNSET_OK_RESET:
+            # ...
+        elif rc == weechat.WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED:
+            # ...
+        elif rc == weechat.WEECHAT_CONFIG_OPTION_UNSET_ERROR:
+            # ...
+    """
     ...
 
 
 def config_option_rename(option: str, new_name: str) -> int:
-    """`config_option_rename in WeeChat plugin API reference <https://weechat.org/doc/api/#_config_option_rename>`_"""
+    """`config_option_rename in WeeChat plugin API reference <https://weechat.org/doc/api/#_config_option_rename>`_
+    ::
+
+        # example
+        weechat.config_option_rename(option, "new_name")
+    """
     ...
 
 
 def config_option_is_null(option: str) -> int:
-    """`config_option_is_null in WeeChat plugin API reference <https://weechat.org/doc/api/#_config_option_is_null>`_"""
+    """`config_option_is_null in WeeChat plugin API reference <https://weechat.org/doc/api/#_config_option_is_null>`_
+    ::
+
+        # example
+        if weechat.config_option_is_null(option):
+            # ...
+    """
     ...
 
 
 def config_option_default_is_null(option: str) -> int:
-    """`config_option_default_is_null in WeeChat plugin API reference <https://weechat.org/doc/api/#_config_option_default_is_null>`_"""
+    """`config_option_default_is_null in WeeChat plugin API reference <https://weechat.org/doc/api/#_config_option_default_is_null>`_
+    ::
+
+        # example
+        if weechat.config_option_default_is_null(option):
+            # ...
+    """
     ...
 
 
 def config_boolean(option: str) -> int:
-    """`config_boolean in WeeChat plugin API reference <https://weechat.org/doc/api/#_config_boolean>`_"""
+    """`config_boolean in WeeChat plugin API reference <https://weechat.org/doc/api/#_config_boolean>`_
+    ::
+
+        # example
+        option = weechat.config_get("plugin.section.option")
+        if weechat.config_boolean(option):
+            # ...
+    """
     ...
 
 
 def config_boolean_default(option: str) -> int:
-    """`config_boolean_default in WeeChat plugin API reference <https://weechat.org/doc/api/#_config_boolean_default>`_"""
+    """`config_boolean_default in WeeChat plugin API reference <https://weechat.org/doc/api/#_config_boolean_default>`_
+    ::
+
+        # example
+        option = weechat.config_get("plugin.section.option")
+        if weechat.config_boolean_default(option):
+            # ...
+    """
     ...
 
 
 def config_integer(option: str) -> int:
-    """`config_integer in WeeChat plugin API reference <https://weechat.org/doc/api/#_config_integer>`_"""
+    """`config_integer in WeeChat plugin API reference <https://weechat.org/doc/api/#_config_integer>`_
+    ::
+
+        # example
+        option = weechat.config_get("plugin.section.option")
+        value = weechat.config_integer(option)
+    """
     ...
 
 
 def config_integer_default(option: str) -> int:
-    """`config_integer_default in WeeChat plugin API reference <https://weechat.org/doc/api/#_config_integer_default>`_"""
+    """`config_integer_default in WeeChat plugin API reference <https://weechat.org/doc/api/#_config_integer_default>`_
+    ::
+
+        # example
+        option = weechat.config_get("plugin.section.option")
+        value = weechat.config_integer_default(option)
+    """
     ...
 
 
 def config_string(option: str) -> str:
-    """`config_string in WeeChat plugin API reference <https://weechat.org/doc/api/#_config_string>`_"""
+    """`config_string in WeeChat plugin API reference <https://weechat.org/doc/api/#_config_string>`_
+    ::
+
+        # example
+        option = weechat.config_get("plugin.section.option")
+        value = weechat.config_string(option)
+    """
     ...
 
 
 def config_string_default(option: str) -> str:
-    """`config_string_default in WeeChat plugin API reference <https://weechat.org/doc/api/#_config_string_default>`_"""
+    """`config_string_default in WeeChat plugin API reference <https://weechat.org/doc/api/#_config_string_default>`_
+    ::
+
+        # example
+        option = weechat.config_get("plugin.section.option")
+        value = weechat.config_string_default(option)
+    """
     ...
 
 
 def config_color(option: str) -> str:
-    """`config_color in WeeChat plugin API reference <https://weechat.org/doc/api/#_config_color>`_"""
+    """`config_color in WeeChat plugin API reference <https://weechat.org/doc/api/#_config_color>`_
+    ::
+
+        # example
+        option = weechat.config_get("plugin.section.option")
+        value = weechat.config_color(option)
+    """
     ...
 
 
 def config_color_default(option: str) -> str:
-    """`config_color_default in WeeChat plugin API reference <https://weechat.org/doc/api/#_config_color_default>`_"""
+    """`config_color_default in WeeChat plugin API reference <https://weechat.org/doc/api/#_config_color_default>`_
+    ::
+
+        # example
+        option = weechat.config_get("plugin.section.option")
+        value = weechat.config_color_default(option)
+    """
     ...
 
 
 def config_write_option(config_file: str, option: str) -> int:
-    """`config_write_option in WeeChat plugin API reference <https://weechat.org/doc/api/#_config_write_option>`_"""
+    """`config_write_option in WeeChat plugin API reference <https://weechat.org/doc/api/#_config_write_option>`_
+    ::
+
+        # example
+        def my_section_write_cb(data: str, config_file: str, section_name: str) -> int:
+            weechat.config_write_line(config_file, "my_section", "")
+            weechat.config_write_option(config_file, option)
+            return weechat.WEECHAT_RC_OK
+    """
     ...
 
 
 def config_write_line(config_file: str, option_name: str, value: str) -> int:
-    """`config_write_line in WeeChat plugin API reference <https://weechat.org/doc/api/#_config_write_line>`_"""
+    """`config_write_line in WeeChat plugin API reference <https://weechat.org/doc/api/#_config_write_line>`_
+    ::
+
+        # example
+        def my_section_write_cb(data: str, config_file: str, section_name: str) -> int:
+            weechat.config_write_line(config_file, "my_section", "")
+            weechat.config_write_line(config_file, "option", "value")
+            return weechat.WEECHAT_RC_OK
+    """
     ...
 
 
 def config_write(config_file: str) -> int:
-    """`config_write in WeeChat plugin API reference <https://weechat.org/doc/api/#_config_write>`_"""
+    """`config_write in WeeChat plugin API reference <https://weechat.org/doc/api/#_config_write>`_
+    ::
+
+        # example
+        rc = weechat.config_write(config_file)
+        if rc == weechat.WEECHAT_CONFIG_WRITE_OK:
+            # ...
+        elif rc == weechat.WEECHAT_CONFIG_WRITE_MEMORY_ERROR:
+            # ...
+        elif rc == weechat.WEECHAT_CONFIG_WRITE_ERROR:
+            # ...
+    """
     ...
 
 
 def config_read(config_file: str) -> int:
-    """`config_read in WeeChat plugin API reference <https://weechat.org/doc/api/#_config_read>`_"""
+    """`config_read in WeeChat plugin API reference <https://weechat.org/doc/api/#_config_read>`_
+    ::
+
+        # example
+        rc = weechat.config_read(config_file)
+        if rc == weechat.WEECHAT_CONFIG_READ_OK:
+            # ...
+        elif rc == weechat.WEECHAT_CONFIG_READ_MEMORY_ERROR:
+            # ...
+        elif rc == weechat.WEECHAT_CONFIG_READ_FILE_NOT_FOUND:
+            # ...
+    """
     ...
 
 
 def config_reload(config_file: str) -> int:
-    """`config_reload in WeeChat plugin API reference <https://weechat.org/doc/api/#_config_reload>`_"""
+    """`config_reload in WeeChat plugin API reference <https://weechat.org/doc/api/#_config_reload>`_
+    ::
+
+        # example
+        rc = weechat.config_reload(config_file)
+        if rc == weechat.WEECHAT_CONFIG_READ_OK:
+            # ...
+        elif rc == weechat.WEECHAT_CONFIG_READ_MEMORY_ERROR:
+            # ...
+        elif rc == weechat.WEECHAT_CONFIG_READ_FILE_NOT_FOUND:
+            # ...
+    """
     ...
 
 
 def config_option_free(option: str) -> int:
-    """`config_option_free in WeeChat plugin API reference <https://weechat.org/doc/api/#_config_option_free>`_"""
+    """`config_option_free in WeeChat plugin API reference <https://weechat.org/doc/api/#_config_option_free>`_
+    ::
+
+        # example
+        weechat.config_option_free(option)
+    """
     ...
 
 
 def config_section_free_options(section: str) -> int:
-    """`config_section_free_options in WeeChat plugin API reference <https://weechat.org/doc/api/#_config_section_free_options>`_"""
+    """`config_section_free_options in WeeChat plugin API reference <https://weechat.org/doc/api/#_config_section_free_options>`_
+    ::
+
+        # example
+        weechat.config_section_free_options(section)
+    """
     ...
 
 
 def config_section_free(section: str) -> int:
-    """`config_section_free in WeeChat plugin API reference <https://weechat.org/doc/api/#_config_section_free>`_"""
+    """`config_section_free in WeeChat plugin API reference <https://weechat.org/doc/api/#_config_section_free>`_
+    ::
+
+        # example
+        weechat.config_section_free(section)
+    """
     ...
 
 
 def config_free(config_file: str) -> int:
-    """`config_free in WeeChat plugin API reference <https://weechat.org/doc/api/#_config_free>`_"""
+    """`config_free in WeeChat plugin API reference <https://weechat.org/doc/api/#_config_free>`_
+    ::
+
+        # example
+        weechat.config_free(config_file)
+    """
     ...
 
 
 def config_get(option_name: str) -> str:
-    """`config_get in WeeChat plugin API reference <https://weechat.org/doc/api/#_config_get>`_"""
+    """`config_get in WeeChat plugin API reference <https://weechat.org/doc/api/#_config_get>`_
+    ::
+
+        # example
+        option = weechat.config_get("weechat.look.item_time_format")
+    """
     ...
 
 
 def config_get_plugin(option_name: str) -> str:
-    """`config_get_plugin in WeeChat plugin API reference <https://weechat.org/doc/api/#_config_get_plugin>`_"""
+    """`config_get_plugin in WeeChat plugin API reference <https://weechat.org/doc/api/#_config_get_plugin>`_
+    ::
+
+        # example
+        value = weechat.config_get_plugin("option")
+    """
     ...
 
 
 def config_is_set_plugin(option_name: str) -> int:
-    """`config_is_set_plugin in WeeChat plugin API reference <https://weechat.org/doc/api/#_config_is_set_plugin>`_"""
+    """`config_is_set_plugin in WeeChat plugin API reference <https://weechat.org/doc/api/#_config_is_set_plugin>`_
+    ::
+
+        # example
+        if weechat.config_is_set_plugin("option"):
+            # option is set
+            # ...
+        else:
+            # option does not exist
+            # ...
+    """
     ...
 
 
 def config_set_plugin(option_name: str, value: str) -> int:
-    """`config_set_plugin in WeeChat plugin API reference <https://weechat.org/doc/api/#_config_set_plugin>`_"""
+    """`config_set_plugin in WeeChat plugin API reference <https://weechat.org/doc/api/#_config_set_plugin>`_
+    ::
+
+        # example
+        rc = weechat.config_set_plugin("option", "test_value")
+        if rc == weechat.WEECHAT_CONFIG_OPTION_SET_OK_CHANGED:
+            # ...
+        elif rc == weechat.WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE:
+            # ...
+        elif rc == weechat.WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND:
+            # ...
+        elif rc == weechat.WEECHAT_CONFIG_OPTION_SET_ERROR:
+            # ...
+    """
     ...
 
 
 def config_set_desc_plugin(option_name: str, description: str) -> int:
-    """`config_set_desc_plugin in WeeChat plugin API reference <https://weechat.org/doc/api/#_config_set_desc_plugin>`_"""
+    """`config_set_desc_plugin in WeeChat plugin API reference <https://weechat.org/doc/api/#_config_set_desc_plugin>`_
+    ::
+
+        # example
+        version = weechat.info_get("version_number", "") or 0
+        if int(version) >= 0x00030500:
+            weechat.config_set_desc_plugin("option", "description of option")
+    """
     ...
 
 
 def config_unset_plugin(option_name: str) -> int:
-    """`config_unset_plugin in WeeChat plugin API reference <https://weechat.org/doc/api/#_config_unset_plugin>`_"""
+    """`config_unset_plugin in WeeChat plugin API reference <https://weechat.org/doc/api/#_config_unset_plugin>`_
+    ::
+
+        # example
+        rc = weechat.config_unset_plugin("option")
+        if rc == weechat.WEECHAT_CONFIG_OPTION_UNSET_OK_NO_RESET:
+            # ...
+        elif rc == weechat.WEECHAT_CONFIG_OPTION_UNSET_OK_RESET:
+            # ...
+        elif rc == weechat.WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED:
+            # ...
+        elif rc == weechat.WEECHAT_CONFIG_OPTION_UNSET_ERROR:
+            # ...
+    """
     ...
 
 
 def key_bind(context: str, keys: Dict[str, str]) -> int:
-    """`key_bind in WeeChat plugin API reference <https://weechat.org/doc/api/#_key_bind>`_"""
+    """`key_bind in WeeChat plugin API reference <https://weechat.org/doc/api/#_key_bind>`_
+    ::
+
+        # example
+        keys = {"@chat(python.test):button1": "hsignal:test_mouse",
+                "@chat(python.test):wheelup": "/mycommand up",
+                "@chat(python.test):wheeldown": "/mycommand down"}
+        weechat.key_bind("mouse", keys)
+    """
     ...
 
 
 def key_unbind(context: str, key: str) -> int:
-    """`key_unbind in WeeChat plugin API reference <https://weechat.org/doc/api/#_key_unbind>`_"""
+    """`key_unbind in WeeChat plugin API reference <https://weechat.org/doc/api/#_key_unbind>`_
+    ::
+
+        # examples
+
+        # remove a single key
+        weechat.key_unbind("mouse", "@chat(plugin.buffer):button1")
+
+        # remove all keys with area "chat(python.test)"
+        weechat.key_unbind("mouse", "area:chat(python.test)")
+    """
     ...
 
 
 def prefix(prefix: str) -> str:
-    """`prefix in WeeChat plugin API reference <https://weechat.org/doc/api/#_prefix>`_"""
+    """`prefix in WeeChat plugin API reference <https://weechat.org/doc/api/#_prefix>`_
+    ::
+
+        # example
+        weechat.prnt("", "%sThis is an error..." % weechat.prefix("error"))
+    """
     ...
 
 
 def color(color_name: str) -> str:
-    """`color in WeeChat plugin API reference <https://weechat.org/doc/api/#_color>`_"""
+    """`color in WeeChat plugin API reference <https://weechat.org/doc/api/#_color>`_
+    ::
+
+        # example
+        weechat.prnt("", "Color: %sblue %sdefault color %syellow on red"
+            % (weechat.color("blue"), weechat.color("chat"), weechat.color("yellow,red")))
+    """
     ...
 
 
 def prnt(buffer: str, message: str) -> int:
-    """`prnt in WeeChat plugin API reference <https://weechat.org/doc/api/#_prnt>`_"""
+    """`prnt in WeeChat plugin API reference <https://weechat.org/doc/api/#_prnt>`_
+    ::
+
+        # example
+        weechat.prnt("", "Hello on WeeChat buffer")
+        weechat.prnt(buffer, "Hello on this buffer")
+        weechat.prnt(buffer, "%sThis is an error!" % weechat.prefix("error"))
+        weechat.prnt(buffer, " \tMessage without prefix but with \t some \t tabs")
+        weechat.prnt(buffer, "\t\tMessage without time/alignment")
+        weechat.prnt(buffer, "\t\t")  # empty line (without time)
+    """
     ...
 
 
 def prnt_date_tags(buffer: str, date: int, tags: str, message: str) -> int:
-    """`prnt_date_tags in WeeChat plugin API reference <https://weechat.org/doc/api/#_prnt_date_tags>`_"""
+    """`prnt_date_tags in WeeChat plugin API reference <https://weechat.org/doc/api/#_prnt_date_tags>`_
+    ::
+
+        # example
+        time = int(time.time())
+        weechat.prnt_date_tags("", time - 120, "notify_message",
+            "Message 2 minutes ago, with a tag 'notify_message'")
+    """
     ...
 
 
 def prnt_y(buffer: str, y: int, message: str) -> int:
-    """`prnt_y in WeeChat plugin API reference <https://weechat.org/doc/api/#_prnt_y>`_"""
+    """`prnt_y in WeeChat plugin API reference <https://weechat.org/doc/api/#_prnt_y>`_
+    ::
+
+        # example
+        weechat.prnt_y("", 2, "My message on third line")
+    """
     ...
 
 
 def prnt_y_date_tags(buffer: str, y: int, date: int, tags: str, message: str) -> int:
-    """`prnt_y_date_tags in WeeChat plugin API reference <https://weechat.org/doc/api/#_prnt_y_date_tags>`_"""
+    """`prnt_y_date_tags in WeeChat plugin API reference <https://weechat.org/doc/api/#_prnt_y_date_tags>`_
+    ::
+
+        # example
+        weechat.prnt_y_date_tags("", 2, 0, "my_tag", "My message on third line with a tag")
+    """
     ...
 
 
 def log_print(message: str) -> int:
-    """`log_print in WeeChat plugin API reference <https://weechat.org/doc/api/#_log_print>`_"""
+    """`log_print in WeeChat plugin API reference <https://weechat.org/doc/api/#_log_print>`_
+    ::
+
+        # example
+        weechat.log_print("My message in log file")
+    """
     ...
 
 
 def hook_command(command: str, description: str, args: str, args_description: str,
                  completion: str, callback: str, callback_data: str) -> str:
-    """`hook_command in WeeChat plugin API reference <https://weechat.org/doc/api/#_hook_command>`_"""
+    """`hook_command in WeeChat plugin API reference <https://weechat.org/doc/api/#_hook_command>`_
+    ::
+
+        # example
+        def my_command_cb(data: str, buffer: str, args: str) -> int:
+            # ...
+            return weechat.WEECHAT_RC_OK
+
+        hook = weechat.hook_command("myfilter", "description of myfilter",
+            "[list] | [enable|disable|toggle [name]] | [add name plugin.buffer tags regex] | [del name|-all]",
+            "description of arguments...",
+            "list"
+            " || enable %(filters_names)"
+            " || disable %(filters_names)"
+            " || toggle %(filters_names)"
+            " || add %(filters_names) %(buffers_plugins_names)|*"
+            " || del %(filters_names)|-all",
+            "my_command_cb", "")
+    """
     ...
 
 
 def hook_completion(completion_item: str, description: str, callback: str, callback_data: str) -> str:
-    """`hook_completion in WeeChat plugin API reference <https://weechat.org/doc/api/#_hook_completion>`_"""
+    """`hook_completion in WeeChat plugin API reference <https://weechat.org/doc/api/#_hook_completion>`_
+    ::
+
+        # example
+        def my_completion_cb(data: str, completion_item: str, buffer: str, completion: str) -> int:
+            weechat.completion_list_add(completion, "word1", 0, weechat.WEECHAT_LIST_POS_SORT)
+            weechat.completion_list_add(completion, "test_word2", 0, weechat.WEECHAT_LIST_POS_SORT)
+            return weechat.WEECHAT_RC_OK
+
+        hook = weechat.hook_completion("plugin_item", "my custom completion!",
+                                       "my_completion_cb", "")
+    """
     ...
 
 
 def hook_command_run(command: str, callback: str, callback_data: str) -> str:
-    """`hook_command_run in WeeChat plugin API reference <https://weechat.org/doc/api/#_hook_command_run>`_"""
+    """`hook_command_run in WeeChat plugin API reference <https://weechat.org/doc/api/#_hook_command_run>`_
+    ::
+
+        # example
+        def my_command_run_cb(data: str, buffer: str, command: str) -> int:
+            weechat.prnt("", "I'm eating the completion!")
+            return weechat.WEECHAT_RC_OK_EAT
+
+        hook = weechat.hook_command_run("/input complete*", "my_command_run_cb", "")
+    """
     ...
 
 
 def hook_timer(interval: int, align_second: int, max_calls: int, callback: str, callback_data: str) -> str:
-    """`hook_timer in WeeChat plugin API reference <https://weechat.org/doc/api/#_hook_timer>`_"""
+    """`hook_timer in WeeChat plugin API reference <https://weechat.org/doc/api/#_hook_timer>`_
+    ::
+
+        # example
+        def my_timer_cb(data: str, remaining_calls: int) -> int:
+            # ...
+            return weechat.WEECHAT_RC_OK
+
+        # timer called each 20 seconds
+        hook = weechat.hook_timer(20 * 1000, 0, 0, "my_timer_cb", "")
+    """
     ...
 
 
 def hook_fd(fd: int, flag_read: int, flag_write: int, flag_exception: int, callback: str, callback_data: str) -> str:
-    """`hook_fd in WeeChat plugin API reference <https://weechat.org/doc/api/#_hook_fd>`_"""
+    """`hook_fd in WeeChat plugin API reference <https://weechat.org/doc/api/#_hook_fd>`_
+    ::
+
+        # example
+        def my_fd_cb(data: str, fd: int) -> int:
+            # ...
+            return weechat.WEECHAT_RC_OK
+
+        sock = ...
+        hook = weechat.hook_fd(sock, 1, 0, 0, "my_fd_cb", "")
+    """
     ...
 
 
 def hook_process(command: str, timeout: int, callback: str, callback_data: str) -> str:
-    """`hook_process in WeeChat plugin API reference <https://weechat.org/doc/api/#_hook_process>`_"""
+    """`hook_process in WeeChat plugin API reference <https://weechat.org/doc/api/#_hook_process>`_
+    ::
+
+        # example with an external command
+        def my_process_cb(data: str, command: str, return_code: int, out: str, err: str) -> int:
+            if return_code == weechat.WEECHAT_HOOK_PROCESS_ERROR:
+                weechat.prnt("", "Error with command '%s'" % command)
+                return weechat.WEECHAT_RC_OK
+            if return_code >= 0:
+                weechat.prnt("", "return_code = %d" % return_code)
+            if out:
+                weechat.prnt("", "stdout: %s" % out)
+            if err:
+                weechat.prnt("", "stderr: %s" % err)
+            return weechat.WEECHAT_RC_OK
+
+        hook = weechat.hook_process("ls", 5000, "my_process_cb", "")
+
+        # example with a script function
+        def get_status(data: str) -> str:
+            # do something blocking...
+            # ...
+            return "this is the result"
+
+        def my_process_cb(data: str, command: str, return_code: int, out: str, err: str) -> int:
+            if return_code == weechat.WEECHAT_HOOK_PROCESS_ERROR:
+                weechat.prnt("", "Error with command '%s'" % command)
+                return weechat.WEECHAT_RC_OK
+            if return_code >= 0:
+                weechat.prnt("", "return_code = %d" % return_code)
+            if out:
+                weechat.prnt("", "stdout: %s" % out)
+            if err:
+                weechat.prnt("", "stderr: %s" % err)
+            return weechat.WEECHAT_RC_OK
+
+        hook = weechat.hook_process("func:get_status", 5000, "my_process_cb", "")
+    """
     ...
 
 
 def hook_process_hashtable(command: str, options: Dict[str, str], timeout: int, callback: str, callback_data: str) -> str:
-    """`hook_process_hashtable in WeeChat plugin API reference <https://weechat.org/doc/api/#_hook_process_hashtable>`_"""
+    """`hook_process_hashtable in WeeChat plugin API reference <https://weechat.org/doc/api/#_hook_process_hashtable>`_
+    ::
+
+        # example
+        def my_process_cb(data: str, command: str, return_code: int, out: str, err: str) -> int:
+            if return_code == weechat.WEECHAT_HOOK_PROCESS_ERROR:
+                weechat.prnt("", "Error with command '%s'" % command)
+                return weechat.WEECHAT_RC_OK
+            if return_code >= 0:
+                weechat.prnt("", "return_code = %d" % return_code)
+            if out:
+                weechat.prnt("", "stdout: %s" % out)
+            if err:
+                weechat.prnt("", "stderr: %s" % err)
+            return weechat.WEECHAT_RC_OK
+
+        # example 1: download URL
+        hook1 = weechat.hook_process_hashtable("url:https://weechat.org/",
+                                               {"file_out": "/tmp/weechat.org.html"},
+                                               20000, "my_process_cb", "")
+
+        # example 2: open URL with custom HTTP headers
+        options = {
+            "httpheader": "\n".join([
+                "Header1: value1",
+                "Header2: value2",
+            ]),
+        }
+        hook2 = weechat.hook_process_hashtable("url:http://localhost:8080/",
+                                               options,
+                                               20000, "my_process_cb", "")
+
+        # example 3: execute a notify program with a message from someone
+        hook3 = weechat.hook_process_hashtable("my-notify-command",
+                                               {"arg1": "-from",
+                                                "arg2": nick,
+                                                "arg3": "-msg",
+                                                "arg4": message},  # untrusted argument
+                                               20000, "my_process_cb", "")
+
+        # example 4: call shell to execute a command (command must be SAFE)
+        hook4 = weechat.hook_process_hashtable("sh",
+                                               {"arg1": "-c",
+                                                "arg2": "ls -l /tmp | grep something"},
+                                               20000, "my_process_cb", "")
+    """
     ...
 
 
 def hook_connect(proxy: str, address: str, port: int, ipv6: int, retry: int, local_hostname: str,
                  callback: str, callback_data: str) -> str:
-    """`hook_connect in WeeChat plugin API reference <https://weechat.org/doc/api/#_hook_connect>`_"""
+    """`hook_connect in WeeChat plugin API reference <https://weechat.org/doc/api/#_hook_connect>`_
+    ::
+
+        # example
+        def my_connect_cb(data: str, status: int, gnutls_rc: int, sock: int, error: str, ip_address: str) -> int:
+            if status == WEECHAT_HOOK_CONNECT_OK:
+                # ...
+            elif status == WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND:
+                # ...
+            elif status == WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND:
+                # ...
+            elif status == WEECHAT_HOOK_CONNECT_CONNECTION_REFUSED:
+                # ...
+            elif status == WEECHAT_HOOK_CONNECT_PROXY_ERROR:
+                # ...
+            elif status == WEECHAT_HOOK_CONNECT_LOCAL_HOSTNAME_ERROR:
+                # ...
+            elif status == WEECHAT_HOOK_CONNECT_GNUTLS_INIT_ERROR:
+                # ...
+            elif status == WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR:
+                # ...
+            elif status == WEECHAT_HOOK_CONNECT_MEMORY_ERROR:
+                # ...
+            elif status == WEECHAT_HOOK_CONNECT_TIMEOUT:
+                # ...
+            elif status == WEECHAT_HOOK_CONNECT_SOCKET_ERROR:
+                # ...
+            return weechat.WEECHAT_RC_OK
+
+        hook = weechat.hook_connect("", "my.server.org", 1234, 1, 0, "",
+                                    "my_connect_cb", "")
+    """
     ...
 
 
 def hook_line(buffer_type: str, buffer_name: str, tags: str, callback: str, callback_data: str) -> str:
-    """`hook_line in WeeChat plugin API reference <https://weechat.org/doc/api/#_hook_line>`_"""
+    """`hook_line in WeeChat plugin API reference <https://weechat.org/doc/api/#_hook_line>`_
+    ::
+
+        # example
+        def my_line_cb(data: str, line: Dict[str, str]) -> Dict[str, str]:
+            # force a highlight on the line
+            return {"highlight": "1"}
+
+        # catch lines with tag "irc_join"
+        hook = weechat.hook_line("", "", "irc_join", "my_line_cb", "")
+    """
     ...
 
 
 def hook_print(buffer: str, tags: str, message: str, strip_colors: int, callback: str, callback_data: str) -> str:
-    """`hook_print in WeeChat plugin API reference <https://weechat.org/doc/api/#_hook_print>`_"""
+    """`hook_print in WeeChat plugin API reference <https://weechat.org/doc/api/#_hook_print>`_
+    ::
+
+        # example
+        def my_print_cb(data: str, buffer: str, date: str, tags: str, displayed: int, highlight: int, prefix: str, message: str) -> int:
+            if highlight:
+                # ...
+            return weechat.WEECHAT_RC_OK
+
+        # catch all messages, on all buffers, without color
+        hook = weechat.hook_print("", "", "", 1, "my_print_cb", "")
+    """
     ...
 
 
 def hook_signal(signal: str, callback: str, callback_data: str) -> str:
-    """`hook_signal in WeeChat plugin API reference <https://weechat.org/doc/api/#_hook_signal>`_"""
+    """`hook_signal in WeeChat plugin API reference <https://weechat.org/doc/api/#_hook_signal>`_
+    ::
+
+        # example
+        def my_signal_cb(data: str, signal: str, signal_data: str) -> int:
+            # ...
+            return weechat.WEECHAT_RC_OK
+
+        # catch signals "quit" and "upgrade"
+        hook = weechat.hook_signal("quit;upgrade", "my_signal_cb", "")
+    """
     ...
 
 
 def hook_signal_send(signal: str, type_data: str, signal_data: str) -> int:
-    """`hook_signal_send in WeeChat plugin API reference <https://weechat.org/doc/api/#_hook_signal_send>`_"""
+    """`hook_signal_send in WeeChat plugin API reference <https://weechat.org/doc/api/#_hook_signal_send>`_
+    ::
+
+        # example
+        rc = weechat.hook_signal_send("my_signal", weechat.WEECHAT_HOOK_SIGNAL_STRING, my_string)
+    """
     ...
 
 
 def hook_hsignal(signal: str, callback: str, callback_data: str) -> str:
-    """`hook_hsignal in WeeChat plugin API reference <https://weechat.org/doc/api/#_hook_hsignal>`_"""
+    """`hook_hsignal in WeeChat plugin API reference <https://weechat.org/doc/api/#_hook_hsignal>`_
+    ::
+
+        # example
+        def my_hsignal_cb(data: str, signal: str, hashtable: Dict[str, str]) -> int:
+            # ...
+            return weechat.WEECHAT_RC_OK
+
+        hook = weechat.hook_hsignal("test", "my_hsignal_cb", "")
+    """
     ...
 
 
 def hook_hsignal_send(signal: str, hashtable: Dict[str, str]) -> int:
-    """`hook_hsignal_send in WeeChat plugin API reference <https://weechat.org/doc/api/#_hook_hsignal_send>`_"""
+    """`hook_hsignal_send in WeeChat plugin API reference <https://weechat.org/doc/api/#_hook_hsignal_send>`_
+    ::
+
+        # example
+        rc = weechat.hook_hsignal_send("my_hsignal", {"key": "value"})
+    """
     ...
 
 
 def hook_config(option: str, callback: str, callback_data: str) -> str:
-    """`hook_config in WeeChat plugin API reference <https://weechat.org/doc/api/#_hook_config>`_"""
+    """`hook_config in WeeChat plugin API reference <https://weechat.org/doc/api/#_hook_config>`_
+    ::
+
+        # example
+        def my_config_cb(data: str, option: str, value: str) -> int:
+            # ...
+            return weechat.WEECHAT_RC_OK
+
+        # catch changes to option "weechat.look.item_time_format"
+        hook = weechat.hook_config("weechat.look.item_time_format", "my_config_cb", "")
+    """
     ...
 
 
 def hook_modifier(modifier: str, callback: str, callback_data: str) -> str:
-    """`hook_modifier in WeeChat plugin API reference <https://weechat.org/doc/api/#_hook_modifier>`_"""
+    """`hook_modifier in WeeChat plugin API reference <https://weechat.org/doc/api/#_hook_modifier>`_
+    ::
+
+        # example
+        def my_modifier_cb(data: str, modifier: str, modifier_data: str, string: str) -> str:
+            return "%s xxx" % string
+
+        hook = weechat.hook_modifier("weechat_print", "my_modifier_cb", "")
+    """
     ...
 
 
 def hook_modifier_exec(modifier: str, modifier_data: str, string: str) -> str:
-    """`hook_modifier_exec in WeeChat plugin API reference <https://weechat.org/doc/api/#_hook_modifier_exec>`_"""
+    """`hook_modifier_exec in WeeChat plugin API reference <https://weechat.org/doc/api/#_hook_modifier_exec>`_
+    ::
+
+        # example
+        weechat.hook_modifier_exec("my_modifier", my_data, my_string)
+    """
     ...
 
 
 def hook_info(info_name: str, description: str, args_description: str,
               callback: str, callback_data: str) -> str:
-    """`hook_info in WeeChat plugin API reference <https://weechat.org/doc/api/#_hook_info>`_"""
+    """`hook_info in WeeChat plugin API reference <https://weechat.org/doc/api/#_hook_info>`_
+    ::
+
+        # example
+        def my_info_cb(data: str, info_name: str, arguments: str) -> str:
+            return "some_info"
+
+        hook = weechat.hook_info("my_info", "Some info", "Info about arguments",
+                                 "my_info_cb", "")
+    """
     ...
 
 
 def hook_info_hashtable(info_name: str, description: str, args_description: str,
                         output_description: str, callback: str, callback_data: str) -> str:
-    """`hook_info_hashtable in WeeChat plugin API reference <https://weechat.org/doc/api/#_hook_info_hashtable>`_"""
+    """`hook_info_hashtable in WeeChat plugin API reference <https://weechat.org/doc/api/#_hook_info_hashtable>`_
+    ::
+
+        # example
+        def my_info_hashtable_cb(data: str, info_name: str, hashtable: Dict[str, str]) -> Dict[str, str]:
+            return {"test_key": "test_value"}
+
+        hook = weechat.hook_info_hashtable("my_info_hashtable", "Some info",
+                                           "Info about input hashtable",
+                                           "Info about output hashtable",
+                                           "my_info_hashtable_cb", "")
+    """
     ...
 
 
 def hook_infolist(infolist_name: str, description: str, pointer_description: str,
                   args_description: str, callback: str, callback_data: str) -> str:
-    """`hook_infolist in WeeChat plugin API reference <https://weechat.org/doc/api/#_hook_infolist>`_"""
+    """`hook_infolist in WeeChat plugin API reference <https://weechat.org/doc/api/#_hook_infolist>`_
+    ::
+
+        # example
+        def my_infolist_cb(data: str, infolist_name: str, pointer: str, arguments: str) -> str:
+            # build infolist
+            # ...
+            return my_infolist
+
+        hook = weechat.hook_infolist("my_infolist", "Infolist with some data",
+                                     "Info about pointer", "Info about arguments",
+                                     "my_infolist_cb", "")
+    """
     ...
 
 
 def hook_focus(area: str, callback: str, callback_data: str) -> str:
-    """`hook_focus in WeeChat plugin API reference <https://weechat.org/doc/api/#_hook_focus>`_"""
+    """`hook_focus in WeeChat plugin API reference <https://weechat.org/doc/api/#_hook_focus>`_
+    ::
+
+        # example
+        def my_focus_nicklist_cb(data: str, info: Dict[str, str]) -> Dict[str, str]:
+            # build dict
+            # ...
+            return my_dict
+
+        hook = weechat.hook_focus("buffer_nicklist", "my_focus_nicklist_cb", "")
+    """
     ...
 
 
 def hook_set(hook: str, property: str, value: str) -> int:
-    """`hook_set in WeeChat plugin API reference <https://weechat.org/doc/api/#_hook_set>`_"""
+    """`hook_set in WeeChat plugin API reference <https://weechat.org/doc/api/#_hook_set>`_
+    ::
+
+        # example
+        def my_process_cb(data: str, command: str, return_code: int, out: str, err: str) -> int:
+            # ...
+            return weechat.WEECHAT_RC_OK
+
+        hook = weechat.hook_process_hashtable("/path/to/command", {"stdin": "1"},
+                                              20000, "my_process_cb", "")
+        weechat.hook_set(hook, "stdin", "data sent to stdin of child process")
+        weechat.hook_set(hook, "stdin_close", "")  # optional
+    """
     ...
 
 
 def unhook(hook: str) -> int:
-    """`unhook in WeeChat plugin API reference <https://weechat.org/doc/api/#_unhook>`_"""
+    """`unhook in WeeChat plugin API reference <https://weechat.org/doc/api/#_unhook>`_
+    ::
+
+        # example
+        weechat.unhook(my_hook)
+    """
     ...
 
 
 def unhook_all() -> int:
-    """`unhook_all in WeeChat plugin API reference <https://weechat.org/doc/api/#_unhook_all>`_"""
+    """`unhook_all in WeeChat plugin API reference <https://weechat.org/doc/api/#_unhook_all>`_
+    ::
+
+        # example
+        weechat.unhook_all()
+    """
     ...
 
 
 def buffer_new(name: str, input_callback: str, input_callback_data: str,
                close_callback: str, close_callback_data: str) -> str:
-    """`buffer_new in WeeChat plugin API reference <https://weechat.org/doc/api/#_buffer_new>`_"""
+    """`buffer_new in WeeChat plugin API reference <https://weechat.org/doc/api/#_buffer_new>`_
+    ::
+
+        # example
+        def my_input_cb(data: str, buffer: str, input_data: str) -> int:
+            weechat.prnt(buffer, "Text: %s" % input_data)
+            return weechat.WEECHAT_RC_OK
+
+        def my_close_cb(data: str, buffer: str) -> int:
+            weechat.prnt("", "Buffer '%s' will be closed!" % weechat.buffer_get_string(buffer, "name"))
+            return weechat.WEECHAT_RC_OK
+
+        buffer = weechat.buffer_new("my_buffer", "my_input_cb", "", "my_close_cb", "")
+    """
     ...
 
 
 def buffer_new_props(name: str, properties: Dict[str, str],
                      input_callback: str, input_callback_data: str,
                      close_callback: str, close_callback_data: str) -> str:
-    """`buffer_new_props in WeeChat plugin API reference <https://weechat.org/doc/api/#_buffer_new_props>`_"""
+    """`buffer_new_props in WeeChat plugin API reference <https://weechat.org/doc/api/#_buffer_new_props>`_
+    ::
+
+        # example
+        def my_input_cb(data: str, buffer: str, input_data: str) -> int:
+            weechat.prnt(buffer, "Text: %s" % input_data)
+            return weechat.WEECHAT_RC_OK
+
+        def my_close_cb(data: str, buffer: str) -> int:
+            weechat.prnt("", "Buffer '%s' will be closed!" % weechat.buffer_get_string(buffer, "name"))
+            return weechat.WEECHAT_RC_OK
+
+        properties = {
+            "type": "free",                    # buffer with free content
+            "localvar_set_no_log": "1",        # no logging on this buffer
+            "key_bind_meta-c": "/my_command",  # bind key alt-c on this buffer
+        }
+        buffer = weechat.buffer_new_props("my_buffer", properties, "my_input_cb", "", "my_close_cb", "")
+    """
     ...
 
 
 def current_buffer() -> str:
-    """`current_buffer in WeeChat plugin API reference <https://weechat.org/doc/api/#_current_buffer>`_"""
+    """`current_buffer in WeeChat plugin API reference <https://weechat.org/doc/api/#_current_buffer>`_
+    ::
+
+        # example
+        weechat.prnt(weechat.current_buffer(), "Text on current buffer")
+    """
     ...
 
 
 def buffer_search(plugin: str, name: str) -> str:
-    """`buffer_search in WeeChat plugin API reference <https://weechat.org/doc/api/#_buffer_search>`_"""
+    """`buffer_search in WeeChat plugin API reference <https://weechat.org/doc/api/#_buffer_search>`_
+    ::
+
+        # example
+        buffer = weechat.buffer_search("my_plugin", "my_buffer")
+    """
     ...
 
 
 def buffer_search_main() -> str:
-    """`buffer_search_main in WeeChat plugin API reference <https://weechat.org/doc/api/#_buffer_search_main>`_"""
+    """`buffer_search_main in WeeChat plugin API reference <https://weechat.org/doc/api/#_buffer_search_main>`_
+    ::
+
+        # example
+        buffer = weechat.buffer_search_main()
+    """
     ...
 
 
 def buffer_clear(buffer: str) -> int:
-    """`buffer_clear in WeeChat plugin API reference <https://weechat.org/doc/api/#_buffer_clear>`_"""
+    """`buffer_clear in WeeChat plugin API reference <https://weechat.org/doc/api/#_buffer_clear>`_
+    ::
+
+        # example
+        buffer = weechat.buffer_search("my_plugin", "my_buffer")
+        if buffer:
+            weechat.buffer_clear(buffer)
+    """
     ...
 
 
 def buffer_close(buffer: str) -> int:
-    """`buffer_close in WeeChat plugin API reference <https://weechat.org/doc/api/#_buffer_close>`_"""
+    """`buffer_close in WeeChat plugin API reference <https://weechat.org/doc/api/#_buffer_close>`_
+    ::
+
+        # example
+        buffer = weechat.buffer_new("my_buffer", "my_input_cb", "", "my_close_cb", "")
+        # ...
+        weechat.buffer_close(buffer)
+    """
     ...
 
 
 def buffer_merge(buffer: str, target_buffer: str) -> int:
-    """`buffer_merge in WeeChat plugin API reference <https://weechat.org/doc/api/#_buffer_merge>`_"""
+    """`buffer_merge in WeeChat plugin API reference <https://weechat.org/doc/api/#_buffer_merge>`_
+    ::
+
+        # example
+        # merge current buffer with WeeChat "core" buffer
+        weechat.buffer_merge(weechat.current_buffer(), weechat.buffer_search_main())
+    """
     ...
 
 
 def buffer_unmerge(buffer: str, number: int) -> int:
-    """`buffer_unmerge in WeeChat plugin API reference <https://weechat.org/doc/api/#_buffer_unmerge>`_"""
+    """`buffer_unmerge in WeeChat plugin API reference <https://weechat.org/doc/api/#_buffer_unmerge>`_
+    ::
+
+        # example
+        weechat.buffer_unmerge(weechat.current_buffer(), 1)
+    """
     ...
 
 
 def buffer_get_integer(buffer: str, property: str) -> int:
-    """`buffer_get_integer in WeeChat plugin API reference <https://weechat.org/doc/api/#_buffer_get_integer>`_"""
+    """`buffer_get_integer in WeeChat plugin API reference <https://weechat.org/doc/api/#_buffer_get_integer>`_
+    ::
+
+        # example
+        weechat.prnt("", "my buffer number is: %d" % weechat.buffer_get_integer(my_buffer, "number"))
+    """
     ...
 
 
 def buffer_get_string(buffer: str, property: str) -> str:
-    """`buffer_get_string in WeeChat plugin API reference <https://weechat.org/doc/api/#_buffer_get_string>`_"""
+    """`buffer_get_string in WeeChat plugin API reference <https://weechat.org/doc/api/#_buffer_get_string>`_
+    ::
+
+        # example
+        weechat.prnt("", "name / short name of buffer are: %s / %s"
+            % (weechat.buffer_get_string(my_buffer, "name"),
+            weechat.buffer_get_string(my_buffer, "short_name")))
+    """
     ...
 
 
 def buffer_get_pointer(buffer: str, property: str) -> str:
-    """`buffer_get_pointer in WeeChat plugin API reference <https://weechat.org/doc/api/#_buffer_get_pointer>`_"""
+    """`buffer_get_pointer in WeeChat plugin API reference <https://weechat.org/doc/api/#_buffer_get_pointer>`_
+    ::
+
+        # example
+        weechat.prnt("", "plugin pointer of my buffer: %s" % weechat.buffer_get_pointer(my_buffer, "plugin"))
+    """
     ...
 
 
 def buffer_set(buffer: str, property: str, value: str) -> int:
-    """`buffer_set in WeeChat plugin API reference <https://weechat.org/doc/api/#_buffer_set>`_"""
+    """`buffer_set in WeeChat plugin API reference <https://weechat.org/doc/api/#_buffer_set>`_
+    ::
+
+        # examples
+
+        # disable hotlist (for all buffers)
+        weechat.buffer_set("", "hotlist", "-")
+
+        # enable again hotlist
+        weechat.buffer_set("", "hotlist", "+")
+
+        # change buffer name
+        weechat.buffer_set(my_buffer, "name", "my_new_name")
+
+        # add new local variable "toto" with value "abc"
+        weechat.buffer_set(my_buffer, "localvar_set_toto", "abc")
+
+        # remove local variable "toto"
+        weechat.buffer_set(my_buffer, "localvar_del_toto", "")
+    """
     ...
 
 
 def buffer_string_replace_local_var(buffer: str, string: str) -> str:
-    """`buffer_string_replace_local_var in WeeChat plugin API reference <https://weechat.org/doc/api/#_buffer_string_replace_local_var>`_"""
+    """`buffer_string_replace_local_var in WeeChat plugin API reference <https://weechat.org/doc/api/#_buffer_string_replace_local_var>`_
+    ::
+
+        # example
+        weechat.buffer_set(my_buffer, "localvar_set_toto", "abc")
+        str = weechat.buffer_string_replace_local_var(my_buffer, "test with $toto")
+        # str contains "test with abc"
+    """
     ...
 
 
 def buffer_match_list(buffer: str, string: str) -> int:
-    """`buffer_match_list in WeeChat plugin API reference <https://weechat.org/doc/api/#_buffer_match_list>`_"""
+    """`buffer_match_list in WeeChat plugin API reference <https://weechat.org/doc/api/#_buffer_match_list>`_
+    ::
+
+        # example
+        buffer = weechat.buffer_search("irc", "libera.#weechat")
+        if buffer:
+            weechat.prnt("", "%d" % weechat.buffer_match_list(buffer, "*"))                    # 1
+            weechat.prnt("", "%d" % weechat.buffer_match_list(buffer, "*,!*#weechat*"))        # 0
+            weechat.prnt("", "%d" % weechat.buffer_match_list(buffer, "irc.libera.*"))       # 1
+            weechat.prnt("", "%d" % weechat.buffer_match_list(buffer, "irc.oftc.*,python.*"))  # 0
+    """
     ...
 
 
 def current_window() -> str:
-    """`current_window in WeeChat plugin API reference <https://weechat.org/doc/api/#_current_window>`_"""
+    """`current_window in WeeChat plugin API reference <https://weechat.org/doc/api/#_current_window>`_
+    ::
+
+        # example
+        current_window = weechat.current_window()
+    """
     ...
 
 
 def window_search_with_buffer(buffer: str) -> str:
-    """`window_search_with_buffer in WeeChat plugin API reference <https://weechat.org/doc/api/#_window_search_with_buffer>`_"""
+    """`window_search_with_buffer in WeeChat plugin API reference <https://weechat.org/doc/api/#_window_search_with_buffer>`_
+    ::
+
+        # example
+        weechat.prnt("", "window displaying core buffer: %s"
+            % weechat.window_search_with_buffer(weechat.buffer_search_main()))
+    """
     ...
 
 
 def window_get_integer(window: str, property: str) -> int:
-    """`window_get_integer in WeeChat plugin API reference <https://weechat.org/doc/api/#_window_get_integer>`_"""
+    """`window_get_integer in WeeChat plugin API reference <https://weechat.org/doc/api/#_window_get_integer>`_
+    ::
+
+        # example
+        weechat.prnt("", "current window is at position (x,y): (%d,%d)"
+            % (weechat.window_get_integer(weechat.current_window(), "win_x"),
+            weechat.window_get_integer(weechat.current_window(), "win_y")))
+    """
     ...
 
 
 def window_get_string(window: str, property: str) -> str:
-    """`window_get_string in WeeChat plugin API reference <https://weechat.org/doc/api/#_window_get_string>`_"""
+    """`window_get_string in WeeChat plugin API reference <https://weechat.org/doc/api/#_window_get_string>`_
+    """
     ...
 
 
 def window_get_pointer(window: str, property: str) -> str:
-    """`window_get_pointer in WeeChat plugin API reference <https://weechat.org/doc/api/#_window_get_pointer>`_"""
+    """`window_get_pointer in WeeChat plugin API reference <https://weechat.org/doc/api/#_window_get_pointer>`_
+    ::
+
+        # example
+        weechat.prnt("", "buffer displayed in current window: %s"
+            % weechat.window_get_pointer(weechat.current_window(), "buffer"))
+    """
     ...
 
 
 def window_set_title(title: str) -> int:
-    """`window_set_title in WeeChat plugin API reference <https://weechat.org/doc/api/#_window_set_title>`_"""
+    """`window_set_title in WeeChat plugin API reference <https://weechat.org/doc/api/#_window_set_title>`_
+    ::
+
+        # example
+        weechat.window_set_title("new title here")
+    """
     ...
 
 
 def nicklist_add_group(buffer: str, parent_group: str, name: str, color: str, visible: int) -> str:
-    """`nicklist_add_group in WeeChat plugin API reference <https://weechat.org/doc/api/#_nicklist_add_group>`_"""
+    """`nicklist_add_group in WeeChat plugin API reference <https://weechat.org/doc/api/#_nicklist_add_group>`_
+    ::
+
+        # example
+        group = weechat.nicklist_add_group(my_buffer, my_parent_group, "test_group",
+            "weechat.color.nicklist_group", 1)
+    """
     ...
 
 
 def nicklist_search_group(buffer: str, from_group: str, name: str) -> str:
-    """`nicklist_search_group in WeeChat plugin API reference <https://weechat.org/doc/api/#_nicklist_search_group>`_"""
+    """`nicklist_search_group in WeeChat plugin API reference <https://weechat.org/doc/api/#_nicklist_search_group>`_
+    ::
+
+        # example
+        group = weechat.nicklist_search_group(my_buffer, "", "test_group")
+    """
     ...
 
 
 def nicklist_add_nick(buffer: str, group: str, name: str, color: str, prefix: str, prefix_color: str, visible: int) -> str:
-    """`nicklist_add_nick in WeeChat plugin API reference <https://weechat.org/doc/api/#_nicklist_add_nick>`_"""
+    """`nicklist_add_nick in WeeChat plugin API reference <https://weechat.org/doc/api/#_nicklist_add_nick>`_
+    ::
+
+        # example
+        if nick_away:
+            color = "weechat.color.nicklist_away"
+        else:
+            color = "bar_fg"
+        nick = weechat.nicklist_add_nick(my_buffer, my_group, "test_nick", color, "@", "lightgreen", 1)
+    """
     ...
 
 
 def nicklist_search_nick(buffer: str, from_group: str, name: str) -> str:
-    """`nicklist_search_nick in WeeChat plugin API reference <https://weechat.org/doc/api/#_nicklist_search_nick>`_"""
+    """`nicklist_search_nick in WeeChat plugin API reference <https://weechat.org/doc/api/#_nicklist_search_nick>`_
+    ::
+
+        # example
+        nick = weechat.nicklist_search_nick(my_buffer, "", "test_nick")
+    """
     ...
 
 
 def nicklist_remove_group(buffer: str, group: str) -> int:
-    """`nicklist_remove_group in WeeChat plugin API reference <https://weechat.org/doc/api/#_nicklist_remove_group>`_"""
+    """`nicklist_remove_group in WeeChat plugin API reference <https://weechat.org/doc/api/#_nicklist_remove_group>`_
+    ::
+
+        # example
+        weechat.nicklist_remove_group(my_buffer, my_group)
+    """
     ...
 
 
 def nicklist_remove_nick(buffer: str, nick: str) -> int:
-    """`nicklist_remove_nick in WeeChat plugin API reference <https://weechat.org/doc/api/#_nicklist_remove_nick>`_"""
+    """`nicklist_remove_nick in WeeChat plugin API reference <https://weechat.org/doc/api/#_nicklist_remove_nick>`_
+    ::
+
+        # example
+        weechat.nicklist_remove_nick(my_buffer, my_nick)
+    """
     ...
 
 
 def nicklist_remove_all(buffer: str) -> int:
-    """`nicklist_remove_all in WeeChat plugin API reference <https://weechat.org/doc/api/#_nicklist_remove_all>`_"""
+    """`nicklist_remove_all in WeeChat plugin API reference <https://weechat.org/doc/api/#_nicklist_remove_all>`_
+    ::
+
+        # example
+        weechat.nicklist_remove_all(my_buffer)
+    """
     ...
 
 
 def nicklist_group_get_integer(buffer: str, group: str, property: str) -> int:
-    """`nicklist_group_get_integer in WeeChat plugin API reference <https://weechat.org/doc/api/#_nicklist_group_get_integer>`_"""
+    """`nicklist_group_get_integer in WeeChat plugin API reference <https://weechat.org/doc/api/#_nicklist_group_get_integer>`_
+    ::
+
+        # example
+        visible = weechat.nicklist_group_get_integer(buffer, group, "visible")
+    """
     ...
 
 
 def nicklist_group_get_string(buffer: str, group: str, property: str) -> str:
-    """`nicklist_group_get_string in WeeChat plugin API reference <https://weechat.org/doc/api/#_nicklist_group_get_string>`_"""
+    """`nicklist_group_get_string in WeeChat plugin API reference <https://weechat.org/doc/api/#_nicklist_group_get_string>`_
+    ::
+
+        # example
+        color = weechat.nicklist_group_get_string(buffer, group, "color")
+    """
     ...
 
 
 def nicklist_group_get_pointer(buffer: str, group: str, property: str) -> str:
-    """`nicklist_group_get_pointer in WeeChat plugin API reference <https://weechat.org/doc/api/#_nicklist_group_get_pointer>`_"""
+    """`nicklist_group_get_pointer in WeeChat plugin API reference <https://weechat.org/doc/api/#_nicklist_group_get_pointer>`_
+    ::
+
+        # example
+        parent = weechat.nicklist_group_get_pointer(buffer, group, "parent")
+    """
     ...
 
 
 def nicklist_group_set(buffer: str, group: str, property: str, value: str) -> int:
-    """`nicklist_group_set in WeeChat plugin API reference <https://weechat.org/doc/api/#_nicklist_group_set>`_"""
+    """`nicklist_group_set in WeeChat plugin API reference <https://weechat.org/doc/api/#_nicklist_group_set>`_
+    ::
+
+        # examples
+
+        # change group color to "bar_fg"
+        weechat.nicklist_group_set(buffer, group, "color", "bar_fg")
+
+        # change group color to yellow
+        weechat.nicklist_group_set(buffer, group, "color", "yellow")
+
+        # hide group in nicklist
+        weechat.nicklist_group_set(buffer, group, "visible", "0")
+    """
     ...
 
 
 def nicklist_nick_get_integer(buffer: str, nick: str, property: str) -> int:
-    """`nicklist_nick_get_integer in WeeChat plugin API reference <https://weechat.org/doc/api/#_nicklist_nick_get_integer>`_"""
+    """`nicklist_nick_get_integer in WeeChat plugin API reference <https://weechat.org/doc/api/#_nicklist_nick_get_integer>`_
+    ::
+
+        # example
+        visible = weechat.nicklist_nick_get_integer(buffer, nick, "visible")
+    """
     ...
 
 
 def nicklist_nick_get_string(buffer: str, nick: str, property: str) -> str:
-    """`nicklist_nick_get_string in WeeChat plugin API reference <https://weechat.org/doc/api/#_nicklist_nick_get_string>`_"""
+    """`nicklist_nick_get_string in WeeChat plugin API reference <https://weechat.org/doc/api/#_nicklist_nick_get_string>`_
+    ::
+
+        # example
+        color = weechat.nicklist_nick_get_string(buffer, nick, "color")
+    """
     ...
 
 
 def nicklist_nick_get_pointer(buffer: str, nick: str, property: str) -> str:
-    """`nicklist_nick_get_pointer in WeeChat plugin API reference <https://weechat.org/doc/api/#_nicklist_nick_get_pointer>`_"""
+    """`nicklist_nick_get_pointer in WeeChat plugin API reference <https://weechat.org/doc/api/#_nicklist_nick_get_pointer>`_
+    ::
+
+        # example
+        group = weechat.nicklist_nick_get_pointer(buffer, nick, "group")
+    """
     ...
 
 
 def nicklist_nick_set(buffer: str, nick: str, property: str, value: str) -> int:
-    """`nicklist_nick_set in WeeChat plugin API reference <https://weechat.org/doc/api/#_nicklist_nick_set>`_"""
+    """`nicklist_nick_set in WeeChat plugin API reference <https://weechat.org/doc/api/#_nicklist_nick_set>`_
+    ::
+
+        # examples
+
+        # change nick color to cyan
+        weechat.nicklist_nick_set(buffer, nick, "color", "cyan")
+
+        # change prefix to "+"
+        weechat.nicklist_nick_set(buffer, nick, "prefix", "+")
+
+        # change prefix color to yellow
+        weechat.nicklist_nick_set(buffer, nick, "prefix_color", "yellow")
+
+        # hide nick in nicklist
+        weechat.nicklist_nick_set(buffer, nick, "visible", "0")
+    """
     ...
 
 
 def bar_item_search(name: str) -> str:
-    """`bar_item_search in WeeChat plugin API reference <https://weechat.org/doc/api/#_bar_item_search>`_"""
+    """`bar_item_search in WeeChat plugin API reference <https://weechat.org/doc/api/#_bar_item_search>`_
+    ::
+
+        # example
+        bar_item = weechat.bar_item_search("myitem")
+    """
     ...
 
 
 def bar_item_new(name: str, build_callback: str, build_callback_data: str) -> str:
-    """`bar_item_new in WeeChat plugin API reference <https://weechat.org/doc/api/#_bar_item_new>`_"""
+    """`bar_item_new in WeeChat plugin API reference <https://weechat.org/doc/api/#_bar_item_new>`_
+    ::
+
+        # example (callback without "buffer" and "extra_info")
+        def my_build_callback(data: str, item: str, window: str) -> str:
+            return "my content"
+
+        bar_item = weechat.bar_item_new("myitem", "my_build_callback", "")
+
+        # example (callback with all arguments, for WeeChat ≥ 0.4.2)
+        def my_build_callback2(data: str, item: str, window: str, buffer: str, extra_info: Dict[str, str]) -> str:
+            return "my content"
+
+        bar_item2 = weechat.bar_item_new("(extra)myitem2", "my_build_callback2", "")  # WeeChat ≥ 0.4.2
+    """
     ...
 
 
 def bar_item_update(name: str) -> int:
-    """`bar_item_update in WeeChat plugin API reference <https://weechat.org/doc/api/#_bar_item_update>`_"""
+    """`bar_item_update in WeeChat plugin API reference <https://weechat.org/doc/api/#_bar_item_update>`_
+    ::
+
+        # example
+        weechat.bar_item_update("myitem")
+    """
     ...
 
 
 def bar_item_remove(item: str) -> int:
-    """`bar_item_remove in WeeChat plugin API reference <https://weechat.org/doc/api/#_bar_item_remove>`_"""
+    """`bar_item_remove in WeeChat plugin API reference <https://weechat.org/doc/api/#_bar_item_remove>`_
+    ::
+
+        # example
+        weechat.bar_item_remove(myitem)
+    """
     ...
 
 
 def bar_search(name: str) -> str:
-    """`bar_search in WeeChat plugin API reference <https://weechat.org/doc/api/#_bar_search>`_"""
+    """`bar_search in WeeChat plugin API reference <https://weechat.org/doc/api/#_bar_search>`_
+    ::
+
+        # example
+        bar = weechat.bar_search("mybar")
+    """
     ...
 
 
@@ -815,272 +2039,616 @@ def bar_new(name: str, hidden: str, priority: str, type: str, condition: str, po
             filling_top_bottom: str, filling_left_right: str, size: str, size_max: str,
             color_fg: str, color_delim: str, color_bg: str, color_bg_inactive: str,
             separator: str, items: str) -> str:
-    """`bar_new in WeeChat plugin API reference <https://weechat.org/doc/api/#_bar_new>`_"""
+    """`bar_new in WeeChat plugin API reference <https://weechat.org/doc/api/#_bar_new>`_
+    ::
+
+        # example
+        bar = weechat.bar_new("mybar", "off", "100", "window", "", "top", "horizontal", "vertical",
+            "0", "5", "default", "cyan", "blue", "darkgray", "off", "time,buffer_number+buffer_name")
+    """
     ...
 
 
 def bar_set(bar: str, property: str, value: str) -> int:
-    """`bar_set in WeeChat plugin API reference <https://weechat.org/doc/api/#_bar_set>`_"""
+    """`bar_set in WeeChat plugin API reference <https://weechat.org/doc/api/#_bar_set>`_
+    ::
+
+        # example
+        weechat.bar_set(my_bar, "position", "bottom")
+    """
     ...
 
 
 def bar_update(name: str) -> int:
-    """`bar_update in WeeChat plugin API reference <https://weechat.org/doc/api/#_bar_update>`_"""
+    """`bar_update in WeeChat plugin API reference <https://weechat.org/doc/api/#_bar_update>`_
+    ::
+
+        # example
+        weechat.bar_update("mybar")
+    """
     ...
 
 
 def bar_remove(bar: str) -> int:
-    """`bar_remove in WeeChat plugin API reference <https://weechat.org/doc/api/#_bar_remove>`_"""
+    """`bar_remove in WeeChat plugin API reference <https://weechat.org/doc/api/#_bar_remove>`_
+    ::
+
+        # example
+        weechat.bar_remove(my_bar)
+    """
     ...
 
 
 def command(buffer: str, command: str) -> int:
-    """`command in WeeChat plugin API reference <https://weechat.org/doc/api/#_command>`_"""
+    """`command in WeeChat plugin API reference <https://weechat.org/doc/api/#_command>`_
+    ::
+
+        # example
+        rc = weechat.command(weechat.buffer_search("irc", "libera.#weechat"), "/whois FlashCode")
+    """
     ...
 
 
 def command_options(buffer: str, command: str, options: Dict[str, str]) -> int:
-    """`command_options in WeeChat plugin API reference <https://weechat.org/doc/api/#_command_options>`_"""
+    """`command_options in WeeChat plugin API reference <https://weechat.org/doc/api/#_command_options>`_
+    ::
+
+        # example: allow any command except /exec
+        rc = weechat.command("", "/some_command arguments", {"commands": "*,!exec"})
+    """
     ...
 
 
 def completion_new(buffer: str) -> str:
-    """`completion_new in WeeChat plugin API reference <https://weechat.org/doc/api/#_completion_new>`_"""
+    """`completion_new in WeeChat plugin API reference <https://weechat.org/doc/api/#_completion_new>`_
+    ::
+
+        # example
+        completion = weechat.completion_new(weechat.buffer_search_main())
+    """
     ...
 
 
 def completion_search(completion: str, data: str, position: int, direction: int) -> int:
-    """`completion_search in WeeChat plugin API reference <https://weechat.org/doc/api/#_completion_search>`_"""
+    """`completion_search in WeeChat plugin API reference <https://weechat.org/doc/api/#_completion_search>`_
+    ::
+
+        # example
+        completion = weechat.completion_new(weechat.buffer_search_main())
+        if weechat.completion_search(completion, "/help filt", 10, 1):
+            # ...
+    """
     ...
 
 
 def completion_get_string(completion: str, property: str) -> str:
-    """`completion_get_string in WeeChat plugin API reference <https://weechat.org/doc/api/#_completion_get_string>`_"""
+    """`completion_get_string in WeeChat plugin API reference <https://weechat.org/doc/api/#_completion_get_string>`_
+    ::
+
+        # example
+        def my_completion_cb(data: str, completion_item: str, buffer: str, completion: str) -> int:
+            # get arguments of command
+            args = weechat.completion_get_string(completion, "args")
+            # completion depending on args
+            # ...
+            return weechat.WEECHAT_RC_OK
+    """
     ...
 
 
 def completion_list_add(completion: str, word: str, nick_completion: int, where: str) -> int:
-    """`completion_list_add in WeeChat plugin API reference <https://weechat.org/doc/api/#_completion_list_add>`_"""
+    """`completion_list_add in WeeChat plugin API reference <https://weechat.org/doc/api/#_completion_list_add>`_
+    ::
+
+        # example: see function hook_completion
+    """
     ...
 
 
 def completion_free(completion: str) -> int:
-    """`completion_free in WeeChat plugin API reference <https://weechat.org/doc/api/#_completion_free>`_"""
+    """`completion_free in WeeChat plugin API reference <https://weechat.org/doc/api/#_completion_free>`_
+    ::
+
+        # example
+        weechat.completion_free(completion)
+    """
     ...
 
 
 def info_get(info_name: str, arguments: str) -> str:
-    """`info_get in WeeChat plugin API reference <https://weechat.org/doc/api/#_info_get>`_"""
+    """`info_get in WeeChat plugin API reference <https://weechat.org/doc/api/#_info_get>`_
+    ::
+
+        # example
+        weechat.prnt("", "Current WeeChat version is: %s (compiled on %s)"
+            % (weechat.info_get("version", ""), weechat.info_get("date", ""))
+        weechat.prnt("", "WeeChat config directory is: %s" % weechat.info_get("weechat_config_dir", ""))
+    """
     ...
 
 
 def info_get_hashtable(info_name: str, dict_in: Dict[str, str]) -> Dict[str, str]:
-    """`info_get_hashtable in WeeChat plugin API reference <https://weechat.org/doc/api/#_info_get_hashtable>`_"""
+    """`info_get_hashtable in WeeChat plugin API reference <https://weechat.org/doc/api/#_info_get_hashtable>`_
+    ::
+
+        # example
+        dict_in = {"message": ":nick!user@host PRIVMSG #weechat :message here"}
+        weechat.prnt("", "message parsed: %s"
+                     % weechat.info_get_hashtable("irc_message_parse", dict_in))
+    """
     ...
 
 
 def infolist_new() -> str:
-    """`infolist_new in WeeChat plugin API reference <https://weechat.org/doc/api/#_infolist_new>`_"""
+    """`infolist_new in WeeChat plugin API reference <https://weechat.org/doc/api/#_infolist_new>`_
+    ::
+
+        # example
+        infolist = weechat.infolist_new()
+    """
     ...
 
 
 def infolist_new_item(infolist: str) -> str:
-    """`infolist_new_item in WeeChat plugin API reference <https://weechat.org/doc/api/#_infolist_new_item>`_"""
+    """`infolist_new_item in WeeChat plugin API reference <https://weechat.org/doc/api/#_infolist_new_item>`_
+    ::
+
+        # example
+        item = weechat.infolist_new_item(infolist)
+    """
     ...
 
 
 def infolist_new_var_integer(item: str, name: str, value: int) -> str:
-    """`infolist_new_var_integer in WeeChat plugin API reference <https://weechat.org/doc/api/#_infolist_new_var_integer>`_"""
+    """`infolist_new_var_integer in WeeChat plugin API reference <https://weechat.org/doc/api/#_infolist_new_var_integer>`_
+    ::
+
+        # example
+        var = weechat.infolist_new_var_integer(item, "my_integer", 123)
+    """
     ...
 
 
 def infolist_new_var_string(item: str, name: str, value: str) -> str:
-    """`infolist_new_var_string in WeeChat plugin API reference <https://weechat.org/doc/api/#_infolist_new_var_string>`_"""
+    """`infolist_new_var_string in WeeChat plugin API reference <https://weechat.org/doc/api/#_infolist_new_var_string>`_
+    ::
+
+        # example
+        var = weechat.infolist_new_var_string(item, "my_string", "value")
+    """
     ...
 
 
 def infolist_new_var_pointer(item: str, name: str, pointer: str) -> str:
-    """`infolist_new_var_pointer in WeeChat plugin API reference <https://weechat.org/doc/api/#_infolist_new_var_pointer>`_"""
+    """`infolist_new_var_pointer in WeeChat plugin API reference <https://weechat.org/doc/api/#_infolist_new_var_pointer>`_
+    ::
+
+        # example
+        var = weechat.infolist_new_var_pointer(item, "my_pointer", pointer)
+    """
     ...
 
 
 def infolist_new_var_time(item: str, name: str, time: int) -> str:
-    """`infolist_new_var_time in WeeChat plugin API reference <https://weechat.org/doc/api/#_infolist_new_var_time>`_"""
+    """`infolist_new_var_time in WeeChat plugin API reference <https://weechat.org/doc/api/#_infolist_new_var_time>`_
+    ::
+
+        # example
+        var = weechat.infolist_new_var_time(item, "my_time", int(time.time()))
+    """
     ...
 
 
 def infolist_get(infolist_name: str, pointer: str, arguments: str) -> str:
-    """`infolist_get in WeeChat plugin API reference <https://weechat.org/doc/api/#_infolist_get>`_"""
+    """`infolist_get in WeeChat plugin API reference <https://weechat.org/doc/api/#_infolist_get>`_
+    ::
+
+        # example
+        infolist = weechat.infolist_get("irc_server", "", "")
+    """
     ...
 
 
 def infolist_next(infolist: str) -> int:
-    """`infolist_next in WeeChat plugin API reference <https://weechat.org/doc/api/#_infolist_next>`_"""
+    """`infolist_next in WeeChat plugin API reference <https://weechat.org/doc/api/#_infolist_next>`_
+    ::
+
+        # example
+        rc = weechat.infolist_next(infolist)
+        if rc:
+            # read variables in item...
+        else:
+            # no more item available
+    """
     ...
 
 
 def infolist_prev(infolist: str) -> int:
-    """`infolist_prev in WeeChat plugin API reference <https://weechat.org/doc/api/#_infolist_prev>`_"""
+    """`infolist_prev in WeeChat plugin API reference <https://weechat.org/doc/api/#_infolist_prev>`_
+    ::
+
+        # example
+        rc = weechat.infolist_prev(infolist)
+        if rc:
+            # read variables in item...
+        else:
+            # no more item available
+    """
     ...
 
 
 def infolist_reset_item_cursor(infolist: str) -> int:
-    """`infolist_reset_item_cursor in WeeChat plugin API reference <https://weechat.org/doc/api/#_infolist_reset_item_cursor>`_"""
+    """`infolist_reset_item_cursor in WeeChat plugin API reference <https://weechat.org/doc/api/#_infolist_reset_item_cursor>`_
+    ::
+
+        # example
+        weechat.infolist_reset_item_cursor(infolist)
+    """
     ...
 
 
 def infolist_search_var(infolist: str, name: str) -> str:
-    """`infolist_search_var in WeeChat plugin API reference <https://weechat.org/doc/api/#_infolist_search_var>`_"""
+    """`infolist_search_var in WeeChat plugin API reference <https://weechat.org/doc/api/#_infolist_search_var>`_
+    ::
+
+        # example
+        if weechat.infolist_search_var(infolist, "name"):
+            # variable "name" exists
+            # ...
+    """
     ...
 
 
 def infolist_fields(infolist: str) -> str:
-    """`infolist_fields in WeeChat plugin API reference <https://weechat.org/doc/api/#_infolist_fields>`_"""
+    """`infolist_fields in WeeChat plugin API reference <https://weechat.org/doc/api/#_infolist_fields>`_
+    ::
+
+        # example
+        fields = weechat.infolist_fields(infolist)
+        # fields contains something like:
+        # "i:my_integer,s:my_string,p:my_pointer,b:my_buffer,t:my_time"
+    """
     ...
 
 
 def infolist_integer(infolist: str, var: str) -> int:
-    """`infolist_integer in WeeChat plugin API reference <https://weechat.org/doc/api/#_infolist_integer>`_"""
+    """`infolist_integer in WeeChat plugin API reference <https://weechat.org/doc/api/#_infolist_integer>`_
+    ::
+
+        # example
+        weechat.prnt("", "integer = %d" % weechat.infolist_integer(infolist, "my_integer"))
+    """
     ...
 
 
 def infolist_string(infolist: str, var: str) -> str:
-    """`infolist_string in WeeChat plugin API reference <https://weechat.org/doc/api/#_infolist_string>`_"""
+    """`infolist_string in WeeChat plugin API reference <https://weechat.org/doc/api/#_infolist_string>`_
+    ::
+
+        # example
+        weechat.prnt("", "string = %s" % weechat.infolist_string(infolist, "my_string"))
+    """
     ...
 
 
 def infolist_pointer(infolist: str, var: str) -> str:
-    """`infolist_pointer in WeeChat plugin API reference <https://weechat.org/doc/api/#_infolist_pointer>`_"""
+    """`infolist_pointer in WeeChat plugin API reference <https://weechat.org/doc/api/#_infolist_pointer>`_
+    ::
+
+        # example
+        weechat.prnt("", "pointer = 0x%s" % weechat.infolist_pointer(infolist, "my_pointer"))
+    """
     ...
 
 
 def infolist_time(infolist: str, var: str) -> int:
-    """`infolist_time in WeeChat plugin API reference <https://weechat.org/doc/api/#_infolist_time>`_"""
+    """`infolist_time in WeeChat plugin API reference <https://weechat.org/doc/api/#_infolist_time>`_
+    ::
+
+        # example
+        weechat.prnt("", "time = %ld" % weechat.infolist_time(infolist, "my_time"))
+    """
     ...
 
 
 def infolist_free(infolist: str) -> int:
-    """`infolist_free in WeeChat plugin API reference <https://weechat.org/doc/api/#_infolist_free>`_"""
+    """`infolist_free in WeeChat plugin API reference <https://weechat.org/doc/api/#_infolist_free>`_
+    ::
+
+        # example
+        weechat.infolist_free(infolist)
+    """
     ...
 
 
 def hdata_get(hdata_name: str) -> str:
-    """`hdata_get in WeeChat plugin API reference <https://weechat.org/doc/api/#_hdata_get>`_"""
+    """`hdata_get in WeeChat plugin API reference <https://weechat.org/doc/api/#_hdata_get>`_
+    ::
+
+        # example
+        hdata = weechat.hdata_get("irc_server")
+    """
     ...
 
 
 def hdata_get_var_offset(hdata: str, name: str) -> int:
-    """`hdata_get_var_offset in WeeChat plugin API reference <https://weechat.org/doc/api/#_hdata_get_var_offset>`_"""
+    """`hdata_get_var_offset in WeeChat plugin API reference <https://weechat.org/doc/api/#_hdata_get_var_offset>`_
+    ::
+
+        # example
+        offset = weechat.hdata_get_var_offset(hdata, "name")
+    """
     ...
 
 
 def hdata_get_var_type_string(hdata: str, name: str) -> str:
-    """`hdata_get_var_type_string in WeeChat plugin API reference <https://weechat.org/doc/api/#_hdata_get_var_type_string>`_"""
+    """`hdata_get_var_type_string in WeeChat plugin API reference <https://weechat.org/doc/api/#_hdata_get_var_type_string>`_
+    ::
+
+        # example
+        weechat.prnt("", "type = %s" % weechat.hdata_get_var_type_string("name"))
+    """
     ...
 
 
 def hdata_get_var_array_size(hdata: str, pointer: str, name: str) -> int:
-    """`hdata_get_var_array_size in WeeChat plugin API reference <https://weechat.org/doc/api/#_hdata_get_var_array_size>`_"""
+    """`hdata_get_var_array_size in WeeChat plugin API reference <https://weechat.org/doc/api/#_hdata_get_var_array_size>`_
+    ::
+
+        # example
+        array_size = weechat.hdata_get_var_array_size(hdata, pointer, "name")
+    """
     ...
 
 
 def hdata_get_var_array_size_string(hdata: str, pointer: str, name: str) -> str:
-    """`hdata_get_var_array_size_string in WeeChat plugin API reference <https://weechat.org/doc/api/#_hdata_get_var_array_size_string>`_"""
+    """`hdata_get_var_array_size_string in WeeChat plugin API reference <https://weechat.org/doc/api/#_hdata_get_var_array_size_string>`_
+    ::
+
+        # example
+        array_size = weechat.hdata_get_var_array_size_string(hdata, pointer, "name")
+    """
     ...
 
 
 def hdata_get_var_hdata(hdata: str, name: str) -> str:
-    """`hdata_get_var_hdata in WeeChat plugin API reference <https://weechat.org/doc/api/#_hdata_get_var_hdata>`_"""
+    """`hdata_get_var_hdata in WeeChat plugin API reference <https://weechat.org/doc/api/#_hdata_get_var_hdata>`_
+    ::
+
+        # example
+        weechat.prnt("", "hdata = %s" % weechat.hdata_get_var_hdata(hdata, "name"))
+    """
     ...
 
 
 def hdata_get_list(hdata: str, name: str) -> str:
-    """`hdata_get_list in WeeChat plugin API reference <https://weechat.org/doc/api/#_hdata_get_list>`_"""
+    """`hdata_get_list in WeeChat plugin API reference <https://weechat.org/doc/api/#_hdata_get_list>`_
+    ::
+
+        # example
+        hdata = weechat.hdata_get("buffer")
+        buffers = weechat.hdata_get_list(hdata, "gui_buffers")
+    """
     ...
 
 
 def hdata_check_pointer(hdata: str, list: str, pointer: str) -> int:
-    """`hdata_check_pointer in WeeChat plugin API reference <https://weechat.org/doc/api/#_hdata_check_pointer>`_"""
+    """`hdata_check_pointer in WeeChat plugin API reference <https://weechat.org/doc/api/#_hdata_check_pointer>`_
+    ::
+
+        # example
+        hdata = weechat.hdata_get("buffer")
+        if weechat.hdata_check_pointer(hdata, weechat.hdata_get_list(hdata, "gui_buffers"), ptr_buffer):
+            # valid pointer
+            # ...
+        else:
+            # invalid pointer
+            # ...
+    """
     ...
 
 
 def hdata_move(hdata: str, pointer: str, count: int) -> str:
-    """`hdata_move in WeeChat plugin API reference <https://weechat.org/doc/api/#_hdata_move>`_"""
+    """`hdata_move in WeeChat plugin API reference <https://weechat.org/doc/api/#_hdata_move>`_
+    ::
+
+        # example
+        hdata = weechat.hdata_get("buffer")
+        buffer = weechat.buffer_search_main()
+
+        # move to next buffer, 2 times
+        buffer = weechat.hdata_move(hdata, buffer, 2)
+
+        # move to previous buffer
+        if buffer:
+            buffer = weechat.hdata_move(hdata, buffer, -1)
+    """
     ...
 
 
 def hdata_search(hdata: str, pointer: str, search: str,
                  pointers: Dict[str, str], extra_vars: Dict[str, str], options: Dict[str, str],
                  count: int) -> str:
-    """`hdata_search in WeeChat plugin API reference <https://weechat.org/doc/api/#_hdata_search>`_"""
+    """`hdata_search in WeeChat plugin API reference <https://weechat.org/doc/api/#_hdata_search>`_
+    ::
+
+        # example
+        hdata = weechat.hdata_get("irc_server")
+        servers = weechat.hdata_get_list(hdata, "irc_servers")
+
+        # search irc server with name "libera"
+        server = weechat.hdata_search(hdata, servers, "${irc_server.name} == ${server_name}",
+                                      {}, {"server_name": "libera"}, {}, 1)
+        if server:
+            # ...
+    """
     ...
 
 
 def hdata_char(hdata: str, pointer: str, name: str) -> int:
-    """`hdata_char in WeeChat plugin API reference <https://weechat.org/doc/api/#_hdata_char>`_"""
+    """`hdata_char in WeeChat plugin API reference <https://weechat.org/doc/api/#_hdata_char>`_
+    ::
+
+        # example
+        weechat.prnt("", "letter = %c" % weechat.hdata_char(hdata, pointer, "letter"))
+    """
     ...
 
 
 def hdata_integer(hdata: str, pointer: str, name: str) -> int:
-    """`hdata_integer in WeeChat plugin API reference <https://weechat.org/doc/api/#_hdata_integer>`_"""
+    """`hdata_integer in WeeChat plugin API reference <https://weechat.org/doc/api/#_hdata_integer>`_
+    ::
+
+        # example
+        hdata = weechat.hdata_get("buffer")
+        buffer = weechat.buffer_search_main()
+        weechat.prnt("", "number = %d" % weechat.hdata_integer(hdata, buffer, "number"))
+    """
     ...
 
 
 def hdata_long(hdata: str, pointer: str, name: str) -> int:
-    """`hdata_long in WeeChat plugin API reference <https://weechat.org/doc/api/#_hdata_long>`_"""
+    """`hdata_long in WeeChat plugin API reference <https://weechat.org/doc/api/#_hdata_long>`_
+    ::
+
+        # example
+        weechat.prnt("", "longvar = %ld" % weechat.hdata_long(hdata, pointer, "longvar"))
+    """
     ...
 
 
 def hdata_string(hdata: str, pointer: str, name: str) -> str:
-    """`hdata_string in WeeChat plugin API reference <https://weechat.org/doc/api/#_hdata_string>`_"""
+    """`hdata_string in WeeChat plugin API reference <https://weechat.org/doc/api/#_hdata_string>`_
+    ::
+
+        # example
+        hdata = weechat.hdata_get("buffer")
+        buffer = weechat.buffer_search_main()
+        weechat.prnt("", "name = %s" % weechat.hdata_string(hdata, buffer, "name"))
+    """
     ...
 
 
 def hdata_pointer(hdata: str, pointer: str, name: str) -> str:
-    """`hdata_pointer in WeeChat plugin API reference <https://weechat.org/doc/api/#_hdata_pointer>`_"""
+    """`hdata_pointer in WeeChat plugin API reference <https://weechat.org/doc/api/#_hdata_pointer>`_
+    ::
+
+        # example
+        hdata = weechat.hdata_get("buffer")
+        buffer = weechat.buffer_search_main()
+        weechat.prnt("", "lines = %lx" % weechat.hdata_pointer(hdata, buffer, "lines"))
+    """
     ...
 
 
 def hdata_time(hdata: str, pointer: str, name: str) -> int:
-    """`hdata_time in WeeChat plugin API reference <https://weechat.org/doc/api/#_hdata_time>`_"""
+    """`hdata_time in WeeChat plugin API reference <https://weechat.org/doc/api/#_hdata_time>`_
+    ::
+
+        # example
+        buf = weechat.buffer_search_main()
+        ptr = weechat.hdata_pointer(weechat.hdata_get("buffer"), buf, "lines")
+        if ptr:
+            ptr = weechat.hdata_pointer(weechat.hdata_get("lines"), ptr, "first_line")
+            if ptr:
+                ptr = weechat.hdata_pointer(weechat.hdata_get("line"), ptr, "data")
+                if ptr:
+                    date = weechat.hdata_time(weechat.hdata_get("line_data"), ptr, "date")
+                    weechat.prnt("", "time of first line displayed = %s" % time.strftime("%F %T", time.localtime(int(date))))
+    """
     ...
 
 
 def hdata_hashtable(hdata: str, pointer: str, name: str) -> Dict[str, str]:
-    """`hdata_hashtable in WeeChat plugin API reference <https://weechat.org/doc/api/#_hdata_hashtable>`_"""
+    """`hdata_hashtable in WeeChat plugin API reference <https://weechat.org/doc/api/#_hdata_hashtable>`_
+    ::
+
+        # example
+        hdata = weechat.hdata_get("buffer")
+        buffer = weechat.buffer_search_main()
+        hash = weechat.hdata_hashtable(hdata, buffer, "local_variables")
+        weechat.prnt("", "local variables in core buffer:")
+        for key in hash:
+            weechat.prnt("", "  %s == %s" % (key, hash[key]))
+    """
     ...
 
 
 def hdata_compare(hdata: str, pointer1: str, pointer2: str, name: str, case_sensitive: int) -> int:
-    """`hdata_compare in WeeChat plugin API reference <https://weechat.org/doc/api/#_hdata_compare>`_"""
+    """`hdata_compare in WeeChat plugin API reference <https://weechat.org/doc/api/#_hdata_compare>`_
+    ::
+
+        # example
+        hdata = weechat.hdata_get("buffer")
+        buffer1 = weechat.buffer_search("irc", "libera.#weechat")
+        buffer2 = weechat.buffer_search("irc", "libera.#weechat-fr")
+        weechat.prnt("", "number comparison = %d" % weechat.hdata_compare(hdata, buffer1, buffer2, "number", 0))
+    """
     ...
 
 
 def hdata_update(hdata: str, pointer: str, hashtable: Dict[str, str]) -> int:
-    """`hdata_update in WeeChat plugin API reference <https://weechat.org/doc/api/#_hdata_update>`_"""
+    """`hdata_update in WeeChat plugin API reference <https://weechat.org/doc/api/#_hdata_update>`_
+    ::
+
+        # example: subtract one hour on last message displayed in current buffer
+        own_lines = weechat.hdata_pointer(weechat.hdata_get("buffer"), weechat.current_buffer(), "own_lines")
+        if own_lines:
+            line = weechat.hdata_pointer(weechat.hdata_get("lines"), own_lines, "last_line")
+            if line:
+                line_data = weechat.hdata_pointer(weechat.hdata_get("line"), line, "data")
+                hdata = weechat.hdata_get("line_data")
+                weechat.hdata_update(hdata, line_data, {"date": str(weechat.hdata_time(hdata, line_data, "date") - 3600)})
+    """
     ...
 
 
 def hdata_get_string(hdata: str, property: str) -> str:
-    """`hdata_get_string in WeeChat plugin API reference <https://weechat.org/doc/api/#_hdata_get_string>`_"""
+    """`hdata_get_string in WeeChat plugin API reference <https://weechat.org/doc/api/#_hdata_get_string>`_
+    ::
+
+        # example
+        weechat.prnt("", "variables in hdata: %s" % weechat.hdata_get_string(hdata, "var_keys"))
+        weechat.prnt("", "lists in hdata: %s" % weechat.hdata_get_string(hdata, "list_keys"))
+    """
     ...
 
 
 def upgrade_new(filename: str, callback_read: str, callback_read_data: str) -> str:
-    """`upgrade_new in WeeChat plugin API reference <https://weechat.org/doc/api/#_upgrade_new>`_"""
+    """`upgrade_new in WeeChat plugin API reference <https://weechat.org/doc/api/#_upgrade_new>`_
+    ::
+
+        # example
+        upgrade_file = weechat.upgrade_new("my_file", "", "")
+    """
     ...
 
 
 def upgrade_write_object(upgrade_file: str, object_id: int, infolist: str) -> int:
-    """`upgrade_write_object in WeeChat plugin API reference <https://weechat.org/doc/api/#_upgrade_write_object>`_"""
+    """`upgrade_write_object in WeeChat plugin API reference <https://weechat.org/doc/api/#_upgrade_write_object>`_
+    ::
+
+        # example
+        weechat.upgrade_write_object(upgrade_file, 1, infolist)
+    """
     ...
 
 
 def upgrade_read(upgrade_file: str) -> int:
-    """`upgrade_read in WeeChat plugin API reference <https://weechat.org/doc/api/#_upgrade_read>`_"""
+    """`upgrade_read in WeeChat plugin API reference <https://weechat.org/doc/api/#_upgrade_read>`_
+    ::
+
+        # example
+        weechat.upgrade_read(upgrade_file)
+    """
     ...
 
 
 def upgrade_close(upgrade_file: str) -> int:
-    """`upgrade_close in WeeChat plugin API reference <https://weechat.org/doc/api/#_upgrade_close>`_"""
+    """`upgrade_close in WeeChat plugin API reference <https://weechat.org/doc/api/#_upgrade_close>`_
+    ::
+
+        # example
+        weechat.upgrade_close(upgrade_file)
+    """
     ...
