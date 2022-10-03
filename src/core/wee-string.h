@@ -88,6 +88,8 @@ extern char *string_replace_regex (const char *string, void *regex,
                                    const char reference_char,
                                    char *(*callback)(void *data, const char *text),
                                    void *callback_data);
+extern char *string_translate_chars (const char *string,
+                                     const char *chars1, const char *chars2);
 extern char **string_split (const char *string, const char *separators,
                             const char *strip_items, int flags,
                             int num_items_max, int *num_items);

@@ -68,7 +68,7 @@ struct timeval;
  * please change the date with current one; for a second change at same
  * date, increment the 01, otherwise please keep 01.
  */
-#define WEECHAT_PLUGIN_API_VERSION "20220926-01"
+#define WEECHAT_PLUGIN_API_VERSION "20221003-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -327,6 +327,8 @@ struct t_weechat_plugin
                                    char *(*callback)(void *data,
                                                      const char *text),
                                    void *callback_data);
+    char *(*string_translate_chars) (const char *string, const char *chars1,
+                                     const char *chars2);
     char **(*string_split) (const char *string, const char *separators,
                             const char *strip_items, int flags,
                             int num_items_max, int *num_items);
@@ -1282,6 +1284,9 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
                                            __reference_char,            \
                                            __callback,                  \
                                            __callback_data)
+#define weechat_string_translate_chars(__string, __chars1, __chars2)    \
+    (weechat_plugin->string_translate_chars)(__string, __chars1,        \
+                                             __chars2);
 #define weechat_string_split(__string, __separators, __strip_items,     \
                              __flags, __max, __num_items)               \
     (weechat_plugin->string_split)(__string, __separators,              \

@@ -626,6 +626,7 @@ plugin_load (const char *filename, int init_plugin, int argc, char **argv)
         new_plugin->string_has_highlight = &string_has_highlight;
         new_plugin->string_has_highlight_regex = &string_has_highlight_regex;
         new_plugin->string_replace_regex = &string_replace_regex;
+        new_plugin->string_translate_chars = &string_translate_chars;
         new_plugin->string_split = &string_split;
         new_plugin->string_split_shell = &string_split_shell;
         new_plugin->string_free_split = &string_free_split;

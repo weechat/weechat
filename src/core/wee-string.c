@@ -1903,6 +1903,61 @@ string_replace_regex (const char *string, void *regex, const char *replace,
 }
 
 /*
+ * Translates chars by other ones in a string.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+string_translate_chars (const char *string,
+                        const char *chars1, const char *chars2)
+{
+    int length, length2, translated;
+    const char *ptr_string, *ptr_chars1, *ptr_chars2;
+    char **result, *ptr_result;
+
+    if (!string)
+        return NULL;
+
+    length = (chars1) ? utf8_strlen (chars1) : 0;
+    length2 = (chars2) ? utf8_strlen (chars2) : 0;
+
+    if (!chars1 || !chars2 || (length != length2))
+        return strdup (string);
+
+    result = string_dyn_alloc (strlen (string) + 1);
+    if (!result)
+        return strdup (string);
+
+    ptr_string = string;
+    while (ptr_string && ptr_string[0])
+    {
+        translated = 0;
+        ptr_chars1 = chars1;
+        ptr_chars2 = chars2;
+        while (ptr_chars1 && ptr_chars1[0] && ptr_chars2 && ptr_chars2[0])
+        {
+            if (utf8_charcmp (ptr_chars1, ptr_string) == 0)
+            {
+                string_dyn_concat (result, ptr_chars2, utf8_char_size (ptr_chars2));
+                translated = 1;
+                break;
+            }
+            ptr_chars1 = utf8_next_char (ptr_chars1);
+            ptr_chars2 = utf8_next_char (ptr_chars2);
+        }
+        if (!translated)
+            string_dyn_concat (result, ptr_string, utf8_char_size (ptr_string));
+        ptr_string = utf8_next_char (ptr_string);
+    }
+
+    ptr_result = *result;
+    string_dyn_free (result, 0);
+
+    return ptr_result;
+}
+
+/*
  * Splits a string according to separators.
  *
  * This function must not be called directly (call string_split or

@@ -1174,6 +1174,38 @@ TEST(CoreString, ReplaceRegex)
 
 /*
  * Tests functions:
+ *   string_translate_chars
+ */
+
+TEST(CoreString, TranslateChars)
+{
+    char *str;
+
+    POINTERS_EQUAL(NULL, string_translate_chars (NULL, NULL, NULL));
+    POINTERS_EQUAL(NULL, string_translate_chars (NULL, "abc", NULL));
+    POINTERS_EQUAL(NULL, string_translate_chars (NULL, "abc", "ABC"));
+    STRCMP_EQUAL("", string_translate_chars ("", "abc", "ABCDEF"));
+    STRCMP_EQUAL("test", string_translate_chars ("test", "abc", "ABCDEF"));
+    WEE_TEST_STR("", string_translate_chars ("", "abc", "ABC"));
+
+    WEE_TEST_STR("tEst", string_translate_chars ("test", "abcdef", "ABCDEF"));
+
+    WEE_TEST_STR("CleAn the BoAt",
+                 string_translate_chars ("clean the boat", "abc", "ABC"));
+
+    WEE_TEST_STR("↑", string_translate_chars ("←", "←↑→↓", "↑→↓←"));
+    WEE_TEST_STR("→", string_translate_chars ("↑", "←↑→↓", "↑→↓←"));
+    WEE_TEST_STR("↓", string_translate_chars ("→", "←↑→↓", "↑→↓←"));
+    WEE_TEST_STR("←", string_translate_chars ("↓", "←↑→↓", "↑→↓←"));
+
+    WEE_TEST_STR("uijt jt b uftu",
+                 string_translate_chars ("this is a test",
+                                         "abcdefghijklmnopqrstuvwxyz",
+                                         "bcdefghijklmnopqrstuvwxyza"));
+}
+
+/*
+ * Tests functions:
  *   string_replace_with_callback
  */
 
