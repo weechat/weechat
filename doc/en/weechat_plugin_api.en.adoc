@@ -2349,7 +2349,7 @@ str3 = weechat.string_input_for_buffer("//test")  # "/test"
 ==== string_eval_expression
 
 _WeeChat ≥ 0.4.0, updated in 0.4.2, 0.4.3, 1.0, 1.1, 1.2, 1.3, 1.6, 1.8, 2.0,
-2.2, 2.3, 2.7, 2.9, 3.1, 3.2, 3.3, 3.4, 3.6._
+2.2, 2.3, 2.7, 2.9, 3.1, 3.2, 3.3, 3.4, 3.6, 3.8._
 
 Evaluate an expression and return result as a string.
 Special variables with format `+${variable}+` are expanded (see table below).
@@ -2734,20 +2734,44 @@ expanded to last):
   >> `+${\ua9}+` +
   == `+©+`
 
+| `+${chars:range}+` | 3.8
+| String with a range of chars, where `range` is one of: +
+  - `digit` (`0123456789`) +
+  - `xdigit` (`0123456789abcdefABCDEF`) +
+  - `lower` (all lower case letters) +
+  - `upper` (all upper case letters) +
+  - `alpha` (all letters) +
+  - `alnum` (all letters and digits) +
+  - a range of chars with format `c1-c2` (`c1` code point must be lower or equal to `c2`)
+| >> `+${chars:digit}+` +
+  == `+0123456789+` +
+  +
+  >> `+${chars:xdigit}+` +
+  == `+0123456789abcdefABCDEF+` +
+  +
+  >> `+${chars:lower}+` +
+  == `+abcdefghijklmnopqrstuvwxyz+` +
+  +
+  >> `+${chars:J-V}+` +
+  == `+JKLMNOPQRSTUV+` +
+  +
+  >> `+${chars:←-↓}+` +
+  == `+←↑→↓+`
+
 | `+${lower:string}+` | 3.6
 | String converted to lower case.
 | >> `+${lower:TEST}+` +
-  >> `+test+`
+  == `+test+`
 
 | `+${upper:string}+` | 3.6
 | String converted to upper case.
 | >> `+${upper:test}+` +
-  >> `+TEST+`
+  == `+TEST+`
 
 | `+${hide:x,string}+` | 1.1
 | String with hidden chars (all chars in `string` replaced by `x`).
 | >> `+${hide:*,password}+` +
-  >> `+********+`
+  == `+********+`
 
 | `+${cut:max,suffix,string}+` +
   `+${cut:+max,suffix,string}+` | 1.8

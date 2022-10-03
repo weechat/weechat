@@ -30,6 +30,13 @@
 
 #define EVAL_RECURSION_MAX  32
 
+#define EVAL_RANGE_DIGIT    "0123456789"
+#define EVAL_RANGE_XDIGIT   EVAL_RANGE_DIGIT "abcdefABCDEF"
+#define EVAL_RANGE_LOWER    "abcdefghijklmnopqrstuvwxyz"
+#define EVAL_RANGE_UPPER    "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+#define EVAL_RANGE_ALPHA    EVAL_RANGE_LOWER EVAL_RANGE_UPPER
+#define EVAL_RANGE_ALNUM    EVAL_RANGE_ALPHA EVAL_RANGE_DIGIT
+
 struct t_hashtable;
 
 enum t_eval_logical_op
