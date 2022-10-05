@@ -41,6 +41,7 @@ New features::
 Bug fixes::
 
   * core: fix wrong terminal title on terminal resize (issue #1702)
+  * core: fix page scroll in bare display (issue #1830)
   * api: change type of argument remaining_calls in hook_timer callback from string to integer (in scripts)
   * api: change type of argument object_id in upgrade_new callback from string to integer (in scripts)
   * irc: fix duplicated channels in autojoin option when autojoin_dynamic is enabled (issue #1795)

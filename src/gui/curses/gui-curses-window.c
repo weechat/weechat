@@ -1381,17 +1381,20 @@ void
 gui_window_page_up (struct t_gui_window *window)
 {
     char scroll[32];
-    int num_lines;
+    int height, num_lines;
 
     if (!gui_init_ok)
         return;
 
-    num_lines = ((window->win_chat_height - 1) *
+    height = (gui_window_bare_display) ?
+        gui_term_lines : window->win_chat_height;
+
+    num_lines = ((height - 1) *
                  CONFIG_INTEGER(config_look_scroll_page_percent)) / 100;
     if (num_lines < 1)
         num_lines = 1;
-    else if (num_lines > window->win_chat_height - 1)
-        num_lines = window->win_chat_height - 1;
+    else if (num_lines > height - 1)
+        num_lines = height - 1;
 
     switch (window->buffer->type)
     {
@@ -1402,7 +1405,7 @@ gui_window_page_up (struct t_gui_window *window)
                                               &window->scroll->start_line_pos,
                                               (window->scroll->start_line) ?
                                               (-1) * (num_lines) :
-                                              (-1) * (num_lines + window->win_chat_height - 1));
+                                              (-1) * (num_lines + height - 1));
                 gui_buffer_ask_chat_refresh (window->buffer, 2);
             }
             break;
@@ -1429,18 +1432,21 @@ void
 gui_window_page_down (struct t_gui_window *window)
 {
     struct t_gui_line *ptr_line;
-    int line_pos, num_lines;
+    int height, num_lines, line_pos;
     char scroll[32];
 
     if (!gui_init_ok)
         return;
 
-    num_lines = ((window->win_chat_height - 1) *
+    height = (gui_window_bare_display) ?
+        gui_term_lines : window->win_chat_height;
+
+    num_lines = ((height - 1) *
                  CONFIG_INTEGER(config_look_scroll_page_percent)) / 100;
     if (num_lines < 1)
         num_lines = 1;
-    else if (num_lines > window->win_chat_height - 1)
-        num_lines = window->win_chat_height - 1;
+    else if (num_lines > height - 1)
+        num_lines = height - 1;
 
     switch (window->buffer->type)
     {
@@ -1456,7 +1462,7 @@ gui_window_page_down (struct t_gui_window *window)
                 ptr_line = window->scroll->start_line;
                 line_pos = window->scroll->start_line_pos;
                 gui_chat_calculate_line_diff (window, &ptr_line, &line_pos,
-                                              window->win_chat_height);
+                                              height);
                 if (!ptr_line)
                 {
                     window->scroll->start_line = NULL;
@@ -1484,10 +1490,14 @@ gui_window_page_down (struct t_gui_window *window)
 void
 gui_window_scroll_up (struct t_gui_window *window)
 {
+    int height;
     char scroll[32];
 
     if (!gui_init_ok)
         return;
+
+    height = (gui_window_bare_display) ?
+        gui_term_lines : window->win_chat_height;
 
     switch (window->buffer->type)
     {
@@ -1498,8 +1508,8 @@ gui_window_scroll_up (struct t_gui_window *window)
                                               &window->scroll->start_line_pos,
                                               (window->scroll->start_line) ?
                                               (-1) * CONFIG_INTEGER(config_look_scroll_amount) :
-                                              (-1) * ( (window->win_chat_height - 1) +
-                                                       CONFIG_INTEGER(config_look_scroll_amount)));
+                                              (-1) * ((height - 1) +
+                                                      CONFIG_INTEGER(config_look_scroll_amount)));
                 gui_buffer_ask_chat_refresh (window->buffer, 2);
             }
             break;
@@ -1526,11 +1536,14 @@ void
 gui_window_scroll_down (struct t_gui_window *window)
 {
     struct t_gui_line *ptr_line;
-    int line_pos;
+    int height, line_pos;
     char scroll[32];
 
     if (!gui_init_ok)
         return;
+
+    height = (gui_window_bare_display) ?
+        gui_term_lines : window->win_chat_height;
 
     switch (window->buffer->type)
     {
@@ -1546,7 +1559,7 @@ gui_window_scroll_down (struct t_gui_window *window)
                 ptr_line = window->scroll->start_line;
                 line_pos = window->scroll->start_line_pos;
                 gui_chat_calculate_line_diff (window, &ptr_line, &line_pos,
-                                              window->win_chat_height);
+                                              height);
 
                 if (!ptr_line)
                 {
@@ -1609,10 +1622,14 @@ gui_window_scroll_top (struct t_gui_window *window)
 void
 gui_window_scroll_bottom (struct t_gui_window *window)
 {
+    int height;
     char scroll[32];
 
     if (!gui_init_ok)
         return;
+
+    height = (gui_window_bare_display) ?
+        gui_term_lines : window->win_chat_height;
 
     switch (window->buffer->type)
     {
@@ -1623,10 +1640,9 @@ gui_window_scroll_bottom (struct t_gui_window *window)
             break;
         case GUI_BUFFER_TYPE_FREE:
             window->scroll->start_line = NULL;
-            if (window->buffer->lines->lines_count > window->win_chat_height)
+            if (window->buffer->lines->lines_count > height)
             {
-                snprintf (scroll, sizeof (scroll), "--%d",
-                          window->win_chat_height - 1);
+                snprintf (scroll, sizeof (scroll), "--%d", height - 1);
                 gui_window_scroll (window, scroll);
             }
             else

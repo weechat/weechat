@@ -1806,6 +1806,13 @@ gui_chat_calculate_line_diff (struct t_gui_window *window,
             *line_pos = 0;
         }
     }
+
+    /* special case for bare display */
+    if (gui_window_bare_display && backward && (*line_pos > 0))
+    {
+        *line = gui_line_get_next_displayed (*line);
+        *line_pos = 0;
+    }
 }
 
 /*
