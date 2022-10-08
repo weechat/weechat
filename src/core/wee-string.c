@@ -3009,7 +3009,7 @@ string_parse_size (const char *size)
         goto end;
 
     pos = size;
-    while (isdigit (pos[0]))
+    while (isdigit ((unsigned char)pos[0]))
     {
         pos++;
     }
