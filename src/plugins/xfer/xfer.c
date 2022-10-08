@@ -28,6 +28,7 @@
 #include <sys/stat.h>
 #include <time.h>
 #include <sys/socket.h>
+#include <netinet/in.h>
 #include <netdb.h>
 #include <gcrypt.h>
 #include <arpa/inet.h>
