@@ -15,6 +15,13 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 (file _ReleaseNotes.adoc_ in sources).
 
 
+[[v3.8]]
+== Version 3.8 (under dev)
+
+Bug fixes::
+
+  * core: fix context info in buffers with free content (issue #1832)
+
 [[v3.7]]
 == Version 3.7 (2022-10-09)
 

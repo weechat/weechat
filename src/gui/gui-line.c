@@ -294,6 +294,10 @@ gui_line_get_align (struct t_gui_buffer *buffer, struct t_gui_line *line,
 {
     int length_time, length_buffer, length_suffix, prefix_length, prefix_is_nick;
 
+    /* return immediately if buffer has free content (no alignment) */
+    if (buffer->type == GUI_BUFFER_TYPE_FREE)
+        return 0;
+
     /* return immediately if line has no time (not aligned) */
     if (line->data->date == 0)
         return 0;
