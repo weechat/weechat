@@ -2533,7 +2533,7 @@ gui_window_set_title (const char *title)
         return;
 
     new_title = (title && title[0]) ?
-        eval_expression (title, NULL, NULL, NULL) : strdup ("Terminal");
+        eval_expression (title, NULL, NULL, NULL) : NULL;
     if (!new_title)
         return;
 
