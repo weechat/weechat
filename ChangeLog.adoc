@@ -18,6 +18,10 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 [[v3.8]]
 == Version 3.8 (under dev)
 
+New features::
+
+  * core: allow command `/toggle` to create option before setting the value, if allowed in the section (issue #1837)
+
 Bug fixes::
 
   * core: fix context info in buffers with free content (issue #1832)

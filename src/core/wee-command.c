@@ -6314,11 +6314,22 @@ COMMAND_CALLBACK(toggle)
     config_file_search_with_string (argv[1], NULL, NULL, &ptr_option, NULL);
     if (!ptr_option)
     {
-        gui_chat_printf (NULL,
-                         _("%sOption \"%s\" not found"),
-                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                         argv[1]);
-        return WEECHAT_RC_OK;
+        /* try to create option with empty value if not existing */
+        rc = config_file_option_set_with_string (argv[1], "");
+        if ((rc == WEECHAT_CONFIG_OPTION_SET_OK_CHANGED) ||
+            (rc == WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE))
+        {
+            config_file_search_with_string (argv[1], NULL, NULL, &ptr_option,
+                                            NULL);
+        }
+        if (!ptr_option)
+        {
+            gui_chat_printf (NULL,
+                             _("%sOption \"%s\" not found"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             argv[1]);
+            return WEECHAT_RC_OK;
+        }
     }
 
     if ((ptr_option->type != CONFIG_OPTION_TYPE_BOOLEAN)
