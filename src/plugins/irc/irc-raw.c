@@ -244,6 +244,12 @@ irc_raw_message_print (struct t_irc_raw_message *raw_message)
                     buf2[pos_buf2++] = hexa[ptr_buf[pos_buf] % 16];
                     pos_buf++;
                 }
+                else if (ptr_buf[pos_buf] == '\\')
+                {
+                    buf2[pos_buf2++] = '\\';
+                    buf2[pos_buf2++] = '\\';
+                    pos_buf++;
+                }
                 else
                 {
                     char_size = weechat_utf8_char_size ((const char *)(ptr_buf + pos_buf));

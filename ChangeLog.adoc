@@ -25,6 +25,7 @@ New features::
 Bug fixes::
 
   * core: fix context info in buffers with free content (issue #1832)
+  * irc: escape backslashes in raw buffer (issue #1838)
 
 [[v3.7]]
 == Version 3.7 (2022-10-09)
