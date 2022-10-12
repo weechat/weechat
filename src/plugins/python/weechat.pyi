@@ -550,10 +550,10 @@ def config_new_option(config_file: str, section: str, name: str, type: str, desc
             return 1
             # return 0
 
-        def option4_change_cb(data: str, option: str) -> int:
+        def option4_change_cb(data: str, option: str) -> None:
             # ...
 
-        def option4_delete_cb(data: str, option: str) -> int:
+        def option4_delete_cb(data: str, option: str) -> None:
             # ...
 
         option1 = weechat.config_new_option(config_file, section, "option1", "boolean",
