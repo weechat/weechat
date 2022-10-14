@@ -25,6 +25,7 @@ New features::
 Bug fixes::
 
   * core: fix context info in buffers with free content (issue #1832)
+  * core: keep terminal title unchanged when option weechat.look.window_title is set to empty value (issue #1835, issue #1836)
   * irc: escape backslashes in raw buffer (issue #1838)
 
 [[v3.7]]
