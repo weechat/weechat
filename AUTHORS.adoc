@@ -77,8 +77,9 @@ Alphabetically:
 * Krzysztof Koroscik (soltys)
 * Kyle Fuller (kylef)
 * Kyle Sabo
-* Leonid Evdokimov
+* Latchezar Tzvetkoff
 * Lázaro A.
+* Leonid Evdokimov
 * Linus Heckemann
 * Maarten de Vries
 * Mantas Mikulėnas (grawity)
