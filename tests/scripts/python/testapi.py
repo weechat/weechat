@@ -181,12 +181,12 @@ def option_check_value_cb(data, option, value):
 
 def option_change_cb(data, option):
     """Option change callback."""
-    pass
+    pass  # pylint: disable=unnecessary-pass
 
 
 def option_delete_cb(data, option):
     """Option delete callback."""
-    pass
+    pass  # pylint: disable=unnecessary-pass
 
 
 def test_config():
