@@ -186,11 +186,13 @@ API_FUNC(register)
 
 static void
 weechat_php_cb (const void *pointer, void *data, void **func_argv,
-                const char *func_types, int func_type, void *rc)
+                const char *func_types, int ret_type, void *rc)
 {
     struct t_plugin_script *script;
     const char *ptr_function, *ptr_data;
     void *ret;
+
+    ret = NULL;
 
     script = (struct t_plugin_script *)pointer;
     plugin_script_get_function_and_data (data, &ptr_function, &ptr_data);
@@ -202,20 +204,25 @@ weechat_php_cb (const void *pointer, void *data, void **func_argv,
         goto weechat_php_cb_err;
     }
 
-    ret = weechat_php_exec (script, func_type, ptr_function,
+    ret = weechat_php_exec (script, ret_type, ptr_function,
                             func_types, func_argv);
 
-    if (!ret)
+    if ((ret_type != WEECHAT_SCRIPT_EXEC_IGNORE) && !ret)
     {
         goto weechat_php_cb_err;
     }
 
-    if (func_type == WEECHAT_SCRIPT_EXEC_INT)
+    if (ret_type == WEECHAT_SCRIPT_EXEC_IGNORE)
+    {
+        if (ret)
+            free (ret);
+    }
+    else if (ret_type == WEECHAT_SCRIPT_EXEC_INT)
     {
         *((int *)rc) = *((int *)ret);
         free (ret);
     }
-    else if (func_type == WEECHAT_SCRIPT_EXEC_HASHTABLE)
+    else if (ret_type == WEECHAT_SCRIPT_EXEC_HASHTABLE)
     {
         *((struct t_hashtable **)rc) = (struct t_hashtable *)ret;
     }
@@ -226,11 +233,16 @@ weechat_php_cb (const void *pointer, void *data, void **func_argv,
     return;
 
 weechat_php_cb_err:
-    if (func_type == WEECHAT_SCRIPT_EXEC_INT)
+    if (ret_type == WEECHAT_SCRIPT_EXEC_IGNORE)
+    {
+        if (ret)
+            free (ret);
+    }
+    else if (ret_type == WEECHAT_SCRIPT_EXEC_INT)
     {
         *((int *)rc) = WEECHAT_RC_ERROR;
     }
-    else if (func_type == WEECHAT_SCRIPT_EXEC_HASHTABLE)
+    else if (ret_type == WEECHAT_SCRIPT_EXEC_HASHTABLE)
     {
         *((struct t_hashtable **)rc) = NULL;
     }
@@ -1273,13 +1285,12 @@ weechat_php_api_config_option_change_cb (const void *pointer,
                                          void *data,
                                          struct t_config_option *option)
 {
-    int *rc;
     void *func_argv[2];
 
     func_argv[1] = (char *)API_PTR2STR(option);
 
     weechat_php_cb (pointer, data, func_argv, "ss",
-                    WEECHAT_SCRIPT_EXEC_INT, &rc);
+                    WEECHAT_SCRIPT_EXEC_IGNORE, NULL);
 }
 
 static void
@@ -1287,13 +1298,12 @@ weechat_php_api_config_option_delete_cb (const void *pointer,
                                          void *data,
                                          struct t_config_option *option)
 {
-    int rc;
     void *func_argv[2];
 
     func_argv[1] = (char *)API_PTR2STR(option);
 
     weechat_php_cb (pointer, data, func_argv, "ss",
-                   WEECHAT_SCRIPT_EXEC_INT, &rc);
+                    WEECHAT_SCRIPT_EXEC_IGNORE, NULL);
 }
 
 API_FUNC(config_new_option)

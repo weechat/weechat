@@ -26,6 +26,7 @@ Bug fixes::
 
   * core: fix context info in buffers with free content (issue #1832)
   * core: keep terminal title unchanged when option weechat.look.window_title is set to empty value (issue #1835, issue #1836)
+  * api: do not expect any return value in callbacks "callback_change" and "callback_delete" of function config_new_option (scripting API)
   * irc: escape backslashes in raw buffer (issue #1838)
 
 Tests::

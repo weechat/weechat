@@ -17,6 +17,16 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 (file _ChangeLog.adoc_ in sources).
 
 
+[[v3.8]]
+== Version 3.8 (under dev)
+
+[[v3.8_config_new_option_callbacks]]
+=== Callbacks of function config_new_option
+
+The two callbacks "callback_change" and "callback_delete" in scripting API function
+config_new_option have been changed: an integer return value was expected by error,
+now any return value is ignored (like it has always been in the C API).
+
 [[v3.7]]
 == Version 3.7 (2022-10-09)
 

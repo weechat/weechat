@@ -1090,7 +1090,7 @@ class UnparseGuile(UnparsePython):
 
     def _ast_pass(self, node):
         """Add an AST Pass in output."""
-        pass
+        self.add('#t')
 
     def _ast_return(self, node):
         """Add an AST Return in output."""

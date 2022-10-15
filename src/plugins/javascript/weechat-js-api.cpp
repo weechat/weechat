@@ -1149,10 +1149,9 @@ weechat_js_api_config_option_change_cb (const void *pointer, void *data,
                                         struct t_config_option *option)
 {
     struct t_plugin_script *script;
-    void *func_argv[2];
+    void *func_argv[2], *rc;
     char empty_arg[1] = { '\0' };
     const char *ptr_function, *ptr_data;
-    int *rc;
 
     script = (struct t_plugin_script *)pointer;
     plugin_script_get_function_and_data (data, &ptr_function, &ptr_data);
@@ -1162,10 +1161,10 @@ weechat_js_api_config_option_change_cb (const void *pointer, void *data,
         func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
         func_argv[1] = (char *)API_PTR2STR(option);
 
-        rc = (int *)weechat_js_exec (script,
-                                     WEECHAT_SCRIPT_EXEC_INT,
-                                     ptr_function,
-                                     "ss", func_argv);
+        rc = weechat_js_exec (script,
+                              WEECHAT_SCRIPT_EXEC_IGNORE,
+                              ptr_function,
+                              "ss", func_argv);
 
         if (rc)
             free (rc);
@@ -1177,10 +1176,9 @@ weechat_js_api_config_option_delete_cb (const void *pointer, void *data,
                                         struct t_config_option *option)
 {
     struct t_plugin_script *script;
-    void *func_argv[2];
+    void *func_argv[2], *rc;
     char empty_arg[1] = { '\0' };
     const char *ptr_function, *ptr_data;
-    int *rc;
 
     script = (struct t_plugin_script *)pointer;
     plugin_script_get_function_and_data (data, &ptr_function, &ptr_data);
@@ -1190,10 +1188,10 @@ weechat_js_api_config_option_delete_cb (const void *pointer, void *data,
         func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
         func_argv[1] = (char *)API_PTR2STR(option);
 
-        rc = (int *)weechat_js_exec (script,
-                                     WEECHAT_SCRIPT_EXEC_INT,
-                                     ptr_function,
-                                     "ss", func_argv);
+        rc = weechat_js_exec (script,
+                              WEECHAT_SCRIPT_EXEC_IGNORE,
+                              ptr_function,
+                              "ss", func_argv);
 
         if (rc)
             free (rc);

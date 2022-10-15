@@ -181,12 +181,12 @@ def option_check_value_cb(data, option, value):
 
 def option_change_cb(data, option):
     """Option change callback."""
-    return 1
+    pass
 
 
 def option_delete_cb(data, option):
     """Option delete callback."""
-    return 1
+    pass
 
 
 def test_config():
