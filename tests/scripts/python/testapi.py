@@ -37,8 +37,8 @@ def check(result, condition, lineno):
         weechat.prnt('', '      TEST OK: ' + condition)
     else:
         weechat.prnt('',
-                     'SCRIPT_SOURCE' + ':' + lineno + ':1: ' +
-                     'ERROR: [' + 'SCRIPT_NAME' + '] condition is false: ' +
+                     '{SCRIPT_SOURCE}' + ':' + lineno + ':1: ' +
+                     'ERROR: [' + '{SCRIPT_NAME}' + '] condition is false: ' +
                      condition)
 
 
@@ -144,6 +144,211 @@ def test_lists():
     weechat.list_free(ptr_list)
 
 
+def config_reload_cb(data, config_file):
+    """Config reload callback."""
+    return weechat.WEECHAT_RC_OK
+
+
+def section_read_cb(data, config_file, section, option_name, value):
+    """Section read callback."""
+    return weechat.WEECHAT_RC_OK
+
+
+def section_write_cb(data, config_file, section_name):
+    """Section write callback."""
+    return weechat.WEECHAT_RC_OK
+
+
+def section_write_default_cb(data, config_file, section_name):
+    """Section write default callback."""
+    return weechat.WEECHAT_RC_OK
+
+
+def section_create_option_cb(data, config_file, section, option_name, value):
+    """Section create option callback."""
+    return weechat.WEECHAT_RC_OK
+
+
+def section_delete_option_cb(data, config_file, section, option):
+    """Section delete option callback."""
+    return weechat.WEECHAT_RC_OK
+
+
+def option_check_value_cb(data, option, value):
+    """Option check value callback."""
+    return 1
+
+
+def option_change_cb(data, option):
+    """Option change callback."""
+    return 1
+
+
+def option_delete_cb(data, option):
+    """Option delete callback."""
+    return 1
+
+
+def test_config():
+    """Test config functions."""
+    # config
+    ptr_config = weechat.config_new(
+        'test_config_' + '{SCRIPT_LANGUAGE}',
+        'config_reload_cb', 'config_reload_data',
+    )
+    check(ptr_config != '')
+    # section
+    ptr_section = weechat.config_new_section(
+        ptr_config, 'section1', 0, 0,
+        'section_read_cb', '',
+        'section_write_cb', '',
+        'section_write_default_cb', '',
+        'section_create_option_cb', '',
+        'section_delete_option_cb', '',
+    )
+    check(ptr_section != '')
+    # search section
+    ptr_section2 = weechat.config_search_section(ptr_config, 'section1')
+    check(ptr_section2 == ptr_section)
+    # boolean option
+    ptr_opt_bool = weechat.config_new_option(
+        ptr_config, ptr_section, 'option_bool', 'boolean', 'bool option',
+        '', 0, 0, 'on', 'on', 0,
+        'option_check_value_cb', '',
+        'option_change_cb', '',
+        'option_delete_cb', '',
+    )
+    check(ptr_opt_bool != '')
+    check(weechat.config_boolean(ptr_opt_bool) == 1)
+    check(weechat.config_option_set(ptr_opt_bool, 'off', 1) == 2)  # SET_OK_CHANGED
+    check(weechat.config_option_set(ptr_opt_bool, 'off', 1) == 1)  # SET_OK_SAME_VALUE
+    check(weechat.config_boolean(ptr_opt_bool) == 0)
+    check(weechat.config_boolean_default(ptr_opt_bool) == 1)
+    check(weechat.config_option_reset(ptr_opt_bool, 1) == 2)  # SET_OK_CHANGED
+    check(weechat.config_option_reset(ptr_opt_bool, 1) == 1)  # SET_OK_SAME_VALUE
+    check(weechat.config_boolean(ptr_opt_bool) == 1)
+    # integer option
+    ptr_opt_int = weechat.config_new_option(
+        ptr_config, ptr_section, 'option_int', 'integer', 'int option',
+        '', 0, 256, '2', '2', 0,
+        'option_check_value_cb', '',
+        'option_change_cb', '',
+        'option_delete_cb', '',
+    )
+    check(ptr_opt_int != '')
+    check(weechat.config_integer(ptr_opt_int) == 2)
+    check(weechat.config_option_set(ptr_opt_int, '15', 1) == 2)  # SET_OK_CHANGED
+    check(weechat.config_option_set(ptr_opt_int, '15', 1) == 1)  # SET_OK_SAME_VALUE
+    check(weechat.config_integer(ptr_opt_int) == 15)
+    check(weechat.config_integer_default(ptr_opt_int) == 2)
+    check(weechat.config_option_reset(ptr_opt_int, 1) == 2)  # SET_OK_CHANGED
+    check(weechat.config_option_reset(ptr_opt_int, 1) == 1)  # SET_OK_SAME_VALUE
+    check(weechat.config_integer(ptr_opt_int) == 2)
+    # integer option (with string values)
+    ptr_opt_int_str = weechat.config_new_option(
+        ptr_config, ptr_section, 'option_int_str', 'integer', 'int option str',
+        'val1|val2|val3', 0, 0, 'val2', 'val2', 0,
+        'option_check_value_cb', '',
+        'option_change_cb', '',
+        'option_delete_cb', '',
+    )
+    check(ptr_opt_int_str != '')
+    check(weechat.config_integer(ptr_opt_int_str) == 1)
+    check(weechat.config_string(ptr_opt_int_str) == 'val2')
+    check(weechat.config_option_set(ptr_opt_int_str, 'val1', 1) == 2)  # SET_OK_CHANGED
+    check(weechat.config_option_set(ptr_opt_int_str, 'val1', 1) == 1)  # SET_OK_SAME_VALUE
+    check(weechat.config_integer(ptr_opt_int_str) == 0)
+    check(weechat.config_string(ptr_opt_int_str) == 'val1')
+    check(weechat.config_integer_default(ptr_opt_int_str) == 1)
+    check(weechat.config_string_default(ptr_opt_int_str) == 'val2')
+    check(weechat.config_option_reset(ptr_opt_int_str, 1) == 2)  # SET_OK_CHANGED
+    check(weechat.config_option_reset(ptr_opt_int_str, 1) == 1)  # SET_OK_SAME_VALUE
+    check(weechat.config_integer(ptr_opt_int_str) == 1)
+    check(weechat.config_string(ptr_opt_int_str) == 'val2')
+    # string option
+    ptr_opt_str = weechat.config_new_option(
+        ptr_config, ptr_section, 'option_str', 'string', 'str option',
+        '', 0, 0, 'value', 'value', 1,
+        'option_check_value_cb', '',
+        'option_change_cb', '',
+        'option_delete_cb', '',
+    )
+    check(ptr_opt_str != '')
+    check(weechat.config_string(ptr_opt_str) == 'value')
+    check(weechat.config_option_set(ptr_opt_str, 'value2', 1) == 2)  # SET_OK_CHANGED
+    check(weechat.config_option_set(ptr_opt_str, 'value2', 1) == 1)  # SET_OK_SAME_VALUE
+    check(weechat.config_string(ptr_opt_str) == 'value2')
+    check(weechat.config_string_default(ptr_opt_str) == 'value')
+    check(weechat.config_option_reset(ptr_opt_str, 1) == 2)  # SET_OK_CHANGED
+    check(weechat.config_option_reset(ptr_opt_str, 1) == 1)  # SET_OK_SAME_VALUE
+    check(weechat.config_string(ptr_opt_str) == 'value')
+    check(weechat.config_option_is_null(ptr_opt_str) == 0)
+    check(weechat.config_option_set_null(ptr_opt_str, 1) == 2)  # SET_OK_CHANGED
+    check(weechat.config_option_set_null(ptr_opt_str, 1) == 1)  # SET_OK_SAME_VALUE
+    check(weechat.config_option_is_null(ptr_opt_str) == 1)
+    check(weechat.config_string(ptr_opt_str) == '')
+    check(weechat.config_option_unset(ptr_opt_str) == 1)  # UNSET_OK_RESET
+    check(weechat.config_option_unset(ptr_opt_str) == 0)  # UNSET_OK_NO_RESET
+    check(weechat.config_string(ptr_opt_str) == 'value')
+    check(weechat.config_option_default_is_null(ptr_opt_str) == 0)
+    # color option
+    ptr_opt_col = weechat.config_new_option(
+        ptr_config, ptr_section, 'option_col', 'color', 'col option',
+        '', 0, 0, 'lightgreen', 'lightgreen', 0,
+        'option_check_value_cb', '',
+        'option_change_cb', '',
+        'option_delete_cb', '',
+    )
+    check(ptr_opt_col != '')
+    check(weechat.config_color(ptr_opt_col) == 'lightgreen')
+    check(weechat.config_option_set(ptr_opt_col, 'red', 1) == 2)  # SET_OK_CHANGED
+    check(weechat.config_option_set(ptr_opt_col, 'red', 1) == 1)  # SET_OK_SAME_VALUE
+    check(weechat.config_color(ptr_opt_col) == 'red')
+    check(weechat.config_color_default(ptr_opt_col) == 'lightgreen')
+    check(weechat.config_option_reset(ptr_opt_col, 1) == 2)  # SET_OK_CHANGED
+    check(weechat.config_option_reset(ptr_opt_col, 1) == 1)  # SET_OK_SAME_VALUE
+    check(weechat.config_color(ptr_opt_col) == 'lightgreen')
+    # search option
+    ptr_opt_bool2 = weechat.config_search_option(ptr_config, ptr_section,
+                                                 'option_bool')
+    check(ptr_opt_bool2 == ptr_opt_bool)
+    # string to boolean
+    check(weechat.config_string_to_boolean('') == 0)
+    check(weechat.config_string_to_boolean('off') == 0)
+    check(weechat.config_string_to_boolean('0') == 0)
+    check(weechat.config_string_to_boolean('on') == 1)
+    check(weechat.config_string_to_boolean('1') == 1)
+    # rename option
+    weechat.config_option_rename(ptr_opt_bool, 'option_bool_renamed')
+    # read config (create it because it does not exist yet)
+    check(weechat.config_read(ptr_config) == 0)  # CONFIG_READ_OK
+    # write config
+    check(weechat.config_write(ptr_config) == 0)  # CONFIG_WRITE_OK
+    # reload config
+    check(weechat.config_reload(ptr_config) == 0)  # CONFIG_READ_OK
+    # free option
+    weechat.config_option_free(ptr_opt_bool)
+    # free options in section
+    weechat.config_section_free_options(ptr_section)
+    # free section
+    weechat.config_section_free(ptr_section)
+    # free config
+    weechat.config_free(ptr_config)
+    # config_get
+    ptr_option = weechat.config_get('weechat.look.item_time_format')
+    check(ptr_option != '')
+    check(weechat.config_string(ptr_option) == '%H:%M')
+    # config plugin
+    check(weechat.config_get_plugin('option') == '')
+    check(weechat.config_is_set_plugin('option') == 0)
+    check(weechat.config_set_plugin('option', 'value') == 1)  # SET_OK_SAME_VALUE
+    weechat.config_set_desc_plugin('option', 'description of option')
+    check(weechat.config_get_plugin('option') == 'value')
+    check(weechat.config_is_set_plugin('option') == 1)
+    check(weechat.config_unset_plugin('option') == 2)  # UNSET_OK_REMOVED
+    check(weechat.config_unset_plugin('option') == -1)  # UNSET_ERROR
+
+
 def test_key():
     """Test key functions."""
     check(
@@ -209,7 +414,7 @@ def test_display():
 def completion_cb(data, completion_item, buf, completion):
     """Completion callback."""
     check(data == 'completion_data')
-    check(completion_item == 'SCRIPT_NAME')
+    check(completion_item == '{SCRIPT_NAME}')
     check(weechat.completion_get_string(completion, 'args') == 'w')
     weechat.completion_list_add(completion, 'word_completed',
                                 0, weechat.WEECHAT_LIST_POS_END)
@@ -226,7 +431,7 @@ def command_cb(data, buf, args):
 def command_run_cb(data, buf, command):
     """Command_run callback."""
     check(data == 'command_run_data')
-    check(command == '/cmd' + 'SCRIPT_NAME' + ' word_completed')
+    check(command == '/cmd' + '{SCRIPT_NAME}' + ' word_completed')
     return weechat.WEECHAT_RC_OK
 
 
@@ -238,16 +443,16 @@ def timer_cb(data, remaining_calls):
 def test_hooks():
     """Test function hook_command."""
     # hook_completion / hook_completion_args / and hook_command
-    hook_cmplt = weechat.hook_completion('SCRIPT_NAME', 'description',
+    hook_cmplt = weechat.hook_completion('{SCRIPT_NAME}', 'description',
                                          'completion_cb', 'completion_data')
-    hook_cmd = weechat.hook_command('cmd' + 'SCRIPT_NAME', 'description',
+    hook_cmd = weechat.hook_command('cmd' + '{SCRIPT_NAME}', 'description',
                                     'arguments', 'description arguments',
-                                    '%(' + 'SCRIPT_NAME' + ')',
+                                    '%(' + '{SCRIPT_NAME}' + ')',
                                     'command_cb', 'command_data')
-    weechat.command('', '/input insert /cmd' + 'SCRIPT_NAME' + ' w')
+    weechat.command('', '/input insert /cmd' + '{SCRIPT_NAME}' + ' w')
     weechat.command('', '/input complete_next')
     # hook_command_run
-    hook_cmd_run = weechat.hook_command_run('/cmd' + 'SCRIPT_NAME' + '*',
+    hook_cmd_run = weechat.hook_command_run('/cmd' + '{SCRIPT_NAME}' + '*',
                                             'command_run_cb', 'command_run_data')
     weechat.command('', '/input return')
     weechat.unhook(hook_cmd_run)
@@ -419,11 +624,12 @@ def cmd_test_cb(data, buf, args):
     """Run all the tests."""
     weechat.prnt('', '>>>')
     weechat.prnt('', '>>> ------------------------------')
-    weechat.prnt('', '>>> Testing ' + 'SCRIPT_LANGUAGE' + ' API')
-    weechat.prnt('', '  > TESTS: ' + 'SCRIPT_TESTS')
+    weechat.prnt('', '>>> Testing ' + '{SCRIPT_LANGUAGE}' + ' API')
+    weechat.prnt('', '  > TESTS: ' + '{SCRIPT_TESTS}')
     test_plugins()
     test_strings()
     test_lists()
+    test_config()
     test_key()
     test_display()
     test_hooks()
@@ -436,6 +642,6 @@ def cmd_test_cb(data, buf, args):
 
 def weechat_init():
     """Main function."""
-    weechat.register('SCRIPT_NAME', 'SCRIPT_AUTHOR', 'SCRIPT_VERSION',
-                     'SCRIPT_LICENSE', 'SCRIPT_DESCRIPTION', '', '')
-    weechat.hook_command('SCRIPT_NAME', '', '', '', '', 'cmd_test_cb', '')
+    weechat.register('{SCRIPT_NAME}', '{SCRIPT_AUTHOR}', '{SCRIPT_VERSION}',
+                     '{SCRIPT_LICENSE}', '{SCRIPT_DESCRIPTION}', '', '')
+    weechat.hook_command('{SCRIPT_NAME}', '', '', '', '', 'cmd_test_cb', '')

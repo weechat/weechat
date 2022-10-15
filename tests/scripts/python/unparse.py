@@ -267,6 +267,14 @@ class UnparsePython(object):
         # ignore import
         pass
 
+    def _ast_list(self, node):
+        """Add an AST List in output."""
+        self.add(
+            '[',
+            self.make_list(node.elts),
+            ']',
+        )
+
     def _ast_module(self, node):
         """Add an AST Module in output."""
         self.add(node.body)
@@ -478,6 +486,14 @@ class UnparsePerl(UnparsePython):
                 '}',
             )
 
+    def _ast_list(self, node):
+        """Add an AST List in output."""
+        self.add(
+            '(',
+            self.make_list(node.elts),
+            ')',
+        )
+
     def _ast_pass(self, node):
         """Add an AST Pass in output."""
         pass
@@ -588,6 +604,14 @@ class UnparseRuby(UnparsePython):
                 'end',
             )
 
+    def _ast_list(self, node):
+        """Add an AST List in output."""
+        self.add(
+            'Array[',
+            self.make_list(node.elts),
+            ']',
+        )
+
     def _ast_pass(self, node):
         """Add an AST Pass in output."""
         pass
@@ -683,6 +707,14 @@ class UnparseLua(UnparsePython):
                 'end',
             )
 
+    def _ast_list(self, node):
+        """Add an AST List in output."""
+        self.add(
+            '{',
+            self.make_list(node.elts),
+            '}',
+        )
+
     def _ast_pass(self, node):
         """Add an AST Pass in output."""
         pass
@@ -704,7 +736,7 @@ class UnparseTcl(UnparsePython):
 
     def _ast_assign(self, node):
         """Add an AST Assign in output."""
-        exclude_types = (ast.Dict, ast.Str, ast.Subscript)
+        exclude_types = (ast.Dict, ast.List, ast.Str, ast.Subscript)
         self.add(
             self.fill,
             'set ',
@@ -835,6 +867,14 @@ class UnparseTcl(UnparsePython):
                 self.fill,
                 '}',
             )
+
+    def _ast_list(self, node):
+        """Add an AST List in output."""
+        self.add(
+            '[',
+            self.make_list(node.elts, sep=' '),
+            ']',
+        )
 
     def _ast_pass(self, node):
         """Add an AST Pass in output."""
@@ -1040,6 +1080,14 @@ class UnparseGuile(UnparsePython):
             )
         self.add(self.fill, ')')
 
+    def _ast_list(self, node):
+        """Add an AST List in output."""
+        self.add(
+            '\'(',
+            self.make_list(node.elts, sep=' '),
+            ')',
+        )
+
     def _ast_pass(self, node):
         """Add an AST Pass in output."""
         pass
@@ -1226,6 +1274,14 @@ class UnparsePhp(UnparsePython):
             self.unindent,
             self.fill,
             '}',
+        )
+
+    def _ast_list(self, node):
+        """Add an AST List in output."""
+        self.add(
+            'array(',
+            self.make_list(node.elts),
+            ')',
         )
 
     def _ast_if(self, node):

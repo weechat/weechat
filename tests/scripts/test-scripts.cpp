@@ -221,7 +221,7 @@ TEST(Scripts, API)
 
         /* load script (run tests) */
         snprintf (str_command, sizeof (str_command),
-                  "/script load -q %s/testapi.%s",
+                  "/script load -q %s/weechat_testapi.%s",
                   path_testapi_output_dir,
                   languages[i][1]);
         run_cmd (str_command);
@@ -231,7 +231,7 @@ TEST(Scripts, API)
 
         /* run tests */
         snprintf (str_command, sizeof (str_command),
-                  "/testapi.%s",
+                  "/weechat_testapi.%s",
                   languages[i][1]);
         run_cmd (str_command);
 
@@ -253,7 +253,7 @@ TEST(Scripts, API)
 
         /* unload script */
         snprintf (str_command, sizeof (str_command),
-                  "/script unload -q testapi.%s",
+                  "/script unload -q weechat_testapi.%s",
                   languages[i][1]);
         run_cmd (str_command);
 
