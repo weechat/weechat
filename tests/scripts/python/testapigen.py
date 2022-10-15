@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
 # Copyright (C) 2017-2022 Sébastien Helleu <flashcode@flashtux.org>
@@ -41,10 +41,7 @@ import argparse
 import ast
 from datetime import datetime
 import inspect
-try:
-    from StringIO import StringIO  # python 2
-except ImportError:
-    from io import StringIO  # python 3
+from io import StringIO
 import os
 import sys
 import traceback

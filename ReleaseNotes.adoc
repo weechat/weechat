@@ -20,6 +20,12 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 [[v3.8]]
 == Version 3.8 (under dev)
 
+[[v3.8_remove_python2_support]]
+=== Remove Python 2 support
+
+The CMake option `ENABLE_PYTHON2` and autotools option `--enable-python2`
+have been removed, and WeeChat can not be compiled with Python 2.x any more.
+
 [[v3.8_config_new_option_callbacks]]
 === Callbacks of function config_new_option
 

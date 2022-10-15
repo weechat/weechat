@@ -179,7 +179,7 @@ WeeChat:
 | gettext                                 |          | Internacjonalizacja (tłumaczenie wiadomości; język bazowy to Angielski).
 | ca-certificates                         |          | Certyfikaty dla połączeń SSL.
 | libaspell-dev / libenchant-dev          |          | Wtyczka spell.
-| python3-dev ^(2)^                       |          | Wtyczka python.
+| python3-dev                             | ≥ 3.0    | Wtyczka python.
 | libperl-dev                             |          | Wtyczka perl.
 | ruby2.7, ruby2.7-dev                    | ≥ 1.9.1  | Wtyczka ruby.
 | liblua5.4-dev                           |          | Wtyczka lua.
@@ -200,9 +200,7 @@ WeeChat:
 [NOTE]
 // TRANSLATION MISSING
 ^(1)^ Name comes from the Debian GNU/Linux Bullseye distribution, version and
-name can be different in other distributions. +
-^(2)^ Domyślnie używany jest Pythin 3.x. Chyba że włączysz opcję `+ENABLE_PYTHON2+`
-(zobacz niżej), zaleca się uzywania wersji 2.7 Pythona.
+name can be different in other distributions.
 
 Jeśli używasz dystrybujci bazującej na Debianie/Ubuntu, oraz jeśli posiadasz wpisy
 "deb-src" w pliku _/etc/apt/sources.list_, możesz zainstalować wszytkie zależności
@@ -316,9 +314,6 @@ Lista popularnych opcji:
 
 | ENABLE_PYTHON | `ON`, `OFF` | ON
 | Kompilacja <<scripting_plugins,wtyczki Python>>.
-
-| ENABLE_PYTHON2 | `ON`, `OFF` | OFF
-| Kompilacja <<scripting_plugins,wtyczki Python>> z użyciem Pythona 2 zamiast Pythona 3.
 
 | ENABLE_RELAY | `ON`, `OFF` | ON
 | Kompilacja <<relay,wtyczki relay>>.

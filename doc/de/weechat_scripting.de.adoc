@@ -144,10 +144,6 @@ Liste ist nicht vollständig):
 
 |===
 
-Mit Python 2, das mittlerweile veraltet ist und nicht mehr verwendet werden sollte, ist die
-Zeichenkette die an die Callbacks gesendet wird immer vom Typ `str` und kann deshalb bei den
-oben genannten Fällen, ungültige UTF-8 Daten enthalten.
-
 [[language_perl]]
 ==== Perl
 

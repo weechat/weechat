@@ -33,6 +33,10 @@ Tests::
 
   * scripts: add tests on config functions
 
+Build::
+
+  * python: remove support of Python 2.x
+
 [[v3.7]]
 == Version 3.7 (2022-10-09)
 

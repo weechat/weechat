@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2022-09-28 20:50+0200\n"
-"PO-Revision-Date: 2022-04-24 10:20+0200\n"
+"POT-Creation-Date: 2022-10-15 22:42+0200\n"
+"PO-Revision-Date: 2022-10-15 22:51+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: ru\n"
@@ -10666,11 +10666,6 @@ msgstr "Не могу записать лог-файл \"%s\"\n"
 msgid "%s%s: unable to redirect stderr"
 msgstr "%s не могу создать сервер\n"
 
-msgid ""
-"path to Python 2.x interpreter (*deprecated* since version 2.6, scripts must "
-"use Python 3 only)"
-msgstr ""
-
 #, fuzzy, c-format
 msgid "%s%s: unable to launch global interpreter"
 msgstr "%s не могу создать сервер\n"
@@ -13039,11 +13034,3 @@ msgstr "%s нет аргумента для параметра \"%s\"\n"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s DCC: не могу соединиться с отправителем\n"
-
-#, fuzzy, c-format
-#~ msgid "%sReal name of %s%s%s has been set to \"%s\""
-#~ msgstr "%s не могу сохранить конфигурационный файл pluginов\n"
-
-#, fuzzy
-#~ msgid "WeeChat session saved"
-#~ msgstr "слоган WeeChat"

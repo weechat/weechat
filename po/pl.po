@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2022-09-28 20:50+0200\n"
-"PO-Revision-Date: 2022-06-18 16:12+0200\n"
+"POT-Creation-Date: 2022-10-15 22:42+0200\n"
+"PO-Revision-Date: 2022-10-15 22:51+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
 "Language: pl\n"
@@ -13255,13 +13255,6 @@ msgstr "%s%s: nie można przekierować wyjścia"
 msgid "%s%s: unable to redirect stderr"
 msgstr "%s%s: nie można przekierować wyjścia błędu"
 
-msgid ""
-"path to Python 2.x interpreter (*deprecated* since version 2.6, scripts must "
-"use Python 3 only)"
-msgstr ""
-"ścieżka do interpretera Pythona 2.x (*przestarzałe* od wersji 2.6 skrypty "
-"muszą używać tylko Pythona 3)"
-
 #, c-format
 msgid "%s%s: unable to launch global interpreter"
 msgstr "%s%s: nie można uruchomić globalnego interpretera"
@@ -16149,15 +16142,3 @@ msgstr "%s%s: przekroczono czas na \"%s\" z %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: nie można połączyć: niespodziewany błąd (%d)"
-
-#~ msgid "enable buflist"
-#~ msgstr "włącz liste buforów"
-
-#, c-format
-#~ msgid "%sReal name of %s%s%s has been set to \"%s\""
-#~ msgstr "%sReal name dla %s%s%s zostało zmienione na \"%s\""
-
-#, fuzzy
-#~| msgid "WeeChat version"
-#~ msgid "WeeChat session saved"
-#~ msgstr "Wersja WeeChat"

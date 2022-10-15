@@ -5,7 +5,7 @@ on:
   - pull_request
 
 env:
-  WEECHAT_DEPENDENCIES: devscripts equivs python3-pip autopoint cmake ninja-build lcov pkg-config libncursesw5-dev gem2deb libperl-dev python2-dev python3-dev libaspell-dev liblua5.3-dev tcl8.6-dev guile-2.2-dev libv8-dev libcurl4-gnutls-dev libgcrypt20-dev libgnutls28-dev libzstd-dev zlib1g-dev curl libcpputest-dev php8.0-dev libphp8.0-embed libargon2-dev libsodium-dev pylint python3-bandit asciidoctor ruby-pygments.rb
+  WEECHAT_DEPENDENCIES: devscripts equivs python3-pip autopoint cmake ninja-build lcov pkg-config libncursesw5-dev gem2deb libperl-dev python3-dev libaspell-dev liblua5.3-dev tcl8.6-dev guile-2.2-dev libv8-dev libcurl4-gnutls-dev libgcrypt20-dev libgnutls28-dev libzstd-dev zlib1g-dev curl libcpputest-dev php8.0-dev libphp8.0-embed libargon2-dev libsodium-dev pylint python3-bandit asciidoctor ruby-pygments.rb
 
 jobs:
 
@@ -19,7 +19,6 @@ jobs:
           - { name: "cmake_gcc", cc: "gcc", cxx: "g++", tool: "cmake", args: "" }
           - { name: "cmake_gcc_ninja", cc: "gcc", cxx: "g++", tool: "cmake", args: "-G Ninja" }
           - { name: "cmake_gcc_no_nls", cc: "gcc", cxx: "g++", tool: "cmake", args: "-DENABLE_NLS=OFF" }
-          - { name: "cmake_gcc_py2", cc: "gcc", cxx: "g++", tool: "cmake", args: "-DENABLE_PYTHON2=ON" }
           - { name: "cmake_gcc_coverage", cc: "gcc", cxx: "g++", tool: "cmake", args: "-DENABLE_CODE_COVERAGE=ON" }
           - { name: "cmake_clang", cc: "clang", cxx: "clang++", tool: "cmake", args: "" }
           - { name: "autotools_gcc", cc: "gcc", cxx: "g++", tool: "autotools", args: "" }

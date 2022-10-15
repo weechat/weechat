@@ -161,7 +161,7 @@ WeeChat:
 | gettext                               |          | Internationalization (translation of messages; base language is English).
 | ca-certificates                       |          | Certificates for SSL connections.
 | libaspell-dev / libenchant-dev        |          | Spell plugin.
-| python3-dev ^(2)^                     |          | Python plugin.
+| python3-dev                           | ≥ 3.0    | Python plugin.
 | libperl-dev                           |          | Perl plugin.
 | ruby2.7, ruby2.7-dev                  | ≥ 1.9.1  | Ruby plugin.
 | liblua5.4-dev                         |          | Lua plugin.
@@ -180,9 +180,7 @@ WeeChat:
 
 [NOTE]
 ^(1)^ Name comes from the Debian GNU/Linux Bullseye distribution, version and
-name can be different in other distributions. +
-^(2)^ By default Python 3.x is used. If you enable option `+ENABLE_PYTHON2+`
-(see below), only the version 2.7 of Python is recommended.
+name can be different in other distributions.
 
 If you are using a Debian/Ubuntu based distribution, and if you have some
 "deb-src" source entries in your file _/etc/apt/sources.list_, you can install
@@ -296,9 +294,6 @@ List of commonly used options:
 
 | ENABLE_PYTHON | `ON`, `OFF` | ON
 | Compile <<scripting_plugins,Python plugin>>.
-
-| ENABLE_PYTHON2 | `ON`, `OFF` | OFF
-| Compile <<scripting_plugins,Python plugin>> using Python 2 instead of Python 3.
 
 | ENABLE_RELAY | `ON`, `OFF` | ON
 | Compile <<relay,Relay plugin>>.

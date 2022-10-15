@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2022-09-28 20:50+0200\n"
-"PO-Revision-Date: 2022-06-18 16:12+0200\n"
+"POT-Creation-Date: 2022-10-15 22:42+0200\n"
+"PO-Revision-Date: 2022-10-15 22:51+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
 "translation/ja_JP>\n"
@@ -12628,11 +12628,6 @@ msgstr "%s%s: 標準入力のリダイレクトに失敗"
 msgid "%s%s: unable to redirect stderr"
 msgstr "%s%s: 標準エラーのリダイレクトに失敗"
 
-msgid ""
-"path to Python 2.x interpreter (*deprecated* since version 2.6, scripts must "
-"use Python 3 only)"
-msgstr ""
-
 #, c-format
 msgid "%s%s: unable to launch global interpreter"
 msgstr "%s%s: グローバルインタプリタの起動に失敗"
@@ -15318,15 +15313,3 @@ msgstr "%s%s: \"%s\" のタイムアウト %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: 接続できません: 未定義のエラー (%d)"
-
-#~ msgid "enable buflist"
-#~ msgstr "buflist を有効化します"
-
-#, fuzzy, c-format
-#~ msgid "%sReal name of %s%s%s has been set to \"%s\""
-#~ msgstr "%sオプション \"%s\" の無効化に失敗しました"
-
-#, fuzzy
-#~| msgid "WeeChat version"
-#~ msgid "WeeChat session saved"
-#~ msgstr "WeeChat のバージョン"

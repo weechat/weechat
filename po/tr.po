@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2022-09-28 20:50+0200\n"
-"PO-Revision-Date: 2022-07-27 23:00+0300\n"
+"POT-Creation-Date: 2022-10-15 22:42+0200\n"
+"PO-Revision-Date: 2022-10-15 22:51+0200\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: tr\n"
@@ -12882,13 +12882,6 @@ msgstr "%s%s: stdout yeniden yönlendirilemiyor"
 msgid "%s%s: unable to redirect stderr"
 msgstr "%s%s: stderr yeniden yönlendirilemiyor"
 
-msgid ""
-"path to Python 2.x interpreter (*deprecated* since version 2.6, scripts must "
-"use Python 3 only)"
-msgstr ""
-"Python 2.x yorumlayıcısının yolu (2.6 sürümünden bu yana kullanılamaz, "
-"betikler yalnızca Python 3.x kullanmalıdır)"
-
 #, c-format
 msgid "%s%s: unable to launch global interpreter"
 msgstr "%s%s: Global yorumlayıcı başlatılamıyor"
@@ -15732,15 +15725,3 @@ msgstr "%s%s: \"%s\" için %s ile zaman aşımı"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: Bağlanılamıyor: Beklenmedik hata (%d)"
-
-#~ msgid "enable buflist"
-#~ msgstr "buflist'i etkinleştir"
-
-#, c-format
-#~ msgid "%sReal name of %s%s%s has been set to \"%s\""
-#~ msgstr "%s%s%s%s kullanıcısının gerçek adı \"%s\" olarak ayarlandı"
-
-#, fuzzy
-#~| msgid "WeeChat version"
-#~ msgid "WeeChat session saved"
-#~ msgstr "WeeChat sürümü"

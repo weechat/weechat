@@ -168,7 +168,7 @@ WeeChat optional sind:
 | gettext                               |          | Internationalisierung (Übersetzung der Mitteilungen; Hauptsprache ist englisch).
 | ca-certificates                       |          | Zertifikate für SSL Verbindungen.
 | libaspell-dev / libenchant-dev        |          | Spell Erweiterung.
-| python3-dev ^(2)^                     |          | Python Erweiterung.
+| python3-dev                           | ≥ 3.0    | Python Erweiterung.
 | libperl-dev                           |          | Perl Erweiterung.
 | ruby2.7, ruby2.7-dev                  | ≥ 1.9.1  | Ruby Erweiterung.
 | liblua5.4-dev                         |          | Lua Erweiterung.
@@ -187,9 +187,7 @@ WeeChat optional sind:
 
 [NOTE]
 ^(1)^ Der Name stammt von der Debian GNU/Linux Bullseye-Distribution,
-Version und Name können in anderen Distributionen anders lauten. +
-^(2)^ standardmäßig wird Python 3.x verwendet. Wird die Option `+ENABLE_PYTHON2+` aktiviert
-(siehe unten), sollte die Version 2.7 von Python genutzt werden.
+Version und Name können in anderen Distributionen anders lauten.
 
 Falls eine Debian/Ubuntu basierte Distribution genutzt wird und man einen
 "deb-src" Quelleintrag in _/etc/apt/sources.list_ eingetragen hat, dann ist
@@ -304,9 +302,6 @@ Liste von häufig verwendeten Optionen:
 
 | ENABLE_PYTHON | `ON`, `OFF` | ON
 | kompiliert <<scripting_plugins,Python Erweiterung>>.
-
-| ENABLE_PYTHON2 | `ON`, `OFF` | OFF
-| kompiliert <<scripting_plugins,Python Erweiterung>> nutzt Python 2 anstelle von Python 3.
 
 | ENABLE_RELAY | `ON`, `OFF` | ON
 | kompiliert <<relay,Relay Erweiterung>>.

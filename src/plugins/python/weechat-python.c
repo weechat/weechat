@@ -73,7 +73,6 @@ struct t_plugin_script *python_registered_script = NULL;
 const char *python_current_script_filename = NULL;
 PyThreadState *python_mainThreadState = NULL;
 PyThreadState *python_current_interpreter = NULL;
-char *python2_bin = NULL;
 char **python_buffer_output = NULL;
 
 /* outputs subroutines */
@@ -83,8 +82,6 @@ static PyMethodDef weechat_python_output_funcs[] = {
     { NULL, NULL, 0, NULL }
 };
 
-#if PY_MAJOR_VERSION >= 3
-/* module definition for python >= 3.x */
 static struct PyModuleDef moduleDef = {
     PyModuleDef_HEAD_INIT,
     "weechat",
@@ -107,7 +104,6 @@ static struct PyModuleDef moduleDefOutputs = {
     NULL,
     NULL
 };
-#endif /* PY_MAJOR_VERSION >= 3 */
 
 /*
  * string used to execute action "install":
@@ -133,64 +129,6 @@ char *python_action_remove_list = NULL;
  */
 char *python_action_autoload_list = NULL;
 
-
-/*
- * Gets path to python 2.x interpreter.
- *
- * Note: result must be freed after use.
- */
-
-char *
-weechat_python_get_python2_bin ()
-{
-    char *dir_separator, *py2_bin, *path, **paths, bin[4096];
-    char *versions[] = { "2.7", "2.6", "2.5", "2.4", "2.3", "2.2", "2", NULL };
-    int num_paths, i, j, rc;
-    struct stat stat_buf;
-
-    py2_bin = NULL;
-
-    dir_separator = weechat_info_get ("dir_separator", "");
-    path = getenv ("PATH");
-
-    if (dir_separator && path)
-    {
-        paths = weechat_string_split (path, ":", NULL,
-                                      WEECHAT_STRING_SPLIT_STRIP_LEFT
-                                      | WEECHAT_STRING_SPLIT_STRIP_RIGHT
-                                      | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
-                                      0, &num_paths);
-        if (paths)
-        {
-            for (i = 0; i < num_paths; i++)
-            {
-                for (j = 0; versions[j]; j++)
-                {
-                    snprintf (bin, sizeof (bin), "%s%s%s%s",
-                              paths[i], dir_separator, "python",
-                              versions[j]);
-                    rc = stat (bin, &stat_buf);
-                    if ((rc == 0) && (S_ISREG(stat_buf.st_mode)))
-                    {
-                        py2_bin = strdup (bin);
-                        break;
-                    }
-                }
-                if (py2_bin)
-                    break;
-            }
-            weechat_string_free_split (paths);
-        }
-    }
-
-    if (dir_separator)
-        free (dir_separator);
-
-    if (!py2_bin)
-        py2_bin = strdup ("python");
-
-    return py2_bin;
-}
 
 /*
  * Converts a python unicode to a C UTF-8 string.
@@ -234,23 +172,16 @@ weechat_python_hashtable_map_cb (void *data,
 
     dict = (PyObject *)data;
 
-#if PY_MAJOR_VERSION >= 3
     /* key */
     if (weechat_utf8_is_valid (key, -1, NULL))
-        dict_key = Py_BuildValue ("s", key);  /* Python 3: str */
+        dict_key = Py_BuildValue ("s", key);  /* str */
     else
-        dict_key = Py_BuildValue ("y", key);  /* Python 3: bytes */
+        dict_key = Py_BuildValue ("y", key);  /* bytes */
     /* value */
     if (weechat_utf8_is_valid (value, -1, NULL))
-        dict_value = Py_BuildValue ("s", value);  /* Python 3: str */
+        dict_value = Py_BuildValue ("s", value);  /* str */
     else
-        dict_value = Py_BuildValue ("y", value);  /* Python 3: bytes */
-#else
-    /* key */
-    dict_key = Py_BuildValue ("s", key);  /* Python 2: str */
-    /* value */
-    dict_value = Py_BuildValue ("s", value);  /* Python 2: str */
-#endif
+        dict_value = Py_BuildValue ("y", value);  /* bytes */
 
     if (dict_key && dict_value)
         PyDict_SetItem (dict, dict_key, dict_value);
@@ -517,14 +448,10 @@ weechat_python_exec (struct t_plugin_script *script,
                 {
                     case 's': /* string */
                         argv2[i] = argv[i];
-#if PY_MAJOR_VERSION >= 3
                         if (weechat_utf8_is_valid (argv2[i], -1, NULL))
-                            format2[i] = 's';  /* Python 3: str */
+                            format2[i] = 's';  /* str */
                         else
-                            format2[i] = 'y';  /* Python 3: bytes */
-#else
-                        format2[i] = 's';  /* Python 2: str */
-#endif
+                            format2[i] = 'y';  /* bytes */
                         break;
                     case 'i': /* integer */
                         argv2[i] = PyLong_FromLong ((long)(*((int *)argv[i])));
@@ -679,21 +606,11 @@ end:
  * Initializes the "weechat" module.
  */
 
-#if PY_MAJOR_VERSION >= 3
 static PyObject *weechat_python_init_module_weechat ()
-#else
-void weechat_python_init_module_weechat ()
-#endif /* PY_MAJOR_VERSION >= 3 */
 {
     PyObject *weechat_module, *weechat_dict;
 
-#if PY_MAJOR_VERSION >= 3
-    /* python >= 3.x */
     weechat_module = PyModule_Create (&moduleDef);
-#else
-    /* python <= 2.x */
-    weechat_module = Py_InitModule ("weechat", weechat_python_funcs);
-#endif /* PY_MAJOR_VERSION >= 3 */
 
     if (!weechat_module)
     {
@@ -701,11 +618,7 @@ void weechat_python_init_module_weechat ()
                         weechat_gettext ("%s%s: unable to initialize WeeChat "
                                          "module"),
                         weechat_prefix ("error"), PYTHON_PLUGIN_NAME);
-#if PY_MAJOR_VERSION >= 3
         return NULL;
-#else
-        return;
-#endif /* PY_MAJOR_VERSION >= 3 */
     }
 
     /* define some constants */
@@ -757,9 +670,7 @@ void weechat_python_init_module_weechat ()
     PyDict_SetItemString (weechat_dict, "WEECHAT_HOOK_SIGNAL_INT", PyUnicode_FromString (WEECHAT_HOOK_SIGNAL_INT));
     PyDict_SetItemString (weechat_dict, "WEECHAT_HOOK_SIGNAL_POINTER", PyUnicode_FromString (WEECHAT_HOOK_SIGNAL_POINTER));
 
-#if PY_MAJOR_VERSION >= 3
     return weechat_module;
-#endif /* PY_MAJOR_VERSION >= 3 */
 }
 
 /*
@@ -771,14 +682,7 @@ weechat_python_set_output ()
 {
     PyObject *weechat_outputs;
 
-#if PY_MAJOR_VERSION >= 3
-    /* python >= 3.x */
     weechat_outputs = PyModule_Create (&moduleDefOutputs);
-#else
-    /* python <= 2.x */
-    weechat_outputs = Py_InitModule ("weechatOutputs",
-                                     weechat_python_output_funcs);
-#endif /* PY_MAJOR_VERSION >= 3 */
 
     if (weechat_outputs)
     {
@@ -817,9 +721,7 @@ struct t_plugin_script *
 weechat_python_load (const char *filename, const char *code)
 {
     char *argv[] = { "__weechat_plugin__" , NULL };
-#if PY_MAJOR_VERSION >= 3
     wchar_t *wargv[] = { NULL, NULL };
-#endif /* PY_MAJOR_VERSION >= 3 */
     FILE *fp;
     PyObject *python_path, *path, *module_main, *globals, *rc;
     char *weechat_sharedir, *weechat_data_dir;
@@ -853,8 +755,6 @@ weechat_python_load (const char *filename, const char *code)
 
     /* PyEval_AcquireLock (); */
     python_current_interpreter = Py_NewInterpreter ();
-#if PY_MAJOR_VERSION >= 3
-    /* python >= 3.x */
     len = mbstowcs (NULL, argv[0], 0) + 1;
     wargv[0] = malloc ((len + 1) * sizeof (wargv[0][0]));
     if (wargv[0])
@@ -868,10 +768,6 @@ weechat_python_load (const char *filename, const char *code)
         if (wargv[0])
             free (wargv[0]);
     }
-#else
-    /* python <= 2.x */
-    PySys_SetArgv (1, argv);
-#endif /* PY_MAJOR_VERSION >= 3 */
 
     if (!python_current_interpreter)
     {
@@ -897,13 +793,7 @@ weechat_python_load (const char *filename, const char *code)
         if (str_sharedir)
         {
             snprintf (str_sharedir, len, "%s/python", weechat_sharedir);
-#if PY_MAJOR_VERSION >= 3
-            /* python >= 3.x */
             path = PyUnicode_FromString (str_sharedir);
-#else
-            /* python <= 2.x */
-            path = PyBytes_FromString (str_sharedir);
-#endif /* PY_MAJOR_VERSION >= 3 */
             if (path != NULL)
             {
                 PyList_Insert (python_path, 0, path);
@@ -923,13 +813,7 @@ weechat_python_load (const char *filename, const char *code)
         if (str_home)
         {
             snprintf (str_home, len, "%s/python", weechat_data_dir);
-#if PY_MAJOR_VERSION >= 3
-            /* python >= 3.x */
             path = PyUnicode_FromString (str_home);
-#else
-            /* python <= 2.x */
-            path = PyBytes_FromString (str_home);
-#endif /* PY_MAJOR_VERSION >= 3 */
             if (path != NULL)
             {
                 PyList_Insert (python_path, 0, path);
@@ -1430,36 +1314,6 @@ weechat_python_hdata_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns python info "python2_bin".
- */
-
-char *
-weechat_python_info_python2_bin_cb (const void *pointer, void *data,
-                                    const char *info_name,
-                                    const char *arguments)
-{
-    int rc;
-    struct stat stat_buf;
-
-    /* make C compiler happy */
-    (void) pointer;
-    (void) data;
-    (void) info_name;
-    (void) arguments;
-
-    if (python2_bin && (strcmp (python2_bin, "python") != 0))
-    {
-        rc = stat (python2_bin, &stat_buf);
-        if ((rc != 0) || (!S_ISREG(stat_buf.st_mode)))
-        {
-            free (python2_bin);
-            python2_bin = weechat_python_get_python2_bin ();
-        }
-    }
-    return (python2_bin) ? strdup (python2_bin) : NULL;
-}
-
-/*
  * Returns python info "python_eval".
  */
 
@@ -1646,18 +1500,6 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     if (!python_buffer_output)
         return WEECHAT_RC_ERROR;
 
-    /*
-     * hook info to get path to python 2.x interpreter
-     * (some scripts using hook_process need that)
-     */
-    python2_bin = weechat_python_get_python2_bin ();
-    weechat_hook_info ("python2_bin",
-                       N_("path to Python 2.x interpreter "
-                          "(*deprecated* since version 2.6, scripts must use "
-                          "Python 3 only)"),
-                       NULL,
-                       &weechat_python_info_python2_bin_cb, NULL, NULL);
-
     PyImport_AppendInittab ("weechat",
                             &weechat_python_init_module_weechat);
 
@@ -1752,8 +1594,6 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
     }
 
     /* free some data */
-    if (python2_bin)
-        free (python2_bin);
     if (python_action_install_list)
         free (python_action_install_list);
     if (python_action_remove_list)

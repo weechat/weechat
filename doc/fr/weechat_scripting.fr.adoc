@@ -143,10 +143,6 @@ pas exhaustive) :
 
 |===
 
-En Python 2, qui est déconseillé et ne devrait plus être utilisé, les chaînes
-envoyées aux fonctions de rappel sont toujours de type `str`, et peuvent contenir
-des données invalides UTF-8, dans les cas mentionnés ci-dessus.
-
 [[language_perl]]
 ==== Perl
 

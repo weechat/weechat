@@ -180,7 +180,7 @@ WeeChat:
 | gettext                                 |             | 国際化 (メッセージの翻訳; ベース言語は英語です)
 | ca-certificates                         |             | SSL 接続に必要な証明書、relay プラグインで SSL サポート
 | libaspell-dev / libenchant-dev          |             | spell プラグイン
-| python3-dev ^(2)^                       |             | python プラグイン
+| python3-dev                             | 3.0 以上    | python プラグイン
 | libperl-dev                             |             | perl プラグイン
 | ruby2.7, ruby2.7-dev                    | 1.9.1 以上  | ruby プラグイン
 | liblua5.4-dev                           |             | lua プラグイン
@@ -201,10 +201,7 @@ WeeChat:
 [NOTE]
 // TRANSLATION MISSING
 ^(1)^ Name comes from the Debian GNU/Linux Bullseye distribution, version and
-name can be different in other distributions. +
-// TRANSLATION MISSING
-^(2)^ By default Python 3.x is used. If you enable option `+ENABLE_PYTHON2+` (see
-below), only the version 2.7 of Python is recommended.
+name can be different in other distributions.
 
 Debian および Ubuntu
 ベースのディストリビューションを使っており、_/etc/apt/sources.list_ ファイルで "deb-src"
@@ -319,10 +316,6 @@ CMake に対するオプションを指定するには、以下の書式を使�
 
 | ENABLE_PYTHON | `ON`, `OFF` | ON
 | <<scripting_plugins,Python プラグイン>>のコンパイル。
-
-// TRANSLATION MISSING
-| ENABLE_PYTHON2 | `ON`, `OFF` | OFF
-| Compile <<scripting_plugins,Python plugin>> using Python 2 instead of Python 3.
 
 | ENABLE_RELAY | `ON`, `OFF` | ON
 | <<relay,リレープラグイン>>のコンパイル。

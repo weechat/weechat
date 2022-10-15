@@ -162,7 +162,7 @@ Le tableau suivant liste les paquets optionnels pour compiler WeeChat :
 | gettext                                  |          | Internationalisation (traduction des messages ; la langue de base est l'anglais).
 | ca-certificates                          |          | Certificats pour les connexions SSL.
 | libaspell-dev / libenchant-dev           |          | Extension spell.
-| python3-dev ^(2)^                        |          | Extension python.
+| python3-dev                              | ≥ 3.0    | Extension python.
 | libperl-dev                              |          | Extension perl.
 | ruby2.7, ruby2.7-dev                     | ≥ 1.9.1  | Extension ruby.
 | liblua5.4-dev                            |          | Extension lua.
@@ -182,9 +182,6 @@ Le tableau suivant liste les paquets optionnels pour compiler WeeChat :
 [NOTE]
 ^(1)^ Le nom provient de la distribution GNU/Linux Debian Bullseye, la version
 et le nom peuvent être différents dans les autres distributions.
-^(2)^ Par défaut Python 3.x est utilisé. Si vous activez l'option
-`+ENABLE_PYTHON2+` (voir ci-dessous), seule la version 2.7 de Python est
-recommandée.
 
 Si vous utilisez une distribution basée sur Debian ou Ubuntu, et si vous avez
 des entrées source "deb-src" dans votre fichier _/etc/apt/sources.list_, vous
@@ -298,10 +295,6 @@ Liste des options couramment utilisées :
 
 | ENABLE_PYTHON | `ON`, `OFF` | ON
 | Compiler <<scripting_plugins,l'extension Python>>.
-
-| ENABLE_PYTHON2 | `ON`, `OFF` | OFF
-| Compiler <<scripting_plugins,l'extension Python>> avec Python 2 au lieu de
-  Python 3.
 
 | ENABLE_RELAY | `ON`, `OFF` | ON
 | Compiler <<relay,l'extension Relay>>.

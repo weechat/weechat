@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
 # Copyright (C) 2017-2022 Sébastien Helleu <flashcode@flashtux.org>
@@ -32,10 +32,7 @@ import ast
 import inspect
 import os
 import select
-try:
-    from StringIO import StringIO  # python 2
-except ImportError:
-    from io import StringIO  # python 3
+from io import StringIO
 import sys
 
 sys.dont_write_bytecode = True
@@ -148,8 +145,6 @@ class UnparsePython(object):
 
     def is_number(self, node):  # pylint: disable=no-self-use
         """Check if the node is a number."""
-        # in python 2, number -1 is Num(n=-1)
-        # in Python 3, number -1 is UnaryOp(op=USub(), operand=Num(n=1))
         return (isinstance(node, ast.Num) or
                 (isinstance(node, ast.UnaryOp) and
                  isinstance(node.op, (ast.UAdd, ast.USub))))

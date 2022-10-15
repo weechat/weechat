@@ -160,7 +160,7 @@ https://github.com/weechat/weechat-container[weechat-container ^↗^,window=_bl
 | gettext                                |          | Интернационализацију (превод порука; основни језик је енглески).
 | ca-certificates                        |          | Сертификате за SSL везе.
 | libaspell-dev / libenchant-dev         |          | Spell додатак.
-| python3-dev ^(2)^                      |          | Python додатак.
+| python3-dev                            | ≥ 3.0    | Python додатак.
 | libperl-dev                            |          | Perl додатак.
 | ruby2.7, ruby2.7-dev                   | ≥ 1.9.1  | Ruby додатак.
 | liblua5.4-dev                          |          | Lua додатак.
@@ -179,8 +179,7 @@ https://github.com/weechat/weechat-container[weechat-container ^↗^,window=_bl
 
 [NOTE]
 ^(1)^ Име долази из Debian GNU/Linux Bullseye дистрибуције, верзија и
-име могу да буду другачији у осталим дистрибуцијама. +
-^(2)^ Подразумевано се користи Python 3.x. Ако укључите опцију `+ENABLE_PYTHON2+` (погледајте испод), препоручује се само верзија 2.7 језика Python.
+име могу да буду другачији у осталим дистрибуцијама.
 
 Ако користите дистрибуцију базирану на Debian/Ubuntu и ако имате неке „deb-src” изворне ставке у фајлу _/etc/apt/sources.list_, можете инсталирати све зависности командом:
 
@@ -292,9 +291,6 @@ $ make install
 
 | ENABLE_PYTHON | `ON`, `OFF` | ON
 | Компајлира <<scripting_plugins,Python додатак>>.
-
-| ENABLE_PYTHON2 | `ON`, `OFF` | OFF
-| Компајлира <<scripting_plugins,Python додатак>> користећи Python 2 уместо Python 3.
 
 | ENABLE_RELAY | `ON`, `OFF` | ON
 | Компајлира <<relay,Relay додатак>>.

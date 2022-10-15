@@ -60,8 +60,6 @@
 
 | php | php_version | wersja użytego interpretera | -
 
-| python | python2_bin | ścieżka do interpretera Pythona 2.x (*przestarzałe* od wersji 2.6 skrypty muszą używać tylko Pythona 3) | -
-
 | python | python_eval | wykonywanie kodu źródłowego | kod źródłowy do wykonania
 
 | python | python_interpreter | nazwa użytego interpretera | -
