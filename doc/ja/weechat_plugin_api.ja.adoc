@@ -15331,7 +15331,7 @@ bar = weechat.bar_new("mybar", "off", "100", "window", "", "top", "horizontal", 
 With WeeChat ≥ 2.9, in Ruby, the 4 colors (color_fg, color_delim, color_bg,
 color_bg_inactive) must be given in an array of 4 strings (due to a Ruby
 limitation of 15 arguments by function), see the
-link:++weechat_scripting.en.html#_ruby++[WeeChat scripting guide ^↗^,window=_blank]
+link:++weechat_scripting.ja.html#_ruby++[WeeChat scripting guide ^↗^,window=_blank]
 for more info.
 
 ==== bar_set

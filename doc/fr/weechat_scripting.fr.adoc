@@ -67,7 +67,7 @@ Si quelque chose doit être lancé en arrière-plan, la fonction `+hook_process+
 peut être utilisée. Voir l'exemple dans le chapitre
 <<hook_process,Lancer un processus en tâche de fond>> et la documentation sur
 la fonction `+hook_process+` dans la
-link:weechat_plugin_api.en.html#_hook_process[Référence API extension WeeChat ^↗^,window=_blank].
+link:weechat_plugin_api.fr.html#_hook_process[Référence API extension WeeChat ^↗^,window=_blank].
 
 [[languages_specificities]]
 === Spécificités des langages
