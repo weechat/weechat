@@ -10,9 +10,6 @@
 :docinfo1:
 
 
-Questo documento è stato scritto per le versioni di WeeChat ≥ 0.3.0, ma dovrebbe
-essere usato preferibilmente con l'ultima versione stabile di WeeChat.
-
 // TRANSLATION MISSING
 Translators:
 
@@ -215,17 +212,10 @@ windows.
 [[buffers_list]]
 === Come si può visualizzare la lista dei buffer sulla sinistra?
 
-With WeeChat ≥ 1.8, the plugin link:weechat_user.it.html#buflist[buflist ^↗^,window=_blank]
+The plugin link:weechat_user.it.html#buflist[buflist ^↗^,window=_blank]
 is loaded and enabled by default.
 
-With an older version, you can install script _buffers.pl_:
-
-----
-/script install buffers.pl
-----
-
-To limit size of bar (replace "buflist" by "buffers" if you're using the script
-_buffers.pl_):
+To limit size of bar:
 
 ----
 /set weechat.bar.buflist.size_max 15
@@ -242,21 +232,6 @@ bar with your mouse wheel.
 
 Default keys to scroll _buflist_ bar are kbd:[F1] (or kbd:[Ctrl+F1]), kbd:[F2]
 (or kbd:[Ctrl+F2]), kbd:[Alt+F1] and kbd:[Alt+F2].
-
-For script _buffers.pl_, you can define keys, similar to the existing keys to
-scroll nicklist. +
-For example to use kbd:[F1], kbd:[F2], kbd:[Alt+F1] and kbd:[Alt+F2]:
-
-----
-/key bind meta-OP /bar scroll buffers * -100%
-/key bind meta-OQ /bar scroll buffers * +100%
-/key bind meta-meta-OP /bar scroll buffers * b
-/key bind meta-meta-OQ /bar scroll buffers * e
-----
-
-[NOTE]
-I tasti "meta-OP" e "meta-OQ" possono essere differenti nel proprio terminale.
-Per trovare il codice tasto digitare kbd:[Alt+k] poi il tast.
 
 // TRANSLATION MISSING
 [[customize_buflist]]
@@ -378,9 +353,8 @@ non viene usato da un'altra barra:
 === Come posso copiare/incollare testo senza incollare la lista nick?
 
 // TRANSLATION MISSING
-With WeeChat ≥ 1.0, you can use the bare display (default key: kbd:[Alt+l] (`L`)),
-which will show just the contents of the currently selected window,
-without any formatting.
+You can use the bare display (default key: kbd:[Alt+l] (`L`)), which shows
+just the contents of the currently selected window, without any formatting.
 
 È possibile usare un terminale con la selezione rettangolare (come
 rxvt-unicode, konsole, gnome-terminal, ...). La combinazione tasti in
@@ -396,7 +370,7 @@ Un'altra soluzione è spostare la lista nick in alto o in basso, per esempio:
 === Come posso cliccare su URL lunghi (più di una riga)?
 
 // TRANSLATION MISSING
-With WeeChat ≥ 1.0, you can use the bare display (default key: kbd:[Alt+l] (`L`)).
+You can use the bare display (default key: kbd:[Alt+l] (`L`)).
 
 // TRANSLATION MISSING
 To make opening URLs easier, you can:
@@ -409,7 +383,7 @@ To make opening URLs easier, you can:
 ----
 
 // TRANSLATION MISSING
-* disable alignment for multiline words (WeeChat ≥ 1.7):
+* disable alignment for multiline words:
 
 ----
 /set weechat.look.align_multiline_words off
@@ -422,9 +396,9 @@ To make opening URLs easier, you can:
 /set weechat.look.align_end_of_lines time
 ----
 
-Con WeeChat ≥ 0.3.6, si può abilitare l'opzione "eat_newline_glitch", in
-modo che non venga aggiunto il carattere di nuova riga all'inizio di ogni riga
-visualizzata (non interferisce con la selezione delle url):
+// TRANSLATION MISSING
+You can enable option "eat_newline_glitch", so that new line char is not added
+at the end of each line displayed (it will not break URL selection):
 
 ----
 /set weechat.look.eat_newline_glitch on
@@ -476,8 +450,6 @@ In WeeChat, the new value is immediately used:
 [[use_256_colors]]
 === Come posso usare 256 colori in WeeChat?
 
-I 256 colori sono supportati nelle versioni di WeeChat ≥ 0.3.4.
-
 Per prima cosa verificare che la variabile di ambiente _TERM_ sia corretta, i
 valori raccomandati sono:
 
@@ -500,17 +472,16 @@ term screen-256color
 
 // TRANSLATION MISSING
 If your _TERM_ variable has wrong value and that WeeChat is already running,
-you can change it with these two commands (with WeeChat ≥ 1.0):
+you can change it with these two commands:
 
 ----
 /set env TERM screen-256color
 /upgrade
 ----
 
-Per la versione 0.3.4, bisogna usare il comando `/color` per aggiungere nuovi colori.
-
-Per le versioni ≥ 0.3.5, è possibile usare qualsiasi numero di colore nelle
-opzioni (opzionale: si possono aggiungere gli alias ai colori con il comando `/color`).
+// TRANSLATION MISSING
+You can use any color number in options (optional: you can add color aliases
+with command `/color`).
 
 // TRANSLATION MISSING
 Please read the link:weechat_user.it.html#colors[User's guide / Colors ^↗^,window=_blank]
@@ -740,8 +711,6 @@ Per trovare il codice tasto digitare kbd:[Alt+k] poi il tast.
 [[mouse_not_working]]
 === Il mouse non funziona affatto, cosa posso fare?
 
-Il mouse è supportato con le versioni di WeeChat ≥ 0.3.6.
-
 Per prima cosa provare ad abilitare il mouse:
 
 ----
@@ -794,13 +763,6 @@ kbd:[Shift]).
 If you are using macOS, you must install `openssl` from Homebrew.
 A CA file will be bootstrapped using certificates from the system keychain.
 
-// TRANSLATION MISSING
-With WeeChat ≤ 3.1, you can set the path to system certificates:
-
-----
-/set weechat.network.gnutls_ca_file "/usr/local/etc/openssl/cert.pem"
-----
-
 Se si verificano problemi con l'handshake gnutls, si può cercare di
 usare una chiave Diffie-Hellman più piccola (la predefinita è 2048):
 
@@ -826,8 +788,7 @@ should be, you can specify the fingerprint (SHA-512, SHA-256 or SHA-1):
 [[irc_ssl_handshake_error]]
 === Alla connessione al server con SSL ottengo solo l'errore "handshake TLS fallito", cosa posso fare?
 
-Provare una stringa di priorità diversa (solo WeeChat ≥ 0.3.5), sostituendo
-"xxx" con il nome del server:
+Provare una stringa di priorità diversa, sostituendo "xxx" con il nome del server:
 
 ----
 /set irc.server.xxx.ssl_priorities "NORMAL:-VERS-TLS-ALL:+VERS-TLS1.0:+VERS-SSL3.0:%COMPAT"
@@ -837,23 +798,8 @@ Provare una stringa di priorità diversa (solo WeeChat ≥ 0.3.5), sostituendo
 === Come ci si può connettere al server libera via SSL?
 
 // TRANSLATION MISSING
-With WeeChat ≤ 3.1, set option _weechat.network.gnutls_ca_file_ to file with
-certificates:
-
-----
-/set weechat.network.gnutls_ca_file "/etc/ssl/certs/ca-certificates.crt"
-----
-
-// TRANSLATION MISSING
-Note: if you are running macOS with homebrew openssl installed, you can do:
-
-----
-/set weechat.network.gnutls_ca_file "/usr/local/etc/openssl/cert.pem"
-----
-
-[NOTE]
-Verificare la presenza di questo file sul sistema (solitamente installato dal
-pacchetto "ca-certificates").
+Check that you have certificates installed on your system, this is commonly
+provided by the package "ca-certificates".
 
 Impostare la porta del server, SSL, poi riconnettersi:
 
@@ -920,8 +866,8 @@ For a single server:
 ----
 
 // TRANSLATION MISSING
-With WeeChat ≥ 3.5, you can also add the current channel in the "autojoin"
-server option using the `/autojoin` command:
+You can also add the current channel in the "autojoin" server option using the
+`/autojoin` command:
 
 ----
 /autojoin add
@@ -935,28 +881,7 @@ Or another channel:
 ----
 
 // TRANSLATION MISSING
-With WeeChat ≤ 3.4, you can use the `/set` command to edit the list of autojoin
-channels, for example for the "libera" server:
-
-----
-/set irc.server.libera.autojoin [TAB]
-----
-
-// TRANSLATION MISSING
-[NOTE]
-You can complete the name and value of option with the kbd:[Tab] key
-(or kbd:[Shift+Tab] for partial completion, useful for the name). +
-This way you don't have to type the whole list of channels.
-
-// TRANSLATION MISSING
-You can also use the `/fset` command to edit the list of channels:
-
-----
-/fset autojoin
-----
-
-// TRANSLATION MISSING
-With WeeChat ≤ 3.4, another solution is to use a script:
+There are also scripts:
 
 ----
 /script search autojoin
@@ -1007,9 +932,9 @@ link:weechat_user.it.html#irc_smart_filter_join_part_quit[Guida per l’Utente /
 === Come posso filtrare i messaggi visualizzati all'ingresso su un canale IRC?
 
 // TRANSLATION MISSING
-With WeeChat ≥ 0.4.1, you can choose which messages are displayed when
-joining a channel with the option _irc.look.display_join_message_ (see
-`+/help irc.look.display_join_message+` for more info).
+You can choose which messages are displayed when joining a channel with the
+option _irc.look.display_join_message_ (see `+/help irc.look.display_join_message+`
+for more info).
 
 // TRANSLATION MISSING
 To hide messages (but keep them in buffer), you can filter them using the tag
@@ -1067,18 +992,14 @@ massimo 25 nick:
 /set irc.server_default.away_check_max_nicks 25
 ----
 
-[NOTE]
-Per WeeChat ≤ 0.3.3, le opzioni sono _irc.network.away_check_ e
-_irc.network.away_check_max_nicks_.
-
 [[highlight_notification]]
 === Come posso essere avvisato quando qualcuno mi cerca in un canale?
 
 // TRANSLATION MISSING
-With WeeChat ≥ 1.0, there is a default trigger "beep" which sends a _BEL_ to
-the terminal on a highlight or private message. Thus you can configure your
-terminal (or multiplexer like screen/tmux) to run a command or play a sound
-when a _BEL_ occurs.
+There is a default trigger "beep" which sends a _BEL_ to the terminal on
+a highlight or private message. Thus you can configure your terminal
+(or multiplexer like screen/tmux) to run a command or play a sound when
+a _BEL_ occurs.
 
 // TRANSLATION MISSING
 Or you can add a command in "beep" trigger:
@@ -1106,8 +1027,9 @@ Altri script correlati:
 [[disable_highlights_for_specific_nicks]]
 === How can I disable highlights for specific nicks?
 
-With WeeChat ≥ 0.3.4 you can use the
-link:weechat_user.en.html#max_hotlist_level_nicks[hotlist_max_level_nicks_add ^↗^,window=_blank]
+// TRANSLATION MISSING
+You can use the
+link:weechat_user.it.html#max_hotlist_level_nicks[hotlist_max_level_nicks_add ^↗^,window=_blank]
 buffer property to set the max hotlist level for some nicks, per buffer,
 or per group of buffers (like IRC servers).
 
@@ -1165,8 +1087,8 @@ Si deve impostare in questo modo:
 === How can I install scripts? Are scripts compatible with other IRC clients?
 
 // TRANSLATION MISSING
-With WeeChat ≥ 0.3.9 you can use the command `/script` to install and manage scripts
-(see `/help script` for help). For older versions there is weeget.py and script.pl.
+You can use the command `/script` to install and manage scripts (see `/help script`
+for help).
 
 Gli script non sono compatibili con altri client IRC.
 
@@ -1182,8 +1104,9 @@ If still not working, try to manually delete the scripts file (in your shell):
 $ rm ~/.cache/weechat/script/plugins.xml.gz
 ----
 
+// TRANSLATION MISSING
 [NOTE]
-With WeeChat ≤ 3.1, the path should be: _~/.weechat/script/plugins.xml.gz_.
+If you are not using the XDG directories, the path could be: _~/.weechat/script/plugins.xml.gz_.
 
 And update scripts again in WeeChat:
 
@@ -1227,11 +1150,6 @@ You have to reload the spell plugin:
 ----
 /plugin reload spell
 ----
-
-// TRANSLATION MISSING
-[NOTE]
-With WeeChat ≤ 2.4, the "spell" plugin was named "aspell", so the command is:
-`/plugin reload aspell`.
 
 [[settings]]
 == Impostazioni

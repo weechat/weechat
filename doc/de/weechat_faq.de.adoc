@@ -10,13 +10,10 @@
 :docinfo1:
 
 
-Diese Dokumentation bezieht sich auf die WeeChat Version ≥ 0.3.0. Es sollte aber
-vorzugsweise immer die aktuell veröffentlichte Version von WeeChat genutzt werden.
-
 Übersetzer:
 
 * Juergen Descher <jhdl@gmx.net>, 2009
-* Nils Görs <weechatter@arcor.de>, 2009-2018
+* Nils Görs <weechatter@arcor.de>, 2009-2022
 
 toc::[]
 
@@ -200,17 +197,11 @@ von einem oder mehreren Fenstern gleichzeitig angezeigt werden.
 [[buffers_list]]
 === Wie kann ich eine Liste mit den Buffern z.B. auf der linken Seite anzeigen lassen?
 
-Ab WeeChat ≥ 1.8 wird standardmäßig die link:weechat_user.de.html#buflist[buflist-Erweiterung ^↗^,window=_blank]
-automatisch geladen und verwendet.
+// TRANSLATION MISSING
+The plugin link:weechat_user.de.html#buflist[buflist ^↗^,window=_blank]
+is loaded and enabled by default.
 
-Bei älteren Versionen kann stattdessen das Skript _buffers.pl_ installiert werden:
-
-----
-/script install buffers.pl
-----
-
-Um die maximale Breite der buflist-Spalte zu reduzieren (ersetze "buflist" durch "buffers", wenn das
-Skript _buffers.pl_ genutzt wird), nutze folgende Option:
+Um die maximale Breite der buflist-Spalte zu reduzieren, nutze folgende Option:
 
 ----
 /set weechat.bar.buflist.size_max 15
@@ -229,26 +220,6 @@ Die Standardtastenbelegung zum Bewegen in der _buflist_ Bar ist folgende:
 kbd:[F1] oder kbd:[Ctrl+F1]) zum Hoch-Scrollen,
 kbd:[F2] oder kbd:[Ctrl+F2] zum Runter-Scrollen,
 kbd:[Alt+F1] und kbd:[Alt+F2] um an den Anfang bzw. an das Ende der Liste zu springen.
-
-Wird das Skript _buffers.pl_ verwendet,
-müssen die entsprechenden Tasten selbst definiert werden.
-Sie sind dann vergleichbar mit den vorhanden Tasten für die Nicklist. +
-Um zum Beispiel folgende Tasten nutzen zu können:
-kbd:[F1], kbd:[F2] um zu scrollen,
-oder kbd:[Alt+F1] und kbd:[Alt+F2] um an den Anfang bzw. das Ende zu springen,
-finden folgende WeeChat-Befehle Anwendung:
-
-----
-/key bind meta-OP /bar scroll buffers * -100%
-/key bind meta-OQ /bar scroll buffers * +100%
-/key bind meta-meta-OP /bar scroll buffers * b
-/key bind meta-meta-OQ /bar scroll buffers * e
-----
-
-[NOTE]
-Die Tasten "meta-OP" und "meta-OQ" können im Hinblick auf das jeweils genutzte Terminal variieren.
-Um die korrekten Tasten zu finden, sollte man mit kbd:[Alt+k] die gewünschte Tastenkombination einfangen.
-Siehe auch: link:weechat_user.de.html#key_bindings_command_line[Benutzerhandbuch / Tastenbelegung ^↗^,window=_blank].
 
 [[customize_buflist]]
 === Wie kann ich die Darstellung der Bufferliste anpassen, z.B. die Farbe des aktiven Buffers?
@@ -369,9 +340,9 @@ sobald das Item "input_text" in keiner anderen Bar genutzt wird:
 [[terminal_copy_paste]]
 === Wie kann ich einen Text kopieren und einfügen, ohne dass die Nickliste (Benutzerliste) mit kopiert wird?
 
-Seit WeeChat ≥ 1.0 gibt es den "einfachen Anzeigemodus".
-Dieser kann mit der Tastenkombination kbd:[Alt+l] (<l> wie in Lima) aktiviert werden.
-Der Inhalt des aktuellen Fensters wird nach der Aktivierung ohne Formatierung angezeigt.
+// TRANSLATION MISSING
+You can use the bare display (default key: kbd:[Alt+l] (`L`)), which shows
+just the contents of the currently selected window, without any formatting.
 
 Jetzt kannst Du die Block-Auswahl nutzen, insofern dein Terminal diesen Modus
 unterstützt (rxvt-unicode, konsole, gnome-terminal, ... um nur einige zu nennen ).
@@ -388,8 +359,8 @@ die Benutzerliste am oberen oder unteren Rand des WeeChat-Bildschirmes zu positi
 [[urls]]
 === Wie kann ich eine URL aufrufen, die einen Zeilenumbruch besitzt?
 
-Seit WeeChat ≥ 1.0 gibt es den "einfachen Anzeigemodus".
-Dieser kann mit der Tastenkombination kbd:[Alt+l] (<l> wie in Lima) aktiviert werden.
+// TRANSLATION MISSING
+You can use the bare display (default key: kbd:[Alt+l] (`L`)).
 
 Um URLs einfacher zu öffnen, können alternativ folgende Optionen gesetzt werden:
 
@@ -399,7 +370,7 @@ Um URLs einfacher zu öffnen, können alternativ folgende Optionen gesetzt werde
 /set weechat.bar.nicklist.position top
 ----
 
-* Die Ausrichtung bei einem Zeilenumbruch innerhalb eines Wortes deaktivieren (WeeChat ≥ 1.7).
+* Die Ausrichtung bei einem Zeilenumbruch innerhalb eines Wortes deaktivieren.
 
 ----
 /set weechat.look.align_multiline_words off
@@ -411,9 +382,9 @@ Um URLs einfacher zu öffnen, können alternativ folgende Optionen gesetzt werde
 /set weechat.look.align_end_of_lines time
 ----
 
-Ab der WeeChat Version ≥ 0.3.6, kann die Option "eat_newline_glitch" aktiviert werden.
-Damit wird das Zeichen für einen Zeilenumbruch nicht an die dargestellten Zeilen angefügt
-(dies führt dazu, dass URLs beim Markieren korrekt erkannt werden):
+// TRANSLATION MISSING
+You can enable option "eat_newline_glitch", so that new line char is not added
+at the end of each line displayed (it will not break URL selection):
 
 ----
 /set weechat.look.eat_newline_glitch on
@@ -460,8 +431,6 @@ In WeeChat wird der neue Wert umgehend genutzt:
 [[use_256_colors]]
 === Wie kann ich 256 Farben in WeeChat nutzen?
 
-256 Farben werden ab der WeeChat Version ≥ 0.3.4 unterstützt.
-
 Zuerst sollte überprüft werden, ob die _TERM_-Umgebungsvariable korrekt hinterlegt ist.
 Folgende Werte sind zu empfehlen:
 
@@ -482,18 +451,16 @@ term screen-256color
 
 Falls die Umgebungsvariable _TERM_ einen falschen Wert haben sollte und WeeChat
 schon gestartet wurde, kann man die Umgebungsvariable mit folgenden WeeChat Befehlen
-anpassen (WeeChat ≥ 1.0):
+anpassen:
 
 ----
 /set env TERM screen-256color
 /upgrade
 ----
 
-Mit der WeeChat Version 0.3.4 muss der Befehl `/color` genutzt werden, um neue Farben zu erstellen.
-
-Ab Version ≥ 0.3.5 kann in den Optionen für eine zu nutzende Farbe die entsprechende
-Zahl der Farbe eingetragen werden (optional: mit dem Befehl `/color` kann man einen Alias für
-eine Farbe definieren).
+// TRANSLATION MISSING
+You can use any color number in options (optional: you can add color aliases
+with command `/color`).
 
 Bitte lese link:weechat_user.de.html#colors[Benutzerhandbuch / Farben ^↗^,window=_blank]
 für weitere Informationen die das Farbmanagement betreffen.
@@ -719,8 +686,6 @@ Um die korrekten Tasten zu finden, sollte man mit kbd:[Alt+k] die gewünschte Ta
 [[mouse_not_working]]
 === Die Mausunterstützung funktioniert nicht, was kann ich tun?
 
-Eine Unterstützung von Mausfunktionen ist seit WeeChat ≥ 0.3.6 verfügbar.
-
 Als erstes sollte man die Mausunterstützung einschalten:
 
 ----
@@ -778,12 +743,6 @@ Falls macOS genutzt wird,
 muss mittels Homebrew `openssl` installiert werden.
 Eine CA-Datei wird mittels Zertifikaten vom Systemschlüssel geladen.
 
-Ab WeeChat ≤ 3.1 können Sie den Pfad zu Systemzertifikaten festlegen:
-
-----
-/set weechat.network.gnutls_ca_file "/usr/local/etc/openssl/cert.pem"
-----
-
 Falls Fehlermeldungen auftreten, die besagen,
 dass der gnutls Handshake fehlgeschlagen ist,
 sollte ein kleinerer Diffie-Hellman-Schlüssel verwendet werden (Standardgröße: 2048):
@@ -813,8 +772,8 @@ des Zertifikats von Hand eingetragen werden:
 [[irc_ssl_handshake_error]]
 === Bei einem Verbindungsaufbau zum Server via SSL erhalte ich "TLS Handshake fehlgeschlagen". Wie kann ich das beheben?
 
-Man sollte versuchen, eine andere Priorität zu nutzen (nur WeeChat ≥ 0.3.5);
-Im folgenden Beispiel muss "xxx" durch den betroffenen Servernamen ersetzt werden:
+Man sollte versuchen, eine andere Priorität zu nutzen; Im folgenden Beispiel
+muss "xxx" durch den betroffenen Servernamen ersetzt werden:
 
 ----
 /set irc.server.xxx.ssl_priorities "NORMAL:-VERS-TLS-ALL:+VERS-TLS1.0:+VERS-SSL3.0:%COMPAT"
@@ -823,23 +782,9 @@ Im folgenden Beispiel muss "xxx" durch den betroffenen Servernamen ersetzt werde
 [[irc_ssl_libera]]
 === Wie kann ich eine SSL gesicherte Verbindung zum libera Server herstellen?
 
-Ab WeeChat ≤ 3.1 kann mit der Option _weechat.network.gnutls_ca_file_ eine Datei mit
-Zertifikaten ausgewählt werden:
-
-----
-/set weechat.network.gnutls_ca_file "/etc/ssl/certs/ca-certificates.crt"
-----
-
-Wenn openssl mit homebrew unter macOS installiert wurde, könnte es sein,
-dass die Zertifikate in einer anderen Datei bereitgestellt werden:
-
-----
-/set weechat.network.gnutls_ca_file "/usr/local/etc/openssl/cert.pem"
-----
-
-[NOTE]
-Überprüfe, ob die Zertifikationsdatei auf deinem System installiert wurde.
-Üblicherweise wird diese Datei durch das Paket "ca-certificates" bereitgestellt.
+// TRANSLATION MISSING
+Check that you have certificates installed on your system, this is commonly
+provided by the package "ca-certificates".
 
 Konfiguration des Servers, Port angeben, SSL aktivieren und Verbindung herstellen:
 
@@ -903,8 +848,9 @@ Für einen einzelnen Server:
 /set irc.server.libera.autojoin_dynamic on
 ----
 
-Ab WeeChat ≥ 3.5 kann man mit dem `/autojoin` Befehl den
-aktuellen Kanal in die Serveroption autojoin hinzufügen:
+// TRANSLATION MISSING
+You can also add the current channel in the "autojoin" server option using the
+`/autojoin` command:
 
 ----
 /autojoin add
@@ -916,28 +862,8 @@ oder einen beliebigen Kanal:
 /autojoin add #test
 ----
 
-Bis WeeChat ≤ 3.4, wird der `/set` Befehl verwendet, um die
-Liste der autojoin-Kanäle zu editieren. In folgendem Beispiel
-wird der "libera"-Server angepasst:
-
-----
-/set irc.server.libera.autojoin [TAB]
-----
-
-[NOTE]
-Man kann den Namen oder den Wert einer Option mit kbd:[Tab] vervollständigen
-oder mittels kbd:[Shift+Tab] eine teilweise Vervollständigung durchführen,
-was bei Namen sinnvoll ist, denn so braucht nicht die komplette Liste
-der Kanäle neu geschrieben werden.
-
-Es kann auch der `/fset` Befehl verwendet werden, um die Liste der Kanäle
-zu editieren:
-
-----
-/fset autojoin
-----
-
-Bis WeeChat ≤ 3.4 kann man auch ein Skript nutzen:
+// TRANSLATION MISSING
+There are also scripts:
 
 ----
 /script search autojoin
@@ -995,10 +921,10 @@ link:weechat_user.de.html#irc_smart_filter_join_part_quit[Benutzerhandbuch / ein
 [[filter_irc_join_channel_messages]]
 === Wie kann ich Server-Nachrichten filtern, wenn ich einen IRC Kanal betrete?
 
-Ab WeeChat ≥ 0.4.1 kann man auswählen, welche Server-Nachrichten beim Betreten
-eines Kanals angezeigt und welche verborgen werden sollen. Dazu nutzt man
-die Option _irc.look.display_join_message_ (für weitere Informationen, siehe
-`+/help irc.look.display_join_message+`).
+// TRANSLATION MISSING
+You can choose which messages are displayed when joining a channel with the
+option _irc.look.display_join_message_ (see `+/help irc.look.display_join_message+`
+for more info).
 
 Um Nachrichten visuell zu verbergen, können diese gefiltert werden.
 Dazu wird der Befehl `/filter` auf bestimmte Nachrichten-Tags angewandt.
@@ -1062,18 +988,14 @@ Teilnehmer haben:
 /set irc.server_default.away_check_max_nicks 25
 ----
 
-[NOTE]
-Für WeeChat ≤ 0.3.3, lauten die Optionen _irc.network.away_check_ und
-_irc.network.away_check_max_nicks_.
-
 [[highlight_notification]]
 === Wie kann ich mich benachrichtigen lassen, falls mich jemand in einem Kanal direkt anspricht (highlight)?
 
-Seit WeeChat ≥ 1.0 gibt es standardmäßig den Trigger "beep",
-der an das Terminal ein _BEL_ Signal schickt,
-sobald man eine highlight (hervorgehobene) oder private Nachricht erhält.
-Nun muss man lediglich im Terminalprogramm oder dem Multiplexer (screen/tmux) einstellen,
-welcher Befehl ausgeführt werden soll, sobald das Terminal das _BEL_ Signal erhält.
+// TRANSLATION MISSING
+There is a default trigger "beep" which sends a _BEL_ to the terminal on
+a highlight or private message. Thus you can configure your terminal
+(or multiplexer like screen/tmux) to run a command or play a sound when
+a _BEL_ occurs.
 
 Der Trigger "beep" kann auch direkt an einen externen Befehl gekoppelt werden:
 
@@ -1099,11 +1021,11 @@ Es gibt weitere Skripten, die auch zu diesem Thema passen:
 [[disable_highlights_for_specific_nicks]]
 === Wie kann ich Highlights (Hervorhebungen) von bestimmten Nicks deaktivieren?
 
-Ab WeeChat ≥ 0.3.4 kann die Eigenschaft
+// TRANSLATION MISSING
+You can use the
 link:weechat_user.de.html#max_hotlist_level_nicks[hotlist_max_level_nicks_add ^↗^,window=_blank]
-für den entsprechenden Buffer gesetzt werden.
-Dies kann für einzelne Nicks,
-einen Buffer oder eine Gruppe von Buffern (z.B. IRC Server) gelten.
+buffer property to set the max hotlist level for some nicks, per buffer,
+or per group of buffers (like IRC servers).
 
 Um nun Highlights (Hervorhebungen) für bestimmte Nicks zu deaktivieren, muss
 man die entsprechende Eigenschaft auf 2 setzen:
@@ -1159,9 +1081,9 @@ Um dies zu beheben, muss folgendes konfiguriert werden:
 [[install_scripts]]
 === Wie kann ich Skripten installieren? Sind Skripten kompatibel mit anderen IRC Clients?
 
-Seit WeeChat ≥ 0.3.9 gibt es den Befehl `/script` um Skripten zu installieren und zu verwalten
-(siehe `/help script` um eine Hilfe zu erhalten). Nutzt man eine ältere Version von WeeChat
-kann man die Skripten weeget.py und script.pl nutzen.
+// TRANSLATION MISSING
+You can use the command `/script` to install and manage scripts (see `/help script`
+for help).
 
 Die Skripten für WeeChat sind mit anderen IRC-Clients nicht kompatibel und vice versa.
 
@@ -1177,8 +1099,9 @@ folgenden Befehl in der Shell ausführen:
 $ rm ~/.cache/weechat/script/plugins.xml.gz
 ----
 
+// TRANSLATION MISSING
 [NOTE]
-Ab WeeChat ≤ 3.1, sollte der Pfad: _~/.weechat/script/plugins.xml.gz_ lauten.
+If you are not using the XDG directories, the path could be: _~/.weechat/script/plugins.xml.gz_.
 
 Danach sollte man noch einmal versuchen die Datei herunter zu laden:
 
@@ -1219,10 +1142,6 @@ Du brauchst lediglich die "spell"-Erweiterung neu zu laden:
 ----
 /plugin reload spell
 ----
-
-[NOTE]
-Bis WeeChat ≤ 2.4, hieß die "spell"-Erweiterung, "aspell". Somit lautet der Befehl:
-`/plugin reload aspell`.
 
 [[settings]]
 == Einstellungen

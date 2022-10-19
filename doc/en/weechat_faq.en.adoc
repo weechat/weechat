@@ -9,9 +9,6 @@
 :docinfo1:
 
 
-This document is written for WeeChat versions ≥ 0.3.0 but should preferably be
-used with latest stable version of WeeChat.
-
 toc::[]
 
 
@@ -187,18 +184,10 @@ windows.
 [[buffers_list]]
 === How to display the buffers list on the left side?
 
-With WeeChat ≥ 1.8, the plugin
-link:weechat_user.en.html#buflist[buflist ^↗^,window=_blank]
+The plugin link:weechat_user.en.html#buflist[buflist ^↗^,window=_blank]
 is loaded and enabled by default.
 
-With an older version, you can install script _buffers.pl_:
-
-----
-/script install buffers.pl
-----
-
-To limit size of bar (replace "buflist" by "buffers" if you're using the script
-_buffers.pl_):
+To limit size of bar:
 
 ----
 /set weechat.bar.buflist.size_max 15
@@ -215,21 +204,6 @@ bar with your mouse wheel.
 
 Default keys to scroll _buflist_ bar are kbd:[F1] (or kbd:[Ctrl+F1]), kbd:[F2]
 (or kbd:[Ctrl+F2]), kbd:[Alt+F1] and kbd:[Alt+F2].
-
-For script _buffers.pl_, you can define keys, similar to the existing keys to
-scroll nicklist. +
-For example to use kbd:[F1], kbd:[F2], kbd:[Alt+F1] and kbd:[Alt+F2]:
-
-----
-/key bind meta-OP /bar scroll buffers * -100%
-/key bind meta-OQ /bar scroll buffers * +100%
-/key bind meta-meta-OP /bar scroll buffers * b
-/key bind meta-meta-OQ /bar scroll buffers * e
-----
-
-[NOTE]
-Keys "meta-OP" and "meta-OQ" may be different in your terminal. To find key
-code press kbd:[Alt+k] then key.
 
 [[customize_buflist]]
 === How can I customize the list of buffers list, like the color of the active buffer?
@@ -346,9 +320,8 @@ any bar:
 [[terminal_copy_paste]]
 === How can I copy/paste text without pasting nicklist?
 
-With WeeChat ≥ 1.0, you can use the bare display (default key: kbd:[Alt+l] (`L`)),
-which will show just the contents of the currently selected window,
-without any formatting.
+You can use the bare display (default key: kbd:[Alt+l] (`L`)), which shows
+just the contents of the currently selected window, without any formatting.
 
 You can use a terminal with rectangular selection (like rxvt-unicode,
 konsole, gnome-terminal, etc.). Key is usually kbd:[Ctrl] + kbd:[Alt] + mouse
@@ -363,7 +336,7 @@ Another solution is to move nicklist to top or bottom, for example:
 [[urls]]
 === How can I click on long URLs (more than one line)?
 
-With WeeChat ≥ 1.0, you can use the bare display (default key: kbd:[Alt+l] (`L`)).
+You can use the bare display (default key: kbd:[Alt+l] (`L`)).
 
 To make opening URLs easier, you can:
 
@@ -373,7 +346,7 @@ To make opening URLs easier, you can:
 /set weechat.bar.nicklist.position top
 ----
 
-* disable alignment for multiline words (WeeChat ≥ 1.7):
+* disable alignment for multiline words:
 
 ----
 /set weechat.look.align_multiline_words off
@@ -385,9 +358,8 @@ To make opening URLs easier, you can:
 /set weechat.look.align_end_of_lines time
 ----
 
-With WeeChat ≥ 0.3.6, you can enable option "eat_newline_glitch", so that
-new line char is not added at the end of each line displayed (it will not break
-URL selection):
+You can enable option "eat_newline_glitch", so that new line char is not added
+at the end of each line displayed (it will not break URL selection):
 
 ----
 /set weechat.look.eat_newline_glitch on
@@ -434,8 +406,6 @@ In WeeChat, the new value is immediately used:
 [[use_256_colors]]
 === How can I use 256 colors in WeeChat?
 
-256 colors are supported with WeeChat ≥ 0.3.4.
-
 First check that your _TERM_ environment variable is correct, recommended values
 are:
 
@@ -454,17 +424,15 @@ term screen-256color
 ----
 
 If your _TERM_ variable has a wrong value and that WeeChat is already running,
-you can change it with these two commands (with WeeChat ≥ 1.0):
+you can change it with these two commands:
 
 ----
 /set env TERM screen-256color
 /upgrade
 ----
 
-For version 0.3.4, you must use command `/color` to add new colors.
-
-For versions ≥ 0.3.5, you can use any color number in options (optional: you
-can add color aliases with command `/color`).
+You can use any color number in options (optional: you can add color aliases
+with command `/color`).
 
 Please read the link:weechat_user.en.html#colors[User's guide / Colors ^↗^,window=_blank]
 for more information about colors management.
@@ -681,8 +649,6 @@ code press kbd:[Alt+k] then key.
 [[mouse_not_working]]
 === Mouse is not working at all, what can I do?
 
-Mouse is supported with WeeChat ≥ 0.3.6.
-
 First try to enable mouse:
 
 ----
@@ -732,12 +698,6 @@ you have to use kbd:[Alt] instead of kbd:[Shift]).
 If you are using macOS, you must install `openssl` from Homebrew.
 A CA file will be bootstrapped using certificates from the system keychain.
 
-With WeeChat ≤ 3.1, you can then set the path to system certificates:
-
-----
-/set weechat.network.gnutls_ca_file "/usr/local/etc/openssl/cert.pem"
-----
-
 If you see errors about gnutls handshake, you can try to use a smaller
 Diffie-Hellman key (default is 2048):
 
@@ -762,8 +722,7 @@ should be, you can specify the fingerprint (SHA-512, SHA-256 or SHA-1):
 [[irc_ssl_handshake_error]]
 === When connecting to server with SSL, I only see the error "TLS handshake failed", what can I do?
 
-You can try a different priority string (WeeChat ≥ 0.3.5 only), replace "xxx"
-by your server name:
+You can try a different priority string, replace "xxx" by your server name:
 
 ----
 /set irc.server.xxx.ssl_priorities "NORMAL:-VERS-TLS-ALL:+VERS-TLS1.0:+VERS-SSL3.0:%COMPAT"
@@ -772,22 +731,8 @@ by your server name:
 [[irc_ssl_libera]]
 === How can I connect to libera server using SSL?
 
-With WeeChat ≤ 3.1, set option _weechat.network.gnutls_ca_file_ to file with
-certificates:
-
-----
-/set weechat.network.gnutls_ca_file "/etc/ssl/certs/ca-certificates.crt"
-----
-
-Note: if you are running macOS with homebrew openssl installed, you can do:
-
-----
-/set weechat.network.gnutls_ca_file "/usr/local/etc/openssl/cert.pem"
-----
-
-[NOTE]
-Check that you have this file on your system (commonly brought by package
-"ca-certificates").
+Check that you have certificates installed on your system, this is commonly
+provided by the package "ca-certificates".
 
 Setup server port, SSL, then connect:
 
@@ -848,8 +793,8 @@ For a single server:
 /set irc.server.libera.autojoin_dynamic on
 ----
 
-With WeeChat ≥ 3.5, you can also add the current channel in the "autojoin"
-server option using the `/autojoin` command:
+You can also add the current channel in the "autojoin" server option using the
+`/autojoin` command:
 
 ----
 /autojoin add
@@ -861,25 +806,7 @@ Or another channel:
 /autojoin add #test
 ----
 
-With WeeChat ≤ 3.4, you can use the `/set` command to edit the list of autojoin
-channels, for example for the "libera" server:
-
-----
-/set irc.server.libera.autojoin [TAB]
-----
-
-[NOTE]
-You can complete the name and value of option with the kbd:[Tab] key
-(or kbd:[Shift+Tab] for partial completion, useful for the name). +
-This way you don't have to type the whole list of channels.
-
-You can also use the `/fset` command to edit the list of channels:
-
-----
-/fset autojoin
-----
-
-With WeeChat ≤ 3.4, another solution is to use a script:
+There are also scripts:
 
 ----
 /script search autojoin
@@ -924,9 +851,9 @@ link:weechat_user.en.html#irc_smart_filter_join_part_quit[User's guide / Smart f
 [[filter_irc_join_channel_messages]]
 === How can I filter some messages displayed when I join an IRC channel?
 
-With WeeChat ≥ 0.4.1, you can choose which messages are displayed when
-joining a channel with the option _irc.look.display_join_message_ (see
-`+/help irc.look.display_join_message+` for more info).
+You can choose which messages are displayed when joining a channel with the
+option _irc.look.display_join_message_ (see `+/help irc.look.display_join_message+`
+for more info).
 
 To hide messages (but keep them in buffer), you can filter them using the tag
 (for example _irc_329_ for channel creation date). See `/help filter` for help
@@ -981,17 +908,13 @@ nicks:
 /set irc.server_default.away_check_max_nicks 25
 ----
 
-[NOTE]
-For WeeChat ≤ 0.3.3, options are _irc.network.away_check_ and
-_irc.network.away_check_max_nicks_.
-
 [[highlight_notification]]
 === How can I be warned when someone highlights me on a channel?
 
-With WeeChat ≥ 1.0, there is a default trigger "beep" which sends a _BEL_ to
-the terminal on a highlight or private message. Thus you can configure your
-terminal (or multiplexer like screen/tmux) to run a command or play a sound
-when a _BEL_ occurs.
+There is a default trigger "beep" which sends a _BEL_ to the terminal on
+a highlight or private message. Thus you can configure your terminal
+(or multiplexer like screen/tmux) to run a command or play a sound when
+a _BEL_ occurs.
 
 Or you can add a command in "beep" trigger:
 
@@ -1016,7 +939,7 @@ Other scripts on this subject:
 [[disable_highlights_for_specific_nicks]]
 === How can I disable highlights for specific nicks?
 
-With WeeChat ≥ 0.3.4 you can use the
+You can use the
 link:weechat_user.en.html#max_hotlist_level_nicks[hotlist_max_level_nicks_add ^↗^,window=_blank]
 buffer property to set the max hotlist level for some nicks, per buffer,
 or per group of buffers (like IRC servers).
@@ -1073,8 +996,8 @@ You must set that up:
 [[install_scripts]]
 === How can I install scripts? Are scripts compatible with other IRC clients?
 
-With WeeChat ≥ 0.3.9 you can use the command `/script` to install and manage scripts
-(see `/help script` for help). For older versions there is weeget.py and script.pl.
+You can use the command `/script` to install and manage scripts (see `/help script`
+for help).
 
 Scripts are not compatible with other IRC clients.
 
@@ -1090,7 +1013,7 @@ $ rm ~/.cache/weechat/script/plugins.xml.gz
 ----
 
 [NOTE]
-With WeeChat ≤ 3.1, the path should be: _~/.weechat/script/plugins.xml.gz_.
+If you are not using the XDG directories, the path could be: _~/.weechat/script/plugins.xml.gz_.
 
 And update scripts again in WeeChat:
 
@@ -1131,10 +1054,6 @@ You have to reload the spell plugin:
 ----
 /plugin reload spell
 ----
-
-[NOTE]
-With WeeChat ≤ 2.4, the "spell" plugin was named "aspell", so the command is:
-`/plugin reload aspell`.
 
 [[settings]]
 == Settings

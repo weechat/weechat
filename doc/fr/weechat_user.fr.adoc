@@ -4897,7 +4897,7 @@ points-virgules.
   `+*;irc.libera.*+` +
   `+*;irc.libera.#weechat+` +
   `+formatted;irc.libera.#weechat;irc_notice+`
-| link:weechat_plugin_api.en.html#_hook_line[hook_line ^↗^,window=_blank]
+| link:weechat_plugin_api.fr.html#_hook_line[hook_line ^↗^,window=_blank]
 
 | print
 | 1. nom de tampon +
