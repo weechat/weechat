@@ -197,9 +197,8 @@ von einem oder mehreren Fenstern gleichzeitig angezeigt werden.
 [[buffers_list]]
 === Wie kann ich eine Liste mit den Buffern z.B. auf der linken Seite anzeigen lassen?
 
-// TRANSLATION MISSING
-The plugin link:weechat_user.de.html#buflist[buflist ^↗^,window=_blank]
-is loaded and enabled by default.
+Diese Erweiterung, link:weechat_user.de.html#buflist[buflist ^↗^,window=_blank],
+wird standardmäßig geladen und aktiviert.
 
 Um die maximale Breite der buflist-Spalte zu reduzieren, nutze folgende Option:
 
@@ -340,9 +339,8 @@ sobald das Item "input_text" in keiner anderen Bar genutzt wird:
 [[terminal_copy_paste]]
 === Wie kann ich einen Text kopieren und einfügen, ohne dass die Nickliste (Benutzerliste) mit kopiert wird?
 
-// TRANSLATION MISSING
-You can use the bare display (default key: kbd:[Alt+l] (`L`)), which shows
-just the contents of the currently selected window, without any formatting.
+Sie können den vereinfachten Anzeigemodus verwenden (Standardtaste: kbd:[Alt+l] (`L`)), dieser
+zeigt nur den Inhalt des aktuell ausgewählten Fensters an, ohne jegliche Formatierung.
 
 Jetzt kannst Du die Block-Auswahl nutzen, insofern dein Terminal diesen Modus
 unterstützt (rxvt-unicode, konsole, gnome-terminal, ... um nur einige zu nennen ).
@@ -359,8 +357,7 @@ die Benutzerliste am oberen oder unteren Rand des WeeChat-Bildschirmes zu positi
 [[urls]]
 === Wie kann ich eine URL aufrufen, die einen Zeilenumbruch besitzt?
 
-// TRANSLATION MISSING
-You can use the bare display (default key: kbd:[Alt+l] (`L`)).
+Dazu kann man den vereinfachten Anzeigemodus nutzen (Standardtaste: kbd:[Alt+l] (`L`)).
 
 Um URLs einfacher zu öffnen, können alternativ folgende Optionen gesetzt werden:
 
@@ -382,9 +379,9 @@ Um URLs einfacher zu öffnen, können alternativ folgende Optionen gesetzt werde
 /set weechat.look.align_end_of_lines time
 ----
 
-// TRANSLATION MISSING
-You can enable option "eat_newline_glitch", so that new line char is not added
-at the end of each line displayed (it will not break URL selection):
+Es kann auch die "eat_newline_glitch" Option aktiviert werden,
+sodass kein neuer Zeilenumbruch hinzugefügt wird,
+am Ende jeder angezeigten Zeile (es wird die URL-Auswahl nicht unterbrechen):
 
 ----
 /set weechat.look.eat_newline_glitch on
@@ -458,9 +455,8 @@ anpassen:
 /upgrade
 ----
 
-// TRANSLATION MISSING
-You can use any color number in options (optional: you can add color aliases
-with command `/color`).
+Sie können eine beliebige Farbnummer in den Optionen verwenden (optional: Sie können Farbaliase,
+mit dem Befehl `/color`, erstellen.
 
 Bitte lese link:weechat_user.de.html#colors[Benutzerhandbuch / Farben ^↗^,window=_blank]
 für weitere Informationen die das Farbmanagement betreffen.
@@ -782,9 +778,8 @@ muss "xxx" durch den betroffenen Servernamen ersetzt werden:
 [[irc_ssl_libera]]
 === Wie kann ich eine SSL gesicherte Verbindung zum libera Server herstellen?
 
-// TRANSLATION MISSING
-Check that you have certificates installed on your system, this is commonly
-provided by the package "ca-certificates".
+Überprüfen Sie, ob auf Ihrem System Zertifikate installiert sind. Dies wird häufig
+durch das Paket "ca-certificates" bereitgestellt.
 
 Konfiguration des Servers, Port angeben, SSL aktivieren und Verbindung herstellen:
 
@@ -848,9 +843,8 @@ Für einen einzelnen Server:
 /set irc.server.libera.autojoin_dynamic on
 ----
 
-// TRANSLATION MISSING
-You can also add the current channel in the "autojoin" server option using the
-`/autojoin` command:
+Sie können den aktuellen Kanal auch in der Serveroption "autojoin" hinzufügen, indem
+Sie den `/autojoin`-Befehl nutzen:
 
 ----
 /autojoin add
@@ -862,8 +856,7 @@ oder einen beliebigen Kanal:
 /autojoin add #test
 ----
 
-// TRANSLATION MISSING
-There are also scripts:
+Es existieren aber auch Skripten:
 
 ----
 /script search autojoin
@@ -919,12 +912,11 @@ Für weitere Hilfe: `/help filter`, `+/help irc.look.smart_filter+` und
 link:weechat_user.de.html#irc_smart_filter_join_part_quit[Benutzerhandbuch / einfacher Filter für join/part/quit Nachrichten ^↗^,window=_blank].
 
 [[filter_irc_join_channel_messages]]
-=== Wie kann ich Server-Nachrichten filtern, wenn ich einen IRC Kanal betrete?
+=== Wie kann ich die Server-Nachrichten filtern, wenn ich einen IRC Kanal betrete?
 
-// TRANSLATION MISSING
-You can choose which messages are displayed when joining a channel with the
-option _irc.look.display_join_message_ (see `+/help irc.look.display_join_message+`
-for more info).
+Sie können auswählen, welche Nachrichten angezeigt werden, wenn Sie einem Kanal beitreten
+Option _irc.look.display_join_message_ (siehe `+/help irc.look.display_join_message+`
+Für mehr Information).
 
 Um Nachrichten visuell zu verbergen, können diese gefiltert werden.
 Dazu wird der Befehl `/filter` auf bestimmte Nachrichten-Tags angewandt.
@@ -991,11 +983,10 @@ Teilnehmer haben:
 [[highlight_notification]]
 === Wie kann ich mich benachrichtigen lassen, falls mich jemand in einem Kanal direkt anspricht (highlight)?
 
-// TRANSLATION MISSING
-There is a default trigger "beep" which sends a _BEL_ to the terminal on
-a highlight or private message. Thus you can configure your terminal
-(or multiplexer like screen/tmux) to run a command or play a sound when
-a _BEL_ occurs.
+Es gibt einen voreingestellten Trigger mit Namen „beep“, der ein _BEL_ an das Terminal sendet,
+bei einem Highlight oder einer private Nachricht. Damit können Sie Ihr Terminal konfigurieren
+(oder einen Multiplexer wie screen/tmux), um einen Befehl auszuführen oder einen Ton abzuspielen, wenn
+ein _BEL_ tritt auf.
 
 Der Trigger "beep" kann auch direkt an einen externen Befehl gekoppelt werden:
 
@@ -1021,11 +1012,9 @@ Es gibt weitere Skripten, die auch zu diesem Thema passen:
 [[disable_highlights_for_specific_nicks]]
 === Wie kann ich Highlights (Hervorhebungen) von bestimmten Nicks deaktivieren?
 
-// TRANSLATION MISSING
-You can use the
-link:weechat_user.de.html#max_hotlist_level_nicks[hotlist_max_level_nicks_add ^↗^,window=_blank]
-buffer property to set the max hotlist level for some nicks, per buffer,
-or per group of buffers (like IRC servers).
+Dafür sollte link:weechat_user.de.html#max_hotlist_level_nicks[hotlist_max_level_nicks_add ^↗^,window=_blank]
+die Buffer-Eigenschaft genutzt werden, um das maximale Hotlist-Level für einige Nicks pro Puffer festzulegen,
+oder pro Gruppe von Buffern (wie IRC-Server).
 
 Um nun Highlights (Hervorhebungen) für bestimmte Nicks zu deaktivieren, muss
 man die entsprechende Eigenschaft auf 2 setzen:
@@ -1081,9 +1070,8 @@ Um dies zu beheben, muss folgendes konfiguriert werden:
 [[install_scripts]]
 === Wie kann ich Skripten installieren? Sind Skripten kompatibel mit anderen IRC Clients?
 
-// TRANSLATION MISSING
-You can use the command `/script` to install and manage scripts (see `/help script`
-for help).
+Mit dem Befehl `/script` können Sie Skripte installieren und verwalten (siehe `/help script`
+für Hilfe).
 
 Die Skripten für WeeChat sind mit anderen IRC-Clients nicht kompatibel und vice versa.
 
@@ -1099,9 +1087,8 @@ folgenden Befehl in der Shell ausführen:
 $ rm ~/.cache/weechat/script/plugins.xml.gz
 ----
 
-// TRANSLATION MISSING
 [NOTE]
-If you are not using the XDG directories, the path could be: _~/.weechat/script/plugins.xml.gz_.
+Wenn Sie die XDG-Verzeichnisse nicht verwenden, könnte der Pfad lauten: _~/.weechat/script/plugins.xml.gz_.
 
 Danach sollte man noch einmal versuchen die Datei herunter zu laden:
 
