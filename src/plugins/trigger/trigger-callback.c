@@ -720,7 +720,6 @@ trigger_callback_modifier_cb (const void *pointer, void *data,
                               const char *modifier, const char *modifier_data,
                               const char *string)
 {
-    struct t_gui_buffer *buffer;
     const char *ptr_string;
     char *string_modified, *pos, *buffer_pointer;
     char *str_tags, **tags, *prefix, *string_no_color;
@@ -730,7 +729,7 @@ trigger_callback_modifier_cb (const void *pointer, void *data,
 
     TRIGGER_CALLBACK_CB_INIT(NULL);
 
-    buffer = NULL;
+    ctx.buffer = NULL;
     tags = NULL;
     num_tags = 0;
     string_no_color = NULL;
@@ -842,15 +841,15 @@ trigger_callback_modifier_cb (const void *pointer, void *data,
                 rc = sscanf (buffer_pointer, "0x%lx", &value);
                 if ((rc != EOF) && (rc != 0))
                 {
-                    buffer = (struct t_gui_buffer *)value;
+                    ctx.buffer = (struct t_gui_buffer *)value;
                     weechat_hashtable_set (
                         ctx.extra_vars,
                         "tg_plugin",
-                        weechat_buffer_get_string (buffer, "plugin"));
+                        weechat_buffer_get_string (ctx.buffer, "plugin"));
                     weechat_hashtable_set (
                         ctx.extra_vars,
                         "tg_buffer",
-                        weechat_buffer_get_string (buffer, "full_name"));
+                        weechat_buffer_get_string (ctx.buffer, "full_name"));
                     pos++;
                     if (pos[0])
                     {
@@ -877,12 +876,12 @@ trigger_callback_modifier_cb (const void *pointer, void *data,
                 free (buffer_pointer);
             }
         }
-        weechat_hashtable_set (ctx.pointers, "buffer", buffer);
+        weechat_hashtable_set (ctx.pointers, "buffer", ctx.buffer);
     }
 
     if (tags)
     {
-        if (!trigger_callback_set_tags (buffer, (const char **)tags, num_tags,
+        if (!trigger_callback_set_tags (ctx.buffer, (const char **)tags, num_tags,
                                         ctx.extra_vars))
         {
             goto end;
@@ -914,7 +913,6 @@ trigger_callback_line_cb (const void *pointer, void *data,
                           struct t_hashtable *line)
 {
     struct t_hashtable *hashtable;
-    struct t_gui_buffer *buffer;
     struct t_weelist_item *ptr_item;
     unsigned long value;
     const char *ptr_key, *ptr_value;
@@ -943,9 +941,9 @@ trigger_callback_line_cb (const void *pointer, void *data,
     rc = sscanf (ptr_value + 2, "%lx", &value);
     if ((rc == EOF) || (rc < 1))
         goto end;
-    buffer = (void *)value;
+    ctx.buffer = (void *)value;
 
-    weechat_hashtable_set (ctx.pointers, "buffer", buffer);
+    weechat_hashtable_set (ctx.pointers, "buffer", ctx.buffer);
     ptr_value = weechat_hashtable_get (line, "tags");
     tags = weechat_string_split ((ptr_value) ? ptr_value : "",
                                  ",",
@@ -981,7 +979,7 @@ trigger_callback_line_cb (const void *pointer, void *data,
     if (string_no_color)
         free (string_no_color);
 
-    if (!trigger_callback_set_tags (buffer, (const char **)tags, num_tags,
+    if (!trigger_callback_set_tags (ctx.buffer, (const char **)tags, num_tags,
                                     ctx.extra_vars))
     {
         goto end;
@@ -1063,6 +1061,8 @@ trigger_callback_print_cb  (const void *pointer, void *data,
 
     TRIGGER_CALLBACK_CB_INIT(WEECHAT_RC_OK);
 
+    ctx.buffer = buffer;
+
     /* do nothing if the buffer does not match buffers defined in the trigger */
     if (trigger->hook_print_buffers
         && !weechat_buffer_match_list (buffer, trigger->hook_print_buffers))
@@ -1143,6 +1143,8 @@ trigger_callback_command_cb  (const void *pointer, void *data,
     TRIGGER_CALLBACK_CB_NEW_POINTERS;
     TRIGGER_CALLBACK_CB_NEW_EXTRA_VARS;
 
+    ctx.buffer = buffer;
+
     /* add data in hashtables used for conditions/replace/command */
     trigger_callback_set_common_vars (trigger, ctx.extra_vars);
     weechat_hashtable_set (ctx.pointers, "buffer", buffer);
@@ -1193,6 +1195,8 @@ trigger_callback_command_run_cb  (const void *pointer, void *data,
 
     TRIGGER_CALLBACK_CB_NEW_POINTERS;
     TRIGGER_CALLBACK_CB_NEW_EXTRA_VARS;
+
+    ctx.buffer = buffer;
 
     /* add data in hashtables used for conditions/replace/command */
     trigger_callback_set_common_vars (trigger, ctx.extra_vars);
