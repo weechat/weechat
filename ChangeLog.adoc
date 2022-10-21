@@ -28,7 +28,6 @@ Bug fixes::
   * core: keep terminal title unchanged when option weechat.look.window_title is set to empty value (issue #1835, issue #1836)
   * api: do not expect any return value in callbacks "callback_change" and "callback_delete" of function config_new_option (scripting API)
   * irc: escape backslashes in raw buffer (issue #1838)
-  * trigger: execute trigger command on appropriate buffer for hooks command, command_run, line, modifier and print (issue #1841)
 
 Tests::
 
@@ -37,6 +36,13 @@ Tests::
 Build::
 
   * python: remove support of Python 2.x
+
+[[v3.7.1]]
+== Version 3.7.1 (2022-10-21)
+
+Bug fixes::
+
+  * trigger: execute trigger command on appropriate buffer for hooks command, command_run, line, modifier and print (issue #1841)
 
 [[v3.7]]
 == Version 3.7 (2022-10-09)

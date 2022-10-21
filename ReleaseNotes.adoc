@@ -33,6 +33,11 @@ The two callbacks "callback_change" and "callback_delete" in scripting API funct
 config_new_option have been changed: an integer return value was expected by error,
 now any return value is ignored (like it has always been in the C API).
 
+[[v3.7.1]]
+== Version 3.7.1 (2022-10-21)
+
+Bug fix and maintenance release.
+
 [[v3.7]]
 == Version 3.7 (2022-10-09)
 
