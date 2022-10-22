@@ -1202,6 +1202,11 @@ TEST(CoreString, TranslateChars)
                  string_translate_chars ("this is a test",
                                          "abcdefghijklmnopqrstuvwxyz",
                                          "bcdefghijklmnopqrstuvwxyza"));
+
+    WEE_TEST_STR("Uijt jt b uftu",
+                 string_translate_chars ("This is a test",
+                                         "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
+                                         "bcdefghijklmnopqrstuvwxyzaBCDEFGHIJKLMNOPQRSTUVWXYZA"));
 }
 
 /*
