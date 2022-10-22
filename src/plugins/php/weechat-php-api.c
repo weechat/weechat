@@ -1085,7 +1085,7 @@ weechat_php_api_config_section_read_cb (const void *pointer, void *data,
     func_argv[1] = (char *)API_PTR2STR(config_file);
     func_argv[2] = (char *)API_PTR2STR(section);
     func_argv[3] = option_name ? (char *)option_name : weechat_php_empty_arg;
-    func_argv[4] = value ? (char *)value : weechat_php_empty_arg;
+    func_argv[4] = value ? (char *)value : NULL;
 
     weechat_php_cb (pointer, data, func_argv, "sssss",
                     WEECHAT_SCRIPT_EXEC_INT, &rc);
@@ -1142,7 +1142,7 @@ weechat_php_api_config_section_create_option_cb (const void *pointer,
     func_argv[1] = (char *)API_PTR2STR(config_file);
     func_argv[2] = (char *)API_PTR2STR(section);
     func_argv[3] = option_name ? (char *)option_name : weechat_php_empty_arg;
-    func_argv[4] = value ? (char *)value : weechat_php_empty_arg;
+    func_argv[4] = value ? (char *)value : NULL;
 
     weechat_php_cb (pointer, data, func_argv, "sssss",
                     WEECHAT_SCRIPT_EXEC_INT, &rc);

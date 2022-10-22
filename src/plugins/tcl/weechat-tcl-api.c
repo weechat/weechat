@@ -1101,7 +1101,7 @@ weechat_tcl_api_config_section_read_cb (const void *pointer, void *data,
         func_argv[1] = (char *)API_PTR2STR(config_file);
         func_argv[2] = (char *)API_PTR2STR(section);
         func_argv[3] = (option_name) ? (char *)option_name : empty_arg;
-        func_argv[4] = (value) ? (char *)value : empty_arg;
+        func_argv[4] = (value) ? (char *)value : WEECHAT_NULL_STRING;
 
         rc = (int *) weechat_tcl_exec (script,
                                        WEECHAT_SCRIPT_EXEC_INT,
@@ -1222,7 +1222,7 @@ weechat_tcl_api_config_section_create_option_cb (const void *pointer, void *data
         func_argv[1] = (char *)API_PTR2STR(config_file);
         func_argv[2] = (char *)API_PTR2STR(section);
         func_argv[3] = (option_name) ? (char *)option_name : empty_arg;
-        func_argv[4] = (value) ? (char *)value : empty_arg;
+        func_argv[4] = (value) ? (char *)value : WEECHAT_NULL_STRING;
 
         rc = (int *) weechat_tcl_exec (script,
                                        WEECHAT_SCRIPT_EXEC_INT,

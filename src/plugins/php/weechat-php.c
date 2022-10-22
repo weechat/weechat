@@ -570,8 +570,11 @@ weechat_php_exec (struct t_plugin_script *script, int ret_type,
         {
             switch (format[i])
             {
-                case 's': /* string */
-                    ZVAL_STRING(&params[i], (char *)argv[i]);
+                case 's': /* string or null */
+                    if (argv[i])
+                        ZVAL_STRING(&params[i], (char *)argv[i]);
+                    else
+                        ZVAL_NULL(&params[i]);
                     break;
                 case 'i': /* integer */
                     ZVAL_LONG(&params[i], *((int *)argv[i]));

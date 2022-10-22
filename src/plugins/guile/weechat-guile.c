@@ -365,8 +365,11 @@ weechat_guile_exec (struct t_plugin_script *script,
         {
             switch (format[i])
             {
-                case 's': /* string */
-                    argv2[i] = scm_from_locale_string ((char *)argv[i]);
+                case 's': /* string or null */
+                    if (argv[i])
+                        argv2[i] = scm_from_locale_string ((char *)argv[i]);
+                    else
+                        argv2[i] = SCM_ELISP_NIL;
                     break;
                 case 'i': /* integer */
                     argv2[i] = scm_from_int (*((int *)argv[i]));

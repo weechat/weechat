@@ -307,8 +307,11 @@ weechat_lua_exec (struct t_plugin_script *script, int ret_type,
         {
             switch (format[i])
             {
-                case 's': /* string */
-                    lua_pushstring (lua_current_interpreter, (char *)argv[i]);
+                case 's': /* string or null */
+                    if (argv[i])
+                        lua_pushstring (lua_current_interpreter, (char *)argv[i]);
+                    else
+                        lua_pushnil (lua_current_interpreter);
                     break;
                 case 'i': /* integer */
 #if LUA_VERSION_NUM >= 503

@@ -446,7 +446,7 @@ weechat_python_exec (struct t_plugin_script *script,
             {
                 switch (format[i])
                 {
-                    case 's': /* string */
+                    case 's': /* string or null */
                         argv2[i] = argv[i];
                         if (weechat_utf8_is_valid (argv2[i], -1, NULL))
                             format2[i] = 's';  /* str */
