@@ -492,7 +492,7 @@ def config_new_section(config_file: str, name: str,
     ::
 
         # example
-        def my_section_read_cb(data: str, config_file: str, section: str, option_name: str, value: str) -> int:
+        def my_section_read_cb(data: str, config_file: str, section: str, option_name: str, value: str | None) -> int:
             # ...
             return weechat.WEECHAT_CONFIG_OPTION_SET_OK_CHANGED
             # return weechat.WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE
@@ -507,7 +507,7 @@ def config_new_section(config_file: str, name: str,
             # ...
             return weechat.WEECHAT_CONFIG_WRITE_OK
 
-        def my_section_create_option_cb(data: str, config_file: str, section: str, option_name: str, value: str) -> int:
+        def my_section_create_option_cb(data: str, config_file: str, section: str, option_name: str, value: str | None) -> int:
             # ...
             return weechat.WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE
 

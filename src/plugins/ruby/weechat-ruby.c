@@ -480,8 +480,11 @@ weechat_ruby_exec (struct t_plugin_script *script,
         {
             switch (format[i])
             {
-                case 's': /* string */
-                    argv2[i] = rb_str_new2 ((char *)argv[i]);
+                case 's': /* string or null */
+                    if (argv[i])
+                        argv2[i] = rb_str_new2 ((char *)argv[i]);
+                    else
+                        argv2[i] = Qnil;
                     break;
                 case 'i': /* integer */
                     argv2[i] = INT2FIX (*((int *)argv[i]));

@@ -208,11 +208,21 @@ Functions are called with `+weechat.xxx(arg1, arg2, ...)+`.
 Functions are called with `+weechat::xxx arg1 arg2 ...+`.
 
 // TRANSLATION MISSING
+[[tcl_null]]
+===== Null values
+
 Since Tcl only has string types, there's no null type to pass as an argument
-when a function accepts null values. To overcome this you can use the constant
+when a function accepts null values or to get as an argument in a callback
+function. To overcome this the WeeChat API defines the constant
 `$::weechat::WEECHAT_NULL` which acts as a null value. This constant is defined
 as `\uFFFF\uFFFF\uFFFFWEECHAT_NULL\uFFFF\uFFFF\uFFFF`, so it's very unlikely to
 appear unintentionally.
+
+You can pass this constant when a function accepts null as an argument and you
+will get it as the value of an argument in a callback function if the argument
+value is null. To see which functions accept null values and passes null values
+to callbacks, look at the Python prototypes in the
+link:weechat_plugin_api.en.html[WeeChat plugin API reference ^↗^,window=_blank].
 
 [[language_guile]]
 ==== Guile (Scheme)

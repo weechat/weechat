@@ -205,8 +205,11 @@ weechat_js_exec (struct t_plugin_script *script,
         {
             switch (format[i])
             {
-                case 's': /* string */
-                    argv2[i] = v8::String::New((const char *)argv[i]);
+                case 's': /* string or null */
+                    if (argv[i])
+                        argv2[i] = v8::String::New((const char *)argv[i]);
+                    else
+                        argv2[i] = v8::Null();
                     break;
                 case 'i': /* integer */
                     argv2[i] = v8::Integer::New(*((int *)argv[i]));
