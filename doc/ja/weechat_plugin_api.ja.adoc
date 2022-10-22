@@ -6187,9 +6187,10 @@ struct t_config_section *weechat_config_new_section (
 ** _const char *option_name_: オプションの名前
 ** _const char *value_: 値
 ** 戻り値:
-*** _WEECHAT_CONFIG_READ_OK_
-*** _WEECHAT_CONFIG_READ_MEMORY_ERROR_
-*** _WEECHAT_CONFIG_READ_FILE_NOT_FOUND_
+*** _WEECHAT_CONFIG_OPTION_SET_OK_CHANGED_
+*** _WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE_
+*** _WEECHAT_CONFIG_OPTION_SET_ERROR_
+*** _WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND_
 * _callback_read_pointer_: WeeChat が _callback_read_
   コールバックを呼び出す際にコールバックに渡すポインタ
 * _callback_read_data_: WeeChat が _callback_read_ コールバックを呼び出す際にコールバックに渡すポインタ;

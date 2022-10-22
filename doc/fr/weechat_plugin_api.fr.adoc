@@ -6251,9 +6251,10 @@ Paramètres :
 ** _const char *option_name_ : nom de l'option
 ** _const char *value_ : valeur
 ** valeur de retour :
-*** _WEECHAT_CONFIG_READ_OK_
-*** _WEECHAT_CONFIG_READ_MEMORY_ERROR_
-*** _WEECHAT_CONFIG_READ_FILE_NOT_FOUND_
+*** _WEECHAT_CONFIG_OPTION_SET_OK_CHANGED_
+*** _WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE_
+*** _WEECHAT_CONFIG_OPTION_SET_ERROR_
+*** _WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND_
 * _callback_read_pointer_ : pointeur donné à la fonction de rappel lorsqu'elle
   est appelée par WeeChat
 * _callback_read_data_ : pointeur donné à la fonction de rappel lorsqu'elle est

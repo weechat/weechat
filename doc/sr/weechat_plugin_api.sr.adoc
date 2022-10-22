@@ -5982,9 +5982,10 @@ struct t_config_section *weechat_config_new_section (
 ** _const char *option_name_: име опције
 ** _const char *value_: вредност
 ** повратна вредност:
-*** _WEECHAT_CONFIG_READ_OK_
-*** _WEECHAT_CONFIG_READ_MEMORY_ERROR_
-*** _WEECHAT_CONFIG_READ_FILE_NOT_FOUND_
+*** _WEECHAT_CONFIG_OPTION_SET_OK_CHANGED_
+*** _WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE_
+*** _WEECHAT_CONFIG_OPTION_SET_ERROR_
+*** _WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND_
 * _callback_read_pointer_: показивач који се прослеђује функцији повратног позива када је позове програм WeeChat
 * _callback_read_data_: показивач који се прослеђује функцији повратног позива када је позове програм WeeChat; ако није NULL, алоцирала га је malloc (или нека слична функција) и аутоматски се ослобађа када се ослободи одељак
 * _callback_write_: функција која се позива када се одељак уписује у фајл (у већини случајева би требало да буде NULL, осим ако је потребно да се одељак упише прилагођеном функцијом), аргументи и повратна вредност су:
