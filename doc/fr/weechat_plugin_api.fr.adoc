@@ -6559,24 +6559,34 @@ def my_section_read_cb(data: str, config_file: str, section: str, option_name: s
     # ...
     return weechat.WEECHAT_CONFIG_OPTION_SET_OK_CHANGED
     # return weechat.WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE
-    # return weechat.WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND
     # return weechat.WEECHAT_CONFIG_OPTION_SET_ERROR
+    # return weechat.WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND
 
 def my_section_write_cb(data: str, config_file: str, section_name: str) -> int:
     # ...
     return weechat.WEECHAT_CONFIG_WRITE_OK
+    # return weechat.WEECHAT_CONFIG_WRITE_ERROR
+    # return weechat.WEECHAT_CONFIG_WRITE_MEMORY_ERROR
 
 def my_section_write_default_cb(data: str, config_file: str, section_name: str) -> int:
     # ...
     return weechat.WEECHAT_CONFIG_WRITE_OK
+    # return weechat.WEECHAT_CONFIG_WRITE_ERROR
+    # return weechat.WEECHAT_CONFIG_WRITE_MEMORY_ERROR
 
 def my_section_create_option_cb(data: str, config_file: str, section: str, option_name: str, value: str | None) -> int:
     # ...
-    return weechat.WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE
+    return weechat.WEECHAT_CONFIG_OPTION_SET_OK_CHANGED
+    # return weechat.WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE
+    # return weechat.WEECHAT_CONFIG_OPTION_SET_ERROR
+    # return weechat.WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND
 
 def my_section_delete_option_cb(data: str, config_file: str, section: str, option: str) -> int:
     # ...
     return weechat.WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED
+    # return weechat.WEECHAT_CONFIG_OPTION_UNSET_OK_NO_RESET
+    # return weechat.WEECHAT_CONFIG_OPTION_UNSET_OK_RESET
+    # return weechat.WEECHAT_CONFIG_OPTION_UNSET_ERROR
 
 section = weechat.config_new_section(config_file, "section1", 1, 1,
     "my_section_read_cb", "",
