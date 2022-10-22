@@ -6500,9 +6500,10 @@ Argomenti:
 ** _const char *option_name_: nome dell'opzione
 ** _const char *value_: valore
 ** valore restituito:
-*** _WEECHAT_CONFIG_READ_OK_
-*** _WEECHAT_CONFIG_READ_MEMORY_ERROR_
-*** _WEECHAT_CONFIG_READ_FILE_NOT_FOUND_
+*** _WEECHAT_CONFIG_OPTION_SET_OK_CHANGED_
+*** _WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE_
+*** _WEECHAT_CONFIG_OPTION_SET_ERROR_
+*** _WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND_
 * _callback_read_pointer_: puntatore fornito alla callback quando chiamata da
   WeeChat
 // TRANSLATION MISSING
