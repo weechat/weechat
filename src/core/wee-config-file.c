@@ -1480,6 +1480,14 @@ config_file_option_set (struct t_config_option *option, const char *value,
                         else
                             rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
                     }
+                    else
+                    {
+                        if (old_value_was_null)
+                        {
+                            free (option->value);
+                            option->value = NULL;
+                        }
+                    }
                 }
                 break;
             case CONFIG_NUM_OPTION_TYPES:
