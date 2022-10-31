@@ -135,6 +135,8 @@ struct t_config_option *config_look_hotlist_names_merged_buffers;
 struct t_config_option *config_look_hotlist_prefix;
 struct t_config_option *config_look_hotlist_remove;
 struct t_config_option *config_look_hotlist_short_names;
+struct t_config_option *config_look_hotlist_smart_jump_order;
+struct t_config_option *config_look_hotlist_smart_jump_prefer_forward;
 struct t_config_option *config_look_hotlist_sort;
 struct t_config_option *config_look_hotlist_suffix;
 struct t_config_option *config_look_hotlist_unique_numbers;
@@ -3218,6 +3220,33 @@ config_weechat_init_options ()
         NULL, 0, 0, "on", NULL, 0,
         NULL, NULL, NULL,
         &config_change_buffer_content, NULL, NULL,
+        NULL, NULL, NULL);
+    config_look_hotlist_smart_jump_order = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "smart_jump_order << weechat.look.hotlist_sort", "integer",
+        N_("order of \"smart jumps\" in hotlist: "
+           "group_time_*: group by notify level (highlights "
+           "first) then sort by time, group_number_*: group by notify level "
+           "(highlights first) then sort by number, number_*: sort by number; "
+           "asc = ascending sort, desc = descending sort."
+           "null = same as weechat.look.hotlist_sort"),
+        "group_time_asc|group_time_desc|group_number_asc|"
+        "group_number_desc|number_asc|number_desc",
+        0, 0, NULL, NULL, 1,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL);
+    config_look_hotlist_smart_jump_prefer_forward = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "smart_jump_prefer_forward", "boolean",
+        N_("if set and smart_jump_order is "
+           "num_asc, group_num_asc, num_desc or group_num_desc "
+           "smart jump prefers going forwards in the hotlist "
+           "instead of jumping to the first buffer with highest "
+           "priority activity."),
+        NULL, 0, 0, "off", NULL, 0,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
         NULL, NULL, NULL);
     config_look_hotlist_sort = config_file_new_option (
         weechat_config_file, ptr_section,

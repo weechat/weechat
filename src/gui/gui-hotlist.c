@@ -201,6 +201,96 @@ gui_hotlist_check_buffer_notify (struct t_gui_buffer *buffer,
     return 1;
 }
 
+typedef char (*t_gui_hotlist_cmp)(struct t_gui_hotlist* , struct t_gui_hotlist*);
+
+/*
+ * Different ways to compare hotlist elements
+ */
+char
+gui_hotlist_cmp_group_time_asc(struct t_gui_hotlist *lhs,
+                                struct t_gui_hotlist *rhs)
+{
+    if ((lhs->priority > rhs->priority)
+            || ((lhs->priority == rhs->priority)
+                && (util_timeval_diff (&(lhs->creation_time),
+                        &(rhs->creation_time)) > 0)))
+        return 1;
+    else
+        return 0;
+}
+char
+gui_hotlist_cmp_group_time_desc(struct t_gui_hotlist *lhs,
+                                 struct t_gui_hotlist *rhs)
+{
+    if ((lhs->priority > rhs->priority)
+            || ((lhs->priority == rhs->priority)
+                && (util_timeval_diff (&(lhs->creation_time),
+                        &(rhs->creation_time)) < 0)))
+        return 1;
+    else
+        return 0;
+}
+char
+gui_hotlist_cmp_group_num_asc(struct t_gui_hotlist *lhs,
+                               struct t_gui_hotlist *rhs)
+{
+    if ((lhs->priority > rhs->priority)
+            || ((lhs->priority == rhs->priority)
+                && (lhs->buffer->number < rhs->buffer->number)))
+        return 1;
+    else
+        return 0;
+}
+char
+gui_hotlist_cmp_group_num_desc(struct t_gui_hotlist *lhs,
+                                struct t_gui_hotlist *rhs)
+{
+    if ((lhs->priority > rhs->priority)
+            || ((lhs->priority == rhs->priority)
+                && (lhs->buffer->number > rhs->buffer->number)))
+        return 1;
+    else
+        return 0;
+}
+char
+gui_hotlist_cmp_num_asc(struct t_gui_hotlist *lhs,
+                         struct t_gui_hotlist *rhs)
+{
+    if (lhs->buffer->number < rhs->buffer->number)
+        return 1;
+    else
+        return 0;
+}
+char
+gui_hotlist_cmp_num_desc(struct t_gui_hotlist *lhs,
+                          struct t_gui_hotlist *rhs)
+{
+    if (lhs->buffer->number > rhs->buffer->number)
+        return 1;
+    else
+        return 0;
+}
+
+t_gui_hotlist_cmp
+gui_hotlist_cmp_gt(int hotlist_sort)
+{
+    switch (hotlist_sort)
+    {
+        case CONFIG_LOOK_HOTLIST_SORT_GROUP_TIME_ASC:
+            return gui_hotlist_cmp_group_time_asc;
+        case CONFIG_LOOK_HOTLIST_SORT_GROUP_TIME_DESC:
+            return gui_hotlist_cmp_group_time_desc;
+        case CONFIG_LOOK_HOTLIST_SORT_GROUP_NUMBER_ASC:
+            return gui_hotlist_cmp_group_num_asc;
+        case CONFIG_LOOK_HOTLIST_SORT_GROUP_NUMBER_DESC:
+            return gui_hotlist_cmp_group_num_desc;
+        case CONFIG_LOOK_HOTLIST_SORT_NUMBER_ASC:
+            return gui_hotlist_cmp_num_asc;
+        case CONFIG_LOOK_HOTLIST_SORT_NUMBER_DESC:
+            return gui_hotlist_cmp_num_desc;
+    }
+}
+
 /*
  * Searches for position of hotlist (to keep hotlist sorted).
  */
@@ -211,66 +301,13 @@ gui_hotlist_find_pos (struct t_gui_hotlist *hotlist,
 {
     struct t_gui_hotlist *ptr_hotlist;
 
-    switch (CONFIG_INTEGER(config_look_hotlist_sort))
+    t_gui_hotlist_cmp cmp = gui_hotlist_cmp_gt(CONFIG_INTEGER(config_look_hotlist_sort));
+
+    for (ptr_hotlist = hotlist; ptr_hotlist;
+         ptr_hotlist = ptr_hotlist->next_hotlist)
     {
-        case CONFIG_LOOK_HOTLIST_SORT_GROUP_TIME_ASC:
-            for (ptr_hotlist = hotlist; ptr_hotlist;
-                 ptr_hotlist = ptr_hotlist->next_hotlist)
-            {
-                if ((new_hotlist->priority > ptr_hotlist->priority)
-                    || ((new_hotlist->priority == ptr_hotlist->priority)
-                        && (util_timeval_diff (&(new_hotlist->creation_time),
-                                               &(ptr_hotlist->creation_time)) > 0)))
-                    return ptr_hotlist;
-            }
-            break;
-        case CONFIG_LOOK_HOTLIST_SORT_GROUP_TIME_DESC:
-            for (ptr_hotlist = hotlist; ptr_hotlist;
-                 ptr_hotlist = ptr_hotlist->next_hotlist)
-            {
-                if ((new_hotlist->priority > ptr_hotlist->priority)
-                    || ((new_hotlist->priority == ptr_hotlist->priority)
-                        && (util_timeval_diff (&(new_hotlist->creation_time),
-                                               &(ptr_hotlist->creation_time)) < 0)))
-                    return ptr_hotlist;
-            }
-            break;
-        case CONFIG_LOOK_HOTLIST_SORT_GROUP_NUMBER_ASC:
-            for (ptr_hotlist = hotlist; ptr_hotlist;
-                 ptr_hotlist = ptr_hotlist->next_hotlist)
-            {
-                if ((new_hotlist->priority > ptr_hotlist->priority)
-                    || ((new_hotlist->priority == ptr_hotlist->priority)
-                        && (new_hotlist->buffer->number < ptr_hotlist->buffer->number)))
-                    return ptr_hotlist;
-            }
-            break;
-        case CONFIG_LOOK_HOTLIST_SORT_GROUP_NUMBER_DESC:
-            for (ptr_hotlist = hotlist; ptr_hotlist;
-                 ptr_hotlist = ptr_hotlist->next_hotlist)
-            {
-                if ((new_hotlist->priority > ptr_hotlist->priority)
-                    || ((new_hotlist->priority == ptr_hotlist->priority)
-                        && (new_hotlist->buffer->number > ptr_hotlist->buffer->number)))
-                    return ptr_hotlist;
-            }
-            break;
-        case CONFIG_LOOK_HOTLIST_SORT_NUMBER_ASC:
-            for (ptr_hotlist = hotlist; ptr_hotlist;
-                 ptr_hotlist = ptr_hotlist->next_hotlist)
-            {
-                if (new_hotlist->buffer->number < ptr_hotlist->buffer->number)
-                    return ptr_hotlist;
-            }
-            break;
-        case CONFIG_LOOK_HOTLIST_SORT_NUMBER_DESC:
-            for (ptr_hotlist = hotlist; ptr_hotlist;
-                 ptr_hotlist = ptr_hotlist->next_hotlist)
-            {
-                if (new_hotlist->buffer->number > ptr_hotlist->buffer->number)
-                    return ptr_hotlist;
-            }
-            break;
+        if (cmp(new_hotlist, ptr_hotlist))
+            return ptr_hotlist;
     }
     return NULL;
 }
@@ -519,6 +556,66 @@ gui_hotlist_resort ()
     }
 
     gui_hotlist_changed_signal (NULL);
+}
+
+/*
+ * Finds a target for smart jump.
+ *
+ * Returns pointer to the target hotlist element if found,
+ * NULL otherwise.
+ *
+ * Following config options change the behaviour of the function:
+ * - config_look_hotlist_smart_jump_order
+ *  - config_look_hotilst_sort
+ * - config_look_hotlist_smart_jump_prefer_forward.
+ */
+
+struct t_gui_hotlist *
+gui_hotlist_smart_jump_target (struct t_gui_buffer* buffer)
+{
+    struct t_gui_hotlist *ptr_hotlist,
+                         *selected = NULL,
+                         *selected_forward = NULL;
+
+    int smart_list_ordering =
+            (!config_file_option_is_null(config_look_hotlist_smart_jump_order)) ?
+                CONFIG_INTEGER(config_look_hotlist_smart_jump_order) :
+                CONFIG_INTEGER(config_look_hotlist_sort);
+
+    t_gui_hotlist_cmp cmp_gt = gui_hotlist_cmp_gt(smart_list_ordering);
+
+    selected = gui_hotlist;
+    for (ptr_hotlist = gui_hotlist; ptr_hotlist;
+         ptr_hotlist = ptr_hotlist->next_hotlist)
+    {
+        if (cmp_gt(ptr_hotlist, selected))
+        {
+            selected = ptr_hotlist;
+        }
+        if (CONFIG_BOOLEAN(config_look_hotlist_smart_jump_prefer_forward))
+        {
+            if(((smart_list_ordering == CONFIG_LOOK_HOTLIST_SORT_NUMBER_ASC ||
+                 smart_list_ordering == CONFIG_LOOK_HOTLIST_SORT_GROUP_NUMBER_ASC) &&
+                    ptr_hotlist->buffer->number > buffer->number) ||
+                (smart_list_ordering == CONFIG_LOOK_HOTLIST_SORT_NUMBER_DESC ||
+                 smart_list_ordering == CONFIG_LOOK_HOTLIST_SORT_GROUP_NUMBER_DESC) &&
+                    ptr_hotlist->buffer->number < buffer->number)
+            {
+                if (!selected_forward || cmp_gt(ptr_hotlist, selected_forward))
+                {
+                    selected_forward = ptr_hotlist;
+                }
+            }
+        }
+    }
+
+    if (CONFIG_BOOLEAN(config_look_hotlist_smart_jump_prefer_forward)
+        && selected_forward
+        && selected_forward->priority >= selected->priority)
+    {
+        return selected_forward;
+    }
+    return selected;
 }
 
 /*
