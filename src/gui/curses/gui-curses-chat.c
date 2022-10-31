@@ -1345,6 +1345,13 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
     pre_lines_displayed = 0;
     lines_displayed = 0;
 
+    /* calculate marker position (maybe not used for this line!) */
+    if (window->buffer->time_for_each_line && line->data->str_time)
+        read_marker_x = x + gui_chat_strlen_screen (line->data->str_time);
+    else
+        read_marker_x = x;
+    read_marker_y = y;
+
     /* display message before first line of buffer if date is not today */
     if ((line->data->date != 0)
         && CONFIG_BOOLEAN(config_look_day_change)
@@ -1374,16 +1381,11 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
                 gui_chat_display_new_line (window, num_lines, count,
                                            &lines_displayed, simulate);
                 pre_lines_displayed++;
+                read_marker_y++;
             }
         }
     }
 
-    /* calculate marker position (maybe not used for this line!) */
-    if (window->buffer->time_for_each_line && line->data->str_time)
-        read_marker_x = x + gui_chat_strlen_screen (line->data->str_time);
-    else
-        read_marker_x = x;
-    read_marker_y = y;
 
     /* display time and prefix */
     gui_chat_display_time_to_prefix (window, line, num_lines, count,
@@ -1972,6 +1974,9 @@ gui_chat_draw_free_buffer (struct t_gui_window *window, int clear_chat)
             ptr_line = gui_line_get_next_displayed (ptr_line);
         if (ptr_line)
         {
+            window->scroll->first_line_displayed =
+                (ptr_line == gui_line_get_first_displayed (window->buffer));
+
             y_start = (window->scroll->start_line) ? ptr_line->data->y : 0;
             y_end = y_start + window->win_chat_height - 1;
             while (ptr_line && (ptr_line->data->y <= y_end))
@@ -2109,6 +2114,8 @@ gui_chat_draw_bare (struct t_gui_window *window)
             y += num_lines;
             ptr_line = gui_line_get_next_displayed (ptr_line);
         }
+        window->scroll->first_line_displayed =
+            (ptr_line == gui_line_get_first_displayed (window->buffer));
     }
     else
     {

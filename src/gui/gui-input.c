@@ -528,8 +528,7 @@ gui_input_complete (struct t_gui_buffer *buffer)
 void
 gui_input_complete_next (struct t_gui_buffer *buffer)
 {
-    if (buffer->input
-        && (buffer->text_search == GUI_TEXT_SEARCH_DISABLED))
+    if (buffer->input)
     {
         gui_buffer_undo_snap (buffer);
         if (gui_completion_search (buffer->completion,
@@ -553,8 +552,7 @@ gui_input_complete_next (struct t_gui_buffer *buffer)
 void
 gui_input_complete_previous (struct t_gui_buffer *buffer)
 {
-    if (buffer->input
-        && (buffer->text_search == GUI_TEXT_SEARCH_DISABLED))
+    if (buffer->input)
     {
         gui_buffer_undo_snap (buffer);
         if (gui_completion_search (buffer->completion,
@@ -581,10 +579,10 @@ gui_input_search_text_here (struct t_gui_buffer *buffer)
     struct t_gui_window *window;
 
     window = gui_window_search_with_buffer (buffer);
-    if (window && (window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED))
+    if (window)
     {
+        gui_input_search_stop_here (buffer);
         gui_window_search_start (window, window->scroll->start_line);
-        gui_input_search_signal (buffer);
     }
 }
 
@@ -598,10 +596,10 @@ gui_input_search_text (struct t_gui_buffer *buffer)
     struct t_gui_window *window;
 
     window = gui_window_search_with_buffer (buffer);
-    if (window && (window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED))
+    if (window)
     {
+        gui_input_search_stop_here (buffer);
         gui_window_search_start (window, NULL);
-        gui_input_search_signal (buffer);
     }
 }
 
@@ -715,7 +713,8 @@ gui_input_search_previous (struct t_gui_buffer *buffer)
     struct t_gui_window *window;
 
     window = gui_window_search_with_buffer (buffer);
-    if (window && (window->buffer->text_search != GUI_TEXT_SEARCH_DISABLED))
+    if (window && (window->buffer->text_search != GUI_TEXT_SEARCH_DISABLED)
+        && window->scroll->first_line_displayed == 0)
     {
         window->buffer->text_search = GUI_TEXT_SEARCH_BACKWARD;
         (void) gui_window_search_text (window);
@@ -732,7 +731,9 @@ gui_input_search_next (struct t_gui_buffer *buffer)
     struct t_gui_window *window;
 
     window = gui_window_search_with_buffer (buffer);
-    if (window && (window->buffer->text_search != GUI_TEXT_SEARCH_DISABLED))
+    if (window && (window->buffer->text_search != GUI_TEXT_SEARCH_DISABLED)
+        && (window->scroll->start_line
+            || window->buffer->type == GUI_BUFFER_TYPE_FREE))
     {
         window->buffer->text_search = GUI_TEXT_SEARCH_FORWARD;
         (void) gui_window_search_text (window);
@@ -1476,8 +1477,7 @@ gui_input_jump_smart (struct t_gui_buffer *buffer)
 
     scroll_to_bottom = 0;
     window = gui_window_search_with_buffer (buffer);
-    if (window
-        && (window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED))
+    if (window)
     {
         if (gui_hotlist)
         {
@@ -1530,8 +1530,7 @@ gui_input_jump_last_buffer_displayed (struct t_gui_buffer *buffer)
     struct t_gui_window *window;
 
     window = gui_window_search_with_buffer (buffer);
-    if (window
-        && (window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED))
+    if (window)
     {
         if (gui_buffer_last_displayed)
             gui_buffer_switch_by_number (window,
@@ -1552,8 +1551,7 @@ gui_input_jump_previously_visited_buffer (struct t_gui_buffer *buffer)
     struct t_gui_buffer_visited *ptr_buffer_visited;
 
     window = gui_window_search_with_buffer (buffer);
-    if (window
-        && (window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED))
+    if (window)
     {
         index = gui_buffer_visited_get_index_previous ();
         if (index >= 0)
@@ -1586,8 +1584,7 @@ gui_input_jump_next_visited_buffer (struct t_gui_buffer *buffer)
     struct t_gui_buffer_visited *ptr_buffer_visited;
 
     window = gui_window_search_with_buffer (buffer);
-    if (window
-        && (window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED))
+    if (window)
     {
         index = gui_buffer_visited_get_index_next ();
         if (index >= 0)
