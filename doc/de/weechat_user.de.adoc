@@ -4942,19 +4942,120 @@ zu werden:
 ${tg_displayed} && (${tg_highlight} || ${tg_msg_pv})
 ----
 
+// TRANSLATION MISSING
 [[trigger_regex]]
-=== reguläre Ausdrücke
+=== Regular expression
 
-Reguläre Ausdrücke werden verwendet um Variablen in einem Callback Hashtable zu ändern.
+The regular expression is used to change variables in callback hashtable.
 
-Das Format ist: "/regex/replace" oder "/regex/replace/var" (wobei _var_ eine
-Variable eines Hashtable darstellt).
+Format is one of the following:
 
-Falls _var_ in der Hashtabelle nicht existieren sollte, wird diese automatisch mit einem
-leeren Wert angelegt. Damit kann man temporär benutzerspezifische Variablen erstellen.
+----
+/string1/string2
+s/string1/string2
+s/string1/string2/var
+y/string1/string2
+y/string1/string2/var
+----
 
-Sollte _var_ nicht näher spezifiziert sein, wird die Standard-Variable genutzt,
-welche abhängig von dem genutzten Hook ist:
+Fields:
+
+* `s` or `y`: a letter with the command; if missing, default command is `s`
+  and the first char is then used as the delimiter:
+** `s`: regex replacement: first string is a regular expression, second string
+   is the replacement for every matching string
+** `y`: chars translation: first string is a set of characters that are replaced
+   by the characters in the second string; once evaluated, each string must have
+   exactly the same number of UTF-8 chars
+* `/`: the regex delimiter; the char "/" can be replaced by any char
+  (one or more identical chars)
+* `string1`: the first string (use depends on the command)
+* `string2`: the second string (use depends on the command)
+* `var`: the hashtable variable to update
+
+Many regular expressions can be separated by a space, for example:
+
+----
+s/regex1/replace1/var1 y/abcdef/ABDDEF/var2
+----
+
+// TRANSLATION MISSING
+[[trigger_regex_replace]]
+==== Regex replace
+
+For the command `s`, the format is: `s/regex/replace` or `s/regex/replace/var`
+(where _var_ is a variable of the hashtable).
+
+As `s` is the default command, it can be omitted, so `/regex/replace` is also
+valid (but the first char, which is the delimiter, must not be a letter).
+
+Matching groups can be used in _replace_:
+
+* `+${re:0}+` to `+${re:99}+`: `+${re:0}+` is the whole match, `+${re:1}+` to
+  `+${re:99}+` are groups captured
+* `+${re:+}+`: the last match (with highest number)
+* `+${hide:c,${re:N}}+`: match "N" with all chars replaced by "c"
+  (example: `+${hide:*,${re:2}}+` is the group #2 with all chars replaced by
+  `+*+`).
+
+Example: use bold for words between `+*+`:
+
+----
+s/\*([^ ]+)\*/*${color:bold}${re:1}${color:-bold}*/
+----
+
+Example: default trigger _server_pass_ uses this regular expression to hide
+password in commands `/server` and `/connect` (chars in passwords are replaced
+by `+*+`):
+
+----
+s==^(/(server|connect) .*-(sasl_)?password=)([^ ]+)(.*)==${re:1}${hide:*,${re:4}}${re:5}
+----
+
+[NOTE]
+In this example, the delimiter used is "==" because there is a "/" in the
+regular expression.
+
+// TRANSLATION MISSING
+[[trigger_regex_translate_chars]]
+==== Translate chars
+
+For the command `y`, the format is: `y/chars1/chars2` or `y/chars1/chars2/var`
+(where _var_ is a variable of the hashtable).
+
+Example: replace "a", "b" and "c" by upper case letter:
+
+----
+y/abc/ABC/
+----
+
+Example: rotate arrows clockwise:
+
+----
+y/←↑→↓/↑→↓←/
+----
+
+Example: convert all letters to lower case:
+
+----
+y/${chars:upper}/${chars:lower}/
+----
+
+Example: shift each letter by one position, preserving case: a→b, b→c … y→z, z→a:
+
+----
+y/${chars:a-z}${chars:A-Z}/${chars:b-z}a${chars:B-Z}A/
+----
+
+// TRANSLATION MISSING
+[[trigger_regex_variable]]
+==== Variable
+
+If _var_ does not exist in the hashtable, it is created automatically with an
+empty value. This allows to create custom temporary variables.
+
+If _var_ is not specified, the default variable is used, it depends on hook
+type:
 
 [width="100%",cols="2,3,7",options="header"]
 |===
@@ -4977,40 +5078,6 @@ welche abhängig von dem genutzten Hook ist:
 ^(1)^ Alle Variablen können im Trigger upgedated werden, aber nur diese Variablen
 haben einen Einfluss auf den Wert der vom Trigger zurückgegeben wird und dann von
 WeeChat genutzt wird.
-
-Mehrere reguläre Ausdrücke können durch ein Leerzeichen voneinander
-getrennt werden, zum Beispiel:
-"/regex1/replace1/var1 /regex2/replace2/var2".
-
-Das Zeichen "/" kann durch jedes andere Zeichen ersetzt werden (ein
-oder mehrere identische Zeichen).
-
-Matching groups können in "replace" genutzt werden:
-
-* `+${re:0}+` bis `+${re:99}+`: `+${re:0}+` um alles zu matchen, `+${re:1}+` bis
-  `+${re:99}+` um Gruppen zu fangen
-* `+${re:+}+`: der letzte match (mit der höchsten Nummer)
-* `+${hide:c,${re:N}}+`: match "N" mit allen Zeichen die durch "c" ersetzt wurden
-  (Beispiel: `+${hide:*,${re:2}}+` ist die group #2 mit allen Zeichen die durch
-  `+*+` ersetzt wurden).
-
-Beispiel: nutzte Fettschrift zwischen dem Zeichen `+*+`:
-
-----
-/\*([^ ]+)\*/*${color:bold}${re:1}${color:-bold}*/
-----
-
-Beispiel: der Standard-Trigger _server_pass_ nutzt folgenden regulären Ausdruck
-um ein Passwort in den Befehlen `/server` und `/connect` zu verbergen (die
-einzelnen Zeichen des Passwortes werden durch `+*+` ersetzt):
-
-----
-==^(/(server|connect) .*-(sasl_)?password=)([^ ]+)(.*)==${re:1}${hide:*,${re:4}}${re:5}
-----
-
-[NOTE]
-In diesem Beispiel wird "==" als Trennzeichen verwendet, da ein "/" in
-dem regulären Ausdruck genutzt wird.
 
 [[trigger_command]]
 === Befehl

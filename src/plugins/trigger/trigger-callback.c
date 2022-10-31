@@ -267,18 +267,95 @@ trigger_callback_check_conditions (struct t_trigger *trigger,
 }
 
 /*
- * Replaces text using one or more regex in the trigger.
+ * Replaces text using regex.
+ *
+ * Returns: text replaced.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+trigger_callback_regex_replace (struct t_trigger_context *context,
+                                const char *text,
+                                regex_t *regex,
+                                const char *replace)
+{
+    char *value;
+    struct t_hashtable *hashtable_options_regex;
+
+    if (!regex)
+        return NULL;
+
+    hashtable_options_regex = weechat_hashtable_new (
+        32,
+        WEECHAT_HASHTABLE_STRING,
+        WEECHAT_HASHTABLE_STRING,
+        NULL, NULL);
+
+    weechat_hashtable_set (context->pointers, "regex", regex);
+    weechat_hashtable_set (hashtable_options_regex,
+                           "regex_replace", replace);
+
+    value = weechat_string_eval_expression (
+        text,
+        context->pointers,
+        context->extra_vars,
+        hashtable_options_regex);
+
+    weechat_hashtable_free (hashtable_options_regex);
+
+    return value;
+}
+
+/*
+ * Translates chars.
+ *
+ * Returns: text with translated chars.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+trigger_callback_regex_translate_chars (struct t_trigger_context *context,
+                                        const char *text,
+                                        const char *chars1,
+                                        const char *chars2)
+{
+    char *value, *chars1_eval, *chars2_eval;
+
+    chars1_eval = weechat_string_eval_expression (
+        chars1,
+        context->pointers,
+        context->extra_vars,
+        NULL);
+    chars2_eval = weechat_string_eval_expression (
+        chars2,
+        context->pointers,
+        context->extra_vars,
+        NULL);
+
+    value = weechat_string_translate_chars (text, chars1_eval, chars2_eval);
+
+    if (chars1_eval)
+        free (chars1_eval);
+    if (chars2_eval)
+        free (chars2_eval);
+
+    return value;
+}
+
+/*
+ * Executes regex commands.
  */
 
 void
-trigger_callback_replace_regex (struct t_trigger *trigger,
-                                struct t_trigger_context *context,
-                                int display_monitor)
+trigger_callback_regex (struct t_trigger *trigger,
+                        struct t_trigger_context *context,
+                        int display_monitor)
 {
     char *value;
     const char *ptr_key, *ptr_value;
     int i, pointers_allocated;
-    struct t_hashtable *hashtable_options_regex;
 
     pointers_allocated = 0;
 
@@ -298,9 +375,12 @@ trigger_callback_replace_regex (struct t_trigger *trigger,
 
     for (i = 0; i < trigger->regex_count; i++)
     {
-        /* if regex is not set (invalid), skip it */
-        if (!trigger->regex[i].regex)
+        /* if regex is not set (invalid) for command "regex replace", skip it */
+        if ((trigger->regex[i].command == TRIGGER_REGEX_COMMAND_REPLACE)
+            && !trigger->regex[i].regex)
+        {
             continue;
+        }
 
         ptr_key = (trigger->regex[i].variable) ?
             trigger->regex[i].variable :
@@ -336,25 +416,25 @@ trigger_callback_replace_regex (struct t_trigger *trigger,
             ptr_value = weechat_hashtable_get (context->extra_vars, ptr_key);
         }
 
-        hashtable_options_regex = weechat_hashtable_new (
-            32,
-            WEECHAT_HASHTABLE_STRING,
-            WEECHAT_HASHTABLE_STRING,
-            NULL, NULL);
-
-        weechat_hashtable_set (context->pointers,
-                               "regex", trigger->regex[i].regex);
-        weechat_hashtable_set (hashtable_options_regex,
-                               "regex_replace",
-                               trigger->regex[i].replace_escaped);
-
-        value = weechat_string_eval_expression (
-            ptr_value,
-            context->pointers,
-            context->extra_vars,
-            hashtable_options_regex);
-
-        weechat_hashtable_free (hashtable_options_regex);
+        switch (trigger->regex[i].command)
+        {
+            case TRIGGER_REGEX_COMMAND_REPLACE:
+                value = trigger_callback_regex_replace (
+                    context,
+                    ptr_value,
+                    trigger->regex[i].regex,
+                    trigger->regex[i].replace_escaped);
+                break;
+            case TRIGGER_REGEX_COMMAND_TRANSLATE_CHARS:
+                value = trigger_callback_regex_translate_chars (
+                    context,
+                    ptr_value,
+                    trigger->regex[i].str_regex,
+                    trigger->regex[i].replace);
+                break;
+            case TRIGGER_NUM_REGEX_COMMANDS:
+                break;
+        }
 
         if (value)
         {
@@ -493,7 +573,7 @@ trigger_callback_execute (struct t_trigger *trigger,
     if (weechat_trigger_plugin->debug >= 1)
     {
         gettimeofday (&(context->start_check_conditions), NULL);
-        context->start_replace_regex = context->start_check_conditions;
+        context->start_regex = context->start_check_conditions;
         context->start_run_command = context->start_check_conditions;
     }
 
@@ -505,7 +585,7 @@ trigger_callback_execute (struct t_trigger *trigger,
         /* replace text with regex */
         if (weechat_trigger_plugin->debug >= 1)
             gettimeofday (&(context->start_check_conditions), NULL);
-        trigger_callback_replace_regex (trigger, context, display_monitor);
+        trigger_callback_regex (trigger, context, display_monitor);
 
         /* execute command(s) */
         if (weechat_trigger_plugin->debug >= 1)
@@ -524,8 +604,8 @@ trigger_callback_execute (struct t_trigger *trigger,
         time_init = weechat_util_timeval_diff (&(context->start_exec),
                                                &(context->start_check_conditions));
         time_cond = weechat_util_timeval_diff (&(context->start_check_conditions),
-                                               &(context->start_replace_regex));
-        time_regex = weechat_util_timeval_diff (&(context->start_replace_regex),
+                                               &(context->start_regex));
+        time_regex = weechat_util_timeval_diff (&(context->start_regex),
                                                 &(context->start_run_command));
         time_cmd = weechat_util_timeval_diff (&(context->start_run_command),
                                               &(context->end_exec));

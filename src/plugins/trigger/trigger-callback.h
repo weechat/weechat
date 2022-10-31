@@ -32,7 +32,7 @@ struct t_trigger_context
     struct t_weelist *vars_updated;
     struct timeval start_exec;
     struct timeval start_check_conditions;
-    struct timeval start_replace_regex;
+    struct timeval start_regex;
     struct timeval start_run_command;
     struct timeval end_exec;
 };

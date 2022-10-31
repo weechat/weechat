@@ -4989,8 +4989,107 @@ ${tg_displayed} && (${tg_highlight} || ${tg_msg_pv})
 L'expression régulière est utilisée pour modifier des variables dans la table
 de hachage de la fonction de rappel.
 
-Le format est : "/regex/remplacement" ou "/regex/remplacement/var" (où _var_ est
-une variable de la table de hachage).
+Le format est l'un des suivants :
+
+----
+/chaîne1/chaîne2
+s/chaîne1/chaîne2
+s/chaîne1/chaîne2/var
+y/chaîne1/chaîne2
+y/chaîne1/chaîne2/var
+----
+
+Champs :
+
+* `s` ou `y` : une lettre avec la commande ; si manquante, la commande par défaut
+  est `s` et le premier caractère est alors utilisé comme délimiteur :
+** `s` : remplacement par expression régulière : la première chaîne est l'expression
+   régulière, la seconde chaîne est le remplacement pour chaque chaîne trouvée
+** `y` : traduction de caractères : la première chaîne est un ensemble de caractères
+   qui sont remplacés par les caractères de la seconde chaîne ; une fois évaluée,
+   chaque chaîne doit contenir exactement le même nombre de caractères UTF-8
+* `/` : le délimiteur d'expression régulière ; le caractère "/" peut être remplacé
+  par n'importe quel caractère (un ou plusieurs caractères identiques)
+* `chaîne1` : la première chaîne (l'utilisation dépend de la commande)
+* `chaîne2` : la seconde chaîne (l'utilisation dépend de la commande)
+* `var` : la table de hachage avec la variable à mettre à jour
+
+Plusieurs expressions régulières peuvent être séparées par un espace, par exemple :
+
+----
+s/regex1/remplacement1/var1 y/abcdef/ABDDEF/var2
+----
+
+[[trigger_regex_replace]]
+==== Regex replace
+
+Pour la commande `s`, le format est : `s/regex/remplacement` ou
+`s/regex/remplacement/var` (où _var_ est une variable de la table de hachage).
+
+Comme `s` est la commande par défaut, elle peut être omise, donc `/regex/replace`
+est également valide (mais le premier caractère, qui est le délimiteur, ne doit
+pas être une lettre).
+
+Les groupes de correspondance peuvent être utilisés dans le _remplacement_ :
+
+* `+${re:0}+` à `+${re:99}+` : `+${re:0}+` est la correspondance complète, `+${re:1}+`
+  à `+${re:99}+` sont les groupes capturés
+* `+${re:+}+` : la dernière correspondance (avec le numéro le plus élevé)
+* `+${hide:c,${re:N}}+` : la correspondance "N" avec tous les caractères
+  remplacés par "c" (exemple : `+${hide:*,${re:2}}+` est le groupe n°2 avec tous
+  les caractères remplacés par `+*+`).
+
+Exemple : utiliser du gras pour les mots entre `+*+` :
+
+----
+s/\*([^ ]+)\*/*${color:bold}${re:1}${color:-bold}*/
+----
+
+Exemple : le trigger par défaut _server_pass_ utilise cette expression régulière
+pour cacher le mot de passe dans les commandes `/server` et `/connect` (les
+caractères des mots de passe sont remplacés par `+*+`) :
+
+----
+s==^(/(server|connect) .*-(sasl_)?password=)([^ ]+)(.*)==${re:1}${hide:*,${re:4}}${re:5}
+----
+
+[NOTE]
+Dans cet exemple, le séparateur utilisé est "==" car il y a "/" dans
+l'expression régulière.
+
+[[trigger_regex_translate_chars]]
+==== Translate chars
+
+Pour la commande `y`, le format est : `y/caractères1/caractères2` ou
+`y/caractères1/caractères2/var` (où _var_ est une variable de la table de hachage).
+
+Exemple : remplacer "a", "b" et "c" par la lettre en majuscules :
+
+----
+y/abc/ABC/
+----
+
+Exemple : faire tourner une flèche dans le sens horaire :
+
+----
+y/←↑→↓/↑→↓←/
+----
+
+Exemple : convertir toutes les lettres en minuscules :
+
+----
+y/${chars:upper}/${chars:lower}/
+----
+
+Exemple : décaler toutes les lettres d'une position, en préservant la casse :
+a→b, b→c … y→z, z→a :
+
+----
+y/${chars:a-z}${chars:A-Z}/${chars:b-z}a${chars:B-Z}A/
+----
+
+[[trigger_regex_variable]]
+==== Variable
 
 Si _var_ n'existe pas dans la table de hachage, elle est automatiquement créée
 avec une valeur vide. Cela permet de créer des variables temporaires.
@@ -5019,39 +5118,6 @@ du type de hook :
 ^(1)^ Toutes les variables peuvent être mises à jour dans le trigger, mais
 seulement ces variables ont un effet sur la valeur retournée par le trigger
 et utilisée par WeeChat.
-
-Plusieurs expressions régulières peuvent être séparées par un espace, par
-exemple : "/regex1/remplacement1/var1 /regex2/remplacement2/var2".
-
-Le caractère "/" peut être remplacé par tout caractère (un ou plusieurs
-caractères identiques).
-
-Les groupes de correspondance peuvent être utilisés dans le "remplacement" :
-
-* `+${re:0}+` à `+${re:99}+` : `+${re:0}+` est la correspondance complète, `+${re:1}+`
-  à `+${re:99}+` sont les groupes capturés
-* `+${re:+}+` : la dernière correspondance (avec le numéro le plus élevé)
-* `+${hide:c,${re:N}}+` : la correspondance "N" avec tous les caractères
-  remplacés par "c" (exemple : `+${hide:*,${re:2}}+` est le groupe n°2 avec tous
-  les caractères remplacés par `+*+`).
-
-Exemple : utiliser du gras pour les mots entre `+*+` :
-
-----
-/\*([^ ]+)\*/*${color:bold}${re:1}${color:-bold}*/
-----
-
-Exemple : le trigger par défaut _server_pass_ utilise cette expression régulière
-pour cacher le mot de passe dans les commandes `/server` et `/connect` (les
-caractères des mots de passe sont remplacés par `+*+`) :
-
-----
-==^(/(server|connect) .*-(sasl_)?password=)([^ ]+)(.*)==${re:1}${hide:*,${re:4}}${re:5}
-----
-
-[NOTE]
-Dans cet exemple, le séparateur utilisé est "==" car il y a "/" dans
-l'expression régulière.
 
 [[trigger_command]]
 === Commande

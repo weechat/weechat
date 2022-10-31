@@ -21,6 +21,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 New features::
 
   * core: allow command `/toggle` to create option before setting the value, if allowed in the section (issue #1837)
+  * trigger: add regex command "y" to translate chars, set default regex command to "s" (regex replace) (issue #1510)
 
 Bug fixes::
 

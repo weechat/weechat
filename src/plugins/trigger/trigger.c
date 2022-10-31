@@ -22,6 +22,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
 #include <regex.h>
 
 #include "../weechat-plugin.h"
@@ -61,6 +62,8 @@ char *trigger_hook_default_rc[TRIGGER_NUM_HOOK_TYPES] =
 { "ok,ok_eat,error", "ok,ok_eat,error", "", "", "ok,error", "ok,error",
   "ok,ok_eat,error", "ok", "ok", "", "", "" };
 
+char trigger_regex_command[TRIGGER_NUM_REGEX_COMMANDS] =
+{ 's', 'y' };
 char *trigger_hook_regex_default_var[TRIGGER_NUM_HOOK_TYPES] =
 { "tg_signal_data", "", "tg_string", "message", "tg_message", "tg_argv_eol1",
   "tg_command", "tg_remaining_calls", "tg_value", "", "tg_info", "" };
@@ -125,6 +128,27 @@ trigger_search_hook_type (const char *type)
     }
 
     /* hook type not found */
+    return -1;
+}
+
+/*
+ * Searches for a regex command.
+ *
+ * Returns index of option in enum t_trigger_regex_command, -1 if not found.
+ */
+
+int
+trigger_search_regex_command (char command)
+{
+    int i;
+
+    for (i = 0; i < TRIGGER_NUM_REGEX_COMMANDS; i++)
+    {
+        if (trigger_regex_command[i] == command)
+            return i;
+    }
+
+    /* regex command not found */
     return -1;
 }
 
@@ -630,7 +654,7 @@ trigger_regex_split (const char *str_regex,
     const char *ptr_regex, *pos, *pos_replace, *pos_replace_end;
     const char *pos_next_regex;
     char *delimiter, *str_regex_escaped;
-    int rc, index, length_delimiter;
+    int rc, index, length_delimiter, command;
     struct t_trigger_regex *new_regex;
 
     rc = 0;
@@ -658,6 +682,21 @@ trigger_regex_split (const char *str_regex,
         {
             free (delimiter);
             delimiter = NULL;
+        }
+
+        /* extract command */
+        if (isalpha ((unsigned char)ptr_regex[0]))
+        {
+            command = trigger_search_regex_command (ptr_regex[0]);
+            if (command < 0)
+                goto format_error;
+            /* skip the command */
+            ptr_regex = weechat_utf8_next_char (ptr_regex);
+        }
+        else
+        {
+            /* default command is "s" (replace regex) */
+            command = TRIGGER_REGEX_COMMAND_REPLACE;
         }
 
         /* search the delimiter (which can be more than one char) */
@@ -694,6 +733,7 @@ trigger_regex_split (const char *str_regex,
         index = *regex_count - 1;
 
         /* initialize new regex */
+        (*regex)[index].command = command;
         (*regex)[index].variable = NULL;
         (*regex)[index].str_regex = NULL;
         (*regex)[index].regex = NULL;
@@ -705,36 +745,44 @@ trigger_regex_split (const char *str_regex,
                                                      pos_replace - ptr_regex);
         if (!(*regex)[index].str_regex)
             goto memory_error;
-        if (str_regex_escaped)
-            free (str_regex_escaped);
-        str_regex_escaped = weechat_string_convert_escaped_chars ((*regex)[index].str_regex);
-        if (!str_regex_escaped)
-            goto memory_error;
 
-        /* set regex */
-        (*regex)[index].regex = malloc (sizeof (*(*regex)[index].regex));
-        if (!(*regex)[index].regex)
-            goto memory_error;
-        if (weechat_string_regcomp ((*regex)[index].regex,
-                                    str_regex_escaped,
-                                    REG_EXTENDED | REG_ICASE) != 0)
+        /* set regex (command "s" only) */
+        if (command == TRIGGER_REGEX_COMMAND_REPLACE)
         {
-            free ((*regex)[index].regex);
-            (*regex)[index].regex = NULL;
-            goto compile_error;
+            if (str_regex_escaped)
+                free (str_regex_escaped);
+            str_regex_escaped = weechat_string_convert_escaped_chars ((*regex)[index].str_regex);
+            if (!str_regex_escaped)
+                goto memory_error;
+            (*regex)[index].regex = malloc (sizeof (*(*regex)[index].regex));
+            if (!(*regex)[index].regex)
+                goto memory_error;
+            if (weechat_string_regcomp ((*regex)[index].regex,
+                                        str_regex_escaped,
+                                        REG_EXTENDED | REG_ICASE) != 0)
+            {
+                free ((*regex)[index].regex);
+                (*regex)[index].regex = NULL;
+                goto compile_error;
+            }
         }
 
-        /* set replace and replace_eval */
+        /* set replace */
         (*regex)[index].replace = (pos_replace_end) ?
             weechat_strndup (pos_replace + length_delimiter,
                              pos_replace_end - pos_replace - length_delimiter) :
             strdup (pos_replace + length_delimiter);
         if (!(*regex)[index].replace)
             goto memory_error;
-        (*regex)[index].replace_escaped =
-            weechat_string_convert_escaped_chars ((*regex)[index].replace);
-        if (!(*regex)[index].replace_escaped)
-            goto memory_error;
+
+        /* set replace_escaped (command "s" only) */
+        if (command == TRIGGER_REGEX_COMMAND_REPLACE)
+        {
+            (*regex)[index].replace_escaped =
+                weechat_string_convert_escaped_chars ((*regex)[index].replace);
+            if (!(*regex)[index].replace_escaped)
+                goto memory_error;
+        }
 
         if (!pos_replace_end)
             break;

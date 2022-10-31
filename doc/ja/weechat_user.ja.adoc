@@ -4985,19 +4985,120 @@ trigger.trigger.beep.post_action = none
 ${tg_displayed} && (${tg_highlight} || ${tg_msg_pv})
 ----
 
+// TRANSLATION MISSING
 [[trigger_regex]]
-=== 正規表現
+=== Regular expression
 
-正規表現はコールバックハッシュテーブル内の変数を変更するために使われます。
+The regular expression is used to change variables in callback hashtable.
 
-書式: "/regex/replace" または "/regex/replace/var" (ここで
-_var_ はハッシュテーブルの変数)。
+Format is one of the following:
 
-ハッシュテーブル内に _var_ が存在しない場合、空の値を持つ _var_
-が自動的に作られます。これを使うことで一時的な任意の変数を作れます。
+----
+/string1/string2
+s/string1/string2
+s/string1/string2/var
+y/string1/string2
+y/string1/string2/var
+----
 
-_var_
-が指定されなかった場合、デフォルト変数を使います、これはフックの種類に依存します:
+Fields:
+
+* `s` or `y`: a letter with the command; if missing, default command is `s`
+  and the first char is then used as the delimiter:
+** `s`: regex replacement: first string is a regular expression, second string
+   is the replacement for every matching string
+** `y`: chars translation: first string is a set of characters that are replaced
+   by the characters in the second string; once evaluated, each string must have
+   exactly the same number of UTF-8 chars
+* `/`: the regex delimiter; the char "/" can be replaced by any char
+  (one or more identical chars)
+* `string1`: the first string (use depends on the command)
+* `string2`: the second string (use depends on the command)
+* `var`: the hashtable variable to update
+
+Many regular expressions can be separated by a space, for example:
+
+----
+s/regex1/replace1/var1 y/abcdef/ABDDEF/var2
+----
+
+// TRANSLATION MISSING
+[[trigger_regex_replace]]
+==== Regex replace
+
+For the command `s`, the format is: `s/regex/replace` or `s/regex/replace/var`
+(where _var_ is a variable of the hashtable).
+
+As `s` is the default command, it can be omitted, so `/regex/replace` is also
+valid (but the first char, which is the delimiter, must not be a letter).
+
+Matching groups can be used in _replace_:
+
+* `+${re:0}+` to `+${re:99}+`: `+${re:0}+` is the whole match, `+${re:1}+` to
+  `+${re:99}+` are groups captured
+* `+${re:+}+`: the last match (with highest number)
+* `+${hide:c,${re:N}}+`: match "N" with all chars replaced by "c"
+  (example: `+${hide:*,${re:2}}+` is the group #2 with all chars replaced by
+  `+*+`).
+
+Example: use bold for words between `+*+`:
+
+----
+s/\*([^ ]+)\*/*${color:bold}${re:1}${color:-bold}*/
+----
+
+Example: default trigger _server_pass_ uses this regular expression to hide
+password in commands `/server` and `/connect` (chars in passwords are replaced
+by `+*+`):
+
+----
+s==^(/(server|connect) .*-(sasl_)?password=)([^ ]+)(.*)==${re:1}${hide:*,${re:4}}${re:5}
+----
+
+[NOTE]
+In this example, the delimiter used is "==" because there is a "/" in the
+regular expression.
+
+// TRANSLATION MISSING
+[[trigger_regex_translate_chars]]
+==== Translate chars
+
+For the command `y`, the format is: `y/chars1/chars2` or `y/chars1/chars2/var`
+(where _var_ is a variable of the hashtable).
+
+Example: replace "a", "b" and "c" by upper case letter:
+
+----
+y/abc/ABC/
+----
+
+Example: rotate arrows clockwise:
+
+----
+y/←↑→↓/↑→↓←/
+----
+
+Example: convert all letters to lower case:
+
+----
+y/${chars:upper}/${chars:lower}/
+----
+
+Example: shift each letter by one position, preserving case: a→b, b→c … y→z, z→a:
+
+----
+y/${chars:a-z}${chars:A-Z}/${chars:b-z}a${chars:B-Z}A/
+----
+
+// TRANSLATION MISSING
+[[trigger_regex_variable]]
+==== Variable
+
+If _var_ does not exist in the hashtable, it is created automatically with an
+empty value. This allows to create custom temporary variables.
+
+If _var_ is not specified, the default variable is used, it depends on hook
+type:
 
 [width="100%",cols="2,3,7",options="header"]
 |===
@@ -5019,38 +5120,6 @@ _var_
 [NOTE]
 ^(1)^ トリガはすべての値を更新できますが、ここで挙げた変数だけがトリガによって返されて
 WeeChat によって使われる値に影響を及ぼします
-
-複数の正規表現を使う場合は空白で区切ってください、例:
-"/regex1/replace1/var1 /regex2/replace2/var2"。
-
-文字 "/" を任意の文字 (1 つ以上の同じ文字) に変えることができます。
-
-マッチグループを "replace" の中で利用できます:
-
-* `+${re:0}+` から `+${re:99}+`: `+${re:0}+` はマッチ部分の全体、`+${re:1}+` から
-  `+${re:99}+` はグループ化されたマッチ部分
-* `+${re:+}+`: 最後のマッチ部分 (最大のグループ番号を持つ)
-* `+${hide:c,${re:N}}+`: マッチグループ "N" のすべての文字を "c" で置換した文字列
-  (例: `+${hide:*,${re:2}}+` はグループ #2 のすべての文字を `+*+`
-  で置換した文字列)。
-
-例: `+*+` で囲まれた文字を太字にする:
-
-----
-/\*([^ ]+)\*/*${color:bold}${re:1}${color:-bold}*/
-----
-
-例: デフォルトトリガ _server_pass_ はこの正規表現を使って、`/server`
-と `/connect` コマンドのパスワードを隠しています (パスワード部分の文字を
-`*` で置換しています):
-
-----
-==^(/(server|connect) .*-(sasl_)?password=)([^ ]+)(.*)==${re:1}${hide:*,${re:4}}${re:5}
-----
-
-[NOTE]
-この例では、区切り文字として "==" を使っています。これは正規表現内で
-"/" を使うためです。
 
 [[trigger_command]]
 === コマンド
