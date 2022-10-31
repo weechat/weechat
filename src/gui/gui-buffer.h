@@ -100,6 +100,7 @@ struct t_gui_buffer
                                        /* 1 = active (merged or not)        */
                                        /* 2 = the only active (merged)      */
     int hidden;                        /* 1 = buffer hidden                 */
+    int layout_hidden;                 /* hidden in layout                  */
     int zoomed;                        /* 1 if a merged buffer is zoomed    */
                                        /* (it can be another buffer)        */
     int print_hooks_enabled;           /* 1 if print hooks are enabled      */

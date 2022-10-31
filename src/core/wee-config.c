@@ -2126,8 +2126,15 @@ config_weechat_layout_read_cb (const void *pointer, void *data,
             {
                 error1 = NULL;
                 number1 = strtol (argv[2], &error1, 10);
+
+                if (argc >= 4)
+                    number2 = strtol (argv[3], &error2, 10);
+                else
+                    number2 = 0;
+
                 if (error1 && !error1[0])
-                    gui_layout_buffer_add (ptr_layout, argv[0], argv[1], number1);
+                    gui_layout_buffer_add (ptr_layout, argv[0], argv[1],
+                                           number1, number2);
             }
             string_free_split (argv);
         }
@@ -2257,10 +2264,11 @@ config_weechat_layout_write_cb (const void *pointer, void *data,
             snprintf (option_name, sizeof (option_name),
                       "%s.buffer", ptr_layout->name);
             if (!config_file_write_line (config_file, option_name,
-                                         "\"%s;%s;%d\"",
+                                         "\"%s;%s;%d;%d\"",
                                          ptr_layout_buffer->plugin_name,
                                          ptr_layout_buffer->buffer_name,
-                                         ptr_layout_buffer->number))
+                                         ptr_layout_buffer->number,
+                                         ptr_layout_buffer->hidden))
                 return WEECHAT_CONFIG_WRITE_ERROR;
         }
 

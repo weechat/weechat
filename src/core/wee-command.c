@@ -4290,10 +4290,11 @@ COMMAND_CALLBACK(layout)
                      ptr_layout_buffer;
                      ptr_layout_buffer = ptr_layout_buffer->next_layout)
                 {
-                    gui_chat_printf (NULL, "    %d. %s.%s",
+                    gui_chat_printf (NULL, "    %d. %s.%s%s",
                                      ptr_layout_buffer->number,
                                      ptr_layout_buffer->plugin_name,
-                                     ptr_layout_buffer->buffer_name);
+                                     ptr_layout_buffer->buffer_name,
+                                     ptr_layout_buffer->hidden ? _(" (hidden)") : "");
                 }
                 if (ptr_layout->layout_windows)
                     command_layout_display_tree (ptr_layout->layout_windows, 1);
