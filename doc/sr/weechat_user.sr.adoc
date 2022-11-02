@@ -2098,7 +2098,7 @@ include::includes/autogen_user_options.sr.adoc[tag=charset_options]
 почиње на „flash” унутар угластих заграда:
 
 ----
-/set weechat.look.highlight_regex "<flash.*>"
+/set weechat.look.highlight_disable_regex "<flash.*>"
 ----
 
 Ово такође може да се постави и са особином бафера „highlight_disable_regex”.

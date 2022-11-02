@@ -2327,7 +2327,7 @@ For example to disable any highlight on messages with a word beginning
 with "flash" between chevrons:
 
 ----
-/set weechat.look.highlight_regex "<flash.*>"
+/set weechat.look.highlight_disable_regex "<flash.*>"
 ----
 
 This can also be set with the buffer property "highlight_disable_regex".
