@@ -2239,7 +2239,7 @@ Zum Beispiel, Nachrichten die eine Hervorhebung besitzen, wo die Nachricht
 mit "flash" zwischen spitzen Klammern beginnt:
 
 ----
-/set weechat.look.highlight_regex "<flash.*>"
+/set weechat.look.highlight_disable_regex "<flash.*>"
 ----
 
 Dies kann auch mit der Buffereigenschaft „highlight_disable_regex“ eingestellt werden.
