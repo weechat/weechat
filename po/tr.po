@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2022-11-06 09:02+0100\n"
+"POT-Creation-Date: 2022-11-06 09:09+0100\n"
 "PO-Revision-Date: 2022-10-15 22:51+0200\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -14844,13 +14844,20 @@ msgstr "Tetiklerin listesi:"
 msgid "%s%s: invalid hook type: \"%s\""
 msgstr "%s%s: Geçersiz kanca türü: \"%s\""
 
-#, c-format
-msgid "%s%s: invalid format for regular expression"
+#, fuzzy, c-format
+#| msgid "%s%s: invalid format for regular expression"
+msgid "%s%s: invalid format for regular expression: \"%s\""
 msgstr "%s%s: Geçersiz düzenli ifade biçimi"
 
-#, c-format
-msgid "%s%s: invalid regular expression (compilation failed)"
+#, fuzzy, c-format
+#| msgid "%s%s: invalid regular expression (compilation failed)"
+msgid "%s%s: invalid regular expression (compilation failed): \"%s\""
 msgstr "%s%s: Geçersiz düzenli ifade (derleme başarısız)"
+
+#, fuzzy, c-format
+#| msgid "%s%s: not enough memory for regular expression"
+msgid "%s%s: not enough memory for regular expression: \"%s\""
+msgstr "%s%s: Düzenli ifade için yetersiz bellek"
 
 #, c-format
 msgid "%s%s: invalid return code: \"%s\""

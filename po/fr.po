@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2022-11-06 09:02+0100\n"
-"PO-Revision-Date: 2022-11-06 09:06+0100\n"
+"POT-Creation-Date: 2022-11-06 09:09+0100\n"
+"PO-Revision-Date: 2022-11-06 09:12+0100\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -15102,12 +15102,17 @@ msgid "%s%s: invalid hook type: \"%s\""
 msgstr "%s%s : type de hook invalide : \"%s\""
 
 #, c-format
-msgid "%s%s: invalid format for regular expression"
-msgstr "%s%s : format invalide pour l'expression régulière"
+msgid "%s%s: invalid format for regular expression: \"%s\""
+msgstr "%s%s : format invalide pour l'expression régulière : \"%s\""
 
 #, c-format
-msgid "%s%s: invalid regular expression (compilation failed)"
-msgstr "%s%s : expression régulière invalide (la compilation a échoué)"
+msgid "%s%s: invalid regular expression (compilation failed): \"%s\""
+msgstr ""
+"%s%s : expression régulière invalide (la compilation a échoué) : \"%s\""
+
+#, c-format
+msgid "%s%s: not enough memory for regular expression: \"%s\""
+msgstr "%s%s : pas assez de mémoire pour l'expression régulière : \"%s\""
 
 #, c-format
 msgid "%s%s: invalid return code: \"%s\""

@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2022-11-06 09:02+0100\n"
+"POT-Creation-Date: 2022-11-06 09:09+0100\n"
 "PO-Revision-Date: 2022-10-15 22:51+0200\n"
 "Last-Translator: Santiago Forero <santiago@forero.xyz>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -13431,12 +13431,17 @@ msgid "%s%s: invalid hook type: \"%s\""
 msgstr "%sError: no se pudo crear el atajo \"%s\""
 
 #, fuzzy, c-format
-msgid "%s%s: invalid format for regular expression"
+msgid "%s%s: invalid format for regular expression: \"%s\""
 msgstr "color para el prefijo de error"
 
 #, fuzzy, c-format
-msgid "%s%s: invalid regular expression (compilation failed)"
+msgid "%s%s: invalid regular expression (compilation failed): \"%s\""
 msgstr "%sError en la expresión a evaluar"
+
+#, fuzzy, c-format
+#| msgid "%s%s: not enough memory for regular expression"
+msgid "%s%s: not enough memory for regular expression: \"%s\""
+msgstr "%s%s: no hay suficiente memoria para la expresión regular"
 
 #, fuzzy, c-format
 msgid "%s%s: invalid return code: \"%s\""

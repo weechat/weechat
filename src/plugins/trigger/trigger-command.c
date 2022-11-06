@@ -587,24 +587,28 @@ trigger_command_trigger (const void *pointer, void *data,
                 case -1: /* format error */
                     weechat_printf (NULL,
                                     _("%s%s: invalid format for regular "
-                                      "expression"),
+                                      "expression: \"%s\""),
                                     weechat_prefix ("error"),
-                                    TRIGGER_PLUGIN_NAME);
+                                    TRIGGER_PLUGIN_NAME,
+                                    sargv[4]);
                     goto end;
                     break;
                 case -2: /* regex compilation error */
                     weechat_printf (NULL,
                                     _("%s%s: invalid regular expression "
-                                      "(compilation failed)"),
+                                      "(compilation failed): \"%s\""),
                                     weechat_prefix ("error"),
-                                    TRIGGER_PLUGIN_NAME);
+                                    TRIGGER_PLUGIN_NAME,
+                                    sargv[4]);
                     goto end;
                     break;
                 case -3: /* memory error */
                     weechat_printf (NULL,
-                                    _("%s%s: not enough memory"),
+                                    _("%s%s: not enough memory for regular "
+                                      "expression: \"%s\""),
                                     weechat_prefix ("error"),
-                                    TRIGGER_PLUGIN_NAME);
+                                    TRIGGER_PLUGIN_NAME,
+                                    sargv[4]);
                     goto end;
                     break;
             }

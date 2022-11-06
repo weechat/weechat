@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2022-11-06 09:02+0100\n"
+"POT-Creation-Date: 2022-11-06 09:09+0100\n"
 "PO-Revision-Date: 2022-10-15 22:51+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -12174,12 +12174,16 @@ msgid "%s%s: invalid hook type: \"%s\""
 msgstr "%s nem sikerült a(z) \"%s\" billentyűt hozzárendelni\n"
 
 #, fuzzy, c-format
-msgid "%s%s: invalid format for regular expression"
+msgid "%s%s: invalid format for regular expression: \"%s\""
 msgstr "belépési nyíl színe"
 
 #, fuzzy, c-format
-msgid "%s%s: invalid regular expression (compilation failed)"
+msgid "%s%s: invalid regular expression (compilation failed): \"%s\""
 msgstr "%s a(z) \"%s\" érvénytelen reguláris kifejezés (%s)\n"
+
+#, fuzzy, c-format
+msgid "%s%s: not enough memory for regular expression: \"%s\""
+msgstr "%s nincs elég memória a reguláris kifejezéshez\n"
 
 #, fuzzy, c-format
 msgid "%s%s: invalid return code: \"%s\""
