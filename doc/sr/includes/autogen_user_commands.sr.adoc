@@ -1373,83 +1373,84 @@ infolists: исписује инфо о инфолистама
 /eval  [-n|-s] [-d] <израз>
        [-n] [-d [-d]] -c <израз1> <оператор> <израз2>
 
-        -n: приказује резултат и не шаље га у бафер (дибаг режим)
-        -s: дели израз пре израчунавања (многе команде могу да се раздвоје са тачка зарезима)
-        -d: приказује дибаг излаз након израчунавања (са два -d: детаљнији дибаг)
-        -c: израчунава као услов: користе се оператори и заграде, враћа логичку вредност („0” или „1”)
-     израз: израз који се израчунава, променљиве у формату ${променљива} се замењују (погледајте испод); више команди може да се раздвоји са тачка зарезима
-  оператор: логички или оператор поређења:
-            - логички оператори:
-                &&   логичко „и”
-                ||   логичко „или”
-            - оператори поређења:
-                ==   једнако
-                !=   није једнако
-                <=   мање или једнако
-                <    мање
-                >=   веће или једнако
-                >    веће
-                =~   подудара се са POSIX проширеним регуларним изразом
-                !~   НЕ подудара се са POSIX проширеним регуларним изразом
-                ==*  је маска подударања, разликује величину слова (дозвољен је џокер „*”)
-                !!*  НИЈЕ маска подударања, разликује величину слова (дозвољен је џокер „*”)
-                =*   је маска подударања, не разликује величину слова (дозвољен је џокер „*”)
-                !*   НИЈЕ маска подударања, не разликује величину слова (дозвољен је џокер „*”)
-                ==-  је укључено, разликује величину слова
-                !!-  НИЈЕ укључено, разликује величину слова
-                =-   је укључено, не разликује величину слова
-                !-   НИЈЕ укључено, не разликује величину слова
+        -n: display result without sending it to buffer (debug mode)
+        -s: split expression before evaluating it (many commands can be separated by semicolons)
+        -d: display debug output after evaluation (with two -d: more verbose debug)
+        -c: evaluate as condition: use operators and parentheses, return a boolean value ("0" or "1")
+expression: expression to evaluate, variables with format ${variable} are replaced (see below); many commands can be separated by semicolons
+  operator: a logical or comparison operator:
+            - logical operators:
+                &&   boolean "and"
+                ||   boolean "or"
+            - comparison operators:
+                ==   equal
+                !=   not equal
+                <=   less or equal
+                <    less
+                >=   greater or equal
+                >    greater
+                =~   is matching POSIX extended regex
+                !~   is NOT matching POSIX extended regex
+                ==*  is matching mask, case sensitive (wildcard "*" is allowed)
+                !!*  is NOT matching mask, case sensitive (wildcard "*" is allowed)
+                =*   is matching mask, case insensitive (wildcard "*" is allowed)
+                !*   is NOT matching mask, case insensitive (wildcard "*" is allowed)
+                ==-  is included, case sensitive
+                !!-  is NOT included, case sensitive
+                =-   is included, case insensitive
+                !-   is NOT included, case insensitive
 
-Сматра се да је израз „true” ако није NULL, није празан и различит је од „0”.
-Поређење се врши употребом бројева у покретном зарезу ако су два израза важећи бројеви, у једном од следећих формата:
-  - целобројни (примери: 5, -7)
-  - број у покретном зарезу (примери: 5.2, -7.5, 2.83e-2)
-  - хексадецимални број (примери: 0xA3, -0xA3)
-Ако желите да форсирате поређење стрингова, можете да додате знаке навода око сваког израза, на пример:
+An expression is considered as "true" if it is not NULL, not empty, and different from "0".
+The comparison is made using floating point numbers if the two expressions are valid numbers, with one of the following formats:
+  - integer (examples: 5, -7)
+  - floating point number (examples: 5.2, -7.5, 2.83e-2)
+  - hexadecimal number (examples: 0xA3, -0xA3)
+To force a string comparison, you can add double quotes around each expression, for example:
   50 > 100      ==> 0
   "50" > "100"  ==> 1
 
-У изразима се замењују неке променљиве, користећи формат ${променљива}, променљива може да буде, према редоследу приоритета:
-  1. сам стринг без израчунавања (формат: „raw:xxx”)
-  2. кориснички дефинисана променљива (формат: „име”)
-  3. израчунати под-стринг (формат: „eval:xxx”)
-  4. израчунати услов (формат: „eval_cond:xxx”)
-  5. стринг са означеним карактерима (формат: „esc:xxx” или „\xxx”)
-  6. стринг конвертован у мала слова (формат: "lower:xxx")
-  7. стринг конвертован у велика слова (формат: "upper:xxx")
-  8. стринг са карактерима за сакривање (формат: „hide:кар,стринг”)
-  9. стринг са највише карактера (формат: „cut:макс,суфикс,стринг” или „cut:+макс,суфикс,стринг")
-     или макс број карактера који се приказује на екрану (формат: „cutscr:макс,суфикс,стринг” или „cutscr:+макс,суфикс,стринг”)
-  10. обрнути стринг (формат: „rev:xxx” или „revscr:xxx”)
-  11. поновљени стринг (формат: „repeat:број,стринг”)
-  12. дужина стринга (формат: „length:xxx” или „lengthscr:xxx”)
-  13. подела стринга (формат: „split:број,сепаратори,заставице,xxx”)
-  14. подела аргумената љуске (формат: „split_shell:број,xxx”)
-  15. боја (формат: „color:xxx”, погледајте „Референтни приручник API додатака”, функција „color”)
-  16. модификатор (формат: „modifier:име,подаци,стринг”)
-  17. инфо (формат: „info:име,аргументи”, аргументи нису обавезни)
-  18. base 16/32/64 шифриран/дешифрован стринг (формат: „base_encode:основа, xxx” или „base_decode:основа,xxx”)
-  19. текући датум/време (формат: „date” или „date:формат”)
-  20. променљива окружења (формат: „env:XXX”)
-  21. тернарни оператор (формат: „if:услов?вредност_ако_је_тачно:вредност_ако_је_нетачно”)
-  22. резултат израза са заградама и операторима + - * / // % ** (формат: „calc:xxx”)
-  23. случајни целобројни број (формат: „random:мин,макс”)
-  24. преведени стринг (формат: „translate:xxx”)
-  25. дефиниција корисничке промонљиве (формат: „define:име,вредност”)
-  26. опција (формат: „фајл.секција.опција”)
-  27. локална променљива у баферу
-  28. hdata име/променљива (вредност се аутоматски конвертује у стринг), „window” и „buffer” подразумевано показују на текући прозор/бафер.
-Формат за hdata може да буде једно од следећег:
-  hdata.пром1.пром2...: почиње са hdata (показивач мора да буде познат), и пита променљиве једну за другом (могу да следе и остала hdata)
-  hdata[листа].пром1.пром2...: почиње са hdata користећи листу/показивач/име показивача, на пример:
-    ${buffer[gui_buffers].full_name}: пуно име првог бафера у увезаној листи бафера
-    ${plugin[weechat_plugins].name}: име првог бафера у увезаној листи додатака
-  hdata[показивач].пром1.пром2...: почиње са hdata користећи показивач, на пример:
-    ${buffer[0x1234abcd].full_name}: пуно име бафера са овим показивачем (може да се користи у окидачима)
-    ${buffer[my_pointer].full_name}: пуно име бафера са овим именом показивача (може да се користи у окидачима)
-У вези имена hdata и променљивих, молим вас да погледате „Референтни приручник API додатака”, функцију „weechat_hdata_get”.
+Some variables are replaced in expression, using the format ${variable}, variable can be, by order of priority:
+  - the string itself without evaluation (format: "raw:xxx")
+  - a user-defined variable (format: "name")
+  - an evaluated sub-string (format: "eval:xxx")
+  - an evaluated condition (format: "eval_cond:xxx")
+  - a string with escaped chars (format: "esc:xxx" or "\xxx")
+  - a string with a range of chars (format: "chars:xxx" or "chars:c1-c2" where "xxx" is one of: "digit", "xdigit", "lower", "upper", "alpha", "alnum")
+  - a string converted to lower case (format: "lower:xxx")
+  - a string converted to upper case (format: "upper:xxx")
+  - a string with chars to hide (format: "hide:char,string")
+  - a string with max chars (format: "cut:max,suffix,string" or "cut:+max,suffix,string")
+     or max chars displayed on screen (format: "cutscr:max,suffix,string" or "cutscr:+max,suffix,string")
+  - a reversed string (format: "rev:xxx" or "revscr:xxx")
+  - a repeated string (format: "repeat:count,string")
+  - length of a string (format: "length:xxx" or "lengthscr:xxx")
+  - split of a string (format: "split:number,separators,flags,xxx")
+  - split of shell argmuents (format: "split_shell:number,xxx")
+  - a color (format: "color:xxx", see "Plugin API reference", function "color")
+  - a modifier (format: "modifier:name,data,string")
+  - an info (format: "info:name,arguments", arguments are optional)
+  - a base 16/32/64 encoded/decoded string (format: "base_encode:base,xxx" or "base_decode:base,xxx")
+  - current date/time (format: "date" or "date:format")
+  - an environment variable (format: "env:XXX")
+  - a ternary operator (format: "if:condition?value_if_true:value_if_false")
+  - result of an expression with parentheses and operators + - * / // % ** (format: "calc:xxx")
+  - a random integer number (format: "random:min,max")
+  - a translated string (format: "translate:xxx")
+  - define a user variable (format: "define:name,value")
+  - an option (format: "file.section.option")
+  - a local variable in buffer
+  - a hdata name/variable (the value is automatically converted to string), by default "window" and "buffer" point to current window/buffer.
+Format for hdata can be one of following:
+  hdata.var1.var2...: start with a hdata (pointer must be known), and ask variables one after one (other hdata can be followed)
+  hdata[list].var1.var2...: start with a hdata using a list/pointer/pointer name, for example:
+    ${buffer[gui_buffers].full_name}: full name of first buffer in linked list of buffers
+    ${plugin[weechat_plugins].name}: name of first plugin in linked list of plugins
+  hdata[pointer].var1.var2...: start with a hdata using a pointer, for example:
+    ${buffer[0x1234abcd].full_name}: full name of the buffer with this pointer (can be used in triggers)
+    ${buffer[my_pointer].full_name}: full name of the buffer with this pointer name (can be used in triggers)
+For name of hdata and variables, please look at "Plugin API reference", function "weechat_hdata_get".
 
-Примери (једноставни стрингови):
+Examples (simple strings):
   /eval -n ${raw:${info:version}}                 ==> ${info:version}
   /eval -n ${eval_cond:${window.win_width}>100}   ==> 1
   /eval -n ${info:version}                        ==> 0.4.3
@@ -1461,6 +1462,8 @@ infolists: исписује инфо о инфолистама
   /eval -n ${window.buffer.full_name}             ==> core.weechat
   /eval -n ${window.buffer.number}                ==> 1
   /eval -n ${\t}                                  ==> <tab>
+  /eval -n ${chars:digit}                         ==> 0123456789
+  /eval -n ${chars:J-T}                           ==> JKLMNOPQRST
   /eval -n ${lower:TEST}                          ==> test
   /eval -n ${upper:test}                          ==> TEST
   /eval -n ${hide:-,${relay.network.password}}    ==> --------
@@ -1486,7 +1489,7 @@ infolists: исписује инфо о инфолистама
   /eval -n ${translate:Plugin}                    ==> Extension
   /eval -n ${define:len,${calc:5+3}}${len}x${len} ==> 8x8
 
-Примери (услови):
+Examples (conditions):
   /eval -n -c ${window.buffer.number} > 2 ==> 0
   /eval -n -c ${window.win_width} > 100   ==> 1
   /eval -n -c (8 > 12) || (5 > 2)         ==> 1

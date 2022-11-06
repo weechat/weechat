@@ -1410,35 +1410,36 @@ To force a string comparison, you can add double quotes around each expression, 
   "50" > "100"  ==> 1
 
 Some variables are replaced in expression, using the format ${variable}, variable can be, by order of priority:
-  1. the string itself without evaluation (format: "raw:xxx")
-  2. a user-defined variable (format: "name")
-  3. an evaluated sub-string (format: "eval:xxx")
-  4. an evaluated condition (format: "eval_cond:xxx")
-  5. a string with escaped chars (format: "esc:xxx" or "\xxx")
-  6. a string converted to lower case (format: "lower:xxx")
-  7. a string converted to upper case (format: "upper:xxx")
-  8. a string with chars to hide (format: "hide:char,string")
-  9. a string with max chars (format: "cut:max,suffix,string" or "cut:+max,suffix,string")
+  - the string itself without evaluation (format: "raw:xxx")
+  - a user-defined variable (format: "name")
+  - an evaluated sub-string (format: "eval:xxx")
+  - an evaluated condition (format: "eval_cond:xxx")
+  - a string with escaped chars (format: "esc:xxx" or "\xxx")
+  - a string with a range of chars (format: "chars:xxx" or "chars:c1-c2" where "xxx" is one of: "digit", "xdigit", "lower", "upper", "alpha", "alnum")
+  - a string converted to lower case (format: "lower:xxx")
+  - a string converted to upper case (format: "upper:xxx")
+  - a string with chars to hide (format: "hide:char,string")
+  - a string with max chars (format: "cut:max,suffix,string" or "cut:+max,suffix,string")
      or max chars displayed on screen (format: "cutscr:max,suffix,string" or "cutscr:+max,suffix,string")
-  10. a reversed string (format: "rev:xxx" or "revscr:xxx")
-  11. a repeated string (format: "repeat:count,string")
-  12. length of a string (format: "length:xxx" or "lengthscr:xxx")
-  13. split of a string (format: "split:number,separators,flags,xxx")
-  14. split of shell argmuents (format: "split_shell:number,xxx")
-  15. a color (format: "color:xxx", see "Plugin API reference", function "color")
-  16. a modifier (format: "modifier:name,data,string")
-  17. an info (format: "info:name,arguments", arguments are optional)
-  18. a base 16/32/64 encoded/decoded string (format: "base_encode:base,xxx" or "base_decode:base,xxx")
-  19. current date/time (format: "date" or "date:format")
-  20. an environment variable (format: "env:XXX")
-  21. a ternary operator (format: "if:condition?value_if_true:value_if_false")
-  22. result of an expression with parentheses and operators + - * / // % ** (format: "calc:xxx")
-  23. a random integer number (format: "random:min,max")
-  24. a translated string (format: "translate:xxx")
-  25. define a user variable (format: "define:name,value")
-  26. an option (format: "file.section.option")
-  27. a local variable in buffer
-  28. a hdata name/variable (the value is automatically converted to string), by default "window" and "buffer" point to current window/buffer.
+  - a reversed string (format: "rev:xxx" or "revscr:xxx")
+  - a repeated string (format: "repeat:count,string")
+  - length of a string (format: "length:xxx" or "lengthscr:xxx")
+  - split of a string (format: "split:number,separators,flags,xxx")
+  - split of shell argmuents (format: "split_shell:number,xxx")
+  - a color (format: "color:xxx", see "Plugin API reference", function "color")
+  - a modifier (format: "modifier:name,data,string")
+  - an info (format: "info:name,arguments", arguments are optional)
+  - a base 16/32/64 encoded/decoded string (format: "base_encode:base,xxx" or "base_decode:base,xxx")
+  - current date/time (format: "date" or "date:format")
+  - an environment variable (format: "env:XXX")
+  - a ternary operator (format: "if:condition?value_if_true:value_if_false")
+  - result of an expression with parentheses and operators + - * / // % ** (format: "calc:xxx")
+  - a random integer number (format: "random:min,max")
+  - a translated string (format: "translate:xxx")
+  - define a user variable (format: "define:name,value")
+  - an option (format: "file.section.option")
+  - a local variable in buffer
+  - a hdata name/variable (the value is automatically converted to string), by default "window" and "buffer" point to current window/buffer.
 Format for hdata can be one of following:
   hdata.var1.var2...: start with a hdata (pointer must be known), and ask variables one after one (other hdata can be followed)
   hdata[list].var1.var2...: start with a hdata using a list/pointer/pointer name, for example:
@@ -1461,6 +1462,8 @@ Examples (simple strings):
   /eval -n ${window.buffer.full_name}             ==> core.weechat
   /eval -n ${window.buffer.number}                ==> 1
   /eval -n ${\t}                                  ==> <tab>
+  /eval -n ${chars:digit}                         ==> 0123456789
+  /eval -n ${chars:J-T}                           ==> JKLMNOPQRST
   /eval -n ${lower:TEST}                          ==> test
   /eval -n ${upper:test}                          ==> TEST
   /eval -n ${hide:-,${relay.network.password}}    ==> --------
