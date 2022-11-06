@@ -20,6 +20,34 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 [[v3.8]]
 == Version 3.8 (under dev)
 
+[[v3.8_trigger_regex_command]]
+=== Trigger regex command
+
+The trigger regex now starts with a command, which is "s" (regex replace, default)
+or "y" (translate chars).
+
+For compatibility, any regex starting with a delimiter different from a letter
+will still work.
+
+If you defined some triggers with a regex starting with a letter (used as delimiter),
+then you must change them *before* upgrading WeeChat, otherwise they'll be lost
+after upgrade (with an error when WeeChat tries to load them from configuration file).
+
+For example this regex is now invalid:
+
+----
+XabcXdefX
+----
+
+And must be replaced by:
+
+----
+sXabcXdefX
+----
+
+For more information on the regex format, see the trigger chapter in the
+_WeeChat User's guide_.
+
 [[v3.8_remove_python2_support]]
 === Remove Python 2 support
 
