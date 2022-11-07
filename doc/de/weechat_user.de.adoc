@@ -4942,13 +4942,12 @@ zu werden:
 ${tg_displayed} && (${tg_highlight} || ${tg_msg_pv})
 ----
 
-// TRANSLATION MISSING
 [[trigger_regex]]
-=== Regular expression
+=== Reguläre Ausdrücke
 
-The regular expression is used to change variables in callback hashtable.
+Der reguläre Ausdruck wird verwendet, um Variablen in der Callback-Hashtabelle zu ändern.
 
-Format is one of the following:
+Format ist eines der folgenden:
 
 ----
 /string1/string2
@@ -4958,108 +4957,104 @@ y/string1/string2
 y/string1/string2/var
 ----
 
-Fields:
+Felder:
 
-* `s` or `y`: a letter with the command; if missing, default command is `s`
-  and the first char is then used as the delimiter:
-** `s`: regex replacement: first string is a regular expression, second string
-   is the replacement for every matching string
-** `y`: chars translation: first string is a set of characters that are replaced
-   by the characters in the second string; once evaluated, each string must have
-   exactly the same number of UTF-8 chars
-* `/`: the regex delimiter; the char "/" can be replaced by any char
-  (one or more identical chars)
-* `string1`: the first string (use depends on the command)
-* `string2`: the second string (use depends on the command)
-* `var`: the hashtable variable to update
+* `s` oder `y`: ein Buchstabe mit dem Befehl; falls nicht vorhanden, ist der Standardbefehl `s`
+  und das erste Zeichen wird dann als Trennzeichen verwendet:
+** `s`: Regex-Ersetzung: Die erste Zeichenfolge ist ein regulärer Ausdruck, die zweite Zeichenfolge
+ist der Ersatz für jede passende Zeichenfolge
+** `y`: Zeichenübersetzung: Die erste Zeichenfolge ist eine Reihe von Zeichen, die ersetzt werden
+durch die Zeichen in der zweiten Zeichenfolge; einmal ausgewertet, muss jeder String haben
+genau die gleiche Anzahl von UTF-8-Zeichen
+* `/`: das Regex-Trennzeichen; das Zeichen "/" kann durch ein beliebiges Zeichen ersetzt werden
+(ein oder mehrere identische Zeichen)
+* `string1`: die erste Zeichenkette (Verwendung ist abhängig vom Befehl)
+* `string2`: die zweite Zeichenkette (Verwendung ist abhängig vom Befehl)
+* `var`: die zu aktualisierende Hashtable-Variable
 
-Many regular expressions can be separated by a space, for example:
+Mehrere reguläre Ausdrücke können durch ein Leerzeichen getrennt werden, zum Beispiel:
 
 ----
 s/regex1/replace1/var1 y/abcdef/ABDDEF/var2
 ----
 
-// TRANSLATION MISSING
 [[trigger_regex_replace]]
-==== Regex replace
+==== Regex ersetzen
 
-For the command `s`, the format is: `s/regex/replace` or `s/regex/replace/var`
-(where _var_ is a variable of the hashtable).
+Für den Befehl `s` ist das Format: `s/regex/replace` oder `s/regex/replace/var`
+(wobei _var_ eine Variable der Hashtabelle ist).
 
-As `s` is the default command, it can be omitted, so `/regex/replace` is also
-valid (but the first char, which is the delimiter, must not be a letter).
+Da `s` der Standardbefehl ist, kann dieser weggelassen werden, also ist es auch `/regex/replace`
+gültig (aber das erste Zeichen, das das Trennzeichen ist, darf kein Buchstabe sein).
 
-Matching groups can be used in _replace_:
+Zutreffende Gruppen können in _replace_ verwendet werden:
 
-* `+${re:0}+` to `+${re:99}+`: `+${re:0}+` is the whole match, `+${re:1}+` to
-  `+${re:99}+` are groups captured
-* `+${re:+}+`: the last match (with highest number)
-* `+${hide:c,${re:N}}+`: match "N" with all chars replaced by "c"
-  (example: `+${hide:*,${re:2}}+` is the group #2 with all chars replaced by
-  `+*+`).
+* `+${re:0}+` nach `+${re:99}+`: `+${re:0}+` ist die ganze Trefferanzahl, `+${re:1}+` nach
+  `+${re:99}+` sind als Gruppen erfasst.
+* `+${re:+}+`: das letzte Treffer (mit der höchsten Zahl)
+* `+${hide:c,${re:N}}+`: Treffer "N" mit allen Zeichen die durch "c" ersetzt wurden
+  (Beispiele: `+${hide:*,${re:2}}+` ist die Gruppe #2, mit allen Zeichen die durch
+  `+*+` ersetzt wurden).
 
-Example: use bold for words between `+*+`:
+Beispiel: Verwenden Sie Fettschrift für Wörter zwischen `+*+`:
 
 ----
 s/\*([^ ]+)\*/*${color:bold}${re:1}${color:-bold}*/
 ----
 
-Example: default trigger _server_pass_ uses this regular expression to hide
-password in commands `/server` and `/connect` (chars in passwords are replaced
-by `+*+`):
+Beispiel: Der Standardtrigger _server_pass_ verwendet diesen regulären Ausdruck zum Ausblenden
+des Passwortes in den Befehlen `/server` und `/connect` (Zeichen in Passwörtern werden ersetzt
+durch `+*+`):
 
 ----
 s==^(/(server|connect) .*-(sasl_)?password=)([^ ]+)(.*)==${re:1}${hide:*,${re:4}}${re:5}
 ----
 
 [NOTE]
-In this example, the delimiter used is "==" because there is a "/" in the
-regular expression.
+In diesem Beispiel ist das verwendete Trennzeichen "==", da ein "/" in dem
+regulären Ausdruck vorhanden ist.
 
-// TRANSLATION MISSING
 [[trigger_regex_translate_chars]]
-==== Translate chars
+==== Zeichen ersetzen
 
-For the command `y`, the format is: `y/chars1/chars2` or `y/chars1/chars2/var`
-(where _var_ is a variable of the hashtable).
+Für den Befehl „y“ ist das Format: „y/chars1/chars2“ oder „y/chars1/chars2/var“.
+(wobei _var_ eine Variable der Hashtabelle ist).
 
-Example: replace "a", "b" and "c" by upper case letter:
+Beispiel: ersetze "a", "b" und "c" durch Großbuchstaben:
 
 ----
 y/abc/ABC/
 ----
 
-Example: rotate arrows clockwise:
+Beispiel: rotiere Pfeile im Uhrzeigersinn:
 
 ----
 y/←↑→↓/↑→↓←/
 ----
 
-Example: convert all letters to lower case:
+Beispiel: konvertiere alle Zeichen in Kleinbuchstaben:
 
 ----
 y/${chars:upper}/${chars:lower}/
 ----
 
-Example: shift each letter by one position, preserving case: a→b, b→c … y→z, z→a:
+Beispiel: verschiebt jeden Buchstaben um eine Position, wobei die Groß- und Kleinschreibung erhalten bleibt: a→b, b→c … y→z, z→a:
 
 ----
 y/${chars:a-z}${chars:A-Z}/${chars:b-z}a${chars:B-Z}A/
 ----
 
-// TRANSLATION MISSING
 [[trigger_regex_variable]]
-==== Variable
+==== Variablen
 
-If _var_ does not exist in the hashtable, it is created automatically with an
-empty value. This allows to create custom temporary variables.
+Wenn _var_ nicht in der Hashtabelle vorhanden ist, wird es automatisch mit einem
+leerer Wert erstellt. Dies ermöglicht das Erstellen benutzerdefinierter temporärer Variablen.
 
-If _var_ is not specified, the default variable is used, it depends on hook
-type:
+Wenn _var_ nicht angegeben ist, wird die Standardvariable verwendet, sie hängt vom Hook-Typ ab:
 
 [width="100%",cols="2,3,7",options="header"]
 |===
-| Hook           | Standard-Variable  | Update allowed ^(1)^
+| Hook           | Standard-Variable  | Update erlaubt ^(1)^
 | signal         | tg_signal_data     |
 | hsignal        |                    |
 | modifier       | tg_string          | tg_string
