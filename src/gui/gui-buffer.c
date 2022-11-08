@@ -903,14 +903,49 @@ int
 gui_buffer_user_input_cb (const void *pointer, void *data,
                           struct t_gui_buffer *buffer, const char *input_data)
 {
+    char str_signal[1024];
+    int rc;
+
     /* make C compiler happy */
     (void) pointer;
     (void) data;
+
+    snprintf (str_signal, sizeof (str_signal),
+              "buffer_user_input_%s",
+              buffer->name);
+    rc = hook_signal_send (str_signal,
+                           WEECHAT_HOOK_SIGNAL_STRING, (void *)input_data);
+
+    if (rc == WEECHAT_RC_OK_EAT)
+        return WEECHAT_RC_OK;
 
     if (string_strcasecmp (input_data, "q") == 0)
     {
         gui_buffer_close (buffer);
     }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * Close callback for user buffers.
+ */
+
+int
+gui_buffer_user_close_cb (const void *pointer, void *data,
+                          struct t_gui_buffer *buffer)
+{
+    char str_signal[1024];
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+
+    snprintf (str_signal, sizeof (str_signal),
+              "buffer_user_closing_%s",
+              buffer->name);
+    hook_signal_send (str_signal,
+                      WEECHAT_HOOK_SIGNAL_STRING, NULL);
 
     return WEECHAT_RC_OK;
 }
@@ -944,7 +979,7 @@ gui_buffer_new_user (const char *name, enum t_gui_buffer_type buffer_type)
 
     new_buffer = gui_buffer_new_props (NULL, name, properties,
                                        &gui_buffer_user_input_cb, NULL, NULL,
-                                       NULL, NULL, NULL);
+                                       &gui_buffer_user_close_cb, NULL, NULL);
 
     if (properties)
         hashtable_free (properties);

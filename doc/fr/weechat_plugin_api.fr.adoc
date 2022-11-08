@@ -11180,6 +11180,18 @@ Liste des signaux envoyés par WeeChat et les extensions :
 | Pointeur : tampon.
 | Fin du zoom sur un tampon mélangé.
 
+| weechat | [[hook_signal_buffer_user_input_xxx]] buffer_user_input_xxx ^(2)^ | 3.8
+| Chaîne : texte envoyé au tampon.
+| Texte envoyé au tampon utilisateur (envoyé seulement sur les tampons créés
+  avec `/buffer add`). +
+  Si le code retour d'une fonction de rappel est _WEECHAT_RC_OK_EAT_, alors
+  la chaîne "q" ne peut plus être utilisée pour fermer le tampon.
+
+| weechat | [[hook_signal_buffer_user_closing_xxx]] buffer_user_closing_xxx ^(2)^ | 3.8
+| -
+| Fermeture du tampon utilisateur en cours (envoyé seulement sur les tampons créés
+  avec `/buffer add`).
+
 | weechat | [[hook_signal_cursor_start]] cursor_start | 3.2
 | -
 | Début du mode curseur.

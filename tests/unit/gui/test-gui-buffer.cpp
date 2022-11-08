@@ -25,17 +25,85 @@ extern "C"
 {
 #include <string.h>
 #include "src/core/wee-hashtable.h"
+#include "src/core/wee-hook.h"
+#include "src/core/wee-input.h"
 #include "src/gui/gui-buffer.h"
 #include "src/gui/gui-key.h"
 #include "src/gui/gui-line.h"
 #include "src/gui/gui-nicklist.h"
 #include "src/plugins/plugin.h"
+
+extern int gui_buffer_user_input_cb (const void *pointer, void *data,
+                                     struct t_gui_buffer *buffer,
+                                     const char *input_data);
+extern int gui_buffer_user_close_cb (const void *pointer, void *data,
+                                     struct t_gui_buffer *buffer);
 }
 
 #define TEST_BUFFER_NAME "test"
 
+char signal_buffer_user_input[256];
+int signal_buffer_user_closing = 0;
+
 TEST_GROUP(GuiBuffer)
 {
+    static int signal_buffer_user_input_cb (const void *pointer, void *data,
+                                            const char *signal,
+                                            const char *type_data,
+                                            void *signal_data)
+    {
+        /* make C++ compiler happy */
+        (void) pointer;
+        (void) data;
+        (void) signal;
+        (void) type_data;
+
+        if (signal_data)
+        {
+            snprintf (signal_buffer_user_input,
+                      sizeof (signal_buffer_user_input),
+                      "%s",
+                      (const char *)signal_data);
+        }
+        return WEECHAT_RC_OK;
+    }
+
+    static int signal_buffer_user_input_eat_cb (const void *pointer, void *data,
+                                                const char *signal,
+                                                const char *type_data,
+                                                void *signal_data)
+    {
+        /* make C++ compiler happy */
+        (void) pointer;
+        (void) data;
+        (void) signal;
+        (void) type_data;
+
+        if (signal_data)
+        {
+            snprintf (signal_buffer_user_input,
+                      sizeof (signal_buffer_user_input),
+                      "%s",
+                      (const char *)signal_data);
+        }
+        return WEECHAT_RC_OK_EAT;
+    }
+
+    static int signal_buffer_user_closing_cb (const void *pointer, void *data,
+                                              const char *signal,
+                                              const char *type_data,
+                                              void *signal_data)
+    {
+        /* make C++ compiler happy */
+        (void) pointer;
+        (void) data;
+        (void) signal;
+        (void) type_data;
+        (void) signal_data;
+
+        signal_buffer_user_closing = 1;
+        return WEECHAT_RC_OK_EAT;
+    }
 };
 
 /*
@@ -435,21 +503,80 @@ TEST(GuiBuffer, New)
 /*
  * Tests functions:
  *   gui_buffer_user_input_cb
- */
-
-TEST(GuiBuffer, UserInputCb)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Tests functions:
+ *   gui_buffer_user_close_cb
  *   gui_buffer_new_user
  */
 
 TEST(GuiBuffer, NewUser)
 {
-    /* TODO: write tests */
+    int type;
+    struct t_gui_buffer *buffer;
+    struct t_hook *signal_input, *signal_closing;
+
+    for (type = 0; type < GUI_BUFFER_NUM_TYPES; type++)
+    {
+        signal_input = hook_signal (NULL,
+                                    "buffer_user_input_" TEST_BUFFER_NAME,
+                                    &signal_buffer_user_input_cb, NULL, NULL);
+        signal_closing = hook_signal (NULL,
+                                      "buffer_user_closing_" TEST_BUFFER_NAME,
+                                      &signal_buffer_user_closing_cb, NULL, NULL);
+
+        /* test creation of user buffer */
+        buffer = gui_buffer_new_user (TEST_BUFFER_NAME,
+                                      (enum t_gui_buffer_type)type);
+        CHECK(buffer);
+        STRCMP_EQUAL(TEST_BUFFER_NAME, buffer->name);
+        STRCMP_EQUAL("core." TEST_BUFFER_NAME, buffer->full_name);
+        POINTERS_EQUAL(&gui_buffer_user_input_cb, buffer->input_callback);
+        POINTERS_EQUAL(&gui_buffer_user_close_cb, buffer->close_callback);
+
+        /* test signal "buffer_user_input_test" */
+        signal_buffer_user_input[0] = '\0';
+        input_data (buffer, "something", NULL);
+        STRCMP_EQUAL("something", signal_buffer_user_input);
+
+        /* test signal "buffer_user_closing_test" */
+        signal_buffer_user_closing = 0;
+        gui_buffer_close (buffer);
+        LONGS_EQUAL(1, signal_buffer_user_closing);
+
+        /* create the buffer again */
+        buffer = gui_buffer_new_user (TEST_BUFFER_NAME,
+                                      (enum t_gui_buffer_type)type);
+
+        /* close the buffer by sending "q" */
+        signal_buffer_user_input[0] = '\0';
+        signal_buffer_user_closing = 0;
+        input_data (buffer, "q", NULL);
+        STRCMP_EQUAL("q", signal_buffer_user_input);
+        LONGS_EQUAL(1, signal_buffer_user_closing);
+
+        /* create the buffer again */
+        buffer = gui_buffer_new_user (TEST_BUFFER_NAME,
+                                      (enum t_gui_buffer_type)type);
+
+        /* hook a signal that eats the input */
+        unhook (signal_input);
+        signal_input = hook_signal (NULL,
+                                    "buffer_user_input_" TEST_BUFFER_NAME,
+                                    &signal_buffer_user_input_eat_cb, NULL, NULL);
+
+        /*
+         * try to close the buffer by sending "q": it should not close it
+         * because the input signal callback as returned WEECHAT_RC_OK_EAT
+         */
+        signal_buffer_user_input[0] = '\0';
+        signal_buffer_user_closing = 0;
+        input_data (buffer, "q", NULL);
+        STRCMP_EQUAL("q", signal_buffer_user_input);
+        LONGS_EQUAL(0, signal_buffer_user_closing);
+
+        gui_buffer_close (buffer);
+
+        unhook (signal_input);
+        unhook (signal_closing);
+    }
 }
 
 /*
