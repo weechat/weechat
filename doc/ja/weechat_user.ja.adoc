@@ -4995,6 +4995,7 @@ Format is one of the following:
 
 ----
 /string1/string2
+/string1/string2/var
 s/string1/string2
 s/string1/string2/var
 y/string1/string2

@@ -4993,6 +4993,7 @@ Le format est l'un des suivants :
 
 ----
 /chaîne1/chaîne2
+/chaîne1/chaîne2/var
 s/chaîne1/chaîne2
 s/chaîne1/chaîne2/var
 y/chaîne1/chaîne2
