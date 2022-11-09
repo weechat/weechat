@@ -11275,7 +11275,9 @@ WeeChat とプラグインが送信するシグナルのリスト:
 |===
 
 [NOTE]
-^(1)^ _xxx_ はサーバ名、_yyy_ は IRC コマンド名。
+^(1)^ _xxx_ はサーバ名、_yyy_ は IRC コマンド名。 +
+// TRANSLATION MISSING
+^(2)^ _xxx_ is buffer name.
 
 C 言語での使用例:
 

@@ -10853,7 +10853,9 @@ struct t_hook *weechat_hook_signal (const char *signal,
 |===
 
 [NOTE]
-^(1)^ _xxx_ је име IRC сервера, _yyy_ је име IRC команде.
+^(1)^ _xxx_ је име IRC сервера, _yyy_ је име IRC команде. +
+// TRANSLATION MISSING
+^(2)^ _xxx_ is buffer name.
 
 C пример:
 

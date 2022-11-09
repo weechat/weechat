@@ -11431,7 +11431,8 @@ Liste des signaux envoyés par WeeChat et les extensions :
 |===
 
 [NOTE]
-^(1)^ _xxx_ est le nom du serveur IRC, _yyy_ est le nom d'une commande IRC.
+^(1)^ _xxx_ est le nom du serveur IRC, _yyy_ est le nom d'une commande IRC. +
+^(2)^ _xxx_ est le nom du tampon.
 
 Exemple en C :
 

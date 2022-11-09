@@ -11655,7 +11655,9 @@ List of signals sent by WeeChat and plugins:
 |===
 
 [NOTE]
-^(1)^ _xxx_ è il nome del server IRC, _yyy_ è il nome del comando IRC.
+^(1)^ _xxx_ è il nome del server IRC, _yyy_ è il nome del comando IRC. +
+// TRANSLATION MISSING
+^(2)^ _xxx_ is buffer name.
 
 Esempio in C:
 
