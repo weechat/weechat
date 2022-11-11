@@ -63,6 +63,7 @@ struct t_plugin_script *js_current_script = NULL;
 struct t_plugin_script *js_registered_script = NULL;
 const char *js_current_script_filename = NULL;
 WeechatJsV8 *js_current_interpreter = NULL;
+char **js_buffer_output = NULL;
 
 /*
  * string used to execute action "install":
@@ -167,6 +168,75 @@ weechat_js_object_to_hashtable (v8::Handle<v8::Object> obj,
 
     return hashtable;
 }
+
+/*
+ * Flushes output.
+ */
+ void
+ weechat_js_output_flush ()
+ {
+    const char *ptr_command;
+    char *temp_buffer, *command;
+    int length;
+
+    if(!*js_buffer_output[0])
+        return;
+    
+    /* if no buffer exists, catch output to stop the flush */
+    if(js_eval_mode && !js_eval_buffer)
+        return;
+    
+    temp_buffer = strdup (*js_buffer_output);
+    if (!temp_buffer)
+        return;
+
+    weechat_string_dyn_copy (js_buffer_output, NULL);
+
+    if (js_eval_mode)
+    {
+        if (js_eval_send_input)
+        {
+            if (js_eval_exec_commands)
+                ptr_command = temp_buffer;
+            else
+                ptr_command = weechat_string_input_for_buffer (temp_buffer);
+            if (ptr_command)
+            {
+                weechat_command (js_eval_buffer, temp_buffer);
+            }
+            else
+            {
+                length = 1 + strlen (temp_buffer) + 1;
+                command = malloc (length);
+                if (command)
+                {
+                    snprintf (command, length, "%c%s",
+                              temp_buffer[0], temp_buffer);
+                    weechat_command (js_eval_buffer,
+                                     (command[0]) ? command : " ");
+                    free (command);
+                }
+            }
+        }
+        else
+        {
+            weechat_printf (js_eval_buffer, "%s", temp_buffer);
+        }
+
+    } 
+    else 
+    {
+        /* script (no eval mode) */
+        weechat_printf (
+            NULL,
+            weechat_gettext ("%s: stdout/stderr (%s): %s"),
+            JS_PLUGIN_NAME,
+            (js_current_script) ? js_current_script->name : "?",
+            temp_buffer);
+    }
+
+    free (temp_buffer);
+ }
 
 /*
  * Executes a javascript function.
@@ -562,11 +632,49 @@ int
 weechat_js_eval (struct t_gui_buffer *buffer, int send_to_buffer_as_input,
                  int exec_commands, const char *code)
 {
-    /* TODO: implement javascript eval */
-    (void) buffer;
-    (void) send_to_buffer_as_input;
-    (void) exec_commands;
-    (void) code;
+    void *func_argv[1], *int result;
+
+    if (!js_script_eval)
+    {
+        js_quiet = 1;
+        js_script_eval = weechat_js_load (WEECHAT_SCRIPT_EVAL_NAME,
+                                        JS_EVAL_SCRIPT);
+        js_quiet = 0;
+        if (!js_script_eval)
+            return 0;
+    }
+
+    weechat_js_output_flush ();
+
+    js_eval_mode = 1;
+    js_eval_send_input = send_to_buffer_as_input;
+    js_eval_exec_commands = exec_commands;
+    js_eval_buffer = buffer;
+
+    func_argv[0] = (char *)code;
+    result = weechat_js_exec (js_script_eval,
+                              WEECHAT_SCRIPT_EXEC_IGNORE,
+                              "script_js_eval",
+                              "s", func_argv);
+
+    /* result ignored here */
+    if (result)
+        free (result);
+
+    weechat_js_output_flush ();
+
+    js_eval_mode = 0;
+    js_eval_send_input = 0;
+    js_eval_exec_commands = 0;
+    js_eval_buffer = NULL;
+    
+    if (!weechat_config_boolean (js_config_look_eval_keep_context))
+    {
+        js_quiet = 1;
+        weechat_js_unload (js_script_eval);
+        js_quiet = 0;
+        js_script_eval = NULL;
+    }
 
     return 1;
 }
