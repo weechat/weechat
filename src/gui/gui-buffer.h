@@ -124,6 +124,8 @@ struct t_gui_buffer
     struct t_gui_lines *mixed_lines;   /* mixed lines (if buffers merged)   */
     struct t_gui_lines *lines;         /* pointer to "own_lines" or         */
                                        /* "mixed_lines"                     */
+    int next_line_id;                  /* next line id                      */
+                                       /* (used with formatted type only)   */
     int time_for_each_line;            /* time is displayed for each line?  */
     int chat_refresh_needed;           /* refresh for chat is needed ?      */
                                        /* (1=refresh, 2=erase+refresh)      */

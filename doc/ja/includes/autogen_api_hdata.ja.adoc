@@ -582,6 +582,7 @@ _title_   (string) +
 _own_lines_   (pointer, hdata: "lines") +
 _mixed_lines_   (pointer, hdata: "lines") +
 _lines_   (pointer, hdata: "lines") +
+_next_line_id_   (integer) +
 _time_for_each_line_   (integer) +
 _chat_refresh_needed_   (integer) +
 _nicklist_   (integer) +
@@ -923,6 +924,7 @@ _next_line_   (pointer, hdata: "line") +
 | 1 行データ構造
 | -
 | _buffer_   (pointer, hdata: "buffer") +
+_id_   (integer) +
 _y_   (integer) +
 _date_   (time) +
 _date_printed_   (time) +

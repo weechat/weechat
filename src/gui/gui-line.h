@@ -30,6 +30,9 @@ struct t_infolist;
 struct t_gui_line_data
 {
     struct t_gui_buffer *buffer;       /* pointer to buffer                 */
+    int id;                            /* formatted buffer: (almost) unique */
+                                       /* line id in buffer                 */
+                                       /* free buffer: equals to "y"        */
     int y;                             /* line position (for free buffer)   */
     time_t date;                       /* date/time of line (may be past)   */
     time_t date_printed;               /* date/time when weechat print it   */

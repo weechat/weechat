@@ -92,7 +92,7 @@ char *gui_buffer_properties_get_integer[] =
 { "number", "layout_number", "layout_number_merge_order", "type", "notify",
   "num_displayed", "active", "hidden", "zoomed", "print_hooks_enabled",
   "day_change", "clear", "filter", "closing", "lines_hidden",
-  "prefix_max_length", "time_for_each_line", "nicklist",
+  "prefix_max_length", "next_line_id", "time_for_each_line", "nicklist",
   "nicklist_case_sensitive", "nicklist_max_length", "nicklist_display_groups",
   "nicklist_count", "nicklist_visible_count",
   "nicklist_groups_count", "nicklist_groups_visible_count",
@@ -742,6 +742,7 @@ gui_buffer_new_props (struct t_weechat_plugin *plugin,
     new_buffer->own_lines = gui_line_lines_alloc ();
     new_buffer->mixed_lines = NULL;
     new_buffer->lines = new_buffer->own_lines;
+    new_buffer->next_line_id = 0;
     new_buffer->time_for_each_line = 1;
     new_buffer->chat_refresh_needed = 2;
 
@@ -1266,6 +1267,8 @@ gui_buffer_get_integer (struct t_gui_buffer *buffer, const char *property)
         return buffer->lines->lines_hidden;
     else if (string_strcasecmp (property, "prefix_max_length") == 0)
         return buffer->lines->prefix_max_length;
+    else if (string_strcasecmp (property, "next_line_id") == 0)
+        return buffer->next_line_id;
     else if (string_strcasecmp (property, "time_for_each_line") == 0)
         return buffer->time_for_each_line;
     else if (string_strcasecmp (property, "nicklist") == 0)
@@ -4482,6 +4485,7 @@ gui_buffer_hdata_buffer_cb (const void *pointer, void *data,
         HDATA_VAR(struct t_gui_buffer, own_lines, POINTER, 0, NULL, "lines");
         HDATA_VAR(struct t_gui_buffer, mixed_lines, POINTER, 0, NULL, "lines");
         HDATA_VAR(struct t_gui_buffer, lines, POINTER, 0, NULL, "lines");
+        HDATA_VAR(struct t_gui_buffer, next_line_id, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, time_for_each_line, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, chat_refresh_needed, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, nicklist, INTEGER, 0, NULL, NULL);
@@ -4682,6 +4686,8 @@ gui_buffer_add_to_infolist (struct t_infolist *infolist,
     if (!infolist_new_var_integer (ptr_item, "lines_hidden", buffer->lines->lines_hidden))
         return 0;
     if (!infolist_new_var_integer (ptr_item, "prefix_max_length", buffer->lines->prefix_max_length))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "next_line_id", buffer->next_line_id))
         return 0;
     if (!infolist_new_var_integer (ptr_item, "time_for_each_line", buffer->time_for_each_line))
         return 0;
@@ -4913,6 +4919,7 @@ gui_buffer_print_log ()
         log_printf ("  mixed_lines . . . . . . : 0x%lx", ptr_buffer->mixed_lines);
         gui_lines_print_log (ptr_buffer->mixed_lines);
         log_printf ("  lines . . . . . . . . . : 0x%lx", ptr_buffer->lines);
+        log_printf ("  next_line_id. . . . . . : %d",    ptr_buffer->next_line_id);
         log_printf ("  time_for_each_line. . . : %d",    ptr_buffer->time_for_each_line);
         log_printf ("  chat_refresh_needed . . : %d",    ptr_buffer->chat_refresh_needed);
         log_printf ("  nicklist. . . . . . . . : %d",    ptr_buffer->nicklist);

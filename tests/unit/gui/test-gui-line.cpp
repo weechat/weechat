@@ -27,6 +27,7 @@ extern "C"
 #include "src/core/wee-config.h"
 #include "src/core/wee-string.h"
 #include "src/gui/gui-buffer.h"
+#include "src/gui/gui-chat.h"
 #include "src/gui/gui-color.h"
 #include "src/gui/gui-filter.h"
 #include "src/gui/gui-hotlist.h"
@@ -843,7 +844,144 @@ TEST(GuiLine, SetHighlight)
 
 TEST(GuiLine, New)
 {
-    /* TODO: write tests */
+    struct t_gui_buffer *buffer;
+    struct t_gui_line *line1, *line2, *line3, *line4;
+    time_t date_printed, date;
+    char *str_time;
+
+    date_printed = time (NULL);
+    date = date_printed - 1;
+    str_time = gui_chat_get_time_string (date);
+
+    POINTERS_EQUAL(NULL,
+                   gui_line_new (NULL, 0, date, date_printed, NULL, NULL, NULL));
+
+    /* create a new test buffer (formatted content) */
+    buffer = gui_buffer_new_user ("test", GUI_BUFFER_TYPE_FORMATTED);
+    CHECK(buffer);
+
+    line1 = gui_line_new (buffer, 0, date, date_printed, NULL, NULL, NULL);
+    CHECK(line1);
+    CHECK(line1->data);
+    POINTERS_EQUAL(NULL, line1->prev_line);
+    POINTERS_EQUAL(NULL, line1->next_line);
+    POINTERS_EQUAL(buffer, line1->data->buffer);
+    LONGS_EQUAL(0, line1->data->id);
+    LONGS_EQUAL(-1, line1->data->y);
+    LONGS_EQUAL(date, line1->data->date);
+    LONGS_EQUAL(date_printed, line1->data->date_printed);
+    STRCMP_EQUAL(str_time, line1->data->str_time);
+    LONGS_EQUAL(0, line1->data->tags_count);
+    POINTERS_EQUAL(NULL, line1->data->tags_array);
+    LONGS_EQUAL(1, line1->data->displayed);
+    LONGS_EQUAL(GUI_HOTLIST_LOW, line1->data->notify_level);
+    LONGS_EQUAL(0, line1->data->highlight);
+    LONGS_EQUAL(0, line1->data->refresh_needed);
+    STRCMP_EQUAL("", line1->data->prefix);
+    LONGS_EQUAL(0, line1->data->prefix_length);
+    STRCMP_EQUAL("", line1->data->message);
+    gui_line_add (line1);
+    POINTERS_EQUAL(NULL, line1->prev_line);
+    POINTERS_EQUAL(NULL, line1->next_line);
+
+    line2 = gui_line_new (buffer, 0, date, date_printed, "tag1,tag2,tag3",
+                          "prefix", "message");
+    CHECK(line2);
+    CHECK(line2->data);
+    POINTERS_EQUAL(NULL, line2->prev_line);
+    POINTERS_EQUAL(NULL, line2->next_line);
+    POINTERS_EQUAL(buffer, line2->data->buffer);
+    LONGS_EQUAL(1, line2->data->id);
+    LONGS_EQUAL(-1, line2->data->y);
+    LONGS_EQUAL(date, line2->data->date);
+    LONGS_EQUAL(date_printed, line2->data->date_printed);
+    STRCMP_EQUAL(str_time, line2->data->str_time);
+    LONGS_EQUAL(3, line2->data->tags_count);
+    CHECK(line2->data->tags_array);
+    STRCMP_EQUAL("tag1", line2->data->tags_array[0]);
+    STRCMP_EQUAL("tag2", line2->data->tags_array[1]);
+    STRCMP_EQUAL("tag3", line2->data->tags_array[2]);
+    LONGS_EQUAL(1, line2->data->displayed);
+    LONGS_EQUAL(GUI_HOTLIST_LOW, line2->data->notify_level);
+    LONGS_EQUAL(0, line2->data->highlight);
+    LONGS_EQUAL(0, line2->data->refresh_needed);
+    STRCMP_EQUAL("prefix", line2->data->prefix);
+    LONGS_EQUAL(6, line2->data->prefix_length);
+    STRCMP_EQUAL("message", line2->data->message);
+    gui_line_add (line2);
+    POINTERS_EQUAL(line1, line2->prev_line);
+    POINTERS_EQUAL(NULL, line2->next_line);
+
+    /* simulate next_line_id == INT_MAX and display 2 lines */
+    buffer->next_line_id = INT_MAX;
+    line3 = gui_line_new (buffer, 0, date, date_printed, NULL, NULL, "test");
+    CHECK(line3);
+    LONGS_EQUAL(INT_MAX, line3->data->id);
+    line4 = gui_line_new (buffer, 0, date, date_printed, NULL, NULL, "test");
+    CHECK(line4);
+    LONGS_EQUAL(0, line4->data->id);
+
+    gui_buffer_close (buffer);
+
+    /* create a new test buffer (free content) */
+    buffer = gui_buffer_new_user ("test", GUI_BUFFER_TYPE_FREE);
+    CHECK(buffer);
+
+    line1 = gui_line_new (buffer, 0, date, date_printed, NULL, NULL, NULL);
+    CHECK(line1);
+    CHECK(line1->data);
+    POINTERS_EQUAL(NULL, line1->prev_line);
+    POINTERS_EQUAL(NULL, line1->next_line);
+    POINTERS_EQUAL(buffer, line1->data->buffer);
+    LONGS_EQUAL(0, line1->data->id);
+    LONGS_EQUAL(0, line1->data->y);
+    LONGS_EQUAL(date, line1->data->date);
+    LONGS_EQUAL(date_printed, line1->data->date_printed);
+    POINTERS_EQUAL(NULL, line1->data->str_time);
+    LONGS_EQUAL(0, line1->data->tags_count);
+    POINTERS_EQUAL(NULL, line1->data->tags_array);
+    LONGS_EQUAL(1, line1->data->displayed);
+    LONGS_EQUAL(GUI_HOTLIST_LOW, line1->data->notify_level);
+    LONGS_EQUAL(0, line1->data->highlight);
+    LONGS_EQUAL(1, line1->data->refresh_needed);
+    POINTERS_EQUAL(NULL, line1->data->prefix);
+    LONGS_EQUAL(0, line1->data->prefix_length);
+    STRCMP_EQUAL("", line1->data->message);
+    gui_line_add (line1);
+    POINTERS_EQUAL(NULL, line1->prev_line);
+    POINTERS_EQUAL(NULL, line1->next_line);
+
+    line2 = gui_line_new (buffer, 3, date, date_printed, "tag1,tag2,tag3",
+                          NULL, "message");
+    CHECK(line2);
+    CHECK(line2->data);
+    POINTERS_EQUAL(NULL, line2->prev_line);
+    POINTERS_EQUAL(NULL, line2->next_line);
+    POINTERS_EQUAL(buffer, line2->data->buffer);
+    LONGS_EQUAL(3, line2->data->id);
+    LONGS_EQUAL(3, line2->data->y);
+    LONGS_EQUAL(date, line2->data->date);
+    LONGS_EQUAL(date_printed, line2->data->date_printed);
+    POINTERS_EQUAL(NULL, line2->data->str_time);
+    LONGS_EQUAL(3, line2->data->tags_count);
+    CHECK(line2->data->tags_array);
+    STRCMP_EQUAL("tag1", line2->data->tags_array[0]);
+    STRCMP_EQUAL("tag2", line2->data->tags_array[1]);
+    STRCMP_EQUAL("tag3", line2->data->tags_array[2]);
+    LONGS_EQUAL(1, line2->data->displayed);
+    LONGS_EQUAL(GUI_HOTLIST_LOW, line2->data->notify_level);
+    LONGS_EQUAL(0, line2->data->highlight);
+    LONGS_EQUAL(1, line2->data->refresh_needed);
+    POINTERS_EQUAL(NULL, line2->data->prefix);
+    LONGS_EQUAL(0, line2->data->prefix_length);
+    STRCMP_EQUAL("message", line2->data->message);
+    gui_line_add (line2);
+    CHECK(line2->prev_line);
+    POINTERS_EQUAL(NULL, line2->next_line);
+
+    gui_buffer_close (buffer);
+
+    free (str_time);
 }
 
 /*

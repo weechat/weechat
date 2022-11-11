@@ -508,6 +508,9 @@ upgrade_weechat_read_buffer (struct t_infolist *infolist)
     ptr_buffer->lines->first_line_not_read =
         infolist_integer (infolist, "first_line_not_read");
 
+    /* next line id */
+    ptr_buffer->next_line_id = infolist_integer (infolist, "next_line_id");
+
     /* time for each line */
     ptr_buffer->time_for_each_line =
         infolist_integer (infolist, "time_for_each_line");
@@ -651,6 +654,7 @@ upgrade_weechat_read_buffer_line (struct t_infolist *infolist)
                                      infolist_string (infolist, "message"));
             if (new_line)
             {
+                new_line->data->id = infolist_integer (infolist, "id");
                 gui_line_add (new_line);
                 new_line->data->highlight = infolist_integer (infolist,
                                                               "highlight");
@@ -667,7 +671,10 @@ upgrade_weechat_read_buffer_line (struct t_infolist *infolist)
                                      NULL,
                                      infolist_string (infolist, "message"));
             if (new_line)
+            {
+                new_line->data->id = infolist_integer (infolist, "id");
                 gui_line_add_y (new_line);
+            }
             break;
         case GUI_BUFFER_NUM_TYPES:
             break;

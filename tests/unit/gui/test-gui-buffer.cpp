@@ -370,6 +370,7 @@ TEST(GuiBuffer, NewProps)
     POINTERS_EQUAL(NULL, buffer->own_lines->first_line);
     POINTERS_EQUAL(NULL, buffer->own_lines->last_line);
     POINTERS_EQUAL(NULL, buffer->own_lines->last_read_line);
+    LONGS_EQUAL(0, buffer->next_line_id);
     LONGS_EQUAL(0, buffer->time_for_each_line);
     LONGS_EQUAL(2, buffer->chat_refresh_needed);
     LONGS_EQUAL(0, buffer->nicklist);

@@ -1488,6 +1488,9 @@ gui_line_new (struct t_gui_buffer *buffer, int y, time_t date,
     struct t_gui_line_data *new_line_data;
     int max_notify_level;
 
+    if (!buffer)
+        return NULL;
+
     /* create new line */
     new_line = malloc (sizeof (*new_line));
     if (!new_line)
@@ -1508,6 +1511,16 @@ gui_line_new (struct t_gui_buffer *buffer, int y, time_t date,
 
     if (buffer->type == GUI_BUFFER_TYPE_FORMATTED)
     {
+        /*
+         * the line identifier is almost unique: when reaching INT_MAX, it is
+         * reset to 0; it is extremely unlikely all integer are used in the
+         * same buffer, that would mean the buffer has a huge number of lines;
+         * when searching a line id in a buffer, it is recommended to start
+         * from the last line and loop to the first
+         */
+        new_line->data->id = buffer->next_line_id;
+        buffer->next_line_id = (buffer->next_line_id == INT_MAX) ?
+            0 : buffer->next_line_id + 1;
         new_line->data->y = -1;
         new_line->data->date = date;
         new_line->data->date_printed = date_printed;
@@ -1526,6 +1539,7 @@ gui_line_new (struct t_gui_buffer *buffer, int y, time_t date,
     }
     else
     {
+        new_line->data->id = y;
         new_line->data->y = y;
         new_line->data->date = date;
         new_line->data->date_printed = date_printed;
@@ -2225,6 +2239,7 @@ gui_line_hdata_line_data_cb (const void *pointer, void *data,
     if (hdata)
     {
         HDATA_VAR(struct t_gui_line_data, buffer, POINTER, 0, NULL, "buffer");
+        HDATA_VAR(struct t_gui_line_data, id, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_line_data, y, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_line_data, date, TIME, 1, NULL, NULL);
         HDATA_VAR(struct t_gui_line_data, date_printed, TIME, 1, NULL, NULL);
@@ -2266,6 +2281,8 @@ gui_line_add_to_infolist (struct t_infolist *infolist,
     if (!ptr_item)
         return 0;
 
+    if (!infolist_new_var_integer (ptr_item, "id", line->data->id))
+        return 0;
     if (!infolist_new_var_integer (ptr_item, "y", line->data->y))
         return 0;
     if (!infolist_new_var_time (ptr_item, "date", line->data->date))
