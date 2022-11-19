@@ -357,6 +357,7 @@ trigger_callback_regex (struct t_trigger *trigger,
     const char *ptr_key, *ptr_value;
     int i, pointers_allocated;
 
+    value = NULL;
     pointers_allocated = 0;
 
     if (trigger->regex_count == 0)
