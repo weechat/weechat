@@ -40,6 +40,7 @@ Tests::
 Build::
 
   * python: remove support of Python 2.x
+  * debian: change dependency guile-2.2-dev to guile-3.0-dev
 
 [[v3.7.1]]
 == Version 3.7.1 (2022-10-21)
