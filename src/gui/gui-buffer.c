@@ -196,7 +196,7 @@ gui_buffer_get_plugin_name (struct t_gui_buffer *buffer)
 }
 
 /*
- * Get short name of buffer (of name if short_name is NULL).
+ * Get short name of buffer (or name if short_name is NULL).
  *
  * Note: this function never returns NULL.
  */
