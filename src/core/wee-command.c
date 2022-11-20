@@ -1859,25 +1859,24 @@ COMMAND_CALLBACK(debug)
         return WEECHAT_RC_OK;
     }
 
-    if (string_strcasecmp (argv[1], "dump") == 0)
-    {
-        if (argc > 2)
-            log_printf ("Dump request for plugin: \"%s\"", argv_eol[2]);
-        else
-            log_printf ("Dump request for WeeChat core and plugins");
-        weechat_log_use_time = 0;
-        (void) hook_signal_send ("debug_dump", WEECHAT_HOOK_SIGNAL_STRING,
-                                 (argc > 2) ? argv_eol[2] : NULL);
-        weechat_log_use_time = 1;
-        return WEECHAT_RC_OK;
-    }
-
     if (string_strcasecmp (argv[1], "buffer") == 0)
     {
         gui_buffer_dump_hexa (buffer);
         gui_chat_printf (NULL,
                          _("Raw content of buffers has been written in log "
                            "file"));
+        return WEECHAT_RC_OK;
+    }
+
+    if (string_strcasecmp (argv[1], "certs") == 0)
+    {
+        gui_chat_printf (NULL,
+                         NG_("%d certificate loaded (system: %d, user: %d)",
+                             "%d certificates loaded (system: %d, user: %d)",
+                             network_num_certs),
+                         network_num_certs,
+                         network_num_certs_system,
+                         network_num_certs_user);
         return WEECHAT_RC_OK;
     }
 
@@ -1897,6 +1896,25 @@ COMMAND_CALLBACK(debug)
                      && (string_strcasecmp (argv[2], "verbose") == 0)) ? 2 : 1;
             gui_cursor_debug_set (debug);
         }
+        return WEECHAT_RC_OK;
+    }
+
+    if (string_strcasecmp (argv[1], "dirs") == 0)
+    {
+        debug_directories ();
+        return WEECHAT_RC_OK;
+    }
+
+    if (string_strcasecmp (argv[1], "dump") == 0)
+    {
+        if (argc > 2)
+            log_printf ("Dump request for plugin: \"%s\"", argv_eol[2]);
+        else
+            log_printf ("Dump request for WeeChat core and plugins");
+        weechat_log_use_time = 0;
+        (void) hook_signal_send ("debug_dump", WEECHAT_HOOK_SIGNAL_STRING,
+                                 (argc > 2) ? argv_eol[2] : NULL);
+        weechat_log_use_time = 1;
         return WEECHAT_RC_OK;
     }
 
@@ -1932,18 +1950,6 @@ COMMAND_CALLBACK(debug)
         return WEECHAT_RC_OK;
     }
 
-    if (string_strcasecmp (argv[1], "certs") == 0)
-    {
-        gui_chat_printf (NULL,
-                         NG_("%d certificate loaded (system: %d, user: %d)",
-                             "%d certificates loaded (system: %d, user: %d)",
-                             network_num_certs),
-                         network_num_certs,
-                         network_num_certs_system,
-                         network_num_certs_user);
-        return WEECHAT_RC_OK;
-    }
-
     if (string_strcasecmp (argv[1], "memory") == 0)
     {
         debug_memory ();
@@ -1960,32 +1966,6 @@ COMMAND_CALLBACK(debug)
                      && (string_strcasecmp (argv[2], "verbose") == 0)) ? 2 : 1;
             gui_mouse_debug_set (debug);
         }
-        return WEECHAT_RC_OK;
-    }
-
-    if (string_strcasecmp (argv[1], "tags") == 0)
-    {
-        gui_chat_display_tags ^= 1;
-        gui_window_ask_refresh (2);
-        return WEECHAT_RC_OK;
-    }
-
-    if (string_strcasecmp (argv[1], "term") == 0)
-    {
-        gui_window_term_display_infos ();
-        weechat_term_check ();
-        return WEECHAT_RC_OK;
-    }
-
-    if (string_strcasecmp (argv[1], "windows") == 0)
-    {
-        debug_windows_tree ();
-        return WEECHAT_RC_OK;
-    }
-
-    if (string_strcasecmp (argv[1], "dirs") == 0)
-    {
-        debug_directories ();
         return WEECHAT_RC_OK;
     }
 
@@ -2021,6 +2001,20 @@ COMMAND_CALLBACK(debug)
         return WEECHAT_RC_OK;
     }
 
+    if (string_strcasecmp (argv[1], "tags") == 0)
+    {
+        gui_chat_display_tags ^= 1;
+        gui_window_ask_refresh (2);
+        return WEECHAT_RC_OK;
+    }
+
+    if (string_strcasecmp (argv[1], "term") == 0)
+    {
+        gui_window_term_display_infos ();
+        weechat_term_check ();
+        return WEECHAT_RC_OK;
+    }
+
     if (string_strcasecmp (argv[1], "time") == 0)
     {
         COMMAND_MIN_ARGS(3, "time");
@@ -2028,6 +2022,12 @@ COMMAND_CALLBACK(debug)
         (void) input_data (buffer, argv_eol[2], NULL);
         gettimeofday (&time_end, NULL);
         debug_display_time_elapsed (&time_start, &time_end, argv_eol[2], 1);
+        return WEECHAT_RC_OK;
+    }
+
+    if (string_strcasecmp (argv[1], "windows") == 0)
+    {
+        debug_windows_tree ();
         return WEECHAT_RC_OK;
     }
 
