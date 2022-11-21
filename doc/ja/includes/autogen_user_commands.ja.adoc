@@ -1343,6 +1343,7 @@ Examples:
         mouse|cursor [verbose]
         hdata [free]
         time <command>
+        unicode <string>
 
      list: list plugins with debug levels
       set: set debug level for plugin
@@ -1364,6 +1365,13 @@ infolists: display infos about infolists
      term: display infos about terminal
   windows: display windows tree
      time: measure time to execute a command or to send text to the current buffer
+  unicode: display information about unicode chars in string (evaluated, see /help eval)
+
+Examples:
+  /debug set irc 1
+  /debug mouse verbose
+  /debug time /filter toggle
+  /debug unicode ${chars:${\u26C0}-${\u26CF}}
 ----
 
 [[command_weechat_eval]]

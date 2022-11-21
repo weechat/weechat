@@ -26,6 +26,7 @@ include_directories(${CPPUTEST_INCLUDE_DIRS} ${PROJECT_BINARY_DIR} ${PROJECT_SOU
 set(LIB_WEECHAT_UNIT_TESTS_CORE_SRC
   unit/core/test-core-arraylist.cpp
   unit/core/test-core-calc.cpp
+  unit/core/test-core-command.cpp
   unit/core/test-core-config-file.cpp
   unit/core/test-core-crypto.cpp
   unit/core/test-core-dir.cpp

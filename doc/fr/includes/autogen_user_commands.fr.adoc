@@ -1343,6 +1343,7 @@ Exemples :
         cursor|mouse [verbose]
         hdata [free]
         time <commande>
+        unicode <chaîne>
 
      list : lister les extensions avec leur niveau de debug
       set : définir le niveau de debug pour l'extension
@@ -1364,6 +1365,13 @@ infolists : afficher des infos sur les infolists
      term : afficher des infos sur le terminal
   windows : afficher l'arbre des fenêtres
      time : mesurer le temps pour exécuter une commande ou pour envoyer du texte au tampon courant
+  unicode : afficher des informations sur les caractères unicode dans la chaîne (évaluée, voir /help eval)
+
+Exemples :
+  /debug set irc 1
+  /debug mouse verbose
+  /debug time /filter toggle
+  /debug unicode ${chars:${\u26C0}-${\u26CF}}
 ----
 
 [[command_weechat_eval]]

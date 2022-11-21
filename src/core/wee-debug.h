@@ -36,6 +36,7 @@ extern void debug_display_time_elapsed (struct timeval *time1,
                                         struct timeval *time2,
                                         const char *message,
                                         int display);
+extern void debug_unicode_string (const char *string);
 extern void debug_init ();
 extern void debug_end ();
 

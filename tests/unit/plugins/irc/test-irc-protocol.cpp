@@ -80,7 +80,7 @@ extern char *irc_protocol_cap_to_enable (const char *capabilities,
 #define CHECK_CORE(__message)                                           \
     if (!record_search ("core.weechat", __message))                     \
     {                                                                   \
-        char **msg = server_check_error (                               \
+        char **msg = server_build_error (                               \
             "Core message not displayed",                               \
             __message,                                                  \
             "All messages displayed");                                  \
@@ -91,7 +91,7 @@ extern char *irc_protocol_cap_to_enable (const char *capabilities,
 #define CHECK_SRV(__message)                                            \
     if (!record_search ("irc.server." IRC_FAKE_SERVER, __message))      \
     {                                                                   \
-        char **msg = server_check_error (                               \
+        char **msg = server_build_error (                               \
             "Server message not displayed",                             \
             __message,                                                  \
             "All messages displayed");                                  \
@@ -115,7 +115,7 @@ extern char *irc_protocol_cap_to_enable (const char *capabilities,
 #define CHECK_CHAN(__message)                                           \
     if (!record_search ("irc." IRC_FAKE_SERVER ".#test", __message))    \
     {                                                                   \
-        char **msg = server_check_error (                               \
+        char **msg = server_build_error (                               \
             "Channel message not displayed",                            \
             __message,                                                  \
             "All messages displayed");                                  \
@@ -126,7 +126,7 @@ extern char *irc_protocol_cap_to_enable (const char *capabilities,
 #define CHECK_PV(__nick, __message)                                     \
     if (!record_search ("irc." IRC_FAKE_SERVER "." __nick, __message))  \
     {                                                                   \
-        char **msg = server_check_error (                               \
+        char **msg = server_build_error (                               \
             "Private message not displayed",                            \
             __message,                                                  \
             "All messages displayed");                                  \
@@ -137,7 +137,7 @@ extern char *irc_protocol_cap_to_enable (const char *capabilities,
 #define CHECK_NO_MSG                                                    \
     if (arraylist_size (recorded_messages) > 0)                         \
     {                                                                   \
-        char **msg = server_check_error (                               \
+        char **msg = server_build_error (                               \
             "Unexpected message(s) displayed",                          \
             NULL,                                                       \
             NULL);                                                      \
@@ -150,7 +150,7 @@ extern char *irc_protocol_cap_to_enable (const char *capabilities,
         && !arraylist_search (sent_messages, (void *)__message,         \
                               NULL, NULL))                              \
     {                                                                   \
-        char **msg = server_check_error (                               \
+        char **msg = server_build_error (                               \
             "Message not sent to server",                               \
             __message,                                                  \
             "All messages sent");                                       \
@@ -160,7 +160,7 @@ extern char *irc_protocol_cap_to_enable (const char *capabilities,
     else if ((__message == NULL)                                        \
              && (arraylist_size (sent_messages) > 0))                   \
     {                                                                   \
-        char **msg = server_check_error (                               \
+        char **msg = server_build_error (                               \
             "Unexpected response(s) sent to the IRC server",            \
             NULL,                                                       \
             NULL);                                                      \
@@ -413,7 +413,7 @@ TEST_GROUP(IrcProtocolWithServer)
         record_stop ();
     }
 
-    char **server_check_error (const char *msg1, const char *message,
+    char **server_build_error (const char *msg1, const char *message,
                                const char *msg2)
     {
         char **msg;

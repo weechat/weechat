@@ -1833,6 +1833,7 @@ COMMAND_CALLBACK(debug)
     struct t_config_option *ptr_option;
     struct t_weechat_plugin *ptr_plugin;
     struct timeval time_start, time_end;
+    char *result;
     int debug;
 
     /* make C compiler happy */
@@ -2022,6 +2023,18 @@ COMMAND_CALLBACK(debug)
         (void) input_data (buffer, argv_eol[2], NULL);
         gettimeofday (&time_end, NULL);
         debug_display_time_elapsed (&time_start, &time_end, argv_eol[2], 1);
+        return WEECHAT_RC_OK;
+    }
+
+    if (string_strcasecmp (argv[1], "unicode") == 0)
+    {
+        COMMAND_MIN_ARGS(3, "unicode");
+        result = eval_expression (argv_eol[2], NULL, NULL, NULL);
+        if (result)
+        {
+            debug_unicode_string (result);
+            free (result);
+        }
         return WEECHAT_RC_OK;
     }
 
@@ -7653,7 +7666,8 @@ command_init ()
            "term|windows"
            " || mouse|cursor [verbose]"
            " || hdata [free]"
-           " || time <command>"),
+           " || time <command>"
+           " || unicode <string>"),
         N_("     list: list plugins with debug levels\n"
            "      set: set debug level for plugin\n"
            "   plugin: name of plugin (\"core\" for WeeChat core)\n"
@@ -7677,7 +7691,15 @@ command_init ()
            "     term: display infos about terminal\n"
            "  windows: display windows tree\n"
            "     time: measure time to execute a command or to send text to "
-           "the current buffer"),
+           "the current buffer\n"
+           "  unicode: display information about unicode chars in string "
+           "(evaluated, see /help eval)\n"
+           "\n"
+           "Examples:\n"
+           "  /debug set irc 1\n"
+           "  /debug mouse verbose\n"
+           "  /debug time /filter toggle\n"
+           "  /debug unicode ${chars:${\\u26C0}-${\\u26CF}}"),
         "list"
         " || set %(plugins_names)|" PLUGIN_CORE
         " || dump %(plugins_names)|" PLUGIN_CORE
@@ -7695,7 +7717,8 @@ command_init ()
         " || tags"
         " || term"
         " || windows"
-        " || time %(commands:/)",
+        " || time %(commands:/)"
+        " || unicode",
         &command_debug, NULL, NULL);
     hook_command (
         NULL, "eval",

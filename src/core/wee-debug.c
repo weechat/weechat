@@ -48,11 +48,13 @@
 #include "wee-log.h"
 #include "wee-proxy.h"
 #include "wee-string.h"
+#include "wee-utf8.h"
 #include "wee-util.h"
 #include "../gui/gui-bar.h"
 #include "../gui/gui-bar-item.h"
 #include "../gui/gui-buffer.h"
 #include "../gui/gui-chat.h"
+#include "../gui/gui-color.h"
 #include "../gui/gui-completion.h"
 #include "../gui/gui-filter.h"
 #include "../gui/gui-hotlist.h"
@@ -756,6 +758,90 @@ debug_display_time_elapsed (struct timeval *time1, struct timeval *time2,
         log_printf ("debug: time[%s] -> %lld:%02lld:%02lld.%06lld",
                     (message) ? message : "?",
                     diff_hour, diff_min, diff_sec, diff_usec);
+    }
+}
+
+/*
+ * Display information about a unicode codepoint.
+ */
+
+void
+debug_unicode_char (unsigned int codepoint)
+{
+    char utf8_char[5], hexa[64], *ptr_hexa;
+    wchar_t wstring[4+2];
+    int i, size, length_wcswidth;
+
+    utf8_int_string (codepoint, utf8_char);
+    size = strlen (utf8_char);
+
+    hexa[0] = '\0';
+    ptr_hexa = hexa;
+    for (i = 0; i < size; i++)
+    {
+        ptr_hexa[0] = '0';
+        ptr_hexa[1] = 'x';
+        ptr_hexa += 2;
+        string_base16_encode (utf8_char + i, 1, ptr_hexa);
+        ptr_hexa += 2;
+        if (i < size - 1)
+        {
+            ptr_hexa[0] = ' ';
+            ptr_hexa++;
+        }
+    }
+    ptr_hexa[0] = '\0';
+
+    length_wcswidth = -1;
+    if (mbstowcs (wstring, utf8_char, 1) != (size_t)(-1))
+        length_wcswidth = wcswidth (wstring, 1);
+
+    gui_chat_printf (NULL,
+                     "\t  \"%s\" (%u, U+%04X, %s): %d %s/%s %d, %d %s/%s %d, %d, %d",
+                     utf8_char,
+                     codepoint,
+                     codepoint,
+                     hexa,
+                     strlen (utf8_char),
+                     GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                     GUI_COLOR(GUI_COLOR_CHAT),
+                     utf8_strlen (utf8_char),
+                     gui_chat_strlen (utf8_char),
+                     GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                     GUI_COLOR(GUI_COLOR_CHAT),
+                     length_wcswidth,
+                     utf8_strlen_screen (utf8_char),
+                     gui_chat_strlen_screen (utf8_char));
+}
+
+/*
+ * Display information about all unicode chars of a string.
+ */
+
+void
+debug_unicode_string (const char *string)
+{
+    const char *ptr_string;
+    if (!string || !string[0])
+        return;
+
+    gui_chat_printf (NULL, "");
+    gui_chat_printf (NULL,
+                     _("Unicode: \"char\" "
+                       "(codepoint, hex codepoint, UTF-8 sequence): "
+                       "strlen %s/%s "
+                       "utf8_strlen, gui_chat_strlen %s/%s "
+                       "wcswidth, utf8_strlen_screen, gui_chat_strlen_screen:"),
+                     GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                     GUI_COLOR(GUI_COLOR_CHAT),
+                     GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                     GUI_COLOR(GUI_COLOR_CHAT));
+
+    ptr_string = string;
+    while (ptr_string && ptr_string[0])
+    {
+        debug_unicode_char (utf8_char_int (ptr_string));
+        ptr_string = utf8_next_char (ptr_string);
     }
 }
 

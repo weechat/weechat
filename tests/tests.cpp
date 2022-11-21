@@ -62,6 +62,7 @@ extern "C"
 /* core */
 IMPORT_TEST_GROUP(CoreArraylist);
 IMPORT_TEST_GROUP(CoreCalc);
+IMPORT_TEST_GROUP(CoreCommand);
 IMPORT_TEST_GROUP(CoreConfigFile);
 IMPORT_TEST_GROUP(CoreCrypto);
 IMPORT_TEST_GROUP(CoreDir);
