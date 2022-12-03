@@ -769,11 +769,11 @@ void
 debug_unicode_char (unsigned int codepoint)
 {
     char utf8_char[5], hexa[64], *ptr_hexa;
-    wchar_t wstring[4+2];
-    int i, size, length_wcswidth;
+    int i, size, width;
 
     utf8_int_string (codepoint, utf8_char);
     size = strlen (utf8_char);
+    width = wcwidth ((wchar_t)codepoint);
 
     hexa[0] = '\0';
     ptr_hexa = hexa;
@@ -792,10 +792,6 @@ debug_unicode_char (unsigned int codepoint)
     }
     ptr_hexa[0] = '\0';
 
-    length_wcswidth = -1;
-    if (mbstowcs (wstring, utf8_char, 1) != (size_t)(-1))
-        length_wcswidth = wcswidth (wstring, 1);
-
     gui_chat_printf (NULL,
                      "\t  \"%s\" (%u, U+%04X, %s): %d %s/%s %d, %d %s/%s %d, %d, %d",
                      utf8_char,
@@ -809,7 +805,7 @@ debug_unicode_char (unsigned int codepoint)
                      gui_chat_strlen (utf8_char),
                      GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
                      GUI_COLOR(GUI_COLOR_CHAT),
-                     length_wcswidth,
+                     width,
                      utf8_strlen_screen (utf8_char),
                      gui_chat_strlen_screen (utf8_char));
 }
@@ -831,7 +827,7 @@ debug_unicode_string (const char *string)
                        "(codepoint, hex codepoint, UTF-8 sequence): "
                        "strlen %s/%s "
                        "utf8_strlen, gui_chat_strlen %s/%s "
-                       "wcswidth, utf8_strlen_screen, gui_chat_strlen_screen:"),
+                       "wcwidth, utf8_strlen_screen, gui_chat_strlen_screen:"),
                      GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
                      GUI_COLOR(GUI_COLOR_CHAT),
                      GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
