@@ -3938,6 +3938,40 @@ free (string);
 [NOTE]
 Questa funzione non è disponibile nelle API per lo scripting.
 
+==== utf8_strncpy
+
+_WeeChat ≥ 3.8._
+
+// TRANSLATION MISSING
+Copy _length_ chars max in another string and add null byte at the end.
+
+Prototipo:
+
+[source,c]
+----
+void weechat_utf8_strncpy (char *dest, const char *string, int length);
+----
+
+Argomenti:
+
+// TRANSLATION MISSING
+* _dest_: destination string (must be long enough)
+* _string_: stringa
+// TRANSLATION MISSING
+* _length_: max chars to copy
+
+Esempio in C:
+
+[source,c]
+----
+char dest[256];
+
+weechat_utf8_strncpy (dest, "chêne", 3);  /* copies "chê" to dest */
+----
+
+[NOTE]
+Questa funzione non è disponibile nelle API per lo scripting.
+
 // TRANSLATION MISSING
 [[crypto]]
 === Cryptography

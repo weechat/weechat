@@ -68,7 +68,7 @@ struct timeval;
  * please change the date with current one; for a second change at same
  * date, increment the 01, otherwise please keep 01.
  */
-#define WEECHAT_PLUGIN_API_VERSION "20221003-01"
+#define WEECHAT_PLUGIN_API_VERSION "20221203-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -379,6 +379,7 @@ struct t_weechat_plugin
     int (*utf8_real_pos) (const char *string, int pos);
     int (*utf8_pos) (const char *string, int real_pos);
     char *(*utf8_strndup) (const char *string, int length);
+    void (*utf8_strncpy) (char *dest, const char *string, int length);
 
     /* crypto */
     int (*crypto_hash) (const void *data, int data_size,
@@ -1378,6 +1379,8 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     (weechat_plugin->utf8_pos)(__string, __real_pos)
 #define weechat_utf8_strndup(__string, __length)                        \
     (weechat_plugin->utf8_strndup)(__string, __length)
+#define weechat_utf8_strncpy(__dest, __string, __length)                \
+    (weechat_plugin->utf8_strncpy)(__dest, __string, __length)
 
 /* crypto */
 #define weechat_crypto_hash(__data, __data_size, __hash_algo,           \

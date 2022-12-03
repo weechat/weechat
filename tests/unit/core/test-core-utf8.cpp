@@ -32,6 +32,18 @@ extern "C"
 #include "src/core/wee-config.h"
 }
 
+#define TEST_STRNCPY(__result, __dest, __string, __length)              \
+    if (__dest != NULL)                                                 \
+    {                                                                   \
+        dest[0] = '\x01';                                               \
+        dest[1] = '\0';                                                 \
+    }                                                                   \
+    utf8_strncpy (__dest, __string, __length);                          \
+    if (__dest != NULL)                                                 \
+    {                                                                   \
+        STRCMP_EQUAL(__result, __dest);                                 \
+    }
+
 /*
  * soft hyphen:
  *   [­]
@@ -303,7 +315,6 @@ TEST(CoreUtf8, Move)
     const char *utf8_4bytes_truncated_1 = UTF8_4BYTES_TRUNCATED_1;
     const char *utf8_4bytes_truncated_2 = UTF8_4BYTES_TRUNCATED_2;
     const char *utf8_4bytes_truncated_3 = UTF8_4BYTES_TRUNCATED_3;
-
     const char *han_char = UNICODE_HAN_CHAR;
 
     /* previous/next char */
@@ -385,7 +396,6 @@ TEST(CoreUtf8, Convert)
     const char *utf8_4bytes_truncated_1 = UTF8_4BYTES_TRUNCATED_1;
     const char *utf8_4bytes_truncated_2 = UTF8_4BYTES_TRUNCATED_2;
     const char *utf8_4bytes_truncated_3 = UTF8_4BYTES_TRUNCATED_3;
-
     char result[5];
 
     /* get UTF-8 char as integer */
@@ -618,4 +628,32 @@ TEST(CoreUtf8, Duplicate)
     WEE_TEST_STR("noë", utf8_strndup (UTF8_NOEL_VALID, 3));
     WEE_TEST_STR("noël", utf8_strndup (UTF8_NOEL_VALID, 4));
     WEE_TEST_STR("noël", utf8_strndup (UTF8_NOEL_VALID, 5));
+}
+
+/*
+ * Tests functions:
+ *   utf8_strncpy
+ */
+
+TEST(CoreUtf8, Copy)
+{
+    char dest[256];
+
+    /* invalid parameters */
+    TEST_STRNCPY("", NULL, NULL, -1);
+    TEST_STRNCPY("", dest, NULL, -1);
+    TEST_STRNCPY("", dest, "abc", -1);
+
+    TEST_STRNCPY("", dest, "abc", 0);
+    TEST_STRNCPY("a", dest, "abc", 1);
+    TEST_STRNCPY("ab", dest, "abc", 2);
+    TEST_STRNCPY("abc", dest, "abc", 3);
+    TEST_STRNCPY("abc", dest, "abc", 4);
+
+    TEST_STRNCPY("", dest, UTF8_NOEL_VALID, 0);
+    TEST_STRNCPY("n", dest, UTF8_NOEL_VALID, 1);
+    TEST_STRNCPY("no", dest, UTF8_NOEL_VALID, 2);
+    TEST_STRNCPY("noë", dest, UTF8_NOEL_VALID, 3);
+    TEST_STRNCPY("noël", dest, UTF8_NOEL_VALID, 4);
+    TEST_STRNCPY("noël", dest, UTF8_NOEL_VALID, 5);
 }

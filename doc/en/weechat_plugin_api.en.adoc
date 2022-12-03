@@ -3792,6 +3792,37 @@ free (string);
 [NOTE]
 This function is not available in scripting API.
 
+==== utf8_strncpy
+
+_WeeChat ≥ 3.8._
+
+Copy _length_ chars max in another string and add null byte at the end.
+
+Prototype:
+
+[source,c]
+----
+void weechat_utf8_strncpy (char *dest, const char *string, int length);
+----
+
+Arguments:
+
+* _dest_: destination string (must be long enough)
+* _string_: string
+* _length_: max chars to copy
+
+C example:
+
+[source,c]
+----
+char dest[256];
+
+weechat_utf8_strncpy (dest, "chêne", 3);  /* copies "chê" to dest */
+----
+
+[NOTE]
+This function is not available in scripting API.
+
 [[crypto]]
 === Cryptography
 

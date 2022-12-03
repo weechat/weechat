@@ -738,3 +738,30 @@ utf8_strndup (const char *string, int length)
 
     return string_strndup (string, end - string);
 }
+
+/*
+ * Copies max N chars from a string to another and adds null byte at the end.
+ *
+ * Note: the target string "dest" must be long enough.
+ */
+
+void
+utf8_strncpy (char *dest, const char *string, int length)
+{
+    const char *end;
+
+    if (!dest)
+        return;
+
+    dest[0] = '\0';
+
+    if (!string || (length <= 0))
+        return;
+
+    end = utf8_add_offset (string, length);
+    if (!end || (end == string))
+        return;
+
+    memcpy (dest, string, end - string);
+    dest[end - string] = '\0';
+}

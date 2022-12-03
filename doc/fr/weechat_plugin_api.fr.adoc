@@ -3855,6 +3855,38 @@ free (str);
 [NOTE]
 Cette fonction n'est pas disponible dans l'API script.
 
+==== utf8_strncpy
+
+_WeeChat ≥ 3.8._
+
+Copier au plus _length_ caractères dans une autre chaîne et ajouter l'octet
+nul à la fin.
+
+Prototype :
+
+[source,c]
+----
+void weechat_utf8_strncpy (char *dest, const char *string, int length);
+----
+
+Paramètres :
+
+* _dest_ : chaîne de destination (doit être suffisamment grande)
+* _string_ : chaîne
+* _length_ : nombre maximum de caractères à copier
+
+Exemple en C :
+
+[source,c]
+----
+char dest[256];
+
+weechat_utf8_strncpy (dest, "chêne", 3);  /* copie "chê" dans dest */
+----
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
 [[crypto]]
 === Cryptographie
 
