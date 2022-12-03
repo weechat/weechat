@@ -481,6 +481,29 @@ utf8_strnlen (const char *string, int bytes)
 }
 
 /*
+ * Gets number of chars needed on screen to display the UTF-8 char.
+ *
+ * Returns the number of chars (>= 0).
+ */
+
+int
+utf8_char_size_screen (const char *string)
+{
+    int width;
+
+    if (!string)
+        return 0;
+
+    if (string[0] == '\t')
+        return CONFIG_INTEGER(config_look_tab_width);
+
+    width = wcwidth ((wchar_t)utf8_char_int (string));
+
+    /* non printable chars are displayed with a space (so size = 1) */
+    return (width >= 0) ? width : 1;
+}
+
+/*
  * Gets number of chars needed on screen to display the UTF-8 string.
  *
  * Returns the number of chars (>= 0).
@@ -489,61 +512,24 @@ utf8_strnlen (const char *string, int bytes)
 int
 utf8_strlen_screen (const char *string)
 {
-    int length, num_char, add_for_tab;
-    wchar_t *alloc_wstring, *ptr_wstring, wstring[4+2];
+    int size_screen;
     const char *ptr_string;
 
-    if (!string || !string[0])
+    if (!string)
         return 0;
 
     if (!local_utf8)
         return utf8_strlen (string);
 
-    alloc_wstring = NULL;
-
-    if (!string[1] || !string[2] || !string[3] || !string[4])
+    size_screen = 0;
+    ptr_string = string;
+    while (ptr_string && ptr_string[0])
     {
-        /* optimization for max 4 chars: no malloc */
-        num_char = 4 + 1;
-        ptr_wstring = wstring;
-    }
-    else
-    {
-        num_char = mbstowcs (NULL, string, 0) + 1;
-        alloc_wstring = malloc ((num_char + 1) * sizeof (alloc_wstring[0]));
-        if (!alloc_wstring)
-            return utf8_strlen (string);
-        ptr_wstring = alloc_wstring;
+        size_screen += utf8_char_size_screen (ptr_string);
+        ptr_string = utf8_next_char (ptr_string);
     }
 
-    if (mbstowcs (ptr_wstring, string, num_char) != (size_t)(-1))
-    {
-        length = wcswidth (ptr_wstring, num_char);
-        /*
-         * if the char is non-printable, wcswidth returns -1
-         * (for example the length of the snowman without snow (U+26C4) == -1)
-         * => in this case, consider the length is 1, to prevent any display bug
-         */
-        if (length < 0)
-            length = 1;
-    }
-    else
-        length = utf8_strlen (string);
-
-    if (alloc_wstring)
-        free (alloc_wstring);
-
-    add_for_tab = CONFIG_INTEGER(config_look_tab_width) - 1;
-    if (add_for_tab > 0)
-    {
-        for (ptr_string = string; ptr_string[0]; ptr_string++)
-        {
-            if (ptr_string[0] == '\t')
-                length += add_for_tab;
-        }
-    }
-
-    return length;
+    return size_screen;
 }
 
 /*
@@ -647,31 +633,6 @@ utf8_charcasecmp_range (const char *string1, const char *string2, int range)
         wchar2 += ('a' - 'A');
 
     return (wchar1 < wchar2) ? -1 : ((wchar1 == wchar2) ? 0 : 1);
-}
-
-/*
- * Gets number of chars needed on screen to display the UTF-8 char.
- *
- * Returns the number of chars (>= 0).
- */
-
-int
-utf8_char_size_screen (const char *string)
-{
-    int char_size;
-    char utf_char[16];
-
-    if (!string)
-        return 0;
-
-    char_size = utf8_char_size (string);
-    if (char_size == 0)
-        return 0;
-
-    memcpy (utf_char, string, char_size);
-    utf_char[char_size] = '\0';
-
-    return utf8_strlen_screen (utf_char);
 }
 
 /*

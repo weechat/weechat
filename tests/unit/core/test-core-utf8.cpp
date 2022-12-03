@@ -495,9 +495,9 @@ TEST(CoreUtf8, Size)
     /* ël as iso-8859-15: invalid UTF-8 */
     LONGS_EQUAL(1, utf8_char_size_screen ("\xebl"));
     /* ëlm as iso-8859-15: invalid UTF-8 */
-    LONGS_EQUAL(1, utf8_char_size_screen ("\xeblm"));
+    LONGS_EQUAL(2, utf8_char_size_screen ("\xeblm"));
     /* ëlmn as iso-8859-15: invalid UTF-8 */
-    LONGS_EQUAL(1, utf8_char_size_screen ("\xeblmn"));
+    LONGS_EQUAL(2, utf8_char_size_screen ("\xeblmn"));
 
     /* length of string (in chars) */
     LONGS_EQUAL(0, utf8_strlen (NULL));
@@ -530,16 +530,18 @@ TEST(CoreUtf8, Size)
     LONGS_EQUAL(1, utf8_strlen_screen ("\x7f"));
     LONGS_EQUAL(1, utf8_strlen_screen ("\x01"));
     LONGS_EQUAL(4, utf8_strlen_screen (UTF8_NOEL_VALID));
+    LONGS_EQUAL(4, utf8_strlen_screen ("abc\x01"));
+    LONGS_EQUAL(8, utf8_strlen_screen ("a" "\x01" UTF8_NOEL_VALID "\x02" "b"));
     LONGS_EQUAL(1, utf8_strlen_screen (UNICODE_SOFT_HYPHEN));
-    LONGS_EQUAL(3, utf8_strlen_screen ("a" UNICODE_SOFT_HYPHEN "b"));
+    LONGS_EQUAL(5, utf8_strlen_screen ("a" "\x01" UNICODE_SOFT_HYPHEN "\x02" "b"));
     LONGS_EQUAL(0, utf8_strlen_screen (UNICODE_ZERO_WIDTH_SPACE));
-    LONGS_EQUAL(2, utf8_strlen_screen ("a" UNICODE_ZERO_WIDTH_SPACE "b"));
+    LONGS_EQUAL(4, utf8_strlen_screen ("a" "\x01" UNICODE_ZERO_WIDTH_SPACE "\x02" "b"));
     LONGS_EQUAL(2, utf8_strlen_screen (UNICODE_SNOWMAN));
-    LONGS_EQUAL(4, utf8_strlen_screen ("a" UNICODE_SNOWMAN "b"));
+    LONGS_EQUAL(6, utf8_strlen_screen ("a" "\x01" UNICODE_SNOWMAN "\x02" "b"));
     LONGS_EQUAL(2, utf8_strlen_screen (UNICODE_CJK_YELLOW));
-    LONGS_EQUAL(4, utf8_strlen_screen ("a" UNICODE_CJK_YELLOW "b"));
+    LONGS_EQUAL(6, utf8_strlen_screen ("a" "\x01" UNICODE_CJK_YELLOW "\x02" "b"));
     LONGS_EQUAL(2, utf8_strlen_screen (UNICODE_HAN_CHAR));
-    LONGS_EQUAL(4, utf8_strlen_screen ("a" UNICODE_HAN_CHAR "b"));
+    LONGS_EQUAL(6, utf8_strlen_screen ("a" "\x01" UNICODE_HAN_CHAR "\x02" "b"));
 
     /* length of Tabulation */
     LONGS_EQUAL(1, utf8_strlen_screen ("\t"));
