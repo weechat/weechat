@@ -793,7 +793,7 @@ debug_unicode_char (unsigned int codepoint)
     ptr_hexa[0] = '\0';
 
     gui_chat_printf (NULL,
-                     "\t  \"%s\" (%u, U+%04X, %s): %d %s/%s %d, %d %s/%s %d, %d, %d",
+                     "\t  \"%s\" (U+%04X, %u, %s): %d %s/%s %d, %d %s/%s %d, %d, %d",
                      utf8_char,
                      codepoint,
                      codepoint,
@@ -824,7 +824,7 @@ debug_unicode_string (const char *string)
     gui_chat_printf (NULL, "");
     gui_chat_printf (NULL,
                      _("Unicode: \"char\" "
-                       "(codepoint, hex codepoint, UTF-8 sequence): "
+                       "(hex codepoint, codepoint, UTF-8 sequence): "
                        "strlen %s/%s "
                        "utf8_strlen, gui_chat_strlen %s/%s "
                        "wcwidth, utf8_strlen_screen, gui_chat_strlen_screen:"),

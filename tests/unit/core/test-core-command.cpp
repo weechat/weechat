@@ -215,9 +215,9 @@ TEST(CoreCommand, Debug)
 
     /* test command "/debug unicode" */
     WEE_CMD_CORE(command_debug_unicode);
-    WEE_CHECK_MSG_CORE("  \"\u00AD\" (173, U+00AD, 0xC2 0xAD): 2 / 1, 1 / 1, 1, 1");
-    WEE_CHECK_MSG_CORE("  \"\u00E9\" (233, U+00E9, 0xC3 0xA9): 2 / 1, 1 / 1, 1, 1");
-    WEE_CHECK_MSG_CORE("  \"\u200B\" (8203, U+200B, 0xE2 0x80 0x8B): 3 / 1, 1 / 0, 0, 0");
+    WEE_CHECK_MSG_CORE("  \"\u00AD\" (U+00AD, 173, 0xC2 0xAD): 2 / 1, 1 / 1, 1, 1");
+    WEE_CHECK_MSG_CORE("  \"\u00E9\" (U+00E9, 233, 0xC3 0xA9): 2 / 1, 1 / 1, 1, 1");
+    WEE_CHECK_MSG_CORE("  \"\u200B\" (U+200B, 8203, 0xE2 0x80 0x8B): 3 / 1, 1 / 0, 0, 0");
 
     /* test command "/debug windows" */
     /* TODO: write tests */
