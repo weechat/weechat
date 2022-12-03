@@ -373,7 +373,7 @@ gui_chat_display_word_raw (struct t_gui_window *window, struct t_gui_line *line,
                            int apply_style_inactive,
                            int nick_offline)
 {
-    char *next_char, *output, utf_char[16], *ptr_char;
+    char *output, utf_char[16], *ptr_char;
     int x, chars_displayed, display_char, size_on_screen;
 
     if (!simulate)
@@ -395,14 +395,10 @@ gui_chat_display_word_raw (struct t_gui_window *window, struct t_gui_line *line,
         if (!string)
             return chars_displayed;
 
-        next_char = (char *)utf8_next_char (string);
-        if (next_char)
+        utf8_strncpy (utf_char, string, 1);
+        if (utf_char[0])
         {
             ptr_char = utf_char;
-
-            memcpy (utf_char, string, next_char - string);
-            utf_char[next_char - string] = '\0';
-
             if (!gui_chat_utf_char_valid (utf_char))
                 snprintf (utf_char, sizeof (utf_char), " ");
             else if (utf_char[0] == '\t')
@@ -440,7 +436,7 @@ gui_chat_display_word_raw (struct t_gui_window *window, struct t_gui_line *line,
             x += size_on_screen;
         }
 
-        string = next_char;
+        string = utf8_next_char (string);
     }
 
     return chars_displayed;
