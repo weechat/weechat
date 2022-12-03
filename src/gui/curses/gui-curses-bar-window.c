@@ -172,8 +172,9 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
                              int hide_chars_if_scrolling,
                              int *index_item, int *index_subitem, int *index_line)
 {
-    int x_with_hidden, size_on_screen, low_char, hidden, color_bg;
-    char utf_char[16], *next_char, *output;
+    int x_with_hidden, size_on_screen, reverse_video, hidden, color_bg;
+    char utf_char[16], utf_char2[16], *output;
+    const char *ptr_char;
 
     if (!bar_window || !string || !string[0])
         return 1;
@@ -341,68 +342,75 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
                                                    1);
                 break;
             default:
-                next_char = (char *)utf8_next_char (string);
-                if (!next_char)
-                    break;
-
-                memcpy (utf_char, string, next_char - string);
-                utf_char[next_char - string] = '\0';
-
-                if ((((unsigned char)utf_char[0]) < 32) && (!utf_char[1]))
+                utf8_strncpy (utf_char, string, 1);
+                reverse_video = 0;
+                ptr_char = utf_char;
+                if (utf_char[0] == '\t')
                 {
-                    low_char = 1;
+                    /* expand tabulation with spaces */
+                    ptr_char = config_tab_spaces;
+                }
+                else if (((unsigned char)utf_char[0]) < 32)
+                {
+                    /* display chars < 32 with letter/symbol + reverse video */
                     snprintf (utf_char, sizeof (utf_char), "%c",
                               'A' + ((unsigned char)utf_char[0]) - 1);
+                    reverse_video = 1;
                 }
                 else
                 {
-                    low_char = 0;
+                    /* display non printable chars as spaces */
                     if (!gui_chat_utf_char_valid (utf_char))
                         snprintf (utf_char, sizeof (utf_char), " ");
                 }
 
-                size_on_screen = utf8_char_size_screen (utf_char);
-                if (size_on_screen >= 0)
+                while (ptr_char && ptr_char[0])
                 {
-                    if (hide_chars_if_scrolling
-                        && (x_with_hidden < bar_window->scroll_x))
+                    utf8_strncpy (utf_char2, ptr_char, 1);
+                    size_on_screen = utf8_char_size_screen (utf_char2);
+                    if (size_on_screen >= 0)
                     {
-                        /* hidden char (before scroll_x value) */
-                        x_with_hidden++;
-                    }
-                    else if (!hidden)
-                    {
-                        if (*x + size_on_screen > bar_window->width)
+                        if (hide_chars_if_scrolling
+                            && (x_with_hidden < bar_window->scroll_x))
                         {
-                            if (filling == GUI_BAR_FILLING_VERTICAL)
-                                return 1;
-                            if (*y >= bar_window->height - 1)
-                                return 0;
-                            *x = 0;
-                            (*y)++;
-                            wmove (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar, *y, *x);
+                            /* hidden char (before scroll_x value) */
+                            x_with_hidden++;
                         }
-
-                        output = string_iconv_from_internal (NULL, utf_char);
-                        if (low_char)
-                            wattron (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar, A_REVERSE);
-                        waddstr (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
-                                 (output) ? output : utf_char);
-                        if (low_char)
-                            wattroff (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar, A_REVERSE);
-                        if (output)
-                            free (output);
-
-                        if (gui_window_current_emphasis)
+                        else if (!hidden)
                         {
-                            gui_window_emphasize (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
-                                                  *x, *y, size_on_screen);
-                        }
+                            if (*x + size_on_screen > bar_window->width)
+                            {
+                                if (filling == GUI_BAR_FILLING_VERTICAL)
+                                    return 1;
+                                if (*y >= bar_window->height - 1)
+                                    return 0;
+                                *x = 0;
+                                (*y)++;
+                                wmove (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar, *y, *x);
+                            }
 
-                        *x += size_on_screen;
+                            output = string_iconv_from_internal (NULL, utf_char2);
+                            if (reverse_video)
+                                wattron (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar, A_REVERSE);
+                            waddstr (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
+                                     (output) ? output : utf_char2);
+                            if (reverse_video)
+                                wattroff (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar, A_REVERSE);
+                            if (output)
+                                free (output);
+
+                            if (gui_window_current_emphasis)
+                            {
+                                gui_window_emphasize (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
+                                                      *x, *y, size_on_screen);
+                            }
+
+                            *x += size_on_screen;
+                        }
+                        ptr_char = utf8_next_char (ptr_char);
                     }
                 }
-                string = next_char;
+                string = utf8_next_char (string);
                 break;
         }
     }
