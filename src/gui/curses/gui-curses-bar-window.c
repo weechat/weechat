@@ -352,10 +352,14 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
                 }
                 else if (((unsigned char)utf_char[0]) < 32)
                 {
-                    /* display chars < 32 with letter/symbol + reverse video */
+                    /*
+                     * display chars < 32 with letter/symbol
+                     * and set reverse video (if not already enabled)
+                     */
                     snprintf (utf_char, sizeof (utf_char), "%c",
                               'A' + ((unsigned char)utf_char[0]) - 1);
-                    reverse_video = 1;
+                    reverse_video = (gui_window_current_color_attr & A_REVERSE) ?
+                        0 : 1;
                 }
                 else
                 {

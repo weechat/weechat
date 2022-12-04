@@ -84,6 +84,7 @@ extern int gui_color_pairs_auto_reset;
 extern int gui_color_pairs_auto_reset_pending;
 extern time_t gui_color_pairs_auto_reset_last;
 extern int gui_color_buffer_refresh_needed;
+extern int gui_window_current_color_attr;
 extern int gui_window_current_emphasis;
 
 /* main functions */
