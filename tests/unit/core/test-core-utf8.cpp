@@ -45,6 +45,30 @@ extern "C"
     }
 
 /*
+ * delete:
+ *   []
+ *   U+007F (127)
+ *   UTF-8: 1 byte = 0x7F
+ */
+#define UNICODE_DELETE "\u007f"
+
+/*
+ * next line:
+ *   []
+ *   U+0085 (133)
+ *   UTF-8: 2 bytes = 0xC2 0x85
+ */
+#define UNICODE_NEXT_LINE "\u0085"
+
+/*
+ * private use two:
+ *   []
+ *   U+0092 (146)
+ *   UTF-8: 2 bytes = 0xC2 0X92
+ */
+#define UNICODE_PRIVATE_USE_TWO "\u0092"
+
+/*
  * soft hyphen:
  *   [­]
  *   U+00AD (173)
@@ -474,6 +498,9 @@ TEST(CoreUtf8, Size)
     LONGS_EQUAL(2, utf8_char_size ("ë"));
     LONGS_EQUAL(3, utf8_char_size ("€"));
     LONGS_EQUAL(1, utf8_char_size ("\x01"));
+    LONGS_EQUAL(1, utf8_char_size (UNICODE_DELETE));
+    LONGS_EQUAL(2, utf8_char_size (UNICODE_NEXT_LINE));
+    LONGS_EQUAL(2, utf8_char_size (UNICODE_PRIVATE_USE_TWO));
     LONGS_EQUAL(2, utf8_char_size (UNICODE_SOFT_HYPHEN));
     LONGS_EQUAL(3, utf8_char_size (UNICODE_ZERO_WIDTH_SPACE));
     LONGS_EQUAL(3, utf8_char_size (UNICODE_SNOWMAN));
@@ -495,13 +522,16 @@ TEST(CoreUtf8, Size)
     LONGS_EQUAL(1, utf8_char_size_screen ("ë"));
     LONGS_EQUAL(1, utf8_char_size_screen ("€"));
     LONGS_EQUAL(1, utf8_char_size_screen ("\x01"));
-    LONGS_EQUAL(1, utf8_char_size_screen (UNICODE_SOFT_HYPHEN));
-    LONGS_EQUAL(0, utf8_char_size_screen (UNICODE_ZERO_WIDTH_SPACE));
+    LONGS_EQUAL(-1, utf8_char_size_screen (UNICODE_DELETE));
+    LONGS_EQUAL(-1, utf8_char_size_screen (UNICODE_NEXT_LINE));
+    LONGS_EQUAL(-1, utf8_char_size_screen (UNICODE_PRIVATE_USE_TWO));
+    LONGS_EQUAL(-1, utf8_char_size_screen (UNICODE_SOFT_HYPHEN));
+    LONGS_EQUAL(-1, utf8_char_size_screen (UNICODE_ZERO_WIDTH_SPACE));
     LONGS_EQUAL(2, utf8_char_size_screen (UNICODE_SNOWMAN));
     LONGS_EQUAL(2, utf8_char_size_screen (UNICODE_CJK_YELLOW));
     LONGS_EQUAL(2, utf8_char_size_screen (UNICODE_HAN_CHAR));
     /* ë as iso-8859-15: invalid UTF-8 */
-    LONGS_EQUAL(1, utf8_char_size_screen ("\xeb"));
+    LONGS_EQUAL(-1, utf8_char_size_screen ("\xeb"));
     /* ël as iso-8859-15: invalid UTF-8 */
     LONGS_EQUAL(1, utf8_char_size_screen ("\xebl"));
     /* ëlm as iso-8859-15: invalid UTF-8 */
@@ -517,6 +547,9 @@ TEST(CoreUtf8, Size)
     LONGS_EQUAL(1, utf8_strlen ("€"));
     LONGS_EQUAL(1, utf8_strlen ("\x01"));
     LONGS_EQUAL(4, utf8_strlen (UTF8_NOEL_VALID));
+    LONGS_EQUAL(1, utf8_strlen (UNICODE_DELETE));
+    LONGS_EQUAL(1, utf8_strlen (UNICODE_NEXT_LINE));
+    LONGS_EQUAL(1, utf8_strlen (UNICODE_PRIVATE_USE_TWO));
     LONGS_EQUAL(1, utf8_strlen (UNICODE_SOFT_HYPHEN));
     LONGS_EQUAL(1, utf8_strlen (UNICODE_ZERO_WIDTH_SPACE));
     LONGS_EQUAL(1, utf8_strlen (UNICODE_SNOWMAN));
@@ -537,13 +570,18 @@ TEST(CoreUtf8, Size)
     LONGS_EQUAL(1, utf8_strlen_screen ("A"));
     LONGS_EQUAL(1, utf8_strlen_screen ("ë"));
     LONGS_EQUAL(1, utf8_strlen_screen ("€"));
-    LONGS_EQUAL(1, utf8_strlen_screen ("\x7f"));
     LONGS_EQUAL(1, utf8_strlen_screen ("\x01"));
     LONGS_EQUAL(4, utf8_strlen_screen (UTF8_NOEL_VALID));
     LONGS_EQUAL(4, utf8_strlen_screen ("abc\x01"));
     LONGS_EQUAL(8, utf8_strlen_screen ("a" "\x01" UTF8_NOEL_VALID "\x02" "b"));
-    LONGS_EQUAL(1, utf8_strlen_screen (UNICODE_SOFT_HYPHEN));
-    LONGS_EQUAL(5, utf8_strlen_screen ("a" "\x01" UNICODE_SOFT_HYPHEN "\x02" "b"));
+    LONGS_EQUAL(0, utf8_strlen_screen (UNICODE_DELETE));
+    LONGS_EQUAL(4, utf8_strlen_screen ("a" "\x01" UNICODE_DELETE "\x02" "b"));
+    LONGS_EQUAL(0, utf8_strlen_screen (UNICODE_NEXT_LINE));
+    LONGS_EQUAL(4, utf8_strlen_screen ("a" "\x01" UNICODE_NEXT_LINE "\x02" "b"));
+    LONGS_EQUAL(0, utf8_strlen_screen (UNICODE_PRIVATE_USE_TWO));
+    LONGS_EQUAL(4, utf8_strlen_screen ("a" "\x01" UNICODE_PRIVATE_USE_TWO "\x02" "b"));
+    LONGS_EQUAL(0, utf8_strlen_screen (UNICODE_SOFT_HYPHEN));
+    LONGS_EQUAL(4, utf8_strlen_screen ("a" "\x01" UNICODE_SOFT_HYPHEN "\x02" "b"));
     LONGS_EQUAL(0, utf8_strlen_screen (UNICODE_ZERO_WIDTH_SPACE));
     LONGS_EQUAL(4, utf8_strlen_screen ("a" "\x01" UNICODE_ZERO_WIDTH_SPACE "\x02" "b"));
     LONGS_EQUAL(2, utf8_strlen_screen (UNICODE_SNOWMAN));

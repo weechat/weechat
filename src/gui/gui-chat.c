@@ -126,51 +126,6 @@ gui_chat_prefix_build ()
 }
 
 /*
- * Checks if an UTF-8 char is valid for screen.
- *
- * Returns:
- *   1: char is valid
- *   0: char is not valid
- */
-
-int
-gui_chat_utf_char_valid (const char *utf_char)
-{
-    if (!utf_char)
-        return 0;
-
-    /* chars below 32 are not valid (except TAB) */
-    if (((unsigned char)utf_char[0] < 32) && (utf_char[0] != '\t'))
-        return 0;
-
-    /* 146 or 0x7F are not valid */
-    if ((((unsigned char)(utf_char[0]) == 146)
-         || ((unsigned char)(utf_char[0]) == 0x7F))
-        && (!utf_char[1]))
-        return 0;
-
-    /* any other char is valid */
-    return 1;
-}
-
-/*
- * Returns number of char needed on screen to display a char.
- */
-
-int
-gui_chat_char_size_screen (const char *utf_char)
-{
-    if (!utf_char)
-        return 0;
-
-    /* if char is invalid, it will be displayed as one space on screen */
-    if (!gui_chat_utf_char_valid (utf_char))
-        return 1;
-
-    return utf8_char_size_screen (utf_char);
-}
-
-/*
  * Returns number of char in a string (special chars like colors/attributes are
  * ignored).
  */
@@ -211,7 +166,7 @@ gui_chat_strlen_screen (const char *string)
                                             (unsigned char *)string, 0, 0, 0);
         if (string)
         {
-            size_on_screen = gui_chat_char_size_screen (string);
+            size_on_screen = utf8_char_size_screen (string);
             if (size_on_screen > 0)
                 length += size_on_screen;
             string = utf8_next_char (string);
@@ -259,10 +214,13 @@ gui_chat_string_add_offset_screen (const char *string, int offset_screen)
                                             0, 0, 0);
         if (string)
         {
-            size_on_screen = gui_chat_char_size_screen (string);
-            offset_screen -= size_on_screen;
-            if (offset_screen < 0)
-                return string;
+            size_on_screen = utf8_char_size_screen (string);
+            if (size_on_screen > 0)
+            {
+                offset_screen -= size_on_screen;
+                if (offset_screen < 0)
+                    return string;
+            }
             string = utf8_next_char (string);
         }
     }
@@ -300,7 +258,7 @@ gui_chat_string_real_pos (const char *string, int pos, int use_screen_size)
                                                 0, 0, 0);
         if (ptr_string)
         {
-            size_on_screen = gui_chat_char_size_screen (ptr_string);
+            size_on_screen = utf8_char_size_screen (ptr_string);
             if (size_on_screen > 0)
                 pos -= (use_screen_size) ? size_on_screen : 1;
             ptr_string = utf8_next_char (ptr_string);
@@ -382,11 +340,13 @@ gui_chat_get_word_info (struct t_gui_window *window,
                         *word_start_offset = next_char - start_data;
                     leading_spaces = 0;
                     *word_end_offset = next_char2 - start_data - 1;
-                    char_size_screen = gui_chat_char_size_screen (next_char);
-                    (*word_length_with_spaces) += char_size_screen;
+                    char_size_screen = utf8_char_size_screen (next_char);
+                    if (char_size_screen > 0)
+                        (*word_length_with_spaces) += char_size_screen;
                     if (*word_length < 0)
                         *word_length = 0;
-                    (*word_length) += char_size_screen;
+                    if (char_size_screen > 0)
+                        (*word_length) += char_size_screen;
                 }
                 else
                 {

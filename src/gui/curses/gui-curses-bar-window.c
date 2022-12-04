@@ -361,12 +361,6 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
                     reverse_video = (gui_window_current_color_attr & A_REVERSE) ?
                         0 : 1;
                 }
-                else
-                {
-                    /* display non printable chars as spaces */
-                    if (!gui_chat_utf_char_valid (utf_char))
-                        snprintf (utf_char, sizeof (utf_char), " ");
-                }
 
                 while (ptr_char && ptr_char[0])
                 {
@@ -411,8 +405,8 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
 
                             *x += size_on_screen;
                         }
-                        ptr_char = utf8_next_char (ptr_char);
                     }
+                    ptr_char = utf8_next_char (ptr_char);
                 }
                 string = utf8_next_char (string);
                 break;

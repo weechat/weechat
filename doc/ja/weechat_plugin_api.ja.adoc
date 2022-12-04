@@ -907,11 +907,15 @@ const char *pos = weechat_strcasestr ("aBcDeF", "de");  /* result: pointer to "D
 
 ==== strlen_screen
 
-_WeeChat バージョン 0.4.2 以上で利用可。_
+// TRANSLATION MISSING
+_WeeChat ≥ 0.4.2, updated in 3.8._
 
-UTF-8 文字列を画面上に表示するために必要な画面幅を返す。非表示文字を
-1 文字として数えます (これが
-<<_utf8_strlen_screen,utf8_strlen_screen>> 関数との違いです)。
+// TRANSLATION MISSING
+Return number of chars needed on screen to display UTF-8 string.
+
+// TRANSLATION MISSING
+WeeChat color codes are skipped and don't count in the result (this is the only
+difference with the function <<_utf8_strlen_screen,utf8_strlen_screen>>).
 
 プロトタイプ:
 
@@ -3705,6 +3709,8 @@ int diff = weechat_utf8_charcasecmp ("aaa", "CCC");  /* == -2 */
 
 ==== utf8_char_size_screen
 
+_WeeChat バージョン 3.8 で更新。_
+
 UTF-8 文字を画面上に表示するために必要な画面幅を返す。
 
 プロトタイプ:
@@ -3720,7 +3726,22 @@ int weechat_utf8_char_size_screen (const char *string);
 
 戻り値:
 
-* UTF-8 文字を画面上に表示するために必要な画面幅
+* UTF-8 文字を画面上に表示するために必要な画面幅:
+// TRANSLATION MISSING
+** -1: non printable char
+// TRANSLATION MISSING
+** ≥ 0: printable char
+
+// TRANSLATION MISSING
+The result is the return value of function `wcwidth` (see `man wcwidth`), with
+exception for the following chars, that have a specific behavior in WeeChat:
+
+// TRANSLATION MISSING
+* U+0009 (Tabulation): value of option
+  link:weechat_user.ja.html#option_weechat.look.tab_width[weechat.look.tab_width ^↗^,window=_blank]
+* U+0001 (1) to U+001F (31), except U+0009 (Tabulation): 1
+* U+00AD (173, soft hyphen): -1
+* U+200B (8203, zero width space): -1
 
 C 言語での使用例:
 

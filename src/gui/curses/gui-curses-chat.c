@@ -373,7 +373,8 @@ gui_chat_display_word_raw (struct t_gui_window *window, struct t_gui_line *line,
                            int apply_style_inactive,
                            int nick_offline)
 {
-    char *output, utf_char[16], *ptr_char;
+    const char *ptr_char;
+    char *output, utf_char[16], utf_char2[16];
     int x, chars_displayed, display_char, size_on_screen, reverse_video;
 
     if (!simulate)
@@ -416,13 +417,6 @@ gui_chat_display_word_raw (struct t_gui_window *window, struct t_gui_line *line,
                 reverse_video = (gui_window_current_color_attr & A_REVERSE) ?
                     0 : 1;
             }
-            else
-            {
-                /* display non printable chars as spaces */
-                if (!gui_chat_utf_char_valid (utf_char))
-                    snprintf (utf_char, sizeof (utf_char), " ");
-
-            }
 
             display_char = (window->buffer->type != GUI_BUFFER_TYPE_FREE)
                 || (x >= window->scroll->start_col);
@@ -433,37 +427,51 @@ gui_chat_display_word_raw (struct t_gui_window *window, struct t_gui_line *line,
             {
                 return chars_displayed;
             }
-            if (display_char && (size_on_screen >= 0))
-            {
-                if (!simulate)
-                {
-                    output = string_iconv_from_internal (NULL, ptr_char);
-                    if (reverse_video)
-                    {
-                        wattron (GUI_WINDOW_OBJECTS(window)->win_chat,
-                                 A_REVERSE);
-                    }
-                    waddstr (GUI_WINDOW_OBJECTS(window)->win_chat,
-                             (output) ? output : ptr_char);
-                    if (reverse_video)
-                    {
-                        wattroff (GUI_WINDOW_OBJECTS(window)->win_chat,
-                                  A_REVERSE);
-                    }
-                    if (output)
-                        free (output);
 
-                    if (gui_window_current_emphasis)
+            if (display_char)
+            {
+                while (ptr_char && ptr_char[0])
+                {
+                    utf8_strncpy (utf_char2, ptr_char, 1);
+                    size_on_screen = utf8_char_size_screen (utf_char2);
+                    if (size_on_screen >= 0)
                     {
-                        gui_window_emphasize (GUI_WINDOW_OBJECTS(window)->win_chat,
-                                              x - window->scroll->start_col,
-                                              window->win_chat_cursor_y,
-                                              size_on_screen);
+                        if (!simulate)
+                        {
+                            output = string_iconv_from_internal (NULL, utf_char2);
+                            if (reverse_video)
+                            {
+                                wattron (GUI_WINDOW_OBJECTS(window)->win_chat,
+                                         A_REVERSE);
+                            }
+                            waddstr (GUI_WINDOW_OBJECTS(window)->win_chat,
+                                     (output) ? output : utf_char2);
+                            if (reverse_video)
+                            {
+                                wattroff (GUI_WINDOW_OBJECTS(window)->win_chat,
+                                          A_REVERSE);
+                            }
+                            if (output)
+                                free (output);
+
+                            if (gui_window_current_emphasis)
+                            {
+                                gui_window_emphasize (GUI_WINDOW_OBJECTS(window)->win_chat,
+                                                      x - window->scroll->start_col,
+                                                      window->win_chat_cursor_y,
+                                                      size_on_screen);
+                            }
+                        }
+                        chars_displayed += size_on_screen;
+                        x += size_on_screen;
                     }
+                    ptr_char = utf8_next_char (ptr_char);
                 }
-                chars_displayed += size_on_screen;
             }
-            x += size_on_screen;
+            else
+            {
+                x += size_on_screen;
+            }
         }
 
         string = utf8_next_char (string);

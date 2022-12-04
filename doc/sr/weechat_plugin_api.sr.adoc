@@ -865,9 +865,14 @@ const char *pos = weechat_strcasestr ("aBcDeF", "de");  /* резултат: п�
 
 ==== strlen_screen
 
-_WeeChat ≥ 0.4.2._
+_WeeChat ≥ 0.4.2, ажурирано у верзији 3.8._
 
-Враћа број карактера на екрану који су потребни за приказивање UTF-8 стринга. Карактери који не могу да се одштампају имају ширину 1 (ово је разлика у односу на функцију <<_utf8_strlen_screen,utf8_strlen_screen>>).
+// TRANSLATION MISSING
+Return number of chars needed on screen to display UTF-8 string.
+
+// TRANSLATION MISSING
+WeeChat color codes are skipped and don't count in the result (this is the only
+difference with the function <<_utf8_strlen_screen,utf8_strlen_screen>>).
 
 Прототип:
 
@@ -3511,6 +3516,8 @@ int diff = weechat_utf8_charcasecmp ("aaa", "CCC");  /* == -2 */
 
 ==== utf8_char_size_screen
 
+_Ажурирано у верзији 3.8._
+
 Враћа број карактера потребних на екрану за испис UTF-8 карактера.
 
 Прототип:
@@ -3526,7 +3533,22 @@ int weechat_utf8_char_size_screen (const char *string);
 
 Повратна вредност:
 
-* број карактера на екрану потребних за испис UTF-8 карактера
+* број карактера на екрану потребних за испис UTF-8 карактера:
+// TRANSLATION MISSING
+** -1: non printable char
+// TRANSLATION MISSING
+** ≥ 0: printable char
+
+// TRANSLATION MISSING
+The result is the return value of function `wcwidth` (see `man wcwidth`), with
+exception for the following chars, that have a specific behavior in WeeChat:
+
+// TRANSLATION MISSING
+* U+0009 (Tabulation): value of option
+  link:weechat_user.sr.html#option_weechat.look.tab_width[weechat.look.tab_width ^↗^,window=_blank]
+* U+0001 (1) to U+001F (31), except U+0009 (Tabulation): 1
+* U+00AD (173, soft hyphen): -1
+* U+200B (8203, zero width space): -1
 
 C пример:
 

@@ -939,13 +939,15 @@ Questa funzione non è disponibile nelle API per lo scripting.
 
 ==== strlen_screen
 
-_WeeChat ≥ 0.4.2._
-
-Restituisce il numero di caratteri necessari per visualizzare la stringa
-UTF-8 su schermo.
 // TRANSLATION MISSING
-Non-printable chars have a width of 1 (this is the difference with the function
-<<_utf8_strlen_screen,utf8_strlen_screen>>).
+_WeeChat ≥ 0.4.2, updated in 3.8._
+
+// TRANSLATION MISSING
+Return number of chars needed on screen to display UTF-8 string.
+
+// TRANSLATION MISSING
+WeeChat color codes are skipped and don't count in the result (this is the only
+difference with the function <<_utf8_strlen_screen,utf8_strlen_screen>>).
 
 Prototipo:
 
@@ -3781,6 +3783,9 @@ Questa funzione non è disponibile nelle API per lo scripting.
 
 ==== utf8_char_size_screen
 
+// TRANSLATION MISSING
+_Updated in 3.8._
+
 Restituisce il numero di caratteri necessari per visualizzare il
 carattere UTF-8 sullo schermo.
 
@@ -3798,7 +3803,22 @@ Argomenti:
 Valore restituito:
 
 * numero di caratteri necessario per visualizzare il carattere
-  UTF-8 su schermo
+  UTF-8 su schermo:
+// TRANSLATION MISSING
+** -1: non printable char
+// TRANSLATION MISSING
+** ≥ 0: printable char
+
+// TRANSLATION MISSING
+The result is the return value of function `wcwidth` (see `man wcwidth`), with
+exception for the following chars, that have a specific behavior in WeeChat:
+
+// TRANSLATION MISSING
+* U+0009 (Tabulation): value of option
+  link:weechat_user.it.html#option_weechat.look.tab_width[weechat.look.tab_width ^↗^,window=_blank]
+* U+0001 (1) to U+001F (31), except U+0009 (Tabulation): 1
+* U+00AD (173, soft hyphen): -1
+* U+200B (8203, zero width space): -1
 
 Esempio in C:
 

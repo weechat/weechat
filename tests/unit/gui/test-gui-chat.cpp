@@ -26,10 +26,9 @@ extern "C"
 #include <string.h>
 #include "src/gui/gui-buffer.h"
 #include "src/gui/gui-chat.h"
+#include "src/gui/gui-color.h"
 #include "src/gui/gui-line.h"
 #include "src/gui/gui-window.h"
-
-extern int gui_chat_char_size_screen (const char *utf_char);
 }
 
 #define WEE_GET_WORD_INFO(__result_word_start_offset,                   \
@@ -75,54 +74,38 @@ TEST(GuiChat, PrefixBuild)
 
 /*
  * Tests functions:
- *   gui_chat_utf_char_valid
- */
-
-TEST(GuiChat, UtfCharValid)
-{
-    LONGS_EQUAL(0, gui_chat_utf_char_valid (NULL));
-    LONGS_EQUAL(0, gui_chat_utf_char_valid (""));
-
-    LONGS_EQUAL(0, gui_chat_utf_char_valid ("\x01"));
-    LONGS_EQUAL(0, gui_chat_utf_char_valid ("\x1F"));
-
-    LONGS_EQUAL(0, gui_chat_utf_char_valid ("\x92"));
-    LONGS_EQUAL(0, gui_chat_utf_char_valid ("\x7F"));
-
-    LONGS_EQUAL(1, gui_chat_utf_char_valid ("\x93"));
-    LONGS_EQUAL(1, gui_chat_utf_char_valid ("\x80"));
-
-    LONGS_EQUAL(1, gui_chat_utf_char_valid ("abc"));
-}
-
-/*
- * Tests functions:
- *   gui_chat_char_size_screen
- */
-
-TEST(GuiChat, CharSizeScreen)
-{
-    LONGS_EQUAL(0, gui_chat_char_size_screen (NULL));
-
-    LONGS_EQUAL(1, gui_chat_char_size_screen ("\x01"));
-
-    LONGS_EQUAL(1, gui_chat_char_size_screen ("no\xc3\xabl"));
-    LONGS_EQUAL(2, gui_chat_char_size_screen ("\xe2\xbb\xa9"));
-}
-
-/*
- * Tests functions:
  *   gui_chat_strlen
  */
 
 TEST(GuiChat, Strlen)
 {
+    char string[128];
+
     LONGS_EQUAL(0, gui_chat_strlen (NULL));
     LONGS_EQUAL(0, gui_chat_strlen (""));
+
+    /* soft hyphen */
+    LONGS_EQUAL(1, gui_chat_strlen ("\u00ad"));
+
+    /* zero width space */
+    LONGS_EQUAL(1, gui_chat_strlen ("\u200b"));
+
+    /* next line (non printable char */
+    LONGS_EQUAL(1, gui_chat_strlen ("\u0085"));
 
     LONGS_EQUAL(3, gui_chat_strlen ("abc"));
     LONGS_EQUAL(4, gui_chat_strlen ("no\xc3\xabl"));
     LONGS_EQUAL(1, gui_chat_strlen ("\xe2\xbb\xa9"));
+
+    /* "é" + color + "à" */
+    snprintf (string, sizeof (string),
+              "é%sà", gui_color_get_custom ("red"));
+    LONGS_EQUAL(2, gui_chat_strlen (string));
+
+    /* "a" + soft hyphen + color + zero width space + "b" */
+    snprintf (string, sizeof (string),
+              "a" "\u00ad" "%s" "\u200b" "b", gui_color_get_custom ("red"));
+    LONGS_EQUAL(4, gui_chat_strlen (string));
 }
 
 /*
@@ -132,12 +115,33 @@ TEST(GuiChat, Strlen)
 
 TEST(GuiChat, StrlenScreen)
 {
+    char string[128];
+
     LONGS_EQUAL(0, gui_chat_strlen_screen (NULL));
     LONGS_EQUAL(0, gui_chat_strlen_screen (""));
+
+    /* soft hyphen */
+    LONGS_EQUAL(0, gui_chat_strlen_screen ("\u00ad"));
+
+    /* zero width space */
+    LONGS_EQUAL(0, gui_chat_strlen_screen ("\u200b"));
+
+    /* next line (non printable char) */
+    LONGS_EQUAL(0, gui_chat_strlen_screen ("\u0085"));
 
     LONGS_EQUAL(3, gui_chat_strlen_screen ("abc"));
     LONGS_EQUAL(4, gui_chat_strlen_screen ("no\xc3\xabl"));
     LONGS_EQUAL(2, gui_chat_strlen_screen ("\xe2\xbb\xa9"));
+
+    /* "é" + color + "à" */
+    snprintf (string, sizeof (string),
+              "é%sà", gui_color_get_custom ("red"));
+    LONGS_EQUAL(2, gui_chat_strlen_screen (string));
+
+    /* "a" + soft hyphen + color + zero width space + "b" */
+    snprintf (string, sizeof (string),
+              "a" "\u00ad" "%s" "\u200b" "b", gui_color_get_custom ("red"));
+    LONGS_EQUAL(2, gui_chat_strlen_screen (string));
 }
 
 /*
@@ -150,6 +154,8 @@ TEST(GuiChat, StringAddOffset)
     const char *str_empty = "";
     const char *str_noel = "no\xc3\xabl";
     const char *str_other = "A\xe2\xbb\xa9Z";
+    const char *str_soft_hyphen = "A" "\u00ad" "Z";
+    const char *str_zero_width_space = "A" "\u200b" "Z";
 
     POINTERS_EQUAL(NULL, gui_chat_string_add_offset (NULL, -1));
     POINTERS_EQUAL(NULL, gui_chat_string_add_offset (NULL, 0));
@@ -174,6 +180,20 @@ TEST(GuiChat, StringAddOffset)
     POINTERS_EQUAL(str_other + 5, gui_chat_string_add_offset (str_other, 3));
     POINTERS_EQUAL(str_other + 5, gui_chat_string_add_offset (str_other, 4));
     POINTERS_EQUAL(str_other + 5, gui_chat_string_add_offset (str_other, 5));
+
+    POINTERS_EQUAL(str_soft_hyphen, gui_chat_string_add_offset (str_soft_hyphen, -1));
+    POINTERS_EQUAL(str_soft_hyphen, gui_chat_string_add_offset (str_soft_hyphen, 0));
+    POINTERS_EQUAL(str_soft_hyphen + 1, gui_chat_string_add_offset (str_soft_hyphen, 1));
+    POINTERS_EQUAL(str_soft_hyphen + 3, gui_chat_string_add_offset (str_soft_hyphen, 2));
+    POINTERS_EQUAL(str_soft_hyphen + 4, gui_chat_string_add_offset (str_soft_hyphen, 3));
+    POINTERS_EQUAL(str_soft_hyphen + 4, gui_chat_string_add_offset (str_soft_hyphen, 4));
+
+    POINTERS_EQUAL(str_zero_width_space, gui_chat_string_add_offset (str_zero_width_space, -1));
+    POINTERS_EQUAL(str_zero_width_space, gui_chat_string_add_offset (str_zero_width_space, 0));
+    POINTERS_EQUAL(str_zero_width_space + 1, gui_chat_string_add_offset (str_zero_width_space, 1));
+    POINTERS_EQUAL(str_zero_width_space + 4, gui_chat_string_add_offset (str_zero_width_space, 2));
+    POINTERS_EQUAL(str_zero_width_space + 5, gui_chat_string_add_offset (str_zero_width_space, 3));
+    POINTERS_EQUAL(str_zero_width_space + 5, gui_chat_string_add_offset (str_zero_width_space, 4));
 }
 
 /*
@@ -186,6 +206,8 @@ TEST(GuiChat, StringAddOffsetScreen)
     const char *str_empty = "";
     const char *str_noel = "no\xc3\xabl";
     const char *str_other = "A\xe2\xbb\xa9Z";
+    const char *str_soft_hyphen = "A" "\u00ad" "Z";
+    const char *str_zero_width_space = "A" "\u200b" "Z";
 
     POINTERS_EQUAL(NULL, gui_chat_string_add_offset_screen (NULL, -1));
     POINTERS_EQUAL(NULL, gui_chat_string_add_offset_screen (NULL, 0));
@@ -210,6 +232,18 @@ TEST(GuiChat, StringAddOffsetScreen)
     POINTERS_EQUAL(str_other + 4, gui_chat_string_add_offset_screen (str_other, 3));
     POINTERS_EQUAL(str_other + 5, gui_chat_string_add_offset_screen (str_other, 4));
     POINTERS_EQUAL(str_other + 5, gui_chat_string_add_offset_screen (str_other, 5));
+
+    POINTERS_EQUAL(str_soft_hyphen, gui_chat_string_add_offset_screen (str_soft_hyphen, -1));
+    POINTERS_EQUAL(str_soft_hyphen, gui_chat_string_add_offset_screen (str_soft_hyphen, 0));
+    POINTERS_EQUAL(str_soft_hyphen + 3, gui_chat_string_add_offset_screen (str_soft_hyphen, 1));
+    POINTERS_EQUAL(str_soft_hyphen + 4, gui_chat_string_add_offset_screen (str_soft_hyphen, 2));
+    POINTERS_EQUAL(str_soft_hyphen + 4, gui_chat_string_add_offset_screen (str_soft_hyphen, 3));
+
+    POINTERS_EQUAL(str_zero_width_space, gui_chat_string_add_offset_screen (str_zero_width_space, -1));
+    POINTERS_EQUAL(str_zero_width_space, gui_chat_string_add_offset_screen (str_zero_width_space, 0));
+    POINTERS_EQUAL(str_zero_width_space + 4, gui_chat_string_add_offset_screen (str_zero_width_space, 1));
+    POINTERS_EQUAL(str_zero_width_space + 5, gui_chat_string_add_offset_screen (str_zero_width_space, 2));
+    POINTERS_EQUAL(str_zero_width_space + 5, gui_chat_string_add_offset_screen (str_zero_width_space, 3));
 }
 
 /*
@@ -242,6 +276,16 @@ TEST(GuiChat, StringRealPos)
     LONGS_EQUAL(0, gui_chat_string_real_pos ("\xe2\xbb\xa9", 0, 1));
     LONGS_EQUAL(0, gui_chat_string_real_pos ("\xe2\xbb\xa9", 1, 1));
     LONGS_EQUAL(3, gui_chat_string_real_pos ("\xe2\xbb\xa9", 2, 1));
+
+    /* soft hyphen */
+    LONGS_EQUAL(0, gui_chat_string_real_pos ("A" "\u00ad" "Z", 0, 0));
+    LONGS_EQUAL(3, gui_chat_string_real_pos ("A" "\u00ad" "Z", 1, 0));
+    LONGS_EQUAL(4, gui_chat_string_real_pos ("A" "\u00ad" "Z", 2, 0));
+
+    /* zero width space */
+    LONGS_EQUAL(0, gui_chat_string_real_pos ("A" "\u200b" "Z", 0, 1));
+    LONGS_EQUAL(4, gui_chat_string_real_pos ("A" "\u200b" "Z", 1, 1));
+    LONGS_EQUAL(5, gui_chat_string_real_pos ("A" "\u200b" "Z", 2, 1));
 }
 
 /*
@@ -270,6 +314,16 @@ TEST(GuiChat, StringPos)
     LONGS_EQUAL(0, gui_chat_string_pos ("\xe2\xbb\xa9", 0));
     LONGS_EQUAL(1, gui_chat_string_pos ("\xe2\xbb\xa9", 1));
     LONGS_EQUAL(1, gui_chat_string_pos ("\xe2\xbb\xa9", 2));
+
+    /* soft hyphen */
+    LONGS_EQUAL(0, gui_chat_string_pos ("A" "\u00ad" "Z", 0));
+    LONGS_EQUAL(1, gui_chat_string_pos ("A" "\u00ad" "Z", 1));
+    LONGS_EQUAL(2, gui_chat_string_pos ("A" "\u00ad" "Z", 2));
+
+    /* zero width space */
+    LONGS_EQUAL(0, gui_chat_string_pos ("A" "\u200b" "Z", 0));
+    LONGS_EQUAL(1, gui_chat_string_pos ("A" "\u200b" "Z", 1));
+    LONGS_EQUAL(2, gui_chat_string_pos ("A" "\u200b" "Z", 2));
 }
 
 /*

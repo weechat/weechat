@@ -489,18 +489,34 @@ utf8_strnlen (const char *string, int bytes)
 int
 utf8_char_size_screen (const char *string)
 {
-    int width;
+    wchar_t codepoint;
 
-    if (!string)
+    if (!string || !string[0])
         return 0;
 
     if (string[0] == '\t')
         return CONFIG_INTEGER(config_look_tab_width);
 
-    width = wcwidth ((wchar_t)utf8_char_int (string));
+    /*
+     * chars < 32 are displayed with a letter/symbol and reverse video,
+     * so exactly one column
+     */
+    if (((unsigned char)string[0]) < 32)
+        return 1;
 
-    /* non printable chars are displayed with a space (so size = 1) */
-    return (width >= 0) ? width : 1;
+    codepoint = (wchar_t)utf8_char_int (string);
+
+    /*
+     * special chars not displayed (because not handled by WeeChat):
+     *   U+00AD: soft hyphen      (wcwidth == 1)
+     *   U+200B: zero width space (wcwidth == 0)
+     */
+    if ((codepoint == 0x00AD) || (codepoint == 0x200B))
+    {
+        return -1;
+    }
+
+    return wcwidth (codepoint);
 }
 
 /*
@@ -512,7 +528,7 @@ utf8_char_size_screen (const char *string)
 int
 utf8_strlen_screen (const char *string)
 {
-    int size_screen;
+    int size_screen, size_screen_char;
     const char *ptr_string;
 
     if (!string)
@@ -525,7 +541,10 @@ utf8_strlen_screen (const char *string)
     ptr_string = string;
     while (ptr_string && ptr_string[0])
     {
-        size_screen += utf8_char_size_screen (ptr_string);
+        size_screen_char = utf8_char_size_screen (ptr_string);
+        /* count only chars that use at least one column */
+        if (size_screen_char > 0)
+            size_screen += size_screen_char;
         ptr_string = utf8_next_char (ptr_string);
     }
 

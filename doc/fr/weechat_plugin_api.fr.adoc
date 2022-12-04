@@ -906,12 +906,13 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== strlen_screen
 
-_WeeChat ≥ 0.4.2._
+_WeeChat ≥ 0.4.2, mis à jour dans la 3.8._
 
 Retourner le nombre de caractères nécessaires pour afficher la chaîne UTF-8
 sur l'écran.
-Les caractères non affichables ont une longueur de 1 (c'est la différence avec
-la fonction <<_utf8_strlen_screen,utf8_strlen_screen>>).
+
+Les codes couleur de WeeChat sont sautés et ne comptent pas dans le résultat
+(ceci est la seule différence avec la fonction <<_utf8_strlen_screen,utf8_strlen_screen>>).
 
 Prototype :
 
@@ -3698,6 +3699,8 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== utf8_char_size_screen
 
+_Mis à jour dans la 3.8._
+
 Retourner le nombre de caractères nécessaires pour afficher le caractère UTF-8
 sur l'écran.
 
@@ -3714,7 +3717,19 @@ Paramètres :
 
 Valeur de retour :
 
-* nombre de caractères nécessaires pour afficher le caractère UTF-8 sur l'écran
+* nombre de caractères nécessaires pour afficher le caractère UTF-8 sur l'écran :
+** -1 : caractère non affichable
+** ≥ 0 : caractère affichable
+
+Le résultat est la valeur de retour de la fonction `wcwidth` (voir `man wcwidth`),
+avec une exception pour les caractères suivants, qui ont un comportement
+spécifique dans WeeChat :
+
+* U+0009 (Tabulation) : valeur de l'option
+    link:weechat_user.fr.html#option_weechat.look.tab_width[weechat.look.tab_width ^↗^,window=_blank]
+* U+0001 (1) to U+001F (31), sauf U+0009 (Tabulation) : 1
+* U+00AD (173, trait d'union conditionnel) : -1
+* U+200B (8203, espace sans chasse) : -1
 
 Exemple en C :
 
