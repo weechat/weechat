@@ -222,6 +222,8 @@ TEST(CoreString, Case)
 
 TEST(CoreString, Cut)
 {
+    char suffix[128], string[128];
+
     POINTERS_EQUAL(NULL, string_cut (NULL, 0, 0, 0, NULL));
     STRCMP_EQUAL("", string_cut ("", 0, 0, 0, NULL));
 
@@ -317,6 +319,25 @@ TEST(CoreString, Cut)
     STRCMP_EQUAL("こ", string_cut ("こんにちは世界", 3, 1, 1, NULL));
     STRCMP_EQUAL("こ+", string_cut ("こんにちは世界", 3, 1, 1, "+"));
     STRCMP_EQUAL("こ…", string_cut ("こんにちは世界", 3, 1, 1, "…"));
+
+    /* cut suffix using color and 1 char */
+    snprintf (suffix, sizeof (suffix), "%s+", gui_color_get_custom ("red"));
+    snprintf (string, sizeof (string), "te%s+", gui_color_get_custom ("red"));
+    STRCMP_EQUAL(string, string_cut ("test", 3, 1, 1, suffix));
+
+    /* cut suffix using color and 2 chars */
+    snprintf (suffix, sizeof (suffix), "%s++", gui_color_get_custom ("red"));
+    snprintf (string, sizeof (string), "t%s++", gui_color_get_custom ("red"));
+    STRCMP_EQUAL(string, string_cut ("test", 3, 1, 1, suffix));
+
+    /* cut suffix using color and 3 chars */
+    snprintf (suffix, sizeof (suffix), "%s+++", gui_color_get_custom ("red"));
+    snprintf (string, sizeof (string), "%s+++", gui_color_get_custom ("red"));
+    STRCMP_EQUAL(string, string_cut ("test", 3, 1, 1, suffix));
+
+    /* cut suffix using color and 4 chars */
+    snprintf (suffix, sizeof (suffix), "%s++++", gui_color_get_custom ("red"));
+    STRCMP_EQUAL("", string_cut ("test", 3, 1, 1, suffix));
 }
 
 /*

@@ -134,7 +134,7 @@ string_cut (const char *string, int length, int count_suffix, int screen,
         if (count_suffix)
         {
             if (screen)
-                length -= utf8_strlen_screen (cut_suffix);
+                length -= gui_chat_strlen_screen (cut_suffix);
             else
                 length -= utf8_strlen (cut_suffix);
             if (length < 0)
