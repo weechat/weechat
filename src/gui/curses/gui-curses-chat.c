@@ -374,7 +374,7 @@ gui_chat_display_word_raw (struct t_gui_window *window, struct t_gui_line *line,
                            int nick_offline)
 {
     char *output, utf_char[16], *ptr_char;
-    int x, chars_displayed, display_char, size_on_screen;
+    int x, chars_displayed, display_char, size_on_screen, reverse_video;
 
     if (!simulate)
     {
@@ -398,11 +398,31 @@ gui_chat_display_word_raw (struct t_gui_window *window, struct t_gui_line *line,
         utf8_strncpy (utf_char, string, 1);
         if (utf_char[0])
         {
+            reverse_video = 0;
             ptr_char = utf_char;
-            if (!gui_chat_utf_char_valid (utf_char))
-                snprintf (utf_char, sizeof (utf_char), " ");
-            else if (utf_char[0] == '\t')
+            if (utf_char[0] == '\t')
+            {
+                /* expand tabulation with spaces */
                 ptr_char = config_tab_spaces;
+            }
+            else if (((unsigned char)utf_char[0]) < 32)
+            {
+                /*
+                 * display chars < 32 with letter/symbol
+                 * and set reverse video (if not already enabled)
+                 */
+                snprintf (utf_char, sizeof (utf_char), "%c",
+                          'A' + ((unsigned char)utf_char[0]) - 1);
+                reverse_video = (gui_window_current_color_attr & A_REVERSE) ?
+                    0 : 1;
+            }
+            else
+            {
+                /* display non printable chars as spaces */
+                if (!gui_chat_utf_char_valid (utf_char))
+                    snprintf (utf_char, sizeof (utf_char), " ");
+
+            }
 
             display_char = (window->buffer->type != GUI_BUFFER_TYPE_FREE)
                 || (x >= window->scroll->start_col);
@@ -418,8 +438,18 @@ gui_chat_display_word_raw (struct t_gui_window *window, struct t_gui_line *line,
                 if (!simulate)
                 {
                     output = string_iconv_from_internal (NULL, ptr_char);
+                    if (reverse_video)
+                    {
+                        wattron (GUI_WINDOW_OBJECTS(window)->win_chat,
+                                 A_REVERSE);
+                    }
                     waddstr (GUI_WINDOW_OBJECTS(window)->win_chat,
                              (output) ? output : ptr_char);
+                    if (reverse_video)
+                    {
+                        wattroff (GUI_WINDOW_OBJECTS(window)->win_chat,
+                                  A_REVERSE);
+                    }
                     if (output)
                         free (output);
 
