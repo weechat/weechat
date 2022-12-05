@@ -1337,37 +1337,37 @@ stop: зауставља режим померања курсора
 
 ----
 /debug  list
-        set <plugin> <level>
-        dump|hooks [<plugin>]
+        set <додатак> <ниво>
+        dump|hooks [<додатак>]
         buffer|certs|color|dirs|infolists|libs|memory|tags|term|windows
         mouse|cursor [verbose]
         hdata [free]
-        time <command>
-        unicode <string>
+        time <команда>
+        unicode <стринг>
 
-     list: list plugins with debug levels
-      set: set debug level for plugin
-   plugin: name of plugin ("core" for WeeChat core)
-    level: debug level for plugin (0 = disable debug)
-     dump: save memory dump in WeeChat log file (same dump is written when WeeChat crashes)
-    hooks: display infos about hooks (with a plugin: display detailed info about hooks created by the plugin)
-   buffer: dump buffer content with hexadecimal values in log file
-    certs: display number of loaded trusted certificate authorities
-    color: display infos about current color pairs
-   cursor: toggle debug for cursor mode
-     dirs: display directories
-    hdata: display infos about hdata (with free: remove all hdata in memory)
-infolists: display infos about infolists
-     libs: display infos about external libraries used
-   memory: display infos about memory usage
-    mouse: toggle debug for mouse
-     tags: display tags for lines
-     term: display infos about terminal
-  windows: display windows tree
-     time: measure time to execute a command or to send text to the current buffer
-  unicode: display information about unicode chars in string (evaluated, see /help eval)
+     list: исписује додатке са дибаг нивоима
+      set: поставља дибаг ниво за додатак
+  додатак: име додатка („core” за WeeChat језгро)
+     ниво: дибаг ниво за додатак (0 = искључује дибаг)
+     dump: чува садржај меморије у WeeChat лог фајл (исти садржај се записује када се програм WeeChat сруши)
+    hooks: исписује инфо о кукама (са додатком: приказује детаљне информације о кукама које креира додатак)
+   buffer: уписује у лог фајл садржај бафера као хексадецималне вредности
+    certs: приказује број учитаних ауторитета сертификата којима се верује
+    color: приказује инфо о тренутним паровима боја
+   cursor: пребацује дибаг за режим померања курсора
+     dirs: исписује директоријуме
+    hdata: исписује инфо о hdata (са free: уклања све hdata из меморије)
+infolists: исписује инфо о инфолистама
+     libs: исписује инфо о коришћеним спољним библиотекама
+   memory: исписује инфо о употреби меморије
+    mouse: пребацује дибаг за миша
+     tags: исписује ознаке за линије
+     term: исписује инфо о терминалу
+  windows: исписује стабло прозора
+     time: мери време извршавања команде или слања текста текућем баферу
+  unicode: приказује информације о уникод карактерима у стрингу (израчунато, погледајте/help eval)
 
-Examples:
+Примери:
   /debug set irc 1
   /debug mouse verbose
   /debug time /filter toggle
@@ -1381,84 +1381,84 @@ Examples:
 /eval  [-n|-s] [-d] <израз>
        [-n] [-d [-d]] -c <израз1> <оператор> <израз2>
 
-        -n: display result without sending it to buffer (debug mode)
-        -s: split expression before evaluating it (many commands can be separated by semicolons)
-        -d: display debug output after evaluation (with two -d: more verbose debug)
-        -c: evaluate as condition: use operators and parentheses, return a boolean value ("0" or "1")
-expression: expression to evaluate, variables with format ${variable} are replaced (see below); many commands can be separated by semicolons
-  operator: a logical or comparison operator:
-            - logical operators:
-                &&   boolean "and"
-                ||   boolean "or"
-            - comparison operators:
-                ==   equal
-                !=   not equal
-                <=   less or equal
-                <    less
-                >=   greater or equal
-                >    greater
-                =~   is matching POSIX extended regex
-                !~   is NOT matching POSIX extended regex
-                ==*  is matching mask, case sensitive (wildcard "*" is allowed)
-                !!*  is NOT matching mask, case sensitive (wildcard "*" is allowed)
-                =*   is matching mask, case insensitive (wildcard "*" is allowed)
-                !*   is NOT matching mask, case insensitive (wildcard "*" is allowed)
-                ==-  is included, case sensitive
-                !!-  is NOT included, case sensitive
-                =-   is included, case insensitive
-                !-   is NOT included, case insensitive
+        -n: приказује резултат и не шаље га у бафер (дибаг режим)
+        -s: дели израз пре израчунавања (многе команде могу да се раздвоје са тачка зарезима)
+        -d: приказује дибаг излаз након израчунавања (са два -d: детаљнији дибаг)
+        -c: израчунава као услов: користе се оператори и заграде, враћа логичку вредност („0” или „1”)
+     израз: израз који се израчунава, променљиве у формату ${променљива} се замењују (погледајте испод); више команди може да се раздвоји са тачка зарезима
+  оператор: логички или оператор поређења:
+            - логички оператори:
+                &&   логичко „и”
+                ||   логичко „или”
+            - оператори поређења:
+                ==   једнако
+                !=   није једнако
+                <=   мање или једнако
+                <    мање
+                >=   веће или једнако
+                >    веће
+                =~   подудара се са POSIX проширеним регуларним изразом
+                !~   НЕ подудара се са POSIX проширеним регуларним изразом
+                ==*  је маска подударања, разликује величину слова (дозвољен је џокер „*”)
+                !!*  НИЈЕ маска подударања, разликује величину слова (дозвољен је џокер „*”)
+                =*   је маска подударања, не разликује величину слова (дозвољен је џокер „*”)
+                !*   НИЈЕ маска подударања, не разликује величину слова (дозвољен је џокер „*”)
+                ==-  је укључено, разликује величину слова
+                !!-  НИЈЕ укључено, разликује величину слова
+                =-   је укључено, не разликује величину слова
+                !-   НИЈЕ укључено, не разликује величину слова
 
-An expression is considered as "true" if it is not NULL, not empty, and different from "0".
-The comparison is made using floating point numbers if the two expressions are valid numbers, with one of the following formats:
-  - integer (examples: 5, -7)
-  - floating point number (examples: 5.2, -7.5, 2.83e-2)
-  - hexadecimal number (examples: 0xA3, -0xA3)
-To force a string comparison, you can add double quotes around each expression, for example:
+Сматра се да је израз „true” ако није NULL, није празан и различит је од „0”.
+Поређење се врши употребом бројева у покретном зарезу ако су два израза важећи бројеви, у једном од следећих формата:
+  - целобројни (примери: 5, -7)
+  - број у покретном зарезу (примери: 5.2, -7.5, 2.83e-2)
+  - хексадецимални број (примери: 0xA3, -0xA3)
+Ако желите да форсирате поређење стрингова, можете да додате знаке навода око сваког израза, на пример:
   50 > 100      ==> 0
   "50" > "100"  ==> 1
 
-Some variables are replaced in expression, using the format ${variable}, variable can be, by order of priority:
-  - the string itself without evaluation (format: "raw:xxx")
-  - a user-defined variable (format: "name")
-  - an evaluated sub-string (format: "eval:xxx")
-  - an evaluated condition (format: "eval_cond:xxx")
-  - a string with escaped chars (format: "esc:xxx" or "\xxx")
-  - a string with a range of chars (format: "chars:xxx" or "chars:c1-c2" where "xxx" is one of: "digit", "xdigit", "lower", "upper", "alpha", "alnum")
-  - a string converted to lower case (format: "lower:xxx")
-  - a string converted to upper case (format: "upper:xxx")
-  - a string with chars to hide (format: "hide:char,string")
-  - a string with max chars (format: "cut:max,suffix,string" or "cut:+max,suffix,string")
-     or max chars displayed on screen (format: "cutscr:max,suffix,string" or "cutscr:+max,suffix,string")
-  - a reversed string (format: "rev:xxx" or "revscr:xxx")
-  - a repeated string (format: "repeat:count,string")
-  - length of a string (format: "length:xxx" or "lengthscr:xxx")
-  - split of a string (format: "split:number,separators,flags,xxx")
-  - split of shell argmuents (format: "split_shell:number,xxx")
-  - a color (format: "color:xxx", see "Plugin API reference", function "color")
-  - a modifier (format: "modifier:name,data,string")
-  - an info (format: "info:name,arguments", arguments are optional)
-  - a base 16/32/64 encoded/decoded string (format: "base_encode:base,xxx" or "base_decode:base,xxx")
-  - current date/time (format: "date" or "date:format")
-  - an environment variable (format: "env:XXX")
-  - a ternary operator (format: "if:condition?value_if_true:value_if_false")
-  - result of an expression with parentheses and operators + - * / // % ** (format: "calc:xxx")
-  - a random integer number (format: "random:min,max")
-  - a translated string (format: "translate:xxx")
-  - define a user variable (format: "define:name,value")
-  - an option (format: "file.section.option")
-  - a local variable in buffer
-  - a hdata name/variable (the value is automatically converted to string), by default "window" and "buffer" point to current window/buffer.
-Format for hdata can be one of following:
-  hdata.var1.var2...: start with a hdata (pointer must be known), and ask variables one after one (other hdata can be followed)
-  hdata[list].var1.var2...: start with a hdata using a list/pointer/pointer name, for example:
-    ${buffer[gui_buffers].full_name}: full name of first buffer in linked list of buffers
-    ${plugin[weechat_plugins].name}: name of first plugin in linked list of plugins
-  hdata[pointer].var1.var2...: start with a hdata using a pointer, for example:
-    ${buffer[0x1234abcd].full_name}: full name of the buffer with this pointer (can be used in triggers)
-    ${buffer[my_pointer].full_name}: full name of the buffer with this pointer name (can be used in triggers)
-For name of hdata and variables, please look at "Plugin API reference", function "weechat_hdata_get".
+У изразима се замењују неке променљиве, користећи формат ${променљива}, променљива може да буде, према редоследу приоритета:
+  - сам стринг без израчунавања (формат: „raw:xxx”)
+  - кориснички дефинисана променљива (формат: „име”)
+  - израчунати под-стринг (формат: „eval:xxx”)
+  - израчунати услов (формат: „eval_cond:xxx”)
+  - стринг са означеним карактерима (формат: „esc:xxx” или „\xxx”)
+  - стринг са опсегом карактера (формат: „chars:xxx” or „chars:c1-c2” где је „xxx” једно од: „digit”, „xdigit”, „lower”, „upper”, „alpha”, „alnum”)
+  - стринг конвертован у мала слова (формат: „lower:xxx”)
+  - стринг конвертован у велика слова (формат: „upper:xxx”)
+  - стринг са карактерима за сакривање (формат: „hide:кар,стринг”)
+  - стринг са највише карактера (формат: „cut:макс,суфикс,стринг” или „cut:+макс,суфикс,стринг")
+     или макс број карактера који се приказује на екрану (формат: „cutscr:макс,суфикс,стринг” или „cutscr:+макс,суфикс,стринг”)
+  - обрнути стринг (формат: „rev:xxx” или „revscr:xxx”)
+  - поновљени стринг (формат: „repeat:број,стринг”)
+  - дужина стринга (формат: „length:xxx” или „lengthscr:xxx”)
+  - подела стринга (формат: „split:број,сепаратори,заставице,xxx”)
+  - подела аргумената љуске (формат: „split_shell:број,xxx”)
+  - боја (формат: „color:xxx”, погледајте „Референтни приручник API додатака”, функција „color”)
+  - модификатор (формат: „modifier:име,подаци,стринг”)
+  - инфо (формат: „info:име,аргументи”, аргументи нису обавезни)
+  - base 16/32/64 шифриран/дешифрован стринг (формат: „base_encode:основа, xxx” или „base_decode:основа,xxx”)
+  - текући датум/време (формат: „date” или „date:формат”)
+  - променљива окружења (формат: „env:XXX”)
+  - тернарни оператор (формат: „if:услов?вредност_ако_је_тачно:вредност_ако_је_нетачно”)
+  - резултат израза са заградама и операторима + - * / // % ** (формат: „calc:xxx”)
+  - случајни целобројни број (формат: „random:мин,макс”)
+  - преведени стринг (формат: „translate:xxx”)
+  - дефиниција корисничке промонљиве (формат: „define:име,вредност”)
+  - опција (формат: „фајл.секција.опција”)
+  - локална променљива у баферу
+  - hdata име/променљива (вредност се аутоматски конвертује у стринг), „window” и „buffer” подразумевано показују на текући прозор/бафер.
+Формат за hdata може да буде једно од следећег:
+  hdata.пром1.пром2...: почиње са hdata (показивач мора да буде познат), и пита променљиве једну за другом (могу да следе и остала hdata)
+  hdata[листа].пром1.пром2...: почиње са hdata користећи листу/показивач/име показивача, на пример:
+    ${buffer[gui_buffers].full_name}: пуно име првог бафера у увезаној листи бафера
+    ${plugin[weechat_plugins].name}: име првог бафера у увезаној листи додатака
+  hdata[показивач].пром1.пром2...: почиње са hdata користећи показивач, на пример:
+    ${buffer[0x1234abcd].full_name}: пуно име бафера са овим показивачем (може да се користи у окидачима)
+    ${buffer[my_pointer].full_name}: пуно име бафера са овим именом показивача (може да се користи у окидачима)
+У вези имена hdata и променљивих, молим вас да погледате „Референтни приручник API додатака”, функцију „weechat_hdata_get”.
 
-Examples (simple strings):
+Примери (једноставни стрингови):
   /eval -n ${raw:${info:version}}                 ==> ${info:version}
   /eval -n ${eval_cond:${window.win_width}>100}   ==> 1
   /eval -n ${info:version}                        ==> 0.4.3
@@ -1486,10 +1486,10 @@ Examples (simple strings):
   /eval -n ${split:-1,,,abc,def,ghi}              ==> ghi
   /eval -n ${split:count,,,abc,def,ghi}           ==> 3
   /eval -n ${split:random,,,abc,def,ghi}          ==> def
-  /eval -n ${split_shell:1,"arg 1" arg2}          ==> arg 1
-  /eval -n ${split_shell:-1,"arg 1" arg2}         ==> arg2
-  /eval -n ${split_shell:count,"arg 1" arg2}      ==> 2
-  /eval -n ${split_shell:random,"arg 1" arg2}     ==> arg2
+  /eval -n ${split_shell:1,„arg 1” arg2}          ==> arg 1
+  /eval -n ${split_shell:-1,„arg 1” arg2}         ==> arg2
+  /eval -n ${split_shell:count,„arg 1” arg2}      ==> 2
+  /eval -n ${split_shell:random,„arg 1” arg2}     ==> arg2
   /eval -n ${calc:(5+2)*3}                        ==> 21
   /eval -n ${random:0,10}                         ==> 3
   /eval -n ${base_encode:64,test}                 ==> dGVzdA==
@@ -1497,7 +1497,7 @@ Examples (simple strings):
   /eval -n ${translate:Plugin}                    ==> Extension
   /eval -n ${define:len,${calc:5+3}}${len}x${len} ==> 8x8
 
-Examples (conditions):
+Примери (услови):
   /eval -n -c ${window.buffer.number} > 2 ==> 0
   /eval -n -c ${window.win_width} > 100   ==> 1
   /eval -n -c (8 > 12) || (5 > 2)         ==> 1
@@ -1609,64 +1609,64 @@ addreplace: додаје или замењује постојећи филтер
 ----
 /input  <акција> [<аргументи>]
 
-list of actions:
-  return: simulate key "enter"
-  complete_next: complete word with next completion
-  complete_previous: complete word with previous completion
-  search_text_here: search text in buffer at current position
-  search_text: search text in buffer
-  search_switch_case: switch exact case for search
-  search_switch_regex: switch search type: string/regular expression
-  search_switch_where: switch search in messages/prefixes
-  search_previous: search previous line
-  search_next: search next line
-  search_stop_here: stop search at current position
-  search_stop: stop search
-  delete_previous_char: delete previous char
-  delete_next_char: delete next char
-  delete_previous_word: delete previous word
-  delete_previous_word_whitespace: delete previous word (until whitespace)
-  delete_next_word: delete next word
-  delete_beginning_of_line: delete from beginning of line until cursor
-  delete_end_of_line: delete from cursor until end of line
-  delete_line: delete entire line
-  clipboard_paste: paste from the internal clipboard
-  transpose_chars: transpose two chars
-  undo: undo last command line action
-  redo: redo last command line action
-  move_beginning_of_line: move cursor to beginning of line
-  move_end_of_line: move cursor to end of line
-  move_previous_char: move cursor to previous char
-  move_next_char: move cursor to next char
-  move_previous_word: move cursor to previous word
-  move_next_word: move cursor to next word
-  history_previous: recall previous command in current buffer history
-  history_next: recall next command in current buffer history
-  history_global_previous: recall previous command in global history
-  history_global_next: recall next command in global history
-  jump_smart: jump to next buffer with activity
-  jump_last_buffer_displayed: jump to last buffer displayed (before last jump to a buffer)
-  jump_previously_visited_buffer: jump to previously visited buffer
-  jump_next_visited_buffer: jump to next visited buffer
-  hotlist_clear: clear hotlist (optional argument: "lowest" to clear only lowest level in hotlist, "highest" to clear only highest level in hotlist, or level mask: integer which is a combination of 1=join/part, 2=message, 4=private, 8=highlight)
-  hotlist_remove_buffer: remove current buffer from hotlist
-  hotlist_restore_buffer: restore latest hotlist removed in the current buffer
-  hotlist_restore_all: restore latest hotlist removed in all buffers
-  grab_key: grab a key (optional argument: delay for end of grab, default is 500 milliseconds)
-  grab_key_command: grab a key with its associated command (optional argument: delay for end of grab, default is 500 milliseconds)
-  grab_mouse: grab mouse event code
-  grab_mouse_area: grab mouse event code with area
-  set_unread: set unread marker for all buffers
-  set_unread_current_buffer: set unread marker for current buffer
-  switch_active_buffer: switch to next merged buffer
-  switch_active_buffer_previous: switch to previous merged buffer
-  zoom_merged_buffer: zoom on merged buffer
-  insert: insert text in command line (escaped chars are allowed, see /help print)
-  send: send text to the buffer
-  paste_start: start paste (bracketed paste mode)
-  paste_stop: stop paste (bracketed paste mode)
+листа акција:
+  return: симулира притисак на тастер „ентер”
+  complete_next: довршава реч са наредним довршавањем
+  complete_previous: довршава реч са претходним довршавањем
+  search_text_here: претражује текст у баферу почевши од текуће позиције
+  search_text: претражује текст у баферу
+  search_switch_case: укључује употребу тачне величине слова код претраге
+  search_switch_regex: мења тип претраге: стринг/регуларни израз
+  search_switch_where: укључује претрагу у порукама/префиксима
+  search_previous: претрага у претходној линији
+  search_next: претрага у наредној линији
+  search_stop_here: зауставља претрагу на текућој позицији
+  search_stop: зауставља претрагу
+  delete_previous_char: брише претходни карактер
+  delete_next_char: брише наредни карактер
+  delete_previous_word: брише претходну реч
+  delete_previous_word_whitespace: брише претходну реч (до празног простора)
+  delete_next_word: брише наредну реч
+  delete_beginning_of_line: брише од почетка линије до позиције курсора
+  delete_end_of_line: брише од позиције курсора до краја линије
+  delete_line: брише комплетну линију
+  clipboard_paste: налепљује из интерног клипборда
+  transpose_chars: транспонује два карактера (замењују места)
+  undo: поништава последњу акцију командне линије
+  redo: обнавља последње поништену акцију команде линије
+  move_beginning_of_line: помера курсор на почетак линије
+  move_end_of_line: помера курсор на крај линије
+  move_previous_char: помера курсор на претходни карактер
+  move_next_char: помера курсор на наредни карактер
+  move_previous_word: помера курсор на претходну реч
+  move_next_word: помера курсор на наредну реч
+  history_previous: позива претходну команду из историје команди текућег бафера
+  history_next: позива наредну команду из историје команди текућег бафера
+  history_global_previous: позива претходну команду из глобалне историје команди
+  history_global_next: позива наредну команду из глобалне историје команди
+  jump_smart: скаче на наредни бафер у коме постоји активност
+  jump_last_buffer_displayed: скаче на последњи приказани бафер (пре последњег скока на бафер)
+  jump_previously_visited_buffer: скаче на претходно посећени бафер
+  jump_next_visited_buffer: скаче на наредни посећени бафер
+  hotlist_clear: брише врућу листу (необавезни аргументи: „lowest” за брисање само најнижег нивоа у врућој листи, „highest” за брисање само највишег нивоа у врућој листи, или маска нивоа: целобројна вредност која представља комбинацију 1=join/part, 2=порука, 4=приватно, 8=истицање)
+  hotlist_remove_buffer: уклања текући бафер из вруће листе
+  hotlist_restore_buffer: враћа последњу уклоњену врућу листу у текући бафер
+  hotlist_restore_all: враћа последњу уклоњену врућу листу у све бафере
+  grab_key: преузима тастер (необавезни аргумент: кашњење за крај преузимања, подразумевано је 500 милисекунди)
+  grab_key_command: преузима тастер са својом придруженом командом (необавезни аргумент: кашњење за крај преузимања, подразумевано је 500 милисекунди)
+  grab_mouse: преузима кôд догађаја миша
+  grab_mouse_area: преузима кôд догађаја миша заједно са површином
+  set_unread: поставља маркер непрочитан за све бафере
+  set_unread_current_buffer: поставља маркер непрочитан за текући бафер
+  switch_active_buffer: прелази на наредни спојени бафер
+  switch_active_buffer_previous: прелази на претходни спојени бафер
+  zoom_merged_buffer: зумира на спојени бафер
+  insert: умеће текст у командну линију (дозвољени су означени карактери, погледајте /help print)
+  send: шаље текст баферу
+  paste_start: започиње налепљивање (режим ограђеног налепљивања)
+  paste_stop: зауставља налепљивање (режим ограђеног налепљивања)
 
-This command is used by key bindings or plugins.
+Ову команду користе тастерске пречице или додаци.
 ----
 
 [[command_weechat_item]]
@@ -3075,27 +3075,27 @@ toggleautoload: пребацивање аутоматског учитавања
 ----
 /spell  enable|disable|toggle
         listdict
-        setdict -|<dict>[,<dict>...]
+        setdict <речн>[,<речн>...]
         deldict
-        addword [<dict>] <word>
+        addword [<речн>] <реч>
 
-  enable: enable spell checker
- disable: disable spell checker
-  toggle: toggle spell checker
-listdict: show installed dictionaries
- setdict: set dictionary for current buffer (multiple dictionaries can be separated by a comma, the special value "-" disables spell checking on current buffer)
- deldict: delete dictionary used on current buffer
- addword: add a word in personal dictionary
+  enable: укључивање програма за проверу правописа
+ disable: искључивање програма за проверу правописа
+  toggle: пребацивање програма за проверу правописа
+listdict: приказ инсталираних речника
+ setdict: постављање речника за текући бафер (више речника може да се раздвоји запетама, специјална вредност „-” искључује проверу правописа у текућем баферу)
+ deldict: брисање речника који се користи за текући бафер
+ addword: додавање речи у лични речник
 
-Input line beginning with a '/' is not checked, except for some commands (see /set spell.check.commands).
+Линије уноса које почињу са ’/’ се не проверавају, осим за неке команде (погледајте /set spell.check.commands).
 
-To enable spell checker on all buffers, use option "default_dict", then enable spell checker, for example:
-  /set spell.check.default_dict "en"
+Ако желите да укључите програм за проверу правописа у свим баферима, употребите опцију „default_dict”, па затим укључите програм за проверу правописа, на пример:
+  /set spell.check.default_dict „en”
   /spell enable
 
-To display a list of suggestions in a bar, use item "spell_suggest".
+Ако желите да се у траци прикаже листа предлога, употребите ставку „spell_suggest”.
 
-Default key to toggle spell checker is alt-s.
+Подразумевани тастер за пребацивање програма за проверу правописа је alt-s.
 ----
 // end::spell_commands[]
 
