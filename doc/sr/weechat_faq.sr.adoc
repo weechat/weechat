@@ -146,9 +146,8 @@ _прозор_ је површина екрана која приказује б
 [[buffers_list]]
 === Како да се са леве стране прикаже листа бафера?
 
-// TRANSLATION MISSING
-The plugin link:weechat_user.sr.html#buflist[buflist ^↗^,window=_blank]
-is loaded and enabled by default.
+Додатак link:weechat_user.sr.html#buflist[buflist ^↗^,window=_blank]
+је подразумевано учитан и укључен.
 
 Ако желите да ограничите величину траке:
 
@@ -266,11 +265,10 @@ is loaded and enabled by default.
 [[terminal_copy_paste]]
 === Како могу да копирам/налепљујем текст без налепљивања листе надимака?
 
-// TRANSLATION MISSING
-You can use the bare display (default key: kbd:[Alt+l] (`L`)), which shows
-just the contents of the currently selected window, without any formatting.
+Можете да употребите огољени приказ (подразумевани тастер: kbd:[Alt+l] (`L`)), који приказује
+само садржај тренутно изабраног прозора, без било каквог форматирања.
 
-Можете да користите терминал са правоугаоним избором (као rxvt-unicode, konsole, gnome-terminal, итд.). Тастер је обично kbd:[Ctrl] + kbd:[Alt] + извор мишем.
+Можете да користите терминал са правоугаоним избором (као rxvt-unicode, konsole, gnome-terminal, итд.). Тастер је обично kbd:[Ctrl] + kbd:[Alt] + избор мишем.
 
 Друго решење је да листу надимака померите на врх или дно, на пример:
 
@@ -281,8 +279,7 @@ just the contents of the currently selected window, without any formatting.
 [[urls]]
 === Како да кликнем на дугачке URL адресе (које заузимају више од једне линије)?
 
-// TRANSLATION MISSING
-You can use the bare display (default key: kbd:[Alt+l] (`L`)).
+Можете да употребите огољени приказ (подразумевани тастер: kbd:[Alt+l] (`L`)).
 
 Ако желите да олакшате отварање URL адреса, можете да:
 
@@ -304,9 +301,8 @@ You can use the bare display (default key: kbd:[Alt+l] (`L`)).
 /set weechat.look.align_end_of_lines time
 ----
 
-// TRANSLATION MISSING
-You can enable option "eat_newline_glitch", so that new line char is not added
-at the end of each line displayed (it will not break URL selection):
+Можете да укључите опцију „eat_newline_glitch”, тако да се карактер нове линије не додаје на крај
+сваке приказане линије (неће покварити избор URL адреса):
 
 ----
 /set weechat.look.eat_newline_glitch on
@@ -649,9 +645,8 @@ $ printf '\033[?1002l'
 [[irc_ssl_libera]]
 === Како да се повежем са libera сервером преко SSL?
 
-// TRANSLATION MISSING
-Check that you have certificates installed on your system, this is commonly
-provided by the package "ca-certificates".
+Проверите да су на вашем систему инсталирани сертификати, обично их обезбеђује пакет
+„ca-certificates”.
 
 Поставите порт сервера, SSL, затим се повежите:
 
@@ -709,9 +704,8 @@ oauth је једноставно лозинка која има вреднос�
 /set irc.server.libera.autojoin_dynamic on
 ----
 
-// TRANSLATION MISSING
-You can also add the current channel in the "autojoin" server option using the
-`/autojoin` command:
+Текући канал такође можете да додате "autojoin" опцијом сервера командом
+`/autojoin`:
 
 ----
 /autojoin add
@@ -723,8 +717,7 @@ You can also add the current channel in the "autojoin" server option using the
 /autojoin add #test
 ----
 
-// TRANSLATION MISSING
-There are also scripts:
+Такође постоје и скрипте:
 
 ----
 /script search autojoin
@@ -759,10 +752,8 @@ There are also scripts:
 [[filter_irc_join_channel_messages]]
 === Како да филтрирам неке поруке које се приказују када приступим IRC каналу?
 
-// TRANSLATION MISSING
-You can choose which messages are displayed when joining a channel with the
-option _irc.look.display_join_message_ (see `+/help irc.look.display_join_message+`
-for more info).
+Када приступате каналу опцијом _irc.look.display_join_message_ можете да изаберете које поруке ће се приказивати
+(погледајте `+/help irc.look.display_join_message+` за детаљније информације).
 
 Ако желите да сакријете поруке (али да их задржите у баферу), можете да их филтрирате употребом ознаке (на пример _irc_329_ за датум креирања канала). За помоћ у вези филтера, погледајте `/help filter`.
 
@@ -810,11 +801,9 @@ set away_devoice false
 [[highlight_notification]]
 === Како могу да добијем упозорење када ме неко означи (истакне) на каналу?
 
-// TRANSLATION MISSING
-There is a default trigger "beep" which sends a _BEL_ to the terminal on
-a highlight or private message. Thus you can configure your terminal
-(or multiplexer like screen/tmux) to run a command or play a sound when
-a _BEL_ occurs.
+Постоји подразумевани окидач „beep” који терминалу шаље _BEL_ када се догоди истицање
+или прими приватна порука. Тако да свој терминал (или мултиплексер као што је screen/tmux)
+можете подесити тако да покрене команду или пусти звук када прими _BEL_.
 
 Или можете да додате команду у „beep” окидач:
 
@@ -839,11 +828,10 @@ a _BEL_ occurs.
 [[disable_highlights_for_specific_nicks]]
 === Како могу да искључим истицање за одређене надимке?
 
-// TRANSLATION MISSING
-You can use the
+Бафер особину
 link:weechat_user.sr.html#max_hotlist_level_nicks[hotlist_max_level_nicks_add ^↗^,window=_blank]
-buffer property to set the max hotlist level for some nicks, per buffer,
-or per group of buffers (like IRC servers).
+можете користити да за неке надимке подесите максимални ниво вруће листе, по баферу, или по
+групи бафера (као на пример IRC сервери).
 
 Ако само желите да искључите истицања, треба да је поставите на 2:
 
@@ -894,9 +882,8 @@ or per group of buffers (like IRC servers).
 [[install_scripts]]
 === Како могу да инсталирам скрипте? Да ли су скрипте компатибилне са осталим IRC клијентима?
 
-// TRANSLATION MISSING
-You can use the command `/script` to install and manage scripts (see `/help script`
-for help).
+Можете да употребите команду `/script` за инсталирање и управљање скриптама (погледајте `/help script`
+за помоћ).
 
 Скрипте нису компатибилне са осталим IRC клијентима.
 
@@ -911,9 +898,8 @@ for help).
 $ rm ~/.cache/weechat/script/plugins.xml.gz
 ----
 
-// TRANSLATION MISSING
 [NOTE]
-If you are not using the XDG directories, the path could be: _~/.weechat/script/plugins.xml.gz_.
+Ако не користите XDG директоријуме, путања би могла да буде: _~/.weechat/script/plugins.xml.gz_.
 
 Па у програму WeeChat поново ажурирајте скрипте:
 

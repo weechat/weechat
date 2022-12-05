@@ -1524,8 +1524,7 @@ if (weechat_string_regcomp (&my_regex, "([0-9]{4})-([0-9]{2})-([0-9]{2})",
 
 _WeeChat ≥ 3.8._
 
-// TRANSLATION MISSING
-Translate chars in a string.
+Преводи карактере у стрингу.
 
 Прототип:
 
@@ -1536,17 +1535,15 @@ char *string_translate_chars (const char *string, const char *chars1, const char
 
 Аргументи:
 
-// TRANSLATION MISSING
-* _string_: string
-* _chars1_: string with chars to translate
-* _chars2_: string with replacement chars; it must contain the same number of
-  UTF-8 chars than _chars1_
+* _string_: стринг
+* _chars1_: стринг са карактерима који треба да се преведу
+* _chars2_: стринг са карактерима замене; мора да садржи исти број
+  UTF-8 карактера као _chars1_
 
 Повратна вредност:
 
-// TRANSLATION MISSING
-* string with translated chars, NULL if problem (must be freed by calling "free"
-  after use)
+* стринг са преведеним карактерима, NULL ако је дошло до проблема (мора да се ослободи позивом функције „free”
+  након употребе)
 
 C примери:
 
@@ -1917,12 +1914,11 @@ def string_format_size(size: int) -> str: ...
 str = weechat.string_format_size(15200)  # == "15.2 KB"
 ----
 
-// TRANSLATION MISSING
 ==== string_parse_size
 
 _WeeChat ≥ 3.7._
 
-Parse a string with a size and optional unit and return the size in bytes.
+Парсира стринг са величином и јединицом која није обавезна, па враћа величину у бајтовима.
 
 Прототип:
 
@@ -1933,17 +1929,17 @@ unsigned long long weechat_string_parse_size (const char *size);
 
 Аргументи:
 
-* _size_: the size as string: positive integer number followed by optional
-  spaces and optional unit (lower or upper case), which is one of:
-** _b_: bytes
-** _k_: kilobytes (1k = 1000 bytes)
-** _m_: megabytes (1m = 1000k = 1,000,000 bytes)
-** _g_: gigabytes (1g = 1000m = 1,000,000,000 bytes)
-** _t_: terabytes (1t = 1000g = 1,000,000,000,000 bytes)
+* _size_: величина као стринг: позитиван цео број након кога следе необавезни размаци и необавезна јединица
+  (малим или великим словима), која је једно од:
+** _b_: бајтова
+** _k_: килобајта (1k = 1000 бајтова)
+** _m_: мегаaбајта (1m = 1000k = 1,000,000 бајтова)
+** _g_: гигабајта (1g = 1000m = 1,000,000,000 бајтова)
+** _t_: терабајта (1t = 1000g = 1,000,000,000,000 бајтова)
 
 Повратна вредност:
 
-* size in bytes, 0 if error
+* величина у бајтовима, 0 у случају грешке
 
 C пример:
 
@@ -2622,16 +2618,15 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
   >> `+${\ua9}+` +
   == `+©+`
 
-// TRANSLATION MISSING
-| `+${chars:range}+` | 3.8
-| String with a range of chars, where `range` is one of: +
+| `+${chars:опсег}+` | 3.8
+| Стринг са опсегом карактера, где је `опсег` једно од: +
   - `digit` (`0123456789`) +
   - `xdigit` (`0123456789abcdefABCDEF`) +
-  - `lower` (all lower case letters) +
-  - `upper` (all upper case letters) +
-  - `alpha` (all letters) +
-  - `alnum` (all letters and digits) +
-  - a range of chars with format `c1-c2` (`c1` code point must be lower or equal to `c2`)
+  - `lower` (сва мала слова) +
+  - `upper` (сва велика слова) +
+  - `alpha` (сва слова) +
+  - `alnum` (сва слова и бројеви) +
+  - опсег карактара у формату `c1-c2` (`c1` кодна тачка мора бити нижа од или једнака са `c2`)
 | >> `+${chars:digit}+` +
   == `+0123456789+` +
   +
@@ -4120,12 +4115,11 @@ if (weechat_file_copy ("/tmp/test.txt", "/path/to/test2.txt"))
 
 Неке корисне функције.
 
-// TRANSLATION MISSING
 ==== file_compress
 
 _WeeChat ≥ 3.7._
 
-Compress a file with gzip or zstd.
+Компресује фајл са gzip или zstd.
 
 Прототип:
 
@@ -4139,11 +4133,11 @@ int weechat_file_compress (const char *from, const char *to,
 
 * _from_: изворишни фајл
 * _to_: одредишни фајл
-* _compressor_: the compressor to use, one of:
-** _gzip_: gzip compression
-** _zstd_: zstandard compression
-* _compression_level_: compression level, between 1 (fast, low compression) to
-  100 (slow, best compression)
+* _compressor_: компресор који треба да се користи, једно од:
+** _gzip_: gzip компресија
+** _zstd_: zstandard компресија
+* _compression_level_: ниво компресије, између 1 (брзо, ниска компресија) и
+  100 (споро, најбоља компресија)
 
 Повратна вредност:
 
@@ -8688,27 +8682,24 @@ _WeeChat ≥ 0.3.4._
 У неким кукама можете да поставите приоритет. Кука са вишим приоритетом се налази при почетку листе кука, тако да ће се пронаћи и извршити пре осталих кука. Корисно је за модификаторе, јер је за њих битан редослед извршавања.
 
 Да бисте поставили приоритет, морате да користите следећу синтаксу за аргумент за који је дозвољен приоритет: `nnn|име` где је `nnn` позитиван цео број са приоритетом, а `име` је име аргумента (приоритет се не појављује у имену, он се аутоматски уклања из стринга). +
-// TRANSLATION MISSING
-Only a single priority per hook is allowed.
+Дозвољен је само један приоритет по куки.
 
 Подразумевани приоритет је 1000.
 
-// TRANSLATION MISSING
-C examples:
+C примери:
 
-// TRANSLATION MISSING
 [source,c]
 ----
 /* модификатор кука са приоритетом = 2000 */
-/* high priority: called before other modifier calbacks */
+/* високи приоритет: позива се пре осталих функција повратног позива модификатора */
 weechat_hook_modifier ("2000|input_text_display", &modifier_cb, NULL, NULL);
 
-/* hook two signals with priority = 3000 */
-/* high priority: called before other signal callbacks */
+/* качи се на два сигнала са приоритетом = 3000 */
+/* високи приоритет: позива се пре осталих функција повратног позива сигнала */
 weechat_hook_signal ("3000|quit;upgrade", &signal_cb, NULL, NULL);
 
-/* hook lines printed in formatted buffers with priority = 500 */
-/* low priority: called after other line callbacks */
+/* качи се на линије које се исписују у форматираним баферима са приоритетом = 500 */
+/* низак приоритет: позива се након осталих функција повратног позива линија */
 weechat_hook_line ("500|formatted", "*", NULL, &line_cb, NULL, NULL);
 ----
 
@@ -8755,8 +8746,7 @@ struct t_hook *weechat_hook_command (const char *command,
 
 Аргументи:
 
-// TRANSLATION MISSING
-* _command_: име команде (a priority is allowed before the command, see note about <<hook_priority,приоритетима>>)
+* _command_: име команде (након команде се дозвољава приоритет, погледајте напомену у вези са <<hook_priority,приоритетима>>)
 * _description_: опис команде (приказује се са `/help команда`)
 * _args_: аргументи за команду (приказује се са `/help команда`)
 * _args_description_: опис аргумената (приказује се са `/help команда`)
@@ -8896,8 +8886,7 @@ struct t_hook *weechat_hook_completion (const char *completion_item,
 
 Аргументи:
 
-// TRANSLATION MISSING
-* _completion_item_: име ставке довршавања, након ње у закаченој команди (аргумент _completion_) можете да користите _%(име)_ (или _%(име:аргументи)_ у WeeChat ≥ 1.7) (a priority is allowed before the completion item, see note about <<hook_priority,приоритетима>>)
+* _completion_item_: име ставке довршавања, након ње у закаченој команди (аргумент _completion_) можете да користите _%(име)_ (или _%(име:аргументи)_ у WeeChat ≥ 1.7) (након ставке довршавања се дозвољава приоритет, погледајте напомену у вези са <<hook_priority,приоритетима>>)
 * _description_: опис довршавања
 * _callback_: функција се позива када се употреби ставка довршавања (корисник нешто довршава употребом ове ставке), аргументи и повратна вредност су:
 ** _const void *pointer_: показивач
@@ -8991,8 +8980,7 @@ struct t_hook *weechat_hook_command_run (const char *command,
 
 Аргументи:
 
-// TRANSLATION MISSING
-* _command_: команда која се качи (дозвољен је џокер `+*+`) (a priority is allowed before the command, see note about <<hook_priority,приоритетима>>)
+* _command_: команда која се качи (дозвољен је џокер `+*+`) (након команде се дозвољава приоритет, погледајте напомену у вези са <<hook_priority,приоритетима>>)
 * _callback_: функција која се позива када се команда покрене, аргументи и повратна вредност су:
 ** _const void *pointer_: показивач
 ** _void *data_: показивач
@@ -9235,9 +9223,8 @@ struct t_hook *weechat_hook_process (const char *command,
 *** _< 0_:
 **** _WEECHAT_HOOK_PROCESS_RUNNING_ (-1): подаци су доступни, али се дете још увек извршава
 **** _WEECHAT_HOOK_PROCESS_ERROR_ (-2): грешка приликом покретања команде
-// TRANSLATION MISSING
 **** _WEECHAT_HOOK_PROCESS_CHILD_ (-3): у дете процесу је позвана функција повратног позива
-     (used only in C API, not scripting API)
+     (користи се само у C API, не у скриптинг API)
 ** _out_: стандардни излаз команде (stdout)
 ** _err_: излаз грешака команде (stderr)
 ** повратна вредност:
@@ -9796,8 +9783,7 @@ hook = weechat.hook_connect("", "my.server.org", 1234, 1, 0, "",
 
 ==== hook_line
 
-// TRANSLATION MISSING
-_WeeChat ≥ 2.3, updated in 3.7._
+_WeeChat ≥ 2.3, ажурирано у 3.7._
 
 Качи се на линију која треба да се испише у бафер.
 
@@ -9826,10 +9812,9 @@ struct t_hook *weechat_hook_line (const char *buffer_type,
 
 Аргументи:
 
-// TRANSLATION MISSING
 * _buffer_type_: хвата линије у наведеном типу бафера (ако је NULL или празан стринг, подразумева се _formatted_)
-  (_WeeChat ≥ 3.7_: a priority is allowed before the buffer type,
-  see note about <<hook_priority,приоритетима>>):
+  (_WeeChat ≥ 3.7_: пре типа бафера се дозвољава приоритет, погледајте белешку у вези са
+  <<hook_priority,приоритетима>>):
 ** _formatted_: хвата линије само у форматираним баферима (подразумевано)
 ** _free_: хвата линије само у баферима са слободним садржајем
 ** _*_: хвата линије у баферима свих типова
@@ -10176,10 +10161,9 @@ struct t_hook *weechat_hook_signal (const char *signal,
 
 Аргументи:
 
-// TRANSLATION MISSING
 * _signal_: сигнал који се хвата, дозвољава се џокер `+*+`, више сигнала може
   да се раздвоји тачка запетама
-  (a priority is allowed before one or more signals, see note about <<hook_priority,приоритетима>>)
+  (испред једног или више сигнала се дозвољава приоритет, погледајте напомену у вези са <<hook_priority,приоритетима>>)
   (погледајте табелу испод)
 * _callback_: функција која се позива када се прими сигнал, аргументи и повратна вредност су:
 ** _const void *pointer_: показивач
@@ -10602,17 +10586,15 @@ struct t_hook *weechat_hook_signal (const char *signal,
 | Показивач: бафер.
 | Одзумиран је спојени бафер.
 
-// TRANSLATION MISSING
 | weechat | [[hook_signal_buffer_user_input_xxx]] buffer_user_input_xxx ^(2)^ | 3.8
-| String: text sent to buffer.
-| Text sent to a user buffer as input (sent only for buffers created with `/buffer add`). +
-  If the return code of a callback is _WEECHAT_RC_OK_EAT_, then the string "q"
-  can not be used any more to close the buffer.
+| Стринг: текст који се шаље у бафер.
+| Текст који се шаље у кориснички бафер као улаз (шаље се само за бафере креиране са `/buffer add`). +
+  Ако је повратни код функције повратног позива _WEECHAT_RC_OK_EAT_, онда стринг „q” више не може да
+  се користи за затварање бафера.
 
-// TRANSLATION MISSING
 | weechat | [[hook_signal_buffer_user_closing_xxx]] buffer_user_closing_xxx ^(2)^ | 3.8
 | -
-| User buffer is closing (sent only for buffers created with `/buffer add`).
+| Корсинички бафер се затвара (шаље се само за бафере креиране са `/buffer add`).
 
 | weechat | [[hook_signal_cursor_start]] cursor_start | 3.2
 | - |
@@ -10854,8 +10836,7 @@ struct t_hook *weechat_hook_signal (const char *signal,
 
 [NOTE]
 ^(1)^ _xxx_ је име IRC сервера, _yyy_ је име IRC команде. +
-// TRANSLATION MISSING
-^(2)^ _xxx_ is buffer name.
+^(2)^ _xxx_ је име бафера.
 
 C пример:
 
@@ -11102,10 +11083,9 @@ struct t_hook *weechat_hook_hsignal (const char *signal,
 
 Аргументи:
 
-// TRANSLATION MISSING
-* _signal_: сигнал који се хвата, дозвољава се џокер `+*+`, multiple signals can
-  be separated by semi-colons
-  (a priority is allowed before one or more signals, see note about <<hook_priority,приоритетима>>)
+* _signal_: сигнал који се хвата, дозвољава се џокер `+*+`, више сигнала може да се
+  раздвоји двотачкама
+  (испред једног или више сигнала се дозвољава приоритет, погледајте напомену у вези са <<hook_priority,приоритетима>>)
   (погледајте табелу испод)
 * _callback_: функција која се позива када се прими сигнал, аргументи и повратна вредност су:
 ** _const void *pointer_: показивач
@@ -11442,8 +11422,7 @@ struct t_hook *weechat_hook_config (const char *option,
 
 Аргументи:
 
-// TRANSLATION MISSING
-* _option_: опција, формат је пуно име, као што се користи у команди `/set` на пример: `+weechat.look.item_time_format+`), дозвољава се џокер `+*+` (a priority is allowed before the option, see note about <<hook_priority,приоритетима>>)
+* _option_: опција, формат је пуно име, као што се користи у команди `/set` на пример: `+weechat.look.item_time_format+`), дозвољава се џокер `+*+` (испред опције се дозвољава приоритет, погледајте напомену у вези са <<hook_priority,приоритетима>>)
 * _callback_: функција која се позива када се измени опција конфигурације, аргументи и повратна вредност су:
 ** _const void *pointer_: показивач
 ** _void *data_: показивач
@@ -11514,8 +11493,7 @@ struct t_hook *weechat_hook_modifier (const char *modifier,
 
 Аргументи:
 
-// TRANSLATION MISSING
-* _modifier_: modifier name (a priority is allowed before the modifier, see note about <<hook_priority,приоритетима>>)
+* _modifier_: modifier name (испред модификатора се дозвољава приоритет, погледајте напомену у вези са <<hook_priority,приоритетима>>)
   (погледајте табелу испод)
 * _callback_: функција која се позива када се употреби модификатор, аргументи и повратна вредност су:
 ** _const void *pointer_: показивач
@@ -11784,8 +11762,7 @@ struct t_hook *weechat_hook_info (const char *info_name,
 
 Аргументи:
 
-// TRANSLATION MISSING
-* _info_name_: име инфо (a priority is allowed before the info name, see note about <<hook_priority,приоритетима>>)
+* _info_name_: име инфо (пре имена инфо се дозвољава приоритет, погледајте напомену у вези са <<hook_priority,приоритетима>>)
 * _description_: опис
 * _args_description_: опис аргумената (није обавезан, може да буде NULL)
 * _callback_: функција која се позива када се затражи инфо, аргументи и повратна вредност су:
@@ -11863,8 +11840,7 @@ struct t_hook *weechat_hook_info_hashtable (const char *info_name,
 
 Аргументи:
 
-// TRANSLATION MISSING
-* _info_name_: име инфо (a priority is allowed before the info name, see note about <<hook_priority,приоритетима>>)
+* _info_name_: име инфо (пре имена инфо се дозвољава приоритет, погледајте напомену у вези са <<hook_priority,приоритетима>>)
 * _description_: опис
 * _args_description_: опис очекиване хеш табеле (није обавезан, може да буде NULL)
 * _output_description_: опис хеш табеле коју враћа функција повратног позива (није обавезно, може да буде NULL)
@@ -11944,8 +11920,7 @@ struct t_hook *weechat_hook_infolist (const char *infolist_name,
 
 Аргументи:
 
-// TRANSLATION MISSING
-* _infolist_name_: име инфолисте (a priority is allowed before the infolist name, see note about <<hook_priority,приоритетима>>)
+* _infolist_name_: име инфолисте (пре имена инфолисте се дозвољава приоритет, погледајте напомену у вези са <<hook_priority,приоритетима>>)
 * _description_: опис
 * _pointer_description_: опис показивача (није обавезно, може да буде NULL)
 * _args_description_: опис аргумената (није обавезан, може да буде NULL)
@@ -12027,8 +12002,7 @@ struct t_hook *weechat_hook_hdata (const char *hdata_name,
 
 Аргументи:
 
-// TRANSLATION MISSING
-* _hdata_name_: име hdata (a priority is allowed before the hdata name, see note about <<hook_priority,приоритетима>>)
+* _hdata_name_: име hdata (испред имена hdata се дозвољава приоритет, погледајте напомену у вези са <<hook_priority,приоритетима>>)
 * _description_: опис
 * _callback_: функција која се позива када се затражи hdata, аргументи и повратна вредност су:
 ** _const void *pointer_: показивач
@@ -12086,8 +12060,7 @@ struct t_hook *weechat_hook_focus (const char *area,
 
 Аргументи:
 
-// TRANSLATION MISSING
-* _area_: „chat” за површину чета (разговора), или име ставке траке (a priority is allowed before the area, see note about <<hook_priority,приоритетима>>)
+* _area_: „chat” за површину чета (разговора), или име ставке траке (испред површине се дозвољава приоритет, погледајте напомену у вези са <<hook_priority,приоритетима>>)
 * _callback_: функција која се позива када се направи фокус, аргументи и повратна вредност су:
 ** _const void *pointer_: показивач
 ** _void *data_: показивач
