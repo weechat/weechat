@@ -106,8 +106,7 @@ https://github.com/weechat/weechat-container[weechat-container ^↗^,window=_bl
 
 [width="100%", cols="5,^3,.^15", options="header"]
 |===
-// TRANSLATION MISSING
-| Пакет ^(1)^ | Верзија | Features
+| Пакет ^(1)^ | Верзија | Могућности
 
 | C компајлер (gcc / clang) |
 | Изградњу.
@@ -127,21 +126,18 @@ https://github.com/weechat/weechat-container[weechat-container ^↗^,window=_bl
 | libgcrypt20-dev |
 | Обезбеђени подаци, IRC SASL аутентификација.
 
-// TRANSLATION MISSING
 | libgnutls28-dev | ≥ 2.2.0 ^(3)^
-| IRC plugin: support of TLS connections, IRC SASL authentication (ECDSA-NIST256P-CHALLENGE). +
-  Relay plugin: support of TLS connections.
+| IRC додатак: подршка за TLS везе, IRC SASL аутентификацију (ECDSA-NIST256P-CHALLENGE). +
+  Relay додатак: подршка за TLS везе.
 
-// TRANSLATION MISSING
 | zlib1g-dev |
-| Logger plugin: compression of rotated log files (gzip). +
-  Relay plugin: compression of messages (WeeChat -> client) with https://zlib.net/[zlib ^↗^,window=_blank] (weechat protocol). +
-  Script plugin: read of repository index file (gzip).
+| Logger додатак: компресија ротирајућих лог фајлова (gzip). +
+  Relay додатак: компресија порука (WeeChat -> клијент) са https://zlib.net/[zlib ^↗^,window=_blank] (weechat протокол). +
+  Script додатак: читање индекс фајла репозиторијума (gzip).
 
-// TRANSLATION MISSING
 | libzstd-dev | ≥ 0.8.1
-| Logger plugin: compression of rotated log files. +
-  Relay plugin: compression of messages (WeeChat -> client) with https://facebook.github.io/zstd/[Zstandard ^↗^,window=_blank] (weechat protocol).
+| Logger додатак: компресија ротирајућих лог фајлова. +
+  Relay додатак: компресија порука (WeeChat -> клијент) са https://facebook.github.io/zstd/[Zstandard ^↗^,window=_blank] (weechat протокол).
 |===
 
 [NOTE]
@@ -154,11 +150,10 @@ https://github.com/weechat/weechat-container[weechat-container ^↗^,window=_bl
 
 [width="100%", cols="5,^3,.^15", options="header"]
 |===
-// TRANSLATION MISSING
-| Пакет ^(1)^                            | Верзија  | Features
-| {cpp} компајлер (pass:[g++ / clang++]) |          | Изградњу и покретање тестова, JavaScript додатак.
-| gettext                                |          | Интернационализацију (превод порука; основни језик је енглески).
-| ca-certificates                        |          | Сертификате за SSL везе.
+| Пакет ^(1)^                            | Верзија  | Могућности
+| {cpp} компајлер (pass:[g++ / clang++]) |          | Изградња и покретање тестова, JavaScript додатак.
+| gettext                                |          | Интернационализација (превод порука; основни језик је енглески).
+| ca-certificates                        |          | Сертификати за SSL везе.
 | libaspell-dev / libenchant-dev         |          | Spell додатак.
 | python3-dev                            | ≥ 3.0    | Python додатак.
 | libperl-dev                            |          | Perl додатак.
@@ -172,9 +167,9 @@ https://github.com/weechat/weechat-container[weechat-container ^↗^,window=_bl
 | libxml2-dev                            |          | PHP додатак.
 | libargon2-dev                          |          | PHP додатак (ако је PHP ≥ 7.2).
 | libsodium-dev                          |          | PHP додатак (ако је PHP ≥ 7.2).
-| asciidoctor                            | ≥ 1.5.4  | Изградњу man странице и документације.
+| asciidoctor                            | ≥ 1.5.4  | Изградња man странице и документације.
 | ruby-pygments.rb                       |          | Документација изградње.
-| libcpputest-dev                        | ≥ 3.4    | Изградњу и покретање тестова.
+| libcpputest-dev                        | ≥ 3.4    | Изградња и покретање тестова.
 |===
 
 [NOTE]
@@ -1436,8 +1431,7 @@ WeeChat нуди доста подразумеваних тастерских п
 | kbd:[Ctrl+t]        | Транспозиција карактера. | `/input transpose_chars`
 | kbd:[Ctrl+u]        | Брисање од курсора до почетка командне линије (обрисани стринг се копира у интерни клипборд). | `+/input delete_beginning_of_line+`
 | kbd:[Alt+Backspace] | Брисање претходне речи командне линије (обрисани стринг се копира у интерни клипборд). | `+/input delete_previous_word+`
-// TRANSLATION MISSING
-| kbd:[Ctrl+w]        | Delete previous word of command line until whitespace (deleted string is copied to the internal clipboard). | `+/input delete_previous_word_whitespace+`
+| kbd:[Ctrl+w]        | Брисање претходне речи командне линије до празног простора (обрисани стринг се копира у интерни клипборд). | `+/input delete_previous_word_whitespace+`
 | kbd:[Ctrl+y]        | Налепљивање садржаја интерног клипборда. | `+/input clipboard_paste+`
 | kbd:[Ctrl+_]        | Поништавање последње акције у командној линији. | `+/input undo+`
 | kbd:[Alt+_]         | Враћање последње поништене акције у командној линији. | `+/input redo+`
@@ -2285,21 +2279,20 @@ logger.file.mask
         ...
 ....
 
-// TRANSLATION MISSING
 [[logger_rotation_compression]]
-==== Rotation and compression
+==== Ротација и компресија
 
-It is possible to define a max size for log files, and when it is reached,
-there is automatic rotation of log file.
+Постоји могућност да се дефинише максимална величина лог фајлова, па када се она достигне,
+врши се аутоматска ротација лог фајла.
 
-The rotated log files can be compressed with gzip or
+Ротирани лог фајлови могу да се компресују помоћу gzip или
 https://facebook.github.io/zstd/[zstd ^↗^,window=_blank].
 
 [NOTE]
-As the compression of a file can take some time, it is performed in background.
+Пошто компресија фајла може да потраје, она се обавља у позадини.
 
-Example with a max size of 2GB and compression with gzip, using good compression
-level (slower than default one):
+Пример са максималном величином од 2GB у компресијом помоћу gzip, уз употребу нивоа добре
+компресије (спорије од подразумеваног нивоа):
 
 ----
 /set logger.file.rotation_compression_type gzip
@@ -2307,15 +2300,15 @@ level (slower than default one):
 /set logger.file.rotation_size_max "2g"
 ----
 
-If you want to use a decimal number, you can use the unit below and multiply
-by 1000, for example to set max size to 2.5GB:
+Ако желите да користите децимални број, можете да користите јединицу испод и помножите са
+1000, на пример да се максимална величина постави на 2.5GB:
 
 ----
 /set logger.file.rotation_size_max "2500m"
 ----
 
-With these settings, you'll end with files like these ones (in this example
-there is rotation only for the log of #weechat channel):
+Помоћу ових подешавања, добићете фајлове као што су следећи (у овом примеру ротација се врши
+само за лог #weechat канала):
 
 ....
 ~/.local/share/weechat
@@ -4559,121 +4552,115 @@ link:weechat_plugin_api.sr.html#_hook_info[hook_info ^↗^,window=_blank]
 ${tg_displayed} && (${tg_highlight} || ${tg_msg_pv})
 ----
 
-// TRANSLATION MISSING
 [[trigger_regex]]
-=== Regular expression
+=== Регуларни израз
 
-The regular expression is used to change variables in callback hashtable.
+За измену променљивих у хештабели функције повратног позива се користи регуларни израз.
 
-Format is one of the following:
+Формат је једно од следећег:
 
 ----
-/string1/string2
-/string1/string2/var
-s/string1/string2
-s/string1/string2/var
-y/string1/string2
-y/string1/string2/var
+/стринг1/стринг2
+/стринг1/стринг2/var
+s/стринг1/стринг2
+s/стринг1/стринг2/var
+y/стринг1/стринг2
+y/стринг1/стринг2/var
 ----
 
-Fields:
+Поља:
 
-* `s` or `y`: a letter with the command; if missing, default command is `s`
-  and the first char is then used as the delimiter:
-** `s`: regex replacement: first string is a regular expression, second string
-   is the replacement for every matching string
-** `y`: chars translation: first string is a set of characters that are replaced
-   by the characters in the second string; once evaluated, each string must have
-   exactly the same number of UTF-8 chars
-* `/`: the regex delimiter; the char "/" can be replaced by any char
-  (one or more identical chars)
-* `string1`: the first string (use depends on the command)
-* `string2`: the second string (use depends on the command)
-* `var`: the hashtable variable to update
+* `s` или `y`: слово са командом; ако недостаје, подразумевана команда је `s`
+  и тада се као граничник користи први карактер:
+** `s`: замена регуларним изразом: први стринг је регуларни израз, други стринг
+   је замена за сваки стринг који се подудара
+** `y`: превођење карактера: први стринг је скуп карактера који се замењују
+   карактерима из другог стринга; кад се израчуна, сваки стринг мора да има
+   потпуно исти број UTF-8 карактера
+* `/`: граничник регуларног израза; карактер „/” може да се замени било којим
+  карактером (један или више идентичних карактера)
+* `стринг1`: први стринг (употреба зависи од команде)
+* `стринг2`: други стринг (употреба зависи од команде)
+* `var`: променљива хештабеле која се ажурира
 
-Many regular expressions can be separated by a space, for example:
+Више регуларних израза може да се раздвоји размаком, на пример:
 
 ----
 s/regex1/replace1/var1 y/abcdef/ABDDEF/var2
 ----
 
-// TRANSLATION MISSING
 [[trigger_regex_replace]]
-==== Regex replace
+==== Замена регуларним изразом
 
-For the command `s`, the format is: `s/regex/replace` or `s/regex/replace/var`
-(where _var_ is a variable of the hashtable).
+У случају команде `s`, формат је: `s/регуларни/замена` или `s/регуларни/замена/var`
+(где је _var_ променљива хештабеле).
 
-As `s` is the default command, it can be omitted, so `/regex/replace` is also
-valid (but the first char, which is the delimiter, must not be a letter).
+Пошто је `s` подразумевана команда, може да се изостави, тако да је исправно и `/регуларни/замена`
+(али први карактер, тј. граничник, не сме да буде слово).
 
-Matching groups can be used in _replace_:
+У _замена_ могу да се користе групе подударања:
 
-* `+${re:0}+` to `+${re:99}+`: `+${re:0}+` is the whole match, `+${re:1}+` to
-  `+${re:99}+` are groups captured
-* `+${re:+}+`: the last match (with highest number)
-* `+${hide:c,${re:N}}+`: match "N" with all chars replaced by "c"
-  (example: `+${hide:*,${re:2}}+` is the group #2 with all chars replaced by
+* `+${re:0}+` до `+${re:99}+`: `+${re:0}+` је комплетно подударање, `+${re:1}+` до
+  `+${re:99}+` су ухваћене групе
+* `+${re:+}+`: последње подударање (под највећим бројем)
+* `+${hide:c,${re:N}}+`: подударање „N” са свим карактерима замењеним са „c”
+  (пример: `+${hide:*,${re:2}}+` је група #2 у којој су сви карактери замењени са
   `+*+`).
 
-Example: use bold for words between `+*+`:
+Пример: постави подебљани фонт за речи између `+*+`:
 
 ----
 s/\*([^ ]+)\*/*${color:bold}${re:1}${color:-bold}*/
 ----
 
-Example: default trigger _server_pass_ uses this regular expression to hide
-password in commands `/server` and `/connect` (chars in passwords are replaced
-by `+*+`):
+Пример: подразумевани окидач _server_pass_ користи следећи регуларни израз да сакрије
+лозинку у командама `/server` и `/connect` (карактери у лозинкама се замењују са
+`+*+`):
 
 ----
 s==^(/(server|connect) .*-(sasl_)?password=)([^ ]+)(.*)==${re:1}${hide:*,${re:4}}${re:5}
 ----
 
 [NOTE]
-In this example, the delimiter used is "==" because there is a "/" in the
-regular expression.
+Граничник у овом примеру је „==” јер се у регуларном изразу користи „/”.
 
-// TRANSLATION MISSING
 [[trigger_regex_translate_chars]]
-==== Translate chars
+==== Превођење карактера
 
-For the command `y`, the format is: `y/chars1/chars2` or `y/chars1/chars2/var`
-(where _var_ is a variable of the hashtable).
+У случају команде `y`, формат је: `y/карак1/карак2` или `y/карак1/карак2/var`
+(где је _var_ променљива хештабеле).
 
-Example: replace "a", "b" and "c" by upper case letter:
+Пример: замена „a”, „b” и „c” великим словима:
 
 ----
 y/abc/ABC/
 ----
 
-Example: rotate arrows clockwise:
+Пример: ротирање стрелица у смеру казаљке:
 
 ----
 y/←↑→↓/↑→↓←/
 ----
 
-Example: convert all letters to lower case:
+Пример: конвертовање свих слова у мала слова:
 
 ----
 y/${chars:upper}/${chars:lower}/
 ----
 
-Example: shift each letter by one position, preserving case: a→b, b→c … y→z, z→a:
+Пример: померање сваког слова за једну позицију, уз очувања величине слова: a→b, b→c … y→z, z→a:
 
 ----
 y/${chars:a-z}${chars:A-Z}/${chars:b-z}a${chars:B-Z}A/
 ----
 
-// TRANSLATION MISSING
 [[trigger_regex_variable]]
-==== Variable
+==== Променљива
 
-If _var_ does not exist in the hashtable, it is created automatically with an
-empty value. This allows to create custom temporary variables.
+Ако у хештабели не постоји _var_, она се аутоматски креира и има празну вредност. На овај начин
+могу да се креирају привремене корисничке променљиве.
 
-If _var_ is not specified, the default variable is used, it depends on hook
-type:
+Ако се _var_ не наведе, користиће се подразумевана променљива, која зависи од врсте куке:
 
 [width="100%", cols="2,3,7", options="header"]
 |===
@@ -4731,8 +4718,7 @@ type:
 |===
 | Променљива      | Тип    | Опис
 | tg_trigger_name | стринг | Име окидача.
-// TRANSLATION MISSING
-| tg_hook_type    | стринг | Hook type: "signal", "command", etc.
+| tg_hook_type    | стринг | Тип куке: „signal”, „command”, итд.
 |===
 
 [[trigger_data_signal]]
