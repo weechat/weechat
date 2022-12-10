@@ -396,6 +396,14 @@ gui_window_set_custom_color_fg (WINDOW *window, int fg)
 
         if ((fg > 0) && (fg & GUI_COLOR_EXTENDED_FLAG))
         {
+            if (fg & GUI_COLOR_EXTENDED_BLINK_FLAG)
+                gui_window_set_color_style (window, A_BLINK);
+            else if (!(fg & GUI_COLOR_EXTENDED_KEEPATTR_FLAG))
+                gui_window_remove_color_style (window, A_BLINK);
+            if (fg & GUI_COLOR_EXTENDED_DIM_FLAG)
+                gui_window_set_color_style (window, A_DIM);
+            else if (!(fg & GUI_COLOR_EXTENDED_KEEPATTR_FLAG))
+                gui_window_remove_color_style (window, A_DIM);
             if (fg & GUI_COLOR_EXTENDED_BOLD_FLAG)
                 gui_window_set_color_style (window, A_BOLD);
             else if (!(fg & GUI_COLOR_EXTENDED_KEEPATTR_FLAG))
@@ -483,6 +491,14 @@ gui_window_set_custom_color_fg_bg (WINDOW *window, int fg, int bg,
     {
         if ((fg > 0) && (fg & GUI_COLOR_EXTENDED_FLAG))
         {
+            if (fg & GUI_COLOR_EXTENDED_BLINK_FLAG)
+                gui_window_set_color_style (window, A_BLINK);
+            else if (!(fg & GUI_COLOR_EXTENDED_KEEPATTR_FLAG))
+                gui_window_remove_color_style (window, A_BLINK);
+            if (fg & GUI_COLOR_EXTENDED_DIM_FLAG)
+                gui_window_set_color_style (window, A_DIM);
+            else if (!(fg & GUI_COLOR_EXTENDED_KEEPATTR_FLAG))
+                gui_window_remove_color_style (window, A_DIM);
             if (fg & GUI_COLOR_EXTENDED_BOLD_FLAG)
                 gui_window_set_color_style (window, A_BOLD);
             else if (!(fg & GUI_COLOR_EXTENDED_KEEPATTR_FLAG))
@@ -587,6 +603,10 @@ gui_window_emphasize (WINDOW *window, int x, int y, int count)
         ptr_attrs = &attrs;
         ptr_pair = &pair;
         wattr_get (window, ptr_attrs, ptr_pair, NULL);
+        if (config_emphasized_attributes & GUI_COLOR_EXTENDED_BLINK_FLAG)
+            attrs ^= A_BLINK;
+        if (config_emphasized_attributes & GUI_COLOR_EXTENDED_DIM_FLAG)
+            attrs ^= A_DIM;
         if (config_emphasized_attributes & GUI_COLOR_EXTENDED_BOLD_FLAG)
             attrs ^= A_BOLD;
         if (config_emphasized_attributes & GUI_COLOR_EXTENDED_REVERSE_FLAG)
@@ -947,6 +967,16 @@ gui_window_string_apply_color_set_attr (unsigned char **string, WINDOW *window)
 
     switch (ptr_string[0])
     {
+        case GUI_COLOR_ATTR_BLINK_CHAR:
+            ptr_string++;
+            if (window)
+                gui_window_set_color_style (window, A_BLINK);
+            break;
+        case GUI_COLOR_ATTR_DIM_CHAR:
+            ptr_string++;
+            if (window)
+                gui_window_set_color_style (window, A_DIM);
+            break;
         case GUI_COLOR_ATTR_BOLD_CHAR:
             ptr_string++;
             if (window)
@@ -988,6 +1018,16 @@ gui_window_string_apply_color_remove_attr (unsigned char **string, WINDOW *windo
 
     switch (ptr_string[0])
     {
+        case GUI_COLOR_ATTR_BLINK_CHAR:
+            ptr_string++;
+            if (window)
+                gui_window_remove_color_style (window, A_BLINK);
+            break;
+        case GUI_COLOR_ATTR_DIM_CHAR:
+            ptr_string++;
+            if (window)
+                gui_window_remove_color_style (window, A_DIM);
+            break;
         case GUI_COLOR_ATTR_BOLD_CHAR:
             ptr_string++;
             if (window)

@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2022-12-10 16:05+0100\n"
+"POT-Creation-Date: 2022-12-10 16:28+0100\n"
 "PO-Revision-Date: 2022-10-15 22:51+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -549,6 +549,20 @@ msgstr "минута"
 #, fuzzy
 msgid "color"
 msgstr "цвет чата"
+
+#, fuzzy
+msgid ""
+"a WeeChat color name (default, black, (dark)gray, white, (light)red, "
+"(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a "
+"terminal color number or an alias; attributes are allowed before color (for "
+"text color only, not background): \"%\" for blink, \".\" for \"dim\" (half "
+"bright), \"*\" for bold, \"!\" for reverse, \"/\" for italic, \"_\" for "
+"underline"
+msgstr ""
+"название цвета WeeChat (default, black, (dark)gray, white, (light)red, "
+"(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), код "
+"или алиас цвета терминала; перед цветом допустимы атрибуты (только для цвета "
+"текста, но не фона): \"*\" жирный, \"!\" инверсия, \"_\" подчёркивание"
 
 #, fuzzy, c-format
 msgid "%sNo help available, \"%s\" is not a command or an option"
@@ -3030,9 +3044,10 @@ msgid ""
 msgstr ""
 
 msgid ""
-"attributes for emphasized text: one or more attribute chars (\"*\" for bold, "
-"\"!\" for reverse, \"/\" for italic, \"_\" for underline); if the string is "
-"empty, the colors weechat.color.emphasized* are used"
+"attributes for emphasized text: one or more attribute chars (\"%\" for "
+"blink, \".\" for \"dim\" (half bright), \"*\" for bold, \"!\" for reverse, "
+"\"/\" for italic, \"_\" for underline); if the string is empty, the colors "
+"weechat.color.emphasized* are used"
 msgstr ""
 
 #, fuzzy

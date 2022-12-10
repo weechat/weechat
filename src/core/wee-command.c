@@ -3157,9 +3157,13 @@ COMMAND_CALLBACK(help)
                                    "(light)cyan), a terminal color number or "
                                    "an alias; attributes are allowed before "
                                    "color (for text color only, not "
-                                   "background): \"*\" for bold, \"!\" for "
-                                   "reverse, \"/\" for italic, \"_\" for "
-                                   "underline"));
+                                   "background): "
+                                   "\"%\" for blink, "
+                                   "\".\" for \"dim\" (half bright), "
+                                   "\"*\" for bold, "
+                                   "\"!\" for reverse, "
+                                   "\"/\" for italic, "
+                                   "\"_\" for underline"));
                 if (ptr_option->default_value)
                 {
                     gui_chat_printf (NULL, "  %s: %s",

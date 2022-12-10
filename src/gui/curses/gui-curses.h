@@ -46,7 +46,7 @@ struct t_gui_bar_window;
 #define A_ITALIC 0
 #endif /* A_ITALIC */
 
-#define A_ALL_ATTR A_BOLD | A_UNDERLINE | A_REVERSE | A_ITALIC
+#define A_ALL_ATTR A_BLINK | A_DIM | A_BOLD | A_UNDERLINE | A_REVERSE | A_ITALIC
 
 #define GUI_WINDOW_OBJECTS(window)                                      \
     ((struct t_gui_window_curses_objects *)(window->gui_objects))

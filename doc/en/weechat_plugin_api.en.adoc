@@ -8676,6 +8676,10 @@ Arguments:
    _irc.color.message_quit_ _(WeeChat ≥ 1.2)_
 ** color with optional attributes/background (see below)
 ** attribute:
+*** _blink_: set blink
+*** _-blink_: remove blink
+*** _dim_: set "dim" (half bright)
+*** _-dim_: remove "dim" (half bright)
 *** _bold_: set bold
 *** _-bold_: remove bold
 *** _reverse_: set reverse
@@ -8698,6 +8702,8 @@ Arguments:
 Format of color is: attributes (optional) + color name + ",background"
 (optional). Possible attributes are:
 
+* `+%+`: blink
+* `+.+`: "dim" (half bright)
 * `+*+`: bold text
 * `+!+`: reverse video
 * `+/+`: italic

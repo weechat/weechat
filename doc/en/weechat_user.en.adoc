@@ -1975,12 +1975,14 @@ For example:
 It is possible to use some attributes for colors. One or more attributes can be
 added before color name or number:
 
+* `+%+`: blink
+* `+.+`: "dim" (half bright)
 * `+*+`: bold text
 * `+!+`: reverse video
 * `+/+`: italic
 * `+_+`: underlined text
-* `+|+`: keep attributes: do not reset bold/reverse/italic/underlined when
-  changing color
+* `+|+`: keep attributes: do not reset blink/dim/bold/reverse/italic/underlined
+  when changing color
 
 For example if you want self nick as white underlined, do:
 

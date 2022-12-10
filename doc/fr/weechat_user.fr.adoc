@@ -2019,12 +2019,14 @@ Par exemple :
 Il est possible d'utiliser des attributs pour les couleurs. Un ou plusieurs
 attributs peuvent être ajoutés avant le nom ou le numéro de la couleur :
 
+* `+%+` : clignotement
+* `+.+` : "dim" (demi-intensité)
 * `+*+` : texte gras
 * `+!+` : mode vidéo inverse
 * `+/+` : italique
 * `+_+` : texte souligné
-* `+|+` : garder les attributs : ne pas réinitialiser gras/inverse/souligné lors
-  du changement de couleur
+* `+|+` : garder les attributs : ne pas réinitialiser
+  clignotement/dim/gras/inverse/souligné lors du changement de couleur
 
 Par exemple si vous voulez votre pseudo en blanc souligné, faites :
 

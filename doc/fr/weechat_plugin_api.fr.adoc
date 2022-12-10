@@ -8807,6 +8807,10 @@ Paramètres :
    _irc.color.message_quit_ _(WeeChat ≥ 1.2)_
 ** une couleur avec des attributs/fond optionnels (voir ci-dessous)
 ** un attribut :
+*** _blink_ : activer le clignotement
+*** _-blink_ : désactiver le clignotement
+*** _dim_ : activer le "dim" (demi-intensité)
+*** _-dim_ : désactiver le "dim" (demi-intensité)
 *** _bold_ : activer le gras
 *** _-bold_ : désactiver le gras
 *** _reverse_ : activer la vidéo inverse
@@ -8831,6 +8835,8 @@ Paramètres :
 Le format de la couleur est : attributs (optionnel) + nom de couleur + ",fond"
 (optionnel). Les attributs possibles sont :
 
+* `+%+` : clignotement
+* `+.+` : "dim" (demi-intensité)
 * `+*+` : texte gras
 * `+!+` : mode vidéo inverse
 * `+/+` : italique

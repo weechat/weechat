@@ -902,6 +902,10 @@ struct t_gui_buffer *last_gui_buffer = NULL;       /* last buffer           */
 * `ПРО`: проширена боја (`+@+` + 5 цифара)
 * `(ATTR)ПРО`: проширена боја са необавезним атрибутима (`+@+` + атрибути + 5 цифара)
 * `(ATTR)`: један или више карактера атрибута:
+// TRANSLATION MISSING
+** `+%+`: blink
+// TRANSLATION MISSING
+** `+.+`: "dim" (half bright)
 ** `+*+`: подебљано
 ** `+!+`: обрнуто
 ** `+/+`: курзив
@@ -912,6 +916,10 @@ struct t_gui_buffer *last_gui_buffer = NULL;       /* last buffer           */
 ** _0x02_: обрнуто
 ** _0x03_: курзив
 ** _0x04_: подвучено
+// TRANSLATION MISSING
+** _0x05_: blink
+// TRANSLATION MISSING
+** _0x06_: "dim" (half bright)
 
 У следећој табели су сажете све комбинације:
 

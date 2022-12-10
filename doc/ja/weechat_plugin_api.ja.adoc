@@ -8722,6 +8722,14 @@ const char *weechat_color (const char *color_name);
    _irc.color.message_quit_ _(WeeChat バージョン 1.2 以上で利用可)_
 ** 任意で属性や背景色を指定した色 (以下を参照)
 ** 属性:
+// TRANSLATION MISSING
+*** _blink_: set blink
+// TRANSLATION MISSING
+*** _-blink_: remove blink
+// TRANSLATION MISSING
+*** _dim_: set "dim" (half bright)
+// TRANSLATION MISSING
+*** _-dim_: remove "dim" (half bright)
 *** _bold_: 太字を有効
 *** _-bold_: 太字を無効
 *** _reverse_: 色反転を有効
@@ -8744,6 +8752,10 @@ const char *weechat_color (const char *color_name);
 色の書式: 属性 (任意) + 色名 + ",background"
 (任意)。以下の属性を使えます:
 
+// TRANSLATION MISSING
+* `+%+`: blink
+// TRANSLATION MISSING
+* `+.+`: "dim" (half bright)
 * `+*+` : 太字
 * `+!+` : 色反転
 * `+/+` : イタリック

@@ -1994,11 +1994,17 @@ Beispiel:
 Er ist möglich einer Farbe ein Attribut hinzuzufügen. Dazu wird dem
 Farbnamen oder der Farbnummer ein- oder mehrere Attribute vorangestellt.
 
+// TRANSLATION MISSING
+* `+%+`: blink
+// TRANSLATION MISSING
+* `+.+`: "dim" (half bright)
 * `+*+` : fett
 * `+!+` : invertierte Darstellung
 * `+/+` : kursiven
 * `+_+` : unterstrichen
-* `+|+` : behält Attribut bei: fett, invertierte Darstellung, Unterstrichen wird beim Farbwechsel nicht zurückgesetzt
+// TRANSLATION MISSING
+* `+|+`: keep attributes: do not reset blink/dim/bold/reverse/italic/underlined
+  when changing color
 
 Um zum Beispiel dem eigenen Nick die Farbe weiß und unterstrichen
 zuzuordnen:

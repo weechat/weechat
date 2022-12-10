@@ -187,6 +187,12 @@ gui_color_search_config (const char *color_name)
 int
 gui_color_attr_get_flag (char c)
 {
+    if (c == GUI_COLOR_EXTENDED_BLINK_CHAR)
+        return GUI_COLOR_EXTENDED_BLINK_FLAG;
+
+    if (c == GUI_COLOR_EXTENDED_DIM_CHAR)
+        return GUI_COLOR_EXTENDED_DIM_FLAG;
+
     if (c == GUI_COLOR_EXTENDED_BOLD_CHAR)
         return GUI_COLOR_EXTENDED_BOLD_FLAG;
 
@@ -218,6 +224,10 @@ gui_color_attr_build_string (int color, char *str_attr)
 
     i = 0;
 
+    if (color & GUI_COLOR_EXTENDED_BLINK_FLAG)
+        str_attr[i++] = GUI_COLOR_EXTENDED_BLINK_CHAR;
+    if (color & GUI_COLOR_EXTENDED_DIM_FLAG)
+        str_attr[i++] = GUI_COLOR_EXTENDED_DIM_CHAR;
     if (color & GUI_COLOR_EXTENDED_BOLD_FLAG)
         str_attr[i++] = GUI_COLOR_EXTENDED_BOLD_CHAR;
     if (color & GUI_COLOR_EXTENDED_REVERSE_FLAG)
@@ -285,6 +295,34 @@ gui_color_get_custom (const char *color_name)
                   "%c%c",
                   GUI_COLOR_COLOR_CHAR,
                   GUI_COLOR_EMPHASIS_CHAR);
+    }
+    else if (string_strcasecmp (ptr_color_name, "blink") == 0)
+    {
+        snprintf (color[index_color], sizeof (color[index_color]),
+                  "%c%c",
+                  GUI_COLOR_SET_ATTR_CHAR,
+                  GUI_COLOR_ATTR_BLINK_CHAR);
+    }
+    else if (string_strcasecmp (ptr_color_name, "-blink") == 0)
+    {
+        snprintf (color[index_color], sizeof (color[index_color]),
+                  "%c%c",
+                  GUI_COLOR_REMOVE_ATTR_CHAR,
+                  GUI_COLOR_ATTR_BLINK_CHAR);
+    }
+    else if (string_strcasecmp (ptr_color_name, "dim") == 0)
+    {
+        snprintf (color[index_color], sizeof (color[index_color]),
+                  "%c%c",
+                  GUI_COLOR_SET_ATTR_CHAR,
+                  GUI_COLOR_ATTR_DIM_CHAR);
+    }
+    else if (string_strcasecmp (ptr_color_name, "-dim") == 0)
+    {
+        snprintf (color[index_color], sizeof (color[index_color]),
+                  "%c%c",
+                  GUI_COLOR_REMOVE_ATTR_CHAR,
+                  GUI_COLOR_ATTR_DIM_CHAR);
     }
     else if (string_strcasecmp (ptr_color_name, "bold") == 0)
     {
@@ -1007,10 +1045,8 @@ gui_color_decode_ansi_cb (void *data, const char *text)
             case 1: /* bold */
                 strcat (output, gui_color_get_custom ("bold"));
                 break;
-            case 2: /* remove bold */
-            case 21:
-            case 22:
-                strcat (output, gui_color_get_custom ("-bold"));
+            case 2: /* dim */
+                strcat (output, gui_color_get_custom ("dim"));
                 break;
             case 3: /* italic */
                 strcat (output, gui_color_get_custom ("italic"));
@@ -1018,14 +1054,26 @@ gui_color_decode_ansi_cb (void *data, const char *text)
             case 4: /* underline */
                 strcat (output, gui_color_get_custom ("underline"));
                 break;
+            case 5: /* blink */
+                strcat (output, gui_color_get_custom ("blink"));
+                break;
             case 7: /* reverse */
                 strcat (output, gui_color_get_custom ("reverse"));
+                break;
+            case 21: /* remove bold */
+                strcat (output, gui_color_get_custom ("-bold"));
+                break;
+            case 22: /* remove dim */
+                strcat (output, gui_color_get_custom ("-dim"));
                 break;
             case 23: /* remove italic */
                 strcat (output, gui_color_get_custom ("-italic"));
                 break;
             case 24: /* remove underline */
                 strcat (output, gui_color_get_custom ("-underline"));
+                break;
+            case 25: /* remove blink */
+                strcat (output, gui_color_get_custom ("-blink"));
                 break;
             case 27: /* remove reverse */
                 strcat (output, gui_color_get_custom ("-reverse"));
@@ -1202,6 +1250,12 @@ gui_color_add_ansi_flag (char **output, int flag)
 {
     switch (flag)
     {
+        case GUI_COLOR_EXTENDED_BLINK_FLAG:
+            string_dyn_concat (output, "\x1B[5m", -1);
+            break;
+        case GUI_COLOR_EXTENDED_DIM_FLAG:
+            string_dyn_concat (output, "\x1B[2m", -1);
+            break;
         case GUI_COLOR_EXTENDED_BOLD_FLAG:
             string_dyn_concat (output, "\x1B[1m", -1);
             break;
@@ -1545,6 +1599,10 @@ gui_color_encode_ansi (const char *string)
                                 attrs = gui_color_get_extended_flags (
                                     gui_color[color]->attributes);
                                 string_dyn_concat (out, "\x1B[0m", -1);
+                                if (attrs & GUI_COLOR_EXTENDED_BLINK_FLAG)
+                                    string_dyn_concat (out, "\x1B[5m", -1);
+                                if (attrs & GUI_COLOR_EXTENDED_DIM_FLAG)
+                                    string_dyn_concat (out, "\x1B[2m", -1);
                                 if (attrs & GUI_COLOR_EXTENDED_BOLD_FLAG)
                                     string_dyn_concat (out, "\x1B[1m", -1);
                                 if (attrs & GUI_COLOR_EXTENDED_REVERSE_FLAG)
@@ -1591,6 +1649,12 @@ gui_color_encode_ansi (const char *string)
                 {
                     switch (ptr_string[0])
                     {
+                        case GUI_COLOR_ATTR_BLINK_CHAR:
+                            string_dyn_concat (out, "\x1B[5m", -1);
+                            break;
+                        case GUI_COLOR_ATTR_DIM_CHAR:
+                            string_dyn_concat (out, "\x1B[2m", -1);
+                            break;
                         case GUI_COLOR_ATTR_BOLD_CHAR:
                             string_dyn_concat (out, "\x1B[1m", -1);
                             break;
@@ -1613,7 +1677,13 @@ gui_color_encode_ansi (const char *string)
                 {
                     switch (ptr_string[0])
                     {
-                        case GUI_COLOR_ATTR_BOLD_CHAR:
+                        case GUI_COLOR_ATTR_BLINK_CHAR:
+                            string_dyn_concat (out, "\x1B[25m", -1);
+                            break;
+                        case GUI_COLOR_ATTR_DIM_CHAR:
+                            string_dyn_concat (out, "\x1B[22m", -1);
+                            break;
+                       case GUI_COLOR_ATTR_BOLD_CHAR:
                             string_dyn_concat (out, "\x1B[21m", -1);
                             break;
                         case GUI_COLOR_ATTR_REVERSE_CHAR:

@@ -983,6 +983,10 @@ WeeChat は文字列中に独自の色コードを使うことで、属性
 * `(ATTR)EXT`:任意属性を含めた拡張色 (`+@+` + 属性 + 5 桁の番号)
 // TRANSLATION MISSING
 * `(ATTR)`: one or more attribute chars:
+// TRANSLATION MISSING
+** `+%+`: blink
+// TRANSLATION MISSING
+** `+.+`: "dim" (half bright)
 ** `+*+`: 太字
 ** `+!+`: 反転
 ** `+/+`: イタリック
@@ -998,6 +1002,10 @@ WeeChat は文字列中に独自の色コードを使うことで、属性
 ** _0x03_: italic
 // TRANSLATION MISSING
 ** _0x04_: underline
+// TRANSLATION MISSING
+** _0x05_: blink
+// TRANSLATION MISSING
+** _0x06_: "dim" (half bright)
 
 以下の表にすべての組み合わせをまとめています:
 

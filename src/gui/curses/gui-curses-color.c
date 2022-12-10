@@ -165,6 +165,10 @@ gui_color_get_gui_attrs (int color)
 
     attributes = 0;
 
+    if (color & GUI_COLOR_EXTENDED_BLINK_FLAG)
+        attributes |= A_BLINK;
+    if (color & GUI_COLOR_EXTENDED_DIM_FLAG)
+        attributes |= A_DIM;
     if (color & GUI_COLOR_EXTENDED_BOLD_FLAG)
         attributes |= A_BOLD;
     if (color & GUI_COLOR_EXTENDED_REVERSE_FLAG)
@@ -173,7 +177,6 @@ gui_color_get_gui_attrs (int color)
         attributes |= A_ITALIC;
     if (color & GUI_COLOR_EXTENDED_UNDERLINE_FLAG)
         attributes |= A_UNDERLINE;
-
     return attributes;
 }
 
@@ -188,6 +191,10 @@ gui_color_get_extended_flags (int attrs)
 
     flags = 0;
 
+    if (attrs & A_BLINK)
+        flags |= GUI_COLOR_EXTENDED_BLINK_FLAG;
+    if (attrs & A_DIM)
+        flags |= GUI_COLOR_EXTENDED_DIM_FLAG;
     if (attrs & A_BOLD)
         flags |= GUI_COLOR_EXTENDED_BOLD_FLAG;
     if (attrs & A_REVERSE)

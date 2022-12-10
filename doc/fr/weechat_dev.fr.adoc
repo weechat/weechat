@@ -938,6 +938,8 @@ Dans le tableau qui suit, les conventions suivantes sont utilisées :
 * `(ATTR)EXT` : couleur étendue avec des attributs facultatifs
   (`+@+` + attributs + 5 digits)
 * `(ATTR)` : un ou plusieurs caractères d'attribut :
+** `+%+` : clignotement
+** `+.+` : "dim" (demi-intensité)
 ** `+*+` : gras
 ** `+!+` : vidéo inverse
 ** `+/+` : italique
@@ -948,6 +950,8 @@ Dans le tableau qui suit, les conventions suivantes sont utilisées :
 ** _0x02_ : vidéo inverse
 ** _0x03_ : italique
 ** _0x04_ : souligné
+** _0x05_ : clignotement
+** _0x06_ : "dim" (demi-intensité)
 
 Toutes les combinaisons sont résumées dans ce tableau :
 

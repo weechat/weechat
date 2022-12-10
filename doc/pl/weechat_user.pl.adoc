@@ -2004,12 +2004,17 @@ Na przykład:
 Możliwe jest użycie niektórych atrybutów dla kolorów. Jeden lub więcej z nich
 może zostać użyty przed nazwą lub numerem koloru:
 
+// TRANSLATION MISSING
+* `+%+`: blink
+// TRANSLATION MISSING
+* `+.+`: "dim" (half bright)
 * `+*+` : pogrubiony tekst
 * `+!+` : odwrócenie video
 * `+/+` : pochyły
 * `+_+` : podkreślony tekst
-* `+|+` : zachowaj atrybuty: nie resetuj pogrubienia/odwrócenia/pochylenia/podkreślenia,
-  podczas zmiany koloru
+// TRANSLATION MISSING
+* `+|+`: keep attributes: do not reset blink/dim/bold/reverse/italic/underlined
+  when changing color
 
 Na przykład jeśli chcesz, żeby twój nick był biały i podkreślony:
 

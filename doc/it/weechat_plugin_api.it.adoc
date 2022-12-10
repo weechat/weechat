@@ -8963,6 +8963,14 @@ Argomenti:
    _irc.color.message_quit_ _(WeeChat ≥ 1.2)_
 ** colore con attributi/sfondo opzionali (vedi sotto)
 ** attributo:
+// TRANSLATION MISSING
+*** _blink_: set blink
+// TRANSLATION MISSING
+*** _-blink_: remove blink
+// TRANSLATION MISSING
+*** _dim_: set "dim" (half bright)
+// TRANSLATION MISSING
+*** _-dim_: remove "dim" (half bright)
 *** _bold_: imposta grassetto
 *** _-bold_: rimuove grassetto
 *** _reverse_: imposta inverso
@@ -8986,6 +8994,10 @@ Argomenti:
 Il formato del colore è: attributi (opzionale) + nome colore +",sfondo"
 (opzionale). Gli attributi possibili sono:
 
+// TRANSLATION MISSING
+* `+%+`: blink
+// TRANSLATION MISSING
+* `+.+`: "dim" (half bright)
 * `+*+` : testo in grassetto
 * `+!+` : video inverso
 * `+/+` : corsivo

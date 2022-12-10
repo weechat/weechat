@@ -104,6 +104,8 @@ enum t_gui_color_enum
 #define GUI_COLOR_ATTR_REVERSE_CHAR    '\x02'
 #define GUI_COLOR_ATTR_ITALIC_CHAR     '\x03'
 #define GUI_COLOR_ATTR_UNDERLINE_CHAR  '\x04'
+#define GUI_COLOR_ATTR_BLINK_CHAR      '\x05'
+#define GUI_COLOR_ATTR_DIM_CHAR        '\x06'
 
 #define GUI_COLOR(color) ((gui_color[color]) ? gui_color[color]->string : "")
 #define GUI_NO_COLOR     "\x1C"
@@ -117,6 +119,8 @@ enum t_gui_color_enum
 #define GUI_COLOR_BG_CHAR                     'B'
 #define GUI_COLOR_FG_BG_CHAR                  '*'
 #define GUI_COLOR_EXTENDED_CHAR               '@'
+#define GUI_COLOR_EXTENDED_BLINK_CHAR         '%'
+#define GUI_COLOR_EXTENDED_DIM_CHAR           '.'
 #define GUI_COLOR_EXTENDED_BOLD_CHAR          '*'
 #define GUI_COLOR_EXTENDED_REVERSE_CHAR       '!'
 #define GUI_COLOR_EXTENDED_ITALIC_CHAR        '/'
@@ -142,6 +146,8 @@ enum t_gui_color_enum
 #define GUI_COLOR_EXTENDED_ITALIC_FLAG        0x0800000
 #define GUI_COLOR_EXTENDED_UNDERLINE_FLAG     0x1000000
 #define GUI_COLOR_EXTENDED_KEEPATTR_FLAG      0x2000000
+#define GUI_COLOR_EXTENDED_BLINK_FLAG         0x4000000
+#define GUI_COLOR_EXTENDED_DIM_FLAG           0x8000000
 #define GUI_COLOR_EXTENDED_MASK               0x00FFFFF
 #define GUI_COLOR_EXTENDED_MAX                99999
 

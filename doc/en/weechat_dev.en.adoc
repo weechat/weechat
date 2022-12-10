@@ -922,6 +922,8 @@ In following table, these conventions are used:
 * `EXT`: extended color (`+@+` + 5 digits)
 * `(ATTR)EXT`: extended color with optional attributes (`+@+` + attributes + 5 digits)
 * `(ATTR)`: one or more attribute chars:
+** `+%+`: blink
+** `+.+`: "dim" (half bright)
 ** `+*+`: bold
 ** `+!+`: reverse
 ** `+/+`: italic
@@ -932,6 +934,8 @@ In following table, these conventions are used:
 ** _0x02_: reverse
 ** _0x03_: italic
 ** _0x04_: underline
+** _0x05_: blink
+** _0x06_: "dim" (half bright)
 
 All combinations are summarized in this table:
 

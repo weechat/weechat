@@ -8441,6 +8441,14 @@ const char *weechat_color (const char *color_name);
 ** име опције (у формату: фајл.одељак.опција), на пример _irc.color.message_quit_ _(WeeChat ≥ 1.2)_
 ** боја са необавезним атрибутима/позадином (погледајте испод)
 ** атрибут:
+// TRANSLATION MISSING
+*** _blink_: set blink
+// TRANSLATION MISSING
+*** _-blink_: remove blink
+// TRANSLATION MISSING
+*** _dim_: set "dim" (half bright)
+// TRANSLATION MISSING
+*** _-dim_: remove "dim" (half bright)
 *** _bold_: поставља подебљан испис
 *** _-bold_: уклања подебљан испис
 *** _reverse_: поставља обрнути приказ
@@ -8460,6 +8468,10 @@ const char *weechat_color (const char *color_name);
 
 Формат боје је: атрибути (није обавезно) + име боје + ",позадина" (није обавезно). Могући су следећи атрибути:
 
+// TRANSLATION MISSING
+* `+%+`: blink
+// TRANSLATION MISSING
+* `+.+`: "dim" (half bright)
 * `+*+`: подебљани текст
 * `+!+`: обрнути видео
 * `+/+`: курзив

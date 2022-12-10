@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2022-12-10 16:05+0100\n"
+"POT-Creation-Date: 2022-12-10 16:28+0100\n"
 "PO-Revision-Date: 2022-10-15 22:51+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -538,6 +538,15 @@ msgstr "perc"
 #, fuzzy
 msgid "color"
 msgstr "üzenetek színe"
+
+msgid ""
+"a WeeChat color name (default, black, (dark)gray, white, (light)red, "
+"(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a "
+"terminal color number or an alias; attributes are allowed before color (for "
+"text color only, not background): \"%\" for blink, \".\" for \"dim\" (half "
+"bright), \"*\" for bold, \"!\" for reverse, \"/\" for italic, \"_\" for "
+"underline"
+msgstr ""
 
 #, fuzzy, c-format
 msgid "%sNo help available, \"%s\" is not a command or an option"
@@ -3005,9 +3014,10 @@ msgid ""
 msgstr ""
 
 msgid ""
-"attributes for emphasized text: one or more attribute chars (\"*\" for bold, "
-"\"!\" for reverse, \"/\" for italic, \"_\" for underline); if the string is "
-"empty, the colors weechat.color.emphasized* are used"
+"attributes for emphasized text: one or more attribute chars (\"%\" for "
+"blink, \".\" for \"dim\" (half bright), \"*\" for bold, \"!\" for reverse, "
+"\"/\" for italic, \"_\" for underline); if the string is empty, the colors "
+"weechat.color.emphasized* are used"
 msgstr ""
 
 #, fuzzy

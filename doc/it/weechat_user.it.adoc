@@ -2175,12 +2175,17 @@ Ad esempio:
 Esistono alcuni attributi per i colori. Uno o più attributi vanno aggiunti prima
 del nome o del numero del colore:
 
+// TRANSLATION MISSING
+* `+%+`: blink
+// TRANSLATION MISSING
+* `+.+`: "dim" (half bright)
 * `+*+` : testo in grassetto
 * `+!+` : video inverso
 * `+/+` : testo in corsivo
 * `+_+` : testo sottolineato
-* `+|+` : mantiene attributi: non ripristina grassetto/inverso/sottolineato
-  al cambio di colore
+// TRANSLATION MISSING
+* `+|+`: keep attributes: do not reset blink/dim/bold/reverse/italic/underlined
+  when changing color
 
 Ad esempio se si vuole il proprio nick bianco e sottolineato:
 

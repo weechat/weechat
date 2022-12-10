@@ -29,6 +29,7 @@ extern "C"
 #include "src/core/wee-config-file.h"
 #include "src/core/wee-config.h"
 #include "src/core/wee-secure-config.h"
+#include "src/gui/gui-color.h"
 #include "src/plugins/plugin.h"
 
 extern char *config_file_option_full_name (struct t_config_option *option);
@@ -504,6 +505,39 @@ TEST(CoreConfigFile, OptionReset)
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
                 config_file_option_set (config_color_chat, "--3", 1));
     LONGS_EQUAL(5, CONFIG_COLOR(config_color_chat));
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
+                config_file_option_set (config_color_chat, "%red", 1));
+    LONGS_EQUAL(3 | GUI_COLOR_EXTENDED_BLINK_FLAG, CONFIG_COLOR(config_color_chat));
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
+                config_file_option_set (config_color_chat, ".red", 1));
+    LONGS_EQUAL(3 | GUI_COLOR_EXTENDED_DIM_FLAG, CONFIG_COLOR(config_color_chat));
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
+                config_file_option_set (config_color_chat, "*red", 1));
+    LONGS_EQUAL(3 | GUI_COLOR_EXTENDED_BOLD_FLAG, CONFIG_COLOR(config_color_chat));
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
+                config_file_option_set (config_color_chat, "!red", 1));
+    LONGS_EQUAL(3 | GUI_COLOR_EXTENDED_REVERSE_FLAG, CONFIG_COLOR(config_color_chat));
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
+                config_file_option_set (config_color_chat, "/red", 1));
+    LONGS_EQUAL(3 | GUI_COLOR_EXTENDED_ITALIC_FLAG, CONFIG_COLOR(config_color_chat));
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
+                config_file_option_set (config_color_chat, "_red", 1));
+    LONGS_EQUAL(3 | GUI_COLOR_EXTENDED_UNDERLINE_FLAG, CONFIG_COLOR(config_color_chat));
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
+                config_file_option_set (config_color_chat, "|red", 1));
+    LONGS_EQUAL(3 | GUI_COLOR_EXTENDED_KEEPATTR_FLAG, CONFIG_COLOR(config_color_chat));
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
+                config_file_option_set (config_color_chat, "%.*!/_|red", 1));
+    LONGS_EQUAL(3
+                | GUI_COLOR_EXTENDED_BLINK_FLAG
+                | GUI_COLOR_EXTENDED_DIM_FLAG
+                | GUI_COLOR_EXTENDED_BOLD_FLAG
+                | GUI_COLOR_EXTENDED_REVERSE_FLAG
+                | GUI_COLOR_EXTENDED_ITALIC_FLAG
+                | GUI_COLOR_EXTENDED_UNDERLINE_FLAG
+                | GUI_COLOR_EXTENDED_KEEPATTR_FLAG,
+                CONFIG_COLOR(config_color_chat));
+
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
                 config_file_option_reset (config_color_chat, 1));
     LONGS_EQUAL(0, CONFIG_COLOR(config_color_chat));

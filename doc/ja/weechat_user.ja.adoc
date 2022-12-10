@@ -2094,12 +2094,17 @@ WeeChat は画面に色が表示された時点で色ペアを動的に割り当
 色に対していくつかの属性を付加することができます。1
 つ以上の属性を色名または色番号の前に付加できます:
 
+// TRANSLATION MISSING
+* `+%+`: blink
+// TRANSLATION MISSING
+* `+.+`: "dim" (half bright)
 * `+*+` : テキストを太字に
 * `+!+` : テキストを反転
 * `+/+` : テキストをイタリック体に
 * `+_+` : テキストに下線を引く
-* `+|+` : 属性を保持:
-  色を変えた際に太字/反転/下線属性をリセットしない
+// TRANSLATION MISSING
+* `+|+`: keep attributes: do not reset blink/dim/bold/reverse/italic/underlined
+  when changing color
 
 例えば、自分自身のニックネームの表示色を白にして、下線を引きたい場合:
 

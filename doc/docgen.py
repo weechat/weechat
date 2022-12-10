@@ -613,15 +613,21 @@ class AutogenDoc():
                         default_value = ('"%s"' %
                                          default_value.replace('"', '\\"'))
                     elif opt_type == 'color':
-                        values = _('a WeeChat color name (default, black, '
-                                   '(dark)gray, white, (light)red, '
-                                   '(light)green, brown, yellow, (light)blue, '
-                                   '(light)magenta, (light)cyan), a terminal '
-                                   'color number or an alias; attributes are '
-                                   'allowed before color (for text color '
-                                   'only, not background): \"*\" for bold, '
-                                   '\"!\" for reverse, \"/\" for italic, '
-                                   '\"_\" for underline')
+                        values = _(
+                            'a WeeChat color name (default, black, '
+                            '(dark)gray, white, (light)red, '
+                            '(light)green, brown, yellow, (light)blue, '
+                            '(light)magenta, (light)cyan), a terminal '
+                            'color number or an alias; attributes are '
+                            'allowed before color (for text color '
+                            'only, not background): '
+                            '\"%\" for blink, '
+                            '\".\" for \"dim\" (half bright), '
+                            '\"*\" for bold, '
+                            '\"!\" for reverse, '
+                            '\"/\" for italic, '
+                            '\"_\" for underline'
+                        )
                     self.write(f'* [[option_{config}.{section}.{option}]] '
                                f'*{config}.{section}.{option}*')
                     self.write('** %s: pass:none[%s]',

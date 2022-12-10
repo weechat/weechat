@@ -84,6 +84,34 @@ TEST(GuiColor, GetCustom)
               GUI_COLOR_EMPHASIS_CHAR);
     STRCMP_EQUAL(string, gui_color_get_custom ("emphasis"));
 
+    /* blink */
+    snprintf (string, sizeof (string),
+              "%c%c",
+              GUI_COLOR_SET_ATTR_CHAR,
+              GUI_COLOR_ATTR_BLINK_CHAR);
+    STRCMP_EQUAL(string, gui_color_get_custom ("blink"));
+
+    /* -blink */
+    snprintf (string, sizeof (string),
+              "%c%c",
+              GUI_COLOR_REMOVE_ATTR_CHAR,
+              GUI_COLOR_ATTR_BLINK_CHAR);
+    STRCMP_EQUAL(string, gui_color_get_custom ("-blink"));
+
+    /* dim */
+    snprintf (string, sizeof (string),
+              "%c%c",
+              GUI_COLOR_SET_ATTR_CHAR,
+              GUI_COLOR_ATTR_DIM_CHAR);
+    STRCMP_EQUAL(string, gui_color_get_custom ("dim"));
+
+    /* -dim */
+    snprintf (string, sizeof (string),
+              "%c%c",
+              GUI_COLOR_REMOVE_ATTR_CHAR,
+              GUI_COLOR_ATTR_DIM_CHAR);
+    STRCMP_EQUAL(string, gui_color_get_custom ("-dim"));
+
     /* bold */
     snprintf (string, sizeof (string),
               "%c%c",
@@ -265,6 +293,14 @@ TEST(GuiColor, CodeSize)
     /* emphasis */
     LONGS_EQUAL(2, gui_color_code_size (gui_color_get_custom ("emphasis")));
 
+    /* blink */
+    LONGS_EQUAL(2, gui_color_code_size (gui_color_get_custom ("blink")));
+    LONGS_EQUAL(2, gui_color_code_size (gui_color_get_custom ("-blink")));
+
+    /* dim */
+    LONGS_EQUAL(2, gui_color_code_size (gui_color_get_custom ("dim")));
+    LONGS_EQUAL(2, gui_color_code_size (gui_color_get_custom ("-dim")));
+
     /* bold */
     LONGS_EQUAL(2, gui_color_code_size (gui_color_get_custom ("bold")));
     LONGS_EQUAL(2, gui_color_code_size (gui_color_get_custom ("-bold")));
@@ -367,6 +403,24 @@ TEST(GuiColor, Decode)
     WEE_CHECK_DECODE("test_emphasis", string, NULL);
     WEE_CHECK_DECODE("test_emphasis", string, "");
     WEE_CHECK_DECODE("test_?emphasis", string, "?");
+
+    /* blink */
+    snprintf (string, sizeof (string),
+              "test_%sblink%s_end",
+              gui_color_get_custom ("blink"),
+              gui_color_get_custom ("-blink"));
+    WEE_CHECK_DECODE("test_blink_end", string, NULL);
+    WEE_CHECK_DECODE("test_blink_end", string, "");
+    WEE_CHECK_DECODE("test_?blink?_end", string, "?");
+
+    /* dim */
+    snprintf (string, sizeof (string),
+              "test_%sdim%s_end",
+              gui_color_get_custom ("dim"),
+              gui_color_get_custom ("-dim"));
+    WEE_CHECK_DECODE("test_dim_end", string, NULL);
+    WEE_CHECK_DECODE("test_dim_end", string, "");
+    WEE_CHECK_DECODE("test_?dim?_end", string, "?");
 
     /* bold */
     snprintf (string, sizeof (string),
@@ -528,17 +582,29 @@ TEST(GuiColor, DecodeAnsi)
               "test_%sreset", gui_color_get_custom ("reset"));
     WEE_CHECK_DECODE_ANSI(string, "test_\x1B[0mreset", 1);
 
+    /* blink */
+    WEE_CHECK_DECODE_ANSI("test_blink_end", "test_\x1B[5mblink\x1B[25m_end", 0);
+    snprintf (string, sizeof (string),
+              "test_%sblink%s_end",
+              gui_color_get_custom ("blink"),
+              gui_color_get_custom ("-blink"));
+    WEE_CHECK_DECODE_ANSI(string, "test_\x1B[5mblink\x1B[25m_end", 1);
+
+    /* dim */
+    WEE_CHECK_DECODE_ANSI("test_dim_end", "test_\x1B[2mdim\x1B[22m_end", 0);
+    snprintf (string, sizeof (string),
+              "test_%sdim%s_end",
+              gui_color_get_custom ("dim"),
+              gui_color_get_custom ("-dim"));
+    WEE_CHECK_DECODE_ANSI(string, "test_\x1B[2mdim\x1B[22m_end", 1);
+
     /* bold */
-    WEE_CHECK_DECODE_ANSI("test_bold_end", "test_\x1B[1mbold\x1B[2m_end", 0);
     WEE_CHECK_DECODE_ANSI("test_bold_end", "test_\x1B[1mbold\x1B[21m_end", 0);
-    WEE_CHECK_DECODE_ANSI("test_bold_end", "test_\x1B[1mbold\x1B[22m_end", 0);
     snprintf (string, sizeof (string),
               "test_%sbold%s_end",
               gui_color_get_custom ("bold"),
               gui_color_get_custom ("-bold"));
-    WEE_CHECK_DECODE_ANSI(string, "test_\x1B[1mbold\x1B[2m_end", 1);
     WEE_CHECK_DECODE_ANSI(string, "test_\x1B[1mbold\x1B[21m_end", 1);
-    WEE_CHECK_DECODE_ANSI(string, "test_\x1B[1mbold\x1B[22m_end", 1);
 
     /* reverse */
     WEE_CHECK_DECODE_ANSI("test_reverse_end",
@@ -671,6 +737,20 @@ TEST(GuiColor, EncodeAnsi)
               "test_%sreset", gui_color_get_custom ("reset"));
     WEE_CHECK_ENCODE_ANSI("test_\x1B[0mreset", string);
 
+    /* blink */
+    snprintf (string, sizeof (string),
+              "test_%sblink%s_end",
+              gui_color_get_custom ("blink"),
+              gui_color_get_custom ("-blink"));
+    WEE_CHECK_ENCODE_ANSI("test_\x1B[5mblink\x1B[25m_end", string);
+
+    /* dim */
+    snprintf (string, sizeof (string),
+              "test_%sdim%s_end",
+              gui_color_get_custom ("dim"),
+              gui_color_get_custom ("-dim"));
+    WEE_CHECK_ENCODE_ANSI("test_\x1B[2mdim\x1B[22m_end", string);
+
     /* bold */
     snprintf (string, sizeof (string),
               "test_%sbold%s_end",
@@ -766,16 +846,22 @@ TEST(GuiColor, EncodeAnsi)
 
     /* multiple colors/attributes */
     snprintf (string, sizeof (string),
-              "%shello, %sthis is%s a test %sblue %sreset %syellow,red here!",
+              "%shello, %sthis is%s %sblink%s %sdim%s a test %sblue %sreset "
+              "%syellow,red here!",
               gui_color_get_custom (",blue"),
               gui_color_get_custom ("bold"),
               gui_color_get_custom ("-bold"),
+              gui_color_get_custom ("blink"),
+              gui_color_get_custom ("-blink"),
+              gui_color_get_custom ("dim"),
+              gui_color_get_custom ("-dim"),
               gui_color_get_custom ("blue"),
               gui_color_get_custom ("reset"),
               gui_color_get_custom ("yellow,red"));
     WEE_CHECK_ENCODE_ANSI(
-        "\x1B[44mhello, \x1B[1mthis is\x1B[21m a test \x1B[34mblue \x1B[0m"
-        "reset \x1B[93m\x1B[41myellow,red here!",
+        "\x1B[44mhello, \x1B[1mthis is\x1B[21m \x1B[5mblink\x1B[25m "
+        "\x1B[2mdim\x1B[22m a test \x1B[34mblue \x1B[0mreset "
+        "\x1B[93m\x1B[41myellow,red here!",
         string);
 }
 

@@ -20,6 +20,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 New features::
 
+  * core: add color attributes "blink" and "dim" (half bright) (issue #1855)
   * core: allow command `/toggle` to create option before setting the value, if allowed in the section (issue #1837)
   * core: add signals "buffer_user_input_xxx" and "buffer_user_closing_xxx" for buffers created with `/buffer add` (issue #1848)
   * core: add identifier in buffer lines (issue #901)
