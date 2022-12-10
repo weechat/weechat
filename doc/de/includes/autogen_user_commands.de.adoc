@@ -1345,29 +1345,29 @@ Beispiele:
         time <command>
         unicode <string>
 
-     list: zeigt alle Erweiterungen mit Debuglevel an
-      set: setzt den Level der Protokollierung für eine Erweiterung
-   plugin: Name der Erweiterung ("core" für den WeeChat Kern)
-    level: Debuglevel der Erweiterung (0 = deaktiviert Debug)
-     dump: Speicherabbild in die WeeChat Protokolldatei schreiben (wie bei einem Programmabsturz)
-    hooks: zeigt die aktiven Hooks an (bei einer Erweiterung: detaillierte Informationen über Hooks werden angezeigt, die von der Erweiterung erstellt wurden)
-   buffer: speichert den Bufferinhalt als hexadezimale Ausgabe in die Protokolldatei
-    certs: gibt die Anzahl geladener vertrauenswürdiger Zertifizierungsstellen aus
-    color: zeigt Informationen über die aktuellen Farbpaarungen an
-   cursor: schaltet den debug-Modus für den Cursor-Modus ein/aus
-     dirs: Verzeichnisse werden angezeigt
-    hdata: zeigt Informationen zu hdata an (mittels free werden alle hdata Informationen aus dem Speicher entfernt)
-infolists: zeigt Information über die Infolists an
-     libs: zeigt an welche externen Bibliotheken verwendet werden
-   memory: gibt Informationen über den genutzten Speicher aus
-    mouse: schaltet den debug-Modus für den Maus-Modus ein/aus
-     tags: zeigt für jede einzelne Zeile die dazugehörigen Schlagwörter an
-     term: zeigt Informationen über das Terminal an
-  windows: zeigt die Fensterstruktur an
-     time: misst die Zeit um einen Befehl auszuführen oder um einen Text in den aktuellen Buffer zu senden
-  unicode: Zeigt Informationen über Unicode-Zeichen in Zeichenkette an (evaluiert, siehe /help eval)
+     list: list plugins with debug levels
+      set: set debug level for plugin
+   plugin: name of plugin ("core" for WeeChat core)
+    level: debug level for plugin (0 = disable debug)
+     dump: save memory dump in WeeChat log file (same dump is written when WeeChat crashes)
+    hooks: display infos about hooks (with a plugin: display detailed info about hooks created by the plugin)
+   buffer: dump buffer content with hexadecimal values in log file
+    certs: display number of loaded trusted certificate authorities
+    color: display infos about current color pairs
+   cursor: toggle debug for cursor mode
+     dirs: display directories
+    hdata: display infos about hdata (with free: remove all hdata in memory)
+infolists: display infos about infolists
+     libs: display infos about external libraries used
+   memory: display infos about memory usage
+    mouse: toggle debug for mouse
+     tags: display tags for lines
+     term: display infos about terminal
+  windows: display windows tree
+     time: measure time to execute a command or to send text to the current buffer
+  unicode: display information about string and unicode chars (evaluated, see /help eval)
 
-Beispiele:
+Examples:
   /debug set irc 1
   /debug mouse verbose
   /debug time /filter toggle

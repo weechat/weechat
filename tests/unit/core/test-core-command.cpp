@@ -214,6 +214,7 @@ TEST(CoreCommand, Debug)
 
     /* test command "/debug unicode" */
     WEE_CMD_CORE(command_debug_unicode);
+    WEE_CHECK_MSG_CORE("  \"\u00E9\u26C4\": 5 / 2, 2 / 3, 3, 3");
     WEE_CHECK_MSG_CORE("  \"\u00E9\" (U+00E9, 233, 0xC3 0xA9): 2 / 1, 1 / 1, 1, 1, 1");
     WEE_CHECK_MSG_CORE("  \"\u26C4\" (U+26C4, 9924, 0xE2 0x9B 0x84): 3 / 1, 1 / 2, 2, 2, 2");
 

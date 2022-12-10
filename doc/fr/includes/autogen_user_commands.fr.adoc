@@ -1365,7 +1365,7 @@ infolists : afficher des infos sur les infolists
      term : afficher des infos sur le terminal
   windows : afficher l'arbre des fenêtres
      time : mesurer le temps pour exécuter une commande ou pour envoyer du texte au tampon courant
-  unicode : afficher des informations sur les caractères unicode dans la chaîne (évaluée, voir /help eval)
+  unicode : afficher des informations sur la chaîne et les caractères unicode (évaluée, voir /help eval)
 
 Exemples :
   /debug set irc 1

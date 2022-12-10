@@ -762,7 +762,7 @@ debug_display_time_elapsed (struct timeval *time1, struct timeval *time2,
 }
 
 /*
- * Display information about a unicode codepoint.
+ * Display unicode information for a codepoint.
  */
 
 void
@@ -813,16 +813,71 @@ debug_unicode_char (unsigned int codepoint)
 }
 
 /*
- * Display information about all unicode chars of a string.
+ * Display unicode information for a string.
  */
 
 void
 debug_unicode_string (const char *string)
 {
+    int num_char, width;
+    wchar_t *wstring;
+
+    num_char = mbstowcs (NULL, string, 0) + 1;
+    wstring = malloc ((num_char + 1) * sizeof (wstring[0]));
+    if (!wstring)
+        return;
+
+    if (mbstowcs (wstring, string, num_char) == (size_t)(-1))
+    {
+        free (wstring);
+        return;
+    }
+
+    width = wcswidth (wstring, num_char);
+
+    gui_chat_printf (NULL,
+                     "\t  \"%s\": %d %s/%s %d, %d %s/%s %d, %d, %d",
+                     string,
+                     strlen (string),
+                     GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                     GUI_COLOR(GUI_COLOR_CHAT),
+                     utf8_strlen (string),
+                     gui_chat_strlen (string),
+                     GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                     GUI_COLOR(GUI_COLOR_CHAT),
+                     width,
+                     utf8_strlen_screen (string),
+                     gui_chat_strlen_screen (string));
+
+    free (wstring);
+}
+
+/*
+ * Display information about all unicode chars of a string.
+ */
+
+void
+debug_unicode (const char *string)
+{
     const char *ptr_string;
     if (!string || !string[0])
         return;
 
+    /* info about string */
+    gui_chat_printf (NULL, "");
+    gui_chat_printf (NULL,
+                     _("Unicode: \"string\": "
+                       "strlen %s/%s "
+                       "utf8_strlen, gui_chat_strlen %s/%s "
+                       "wcswidth, utf8_strlen_screen, "
+                       "gui_chat_strlen_screen:"),
+                     GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                     GUI_COLOR(GUI_COLOR_CHAT),
+                     GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                     GUI_COLOR(GUI_COLOR_CHAT));
+    debug_unicode_string (string);
+
+    /* info about chars in string */
     gui_chat_printf (NULL, "");
     gui_chat_printf (NULL,
                      _("Unicode: \"char\" "
@@ -835,7 +890,6 @@ debug_unicode_string (const char *string)
                      GUI_COLOR(GUI_COLOR_CHAT),
                      GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
                      GUI_COLOR(GUI_COLOR_CHAT));
-
     ptr_string = string;
     while (ptr_string && ptr_string[0])
     {

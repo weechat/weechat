@@ -1365,7 +1365,7 @@ infolists: display infos about infolists
      term: display infos about terminal
   windows: display windows tree
      time: measure time to execute a command or to send text to the current buffer
-  unicode: display information about unicode chars in string (evaluated, see /help eval)
+  unicode: display information about string and unicode chars (evaluated, see /help eval)
 
 Examples:
   /debug set irc 1

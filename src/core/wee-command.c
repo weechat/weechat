@@ -2032,7 +2032,7 @@ COMMAND_CALLBACK(debug)
         result = eval_expression (argv_eol[2], NULL, NULL, NULL);
         if (result)
         {
-            debug_unicode_string (result);
+            debug_unicode (result);
             free (result);
         }
         return WEECHAT_RC_OK;
@@ -7696,7 +7696,7 @@ command_init ()
            "  windows: display windows tree\n"
            "     time: measure time to execute a command or to send text to "
            "the current buffer\n"
-           "  unicode: display information about unicode chars in string "
+           "  unicode: display information about string and unicode chars "
            "(evaluated, see /help eval)\n"
            "\n"
            "Examples:\n"

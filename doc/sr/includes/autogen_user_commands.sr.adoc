@@ -1345,29 +1345,29 @@ stop: зауставља режим померања курсора
         time <команда>
         unicode <стринг>
 
-     list: исписује додатке са дибаг нивоима
-      set: поставља дибаг ниво за додатак
-  додатак: име додатка („core” за WeeChat језгро)
-     ниво: дибаг ниво за додатак (0 = искључује дибаг)
-     dump: чува садржај меморије у WeeChat лог фајл (исти садржај се записује када се програм WeeChat сруши)
-    hooks: исписује инфо о кукама (са додатком: приказује детаљне информације о кукама које креира додатак)
-   buffer: уписује у лог фајл садржај бафера као хексадецималне вредности
-    certs: приказује број учитаних ауторитета сертификата којима се верује
-    color: приказује инфо о тренутним паровима боја
-   cursor: пребацује дибаг за режим померања курсора
-     dirs: исписује директоријуме
-    hdata: исписује инфо о hdata (са free: уклања све hdata из меморије)
-infolists: исписује инфо о инфолистама
-     libs: исписује инфо о коришћеним спољним библиотекама
-   memory: исписује инфо о употреби меморије
-    mouse: пребацује дибаг за миша
-     tags: исписује ознаке за линије
-     term: исписује инфо о терминалу
-  windows: исписује стабло прозора
-     time: мери време извршавања команде или слања текста текућем баферу
-  unicode: приказује информације о уникод карактерима у стрингу (израчунато, погледајте/help eval)
+     list: list plugins with debug levels
+      set: set debug level for plugin
+   plugin: name of plugin ("core" for WeeChat core)
+    level: debug level for plugin (0 = disable debug)
+     dump: save memory dump in WeeChat log file (same dump is written when WeeChat crashes)
+    hooks: display infos about hooks (with a plugin: display detailed info about hooks created by the plugin)
+   buffer: dump buffer content with hexadecimal values in log file
+    certs: display number of loaded trusted certificate authorities
+    color: display infos about current color pairs
+   cursor: toggle debug for cursor mode
+     dirs: display directories
+    hdata: display infos about hdata (with free: remove all hdata in memory)
+infolists: display infos about infolists
+     libs: display infos about external libraries used
+   memory: display infos about memory usage
+    mouse: toggle debug for mouse
+     tags: display tags for lines
+     term: display infos about terminal
+  windows: display windows tree
+     time: measure time to execute a command or to send text to the current buffer
+  unicode: display information about string and unicode chars (evaluated, see /help eval)
 
-Примери:
+Examples:
   /debug set irc 1
   /debug mouse verbose
   /debug time /filter toggle
