@@ -24,13 +24,16 @@ New features::
   * core: add signals "buffer_user_input_xxx" and "buffer_user_closing_xxx" for buffers created with `/buffer add` (issue #1848)
   * core: add identifier in buffer lines (issue #901)
   * core: add option `unicode` in command `/debug`
+  * api: add function utf8_strncpy
   * trigger: add regex command "y" to translate chars, set default regex command to "s" (regex replace) (issue #1510)
 
 Bug fixes::
 
+  * core: display chars the same way in chat and bars, replace tabulations by spaces in bars, display chars < 32 with letter in chat, do not display soft hyphens, zero width spaces and all non-printable chars (issue #1659, issue #1669, issue #1770)
   * core: fix context info in buffers with free content (issue #1832)
   * core: keep terminal title unchanged when option weechat.look.window_title is set to empty value (issue #1835, issue #1836)
   * core: fix crash when setting invalid color in option with null value (issue #1844)
+  * api: fix function string_cut when there are non printable chars in suffix
   * api: do not expect any return value in callbacks "callback_change" and "callback_delete" of function config_new_option (scripting API)
   * irc: escape backslashes in raw buffer (issue #1838)
 
