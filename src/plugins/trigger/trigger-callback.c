@@ -1385,6 +1385,8 @@ trigger_callback_focus_cb (const void *pointer, void *data,
 
     TRIGGER_CALLBACK_CB_NEW_POINTERS;
 
+    ctx.extra_vars = weechat_hashtable_dup (info);
+
     /* add data in hashtables used for conditions/replace/command */
     trigger_callback_set_common_vars (trigger, info);
     ptr_value = weechat_hashtable_get (info, "_window");
