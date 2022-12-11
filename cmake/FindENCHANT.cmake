@@ -27,11 +27,11 @@ else()
   find_path(ENCHANT_INCLUDE_DIR
     NAMES enchant++.h
     HINTS ${PC_ENCHANT_INCLUDEDIR} ${PC_ENCHANT_INCLUDE_DIRS}
-    PATH_SUFFIXES enchant
+    PATH_SUFFIXES enchant-2 enchant
   )
 
   find_library(ENCHANT_LIBRARIES
-    NAMES enchant
+    NAMES enchant-2 enchant
     HINTS ${PC_ENCHANT_LIBDIR}
     ${PC_ENCHANT_LIBRARY_DIRS}
   )
