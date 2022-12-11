@@ -123,6 +123,7 @@ Alphabetically:
 * Rudolf Polzer (divVerent)
 * Ruslan Bekenev
 * Ryan Farley
+* Ryan Qian
 * Ryuunosuke Ayanokouzi
 * scumjr
 * Sergio Durigan Junior
