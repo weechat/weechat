@@ -34,6 +34,7 @@ Bug fixes::
   * core: fix context info in buffers with free content (issue #1832)
   * core: keep terminal title unchanged when option weechat.look.window_title is set to empty value (issue #1835, issue #1836)
   * core: fix crash when setting invalid color in option with null value (issue #1844)
+  * api: send NULL values to config section callbacks in scripting API (issue #1843)
   * api: fix function string_cut when there are non printable chars in suffix
   * api: do not expect any return value in callbacks "callback_change" and "callback_delete" of function config_new_option (scripting API)
   * irc: escape backslashes in raw buffer (issue #1838)
