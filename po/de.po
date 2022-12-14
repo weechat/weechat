@@ -27,7 +27,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2022-12-10 17:20+0100\n"
-"PO-Revision-Date: 2022-11-22 10:05+0100\n"
+"PO-Revision-Date: 2022-12-14 22:37+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German - Germany <weechatter@arcor.de>\n"
 "Language: de_DE\n"
@@ -48,13 +48,6 @@ msgstr "beliebiges Zeichen"
 msgid "max chars"
 msgstr "maximale Anzahl an Zeichen"
 
-#, fuzzy
-#| msgid ""
-#| "a WeeChat color name (default, black, (dark)gray, white, (light)red, "
-#| "(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a "
-#| "terminal color number or an alias; attributes are allowed before color "
-#| "(for text color only, not background): \"*\" for bold, \"!\" for reverse, "
-#| "\"/\" for italic, \"_\" for underline"
 msgid ""
 "a WeeChat color name (default, black, (dark)gray, white, (light)red, "
 "(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a "
@@ -67,8 +60,8 @@ msgstr ""
 "(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine "
 "Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt "
 "werden (gilt ausschließlich für die Textfarbe und nicht für den "
-"Hintergrund): \"*\" für fett, \"!\" für invertiert, \"/\" für kursiv, \"_\" "
-"für unterstrichen"
+"Hintergrund): \"%\" für blinken, \".\" für \"dimmen\" (half hell), \"*\" für "
+"fett, \"!\" für invertiert, \"/\" für kursiv, \"_\" für unterstrichen"
 
 msgid "description"
 msgstr "Beschreibung"
@@ -618,11 +611,11 @@ msgstr "Es wurde kein benutzerdefiniertes Bar-Item festgelegt"
 
 #, c-format
 msgid "Custom bar item \"%s\" updated"
-msgstr "benutzerdefiniertes Bar-Item\"%s\" aktualisiert"
+msgstr "Benutzerdefiniertes Bar-Item\"%s\" aktualisiert"
 
 #, c-format
 msgid "Custom bar item \"%s\" added"
-msgstr "benutzerdefiniertes Bar-Item \"%s\" hinzugefügt"
+msgstr "Benutzerdefiniertes Bar-Item \"%s\" hinzugefügt"
 
 #, c-format
 msgid "%sUnable to add custom bar item \"%s\""
@@ -636,7 +629,7 @@ msgstr "%sbenutzerdefiniertes Bar-Item\"%s\" nicht gefunden"
 #, c-format
 msgid "Custom bar item \"%s\" renamed to \"%s\""
 msgstr ""
-"beutzerdefiniertes Bar-Item\"%s\" wurde umbenannt. Der neue Name lautet "
+"Benutzerdefiniertes Bar-Item\"%s\" wurde umbenannt. Der neue Name lautet "
 "\"%s\""
 
 #, c-format
@@ -648,7 +641,7 @@ msgstr "Alle Bar-Items wurden entfernt"
 
 #, c-format
 msgid "Custom bar item \"%s\" deleted"
-msgstr "benutzerdefiniertes Bar-Item \"%s\" gelöscht"
+msgstr "Benutzerdefiniertes Bar-Item \"%s\" gelöscht"
 
 msgid "default command:"
 msgstr "Standardbefehl:"
