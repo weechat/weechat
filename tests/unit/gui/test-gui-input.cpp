@@ -574,7 +574,52 @@ TEST(GuiInput, DeletePreviousWordWhitespace)
 
 TEST(GuiInput, DeleteNextWord)
 {
-    /* TODO: write tests */
+    gui_input_replace_input (gui_buffers, "");
+    LONGS_EQUAL(0, gui_buffers->input_buffer_pos);
+    STRCMP_EQUAL("", gui_buffers->input_buffer);
+
+    gui_input_delete_next_word (gui_buffers);
+    LONGS_EQUAL(0, gui_buffers->input_buffer_pos);
+    STRCMP_EQUAL("", gui_buffers->input_buffer);
+
+    gui_input_replace_input (gui_buffers, "abc");
+    gui_input_set_pos (gui_buffers, 0);
+    gui_input_delete_next_word (gui_buffers);
+    LONGS_EQUAL(0, gui_buffers->input_buffer_pos);
+    STRCMP_EQUAL("", gui_buffers->input_buffer);
+
+    gui_input_replace_input (gui_buffers, "abc");
+    gui_input_set_pos (gui_buffers, 1);
+    gui_input_delete_next_word (gui_buffers);
+    LONGS_EQUAL(1, gui_buffers->input_buffer_pos);
+    STRCMP_EQUAL("a", gui_buffers->input_buffer);
+
+    gui_input_replace_input (gui_buffers, "  abc");
+    gui_input_set_pos (gui_buffers, 0);
+    gui_input_delete_next_word (gui_buffers);
+    LONGS_EQUAL(0, gui_buffers->input_buffer_pos);
+    STRCMP_EQUAL("", gui_buffers->input_buffer);
+
+    gui_input_replace_input (gui_buffers, "abc def");
+    gui_input_set_pos (gui_buffers, 0);
+    gui_input_delete_next_word (gui_buffers);
+    LONGS_EQUAL(0, gui_buffers->input_buffer_pos);
+    STRCMP_EQUAL(" def", gui_buffers->input_buffer);
+
+    gui_input_replace_input (gui_buffers, "abc def/ghi/jkl");
+    gui_input_set_pos (gui_buffers, 0);
+    gui_input_delete_next_word (gui_buffers);
+    LONGS_EQUAL(0, gui_buffers->input_buffer_pos);
+    STRCMP_EQUAL(" def/ghi/jkl", gui_buffers->input_buffer);
+    gui_input_delete_next_word (gui_buffers);
+    LONGS_EQUAL(0, gui_buffers->input_buffer_pos);
+    STRCMP_EQUAL("/ghi/jkl", gui_buffers->input_buffer);
+    gui_input_delete_next_word (gui_buffers);
+    LONGS_EQUAL(0, gui_buffers->input_buffer_pos);
+    STRCMP_EQUAL("/jkl", gui_buffers->input_buffer);
+    gui_input_delete_next_word (gui_buffers);
+    LONGS_EQUAL(0, gui_buffers->input_buffer_pos);
+    STRCMP_EQUAL("", gui_buffers->input_buffer);
 }
 
 /*
