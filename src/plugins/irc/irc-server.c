@@ -5707,30 +5707,36 @@ irc_server_autojoin_channels (struct t_irc_server *server)
 {
     char *autojoin;
 
-    /* auto-join after disconnection (only rejoins opened channels) */
-    if (!server->disable_autojoin && server->reconnect_join && server->channels)
+    if (!server->disable_autojoin)
     {
-        autojoin = irc_server_build_autojoin (server);
-        if (autojoin)
+        /* auto-join after disconnection (only rejoins opened channels) */
+        if (server->reconnect_join)
         {
-            irc_server_sendf (server,
-                              IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
-                              "JOIN %s",
-                              autojoin);
-            free (autojoin);
+            if (server->channels)
+            {
+                autojoin = irc_server_build_autojoin (server);
+                if (autojoin)
+                {
+                    irc_server_sendf (server,
+                                      IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
+                                      "JOIN %s",
+                                      autojoin);
+                    free (autojoin);
+                }
+            }
+            server->reconnect_join = 0;
         }
-        server->reconnect_join = 0;
-    }
-    else
-    {
-        /* auto-join when connecting to server for first time */
-        autojoin = irc_server_eval_expression (
-            server,
-            IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_AUTOJOIN));
-        if (!server->disable_autojoin && autojoin && autojoin[0])
-            irc_command_join_server (server, autojoin, 0, 0);
-        if (autojoin)
-            free (autojoin);
+        else
+        {
+            /* auto-join when connecting to server for first time */
+            autojoin = irc_server_eval_expression (
+                server,
+                IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_AUTOJOIN));
+            if (autojoin && autojoin[0])
+                irc_command_join_server (server, autojoin, 0, 0);
+            if (autojoin)
+                free (autojoin);
+        }
     }
 
     server->disable_autojoin = 0;
