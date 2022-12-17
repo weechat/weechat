@@ -1073,10 +1073,9 @@ string_convert_escaped_chars (const char *string)
                         {
                             value = (value * 16) + HEX2DEC(ptr_string[i + 1]);
                         }
-                        utf8_int_string (value, utf_char);
+                        length = utf8_int_string (value, utf_char);
                         if (utf_char[0])
                         {
-                            length = strlen (utf_char);
                             memcpy (output + pos_output, utf_char, length);
                             pos_output += length;
                         }

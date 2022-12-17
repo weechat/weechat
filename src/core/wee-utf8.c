@@ -331,21 +331,32 @@ utf8_char_int (const char *string)
  *
  * In case of error (if unicode value is > 0x1FFFFF), the string is set to an
  * empty string (string[0] == '\0').
+ *
+ * Returns the number of bytes in the UTF-8 char (not counting the final '\0').
  */
 
-void
+int
 utf8_int_string (unsigned int unicode_value, char *string)
 {
+    int num_bytes;
+
+    num_bytes = 0;
+
     if (!string)
-        return;
+        return num_bytes;
 
     string[0] = '\0';
 
-    if (unicode_value <= 0x007F)
+    if (unicode_value == 0)
+    {
+        /* NUL char */
+    }
+    else if (unicode_value <= 0x007F)
     {
         /* UTF-8, 1 byte: 0vvvvvvv */
         string[0] = unicode_value;
         string[1] = '\0';
+        num_bytes = 1;
     }
     else if (unicode_value <= 0x07FF)
     {
@@ -353,6 +364,7 @@ utf8_int_string (unsigned int unicode_value, char *string)
         string[0] = 0xC0 | ((unicode_value >> 6) & 0x1F);
         string[1] = 0x80 | (unicode_value & 0x3F);
         string[2] = '\0';
+        num_bytes = 2;
     }
     else if (unicode_value <= 0xFFFF)
     {
@@ -361,6 +373,7 @@ utf8_int_string (unsigned int unicode_value, char *string)
         string[1] = 0x80 | ((unicode_value >> 6) & 0x3F);
         string[2] = 0x80 | (unicode_value & 0x3F);
         string[3] = '\0';
+        num_bytes = 3;
     }
     else if (unicode_value <= 0x1FFFFF)
     {
@@ -370,7 +383,10 @@ utf8_int_string (unsigned int unicode_value, char *string)
         string[2] = 0x80 | ((unicode_value >> 6) & 0x3F);
         string[3] = 0x80 | (unicode_value & 0x3F);
         string[4] = '\0';
+        num_bytes = 4;
     }
+
+    return num_bytes;
 }
 
 /*

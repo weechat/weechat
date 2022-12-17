@@ -458,16 +458,16 @@ TEST(CoreUtf8, Convert)
     LONGS_EQUAL(0x92d, utf8_char_int (utf8_4bytes_truncated_3));
 
     /* convert unicode char to a string */
-    utf8_int_string (0, NULL);
-    utf8_int_string (0, result);
+    LONGS_EQUAL(0, utf8_int_string (0, NULL));
+    LONGS_EQUAL(0, utf8_int_string (0, result));
     STRCMP_EQUAL("", result);
-    utf8_int_string (235, result);
+    LONGS_EQUAL(2, utf8_int_string (L'ë', result));
     STRCMP_EQUAL("ë", result);
-    utf8_int_string (0x20ac, result);
+    LONGS_EQUAL(3, utf8_int_string (L'€', result));
     STRCMP_EQUAL("€", result);
-    utf8_int_string (0x2ee9, result);
+    LONGS_EQUAL(3, utf8_int_string (0x2ee9, result));
     STRCMP_EQUAL(UNICODE_CJK_YELLOW, result);
-    utf8_int_string (0x24b62, result);
+    LONGS_EQUAL(4, utf8_int_string (0x24b62, result));
     STRCMP_EQUAL(UNICODE_HAN_CHAR, result);
 
     /* get wide char */
