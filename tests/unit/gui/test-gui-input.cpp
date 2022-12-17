@@ -191,31 +191,33 @@ TEST(GuiInput, Return)
 /*
  * Tests functions:
  *   gui_input_complete
- */
-
-TEST(GuiInput, Complete)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Tests functions:
  *   gui_input_complete_next
+ *   gui_input_complete_previous
  */
 
 TEST(GuiInput, CompleteNext)
 {
-    /* TODO: write tests */
-}
+    gui_input_replace_input (gui_buffers, "");
+    LONGS_EQUAL(0, gui_buffers->input_buffer_pos);
+    STRCMP_EQUAL("", gui_buffers->input_buffer);
 
-/*
- * Tests functions:
- *   gui_input_complete_previous
- */
+    gui_input_insert_string (gui_buffers, "/wa");
 
-TEST(GuiInput, CompletePrevious)
-{
-    /* TODO: write tests */
+    gui_input_complete_next (gui_buffers);
+    STRCMP_EQUAL("/wait ", gui_buffers->input_buffer);
+    gui_input_complete_next (gui_buffers);
+    STRCMP_EQUAL("/wallchops ", gui_buffers->input_buffer);
+    gui_input_complete_next (gui_buffers);
+    STRCMP_EQUAL("/wallops ", gui_buffers->input_buffer);
+    gui_input_complete_next (gui_buffers);
+    STRCMP_EQUAL("/wait ", gui_buffers->input_buffer);
+
+    gui_input_complete_previous (gui_buffers);
+    STRCMP_EQUAL("/wallops ", gui_buffers->input_buffer);
+    gui_input_complete_previous (gui_buffers);
+    STRCMP_EQUAL("/wallchops ", gui_buffers->input_buffer);
+    gui_input_complete_previous (gui_buffers);
+    STRCMP_EQUAL("/wait ", gui_buffers->input_buffer);
 }
 
 /*
