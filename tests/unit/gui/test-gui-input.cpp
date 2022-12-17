@@ -26,6 +26,9 @@ extern "C"
 #include <string.h>
 #include "src/gui/gui-buffer.h"
 #include "src/gui/gui-input.h"
+
+extern void gui_input_delete_range (struct t_gui_buffer *buffer,
+                                    char *start, char *end);
 }
 
 TEST_GROUP(GuiInput)
@@ -429,7 +432,35 @@ TEST(GuiInput, DeleteNextChar)
 
 TEST(GuiInput, DeleteRange)
 {
-    /* TODO: write tests */
+    gui_input_replace_input (gui_buffers, "abcdef");
+    gui_input_set_pos (gui_buffers, 6);
+
+    gui_input_delete_range (gui_buffers,
+                            gui_buffers->input_buffer,
+                            gui_buffers->input_buffer);
+    STRCMP_EQUAL("bcdef", gui_buffers->input_buffer);
+    LONGS_EQUAL(5, gui_buffers->input_buffer_pos);
+    gui_input_clipboard_paste (gui_buffers);
+    STRCMP_EQUAL("bcdefa", gui_buffers->input_buffer);
+    LONGS_EQUAL(6, gui_buffers->input_buffer_pos);
+
+    gui_input_delete_range (gui_buffers,
+                            gui_buffers->input_buffer,
+                            gui_buffers->input_buffer + 2);
+    STRCMP_EQUAL("efa", gui_buffers->input_buffer);
+    LONGS_EQUAL(3, gui_buffers->input_buffer_pos);
+    gui_input_clipboard_paste (gui_buffers);
+    STRCMP_EQUAL("efabcd", gui_buffers->input_buffer);
+    LONGS_EQUAL(6, gui_buffers->input_buffer_pos);
+
+    gui_input_delete_range (gui_buffers,
+                            gui_buffers->input_buffer,
+                            gui_buffers->input_buffer + 5);
+    STRCMP_EQUAL("", gui_buffers->input_buffer);
+    LONGS_EQUAL(0, gui_buffers->input_buffer_pos);
+    gui_input_clipboard_paste (gui_buffers);
+    STRCMP_EQUAL("efabcd", gui_buffers->input_buffer);
+    LONGS_EQUAL(6, gui_buffers->input_buffer_pos);
 }
 
 /*
