@@ -331,7 +331,46 @@ TEST(GuiInput, SearchStop)
 
 TEST(GuiInput, DeletePreviousChar)
 {
-    /* TODO: write tests */
+    gui_input_replace_input (gui_buffers, "");
+    LONGS_EQUAL(0, gui_buffers->input_buffer_pos);
+    STRCMP_EQUAL("", gui_buffers->input_buffer);
+
+    gui_input_delete_previous_char (gui_buffers);
+    LONGS_EQUAL(0, gui_buffers->input_buffer_pos);
+    STRCMP_EQUAL("", gui_buffers->input_buffer);
+
+    gui_input_replace_input (gui_buffers, "abc");
+    gui_input_set_pos (gui_buffers, 0);
+    gui_input_delete_previous_char (gui_buffers);
+    LONGS_EQUAL(0, gui_buffers->input_buffer_pos);
+    STRCMP_EQUAL("abc", gui_buffers->input_buffer);
+
+    gui_input_replace_input (gui_buffers, "abc");
+    gui_input_set_pos (gui_buffers, 1);
+    gui_input_delete_previous_char (gui_buffers);
+    LONGS_EQUAL(0, gui_buffers->input_buffer_pos);
+    STRCMP_EQUAL("bc", gui_buffers->input_buffer);
+
+    gui_input_replace_input (gui_buffers, "abc");
+    gui_input_set_pos (gui_buffers, 2);
+    gui_input_delete_previous_char (gui_buffers);
+    LONGS_EQUAL(1, gui_buffers->input_buffer_pos);
+    STRCMP_EQUAL("ac", gui_buffers->input_buffer);
+
+    gui_input_replace_input (gui_buffers, "abc");
+    gui_input_set_pos (gui_buffers, 3);
+    gui_input_delete_previous_char (gui_buffers);
+    LONGS_EQUAL(2, gui_buffers->input_buffer_pos);
+    STRCMP_EQUAL("ab", gui_buffers->input_buffer);
+    gui_input_delete_previous_char (gui_buffers);
+    LONGS_EQUAL(1, gui_buffers->input_buffer_pos);
+    STRCMP_EQUAL("a", gui_buffers->input_buffer);
+    gui_input_delete_previous_char (gui_buffers);
+    LONGS_EQUAL(0, gui_buffers->input_buffer_pos);
+    STRCMP_EQUAL("", gui_buffers->input_buffer);
+    gui_input_delete_previous_char (gui_buffers);
+    LONGS_EQUAL(0, gui_buffers->input_buffer_pos);
+    STRCMP_EQUAL("", gui_buffers->input_buffer);
 }
 
 /*
@@ -341,7 +380,46 @@ TEST(GuiInput, DeletePreviousChar)
 
 TEST(GuiInput, DeleteNextChar)
 {
-    /* TODO: write tests */
+    gui_input_replace_input (gui_buffers, "");
+    LONGS_EQUAL(0, gui_buffers->input_buffer_pos);
+    STRCMP_EQUAL("", gui_buffers->input_buffer);
+
+    gui_input_delete_next_char (gui_buffers);
+    LONGS_EQUAL(0, gui_buffers->input_buffer_pos);
+    STRCMP_EQUAL("", gui_buffers->input_buffer);
+
+    gui_input_replace_input (gui_buffers, "abc");
+    gui_input_set_pos (gui_buffers, 3);
+    gui_input_delete_next_char (gui_buffers);
+    LONGS_EQUAL(3, gui_buffers->input_buffer_pos);
+    STRCMP_EQUAL("abc", gui_buffers->input_buffer);
+
+    gui_input_replace_input (gui_buffers, "abc");
+    gui_input_set_pos (gui_buffers, 2);
+    gui_input_delete_next_char (gui_buffers);
+    LONGS_EQUAL(2, gui_buffers->input_buffer_pos);
+    STRCMP_EQUAL("ab", gui_buffers->input_buffer);
+
+    gui_input_replace_input (gui_buffers, "abc");
+    gui_input_set_pos (gui_buffers, 1);
+    gui_input_delete_next_char (gui_buffers);
+    LONGS_EQUAL(1, gui_buffers->input_buffer_pos);
+    STRCMP_EQUAL("ac", gui_buffers->input_buffer);
+
+    gui_input_replace_input (gui_buffers, "abc");
+    gui_input_set_pos (gui_buffers, 0);
+    gui_input_delete_next_char (gui_buffers);
+    LONGS_EQUAL(0, gui_buffers->input_buffer_pos);
+    STRCMP_EQUAL("bc", gui_buffers->input_buffer);
+    gui_input_delete_next_char (gui_buffers);
+    LONGS_EQUAL(0, gui_buffers->input_buffer_pos);
+    STRCMP_EQUAL("c", gui_buffers->input_buffer);
+    gui_input_delete_next_char (gui_buffers);
+    LONGS_EQUAL(0, gui_buffers->input_buffer_pos);
+    STRCMP_EQUAL("", gui_buffers->input_buffer);
+    gui_input_delete_next_char (gui_buffers);
+    LONGS_EQUAL(0, gui_buffers->input_buffer_pos);
+    STRCMP_EQUAL("", gui_buffers->input_buffer);
 }
 
 /*
