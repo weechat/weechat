@@ -1734,7 +1734,7 @@ gui_window_search_end (struct t_gui_window *window)
     if (window->buffer->text_search_input)
     {
         gui_input_insert_string (window->buffer,
-                                 window->buffer->text_search_input, -1);
+                                 window->buffer->text_search_input);
         gui_input_text_changed_modifier_and_signal (window->buffer,
                                                     0, /* save undo */
                                                     1); /* stop completion */

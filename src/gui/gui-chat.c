@@ -1108,7 +1108,7 @@ gui_chat_hsignal_quote_line_cb (const void *pointer, void *data,
                   (ptr_prefix && ptr_prefix[0] && is_nick) ? CONFIG_STRING(config_look_quote_nick_suffix) : "",
                   (ptr_prefix && ptr_prefix[0]) ? " " : "",
                   message);
-        gui_input_insert_string (gui_current_window->buffer, str, -1);
+        gui_input_insert_string (gui_current_window->buffer, str);
         gui_input_text_changed_modifier_and_signal (gui_current_window->buffer,
                                                     1, /* save undo */
                                                     1); /* stop completion */

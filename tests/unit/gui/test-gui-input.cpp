@@ -116,7 +116,36 @@ TEST(GuiInput, SearchSignal)
 
 TEST(GuiInput, InsertString)
 {
-    /* TODO: write tests */
+    gui_input_replace_input (gui_buffers, "");
+    LONGS_EQUAL(0, gui_buffers->input_buffer_pos);
+    STRCMP_EQUAL("", gui_buffers->input_buffer);
+
+    gui_input_insert_string (gui_buffers, NULL);
+    LONGS_EQUAL(0, gui_buffers->input_buffer_pos);
+    STRCMP_EQUAL("", gui_buffers->input_buffer);
+
+    gui_input_insert_string (gui_buffers, "");
+    STRCMP_EQUAL("", gui_buffers->input_buffer);
+    LONGS_EQUAL(0, gui_buffers->input_buffer_size);
+    LONGS_EQUAL(0, gui_buffers->input_buffer_length);
+    LONGS_EQUAL(0, gui_buffers->input_buffer_pos);
+
+    gui_input_insert_string (gui_buffers, "noël");
+    STRCMP_EQUAL("noël", gui_buffers->input_buffer);
+    LONGS_EQUAL(5, gui_buffers->input_buffer_size);
+    LONGS_EQUAL(4, gui_buffers->input_buffer_length);
+    LONGS_EQUAL(4, gui_buffers->input_buffer_pos);
+
+    gui_input_set_pos (gui_buffers, 3);
+    LONGS_EQUAL(5, gui_buffers->input_buffer_size);
+    LONGS_EQUAL(4, gui_buffers->input_buffer_length);
+    LONGS_EQUAL(3, gui_buffers->input_buffer_pos);
+
+    gui_input_insert_string (gui_buffers, "ï");
+    STRCMP_EQUAL("noëïl", gui_buffers->input_buffer);
+    LONGS_EQUAL(7, gui_buffers->input_buffer_size);
+    LONGS_EQUAL(5, gui_buffers->input_buffer_length);
+    LONGS_EQUAL(4, gui_buffers->input_buffer_pos);
 }
 
 /*

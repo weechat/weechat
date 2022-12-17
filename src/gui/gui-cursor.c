@@ -143,7 +143,7 @@ gui_cursor_display_debug_info ()
                   focus_info->chat,
                   focus_info->chat_word);
         gui_input_delete_line (gui_current_window->buffer);
-        gui_input_insert_string (gui_current_window->buffer, str_info, -1);
+        gui_input_insert_string (gui_current_window->buffer, str_info);
         gui_focus_free_info (focus_info);
     }
 }

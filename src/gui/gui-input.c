@@ -236,27 +236,21 @@ gui_input_set_pos (struct t_gui_buffer *buffer, int pos)
 }
 
 /*
- * Inserts a string into the input buffer.
- *
- * If pos == -1, string is inserted at cursor position.
+ * Inserts a string into the input buffer at cursor position.
  */
 
 void
-gui_input_insert_string (struct t_gui_buffer *buffer, const char *string,
-                         int pos)
+gui_input_insert_string (struct t_gui_buffer *buffer, const char *string)
 {
     int size, length;
     char *string_utf8, *ptr_start;
 
-    if (!buffer->input)
+    if (!buffer->input || !string)
         return;
 
     string_utf8 = strdup (string);
     if (!string_utf8)
         return;
-
-    if (pos == -1)
-        pos = buffer->input_buffer_pos;
 
     utf8_normalize (string_utf8, '?');
 
@@ -270,11 +264,10 @@ gui_input_insert_string (struct t_gui_buffer *buffer, const char *string,
         buffer->input_buffer[buffer->input_buffer_size] = '\0';
 
         /* move end of string to the right */
-        ptr_start = (char *)utf8_add_offset (buffer->input_buffer, pos);
+        ptr_start = (char *)utf8_add_offset (buffer->input_buffer, buffer->input_buffer_pos);
         memmove (ptr_start + size, ptr_start, strlen (ptr_start));
 
         /* insert new string */
-        ptr_start = (char *)utf8_add_offset (buffer->input_buffer, pos);
         memcpy (ptr_start, string_utf8, size);
 
         buffer->input_buffer_pos += length;
@@ -384,8 +377,7 @@ gui_input_clipboard_paste (struct t_gui_buffer *buffer)
     if (buffer->input && gui_input_clipboard)
     {
         gui_buffer_undo_snap (buffer);
-        gui_input_insert_string (buffer,
-                                 gui_input_clipboard, -1);
+        gui_input_insert_string (buffer, gui_input_clipboard);
         gui_input_text_changed_modifier_and_signal (buffer,
                                                     1, /* save undo */
                                                     1); /* stop completion */
@@ -508,8 +500,7 @@ gui_input_complete (struct t_gui_buffer *buffer)
         if (buffer->input_buffer[utf8_real_pos (buffer->input_buffer,
                                                 buffer->input_buffer_pos)] != ' ')
         {
-            gui_input_insert_string (buffer, " ",
-                                     buffer->input_buffer_pos);
+            gui_input_insert_string (buffer, " ");
         }
         else
             buffer->input_buffer_pos++;
@@ -1893,7 +1884,7 @@ gui_input_insert (struct t_gui_buffer *buffer, const char *args)
 
     gui_buffer_undo_snap (buffer);
     args2 = string_convert_escaped_chars (args);
-    gui_input_insert_string (buffer, (args2) ? args2 : args, -1);
+    gui_input_insert_string (buffer, (args2) ? args2 : args);
     gui_input_text_changed_modifier_and_signal (buffer,
                                                 1, /* save undo */
                                                 1); /* stop completion */

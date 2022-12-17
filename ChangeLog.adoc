@@ -43,6 +43,7 @@ Bug fixes::
 
 Tests::
 
+  * gui: add tests on input functions
   * scripts: add tests on config functions
 
 Build::

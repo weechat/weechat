@@ -234,7 +234,7 @@ gui_key_grab_end_timer_cb (const void *pointer, void *data,
         /* add expanded key to input buffer */
         if (gui_current_window->buffer->input)
         {
-            gui_input_insert_string (gui_current_window->buffer, expanded_key, -1);
+            gui_input_insert_string (gui_current_window->buffer, expanded_key);
             if (gui_key_grab_command)
             {
                 /* add command bound to key (if found) */
@@ -242,8 +242,8 @@ gui_key_grab_end_timer_cb (const void *pointer, void *data,
                                           gui_key_combo_buffer);
                 if (ptr_key)
                 {
-                    gui_input_insert_string (gui_current_window->buffer, " ", -1);
-                    gui_input_insert_string (gui_current_window->buffer, ptr_key->command, -1);
+                    gui_input_insert_string (gui_current_window->buffer, " ");
+                    gui_input_insert_string (gui_current_window->buffer, ptr_key->command);
                 }
             }
             gui_input_text_changed_modifier_and_signal (gui_current_window->buffer,

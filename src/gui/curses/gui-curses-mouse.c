@@ -203,8 +203,7 @@ gui_mouse_grab_end (const char *mouse_key)
             snprintf (mouse_key_input, sizeof (mouse_key_input),
                       "%s", mouse_key);
         }
-        gui_input_insert_string (gui_current_window->buffer,
-                                 mouse_key_input, -1);
+        gui_input_insert_string (gui_current_window->buffer, mouse_key_input);
         gui_input_text_changed_modifier_and_signal (gui_current_window->buffer,
                                                     1, /* save undo */
                                                     1); /* stop completion */
