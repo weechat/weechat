@@ -53,8 +53,12 @@ TEST(GuiInput, ReplaceInputSetPos)
     gui_input_replace_input (gui_buffers, NULL);
 
     gui_input_replace_input (gui_buffers, "noël");
-    gui_input_set_pos (gui_buffers, 4);
     STRCMP_EQUAL("noël", gui_buffers->input_buffer);
+    gui_input_set_pos (gui_buffers, 4);
+    LONGS_EQUAL(5, gui_buffers->input_buffer_size);
+    LONGS_EQUAL(4, gui_buffers->input_buffer_length);
+    LONGS_EQUAL(4, gui_buffers->input_buffer_pos);
+    gui_input_set_pos (gui_buffers, 5);
     LONGS_EQUAL(5, gui_buffers->input_buffer_size);
     LONGS_EQUAL(4, gui_buffers->input_buffer_length);
     LONGS_EQUAL(4, gui_buffers->input_buffer_pos);
