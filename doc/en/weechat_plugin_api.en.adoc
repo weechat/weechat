@@ -616,25 +616,34 @@ This function is not available in scripting API.
 
 ==== string_tolower
 
-Convert UTF-8 string to lower case.
+_Updated in 3.8._
+
+Return a string with uppercase letters converted to lowercase. +
+This function is locale independent: only letters `A` to `Z` without accents
+are converted to lowercase. All other chars are kept as-is.
 
 Prototype:
 
 [source,c]
 ----
-void weechat_string_tolower (char *string);
+char *weechat_string_tolower (const char *string);
 ----
 
 Arguments:
 
 * _string_: string to convert
 
+Return value:
+
+* string with lowercase letters (must be freed by calling "free" after use)
+
 C example:
 
 [source,c]
 ----
-char str[] = "AbCdé";
-weechat_string_tolower (str);  /* str is now: "abcdé" */
+char *str = weechat_string_tolower ("ABCD_É");  /* result: "abcd_É" */
+/* ... */
+free (str);
 ----
 
 [NOTE]
@@ -642,25 +651,34 @@ This function is not available in scripting API.
 
 ==== string_toupper
 
-Convert UTF-8 string to upper case.
+_Updated in 3.8._
+
+Return a string with lowercase letters converted to uppercase. +
+This function is locale independent: only letters `a` to `z` without accents
+are converted to uppercase. All other chars are kept as-is.
 
 Prototype:
 
 [source,c]
 ----
-void weechat_string_toupper (char *string);
+char *weechat_string_toupper (const char *string);
 ----
 
 Arguments:
 
 * _string_: string to convert
 
+Return value:
+
+* string with uppercase letters (must be freed by calling "free" after use)
+
 C example:
 
 [source,c]
 ----
-char str[] = "AbCdé";
-weechat_string_toupper (str);  /* str is now: "ABCDé" */
+char *str = weechat_string_toupper ("abcd_é");  /* result: "ABCD_é" */
+/* ... */
+free (str);
 ----
 
 [NOTE]

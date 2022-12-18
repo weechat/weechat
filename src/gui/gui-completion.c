@@ -1144,6 +1144,7 @@ gui_completion_complete (struct t_gui_completion *completion)
     int length, word_found_seen, other_completion, partial_completion;
     int common_prefix_size, index, index2;
     struct t_gui_completion_word *ptr_completion_word, *ptr_completion_word2;
+    char *word_found_lower;
 
     length = utf8_strlen (completion->base_word);
     word_found_seen = 0;
@@ -1262,7 +1263,12 @@ gui_completion_complete (struct t_gui_completion *completion)
                     completion->word_found_is_nick = 0;
                     completion->add_space = 0;
                     completion->position = -1;
-                    string_tolower (completion->word_found);
+                    word_found_lower = string_tolower (completion->word_found);
+                    if (word_found_lower)
+                    {
+                        free (completion->word_found);
+                        completion->word_found = word_found_lower;
+                    }
 
                     /* alert user of partial completion */
                     if (CONFIG_BOOLEAN(config_completion_partial_completion_alert))

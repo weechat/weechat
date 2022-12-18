@@ -188,13 +188,13 @@ TEST(CoreString, ToLower)
 {
     char *str;
 
-    str = strdup ("ABC");
+    WEE_TEST_STR(NULL, string_tolower (NULL));
 
-    string_tolower (NULL);
-    string_tolower (str);
-    STRCMP_EQUAL("abc", str);
-
-    free (str);
+    WEE_TEST_STR("", string_tolower (""));
+    WEE_TEST_STR("abcd_É", string_tolower ("ABCD_É"));
+    WEE_TEST_STR("À É Ï Ô Ü Ÿ Æ Œ Ç", string_tolower ("À É Ï Ô Ü Ÿ Æ Œ Ç"));
+    WEE_TEST_STR("€", string_tolower ("€"));
+    WEE_TEST_STR("[⛄]", string_tolower ("[⛄]"));
 }
 
 /*
@@ -202,17 +202,17 @@ TEST(CoreString, ToLower)
  *   string_toupper
  */
 
-TEST(CoreString, Case)
+TEST(CoreString, ToUpper)
 {
     char *str;
 
-    str = strdup ("abc");
+    WEE_TEST_STR(NULL, string_tolower (NULL));
 
-    string_toupper (NULL);
-    string_toupper (str);
-    STRCMP_EQUAL("ABC", str);
-
-    free (str);
+    WEE_TEST_STR("", string_toupper (""));
+    WEE_TEST_STR("ABCD_é", string_toupper ("abcd_é"));
+    WEE_TEST_STR("à é ï ô ü ÿ æ œ ç", string_toupper ("à é ï ô ü ÿ æ œ ç"));
+    WEE_TEST_STR("€", string_toupper ("€"));
+    WEE_TEST_STR("[⛄]", string_toupper ("[⛄]"));
 }
 
 /*

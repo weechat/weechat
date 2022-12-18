@@ -1330,7 +1330,7 @@ relay_irc_recv (struct t_relay_client *client, const char *data)
     const char *irc_command, *str_num_params, *isupport, *pos_password;
     char str_time[128], str_signal[128], str_server_channel[256], *nick;
     char str_param[128], *str_args, *version, str_command[128], **params;
-    char *pos, *password, *irc_is_channel, *info, *error;
+    char *pos, *password, *irc_is_channel, *info, *error, *str_cmd_lower;
     long num_params;
     int i, redirect_msg;
 
@@ -1766,11 +1766,15 @@ relay_irc_recv (struct t_relay_client *client, const char *data)
                         redirect_msg = 1;
                         snprintf (str_command, sizeof (str_command),
                                   "%s", irc_command);
-                        weechat_string_tolower (str_command);
-                        weechat_hashtable_set (hash_redirect, "pattern",
-                                               str_command);
-                        weechat_hashtable_set (hash_redirect, "string",
-                                               params[0]);
+                        str_cmd_lower = weechat_string_tolower (str_command);
+                        if (str_cmd_lower)
+                        {
+                            weechat_hashtable_set (hash_redirect, "pattern",
+                                                   str_cmd_lower);
+                            weechat_hashtable_set (hash_redirect, "string",
+                                                   params[0]);
+                            free (str_cmd_lower);
+                        }
                     }
                 }
                 else if (weechat_strcasecmp (irc_command, "time") == 0)

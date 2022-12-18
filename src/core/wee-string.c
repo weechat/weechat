@@ -308,33 +308,67 @@ string_repeat (const char *string, int count)
 }
 
 /*
- * Converts string to lower case (locale independent).
+ * Converts uppercase letters to lowercase.
+ *
+ * This function is locale independent: only letters 'A' to 'Z' without accents
+ * are converted to lowercase. All other chars are kept as-is.
+ *
+ * Note: result must be freed after use.
  */
 
-void
-string_tolower (char *string)
+char *
+string_tolower (const char *string)
 {
-    while (string && string[0])
+    char *result, *ptr_result;
+
+    if (!string)
+        return NULL;
+
+    result = strdup (string);
+    if (!result)
+        return NULL;
+
+    ptr_result = result;
+    while (ptr_result && ptr_result[0])
     {
-        if ((string[0] >= 'A') && (string[0] <= 'Z'))
-            string[0] += ('a' - 'A');
-        string = (char *)utf8_next_char (string);
+        if ((ptr_result[0] >= 'A') && (ptr_result[0] <= 'Z'))
+            ptr_result[0] += ('a' - 'A');
+        ptr_result = (char *)utf8_next_char (ptr_result);
     }
+
+    return result;
 }
 
 /*
- * Converts string to upper case (locale independent).
+ * Converts lowercase letters to uppercase.
+ *
+ * This function is locale independent: only letters 'a' to 'z' without accents
+ * are converted to uppercase. All other chars are kept as-is.
+ *
+ * Note: result must be freed after use.
  */
 
-void
-string_toupper (char *string)
+char *
+string_toupper (const char *string)
 {
-    while (string && string[0])
+    char *result, *ptr_result;
+
+    if (!string)
+        return NULL;
+
+    result = strdup (string);
+    if (!result)
+        return NULL;
+
+    ptr_result = result;
+    while (ptr_result && ptr_result[0])
     {
-        if ((string[0] >= 'a') && (string[0] <= 'z'))
-            string[0] -= ('a' - 'A');
-        string = (char *)utf8_next_char (string);
+        if ((ptr_result[0] >= 'a') && (ptr_result[0] <= 'z'))
+            ptr_result[0] -= ('a' - 'A');
+        ptr_result = (char *)utf8_next_char (ptr_result);
     }
+
+    return result;
 }
 
 /*

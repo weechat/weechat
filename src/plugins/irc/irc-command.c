@@ -2877,10 +2877,9 @@ irc_command_join_server (struct t_irc_server *server, const char *arguments,
                 strcat (new_args, channels[i]);
                 if (manual_join || noswitch)
                 {
-                    channel_name = strdup (pos_channel);
+                    channel_name = weechat_string_tolower (pos_channel);
                     if (channel_name)
                     {
-                        weechat_string_tolower (channel_name);
                         if (manual_join)
                         {
                             weechat_hashtable_set (server->join_manual,

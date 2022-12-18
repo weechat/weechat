@@ -626,25 +626,36 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== string_tolower
 
-Convertir une chaîne UTF-8 en minuscules.
+_Mis à jour dans la 3.8._
+
+Retourner une chaîne avec les lettres majuscules converties en minuscules. +
+Cette fonction n'est pas dépendante de la locale : seules les lettres `A` à `Z`
+sans accents sont converties en minuscules. Tous les autres caractères sont
+gardés tels quels.
 
 Prototype :
 
 [source,c]
 ----
-void weechat_string_tolower (char *string);
+char *weechat_string_tolower (const char *string);
 ----
 
 Paramètres :
 
 * _string_ : chaîne à convertir
 
+Valeur de retour :
+
+* chaîne avec les lettres en minuscules (doit être supprimée par un appel à "free"
+  après utilisation)
+
 Exemple en C :
 
 [source,c]
 ----
-char str[] = "AbCdé";
-weechat_string_tolower (str);  /* str vaut maintenant : "abcdé" */
+char *str = weechat_string_tolower ("ABCD_É");  /* résultat : "abcd_É" */
+/* ... */
+free (str);
 ----
 
 [NOTE]
@@ -652,25 +663,36 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== string_toupper
 
-Convertir une chaîne UTF-8 en majuscules.
+_Mis à jour dans la 3.8._
+
+Retourner une chaîne avec les lettres minuscules converties en majuscules. +
+Cette fonction n'est pas dépendante de la locale : seules les lettres `a` à `z`
+sans accents sont converties en majuscules. Tous les autres caractères sont
+gardés tels quels.
 
 Prototype :
 
 [source,c]
 ----
-void weechat_string_toupper (char *string);
+char *weechat_string_toupper (const char *string);
 ----
 
 Paramètres :
 
 * _string_ : chaîne à convertir
 
+Valeur de retour :
+
+* chaîne avec les lettres en majuscules (doit être supprimée par un appel à "free"
+  après utilisation)
+
 Exemple en C :
 
 [source,c]
 ----
-char str[] = "AbCdé";
-weechat_string_toupper (str);  /* str vaut maintenant : "ABCDé" */
+char *str = weechat_string_toupper ("abcd_é");  /* résultat : "ABCD_é" */
+/* ... */
+free (str);
 ----
 
 [NOTE]

@@ -760,9 +760,8 @@ script_repo_sha512sum_file (const char *filename)
         return NULL;
 
     weechat_string_base_encode (16, hash, hash_size, hash_hexa);
-    weechat_string_tolower (hash_hexa);
 
-    return strdup (hash_hexa);
+    return weechat_string_tolower (hash_hexa);
 }
 
 /*

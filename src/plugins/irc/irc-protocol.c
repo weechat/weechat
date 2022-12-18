@@ -6730,15 +6730,12 @@ IRC_PROTOCOL_CALLBACK(470)
             }
         }
 
-        old_channel_lower = strdup (params[1]);
+        old_channel_lower = weechat_string_tolower (params[1]);
         if (old_channel_lower)
         {
-            weechat_string_tolower (old_channel_lower);
-            new_channel_lower = strdup (params[2]);
+            new_channel_lower = weechat_string_tolower (params[2]);
             if (new_channel_lower)
             {
-                weechat_string_tolower (new_channel_lower);
-
                 if (weechat_hashtable_has_key (server->join_manual,
                                                old_channel_lower))
                 {
@@ -6750,7 +6747,6 @@ IRC_PROTOCOL_CALLBACK(470)
                     weechat_hashtable_remove (server->join_manual,
                                               old_channel_lower);
                 }
-
                 if (weechat_hashtable_has_key (server->join_noswitch,
                                                old_channel_lower))
                 {
@@ -6762,10 +6758,8 @@ IRC_PROTOCOL_CALLBACK(470)
                     weechat_hashtable_remove (server->join_noswitch,
                                               old_channel_lower);
                 }
-
                 free (new_channel_lower);
             }
-
             free (old_channel_lower);
         }
     }

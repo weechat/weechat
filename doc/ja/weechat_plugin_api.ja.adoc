@@ -630,25 +630,36 @@ free (str);
 
 ==== string_tolower
 
-UTF-8 文字列を小文字に変換。
+_WeeChat バージョン 3.8 で更新。_
+
+// TRANSLATION MISSING
+Return a string with uppercase letters converted to lowercase. +
+This function is locale independent: only letters `A` to `Z` without accents
+are converted to lowercase. All other chars are kept as-is.
 
 プロトタイプ:
 
 [source,c]
 ----
-void weechat_string_tolower (char *string);
+char *weechat_string_tolower (const char *string);
 ----
 
 引数:
 
 * _string_: 変換元の文字列
 
+戻り値:
+
+// TRANSLATION MISSING
+* string with lowercase letters (must be freed by calling "free" after use)
+
 C 言語での使用例:
 
 [source,c]
 ----
-char str[] = "AbCdé";
-weechat_string_tolower (str);  /* str is now: "abcdé" */
+char *str = weechat_string_tolower ("ABCD_É");  /* result: "abcd_É" */
+/* ... */
+free (str);
 ----
 
 [NOTE]
@@ -656,25 +667,36 @@ weechat_string_tolower (str);  /* str is now: "abcdé" */
 
 ==== string_toupper
 
-UTF-8 文字列を大文字に変換。
+_WeeChat バージョン 3.8 で更新。_
+
+// TRANSLATION MISSING
+Return a string with lowercase letters converted to uppercase. +
+This function is locale independent: only letters `a` to `z` without accents
+are converted to uppercase. All other chars are kept as-is.
 
 プロトタイプ:
 
 [source,c]
 ----
-void weechat_string_toupper (char *string);
+char *weechat_string_toupper (const char *string);
 ----
 
 引数:
 
 * _string_: 変換元の文字列
 
+戻り値:
+
+// TRANSLATION MISSING
+* string with uppercase letters (must be freed by calling "free" after use)
+
 C 言語での使用例:
 
 [source,c]
 ----
-char str[] = "AbCdé";
-weechat_string_toupper (str);  /* str is now: "ABCDé" */
+char *str = weechat_string_toupper ("abcd_é");  /* result: "ABCD_é" */
+/* ... */
+free (str);
 ----
 
 [NOTE]

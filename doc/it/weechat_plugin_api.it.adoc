@@ -652,25 +652,37 @@ Questa funzione non è disponibile nelle API per lo scripting.
 
 ==== string_tolower
 
-Converte una stringa UTF-8 in minuscolo.
+// TRANSLATION MISSING
+_Updated in 3.8._
+
+// TRANSLATION MISSING
+Return a string with uppercase letters converted to lowercase. +
+This function is locale independent: only letters `A` to `Z` without accents
+are converted to lowercase. All other chars are kept as-is.
 
 Prototipo:
 
 [source,c]
 ----
-void weechat_string_tolower (char *string);
+char *weechat_string_tolower (const char *string);
 ----
 
 Argomenti:
 
 * _string_: stringa da convertire
 
+Valore restituito:
+
+// TRANSLATION MISSING
+* string with lowercase letters (must be freed by calling "free" after use)
+
 Esempio in C:
 
 [source,c]
 ----
-char str[] = "AbCdé";
-weechat_string_tolower (str);  /* str ora è: "abcdé" */
+char *str = weechat_string_tolower ("ABCD_É");  /* result: "abcd_É" */
+/* ... */
+free (str);
 ----
 
 [NOTE]
@@ -678,25 +690,37 @@ Questa funzione non è disponibile nelle API per lo scripting.
 
 ==== string_toupper
 
-Converte una stringa UTF-8 in maiuscolo.
+// TRANSLATION MISSING
+_Updated in 3.8._
+
+// TRANSLATION MISSING
+Return a string with lowercase letters converted to uppercase. +
+This function is locale independent: only letters `a` to `z` without accents
+are converted to uppercase. All other chars are kept as-is.
 
 Prototipo:
 
 [source,c]
 ----
-void weechat_string_toupper (char *string);
+char *weechat_string_toupper (const char *string);
 ----
 
 Argomenti:
 
 * _string_: stringa da convertire
 
+Valore restituito:
+
+// TRANSLATION MISSING
+* string with uppercase letters (must be freed by calling "free" after use)
+
 Esempio in C:
 
 [source,c]
 ----
-char str[] = "AbCdé";
-weechat_string_toupper (str);  /* str ora è: "ABCDé" */
+char *str = weechat_string_toupper ("abcd_é");  /* result: "ABCD_é" */
+/* ... */
+free (str);
 ----
 
 [NOTE]

@@ -343,46 +343,6 @@ end:
 }
 
 /*
- * Converts string to lower case.
- *
- * Note: result must be freed after use.
- */
-
-char *
-eval_string_lower (const char *text)
-{
-    char *tmp;
-
-    tmp = strdup (text);
-    if (!tmp)
-        return strdup ("");
-
-    string_tolower (tmp);
-
-    return tmp;
-}
-
-/*
- * Converts string to upper case.
- *
- * Note: result must be freed after use.
- */
-
-char *
-eval_string_upper (const char *text)
-{
-    char *tmp;
-
-    tmp = strdup (text);
-    if (!tmp)
-        return strdup ("");
-
-    string_toupper (tmp);
-
-    return tmp;
-}
-
-/*
  * Hides chars in a string.
  *
  * Note: result must be freed after use.
@@ -1650,14 +1610,14 @@ eval_replace_vars_cb (void *data, const char *text)
     /* convert to lower case */
     if (strncmp (text, "lower:", 6) == 0)
     {
-        value = eval_string_lower (text + 6);
+        value = string_tolower (text + 6);
         goto end;
     }
 
     /* convert to upper case */
     if (strncmp (text, "upper:", 6) == 0)
     {
-        value = eval_string_upper (text + 6);
+        value = string_toupper (text + 6);
         goto end;
     }
 

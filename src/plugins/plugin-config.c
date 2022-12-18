@@ -111,7 +111,7 @@ plugin_config_set (const char *plugin_name, const char *option_name,
                    const char *value)
 {
     int length, rc;
-    char *option_full_name;
+    char *option_full_name, *option_full_name_lower;
 
     rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
 
@@ -121,8 +121,12 @@ plugin_config_set (const char *plugin_name, const char *option_name,
     {
         snprintf (option_full_name, length, "%s.%s",
                   plugin_name, option_name);
-        string_tolower (option_full_name);
-        rc = plugin_config_set_internal (option_full_name, value);
+        option_full_name_lower = string_tolower (option_full_name);
+        if (option_full_name_lower)
+        {
+            rc = plugin_config_set_internal (option_full_name_lower, value);
+            free (option_full_name_lower);
+        }
         free (option_full_name);
     }
 
@@ -199,7 +203,7 @@ plugin_config_set_desc (const char *plugin_name, const char *option_name,
                         const char *description)
 {
     int length;
-    char *option_full_name;
+    char *option_full_name, *option_full_name_lower;
 
     length = strlen (plugin_name) + 1 + strlen (option_name) + 1;
     option_full_name = malloc (length);
@@ -207,8 +211,13 @@ plugin_config_set_desc (const char *plugin_name, const char *option_name,
     {
         snprintf (option_full_name, length, "%s.%s",
                   plugin_name, option_name);
-        string_tolower (option_full_name);
-        plugin_config_set_desc_internal (option_full_name, description);
+        option_full_name_lower = string_tolower (option_full_name);
+        if (option_full_name_lower)
+        {
+            plugin_config_set_desc_internal (option_full_name_lower,
+                                             description);
+            free (option_full_name_lower);
+        }
         free (option_full_name);
     }
 }

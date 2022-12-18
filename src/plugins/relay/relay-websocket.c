@@ -72,7 +72,7 @@ void
 relay_websocket_save_header (struct t_relay_client *client,
                              const char *message)
 {
-    char *pos, *name;
+    char *pos, *name, *name_lower;
     const char *ptr_value;
 
     /* ignore the "GET" request */
@@ -89,7 +89,12 @@ relay_websocket_save_header (struct t_relay_client *client,
     name = weechat_strndup (message, pos - message);
     if (!name)
         return;
-    weechat_string_tolower (name);
+    name_lower = weechat_string_tolower (name);
+    if (!name_lower)
+    {
+        free (name);
+        return;
+    }
 
     /* get pointer on header value */
     ptr_value = pos + 1;
@@ -99,9 +104,10 @@ relay_websocket_save_header (struct t_relay_client *client,
     }
 
     /* add header in the hashtable */
-    weechat_hashtable_set (client->http_headers, name, ptr_value);
+    weechat_hashtable_set (client->http_headers, name_lower, ptr_value);
 
     free (name);
+    free (name_lower);
 }
 
 /*

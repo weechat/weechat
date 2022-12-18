@@ -182,10 +182,9 @@ gui_nick_get_forced_color (const char *nickname)
     if (forced_color)
         return forced_color;
 
-    nick_lower = strdup (nickname);
+    nick_lower = string_tolower (nickname);
     if (nick_lower)
     {
-        string_tolower (nick_lower);
         forced_color = hashtable_get (config_hashtable_nick_color_force,
                                       nick_lower);
         free (nick_lower);

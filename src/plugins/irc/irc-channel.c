@@ -399,10 +399,9 @@ irc_channel_create_buffer (struct t_irc_server *server,
         channel_name_lower = NULL;
         if (channel_type == IRC_CHANNEL_TYPE_CHANNEL)
         {
-            channel_name_lower = strdup (channel_name);
+            channel_name_lower = weechat_string_tolower (channel_name);
             if (channel_name_lower)
             {
-                weechat_string_tolower (channel_name_lower);
                 manual_join = weechat_hashtable_has_key (server->join_manual,
                                                          channel_name_lower);
                 noswitch = weechat_hashtable_has_key (server->join_noswitch,

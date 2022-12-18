@@ -20,6 +20,14 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 [[v3.8]]
 == Version 3.8 (under dev)
 
+[[v3.8_api_string_lower_upper]]
+=== API functions string_tolower and string_toupper
+
+The functions link:https://weechat.org/doc/plugin/#_string_tolower[string_tolower]
+and link:https://weechat.org/doc/plugin/#_string_toupper[string_toupper]
+now return newly allocated string instead of doing the change in place. +
+The returned string must then be freed after use.
+
 [[v3.8_trigger_regex_command]]
 === Trigger regex command
 
