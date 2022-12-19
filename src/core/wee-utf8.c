@@ -199,28 +199,32 @@ utf8_prev_char (const char *string_start, const char *string)
         /* UTF-8, at least 2 bytes */
         string--;
         if (string < string_start)
-            return (char *)string + 1;
+            return string + 1;
         if (((unsigned char)(string[0]) & 0xC0) == 0x80)
         {
             /* UTF-8, at least 3 bytes */
             string--;
             if (string < string_start)
-                return (char *)string + 1;
+                return string + 1;
             if (((unsigned char)(string[0]) & 0xC0) == 0x80)
             {
                 /* UTF-8, 4 bytes */
                 string--;
                 if (string < string_start)
-                    return (char *)string + 1;
-                return (char *)string;
+                    return string + 1;
+                return string;
             }
             else
-                return (char *)string;
+            {
+                return string;
+            }
         }
         else
-            return (char *)string;
+        {
+            return string;
+        }
     }
-    return (char *)string;
+    return string;
 }
 
 /*
@@ -239,31 +243,31 @@ utf8_next_char (const char *string)
     if (((unsigned char)(string[0]) & 0xE0) == 0xC0)
     {
         if (!string[1])
-            return (char *)string + 1;
-        return (char *)string + 2;
+            return string + 1;
+        return string + 2;
     }
     /* UTF-8, 3 bytes: 1110vvvv 10vvvvvv 10vvvvvv */
     else if (((unsigned char)(string[0]) & 0xF0) == 0xE0)
     {
         if (!string[1])
-            return (char *)string + 1;
+            return string + 1;
         if (!string[2])
-            return (char *)string + 2;
-        return (char *)string + 3;
+            return string + 2;
+        return string + 3;
     }
     /* UTF-8, 4 bytes: 11110vvv 10vvvvvv 10vvvvvv 10vvvvvv */
     else if (((unsigned char)(string[0]) & 0xF8) == 0xF0)
     {
         if (!string[1])
-            return (char *)string + 1;
+            return string + 1;
         if (!string[2])
-            return (char *)string + 2;
+            return string + 2;
         if (!string[3])
-            return (char *)string + 3;
-        return (char *)string + 4;
+            return string + 3;
+        return string + 4;
     }
     /* UTF-8, 1 byte: 0vvvvvvv */
-    return (char *)string + 1;
+    return string + 1;
 }
 
 /*
