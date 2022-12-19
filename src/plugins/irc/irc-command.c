@@ -813,7 +813,7 @@ IRC_COMMAND_CALLBACK(allserv)
 
 IRC_COMMAND_CALLBACK(auth)
 {
-    char str_msg_auth[512];
+    char str_msg_auth[512], *str_msg_auth_upper;
     int sasl_mechanism;
 
     IRC_BUFFER_GET_SERVER(buffer);
@@ -861,9 +861,14 @@ IRC_COMMAND_CALLBACK(auth)
             snprintf (str_msg_auth, sizeof (str_msg_auth),
                       "AUTHENTICATE %s",
                       irc_sasl_mechanism_string[sasl_mechanism]);
-            weechat_string_toupper (str_msg_auth);
-            irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
-                              str_msg_auth);
+            str_msg_auth_upper = weechat_string_toupper (str_msg_auth);
+            if (str_msg_auth_upper)
+            {
+                irc_server_sendf (ptr_server,
+                                  IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
+                                  str_msg_auth_upper);
+                free (str_msg_auth_upper);
+            }
         }
     }
     else
@@ -1505,11 +1510,9 @@ IRC_COMMAND_CALLBACK(cap)
 
     if (argc > 1)
     {
-        cap_cmd = strdup (argv[1]);
+        cap_cmd = weechat_string_toupper (argv[1]);
         if (!cap_cmd)
             WEECHAT_COMMAND_ERROR;
-
-        weechat_string_toupper (cap_cmd);
 
         if ((strcmp (cap_cmd, "LS") == 0) && !argv_eol[2])
         {
@@ -1829,14 +1832,12 @@ IRC_COMMAND_CALLBACK(ctcp)
     if (!targets)
         WEECHAT_COMMAND_ERROR;
 
-    ctcp_type = strdup (argv[arg_type]);
+    ctcp_type = weechat_string_toupper (argv[arg_type]);
     if (!ctcp_type)
     {
         weechat_string_free_split (targets);
         WEECHAT_COMMAND_ERROR;
     }
-
-    weechat_string_toupper (ctcp_type);
 
     if ((strcmp (ctcp_type, "PING") == 0) && !argv_eol[arg_args])
     {

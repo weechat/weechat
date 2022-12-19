@@ -270,10 +270,11 @@ irc_ctcp_reply_to_nick (struct t_irc_server *server,
 {
     struct t_hashtable *hashtable;
     int number;
-    char hash_key[32], *str_args_color, *dup_ctcp, *dup_args;
+    char hash_key[32], *str_args_color, *dup_ctcp, *dup_ctcp_upper, *dup_args;
     const char *str_args;
 
     dup_ctcp = NULL;
+    dup_ctcp_upper = NULL;
     dup_args = NULL;
     hashtable = NULL;
 
@@ -284,7 +285,10 @@ irc_ctcp_reply_to_nick (struct t_irc_server *server,
     dup_ctcp = weechat_string_replace (ctcp, "\01", " ");
     if (!dup_ctcp)
         goto end;
-    weechat_string_toupper (dup_ctcp);
+
+    dup_ctcp_upper = weechat_string_toupper (dup_ctcp);
+    if (!dup_ctcp_upper)
+        goto end;
 
     if (arguments)
     {
@@ -303,7 +307,7 @@ irc_ctcp_reply_to_nick (struct t_irc_server *server,
         NULL,
         "NOTICE %s :\01%s%s%s\01",
         nick,
-        dup_ctcp,
+        dup_ctcp_upper,
         (dup_args) ? " " : "",
         (dup_args) ? dup_args : "");
     if (!hashtable)
@@ -338,7 +342,7 @@ irc_ctcp_reply_to_nick (struct t_irc_server *server,
                 nick,
                 IRC_COLOR_RESET,
                 IRC_COLOR_CHAT_CHANNEL,
-                dup_ctcp,
+                dup_ctcp_upper,
                 (str_args_color[0]) ? IRC_COLOR_RESET : "",
                 (str_args_color[0]) ? " " : "",
                 str_args_color);
@@ -350,6 +354,8 @@ irc_ctcp_reply_to_nick (struct t_irc_server *server,
 end:
     if (dup_ctcp)
         free (dup_ctcp);
+    if (dup_ctcp_upper)
+        free (dup_ctcp_upper);
     if (dup_args)
         free (dup_args);
     if (hashtable)

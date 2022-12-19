@@ -406,7 +406,7 @@ irc_redirect_new_with_commands (struct t_irc_server *server,
                                 const char *cmd_filter)
 {
     struct t_irc_redirect *new_redirect;
-    char **items[4], *pos, *error;
+    char **items[4], *item_upper, *pos, *error;
     int i, j, num_items[4];
     long value;
     struct t_hashtable *hash_cmd[4];
@@ -466,8 +466,12 @@ irc_redirect_new_with_commands (struct t_irc_server *server,
                         if (!error || error[0])
                             value = -1;
                     }
-                    weechat_string_toupper (items[i][j]);
-                    weechat_hashtable_set (hash_cmd[i], items[i][j], &value);
+                    item_upper = weechat_string_toupper (items[i][j]);
+                    if (item_upper)
+                    {
+                        weechat_hashtable_set (hash_cmd[i], item_upper, &value);
+                        free (item_upper);
+                    }
                 }
                 else
                 {

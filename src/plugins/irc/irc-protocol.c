@@ -842,7 +842,8 @@ IRC_PROTOCOL_CALLBACK(cap)
 {
     char **caps_supported, **caps_added, **caps_removed;
     char **caps_enabled, *pos_value, *str_name, **str_caps;
-    char str_msg_auth[512], **str_caps_enabled, **str_caps_disabled, *str_params;
+    char str_msg_auth[512], *str_msg_auth_upper, **str_caps_enabled;
+    char **str_caps_disabled, *str_params;
     int arg_caps, num_caps_supported, num_caps_added, num_caps_removed;
     int num_caps_enabled, sasl_to_do, sasl_mechanism;
     int i, j, timeout, last_reply;
@@ -1094,8 +1095,12 @@ IRC_PROTOCOL_CALLBACK(cap)
                 snprintf (str_msg_auth, sizeof (str_msg_auth),
                           "AUTHENTICATE %s",
                           irc_sasl_mechanism_string[sasl_mechanism]);
-                weechat_string_toupper (str_msg_auth);
-                irc_server_sendf (server, 0, NULL, str_msg_auth);
+                str_msg_auth_upper = weechat_string_toupper (str_msg_auth);
+                if (str_msg_auth_upper)
+                {
+                    irc_server_sendf (server, 0, NULL, str_msg_auth_upper);
+                    free (str_msg_auth_upper);
+                }
                 if (server->hook_timer_sasl)
                     weechat_unhook (server->hook_timer_sasl);
                 timeout = IRC_SERVER_OPTION_INTEGER(
