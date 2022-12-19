@@ -95,7 +95,7 @@ regex_t *irc_color_regex_ansi = NULL;
 char *
 irc_color_decode (const char *string, int keep_colors)
 {
-    char **out, *result;
+    char **out;
     char str_fg[3], str_bg[3], str_color[128], str_key[128], str_to_add[128];
     const char *remapped_color;
     unsigned char *ptr_string;
@@ -271,10 +271,7 @@ irc_color_decode (const char *string, int keep_colors)
             weechat_string_dyn_concat (out, str_to_add, -1);
     }
 
-    result = *out;
-    weechat_string_dyn_free (out, 0);
-
-    return result;
+    return weechat_string_dyn_free (out, 0);
 }
 
 /*
@@ -289,7 +286,7 @@ irc_color_decode (const char *string, int keep_colors)
 char *
 irc_color_encode (const char *string, int keep_colors)
 {
-    char **out, *result;
+    char **out;
     unsigned char *ptr_string;
     int length;
 
@@ -398,10 +395,7 @@ irc_color_encode (const char *string, int keep_colors)
         }
     }
 
-    result = *out;
-    weechat_string_dyn_free (out, 0);
-
-    return result;
+    return weechat_string_dyn_free (out, 0);
 }
 
 /*

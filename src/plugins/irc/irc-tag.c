@@ -49,7 +49,7 @@
 char *
 irc_tag_escape_value (const char *string)
 {
-    char **out, *result;
+    char **out;
     unsigned char *ptr_string;
     int length;
 
@@ -98,10 +98,7 @@ irc_tag_escape_value (const char *string)
         }
     }
 
-    result = *out;
-    weechat_string_dyn_free (out, 0);
-
-    return result;
+    return weechat_string_dyn_free (out, 0);
 }
 
 /*
@@ -115,7 +112,7 @@ irc_tag_escape_value (const char *string)
 char *
 irc_tag_unescape_value (const char *string)
 {
-    char **out, *result;
+    char **out;
     unsigned char *ptr_string;
     int length;
 
@@ -182,10 +179,7 @@ irc_tag_unescape_value (const char *string)
         }
     }
 
-    result = *out;
-    weechat_string_dyn_free (out, 0);
-
-    return result;
+    return weechat_string_dyn_free (out, 0);
 }
 
 /*
