@@ -725,7 +725,7 @@ spell_modifier_cb (const void *pointer, void *data,
     unsigned long value;
     struct t_gui_buffer *buffer;
     struct t_spell_speller_buffer *ptr_speller_buffer;
-    char **result, *str_result, *ptr_string, *ptr_string_orig, *pos_space;
+    char **result, *ptr_string, *ptr_string_orig, *pos_space;
     char *ptr_end, *ptr_end_valid, save_end;
     char *misspelled_word, *old_misspelled_word, *old_suggestions, *suggestions;
     char *word_and_suggestions;
@@ -1052,10 +1052,7 @@ spell_modifier_cb (const void *pointer, void *data,
 
     ptr_speller_buffer->modifier_result = strdup (*result);
 
-    str_result = *result;
-    weechat_string_dyn_free (result, 0);
-
-    return str_result;
+    return weechat_string_dyn_free (result, 0);
 }
 
 /*
