@@ -1947,7 +1947,7 @@ string_translate_chars (const char *string,
 {
     int length, length2, translated;
     const char *ptr_string, *ptr_chars1, *ptr_chars2;
-    char **result, *ptr_result;
+    char **result;
 
     if (!string)
         return NULL;
@@ -1984,10 +1984,7 @@ string_translate_chars (const char *string,
         ptr_string = utf8_next_char (ptr_string);
     }
 
-    ptr_result = *result;
-    string_dyn_free (result, 0);
-
-    return ptr_result;
+    return string_dyn_free (result, 0);
 }
 
 /*

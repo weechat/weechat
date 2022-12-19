@@ -426,7 +426,7 @@ gui_bar_window_expand_spacers (const char *string, int length_on_screen,
                                int bar_window_width, int num_spacers)
 {
     int *spacers, index_spacer, i;
-    char **result, *result2, *next_char;
+    char **result, *next_char;
 
     if (!string || !string[0])
         return NULL;
@@ -517,11 +517,7 @@ gui_bar_window_expand_spacers (const char *string, int length_on_screen,
 
     free (spacers);
 
-    result2 = *result;
-
-    string_dyn_free (result, 0);
-
-    return result2;
+    return string_dyn_free (result, 0);
 }
 
 /*

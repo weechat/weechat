@@ -1741,7 +1741,7 @@ gui_bar_item_buffer_nicklist_cb (const void *pointer, void *data,
     struct t_gui_nick_group *ptr_group;
     struct t_gui_nick *ptr_nick;
     struct t_config_option *ptr_option;
-    char **nicklist, *str_nicklist;
+    char **nicklist;
     int i;
 
     /* make C compiler happy */
@@ -1874,11 +1874,7 @@ gui_bar_item_buffer_nicklist_cb (const void *pointer, void *data,
         gui_nicklist_get_next_item (buffer, &ptr_group, &ptr_nick);
     }
 
-    str_nicklist = *nicklist;
-
-    string_dyn_free (nicklist, 0);
-
-    return str_nicklist;
+    return string_dyn_free (nicklist, 0);
 }
 
 /*

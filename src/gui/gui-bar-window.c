@@ -702,7 +702,7 @@ gui_bar_window_content_get_with_filling (struct t_gui_bar_window *bar_window,
 {
     enum t_gui_bar_filling filling;
     const char *ptr_content;
-    char **content, *content2, str_reinit_color[32];
+    char **content, str_reinit_color[32];
     char str_reinit_color_space[32], str_reinit_color_space_start_line[32];
     char str_start_item[32];
     char *item_value, *item_value2, ****split_items, **linear_items;
@@ -987,10 +987,7 @@ gui_bar_window_content_get_with_filling (struct t_gui_bar_window *bar_window,
         return NULL;
     }
 
-    content2 = *content;
-    string_dyn_free (content, 0);
-
-    return content2;
+    return string_dyn_free (content, 0);
 }
 
 /*
