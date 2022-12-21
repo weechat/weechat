@@ -469,15 +469,6 @@ TEST(CoreUtf8, Convert)
     STRCMP_EQUAL(UNICODE_CJK_YELLOW, result);
     LONGS_EQUAL(4, utf8_int_string (0x24b62, result));
     STRCMP_EQUAL(UNICODE_HAN_CHAR, result);
-
-    /* get wide char */
-    LONGS_EQUAL(WEOF, utf8_wide_char (NULL));
-    LONGS_EQUAL(WEOF, utf8_wide_char (""));
-    LONGS_EQUAL(65, utf8_wide_char ("A"));
-    LONGS_EQUAL(0xc3ab, utf8_wide_char ("ë"));
-    LONGS_EQUAL(0xe282ac, utf8_wide_char ("€"));
-    LONGS_EQUAL(0xe2bba9, utf8_wide_char (UNICODE_CJK_YELLOW));
-    LONGS_EQUAL(0xf0a4ada2, utf8_wide_char (UNICODE_HAN_CHAR));
 }
 
 /*

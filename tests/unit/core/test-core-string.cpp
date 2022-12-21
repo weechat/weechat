@@ -191,8 +191,9 @@ TEST(CoreString, ToLower)
     WEE_TEST_STR(NULL, string_tolower (NULL));
 
     WEE_TEST_STR("", string_tolower (""));
-    WEE_TEST_STR("abcd_É", string_tolower ("ABCD_É"));
-    WEE_TEST_STR("À É Ï Ô Ü Ÿ Æ Œ Ç", string_tolower ("À É Ï Ô Ü Ÿ Æ Œ Ç"));
+    WEE_TEST_STR("abcd_é", string_tolower ("ABCD_É"));
+    WEE_TEST_STR("àáâãäåæçèéêëìíîïðñòóôõöøœšùúûüýÿ",
+                 string_tolower ("ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØŒŠÙÚÛÜÝŸ"));
     WEE_TEST_STR("€", string_tolower ("€"));
     WEE_TEST_STR("[⛄]", string_tolower ("[⛄]"));
 }
@@ -209,8 +210,9 @@ TEST(CoreString, ToUpper)
     WEE_TEST_STR(NULL, string_tolower (NULL));
 
     WEE_TEST_STR("", string_toupper (""));
-    WEE_TEST_STR("ABCD_é", string_toupper ("abcd_é"));
-    WEE_TEST_STR("à é ï ô ü ÿ æ œ ç", string_toupper ("à é ï ô ü ÿ æ œ ç"));
+    WEE_TEST_STR("ABCD_É", string_toupper ("abcd_é"));
+    WEE_TEST_STR("ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØŒŠÙÚÛÜÝŸ",
+                 string_toupper ("àáâãäåæçèéêëìíîïðñòóôõöøœšùúûüýÿ"));
     WEE_TEST_STR("€", string_toupper ("€"));
     WEE_TEST_STR("[⛄]", string_toupper ("[⛄]"));
 }

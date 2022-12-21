@@ -628,10 +628,14 @@ Cette fonction n'est pas disponible dans l'API script.
 
 _Mis à jour dans la 3.8._
 
-Retourner une chaîne avec les lettres majuscules converties en minuscules. +
-Cette fonction n'est pas dépendante de la locale : seules les lettres `A` à `Z`
-sans accents sont converties en minuscules. Tous les autres caractères sont
-gardés tels quels.
+Retourner une chaîne avec les lettres majuscules converties en minuscules.
+
+[NOTE]
+Le comportement a changé dans la version 3.8 : désormais toutes les lettres en
+majuscules sont correctement converties en minuscules (par appel à la fonction
+`towlower`), en plus de l'intervalle de `A` à `Z`. +
+De plus, une chaîne nouvellement allouée est retournée et doit être libérée après
+utilisation.
 
 Prototype :
 
@@ -653,7 +657,7 @@ Exemple en C :
 
 [source,c]
 ----
-char *str = weechat_string_tolower ("ABCD_É");  /* résultat : "abcd_É" */
+char *str = weechat_string_tolower ("ABCD_É");  /* résultat : "abcd_é" */
 /* ... */
 free (str);
 ----
@@ -665,10 +669,14 @@ Cette fonction n'est pas disponible dans l'API script.
 
 _Mis à jour dans la 3.8._
 
-Retourner une chaîne avec les lettres minuscules converties en majuscules. +
-Cette fonction n'est pas dépendante de la locale : seules les lettres `a` à `z`
-sans accents sont converties en majuscules. Tous les autres caractères sont
-gardés tels quels.
+Retourner une chaîne avec les lettres minuscules converties en majuscules.
+
+[NOTE]
+Le comportement a changé dans la version 3.8 : désormais toutes les lettres en
+minuscules sont correctement converties en majuscules (par appel à la fonction
+`towupper`), en plus de l'intervalle de `a` à `z`. +
+De plus, une chaîne nouvellement allouée est retournée et doit être libérée après
+utilisation.
 
 Prototype :
 
@@ -690,7 +698,7 @@ Exemple en C :
 
 [source,c]
 ----
-char *str = weechat_string_toupper ("abcd_é");  /* résultat : "ABCD_é" */
+char *str = weechat_string_toupper ("abcd_é");  /* résultat : "ABCD_É" */
 /* ... */
 free (str);
 ----
@@ -700,9 +708,14 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== strcasecmp
 
-_Mis à jour dans la 1.0._
+_Mis à jour dans la 1.0, 3.8._
 
-Comparer deux chaînes indépendemment de la locale et de la casse.
+Comparer deux chaînes indépendemment de la casse.
+
+[NOTE]
+Le comportement a changé dans la version 3.8 : désormais toutes les lettres en
+majuscules sont correctement converties en minuscules (par appel à la fonction
+`towlower`), en plus de l'intervalle de `A` à `Z`.
 
 Prototype :
 
@@ -726,7 +739,9 @@ Exemple en C :
 
 [source,c]
 ----
-int diff = weechat_strcasecmp ("aaa", "CCC");  /* == -2 */
+int diff;
+diff = weechat_strcasecmp ("aaa", "CCC");    /* == -1 */
+diff = weechat_strcasecmp ("noël", "NOËL");  /* == 0  */
 ----
 
 [NOTE]
@@ -776,10 +791,14 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== strncasecmp
 
-_Mis à jour dans la 1.0._
+_Mis à jour dans la 1.0, 3.8._
 
-Comparer deux chaînes indépendemment de la locale et de la casse, pour _max_
-caractères.
+Comparer deux chaînes indépendemment de la casse, pour _max_ caractères.
+
+[NOTE]
+Le comportement a changé dans la version 3.8 : désormais toutes les lettres en
+majuscules sont correctement converties en minuscules (par appel à la fonction
+`towlower`), en plus de l'intervalle de `A` à `Z`.
 
 Prototype :
 
@@ -855,10 +874,9 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== strcmp_ignore_chars
 
-_Mis à jour dans la 1.0._
+_Mis à jour dans la 1.0, 3.8._
 
-Comparer deux chaînes indépendemment de la locale (et en option de la casse), en
-ignorant des caractères.
+Comparer deux chaînes en ignorant des caractères.
 
 Prototype :
 
@@ -875,6 +893,12 @@ Paramètres :
 * _string2_ : seconde chaîne à comparer
 * _chars_ignored_ : chaîne avec les caractères à ignorer
 * _case_sensitive_ : 1 pour une comparaison tenant compte de la casse, sinon 0
+
+[NOTE]
+Le comportement a changé dans la version 3.8 lorsque _case_sensitive_ est
+positionné à 0 : désormais toutes les lettres en majuscules sont correctement
+converties en minuscules (par appel à la fonction `towlower`), en plus de
+l'intervalle de `A` à `Z`.
 
 Valeur de retour :
 
@@ -894,9 +918,14 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== strcasestr
 
-_Mis à jour dans la 1.3._
+_Mis à jour dans la 1.3, 3.8._
 
-Rechercher une chaîne indépendemment de la locale et de la casse.
+Rechercher une chaîne indépendemment de la casse.
+
+[NOTE]
+Le comportement a changé dans la version 3.8 : désormais toutes les lettres en
+majuscules sont correctement converties en minuscules (par appel à la fonction
+`towlower`), en plus de l'intervalle de `A` à `Z`.
 
 Prototype :
 
@@ -971,7 +1000,7 @@ length = weechat.strlen_screen("é")  # 1
 
 ==== string_match
 
-_Mis à jour dans la 1.0._
+_Mis à jour dans la 1.0, 3.8._
 
 Vérifier si une chaîne correspond à un masque.
 
@@ -993,6 +1022,12 @@ Paramètres :
 [NOTE]
 Depuis la version 1.0, les caractères joker sont autorisés à l'intérieur du
 masque (pas seulement au début et à la fin du masque).
+
+[NOTE]
+Le comportement a changé dans la version 3.8 lorsque _case_sensitive_ est
+positionné à 0 : désormais toutes les lettres en majuscules sont correctement
+converties en minuscules (par appel à la fonction `towlower`), en plus de
+l'intervalle de `A` à `Z`.
 
 Valeur de retour :
 
@@ -1026,7 +1061,7 @@ match5 = weechat.string_match("abcdef", "*b*d*", 0)  # == 1
 
 ==== string_match_list
 
-_WeeChat ≥ 2.5._
+_WeeChat ≥ 2.5, mis à jour dans la 3.8._
 
 Vérifier si une chaîne correspond à une liste de masques. Des masques négatifs
 sont autorisés avec le format "!mot". Un masque négatif a une priorité plus
@@ -1047,6 +1082,12 @@ Paramètres :
   chaque masque est comparé à la chaîne avec la fonction
   <<_string_match,string_match>>
 * _case_sensitive_ : 1 pour une comparaison tenant compte de la casse, sinon 0
+
+[NOTE]
+Le comportement a changé dans la version 3.8 lorsque _case_sensitive_ est
+positionné à 0 : désormais toutes les lettres en majuscules sont correctement
+converties en minuscules (par appel à la fonction `towlower`), en plus de
+l'intervalle de `A` à `Z`.
 
 Valeur de retour :
 
@@ -3687,9 +3728,14 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== utf8_charcasecmp
 
-_Mis à jour dans la 1.0._
+_Mis à jour dans la 1.0, 3.8._
 
 Comparer deux caractères UTF-8 en ignorant la casse.
+
+[NOTE]
+Le comportement a changé dans la version 3.8 : désormais toutes les lettres en
+majuscules sont correctement converties en minuscules (par appel à la fonction
+`towlower`), en plus de l'intervalle de `A` à `Z`.
 
 Prototype :
 

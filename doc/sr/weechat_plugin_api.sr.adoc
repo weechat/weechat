@@ -594,9 +594,13 @@ free (str);
 _Ажурирано у верзији 3.8._
 
 // TRANSLATION MISSING
-Return a string with uppercase letters converted to lowercase. +
-This function is locale independent: only letters `A` to `Z` without accents
-are converted to lowercase. All other chars are kept as-is.
+Return a string with uppercase letters converted to lowercase.
+
+[NOTE]
+Behavior has changed in version 3.8: now all uppercase letters are properly
+converted to lowercase (by calling function `towlower`), in addition to the
+range `A` to `Z`. +
+Moreover, a newly allocated string is returned and must be freed after use.
 
 Прототип:
 
@@ -618,7 +622,7 @@ C пример:
 
 [source,c]
 ----
-char *str = weechat_string_tolower ("ABCD_É");  /* result: „abcd_É” */
+char *str = weechat_string_tolower ("ABCD_É");  /* result: „abcd_é” */
 /* ... */
 free (str);
 ----
@@ -631,9 +635,13 @@ free (str);
 _Ажурирано у верзији 3.8._
 
 // TRANSLATION MISSING
-Return a string with lowercase letters converted to uppercase. +
-This function is locale independent: only letters `a` to `z` without accents
-are converted to uppercase. All other chars are kept as-is.
+Return a string with lowercase letters converted to uppercase.
+
+[NOTE]
+Behavior has changed in version 3.8: now all lowercase letters are properly
+converted to uppercase (by calling function `towupper`), in addition to the
+range `a` to `z`. +
+Moreover, a newly allocated string is returned and must be freed after use.
 
 Прототип:
 
@@ -655,7 +663,7 @@ C пример:
 
 [source,c]
 ----
-char *str = weechat_string_toupper ("abcd_é");  /* result: „ABCD_é” */
+char *str = weechat_string_toupper ("abcd_é");  /* result: „ABCD_É” */
 /* ... */
 free (str);
 ----
@@ -665,9 +673,16 @@ free (str);
 
 ==== strcasecmp
 
-_Ажурирано у верзији 1.0._
+_Ажурирано у верзији 1.0, 3.8._
 
-Поређење стрингова независно од величине слова и локал подешавања.
+// TRANSLATION MISSING
+Case insensitive string comparison.
+
+// TRANSLATION MISSING
+[NOTE]
+Behavior has changed in version 3.8: now all uppercase letters are properly
+converted to lowercase (by calling function `towlower`), in addition to the
+range `A` to `Z`.
 
 Прототип:
 
@@ -691,7 +706,9 @@ C пример:
 
 [source,c]
 ----
-int diff = weechat_strcasecmp ("aaa", "CCC");  /* == -2 */
+int diff;
+diff = weechat_strcasecmp ("aaa", "CCC");    /* == -1 */
+diff = weechat_strcasecmp ("noël", "NOËL");  /* == 0  */
 ----
 
 [NOTE]
@@ -742,7 +759,14 @@ int diff = weechat_strcasecmp_range ("nick{away}", "NICK[away]", 29);  /* == 0 *
 
 _Ажурирано у верзији 1.0._
 
-Поређење стрингова независно од величине слова и локал подешавања, за _max_ карактера.
+// TRANSLATION MISSING
+Case insensitive string comparison, for _max_ chars.
+
+// TRANSLATION MISSING
+[NOTE]
+Behavior has changed in version 3.8: now all uppercase letters are properly
+converted to lowercase (by calling function `towlower`), in addition to the
+range `A` to `Z`.
 
 Прототип:
 
@@ -817,9 +841,10 @@ int diff = weechat_strncasecmp_range ("nick{away}", "NICK[away]", 6, 29);  /* ==
 
 ==== strcmp_ignore_chars
 
-_Ажурирано у верзији 1.0._
+_Ажурирано у верзији 1.0, 3.8._
 
-Поређење стрингова према локал подешавању (и необавезно независно од величине слова), уз игнорисање неких карактера.
+// TRANSLATION MISSING
+String comparison ignoring some chars.
 
 Прототип:
 
@@ -836,6 +861,12 @@ int weechat_strcmp_ignore_chars (const char *string1, const char *string2,
 * _string2_: други стринг за поређење
 * _chars_ignored_: стринг са карактерима који се игноришу
 * _case_sensitive_: 1 за поређење које прави разлику у величини слова, у супротном 0
+
+// TRANSLATION MISSING
+[NOTE]
+Behavior has changed in version 3.8 when _case_sensitive_ is set to 0: now all
+uppercase letters are properly converted to lowercase (by calling function
+`towlower`), in addition to the range `A` to `Z`.
 
 Повратна вредност:
 
@@ -855,9 +886,16 @@ int diff = weechat_strcmp_ignore_chars ("a-b", "--a-e", "-", 1);  /* == -3 */
 
 ==== strcasestr
 
-_Ажурирано у верзији 1.3._
+_Ажурирано у верзији 1.3, 3.8._
 
-Претрага стринга независно од величине слова и локал подешавања.
+// TRANSLATION MISSING
+Case insensitive string search.
+
+// TRANSLATION MISSING
+[NOTE]
+Behavior has changed in version 3.8: now all uppercase letters are properly
+converted to lowercase (by calling function `towlower`), in addition to the
+range `A` to `Z`.
 
 Прототип:
 
@@ -931,7 +969,7 @@ length = weechat.strlen_screen("é")  # 1
 
 ==== string_match
 
-_Ажурирано у верзији 1.0._
+_Ажурирано у верзији 1.0, 3.8._
 
 Провера да ли стринг задовољава маску.
 
@@ -951,6 +989,12 @@ int weechat_string_match (const char *string, const char *mask,
 
 [NOTE]
 Почевши од верзије 1.0, у маски се дозвољава употреба џокера (не само на почетку/крају маске).
+
+// TRANSLATION MISSING
+[NOTE]
+Behavior has changed in version 3.8 when _case_sensitive_ is set to 0: now all
+uppercase letters are properly converted to lowercase (by calling function
+`towlower`), in addition to the range `A` to `Z`.
 
 Повратна вредност:
 
@@ -984,7 +1028,7 @@ match5 = weechat.string_match("abcdef", "*b*d*", 0)  # == 1
 
 ==== string_match_list
 
-_WeeChat ≥ 2.5._
+_WeeChat ≥ 2.5, ажурирано у верзији 3.8._
 
 Проверава да ли стринг задовољава листу маски, при чему је дозвољена употреба негативних маски у формату „!реч”. Негативна маска има виши приоритет у односу на стандардну маску.
 
@@ -1001,6 +1045,12 @@ int weechat_string_match_list (const char *string, const char **masks,
 * _string_: стринг
 * _masks_: листа маски, са NULL након последње маске у листи; свака маска се пореди са стрингом функцијом <<_string_match,string_match>>
 * _case_sensitive_: 1 за поређење које прави разлику у величини слова, у супротном 0
+
+// TRANSLATION MISSING
+[NOTE]
+Behavior has changed in version 3.8 when _case_sensitive_ is set to 0: now all
+uppercase letters are properly converted to lowercase (by calling function
+`towlower`), in addition to the range `A` to `Z`.
 
 Повратна вредност:
 
@@ -3504,9 +3554,15 @@ int diff = weechat_utf8_charcmp ("aaa", "ccc");  /* == -2 */
 
 ==== utf8_charcasecmp
 
-_Ажурирано у верзији 1.0._
+_Ажурирано у верзији 1.0, 3.8._
 
 Пореди два UTF-8 карактера, уз игнорисање разлике у величини слова.
+
+// TRANSLATION MISSING
+[NOTE]
+Behavior has changed in version 3.8: now all uppercase letters are properly
+converted to lowercase (by calling function `towlower`), in addition to the
+range `A` to `Z`.
 
 Прототип:
 

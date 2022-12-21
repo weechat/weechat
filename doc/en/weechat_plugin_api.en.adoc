@@ -618,9 +618,13 @@ This function is not available in scripting API.
 
 _Updated in 3.8._
 
-Return a string with uppercase letters converted to lowercase. +
-This function is locale independent: only letters `A` to `Z` without accents
-are converted to lowercase. All other chars are kept as-is.
+Return a string with uppercase letters converted to lowercase.
+
+[NOTE]
+Behavior has changed in version 3.8: now all uppercase letters are properly
+converted to lowercase (by calling function `towlower`), in addition to the
+range `A` to `Z`. +
+Moreover, a newly allocated string is returned and must be freed after use.
 
 Prototype:
 
@@ -641,7 +645,7 @@ C example:
 
 [source,c]
 ----
-char *str = weechat_string_tolower ("ABCD_É");  /* result: "abcd_É" */
+char *str = weechat_string_tolower ("ABCD_É");  /* result: "abcd_é" */
 /* ... */
 free (str);
 ----
@@ -653,9 +657,13 @@ This function is not available in scripting API.
 
 _Updated in 3.8._
 
-Return a string with lowercase letters converted to uppercase. +
-This function is locale independent: only letters `a` to `z` without accents
-are converted to uppercase. All other chars are kept as-is.
+Return a string with lowercase letters converted to uppercase.
+
+[NOTE]
+Behavior has changed in version 3.8: now all lowercase letters are properly
+converted to uppercase (by calling function `towupper`), in addition to the
+range `a` to `z`. +
+Moreover, a newly allocated string is returned and must be freed after use.
 
 Prototype:
 
@@ -676,7 +684,7 @@ C example:
 
 [source,c]
 ----
-char *str = weechat_string_toupper ("abcd_é");  /* result: "ABCD_é" */
+char *str = weechat_string_toupper ("abcd_é");  /* result: "ABCD_É" */
 /* ... */
 free (str);
 ----
@@ -686,9 +694,14 @@ This function is not available in scripting API.
 
 ==== strcasecmp
 
-_Updated in 1.0._
+_Updated in 1.0, 3.8._
 
-Locale and case independent string comparison.
+Case insensitive string comparison.
+
+[NOTE]
+Behavior has changed in version 3.8: now all uppercase letters are properly
+converted to lowercase (by calling function `towlower`), in addition to the
+range `A` to `Z`.
 
 Prototype:
 
@@ -712,7 +725,9 @@ C example:
 
 [source,c]
 ----
-int diff = weechat_strcasecmp ("aaa", "CCC");  /* == -2 */
+int diff;
+diff = weechat_strcasecmp ("aaa", "CCC");    /* == -1 */
+diff = weechat_strcasecmp ("noël", "NOËL");  /* == 0  */
 ----
 
 [NOTE]
@@ -762,9 +777,14 @@ This function is not available in scripting API.
 
 ==== strncasecmp
 
-_Updated in 1.0._
+_Updated in 1.0, 3.8._
 
-Locale and case independent string comparison, for _max_ chars.
+Case insensitive string comparison, for _max_ chars.
+
+[NOTE]
+Behavior has changed in version 3.8: now all uppercase letters are properly
+converted to lowercase (by calling function `towlower`), in addition to the
+range `A` to `Z`.
 
 Prototype:
 
@@ -840,10 +860,9 @@ This function is not available in scripting API.
 
 ==== strcmp_ignore_chars
 
-_Updated in 1.0._
+_Updated in 1.0, 3.8._
 
-Locale (and optionally case independent) string comparison, ignoring some
-chars.
+String comparison ignoring some chars.
 
 Prototype:
 
@@ -860,6 +879,11 @@ Arguments:
 * _string2_: second string for comparison
 * _chars_ignored_: string with chars to ignored
 * _case_sensitive_: 1 for case sensitive comparison, otherwise 0
+
+[NOTE]
+Behavior has changed in version 3.8 when _case_sensitive_ is set to 0: now all
+uppercase letters are properly converted to lowercase (by calling function
+`towlower`), in addition to the range `A` to `Z`.
 
 Return value:
 
@@ -879,9 +903,14 @@ This function is not available in scripting API.
 
 ==== strcasestr
 
-_Updated in 1.3._
+_Updated in 1.3, 3.8._
 
-Locale and case independent string search.
+Case insensitive string search.
+
+[NOTE]
+Behavior has changed in version 3.8: now all uppercase letters are properly
+converted to lowercase (by calling function `towlower`), in addition to the
+range `A` to `Z`.
 
 Prototype:
 
@@ -954,7 +983,7 @@ length = weechat.strlen_screen("é")  # 1
 
 ==== string_match
 
-_Updated in 1.0._
+_Updated in 1.0, 3.8._
 
 Check if a string matches a mask.
 
@@ -976,6 +1005,11 @@ Arguments:
 [NOTE]
 Since version 1.0, wildcards are allowed inside the mask
 (not only beginning/end of mask).
+
+[NOTE]
+Behavior has changed in version 3.8 when _case_sensitive_ is set to 0: now all
+uppercase letters are properly converted to lowercase (by calling function
+`towlower`), in addition to the range `A` to `Z`.
 
 Return value:
 
@@ -1009,7 +1043,7 @@ match5 = weechat.string_match("abcdef", "*b*d*", 0)  # == 1
 
 ==== string_match_list
 
-_WeeChat ≥ 2.5._
+_WeeChat ≥ 2.5, updated in 3.8._
 
 Check if a string matches a list of masks where negative mask is allowed
 with the format "!word". A negative mask has higher priority than a standard
@@ -1029,6 +1063,11 @@ Arguments:
 * _masks_: list of masks, with a NULL after the last mask in list; each mask
   is compared to the string with the function <<_string_match,string_match>>
 * _case_sensitive_: 1 for case sensitive comparison, otherwise 0
+
+[NOTE]
+Behavior has changed in version 3.8 when _case_sensitive_ is set to 0: now all
+uppercase letters are properly converted to lowercase (by calling function
+`towlower`), in addition to the range `A` to `Z`.
 
 Return value:
 
@@ -3624,9 +3663,14 @@ This function is not available in scripting API.
 
 ==== utf8_charcasecmp
 
-_Updated in 1.0._
+_Updated in 1.0, 3.8._
 
 Compare two UTF-8 chars, ignoring case.
+
+[NOTE]
+Behavior has changed in version 3.8: now all uppercase letters are properly
+converted to lowercase (by calling function `towlower`), in addition to the
+range `A` to `Z`.
 
 Prototype:
 

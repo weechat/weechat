@@ -500,7 +500,7 @@ config_set_word_chars (const char *str_word_chars,
                 /* char1 */
                 item = string_strndup (ptr_item, pos - ptr_item);
                 item2 = string_convert_escaped_chars (item);
-                (*word_chars)[i].char1 = utf8_wide_char (item2);
+                (*word_chars)[i].char1 = utf8_char_int (item2);
                 if (item)
                     free (item);
                 if (item2)
@@ -508,7 +508,7 @@ config_set_word_chars (const char *str_word_chars,
                 /* char2 */
                 item = strdup (pos + 1);
                 item2 = string_convert_escaped_chars (item);
-                (*word_chars)[i].char2 = utf8_wide_char (item2);
+                (*word_chars)[i].char2 = utf8_char_int (item2);
                 if (item)
                     free (item);
                 if (item2)
@@ -521,7 +521,7 @@ config_set_word_chars (const char *str_word_chars,
                 if ((*word_chars)[i].wc_class == (wctype_t)0)
                 {
                     item = string_convert_escaped_chars (ptr_item);
-                    (*word_chars)[i].char1 = utf8_wide_char (item);
+                    (*word_chars)[i].char1 = utf8_char_int (item);
                     (*word_chars)[i].char2 = (*word_chars)[i].char1;
                     if (item)
                         free (item);

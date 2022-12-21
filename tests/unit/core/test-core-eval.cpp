@@ -538,12 +538,12 @@ TEST(CoreEval, EvalExpression)
     /* test case conversion: to lower case */
     WEE_CHECK_EVAL("", "${lower:}");
     WEE_CHECK_EVAL("this is a test", "${lower:This is a TEST}");
-    WEE_CHECK_EVAL("testÉ testé", "${lower:TESTÉ Testé}");
+    WEE_CHECK_EVAL("testé testé", "${lower:TESTÉ Testé}");
 
     /* test case conversion: to upper case */
     WEE_CHECK_EVAL("", "${upper:}");
     WEE_CHECK_EVAL("THIS IS A TEST", "${upper:This is a TEST}");
-    WEE_CHECK_EVAL("TESTÉ TESTé", "${upper:TESTÉ Testé}");
+    WEE_CHECK_EVAL("TESTÉ TESTÉ", "${upper:TESTÉ Testé}");
 
     /* test hidden chars */
     WEE_CHECK_EVAL("", "${hide:invalid}");

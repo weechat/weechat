@@ -656,9 +656,13 @@ Questa funzione non è disponibile nelle API per lo scripting.
 _Updated in 3.8._
 
 // TRANSLATION MISSING
-Return a string with uppercase letters converted to lowercase. +
-This function is locale independent: only letters `A` to `Z` without accents
-are converted to lowercase. All other chars are kept as-is.
+Return a string with uppercase letters converted to lowercase.
+
+[NOTE]
+Behavior has changed in version 3.8: now all uppercase letters are properly
+converted to lowercase (by calling function `towlower`), in addition to the
+range `A` to `Z`. +
+Moreover, a newly allocated string is returned and must be freed after use.
 
 Prototipo:
 
@@ -680,7 +684,7 @@ Esempio in C:
 
 [source,c]
 ----
-char *str = weechat_string_tolower ("ABCD_É");  /* result: "abcd_É" */
+char *str = weechat_string_tolower ("ABCD_É");  /* result: "abcd_é" */
 /* ... */
 free (str);
 ----
@@ -694,9 +698,13 @@ Questa funzione non è disponibile nelle API per lo scripting.
 _Updated in 3.8._
 
 // TRANSLATION MISSING
-Return a string with lowercase letters converted to uppercase. +
-This function is locale independent: only letters `a` to `z` without accents
-are converted to uppercase. All other chars are kept as-is.
+Return a string with lowercase letters converted to uppercase.
+
+[NOTE]
+Behavior has changed in version 3.8: now all lowercase letters are properly
+converted to uppercase (by calling function `towupper`), in addition to the
+range `a` to `z`. +
+Moreover, a newly allocated string is returned and must be freed after use.
 
 Prototipo:
 
@@ -718,7 +726,7 @@ Esempio in C:
 
 [source,c]
 ----
-char *str = weechat_string_toupper ("abcd_é");  /* result: "ABCD_é" */
+char *str = weechat_string_toupper ("abcd_é");  /* result: "ABCD_É" */
 /* ... */
 free (str);
 ----
@@ -729,9 +737,16 @@ Questa funzione non è disponibile nelle API per lo scripting.
 ==== strcasecmp
 
 // TRANSLATION MISSING
-_Updated in 1.0._
+_Updated in 1.0, 3.8._
 
-Confronta stringa non sensibile alle maiuscole e alla localizzazione.
+// TRANSLATION MISSING
+Case insensitive string comparison.
+
+// TRANSLATION MISSING
+[NOTE]
+Behavior has changed in version 3.8: now all uppercase letters are properly
+converted to lowercase (by calling function `towlower`), in addition to the
+range `A` to `Z`.
 
 Prototipo:
 
@@ -755,7 +770,9 @@ Esempio in C:
 
 [source,c]
 ----
-int diff = weechat_strcasecmp ("aaa", "CCC");  /* == -2 */
+int diff;
+diff = weechat_strcasecmp ("aaa", "CCC");    /* == -1 */
+diff = weechat_strcasecmp ("noël", "NOËL");  /* == 0  */
 ----
 
 [NOTE]
@@ -807,10 +824,16 @@ Questa funzione non è disponibile nelle API per lo scripting.
 ==== strncasecmp
 
 // TRANSLATION MISSING
-_Updated in 1.0._
+_Updated in 1.0, 3.8._
 
-Confronta stringa indipendente non sensibile alle maiuscole e alla
-localizzazione, per un numero _max_ di caratteri.
+// TRANSLATION MISSING
+Case insensitive string comparison, for _max_ chars.
+
+// TRANSLATION MISSING
+[NOTE]
+Behavior has changed in version 3.8: now all uppercase letters are properly
+converted to lowercase (by calling function `towlower`), in addition to the
+range `A` to `Z`.
 
 Prototipo:
 
@@ -888,10 +911,10 @@ Questa funzione non è disponibile nelle API per lo scripting.
 ==== strcmp_ignore_chars
 
 // TRANSLATION MISSING
-_Updated in 1.0._
+_Updated in 1.0, 3.8._
 
-Confronta una stringa localizzata (e opzionalmente non sensibile alle
-maiuscole), ignorando alcuni caratteri.
+// TRANSLATION MISSING
+String comparison ignoring some chars.
 
 Prototipo:
 
@@ -908,6 +931,12 @@ Argomenti:
 * _string2_: seconda stringa per il confronto
 * _chars_ignored_: stringa con caratteri da ignorare
 * _case_sensitive_: 1 per il confronto sensibile alle maiuscole, altrimenti 0
+
+// TRANSLATION MISSING
+[NOTE]
+Behavior has changed in version 3.8 when _case_sensitive_ is set to 0: now all
+uppercase letters are properly converted to lowercase (by calling function
+`towlower`), in addition to the range `A` to `Z`.
 
 Valore restituito:
 
@@ -928,10 +957,16 @@ Questa funzione non è disponibile nelle API per lo scripting.
 ==== strcasestr
 
 // TRANSLATION MISSING
-_Updated in 1.3._
+_Updated in 1.3, 3.8._
 
-Cerca una stringa non sensibile alle maiuscole e indipendente dalla
-localizzazione.
+// TRANSLATION MISSING
+Case insensitive string search.
+
+// TRANSLATION MISSING
+[NOTE]
+Behavior has changed in version 3.8: now all uppercase letters are properly
+converted to lowercase (by calling function `towlower`), in addition to the
+range `A` to `Z`.
 
 Prototipo:
 
@@ -1010,7 +1045,7 @@ length = weechat.strlen_screen("é")  # 1
 ==== string_match
 
 // TRANSLATION MISSING
-_Updated in 1.0._
+_Updated in 1.0, 3.8._
 
 Verifica se una stringa coincide ad una mask.
 
@@ -1034,6 +1069,12 @@ Argomenti:
 [NOTE]
 Since version 1.0, wildcards are allowed inside the mask
 (not only beginning/end of mask).
+
+// TRANSLATION MISSING
+[NOTE]
+Behavior has changed in version 3.8 when _case_sensitive_ is set to 0: now all
+uppercase letters are properly converted to lowercase (by calling function
+`towlower`), in addition to the range `A` to `Z`.
 
 Valore restituito:
 
@@ -1067,7 +1108,8 @@ match5 = weechat.string_match("abcdef", "*b*d*", 0)  # == 1
 
 ==== string_match_list
 
-_WeeChat ≥ 2.5._
+// TRANSLATION MISSING
+_WeeChat ≥ 2.5, updated in 3.8._
 
 // TRANSLATION MISSING
 Check if a string matches a list of masks where negative mask is allowed
@@ -1089,6 +1131,12 @@ Argomenti:
 * _masks_: list of masks, with a NULL after the last mask in list; each mask
   is compared to the string with the function <<_string_match,string_match>>
 * _case_sensitive_: 1 for case sensitive comparison, otherwise 0
+
+// TRANSLATION MISSING
+[NOTE]
+Behavior has changed in version 3.8 when _case_sensitive_ is set to 0: now all
+uppercase letters are properly converted to lowercase (by calling function
+`towlower`), in addition to the range `A` to `Z`.
 
 Valore restituito:
 
@@ -3773,9 +3821,15 @@ Questa funzione non è disponibile nelle API per lo scripting.
 ==== utf8_charcasecmp
 
 // TRANSLATION MISSING
-_Updated in 1.0._
+_Updated in 1.0, 3.8._
 
 Confronta due caratteri UTF-8, ignorando la sensibilità alle maiuscole.
+
+// TRANSLATION MISSING
+[NOTE]
+Behavior has changed in version 3.8: now all uppercase letters are properly
+converted to lowercase (by calling function `towlower`), in addition to the
+range `A` to `Z`.
 
 Prototipo:
 

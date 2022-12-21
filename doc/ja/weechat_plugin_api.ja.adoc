@@ -633,9 +633,13 @@ free (str);
 _WeeChat バージョン 3.8 で更新。_
 
 // TRANSLATION MISSING
-Return a string with uppercase letters converted to lowercase. +
-This function is locale independent: only letters `A` to `Z` without accents
-are converted to lowercase. All other chars are kept as-is.
+Return a string with uppercase letters converted to lowercase.
+
+[NOTE]
+Behavior has changed in version 3.8: now all uppercase letters are properly
+converted to lowercase (by calling function `towlower`), in addition to the
+range `A` to `Z`. +
+Moreover, a newly allocated string is returned and must be freed after use.
 
 プロトタイプ:
 
@@ -657,7 +661,7 @@ C 言語での使用例:
 
 [source,c]
 ----
-char *str = weechat_string_tolower ("ABCD_É");  /* result: "abcd_É" */
+char *str = weechat_string_tolower ("ABCD_É");  /* result: "abcd_é" */
 /* ... */
 free (str);
 ----
@@ -670,9 +674,13 @@ free (str);
 _WeeChat バージョン 3.8 で更新。_
 
 // TRANSLATION MISSING
-Return a string with lowercase letters converted to uppercase. +
-This function is locale independent: only letters `a` to `z` without accents
-are converted to uppercase. All other chars are kept as-is.
+Return a string with lowercase letters converted to uppercase.
+
+[NOTE]
+Behavior has changed in version 3.8: now all lowercase letters are properly
+converted to uppercase (by calling function `towupper`), in addition to the
+range `a` to `z`. +
+Moreover, a newly allocated string is returned and must be freed after use.
 
 プロトタイプ:
 
@@ -694,7 +702,7 @@ C 言語での使用例:
 
 [source,c]
 ----
-char *str = weechat_string_toupper ("abcd_é");  /* result: "ABCD_é" */
+char *str = weechat_string_toupper ("abcd_é");  /* result: "ABCD_É" */
 /* ... */
 free (str);
 ----
@@ -704,15 +712,24 @@ free (str);
 
 ==== strcasecmp
 
-_WeeChat バージョン 1.0 で更新。_
+_WeeChat バージョン 1.0, 3.8 で更新。_
 
-ロケールと大文字小文字を無視して文字列を比較。
+// TRANSLATION MISSING
+Case insensitive string comparison.
+
+// TRANSLATION MISSING
+[NOTE]
+Behavior has changed in version 3.8: now all uppercase letters are properly
+converted to lowercase (by calling function `towlower`), in addition to the
+range `A` to `Z`.
 
 プロトタイプ:
 
 [source,c]
 ----
-int weechat_strcasecmp (const char *string1, const char *string2);
+int diff;
+diff = weechat_strcasecmp ("aaa", "CCC");    /* == -1 */
+diff = weechat_strcasecmp ("noël", "NOËL");  /* == 0  */
 ----
 
 引数:
@@ -730,7 +747,7 @@ C 言語での使用例:
 
 [source,c]
 ----
-int diff = weechat_strcasecmp ("aaa", "CCC");  /* == -2 */
+int diff = weechat_strcasecmp ("aaa", "CCC");  /* == -1 */
 ----
 
 [NOTE]
@@ -781,7 +798,14 @@ int diff = weechat_strcasecmp_range ("nick{away}", "NICK[away]", 29);  /* == 0 *
 
 _WeeChat バージョン 1.0 で更新。_
 
-ロケールと大文字小文字を無視して _max_ 文字だけ文字列を比較。
+// TRANSLATION MISSING
+Case insensitive string comparison, for _max_ chars.
+
+// TRANSLATION MISSING
+[NOTE]
+Behavior has changed in version 3.8: now all uppercase letters are properly
+converted to lowercase (by calling function `towlower`), in addition to the
+range `A` to `Z`.
 
 プロトタイプ:
 
@@ -857,10 +881,10 @@ int diff = weechat_strncasecmp_range ("nick{away}", "NICK[away]", 6, 29);  /* ==
 
 ==== strcmp_ignore_chars
 
-_WeeChat バージョン 1.0 で更新。_
+_WeeChat バージョン 1.0, 3.8 で更新。_
 
-一部の文字列を無視して、ロケールに依存して
-(オプションで大文字小文字の区別をしない) 文字列を比較。
+// TRANSLATION MISSING
+String comparison ignoring some chars.
 
 プロトタイプ:
 
@@ -877,6 +901,12 @@ int weechat_strcmp_ignore_chars (const char *string1, const char *string2,
 * _string2_: 2 番目の比較対象の文字列
 * _chars_ignored_: 無視する文字
 * _case_sensitive_: 大文字小文字を区別して比較する場合は 1、区別しない場合は 0
+
+// TRANSLATION MISSING
+[NOTE]
+Behavior has changed in version 3.8 when _case_sensitive_ is set to 0: now all
+uppercase letters are properly converted to lowercase (by calling function
+`towlower`), in addition to the range `A` to `Z`.
 
 戻り値:
 
@@ -896,9 +926,16 @@ int diff = weechat_strcmp_ignore_chars ("a-b", "--a-e", "-", 1);  /* == -3 */
 
 ==== strcasestr
 
-_WeeChat バージョン 1.3 で更新。_
+_WeeChat バージョン 1.3, 3.8 で更新。_
 
-ロケールと大文字小文字を区別して文字列を検索。
+// TRANSLATION MISSING
+Case insensitive string search.
+
+// TRANSLATION MISSING
+[NOTE]
+Behavior has changed in version 3.8: now all uppercase letters are properly
+converted to lowercase (by calling function `towlower`), in addition to the
+range `A` to `Z`.
 
 プロトタイプ:
 
@@ -974,7 +1011,7 @@ length = weechat.strlen_screen("é")  # 1
 
 ==== string_match
 
-_WeeChat バージョン 1.0 で更新。_
+_WeeChat バージョン 1.0, 3.8 で更新。_
 
 文字列がマスクにマッチするか確認。
 
@@ -996,6 +1033,12 @@ int weechat_string_match (const char *string, const char *mask,
 [NOTE]
 WeeChat バージョン 1.0 以上の場合、ワイルドカードをマスクの内部で使うことが可能です
 (マスクの最初および最後だけではありません)。
+
+// TRANSLATION MISSING
+[NOTE]
+Behavior has changed in version 3.8 when _case_sensitive_ is set to 0: now all
+uppercase letters are properly converted to lowercase (by calling function
+`towlower`), in addition to the range `A` to `Z`.
 
 戻り値:
 
@@ -1029,7 +1072,8 @@ match5 = weechat.string_match("abcdef", "*b*d*", 0)  # == 1
 
 ==== string_match_list
 
-_WeeChat バージョン 2.5 以上で利用可。_
+// TRANSLATION MISSING
+_WeeChat ≥ 2.5, updated in 3.8._
 
 文字列が否定マスク
 (書式: "!word")
@@ -1049,6 +1093,12 @@ int weechat_string_match_list (const char *string, const char **masks,
 * _masks_: マスクリスト、リストの最後には NULL をつけてください;
   各マスクは関数 <<_string_match,string_match>> で文字列と比較されます
 * _case_sensitive_: 大文字と小文字を区別する場合は 1、区別しない場合は 0
+
+// TRANSLATION MISSING
+[NOTE]
+Behavior has changed in version 3.8 when _case_sensitive_ is set to 0: now all
+uppercase letters are properly converted to lowercase (by calling function
+`towlower`), in addition to the range `A` to `Z`.
 
 戻り値:
 
@@ -3697,9 +3747,15 @@ int diff = weechat_utf8_charcmp ("aaa", "ccc");  /* == -2 */
 
 ==== utf8_charcasecmp
 
-_WeeChat バージョン 1.0 で更新。_
+_WeeChat バージョン 1.0, 3.8 で更新。_
 
 大文字小文字の違いを無視して、2 つの UTF-8 文字を比較。
+
+// TRANSLATION MISSING
+[NOTE]
+Behavior has changed in version 3.8: now all uppercase letters are properly
+converted to lowercase (by calling function `towlower`), in addition to the
+range `A` to `Z`.
 
 プロトタイプ:
 

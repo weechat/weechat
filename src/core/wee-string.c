@@ -31,8 +31,8 @@
 #include <string.h>
 #include <ctype.h>
 #include <wctype.h>
-#include <regex.h>
 #include <wchar.h>
+#include <regex.h>
 #include <stdint.h>
 #include <gcrypt.h>
 
@@ -308,67 +308,89 @@ string_repeat (const char *string, int count)
 }
 
 /*
- * Converts uppercase letters to lowercase.
- *
- * This function is locale independent: only letters 'A' to 'Z' without accents
- * are converted to lowercase. All other chars are kept as-is.
- *
- * Note: result must be freed after use.
+ * Converts string to lowercase (locale dependent).
  */
 
 char *
 string_tolower (const char *string)
 {
-    char *result, *ptr_result;
+    char **result, utf_char[5];
 
     if (!string)
         return NULL;
 
-    result = strdup (string);
+    result = string_dyn_alloc (strlen (string) + 1);
     if (!result)
         return NULL;
 
-    ptr_result = result;
-    while (ptr_result && ptr_result[0])
+    while (string && string[0])
     {
-        if ((ptr_result[0] >= 'A') && (ptr_result[0] <= 'Z'))
-            ptr_result[0] += ('a' - 'A');
-        ptr_result = (char *)utf8_next_char (ptr_result);
+        if (!((unsigned char)(string[0]) & 0x80))
+        {
+            /*
+             * optimization for single-byte char: only letters A-Z must be
+             * converted to lowercase; this is faster than calling `towlower`
+             */
+            if ((string[0] >= 'A') && (string[0] <= 'Z'))
+                utf_char[0] = string[0] + ('a' - 'A');
+            else
+                utf_char[0] = string[0];
+            utf_char[1] = '\0';
+            string_dyn_concat (result, utf_char, -1);
+            string++;
+        }
+        else
+        {
+            /* char ≥ 2 bytes, use `towlower` */
+            utf8_int_string (towlower (utf8_char_int (string)), utf_char);
+            string_dyn_concat (result, utf_char, -1);
+            string = (char *)utf8_next_char (string);
+        }
     }
-
-    return result;
+    return string_dyn_free (result, 0);
 }
 
 /*
- * Converts lowercase letters to uppercase.
- *
- * This function is locale independent: only letters 'a' to 'z' without accents
- * are converted to uppercase. All other chars are kept as-is.
- *
- * Note: result must be freed after use.
+ * Converts string to uppercase (locale dependent).
  */
 
 char *
 string_toupper (const char *string)
 {
-    char *result, *ptr_result;
+    char **result, utf_char[5];
 
     if (!string)
         return NULL;
 
-    result = strdup (string);
+    result = string_dyn_alloc (strlen (string) + 1);
     if (!result)
         return NULL;
 
-    ptr_result = result;
-    while (ptr_result && ptr_result[0])
+    while (string && string[0])
     {
-        if ((ptr_result[0] >= 'a') && (ptr_result[0] <= 'z'))
-            ptr_result[0] -= ('a' - 'A');
-        ptr_result = (char *)utf8_next_char (ptr_result);
+        if (!((unsigned char)(string[0]) & 0x80))
+        {
+            /*
+             * optimization for single-byte char: only letters a-z must be
+             * converted to uppercase; this is faster than calling `towupper`
+             */
+            if ((string[0] >= 'a') && (string[0] <= 'z'))
+                utf_char[0] = string[0] - ('a' - 'A');
+            else
+                utf_char[0] = string[0];
+            utf_char[1] = '\0';
+            string_dyn_concat (result, utf_char, -1);
+            string++;
+        }
+        else
+        {
+            /* char ≥ 2 bytes, use `towupper` */
+            utf8_int_string (towupper (utf8_char_int (string)), utf_char);
+            string_dyn_concat (result, utf_char, -1);
+            string = (char *)utf8_next_char (string);
+        }
     }
-
-    return result;
+    return string_dyn_free (result, 0);
 }
 
 /*
@@ -1174,10 +1196,10 @@ string_is_word_char (const char *string,
     wint_t c;
     int i, match;
 
-    c = utf8_wide_char (string);
-
-    if (c == WEOF)
+    if (!string || !string[0])
         return 0;
+
+    c = utf8_char_int (string);
 
     for (i = 0; i < word_chars_count; i++)
     {
