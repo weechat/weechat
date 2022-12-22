@@ -1666,7 +1666,7 @@ liste des actions :
   paste_start : début de collage (mode "bracketed paste")
   paste_stop : fin de collage (mode "bracketed paste")
 
-Cette commande est utilisé par les associations de touches ou les extensions.
+Cette commande est utilisée par les associations de touches ou les extensions.
 ----
 
 [[command_weechat_item]]
