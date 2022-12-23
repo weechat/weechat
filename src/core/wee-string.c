@@ -583,7 +583,7 @@ string_strcmp_ignore_chars (const char *string1, const char *string2,
 
         /* look at diff */
         diff = (case_sensitive) ?
-            (int)string1[0] - (int)string2[0] : utf8_charcasecmp (string1, string2);
+            utf8_charcmp (string1, string2) : utf8_charcasecmp (string1, string2);
         if (diff != 0)
             return (diff < 0) ? -1 : 1;
 

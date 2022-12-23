@@ -566,6 +566,9 @@ TEST(CoreString, Comparison)
     LONGS_EQUAL(1, string_strcmp_ignore_chars (".abc..abc", "..", ".", 0));
     LONGS_EQUAL(-1, string_strcmp_ignore_chars (".", "..abcabc", ".", 0));
     LONGS_EQUAL(0, string_strcmp_ignore_chars (".", ".", ".", 0));
+    LONGS_EQUAL(-1, string_strcmp_ignore_chars ("è", "é", "", 0));
+    LONGS_EQUAL(-1, string_strcmp_ignore_chars ("è", "É", "", 0));
+    LONGS_EQUAL(-1, string_strcmp_ignore_chars ("è", "é", "", 1));
 }
 
 /*
