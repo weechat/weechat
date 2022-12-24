@@ -692,6 +692,81 @@ free (str);
 [NOTE]
 This function is not available in scripting API.
 
+==== string_charcmp
+
+_Updated in 1.0, 3.8._
+
+Compare two chars.
+
+Prototype:
+
+[source,c]
+----
+int weechat_string_charcmp (const char *string1, const char *string2);
+----
+
+Arguments:
+
+* _string1_: first string for comparison
+* _string2_: second string for comparison
+
+Return value: arithmetic result of subtracting the first char in _string2_ from
+the first char in _string1_:
+
+* < 0 if char1 < char2
+* 0 if char1 == char2
+* > 0 if char1 > char2
+
+C example:
+
+[source,c]
+----
+int diff = weechat_string_charcmp ("aaa", "ccc");  /* == -2 */
+----
+
+[NOTE]
+This function is not available in scripting API.
+
+==== string_charcasecmp
+
+_Updated in 1.0, 3.8._
+
+Compare two chars, ignoring case.
+
+[NOTE]
+Behavior has changed in version 3.8: now all uppercase letters are properly
+converted to lowercase (by calling function `towlower`), in addition to the
+range `A` to `Z`.
+
+Prototype:
+
+[source,c]
+----
+int weechat_string_charcasecmp (const char *string1, const char *string2);
+----
+
+Arguments:
+
+* _string1_: first string for comparison
+* _string2_: second string for comparison
+
+Return value: arithmetic result of subtracting the first char in _string2_
+(converted to lowercase) from the first char in _string1_ (converted to lowercase):
+
+* < 0 if char1 < char2
+* 0 if char1 == char2
+* > 0 if char1 > char2
+
+C example:
+
+[source,c]
+----
+int diff = weechat_string_charcasecmp ("aaa", "CCC");  /* == -2 */
+----
+
+[NOTE]
+This function is not available in scripting API.
+
 ==== strcasecmp
 
 _Updated in 1.0, 3.8._
@@ -3632,81 +3707,6 @@ C example:
 [source,c]
 ----
 int length_on_screen = weechat_utf8_strlen_screen ("é");  /* == 1 */
-----
-
-[NOTE]
-This function is not available in scripting API.
-
-==== utf8_charcmp
-
-_Updated in 1.0, 3.8._
-
-Compare two UTF-8 chars.
-
-Prototype:
-
-[source,c]
-----
-int weechat_utf8_charcmp (const char *string1, const char *string2);
-----
-
-Arguments:
-
-* _string1_: first string for comparison
-* _string2_: second string for comparison
-
-Return value: arithmetic result of subtracting the first char in _string2_ from
-the first char in _string1_:
-
-* < 0 if char1 < char2
-* 0 if char1 == char2
-* > 0 if char1 > char2
-
-C example:
-
-[source,c]
-----
-int diff = weechat_utf8_charcmp ("aaa", "ccc");  /* == -2 */
-----
-
-[NOTE]
-This function is not available in scripting API.
-
-==== utf8_charcasecmp
-
-_Updated in 1.0, 3.8._
-
-Compare two UTF-8 chars, ignoring case.
-
-[NOTE]
-Behavior has changed in version 3.8: now all uppercase letters are properly
-converted to lowercase (by calling function `towlower`), in addition to the
-range `A` to `Z`.
-
-Prototype:
-
-[source,c]
-----
-int weechat_utf8_charcasecmp (const char *string1, const char *string2);
-----
-
-Arguments:
-
-* _string1_: first string for comparison
-* _string2_: second string for comparison
-
-Return value: arithmetic result of subtracting the first char in _string2_
-(converted to lowercase) from the first char in _string1_ (converted to lowercase):
-
-* < 0 if char1 < char2
-* 0 if char1 == char2
-* > 0 if char1 > char2
-
-C example:
-
-[source,c]
-----
-int diff = weechat_utf8_charcasecmp ("aaa", "CCC");  /* == -2 */
 ----
 
 [NOTE]

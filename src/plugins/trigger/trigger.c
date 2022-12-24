@@ -701,7 +701,7 @@ trigger_regex_split (const char *str_regex,
 
         /* search the delimiter (which can be more than one char) */
         pos = weechat_utf8_next_char (ptr_regex);
-        while (pos[0] && (weechat_utf8_charcmp (ptr_regex, pos) == 0))
+        while (pos[0] && (weechat_string_charcmp (ptr_regex, pos) == 0))
         {
             pos = weechat_utf8_next_char (pos);
         }

@@ -26,7 +26,8 @@ New features::
   * core: add signals "buffer_user_input_xxx" and "buffer_user_closing_xxx" for buffers created with `/buffer add` (issue #1848)
   * core: add identifier in buffer lines (issue #901)
   * core: add option `unicode` in command `/debug`
-  * api: return arithmetic difference between chars in functions string_strcasecmp, string_strcasecmp_range, string_strncasecmp, string_strncasecmp_range, string_strcmp_ignore_chars, utf8_charcmp, utf8_charcasecmp, utf8_charcasecmp_range
+  * api: rename char comparison functions "utf8_char*" to "string_char*"
+  * api: return arithmetic difference between chars in functions string_charcmp, string_charcasecmp, string_charcasecmp_range, string_strcasecmp, string_strcasecmp_range, string_strncasecmp, string_strncasecmp_range, string_strcmp_ignore_chars
   * api: return newly allocated string in functions string_tolower and string_toupper
   * api: add function utf8_strncpy
   * trigger: add regex command "y" to translate chars, set default regex command to "s" (regex replace) (issue #1510)

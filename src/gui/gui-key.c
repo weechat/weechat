@@ -731,7 +731,7 @@ gui_key_cmp (const char *key, const char *search, int context)
 
     while (search[0])
     {
-        diff = utf8_charcmp (key, search);
+        diff = string_charcmp (key, search);
         if (diff != 0)
             return diff;
         key = utf8_next_char (key);

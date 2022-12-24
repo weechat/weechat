@@ -457,6 +457,60 @@ TEST(CoreString, Repeat)
 
 /*
  * Tests functions:
+ *   string_charcmp
+ *   string_charcasecmp
+ *   string_charcasecmp_range
+ */
+
+TEST(CoreString, CharComparison)
+{
+    /* case-sensitive comparison */
+    LONGS_EQUAL(0, string_charcmp (NULL, NULL));
+    LONGS_EQUAL(-97, string_charcmp (NULL, "abc"));
+    LONGS_EQUAL(97, string_charcmp ("abc", NULL));
+    LONGS_EQUAL(0, string_charcmp ("axx", "azz"));
+    LONGS_EQUAL(-2, string_charcmp ("A", "C"));
+    LONGS_EQUAL(2, string_charcmp ("C", "A"));
+    LONGS_EQUAL(-32, string_charcmp ("A", "a"));
+    LONGS_EQUAL(-8129, string_charcmp ("ë", "€"));
+    LONGS_EQUAL(235, string_charcmp ("ë", ""));
+    LONGS_EQUAL(-235, string_charcmp ("", "ë"));
+
+    /* case-insensitive comparison */
+    LONGS_EQUAL(0, string_charcasecmp (NULL, NULL));
+    LONGS_EQUAL(-97, string_charcasecmp (NULL, "abc"));
+    LONGS_EQUAL(97, string_charcasecmp ("abc", NULL));
+    LONGS_EQUAL(0, string_charcasecmp ("axx", "azz"));
+    LONGS_EQUAL(-2, string_charcasecmp ("A", "C"));
+    LONGS_EQUAL(2, string_charcasecmp ("C", "A"));
+    LONGS_EQUAL(0, string_charcasecmp ("A", "a"));
+    LONGS_EQUAL(-8129, string_charcasecmp ("ë", "€"));
+
+    /* case-insensitive comparison with a range */
+    LONGS_EQUAL(0, string_charcasecmp_range (NULL, NULL, 30));
+    LONGS_EQUAL(-97, string_charcasecmp_range (NULL, "abc", 30));
+    LONGS_EQUAL(97, string_charcasecmp_range ("abc", NULL, 30));
+    LONGS_EQUAL(0, string_charcasecmp_range ("axx", "azz", 30));
+    LONGS_EQUAL(-2, string_charcasecmp_range ("A", "C", 30));
+    LONGS_EQUAL(2, string_charcasecmp_range ("C", "A", 30));
+    LONGS_EQUAL(0, string_charcasecmp_range ("A", "a", 30));
+    LONGS_EQUAL(-8129, string_charcasecmp_range ("ë", "€", 30));
+    LONGS_EQUAL(0, string_charcasecmp_range ("[", "{", 30));
+    LONGS_EQUAL(0, string_charcasecmp_range ("]", "}", 30));
+    LONGS_EQUAL(0, string_charcasecmp_range ("\\", "|", 30));
+    LONGS_EQUAL(0, string_charcasecmp_range ("^", "~", 30));
+    LONGS_EQUAL(-32, string_charcasecmp_range ("[", "{", 26));
+    LONGS_EQUAL(32, string_charcasecmp_range ("{", "[", 26));
+    LONGS_EQUAL(-32, string_charcasecmp_range ("]", "}", 26));
+    LONGS_EQUAL(32, string_charcasecmp_range ("}", "]", 26));
+    LONGS_EQUAL(-32, string_charcasecmp_range ("\\", "|", 26));
+    LONGS_EQUAL(32, string_charcasecmp_range ("|", "\\", 26));
+    LONGS_EQUAL(-32, string_charcasecmp_range ("^", "~", 26));
+    LONGS_EQUAL(32, string_charcasecmp_range ("~", "^", 26));
+}
+
+/*
+ * Tests functions:
  *   string_strcasecmp
  *   string_strncasecmp
  *   string_strcasecmp_range
@@ -464,7 +518,7 @@ TEST(CoreString, Repeat)
  *   string_strcmp_ignore_chars
  */
 
-TEST(CoreString, Comparison)
+TEST(CoreString, StringComparison)
 {
     /* case-insensitive comparison */
     LONGS_EQUAL(0, string_strcasecmp (NULL, NULL));

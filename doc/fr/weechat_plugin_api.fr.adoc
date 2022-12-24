@@ -706,6 +706,81 @@ free (str);
 [NOTE]
 Cette fonction n'est pas disponible dans l'API script.
 
+==== string_charcmp
+
+_Mis à jour dans la 1.0, 3.8._
+
+Comparer deux caractères.
+
+Prototype :
+
+[source,c]
+----
+int weechat_string_charcmp (const char *string1, const char *string2);
+----
+
+Paramètres :
+
+* _string1_ : première chaîne pour la comparaison
+* _string2_ : seconde chaîne pour la comparaison
+
+Valeur de retour : résultat de la soustraction du premier caractère dans _string2_
+du premier caractère dans _string1_ :
+
+* < 0 si char1 < char2
+* 0 si char1 == char2
+* > 0 si char1 > char2
+
+Exemple en C :
+
+[source,c]
+----
+int diff = weechat_string_charcmp ("aaa", "ccc");  /* == -2 */
+----
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
+==== string_charcasecmp
+
+_Mis à jour dans la 1.0, 3.8._
+
+Comparer deux caractères en ignorant la casse.
+
+[NOTE]
+Le comportement a changé dans la version 3.8 : désormais toutes les lettres en
+majuscules sont correctement converties en minuscules (par appel à la fonction
+`towlower`), en plus de l'intervalle de `A` à `Z`.
+
+Prototype :
+
+[source,c]
+----
+int weechat_string_charcasecmp (const char *string1, const char *string2);
+----
+
+Paramètres :
+
+* _string1_ : première chaîne pour la comparaison
+* _string2_ : seconde chaîne pour la comparaison
+
+Valeur de retour : résultat de la soustraction du premier caractère dans _string2_
+(converti en minuscule) du premier caractère dans _string1_ (converti en minuscule) :
+
+* < 0 si char1 < char2
+* 0 si char1 == char2
+* > 0 si char1 > char2
+
+Exemple en C :
+
+[source,c]
+----
+int diff = weechat_string_charcasecmp ("aaa", "CCC");  /* == -2 */
+----
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
 ==== strcasecmp
 
 _Mis à jour dans la 1.0, 3.8._
@@ -3698,81 +3773,6 @@ Exemple en C :
 [source,c]
 ----
 int length_on_screen = weechat_utf8_strlen_screen ("é");  /* == 1 */
-----
-
-[NOTE]
-Cette fonction n'est pas disponible dans l'API script.
-
-==== utf8_charcmp
-
-_Mis à jour dans la 1.0, 3.8._
-
-Comparer deux caractères UTF-8.
-
-Prototype :
-
-[source,c]
-----
-int weechat_utf8_charcmp (const char *string1, const char *string2);
-----
-
-Paramètres :
-
-* _string1_ : première chaîne pour la comparaison
-* _string2_ : seconde chaîne pour la comparaison
-
-Valeur de retour : résultat de la soustraction du premier caractère dans _string2_
-du premier caractère dans _string1_ :
-
-* < 0 si char1 < char2
-* 0 si char1 == char2
-* > 0 si char1 > char2
-
-Exemple en C :
-
-[source,c]
-----
-int diff = weechat_utf8_charcmp ("aaa", "ccc");  /* == -2 */
-----
-
-[NOTE]
-Cette fonction n'est pas disponible dans l'API script.
-
-==== utf8_charcasecmp
-
-_Mis à jour dans la 1.0, 3.8._
-
-Comparer deux caractères UTF-8 en ignorant la casse.
-
-[NOTE]
-Le comportement a changé dans la version 3.8 : désormais toutes les lettres en
-majuscules sont correctement converties en minuscules (par appel à la fonction
-`towlower`), en plus de l'intervalle de `A` à `Z`.
-
-Prototype :
-
-[source,c]
-----
-int weechat_utf8_charcasecmp (const char *string1, const char *string2);
-----
-
-Paramètres :
-
-* _string1_ : première chaîne pour la comparaison
-* _string2_ : seconde chaîne pour la comparaison
-
-Valeur de retour : résultat de la soustraction du premier caractère dans _string2_
-(converti en minuscule) du premier caractère dans _string1_ (converti en minuscule) :
-
-* < 0 si char1 < char2
-* 0 si char1 == char2
-* > 0 si char1 > char2
-
-Exemple en C :
-
-[source,c]
-----
-int diff = weechat_utf8_charcasecmp ("aaa", "CCC");  /* == -2 */
 ----
 
 [NOTE]

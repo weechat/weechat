@@ -44,6 +44,10 @@ extern char *string_reverse_screen (const char *string);
 extern char *string_repeat (const char *string, int count);
 extern char *string_tolower (const char *string);
 extern char *string_toupper (const char *string);
+extern int string_charcmp (const char *string1, const char *string2);
+extern int string_charcasecmp (const char *string1, const char *string2);
+extern int string_charcasecmp_range (const char *string1, const char *string2,
+                                     int range);
 extern int string_strcasecmp (const char *string1, const char *string2);
 extern int string_strcasecmp_range (const char *string1, const char *string2,
                                     int range);

@@ -710,6 +710,86 @@ free (str);
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
+==== string_charcmp
+
+_WeeChat バージョン 1.0, 3.8 で更新。_
+
+2 つの 文字を比較。
+
+プロトタイプ:
+
+[source,c]
+----
+int weechat_string_charcmp (const char *string1, const char *string2);
+----
+
+引数:
+
+* _string1_: 1 番目の比較文字列
+* _string2_: 2 番目の比較文字列
+
+// TRANSLATION MISSING
+Return value: arithmetic result of subtracting the first char in _string2_ from
+the first char in _string1_:
+
+// TRANSLATION MISSING
+* < 0 if char1 < char2
+* 0 if char1 == char2
+* > 0 if char1 > char2
+
+C 言語での使用例:
+
+[source,c]
+----
+int diff = weechat_string_charcmp ("aaa", "ccc");  /* == -2 */
+----
+
+[NOTE]
+スクリプト API ではこの関数を利用できません。
+
+==== string_charcasecmp
+
+_WeeChat バージョン 1.0, 3.8 で更新。_
+
+大文字小文字の違いを無視して、2 つの 文字を比較。
+
+// TRANSLATION MISSING
+[NOTE]
+Behavior has changed in version 3.8: now all uppercase letters are properly
+converted to lowercase (by calling function `towlower`), in addition to the
+range `A` to `Z`.
+
+プロトタイプ:
+
+[source,c]
+----
+int weechat_string_charcasecmp (const char *string1, const char *string2);
+----
+
+引数:
+
+* _string1_: 1 番目の比較文字列
+* _string2_: 2 番目の比較文字列
+
+// TRANSLATION MISSING
+Return value: arithmetic result of subtracting the first char in _string2_
+(converted to lowercase) from the first char in _string1_ (converted to lowercase):
+
+// TRANSLATION MISSING
+* < 0 if char1 < char2
+* 0 if char1 == char2
+* > 0 if char1 > char2
+
+C 言語での使用例:
+
+[source,c]
+----
+int diff = weechat_string_charcasecmp ("aaa", "CCC");  /* == -2 */
+----
+
+[NOTE]
+スクリプト API ではこの関数を利用できません。
+
 ==== strcasecmp
 
 _WeeChat バージョン 1.0, 3.8 で更新。_
@@ -3726,86 +3806,6 @@ C 言語での使用例:
 [source,c]
 ----
 int length_on_screen = weechat_utf8_strlen_screen ("é");  /* == 1 */
-----
-
-[NOTE]
-スクリプト API ではこの関数を利用できません。
-
-==== utf8_charcmp
-
-_WeeChat バージョン 1.0, 3.8 で更新。_
-
-2 つの UTF-8 文字を比較。
-
-プロトタイプ:
-
-[source,c]
-----
-int weechat_utf8_charcmp (const char *string1, const char *string2);
-----
-
-引数:
-
-* _string1_: 1 番目の比較文字列
-* _string2_: 2 番目の比較文字列
-
-// TRANSLATION MISSING
-Return value: arithmetic result of subtracting the first char in _string2_ from
-the first char in _string1_:
-
-// TRANSLATION MISSING
-* < 0 if char1 < char2
-* 0 if char1 == char2
-* > 0 if char1 > char2
-
-C 言語での使用例:
-
-[source,c]
-----
-int diff = weechat_utf8_charcmp ("aaa", "ccc");  /* == -2 */
-----
-
-[NOTE]
-スクリプト API ではこの関数を利用できません。
-
-==== utf8_charcasecmp
-
-_WeeChat バージョン 1.0, 3.8 で更新。_
-
-大文字小文字の違いを無視して、2 つの UTF-8 文字を比較。
-
-// TRANSLATION MISSING
-[NOTE]
-Behavior has changed in version 3.8: now all uppercase letters are properly
-converted to lowercase (by calling function `towlower`), in addition to the
-range `A` to `Z`.
-
-プロトタイプ:
-
-[source,c]
-----
-int weechat_utf8_charcasecmp (const char *string1, const char *string2);
-----
-
-引数:
-
-* _string1_: 1 番目の比較文字列
-* _string2_: 2 番目の比較文字列
-
-// TRANSLATION MISSING
-Return value: arithmetic result of subtracting the first char in _string2_
-(converted to lowercase) from the first char in _string1_ (converted to lowercase):
-
-// TRANSLATION MISSING
-* < 0 if char1 < char2
-* 0 if char1 == char2
-* > 0 if char1 > char2
-
-C 言語での使用例:
-
-[source,c]
-----
-int diff = weechat_utf8_charcasecmp ("aaa", "CCC");  /* == -2 */
 ----
 
 [NOTE]

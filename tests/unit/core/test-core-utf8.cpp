@@ -593,60 +593,6 @@ TEST(CoreUtf8, Size)
 
 /*
  * Tests functions:
- *   utf8_charcmp
- *   utf8_charcasecmp
- *   utf8_charcasecmp_range
- */
-
-TEST(CoreUtf8, Comparison)
-{
-    /* case-sensitive comparison */
-    LONGS_EQUAL(0, utf8_charcmp (NULL, NULL));
-    LONGS_EQUAL(-97, utf8_charcmp (NULL, "abc"));
-    LONGS_EQUAL(97, utf8_charcmp ("abc", NULL));
-    LONGS_EQUAL(0, utf8_charcmp ("axx", "azz"));
-    LONGS_EQUAL(-2, utf8_charcmp ("A", "C"));
-    LONGS_EQUAL(2, utf8_charcmp ("C", "A"));
-    LONGS_EQUAL(-32, utf8_charcmp ("A", "a"));
-    LONGS_EQUAL(-8129, utf8_charcmp ("ë", "€"));
-    LONGS_EQUAL(235, utf8_charcmp ("ë", ""));
-    LONGS_EQUAL(-235, utf8_charcmp ("", "ë"));
-
-    /* case-insensitive comparison */
-    LONGS_EQUAL(0, utf8_charcasecmp (NULL, NULL));
-    LONGS_EQUAL(-97, utf8_charcasecmp (NULL, "abc"));
-    LONGS_EQUAL(97, utf8_charcasecmp ("abc", NULL));
-    LONGS_EQUAL(0, utf8_charcasecmp ("axx", "azz"));
-    LONGS_EQUAL(-2, utf8_charcasecmp ("A", "C"));
-    LONGS_EQUAL(2, utf8_charcasecmp ("C", "A"));
-    LONGS_EQUAL(0, utf8_charcasecmp ("A", "a"));
-    LONGS_EQUAL(-8129, utf8_charcasecmp ("ë", "€"));
-
-    /* case-insensitive comparison with a range */
-    LONGS_EQUAL(0, utf8_charcasecmp_range (NULL, NULL, 30));
-    LONGS_EQUAL(-97, utf8_charcasecmp_range (NULL, "abc", 30));
-    LONGS_EQUAL(97, utf8_charcasecmp_range ("abc", NULL, 30));
-    LONGS_EQUAL(0, utf8_charcasecmp_range ("axx", "azz", 30));
-    LONGS_EQUAL(-2, utf8_charcasecmp_range ("A", "C", 30));
-    LONGS_EQUAL(2, utf8_charcasecmp_range ("C", "A", 30));
-    LONGS_EQUAL(0, utf8_charcasecmp_range ("A", "a", 30));
-    LONGS_EQUAL(-8129, utf8_charcasecmp_range ("ë", "€", 30));
-    LONGS_EQUAL(0, utf8_charcasecmp_range ("[", "{", 30));
-    LONGS_EQUAL(0, utf8_charcasecmp_range ("]", "}", 30));
-    LONGS_EQUAL(0, utf8_charcasecmp_range ("\\", "|", 30));
-    LONGS_EQUAL(0, utf8_charcasecmp_range ("^", "~", 30));
-    LONGS_EQUAL(-32, utf8_charcasecmp_range ("[", "{", 26));
-    LONGS_EQUAL(32, utf8_charcasecmp_range ("{", "[", 26));
-    LONGS_EQUAL(-32, utf8_charcasecmp_range ("]", "}", 26));
-    LONGS_EQUAL(32, utf8_charcasecmp_range ("}", "]", 26));
-    LONGS_EQUAL(-32, utf8_charcasecmp_range ("\\", "|", 26));
-    LONGS_EQUAL(32, utf8_charcasecmp_range ("|", "\\", 26));
-    LONGS_EQUAL(-32, utf8_charcasecmp_range ("^", "~", 26));
-    LONGS_EQUAL(32, utf8_charcasecmp_range ("~", "^", 26));
-}
-
-/*
- * Tests functions:
  *   utf8_strndup
  */
 

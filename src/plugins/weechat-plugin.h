@@ -68,7 +68,7 @@ struct timeval;
  * please change the date with current one; for a second change at same
  * date, increment the 01, otherwise please keep 01.
  */
-#define WEECHAT_PLUGIN_API_VERSION "20221218-01"
+#define WEECHAT_PLUGIN_API_VERSION "20221224-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -289,6 +289,8 @@ struct t_weechat_plugin
                          int screen, const char *cut_suffix);
     char *(*string_tolower) (const char *string);
     char *(*string_toupper) (const char *string);
+    int (*string_charcmp) (const char *string1, const char *string2);
+    int (*string_charcasecmp) (const char *string1, const char *string2);
     int (*strcasecmp) (const char *string1, const char *string2);
     int (*strcasecmp_range) (const char *string1, const char *string2,
                              int range);
@@ -372,8 +374,6 @@ struct t_weechat_plugin
     int (*utf8_strlen) (const char *string);
     int (*utf8_strnlen) (const char *string, int bytes);
     int (*utf8_strlen_screen) (const char *string);
-    int (*utf8_charcmp) (const char *string1, const char *string2);
-    int (*utf8_charcasecmp) (const char *string1, const char *string2);
     int (*utf8_char_size_screen) (const char *string);
     const char *(*utf8_add_offset) (const char *string, int offset);
     int (*utf8_real_pos) (const char *string, int pos);
@@ -1229,6 +1229,10 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     (weechat_plugin->string_tolower)(__string)
 #define weechat_string_toupper(__string)                                \
     (weechat_plugin->string_toupper)(__string)
+#define weechat_string_charcmp(__string1, __string2)                    \
+    (weechat_plugin->string_charcmp)(__string1, __string2)
+#define weechat_string_charcasecmp(__string1, __string2)                \
+    (weechat_plugin->string_charcasecmp)(__string1, __string2)
 #define weechat_strcasecmp(__string1, __string2)                        \
     (weechat_plugin->strcasecmp)(__string1, __string2)
 #define weechat_strcasecmp_range(__string1, __string2, __range)         \
@@ -1365,10 +1369,6 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     (weechat_plugin->utf8_strnlen)(__string, __bytes)
 #define weechat_utf8_strlen_screen(__string)                            \
     (weechat_plugin->utf8_strlen_screen)(__string)
-#define weechat_utf8_charcmp(__string1, __string2)                      \
-    (weechat_plugin->utf8_charcmp)(__string1, __string2)
-#define weechat_utf8_charcasecmp(__string1, __string2)                  \
-    (weechat_plugin->utf8_charcasecmp)(__string1, __string2)
 #define weechat_utf8_char_size_screen(__string)                         \
     (weechat_plugin->utf8_char_size_screen)(__string)
 #define weechat_utf8_add_offset(__string, __offset)                     \

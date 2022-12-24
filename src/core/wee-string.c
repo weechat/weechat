@@ -394,6 +394,97 @@ string_toupper (const char *string)
 }
 
 /*
+ * Compares two chars (case sensitive).
+ *
+ * Returns: arithmetic result of subtracting the first char in string2
+ * from the first char in string1:
+ *   < 0: string1 < string2
+ *     0: string1 == string2
+ *   > 0: string1 > string2
+ */
+
+int
+string_charcmp (const char *string1, const char *string2)
+{
+    return utf8_char_int (string1) - utf8_char_int (string2);
+}
+
+/*
+ * Compares two chars (case insensitive).
+ *
+ * Returns: arithmetic result of subtracting the first char in string2
+ * (converted to lowercase) from the first char in string1 (converted
+ * to lowercase):
+ *   < 0: string1 < string2
+ *     0: string1 == string2
+ *   > 0: string1 > string2
+ */
+
+int
+string_charcasecmp (const char *string1, const char *string2)
+{
+    wint_t wchar1, wchar2;
+
+    /*
+     * optimization for single-byte chars: only letters A-Z must be converted
+     * to lowercase; this is faster than calling `towlower`
+     */
+    if (string1 && !((unsigned char)(string1[0]) & 0x80)
+        && string2 && !((unsigned char)(string2[0]) & 0x80))
+    {
+        wchar1 = string1[0];
+        if ((wchar1 >= 'A') && (wchar1 <= 'Z'))
+            wchar1 += ('a' - 'A');
+        wchar2 = string2[0];
+        if ((wchar2 >= 'A') && (wchar2 <= 'Z'))
+            wchar2 += ('a' - 'A');
+    }
+    else
+    {
+        wchar1 = towlower (utf8_char_int (string1));
+        wchar2 = towlower (utf8_char_int (string2));
+    }
+
+    return wchar1 - wchar2;
+}
+
+/*
+ * Compares two chars (case insensitive using a range).
+ *
+ * The range is the number of chars which can be converted from upper to lower
+ * case. For example 26 = all letters of alphabet, 29 = all letters + 3 chars.
+ *
+ * Examples:
+ *   - range = 26: A-Z         ==> a-z
+ *   - range = 29: A-Z [ \ ]   ==> a-z { | }
+ *   - range = 30: A-Z [ \ ] ^ ==> a-z { | } ~
+ *   (ranges 29 and 30 are used by some protocols like IRC)
+ *
+ * Returns: arithmetic result of subtracting the last compared char in string2
+ * (converted to lowercase) from the last compared char in string1 (converted
+ * to lowercase):
+ *   < 0: string1 < string2
+ *     0: string1 == string2
+ *   > 0: string1 > string2
+ */
+
+int
+string_charcasecmp_range (const char *string1, const char *string2, int range)
+{
+    wchar_t wchar1, wchar2;
+
+    wchar1 = utf8_char_int (string1);
+    if ((wchar1 >= (wchar_t)'A') && (wchar1 < (wchar_t)('A' + range)))
+        wchar1 += ('a' - 'A');
+
+    wchar2 = utf8_char_int (string2);
+    if ((wchar2 >= (wchar_t)'A') && (wchar2 < (wchar_t)('A' + range)))
+        wchar2 += ('a' - 'A');
+
+    return wchar1 - wchar2;
+}
+
+/*
  * Compares two strings (case insensitive).
  *
  * Returns: arithmetic result of subtracting the last compared char in string2
@@ -411,7 +502,7 @@ string_strcasecmp (const char *string1, const char *string2)
 
     while (string1 && string1[0] && string2 && string2[0])
     {
-        diff = utf8_charcasecmp (string1, string2);
+        diff = string_charcasecmp (string1, string2);
         if (diff != 0)
             return diff;
 
@@ -419,7 +510,7 @@ string_strcasecmp (const char *string1, const char *string2)
         string2 = utf8_next_char (string2);
     }
 
-    return utf8_charcasecmp (string1, string2);
+    return string_charcasecmp (string1, string2);
 }
 
 /*
@@ -449,7 +540,7 @@ string_strcasecmp_range (const char *string1, const char *string2, int range)
 
     while (string1 && string1[0] && string2 && string2[0])
     {
-        diff = utf8_charcasecmp_range (string1, string2, range);
+        diff = string_charcasecmp_range (string1, string2, range);
         if (diff != 0)
             return diff;
 
@@ -457,7 +548,7 @@ string_strcasecmp_range (const char *string1, const char *string2, int range)
         string2 = utf8_next_char (string2);
     }
 
-    return utf8_charcasecmp_range (string1, string2, range);
+    return string_charcasecmp_range (string1, string2, range);
 }
 
 /*
@@ -479,7 +570,7 @@ string_strncasecmp (const char *string1, const char *string2, int max)
     count = 0;
     while ((count < max) && string1 && string1[0] && string2 && string2[0])
     {
-        diff = utf8_charcasecmp (string1, string2);
+        diff = string_charcasecmp (string1, string2);
         if (diff != 0)
             return diff;
 
@@ -491,7 +582,7 @@ string_strncasecmp (const char *string1, const char *string2, int max)
     if (count >= max)
         return 0;
     else
-        return utf8_charcasecmp (string1, string2);
+        return string_charcasecmp (string1, string2);
 }
 
 /*
@@ -523,7 +614,7 @@ string_strncasecmp_range (const char *string1, const char *string2, int max,
     count = 0;
     while ((count < max) && string1 && string1[0] && string2 && string2[0])
     {
-        diff = utf8_charcasecmp_range (string1, string2, range);
+        diff = string_charcasecmp_range (string1, string2, range);
         if (diff != 0)
             return diff;
 
@@ -535,7 +626,7 @@ string_strncasecmp_range (const char *string1, const char *string2, int max,
     if (count >= max)
         return 0;
     else
-        return utf8_charcasecmp_range (string1, string2, range);
+        return string_charcasecmp_range (string1, string2, range);
 }
 
 /*
@@ -572,13 +663,14 @@ string_strcmp_ignore_chars (const char *string1, const char *string2,
         if (!string1 || !string1[0] || !string2 || !string2[0])
         {
             return (case_sensitive) ?
-                utf8_charcmp (string1, string2) :
-                utf8_charcasecmp (string1, string2);
+                string_charcmp (string1, string2) :
+                string_charcasecmp (string1, string2);
         }
 
         /* look at diff */
         diff = (case_sensitive) ?
-            utf8_charcmp (string1, string2) : utf8_charcasecmp (string1, string2);
+            string_charcmp (string1, string2) :
+            string_charcasecmp (string1, string2);
         if (diff != 0)
             return diff;
 
@@ -596,7 +688,8 @@ string_strcmp_ignore_chars (const char *string1, const char *string2,
         }
     }
     return (case_sensitive) ?
-        utf8_charcmp (string1, string2) : utf8_charcasecmp (string1, string2);
+        string_charcmp (string1, string2) :
+        string_charcasecmp (string1, string2);
 }
 
 /*
@@ -1984,7 +2077,7 @@ string_translate_chars (const char *string,
         ptr_chars2 = chars2;
         while (ptr_chars1 && ptr_chars1[0] && ptr_chars2 && ptr_chars2[0])
         {
-            if (utf8_charcmp (ptr_chars1, ptr_string) == 0)
+            if (string_charcmp (ptr_chars1, ptr_string) == 0)
             {
                 string_dyn_concat (result, ptr_chars2, utf8_char_size (ptr_chars2));
                 translated = 1;
@@ -3736,7 +3829,7 @@ string_is_command_char (const char *string)
 
     while (ptr_command_chars && ptr_command_chars[0])
     {
-        if (utf8_charcmp (ptr_command_chars, string) == 0)
+        if (string_charcmp (ptr_command_chars, string) == 0)
             return 1;
         ptr_command_chars = utf8_next_char (ptr_command_chars);
     }
@@ -3798,7 +3891,7 @@ string_input_for_buffer (const char *string)
         return string;
 
     /* check if first char is doubled: if yes, then it's not a command */
-    if (utf8_charcmp (string, next_char) == 0)
+    if (string_charcmp (string, next_char) == 0)
         return next_char;
 
     /* string is a command */

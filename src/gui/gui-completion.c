@@ -1034,11 +1034,11 @@ gui_completion_common_prefix_size (struct t_arraylist *list,
             ptr_completion_word =
                 (struct t_gui_completion_word *)(list->data[i]);
             if (!utf_char
-                || (utf8_charcasecmp (utf_char,
-                                      ptr_completion_word->word) == 0))
+                || (string_charcasecmp (utf_char,
+                                        ptr_completion_word->word) == 0))
             {
                 if ((ptr_completion_word->word[ptr_char - ptr_first_item] == '\0')
-                    || (utf8_charcasecmp (
+                    || (string_charcasecmp (
                             ptr_char,
                             ptr_completion_word->word + (ptr_char - ptr_first_item)) != 0))
                 {
@@ -1112,7 +1112,7 @@ gui_completion_partial_build_list (struct t_gui_completion *completion,
         {
             ptr_completion_word =
                 (struct t_gui_completion_word *)list_temp->data[index];
-            if (utf8_charcasecmp (utf_char, ptr_completion_word->word) == 0)
+            if (string_charcasecmp (utf_char, ptr_completion_word->word) == 0)
             {
                 arraylist_remove (list_temp, index);
                 items_count++;

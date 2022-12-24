@@ -26,14 +26,14 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 The following functions now return arithmetic result of subtracting the last
 compared char in string2 from the last compared char in string1:
 
+* string_charcmp
+* string_charcasecmp
+* string_charcasecmp_range
 * string_strcasecmp
 * string_strcasecmp_range
 * string_strncasecmp
 * string_strncasecmp_range
 * string_strcmp_ignore_chars
-* utf8_charcmp
-* utf8_charcasecmp
-* utf8_charcasecmp_range
 
 Example with WeeChat 3.8:
 

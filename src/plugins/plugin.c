@@ -605,6 +605,8 @@ plugin_load (const char *filename, int init_plugin, int argc, char **argv)
         new_plugin->string_cut = &string_cut;
         new_plugin->string_tolower = &string_tolower;
         new_plugin->string_toupper = &string_toupper;
+        new_plugin->string_charcmp = &string_charcmp;
+        new_plugin->string_charcasecmp = &string_charcasecmp;
         new_plugin->strcasecmp = &string_strcasecmp;
         new_plugin->strcasecmp_range = &string_strcasecmp_range;
         new_plugin->strncasecmp = &string_strncasecmp;
@@ -658,8 +660,6 @@ plugin_load (const char *filename, int init_plugin, int argc, char **argv)
         new_plugin->utf8_strlen = &utf8_strlen;
         new_plugin->utf8_strnlen = &utf8_strnlen;
         new_plugin->utf8_strlen_screen = &utf8_strlen_screen;
-        new_plugin->utf8_charcmp = &utf8_charcmp;
-        new_plugin->utf8_charcasecmp = &utf8_charcasecmp;
         new_plugin->utf8_char_size_screen = &utf8_char_size_screen;
         new_plugin->utf8_add_offset = &utf8_add_offset;
         new_plugin->utf8_real_pos = &utf8_real_pos;
