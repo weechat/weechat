@@ -48,6 +48,8 @@ extern int string_charcmp (const char *string1, const char *string2);
 extern int string_charcasecmp (const char *string1, const char *string2);
 extern int string_charcasecmp_range (const char *string1, const char *string2,
                                      int range);
+extern int string_strcmp (const char *string1, const char *string2);
+extern int string_strncmp (const char *string1, const char *string2, int max);
 extern int string_strcasecmp (const char *string1, const char *string2);
 extern int string_strcasecmp_range (const char *string1, const char *string2,
                                     int range);

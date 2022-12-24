@@ -752,6 +752,85 @@ int diff = weechat_string_charcasecmp ("aaa", "CCC");  /* == -2 */
 [NOTE]
 Ова функција није доступна у API скриптовања.
 
+==== strcmp
+
+_WeeChat ≥ 3.8._
+
+// TRANSLATION MISSING
+Case sensitive string comparison.
+
+Прототип:
+
+[source,c]
+----
+int weechat_strcmp (const char *string1, const char *string2);
+----
+
+Аргументи:
+
+* _string1_: први стринг за поређење
+* _string2_: други стринг за поређење
+
+Повратна вредност:
+
+// TRANSLATION MISSING
+Return value: arithmetic result of subtracting the last compared UTF-8 char in
+_string2_ from the last compared UTF-8 char in _string1_:
+
+// TRANSLATION MISSING
+* < 0 if string1 < string2
+* 0 if string1 == string2
+* > 0 if string1 > string2
+
+C пример:
+
+[source,c]
+----
+int diff = weechat_strcmp ("aaa", "ccc");  /* == -2 */
+----
+
+[NOTE]
+Ова функција није доступна у API скриптовања.
+
+==== strncmp
+
+_WeeChat ≥ 3.8._
+
+// TRANSLATION MISSING
+Case sensitive string comparison, for _max_ chars.
+
+Прототип:
+
+[source,c]
+----
+int weechat_strncmp (const char *string1, const char *string2, int max);
+----
+
+Аргументи:
+
+* _string1_: први стринг за поређење
+* _string2_: други стринг за поређење
+* _max_: максимални број карактера који се пореде
+
+// TRANSLATION MISSING
+Return value: arithmetic result of subtracting the last compared UTF-8 char in
+_string2_ from the last compared UTF-8 char in _string1_:
+
+// TRANSLATION MISSING
+* < 0 if string1 < string2
+* 0 if string1 == string2
+* > 0 if string1 > string2
+
+C пример:
+
+[source,c]
+----
+int diff = weechat_strncmp ("aabb", "aacc", 2);  /* == 0 */
+----
+
+[NOTE]
+Ова функција није доступна у API скриптовања.
+
 ==== strcasecmp
 
 _Ажурирано у верзији 1.0, 3.8._

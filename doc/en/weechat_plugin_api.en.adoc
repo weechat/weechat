@@ -768,6 +768,77 @@ int diff = weechat_string_charcasecmp ("aaa", "CCC");  /* == -2 */
 [NOTE]
 This function is not available in scripting API.
 
+==== strcmp
+
+_WeeChat ≥ 3.8._
+
+Case sensitive string comparison.
+
+Prototype:
+
+[source,c]
+----
+int weechat_strcmp (const char *string1, const char *string2);
+----
+
+Arguments:
+
+* _string1_: first string for comparison
+* _string2_: second string for comparison
+
+Return value: arithmetic result of subtracting the last compared UTF-8 char in
+_string2_ from the last compared UTF-8 char in _string1_:
+
+* < 0 if string1 < string2
+* 0 if string1 == string2
+* > 0 if string1 > string2
+
+C example:
+
+[source,c]
+----
+int diff = weechat_strcmp ("aaa", "ccc");  /* == -2 */
+----
+
+[NOTE]
+This function is not available in scripting API.
+
+==== strncmp
+
+_WeeChat ≥ 3.8._
+
+Case sensitive string comparison, for _max_ chars.
+
+Prototype:
+
+[source,c]
+----
+int weechat_strncmp (const char *string1, const char *string2, int max);
+----
+
+Arguments:
+
+* _string1_: first string for comparison
+* _string2_: second string for comparison
+* _max_: max chars to compare
+
+Return value: arithmetic result of subtracting the last compared UTF-8 char in
+_string2_ from the last compared UTF-8 char in _string1_:
+
+* < 0 if string1 < string2
+* 0 if string1 == string2
+* > 0 if string1 > string2
+
+C example:
+
+[source,c]
+----
+int diff = weechat_strncmp ("aabb", "aacc", 2);  /* == 0 */
+----
+
+[NOTE]
+This function is not available in scripting API.
+
 ==== strcasecmp
 
 _Updated in 1.0, 3.8._

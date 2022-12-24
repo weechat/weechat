@@ -511,6 +511,8 @@ TEST(CoreString, CharComparison)
 
 /*
  * Tests functions:
+ *   string_strcmp
+ *   string_strncmp
  *   string_strcasecmp
  *   string_strncasecmp
  *   string_strcasecmp_range
@@ -520,6 +522,48 @@ TEST(CoreString, CharComparison)
 
 TEST(CoreString, StringComparison)
 {
+    /* case-sensitive comparison */
+    LONGS_EQUAL(0, string_strcmp (NULL, NULL));
+    LONGS_EQUAL(-97, string_strcmp (NULL, "abc"));
+    LONGS_EQUAL(97, string_strcmp ("abc", NULL));
+    LONGS_EQUAL(-98, string_strcmp ("", "b"));
+    LONGS_EQUAL(98, string_strcmp ("b", ""));
+    LONGS_EQUAL(0, string_strcmp ("abc", "abc"));
+    LONGS_EQUAL(32, string_strcmp ("abc", "ABC"));
+    LONGS_EQUAL(0, string_strcmp ("ABC", "ABC"));
+    LONGS_EQUAL(-3, string_strcmp ("abc", "def"));
+    LONGS_EQUAL(29, string_strcmp ("abc", "DEF"));
+    LONGS_EQUAL(-35, string_strcmp ("ABC", "def"));
+    LONGS_EQUAL(-3, string_strcmp ("ABC", "DEF"));
+    LONGS_EQUAL(3, string_strcmp ("def", "abc"));
+    LONGS_EQUAL(35, string_strcmp ("def", "ABC"));
+    LONGS_EQUAL(-29, string_strcmp ("DEF", "abc"));
+    LONGS_EQUAL(3, string_strcmp ("DEF", "ABC"));
+
+    /* case-sensitive comparison with max length */
+    LONGS_EQUAL(0, string_strncmp (NULL, NULL, 3));
+    LONGS_EQUAL(-97, string_strncmp (NULL, "abc", 3));
+    LONGS_EQUAL(97, string_strncmp ("abc", NULL, 3));
+    LONGS_EQUAL(-98, string_strncmp ("", "b", 3));
+    LONGS_EQUAL(98, string_strncmp ("b", "", 3));
+    LONGS_EQUAL(0, string_strncmp ("abc", "abc", 3));
+    LONGS_EQUAL(0, string_strncmp ("abcabc", "abcdef", 3));
+    LONGS_EQUAL(-3, string_strncmp ("abcabc", "abcdef", 6));
+    LONGS_EQUAL(32, string_strncmp ("abc", "ABC", 3));
+    LONGS_EQUAL(32, string_strncmp ("abcabc", "ABCDEF", 3));
+    LONGS_EQUAL(32, string_strncmp ("abcabc", "ABCDEF", 6));
+    LONGS_EQUAL(0, string_strncmp ("ABC", "ABC", 3));
+    LONGS_EQUAL(0, string_strncmp ("ABCABC", "ABCDEF", 3));
+    LONGS_EQUAL(-3, string_strncmp ("ABCABC", "ABCDEF", 6));
+    LONGS_EQUAL(-3, string_strncmp ("abc", "def", 3));
+    LONGS_EQUAL(29, string_strncmp ("abc", "DEF", 3));
+    LONGS_EQUAL(-35, string_strncmp ("ABC", "def", 3));
+    LONGS_EQUAL(-3, string_strncmp ("ABC", "DEF", 3));
+    LONGS_EQUAL(3, string_strncmp ("def", "abc", 3));
+    LONGS_EQUAL(35, string_strncmp ("def", "ABC", 3));
+    LONGS_EQUAL(-29, string_strncmp ("DEF", "abc", 3));
+    LONGS_EQUAL(3, string_strncmp ("DEF", "ABC", 3));
+
     /* case-insensitive comparison */
     LONGS_EQUAL(0, string_strcasecmp (NULL, NULL));
     LONGS_EQUAL(-97, string_strcasecmp (NULL, "abc"));

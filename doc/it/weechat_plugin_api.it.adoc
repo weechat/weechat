@@ -816,6 +816,85 @@ int diff = weechat_string_charcasecmp ("aaa", "CCC");  /* == -2 */
 [NOTE]
 Questa funzione non è disponibile nelle API per lo scripting.
 
+==== strcmp
+
+// TRANSLATION MISSING
+_WeeChat ≥ 3.8._
+
+// TRANSLATION MISSING
+Case sensitive string comparison.
+
+Prototipo:
+
+[source,c]
+----
+int weechat_strcmp (const char *string1, const char *string2);
+----
+
+Argomenti:
+
+* _string1_: prima stringa da comparare
+* _string2_: seconda stringa da comparare
+
+// TRANSLATION MISSING
+Return value: arithmetic result of subtracting the last compared UTF-8 char in
+_string2_ from the last compared UTF-8 char in _string1_:
+
+// TRANSLATION MISSING
+* < 0 if string1 < string2
+* 0 if string1 == string2
+* > 0 if string1 > string2
+
+Esempio in C:
+
+[source,c]
+----
+int diff = weechat_strcmp ("aaa", "ccc");  /* == -2 */
+----
+
+[NOTE]
+Questa funzione non è disponibile nelle API per lo scripting.
+
+==== strncmp
+
+// TRANSLATION MISSING
+_WeeChat ≥ 3.8._
+
+// TRANSLATION MISSING
+Case sensitive string comparison, for _max_ chars.
+
+Prototipo:
+
+[source,c]
+----
+int weechat_strncmp (const char *string1, const char *string2, int max);
+----
+
+Argomenti:
+
+* _string1_: prima stringa da comparare
+* _string2_: seconda stringa da comparare
+* _max_: numero massimo di caratteri da comparare
+
+// TRANSLATION MISSING
+Return value: arithmetic result of subtracting the last compared UTF-8 char in
+_string2_ from the last compared UTF-8 char in _string1_:
+
+// TRANSLATION MISSING
+* < 0 if string1 < string2
+* 0 if string1 == string2
+* > 0 if string1 > string2
+
+Esempio in C:
+
+[source,c]
+----
+int diff = weechat_strncmp ("aabb", "aacc", 2);  /* == 0 */
+----
+
+[NOTE]
+Questa funzione non è disponibile nelle API per lo scripting.
+
 ==== strcasecmp
 
 // TRANSLATION MISSING

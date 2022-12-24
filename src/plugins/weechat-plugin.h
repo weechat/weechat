@@ -68,7 +68,7 @@ struct timeval;
  * please change the date with current one; for a second change at same
  * date, increment the 01, otherwise please keep 01.
  */
-#define WEECHAT_PLUGIN_API_VERSION "20221224-01"
+#define WEECHAT_PLUGIN_API_VERSION "20221224-02"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -291,6 +291,8 @@ struct t_weechat_plugin
     char *(*string_toupper) (const char *string);
     int (*string_charcmp) (const char *string1, const char *string2);
     int (*string_charcasecmp) (const char *string1, const char *string2);
+    int (*strcmp) (const char *string1, const char *string2);
+    int (*strncmp) (const char *string1, const char *string2, int max);
     int (*strcasecmp) (const char *string1, const char *string2);
     int (*strcasecmp_range) (const char *string1, const char *string2,
                              int range);
@@ -1233,6 +1235,10 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     (weechat_plugin->string_charcmp)(__string1, __string2)
 #define weechat_string_charcasecmp(__string1, __string2)                \
     (weechat_plugin->string_charcasecmp)(__string1, __string2)
+#define weechat_strcmp(__string1, __string2)                            \
+    (weechat_plugin->strcmp)(__string1, __string2)
+#define weechat_strncmp(__string1, __string2, __max)                    \
+    (weechat_plugin->strncmp)(__string1, __string2, __max)
 #define weechat_strcasecmp(__string1, __string2)                        \
     (weechat_plugin->strcasecmp)(__string1, __string2)
 #define weechat_strcasecmp_range(__string1, __string2, __range)         \

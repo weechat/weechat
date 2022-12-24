@@ -485,6 +485,67 @@ string_charcasecmp_range (const char *string1, const char *string2, int range)
 }
 
 /*
+ * Compares two strings (case sensitive).
+ *
+ * Returns: arithmetic result of subtracting the last compared UTF-8 char in
+ * string2 from the last compared UTF-8 char in string1:
+ *   < 0: string1 < string2
+ *     0: string1 == string2
+ *   > 0: string1 > string2
+ */
+
+int
+string_strcmp (const char *string1, const char *string2)
+{
+    int diff;
+
+    while (string1 && string1[0] && string2 && string2[0])
+    {
+        diff = string_charcmp (string1, string2);
+        if (diff != 0)
+            return diff;
+
+        string1 = utf8_next_char (string1);
+        string2 = utf8_next_char (string2);
+    }
+
+    return string_charcmp (string1, string2);
+}
+
+/*
+ * Compares two strings with max length (case sensitive).
+ *
+ * Returns: arithmetic result of subtracting the last compared UTF-8 char in
+ * string2 from the last compared UTF-8 char in string1:
+ *   < 0: string1 < string2
+ *     0: string1 == string2
+ *   > 0: string1 > string2
+ */
+
+int
+string_strncmp (const char *string1, const char *string2, int max)
+{
+    int count, diff;
+
+    count = 0;
+    while ((count < max) && string1 && string1[0] && string2 && string2[0])
+    {
+        diff = string_charcmp (string1, string2);
+        if (diff != 0)
+            return diff;
+
+        string1 = utf8_next_char (string1);
+        string2 = utf8_next_char (string2);
+        count++;
+    }
+
+    if (count >= max)
+        return 0;
+    else
+        return string_charcmp (string1, string2);
+}
+
+/*
  * Compares two strings (case insensitive).
  *
  * Returns: arithmetic result of subtracting the last compared UTF-8 char in

@@ -607,6 +607,8 @@ plugin_load (const char *filename, int init_plugin, int argc, char **argv)
         new_plugin->string_toupper = &string_toupper;
         new_plugin->string_charcmp = &string_charcmp;
         new_plugin->string_charcasecmp = &string_charcasecmp;
+        new_plugin->strcmp = &string_strcmp;
+        new_plugin->strncmp = &string_strncmp;
         new_plugin->strcasecmp = &string_strcasecmp;
         new_plugin->strcasecmp_range = &string_strcasecmp_range;
         new_plugin->strncasecmp = &string_strncasecmp;

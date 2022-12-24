@@ -782,6 +782,77 @@ int diff = weechat_string_charcasecmp ("aaa", "CCC");  /* == -2 */
 [NOTE]
 Cette fonction n'est pas disponible dans l'API script.
 
+==== strcmp
+
+_WeeChat ≥ 3.8._
+
+Comparer deux chaînes.
+
+Prototype :
+
+[source,c]
+----
+int weechat_strcmp (const char *string1, const char *string2);
+----
+
+Paramètres :
+
+* _string1_ : première chaîne à comparer
+* _string2_ : seconde chaîne à comparer
+
+Valeur de retour : résultat de la soustraction du dernier caractère UTF-8 comparé
+dans _string2_ du dernier caractère UTF-8 comparé dans _string1_ :
+
+* < 0 si string1 < string2
+* 0 si string1 == string2
+* > 0 si string1 > string2
+
+Exemple en C :
+
+[source,c]
+----
+int diff = weechat_strcmp ("aaa", "ccc");  /* == -2 */
+----
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
+==== strncmp
+
+_WeeChat ≥ 3.8._
+
+Comparer deux chaînes, pour _max_ caractères.
+
+Prototype :
+
+[source,c]
+----
+int weechat_strncmp (const char *string1, const char *string2, int max);
+----
+
+Paramètres :
+
+* _string1_ : première chaîne à comparer
+* _string2_ : seconde chaîne à comparer
+* _max_ : nombre maximum de caractères à comparer
+
+Valeur de retour : résultat de la soustraction du dernier caractère UTF-8 comparé
+dans _string2_ du dernier caractère UTF-8 comparé dans _string1_ :
+
+* < 0 si string1 < string2
+* 0 si string1 == string2
+* > 0 si string1 > string2
+
+Exemple en C :
+
+[source,c]
+----
+int diff = weechat_strncmp ("aabb", "aacc", 2);  /* == 0 */
+----
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
 ==== strcasecmp
 
 _Mis à jour dans la 1.0, 3.8._

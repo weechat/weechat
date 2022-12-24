@@ -791,6 +791,83 @@ int diff = weechat_string_charcasecmp ("aaa", "CCC");  /* == -2 */
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
+==== strcmp
+
+_WeeChat ≥ 3.8_
+
+// TRANSLATION MISSING
+Case sensitive string comparison.
+
+プロトタイプ:
+
+[source,c]
+----
+int weechat_strcmp (const char *string1, const char *string2);
+----
+
+引数:
+
+* _string1_: 1 番目の比較対象の文字列
+* _string2_: 2 番目の比較対象の文字列
+
+// TRANSLATION MISSING
+Return value: arithmetic result of subtracting the last compared UTF-8 char in
+_string2_ from the last compared UTF-8 char in _string1_:
+
+// TRANSLATION MISSING
+* < 0 if string1 < string2
+* 0 if string1 == string2
+* > 0 if string1 > string2
+
+C 言語での使用例:
+
+[source,c]
+----
+int diff = weechat_strcmp ("aaa", "ccc");  /* == -2 */
+----
+
+[NOTE]
+スクリプト API ではこの関数を利用できません。
+
+==== strncmp
+
+_WeeChat ≥ 3.8_
+
+// TRANSLATION MISSING
+Case sensitive string comparison, for _max_ chars.
+
+プロトタイプ:
+
+[source,c]
+----
+int weechat_strncmp (const char *string1, const char *string2, int max);
+----
+
+引数:
+
+* _string1_: 1 番目の比較対象の文字列
+* _string2_: 2 番目の比較対象の文字列
+* _max_: 比較する文字数の最大値
+
+// TRANSLATION MISSING
+Return value: arithmetic result of subtracting the last compared UTF-8 char in
+_string2_ from the last compared UTF-8 char in _string1_:
+
+// TRANSLATION MISSING
+* < 0 if string1 < string2
+* 0 if string1 == string2
+* > 0 if string1 > string2
+
+C 言語での使用例:
+
+[source,c]
+----
+int diff = weechat_strncmp ("aabb", "aacc", 2);  /* == 0 */
+----
+
+[NOTE]
+スクリプト API ではこの関数を利用できません。
+
 ==== strcasecmp
 
 _WeeChat バージョン 1.0, 3.8 で更新。_
