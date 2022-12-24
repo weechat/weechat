@@ -193,23 +193,21 @@ COMMAND_CALLBACK(bar)
     (void) buffer;
 
     /* list of bars */
-    if ((argc == 1)
-        || ((argc == 2) && (string_strcasecmp (argv[1], "list") == 0)))
+    if ((argc == 1) || (string_strcasecmp (argv[1], "list") == 0))
     {
         command_bar_list (0);
         return WEECHAT_RC_OK;
     }
 
     /* full list of bars */
-    if ((argc == 2) && (string_strcasecmp (argv[1], "listfull") == 0))
+    if (string_strcasecmp (argv[1], "listfull") == 0)
     {
         command_bar_list (1);
         return WEECHAT_RC_OK;
     }
 
     /* list of bar items */
-    if ((argc == 1)
-        || ((argc == 2) && (string_strcasecmp (argv[1], "listitems") == 0)))
+    if (string_strcasecmp (argv[1], "listitems") == 0)
     {
         if (gui_bar_items)
         {
@@ -225,8 +223,9 @@ COMMAND_CALLBACK(bar)
             }
         }
         else
+        {
             gui_chat_printf (NULL, _("No bar item defined"));
-
+        }
         return WEECHAT_RC_OK;
     }
 
@@ -568,8 +567,7 @@ COMMAND_CALLBACK(buffer)
     (void) pointer;
     (void) data;
 
-    if ((argc == 1)
-        || ((argc == 2) && (string_strcasecmp (argv[1], "list") == 0)))
+    if ((argc == 1) || (string_strcasecmp (argv[1], "list") == 0))
     {
         /* list buffers */
         gui_chat_printf (NULL, "");
@@ -1840,8 +1838,7 @@ COMMAND_CALLBACK(debug)
     (void) pointer;
     (void) data;
 
-    if ((argc == 1)
-        || ((argc == 2) && (string_strcasecmp (argv[1], "list") == 0)))
+    if ((argc == 1) || (string_strcasecmp (argv[1], "list") == 0))
     {
         gui_chat_printf (NULL, "");
         gui_chat_printf (NULL, "Debug:");
@@ -2302,8 +2299,7 @@ COMMAND_CALLBACK(filter)
     (void) pointer;
     (void) data;
 
-    if ((argc == 1)
-        || ((argc == 2) && (string_strcasecmp (argv[1], "list") == 0)))
+    if ((argc == 1) || (string_strcasecmp (argv[1], "list") == 0))
     {
         /* display all filters */
         gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER, "");
@@ -2832,8 +2828,7 @@ COMMAND_CALLBACK(help)
     (void) argv_eol;
 
     /* display help for all commands */
-    if ((argc == 1)
-        || ((argc > 1) && (string_strncasecmp (argv[1], "-list", 5) == 0)))
+    if ((argc == 1) || (string_strncasecmp (argv[1], "-list", 5) == 0))
     {
         verbose = ((argc > 1) && (string_strcasecmp (argv[1], "-listfull") == 0));
         if (argc > 2)
@@ -3421,8 +3416,7 @@ COMMAND_CALLBACK(item)
     (void) pointer;
     (void) data;
 
-    if ((argc == 1)
-        || ((argc == 2) && (string_strcasecmp (argv[1], "list") == 0)))
+    if ((argc == 1) || (string_strcasecmp (argv[1], "list") == 0))
     {
         /* display all custom bar items */
         if (gui_custom_bar_items)
@@ -5258,8 +5252,7 @@ COMMAND_CALLBACK(proxy)
     (void) buffer;
 
     /* list of bars */
-    if ((argc == 1)
-        || ((argc == 2) && (string_strcasecmp (argv[1], "list") == 0)))
+    if ((argc == 1) || (string_strcasecmp (argv[1], "list") == 0))
     {
         command_proxy_list ();
         return WEECHAT_RC_OK;
@@ -6981,8 +6974,7 @@ COMMAND_CALLBACK(window)
     (void) buffer;
     (void) argv_eol;
 
-    if ((argc == 1)
-        || ((argc == 2) && (string_strcasecmp (argv[1], "list") == 0)))
+    if ((argc == 1) || (string_strcasecmp (argv[1], "list") == 0))
     {
         /* list all windows */
         gui_chat_printf (NULL, "");
