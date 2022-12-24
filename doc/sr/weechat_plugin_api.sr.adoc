@@ -690,8 +690,8 @@ int weechat_string_charcmp (const char *string1, const char *string2);
 * _string2_: други стринг за поређење
 
 // TRANSLATION MISSING
-Return value: arithmetic result of subtracting the first char in _string2_ from
-the first char in _string1_:
+Return value: arithmetic result of subtracting the first UTF-8 char in _string2_
+from the first UTF-8 char in _string1_:
 
 // TRANSLATION MISSING
 * < 0 if char1 < char2
@@ -733,8 +733,9 @@ int weechat_string_charcasecmp (const char *string1, const char *string2);
 * _string2_: други стринг за поређење
 
 // TRANSLATION MISSING
-Return value: arithmetic result of subtracting the first char in _string2_
-(converted to lowercase) from the first char in _string1_ (converted to lowercase):
+Return value: arithmetic result of subtracting the first UTF-8 char in _string2_
+(converted to lowercase) from the first UTF-8 char in _string1_ (converted to
+lowercase):
 
 // TRANSLATION MISSING
 * < 0 if char1 < char2
@@ -779,8 +780,8 @@ int weechat_strcasecmp (const char *string1, const char *string2);
 Повратна вредност:
 
 // TRANSLATION MISSING
-Return value: arithmetic result of subtracting the last compared char in
-_string2_ (converted to lowercase) from the last compared char in _string1_
+Return value: arithmetic result of subtracting the last compared UTF-8 char in
+_string2_ (converted to lowercase) from the last compared UTF-8 char in _string1_
 (converted to lowercase):
 
 // TRANSLATION MISSING
@@ -826,8 +827,8 @@ int weechat_strcasecmp_range (const char *string1, const char *string2, int rang
 Вредности 29 и 30 користе неки протоколи, као што је IRC.
 
 // TRANSLATION MISSING
-Return value: arithmetic result of subtracting the last compared char in
-_string2_ (converted to lowercase) from the last compared char in _string1_
+Return value: arithmetic result of subtracting the last compared UTF-8 char in
+_string2_ (converted to lowercase) from the last compared UTF-8 char in _string1_
 (converted to lowercase):
 
 // TRANSLATION MISSING
@@ -872,8 +873,8 @@ int weechat_strncasecmp (const char *string1, const char *string2, int max);
 * _max_: максимални број карактера који се пореде
 
 // TRANSLATION MISSING
-Return value: arithmetic result of subtracting the last compared char in
-_string2_ (converted to lowercase) from the last compared char in _string1_
+Return value: arithmetic result of subtracting the last compared UTF-8 char in
+_string2_ (converted to lowercase) from the last compared UTF-8 char in _string1_
 (converted to lowercase):
 
 // TRANSLATION MISSING
@@ -918,8 +919,8 @@ int weechat_strncasecmp_range (const char *string1, const char *string2, int max
 Вредности 29 и 30 користе неки протоколи, као што је IRC.
 
 // TRANSLATION MISSING
-Return value: arithmetic result of subtracting the last compared char in
-_string2_ (converted to lowercase) from the last compared char in _string1_
+Return value: arithmetic result of subtracting the last compared UTF-8 char in
+_string2_ (converted to lowercase) from the last compared UTF-8 char in _string1_
 (converted to lowercase):
 
 // TRANSLATION MISSING
@@ -967,9 +968,10 @@ uppercase letters are properly converted to lowercase (by calling function
 `towlower`), in addition to the range `A` to `Z`.
 
 // TRANSLATION MISSING
-Return value: arithmetic result of subtracting the last compared char in
+Return value: arithmetic result of subtracting the last compared UTF-8 char in
 _string2_ (converted to lowercase if _case_sentitive_ is set to 0) from the last
-compared char in _string1_ (converted to lowercase if _case_sensitive_ is set to 0):
+compared UTF-8 char in _string1_ (converted to lowercase if _case_sensitive_ is
+set to 0):
 
 // TRANSLATION MISSING
 * < 0 if string1 < string2

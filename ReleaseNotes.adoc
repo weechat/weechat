@@ -24,7 +24,7 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 === Return code of string comparison functions
 
 The following functions now return arithmetic result of subtracting the last
-compared char in string2 from the last compared char in string1:
+compared UTF-8 char in string2 from the last compared UTF-8 char in string1:
 
 * string_charcmp
 * string_charcasecmp

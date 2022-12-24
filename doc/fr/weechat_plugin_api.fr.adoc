@@ -724,8 +724,8 @@ Paramètres :
 * _string1_ : première chaîne pour la comparaison
 * _string2_ : seconde chaîne pour la comparaison
 
-Valeur de retour : résultat de la soustraction du premier caractère dans _string2_
-du premier caractère dans _string1_ :
+Valeur de retour : résultat de la soustraction du premier caractère UTF-8 dans
+_string2_ du premier caractère UTF-8 dans _string1_ :
 
 * < 0 si char1 < char2
 * 0 si char1 == char2
@@ -764,8 +764,9 @@ Paramètres :
 * _string1_ : première chaîne pour la comparaison
 * _string2_ : seconde chaîne pour la comparaison
 
-Valeur de retour : résultat de la soustraction du premier caractère dans _string2_
-(converti en minuscule) du premier caractère dans _string1_ (converti en minuscule) :
+Valeur de retour : résultat de la soustraction du premier caractère UTF-8 dans
+_string2_ (converti en minuscule) du premier caractère UTF-8 dans _string1_
+(converti en minuscule) :
 
 * < 0 si char1 < char2
 * 0 si char1 == char2
@@ -804,8 +805,8 @@ Paramètres :
 * _string1_ : première chaîne à comparer
 * _string2_ : seconde chaîne à comparer
 
-Valeur de retour : résultat de la soustraction du dernier caractère comparé
-dans _string2_ (converti en minuscule) du dernier caractère comparé dans
+Valeur de retour : résultat de la soustraction du dernier caractère UTF-8 comparé
+dans _string2_ (converti en minuscule) du dernier caractère UTF-8 comparé dans
 _string1_ (converti en minuscule) :
 
 * < 0 si string1 < string2
@@ -850,8 +851,8 @@ Paramètres :
 [NOTE]
 Les valeurs 29 et 30 sont utilisés par quelques protocoles comme IRC.
 
-Valeur de retour : résultat de la soustraction du dernier caractère comparé
-dans _string2_ (converti en minuscule) du dernier caractère comparé dans
+Valeur de retour : résultat de la soustraction du dernier caractère UTF-8 comparé
+dans _string2_ (converti en minuscule) du dernier caractère UTF-8 comparé dans
 _string1_ (converti en minuscule) :
 
 * < 0 si string1 < string2
@@ -892,8 +893,8 @@ Paramètres :
 * _string2_ : seconde chaîne à comparer
 * _max_ : nombre maximum de caractères à comparer
 
-Valeur de retour : résultat de la soustraction du dernier caractère comparé
-dans _string2_ (converti en minuscule) du dernier caractère comparé dans
+Valeur de retour : résultat de la soustraction du dernier caractère UTF-8 comparé
+dans _string2_ (converti en minuscule) du dernier caractère UTF-8 comparé dans
 _string1_ (converti en minuscule) :
 
 * < 0 si string1 < string2
@@ -937,8 +938,8 @@ Paramètres :
 [NOTE]
 Les valeurs 29 et 30 sont utilisés par quelques protocoles comme IRC.
 
-Valeur de retour : résultat de la soustraction du dernier caractère comparé
-dans _string2_ (converti en minuscule) du dernier caractère comparé dans
+Valeur de retour : résultat de la soustraction du dernier caractère UTF-8 comparé
+dans _string2_ (converti en minuscule) du dernier caractère UTF-8 comparé dans
 _string1_ (converti en minuscule) :
 
 * < 0 si string1 < string2
@@ -983,9 +984,9 @@ positionné à 0 : désormais toutes les lettres en majuscules sont correctemen
 converties en minuscules (par appel à la fonction `towlower`), en plus de
 l'intervalle de `A` à `Z`.
 
-Valeur de retour : résultat de la soustraction du dernier caractère comparé
+Valeur de retour : résultat de la soustraction du dernier caractère UTF-8 comparé
 dans _string2_ (converti en minuscule si _case_sensitive_ est positionné à 0)
-du dernier caractère comparé dans _string1_ (converti en minuscule si
+du dernier caractère UTF-8 comparé dans _string1_ (converti en minuscule si
 _case_sensitive_ est positionné à 0) :
 
 * < 0 si string1 < string2

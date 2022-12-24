@@ -729,8 +729,8 @@ int weechat_string_charcmp (const char *string1, const char *string2);
 * _string2_: 2 番目の比較文字列
 
 // TRANSLATION MISSING
-Return value: arithmetic result of subtracting the first char in _string2_ from
-the first char in _string1_:
+Return value: arithmetic result of subtracting the first UTF-8 char in _string2_
+from the first UTF-8 char in _string1_:
 
 // TRANSLATION MISSING
 * < 0 if char1 < char2
@@ -772,8 +772,9 @@ int weechat_string_charcasecmp (const char *string1, const char *string2);
 * _string2_: 2 番目の比較文字列
 
 // TRANSLATION MISSING
-Return value: arithmetic result of subtracting the first char in _string2_
-(converted to lowercase) from the first char in _string1_ (converted to lowercase):
+Return value: arithmetic result of subtracting the first UTF-8 char in _string2_
+(converted to lowercase) from the first UTF-8 char in _string1_ (converted to
+lowercase):
 
 // TRANSLATION MISSING
 * < 0 if char1 < char2
@@ -816,8 +817,8 @@ int weechat_strcasecmp (const char *string1, const char *string2);
 * _string2_: 2 番目の比較対象の文字列
 
 // TRANSLATION MISSING
-Return value: arithmetic result of subtracting the last compared char in
-_string2_ (converted to lowercase) from the last compared char in _string1_
+Return value: arithmetic result of subtracting the last compared UTF-8 char in
+_string2_ (converted to lowercase) from the last compared UTF-8 char in _string1_
 (converted to lowercase):
 
 // TRANSLATION MISSING
@@ -863,8 +864,8 @@ int weechat_strcasecmp_range (const char *string1, const char *string2, int rang
 29 と 30 は IRC など一部のプロトコルで使います。
 
 // TRANSLATION MISSING
-Return value: arithmetic result of subtracting the last compared char in
-_string2_ (converted to lowercase) from the last compared char in _string1_
+Return value: arithmetic result of subtracting the last compared UTF-8 char in
+_string2_ (converted to lowercase) from the last compared UTF-8 char in _string1_
 (converted to lowercase):
 
 // TRANSLATION MISSING
@@ -909,8 +910,8 @@ int weechat_strncasecmp (const char *string1, const char *string2, int max);
 * _max_: 比較する文字数の最大値
 
 // TRANSLATION MISSING
-Return value: arithmetic result of subtracting the last compared char in
-_string2_ (converted to lowercase) from the last compared char in _string1_
+Return value: arithmetic result of subtracting the last compared UTF-8 char in
+_string2_ (converted to lowercase) from the last compared UTF-8 char in _string1_
 (converted to lowercase):
 
 // TRANSLATION MISSING
@@ -956,8 +957,8 @@ int weechat_strncasecmp_range (const char *string1, const char *string2, int max
 29 と 30 は IRC など一部のプロトコルで使います。
 
 // TRANSLATION MISSING
-Return value: arithmetic result of subtracting the last compared char in
-_string2_ (converted to lowercase) from the last compared char in _string1_
+Return value: arithmetic result of subtracting the last compared UTF-8 char in
+_string2_ (converted to lowercase) from the last compared UTF-8 char in _string1_
 (converted to lowercase):
 
 // TRANSLATION MISSING
@@ -1005,9 +1006,10 @@ uppercase letters are properly converted to lowercase (by calling function
 `towlower`), in addition to the range `A` to `Z`.
 
 // TRANSLATION MISSING
-Return value: arithmetic result of subtracting the last compared char in
+Return value: arithmetic result of subtracting the last compared UTF-8 char in
 _string2_ (converted to lowercase if _case_sentitive_ is set to 0) from the last
-compared char in _string1_ (converted to lowercase if _case_sensitive_ is set to 0):
+compared UTF-8 char in _string1_ (converted to lowercase if _case_sensitive_ is
+set to 0):
 
 // TRANSLATION MISSING
 * < 0 if string1 < string2

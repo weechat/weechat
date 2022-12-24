@@ -396,8 +396,8 @@ string_toupper (const char *string)
 /*
  * Compares two chars (case sensitive).
  *
- * Returns: arithmetic result of subtracting the first char in string2
- * from the first char in string1:
+ * Returns: arithmetic result of subtracting the first UTF-8 char in string2
+ * from the first UTF-8 char in string1:
  *   < 0: string1 < string2
  *     0: string1 == string2
  *   > 0: string1 > string2
@@ -412,8 +412,8 @@ string_charcmp (const char *string1, const char *string2)
 /*
  * Compares two chars (case insensitive).
  *
- * Returns: arithmetic result of subtracting the first char in string2
- * (converted to lowercase) from the first char in string1 (converted
+ * Returns: arithmetic result of subtracting the first UTF-8 char in string2
+ * (converted to lowercase) from the first UTF-8 char in string1 (converted
  * to lowercase):
  *   < 0: string1 < string2
  *     0: string1 == string2
@@ -460,9 +460,9 @@ string_charcasecmp (const char *string1, const char *string2)
  *   - range = 30: A-Z [ \ ] ^ ==> a-z { | } ~
  *   (ranges 29 and 30 are used by some protocols like IRC)
  *
- * Returns: arithmetic result of subtracting the last compared char in string2
- * (converted to lowercase) from the last compared char in string1 (converted
- * to lowercase):
+ * Returns: arithmetic result of subtracting the last compared UTF-8 char in
+ * string2 (converted to lowercase) from the last compared UTF-8 char in
+ * string1 (converted to lowercase):
  *   < 0: string1 < string2
  *     0: string1 == string2
  *   > 0: string1 > string2
@@ -487,9 +487,9 @@ string_charcasecmp_range (const char *string1, const char *string2, int range)
 /*
  * Compares two strings (case insensitive).
  *
- * Returns: arithmetic result of subtracting the last compared char in string2
- * (converted to lowercase) from the last compared char in string1 (converted
- * to lowercase):
+ * Returns: arithmetic result of subtracting the last compared UTF-8 char in
+ * string2 (converted to lowercase) from the last compared UTF-8 char in
+ * string1 (converted to lowercase):
  *   < 0: string1 < string2
  *     0: string1 == string2
  *   > 0: string1 > string2
@@ -525,9 +525,9 @@ string_strcasecmp (const char *string1, const char *string2)
  *   - range = 30: A-Z [ \ ] ^ ==> a-z { | } ~
  *   (ranges 29 and 30 are used by some protocols like IRC)
  *
- * Returns: arithmetic result of subtracting the last compared char in string2
- * (converted to lowercase) from the last compared char in string1 (converted
- * to lowercase):
+ * Returns: arithmetic result of subtracting the last compared UTF-8 char in
+ * string2 (converted to lowercase) from the last compared UTF-8 char in
+ * string1 (converted to lowercase):
  *   < 0: string1 < string2
  *     0: string1 == string2
  *   > 0: string1 > string2
@@ -554,9 +554,9 @@ string_strcasecmp_range (const char *string1, const char *string2, int range)
 /*
  * Compares two strings with max length (case insensitive).
  *
- * Returns: arithmetic result of subtracting the last compared char in string2
- * (converted to lowercase) from the last compared char in string1 (converted
- * to lowercase):
+ * Returns: arithmetic result of subtracting the last compared UTF-8 char in
+ * string2 (converted to lowercase) from the last compared UTF-8 char in
+ * string1 (converted to lowercase):
  *   < 0: string1 < string2
  *     0: string1 == string2
  *   > 0: string1 > string2
@@ -597,9 +597,9 @@ string_strncasecmp (const char *string1, const char *string2, int max)
  *   - range = 30: A-Z [ \ ] ^ ==> a-z { | } ~
  *   (ranges 29 and 30 are used by some protocols like IRC)
  *
- * Returns: arithmetic result of subtracting the last compared char in string2
- * (converted to lowercase) from the last compared char in string1 (converted
- * to lowercase):
+ * Returns: arithmetic result of subtracting the last compared UTF-8 char in
+ * string2 (converted to lowercase) from the last compared UTF-8 char in
+ * string1 (converted to lowercase):
  *   < 0: string1 < string2
  *     0: string1 == string2
  *   > 0: string1 > string2
@@ -632,10 +632,10 @@ string_strncasecmp_range (const char *string1, const char *string2, int max,
 /*
  * Compares two strings, ignoring some chars.
  *
- * Returns: arithmetic result of subtracting the last compared char in string2
- * (converted to lowercase if case_sensitive is set to 0) from the last
- * compared char in string1 (converted to lowercase if case_sensitive is set
- * to 0):
+ * Returns: arithmetic result of subtracting the last compared UTF-8 char in
+ * string2 (converted to lowercase if case_sensitive is set to 0) from the last
+ * compared UTF-8 char in string1 (converted to lowercase if case_sensitive is
+ * set to 0):
  *   < 0: string1 < string2
  *     0: string1 == string2
  *   > 0: string1 > string2
