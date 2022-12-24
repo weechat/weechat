@@ -715,18 +715,20 @@ Arguments:
 * _string1_: first string for comparison
 * _string2_: second string for comparison
 
-Return value:
+Return value: arithmetic result of subtracting the last compared char in
+_string2_ (converted to lowercase) from the last compared char in _string1_
+(converted to lowercase):
 
-* -1 if string1 < string2
+* < 0 if string1 < string2
 * 0 if string1 == string2
-* 1 if string1 > string2
+* > 0 if string1 > string2
 
 C example:
 
 [source,c]
 ----
 int diff;
-diff = weechat_strcasecmp ("aaa", "CCC");    /* == -1 */
+diff = weechat_strcasecmp ("aaa", "CCC");    /* == -2 */
 diff = weechat_strcasecmp ("noël", "NOËL");  /* == 0  */
 ----
 
@@ -735,7 +737,7 @@ This function is not available in scripting API.
 
 ==== strcasecmp_range
 
-_WeeChat ≥ 0.3.7, updated in 1.0._
+_WeeChat ≥ 0.3.7, updated in 1.0, 3.8._
 
 Locale and case independent string comparison, using a range for case
 comparison.
@@ -759,11 +761,13 @@ Arguments:
 [NOTE]
 Values 29 and 30 are used by some protocols like IRC.
 
-Return value:
+Return value: arithmetic result of subtracting the last compared char in
+_string2_ (converted to lowercase) from the last compared char in _string1_
+(converted to lowercase):
 
-* -1 if string1 < string2
+* < 0 if string1 < string2
 * 0 if string1 == string2
-* 1 if string1 > string2
+* > 0 if string1 > string2
 
 C example:
 
@@ -799,17 +803,19 @@ Arguments:
 * _string2_: second string for comparison
 * _max_: max chars to compare
 
-Return value:
+Return value: arithmetic result of subtracting the last compared char in
+_string2_ (converted to lowercase) from the last compared char in _string1_
+(converted to lowercase):
 
-* -1 if string1 < string2
+* < 0 if string1 < string2
 * 0 if string1 == string2
-* 1 if string1 > string2
+* > 0 if string1 > string2
 
 C example:
 
 [source,c]
 ----
-int diff = weechat_strncasecmp ("aabb", "aacc", 2);  /* == 0 */
+int diff = weechat_strncasecmp ("aabb", "AACC", 2);  /* == 0 */
 ----
 
 [NOTE]
@@ -817,7 +823,7 @@ This function is not available in scripting API.
 
 ==== strncasecmp_range
 
-_WeeChat ≥ 0.3.7, updated in 1.0._
+_WeeChat ≥ 0.3.7, updated in 1.0, 3.8._
 
 Locale and case independent string comparison, for _max_ chars, using a range
 for case comparison.
@@ -842,11 +848,13 @@ Arguments:
 [NOTE]
 Values 29 and 30 are used by some protocols like IRC.
 
-Return value:
+Return value: arithmetic result of subtracting the last compared char in
+_string2_ (converted to lowercase) from the last compared char in _string1_
+(converted to lowercase):
 
-* -1 if string1 < string2
+* < 0 if string1 < string2
 * 0 if string1 == string2
-* 1 if string1 > string2
+* > 0 if string1 > string2
 
 C example:
 
@@ -885,11 +893,13 @@ Behavior has changed in version 3.8 when _case_sensitive_ is set to 0: now all
 uppercase letters are properly converted to lowercase (by calling function
 `towlower`), in addition to the range `A` to `Z`.
 
-Return value:
+Return value: arithmetic result of subtracting the last compared char in
+_string2_ (converted to lowercase if _case_sentitive_ is set to 0) from the last
+compared char in _string1_ (converted to lowercase if _case_sensitive_ is set to 0):
 
-* -1 if string1 < string2
+* < 0 if string1 < string2
 * 0 if string1 == string2
-* 1 if string1 > string2
+* > 0 if string1 > string2
 
 C example:
 
@@ -3629,7 +3639,7 @@ This function is not available in scripting API.
 
 ==== utf8_charcmp
 
-_Updated in 1.0._
+_Updated in 1.0, 3.8._
 
 Compare two UTF-8 chars.
 
@@ -3645,11 +3655,12 @@ Arguments:
 * _string1_: first string for comparison
 * _string2_: second string for comparison
 
-Return value:
+Return value: arithmetic result of subtracting the first char in _string2_ from
+the first char in _string1_:
 
-* -1 if string1 < string2
-* 0 if string1 == string2
-* 1 if string1 > string2
+* < 0 if char1 < char2
+* 0 if char1 == char2
+* > 0 if char1 > char2
 
 C example:
 
@@ -3684,11 +3695,12 @@ Arguments:
 * _string1_: first string for comparison
 * _string2_: second string for comparison
 
-Return value:
+Return value: arithmetic result of subtracting the first char in _string2_
+(converted to lowercase) from the first char in _string1_ (converted to lowercase):
 
-* -1 if string1 < string2
-* 0 if string1 == string2
-* 1 if string1 > string2
+* < 0 if char1 < char2
+* 0 if char1 == char2
+* > 0 if char1 > char2
 
 C example:
 

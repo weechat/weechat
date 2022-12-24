@@ -760,18 +760,22 @@ Argomenti:
 * _string1_: prima stringa da comparare
 * _string2_: seconda stringa da comparare
 
-Valore restituito:
+// TRANSLATION MISSING
+Return value: arithmetic result of subtracting the last compared char in
+_string2_ (converted to lowercase) from the last compared char in _string1_
+(converted to lowercase):
 
-* -1 se stringa1 < stringa2
-* 0 se stringa1 == stringa1
-* 1 se stringa1 > stringa2
+// TRANSLATION MISSING
+* < 0 if string1 < string2
+* 0 if string1 == string2
+* > 0 if string1 > string2
 
 Esempio in C:
 
 [source,c]
 ----
 int diff;
-diff = weechat_strcasecmp ("aaa", "CCC");    /* == -1 */
+diff = weechat_strcasecmp ("aaa", "CCC");    /* == -2 */
 diff = weechat_strcasecmp ("noël", "NOËL");  /* == 0  */
 ----
 
@@ -781,7 +785,7 @@ Questa funzione non è disponibile nelle API per lo scripting.
 ==== strcasecmp_range
 
 // TRANSLATION MISSING
-_WeeChat ≥ 0.3.7, updated in 1.0._
+_WeeChat ≥ 0.3.7, updated in 1.0, 3.8._
 
 Confronta stringa non sensibile alle maiuscole e alla localizzazione, usando una
 serie per il confronto.
@@ -805,11 +809,15 @@ Argomenti:
 [NOTE]
 I valori 29 e 30 vengono usati da alcuni protocolli come IRC.
 
-Valore restituito:
+// TRANSLATION MISSING
+Return value: arithmetic result of subtracting the last compared char in
+_string2_ (converted to lowercase) from the last compared char in _string1_
+(converted to lowercase):
 
-* -1 se stringa1 < stringa2
-* 0 se stringa1 == stringa1
-* 1 se stringa1 > stringa2
+// TRANSLATION MISSING
+* < 0 if string1 < string2
+* 0 if string1 == string2
+* > 0 if string1 > string2
 
 Esempio in C:
 
@@ -848,17 +856,21 @@ Argomenti:
 * _string2_: seconda stringa da comparare
 * _max_: numero massimo di caratteri da comparare
 
-Valore restituito:
+// TRANSLATION MISSING
+Return value: arithmetic result of subtracting the last compared char in
+_string2_ (converted to lowercase) from the last compared char in _string1_
+(converted to lowercase):
 
-* -1 se stringa1 < stringa2
-* 0 se stringa1 == stringa1
-* 1 se stringa1 > stringa2
+// TRANSLATION MISSING
+* < 0 if string1 < string2
+* 0 if string1 == string2
+* > 0 if string1 > string2
 
 Esempio in C:
 
 [source,c]
 ----
-int diff = weechat_strncasecmp ("aabb", "aacc", 2);  /* == 0 */
+int diff = weechat_strncasecmp ("aabb", "AACC", 2);  /* == 0 */
 ----
 
 [NOTE]
@@ -867,7 +879,7 @@ Questa funzione non è disponibile nelle API per lo scripting.
 ==== strncasecmp_range
 
 // TRANSLATION MISSING
-_WeeChat ≥ 0.3.7, updated in 1.0._
+_WeeChat ≥ 0.3.7, updated in 1.0, 3.8._
 
 Confronta una stringa non sensibile alle maiuscole e alla localizzazione, per un
 numero _max_ di caratteri, usando una serie per il confronto.
@@ -892,11 +904,15 @@ Argomenti:
 [NOTE]
 I valori 29 e 30 vengono usati da alcuni protocolli come IRC.
 
-Valore restituito:
+// TRANSLATION MISSING
+Return value: arithmetic result of subtracting the last compared char in
+_string2_ (converted to lowercase) from the last compared char in _string1_
+(converted to lowercase):
 
-* -1 se stringa1 < stringa2
-* 0 se stringa1 == stringa1
-* 1 se stringa1 > stringa2
+// TRANSLATION MISSING
+* < 0 if string1 < string2
+* 0 if string1 == string2
+* > 0 if string1 > string2
 
 Esempio in C:
 
@@ -938,11 +954,15 @@ Behavior has changed in version 3.8 when _case_sensitive_ is set to 0: now all
 uppercase letters are properly converted to lowercase (by calling function
 `towlower`), in addition to the range `A` to `Z`.
 
-Valore restituito:
+// TRANSLATION MISSING
+Return value: arithmetic result of subtracting the last compared char in
+_string2_ (converted to lowercase if _case_sentitive_ is set to 0) from the last
+compared char in _string1_ (converted to lowercase if _case_sensitive_ is set to 0):
 
-* -1 se stringa1 < stringa2
-* 0 se stringa1 == stringa1
-* 1 se stringa1 > stringa2
+// TRANSLATION MISSING
+* < 0 if string1 < string2
+* 0 if string1 == string2
+* > 0 if string1 > string2
 
 Esempio in C:
 
@@ -3786,7 +3806,7 @@ Questa funzione non è disponibile nelle API per lo scripting.
 ==== utf8_charcmp
 
 // TRANSLATION MISSING
-_Updated in 1.0._
+_Updated in 1.0, 3.8._
 
 Confronta due caratteri UTF-8.
 
@@ -3802,11 +3822,14 @@ Argomenti:
 * _string1_: prima stringa da comparare
 * _string2_: seconda stringa da comparare
 
-Valore restituito:
+// TRANSLATION MISSING
+Return value: arithmetic result of subtracting the first char in _string2_ from
+the first char in _string1_:
 
-* -1 se string1 < string2
-* 0 se string1 == string2
-* 1 se string1 > string2
+// TRANSLATION MISSING
+* < 0 if char1 < char2
+* 0 if char1 == char2
+* > 0 if char1 > char2
 
 Esempio in C:
 
@@ -3843,11 +3866,14 @@ Argomenti:
 * _string1_: prima stringa da comparare
 * _string2_: seconda stringa da comparare
 
-Valore restituito:
+// TRANSLATION MISSING
+Return value: arithmetic result of subtracting the first char in _string2_
+(converted to lowercase) from the first char in _string1_ (converted to lowercase):
 
-* -1 se string1 < string2
-* 0 se string1 == string2
-* 1 se string1 > string2
+// TRANSLATION MISSING
+* < 0 if char1 < char2
+* 0 if char1 == char2
+* > 0 if char1 > char2
 
 Esempio in C:
 

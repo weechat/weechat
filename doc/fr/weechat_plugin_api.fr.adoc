@@ -729,18 +729,20 @@ Paramètres :
 * _string1_ : première chaîne à comparer
 * _string2_ : seconde chaîne à comparer
 
-Valeur de retour :
+Valeur de retour : résultat de la soustraction du dernier caractère comparé
+dans _string2_ (converti en minuscule) du dernier caractère comparé dans
+_string1_ (converti en minuscule) :
 
-* -1 si string1 < string2
+* < 0 si string1 < string2
 * 0 si string1 == string2
-* 1 si string1 > string2
+* > 0 si string1 > string2
 
 Exemple en C :
 
 [source,c]
 ----
 int diff;
-diff = weechat_strcasecmp ("aaa", "CCC");    /* == -1 */
+diff = weechat_strcasecmp ("aaa", "CCC");    /* == -2 */
 diff = weechat_strcasecmp ("noël", "NOËL");  /* == 0  */
 ----
 
@@ -749,7 +751,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== strcasecmp_range
 
-_WeeChat ≥ 0.3.7, mis à jour dans la 1.0._
+_WeeChat ≥ 0.3.7, mis à jour dans la 1.0, 3.8._
 
 Comparer deux chaînes indépendemment de la locale et de la casse, avec un
 intervalle pour comparer la casse.
@@ -773,11 +775,13 @@ Paramètres :
 [NOTE]
 Les valeurs 29 et 30 sont utilisés par quelques protocoles comme IRC.
 
-Valeur de retour :
+Valeur de retour : résultat de la soustraction du dernier caractère comparé
+dans _string2_ (converti en minuscule) du dernier caractère comparé dans
+_string1_ (converti en minuscule) :
 
-* -1 si string1 < string2
+* < 0 si string1 < string2
 * 0 si string1 == string2
-* 1 si string1 > string2
+* > 0 si string1 > string2
 
 Exemple en C :
 
@@ -813,17 +817,19 @@ Paramètres :
 * _string2_ : seconde chaîne à comparer
 * _max_ : nombre maximum de caractères à comparer
 
-Valeur de retour :
+Valeur de retour : résultat de la soustraction du dernier caractère comparé
+dans _string2_ (converti en minuscule) du dernier caractère comparé dans
+_string1_ (converti en minuscule) :
 
-* -1 si string1 < string2
+* < 0 si string1 < string2
 * 0 si string1 == string2
-* 1 si string1 > string2
+* > 0 si string1 > string2
 
 Exemple en C :
 
 [source,c]
 ----
-int diff = weechat_strncasecmp ("aabb", "aacc", 2);  /* == 0 */
+int diff = weechat_strncasecmp ("aabb", "AACC", 2);  /* == 0 */
 ----
 
 [NOTE]
@@ -831,7 +837,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== strncasecmp_range
 
-_WeeChat ≥ 0.3.7, mis à jour dans la 1.0._
+_WeeChat ≥ 0.3.7, mis à jour dans la 1.0, 3.8._
 
 Comparer deux chaînes indépendemment de la locale et de la casse, pour _max_
 caractères, avec un intervalle pour comparer la casse.
@@ -856,11 +862,13 @@ Paramètres :
 [NOTE]
 Les valeurs 29 et 30 sont utilisés par quelques protocoles comme IRC.
 
-Valeur de retour :
+Valeur de retour : résultat de la soustraction du dernier caractère comparé
+dans _string2_ (converti en minuscule) du dernier caractère comparé dans
+_string1_ (converti en minuscule) :
 
-* -1 si string1 < string2
+* < 0 si string1 < string2
 * 0 si string1 == string2
-* 1 si string1 > string2
+* > 0 si string1 > string2
 
 Exemple en C :
 
@@ -900,11 +908,14 @@ positionné à 0 : désormais toutes les lettres en majuscules sont correctemen
 converties en minuscules (par appel à la fonction `towlower`), en plus de
 l'intervalle de `A` à `Z`.
 
-Valeur de retour :
+Valeur de retour : résultat de la soustraction du dernier caractère comparé
+dans _string2_ (converti en minuscule si _case_sensitive_ est positionné à 0)
+du dernier caractère comparé dans _string1_ (converti en minuscule si
+_case_sensitive_ est positionné à 0) :
 
-* -1 si string1 < string2
+* < 0 si string1 < string2
 * 0 si string1 == string2
-* 1 si string1 > string2
+* > 0 si string1 > string2
 
 Exemple en C :
 
@@ -3694,7 +3705,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== utf8_charcmp
 
-_Mis à jour dans la 1.0._
+_Mis à jour dans la 1.0, 3.8._
 
 Comparer deux caractères UTF-8.
 
@@ -3710,11 +3721,12 @@ Paramètres :
 * _string1_ : première chaîne pour la comparaison
 * _string2_ : seconde chaîne pour la comparaison
 
-Valeur de retour :
+Valeur de retour : résultat de la soustraction du premier caractère dans _string2_
+du premier caractère dans _string1_ :
 
-* -1 si string1 < string2
-* 0 si string1 == string2
-* 1 si string1 > string2
+* < 0 si char1 < char2
+* 0 si char1 == char2
+* > 0 si char1 > char2
 
 Exemple en C :
 
@@ -3749,11 +3761,12 @@ Paramètres :
 * _string1_ : première chaîne pour la comparaison
 * _string2_ : seconde chaîne pour la comparaison
 
-Valeur de retour :
+Valeur de retour : résultat de la soustraction du premier caractère dans _string2_
+(converti en minuscule) du premier caractère dans _string1_ (converti en minuscule) :
 
-* -1 si string1 < string2
-* 0 si string1 == string2
-* 1 si string1 > string2
+* < 0 si char1 < char2
+* 0 si char1 == char2
+* > 0 si char1 > char2
 
 Exemple en C :
 

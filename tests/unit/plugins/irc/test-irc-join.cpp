@@ -112,7 +112,7 @@ TEST(IrcJoin, CompateJoinChannel)
     LONGS_EQUAL(0, irc_join_compare_join_channel (NULL, &join_chan1, &join_chan2));
 
     join_chan1.name = strdup ("#abc");
-    LONGS_EQUAL(1, irc_join_compare_join_channel (NULL, &join_chan1, &join_chan2));
+    LONGS_EQUAL(35, irc_join_compare_join_channel (NULL, &join_chan1, &join_chan2));
 
     join_chan2.name = strdup ("#abc");
     LONGS_EQUAL(0, irc_join_compare_join_channel (NULL, &join_chan1, &join_chan2));
@@ -129,7 +129,7 @@ TEST(IrcJoin, CompateJoinChannel)
 
     free (join_chan2.name);
     join_chan2.name = strdup ("#def");
-    LONGS_EQUAL(-1, irc_join_compare_join_channel (NULL, &join_chan1, &join_chan2));
+    LONGS_EQUAL(-3, irc_join_compare_join_channel (NULL, &join_chan1, &join_chan2));
 
     free (join_chan1.name);
     free (join_chan1.key);

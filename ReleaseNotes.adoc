@@ -20,6 +20,35 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 [[v3.8]]
 == Version 3.8 (under dev)
 
+[[v3.8_return_code_string_comparison_functions]]
+=== Return code of string comparison functions
+
+The following functions now return arithmetic result of subtracting the last
+compared char in string2 from the last compared char in string1:
+
+* string_strcasecmp
+* string_strcasecmp_range
+* string_strncasecmp
+* string_strncasecmp_range
+* string_strcmp_ignore_chars
+* utf8_charcmp
+* utf8_charcasecmp
+* utf8_charcasecmp_range
+
+Example with WeeChat 3.8:
+
+[source,c]
+----
+int diff = string_strcasecmp ("aaa", "CCC");  /* == -2 */
+----
+
+With older releases:
+
+[source,c]
+----
+int diff = string_strcasecmp ("aaa", "CCC");  /* == -1 */
+----
+
 [[v3.8_api_string_lower_upper]]
 === API functions string_tolower and string_toupper
 

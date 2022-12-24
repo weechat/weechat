@@ -531,48 +531,28 @@ utf8_strlen_screen (const char *string)
 /*
  * Compares two UTF-8 chars (case sensitive).
  *
- * Returns:
- *   -1: string1 < string2
- *    0: string1 == string2
- *    1: string1 > string2
+ * Returns: arithmetic result of subtracting the first char in string2
+ * from the first char in string1:
+ *   < 0: string1 < string2
+ *     0: string1 == string2
+ *   > 0: string1 > string2
  */
 
 int
 utf8_charcmp (const char *string1, const char *string2)
 {
-    int length1, length2, i, diff;
-
-    if (!string1 || !string2)
-        return (string1) ? 1 : ((string2) ? -1 : 0);
-
-    length1 = utf8_char_size (string1);
-    length2 = utf8_char_size (string2);
-
-    i = 0;
-    while ((i < length1) && (i < length2))
-    {
-        diff = (int)((unsigned char) string1[i]) - (int)((unsigned char) string2[i]);
-        if (diff != 0)
-            return (diff < 0) ? -1 : 1;
-        i++;
-    }
-    /* string1 == string2 ? */
-    if ((i == length1) && (i == length2))
-        return 0;
-    /* string1 < string2 ? */
-    if (i == length1)
-        return 1;
-    /* string1 > string2 */
-    return -1;
+    return utf8_char_int (string1) - utf8_char_int (string2);
 }
 
 /*
- * Compares two UTF-8 chars (case is ignored).
+ * Compares two UTF-8 chars (case insensitive).
  *
- * Returns:
- *   -1: string1 < string2
- *    0: string1 == string2
- *    1: string1 > string2
+ * Returns: arithmetic result of subtracting the first char in string2
+ * (converted to lowercase) from the first char in string1 (converted
+ * to lowercase):
+ *   < 0: string1 < string2
+ *     0: string1 == string2
+ *   > 0: string1 > string2
  */
 
 int
@@ -580,15 +560,12 @@ utf8_charcasecmp (const char *string1, const char *string2)
 {
     wint_t wchar1, wchar2;
 
-    if (!string1 || !string2)
-        return (string1) ? 1 : ((string2) ? -1 : 0);
-
     /*
      * optimization for single-byte chars: only letters A-Z must be converted
      * to lowercase; this is faster than calling `towlower`
      */
-    if (!((unsigned char)(string1[0]) & 0x80)
-        && !((unsigned char)(string2[0]) & 0x80))
+    if (string1 && !((unsigned char)(string1[0]) & 0x80)
+        && string2 && !((unsigned char)(string2[0]) & 0x80))
     {
         wchar1 = string1[0];
         if ((wchar1 >= 'A') && (wchar1 <= 'Z'))
@@ -603,11 +580,11 @@ utf8_charcasecmp (const char *string1, const char *string2)
         wchar2 = towlower (utf8_char_int (string2));
     }
 
-    return (wchar1 < wchar2) ? -1 : ((wchar1 == wchar2) ? 0 : 1);
+    return wchar1 - wchar2;
 }
 
 /*
- * Compares two UTF-8 chars (case is ignored) using a range.
+ * Compares two UTF-8 chars (case insensitive using a range).
  *
  * The range is the number of chars which can be converted from upper to lower
  * case. For example 26 = all letters of alphabet, 29 = all letters + 3 chars.
@@ -618,19 +595,18 @@ utf8_charcasecmp (const char *string1, const char *string2)
  *   - range = 30: A-Z [ \ ] ^ ==> a-z { | } ~
  *   (ranges 29 and 30 are used by some protocols like IRC)
  *
- * Returns:
- *   < 0: char1 < char2
- *     0: char1 == char2
- *   > 0: char1 > char2
+ * Returns: arithmetic result of subtracting the last compared char in string2
+ * (converted to lowercase) from the last compared char in string1 (converted
+ * to lowercase):
+ *   < 0: string1 < string2
+ *     0: string1 == string2
+ *   > 0: string1 > string2
  */
 
 int
 utf8_charcasecmp_range (const char *string1, const char *string2, int range)
 {
     wchar_t wchar1, wchar2;
-
-    if (!string1 || !string2)
-        return (string1) ? 1 : ((string2) ? -1 : 0);
 
     wchar1 = utf8_char_int (string1);
     if ((wchar1 >= (wchar_t)'A') && (wchar1 < (wchar_t)('A' + range)))
@@ -640,7 +616,7 @@ utf8_charcasecmp_range (const char *string1, const char *string2, int range)
     if ((wchar2 >= (wchar_t)'A') && (wchar2 < (wchar_t)('A' + range)))
         wchar2 += ('a' - 'A');
 
-    return (wchar1 < wchar2) ? -1 : ((wchar1 == wchar2) ? 0 : 1);
+    return wchar1 - wchar2;
 }
 
 /*

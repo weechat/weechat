@@ -727,9 +727,7 @@ range `A` to `Z`.
 
 [source,c]
 ----
-int diff;
-diff = weechat_strcasecmp ("aaa", "CCC");    /* == -1 */
-diff = weechat_strcasecmp ("noël", "NOËL");  /* == 0  */
+int weechat_strcasecmp (const char *string1, const char *string2);
 ----
 
 引数:
@@ -737,17 +735,23 @@ diff = weechat_strcasecmp ("noël", "NOËL");  /* == 0  */
 * _string1_: 1 番目の比較対象の文字列
 * _string2_: 2 番目の比較対象の文字列
 
-戻り値:
+// TRANSLATION MISSING
+Return value: arithmetic result of subtracting the last compared char in
+_string2_ (converted to lowercase) from the last compared char in _string1_
+(converted to lowercase):
 
-* string1 < string2 の場合は -1
-* string1 == string2 の場合は 0
-* string1 > string2 の場合は 1
+// TRANSLATION MISSING
+* < 0 if string1 < string2
+* 0 if string1 == string2
+* > 0 if string1 > string2
 
 C 言語での使用例:
 
 [source,c]
 ----
-int diff = weechat_strcasecmp ("aaa", "CCC");  /* == -1 */
+int diff;
+diff = weechat_strcasecmp ("aaa", "CCC");    /* == -2 */
+diff = weechat_strcasecmp ("noël", "NOËL");  /* == 0  */
 ----
 
 [NOTE]
@@ -755,7 +759,7 @@ int diff = weechat_strcasecmp ("aaa", "CCC");  /* == -1 */
 
 ==== strcasecmp_range
 
-_WeeChat バージョン 0.3.7 以上で利用可、バージョン 1.0 で更新。_
+_WeeChat バージョン 0.3.7 以上で利用可、バージョン 1.0, 3.8 で更新。_
 
 大文字小文字を無視する文字範囲の幅を使い、ロケールと大文字小文字を無視して文字列を比較。
 
@@ -778,11 +782,15 @@ int weechat_strcasecmp_range (const char *string1, const char *string2, int rang
 [NOTE]
 29 と 30 は IRC など一部のプロトコルで使います。
 
-戻り値:
+// TRANSLATION MISSING
+Return value: arithmetic result of subtracting the last compared char in
+_string2_ (converted to lowercase) from the last compared char in _string1_
+(converted to lowercase):
 
-* string1 < string2 の場合は -1
-* string1 == string2 の場合は 0
-* string1 > string2 の場合は 1
+// TRANSLATION MISSING
+* < 0 if string1 < string2
+* 0 if string1 == string2
+* > 0 if string1 > string2
 
 C 言語での使用例:
 
@@ -796,7 +804,7 @@ int diff = weechat_strcasecmp_range ("nick{away}", "NICK[away]", 29);  /* == 0 *
 
 ==== strncasecmp
 
-_WeeChat バージョン 1.0 で更新。_
+_WeeChat バージョン 1.0, 3.8 で更新。_
 
 // TRANSLATION MISSING
 Case insensitive string comparison, for _max_ chars.
@@ -820,17 +828,21 @@ int weechat_strncasecmp (const char *string1, const char *string2, int max);
 * _string2_: 2 番目の比較対象の文字列
 * _max_: 比較する文字数の最大値
 
-戻り値:
+// TRANSLATION MISSING
+Return value: arithmetic result of subtracting the last compared char in
+_string2_ (converted to lowercase) from the last compared char in _string1_
+(converted to lowercase):
 
-* string1 < string2 の場合は -1
-* string1 == string2 の場合は 0
-* string1 > string2 の場合は 1
+// TRANSLATION MISSING
+* < 0 if string1 < string2
+* 0 if string1 == string2
+* > 0 if string1 > string2
 
 C 言語での使用例:
 
 [source,c]
 ----
-int diff = weechat_strncasecmp ("aabb", "aacc", 2);  /* == 0 */
+int diff = weechat_strncasecmp ("aabb", "AACC", 2);  /* == 0 */
 ----
 
 [NOTE]
@@ -838,7 +850,7 @@ int diff = weechat_strncasecmp ("aabb", "aacc", 2);  /* == 0 */
 
 ==== strncasecmp_range
 
-_WeeChat バージョン 0.3.7 以上で利用可、バージョン 1.0 で更新。_
+_WeeChat バージョン 0.3.7 以上で利用可、バージョン 1.0, 3.8 で更新。_
 
 大文字小文字を無視する文字範囲の幅を使い、ロケールと大文字小文字を無視して
 _max_ 文字だけ文字列を比較。
@@ -863,11 +875,15 @@ int weechat_strncasecmp_range (const char *string1, const char *string2, int max
 [NOTE]
 29 と 30 は IRC など一部のプロトコルで使います。
 
-戻り値:
+// TRANSLATION MISSING
+Return value: arithmetic result of subtracting the last compared char in
+_string2_ (converted to lowercase) from the last compared char in _string1_
+(converted to lowercase):
 
-* string1 < string2 の場合は -1
-* string1 == string2 の場合は 0
-* string1 > string2 の場合は 1
+// TRANSLATION MISSING
+* < 0 if string1 < string2
+* 0 if string1 == string2
+* > 0 if string1 > string2
 
 C 言語での使用例:
 
@@ -908,11 +924,15 @@ Behavior has changed in version 3.8 when _case_sensitive_ is set to 0: now all
 uppercase letters are properly converted to lowercase (by calling function
 `towlower`), in addition to the range `A` to `Z`.
 
-戻り値:
+// TRANSLATION MISSING
+Return value: arithmetic result of subtracting the last compared char in
+_string2_ (converted to lowercase if _case_sentitive_ is set to 0) from the last
+compared char in _string1_ (converted to lowercase if _case_sensitive_ is set to 0):
 
-* string1 < string2 の場合は -1
-* string1 == string2 の場合は 0
-* string1 > string2 の場合は 1
+// TRANSLATION MISSING
+* < 0 if string1 < string2
+* 0 if string1 == string2
+* > 0 if string1 > string2
 
 C 言語での使用例:
 
@@ -3713,7 +3733,7 @@ int length_on_screen = weechat_utf8_strlen_screen ("é");  /* == 1 */
 
 ==== utf8_charcmp
 
-_WeeChat バージョン 1.0 で更新。_
+_WeeChat バージョン 1.0, 3.8 で更新。_
 
 2 つの UTF-8 文字を比較。
 
@@ -3729,11 +3749,14 @@ int weechat_utf8_charcmp (const char *string1, const char *string2);
 * _string1_: 1 番目の比較文字列
 * _string2_: 2 番目の比較文字列
 
-戻り値:
+// TRANSLATION MISSING
+Return value: arithmetic result of subtracting the first char in _string2_ from
+the first char in _string1_:
 
-* string1 < string2 の場合は -1
-* string1 == string2 の場合は 0
-* string1 > string2 の場合は 1
+// TRANSLATION MISSING
+* < 0 if char1 < char2
+* 0 if char1 == char2
+* > 0 if char1 > char2
 
 C 言語での使用例:
 
@@ -3769,11 +3792,14 @@ int weechat_utf8_charcasecmp (const char *string1, const char *string2);
 * _string1_: 1 番目の比較文字列
 * _string2_: 2 番目の比較文字列
 
-戻り値:
+// TRANSLATION MISSING
+Return value: arithmetic result of subtracting the first char in _string2_
+(converted to lowercase) from the first char in _string1_ (converted to lowercase):
 
-* string1 < string2 の場合は -1
-* string1 == string2 の場合は 0
-* string1 > string2 の場合は 1
+// TRANSLATION MISSING
+* < 0 if char1 < char2
+* 0 if char1 == char2
+* > 0 if char1 > char2
 
 C 言語での使用例:
 

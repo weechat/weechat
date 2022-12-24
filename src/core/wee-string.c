@@ -394,12 +394,14 @@ string_toupper (const char *string)
 }
 
 /*
- * Compares two strings (locale and case independent).
+ * Compares two strings (case insensitive).
  *
- * Returns:
- *   -1: string1 < string2
- *    0: string1 == string2
- *    1: string1 > string2
+ * Returns: arithmetic result of subtracting the last compared char in string2
+ * (converted to lowercase) from the last compared char in string1 (converted
+ * to lowercase):
+ *   < 0: string1 < string2
+ *     0: string1 == string2
+ *   > 0: string1 > string2
  */
 
 int
@@ -407,24 +409,21 @@ string_strcasecmp (const char *string1, const char *string2)
 {
     int diff;
 
-    if (!string1 || !string2)
-        return (string1) ? 1 : ((string2) ? -1 : 0);
-
-    while (string1[0] && string2[0])
+    while (string1 && string1[0] && string2 && string2[0])
     {
         diff = utf8_charcasecmp (string1, string2);
         if (diff != 0)
-            return (diff < 0) ? -1 : 1;
+            return diff;
 
         string1 = utf8_next_char (string1);
         string2 = utf8_next_char (string2);
     }
 
-    return (string1[0]) ? 1 : ((string2[0]) ? -1 : 0);
+    return utf8_charcasecmp (string1, string2);
 }
 
 /*
- * Compares two strings (locale and case independent) using a range.
+ * Compares two strings (case insensitive using a range).
  *
  * The range is the number of chars which can be converted from upper to lower
  * case. For example 26 = all letters of alphabet, 29 = all letters + 3 chars.
@@ -435,10 +434,12 @@ string_strcasecmp (const char *string1, const char *string2)
  *   - range = 30: A-Z [ \ ] ^ ==> a-z { | } ~
  *   (ranges 29 and 30 are used by some protocols like IRC)
  *
- * Returns:
- *   -1: string1 < string2
- *    0: string1 == string2
- *    1: string1 > string2
+ * Returns: arithmetic result of subtracting the last compared char in string2
+ * (converted to lowercase) from the last compared char in string1 (converted
+ * to lowercase):
+ *   < 0: string1 < string2
+ *     0: string1 == string2
+ *   > 0: string1 > string2
  */
 
 int
@@ -446,29 +447,28 @@ string_strcasecmp_range (const char *string1, const char *string2, int range)
 {
     int diff;
 
-    if (!string1 || !string2)
-        return (string1) ? 1 : ((string2) ? -1 : 0);
-
-    while (string1[0] && string2[0])
+    while (string1 && string1[0] && string2 && string2[0])
     {
         diff = utf8_charcasecmp_range (string1, string2, range);
         if (diff != 0)
-            return (diff < 0) ? -1 : 1;
+            return diff;
 
         string1 = utf8_next_char (string1);
         string2 = utf8_next_char (string2);
     }
 
-    return (string1[0]) ? 1 : ((string2[0]) ? -1 : 0);
+    return utf8_charcasecmp_range (string1, string2, range);
 }
 
 /*
- * Compares two strings with max length (locale and case independent).
+ * Compares two strings with max length (case insensitive).
  *
- * Returns:
- *    -1: string1 < string2
+ * Returns: arithmetic result of subtracting the last compared char in string2
+ * (converted to lowercase) from the last compared char in string1 (converted
+ * to lowercase):
+ *   < 0: string1 < string2
  *     0: string1 == string2
- *     1: string1 > string2
+ *   > 0: string1 > string2
  */
 
 int
@@ -476,15 +476,12 @@ string_strncasecmp (const char *string1, const char *string2, int max)
 {
     int count, diff;
 
-    if (!string1 || !string2)
-        return (string1) ? 1 : ((string2) ? -1 : 0);
-
     count = 0;
-    while ((count < max) && string1[0] && string2[0])
+    while ((count < max) && string1 && string1[0] && string2 && string2[0])
     {
         diff = utf8_charcasecmp (string1, string2);
         if (diff != 0)
-            return (diff < 0) ? -1 : 1;
+            return diff;
 
         string1 = utf8_next_char (string1);
         string2 = utf8_next_char (string2);
@@ -494,12 +491,11 @@ string_strncasecmp (const char *string1, const char *string2, int max)
     if (count >= max)
         return 0;
     else
-        return (string1[0]) ? 1 : ((string2[0]) ? -1 : 0);
+        return utf8_charcasecmp (string1, string2);
 }
 
 /*
- * Compares two strings with max length (locale and case independent) using a
- * range.
+ * Compares two strings with max length (case insensitive using a range).
  *
  * The range is the number of chars which can be converted from upper to lower
  * case. For example 26 = all letters of alphabet, 29 = all letters + 3 chars.
@@ -510,10 +506,12 @@ string_strncasecmp (const char *string1, const char *string2, int max)
  *   - range = 30: A-Z [ \ ] ^ ==> a-z { | } ~
  *   (ranges 29 and 30 are used by some protocols like IRC)
  *
- * Returns:
- *   -1: string1 < string2
- *    0: string1 == string2
- *    1: string1 > string2
+ * Returns: arithmetic result of subtracting the last compared char in string2
+ * (converted to lowercase) from the last compared char in string1 (converted
+ * to lowercase):
+ *   < 0: string1 < string2
+ *     0: string1 == string2
+ *   > 0: string1 > string2
  */
 
 int
@@ -522,15 +520,12 @@ string_strncasecmp_range (const char *string1, const char *string2, int max,
 {
     int count, diff;
 
-    if (!string1 || !string2)
-        return (string1) ? 1 : ((string2) ? -1 : 0);
-
     count = 0;
-    while ((count < max) && string1[0] && string2[0])
+    while ((count < max) && string1 && string1[0] && string2 && string2[0])
     {
         diff = utf8_charcasecmp_range (string1, string2, range);
         if (diff != 0)
-            return (diff < 0) ? -1 : 1;
+            return diff;
 
         string1 = utf8_next_char (string1);
         string2 = utf8_next_char (string2);
@@ -540,16 +535,19 @@ string_strncasecmp_range (const char *string1, const char *string2, int max,
     if (count >= max)
         return 0;
     else
-        return (string1[0]) ? 1 : ((string2[0]) ? -1 : 0);
+        return utf8_charcasecmp_range (string1, string2, range);
 }
 
 /*
  * Compares two strings, ignoring some chars.
  *
- * Returns:
- *   -1: string1 < string2
- *    0: string1 == string2
- *    1: string1 > string2
+ * Returns: arithmetic result of subtracting the last compared char in string2
+ * (converted to lowercase if case_sensitive is set to 0) from the last
+ * compared char in string1 (converted to lowercase if case_sensitive is set
+ * to 0):
+ *   < 0: string1 < string2
+ *     0: string1 == string2
+ *   > 0: string1 > string2
  */
 
 int
@@ -557,9 +555,6 @@ string_strcmp_ignore_chars (const char *string1, const char *string2,
                             const char *chars_ignored, int case_sensitive)
 {
     int diff;
-
-    if (!string1 || !string2)
-        return (string1) ? 1 : ((string2) ? -1 : 0);
 
     while (string1 && string1[0] && string2 && string2[0])
     {
@@ -574,18 +569,18 @@ string_strcmp_ignore_chars (const char *string1, const char *string2,
         }
 
         /* end of one (or both) string(s) ? */
-        if ((!string1 || !string1[0]) && (!string2 || !string2[0]))
-            return 0;
-        if ((!string1 || !string1[0]) && string2 && string2[0])
-            return -1;
-        if (string1 && string1[0] && (!string2 || !string2[0]))
-            return 1;
+        if (!string1 || !string1[0] || !string2 || !string2[0])
+        {
+            return (case_sensitive) ?
+                utf8_charcmp (string1, string2) :
+                utf8_charcasecmp (string1, string2);
+        }
 
         /* look at diff */
         diff = (case_sensitive) ?
             utf8_charcmp (string1, string2) : utf8_charcasecmp (string1, string2);
         if (diff != 0)
-            return (diff < 0) ? -1 : 1;
+            return diff;
 
         string1 = utf8_next_char (string1);
         string2 = utf8_next_char (string2);
@@ -600,11 +595,8 @@ string_strcmp_ignore_chars (const char *string1, const char *string2,
             string2 = utf8_next_char (string2);
         }
     }
-    if ((!string1 || !string1[0]) && string2 && string2[0])
-        return -1;
-    if (string1 && string1[0] && (!string2 || !string2[0]))
-        return 1;
-    return 0;
+    return (case_sensitive) ?
+        utf8_charcmp (string1, string2) : utf8_charcasecmp (string1, string2);
 }
 
 /*

@@ -698,16 +698,22 @@ int weechat_strcasecmp (const char *string1, const char *string2);
 
 Повратна вредност:
 
-* -1 ако је string1 < string2
-* 0 ако је string1 == string2
-* 1 ако је string1 > string2
+// TRANSLATION MISSING
+Return value: arithmetic result of subtracting the last compared char in
+_string2_ (converted to lowercase) from the last compared char in _string1_
+(converted to lowercase):
+
+// TRANSLATION MISSING
+* < 0 if string1 < string2
+* 0 if string1 == string2
+* > 0 if string1 > string2
 
 C пример:
 
 [source,c]
 ----
 int diff;
-diff = weechat_strcasecmp ("aaa", "CCC");    /* == -1 */
+diff = weechat_strcasecmp ("aaa", "CCC");    /* == -2 */
 diff = weechat_strcasecmp ("noël", "NOËL");  /* == 0  */
 ----
 
@@ -716,7 +722,7 @@ diff = weechat_strcasecmp ("noël", "NOËL");  /* == 0  */
 
 ==== strcasecmp_range
 
-_WeeChat ≥ 0.3.7, ажурирано у верзији 1.0._
+_WeeChat ≥ 0.3.7, ажурирано у верзији 1.0, 3.8._
 
 Поређење стрингова независно од величине слова и локал подешавања, употребом опсега за поређење величине слова.
 
@@ -739,11 +745,15 @@ int weechat_strcasecmp_range (const char *string1, const char *string2, int rang
 [NOTE]
 Вредности 29 и 30 користе неки протоколи, као што је IRC.
 
-Повратна вредност:
+// TRANSLATION MISSING
+Return value: arithmetic result of subtracting the last compared char in
+_string2_ (converted to lowercase) from the last compared char in _string1_
+(converted to lowercase):
 
-* -1 ако је string1 < string2
-* 0 ако је string1 == string2
-* 1 ако је string1 > string2
+// TRANSLATION MISSING
+* < 0 if string1 < string2
+* 0 if string1 == string2
+* > 0 if string1 > string2
 
 C пример:
 
@@ -757,7 +767,7 @@ int diff = weechat_strcasecmp_range ("nick{away}", "NICK[away]", 29);  /* == 0 *
 
 ==== strncasecmp
 
-_Ажурирано у верзији 1.0._
+_Ажурирано у верзији 1.0, 3.8._
 
 // TRANSLATION MISSING
 Case insensitive string comparison, for _max_ chars.
@@ -781,17 +791,21 @@ int weechat_strncasecmp (const char *string1, const char *string2, int max);
 * _string2_: други стринг за поређење
 * _max_: максимални број карактера који се пореде
 
-Повратна вредност:
+// TRANSLATION MISSING
+Return value: arithmetic result of subtracting the last compared char in
+_string2_ (converted to lowercase) from the last compared char in _string1_
+(converted to lowercase):
 
-* -1 ако је string1 < string2
-* 0 ако је string1 == string2
-* 1 ако је string1 > string2
+// TRANSLATION MISSING
+* < 0 if string1 < string2
+* 0 if string1 == string2
+* > 0 if string1 > string2
 
 C пример:
 
 [source,c]
 ----
-int diff = weechat_strncasecmp ("aabb", "aacc", 2);  /* == 0 */
+int diff = weechat_strncasecmp ("aabb", "AACC", 2);  /* == 0 */
 ----
 
 [NOTE]
@@ -799,7 +813,7 @@ int diff = weechat_strncasecmp ("aabb", "aacc", 2);  /* == 0 */
 
 ==== strncasecmp_range
 
-_WeeChat ≥ 0.3.7, ажурирано у верзији 1.0._
+_WeeChat ≥ 0.3.7, ажурирано у верзији 1.0, 3.8._
 
 Поређење стрингова независно од величине слова и локал подешавања, за _max_ карактера, користећи опсег за поређење величине слова.
 
@@ -823,11 +837,15 @@ int weechat_strncasecmp_range (const char *string1, const char *string2, int max
 [NOTE]
 Вредности 29 и 30 користе неки протоколи, као што је IRC.
 
-Повратна вредност:
+// TRANSLATION MISSING
+Return value: arithmetic result of subtracting the last compared char in
+_string2_ (converted to lowercase) from the last compared char in _string1_
+(converted to lowercase):
 
-* -1 ако је string1 < string2
-* 0 ако је string1 == string2
-* 1 ако је string1 > string2
+// TRANSLATION MISSING
+* < 0 if string1 < string2
+* 0 if string1 == string2
+* > 0 if string1 > string2
 
 C пример:
 
@@ -868,11 +886,15 @@ Behavior has changed in version 3.8 when _case_sensitive_ is set to 0: now all
 uppercase letters are properly converted to lowercase (by calling function
 `towlower`), in addition to the range `A` to `Z`.
 
-Повратна вредност:
+// TRANSLATION MISSING
+Return value: arithmetic result of subtracting the last compared char in
+_string2_ (converted to lowercase if _case_sentitive_ is set to 0) from the last
+compared char in _string1_ (converted to lowercase if _case_sensitive_ is set to 0):
 
-* -1 ако је string1 < string2
-* 0 ако је string1 == string2
-* 1 ако је string1 > string2
+// TRANSLATION MISSING
+* < 0 if string1 < string2
+* 0 if string1 == string2
+* > 0 if string1 > string2
 
 C пример:
 
@@ -3520,7 +3542,7 @@ int length_on_screen = weechat_utf8_strlen_screen ("é");  /* == 1 */
 
 ==== utf8_charcmp
 
-_Ажурирано у верзији 1.0._
+_Ажурирано у верзији 1.0, 3.8._
 
 Пореди два UTF-8 карактера.
 
@@ -3536,11 +3558,14 @@ int weechat_utf8_charcmp (const char *string1, const char *string2);
 * _string1_: први стринг за поређење
 * _string2_: други стринг за поређење
 
-Повратна вредност:
+// TRANSLATION MISSING
+Return value: arithmetic result of subtracting the first char in _string2_ from
+the first char in _string1_:
 
-* -1 ако је string1 < string2
-* 0 ако је string1 == string2
-* 1 ако је string1 > string2
+// TRANSLATION MISSING
+* < 0 if char1 < char2
+* 0 if char1 == char2
+* > 0 if char1 > char2
 
 C пример:
 
@@ -3576,11 +3601,14 @@ int weechat_utf8_charcasecmp (const char *string1, const char *string2);
 * _string1_: први стринг за поређење
 * _string2_: други стринг за поређење
 
-Повратна вредност:
+// TRANSLATION MISSING
+Return value: arithmetic result of subtracting the first char in _string2_
+(converted to lowercase) from the first char in _string1_ (converted to lowercase):
 
-* -1 ако је string1 < string2
-* 0 ако је string1 == string2
-* 1 ако је string1 > string2
+// TRANSLATION MISSING
+* < 0 if char1 < char2
+* 0 if char1 == char2
+* > 0 if char1 > char2
 
 C пример:
 
