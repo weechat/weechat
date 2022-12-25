@@ -1358,17 +1358,7 @@ COMMAND_CALLBACK(buffer)
     {
         if (strcmp (argv[1], "+") == 0)
         {
-            /* search last non-hidden buffer */
-            for (ptr_buffer = last_gui_buffer; ptr_buffer;
-                 ptr_buffer = ptr_buffer->prev_buffer)
-            {
-                if (!ptr_buffer->hidden)
-                    break;
-            }
-            number = (ptr_buffer) ?
-                ptr_buffer->number : ((last_gui_buffer) ? last_gui_buffer->number : -1);
-            if (number > 0)
-                gui_buffer_switch_by_number (gui_current_window, number);
+            gui_buffer_jump_last_visible_number (gui_current_window);
         }
         else
         {
@@ -3412,7 +3402,7 @@ COMMAND_CALLBACK(input)
             gui_buffer_jump_smart (gui_current_window);
         /* since WeeChat 1.0: "/buffer +" */
         else if (string_strcasecmp (argv[1], "jump_last_buffer") == 0)
-            (void) input_data (buffer, "/buffer +", NULL);
+            gui_buffer_jump_last_visible_number (gui_current_window);
         /* since WeeChat 3.8: "/buffer jump last_displayed" */
         else if (string_strcasecmp (argv[1], "jump_last_buffer_displayed") == 0)
             gui_buffer_jump_last_buffer_displayed (gui_current_window);

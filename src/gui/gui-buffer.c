@@ -4494,6 +4494,33 @@ gui_buffer_jump_smart (struct t_gui_window *window)
 }
 
 /*
+ * Jumps to last buffer that is visible (not hidden).
+ */
+
+void
+gui_buffer_jump_last_visible_number (struct t_gui_window *window)
+{
+    struct t_gui_buffer *ptr_buffer;
+    int number;
+
+    if (!window)
+        return;
+
+    /* search last non-hidden buffer */
+    for (ptr_buffer = last_gui_buffer; ptr_buffer;
+         ptr_buffer = ptr_buffer->prev_buffer)
+    {
+        if (!ptr_buffer->hidden)
+            break;
+    }
+
+    number = (ptr_buffer) ?
+        ptr_buffer->number : ((last_gui_buffer) ? last_gui_buffer->number : -1);
+    if (number > 0)
+        gui_buffer_switch_by_number (gui_current_window, number);
+}
+
+/*
  * Jumps to last buffer displayed (before last jump to a buffer).
  */
 

@@ -1399,6 +1399,16 @@ TEST(GuiBuffer, JumpSmart)
 
 /*
  * Tests functions:
+ *   gui_buffer_jump_last_visible_number
+ */
+
+TEST(GuiBuffer, JumpLastVisibleNumber)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
  *   gui_buffer_jump_last_buffer_displayed
  */
 
