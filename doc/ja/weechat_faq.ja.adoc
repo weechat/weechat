@@ -996,7 +996,7 @@ or per group of buffers (like IRC servers).
 [[irc_target_buffer]]
 === どうすればマージされたバッファ内であるコマンドを発行するターゲットバッファを変更できますか。
 
-デフォルトのキーは kbd:[Ctrl+x] です (コマンドは: `+/input switch_active_buffer+`)。
+デフォルトのキーは kbd:[Ctrl+x] です (コマンドは: `+/buffer switch+`)。
 
 [[plugins_scripts]]
 == プラグイン / スクリプト

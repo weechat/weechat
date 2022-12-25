@@ -22,7 +22,7 @@ New features::
 
   * core: add command `/allbuf`
   * core: add command `/hotlist`
-  * core: move some `/input` actions to commands `/allbuf`, `/buffer set`, `/buffer jump` and `/hotlist`
+  * core: move some `/input` actions to commands `/allbuf`, `/buffer` and `/hotlist`
   * core: improve case convert and insensitive char comparisons (issue #258)
   * core: add color attributes "blink" and "dim" (half bright) (issue #1855)
   * core: allow command `/toggle` to create option before setting the value, if allowed in the section (issue #1837)

@@ -1149,6 +1149,36 @@ TEST(GuiBuffer, GetPreviousActiveBuffer)
 
 /*
  * Tests functions:
+ *   gui_buffer_switch_active_buffer
+ */
+
+TEST(GuiBuffer, SwitchActiveBuffer)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   gui_buffer_switch_active_buffer_previous
+ */
+
+TEST(GuiBuffer, SwitchActiveBufferPrevious)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   gui_buffer_zoom
+ */
+
+TEST(GuiBuffer, Zoom)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
  *   gui_buffer_renumber
  */
 

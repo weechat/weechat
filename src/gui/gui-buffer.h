@@ -361,6 +361,9 @@ extern struct t_gui_buffer *gui_buffer_get_next_active_buffer (struct t_gui_buff
                                                                int allow_hidden_buffer);
 extern struct t_gui_buffer *gui_buffer_get_previous_active_buffer (struct t_gui_buffer *buffer,
                                                                    int allow_hidden_buffer);
+extern void gui_buffer_switch_active_buffer (struct t_gui_buffer *buffer);
+extern void gui_buffer_switch_active_buffer_previous (struct t_gui_buffer *buffer);
+extern void gui_buffer_zoom (struct t_gui_buffer *buffer);
 extern void gui_buffer_renumber (int number1, int number2, int start_number);
 extern void gui_buffer_move_to_number (struct t_gui_buffer *buffer, int number);
 extern void gui_buffer_swap (int number1, int number2);

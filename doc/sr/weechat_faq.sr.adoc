@@ -862,7 +862,7 @@ link:weechat_user.sr.html#max_hotlist_level_nicks[hotlist_max_level_nicks_add ^
 [[irc_target_buffer]]
 === Како могу да променим циљни бафер за команде над спојеним баферима (као што је бафер са серверима)?
 
-Подразумевани тастер је kbd:[Ctrl+x] (команда је: `+/input switch_active_buffer+`).
+Подразумевани тастер је kbd:[Ctrl+x] (команда је: `+/buffer switch+`).
 
 [[plugins_scripts]]
 == Додаци / скрипте

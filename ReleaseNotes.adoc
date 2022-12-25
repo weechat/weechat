@@ -40,6 +40,9 @@ removed):
 | /input hotlist_restore_all            | /hotlist restore -all       | kbd:[Alt+h], kbd:[Alt+Shift+R]
 | /input set_unread                     | /allbuf /buffer set unread  | kbd:[Ctrl+s], kbd:[Ctrl+u]
 | /input set_unread_current_buffer      | /buffer set unread          | (none)
+| /input switch_active_buffer           | /buffer switch              | kbd:[Ctrl+x]
+| /input switch_active_buffer_previous  | /buffer switch -previous    | (none)
+| /input zoom_merged_buffer             | /buffer zoom                | kbd:[Alt+x]
 |===
 
 The following default keys can be reset to use the new command:
@@ -54,6 +57,8 @@ The following default keys can be reset to use the new command:
 /key reset meta-hmeta-r
 /key reset meta-hmeta-R
 /key reset ctrl-Sctrl-U
+/key reset ctrl-X
+/key reset meta-x
 ----
 
 [[v3.8_return_code_string_comparison_functions]]

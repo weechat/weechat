@@ -976,6 +976,23 @@ COMMAND_CALLBACK(buffer)
         return WEECHAT_RC_OK;
     }
 
+    /* switch to next/previous active buffer */
+    if (string_strcasecmp (argv[1], "switch") == 0)
+    {
+        if ((argc > 2) && (string_strcasecmp (argv[2], "-previous") == 0))
+            gui_buffer_switch_active_buffer_previous (buffer);
+        else
+            gui_buffer_switch_active_buffer (buffer);
+        return WEECHAT_RC_OK;
+    }
+
+    /* zoom on merged buffer */
+    if (string_strcasecmp (argv[1], "zoom") == 0)
+    {
+        gui_buffer_zoom (buffer);
+        return WEECHAT_RC_OK;
+    }
+
     /* renumber buffers */
     if (string_strcasecmp (argv[1], "renumber") == 0)
     {
@@ -3433,12 +3450,6 @@ COMMAND_CALLBACK(input)
         gui_input_grab_mouse (buffer, 0);
     else if (string_strcasecmp (argv[1], "grab_mouse_area") == 0)
         gui_input_grab_mouse (buffer, 1);
-    else if (string_strcasecmp (argv[1], "switch_active_buffer") == 0)
-        gui_input_switch_active_buffer (buffer);
-    else if (string_strcasecmp (argv[1], "zoom_merged_buffer") == 0)
-        gui_input_zoom_merged_buffer (buffer);
-    else if (string_strcasecmp (argv[1], "switch_active_buffer_previous") == 0)
-        gui_input_switch_active_buffer_previous (buffer);
     else if (string_strcasecmp (argv[1], "insert") == 0)
     {
         if (argc > 2)
@@ -3498,6 +3509,15 @@ COMMAND_CALLBACK(input)
         /* since WeeChat 3.8: "/allbuf /buffer set unread" */
         else if (string_strcasecmp (argv[1], "set_unread") == 0)
             (void) input_data (buffer, "/allbuf /buffer set unread", NULL);
+        /* since WeeChat 3.8: "/buffer switch" */
+        else if (string_strcasecmp (argv[1], "switch_active_buffer") == 0)
+            gui_buffer_switch_active_buffer (buffer);
+        /* since WeeChat 3.8: "/buffer switch previous" */
+        else if (string_strcasecmp (argv[1], "switch_active_buffer_previous") == 0)
+            gui_buffer_switch_active_buffer_previous (buffer);
+        /* since WeeChat 3.8: "/buffer zoom" */
+        else if (string_strcasecmp (argv[1], "zoom_merged_buffer") == 0)
+            gui_buffer_zoom (buffer);
         else
             COMMAND_ERROR;
     }
@@ -7566,6 +7586,8 @@ command_init ()
            " || unmerge [<number>|-all]"
            " || hide [<number>|<name>|-all [<number>|<name>...]]"
            " || unhide [<number>|<name>|-all [<number>|<name>...]]"
+           " || switch [-previous]"
+           " || zoom"
            " || renumber [<number1> [<number2> [<start>]]]"
            " || close [<n1>[-<n2>]|<name>...]"
            " || notify [<level>]"
@@ -7593,6 +7615,9 @@ command_init ()
            " unmerge: unmerge buffer from other buffers which have same number\n"
            "    hide: hide the buffer\n"
            "  unhide: unhide the buffer\n"
+           "  switch: switch to next merged buffer (or to previous buffer "
+           "with \"-previous\")\n"
+           "    zoom: zoom on merged buffer\n"
            "renumber: renumber buffers (works only if option weechat.look."
            "buffer_auto_renumber is off)\n"
            "   close: close buffer (number/range or name is optional)\n"
@@ -7662,6 +7687,8 @@ command_init ()
         " || hide %(buffers_numbers)|%(buffers_plugins_names)|-all "
         "%(buffers_numbers)|%(buffers_plugins_names)|%*"
         " || unhide %(buffers_numbers)|%(buffers_plugins_names)|-all "
+        " || switch -previous"
+        " || zoom"
         "%(buffers_numbers)|%(buffers_plugins_names)|%*"
         " || renumber %(buffers_numbers) %(buffers_numbers) %(buffers_numbers)"
         " || close %(buffers_plugins_names)|%*"
@@ -8195,9 +8222,6 @@ command_init ()
            "argument: delay for end of grab, default is 500 milliseconds)\n"
            "  grab_mouse: grab mouse event code\n"
            "  grab_mouse_area: grab mouse event code with area\n"
-           "  switch_active_buffer: switch to next merged buffer\n"
-           "  switch_active_buffer_previous: switch to previous merged buffer\n"
-           "  zoom_merged_buffer: zoom on merged buffer\n"
            "  insert: insert text in command line (escaped chars are allowed, "
            "see /help print)\n"
            "  send: send text to the buffer\n"
@@ -8221,8 +8245,6 @@ command_init ()
         "history_previous || history_next || history_global_previous || "
         "history_global_next || "
         "grab_key || grab_key_command || grab_mouse || grab_mouse_area || "
-        "switch_active_buffer || switch_active_buffer_previous || "
-        "zoom_merged_buffer || "
         "insert || send || "
         "paste_start || paste_stop",
         &command_input, NULL, NULL);

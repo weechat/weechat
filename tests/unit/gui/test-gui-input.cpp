@@ -804,36 +804,6 @@ TEST(GuiInput, GrabMouse)
 
 /*
  * Tests functions:
- *   gui_input_switch_active_buffer
- */
-
-TEST(GuiInput, SwitchActiveBuffer)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Tests functions:
- *   gui_input_switch_active_buffer_previous
- */
-
-TEST(GuiInput, SwitchActiveBufferPrevious)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Tests functions:
- *   gui_input_zoom_merged_buffer
- */
-
-TEST(GuiInput, ZoomMergedBuffer)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Tests functions:
  *   gui_input_insert
  */
 

@@ -976,7 +976,7 @@ For more examples, see `+/help buffer_autoset+`.
 [[irc_target_buffer]]
 === How can I change target buffer for commands on merged buffers (like buffer with servers)?
 
-The default key is kbd:[Ctrl+x] (command is: `+/input switch_active_buffer+`).
+The default key is kbd:[Ctrl+x] (command is: `+/buffer switch+`).
 
 [[plugins_scripts]]
 == Plugins / scripts

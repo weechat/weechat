@@ -3355,6 +3355,120 @@ gui_buffer_get_previous_active_buffer (struct t_gui_buffer *buffer,
 }
 
 /*
+ * Switches active buffer to next buffer (when many buffers are merged).
+ */
+
+void
+gui_buffer_switch_active_buffer (struct t_gui_buffer *buffer)
+{
+    struct t_gui_buffer *ptr_buffer;
+    struct t_gui_window *window;
+
+    ptr_buffer = gui_buffer_get_next_active_buffer (buffer, 0);
+    if (ptr_buffer)
+    {
+        gui_buffer_set_active_buffer (ptr_buffer);
+        window = gui_window_search_with_buffer (buffer);
+        if (window)
+            gui_window_switch_to_buffer (window, ptr_buffer, 1);
+    }
+}
+
+/*
+ * Switches active buffer to previous buffer (when many buffers are merged).
+ */
+
+void
+gui_buffer_switch_active_buffer_previous (struct t_gui_buffer *buffer)
+{
+    struct t_gui_buffer *ptr_buffer;
+    struct t_gui_window *window;
+
+    ptr_buffer = gui_buffer_get_previous_active_buffer (buffer, 0);
+    if (ptr_buffer)
+    {
+        gui_buffer_set_active_buffer (ptr_buffer);
+        window = gui_window_search_with_buffer (buffer);
+        if (window)
+            gui_window_switch_to_buffer (window, ptr_buffer, 1);
+    }
+}
+
+/*
+ * Zooms on current active merged buffer, or display all merged buffers if zoom
+ * was active.
+ */
+
+void
+gui_buffer_zoom (struct t_gui_buffer *buffer)
+{
+    struct t_gui_window *ptr_window;
+    struct t_gui_buffer *ptr_buffer;
+    int buffer_was_zoomed;
+
+    /* do nothing if current buffer is not merged with another buffer */
+    if (gui_buffer_count_merged_buffers (buffer->number) < 2)
+        return;
+
+    buffer_was_zoomed = (buffer->active == 2);
+
+    /* reset scroll in all windows displaying this buffer number */
+    for (ptr_window = gui_windows; ptr_window;
+         ptr_window = ptr_window->next_window)
+    {
+        if ((ptr_window->buffer->number == buffer->number)
+            && ptr_window->scroll && ptr_window->scroll->start_line)
+        {
+            gui_window_scroll_bottom (ptr_window);
+        }
+    }
+
+    /* first make buffer active if it is not */
+    if (!buffer->active)
+    {
+        gui_buffer_set_active_buffer (buffer);
+        ptr_window = gui_window_search_with_buffer (buffer);
+        if (ptr_window)
+            gui_window_switch_to_buffer (ptr_window, buffer, 1);
+    }
+
+    /*
+     * toggle active flag between 1 and 2
+     * (1 = active with other merged buffers displayed, 2 = the only active)
+     */
+    if (buffer->active == 1)
+    {
+        buffer->active = 2;
+        buffer->lines = buffer->own_lines;
+    }
+    else if (buffer->active == 2)
+    {
+        buffer->active = 1;
+        buffer->lines = buffer->mixed_lines;
+    }
+
+    /* set "zoomed" in merged buffers */
+    for (ptr_buffer = gui_buffers; ptr_buffer;
+         ptr_buffer = ptr_buffer->next_buffer)
+    {
+        if (ptr_buffer->number > buffer->number)
+            break;
+        if (ptr_buffer->number == buffer->number)
+        {
+            ptr_buffer->zoomed = (buffer->active == 2) ? 1 : 0;
+        }
+    }
+
+    gui_buffer_compute_num_displayed ();
+
+    gui_buffer_ask_chat_refresh (buffer, 2);
+
+    (void) hook_signal_send ((buffer_was_zoomed) ?
+                             "buffer_unzoomed" : "buffer_zoomed",
+                             WEECHAT_HOOK_SIGNAL_POINTER, buffer);
+}
+
+/*
  * Renumbers buffers with consecutive numbers between the range
  * number1 -> number2, sarting with new number "start_number".
  *

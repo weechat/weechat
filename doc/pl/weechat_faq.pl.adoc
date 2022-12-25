@@ -995,7 +995,7 @@ Więcej przykładów można znaleźć wykonując komende `+/help buffer_autoset+
 [[irc_target_buffer]]
 === Jak mogę zmienić docelowy bufor dla komendy w połączonym buforze (jak bufor z serwerami)?
 
-Domyślna kombinacja to kbd:[Ctrl+x] (komenda: `+/input switch_active_buffer+`).
+Domyślna kombinacja to kbd:[Ctrl+x] (komenda: `+/buffer switch+`).
 
 [[plugins_scripts]]
 == Pluginy / skrypty

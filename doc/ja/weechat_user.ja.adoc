@@ -1657,8 +1657,8 @@ They can be changed and new ones can be added with the <<command_weechat_key,/ke
 | kbd:[Ctrl+r]                   | バッファ中の履歴からテキスト検索 (<<key_bindings_search_context,検索モード用のキー>>を参照) | `+/input search_text_here+`
 | kbd:[Ctrl+s], kbd:[Ctrl+u]     | すべてのバッファに未読マークをセット | `+/allbuf /buffer set unread+`
 // TRANSLATION MISSING
-| kbd:[Ctrl+x]                   | Switch current buffer if buffers are merged with same number, for example switch to another IRC server buffer. | `+/input switch_active_buffer+`
-| kbd:[Alt+x]                    | マージされたバッファに再ズーム (kbd:[Alt+x]: 全てのマージされたバッファを表示) | `+/input zoom_merged_buffer+`
+| kbd:[Ctrl+x]                   | Switch current buffer if buffers are merged with same number, for example switch to another IRC server buffer. | `+/buffer switch+`
+| kbd:[Alt+x]                    | マージされたバッファに再ズーム (kbd:[Alt+x]: 全てのマージされたバッファを表示) | `+/buffer zoom+`
 | kbd:[PgUp]                     | バッファ履歴を 1 ページ分上方向にスクロール | `+/window page_up+`
 | kbd:[PgDn]                     | バッファ履歴を 1 ページ分下方向にスクロール | `+/window page_down+`
 | kbd:[Alt+PgUp]                 | バッファ履歴を数行分上方向にスクロール | `+/window scroll_up+`

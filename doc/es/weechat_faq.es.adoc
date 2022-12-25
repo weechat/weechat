@@ -997,7 +997,7 @@ Para más ejemplos, vea `+/help buffer_autoset+`.
 [[irc_target_buffer]]
 === ¿Cómo puedo cambiar el objetivo del buffer para comandos en buffers unidos (como en un buffer con servidores)?
 
-La tecla predeterminada es kbd:[Ctrl+x] (el comando es: `+/input switch_active_buffer+`).
+La tecla predeterminada es kbd:[Ctrl+x] (el comando es: `+/buffer switch+`).
 
 [[plugins_scripts]]
 == Complementos / scripts

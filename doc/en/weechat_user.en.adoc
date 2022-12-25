@@ -1570,8 +1570,8 @@ They can be changed and new ones can be added with the <<command_weechat_key,/ke
 | Key                            | Description | Command
 | kbd:[Ctrl+r]                   | Search for text in buffer history (see <<key_bindings_search_context,keys for search context>>). | `+/input search_text_here+`
 | kbd:[Ctrl+s], kbd:[Ctrl+u]     | Set unread marker on all buffers. | `+/allbuf /buffer set unread+`
-| kbd:[Ctrl+x]                   | Switch current buffer if buffers are merged with same number, for example switch to another IRC server buffer. | `+/input switch_active_buffer+`
-| kbd:[Alt+x]                    | Zoom on merged buffer (kbd:[Alt+x] again: display all merged buffers). | `+/input zoom_merged_buffer+`
+| kbd:[Ctrl+x]                   | Switch current buffer if buffers are merged with same number, for example switch to another IRC server buffer. | `+/buffer switch+`
+| kbd:[Alt+x]                    | Zoom on merged buffer (kbd:[Alt+x] again: display all merged buffers). | `+/buffer zoom+`
 | kbd:[PgUp]                     | Scroll up one page in buffer history. | `+/window page_up+`
 | kbd:[PgDn]                     | Scroll down one page in buffer history. | `+/window page_down+`
 | kbd:[Alt+PgUp]                 | Scroll up a few lines in buffer history. | `+/window scroll_up+`

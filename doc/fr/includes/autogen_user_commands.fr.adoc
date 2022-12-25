@@ -1193,6 +1193,8 @@ Exemples :
          unmerge [<nombre>|-all]
          hide [<nombre>|<nom>|-all [<nombre>|<nom>...]]
          unhide [<nombre>|<nom>|-all [<nombre>|<nom>...]]
+         switch [-previous]
+         zoom
          renumber <nombre1> [<nombre2> [<départ>]]
          close [<n1>[-<n2>]|<nom>...]
          notify [<niveau>]
@@ -1215,6 +1217,8 @@ Exemples :
  unmerge : détacher le tampon courant des autres tampons portant le même numéro
     hide : masquer le tampon
   unhide : démasquer le tampon
+  switch : basculer vers le tampon mélangé suivant (ou vers le tampon précédent avec -previous)
+    zoom : zoom sur le tampon mélangé
 renumber : renuméroter des tampons (fonctionne seulement si l'option weechat.look.buffer_auto_renumber est désactivée)
    close : fermer le tampon (nombre/intervalle ou nom optionnel)
   notify : afficher ou définir le niveau de notification pour le tampon courant : ce niveau détermine si le tampon doit être ajouté à la hotlist ou pas :
@@ -1683,9 +1687,6 @@ liste des actions :
   grab_key_command : capturer une touche avec sa commande associée (paramètre facultatif : délai pour la fin de la capture, par défaut 500 millisecondes)
   grab_mouse : capturer un évènement de la souris
   grab_mouse_area : capturer un évènement de la souris avec la zone
-  switch_active_buffer : basculer vers le tampon mélangé suivant
-  switch_active_buffer_previous : basculer vers le tampon mélangé précédent
-  zoom_merged_buffer : zoom sur le tampon mélangé
   insert : insérer du texte dans la ligne de commande (les caractères échappés sont autorisés, voir /help print)
   send : envoyer du texte au tampon
   paste_start : début de collage (mode "bracketed paste")

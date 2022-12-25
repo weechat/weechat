@@ -1598,8 +1598,8 @@ Można je zmienić oraz dodać nowe za pomocą komendy <<command_weechat_key,/ke
 | kbd:[Ctrl+r]                   | Wyszukaj tekst w historii bufora (zobacz <<key_bindings_search_context,skróty dla kontekstu wyszukiwania>>). | `+/input search_text_here+`
 | kbd:[Ctrl+s], kbd:[Ctrl+u]     | Ustaw znacznik nieprzeczytania we wszystkich buforach. | `+/allbuf /buffer set unread+`
 // TRANSLATION MISSING
-| kbd:[Ctrl+x]                   | Switch current buffer if buffers are merged with same number, for example switch to another IRC server buffer. | `+/input switch_active_buffer+`
-| kbd:[Alt+x]                    | Pokaż wybrany z połączonych buforów (naciśnij kbd:[Alt+x] ponownie: wyświetl wszystkie połączone bufory). | `+/input zoom_merged_buffer+`
+| kbd:[Ctrl+x]                   | Switch current buffer if buffers are merged with same number, for example switch to another IRC server buffer. | `+/buffer switch+`
+| kbd:[Alt+x]                    | Pokaż wybrany z połączonych buforów (naciśnij kbd:[Alt+x] ponownie: wyświetl wszystkie połączone bufory). | `+/buffer zoom+`
 | kbd:[PgUp]                     | Przewiń jedną stronę w górę w historii bufora. | `+/window page_up+`
 | kbd:[PgDn]                     | Przewiń jedną stronę w dół w historii bufora. | `+/window page_down+`
 | kbd:[Alt+PgUp]                 | Przewiń w górę kilka linii w historii bufora. | `+/window scroll_up+`

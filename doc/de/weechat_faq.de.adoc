@@ -1050,7 +1050,7 @@ Für weitere Beispiele, siehe `+/help buffer_autoset+`.
 === Wie kann ich bei zusammengefügten Buffern den Zielbuffer ändern (z.B. bei einem Server-Buffer)?
 
 Die Standardtastenkombination ist kbd:[Ctrl+x]. Der entsprechende Befehl lautet:
-`+/input switch_active_buffer+`.
+`+/buffer switch+`.
 
 [[plugins_scripts]]
 == Erweiterungen / Skripten
