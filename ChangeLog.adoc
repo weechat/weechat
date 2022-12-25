@@ -58,10 +58,10 @@ Tests::
 
 Build::
 
-  * spell: add detection of enchant-2 (issue #1859)
-  * python: remove support of Python 2.x
   * debian: change dependency guile-2.2-dev to guile-3.0-dev
+  * python: remove support of Python 2.x
   * ruby: add detection of Ruby 3.2
+  * spell: add detection of enchant-2 (issue #1859)
 
 [[v3.7.1]]
 == Version 3.7.1 (2022-10-21)
