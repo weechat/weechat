@@ -3433,10 +3433,6 @@ COMMAND_CALLBACK(input)
         gui_input_grab_mouse (buffer, 0);
     else if (string_strcasecmp (argv[1], "grab_mouse_area") == 0)
         gui_input_grab_mouse (buffer, 1);
-    else if (string_strcasecmp (argv[1], "set_unread") == 0)
-        gui_input_set_unread ();
-    else if (string_strcasecmp (argv[1], "set_unread_current_buffer") == 0)
-        gui_input_set_unread_current (buffer);
     else if (string_strcasecmp (argv[1], "switch_active_buffer") == 0)
         gui_input_switch_active_buffer (buffer);
     else if (string_strcasecmp (argv[1], "zoom_merged_buffer") == 0)
@@ -3496,6 +3492,12 @@ COMMAND_CALLBACK(input)
         /* since WeeChat 3.8: "/hotlist restore -all" */
         else if (string_strcasecmp (argv[1], "hotlist_restore_all") == 0)
             gui_hotlist_restore_all_buffers ();
+        /* since WeeChat 3.8: "/buffer set unread" */
+        else if (string_strcasecmp (argv[1], "set_unread_current_buffer") == 0)
+            (void) input_data (buffer, "/buffer set unread", NULL);
+        /* since WeeChat 3.8: "/allbuf /buffer set unread" */
+        else if (string_strcasecmp (argv[1], "set_unread") == 0)
+            (void) input_data (buffer, "/allbuf /buffer set unread", NULL);
         else
             COMMAND_ERROR;
     }
@@ -8193,8 +8195,6 @@ command_init ()
            "argument: delay for end of grab, default is 500 milliseconds)\n"
            "  grab_mouse: grab mouse event code\n"
            "  grab_mouse_area: grab mouse event code with area\n"
-           "  set_unread: set unread marker for all buffers\n"
-           "  set_unread_current_buffer: set unread marker for current buffer\n"
            "  switch_active_buffer: switch to next merged buffer\n"
            "  switch_active_buffer_previous: switch to previous merged buffer\n"
            "  zoom_merged_buffer: zoom on merged buffer\n"
@@ -8221,7 +8221,6 @@ command_init ()
         "history_previous || history_next || history_global_previous || "
         "history_global_next || "
         "grab_key || grab_key_command || grab_mouse || grab_mouse_area || "
-        "set_unread || set_unread_current_buffer || "
         "switch_active_buffer || switch_active_buffer_previous || "
         "zoom_merged_buffer || "
         "insert || send || "

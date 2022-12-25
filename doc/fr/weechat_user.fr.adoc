@@ -1608,7 +1608,7 @@ Ils peuvent être modifiés et de nouveaux peuvent être ajoutés avec la comman
 |===
 | Touche                         | Description | Commande
 | kbd:[Ctrl+r]                   | Chercher du texte dans l'historique du tampon (voir <<key_bindings_search_context,les touches pour le contexte de recherche>>). | `+/input search_text_here+`
-| kbd:[Ctrl+s], kbd:[Ctrl+u]     | Positionner le marqueur de données non lues sur tous les tampons. | `+/input set_unread+`
+| kbd:[Ctrl+s], kbd:[Ctrl+u]     | Positionner le marqueur de données non lues sur tous les tampons. | `+/allbuf /buffer set unread+`
 | kbd:[Ctrl+x]                   | Changer de tampon courant si plusieurs tampons sont mélangés avec le même numéro, par exemple basculer vers un autre tampon serveur IRC. | `+/input switch_active_buffer+`
 | kbd:[Alt+x]                    | Zoomer sur le tampon mélangé (kbd:[Alt+x] de nouveau : afficher tous les tampons mélangés). | `+/input zoom_merged_buffer+`
 | kbd:[PgUp]                     | Monter d'une page dans l'historique du tampon. | `+/window page_up+`

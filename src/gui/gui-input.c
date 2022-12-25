@@ -1485,33 +1485,6 @@ gui_input_grab_mouse (struct t_gui_buffer *buffer, int area)
 }
 
 /*
- * Sets unread marker for all buffers (default key: ctrl-S, ctrl-U).
- */
-
-void
-gui_input_set_unread ()
-{
-    struct t_gui_buffer *ptr_buffer;
-
-    /* set read marker for all standard buffers */
-    for (ptr_buffer = gui_buffers; ptr_buffer;
-         ptr_buffer = ptr_buffer->next_buffer)
-    {
-        gui_buffer_set_unread (ptr_buffer);
-    }
-}
-
-/*
- * Sets unread marker for a buffer.
- */
-
-void
-gui_input_set_unread_current (struct t_gui_buffer *buffer)
-{
-    gui_buffer_set_unread (buffer);
-}
-
-/*
  * Switches active buffer to next buffer (when many buffers are merged) (default
  * key: ctrl-X).
  */

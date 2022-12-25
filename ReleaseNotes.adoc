@@ -21,20 +21,26 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 == Version 3.8 (under dev)
 
 [[v3.8_command_input_options]]
-=== Options in command /input
+=== Move of options out of command /input
 
 Some options of `/input` command have been moved to other commands (they can
 still be used with `/input` but marked as deprecated and completion has been
 removed):
 
-* `/input jump_smart` -> `/buffer jump smart` (default key: kbd:[Alt+a])
-* `/input jump_previously_visited_buffer` -> `/buffer jump prev_visited` (default key: kbd:[Alt+<])
-* `/input jump_next_visited_buffer` -> `/buffer jump next_visited` (default key: kbd:[Alt+>])
-* `/input jump_last_buffer_displayed` -> `/buffer jump last_displayed` (default key: kbd:[Alt+/])
-* `/input hotlist_clear` -> `/hotlist clear` (default key: kbd:[Alt+h], kbd:[Alt+c])
-* `/input hotlist_remove_buffer` -> `/hotlist remove` (default key: kbd:[Alt+h], kbd:[Alt+m])
-* `/input hotlist_restore_buffer` -> `/hotlist restore` (default key: kbd:[Alt+h], kbd:[Alt+r])
-* `/input hotlist_restore_all` -> `/hotlist restore -all` (default key: kbd:[Alt+h], kbd:[Alt+Shift+R])
+[width="100%",cols="4m,4m,3",options="header"]
+|===
+| Old command                           | New command                 | Default key
+| /input jump_smart                     | /buffer jump smart          | kbd:[Alt+a]
+| /input jump_previously_visited_buffer | /buffer jump prev_visited   | kbd:[Alt+<]
+| /input jump_next_visited_buffer       | /buffer jump next_visited   | kbd:[Alt+>]
+| /input jump_last_buffer_displayed     | /buffer jump last_displayed | kbd:[Alt+/]
+| /input hotlist_clear                  | /hotlist clear              | kbd:[Alt+h], kbd:[Alt+c]
+| /input hotlist_remove_buffer          | /hotlist remove             | kbd:[Alt+h], kbd:[Alt+m]
+| /input hotlist_restore_buffer         | /hotlist restore            | kbd:[Alt+h], kbd:[Alt+r]
+| /input hotlist_restore_all            | /hotlist restore -all       | kbd:[Alt+h], kbd:[Alt+Shift+R]
+| /input set_unread                     | /allbuf /buffer set unread  | kbd:[Ctrl+s], kbd:[Ctrl+u]
+| /input set_unread_current_buffer      | /buffer set unread          | (none)
+|===
 
 The following default keys can be reset to use the new command:
 
@@ -47,6 +53,7 @@ The following default keys can be reset to use the new command:
 /key reset meta-hmeta-m
 /key reset meta-hmeta-r
 /key reset meta-hmeta-R
+/key reset ctrl-Sctrl-U
 ----
 
 [[v3.8_return_code_string_comparison_functions]]

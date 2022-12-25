@@ -804,26 +804,6 @@ TEST(GuiInput, GrabMouse)
 
 /*
  * Tests functions:
- *   gui_input_set_unread
- */
-
-TEST(GuiInput, SetUnread)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Tests functions:
- *   gui_input_set_unread_current
- */
-
-TEST(GuiInput, SetUnreadCurrent)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Tests functions:
  *   gui_input_switch_active_buffer
  */
 

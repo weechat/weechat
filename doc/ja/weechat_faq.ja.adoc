@@ -484,7 +484,7 @@ WeeChat の開始時にコードを送信するには:
 端末のフォーカスが外れた時点でバッファに未読マークをつける例:
 
 ----
-/key bind meta2-O /input set_unread
+/key bind meta2-O /allbuf /buffer set unread
 ----
 
 [[screen_paste]]

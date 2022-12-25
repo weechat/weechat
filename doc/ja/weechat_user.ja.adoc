@@ -1655,7 +1655,7 @@ They can be changed and new ones can be added with the <<command_weechat_key,/ke
 |===
 | キー                            | 説明 | コマンド
 | kbd:[Ctrl+r]                   | バッファ中の履歴からテキスト検索 (<<key_bindings_search_context,検索モード用のキー>>を参照) | `+/input search_text_here+`
-| kbd:[Ctrl+s], kbd:[Ctrl+u]     | すべてのバッファに未読マークをセット | `+/input set_unread+`
+| kbd:[Ctrl+s], kbd:[Ctrl+u]     | すべてのバッファに未読マークをセット | `+/allbuf /buffer set unread+`
 // TRANSLATION MISSING
 | kbd:[Ctrl+x]                   | Switch current buffer if buffers are merged with same number, for example switch to another IRC server buffer. | `+/input switch_active_buffer+`
 | kbd:[Alt+x]                    | マージされたバッファに再ズーム (kbd:[Alt+x]: 全てのマージされたバッファを表示) | `+/input zoom_merged_buffer+`

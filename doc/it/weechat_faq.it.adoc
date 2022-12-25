@@ -530,7 +530,7 @@ commands of your choice):
 For example to mark buffers as read when the terminal loses the focus:
 
 ----
-/key bind meta2-O /input set_unread
+/key bind meta2-O /allbuf /buffer set unread
 ----
 
 // TRANSLATION MISSING

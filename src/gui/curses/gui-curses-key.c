@@ -145,7 +145,7 @@ gui_key_default_bindings (int context)
         BIND(/* m-k           */ "meta-k",             "/input grab_key_command");
         BIND(/* m-s           */ "meta-s",             "/mute spell toggle");
         BIND(/* m-u           */ "meta-u",             "/window scroll_unread");
-        BIND(/* ^S^U          */ "ctrl-Sctrl-U",       "/input set_unread");
+        BIND(/* ^S^U          */ "ctrl-Sctrl-U",       "/allbuf /buffer set unread");
         BIND(/* ^Cb           */ "ctrl-Cb",            "/input insert \\x02");
         BIND(/* ^Cc           */ "ctrl-Cc",            "/input insert \\x03");
         BIND(/* ^Ci           */ "ctrl-Ci",            "/input insert \\x1D");

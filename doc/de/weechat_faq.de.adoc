@@ -505,7 +505,7 @@ Um zum Beispiel Buffer als gelesen zu markieren,
 wenn das Terminal den Fokus verlieren sollte:
 
 ----
-/key bind meta2-O /input set_unread
+/key bind meta2-O /allbuf /buffer set unread
 ----
 
 [[screen_paste]]

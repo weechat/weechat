@@ -1707,7 +1707,7 @@ They can be changed and new ones can be added with the <<command_weechat_key,/ke
 |===
 | Tasti                          | Descrizione | Comando
 | kbd:[Ctrl+r]                   | Cerca del testo nella cronologia del buffer (consultare <<key_bindings_search_context,tasti per il contesto search>>). | `+/input search_text_here+`
-| kbd:[Ctrl+s], kbd:[Ctrl+u]     | Imposta l'evidenziatore dei messaggi non letti su tutti i buffer. | `+/input set_unread+`
+| kbd:[Ctrl+s], kbd:[Ctrl+u]     | Imposta l'evidenziatore dei messaggi non letti su tutti i buffer. | `+/allbuf /buffer set unread+`
 // TRANSLATION MISSING
 | kbd:[Ctrl+x]                   | Switch current buffer if buffers are merged with same number, for example switch to another IRC server buffer. | `+/input switch_active_buffer+`
 // TRANSLATION MISSING

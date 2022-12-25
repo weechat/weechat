@@ -484,7 +484,7 @@ Następnie przypisz dwie kombinacje klawiszy dla stanu aktywności (zamień kome
 Na przykład w celu oznaczenia boforów jako nie przeczytane w momencie jak terminal straci focus:
 
 ----
-/key bind meta2-O /input set_unread
+/key bind meta2-O /allbuf /buffer set unread
 ----
 
 [[screen_paste]]

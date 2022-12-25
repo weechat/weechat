@@ -1683,8 +1683,6 @@ liste des actions :
   grab_key_command : capturer une touche avec sa commande associée (paramètre facultatif : délai pour la fin de la capture, par défaut 500 millisecondes)
   grab_mouse : capturer un évènement de la souris
   grab_mouse_area : capturer un évènement de la souris avec la zone
-  set_unread : définir le marqueur de données non lues pour tous les tampons
-  set_unread_current_buffer : définir le marqueur de données non lues pour le tampon courant
   switch_active_buffer : basculer vers le tampon mélangé suivant
   switch_active_buffer_previous : basculer vers le tampon mélangé précédent
   zoom_merged_buffer : zoom sur le tampon mélangé

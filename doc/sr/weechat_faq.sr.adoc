@@ -410,7 +410,7 @@ with command `/color`).
 Ако желите, на пример, да означите бафере као прочитане када терминал изгуби фокус:
 
 ----
-/key bind meta2-O /input set_unread
+/key bind meta2-O /allbuf /buffer set unread
 ----
 
 [[screen_paste]]

@@ -495,7 +495,7 @@ les commandes de votre choix) :
 Par exemple pour marquer les tampons comme lus lorsque le terminal perd le focus :
 
 ----
-/key bind meta2-O /input set_unread
+/key bind meta2-O /allbuf /buffer set unread
 ----
 
 [[screen_paste]]
