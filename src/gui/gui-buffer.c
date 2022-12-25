@@ -2157,9 +2157,17 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
             if (error && !error[0])
             {
                 if (number < 0)
+                {
                     gui_hotlist_remove_buffer (buffer, 0);
+                }
                 else
-                    (void) gui_hotlist_add (buffer, number, NULL, 1);
+                {
+                    (void) gui_hotlist_add (
+                        buffer,
+                        number,
+                        NULL,  /* creation_time */
+                        0);  /* check_conditions */
+                }
             }
         }
     }

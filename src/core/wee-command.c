@@ -3293,7 +3293,11 @@ COMMAND_CALLBACK(hotlist)
             if (priority < 0)
                 COMMAND_ERROR;
         }
-        gui_hotlist_add (buffer, priority, NULL, 0);
+        gui_hotlist_add (
+            buffer,
+            priority,
+            NULL,  /* creation_time */
+            0);  /* check_conditions */
         return WEECHAT_RC_OK;
     }
 

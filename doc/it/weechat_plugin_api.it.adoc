@@ -14400,11 +14400,14 @@ Properties:
 // TRANSLATION MISSING
 | hotlist | | "+", "-", WEECHAT_HOTLIST_LOW, WEECHAT_HOTLIST_MESSAGE,
   WEECHAT_HOTLIST_PRIVATE, WEECHAT_HOTLIST_HIGHLIGHT, "-1"
+// TRANSLATION MISSING
 | "+": abilita hotlist (impostazione globale , il puntatore al buffer pointer non
   è utilizzato) +
   "-": disabilita hotlist (impostazione globale, il puntatore al buffer non è
   utilizzato) +
-  priorità: aggiunge il buffer alla hotlist con questa proprietà +
+  priorità: aggiunge il buffer alla hotlist con questa proprietà
+  (conditions defined in option _weechat.look.hotlist_add_conditions_
+  are *NOT* checked) +
   "-1": remove buffer from hotlist _(WeeChat ≥ 1.0)_.
 
 // TRANSLATION MISSING

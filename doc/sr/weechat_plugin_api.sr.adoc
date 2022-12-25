@@ -13333,9 +13333,12 @@ void weechat_buffer_set (struct t_gui_buffer *buffer, const char *property,
 
 | hotlist | | "+", "-", WEECHAT_HOTLIST_LOW, WEECHAT_HOTLIST_MESSAGE,
   WEECHAT_HOTLIST_PRIVATE, WEECHAT_HOTLIST_HIGHLIGHT, "-1"
+// TRANSLATION MISSING
 | "+": укључује врућу листу (глобално подешавање, не користи се показивач на бафер) +
   "-": искључује врућу листу (глобално подешавање, не користи се показивач на бафер) +
-  приоритет: бафер се на врућу листу додаје са овим приоритетом +
+  приоритет: бафер се на врућу листу додаје са овим приоритетом
+  (conditions defined in option _weechat.look.hotlist_add_conditions_
+  are *NOT* checked) +
   "-1": уклања бафер из вруће листе _(WeeChat ≥ 1.0)_.
 
 | completion_freeze | | "0" или "1"

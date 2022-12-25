@@ -41,6 +41,7 @@ Bug fixes::
   * core: fix context info in buffers with free content (issue #1832)
   * core: keep terminal title unchanged when option weechat.look.window_title is set to empty value (issue #1835, issue #1836)
   * core: fix crash when setting invalid color in option with null value (issue #1844)
+  * api: do not check conditions defined in option weechat.look.hotlist_add_conditions when adding buffer in hotlist with function buffer_set
   * api: fix function strcmp_ignore_chars with case sensitive comparison and wide chars starting with the same byte
   * api: send NULL values to config section callbacks in scripting API (issue #1843)
   * api: fix function string_cut when there are non printable chars in suffix

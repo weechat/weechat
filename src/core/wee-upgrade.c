@@ -767,10 +767,11 @@ upgrade_weechat_read_hotlist (struct t_infolist *infolist)
             if (buf)
             {
                 memcpy (&creation_time, buf, size);
-                new_hotlist = gui_hotlist_add (ptr_buffer,
-                                               infolist_integer (infolist, "priority"),
-                                               &creation_time,
-                                               1);
+                new_hotlist = gui_hotlist_add (
+                    ptr_buffer,
+                    infolist_integer (infolist, "priority"),
+                    &creation_time,
+                    1);  /* check_conditions */
                 if (new_hotlist)
                 {
                     for (i = 0; i < GUI_HOTLIST_NUM_PRIORITIES; i++)

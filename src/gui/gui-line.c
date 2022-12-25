@@ -1790,8 +1790,11 @@ gui_line_add (struct t_gui_line *line)
         if ((line->data->notify_level >= GUI_HOTLIST_MIN)
             && line->data->highlight)
         {
-            (void) gui_hotlist_add (line->data->buffer,
-                                    GUI_HOTLIST_HIGHLIGHT, NULL, 1);
+            (void) gui_hotlist_add (
+                line->data->buffer,
+                GUI_HOTLIST_HIGHLIGHT,
+                NULL,  /* creation_time */
+                1);  /* check_conditions */
             if (!weechat_upgrading)
             {
                 message_for_signal = gui_line_build_string_prefix_message (
@@ -1822,8 +1825,11 @@ gui_line_add (struct t_gui_line *line)
             }
             if (line->data->notify_level >= GUI_HOTLIST_MIN)
             {
-                (void) gui_hotlist_add (line->data->buffer,
-                                        line->data->notify_level, NULL, 1);
+                (void) gui_hotlist_add (
+                    line->data->buffer,
+                    line->data->notify_level,
+                    NULL,  /* creation_time */
+                    1);  /* check_conditions */
             }
         }
     }

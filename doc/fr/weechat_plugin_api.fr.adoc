@@ -14064,7 +14064,9 @@ Propriétés :
   utilisé) +
   "-" : désactive la hotlist (option globale, le pointeur vers le tampon n'est
   pas utilisé) +
-  priorité : ajouter ce tampon dans la hotlist avec cette priorité +
+  priorité : ajouter ce tampon dans la hotlist avec cette priorité
+  (les conditions définies dans l'option _weechat.look.hotlist_add_conditions_
+  ne sont *PAS* vérifiées) +
   "-1" : supprimer ce tampon de la hotlist _(WeeChat ≥ 1.0)_.
 
 | completion_freeze | | "0" ou "1"
