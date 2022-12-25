@@ -3275,12 +3275,27 @@ COMMAND_CALLBACK(history)
 
 COMMAND_CALLBACK(hotlist)
 {
+    int priority;
+
     /* make C compiler happy */
     (void) pointer;
     (void) data;
     (void) argv_eol;
 
     COMMAND_MIN_ARGS(2, "");
+
+    if (string_strcasecmp (argv[1], "add") == 0)
+    {
+        priority = GUI_HOTLIST_LOW;
+        if (argc > 2)
+        {
+            priority = gui_hotlist_search_priority (argv[2]);
+            if (priority < 0)
+                COMMAND_ERROR;
+        }
+        gui_hotlist_add (buffer, priority, NULL, 0);
+        return WEECHAT_RC_OK;
+    }
 
     if (string_strcasecmp (argv[1], "clear") == 0)
     {
@@ -8067,17 +8082,25 @@ command_init ()
     hook_command (
         NULL, "hotlist",
         N_("manage hotlist"),
-        N_("clear [<level>] || remove || restore [-all]"),
-        N_("clear: clear hotlist\n"
-           "level: \"lowest\" to clear only lowest level in hotlist, "
+        N_("add [low|message|private|highlight]"
+           " || clear [<level>]"
+           " || remove"
+           " || restore [-all]"),
+        N_("    add: add current buffer in hotlist (default level: \"low\", "
+            "conditions defined in option weechat.look.hotlist_add_conditions "
+            "are NOT checked)\n"
+           "  clear: clear hotlist\n"
+           "  level: \"lowest\" to clear only lowest level in hotlist, "
            "highest\" to clear only highest level in hotlist, or level mask: "
            "integer which is a combination of 1=join/part, 2=message, "
            "4=private, 8=highlight)\n"
-           "remove: remove current buffer from hotlist\n"
+           " remove: remove current buffer from hotlist\n"
            "restore: restore latest hotlist removed in the current buffer "
            "(or all buffers with -all)"),
+        "add low|message|private|highlight || "
         "clear 1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|lowest|highest || "
-        "remove || restore -all",
+        "remove || "
+        "restore -all",
         &command_hotlist, NULL, NULL);
     /*
      * give high priority (50000) so that an alias will not take precedence

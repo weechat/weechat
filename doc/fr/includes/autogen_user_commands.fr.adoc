@@ -1613,11 +1613,13 @@ valeur : nombre d'entrées dans l'historique à afficher
 * `+hotlist+`: gestion de la hotlist
 
 ----
-/hotlist  clear [<niveau>]
+/hotlist  add [low|message|private|highlight]
+          clear [<niveau>]
           remove
           restore [-all]
 
-  clear : effacer la hotlist
+   add : ajouter le tampon courant dans la hotlist (niveau par défaut : "low", les conditions définies dans l'option weechat.look.hotlist_add_conditions ne sont PAS vérifiées)
+ clear : effacer la hotlist
  niveau : "lowest" pour effacer seulement le plus petit niveau dans la hotlist, "highest" pour effacer seulement le niveau le plus haut dans la hotlist, ou un masque de niveaux : entier qui est une combinaison de 1=join/part, 2=message, 4=privé, 8=highlight
  remove : supprimer le tampon courant de la hotlist
 restore : restaurer la dernière hotlist supprimée dans le tampon courant (ou tous les tampons avec -all)

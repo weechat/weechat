@@ -58,9 +58,11 @@ extern int gui_add_hotlist;
 
 /* hotlist functions */
 
+extern int gui_hotlist_search_priority (const char *priority);
 extern struct t_gui_hotlist *gui_hotlist_add (struct t_gui_buffer *buffer,
                                               enum t_gui_hotlist_priority priority,
-                                              struct timeval *creation_time);
+                                              struct timeval *creation_time,
+                                              int check_conditions);
 extern void gui_hotlist_restore_buffer (struct t_gui_buffer *buffer);
 extern void gui_hotlist_restore_all_buffers ();
 extern void gui_hotlist_resort ();
