@@ -1671,7 +1671,7 @@ New features::
   * api: add hdata "buffer_visited"
   * api: add support of infos with format `${info:name,arguments}` in function string_eval_expression and command `/eval`
   * api: add support for C++ plugins
-  * alias: add default alias `/beep` => `/print -stderr \a`
+  * alias: add default alias `/beep` -> `/print -stderr \a`
   * irc: add server option "ssl_fingerprint" (task #12724)
   * irc: add option irc.look.smart_filter_mode (task #12499)
   * irc: add option irc.network.ban_mask_default (bug #26571)
@@ -2181,7 +2181,7 @@ New features::
   * api: add modifier "input_text_for_buffer" (bug #35317)
   * api: add support of URL in hook_process / hook_process_hashtable (task #10247)
   * api: add new functions strcasecmp_range, strncasecmp_range, string_regex_flags, string_regcomp, hashtable_map_string, hook_process_hashtable, hdata_check_pointer, hdata_char, hdata_hashtable and nicklist_get_next_item
-  * alias: add default alias `/umode` => `/mode $nick`
+  * alias: add default alias `/umode` -> `/mode $nick`
   * irc: add option "capabilities" in servers to enable client capabilities on connection
   * irc: add signal "irc_server_opened"
   * irc: add signal "xxx,irc_out1_yyy" and modifier "irc_out1_xxx" (outgoing message before automatic split to fit in 512 bytes)

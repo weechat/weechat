@@ -762,8 +762,8 @@ plugins/scripts to complete a string, without using the buffer input.
 Therefore two functions have been renamed in API and moved to the new
 "completion" category:
 
-* hook_completion_get_string => link:https://weechat.org/doc/plugin/#_completion_get_string[completion_get_string]
-* hook_completion_list_add => link:https://weechat.org/doc/plugin/#_completion_list_add[completion_list_add]
+* hook_completion_get_string -> link:https://weechat.org/doc/plugin/#_completion_get_string[completion_get_string]
+* hook_completion_list_add -> link:https://weechat.org/doc/plugin/#_completion_list_add[completion_list_add]
 
 [NOTE]
 The old names are still valid for compatibility reasons, but it is recommended
@@ -1061,13 +1061,13 @@ it supports aspell and also enchant.
 
 Consequently, the following things have been renamed as well:
 
-* file aspell.conf => spell.conf (the content of the file has not changed, so you can just rename the file to keep your changes)
-* options aspell.* => spell.*
-* command `/aspell` => `/spell`
-* default key kbd:[Alt+s] => `/mute spell toggle`
-* bar item aspell_dict => spell_dict
-* bar item aspell_suggest => spell_suggest
-* info aspell_dict => spell_dict
+* file aspell.conf -> spell.conf (the content of the file has not changed, so you can just rename the file to keep your changes)
+* options aspell.* -> spell.*
+* command `/aspell` -> `/spell`
+* default key kbd:[Alt+s] -> `/mute spell toggle`
+* bar item aspell_dict -> spell_dict
+* bar item aspell_suggest -> spell_suggest
+* info aspell_dict -> spell_dict
 
 If you are upgrading from a previous release, you can copy the config file
 before doing `/upgrade`, in WeeChat:
@@ -1287,14 +1287,14 @@ configuration file (type: boolean, default is `off`).
 
 List of options moved:
 
-* plugins.var.python.check_license (string) => python.look.check_license (boolean)
-* plugins.var.perl.check_license (string) => perl.look.check_license (boolean)
-* plugins.var.ruby.check_license (string) => ruby.look.check_license (boolean)
-* plugins.var.lua.check_license (string) => lua.look.check_license (boolean)
-* plugins.var.tcl.check_license (string) => tcl.look.check_license (boolean)
-* plugins.var.guile.check_license (string) => guile.look.check_license (boolean)
-* plugins.var.javascript.check_license (string) => javascript.look.check_license (boolean)
-* plugins.var.php.check_license (string) => php.look.check_license (boolean)
+* plugins.var.python.check_license (string) -> python.look.check_license (boolean)
+* plugins.var.perl.check_license (string) -> perl.look.check_license (boolean)
+* plugins.var.ruby.check_license (string) -> ruby.look.check_license (boolean)
+* plugins.var.lua.check_license (string) -> lua.look.check_license (boolean)
+* plugins.var.tcl.check_license (string) -> tcl.look.check_license (boolean)
+* plugins.var.guile.check_license (string) -> guile.look.check_license (boolean)
+* plugins.var.javascript.check_license (string) -> javascript.look.check_license (boolean)
+* plugins.var.php.check_license (string) -> php.look.check_license (boolean)
 
 [[v2.0.1]]
 == Version 2.0.1 (2017-12-20)
@@ -1489,13 +1489,13 @@ command:
 Server options with default messages for kick/part/quit have been renamed:
 
 * options by default for all servers:
-** irc.server_default.default_msg_kick => irc.server_default.msg_kick
-** irc.server_default.default_msg_part => irc.server_default.msg_part
-** irc.server_default.default_msg_quit => irc.server_default.msg_quit
+** irc.server_default.default_msg_kick -> irc.server_default.msg_kick
+** irc.server_default.default_msg_part -> irc.server_default.msg_part
+** irc.server_default.default_msg_quit -> irc.server_default.msg_quit
 * options in each server:
-** irc.server.xxx.default_msg_kick => irc.server.xxx.msg_kick
-** irc.server.xxx.default_msg_part => irc.server.xxx.msg_part
-** irc.server.xxx.default_msg_quit => irc.server.xxx.msg_quit
+** irc.server.xxx.default_msg_kick -> irc.server.xxx.msg_kick
+** irc.server.xxx.default_msg_part -> irc.server.xxx.msg_part
+** irc.server.xxx.default_msg_quit -> irc.server.xxx.msg_quit
 
 If you changed the value of these options, you must set them again after upgrade.
 
@@ -1522,17 +1522,17 @@ The nick coloring feature has been moved from irc plugin to core.
 Two options have been moved from irc plugin (irc.conf) to core (weechat.conf),
 and you must set new value if you customized them:
 
-* irc.look.nick_color_force => weechat.look.nick_color_force
-* irc.look.nick_color_hash => weechat.look.nick_color_hash
-* irc.look.nick_color_stop_chars => weechat.look.nick_color_stop_chars
+* irc.look.nick_color_force -> weechat.look.nick_color_force
+* irc.look.nick_color_hash -> weechat.look.nick_color_hash
+* irc.look.nick_color_stop_chars -> weechat.look.nick_color_stop_chars
 
 The default value for option weechat.look.nick_color_hash is now `djb2`
 instead of `sum`.
 
 The following info names (used by API function "info_get") are renamed as well:
 
-* irc_nick_color => nick_color
-* irc_nick_color_name => nick_color_name
+* irc_nick_color -> nick_color
+* irc_nick_color_name -> nick_color_name
 
 [NOTE]
 The old info irc_nick_color and irc_nick_color_name are kept for
@@ -1589,8 +1589,8 @@ can be displayed for any plugin, using the buffer local variable "away").
 
 Two options have been moved from irc plugin (irc.conf) to core (weechat.conf):
 
-* irc.look.item_away_message => weechat.look.item_away_message
-* irc.color.item_away => weechat.color.item_away
+* irc.look.item_away_message -> weechat.look.item_away_message
+* irc.color.item_away -> weechat.color.item_away
 
 [[v1.5_default_triggers]]
 === Default triggers
@@ -2158,10 +2158,10 @@ display (not stored any more in the line).
 
 Options moved from irc plugin (irc.conf) to core (weechat.conf):
 
-* irc.look.nick_prefix => weechat.look.nick_prefix
-* irc.look.nick_suffix => weechat.look.nick_suffix
-* irc.color.nick_prefix => weechat.color.chat_nick_prefix
-* irc.color.nick_suffix => weechat.color.chat_nick_suffix
+* irc.look.nick_prefix -> weechat.look.nick_prefix
+* irc.look.nick_suffix -> weechat.look.nick_suffix
+* irc.color.nick_prefix -> weechat.color.chat_nick_prefix
+* irc.color.nick_suffix -> weechat.color.chat_nick_suffix
 
 Types and default values for these four options remain unchanged.
 
@@ -2331,8 +2331,8 @@ This version fixes crash when decoding IRC colors in strings.
 
 Options moved from core (weechat.conf) to irc plugin (irc.conf):
 
-* weechat.look.nickmode => irc.look.nick_mode (new type: integer with values: none/prefix/action/both)
-* weechat.look.nickmode_empty => irc.look.nick_mode_empty
+* weechat.look.nickmode -> irc.look.nick_mode (new type: integer with values: none/prefix/action/both)
+* weechat.look.nickmode_empty -> irc.look.nick_mode_empty
 
 [[v0.3.9_bar_item_buffer_modes]]
 === New bar item buffer_modes
@@ -2357,9 +2357,9 @@ New options in command `/aspell`:
 
 Options renamed in command `/aspell`:
 
-* `enable` => `setdict` (set dictionary for current buffer)
-* `disable` => `deldict` (delete dictionary used on current buffer)
-* `dictlist` => `listdict` (show installed dictionaries)
+* `enable` -> `setdict` (set dictionary for current buffer)
+* `disable` -> `deldict` (delete dictionary used on current buffer)
+* `dictlist` -> `listdict` (show installed dictionaries)
 
 [[v0.3.9_horizontal_separator]]
 === Horizontal separator
@@ -2539,17 +2539,17 @@ value for old options, and set them again with new name:
 
 * options moved from "network" section to servers (with global value, and
   server value, like other server options):
-** irc.network.connection_timeout => irc.server_default.connection_timeout
-** irc.network.anti_flood_prio_high => irc.server_default.anti_flood_prio_high
-** irc.network.anti_flood_prio_low => irc.server_default.anti_flood_prio_low
-** irc.network.away_check => irc.server_default.away_check
-** irc.network.away_check_max_nicks => irc.server_default.away_check_max_nicks
-** irc.network.default_msg_part => irc.server_default.default_msg_part
-** irc.network.default_msg_quit => irc.server_default.default_msg_quit
+** irc.network.connection_timeout -> irc.server_default.connection_timeout
+** irc.network.anti_flood_prio_high -> irc.server_default.anti_flood_prio_high
+** irc.network.anti_flood_prio_low -> irc.server_default.anti_flood_prio_low
+** irc.network.away_check -> irc.server_default.away_check
+** irc.network.away_check_max_nicks -> irc.server_default.away_check_max_nicks
+** irc.network.default_msg_part -> irc.server_default.default_msg_part
+** irc.network.default_msg_quit -> irc.server_default.default_msg_quit
 * other IRC options renamed:
-** irc.look.open_channel_near_server => irc.look.new_channel_position
+** irc.look.open_channel_near_server -> irc.look.new_channel_position
    (old option was boolean, new is integer with value as string)
-** irc.look.open_pv_near_server => irc.look.new_pv_position
+** irc.look.open_pv_near_server -> irc.look.new_pv_position
    (old option was boolean, new is integer with value as string)
 
 [[v0.3.3]]
