@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2022-12-25 19:37+0100\n"
+"POT-Creation-Date: 2022-12-25 21:19+0100\n"
 "PO-Revision-Date: 2022-10-15 22:51+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1078,6 +1078,23 @@ msgid ""
 msgstr ""
 "%s nem sikerült az ablakokat összefésülni: nincs a közelben azonos méretű "
 "ablak.\n"
+
+#, fuzzy
+msgid "execute a command on all buffers"
+msgstr "üzenet küldése az összes csatlakoztatott szerver összes szobájába"
+
+#, fuzzy
+msgid "<command>"
+msgstr "%s belső parancsok:\n"
+
+msgid ""
+"command: command to execute (or text to send to buffer if command does not "
+"start with '/')\n"
+"\n"
+"Examples:\n"
+"  set unread marker on all buffers:\n"
+"    /allbuf /buffer set unread"
+msgstr ""
 
 #, fuzzy
 msgid "set or remove away status"

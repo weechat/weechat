@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2022-12-25 19:37+0100\n"
+"POT-Creation-Date: 2022-12-25 21:19+0100\n"
 "PO-Revision-Date: 2022-10-15 22:51+0200\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1090,6 +1090,24 @@ msgid ""
 msgstr ""
 "%sChyba: nemohu spojit okna, není zde další okno se stejnou velikostí poblíž "
 "aktuálního okna"
+
+#, fuzzy
+#| msgid "execute a command on all connected servers"
+msgid "execute a command on all buffers"
+msgstr "vykonat příkaz na všech připojených serverech"
+
+#, fuzzy
+msgid "<command>"
+msgstr "Příkazy:"
+
+msgid ""
+"command: command to execute (or text to send to buffer if command does not "
+"start with '/')\n"
+"\n"
+"Examples:\n"
+"  set unread marker on all buffers:\n"
+"    /allbuf /buffer set unread"
+msgstr ""
 
 msgid "set or remove away status"
 msgstr "nastavit nebo smazat \"away\" status"

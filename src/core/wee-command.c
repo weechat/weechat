@@ -89,6 +89,30 @@ extern char **environ;
 
 
 /*
+ * Callback for command "/allbuf": executes a command on all buffers.
+ */
+
+COMMAND_CALLBACK(allbuf)
+{
+    struct t_gui_buffer *ptr_buffer;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) buffer;
+
+    COMMAND_MIN_ARGS(2, "");
+
+    for (ptr_buffer = gui_buffers; ptr_buffer;
+         ptr_buffer = ptr_buffer->next_buffer)
+    {
+        (void) input_data (ptr_buffer, argv_eol[1], NULL);
+    }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Callback for command "/away".
  *
  * The command /away in core does nothing, so this function is empty.
@@ -7436,6 +7460,17 @@ COMMAND_CALLBACK(window)
 void
 command_init ()
 {
+    hook_command (
+        NULL, "allbuf",
+        N_("execute a command on all buffers"),
+        N_("<command>"),
+        N_("command: command to execute (or text to send to buffer if "
+           "command does not start with '/')\n"
+           "\n"
+           "Examples:\n"
+           "  set unread marker on all buffers:\n"
+           "    /allbuf /buffer set unread"),
+        "%(commands:/)", &command_allbuf, NULL, NULL);
     hook_command (
         NULL, "away",
         N_("set or remove away status"),

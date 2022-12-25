@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2022-12-25 19:37+0100\n"
+"POT-Creation-Date: 2022-12-25 21:19+0100\n"
 "PO-Revision-Date: 2022-10-15 22:51+0200\n"
 "Last-Translator: Vasco Almeida <vascomalmeida@sapo.pt>\n"
 "Language-Team: Portuguese <>\n"
@@ -1092,6 +1092,24 @@ msgid ""
 msgstr ""
 "%sErro: não é possível unir as janelas, não há outra janela com o mesmo "
 "tamanho junto à atual"
+
+#, fuzzy
+#| msgid "execute a command on all connected servers"
+msgid "execute a command on all buffers"
+msgstr "executar um comando em todos os servidores conectados"
+
+#, fuzzy
+msgid "<command>"
+msgstr "Comandos:"
+
+msgid ""
+"command: command to execute (or text to send to buffer if command does not "
+"start with '/')\n"
+"\n"
+"Examples:\n"
+"  set unread marker on all buffers:\n"
+"    /allbuf /buffer set unread"
+msgstr ""
 
 msgid "set or remove away status"
 msgstr "definir ou remover estado ausente"

@@ -1104,6 +1104,19 @@ Exemples :
 // end::alias_commands[]
 
 // tag::weechat_commands[]
+[[command_weechat_allbuf]]
+* `+allbuf+`: exécuter une commande sur tous les tampons
+
+----
+/allbuf  <commande>
+
+commande : commande à exécuter (ou texte à envoyer au tampon si la commande ne commence pas par '/')
+
+Exemples :
+  définir le marqueur de données non lues sur tous les tampons :
+    /allbuf /buffer set unread
+----
+
 [[command_weechat_away]]
 * `+away+`: définir ou supprimer le statut d'absence
 

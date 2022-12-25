@@ -1104,6 +1104,19 @@ Examples:
 // end::alias_commands[]
 
 // tag::weechat_commands[]
+[[command_weechat_allbuf]]
+* `+allbuf+`: execute a command on all buffers
+
+----
+/allbuf  <command>
+
+command: command to execute (or text to send to buffer if command does not start with '/')
+
+Examples:
+  set unread marker on all buffers:
+    /allbuf /buffer set unread
+----
+
 [[command_weechat_away]]
 * `+away+`: 離席状態の切り替え
 
