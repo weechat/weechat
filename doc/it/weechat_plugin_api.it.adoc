@@ -754,13 +754,14 @@ Argomenti:
 * _string2_: seconda stringa da comparare
 
 // TRANSLATION MISSING
-Return value: arithmetic result of subtracting the first UTF-8 char in _string2_
-from the first UTF-8 char in _string1_:
+Return value:
 
+* arithmetic result of subtracting the first UTF-8 char in _string2_
+  from the first UTF-8 char in _string1_:
 // TRANSLATION MISSING
-* < 0 if char1 < char2
-* 0 if char1 == char2
-* > 0 if char1 > char2
+** < 0 if char1 < char2
+** 0 if char1 == char2
+** > 0 if char1 > char2
 
 Esempio in C:
 
@@ -798,13 +799,15 @@ Argomenti:
 * _string2_: seconda stringa da comparare
 
 // TRANSLATION MISSING
-Return value: arithmetic result of subtracting the first UTF-8 char in _string2_
-(converted to lowercase) from the first UTF-8 char in _string1_ (converted to lowercase):
+Return value:
 
+* arithmetic result of subtracting the first UTF-8 char in _string2_
+  (converted to lowercase) from the first UTF-8 char in _string1_ (converted to
+  lowercase):
 // TRANSLATION MISSING
-* < 0 if char1 < char2
-* 0 if char1 == char2
-* > 0 if char1 > char2
+** < 0 if char1 < char2
+** 0 if char1 == char2
+** > 0 if char1 > char2
 
 Esempio in C:
 
@@ -837,13 +840,14 @@ Argomenti:
 * _string2_: seconda stringa da comparare
 
 // TRANSLATION MISSING
-Return value: arithmetic result of subtracting the last compared UTF-8 char in
-_string2_ from the last compared UTF-8 char in _string1_:
+Return value:
 
+* arithmetic result of subtracting the last compared UTF-8 char in
+  _string2_ from the last compared UTF-8 char in _string1_:
 // TRANSLATION MISSING
-* < 0 if string1 < string2
-* 0 if string1 == string2
-* > 0 if string1 > string2
+** < 0 if string1 < string2
+** 0 if string1 == string2
+** > 0 if string1 > string2
 
 Esempio in C:
 
@@ -877,13 +881,14 @@ Argomenti:
 * _max_: numero massimo di caratteri da comparare
 
 // TRANSLATION MISSING
-Return value: arithmetic result of subtracting the last compared UTF-8 char in
-_string2_ from the last compared UTF-8 char in _string1_:
+Return value:
 
+* arithmetic result of subtracting the last compared UTF-8 char in
+  _string2_ from the last compared UTF-8 char in _string1_:
 // TRANSLATION MISSING
-* < 0 if string1 < string2
-* 0 if string1 == string2
-* > 0 if string1 > string2
+** < 0 if string1 < string2
+** 0 if string1 == string2
+** > 0 if string1 > string2
 
 Esempio in C:
 
@@ -922,14 +927,15 @@ Argomenti:
 * _string2_: seconda stringa da comparare
 
 // TRANSLATION MISSING
-Return value: arithmetic result of subtracting the last compared UTF-8 char in
-_string2_ (converted to lowercase) from the last compared UTF-8 char in _string1_
-(converted to lowercase):
+Return value:
 
+* arithmetic result of subtracting the last compared UTF-8 char in
+  _string2_ (converted to lowercase) from the last compared UTF-8 char in _string1_
+  (converted to lowercase):
 // TRANSLATION MISSING
-* < 0 if string1 < string2
-* 0 if string1 == string2
-* > 0 if string1 > string2
+** < 0 if string1 < string2
+** 0 if string1 == string2
+** > 0 if string1 > string2
 
 Esempio in C:
 
@@ -971,14 +977,15 @@ Argomenti:
 I valori 29 e 30 vengono usati da alcuni protocolli come IRC.
 
 // TRANSLATION MISSING
-Return value: arithmetic result of subtracting the last compared UTF-8 char in
-_string2_ (converted to lowercase) from the last compared UTF-8 char in _string1_
-(converted to lowercase):
+Return value:
 
+* arithmetic result of subtracting the last compared UTF-8 char in
+  _string2_ (converted to lowercase) from the last compared UTF-8 char in _string1_
+  (converted to lowercase):
 // TRANSLATION MISSING
-* < 0 if string1 < string2
-* 0 if string1 == string2
-* > 0 if string1 > string2
+** < 0 if string1 < string2
+** 0 if string1 == string2
+** > 0 if string1 > string2
 
 Esempio in C:
 
@@ -1018,14 +1025,15 @@ Argomenti:
 * _max_: numero massimo di caratteri da comparare
 
 // TRANSLATION MISSING
-Return value: arithmetic result of subtracting the last compared UTF-8 char in
-_string2_ (converted to lowercase) from the last compared UTF-8 char in _string1_
-(converted to lowercase):
+Return value:
 
+* arithmetic result of subtracting the last compared UTF-8 char in
+  _string2_ (converted to lowercase) from the last compared UTF-8 char in _string1_
+  (converted to lowercase):
 // TRANSLATION MISSING
-* < 0 if string1 < string2
-* 0 if string1 == string2
-* > 0 if string1 > string2
+** < 0 if string1 < string2
+** 0 if string1 == string2
+** > 0 if string1 > string2
 
 Esempio in C:
 
@@ -1066,14 +1074,15 @@ Argomenti:
 I valori 29 e 30 vengono usati da alcuni protocolli come IRC.
 
 // TRANSLATION MISSING
-Return value: arithmetic result of subtracting the last compared UTF-8 char in
-_string2_ (converted to lowercase) from the last compared UTF-8 char in _string1_
-(converted to lowercase):
+Return value:
 
+* arithmetic result of subtracting the last compared UTF-8 char in
+  _string2_ (converted to lowercase) from the last compared UTF-8 char in _string1_
+  (converted to lowercase):
 // TRANSLATION MISSING
-* < 0 if string1 < string2
-* 0 if string1 == string2
-* > 0 if string1 > string2
+** < 0 if string1 < string2
+** 0 if string1 == string2
+** > 0 if string1 > string2
 
 Esempio in C:
 
@@ -1116,15 +1125,16 @@ uppercase letters are properly converted to lowercase (by calling function
 `towlower`), in addition to the range `A` to `Z`.
 
 // TRANSLATION MISSING
-Return value: arithmetic result of subtracting the last compared UTF-8 char in
-_string2_ (converted to lowercase if _case_sentitive_ is set to 0) from the last
-compared UTF-8 char in _string1_ (converted to lowercase if _case_sensitive_ is
-set to 0):
+Return value:
 
+* arithmetic result of subtracting the last compared UTF-8 char in
+  _string2_ (converted to lowercase if _case_sentitive_ is set to 0) from the last
+  compared UTF-8 char in _string1_ (converted to lowercase if _case_sensitive_ is
+  set to 0):
 // TRANSLATION MISSING
-* < 0 if string1 < string2
-* 0 if string1 == string2
-* > 0 if string1 > string2
+** < 0 if string1 < string2
+** 0 if string1 == string2
+** > 0 if string1 > string2
 
 Esempio in C:
 

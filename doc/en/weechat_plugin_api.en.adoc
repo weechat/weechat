@@ -710,12 +710,13 @@ Arguments:
 * _string1_: first string for comparison
 * _string2_: second string for comparison
 
-Return value: arithmetic result of subtracting the first UTF-8 char in _string2_
-from the first UTF-8 char in _string1_:
+Return value:
 
-* < 0 if char1 < char2
-* 0 if char1 == char2
-* > 0 if char1 > char2
+* arithmetic result of subtracting the first UTF-8 char in _string2_
+  from the first UTF-8 char in _string1_:
+** < 0 if char1 < char2
+** 0 if char1 == char2
+** > 0 if char1 > char2
 
 C example:
 
@@ -750,13 +751,14 @@ Arguments:
 * _string1_: first string for comparison
 * _string2_: second string for comparison
 
-Return value: arithmetic result of subtracting the first UTF-8 char in _string2_
-(converted to lowercase) from the first UTF-8 char in _string1_ (converted to
-lowercase):
+Return value:
 
-* < 0 if char1 < char2
-* 0 if char1 == char2
-* > 0 if char1 > char2
+* arithmetic result of subtracting the first UTF-8 char in _string2_
+  (converted to lowercase) from the first UTF-8 char in _string1_ (converted to
+  lowercase):
+** < 0 if char1 < char2
+** 0 if char1 == char2
+** > 0 if char1 > char2
 
 C example:
 
@@ -786,12 +788,13 @@ Arguments:
 * _string1_: first string for comparison
 * _string2_: second string for comparison
 
-Return value: arithmetic result of subtracting the last compared UTF-8 char in
-_string2_ from the last compared UTF-8 char in _string1_:
+Return value:
 
-* < 0 if string1 < string2
-* 0 if string1 == string2
-* > 0 if string1 > string2
+* arithmetic result of subtracting the last compared UTF-8 char in
+  _string2_ from the last compared UTF-8 char in _string1_:
+** < 0 if string1 < string2
+** 0 if string1 == string2
+** > 0 if string1 > string2
 
 C example:
 
@@ -822,12 +825,13 @@ Arguments:
 * _string2_: second string for comparison
 * _max_: max chars to compare
 
-Return value: arithmetic result of subtracting the last compared UTF-8 char in
-_string2_ from the last compared UTF-8 char in _string1_:
+Return value:
 
-* < 0 if string1 < string2
-* 0 if string1 == string2
-* > 0 if string1 > string2
+* arithmetic result of subtracting the last compared UTF-8 char in
+  _string2_ from the last compared UTF-8 char in _string1_:
+** < 0 if string1 < string2
+** 0 if string1 == string2
+** > 0 if string1 > string2
 
 C example:
 
@@ -862,13 +866,14 @@ Arguments:
 * _string1_: first string for comparison
 * _string2_: second string for comparison
 
-Return value: arithmetic result of subtracting the last compared UTF-8 char in
-_string2_ (converted to lowercase) from the last compared UTF-8 char in _string1_
-(converted to lowercase):
+Return value:
 
-* < 0 if string1 < string2
-* 0 if string1 == string2
-* > 0 if string1 > string2
+* arithmetic result of subtracting the last compared UTF-8 char in
+  _string2_ (converted to lowercase) from the last compared UTF-8 char in _string1_
+  (converted to lowercase):
+** < 0 if string1 < string2
+** 0 if string1 == string2
+** > 0 if string1 > string2
 
 C example:
 
@@ -908,13 +913,14 @@ Arguments:
 [NOTE]
 Values 29 and 30 are used by some protocols like IRC.
 
-Return value: arithmetic result of subtracting the last compared UTF-8 char in
-_string2_ (converted to lowercase) from the last compared UTF-8 char in _string1_
-(converted to lowercase):
+Return value:
 
-* < 0 if string1 < string2
-* 0 if string1 == string2
-* > 0 if string1 > string2
+* arithmetic result of subtracting the last compared UTF-8 char in
+  _string2_ (converted to lowercase) from the last compared UTF-8 char in _string1_
+  (converted to lowercase):
+** < 0 if string1 < string2
+** 0 if string1 == string2
+** > 0 if string1 > string2
 
 C example:
 
@@ -950,13 +956,14 @@ Arguments:
 * _string2_: second string for comparison
 * _max_: max chars to compare
 
-Return value: arithmetic result of subtracting the last compared UTF-8 char in
-_string2_ (converted to lowercase) from the last compared UTF-8 char in _string1_
-(converted to lowercase):
+Return value:
 
-* < 0 if string1 < string2
-* 0 if string1 == string2
-* > 0 if string1 > string2
+* arithmetic result of subtracting the last compared UTF-8 char in
+  _string2_ (converted to lowercase) from the last compared UTF-8 char in _string1_
+  (converted to lowercase):
+** < 0 if string1 < string2
+** 0 if string1 == string2
+** > 0 if string1 > string2
 
 C example:
 
@@ -995,13 +1002,14 @@ Arguments:
 [NOTE]
 Values 29 and 30 are used by some protocols like IRC.
 
-Return value: arithmetic result of subtracting the last compared UTF-8 char in
-_string2_ (converted to lowercase) from the last compared UTF-8 char in _string1_
-(converted to lowercase):
+Return value:
 
-* < 0 if string1 < string2
-* 0 if string1 == string2
-* > 0 if string1 > string2
+* arithmetic result of subtracting the last compared UTF-8 char in
+  _string2_ (converted to lowercase) from the last compared UTF-8 char in _string1_
+  (converted to lowercase):
+** < 0 if string1 < string2
+** 0 if string1 == string2
+** > 0 if string1 > string2
 
 C example:
 
@@ -1040,14 +1048,15 @@ Behavior has changed in version 3.8 when _case_sensitive_ is set to 0: now all
 uppercase letters are properly converted to lowercase (by calling function
 `towlower`), in addition to the range `A` to `Z`.
 
-Return value: arithmetic result of subtracting the last compared UTF-8 char in
-_string2_ (converted to lowercase if _case_sentitive_ is set to 0) from the last
-compared UTF-8 char in _string1_ (converted to lowercase if _case_sensitive_ is
-set to 0):
+Return value:
 
-* < 0 if string1 < string2
-* 0 if string1 == string2
-* > 0 if string1 > string2
+* arithmetic result of subtracting the last compared UTF-8 char in
+  _string2_ (converted to lowercase if _case_sentitive_ is set to 0) from the last
+  compared UTF-8 char in _string1_ (converted to lowercase if _case_sensitive_ is
+  set to 0):
+** < 0 if string1 < string2
+** 0 if string1 == string2
+** > 0 if string1 > string2
 
 C example:
 
