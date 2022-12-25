@@ -1678,10 +1678,10 @@ Można je zmienić oraz dodać nowe za pomocą komendy <<command_weechat_key,/ke
 |===
 | Skrót                          | Opis | Komenda
 | kbd:[Alt+a]                    | Przełącz na następny bufor z aktywnością (z priorytetem: powiadomienie, wiadomość, inne). | `+/buffer jump smart+`
-| kbd:[Alt+h], kbd:[Alt+c]       | Wyczyść hotliste (powiadomienia o aktywności w buforach). | `+/input hotlist_clear+`
-| kbd:[Alt+h], kbd:[Alt+m]       | Usuń obecny bufor z hotlisty. | `+/input hotlist_remove_buffer+`
-| kbd:[Alt+h], kbd:[Alt+r]       | Przywróć ostatnią usuniętą hotlistę w obecnym buforze. | `+/input hotlist_restore_buffer+`
-| kbd:[Alt+h], kbd:[Alt+Shift+R] | Przywróć ostatnią hotlistę usuniętą we wszystkich buforach. | `+/input hotlist_restore_all+`
+| kbd:[Alt+h], kbd:[Alt+c]       | Wyczyść hotliste (powiadomienia o aktywności w buforach). | `+/hotlist clear+`
+| kbd:[Alt+h], kbd:[Alt+m]       | Usuń obecny bufor z hotlisty. | `+/hotlist remove+`
+| kbd:[Alt+h], kbd:[Alt+r]       | Przywróć ostatnią usuniętą hotlistę w obecnym buforze. | `+/hotlist restore+`
+| kbd:[Alt+h], kbd:[Alt+Shift+R] | Przywróć ostatnią hotlistę usuniętą we wszystkich buforach. | `+/hotlist restore -all+`
 |===
 
 [[key_bindings_toggle_keys]]

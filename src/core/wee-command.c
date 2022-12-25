@@ -3270,6 +3270,43 @@ COMMAND_CALLBACK(history)
 }
 
 /*
+ * Callback for command "/hotlist": manages hotlist.
+ */
+
+COMMAND_CALLBACK(hotlist)
+{
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) argv_eol;
+
+    COMMAND_MIN_ARGS(2, "");
+
+    if (string_strcasecmp (argv[1], "clear") == 0)
+    {
+        gui_hotlist_clear_level_string (buffer, (argc > 2) ? argv[2] : NULL);
+        return WEECHAT_RC_OK;
+    }
+
+    if (string_strcasecmp (argv[1], "remove") == 0)
+    {
+        gui_hotlist_remove_buffer (buffer, 1);
+        return WEECHAT_RC_OK;
+    }
+
+    if (string_strcasecmp (argv[1], "restore") == 0)
+    {
+        if ((argc > 2) && (string_strcasecmp (argv[2], "-all") == 0))
+            gui_hotlist_restore_all_buffers ();
+        else
+            gui_hotlist_restore_buffer (buffer);
+        return WEECHAT_RC_OK;
+    }
+
+    COMMAND_ERROR;
+}
+
+/*
  * Callback for command "/input": input actions (used by key bindings).
  */
 
@@ -3345,14 +3382,6 @@ COMMAND_CALLBACK(input)
         gui_input_history_global_previous (buffer);
     else if (string_strcasecmp (argv[1], "history_global_next") == 0)
         gui_input_history_global_next (buffer);
-    else if (string_strcasecmp (argv[1], "hotlist_clear") == 0)
-        gui_input_hotlist_clear (buffer, (argc > 2) ? argv[2] : NULL);
-    else if (string_strcasecmp (argv[1], "hotlist_remove_buffer") == 0)
-        gui_input_hotlist_remove_buffer (buffer);
-    else if (string_strcasecmp (argv[1], "hotlist_restore_buffer") == 0)
-        gui_input_hotlist_restore_buffer (buffer);
-    else if (string_strcasecmp (argv[1], "hotlist_restore_all") == 0)
-        gui_input_hotlist_restore_all ();
     else if (string_strcasecmp (argv[1], "grab_key") == 0)
         gui_input_grab_key (buffer, 0, (argc > 2) ? argv[2] : NULL);
     else if (string_strcasecmp (argv[1], "grab_key_command") == 0)
@@ -3412,6 +3441,18 @@ COMMAND_CALLBACK(input)
         /* since WeeChat 3.8: "/buffer jump next_visited" */
         else if (string_strcasecmp (argv[1], "jump_next_visited_buffer") == 0)
             gui_buffer_jump_next_visited_buffer (gui_current_window);
+        /* since WeeChat 3.8: "/hotlist clear" */
+        else if (string_strcasecmp (argv[1], "hotlist_clear") == 0)
+            gui_hotlist_clear_level_string (buffer, (argc > 2) ? argv[2] : NULL);
+        /* since WeeChat 3.8: "/hotlist remove" */
+        else if (string_strcasecmp (argv[1], "hotlist_remove_buffer") == 0)
+            gui_hotlist_remove_buffer (buffer, 1);
+        /* since WeeChat 3.8: "/hotlist restore" */
+        else if (string_strcasecmp (argv[1], "hotlist_restore_buffer") == 0)
+            gui_hotlist_restore_buffer (buffer);
+        /* since WeeChat 3.8: "/hotlist restore -all" */
+        else if (string_strcasecmp (argv[1], "hotlist_restore_all") == 0)
+            gui_hotlist_restore_all_buffers ();
         else
             COMMAND_ERROR;
     }
@@ -8023,6 +8064,21 @@ command_init ()
            "value: number of history entries to show"),
         "clear",
         &command_history, NULL, NULL);
+    hook_command (
+        NULL, "hotlist",
+        N_("manage hotlist"),
+        N_("clear [<level>] || remove || restore [-all]"),
+        N_("clear: clear hotlist\n"
+           "level: \"lowest\" to clear only lowest level in hotlist, "
+           "highest\" to clear only highest level in hotlist, or level mask: "
+           "integer which is a combination of 1=join/part, 2=message, "
+           "4=private, 8=highlight)\n"
+           "remove: remove current buffer from hotlist\n"
+           "restore: restore latest hotlist removed in the current buffer "
+           "(or all buffers with -all)"),
+        "clear 1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|lowest|highest || "
+        "remove || restore -all",
+        &command_hotlist, NULL, NULL);
     /*
      * give high priority (50000) so that an alias will not take precedence
      * over this command
@@ -8069,15 +8125,6 @@ command_init ()
            "  history_next: recall next command in current buffer history\n"
            "  history_global_previous: recall previous command in global history\n"
            "  history_global_next: recall next command in global history\n"
-           "  hotlist_clear: clear hotlist (optional argument: \"lowest\" to "
-           "clear only lowest level in hotlist, \"highest\" to clear only "
-           "highest level in hotlist, or level mask: integer which is a "
-           "combination of 1=join/part, 2=message, 4=private, 8=highlight)\n"
-           "  hotlist_remove_buffer: remove current buffer from hotlist\n"
-           "  hotlist_restore_buffer: restore latest hotlist removed in the "
-           "current buffer\n"
-           "  hotlist_restore_all: restore latest hotlist removed in all "
-           "buffers\n"
            "  grab_key: grab a key (optional argument: delay for end of grab, "
             "default is 500 milliseconds)\n"
            "  grab_key_command: grab a key with its associated command (optional "
@@ -8111,9 +8158,6 @@ command_init ()
         "move_next_char || move_previous_word || move_next_word || "
         "history_previous || history_next || history_global_previous || "
         "history_global_next || "
-        "hotlist_clear 1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|lowest|highest || "
-        "hotlist_remove_buffer || hotlist_restore_buffer || "
-        "hotlist_restore_all || "
         "grab_key || grab_key_command || grab_mouse || grab_mouse_area || "
         "set_unread || set_unread_current_buffer || "
         "switch_active_buffer || switch_active_buffer_previous || "

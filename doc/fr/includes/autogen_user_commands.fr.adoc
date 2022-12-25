@@ -1609,6 +1609,20 @@ extension : lister les commandes de cette extension
 valeur : nombre d'entrées dans l'historique à afficher
 ----
 
+[[command_weechat_hotlist]]
+* `+hotlist+`: gestion de la hotlist
+
+----
+/hotlist  clear [<niveau>]
+          remove
+          restore [-all]
+
+  clear : effacer la hotlist
+ niveau : "lowest" pour effacer seulement le plus petit niveau dans la hotlist, "highest" pour effacer seulement le niveau le plus haut dans la hotlist, ou un masque de niveaux : entier qui est une combinaison de 1=join/part, 2=message, 4=privé, 8=highlight
+ remove : supprimer le tampon courant de la hotlist
+restore : restaurer la dernière hotlist supprimée dans le tampon courant (ou tous les tampons avec -all)
+----
+
 [[command_weechat_input]]
 * `+input+`: fonctions pour la ligne de commande
 
@@ -1650,10 +1664,6 @@ liste des actions :
   history_next : rappeler la commande suivante dans l'historique du tampon courant
   history_global_previous : rappeler la commande précédente dans l'historique global
   history_global_next : rappeler la commande suivante dans l'historique global
-  hotlist_clear : effacer la hotlist (paramètre facultatif : "lowest" pour effacer seulement le plus petit niveau dans la hotlist, "highest" pour effacer seulement le niveau le plus haut dans la hotlist, ou un masque de niveaux : entier qui est une combinaison de 1=join/part, 2=message, 4=privé, 8=highlight)
-  hotlist_remove_buffer : supprimer le tampon courant de la hotlist
-  hotlist_restore_buffer : restaurer la dernière hotlist supprimée dans le tampon courant
-  hotlist_restore_all : restaurer la dernière hotlist supprimée dans tous les tampons
   grab_key : capturer une touche (paramètre facultatif : délai pour la fin de la capture, par défaut 500 millisecondes)
   grab_key_command : capturer une touche avec sa commande associée (paramètre facultatif : délai pour la fin de la capture, par défaut 500 millisecondes)
   grab_mouse : capturer un évènement de la souris

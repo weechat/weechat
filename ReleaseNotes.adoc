@@ -24,13 +24,17 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 === Options in command /input
 
 Some options of `/input` command have been moved to other commands (they can
-still be used with `/input` but marked as deprecated and completion doesn't
-work any more):
+still be used with `/input` but marked as deprecated and completion has been
+removed):
 
-* `/input jump_smart` -> `/buffer jump smart`
-* `/input jump_previously_visited_buffer` -> `/buffer jump prev_visited`
-* `/input jump_next_visited_buffer` -> `/buffer jump next_visited`
-* `/input jump_last_buffer_displayed` -> `/buffer jump last_displayed`
+* `/input jump_smart` -> `/buffer jump smart` (default key: kbd:[Alt+a])
+* `/input jump_previously_visited_buffer` -> `/buffer jump prev_visited` (default key: kbd:[Alt+<])
+* `/input jump_next_visited_buffer` -> `/buffer jump next_visited` (default key: kbd:[Alt+>])
+* `/input jump_last_buffer_displayed` -> `/buffer jump last_displayed` (default key: kbd:[Alt+/])
+* `/input hotlist_clear` -> `/hotlist clear` (default key: kbd:[Alt+h], kbd:[Alt+c])
+* `/input hotlist_remove_buffer` -> `/hotlist remove` (default key: kbd:[Alt+h], kbd:[Alt+m])
+* `/input hotlist_restore_buffer` -> `/hotlist restore` (default key: kbd:[Alt+h], kbd:[Alt+r])
+* `/input hotlist_restore_all` -> `/hotlist restore -all` (default key: kbd:[Alt+h], kbd:[Alt+Shift+R])
 
 The following default keys can be reset to use the new command:
 
@@ -39,6 +43,10 @@ The following default keys can be reset to use the new command:
 /key reset meta-<
 /key reset meta->
 /key reset meta-/
+/key reset meta-hmeta-c
+/key reset meta-hmeta-m
+/key reset meta-hmeta-r
+/key reset meta-hmeta-R
 ----
 
 [[v3.8_return_code_string_comparison_functions]]

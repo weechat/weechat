@@ -784,46 +784,6 @@ TEST(GuiInput, HistoryGlobalNext)
 
 /*
  * Tests functions:
- *   gui_input_hotlist_clear
- */
-
-TEST(GuiInput, HotlistClear)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Tests functions:
- *   gui_input_hotlist_remove_buffer
- */
-
-TEST(GuiInput, HotlistRemoveBuffer)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Tests functions:
- *   gui_input_hotlist_restore_buffer
- */
-
-TEST(GuiInput, HotlistRestoreBuffer)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Tests functions:
- *   gui_input_hotlist_restore_all
- */
-
-TEST(GuiInput, HotlistRestoreAll)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Tests functions:
  *   gui_input_grab_key
  */
 

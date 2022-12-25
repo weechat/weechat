@@ -1650,10 +1650,10 @@ They can be changed and new ones can be added with the <<command_weechat_key,/ke
 |===
 | Key                            | Description | Command
 | kbd:[Alt+a]                    | Switch to next buffer with activity (with priority: highlight, message, other). | `+/buffer jump smart+`
-| kbd:[Alt+h], kbd:[Alt+c]       | Clear hotlist (activity notification on buffers). | `+/input hotlist_clear+`
-| kbd:[Alt+h], kbd:[Alt+m]       | Remove current buffer from hotlist. | `+/input hotlist_remove_buffer+`
-| kbd:[Alt+h], kbd:[Alt+r]       | Restore latest hotlist removed in the current buffer. | `+/input hotlist_restore_buffer+`
-| kbd:[Alt+h], kbd:[Alt+Shift+R] | Restore latest hotlist removed in all buffers. | `+/input hotlist_restore_all+`
+| kbd:[Alt+h], kbd:[Alt+c]       | Clear hotlist (activity notification on buffers). | `+/hotlist clear+`
+| kbd:[Alt+h], kbd:[Alt+m]       | Remove current buffer from hotlist. | `+/hotlist remove+`
+| kbd:[Alt+h], kbd:[Alt+r]       | Restore latest hotlist removed in the current buffer. | `+/hotlist restore+`
+| kbd:[Alt+h], kbd:[Alt+Shift+R] | Restore latest hotlist removed in all buffers. | `+/hotlist restore -all+`
 |===
 
 [[key_bindings_toggle_keys]]

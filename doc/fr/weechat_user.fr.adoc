@@ -1689,10 +1689,10 @@ Ils peuvent être modifiés et de nouveaux peuvent être ajoutés avec la comman
 |===
 | Touche                         | Description | Commande
 | kbd:[Alt+a]                    | Sauter au prochain tampon avec activité (avec priorité : highlight, message, autre). | `+/buffer jump smart+`
-| kbd:[Alt+h], kbd:[Alt+c]       | Vider la hotlist (notification d'activité sur les tampons). | `+/input hotlist_clear+`
-| kbd:[Alt+h], kbd:[Alt+m]       | Supprimer le tampon courant de la hotlist. | `+/input hotlist_remove_buffer+`
-| kbd:[Alt+h], kbd:[Alt+r]       | Restaurer la dernière hotlist supprimée dans le tampon courant. | `+/input hotlist_restore_buffer+`
-| kbd:[Alt+h], kbd:[Alt+Shift+R] | Restaurer la dernière hotlist supprimée dans tous les tampons. | `+/input hotlist_restore_all+`
+| kbd:[Alt+h], kbd:[Alt+c]       | Vider la hotlist (notification d'activité sur les tampons). | `+/hotlist clear+`
+| kbd:[Alt+h], kbd:[Alt+m]       | Supprimer le tampon courant de la hotlist. | `+/hotlist remove+`
+| kbd:[Alt+h], kbd:[Alt+r]       | Restaurer la dernière hotlist supprimée dans le tampon courant. | `+/hotlist restore+`
+| kbd:[Alt+h], kbd:[Alt+Shift+R] | Restaurer la dernière hotlist supprimée dans tous les tampons. | `+/hotlist restore -all+`
 |===
 
 [[key_bindings_toggle_keys]]

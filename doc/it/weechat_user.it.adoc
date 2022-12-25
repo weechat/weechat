@@ -1800,13 +1800,13 @@ They can be changed and new ones can be added with the <<command_weechat_key,/ke
 | Tasti                          | Descrizione | Comando
 | kbd:[Alt+a]                    | Passa al buffer successivo con attività (con priorità: highligh, messagge, altro). | `+/buffer jump smart+`
 // TRANSLATION MISSING
-| kbd:[Alt+h], kbd:[Alt+c]       | Clear hotlist (activity notification on buffers). | `+/input hotlist_clear+`
+| kbd:[Alt+h], kbd:[Alt+c]       | Clear hotlist (activity notification on buffers). | `+/hotlist clear+`
 // TRANSLATION MISSING
-| kbd:[Alt+h], kbd:[Alt+m]       | Remove current buffer from hotlist. | `+/input hotlist_remove_buffer+`
+| kbd:[Alt+h], kbd:[Alt+m]       | Remove current buffer from hotlist. | `+/hotlist remove+`
 // TRANSLATION MISSING
-| kbd:[Alt+h], kbd:[Alt+r]       | Restore latest hotlist removed in the current buffer. | `+/input hotlist_restore_buffer+`
+| kbd:[Alt+h], kbd:[Alt+r]       | Restore latest hotlist removed in the current buffer. | `+/hotlist restore+`
 // TRANSLATION MISSING
-| kbd:[Alt+h], kbd:[Alt+Shift+R] | Restore latest hotlist removed in all buffers. | `+/input hotlist_restore_all+`
+| kbd:[Alt+h], kbd:[Alt+Shift+R] | Restore latest hotlist removed in all buffers. | `+/hotlist restore -all+`
 |===
 
 // TRANSLATION MISSING

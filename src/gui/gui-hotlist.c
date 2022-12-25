@@ -485,6 +485,23 @@ gui_hotlist_restore_buffer (struct t_gui_buffer *buffer)
 }
 
 /*
+ * Restores latest hotlist removed in all buffers.
+ */
+
+void
+gui_hotlist_restore_all_buffers ()
+{
+    struct t_gui_buffer *ptr_buffer;
+
+    for (ptr_buffer = gui_buffers; ptr_buffer;
+         ptr_buffer = ptr_buffer->next_buffer)
+    {
+        gui_hotlist_restore_buffer (ptr_buffer);
+    }
+}
+
+
+/*
  * Resorts hotlist with new sort type.
  */
 
@@ -522,7 +539,7 @@ gui_hotlist_resort ()
 }
 
 /*
- * Clears hotlist.
+ * Clears hotlist with a level mask (integer).
  *
  * Argument "level_mask" is a combination of:
  *   1 = join/part
@@ -558,6 +575,72 @@ gui_hotlist_clear (int level_mask)
 
     if (hotlist_changed)
         gui_hotlist_changed_signal (NULL);
+}
+
+/*
+ * Clears hotlist with a level mask (string).
+ */
+
+void
+gui_hotlist_clear_level_string (struct t_gui_buffer *buffer,
+                                const char *str_level_mask)
+{
+    long level_mask;
+    char *error;
+    struct t_gui_hotlist *ptr_hotlist;
+    int priority;
+
+    if (str_level_mask)
+    {
+        if (strcmp (str_level_mask, "lowest") == 0)
+        {
+            /* clear only lowest priority currently in hotlist */
+            priority = GUI_HOTLIST_MAX + 1;
+            for (ptr_hotlist = gui_hotlist; ptr_hotlist;
+                 ptr_hotlist = ptr_hotlist->next_hotlist)
+            {
+                if ((int)ptr_hotlist->priority < priority)
+                    priority = ptr_hotlist->priority;
+            }
+            if (priority <= GUI_HOTLIST_MAX)
+            {
+                gui_hotlist_clear (1 << priority);
+                gui_hotlist_initial_buffer = buffer;
+            }
+        }
+        else if (strcmp (str_level_mask, "highest") == 0)
+        {
+            /* clear only highest priority currently in hotlist */
+            priority = GUI_HOTLIST_MIN - 1;
+            for (ptr_hotlist = gui_hotlist; ptr_hotlist;
+                 ptr_hotlist = ptr_hotlist->next_hotlist)
+            {
+                if ((int)ptr_hotlist->priority > priority)
+                    priority = ptr_hotlist->priority;
+            }
+            if (priority >= GUI_HOTLIST_MIN)
+            {
+                gui_hotlist_clear (1 << priority);
+                gui_hotlist_initial_buffer = buffer;
+            }
+        }
+        else
+        {
+            /* clear hotlist using a mask of levels */
+            error = NULL;
+            level_mask = strtol (str_level_mask, &error, 10);
+            if (error && !error[0] && (level_mask > 0))
+            {
+                gui_hotlist_clear ((int)level_mask);
+                gui_hotlist_initial_buffer = buffer;
+            }
+        }
+    }
+    else
+    {
+        gui_hotlist_clear (GUI_HOTLIST_MASK_MAX);
+        gui_hotlist_initial_buffer = buffer;
+    }
 }
 
 /*
