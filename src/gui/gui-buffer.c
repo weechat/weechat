@@ -133,7 +133,7 @@ char *gui_buffer_properties_set[] =
 /*
  * Searches for buffer type.
  *
- * Returns index of bufffer type found, -1 if not found.
+ * Returns index of buffer type found, -1 if not found.
  */
 
 int
