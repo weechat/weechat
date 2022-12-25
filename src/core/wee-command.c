@@ -3340,7 +3340,7 @@ COMMAND_CALLBACK(input)
         gui_input_history_global_next (buffer);
     else if (string_strcasecmp (argv[1], "jump_smart") == 0)
         gui_input_jump_smart (buffer);
-    /* not used any more in WeeChat >= 1.0 (replaced by "/buffer ++") */
+    /* not used any more in WeeChat >= 1.0 (replaced by "/buffer +") */
     else if (string_strcasecmp (argv[1], "jump_last_buffer") == 0)
         (void) input_data (buffer, "/buffer +", NULL);
     else if (string_strcasecmp (argv[1], "jump_last_buffer_displayed") == 0)
