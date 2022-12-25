@@ -1634,9 +1634,9 @@ Ils peuvent être modifiés et de nouveaux peuvent être ajoutés avec la comman
 | kbd:[Alt+n]                    | Se positionner sur le highlight suivant. | `+/window scroll_next_highlight+`
 | kbd:[Alt+p]                    | Se positionner sur le highlight précédent. | `+/window scroll_previous_highlight+`
 | kbd:[Alt+u]                    | Se positionner sur la première ligne non lue du tampon. | `+/window scroll_unread+`
-| kbd:[Alt+<]                    | Sauter au tampon précédent dans la liste des tampons visités. | `+/input jump_previously_visited_buffer+`
-| kbd:[Alt+>]                    | Sauter au tampon suivant dans la liste des tampons visités. | `+/input jump_next_visited_buffer+`
-| kbd:[Alt+/]                    | Sauter au dernier tampon affiché (avant le dernier saut vers un tampon). | `+/input jump_last_buffer_displayed+`
+| kbd:[Alt+<]                    | Sauter au tampon précédent dans la liste des tampons visités. | `+/buffer jump prev_visited+`
+| kbd:[Alt+>]                    | Sauter au tampon suivant dans la liste des tampons visités. | `+/buffer jump next_visited+`
+| kbd:[Alt+/]                    | Sauter au dernier tampon affiché (avant le dernier saut vers un tampon). | `+/buffer jump last_displayed+`
 |===
 
 [[key_bindings_windows]]
@@ -1688,7 +1688,7 @@ Ils peuvent être modifiés et de nouveaux peuvent être ajoutés avec la comman
 [width="100%",cols="^.^3,.^8,.^5",options="header"]
 |===
 | Touche                         | Description | Commande
-| kbd:[Alt+a]                    | Sauter au prochain tampon avec activité (avec priorité : highlight, message, autre). | `+/input jump_smart+`
+| kbd:[Alt+a]                    | Sauter au prochain tampon avec activité (avec priorité : highlight, message, autre). | `+/buffer jump smart+`
 | kbd:[Alt+h], kbd:[Alt+c]       | Vider la hotlist (notification d'activité sur les tampons). | `+/input hotlist_clear+`
 | kbd:[Alt+h], kbd:[Alt+m]       | Supprimer le tampon courant de la hotlist. | `+/input hotlist_remove_buffer+`
 | kbd:[Alt+h], kbd:[Alt+r]       | Restaurer la dernière hotlist supprimée dans le tampon courant. | `+/input hotlist_restore_buffer+`
@@ -1770,7 +1770,7 @@ avec la touche kbd:[Alt+m] (commande : `+/mouse toggle+`).
 | ◾◽◽                   | left         | chat                 | Aller au tampon précédent. | `+/window ${_window_number};/buffer +1+`
 | ◾◽◽                   | right        | chat                 | Aller au tampon suivant. | `+/window ${_window_number};/buffer +1+`
 | ◾◽◽                   | left (long)  | chat                 | Aller au premier tampon. | `+/window ${_window_number};/buffer 1+`
-| ◾◽◽                   | right (long) | chat                 | Aller au dernier tampon. | `+/window ${_window_number};/input jump_last_buffer+`
+| ◾◽◽                   | right (long) | chat                 | Aller au dernier tampon. | `+/window ${_window_number};/buffer ++`
 | kbd:[▲]               | -            | chat                 | Monter de quelques lignes dans l'historique du tampon. | `+/window scroll_up -window ${_window_number}+`
 | kbd:[▼]               | -            | chat                 | Descendre de quelques lignes dans l'historique du tampon. | `+/window scroll_down -window ${_window_number}+`
 | kbd:[Ctrl+▲]          | -            | chat                 | Faire défiler horizontalement vers la gauche. | `+/window scroll_horiz -window ${_window_number} -10%+`

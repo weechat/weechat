@@ -1188,7 +1188,8 @@ Exemples :
          delvar <nom>
          set <propriété> [<valeur>]
          get <propriété>
-         <nombre>|<nom>
+         jump smart|last_displayed|prev_visited|next_visited
+         <nombre>|-|+|<nom>
 
     list : lister les tampons ouverts (sans paramètre, cette liste est affichée)
      add : ajouter un nouveau tampon (il peut être fermé avec "/buffer close" ou l'entrée "q")
@@ -1214,9 +1215,14 @@ renumber : renuméroter des tampons (fonctionne seulement si l'option weechat.l
   delvar : supprimer une variable locale du tampon courant
      set : modifier une propriété du tampon courant
      get : afficher une propriété du tampon courant
+    jump : sauter vers un autre tampon :
+           smart : prochain tampon avec de l'activité
+           last_displayed : dernier tampon affiché (avant le dernier saut vers un tampon)
+           prev_visited : tampon visité précédemment
+           next_visited : tampon visité après
   nombre : sauter au tampon qui a ce numéro, préfixe possible :
-           '+' : saut relatif, ajoute le numéro au courant,
-           '-' : saut relatif, soustrait le numéro au courant,
+           '+' : saut relatif, ajoute le numéro au courant
+           '-' : saut relatif, soustrait le numéro au courant
            '*' : saut au numéro en utilisant l'option "jump_current_to_previous_buffer"
        - : sauter au premier numéro de tampon
        + : sauter au dernier numéro de tampon
@@ -1644,10 +1650,6 @@ liste des actions :
   history_next : rappeler la commande suivante dans l'historique du tampon courant
   history_global_previous : rappeler la commande précédente dans l'historique global
   history_global_next : rappeler la commande suivante dans l'historique global
-  jump_smart : sauter au prochain tampon avec de l'activité
-  jump_last_buffer_displayed : sauter au dernier tampon affiché (avant le dernier saut vers un tampon)
-  jump_previously_visited_buffer : sauter au tampon visité précédemment
-  jump_next_visited_buffer : sauter au tampon visité après
   hotlist_clear : effacer la hotlist (paramètre facultatif : "lowest" pour effacer seulement le plus petit niveau dans la hotlist, "highest" pour effacer seulement le niveau le plus haut dans la hotlist, ou un masque de niveaux : entier qui est une combinaison de 1=join/part, 2=message, 4=privé, 8=highlight)
   hotlist_remove_buffer : supprimer le tampon courant de la hotlist
   hotlist_restore_buffer : restaurer la dernière hotlist supprimée dans le tampon courant

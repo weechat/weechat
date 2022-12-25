@@ -1171,83 +1171,89 @@ addcompletion: додавање алијаса са кориснички деф�
 
 ----
 /buffer  list
-         add [-free] [-switch] <име>
-         clear [<број>|<име>|-merged|-all [<број>|<име>...]]
-         move <број>|-|+
-         swap <број1>|<име1> [<број2>|<име2>]
-         cycle <број>|<име> [<број>|<име>...]
-         merge <број>|<име>
-         unmerge [<број>|-all]
-         hide [<број>|<име>|-all [<број>|<име>...]]
-         unhide [<број>|<име>|-all [<број>|<име>...]]
-         renumber [<број1> [<број2> [<старт>]]]
-         close [<n1>[-<n2>]|<име>...]
-         notify [<ниво>]
-         listvar [<број>|<име>]
-         setvar <име> [<вредн>]
-         delvar <име>
-         set <особина> [<вредн>]
-         get <особина>
-         <број>|-|+|<име>
+         add [-free] [-switch] <name>
+         clear [<number>|<name>|-merged|-all [<number>|<name>...]]
+         move <number>|-|+
+         swap <number1>|<name1> [<number2>|<name2>]
+         cycle <number>|<name> [<number>|<name>...]
+         merge <number>|<name>
+         unmerge [<number>|-all]
+         hide [<number>|<name>|-all [<number>|<name>...]]
+         unhide [<number>|<name>|-all [<number>|<name>...]]
+         renumber [<number1> [<number2> [<start>]]]
+         close [<n1>[-<n2>]|<name>...]
+         notify [<level>]
+         listvar [<number>|<name>]
+         setvar <name> [<value>]
+         delvar <name>
+         set <property> [<value>]
+         get <property>
+         jump smart|last_displayed|prev_visited|next_visited
+         <number>|-|+|<name>
 
-    list: листа бафера (без аргумента, исписује се ова листа)
-     add: додаје нови бафер (може да се затвори са „/buffer close” или уносом „q”)
-   clear: брише садржај бафера (број за бафер, -merged за спојене бафере, -all за све бафере, или ништа за текући бафер)
-    move: помера бафер у листи (може бити и релативно, на пример -1); „-” = помери на први број бафера, „+” = помери на последњи број бафера + 1
-    swap: замењује два бафера (замењује са текућим бафером ако се зада само један број/име)
-   cycle: скаче у круг по листи бафера
-   merge: спаја текући бафер са другим бафером (простор разговора ће бити мешавина оба бафера)
-          (ctrl-x подразумевано пребацује између спојених бафера)
- unmerge: раздваја спојени бафер од осталих бафера који имају исти број
-    hide: скрива бафер
-  unhide: открива бафер
-renumber: ренумерише бафере (ради само ако је искључена опција weechat.look.buffer_auto_renumber)
-   close: затвара бафер (број/опсег или име није обавезно)
-  notify: приказује или поставља ниво обавештавања за текући бафер: овај ниво одређује да ли се бафер поставља на врућу листу или не:
-               none: никада
-          highlight: само за истицања
-            message: за поруке од корисника + истицања
-                all: све поруке
-              reset: ресет на подразумевану вредност (all)
- listvar: приказује локалне променљиве у баферу
-  setvar: поставља локалну променљиву у текући бафер
-  delvar: брише локалну променљиву из текућег бафера
-     set: поставља особину текућег бафера
-     get: приказује особину текућег бафера
-    број: скок на бафер са бројем, могући префикси:
-          ’+’: релативни скок, број се додаје на текући
-          ’-’: релативни скок, број се одузима од текућег
-          ’*’: скок на број, уз употребу опције „weechat.look.jump_current_to_previous_buffer”
-       -: скок на први број бафера
-       +: скок на последњи број бафера
-     име: скок на бафер под (делимичним) именом
+    list: list buffers (without argument, this list is displayed)
+     add: add a new buffer (it can be closed with "/buffer close" or input "q")
+   clear: clear buffer content (number for a buffer, -merged for merged buffers, -all for all buffers, or nothing for current buffer)
+    move: move buffer in the list (may be relative, for example -1); "-" = move to first buffer number, "+" = move to last buffer number + 1
+    swap: swap two buffers (swap with current buffer if only one number/name given)
+   cycle: jump loop between a list of buffers
+   merge: merge current buffer to another buffer (chat area will be mix of both buffers)
+          (by default ctrl-x switches between merged buffers)
+ unmerge: unmerge buffer from other buffers which have same number
+    hide: hide the buffer
+  unhide: unhide the buffer
+renumber: renumber buffers (works only if option weechat.look.buffer_auto_renumber is off)
+   close: close buffer (number/range or name is optional)
+  notify: display or set notify level for current buffer: this level determines whether buffer will be added to hotlist or not:
+               none: never
+          highlight: for highlights only
+            message: for messages from users + highlights
+                all: all messages
+              reset: reset to default value (all)
+ listvar: display local variables in a buffer
+  setvar: set a local variable in the current buffer
+  delvar: delete a local variable from the current buffer
+     set: set a property in the current buffer
+     get: display a property of current buffer
+    jump: jump to another buffer:
+          smart: next buffer with activity
+          last_displayed: last buffer displayed (before last jump to a buffer)
+          prev_visited: previously visited buffer
+          next_visited: jump to next visited buffer
+  number: jump to buffer by number, possible prefix:
+          '+': relative jump, add number to current
+          '-': relative jump, sub number to current
+          '*': jump to number, using option "weechat.look.jump_current_to_previous_buffer"
+       -: jump to first buffer number
+       +: jump to last buffer number
+    name: jump to buffer by (partial) name
 
-Примери:
-  брише текући бафер:
+Examples:
+  clear current buffer:
     /buffer clear
-  прелази на бафер под бројем 5:
+  move buffer to number 5:
     /buffer move 5
-  замењује бафер 1 са 3:
+  swap buffer 1 with 3:
     /buffer swap 1 3
-  замењује бафер #weechat са текућим бафером:
+  swap buffer #weechat with current buffer:
     /buffer swap #weechat
-  скаче на #chan1, #chan2, #chan3 па у круг:
+  jump on #chan1, #chan2, #chan3 and loop:
     /buffer cycle #chan1 #chan2 #chan3
-  спајање са основним бафером:
+  merge with core buffer:
     /buffer merge 1
-  спајање са #weechat бафером:
+  merge with #weechat buffer:
     /buffer merge #weechat
-  раздвајање бафера:
+  unmerge buffer:
     /buffer unmerge
-  затвара текући бафер:
+  close current buffer:
     /buffer close
-  затвара бафере од 5 до 7:
+  close buffers 5 to 7:
     /buffer close 5-7
-  скок на #weechat:
+  jump to #weechat:
     /buffer #weechat
-  скок на следећи бафер:
+  jump to next buffer:
     /buffer +1
-  скок на бафер под последњим бројем:
+  jump to last buffer number:
     /buffer +
 ----
 
@@ -1609,64 +1615,60 @@ addreplace: додаје или замењује постојећи филтер
 ----
 /input  <акција> [<аргументи>]
 
-листа акција:
-  return: симулира притисак на тастер „ентер”
-  complete_next: довршава реч са наредним довршавањем
-  complete_previous: довршава реч са претходним довршавањем
-  search_text_here: претражује текст у баферу почевши од текуће позиције
-  search_text: претражује текст у баферу
-  search_switch_case: укључује употребу тачне величине слова код претраге
-  search_switch_regex: мења тип претраге: стринг/регуларни израз
-  search_switch_where: укључује претрагу у порукама/префиксима
-  search_previous: претрага у претходној линији
-  search_next: претрага у наредној линији
-  search_stop_here: зауставља претрагу на текућој позицији
-  search_stop: зауставља претрагу
-  delete_previous_char: брише претходни карактер
-  delete_next_char: брише наредни карактер
-  delete_previous_word: брише претходну реч
-  delete_previous_word_whitespace: брише претходну реч (до празног простора)
-  delete_next_word: брише наредну реч
-  delete_beginning_of_line: брише од почетка линије до позиције курсора
-  delete_end_of_line: брише од позиције курсора до краја линије
-  delete_line: брише комплетну линију
-  clipboard_paste: налепљује из интерног клипборда
-  transpose_chars: транспонује два карактера (замењују места)
-  undo: поништава последњу акцију командне линије
-  redo: обнавља последње поништену акцију команде линије
-  move_beginning_of_line: помера курсор на почетак линије
-  move_end_of_line: помера курсор на крај линије
-  move_previous_char: помера курсор на претходни карактер
-  move_next_char: помера курсор на наредни карактер
-  move_previous_word: помера курсор на претходну реч
-  move_next_word: помера курсор на наредну реч
-  history_previous: позива претходну команду из историје команди текућег бафера
-  history_next: позива наредну команду из историје команди текућег бафера
-  history_global_previous: позива претходну команду из глобалне историје команди
-  history_global_next: позива наредну команду из глобалне историје команди
-  jump_smart: скаче на наредни бафер у коме постоји активност
-  jump_last_buffer_displayed: скаче на последњи приказани бафер (пре последњег скока на бафер)
-  jump_previously_visited_buffer: скаче на претходно посећени бафер
-  jump_next_visited_buffer: скаче на наредни посећени бафер
-  hotlist_clear: брише врућу листу (необавезни аргументи: „lowest” за брисање само најнижег нивоа у врућој листи, „highest” за брисање само највишег нивоа у врућој листи, или маска нивоа: целобројна вредност која представља комбинацију 1=join/part, 2=порука, 4=приватно, 8=истицање)
-  hotlist_remove_buffer: уклања текући бафер из вруће листе
-  hotlist_restore_buffer: враћа последњу уклоњену врућу листу у текући бафер
-  hotlist_restore_all: враћа последњу уклоњену врућу листу у све бафере
-  grab_key: преузима тастер (необавезни аргумент: кашњење за крај преузимања, подразумевано је 500 милисекунди)
-  grab_key_command: преузима тастер са својом придруженом командом (необавезни аргумент: кашњење за крај преузимања, подразумевано је 500 милисекунди)
-  grab_mouse: преузима кôд догађаја миша
-  grab_mouse_area: преузима кôд догађаја миша заједно са површином
-  set_unread: поставља маркер непрочитан за све бафере
-  set_unread_current_buffer: поставља маркер непрочитан за текући бафер
-  switch_active_buffer: прелази на наредни спојени бафер
-  switch_active_buffer_previous: прелази на претходни спојени бафер
-  zoom_merged_buffer: зумира на спојени бафер
-  insert: умеће текст у командну линију (дозвољени су означени карактери, погледајте /help print)
-  send: шаље текст баферу
-  paste_start: започиње налепљивање (режим ограђеног налепљивања)
-  paste_stop: зауставља налепљивање (режим ограђеног налепљивања)
+list of actions:
+  return: simulate key "enter"
+  complete_next: complete word with next completion
+  complete_previous: complete word with previous completion
+  search_text_here: search text in buffer at current position
+  search_text: search text in buffer
+  search_switch_case: switch exact case for search
+  search_switch_regex: switch search type: string/regular expression
+  search_switch_where: switch search in messages/prefixes
+  search_previous: search previous line
+  search_next: search next line
+  search_stop_here: stop search at current position
+  search_stop: stop search
+  delete_previous_char: delete previous char
+  delete_next_char: delete next char
+  delete_previous_word: delete previous word
+  delete_previous_word_whitespace: delete previous word (until whitespace)
+  delete_next_word: delete next word
+  delete_beginning_of_line: delete from beginning of line until cursor
+  delete_end_of_line: delete from cursor until end of line
+  delete_line: delete entire line
+  clipboard_paste: paste from the internal clipboard
+  transpose_chars: transpose two chars
+  undo: undo last command line action
+  redo: redo last command line action
+  move_beginning_of_line: move cursor to beginning of line
+  move_end_of_line: move cursor to end of line
+  move_previous_char: move cursor to previous char
+  move_next_char: move cursor to next char
+  move_previous_word: move cursor to previous word
+  move_next_word: move cursor to next word
+  history_previous: recall previous command in current buffer history
+  history_next: recall next command in current buffer history
+  history_global_previous: recall previous command in global history
+  history_global_next: recall next command in global history
+  hotlist_clear: clear hotlist (optional argument: "lowest" to clear only lowest level in hotlist, "highest" to clear only highest level in hotlist, or level mask: integer which is a combination of 1=join/part, 2=message, 4=private, 8=highlight)
+  hotlist_remove_buffer: remove current buffer from hotlist
+  hotlist_restore_buffer: restore latest hotlist removed in the current buffer
+  hotlist_restore_all: restore latest hotlist removed in all buffers
+  grab_key: grab a key (optional argument: delay for end of grab, default is 500 milliseconds)
+  grab_key_command: grab a key with its associated command (optional argument: delay for end of grab, default is 500 milliseconds)
+  grab_mouse: grab mouse event code
+  grab_mouse_area: grab mouse event code with area
+  set_unread: set unread marker for all buffers
+  set_unread_current_buffer: set unread marker for current buffer
+  switch_active_buffer: switch to next merged buffer
+  switch_active_buffer_previous: switch to previous merged buffer
+  zoom_merged_buffer: zoom on merged buffer
+  insert: insert text in command line (escaped chars are allowed, see /help print)
+  send: send text to the buffer
+  paste_start: start paste (bracketed paste mode)
+  paste_stop: stop paste (bracketed paste mode)
 
-Ову команду користе тастерске пречице или додаци.
+This command is used by key bindings or plugins.
 ----
 
 [[command_weechat_item]]

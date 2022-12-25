@@ -784,46 +784,6 @@ TEST(GuiInput, HistoryGlobalNext)
 
 /*
  * Tests functions:
- *   gui_input_jump_smart
- */
-
-TEST(GuiInput, JumpSmart)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Tests functions:
- *   gui_input_jump_last_buffer_displayed
- */
-
-TEST(GuiInput, JumpLastBufferDisplayed)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Tests functions:
- *   gui_input_jump_previously_visited_buffer
- */
-
-TEST(GuiInput, JumpPreviouslyVisitedBuffer)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Tests functions:
- *   gui_input_jump_next_visited_buffer
- */
-
-TEST(GuiInput, JumpNextVisitedBuffer)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Tests functions:
  *   gui_input_hotlist_clear
  */
 

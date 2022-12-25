@@ -1682,9 +1682,9 @@ They can be changed and new ones can be added with the <<command_weechat_key,/ke
 | kbd:[Alt+n]                    | 次のハイライトまでスクロール | `+/window scroll_next_highlight+`
 | kbd:[Alt+p]                    | 前のハイライトまでスクロール | `+/window scroll_previous_highlight+`
 | kbd:[Alt+u]                    | バッファを最初の未読行までスクロール | `+/window scroll_unread+`
-| kbd:[Alt+<]                    | バッファ訪問履歴で前のバッファに移動 | `+/input jump_previously_visited_buffer+`
-| kbd:[Alt+>]                    | バッファ訪問履歴で次のバッファに移動 | `+/input jump_next_visited_buffer+`
-| kbd:[Alt+/]                    | 最後に表示したバッファに移動 (バッファ移動前に表示していたウィンドウ) | `+/input jump_last_buffer_displayed+`
+| kbd:[Alt+<]                    | バッファ訪問履歴で前のバッファに移動 | `+/buffer jump prev_visited+`
+| kbd:[Alt+>]                    | バッファ訪問履歴で次のバッファに移動 | `+/buffer jump next_visited+`
+| kbd:[Alt+/]                    | 最後に表示したバッファに移動 (バッファ移動前に表示していたウィンドウ) | `+/buffer jump last_displayed+`
 |===
 
 // TRANSLATION MISSING
@@ -1741,7 +1741,7 @@ They can be changed and new ones can be added with the <<command_weechat_key,/ke
 [width="100%",cols="^.^3,.^8,.^5",options="header"]
 |===
 | キー                            | 説明 | コマンド
-| kbd:[Alt+a]                    | 変更のあった次のバッファに移動 (優先順位: ハイライト、新規メッセージ、その他) | `+/input jump_smart+`
+| kbd:[Alt+a]                    | 変更のあった次のバッファに移動 (優先順位: ハイライト、新規メッセージ、その他) | `+/buffer jump smart+`
 // TRANSLATION MISSING
 | kbd:[Alt+h], kbd:[Alt+c]       | Clear hotlist (activity notification on buffers). | `+/input hotlist_clear+`
 // TRANSLATION MISSING
@@ -1831,7 +1831,7 @@ These mouse actions are possible only if mouse is enabled with key kbd:[Alt+m]
 | ◾◽◽                | 左           | チャット                     | 前のバッファに移動 | `+/window ${_window_number};/buffer +1+`
 | ◾◽◽                | 右           | チャット                     | 次のバッファに移動 | `+/window ${_window_number};/buffer +1+`
 | ◾◽◽                | 左 (長く)    | チャット                     | 最初のバッファに移動 | `+/window ${_window_number};/buffer 1+`
-| ◾◽◽                | 右 (長く)    | チャット                     | 最後のバッファに移動 | `+/window ${_window_number};/input jump_last_buffer+`
+| ◾◽◽                | 右 (長く)    | チャット                     | 最後のバッファに移動 | `+/window ${_window_number};/buffer ++`
 | kbd:[▲]            | -            | チャット                     | バッファ履歴を上方向にスクロール | `+/window scroll_up -window ${_window_number}+`
 | kbd:[▼]            | -            | チャット                     | バッファ履歴を下方向にスクロール | `+/window scroll_down -window ${_window_number}+`
 | kbd:[Ctrl+▲]       | -            | チャット                     | 水平左方向にスクロール | `+/window scroll_horiz -window ${_window_number} -10%+`

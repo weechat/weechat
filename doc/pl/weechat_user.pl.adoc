@@ -1623,9 +1623,9 @@ Można je zmienić oraz dodać nowe za pomocą komendy <<command_weechat_key,/ke
 | kbd:[Alt+n]                    | Przewiń do następnego powiadomienia. | `+/window scroll_next_highlight+`
 | kbd:[Alt+p]                    | Przewiń do poprzedniego powiadomienia. | `+/window scroll_previous_highlight+`
 | kbd:[Alt+u]                    | Przewiń do pierwszej nieprzeczytanej linii w buforze. | `+/window scroll_unread+`
-| kbd:[Alt+<]                    | Przełącz na poprzedni bufor z listy odwiedzonych buforów. | `+/input jump_previously_visited_buffer+`
-| kbd:[Alt+>]                    | Przełącz na następny bufor z listy odwiedzonych buforów. | `+/input jump_next_visited_buffer+`
-| kbd:[Alt+/]                    | Przełącz na ostatnio wyświetlony bufor (przed ostatnią zmianą bufora). | `+/input jump_last_buffer_displayed+`
+| kbd:[Alt+<]                    | Przełącz na poprzedni bufor z listy odwiedzonych buforów. | `+/buffer jump prev_visited+`
+| kbd:[Alt+>]                    | Przełącz na następny bufor z listy odwiedzonych buforów. | `+/buffer jump next_visited+`
+| kbd:[Alt+/]                    | Przełącz na ostatnio wyświetlony bufor (przed ostatnią zmianą bufora). | `+/buffer jump last_displayed+`
 |===
 
 [[key_bindings_windows]]
@@ -1677,7 +1677,7 @@ Można je zmienić oraz dodać nowe za pomocą komendy <<command_weechat_key,/ke
 [width="100%",cols="^.^3,.^8,.^5",options="header"]
 |===
 | Skrót                          | Opis | Komenda
-| kbd:[Alt+a]                    | Przełącz na następny bufor z aktywnością (z priorytetem: powiadomienie, wiadomość, inne). | `+/input jump_smart+`
+| kbd:[Alt+a]                    | Przełącz na następny bufor z aktywnością (z priorytetem: powiadomienie, wiadomość, inne). | `+/buffer jump smart+`
 | kbd:[Alt+h], kbd:[Alt+c]       | Wyczyść hotliste (powiadomienia o aktywności w buforach). | `+/input hotlist_clear+`
 | kbd:[Alt+h], kbd:[Alt+m]       | Usuń obecny bufor z hotlisty. | `+/input hotlist_remove_buffer+`
 | kbd:[Alt+h], kbd:[Alt+r]       | Przywróć ostatnią usuniętą hotlistę w obecnym buforze. | `+/input hotlist_restore_buffer+`
@@ -1759,7 +1759,7 @@ za pomocą skrótu kbd:[Alt+m] (komenda: `+/mouse toggle+`).
 | ◾◽◽                 | lewo          | chat                 | Przełącz na poprzedni bufor. | `+/window ${_window_number};/buffer +1+`
 | ◾◽◽                 | prawo         | chat                 | Przełącz na następny bufor. | `+/window ${_window_number};/buffer +1+`
 | ◾◽◽                 | lewo (długo)  | chat                 | Przełącz na pierwszy bufor. | `+/window ${_window_number};/buffer 1+`
-| ◾◽◽                 | prawo (długo) | chat                 | Przełącz na ostatni bufor. | `+/window ${_window_number};/input jump_last_buffer+`
+| ◾◽◽                 | prawo (długo) | chat                 | Przełącz na ostatni bufor. | `+/window ${_window_number};/buffer ++`
 | kbd:[▲]             | -             | chat                 | Przewiń w górę kilka linii w historii bufora. | `+/window scroll_up -window ${_window_number}+`
 | kbd:[▼]             | -             | chat                 | Przewiń w dół kilka linii w historii bufora. | `+/window scroll_down -window ${_window_number}+`
 | kbd:[Ctrl+▲]        | -             | chat                 | Przewiń poziomo w lewo. | `+/window scroll_horiz -window ${_window_number} -10%+`

@@ -72,10 +72,6 @@ extern void gui_input_history_local_previous (struct t_gui_buffer *buffer);
 extern void gui_input_history_local_next (struct t_gui_buffer *buffer);
 extern void gui_input_history_global_previous (struct t_gui_buffer *buffer);
 extern void gui_input_history_global_next (struct t_gui_buffer *buffer);
-extern void gui_input_jump_smart (struct t_gui_buffer *buffer);
-extern void gui_input_jump_last_buffer_displayed (struct t_gui_buffer *buffer);
-extern void gui_input_jump_previously_visited_buffer (struct t_gui_buffer *buffer);
-extern void gui_input_jump_next_visited_buffer (struct t_gui_buffer *buffer);
 extern void gui_input_hotlist_clear (struct t_gui_buffer *buffer,
                                      const char *level_mask);
 extern void gui_input_hotlist_remove_buffer (struct t_gui_buffer *buffer);

@@ -4441,6 +4441,129 @@ gui_buffer_visited_get_index_next ()
 }
 
 /*
+ * Jumps to buffer with activity.
+ */
+
+void
+gui_buffer_jump_smart (struct t_gui_window *window)
+{
+    int scroll_to_bottom;
+
+    if (!window)
+        return;
+
+    scroll_to_bottom = 0;
+
+    if (gui_hotlist)
+    {
+        if (!gui_hotlist_initial_buffer)
+            gui_hotlist_initial_buffer = window->buffer;
+        gui_window_switch_to_buffer (window, gui_hotlist->buffer, 1);
+        gui_hotlist_remove_buffer (window->buffer, 0);
+        scroll_to_bottom = 1;
+    }
+    else
+    {
+        if (gui_hotlist_initial_buffer)
+        {
+            if (CONFIG_BOOLEAN(config_look_jump_smart_back_to_buffer))
+            {
+                gui_window_switch_to_buffer (window,
+                                             gui_hotlist_initial_buffer, 1);
+                scroll_to_bottom = 1;
+            }
+            gui_hotlist_initial_buffer = NULL;
+        }
+        else
+        {
+            gui_hotlist_initial_buffer = NULL;
+        }
+    }
+
+    /*
+     * scroll to bottom if window was scrolled (except if scrolled
+     * beyond the end)
+     */
+    if (scroll_to_bottom
+        && window->scroll
+        && window->scroll->start_line
+        && (window->scroll->start_line_pos >= 0))
+    {
+        gui_window_scroll_bottom (window);
+    }
+}
+
+/*
+ * Jumps to last buffer displayed (before last jump to a buffer).
+ */
+
+void
+gui_buffer_jump_last_buffer_displayed (struct t_gui_window *window)
+{
+    if (window && gui_buffer_last_displayed)
+    {
+        gui_buffer_switch_by_number (window,
+                                     gui_buffer_last_displayed->number);
+    }
+}
+
+/*
+ * Jumps to a visited buffer by index (called by functions to jump to
+ * previously / next visited buffer).
+ */
+
+void
+gui_buffer_jump_visited_by_index (struct t_gui_window *window, int index)
+{
+    struct t_gui_buffer_visited *ptr_buffer_visited;
+
+    if (!window || (index < 0))
+        return;
+
+    gui_buffers_visited_index = index;
+
+    ptr_buffer_visited =
+        gui_buffer_visited_search_by_number (gui_buffers_visited_index);
+    if (ptr_buffer_visited)
+    {
+        gui_buffers_visited_frozen = 1;
+        gui_buffer_switch_by_number (window,
+                                     ptr_buffer_visited->buffer->number);
+        gui_buffers_visited_frozen = 0;
+    }
+}
+
+/*
+ * Jumps to previously visited buffer (buffer displayed before current one).
+ */
+
+void
+gui_buffer_jump_previously_visited_buffer (struct t_gui_window *window)
+{
+    if (!window)
+        return;
+
+    gui_buffer_jump_visited_by_index (
+        window,
+        gui_buffer_visited_get_index_previous ());
+}
+
+/*
+ * Jumps to next visited buffer (buffer displayed after current one).
+ */
+
+void
+gui_buffer_jump_next_visited_buffer (struct t_gui_window *window)
+{
+    if (!window)
+        return;
+
+    gui_buffer_jump_visited_by_index (
+        window,
+        gui_buffer_visited_get_index_next ());
+}
+
+/*
  * Returns hdata for buffer.
  */
 

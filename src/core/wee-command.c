@@ -1265,6 +1265,23 @@ COMMAND_CALLBACK(buffer)
         return WEECHAT_RC_OK;
     }
 
+    /* jump to another buffer */
+    if (string_strcasecmp (argv[1], "jump") == 0)
+    {
+        COMMAND_MIN_ARGS(3, "jump");
+        if (string_strcasecmp (argv[2], "smart") == 0)
+             gui_buffer_jump_smart (gui_current_window);
+        else if (string_strcasecmp (argv[2], "last_displayed") == 0)
+            gui_buffer_jump_last_buffer_displayed (gui_current_window);
+        else if (string_strcasecmp (argv[2], "prev_visited") == 0)
+            gui_buffer_jump_previously_visited_buffer (gui_current_window);
+        else if (string_strcasecmp (argv[2], "next_visited") == 0)
+            gui_buffer_jump_next_visited_buffer (gui_current_window);
+        else
+            COMMAND_ERROR;
+        return WEECHAT_RC_OK;
+    }
+
     /* relative jump '-' */
     if (argv[1][0] == '-')
     {
@@ -1419,7 +1436,7 @@ COMMAND_CALLBACK(buffer)
                 && (CONFIG_BOOLEAN(config_look_jump_current_to_previous_buffer))
                 && gui_buffers_visited)
             {
-                gui_input_jump_previously_visited_buffer (buffer);
+                gui_buffer_jump_previously_visited_buffer (gui_current_window);
             }
             else
             {
@@ -3338,17 +3355,6 @@ COMMAND_CALLBACK(input)
         gui_input_history_global_previous (buffer);
     else if (string_strcasecmp (argv[1], "history_global_next") == 0)
         gui_input_history_global_next (buffer);
-    else if (string_strcasecmp (argv[1], "jump_smart") == 0)
-        gui_input_jump_smart (buffer);
-    /* not used any more in WeeChat >= 1.0 (replaced by "/buffer +") */
-    else if (string_strcasecmp (argv[1], "jump_last_buffer") == 0)
-        (void) input_data (buffer, "/buffer +", NULL);
-    else if (string_strcasecmp (argv[1], "jump_last_buffer_displayed") == 0)
-        gui_input_jump_last_buffer_displayed (buffer);
-    else if (string_strcasecmp (argv[1], "jump_previously_visited_buffer") == 0)
-        gui_input_jump_previously_visited_buffer (buffer);
-    else if (string_strcasecmp (argv[1], "jump_next_visited_buffer") == 0)
-        gui_input_jump_next_visited_buffer (buffer);
     else if (string_strcasecmp (argv[1], "hotlist_clear") == 0)
         gui_input_hotlist_clear (buffer, (argc > 2) ? argv[2] : NULL);
     else if (string_strcasecmp (argv[1], "hotlist_remove_buffer") == 0)
@@ -3396,7 +3402,28 @@ COMMAND_CALLBACK(input)
     }
     else
     {
-        COMMAND_ERROR;
+        /*
+         * deprecated options kept for compatibility
+         * (they may be removed in future)
+         */
+
+        /* since WeeChat 3.8: "/buffer jump smart" */
+        if (string_strcasecmp (argv[1], "jump_smart") == 0)
+            gui_buffer_jump_smart (gui_current_window);
+        /* since WeeChat 1.0: "/buffer +" */
+        else if (string_strcasecmp (argv[1], "jump_last_buffer") == 0)
+            (void) input_data (buffer, "/buffer +", NULL);
+        /* since WeeChat 3.8: "/buffer jump last_displayed" */
+        else if (string_strcasecmp (argv[1], "jump_last_buffer_displayed") == 0)
+            gui_buffer_jump_last_buffer_displayed (gui_current_window);
+        /* since WeeChat 3.8: "/buffer jump prev_visited" */
+        else if (string_strcasecmp (argv[1], "jump_previously_visited_buffer") == 0)
+            gui_buffer_jump_previously_visited_buffer (gui_current_window);
+        /* since WeeChat 3.8: "/buffer jump next_visited" */
+        else if (string_strcasecmp (argv[1], "jump_next_visited_buffer") == 0)
+            gui_buffer_jump_next_visited_buffer (gui_current_window);
+        else
+            COMMAND_ERROR;
     }
 
     return WEECHAT_RC_OK;
@@ -7460,6 +7487,7 @@ command_init ()
            " || delvar <name>"
            " || set <property> [<value>]"
            " || get <property>"
+           " || jump smart|last_displayed|prev_visited|next_visited"
            " || <number>|-|+|<name>"),
         N_("    list: list buffers (without argument, this list is displayed)\n"
            "     add: add a new buffer (it can be closed with \"/buffer close\" "
@@ -7493,6 +7521,12 @@ command_init ()
            "  delvar: delete a local variable from the current buffer\n"
            "     set: set a property in the current buffer\n"
            "     get: display a property of current buffer\n"
+           "    jump: jump to another buffer:\n"
+           "          smart: next buffer with activity\n"
+           "          last_displayed: last buffer displayed (before last jump "
+           "to a buffer)\n"
+           "          prev_visited: previously visited buffer\n"
+           "          next_visited: jump to next visited buffer\n"
            "  number: jump to buffer by number, possible prefix:\n"
            "          '+': relative jump, add number to current\n"
            "          '-': relative jump, sub number to current\n"
@@ -7551,6 +7585,7 @@ command_init ()
         " || delvar %(buffer_local_variables)"
         " || set %(buffer_properties_set)"
         " || get %(buffer_properties_get)"
+        " || jump smart|last_displayed|prev_visited|next_visited"
         " || %(buffers_plugins_names)|%(buffers_names)|%(irc_channels)|"
         "%(irc_privates)|%(buffers_numbers)|-|-1|+|+1",
         &command_buffer, NULL, NULL);
@@ -8044,11 +8079,6 @@ command_init ()
            "  history_next: recall next command in current buffer history\n"
            "  history_global_previous: recall previous command in global history\n"
            "  history_global_next: recall next command in global history\n"
-           "  jump_smart: jump to next buffer with activity\n"
-           "  jump_last_buffer_displayed: jump to last buffer displayed (before "
-           "last jump to a buffer)\n"
-           "  jump_previously_visited_buffer: jump to previously visited buffer\n"
-           "  jump_next_visited_buffer: jump to next visited buffer\n"
            "  hotlist_clear: clear hotlist (optional argument: \"lowest\" to "
            "clear only lowest level in hotlist, \"highest\" to clear only "
            "highest level in hotlist, or level mask: integer which is a "
@@ -8076,25 +8106,30 @@ command_init ()
            "  paste_stop: stop paste (bracketed paste mode)\n"
            "\n"
            "This command is used by key bindings or plugins."),
-        "return || complete_next || complete_previous || search_text_here || "
+        "return || "
+        "complete_next || complete_previous || search_text_here || "
         "search_text || search_switch_case || search_switch_regex || "
         "search_switch_where || search_previous || search_next || "
-        "search_stop_here || search_stop || delete_previous_char || "
-        "delete_next_char || delete_previous_word || "
+        "search_stop_here || search_stop || "
+        "delete_previous_char || delete_next_char || delete_previous_word || "
         "delete_previous_word_whitespace || delete_next_word || "
         "delete_beginning_of_line || delete_end_of_line || delete_line || "
-        "clipboard_paste || transpose_chars || undo || redo || "
+        "clipboard_paste || "
+        "transpose_chars || "
+        "undo || redo || "
         "move_beginning_of_line || move_end_of_line || move_previous_char || "
         "move_next_char || move_previous_word || move_next_word || "
         "history_previous || history_next || history_global_previous || "
-        "history_global_next || jump_smart || jump_last_buffer_displayed || "
-        "jump_previously_visited_buffer || jump_next_visited_buffer || "
+        "history_global_next || "
         "hotlist_clear 1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|lowest|highest || "
         "hotlist_remove_buffer || hotlist_restore_buffer || "
-        "hotlist_restore_all || grab_key || grab_key_command || grab_mouse || "
-        "grab_mouse_area || set_unread || set_unread_current_buffer || "
+        "hotlist_restore_all || "
+        "grab_key || grab_key_command || grab_mouse || grab_mouse_area || "
+        "set_unread || set_unread_current_buffer || "
         "switch_active_buffer || switch_active_buffer_previous || "
-        "zoom_merged_buffer || insert || send || paste_start || paste_stop",
+        "zoom_merged_buffer || "
+        "insert || send || "
+        "paste_start || paste_stop",
         &command_input, NULL, NULL);
     hook_command (
         NULL, "item",

@@ -1188,66 +1188,72 @@ Beispiele:
          delvar <name>
          set <property> [<value>]
          get <property>
+         jump smart|last_displayed|prev_visited|next_visited
          <number>|-|+|<name>
 
-    list: alle geöffneten Buffer werden aufgelistet (ohne Angabe von Argumente wird diese Liste standardmäßig ausgegeben)
-     add: öffnet einen neuen Buffer (dieser kann mit "/buffer close" oder "q" in der Eingabezeile, beendet werden)
-   clear: leert den Inhalt des Buffers (entweder durch Angabe der entsprechenden Nummer des Buffers oder "-merged " für zusammengefügte Buffer oder "-all" für alle Buffer. Ohne Angabe eines Arguments wird der aktuelle Buffer gelöscht)
-    move: Buffer in der Liste verschieben (kann auch relativ sein, z.B. -1); "-" = auf erste Position verschieben, "+" = auf letzte Position + 1 verschieben
-    swap: tauscht zwei Buffer miteinander aus (bei Angabe von nur einem Buffer (Buffernummer/-name), wird der aktuelle Buffer mit dem angegebenen Buffer getauscht)
-   cycle: springt in einer Schleife von einem Buffer zum nächsten, die in einer Liste angegeben werden
-   merge: fügt den aktuellen Buffer mit einem anderen Buffer zusammen (bei einem Chat-Buffer werden zwei Buffer zusammengefügt
-         (Bei der Standardtastenbelegung wird mittels "CTRL-x" zwischen zusammengefügten Buffern umgeschaltet)
- unmerge: trennt Buffer wieder voneinander, falls zwei Buffer die selbe Nummer teilen
-    hide: versteckt einen Buffer
-  unhide: macht Buffer wieder sichtbar
-renumber: Buffer werden umnummeriert (Einstellung weechat.look.buffer_auto_renumber muss deaktiviert sein)
-   close: Buffer schließen (Nummer oder Bereich ist optional)
-  notify: Benachrichtigungsstufe für den aktuellen Buffer anzeigen oder einstellen. Folgende Möglichkeiten bestimmen den Grad der Benachrichtigung und ob der Buffer in der Hotlist angezeigt wird:
-            none: keine Benachrichtigung
-       highlight: Benachrichtigung bei hervorgehobenen Nachrichten (Highlights)
-         message: Benachrichtigung bei Nachrichten von Usern + Highlights
-             all: Benachrichtigung bei allen Nachrichten
-           reset: Benachrichtigung auf Standardwert zurück setzen (all)
- listvar: zeigt die lokalen Variablen für den aktuellen Buffer an
-  setvar: legt eine lokale Variable für den aktuellen Buffer an
-  delvar: löscht eine lokale Variable des aktuellen Buffers
-     set: setzt eine Eigenschaft für den aktuellen Buffer
-     get: zeigt eine Eigenschaft für den aktuellen Buffer an
-  number: wechselt von einem Buffer zu einem anderen, mögliche Optionen:
-          '+': relativer Sprung um 'n'-Buffer
-          '-': relativer Sprung, um 'n'-Buffer
-          '*': wechselt zum Buffer mit der Nummer 'n'; nutzt die interne Einstellung "weechat.look.jump_current_to_previous_buffer"
-       -: springt zum ersten Buffer
-       +: springt zum letzten Buffer
-    name: wechselt zum Buffer mit dem angegebenen Namen (Name muss nicht vollständig sein!)
+    list: list buffers (without argument, this list is displayed)
+     add: add a new buffer (it can be closed with "/buffer close" or input "q")
+   clear: clear buffer content (number for a buffer, -merged for merged buffers, -all for all buffers, or nothing for current buffer)
+    move: move buffer in the list (may be relative, for example -1); "-" = move to first buffer number, "+" = move to last buffer number + 1
+    swap: swap two buffers (swap with current buffer if only one number/name given)
+   cycle: jump loop between a list of buffers
+   merge: merge current buffer to another buffer (chat area will be mix of both buffers)
+          (by default ctrl-x switches between merged buffers)
+ unmerge: unmerge buffer from other buffers which have same number
+    hide: hide the buffer
+  unhide: unhide the buffer
+renumber: renumber buffers (works only if option weechat.look.buffer_auto_renumber is off)
+   close: close buffer (number/range or name is optional)
+  notify: display or set notify level for current buffer: this level determines whether buffer will be added to hotlist or not:
+               none: never
+          highlight: for highlights only
+            message: for messages from users + highlights
+                all: all messages
+              reset: reset to default value (all)
+ listvar: display local variables in a buffer
+  setvar: set a local variable in the current buffer
+  delvar: delete a local variable from the current buffer
+     set: set a property in the current buffer
+     get: display a property of current buffer
+    jump: jump to another buffer:
+          smart: next buffer with activity
+          last_displayed: last buffer displayed (before last jump to a buffer)
+          prev_visited: previously visited buffer
+          next_visited: jump to next visited buffer
+  number: jump to buffer by number, possible prefix:
+          '+': relative jump, add number to current
+          '-': relative jump, sub number to current
+          '*': jump to number, using option "weechat.look.jump_current_to_previous_buffer"
+       -: jump to first buffer number
+       +: jump to last buffer number
+    name: jump to buffer by (partial) name
 
-Beispiele:
-  leert den aktuellen Buffer:
+Examples:
+  clear current buffer:
     /buffer clear
-  verschiebt Buffer auf Position 5:
+  move buffer to number 5:
     /buffer move 5
-  tauscht Buffer 1 und 3:
+  swap buffer 1 with 3:
     /buffer swap 1 3
-  tauscht Buffer #weechat und den aktuellen Buffer:
+  swap buffer #weechat with current buffer:
     /buffer swap #weechat
-  springt in einer Schleife zu den Buffern #chan1, #chan2, #chan3:
+  jump on #chan1, #chan2, #chan3 and loop:
     /buffer cycle #chan1 #chan2 #chan3
-  verbindet Buffer mit dem Core-Buffer:
+  merge with core buffer:
     /buffer merge 1
-  verbindet Buffer mit #weechat buffer:
+  merge with #weechat buffer:
     /buffer merge #weechat
-  trennt Buffer voneinander:
+  unmerge buffer:
     /buffer unmerge
-  schließt aktuellen Buffer:
+  close current buffer:
     /buffer close
-  schließt Buffer 5 bis 7:
+  close buffers 5 to 7:
     /buffer close 5-7
-  springt zum Buffer: #weechat:
+  jump to #weechat:
     /buffer #weechat
-  springt zum nächsten Buffer:
+  jump to next buffer:
     /buffer +1
-  springt zum letzten Buffer:
+  jump to last buffer number:
     /buffer +
 ----
 
@@ -1609,64 +1615,60 @@ value: Anzahl der gewünschten Einträgen im Befehlsverlauf anzeigen
 ----
 /input  <action> [<arguments>]
 
-Auflistung der möglichen Aktionen:
-  return: simuliert die "enter" Taste
-  complete_next: vervollständigt Wort mit nächster Komplettierung
-  complete_previous: vervollständigt Word mit vorheriger Komplettierung
-  search_text_here: Textsuche ab aktueller Position
-  search_text: Textsuche im Buffer
-  search_switch_case: schaltet Groß-/Kleinschreibung ein und aus
-  search_switch_regex: Wechsel des Suchmodus: einfache Textsuche/reguläre Ausdrücke
-  search_switch_where: wechselt Suche in Nachricht/Präfix
-  search_previous: sucht vorheriger Zeile
-  search_next: sucht nächste Zeile
-  search_stop_here: beendet Suche ab aktueller Position
-  search_stop: suche beenden
-  delete_previous_char: entfernt vorheriges Zeichen
-  delete_next_char: entfernt nächstes Zeichen
-  delete_previous_word: entfernt vorheriges Wort
-  delete_previous_word_whitespace: vorheriges Wort löschen (bis zum Leerzeichen)
-  delete_next_word: entfernt nächstes Wort
-  delete_beginning_of_line: entfernt alle Zeichen ab Zeilenanfang bis zum Cursor
-  delete_end_of_line: entfernt alle Zeichen ab Cursor bis zum Ende der Zeile
-  delete_line: löscht die komplette Eingabezeile
-  clipboard_paste: fügt Zeichenkette aus der internen Zwischenablage ein
-  transpose_chars: Zeichen austauschen
-  undo: letzten Befehl in der Eingabezeile rückgängig machen
-  redo: letzten Befehl in der Eingabezeile wiederherstellen
-  move_beginning_of_line: springt an den Anfang der Eingabezeile
-  move_end_of_line: springt ans Ende der Eingabezeile
-  move_previous_char: setzt den Cursor eine Position nach links
-  move_next_char: setzt den Cursor eine Position nach rechts
-  move_previous_word: springt zum Anfang des vorherigen Wortes, in der Eingabezeile
-  move_next_word: springt zum Anfang des nächsten Wortes, in der Eingabezeile
-  history_previous: ruft vorherigen Befehl oder Nachricht aus dem Befehlsspeicher auf (im Such-Modus: rückwärts suchen)
-  history_next: ruft nächsten Befehl oder Nachricht aus dem Befehlsspeicher auf (im Such-Modus: vorwärts suchen)
-  history_global_previous: ruft vorherigen Befehl/Nachricht aus dem globalen Befehlsspeicher auf (für alle Buffer)
-  history_global_next: ruft nächsten Befehl/Nachricht aus dem globalen Befehlsspeicher auf (für alle Buffer)
-  jump_smart: wechselt zum nächsten Buffer mit Aktivität (nach Priorität: highlight, Nachricht, …)
-  jump_last_buffer_displayed: wechselt zum jeweils zuletzt angezeigten Buffer
-  jump_previously_visited_buffer: springt zum letzten besuchten Buffer
-  jump_next_visited_buffer: springt zum nächsten besuchten Buffer
-  hotlist_clear: löscht Hotlist (Aktivitätsanzeige für die Buffer), (optionales Argument: "lowest" löscht den niedrigsten Eintrag der Hotlist, "highest" löscht den höchsten Eintrag der Hotlist, oder eine integer Maske: eine Kombination aus 1=join/part, 2=Nachricht,4=privat,8=highlight)
-  hotlist_remove_buffer: entferne aktuellen Buffer von der Hotlist
-  hotlist_restore_buffer: Wiederherstellen der neuesten Hotlist, die im aktuellen Buffer entfernt wurde
-  hotlist_restore_all: Wiederherstellen der neuesten Hotlist, die in allen Buffern entfernt wurde
-  grab_key: fängt eine Taste (optionales Argument: Verzögerung um eine Taste einzufangen. Standard sind 500 Millisekunden)
-  grab_key_command: zeigt den Tastencode (inklusive des eingebundenen Befehls) einer Tastenkombination an und fügt ihn in die Befehlszeile ein (optionales Argument: Verzögerung um eine Taste einzufangen. Standard sind 500 Millisekunden)
-  grab_mouse: fängt den Code einer Maus Aktivität
-  grab_mouse_area: fängt den Code einer Maus Aktivität mit entsprechendem Bereich
-  set_unread: setzt für alle Buffer die Markierung der ungelesen Nachrichten
-  set_unread_current_buffer: setzt nur für den aktuellen Buffer eine Markierung der ungelesen Nachrichten
-  switch_active_buffer: springt zum nächsten zusammengefügten Buffer
-  switch_active_buffer_previous: springt zum vorherigen zusammengefügten Buffer
-  zoom_merged_buffer: zoomt in zusammengefügte Buffer
-  insert: fügt einen Text in die Eingabezeile ein (Escapesequenzen sind möglich, siehe /help print)
-  send: schickt Text an einen Buffer
-  paste_start: Einfügen wird gestartet (bracketed paste mode)
-  paste_stop: Einfügen wird beendet (bracketed paste mode)
+list of actions:
+  return: simulate key "enter"
+  complete_next: complete word with next completion
+  complete_previous: complete word with previous completion
+  search_text_here: search text in buffer at current position
+  search_text: search text in buffer
+  search_switch_case: switch exact case for search
+  search_switch_regex: switch search type: string/regular expression
+  search_switch_where: switch search in messages/prefixes
+  search_previous: search previous line
+  search_next: search next line
+  search_stop_here: stop search at current position
+  search_stop: stop search
+  delete_previous_char: delete previous char
+  delete_next_char: delete next char
+  delete_previous_word: delete previous word
+  delete_previous_word_whitespace: delete previous word (until whitespace)
+  delete_next_word: delete next word
+  delete_beginning_of_line: delete from beginning of line until cursor
+  delete_end_of_line: delete from cursor until end of line
+  delete_line: delete entire line
+  clipboard_paste: paste from the internal clipboard
+  transpose_chars: transpose two chars
+  undo: undo last command line action
+  redo: redo last command line action
+  move_beginning_of_line: move cursor to beginning of line
+  move_end_of_line: move cursor to end of line
+  move_previous_char: move cursor to previous char
+  move_next_char: move cursor to next char
+  move_previous_word: move cursor to previous word
+  move_next_word: move cursor to next word
+  history_previous: recall previous command in current buffer history
+  history_next: recall next command in current buffer history
+  history_global_previous: recall previous command in global history
+  history_global_next: recall next command in global history
+  hotlist_clear: clear hotlist (optional argument: "lowest" to clear only lowest level in hotlist, "highest" to clear only highest level in hotlist, or level mask: integer which is a combination of 1=join/part, 2=message, 4=private, 8=highlight)
+  hotlist_remove_buffer: remove current buffer from hotlist
+  hotlist_restore_buffer: restore latest hotlist removed in the current buffer
+  hotlist_restore_all: restore latest hotlist removed in all buffers
+  grab_key: grab a key (optional argument: delay for end of grab, default is 500 milliseconds)
+  grab_key_command: grab a key with its associated command (optional argument: delay for end of grab, default is 500 milliseconds)
+  grab_mouse: grab mouse event code
+  grab_mouse_area: grab mouse event code with area
+  set_unread: set unread marker for all buffers
+  set_unread_current_buffer: set unread marker for current buffer
+  switch_active_buffer: switch to next merged buffer
+  switch_active_buffer_previous: switch to previous merged buffer
+  zoom_merged_buffer: zoom on merged buffer
+  insert: insert text in command line (escaped chars are allowed, see /help print)
+  send: send text to the buffer
+  paste_start: start paste (bracketed paste mode)
+  paste_stop: stop paste (bracketed paste mode)
 
-Dieser Befehl wird sinnvollerweise mittels Tastenbelegungen oder Erweiterungen genutzt.
+This command is used by key bindings or plugins.
 ----
 
 [[command_weechat_item]]

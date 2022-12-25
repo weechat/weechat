@@ -1595,9 +1595,9 @@ They can be changed and new ones can be added with the <<command_weechat_key,/ke
 | kbd:[Alt+n]                    | Scroll to next highlight. | `+/window scroll_next_highlight+`
 | kbd:[Alt+p]                    | Scroll to previous highlight. | `+/window scroll_previous_highlight+`
 | kbd:[Alt+u]                    | Scroll to first unread line in buffer. | `+/window scroll_unread+`
-| kbd:[Alt+<]                    | Switch to previous buffer in list of visited buffers. | `+/input jump_previously_visited_buffer+`
-| kbd:[Alt+>]                    | Switch to next buffer in list of visited buffers. | `+/input jump_next_visited_buffer+`
-| kbd:[Alt+/]                    | Switch to last buffer displayed (before last jump to a buffer). | `+/input jump_last_buffer_displayed+`
+| kbd:[Alt+<]                    | Switch to previous buffer in list of visited buffers. | `+/buffer jump prev_visited+`
+| kbd:[Alt+>]                    | Switch to next buffer in list of visited buffers. | `+/buffer jump next_visited+`
+| kbd:[Alt+/]                    | Switch to last buffer displayed (before last jump to a buffer). | `+/buffer jump last_displayed+`
 |===
 
 [[key_bindings_windows]]
@@ -1649,7 +1649,7 @@ They can be changed and new ones can be added with the <<command_weechat_key,/ke
 [width="100%",cols="^.^3,.^8,.^5",options="header"]
 |===
 | Key                            | Description | Command
-| kbd:[Alt+a]                    | Switch to next buffer with activity (with priority: highlight, message, other). | `+/input jump_smart+`
+| kbd:[Alt+a]                    | Switch to next buffer with activity (with priority: highlight, message, other). | `+/buffer jump smart+`
 | kbd:[Alt+h], kbd:[Alt+c]       | Clear hotlist (activity notification on buffers). | `+/input hotlist_clear+`
 | kbd:[Alt+h], kbd:[Alt+m]       | Remove current buffer from hotlist. | `+/input hotlist_remove_buffer+`
 | kbd:[Alt+h], kbd:[Alt+r]       | Restore latest hotlist removed in the current buffer. | `+/input hotlist_restore_buffer+`
@@ -1730,7 +1730,7 @@ These mouse actions are possible only if mouse is enabled with key kbd:[Alt+m]
 | ◾◽◽                | left         | chat                | Switch to previous buffer. | `+/window ${_window_number};/buffer +1+`
 | ◾◽◽                | right        | chat                | Switch to next buffer. | `+/window ${_window_number};/buffer +1+`
 | ◾◽◽                | left (long)  | chat                | Switch to first buffer. | `+/window ${_window_number};/buffer 1+`
-| ◾◽◽                | right (long) | chat                | Switch to last buffer. | `+/window ${_window_number};/input jump_last_buffer+`
+| ◾◽◽                | right (long) | chat                | Switch to last buffer. | `+/window ${_window_number};/buffer ++`
 | kbd:[▲]            | -            | chat                | Scroll up a few lines in buffer history. | `+/window scroll_up -window ${_window_number}+`
 | kbd:[▼]            | -            | chat                | Scroll down a few lines in buffer history. | `+/window scroll_down -window ${_window_number}+`
 | kbd:[Ctrl+▲]       | -            | chat                | Scroll horizontally to the left. | `+/window scroll_horiz -window ${_window_number} -10%+`

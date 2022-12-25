@@ -20,6 +20,27 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 [[v3.8]]
 == Version 3.8 (under dev)
 
+[[v3.8_command_input_options]]
+=== Options in command /input
+
+Some options of `/input` command have been moved to other commands (they can
+still be used with `/input` but marked as deprecated and completion doesn't
+work any more):
+
+* `/input jump_smart` -> `/buffer jump smart`
+* `/input jump_previously_visited_buffer` -> `/buffer jump prev_visited`
+* `/input jump_next_visited_buffer` -> `/buffer jump next_visited`
+* `/input jump_last_buffer_displayed` -> `/buffer jump last_displayed`
+
+The following default keys can be reset to use the new command:
+
+----
+/key reset meta-a
+/key reset meta-<
+/key reset meta->
+/key reset meta-/
+----
+
 [[v3.8_return_code_string_comparison_functions]]
 === Return code of string comparison functions
 

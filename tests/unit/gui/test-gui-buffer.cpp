@@ -1389,6 +1389,56 @@ TEST(GuiBuffer, VisitedGetIndexNext)
 
 /*
  * Tests functions:
+ *   gui_buffer_jump_smart
+ */
+
+TEST(GuiBuffer, JumpSmart)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   gui_buffer_jump_last_buffer_displayed
+ */
+
+TEST(GuiBuffer, JumpLastBufferDisplayed)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   gui_buffer_jump_visited_by_index
+ */
+
+TEST(GuiBuffer, JumpVisitedByIndex)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   gui_buffer_jump_previously_visited_buffer
+ */
+
+TEST(GuiBuffer, JumpPreviouslyVisitedBuffer)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   gui_buffer_jump_next_visited_buffer
+ */
+
+TEST(GuiBuffer, JumpNextVisitedBuffer)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
  *   gui_buffer_hdata_buffer_cb
  */
 

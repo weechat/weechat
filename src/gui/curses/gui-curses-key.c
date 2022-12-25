@@ -133,7 +133,7 @@ gui_key_default_bindings (int context)
         BIND(/* ^<down>       */ "meta-Ob",            "/input history_global_next");
         BIND(/* ^<down>       */ "meta-OB",            "/input history_global_next");
         BIND(/* ^<down>       */ "meta2-1;5B",         "/input history_global_next");
-        BIND(/* m-a           */ "meta-a",             "/input jump_smart");
+        BIND(/* m-a           */ "meta-a",             "/buffer jump smart");
         BIND(/* m-j,m-f       */ "meta-jmeta-f",       "/buffer -");
         BIND(/* m-j,m-l       */ "meta-jmeta-l",       "/buffer +");
         BIND(/* m-j,m-r       */ "meta-jmeta-r",       "/server raw");
@@ -220,9 +220,9 @@ gui_key_default_bindings (int context)
         BIND(/* m-7           */ "meta-7",             "/buffer *7");
         BIND(/* m-8           */ "meta-8",             "/buffer *8");
         BIND(/* m-9           */ "meta-9",             "/buffer *9");
-        BIND(/* m-<           */ "meta-<",             "/input jump_previously_visited_buffer");
-        BIND(/* m->           */ "meta->",             "/input jump_next_visited_buffer");
-        BIND(/* m-/           */ "meta-/",             "/input jump_last_buffer_displayed");
+        BIND(/* m-<           */ "meta-<",             "/buffer jump prev_visited");
+        BIND(/* m->           */ "meta->",             "/buffer jump next_visited");
+        BIND(/* m-/           */ "meta-/",             "/buffer jump last_displayed");
         BIND(/* m-l           */ "meta-l",             "/window bare");
         BIND(/* m-m           */ "meta-m",             "/mute mouse toggle");
         BIND(/* start paste   */ "meta2-200~",         "/input paste_start");
@@ -282,7 +282,7 @@ gui_key_default_bindings (int context)
         BIND("@chat:button1-gesture-left",       "/window ${_window_number};/buffer -1");
         BIND("@chat:button1-gesture-right",      "/window ${_window_number};/buffer +1");
         BIND("@chat:button1-gesture-left-long",  "/window ${_window_number};/buffer 1");
-        BIND("@chat:button1-gesture-right-long", "/window ${_window_number};/input jump_last_buffer");
+        BIND("@chat:button1-gesture-right-long", "/window ${_window_number};/buffer +");
         BIND("@chat:wheelup",                    "/window scroll_up -window ${_window_number}");
         BIND("@chat:wheeldown",                  "/window scroll_down -window ${_window_number}");
         BIND("@chat:ctrl-wheelup",               "/window scroll_horiz -window ${_window_number} -10%");

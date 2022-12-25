@@ -1505,9 +1505,9 @@ WeeChat нуди доста подразумеваних тастерских п
 | kbd:[Alt+n]                    | Скроловање до наредног истицања. | `+/window scroll_next_highlight+`
 | kbd:[Alt+p]                    | Скроловање на претходно истицање. | `+/window scroll_previous_highlight+`
 | kbd:[Alt+u]                    | Скроловање на прву непрочитану линију у баферу. | `+/window scroll_unread+`
-| kbd:[Alt+<]                    | Прелаз на претходни бафер у листи посећених бафера. | `+/input jump_previously_visited_buffer+`
-| kbd:[Alt+>]                    | Прелаз на наредни бафер у листи посећених бафера. | `+/input jump_next_visited_buffer+`
-| kbd:[Alt+/]                    | Прелаз на последње приказани бафер. | `+/input jump_last_buffer_displayed+`
+| kbd:[Alt+<]                    | Прелаз на претходни бафер у листи посећених бафера. | `+/buffer jump prev_visited+`
+| kbd:[Alt+>]                    | Прелаз на наредни бафер у листи посећених бафера. | `+/buffer jump next_visited+`
+| kbd:[Alt+/]                    | Прелаз на последње приказани бафер. | `+/buffer jump last_displayed+`
 |===
 
 [[key_bindings_windows]]
@@ -1559,7 +1559,7 @@ WeeChat нуди доста подразумеваних тастерских п
 [width="100%", cols="^.^3,.^8,.^5", options="header"]
 |===
 | Тастер                         | Опис | Команда
-| kbd:[Alt+a]                    | Пребацивање на следећи бафер у коме има активности (са приоритетом: истицање, порука, остало). | `+/input jump_smart+`
+| kbd:[Alt+a]                    | Пребацивање на следећи бафер у коме има активности (са приоритетом: истицање, порука, остало). | `+/buffer jump smart+`
 | kbd:[Alt+h], kbd:[Alt+c]       | Брисање вруће листе (обавештења о активности у баферима). | `+/input hotlist_clear+`
 | kbd:[Alt+h], kbd:[Alt+m]       | Уклањање текућег бафера из вруће листе. | `+/input hotlist_remove_buffer+`
 | kbd:[Alt+h], kbd:[Alt+r]       | Враћање најновије вруће листе уклоњене из текућег бафера. | `+/input hotlist_restore_buffer+`
@@ -1639,7 +1639,7 @@ WeeChat нуди доста подразумеваних тастерских п
 | ◾◽◽                 | лево         | чет                | Пребацивање на претходни бафер. | `+/window ${_window_number};/buffer +1+`
 | ◾◽◽                 | десно        | чет                | Пребацивање на наредни бафер. | `+/window ${_window_number};/buffer +1+`
 | ◾◽◽                 | лево (дуго)  | чет                | Пребацивање на први бафер. | `+/window ${_window_number};/buffer 1+`
-| ◾◽◽                 | десно (дуго) | чет                | Пребацивање на последњи бафер. | `+/window ${_window_number};/input jump_last_buffer+`
+| ◾◽◽                 | десно (дуго) | чет                | Пребацивање на последњи бафер. | `+/window ${_window_number};/buffer ++`
 | kbd:[▲]             | -            | чет                | Скролује навише неколико линија у историји бафера. | `+/window scroll_up -window ${_window_number}+`
 | kbd:[▼]             | -            | чет                | Скролује наниже неколико линија у историји бафера. | `+/window scroll_down -window ${_window_number}+`
 | kbd:[Ctrl+▲]        | -            | чет                | Скролује хоризонтално у лево. | `+/window scroll_horiz -window ${_window_number} -10%+`

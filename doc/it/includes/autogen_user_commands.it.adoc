@@ -1188,6 +1188,7 @@ Examples:
          delvar <name>
          set <property> [<value>]
          get <property>
+         jump smart|last_displayed|prev_visited|next_visited
          <number>|-|+|<name>
 
     list: list buffers (without argument, this list is displayed)
@@ -1214,6 +1215,11 @@ renumber: renumber buffers (works only if option weechat.look.buffer_auto_renumb
   delvar: delete a local variable from the current buffer
      set: set a property in the current buffer
      get: display a property of current buffer
+    jump: jump to another buffer:
+          smart: next buffer with activity
+          last_displayed: last buffer displayed (before last jump to a buffer)
+          prev_visited: previously visited buffer
+          next_visited: jump to next visited buffer
   number: jump to buffer by number, possible prefix:
           '+': relative jump, add number to current
           '-': relative jump, sub number to current
@@ -1644,10 +1650,6 @@ list of actions:
   history_next: recall next command in current buffer history
   history_global_previous: recall previous command in global history
   history_global_next: recall next command in global history
-  jump_smart: jump to next buffer with activity
-  jump_last_buffer_displayed: jump to last buffer displayed (before last jump to a buffer)
-  jump_previously_visited_buffer: jump to previously visited buffer
-  jump_next_visited_buffer: jump to next visited buffer
   hotlist_clear: clear hotlist (optional argument: "lowest" to clear only lowest level in hotlist, "highest" to clear only highest level in hotlist, or level mask: integer which is a combination of 1=join/part, 2=message, 4=private, 8=highlight)
   hotlist_remove_buffer: remove current buffer from hotlist
   hotlist_restore_buffer: restore latest hotlist removed in the current buffer

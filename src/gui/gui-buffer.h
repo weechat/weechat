@@ -385,6 +385,10 @@ extern void gui_buffer_visited_remove_by_buffer (struct t_gui_buffer *buffer);
 extern struct t_gui_buffer_visited *gui_buffer_visited_add (struct t_gui_buffer *buffer);
 extern int gui_buffer_visited_get_index_previous ();
 extern int gui_buffer_visited_get_index_next ();
+extern void gui_buffer_jump_smart (struct t_gui_window *window);
+extern void gui_buffer_jump_last_buffer_displayed (struct t_gui_window *window);
+extern void gui_buffer_jump_previously_visited_buffer (struct t_gui_window *window);
+extern void gui_buffer_jump_next_visited_buffer (struct t_gui_window *window);
 extern struct t_hdata *gui_buffer_hdata_buffer_cb (const void *pointer,
                                                    void *data,
                                                    const char *hdata_name);

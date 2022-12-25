@@ -1612,9 +1612,9 @@ Sie können mit dem Befehl <<command_weechat_key,/key>> geändert und neue hinzu
 | kbd:[Alt+n]                    | springt zur nächsten Highlight Nachricht. | `+/window scroll_next_highlight+`
 | kbd:[Alt+p]                    | springt zur vorherigen Highlight Nachricht. | `+/window scroll_previous_highlight+`
 | kbd:[Alt+u]                    | springt zur ersten ungelesenen Zeile im Buffer. | `+/window scroll_unread+`
-| kbd:[Alt+<]                    | springt zum letzten besuchten Buffer. | `+/input jump_previously_visited_buffer+`
-| kbd:[Alt+>]                    | springt zum nächsten besuchten Buffer. | `+/input jump_next_visited_buffer+`
-| kbd:[Alt+/]                    | wechselt zum jeweils zuletzt angezeigten Buffern. | `+/input jump_last_buffer_displayed+`
+| kbd:[Alt+<]                    | springt zum letzten besuchten Buffer. | `+/buffer jump prev_visited+`
+| kbd:[Alt+>]                    | springt zum nächsten besuchten Buffer. | `+/buffer jump next_visited+`
+| kbd:[Alt+/]                    | wechselt zum jeweils zuletzt angezeigten Buffern. | `+/buffer jump last_displayed+`
 |===
 
 [[key_bindings_windows]]
@@ -1666,7 +1666,7 @@ Sie können mit dem Befehl <<command_weechat_key,/key>> geändert und neue hinzu
 [width="100%",cols="^.^3,.^8,.^5",options="header"]
 |===
 | Taste                          | Beschreibung | Befehl
-| kbd:[Alt+a]                    | wechselt zum nächsten Buffer mit Aktivität (nach Priorität: highlight, Nachricht, ...). | `+/input jump_smart+`
+| kbd:[Alt+a]                    | wechselt zum nächsten Buffer mit Aktivität (nach Priorität: highlight, Nachricht, ...). | `+/buffer jump smart+`
 | kbd:[Alt+h], kbd:[Alt+c]       | Hotlist löschen (Aktivitätsbenachrichtigung bei Buffern). | `+/input hotlist_clear+`
 | kbd:[Alt+h], kbd:[Alt+m]       | Aktuellen Puffer aus Hotlist entfernen. | `+/input hotlist_remove_buffer+`
 | kbd:[Alt+h], kbd:[Alt+r]       | stelle die letzte aus dem aktuellen Buffer entfernte Hotlist wieder her. | `+/input hotlist_restore_buffer+`
@@ -1747,7 +1747,7 @@ wurde (Befehl: `+/mouse toggle+`).
 | ◾◽◽                     | links        | Chat                | zum vorherigen Buffer springen. | `+/window ${_window_number};/buffer +1+`
 | ◾◽◽                     | rechts       | Chat                | zum nächsten Buffer springen. | `+/window ${_window_number};/buffer +1+`
 | ◾◽◽                     | links(lang)  | Chat                | wechselt zum ersten Buffer. | `+/window ${_window_number};/buffer 1+`
-| ◾◽◽                     | rechts(lang) | Chat                | wechselt zum letzten Buffer. | `+/window ${_window_number};/input jump_last_buffer+`
+| ◾◽◽                     | rechts(lang) | Chat                | wechselt zum letzten Buffer. | `+/window ${_window_number};/buffer ++`
 | kbd:[▲]                 | -            | Chat                | mehrere Zeilen im Verlaufsspeicher des Buffer nach oben blättern. | `+/window scroll_up -window ${_window_number}+`
 | kbd:[▼]                 | -            | Chat                | mehrere Zeilen im Verlaufsspeicher des Buffer nach unten blättern. | `+/window scroll_down -window ${_window_number}+`
 | kbd:[Ctrl+▲]            | -            | Chat                | horizontal, nach links scrollen. | `+/window scroll_horiz -window ${_window_number} -10%+`

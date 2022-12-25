@@ -1736,9 +1736,9 @@ They can be changed and new ones can be added with the <<command_weechat_key,/ke
 | kbd:[Alt+n]                    | Scorre fino alla notifica successiva. | `+/window scroll_next_highlight+`
 | kbd:[Alt+p]                    | Scorre fino alla notifica precedente. | `+/window scroll_previous_highlight+`
 | kbd:[Alt+u]                    | Scorre fino alla prima riga non letta nel buffer. | `+/window scroll_unread+`
-| kbd:[Alt+<]                    | Passa al buffer precedente nella lista dei buffer visitati. | `+/input jump_previously_visited_buffer+`
-| kbd:[Alt+>]                    | Passa al buffer successivo nella lista dei buffer visitati. | `+/input jump_next_visited_buffer+`
-| kbd:[Alt+/]                    | Passa all'ultimo buffer mostrato (prima dell'ultimo passaggio ad un buffer). | `+/input jump_last_buffer_displayed+`
+| kbd:[Alt+<]                    | Passa al buffer precedente nella lista dei buffer visitati. | `+/buffer jump prev_visited+`
+| kbd:[Alt+>]                    | Passa al buffer successivo nella lista dei buffer visitati. | `+/buffer jump next_visited+`
+| kbd:[Alt+/]                    | Passa all'ultimo buffer mostrato (prima dell'ultimo passaggio ad un buffer). | `+/buffer jump last_displayed+`
 |===
 
 // TRANSLATION MISSING
@@ -1798,7 +1798,7 @@ They can be changed and new ones can be added with the <<command_weechat_key,/ke
 [width="100%",cols="^.^3,.^8,.^5",options="header"]
 |===
 | Tasti                          | Descrizione | Comando
-| kbd:[Alt+a]                    | Passa al buffer successivo con attività (con priorità: highligh, messagge, altro). | `+/input jump_smart+`
+| kbd:[Alt+a]                    | Passa al buffer successivo con attività (con priorità: highligh, messagge, altro). | `+/buffer jump smart+`
 // TRANSLATION MISSING
 | kbd:[Alt+h], kbd:[Alt+c]       | Clear hotlist (activity notification on buffers). | `+/input hotlist_clear+`
 // TRANSLATION MISSING
@@ -1897,7 +1897,7 @@ These mouse actions are possible only if mouse is enabled with key kbd:[Alt+m]
 | ◾◽◽               | sinistra         | chat                | Passa al buffer precedente. | `+/window ${_window_number};/buffer +1+`
 | ◾◽◽               | destra           | chat                | Passa al buffer successivo. | `+/window ${_window_number};/buffer +1+`
 | ◾◽◽               | sinistra (lungo) | chat                | Switch to first buffer. | `+/window ${_window_number};/buffer 1+`
-| ◾◽◽               | destra (lungo)   | chat                | Passa all'ultimo buffer. | `+/window ${_window_number};/input jump_last_buffer+`
+| ◾◽◽               | destra (lungo)   | chat                | Passa all'ultimo buffer. | `+/window ${_window_number};/buffer ++`
 | kbd:[▲]           | -                | chat                | Scorre di qualche riga in alto nella cronologia del buffer. | `+/window scroll_up -window ${_window_number}+`
 | kbd:[▼]           | -                | chat                | Scorre di qualche riga in basso nella cronologia del buffer. | `+/window scroll_down -window ${_window_number}+`
 | kbd:[Ctrl+▲]      | -                | chat                | Scroll horizontally to the left. | `+/window scroll_horiz -window ${_window_number} -10%+`
