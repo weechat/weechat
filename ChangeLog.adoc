@@ -20,6 +20,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 New features::
 
+  * core: allow value "0" in buffer property "unread" to remove read marker from buffer
   * core: add command `/allbuf`
   * core: add command `/hotlist`
   * core: move some `/input` actions to commands `/allbuf`, `/buffer` and `/hotlist`

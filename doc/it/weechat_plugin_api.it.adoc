@@ -14427,8 +14427,10 @@ Properties:
   "1": do not stop completion when command line is updated
   (impostazione globale, il puntatore al buffer non è utilizzato).
 
-| unread | | -
-| Imposta l'evidenziatore di lettura dopo l'ultima riga del buffer.
+// TRANSLATION MISSING
+| unread | | empty string or "0"
+| empty string: set unread marker after last line of buffer +
+  "0": remove unread marker from buffer.
 
 | display | | "1" oppure "auto"
 | "1": passa a questo buffer nella finestra corrente +

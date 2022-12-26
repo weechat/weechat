@@ -2107,21 +2107,34 @@ gui_buffer_set_input_multiline (struct t_gui_buffer *buffer,
 
 /*
  * Sets unread marker for a buffer.
+ *
+ * If remove_marker == 1, then unread marker is removed, otherwise it's set
+ * after the last line.
  */
 
 void
-gui_buffer_set_unread (struct t_gui_buffer *buffer)
+gui_buffer_set_unread (struct t_gui_buffer *buffer, int remove_marker)
 {
     int refresh;
 
     if (!buffer || (buffer->type != GUI_BUFFER_TYPE_FORMATTED))
         return;
 
-    refresh = ((buffer->lines->last_read_line != NULL)
-               && (buffer->lines->last_read_line != buffer->lines->last_line));
-
-    buffer->lines->last_read_line = buffer->lines->last_line;
-    buffer->lines->first_line_not_read = (buffer->lines->last_read_line) ? 0 : 1;
+    if (remove_marker)
+    {
+        /* remove unread marker */
+        refresh = (buffer->lines->last_read_line != NULL);
+        buffer->lines->last_read_line = NULL;
+        buffer->lines->first_line_not_read = 0;
+    }
+    else
+    {
+        /* set unread marker after last line */
+        refresh = ((buffer->lines->last_read_line != NULL)
+                   && (buffer->lines->last_read_line != buffer->lines->last_line));
+        buffer->lines->last_read_line = buffer->lines->last_line;
+        buffer->lines->first_line_not_read = (buffer->lines->last_read_line) ? 0 : 1;
+    }
 
     if (refresh)
         gui_buffer_ask_chat_refresh (buffer, 2);
@@ -2135,7 +2148,7 @@ void
 gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
                 const char *value)
 {
-    int gui_chat_mute_old;
+    int gui_chat_mute_old, remove_marker;
     long number;
     char *error;
     const char *ptr_notify;
@@ -2182,7 +2195,8 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
     /* properties that need a buffer */
     if (string_strcasecmp (property, "unread") == 0)
     {
-        gui_buffer_set_unread (buffer);
+        remove_marker = (strcmp (value, "0") == 0);
+        gui_buffer_set_unread (buffer, remove_marker);
     }
     else if (string_strcasecmp (property, "display") == 0)
     {

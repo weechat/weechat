@@ -13936,8 +13936,10 @@ void weechat_buffer_set (struct t_gui_buffer *buffer, const char *property,
   "1": コマンドラインが更新された際に補完を継続する
   (グローバル設定、バッファへのポインタは使われない)
 
-| unread | | -
-| バッファの最後の行の後に未読マーカーを設定
+// TRANSLATION MISSING
+| unread | | empty string or "0"
+| empty string: set unread marker after last line of buffer +
+  "0": remove unread marker from buffer.
 
 | display | | "1" または "auto"
 | "1": 指定したバッファを現在のウィンドウに表示 +
