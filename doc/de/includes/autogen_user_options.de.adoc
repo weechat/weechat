@@ -739,7 +739,7 @@
 ** Standardwert: `+off+`
 
 * [[option_weechat.look.emphasized_attributes]] *weechat.look.emphasized_attributes*
-** Beschreibung: pass:none[attributes for emphasized text: one or more attribute chars ("%" for blink, "." for "dim" (half bright), "*" for bold, "!" for reverse, "/" for italic, "_" for underline); if the string is empty, the colors weechat.color.emphasized* are used]
+** Beschreibung: pass:none[Attribute um Textpassagen hervorzuheben: Das setzen von ein- oder mehreren Attributen ist möglich ("%" für blinkenden Text, "." zum "dimmen" (halbe Helligkeit),"*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen); wenn die Zeichenkette leer ist, werden die Farben genutzt die durch weechat.color.emphasized* definiert sind]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+""+`

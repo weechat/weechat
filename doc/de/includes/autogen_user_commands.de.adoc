@@ -1105,15 +1105,15 @@ Beispiele:
 
 // tag::weechat_commands[]
 [[command_weechat_allbuf]]
-* `+allbuf+`: execute a command on all buffers
+* `+allbuf+`: führt einen Befehl in allen Buffern aus
 
 ----
-/allbuf  <command>
+/allbuf  <Befehl>
 
-command: command to execute (or text to send to buffer if command does not start with '/')
+command: Befehl der ausgeführt werden soll (oderText welcher in den Buffer gesendet werden soll, sofern dem Befehl kein '/' vorangestellt ist)
 
-Examples:
-  set unread marker on all buffers:
+Beispiele:
+  setze den ungelesen Marker für alle Buffer:
     /allbuf /buffer set unread
 ----
 
@@ -1635,11 +1635,11 @@ value: Anzahl der gewünschten Einträgen im Befehlsverlauf anzeigen
           remove
           restore [-all]
 
-    add: add current buffer in hotlist (default level: "low", conditions defined in option weechat.look.hotlist_add_conditions are NOT checked)
-  clear: clear hotlist
-  level: "lowest" to clear only lowest level in hotlist, highest" to clear only highest level in hotlist, or level mask: integer which is a combination of 1=join/part, 2=message, 4=private, 8=highlight)
- remove: remove current buffer from hotlist
-restore: restore latest hotlist removed in the current buffer (or all buffers with -all)
+    add: füge den aktuellen Buffer zur Hotlist (Standardlevel: "low", Bedingungen die in Option weechat.look.hotlist_add_conditions definiert sind, werden NICHT überprüft)
+  clear: lösche Hotlist
+  level: "lowest" um die niedrigste Benachrichtigungsstufe in der Hotlist zu löschen, "highest" um die höchste Benachrichtigungsstufe in der Hotlist zu löschen, oder mit einer Levelmaske: Integer aus einer Kombination von 1=join/part, 2=message, 4=private, 8=highlight)
+ remove: entferne aktuellen Buffer von Hotlist
+restore: stellt die letzte Hotlist wieder her, die im aktuellen Buffer entfernt wurde (oder alle Buffer mit -all)
 ----
 
 [[command_weechat_input]]
