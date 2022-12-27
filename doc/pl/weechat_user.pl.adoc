@@ -12,14 +12,13 @@
 
 Tłumaczenie:
 
-* Krzysztof Korościk <soltys1@gmail.com>, 2009-2021
+* Krzysztof Korościk <soltys1@gmail.com>, 2009-2022
 
 
 Ten dokument opisuje klienta rozmów WeeChat, będącego częścią WeeChat.
 
-// TRANSLATION MISSING
-Latest version of this document can be found on
-https://weechat.org/doc/[this page ^↗^,window=_blank].
+Najnowszą wersję tego dokumentu można znaleźć na
+https://weechat.org/doc/[tej stronie ^↗^,window=_blank].
 
 
 [[introduction]]
@@ -47,9 +46,8 @@ Główne cechy to:
 * wielo-platformowy (GNU/Linux, *BSD, macOS, Windows i inne)
 * 100% GPL, darmowe oprogramowanie
 
-// TRANSLATION MISSING
-The list of all features can be found on
-https://weechat.org/about/features/[this page ^↗^,window=_blank].
+Listę wszystkich cech i możliwości można znaleźć na
+https://weechat.org/about/features/[tej stronie ^↗^,window=_blank].
 
 [[prerequisites]]
 === Wymagania
@@ -71,11 +69,10 @@ Pakiety binarne dostępne są dla wielu dystrybucji, wliczając:
 
 * Arch Linuxa: `pacman -S weechat`
 * Cygwin (Windows): wybierz pakiet WeeChat w setup.exe
-// TRANSLATION MISSING
 * Debiana/Ubuntu (lub dowolna kompatybilna):
   `apt-get install weechat-curses weechat-plugins` +
   Najnowsze wersje i nocne buildy można znaleźć na stonie:
-  https://weechat.org/download/debian/[Debian repositories ^↗^,window=_blank]
+  https://weechat.org/download/debian/[Repozytoria Debiana ^↗^,window=_blank]
 * Fedora Core: `dnf install weechat`
 * FreeBSD: `pkg install weechat`
 * Gentoo: `emerge weechat`
@@ -83,25 +80,21 @@ Pakiety binarne dostępne są dla wielu dystrybucji, wliczając:
   `rpm -i /path/to/weechat-x.y.z-1.i386.rpm`
 * openSUSE: `zypper in weechat`
 * Sourcemage: `cast weechat`
-// TRANSLATION MISSING
-* macOS (with https://brew.sh/[Homebrew ^↗^,window=_blank]): `brew install weechat`
-  (for help: `brew info weechat`)
+* macOS (za pomocą https://brew.sh/[Homebrew ^↗^,window=_blank]): `brew install weechat`
+  (w razie problemów: `brew info weechat`)
 
 Niektóre dodatkowe pakiety mogą okazać się przydatne, jak weechat-plugins.
 
 Dla innych dystrybucji, poszukaj w dokumentacji instrukcji na temat instalacji
 pakietów.
 
-// TRANSLATION MISSING
 [[containers]]
-=== Containers
+=== Kontenery
 
-// TRANSLATION MISSING
-Containers with WeeChat can be built or installed directly from the
-https://hub.docker.com/r/weechat/weechat[Docker Hub ^↗^,window=_blank]. +
-For more information, see the README in the
-https://github.com/weechat/weechat-container[weechat-container ^↗^,window=_blank]
-repository.
+Kontenery z WeeChat mogą być zbudowane lub zainstalowane bezpośrednio
+z https://hub.docker.com/r/weechat/weechat[Docker Hub ^↗^,window=_blank]. +
+Więcej informacji można znaleźć w pliku README w repozytorium
+https://github.com/weechat/weechat-container[weechat-container ^↗^,window=_blank].
 
 [[source_package]]
 === Pakiety źródłowe
@@ -120,8 +113,7 @@ WeeChat:
 
 [width="100%",cols="5,^3,.^15",options="header"]
 |===
-// TRANSLATION MISSING
-| Pakiet ^(1)^ | Wersja | Features
+| Pakiet ^(1)^ | Wersja | Funkcje
 
 | kompilator C (gcc / clang) |
 | Kompilacja.
@@ -141,27 +133,23 @@ WeeChat:
 | libgcrypt20-dev |
 | Zabezpieczone dane, uwierzytelnianie IRC SASL.
 
-// TRANSLATION MISSING
 | libgnutls28-dev | ≥ 2.2.0 ^(3)^
-| IRC plugin: support of TLS connections, IRC SASL authentication (ECDSA-NIST256P-CHALLENGE). +
-  Relay plugin: support of TLS connections.
+| Wtyczka IRC: wsparcie dla połączeń TLS, autentykacja IRC SASL (ECDSA-NIST256P-CHALLENGE). +
+  Wtyczka relay: wsparcie dla połączeń TLS.
 
-// TRANSLATION MISSING
 | zlib1g-dev |
-| Logger plugin: compression of rotated log files (gzip). +
-  Relay plugin: compression of messages (WeeChat -> client) with https://zlib.net/[zlib ^↗^,window=_blank] (weechat protocol). +
-  Script plugin: read of repository index file (gzip).
+| Wtyczka logger: kompresja rotowanych plików z logami (gzip). +
+  Wtyczka relay: kompresja wiadomości (WeeChat -> klient) za pomocą https://zlib.net/[zlib ^↗^,window=_blank] (protokół weechat). +
+  Wtyczka script: odczyt repozytorium ze skryptami (gzip).
 
-// TRANSLATION MISSING
 | libzstd-dev | ≥ 0.8.1
-| Logger plugin: compression of rotated log files. +
-  Relay plugin: compression of messages (WeeChat -> client) with https://facebook.github.io/zstd/[Zstandard ^↗^,window=_blank] (weechat protocol).
+| Wtyczka logger: kompresja rotowanych plików z logami. +
+  Wtyczka Relay: kompresja wiadomości (WeeChat -> klient) za pomocą https://facebook.github.io/zstd/[Zstandard ^↗^,window=_blank] (protokół weechat).
 |===
 
 [NOTE]
-// TRANSLATION MISSING
-^(1)^ Name comes from the Debian GNU/Linux Bullseye distribution, version and
-name can be different in other distributions. +
+^(1)^ Nazwa pochodzi z repozytorium dystrybucji Debian GNU/Linux Bullseye distribution,
+wersja i nazwa mogą się różnić dla innych dystrybucji. +
 ^(2)^ Zaleca się kompilację z użyciem libncurses**w**5-dev (*w* jest istotne).
 WeeChat można skompilowac używając libncurses5-dev, ale *NIE* jest to zalecane:
 możesz doświadczyć błędów wyświetlania. +
@@ -173,8 +161,7 @@ WeeChat:
 
 [width="100%",cols="5,^3,.^15",options="header"]
 |===
-// TRANSLATION MISSING
-| Pakiet ^(1)^                            | Wersja   | Features
+| Pakiet ^(1)^                            | Wersja   | Funkcje
 | kompilator {cpp} (pass:[g++ / clang++]) |          | Kompilacja i uruchamianie testów, wtyczka JavaScript.
 | gettext                                 |          | Internacjonalizacja (tłumaczenie wiadomości; język bazowy to Angielski).
 | ca-certificates                         |          | Certyfikaty dla połączeń SSL.
@@ -192,15 +179,13 @@ WeeChat:
 | libargon2-dev                           |          | Wtyczka PHP (jeśli PHP ≥ 7.2).
 | libsodium-dev                           |          | Wtyczka PHP (jeśli PHP ≥ 7.2).
 | asciidoctor                             | ≥ 1.5.4  | Tworzenie strony man i dokumentacji.
-// TRANSLATION MISSING
-| ruby-pygments.rb                        |          | Build documentation.
+| ruby-pygments.rb                        |          | Dokumentacja budowania.
 | libcpputest-dev                         | ≥ 3.4    | Kompilacja i uruchamianie testów.
 |===
 
 [NOTE]
-// TRANSLATION MISSING
-^(1)^ Name comes from the Debian GNU/Linux Bullseye distribution, version and
-name can be different in other distributions.
+^(1)^ Nazwa pochodzi z repozytorium dystrybucji Debian GNU/Linux Bullseye distribution,
+wersja i nazwa mogą się różnić dla innych dystrybucji. +
 
 Jeśli używasz dystrybujci bazującej na Debianie/Ubuntu, oraz jeśli posiadasz wpisy
 "deb-src" w pliku _/etc/apt/sources.list_, możesz zainstalować wszytkie zależności
@@ -514,9 +499,8 @@ jest to katalog, gdzie zainstalowano WeeChat!).
 [NOTE]
 Na niektórych systemach jak Archlinux pliki te mogą znajdować się w innym katalogu
 jak _/var/lib/systemd/coredump_ i należy użyć komendy `coredumpctl` do ich odczytania. +
-// TRANSLATION MISSING
-For more information, see this
-https://wiki.archlinux.org/title/Core_dump[wiki page ^↗^,window=_blank].
+Więcej informacji można znaleźć na tej
+https://wiki.archlinux.org/title/Core_dump[stronie wiki ^↗^,window=_blank].
 
 Na przykład jeśli _weechat_ jest zainstalowany w _/usr/bin/_ i plik _core_
 znajduje się w _/home/user/_, uruchom gdb za pomocą tej komendy:
@@ -1547,8 +1531,7 @@ Można je zmienić oraz dodać nowe za pomocą komendy <<command_weechat_key,/ke
 | kbd:[Ctrl+t]        | Przestaw znaki. | `+/input transpose_chars+`
 | kbd:[Ctrl+u]        | Usuń od znaku kursora do początku linii poleceń (usuwany ciąg jest kopiowany do wewnętrznego schowka). | `+/input delete_beginning_of_line+`
 | kbd:[Alt+Backspace] | Usuń poprzednie słowo w linii poleceń (usuwany ciąg jest kopiowany do wewnętrznego schowka). | `+/input delete_previous_word+`
-// TRANSLATION MISSING
-| kbd:[Ctrl+w]        | Delete previous word of command line until whitespace (deleted string is copied to the internal clipboard). | `+/input delete_previous_word_whitespace+`
+| kbd:[Ctrl+w]        | Usuń poprzednie słowo w linii poleceń do białego znaku (usuwany ciąg jest kopiowany do wewnętrznego schowka). | `+/input delete_previous_word_whitespace+`
 | kbd:[Ctrl+y]        | Wkleja zawartość wewnętrznego schowka. | `+/input clipboard_paste+`
 | kbd:[Ctrl+_]        | Cofnij poprzednia akcję w linii poleceń. | `+/input undo+`
 | kbd:[Alt+_]         | Powtórz ostatnią akcję w linii poleceń. | `+/input redo+`
@@ -1597,8 +1580,7 @@ Można je zmienić oraz dodać nowe za pomocą komendy <<command_weechat_key,/ke
 | Skrót                          | Opis | Komenda
 | kbd:[Ctrl+r]                   | Wyszukaj tekst w historii bufora (zobacz <<key_bindings_search_context,skróty dla kontekstu wyszukiwania>>). | `+/input search_text_here+`
 | kbd:[Ctrl+s], kbd:[Ctrl+u]     | Ustaw znacznik nieprzeczytania we wszystkich buforach. | `+/allbuf /buffer set unread+`
-// TRANSLATION MISSING
-| kbd:[Ctrl+x]                   | Switch current buffer if buffers are merged with same number, for example switch to another IRC server buffer. | `+/buffer switch+`
+| kbd:[Ctrl+x]                   | Przełącz obecny bufor jeśli bufory są połączone pod tym samym numerem, na przykład przełącz na bufor innego serwera IRC. | `+/buffer switch+`
 | kbd:[Alt+x]                    | Pokaż wybrany z połączonych buforów (naciśnij kbd:[Alt+x] ponownie: wyświetl wszystkie połączone bufory). | `+/buffer zoom+`
 | kbd:[PgUp]                     | Przewiń jedną stronę w górę w historii bufora. | `+/window page_up+`
 | kbd:[PgDn]                     | Przewiń jedną stronę w dół w historii bufora. | `+/window page_down+`
@@ -2004,17 +1986,14 @@ Na przykład:
 Możliwe jest użycie niektórych atrybutów dla kolorów. Jeden lub więcej z nich
 może zostać użyty przed nazwą lub numerem koloru:
 
-// TRANSLATION MISSING
-* `+%+`: blink
-// TRANSLATION MISSING
-* `+.+`: "dim" (half bright)
+* `+%+`: mruganie
+* `+.+`: "przyciemnienie" (połowa jasności)
 * `+*+` : pogrubiony tekst
 * `+!+` : odwrócenie video
 * `+/+` : pochyły
 * `+_+` : podkreślony tekst
-// TRANSLATION MISSING
-* `+|+`: keep attributes: do not reset blink/dim/bold/reverse/italic/underlined
-  when changing color
+* `+|+`: zachowuje atrybuty: nie resetuje blink/dim/bold/reverse/italic/underlined
+  przy zmianie koloru
 
 Na przykład jeśli chcesz, żeby twój nick był biały i podkreślony:
 
@@ -2235,26 +2214,25 @@ Można ją zapisać za pomocą skryptu _buffer_autoset.py_: można go zaintalowa
 [[highlights]]
 === Podświetlenia
 
-// TRANSLATION MISSING
 [[highlights_disable]]
-==== Disable highlights
+==== Wyłączenie podświetleń
 
-You can disable highlights with option
+Możesz wyłączyć podświetlenia za pomocą opcji
 <<option_weechat.look.highlight_disable_regex,weechat.look.highlight_disable_regex>>
-(regular expression). +
-When a highlight is disabled with this option, the other highlight options are
-ignored.
+(wyrażenie regularne). +
+Kiedy podświetlenie jest wyłączone za pomocą tej opcji wszystkie pozostałe opcje
+podświetleń są ignorowane.
 
-For example to disable any highlight on messages with a word beginning
-with "flash" between chevrons:
+Na przykład żeby wyłączyć wszystkie podświetlenia wiadomości ze słowem zaczynającym
+się od "flash" pomiędzy nawiasami trójkątnymi:
 
 ----
 /set weechat.look.highlight_disable_regex "<flash.*>"
 ----
 
-This can also be set with the buffer property "highlight_disable_regex".
+Można to także osiągnąć za pomocą właściwości bufora "highlight_disable_regex".
 
-Same example, specific to the current buffer:
+Ten sam przykład, tylko dla konkretnego bufora:
 
 ----
 /buffer set highlight_disable_regex <flash.*>
@@ -2464,21 +2442,20 @@ Spowoduje powstanie następującej struktury:
         ...
 ....
 
-// TRANSLATION MISSING
 [[logger_rotation_compression]]
-==== Rotation and compression
+==== Rotowanie i kompresja
 
-It is possible to define a max size for log files, and when it is reached,
-there is automatic rotation of log file.
+Istnieje możliwość zdefiniowania rozmiaru pliku z logami, po przekroczeniu
+którego nastąpi automatyczne zrotowanie pliku z logiem.
 
-The rotated log files can be compressed with gzip or
+Zrotowany plik z logami może być skompresowany za pomocą gzip lub
 https://facebook.github.io/zstd/[zstd ^↗^,window=_blank].
 
 [NOTE]
-As the compression of a file can take some time, it is performed in background.
+Jako że kompresowanie pliku może zająć chwilę jest wykonywane w tle.
 
-Example with a max size of 2GB and compression with gzip, using good compression
-level (slower than default one):
+Przykład dla maksymalnej wielkości pliku 2GB i włączonej kompresji gzip,
+z użyciem dobrego poziomu kompresji (wolniejsze od domyślnego):
 
 ----
 /set logger.file.rotation_compression_type gzip
@@ -2486,15 +2463,15 @@ level (slower than default one):
 /set logger.file.rotation_size_max "2g"
 ----
 
-If you want to use a decimal number, you can use the unit below and multiply
-by 1000, for example to set max size to 2.5GB:
+Jeśli chcesz użyć liczby dziesiętnej, możesz użyć poniższej jednostki
+i pomnożyć przez 1000, na przykład aby ustwić maksymalny rozmiar na 2.5GB:
 
 ----
 /set logger.file.rotation_size_max "2500m"
 ----
 
-With these settings, you'll end with files like these ones (in this example
-there is rotation only for the log of #weechat channel):
+Z tymi ustawieniami, uzyskasz strukturę plików podobną do poniższej
+(w tym przykładzie rotowany jest tylko plik z logiem kanału #weechat):
 
 ....
 ~/.local/share/weechat
@@ -2858,19 +2835,20 @@ Przykład paska z elementami
 └───────────────────────────────────────────────────────────────────────────┘
 ....
 
-// TRANSLATION MISSING
 [[item_spacer]]
-===== Spacer item
+===== Odstęp
 
-An item called `spacer` can be used to align items (left, center, right).
+Element paska `spacer` może być użyty do wyrównywania elementów (lewo, środek, prawo).
 
-When at least one `spacer` item is used in a bar, the whole bar width is used:
-the spacers auto expand with the same size (or almost). +
-When the bar is not large enough for all items, spacers are not displayed.
+Kiedy przynajmniej jeden element `spacer` jest użyty na pasku, użyta jest cała
+szerokość:
+odstępy same się skalują do tego samego rozmiaru (albo prawie). +
+Kiedy pasek nie jest dostatecznie duży dla wszystkich elementów odstępy nie
+są wyświetlane.
 
 [NOTE]
-The `spacer` bar item can be used only in bars with position `top` or `bottom`,
-filling `horizontal` and size `1`.
+Elementy `spacer` mogą być tylko użyte w paskach z pozycją `top` lub `bottom`,
+wypełnieniem `horizontal` i rozmiarem `1`.
 
 Example of bar with items
 "[time],spacer,buffer_number+:+buffer_plugin+.+buffer_name,spacer,[buffer_last_number]":
@@ -2881,9 +2859,8 @@ Example of bar with items
 └───────────────────────────────────────────────────────────────────────────┘
 ....
 
-// TRANSLATION MISSING
 [[item_force_buffer]]
-===== Force buffer
+===== Wymuszenie bufora
 
 Specjalna składnia może zostać użyta, żeby wymusić bufor używany do wyświetlenia
 elementów paska: "@bufor:element" (gdzie "bufor" to pełna nazwa bufora i "element"
@@ -2900,41 +2877,40 @@ i serwer bitlbee nazywa sie _bitlbee_):
 /set weechat.bar.bitlist.items "@irc.bitlbee.&bitlbee:buffer_nicklist"
 ----
 
-// TRANSLATION MISSING
 [[custom_bar_items]]
-===== Custom bar items
+===== Niestandardowe elementy
 
-Custom bar items can be added with the <<command_weechat_item,/item>> command,
-each new item having two properties defined via configuration options:
+Niestandardowe elementy paska mogą zostać oddane za pomocą komendy <<command_weechat_item,/item>>,
+każdy nowy element posiada dwie właściwości zdefiniowanymi przez opcje konfiguracyjne:
 
-* `conditions`: evaluated conditions to display the bar item, for example to
-  restrict the bar item to some specific buffers (if empty, the bar item is
-  displayed everywhere)
-* `content`: evaluated content of bar item.
+* `conditions`: warunki do wyświetlenia elementu paska, na przykład
+  wyświetlenie elementu paska tylko w specyficznych buforach (jeśli nie zostanie podany
+  pasek jest wyświetlany wszędzie)
+* `content`: przetworzona zawartość elementu paska.
 
-In both options, the following variables can be used:
+W obu opcjach mogą zostać użyte następujące zmienne:
 
-* `window`: pointer to the window where the bar is displayed (`NULL` for root bars)
-* `buffer`: pointer to buffer where the bar is displayed (current buffer for root bars).
+* `window`: wskaźnik do okna, w którym pasek jest wyświetlany (`NULL` dla pasków typu root)
+* `buffer`: wskaźnik do buforu, w którym wyświetlany jest pasek (obecny bufor dla pasków typu root).
 
-Examples of conditions:
+Przykłady warunków:
 
 [width="100%",cols="3,10",options="header"]
 |===
-| Condition | Description
-| `${window}` | Displayed in window bars only
-| `${buffer.number} == 1` | Displayed in all buffers with number = 1
-| `${buffer.plugin.name} == irc` | Displayed in all IRC buffers
-| `${type} == channel` | Displayed in all buffers where local variable `type` is set to `channel` (example: all IRC channels)
-| `${type} == private` | Displayed in all buffers where local variable `type` is set to `private` (example: all IRC private buffers)
+| Warunek | Opis
+| `${window}` | Wyświetlany tylko w paskach okien
+| `${buffer.number} == 1` | Wyświetlany we wszystkich buforach z numerem = 1.
+| `${buffer.plugin.name} == irc` | Wyświetlany tylko w buforach IRC
+| `${type} == channel` | Wyświetlany tylko w buforach, w których zmienna lokalna `type` ma wartość `channel` (przykład: wszystkie kanały IRC)
+| `${type} == private` | Wyświetlany tylko w buforach, w których zmienna lokalna `type` ma wartość `private` (przykład: wszystkie bufory prywatne IRC)
 |===
 
 [NOTE]
-There's no builtin way to refresh the custom bar items. You can use the
-<<trigger,Trigger>> plugin to force the refresh, for example via one or more
-signals received.
+Nie istnieje wbudowany sposób na odświerzenie niestandardowych elementów paska.
+Możesz użyć wtyczki <<trigger,Trigger>> do wymuszenia odświerzenia, na przykład
+przez ostrzymanie jednego lub więcej sygnałów.
 
-For more information and examples, see the <<command_weechat_item,/item>> command.
+Więcej informacji i przykładów można otrzymać wykonując komendę <<command_weechat_item,/item>>.
 
 [[bar_filling]]
 ==== Wypełnienie
@@ -3465,15 +3441,13 @@ który może być ustawiony na przykład na `~/.weechat`.
 /msg nickserv cert add
 ----
 
-// TRANSLATION MISSING
-For more information, please look at
-https://www.oftc.net/NickServ/CertFP/[this page ^↗^,window=_blank].
+Więcej informacji można znaleźć odwiedzając
+https://www.oftc.net/NickServ/CertFP/[tą stronę ^↗^,window=_blank].
 
-// TRANSLATION MISSING
 [[irc_ircv3_support]]
-==== IRCv3 support
+==== Wsparcie dla IRCv3 
 
-WeeChat supports the following https://ircv3.net/irc/[IRCv3 extensions ^↗^,window=_blank]:
+WeeChat wspiera następujące https://ircv3.net/irc/[rozszerzenia IRCv3 ^↗^,window=_blank]:
 
 * <<irc_ircv3_account_notify,account-notify>>
 * <<irc_ircv3_account_tag,account-tag>>
@@ -3492,25 +3466,25 @@ WeeChat supports the following https://ircv3.net/irc/[IRCv3 extensions ^↗^,wi
 * <<irc_ircv3_userhost_in_names,userhost-in-names>>
 * <<irc_ircv3_whox,WHOX>>
 
-By default all capabilities supported by the server and WeeChat are
-automatically enabled
-(see option <<option_irc.server_default.capabilities,irc.server_default.capabilities>>).
+Domyślnie wszystkie możliwości wspierane przez serwer i WeeChat są
+automatycznie włączone
+(opcja <<option_irc.server_default.capabilities,irc.server_default.capabilities>>).
 
-Tables with comparison of different IRC clients, including WeeChat, are available
-on https://ircv3.net/software/clients[this page ^↗^,window=_blank].
+Tabele z porównaniem różnych klientów IRC, także WeeChat, można znaleźć na
+https://ircv3.net/software/clients[tej stronie ^↗^,window=_blank].
 
 [[irc_ircv3_account_notify]]
 ===== account-notify
 
-Specification: https://ircv3.net/specs/extensions/account-notify[account-notify ^↗^,window=_blank]
+Specyfikacja: https://ircv3.net/specs/extensions/account-notify[account-notify ^↗^,window=_blank]
 
-This capability allows the server to send messages when users identify or
-unidentify on the server. +
-WeeChat displays such messages if the option
+Ta właściwość pozwala serwerowi na wysyłanie wiadomości po tym jak użytkownik
+zostanie zidentyfikwany lub niezidentyfikowany na serwerze. +
+WeeChat wyświetla takie wiadomości jeśli opcja
 <<option_irc.look.display_account_message,irc.look.display_account_message>>
-is enabled (default value).
+jest włączona (domyślna wartość).
 
-Examples:
+Przykłady:
 
 ....
 -- alice zidentyfikował się jako Alice01
@@ -3521,27 +3495,27 @@ Examples:
 [[irc_ircv3_account_tag]]
 ===== account-tag
 
-Specification: https://ircv3.net/specs/extensions/account-tag[account-tag ^↗^,window=_blank]
+Specyfikacja: https://ircv3.net/specs/extensions/account-tag[account-tag ^↗^,window=_blank]
 
-This capability allows the server to send account as message tag to commands
-sent to the client. +
-WeeChat parses this tag and saves it in the message, but it is not used or
-displayed. It can be used in <<command_filter,/filter>> command to filter
-messages matching specific accounts.
+Ta właściwość pozwala serwerowi na wysyłanie komend konta jako tagów wiadomości
+do komend wysyłanych do klienta. +
+WeeChat parsuje te tagi i zapisuje je w wiadomości ale nie jest on używany ani
+wyświetlany. Można ich użyć w komendzie <<command_filter,/filter>> do filtrowania
+wiadmości pasujących do konkretnych kont:
 
-Example of raw IRC message received:
+Przykład otrzymanej nieprzetworzonej wiadomości:
 
 ....
 @account=Alice01 :user@example.com PRIVMSG #test :Hello!
 ....
 
-Message displayed in channel:
+Wiadomość wyświetlana na kanale:
 
 ....
 <alice> Hello!
 ....
 
-Message with tags:
+Wiadomość z tagami:
 
 ....
 <alice> Hello! [irc_privmsg,irc_tag_account_Alice01,notify_message,prefix_nick_lightcyan,nick_alice,host_user@example.com,log1]
@@ -3550,13 +3524,13 @@ Message with tags:
 [[irc_ircv3_away_notify]]
 ===== away-notify
 
-Specification: https://ircv3.net/specs/extensions/away-notify[away-notify ^↗^,window=_blank]
+Specyfikacja: https://ircv3.net/specs/extensions/away-notify[away-notify ^↗^,window=_blank]
 
-This capability allows the server to send away notifications for users present
-on the same channels as you.
+Ta właściwość pozwala serwerowi na wysyłanie powiadomień o nieobecności do
+użytkowników znajdujących się na tych samych kanałach co ty.
 
-When the away status is changed for a user (away or back), this is reflected
-with a specific color in the nicklist, using the following options:
+Kiedy status nieobecności zmienia się dla użytkownika, jest to odzwierciedlane
+konkretnym kolorze na liście nicków, za pomocą następujących opcji:
 
 * <<option_irc.server_default.away_check,irc.server_default.away_check>>
 * <<option_irc.server_default.away_check_max_nicks,irc.server_default.away_check_max_nicks>>
@@ -3565,12 +3539,12 @@ with a specific color in the nicklist, using the following options:
 [[irc_ircv3_cap_notify]]
 ===== cap-notify
 
-Specification: https://ircv3.net/specs/extensions/capability-negotiation#the-cap-new-subcommand[cap-notify ^↗^,window=_blank]
+Specyfikacja: https://ircv3.net/specs/extensions/capability-negotiation#the-cap-new-subcommand[cap-notify ^↗^,window=_blank]
 
-This capability allows the server to advertise on new or removed capabilities
-on the server (via `CAP NEW` and `CAP DEL` commands).
+Ta właściwość pozwala serwerowi na ogłaszanie nowych lub usuniętych możliwości
+na serwerze (za pomocą komend  `CAP NEW` i `CAP DEL`i).
 
-Examples:
+Przykłady:
 
 ....
 -- irc: możliwości klienta, teraz dostępne: sasl
@@ -3581,16 +3555,16 @@ Examples:
 [[irc_ircv3_chghost]]
 ===== chghost
 
-Specification: https://ircv3.net/specs/extensions/chghost[chghost ^↗^,window=_blank]
+Specyfikacja: https://ircv3.net/specs/extensions/chghost[chghost ^↗^,window=_blank]
 
-This capability allows the server to send messages when users change name or host. +
-When the option <<option_irc.look.smart_filter_chghost,irc.look.smart_filter_chghost>>
-is enabled (default value), the host changes are automatically hidden if the nick
-has not spoken for several minutes. +
-The color of the change host message is controlled by the option
+Ta właściwośc pozwala serwerowi na wysyłanie wiadomości, kiedy użytkownik zmienia
+nazwę lub hosta. Kiedy opcja <<option_irc.look.smart_filter_chghost,irc.look.smart_filter_chghost>>
+jest włączona (domyślna wartość), zmiany hosta są domyślnie ukrywane jeśli dany
+nick nie odzywał się od kilku minut. +
+Kolor wiadomości o zmianie hosta można ustawić za pomocą opcji
 <<option_irc.color.message_chghost,irc.color.message_chghost>>.
 
-Example:
+Przykłady:
 
 ....
 -- alice (user@example.com) zmienił hosta na test.com
@@ -3599,15 +3573,15 @@ Example:
 [[irc_ircv3_extended_join]]
 ===== extended-join
 
-Specification: https://ircv3.net/specs/extensions/extended-join[extended-join ^↗^,window=_blank]
+Specyfikacja: https://ircv3.net/specs/extensions/extended-join[extended-join ^↗^,window=_blank]
 
-This capability allows the server to send account and real name when users
-join channels. +
-WeeChat displays this additional information in join messages if the option
+Ta właściwość pozwala serwerowi na wysyłanie konta i prawdziwej nazwy,
+kiedy użytkownicy wchodzą na kanały. +
+WeeChat wyświetla te dodatkowe informacje jeśli opcja
 <<option_irc.look.display_extended_join,irc.look.display_extended_join>>
-is enabled (default value).
+jest włączona (domyślna wartość).
 
-Example:
+Przykład:
 
 ....
 --> john [John01] (John Doe) (~user@example.com) wszedł na #test
@@ -3616,12 +3590,12 @@ Example:
 [[irc_ircv3_invite_notify]]
 ===== invite-notify
 
-Specification: https://ircv3.net/specs/extensions/invite-notify[invite-notify ^↗^,window=_blank]
+Specyfikacja: https://ircv3.net/specs/extensions/invite-notify[invite-notify ^↗^,window=_blank]
 
-This capability allows the server to send invite messages when users are
-invited to channels.
+Ta właściwość pozwala serwerowi na wysyłanie wiadomości zaproszeń, kiedy
+użytkownicy są zapraszani na kanały.
 
-Example:
+Przykłady:
 
 ....
 -- alice zaprosił bob na #test
@@ -3630,33 +3604,33 @@ Example:
 [[irc_ircv3_message_tags]]
 ===== message-tags
 
-Specification: https://ircv3.net/specs/extensions/message-tags[message-tags ^↗^,window=_blank]
+Specyfikacja: https://ircv3.net/specs/extensions/message-tags[message-tags ^↗^,window=_blank]
 
-This capability allows to add metadata in messages. +
-These tags can be displayed using the command `/debug tags`.
+Ta właściwość pozwala dodawać metdane do wiadomości. +
+Tagi te mogą być wyświetlone za pomocą komendy `/debug tags`.
 
-It must be enabled to use <<typing_notifications,typing notifications>>.
+Musi to być włączone, żeby używać <<typing_notifications,powiadomień o pisaniu>>.
 
 [[irc_ircv3_monitor]]
 ===== monitor
 
-Specification: https://ircv3.net/specs/extensions/monitor[monitor ^↗^,window=_blank]
+Specyfikacja: https://ircv3.net/specs/extensions/monitor[monitor ^↗^,window=_blank]
 
-This capability allows the server to send notifications when clients become
-online/offline. +
-WeeChat automatically uses this extension if available when using the
-<<command_irc_notify,/notify>> command.
+Ta właściwość pozwala serwerowi na wysyłanie powiadomień kiedy klient
+stanie się online lub offline. +
+WeeChat automatycznie użyje tego rozszerzenia jeśli jest dostępne podczas
+użycia komendy <<command_irc_notify,/notify>>.
 
 [[irc_ircv3_multi_prefix]]
 ===== multi-prefix
 
-Specification: https://ircv3.net/specs/extensions/multi-prefix[multi-prefix ^↗^,window=_blank]
+Specyfikacja: https://ircv3.net/specs/extensions/multi-prefix[multi-prefix ^↗^,window=_blank]
 
-This capability allows the server to send all user modes at once in
-<<command_irc_names,/names>> and <<command_irc_whois,/whois>> responses. +
+Ta właściwość pozwala serwerowi na wysyłanie wszystkich trybów użytkownika
+na raz w odpowiedziach na <<command_irc_names,/names>> i <<command_irc_whois,/whois>>. +
 
 ////
-Example: output of `/names`:
+Przykład: wynik `/names`:
 
 ....
 -- Nicki #test: [@%+alice bob +carol]
@@ -3664,10 +3638,10 @@ Example: output of `/names`:
 ////
 
 [NOTE]
-For now, WeeChat doesn't display all prefixes in the `/names` output, even if
-they are received and properly saved internally.
+Obecnie WeeChat nie wyświetla wszystkich prefuksów w wyniku komendy `/names`,
+nawet jeśli zostały poprawnie otrzmane i zapisane wewnętrznie.
 
-Example: output of `/whois alice`:
+Przykład: wynik `/whois alice`:
 
 ....
 -- [alice] @%+#test
@@ -3676,56 +3650,56 @@ Example: output of `/whois alice`:
 [[irc_ircv3_sasl]]
 ===== SASL
 
-Specification: https://ircv3.net/specs/extensions/sasl-3.2[SASL 3.2 ^↗^,window=_blank]
+Specyfikacja: https://ircv3.net/specs/extensions/sasl-3.2[SASL 3.2 ^↗^,window=_blank]
 
-See the dedicated chapter <<irc_sasl_authentication,SASL authentication>>.
+Zobacz dedykowany rozdział <<irc_sasl_authentication,autentykacja SASL>>.
 
 [[irc_ircv3_server_time]]
 ===== server-time
 
-Specification: https://ircv3.net/specs/extensions/server-time[server-time ^↗^,window=_blank]
+Specyfikacja: https://ircv3.net/specs/extensions/server-time[server-time ^↗^,window=_blank]
 
-This capability allows the server to send time for messages as message tag. +
-When the time is received in a message, WeeChat uses it to display the message
-(it can then be displayed with a past date).
+Ta właściwość pozwala serwerowi na wysyłanie czasu dla wiadomości w tagach. +
+Po otrzymaniu czasu w wiadomości WeeChat używa go do jej wyświetlenia
+(może zostać wyświetlona z wrześniejszym czasem).
 
-The <<relay_irc_proxy,IRC proxy>> in Relay plugin supports this capability,
-so any IRC client of Relay should enable it to display the real message time
-in the backlog sent upon connection.
+<<relay_irc_proxy,IRC proxy>> we wtyczce Relay wspiera tą właściwość,
+każdy klient IRC połączony z Relay powinien włączyć tą właściwość jeśli
+chce wyświetlać prawdziwi czas wysłania wiadomości.
 
 [[irc_ircv3_setname]]
 ===== setname
 
-Specification: https://ircv3.net/specs/extensions/setname[setname ^↗^,window=_blank]
+Specyfikacja: https://ircv3.net/specs/extensions/setname[setname ^↗^,window=_blank]
 
-This capability lets you change your real name by using the
-<<command_irc_setname,/setname>> command.
+Ta właściwość pozwala zmienić prawdziwą nazwę za pomocą komendy
+<<command_irc_setname,/setname>>.
 
 [[irc_ircv3_typing]]
 ===== typing
 
-Specification: https://ircv3.net/specs/client-tags/typing[typing ^↗^,window=_blank]
+Specyfikacja: https://ircv3.net/specs/client-tags/typing[typing ^↗^,window=_blank]
 
-See the dedicated chapter <<typing_notifications,Typing notifications>>.
+Zobacz dedykowany rozdział <<typing_notifications,Powiadomienia o pisaniu>>.
 
 [[irc_ircv3_userhost_in_names]]
 ===== userhost-in-names
 
-Specification: https://ircv3.net/specs/extensions/userhost-in-names[userhost-in-names ^↗^,window=_blank]
+Specyfikacja: https://ircv3.net/specs/extensions/userhost-in-names[userhost-in-names ^↗^,window=_blank]
 
-This capability allows the server to send hostnames in <<command_irc_names,/names>>
-responses.
+Ta właściwość pozwala serwerowi na wysyłanie nazwy kostów w odpowiedzi na
+komendę <<command_irc_names,/names>>.
 
 [NOTE]
-WeeChat doesn't display hostnames in the `/names` output.
+WeeChat nie wyświetla nazwy hostów w wyjściu komendy `/names`.
 
-Example of raw IRC messages received without the capability:
+Przykład nieprzetworzonych wiadomości IRC otrzymanych bez tej właściwości:
 
 ....
 :irc.server 353 alice = #test :@alice bob +carol
 ....
 
-Example of raw IRC messages received with the capability:
+Przykład nieprzetworzonych wiadomości IRC z tą właściwością:
 
 ....
 :irc.server 353 alice = #test :@alice!user1@host1 bob!user2@host2 +carol!user3@host3
@@ -3734,11 +3708,12 @@ Example of raw IRC messages received with the capability:
 [[irc_ircv3_whox]]
 ===== WHOX
 
-Specification: https://ircv3.net/specs/extensions/whox[WHOX ^↗^,window=_blank]
+Specyfikacja: https://ircv3.net/specs/extensions/whox[WHOX ^↗^,window=_blank]
 
-This capability lets you request additional fields in the WHO response
-(via the <<command_irc_who,/who>> command). +
-WeeChat displays all additional information received in the WHO output.
+Ta właściwość pozwala na zarządanie dodatkowych pól w odpowiedzi na WHO
+(przez komendę <<command_irc_who,/who>>). +
+WeeChat wyświetla wszystkie dodatkowe informacje otrzymane w odpowiedzi
+na WHO.
 
 [[irc_sasl_authentication]]
 ==== Uwierzytelnianie SASL
@@ -4262,9 +4237,8 @@ pokazaniu listy osób piszących obecnie wiadomości w buforze.
 Jest używana przez wtyczkę IRC na kanałach i w prywatnych buforach, kiedy
 serwer posiada włączoną opcję "message-tags" (możesz to sprawdzić komendą
 <<command_irc_cap,/cap>>). +
-// TRANSLATION MISSING
-Under the hood, typing client tag is used, following
-https://ircv3.net/specs/client-tags/typing[this specification ^↗^,window=_blank].
+Pod spodem użyty jest tag klienta, zgodnie z
+https://ircv3.net/specs/client-tags/typing[tą specyfikacją ^↗^,window=_blank].
 
 [[typing_activation]]
 === Aktywacja
@@ -4357,9 +4331,8 @@ protokołów:
 
 * _irc_: pośrednik IRC: używany do dzielenia połączeń z serwerami IRC z jednym
   lub wieloma klientami IRC
-// TRANSLATION MISSING
-* _weechat_: protocol used by remote interfaces to display and interact with
-  WeeChat, see https://weechat.org/about/interfaces/[this page ^↗^,window=_blank].
+* _weechat_: protokół używany przez zdalne interfejsy do wyświetlania i interakcji
+  z WeeChat, zobacz https://weechat.org/about/interfaces/[tą stronę ^↗^,window=_blank].
 
 [[relay_password]]
 === Hasło
@@ -4477,9 +4450,8 @@ za pomocą tych komend:
 Wtyczka relay może wysyłać dane do zdalnego interfejsu korzystając z protokołu
 WeeChat.
 
-// TRANSLATION MISSING
-You can connect with a remote interface, see
-https://weechat.org/about/interfaces/[this page ^↗^,window=_blank].
+Możesz się łączyć za pomocą zdalnych interfejsów, więcej na
+https://weechat.org/about/interfaces/[tej stronie ^↗^,window=_blank].
 
 [IMPORTANT]
 WeeChat NIE MOŻE się połączyć z innym WeeChat za pomocą tego protokołu.
@@ -4909,13 +4881,12 @@ w przypadku podświetlenia lub otrzymania prywatnej wiadomości:
 ${tg_displayed} && (${tg_highlight} || ${tg_msg_pv})
 ----
 
-// TRANSLATION MISSING
 [[trigger_regex]]
-=== Regular expression
+=== Wyrażenia regularne
 
-The regular expression is used to change variables in callback hashtable.
+Wyrażenia regularne są używane do zmiany zmiennych w tabelach hashy callbacków.
 
-Format is one of the following:
+Format to jeden z poniższych:
 
 ----
 /string1/string2
@@ -4926,104 +4897,102 @@ y/string1/string2
 y/string1/string2/var
 ----
 
-Fields:
+Pola:
 
-* `s` or `y`: a letter with the command; if missing, default command is `s`
-  and the first char is then used as the delimiter:
-** `s`: regex replacement: first string is a regular expression, second string
-   is the replacement for every matching string
-** `y`: chars translation: first string is a set of characters that are replaced
-   by the characters in the second string; once evaluated, each string must have
-   exactly the same number of UTF-8 chars
-* `/`: the regex delimiter; the char "/" can be replaced by any char
-  (one or more identical chars)
-* `string1`: the first string (use depends on the command)
-* `string2`: the second string (use depends on the command)
-* `var`: the hashtable variable to update
+* `s` lub `y`: litera z komendą; jeśli nie podana domyślnie zostanie użyte `s`
+  następny znak jest użyty jako ogranicznik:
+** `s`: zamiana z użyciem wyrażenia regularnego: pierwszy ciąg to wyrażenie
+   regularne, drugi to ciąg na który ma zostać zamienione każde dopasowanie
+** `y`: zamiana znaków: pierwszy ciąg to zbiór znaków które zostaną zastąpione
+   przez znaki z drugiego ciągu; po przetworzeniu każdy z ciągów musi mieć
+   dokładnie taką samą ilość znaków UTF-8
+* `/`: separator wyrażenia; znak "/" może zostać zastąpiony dowolnym innym znakiem
+  (jeden lub więcej identycznych znaków)
+* `string1`: pierwszy ciąg (użycie zależne od polecenia)
+* `string2`: drugi ciąg (użycie zależne od polecenia)
+* `var`: zmienna w tabeli hashy do zaktualizowania
 
-Many regular expressions can be separated by a space, for example:
+Wyrażenia regularne można oddzielić spacją, na przykład:
 
 ----
 s/regex1/replace1/var1 y/abcdef/ABDDEF/var2
 ----
 
-// TRANSLATION MISSING
 [[trigger_regex_replace]]
-==== Regex replace
+==== Zamiana wyrażeniem regularnym
 
-For the command `s`, the format is: `s/regex/replace` or `s/regex/replace/var`
-(where _var_ is a variable of the hashtable).
+Dla komendy `s`, format jest jestępujący: `s/regex/replace` lub `s/regex/replace/var`
+(gdzie _var_ to zmianna z tablicy hashy).
 
-As `s` is the default command, it can be omitted, so `/regex/replace` is also
-valid (but the first char, which is the delimiter, must not be a letter).
+Jako że `s` to domyślna komenda, można to pominąć, dlatego `/regex/replace`
+jest także poprawne (jednak pierwszy znak, który będzie separatorem, nie może być
+literą).
 
-Matching groups can be used in _replace_:
+Dopasowanie grup może być także użyte:
 
-* `+${re:0}+` to `+${re:99}+`: `+${re:0}+` is the whole match, `+${re:1}+` to
-  `+${re:99}+` are groups captured
-* `+${re:+}+`: the last match (with highest number)
-* `+${hide:c,${re:N}}+`: match "N" with all chars replaced by "c"
-  (example: `+${hide:*,${re:2}}+` is the group #2 with all chars replaced by
+* `+${re:0}+` do `+${re:99}+`: `+${re:0}+` to pełne dopasowanie, `+${re:1}+` do
+  `+${re:99}+` to złapane grupy
+* `+${re:+}+`: ostatnie dopasowanie (z najwyższym numerem)
+* `+${hide:c,${re:N}}+`: dopasuje "N" ze wszystkimi znakami zastąpionymi przez "c"
+  (przykład: `+${hide:*,${re:2}}+` to grupa #2 ze wszystkimi znakami zastąpionymi przez
   `+*+`).
 
-Example: use bold for words between `+*+`:
+Przykład: użyj pogrubienia dla słów pomiędzy `+*+`:
 
 ----
 s/\*([^ ]+)\*/*${color:bold}${re:1}${color:-bold}*/
 ----
 
-Example: default trigger _server_pass_ uses this regular expression to hide
-password in commands `/server` and `/connect` (chars in passwords are replaced
-by `+*+`):
+Przykład: domyślny trigger _server_pass_ używa tego wyrażenia regularnego do
+ukrycia haseł w komendach `/server` i `/connect` (znaki w hasłach są zastępowane
+przez `+*+`):
 
 ----
 s==^(/(server|connect) .*-(sasl_)?password=)([^ ]+)(.*)==${re:1}${hide:*,${re:4}}${re:5}
 ----
 
 [NOTE]
-In this example, the delimiter used is "==" because there is a "/" in the
-regular expression.
+W tym przykładzie jako separator jest użyte "==" ponieważ znak "/" jest użyty
+w wyrażeniu regularnym.
 
-// TRANSLATION MISSING
 [[trigger_regex_translate_chars]]
-==== Translate chars
+==== Tłumaczenie znaków
 
-For the command `y`, the format is: `y/chars1/chars2` or `y/chars1/chars2/var`
-(where _var_ is a variable of the hashtable).
+Dla komendy `y`, format to: `y/chars1/chars2` lub `y/chars1/chars2/var`
+(gdzie _var_ to zmienna w tabeli hashy).
 
-Example: replace "a", "b" and "c" by upper case letter:
+Przykłady: zamienia "a", "b" i "c" na wielkie litery:
 
 ----
 y/abc/ABC/
 ----
 
-Example: rotate arrows clockwise:
+Przykład: obraca strzałki zgodnie z ruchem wskazówek zegara:
 
 ----
 y/←↑→↓/↑→↓←/
 ----
 
-Example: convert all letters to lower case:
+Przykład: zamienia wielkie litery na małe:
 
 ----
 y/${chars:upper}/${chars:lower}/
 ----
 
-Example: shift each letter by one position, preserving case: a→b, b→c … y→z, z→a:
+Przykład: przesuwa litery o jedną pozycję zachowując wielkość: a→b, b→c … y→z, z→a:
 
 ----
 y/${chars:a-z}${chars:A-Z}/${chars:b-z}a${chars:B-Z}A/
 ----
 
-// TRANSLATION MISSING
 [[trigger_regex_variable]]
-==== Variable
+==== Zmienna
 
-If _var_ does not exist in the hashtable, it is created automatically with an
-empty value. This allows to create custom temporary variables.
+Jeśli _var_ nie istnieje w tabeli hashy zostanie sutomatycznie utworzona bez
+wartości. Pozwala to na tworzenie zmiennych tymczasowych.
 
-If _var_ is not specified, the default variable is used, it depends on hook
-type:
+Jeśli _var_ nie została podana, zostanie użyta domyślna zmienna w zależności
+od typu hooka:
 
 [width="100%",cols="2,3,7",options="header"]
 |===
@@ -5086,8 +5055,7 @@ Wszystkie callbacki ustawiają następujące zmienne w tablicy hashy:
 |===
 | Zmienna         | Typ  | Opis
 | tg_trigger_name | ciąg | Nazwa triggera.
-// TRANSLATION MISSING
-| tg_hook_type    | ciąg | Hook type: "signal", "command", etc.
+| tg_hook_type    | ciąg | Typ hooka: "signal", "command", etc.
 |===
 
 [[trigger_data_signal]]
@@ -5213,19 +5181,17 @@ Zmienne ustawiane za pomocą tagów w wiadomościach:
 | tg_tag_prefix_nick | ciąg | Kolor nicka w prefiksie (z tagu "prefix_nick_ccc").
 | tg_tag_host        | ciąg | Nazwa użytkownika i host, format: username@host (z tagu "host_xxx").
 | tg_tag_notify      | ciąg | Poziom powiadomień (_none_, _message_, _private_, _highlight_).
-// TRANSLATION MISSING
-| tg_tag_irc_xxx     | ciąg | IRC message tag (key "xxx"). ^(1)^
+| tg_tag_irc_xxx     | ciąg | Tag wiadomości IRC (klucz "xxx"). ^(1)^
 | tg_notify          | ciąg | Poziom powiadomień, jeśli różny od _none_.
 | tg_msg_pv          | ciąg | "1" dla prywatnej wiadomości, inaczej "0".
 |===
 
-// TRANSLATION MISSING
 [NOTE]
 ====
-^(1)^ Special chars are replaced in IRC tag:
+^(1)^ Znaki specjalne są zastępowane w tagach IRC:
 
-* key: `_` -> `-` and `,` -> `;`
-* value: `,` -> `;`
+* klucz: `_` -> `-` i `,` -> `;`
+* wartość: `,` -> `;`
 ====
 
 [[trigger_data_print]]
@@ -5257,19 +5223,17 @@ Zmienne ustawiane za pomocą tagów w wiadomościach:
 | tg_tag_prefix_nick | ciąg | Kolor nicka w prefiksie (z tagu "prefix_nick_ccc").
 | tg_tag_host        | ciąg | Nazwa użytkownika i host, format: username@host (z tagu "host_xxx").
 | tg_tag_notify      | ciąg | Poziom powiadomień (_none_, _message_, _private_, _highlight_).
-// TRANSLATION MISSING
-| tg_tag_irc_xxx     | ciąg | IRC message tag (key "xxx"). ^(1)^
+| tg_tag_irc_xxx     | ciąg | Tag wiadomości IRC (klucz "xxx"). ^(1)^ 
 | tg_notify          | ciąg | Poziom powiadomień, jeśli różny od _none_.
 | tg_msg_pv          | ciąg | "1" dla prywatnej wiadomości, inaczej "0".
 |===
 
-// TRANSLATION MISSING
 [NOTE]
 ====
-^(1)^ Special chars are replaced in IRC tag:
+^(1)^ Znaki specjalne są zastępowane w tagach IRC:
 
-* key: `_` -> `-` and `,` -> `;`
-* value: `,` -> `;`
+* klucz: `_` -> `-` i `,` -> `;`
+* wartość: `,` -> `;`
 ====
 
 [[trigger_data_command]]
@@ -5542,11 +5506,10 @@ znaleźć w link:weechat_scripting.pl.html[Poradniku pisania skryptów ^↗^,wi
 [[script_manager]]
 ==== Manager skryptów
 
-// TRANSLATION MISSING
-The script manager (command <<command_script_script,/script>>) is used to
-load/unload scripts of any language, and install/remove scripts of WeeChat
-scripts repository, which are visible on
-https://weechat.org/scripts/[this page ^↗^,window=_blank].
+Manager skryptów (komenda <<command_script_script,/script>>) jest używany
+do ładowania/wyładowania skryptów w dowolnym języku, oraz do
+instalowania/usuwania skryptów z repozytorium skryptów WeeChat, które można
+znależć na https://weechat.org/scripts/[tej stronie ^↗^,window=_blank].
 
 W trosce o prywatność pobieranie skryptów jest domyślnie wyłąćzone. +
 Żeby je włączyć, wpisz poniższe polecenie:
@@ -5794,6 +5757,5 @@ Wsparcie w sieci IRC na serwerze _irc.libera.chat_:
 ** _#weechat-de_ (Niemiecki)
 ** _#weechat-fi_ (Fiński)
 
-// TRANSLATION MISSING
-For other ways of support, see
-https://weechat.org/about/support/[this page ^↗^,window=_blank].
+Inne opcje uzyskania wsparcia można znaleźć na
+https://weechat.org/about/support/[tej stronie ^↗^,window=_blank].

@@ -10,7 +10,7 @@
 
 Tłumaczenie:
 
-* Krzysztof Korościk <soltys1@gmail.com>, 2009-2018
+* Krzysztof Korościk <soltys1@gmail.com>, 2009-2022
 
 
 [[start]]
@@ -200,13 +200,11 @@ Aby automatycznie wejść na kanały po połączeniu z serwerem:
 /set irc.server.libera.autojoin "#kanał1,#kanał2"
 ----
 
-// TRANSLATION MISSING
-The `/autojoin` command lets you configure the _autojoin_ option easily
-(see `/help autojoin`).
+Komenda `/autojoin` pozwala w łatwy sposów skonfigurować opcję _autojoin_
+(zobacz `/help autojoin`).
 
-// TRANSLATION MISSING
-You can also configure WeeChat to automatically update the _autojoin_ option
-when you join or leave channels:
+Możesz też skonfigurować WeeChat żeby sam aktualizował opcję _autojoin_
+kiedy wchodzisz i opuszczasz kanały:
 
 ----
 /set irc.server_default.autojoin_dynamic on
@@ -387,16 +385,14 @@ i zainstalować za pomocą komendy `/script`, na przykład:
 
 Więcej informacji można uzyskać wykonując komendę `/help script`.
 
-// TRANSLATION MISSING
-A list of scripts is available in WeeChat with `/script` or on
-https://weechat.org/scripts/[this page ^↗^,window=_blank].
+Listę skryptów możesz zobaczyć w WeeChat za pomocą polecenia `/script`
+lub https://weechat.org/scripts/[na tej stronie ^↗^,window=_blank].
 
 [[more_doc]]
 == Więcej dokumentacji
 
-// TRANSLATION MISSING
-You can now use WeeChat and read
-https://weechat.org/doc/[FAQ/documentation ^↗^,window=_blank]
-for any other questions.
+Możesz teraz zacząć używać WeeChat i przeczytać
+https://weechat.org/doc/[FAQ/dokomentacje ^↗^,window=_blank]
+w razie dalszych pytań.
 
 Miłej pracy z WeeChat!

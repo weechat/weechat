@@ -12,14 +12,13 @@
 
 Tłumaczenie:
 
-* Krzysztof Korościk <soltys1@gmail.com>, 2009-2021
+* Krzysztof Korościk <soltys1@gmail.com>, 2009-2022
 
 
 Ten dokument opisuje klienta rozmów WeeChat, który jest częścią WeeChat.
 
-// TRANSLATION MISSING
-Latest version of this document can be found on
-https://weechat.org/doc/[this page ^↗^,window=_blank].
+Najnowszą wersję dokumentacji można znaleźć
+https://weechat.org/doc/[tutaj ^↗^,window=_blank].
 
 
 [[introduction]]
@@ -201,22 +200,21 @@ Funkcje są wywoływane za pomocą `+weechat.xxx(arg1, arg2, ...)+`.
 
 Funkcje są wywoływane za pomocą `+weechat::xxx arg1 arg2 ...+`.
 
-// TRANSLATION MISSING
 [[tcl_null]]
-===== Null values
+===== Wartości null
 
-Since Tcl only has string types, there's no null type to pass as an argument
-when a function accepts null values or to get as an argument in a callback
-function. To overcome this the WeeChat API defines the constant
-`$::weechat::WEECHAT_NULL` which acts as a null value. This constant is defined
-as `\uFFFF\uFFFF\uFFFFWEECHAT_NULL\uFFFF\uFFFF\uFFFF`, so it's very unlikely to
-appear unintentionally.
+Jako że Tcl wspiera tylko ciągi znaków jako zmienne, nie ma typu null, który można
+by przekazać jako argument dla funkcji akceptującej takie wartości lub otrzymać
+jako argument w funkcji callback. Żeby rozwiązać ten problem API WeeChat definiuje
+stałą `$::weechat::WEECHAT_NULL`, która zachowuje się jak wartość null.
+Stała ta jest zdefiniowana jako `\uFFFF\uFFFF\uFFFFWEECHAT_NULL\uFFFF\uFFFF\uFFFF`,
+jest więc mało prawdopodobne, że pokaże się przypadkowo.
 
-You can pass this constant when a function accepts null as an argument and you
-will get it as the value of an argument in a callback function if the argument
-value is null. To see which functions accept null values and passes null values
-to callbacks, look at the Python prototypes in the
-link:weechat_plugin_api.en.html[WeeChat plugin API reference ^↗^,window=_blank].
+Możesz przekazać tą stałą do funkcji przyjmujących null jako argument i otrzymasz
+tą wartość w funkcji callback jeśli wartość argumentu to null. Aby zobaczyć które
+funlcje akceptują wartości null i przekazują ja do callbacków przejrzyj prototypy
+języka Python w
+link:weechat_plugin_api.en.html[Opisie API wtyczek WeeChat ^↗^,window=_blank].
 
 [[language_guile]]
 ==== Guile (Scheme)
@@ -1097,9 +1095,8 @@ def my_process_cb(data, command, return_code, out, err):
 weechat.hook_process("/bin/ls -l /etc", 10 * 1000, "my_process_cb", "")
 ----
 
-// TRANSLATION MISSING
-You can also call directly a script function that does something blocking,
-instead of an external command:
+Zamiast zewnętrznej komendy możesz też wywołać bezpośrednio funkcję ze skryptu,
+tóra robi coś blokującego:
 
 [source,python]
 ----
@@ -1134,10 +1131,9 @@ Aby pobrać URL (albo wysłać do URL), należy użyć funkcji `+hook_process+`,
 Przykład transferu URL bez opcji: strona HTML jest otrzymywana jako "out"
 (standardowe wyjście procesu):
 
-// TRANSLATION MISSING
 [source,python]
 ----
-# Display latest stable version of WeeChat.
+# Wyświetla najnowszą stabilną wersję WeeChat.
 weechat_latest_version = ""
 
 def weechat_process_cb(data, command, return_code, out, err):
@@ -1153,9 +1149,8 @@ weechat.hook_process("url:https://weechat.org/dev/info/stable/",
 ----
 
 [TIP]
-// TRANSLATION MISSING
-All infos available about WeeChat are on
-https://weechat.org/dev/info/[this page ^↗^,window=_blank].
+Wszystkie dostępne informacje można znaleźć na
+https://weechat.org/dev/info/[tej stronie ^↗^,window=_blank].
 
 Przykładowy transfer URL z opcją: pobranie najnowszej wersji rozwojowej WeeChat
 do pliku _/tmp/weechat-devel.tar.gz_:
@@ -1372,14 +1367,12 @@ Wynik jest tabela hashy z następującymi kluczami
 | Tekst (na przykład wiadomość użytkownika).
 | `+hello!+`
 
-// TRANSLATION MISSING
 | paramN | 3.4
-| Command parameter (from 1 to N).
+| Parametry komendy (od 1 do N).
 | `+#weechat+`
 
-// TRANSLATION MISSING
 | num_params | 3.4
-| Number of command parameters.
+| Ilość parametrów komendy.
 | `+2+`
 
 | pos_command | 1.3

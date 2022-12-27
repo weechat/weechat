@@ -12,7 +12,7 @@
 
 Tłumaczenie:
 
-* Krzysztof Korościk <soltys1@gmail.com>, 2009-2021
+* Krzysztof Korościk <soltys1@gmail.com>, 2009-2022
 
 toc::[]
 
@@ -33,10 +33,8 @@ pasuje ono do WeeChat!).
 === Dlaczego wybrać WeeChat? X-Chat i Irssi są takie dobre...
 
 Ponieważ WeeChat jest bardzo lekki i posiada innowacyjne funkcje.
-
-// TRANSLATION MISSING
-More info on the WeeChat
-https://weechat.org/about/features/[features page ^↗^,window=_blank].
+Więcej informacji na temat WeeChat można znaleźć na
+https://weechat.org/about/features/[tej stronie ^↗^,window=_blank].
 
 [[compilation_install]]
 == Kompilacja / instalacja
@@ -44,9 +42,8 @@ https://weechat.org/about/features/[features page ^↗^,window=_blank].
 [[gui]]
 === Słyszałem o wielu GUI dla WeeChat. Jak mogę je skompilować/użyć?
 
-// TRANSLATION MISSING
-Some remote GUIs are available, see the
-https://weechat.org/about/interfaces/[remote interfaces page ^↗^,window=_blank].
+Kilka zdalnych GUI jest dostępnych, zajrzyj na stronę poświęconą
+https://weechat.org/about/interfaces/[zdalnym interfejsom ^↗^,window=_blank].
 
 [[compile_git]]
 === Nie mogę skompilować WeeChat po sklonowaniu repozytorium git, dlaczego?
@@ -130,9 +127,7 @@ naprawiony w glibc 2.22 (może jeszcze nie być dostępny w twojej dystrybucji).
 Istnieje sposób na obejście błędu funkcji _wcwidth_:
 https://blog.nytsoi.net/2015/05/04/emoji-support-for-weechat[https://blog.nytsoi.net/2015/05/04/emoji-support-for-weechat ^↗^,window=_blank].
 
-// TRANSLATION MISSING
-See this https://github.com/weechat/weechat/issues/79[bug report ^↗^,window=_blank]
-for more information.
+Więcej informacji można znaleźć w tym https://github.com/weechat/weechat/issues/79[zgłoszonym błędzie ^↗^,window=_blank].
 
 [[bars_background]]
 === Paski jak tytuł i status nie są filtrowane, kolor tła zatrzymuje się po tekście, czemu?
@@ -234,9 +229,8 @@ jak `237` dla ciemnego szarego.
 Wtyczka buflist posiada wiele opcji, które można personalizować, zapoznaj się
 z opisem dla każdej z nich.
 
-// TRANSLATION MISSING
-There's also a https://github.com/weechat/weechat/wiki/buflist[wiki page ^↗^,window=_blank]
-with examples of advanced buflist configuration.
+Jest też dostępna https://github.com/weechat/weechat/wiki/buflist[strona wiki ^↗^,window=_blank]
+z przykładami zaawansowanej konfiguracji listy buforów.
 
 [[customize_prefix]]
 === Jak mogę ograniczyć długość wyświetlanych nicków lub usunąć wyrównanie w oknie rozmowy?
@@ -267,7 +261,7 @@ w przykładzie `[H: 3(1,8), 2(4)]`, oznacza:
 * 1 wywołanie i 8 nieprzeczytanych wiadomości w buforze #3,
 * 4 nieprzeczytane wiadomości w buforze #2.
 
-Kolor bufora/licznika zależy od typu wiadomoci, domyślne kolory:
+Kolor bufora/licznika zależy od typu wiadomości, domyślne kolory:
 
 * podświetlenie: `lightmagenta` / `magenta`
 * prywatna wiadomość: `lightgreen` / `green`
@@ -324,9 +318,8 @@ użyty w żadnym z pasków:
 [[terminal_copy_paste]]
 === Jak mogę kopiować/wklejać tekst bez wklejania listy nicków?
 
-// TRANSLATION MISSING
-You can use the bare display (default key: kbd:[Alt+l] (`L`)), which shows
-just the contents of the currently selected window, without any formatting.
+Możesz użyć prostego tybu wyświetlania (domyślnie: kbd:[Alt+l] (`L`)), który pokazuje
+samą zawartość obecnie wybranego okna, bez żadnego formatowania.
 
 Możesz użyć terminala z prostokątnym zaznaczaniem (jak rxvt-unicode,
 konsole, gnome-terminal, ...). Klawisze to zazwyczaj kbd:[Ctrl] + kbd:[Alt] + zaznaczenie myszką.
@@ -340,8 +333,7 @@ Innym rozwiązaniem jest przesunięcie listy nicków na górę lub dół, na prz
 [[urls]]
 === Jak mogę kliknąć na długi URL (dłuższy niż linia)?
 
-// TRANSLATION MISSING
-You can use the bare display (default key: kbd:[Alt+l] (`L`)).
+Możesz użyć prostego trybu wyświetlania (domyślnie: kbd:[Alt+l] (`L`)).
 
 Żeby operowanie na URLach było latwiejsze możesz:
 
@@ -363,9 +355,9 @@ You can use the bare display (default key: kbd:[Alt+l] (`L`)).
 /set weechat.look.align_end_of_lines time
 ----
 
-// TRANSLATION MISSING
-You can enable option "eat_newline_glitch", so that new line char is not added
-at the end of each line displayed (it will not break URL selection):
+Możesz włączyć opcję "eat_newline_glitch", dzięki czemu znak nowej lini
+nie będzie dodawany na końcu każdej wyświetlanej lini (nie będzie
+przerywać zaznaczania URLi):
 
 ----
 /set weechat.look.eat_newline_glitch on
@@ -437,9 +429,8 @@ możesz zmienić ją za pomocą tych dwóch komend:
 /upgrade
 ----
 
-// TRANSLATION MISSING
-You can use any color number in options (optional: you can add color aliases
-with command `/color`).
+Możesz użyć dowolnego numeru koloru w opcjach (opcjonalnie możesz dodać aliasy
+dla kolorów za pomocą polecenia `/color`).
 
 Więcej informacji o zarządzaniu kolorami można znaleźć w
 link:weechat_user.pl.html#colors[Poradniku użytkownika / Kolory ^↗^,window=_blank].
@@ -740,9 +731,8 @@ Możesz spróbować innego ciągu priorytetu, zamień "xxx" nazwą serwera:
 [[irc_ssl_libera]]
 === Jak mogę połączyć się z serwerem libera używając SSL?
 
-// TRANSLATION MISSING
-Check that you have certificates installed on your system, this is commonly
-provided by the package "ca-certificates".
+Sprawdź czy masz zainstalowane cartyfikaty w systemie, zazwyczaj zapewnia je paczka
+o nazwie "ca-certificates".
 
 Ustaw port serwera, SSL, następnie się połącz:
 
@@ -788,41 +778,35 @@ na kanały):
 [[edit_autojoin]]
 === Jak mogę dodać/usunąć kanaly z opcji automatycznego wejścia?
 
-// TRANSLATION MISSING
-With WeeChat ≥ 3.5, you can automatically record the channels you manually
-join and part in the "autojoin" server option.
+Z WeeChat ≥ 3.5, możesz automatycznie śledzić kanały, na które wchodzisz
+i które opuszczasz w opcji serwera "autojoin".
 
-// TRANSLATION MISSING
-For all servers:
+Dla wszystkich serwerów:
 
 ----
 /set irc.server_default.autojoin_dynamic on
 ----
 
-// TRANSLATION MISSING
-For a single server:
+Dla pojedynczego serwera:
 
 ----
 /set irc.server.libera.autojoin_dynamic on
 ----
 
-// TRANSLATION MISSING
-You can also add the current channel in the "autojoin" server option using the
-`/autojoin` command:
+Możesz także dodać obecny kanał do opcji "autojoin" dla serwera za pomocą
+polecenia `/autojoin`:
 
 ----
 /autojoin add
 ----
 
-// TRANSLATION MISSING
-Or another channel:
+Lub inny kanał:
 
 ----
 /autojoin add #test
 ----
 
-// TRANSLATION MISSING
-There are also scripts:
+Dostępne są również skrypty:
 
 ----
 /script search autojoin
@@ -868,10 +852,9 @@ Za pomocą globalnego filtru (ukrywa *wszystkie* wejścia/opuszczenia/wyjścia):
 [[filter_irc_join_channel_messages]]
 === Jak mogę filtrować wyświetlane wiadomości podczas wejścia na kanał IRC?
 
-// TRANSLATION MISSING
-You can choose which messages are displayed when joining a channel with the
-option _irc.look.display_join_message_ (see `+/help irc.look.display_join_message+`
-for more info).
+Możesz wybrać, które wiadomości są wyświetlane po wejściu na kanał za pomocą
+opcji _irc.look.display_join_message_ (więcej informacji można uzyskać wykonując
+`+/help irc.look.display_join_message+`).
 
 W celu ukrycia wiadomości (ale zachowując je w buforze), możesz je filtrować
 używając tagu (na przykład _irc_329_ dla daty utworzenia kanału). zobacz
@@ -929,11 +912,10 @@ osobami:
 [[highlight_notification]]
 === Jak mogę zostać powiadomiony, jeśli ktoś będzie chciał przyciągnąć moją uwagę na kanale?
 
-// TRANSLATION MISSING
-There is a default trigger "beep" which sends a _BEL_ to the terminal on
-a highlight or private message. Thus you can configure your terminal
-(or multiplexer like screen/tmux) to run a command or play a sound when
-a _BEL_ occurs.
+Istnieje domyślny trigger "beep" wysyłający sygnał _BEL_ do terminala przy
+wyołaniu na kanale lub prywatnej wiadomości. Możesz skonfigurować swój terminal
+(lub multiplekser jak screen/tmux), aby wykonał polecenie lub odtworzył dźwięk
+po otrzymaniu sygnału _BEL_.
 
 Lub możesz dodać komendę w triggerze "beep":
 
@@ -958,11 +940,10 @@ Inne podobne skrypty:
 [[disable_highlights_for_specific_nicks]]
 === Jak mogę wyłączyć podświetlenia dla konkretnych nicków?
 
-// TRANSLATION MISSING
-You can use the
-link:weechat_user.pl.html#max_hotlist_level_nicks[hotlist_max_level_nicks_add ^↗^,window=_blank]
-buffer property to set the max hotlist level for some nicks, per buffer,
-or per group of buffers (like IRC servers).
+Możesz użyć właściwości bufora
+link:weechat_user.pl.html#max_hotlist_level_nicks[hotlist_max_level_nicks_add ^↗^,window=_blank],
+do ustawienia maksymalnego poziomu hotlisty dla niektórych nicków, dla buforów
+lub grup buforów (jak serwery IRC).
 
 W celu wyłączenia tylko podświetleń wystarczy ustawić ja na 2:
 
@@ -1015,9 +996,8 @@ Musisz ustawić:
 [[install_scripts]]
 === Jak mogę instalować skrypty? Czy są one kompatybilne z innymi klientami IRC?
 
-// TRANSLATION MISSING
-You can use the command `/script` to install and manage scripts (see `/help script`
-for help).
+Możesz użyć komendy `/script` do instalacji i zarządzania skryptami
+(zobacz `/help script`).
 
 Skrypty nie są kompatybilne z innymi klientami IRC.
 
@@ -1027,15 +1007,14 @@ Skrypty nie są kompatybilne z innymi klientami IRC.
 Najpierw zapoznaj się z zagadnieniami dotyczącymi połączeń SSL znajdującymi się
 w tym dokumencie.
 
-Jeśli to nie pomoże spróuj ręcznie usunąć plik z listą skryptów (z poziomu powłoki):
+Jeśli to nie pomoże spróbuj ręcznie usunąć plik z listą skryptów (z poziomu powłoki):
 
 ----
 $ rm ~/.cache/weechat/script/plugins.xml.gz
 ----
 
-// TRANSLATION MISSING
 [NOTE]
-If you are not using the XDG directories, the path could be: _~/.weechat/script/plugins.xml.gz_.
+Jeśli nie używasz katalogów XDG, lista skryptów znajduję się w: _~/.weechat/script/plugins.xml.gz_.
 
 Następnie ponownie zaktualizuj listę sktyptów w WeeChat:
 
@@ -1192,8 +1171,7 @@ gdzie znajdziesz więcej informacji o plikach konfiguracyjnych.
 [[bug_task_patch]]
 === Jak zgłaszać błędy, prosić o nowe możliwości lub wysyłać patche?
 
-// TRANSLATION MISSING
-See https://weechat.org/about/support/[this page ^↗^,window=_blank].
+Zobacz https://weechat.org/about/support/[tą strone ^↗^,window=_blank].
 
 [[gdb_error_threads]]
 === Kiedy uruchamiam WeeChat pod gdb dostaję komunikat o wątkach, co mogę z tym zrobić?
@@ -1229,13 +1207,11 @@ możliwe. Mile widziana jest pomoc w testowaniu dla systemów, których nie mamy
 
 Jest wiele zadań do zrobienia (testowanie, kod, dokumentacja, ...)
 
-// TRANSLATION MISSING
-Please contact us via IRC or mail, look at
-https://weechat.org/about/support/[support page ^↗^,window=_blank].
+Proszę odezwij się do nas na IRCu albo mailem, zobacz na
+https://weechat.org/about/support/[stronę wsparcia ^↗^,window=_blank].
 
 [[donate]]
 === Czy mogę dać pieniądze albo inne rzeczy deweloperom WeeChat?
 
-// TRANSLATION MISSING
-You can give us money to help development.
-Details on https://weechat.org/donate/[donation page ^↗^,window=_blank].
+Możesz dać nam pieniądze na pomoc w rozwoju.
+Szczegóły można znaleźć na https://weechat.org/donate/[stronie dotacji ^↗^,window=_blank].
