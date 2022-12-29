@@ -101,6 +101,7 @@ struct t_config_option *config_look_buffer_search_regex;
 struct t_config_option *config_look_buffer_search_where;
 struct t_config_option *config_look_buffer_time_format;
 struct t_config_option *config_look_buffer_time_same;
+struct t_config_option *config_look_chat_space_right;
 struct t_config_option *config_look_color_basic_force_bold;
 struct t_config_option *config_look_color_inactive_buffer;
 struct t_config_option *config_look_color_inactive_message;
@@ -2885,6 +2886,13 @@ config_weechat_init_options ()
         NULL, NULL, NULL,
         &config_change_buffer_time_same, NULL, NULL,
         NULL, NULL, NULL);
+    config_look_chat_space_right = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "chat_space_right", "boolean",
+        N_("keep a space on the right side of chat area if there is a bar "
+           "displayed on the right (for both text and read marker)"),
+        NULL, 0, 0, "off", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_color_basic_force_bold = config_file_new_option (
         weechat_config_file, ptr_section,
         "color_basic_force_bold", "boolean",

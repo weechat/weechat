@@ -56,11 +56,16 @@
 int
 gui_chat_get_real_width (struct t_gui_window *window)
 {
-    if ((window->win_chat_width > 1)
+    if (CONFIG_BOOLEAN(config_look_chat_space_right)
+        && (window->win_chat_width > 1)
         && (window->win_chat_x + window->win_chat_width < gui_window_get_width ()))
+    {
         return window->win_chat_width - 1;
+    }
     else
+    {
         return window->win_chat_width;
+    }
 }
 
 /*

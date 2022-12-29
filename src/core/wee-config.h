@@ -153,6 +153,7 @@ extern struct t_config_option *config_look_buffer_search_regex;
 extern struct t_config_option *config_look_buffer_search_where;
 extern struct t_config_option *config_look_buffer_time_format;
 extern struct t_config_option *config_look_buffer_time_same;
+extern struct t_config_option *config_look_chat_space_right;
 extern struct t_config_option *config_look_color_basic_force_bold;
 extern struct t_config_option *config_look_color_inactive_buffer;
 extern struct t_config_option *config_look_color_inactive_message;

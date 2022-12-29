@@ -630,6 +630,12 @@
 ** 値: 未制約文字列
 ** デフォルト値: `+""+`
 
+* [[option_weechat.look.chat_space_right]] *weechat.look.chat_space_right*
+** 説明: pass:none[keep a space on the right side of chat area if there is a bar displayed on the right (for both text and read marker)]
+** タイプ: ブール
+** 値: on, off
+** デフォルト値: `+off+`
+
 * [[option_weechat.look.color_basic_force_bold]] *weechat.look.color_basic_force_bold*
 ** 説明: pass:none[明るい色と標準的な色の "darkgray" には "太字" 属性を強制 (このオプションはデフォルトでは無効: 太字は端末が 16 色以下の表示能力しかない場合に利用される)]
 ** タイプ: ブール

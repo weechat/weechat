@@ -630,6 +630,12 @@
 ** values: any string
 ** default value: `+""+`
 
+* [[option_weechat.look.chat_space_right]] *weechat.look.chat_space_right*
+** description: pass:none[keep a space on the right side of chat area if there is a bar displayed on the right (for both text and read marker)]
+** type: boolean
+** values: on, off
+** default value: `+off+`
+
 * [[option_weechat.look.color_basic_force_bold]] *weechat.look.color_basic_force_bold*
 ** description: pass:none[force "bold" attribute for light colors and "darkgray" in basic colors (this option is disabled by default: bold is used only if terminal has less than 16 colors)]
 ** type: boolean

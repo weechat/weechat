@@ -630,6 +630,12 @@
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+""+`
 
+* [[option_weechat.look.chat_space_right]] *weechat.look.chat_space_right*
+** Beschreibung: pass:none[keep a space on the right side of chat area if there is a bar displayed on the right (for both text and read marker)]
+** Typ: boolesch
+** Werte: on, off
+** Standardwert: `+off+`
+
 * [[option_weechat.look.color_basic_force_bold]] *weechat.look.color_basic_force_bold*
 ** Beschreibung: pass:none[erzwingt das Textattribut "fett" für helle Farben und "darkgray", um diese Farben stärker hervorzuheben (diese Einstellung ist standardmäßig deaktiviert: "fett" findet ausschließlich dann Verwendung falls das Terminal weniger als 16 Farben zur Verfügung stellt)]
 ** Typ: boolesch

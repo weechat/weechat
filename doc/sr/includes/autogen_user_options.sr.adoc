@@ -630,6 +630,12 @@
 ** вредности: било који стринг
 ** подразумевана вредност: `+""+`
 
+* [[option_weechat.look.chat_space_right]] *weechat.look.chat_space_right*
+** опис: pass:none[keep a space on the right side of chat area if there is a bar displayed on the right (for both text and read marker)]
+** тип: логичка
+** вредности: on, off
+** подразумевана вредност: `+off+`
+
 * [[option_weechat.look.color_basic_force_bold]] *weechat.look.color_basic_force_bold*
 ** опис: pass:none[форсира атрибут „подебљано” за светле боје и „darkgray” у основним бојама (ова опција је подразумевано искључена: подебљано се користи само ако терминал подржава мање од 16 боја)]
 ** тип: логичка
