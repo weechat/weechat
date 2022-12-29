@@ -631,7 +631,7 @@
 ** Standardwert: `+""+`
 
 * [[option_weechat.look.chat_space_right]] *weechat.look.chat_space_right*
-** Beschreibung: pass:none[keep a space on the right side of chat area if there is a bar displayed on the right (for both text and read marker)]
+** Beschreibung: pass:none[auf der rechten Seite des Chatbereichs ein Leerzeichen darstellen, sofern rechts eine Bar angezeigt wird (dies gilt sowohl für Text als auch für die Lesemarkierung)]
 ** Typ: boolesch
 ** Werte: on, off
 ** Standardwert: `+off+`
