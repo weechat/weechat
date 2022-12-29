@@ -211,13 +211,13 @@
 ** valeur par défaut: `+green+`
 
 * [[option_weechat.color.chat_read_marker]] *weechat.color.chat_read_marker*
-** description: pass:none[couleur du texte pour le marqueur de données non lues]
+** description: pass:none[couleur du texte pour le marqueur de lecture]
 ** type: couleur
 ** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "%" pour le clignotement, "." pour "dim" (demi-intensité), "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné
 ** valeur par défaut: `+magenta+`
 
 * [[option_weechat.color.chat_read_marker_bg]] *weechat.color.chat_read_marker_bg*
-** description: pass:none[couleur du fond pour le marqueur de données non lues]
+** description: pass:none[couleur du fond pour le marqueur de lecture]
 ** type: couleur
 ** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "%" pour le clignotement, "." pour "dim" (demi-intensité), "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné
 ** valeur par défaut: `+default+`
@@ -631,7 +631,7 @@
 ** valeur par défaut: `+""+`
 
 * [[option_weechat.look.chat_space_right]] *weechat.look.chat_space_right*
-** description: pass:none[garder un espace sur la droite de la zone de discussion s'il y a une barre affichée sur la droite (pour le texte et le marqueur de données non lues)]
+** description: pass:none[garder un espace sur la droite de la zone de discussion s'il y a une barre affichée sur la droite (pour le texte et le marqueur de lecture)]
 ** type: booléen
 ** valeurs: on, off
 ** valeur par défaut: `+off+`
@@ -1153,13 +1153,13 @@
 ** valeur par défaut: `+off+`
 
 * [[option_weechat.look.read_marker_string]] *weechat.look.read_marker_string*
-** description: pass:none[chaîne utilisée pour tracer la ligne de marqueur des données non lues (la chaîne est répétée jusqu'à la fin de la ligne)]
+** description: pass:none[chaîne utilisée pour tracer la ligne du marqueur de lecture (la chaîne est répétée jusqu'à la fin de la ligne)]
 ** type: chaîne
 ** valeurs: toute chaîne
 ** valeur par défaut: `+"- "+`
 
 * [[option_weechat.look.read_marker_update_on_buffer_switch]] *weechat.look.read_marker_update_on_buffer_switch*
-** description: pass:none[mettre à jour le marqueur de données non lues lors du changement de tampon]
+** description: pass:none[mettre à jour le marqueur de lecture lors du changement de tampon]
 ** type: booléen
 ** valeurs: on, off
 ** valeur par défaut: `+on+`

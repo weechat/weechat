@@ -1113,7 +1113,7 @@ Exemples :
 commande : commande à exécuter (ou texte à envoyer au tampon si la commande ne commence pas par '/')
 
 Exemples :
-  définir le marqueur de données non lues sur tous les tampons :
+  définir le marqueur de lecture sur tous les tampons :
     /allbuf /buffer set unread
 ----
 
@@ -2294,7 +2294,7 @@ scroll_bottom : faire défiler jusqu'en bas du tampon
 scroll_beyond_end : faire défiler au-delà de la fin du tampon
 scroll_previous_highlight : faire défiler jusqu'au highlight précédent
 scroll_next_highlight : faire défiler jusqu'au highlight suivant
-scroll_unread : faire défiler jusqu'au marqueur de données non lues
+scroll_unread : faire défiler jusqu'au marqueur de lecture
          swap : échanger les tampons de deux fenêtres (avec une direction facultative pour la fenêtre cible)
          zoom : zoomer sur la fenêtre
          bare : activer/désactiver le mode d'affichage dépouillé (avec un délai facultatif en secondes pour un retour automatique au mode d'affichage standard)
