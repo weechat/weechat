@@ -424,7 +424,7 @@ gui_color_get_custom (const char *color_name)
             else
                 str_fg = string_strndup (ptr_color_name,
                                          pos_delim - ptr_color_name);
-            pos_bg = pos_delim + 1;
+            pos_bg = (pos_delim[1]) ? pos_delim + 1 : NULL;
         }
         else
         {

@@ -192,12 +192,24 @@ TEST(GuiColor, GetCustom)
               GUI_COLOR_BAR_BG_CHAR);
     STRCMP_EQUAL(string, gui_color_get_custom ("bar_bg"));
 
+    /* only delimiter (no-op) */
+    STRCMP_EQUAL("", gui_color_get_custom (","));
+    STRCMP_EQUAL("", gui_color_get_custom (":"));
+
     /* fg color */
     snprintf (string, sizeof (string),
               "%c%c09",
               GUI_COLOR_COLOR_CHAR,
               GUI_COLOR_FG_CHAR);
     STRCMP_EQUAL(string, gui_color_get_custom ("blue"));
+
+    /* fg color, delimiter and no bg color */
+    snprintf (string, sizeof (string),
+              "%c%c09",
+              GUI_COLOR_COLOR_CHAR,
+              GUI_COLOR_FG_CHAR);
+    STRCMP_EQUAL(string, gui_color_get_custom ("blue,"));
+    STRCMP_EQUAL(string, gui_color_get_custom ("blue:"));
 
     /* bg color */
     snprintf (string, sizeof (string),

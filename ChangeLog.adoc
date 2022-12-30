@@ -40,6 +40,7 @@ New features::
 
 Bug fixes::
 
+  * core: fix color when the delimiter is not followed by a background color (issue #1867)
   * core: display chars the same way in chat and bars, replace tabulations by spaces in bars, display chars < 32 with letter in chat, do not display soft hyphens, zero width spaces and all non-printable chars (issue #1659, issue #1669, issue #1770)
   * core: fix context info in buffers with free content (issue #1832)
   * core: keep terminal title unchanged when option weechat.look.window_title is set to empty value (issue #1835, issue #1836)
