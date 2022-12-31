@@ -1339,6 +1339,16 @@ TEST(GuiBuffer, UndoFreeAll)
 
 /*
  * Tests functions:
+ *   gui_buffer_input_move_to_buffer
+ */
+
+TEST(GuiBuffer, InputMoveToBuffer)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
  *   gui_buffer_visited_search
  */
 

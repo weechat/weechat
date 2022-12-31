@@ -383,6 +383,8 @@ extern void gui_buffer_undo_add (struct t_gui_buffer *buffer);
 extern void gui_buffer_undo_free (struct t_gui_buffer *buffer,
                                   struct t_gui_input_undo *undo);
 extern void gui_buffer_undo_free_all (struct t_gui_buffer *buffer);
+extern void gui_buffer_input_move_to_buffer (struct t_gui_buffer *from_buffer,
+                                             struct t_gui_buffer *to_buffer);
 extern struct t_gui_buffer_visited *gui_buffer_visited_search_by_number (int number);
 extern void gui_buffer_visited_remove (struct t_gui_buffer_visited *buffer_visited);
 extern void gui_buffer_visited_remove_by_buffer (struct t_gui_buffer *buffer);

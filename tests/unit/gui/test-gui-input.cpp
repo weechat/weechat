@@ -157,16 +157,6 @@ TEST(GuiInput, InsertString)
 
 /*
  * Tests functions:
- *   gui_input_move_to_buffer
- */
-
-TEST(GuiInput, MoveToBuffer)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Tests functions:
  *   gui_input_clipboard_copy
  */
 

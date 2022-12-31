@@ -48,7 +48,6 @@
 #include "../gui-color.h"
 #include "../gui-cursor.h"
 #include "../gui-hotlist.h"
-#include "../gui-input.h"
 #include "../gui-key.h"
 #include "../gui-layout.h"
 #include "../gui-line.h"
@@ -1365,7 +1364,7 @@ gui_window_switch_to_buffer (struct t_gui_window *window,
         window->buffer->lines->last_read_line = window->buffer->lines->last_line;
     }
 
-    gui_input_move_to_buffer (old_buffer, window->buffer);
+    gui_buffer_input_move_to_buffer (old_buffer, window->buffer);
 
     if (old_buffer != buffer)
     {
@@ -1407,7 +1406,7 @@ gui_window_switch (struct t_gui_window *window)
 
     old_window->refresh_needed = 1;
 
-    gui_input_move_to_buffer (old_window->buffer, window->buffer);
+    gui_buffer_input_move_to_buffer (old_window->buffer, window->buffer);
 
     (void) hook_signal_send ("window_switch",
                              WEECHAT_HOOK_SIGNAL_POINTER, gui_current_window);
