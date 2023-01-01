@@ -283,7 +283,7 @@ gui_input_insert_string (struct t_gui_buffer *buffer, const char *string)
 void
 gui_input_clipboard_copy (const char *buffer, int size)
 {
-    if (size <= 0)
+    if (!buffer || (size <= 0))
         return;
 
     if (gui_input_clipboard != NULL)
@@ -912,7 +912,6 @@ gui_input_delete_next_word (struct t_gui_buffer *buffer)
                                                 1, /* save undo */
                                                 1); /* stop completion */
 }
-
 
 /*
  * Deletes all from cursor pos to beginning of line (default key: ctrl-U).
