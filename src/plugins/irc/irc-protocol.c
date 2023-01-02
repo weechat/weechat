@@ -2010,9 +2010,9 @@ IRC_PROTOCOL_CALLBACK(mode)
 
 IRC_PROTOCOL_CALLBACK(nick)
 {
-    struct t_irc_channel *ptr_channel;
+    struct t_irc_channel *ptr_channel, *ptr_channel_new_nick;
     struct t_irc_nick *ptr_nick, *ptr_nick_found;
-    char *old_color, *new_color, str_tags[512], *buffer_name;
+    char *old_color, *new_color, str_tags[512];
     int local_nick, smart_filter;
     struct t_irc_channel_speaking *ptr_nick_speaking;
 
@@ -2057,35 +2057,31 @@ IRC_PROTOCOL_CALLBACK(nick)
         weechat_buffer_set (NULL, "hotlist", "+");
     }
 
+    ptr_channel_new_nick = irc_channel_search (server, params[0]);
+
     for (ptr_channel = server->channels; ptr_channel;
          ptr_channel = ptr_channel->next_channel)
     {
         switch (ptr_channel->type)
         {
             case IRC_CHANNEL_TYPE_PRIVATE:
-                /* rename private buffer if this is with "old nick" */
-                if ((irc_server_strcasecmp (server,
-                                            ptr_channel->name, nick) == 0)
-                    && !irc_channel_search (server, params[0]))
+                /*
+                 * rename private buffer if this is with "old nick"
+                 * or if it's with "new nick" but different case
+                 * (only if another buffer for the nick doesn't exist)
+                 */
+                if ((!ptr_channel_new_nick
+                     || (ptr_channel_new_nick == ptr_channel))
+                    && ((irc_server_strcasecmp (server,
+                                                ptr_channel->name, nick) == 0)
+                        || ((irc_server_strcasecmp (server,
+                                                    ptr_channel->name, params[0]) == 0)
+                            && (strcmp (ptr_channel->name, params[0]) != 0))))
                 {
-                    free (ptr_channel->name);
-                    ptr_channel->name = strdup (params[0]);
-                    if (ptr_channel->pv_remote_nick_color)
-                    {
-                        free (ptr_channel->pv_remote_nick_color);
-                        ptr_channel->pv_remote_nick_color = NULL;
-                    }
-                    buffer_name = irc_buffer_build_name (server->name,
-                                                         ptr_channel->name);
-                    weechat_buffer_set (ptr_channel->buffer,
-                                        "name", buffer_name);
-                    weechat_buffer_set (ptr_channel->buffer,
-                                        "short_name", ptr_channel->name);
-                    weechat_buffer_set (ptr_channel->buffer,
-                                        "localvar_set_channel",
-                                        ptr_channel->name);
-                    if (buffer_name)
-                        free (buffer_name);
+                    /* rename private buffer */
+                    irc_channel_pv_rename (server, ptr_channel, params[0]);
+
+                    /* display message */
                     if (weechat_config_boolean (irc_config_look_display_pv_nick_change))
                     {
                         if (weechat_config_boolean (irc_config_look_color_nicks_in_server_messages))
@@ -2916,7 +2912,13 @@ IRC_PROTOCOL_CALLBACK(privmsg)
         /* private message received => display it */
         ptr_channel = irc_channel_search (server, remote_nick);
 
-        if (!ptr_channel)
+        if (ptr_channel)
+        {
+            /* rename buffer if open with nick case not matching */
+            if (strcmp (ptr_channel->name, remote_nick) != 0)
+                irc_channel_pv_rename (server, ptr_channel, remote_nick);
+        }
+        else
         {
             ptr_channel = irc_channel_new (server,
                                            IRC_CHANNEL_TYPE_PRIVATE,

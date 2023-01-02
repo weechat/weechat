@@ -537,6 +537,40 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
 }
 
 /*
+ * Renames a private buffer.
+ */
+
+void
+irc_channel_pv_rename (struct t_irc_server *server,
+                       struct t_irc_channel *channel,
+                       const char *new_name)
+{
+    char *buffer_name;
+
+    if (!server || !channel || (channel->type != IRC_CHANNEL_TYPE_PRIVATE)
+        || !new_name)
+    {
+        return;
+    }
+
+    free (channel->name);
+    channel->name = strdup (new_name);
+    if (channel->pv_remote_nick_color)
+    {
+        free (channel->pv_remote_nick_color);
+        channel->pv_remote_nick_color = NULL;
+    }
+    buffer_name = irc_buffer_build_name (server->name, channel->name);
+    if (buffer_name)
+    {
+        weechat_buffer_set (channel->buffer, "name", buffer_name);
+        weechat_buffer_set (channel->buffer, "short_name", channel->name);
+        weechat_buffer_set (channel->buffer, "localvar_set_channel", channel->name);
+        free (buffer_name);
+    }
+}
+
+/*
  * Adds groups in nicklist for a channel.
  */
 
