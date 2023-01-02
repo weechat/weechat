@@ -2063,7 +2063,7 @@ IRC_PROTOCOL_CALLBACK(nick)
         switch (ptr_channel->type)
         {
             case IRC_CHANNEL_TYPE_PRIVATE:
-                /* rename private window if this is with "old nick" */
+                /* rename private buffer if this is with "old nick" */
                 if ((irc_server_strcasecmp (server,
                                             ptr_channel->name, nick) == 0)
                     && !irc_channel_search (server, params[0]))

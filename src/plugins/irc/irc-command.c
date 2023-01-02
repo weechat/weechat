@@ -4238,7 +4238,7 @@ irc_command_part_channel (struct t_irc_server *server, const char *channel_name,
 }
 
 /*
- * Callback for command "/part": leaves a channel or close a private window.
+ * Callback for command "/part": leaves a channel or close a private buffer.
  */
 
 IRC_COMMAND_CALLBACK(part)
@@ -4442,7 +4442,7 @@ IRC_COMMAND_CALLBACK(query)
             continue;
         }
 
-        /* create private window if not already opened */
+        /* create private buffer if not already opened */
         ptr_channel = irc_channel_search (ptr_server, nicks[i]);
         if (!ptr_channel)
         {
