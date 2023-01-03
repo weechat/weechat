@@ -50,7 +50,7 @@ Bug fixes::
   * api: send NULL values to config section callbacks in scripting API (issue #1843)
   * api: fix function string_cut when there are non printable chars in suffix
   * api: do not expect any return value in callbacks "callback_change" and "callback_delete" of function config_new_option (scripting API)
-  * irc: properly rename private buffer on nick changes or private message when new nick is the same with different case
+  * irc: properly rename private buffer on nick changes or privmsg/notice message when new nick is the same with different case
   * irc: do not join channels in server autojoin option after reconnection to the server (issue #560, bug #21529)
   * irc: escape backslashes in raw buffer (issue #1838)
   * trigger: fix variables sent to focus callback (issue #1858)

@@ -2428,6 +2428,10 @@ IRC_PROTOCOL_CALLBACK(notice)
 
             if (ptr_channel)
             {
+                /* rename buffer if open with nick case not matching */
+                if (strcmp (ptr_channel->name, nick) != 0)
+                    irc_channel_pv_rename (server, ptr_channel, nick);
+
                 if (weechat_config_boolean (irc_config_look_typing_status_nicks))
                 {
                     irc_typing_channel_set_nick (ptr_channel, nick,
