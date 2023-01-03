@@ -94,7 +94,9 @@ extern char **environ;
 
 COMMAND_CALLBACK(allbuf)
 {
+    struct t_arraylist *all_buffers;
     struct t_gui_buffer *ptr_buffer;
+    int i, list_size;
 
     /* make C compiler happy */
     (void) pointer;
@@ -103,11 +105,25 @@ COMMAND_CALLBACK(allbuf)
 
     COMMAND_MIN_ARGS(2, "");
 
+    all_buffers = arraylist_new (gui_buffers_count, 0, 0,
+                                 NULL, NULL, NULL, NULL);
+
     for (ptr_buffer = gui_buffers; ptr_buffer;
          ptr_buffer = ptr_buffer->next_buffer)
     {
+        arraylist_add (all_buffers, ptr_buffer);
+    }
+
+    list_size = arraylist_size (all_buffers);
+    for (i = 0; i < list_size; i++)
+    {
+        ptr_buffer = (struct t_gui_buffer *)arraylist_get (all_buffers, i);
+        if (!gui_buffer_valid (ptr_buffer))
+            continue;
         (void) input_data (ptr_buffer, argv_eol[1], NULL);
     }
+
+    arraylist_free (all_buffers);
 
     return WEECHAT_RC_OK;
 }
