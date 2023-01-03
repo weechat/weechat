@@ -141,6 +141,10 @@ extern char *string_replace_with_callback (const char *string,
                                            char *(*callback)(void *data, const char *text),
                                            void *callback_data,
                                            int *errors);
+extern void string_get_priority_and_name (const char *string,
+                                          int *priority,
+                                          const char **name,
+                                          int default_priority);
 extern const char *string_shared_get (const char *string);
 extern void string_shared_free (const char *string);
 extern char **string_dyn_alloc (int size_alloc);

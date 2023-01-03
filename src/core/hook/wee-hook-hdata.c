@@ -32,6 +32,7 @@
 #include "../wee-hook.h"
 #include "../wee-infolist.h"
 #include "../wee-log.h"
+#include "../wee-string.h"
 
 
 /*
@@ -77,7 +78,8 @@ hook_hdata (struct t_weechat_plugin *plugin, const char *hdata_name,
         return NULL;
     }
 
-    hook_get_priority_and_name (hdata_name, &priority, &ptr_hdata_name);
+    string_get_priority_and_name (hdata_name, &priority, &ptr_hdata_name,
+                                  HOOK_PRIORITY_DEFAULT);
     hook_init_data (new_hook, plugin, HOOK_TYPE_HDATA, priority,
                     callback_pointer, callback_data);
 

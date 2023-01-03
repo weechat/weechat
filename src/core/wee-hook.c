@@ -341,51 +341,6 @@ hook_remove_deleted ()
 }
 
 /*
- * Extracts priority and name from a string.
- *
- * String can be:
- *   - a simple name like "test":
- *       => priority = 1000 (default), name = "test"
- *   - a priority + "|" + name, like "500|test":
- *       => priority = 500, name = "test"
- */
-
-void
-hook_get_priority_and_name (const char *string,
-                            int *priority, const char **name)
-{
-    char *pos, *str_priority, *error;
-    long number;
-
-    if (priority)
-        *priority = HOOK_PRIORITY_DEFAULT;
-    if (name)
-        *name = string;
-
-    if (!string)
-        return;
-
-    pos = strchr (string, '|');
-    if (pos)
-    {
-        str_priority = string_strndup (string, pos - string);
-        if (str_priority)
-        {
-            error = NULL;
-            number = strtol (str_priority, &error, 10);
-            if (error && !error[0])
-            {
-                if (priority)
-                    *priority = number;
-                if (name)
-                    *name = pos + 1;
-            }
-            free (str_priority);
-        }
-    }
-}
-
-/*
  * Initializes a new hook with default values.
  */
 

@@ -78,7 +78,8 @@ hook_focus (struct t_weechat_plugin *plugin,
         return NULL;
     }
 
-    hook_get_priority_and_name (area, &priority, &ptr_area);
+    string_get_priority_and_name (area, &priority, &ptr_area,
+                                  HOOK_PRIORITY_DEFAULT);
     hook_init_data (new_hook, plugin, HOOK_TYPE_FOCUS, priority,
                     callback_pointer, callback_data);
 

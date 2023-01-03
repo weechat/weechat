@@ -78,7 +78,8 @@ hook_command_run (struct t_weechat_plugin *plugin,
         return NULL;
     }
 
-    hook_get_priority_and_name (command, &priority, &ptr_command);
+    string_get_priority_and_name (command, &priority, &ptr_command,
+                                  HOOK_PRIORITY_DEFAULT);
     hook_init_data (new_hook, plugin, HOOK_TYPE_COMMAND_RUN, priority,
                     callback_pointer, callback_data);
 

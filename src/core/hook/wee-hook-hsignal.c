@@ -77,7 +77,8 @@ hook_hsignal (struct t_weechat_plugin *plugin, const char *signal,
         return NULL;
     }
 
-    hook_get_priority_and_name (signal, &priority, &ptr_signal);
+    string_get_priority_and_name (signal, &priority, &ptr_signal,
+                                  HOOK_PRIORITY_DEFAULT);
     hook_init_data (new_hook, plugin, HOOK_TYPE_HSIGNAL, priority,
                     callback_pointer, callback_data);
 

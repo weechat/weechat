@@ -77,7 +77,8 @@ hook_infolist (struct t_weechat_plugin *plugin, const char *infolist_name,
         return NULL;
     }
 
-    hook_get_priority_and_name (infolist_name, &priority, &ptr_infolist_name);
+    string_get_priority_and_name (infolist_name, &priority, &ptr_infolist_name,
+                                  HOOK_PRIORITY_DEFAULT);
     hook_init_data (new_hook, plugin, HOOK_TYPE_INFOLIST, priority,
                     callback_pointer, callback_data);
 

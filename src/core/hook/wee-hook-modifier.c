@@ -75,7 +75,8 @@ hook_modifier (struct t_weechat_plugin *plugin, const char *modifier,
         return NULL;
     }
 
-    hook_get_priority_and_name (modifier, &priority, &ptr_modifier);
+    string_get_priority_and_name (modifier, &priority, &ptr_modifier,
+                                  HOOK_PRIORITY_DEFAULT);
     hook_init_data (new_hook, plugin, HOOK_TYPE_MODIFIER, priority,
                     callback_pointer, callback_data);
 

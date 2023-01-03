@@ -78,7 +78,9 @@ hook_completion (struct t_weechat_plugin *plugin, const char *completion_item,
         return NULL;
     }
 
-    hook_get_priority_and_name (completion_item, &priority, &ptr_completion_item);
+    string_get_priority_and_name (completion_item,
+                                  &priority, &ptr_completion_item,
+                                  HOOK_PRIORITY_DEFAULT);
     hook_init_data (new_hook, plugin, HOOK_TYPE_COMPLETION, priority,
                     callback_pointer, callback_data);
 

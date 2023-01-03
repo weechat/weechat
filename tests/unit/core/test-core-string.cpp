@@ -2542,6 +2542,67 @@ TEST(CoreString, InputForBuffer)
 
 /*
  * Tests functions:
+ *    string_get_priority_and_name
+ */
+
+TEST(CoreString, GetPriorityAndName)
+{
+    const char *empty = "";
+    const char *delimiter = "|";
+    const char *name = "test";
+    const char *name_prio_empty = "|test";
+    const char *name_prio = "1234|test";
+    const char *ptr_name;
+    int priority;
+
+    string_get_priority_and_name (NULL, NULL, NULL, 0);
+    string_get_priority_and_name ("test", NULL, NULL, 0);
+
+    /* NULL => (default_priority, NULL) */
+    priority = -1;
+    ptr_name = NULL;
+    string_get_priority_and_name (NULL, &priority, &ptr_name, 500);
+    LONGS_EQUAL(500, priority);
+    POINTERS_EQUAL(NULL, ptr_name);
+
+    /* "" => (default_priority, "") */
+    priority = -1;
+    ptr_name = NULL;
+    string_get_priority_and_name (empty, &priority, &ptr_name, 500);
+    LONGS_EQUAL(500, priority);
+    STRCMP_EQUAL("", ptr_name);
+
+    /* "|" => (0, "") */
+    priority = -1;
+    ptr_name = NULL;
+    string_get_priority_and_name (delimiter, &priority, &ptr_name, 500);
+    LONGS_EQUAL(0, priority);
+    STRCMP_EQUAL("", ptr_name);
+
+    /* "test" => (default_priority, "test") */
+    priority = -1;
+    ptr_name = NULL;
+    string_get_priority_and_name (name, &priority, &ptr_name, 500);
+    LONGS_EQUAL(500, priority);
+    STRCMP_EQUAL("test", ptr_name);
+
+    /* "|test" => (0, "test") */
+    priority = -1;
+    ptr_name = NULL;
+    string_get_priority_and_name (name_prio_empty, &priority, &ptr_name, 500);
+    LONGS_EQUAL(0, priority);
+    STRCMP_EQUAL("test", ptr_name);
+
+    /* "1234|test" => (1234, "test") */
+    priority = -1;
+    ptr_name = NULL;
+    string_get_priority_and_name (name_prio, &priority, &ptr_name, 500);
+    LONGS_EQUAL(1234, priority);
+    STRCMP_EQUAL("test", ptr_name);
+}
+
+/*
+ * Tests functions:
  *    string_shared_get
  *    string_shared_free
  */

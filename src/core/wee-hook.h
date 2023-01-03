@@ -123,8 +123,6 @@ extern int hook_socketpair_ok;
 
 extern void hook_init ();
 extern void hook_add_to_list (struct t_hook *new_hook);
-extern void hook_get_priority_and_name (const char *string, int *priority,
-                                        const char **name);
 extern void hook_init_data (struct t_hook *hook,
                             struct t_weechat_plugin *plugin,
                             int type, int priority,

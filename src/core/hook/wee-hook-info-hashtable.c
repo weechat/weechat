@@ -77,7 +77,8 @@ hook_info_hashtable (struct t_weechat_plugin *plugin, const char *info_name,
         return NULL;
     }
 
-    hook_get_priority_and_name (info_name, &priority, &ptr_info_name);
+    string_get_priority_and_name (info_name, &priority, &ptr_info_name,
+                                  HOOK_PRIORITY_DEFAULT);
     hook_init_data (new_hook, plugin, HOOK_TYPE_INFO_HASHTABLE, priority,
                     callback_pointer, callback_data);
 

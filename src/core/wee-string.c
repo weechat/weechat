@@ -4130,6 +4130,52 @@ string_replace_with_callback (const char *string,
 }
 
 /*
+ * Extracts priority and name from a string.
+ *
+ * String can be:
+ *   - a simple name like "test":
+ *       => priority = default_priority, name = "test"
+ *   - a priority + "|" + name, like "500|test":
+ *       => priority = 500, name = "test"
+ */
+
+void
+string_get_priority_and_name (const char *string,
+                              int *priority, const char **name,
+                              int default_priority)
+{
+    char *pos, *str_priority, *error;
+    long number;
+
+    if (priority)
+        *priority = default_priority;
+    if (name)
+        *name = string;
+
+    if (!string)
+        return;
+
+    pos = strchr (string, '|');
+    if (pos)
+    {
+        str_priority = string_strndup (string, pos - string);
+        if (str_priority)
+        {
+            error = NULL;
+            number = strtol (str_priority, &error, 10);
+            if (error && !error[0])
+            {
+                if (priority)
+                    *priority = number;
+                if (name)
+                    *name = pos + 1;
+            }
+            free (str_priority);
+        }
+    }
+}
+
+/*
  * Hashes a shared string.
  * The string starts after the reference count, which is skipped.
  *

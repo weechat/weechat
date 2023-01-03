@@ -87,7 +87,8 @@ hook_line (struct t_weechat_plugin *plugin, const char *buffer_type,
         return NULL;
     }
 
-    hook_get_priority_and_name (buffer_type, &priority, &ptr_buffer_type);
+    string_get_priority_and_name (buffer_type, &priority, &ptr_buffer_type,
+                                  HOOK_PRIORITY_DEFAULT);
     hook_init_data (new_hook, plugin, HOOK_TYPE_LINE, priority,
                     callback_pointer, callback_data);
 
