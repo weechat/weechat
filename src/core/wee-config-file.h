@@ -23,6 +23,8 @@
 
 #include <stdio.h>
 
+#define CONFIG_PRIORITY_DEFAULT 1000
+
 #define CONFIG_BOOLEAN(option) (*((int *)((option)->value)))
 #define CONFIG_BOOLEAN_DEFAULT(option) (*((int *)((option)->default_value)))
 
@@ -46,6 +48,8 @@ struct t_config_option;
 struct t_config_file
 {
     struct t_weechat_plugin *plugin;       /* plugin which created this cfg */
+    int priority;                          /* config files are sorted by    */
+                                           /* priority then name            */
     char *name;                            /* name (example: "weechat")     */
     char *filename;                        /* filename (without path)       */
                                            /* (example: "weechat.conf")     */

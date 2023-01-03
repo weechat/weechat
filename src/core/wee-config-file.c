@@ -121,36 +121,40 @@ config_file_new (struct t_weechat_plugin *plugin, const char *name,
                  void *callback_reload_data)
 {
     struct t_config_file *new_config_file;
+    const char *ptr_name;
     char *filename;
-    int length;
+    int priority, length;
 
-    if (!name)
+    string_get_priority_and_name (name, &priority, &ptr_name,
+                                  CONFIG_PRIORITY_DEFAULT);
+
+    if (!ptr_name || !ptr_name[0])
         return NULL;
 
     /* two configuration files can not have same name */
-    if (config_file_search (name))
+    if (config_file_search (ptr_name))
         return NULL;
 
     new_config_file = malloc (sizeof (*new_config_file));
     if (new_config_file)
     {
         new_config_file->plugin = plugin;
-        new_config_file->name = strdup (name);
+        new_config_file->priority = priority;
+        new_config_file->name = strdup (ptr_name);
         if (!new_config_file->name)
         {
             free (new_config_file);
             return NULL;
         }
-        length = strlen (name) + 8 + 1;
+        new_config_file->filename = NULL;
+        length = strlen (ptr_name) + 8 + 1;
         filename = malloc (length);
         if (filename)
         {
-            snprintf (filename, length, "%s.conf", name);
+            snprintf (filename, length, "%s.conf", ptr_name);
             new_config_file->filename = strdup (filename);
             free (filename);
         }
-        else
-            new_config_file->filename = strdup (name);
         if (!new_config_file->filename)
         {
             free (new_config_file->name);
@@ -3233,6 +3237,7 @@ config_file_hdata_config_file_cb (const void *pointer, void *data,
     if (hdata)
     {
         HDATA_VAR(struct t_config_file, plugin, POINTER, 0, NULL, "plugin");
+        HDATA_VAR(struct t_config_file, priority, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_config_file, name, STRING, 0, NULL, NULL);
         HDATA_VAR(struct t_config_file, filename, STRING, 0, NULL, NULL);
         HDATA_VAR(struct t_config_file, file, POINTER, 0, NULL, NULL);
@@ -3546,6 +3551,7 @@ config_file_print_log ()
         log_printf ("  plugin . . . . . . . . : 0x%lx ('%s')",
                     ptr_config_file->plugin,
                     plugin_get_name (ptr_config_file->plugin));
+        log_printf ("  priority . . . . . . . : %d",    ptr_config_file->priority);
         log_printf ("  name . . . . . . . . . : '%s'",  ptr_config_file->name);
         log_printf ("  filename . . . . . . . : '%s'",  ptr_config_file->filename);
         log_printf ("  file . . . . . . . . . : 0x%lx", ptr_config_file->file);
