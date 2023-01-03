@@ -31,6 +31,7 @@ New features::
   * core: add signals "buffer_user_input_xxx" and "buffer_user_closing_xxx" for buffers created with `/buffer add` (issue #1848)
   * core: add identifier in buffer lines (issue #901)
   * core: add option `unicode` in command `/debug`
+  * api: add Curl options for versions 7.64.0 to 7.87.0
   * api: add functions string_strcmp and string_strncmp
   * api: rename char comparison functions "utf8_char*" to "string_char*"
   * api: return arithmetic difference between chars in functions string_charcmp, string_charcasecmp, string_charcasecmp_range, string_strcasecmp, string_strcasecmp_range, string_strncasecmp, string_strncasecmp_range, string_strcmp_ignore_chars
