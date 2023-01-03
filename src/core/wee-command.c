@@ -584,7 +584,7 @@ COMMAND_CALLBACK(buffer)
     struct t_arraylist *buffers_to_close;
     long number, number1, number2, numbers[3];
     char *error, *value, *pos, *str_number1, *pos_number2;
-    int i, count, prev_number, clear_number;
+    int i, count, prev_number, clear_number, list_size;
     int buffer_found, arg_name, type_free, switch_to_buffer;
 
     /* make C compiler happy */
@@ -1122,7 +1122,8 @@ COMMAND_CALLBACK(buffer)
 
         weechat_buffer = gui_buffer_search_main ();
 
-        for (i = 0; i < arraylist_size (buffers_to_close); i++)
+        list_size = arraylist_size (buffers_to_close);
+        for (i = 0; i < list_size; i++)
         {
             ptr_buffer = (struct t_gui_buffer *)arraylist_get (buffers_to_close,
                                                                i);
