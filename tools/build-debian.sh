@@ -146,7 +146,6 @@ if [ $# -eq 0 ]; then
 fi
 if [ "$1" = "test-patches" ]; then
     test_patches
-    exit 0
 fi
 if [ $# -lt 2 ]; then
     error_usage "missing arguments"
