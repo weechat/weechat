@@ -45,7 +45,9 @@ def check(result, condition, lineno):
 def test_plugins():
     """Test plugins functions."""
     check(weechat.plugin_get_name('') == 'core')
-    check(weechat.plugin_get_name(weechat.buffer_get_pointer(weechat.buffer_search_main(), 'plugin')) == 'core')
+    check(weechat.plugin_get_name(
+        weechat.buffer_get_pointer(
+            weechat.buffer_search_main(), 'plugin')) == 'core')
 
 
 def test_strings():
@@ -385,8 +387,10 @@ def test_display():
     check(weechat.color('green') != '')
     check(weechat.color('unknown') == '')
     weechat.prnt('', '## test print core buffer')
-    weechat.prnt_date_tags('', 946681200, 'tag1,tag2', '## test print_date_tags core buffer')
-    weechat.prnt_date_tags('', 5680744830, 'tag1,tag2', '## test print_date_tags core buffer, year 2150')
+    weechat.prnt_date_tags('', 946681200, 'tag1,tag2',
+                           '## test print_date_tags core buffer')
+    weechat.prnt_date_tags('', 5680744830, 'tag1,tag2',
+                           '## test print_date_tags core buffer, year 2150')
     hdata_buffer = weechat.hdata_get('buffer')
     hdata_lines = weechat.hdata_get('lines')
     hdata_line = weechat.hdata_get('line')
@@ -396,18 +400,23 @@ def test_display():
     line = weechat.hdata_pointer(hdata_lines, own_lines, 'last_line')
     data = weechat.hdata_pointer(hdata_line, line, 'data')
     check(weechat.hdata_time(hdata_line_data, data, 'date') == 5680744830)
-    buffer = weechat.buffer_new('test_formatted', 'buffer_input_cb', '', 'buffer_close_cb', '')
+    buffer = weechat.buffer_new('test_formatted',
+                                'buffer_input_cb', '', 'buffer_close_cb', '')
     check(buffer != '')
     check(weechat.buffer_get_integer(buffer, 'type') == 0)
     weechat.prnt(buffer, '## test print formatted buffer')
-    weechat.prnt_date_tags(buffer, 946681200, 'tag1,tag2', '## test print_date_tags formatted buffer')
+    weechat.prnt_date_tags(buffer, 946681200, 'tag1,tag2',
+                           '## test print_date_tags formatted buffer')
     weechat.buffer_close(buffer)
-    buffer = weechat.buffer_new_props('test_free', {'type': 'free'}, 'buffer_input_cb', '', 'buffer_close_cb', '')
+    buffer = weechat.buffer_new_props('test_free', {'type': 'free'},
+                                      'buffer_input_cb', '', 'buffer_close_cb', '')
     check(weechat.buffer_get_integer(buffer, 'type') == 1)
     check(buffer != '')
     weechat.prnt_y(buffer, 0, '## test print_y free buffer')
-    weechat.prnt_y_date_tags(buffer, 0, 946681200, 'tag1,tag2', '## test print_y_date_tags free buffer')
-    weechat.prnt_y_date_tags(buffer, 1, 5680744830, 'tag1,tag2', '## test print_y_date_tags free buffer, year 2150')
+    weechat.prnt_y_date_tags(buffer, 0, 946681200, 'tag1,tag2',
+                             '## test print_y_date_tags free buffer')
+    weechat.prnt_y_date_tags(buffer, 1, 5680744830, 'tag1,tag2',
+                             '## test print_y_date_tags free buffer, year 2150')
     weechat.buffer_close(buffer)
 
 
@@ -558,7 +567,8 @@ def test_hdata():
     check(weechat.hdata_get_var_array_size(hdata_buffer, buffer2, 'highlight_tags_array') >= 0)
     # hdata_get_var_array_size_string
     check(weechat.hdata_get_var_array_size_string(hdata_buffer, buffer2, 'name') == '')
-    check(weechat.hdata_get_var_array_size_string(hdata_buffer, buffer2, 'highlight_tags_array') == 'highlight_tags_count')
+    check(weechat.hdata_get_var_array_size_string(
+        hdata_buffer, buffer2, 'highlight_tags_array') == 'highlight_tags_count')
     # hdata_get_var_hdata
     check(weechat.hdata_get_var_hdata(hdata_buffer, 'plugin') == 'plugin')
     check(weechat.hdata_get_var_hdata(hdata_buffer, 'own_lines') == 'lines')
