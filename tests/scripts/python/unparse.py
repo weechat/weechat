@@ -139,11 +139,13 @@ class UnparsePython(object):
             result.append(value)
         return result
 
-    def is_bool(self, node):  # pylint: disable=no-self-use
+    @staticmethod
+    def is_bool(node):
         """Check if the node is a boolean."""
         return isinstance(node, ast.Name) and node.id in ('False', 'True')
 
-    def is_number(self, node):  # pylint: disable=no-self-use
+    @staticmethod
+    def is_number(node):
         """Check if the node is a number."""
         return (isinstance(node, ast.Num) or
                 (isinstance(node, ast.UnaryOp) and
