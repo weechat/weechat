@@ -58,6 +58,7 @@ Bug fixes::
 
 Tests::
 
+  * core: add script check_scripts.sh
   * core: add script check_curl_symbols.py
   * gui: add tests on input functions
   * scripts: add tests on config functions
