@@ -50,7 +50,7 @@ sys.dont_write_bytecode = True
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(SCRIPT_DIR)
-from unparse import (
+from unparse import (  # noqa: E402
     UnparsePython,
     UnparsePerl,
     UnparseRuby,
