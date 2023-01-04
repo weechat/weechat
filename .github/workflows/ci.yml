@@ -47,11 +47,16 @@ jobs:
         pylint --additional-builtins=_ doc/docgen.py
         pylint doc/python_stub.py
         pylint tests/scripts/python/testapigen.py tests/scripts/python/testapi.py tests/scripts/python/unparse.py
+        pylint tools/check_curl_symbols.py
         bandit doc/docgen.py doc/python_stub.py
         bandit tests/scripts/python/testapigen.py tests/scripts/python/testapi.py tests/scripts/python/unparse.py
+        bandit tools/check_curl_symbols.py
 
     - name: Check Python stub file
       run: ./doc/python_stub.py | diff src/plugins/python/weechat.pyi -
+
+    - name: Check Curl symbols
+      run: curl --silent --show-error --fail --retry 10 https://raw.githubusercontent.com/curl/curl/master/docs/libcurl/symbols-in-versions | ./tools/check_curl_symbols.py
 
     - name: Build and run tests
       env:
