@@ -41,29 +41,29 @@ err ()
 
 run ()
 {
-    printf "Running \"%s\"..." "$@"
-    if eval "$@" >"$AUTOGEN_LOG" 2>&1 ; then
-        echo " OK"
+    printf "Running \"%s\"... " "$*"
+    if "$@" >"$AUTOGEN_LOG" 2>&1 ; then
+        echo "OK"
     else
-        echo " FAILED"
+        echo "FAILED"
         err
     fi
 }
 
 # remove autotools stuff
-run "rm -f config.h.in"
-run "rm -f aclocal.m4 configure config.log config.status"
-run "rm -rf autom4te*.cache"
+run rm -f config.h.in
+run rm -f aclocal.m4 configure config.log config.status
+run rm -rf "autom4te*.cache"
 
 # remove libtool stuff
-run "rm -f libtool"
+run rm -f libtool
 
 # remove gettext stuff
-run "rm -f ABOUT-NLS"
-run "rm -rf intl"
+run rm -f ABOUT-NLS
+run rm -rf intl
 
 # execute autoreconf cmds
-run "autoreconf -vi"
+run autoreconf -vi
 
 # ending
 rm -f "$AUTOGEN_LOG"

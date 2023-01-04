@@ -36,14 +36,8 @@
 # This script is used to build WeeChat in CI environment.
 #
 
-run ()
-{
-    echo "Running \"$*\"..."
-    if ! eval "$@"; then
-        echo "ERROR"
-        exit 1
-    fi
-}
+# exit on any error
+set -e
 
 BUILDDIR="build-tmp-$$"
 
@@ -61,32 +55,40 @@ if [ -z "$BUILDTOOL" ]; then
     exit 1
 fi
 
+run ()
+{
+    "$@"
+}
+
+# display commands
+set -x
+
 # create build directory
-run "mkdir $BUILDDIR"
-run "cd $BUILDDIR"
+mkdir "$BUILDDIR"
+cd "$BUILDDIR"
 
 if [ "$BUILDTOOL" = "cmake" ]; then
     # build with CMake
-    run "cmake .. -DENABLE_MAN=ON -DENABLE_DOC=ON -DENABLE_TESTS=ON ${BUILDARGS}"
+    run cmake .. -DENABLE_MAN=ON -DENABLE_DOC=ON -DENABLE_TESTS=ON "${BUILDARGS}"
     if [ -f "build.ninja" ]; then
-        run "ninja -v"
-        run "ninja -v changelog"
-        run "ninja -v rn"
-        run "sudo ninja install"
+        ninja -v
+        ninja -v changelog
+        ninja -v rn
+        sudo ninja install
     else
-        run "make VERBOSE=1 -j$(nproc)"
-        run "make VERBOSE=1 changelog"
-        run "make VERBOSE=1 rn"
-        run "sudo make install"
+        make VERBOSE=1 --jobs="$(nproc)"
+        make VERBOSE=1 changelog
+        make VERBOSE=1 rn
+        sudo make install
     fi
-    run "ctest -V"
+    ctest -V
 fi
 
 if [ "$BUILDTOOL" = "autotools" ]; then
     # build with autotools
-    run "../autogen.sh"
-    run "../configure --enable-man --enable-doc --enable-tests ${BUILDARGS}"
-    run "make -j$(nproc)"
-    run "sudo make install"
-    run "./tests/tests -v"
+    ../autogen.sh
+    run ../configure --enable-man --enable-doc --enable-tests "${BUILDARGS}"
+    make --jobs="$(nproc)"
+    sudo make install
+    ./tests/tests -v
 fi
