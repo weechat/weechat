@@ -60,7 +60,7 @@ EXTRA_DIST = AUTHORS.adoc \
              cmake/cmake_uninstall.cmake.in \
              po/CMakeLists.txt \
              po/srcfiles.cmake \
-             tools/build-test.sh \
+             tools/build_test.sh \
              tools/set_git_version.sh \
              tools/makedist.sh \
              version.sh \

@@ -57,7 +57,7 @@ jobs:
         CXX: ${{ matrix.config.cxx }}
         BUILDTOOL: ${{ matrix.config.tool }}
         BUILDARGS: ${{ matrix.config.args }}
-      run: ./tools/build-test.sh
+      run: ./tools/build_test.sh
 
     - name: Run WeeChat
       env:

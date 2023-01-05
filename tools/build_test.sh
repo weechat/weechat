@@ -24,14 +24,14 @@
 #   - BUILDARGS: arguments for cmake or configure commands
 #
 # Syntax to run the script with environment variables:
-#   BUILDTOOL=cmake ./build-test.sh
-#   BUILDTOOL=autotools ./build-test.sh
-#   BUILDTOOL=cmake BUILDARGS="arguments" ./build-test.sh
-#   BUILDTOOL=autotools BUILDARGS="arguments" ./build-test.sh
+#   BUILDTOOL=cmake ./build_test.sh
+#   BUILDTOOL=autotools ./build_test.sh
+#   BUILDTOOL=cmake BUILDARGS="arguments" ./build_test.sh
+#   BUILDTOOL=autotools BUILDARGS="arguments" ./build_test.sh
 #
 # Syntax to run the script with arguments on command line:
-#   ./build-test.sh cmake [arguments]
-#   ./build-test.sh autotools [arguments]
+#   ./build_test.sh cmake [arguments]
+#   ./build_test.sh autotools [arguments]
 #
 # This script is used to build WeeChat in CI environment.
 #
