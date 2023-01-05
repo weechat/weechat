@@ -30,6 +30,12 @@ URL=https://raw.githubusercontent.com/curl/curl/master/docs/libcurl/symbols-in-v
 curl $URL | ./check_curl_symbols.py
 ```
 
+Or with Curl repository cloned locally:
+
+```
+./check_curl_symbols.py < /path/to/curl/docs/libcurl/symbols-in-versions
+```
+
 This script requires Python 3.7+.
 """
 
