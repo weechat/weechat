@@ -147,10 +147,10 @@ jobs:
         sudo apt-get --yes --no-install-recommends install ${{ env.WEECHAT_DEPENDENCIES }} php-dev
 
     - name: Test Debian patches
-      run: ./tools/build-debian.sh test-patches
+      run: ./tools/build_debian.sh test-patches
 
     - name: Build Debian packages
-      run: ./tools/build-debian.sh devel ubuntu/jammy
+      run: ./tools/build_debian.sh devel ubuntu/jammy
 
     - name: Install Debian packages
       run: sudo dpkg -i ../weechat-devel*.deb

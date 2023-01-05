@@ -38,12 +38,12 @@
 #
 # Examples:
 #
-#   …/build-debian.sh devel debian/sid
-#   …/build-debian.sh stable debian/bullseye
-#   …/build-debian.sh 1.9 ubuntu/jammy
-#   …/build-debian.sh 1.9-2 ubuntu/focal
+#   …/build_debian.sh devel debian/sid
+#   …/build_debian.sh stable debian/bullseye
+#   …/build_debian.sh 1.9 ubuntu/jammy
+#   …/build_debian.sh 1.9-2 ubuntu/focal
 #
-#   …/build-debian.sh test-patches
+#   …/build_debian.sh test-patches
 #
 # Environment variables that can be used:
 #

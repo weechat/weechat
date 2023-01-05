@@ -1,4 +1,4 @@
 This directory contains patches that must be applied for some old Debian/Ubuntu
 versions, in order to build Debian packages.
 
-They are automatically applied by the script "tools/build-debian.sh".
+They are automatically applied by the script "tools/build_debian.sh".
