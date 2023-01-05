@@ -241,6 +241,8 @@ if(ENABLE_TESTS)
   else()
     message(SEND_ERROR "CppUTest not found")
   endif()
+else()
+  add_custom_target(test)
 endif()
 
 configure_file(config.h.cmake config.h @ONLY)
