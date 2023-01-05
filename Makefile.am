@@ -23,7 +23,7 @@
 # (if needed, and only for a devel/rc version).
 BUILT_SOURCES = build-config-git.h
 build-config-git.h:
-	-$(abs_top_srcdir)/tools/git-version.sh "$(abs_top_srcdir)" "$(VERSION)" config-git.h
+	-$(abs_top_srcdir)/tools/set_git_version.sh "$(abs_top_srcdir)" "$(VERSION)" config-git.h
 
 if TESTS
 tests_dir = tests
@@ -61,7 +61,7 @@ EXTRA_DIST = AUTHORS.adoc \
              po/CMakeLists.txt \
              po/srcfiles.cmake \
              tools/build-test.sh \
-             tools/git-version.sh \
+             tools/set_git_version.sh \
              tools/makedist.sh \
              version.sh \
              weechat.desktop \
