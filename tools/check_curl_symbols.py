@@ -269,6 +269,8 @@ def main() -> int:
         sys.exit("FATAL: failed to read Curl symbols on standard input")
     weechat_curl_symbols, errors = get_weechat_curl_symbols()
     errors += check_symbols(weechat_curl_symbols, curl_symbols)
+    dict_err = {0: "all good!", 1: "1 error"}
+    print("Curl symbols:", dict_err.get(errors, f"{errors} errors"))
     return errors
 
 
