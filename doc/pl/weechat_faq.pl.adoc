@@ -48,16 +48,15 @@ https://weechat.org/about/interfaces/[zdalnym interfejsom ^↗^,window=_blank].
 [[compile_git]]
 === Nie mogę skompilować WeeChat po sklonowaniu repozytorium git, dlaczego?
 
-Zalecaną metodą kompilacji WeeChat jest użycie
-link:weechat_user.pl.html#compile_with_cmake[CMake ^↗^,window=_blank].
+// TRANSLATION MISSING
+WeeChat must be compiled with CMake.
 
-Jeśli kompilujesz używając link:weechat_user.pl.html#compile_with_autotools[autotools ^↗^,window=_blank]
-(nie CMake), upewnij się, że posiadasz najnowszą wersję autoconf i automake.
+// TRANSLATION MISSING
+Please follow link:weechat_user.en.html#source_package[build instructions ^↗^,window=_blank]
+and ensure all required dependencies are installed.
 
-Innym sposobem jest zainstalowanie "paczki deweloperskiej", która wymaga mniej
-zależności. Ten pakiet jest budowany prawie codziennie z użyciem repozytorium
-git. Ten pakiet może odpowiadać dokładnie wersji z gita i jest mniej wygodny
-przy aktualizowaniu jak klonowanie z gita.
+// TRANSLATION MISSING
+If you still have issues, please report them to the developers.
 
 [[compile_macos]]
 === Jak zainstalować WeeChat na macOS?

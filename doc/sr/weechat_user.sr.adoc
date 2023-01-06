@@ -94,7 +94,8 @@ https://github.com/weechat/weechat-container[weechat-container ^↗^,window=_bl
 [[source_package]]
 === Пакет са изворним кодом
 
-Програм WeeChat може да се компајлира са CMake или са autotools (CMake је препоручени начин).
+// TRANSLATION MISSING
+WeeChat must be built with CMake.
 
 [NOTE]
 На macOS можете да употребите https://brew.sh/[Homebrew ^↗^,window=_blank]: `brew install --build-from-source weechat`.
@@ -102,17 +103,20 @@ https://github.com/weechat/weechat-container[weechat-container ^↗^,window=_bl
 [[dependencies]]
 ==== Зависности
 
-Следећа табела приказује листу пакета који су *неопходни* за успешно компајлирање програма WeeChat:
+// TRANSLATION MISSING
+The following table shows the list of packages that are *required* to build
+WeeChat:
 
 [width="100%", cols="5,^3,.^15", options="header"]
 |===
 | Пакет ^(1)^ | Верзија | Могућности
 
+// TRANSLATION MISSING
 | C компајлер (gcc / clang) |
-| Изградњу.
+| Compile C sources.
 
 | cmake | ≥ 3.0
-| Изградњу (може да се користи и autotools, али се препоручује CMake).
+| Изградњу.
 
 | pkg-config |
 | Детекција инсталираних библиотека.
@@ -182,8 +186,9 @@ https://github.com/weechat/weechat-container[weechat-container ^↗^,window=_bl
 # apt-get build-dep weechat
 ----
 
-[[compile_with_cmake]]
-==== Компајлирање са CMake
+// TRANSLATION MISSING
+[[build]]
+==== Build
 
 * Инсталација у системске директоријуме (неопходне су _root_ привилегије):
 
@@ -335,56 +340,22 @@ $ cmake -LA
 $ ccmake ..
 ----
 
-[[compile_with_autotools]]
-==== Компајлирање са autotools
-
-[WARNING]
-За изградњу програма WeeChat званично се подржава само CMake. Требало би користите autotools само ако ни сте у могућности да користите CMake. +
-Изградња са autotools захтева више зависности и спорија је у односу на изградњу са CMake.
-
-* Инсталација у системске директоријуме (неопходне су _root_ привилегије):
-
-----
-$ ./autogen.sh
-$ mkdir build
-$ cd build
-$ ../configure
-$ make
-$ sudo make install
-----
-
-* Инсталација у директоријум по жељи (на пример, у ваш почетни):
-
-----
-$ ./autogen.sh
-$ mkdir build
-$ cd build
-$ ../configure --prefix=/путања/до/директоријума
-$ make
-$ make install
-----
-
-За скрипту _configure_ могу да се користе опције које се приказују следећом командом:
-
-----
-$ ./configure --help
-----
-
-[[run_tests]]
-==== Покретање тестова
+// TRANSLATION MISSING
+[[tests]]
+==== Tests
 
 За компајлирање тестова су *неопходни* следећи пакети:
 
 * libcpputest-dev
 * C++ компајлер
 
-Када се компајлира програм WeeChat (са CMake), тестови морају да се укључе:
+Када се компајлира програм WeeChat, тестови морају да се укључе:
 
 ----
 $ cmake .. -DENABLE_TESTS=ON
 ----
 
-Након компајлирања могу да се покрену из директоријума у који је изграђен програм (са CMake):
+Након компајлирања могу да се покрену из директоријума у који је изграђен програм:
 
 ----
 $ ctest -V

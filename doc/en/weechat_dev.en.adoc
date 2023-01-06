@@ -1160,11 +1160,8 @@ Where _component_ is one of following:
 | WeeChat core
 
 | build
-| autogen.sh +
-  CMakeLists.txt +
+| CMakeLists.txt +
   cmake/* +
-  configure.ac +
-  Makefile.am +
   tools/* +
   weechat.cygport.in +
   weechat.spec

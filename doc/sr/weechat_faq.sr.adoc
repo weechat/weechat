@@ -47,11 +47,15 @@ https://weechat.org/about/interfaces/[страницу са удаљеним Г�
 [[compile_git]]
 === Након клонирања git репозиторијума не могу да компајлирам програм WeeChat, зашто?
 
-Препоручени начин да за компајлирање програма WeeChat је помоћу link:weechat_user.sr.html#compile_with_cmake[CMake ^↗^,window=_blank].
+// TRANSLATION MISSING
+WeeChat must be compiled with CMake.
 
-Ако компајлирате са link:weechat_user.sr.html#compile_with_autotools[autotools ^↗^,window=_blank] (а не са CMake), проверите да ли поседујете најновију верзију пакета autoconf и automake.
+// TRANSLATION MISSING
+Please follow link:weechat_user.en.html#source_package[build instructions ^↗^,window=_blank]
+and ensure all required dependencies are installed.
 
-Други начин је да се инсталира „devel package”, што тражи мање зависности. Овај пакет се се изграђује скоро свакодневно користећи git репозиторијум. Приметите да овај пакет можда није потпуно исти као git база, као и да је инсталирање ажурирања компликованије него просто git клонирање.
+// TRANSLATION MISSING
+If you still have issues, please report them to the developers.
 
 [[compile_macos]]
 === Како да инсталирам програм WeeChat на macOS систем?

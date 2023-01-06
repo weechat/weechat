@@ -94,7 +94,7 @@ repository.
 [[source_package]]
 === Source package
 
-WeeChat can be compiled with CMake or autotools (CMake is recommended way).
+WeeChat must be built with CMake.
 
 [NOTE]
 On macOS, you can use https://brew.sh/[Homebrew ^↗^,window=_blank]:
@@ -103,7 +103,7 @@ On macOS, you can use https://brew.sh/[Homebrew ^↗^,window=_blank]:
 [[dependencies]]
 ==== Dependencies
 
-The following table shows the list of packages that are *required* to compile
+The following table shows the list of packages that are *required* to build
 WeeChat:
 
 [width="100%",cols="5,^3,.^15",options="header"]
@@ -111,10 +111,10 @@ WeeChat:
 | Package ^(1)^ | Version | Features
 
 | C compiler (gcc / clang) |
-| Build.
+| Compile C sources.
 
 | cmake | ≥ 3.0
-| Build (autotools still possible, but CMake is recommended).
+| Build.
 
 | pkg-config |
 | Detect installed libraries.
@@ -190,8 +190,8 @@ all dependencies with the command:
 # apt-get build-dep weechat
 ----
 
-[[compile_with_cmake]]
-==== Compile with CMake
+[[build]]
+==== Build
 
 * Installation in system directories (requires _root_ privileges):
 
@@ -343,58 +343,21 @@ Or with Curses interface:
 $ ccmake ..
 ----
 
-[[compile_with_autotools]]
-==== Compile with autotools
-
-[WARNING]
-Only CMake is officially supported to build WeeChat. You should use autotools
-only if you are not able to use CMake. +
-Build with autotools requires more dependencies and is slower than with CMake.
-
-* Installation in system directories (requires _root_ privileges):
-
-----
-$ ./autogen.sh
-$ mkdir build
-$ cd build
-$ ../configure
-$ make
-$ sudo make install
-----
-
-* Installation in custom directory (for example your home):
-
-----
-$ ./autogen.sh
-$ mkdir build
-$ cd build
-$ ../configure --prefix=/path/to/directory
-$ make
-$ make install
-----
-
-Options can be used for _configure_ script, they can be displayed with this
-command:
-
-----
-$ ./configure --help
-----
-
-[[run_tests]]
-==== Run tests
+[[tests]]
+==== Tests
 
 Following packages are *required* to compile tests:
 
 * libcpputest-dev
 * C++ compiler
 
-Tests must be enabled when compiling WeeChat (with CMake):
+Tests must be enabled when compiling WeeChat:
 
 ----
 $ cmake .. -DENABLE_TESTS=ON
 ----
 
-They can be launched after compilation from the build directory (with CMake):
+They can be launched after compilation from the build directory:
 
 ----
 $ ctest -V

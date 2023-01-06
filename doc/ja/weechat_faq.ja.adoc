@@ -51,16 +51,15 @@ https://weechat.org/about/interfaces/[remote interfaces page ^↗^,window=_blan
 [[compile_git]]
 === git リポジトリをクローンした後に WeeChat をコンパイルできません。
 
-WeeChat をコンパイルするには link:weechat_user.ja.html#compile_with_cmake[CMake ^↗^,window=_blank]
-を使うことが推奨されています。
+// TRANSLATION MISSING
+WeeChat must be compiled with CMake.
 
-link:weechat_user.ja.html#compile_with_autotools[autotools ^↗^,window=_blank] を使って (CMake を使わずに)
-コンパイルする場合、最新の autoconf と automake を使ってください。
+// TRANSLATION MISSING
+Please follow link:weechat_user.en.html#source_package[build instructions ^↗^,window=_blank]
+and ensure all required dependencies are installed.
 
-他には「開発パッケージ」をインストール方法があります。この場合、インストールするのに必要なパッケージの数が減ります。このパッケージは
-git リポジトリからほぼ毎日ビルドされます。このパッケージは厳密には
-git ベースではなく、アップデートをインストールする場合には
-git をクローンする方法よりも不便であることに注意してください。
+// TRANSLATION MISSING
+If you still have issues, please report them to the developers.
 
 [[compile_macos]]
 === どうすれば macOS に WeeChat をインストールできますか?

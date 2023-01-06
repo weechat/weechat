@@ -1235,11 +1235,8 @@ _component_ には以下から 1 つ選んで記入してください:
   WeeChat core
 
 | build
-| autogen.sh +
-  CMakeLists.txt +
+| CMakeLists.txt +
   cmake/* +
-  configure.ac +
-  Makefile.am +
   tools/* +
   weechat.cygport.in +
   weechat.spec |

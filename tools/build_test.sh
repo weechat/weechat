@@ -20,18 +20,13 @@
 
 #
 # Build WeeChat according to environment variables:
-#   - BUILDTOOL: cmake or autotools
-#   - BUILDARGS: arguments for cmake or configure commands
+#   - BUILDARGS: arguments for cmake command
 #
 # Syntax to run the script with environment variables:
-#   BUILDTOOL=cmake ./build_test.sh
-#   BUILDTOOL=autotools ./build_test.sh
-#   BUILDTOOL=cmake BUILDARGS="arguments" ./build_test.sh
-#   BUILDTOOL=autotools BUILDARGS="arguments" ./build_test.sh
+#   BUILDARGS="arguments" ./build_test.sh
 #
 # Syntax to run the script with arguments on command line:
-#   ./build_test.sh cmake [arguments]
-#   ./build_test.sh autotools [arguments]
+#   ./build_test.sh [arguments]
 #
 # This script is used to build WeeChat in CI environment.
 #
@@ -42,17 +37,7 @@ set -e
 BUILDDIR="build-tmp-$$"
 
 if [ $# -ge 1 ]; then
-    BUILDTOOL="$1"
-    shift
-fi
-
-if [ $# -ge 1 ]; then
     BUILDARGS="$*"
-fi
-
-if [ -z "$BUILDTOOL" ]; then
-    echo "Syntax: $0 cmake|autotools"
-    exit 1
 fi
 
 run ()
@@ -67,28 +52,16 @@ set -x
 mkdir "$BUILDDIR"
 cd "$BUILDDIR"
 
-if [ "$BUILDTOOL" = "cmake" ]; then
-    # build with CMake
-    run cmake .. -DENABLE_MAN=ON -DENABLE_DOC=ON -DENABLE_TESTS=ON "${BUILDARGS}"
-    if [ -f "build.ninja" ]; then
-        ninja -v
-        ninja -v changelog
-        ninja -v rn
-        sudo ninja install
-    else
-        make VERBOSE=1 --jobs="$(nproc)"
-        make VERBOSE=1 changelog
-        make VERBOSE=1 rn
-        sudo make install
-    fi
-    ctest -V
-fi
-
-if [ "$BUILDTOOL" = "autotools" ]; then
-    # build with autotools
-    ../autogen.sh
-    run ../configure --enable-man --enable-doc --enable-tests "${BUILDARGS}"
-    make --jobs="$(nproc)"
+run cmake .. -DENABLE_MAN=ON -DENABLE_DOC=ON -DENABLE_TESTS=ON "${BUILDARGS}"
+if [ -f "build.ninja" ]; then
+    ninja -v
+    ninja -v changelog
+    ninja -v rn
+    sudo ninja install
+else
+    make VERBOSE=1 --jobs="$(nproc)"
+    make VERBOSE=1 changelog
+    make VERBOSE=1 rn
     sudo make install
-    ./tests/tests -v
 fi
+ctest -V

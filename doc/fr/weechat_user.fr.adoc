@@ -95,8 +95,7 @@ https://github.com/weechat/weechat-container[weechat-container ^↗^,window=_bl
 [[source_package]]
 === Paquet source
 
-WeeChat peut être compilé avec CMake ou les autotools (CMake est la méthode
-recommandée).
+WeeChat doit être construit avec CMake.
 
 [NOTE]
 Sous macOS, vous pouvez utiliser https://brew.sh/[Homebrew ^↗^,window=_blank] :
@@ -105,17 +104,17 @@ Sous macOS, vous pouvez utiliser https://brew.sh/[Homebrew ^↗^,window=_blank]
 [[dependencies]]
 ==== Dépendances
 
-Le tableau suivant liste les paquets *requis* pour compiler WeeChat :
+Le tableau suivant liste les paquets *requis* pour construire WeeChat :
 
 [width="100%",cols="5,^3,.^15",options="header"]
 |===
 | Paquet ^(1)^ | Version | Fonctionnalités
 
 | compilateur C (gcc / clang) |
-| Construction.
+| Compilation des sources en C.
 
 | cmake | ≥ 3.0
-| Construction (autotools toujours possible, mais CMake est recommandé).
+| Construction.
 
 | pkg-config |
 | Détection des bibliothèques installées.
@@ -191,8 +190,8 @@ pouvez installer toutes les dépendances avec la commande :
 # apt-get build-dep weechat
 ----
 
-[[compile_with_cmake]]
-==== Compilation avec CMake
+[[build]]
+==== Construction
 
 * Installation dans les répertoires systèmes (nécessite les droits _root_) :
 
@@ -345,60 +344,21 @@ Ou avec l'interface Curses :
 $ ccmake ..
 ----
 
-[[compile_with_autotools]]
-==== Compilation avec autotools
-
-[WARNING]
-Seul CMake est officiellement supporté pour construire WeeChat. Vous ne devriez
-utiliser les autotools que si vous n'avez pas la possibilité d'utiliser CMake. +
-La compilation avec les autotools requiert plus de dépendances et est plus lente
-qu'avec CMake.
-
-* Installation dans les répertoires systèmes (nécessite les droits _root_) :
-
-----
-$ ./autogen.sh
-$ mkdir build
-$ cd build
-$ ../configure
-$ make
-$ sudo make install
-----
-
-* Installation dans un répertoire spécifique (par exemple dans votre "home") :
-
-----
-$ ./autogen.sh
-$ mkdir build
-$ cd build
-$ ../configure --prefix=/chemin/vers/répertoire
-$ make
-$ make install
-----
-
-Des options peuvent être utilisées pour le script _configure_, elles peuvent
-être affichées avec cette commande :
-
-----
-$ ./configure --help
-----
-
-[[run_tests]]
-==== Lancement des tests
+[[tests]]
+==== Tests
 
 Les paquets suivants sont nécessaires pour compiler les tests :
 
 * libcpputest-dev
 * C++ compiler
 
-Les tests doivent être activés pour compiler WeeChat (avec CMake) :
+Les tests doivent être activés pour compiler WeeChat :
 
 ----
 $ cmake .. -DENABLE_TESTS=ON
 ----
 
-Ils peuvent être lancés après compilation depuis le répertoire de construction
-(avec CMake) :
+Ils peuvent être lancés après compilation depuis le répertoire de construction :
 
 ----
 $ ctest -V

@@ -54,10 +54,6 @@ extern "C"
 
 #define WEECHAT_TESTS_HOME "./tmp_weechat_test"
 
-/* lib with tests on plugins when autotools is used to compile */
-#define WEECHAT_TESTS_PLUGINS_LIB_DEFAULT                       \
-    "./tests/.libs/lib_weechat_unit_tests_plugins.so.0.0.0"
-
 /* import tests from libs */
 /* core */
 IMPORT_TEST_GROUP(CoreArraylist);
@@ -320,7 +316,6 @@ main (int argc, char *argv[])
 {
     int rc, length, weechat_argc;
     char *weechat_tests_args, *args, **weechat_argv, *tests_plugins_lib;
-    const char *tests_plugins_lib_default = WEECHAT_TESTS_PLUGINS_LIB_DEFAULT;
     const char *ptr_path;
     void *handle;
 
@@ -384,7 +379,14 @@ main (int argc, char *argv[])
     /* load plugins tests */
     tests_plugins_lib = getenv ("WEECHAT_TESTS_PLUGINS_LIB");
     ptr_path = (tests_plugins_lib && tests_plugins_lib[0]) ?
-        tests_plugins_lib : tests_plugins_lib_default;
+        tests_plugins_lib : NULL;
+    if (!ptr_path)
+    {
+        fprintf (stderr,
+                 "ERROR: environment variable WEECHAT_TESTS_PLUGINS_LIB "
+                 "is not defined\n");
+        return 1;
+    }
     printf ("Loading tests on plugins: \"%s\"\n", ptr_path);
     handle = dlopen (ptr_path, RTLD_GLOBAL | RTLD_NOW);
     if (!handle)

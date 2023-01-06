@@ -1180,11 +1180,8 @@ Où _composant_ est :
 | cœur de WeeChat
 
 | build
-| autogen.sh +
-  CMakeLists.txt +
+| CMakeLists.txt +
   cmake/* +
-  configure.ac +
-  Makefile.am +
   tools/* +
   weechat.cygport.in +
   weechat.spec

@@ -99,7 +99,8 @@ https://github.com/weechat/weechat-container[weechat-container ^↗^,window=_bl
 [[source_package]]
 === Pakiety źródłowe
 
-WeeChat może być kompilowany za pomocą CMake lub autotools (CMake jest zalecany).
+// TRANSLATION MISSING
+WeeChat must be built with CMake.
 
 [NOTE]
 Na macOS możesz użyć https://brew.sh/[Homebrew ^↗^,window=_blank]:
@@ -108,18 +109,20 @@ Na macOS możesz użyć https://brew.sh/[Homebrew ^↗^,window=_blank]:
 [[dependencies]]
 ==== Zależności
 
-Poniższa tabela zawiera listę *wymaganych* zależności do skompilowania
+// TRANSLATION MISSING
+The following table shows the list of packages that are *required* to build
 WeeChat:
 
 [width="100%",cols="5,^3,.^15",options="header"]
 |===
 | Pakiet ^(1)^ | Wersja | Funkcje
 
+// TRANSLATION MISSING
 | kompilator C (gcc / clang) |
-| Kompilacja.
+| Compile C sources.
 
 | cmake | ≥ 3.0
-| Kompilacja (możliwe jest użycie autotools, jednak CMake jest zalecany).
+| Kompilacja.
 
 | pkg-config |
 | Wykrywa zainstalowane biblioteki.
@@ -195,8 +198,9 @@ za pomocą jednej komendy:
 # apt-get build-dep weechat
 ----
 
-[[compile_with_cmake]]
-==== Kompilacja z użyciem CMake
+// TRANSLATION MISSING
+[[build]]
+==== Build
 
 * Instalacja w katalogach systemowych (wymaga uprawnień użytkownika _root_):
 
@@ -348,59 +352,22 @@ Lub z interfejsem Curses:
 $ ccmake ..
 ----
 
-[[compile_with_autotools]]
-==== Kompilacja z użyciem autotools
-
-[WARNING]
-Oficjalne wsparcie do budowania WeeChat posiada tylko CMake. Powinieneś używać
-autotools tylko jeśli nie możesz użyć CMake. +
-Budowanie z użyciem autotools wymaga więcej zależności i jest wolniejsze niż
-z CMake.
-
-* Instalacja w katalogach systemowych (wymaga uprawnień użytkownika _root_):
-
-----
-$ ./autogen.sh
-$ mkdir build
-$ cd build
-$ ../configure
-$ make
-$ sudo make install
-----
-
-* Instalacja w wybranym katalogu (na przykład w katalogu domowym):
-
-----
-$ ./autogen.sh
-$ mkdir build
-$ cd build
-$ ../configure --prefix=/ścieżka/do/katalogu
-$ make
-$ make install
-----
-
-Opcje mogą zostać przekazane to skryptu _configure_, można je wyświetlić
-za pomocą tej komendy:
-
-----
-$ ./configure --help
-----
-
-[[run_tests]]
-==== Uruchamianie testów
+// TRANSLATION MISSING
+[[tests]]
+==== Tests
 
 Następujące pakiety są *wymagane* do kompilacji testów:
 
 * libcpputest-dev
 * kompilator C++
 
-Testy muszą być włączone podczas kompilacji WeeChat (z użyciem CMake):
+Testy muszą być włączone podczas kompilacji WeeChat:
 
 ----
 $ cmake .. -DENABLE_TESTS=ON
 ----
 
-Można je uruchomić po skompilowaniu z katalogu kompilacji (z użyciem CMake):
+Można je uruchomić po skompilowaniu z katalogu kompilacji:
 
 ----
 $ ctest -V

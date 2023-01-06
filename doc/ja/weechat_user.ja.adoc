@@ -105,7 +105,8 @@ repository.
 [[source_package]]
 === ソースパッケージ
 
-WeeChat は CMake または autotools を使ってコンパイルできます (CMake を使うことが推奨されています)。
+// TRANSLATION MISSING
+WeeChat must be built with CMake.
 
 [NOTE]
 macOS では https://brew.sh/[Homebrew ^↗^,window=_blank] を使ってください:
@@ -115,7 +116,7 @@ macOS では https://brew.sh/[Homebrew ^↗^,window=_blank] を使ってくだ�
 ==== 依存関係
 
 // TRANSLATION MISSING
-The following table shows the list of packages that are *required* to compile
+The following table shows the list of packages that are *required* to build
 WeeChat:
 
 [width="100%",cols="5,^3,.^15",options="header"]
@@ -123,11 +124,12 @@ WeeChat:
 // TRANSLATION MISSING
 | パッケージ ^(1)^ | バージョン | Features
 
+// TRANSLATION MISSING
 | C コンパイラ (gcc / clang) |
-| ビルド
+| Compile C sources.
 
 | cmake | ≥ 3.0
-| ビルド (autotools でも可能ですが、CMake を推奨します)
+| ビルド
 
 | pkg-config |
 | インストール済みライブラリを検出
@@ -211,8 +213,9 @@ Debian および Ubuntu
 # apt-get build-dep weechat
 ----
 
-[[compile_with_cmake]]
-==== CMake によるコンパイル
+// TRANSLATION MISSING
+[[build]]
+==== Build
 
 * システムディレクトリにインストールする場合 (_root_ 特権が必要です):
 
@@ -365,58 +368,22 @@ Curses インターフェースを使う場合は以下のコマンドを使っ�
 $ ccmake ..
 ----
 
-[[compile_with_autotools]]
-==== autotools によるコンパイル
-
-[WARNING]
-CMake 以外を用いた WeeChat のビルドは公式にサポートされません。CMake
-を利用できない場合のみ autotools を使ってください。 +
-autotools を用いてビルドする場合、CMake よりも多くの依存パッケージとより長い時間が必要です。
-
-* システムディレクトリにインストールする場合 (_root_ 特権が必要です):
-
-----
-$ ./autogen.sh
-$ mkdir build
-$ cd build
-$ ../configure
-$ make
-$ sudo make install
-----
-
-* 任意のディレクトリ (例えば自分のホームディレクトリ) にインストールする場合:
-
-----
-$ ./autogen.sh
-$ mkdir build
-$ cd build
-$ ../configure --prefix=/path/to/directory
-$ make
-$ make install
-----
-
-_configure_
-スクリプトに対してオプションを指定することができます、オプションを表示するには以下のコマンドを使ってください:
-
-----
-$ ./configure --help
-----
-
-[[run_tests]]
-==== テストの実行
+// TRANSLATION MISSING
+[[tests]]
+==== Tests
 
 テストをコンパイルするには以下のパッケージが *必須* です:
 
 * libcpputest-dev
 * C++ compiler
 
-テストは WeeChat のコンパイル時に有効化しなければいけません (CMake を使う場合):
+テストは WeeChat のコンパイル時に有効化しなければいけません:
 
 ----
 $ cmake .. -DENABLE_TESTS=ON
 ----
 
-コンパイル終了後、build ディレクトリでテストを起動してください (CMake を使う場合):
+コンパイル終了後、build ディレクトリでテストを起動してください:
 
 ----
 $ ctest -V
