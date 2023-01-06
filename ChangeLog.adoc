@@ -65,6 +65,7 @@ Tests::
 
 Build::
 
+  * core: add CMake test called "notests" when tests are not compiled
   * core: rename scripts: build-debian.sh to build_debian.sh, build-test.sh to build_test.sh, git-version.sh to set_git_version.sh
   * debian: change dependency guile-2.2-dev to guile-3.0-dev
   * python: remove support of Python 2.x
