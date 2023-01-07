@@ -58,6 +58,7 @@ Bug fixes::
 
 Tests::
 
+  * ci: remove use of repository ppa:ondrej/php, use standard PHP version (8.1) from Ubuntu 22.04
   * core: add script check_scripts.sh
   * core: add script check_curl_symbols.py
   * gui: add tests on input functions
