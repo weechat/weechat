@@ -828,7 +828,7 @@ if test "x$enable_php" = "xyes" ; then
 
     PHP_CFLAGS=""
     PHP_LFLAGS=""
-    PHP_VERSIONS="8.1 81 8.0 80 8 7.4 74 7.3 73 7.2 72 7.1 71 7.0 70 7 $php_suffix"
+    PHP_VERSIONS="8.2 82 8.1 81 8.0 80 8 7.4 74 7.3 73 7.2 72 7.1 71 7.0 70 7 $php_suffix"
 
     if test -n "$php_inc"; then
        CFLAGS="$CFLAGS -I$php_inc"
