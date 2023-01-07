@@ -138,8 +138,8 @@ Bug fixes::
 
 Tests::
 
-  * core: switch from Ubuntu 20.04 to 22.04 in CI
-  * core: remove macOS 10.15, add macOS 12 in CI
+  * ci: switch from Ubuntu 20.04 to 22.04
+  * ci: remove macOS 10.15, add macOS 12
   * core: add tests on filter functions
   * scripts: add tests on hdata functions
   * scripts: fix run of Guile test script
@@ -209,8 +209,8 @@ Bug fixes::
 
 Tests::
 
+  * ci: add build of Debian packages
   * core: add tests on GUI chat functions
-  * core: add build of Debian packages in CI
 
 Build::
 
@@ -259,8 +259,8 @@ Documentation::
 
 Tests::
 
-  * core: add build with CMake and Ninja in CI
-  * core: add build on macOS 11 in CI
+  * ci: add build with CMake and Ninja
+  * ci: add build on macOS 11
 
 Build::
 
@@ -313,8 +313,8 @@ Documentation::
 
 Tests::
 
-  * core: switch to PHP 8.0 in CI
-  * core: add build on macOS in CI
+  * ci: switch to PHP 8.0
+  * ci: add build on macOS
 
 Build::
 
@@ -376,7 +376,7 @@ Bug fixes::
 
 Tests::
 
-  * core: switch from Ubuntu 18.04 to 20.04 in CI
+  * ci: switch from Ubuntu 18.04 to 20.04
   * trigger: add tests on main trigger functions
 
 Build::
@@ -537,8 +537,8 @@ Documentation::
 
 Tests::
 
-  * core: add CI with GitHub Actions, move codecov.io upload to GitHub Actions
-  * core: switch to Ubuntu Bionic on Travis CI, use pylint3 to lint Python scripts
+  * ci: add CI with GitHub Actions, move codecov.io upload to GitHub Actions
+  * ci: switch to Ubuntu Bionic on Travis CI, use pylint3 to lint Python scripts
   * core: run tests on plugins only if the plugins are enabled and compiled
   * irc: add tests on IRC color and channel functions
 
