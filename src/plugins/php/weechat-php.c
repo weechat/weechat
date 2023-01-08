@@ -545,7 +545,6 @@ weechat_php_exec (struct t_plugin_script *script, int ret_type,
     zval *params;
     zval zretval;
     void *ret_value;
-    int *ret_i;
     zend_fcall_info fci;
     zend_fcall_info_cache fci_cache;
     struct t_plugin_script *old_php_current_script;
@@ -558,14 +557,12 @@ weechat_php_exec (struct t_plugin_script *script, int ret_type,
     /* Build func args */
     if (!format || !format[0])
     {
-        argc = 0;
         params = NULL;
     }
     else
     {
         argc = strlen (format);
         params = safe_emalloc (sizeof (zval), argc, 0);
-
         for (i = 0; i < argc; i++)
         {
             switch (format[i])
@@ -596,7 +593,7 @@ weechat_php_exec (struct t_plugin_script *script, int ret_type,
     if (zfunc && zend_fcall_info_init (zfunc, 0, &fci, &fci_cache, NULL, NULL) == SUCCESS)
     {
         fci.params = params;
-        fci.param_count = argc;
+        fci.param_count = (format) ? strlen (format) : 0;
         fci.retval = &zretval;
     }
 
@@ -619,9 +616,8 @@ weechat_php_exec (struct t_plugin_script *script, int ret_type,
             else if (ret_type == WEECHAT_SCRIPT_EXEC_INT)
             {
                 convert_to_long (&zretval);
-                ret_i = malloc (sizeof (*ret_i));
-                *ret_i = Z_LVAL(zretval);
-                ret_value = ret_i;
+                ret_value = malloc (sizeof (int));
+                *((int *)ret_value) = Z_LVAL(zretval);
             }
             else if (ret_type == WEECHAT_SCRIPT_EXEC_HASHTABLE)
             {
@@ -662,6 +658,7 @@ weechat_php_exec (struct t_plugin_script *script, int ret_type,
     /* Cleanup */
     if (params)
     {
+        argc = (format) ? strlen (format) : 0;
         for (i = 0; i < argc; i++)
         {
             zval_ptr_dtor (&params[i]);
