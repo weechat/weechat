@@ -784,93 +784,59 @@ char *
 dir_search_full_lib_name_ext (const char *filename, const char *extension,
                               const char *plugins_dir)
 {
-    char *name_with_ext, *final_name, *extra_libdir;
-    int length;
+    char name_with_ext[256], final_name[PATH_MAX], *extra_libdir;
     struct stat st;
+    int rc;
 
-    length = strlen (filename) + strlen (extension) + 1;
-    name_with_ext = malloc (length);
-    if (!name_with_ext)
+    rc = snprintf (name_with_ext, sizeof (name_with_ext),
+                   "%s%s",
+                   filename,
+                   (strchr (filename, '.')) ? "" : extension);
+    if ((rc < 0) || (rc >= (int)sizeof (name_with_ext)))
         return NULL;
-    snprintf (name_with_ext, length,
-              "%s%s",
-              filename,
-              (strchr (filename, '.')) ? "" : extension);
 
     /* try libdir from environment variable WEECHAT_EXTRA_LIBDIR */
     extra_libdir = getenv (WEECHAT_EXTRA_LIBDIR);
     if (extra_libdir && extra_libdir[0])
     {
-        length = strlen (extra_libdir) + strlen (name_with_ext) +
-            strlen (plugins_dir) + 16;
-        final_name = malloc (length);
-        if (!final_name)
-        {
-            free (name_with_ext);
+        rc = snprintf (final_name, sizeof (final_name),
+                       "%s%s%s%s%s",
+                       extra_libdir,
+                       DIR_SEPARATOR,
+                       plugins_dir,
+                       DIR_SEPARATOR,
+                       name_with_ext);
+        if ((rc < 0) || (rc >= (int)sizeof (final_name)))
             return NULL;
-        }
-        snprintf (final_name, length,
-                  "%s%s%s%s%s",
-                  extra_libdir,
-                  DIR_SEPARATOR,
-                  plugins_dir,
-                  DIR_SEPARATOR,
-                  name_with_ext);
         if ((stat (final_name, &st) == 0) && (st.st_size > 0))
-        {
-            free (name_with_ext);
-            return final_name;
-        }
-        free (final_name);
+            return strdup (final_name);
     }
 
     /* try WeeChat user's dir */
-    length = strlen (weechat_data_dir) + strlen (name_with_ext) +
-        strlen (plugins_dir) + 16;
-    final_name = malloc (length);
-    if (!final_name)
-    {
-        free (name_with_ext);
+    rc = snprintf (final_name, sizeof (final_name),
+                   "%s%s%s%s%s",
+                   weechat_data_dir,
+                   DIR_SEPARATOR,
+                   plugins_dir,
+                   DIR_SEPARATOR,
+                   name_with_ext);
+    if ((rc < 0) || (rc >= (int)sizeof (final_name)))
         return NULL;
-    }
-    snprintf (final_name, length,
-              "%s%s%s%s%s",
-              weechat_data_dir,
-              DIR_SEPARATOR,
-              plugins_dir,
-              DIR_SEPARATOR,
-              name_with_ext);
     if ((stat (final_name, &st) == 0) && (st.st_size > 0))
-    {
-        free (name_with_ext);
-        return final_name;
-    }
-    free (final_name);
+        return strdup (final_name);
 
     /* try WeeChat global lib dir */
-    length = strlen (WEECHAT_LIBDIR) + strlen (name_with_ext) +
-        strlen (plugins_dir) + 16;
-    final_name = malloc (length);
-    if (!final_name)
-    {
-        free (name_with_ext);
+    rc = snprintf (final_name, sizeof (final_name),
+                   "%s%s%s%s%s",
+                   WEECHAT_LIBDIR,
+                   DIR_SEPARATOR,
+                   plugins_dir,
+                   DIR_SEPARATOR,
+                   name_with_ext);
+    if ((rc < 0) || (rc >= (int)sizeof (final_name)))
         return NULL;
-    }
-    snprintf (final_name, length,
-              "%s%s%s%s%s",
-              WEECHAT_LIBDIR,
-              DIR_SEPARATOR,
-              plugins_dir,
-              DIR_SEPARATOR,
-              name_with_ext);
     if ((stat (final_name, &st) == 0) && (st.st_size > 0))
-    {
-        free (name_with_ext);
-        return final_name;
-    }
-    free (final_name);
-
-    free (name_with_ext);
+        return strdup (final_name);
 
     return NULL;
 }
