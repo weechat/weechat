@@ -18,6 +18,9 @@ $(BUILDDIR)/Makefile:
 		-DCMAKE_SKIP_RPATH:BOOL=ON \
 		-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
 
+override_dh_auto_configure:
+	echo
+
 override_dh_auto_build: $(BUILDDIR)/Makefile
 	dh_auto_build
 
