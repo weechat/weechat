@@ -18,6 +18,10 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 [[v3.9]]
 == Version 3.9 (under dev)
 
+Bug fixes::
+
+  * typing: fix crash when pointer buffer is not received in callback for signal "input_text_changed" (issue #1869)
+
 Build::
 
   * core: remove build with autotools (issue #1860)

@@ -94,7 +94,7 @@ typing_buffer_closing_signal_cb (const void *pointer, void *data,
 }
 
 /*
- * Callback for signal "buffer_closing".
+ * Callback for signal "input_text_changed".
  */
 
 int
@@ -113,7 +113,12 @@ typing_input_text_changed_signal_cb (const void *pointer, void *data,
     (void) signal;
     (void) type_data;
 
+    if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_POINTER) != 0)
+        return WEECHAT_RC_OK;
+
     ptr_buffer = (struct t_gui_buffer *)signal_data;
+    if (!ptr_buffer)
+        return WEECHAT_RC_OK;
 
     /* ignore any change in input if the user is searching text in the buffer */
     text_search = weechat_buffer_get_integer (ptr_buffer, "text_search");
