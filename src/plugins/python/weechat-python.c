@@ -720,8 +720,6 @@ weechat_python_set_output ()
 struct t_plugin_script *
 weechat_python_load (const char *filename, const char *code)
 {
-    char *argv[] = { "__weechat_plugin__" , NULL };
-    wchar_t *wargv[] = { NULL, NULL };
     FILE *fp;
     PyObject *python_path, *path, *module_main, *globals, *rc;
     char *weechat_sharedir, *weechat_data_dir;
@@ -755,20 +753,6 @@ weechat_python_load (const char *filename, const char *code)
 
     /* PyEval_AcquireLock (); */
     python_current_interpreter = Py_NewInterpreter ();
-    len = mbstowcs (NULL, argv[0], 0) + 1;
-    wargv[0] = malloc ((len + 1) * sizeof (wargv[0][0]));
-    if (wargv[0])
-    {
-        if (mbstowcs (wargv[0], argv[0], len) == (size_t)(-1))
-        {
-            free (wargv[0]);
-            wargv[0] = NULL;
-        }
-        PySys_SetArgv (1, wargv);
-        if (wargv[0])
-            free (wargv[0]);
-    }
-
     if (!python_current_interpreter)
     {
         weechat_printf (NULL,
