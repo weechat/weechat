@@ -17,6 +17,15 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 (file _ChangeLog.adoc_ in sources).
 
 
+[[v3.9]]
+== Version 3.9 (under dev)
+
+[[v3.9_remove_autotools]]
+=== Remove build with autotools
+
+The autotools support for build of WeeChat has been removed. +
+WeeChat must now be built with CMake.
+
 [[v3.8]]
 == Version 3.8 (2023-01-08)
 
