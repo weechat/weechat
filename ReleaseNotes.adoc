@@ -76,6 +76,11 @@ compared UTF-8 char in string2 from the last compared UTF-8 char in string1:
 * string_strncasecmp_range
 * string_strcmp_ignore_chars
 
+In addition, the case conversion has been extended, now in addition to range
+A-Z, all chars that have a lower case version are handled. +
+That means for example the case insensitive comparison of "é" and "É" is 0
+(chars are considered equal).
+
 Example with WeeChat 3.8:
 
 [source,c]
