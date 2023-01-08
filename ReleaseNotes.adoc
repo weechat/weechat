@@ -18,7 +18,7 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 
 
 [[v3.8]]
-== Version 3.8 (under dev)
+== Version 3.8 (2023-01-08)
 
 [[v3.8_command_input_options]]
 === Move of options out of command /input

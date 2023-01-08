@@ -16,7 +16,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 
 [[v3.8]]
-== Version 3.8 (under dev)
+== Version 3.8 (2023-01-08)
 
 New features::
 
