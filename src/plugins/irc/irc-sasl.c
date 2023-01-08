@@ -115,7 +115,7 @@ irc_sasl_mechanism_scram (struct t_irc_server *server,
     char client_signature[512 / 8], client_proof[512 / 8];
     char client_proof_base64[((512 / 8) * 4) + 1], server_key[512 / 8];
     char server_signature[512 / 8];
-    int i, length, num_attrs, iterations, salt_size, salted_password_size;
+    int i, rc, length, num_attrs, iterations, salt_size, salted_password_size;
     int client_key_size, stored_key_size, client_signature_size;
     int server_key_size, server_signature_size, verifier_size;
     long number;
@@ -344,10 +344,12 @@ irc_sasl_mechanism_scram (struct t_irc_server *server,
             auth_message = malloc (length);
             if (!auth_message)
                 goto memory_error;
-            snprintf (auth_message, length, "%s,%s,%s",
-                      server->sasl_scram_client_first,
-                      data,
-                      auth_no_proof);
+            rc = snprintf (auth_message, length, "%s,%s,%s",
+                           server->sasl_scram_client_first,
+                           data,
+                           auth_no_proof);
+            if ((rc < 0) || (rc >= length))
+                goto memory_error;
             if (server->sasl_scram_auth_message)
                 free (server->sasl_scram_auth_message);
             server->sasl_scram_auth_message = strdup (auth_message);
@@ -374,9 +376,11 @@ irc_sasl_mechanism_scram (struct t_irc_server *server,
             /* final message: auth_no_proof + "," + proof */
             length = strlen (auth_no_proof) + 3 + strlen (client_proof_base64);
             string = malloc (length + 1);
-            snprintf (string, length + 1, "%s,p=%s",
-                      auth_no_proof,
-                      client_proof_base64);
+            rc = snprintf (string, length + 1, "%s,p=%s",
+                           auth_no_proof,
+                           client_proof_base64);
+            if ((rc < 0) || (rc >= length + 1))
+                goto memory_error;
         }
     }
     goto end;
