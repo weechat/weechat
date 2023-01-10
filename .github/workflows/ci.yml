@@ -85,7 +85,7 @@ jobs:
           - macos-11
         config:
           - { name: "gcc", cc: "gcc", cxx: "g++" }
-          - { name: "ang", cc: "clang", cxx: "clang++" }
+          - { name: "clang", cc: "clang", cxx: "clang++" }
 
     name: "Tests: ${{ matrix.config.name }} on ${{ matrix.os }}"
     runs-on: ${{ matrix.os }}
