@@ -66,7 +66,7 @@ jobs:
         weechat --run-command "/debug dirs;/debug libs" --run-command "/quit"
 
     - name: Code coverage
-      if: ${{ matrix.config.name == 'cmake_gcc_coverage' }}
+      if: ${{ matrix.config.name == 'gcc_coverage' }}
       env:
         CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
       run: |
@@ -84,8 +84,8 @@ jobs:
           - macos-12
           - macos-11
         config:
-          - { name: "cmake_gcc", cc: "gcc", cxx: "g++" }
-          - { name: "cmake_clang", cc: "clang", cxx: "clang++" }
+          - { name: "gcc", cc: "gcc", cxx: "g++" }
+          - { name: "ang", cc: "clang", cxx: "clang++" }
 
     name: "Tests: ${{ matrix.config.name }} on ${{ matrix.os }}"
     runs-on: ${{ matrix.os }}
