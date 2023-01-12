@@ -107,6 +107,8 @@ COMMAND_CALLBACK(allbuf)
 
     all_buffers = arraylist_new (gui_buffers_count, 0, 0,
                                  NULL, NULL, NULL, NULL);
+    if (!all_buffers)
+        COMMAND_ERROR;
 
     for (ptr_buffer = gui_buffers; ptr_buffer;
          ptr_buffer = ptr_buffer->next_buffer)
@@ -1057,6 +1059,8 @@ COMMAND_CALLBACK(buffer)
     if (string_strcasecmp (argv[1], "close") == 0)
     {
         buffers_to_close = arraylist_new (32, 0, 0, NULL, NULL, NULL, NULL);
+        if (!buffers_to_close)
+            COMMAND_ERROR;
 
         if (argc < 3)
         {
