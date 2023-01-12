@@ -2635,7 +2635,7 @@ config_weechat_init_options ()
     char section_name[128];
 
     weechat_config_file = config_file_new (
-        NULL, WEECHAT_CONFIG_NAME, &config_weechat_reload_cb, NULL, NULL);
+        NULL, WEECHAT_CONFIG_PRIO_NAME, &config_weechat_reload_cb, NULL, NULL);
     if (!weechat_config_file)
         return 0;
 

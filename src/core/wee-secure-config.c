@@ -446,7 +446,7 @@ secure_config_init_options ()
 {
     struct t_config_section *ptr_section;
 
-    secure_config_file = config_file_new (NULL, SECURE_CONFIG_NAME,
+    secure_config_file = config_file_new (NULL, SECURE_CONFIG_PRIO_NAME,
                                           &secure_config_reload_cb, NULL, NULL);
     if (!secure_config_file)
         return 0;
