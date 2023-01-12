@@ -120,9 +120,8 @@ COMMAND_CALLBACK(allbuf)
     for (i = 0; i < list_size; i++)
     {
         ptr_buffer = (struct t_gui_buffer *)arraylist_get (all_buffers, i);
-        if (!gui_buffer_valid (ptr_buffer))
-            continue;
-        (void) input_data (ptr_buffer, argv_eol[1], NULL);
+        if (gui_buffer_valid (ptr_buffer))
+            (void) input_data (ptr_buffer, argv_eol[1], NULL);
     }
 
     arraylist_free (all_buffers);
