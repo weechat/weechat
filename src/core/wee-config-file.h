@@ -169,6 +169,7 @@ struct t_config_option
 extern struct t_config_file *config_files;
 extern struct t_config_file *last_config_file;
 
+extern int config_file_valid (struct t_config_file *config_file);
 extern struct t_config_file *config_file_search (const char *name);
 extern struct t_config_file *config_file_new (struct t_weechat_plugin *plugin,
                                               const char *name,

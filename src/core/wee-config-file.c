@@ -60,6 +60,33 @@ void config_file_option_free_data (struct t_config_option *option);
 
 
 /*
+ * Checks if a configuration file pointer is valid.
+ *
+ * Returns:
+ *   1: configuration file exists
+ *   0: configuration file does not exist
+ */
+
+int
+config_file_valid (struct t_config_file *config_file)
+{
+    struct t_config_file *ptr_config;
+
+    if (!config_file)
+        return 0;
+
+    for (ptr_config = config_files; ptr_config;
+         ptr_config = ptr_config->next_config)
+    {
+        if (ptr_config == config_file)
+            return 1;
+    }
+
+    /* configuration file not found */
+    return 0;
+}
+
+/*
  * Searches for a configuration file.
  */
 
@@ -67,15 +94,19 @@ struct t_config_file *
 config_file_search (const char *name)
 {
     struct t_config_file *ptr_config;
+    int rc;
 
     if (!name)
         return NULL;
 
-    for (ptr_config = config_files; ptr_config;
-         ptr_config = ptr_config->next_config)
+    for (ptr_config = last_config_file; ptr_config;
+         ptr_config = ptr_config->prev_config)
     {
-        if (string_strcasecmp (ptr_config->name, name) == 0)
+        rc = string_strcasecmp (ptr_config->name, name);
+        if (rc == 0)
             return ptr_config;
+        else if (rc < 0)
+            break;
     }
 
     /* configuration file not found */
@@ -88,7 +119,7 @@ config_file_search (const char *name)
  */
 
 struct t_config_file *
-config_file_config_find_pos (const char *name)
+config_file_find_pos (const char *name)
 {
     struct t_config_file *ptr_config;
 
@@ -104,6 +135,51 @@ config_file_config_find_pos (const char *name)
 
     /* position not found (we will add to the end of list) */
     return NULL;
+}
+
+/*
+ * Inserts a configuration file (keeping files sorted by name).
+ */
+
+void
+config_file_config_insert (struct t_config_file *config_file)
+{
+    struct t_config_file *pos_config;
+
+    if (!config_file)
+        return;
+
+    if (config_files)
+    {
+        pos_config = config_file_find_pos (config_file->name);
+        if (pos_config)
+        {
+            /* insert config into the list (before config found) */
+            config_file->prev_config = pos_config->prev_config;
+            config_file->next_config = pos_config;
+            if (pos_config->prev_config)
+                (pos_config->prev_config)->next_config = config_file;
+            else
+                config_files = config_file;
+            pos_config->prev_config = config_file;
+        }
+        else
+        {
+            /* add config to the end */
+            config_file->prev_config = last_config_file;
+            config_file->next_config = NULL;
+            last_config_file->next_config = config_file;
+            last_config_file = config_file;
+        }
+    }
+    else
+    {
+        /* first config */
+        config_file->prev_config = NULL;
+        config_file->next_config = NULL;
+        config_files = config_file;
+        last_config_file = config_file;
+    }
 }
 
 /*
@@ -168,13 +244,7 @@ config_file_new (struct t_weechat_plugin *plugin, const char *name,
         new_config_file->sections = NULL;
         new_config_file->last_section = NULL;
 
-        new_config_file->prev_config = last_config_file;
-        new_config_file->next_config = NULL;
-        if (last_config_file)
-            last_config_file->next_config = new_config_file;
-        else
-            config_files = new_config_file;
-        last_config_file = new_config_file;
+        config_file_config_insert (new_config_file);
     }
 
     return new_config_file;

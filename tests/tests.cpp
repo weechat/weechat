@@ -222,22 +222,23 @@ record_stop ()
  * The format of "message" argument is: "prefix message" (prefix and message
  * separated by a space).
  *
- * Returns:
- *   1: message has been displayed
- *   0: message has NOT been displayed
+ * Returns index of message displayed (≥ 0), -1 if message has NOT been
+ * displayed.
  */
 
 int
 record_search (const char *buffer, const char *message)
 {
     char str_message[8192];
+    int index;
 
     snprintf (str_message, sizeof (str_message),
               "%s: \"%s\"",
               buffer, message);
 
-    return (arraylist_search (recorded_messages, str_message,
-                              NULL, NULL) != NULL);
+    arraylist_search (recorded_messages, str_message, &index, NULL);
+
+    return index;
 }
 
 /*

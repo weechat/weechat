@@ -42,7 +42,7 @@ extern "C"
     command_record ("core.weechat", __command);
 
 #define WEE_CHECK_MSG_BUFFER(__buffer_name, __message)                  \
-    if (!record_search (__buffer_name, __message))                      \
+    if (record_search (__buffer_name, __message) < 0)                   \
     {                                                                   \
         char **msg = command_build_error (                              \
             "Message not displayed on buffer " __buffer_name ": "       \
@@ -54,6 +54,8 @@ extern "C"
 
 #define WEE_CHECK_MSG_CORE(__message)                                   \
     WEE_CHECK_MSG_BUFFER("core.weechat", __message);
+#define WEE_SEARCH_MSG_CORE(__message)                                  \
+    record_search ("core.weechat", __message)
 
 
 TEST_GROUP(CoreCommand)
@@ -369,7 +371,12 @@ TEST(CoreCommand, Quit)
 
 TEST(CoreCommand, Reload)
 {
-    /* TODO: write tests */
+    WEE_CMD_CORE("/save");
+    WEE_CMD_CORE("/reload");
+    LONGS_EQUAL(0, WEE_SEARCH_MSG_CORE("Options reloaded from sec.conf"));
+    LONGS_EQUAL(1, WEE_SEARCH_MSG_CORE("Options reloaded from weechat.conf"));
+    LONGS_EQUAL(2, WEE_SEARCH_MSG_CORE("Options reloaded from plugins.conf"));
+    LONGS_EQUAL(3, WEE_SEARCH_MSG_CORE("Options reloaded from charset.conf"));
 }
 
 /*

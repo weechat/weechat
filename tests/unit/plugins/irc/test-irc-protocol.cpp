@@ -78,7 +78,7 @@ extern char *irc_protocol_cap_to_enable (const char *capabilities,
     server_recv (__irc_msg);
 
 #define CHECK_CORE(__message)                                           \
-    if (!record_search ("core.weechat", __message))                     \
+    if (record_search ("core.weechat", __message) < 0)                  \
     {                                                                   \
         char **msg = server_build_error (                               \
             "Core message not displayed",                               \
@@ -89,7 +89,7 @@ extern char *irc_protocol_cap_to_enable (const char *capabilities,
     }
 
 #define CHECK_SRV(__message)                                            \
-    if (!record_search ("irc.server." IRC_FAKE_SERVER, __message))      \
+    if (record_search ("irc.server." IRC_FAKE_SERVER, __message) < 0)   \
     {                                                                   \
         char **msg = server_build_error (                               \
             "Server message not displayed",                             \
@@ -113,7 +113,7 @@ extern char *irc_protocol_cap_to_enable (const char *capabilities,
               "(please report to developers): \"" __message "\"");
 
 #define CHECK_CHAN(__message)                                           \
-    if (!record_search ("irc." IRC_FAKE_SERVER ".#test", __message))    \
+    if (record_search ("irc." IRC_FAKE_SERVER ".#test", __message) < 0) \
     {                                                                   \
         char **msg = server_build_error (                               \
             "Channel message not displayed",                            \
@@ -124,7 +124,8 @@ extern char *irc_protocol_cap_to_enable (const char *capabilities,
     }
 
 #define CHECK_PV(__nick, __message)                                     \
-    if (!record_search ("irc." IRC_FAKE_SERVER "." __nick, __message))  \
+    if (record_search ("irc." IRC_FAKE_SERVER "." __nick,               \
+                       __message) < 0)                                  \
     {                                                                   \
         char **msg = server_build_error (                               \
             "Private message not displayed",                            \

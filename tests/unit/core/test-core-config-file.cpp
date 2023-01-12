@@ -32,6 +32,7 @@ extern "C"
 #include "src/gui/gui-color.h"
 #include "src/plugins/plugin.h"
 
+extern struct t_config_file *config_file_find_pos (const char *name);
 extern char *config_file_option_full_name (struct t_config_option *option);
 extern int config_file_string_boolean_is_valid (const char *text);
 extern const char *config_file_option_escape (const char *name);
@@ -40,6 +41,20 @@ extern const char *config_file_option_escape (const char *name);
 TEST_GROUP(CoreConfigFile)
 {
 };
+
+/*
+ * Tests functions:
+ *   config_file_valid
+ */
+
+TEST(CoreConfigFile, Valid)
+{
+    LONGS_EQUAL(0, config_file_valid (NULL));
+    LONGS_EQUAL(0, config_file_valid ((struct t_config_file *)0x1));
+
+    LONGS_EQUAL(1, config_file_valid (config_file_search ("weechat")));
+    LONGS_EQUAL(1, config_file_valid (config_file_search ("sec")));
+}
 
 /*
  * Tests functions:
@@ -58,10 +73,23 @@ TEST(CoreConfigFile, Search)
 
 /*
  * Tests functions:
- *   config_file_config_find_pos
+ *   config_file_find_pos
  */
 
 TEST(CoreConfigFile, FindPos)
+{
+    POINTERS_EQUAL(NULL, config_file_find_pos (NULL));
+    POINTERS_EQUAL(config_files, config_file_find_pos (""));
+    POINTERS_EQUAL(weechat_config_file->next_config, config_file_find_pos ("weechat"));
+    POINTERS_EQUAL(weechat_config_file->next_config, config_file_find_pos ("WEECHAT"));
+}
+
+/*
+ * Tests functions:
+ *   config_file_config_insert
+ */
+
+TEST(CoreConfigFile, ConfigInsert)
 {
     /* TODO: write tests */
 }
