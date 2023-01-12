@@ -63,7 +63,7 @@
             argv[0],                                                    \
             (__option && __option[0]) ? " " : "",                       \
             (__option && __option[0]) ? __option : "",                  \
-            argv[0] + 1);                                               \
+            utf8_next_char (argv[0]));                                  \
         return WEECHAT_RC_ERROR;                                        \
     }
 
@@ -76,7 +76,7 @@
               "(help on command: /help %s)"),                           \
             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],                     \
             argv_eol[0],                                                \
-            argv[0] + 1);                                               \
+            utf8_next_char (argv[0]));                                  \
         return WEECHAT_RC_ERROR;                                        \
     }
 

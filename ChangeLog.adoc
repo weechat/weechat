@@ -20,6 +20,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 Bug fixes::
 
+  * core: fix display glitch in command errors when a wide char is set in option weechat.look.command_chars (issue #1871)
   * typing: fix crash when pointer buffer is not received in callback for signal "input_text_changed" (issue #1869)
 
 Build::
