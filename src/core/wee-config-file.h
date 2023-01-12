@@ -218,7 +218,7 @@ extern struct t_config_section *config_file_new_section (struct t_config_file *c
                                                          const void *callback_delete_option_pointer,
                                                          void *callback_delete_option_data);
 extern struct t_config_section *config_file_search_section (struct t_config_file *config_file,
-                                                            const char *section_name);
+                                                            const char *name);
 extern struct t_config_option *config_file_new_option (struct t_config_file *config_file,
                                                        struct t_config_section *section,
                                                        const char *name, const char *type,

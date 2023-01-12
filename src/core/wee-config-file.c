@@ -123,14 +123,14 @@ config_file_find_pos (const char *name)
 {
     struct t_config_file *ptr_config;
 
-    if (name)
+    if (!name)
+        return NULL;
+
+    for (ptr_config = config_files; ptr_config;
+         ptr_config = ptr_config->next_config)
     {
-        for (ptr_config = config_files; ptr_config;
-             ptr_config = ptr_config->next_config)
-        {
-            if (string_strcasecmp (name, ptr_config->name) < 0)
-                return ptr_config;
-        }
+        if (string_strcasecmp (name, ptr_config->name) < 0)
+            return ptr_config;
     }
 
     /* position not found (we will add to the end of list) */
@@ -261,14 +261,14 @@ config_file_section_find_pos (struct t_config_file *config_file,
 {
     struct t_config_section *ptr_section;
 
-    if (config_file && name)
+    if (!config_file || !name)
+        return NULL;
+
+    for (ptr_section = config_file->sections; ptr_section;
+         ptr_section = ptr_section->next_section)
     {
-        for (ptr_section = config_file->sections; ptr_section;
-             ptr_section = ptr_section->next_section)
-        {
-            if (string_strcasecmp (name, ptr_section->name) < 0)
-                return ptr_section;
-        }
+        if (string_strcasecmp (name, ptr_section->name) < 0)
+            return ptr_section;
     }
 
     /* position not found (we will add to the end of list) */
@@ -378,17 +378,17 @@ config_file_new_section (struct t_config_file *config_file, const char *name,
 
 struct t_config_section *
 config_file_search_section (struct t_config_file *config_file,
-                            const char *section_name)
+                            const char *name)
 {
     struct t_config_section *ptr_section;
 
-    if (!config_file || !section_name)
+    if (!config_file || !name)
         return NULL;
 
     for (ptr_section = config_file->sections; ptr_section;
          ptr_section = ptr_section->next_section)
     {
-        if (string_strcasecmp (ptr_section->name, section_name) == 0)
+        if (string_strcasecmp (ptr_section->name, name) == 0)
             return ptr_section;
     }
 
@@ -435,48 +435,52 @@ config_file_hook_config_exec (struct t_config_option *option)
 {
     char *option_full_name, str_value[256];
 
-    if (option)
-    {
-        option_full_name = config_file_option_full_name (option);
-        if (option_full_name)
-        {
-            if (option->value)
-            {
-                switch (option->type)
-                {
-                    case CONFIG_OPTION_TYPE_BOOLEAN:
-                        hook_config_exec (option_full_name,
-                                          (CONFIG_BOOLEAN(option) == CONFIG_BOOLEAN_TRUE) ?
-                                          "on" : "off");
-                        break;
-                    case CONFIG_OPTION_TYPE_INTEGER:
-                        if (option->string_values)
-                            hook_config_exec (option_full_name,
-                                              option->string_values[CONFIG_INTEGER(option)]);
-                        else
-                        {
-                            snprintf (str_value, sizeof (str_value),
-                                      "%d", CONFIG_INTEGER(option));
-                            hook_config_exec (option_full_name, str_value);
-                        }
-                        break;
-                    case CONFIG_OPTION_TYPE_STRING:
-                        hook_config_exec (option_full_name, (char *)option->value);
-                        break;
-                    case CONFIG_OPTION_TYPE_COLOR:
-                        hook_config_exec (option_full_name,
-                                          gui_color_get_name (CONFIG_COLOR(option)));
-                        break;
-                    case CONFIG_NUM_OPTION_TYPES:
-                        break;
-                }
-            }
-            else
-                hook_config_exec (option_full_name, NULL);
+    if (!option)
+        return;
 
-            free (option_full_name);
+    option_full_name = config_file_option_full_name (option);
+    if (!option_full_name)
+        return;
+
+    if (option->value)
+    {
+        switch (option->type)
+        {
+            case CONFIG_OPTION_TYPE_BOOLEAN:
+                hook_config_exec (option_full_name,
+                                  (CONFIG_BOOLEAN(option) == CONFIG_BOOLEAN_TRUE) ?
+                                  "on" : "off");
+                break;
+            case CONFIG_OPTION_TYPE_INTEGER:
+                if (option->string_values)
+                {
+                    hook_config_exec (option_full_name,
+                                      option->string_values[CONFIG_INTEGER(option)]);
+                }
+                else
+                {
+                    snprintf (str_value, sizeof (str_value),
+                              "%d", CONFIG_INTEGER(option));
+                    hook_config_exec (option_full_name, str_value);
+                }
+                break;
+            case CONFIG_OPTION_TYPE_STRING:
+                hook_config_exec (option_full_name, (char *)option->value);
+                break;
+            case CONFIG_OPTION_TYPE_COLOR:
+                hook_config_exec (option_full_name,
+                                  gui_color_get_name (CONFIG_COLOR(option)));
+                break;
+            case CONFIG_NUM_OPTION_TYPES:
+                break;
         }
     }
+    else
+    {
+        hook_config_exec (option_full_name, NULL);
+    }
+
+    free (option_full_name);
 }
 
 /*
@@ -488,19 +492,17 @@ config_file_option_find_pos (struct t_config_section *section, const char *name)
 {
     struct t_config_option *ptr_option;
 
-    if (section && name)
+    if (!section || !name)
+        return NULL;
+
+    for (ptr_option = section->last_option; ptr_option;
+         ptr_option = ptr_option->prev_option)
     {
-        for (ptr_option = section->last_option; ptr_option;
-             ptr_option = ptr_option->prev_option)
-        {
-            if (string_strcasecmp (name, ptr_option->name) >= 0)
-                return ptr_option->next_option;
-        }
-        return section->options;
+        if (string_strcasecmp (name, ptr_option->name) >= 0)
+            return ptr_option->next_option;
     }
 
-    /* position not found (we will add to the end of list) */
-    return NULL;
+    return section->options;
 }
 
 /*
