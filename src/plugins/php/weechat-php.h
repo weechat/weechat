@@ -36,6 +36,8 @@
 
 #define weechat_plugin weechat_php_plugin
 #define PHP_PLUGIN_NAME "php"
+#define PHP_PLUGIN_PRIORITY 4030
+
 #define PHP_WEECHAT_VERSION "0.1"
 
 #define PHP_CURRENT_SCRIPT_NAME ((php_current_script) ? php_current_script->name : "-")

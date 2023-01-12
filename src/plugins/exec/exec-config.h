@@ -21,6 +21,7 @@
 #define WEECHAT_PLUGIN_EXEC_CONFIG_H
 
 #define EXEC_CONFIG_NAME "exec"
+#define EXEC_CONFIG_PRIO_NAME (TO_STR(EXEC_PLUGIN_PRIORITY) "|" EXEC_CONFIG_NAME)
 
 extern struct t_config_file *exec_config_file;
 

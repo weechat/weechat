@@ -22,6 +22,7 @@
 
 #define weechat_plugin weechat_typing_plugin
 #define TYPING_PLUGIN_NAME "typing"
+#define TYPING_PLUGIN_PRIORITY 8000
 
 struct t_typing
 {

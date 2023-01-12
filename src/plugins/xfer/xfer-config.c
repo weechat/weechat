@@ -114,7 +114,7 @@ xfer_config_init ()
 {
     struct t_config_section *ptr_section;
 
-    xfer_config_file = weechat_config_new (XFER_CONFIG_NAME,
+    xfer_config_file = weechat_config_new (XFER_CONFIG_PRIO_NAME,
                                            &xfer_config_reload, NULL, NULL);
     if (!xfer_config_file)
         return 0;

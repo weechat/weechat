@@ -28,21 +28,17 @@
 #include <iconv.h>
 
 #include "../weechat-plugin.h"
+#include "charset.h"
 
-
-#define CHARSET_PLUGIN_NAME "charset"
 
 WEECHAT_PLUGIN_NAME(CHARSET_PLUGIN_NAME);
 WEECHAT_PLUGIN_DESCRIPTION(N_("Charset conversions"));
 WEECHAT_PLUGIN_AUTHOR("Sébastien Helleu <flashcode@flashtux.org>");
 WEECHAT_PLUGIN_VERSION(WEECHAT_VERSION);
 WEECHAT_PLUGIN_LICENSE(WEECHAT_LICENSE);
-WEECHAT_PLUGIN_PRIORITY(16000);
-
-#define CHARSET_CONFIG_NAME "charset"
+WEECHAT_PLUGIN_PRIORITY(CHARSET_PLUGIN_PRIORITY);
 
 struct t_weechat_plugin *weechat_charset_plugin = NULL;
-#define weechat_plugin weechat_charset_plugin
 
 struct t_config_file *charset_config_file = NULL;
 struct t_config_option *charset_default_decode = NULL;
@@ -201,8 +197,9 @@ charset_config_init ()
 {
     struct t_config_section *ptr_section;
 
-    charset_config_file = weechat_config_new (CHARSET_CONFIG_NAME,
-                                              &charset_config_reload, NULL, NULL);
+    charset_config_file = weechat_config_new (
+        CHARSET_CONFIG_PRIO_NAME,
+        &charset_config_reload, NULL, NULL);
     if (!charset_config_file)
         return 0;
 

@@ -891,7 +891,7 @@ relay_config_init ()
 {
     struct t_config_section *ptr_section;
 
-    relay_config_file = weechat_config_new (RELAY_CONFIG_NAME,
+    relay_config_file = weechat_config_new (RELAY_CONFIG_PRIO_NAME,
                                             &relay_config_reload, NULL, NULL);
     if (!relay_config_file)
         return 0;

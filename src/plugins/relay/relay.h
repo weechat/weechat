@@ -22,6 +22,7 @@
 
 #define weechat_plugin weechat_relay_plugin
 #define RELAY_PLUGIN_NAME "relay"
+#define RELAY_PLUGIN_PRIORITY 5000
 
 extern struct t_weechat_plugin *weechat_relay_plugin;
 

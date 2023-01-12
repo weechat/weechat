@@ -420,8 +420,9 @@ script_config_init ()
 {
     struct t_config_section *ptr_section;
 
-    script_config_file = weechat_config_new (SCRIPT_CONFIG_NAME,
-                                             &script_config_reload, NULL, NULL);
+    script_config_file = weechat_config_new (
+        SCRIPT_CONFIG_PRIO_NAME,
+        &script_config_reload, NULL, NULL);
     if (!script_config_file)
         return 0;
 

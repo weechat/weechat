@@ -17,19 +17,16 @@
  * along with WeeChat.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef WEECHAT_PLUGIN_FIFO_H
-#define WEECHAT_PLUGIN_FIFO_H
+#ifndef WEECHAT_PLUGIN_CHARSET_H
+#define WEECHAT_PLUGIN_CHARSET_H
 
-#define weechat_plugin weechat_fifo_plugin
-#define FIFO_PLUGIN_NAME "fifo"
-#define FIFO_PLUGIN_PRIORITY 9000
+#define weechat_plugin weechat_charset_plugin
+#define CHARSET_PLUGIN_NAME "charset"
+#define CHARSET_PLUGIN_PRIORITY 16000
 
-extern struct t_weechat_plugin *weechat_fifo_plugin;
-extern int fifo_quiet;
-extern int fifo_fd;
-extern char *fifo_filename;
+#define CHARSET_CONFIG_NAME "charset"
+#define CHARSET_CONFIG_PRIO_NAME (TO_STR(CHARSET_PLUGIN_PRIORITY) "|" CHARSET_CONFIG_NAME)
 
-extern void fifo_create ();
-extern void fifo_remove ();
+extern struct t_weechat_plugin *weechat_charset_plugin;
 
-#endif /* WEECHAT_PLUGIN_FIFO_H */
+#endif /* WEECHAT_PLUGIN_CHARSET_H */

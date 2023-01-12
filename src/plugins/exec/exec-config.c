@@ -100,7 +100,7 @@ exec_config_init ()
 {
     struct t_config_section *ptr_section;
 
-    exec_config_file = weechat_config_new (EXEC_CONFIG_NAME,
+    exec_config_file = weechat_config_new (EXEC_CONFIG_PRIO_NAME,
                                            &exec_config_reload_cb, NULL, NULL);
     if (!exec_config_file)
         return 0;

@@ -365,7 +365,7 @@ fset_config_init ()
 {
     struct t_config_section *ptr_section;
 
-    fset_config_file = weechat_config_new (FSET_CONFIG_NAME,
+    fset_config_file = weechat_config_new (FSET_CONFIG_PRIO_NAME,
                                            &fset_config_reload, NULL, NULL);
     if (!fset_config_file)
         return 0;

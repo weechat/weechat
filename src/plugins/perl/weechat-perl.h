@@ -22,6 +22,7 @@
 
 #define weechat_plugin weechat_perl_plugin
 #define PERL_PLUGIN_NAME "perl"
+#define PERL_PLUGIN_PRIORITY 4040
 
 #define PERL_CURRENT_SCRIPT_NAME ((perl_current_script) ? perl_current_script->name : "-")
 

@@ -21,6 +21,7 @@
 #define WEECHAT_PLUGIN_IRC_CONFIG_H
 
 #define IRC_CONFIG_NAME "irc"
+#define IRC_CONFIG_PRIO_NAME (TO_STR(IRC_PLUGIN_PRIORITY) "|" IRC_CONFIG_NAME)
 
 enum t_irc_config_look_server_buffer
 {

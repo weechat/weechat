@@ -22,6 +22,7 @@
 
 #define weechat_plugin weechat_script_plugin
 #define SCRIPT_PLUGIN_NAME "script"
+#define SCRIPT_PLUGIN_PRIORITY 3000
 
 #define SCRIPT_NUM_LANGUAGES 8
 

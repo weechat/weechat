@@ -23,6 +23,7 @@
 
 #define weechat_plugin weechat_irc_plugin
 #define IRC_PLUGIN_NAME "irc"
+#define IRC_PLUGIN_PRIORITY 6000
 
 extern struct t_weechat_plugin *weechat_irc_plugin;
 

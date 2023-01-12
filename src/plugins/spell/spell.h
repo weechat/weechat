@@ -29,6 +29,7 @@
 
 #define weechat_plugin weechat_spell_plugin
 #define SPELL_PLUGIN_NAME "spell"
+#define SPELL_PLUGIN_PRIORITY 12000
 
 struct t_spell_code
 {

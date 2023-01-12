@@ -2732,7 +2732,7 @@ irc_config_init ()
         WEECHAT_HASHTABLE_STRING,
         NULL, NULL);
 
-    irc_config_file = weechat_config_new (IRC_CONFIG_NAME,
+    irc_config_file = weechat_config_new (IRC_CONFIG_PRIO_NAME,
                                           &irc_config_reload, NULL, NULL);
     if (!irc_config_file)
         return 0;

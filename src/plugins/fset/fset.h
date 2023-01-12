@@ -22,6 +22,7 @@
 
 #define weechat_plugin weechat_fset_plugin
 #define FSET_PLUGIN_NAME "fset"
+#define FSET_PLUGIN_PRIORITY 2000
 
 #define FSET_BAR_NAME "fset"
 

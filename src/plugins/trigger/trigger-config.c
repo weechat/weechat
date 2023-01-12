@@ -686,7 +686,8 @@ trigger_config_init ()
     struct t_config_section *ptr_section;
 
     trigger_config_file = weechat_config_new (
-        TRIGGER_CONFIG_NAME, &trigger_config_reload_cb, NULL, NULL);
+        TRIGGER_CONFIG_PRIO_NAME,
+        &trigger_config_reload_cb, NULL, NULL);
     if (!trigger_config_file)
         return 0;
 

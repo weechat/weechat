@@ -21,7 +21,7 @@
 #define WEECHAT_PLUGIN_FIFO_CONFIG_H
 
 #define FIFO_CONFIG_NAME "fifo"
-
+#define FIFO_CONFIG_PRIO_NAME (TO_STR(FIFO_PLUGIN_PRIORITY) "|" FIFO_CONFIG_NAME)
 
 extern struct t_config_option *fifo_config_file_enabled;
 extern struct t_config_option *fifo_config_file_path;

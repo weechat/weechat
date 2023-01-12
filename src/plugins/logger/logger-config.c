@@ -462,7 +462,7 @@ logger_config_init ()
 {
     struct t_config_section *ptr_section;
 
-    logger_config_file = weechat_config_new (LOGGER_CONFIG_NAME,
+    logger_config_file = weechat_config_new (LOGGER_CONFIG_PRIO_NAME,
                                              NULL, NULL, NULL);
     if (!logger_config_file)
         return 0;

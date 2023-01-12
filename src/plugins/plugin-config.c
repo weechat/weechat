@@ -356,7 +356,7 @@ plugin_config_delete_desc (const void *pointer, void *data,
 void
 plugin_config_init ()
 {
-    plugin_config_file = config_file_new (NULL, PLUGIN_CONFIG_NAME,
+    plugin_config_file = config_file_new (NULL, PLUGIN_CONFIG_PRIO_NAME,
                                           &plugin_config_reload, NULL, NULL);
     if (plugin_config_file)
     {

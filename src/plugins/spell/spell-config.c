@@ -441,7 +441,7 @@ spell_config_init ()
 {
     struct t_config_section *ptr_section;
 
-    spell_config_file = weechat_config_new (SPELL_CONFIG_NAME,
+    spell_config_file = weechat_config_new (SPELL_CONFIG_PRIO_NAME,
                                             NULL, NULL, NULL);
     if (!spell_config_file)
         return 0;

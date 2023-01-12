@@ -24,6 +24,7 @@
 
 #define weechat_plugin weechat_guile_plugin
 #define GUILE_PLUGIN_NAME "guile"
+#define GUILE_PLUGIN_PRIORITY 4070
 
 #define GUILE_CURRENT_SCRIPT_NAME ((guile_current_script) ? guile_current_script->name : "-")
 

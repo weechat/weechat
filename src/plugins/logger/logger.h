@@ -22,6 +22,7 @@
 
 #define weechat_plugin weechat_logger_plugin
 #define LOGGER_PLUGIN_NAME "logger"
+#define LOGGER_PLUGIN_PRIORITY 15000
 
 #define LOGGER_LEVEL_DEFAULT 9
 

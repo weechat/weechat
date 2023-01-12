@@ -21,6 +21,7 @@
 #define WEECHAT_PLUGIN_LOGGER_CONFIG_H
 
 #define LOGGER_CONFIG_NAME "logger"
+#define LOGGER_CONFIG_PRIO_NAME (TO_STR(LOGGER_PLUGIN_PRIORITY) "|" LOGGER_CONFIG_NAME)
 
 extern struct t_config_option *logger_config_look_backlog;
 extern struct t_config_option *logger_config_look_backlog_conditions;

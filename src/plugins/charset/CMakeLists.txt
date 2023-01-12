@@ -18,7 +18,7 @@
 #
 
 add_library(charset MODULE
-  charset.c
+  charset.c charset.h
 )
 set_target_properties(charset PROPERTIES PREFIX "")
 

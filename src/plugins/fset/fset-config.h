@@ -21,6 +21,7 @@
 #define WEECHAT_PLUGIN_FSET_CONFIG_H
 
 #define FSET_CONFIG_NAME "fset"
+#define FSET_CONFIG_PRIO_NAME (TO_STR(FSET_PLUGIN_PRIORITY) "|" FSET_CONFIG_NAME)
 
 extern struct t_config_file *fset_config_file;
 

@@ -248,6 +248,10 @@ struct timeval;
         return WEECHAT_RC_ERROR;                                        \
     }
 
+/* macro to convert integer to string */
+#define TO_STR_HELPER(x) #x
+#define TO_STR(x) TO_STR_HELPER(x)
+
 struct t_weechat_plugin
 {
     /* plugin variables */

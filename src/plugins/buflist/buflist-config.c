@@ -469,7 +469,7 @@ buflist_config_init ()
     struct t_config_section *ptr_section;
 
     buflist_config_file = weechat_config_new (
-        BUFLIST_CONFIG_NAME,
+        BUFLIST_CONFIG_PRIO_NAME,
         &buflist_config_reload, NULL, NULL);
     if (!buflist_config_file)
         return 0;

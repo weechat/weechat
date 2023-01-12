@@ -27,6 +27,7 @@
 
 #define weechat_plugin weechat_xfer_plugin
 #define XFER_PLUGIN_NAME "xfer"
+#define XFER_PLUGIN_PRIORITY 7000
 
 /* xfer types */
 

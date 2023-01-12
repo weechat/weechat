@@ -25,6 +25,7 @@
 
 #include "../weechat-plugin.h"
 #include "alias.h"
+#include "alias-config.h"
 
 
 struct t_config_file *alias_config_file = NULL;
@@ -368,7 +369,7 @@ alias_config_init ()
 {
     struct t_config_section *ptr_section;
 
-    alias_config_file = weechat_config_new (ALIAS_CONFIG_NAME,
+    alias_config_file = weechat_config_new (ALIAS_CONFIG_PRIO_NAME,
                                             &alias_config_reload, NULL, NULL);
     if (!alias_config_file)
         return 0;

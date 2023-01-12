@@ -35,6 +35,7 @@
 
 #define weechat_plugin weechat_js_plugin
 #define JS_PLUGIN_NAME "javascript"
+#define JS_PLUGIN_PRIORITY 4060
 
 #define JS_CURRENT_SCRIPT_NAME ((js_current_script) ? js_current_script->name : "-")
 

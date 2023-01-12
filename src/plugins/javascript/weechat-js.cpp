@@ -35,11 +35,11 @@ extern "C"
 #include "weechat-js-v8.h"
 
 WEECHAT_PLUGIN_NAME(JS_PLUGIN_NAME);
-WEECHAT_PLUGIN_DESCRIPTION("Support of javascript scripts");
+WEECHAT_PLUGIN_DESCRIPTION(N_("Support of javascript scripts"));
 WEECHAT_PLUGIN_AUTHOR("Koka El Kiwi <kokakiwi@kokakiwi.net>");
 WEECHAT_PLUGIN_VERSION(WEECHAT_VERSION);
 WEECHAT_PLUGIN_LICENSE(WEECHAT_LICENSE);
-WEECHAT_PLUGIN_PRIORITY(4060);
+WEECHAT_PLUGIN_PRIORITY(JS_PLUGIN_PRIORITY);
 
 struct t_weechat_plugin *weechat_js_plugin = NULL;
 

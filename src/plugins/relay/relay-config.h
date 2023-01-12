@@ -23,6 +23,7 @@
 #include <regex.h>
 
 #define RELAY_CONFIG_NAME "relay"
+#define RELAY_CONFIG_PRIO_NAME (TO_STR(RELAY_PLUGIN_PRIORITY) "|" RELAY_CONFIG_NAME)
 
 extern struct t_config_file *relay_config_file;
 extern struct t_config_section *relay_config_section_port;

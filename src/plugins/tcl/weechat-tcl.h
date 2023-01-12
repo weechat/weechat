@@ -23,6 +23,7 @@
 
 #define weechat_plugin weechat_tcl_plugin
 #define TCL_PLUGIN_NAME "tcl"
+#define TCL_PLUGIN_PRIORITY 4000
 
 #define TCL_CURRENT_SCRIPT_NAME ((tcl_current_script) ? tcl_current_script->name : "-")
 

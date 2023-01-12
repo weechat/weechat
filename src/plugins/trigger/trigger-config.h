@@ -21,6 +21,7 @@
 #define WEECHAT_PLUGIN_TRIGGER_CONFIG_H
 
 #define TRIGGER_CONFIG_NAME "trigger"
+#define TRIGGER_CONFIG_PRIO_NAME (TO_STR(TRIGGER_PLUGIN_PRIORITY) "|" TRIGGER_CONFIG_NAME)
 #define TRIGGER_CONFIG_SECTION_TRIGGER "trigger"
 
 extern struct t_config_file *trigger_config_file;

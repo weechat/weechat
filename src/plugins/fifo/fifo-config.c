@@ -87,7 +87,7 @@ fifo_config_init ()
 {
     struct t_config_section *ptr_section;
 
-    fifo_config_file = weechat_config_new (FIFO_CONFIG_NAME,
+    fifo_config_file = weechat_config_new (FIFO_CONFIG_PRIO_NAME,
                                            NULL, NULL, NULL);
     if (!fifo_config_file)
         return 0;

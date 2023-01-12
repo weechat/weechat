@@ -23,6 +23,7 @@
 #include "buflist-bar-item.h"
 
 #define BUFLIST_CONFIG_NAME "buflist"
+#define BUFLIST_CONFIG_PRIO_NAME (TO_STR(BUFLIST_PLUGIN_PRIORITY) "|" BUFLIST_CONFIG_NAME)
 
 #define BUFLIST_CONFIG_SIGNALS_REFRESH                                  \
     "buffer_opened,buffer_closed,buffer_merged,buffer_unmerged,"        \

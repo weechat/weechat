@@ -44,7 +44,7 @@ WEECHAT_PLUGIN_DESCRIPTION(N_("Support of scheme scripts (with Guile)"));
 WEECHAT_PLUGIN_AUTHOR("Sébastien Helleu <flashcode@flashtux.org>");
 WEECHAT_PLUGIN_VERSION(WEECHAT_VERSION);
 WEECHAT_PLUGIN_LICENSE(WEECHAT_LICENSE);
-WEECHAT_PLUGIN_PRIORITY(4070);
+WEECHAT_PLUGIN_PRIORITY(GUILE_PLUGIN_PRIORITY);
 
 struct t_weechat_plugin *weechat_guile_plugin = NULL;
 

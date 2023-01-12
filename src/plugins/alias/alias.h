@@ -22,8 +22,7 @@
 
 #define weechat_plugin weechat_alias_plugin
 #define ALIAS_PLUGIN_NAME "alias"
-
-#define ALIAS_CONFIG_NAME "alias"
+#define ALIAS_PLUGIN_PRIORITY 11000
 
 struct t_alias
 {

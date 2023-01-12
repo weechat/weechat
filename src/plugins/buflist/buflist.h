@@ -22,6 +22,7 @@
 
 #define weechat_plugin weechat_buflist_plugin
 #define BUFLIST_PLUGIN_NAME "buflist"
+#define BUFLIST_PLUGIN_PRIORITY 10000
 
 #define BUFLIST_BAR_NAME "buflist"
 

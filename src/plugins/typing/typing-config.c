@@ -113,7 +113,7 @@ typing_config_init ()
     struct t_config_section *ptr_section;
 
     typing_config_file = weechat_config_new (
-        TYPING_CONFIG_NAME,
+        TYPING_CONFIG_PRIO_NAME,
         &typing_config_reload, NULL, NULL);
     if (!typing_config_file)
         return 0;

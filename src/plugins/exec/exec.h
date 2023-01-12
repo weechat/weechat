@@ -25,6 +25,7 @@
 
 #define weechat_plugin weechat_exec_plugin
 #define EXEC_PLUGIN_NAME "exec"
+#define EXEC_PLUGIN_PRIORITY 14000
 
 #define EXEC_STDOUT 0
 #define EXEC_STDERR 1

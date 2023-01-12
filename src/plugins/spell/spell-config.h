@@ -22,7 +22,7 @@
 #define WEECHAT_PLUGIN_SPELL_CONFIG_H
 
 #define SPELL_CONFIG_NAME "spell"
-
+#define SPELL_CONFIG_PRIO_NAME (TO_STR(SPELL_PLUGIN_PRIORITY) "|" SPELL_CONFIG_NAME)
 
 extern struct t_config_option *spell_config_color_misspelled;
 extern struct t_config_option *spell_config_color_suggestion;
