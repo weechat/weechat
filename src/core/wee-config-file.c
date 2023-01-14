@@ -103,7 +103,7 @@ config_file_search (const char *name)
     for (ptr_config = last_config_file; ptr_config;
          ptr_config = ptr_config->prev_config)
     {
-        rc = string_strcasecmp (ptr_config->name, name);
+        rc = strcmp (ptr_config->name, name);
         if (rc == 0)
             return ptr_config;
         else if (rc < 0)
@@ -130,7 +130,7 @@ config_file_find_pos (const char *name)
     for (ptr_config = config_files; ptr_config;
          ptr_config = ptr_config->next_config)
     {
-        if (string_strcasecmp (name, ptr_config->name) < 0)
+        if (strcmp (name, ptr_config->name) < 0)
             return ptr_config;
     }
 
@@ -325,7 +325,7 @@ config_file_section_find_pos (struct t_config_file *config_file,
     for (ptr_section = config_file->sections; ptr_section;
          ptr_section = ptr_section->next_section)
     {
-        if (string_strcasecmp (name, ptr_section->name) < 0)
+        if (strcmp (name, ptr_section->name) < 0)
             return ptr_section;
     }
 
@@ -446,7 +446,7 @@ config_file_search_section (struct t_config_file *config_file,
     for (ptr_section = config_file->sections; ptr_section;
          ptr_section = ptr_section->next_section)
     {
-        if (string_strcasecmp (ptr_section->name, name) == 0)
+        if (strcmp (ptr_section->name, name) == 0)
             return ptr_section;
     }
 
@@ -556,7 +556,7 @@ config_file_option_find_pos (struct t_config_section *section, const char *name)
     for (ptr_option = section->last_option; ptr_option;
          ptr_option = ptr_option->prev_option)
     {
-        if (string_strcasecmp (name, ptr_option->name) >= 0)
+        if (strcmp (name, ptr_option->name) >= 0)
             return ptr_option->next_option;
     }
 
@@ -715,7 +715,7 @@ config_file_new_option (struct t_config_file *config_file,
     var_type = -1;
     for (i = 0; i < CONFIG_NUM_OPTION_TYPES; i++)
     {
-        if (string_strcasecmp (type, config_option_type_string[i]) == 0)
+        if (string_strcmp (type, config_option_type_string[i]) == 0)
         {
             var_type = i;
             break;
@@ -802,8 +802,8 @@ config_file_new_option (struct t_config_file *config_file,
                         index_value = 0;
                         for (i = 0; i < argc; i++)
                         {
-                            if (string_strcasecmp (new_option->string_values[i],
-                                                   default_value) == 0)
+                            if (string_strcmp (new_option->string_values[i],
+                                               default_value) == 0)
                             {
                                 index_value = i;
                                 break;
@@ -819,8 +819,8 @@ config_file_new_option (struct t_config_file *config_file,
                         index_value = 0;
                         for (i = 0; i < argc; i++)
                         {
-                            if (string_strcasecmp (new_option->string_values[i],
-                                                   value) == 0)
+                            if (string_strcmp (new_option->string_values[i],
+                                               value) == 0)
                             {
                                 index_value = i;
                                 break;
@@ -977,7 +977,7 @@ config_file_search_option (struct t_config_file *config_file,
         for (ptr_option = section->last_option; ptr_option;
              ptr_option = ptr_option->prev_option)
         {
-            rc = string_strcasecmp (ptr_option->name, option_name);
+            rc = strcmp (ptr_option->name, option_name);
             if (rc == 0)
                 return ptr_option;
             else if (rc < 0)
@@ -992,7 +992,7 @@ config_file_search_option (struct t_config_file *config_file,
             for (ptr_option = ptr_section->last_option; ptr_option;
                  ptr_option = ptr_option->prev_option)
             {
-                rc = string_strcasecmp (ptr_option->name, option_name);
+                rc = strcmp (ptr_option->name, option_name);
                 if (rc == 0)
                     return ptr_option;
                 else if (rc < 0)
@@ -1034,7 +1034,7 @@ config_file_search_section_option (struct t_config_file *config_file,
         for (ptr_option = section->last_option; ptr_option;
              ptr_option = ptr_option->prev_option)
         {
-            rc = string_strcasecmp (ptr_option->name, option_name);
+            rc = strcmp (ptr_option->name, option_name);
             if (rc == 0)
             {
                 *section_found = section;
@@ -1053,7 +1053,7 @@ config_file_search_section_option (struct t_config_file *config_file,
             for (ptr_option = ptr_section->last_option; ptr_option;
                  ptr_option = ptr_option->prev_option)
             {
-                rc = string_strcasecmp (ptr_option->name, option_name);
+                rc = strcmp (ptr_option->name, option_name);
                 if (rc == 0)
                 {
                     *section_found = ptr_section;
@@ -1162,13 +1162,13 @@ config_file_string_boolean_is_valid (const char *text)
 
     for (i = 0; config_boolean_true[i]; i++)
     {
-        if (string_strcasecmp (text, config_boolean_true[i]) == 0)
+        if (string_strcmp (text, config_boolean_true[i]) == 0)
             return 1;
     }
 
     for (i = 0; config_boolean_false[i]; i++)
     {
-        if (string_strcasecmp (text, config_boolean_false[i]) == 0)
+        if (string_strcmp (text, config_boolean_false[i]) == 0)
             return 1;
     }
 
@@ -1194,7 +1194,7 @@ config_file_string_to_boolean (const char *text)
 
     for (i = 0; config_boolean_true[i]; i++)
     {
-        if (string_strcasecmp (text, config_boolean_true[i]) == 0)
+        if (string_strcmp (text, config_boolean_true[i]) == 0)
             return CONFIG_BOOLEAN_TRUE;
     }
 
@@ -1380,7 +1380,7 @@ config_file_option_set (struct t_config_option *option, const char *value,
                     option->value = malloc (sizeof (int));
                     if (option->value)
                     {
-                        if (string_strcasecmp (value, "toggle") == 0)
+                        if (string_strcmp (value, "toggle") == 0)
                         {
                             CONFIG_BOOLEAN(option) = CONFIG_BOOLEAN_TRUE;
                             rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
@@ -1403,7 +1403,7 @@ config_file_option_set (struct t_config_option *option, const char *value,
                 }
                 else
                 {
-                    if (string_strcasecmp (value, "toggle") == 0)
+                    if (string_strcmp (value, "toggle") == 0)
                     {
                         CONFIG_BOOLEAN(option) =
                             (CONFIG_BOOLEAN(option) == CONFIG_BOOLEAN_TRUE) ?
@@ -1463,8 +1463,8 @@ config_file_option_set (struct t_config_option *option, const char *value,
                         {
                             for (i = 0; option->string_values[i]; i++)
                             {
-                                if (string_strcasecmp (option->string_values[i],
-                                                       value) == 0)
+                                if (string_strcmp (option->string_values[i],
+                                                   value) == 0)
                                 {
                                     value_int = i;
                                     break;
@@ -2944,7 +2944,7 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
                         }
 
                         if (pos[0]
-                            && string_strcasecmp (pos, WEECHAT_CONFIG_OPTION_NULL) != 0)
+                            && string_strcmp (pos, WEECHAT_CONFIG_OPTION_NULL) != 0)
                         {
                             undefined_value = 0;
                             /* remove simple or double quotes and spaces at the end */
@@ -3502,7 +3502,7 @@ config_file_add_option_to_infolist (struct t_infolist *infolist,
         goto error;
 
     if (option_name && option_name[0]
-        && (!string_match (option_full_name, option_name, 0)))
+        && (!string_match (option_full_name, option_name, 1)))
     {
         goto end;
     }

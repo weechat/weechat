@@ -82,8 +82,8 @@ TEST(CoreConfigFile, FindPos)
 {
     POINTERS_EQUAL(NULL, config_file_find_pos (NULL));
     POINTERS_EQUAL(config_files, config_file_find_pos (""));
-    POINTERS_EQUAL(weechat_config_file->next_config, config_file_find_pos ("weechat"));
-    POINTERS_EQUAL(weechat_config_file->next_config, config_file_find_pos ("WEECHAT"));
+    POINTERS_EQUAL(weechat_config_file->next_config, config_file_find_pos ("weechat2"));
+    POINTERS_EQUAL(config_files, config_file_find_pos ("WEECHAT2"));
 }
 
 /*
@@ -444,18 +444,14 @@ TEST(CoreConfigFile, StringBooleanIsValid)
     LONGS_EQUAL(0, config_file_string_boolean_is_valid ("zzz"));
 
     LONGS_EQUAL(1, config_file_string_boolean_is_valid ("on"));
-    LONGS_EQUAL(1, config_file_string_boolean_is_valid ("ON"));
     LONGS_EQUAL(1, config_file_string_boolean_is_valid ("yes"));
-    LONGS_EQUAL(1, config_file_string_boolean_is_valid ("Yes"));
     LONGS_EQUAL(1, config_file_string_boolean_is_valid ("y"));
     LONGS_EQUAL(1, config_file_string_boolean_is_valid ("true"));
     LONGS_EQUAL(1, config_file_string_boolean_is_valid ("t"));
     LONGS_EQUAL(1, config_file_string_boolean_is_valid ("1"));
 
     LONGS_EQUAL(1, config_file_string_boolean_is_valid ("off"));
-    LONGS_EQUAL(1, config_file_string_boolean_is_valid ("OFF"));
     LONGS_EQUAL(1, config_file_string_boolean_is_valid ("no"));
-    LONGS_EQUAL(1, config_file_string_boolean_is_valid ("No"));
     LONGS_EQUAL(1, config_file_string_boolean_is_valid ("n"));
     LONGS_EQUAL(1, config_file_string_boolean_is_valid ("false"));
     LONGS_EQUAL(1, config_file_string_boolean_is_valid ("f"));
@@ -474,18 +470,14 @@ TEST(CoreConfigFile, StringToBoolean)
     LONGS_EQUAL(0, config_file_string_to_boolean ("zzz"));
 
     LONGS_EQUAL(1, config_file_string_to_boolean ("on"));
-    LONGS_EQUAL(1, config_file_string_to_boolean ("ON"));
     LONGS_EQUAL(1, config_file_string_to_boolean ("yes"));
-    LONGS_EQUAL(1, config_file_string_to_boolean ("Yes"));
     LONGS_EQUAL(1, config_file_string_to_boolean ("y"));
     LONGS_EQUAL(1, config_file_string_to_boolean ("true"));
     LONGS_EQUAL(1, config_file_string_to_boolean ("t"));
     LONGS_EQUAL(1, config_file_string_to_boolean ("1"));
 
     LONGS_EQUAL(0, config_file_string_to_boolean ("off"));
-    LONGS_EQUAL(0, config_file_string_to_boolean ("OFF"));
     LONGS_EQUAL(0, config_file_string_to_boolean ("no"));
-    LONGS_EQUAL(0, config_file_string_to_boolean ("No"));
     LONGS_EQUAL(0, config_file_string_to_boolean ("n"));
     LONGS_EQUAL(0, config_file_string_to_boolean ("false"));
     LONGS_EQUAL(0, config_file_string_to_boolean ("f"));

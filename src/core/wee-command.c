@@ -6155,7 +6155,7 @@ command_set_display_option_list (const char *message, const char *search,
                               ptr_option->name);
                     if ((!search) ||
                         (search && search[0]
-                         && (string_match (option_full_name, search, 0))))
+                         && (string_match (option_full_name, search, 1))))
                     {
                         if (!section_displayed)
                         {
@@ -6640,7 +6640,7 @@ COMMAND_CALLBACK(unset)
                         snprintf (option_full_name, length, "%s.%s.%s",
                                   ptr_config->name, ptr_section->name,
                                   ptr_option->name);
-                        if (string_match (option_full_name, ptr_name, 0))
+                        if (string_match (option_full_name, ptr_name, 1))
                         {
                             command_unset_option (ptr_option,
                                                   option_full_name,

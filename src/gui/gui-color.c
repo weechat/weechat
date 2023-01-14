@@ -161,7 +161,7 @@ gui_color_search_config (const char *color_name)
     for (ptr_option = weechat_config_section_color->options;
          ptr_option; ptr_option = ptr_option->next_option)
     {
-        if (string_strcasecmp (ptr_option->name, color_name) == 0)
+        if (strcmp (ptr_option->name, color_name) == 0)
             return gui_color_from_option (ptr_option);
     }
 
