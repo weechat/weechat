@@ -3973,7 +3973,7 @@
 ** valeur par défaut: `+off+`
 
 * [[option_fset.look.condition_catch_set]] *fset.look.condition_catch_set*
-** description: pass:none[condition pour capturer la commande /set et afficher les résultats dans le tampon fset ; les variables suivantes peuvent être utilisées : ${name} (nom de l'option donné pour la commande /set), ${count} (nombre d'options trouvées avec le paramètre de /set) ; une chaîne vide désactive la capture de la commande /set ; avec la valeur "1", le tampon fset est toujours utilisé avec la commande /fset]
+** description: pass:none[condition pour capturer la commande /set et afficher les résultats dans le tampon fset ; les variables suivantes peuvent être utilisées : ${name} (nom de l'option donné pour la commande /set), ${count} (nombre d'options trouvées avec le paramètre de /set) ; une chaîne vide désactive la capture de la commande /set ; avec la valeur "1", le tampon fset est toujours utilisé avec la commande /set]
 ** type: chaîne
 ** valeurs: toute chaîne
 ** valeur par défaut: `+"${count} >= 1"+`
