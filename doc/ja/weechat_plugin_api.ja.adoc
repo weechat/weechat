@@ -6343,7 +6343,7 @@ weechat_hashtable_free (hashtable);
 
 ==== config_new
 
-_WeeChat バージョン 1.5 で更新。_
+_WeeChat バージョン 1.5, 3.9 で更新。_
 
 新しい設定ファイルを作成。
 
@@ -6361,7 +6361,12 @@ struct t_config_file *weechat_config_new (const char *name,
 
 引数:
 
-* _name_: 設定ファイルの名前 (パスと拡張子は不要)
+// TRANSLATION MISSING
+* _name_: 設定ファイルの名前 (パスと拡張子は不要); a priority
+  is allowed before the name, with format `nnn|name` where `nnn` is non-negative
+  integer with priority; default priority is 1000; files are sorted by priority
+  from higher to lower when running command `/reload`
+  (see priority of configuration files below)
 * _callback_reload_: `/reload` で設定ファイルをリロードする際に呼び出すコールバック関数
   (任意、NULL でも可、下の説明を参照)、引数と戻り値:
 ** _const void *pointer_: ポインタ
@@ -6396,6 +6401,11 @@ struct t_config_file *weechat_config_new (const char *name,
 関数を使ってください。この関数を呼び出す必要があるのは
 (<<_config_new_section,config_new_section>> を使って) セクションもしくは
 (<<_config_new_option,config_new_option>> を使って) オプションを追加した後だけです。
+
+// TRANSLATION MISSING
+Priority of default configuration files:
+
+include::includes/autogen_api_config_priority.ja.adoc[tag=config_priority]
 
 C 言語での使用例:
 

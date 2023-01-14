@@ -29,7 +29,8 @@ Documentation generator for WeeChat: build include files with:
 - hdata
 - completions
 - URL options
-- plugins priority.
+- plugins priority
+- config files priority.
 
 Instructions to build config files yourself in WeeChat directories
 (replace "path" with the path to the docgen.py script in WeeChat repository):
@@ -452,6 +453,25 @@ class WeechatDoc():  # pylint: disable=too-few-public-methods
         weechat.infolist_free(infolist)
         return plugins_priority
 
+    @staticmethod
+    def _read_api_config_priority():
+        """
+        Get priority of default configuration files as a dictionary.
+        """
+        config_priority = {}
+        ptr_hdata = weechat.hdata_get('config_file')
+        ptr_config = weechat.hdata_get_list(ptr_hdata, 'config_files')
+        while ptr_config:
+            name = weechat.hdata_string(ptr_hdata, ptr_config, 'name')
+            config_name = f'{name}.conf'
+            priority = weechat.hdata_integer(ptr_hdata, ptr_config, 'priority')
+            if priority in config_priority:
+                config_priority[priority].append(config_name)
+            else:
+                config_priority[priority] = [config_name]
+            ptr_config = weechat.hdata_move(ptr_hdata, ptr_config, 1)
+        return config_priority
+
 
 class AutogenDoc():
     """A class to write auto-generated doc files."""
@@ -805,10 +825,29 @@ class AutogenDoc():
         """Write plugins priority."""
         self.write()
         self.write('// tag::plugins_priority[]')
-        for priority in sorted(plugins_priority, reverse=True):
+        self.write('[width="30%",cols="1,3,2",options="header"]')
+        self.write('|===')
+        self.write('| %s | %s | %s',
+                   _('Rank'), _('Plugin'), _('Priority'))
+        for i, priority in enumerate(sorted(plugins_priority, reverse=True)):
             plugins = ', '.join(sorted(plugins_priority[priority]))
-            self.write('. %s (%s)', escape(plugins), priority)
+            self.write('| %d | %s | %d', i + 1, escape(plugins), priority)
+        self.write('|===')
         self.write('// end::plugins_priority[]')
+
+    def _write_api_config_priority(self, config_priority):
+        """Write configuration files priority."""
+        self.write()
+        self.write('// tag::config_priority[]')
+        self.write('[width="30%",cols="1,3,2",options="header"]')
+        self.write('|===')
+        self.write('| %s | %s | %s',
+                   _('Rank'), _('File'), _('Priority'))
+        for i, priority in enumerate(sorted(config_priority, reverse=True)):
+            configs = ', '.join(sorted(config_priority[priority]))
+            self.write('| %d | %s | %d', i + 1, escape(configs), priority)
+        self.write('|===')
+        self.write('// end::config_priority[]')
 
 
 def docgen_cmd_cb(data, buf, args):

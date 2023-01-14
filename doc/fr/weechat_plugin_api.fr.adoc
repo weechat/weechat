@@ -6360,7 +6360,7 @@ Fonctions pour les fichiers de configuration.
 
 ==== config_new
 
-_Mis à jour dans la 1.5._
+_Mis à jour dans la 1.5, 3.9._
 
 Créer un nouveau fichier de configuration.
 
@@ -6378,7 +6378,12 @@ struct t_config_file *weechat_config_new (const char *name,
 
 Paramètres :
 
-* _name_ : nom du nouveau fichier de configuration (sans chemin ou extension)
+* _name_ : nom du nouveau fichier de configuration (sans chemin ou extension) ;
+  une priorité est autorisée avant le nom, avec le format `nnn|nom` où `nnn` est
+  un entier positif avec la priorité ; la priorité par défaut est 1000 ; les
+  fichiers de configuration sont triés par priorité de la plus haute à la plus
+  basse lorsque la commande `/reload` est exécutée
+  (voir la priorité des fichiers de configuration ci-dessous)
 * _callback_reload_ : fonction appelée quand le fichier de configuration est
   rechargé avec `/reload` (optionnel, peut être NULL, voir ci-dessous),
   paramètres et valeur de retour :
@@ -6418,6 +6423,10 @@ l'appel à la fonction <<_config_write,config_write>>.
 Vous ne devriez appeler cette fonction qu'après avoir créé les sections (avec
 <<_config_new_section,config_new_section>>) et les options (avec
 <<_config_new_option,config_new_option>>).
+
+Priorité des fichiers de configuration par défaut :
+
+include::includes/autogen_api_config_priority.fr.adoc[tag=config_priority]
 
 Exemple en C :
 

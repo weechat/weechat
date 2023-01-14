@@ -6153,7 +6153,7 @@ weechat_hashtable_free (hashtable);
 
 ==== config_new
 
-_Ажурирано у верзији 1.5._
+_Ажурирано у верзији 1.5, 3.9._
 
 Креира нови конфигурациони фајл.
 
@@ -6171,7 +6171,12 @@ struct t_config_file *weechat_config_new (const char *name,
 
 Аргументи:
 
-* _name_: име конфигурационог фајла (без путање или екстензије)
+// TRANSLATION MISSING
+* _name_: име конфигурационог фајла (без путање или екстензије); a priority
+  is allowed before the name, with format `nnn|name` where `nnn` is non-negative
+  integer with priority; default priority is 1000; files are sorted by priority
+  from higher to lower when running command `/reload`
+  (see priority of configuration files below)
 * _callback_reload_: функција која се позива када се командом `/reload` поново учита конфигурациони фајл (није обавезна, може да буде NULL, погледајте испод), аргументи и повратна вредност су:
 ** _const void *pointer_: показивач
 ** _void *data_: показивач
@@ -6195,6 +6200,11 @@ struct t_config_file *weechat_config_new (const char *name,
 
 [NOTE]
 Ова функција НЕ креира фајл на диску. Фајл ће се креирати позивом функције <<_config_write,config_write>>. Ово функцију би требало да позовете само након додавања неких одељака (са <<_config_new_section,config_new_section>>) и опција (са <<_config_new_option,config_new_option>>).
+
+// TRANSLATION MISSING
+Priority of default configuration files:
+
+include::includes/autogen_api_config_priority.sr.adoc[tag=config_priority]
 
 C пример:
 

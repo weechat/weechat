@@ -707,6 +707,7 @@ _count_   (integer) +
 _last_config_file_ +
 
 | _plugin_   (pointer, hdata: "plugin") +
+_priority_   (integer) +
 _name_   (string) +
 _filename_   (string) +
 _file_   (pointer) +
