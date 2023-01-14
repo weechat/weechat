@@ -87,7 +87,7 @@ alias_search (const char *alias_name)
     for (ptr_alias = alias_list; ptr_alias;
          ptr_alias = ptr_alias->next_alias)
     {
-        if (weechat_strcasecmp (alias_name, ptr_alias->name) == 0)
+        if (strcmp (alias_name, ptr_alias->name) == 0)
             return ptr_alias;
     }
     return NULL;
@@ -504,7 +504,7 @@ alias_find_pos (const char *name)
 
     for (ptr_alias = alias_list; ptr_alias; ptr_alias = ptr_alias->next_alias)
     {
-        if (weechat_strcasecmp (name, ptr_alias->name) < 0)
+        if (strcmp (name, ptr_alias->name) < 0)
             return ptr_alias;
     }
 

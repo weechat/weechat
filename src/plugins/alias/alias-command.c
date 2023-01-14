@@ -109,7 +109,7 @@ alias_command_cb (const void *pointer, void *data,
                  ptr_alias = ptr_alias->next_alias)
             {
                 if (!ptr_alias_name
-                    || weechat_strcasestr (ptr_alias->name, ptr_alias_name))
+                    || strstr (ptr_alias->name, ptr_alias_name))
                 {
                     if (!alias_found)
                     {

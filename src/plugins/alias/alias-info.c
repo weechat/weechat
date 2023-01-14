@@ -68,7 +68,7 @@ alias_info_infolist_alias_cb (const void *pointer, void *data,
              ptr_alias = ptr_alias->next_alias)
         {
             if (!arguments || !arguments[0]
-                || weechat_string_match (ptr_alias->name, arguments, 0))
+                || weechat_string_match (ptr_alias->name, arguments, 1))
             {
                 if (!alias_add_to_infolist (ptr_infolist, ptr_alias))
                 {
