@@ -539,6 +539,8 @@ TEST(CoreString, StringComparison)
     LONGS_EQUAL(35, string_strcmp ("def", "ABC"));
     LONGS_EQUAL(-29, string_strcmp ("DEF", "abc"));
     LONGS_EQUAL(3, string_strcmp ("DEF", "ABC"));
+    LONGS_EQUAL(-9, string_strcmp ("à", "é"));
+    LONGS_EQUAL(32, string_strcmp ("ê", "Ê"));
 
     /* case-sensitive comparison with max length */
     LONGS_EQUAL(0, string_strncmp (NULL, NULL, 3));
@@ -563,6 +565,8 @@ TEST(CoreString, StringComparison)
     LONGS_EQUAL(35, string_strncmp ("def", "ABC", 3));
     LONGS_EQUAL(-29, string_strncmp ("DEF", "abc", 3));
     LONGS_EQUAL(3, string_strncmp ("DEF", "ABC", 3));
+    LONGS_EQUAL(-9, string_strncmp ("à", "é", 1));
+    LONGS_EQUAL(32, string_strncmp ("ê", "Ê", 1));
 
     /* case-insensitive comparison */
     LONGS_EQUAL(0, string_strcasecmp (NULL, NULL));
@@ -581,6 +585,8 @@ TEST(CoreString, StringComparison)
     LONGS_EQUAL(3, string_strcasecmp ("def", "ABC"));
     LONGS_EQUAL(3, string_strcasecmp ("DEF", "abc"));
     LONGS_EQUAL(3, string_strcasecmp ("DEF", "ABC"));
+    LONGS_EQUAL(-9, string_strcasecmp ("à", "é"));
+    LONGS_EQUAL(0, string_strcasecmp ("ê", "Ê"));
 
     /* case-insensitive comparison with max length */
     LONGS_EQUAL(0, string_strncasecmp (NULL, NULL, 3));
@@ -605,6 +611,8 @@ TEST(CoreString, StringComparison)
     LONGS_EQUAL(3, string_strncasecmp ("def", "ABC", 3));
     LONGS_EQUAL(3, string_strncasecmp ("DEF", "abc", 3));
     LONGS_EQUAL(3, string_strncasecmp ("DEF", "ABC", 3));
+    LONGS_EQUAL(-9, string_strncasecmp ("à", "é", 1));
+    LONGS_EQUAL(0, string_strncasecmp ("ê", "Ê", 1));
 
     /* case-insensitive comparison with a range */
     LONGS_EQUAL(0, string_strcasecmp_range (NULL, NULL, 30));
