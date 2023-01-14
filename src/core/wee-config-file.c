@@ -35,6 +35,7 @@
 
 #include "weechat.h"
 #include "wee-config-file.h"
+#include "wee-arraylist.h"
 #include "wee-config.h"
 #include "wee-hdata.h"
 #include "wee-hook.h"
@@ -248,6 +249,63 @@ config_file_new (struct t_weechat_plugin *plugin, const char *name,
     }
 
     return new_config_file;
+}
+
+/*
+ * Compares two configuration files to sort them by priority (highest priority
+ * at beginning of list).
+ *
+ * Returns:
+ *   -1: config1 has higher priority than config2
+ *    1: config1 has same or lower priority than config2
+ */
+
+int
+config_file_arraylist_cmp_config_cb (void *data,
+                                     struct t_arraylist *arraylist,
+                                     void *pointer1, void *pointer2)
+{
+    struct t_config_file *ptr_config1, *ptr_config2;
+
+    /* make C compiler happy */
+    (void) data;
+    (void) arraylist;
+
+    ptr_config1 = (struct t_config_file *)pointer1;
+    ptr_config2 = (struct t_config_file *)pointer2;
+
+    return (ptr_config1->priority > ptr_config2->priority) ? -1 : 1;
+}
+
+/*
+ * Returns an arraylist with pointers to configuration files, sorted by
+ * priority (from highest to lowest).
+ */
+
+struct t_arraylist *
+config_file_get_configs_by_priority ()
+{
+    struct t_arraylist *list;
+    struct t_config_file *ptr_config;
+
+    /*
+     * build a list of pointers to configs sorted by priority,
+     * so that configs with high priority are reloaded first
+     */
+    list = arraylist_new (
+        32, 1, 1,
+        &config_file_arraylist_cmp_config_cb, NULL,
+        NULL, NULL);
+    if (!list)
+        return NULL;
+
+    for (ptr_config = config_files; ptr_config;
+         ptr_config = ptr_config->next_config)
+    {
+        arraylist_add (list, ptr_config);
+    }
+
+    return list;
 }
 
 /*

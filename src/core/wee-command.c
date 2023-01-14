@@ -5586,39 +5586,12 @@ command_reload_file (struct t_config_file *config_file)
 }
 
 /*
- * Compares two configuration files to sort them by priority (highest priority
- * at beginning of list).
- *
- * Returns:
- *   -1: config1 has higher priority than config2
- *    1: config1 has same or lower priority than config2
- */
-
-int
-command_reload_arraylist_cmp_config_cb (void *data,
-                                        struct t_arraylist *arraylist,
-                                        void *pointer1, void *pointer2)
-{
-    struct t_config_file *ptr_config1, *ptr_config2;
-
-    /* make C compiler happy */
-    (void) data;
-    (void) arraylist;
-
-    ptr_config1 = (struct t_config_file *)pointer1;
-    ptr_config2 = (struct t_config_file *)pointer2;
-
-    return (ptr_config1->priority > ptr_config2->priority) ? -1 : 1;
-}
-
-
-/*
  * Callback for command "/reload": reloads a configuration file.
  */
 
 COMMAND_CALLBACK(reload)
 {
-    struct t_config_file *ptr_config_file;
+    struct t_config_file *ptr_config;
     struct t_arraylist *all_configs;
     int i, list_size;
 
@@ -5632,10 +5605,10 @@ COMMAND_CALLBACK(reload)
     {
         for (i = 1; i < argc; i++)
         {
-            ptr_config_file = config_file_search (argv[i]);
-            if (ptr_config_file)
+            ptr_config = config_file_search (argv[i]);
+            if (ptr_config)
             {
-                command_reload_file (ptr_config_file);
+                command_reload_file (ptr_config);
             }
             else
             {
@@ -5647,32 +5620,16 @@ COMMAND_CALLBACK(reload)
     }
     else
     {
-        /*
-         * build a list of pointers to configs sorted by priority,
-         * so that configs with high priority are reloaded first
-         */
-        all_configs = arraylist_new (
-            32, 1, 1,
-            &command_reload_arraylist_cmp_config_cb, NULL,
-            NULL, NULL);
+        all_configs = config_file_get_configs_by_priority ();
         if (!all_configs)
             COMMAND_ERROR;
-
-        for (ptr_config_file = config_files; ptr_config_file;
-             ptr_config_file = ptr_config_file->next_config)
-        {
-            arraylist_add (all_configs, ptr_config_file);
-        }
-
         list_size = arraylist_size (all_configs);
         for (i = 0; i < list_size; i++)
         {
-            ptr_config_file = (struct t_config_file *)arraylist_get (
-                all_configs, i);
-            if (config_file_valid (ptr_config_file))
-                command_reload_file (ptr_config_file);
+            ptr_config = (struct t_config_file *)arraylist_get (all_configs, i);
+            if (config_file_valid (ptr_config))
+                command_reload_file (ptr_config);
         }
-
         arraylist_free (all_configs);
     }
 
@@ -5825,8 +5782,9 @@ command_save_file (struct t_config_file *config_file)
 
 COMMAND_CALLBACK(save)
 {
-    struct t_config_file *ptr_config_file;
-    int i;
+    struct t_config_file *ptr_config;
+    struct t_arraylist *all_configs;
+    int i, list_size;
 
     /* make C compiler happy */
     (void) pointer;
@@ -5839,10 +5797,10 @@ COMMAND_CALLBACK(save)
         /* save configuration files asked by user */
         for (i = 1; i < argc; i++)
         {
-            ptr_config_file = config_file_search (argv[i]);
-            if (ptr_config_file)
+            ptr_config = config_file_search (argv[i]);
+            if (ptr_config)
             {
-                command_save_file (ptr_config_file);
+                command_save_file (ptr_config);
             }
             else
             {
@@ -5855,11 +5813,17 @@ COMMAND_CALLBACK(save)
     else
     {
         /* save all configuration files */
-        for (ptr_config_file = config_files; ptr_config_file;
-             ptr_config_file = ptr_config_file->next_config)
+        all_configs = config_file_get_configs_by_priority ();
+        if (!all_configs)
+            COMMAND_ERROR;
+        list_size = arraylist_size (all_configs);
+        for (i = 0; i < list_size; i++)
         {
-            command_save_file (ptr_config_file);
+            ptr_config = (struct t_config_file *)arraylist_get (all_configs, i);
+            if (config_file_valid (ptr_config))
+                command_save_file (ptr_config);
         }
+        arraylist_free (all_configs);
     }
 
     return WEECHAT_RC_OK;

@@ -178,6 +178,7 @@ extern struct t_config_file *config_file_new (struct t_weechat_plugin *plugin,
                                                                      struct t_config_file *config_file),
                                               const void *callback_reload_pointer,
                                               void *callback_reload_data);
+extern struct t_arraylist *config_file_get_configs_by_priority ();
 extern struct t_config_section *config_file_new_section (struct t_config_file *config_file,
                                                          const char *name,
                                                          int user_can_add_options,

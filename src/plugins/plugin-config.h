@@ -23,7 +23,7 @@
 #define PLUGIN_CONFIG_NAME "plugins"
 #define PLUGIN_CONFIG_PRIO_NAME "100000|plugins"
 
-extern struct t_config_file *plugin_config;
+extern struct t_config_file *plugin_config_file;
 extern struct t_config_option *plugin_options;
 
 extern struct t_config_option *plugin_config_search (const char *plugin_name,

@@ -26,11 +26,13 @@
 extern "C"
 {
 #include <string.h>
+#include "src/core/wee-arraylist.h"
 #include "src/core/wee-config-file.h"
 #include "src/core/wee-config.h"
 #include "src/core/wee-secure-config.h"
 #include "src/gui/gui-color.h"
 #include "src/plugins/plugin.h"
+#include "src/plugins/plugin-config.h"
 
 extern struct t_config_file *config_file_find_pos (const char *name);
 extern char *config_file_option_full_name (struct t_config_option *option);
@@ -102,6 +104,52 @@ TEST(CoreConfigFile, ConfigInsert)
 TEST(CoreConfigFile, New)
 {
     /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   config_file_arraylist_cmp_config_cb
+ *   config_file_get_configs_by_priority
+ */
+
+TEST(CoreConfigFile, GetConfigsByPriority)
+{
+    struct t_config_file *ptr_config;
+    struct t_arraylist *all_configs;
+    int config_count;
+
+    /* count number of configuration files */
+    config_count = 0;
+    for (ptr_config = config_files; ptr_config;
+         ptr_config = ptr_config->next_config)
+    {
+        config_count++;
+    }
+
+    /* get list of configuration files by priority (highest to lowest) */
+    all_configs = config_file_get_configs_by_priority ();
+    CHECK(all_configs);
+
+    /* ensure we have all files in the list (and not more) */
+    LONGS_EQUAL(config_count, arraylist_size (all_configs));
+
+    /* check core configuration files (they have higher priority) */
+    POINTERS_EQUAL(secure_config_file, arraylist_get (all_configs, 0));
+    POINTERS_EQUAL(weechat_config_file, arraylist_get (all_configs, 1));
+    POINTERS_EQUAL(plugin_config_file, arraylist_get (all_configs, 2));
+
+    /* check first plugin configuration file (with highest priority) */
+    ptr_config = (struct t_config_file *)arraylist_get (all_configs, 3);
+    CHECK(ptr_config);
+    STRCMP_EQUAL("charset", ptr_config->name);
+
+    /* check last plugin configuration file (with lowest priority) */
+    ptr_config = (struct t_config_file *)arraylist_get (all_configs,
+                                                        config_count - 1);
+    CHECK(ptr_config);
+    STRCMP_EQUAL("fset", ptr_config->name);
+
+    arraylist_free (all_configs);
 }
 
 /*
