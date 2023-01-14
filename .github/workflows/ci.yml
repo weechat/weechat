@@ -97,6 +97,19 @@ jobs:
     - name: Install dependencies
       run: |
         brew update
+        # temporary fix, see: https://github.com/actions/setup-python/issues/577
+        rm -f \
+          /usr/local/bin/2to3 \
+          /usr/local/bin/idle3 \
+          /usr/local/bin/pydoc3 \
+          /usr/local/bin/python3 \
+          /usr/local/bin/python3-config \
+          /usr/local/bin/2to3-3.11 \
+          /usr/local/bin/idle3.11 \
+          /usr/local/bin/pydoc3.11 \
+          /usr/local/bin/python3.11 \
+          /usr/local/bin/python3.11-config \
+        ;
         brew install asciidoctor lua ruby
 
     - name: Build
