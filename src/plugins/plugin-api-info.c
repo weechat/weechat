@@ -1661,7 +1661,7 @@ plugin_api_infolist_plugin_cb (const void *pointer, void *data,
              ptr_plugin = ptr_plugin->next_plugin)
         {
             if (!arguments || !arguments[0]
-                || string_match (ptr_plugin->name, arguments, 0))
+                || string_match (ptr_plugin->name, arguments, 1))
             {
                 if (!plugin_add_to_infolist (ptr_infolist, ptr_plugin))
                 {

@@ -4810,7 +4810,7 @@ command_plugin_list (const char *name, int full)
     for (ptr_plugin = weechat_plugins; ptr_plugin;
          ptr_plugin = ptr_plugin->next_plugin)
     {
-        if (!name || (string_strcasestr (ptr_plugin->name, name)))
+        if (!name || (strstr (ptr_plugin->name, name)))
         {
             plugins_found++;
 

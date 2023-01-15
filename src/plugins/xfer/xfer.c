@@ -245,8 +245,8 @@ xfer_search (const char *plugin_name, const char *plugin_id, enum t_xfer_type ty
 
     for (ptr_xfer = xfer_list; ptr_xfer; ptr_xfer = ptr_xfer->next_xfer)
     {
-        if ((weechat_strcasecmp (ptr_xfer->plugin_name, plugin_name) == 0)
-            && (weechat_strcasecmp (ptr_xfer->plugin_id, plugin_id) == 0)
+        if ((weechat_strcmp (ptr_xfer->plugin_name, plugin_name) == 0)
+            && (weechat_strcmp (ptr_xfer->plugin_id, plugin_id) == 0)
             && (ptr_xfer->type == type)
             && (ptr_xfer->status = status)
             && (ptr_xfer->port == port))
