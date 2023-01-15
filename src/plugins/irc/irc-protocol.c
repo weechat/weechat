@@ -6086,7 +6086,7 @@ IRC_PROTOCOL_CALLBACK(366)
     struct t_irc_channel *ptr_channel;
     struct t_infolist *infolist;
     struct t_config_option *ptr_option;
-    int num_nicks, num_op, num_halfop, num_voice, num_normal;
+    int num_nicks, num_ops, num_halfops, num_voiced, num_regular;
     char *str_params, str_count[1024], **str_nicks, *color;
     const char *prefix, *prefix_color, *nickname;
 
@@ -6190,12 +6190,15 @@ IRC_PROTOCOL_CALLBACK(366)
             }
         }
 
-        /* display number of nicks, ops, halfops & voices on the channel */
+        /*
+         * display the number of total nicks, ops, halfops, voiced and
+         * regular on the channel
+         */
         if (weechat_hashtable_has_key (ptr_channel->join_msg_received, "366")
             || weechat_hashtable_has_key (irc_config_hashtable_display_join_message, "366"))
         {
-            irc_nick_count (server, ptr_channel, &num_nicks, &num_op, &num_halfop,
-                            &num_voice, &num_normal);
+            irc_nick_count (server, ptr_channel, &num_nicks, &num_ops,
+                            &num_halfops, &num_voiced, &num_regular);
             str_nicks = weechat_string_dyn_alloc (1024);
             if (irc_server_get_prefix_mode_index (server, 'o') >= 0)
             {
@@ -6203,9 +6206,9 @@ IRC_PROTOCOL_CALLBACK(366)
                           "%s%s%d%s %s",
                           (*str_nicks[0]) ? ", " : "",
                           IRC_COLOR_CHAT_CHANNEL,
-                          num_op,
+                          num_ops,
                           IRC_COLOR_RESET,
-                          NG_("op", "ops", num_op));
+                          NG_("op", "ops", num_ops));
                 weechat_string_dyn_concat (str_nicks, str_count, -1);
             }
             if (irc_server_get_prefix_mode_index (server, 'h') >= 0)
@@ -6214,9 +6217,9 @@ IRC_PROTOCOL_CALLBACK(366)
                           "%s%s%d%s %s",
                           (*str_nicks[0]) ? ", " : "",
                           IRC_COLOR_CHAT_CHANNEL,
-                          num_halfop,
+                          num_halfops,
                           IRC_COLOR_RESET,
-                          NG_("halfop", "halfops", num_halfop));
+                          NG_("halfop", "halfops", num_halfops));
                 weechat_string_dyn_concat (str_nicks, str_count, -1);
             }
             if (irc_server_get_prefix_mode_index (server, 'v') >= 0)
@@ -6225,18 +6228,18 @@ IRC_PROTOCOL_CALLBACK(366)
                           "%s%s%d%s %s",
                           (*str_nicks[0]) ? ", " : "",
                           IRC_COLOR_CHAT_CHANNEL,
-                          num_voice,
+                          num_voiced,
                           IRC_COLOR_RESET,
-                          NG_("voice", "voices", num_voice));
+                          NG_("voiced", "voiced", num_voiced));
                 weechat_string_dyn_concat (str_nicks, str_count, -1);
             }
             snprintf (
                 str_count, sizeof (str_count),
-                /* TRANSLATORS: number of "normal" nicks on a channel (ie no op/voice), for example: "56 normals" */
-                NG_("%s%s%d%s normal", "%s%s%d%s normals", num_normal),
+                /* TRANSLATORS: number of "regular" nicks on a channel (ie not op/halfop/voiced), for example: "56 regular" */
+                NG_("%s%s%d%s regular", "%s%s%d%s regular", num_regular),
                 (*str_nicks[0]) ? ", " : "",
                 IRC_COLOR_CHAT_CHANNEL,
-                num_normal,
+                num_regular,
                 IRC_COLOR_RESET);
             weechat_string_dyn_concat (str_nicks, str_count, -1);
             weechat_printf_date_tags (

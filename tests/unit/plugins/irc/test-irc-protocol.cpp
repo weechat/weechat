@@ -3650,33 +3650,43 @@ TEST(IrcProtocolWithServer, 366)
     CHECK_ERROR_PARAMS("366", 2, 3);
 
     RECV(":server 366 alice #test end");
-    CHECK_CHAN("-- Channel #test: 1 nick (0 ops, 0 voices, 1 normal)");
+    CHECK_CHAN("-- Channel #test: 1 nick (0 ops, 0 voiced, 1 regular)");
     RECV(":server 366 alice #test :End of /NAMES list");
-    CHECK_CHAN("-- Channel #test: 1 nick (0 ops, 0 voices, 1 normal)");
+    CHECK_CHAN("-- Channel #test: 1 nick (0 ops, 0 voiced, 1 regular)");
 
     RECV(":server 353 alice = #test :bob");
     RECV(":server 366 alice #test :End of /NAMES list");
-    CHECK_CHAN("-- Channel #test: 2 nicks (0 ops, 0 voices, 2 normals)");
+    CHECK_CHAN("-- Channel #test: 2 nicks (0 ops, 0 voiced, 2 regular)");
 
     RECV(":server 353 alice = #test :@carol");
     RECV(":server 366 alice #test :End of /NAMES list");
-    CHECK_CHAN("-- Channel #test: 3 nicks (1 op, 0 voices, 2 normals)");
+    CHECK_CHAN("-- Channel #test: 3 nicks (1 op, 0 voiced, 2 regular)");
 
     RECV(":server 353 alice = #test :+dan!user@host");
     RECV(":server 366 alice #test :End of /NAMES list");
-    CHECK_CHAN("-- Channel #test: 4 nicks (1 op, 1 voice, 2 normals)");
+    CHECK_CHAN("-- Channel #test: 4 nicks (1 op, 1 voiced, 2 regular)");
 
     RECV(":server 353 alice = #test :@evans");
     RECV(":server 366 alice #test :End of /NAMES list");
-    CHECK_CHAN("-- Channel #test: 5 nicks (2 ops, 1 voice, 2 normals)");
+    CHECK_CHAN("-- Channel #test: 5 nicks (2 ops, 1 voiced, 2 regular)");
 
     RECV(":server 353 alice = #test :+fred");
     RECV(":server 366 alice #test :End of /NAMES list");
-    CHECK_CHAN("-- Channel #test: 6 nicks (2 ops, 2 voices, 2 normals)");
+    CHECK_CHAN("-- Channel #test: 6 nicks (2 ops, 2 voiced, 2 regular)");
 
     RECV(":server 353 alice = #test :greg");
     RECV(":server 366 alice #test :End of /NAMES list");
-    CHECK_CHAN("-- Channel #test: 7 nicks (2 ops, 2 voices, 3 normals)");
+    CHECK_CHAN("-- Channel #test: 7 nicks (2 ops, 2 voiced, 3 regular)");
+
+    RECV(":server 005 alice " IRC_MSG_005 " :are supported");
+
+    RECV(":server 353 alice = #test :%harry");
+    RECV(":server 366 alice #test :End of /NAMES list");
+    CHECK_CHAN("-- Channel #test: 8 nicks (2 ops, 1 halfop, 2 voiced, 3 regular)");
+
+    RECV(":server 353 alice = #test :%ian");
+    RECV(":server 366 alice #test :End of /NAMES list");
+    CHECK_CHAN("-- Channel #test: 9 nicks (2 ops, 2 halfops, 2 voiced, 3 regular)");
 
     /* channel not found */
     RECV(":server 366 alice #xyz end");
