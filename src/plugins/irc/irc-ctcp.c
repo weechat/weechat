@@ -179,7 +179,7 @@ irc_ctcp_display_reply_from_nick (struct t_irc_server *server, time_t date,
             {
                 pos_args++;
             }
-            if (weechat_strcasecmp (ptr_args + 1, "PING") == 0)
+            if (weechat_strcasecmp (ptr_args + 1, "ping") == 0)
             {
                 pos_usec = strchr (pos_args, ' ');
                 if (pos_usec)
@@ -1064,7 +1064,7 @@ irc_ctcp_recv (struct t_irc_server *server, time_t date,
         }
 
         /* CTCP ACTION */
-        if (weechat_strcasecmp (ptr_args + 1, "ACTION") == 0)
+        if (weechat_strcasecmp (ptr_args + 1, "action") == 0)
         {
             nick_is_me = (irc_server_strcasecmp (server, server->nick, nick) == 0);
             if (channel)
@@ -1152,7 +1152,7 @@ irc_ctcp_recv (struct t_irc_server *server, time_t date,
             }
         }
         /* CTCP PING */
-        else if (weechat_strcasecmp (ptr_args + 1, "PING") == 0)
+        else if (weechat_strcasecmp (ptr_args + 1, "ping") == 0)
         {
             reply = irc_ctcp_get_reply (server, ptr_args + 1);
             irc_ctcp_display_request (server, date, tags, command, channel,
@@ -1179,7 +1179,7 @@ irc_ctcp_recv (struct t_irc_server *server, time_t date,
             }
         }
         /* CTCP DCC */
-        else if (weechat_strcasecmp (ptr_args + 1, "DCC") == 0)
+        else if (weechat_strcasecmp (ptr_args + 1, "dcc") == 0)
         {
             irc_ctcp_recv_dcc (server, nick, pos_args, message);
         }
