@@ -1011,7 +1011,7 @@ weechat_guile_infolist_cb (const void *pointer, void *data,
     if (!infolist_name || !infolist_name[0])
         return NULL;
 
-    if (weechat_strcasecmp (infolist_name, "guile_script") == 0)
+    if (weechat_strcmp (infolist_name, "guile_script") == 0)
     {
         return plugin_script_infolist_list_scripts (weechat_guile_plugin,
                                                     guile_scripts, obj_pointer,

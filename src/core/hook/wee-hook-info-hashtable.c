@@ -123,8 +123,8 @@ hook_info_get_hashtable (struct t_weechat_plugin *plugin, const char *info_name,
 
         if (!ptr_hook->deleted
             && !ptr_hook->running
-            && (string_strcasecmp (HOOK_INFO_HASHTABLE(ptr_hook, info_name),
-                                   info_name) == 0))
+            && (string_strcmp (HOOK_INFO_HASHTABLE(ptr_hook, info_name),
+                               info_name) == 0))
         {
             ptr_hook->running = 1;
             value = (HOOK_INFO_HASHTABLE(ptr_hook, callback))

@@ -794,7 +794,7 @@ weechat_js_infolist_cb (const void *pointer, void *data,
     if (!infolist_name || !infolist_name[0])
         return NULL;
 
-    if (weechat_strcasecmp (infolist_name, "javascript_script") == 0)
+    if (weechat_strcmp (infolist_name, "javascript_script") == 0)
     {
         return plugin_script_infolist_list_scripts (weechat_js_plugin,
                                                     js_scripts, obj_pointer,

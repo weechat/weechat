@@ -1147,7 +1147,7 @@ weechat_ruby_infolist_cb (const void *pointer, void *data,
     if (!infolist_name || !infolist_name[0])
         return NULL;
 
-    if (weechat_strcasecmp (infolist_name, "ruby_script") == 0)
+    if (weechat_strcmp (infolist_name, "ruby_script") == 0)
     {
         return plugin_script_infolist_list_scripts (weechat_ruby_plugin,
                                                     ruby_scripts, obj_pointer,
