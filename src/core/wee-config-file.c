@@ -2106,17 +2106,17 @@ config_file_option_get_string (struct t_config_option *option,
     if (!option || !property)
         return NULL;
 
-    if (string_strcasecmp (property, "config_name") == 0)
+    if (string_strcmp (property, "config_name") == 0)
         return option->config_file->name;
-    else if (string_strcasecmp (property, "section_name") == 0)
+    else if (string_strcmp (property, "section_name") == 0)
         return option->section->name;
-    else if (string_strcasecmp (property, "name") == 0)
+    else if (string_strcmp (property, "name") == 0)
         return option->name;
-    else if (string_strcasecmp (property, "parent_name") == 0)
+    else if (string_strcmp (property, "parent_name") == 0)
         return option->parent_name;
-    else if (string_strcasecmp (property, "type") == 0)
+    else if (string_strcmp (property, "type") == 0)
         return config_option_type_string[option->type];
-    else if (string_strcasecmp (property, "description") == 0)
+    else if (string_strcmp (property, "description") == 0)
         return option->description;
 
     return NULL;
@@ -2133,31 +2133,31 @@ config_file_option_get_pointer (struct t_config_option *option,
     if (!option || !property)
         return NULL;
 
-    if (string_strcasecmp (property, "config_file") == 0)
+    if (string_strcmp (property, "config_file") == 0)
         return option->config_file;
-    else if (string_strcasecmp (property, "section") == 0)
+    else if (string_strcmp (property, "section") == 0)
         return option->section;
-    else if (string_strcasecmp (property, "name") == 0)
+    else if (string_strcmp (property, "name") == 0)
         return option->name;
-    else if (string_strcasecmp (property, "parent_name") == 0)
+    else if (string_strcmp (property, "parent_name") == 0)
         return option->parent_name;
-    else if (string_strcasecmp (property, "type") == 0)
+    else if (string_strcmp (property, "type") == 0)
         return &option->type;
-    else if (string_strcasecmp (property, "description") == 0)
+    else if (string_strcmp (property, "description") == 0)
         return option->description;
-    else if (string_strcasecmp (property, "string_values") == 0)
+    else if (string_strcmp (property, "string_values") == 0)
         return option->string_values;
-    else if (string_strcasecmp (property, "min") == 0)
+    else if (string_strcmp (property, "min") == 0)
         return &option->min;
-    else if (string_strcasecmp (property, "max") == 0)
+    else if (string_strcmp (property, "max") == 0)
         return &option->max;
-    else if (string_strcasecmp (property, "default_value") == 0)
+    else if (string_strcmp (property, "default_value") == 0)
         return option->default_value;
-    else if (string_strcasecmp (property, "value") == 0)
+    else if (string_strcmp (property, "value") == 0)
         return option->value;
-    else if (string_strcasecmp (property, "prev_option") == 0)
+    else if (string_strcmp (property, "prev_option") == 0)
         return option->prev_option;
-    else if (string_strcasecmp (property, "next_option") == 0)
+    else if (string_strcmp (property, "next_option") == 0)
         return option->next_option;
 
     return NULL;

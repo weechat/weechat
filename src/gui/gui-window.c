@@ -771,33 +771,33 @@ gui_window_get_integer (struct t_gui_window *window, const char *property)
     if (!window || !property)
         return 0;
 
-    if (string_strcasecmp (property, "number") == 0)
+    if (string_strcmp (property, "number") == 0)
         return window->number;
-    if (string_strcasecmp (property, "win_x") == 0)
+    if (string_strcmp (property, "win_x") == 0)
         return window->win_x;
-    if (string_strcasecmp (property, "win_y") == 0)
+    if (string_strcmp (property, "win_y") == 0)
         return window->win_y;
-    if (string_strcasecmp (property, "win_width") == 0)
+    if (string_strcmp (property, "win_width") == 0)
         return window->win_width;
-    if (string_strcasecmp (property, "win_height") == 0)
+    if (string_strcmp (property, "win_height") == 0)
         return window->win_height;
-    if (string_strcasecmp (property, "win_width_pct") == 0)
+    if (string_strcmp (property, "win_width_pct") == 0)
         return window->win_width_pct;
-    if (string_strcasecmp (property, "win_height_pct") == 0)
+    if (string_strcmp (property, "win_height_pct") == 0)
         return window->win_height_pct;
-    if (string_strcasecmp (property, "win_chat_x") == 0)
+    if (string_strcmp (property, "win_chat_x") == 0)
         return window->win_chat_x;
-    if (string_strcasecmp (property, "win_chat_y") == 0)
+    if (string_strcmp (property, "win_chat_y") == 0)
         return window->win_chat_y;
-    if (string_strcasecmp (property, "win_chat_width") == 0)
+    if (string_strcmp (property, "win_chat_width") == 0)
         return window->win_chat_width;
-    if (string_strcasecmp (property, "win_chat_height") == 0)
+    if (string_strcmp (property, "win_chat_height") == 0)
         return window->win_chat_height;
-    if (string_strcasecmp (property, "first_line_displayed") == 0)
+    if (string_strcmp (property, "first_line_displayed") == 0)
         return window->scroll->first_line_displayed;
-    if (string_strcasecmp (property, "scrolling") == 0)
+    if (string_strcmp (property, "scrolling") == 0)
         return window->scroll->scrolling;
-    if (string_strcasecmp (property, "lines_after") == 0)
+    if (string_strcmp (property, "lines_after") == 0)
         return window->scroll->lines_after;
 
     return 0;
@@ -825,12 +825,12 @@ gui_window_get_pointer (struct t_gui_window *window, const char *property)
 {
     if (property)
     {
-        if (string_strcasecmp (property, "current") == 0)
+        if (string_strcmp (property, "current") == 0)
             return gui_current_window;
 
         if (window)
         {
-            if (string_strcasecmp (property, "buffer") == 0)
+            if (string_strcmp (property, "buffer") == 0)
                 return window->buffer;
         }
     }

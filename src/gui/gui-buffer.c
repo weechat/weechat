@@ -1233,91 +1233,91 @@ gui_buffer_get_integer (struct t_gui_buffer *buffer, const char *property)
     if (!buffer || !property)
         return 0;
 
-    if (string_strcasecmp (property, "number") == 0)
+    if (string_strcmp (property, "number") == 0)
         return buffer->number;
-    else if (string_strcasecmp (property, "layout_number") == 0)
+    else if (string_strcmp (property, "layout_number") == 0)
         return buffer->layout_number;
-    else if (string_strcasecmp (property, "layout_number_merge_order") == 0)
+    else if (string_strcmp (property, "layout_number_merge_order") == 0)
         return buffer->layout_number_merge_order;
-    else if (string_strcasecmp (property, "short_name_is_set") == 0)
+    else if (string_strcmp (property, "short_name_is_set") == 0)
         return (buffer->short_name) ? 1 : 0;
-    else if (string_strcasecmp (property, "type") == 0)
+    else if (string_strcmp (property, "type") == 0)
         return buffer->type;
-    else if (string_strcasecmp (property, "notify") == 0)
+    else if (string_strcmp (property, "notify") == 0)
         return buffer->notify;
-    else if (string_strcasecmp (property, "num_displayed") == 0)
+    else if (string_strcmp (property, "num_displayed") == 0)
         return buffer->num_displayed;
-    else if (string_strcasecmp (property, "active") == 0)
+    else if (string_strcmp (property, "active") == 0)
         return buffer->active;
-    else if (string_strcasecmp (property, "hidden") == 0)
+    else if (string_strcmp (property, "hidden") == 0)
         return buffer->hidden;
-    else if (string_strcasecmp (property, "zoomed") == 0)
+    else if (string_strcmp (property, "zoomed") == 0)
         return buffer->zoomed;
-    else if (string_strcasecmp (property, "print_hooks_enabled") == 0)
+    else if (string_strcmp (property, "print_hooks_enabled") == 0)
         return buffer->print_hooks_enabled;
-    else if (string_strcasecmp (property, "day_change") == 0)
+    else if (string_strcmp (property, "day_change") == 0)
         return buffer->day_change;
-    else if (string_strcasecmp (property, "clear") == 0)
+    else if (string_strcmp (property, "clear") == 0)
         return buffer->clear;
-    else if (string_strcasecmp (property, "filter") == 0)
+    else if (string_strcmp (property, "filter") == 0)
         return buffer->filter;
-    else if (string_strcasecmp (property, "closing") == 0)
+    else if (string_strcmp (property, "closing") == 0)
         return buffer->closing;
-    else if (string_strcasecmp (property, "lines_hidden") == 0)
+    else if (string_strcmp (property, "lines_hidden") == 0)
         return buffer->lines->lines_hidden;
-    else if (string_strcasecmp (property, "prefix_max_length") == 0)
+    else if (string_strcmp (property, "prefix_max_length") == 0)
         return buffer->lines->prefix_max_length;
-    else if (string_strcasecmp (property, "next_line_id") == 0)
+    else if (string_strcmp (property, "next_line_id") == 0)
         return buffer->next_line_id;
-    else if (string_strcasecmp (property, "time_for_each_line") == 0)
+    else if (string_strcmp (property, "time_for_each_line") == 0)
         return buffer->time_for_each_line;
-    else if (string_strcasecmp (property, "nicklist") == 0)
+    else if (string_strcmp (property, "nicklist") == 0)
         return buffer->nicklist;
-    else if (string_strcasecmp (property, "nicklist_case_sensitive") == 0)
+    else if (string_strcmp (property, "nicklist_case_sensitive") == 0)
         return buffer->nicklist_case_sensitive;
-    else if (string_strcasecmp (property, "nicklist_max_length") == 0)
+    else if (string_strcmp (property, "nicklist_max_length") == 0)
         return buffer->nicklist_max_length;
-    else if (string_strcasecmp (property, "nicklist_display_groups") == 0)
+    else if (string_strcmp (property, "nicklist_display_groups") == 0)
         return buffer->nicklist_display_groups;
-    else if (string_strcasecmp (property, "nicklist_count") == 0)
+    else if (string_strcmp (property, "nicklist_count") == 0)
         return buffer->nicklist_count;
-    else if (string_strcasecmp (property, "nicklist_visible_count") == 0)
+    else if (string_strcmp (property, "nicklist_visible_count") == 0)
         return buffer->nicklist_visible_count;
-    else if (string_strcasecmp (property, "nicklist_groups_count") == 0)
+    else if (string_strcmp (property, "nicklist_groups_count") == 0)
         return buffer->nicklist_groups_count;
-    else if (string_strcasecmp (property, "nicklist_groups_visible_count") == 0)
+    else if (string_strcmp (property, "nicklist_groups_visible_count") == 0)
         return buffer->nicklist_groups_visible_count;
-    else if (string_strcasecmp (property, "nicklist_nicks_count") == 0)
+    else if (string_strcmp (property, "nicklist_nicks_count") == 0)
         return buffer->nicklist_nicks_count;
-    else if (string_strcasecmp (property, "nicklist_nicks_visible_count") == 0)
+    else if (string_strcmp (property, "nicklist_nicks_visible_count") == 0)
         return buffer->nicklist_nicks_visible_count;
-    else if (string_strcasecmp (property, "input") == 0)
+    else if (string_strcmp (property, "input") == 0)
         return buffer->input;
-    else if (string_strcasecmp (property, "input_get_unknown_commands") == 0)
+    else if (string_strcmp (property, "input_get_unknown_commands") == 0)
         return buffer->input_get_unknown_commands;
-    else if (string_strcasecmp (property, "input_get_empty") == 0)
+    else if (string_strcmp (property, "input_get_empty") == 0)
         return buffer->input_get_empty;
-    else if (string_strcasecmp (property, "input_multiline") == 0)
+    else if (string_strcmp (property, "input_multiline") == 0)
         return buffer->input_multiline;
-    else if (string_strcasecmp (property, "input_size") == 0)
+    else if (string_strcmp (property, "input_size") == 0)
         return buffer->input_buffer_size;
-    else if (string_strcasecmp (property, "input_length") == 0)
+    else if (string_strcmp (property, "input_length") == 0)
         return buffer->input_buffer_length;
-    else if (string_strcasecmp (property, "input_pos") == 0)
+    else if (string_strcmp (property, "input_pos") == 0)
         return buffer->input_buffer_pos;
-    else if (string_strcasecmp (property, "input_1st_display") == 0)
+    else if (string_strcmp (property, "input_1st_display") == 0)
         return buffer->input_buffer_1st_display;
-    else if (string_strcasecmp (property, "num_history") == 0)
+    else if (string_strcmp (property, "num_history") == 0)
         return buffer->num_history;
-    else if (string_strcasecmp (property, "text_search") == 0)
+    else if (string_strcmp (property, "text_search") == 0)
         return buffer->text_search;
-    else if (string_strcasecmp (property, "text_search_exact") == 0)
+    else if (string_strcmp (property, "text_search_exact") == 0)
         return buffer->text_search_exact;
-    else if (string_strcasecmp (property, "text_search_regex") == 0)
+    else if (string_strcmp (property, "text_search_regex") == 0)
         return buffer->text_search_regex;
-    else if (string_strcasecmp (property, "text_search_where") == 0)
+    else if (string_strcmp (property, "text_search_where") == 0)
         return buffer->text_search_where;
-    else if (string_strcasecmp (property, "text_search_found") == 0)
+    else if (string_strcmp (property, "text_search_found") == 0)
         return buffer->text_search_found;
 
     return 0;
@@ -1335,35 +1335,35 @@ gui_buffer_get_string (struct t_gui_buffer *buffer, const char *property)
     if (!buffer || !property)
         return NULL;
 
-    if (string_strcasecmp (property, "plugin") == 0)
+    if (string_strcmp (property, "plugin") == 0)
         return gui_buffer_get_plugin_name (buffer);
-    else if (string_strcasecmp (property, "name") == 0)
+    else if (string_strcmp (property, "name") == 0)
         return buffer->name;
-    else if (string_strcasecmp (property, "full_name") == 0)
+    else if (string_strcmp (property, "full_name") == 0)
         return buffer->full_name;
-    else if (string_strcasecmp (property, "old_full_name") == 0)
+    else if (string_strcmp (property, "old_full_name") == 0)
         return buffer->old_full_name;
-    else if (string_strcasecmp (property, "short_name") == 0)
+    else if (string_strcmp (property, "short_name") == 0)
         return gui_buffer_get_short_name (buffer);
-    else if (string_strcasecmp (property, "title") == 0)
+    else if (string_strcmp (property, "title") == 0)
         return buffer->title;
-    else if (string_strcasecmp (property, "input") == 0)
+    else if (string_strcmp (property, "input") == 0)
         return buffer->input_buffer;
-    else if (string_strcasecmp (property, "text_search_input") == 0)
+    else if (string_strcmp (property, "text_search_input") == 0)
         return buffer->text_search_input;
-    else if (string_strcasecmp (property, "highlight_words") == 0)
+    else if (string_strcmp (property, "highlight_words") == 0)
         return buffer->highlight_words;
-    else if (string_strcasecmp (property, "highlight_disable_regex") == 0)
+    else if (string_strcmp (property, "highlight_disable_regex") == 0)
         return buffer->highlight_disable_regex;
-    else if (string_strcasecmp (property, "highlight_regex") == 0)
+    else if (string_strcmp (property, "highlight_regex") == 0)
         return buffer->highlight_regex;
-    else if (string_strcasecmp (property, "highlight_tags_restrict") == 0)
+    else if (string_strcmp (property, "highlight_tags_restrict") == 0)
         return buffer->highlight_tags_restrict;
-    else if (string_strcasecmp (property, "highlight_tags") == 0)
+    else if (string_strcmp (property, "highlight_tags") == 0)
         return buffer->highlight_tags;
-    else if (string_strcasecmp (property, "hotlist_max_level_nicks") == 0)
+    else if (string_strcmp (property, "hotlist_max_level_nicks") == 0)
         return hashtable_get_string (buffer->hotlist_max_level_nicks, "keys_values");
-    else if (string_strncasecmp (property, "localvar_", 9) == 0)
+    else if (string_strncmp (property, "localvar_", 9) == 0)
     {
         ptr_value = (const char *)hashtable_get (buffer->local_variables,
                                                  property + 9);
@@ -1384,13 +1384,13 @@ gui_buffer_get_pointer (struct t_gui_buffer *buffer, const char *property)
     if (!buffer || !property)
         return NULL;
 
-    if (string_strcasecmp (property, "plugin") == 0)
+    if (string_strcmp (property, "plugin") == 0)
         return buffer->plugin;
-    else if (string_strcasecmp (property, "text_search_regex_compiled") == 0)
+    else if (string_strcmp (property, "text_search_regex_compiled") == 0)
         return buffer->text_search_regex_compiled;
-    else if (string_strcasecmp (property, "highlight_disable_regex_compiled") == 0)
+    else if (string_strcmp (property, "highlight_disable_regex_compiled") == 0)
         return buffer->highlight_disable_regex_compiled;
-    else if (string_strcasecmp (property, "highlight_regex_compiled") == 0)
+    else if (string_strcmp (property, "highlight_regex_compiled") == 0)
         return buffer->highlight_regex_compiled;
 
     return NULL;
@@ -2157,7 +2157,7 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
         return;
 
     /* properties with optional buffer */
-    if (string_strcasecmp (property, "hotlist") == 0)
+    if (string_strcmp (property, "hotlist") == 0)
     {
         if (strcmp (value, "-") == 0)
             gui_add_hotlist = 0;
@@ -2184,7 +2184,7 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
             }
         }
     }
-    else if (string_strcasecmp (property, "completion_freeze") == 0)
+    else if (string_strcmp (property, "completion_freeze") == 0)
     {
         gui_completion_freeze = (strcmp (value, "1") == 0) ? 1 : 0;
     }
@@ -2193,12 +2193,12 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
         return;
 
     /* properties that need a buffer */
-    if (string_strcasecmp (property, "unread") == 0)
+    if (string_strcmp (property, "unread") == 0)
     {
         remove_marker = (strcmp (value, "0") == 0);
         gui_buffer_set_unread (buffer, remove_marker);
     }
-    else if (string_strcasecmp (property, "display") == 0)
+    else if (string_strcmp (property, "display") == 0)
     {
         /*
          * if it is auto-switch to a buffer, then we don't set read marker,
@@ -2206,10 +2206,10 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
          * switch
          */
         gui_window_switch_to_buffer (gui_current_window, buffer,
-                                     (string_strcasecmp (value, "auto") == 0) ?
+                                     (string_strcmp (value, "auto") == 0) ?
                                      0 : 1);
     }
-    else if (string_strcasecmp (property, "hidden") == 0)
+    else if (string_strcmp (property, "hidden") == 0)
     {
         error = NULL;
         number = strtol (value, &error, 10);
@@ -2221,14 +2221,14 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
                 gui_buffer_unhide (buffer);
         }
     }
-    else if (string_strcasecmp (property, "print_hooks_enabled") == 0)
+    else if (string_strcmp (property, "print_hooks_enabled") == 0)
     {
         error = NULL;
         number = strtol (value, &error, 10);
         if (error && !error[0])
             buffer->print_hooks_enabled = (number) ? 1 : 0;
     }
-    else if (string_strcasecmp (property, "day_change") == 0)
+    else if (string_strcmp (property, "day_change") == 0)
     {
         error = NULL;
         number = strtol (value, &error, 10);
@@ -2238,14 +2238,14 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
             gui_buffer_ask_chat_refresh (buffer, 2);
         }
     }
-    else if (string_strcasecmp (property, "clear") == 0)
+    else if (string_strcmp (property, "clear") == 0)
     {
         error = NULL;
         number = strtol (value, &error, 10);
         if (error && !error[0])
             buffer->clear = (number) ? 1 : 0;
     }
-    else if (string_strcasecmp (property, "filter") == 0)
+    else if (string_strcmp (property, "filter") == 0)
     {
         error = NULL;
         number = strtol (value, &error, 10);
@@ -2255,29 +2255,29 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
             gui_filter_buffer (buffer, NULL);
         }
     }
-    else if (string_strcasecmp (property, "number") == 0)
+    else if (string_strcmp (property, "number") == 0)
     {
         error = NULL;
         number = strtol (value, &error, 10);
         if (error && !error[0] && (number >= 1))
             gui_buffer_move_to_number (buffer, number);
     }
-    else if (string_strcasecmp (property, "name") == 0)
+    else if (string_strcmp (property, "name") == 0)
     {
         gui_buffer_set_name (buffer, value);
     }
-    else if (string_strcasecmp (property, "short_name") == 0)
+    else if (string_strcmp (property, "short_name") == 0)
     {
         gui_buffer_set_short_name (buffer, value);
     }
-    else if (string_strcasecmp (property, "type") == 0)
+    else if (string_strcmp (property, "type") == 0)
     {
-        if (string_strcasecmp (value, "formatted") == 0)
+        if (string_strcmp (value, "formatted") == 0)
             gui_buffer_set_type (buffer, GUI_BUFFER_TYPE_FORMATTED);
-        else if (string_strcasecmp (value, "free") == 0)
+        else if (string_strcmp (value, "free") == 0)
             gui_buffer_set_type (buffer, GUI_BUFFER_TYPE_FREE);
     }
-    else if (string_strcasecmp (property, "notify") == 0)
+    else if (string_strcmp (property, "notify") == 0)
     {
         ptr_notify = NULL;
         error = NULL;
@@ -2303,83 +2303,83 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
             gui_chat_mute = gui_chat_mute_old;
         }
     }
-    else if (string_strcasecmp (property, "title") == 0)
+    else if (string_strcmp (property, "title") == 0)
     {
         gui_buffer_set_title (buffer, value);
     }
-    else if (string_strcasecmp (property, "time_for_each_line") == 0)
+    else if (string_strcmp (property, "time_for_each_line") == 0)
     {
         error = NULL;
         number = strtol (value, &error, 10);
         if (error && !error[0])
             gui_buffer_set_time_for_each_line (buffer, number);
     }
-    else if (string_strcasecmp (property, "nicklist") == 0)
+    else if (string_strcmp (property, "nicklist") == 0)
     {
         error = NULL;
         number = strtol (value, &error, 10);
         if (error && !error[0])
             gui_buffer_set_nicklist (buffer, number);
     }
-    else if (string_strcasecmp (property, "nicklist_case_sensitive") == 0)
+    else if (string_strcmp (property, "nicklist_case_sensitive") == 0)
     {
         error = NULL;
         number = strtol (value, &error, 10);
         if (error && !error[0])
             gui_buffer_set_nicklist_case_sensitive (buffer, number);
     }
-    else if (string_strcasecmp (property, "nicklist_display_groups") == 0)
+    else if (string_strcmp (property, "nicklist_display_groups") == 0)
     {
         error = NULL;
         number = strtol (value, &error, 10);
         if (error && !error[0])
             gui_buffer_set_nicklist_display_groups (buffer, number);
     }
-    else if (string_strcasecmp (property, "highlight_words") == 0)
+    else if (string_strcmp (property, "highlight_words") == 0)
     {
         gui_buffer_set_highlight_words (buffer, value);
     }
-    else if (string_strcasecmp (property, "highlight_words_add") == 0)
+    else if (string_strcmp (property, "highlight_words_add") == 0)
     {
         gui_buffer_add_highlight_words (buffer, value);
     }
-    else if (string_strcasecmp (property, "highlight_words_del") == 0)
+    else if (string_strcmp (property, "highlight_words_del") == 0)
     {
         gui_buffer_remove_highlight_words (buffer, value);
     }
-    else if (string_strcasecmp (property, "highlight_disable_regex") == 0)
+    else if (string_strcmp (property, "highlight_disable_regex") == 0)
     {
         gui_buffer_set_highlight_disable_regex (buffer, value);
     }
-    else if (string_strcasecmp (property, "highlight_regex") == 0)
+    else if (string_strcmp (property, "highlight_regex") == 0)
     {
         gui_buffer_set_highlight_regex (buffer, value);
     }
-    else if (string_strcasecmp (property, "highlight_tags_restrict") == 0)
+    else if (string_strcmp (property, "highlight_tags_restrict") == 0)
     {
         gui_buffer_set_highlight_tags_restrict (buffer, value);
     }
-    else if (string_strcasecmp (property, "highlight_tags") == 0)
+    else if (string_strcmp (property, "highlight_tags") == 0)
     {
         gui_buffer_set_highlight_tags (buffer, value);
     }
-    else if (string_strcasecmp (property, "hotlist_max_level_nicks") == 0)
+    else if (string_strcmp (property, "hotlist_max_level_nicks") == 0)
     {
         gui_buffer_set_hotlist_max_level_nicks (buffer, value);
     }
-    else if (string_strcasecmp (property, "hotlist_max_level_nicks_add") == 0)
+    else if (string_strcmp (property, "hotlist_max_level_nicks_add") == 0)
     {
         gui_buffer_add_hotlist_max_level_nicks (buffer, value);
     }
-    else if (string_strcasecmp (property, "hotlist_max_level_nicks_del") == 0)
+    else if (string_strcmp (property, "hotlist_max_level_nicks_del") == 0)
     {
         gui_buffer_remove_hotlist_max_level_nicks (buffer, value);
     }
-    else if (string_strncasecmp (property, "key_bind_", 9) == 0)
+    else if (string_strncmp (property, "key_bind_", 9) == 0)
     {
         gui_key_bind (buffer, 0, property + 9, value);
     }
-    else if (string_strncasecmp (property, "key_unbind_", 11) == 0)
+    else if (string_strncmp (property, "key_unbind_", 11) == 0)
     {
         if (strcmp (property + 11, "*") == 0)
         {
@@ -2389,7 +2389,7 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
         else
             gui_key_unbind (buffer, 0, property + 11);
     }
-    else if (string_strcasecmp (property, "input") == 0)
+    else if (string_strcmp (property, "input") == 0)
     {
         gui_buffer_undo_snap (buffer);
         gui_input_replace_input (buffer, value);
@@ -2397,40 +2397,40 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
                                                     1, /* save undo */
                                                     1); /* stop completion */
     }
-    else if (string_strcasecmp (property, "input_pos") == 0)
+    else if (string_strcmp (property, "input_pos") == 0)
     {
         error = NULL;
         number = strtol (value, &error, 10);
         if (error && !error[0])
             gui_input_set_pos (buffer, number);
     }
-    else if (string_strcasecmp (property, "input_get_unknown_commands") == 0)
+    else if (string_strcmp (property, "input_get_unknown_commands") == 0)
     {
         error = NULL;
         number = strtol (value, &error, 10);
         if (error && !error[0])
             gui_buffer_set_input_get_unknown_commands (buffer, number);
     }
-    else if (string_strcasecmp (property, "input_get_empty") == 0)
+    else if (string_strcmp (property, "input_get_empty") == 0)
     {
         error = NULL;
         number = strtol (value, &error, 10);
         if (error && !error[0])
             gui_buffer_set_input_get_empty (buffer, number);
     }
-    else if (string_strcasecmp (property, "input_multiline") == 0)
+    else if (string_strcmp (property, "input_multiline") == 0)
     {
         error = NULL;
         number = strtol (value, &error, 10);
         if (error && !error[0])
             gui_buffer_set_input_multiline (buffer, number);
     }
-    else if (string_strncasecmp (property, "localvar_set_", 13) == 0)
+    else if (string_strncmp (property, "localvar_set_", 13) == 0)
     {
         if (value)
             gui_buffer_local_var_add (buffer, property + 13, value);
     }
-    else if (string_strncasecmp (property, "localvar_del_", 13) == 0)
+    else if (string_strncmp (property, "localvar_del_", 13) == 0)
     {
         gui_buffer_local_var_remove (buffer, property + 13);
     }
@@ -2447,39 +2447,39 @@ gui_buffer_set_pointer (struct t_gui_buffer *buffer, const char *property,
     if (!buffer || !property)
         return;
 
-    if (string_strcasecmp (property, "close_callback") == 0)
+    if (string_strcmp (property, "close_callback") == 0)
     {
         buffer->close_callback = pointer;
     }
-    else if (string_strcasecmp (property, "close_callback_pointer") == 0)
+    else if (string_strcmp (property, "close_callback_pointer") == 0)
     {
         buffer->close_callback_pointer = pointer;
     }
-    else if (string_strcasecmp (property, "close_callback_data") == 0)
+    else if (string_strcmp (property, "close_callback_data") == 0)
     {
         buffer->close_callback_data = pointer;
     }
-    else if (string_strcasecmp (property, "nickcmp_callback") == 0)
+    else if (string_strcmp (property, "nickcmp_callback") == 0)
     {
         buffer->nickcmp_callback = pointer;
     }
-    else if (string_strcasecmp (property, "nickcmp_callback_pointer") == 0)
+    else if (string_strcmp (property, "nickcmp_callback_pointer") == 0)
     {
         buffer->nickcmp_callback_pointer = pointer;
     }
-    else if (string_strcasecmp (property, "nickcmp_callback_data") == 0)
+    else if (string_strcmp (property, "nickcmp_callback_data") == 0)
     {
         buffer->nickcmp_callback_data = pointer;
     }
-    else if (string_strcasecmp (property, "input_callback") == 0)
+    else if (string_strcmp (property, "input_callback") == 0)
     {
         buffer->input_callback = pointer;
     }
-    else if (string_strcasecmp (property, "input_callback_pointer") == 0)
+    else if (string_strcmp (property, "input_callback_pointer") == 0)
     {
         buffer->input_callback_pointer = pointer;
     }
-    else if (string_strcasecmp (property, "input_callback_data") == 0)
+    else if (string_strcmp (property, "input_callback_data") == 0)
     {
         buffer->input_callback_data = pointer;
     }

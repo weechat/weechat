@@ -1497,11 +1497,11 @@ gui_completion_get_string (struct t_gui_completion *completion,
 {
     if (completion)
     {
-        if (string_strcasecmp (property, "base_command") == 0)
+        if (string_strcmp (property, "base_command") == 0)
             return completion->base_command;
-        else if (string_strcasecmp (property, "base_word") == 0)
+        else if (string_strcmp (property, "base_word") == 0)
             return completion->base_word;
-        else if (string_strcasecmp (property, "args") == 0)
+        else if (string_strcmp (property, "args") == 0)
             return completion->args;
     }
 

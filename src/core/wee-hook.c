@@ -454,13 +454,13 @@ hook_set (struct t_hook *hook, const char *property, const char *value)
     if (!hook_valid (hook))
         return;
 
-    if (string_strcasecmp (property, "subplugin") == 0)
+    if (string_strcmp (property, "subplugin") == 0)
     {
         if (hook->subplugin)
             free (hook->subplugin);
         hook->subplugin = strdup (value);
     }
-    else if (string_strcasecmp (property, "stdin") == 0)
+    else if (string_strcmp (property, "stdin") == 0)
     {
         if (!hook->deleted
             && (hook->type == HOOK_TYPE_PROCESS)
@@ -472,7 +472,7 @@ hook_set (struct t_hook *hook, const char *property, const char *value)
             (void) num_written;
         }
     }
-    else if (string_strcasecmp (property, "stdin_close") == 0)
+    else if (string_strcmp (property, "stdin_close") == 0)
     {
         if (!hook->deleted
             && (hook->type == HOOK_TYPE_PROCESS)
@@ -483,7 +483,7 @@ hook_set (struct t_hook *hook, const char *property, const char *value)
             HOOK_PROCESS(hook, child_write[HOOK_PROCESS_STDIN]) = -1;
         }
     }
-    else if (string_strcasecmp (property, "signal") == 0)
+    else if (string_strcmp (property, "signal") == 0)
     {
         if (!hook->deleted
             && (hook->type == HOOK_TYPE_PROCESS)

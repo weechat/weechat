@@ -1219,76 +1219,76 @@ gui_bar_set (struct t_gui_bar *bar, const char *property, const char *value)
     if (!bar || !property || !value)
         return 0;
 
-    if (string_strcasecmp (property, "name") == 0)
+    if (string_strcmp (property, "name") == 0)
     {
         gui_bar_set_name (bar, value);
         return 1;
     }
-    else if (string_strcasecmp (property, "hidden") == 0)
+    else if (string_strcmp (property, "hidden") == 0)
     {
         config_file_option_set (bar->options[GUI_BAR_OPTION_HIDDEN], value, 1);
         return 1;
     }
-    else if (string_strcasecmp (property, "priority") == 0)
+    else if (string_strcmp (property, "priority") == 0)
     {
         config_file_option_set (bar->options[GUI_BAR_OPTION_PRIORITY], value, 1);
         return 1;
     }
-    else if (string_strcasecmp (property, "conditions") == 0)
+    else if (string_strcmp (property, "conditions") == 0)
     {
         config_file_option_set (bar->options[GUI_BAR_OPTION_CONDITIONS], value, 1);
         return 1;
     }
-    else if (string_strcasecmp (property, "position") == 0)
+    else if (string_strcmp (property, "position") == 0)
     {
         config_file_option_set (bar->options[GUI_BAR_OPTION_POSITION], value, 1);
         return 1;
     }
-    else if (string_strcasecmp (property, "filling_top_bottom") == 0)
+    else if (string_strcmp (property, "filling_top_bottom") == 0)
     {
         config_file_option_set (bar->options[GUI_BAR_OPTION_FILLING_TOP_BOTTOM], value, 1);
         return 1;
     }
-    else if (string_strcasecmp (property, "filling_left_right") == 0)
+    else if (string_strcmp (property, "filling_left_right") == 0)
     {
         config_file_option_set (bar->options[GUI_BAR_OPTION_FILLING_LEFT_RIGHT], value, 1);
         return 1;
     }
-    else if (string_strcasecmp (property, "size") == 0)
+    else if (string_strcmp (property, "size") == 0)
     {
         config_file_option_set (bar->options[GUI_BAR_OPTION_SIZE], value, 1);
         return 1;
     }
-    else if (string_strcasecmp (property, "size_max") == 0)
+    else if (string_strcmp (property, "size_max") == 0)
     {
         config_file_option_set (bar->options[GUI_BAR_OPTION_SIZE_MAX], value, 1);
         return 1;
     }
-    else if (string_strcasecmp (property, "color_fg") == 0)
+    else if (string_strcmp (property, "color_fg") == 0)
     {
         config_file_option_set (bar->options[GUI_BAR_OPTION_COLOR_FG], value, 1);
         gui_bar_refresh (bar);
         return 1;
     }
-    else if (string_strcasecmp (property, "color_delim") == 0)
+    else if (string_strcmp (property, "color_delim") == 0)
     {
         config_file_option_set (bar->options[GUI_BAR_OPTION_COLOR_DELIM], value, 1);
         gui_bar_refresh (bar);
         return 1;
     }
-    else if (string_strcasecmp (property, "color_bg") == 0)
+    else if (string_strcmp (property, "color_bg") == 0)
     {
         config_file_option_set (bar->options[GUI_BAR_OPTION_COLOR_BG], value, 1);
         gui_bar_refresh (bar);
         return 1;
     }
-    else if (string_strcasecmp (property, "color_bg_inactive") == 0)
+    else if (string_strcmp (property, "color_bg_inactive") == 0)
     {
         config_file_option_set (bar->options[GUI_BAR_OPTION_COLOR_BG_INACTIVE], value, 1);
         gui_bar_refresh (bar);
         return 1;
     }
-    else if (string_strcasecmp (property, "separator") == 0)
+    else if (string_strcmp (property, "separator") == 0)
     {
         config_file_option_set (bar->options[GUI_BAR_OPTION_SEPARATOR],
                                 (strcmp (value, "1") == 0) ? "on" : "off",
@@ -1296,7 +1296,7 @@ gui_bar_set (struct t_gui_bar *bar, const char *property, const char *value)
         gui_bar_refresh (bar);
         return 1;
     }
-    else if (string_strcasecmp (property, "items") == 0)
+    else if (string_strcmp (property, "items") == 0)
     {
         config_file_option_set (bar->options[GUI_BAR_OPTION_ITEMS], value, 1);
         gui_bar_draw (bar);

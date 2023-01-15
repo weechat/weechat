@@ -749,9 +749,9 @@ hashtable_get_integer (struct t_hashtable *hashtable, const char *property)
 {
     if (hashtable && property)
     {
-        if (string_strcasecmp (property, "size") == 0)
+        if (string_strcmp (property, "size") == 0)
             return hashtable->size;
-        else if (string_strcasecmp (property, "items_count") == 0)
+        else if (string_strcmp (property, "items_count") == 0)
             return hashtable->items_count;
     }
 
@@ -1005,19 +1005,19 @@ hashtable_get_string (struct t_hashtable *hashtable, const char *property)
 {
     if (hashtable && property)
     {
-        if (string_strcasecmp (property, "type_keys") == 0)
+        if (string_strcmp (property, "type_keys") == 0)
             return hashtable_type_string[hashtable->type_keys];
-        else if (string_strcasecmp (property, "type_values") == 0)
+        else if (string_strcmp (property, "type_values") == 0)
             return hashtable_type_string[hashtable->type_values];
-        else if (string_strcasecmp (property, "keys") == 0)
+        else if (string_strcmp (property, "keys") == 0)
             return hashtable_get_keys_values (hashtable, 1, 0, 0);
-        else if (string_strcasecmp (property, "keys_sorted") == 0)
+        else if (string_strcmp (property, "keys_sorted") == 0)
             return hashtable_get_keys_values (hashtable, 1, 1, 0);
-        else if (string_strcasecmp (property, "values") == 0)
+        else if (string_strcmp (property, "values") == 0)
             return hashtable_get_keys_values (hashtable, 0, 0, 1);
-        else if (string_strcasecmp (property, "keys_values") == 0)
+        else if (string_strcmp (property, "keys_values") == 0)
             return hashtable_get_keys_values (hashtable, 1, 0, 1);
-        else if (string_strcasecmp (property, "keys_values_sorted") == 0)
+        else if (string_strcmp (property, "keys_values_sorted") == 0)
             return hashtable_get_keys_values (hashtable, 1, 1, 1);
     }
 
@@ -1034,9 +1034,9 @@ hashtable_set_pointer (struct t_hashtable *hashtable, const char *property,
 {
     if (hashtable && property)
     {
-        if (string_strcasecmp (property, "callback_free_key") == 0)
+        if (string_strcmp (property, "callback_free_key") == 0)
             hashtable->callback_free_key = pointer;
-        else if (string_strcasecmp (property, "callback_free_value") == 0)
+        else if (string_strcmp (property, "callback_free_value") == 0)
             hashtable->callback_free_value = pointer;
     }
 }
