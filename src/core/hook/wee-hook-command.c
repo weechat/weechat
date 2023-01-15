@@ -66,7 +66,7 @@ hook_command_search (struct t_weechat_plugin *plugin, const char *command)
     {
         if (!ptr_hook->deleted
             && (ptr_hook->plugin == plugin)
-            && (string_strcasecmp (HOOK_COMMAND(ptr_hook, command), command) == 0))
+            && (string_strcmp (HOOK_COMMAND(ptr_hook, command), command) == 0))
             return ptr_hook;
     }
 
@@ -406,8 +406,8 @@ hook_command_exec (struct t_gui_buffer *buffer, int any_plugin,
 
         if (!ptr_hook->deleted)
         {
-            if (string_strcasecmp (ptr_command_name,
-                                   HOOK_COMMAND(ptr_hook, command)) == 0)
+            if (string_strcmp (ptr_command_name,
+                               HOOK_COMMAND(ptr_hook, command)) == 0)
             {
                 if (ptr_hook->plugin == plugin)
                 {
@@ -427,9 +427,9 @@ hook_command_exec (struct t_gui_buffer *buffer, int any_plugin,
                 }
             }
             else if (allow_incomplete_commands
-                     && (string_strncasecmp (ptr_command_name,
-                                             HOOK_COMMAND(ptr_hook, command),
-                                             length_command_name) == 0))
+                     && (string_strncmp (ptr_command_name,
+                                         HOOK_COMMAND(ptr_hook, command),
+                                         length_command_name) == 0))
             {
                 hook_incomplete_command = ptr_hook;
                 count_incomplete_commands++;

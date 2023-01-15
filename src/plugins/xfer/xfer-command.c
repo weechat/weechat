@@ -207,13 +207,13 @@ xfer_command_xfer (const void *pointer, void *data,
     (void) buffer;
     (void) argv_eol;
 
-    if ((argc > 1) && (weechat_strcasecmp (argv[1], "list") == 0))
+    if ((argc > 1) && (weechat_strcmp (argv[1], "list") == 0))
     {
         xfer_command_xfer_list (0);
         return WEECHAT_RC_OK;
     }
 
-    if ((argc > 1) && (weechat_strcasecmp (argv[1], "listfull") == 0))
+    if ((argc > 1) && (weechat_strcmp (argv[1], "listfull") == 0))
     {
         xfer_command_xfer_list (1);
         return WEECHAT_RC_OK;

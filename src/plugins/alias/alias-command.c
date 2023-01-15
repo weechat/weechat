@@ -91,7 +91,7 @@ alias_command_cb (const void *pointer, void *data,
     (void) buffer;
 
     /* List all aliases */
-    if ((argc == 1) || (weechat_strcasecmp (argv[1], "list") == 0))
+    if ((argc == 1) || (weechat_strcmp (argv[1], "list") == 0))
     {
         if (alias_list)
         {
@@ -171,7 +171,7 @@ alias_command_cb (const void *pointer, void *data,
         return WEECHAT_RC_OK;
     }
 
-    if (weechat_strcasecmp (argv[1], "add") == 0)
+    if (weechat_strcmp (argv[1], "add") == 0)
     {
         WEECHAT_COMMAND_MIN_ARGS(4, "add");
         alias_command_add (
@@ -182,7 +182,7 @@ alias_command_cb (const void *pointer, void *data,
         return WEECHAT_RC_OK;
     }
 
-    if (weechat_strcasecmp (argv[1], "addcompletion") == 0)
+    if (weechat_strcmp (argv[1], "addcompletion") == 0)
     {
         WEECHAT_COMMAND_MIN_ARGS(5, "addcompletion");
         alias_command_add (
@@ -193,7 +193,7 @@ alias_command_cb (const void *pointer, void *data,
         return WEECHAT_RC_OK;
     }
 
-    if (weechat_strcasecmp (argv[1], "del") == 0)
+    if (weechat_strcmp (argv[1], "del") == 0)
     {
         WEECHAT_COMMAND_MIN_ARGS(3, "del");
         for (i = 2; i < argc; i++)

@@ -138,7 +138,7 @@ input_exec_command (struct t_gui_buffer *buffer,
     /* check if command is allowed */
     if (input_commands_allowed
         && !string_match_list (command_name + 1,
-                               (const char **)input_commands_allowed, 0))
+                               (const char **)input_commands_allowed, 1))
     {
         if (weechat_debug_core >= 1)
         {

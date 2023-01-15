@@ -91,8 +91,8 @@ script_command_action (struct t_gui_buffer *buffer,
     {
         /* action on current line of script buffer */
         if (script_buffer_detail_script
-            && ((weechat_strcasecmp (action, "show") == 0)
-                || (weechat_strcasecmp (action, "showdiff") == 0)))
+            && ((weechat_strcmp (action, "show") == 0)
+                || (weechat_strcmp (action, "showdiff") == 0)))
         {
             /* if detail on script is displayed, back to list */
             snprintf (str_action, sizeof (str_action),
@@ -144,7 +144,7 @@ script_command_script (const void *pointer, void *data,
         return WEECHAT_RC_OK;
     }
 
-    if (weechat_strcasecmp (argv[1], "go") == 0)
+    if (weechat_strcmp (argv[1], "go") == 0)
     {
         if ((argc > 2) && script_buffer && !script_buffer_detail_script)
         {
@@ -158,7 +158,7 @@ script_command_script (const void *pointer, void *data,
         return WEECHAT_RC_OK;
     }
 
-    if (weechat_strcasecmp (argv[1], "search") == 0)
+    if (weechat_strcmp (argv[1], "search") == 0)
     {
         if (scripts_repo)
             script_repo_filter_scripts ((argc > 2) ? argv_eol[2] : NULL);
@@ -168,18 +168,18 @@ script_command_script (const void *pointer, void *data,
         return WEECHAT_RC_OK;
     }
 
-    if (weechat_strcasecmp (argv[1], "list") == 0)
+    if (weechat_strcmp (argv[1], "list") == 0)
     {
         script_action_schedule (argv_eol[1], 1, 0, 0);
         return WEECHAT_RC_OK;
     }
 
-    if ((weechat_strcasecmp (argv[1], "load") == 0)
-        || (weechat_strcasecmp (argv[1], "unload") == 0)
-        || (weechat_strcasecmp (argv[1], "reload") == 0)
-        || (weechat_strcasecmp (argv[1], "autoload") == 0)
-        || (weechat_strcasecmp (argv[1], "noautoload") == 0)
-        || (weechat_strcasecmp (argv[1], "toggleautoload") == 0))
+    if ((weechat_strcmp (argv[1], "load") == 0)
+        || (weechat_strcmp (argv[1], "unload") == 0)
+        || (weechat_strcmp (argv[1], "reload") == 0)
+        || (weechat_strcmp (argv[1], "autoload") == 0)
+        || (weechat_strcmp (argv[1], "noautoload") == 0)
+        || (weechat_strcmp (argv[1], "toggleautoload") == 0))
     {
         script_command_action (buffer,
                                argv[1],
@@ -189,12 +189,12 @@ script_command_script (const void *pointer, void *data,
         return WEECHAT_RC_OK;
     }
 
-    if ((weechat_strcasecmp (argv[1], "install") == 0)
-        || (weechat_strcasecmp (argv[1], "remove") == 0)
-        || (weechat_strcasecmp (argv[1], "installremove") == 0)
-        || (weechat_strcasecmp (argv[1], "hold") == 0)
-        || (weechat_strcasecmp (argv[1], "show") == 0)
-        || (weechat_strcasecmp (argv[1], "showdiff") == 0))
+    if ((weechat_strcmp (argv[1], "install") == 0)
+        || (weechat_strcmp (argv[1], "remove") == 0)
+        || (weechat_strcmp (argv[1], "installremove") == 0)
+        || (weechat_strcmp (argv[1], "hold") == 0)
+        || (weechat_strcmp (argv[1], "show") == 0)
+        || (weechat_strcmp (argv[1], "showdiff") == 0))
     {
         script_command_action (buffer,
                                argv[1],
@@ -204,19 +204,19 @@ script_command_script (const void *pointer, void *data,
         return WEECHAT_RC_OK;
     }
 
-    if (weechat_strcasecmp (argv[1], "upgrade") == 0)
+    if (weechat_strcmp (argv[1], "upgrade") == 0)
     {
         script_action_schedule ("upgrade", 1, 1, 0);
         return WEECHAT_RC_OK;
     }
 
-    if (weechat_strcasecmp (argv[1], "update") == 0)
+    if (weechat_strcmp (argv[1], "update") == 0)
     {
         script_repo_file_update (0);
         return WEECHAT_RC_OK;
     }
 
-    if (weechat_strcasecmp (argv[1], "up") == 0)
+    if (weechat_strcmp (argv[1], "up") == 0)
     {
         if (script_buffer)
         {
@@ -250,7 +250,7 @@ script_command_script (const void *pointer, void *data,
         return WEECHAT_RC_OK;
     }
 
-    if (weechat_strcasecmp (argv[1], "down") == 0)
+    if (weechat_strcmp (argv[1], "down") == 0)
     {
         if (script_buffer)
         {

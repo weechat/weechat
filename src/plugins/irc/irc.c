@@ -254,7 +254,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     /* look at arguments */
     for (i = 0; i < argc; i++)
     {
-        if ((weechat_strncasecmp (argv[i], IRC_PLUGIN_NAME, 3) == 0))
+        if ((weechat_strncmp (argv[i], IRC_PLUGIN_NAME, 3) == 0))
         {
             if (!irc_server_alloc_with_url (argv[i]))
             {

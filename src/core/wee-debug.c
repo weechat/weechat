@@ -137,7 +137,7 @@ debug_dump_cb (const void *pointer, void *data,
     (void) signal;
     (void) type_data;
 
-    if (!signal_data || (string_strcasecmp ((char *)signal_data, "core") == 0))
+    if (!signal_data || (string_strcmp ((char *)signal_data, PLUGIN_CORE) == 0))
         debug_dump (0);
 
     return WEECHAT_RC_OK;

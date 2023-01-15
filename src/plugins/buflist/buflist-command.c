@@ -46,31 +46,31 @@ buflist_command_buflist (const void *pointer, void *data,
     if (argc == 1)
         return WEECHAT_RC_OK;
 
-    if (weechat_strcasecmp (argv[1], "enable") == 0)
+    if (weechat_strcmp (argv[1], "enable") == 0)
     {
         weechat_config_option_set (buflist_config_look_enabled, "on", 1);
         return WEECHAT_RC_OK;
     }
 
-    if (weechat_strcasecmp (argv[1], "disable") == 0)
+    if (weechat_strcmp (argv[1], "disable") == 0)
     {
         weechat_config_option_set (buflist_config_look_enabled, "off", 1);
         return WEECHAT_RC_OK;
     }
 
-    if (weechat_strcasecmp (argv[1], "toggle") == 0)
+    if (weechat_strcmp (argv[1], "toggle") == 0)
     {
         weechat_config_option_set (buflist_config_look_enabled, "toggle", 1);
         return WEECHAT_RC_OK;
     }
 
-    if (weechat_strcasecmp (argv[1], "bar") == 0)
+    if (weechat_strcmp (argv[1], "bar") == 0)
     {
         buflist_add_bar ();
         return WEECHAT_RC_OK;
     }
 
-    if (weechat_strcasecmp (argv[1], "refresh") == 0)
+    if (weechat_strcmp (argv[1], "refresh") == 0)
     {
         buflist_bar_item_update (0);
         return WEECHAT_RC_OK;

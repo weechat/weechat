@@ -515,7 +515,7 @@ charset_command_cb (const void *pointer, void *data,
         snprintf (option_name, length, "%s.%s", plugin_name, name);
     }
 
-    if (weechat_strcasecmp (argv[1], "reset") == 0)
+    if (weechat_strcmp (argv[1], "reset") == 0)
     {
         charset_set (charset_config_section_decode, "decode", option_name,
                      NULL);
@@ -526,12 +526,12 @@ charset_command_cb (const void *pointer, void *data,
     {
         if (argc > 2)
         {
-            if (weechat_strcasecmp (argv[1], "decode") == 0)
+            if (weechat_strcmp (argv[1], "decode") == 0)
             {
                 ptr_section = charset_config_section_decode;
                 ptr_charset = argv_eol[2];
             }
-            else if (weechat_strcasecmp (argv[1], "encode") == 0)
+            else if (weechat_strcmp (argv[1], "encode") == 0)
             {
                 ptr_section = charset_config_section_encode;
                 ptr_charset = argv_eol[2];

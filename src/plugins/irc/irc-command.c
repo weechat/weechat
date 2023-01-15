@@ -569,7 +569,7 @@ IRC_COMMAND_CALLBACK(allchan)
     ptr_command = argv_eol[1];
     for (i = 1; i < argc; i++)
     {
-        if (weechat_strcasecmp (argv[i], "-current") == 0)
+        if (weechat_strcmp (argv[i], "-current") == 0)
         {
             if (!ptr_server)
             {
@@ -584,18 +584,18 @@ IRC_COMMAND_CALLBACK(allchan)
             current_server = 1;
             ptr_command = argv_eol[i + 1];
         }
-        else if (weechat_strcasecmp (argv[i], "-parted") == 0)
+        else if (weechat_strcmp (argv[i], "-parted") == 0)
         {
             parted_channels = 1;
             ptr_command = argv_eol[i + 1];
         }
-        else if (weechat_strncasecmp (argv[i], "-exclude=", 9) == 0)
+        else if (weechat_strncmp (argv[i], "-exclude=", 9) == 0)
         {
             ptr_channels = argv[i] + 9;
             ptr_command = argv_eol[i + 1];
             inclusive = 0;
         }
-        else if (weechat_strncasecmp (argv[i], "-include=", 9) == 0)
+        else if (weechat_strncmp (argv[i], "-include=", 9) == 0)
         {
             ptr_channels = argv[i] + 9;
             ptr_command = argv_eol[i + 1];
@@ -644,7 +644,7 @@ IRC_COMMAND_CALLBACK(allpv)
     ptr_command = argv_eol[1];
     for (i = 1; i < argc; i++)
     {
-        if (weechat_strcasecmp (argv[i], "-current") == 0)
+        if (weechat_strcmp (argv[i], "-current") == 0)
         {
             if (!ptr_server)
             {
@@ -659,13 +659,13 @@ IRC_COMMAND_CALLBACK(allpv)
             current_server = 1;
             ptr_command = argv_eol[i + 1];
         }
-        else if (weechat_strncasecmp (argv[i], "-exclude=", 9) == 0)
+        else if (weechat_strncmp (argv[i], "-exclude=", 9) == 0)
         {
             ptr_channels = argv[i] + 9;
             ptr_command = argv_eol[i + 1];
             inclusive = 0;
         }
-        else if (weechat_strncasecmp (argv[i], "-include=", 9) == 0)
+        else if (weechat_strncmp (argv[i], "-include=", 9) == 0)
         {
             ptr_channels = argv[i] + 9;
             ptr_command = argv_eol[i + 1];
@@ -781,13 +781,13 @@ IRC_COMMAND_CALLBACK(allserv)
     ptr_command = argv_eol[1];
     for (i = 1; i < argc; i++)
     {
-        if (weechat_strncasecmp (argv[i], "-exclude=", 9) == 0)
+        if (weechat_strncmp (argv[i], "-exclude=", 9) == 0)
         {
             ptr_servers = argv[i] + 9;
             ptr_command = argv_eol[i + 1];
             inclusive = 0;
         }
-        else if (weechat_strncasecmp (argv[i], "-include=", 9) == 0)
+        else if (weechat_strncmp (argv[i], "-include=", 9) == 0)
         {
             ptr_servers = argv[i] + 9;
             ptr_command = argv_eol[i + 1];
@@ -925,7 +925,7 @@ IRC_COMMAND_CALLBACK(autojoin)
                                             IRC_SERVER_OPTION_AUTOJOIN);
 
     /* join channels in server "autojoin" option */
-    if (weechat_strcasecmp (argv[1], "join") == 0)
+    if (weechat_strcmp (argv[1], "join") == 0)
     {
         if (ptr_autojoin)
         {
@@ -943,7 +943,7 @@ IRC_COMMAND_CALLBACK(autojoin)
     old_autojoin = strdup ((ptr_autojoin) ? ptr_autojoin : "");
 
     /* add channel(s) */
-    if (weechat_strcasecmp (argv[1], "add") == 0)
+    if (weechat_strcmp (argv[1], "add") == 0)
     {
         if (argc < 3)
         {
@@ -978,7 +978,7 @@ IRC_COMMAND_CALLBACK(autojoin)
     }
 
     /* add raw channel(s) */
-    if (weechat_strcasecmp (argv[1], "addraw") == 0)
+    if (weechat_strcmp (argv[1], "addraw") == 0)
     {
         if (argc < 3)
         {
@@ -991,7 +991,7 @@ IRC_COMMAND_CALLBACK(autojoin)
     }
 
     /* delete channel(s) */
-    if (weechat_strcasecmp (argv[1], "del") == 0)
+    if (weechat_strcmp (argv[1], "del") == 0)
     {
         if (argc < 3)
         {
@@ -1016,14 +1016,14 @@ IRC_COMMAND_CALLBACK(autojoin)
     }
 
     /* apply currently joined channels in server "autojoin" option */
-    if (weechat_strcasecmp (argv[1], "apply") == 0)
+    if (weechat_strcmp (argv[1], "apply") == 0)
     {
         irc_join_save_channels_to_autojoin (ptr_server);
         goto end;
     }
 
     /* sort channels */
-    if (weechat_strcasecmp (argv[1], "sort") == 0)
+    if (weechat_strcmp (argv[1], "sort") == 0)
     {
         irc_join_sort_autojoin (ptr_server);
         goto end;
@@ -1328,7 +1328,7 @@ IRC_COMMAND_CALLBACK(away)
     (void) pointer;
     (void) data;
 
-    if ((argc >= 2) && (weechat_strcasecmp (argv[1], "-all") == 0))
+    if ((argc >= 2) && (weechat_strcmp (argv[1], "-all") == 0))
     {
         weechat_buffer_set (NULL, "hotlist", "-");
         for (ptr_server = irc_servers; ptr_server;
@@ -1635,15 +1635,15 @@ IRC_COMMAND_CALLBACK(connect)
     autoconnect = 0;
     for (i = 1; i < argc; i++)
     {
-        if (weechat_strcasecmp (argv[i], "-all") == 0)
+        if (weechat_strcmp (argv[i], "-all") == 0)
             all_servers = 1;
-        else if (weechat_strcasecmp (argv[i], "-open") == 0)
+        else if (weechat_strcmp (argv[i], "-open") == 0)
             all_opened = 1;
-        else if (weechat_strcasecmp (argv[i], "-switch") == 0)
+        else if (weechat_strcmp (argv[i], "-switch") == 0)
             switch_address = 1;
-        else if (weechat_strcasecmp (argv[i], "-nojoin") == 0)
+        else if (weechat_strcmp (argv[i], "-nojoin") == 0)
             no_join = 1;
-        else if (weechat_strcasecmp (argv[i], "-auto") == 0)
+        else if (weechat_strcmp (argv[i], "-auto") == 0)
             autoconnect = 1;
     }
 
@@ -1791,7 +1791,7 @@ IRC_COMMAND_CALLBACK(connect)
             }
             else
             {
-                if (weechat_strcasecmp (argv[i], "-port") == 0)
+                if (weechat_strcmp (argv[i], "-port") == 0)
                     i++;
             }
         }
@@ -1829,7 +1829,7 @@ IRC_COMMAND_CALLBACK(ctcp)
     arg_type = 2;
     arg_args = 3;
 
-    if ((argc >= 5) && (weechat_strcasecmp (argv[1], "-server") == 0))
+    if ((argc >= 5) && (weechat_strcmp (argv[1], "-server") == 0))
     {
         ptr_server = irc_server_search (argv[2]);
         ptr_channel = NULL;
@@ -2071,7 +2071,7 @@ IRC_COMMAND_CALLBACK(dcc)
     }
 
     /* DCC SEND file */
-    if (weechat_strcasecmp (argv[1], "send") == 0)
+    if (weechat_strcmp (argv[1], "send") == 0)
     {
         WEECHAT_COMMAND_MIN_ARGS(4, "send");
         infolist = weechat_infolist_new ();
@@ -2099,7 +2099,7 @@ IRC_COMMAND_CALLBACK(dcc)
     }
 
     /* DCC CHAT */
-    if (weechat_strcasecmp (argv[1], "chat") == 0)
+    if (weechat_strcmp (argv[1], "chat") == 0)
     {
         WEECHAT_COMMAND_MIN_ARGS(3, "chat");
         infolist = weechat_infolist_new ();
@@ -2394,7 +2394,7 @@ IRC_COMMAND_CALLBACK(disconnect)
     {
         disconnect_ok = 1;
 
-        if (weechat_strcasecmp (argv[1], "-all") == 0)
+        if (weechat_strcmp (argv[1], "-all") == 0)
         {
             for (ptr_server = irc_servers; ptr_server;
                  ptr_server = ptr_server->next_server)
@@ -2408,7 +2408,7 @@ IRC_COMMAND_CALLBACK(disconnect)
                 }
             }
         }
-        else if (weechat_strcasecmp (argv[1], "-pending") == 0)
+        else if (weechat_strcmp (argv[1], "-pending") == 0)
         {
             for (ptr_server = irc_servers; ptr_server;
                  ptr_server = ptr_server->next_server)
@@ -2521,7 +2521,7 @@ IRC_COMMAND_CALLBACK(ignore)
     (void) argv_eol;
 
     if ((argc == 1)
-        || ((argc == 2) && (weechat_strcasecmp (argv[1], "list") == 0)))
+        || ((argc == 2) && (weechat_strcmp (argv[1], "list") == 0)))
     {
         /* display all ignores */
         if (irc_ignore_list)
@@ -2540,7 +2540,7 @@ IRC_COMMAND_CALLBACK(ignore)
     }
 
     /* add ignore */
-    if (weechat_strcasecmp (argv[1], "add") == 0)
+    if (weechat_strcmp (argv[1], "add") == 0)
     {
         WEECHAT_COMMAND_MIN_ARGS(3, "add");
 
@@ -2629,11 +2629,11 @@ IRC_COMMAND_CALLBACK(ignore)
     }
 
     /* delete ignore */
-    if (weechat_strcasecmp (argv[1], "del") == 0)
+    if (weechat_strcmp (argv[1], "del") == 0)
     {
         WEECHAT_COMMAND_MIN_ARGS(3, "del");
 
-        if (weechat_strcasecmp (argv[2], "-all") == 0)
+        if (weechat_strcmp (argv[2], "-all") == 0)
         {
             if (irc_ignore_list)
             {
@@ -2982,7 +2982,7 @@ IRC_COMMAND_CALLBACK(join)
 
     for (i = 1; i < argc; i++)
     {
-        if (weechat_strcasecmp (argv[i], "-server") == 0)
+        if (weechat_strcmp (argv[i], "-server") == 0)
         {
             if (argc <= i + 1)
                 WEECHAT_COMMAND_ERROR;
@@ -2992,7 +2992,7 @@ IRC_COMMAND_CALLBACK(join)
             arg_channels = i + 2;
             i++;
         }
-        else if (weechat_strcasecmp (argv[i], "-noswitch") == 0)
+        else if (weechat_strcmp (argv[i], "-noswitch") == 0)
         {
             noswitch = 1;
             arg_channels = i + 1;
@@ -3309,7 +3309,7 @@ IRC_COMMAND_CALLBACK(list)
 
     for (i = 1; i < argc; i++)
     {
-        if (weechat_strcasecmp (argv[i], "-server") == 0)
+        if (weechat_strcmp (argv[i], "-server") == 0)
         {
             if (argc <= i + 1)
                 WEECHAT_COMMAND_ERROR;
@@ -3318,7 +3318,7 @@ IRC_COMMAND_CALLBACK(list)
                 WEECHAT_COMMAND_ERROR;
             i++;
         }
-        else if (weechat_strcasecmp (argv[i], "-re") == 0)
+        else if (weechat_strcmp (argv[i], "-re") == 0)
         {
             if (argc <= i + 1)
                 WEECHAT_COMMAND_ERROR;
@@ -3606,7 +3606,7 @@ IRC_COMMAND_CALLBACK(msg)
     arg_target = 1;
     arg_text = 2;
 
-    if ((argc >= 5) && (weechat_strcasecmp (argv[1], "-server") == 0))
+    if ((argc >= 5) && (weechat_strcmp (argv[1], "-server") == 0))
     {
         ptr_server = irc_server_search (argv[2]);
         ptr_channel = NULL;
@@ -3875,7 +3875,7 @@ IRC_COMMAND_CALLBACK(nick)
 
     if (argc > 2)
     {
-        if (weechat_strcasecmp (argv[1], "-all") != 0)
+        if (weechat_strcmp (argv[1], "-all") != 0)
             WEECHAT_COMMAND_ERROR;
         for (ptr_server = irc_servers; ptr_server;
              ptr_server = ptr_server->next_server)
@@ -3910,7 +3910,7 @@ IRC_COMMAND_CALLBACK(notice)
 
     arg_target = 1;
     arg_text = 2;
-    if ((argc >= 5) && (weechat_strcasecmp (argv[1], "-server") == 0))
+    if ((argc >= 5) && (weechat_strcmp (argv[1], "-server") == 0))
     {
         ptr_server = irc_server_search (argv[2]);
         arg_target = 3;
@@ -4000,7 +4000,7 @@ IRC_COMMAND_CALLBACK(notify)
     }
 
     /* add notify */
-    if (weechat_strcasecmp (argv[1], "add") == 0)
+    if (weechat_strcmp (argv[1], "add") == 0)
     {
         WEECHAT_COMMAND_MIN_ARGS(3, "add");
 
@@ -4033,7 +4033,7 @@ IRC_COMMAND_CALLBACK(notify)
         {
             for (i = 4; i < argc; i++)
             {
-                if (weechat_strcasecmp (argv[i], "-away") == 0)
+                if (weechat_strcmp (argv[i], "-away") == 0)
                     check_away = 1;
             }
         }
@@ -4083,7 +4083,7 @@ IRC_COMMAND_CALLBACK(notify)
     }
 
     /* delete notify */
-    if (weechat_strcasecmp (argv[1], "del") == 0)
+    if (weechat_strcmp (argv[1], "del") == 0)
     {
         WEECHAT_COMMAND_MIN_ARGS(3, "del");
 
@@ -4110,7 +4110,7 @@ IRC_COMMAND_CALLBACK(notify)
             return WEECHAT_RC_OK;
         }
 
-        if (weechat_strcasecmp (argv[2], "-all") == 0)
+        if (weechat_strcmp (argv[2], "-all") == 0)
         {
             if (ptr_server->notify_list)
             {
@@ -4406,7 +4406,7 @@ IRC_COMMAND_CALLBACK(query)
 
     for (i = 1; i < argc; i++)
     {
-        if (weechat_strcasecmp (argv[i], "-server") == 0)
+        if (weechat_strcmp (argv[i], "-server") == 0)
         {
             if (argc <= i + 1)
                 WEECHAT_COMMAND_ERROR;
@@ -4417,7 +4417,7 @@ IRC_COMMAND_CALLBACK(query)
             arg_text = i + 3;
             i++;
         }
-        else if (weechat_strcasecmp (argv[i], "-noswitch") == 0)
+        else if (weechat_strcmp (argv[i], "-noswitch") == 0)
         {
             noswitch = 1;
             arg_nick = i + 1;
@@ -4591,7 +4591,7 @@ IRC_COMMAND_CALLBACK(quote)
 
     WEECHAT_COMMAND_MIN_ARGS(2, "");
 
-    if ((argc >= 4) && (weechat_strcasecmp (argv[1], "-server") == 0))
+    if ((argc >= 4) && (weechat_strcmp (argv[1], "-server") == 0))
     {
         ptr_server = irc_server_search (argv[2]);
         if (!ptr_server || (ptr_server->sock < 0))
@@ -4674,11 +4674,11 @@ IRC_COMMAND_CALLBACK(reconnect)
     no_join = 0;
     for (i = 1; i < argc; i++)
     {
-        if (weechat_strcasecmp (argv[i], "-all") == 0)
+        if (weechat_strcmp (argv[i], "-all") == 0)
             all_servers = 1;
-        else if (weechat_strcasecmp (argv[i], "-switch") == 0)
+        else if (weechat_strcmp (argv[i], "-switch") == 0)
             switch_address = 1;
-        else if (weechat_strcasecmp (argv[i], "-nojoin") == 0)
+        else if (weechat_strcmp (argv[i], "-nojoin") == 0)
             no_join = 1;
     }
 
@@ -5507,17 +5507,17 @@ IRC_COMMAND_CALLBACK(server)
     (void) buffer;
 
     if ((argc == 1)
-        || (weechat_strcasecmp (argv[1], "list") == 0)
-        || (weechat_strcasecmp (argv[1], "listfull") == 0))
+        || (weechat_strcmp (argv[1], "list") == 0)
+        || (weechat_strcmp (argv[1], "listfull") == 0))
     {
         /* list servers */
         server_name = NULL;
         detailed_list = 0;
         for (i = 1; i < argc; i++)
         {
-            if (weechat_strcasecmp (argv[i], "list") == 0)
+            if (weechat_strcmp (argv[i], "list") == 0)
                 continue;
-            if (weechat_strcasecmp (argv[i], "listfull") == 0)
+            if (weechat_strcmp (argv[i], "listfull") == 0)
             {
                 detailed_list = 1;
                 continue;
@@ -5567,7 +5567,7 @@ IRC_COMMAND_CALLBACK(server)
         return WEECHAT_RC_OK;
     }
 
-    if (weechat_strcasecmp (argv[1], "add") == 0)
+    if (weechat_strcmp (argv[1], "add") == 0)
     {
         WEECHAT_COMMAND_MIN_ARGS(4, "add");
 
@@ -5616,7 +5616,7 @@ IRC_COMMAND_CALLBACK(server)
         return WEECHAT_RC_OK;
     }
 
-    if (weechat_strcasecmp (argv[1], "copy") == 0)
+    if (weechat_strcmp (argv[1], "copy") == 0)
     {
         WEECHAT_COMMAND_MIN_ARGS(4, "copy");
 
@@ -5664,7 +5664,7 @@ IRC_COMMAND_CALLBACK(server)
         WEECHAT_COMMAND_ERROR;
     }
 
-    if (weechat_strcasecmp (argv[1], "rename") == 0)
+    if (weechat_strcmp (argv[1], "rename") == 0)
     {
         WEECHAT_COMMAND_MIN_ARGS(4, "rename");
 
@@ -5711,7 +5711,7 @@ IRC_COMMAND_CALLBACK(server)
         WEECHAT_COMMAND_ERROR;
     }
 
-    if (weechat_strcasecmp (argv[1], "reorder") == 0)
+    if (weechat_strcmp (argv[1], "reorder") == 0)
     {
         WEECHAT_COMMAND_MIN_ARGS(3, "reorder");
 
@@ -5723,11 +5723,11 @@ IRC_COMMAND_CALLBACK(server)
         return WEECHAT_RC_OK;
     }
 
-    if (weechat_strcasecmp (argv[1], "open") == 0)
+    if (weechat_strcmp (argv[1], "open") == 0)
     {
         WEECHAT_COMMAND_MIN_ARGS(3, "open");
 
-        if (weechat_strcasecmp (argv[2], "-all") == 0)
+        if (weechat_strcmp (argv[2], "-all") == 0)
         {
             for (ptr_server2 = irc_servers; ptr_server2;
                  ptr_server2 = ptr_server2->next_server)
@@ -5772,7 +5772,7 @@ IRC_COMMAND_CALLBACK(server)
         return WEECHAT_RC_OK;
     }
 
-    if (weechat_strcasecmp (argv[1], "keep") == 0)
+    if (weechat_strcmp (argv[1], "keep") == 0)
     {
         WEECHAT_COMMAND_MIN_ARGS(3, "keep");
 
@@ -5813,7 +5813,7 @@ IRC_COMMAND_CALLBACK(server)
         return WEECHAT_RC_OK;
     }
 
-    if (weechat_strcasecmp (argv[1], "del") == 0)
+    if (weechat_strcmp (argv[1], "del") == 0)
     {
         WEECHAT_COMMAND_MIN_ARGS(3, "del");
 
@@ -5853,7 +5853,7 @@ IRC_COMMAND_CALLBACK(server)
         return WEECHAT_RC_OK;
     }
 
-    if (weechat_strcasecmp (argv[1], "deloutq") == 0)
+    if (weechat_strcmp (argv[1], "deloutq") == 0)
     {
         for (ptr_server2 = irc_servers; ptr_server2;
              ptr_server2 = ptr_server2->next_server)
@@ -5871,7 +5871,7 @@ IRC_COMMAND_CALLBACK(server)
         return WEECHAT_RC_OK;
     }
 
-    if (weechat_strcasecmp (argv[1], "raw") == 0)
+    if (weechat_strcmp (argv[1], "raw") == 0)
     {
         refresh = irc_raw_buffer && (argc > 2);
         if (argc > 2)
@@ -5882,14 +5882,14 @@ IRC_COMMAND_CALLBACK(server)
         return WEECHAT_RC_OK;
     }
 
-    if (weechat_strcasecmp (argv[1], "jump") == 0)
+    if (weechat_strcmp (argv[1], "jump") == 0)
     {
         if (ptr_server && ptr_server->buffer)
             weechat_buffer_set (ptr_server->buffer, "display", "1");
         return WEECHAT_RC_OK;
     }
 
-    if (weechat_strcasecmp (argv[1], "fakerecv") == 0)
+    if (weechat_strcmp (argv[1], "fakerecv") == 0)
     {
         WEECHAT_COMMAND_MIN_ARGS(3, "fakerecv");
         IRC_COMMAND_CHECK_SERVER("server fakerecv", 0, 1);
@@ -6165,7 +6165,7 @@ IRC_COMMAND_CALLBACK(topic)
 
     if (new_topic)
     {
-        if (weechat_strcasecmp (new_topic, "-delete") == 0)
+        if (weechat_strcmp (new_topic, "-delete") == 0)
         {
             irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
                               "TOPIC %s :", channel_name);

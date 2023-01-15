@@ -1294,7 +1294,7 @@ script_action_run_all ()
                 &argc);
             if (argv && argv_eol)
             {
-                if (weechat_strcasecmp (argv[0], "buffer") == 0)
+                if (weechat_strcmp (argv[0], "buffer") == 0)
                 {
                     /* open buffer with list of scripts */
                     if (!script_buffer)
@@ -1304,17 +1304,17 @@ script_action_run_all ()
                     }
                     weechat_buffer_set (script_buffer, "display", "1");
                 }
-                else if (weechat_strcasecmp (argv[0], "list") == 0)
+                else if (weechat_strcmp (argv[0], "list") == 0)
                 {
                     if (argc > 1)
                     {
-                        if (weechat_strcasecmp (argv[1], "-i") == 0)
+                        if (weechat_strcmp (argv[1], "-i") == 0)
                             script_action_run_list_input (0, 0);
-                        else if (weechat_strcasecmp (argv[1], "-il") == 0)
+                        else if (weechat_strcmp (argv[1], "-il") == 0)
                             script_action_run_list_input (0, 1);
-                        else if (weechat_strcasecmp (argv[1], "-o") == 0)
+                        else if (weechat_strcmp (argv[1], "-o") == 0)
                             script_action_run_list_input (1, 0);
-                        else if (weechat_strcasecmp (argv[1], "-ol") == 0)
+                        else if (weechat_strcmp (argv[1], "-ol") == 0)
                             script_action_run_list_input (1, 1);
                         else
                             script_action_run_list ();
@@ -1322,49 +1322,49 @@ script_action_run_all ()
                     else
                         script_action_run_list ();
                 }
-                else if (weechat_strcasecmp (argv[0], "load") == 0)
+                else if (weechat_strcmp (argv[0], "load") == 0)
                 {
                     for (j = 1; j < argc; j++)
                     {
                         script_action_run_load (argv[j], quiet);
                     }
                 }
-                else if (weechat_strcasecmp (argv[0], "unload") == 0)
+                else if (weechat_strcmp (argv[0], "unload") == 0)
                 {
                     for (j = 1; j < argc; j++)
                     {
                         script_action_run_unload (argv[j], quiet);
                     }
                 }
-                else if (weechat_strcasecmp (argv[0], "reload") == 0)
+                else if (weechat_strcmp (argv[0], "reload") == 0)
                 {
                     for (j = 1; j < argc; j++)
                     {
                         script_action_run_reload (argv[j], quiet);
                     }
                 }
-                else if (weechat_strcasecmp (argv[0], "autoload") == 0)
+                else if (weechat_strcmp (argv[0], "autoload") == 0)
                 {
                     for (j = 1; j < argc; j++)
                     {
                         script_action_run_autoload (argv[j], quiet, 1);
                     }
                 }
-                else if (weechat_strcasecmp (argv[0], "noautoload") == 0)
+                else if (weechat_strcmp (argv[0], "noautoload") == 0)
                 {
                     for (j = 1; j < argc; j++)
                     {
                         script_action_run_autoload (argv[j], quiet, 0);
                     }
                 }
-                else if (weechat_strcasecmp (argv[0], "toggleautoload") == 0)
+                else if (weechat_strcmp (argv[0], "toggleautoload") == 0)
                 {
                     for (j = 1; j < argc; j++)
                     {
                         script_action_run_autoload (argv[j], quiet, -1);
                     }
                 }
-                else if (weechat_strcasecmp (argv[0], "install") == 0)
+                else if (weechat_strcmp (argv[0], "install") == 0)
                 {
                     script_found = 0;
                     for (j = 1; j < argc; j++)
@@ -1402,14 +1402,14 @@ script_action_run_all ()
                     if (script_found)
                         script_action_run_install (quiet);
                 }
-                else if (weechat_strcasecmp (argv[0], "remove") == 0)
+                else if (weechat_strcmp (argv[0], "remove") == 0)
                 {
                     for (j = 1; j < argc; j++)
                     {
                         script_action_run_remove (argv[j], quiet);
                     }
                 }
-                else if (weechat_strcasecmp (argv[0], "installremove") == 0)
+                else if (weechat_strcmp (argv[0], "installremove") == 0)
                 {
                     script_found = 0;
                     for (j = 1; j < argc; j++)
@@ -1443,7 +1443,7 @@ script_action_run_all ()
                     if (script_found)
                         script_action_run_install (quiet);
                 }
-                else if (weechat_strcasecmp (argv[0], "hold") == 0)
+                else if (weechat_strcmp (argv[0], "hold") == 0)
                 {
                     script_found = 0;
                     for (j = 1; j < argc; j++)
@@ -1454,7 +1454,7 @@ script_action_run_all ()
                     if (script_found)
                         script_buffer_refresh (0);
                 }
-                else if (weechat_strcasecmp (argv[0], "show") == 0)
+                else if (weechat_strcmp (argv[0], "show") == 0)
                 {
                     if (!script_buffer)
                         script_buffer_open ();
@@ -1462,11 +1462,11 @@ script_action_run_all ()
                                             quiet);
                     weechat_buffer_set (script_buffer, "display", "1");
                 }
-                else if (weechat_strcasecmp (argv[0], "showdiff") == 0)
+                else if (weechat_strcmp (argv[0], "showdiff") == 0)
                 {
                     script_action_run_showdiff ();
                 }
-                else if (weechat_strcasecmp (argv[0], "upgrade") == 0)
+                else if (weechat_strcmp (argv[0], "upgrade") == 0)
                 {
                     script_found = 0;
                     for (ptr_script = scripts_repo; ptr_script;

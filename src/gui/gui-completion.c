@@ -74,7 +74,7 @@ gui_completion_word_compare_cb (void *data,
     completion_word1 = (struct t_gui_completion_word *)pointer1;
     completion_word2 = (struct t_gui_completion_word *)pointer2;
 
-    return string_strcasecmp (completion_word1->word, completion_word2->word);
+    return string_strcmp (completion_word1->word, completion_word2->word);
 }
 
 /*
@@ -332,17 +332,16 @@ gui_completion_search_command (struct t_weechat_plugin *plugin,
             && HOOK_COMMAND(ptr_hook, command)
             && HOOK_COMMAND(ptr_hook, command)[0])
         {
-            if (string_strcasecmp (HOOK_COMMAND(ptr_hook, command),
-                                   command) == 0)
+            if (string_strcmp (HOOK_COMMAND(ptr_hook, command), command) == 0)
             {
                 if (ptr_hook->plugin == plugin)
                     return ptr_hook;
                 hook_for_other_plugin = ptr_hook;
             }
             else if (allow_incomplete_commands
-                     && (string_strncasecmp (HOOK_COMMAND(ptr_hook, command),
-                                             command,
-                                             length_command) == 0))
+                     && (string_strncmp (HOOK_COMMAND(ptr_hook, command),
+                                         command,
+                                         length_command) == 0))
             {
                 hook_incomplete_command = ptr_hook;
                 count_incomplete_commands++;
@@ -478,8 +477,8 @@ gui_completion_list_add (struct t_gui_completion *completion, const char *word,
     if (!completion->base_word || !completion->base_word[0]
         || (nick_completion && (gui_completion_nickncmp (completion->base_word, word,
                                                          utf8_strlen (completion->base_word)) == 0))
-        || (!nick_completion && (string_strncasecmp (completion->base_word, word,
-                                                     utf8_strlen (completion->base_word)) == 0)))
+        || (!nick_completion && (string_strncmp (completion->base_word, word,
+                                                 utf8_strlen (completion->base_word)) == 0)))
     {
         completion_word = malloc (sizeof (*completion_word));
         if (completion_word)
@@ -1144,7 +1143,6 @@ gui_completion_complete (struct t_gui_completion *completion)
     int length, word_found_seen, other_completion, partial_completion;
     int common_prefix_size, index, index2;
     struct t_gui_completion_word *ptr_completion_word, *ptr_completion_word2;
-    char *word_found_lower;
 
     length = utf8_strlen (completion->base_word);
     word_found_seen = 0;
@@ -1202,9 +1200,9 @@ gui_completion_complete (struct t_gui_completion *completion)
                                           ptr_completion_word->word,
                                           length) == 0))
             || (!ptr_completion_word->nick_completion
-                && (string_strncasecmp (completion->base_word,
-                                        ptr_completion_word->word,
-                                        length) == 0)))
+                && (string_strncmp (completion->base_word,
+                                    ptr_completion_word->word,
+                                    length) == 0)))
         {
             if ((!completion->word_found) || word_found_seen)
             {
@@ -1237,9 +1235,9 @@ gui_completion_complete (struct t_gui_completion *completion)
                                                       ptr_completion_word2->word,
                                                       length) == 0))
                         || (!ptr_completion_word->nick_completion
-                            && (string_strncasecmp (completion->base_word,
-                                                    ptr_completion_word2->word,
-                                                    length) == 0)))
+                            && (string_strncmp (completion->base_word,
+                                                ptr_completion_word2->word,
+                                                length) == 0)))
                     {
                         other_completion++;
                     }
@@ -1263,12 +1261,6 @@ gui_completion_complete (struct t_gui_completion *completion)
                     completion->word_found_is_nick = 0;
                     completion->add_space = 0;
                     completion->position = -1;
-                    word_found_lower = string_tolower (completion->word_found);
-                    if (word_found_lower)
-                    {
-                        free (completion->word_found);
-                        completion->word_found = word_found_lower;
-                    }
 
                     /* alert user of partial completion */
                     if (CONFIG_BOOLEAN(config_completion_partial_completion_alert))

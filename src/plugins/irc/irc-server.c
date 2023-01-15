@@ -1936,7 +1936,7 @@ irc_server_apply_command_line_options (struct t_irc_server *server,
             }
             if (option_name)
             {
-                if (weechat_strcasecmp (option_name, "temp") == 0)
+                if (weechat_strcmp (option_name, "temp") == 0)
                 {
                     /* temporary server, not saved */
                     server->temp_server = 1;
@@ -1947,7 +1947,7 @@ irc_server_apply_command_line_options (struct t_irc_server *server,
                     if (index_option < 0)
                     {
                         /* look if option is negative, like "-noxxx" */
-                        if (weechat_strncasecmp (argv[i], "-no", 3) == 0)
+                        if (weechat_strncmp (argv[i], "-no", 3) == 0)
                         {
                             free (option_name);
                             option_name = strdup (argv[i] + 3);

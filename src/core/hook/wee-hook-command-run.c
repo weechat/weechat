@@ -133,15 +133,15 @@ hook_command_run_exec (struct t_gui_buffer *buffer, const char *command)
         {
             hook_matching = string_match (ptr_command,
                                           HOOK_COMMAND_RUN(ptr_hook, command),
-                                          0);
+                                          1);
 
             if (!hook_matching
                 && !strchr (HOOK_COMMAND_RUN(ptr_hook, command), ' '))
             {
                 length = strlen (HOOK_COMMAND_RUN(ptr_hook, command));
-                hook_matching = ((string_strncasecmp (ptr_command,
-                                                      HOOK_COMMAND_RUN(ptr_hook, command),
-                                                      utf8_strlen (HOOK_COMMAND_RUN(ptr_hook, command))) == 0)
+                hook_matching = ((string_strncmp (ptr_command,
+                                                  HOOK_COMMAND_RUN(ptr_hook, command),
+                                                  utf8_strlen (HOOK_COMMAND_RUN(ptr_hook, command))) == 0)
                                  && ((ptr_command[length] == ' ')
                                      || (ptr_command[length] == '\0')));
             }

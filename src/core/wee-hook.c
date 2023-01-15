@@ -204,8 +204,8 @@ hook_find_pos (struct t_hook *hook)
         {
             if (!ptr_hook->deleted)
             {
-                rc_cmp = string_strcasecmp (HOOK_COMMAND(hook, command),
-                                            HOOK_COMMAND(ptr_hook, command));
+                rc_cmp = string_strcmp (HOOK_COMMAND(hook, command),
+                                        HOOK_COMMAND(ptr_hook, command));
                 if (rc_cmp < 0)
                     return ptr_hook;
                 if ((rc_cmp == 0) && (hook->priority > ptr_hook->priority))
@@ -692,7 +692,7 @@ hook_add_to_infolist_type (struct t_infolist *infolist, int type,
             switch (ptr_hook->type)
             {
                 case HOOK_TYPE_COMMAND:
-                    match = string_match (HOOK_COMMAND(ptr_hook, command), arguments, 0);
+                    match = string_match (HOOK_COMMAND(ptr_hook, command), arguments, 1);
                     break;
                 default:
                     break;

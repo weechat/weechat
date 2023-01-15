@@ -186,31 +186,31 @@ exec_command_parse_options (struct t_exec_cmd_options *cmd_options,
 
     for (i = start_arg; i < argc; i++)
     {
-        if (weechat_strcasecmp (argv[i], "-sh") == 0)
+        if (weechat_strcmp (argv[i], "-sh") == 0)
         {
             cmd_options->use_shell = 1;
         }
-        else if (weechat_strcasecmp (argv[i], "-nosh") == 0)
+        else if (weechat_strcmp (argv[i], "-nosh") == 0)
         {
             cmd_options->use_shell = 0;
         }
-        else if (weechat_strcasecmp (argv[i], "-bg") == 0)
+        else if (weechat_strcmp (argv[i], "-bg") == 0)
         {
             cmd_options->detached = 1;
         }
-        else if (weechat_strcasecmp (argv[i], "-nobg") == 0)
+        else if (weechat_strcmp (argv[i], "-nobg") == 0)
         {
             cmd_options->detached = 0;
         }
-        else if (weechat_strcasecmp (argv[i], "-stdin") == 0)
+        else if (weechat_strcmp (argv[i], "-stdin") == 0)
         {
             cmd_options->pipe_stdin = 1;
         }
-        else if (weechat_strcasecmp (argv[i], "-nostdin") == 0)
+        else if (weechat_strcmp (argv[i], "-nostdin") == 0)
         {
             cmd_options->pipe_stdin = 0;
         }
-        else if (weechat_strcasecmp (argv[i], "-buffer") == 0)
+        else if (weechat_strcmp (argv[i], "-buffer") == 0)
         {
             if (i + 1 >= argc)
                 return 0;
@@ -226,73 +226,73 @@ exec_command_parse_options (struct t_exec_cmd_options *cmd_options,
             if (!cmd_options->ptr_buffer)
                 cmd_options->new_buffer = 1;
         }
-        else if (weechat_strcasecmp (argv[i], "-l") == 0)
+        else if (weechat_strcmp (argv[i], "-l") == 0)
         {
             cmd_options->output_to_buffer = 0;
             cmd_options->output_to_buffer_exec_cmd = 0;
             cmd_options->new_buffer = 0;
         }
-        else if (weechat_strcasecmp (argv[i], "-o") == 0)
+        else if (weechat_strcmp (argv[i], "-o") == 0)
         {
             cmd_options->output_to_buffer = 1;
             cmd_options->output_to_buffer_exec_cmd = 0;
             cmd_options->new_buffer = 0;
         }
-        else if (weechat_strcasecmp (argv[i], "-oc") == 0)
+        else if (weechat_strcmp (argv[i], "-oc") == 0)
         {
             cmd_options->output_to_buffer = 1;
             cmd_options->output_to_buffer_exec_cmd = 1;
             cmd_options->new_buffer = 0;
         }
-        else if (weechat_strcasecmp (argv[i], "-oerr") == 0)
+        else if (weechat_strcmp (argv[i], "-oerr") == 0)
         {
             cmd_options->output_to_buffer_stderr = 1;
         }
-        else if (weechat_strcasecmp (argv[i], "-n") == 0)
+        else if (weechat_strcmp (argv[i], "-n") == 0)
         {
             cmd_options->output_to_buffer = 0;
             cmd_options->output_to_buffer_exec_cmd = 0;
             cmd_options->new_buffer = 1;
         }
-        else if (weechat_strcasecmp (argv[i], "-nf") == 0)
+        else if (weechat_strcmp (argv[i], "-nf") == 0)
         {
             cmd_options->output_to_buffer = 0;
             cmd_options->output_to_buffer_exec_cmd = 0;
             cmd_options->new_buffer = 2;
         }
-        else if (weechat_strcasecmp (argv[i], "-cl") == 0)
+        else if (weechat_strcmp (argv[i], "-cl") == 0)
         {
             cmd_options->new_buffer_clear = 1;
         }
-        else if (weechat_strcasecmp (argv[i], "-nocl") == 0)
+        else if (weechat_strcmp (argv[i], "-nocl") == 0)
         {
             cmd_options->new_buffer_clear = 0;
         }
-        else if (weechat_strcasecmp (argv[i], "-sw") == 0)
+        else if (weechat_strcmp (argv[i], "-sw") == 0)
         {
             cmd_options->switch_to_buffer = 1;
         }
-        else if (weechat_strcasecmp (argv[i], "-nosw") == 0)
+        else if (weechat_strcmp (argv[i], "-nosw") == 0)
         {
             cmd_options->switch_to_buffer = 0;
         }
-        else if (weechat_strcasecmp (argv[i], "-ln") == 0)
+        else if (weechat_strcmp (argv[i], "-ln") == 0)
         {
             cmd_options->line_numbers = 1;
         }
-        else if (weechat_strcasecmp (argv[i], "-noln") == 0)
+        else if (weechat_strcmp (argv[i], "-noln") == 0)
         {
             cmd_options->line_numbers = 0;
         }
-        else if (weechat_strcasecmp (argv[i], "-flush") == 0)
+        else if (weechat_strcmp (argv[i], "-flush") == 0)
         {
             cmd_options->flush = 1;
         }
-        else if (weechat_strcasecmp (argv[i], "-noflush") == 0)
+        else if (weechat_strcmp (argv[i], "-noflush") == 0)
         {
             cmd_options->flush = 0;
         }
-        else if (weechat_strcasecmp (argv[i], "-color") == 0)
+        else if (weechat_strcmp (argv[i], "-color") == 0)
         {
             if (i + 1 >= argc)
                 return 0;
@@ -301,15 +301,15 @@ exec_command_parse_options (struct t_exec_cmd_options *cmd_options,
             if (cmd_options->color < 0)
                 return 0;
         }
-        else if (weechat_strcasecmp (argv[i], "-rc") == 0)
+        else if (weechat_strcmp (argv[i], "-rc") == 0)
         {
             cmd_options->display_rc = 1;
         }
-        else if (weechat_strcasecmp (argv[i], "-norc") == 0)
+        else if (weechat_strcmp (argv[i], "-norc") == 0)
         {
             cmd_options->display_rc = 0;
         }
-        else if (weechat_strcasecmp (argv[i], "-timeout") == 0)
+        else if (weechat_strcmp (argv[i], "-timeout") == 0)
         {
             if (i + 1 >= argc)
                 return 0;
@@ -319,14 +319,14 @@ exec_command_parse_options (struct t_exec_cmd_options *cmd_options,
             if (!error || error[0])
                 return 0;
         }
-        else if (weechat_strcasecmp (argv[i], "-name") == 0)
+        else if (weechat_strcmp (argv[i], "-name") == 0)
         {
             if (i + 1 >= argc)
                 return 0;
             i++;
             cmd_options->ptr_command_name = argv[i];
         }
-        else if (weechat_strcasecmp (argv[i], "-pipe") == 0)
+        else if (weechat_strcmp (argv[i], "-pipe") == 0)
         {
             if (i + 1 >= argc)
                 return 0;
@@ -370,7 +370,7 @@ exec_command_parse_options (struct t_exec_cmd_options *cmd_options,
             else
                 cmd_options->pipe_command = strdup (argv[i]);
         }
-        else if (weechat_strcasecmp (argv[i], "-hsignal") == 0)
+        else if (weechat_strcmp (argv[i], "-hsignal") == 0)
         {
             if (i + 1 >= argc)
                 return 0;
@@ -676,14 +676,14 @@ exec_command_exec (const void *pointer, void *data,
 
     /* list running commands */
     if ((argc == 1)
-        || ((argc == 2) && (weechat_strcasecmp (argv[1], "-list") == 0)))
+        || ((argc == 2) && (weechat_strcmp (argv[1], "-list") == 0)))
     {
         exec_command_list ();
         return WEECHAT_RC_OK;
     }
 
     /* send text to a running process */
-    if (weechat_strcasecmp (argv[1], "-in") == 0)
+    if (weechat_strcmp (argv[1], "-in") == 0)
     {
         WEECHAT_COMMAND_MIN_ARGS(4, "-in");
         ptr_exec_cmd = exec_command_search_running_id (argv[2]);
@@ -702,7 +702,7 @@ exec_command_exec (const void *pointer, void *data,
     }
 
     /* send text to a running process (if given), then close stdin */
-    if (weechat_strcasecmp (argv[1], "-inclose") == 0)
+    if (weechat_strcmp (argv[1], "-inclose") == 0)
     {
         WEECHAT_COMMAND_MIN_ARGS(3, "-inclose");
         ptr_exec_cmd = exec_command_search_running_id (argv[2]);
@@ -725,7 +725,7 @@ exec_command_exec (const void *pointer, void *data,
     }
 
     /* send a signal to a running process */
-    if (weechat_strcasecmp (argv[1], "-signal") == 0)
+    if (weechat_strcmp (argv[1], "-signal") == 0)
     {
         WEECHAT_COMMAND_MIN_ARGS(4, "-signal");
         ptr_exec_cmd = exec_command_search_running_id (argv[2]);
@@ -735,7 +735,7 @@ exec_command_exec (const void *pointer, void *data,
     }
 
     /* send a KILL signal to a running process */
-    if (weechat_strcasecmp (argv[1], "-kill") == 0)
+    if (weechat_strcmp (argv[1], "-kill") == 0)
     {
         WEECHAT_COMMAND_MIN_ARGS(3, "-kill");
         ptr_exec_cmd = exec_command_search_running_id (argv[2]);
@@ -745,7 +745,7 @@ exec_command_exec (const void *pointer, void *data,
     }
 
     /* send a KILL signal to all running processes */
-    if (weechat_strcasecmp (argv[1], "-killall") == 0)
+    if (weechat_strcmp (argv[1], "-killall") == 0)
     {
         for (ptr_exec_cmd = exec_cmds; ptr_exec_cmd;
              ptr_exec_cmd = ptr_exec_cmd->next_cmd)
@@ -759,7 +759,7 @@ exec_command_exec (const void *pointer, void *data,
     }
 
     /* set a hook property */
-    if (weechat_strcasecmp (argv[1], "-set") == 0)
+    if (weechat_strcmp (argv[1], "-set") == 0)
     {
         WEECHAT_COMMAND_MIN_ARGS(5, "-set");
         ptr_exec_cmd = exec_command_search_running_id (argv[2]);
@@ -769,10 +769,10 @@ exec_command_exec (const void *pointer, void *data,
     }
 
     /* delete terminated command(s) */
-    if (weechat_strcasecmp (argv[1], "-del") == 0)
+    if (weechat_strcmp (argv[1], "-del") == 0)
     {
         WEECHAT_COMMAND_MIN_ARGS(3, "-del");
-        if (weechat_strcasecmp (argv[2], "-all") == 0)
+        if (weechat_strcmp (argv[2], "-all") == 0)
         {
             count = 0;
             ptr_exec_cmd = exec_cmds;

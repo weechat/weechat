@@ -598,30 +598,30 @@ weechat_tcl_command_cb (const void *pointer, void *data,
     }
     else if (argc == 2)
     {
-        if (weechat_strcasecmp (argv[1], "list") == 0)
+        if (weechat_strcmp (argv[1], "list") == 0)
         {
             plugin_script_display_list (weechat_tcl_plugin, tcl_scripts,
                                         NULL, 0);
         }
-        else if (weechat_strcasecmp (argv[1], "listfull") == 0)
+        else if (weechat_strcmp (argv[1], "listfull") == 0)
         {
             plugin_script_display_list (weechat_tcl_plugin, tcl_scripts,
                                         NULL, 1);
         }
-        else if (weechat_strcasecmp (argv[1], "autoload") == 0)
+        else if (weechat_strcmp (argv[1], "autoload") == 0)
         {
             plugin_script_auto_load (weechat_tcl_plugin, &weechat_tcl_load_cb);
         }
-        else if (weechat_strcasecmp (argv[1], "reload") == 0)
+        else if (weechat_strcmp (argv[1], "reload") == 0)
         {
             weechat_tcl_unload_all ();
             plugin_script_auto_load (weechat_tcl_plugin, &weechat_tcl_load_cb);
         }
-        else if (weechat_strcasecmp (argv[1], "unload") == 0)
+        else if (weechat_strcmp (argv[1], "unload") == 0)
         {
             weechat_tcl_unload_all ();
         }
-        else if (weechat_strcasecmp (argv[1], "version") == 0)
+        else if (weechat_strcmp (argv[1], "version") == 0)
         {
             plugin_script_display_interpreter (weechat_tcl_plugin, 0);
         }
@@ -630,19 +630,19 @@ weechat_tcl_command_cb (const void *pointer, void *data,
     }
     else
     {
-        if (weechat_strcasecmp (argv[1], "list") == 0)
+        if (weechat_strcmp (argv[1], "list") == 0)
         {
             plugin_script_display_list (weechat_tcl_plugin, tcl_scripts,
                                         argv_eol[2], 0);
         }
-        else if (weechat_strcasecmp (argv[1], "listfull") == 0)
+        else if (weechat_strcmp (argv[1], "listfull") == 0)
         {
             plugin_script_display_list (weechat_tcl_plugin, tcl_scripts,
                                         argv_eol[2], 1);
         }
-        else if ((weechat_strcasecmp (argv[1], "load") == 0)
-                 || (weechat_strcasecmp (argv[1], "reload") == 0)
-                 || (weechat_strcasecmp (argv[1], "unload") == 0))
+        else if ((weechat_strcmp (argv[1], "load") == 0)
+                 || (weechat_strcmp (argv[1], "reload") == 0)
+                 || (weechat_strcmp (argv[1], "unload") == 0))
         {
             ptr_name = argv_eol[2];
             if (strncmp (ptr_name, "-q ", 3) == 0)
@@ -654,7 +654,7 @@ weechat_tcl_command_cb (const void *pointer, void *data,
                     ptr_name++;
                 }
             }
-            if (weechat_strcasecmp (argv[1], "load") == 0)
+            if (weechat_strcmp (argv[1], "load") == 0)
             {
                 /* load tcl script */
                 path_script = plugin_script_search_path (weechat_tcl_plugin,
@@ -664,19 +664,19 @@ weechat_tcl_command_cb (const void *pointer, void *data,
                 if (path_script)
                     free (path_script);
             }
-            else if (weechat_strcasecmp (argv[1], "reload") == 0)
+            else if (weechat_strcmp (argv[1], "reload") == 0)
             {
                 /* reload one tcl script */
                 weechat_tcl_reload_name (ptr_name);
             }
-            else if (weechat_strcasecmp (argv[1], "unload") == 0)
+            else if (weechat_strcmp (argv[1], "unload") == 0)
             {
                 /* unload tcl script */
                 weechat_tcl_unload_name (ptr_name);
             }
             tcl_quiet = 0;
         }
-        else if (weechat_strcasecmp (argv[1], "eval") == 0)
+        else if (weechat_strcmp (argv[1], "eval") == 0)
         {
             send_to_buffer_as_input = 0;
             exec_commands = 0;
@@ -821,7 +821,7 @@ weechat_tcl_signal_debug_dump_cb (const void *pointer, void *data,
     (void) type_data;
 
     if (!signal_data
-        || (weechat_strcasecmp ((char *)signal_data, TCL_PLUGIN_NAME) == 0))
+        || (weechat_strcmp ((char *)signal_data, TCL_PLUGIN_NAME) == 0))
     {
         plugin_script_print_log (weechat_tcl_plugin, tcl_scripts);
     }

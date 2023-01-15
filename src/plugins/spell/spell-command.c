@@ -392,7 +392,7 @@ spell_command_cb (const void *pointer, void *data,
     }
 
     /* enable spell */
-    if (weechat_strcasecmp (argv[1], "enable") == 0)
+    if (weechat_strcmp (argv[1], "enable") == 0)
     {
         weechat_config_option_set (spell_config_check_enabled, "1", 1);
         weechat_printf (NULL, _("Spell checker enabled"));
@@ -400,7 +400,7 @@ spell_command_cb (const void *pointer, void *data,
     }
 
     /* disable spell */
-    if (weechat_strcasecmp (argv[1], "disable") == 0)
+    if (weechat_strcmp (argv[1], "disable") == 0)
     {
         weechat_config_option_set (spell_config_check_enabled, "0", 1);
         weechat_printf (NULL, _("Spell checker disabled"));
@@ -408,7 +408,7 @@ spell_command_cb (const void *pointer, void *data,
     }
 
     /* toggle spell */
-    if (weechat_strcasecmp (argv[1], "toggle") == 0)
+    if (weechat_strcmp (argv[1], "toggle") == 0)
     {
         if (spell_enabled)
         {
@@ -424,14 +424,14 @@ spell_command_cb (const void *pointer, void *data,
     }
 
     /* list of dictionaries */
-    if (weechat_strcasecmp (argv[1], "listdict") == 0)
+    if (weechat_strcmp (argv[1], "listdict") == 0)
     {
         spell_command_speller_list_dicts ();
         return WEECHAT_RC_OK;
     }
 
     /* set dictionary for current buffer */
-    if (weechat_strcasecmp (argv[1], "setdict") == 0)
+    if (weechat_strcmp (argv[1], "setdict") == 0)
     {
         WEECHAT_COMMAND_MIN_ARGS(3, "setdict");
         dicts = weechat_string_replace (argv_eol[2], " ", "");
@@ -443,14 +443,14 @@ spell_command_cb (const void *pointer, void *data,
     }
 
     /* delete dictionary used on current buffer */
-    if (weechat_strcasecmp (argv[1], "deldict") == 0)
+    if (weechat_strcmp (argv[1], "deldict") == 0)
     {
         spell_command_set_dict (buffer, NULL);
         return WEECHAT_RC_OK;
     }
 
     /* add word to personal dictionary */
-    if (weechat_strcasecmp (argv[1], "addword") == 0)
+    if (weechat_strcmp (argv[1], "addword") == 0)
     {
         WEECHAT_COMMAND_MIN_ARGS(3, "addword");
         if (argc > 3)

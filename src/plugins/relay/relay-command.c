@@ -204,25 +204,25 @@ relay_command_relay (const void *pointer, void *data,
 
     if (argc > 1)
     {
-        if (weechat_strcasecmp (argv[1], "list") == 0)
+        if (weechat_strcmp (argv[1], "list") == 0)
         {
             relay_command_client_list (0);
             return WEECHAT_RC_OK;
         }
 
-        if (weechat_strcasecmp (argv[1], "listfull") == 0)
+        if (weechat_strcmp (argv[1], "listfull") == 0)
         {
             relay_command_client_list (1);
             return WEECHAT_RC_OK;
         }
 
-        if (weechat_strcasecmp (argv[1], "listrelay") == 0)
+        if (weechat_strcmp (argv[1], "listrelay") == 0)
         {
             relay_command_server_list ();
             return WEECHAT_RC_OK;
         }
 
-        if (weechat_strcasecmp (argv[1], "add") == 0)
+        if (weechat_strcmp (argv[1], "add") == 0)
         {
             WEECHAT_COMMAND_MIN_ARGS(4, "add");
             relay_server_get_protocol_args (argv[2], NULL, NULL, NULL,
@@ -245,7 +245,7 @@ relay_command_relay (const void *pointer, void *data,
             return WEECHAT_RC_OK;
         }
 
-        if (weechat_strcasecmp (argv[1], "del") == 0)
+        if (weechat_strcmp (argv[1], "del") == 0)
         {
             WEECHAT_COMMAND_MIN_ARGS(3, "del");
             ptr_server = relay_server_search (argv_eol[2]);
@@ -279,7 +279,7 @@ relay_command_relay (const void *pointer, void *data,
             return WEECHAT_RC_OK;
         }
 
-        if (weechat_strcasecmp (argv[1], "stop") == 0)
+        if (weechat_strcmp (argv[1], "stop") == 0)
         {
             WEECHAT_COMMAND_MIN_ARGS(3, "stop");
             ptr_server = relay_server_search (argv_eol[2]);
@@ -298,7 +298,7 @@ relay_command_relay (const void *pointer, void *data,
             return WEECHAT_RC_OK;
         }
 
-        if (weechat_strcasecmp (argv[1], "start") == 0)
+        if (weechat_strcmp (argv[1], "start") == 0)
         {
             WEECHAT_COMMAND_MIN_ARGS(3, "start");
             ptr_server = relay_server_search (argv_eol[2]);
@@ -318,7 +318,7 @@ relay_command_relay (const void *pointer, void *data,
             return WEECHAT_RC_OK;
         }
 
-        if (weechat_strcasecmp (argv[1], "restart") == 0)
+        if (weechat_strcmp (argv[1], "restart") == 0)
         {
             WEECHAT_COMMAND_MIN_ARGS(3, "restart");
             ptr_server = relay_server_search (argv_eol[2]);
@@ -338,19 +338,19 @@ relay_command_relay (const void *pointer, void *data,
             return WEECHAT_RC_OK;
         }
 
-        if (weechat_strcasecmp (argv[1], "raw") == 0)
+        if (weechat_strcmp (argv[1], "raw") == 0)
         {
             relay_raw_open (1);
             return WEECHAT_RC_OK;
         }
 
-        if (weechat_strcasecmp (argv[1], "sslcertkey") == 0)
+        if (weechat_strcmp (argv[1], "sslcertkey") == 0)
         {
             relay_network_set_ssl_cert_key (1);
             return WEECHAT_RC_OK;
         }
 
-        if (weechat_strcasecmp (argv[1], "up") == 0)
+        if (weechat_strcmp (argv[1], "up") == 0)
         {
             if (relay_buffer && (relay_buffer_selected_line > 0))
             {
@@ -360,7 +360,7 @@ relay_command_relay (const void *pointer, void *data,
             return WEECHAT_RC_OK;
         }
 
-        if (weechat_strcasecmp (argv[1], "down") == 0)
+        if (weechat_strcmp (argv[1], "down") == 0)
         {
             if (relay_buffer
                 && relay_buffer_selected_line < relay_client_count - 1)

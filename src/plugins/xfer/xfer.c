@@ -1754,7 +1754,7 @@ xfer_debug_dump_cb (const void *pointer, void *data,
     (void) type_data;
 
     if (!signal_data
-        || (weechat_strcasecmp ((char *)signal_data, XFER_PLUGIN_NAME) == 0))
+        || (weechat_strcmp ((char *)signal_data, XFER_PLUGIN_NAME) == 0))
     {
         weechat_log_printf ("");
         weechat_log_printf ("***** \"%s\" plugin dump *****",
