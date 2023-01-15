@@ -44,7 +44,7 @@ int local_utf8 = 0;
 void
 utf8_init ()
 {
-    local_utf8 = (string_strcasecmp (weechat_local_charset, "UTF-8") == 0);
+    local_utf8 = (string_strcasecmp (weechat_local_charset, "utf-8") == 0);
 }
 
 /*
