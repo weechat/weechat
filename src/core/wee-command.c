@@ -367,13 +367,13 @@ COMMAND_CALLBACK(bar)
         {
             for (i = 2; i < argc; i++)
             {
-                if (string_strcasecmp (argv[i], "input") == 0)
+                if (string_strcmp (argv[i], "input") == 0)
                     gui_bar_create_default_input ();
-                else if (string_strcasecmp (argv[i], "title") == 0)
+                else if (string_strcmp (argv[i], "title") == 0)
                     gui_bar_create_default_title ();
-                else if (string_strcasecmp (argv[i], "status") == 0)
+                else if (string_strcmp (argv[i], "status") == 0)
                     gui_bar_create_default_status ();
-                else if (string_strcasecmp (argv[i], "nicklist") == 0)
+                else if (string_strcmp (argv[i], "nicklist") == 0)
                     gui_bar_create_default_nicklist ();
             }
         }

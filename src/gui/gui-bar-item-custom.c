@@ -96,8 +96,8 @@ gui_bar_item_custom_search_option (const char *option_name)
 
     for (i = 0; i < GUI_BAR_ITEM_CUSTOM_NUM_OPTIONS; i++)
     {
-        if (string_strcasecmp (gui_bar_item_custom_option_string[i],
-                               option_name) == 0)
+        if (string_strcmp (gui_bar_item_custom_option_string[i],
+                           option_name) == 0)
             return i;
     }
 
@@ -154,7 +154,7 @@ gui_bar_item_custom_search_with_option_name (const char *option_name)
             for (ptr_item = gui_custom_bar_items; ptr_item;
                  ptr_item = ptr_item->next_item)
             {
-                if (string_strcasecmp (ptr_item->name, item_name) == 0)
+                if (string_strcmp (ptr_item->name, item_name) == 0)
                     break;
             }
             free (item_name);

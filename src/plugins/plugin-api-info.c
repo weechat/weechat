@@ -1065,7 +1065,7 @@ plugin_api_infolist_bar_cb (const void *pointer, void *data,
         for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
         {
             if (!arguments || !arguments[0]
-                || string_match (ptr_bar->name, arguments, 0))
+                || string_match (ptr_bar->name, arguments, 1))
             {
                 if (!gui_bar_add_to_infolist (ptr_infolist, ptr_bar))
                 {
@@ -1124,7 +1124,7 @@ plugin_api_infolist_bar_item_cb (const void *pointer, void *data,
              ptr_bar_item = ptr_bar_item->next_item)
         {
             if (!arguments || !arguments[0]
-                || string_match (ptr_bar_item->name, arguments, 0))
+                || string_match (ptr_bar_item->name, arguments, 1))
             {
                 if (!gui_bar_item_add_to_infolist (ptr_infolist, ptr_bar_item))
                 {
