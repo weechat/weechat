@@ -20,14 +20,14 @@
 # along with WeeChat.  If not, see <https://www.gnu.org/licenses/>.
 #
 # w8rabbit <w8rabbit@mail.i2p>, 2018.
-# Nils Görs <weechatter@arcor.de>, 2022.
+# Nils Görs <weechatter@arcor.de>, 2022-2023.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2023-01-15 21:01+0100\n"
-"PO-Revision-Date: 2022-12-29 12:50+0100\n"
+"PO-Revision-Date: 2023-01-16 08:43+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German - Germany <weechatter@arcor.de>\n"
 "Language: de_DE\n"
@@ -9163,7 +9163,7 @@ msgid ""
 "   *: remove voice from everybody on channel"
 msgstr ""
 "nick: Nick oder Maske (Platzhalter \"*\" kann verwendet werden)\n"
-"   *: entzieht allen Nicks im Kanal den voice-Status"
+"   *: entzieht allen Nicks im Kanal die Stimme"
 
 msgid "shutdown the server"
 msgstr "Server herunterfahren"
@@ -9495,7 +9495,7 @@ msgstr ""
 "  i: geschlossener Kanal (Zutritt nur mit Einladung)\n"
 "  t: nur Operatoren dürfen das Thema setzen\n"
 "  n: keine Nachrichten von außerhalb des Kanals zulassen\n"
-"  m: moderierter Kanal (schreiben nur mit Voice)\n"
+"  m: moderierter Kanal (schreiben nur mit Stimme)\n"
 "  l: maximale Anzahl an Usern im Kanal festlegen\n"
 "  b: Bannmaske für zu sperrende User (in nick!ident@host-Form)\n"
 "  e: legt Ausnahmemaske fest\n"
@@ -10103,14 +10103,14 @@ msgstr ""
 "  nick: Nickname"
 
 msgid "give voice to nick(s)"
-msgstr "Voice an Nick(s) vergeben"
+msgstr "Stimme an Nick(s) vergeben"
 
 msgid ""
 "nick: nick or mask (wildcard \"*\" is allowed)\n"
 "   *: give voice to everybody on channel"
 msgstr ""
 "nick: Nick oder Maske (Platzhalter \"*\" kann verwendet werden)\n"
-"   *: vergibt an alle Nicks im Kanal den voice-Status"
+"   *: vergibt an alle Nicks im Kanal eine Stimme"
 
 msgid "send a notice to channel ops"
 msgstr "Nachricht an Kanal-Operator verschicken"
@@ -12100,22 +12100,17 @@ msgid_plural "halfops"
 msgstr[0] "Halb-Operator"
 msgstr[1] "Halb-Operatoren"
 
-#, fuzzy
-#| msgid "voice"
-#| msgid_plural "voices"
 msgid "voiced"
 msgid_plural "voiced"
-msgstr[0] "ge-voice-ter"
-msgstr[1] "ge-voice-te"
+msgstr[0] "Stimme"
+msgstr[1] "Stimmen"
 
 #. TRANSLATORS: number of "regular" nicks on a channel (ie not op/halfop/voiced), for example: "56 regular"
-#, fuzzy, c-format
-#| msgid "%s%s%d%s normal"
-#| msgid_plural "%s%s%d%s normals"
+#, c-format
 msgid "%s%s%d%s regular"
 msgid_plural "%s%s%d%s regular"
-msgstr[0] "%s%s%d%s normal"
-msgstr[1] "%s%s%d%s normale"
+msgstr[0] "%s%s%d%s regulär"
+msgstr[1] "%s%s%d%s reguläre"
 
 #, c-format
 msgid "%sChannel %s%s%s: %s%d%s %s %s(%s%s)"
