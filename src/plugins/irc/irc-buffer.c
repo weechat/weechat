@@ -219,6 +219,9 @@ irc_buffer_close_cb (const void *pointer, void *data,
                 ptr_server->reconnect_delay = 0;
                 ptr_server->reconnect_start = 0;
 
+                /* consider auto-join has never been done */
+                ptr_server->autojoin_done = 0;
+
                 /* close server channels/privates */
                 ptr_channel = ptr_server->channels;
                 while (ptr_channel)

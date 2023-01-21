@@ -1586,7 +1586,6 @@ irc_command_connect_one_server (struct t_irc_server *server,
     {
         server->reconnect_delay = 0;
         server->reconnect_start = 0;
-        server->reconnect_join = (server->channels) ? 1 : 0;
     }
 
     /* connect OK */
@@ -4630,7 +4629,6 @@ irc_command_reconnect_one_server (struct t_irc_server *server,
     {
         server->reconnect_delay = 0;
         server->reconnect_start = 0;
-        server->reconnect_join = (server->channels) ? 1 : 0;
     }
 
     /* reconnect OK */

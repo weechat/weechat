@@ -241,7 +241,7 @@ struct t_irc_server
     time_t reconnect_start;         /* this time + delay = reconnect time    */
     time_t command_time;            /* this time + command_delay = time to   */
                                     /* autojoin channels                     */
-    int reconnect_join;             /* 1 if channels opened to rejoin        */
+    int autojoin_done;              /* 1 if autojoin has been done           */
     int disable_autojoin;           /* 1 if user asked to not autojoin chans */
     int is_away;                    /* 1 is user is marked as away           */
     char *away_message;             /* away message, NULL if not away        */

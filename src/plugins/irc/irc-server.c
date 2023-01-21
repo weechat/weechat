@@ -1615,7 +1615,7 @@ irc_server_alloc (const char *name)
     new_server->reconnect_delay = 0;
     new_server->reconnect_start = 0;
     new_server->command_time = 0;
-    new_server->reconnect_join = 0;
+    new_server->autojoin_done = 0;
     new_server->disable_autojoin = 0;
     new_server->is_away = 0;
     new_server->away_message = NULL;
@@ -5357,9 +5357,7 @@ irc_server_reconnect (struct t_irc_server *server)
 
     server->reconnect_start = 0;
 
-    if (irc_server_connect (server))
-        server->reconnect_join = 1;
-    else
+    if (!irc_server_connect (server))
         irc_server_reconnect_schedule (server);
 }
 
@@ -5551,8 +5549,11 @@ irc_server_autojoin_create_buffers (struct t_irc_server *server)
     char *autojoin, *autojoin2, **channels;
     int num_channels, i;
 
-    /* buffers are opened only if no channels are currently opened */
-    if (server->channels)
+    /*
+     * buffers are opened only if auto-join was not already done
+     * and if no channels are currently opened
+     */
+    if (server->autojoin_done || server->channels)
         return;
 
     /* evaluate server option "autojoin" */
@@ -5707,39 +5708,39 @@ irc_server_autojoin_channels (struct t_irc_server *server)
 {
     char *autojoin;
 
-    if (!server->disable_autojoin)
+    if (server->disable_autojoin)
     {
-        /* auto-join after disconnection (only rejoins opened channels) */
-        if (server->reconnect_join)
-        {
-            if (server->channels)
-            {
-                autojoin = irc_server_build_autojoin (server);
-                if (autojoin)
-                {
-                    irc_server_sendf (server,
-                                      IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
-                                      "JOIN %s",
-                                      autojoin);
-                    free (autojoin);
-                }
-            }
-            server->reconnect_join = 0;
-        }
-        else
-        {
-            /* auto-join when connecting to server for first time */
-            autojoin = irc_server_eval_expression (
-                server,
-                IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_AUTOJOIN));
-            if (autojoin && autojoin[0])
-                irc_command_join_server (server, autojoin, 0, 0);
-            if (autojoin)
-                free (autojoin);
-        }
+        server->disable_autojoin = 0;
+        return;
     }
 
-    server->disable_autojoin = 0;
+    if (!server->autojoin_done && !server->channels)
+    {
+        /* auto-join when connecting to server for first time */
+        autojoin = irc_server_eval_expression (
+            server,
+            IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_AUTOJOIN));
+        if (autojoin && autojoin[0])
+        {
+            irc_command_join_server (server, autojoin, 0, 0);
+            server->autojoin_done = 1;
+        }
+        if (autojoin)
+            free (autojoin);
+    }
+    else if (server->channels)
+    {
+        /* auto-join after disconnection (only rejoins opened channels) */
+        autojoin = irc_server_build_autojoin (server);
+        if (autojoin)
+        {
+            irc_server_sendf (server,
+                              IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
+                              "JOIN %s",
+                              autojoin);
+            free (autojoin);
+        }
+    }
 }
 
 /*
@@ -6167,7 +6168,7 @@ irc_server_hdata_server_cb (const void *pointer, void *data,
         WEECHAT_HDATA_VAR(struct t_irc_server, reconnect_delay, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, reconnect_start, TIME, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, command_time, TIME, 0, NULL, NULL);
-        WEECHAT_HDATA_VAR(struct t_irc_server, reconnect_join, INTEGER, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_server, autojoin_done, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, disable_autojoin, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, is_away, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, away_message, STRING, 0, NULL, NULL);
@@ -6530,7 +6531,7 @@ irc_server_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!weechat_infolist_new_var_time (ptr_item, "command_time", server->command_time))
         return 0;
-    if (!weechat_infolist_new_var_integer (ptr_item, "reconnect_join", server->reconnect_join))
+    if (!weechat_infolist_new_var_integer (ptr_item, "autojoin_done", server->autojoin_done))
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "disable_autojoin", server->disable_autojoin))
         return 0;
@@ -6917,7 +6918,7 @@ irc_server_print_log ()
         weechat_log_printf ("  reconnect_delay . . . . . : %d",    ptr_server->reconnect_delay);
         weechat_log_printf ("  reconnect_start . . . . . : %lld",  (long long)ptr_server->reconnect_start);
         weechat_log_printf ("  command_time. . . . . . . : %lld",  (long long)ptr_server->command_time);
-        weechat_log_printf ("  reconnect_join. . . . . . : %d",    ptr_server->reconnect_join);
+        weechat_log_printf ("  autojoin_done . . . . . . : %d",    ptr_server->autojoin_done);
         weechat_log_printf ("  disable_autojoin. . . . . : %d",    ptr_server->disable_autojoin);
         weechat_log_printf ("  is_away . . . . . . . . . : %d",    ptr_server->is_away);
         weechat_log_printf ("  away_message. . . . . . . : '%s'",  ptr_server->away_message);
