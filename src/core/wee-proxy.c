@@ -67,7 +67,7 @@ proxy_search_option (const char *option_name)
 
     for (i = 0; i < PROXY_NUM_OPTIONS; i++)
     {
-        if (string_strcasecmp (proxy_option_string[i], option_name) == 0)
+        if (strcmp (proxy_option_string[i], option_name) == 0)
             return i;
     }
 
@@ -91,7 +91,7 @@ proxy_search_type (const char *type)
 
     for (i = 0; i < PROXY_NUM_TYPES; i++)
     {
-        if (string_strcasecmp (proxy_type_string[i], type) == 0)
+        if (strcmp (proxy_type_string[i], type) == 0)
             return i;
     }
 
