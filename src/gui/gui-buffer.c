@@ -146,7 +146,7 @@ gui_buffer_search_type (const char *type)
 
     for (i = 0; i < GUI_BUFFER_NUM_TYPES; i++)
     {
-        if (string_strcasecmp (gui_buffer_type_string[i], type) == 0)
+        if (strcmp (gui_buffer_type_string[i], type) == 0)
             return i;
     }
 
@@ -169,7 +169,7 @@ gui_buffer_search_notify (const char *notify)
 
     for (i = 0; i < GUI_BUFFER_NUM_NOTIFY; i++)
     {
-        if (string_strcasecmp (gui_buffer_notify_string[i], notify) == 0)
+        if (strcmp (gui_buffer_notify_string[i], notify) == 0)
             return i;
     }
 
