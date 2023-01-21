@@ -101,9 +101,9 @@ weelist_insert (struct t_weelist *weelist, struct t_weelist_item *item,
     {
         /* search position for new element, according to pos asked */
         pos_item = NULL;
-        if (string_strcasecmp (where, WEECHAT_LIST_POS_BEGINNING) == 0)
+        if (string_strcmp (where, WEECHAT_LIST_POS_BEGINNING) == 0)
             pos_item = weelist->items;
-        else if (string_strcasecmp (where, WEECHAT_LIST_POS_END) == 0)
+        else if (string_strcmp (where, WEECHAT_LIST_POS_END) == 0)
             pos_item = NULL;
         else
             pos_item = weelist_find_pos (weelist, item->data);
