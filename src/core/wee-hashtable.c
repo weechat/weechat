@@ -60,7 +60,7 @@ hashtable_get_type (const char *type)
 
     for (i = 0; i < HASHTABLE_NUM_TYPES; i++)
     {
-        if (string_strcasecmp (hashtable_type_string[i], type) == 0)
+        if (strcmp (hashtable_type_string[i], type) == 0)
             return i;
     }
 
