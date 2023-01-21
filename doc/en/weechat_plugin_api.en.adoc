@@ -14082,7 +14082,7 @@ str = weechat.buffer_string_replace_local_var(my_buffer, "test with $toto")
 
 ==== buffer_match_list
 
-_WeeChat ≥ 0.3.5._
+_WeeChat ≥ 0.3.5, updated in 3.9._
 
 Check if buffer matches a list of buffers.
 
@@ -14101,6 +14101,9 @@ Arguments:
 ** name beginning with `+!+` is excluded
 ** wildcard `+*+` is allowed in name
 
+[NOTE]
+Since version 3.9, comparison of buffer names is case sensitive.
+
 Return value:
 
 * 1 if buffer matches list of buffers, 0 otherwise
@@ -14114,7 +14117,7 @@ if (buffer)
 {
     weechat_printf (NULL, "%d", weechat_buffer_match_list (buffer, "*"));                    /* 1 */
     weechat_printf (NULL, "%d", weechat_buffer_match_list (buffer, "*,!*#weechat*"));        /* 0 */
-    weechat_printf (NULL, "%d", weechat_buffer_match_list (buffer, "irc.libera.*"));       /* 1 */
+    weechat_printf (NULL, "%d", weechat_buffer_match_list (buffer, "irc.libera.*"));         /* 1 */
     weechat_printf (NULL, "%d", weechat_buffer_match_list (buffer, "irc.oftc.*,python.*"));  /* 0 */
 }
 ----
@@ -14131,7 +14134,7 @@ buffer = weechat.buffer_search("irc", "libera.#weechat")
 if buffer:
     weechat.prnt("", "%d" % weechat.buffer_match_list(buffer, "*"))                    # 1
     weechat.prnt("", "%d" % weechat.buffer_match_list(buffer, "*,!*#weechat*"))        # 0
-    weechat.prnt("", "%d" % weechat.buffer_match_list(buffer, "irc.libera.*"))       # 1
+    weechat.prnt("", "%d" % weechat.buffer_match_list(buffer, "irc.libera.*"))         # 1
     weechat.prnt("", "%d" % weechat.buffer_match_list(buffer, "irc.oftc.*,python.*"))  # 0
 ----
 

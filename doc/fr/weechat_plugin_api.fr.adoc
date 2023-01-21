@@ -14395,7 +14395,7 @@ str = weechat.buffer_string_replace_local_var(my_buffer, "test avec $toto")
 
 ==== buffer_match_list
 
-_WeeChat ≥ 0.3.5._
+_WeeChat ≥ 0.3.5, mis à jour dans la 3.9._
 
 Vérifier si le tampon correspond à la liste de tampons.
 
@@ -14414,6 +14414,9 @@ Paramètres :
 ** un nom commençant par `+!+` est exclu
 ** le caractère joker `+*+` est autorisé dans le nom
 
+[NOTE]
+Depuis la version 3.9, la comparaison des noms de tampons est sensible à la casse.
+
 Valeur de retour :
 
 * 1 si le tampon correspond à la liste de tampons, 0 sinon
@@ -14427,7 +14430,7 @@ if (buffer)
 {
     weechat_printf (NULL, "%d", weechat_buffer_match_list (buffer, "*"));                    /* 1 */
     weechat_printf (NULL, "%d", weechat_buffer_match_list (buffer, "*,!*#weechat*"));        /* 0 */
-    weechat_printf (NULL, "%d", weechat_buffer_match_list (buffer, "irc.libera.*"));       /* 1 */
+    weechat_printf (NULL, "%d", weechat_buffer_match_list (buffer, "irc.libera.*"));         /* 1 */
     weechat_printf (NULL, "%d", weechat_buffer_match_list (buffer, "irc.oftc.*,python.*"));  /* 0 */
 }
 ----
@@ -14444,7 +14447,7 @@ buffer = weechat.buffer_search("irc", "libera.#weechat")
 if buffer:
     weechat.prnt("", "%d" % weechat.buffer_match_list(buffer, "*"))                    # 1
     weechat.prnt("", "%d" % weechat.buffer_match_list(buffer, "*,!*#weechat*"))        # 0
-    weechat.prnt("", "%d" % weechat.buffer_match_list(buffer, "irc.libera.*"))       # 1
+    weechat.prnt("", "%d" % weechat.buffer_match_list(buffer, "irc.libera.*"))         # 1
     weechat.prnt("", "%d" % weechat.buffer_match_list(buffer, "irc.oftc.*,python.*"))  # 0
 ----
 

@@ -13654,7 +13654,7 @@ str = weechat.buffer_string_replace_local_var(my_buffer, "тест са $toto")
 
 ==== buffer_match_list
 
-_WeeChat ≥ 0.3.5._
+_WeeChat ≥ 0.3.5, ажурирано у верзији 3.9._
 
 Проверава да ли се бафер подудара са листом бафера.
 
@@ -13673,6 +13673,10 @@ int weechat_buffer_match_list (struct t_gui_buffer *buffer, const char *string);
 ** име које почиње са `+!+` се не узима у обзир
 ** у имену је дозвољен џокер `+*+`
 
+// TRANSLATION MISSING
+[NOTE]
+Since version 3.9, comparison of buffer names is case sensitive.
+
 Повратна вредност:
 
 * 1 ако се бафер подудара са листом бафера, 0 у супротном
@@ -13686,7 +13690,7 @@ if (buffer)
 {
     weechat_printf (NULL, "%d", weechat_buffer_match_list (buffer, "*"));                    /* 1 */
     weechat_printf (NULL, "%d", weechat_buffer_match_list (buffer, "*,!*#weechat*"));        /* 0 */
-    weechat_printf (NULL, "%d", weechat_buffer_match_list (buffer, "irc.libera.*"));       /* 1 */
+    weechat_printf (NULL, "%d", weechat_buffer_match_list (buffer, "irc.libera.*"));         /* 1 */
     weechat_printf (NULL, "%d", weechat_buffer_match_list (buffer, "irc.oftc.*,python.*"));  /* 0 */
 }
 ----
@@ -13703,7 +13707,7 @@ buffer = weechat.buffer_search("irc", "libera.#weechat")
 if buffer:
     weechat.prnt("", "%d" % weechat.buffer_match_list(buffer, "*"))                    # 1
     weechat.prnt("", "%d" % weechat.buffer_match_list(buffer, "*,!*#weechat*"))        # 0
-    weechat.prnt("", "%d" % weechat.buffer_match_list(buffer, "irc.libera.*"))       # 1
+    weechat.prnt("", "%d" % weechat.buffer_match_list(buffer, "irc.libera.*"))         # 1
     weechat.prnt("", "%d" % weechat.buffer_match_list(buffer, "irc.oftc.*,python.*"))  # 0
 ----
 

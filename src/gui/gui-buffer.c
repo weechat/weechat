@@ -1138,6 +1138,8 @@ gui_buffer_string_replace_local_var (struct t_gui_buffer *buffer,
  * List is a comma-separated list of buffers, where exclusion is possible with
  * char '!', and "*" means all buffers.
  *
+ * Comparison is case sensitive.
+ *
  * Examples:
  *   "*"
  *   "*,!*#weechat*"
@@ -1165,7 +1167,7 @@ gui_buffer_match_list (struct t_gui_buffer *buffer, const char *string)
     if (buffers)
     {
         match = string_match_list (buffer->full_name,
-                                   (const char **)buffers, 0);
+                                   (const char **)buffers, 1);
         string_free_split (buffers);
     }
 

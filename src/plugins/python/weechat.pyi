@@ -1746,7 +1746,7 @@ def buffer_match_list(buffer: str, string: str) -> int:
         if buffer:
             weechat.prnt("", "%d" % weechat.buffer_match_list(buffer, "*"))                    # 1
             weechat.prnt("", "%d" % weechat.buffer_match_list(buffer, "*,!*#weechat*"))        # 0
-            weechat.prnt("", "%d" % weechat.buffer_match_list(buffer, "irc.libera.*"))       # 1
+            weechat.prnt("", "%d" % weechat.buffer_match_list(buffer, "irc.libera.*"))         # 1
             weechat.prnt("", "%d" % weechat.buffer_match_list(buffer, "irc.oftc.*,python.*"))  # 0
     """
     ...
