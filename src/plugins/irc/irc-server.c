@@ -45,6 +45,8 @@
 #include <resolv.h>
 
 #include <gnutls/gnutls.h>
+#include <gnutls/abstract.h>
+#include <gnutls/crypto.h>
 #include <gnutls/x509.h>
 
 #include "../weechat-plugin.h"
@@ -4580,38 +4582,6 @@ irc_server_fingerprint_str_sizes ()
 }
 
 /*
- * Compares two fingerprints: one hexadecimal (given by user), the second binary
- * (received from IRC server).
- *
- * Returns:
- *    0: fingerprints are the same
- *   -1: fingerprints are different
- */
-
-int
-irc_server_compare_fingerprints (const char *fingerprint,
-                                 const unsigned char *fingerprint_server,
-                                 ssize_t fingerprint_size)
-{
-    ssize_t i;
-    unsigned int value;
-
-    if ((ssize_t)strlen (fingerprint) != fingerprint_size * 2)
-        return -1;
-
-    for (i = 0; i < fingerprint_size; i++)
-    {
-        if (sscanf (&fingerprint[i * 2], "%02x", &value) != 1)
-            return -1;
-        if (value != fingerprint_server[i])
-            return -1;
-    }
-
-    /* fingerprints are the same */
-    return 0;
-}
-
-/*
  * Checks if a GnuTLS session uses the certificate with a given fingerprint.
  *
  * Returns:
@@ -4624,15 +4594,14 @@ irc_server_check_certificate_fingerprint (struct t_irc_server *server,
                                           gnutls_x509_crt_t certificate,
                                           const char *good_fingerprints)
 {
-    unsigned char *fingerprint_server[IRC_FINGERPRINT_NUM_ALGOS];
+    unsigned char *pkbuf;
+    unsigned char fpbuf[256];
+    char *certfpstr[IRC_FINGERPRINT_NUM_ALGOS];
+    char *keyfpstr[IRC_FINGERPRINT_NUM_ALGOS];
     char **fingerprints;
     int i, rc, algo;
-    size_t size_bits, size_bytes;
-
-    for (i = 0; i < IRC_FINGERPRINT_NUM_ALGOS; i++)
-    {
-        fingerprint_server[i] = NULL;
-    }
+    size_t j, size_bytes, pkbuf_len;
+    gnutls_pubkey_t pk;
 
     /* split good_fingerprints */
     fingerprints = weechat_string_split (good_fingerprints, ",", NULL,
@@ -4640,59 +4609,184 @@ irc_server_check_certificate_fingerprint (struct t_irc_server *server,
                                          | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                                          | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
                                          0, NULL);
+
     if (!fingerprints)
         return 0;
 
     rc = 0;
+    pkbuf = NULL;
+    pkbuf_len = 0;
 
-    for (i = 0; fingerprints[i]; i++)
+    for (algo = 0; algo < IRC_FINGERPRINT_NUM_ALGOS; algo++)
     {
-        size_bits = strlen (fingerprints[i]) * 4;
-        size_bytes = size_bits / 8;
+        certfpstr[algo] = NULL;
+        keyfpstr[algo] = NULL;
+    }
 
-        algo = irc_server_fingerprint_search_algo_with_size (size_bits);
-        if (algo < 0)
-            continue;
-
-        if (!fingerprint_server[algo])
+    /* attempt to extract and fingerprint the certificate's public key */
+    if (gnutls_pubkey_init (&pk) != GNUTLS_E_SUCCESS)
+    {
+        weechat_printf (
+            server->buffer,
+            _("%sgnutls: failed to initialize public key object"),
+            weechat_prefix ("error"));
+    }
+    else
+    {
+        if (gnutls_pubkey_import_x509 (pk, certificate, 0)
+            != GNUTLS_E_SUCCESS)
         {
-            fingerprint_server[algo] = malloc (size_bytes);
-            if (fingerprint_server[algo])
+            weechat_printf (
+                server->buffer,
+                _("%sgnutls: failed to import certificate public key"),
+                weechat_prefix ("error"));
+        }
+        else if (gnutls_pubkey_export (pk, GNUTLS_X509_FMT_DER, NULL,
+                     &pkbuf_len) != GNUTLS_E_SHORT_MEMORY_BUFFER)
+        {
+            weechat_printf (
+                server->buffer,
+                _("%sgnutls: failed to export certificate public key"),
+                weechat_prefix ("error"));
+        }
+        else if (!pkbuf_len)
+        {
+            weechat_printf (
+                server->buffer,
+                _("%sgnutls: failed to export certificate public key"),
+                weechat_prefix ("error"));
+        }
+        else if (!(pkbuf = malloc (pkbuf_len)))
+        {
+            weechat_printf (
+                server->buffer,
+                _("%s%s: not enough memory (%s)"),
+                weechat_prefix ("error"), IRC_PLUGIN_NAME,
+                "fingerprint");
+        }
+        else if (gnutls_pubkey_export (pk, GNUTLS_X509_FMT_DER, pkbuf,
+                     &pkbuf_len) != GNUTLS_E_SUCCESS)
+        {
+            weechat_printf (
+                server->buffer,
+                _("%sgnutls: failed to export certificate public key"),
+                weechat_prefix ("error"));
+        }
+        else
+        {
+            for (algo = 0; algo < IRC_FINGERPRINT_NUM_ALGOS; algo++)
             {
-                /* calculate the fingerprint for the certificate */
-                if (gnutls_x509_crt_get_fingerprint (
-                        certificate,
-                        irc_fingerprint_digest_algos[algo],
-                        fingerprint_server[algo],
-                        &size_bytes) != GNUTLS_E_SUCCESS)
+                if (!(size_bytes = gnutls_hash_get_len(irc_fingerprint_digest_algos[algo])))
                 {
                     weechat_printf (
                         server->buffer,
-                        _("%sgnutls: failed to calculate certificate "
+                        _("%sgnutls: failed to calculate public key "
                           "fingerprint (%s)"),
-                        weechat_prefix ("error"),
-                        irc_fingerprint_digest_algos_name[algo]);
-                    free (fingerprint_server[algo]);
-                    fingerprint_server[algo] = NULL;
+                    weechat_prefix ("error"),
+                    irc_fingerprint_digest_algos_name[algo]);
                 }
-            }
-            else
-            {
-                weechat_printf (
-                    server->buffer,
-                    _("%s%s: not enough memory (%s)"),
-                    weechat_prefix ("error"), IRC_PLUGIN_NAME,
-                    "fingerprint");
+                else if (!(keyfpstr[algo] = malloc ((size_bytes * 2) + 1)))
+                {
+                    weechat_printf (
+                        server->buffer,
+                        _("%s%s: not enough memory (%s)"),
+                        weechat_prefix ("error"), IRC_PLUGIN_NAME,
+                        "fingerprint");
+                }
+                else
+                {
+                    keyfpstr[algo][0] = '\0';
+
+                    if (gnutls_hash_fast (irc_fingerprint_digest_algos[algo],
+                            pkbuf, pkbuf_len, fpbuf) != GNUTLS_E_SUCCESS)
+                    {
+                        weechat_printf (
+                            server->buffer,
+                            _("%sgnutls: failed to calculate public key "
+                              "fingerprint (%s)"),
+                            weechat_prefix ("error"),
+                            irc_fingerprint_digest_algos_name[algo]);
+                    }
+                    else
+                    {
+                        for (j = 0; j < size_bytes; j++)
+                            sprintf(&keyfpstr[algo][j * 2], "%02x", fpbuf[j]);
+                    }
+                }
             }
         }
 
-        if (fingerprint_server[algo])
+        gnutls_pubkey_deinit (pk);
+        free (pkbuf);
+    }
+
+    /* attempt to fingerprint the certificate */
+    for (algo = 0; algo < IRC_FINGERPRINT_NUM_ALGOS; algo++)
+    {
+        if (!(size_bytes = gnutls_hash_get_len(irc_fingerprint_digest_algos[algo])))
         {
-            /* check if the fingerprint matches */
-            if (irc_server_compare_fingerprints (fingerprints[i],
-                                                 fingerprint_server[algo],
-                                                 size_bytes) == 0)
+            weechat_printf (
+                server->buffer,
+                _("%sgnutls: failed to calculate certificate fingerprint "
+                  "(%s)"),
+                weechat_prefix ("error"),
+                irc_fingerprint_digest_algos_name[algo]);
+        }
+        else if (!(certfpstr[algo] = malloc ((size_bytes * 2) + 1)))
+        {
+            weechat_printf (
+                server->buffer,
+                _("%s%s: not enough memory (%s)"),
+                weechat_prefix ("error"), IRC_PLUGIN_NAME,
+                "fingerprint");
+        }
+        else
+        {
+            certfpstr[algo][0] = '\0';
+
+            if (gnutls_x509_crt_get_fingerprint (certificate,
+                    irc_fingerprint_digest_algos[algo], fpbuf, &size_bytes)
+                    != GNUTLS_E_SUCCESS)
             {
+                weechat_printf (
+                    server->buffer,
+                    _("%sgnutls: failed to calculate certificate fingerprint "
+                      "(%s)"),
+                    weechat_prefix ("error"),
+                    irc_fingerprint_digest_algos_name[algo]);
+            }
+            else
+            {
+                for (j = 0; j < size_bytes; j++)
+                    sprintf(&certfpstr[algo][j * 2], "%02x", fpbuf[j]);
+            }
+        }
+    }
+
+    /* compare all good fingerprints against all calculated fingerprints */
+    for (i = 0; fingerprints[i] && !rc; i++)
+    {
+        for (algo = 0; algo < IRC_FINGERPRINT_NUM_ALGOS; algo++)
+        {
+            if (certfpstr[algo]
+                && !strcasecmp (fingerprints[i], certfpstr[algo]))
+            {
+                weechat_printf (
+                    server->buffer,
+                    _("%sgnutls: certificate fingerprint match (%s)"),
+                    weechat_prefix ("network"), fingerprints[i]);
+
+                rc = 1;
+                break;
+            }
+            if (keyfpstr[algo]
+                && !strcasecmp (fingerprints[i], keyfpstr[algo]))
+            {
+                weechat_printf (
+                    server->buffer,
+                    _("%sgnutls: public key fingerprint match (%s)"),
+                    weechat_prefix ("network"), fingerprints[i]);
+
                 rc = 1;
                 break;
             }
@@ -4701,10 +4795,10 @@ irc_server_check_certificate_fingerprint (struct t_irc_server *server,
 
     weechat_string_free_split (fingerprints);
 
-    for (i = 0; i < IRC_FINGERPRINT_NUM_ALGOS; i++)
+    for (algo = 0; algo < IRC_FINGERPRINT_NUM_ALGOS; algo++)
     {
-        if (fingerprint_server[i])
-            free (fingerprint_server[i]);
+        free (certfpstr[algo]);
+        free (keyfpstr[algo]);
     }
 
     return rc;
@@ -4891,25 +4985,17 @@ irc_server_gnutls_callback (const void *pointer, void *data,
             }
 
             /*
-             * if fingerprint is set, display if matches, and don't check
-             * anything else
+             * if fingerprint is set, display if it doesn't match, and don't
+             * check anything else
              */
             if (ptr_fingerprint && ptr_fingerprint[0])
             {
-                if (fingerprint_match)
+                if (!fingerprint_match)
                 {
                     weechat_printf (
                         server->buffer,
-                        _("%sgnutls: certificate fingerprint matches"),
-                        weechat_prefix ("network"));
-                }
-                else
-                {
-                    weechat_printf (
-                        server->buffer,
-                        _("%sgnutls: certificate fingerprint does NOT match "
-                          "(check value of option "
-                          "irc.server.%s.ssl_fingerprint)"),
+                        _("%sgnutls: fingerprint does NOT match (check value"
+                          " of option irc.server.%s.ssl_fingerprint)"),
                         weechat_prefix ("error"), server->name);
                     rc = -1;
                 }

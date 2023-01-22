@@ -1784,13 +1784,13 @@ irc_config_server_new_option (struct t_config_file *config_file,
             new_option = weechat_config_new_option (
                 config_file, section,
                 option_name, "string",
-                N_("fingerprint of certificate which is trusted and accepted "
-                   "for the server; only hexadecimal digits are allowed (0-9, "
-                   "a-f): 128 chars for SHA-512, 64 chars for SHA-256, "
-                   "40 chars for SHA-1 (insecure, not recommended); many "
-                   "fingerprints can be separated by commas; if this option "
-                   "is set, the other checks on certificates are NOT "
-                   "performed (option \"ssl_verify\") "
+                N_("fingerprint of certificate (or its public key) which is "
+                   "trusted and accepted for the server; only hexadecimal "
+                   "digits are allowed (0-9, a-f): 128 chars for SHA-512, 64 "
+                   "chars for SHA-256, 40 chars for SHA-1 (insecure, not "
+                   "recommended); many fingerprints can be separated by "
+                   "commas; if this option is set, the other checks on "
+                   "certificates are NOT performed (option \"ssl_verify\") "
                    "(note: content is evaluated, see /help eval; server "
                    "options are evaluated with ${irc_server.xxx} and "
                    "${server} is replaced by the server name)"),
