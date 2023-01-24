@@ -909,7 +909,7 @@ IRC_COMMAND_CALLBACK(autojoin)
 {
     struct t_irc_channel *ptr_channel2;
     const char *ptr_autojoin;
-    char *old_autojoin;
+    char *old_autojoin, *autojoin;
     int i;
 
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
@@ -923,6 +923,23 @@ IRC_COMMAND_CALLBACK(autojoin)
 
     ptr_autojoin = IRC_SERVER_OPTION_STRING(ptr_server,
                                             IRC_SERVER_OPTION_AUTOJOIN);
+
+    /* join channels in server "autojoin" option */
+    if (weechat_strcasecmp (argv[1], "join") == 0)
+    {
+        if (ptr_autojoin)
+        {
+            autojoin = irc_server_eval_expression (ptr_server, ptr_autojoin);
+            if (autojoin && autojoin[0])
+            {
+                irc_command_join_server (ptr_server, autojoin, 0, 0);
+            }
+            if (autojoin)
+                free (autojoin);
+        }
+        return WEECHAT_RC_OK;
+    }
+
     old_autojoin = strdup ((ptr_autojoin) ? ptr_autojoin : "");
 
     /* add channel(s) */
@@ -6817,6 +6834,7 @@ irc_command_init ()
            " || addraw <channel1>[,<channel2>...] [<key1>[,<key2>...]]"
            " || del [<channel1> [<channel2>...]]"
            " || apply"
+           " || join"
            " || sort"),
         N_("    add: add current channel or a list of channels (with optional "
            "keys) to the autojoin option; if you are on the channel and the "
@@ -6828,6 +6846,7 @@ irc_command_init ()
            "channel: channel name\n"
            "    key: key for the channel\n"
            "  apply: set currently joined channels in the autojoin option\n"
+           "   join: join the channels in the autojoin option\n"
            "   sort: sort alphabetically channels in the autojoin option\n"
            "\n"
            "Examples:\n"
@@ -6839,11 +6858,13 @@ irc_command_init ()
            "  /autojoin del\n"
            "  /autojoin del #chan1\n"
            "  /autojoin apply\n"
+           "  /autojoin join\n"
            "  /autojoin sort"),
         "add %(irc_channels)|%*"
         " || addraw %(irc_channels) %-"
         " || del %(irc_channels_autojoin)|%*"
         " || apply"
+        " || join"
         " || sort",
         &irc_command_autojoin, NULL, NULL);
     weechat_hook_command_run ("/away", &irc_command_run_away, NULL, NULL);

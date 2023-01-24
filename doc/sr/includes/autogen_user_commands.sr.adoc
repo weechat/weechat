@@ -127,19 +127,21 @@
 * `+autojoin+`: конфигурисање „autojoin” (аутоприступ) серверске опције
 
 ----
-/autojoin  add [<канал1> [<канал2>...]]
-           addraw <канал1>[,<канал2>...] [<кључ1>[,<кључ2>...]]
-           del [<канал1> [<канал2>...]]
+/autojoin  add [<channel1> [<channel2>...]]
+           addraw <channel1>[,<channel2>...] [<key1>[,<key2>...]]
+           del [<channel1> [<channel2>...]]
            apply
+           join
            sort
 
-   add: додаје текући канал или листу канала (са необавезним кључевима) у autojoin опцију; ако се налазите на каналу и не наведете кључ, он се чита са канала
-addraw: користи се IRC сирови формат (исто као за /join команду): сви канали су раздвојени запетама, небавезни кључеви су раздвојени запетама
-   del: брише текући канал или листу канала из autojoin опције
- канал: име канала
-  кључ: кључ за канал
- apply: поставља канале на које сте тренутно пријављени у autojoin опцију
-  sort: сортира по абецеди канале у autojoin опцији
+    add: add current channel or a list of channels (with optional keys) to the autojoin option; if you are on the channel and the key is not provided, the key is read in the channel
+ addraw: use the IRC raw format (same as /join command): all channels separated by commas, optional keys separated by commas
+    del: delete current channel or a list of channels from the autojoin option
+channel: channel name
+    key: key for the channel
+  apply: set currently joined channels in the autojoin option
+   join: join the channels in the autojoin option
+   sort: sort alphabetically channels in the autojoin option
 
 Examples:
   /autojoin add
@@ -150,6 +152,7 @@ Examples:
   /autojoin del
   /autojoin del #chan1
   /autojoin apply
+  /autojoin join
   /autojoin sort
 ----
 

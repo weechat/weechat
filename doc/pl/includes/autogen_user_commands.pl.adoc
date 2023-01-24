@@ -127,21 +127,23 @@ Przykłady:
 * `+autojoin+`: konfiguruje opcje serwera "autojoin"
 
 ----
-/autojoin  add [<kanał1> [<kanał2>...]]
-           addraw <kanał1>[,<kanał2>...] [<hasło1>[,<hasło2>...]]
-           del [<kanał1> [<kanał2>...]]
+/autojoin  add [<channel1> [<channel2>...]]
+           addraw <channel1>[,<channel2>...] [<key1>[,<key2>...]]
+           del [<channel1> [<channel2>...]]
            apply
+           join
            sort
 
-    add: dodaje obecny kanał albo listę kanałów (z opcjonalnymi hasłami) do opcji autojoin; jeśli jesteś na kanale i hasło nie zostało podane, jest ono odczytywane z kanału
- addraw: użyj nieprzetworzonego formatu IRC (taki jak dla komendy /join): nazwy kanałów oddzielone przecinkami, opcjonalne hasła oddzielone przecinkami
-    del: usuwa obecny kanał lub listę kanałów z opcji autojoin
-kanał: nazwa kanału
-    hasło: hasło do kanału
-  apply: ustawia obecne kanały w opcji autojoin
-   sort: sortuje alfabetycznie kanały w opcji autojoin
+    add: add current channel or a list of channels (with optional keys) to the autojoin option; if you are on the channel and the key is not provided, the key is read in the channel
+ addraw: use the IRC raw format (same as /join command): all channels separated by commas, optional keys separated by commas
+    del: delete current channel or a list of channels from the autojoin option
+channel: channel name
+    key: key for the channel
+  apply: set currently joined channels in the autojoin option
+   join: join the channels in the autojoin option
+   sort: sort alphabetically channels in the autojoin option
 
-Przykłady:
+Examples:
   /autojoin add
   /autojoin add #test
   /autojoin add #chan1 #chan2
@@ -150,6 +152,7 @@ Przykłady:
   /autojoin del
   /autojoin del #chan1
   /autojoin apply
+  /autojoin join
   /autojoin sort
 ----
 

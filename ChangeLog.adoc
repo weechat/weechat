@@ -18,6 +18,10 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 [[v3.9]]
 == Version 3.9 (under dev)
 
+New features::
+
+  * irc: add option `join` in command `/autojoin`
+
 Bug fixes::
 
   * core: fix display glitch in command errors when a wide char is set in option weechat.look.command_chars (issue #1871)

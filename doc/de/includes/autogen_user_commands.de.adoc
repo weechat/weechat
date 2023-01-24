@@ -131,17 +131,19 @@ Beispiele:
            addraw <channel1>[,<channel2>...] [<key1>[,<key2>...]]
            del [<channel1> [<channel2>...]]
            apply
+           join
            sort
 
-    add: Hinzufügen des aktuellen Kanals oder einer Liste von Kanälen (mit optionalen Schlüsseln) zur autojoin-Option; Wenn Sie sich in dem Kanal befinden und der Schlüssel nicht übergeben wird, wird der Schlüssel im Kanal gelesen
- addraw: das IRC Roh-Format wird genutzt (wie beim /join Befehl): alle Kanäle werden durch Kommata voneinander getrennt und optional werden die Schlüssel durch Kommata separiert
-    del: Löschen des aktuellen Kanals oder eine Liste von Kanälen aus der autoJoin-Option
-channel: Kanalname
-    key: Schlüssel für den Kanal
-  apply: fügt die aktuell besuchten Kanäle in der autojoin-Option hinzu
-   sort: sortiert die Kanäle alphabetisch in der autojoin Option
+    add: add current channel or a list of channels (with optional keys) to the autojoin option; if you are on the channel and the key is not provided, the key is read in the channel
+ addraw: use the IRC raw format (same as /join command): all channels separated by commas, optional keys separated by commas
+    del: delete current channel or a list of channels from the autojoin option
+channel: channel name
+    key: key for the channel
+  apply: set currently joined channels in the autojoin option
+   join: join the channels in the autojoin option
+   sort: sort alphabetically channels in the autojoin option
 
-Beispiele:
+Examples:
   /autojoin add
   /autojoin add #test
   /autojoin add #chan1 #chan2
@@ -150,6 +152,7 @@ Beispiele:
   /autojoin del
   /autojoin del #chan1
   /autojoin apply
+  /autojoin join
   /autojoin sort
 ----
 
@@ -303,7 +306,7 @@ nick: Nick oder Maske (Platzhalter "*" kann verwendet werden)
           * -yes
 
 nick: Nick oder Maske (Platzhalter "*" kann verwendet werden)
-   *: entzieht allen Nicks im Kanal den voice-Status
+   *: entzieht allen Nicks im Kanal die Stimme
 ----
 
 [[command_irc_die]]
@@ -520,7 +523,7 @@ Kanal-Eigenschaften:
   i: geschlossener Kanal (Zutritt nur mit Einladung)
   t: nur Operatoren dürfen das Thema setzen
   n: keine Nachrichten von außerhalb des Kanals zulassen
-  m: moderierter Kanal (schreiben nur mit Voice)
+  m: moderierter Kanal (schreiben nur mit Stimme)
   l: maximale Anzahl an Usern im Kanal festlegen
   b: Bannmaske für zu sperrende User (in nick!ident@host-Form)
   e: legt Ausnahmemaske fest
@@ -997,14 +1000,14 @@ target: Servername
 ----
 
 [[command_irc_voice]]
-* `+voice+`: Voice an Nick(s) vergeben
+* `+voice+`: Stimme an Nick(s) vergeben
 
 ----
 /voice  <nick> [<nick>...]
         * -yes
 
 nick: Nick oder Maske (Platzhalter "*" kann verwendet werden)
-   *: vergibt an alle Nicks im Kanal den voice-Status
+   *: vergibt an alle Nicks im Kanal eine Stimme
 ----
 
 [[command_irc_wallchops]]
