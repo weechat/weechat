@@ -278,7 +278,7 @@ _typing_allowed_   (integer) +
 _reconnect_delay_   (integer) +
 _reconnect_start_   (time) +
 _command_time_   (time) +
-_reconnect_join_   (integer) +
+_autojoin_done_   (integer) +
 _disable_autojoin_   (integer) +
 _is_away_   (integer) +
 _away_message_   (string) +
