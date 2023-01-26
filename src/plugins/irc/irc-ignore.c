@@ -82,7 +82,7 @@ irc_ignore_search (const char *mask, const char *server, const char *channel)
          ptr_ignore = ptr_ignore->next_ignore)
     {
         if ((strcmp (ptr_ignore->mask, mask) == 0)
-            && (weechat_strcasecmp (ptr_ignore->server, server) == 0)
+            && (strcmp (ptr_ignore->server, server) == 0)
             && (weechat_strcasecmp (ptr_ignore->channel, channel) == 0))
         {
             return ptr_ignore;
@@ -177,7 +177,7 @@ irc_ignore_check_server (struct t_irc_ignore *ignore, const char *server)
     if (strcmp (ignore->server, "*") == 0)
         return 1;
 
-    return (weechat_strcasecmp (ignore->server, server) == 0) ? 1 : 0;
+    return (weechat_strcmp (ignore->server, server) == 0) ? 1 : 0;
 }
 
 /*

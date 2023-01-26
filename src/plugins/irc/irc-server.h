@@ -306,7 +306,6 @@ extern char *irc_server_options[][2];
 
 extern int irc_server_valid (struct t_irc_server *server);
 extern struct t_irc_server *irc_server_search (const char *server_name);
-extern struct t_irc_server *irc_server_casesearch (const char *server_name);
 extern int irc_server_search_option (const char *option_name);
 extern int irc_server_search_casemapping (const char *casemapping);
 extern int irc_server_search_utf8mapping (const char *utf8mapping);

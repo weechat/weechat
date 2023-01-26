@@ -203,31 +203,6 @@ irc_server_search (const char *server_name)
 }
 
 /*
- * Searches for a server by name (case insensitive).
- *
- * Returns pointer to server found, NULL if not found.
- */
-
-struct t_irc_server *
-irc_server_casesearch (const char *server_name)
-{
-    struct t_irc_server *ptr_server;
-
-    if (!server_name)
-        return NULL;
-
-    for (ptr_server = irc_servers; ptr_server;
-         ptr_server = ptr_server->next_server)
-    {
-        if (weechat_strcasecmp (ptr_server->name, server_name) == 0)
-            return ptr_server;
-    }
-
-    /* server not found */
-    return NULL;
-}
-
-/*
  * Searches for a server option name.
  *
  * Returns index of option in array "irc_server_option_string", -1 if not found.
@@ -1522,7 +1497,8 @@ irc_server_alloc (const char *name)
     int i, length;
     char *option_name;
 
-    if (irc_server_casesearch (name))
+    /* check if another server exists with this name */
+    if (irc_server_search (name))
         return NULL;
 
     /* alloc memory for new server */
@@ -2254,7 +2230,7 @@ irc_server_copy (struct t_irc_server *server, const char *new_name)
     int length, index_option;
 
     /* check if another server exists with this name */
-    if (irc_server_casesearch (new_name))
+    if (irc_server_search (new_name))
         return NULL;
 
     new_server = irc_server_alloc (new_name);
@@ -2321,7 +2297,7 @@ irc_server_rename (struct t_irc_server *server, const char *new_name)
     struct t_irc_channel *ptr_channel;
 
     /* check if another server exists with this name */
-    if (irc_server_casesearch (new_name))
+    if (irc_server_search (new_name))
         return 0;
 
     /* rename options */

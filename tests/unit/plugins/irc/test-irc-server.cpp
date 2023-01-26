@@ -86,31 +86,6 @@ TEST(IrcServer, Search)
 
 /*
  * Tests functions:
- *   irc_server_casesearch
- */
-
-TEST(IrcServer, CaseSearch)
-{
-    struct t_irc_server *server1, *server2;
-
-    server1 = irc_server_alloc ("srv1");
-    server2 = irc_server_alloc ("abc");
-
-    POINTERS_EQUAL(NULL, irc_server_casesearch (NULL));
-    POINTERS_EQUAL(NULL, irc_server_casesearch ("does_not_exist"));
-
-    POINTERS_EQUAL(server1, irc_server_casesearch ("SRV1"));
-    POINTERS_EQUAL(server2, irc_server_casesearch ("ABC"));
-
-    POINTERS_EQUAL(server1, irc_server_casesearch ("srv1"));
-    POINTERS_EQUAL(server2, irc_server_casesearch ("abc"));
-
-    irc_server_free (server1);
-    irc_server_free (server2);
-}
-
-/*
- * Tests functions:
  *   irc_server_search_option
  */
 

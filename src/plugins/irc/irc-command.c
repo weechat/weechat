@@ -730,7 +730,7 @@ irc_command_exec_all_servers (int inclusive, const char *str_servers, const char
                 for (i = 0; i < num_servers; i++)
                 {
                     if (weechat_string_match (ptr_server->name,
-                                              servers[i], 0))
+                                              servers[i], 1))
                     {
                         picked = (inclusive) ? 1 : 0;
                         break;
@@ -5546,7 +5546,7 @@ IRC_COMMAND_CALLBACK(server)
             for (ptr_server2 = irc_servers; ptr_server2;
                  ptr_server2 = ptr_server2->next_server)
             {
-                if (weechat_strcasestr (ptr_server2->name, server_name))
+                if (strstr (ptr_server2->name, server_name))
                 {
                     if (!one_server_found)
                     {
@@ -5571,7 +5571,7 @@ IRC_COMMAND_CALLBACK(server)
     {
         WEECHAT_COMMAND_MIN_ARGS(4, "add");
 
-        ptr_server2 = irc_server_casesearch (argv[2]);
+        ptr_server2 = irc_server_search (argv[2]);
         if (ptr_server2)
         {
             weechat_printf (
@@ -5633,7 +5633,7 @@ IRC_COMMAND_CALLBACK(server)
         }
 
         /* check if target name already exists */
-        ptr_server2 = irc_server_casesearch (argv[3]);
+        ptr_server2 = irc_server_search (argv[3]);
         if (ptr_server2)
         {
             weechat_printf (
@@ -5681,7 +5681,7 @@ IRC_COMMAND_CALLBACK(server)
         }
 
         /* check if target name already exists */
-        ptr_server2 = irc_server_casesearch (argv[3]);
+        ptr_server2 = irc_server_search (argv[3]);
         if (ptr_server2)
         {
             weechat_printf (

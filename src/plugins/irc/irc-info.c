@@ -548,7 +548,7 @@ irc_info_infolist_irc_server_cb (const void *pointer, void *data,
              ptr_server = ptr_server->next_server)
         {
             if (!arguments || !arguments[0]
-                || weechat_string_match (ptr_server->name, arguments, 0))
+                || weechat_string_match (ptr_server->name, arguments, 1))
             {
                 if (!irc_server_add_to_infolist (ptr_infolist, ptr_server, 0))
                 {
@@ -1063,7 +1063,7 @@ irc_info_infolist_irc_notify_cb (const void *pointer, void *data,
              ptr_server = ptr_server->next_server)
         {
             if (!arguments || !arguments[0]
-                || weechat_string_match (ptr_server->name, arguments, 0))
+                || weechat_string_match (ptr_server->name, arguments, 1))
             {
                 for (ptr_notify = ptr_server->notify_list; ptr_notify;
                      ptr_notify = ptr_notify->next_notify)
