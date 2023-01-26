@@ -351,15 +351,15 @@ plugin_api_prefix (const char *prefix)
     if (!prefix)
         return gui_chat_prefix_empty;
 
-    if (string_strcasecmp (prefix, "error") == 0)
+    if (strcmp (prefix, "error") == 0)
         return gui_chat_prefix[GUI_CHAT_PREFIX_ERROR];
-    if (string_strcasecmp (prefix, "network") == 0)
+    if (strcmp (prefix, "network") == 0)
         return gui_chat_prefix[GUI_CHAT_PREFIX_NETWORK];
-    if (string_strcasecmp (prefix, "action") == 0)
+    if (strcmp (prefix, "action") == 0)
         return gui_chat_prefix[GUI_CHAT_PREFIX_ACTION];
-    if (string_strcasecmp (prefix, "join") == 0)
+    if (strcmp (prefix, "join") == 0)
         return gui_chat_prefix[GUI_CHAT_PREFIX_JOIN];
-    if (string_strcasecmp (prefix, "quit") == 0)
+    if (strcmp (prefix, "quit") == 0)
         return gui_chat_prefix[GUI_CHAT_PREFIX_QUIT];
 
     return gui_chat_prefix_empty;
