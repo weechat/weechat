@@ -136,9 +136,12 @@ gui_key_search_context (const char *context)
 {
     int i;
 
+    if (!context)
+        return -1;
+
     for (i = 0; i < GUI_KEY_NUM_CONTEXTS; i++)
     {
-        if (string_strcasecmp (gui_key_context_string[i], context) == 0)
+        if (strcmp (gui_key_context_string[i], context) == 0)
             return i;
     }
 
