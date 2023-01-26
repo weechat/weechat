@@ -133,25 +133,24 @@ irc_raw_message_match_filter (struct t_irc_raw_message *raw_message,
     else if (strncmp (filter, "s:", 2) == 0)
     {
         /* filter by server name */
-        return (weechat_strcasecmp (raw_message->server->name,
-                                    filter + 2) == 0) ? 1 : 0;
+        return (strcmp (raw_message->server->name, filter + 2) == 0) ? 1 : 0;
     }
     else if (strncmp (filter, "f:", 2) == 0)
     {
         /* filter by message flag */
-        if (weechat_strcasecmp (filter + 2, "recv") == 0)
+        if (strcmp (filter + 2, "recv") == 0)
         {
             return (raw_message->flags & IRC_RAW_FLAG_RECV) ? 1 : 0;
         }
-        else if (weechat_strcasecmp (filter + 2, "sent") == 0)
+        else if (strcmp (filter + 2, "sent") == 0)
         {
             return (raw_message->flags & IRC_RAW_FLAG_SEND) ? 1 : 0;
         }
-        else if (weechat_strcasecmp (filter + 2, "modified") == 0)
+        else if (strcmp (filter + 2, "modified") == 0)
         {
             return (raw_message->flags & IRC_RAW_FLAG_MODIFIED) ? 1 : 0;
         }
-        else if (weechat_strcasecmp (filter + 2, "redirected") == 0)
+        else if (strcmp (filter + 2, "redirected") == 0)
         {
             return (raw_message->flags & IRC_RAW_FLAG_REDIRECT) ? 1 : 0;
         }
