@@ -920,10 +920,8 @@ gui_buffer_user_input_cb (const void *pointer, void *data,
     if (rc == WEECHAT_RC_OK_EAT)
         return WEECHAT_RC_OK;
 
-    if (string_strcasecmp (input_data, "q") == 0)
-    {
+    if (string_strcmp (input_data, "q") == 0)
         gui_buffer_close (buffer);
-    }
 
     return WEECHAT_RC_OK;
 }

@@ -153,10 +153,8 @@ secure_buffer_input_cb (const void *pointer, void *data,
     (void) pointer;
     (void) data;
 
-    if (string_strcasecmp (input_data, "q") == 0)
-    {
+    if (string_strcmp (input_data, "q") == 0)
         gui_buffer_close (buffer);
-    }
 
     return WEECHAT_RC_OK;
 }

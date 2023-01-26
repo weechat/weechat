@@ -166,7 +166,7 @@ relay_buffer_input_cb (const void *pointer, void *data,
 
     if (buffer == relay_raw_buffer)
     {
-        if (weechat_strcasecmp (input_data, "q") == 0)
+        if (weechat_strcmp (input_data, "q") == 0)
             weechat_buffer_close (buffer);
     }
     else if (buffer == relay_buffer)
@@ -174,7 +174,7 @@ relay_buffer_input_cb (const void *pointer, void *data,
         client = relay_client_search_by_number (relay_buffer_selected_line);
 
         /* disconnect client */
-        if (weechat_strcasecmp (input_data, "d") == 0)
+        if (weechat_strcmp (input_data, "d") == 0)
         {
             if (client && !RELAY_CLIENT_HAS_ENDED(client))
             {
@@ -183,7 +183,7 @@ relay_buffer_input_cb (const void *pointer, void *data,
             }
         }
         /* purge old clients */
-        else if (weechat_strcasecmp (input_data, "p") == 0)
+        else if (weechat_strcmp (input_data, "p") == 0)
         {
             ptr_client = relay_clients;
             while (ptr_client)
@@ -196,12 +196,12 @@ relay_buffer_input_cb (const void *pointer, void *data,
             relay_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
         }
         /* quit relay buffer (close it) */
-        else if (weechat_strcasecmp (input_data, "q") == 0)
+        else if (weechat_strcmp (input_data, "q") == 0)
         {
             weechat_buffer_close (buffer);
         }
         /* remove client */
-        else if (weechat_strcasecmp (input_data, "r") == 0)
+        else if (weechat_strcmp (input_data, "r") == 0)
         {
             if (client && RELAY_CLIENT_HAS_ENDED(client))
             {

@@ -1199,20 +1199,20 @@ gui_color_buffer_input_cb (const void *pointer, void *data,
     (void) pointer;
     (void) data;
 
-    if (string_strcasecmp (input_data, "e") == 0)
+    if (string_strcmp (input_data, "e") == 0)
     {
         gui_color_buffer_extra_info ^= 1;
         gui_color_buffer_display ();
     }
-    else if (string_strcasecmp (input_data, "r") == 0)
+    else if (string_strcmp (input_data, "r") == 0)
     {
         gui_color_buffer_display ();
     }
-    else if (string_strcasecmp (input_data, "q") == 0)
+    else if (string_strcmp (input_data, "q") == 0)
     {
         gui_buffer_close (buffer);
     }
-    else if (string_strcasecmp (input_data, "z") == 0)
+    else if (string_strcmp (input_data, "z") == 0)
     {
         gui_color_reset_pairs ();
     }
