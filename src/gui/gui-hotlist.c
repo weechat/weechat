@@ -85,7 +85,7 @@ gui_hotlist_search_priority (const char *priority)
 
     for (i = 0; i < GUI_HOTLIST_NUM_PRIORITIES; i++)
     {
-        if (string_strcasecmp (gui_hotlist_priority_string[i], priority) == 0)
+        if (strcmp (gui_hotlist_priority_string[i], priority) == 0)
             return i;
     }
 
