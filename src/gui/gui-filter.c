@@ -292,7 +292,7 @@ gui_filter_find_pos (struct t_gui_filter *filter)
     for (ptr_filter = gui_filters; ptr_filter;
          ptr_filter = ptr_filter->next_filter)
     {
-        if (string_strcasecmp (filter->name, ptr_filter->name) < 0)
+        if (strcmp (filter->name, ptr_filter->name) < 0)
             return ptr_filter;
     }
 

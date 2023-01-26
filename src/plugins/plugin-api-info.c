@@ -1347,7 +1347,7 @@ plugin_api_infolist_filter_cb (const void *pointer, void *data,
          ptr_filter = ptr_filter->next_filter)
     {
         if (!arguments || !arguments[0]
-            || string_match (ptr_filter->name, arguments, 0))
+            || string_match (ptr_filter->name, arguments, 1))
         {
             if (!gui_filter_add_to_infolist (ptr_infolist, ptr_filter))
             {
