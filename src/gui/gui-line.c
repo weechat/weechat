@@ -1443,13 +1443,13 @@ gui_line_set_notify_level (struct t_gui_line *line, int max_notify_level)
 
     for (i = 0; i < line->data->tags_count; i++)
     {
-        if (string_strcasecmp (line->data->tags_array[i], "notify_none") == 0)
+        if (strcmp (line->data->tags_array[i], "notify_none") == 0)
             line->data->notify_level = -1;
-        if (string_strcasecmp (line->data->tags_array[i], "notify_message") == 0)
+        if (strcmp (line->data->tags_array[i], "notify_message") == 0)
             line->data->notify_level = GUI_HOTLIST_MESSAGE;
-        if (string_strcasecmp (line->data->tags_array[i], "notify_private") == 0)
+        if (strcmp (line->data->tags_array[i], "notify_private") == 0)
             line->data->notify_level = GUI_HOTLIST_PRIVATE;
-        if (string_strcasecmp (line->data->tags_array[i], "notify_highlight") == 0)
+        if (strcmp (line->data->tags_array[i], "notify_highlight") == 0)
             line->data->notify_level = GUI_HOTLIST_HIGHLIGHT;
     }
 
