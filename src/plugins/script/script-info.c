@@ -71,7 +71,7 @@ script_info_infolist_script_script_cb (const void *pointer, void *data,
         {
             if (!arguments || !arguments[0]
                 || weechat_string_match (ptr_script->name_with_extension,
-                                         arguments, 0))
+                                         arguments, 1))
             {
                 if (!script_repo_add_to_infolist (ptr_infolist, ptr_script))
                 {

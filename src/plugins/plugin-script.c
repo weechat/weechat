@@ -492,10 +492,13 @@ plugin_script_search (struct t_weechat_plugin *weechat_plugin,
 {
     struct t_plugin_script *ptr_script;
 
+    if (!name)
+        return NULL;
+
     for (ptr_script = scripts; ptr_script;
          ptr_script = ptr_script->next_script)
     {
-        if (weechat_strcasecmp (ptr_script->name, name) == 0)
+        if (strcmp (ptr_script->name, name) == 0)
             return ptr_script;
     }
 
@@ -635,7 +638,7 @@ plugin_script_find_pos (struct t_weechat_plugin *weechat_plugin,
 
     for (ptr_script = scripts; ptr_script; ptr_script = ptr_script->next_script)
     {
-        if (weechat_strcasecmp (script->name, ptr_script->name) < 0)
+        if (weechat_strcmp (script->name, ptr_script->name) < 0)
             return ptr_script;
     }
     return NULL;
@@ -1754,7 +1757,7 @@ plugin_script_infolist_list_scripts (struct t_weechat_plugin *weechat_plugin,
                  ptr_script = ptr_script->next_script)
             {
                 if (!arguments || !arguments[0]
-                    || weechat_string_match (ptr_script->name, arguments, 0))
+                    || weechat_string_match (ptr_script->name, arguments, 1))
                 {
                     if (!plugin_script_add_to_infolist (weechat_plugin,
                                                         ptr_infolist, ptr_script))
