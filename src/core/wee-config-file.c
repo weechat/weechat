@@ -692,7 +692,7 @@ config_file_new_option (struct t_config_file *config_file,
     option_name = NULL;
     parent_name = NULL;
 
-    if (!name)
+    if (!name || !type)
         goto error;
 
     pos = strstr (name, " << ");
@@ -715,7 +715,7 @@ config_file_new_option (struct t_config_file *config_file,
     var_type = -1;
     for (i = 0; i < CONFIG_NUM_OPTION_TYPES; i++)
     {
-        if (string_strcmp (type, config_option_type_string[i]) == 0)
+        if (strcmp (type, config_option_type_string[i]) == 0)
         {
             var_type = i;
             break;
@@ -802,8 +802,8 @@ config_file_new_option (struct t_config_file *config_file,
                         index_value = 0;
                         for (i = 0; i < argc; i++)
                         {
-                            if (string_strcmp (new_option->string_values[i],
-                                               default_value) == 0)
+                            if (strcmp (new_option->string_values[i],
+                                        default_value) == 0)
                             {
                                 index_value = i;
                                 break;
@@ -819,8 +819,8 @@ config_file_new_option (struct t_config_file *config_file,
                         index_value = 0;
                         for (i = 0; i < argc; i++)
                         {
-                            if (string_strcmp (new_option->string_values[i],
-                                               value) == 0)
+                            if (strcmp (new_option->string_values[i],
+                                        value) == 0)
                             {
                                 index_value = i;
                                 break;
@@ -1162,13 +1162,13 @@ config_file_string_boolean_is_valid (const char *text)
 
     for (i = 0; config_boolean_true[i]; i++)
     {
-        if (string_strcmp (text, config_boolean_true[i]) == 0)
+        if (strcmp (text, config_boolean_true[i]) == 0)
             return 1;
     }
 
     for (i = 0; config_boolean_false[i]; i++)
     {
-        if (string_strcmp (text, config_boolean_false[i]) == 0)
+        if (strcmp (text, config_boolean_false[i]) == 0)
             return 1;
     }
 
@@ -1194,7 +1194,7 @@ config_file_string_to_boolean (const char *text)
 
     for (i = 0; config_boolean_true[i]; i++)
     {
-        if (string_strcmp (text, config_boolean_true[i]) == 0)
+        if (strcmp (text, config_boolean_true[i]) == 0)
             return CONFIG_BOOLEAN_TRUE;
     }
 
@@ -1380,7 +1380,7 @@ config_file_option_set (struct t_config_option *option, const char *value,
                     option->value = malloc (sizeof (int));
                     if (option->value)
                     {
-                        if (string_strcmp (value, "toggle") == 0)
+                        if (strcmp (value, "toggle") == 0)
                         {
                             CONFIG_BOOLEAN(option) = CONFIG_BOOLEAN_TRUE;
                             rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
@@ -1403,7 +1403,7 @@ config_file_option_set (struct t_config_option *option, const char *value,
                 }
                 else
                 {
-                    if (string_strcmp (value, "toggle") == 0)
+                    if (strcmp (value, "toggle") == 0)
                     {
                         CONFIG_BOOLEAN(option) =
                             (CONFIG_BOOLEAN(option) == CONFIG_BOOLEAN_TRUE) ?
@@ -1463,8 +1463,7 @@ config_file_option_set (struct t_config_option *option, const char *value,
                         {
                             for (i = 0; option->string_values[i]; i++)
                             {
-                                if (string_strcmp (option->string_values[i],
-                                                   value) == 0)
+                                if (strcmp (option->string_values[i], value) == 0)
                                 {
                                     value_int = i;
                                     break;
@@ -2106,17 +2105,17 @@ config_file_option_get_string (struct t_config_option *option,
     if (!option || !property)
         return NULL;
 
-    if (string_strcmp (property, "config_name") == 0)
+    if (strcmp (property, "config_name") == 0)
         return option->config_file->name;
-    else if (string_strcmp (property, "section_name") == 0)
+    else if (strcmp (property, "section_name") == 0)
         return option->section->name;
-    else if (string_strcmp (property, "name") == 0)
+    else if (strcmp (property, "name") == 0)
         return option->name;
-    else if (string_strcmp (property, "parent_name") == 0)
+    else if (strcmp (property, "parent_name") == 0)
         return option->parent_name;
-    else if (string_strcmp (property, "type") == 0)
+    else if (strcmp (property, "type") == 0)
         return config_option_type_string[option->type];
-    else if (string_strcmp (property, "description") == 0)
+    else if (strcmp (property, "description") == 0)
         return option->description;
 
     return NULL;
@@ -2133,31 +2132,31 @@ config_file_option_get_pointer (struct t_config_option *option,
     if (!option || !property)
         return NULL;
 
-    if (string_strcmp (property, "config_file") == 0)
+    if (strcmp (property, "config_file") == 0)
         return option->config_file;
-    else if (string_strcmp (property, "section") == 0)
+    else if (strcmp (property, "section") == 0)
         return option->section;
-    else if (string_strcmp (property, "name") == 0)
+    else if (strcmp (property, "name") == 0)
         return option->name;
-    else if (string_strcmp (property, "parent_name") == 0)
+    else if (strcmp (property, "parent_name") == 0)
         return option->parent_name;
-    else if (string_strcmp (property, "type") == 0)
+    else if (strcmp (property, "type") == 0)
         return &option->type;
-    else if (string_strcmp (property, "description") == 0)
+    else if (strcmp (property, "description") == 0)
         return option->description;
-    else if (string_strcmp (property, "string_values") == 0)
+    else if (strcmp (property, "string_values") == 0)
         return option->string_values;
-    else if (string_strcmp (property, "min") == 0)
+    else if (strcmp (property, "min") == 0)
         return &option->min;
-    else if (string_strcmp (property, "max") == 0)
+    else if (strcmp (property, "max") == 0)
         return &option->max;
-    else if (string_strcmp (property, "default_value") == 0)
+    else if (strcmp (property, "default_value") == 0)
         return option->default_value;
-    else if (string_strcmp (property, "value") == 0)
+    else if (strcmp (property, "value") == 0)
         return option->value;
-    else if (string_strcmp (property, "prev_option") == 0)
+    else if (strcmp (property, "prev_option") == 0)
         return option->prev_option;
-    else if (string_strcmp (property, "next_option") == 0)
+    else if (strcmp (property, "next_option") == 0)
         return option->next_option;
 
     return NULL;
@@ -2944,7 +2943,7 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
                         }
 
                         if (pos[0]
-                            && string_strcmp (pos, WEECHAT_CONFIG_OPTION_NULL) != 0)
+                            && strcmp (pos, WEECHAT_CONFIG_OPTION_NULL) != 0)
                         {
                             undefined_value = 0;
                             /* remove simple or double quotes and spaces at the end */

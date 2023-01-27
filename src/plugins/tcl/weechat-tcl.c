@@ -795,7 +795,7 @@ weechat_tcl_infolist_cb (const void *pointer, void *data,
     if (!infolist_name || !infolist_name[0])
         return NULL;
 
-    if (weechat_strcmp (infolist_name, "tcl_script") == 0)
+    if (strcmp (infolist_name, "tcl_script") == 0)
     {
         return plugin_script_infolist_list_scripts (weechat_tcl_plugin,
                                                     tcl_scripts, obj_pointer,
@@ -820,8 +820,7 @@ weechat_tcl_signal_debug_dump_cb (const void *pointer, void *data,
     (void) signal;
     (void) type_data;
 
-    if (!signal_data
-        || (weechat_strcmp ((char *)signal_data, TCL_PLUGIN_NAME) == 0))
+    if (!signal_data || (strcmp ((char *)signal_data, TCL_PLUGIN_NAME) == 0))
     {
         plugin_script_print_log (weechat_tcl_plugin, tcl_scripts);
     }

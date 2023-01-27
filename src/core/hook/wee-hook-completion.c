@@ -132,8 +132,7 @@ hook_completion_exec (struct t_weechat_plugin *plugin,
 
         if (!ptr_hook->deleted
             && !ptr_hook->running
-            && (string_strcmp (HOOK_COMPLETION(ptr_hook, completion_item),
-                               item) == 0))
+            && (strcmp (HOOK_COMPLETION(ptr_hook, completion_item), item) == 0))
         {
             ptr_hook->running = 1;
             (void) (HOOK_COMPLETION(ptr_hook, callback))

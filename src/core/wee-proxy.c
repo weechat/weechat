@@ -203,37 +203,37 @@ proxy_set (struct t_proxy *proxy, const char *property, const char *value)
     if (!proxy || !property || !value)
         return 0;
 
-    if (string_strcmp (property, "name") == 0)
+    if (strcmp (property, "name") == 0)
     {
         proxy_set_name (proxy, value);
         return 1;
     }
-    else if (string_strcmp (property, "type") == 0)
+    else if (strcmp (property, "type") == 0)
     {
         config_file_option_set (proxy->options[PROXY_OPTION_TYPE], value, 1);
         return 1;
     }
-    else if (string_strcmp (property, "ipv6") == 0)
+    else if (strcmp (property, "ipv6") == 0)
     {
         config_file_option_set (proxy->options[PROXY_OPTION_IPV6], value, 1);
         return 1;
     }
-    else if (string_strcmp (property, "address") == 0)
+    else if (strcmp (property, "address") == 0)
     {
         config_file_option_set (proxy->options[PROXY_OPTION_ADDRESS], value, 1);
         return 1;
     }
-    else if (string_strcmp (property, "port") == 0)
+    else if (strcmp (property, "port") == 0)
     {
         config_file_option_set (proxy->options[PROXY_OPTION_PORT], value, 1);
         return 1;
     }
-    else if (string_strcmp (property, "username") == 0)
+    else if (strcmp (property, "username") == 0)
     {
         config_file_option_set (proxy->options[PROXY_OPTION_USERNAME], value, 1);
         return 1;
     }
-    else if (string_strcmp (property, "password") == 0)
+    else if (strcmp (property, "password") == 0)
     {
         config_file_option_set (proxy->options[PROXY_OPTION_PASSWORD], value, 1);
         return 1;

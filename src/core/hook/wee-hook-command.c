@@ -69,7 +69,7 @@ hook_command_search (struct t_weechat_plugin *plugin, const char *command)
     {
         if (!ptr_hook->deleted
             && (ptr_hook->plugin == plugin)
-            && (string_strcmp (HOOK_COMMAND(ptr_hook, command), command) == 0))
+            && (strcmp (HOOK_COMMAND(ptr_hook, command), command) == 0))
             return ptr_hook;
     }
 
@@ -409,8 +409,7 @@ hook_command_exec (struct t_gui_buffer *buffer, int any_plugin,
 
         if (!ptr_hook->deleted)
         {
-            if (string_strcmp (ptr_command_name,
-                               HOOK_COMMAND(ptr_hook, command)) == 0)
+            if (strcmp (ptr_command_name, HOOK_COMMAND(ptr_hook, command)) == 0)
             {
                 if (ptr_hook->plugin == plugin)
                 {

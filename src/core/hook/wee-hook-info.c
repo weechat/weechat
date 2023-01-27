@@ -122,8 +122,7 @@ hook_info_get (struct t_weechat_plugin *plugin, const char *info_name,
 
         if (!ptr_hook->deleted
             && !ptr_hook->running
-            && (string_strcmp (HOOK_INFO(ptr_hook, info_name),
-                               info_name) == 0))
+            && (strcmp (HOOK_INFO(ptr_hook, info_name), info_name) == 0))
         {
             ptr_hook->running = 1;
             value = (HOOK_INFO(ptr_hook, callback))

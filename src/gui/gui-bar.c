@@ -114,7 +114,7 @@ gui_bar_search_option (const char *option_name)
 
     for (i = 0; i < GUI_BAR_NUM_OPTIONS; i++)
     {
-        if (string_strcmp (gui_bar_option_string[i], option_name) == 0)
+        if (strcmp (gui_bar_option_string[i], option_name) == 0)
             return i;
     }
 
@@ -138,7 +138,7 @@ gui_bar_search_type (const char *type)
 
     for (i = 0; i < GUI_BAR_NUM_TYPES; i++)
     {
-        if (string_strcmp (gui_bar_type_string[i], type) == 0)
+        if (strcmp (gui_bar_type_string[i], type) == 0)
             return i;
     }
 
@@ -162,7 +162,7 @@ gui_bar_search_position (const char *position)
 
     for (i = 0; i < GUI_BAR_NUM_POSITIONS; i++)
     {
-        if (string_strcmp (gui_bar_position_string[i], position) == 0)
+        if (strcmp (gui_bar_position_string[i], position) == 0)
             return i;
     }
 
@@ -450,7 +450,7 @@ gui_bar_search (const char *name)
 
     for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
     {
-        if (string_strcmp (ptr_bar->name, name) == 0)
+        if (strcmp (ptr_bar->name, name) == 0)
             return ptr_bar;
     }
 
@@ -483,7 +483,7 @@ gui_bar_search_with_option_name (const char *option_name)
         {
             for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
             {
-                if (string_strcmp (ptr_bar->name, bar_name) == 0)
+                if (strcmp (ptr_bar->name, bar_name) == 0)
                     break;
             }
             free (bar_name);
@@ -1219,76 +1219,76 @@ gui_bar_set (struct t_gui_bar *bar, const char *property, const char *value)
     if (!bar || !property || !value)
         return 0;
 
-    if (string_strcmp (property, "name") == 0)
+    if (strcmp (property, "name") == 0)
     {
         gui_bar_set_name (bar, value);
         return 1;
     }
-    else if (string_strcmp (property, "hidden") == 0)
+    else if (strcmp (property, "hidden") == 0)
     {
         config_file_option_set (bar->options[GUI_BAR_OPTION_HIDDEN], value, 1);
         return 1;
     }
-    else if (string_strcmp (property, "priority") == 0)
+    else if (strcmp (property, "priority") == 0)
     {
         config_file_option_set (bar->options[GUI_BAR_OPTION_PRIORITY], value, 1);
         return 1;
     }
-    else if (string_strcmp (property, "conditions") == 0)
+    else if (strcmp (property, "conditions") == 0)
     {
         config_file_option_set (bar->options[GUI_BAR_OPTION_CONDITIONS], value, 1);
         return 1;
     }
-    else if (string_strcmp (property, "position") == 0)
+    else if (strcmp (property, "position") == 0)
     {
         config_file_option_set (bar->options[GUI_BAR_OPTION_POSITION], value, 1);
         return 1;
     }
-    else if (string_strcmp (property, "filling_top_bottom") == 0)
+    else if (strcmp (property, "filling_top_bottom") == 0)
     {
         config_file_option_set (bar->options[GUI_BAR_OPTION_FILLING_TOP_BOTTOM], value, 1);
         return 1;
     }
-    else if (string_strcmp (property, "filling_left_right") == 0)
+    else if (strcmp (property, "filling_left_right") == 0)
     {
         config_file_option_set (bar->options[GUI_BAR_OPTION_FILLING_LEFT_RIGHT], value, 1);
         return 1;
     }
-    else if (string_strcmp (property, "size") == 0)
+    else if (strcmp (property, "size") == 0)
     {
         config_file_option_set (bar->options[GUI_BAR_OPTION_SIZE], value, 1);
         return 1;
     }
-    else if (string_strcmp (property, "size_max") == 0)
+    else if (strcmp (property, "size_max") == 0)
     {
         config_file_option_set (bar->options[GUI_BAR_OPTION_SIZE_MAX], value, 1);
         return 1;
     }
-    else if (string_strcmp (property, "color_fg") == 0)
+    else if (strcmp (property, "color_fg") == 0)
     {
         config_file_option_set (bar->options[GUI_BAR_OPTION_COLOR_FG], value, 1);
         gui_bar_refresh (bar);
         return 1;
     }
-    else if (string_strcmp (property, "color_delim") == 0)
+    else if (strcmp (property, "color_delim") == 0)
     {
         config_file_option_set (bar->options[GUI_BAR_OPTION_COLOR_DELIM], value, 1);
         gui_bar_refresh (bar);
         return 1;
     }
-    else if (string_strcmp (property, "color_bg") == 0)
+    else if (strcmp (property, "color_bg") == 0)
     {
         config_file_option_set (bar->options[GUI_BAR_OPTION_COLOR_BG], value, 1);
         gui_bar_refresh (bar);
         return 1;
     }
-    else if (string_strcmp (property, "color_bg_inactive") == 0)
+    else if (strcmp (property, "color_bg_inactive") == 0)
     {
         config_file_option_set (bar->options[GUI_BAR_OPTION_COLOR_BG_INACTIVE], value, 1);
         gui_bar_refresh (bar);
         return 1;
     }
-    else if (string_strcmp (property, "separator") == 0)
+    else if (strcmp (property, "separator") == 0)
     {
         config_file_option_set (bar->options[GUI_BAR_OPTION_SEPARATOR],
                                 (strcmp (value, "1") == 0) ? "on" : "off",
@@ -1296,7 +1296,7 @@ gui_bar_set (struct t_gui_bar *bar, const char *property, const char *value)
         gui_bar_refresh (bar);
         return 1;
     }
-    else if (string_strcmp (property, "items") == 0)
+    else if (strcmp (property, "items") == 0)
     {
         config_file_option_set (bar->options[GUI_BAR_OPTION_ITEMS], value, 1);
         gui_bar_draw (bar);
@@ -1319,9 +1319,12 @@ gui_bar_default_items (const char *bar_name)
     int i;
     static char empty_items[1] = { '\0' };
 
+    if (!bar_name)
+        return NULL;
+
     for (i = 0; gui_bar_items_default_for_bars[i][0]; i++)
     {
-        if (string_strcmp (gui_bar_items_default_for_bars[i][0], bar_name) == 0)
+        if (strcmp (gui_bar_items_default_for_bars[i][0], bar_name) == 0)
             return gui_bar_items_default_for_bars[i][1];
     }
 
@@ -2054,10 +2057,13 @@ gui_bar_update (const char *name)
 {
     struct t_gui_bar *ptr_bar;
 
+    if (!name)
+        return;
+
     for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
     {
         if (!CONFIG_BOOLEAN(ptr_bar->options[GUI_BAR_OPTION_HIDDEN])
-            && (string_strcmp (ptr_bar->name, name) == 0))
+            && (strcmp (ptr_bar->name, name) == 0))
         {
             gui_bar_ask_refresh (ptr_bar);
         }

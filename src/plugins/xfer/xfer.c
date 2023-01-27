@@ -244,15 +244,18 @@ xfer_search_protocol (const char *protocol)
  */
 
 struct t_xfer *
-xfer_search (const char *plugin_name, const char *plugin_id, enum t_xfer_type type,
-             enum t_xfer_status status, int port)
+xfer_search (const char *plugin_name, const char *plugin_id,
+             enum t_xfer_type type, enum t_xfer_status status, int port)
 {
     struct t_xfer *ptr_xfer;
 
+    if (!plugin_name || !plugin_id)
+        return NULL;
+
     for (ptr_xfer = xfer_list; ptr_xfer; ptr_xfer = ptr_xfer->next_xfer)
     {
-        if ((weechat_strcmp (ptr_xfer->plugin_name, plugin_name) == 0)
-            && (weechat_strcmp (ptr_xfer->plugin_id, plugin_id) == 0)
+        if ((strcmp (ptr_xfer->plugin_name, plugin_name) == 0)
+            && (strcmp (ptr_xfer->plugin_id, plugin_id) == 0)
             && (ptr_xfer->type == type)
             && (ptr_xfer->status = status)
             && (ptr_xfer->port == port))
@@ -1759,8 +1762,7 @@ xfer_debug_dump_cb (const void *pointer, void *data,
     (void) signal;
     (void) type_data;
 
-    if (!signal_data
-        || (weechat_strcmp ((char *)signal_data, XFER_PLUGIN_NAME) == 0))
+    if (!signal_data || (strcmp ((char *)signal_data, XFER_PLUGIN_NAME) == 0))
     {
         weechat_log_printf ("");
         weechat_log_printf ("***** \"%s\" plugin dump *****",

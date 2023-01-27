@@ -180,7 +180,7 @@ irc_ignore_check_server (struct t_irc_ignore *ignore, const char *server)
     if (strcmp (ignore->server, "*") == 0)
         return 1;
 
-    return (weechat_strcmp (ignore->server, server) == 0) ? 1 : 0;
+    return (server && (strcmp (ignore->server, server) == 0)) ? 1 : 0;
 }
 
 /*

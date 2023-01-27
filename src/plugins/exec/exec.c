@@ -65,7 +65,7 @@ exec_search_color (const char *color)
 
     for (i = 0; i < EXEC_NUM_COLORS; i++)
     {
-        if (weechat_strcmp (exec_color_string[i], color) == 0)
+        if (strcmp (exec_color_string[i], color) == 0)
             return i;
     }
 
@@ -726,8 +726,7 @@ exec_debug_dump_cb (const void *pointer, void *data,
     (void) signal;
     (void) type_data;
 
-    if (!signal_data
-        || (weechat_strcmp ((char *)signal_data, EXEC_PLUGIN_NAME) == 0))
+    if (!signal_data || (strcmp ((char *)signal_data, EXEC_PLUGIN_NAME) == 0))
     {
         weechat_log_printf ("");
         weechat_log_printf ("***** \"%s\" plugin dump *****",

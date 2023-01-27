@@ -1262,7 +1262,7 @@ completion_list_add_plugins_commands_cb (const void *pointer, void *data,
             arg_index = argc - 1;
 
         ptr_plugin = NULL;
-        if (string_strcmp (argv[arg_index], PLUGIN_CORE) != 0)
+        if (strcmp (argv[arg_index], PLUGIN_CORE) != 0)
         {
             /*
              * plugin name is different from "core", then search it in

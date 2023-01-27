@@ -128,7 +128,7 @@ plugin_search (const char *name)
     for (ptr_plugin = weechat_plugins; ptr_plugin;
          ptr_plugin = ptr_plugin->next_plugin)
     {
-        if (string_strcmp (ptr_plugin->name, name) == 0)
+        if (strcmp (ptr_plugin->name, name) == 0)
             return ptr_plugin;
     }
 
@@ -166,14 +166,17 @@ plugin_check_extension_allowed (const char *filename)
     if (!config_plugin_extensions)
         return 1;
 
+    if (!filename)
+        return 0;
+
     length = strlen (filename);
     for (i = 0; i < config_num_plugin_extensions; i++)
     {
         length_ext = strlen (config_plugin_extensions[i]);
         if (length >= length_ext)
         {
-            if (string_strcmp (filename + length - length_ext,
-                               config_plugin_extensions[i]) == 0)
+            if (strcmp (filename + length - length_ext,
+                        config_plugin_extensions[i]) == 0)
             {
                 /* extension allowed */
                 return 1;
@@ -235,8 +238,8 @@ plugin_check_autoload (const char *filename)
             length_ext = strlen (config_plugin_extensions[i]);
             if (length >= length_ext)
             {
-                if (string_strcmp (base_name + length - length_ext,
-                                   config_plugin_extensions[i]) == 0)
+                if (strcmp (base_name + length - length_ext,
+                            config_plugin_extensions[i]) == 0)
                 {
                     plugin_name = string_strndup (base_name, length - length_ext);
                     break;

@@ -276,111 +276,111 @@ gui_color_get_custom (const char *color_name)
                                      ptr_color_name - color_name);
     }
 
-    if (string_strcmp (ptr_color_name, "reset") == 0)
+    if (strcmp (ptr_color_name, "reset") == 0)
     {
         snprintf (color[index_color], sizeof (color[index_color]),
                   "%c",
                   GUI_COLOR_RESET_CHAR);
     }
-    else if (string_strcmp (ptr_color_name, "resetcolor") == 0)
+    else if (strcmp (ptr_color_name, "resetcolor") == 0)
     {
         snprintf (color[index_color], sizeof (color[index_color]),
                   "%c%c",
                   GUI_COLOR_COLOR_CHAR,
                   GUI_COLOR_RESET_CHAR);
     }
-    else if (string_strcmp (ptr_color_name, "emphasis") == 0)
+    else if (strcmp (ptr_color_name, "emphasis") == 0)
     {
         snprintf (color[index_color], sizeof (color[index_color]),
                   "%c%c",
                   GUI_COLOR_COLOR_CHAR,
                   GUI_COLOR_EMPHASIS_CHAR);
     }
-    else if (string_strcmp (ptr_color_name, "blink") == 0)
+    else if (strcmp (ptr_color_name, "blink") == 0)
     {
         snprintf (color[index_color], sizeof (color[index_color]),
                   "%c%c",
                   GUI_COLOR_SET_ATTR_CHAR,
                   GUI_COLOR_ATTR_BLINK_CHAR);
     }
-    else if (string_strcmp (ptr_color_name, "-blink") == 0)
+    else if (strcmp (ptr_color_name, "-blink") == 0)
     {
         snprintf (color[index_color], sizeof (color[index_color]),
                   "%c%c",
                   GUI_COLOR_REMOVE_ATTR_CHAR,
                   GUI_COLOR_ATTR_BLINK_CHAR);
     }
-    else if (string_strcmp (ptr_color_name, "dim") == 0)
+    else if (strcmp (ptr_color_name, "dim") == 0)
     {
         snprintf (color[index_color], sizeof (color[index_color]),
                   "%c%c",
                   GUI_COLOR_SET_ATTR_CHAR,
                   GUI_COLOR_ATTR_DIM_CHAR);
     }
-    else if (string_strcmp (ptr_color_name, "-dim") == 0)
+    else if (strcmp (ptr_color_name, "-dim") == 0)
     {
         snprintf (color[index_color], sizeof (color[index_color]),
                   "%c%c",
                   GUI_COLOR_REMOVE_ATTR_CHAR,
                   GUI_COLOR_ATTR_DIM_CHAR);
     }
-    else if (string_strcmp (ptr_color_name, "bold") == 0)
+    else if (strcmp (ptr_color_name, "bold") == 0)
     {
         snprintf (color[index_color], sizeof (color[index_color]),
                   "%c%c",
                   GUI_COLOR_SET_ATTR_CHAR,
                   GUI_COLOR_ATTR_BOLD_CHAR);
     }
-    else if (string_strcmp (ptr_color_name, "-bold") == 0)
+    else if (strcmp (ptr_color_name, "-bold") == 0)
     {
         snprintf (color[index_color], sizeof (color[index_color]),
                   "%c%c",
                   GUI_COLOR_REMOVE_ATTR_CHAR,
                   GUI_COLOR_ATTR_BOLD_CHAR);
     }
-    else if (string_strcmp (ptr_color_name, "reverse") == 0)
+    else if (strcmp (ptr_color_name, "reverse") == 0)
     {
         snprintf (color[index_color], sizeof (color[index_color]),
                   "%c%c",
                   GUI_COLOR_SET_ATTR_CHAR,
                   GUI_COLOR_ATTR_REVERSE_CHAR);
     }
-    else if (string_strcmp (ptr_color_name, "-reverse") == 0)
+    else if (strcmp (ptr_color_name, "-reverse") == 0)
     {
         snprintf (color[index_color], sizeof (color[index_color]),
                   "%c%c",
                   GUI_COLOR_REMOVE_ATTR_CHAR,
                   GUI_COLOR_ATTR_REVERSE_CHAR);
     }
-    else if (string_strcmp (ptr_color_name, "italic") == 0)
+    else if (strcmp (ptr_color_name, "italic") == 0)
     {
         snprintf (color[index_color], sizeof (color[index_color]),
                   "%c%c",
                   GUI_COLOR_SET_ATTR_CHAR,
                   GUI_COLOR_ATTR_ITALIC_CHAR);
     }
-    else if (string_strcmp (ptr_color_name, "-italic") == 0)
+    else if (strcmp (ptr_color_name, "-italic") == 0)
     {
         snprintf (color[index_color], sizeof (color[index_color]),
                   "%c%c",
                   GUI_COLOR_REMOVE_ATTR_CHAR,
                   GUI_COLOR_ATTR_ITALIC_CHAR);
     }
-    else if (string_strcmp (ptr_color_name, "underline") == 0)
+    else if (strcmp (ptr_color_name, "underline") == 0)
     {
         snprintf (color[index_color], sizeof (color[index_color]),
                   "%c%c",
                   GUI_COLOR_SET_ATTR_CHAR,
                   GUI_COLOR_ATTR_UNDERLINE_CHAR);
     }
-    else if (string_strcmp (ptr_color_name, "-underline") == 0)
+    else if (strcmp (ptr_color_name, "-underline") == 0)
     {
         snprintf (color[index_color], sizeof (color[index_color]),
                   "%c%c",
                   GUI_COLOR_REMOVE_ATTR_CHAR,
                   GUI_COLOR_ATTR_UNDERLINE_CHAR);
     }
-    else if (string_strcmp (ptr_color_name, "bar_fg") == 0)
+    else if (strcmp (ptr_color_name, "bar_fg") == 0)
     {
         snprintf (color[index_color], sizeof (color[index_color]),
                   "%c%c%c",
@@ -388,7 +388,7 @@ gui_color_get_custom (const char *color_name)
                   GUI_COLOR_BAR_CHAR,
                   GUI_COLOR_BAR_FG_CHAR);
     }
-    else if (string_strcmp (ptr_color_name, "bar_delim") == 0)
+    else if (strcmp (ptr_color_name, "bar_delim") == 0)
     {
         snprintf (color[index_color], sizeof (color[index_color]),
                   "%c%c%c",
@@ -396,7 +396,7 @@ gui_color_get_custom (const char *color_name)
                   GUI_COLOR_BAR_CHAR,
                   GUI_COLOR_BAR_DELIM_CHAR);
     }
-    else if (string_strcmp (ptr_color_name, "bar_bg") == 0)
+    else if (strcmp (ptr_color_name, "bar_bg") == 0)
     {
         snprintf (color[index_color], sizeof (color[index_color]),
                   "%c%c%c",

@@ -794,7 +794,7 @@ weechat_js_infolist_cb (const void *pointer, void *data,
     if (!infolist_name || !infolist_name[0])
         return NULL;
 
-    if (weechat_strcmp (infolist_name, "javascript_script") == 0)
+    if (strcmp (infolist_name, "javascript_script") == 0)
     {
         return plugin_script_infolist_list_scripts (weechat_js_plugin,
                                                     js_scripts, obj_pointer,
@@ -819,8 +819,7 @@ weechat_js_signal_debug_dump_cb (const void *pointer, void *data,
     (void) signal;
     (void) type_data;
 
-    if (!signal_data
-        || (weechat_strcmp ((char *)signal_data, JS_PLUGIN_NAME) == 0))
+    if (!signal_data || (strcmp ((char *)signal_data, JS_PLUGIN_NAME) == 0))
     {
         plugin_script_print_log (weechat_js_plugin, js_scripts);
     }

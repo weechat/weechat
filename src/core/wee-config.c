@@ -2114,7 +2114,7 @@ config_weechat_layout_read_cb (const void *pointer, void *data,
         gui_layout_add (ptr_layout);
     }
 
-    if (string_strcmp (ptr_option_name, "buffer") == 0)
+    if (strcmp (ptr_option_name, "buffer") == 0)
     {
         argv = string_split (value, ";", NULL,
                              WEECHAT_STRING_SPLIT_STRIP_LEFT
@@ -2133,7 +2133,7 @@ config_weechat_layout_read_cb (const void *pointer, void *data,
             string_free_split (argv);
         }
     }
-    else if (string_strcmp (ptr_option_name, "window") == 0)
+    else if (strcmp (ptr_option_name, "window") == 0)
     {
         argv = string_split (value, ";", NULL,
                              WEECHAT_STRING_SPLIT_STRIP_LEFT
@@ -2171,7 +2171,7 @@ config_weechat_layout_read_cb (const void *pointer, void *data,
             string_free_split (argv);
         }
     }
-    else if (string_strcmp (ptr_option_name, "current") == 0)
+    else if (strcmp (ptr_option_name, "current") == 0)
     {
         if (config_file_string_to_boolean (value))
             gui_layout_current = ptr_layout;

@@ -264,7 +264,7 @@ gui_layout_buffer_get_number (struct t_gui_layout *layout,
     *layout_number = 0;
     *layout_number_merge_order = 0;
 
-    if (!layout)
+    if (!layout || !plugin_name || !buffer_name)
         return;
 
     old_number = -1;
@@ -281,8 +281,8 @@ gui_layout_buffer_get_number (struct t_gui_layout *layout,
         else
             merge_order++;
 
-        if ((string_strcmp (ptr_layout_buffer->plugin_name, plugin_name) == 0)
-            && (string_strcmp (ptr_layout_buffer->buffer_name, buffer_name) == 0))
+        if ((strcmp (ptr_layout_buffer->plugin_name, plugin_name) == 0)
+            && (strcmp (ptr_layout_buffer->buffer_name, buffer_name) == 0))
         {
             *layout_number = ptr_layout_buffer->number;
             *layout_number_merge_order = merge_order;

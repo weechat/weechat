@@ -123,8 +123,7 @@ hook_infolist_get (struct t_weechat_plugin *plugin, const char *infolist_name,
 
         if (!ptr_hook->deleted
             && !ptr_hook->running
-            && (string_strcmp (HOOK_INFOLIST(ptr_hook, infolist_name),
-                               infolist_name) == 0))
+            && (strcmp (HOOK_INFOLIST(ptr_hook, infolist_name), infolist_name) == 0))
         {
             ptr_hook->running = 1;
             value = (HOOK_INFOLIST(ptr_hook, callback))

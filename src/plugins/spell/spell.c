@@ -351,7 +351,7 @@ spell_command_authorized (const char *command)
     for (i = 0; i < spell_count_commands_to_check; i++)
     {
         if ((spell_length_commands_to_check[i] == length_command)
-            && (weechat_strcmp (command, spell_commands_to_check[i]) == 0))
+            && (strcmp (command, spell_commands_to_check[i]) == 0))
         {
             /* command is authorized */
             return 1;

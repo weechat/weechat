@@ -1336,7 +1336,7 @@ weechat_python_infolist_cb (const void *pointer, void *data,
     if (!infolist_name || !infolist_name[0])
         return NULL;
 
-    if (weechat_strcmp (infolist_name, "python_script") == 0)
+    if (strcmp (infolist_name, "python_script") == 0)
     {
         return plugin_script_infolist_list_scripts (weechat_python_plugin,
                                                     python_scripts,
@@ -1362,8 +1362,7 @@ weechat_python_signal_debug_dump_cb (const void *pointer, void *data,
     (void) signal;
     (void) type_data;
 
-    if (!signal_data
-        || (weechat_strcmp ((char *)signal_data, PYTHON_PLUGIN_NAME) == 0))
+    if (!signal_data || (strcmp ((char *)signal_data, PYTHON_PLUGIN_NAME) == 0))
     {
         plugin_script_print_log (weechat_python_plugin, python_scripts);
     }

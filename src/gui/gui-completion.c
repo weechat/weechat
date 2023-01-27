@@ -335,7 +335,7 @@ gui_completion_search_command (struct t_weechat_plugin *plugin,
             && HOOK_COMMAND(ptr_hook, command)
             && HOOK_COMMAND(ptr_hook, command)[0])
         {
-            if (string_strcmp (HOOK_COMMAND(ptr_hook, command), command) == 0)
+            if (strcmp (HOOK_COMMAND(ptr_hook, command), command) == 0)
             {
                 if (ptr_hook->plugin == plugin)
                     return ptr_hook;
@@ -1498,15 +1498,15 @@ const char *
 gui_completion_get_string (struct t_gui_completion *completion,
                            const char *property)
 {
-    if (completion)
-    {
-        if (string_strcmp (property, "base_command") == 0)
-            return completion->base_command;
-        else if (string_strcmp (property, "base_word") == 0)
-            return completion->base_word;
-        else if (string_strcmp (property, "args") == 0)
-            return completion->args;
-    }
+    if (!completion || !property)
+        return NULL;
+
+    if (strcmp (property, "base_command") == 0)
+        return completion->base_command;
+    else if (strcmp (property, "base_word") == 0)
+        return completion->base_word;
+    else if (strcmp (property, "args") == 0)
+        return completion->args;
 
     return NULL;
 }

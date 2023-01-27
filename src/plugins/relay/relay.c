@@ -173,8 +173,7 @@ relay_debug_dump_cb (const void *pointer, void *data,
     (void) signal;
     (void) type_data;
 
-    if (!signal_data
-        || (weechat_strcmp ((char *)signal_data, RELAY_PLUGIN_NAME) == 0))
+    if (!signal_data || (strcmp ((char *)signal_data, RELAY_PLUGIN_NAME) == 0))
     {
         weechat_log_printf ("");
         weechat_log_printf ("***** \"%s\" plugin dump *****",
