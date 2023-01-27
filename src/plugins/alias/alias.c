@@ -507,7 +507,7 @@ alias_find_pos (const char *name)
 
     for (ptr_alias = alias_list; ptr_alias; ptr_alias = ptr_alias->next_alias)
     {
-        if (strcmp (name, ptr_alias->name) < 0)
+        if (weechat_strcmp (name, ptr_alias->name) < 0)
             return ptr_alias;
     }
 

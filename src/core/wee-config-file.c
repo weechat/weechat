@@ -130,7 +130,7 @@ config_file_find_pos (const char *name)
     for (ptr_config = config_files; ptr_config;
          ptr_config = ptr_config->next_config)
     {
-        if (strcmp (name, ptr_config->name) < 0)
+        if (string_strcmp (name, ptr_config->name) < 0)
             return ptr_config;
     }
 
@@ -325,7 +325,7 @@ config_file_section_find_pos (struct t_config_file *config_file,
     for (ptr_section = config_file->sections; ptr_section;
          ptr_section = ptr_section->next_section)
     {
-        if (strcmp (name, ptr_section->name) < 0)
+        if (string_strcmp (name, ptr_section->name) < 0)
             return ptr_section;
     }
 
@@ -556,7 +556,7 @@ config_file_option_find_pos (struct t_config_section *section, const char *name)
     for (ptr_option = section->last_option; ptr_option;
          ptr_option = ptr_option->prev_option)
     {
-        if (strcmp (name, ptr_option->name) >= 0)
+        if (string_strcmp (name, ptr_option->name) >= 0)
             return ptr_option->next_option;
     }
 

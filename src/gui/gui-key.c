@@ -390,7 +390,7 @@ gui_key_find_pos (struct t_gui_key *keys, struct t_gui_key *key)
     {
         if ((key->score < ptr_key->score)
             || ((key->score == ptr_key->score)
-                && (strcmp (key->key, ptr_key->key) < 0)))
+                && (string_strcmp (key->key, ptr_key->key) < 0)))
         {
             return ptr_key;
         }
