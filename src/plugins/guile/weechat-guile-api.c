@@ -176,8 +176,7 @@ weechat_guile_api_register (SCM name, SCM author, SCM version, SCM license,
         || !scm_is_string (charset))
         API_WRONG_ARGS(API_RETURN_ERROR);
 
-    if (plugin_script_search (weechat_guile_plugin, guile_scripts,
-                              API_SCM_TO_STRING(name)))
+    if (plugin_script_search (guile_scripts, API_SCM_TO_STRING(name)))
     {
         /* another script already exists with same name */
         weechat_printf (NULL,

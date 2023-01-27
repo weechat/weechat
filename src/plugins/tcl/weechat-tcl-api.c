@@ -254,7 +254,7 @@ API_FUNC(register)
     shutdown_func = Tcl_GetStringFromObj (objv[6], &i);
     charset = Tcl_GetStringFromObj (objv[7], &i);
 
-    if (plugin_script_search (weechat_tcl_plugin, tcl_scripts, name))
+    if (plugin_script_search (tcl_scripts, name))
     {
         /* another script already exists with same name */
         weechat_printf (NULL,

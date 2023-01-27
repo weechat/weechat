@@ -154,7 +154,7 @@ API_FUNC(register)
     shutdown_func = lua_tostring (L, -2);
     charset = lua_tostring (L, -1);
 
-    if (plugin_script_search (weechat_lua_plugin, lua_scripts, name))
+    if (plugin_script_search (lua_scripts, name))
     {
         /* another script already exists with same name */
         weechat_printf (NULL,

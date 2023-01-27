@@ -66,6 +66,9 @@ relay_protocol_search (const char *name)
 {
     int i;
 
+    if (!name)
+        return -1;
+
     for (i = 0; i < RELAY_NUM_PROTOCOLS; i++)
     {
         if (strcmp (relay_protocol_string[i], name) == 0)

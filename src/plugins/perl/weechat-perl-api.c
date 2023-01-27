@@ -133,7 +133,7 @@ API_FUNC(register)
     shutdown_func = SvPV_nolen (ST (5));
     charset = SvPV_nolen (ST (6));
 
-    if (plugin_script_search (weechat_perl_plugin, perl_scripts, name))
+    if (plugin_script_search (perl_scripts, name))
     {
         /* another script already exists with same name */
         weechat_printf (NULL,

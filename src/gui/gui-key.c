@@ -710,6 +710,9 @@ gui_key_search (struct t_gui_key *keys, const char *key)
 {
     struct t_gui_key *ptr_key;
 
+    if (!key)
+        return NULL;
+
     for (ptr_key = keys; ptr_key; ptr_key = ptr_key->next_key)
     {
         if (strcmp (ptr_key->key, key) == 0)
@@ -755,6 +758,9 @@ gui_key_search_part (struct t_gui_buffer *buffer, int context,
                      const char *key)
 {
     struct t_gui_key *ptr_key;
+
+    if (!key)
+        return NULL;
 
     for (ptr_key = (buffer) ? buffer->keys : gui_keys[context]; ptr_key;
          ptr_key = ptr_key->next_key)

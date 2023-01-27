@@ -195,6 +195,9 @@ irc_channel_search_buffer (struct t_irc_server *server, int channel_type,
     struct t_gui_buffer *ptr_buffer;
     const char *ptr_type, *ptr_server_name, *ptr_channel_name;
 
+    if (!channel_name)
+        return NULL;
+
     hdata_buffer = weechat_hdata_get ("buffer");
     ptr_buffer = weechat_hdata_get_list (hdata_buffer, "gui_buffers");
 
@@ -988,6 +991,9 @@ irc_channel_nick_speaking_time_search (struct t_irc_server *server,
 {
     struct t_irc_channel_speaking *ptr_nick;
     time_t time_limit;
+
+    if (!server || !channel || !nick_name)
+        return NULL;
 
     time_limit = time (NULL) -
         (weechat_config_integer (irc_config_look_smart_filter_delay) * 60);

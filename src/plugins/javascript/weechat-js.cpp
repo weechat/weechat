@@ -486,7 +486,7 @@ weechat_js_unload_name (const char *name)
 {
     struct t_plugin_script *ptr_script;
 
-    ptr_script = plugin_script_search (weechat_js_plugin, js_scripts, name);
+    ptr_script = plugin_script_search (js_scripts, name);
     if (ptr_script)
     {
         weechat_js_unload (ptr_script);
@@ -528,7 +528,7 @@ weechat_js_reload_name (const char *name)
     struct t_plugin_script *ptr_script;
     char *filename;
 
-    ptr_script = plugin_script_search (weechat_js_plugin, js_scripts, name);
+    ptr_script = plugin_script_search (js_scripts, name);
     if (ptr_script)
     {
         filename = strdup (ptr_script->filename);

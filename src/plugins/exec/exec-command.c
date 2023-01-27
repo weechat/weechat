@@ -148,6 +148,9 @@ exec_command_search_running_id (const char *id)
 {
     struct t_exec_cmd *ptr_exec_cmd;
 
+    if (!id)
+        return NULL;
+
     ptr_exec_cmd = exec_search_by_id (id);
     if (!ptr_exec_cmd)
     {

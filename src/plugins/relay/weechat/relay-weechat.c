@@ -56,6 +56,9 @@ relay_weechat_compression_search (const char *compression)
 {
     int i;
 
+    if (!compression)
+        return -1;
+
     for (i = 0; i < RELAY_WEECHAT_NUM_COMPRESSIONS; i++)
     {
         if (weechat_strcasecmp (relay_weechat_compression_string[i], compression) == 0)

@@ -196,7 +196,7 @@ gui_nicklist_search_group_internal (struct t_gui_buffer *buffer,
     struct t_gui_nick_group *ptr_group;
     const char *ptr_name;
 
-    if (!buffer)
+    if (!buffer || !name)
         return NULL;
 
     if (!from_group)
@@ -241,6 +241,9 @@ gui_nicklist_search_group (struct t_gui_buffer *buffer,
                            const char *name)
 {
     const char *ptr_name;
+
+    if (!buffer || !name)
+        return NULL;
 
     ptr_name = gui_nicklist_get_group_start (name);
 
@@ -386,6 +389,9 @@ gui_nicklist_search_nick (struct t_gui_buffer *buffer,
     struct t_gui_nick_group *ptr_group;
 
     if (!buffer && !from_group)
+        return NULL;
+
+    if (!name)
         return NULL;
 
     if (!from_group && !buffer->nicklist_root)

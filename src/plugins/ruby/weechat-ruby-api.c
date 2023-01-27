@@ -125,7 +125,7 @@ weechat_ruby_api_register (VALUE class, VALUE name, VALUE author,
     c_shutdown_func = StringValuePtr (shutdown_func);
     c_charset = StringValuePtr (charset);
 
-    if (plugin_script_search (weechat_ruby_plugin, ruby_scripts, c_name))
+    if (plugin_script_search (ruby_scripts, c_name))
     {
         /* another script already exists with same name */
         weechat_printf (NULL,

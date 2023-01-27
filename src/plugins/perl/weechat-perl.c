@@ -750,7 +750,7 @@ weechat_perl_unload_name (const char *name)
 {
     struct t_plugin_script *ptr_script;
 
-    ptr_script = plugin_script_search (weechat_perl_plugin, perl_scripts, name);
+    ptr_script = plugin_script_search (perl_scripts, name);
     if (ptr_script)
     {
         weechat_perl_unload (ptr_script);
@@ -792,7 +792,7 @@ weechat_perl_reload_name (const char *name)
     struct t_plugin_script *ptr_script;
     char *filename;
 
-    ptr_script = plugin_script_search (weechat_perl_plugin, perl_scripts, name);
+    ptr_script = plugin_script_search (perl_scripts, name);
     if (ptr_script)
     {
         filename = strdup (ptr_script->filename);

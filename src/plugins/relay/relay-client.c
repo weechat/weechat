@@ -150,6 +150,9 @@ relay_client_status_search (const char *name)
 {
     int i;
 
+    if (!name)
+        return -1;
+
     for (i = 0; i < RELAY_NUM_STATUS; i++)
     {
         if (strcmp (relay_client_status_name[i], name) == 0)

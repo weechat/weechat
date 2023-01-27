@@ -123,6 +123,9 @@ gui_color_search (const char *color_name)
 {
     int i;
 
+    if (!color_name)
+        return -1;
+
     for (i = 0; gui_weechat_colors[i].string; i++)
     {
         if (string_strcmp (gui_weechat_colors[i].string, color_name) == 0)

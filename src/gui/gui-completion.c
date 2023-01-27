@@ -319,6 +319,9 @@ gui_completion_search_command (struct t_weechat_plugin *plugin,
     struct t_hook *ptr_hook, *hook_for_other_plugin, *hook_incomplete_command;
     int length_command, allow_incomplete_commands, count_incomplete_commands;
 
+    if (!command)
+        return NULL;
+
     hook_for_other_plugin = NULL;
     hook_incomplete_command = NULL;
     length_command = utf8_strlen (command);

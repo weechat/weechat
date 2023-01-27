@@ -668,7 +668,7 @@ weechat_guile_unload_name (const char *name)
 {
     struct t_plugin_script *ptr_script;
 
-    ptr_script = plugin_script_search (weechat_guile_plugin, guile_scripts, name);
+    ptr_script = plugin_script_search (guile_scripts, name);
     if (ptr_script)
     {
         weechat_guile_unload (ptr_script);
@@ -710,7 +710,7 @@ weechat_guile_reload_name (const char *name)
     struct t_plugin_script *ptr_script;
     char *filename;
 
-    ptr_script = plugin_script_search (weechat_guile_plugin, guile_scripts, name);
+    ptr_script = plugin_script_search (guile_scripts, name);
     if (ptr_script)
     {
         filename = strdup (ptr_script->filename);

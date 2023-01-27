@@ -2794,11 +2794,16 @@ gui_buffer_search_by_number_or_name (const char *string)
     long number;
     char *error;
 
+    if (!string)
+        return NULL;
+
     ptr_buffer = NULL;
 
     number = strtol (string, &error, 10);
     if (error && !error[0])
+    {
         ptr_buffer = gui_buffer_search_by_number (number);
+    }
     else
     {
         ptr_buffer = gui_buffer_search_by_full_name (string);

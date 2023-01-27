@@ -128,7 +128,7 @@ API_FUNC(register)
     php_current_script = NULL;
     php_registered_script = NULL;
 
-    if (plugin_script_search (weechat_php_plugin, php_scripts, ZSTR_VAL(name)))
+    if (plugin_script_search (php_scripts, ZSTR_VAL(name)))
     {
         /* another script already exists with same name */
         weechat_printf (NULL,

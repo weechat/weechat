@@ -115,7 +115,7 @@ API_FUNC(register)
                            &license, &description, &shutdown_func, &charset))
         API_WRONG_ARGS(API_RETURN_ERROR);
 
-    if (plugin_script_search (weechat_python_plugin, python_scripts, name))
+    if (plugin_script_search (python_scripts, name))
     {
         /* another script already exists with same name */
         weechat_printf (NULL,

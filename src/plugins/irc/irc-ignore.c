@@ -73,6 +73,9 @@ irc_ignore_search (const char *mask, const char *server, const char *channel)
     struct t_irc_ignore *ptr_ignore;
     char any[2] = "*";
 
+    if (!mask)
+        return NULL;
+
     if (!server)
         server = any;
     if (!channel)

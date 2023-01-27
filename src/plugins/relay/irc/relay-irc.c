@@ -109,6 +109,9 @@ relay_irc_search_backlog_commands_tags (const char *tag)
 {
     int i;
 
+    if (!tag)
+        return -1;
+
     for (i = 0; i < RELAY_IRC_NUM_CMD; i++)
     {
         if (strcmp (relay_irc_backlog_commands_tags[i], tag) == 0)
@@ -130,6 +133,9 @@ int
 relay_irc_search_server_capability (const char *capability)
 {
     int i;
+
+    if (!capability)
+        return -1;
 
     for (i = 0; i < RELAY_IRC_NUM_CAPAB; i++)
     {

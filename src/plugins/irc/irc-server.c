@@ -238,6 +238,9 @@ irc_server_search_casemapping (const char *casemapping)
 {
     int i;
 
+    if (!casemapping)
+        return -1;
+
     for (i = 0; i < IRC_SERVER_NUM_CASEMAPPING; i++)
     {
         if (weechat_strcasecmp (irc_server_casemapping_string[i], casemapping) == 0)
@@ -259,6 +262,9 @@ int
 irc_server_search_utf8mapping (const char *utf8mapping)
 {
     int i;
+
+    if (!utf8mapping)
+        return -1;
 
     for (i = 0; i < IRC_SERVER_NUM_UTF8MAPPING; i++)
     {

@@ -122,6 +122,9 @@ script_repo_search_by_name (const char *name)
 {
     struct t_script_repo *ptr_script;
 
+    if (!name)
+        return NULL;
+
     for (ptr_script = scripts_repo; ptr_script;
          ptr_script = ptr_script->next_script)
     {
@@ -143,6 +146,9 @@ struct t_script_repo *
 script_repo_search_by_name_ext (const char *name_with_extension)
 {
     struct t_script_repo *ptr_script;
+
+    if (!name_with_extension)
+        return NULL;
 
     for (ptr_script = scripts_repo; ptr_script;
          ptr_script = ptr_script->next_script)

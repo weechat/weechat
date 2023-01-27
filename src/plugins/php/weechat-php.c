@@ -805,7 +805,7 @@ weechat_php_unload_name (const char *name)
 {
     struct t_plugin_script *ptr_script;
 
-    ptr_script = plugin_script_search (weechat_php_plugin, php_scripts, name);
+    ptr_script = plugin_script_search (php_scripts, name);
     if (ptr_script)
     {
         weechat_php_unload (ptr_script);
@@ -847,7 +847,7 @@ weechat_php_reload_name (const char *name)
     struct t_plugin_script *ptr_script;
     char *filename;
 
-    ptr_script = plugin_script_search (weechat_php_plugin, php_scripts, name);
+    ptr_script = plugin_script_search (php_scripts, name);
     if (ptr_script)
     {
         filename = strdup (ptr_script->filename);

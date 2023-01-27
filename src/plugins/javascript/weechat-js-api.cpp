@@ -149,7 +149,7 @@ API_FUNC(register)
     v8::String::Utf8Value shutdown_func(args[5]);
     v8::String::Utf8Value charset(args[6]);
 
-    if (plugin_script_search (weechat_js_plugin, js_scripts, *name))
+    if (plugin_script_search (js_scripts, *name))
     {
         /* another script already exists with same name */
         weechat_printf (NULL,

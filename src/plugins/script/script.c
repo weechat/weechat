@@ -67,6 +67,9 @@ script_language_search (const char *language)
 {
     int i;
 
+    if (!language)
+        return -1;
+
     for (i = 0; i < SCRIPT_NUM_LANGUAGES; i++)
     {
         if (strcmp (script_language[i], language) == 0)
@@ -87,6 +90,9 @@ int
 script_language_search_by_extension (const char *extension)
 {
     int i;
+
+    if (!extension)
+        return -1;
 
     for (i = 0; i < SCRIPT_NUM_LANGUAGES; i++)
     {

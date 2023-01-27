@@ -133,8 +133,7 @@ extern void plugin_script_get_function_and_data (void *callback_data,
 extern void plugin_script_auto_load (struct t_weechat_plugin *weechat_plugin,
                                      void (*callback)(void *data,
                                                       const char *filename));
-extern struct t_plugin_script *plugin_script_search (struct t_weechat_plugin *weechat_plugin,
-                                                     struct t_plugin_script *scripts,
+extern struct t_plugin_script *plugin_script_search (struct t_plugin_script *scripts,
                                                      const char *name);
 extern char *plugin_script_search_path (struct t_weechat_plugin *weechat_plugin,
                                         const char *filename);

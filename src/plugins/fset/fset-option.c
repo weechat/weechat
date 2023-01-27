@@ -102,6 +102,9 @@ fset_option_search_by_name (const char *name, int *line)
     if (line)
         *line = -1;
 
+    if (!name)
+        return NULL;
+
     num_options = weechat_arraylist_size (fset_options);
     for (i = 0; i < num_options; i++)
     {

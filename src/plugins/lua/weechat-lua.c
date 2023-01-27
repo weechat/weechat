@@ -767,7 +767,7 @@ weechat_lua_unload_name (const char *name)
 {
     struct t_plugin_script *ptr_script;
 
-    ptr_script = plugin_script_search (weechat_lua_plugin, lua_scripts, name);
+    ptr_script = plugin_script_search (lua_scripts, name);
     if (ptr_script)
     {
         weechat_lua_unload (ptr_script);
@@ -796,7 +796,7 @@ weechat_lua_reload_name (const char *name)
     struct t_plugin_script *ptr_script;
     char *filename;
 
-    ptr_script = plugin_script_search (weechat_lua_plugin, lua_scripts, name);
+    ptr_script = plugin_script_search (lua_scripts, name);
     if (ptr_script)
     {
         filename = strdup (ptr_script->filename);

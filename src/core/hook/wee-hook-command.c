@@ -61,6 +61,9 @@ hook_command_search (struct t_weechat_plugin *plugin, const char *command)
 {
     struct t_hook *ptr_hook;
 
+    if (!command)
+        return NULL;
+
     for (ptr_hook = weechat_hooks[HOOK_TYPE_COMMAND]; ptr_hook;
          ptr_hook = ptr_hook->next_hook)
     {

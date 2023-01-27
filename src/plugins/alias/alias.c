@@ -84,6 +84,9 @@ alias_search (const char *alias_name)
 {
     struct t_alias *ptr_alias;
 
+    if (!alias_name)
+        return NULL;
+
     for (ptr_alias = alias_list; ptr_alias;
          ptr_alias = ptr_alias->next_alias)
     {

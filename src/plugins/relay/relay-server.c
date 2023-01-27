@@ -170,6 +170,9 @@ relay_server_search (const char *protocol_and_args)
 {
     struct t_relay_server *ptr_server;
 
+    if (!protocol_and_args)
+        return NULL;
+
     for (ptr_server = relay_servers; ptr_server;
          ptr_server = ptr_server->next_server)
     {
@@ -212,6 +215,9 @@ struct t_relay_server *
 relay_server_search_path (const char *path)
 {
     struct t_relay_server *ptr_server;
+
+    if (!path)
+        return NULL;
 
     for (ptr_server = relay_servers; ptr_server;
          ptr_server = ptr_server->next_server)

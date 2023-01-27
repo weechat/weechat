@@ -55,6 +55,9 @@ gui_layout_search (const char *name)
 {
     struct t_gui_layout *ptr_layout;
 
+    if (!name)
+        return NULL;
+
     for (ptr_layout = gui_layouts; ptr_layout;
          ptr_layout = ptr_layout->next_layout)
     {

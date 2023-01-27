@@ -481,14 +481,13 @@ plugin_script_auto_load (struct t_weechat_plugin *weechat_plugin,
 }
 
 /*
- * Searches for a script by registered name (example: "iset").
+ * Searches for a script by registered name.
  *
  * Returns pointer to script, NULL if not found.
  */
 
 struct t_plugin_script *
-plugin_script_search (struct t_weechat_plugin *weechat_plugin,
-                      struct t_plugin_script *scripts, const char *name)
+plugin_script_search (struct t_plugin_script *scripts, const char *name)
 {
     struct t_plugin_script *ptr_script;
 
@@ -519,6 +518,9 @@ plugin_script_search_by_full_name (struct t_plugin_script *scripts,
     char *base_name;
     struct t_plugin_script *ptr_script;
 
+    if (!full_name)
+        return NULL;
+
     for (ptr_script = scripts; ptr_script;
          ptr_script = ptr_script->next_script)
     {
@@ -544,6 +546,9 @@ plugin_script_search_path (struct t_weechat_plugin *weechat_plugin,
     char *final_name, *weechat_data_dir, *dir_system;
     int length;
     struct stat st;
+
+    if (!filename)
+        return NULL;
 
     if (filename[0] == '~')
         return weechat_string_expand_home (filename);
@@ -820,8 +825,7 @@ plugin_script_set_buffer_callbacks (struct t_weechat_plugin *weechat_plugin,
                 script_name = weechat_buffer_get_string (ptr_buffer, "localvar_script_name");
                 if (script_name && script_name[0])
                 {
-                    ptr_script = plugin_script_search (weechat_plugin, scripts,
-                                                       script_name);
+                    ptr_script = plugin_script_search (scripts, script_name);
                     if (ptr_script && (ptr_script == script))
                     {
                         str_script_input_cb = weechat_buffer_get_string (

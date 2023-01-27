@@ -803,7 +803,7 @@ weechat_ruby_unload_name (const char *name)
 {
     struct t_plugin_script *ptr_script;
 
-    ptr_script = plugin_script_search (weechat_ruby_plugin, ruby_scripts, name);
+    ptr_script = plugin_script_search (ruby_scripts, name);
     if (ptr_script)
     {
         weechat_ruby_unload (ptr_script);
@@ -832,7 +832,7 @@ weechat_ruby_reload_name (const char *name)
     struct t_plugin_script *ptr_script;
     char *filename;
 
-    ptr_script = plugin_script_search (weechat_ruby_plugin, ruby_scripts, name);
+    ptr_script = plugin_script_search (ruby_scripts, name);
     if (ptr_script)
     {
         filename = strdup (ptr_script->filename);

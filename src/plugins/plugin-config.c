@@ -55,6 +55,9 @@ plugin_config_search (const char *plugin_name, const char *option_name)
     char *option_full_name;
     struct t_config_option *ptr_option;
 
+    if (!plugin_name || !option_name)
+        return NULL;
+
     ptr_option = NULL;
 
     length = strlen (plugin_name) + 1 + strlen (option_name) + 1;

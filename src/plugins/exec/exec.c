@@ -86,6 +86,9 @@ exec_search_by_id (const char *id)
     char *error;
     long number;
 
+    if (!id)
+        return NULL;
+
     error = NULL;
     number = strtol (id, &error, 10);
     if (!error || error[0])
