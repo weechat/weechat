@@ -200,9 +200,12 @@ xfer_search_type (const char *type)
 {
     int i;
 
+    if (!type)
+        return -1;
+
     for (i = 0; i < XFER_NUM_TYPES; i++)
     {
-        if (weechat_strcasecmp (xfer_type_string[i], type) == 0)
+        if (strcmp (xfer_type_string[i], type) == 0)
             return i;
     }
 
@@ -221,9 +224,12 @@ xfer_search_protocol (const char *protocol)
 {
     int i;
 
+    if (!protocol)
+        return -1;
+
     for (i = 0; i < XFER_NUM_PROTOCOLS; i++)
     {
-        if (weechat_strcasecmp (xfer_protocol_string[i], protocol) == 0)
+        if (strcmp (xfer_protocol_string[i], protocol) == 0)
             return i;
     }
 
