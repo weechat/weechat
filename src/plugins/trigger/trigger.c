@@ -102,7 +102,7 @@ trigger_search_option (const char *option_name)
 
     for (i = 0; i < TRIGGER_NUM_OPTIONS; i++)
     {
-        if (weechat_strcasecmp (trigger_option_string[i], option_name) == 0)
+        if (strcmp (trigger_option_string[i], option_name) == 0)
             return i;
     }
 
@@ -121,9 +121,12 @@ trigger_search_hook_type (const char *type)
 {
     int i;
 
+    if (!type)
+        return -1;
+
     for (i = 0; i < TRIGGER_NUM_HOOK_TYPES; i++)
     {
-        if (weechat_strcasecmp (trigger_hook_type_string[i], type) == 0)
+        if (strcmp (trigger_hook_type_string[i], type) == 0)
             return i;
     }
 
@@ -163,9 +166,12 @@ trigger_search_return_code (const char *return_code)
 {
     int i;
 
+    if (!return_code)
+        return -1;
+
     for (i = 0; i < TRIGGER_NUM_RETURN_CODES; i++)
     {
-        if (weechat_strcasecmp (trigger_return_code_string[i], return_code) == 0)
+        if (strcmp (trigger_return_code_string[i], return_code) == 0)
             return i;
     }
 
@@ -184,9 +190,12 @@ trigger_search_post_action (const char *post_action)
 {
     int i;
 
+    if (!post_action)
+        return -1;
+
     for (i = 0; i < TRIGGER_NUM_POST_ACTIONS; i++)
     {
-        if (weechat_strcasecmp (trigger_post_action_string[i], post_action) == 0)
+        if (strcmp (trigger_post_action_string[i], post_action) == 0)
             return i;
     }
 
@@ -211,7 +220,7 @@ trigger_search (const char *name)
     for (ptr_trigger = triggers; ptr_trigger;
          ptr_trigger = ptr_trigger->next_trigger)
     {
-        if (weechat_strcasecmp (ptr_trigger->name, name) == 0)
+        if (strcmp (ptr_trigger->name, name) == 0)
             return ptr_trigger;
     }
 
@@ -250,7 +259,7 @@ trigger_search_with_option (struct t_config_option *option)
     for (ptr_trigger = triggers; ptr_trigger;
          ptr_trigger = ptr_trigger->next_trigger)
     {
-        if (weechat_strncasecmp (ptr_trigger->name, ptr_name, num_chars) == 0)
+        if (weechat_strncmp (ptr_trigger->name, ptr_name, num_chars) == 0)
             break;
     }
 
@@ -954,7 +963,7 @@ trigger_find_pos (struct t_trigger *trigger, struct t_trigger *list_triggers)
     for (ptr_trigger = list_triggers; ptr_trigger;
          ptr_trigger = ptr_trigger->next_trigger)
     {
-        if (weechat_strcasecmp (trigger->name, ptr_trigger->name) < 0)
+        if (weechat_strcmp (trigger->name, ptr_trigger->name) < 0)
             return ptr_trigger;
     }
 

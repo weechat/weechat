@@ -1095,11 +1095,8 @@ trigger_command_trigger (const void *pointer, void *data,
         {
             for (j = 0; trigger_config_default_list[j][0]; j++)
             {
-                if (weechat_strcasecmp (trigger_config_default_list[j][0],
-                                        argv[i]) == 0)
-                {
+                if (strcmp (trigger_config_default_list[j][0], argv[i]) == 0)
                     break;
-                }
             }
             if (trigger_config_default_list[j][0])
             {
