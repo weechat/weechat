@@ -884,15 +884,24 @@ int
 gui_key_unbind (struct t_gui_buffer *buffer, int context, const char *key)
 {
     struct t_gui_key *ptr_key;
-    char *internal_code;
+    char *internal_code, *expanded_name;
+    int rc;
+
+    rc = 0;
 
     internal_code = gui_key_get_internal_code (key);
     if (!internal_code)
         return 0;
 
+    expanded_name = gui_key_get_expanded_name (internal_code);
+    if (!expanded_name)
+    {
+        free (internal_code);
+        return 0;
+    }
+
     ptr_key = gui_key_search ((buffer) ? buffer->keys : gui_keys[context],
-                              (internal_code) ? internal_code : key);
-    free (internal_code);
+                              internal_code);
     if (ptr_key)
     {
         if (buffer)
@@ -906,18 +915,22 @@ gui_key_unbind (struct t_gui_buffer *buffer, int context, const char *key)
             {
                 gui_chat_printf (NULL,
                                  _("Key \"%s\" unbound (context: \"%s\")"),
-                                 key,
+                                 expanded_name,
                                  gui_key_context_string[context]);
             }
             gui_key_free (&gui_keys[context], &last_gui_key[context],
                           &gui_keys_count[context], ptr_key);
         }
         (void) hook_signal_send ("key_unbind",
-                                 WEECHAT_HOOK_SIGNAL_STRING, (char *)key);
-        return 1;
+                                 WEECHAT_HOOK_SIGNAL_STRING,
+                                 (char *)expanded_name);
+        rc = 1;
     }
 
-    return 0;
+    free (internal_code);
+    free (expanded_name);
+
+    return rc;
 }
 
 /*
