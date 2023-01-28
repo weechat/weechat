@@ -30,6 +30,10 @@ Bug fixes::
   * irc: fix join of channels in "autojoin" server option on first connection to server if auto reconnection is performed (issue #1873)
   * typing: fix crash when pointer buffer is not received in callback for signal "input_text_changed" (issue #1869)
 
+Tests::
+
+  * gui: add tests on key functions
+
 Build::
 
   * core: remove build with autotools (issue #1860)

@@ -278,6 +278,9 @@ gui_key_get_internal_code (const char *key)
 {
     char *result, *result2;
 
+    if (!key)
+        return NULL;
+
     if ((key[0] == '@') && strchr (key, ':'))
         return strdup (key);
 
