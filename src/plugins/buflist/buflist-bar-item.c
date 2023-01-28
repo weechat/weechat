@@ -574,8 +574,7 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
                                                    -1);
                     }
                 }
-                str_hotlist = *hotlist;
-                weechat_string_dyn_free (hotlist, 0);
+                str_hotlist = weechat_string_dyn_free (hotlist, 0);
             }
         }
         weechat_hashtable_set (
@@ -655,15 +654,15 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
         line_number++;
     }
 
-    str_buflist = *buflist;
+    str_buflist = weechat_string_dyn_free (buflist, 0);
 
     goto end;
 
 error:
+    weechat_string_dyn_free (buflist, 1);
     str_buflist = NULL;
 
 end:
-    weechat_string_dyn_free (buflist, 0);
     weechat_arraylist_free (buffers);
 
     if ((line_number_current_buffer != old_line_number_current_buffer[item_index])

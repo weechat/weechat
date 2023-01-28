@@ -4409,7 +4409,6 @@ string_dyn_copy (char **string, const char *new_string)
         if (!string_realloc)
             return 0;
         ptr_string_dyn->string = string_realloc;
-        *string = string_realloc;
         ptr_string_dyn->size_alloc = new_size_alloc;
     }
 
@@ -4475,7 +4474,6 @@ string_dyn_concat (char **string, const char *add, int bytes)
             return 0;
         }
         ptr_string_dyn->string = string_realloc;
-        *string = string_realloc;
         ptr_string_dyn->size_alloc = new_size_alloc;
     }
 
@@ -4496,8 +4494,11 @@ string_dyn_concat (char **string, const char *add, int bytes)
  * string_dyn_alloc or a string pointer modified by string_dyn_concat.
  *
  * If free_string == 1, the string itself is freed in the structure.
- * Otherwise the pointer (*string) remains valid after this call, and
- * the caller must manually free the string with a call to free().
+ *
+ * If free_string == 0, the pointer (*string) remains valid after this call,
+ * and the caller must manually free the string with a call to free().
+ * Be careful, the pointer in *string may change after this call because
+ * the string can be reallocated to its exact size.
  *
  * Returns the pointer to the string if "free_string" is 0 (string
  * pointer is still valid), or NULL if "free_string" is 1 (string
@@ -4508,7 +4509,7 @@ char *
 string_dyn_free (char **string, int free_string)
 {
     struct t_string_dyn *ptr_string_dyn;
-    char *ptr_string;
+    char *ptr_string, *string_realloc;
 
     if (!string || !*string)
         return NULL;
@@ -4522,6 +4523,14 @@ string_dyn_free (char **string, int free_string)
     }
     else
     {
+        /* if needed, realloc the string to its exact size */
+        if (ptr_string_dyn->size_alloc > ptr_string_dyn->size)
+        {
+            string_realloc = realloc (ptr_string_dyn->string,
+                                      ptr_string_dyn->size);
+            if (string_realloc)
+                ptr_string_dyn->string = string_realloc;
+        }
         ptr_string = ptr_string_dyn->string;
     }
 

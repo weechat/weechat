@@ -334,10 +334,7 @@ eval_string_range_chars (const char *range)
 
 end:
     if (string)
-    {
-        result = *string;
-        string_dyn_free (string, 0);
-    }
+        result = string_dyn_free (string, 0);
 
     return (result) ? result : strdup ("");
 }
