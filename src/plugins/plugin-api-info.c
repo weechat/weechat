@@ -1257,7 +1257,7 @@ plugin_api_infolist_buffer_cb (const void *pointer, void *data,
              ptr_buffer = ptr_buffer->next_buffer)
         {
             if (!arguments || !arguments[0]
-                || string_match (ptr_buffer->full_name, arguments, 0))
+                || string_match (ptr_buffer->full_name, arguments, 1))
             {
                 if (!gui_buffer_add_to_infolist (ptr_infolist, ptr_buffer))
                 {
