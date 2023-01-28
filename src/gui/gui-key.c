@@ -276,7 +276,7 @@ gui_key_grab_end_timer_cb (const void *pointer, void *data,
 char *
 gui_key_get_internal_code (const char *key)
 {
-    char *result, *result2;
+    char **result;
 
     if (!key)
         return NULL;
@@ -284,50 +284,46 @@ gui_key_get_internal_code (const char *key)
     if ((key[0] == '@') && strchr (key, ':'))
         return strdup (key);
 
-    result = malloc (strlen (key) + 1);
+    result = string_dyn_alloc (strlen (key) + 1);
     if (!result)
         return NULL;
 
-    result[0] = '\0';
     while (key[0])
     {
         if (strncmp (key, "meta2-", 6) == 0)
         {
-            strcat (result, "\x01[[");
+            string_dyn_concat (result, "\x01[[", -1);
             key += 6;
         }
         if (strncmp (key, "meta-", 5) == 0)
         {
-            strcat (result, "\x01[");
+            string_dyn_concat (result, "\x01[", -1);
             key += 5;
         }
         else if (strncmp (key, "ctrl-", 5) == 0)
         {
-            strcat (result, "\x01");
+            string_dyn_concat (result, "\x01", -1);
             key += 5;
         }
         else if (strncmp (key, "space", 5) == 0)
         {
-            strcat (result, " ");
+            string_dyn_concat (result, " ", -1);
             key += 5;
         }
         else
         {
-            strncat (result, key, 1);
+            string_dyn_concat (result, key, 1);
             key++;
         }
     }
 
-    result2 = strdup (result);
-    free (result);
-
-    return result2;
+    return string_dyn_free (result, 0);
 }
 
 /*
  * Gets expanded name from internal key code.
  *
- * For example: return "ctrl-R" for "\x01+R".
+ * For example: return "ctrl-r" for "\x01+r".
  *
  * Note: result must be freed after use.
  */
@@ -335,49 +331,45 @@ gui_key_get_internal_code (const char *key)
 char *
 gui_key_get_expanded_name (const char *key)
 {
-    char *result, *result2;
+    char **result;
 
     if (!key)
         return NULL;
 
-    result = malloc ((strlen (key) * 5) + 1);
+    result = string_dyn_alloc ((strlen (key) * 2) + 1);
     if (!result)
         return NULL;
 
-    result[0] = '\0';
     while (key[0])
     {
         if (strncmp (key, "\x01[[", 3) == 0)
         {
-            strcat (result, "meta2-");
+            string_dyn_concat (result, "meta2-", -1);
             key += 3;
         }
         if (strncmp (key, "\x01[", 2) == 0)
         {
-            strcat (result, "meta-");
+            string_dyn_concat (result, "meta-", -1);
             key += 2;
         }
         else if ((key[0] == '\x01') && (key[1]))
         {
-            strcat (result, "ctrl-");
+            string_dyn_concat (result, "ctrl-", -1);
             key++;
         }
         else if (key[0] == ' ')
         {
-            strcat (result, "space");
+            string_dyn_concat (result, "space", -1);
             key++;
         }
         else
         {
-            strncat (result, key, 1);
+            string_dyn_concat (result, key, 1);
             key++;
         }
     }
 
-    result2 = strdup (result);
-    free (result);
-
-    return result2;
+    return string_dyn_free (result, 0);
 }
 
 /*
