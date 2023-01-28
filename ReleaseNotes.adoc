@@ -20,6 +20,65 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 [[v3.9]]
 == Version 3.9 (under dev)
 
+[[v3.9_case_sensitive_identifiers]]
+=== Case sensitive identifiers
+
+Many identifiers are made case sensitive, including among others:
+
+- configuration files, sections, options
+- commands, aliases
+- completion (except nick completion)
+- bars, bar items
+- colors
+- filters
+- IRC servers
+- scripts
+- triggers.
+
+See https://specs.weechat.org/specs/2023-001-case-sensitive-identifiers.html[Case sensitive identifiers specification]
+for more information.
+
+Accordingly, default aliases are now in lower case. +
+If you upgraded from an old WeeChat version, the aliases are still in upper case
+and must be completed/used with upper case. For example `/CLO` + key kbd:[Tab]
+completes to `/CLOSE` (and `/close` is not valid any more). +
+The default aliases can be converted to lower case with the following commands:
+
+----
+/alias rename AAWAY aaway
+/alias rename ANICK anick
+/alias rename BEEP beep
+/alias rename BYE bye
+/alias rename C c
+/alias rename CHAT chat
+/alias rename CL cl
+/alias rename CLOSE close
+/alias rename EXIT exit
+/alias rename IG ig
+/alias rename J j
+/alias rename K k
+/alias rename KB kb
+/alias rename LEAVE leave
+/alias rename M m
+/alias rename MSGBUF msgbuf
+/alias rename MUB mub
+/alias rename N n
+/alias rename Q q
+/alias rename REDRAW redraw
+/alias rename SAY say
+/alias rename SIGNOFF signoff
+/alias rename T t
+/alias rename UB ub
+/alias rename UMODE umode
+/alias rename V v
+/alias rename W w
+/alias rename WC wc
+/alias rename WI wi
+/alias rename WII wii
+/alias rename WM wm
+/alias rename WW ww
+----
+
 [[v3.9_remove_autotools]]
 === Remove build with autotools
 
