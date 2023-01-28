@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-01-24 20:52+0100\n"
+"POT-Creation-Date: 2023-01-28 15:14+0100\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -116,6 +116,15 @@ msgid "Type"
 msgstr ""
 
 msgid "Constants"
+msgstr ""
+
+msgid "Rank"
+msgstr ""
+
+msgid "Priority"
+msgstr ""
+
+msgid "File"
 msgstr ""
 
 #, c-format
@@ -4268,12 +4277,21 @@ msgstr ""
 msgid "Alias \"%s\" removed"
 msgstr ""
 
+#, c-format
+msgid "%sAlias \"%s\" already exists"
+msgstr ""
+
+#, c-format
+msgid "Alias \"%s\" has been renamed to \"%s\""
+msgstr ""
+
 msgid "list, add or remove command aliases"
 msgstr ""
 
 msgid ""
 "list [<alias>] || add <alias> [<command>[;<command>...]] || addcompletion "
-"<completion> <alias> [<command>[;<command>...]] || del <alias> [<alias>...]"
+"<completion> <alias> [<command>[;<command>...]] || del <alias> [<alias>...] "
+"|| rename <alias> <new_alias>"
 msgstr ""
 
 #, no-c-format
@@ -4282,6 +4300,7 @@ msgid ""
 "          add: add an alias\n"
 "addcompletion: add an alias with a custom completion\n"
 "          del: delete an alias\n"
+"       rename: rename an alias\n"
 "   completion: completion for alias: by default completion is done with "
 "target command\n"
 "               note: you can use %%command to use completion of an existing "
@@ -4306,6 +4325,8 @@ msgid ""
 "    /alias add split /window splith\n"
 "  alias /hello to say \"hello\" on all channels but not on #weechat:\n"
 "    /alias add hello /allchan -exclude=#weechat hello\n"
+"  rename alias \"hello\" to \"Hello\":\n"
+"    /alias rename hello Hello\n"
 "  alias /forcejoin to send IRC command \"forcejoin\" with completion of /"
 "sajoin:\n"
 "    /alias addcompletion %%sajoin forcejoin /quote forcejoin"

@@ -1076,11 +1076,13 @@ target: reply should match this mask
         add <alias> [<command>[;<command>...]]
         addcompletion <completion> <alias> [<command>[;<command>...]]
         del <alias> [<alias>...]
+        rename <alias> <new_alias>
 
          list: list aliases (without argument, this list is displayed)
           add: add an alias
 addcompletion: add an alias with a custom completion
           del: delete an alias
+       rename: rename an alias
    completion: completion for alias: by default completion is done with target command
                note: you can use %%command to use completion of an existing command
         alias: name of alias
@@ -1101,6 +1103,8 @@ Examples:
     /alias add split /window splith
   alias /hello to say "hello" on all channels but not on #weechat:
     /alias add hello /allchan -exclude=#weechat hello
+  rename alias "hello" to "Hello":
+    /alias rename hello Hello
   alias /forcejoin to send IRC command "forcejoin" with completion of /sajoin:
     /alias addcompletion %%sajoin forcejoin /quote forcejoin
 ----

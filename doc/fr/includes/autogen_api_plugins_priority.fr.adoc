@@ -6,7 +6,7 @@
 // tag::plugins_priority[]
 [width="30%",cols="1,3,2",options="header"]
 |===
-| Rank | Extension | Priority
+| Rang | Extension | Priorité
 | 1 | charset | 16000
 | 2 | logger | 15000
 | 3 | exec | 14000

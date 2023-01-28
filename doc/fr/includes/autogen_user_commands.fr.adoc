@@ -1076,11 +1076,13 @@ nombre : nombre de réponses à retourner (recherche complète si nombre négat
         add <alias> [<commande>[;<commande>...]]
         addcompletion <complétion> <alias> [<commande>[;<commande>...]]
         del <alias> [<alias>...]
+        rename <alias> <nouvel_alias>
 
          list : afficher les alias (sans paramètre, cette liste est affichée)
           add : ajouter un alias
 addcompletion : ajouter un alias avec une complétion personnalisée
           del : supprimer un alias
+       rename : renommer un alias
    complétion : complétion pour l'alias : par défaut la complétion se fait avec la commande cible
                 note : vous pouvez utiliser %%commande pour utiliser la complétion d'une commande existante
         alias : nom de l'alias
@@ -1101,6 +1103,8 @@ Exemples :
     /alias add split /window splith
   alias /hello pour dire "hello" sur tous les canaux mais pas sur #weechat :
     /alias add hello /allchan -exclude=#weechat hello
+  renommer l'alias "hello" en "Hello" :
+    /alias rename hello Hello
   alias /forcejoin pour envoyer la commande IRC "forcejoin" avec la complétion de /sajoin :
     /alias addcompletion %%sajoin forcejoin /quote forcejoin
 ----
