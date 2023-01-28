@@ -59,14 +59,14 @@ gui_key_default_bind (int context, const char *key, const char *command)
     char *internal_code;
 
     internal_code = gui_key_get_internal_code (key);
+    if (!internal_code)
+        return;
 
-    ptr_key = gui_key_search (gui_keys[context],
-                              (internal_code) ? internal_code : key);
+    ptr_key = gui_key_search (gui_keys[context], internal_code);
     if (!ptr_key)
         gui_key_new (NULL, context, key, command);
 
-    if (internal_code)
-        free (internal_code);
+    free (internal_code);
 }
 
 /*
