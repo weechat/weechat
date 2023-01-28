@@ -1720,7 +1720,7 @@ plugin_api_infolist_proxy_cb (const void *pointer, void *data,
              ptr_proxy = ptr_proxy->next_proxy)
         {
             if (!arguments || !arguments[0]
-                || string_match (ptr_proxy->name, arguments, 0))
+                || string_match (ptr_proxy->name, arguments, 1))
             {
                 if (!proxy_add_to_infolist (ptr_infolist, ptr_proxy))
                 {
