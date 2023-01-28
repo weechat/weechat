@@ -643,18 +643,27 @@ gui_key_new (struct t_gui_buffer *buffer, int context, const char *key,
              const char *command)
 {
     struct t_gui_key *new_key;
-    char *expanded_name;
+    char *internal_code, *expanded_name;
 
     if (!key || !command)
         return NULL;
+
+    internal_code = gui_key_get_internal_code (key);
+    if (!internal_code)
+        return NULL;
+
+    expanded_name = gui_key_get_expanded_name (internal_code);
+    if (!expanded_name)
+    {
+        free (internal_code);
+        return NULL;
+    }
 
     new_key = malloc (sizeof (*new_key));
     if (!new_key)
         return NULL;
 
-    new_key->key = gui_key_get_internal_code (key);
-    if (!new_key->key)
-        new_key->key = strdup (key);
+    new_key->key = internal_code;
     new_key->command = strdup (command);
     gui_key_set_areas (new_key);
     gui_key_set_score (new_key);
@@ -671,25 +680,22 @@ gui_key_new (struct t_gui_buffer *buffer, int context, const char *key,
                                &gui_keys_count[context], new_key);
     }
 
-    expanded_name = gui_key_get_expanded_name (new_key->key);
-
-    (void) hook_signal_send ("key_bind",
-                             WEECHAT_HOOK_SIGNAL_STRING, expanded_name);
-
     if (gui_key_verbose)
     {
         gui_chat_printf (NULL,
                          _("New key binding (context \"%s\"): "
                            "%s%s => %s%s"),
                          gui_key_context_string[context],
-                         (expanded_name) ? expanded_name : new_key->key,
+                         expanded_name,
                          GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
                          GUI_COLOR(GUI_COLOR_CHAT),
                          new_key->command);
     }
 
-    if (expanded_name)
-        free (expanded_name);
+    (void) hook_signal_send ("key_bind",
+                             WEECHAT_HOOK_SIGNAL_STRING, expanded_name);
+
+    free (expanded_name);
 
     return new_key;
 }
