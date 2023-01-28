@@ -26,6 +26,7 @@ New features::
 
 Bug fixes::
 
+  * core: ignore incomplete ctrl/meta/meta2 codes in keys
   * core: fix display glitch in command errors when a wide char is set in option weechat.look.command_chars (issue #1871)
   * api: readjust string size in function string_dyn_free when string is not freed
   * irc: fix join of channels in "autojoin" server option on first connection to server if auto reconnection is performed (issue #1873)

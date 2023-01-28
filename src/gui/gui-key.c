@@ -292,17 +292,20 @@ gui_key_get_internal_code (const char *key)
     {
         if (strncmp (key, "meta2-", 6) == 0)
         {
-            string_dyn_concat (result, "\x01[[", -1);
+            if (key[6])
+                string_dyn_concat (result, "\x01[[", -1);
             key += 6;
         }
-        if (strncmp (key, "meta-", 5) == 0)
+        else if (strncmp (key, "meta-", 5) == 0)
         {
-            string_dyn_concat (result, "\x01[", -1);
+            if (key[5])
+                string_dyn_concat (result, "\x01[", -1);
             key += 5;
         }
         else if (strncmp (key, "ctrl-", 5) == 0)
         {
-            string_dyn_concat (result, "\x01", -1);
+            if (key[5])
+                string_dyn_concat (result, "\x01", -1);
             key += 5;
         }
         else if (strncmp (key, "space", 5) == 0)
@@ -651,6 +654,11 @@ gui_key_new (struct t_gui_buffer *buffer, int context, const char *key,
     internal_code = gui_key_get_internal_code (key);
     if (!internal_code)
         return NULL;
+    if (!internal_code[0])
+    {
+        free (internal_code);
+        return NULL;
+    }
 
     expanded_name = gui_key_get_expanded_name (internal_code);
     if (!expanded_name)
@@ -711,7 +719,7 @@ gui_key_search (struct t_gui_key *keys, const char *key)
 {
     struct t_gui_key *ptr_key;
 
-    if (!key)
+    if (!key || !key[0])
         return NULL;
 
     for (ptr_key = keys; ptr_key; ptr_key = ptr_key->next_key)
@@ -795,7 +803,7 @@ struct t_gui_key *
 gui_key_bind (struct t_gui_buffer *buffer, int context, const char *key,
               const char *command)
 {
-    if (!key || !command || (string_strcasecmp (key, "meta-") == 0))
+    if (!key || !command)
         return NULL;
 
     gui_key_unbind (buffer, context, key);
@@ -892,6 +900,11 @@ gui_key_unbind (struct t_gui_buffer *buffer, int context, const char *key)
     internal_code = gui_key_get_internal_code (key);
     if (!internal_code)
         return 0;
+    if (!internal_code[0])
+    {
+        free (internal_code);
+        return 0;
+    }
 
     expanded_name = gui_key_get_expanded_name (internal_code);
     if (!expanded_name)
