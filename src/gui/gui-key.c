@@ -268,7 +268,11 @@ gui_key_grab_end_timer_cb (const void *pointer, void *data,
 /*
  * Gets internal code from user key name.
  *
- * For example: returns '\x01'+'R' for "ctrl-R"
+ * Examples:
+ *   "meta-a" => "\x01[a"
+ *   "meta-A" => "\x01[A"
+ *   "ctrl-R" => "\x01" + "r" (lower case enforced for ctrl keys)
+ *   "ctrl-r" => "\x01" + "r"
  *
  * Note: result must be freed after use.
  */
@@ -276,7 +280,7 @@ gui_key_grab_end_timer_cb (const void *pointer, void *data,
 char *
 gui_key_get_internal_code (const char *key)
 {
-    char **result;
+    char **result, str_key[2];
 
     if (!key)
         return NULL;
@@ -307,6 +311,21 @@ gui_key_get_internal_code (const char *key)
             if (key[5])
                 string_dyn_concat (result, "\x01", -1);
             key += 5;
+            if (key[0])
+            {
+                /*
+                 * note: the terminal makes no difference between ctrl-x and
+                 * ctrl-shift-x, so for now WeeChat automatically converts any
+                 * ctrl-letter key to lower case: when the user tries to bind
+                 * "ctrl-A", the key "ctrl-a" is actually added
+                 * (lower case is forced for ctrl keys)
+                 */
+                str_key[0] = ((key[0] >= 'A') && (key[0] <= 'Z')) ?
+                    key[0] + ('a' - 'A') : key[0];
+                str_key[1] = '\0';
+                string_dyn_concat (result, str_key, -1);
+                key++;
+            }
         }
         else if (strncmp (key, "space", 5) == 0)
         {
@@ -1760,7 +1779,7 @@ gui_key_get_paste_lines ()
 
 /*
  * Checks pasted lines: if more than N lines, then enables paste mode and ask
- * confirmation to user (ctrl-Y=paste, ctrl-N=cancel) (N is option
+ * confirmation to user (ctrl-y=paste, ctrl-n=cancel) (N is option
  * weechat.look.paste_max_lines).
  *
  * Returns:

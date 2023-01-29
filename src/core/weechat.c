@@ -391,7 +391,7 @@ weechat_startup_message ()
     {
         string_fprintf (stdout,
                         _("WeeChat is running in headless mode "
-                          "(Ctrl-C to quit)."));
+                          "(ctrl-c to quit)."));
         string_fprintf (stdout, "\n");
     }
 

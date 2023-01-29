@@ -81,42 +81,42 @@ gui_key_default_bindings (int context)
 
     if (context == GUI_KEY_CONTEXT_DEFAULT)
     {
-        BIND(/* <enter>       */ "ctrl-M",             "/input return");
-        BIND(/* <enter>       */ "ctrl-J",             "/input return");
-        BIND(/* m-<enter>     */ "meta-ctrl-M",        "/input insert \\n");
-        BIND(/* <tab>         */ "ctrl-I",             "/input complete_next");
+        BIND(/* <enter>       */ "ctrl-m",             "/input return");
+        BIND(/* <enter>       */ "ctrl-j",             "/input return");
+        BIND(/* m-<enter>     */ "meta-ctrl-m",        "/input insert \\n");
+        BIND(/* <tab>         */ "ctrl-i",             "/input complete_next");
         BIND(/* s-<tab>       */ "meta2-Z",            "/input complete_previous");
-        BIND(/* ^R            */ "ctrl-R",             "/input search_text_here");
-        BIND(/* <backspace>   */ "ctrl-H",             "/input delete_previous_char");
+        BIND(/* ^r            */ "ctrl-r",             "/input search_text_here");
+        BIND(/* <backspace>   */ "ctrl-h",             "/input delete_previous_char");
         BIND(/* <backspace>   */ "ctrl-?",             "/input delete_previous_char");
         BIND(/* ^_            */ "ctrl-_",             "/input undo");
         BIND(/* m-_           */ "meta-_",             "/input redo");
         BIND(/* <del>         */ "meta2-3~",           "/input delete_next_char");
-        BIND(/* ^D            */ "ctrl-D",             "/input delete_next_char");
-        BIND(/* ^W            */ "ctrl-W",             "/input delete_previous_word_whitespace");
+        BIND(/* ^d            */ "ctrl-d",             "/input delete_next_char");
+        BIND(/* ^w            */ "ctrl-w",             "/input delete_previous_word_whitespace");
         BIND(/* m-<backspace> */ "meta-ctrl-?",        "/input delete_previous_word");
-        BIND(/* ^X            */ "ctrl-X",             "/buffer switch");
+        BIND(/* ^x            */ "ctrl-x",             "/buffer switch");
         BIND(/* m-x           */ "meta-x",             "/buffer zoom");
         BIND(/* m-d           */ "meta-d",             "/input delete_next_word");
-        BIND(/* ^K            */ "ctrl-K",             "/input delete_end_of_line");
+        BIND(/* ^k            */ "ctrl-k",             "/input delete_end_of_line");
         BIND(/* m-r           */ "meta-r",             "/input delete_line");
-        BIND(/* ^T            */ "ctrl-T",             "/input transpose_chars");
-        BIND(/* ^U            */ "ctrl-U",             "/input delete_beginning_of_line");
-        BIND(/* ^Y            */ "ctrl-Y",             "/input clipboard_paste");
+        BIND(/* ^t            */ "ctrl-t",             "/input transpose_chars");
+        BIND(/* ^u            */ "ctrl-u",             "/input delete_beginning_of_line");
+        BIND(/* ^y            */ "ctrl-y",             "/input clipboard_paste");
         BIND(/* <home>        */ "meta2-1~",           "/input move_beginning_of_line");
         BIND(/* <home>        */ "meta2-H",            "/input move_beginning_of_line");
         BIND(/* <home>        */ "meta2-7~",           "/input move_beginning_of_line");
         BIND(/* <home>        */ "meta-OH",            "/input move_beginning_of_line");
-        BIND(/* ^A            */ "ctrl-A",             "/input move_beginning_of_line");
+        BIND(/* ^a            */ "ctrl-a",             "/input move_beginning_of_line");
         BIND(/* <end>         */ "meta2-4~",           "/input move_end_of_line");
         BIND(/* <end>         */ "meta2-F",            "/input move_end_of_line");
         BIND(/* <end>         */ "meta2-8~",           "/input move_end_of_line");
         BIND(/* <end>         */ "meta-OF",            "/input move_end_of_line");
-        BIND(/* ^E            */ "ctrl-E",             "/input move_end_of_line");
+        BIND(/* ^e            */ "ctrl-e",             "/input move_end_of_line");
         BIND(/* <left>        */ "meta2-D",            "/input move_previous_char");
-        BIND(/* ^B            */ "ctrl-B",             "/input move_previous_char");
+        BIND(/* ^b            */ "ctrl-b",             "/input move_previous_char");
         BIND(/* <right>       */ "meta2-C",            "/input move_next_char");
-        BIND(/* ^F            */ "ctrl-F",             "/input move_next_char");
+        BIND(/* ^f            */ "ctrl-f",             "/input move_next_char");
         BIND(/* m-b           */ "meta-b",             "/input move_previous_word");
         BIND(/* ^<left>       */ "meta-Od",            "/input move_previous_word");
         BIND(/* ^<left>       */ "meta-OD",            "/input move_previous_word");
@@ -145,26 +145,26 @@ gui_key_default_bindings (int context)
         BIND(/* m-k           */ "meta-k",             "/input grab_key_command");
         BIND(/* m-s           */ "meta-s",             "/mute spell toggle");
         BIND(/* m-u           */ "meta-u",             "/window scroll_unread");
-        BIND(/* ^S^U          */ "ctrl-Sctrl-U",       "/allbuf /buffer set unread");
-        BIND(/* ^Cb           */ "ctrl-Cb",            "/input insert \\x02");
-        BIND(/* ^Cc           */ "ctrl-Cc",            "/input insert \\x03");
-        BIND(/* ^Ci           */ "ctrl-Ci",            "/input insert \\x1D");
-        BIND(/* ^Co           */ "ctrl-Co",            "/input insert \\x0F");
-        BIND(/* ^Cv           */ "ctrl-Cv",            "/input insert \\x16");
-        BIND(/* ^C_           */ "ctrl-C_",            "/input insert \\x1F");
+        BIND(/* ^s^u          */ "ctrl-sctrl-u",       "/allbuf /buffer set unread");
+        BIND(/* ^cb           */ "ctrl-cb",            "/input insert \\x02");
+        BIND(/* ^cc           */ "ctrl-cc",            "/input insert \\x03");
+        BIND(/* ^ci           */ "ctrl-ci",            "/input insert \\x1D");
+        BIND(/* ^co           */ "ctrl-co",            "/input insert \\x0F");
+        BIND(/* ^cv           */ "ctrl-cv",            "/input insert \\x16");
+        BIND(/* ^c_           */ "ctrl-c_",            "/input insert \\x1F");
         BIND(/* m-<right>     */ "meta-meta2-C",       "/buffer +1");
         BIND(/* m-<right>     */ "meta2-1;3C",         "/buffer +1");
         BIND(/* m-<down>      */ "meta-meta2-B",       "/buffer +1");
         BIND(/* m-<down>      */ "meta2-1;3B",         "/buffer +1");
         BIND(/* <f6>          */ "meta2-17~",          "/buffer +1");
-        BIND(/* ^N            */ "ctrl-N",             "/buffer +1");
+        BIND(/* ^n            */ "ctrl-n",             "/buffer +1");
         BIND(/* m-<left>      */ "meta-meta2-D",       "/buffer -1");
         BIND(/* m-<left>      */ "meta2-1;3D",         "/buffer -1");
         BIND(/* m-<up>        */ "meta-meta2-A",       "/buffer -1");
         BIND(/* m-<up>        */ "meta2-1;3A",         "/buffer -1");
         BIND(/* <f5>          */ "meta2-15~",          "/buffer -1");
         BIND(/* <f5>          */ "meta2-[E",           "/buffer -1");
-        BIND(/* ^P            */ "ctrl-P",             "/buffer -1");
+        BIND(/* ^p            */ "ctrl-p",             "/buffer -1");
         BIND(/* <pgup>        */ "meta2-5~",           "/window page_up");
         BIND(/* <pgup>        */ "meta2-I",            "/window page_up");
         BIND(/* <pgdn>        */ "meta2-6~",           "/window page_down");
@@ -194,7 +194,7 @@ gui_key_default_bindings (int context)
         BIND(/* m-<f11>       */ "meta-meta2-23~",     "/bar scroll nicklist * b");
         BIND(/* m-<f12>       */ "meta2-24;3~",        "/bar scroll nicklist * e");
         BIND(/* m-<f12>       */ "meta-meta2-24~",     "/bar scroll nicklist * e");
-        BIND(/* ^L            */ "ctrl-L",             "/window refresh");
+        BIND(/* ^l            */ "ctrl-l",             "/window refresh");
         BIND(/* <f7>          */ "meta2-18~",          "/window -1");
         BIND(/* <f8>          */ "meta2-19~",          "/window +1");
         BIND(/* m-w,m-<up>    */ "meta-wmeta-meta2-A", "/window up");
@@ -238,20 +238,20 @@ gui_key_default_bindings (int context)
     }
     else if (context == GUI_KEY_CONTEXT_SEARCH)
     {
-        BIND(/* <enter> */ "ctrl-M",  "/input search_stop_here");
-        BIND(/* <enter> */ "ctrl-J",  "/input search_stop_here");
-        BIND(/* ^Q      */ "ctrl-Q",  "/input search_stop");
+        BIND(/* <enter> */ "ctrl-m",  "/input search_stop_here");
+        BIND(/* <enter> */ "ctrl-j",  "/input search_stop_here");
+        BIND(/* ^q      */ "ctrl-q",  "/input search_stop");
         BIND(/* m-c     */ "meta-c",  "/input search_switch_case");
-        BIND(/* ^R      */ "ctrl-R",  "/input search_switch_regex");
-        BIND(/* <tab>   */ "ctrl-I",  "/input search_switch_where");
+        BIND(/* ^r      */ "ctrl-r",  "/input search_switch_regex");
+        BIND(/* <tab>   */ "ctrl-i",  "/input search_switch_where");
         BIND(/* <up>    */ "meta2-A", "/input search_previous");
         BIND(/* <down>  */ "meta2-B", "/input search_next");
     }
     else if (context == GUI_KEY_CONTEXT_CURSOR)
     {
         /* general & move */
-        BIND(/* <enter>   */ "ctrl-M",                   "/cursor stop");
-        BIND(/* <enter>   */ "ctrl-J",                   "/cursor stop");
+        BIND(/* <enter>   */ "ctrl-m",                   "/cursor stop");
+        BIND(/* <enter>   */ "ctrl-j",                   "/cursor stop");
         BIND(/* <up>      */ "meta2-A",                  "/cursor move up");
         BIND(/* <down>    */ "meta2-B",                  "/cursor move down");
         BIND(/* <left>    */ "meta2-D",                  "/cursor move left");
@@ -343,77 +343,78 @@ gui_key_flush (int paste)
         insert_ok = 1;
         utf_partial_char[0] = '\0';
 
-        if (gui_mouse_event_pending || (key < 32) || (key == 127))
+        if (gui_mouse_event_pending)
         {
-            if (gui_mouse_event_pending)
+            insert_ok = 0;
+            key_str[0] = (char)key;
+            key_str[1] = '\0';
+            length_key_str = 1;
+        }
+        else if (key < 32)
+        {
+            insert_ok = 0;
+            key_str[0] = '\x01';
+            key_str[1] = (char)key + '@';
+            /*
+             * note: the terminal makes no difference between ctrl-x and
+             * ctrl-shift-x, so for now WeeChat uses lower case letters for
+             * ctrl keys
+             */
+            if ((key_str[1] >= 'A') && (key_str[1] <= 'Z'))
+                key_str[1] += 'a' - 'A';
+            key_str[2] = '\0';
+            length_key_str = 2;
+        }
+        else if (key == 127)
+        {
+            key_str[0] = '\x01';
+            key_str[1] = '?';
+            key_str[2] = '\0';
+            length_key_str = 2;
+        }
+        else if (local_utf8)
+        {
+            key_str[length_key_str] = (char)key;
+            key_str[length_key_str + 1] = '\0';
+            length_key_str++;
+
+            /*
+             * replace invalid chars by "?", but NOT last char of
+             * string, if it is incomplete UTF-8 char (another char
+             * will be added to the string on next iteration)
+             */
+            ptr_char = key_str;
+            while (ptr_char && ptr_char[0])
             {
-                insert_ok = 0;
-                key_str[0] = (char)key;
-                key_str[1] = '\0';
-                length_key_str = 1;
-            }
-            else if (key < 32)
-            {
-                insert_ok = 0;
-                key_str[0] = '\x01';
-                key_str[1] = (char)key + '@';
-                key_str[2] = '\0';
-                length_key_str = 2;
-            }
-            else if (key == 127)
-            {
-                key_str[0] = '\x01';
-                key_str[1] = '?';
-                key_str[2] = '\0';
-                length_key_str = 2;
+                (void) utf8_is_valid (ptr_char, -1, &ptr_error);
+                if (!ptr_error)
+                    break;
+                next_char = (char *)utf8_next_char (ptr_error);
+                if (next_char && next_char[0])
+                {
+                    ptr_char = ptr_error;
+                    while (ptr_char < next_char)
+                    {
+                        ptr_char[0] = '?';
+                        ptr_char++;
+                    }
+                }
+                else
+                {
+                    strcpy (utf_partial_char, ptr_char);
+                    ptr_char[0] = '\0';
+                    break;
+                }
+                ptr_char = next_char;
             }
         }
         else
         {
-            if (local_utf8)
-            {
-                key_str[length_key_str] = (char)key;
-                key_str[length_key_str + 1] = '\0';
-                length_key_str++;
-
-                /*
-                 * replace invalid chars by "?", but NOT last char of
-                 * string, if it is incomplete UTF-8 char (another char
-                 * will be added to the string on next iteration)
-                 */
-                ptr_char = key_str;
-                while (ptr_char && ptr_char[0])
-                {
-                    (void) utf8_is_valid (ptr_char, -1, &ptr_error);
-                    if (!ptr_error)
-                        break;
-                    next_char = (char *)utf8_next_char (ptr_error);
-                    if (next_char && next_char[0])
-                    {
-                        ptr_char = ptr_error;
-                        while (ptr_char < next_char)
-                        {
-                            ptr_char[0] = '?';
-                            ptr_char++;
-                        }
-                    }
-                    else
-                    {
-                        strcpy (utf_partial_char, ptr_char);
-                        ptr_char[0] = '\0';
-                        break;
-                    }
-                    ptr_char = next_char;
-                }
-            }
-            else
-            {
-                /* convert input to UTF-8 */
-                key_temp[0] = (char)key;
-                key_temp[1] = '\0';
-                key_utf = string_iconv_to_internal (NULL, key_temp);
-                strcat (key_str, key_utf);
-            }
+            /* convert input to UTF-8 */
+            key_temp[0] = (char)key;
+            key_temp[1] = '\0';
+            key_utf = string_iconv_to_internal (NULL, key_temp);
+            strcat (key_str, key_utf);
         }
 
         if (key_str[0])
@@ -553,12 +554,12 @@ gui_key_read_cb (const void *pointer, void *data, int fd)
     {
         if (gui_key_paste_pending && (buffer[i] == 25))
         {
-            /* ctrl-Y: accept paste */
+            /* ctrl-y: accept paste */
             accept_paste = 1;
         }
         else if (gui_key_paste_pending && (buffer[i] == 14))
         {
-            /* ctrl-N: cancel paste */
+            /* ctrl-n: cancel paste */
             cancel_paste = 1;
         }
         else

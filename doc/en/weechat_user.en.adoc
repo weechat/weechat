@@ -876,7 +876,7 @@ Bar _input_ has following default items:
 | input_prompt | `[@Flashy(i)]`                               | Input prompt, for irc: nick and modes (mode "+i" means invisible on libera).
 | away         | `(away)`                                     | Away indicator.
 | input_search | `[Search (~ str,msg)]`                       | Search indicator ("`~`": case insensitive, "`==`": case sensitive, "`str`": search string, "`regex`": search regular expression, "`msg`": search in messages, "`pre`": search in prefixes, "`pre\|msg`": search in prefixes and messages).
-| input_paste  | `[Paste 7 lines ? [ctrl-Y] Yes [ctrl-N] No]` | Question to user for pasting lines.
+| input_paste  | `[Paste 7 lines ? [ctrl-y] Yes [ctrl-n] No]` | Question to user for pasting lines.
 | input_text   | `hi peter!`                                  | Input text.
 |===
 

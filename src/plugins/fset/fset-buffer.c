@@ -83,7 +83,7 @@ fset_buffer_set_title ()
                 "(u)=unmark matching options, "
                 "alt+p(p)=toggle plugins desc, "
                 "alt+v(v)=toggle help bar, "
-                "ctrl+X(x)=switch format, "
+                "ctrl+x(x)=switch format, "
                 "(q)=close buffer"),
               weechat_color (weechat_config_string (fset_config_color_title_current_option)),
               (num_options > 0) ? fset_buffer_selected_line + 1 : 0,
@@ -1363,17 +1363,17 @@ fset_buffer_set_keys ()
         { "meta-+",        "/fset -add 1"                                  },
         { "meta-fmeta-r",  "/fset -reset"                                  },
         { "meta-fmeta-u",  "/fset -unset"                                  },
-        { "meta-ctrl-J",   "/fset -set"                                    },
-        { "meta-ctrl-M",   "/fset -set"                                    },
+        { "meta-ctrl-j",   "/fset -set"                                    },
+        { "meta-ctrl-m",   "/fset -set"                                    },
         { "meta-fmeta-n",  "/fset -setnew"                                 },
         { "meta-fmeta-a",  "/fset -append"                                 },
         { "meta-,",        "/fset -mark"                                   },
         { "meta2-a",       "/fset -up; /fset -mark"                        },
         { "meta2-b",       "/fset -mark; /fset -down"                      },
-        { "ctrl-L",        "/fset -refresh"                                },
+        { "ctrl-l",        "/fset -refresh"                                },
         { "meta-p",        "/mute /set fset.look.show_plugins_desc toggle" },
         { "meta-v",        "/bar toggle " FSET_BAR_NAME                    },
-        { "ctrl-X",        "/fset -format"                                 },
+        { "ctrl-x",        "/fset -format"                                 },
         { NULL,            NULL                                            },
     };
     char str_key[64];

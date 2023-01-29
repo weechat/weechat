@@ -929,7 +929,7 @@ By default, the screen is divided up into the following areas:
 | input_prompt | `[@Flashy]`                                  | 入力プロンプト、irc の場合: ニックネームとモード (libera では "+i" モードは不可視状態を意味します)
 | away         | `(away)`                                     | 離席状態表示
 | input_search | `[Search (~ str,msg)]`                       | 検索インジケータ ("`~`": 大文字小文字を区別しない、"`==`": 大文字小文字を区別する、"`str`": 検索文字列、"`regex`": 検索正規表現、"`msg`": メッセージ部分から検索、"`pre`": プレフィックス部分から検索、"`pre\|msg`": プレフィックス部分とメッセージ部分から検索)
-| input_paste  | `[Paste 7 lines ? [ctrl-Y] Yes [ctrl-N] No]` | 行をペーストする場合にユーザへ行われる質問
+| input_paste  | `[Paste 7 lines ? [ctrl-y] Yes [ctrl-n] No]` | 行をペーストする場合にユーザへ行われる質問
 | input_text   | `hi peter!`                                  | 入力テキスト
 |===
 

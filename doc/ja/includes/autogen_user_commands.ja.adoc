@@ -1759,44 +1759,44 @@ Examples:
       resetall -yes [<context>]
       missing [<context>]
 
-       list: 現在のキーをリストアップ (引数無しの場合、このリストが表示されます)
-listdefault: デフォルトキーをリストアップ
-   listdiff: デフォルトと現在のキーの違いをリストアップ (追加、再定義、削除されたキー)
-    context: コンテキストの名前 ("default" または "search")
-       bind: キーにコマンドを割り当てるか、キーに割り当てられたコマンドを表示 ("default" コンテキストに対する)
-   bindctxt: キーにコマンドを割り当てるか、キーに割り当てられたコマンドを表示 (指定されたコンテキストに対する)
-    command: コマンド (複数のコマンドはセミコロンで分けて書く)
-     unbind: キーバインドを削除 ("default" コンテキストに対する)
- unbindctxt: キーバインドを削除 (指定されたコンテキストに対する)
-      reset: キーをデフォルトの割り当てにリセットする ("default" コンテキストに対する)
-  resetctxt: キーをデフォルトの割り当てにリセットする (指定されたコンテキストに対する)
-   resetall: デフォルトの割り当てにリストアし、全ての個人的な設定を削除 (注意して使用!)
-    missing: 未割り当てのキーを追加 (デフォルトの割り当てに無い)、新しい WeeChat バージョンをインストールした後に便利
+       list: list all current keys (without argument, this list is displayed)
+listdefault: list default keys
+   listdiff: list differences between current and default keys (keys added, redefined or deleted)
+    context: name of context ("default" or "search")
+       bind: bind a command to a key or display command bound to key (for context "default")
+   bindctxt: bind a command to a key or display command bound to key, for given context
+    command: command (many commands can be separated by semicolons)
+     unbind: remove a key binding (for context "default")
+ unbindctxt: remove a key binding for given context
+      reset: reset a key to default binding (for context "default")
+  resetctxt: reset a key to default binding, for given context
+   resetall: restore bindings to the default values and delete ALL personal bindings (use carefully!)
+    missing: add missing keys (using default bindings), useful after installing new WeeChat version
 
-キーにコマンドを割り当てる場合、alt+k (または Esc の後に k) した後に、割り当てたいキーを押すことをお勧めします: これはコマンドラインにキーコードを入力することになります。
+When binding a command to a key, it is recommended to use key alt+k (or Esc then k), and then press the key to bind: this will insert key code in command line.
 
-"mouse" コンテント ("cursor" コンテキストの一部) に対しては、キーは以下の書式: "@area:key" または "@area1>area2:key"。ここで、area は以下の値を取れます:
-          *: 画面上の任意のエリア
-       chat: チャットエリア (任意のバッファ)
-  chat(xxx): 名前 "xxx" を持つチャットエリア (プラグイン含む完全な名前)
-     bar(*): 任意のバー
-   bar(xxx): バー "xxx"
-    item(*): 任意のバー要素
-  item(xxx): バー要素 "xxx"
-多くのマウスイベントにマッチさせるにはワイルドカード "*" をキーに使ってください。
-"hsignal:name" という書式のコマンドに対する特別な値はマウスコンテキストに使えます、これはフォーカスハッシュテーブルを引数にして hsignal "name" を送ります。
-その他の特別な値 "-" はキーを無効化するために利用されます。(これはキーの探索時には無視されます)
+For context "mouse" (possible in context "cursor" too), key has format: "@area:key" or "@area1>area2:key" where area can be:
+          *: any area on screen
+       chat: chat area (any buffer)
+  chat(xxx): chat area for buffer with name "xxx" (full name including plugin)
+     bar(*): any bar
+   bar(xxx): bar "xxx"
+    item(*): any bar item
+  item(xxx): bar item "xxx"
+Wildcard "*" is allowed in key to match many mouse events.
+A special value for command with format "hsignal:name" can be used for context mouse, this will send the hsignal "name" with the focus hashtable as argument.
+Another special value "-" can be used to disable key (it will be ignored when looking for keys).
 
-例:
-  alt-t キーをニックネームリストバーに割り当てる:
+Examples:
+  key alt-t to toggle nicklist bar:
     /key bind meta-t /bar toggle nicklist
-  alt-r キーを #weechat IRC チャンネルへの移動に割り当てる:
+  key alt-r to jump to #weechat IRC channel:
     /key bind meta-r /buffer #weechat
-  alt-r キーの割り当てをデフォルトに戻す:
+  restore default binding for key alt-r:
     /key reset meta-r
-  "tab" キーをバッファ検索の終了に割り当てる:
-    /key bindctxt search ctrl-I /input search_stop
-  ニック上でのマウスのセンターボタンをニックネームの情報取得に割り当てる:
+  key "tab" to stop search in buffer:
+    /key bindctxt search ctrl-i /input search_stop
+  middle button of mouse on a nick to retrieve info on nick:
     /key bindctxt mouse @item(buffer_nicklist):button3 /msg nickserv info ${nick}
 ----
 
@@ -2634,7 +2634,7 @@ Keys and input to set options on fset buffer:
                     u:xxx   unmark options displayed that are matching filter "xxx" (any filter on option or value is allowed, see filters above)
 
 Other keys and input on fset buffer:
-  ctrl+L                    refresh options and whole screen (command: /fset -refresh)
+  ctrl+l                    refresh options and whole screen (command: /fset -refresh)
                     $       refresh options (keep marked options)
                     $$      refresh options (unmark all options)
   alt+p             p       toggle plugin description options (plugins.desc.*)
@@ -2644,7 +2644,7 @@ Other keys and input on fset buffer:
                     w:xxx   export options in file "xxx"
                     w-:xxx  export options in file "xxx" without help
                     w+:xxx  export options in file "xxx" with help
-  ctrl+X            x       switch the format used to display options
+  ctrl+x            x       switch the format used to display options
                     q       close fset buffer
 
 Mouse actions on fset buffer:

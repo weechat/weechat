@@ -1795,7 +1795,7 @@ Exemples :
   restaure l'association par défaut pour la touche alt-r :
     /key reset meta-r
   touche "tab" pour arrêter la recherche dans le tampon :
-    /key bindctxt search ctrl-I /input search_stop
+    /key bindctxt search ctrl-i /input search_stop
   bouton du milieu de la souris sur un pseudo pour récupérer les infos sur le pseudo :
     /key bindctxt mouse @item(buffer_nicklist):button3 /msg nickserv info ${nick}
 ----
@@ -2634,7 +2634,7 @@ Touches et entrées pour définir les options sur le tampon fset :
                     u:xxx   démarquer les options affichées qui correspondent au filtre "xxx" (tout filtre sur une option ou valeur est autorisé, voir les filtres ci-dessus)
 
 Autres touches et entrées sur le tampon fset :
-  ctrl+L                    rafraîchir les options et l'écran entier (commande : /fset -refresh)
+  ctrl+l                    rafraîchir les options et l'écran entier (commande : /fset -refresh)
                     $       rafraîchir les options (garder les options marquées)
                     $$      rafraîchir les options (démarquer toutes les options)
   alt+p             p       activer/désactiver la description des options d'extensions (plugins.desc.*)
@@ -2644,7 +2644,7 @@ Autres touches et entrées sur le tampon fset :
                     w:xxx   exporter les options dans le fichier "xxx"
                     w-:xxx  exporter les options dans le fichier "xxx" sans aide
                     w+:xxx  exporter les options dans le fichier "xxx" avec aide
-  ctrl+X            x       basculer le format utilisé pour afficher les options
+  ctrl+x            x       basculer le format utilisé pour afficher les options
                     q       fermer le tampon fset
 
 Actions de la souris sur le tampon fset :

@@ -619,13 +619,13 @@
 ** デフォルト値: `+"/unset ${name}"+`
 
 * [[option_fset.format.option1]] *fset.format.option1*
-** 説明: pass:none[first format of each line, used when option fset.look.format_number is set to 1 (note: content is evaluated, see /help fset); an empty string uses the default format ("${marked} ${name}  ${type}  ${value2}"), which is without evaluation of string and then much faster; formats can be switched with key ctrl+X]
+** 説明: pass:none[first format of each line, used when option fset.look.format_number is set to 1 (note: content is evaluated, see /help fset); an empty string uses the default format ("${marked} ${name}  ${type}  ${value2}"), which is without evaluation of string and then much faster; formats can be switched with key ctrl-x]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+""+`
 
 * [[option_fset.format.option2]] *fset.format.option2*
-** 説明: pass:none[second format of each line, used when option fset.look.format_number is set to 2 (note: content is evaluated, see /help fset); an empty string uses the default format ("${marked} ${name}  ${type}  ${value2}"), which is without evaluation of string and then much faster; formats can be switched with key ctrl+X]
+** 説明: pass:none[second format of each line, used when option fset.look.format_number is set to 2 (note: content is evaluated, see /help fset); an empty string uses the default format ("${marked} ${name}  ${type}  ${value2}"), which is without evaluation of string and then much faster; formats can be switched with key ctrl-x]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+"${marked} ${name}  ${type}  ${value2}${newline}  ${empty_name}  ${_default_value}${color:darkgray} -- ${min}..${max}${newline}  ${empty_name}  ${description}"+`
@@ -655,7 +655,7 @@
 ** デフォルト値: `+on+`
 
 * [[option_fset.look.format_number]] *fset.look.format_number*
-** 説明: pass:none[オプションを表示する際に使う書式番号; この値は fset バッファで ctrl-X キーを押すことで動的に変化します]
+** 説明: pass:none[number of format used to display options; this is dynamically changed by the key ctrl-x on the fset buffer]
 ** タイプ: 整数
 ** 値: 1 .. 2
 ** デフォルト値: `+1+`

@@ -1386,13 +1386,13 @@ def get_stdin():
     """
     Return data from standard input.
 
-    If there is nothing in stdin, wait for data until ctrl-D (EOF)
+    If there is nothing in stdin, wait for data until ctrl-d (EOF)
     is received.
     """
     data = ''
     inr = select.select([sys.stdin], [], [], 0)[0]
     if not inr:
-        print('Enter the code to convert (Enter + ctrl+D to end)')
+        print('Enter the code to convert (Enter + ctrl-d to end)')
     while True:
         inr = select.select([sys.stdin], [], [], 0.1)[0]
         if not inr:

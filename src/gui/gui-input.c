@@ -300,7 +300,7 @@ gui_input_clipboard_copy (const char *buffer, int size)
 
 /*
  * Pastes the internal clipboard at cursor pos in input line
- * (default key: ctrl-Y).
+ * (default key: ctrl-y).
  */
 
 void
@@ -490,7 +490,7 @@ gui_input_complete_previous (struct t_gui_buffer *buffer)
 }
 
 /*
- * Searches for text in buffer at current position (default key: ctrl-R).
+ * Searches for text in buffer at current position (default key: ctrl-r).
  */
 
 void
@@ -578,7 +578,7 @@ gui_input_search_switch_case (struct t_gui_buffer *buffer)
 }
 
 /*
- * Switches string/regex for search in buffer (default key: ctrl-R during
+ * Switches string/regex for search in buffer (default key: ctrl-r during
  * search).
  */
 
@@ -675,7 +675,7 @@ gui_input_search_stop_here (struct t_gui_buffer *buffer)
 }
 
 /*
- * Stops text search (default key: ctrl-Q during search).
+ * Stops text search (default key: ctrl-q during search).
  */
 
 void
@@ -828,7 +828,7 @@ gui_input_delete_previous_word (struct t_gui_buffer *buffer)
 }
 
 /*
- * Deletes previous word until whitespace (default key: ctrl-W).
+ * Deletes previous word until whitespace (default key: ctrl-w).
  */
 
 void
@@ -914,7 +914,7 @@ gui_input_delete_next_word (struct t_gui_buffer *buffer)
 }
 
 /*
- * Deletes all from cursor pos to beginning of line (default key: ctrl-U).
+ * Deletes all from cursor pos to beginning of line (default key: ctrl-u).
  */
 
 void
@@ -950,7 +950,7 @@ gui_input_delete_beginning_of_line (struct t_gui_buffer *buffer)
 }
 
 /*
- * Deletes all from cursor pos to end of line (default key: ctrl-K).
+ * Deletes all from cursor pos to end of line (default key: ctrl-k).
  */
 
 void
@@ -998,7 +998,7 @@ gui_input_delete_line (struct t_gui_buffer *buffer)
 }
 
 /*
- * Transposes chars at cursor pos (default key: ctrl-T).
+ * Transposes chars at cursor pos (default key: ctrl-t).
  */
 
 void

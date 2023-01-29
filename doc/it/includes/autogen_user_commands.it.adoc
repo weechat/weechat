@@ -1795,7 +1795,7 @@ Examples:
   restore default binding for key alt-r:
     /key reset meta-r
   key "tab" to stop search in buffer:
-    /key bindctxt search ctrl-I /input search_stop
+    /key bindctxt search ctrl-i /input search_stop
   middle button of mouse on a nick to retrieve info on nick:
     /key bindctxt mouse @item(buffer_nicklist):button3 /msg nickserv info ${nick}
 ----
@@ -2634,7 +2634,7 @@ Keys and input to set options on fset buffer:
                     u:xxx   unmark options displayed that are matching filter "xxx" (any filter on option or value is allowed, see filters above)
 
 Other keys and input on fset buffer:
-  ctrl+L                    refresh options and whole screen (command: /fset -refresh)
+  ctrl+l                    refresh options and whole screen (command: /fset -refresh)
                     $       refresh options (keep marked options)
                     $$      refresh options (unmark all options)
   alt+p             p       toggle plugin description options (plugins.desc.*)
@@ -2644,7 +2644,7 @@ Other keys and input on fset buffer:
                     w:xxx   export options in file "xxx"
                     w-:xxx  export options in file "xxx" without help
                     w+:xxx  export options in file "xxx" with help
-  ctrl+X            x       switch the format used to display options
+  ctrl+x            x       switch the format used to display options
                     q       close fset buffer
 
 Mouse actions on fset buffer:

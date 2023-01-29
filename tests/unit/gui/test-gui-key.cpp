@@ -111,7 +111,8 @@ TEST(GuiKey, GetInternalCode)
     WEE_TEST_STR("\x01[[A", gui_key_get_internal_code ("meta2-A"));
     WEE_TEST_STR("\x01[[a", gui_key_get_internal_code ("meta2-a"));
 
-    WEE_TEST_STR("\x01" "A", gui_key_get_internal_code ("ctrl-A"));
+    /* ctrl-letter keys are forced to lower case */
+    WEE_TEST_STR("\x01" "a", gui_key_get_internal_code ("ctrl-A"));
     WEE_TEST_STR("\x01" "a", gui_key_get_internal_code ("ctrl-a"));
 
     WEE_TEST_STR(" ", gui_key_get_internal_code ("space"));

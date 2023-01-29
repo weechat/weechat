@@ -1759,44 +1759,44 @@ addreplace: додаје или мења постојећу прилагођен
       resetall -yes [<контекст>]
       missing [<контекст>]
 
-       list: исписује све текуће тастере (без аргумената, приказује се ова листа)
-listdefault: исписује подразумеване тастере
-   listdiff: исписује разлике између тренутних и подразумеваних тастера (додати, редефинисани или обрисани тастери)
-   контекст: име контекста („default” или „search”)
-       bind: везује команду за тастер или приказује команду која је везана за тастер (за контекст „default”)
-   bindctxt: везује команду за тастер или приказује команду која је везана за тастер, за дати контекст
-    команда: команда (више команди може да се раздвоји са тачка зарезима)
-     unbind: уклања везивање тастера (за контекст „default”)
- unbindctxt: уклања везивање тастера за дати контекст
-      reset: ресетује тастер на подразумевано везивање (за контекст „default”)
-  resetctxt: ресетује тастер на подразумевано везивање, за дати контекст
-   resetall: обнавља везивања на подразумеване вредности и брише СВА лична везивања (употребљавајте опрезно!)
-    missing: додаје недостајуће тастере (користећи подразумевана везивања), корисно након инсталације нове верзије програма WeeChat
+       list: list all current keys (without argument, this list is displayed)
+listdefault: list default keys
+   listdiff: list differences between current and default keys (keys added, redefined or deleted)
+    context: name of context ("default" or "search")
+       bind: bind a command to a key or display command bound to key (for context "default")
+   bindctxt: bind a command to a key or display command bound to key, for given context
+    command: command (many commands can be separated by semicolons)
+     unbind: remove a key binding (for context "default")
+ unbindctxt: remove a key binding for given context
+      reset: reset a key to default binding (for context "default")
+  resetctxt: reset a key to default binding, for given context
+   resetall: restore bindings to the default values and delete ALL personal bindings (use carefully!)
+    missing: add missing keys (using default bindings), useful after installing new WeeChat version
 
-Када се команда везује за тастер, препоручује се да се користи тастер alt+k (или Esc па онда k), па да се онда притисне тастер који желите да вежете: ово ће у командну линију да убаци кôд тастера.
+When binding a command to a key, it is recommended to use key alt+k (or Esc then k), and then press the key to bind: this will insert key code in command line.
 
-За контекст „mouse” (такође могуће и у контексту „cursor”), тастер има следећи формат: „@површина:тастер” или „@површина1>површина2:тастер” где површина може бити:
-          *: било која површина на екрану
-       chat: простор за разговор (било који бафер)
-  chat(xxx): простор за разговор у баферу под именом „xxx” (пуно име укључујући и додатак)
-     bar(*): било која трака
-   bar(xxx): трака „xxx”
-    item(*): било која ставка траке
-  item(xxx): ставка траке „xxx”
-У тастеру се дозвољава употреба џокера „*” који се подудара са више догађаја миша.
-У контексту миша може да се користи специјална вредност за команду у формату „hsignal:име”, она ће послати hsignal „име” са фокус хеш табелом као аргументом.
-Још једна специјална вредност је „-” и она може да се користи за искључивање тастера (тастер ће се игнорисати приликом претраге тастера).
+For context "mouse" (possible in context "cursor" too), key has format: "@area:key" or "@area1>area2:key" where area can be:
+          *: any area on screen
+       chat: chat area (any buffer)
+  chat(xxx): chat area for buffer with name "xxx" (full name including plugin)
+     bar(*): any bar
+   bar(xxx): bar "xxx"
+    item(*): any bar item
+  item(xxx): bar item "xxx"
+Wildcard "*" is allowed in key to match many mouse events.
+A special value for command with format "hsignal:name" can be used for context mouse, this will send the hsignal "name" with the focus hashtable as argument.
+Another special value "-" can be used to disable key (it will be ignored when looking for keys).
 
-Примери:
-  тастер alt-t за преклапање видљивости траке са надимцима:
+Examples:
+  key alt-t to toggle nicklist bar:
     /key bind meta-t /bar toggle nicklist
-  тастер alt-r за скок на #weechat IRC канал:
+  key alt-r to jump to #weechat IRC channel:
     /key bind meta-r /buffer #weechat
-  обнављање подразумеваног везивања за тастер alt-r:
+  restore default binding for key alt-r:
     /key reset meta-r
-  тастер „tab” за заустављање претраге у баферу:
-    /key bindctxt search ctrl-I /input search_stop
-  средњи тастер миша над надимком приказује информације о надимку:
+  key "tab" to stop search in buffer:
+    /key bindctxt search ctrl-i /input search_stop
+  middle button of mouse on a nick to retrieve info on nick:
     /key bindctxt mouse @item(buffer_nicklist):button3 /msg nickserv info ${nick}
 ----
 
@@ -2533,139 +2533,139 @@ FIFO pipe се подразумевано зове у weechat_fifo_xxx (где �
        -export [-help|-nohelp] <имефајла>
        <филтер>
 
-       -bar: додавање траке помоћи
-   -refresh: освежавање листе опција, па затим комплетног екрана (команда: /window refresh)
-        -up: померање изабране линије навише за „број” линија
-      -down: померање изабране линије наниже за „број” линија
-      -left: скроловање fset бафера за „проценат” ширине у лево
-     -right: скроловање fset бафера за „проценат” ширине у десно
-        -go: избор линије према броју, број прве линије је 0 („end” да изаберете последњу линију)
-    -toggle: пребацивање логичке вредности
-       -add: додавање „вредн” (која може да буде и негативан број) за целе бројеве и боје, постављање/надовезивање на вредност осталих типова (постављање за негативну вредност, надовезивање за позитивну вредност)
-     -reset: ресетовање вредности опције
-     -unset: уклањање опције
-       -set: додавање /set команде на улаз како би се уредила вредност опције (курсор се помера на почетак вредности)
-    -setnew: додавање /set команде на улаз како би се уредила нова вредност за опцију
-    -append: додавање /set команде како би се нешто надовезало на вредност опције (курсор се помера на крај вредности)
-      -mark: пребацивање маркера
-    -format: прелаз на следећи доступан формат
-    -export: извоз опција и вредности које су приказане у фајлу (свака линија има формат: „/set име вредност” или „/unset име”)
-      -help: форсирање уписивања помоћи за опције које се извозе у фајл (погледајте /help fset.look.export_help_default)
-    -nohelp: не уписује помоћ за опције које се извозе у фајл (погледајте /help fset.look.export_help_default)
-     filter: постављање новог филтера тако да се прикажу само опције које се подударају са њим (овај филтер такође може да се користи и као улаз у fset бафер); дозвољени су следећи формати:
-               *       приказивање свих опција (без филтера)
-               xxx     приказивање само опција са „xxx” у имену
-               f:xxx   приказивање само конфигурационог фајла „xxx”
-               t:xxx   приказивање само типа „xxx” (bool/int/str/col)
-               d       приказивање само измењених опција
-               d:xxx   приказивање само измењених опција са „xxx” у имену
-               d=xxx   приказивање само измењених опција са „xxx” у вредности
-               d==xxx  приказивање само измењених опција са тачном вредности „xxx”
-               h=xxx   приказивање само опција са „xxx” у опису (преведеном)
-               he=xxx  приказивање само опција са „xxx” у опцију (на енглеском)
-               =xxx    приказивање опција само са „xxx” у вредности
-               ==xxx   приказивање опција само са тачном вредности „xxx”
-               c:xxx   приказивање опција које се подударају са израчунатим условом „xxx”, уз коришћење следећих променљивих: file, section, option, name, parent_name, type, type_en, type_short (bool/int/str/col), type_tiny (b/i/s/c), default_value, default_value_undef, value, quoted_value, value_undef, value_changed, parent_value, min, max, description, description2, description_en, description_en2, string_values
+       -bar: add the help bar
+   -refresh: refresh list of options, then whole screen (command: /window refresh)
+        -up: move the selected line up by "number" lines
+      -down: move the selected line down by "number" lines
+      -left: scroll the fset buffer by "percent" of width on the left
+     -right: scroll the fset buffer by "percent" of width on the right
+        -go: select a line by number, first line number is 0 ("end" to select the last line)
+    -toggle: toggle the boolean value
+       -add: add "value" (which can be a negative number) for integers and colors, set/append to value for other types (set for a negative value, append for a positive value)
+     -reset: reset the value of option
+     -unset: unset the option
+       -set: add the /set command in input to edit the value of option (move the cursor at the beginning of value)
+    -setnew: add the /set command in input to edit a new value for the option
+    -append: add the /set command to append something in the value of option (move the cursor at the end of value)
+      -mark: toggle mark
+    -format: switch to the next available format
+    -export: export the options and values displayed in a file (each line has format: "/set name value" or "/unset name")
+      -help: force writing of help on options in exported file (see /help fset.look.export_help_default)
+    -nohelp: do not write help on options in exported file (see /help fset.look.export_help_default)
+     filter: set a new filter to see only matching options (this filter can be used as input in fset buffer as well); allowed formats are:
+               *       show all options (no filter)
+               xxx     show only options with "xxx" in name
+               f:xxx   show only configuration file "xxx"
+               t:xxx   show only type "xxx" (bool/int/str/col)
+               d       show only changed options
+               d:xxx   show only changed options with "xxx" in name
+               d=xxx   show only changed options with "xxx" in value
+               d==xxx  show only changed options with exact value "xxx"
+               h=xxx   show only options with "xxx" in description (translated)
+               he=xxx  show only options with "xxx" in description (in English)
+               =xxx    show only options with "xxx" in value
+               ==xxx   show only options with exact value "xxx"
+               c:xxx   show only options matching the evaluated condition "xxx", using following variables: file, section, option, name, parent_name, type, type_en, type_short (bool/int/str/col), type_tiny (b/i/s/c), default_value, default_value_undef, value, quoted_value, value_undef, value_changed, parent_value, min, max, description, description2, description_en, description_en2, string_values
 
-Линије са опцијама се приказују употребом израчунавања стринга (погледајте /help eval за формат), са следећим опцијама:
-  - fset.format.option1: први формат за опцију
-  - fset.format.option2: други формат за опцију
+The lines with options are displayed using string evaluation (see /help eval for the format), with these options:
+  - fset.format.option1: first format for an option
+  - fset.format.option2: second format for an option
 
-У овим опцијама је дозвољена употреба следећих променљивих:
-  - подаци опције, са бојом и допуњени размацима са десне стране:
-    - ${file}: конфигурациони фајл (на пример „weechat” или „irc”)
-    - ${section}: одељак
-    - ${option}: име опције
-    - ${name}: пуно име опције (file.section.option)
-    - ${parent_name}: име родитељ-опције
-    - ${type}: тип опције (преведени)
-    - ${type_en}: тип опције (на енглеском)
-    - ${type_short}: кратки тип опције (bool/int/str/col)
-    - ${type_tiny}: сићушни тип опције (b/i/s/c)
-    - ${default_value}: подразумевана вредност опције
-    - ${default_value_undef}: „1” ако је подразумевана вредност null, у супротном „0”
-    - ${value}: вредност опције
-    - ${value_undef}: „1” ако је вредност null, у супротном „0”
-    - ${value_changed}: „1” ако се вредност разликује од подразумеване вредности, у супротном „0”
-    - ${value2}: вредност опције, са наслеђеном вредности ако је null
-    - ${parent_value}: вредност родитељ-опције
-    - ${min}: мин вредност
-    - ${max}: макс вредност
-    - ${description}: опис опције (преведен)
-    - ${description2}: опис опције (преведен), „(без описа)” (преведено) ако нема описа
-    - ${description_en}: опис опције (на енглеском)
-    - ${description_en2}: опис опције (на енглеском), „(no description)” ако нема описа
-    - ${string_values}: стринг вредности које се дозвољавају за постављање целобројне опције употребом стрингова
-    - ${marked}: „1” ако је опција маркирана, у супротном „0”
-    - ${index}: индекс опције у листи
-  - подаци опције, са бојом али без додатних размака:
-    - иста имена испред којих се налази доња црта, на пример: ${_name}, ${_type}, ...
-  - подаци опције, у сировом формату (без боја/размака):
-    - иста имена испред којих се налазе две доње црте, на пример: ${__name}, ${__type}, ...
-  - подаци опције, само размаци:
-    - иста имена испред којих се налази „empty_”, на пример: ${empty_name}, ${empty_type}
-  - остали подаци:
-    - ${selected_line}: „1” ако је линија изабрана, у супротном „0”
-    - ${newline}: умеће прелом линије на ову позицију, тако да се опција простире на више линија
+The following variables can be used in these options:
+  - option data, with color and padded by spaces on the right:
+    - ${file}: configuration file (for example "weechat" or "irc")
+    - ${section}: section
+    - ${option}: option name
+    - ${name}: full option name (file.section.option)
+    - ${parent_name}: parent option name
+    - ${type}: option type (translated)
+    - ${type_en}: option type (in English)
+    - ${type_short}: short option type (bool/int/str/col)
+    - ${type_tiny}: tiny option type (b/i/s/c)
+    - ${default_value}: option default value
+    - ${default_value_undef}: "1" if default value is null, otherwise "0"
+    - ${value}: option value
+    - ${value_undef}: "1" if value is null, otherwise "0"
+    - ${value_changed}: "1" if value is different from default value, otherwise "0"
+    - ${value2}: option value, with inherited value if null
+    - ${parent_value}: parent option value
+    - ${min}: min value
+    - ${max}: max value
+    - ${description}: option description (translated)
+    - ${description2}: option description (translated), "(no description)" (translated) if there's no description
+    - ${description_en}: option description (in English)
+    - ${description_en2}: option description (in English), "(no description)" if there's no description
+    - ${string_values}: string values allowed for set of an integer option using strings
+    - ${marked}: "1" if option is marked, otherwise "0"
+    - ${index}: index of option in list
+  - option data, with color but no spaces:
+    - same names prefixed by underscore, for example: ${_name}, ${_type}, ...
+  - option data, raw format (no colors/spaces):
+    - same names prefixed by two underscores, for example: ${__name}, ${__type}, ...
+  - option data, only spaces:
+    - same names prefixed with "empty_", for example: ${empty_name}, ${empty_type}
+  - other data:
+    - ${selected_line}: "1" if the line is selected, otherwise "0"
+    - ${newline}: insert a new line at point, so the option is displayed on multiple lines
 
-Тастери и унос којим се врши кретање по fset баферу:
-  up                        једна линија навише
-  down                      једна линија наниже
-  pgup                      једна линија страница навише
-  pgdn                      једна линија страница наниже
-  alt-home          <<      прелаз на прву линију
-  alt-end           >>      прелаз на последњу линију
-  F11               <       хоризонтално скроловање у лево
-  F12               >       хоризонтално скроловање у десно
+Keys and input to move in on fset buffer:
+  up                        move one line up
+  down                      move one line down
+  pgup                      move one page up
+  pgdn                      move one page down
+  alt-home          <<      move to first line
+  alt-end           >>      move to last line
+  F11               <       scroll horizontally on the left
+  F12               >       scroll horizontally on the right
 
-Тастеру у унос за постављање опција у fset баферу:
-  alt+space         t       пребацивање логичке вредности
-  alt+'-'           -       умањивање целобројне вредности/боја за 1, постављање вредности за остале типове
-  alt+'+'           +       увећање целобројне вредности/боје за 1, надовезивање вредности за остале типове
-  alt+f, alt+r      r       ресетовање вредности
-  alt+f, alt+u      u       уклањање вредности
-  alt+enter         s       постављање вредности
-  alt+f, alt+n      n       постављање нове вредности
-  alt+f, alt+a      a       надовезивање вредности
-  alt+','           ,       маркирање/уклањање маркера са опције
-  shift+up                  померање за линију навише и маркирање/уклањање маркера са опције
-  shift+down                маркирање/уклањање маркера са опције и померање за линију наниже
-                    m:xxx   маркирање приказаних опција које задовољавају услов филтера „xxx” (дозвољен је било који филтер на опцији или вредности, погледајте filters изнад)
-                    u:xxx   уклања маркирање приказаних опција које задовољавају услов филтера „xxx” дозвољен је било који филтер на опцији или вредности, погледајте filters изнад)
+Keys and input to set options on fset buffer:
+  alt+space         t       toggle boolean value
+  alt+'-'           -       subtract 1 from value for integer/color, set value for other types
+  alt+'+'           +       add 1 to value for integer/color, append to value for other types
+  alt+f, alt+r      r       reset value
+  alt+f, alt+u      u       unset value
+  alt+enter         s       set value
+  alt+f, alt+n      n       set new value
+  alt+f, alt+a      a       append to value
+  alt+','           ,       mark/unmark option
+  shift+up                  move one line up and mark/unmark option
+  shift+down                mark/unmark option and move one line down
+                    m:xxx   mark options displayed that are matching filter "xxx" (any filter on option or value is allowed, see filters above)
+                    u:xxx   unmark options displayed that are matching filter "xxx" (any filter on option or value is allowed, see filters above)
 
-Остали тастери и улаз у fset баферу:
-  ctrl+L                    освежавање опција и комплетног екрана (команда: /fset -refresh)
-                    $       освежавање опција (маркиране опције остају маркиране)
-                    $$      освежавање опција (маркирање се уклања са свих опција)
-  alt+p             p       пребацивање видљивости описа опција додатака (plugins.desc.*)
-  alt+v             v       пребацивање видљивости траке помоћи
-                    s:x,y   сортирање опција према пољима x,y (погледајте /help fset.look.sort)
-                    s:      ресетовање сортирања на подразумевану вредност (погледајте /help fset.look.sort)
-                    w:xxx   извоз опција у фајл „xxx”
-                    w-:xxx  извоз опција у фајл „xxx” без помоћи
-                    w+:xxx  извоз опција у фајл „xxx” заједно са помоћи
-  ctrl+X            x       пребацивање формата који се користи за приказ опција
-                    q       затварање fset бафера
+Other keys and input on fset buffer:
+  ctrl+l                    refresh options and whole screen (command: /fset -refresh)
+                    $       refresh options (keep marked options)
+                    $$      refresh options (unmark all options)
+  alt+p             p       toggle plugin description options (plugins.desc.*)
+  alt+v             v       toggle help bar
+                    s:x,y   sort options by fields x,y (see /help fset.look.sort)
+                    s:      reset sort to its default value (see /help fset.look.sort)
+                    w:xxx   export options in file "xxx"
+                    w-:xxx  export options in file "xxx" without help
+                    w+:xxx  export options in file "xxx" with help
+  ctrl+x            x       switch the format used to display options
+                    q       close fset buffer
 
-Акције миша у fset баферу:
-  точкић горе/доле                померање линију навише/наниже
-  леви тастер                     померање линије на то место
-  десни тастер                    пребацивање логичке вредности (укљ./искљ.) или уређивање вредности
-  десни тастер + превлачење л/д   увећавање/умањивање целобројне вредности/боје, постављање/надовезивање на вредност за остале типове
-  десни тастер + превлачење г/д   маркирање/уклањање маркирања са више опција одједном
+Mouse actions on fset buffer:
+  wheel up/down                   move line up/down
+  left button                     move line here
+  right button                    toggle boolean (on/off) or edit the option value
+  right button + drag left/right  increase/decrease value for integer/color, set/append to value for other types
+  right button + drag up/down     mark/unmark multiple options
 
-Напомена: ако улаз има један или више водећих размака, текст који следи се интерпретира као филтер, без размака. На пример „ q” претражује све опције које у свом имену имају „q” док „q” затвара fset бафер.
+Note: if input has one or more leading spaces, the following text is interpreted as a filter, without the spaces. For example " q" searches all options with "q" inside name while "q" closes the fset buffer.
 
-Примери:
-  приказивање измењених IRC опција:
+Examples:
+  show IRC options changed:
     /fset d:irc.*
-  приказивање свих опција које у имену садрже „nicklist”:
+  show all options with "nicklist" in name:
     /fset nicklist
-  приказивање свих вредности које садрже реч „red”:
+  show all values which contain "red":
     /fset =red
-  приказивање свих вредности које су тачно „red”:
+  show all values which are exactly "red":
     /fset ==red
-  приказивање свих целобројних опција у irc додатку:
+  show all integer options in irc plugin:
     /fset c:${file} == irc && ${type_en} == integer
 ----
 // end::fset_commands[]

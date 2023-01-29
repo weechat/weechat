@@ -886,7 +886,7 @@ Pasek _input_ posiada następujące domyślne elementy:
 | input_prompt | `[@Flashy(i)]`                                 | Input prompt, dla irc: nick i tryby (tryb "+i" oznacza niewidzialny na libera).
 | away         | `(away)`                                       | Wskaźnik nieobecności.
 | input_search | `[Szukam (~ str,msg)]`                         | Wskaźnik wyszukiwania ("`~`": wielkość liter ma znaczenie, "`==`": wielkość liter nie ma znaczenia, "`str`": wyszukiwanie ciągu, "`regex`": wyszukiwanie wyrażenia regularnego, "`msg`": wyszukiwanie w wiadomościach, "`pre`": wyszukiwanie w prefiksach, "`pre\|msg`": wyszukiwanie w prefiksach i wiadomościach).
-| input_paste  | `[Wkleić 7 linii ? [ctrl-Y] Tak [ctrl-N] Nie]` | Pyta użytkownika podczas wklejania kilku linii tekstu.
+| input_paste  | `[Wkleić 7 linii ? [ctrl-y] Tak [ctrl-n] Nie]` | Pyta użytkownika podczas wklejania kilku linii tekstu.
 | input_text   | `hi peter!`                                    | Wprowadzony tekst.
 |===
 

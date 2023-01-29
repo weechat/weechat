@@ -8406,7 +8406,7 @@ command_init ()
            "  restore default binding for key alt-r:\n"
            "    /key reset meta-r\n"
            "  key \"tab\" to stop search in buffer:\n"
-           "    /key bindctxt search ctrl-I /input search_stop\n"
+           "    /key bindctxt search ctrl-i /input search_stop\n"
            "  middle button of mouse on a nick to retrieve info on nick:\n"
            "    /key bindctxt mouse @item(buffer_nicklist):button3 "
            "/msg nickserv info ${nick}"),

@@ -2461,7 +2461,8 @@ gui_window_swap (struct t_gui_window *window, int direction)
 /*
  * Called when terminal size is modified.
  *
- * Argument full_refresh == 1 when Ctrl+L is pressed, or if terminal is resized.
+ * Argument full_refresh == 1 when ctrl-l is pressed, or if terminal is
+ * resized.
  */
 
 void

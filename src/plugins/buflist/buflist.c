@@ -141,7 +141,7 @@ buflist_buffer_get_irc_pointers (struct t_gui_buffer *buffer,
  * Buffers are sorted so that the active buffer and buffers immediately after
  * this one are first in list, followed by the buffers before the active one.
  * This sort respects the order of next active buffers that can be selected
- * with ctrl-X.
+ * with ctrl-x.
  *
  * For example with such list of merged buffers:
  *

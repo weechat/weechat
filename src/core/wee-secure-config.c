@@ -60,7 +60,7 @@ secure_config_get_passphrase_from_user (const char *error)
                   "by WeeChat:");
     prompt[1] = _("(enter just one space to skip the passphrase, but this "
                   "will DISABLE all secured data!)");
-    prompt[2] = _("(press ctrl-C to exit WeeChat now)");
+    prompt[2] = _("(press ctrl-c to exit WeeChat now)");
     prompt[3] = error;
     prompt[4] = NULL;
 
@@ -83,7 +83,7 @@ secure_config_get_passphrase_from_user (const char *error)
             }
             else if (strcmp (passphrase, "\x03") == 0)
             {
-                /* ctrl-C pressed, just exit now */
+                /* ctrl-c pressed, just exit now */
                 exit (1);
             }
             else

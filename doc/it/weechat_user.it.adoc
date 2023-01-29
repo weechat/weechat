@@ -967,7 +967,7 @@ La barra _input_ ha i seguenti elementi predefiniti:
 | away         | `(assente)`                                     | Indicatore di assenza.
 // TRANSLATION MISSING
 | input_search | `[Search (~ str,msg)]`                          | Search indicator ("`~`": case insensitive, "`==`": case sensitive, "`str`": search string, "`regex`": search regular expression, "`msg`": search in messages, "`pre`": search in prefixes, "`pre\|msg`": search in prefixes and messages).
-| input_paste  | `[Incollare 7 righe ? [ctrl-Y] Sì [ctrl-N] No]` | Chiede all'utente se incollare le righe.
+| input_paste  | `[Incollare 7 righe ? [ctrl-y] Sì [ctrl-n] No]` | Chiede all'utente se incollare le righe.
 | input_text   | `ciao peter!`                                   | Testo in input.
 |===
 
