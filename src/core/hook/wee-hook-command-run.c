@@ -103,7 +103,7 @@ hook_command_run_exec (struct t_gui_buffer *buffer, const char *command)
     struct t_hook *ptr_hook, *next_hook;
     int rc, hook_matching, length;
     char *command2;
-    const char *ptr_command;
+    const char *ptr_string, *ptr_command;
 
     if (!weechat_hooks[HOOK_TYPE_COMMAND_RUN])
         return WEECHAT_RC_OK;
@@ -113,11 +113,12 @@ hook_command_run_exec (struct t_gui_buffer *buffer, const char *command)
 
     if (command[0] != '/')
     {
-        length = strlen (command) + 1;
+        ptr_string = utf8_next_char (command);
+        length = 1 + strlen (ptr_string) + 1;
         command2 = malloc (length);
         if (command2)
         {
-            snprintf (command2, length, "/%s", command + 1);
+            snprintf (command2, length, "/%s", ptr_string);
             ptr_command = command2;
         }
     }
