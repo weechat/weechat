@@ -1504,6 +1504,12 @@
 ** valeurs: toute chaîne
 ** valeur par défaut: `+""+`
 
+* [[option_irc.server_default.registered_mode]] *irc.server_default.registered_mode*
+** description: pass:none[mode qui est défini sur les utilisateurs qui se sont enregistrés (la valeur par défaut est "r")]
+** type: chaîne
+** valeurs: toute chaîne
+** valeur par défaut: `+"r"+`
+
 * [[option_irc.server_default.sasl_fail]] *irc.server_default.sasl_fail*
 ** description: pass:none[action à effectuer si l'authentification SASL échoue : "continue" pour ignorer le problème d'authentification, "reconnect" pour planifier une reconnexion au serveur, "disconnect" pour se déconnecter du serveur (voir aussi l'option irc.network.sasl_fail_unavailable)]
 ** type: entier

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-01-29 12:15+0100\n"
+"POT-Creation-Date: 2023-01-29 16:50+0100\n"
 "PO-Revision-Date: 2022-10-15 22:51+0200\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -10462,6 +10462,10 @@ msgstr ""
 "tamsayı olmalıdır"
 
 #, c-format
+msgid "%s%s: invalid registered mode, must be a single character"
+msgstr ""
+
+#, c-format
 msgid ""
 "%s%s: warning: server \"%s\" not found in configuration file, not deleted in "
 "memory because it's currently used"
@@ -10888,6 +10892,9 @@ msgid ""
 msgstr ""
 "eğer sunucu kanal türü öneklerini 005 iletisinde göndermiyorsa kullanılacak "
 "önekler (öntanımlı: \"#&\")"
+
+msgid "mode that is set on registered users (default is \"r\")"
+msgstr ""
 
 #, c-format
 msgid "%s%s: error adding server \"%s\""

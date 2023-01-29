@@ -94,6 +94,7 @@ enum t_irc_server_option
     IRC_SERVER_OPTION_SPLIT_MSG_MAX_LENGTH, /* max length of messages        */
     IRC_SERVER_OPTION_CHARSET_MESSAGE,      /* what to decode/encode in msg  */
     IRC_SERVER_OPTION_DEFAULT_CHANTYPES,    /* chantypes if not received     */
+    IRC_SERVER_OPTION_REGISTERED_MODE,      /* mode set on registered user   */
     /* number of server options */
     IRC_SERVER_NUM_OPTIONS,
 };
@@ -153,6 +154,14 @@ enum t_irc_server_utf8mapping
     IRC_SERVER_NUM_UTF8MAPPING,
 };
 
+/* authentication method */
+enum t_irc_server_auth_method
+{
+    IRC_SERVER_AUTH_METHOD_NONE = 0,
+    IRC_SERVER_AUTH_METHOD_SASL,
+    IRC_SERVER_AUTH_METHOD_OTHER,
+};
+
 /* output queue of messages to server (for sending slowly to server) */
 
 struct t_irc_outqueue
@@ -200,6 +209,8 @@ struct t_irc_server
     char *sasl_scram_auth_message;  /* auth message for SASL SCRAM           */
     char *sasl_temp_username;       /* temp SASL username (set by /auth cmd) */
     char *sasl_temp_password;       /* temp SASL password (set by /auth cmd) */
+    int authentication_method;      /* authentication method used to login   */
+    int sasl_mechanism_used;        /* SASL method used at login time        */
     int is_connected;               /* 1 if WeeChat is connected to server   */
     int ssl_connected;              /* = 1 if connected with SSL             */
     int disconnected;               /* 1 if server has been disconnected     */

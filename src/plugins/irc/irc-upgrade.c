@@ -416,6 +416,20 @@ irc_upgrade_read_cb (const void *pointer, void *data,
                             irc_upgrade_current_server,
                             NULL);
                     }
+                    /*
+                     * "authentication_method" and "sasl_mechanism_used" are
+                     * new in WeeChat 3.9
+                     */
+                    if (weechat_infolist_search_var (infolist, "authentication_method"))
+                    {
+                        irc_upgrade_current_server->authentication_method = weechat_infolist_integer (infolist, "authentication_method");
+                        irc_upgrade_current_server->sasl_mechanism_used = weechat_infolist_integer (infolist, "sasl_mechanism_used");
+                    }
+                    else
+                    {
+                        irc_upgrade_current_server->authentication_method = IRC_SERVER_AUTH_METHOD_NONE;
+                        irc_upgrade_current_server->sasl_mechanism_used = -1;
+                    }
                     irc_upgrade_current_server->is_connected = weechat_infolist_integer (infolist, "is_connected");
                     irc_upgrade_current_server->ssl_connected = weechat_infolist_integer (infolist, "ssl_connected");
                     irc_upgrade_current_server->disconnected = weechat_infolist_integer (infolist, "disconnected");

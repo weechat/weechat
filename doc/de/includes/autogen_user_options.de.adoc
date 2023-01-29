@@ -1504,6 +1504,12 @@
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+""+`
 
+* [[option_irc.server_default.registered_mode]] *irc.server_default.registered_mode*
+** Beschreibung: pass:none[mode that is set on registered users (default is "r")]
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette
+** Standardwert: `+"r"+`
+
 * [[option_irc.server_default.sasl_fail]] *irc.server_default.sasl_fail*
 ** Beschreibung: pass:none[auszuführende Aktion falls die SASL Authentifizierung fehlschlägt: "continue" ignoriert das Problem welches bei der Authentifizierung aufgetreten ist, "reconnect" versucht erneut eine Verbindung herzustellen, "disconnect" trennt die Verbindung zum Server (siehe Option irc.network.sasl_fail_unavailable)]
 ** Typ: integer

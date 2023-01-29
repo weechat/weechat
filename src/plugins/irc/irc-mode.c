@@ -585,6 +585,7 @@ void
 irc_mode_user_add (struct t_irc_server *server, char mode)
 {
     char str_mode[2], *nick_modes2;
+    const char *registered_mode;
 
     str_mode[0] = mode;
     str_mode[1] = '\0';
@@ -617,6 +618,15 @@ irc_mode_user_add (struct t_irc_server *server, char mode)
         weechat_bar_item_update ("input_prompt");
         weechat_bar_item_update ("irc_nick_modes");
     }
+
+    registered_mode = IRC_SERVER_OPTION_STRING(
+        server, IRC_SERVER_OPTION_REGISTERED_MODE);
+    if (registered_mode
+        && (registered_mode[0] == mode)
+        && (server->authentication_method == IRC_SERVER_AUTH_METHOD_NONE))
+    {
+        server->authentication_method = IRC_SERVER_AUTH_METHOD_OTHER;
+    }
 }
 
 /*
@@ -627,6 +637,7 @@ void
 irc_mode_user_remove (struct t_irc_server *server, char mode)
 {
     char *pos, *nick_modes2;
+    const char *registered_mode;
     int new_size;
 
     if (server->nick_modes)
@@ -643,6 +654,11 @@ irc_mode_user_remove (struct t_irc_server *server, char mode)
             weechat_bar_item_update ("irc_nick_modes");
         }
     }
+
+    registered_mode = IRC_SERVER_OPTION_STRING(
+        server, IRC_SERVER_OPTION_REGISTERED_MODE);
+    if (registered_mode && (registered_mode[0] == mode))
+        server->authentication_method = IRC_SERVER_AUTH_METHOD_NONE;
 }
 
 /*
@@ -694,4 +710,32 @@ irc_mode_user_set (struct t_irc_server *server, const char *modes,
     }
     weechat_bar_item_update ("input_prompt");
     weechat_bar_item_update ("irc_nick_modes");
+}
+
+/*
+ * Updates authentication_method when IRC_SERVER_OPTION_REGISTERED_MODE
+ * changes.
+ */
+
+void
+irc_mode_registered_mode_change (struct t_irc_server *server)
+{
+    const char *ptr_mode, *registered_mode;
+
+    registered_mode = IRC_SERVER_OPTION_STRING(
+        server, IRC_SERVER_OPTION_REGISTERED_MODE);
+
+    ptr_mode = (server->nick_modes && registered_mode[0]) ?
+        strchr (server->nick_modes, registered_mode[0]) : NULL;
+
+    if (ptr_mode)
+    {
+        if (server->authentication_method == IRC_SERVER_AUTH_METHOD_NONE)
+            server->authentication_method = IRC_SERVER_AUTH_METHOD_OTHER;
+    }
+    else
+    {
+        if (server->authentication_method == IRC_SERVER_AUTH_METHOD_OTHER)
+            server->authentication_method = IRC_SERVER_AUTH_METHOD_NONE;
+    }
 }

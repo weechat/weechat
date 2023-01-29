@@ -1504,6 +1504,12 @@
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+""+`
 
+* [[option_irc.server_default.registered_mode]] *irc.server_default.registered_mode*
+** opis: pass:none[mode that is set on registered users (default is "r")]
+** typ: ciąg
+** wartości: dowolny ciąg
+** domyślna wartość: `+"r"+`
+
 * [[option_irc.server_default.sasl_fail]] *irc.server_default.sasl_fail*
 ** opis: pass:none[akcja do wykonania jeśli uwierzytelnianie SASL się nie powiedzie: "continue" dla zignorowania problemu, "reconnect" ponownie połącz się z serwerem, "disconnect" odłącz od serwera (zobacz też opcję irc.network.sasl_fail_unavailable)]
 ** typ: liczba

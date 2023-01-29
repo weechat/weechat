@@ -1504,6 +1504,12 @@
 ** вредности: било који стринг
 ** подразумевана вредност: `+""+`
 
+* [[option_irc.server_default.registered_mode]] *irc.server_default.registered_mode*
+** опис: pass:none[mode that is set on registered users (default is "r")]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"r"+`
+
 * [[option_irc.server_default.sasl_fail]] *irc.server_default.sasl_fail*
 ** опис: pass:none[радња која се преузима у случају да SASL аутентификација не успе: „continue” да се игнорише проблем аутентификације, „reconnect” да се закаже поновно повезивање са сервером, „disconnect” да се прекине веза са сервером (погледајте и опцију irc.network.sasl_fail_unavailable)]
 ** тип: целобројна

@@ -1504,6 +1504,12 @@
 ** 値: 未制約文字列
 ** デフォルト値: `+""+`
 
+* [[option_irc.server_default.registered_mode]] *irc.server_default.registered_mode*
+** 説明: pass:none[mode that is set on registered users (default is "r")]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"r"+`
+
 * [[option_irc.server_default.sasl_fail]] *irc.server_default.sasl_fail*
 ** 説明: pass:none[SASL 認証が失敗した場合の挙動: 認証の問題を無視する場合は "continue"、サーバへの再接続を予定する場合は "reconnect"、サーバから切断する場合は "disconnect" (irc.network.sasl_fail_unavailable も参照してください)]
 ** タイプ: 整数

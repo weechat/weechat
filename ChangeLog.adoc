@@ -23,6 +23,7 @@ New features::
   * core: force ctrl keys to lower case when they are added (issue #1875)
   * core, plugins: make many identifiers case sensitive (issue #1872, issue #398, bug #32213)
   * alias: use lower case for default aliases (issue #1872)
+  * irc: add server option "registered_mode", add fields "authentication_method" and "sasl_mechanism_used" in server (issue #1625)
   * irc: add option `join` in command `/autojoin`
 
 Bug fixes::

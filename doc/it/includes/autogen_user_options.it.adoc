@@ -1504,6 +1504,12 @@
 ** valori: qualsiasi stringa
 ** valore predefinito: `+""+`
 
+* [[option_irc.server_default.registered_mode]] *irc.server_default.registered_mode*
+** descrizione: pass:none[mode that is set on registered users (default is "r")]
+** tipo: stringa
+** valori: qualsiasi stringa
+** valore predefinito: `+"r"+`
+
 * [[option_irc.server_default.sasl_fail]] *irc.server_default.sasl_fail*
 ** descrizione: pass:none[action to perform if SASL authentication fails: "continue" to ignore the authentication problem, "reconnect" to schedule a reconnection to the server, "disconnect" to disconnect from server (see also option irc.network.sasl_fail_unavailable)]
 ** tipo: intero

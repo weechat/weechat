@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-01-29 12:15+0100\n"
+"POT-Creation-Date: 2023-01-29 16:50+0100\n"
 "PO-Revision-Date: 2022-10-15 22:51+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7860,6 +7860,10 @@ msgid ""
 msgstr ""
 
 #, c-format
+msgid "%s%s: invalid registered mode, must be a single character"
+msgstr ""
+
+#, c-format
 msgid ""
 "%s%s: warning: server \"%s\" not found in configuration file, not deleted in "
 "memory because it's currently used"
@@ -8210,6 +8214,9 @@ msgstr ""
 msgid ""
 "channel type prefixes to use if the server does not send them in message 005 "
 "(default is \"#&\")"
+msgstr ""
+
+msgid "mode that is set on registered users (default is \"r\")"
 msgstr ""
 
 #, fuzzy, c-format

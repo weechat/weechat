@@ -122,6 +122,7 @@ char *irc_server_options[IRC_SERVER_NUM_OPTIONS][2] =
   { "split_msg_max_length", "512"                     },
   { "charset_message",      "message"                 },
   { "default_chantypes",    "#&"                      },
+  { "registered_mode",      "r"                       },
 };
 
 char *irc_server_casemapping_string[IRC_SERVER_NUM_CASEMAPPING] =
@@ -1555,6 +1556,8 @@ irc_server_alloc (const char *name)
     new_server->sasl_scram_auth_message = NULL;
     new_server->sasl_temp_username = NULL;
     new_server->sasl_temp_password = NULL;
+    new_server->authentication_method = IRC_SERVER_AUTH_METHOD_NONE;
+    new_server->sasl_mechanism_used = -1;
     new_server->is_connected = 0;
     new_server->ssl_connected = 0;
     new_server->disconnected = 0;
@@ -3975,6 +3978,8 @@ irc_server_close_connection (struct t_irc_server *server)
     weechat_hashtable_remove_all (server->join_noswitch);
 
     /* server is now disconnected */
+    server->authentication_method = IRC_SERVER_AUTH_METHOD_NONE;
+    server->sasl_mechanism_used = -1;
     server->is_connected = 0;
     server->ssl_connected = 0;
 
@@ -6113,6 +6118,8 @@ irc_server_hdata_server_cb (const void *pointer, void *data,
         WEECHAT_HDATA_VAR(struct t_irc_server, sasl_scram_auth_message, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, sasl_temp_username, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, sasl_temp_password, STRING, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_server, authentication_method, INTEGER, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_server, sasl_mechanism_used, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, is_connected, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, ssl_connected, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, disconnected, INTEGER, 0, NULL, NULL);
@@ -6483,6 +6490,10 @@ irc_server_add_to_infolist (struct t_infolist *infolist,
         if (!weechat_infolist_new_var_time (ptr_item, "lag_last_refresh", server->lag_last_refresh))
             return 0;
     }
+    if (!weechat_infolist_new_var_integer (ptr_item, "authentication_method", server->authentication_method))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "sasl_mechanism_used", server->sasl_mechanism_used))
+        return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "isupport", server->isupport))
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "prefix_modes", server->prefix_modes))
@@ -6857,6 +6868,8 @@ irc_server_print_log ()
         weechat_log_printf ("  sasl_scram_auth_message . : (hidden)");
         weechat_log_printf ("  sasl_temp_username. . . . : '%s'",  ptr_server->sasl_temp_username);
         weechat_log_printf ("  sasl_temp_password. . . . : (hidden)");
+        weechat_log_printf ("  authentication_method . . : %d",    ptr_server->authentication_method);
+        weechat_log_printf ("  sasl_mechanism_used . . . : %d",    ptr_server->sasl_mechanism_used);
         weechat_log_printf ("  is_connected. . . . . . . : %d",    ptr_server->is_connected);
         weechat_log_printf ("  ssl_connected . . . . . . : %d",    ptr_server->ssl_connected);
         weechat_log_printf ("  disconnected. . . . . . . : %d",    ptr_server->disconnected);
