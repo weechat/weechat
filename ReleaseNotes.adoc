@@ -20,6 +20,29 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 [[v3.9]]
 == Version 3.9 (under dev)
 
+[[v3.9_ctrl_keys_lower_case]]
+=== Control keys as lower case
+
+Keys using the kbd:[Ctrl] key and a letter are now automatically converted to
+lower case. +
+That means for example keys `ctrl-q` and `ctrl-Q` are the same and saved as
+`ctrl-q` (lower case).
+
+Example of key being automatically converted to lower case:
+
+----
+/key bind ctrl-Q /print test
+----
+
+Output is now:
+
+----
+New key binding (context "default"): ctrl-q => /print test
+----
+
+With older releases, upper case was mandatory and lower case letter for control
+keys were not working at all.
+
 [[v3.9_case_sensitive_identifiers]]
 === Case sensitive identifiers
 
