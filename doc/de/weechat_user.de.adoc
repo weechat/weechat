@@ -100,8 +100,7 @@ Repositorium.
 [[source_package]]
 === Quellpakete
 
-// TRANSLATION MISSING
-WeeChat must be built with CMake.
+WeeChat muss mit CMake erstellt werden.
 
 [NOTE]
 Unter macOS kann https://brew.sh/[Homebrew ^↗^,window=_blank] verwendet werden:
@@ -110,21 +109,18 @@ Unter macOS kann https://brew.sh/[Homebrew ^↗^,window=_blank] verwendet werde
 [[dependencies]]
 ==== Abhängigkeiten
 
-// TRANSLATION MISSING
-The following table shows the list of packages that are *required* to build
-WeeChat:
+Die folgende Tabelle zeigt eine Auflistung der Pakete, die zum Erstellen von WeeChat
+*erforderlich* sind:
 
 [width="100%",cols="5,^3,.^15",options="header"]
 |===
 | Paket ^(1)^ | Version | Funktionen
 
-// TRANSLATION MISSING
-| C compiler (gcc / clang) |
-| Compile C sources.
+| C Kompiler (gcc / clang) |
+| kompiliert C Quelldaten.
 
-// TRANSLATION MISSING
 | cmake | ≥ 3.0
-| Build.
+| bauen.
 
 | pkg-config |
 | entdeckt installierte Bibliotheken.
@@ -202,9 +198,8 @@ installieren:
 # apt-get build-dep weechat
 ----
 
-// TRANSLATION MISSING
 [[build]]
-==== Build
+==== Erstellen
 
 * Installation in das Systemverzeichnis (benötigt _root_ Privilegien):
 

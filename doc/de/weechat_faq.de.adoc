@@ -50,15 +50,12 @@ https://weechat.org/about/interfaces/[remote interfaces page ^↗^,window=_blan
 [[compile_git]]
 === Ich kann WeeChat nach Cloning des git Repository nicht kompilieren - weshalb?
 
-// TRANSLATION MISSING
-WeeChat must be compiled with CMake.
+WeeChat muss mit CMake kompiliert werden.
 
-// TRANSLATION MISSING
-Please follow link:weechat_user.en.html#source_package[build instructions ^↗^,window=_blank]
-and ensure all required dependencies are installed.
+Bitte folgen Sie link:weechat_user.en.html#source_package[build instructions ^↗^,window=_blank]
+und stellen Sie sicher, dass alle erforderlichen Abhängigkeiten installiert sind.
 
-// TRANSLATION MISSING
-If you still have issues, please report them to the developers.
+Wenn Sie weiterhin Probleme haben, melden Sie diese bitte den Entwicklern.
 
 [[compile_macos]]
 === Wie installiere ich WeeChat auf macOS?
