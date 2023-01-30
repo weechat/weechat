@@ -3961,6 +3961,31 @@ string_input_for_buffer (const char *string)
 }
 
 /*
+ * Returns the number of bytes in common between two strings (this function
+ * works with bytes and not UTF-8 chars).
+ */
+
+int
+string_get_common_bytes_count (const char *string1, const char *string2)
+{
+    const char *ptr_str1;
+    int found;
+
+    if (!string1 || !string2)
+        return 0;
+
+    found = 0;
+    ptr_str1 = string1;
+    while (ptr_str1[0])
+    {
+        if (strchr (string2, ptr_str1[0]))
+            found++;
+        ptr_str1++;
+    }
+    return found;
+}
+
+/*
  * Returns the distance between two strings using the Levenshtein algorithm.
  * See: https://en.wikipedia.org/wiki/Levenshtein_distance
  */

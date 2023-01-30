@@ -134,6 +134,8 @@ extern char *string_hex_dump (const char *data, int data_size,
                               const char *prefix, const char *suffix);
 extern int string_is_command_char (const char *string);
 extern const char *string_input_for_buffer (const char *string);
+extern int string_get_common_bytes_count (const char *string1,
+                                          const char *string2);
 extern int string_levenshtein (const char *string1, const char *string2,
                                int case_sensitive);
 extern char *string_replace_with_callback (const char *string,

@@ -2542,7 +2542,29 @@ TEST(CoreString, InputForBuffer)
 
 /*
  * Tests functions:
- *    string_levenshtein
+ *   string_get_common_bytes_count
+ */
+
+TEST(CoreString, GetCommonBytesCount)
+{
+    LONGS_EQUAL(0, string_get_common_bytes_count (NULL, NULL));
+    LONGS_EQUAL(0, string_get_common_bytes_count ("", NULL));
+    LONGS_EQUAL(0, string_get_common_bytes_count (NULL, ""));
+    LONGS_EQUAL(0, string_get_common_bytes_count ("", ""));
+
+    LONGS_EQUAL(1, string_get_common_bytes_count ("a", "a"));
+    LONGS_EQUAL(0, string_get_common_bytes_count ("a", "b"));
+
+    LONGS_EQUAL(3, string_get_common_bytes_count ("abc", "abc"));
+
+    LONGS_EQUAL(3, string_get_common_bytes_count ("abcdef", "fac"));
+
+    LONGS_EQUAL(4, string_get_common_bytes_count ("noël", "noïl"));
+}
+
+/*
+ * Tests functions:
+ *   string_levenshtein
  */
 
 TEST(CoreString, Levenshtein)
