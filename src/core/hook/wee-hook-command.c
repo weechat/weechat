@@ -543,7 +543,7 @@ hook_command_similar_get_relevance (const char *cmd1, int length_cmd1,
 
     /* perfect match if commands are the same (different case) */
     if (strcmp (cmd1, cmd2) == 0)
-        return -99;
+        return HOOK_COMMAND_SIMILAR_DIFF_CASE_ONLY;
 
     /* init relevance with Levenshtein distance (lower is better) */
     relevance = string_levenshtein (cmd1, cmd2, 1);
@@ -673,7 +673,7 @@ hook_command_display_error_unknown (const char *command)
     struct t_arraylist *list_commands;
     struct t_hook_command_similar *cmd_similar;
     char **str_commands;
-    int i, list_size, found;
+    int i, list_size, found, found_diff_case_only;
 
     if (!command || !command[0])
         return;
@@ -690,6 +690,7 @@ hook_command_display_error_unknown (const char *command)
     }
 
     found = 0;
+    found_diff_case_only = 0;
     list_size = arraylist_size (list_commands);
     for (i = 0; i < list_size; i++)
     {
@@ -701,6 +702,8 @@ hook_command_display_error_unknown (const char *command)
             string_dyn_concat (str_commands, ", ", -1);
         string_dyn_concat (str_commands, cmd_similar->command, -1);
         found++;
+        if (cmd_similar->relevance == HOOK_COMMAND_SIMILAR_DIFF_CASE_ONLY)
+            found_diff_case_only++;
         if (found >= 5)
             break;
     }
@@ -710,6 +713,10 @@ hook_command_display_error_unknown (const char *command)
     gui_chat_printf_date_tags (
         NULL,
         0, GUI_FILTER_TAG_NO_FILTER,
+        (found_diff_case_only > 0) ?
+        _("%sUnknown command \"%s\" (commands are case sensitive, "
+          "type /help for help), "
+          "commands with similar name: %s") :
         _("%sUnknown command \"%s\" (type /help for help), "
           "commands with similar name: %s"),
         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],

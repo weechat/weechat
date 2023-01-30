@@ -26,7 +26,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-01-30 21:30+0100\n"
+"POT-Creation-Date: 2023-01-30 22:06+0100\n"
 "PO-Revision-Date: 2023-01-29 13:05+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German - Germany <weechatter@arcor.de>\n"
@@ -146,6 +146,13 @@ msgstr "Datei"
 msgid "%sAnother command \"%s\" already exists for plugin \"%s\""
 msgstr ""
 "%sEin anderer Befehl \"%s\" existiert bereits für die Erweiterung \"%s\""
+
+#, fuzzy, c-format
+#| msgid "%sUnknown command \"%s\" (type /help for help)"
+msgid ""
+"%sUnknown command \"%s\" (commands are case sensitive, type /help for help), "
+"commands with similar name: %s"
+msgstr "%sDer Befehl \"%s\" ist nicht bekannt (für eine Hilfe nutze /help)"
 
 #, fuzzy, c-format
 #| msgid "%sUnknown command \"%s\" (type /help for help)"

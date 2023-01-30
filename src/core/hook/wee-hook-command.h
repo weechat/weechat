@@ -37,6 +37,9 @@ struct t_gui_buffer;
 #define HOOK_COMMAND_EXEC_AMBIGUOUS_INCOMPLETE -3
 #define HOOK_COMMAND_EXEC_RUNNING              -4
 
+/* same command found with a different case */
+#define HOOK_COMMAND_SIMILAR_DIFF_CASE_ONLY -99
+
 typedef int (t_hook_callback_command)(const void *pointer, void *data,
                                       struct t_gui_buffer *buffer,
                                       int argc, char **argv, char **argv_eol);
