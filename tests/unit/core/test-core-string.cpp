@@ -1417,8 +1417,8 @@ TEST(CoreString, ReplaceWithCallback)
 
 /*
  * Tests functions:
- *    string_split
- *    string_free_split
+ *   string_split
+ *   string_free_split
  */
 
 TEST(CoreString, Split)
@@ -1704,8 +1704,8 @@ TEST(CoreString, Split)
 
 /*
  * Tests functions:
- *    string_split_shared
- *    string_free_split_shared
+ *   string_split_shared
+ *   string_free_split_shared
  */
 
 TEST(CoreString, SplitShared)
@@ -1748,8 +1748,8 @@ TEST(CoreString, SplitShared)
 
 /*
  * Tests functions:
- *    string_split_shell
- *    string_free_split
+ *   string_split_shell
+ *   string_free_split
  */
 
 TEST(CoreString, SplitShell)
@@ -1785,8 +1785,8 @@ TEST(CoreString, SplitShell)
 
 /*
  * Tests functions:
- *    string_split_command
- *    string_free_split_command
+ *   string_split_command
+ *   string_free_split_command
  */
 
 TEST(CoreString, SplitCommand)
@@ -1837,8 +1837,8 @@ TEST(CoreString, SplitCommand)
 
 /*
  * Tests functions:
- *    string_split_tags
- *    string_free_split_tags
+ *   string_split_tags
+ *   string_free_split_tags
  */
 
 TEST(CoreString, SplitTags)
@@ -1898,7 +1898,7 @@ TEST(CoreString, SplitTags)
 
 /*
  * Tests functions:
- *    string_rebuild_split_string
+ *   string_rebuild_split_string
  */
 
 TEST(CoreString, RebuildSplitString)
@@ -2009,10 +2009,10 @@ TEST(CoreString, RebuildSplitString)
 
 /*
  * Tests functions:
- *    string_iconv
- *    string_iconv_to_internal
- *    string_iconv_from_internal
- *    string_fprintf
+ *   string_iconv
+ *   string_iconv_to_internal
+ *   string_iconv_from_internal
+ *   string_fprintf
  */
 
 TEST(CoreString, Iconv)
@@ -2053,7 +2053,7 @@ TEST(CoreString, Iconv)
 
 /*
  * Tests functions:
- *    string_format_size
+ *   string_format_size
  */
 
 TEST(CoreString, FormatSize)
@@ -2090,7 +2090,7 @@ TEST(CoreString, FormatSize)
 
 /*
  * Tests functions:
- *    string_parse_size
+ *   string_parse_size
  */
 
 TEST(CoreString, ParseSize)
@@ -2160,8 +2160,8 @@ TEST(CoreString, ParseSize)
 
 /*
  * Tests functions:
- *    string_base16_encode
- *    string_base16_decode
+ *   string_base16_encode
+ *   string_base16_decode
  */
 
 TEST(CoreString, Base16)
@@ -2210,8 +2210,8 @@ TEST(CoreString, Base16)
 
 /*
  * Tests functions:
- *    string_base32_encode
- *    string_base32_decode
+ *   string_base32_encode
+ *   string_base32_decode
  */
 
 TEST(CoreString, Base32)
@@ -2268,8 +2268,8 @@ TEST(CoreString, Base32)
 
 /*
  * Tests functions:
- *    string_base64_encode
- *    string_base64_decode
+ *   string_base64_encode
+ *   string_base64_decode
  */
 
 TEST(CoreString, Base64)
@@ -2343,7 +2343,7 @@ TEST(CoreString, Base64)
 
 /*
  * Tests functions:
- *    string_base_encode
+ *   string_base_encode
  */
 
 TEST(CoreString, BaseEncode)
@@ -2371,7 +2371,7 @@ TEST(CoreString, BaseEncode)
 
 /*
  * Tests functions:
- *    string_base_decode
+ *   string_base_decode
  */
 
 TEST(CoreString, BaseDecode)
@@ -2399,7 +2399,7 @@ TEST(CoreString, BaseDecode)
 
 /*
  * Tests functions:
- *    string_hex_dump
+ *   string_hex_dump
  */
 
 TEST(CoreString, Hex_dump)
@@ -2447,7 +2447,7 @@ TEST(CoreString, Hex_dump)
 
 /*
  * Tests functions:
- *    string_is_command_char
+ *   string_is_command_char
  */
 
 TEST(CoreString, IsCommandChar)
@@ -2479,7 +2479,7 @@ TEST(CoreString, IsCommandChar)
 
 /*
  * Tests functions:
- *    string_input_for_buffer
+ *   string_input_for_buffer
  */
 
 TEST(CoreString, InputForBuffer)
@@ -2618,7 +2618,7 @@ TEST(CoreString, Levenshtein)
 
 /*
  * Tests functions:
- *    string_get_priority_and_name
+ *   string_get_priority_and_name
  */
 
 TEST(CoreString, GetPriorityAndName)
@@ -2679,8 +2679,8 @@ TEST(CoreString, GetPriorityAndName)
 
 /*
  * Tests functions:
- *    string_shared_get
- *    string_shared_free
+ *   string_shared_get
+ *   string_shared_free
  */
 
 TEST(CoreString, Shared)
@@ -2723,10 +2723,10 @@ TEST(CoreString, Shared)
 
 /*
  * Tests functions:
- *    string_dyn_alloc
- *    string_dyn_copy
- *    string_dyn_concat
- *    string_dyn_free
+ *   string_dyn_alloc
+ *   string_dyn_copy
+ *   string_dyn_concat
+ *   string_dyn_free
  */
 
 TEST(CoreString, Dyn)
