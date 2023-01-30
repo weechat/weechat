@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-01-29 16:50+0100\n"
+"POT-Creation-Date: 2023-01-30 21:30+0100\n"
 "PO-Revision-Date: 2022-12-30 14:10+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
@@ -140,6 +140,13 @@ msgstr ""
 #, c-format
 msgid "%sAnother command \"%s\" already exists for plugin \"%s\""
 msgstr "%sIstnieje już inna komenda \"%s\" dla wtyczki \"%s\""
+
+#, fuzzy, c-format
+#| msgid "%sUnknown command \"%s\" (type /help for help)"
+msgid ""
+"%sUnknown command \"%s\" (type /help for help), commands with similar name: "
+"%s"
+msgstr "%sNieznana komenda \"%s\" (wpisz /help , aby uzyskać pomoc)"
 
 #, c-format
 msgid "%sBad file descriptor (%d) used in hook_fd"
@@ -5422,10 +5429,6 @@ msgid ""
 msgstr ""
 "uwaga: komenda \"%s\" nie jest obecnie dozwolona (komenda: \"%s\", bufor: "
 "\"%s\")"
-
-#, c-format
-msgid "%sUnknown command \"%s\" (type /help for help)"
-msgstr "%sNieznana komenda \"%s\" (wpisz /help , aby uzyskać pomoc)"
 
 #, c-format
 msgid ""

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-01-29 16:50+0100\n"
+"POT-Creation-Date: 2023-01-30 21:30+0100\n"
 "PO-Revision-Date: 2022-10-15 22:51+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -144,6 +144,12 @@ msgid "%sAnother command \"%s\" already exists for plugin \"%s\""
 msgstr ""
 "%1$sエラー: プラグイン \"%3$s\" で他のコマンド \"%2$s\" は既に定義されていま"
 "す"
+
+#, fuzzy, c-format
+msgid ""
+"%sUnknown command \"%s\" (type /help for help), commands with similar name: "
+"%s"
+msgstr "%sエラー: 未定義のコマンド \"%s\" (ヘルプを見るには /help を入力)"
 
 #, fuzzy, c-format
 msgid "%sBad file descriptor (%d) used in hook_fd"
@@ -5258,10 +5264,6 @@ msgid ""
 msgstr ""
 "警告: コマンド \"%s\" は許可されていません (コマンド: \"%s\"、バッファ: "
 "\"%s\")"
-
-#, fuzzy, c-format
-msgid "%sUnknown command \"%s\" (type /help for help)"
-msgstr "%sエラー: 未定義のコマンド \"%s\" (ヘルプを見るには /help を入力)"
 
 #, fuzzy, c-format
 msgid ""

@@ -27,6 +27,7 @@
 #include <string.h>
 
 #include "../weechat.h"
+#include "../wee-arraylist.h"
 #include "../wee-config.h"
 #include "../wee-hook.h"
 #include "../wee-infolist.h"
@@ -35,6 +36,7 @@
 #include "../wee-string.h"
 #include "../wee-utf8.h"
 #include "../../gui/gui-chat.h"
+#include "../../gui/gui-filter.h"
 #include "../../plugins/plugin.h"
 
 
@@ -520,6 +522,203 @@ hook_command_exec (struct t_gui_buffer *buffer, int any_plugin,
     hook_exec_end ();
 
     return rc;
+}
+
+/*
+ * Gets relevance for cmd2 (existing command) compared to cmd1 (non-existing
+ * command).
+ *
+ * Both commands are in lower case.
+ *
+ * Returns a number based on the Levenshtein distance between two commands,
+ * lower is better.
+ */
+
+int
+hook_command_similar_get_relevance (const char *cmd1, int length_cmd1,
+                                    const char *cmd2, int length_cmd2)
+{
+    const char *pos;
+    int relevance, factor;
+
+    /* perfect match if commands are the same (different case) */
+    if (strcmp (cmd1, cmd2) == 0)
+        return -1;
+
+    /* init relevance with Levenshtein distance (lower is better) */
+    relevance = string_levenshtein (cmd1, cmd2, 1);
+
+    /* bonus if one command includes the other */
+    pos = (length_cmd1 < length_cmd2) ?
+        strstr (cmd2, cmd1) : strstr (cmd1, cmd2);
+    if (pos)
+    {
+        factor = 4;
+        /* extra bonus if match is at beginning */
+        if ((pos == cmd1) || (pos == cmd2))
+            factor = 5;
+        relevance /= factor;
+    }
+    else
+    {
+        /* malus if no chars in common between two words */
+        if (string_get_common_bytes_count (cmd1, cmd2) == 0)
+            relevance *= 2;
+    }
+
+    return relevance;
+}
+
+/*
+ * Compares similar commands to sort them by relevance (lower number first:
+ * best relevance).
+ */
+
+int
+hook_command_similar_cmp_cb (void *data, struct t_arraylist *arraylist,
+                             void *pointer1, void *pointer2)
+{
+    struct t_hook_command_similar *ptr_cmd1, *ptr_cmd2;
+
+    /* make C compiler happy */
+    (void) data;
+    (void) arraylist;
+
+    ptr_cmd1 = (struct t_hook_command_similar *)pointer1;
+    ptr_cmd2 = (struct t_hook_command_similar *)pointer2;
+
+    if (ptr_cmd1->relevance < ptr_cmd2->relevance)
+        return -1;
+
+    if (ptr_cmd1->relevance > ptr_cmd2->relevance)
+        return 1;
+
+    return string_strcasecmp (ptr_cmd1->command, ptr_cmd2->command);
+}
+
+/*
+ * Frees a similar command.
+ */
+
+void
+hook_command_similar_free_cb (void *data, struct t_arraylist *arraylist,
+                              void *pointer)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) arraylist;
+
+    free (pointer);
+}
+
+/*
+ * Builds an arraylist with similar commands.
+ *
+ * Note: result must be freed after use.
+ */
+
+struct t_arraylist *
+hook_command_build_list_similar_commands (const char *command)
+{
+    struct t_arraylist *list_commands;
+    struct t_hook *ptr_hook;
+    struct t_hook_command_similar *cmd_similar;
+    char *cmd1, *cmd2;
+    int length_cmd1, length_cmd2, relevance;
+
+    cmd1 = string_tolower (command);
+    if (!cmd1)
+        return NULL;
+
+    length_cmd1 = strlen (cmd1);
+
+    list_commands = arraylist_new (64, 1, 0,
+                                   &hook_command_similar_cmp_cb, NULL,
+                                   &hook_command_similar_free_cb, NULL);
+
+    for (ptr_hook = weechat_hooks[HOOK_TYPE_COMMAND]; ptr_hook;
+         ptr_hook = ptr_hook->next_hook)
+    {
+        if (ptr_hook->deleted)
+            continue;
+        cmd2 = string_tolower (HOOK_COMMAND(ptr_hook, command));
+        if (!cmd2)
+            continue;
+        length_cmd2 = strlen (cmd2);
+        relevance = hook_command_similar_get_relevance (cmd1, length_cmd1,
+                                                        cmd2, length_cmd2);
+        cmd_similar = (struct t_hook_command_similar *)malloc (
+            sizeof (*cmd_similar));
+        if (cmd_similar)
+        {
+            cmd_similar->command = HOOK_COMMAND(ptr_hook, command);
+            cmd_similar->relevance = relevance;
+        }
+        arraylist_add (list_commands, cmd_similar);
+        free (cmd2);
+    }
+
+    free (cmd1);
+
+    return list_commands;
+}
+
+/*
+ * Displays similar command when an unknown command has been used, to help
+ * the user.
+ */
+
+void
+hook_command_display_error_unknown (const char *command)
+{
+    struct t_arraylist *list_commands;
+    struct t_hook_command_similar *cmd_similar;
+    char **str_commands;
+    int i, list_size, found;
+
+    if (!command || !command[0])
+        return;
+
+    list_commands = hook_command_build_list_similar_commands (command);
+    if (!list_commands)
+        return;
+
+    str_commands = string_dyn_alloc (256);
+    if (!str_commands)
+    {
+        arraylist_free (list_commands);
+        return;
+    }
+
+    found = 0;
+    list_size = arraylist_size (list_commands);
+    for (i = 0; i < list_size; i++)
+    {
+        cmd_similar = (struct t_hook_command_similar *)arraylist_get (
+            list_commands, i);
+        if (cmd_similar->relevance >= 3)
+            break;
+        if (found > 0)
+            string_dyn_concat (str_commands, ", ", -1);
+        string_dyn_concat (str_commands, cmd_similar->command, -1);
+        found++;
+        if (found >= 5)
+            break;
+    }
+    if (found == 0)
+        string_dyn_concat (str_commands, "-", -1);
+
+    gui_chat_printf_date_tags (
+        NULL,
+        0, GUI_FILTER_TAG_NO_FILTER,
+        _("%sUnknown command \"%s\" (type /help for help), "
+          "commands with similar name: %s"),
+        gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+        command,
+        *str_commands);
+
+    string_dyn_free (str_commands, 1);
+    arraylist_free (list_commands);
 }
 
 /*

@@ -65,6 +65,13 @@ struct t_hook_command
     char **cplt_template_args_concat;  /* concatenated arguments            */
 };
 
+struct t_hook_command_similar
+{
+    const char *command;               /* pointer to command name           */
+    int relevance;                     /* lower is better: mostly based on  */
+                                       /* Levenshtein distance between cmds */
+};
+
 extern char *hook_command_get_description (struct t_hook *hook);
 extern struct t_hook *hook_command (struct t_weechat_plugin *plugin,
                                     const char *command,
@@ -78,6 +85,7 @@ extern struct t_hook *hook_command (struct t_weechat_plugin *plugin,
 extern int hook_command_exec (struct t_gui_buffer *buffer, int any_plugin,
                               struct t_weechat_plugin *plugin,
                               const char *string);
+extern void hook_command_display_error_unknown (const char *command);
 extern void hook_command_free_data (struct t_hook *hook);
 extern int hook_command_add_to_infolist (struct t_infolist_item *item,
                                          struct t_hook *hook);
