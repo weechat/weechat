@@ -663,8 +663,8 @@ hook_command_build_list_similar_commands (const char *command)
 }
 
 /*
- * Displays similar command when an unknown command has been used, to help
- * the user.
+ * Displays an error on unknown command, with a list of existing similar
+ * command names.
  */
 
 void
