@@ -539,11 +539,11 @@ hook_command_similar_get_relevance (const char *cmd1, int length_cmd1,
                                     const char *cmd2, int length_cmd2)
 {
     const char *pos;
-    int relevance, factor;
+    int relevance;
 
     /* perfect match if commands are the same (different case) */
     if (strcmp (cmd1, cmd2) == 0)
-        return -1;
+        return -99;
 
     /* init relevance with Levenshtein distance (lower is better) */
     relevance = string_levenshtein (cmd1, cmd2, 1);
@@ -553,11 +553,10 @@ hook_command_similar_get_relevance (const char *cmd1, int length_cmd1,
         strstr (cmd2, cmd1) : strstr (cmd1, cmd2);
     if (pos)
     {
-        factor = 4;
+        relevance /= 4;
         /* extra bonus if match is at beginning */
         if ((pos == cmd1) || (pos == cmd2))
-            factor = 5;
-        relevance /= factor;
+            relevance -= 2;
     }
     else
     {
