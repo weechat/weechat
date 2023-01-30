@@ -63,6 +63,7 @@
 #define HEX2DEC(c) (((c >= 'a') && (c <= 'f')) ? c - 'a' + 10 :         \
                     ((c >= 'A') && (c <= 'F')) ? c - 'A' + 10 :         \
                     c - '0')
+#define MIN3(a, b, c) ((a) < (b) ? ((a) < (c) ? (a) : (c)) : ((b) < (c) ? (b) : (c)))
 
 struct t_hashtable *string_hashtable_shared = NULL;
 
@@ -3957,6 +3958,62 @@ string_input_for_buffer (const char *string)
 
     /* string is a command */
     return NULL;
+}
+
+/*
+ * Returns the distance between two strings using the Levenshtein algorithm.
+ * See: https://en.wikipedia.org/wiki/Levenshtein_distance
+ */
+
+int
+string_levenshtein (const char *string1, const char *string2,
+                    int case_sensitive)
+{
+    int x, y, length1, length2, last_diag, old_diag;
+    wint_t char1, char2;
+    const char *ptr_str1, *ptr_str2;
+
+    length1 = (string1) ? utf8_strlen (string1) : 0;
+    length2 = (string2) ? utf8_strlen (string2) : 0;
+
+    if (length1 == 0)
+        return length2;
+    if (length2 == 0)
+        return length1;
+
+    int column[length1 + 1];
+
+    for (y = 1; y <= length1; y++)
+    {
+        column[y] = y;
+    }
+
+    ptr_str2 = string2;
+
+    for (x = 1; x <= length2; x++)
+    {
+        char2 = (case_sensitive) ?
+            (wint_t)utf8_char_int (ptr_str2) :
+            towlower (utf8_char_int (ptr_str2));
+        column[0] = x;
+        ptr_str1 = string1;
+        for (y = 1, last_diag = x - 1; y <= length1; y++)
+        {
+            char1 = (case_sensitive) ?
+                (wint_t)utf8_char_int (ptr_str1) :
+                towlower (utf8_char_int (ptr_str1));
+            old_diag = column[y];
+            column[y] = MIN3(
+                column[y] + 1,
+                column[y - 1] + 1,
+                last_diag + ((char1 == char2) ? 0 : 1));
+            last_diag = old_diag;
+            ptr_str1 = utf8_next_char (ptr_str1);
+        }
+        ptr_str2 = utf8_next_char (ptr_str2);
+    }
+
+    return column[length1];
 }
 
 /*

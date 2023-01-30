@@ -2542,6 +2542,60 @@ TEST(CoreString, InputForBuffer)
 
 /*
  * Tests functions:
+ *    string_levenshtein
+ */
+
+TEST(CoreString, Levenshtein)
+{
+    LONGS_EQUAL(0, string_levenshtein (NULL, NULL, 1));
+    LONGS_EQUAL(0, string_levenshtein ("", "", 1));
+    LONGS_EQUAL(3, string_levenshtein (NULL, "abc", 1));
+    LONGS_EQUAL(3, string_levenshtein ("abc", NULL, 1));
+    LONGS_EQUAL(3, string_levenshtein ("", "abc", 1));
+    LONGS_EQUAL(3, string_levenshtein ("abc", "", 1));
+
+    LONGS_EQUAL(0, string_levenshtein ("abc", "abc", 1));
+    LONGS_EQUAL(1, string_levenshtein ("abc", "ab", 1));
+    LONGS_EQUAL(1, string_levenshtein ("ab", "abc", 1));
+    LONGS_EQUAL(2, string_levenshtein ("abc", "a", 1));
+    LONGS_EQUAL(2, string_levenshtein ("a", "abc", 1));
+    LONGS_EQUAL(3, string_levenshtein ("abc", "", 1));
+    LONGS_EQUAL(3, string_levenshtein ("", "abc", 1));
+
+    LONGS_EQUAL(3, string_levenshtein ("abc", "ABC", 1));
+    LONGS_EQUAL(3, string_levenshtein ("abc", "AB", 1));
+    LONGS_EQUAL(3, string_levenshtein ("ab", "ABC", 1));
+    LONGS_EQUAL(3, string_levenshtein ("abc", "A", 1));
+    LONGS_EQUAL(3, string_levenshtein ("a", "ABC", 1));
+    LONGS_EQUAL(3, string_levenshtein ("abc", "", 1));
+    LONGS_EQUAL(3, string_levenshtein ("", "ABC", 1));
+
+    LONGS_EQUAL(0, string_levenshtein ("abc", "ABC", 0));
+    LONGS_EQUAL(1, string_levenshtein ("abc", "AB", 0));
+    LONGS_EQUAL(1, string_levenshtein ("ab", "ABC", 0));
+    LONGS_EQUAL(2, string_levenshtein ("abc", "A", 0));
+    LONGS_EQUAL(2, string_levenshtein ("a", "ABC", 0));
+    LONGS_EQUAL(3, string_levenshtein ("abc", "", 0));
+    LONGS_EQUAL(3, string_levenshtein ("", "ABC", 0));
+
+    LONGS_EQUAL(2, string_levenshtein ("response", "respond", 1));
+    LONGS_EQUAL(4, string_levenshtein ("response", "resist", 1));
+
+    LONGS_EQUAL(2, string_levenshtein ("response", "responsive", 1));
+
+    /* with UTF-8 chars */
+    LONGS_EQUAL(1, string_levenshtein ("é", "É", 1));
+    LONGS_EQUAL(0, string_levenshtein ("é", "É", 0));
+    LONGS_EQUAL(1, string_levenshtein ("é", "à", 1));
+    LONGS_EQUAL(1, string_levenshtein ("é", "à", 0));
+    LONGS_EQUAL(1, string_levenshtein ("té", "to", 1));
+    LONGS_EQUAL(1, string_levenshtein ("noël", "noel", 1));
+    LONGS_EQUAL(2, string_levenshtein ("bôô", "boo", 1));
+    LONGS_EQUAL(2, string_levenshtein ("界世", "こん", 1));
+}
+
+/*
+ * Tests functions:
  *    string_get_priority_and_name
  */
 
