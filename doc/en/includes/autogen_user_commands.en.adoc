@@ -757,6 +757,12 @@ channel: channel name
 target: server name
 ----
 
+[[command_irc_rules]]
+* `+rules+`: request the server rules
+
+----
+----
+
 [[command_irc_sajoin]]
 * `+sajoin+`: force a user to join channel(s)
 

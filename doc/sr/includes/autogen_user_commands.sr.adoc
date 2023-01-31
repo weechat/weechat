@@ -757,6 +757,12 @@ message: message to send
 циљ: име сервера
 ----
 
+[[command_irc_rules]]
+* `+rules+`: request the server rules
+
+----
+----
+
 [[command_irc_sajoin]]
 * `+sajoin+`: форсирање да корисник приступи канал(у/има)
 

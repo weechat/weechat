@@ -4889,6 +4889,28 @@ IRC_COMMAND_CALLBACK(restart)
 }
 
 /*
+ * Callback for command "/rules": requests the server rules
+ */
+
+IRC_COMMAND_CALLBACK(rules)
+{
+    IRC_BUFFER_GET_SERVER(buffer);
+    IRC_COMMAND_CHECK_SERVER("rules", 1, 1);
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) argc;
+    (void) argv;
+    (void) argv_eol;
+
+    irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
+                      "RULES");
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Callback for command "/sajoin": forces a user to join channel(s).
  */
 
@@ -7433,6 +7455,12 @@ irc_command_init ()
         N_("[<target>]"),
         N_("target: server name"),
         NULL, &irc_command_restart, NULL, NULL);
+    weechat_hook_command (
+        "rules",
+        N_("request the server rules"),
+        "",
+        "",
+        NULL, &irc_command_rules, NULL, NULL);
     weechat_hook_command (
         "sajoin",
         N_("force a user to join channel(s)"),

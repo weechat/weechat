@@ -757,6 +757,12 @@ raison : raison (les variables spéciales $nick, $channel et $server sont rempl
 cible : nom du serveur
 ----
 
+[[command_irc_rules]]
+* `+rules+`: demander les règles du serveur
+
+----
+----
+
 [[command_irc_sajoin]]
 * `+sajoin+`: forcer un utilisateur à rejoindre un ou plusieurs canaux
 

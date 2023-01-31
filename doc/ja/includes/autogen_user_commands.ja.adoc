@@ -757,6 +757,12 @@ channel: channel name
 target: サーバ名
 ----
 
+[[command_irc_rules]]
+* `+rules+`: request the server rules
+
+----
+----
+
 [[command_irc_sajoin]]
 * `+sajoin+`: ユーザがチャンネルへ参加することを強制
 

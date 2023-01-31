@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-01-31 18:33+0100\n"
+"POT-Creation-Date: 2023-01-31 18:40+0100\n"
 "PO-Revision-Date: 2022-10-15 22:51+0200\n"
 "Last-Translator: Santiago Forero <santiago@forero.xyz>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8448,6 +8448,11 @@ msgstr ""
 
 msgid "tell the server to restart itself"
 msgstr "pedir al servidor que se reinicie"
+
+#, fuzzy
+#| msgid "reconnect to server(s)"
+msgid "request the server rules"
+msgstr "reconectar al servidor(es)"
 
 msgid "force a user to join channel(s)"
 msgstr "fuerza un usuario a unirse a un canal o canales"
