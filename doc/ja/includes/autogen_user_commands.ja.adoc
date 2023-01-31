@@ -453,6 +453,16 @@ Example:
 reason: 理由
 ----
 
+[[command_irc_knock]]
+* `+knock+`: send a notice to an invitation-only channel, requesting an invite
+
+----
+/knock  <channel> [<message>]
+
+channel: channel name
+message: message to send
+----
+
 [[command_irc_links]]
 * `+links+`: list all server names which are known by the server answering the query
 

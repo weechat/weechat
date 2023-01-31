@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-01-30 22:06+0100\n"
+"POT-Creation-Date: 2023-01-31 18:33+0100\n"
 "PO-Revision-Date: 2022-10-15 22:51+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -8814,6 +8814,25 @@ msgstr ""
 "  nick: ニックネーム\n"
 "reason: 理由"
 
+msgid "send a notice to an invitation-only channel, requesting an invite"
+msgstr ""
+
+#, fuzzy
+#| msgid "[-all] [<message>]"
+msgid "<channel> [<message>]"
+msgstr "[-all] [<message>]"
+
+#, fuzzy
+#| msgid ""
+#| "channel: channel name\n"
+#| "   text: text to send"
+msgid ""
+"channel: channel name\n"
+"message: message to send"
+msgstr ""
+"channel: チャンネル名\n"
+"   text: 送信テキスト"
+
 #, fuzzy
 msgid "list all server names which are known by the server answering the query"
 msgstr "このクエリに応答するサーバが知っている全てのサーバ名をリストアップ"
@@ -11462,6 +11481,9 @@ msgid "%s%s: nickname \"%s\" is unavailable, trying nickname \"%s\""
 msgstr ""
 "%s%s: ニックネーム \"%s\" は利用できません、ニックネーム \"%s\" を試行してい"
 "ます"
+
+msgid "has asked for an invite"
+msgstr ""
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, c-format

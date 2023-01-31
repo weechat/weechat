@@ -3258,6 +3258,36 @@ IRC_COMMAND_CALLBACK(kill)
 }
 
 /*
+ * Callback for command "/knock": sends a notice to an invitation-only channel,
+ * requesting an invite.
+ */
+
+IRC_COMMAND_CALLBACK(knock)
+{
+    IRC_BUFFER_GET_SERVER(buffer);
+    IRC_COMMAND_CHECK_SERVER("knock", 1, 1);
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+
+    WEECHAT_COMMAND_MIN_ARGS(2, "");
+
+    if (argc < 3)
+    {
+        irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
+                          "KNOCK %s", argv[1]);
+    }
+    else
+    {
+        irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
+                          "KNOCK %s :%s", argv[1], argv_eol[2]);
+    }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Callback for command "/links": lists all server names which are known by the
  * server answering the query.
  */
@@ -7147,6 +7177,14 @@ irc_command_init ()
         N_("  nick: nick\n"
            "reason: reason"),
         "%(nicks) %-", &irc_command_kill, NULL, NULL);
+    weechat_hook_command (
+        "knock",
+        N_("send a notice to an invitation-only channel, requesting an invite"),
+        N_("<channel> [<message>]"),
+        N_("channel: channel name\n"
+           "message: message to send"),
+        "%(irc_channels)",
+        &irc_command_knock, NULL, NULL);
     weechat_hook_command (
         "links",
         N_("list all server names which are known by the server answering the "

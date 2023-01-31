@@ -26,7 +26,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-01-30 22:06+0100\n"
+"POT-Creation-Date: 2023-01-31 18:33+0100\n"
 "PO-Revision-Date: 2023-01-31 07:52+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German - Germany <weechatter@arcor.de>\n"
@@ -9413,6 +9413,25 @@ msgstr ""
 "  nick: Nickname\n"
 "reason: Grund der Abmeldung"
 
+msgid "send a notice to an invitation-only channel, requesting an invite"
+msgstr ""
+
+#, fuzzy
+#| msgid "[-all] [<message>]"
+msgid "<channel> [<message>]"
+msgstr "[-all] [<message>]"
+
+#, fuzzy
+#| msgid ""
+#| "channel: channel name\n"
+#| "   text: text to send"
+msgid ""
+"channel: channel name\n"
+"message: message to send"
+msgstr ""
+"channel: Name des Kanals\n"
+"   text: Text der versendet werden soll"
+
 msgid "list all server names which are known by the server answering the query"
 msgstr "alle Servernamen auflisten, die dem antwortenden Server bekannt sind"
 
@@ -12220,6 +12239,9 @@ msgid "%s%s: nickname \"%s\" is unavailable, trying nickname \"%s\""
 msgstr ""
 "%s%s: Der Nickname \"%s\" ist nicht verfügbar. Es wird nun versucht den "
 "Nicknamen \"%s\" zu nutzen"
+
+msgid "has asked for an invite"
+msgstr ""
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, c-format

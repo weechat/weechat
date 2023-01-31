@@ -453,6 +453,16 @@ pseudo : pseudo
 raison : raison
 ----
 
+[[command_irc_knock]]
+* `+knock+`: envoyer une notice à un canal en invitation seulement, en demandant une invitation
+
+----
+/knock  <canal> [<message>]
+
+  canal : nom du canal
+message : message à envoyer
+----
+
 [[command_irc_links]]
 * `+links+`: lister tous les noms de serveurs connus du serveur qui répondent à la requête
 

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-01-30 22:06+0100\n"
+"POT-Creation-Date: 2023-01-31 18:33+0100\n"
 "PO-Revision-Date: 2022-12-05 09:44+0400\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -9522,6 +9522,25 @@ msgstr ""
 "надимак: надимак\n"
 " разлог: разлог"
 
+msgid "send a notice to an invitation-only channel, requesting an invite"
+msgstr ""
+
+#, fuzzy
+#| msgid "[-all] [<message>]"
+msgid "<channel> [<message>]"
+msgstr "[-all] [<порука>]"
+
+#, fuzzy
+#| msgid ""
+#| "channel: channel name\n"
+#| "   text: text to send"
+msgid ""
+"channel: channel name\n"
+"message: message to send"
+msgstr ""
+"канал: име канала\n"
+"текст: текст који се шаље"
+
 msgid "list all server names which are known by the server answering the query"
 msgstr "листа свих имена сервера који су познати серверу одговарајући на упит"
 
@@ -12197,6 +12216,9 @@ msgstr "%s%s: надимак „%s” се већ користи, покушав
 #, c-format
 msgid "%s%s: nickname \"%s\" is unavailable, trying nickname \"%s\""
 msgstr "%s%s: надимак „%s” није доступан, покушава се са надимком „%s”"
+
+msgid "has asked for an invite"
+msgstr ""
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, c-format

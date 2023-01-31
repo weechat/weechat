@@ -4099,6 +4099,119 @@ TEST(IrcProtocolWithServer, 706)
 
 /*
  * Tests functions:
+ *   irc_protocol_cb_710 (knock: has asked for an invite)
+ */
+
+TEST(IrcProtocolWithServer, 710)
+{
+    SRV_INIT_JOIN;
+
+    /* not enough parameters */
+    RECV(":server 710");
+    CHECK_ERROR_PARAMS("710", 0, 3);
+    RECV(":server 710 #test");
+    CHECK_ERROR_PARAMS("710", 1, 3);
+    RECV(":server 710 #test #test");
+    CHECK_ERROR_PARAMS("710", 2, 3);
+
+    RECV(":server 710 #test #test nick1!user1@host1");
+    CHECK_CHAN("-- nick1 (user1@host1) has asked for an invite");
+    RECV(":server 710 #test #test nick1!user1@host1 :has asked for an invite.");
+    CHECK_CHAN("-- nick1 (user1@host1) has asked for an invite.");
+
+    /* channel not found */
+    RECV(":server 710 #xyz #xyz nick1!user1@host1");
+    CHECK_ERROR_PARSE("710", ":server 710 #xyz #xyz nick1!user1@host1");
+    RECV(":server 710 #xyz #xyz nick1!user1@host1 :has asked for an invite.");
+    CHECK_ERROR_PARSE("710", ":server 710 #xyz #xyz nick1!user1@host1 :has asked for an invite.");
+}
+
+/*
+ * Tests functions:
+ *   irc_protocol_cb_711 (knock: has been delivered)
+ */
+
+TEST(IrcProtocolWithServer, 711)
+{
+    SRV_INIT;
+
+    /* not enough parameters */
+    RECV(":server 711");
+    CHECK_ERROR_PARAMS("711", 0, 3);
+    RECV(":server 711 alice");
+    CHECK_ERROR_PARAMS("711", 1, 3);
+    RECV(":server 711 alice #test");
+    CHECK_ERROR_PARAMS("711", 2, 3);
+
+    RECV(":server 711 alice #test :Your KNOCK has been delivered.");
+    CHECK_SRV("-- #test: Your KNOCK has been delivered.");
+}
+
+/*
+ * Tests functions:
+ *   irc_protocol_cb_712 (knock: too many knocks)
+ */
+
+TEST(IrcProtocolWithServer, 712)
+{
+    SRV_INIT;
+
+    /* not enough parameters */
+    RECV(":server 712");
+    CHECK_ERROR_PARAMS("712", 0, 3);
+    RECV(":server 712 alice");
+    CHECK_ERROR_PARAMS("712", 1, 3);
+    RECV(":server 712 alice #test");
+    CHECK_ERROR_PARAMS("712", 2, 3);
+
+    RECV(":server 712 alice #test :Too many KNOCKs (channel).");
+    CHECK_SRV("-- #test: Too many KNOCKs (channel).");
+}
+
+/*
+ * Tests functions:
+ *   irc_protocol_cb_713 (knock: channel is open)
+ */
+
+TEST(IrcProtocolWithServer, 713)
+{
+    SRV_INIT;
+
+    /* not enough parameters */
+    RECV(":server 713");
+    CHECK_ERROR_PARAMS("713", 0, 3);
+    RECV(":server 713 alice");
+    CHECK_ERROR_PARAMS("713", 1, 3);
+    RECV(":server 713 alice #test");
+    CHECK_ERROR_PARAMS("713", 2, 3);
+
+    RECV(":server 713 alice #test :Channel is open.");
+    CHECK_SRV("-- #test: Channel is open.");
+}
+
+/*
+ * Tests functions:
+ *   irc_protocol_cb_714 (knock: already on that channel)
+ */
+
+TEST(IrcProtocolWithServer, 714)
+{
+    SRV_INIT_JOIN;
+
+    /* not enough parameters */
+    RECV(":server 714");
+    CHECK_ERROR_PARAMS("714", 0, 3);
+    RECV(":server 714 alice");
+    CHECK_ERROR_PARAMS("714", 1, 3);
+    RECV(":server 714 alice #test");
+    CHECK_ERROR_PARAMS("714", 2, 3);
+
+    RECV(":server 714 alice #test :You are already on that channel.");
+    CHECK_SRV("-- #test: You are already on that channel.");
+}
+
+/*
+ * Tests functions:
  *   irc_protocol_cb_728 (quietlist)
  */
 

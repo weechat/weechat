@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-01-30 22:06+0100\n"
+"POT-Creation-Date: 2023-01-31 18:33+0100\n"
 "PO-Revision-Date: 2022-10-15 22:51+0200\n"
 "Last-Translator: Érico Nogueira <ericonr@disroot.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7595,6 +7595,25 @@ msgid ""
 "reason: reason"
 msgstr ""
 
+msgid "send a notice to an invitation-only channel, requesting an invite"
+msgstr ""
+
+#, fuzzy
+#| msgid "[-all] [<message>]"
+msgid "<channel> [<message>]"
+msgstr "[-all] [<mensagem>]"
+
+#, fuzzy
+#| msgid ""
+#| "channel: channel name to leave\n"
+#| "message: part message (displayed to other users)"
+msgid ""
+"channel: channel name\n"
+"message: message to send"
+msgstr ""
+"channel: nome do cair que quer sair\n"
+"message: mensagem de saida (mostrado para os outros usuários)"
+
 #, fuzzy
 msgid "list all server names which are known by the server answering the query"
 msgstr ""
@@ -9896,6 +9915,9 @@ msgstr "%s%s: apelido \"%s\" já está em uso, tentando apelido \"%s\""
 #, c-format
 msgid "%s%s: nickname \"%s\" is unavailable, trying nickname \"%s\""
 msgstr "%s%s: apelido \"%s\" está indisponível, tentando apelido \"%s\""
+
+msgid "has asked for an invite"
+msgstr ""
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, fuzzy, c-format

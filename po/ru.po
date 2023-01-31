@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-01-30 22:06+0100\n"
+"POT-Creation-Date: 2023-01-31 18:33+0100\n"
 "PO-Revision-Date: 2022-10-15 22:51+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6996,6 +6996,21 @@ msgstr ""
 "  ник: приглашаемый ник\n"
 "канал: целевой канал"
 
+msgid "send a notice to an invitation-only channel, requesting an invite"
+msgstr ""
+
+#, fuzzy
+msgid "<channel> [<message>]"
+msgstr "[-all] [сообщение]"
+
+#, fuzzy
+msgid ""
+"channel: channel name\n"
+"message: message to send"
+msgstr ""
+"канал: название канала\n"
+" ключ: ключ для входа на канал"
+
 #, fuzzy
 msgid "list all server names which are known by the server answering the query"
 msgstr "перечислить все серверы известные серверу, отвечающему на запрос"
@@ -9464,6 +9479,9 @@ msgstr "%s: ник \"%s\" уже используется, пробую втор
 #, fuzzy, c-format
 msgid "%s%s: nickname \"%s\" is unavailable, trying nickname \"%s\""
 msgstr "%s: ник \"%s\" уже используется, пробую второй ник \"%s\"\n"
+
+msgid "has asked for an invite"
+msgstr ""
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, fuzzy, c-format

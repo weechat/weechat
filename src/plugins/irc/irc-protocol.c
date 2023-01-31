@@ -348,7 +348,7 @@ irc_protocol_string_params (const char **params, int arg_start, int arg_end)
  *
  * Called by callbacks for commands: FAIL, WARN, NOTE.
  *
- * Commands looks like:
+ * Commands look like:
  *   FAIL * NEED_REGISTRATION :You need to be registered to continue
  *   FAIL ACC REG_INVALID_CALLBACK REGISTER :Email address is not valid
  *   FAIL BOX BOXES_INVALID STACK CLOCKWISE :Given boxes are not supported
@@ -1916,6 +1916,41 @@ IRC_PROTOCOL_CALLBACK(kill)
                 irc_nick_free (server, ptr_channel, ptr_nick_killed);
         }
     }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * Callback for an IRC KNOCK reply.
+ *
+ * Commands look like:
+ *   711 nick #channel :Your KNOCK has been delivered.
+ *   712 nick #channel :Too many KNOCKs (channel).
+ *   713 nick #channel :Channel is open.
+ *   714 nick #channel :You are already on that channel.
+ */
+
+IRC_PROTOCOL_CALLBACK(knock_reply)
+{
+    char *str_message;
+
+    IRC_PROTOCOL_MIN_PARAMS(3);
+
+    str_message = irc_protocol_string_params (params, 2, num_params - 1);
+
+    weechat_printf_date_tags (
+        irc_msgbuffer_get_target_buffer (server, params[0], command, NULL, NULL),
+        date,
+        irc_protocol_tags (command, tags, NULL, NULL, NULL),
+        "%s%s%s%s: %s",
+        weechat_prefix ("network"),
+        IRC_COLOR_CHAT_CHANNEL,
+        params[1],
+        IRC_COLOR_RESET,
+        str_message);
+
+    if (str_message)
+        free (str_message);
 
     return WEECHAT_RC_OK;
 }
@@ -6825,6 +6860,51 @@ IRC_PROTOCOL_CALLBACK(help)
 }
 
 /*
+ * Callback for the IRC command "710": has asked for an invite (knock).
+ *
+ * Command looks like:
+ *   710 #channel #channel nick!user@host :has asked for an invite.
+ */
+
+IRC_PROTOCOL_CALLBACK(710)
+{
+    struct t_irc_channel *ptr_channel;
+    const char *nick_address;
+    char *str_message;
+
+    IRC_PROTOCOL_MIN_PARAMS(3);
+
+    if (ignored)
+        return WEECHAT_RC_OK;
+
+    ptr_channel = irc_channel_search (server, params[1]);
+    if (!ptr_channel)
+        return WEECHAT_RC_ERROR;
+
+    nick_address = irc_protocol_nick_address (
+        server, 1, NULL, irc_message_get_nick_from_host (params[2]),
+        irc_message_get_address_from_host (params[2]));
+
+    str_message = irc_protocol_string_params (params, 3, num_params - 1);
+
+    weechat_printf_date_tags (
+        irc_msgbuffer_get_target_buffer (
+            server, NULL, command, NULL, ptr_channel->buffer),
+        date,
+        irc_protocol_tags (command, tags, "notify_message", NULL, NULL),
+        "%s%s %s",
+        weechat_prefix ("network"),
+        (nick_address[0]) ? nick_address : "?",
+        (str_message && str_message[0]) ?
+        str_message : _("has asked for an invite"));
+
+    if (str_message)
+        free (str_message);
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Callback for the IRC command "728": quietlist.
  *
  * Command looks like:
@@ -7500,6 +7580,11 @@ irc_protocol_recv_command (struct t_irc_server *server,
         IRCB(704, 1, 0, help),           /* start of HELP/HELPOP            */
         IRCB(705, 1, 0, help),           /* body of HELP/HELPOP             */
         IRCB(706, 1, 0, help),           /* end of HELP/HELPOP              */
+        IRCB(710, 1, 0, 710),            /* knock: has asked for an invite  */
+        IRCB(711, 1, 0, knock_reply),    /* knock: has been delivered       */
+        IRCB(712, 1, 0, knock_reply),    /* knock: too many knocks          */
+        IRCB(713, 1, 0, knock_reply),    /* knock: channel is open          */
+        IRCB(714, 1, 0, knock_reply),    /* knock: already on that channel  */
         IRCB(728, 1, 0, 728),            /* quietlist                       */
         IRCB(729, 1, 0, 729),            /* end of quietlist                */
         IRCB(730, 1, 0, 730),            /* monitored nicks online          */

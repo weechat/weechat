@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-01-30 22:06+0100\n"
+"POT-Creation-Date: 2023-01-31 18:33+0100\n"
 "PO-Revision-Date: 2022-10-15 22:51+0200\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -9561,6 +9561,25 @@ msgstr ""
 "takmaad: Takma ad\n"
 "  neden: Neden"
 
+msgid "send a notice to an invitation-only channel, requesting an invite"
+msgstr ""
+
+#, fuzzy
+#| msgid "[-all] [<message>]"
+msgid "<channel> [<message>]"
+msgstr "[-all] [<ileti>]"
+
+#, fuzzy
+#| msgid ""
+#| "channel: channel name\n"
+#| "   text: text to send"
+msgid ""
+"channel: channel name\n"
+"message: message to send"
+msgstr ""
+"kanal: Kanal adı\n"
+"metin: Gönderilecek metin"
+
 msgid "list all server names which are known by the server answering the query"
 msgstr "sorguya yanıt veren tüm sunucu adlarını listele"
 
@@ -12229,6 +12248,9 @@ msgstr "%s%s: \"%s\" takma adı zaten kullanılıyor, \"%s\" takma adı deneniyo
 #, c-format
 msgid "%s%s: nickname \"%s\" is unavailable, trying nickname \"%s\""
 msgstr "%s%s: \"%s\" takma adı kullanılamıyor, \"%s\" takma adı deneniyor"
+
+msgid "has asked for an invite"
+msgstr ""
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, c-format
