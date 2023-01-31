@@ -27,7 +27,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2023-01-30 22:06+0100\n"
-"PO-Revision-Date: 2023-01-29 13:05+0100\n"
+"PO-Revision-Date: 2023-01-31 07:52+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German - Germany <weechatter@arcor.de>\n"
 "Language: de_DE\n"
@@ -147,19 +147,21 @@ msgid "%sAnother command \"%s\" already exists for plugin \"%s\""
 msgstr ""
 "%sEin anderer Befehl \"%s\" existiert bereits für die Erweiterung \"%s\""
 
-#, fuzzy, c-format
-#| msgid "%sUnknown command \"%s\" (type /help for help)"
+#, c-format
 msgid ""
 "%sUnknown command \"%s\" (commands are case sensitive, type /help for help), "
 "commands with similar name: %s"
-msgstr "%sDer Befehl \"%s\" ist nicht bekannt (für eine Hilfe nutze /help)"
+msgstr ""
+"%sUnbekannter Befehl \"%s\" (Befehle unterscheiden sich in Groß- und "
+"Kleinschreibung, für eine Hilfe nutze /help), Befehl mit ähnlichem Namen: %s"
 
-#, fuzzy, c-format
-#| msgid "%sUnknown command \"%s\" (type /help for help)"
+#, c-format
 msgid ""
 "%sUnknown command \"%s\" (type /help for help), commands with similar name: "
 "%s"
-msgstr "%sDer Befehl \"%s\" ist nicht bekannt (für eine Hilfe nutze /help)"
+msgstr ""
+"%sUnbekannter Befehl \"%s\" (für eine Hilfe nutze /help), Befehl mit "
+"ähnlichem Namen: %s"
 
 #, c-format
 msgid "%sBad file descriptor (%d) used in hook_fd"
@@ -10352,6 +10354,8 @@ msgstr ""
 #, c-format
 msgid "%s%s: invalid registered mode, must be a single character"
 msgstr ""
+"%s%s: ungültiger registrierter Modus, es muss ein einzelnes Zeichen genutzt "
+"werden"
 
 #, c-format
 msgid ""
@@ -10819,6 +10823,7 @@ msgstr ""
 
 msgid "mode that is set on registered users (default is \"r\")"
 msgstr ""
+"Modus, der für registrierte Benutzer eingestellt ist (Standard ist \"r\")"
 
 #, c-format
 msgid "%s%s: error adding server \"%s\""
