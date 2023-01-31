@@ -1505,7 +1505,7 @@
 ** Standardwert: `+""+`
 
 * [[option_irc.server_default.registered_mode]] *irc.server_default.registered_mode*
-** Beschreibung: pass:none[mode that is set on registered users (default is "r")]
+** Beschreibung: pass:none[Modus, der für registrierte Benutzer eingestellt ist (Standard ist "r")]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+"r"+`
