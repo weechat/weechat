@@ -176,22 +176,21 @@ Weechat.bar_new("name", "off", "0", "window", "", "left", "vertical", "vertical"
 
 Функције се позивају са `+weechat::xxx арг1 арг2 ...+`.
 
-// TRANSLATION MISSING
 [[tcl_null]]
-===== Null values
+===== Null вредности
 
-Since Tcl only has string types, there's no null type to pass as an argument
-when a function accepts null values or to get as an argument in a callback
-function. To overcome this the WeeChat API defines the constant
-`$::weechat::WEECHAT_NULL` which acts as a null value. This constant is defined
-as `\uFFFF\uFFFF\uFFFFWEECHAT_NULL\uFFFF\uFFFF\uFFFF`, so it's very unlikely to
-appear unintentionally.
+Пошто Tcl има само стринг типове, не постоји могућност да се проследи аргумент
+null типа када функција прихвата null вредности или да прихвати као аргумент у
+функцији повратног позива. Да би се решио овај проблем WeeChat API дефинише
+константу `$::weechat::WEECHAT_NULL` која има улогу null вредности. Ова константа
+се дефинипе као `\uFFFF\uFFFF\uFFFFWEECHAT_NULL\uFFFF\uFFFF\uFFFF`, тако да је
+мала вероватноћа да се појави без намере.
 
-You can pass this constant when a function accepts null as an argument and you
-will get it as the value of an argument in a callback function if the argument
-value is null. To see which functions accept null values and passes null values
-to callbacks, look at the Python prototypes in the
-link:weechat_plugin_api.en.html[WeeChat plugin API reference ^↗^,window=_blank].
+Ову константу можете да проследите када функција као аргумент прихвата null и
+вретиће вам се као вредност аргумента у функцији повратног позива ако је вредност
+аргумента null. Да бисте видели које функције прихватају null вредности и 
+прослеђују null вредности функцијама повратног позива, погледајте Python прототипе
+у link:weechat_plugin_api.en.html[API референтном приручнику WeeChat додатака ^↗^,window=_blank].
 
 [[language_guile]]
 ==== Guile (Scheme)

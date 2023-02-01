@@ -593,8 +593,7 @@ free (str);
 
 _Ажурирано у верзији 3.8._
 
-// TRANSLATION MISSING
-Return a string with uppercase letters converted to lowercase.
+Враћа стринг у којем су велика слова претворена у мала.
 
 [NOTE]
 Behavior has changed in version 3.8: now all uppercase letters are properly
@@ -615,8 +614,7 @@ char *weechat_string_tolower (const char *string);
 
 Повратна вредност:
 
-// TRANSLATION MISSING
-* string with lowercase letters (must be freed by calling "free" after use)
+* стринг од малих слова (након употребе мора да се ослободи позивом „free”)
 
 C пример:
 
@@ -634,8 +632,7 @@ free (str);
 
 _Ажурирано у верзији 3.8._
 
-// TRANSLATION MISSING
-Return a string with lowercase letters converted to uppercase.
+Враћа стринг у којем су мала слова претворена у велика.
 
 [NOTE]
 Behavior has changed in version 3.8: now all lowercase letters are properly
@@ -656,8 +653,7 @@ char *weechat_string_toupper (const char *string);
 
 Повратна вредност:
 
-// TRANSLATION MISSING
-* string with uppercase letters (must be freed by calling "free" after use)
+* стринг од великих слова (након употребе мора да се ослободи позивом „free”)
 
 C пример:
 
@@ -689,15 +685,13 @@ int weechat_string_charcmp (const char *string1, const char *string2);
 * _string1_: први стринг за поређење
 * _string2_: други стринг за поређење
 
-// TRANSLATION MISSING
-Return value:
+Вредност која се враћа:
 
-* arithmetic result of subtracting the first UTF-8 char in _string2_
-  from the first UTF-8 char in _string1_:
-// TRANSLATION MISSING
-** < 0 if char1 < char2
-** 0 if char1 == char2
-** > 0 if char1 > char2
+* аритметички резултат одузимања првог UTF-8 карактера у _string2_
+  од првог UTF-8 карактера у _string1_:
+** < 0 ако је char1 < char2
+** 0 ако је char1 == char2
+** > 0 ако је char1 > char2
 
 C пример:
 
@@ -715,11 +709,9 @@ _Ажурирано у верзији 1.0, 3.8._
 
 Пореди два карактера, уз игнорисање разлике у величини слова.
 
-// TRANSLATION MISSING
 [NOTE]
-Behavior has changed in version 3.8: now all uppercase letters are properly
-converted to lowercase (by calling function `towlower`), in addition to the
-range `A` to `Z`.
+Понашање је промењено у верзији 3.8: сада се сва велика слова исправно претварају
+у мала (позивом функције `towlower`), заједно уз опсег `A` до `Z`.
 
 Прототип:
 
@@ -733,16 +725,14 @@ int weechat_string_charcasecmp (const char *string1, const char *string2);
 * _string1_: први стринг за поређење
 * _string2_: други стринг за поређење
 
-// TRANSLATION MISSING
-Return value:
+Вредност која се враћа:
 
-* arithmetic result of subtracting the first UTF-8 char in _string2_
-  (converted to lowercase) from the first UTF-8 char in _string1_ (converted to
-  lowercase):
-// TRANSLATION MISSING
-** < 0 if char1 < char2
-** 0 if char1 == char2
-** > 0 if char1 > char2
+* аритметички резултат одузимања првог UTF-8 карактера у _string2_
+  (претвореног у мало слово) од првог UTF-8 карактера у _string1_
+  (претвореног у мало слово):
+** < 0 ако је char1 < char2
+** 0 ако је char1 == char2
+** > 0 ако је char1 > char2
 
 C пример:
 
@@ -758,7 +748,6 @@ int diff = weechat_string_charcasecmp ("aaa", "CCC");  /* == -2 */
 
 _WeeChat ≥ 3.8._
 
-// TRANSLATION MISSING
 Case sensitive string comparison.
 
 Прототип:
@@ -775,15 +764,13 @@ int weechat_strcmp (const char *string1, const char *string2);
 
 Повратна вредност:
 
-// TRANSLATION MISSING
-Return value:
+Вредност која се враћа:
 
-* arithmetic result of subtracting the last compared UTF-8 char in
-  _string2_ from the last compared UTF-8 char in _string1_:
-// TRANSLATION MISSING
-** < 0 if string1 < string2
-** 0 if string1 == string2
-** > 0 if string1 > string2
+* аритметички резултат одузимања последњег поређеног UTF-8 карактера у
+  _string2_ од последње поређеног UTF-8 карактера у _string1_:
+** < 0 ако је string1 < string2
+** 0 ако је string1 == string2
+** > 0 ако је string1 > string2
 
 C пример:
 
@@ -799,8 +786,7 @@ int diff = weechat_strcmp ("aaa", "ccc");  /* == -2 */
 
 _WeeChat ≥ 3.8._
 
-// TRANSLATION MISSING
-Case sensitive string comparison, for _max_ chars.
+Поређење стрингова које води рачуна о величини слова, до _max_ карактера.
 
 Прототип:
 
@@ -815,15 +801,13 @@ int weechat_strncmp (const char *string1, const char *string2, int max);
 * _string2_: други стринг за поређење
 * _max_: максимални број карактера који се пореде
 
-// TRANSLATION MISSING
-Return value:
+Вредност која се враћа:
 
-* arithmetic result of subtracting the last compared UTF-8 char in
-  _string2_ from the last compared UTF-8 char in _string1_:
-// TRANSLATION MISSING
-** < 0 if string1 < string2
-** 0 if string1 == string2
-** > 0 if string1 > string2
+* аритметички резултат одузимања последњег поређеног UTF-8 карактера у
+  _string2_ од последње поређеног UTF-8 карактера у _string1_:
+** < 0 ако је string1 < string2
+** 0 ако је string1 == string2
+** > 0 ако је string1 > string2
 
 C пример:
 
@@ -839,14 +823,12 @@ int diff = weechat_strncmp ("aabb", "aacc", 2);  /* == 0 */
 
 _Ажурирано у верзији 1.0, 3.8._
 
-// TRANSLATION MISSING
-Case insensitive string comparison.
+Поређење стрингова које не води рачуна о величини слова.
 
-// TRANSLATION MISSING
 [NOTE]
-Behavior has changed in version 3.8: now all uppercase letters are properly
-converted to lowercase (by calling function `towlower`), in addition to the
-range `A` to `Z`.
+Понашање је промењено у верзији 3.8: сада се сва велика слова исправно
+претварају у мала (позивом функције `towlower`), заједно уз опсег
+`A` до `Z`.
 
 Прототип:
 
@@ -860,18 +842,14 @@ int weechat_strcasecmp (const char *string1, const char *string2);
 * _string1_: први стринг за поређење
 * _string2_: други стринг за поређење
 
-Повратна вредност:
+Вредност која се враћа:
 
-// TRANSLATION MISSING
-Return value:
-
-* arithmetic result of subtracting the last compared UTF-8 char in
-  _string2_ (converted to lowercase) from the last compared UTF-8 char in _string1_
-  (converted to lowercase):
-// TRANSLATION MISSING
-** < 0 if string1 < string2
-** 0 if string1 == string2
-** > 0 if string1 > string2
+* аритметички резултат одузимања последњег поређеног UTF-8 карактера у
+  _string2_ (претвореног у мало слово) од последњег поређеног UTF-8 карактера у _string1_
+  (претвореног у мало слово):
+** < 0 ако је string1 < string2
+** 0 ако је string1 == string2
+** > 0 ако је string1 > string2
 
 C пример:
 
@@ -910,16 +888,14 @@ int weechat_strcasecmp_range (const char *string1, const char *string2, int rang
 [NOTE]
 Вредности 29 и 30 користе неки протоколи, као што је IRC.
 
-// TRANSLATION MISSING
-Return value:
+Вредност која се враћа:
 
-* arithmetic result of subtracting the last compared UTF-8 char in
-  _string2_ (converted to lowercase) from the last compared UTF-8 char in _string1_
-  (converted to lowercase):
-// TRANSLATION MISSING
-** < 0 if string1 < string2
-** 0 if string1 == string2
-** > 0 if string1 > string2
+* аритметички резултат одузимања последњег поређеног UTF-8 карактера у
+  _string2_ (претвореног у мало слово) од последњег поређеног UTF-8 карактера у _string1_
+  (претвореног у мало слово):
+** < 0 ако је string1 < string2
+** 0 ако је string1 == string2
+** > 0 ако је string1 > string2
 
 C пример:
 
@@ -935,14 +911,12 @@ int diff = weechat_strcasecmp_range ("nick{away}", "NICK[away]", 29);  /* == 0 *
 
 _Ажурирано у верзији 1.0, 3.8._
 
-// TRANSLATION MISSING
-Case insensitive string comparison, for _max_ chars.
+Поређење стрингова које не прави разлику у величини слова, за _max_ карактера.
 
-// TRANSLATION MISSING
 [NOTE]
-Behavior has changed in version 3.8: now all uppercase letters are properly
-converted to lowercase (by calling function `towlower`), in addition to the
-range `A` to `Z`.
+Понашање је промењено у верзији 3.8: сада се сва велика слова исправно
+претварају у мала (позивом функције `towlower`), заједно уз опсег
+`A` до `Z`.
 
 Прототип:
 
@@ -957,16 +931,14 @@ int weechat_strncasecmp (const char *string1, const char *string2, int max);
 * _string2_: други стринг за поређење
 * _max_: максимални број карактера који се пореде
 
-// TRANSLATION MISSING
-Return value:
+Вредност која се враћа:
 
-* arithmetic result of subtracting the last compared UTF-8 char in
-  _string2_ (converted to lowercase) from the last compared UTF-8 char in _string1_
-  (converted to lowercase):
-// TRANSLATION MISSING
-** < 0 if string1 < string2
-** 0 if string1 == string2
-** > 0 if string1 > string2
+* аритметички резултат одузимања последњег поређеног UTF-8 карактера у
+  _string2_ (претвореног у мало слово) од последњег поређеног UTF-8 карактера у _string1_
+  (претвореног у мало слово):
+** < 0 ако је string1 < string2
+** 0 ако је string1 == string2
+** > 0 ако је string1 > string2
 
 C пример:
 
@@ -1004,16 +976,14 @@ int weechat_strncasecmp_range (const char *string1, const char *string2, int max
 [NOTE]
 Вредности 29 и 30 користе неки протоколи, као што је IRC.
 
-// TRANSLATION MISSING
-Return value:
+Вредност која се враћа:
 
-* arithmetic result of subtracting the last compared UTF-8 char in
-  _string2_ (converted to lowercase) from the last compared UTF-8 char in _string1_
-  (converted to lowercase):
-// TRANSLATION MISSING
-** < 0 if string1 < string2
-** 0 if string1 == string2
-** > 0 if string1 > string2
+* аритметички резултат одузимања последњег поређеног UTF-8 карактера у
+  _string2_ (претвореног у мало слово) од последњег UTF-8 карактера у _string1_
+  (претвореног у мало слово):
+** < 0 ако је string1 < string2
+** 0 ако је string1 == string2
+** > 0 ако је string1 > string2
 
 C пример:
 
@@ -1029,8 +999,7 @@ int diff = weechat_strncasecmp_range ("nick{away}", "NICK[away]", 6, 29);  /* ==
 
 _Ажурирано у верзији 1.0, 3.8._
 
-// TRANSLATION MISSING
-String comparison ignoring some chars.
+Поређење стрингова које игнорише неке карактере.
 
 Прототип:
 
@@ -1048,23 +1017,20 @@ int weechat_strcmp_ignore_chars (const char *string1, const char *string2,
 * _chars_ignored_: стринг са карактерима који се игноришу
 * _case_sensitive_: 1 за поређење које прави разлику у величини слова, у супротном 0
 
-// TRANSLATION MISSING
 [NOTE]
-Behavior has changed in version 3.8 when _case_sensitive_ is set to 0: now all
-uppercase letters are properly converted to lowercase (by calling function
-`towlower`), in addition to the range `A` to `Z`.
+Понашање се променило у верзији 3.8 када се _case_sensitive_ постави на 0: сада се
+сва велика слова исправно претварају у мала (позивом функције `towlower`),
+заједно уз опсег `A` до `Z`.
 
-// TRANSLATION MISSING
-Return value:
+Вредност која се враћа:
 
-* arithmetic result of subtracting the last compared UTF-8 char in
-  _string2_ (converted to lowercase if _case_sentitive_ is set to 0) from the last
-  compared UTF-8 char in _string1_ (converted to lowercase if _case_sensitive_ is
-  set to 0):
-// TRANSLATION MISSING
-** < 0 if string1 < string2
-** 0 if string1 == string2
-** > 0 if string1 > string2
+* аритметички резултат одузимања последњег поређеног UTF-8 карактера у
+  _string2_ (претвореног у мало слово) од последњег поређеног UTF-8
+  карактера у _string1_ (претвореног у мало слово ако је _case_sensitive_
+  постављено на 0):
+** < 0 ако је string1 < string2
+** 0 ако је string1 == string2
+** > 0 ако је string1 > string2
 
 C пример:
 
@@ -1080,14 +1046,12 @@ int diff = weechat_strcmp_ignore_chars ("a-b", "--a-e", "-", 1);  /* == -3 */
 
 _Ажурирано у верзији 1.3, 3.8._
 
-// TRANSLATION MISSING
-Case insensitive string search.
+Претрага стринга која не прави разлику у величини слова.
 
-// TRANSLATION MISSING
 [NOTE]
-Behavior has changed in version 3.8: now all uppercase letters are properly
-converted to lowercase (by calling function `towlower`), in addition to the
-range `A` to `Z`.
+Понашање се променило у верзији 3.8: сада се сва велика слова исправно
+претварају у мала (позивом функције `towlower`), заједно уз опсег
+`A` до `Z`.
 
 Прототип:
 
@@ -1119,12 +1083,10 @@ const char *pos = weechat_strcasestr ("aBcDeF", "de");  /* резултат: п�
 
 _WeeChat ≥ 0.4.2, ажурирано у верзији 3.8._
 
-// TRANSLATION MISSING
-Return number of chars needed on screen to display UTF-8 string.
+Враћа број карактера који су потребни да се на екран испише UTF-8 стринг.
 
-// TRANSLATION MISSING
-WeeChat color codes are skipped and don't count in the result (this is the only
-difference with the function <<_utf8_strlen_screen,utf8_strlen_screen>>).
+WeeChat кодови боја се прескачу у не броје се у резултату (ово је једина
+разлика у односу на функцију <<_utf8_strlen_screen,utf8_strlen_screen>>).
 
 Прототип:
 
@@ -1182,11 +1144,10 @@ int weechat_string_match (const char *string, const char *mask,
 [NOTE]
 Почевши од верзије 1.0, у маски се дозвољава употреба џокера (не само на почетку/крају маске).
 
-// TRANSLATION MISSING
 [NOTE]
-Behavior has changed in version 3.8 when _case_sensitive_ is set to 0: now all
-uppercase letters are properly converted to lowercase (by calling function
-`towlower`), in addition to the range `A` to `Z`.
+Понашање се променило у верзији 3.8 када се _case_sensitive_ постави на 0: сада се
+сва велика слова исправно претварају у мала (позивом функцкје `towlower`), заједно
+уз опсег `A` до `Z`.
 
 Повратна вредност:
 
@@ -1238,11 +1199,10 @@ int weechat_string_match_list (const char *string, const char **masks,
 * _masks_: листа маски, са NULL након последње маске у листи; свака маска се пореди са стрингом функцијом <<_string_match,string_match>>
 * _case_sensitive_: 1 за поређење које прави разлику у величини слова, у супротном 0
 
-// TRANSLATION MISSING
 [NOTE]
-Behavior has changed in version 3.8 when _case_sensitive_ is set to 0: now all
-uppercase letters are properly converted to lowercase (by calling function
-`towlower`), in addition to the range `A` to `Z`.
+Понашање се променило у верзији 3.8 када је _case_sensitive_ постављени на 0: сада се
+сва велика слова исправно претварају у мала (позивом функције `towlower`), заједно уз
+опсег `A` до `Z`.
 
 Повратна вредност:
 
@@ -3730,21 +3690,17 @@ int weechat_utf8_char_size_screen (const char *string);
 Повратна вредност:
 
 * број карактера на екрану потребних за испис UTF-8 карактера:
-// TRANSLATION MISSING
-** -1: non printable char
-// TRANSLATION MISSING
-** ≥ 0: printable char
+** -1: карактер који не може да се одштампа
+** ≥ 0: карактер који може да се одштампа
 
-// TRANSLATION MISSING
-The result is the return value of function `wcwidth` (see `man wcwidth`), with
-exception for the following chars, that have a specific behavior in WeeChat:
+Резултат је вредност враћена из функције `wcwidth` (погледајте `man wcwidth`), уз
+изузетак следећих карактера који у програму WeeChat имају посебну улогу:
 
-// TRANSLATION MISSING
-* U+0009 (Tabulation): value of option
+* U+0009 (Табулатор): вредност опције
   link:weechat_user.sr.html#option_weechat.look.tab_width[weechat.look.tab_width ^↗^,window=_blank]
-* U+0001 (1) to U+001F (31), except U+0009 (Tabulation): 1
-* U+00AD (173, soft hyphen): -1
-* U+200B (8203, zero width space): -1
+* U+0001 (1) до U+001F (31), осим U+0009 (Табулатор): 1
+* U+00AD (173, мека цртица): -1
+* U+200B (8203, размак нулте ширине): -1
 
 C пример:
 
@@ -3885,8 +3841,7 @@ free (string);
 
 _WeeChat ≥ 3.8._
 
-// TRANSLATION MISSING
-Copy _length_ chars max in another string and add null byte at the end.
+Копира максимално _length_ карактера у други стринг и на крај додаје null бајт.
 
 Прототип:
 
@@ -3897,11 +3852,9 @@ void weechat_utf8_strncpy (char *dest, const char *string, int length);
 
 Аргументи:
 
-// TRANSLATION MISSING
-* _dest_: destination string (must be long enough)
+* _dest_: одредишни стринг (мора да буде довољно дугачак)
 * _string_: стринг
-// TRANSLATION MISSING
-* _length_: max chars to copy
+* _length_: максимални број карактера који може да се копира
 
 C пример:
 
@@ -6171,12 +6124,11 @@ struct t_config_file *weechat_config_new (const char *name,
 
 Аргументи:
 
-// TRANSLATION MISSING
-* _name_: име конфигурационог фајла (без путање или екстензије); a priority
-  is allowed before the name, with format `nnn|name` where `nnn` is non-negative
-  integer with priority; default priority is 1000; files are sorted by priority
-  from higher to lower when running command `/reload`
-  (see priority of configuration files below)
+* _name_: име конфигурационог фајла (без путање или екстензије); приоритет
+  је дозвољен испред имена, у формату `nnn|име` где је `nnn` цео позитиван број
+  који представља приоритет; подразумевани приоритет је 1000; када се извршава
+  команда `/reload` фајлови се сортирају према приоритету, од вишег ка нижем 
+  (погледајте приоритет конфигурационих фајлова испод)
 * _callback_reload_: функција која се позива када се командом `/reload` поново учита конфигурациони фајл (није обавезна, може да буде NULL, погледајте испод), аргументи и повратна вредност су:
 ** _const void *pointer_: показивач
 ** _void *data_: показивач
@@ -6201,8 +6153,7 @@ struct t_config_file *weechat_config_new (const char *name,
 [NOTE]
 Ова функција НЕ креира фајл на диску. Фајл ће се креирати позивом функције <<_config_write,config_write>>. Ово функцију би требало да позовете само након додавања неких одељака (са <<_config_new_section,config_new_section>>) и опција (са <<_config_new_option,config_new_option>>).
 
-// TRANSLATION MISSING
-Priority of default configuration files:
+Приоритет подразумеваних конфигурационих фајлова:
 
 include::includes/autogen_api_config_priority.sr.adoc[tag=config_priority]
 
@@ -8658,14 +8609,10 @@ const char *weechat_color (const char *color_name);
 ** име опције (у формату: фајл.одељак.опција), на пример _irc.color.message_quit_ _(WeeChat ≥ 1.2)_
 ** боја са необавезним атрибутима/позадином (погледајте испод)
 ** атрибут:
-// TRANSLATION MISSING
-*** _blink_: set blink
-// TRANSLATION MISSING
-*** _-blink_: remove blink
-// TRANSLATION MISSING
-*** _dim_: set "dim" (half bright)
-// TRANSLATION MISSING
-*** _-dim_: remove "dim" (half bright)
+*** _blink_: поставља трептање
+*** _-blink_: уклања трептање
+*** _dim_: поставља „dim” (затамњено)
+*** _-dim_: уклања „dim” (затамњено)
 *** _bold_: поставља подебљан испис
 *** _-bold_: уклања подебљан испис
 *** _reverse_: поставља обрнути приказ
@@ -8685,10 +8632,8 @@ const char *weechat_color (const char *color_name);
 
 Формат боје је: атрибути (није обавезно) + име боје + ",позадина" (није обавезно). Могући су следећи атрибути:
 
-// TRANSLATION MISSING
-* `+%+`: blink
-// TRANSLATION MISSING
-* `+.+`: "dim" (half bright)
+* `+%+`: трептање
+* `+.+`: „dim” (затамњено)
 * `+*+`: подебљани текст
 * `+!+`: обрнути видео
 * `+/+`: курзив
@@ -13352,12 +13297,11 @@ void weechat_buffer_set (struct t_gui_buffer *buffer, const char *property,
 
 | hotlist | | "+", "-", WEECHAT_HOTLIST_LOW, WEECHAT_HOTLIST_MESSAGE,
   WEECHAT_HOTLIST_PRIVATE, WEECHAT_HOTLIST_HIGHLIGHT, "-1"
-// TRANSLATION MISSING
 | "+": укључује врућу листу (глобално подешавање, не користи се показивач на бафер) +
   "-": искључује врућу листу (глобално подешавање, не користи се показивач на бафер) +
   приоритет: бафер се на врућу листу додаје са овим приоритетом
-  (conditions defined in option _weechat.look.hotlist_add_conditions_
-  are *NOT* checked) +
+  (услови дефинисани у опцији _weechat.look.hotlist_add_conditions_
+  се *НЕ* проверавају) +
   "-1": уклања бафер из вруће листе _(WeeChat ≥ 1.0)_.
 
 | completion_freeze | | "0" или "1"
@@ -13366,10 +13310,9 @@ void weechat_buffer_set (struct t_gui_buffer *buffer, const char *property,
   "1": довршавање се не зауставља када се ажурира командна линија
   (глобално подешавање, не користи се показивач на бафер).
 
-// TRANSLATION MISSING
-| unread | | empty string or "0"
-| empty string: set unread marker after last line of buffer +
-  "0": remove unread marker from buffer.
+| unread | | празан стринг или "0"
+| празан стринг: поставља ознаку непрочитано након последње линије бафера +
+  "0": уклања ознаку непрочитано из бафера.
 
 | display | | "1" или "auto"
 | "1": прелазак на овај бафер у текућем прозору +
@@ -13673,9 +13616,8 @@ int weechat_buffer_match_list (struct t_gui_buffer *buffer, const char *string);
 ** име које почиње са `+!+` се не узима у обзир
 ** у имену је дозвољен џокер `+*+`
 
-// TRANSLATION MISSING
 [NOTE]
-Since version 3.9, comparison of buffer names is case sensitive.
+Од верзије 3.9, поређење имена бафера прави разлику у величини слова.
 
 Повратна вредност:
 

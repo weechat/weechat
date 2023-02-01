@@ -94,8 +94,7 @@ https://github.com/weechat/weechat-container[weechat-container ^↗^,window=_bl
 [[source_package]]
 === Пакет са изворним кодом
 
-// TRANSLATION MISSING
-WeeChat must be built with CMake.
+WeeChat мора да се изгради са CMake.
 
 [NOTE]
 На macOS можете да употребите https://brew.sh/[Homebrew ^↗^,window=_blank]: `brew install --build-from-source weechat`.
@@ -103,17 +102,15 @@ WeeChat must be built with CMake.
 [[dependencies]]
 ==== Зависности
 
-// TRANSLATION MISSING
-The following table shows the list of packages that are *required* to build
-WeeChat:
+Следећа табела приказује листу пакета који су *неопходни* да се изгради
+програм WeeChat:
 
 [width="100%", cols="5,^3,.^15", options="header"]
 |===
 | Пакет ^(1)^ | Верзија | Могућности
 
-// TRANSLATION MISSING
 | C компајлер (gcc / clang) |
-| Compile C sources.
+| Превођење C изворних фајлова.
 
 | cmake | ≥ 3.0
 | Изградњу.
@@ -186,9 +183,8 @@ WeeChat:
 # apt-get build-dep weechat
 ----
 
-// TRANSLATION MISSING
 [[build]]
-==== Build
+==== Изградња
 
 * Инсталација у системске директоријуме (неопходне су _root_ привилегије):
 
@@ -340,9 +336,8 @@ $ cmake -LA
 $ ccmake ..
 ----
 
-// TRANSLATION MISSING
 [[tests]]
-==== Tests
+==== Тестови
 
 За компајлирање тестова су *неопходни* следећи пакети:
 
@@ -1849,17 +1844,14 @@ include::includes/autogen_user_options.sr.adoc[tag=fset_options]
 
 За боје можете да користите и неке атрибуте. Испред имена или броја боје можете додати један или више атрибута:
 
-// TRANSLATION MISSING
-* `+%+`: blink
-// TRANSLATION MISSING
-* `+.+`: "dim" (half bright)
+* `+%+`: трептање
+* `+.+`: „dim” (затамњено)
 * `+*+`: подебљани текст
 * `+!+`: обрнути видео
 * `+/+`: курзив
 * `+_+`: подвучен текст
-// TRANSLATION MISSING
-* `+|+`: keep attributes: do not reset blink/dim/bold/reverse/italic/underlined
-  when changing color
+* `+|+`: задржавање атрибута: приликом измене боје не ресетују се трептање/dim/подебљано/обрнуто/курзив/подвучено
+
 
 На пример, ако желите да ваш надимак исписује у белој боји, подвучено, извршите:
 

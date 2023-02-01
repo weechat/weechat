@@ -47,15 +47,12 @@ https://weechat.org/about/interfaces/[страницу са удаљеним Г�
 [[compile_git]]
 === Након клонирања git репозиторијума не могу да компајлирам програм WeeChat, зашто?
 
-// TRANSLATION MISSING
-WeeChat must be compiled with CMake.
+WeeChat мора да се компајлира са CMake.
 
-// TRANSLATION MISSING
-Please follow link:weechat_user.en.html#source_package[build instructions ^↗^,window=_blank]
-and ensure all required dependencies are installed.
+Молимо да пратите link:weechat_user.en.html#source_package[инструкције за изградњу ^↗^,window=_blank]
+и обезбедите да су све неопходне зависности инсталиране.
 
-// TRANSLATION MISSING
-If you still have issues, please report them to the developers.
+Ако и даље имате проблема, молимо вас да их пријавите програмерима.
 
 [[compile_macos]]
 === Како да инсталирам програм WeeChat на macOS систем?
@@ -373,9 +370,8 @@ term screen-256color
 /upgrade
 ----
 
-// TRANSLATION MISSING
-You can use any color number in options (optional: you can add color aliases
-with command `/color`).
+У опцијама можете да користите било који број боје (није обавезно: командом `/color` можете да додате
+алијасе боја).
 
 За више информација у вези управљања бојама, молимо вас да прочитате link:weechat_user.sr.html#colors[Корисничко упутство / Боје ^↗^,window=_blank].
 
