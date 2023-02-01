@@ -27,7 +27,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2023-01-31 18:40+0100\n"
-"PO-Revision-Date: 2023-01-31 07:52+0100\n"
+"PO-Revision-Date: 2023-02-01 11:05+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German - Germany <weechatter@arcor.de>\n"
 "Language: de_DE\n"
@@ -9415,22 +9415,18 @@ msgstr ""
 
 msgid "send a notice to an invitation-only channel, requesting an invite"
 msgstr ""
+"sendet eine Benachrichtigung an einen Kanal, der nur mit Einladung betreten "
+"werden kann, um eine Einladung anzufragen"
 
-#, fuzzy
-#| msgid "[-all] [<message>]"
 msgid "<channel> [<message>]"
-msgstr "[-all] [<message>]"
+msgstr "<channel> [<message>]"
 
-#, fuzzy
-#| msgid ""
-#| "channel: channel name\n"
-#| "   text: text to send"
 msgid ""
 "channel: channel name\n"
 "message: message to send"
 msgstr ""
 "channel: Name des Kanals\n"
-"   text: Text der versendet werden soll"
+"message: Text, welcher versendet werden soll"
 
 msgid "list all server names which are known by the server answering the query"
 msgstr "alle Servernamen auflisten, die dem antwortenden Server bekannt sind"
@@ -9834,10 +9830,8 @@ msgstr ""
 msgid "tell the server to restart itself"
 msgstr "Server dazu bringen sich selbst neu zu starten"
 
-#, fuzzy
-#| msgid "reconnect to server(s)"
 msgid "request the server rules"
-msgstr "Mit einem oder mehreren Server(n) erneut verbinden"
+msgstr "Fordert die Serverregeln an"
 
 msgid "force a user to join channel(s)"
 msgstr "fordert einen User auf einen oder mehrere Kanäle zu betreten"
@@ -12246,7 +12240,7 @@ msgstr ""
 "Nicknamen \"%s\" zu nutzen"
 
 msgid "has asked for an invite"
-msgstr ""
+msgstr "hat um eine Einladung gebeten"
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, c-format
