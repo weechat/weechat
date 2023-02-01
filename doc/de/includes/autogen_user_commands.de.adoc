@@ -454,13 +454,13 @@ reason: Grund der Abmeldung
 ----
 
 [[command_irc_knock]]
-* `+knock+`: send a notice to an invitation-only channel, requesting an invite
+* `+knock+`: sendet eine Benachrichtigung an einen Kanal, der nur mit Einladung betreten werden kann, um eine Einladung anzufragen
 
 ----
 /knock  <channel> [<message>]
 
-channel: channel name
-message: message to send
+channel: Name des Kanals
+message: Text, welcher versendet werden soll
 ----
 
 [[command_irc_links]]
@@ -758,7 +758,7 @@ target: Servername
 ----
 
 [[command_irc_rules]]
-* `+rules+`: request the server rules
+* `+rules+`: Fordert die Serverregeln an
 
 ----
 ----
