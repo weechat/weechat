@@ -175,7 +175,7 @@ gui_key_default_bindings (int context)
         BIND(/* m-<pgdn>      */ "meta2-6;3~",         "/window scroll_down");
         BIND(/* m-<home>      */ "meta-meta2-1~",      "/window scroll_top");
         BIND(/* m-<home>      */ "meta-meta2-7~",      "/window scroll_top");
-        BIND(/* m-<home>      */ "meta2-1;3H"   ,      "/window scroll_top");
+        BIND(/* m-<home>      */ "meta2-1;3H",         "/window scroll_top");
         BIND(/* m-<end>       */ "meta-meta2-4~",      "/window scroll_bottom");
         BIND(/* m-<end>       */ "meta-meta2-8~",      "/window scroll_bottom");
         BIND(/* m-<end>       */ "meta2-1;3F",         "/window scroll_bottom");
