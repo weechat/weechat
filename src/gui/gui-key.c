@@ -758,21 +758,10 @@ gui_key_search (struct t_gui_key *keys, const char *key)
 int
 gui_key_cmp (const char *key, const char *search, int context)
 {
-    int diff;
-
     if (context == GUI_KEY_CONTEXT_MOUSE)
         return (string_match (key, search, 1)) ? 0 : 1;
 
-    while (search[0])
-    {
-        diff = string_charcmp (key, search);
-        if (diff != 0)
-            return diff;
-        key = utf8_next_char (key);
-        search = utf8_next_char (search);
-    }
-
-    return 0;
+    return string_strncmp (key, search, utf8_strlen (search));
 }
 
 /*
