@@ -26,8 +26,6 @@
 extern "C"
 {
 #include "src/gui/gui-key.h"
-
-extern int gui_key_cmp (const char *key, const char *search, int context);
 }
 
 TEST_GROUP(GuiKey)
@@ -226,52 +224,6 @@ TEST(GuiKey, New)
 TEST(GuiKey, Search)
 {
     /* TODO: write tests */
-}
-
-/*
- * Tests functions:
- *   gui_key_cmp
- */
-
-TEST(GuiKey, Cmp)
-{
-    LONGS_EQUAL(0, gui_key_cmp ("", "", GUI_KEY_CONTEXT_DEFAULT));
-    LONGS_EQUAL(0, gui_key_cmp ("a", "", GUI_KEY_CONTEXT_DEFAULT));
-    LONGS_EQUAL(-97, gui_key_cmp ("", "a", GUI_KEY_CONTEXT_DEFAULT));
-    LONGS_EQUAL(0, gui_key_cmp ("a", "a", GUI_KEY_CONTEXT_DEFAULT));
-    LONGS_EQUAL(32, gui_key_cmp ("meta-a", "meta-A", GUI_KEY_CONTEXT_DEFAULT));
-    LONGS_EQUAL(-99, gui_key_cmp ("meta-a", "meta-ac", GUI_KEY_CONTEXT_DEFAULT));
-    LONGS_EQUAL(0, gui_key_cmp ("meta-ac", "meta-a", GUI_KEY_CONTEXT_DEFAULT));
-
-    LONGS_EQUAL(0, gui_key_cmp ("", "", GUI_KEY_CONTEXT_SEARCH));
-    LONGS_EQUAL(0, gui_key_cmp ("a", "", GUI_KEY_CONTEXT_SEARCH));
-    LONGS_EQUAL(-97, gui_key_cmp ("", "a", GUI_KEY_CONTEXT_SEARCH));
-    LONGS_EQUAL(0, gui_key_cmp ("a", "a", GUI_KEY_CONTEXT_SEARCH));
-    LONGS_EQUAL(32, gui_key_cmp ("meta-a", "meta-A", GUI_KEY_CONTEXT_SEARCH));
-    LONGS_EQUAL(-99, gui_key_cmp ("meta-a", "meta-ac", GUI_KEY_CONTEXT_SEARCH));
-    LONGS_EQUAL(0, gui_key_cmp ("meta-ac", "meta-a", GUI_KEY_CONTEXT_SEARCH));
-
-    LONGS_EQUAL(0, gui_key_cmp ("", "", GUI_KEY_CONTEXT_CURSOR));
-    LONGS_EQUAL(0, gui_key_cmp ("a", "", GUI_KEY_CONTEXT_CURSOR));
-    LONGS_EQUAL(-97, gui_key_cmp ("", "a", GUI_KEY_CONTEXT_CURSOR));
-    LONGS_EQUAL(0, gui_key_cmp ("a", "a", GUI_KEY_CONTEXT_CURSOR));
-    LONGS_EQUAL(32, gui_key_cmp ("meta-a", "meta-A", GUI_KEY_CONTEXT_CURSOR));
-    LONGS_EQUAL(-99, gui_key_cmp ("meta-a", "meta-ac", GUI_KEY_CONTEXT_CURSOR));
-    LONGS_EQUAL(0, gui_key_cmp ("meta-ac", "meta-a", GUI_KEY_CONTEXT_CURSOR));
-
-    LONGS_EQUAL(1, gui_key_cmp ("", "", GUI_KEY_CONTEXT_MOUSE));
-    LONGS_EQUAL(1, gui_key_cmp ("a", "", GUI_KEY_CONTEXT_MOUSE));
-    LONGS_EQUAL(1, gui_key_cmp ("", "a", GUI_KEY_CONTEXT_MOUSE));
-    LONGS_EQUAL(0, gui_key_cmp ("a", "a", GUI_KEY_CONTEXT_MOUSE));
-    LONGS_EQUAL(0, gui_key_cmp ("@chat(fset.fset):button2",
-                                "@chat(fset.fset):button2",
-                                GUI_KEY_CONTEXT_MOUSE));
-    LONGS_EQUAL(0, gui_key_cmp ("@chat(fset.fset):button2-gesture-right",
-                                "@chat(fset.fset):button2*",
-                                GUI_KEY_CONTEXT_MOUSE));
-    LONGS_EQUAL(1, gui_key_cmp ("@chat(Fset.fset):button2-gesture-right",
-                                "@chat(fset.fset):button2*",
-                                GUI_KEY_CONTEXT_MOUSE));
 }
 
 /*

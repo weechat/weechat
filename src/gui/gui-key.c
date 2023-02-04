@@ -752,42 +752,31 @@ gui_key_search (struct t_gui_key *keys, const char *key)
 }
 
 /*
- * Compares two keys.
- */
-
-int
-gui_key_cmp (const char *key, const char *search, int context)
-{
-    if (context == GUI_KEY_CONTEXT_MOUSE)
-        return (string_match (key, search, 1)) ? 0 : 1;
-
-    return string_strncmp (key, search, utf8_strlen (search));
-}
-
-/*
- * Searches for a key (maybe part of string).
+ * Searches for a key (maybe part of string) for context default, search or
+ * cursor (not for mouse).
  *
  * Returns pointer to key found, NULL if not found.
  */
 
 struct t_gui_key *
-gui_key_search_part (struct t_gui_buffer *buffer, int context,
-                     const char *key)
+gui_key_search_part (struct t_gui_buffer *buffer, int context, const char *key)
 {
     struct t_gui_key *ptr_key;
+    int length_key;
 
     if (!key)
         return NULL;
+
+    length_key = utf8_strlen (key);
 
     for (ptr_key = (buffer) ? buffer->keys : gui_keys[context]; ptr_key;
          ptr_key = ptr_key->next_key)
     {
         if (ptr_key->key
-            && (((context != GUI_KEY_CONTEXT_CURSOR)
-                 && (context != GUI_KEY_CONTEXT_MOUSE))
+            && ((context != GUI_KEY_CONTEXT_CURSOR)
                 || (ptr_key->key[0] != '@')))
         {
-            if (gui_key_cmp (ptr_key->key, key, context) == 0)
+            if (string_strncmp (ptr_key->key, key, length_key) == 0)
                 return ptr_key;
         }
     }
@@ -1116,9 +1105,20 @@ gui_key_focus_command (const char *key, int context,
         if (strcmp (ptr_key->command, "-") == 0)
             continue;
 
-        /* ignore key if key for area is not matching */
-        if (gui_key_cmp (key, ptr_key->area_key, context) != 0)
+        /* ignore key if key for area is not matching (context: cursor) */
+        if ((context == GUI_KEY_CONTEXT_CURSOR)
+            && (string_strncmp (key, ptr_key->area_key,
+                                utf8_strlen (ptr_key->area_key)) != 0))
+        {
             continue;
+        }
+
+        /* ignore key if key for area is not matching (context: mouse) */
+        if ((context == GUI_KEY_CONTEXT_MOUSE)
+            && !string_match (key, ptr_key->area_key, 1))
+        {
+            continue;
+        }
 
         /* ignore mouse event if not explicit requested */
         if ((context == GUI_KEY_CONTEXT_MOUSE) &&
