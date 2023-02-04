@@ -369,7 +369,7 @@ relay_config_change_network_ssl_priorities (const void *pointer, void *data,
 }
 
 /*
- * Callback for changes on option "relay.network.websocker_allowed_origins".
+ * Callback for changes on option "relay.network.websocket_allowed_origins".
  */
 
 void

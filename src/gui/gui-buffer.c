@@ -154,7 +154,7 @@ gui_buffer_search_type (const char *type)
 }
 
 /*
- * Searches for buffer notif levely.
+ * Searches for buffer notify level.
  *
  * Returns index of notify level, -1 if not found.
  */
