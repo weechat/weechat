@@ -211,7 +211,7 @@ irc_tag_modifier_cb (const void *pointer, void *data,
 
 /*
  * Parses tags received in an IRC message and returns the number of tags
- * set in the hasbtable "hashtable" (values are unescaped tag values).
+ * set in the hashtable "hashtable" (values are unescaped tag values).
  *
  * If prefix_key is not NULL, it is used as prefix before the name of keys.
  *
