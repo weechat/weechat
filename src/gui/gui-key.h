@@ -73,6 +73,7 @@ extern struct t_gui_key *last_gui_default_key[GUI_KEY_NUM_CONTEXTS];
 extern int gui_keys_count[GUI_KEY_NUM_CONTEXTS];
 extern int gui_default_keys_count[GUI_KEY_NUM_CONTEXTS];
 extern char *gui_key_context_string[GUI_KEY_NUM_CONTEXTS];
+extern int gui_key_debug;
 extern int gui_key_verbose;
 extern char gui_key_combo_buffer[];
 extern int gui_key_grab;

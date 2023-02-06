@@ -70,6 +70,9 @@ char *gui_key_context_string[GUI_KEY_NUM_CONTEXTS] =
 char *gui_key_focus_string[GUI_KEY_NUM_FOCUS] =
 { "*", "chat", "bar", "item" };
 
+int gui_key_debug = 0;              /* 1 for key debug: display raw codes,  */
+                                    /* do not execute associated actions    */
+
 int gui_key_verbose = 0;            /* 1 to see some messages               */
 
 char gui_key_combo_buffer[1024];    /* buffer used for combos               */
@@ -1337,18 +1340,29 @@ gui_key_is_complete (const char *key)
 int
 gui_key_pressed (const char *key_str)
 {
-    int i, first_key, context, length, length_key, rc, signal_sent;
+    int i, insert_into_input, context, length, length_key, rc, signal_sent;
     struct t_gui_key *ptr_key;
-    char *pos, signal_name[128], **commands;
+    char *pos, signal_name[128], **commands, *expanded_key;
 
     signal_sent = 0;
 
     /* add key to buffer */
-    first_key = (gui_key_combo_buffer[0] == '\0');
+    insert_into_input = (gui_key_combo_buffer[0] == '\0');
     length = strlen (gui_key_combo_buffer);
     length_key = strlen (key_str);
     if (length + length_key + 1 <= (int)sizeof (gui_key_combo_buffer))
         strcat (gui_key_combo_buffer, key_str);
+
+    if (gui_key_debug)
+    {
+        if (strcmp (gui_key_combo_buffer, "q") == 0)
+        {
+            gui_key_debug = 0;
+            gui_key_combo_buffer[0] = '\0';
+            gui_bar_item_update ("input_text");
+            return 0;
+        }
+    }
 
     /* if we are in "show mode", increase counter and return */
     if (gui_key_grab)
@@ -1365,13 +1379,20 @@ gui_key_pressed (const char *key_str)
     /* mouse event pending */
     if (gui_mouse_event_pending)
     {
-        pos = strstr (gui_key_combo_buffer, "\x1B[M");
-        if (pos)
+        if (gui_key_debug)
         {
-            pos[0] = '\0';
-            if (!gui_window_bare_display)
-                gui_mouse_event_end ();
-            gui_mouse_event_init ();
+            gui_key_combo_buffer[0] = '\0';
+        }
+        else
+        {
+            pos = strstr (gui_key_combo_buffer, "\x1B[M");
+            if (pos)
+            {
+                pos[0] = '\0';
+                if (!gui_window_bare_display)
+                    gui_mouse_event_end ();
+                gui_mouse_event_init ();
+            }
         }
         return 0;
     }
@@ -1379,7 +1400,8 @@ gui_key_pressed (const char *key_str)
     if (strstr (gui_key_combo_buffer, "\x01[[M"))
     {
         gui_key_combo_buffer[0] = '\0';
-        gui_mouse_event_init ();
+        if (!gui_key_debug)
+            gui_mouse_event_init ();
         return 0;
     }
 
@@ -1417,74 +1439,140 @@ gui_key_pressed (const char *key_str)
             break;
     }
 
-    /* if key is found, then execute action */
     if (ptr_key)
     {
+        /*
+         * key is found, but it can be partial match
+         * (in this case, gui_key_combo_buffer is kept and we'll wait for
+         * the next key)
+         */
         if (strcmp (ptr_key->key, gui_key_combo_buffer) == 0)
         {
             /* exact combo found => execute command */
-            snprintf (signal_name, sizeof (signal_name),
-                      "key_combo_%s", gui_key_context_string[context]);
-            rc = hook_signal_send (signal_name,
-                                   WEECHAT_HOOK_SIGNAL_STRING,
-                                   gui_key_combo_buffer);
-            gui_key_combo_buffer[0] = '\0';
-            if ((rc != WEECHAT_RC_OK_EAT) && ptr_key->command)
+            if (gui_key_debug)
             {
-                commands = string_split_command (ptr_key->command, ';');
-                if (commands)
+                expanded_key = gui_key_get_expanded_name (gui_key_combo_buffer);
+                gui_chat_printf (
+                    NULL,
+                    _("debug: %s\"%s%s%s\"%s -> %s\"%s%s%s\"%s -> %s\"%s%s%s\""),
+                    /* raw code */
+                    GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                    GUI_COLOR(GUI_COLOR_CHAT),
+                    gui_key_combo_buffer,
+                    GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                    GUI_COLOR(GUI_COLOR_CHAT),
+                    /* expanded name */
+                    GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                    GUI_COLOR(GUI_COLOR_CHAT),
+                    expanded_key,
+                    GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                    GUI_COLOR(GUI_COLOR_CHAT),
+                    /* command */
+                    GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                    GUI_COLOR(GUI_COLOR_CHAT),
+                    ptr_key->command,
+                    GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
+                if (expanded_key)
+                    free (expanded_key);
+                gui_key_combo_buffer[0] = '\0';
+            }
+            else
+            {
+                snprintf (signal_name, sizeof (signal_name),
+                          "key_combo_%s", gui_key_context_string[context]);
+                rc = hook_signal_send (signal_name,
+                                       WEECHAT_HOOK_SIGNAL_STRING,
+                                       gui_key_combo_buffer);
+                gui_key_combo_buffer[0] = '\0';
+                if ((rc != WEECHAT_RC_OK_EAT) && ptr_key->command)
                 {
-                    for (i = 0; commands[i]; i++)
+                    commands = string_split_command (ptr_key->command, ';');
+                    if (commands)
                     {
-                        (void) input_data (gui_current_window->buffer,
-                                           commands[i], NULL);
+                        for (i = 0; commands[i]; i++)
+                        {
+                            (void) input_data (gui_current_window->buffer,
+                                               commands[i], NULL);
+                        }
+                        string_free_split (commands);
                     }
-                    string_free_split (commands);
                 }
             }
         }
         return 0;
     }
-    else if (context == GUI_KEY_CONTEXT_CURSOR)
-    {
-        signal_sent = 1;
-        snprintf (signal_name, sizeof (signal_name),
-                  "key_combo_%s", gui_key_context_string[context]);
-        if (hook_signal_send (signal_name,
-                              WEECHAT_HOOK_SIGNAL_STRING,
-                              gui_key_combo_buffer) == WEECHAT_RC_OK_EAT)
-        {
-            gui_key_combo_buffer[0] = '\0';
-            return 0;
-        }
-        if (gui_key_focus (gui_key_combo_buffer, GUI_KEY_CONTEXT_CURSOR))
-        {
-            gui_key_combo_buffer[0] = '\0';
-            return 0;
-        }
-    }
 
-    if (!signal_sent)
+    if (!gui_key_debug)
     {
-        snprintf (signal_name, sizeof (signal_name),
-                  "key_combo_%s", gui_key_context_string[context]);
-        if (hook_signal_send (signal_name,
-                              WEECHAT_HOOK_SIGNAL_STRING,
-                              gui_key_combo_buffer) == WEECHAT_RC_OK_EAT)
+        if (context == GUI_KEY_CONTEXT_CURSOR)
         {
-            gui_key_combo_buffer[0] = '\0';
-            return 0;
+            signal_sent = 1;
+            snprintf (signal_name, sizeof (signal_name),
+                      "key_combo_%s", gui_key_context_string[context]);
+            if (hook_signal_send (signal_name,
+                                  WEECHAT_HOOK_SIGNAL_STRING,
+                                  gui_key_combo_buffer) == WEECHAT_RC_OK_EAT)
+            {
+                gui_key_combo_buffer[0] = '\0';
+                return 0;
+            }
+            if (gui_key_focus (gui_key_combo_buffer, GUI_KEY_CONTEXT_CURSOR))
+            {
+                gui_key_combo_buffer[0] = '\0';
+                return 0;
+            }
+        }
+        if (!signal_sent)
+        {
+            snprintf (signal_name, sizeof (signal_name),
+                      "key_combo_%s", gui_key_context_string[context]);
+            if (hook_signal_send (signal_name,
+                                       WEECHAT_HOOK_SIGNAL_STRING,
+                                       gui_key_combo_buffer) == WEECHAT_RC_OK_EAT)
+            {
+                gui_key_combo_buffer[0] = '\0';
+                return 0;
+            }
         }
     }
 
     if (gui_key_is_complete (gui_key_combo_buffer))
+    {
+        if (gui_key_debug)
+        {
+            expanded_key = gui_key_get_expanded_name (gui_key_combo_buffer);
+            gui_chat_printf (
+                NULL,
+                _("debug: %s\"%s%s%s\"%s -> %s\"%s%s%s\"%s (no key) -> %s"),
+                /* raw code */
+                GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                GUI_COLOR(GUI_COLOR_CHAT),
+                gui_key_combo_buffer,
+                GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                GUI_COLOR(GUI_COLOR_CHAT),
+                /* expanded name */
+                GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                GUI_COLOR(GUI_COLOR_CHAT),
+                expanded_key,
+                GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                GUI_COLOR(GUI_COLOR_CHAT),
+                /* insert into input */
+                (insert_into_input) ? _("insert into input") : _("ignored"));
+            if (expanded_key)
+                free (expanded_key);
+        }
         gui_key_combo_buffer[0] = '\0';
+    }
+
+    /* in debug mode, don't insert anything in input */
+    if (gui_key_debug)
+        return 0;
 
     /*
      * if this is first key and not found (even partial) => return 1
      * else return 0 (= silently discard sequence of bad keys)
      */
-    return first_key;
+    return insert_into_input;
 }
 
 /*

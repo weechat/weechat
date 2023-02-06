@@ -850,7 +850,7 @@ gui_bar_item_input_text_cb (const void *pointer, void *data,
                             struct t_hashtable *extra_info)
 {
     char *ptr_input, *ptr_input2, str_buffer[128], str_start_input[16];
-    char str_cursor[16], *buf;
+    char str_cursor[16], *buf, str_key_debug[1024];
     const char *pos_cursor;
     int length, length_cursor, length_start_input, buf_pos;
 
@@ -874,6 +874,14 @@ gui_bar_item_input_text_cb (const void *pointer, void *data,
               GUI_COLOR_BAR_CHAR,
               GUI_COLOR_BAR_START_INPUT_CHAR);
     length_start_input = strlen (str_start_input);
+
+    if (gui_key_debug)
+    {
+        snprintf (str_key_debug, sizeof (str_key_debug),
+                  _("keyboard debug ('q' to quit debug mode)%s"),
+                  str_cursor);
+        return strdup (str_key_debug);
+    }
 
     /* for modifiers */
     snprintf (str_buffer, sizeof (str_buffer),

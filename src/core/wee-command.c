@@ -4321,6 +4321,13 @@ COMMAND_CALLBACK(key)
         return WEECHAT_RC_OK;
     }
 
+    /* enter keyboard debug */
+    if (string_strcmp (argv[1], "debug") == 0)
+    {
+        gui_key_debug = 1;
+        return WEECHAT_RC_OK;
+    }
+
     COMMAND_ERROR;
 }
 
@@ -8360,7 +8367,8 @@ command_init ()
            " || reset <key>"
            " || resetctxt <context> <key>"
            " || resetall -yes [<context>]"
-           " || missing [<context>]"),
+           " || missing [<context>]"
+           " || debug"),
         N_("       list: list all current keys (without argument, this list is "
            "displayed)\n"
            "listdefault: list default keys\n"
@@ -8381,6 +8389,8 @@ command_init ()
            "personal bindings (use carefully!)\n"
            "    missing: add missing keys (using default bindings), useful "
            "after installing new WeeChat version\n"
+           "      debug: enable keyboard debug: display raw codes, expanded "
+           "key name and associated command ('q' to quit this mode)\n"
            "\n"
            "When binding a command to a key, it is recommended to use key alt+k "
            "(or Esc then k), and then press the key to bind: this will insert "
@@ -8425,7 +8435,8 @@ command_init ()
         " || reset %(keys_codes_for_reset)"
         " || resetctxt %(keys_contexts) %(keys_codes_for_reset)"
         " || resetall %- %(keys_contexts)"
-        " || missing %(keys_contexts)",
+        " || missing %(keys_contexts)"
+        " || debug",
         &command_key, NULL, NULL);
     hook_command (
         NULL, "layout",
