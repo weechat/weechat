@@ -133,6 +133,7 @@ gui_key_default_bindings (int context)
         BIND(/* ^<down>       */ "meta-Ob",            "/input history_global_next");
         BIND(/* ^<down>       */ "meta-OB",            "/input history_global_next");
         BIND(/* ^<down>       */ "meta2-1;5B",         "/input history_global_next");
+        BIND(/* m-l           */ "meta-l",             "/buffer #h4x");
         BIND(/* m-a           */ "meta-a",             "/buffer jump smart");
         BIND(/* m-j,m-f       */ "meta-jmeta-f",       "/buffer -");
         BIND(/* m-j,m-l       */ "meta-jmeta-l",       "/buffer +");
