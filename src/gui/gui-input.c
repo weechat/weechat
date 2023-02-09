@@ -1174,11 +1174,7 @@ gui_input_move_next_word (struct t_gui_buffer *buffer)
             buffer->input_buffer_pos = buffer->input_buffer_length;
     }
     else
-    {
-        buffer->input_buffer_pos =
-            utf8_pos (buffer->input_buffer,
-                      utf8_prev_char (buffer->input_buffer, pos) - buffer->input_buffer);
-    }
+        buffer->input_buffer_pos = buffer->input_buffer_length;
 
     gui_input_text_cursor_moved_signal (buffer);
 }
