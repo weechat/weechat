@@ -529,78 +529,6 @@ Następnie jak w przypadku awarii, użyj polecenia `bt full`:
 (gdb) bt full
 ----
 
-[[upgrade]]
-== Aktualizacja
-
-Jeśli zostanie wydana nowa stabilna wersja WeeChat należy zaktualizować
-się do tej wersji.
-
-Na samym początku musisz zainstalować nową wersje WeeChat albo za pomocą
-managera pakietów albo kompilując ją samemu, w taki sposób żeby plik
-wykonywalny `weechat` i wszystke wymagane pliki znajdowały się w tych samych
-ścieżkach. +
-Można to zrobić podczas działania WeeChat.
-
-[[upgrade_command]]
-=== Komenda aktualizacji
-
-WeeChat może zostać ponownie uruchomiony z nowego pliku binarnego bez potrzeby
-jego wyłączania za pomocą komendy <<command_weechat_upgrade,/upgrade>>:
-zawartości buforów i połączenia nie SSL zostają zachowane. +
-Połączenia SSL są przerywane podczas aktualizacji i są automatycznie
-przywracane po jej zakończeniu (przeładowanie sesji SSL jest obecnie
-niemożliwe z użyciem GnuTLS).
-
-Komenda ta może zostać użyta również w momencie restartu maszyny, na przykład
-w celu aktualizacji kernela albo przeniesienia WeeChat na nową maszynę:
-
-----
-/upgrade -quit
-----
-
-Zapisuje to obecny stan w plikach `*.upgrade`. Możesz następnie wykonać restart
-lub przenieść cały katalog WeeChat (konfiguracja, dane, cache) na inną maszynę,
-następnie uruchomić WeeChat za pomocą polecenia:
-
-----
-$ weechat --upgrade
-----
-
-[[restart_after_upgrade]]
-=== Restart po aktualizacji
-
-[[restart_release_notes]]
-==== Informacje o wydaniu
-
-Po aktualizacji *zaleca się* przeczytanie
-https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[informacji o wydaniu ^↗^,window=_blank],
-które zawierają ważne informacje o przełomowych zmianach i do zrobienia jakie mogą
-być wymagane.
-
-Powinieneś przeczytać informacje o zmianach dla wyszystkich wersji pomiędzy obecną
-a tą, do której aktualizujesz. +
-Na przykład aktualizując z wersji 3.0 do 3.2, musisz przeczytać informacje dla wersj
-3.1 i 3.2.
-
-[[restart_configuration_upgrade]]
-==== Aktualizacja konfiguracji
-
-WeeChat potrafi automatycznie aktualizować pliki konfiguracyjne (`*.conf`):
-
-* nowe opcje są dodawane z domyślnymi wartościami
-* niepotrzebne już opcje są automatycznie kasowane i WeeChat wyświetla ostrzeżenie
-  z wartościami odczytanymi z pliku.
-
-Przykład ostrzeżenia o usuwanej opcji:
-
-----
-=!= Ostrzeżenie: /home/user/.config/weechat/sec.conf, linia 15: nieznana opcja dla sekcji "crypt": passphrase_file = ""
-----
-
-Oznaza to, że opcja `sec.crypt.passphrase_file` została usunięta i jej wartość była
-ustawiona na pusty ciąg, który był domyślną wartością w poprzednej wersji
-(w tym przypadku żadna dodatkowa akcja nie jest wymagana).
-
 [[running_weechat]]
 == Uruchamianie WeeChat
 
@@ -790,6 +718,78 @@ oraz po wprowadzeniu ręcznie zmian należy użyć komendy <<command_weechat_rel
 (ryzykując utratę zmian, nie zapisanych za pomocą komendy <<command_weechat_save,/save>>). +
 Możesz użyć komendy <<command_weechat_set,/set>>, która sprawdza ustawianą wartość
 i od razu wprowadza zmiany.
+
+[[upgrade]]
+== Aktualizacja
+
+Jeśli zostanie wydana nowa stabilna wersja WeeChat należy zaktualizować
+się do tej wersji.
+
+Na samym początku musisz zainstalować nową wersje WeeChat albo za pomocą
+managera pakietów albo kompilując ją samemu, w taki sposób żeby plik
+wykonywalny `weechat` i wszystke wymagane pliki znajdowały się w tych samych
+ścieżkach. +
+Można to zrobić podczas działania WeeChat.
+
+[[upgrade_command]]
+=== Komenda aktualizacji
+
+WeeChat może zostać ponownie uruchomiony z nowego pliku binarnego bez potrzeby
+jego wyłączania za pomocą komendy <<command_weechat_upgrade,/upgrade>>:
+zawartości buforów i połączenia nie SSL zostają zachowane. +
+Połączenia SSL są przerywane podczas aktualizacji i są automatycznie
+przywracane po jej zakończeniu (przeładowanie sesji SSL jest obecnie
+niemożliwe z użyciem GnuTLS).
+
+Komenda ta może zostać użyta również w momencie restartu maszyny, na przykład
+w celu aktualizacji kernela albo przeniesienia WeeChat na nową maszynę:
+
+----
+/upgrade -quit
+----
+
+Zapisuje to obecny stan w plikach `*.upgrade`. Możesz następnie wykonać restart
+lub przenieść cały katalog WeeChat (konfiguracja, dane, cache) na inną maszynę,
+następnie uruchomić WeeChat za pomocą polecenia:
+
+----
+$ weechat --upgrade
+----
+
+[[restart_after_upgrade]]
+=== Restart po aktualizacji
+
+[[restart_release_notes]]
+==== Informacje o wydaniu
+
+Po aktualizacji *zaleca się* przeczytanie
+https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[informacji o wydaniu ^↗^,window=_blank],
+które zawierają ważne informacje o przełomowych zmianach i do zrobienia jakie mogą
+być wymagane.
+
+Powinieneś przeczytać informacje o zmianach dla wyszystkich wersji pomiędzy obecną
+a tą, do której aktualizujesz. +
+Na przykład aktualizując z wersji 3.0 do 3.2, musisz przeczytać informacje dla wersj
+3.1 i 3.2.
+
+[[restart_configuration_upgrade]]
+==== Aktualizacja konfiguracji
+
+WeeChat potrafi automatycznie aktualizować pliki konfiguracyjne (`*.conf`):
+
+* nowe opcje są dodawane z domyślnymi wartościami
+* niepotrzebne już opcje są automatycznie kasowane i WeeChat wyświetla ostrzeżenie
+  z wartościami odczytanymi z pliku.
+
+Przykład ostrzeżenia o usuwanej opcji:
+
+----
+=!= Ostrzeżenie: /home/user/.config/weechat/sec.conf, linia 15: nieznana opcja dla sekcji "crypt": passphrase_file = ""
+----
+
+Oznaza to, że opcja `sec.crypt.passphrase_file` została usunięta i jej wartość była
+ustawiona na pusty ciąg, który był domyślną wartością w poprzednej wersji
+(w tym przypadku żadna dodatkowa akcja nie jest wymagana).
 
 [[interface]]
 == Interfejs

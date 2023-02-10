@@ -520,77 +520,6 @@ Then like for a crash, use command `bt full`:
 (gdb) bt full
 ----
 
-[[upgrade]]
-== Upgrade
-
-If a new stable version of WeeChat is released, this is time for you to
-switch to this version.
-
-First of all, you must install the new version of WeeChat, either with your
-package manager or by compiling yourself, so that the `weechat` binary and all
-required files are in the same paths. +
-This can be done while WeeChat is running.
-
-[[upgrade_command]]
-=== Upgrade command
-
-WeeChat can restart the new binary, in place, using the
-<<command_weechat_upgrade,/upgrade>> command: the buffer contents and non-SSL
-connections are preserved. +
-The SSL connections are lost during upgrade and are restored automatically
-after the upgrade (reload of SSL sessions is currently not possible
-with GnuTLS).
-
-The command can also be used if you have to restart the machine, for example
-to upgrade the kernel or to move your WeeChat to another machine:
-
-----
-/upgrade -quit
-----
-
-This saves the current state in `*.upgrade` files. You can then either reboot
-or move the whole WeeChat directories (config, data, cache) to another machine,
-and restart WeeChat later with this command:
-
-----
-$ weechat --upgrade
-----
-
-[[restart_after_upgrade]]
-=== Restart after upgrade
-
-[[restart_release_notes]]
-==== Release notes
-
-After an upgrade, it is *strongly recommended* to read the
-https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes ^↗^,window=_blank]
-which contain important information about breaking changes and some
-manual actions that could be required.
-
-You must read the release notes of all versions between your old (excluded) and
-your new version (included). +
-For example if you switch from version 3.0 to 3.2, you must read release notes
-of versions 3.1 and 3.2.
-
-[[restart_configuration_upgrade]]
-==== Configuration upgrade
-
-WeeChat has an automatic upgrade of configuration files (`*.conf`):
-
-* new options are silently added with default value
-* obsolete options are automatically discarded and WeeChat displays a warning
-  with the value read from file.
-
-Example of warning when an option has been removed:
-
-----
-=!= Warning: /home/user/.config/weechat/sec.conf, line 15: unknown option for section "crypt": passphrase_file = ""
-----
-
-That means the option `sec.crypt.passphrase_file` has been removed, and you
-had value set to empty string, which was the default value in the previous version
-(in this case no manual action is required).
-
 [[running_weechat]]
 == Running WeeChat
 
@@ -780,6 +709,77 @@ and after any change you must run the command <<command_weechat_reload,/reload>>
 <<command_weechat_save,/save>>). +
 You can use the command <<command_weechat_set,/set>>, which checks the value
 and applies immediately the changes.
+
+[[upgrade]]
+== Upgrade
+
+If a new stable version of WeeChat is released, this is time for you to
+switch to this version.
+
+First of all, you must install the new version of WeeChat, either with your
+package manager or by compiling yourself, so that the `weechat` binary and all
+required files are in the same paths. +
+This can be done while WeeChat is running.
+
+[[upgrade_command]]
+=== Upgrade command
+
+WeeChat can restart the new binary, in place, using the
+<<command_weechat_upgrade,/upgrade>> command: the buffer contents and non-SSL
+connections are preserved. +
+The SSL connections are lost during upgrade and are restored automatically
+after the upgrade (reload of SSL sessions is currently not possible
+with GnuTLS).
+
+The command can also be used if you have to restart the machine, for example
+to upgrade the kernel or to move your WeeChat to another machine:
+
+----
+/upgrade -quit
+----
+
+This saves the current state in `*.upgrade` files. You can then either reboot
+or move the whole WeeChat directories (config, data, cache) to another machine,
+and restart WeeChat later with this command:
+
+----
+$ weechat --upgrade
+----
+
+[[restart_after_upgrade]]
+=== Restart after upgrade
+
+[[restart_release_notes]]
+==== Release notes
+
+After an upgrade, it is *strongly recommended* to read the
+https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes ^↗^,window=_blank]
+which contain important information about breaking changes and some
+manual actions that could be required.
+
+You must read the release notes of all versions between your old (excluded) and
+your new version (included). +
+For example if you switch from version 3.0 to 3.2, you must read release notes
+of versions 3.1 and 3.2.
+
+[[restart_configuration_upgrade]]
+==== Configuration upgrade
+
+WeeChat has an automatic upgrade of configuration files (`*.conf`):
+
+* new options are silently added with default value
+* obsolete options are automatically discarded and WeeChat displays a warning
+  with the value read from file.
+
+Example of warning when an option has been removed:
+
+----
+=!= Warning: /home/user/.config/weechat/sec.conf, line 15: unknown option for section "crypt": passphrase_file = ""
+----
+
+That means the option `sec.crypt.passphrase_file` has been removed, and you
+had value set to empty string, which was the default value in the previous version
+(in this case no manual action is required).
 
 [[interface]]
 == Interface

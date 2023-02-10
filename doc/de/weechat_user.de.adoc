@@ -529,77 +529,6 @@ Sollte WeeChat abgestürzt sein, muss der Befehl `bt full` genutzt werden:
 (gdb) bt full
 ----
 
-[[upgrade]]
-== Upgrade
-
-Wenn eine neue stabile Version von WeeChat veröffentlicht wird, ist es Zeit
-auf diese neue Version zu wechseln.
-
-Zunächst müssen Sie die neue WeeChat Version als Binärdatei installieren.
-Entweder installieren Sie WeeChat mittels Ihrem Paketmanager oder Sie
-kompilieren WeeChat selber. Dadurch befindet sich die `weechat`-Binärdatei
-und alle erforderlichen Dateien in den selben Pfaden. +
-Diese Installation kann durchgeführt werden, während WeeChat ausgeführt wird.
-
-[[upgrade_command]]
-=== Upgrade Befehl
-
-WeeChat kann die neue Binärdatei mit Hilfe des  <<command_weechat_upgrade,/upgrade>>
-Befehls starten: der Bufferinhalt und nicht-SSL Verbindungen bleiben dabei erhalten. +
-Eine SSL-Verbindung wird während des Upgrades getrennt und wird automatisch,
-nach dem Beenden des Upgrades, wiederhergestellt (das aufrechterhalten einer
-SSL-Sitzungen ist derzeit, mit GnuTLS, nicht möglich).
-
-Der Befehl kann auch verwendet werden, wenn Sie den Computer neu starten müssen,
-z.B. um den Kernel zu aktualisieren oder WeeChat auf einen anderen Computer zu verschieben:
-
-----
-/upgrade -quit
-----
-
-Dies speichert den aktuellen Status in `*.upgrade`-Dateien. Sie können dann entweder
-die gesamten WeeChat-Verzeichnisse (Konfiguration, Daten, Cache) neu starten oder auf
-einen anderen Computer verschieben und WeeChat später mit diesem Befehl neu starten:
-
-----
-$ weechat --upgrade
-----
-
-[[restart_after_upgrade]]
-=== Neustart nach Upgrade
-
-[[restart_release_notes]]
-==== Versionshinweise
-
-Nach einem Upgrade wird *dringend empfohlen* die,
-https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[Versionshinweise ^↗^,window=_blank]
-zu lesen, denn dort sind wichtige Informationen zu Änderungen enthalten und ob
-eventuell ein manuelles Eingreifen erforderlich sein könnte.
-
-Sie müssen die Versionshinweise aller Versionen zwischen Ihrer alten (abgelaufenen)
-und Ihrer neuen Version (enthalten) lesen. +
-Wenn Sie beispielsweise von Version 3.0 auf 3.2 wechseln, müssen Sie die Versionshinweise
-der Versionen 3.1 und 3.2 lesen.
-
-[[restart_configuration_upgrade]]
-==== Konfigurations-Upgrade
-
-WeeChat hat ein automatisches Upgrade für Konfigurationsdateien (`*.conf`):
-
-* Neue Optionen werden stillschweigend mit dem Standardwert hinzugefügt
-* Veraltete Optionen werden automatisch verworfen. WeeChat zeigt eine Warnung,
-  mit dem Wert der eingestellt war, im Core-Buffer, an.
-
-Beispiel für eine Warnung, wenn eine Option entfernt wurde:
-
-----
-=!= Warnung: /home/user/.config/weechat/sec.conf, Zeile 15: unbekannte Einstellung für Sektion "crypt": passphrase_file = ""
-----
-
-Das bedeutet, dass die Option "sec.crypt.passphrase_file" entfernt wurde und der
-Wert für diese Option eine leere Zeichenkette war. Dies war der Standardwert in
-der vorherigen Version (in diesem Fall ist kein manuelles Eingreifen erforderlich).
-
 [[running_weechat]]
 == WeeChat starten
 
@@ -791,6 +720,77 @@ laden muss (mit dem Risiko von Datenverlust da Daten kommentarlos überschrieben
 bevor man diese ggf. gesichert hat <<command_weechat_save,/save>>). +
 Man sollte immer den <<command_weechat_set,/set>> Befehl nutzen, da der Befehl die
 Eingabe prüft und Änderungen sofort wirksam werden.
+
+[[upgrade]]
+== Upgrade
+
+Wenn eine neue stabile Version von WeeChat veröffentlicht wird, ist es Zeit
+auf diese neue Version zu wechseln.
+
+Zunächst müssen Sie die neue WeeChat Version als Binärdatei installieren.
+Entweder installieren Sie WeeChat mittels Ihrem Paketmanager oder Sie
+kompilieren WeeChat selber. Dadurch befindet sich die `weechat`-Binärdatei
+und alle erforderlichen Dateien in den selben Pfaden. +
+Diese Installation kann durchgeführt werden, während WeeChat ausgeführt wird.
+
+[[upgrade_command]]
+=== Upgrade Befehl
+
+WeeChat kann die neue Binärdatei mit Hilfe des  <<command_weechat_upgrade,/upgrade>>
+Befehls starten: der Bufferinhalt und nicht-SSL Verbindungen bleiben dabei erhalten. +
+Eine SSL-Verbindung wird während des Upgrades getrennt und wird automatisch,
+nach dem Beenden des Upgrades, wiederhergestellt (das aufrechterhalten einer
+SSL-Sitzungen ist derzeit, mit GnuTLS, nicht möglich).
+
+Der Befehl kann auch verwendet werden, wenn Sie den Computer neu starten müssen,
+z.B. um den Kernel zu aktualisieren oder WeeChat auf einen anderen Computer zu verschieben:
+
+----
+/upgrade -quit
+----
+
+Dies speichert den aktuellen Status in `*.upgrade`-Dateien. Sie können dann entweder
+die gesamten WeeChat-Verzeichnisse (Konfiguration, Daten, Cache) neu starten oder auf
+einen anderen Computer verschieben und WeeChat später mit diesem Befehl neu starten:
+
+----
+$ weechat --upgrade
+----
+
+[[restart_after_upgrade]]
+=== Neustart nach Upgrade
+
+[[restart_release_notes]]
+==== Versionshinweise
+
+Nach einem Upgrade wird *dringend empfohlen* die,
+https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[Versionshinweise ^↗^,window=_blank]
+zu lesen, denn dort sind wichtige Informationen zu Änderungen enthalten und ob
+eventuell ein manuelles Eingreifen erforderlich sein könnte.
+
+Sie müssen die Versionshinweise aller Versionen zwischen Ihrer alten (abgelaufenen)
+und Ihrer neuen Version (enthalten) lesen. +
+Wenn Sie beispielsweise von Version 3.0 auf 3.2 wechseln, müssen Sie die Versionshinweise
+der Versionen 3.1 und 3.2 lesen.
+
+[[restart_configuration_upgrade]]
+==== Konfigurations-Upgrade
+
+WeeChat hat ein automatisches Upgrade für Konfigurationsdateien (`*.conf`):
+
+* Neue Optionen werden stillschweigend mit dem Standardwert hinzugefügt
+* Veraltete Optionen werden automatisch verworfen. WeeChat zeigt eine Warnung,
+  mit dem Wert der eingestellt war, im Core-Buffer, an.
+
+Beispiel für eine Warnung, wenn eine Option entfernt wurde:
+
+----
+=!= Warnung: /home/user/.config/weechat/sec.conf, Zeile 15: unbekannte Einstellung für Sektion "crypt": passphrase_file = ""
+----
+
+Das bedeutet, dass die Option "sec.crypt.passphrase_file" entfernt wurde und der
+Wert für diese Option eine leere Zeichenkette war. Dies war der Standardwert in
+der vorherigen Version (in diesem Fall ist kein manuelles Eingreifen erforderlich).
 
 [[interface]]
 == Schnittstelle
