@@ -31,6 +31,7 @@ New features::
 
 Bug fixes::
 
+  * core: allow command `/input move_next_word` going to the end of line (issue #1881)
   * core: ignore incomplete ctrl/meta/meta2 codes in keys
   * core: fix display glitch in command errors when a wide char is set in option weechat.look.command_chars (issue #1871)
   * api: readjust string size in function string_dyn_free when string is not freed
