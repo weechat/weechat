@@ -2602,7 +2602,7 @@ config_weechat_key_write_cb (const void *pointer, void *data,
     }
     for (ptr_key = gui_keys[context]; ptr_key; ptr_key = ptr_key->next_key)
     {
-        expanded_name = gui_key_get_expanded_name (ptr_key->key);
+        expanded_name = gui_key_expand_legacy (ptr_key->key);
         if (expanded_name)
         {
             rc = config_file_write_line (config_file,

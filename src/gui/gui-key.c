@@ -214,7 +214,7 @@ gui_key_grab_end_timer_cb (const void *pointer, void *data,
     (void) remaining_calls;
 
     /* get expanded name (for example: \x01+U => ctrl-u) */
-    expanded_key = gui_key_get_expanded_name (gui_key_combo_buffer);
+    expanded_key = gui_key_expand_legacy (gui_key_combo_buffer);
     if (expanded_key)
     {
         /*
@@ -272,10 +272,11 @@ gui_key_grab_end_timer_cb (const void *pointer, void *data,
  * Gets internal code from user key name.
  *
  * Examples:
- *   "meta-a" => "\x01[a"
- *   "meta-A" => "\x01[A"
  *   "ctrl-R" => "\x01" + "r" (lower case enforced for ctrl keys)
  *   "ctrl-r" => "\x01" + "r"
+ *   "meta-a" => "\x01[a"
+ *   "meta-A" => "\x01[A"
+ *   "meta-wmeta2-1;3A" => "\x01" + "[w" + "\x01" + "[[1;3A"
  *
  * Note: result must be freed after use.
  */
@@ -346,15 +347,22 @@ gui_key_get_internal_code (const char *key)
 }
 
 /*
- * Gets expanded name from internal key code.
+ * Gets expanded name from internal key code (legacy function).
  *
- * For example: return "ctrl-r" for "\x01+r".
+ * Examples:
+ *   "\001j"            => "ctrl-j"
+ *   "\001m"            => "ctrl-m"
+ *   "\001r"            => "ctrl-r"
+ *   "\001[A"           => "meta-A"
+ *   "\001[a"           => "meta-a"
+ *   "\001[[1;3D"       => "meta2-1;3D"
+ *   "\001[w\001[[1;3A" => "meta-wmeta2-1;3A"
  *
  * Note: result must be freed after use.
  */
 
 char *
-gui_key_get_expanded_name (const char *key)
+gui_key_expand_legacy (const char *key)
 {
     char **result;
 
@@ -395,6 +403,503 @@ gui_key_get_expanded_name (const char *key)
     }
 
     return string_dyn_free (result, 0);
+}
+
+/*
+ * Expands raw key code to its name and name using aliases (human readable
+ * key name).
+ *
+ * Examples (return: rc, key name, key name with alias):
+ *   "\001"             => 0, NULL,                NULL
+ *   "\001j"            => 1, "ctrl-j",            "return"
+ *   "\001m"            => 1, "ctrl-m",            "return"
+ *   "\001r"            => 1, "ctrl-r",            "ctrl-r"
+ *   "\001[A"           => 1, "meta-A",            "meta-A"
+ *   "\001[a"           => 1, "meta-a",            "meta-a"
+ *   "\001[[1;3D"       => 1, "meta2-1;3D",        "meta-left"
+ *   "\001[w\001[[1;3A" => 1, "meta-w,meta2-1;3A", "meta-w,meta-up"
+ *
+ * Returns:
+ *   1: OK
+ *   0: error: incomplete/invalid raw key
+ *
+ * Note: if set to non NULL value, *key_name_raw and *key_name_alias must be
+ * freed.
+ */
+
+int
+gui_key_expand (const char *key, char **key_name, char **key_name_alias)
+{
+    const char *ptr_key_meta2;
+    char **str_dyn_key, **str_dyn_key_alias, str_raw[64], str_alias[128];
+    int i, modifier, ctrl, meta, meta_initial, meta2, shift, number, length;
+
+    if (key_name)
+        *key_name = NULL;
+    if (key_name_alias)
+        *key_name_alias = NULL;
+
+    if (!key)
+        return 0;
+
+    str_dyn_key = NULL;
+    str_dyn_key_alias = NULL;
+
+    str_dyn_key = string_dyn_alloc ((strlen (key) * 2) + 1);
+    if (!str_dyn_key)
+        goto error;
+
+    str_dyn_key_alias = string_dyn_alloc ((strlen (key) * 2) + 1);
+    if (!str_dyn_key_alias)
+        goto error;
+
+    while (key[0])
+    {
+        ctrl = 0;
+        meta = 0;
+        meta_initial = 0;
+        meta2 = 0;
+        shift = 0;
+
+        if (*str_dyn_key[0])
+            string_dyn_concat (str_dyn_key, ",", -1);
+
+        if (*str_dyn_key_alias[0])
+            string_dyn_concat (str_dyn_key_alias, ",", -1);
+
+        while (string_strncmp (key, "\x01[\x01", 3) == 0)
+        {
+            /* key: meta + meta-something: increase meta and skip it */
+            meta++;
+            key += 2;
+        }
+
+        if (string_strncmp (key, "\x01[[O", 4) == 0)
+        {
+            meta2 = 1;
+            key += 4;
+        }
+        else if (string_strncmp (key, "\x01[O", 3) == 0)
+        {
+            meta2 = 1;
+            key += 3;
+        }
+        else if (string_strncmp (key, "\x01[[", 3) == 0)
+        {
+            meta2 = 1;
+            key += 3;
+        }
+        else if (string_strncmp (key, "\x01[", 2) == 0)
+        {
+            meta++;
+            key += 2;
+        }
+        else if (key[0] == '\x01')
+        {
+            ctrl = 1;
+            key++;
+        }
+
+        if (!key[0])
+            goto error;
+
+        if (meta2)
+        {
+            ptr_key_meta2 = key;
+            meta_initial = meta;
+            str_alias[0] = '\0';
+
+            if (isdigit ((unsigned char)key[0])
+                && (!key[1]
+                    || (isdigit ((unsigned char)key[1])
+                        && (!key[2]
+                            || (isdigit ((unsigned char)key[2]) && !key[3])))))
+            {
+                /* incomplete sequence: 1 to 3 digits with nothing after */
+                goto error;
+            }
+
+            /*
+             * Supported formats: "<esc>[" + one of:
+             *   3~     -> delete
+             *   3;5~   -> ctrl-delete
+             *   15~    -> f5
+             *   15;5~  -> ctrl-f5
+             *   A      -> up
+             *   1;5A   -> ctrl-up
+             */
+            if ((key[0] == '1') && (key[1] == ';')
+                && ((key[2] >= '1') && (key[2] <= '9')))
+            {
+                /* modifier, format: "1;1" to "1;9" */
+                modifier = key[2] - '0' - 1;
+                if ((modifier & 0x01) || (modifier & 0x08))
+                    shift = 1;
+                if ((modifier & 0x02) || (modifier & 0x08))
+                    meta++;
+                if ((modifier & 0x04) || (modifier & 0x08))
+                    ctrl = 1;
+                key += 3;
+            }
+
+            if (!key[0])
+                goto error;
+
+            if (isdigit ((unsigned char)key[0])
+                && isdigit ((unsigned char)key[1])
+                && ((key[2] == ';') || (key[2] == '~') || (key[2] == '^')
+                    || (key[2] == '$') || (key[2] == '@')))
+            {
+                /*
+                 * format: "00;N~" to "99;N~" (urxvt: ~ ^ $ @)
+                 * or "00~" to "99~" (urxvt: ~ ^ $ @)
+                 */
+                number = ((key[0] - '0') * 10) + (key[1] - '0');
+                if ((number >= 10) && (number <= 15))
+                    snprintf (str_alias, sizeof (str_alias), "f%d", number - 10);
+                else if ((number >= 17) && (number <= 21))
+                    snprintf (str_alias, sizeof (str_alias), "f%d", number - 11);
+                else if ((number >= 23) && (number <= 26))
+                    snprintf (str_alias, sizeof (str_alias), "f%d", number - 12);
+                else if ((number >= 28) && (number <= 29))
+                    snprintf (str_alias, sizeof (str_alias), "f%d", number - 13);
+                else if ((number >= 31) && (number <= 34))
+                    snprintf (str_alias, sizeof (str_alias), "f%d", number - 14);
+                key += 2;
+                if (key[0] == ';')
+                {
+                    key++;
+                    if (!key[0])
+                        goto error;
+                    if ((key[0] >= '1') && (key[0] <= '9'))
+                    {
+                        modifier = key[0] - '0' - 1;
+                        if ((modifier & 0x01) || (modifier & 0x08))
+                            shift = 1;
+                        if ((modifier & 0x02) || (modifier & 0x08))
+                            meta++;
+                        if ((modifier & 0x04) || (modifier & 0x08))
+                            ctrl = 1;
+                        key++;
+                        if (!key[0])
+                            goto error;
+                    }
+                }
+                if (key[0] == '^')
+                    ctrl = 1;
+                else if (key[0] == '$')
+                    shift = 1;
+                else if (key[0] == '@')
+                {
+                    ctrl = 1;
+                    shift = 1;
+                }
+                key++;
+            }
+            else if (isdigit ((unsigned char)key[0])
+                     && ((key[1] == ';') || (key[1] == '~') || (key[1] == '^')
+                         || (key[1] == '$') || (key[1] == '@')))
+            {
+                /*
+                 * format: "0;N~" to "9;N~" (urxvt: ~ ^ $ @)
+                 * or "0~" to "9~" (urxvt: ~ ^ $ @)
+                 * */
+                number = key[0] - '0';
+                if ((number == 1) || (number == 7))
+                    snprintf (str_alias, sizeof (str_alias), "home");
+                else if (number == 2)
+                    snprintf (str_alias, sizeof (str_alias), "insert");
+                else if (number == 3)
+                    snprintf (str_alias, sizeof (str_alias), "delete");
+                else if ((number == 4) || (number == 8))
+                    snprintf (str_alias, sizeof (str_alias), "end");
+                else if (number == 5)
+                    snprintf (str_alias, sizeof (str_alias), "pgup");
+                else if (number == 6)
+                    snprintf (str_alias, sizeof (str_alias), "pgdn");
+                key++;
+                if (key[0] == ';')
+                {
+                    key++;
+                    if (!key[0])
+                        goto error;
+                    if ((key[0] >= '1') && (key[0] <= '9'))
+                    {
+                        modifier = key[0] - '0' - 1;
+                        if ((modifier & 0x01) || (modifier & 0x08))
+                            shift = 1;
+                        if ((modifier & 0x02) || (modifier & 0x08))
+                            meta++;
+                        if ((modifier & 0x04) || (modifier & 0x08))
+                            ctrl = 1;
+                        key++;
+                        if (!key[0])
+                            goto error;
+
+                    }
+                }
+                if (key[0] == '^')
+                    ctrl = 1;
+                else if (key[0] == '$')
+                    shift = 1;
+                else if (key[0] == '@')
+                {
+                    ctrl = 1;
+                    shift = 1;
+                }
+                key++;
+            }
+            else if (((key[0] >= 'A') && (key[0] <= 'Z'))
+                     || ((key[0] >= 'a') && (key[0] <= 'z')))
+            {
+                /* format: "A" to "Z" */
+                if (key[0] == 'A')
+                    snprintf (str_alias, sizeof (str_alias), "up");
+                else if (key[0] == 'a')
+                {
+                    ctrl = 1;
+                    snprintf (str_alias, sizeof (str_alias), "up");
+                }
+                else if (key[0] == 'B')
+                    snprintf (str_alias, sizeof (str_alias), "down");
+                else if (key[0] == 'b')
+                {
+                    ctrl = 1;
+                    snprintf (str_alias, sizeof (str_alias), "down");
+                }
+                else if (key[0] == 'C')
+                    snprintf (str_alias, sizeof (str_alias), "right");
+                else if (key[0] == 'c')
+                {
+                    ctrl = 1;
+                    snprintf (str_alias, sizeof (str_alias), "right");
+                }
+                else if (key[0] == 'D')
+                    snprintf (str_alias, sizeof (str_alias), "left");
+                else if (key[0] == 'd')
+                {
+                    ctrl = 1;
+                    snprintf (str_alias, sizeof (str_alias), "left");
+                }
+                else if (key[0] == 'F')
+                    snprintf (str_alias, sizeof (str_alias), "end");
+                else if (key[0] == 'G')
+                    snprintf (str_alias, sizeof (str_alias), "pgdn");
+                else if (key[0] == 'H')
+                    snprintf (str_alias, sizeof (str_alias), "home");
+                else if (key[0] == 'I')
+                    snprintf (str_alias, sizeof (str_alias), "pgup");
+                else if (key[0] == 'P')
+                    snprintf (str_alias, sizeof (str_alias), "f1");
+                else if (key[0] == 'Q')
+                    snprintf (str_alias, sizeof (str_alias), "f2");
+                else if (key[0] == 'R')
+                    snprintf (str_alias, sizeof (str_alias), "f3");
+                else if (key[0] == 'S')
+                    snprintf (str_alias, sizeof (str_alias), "f4");
+                else if (key[0] == 'Z')
+                {
+                    shift = 1;
+                    snprintf (str_alias, sizeof (str_alias), "tab");
+                }
+                key++;
+            }
+            else if (key[0] == '[')
+            {
+                /* some sequences specific to Linux console */
+                key++;
+                if (!key[0])
+                    goto error;
+                if (key[0] == 'A')
+                    snprintf (str_alias, sizeof (str_alias), "f1");
+                else if (key[0] == 'B')
+                    snprintf (str_alias, sizeof (str_alias), "f2");
+                else if (key[0] == 'C')
+                    snprintf (str_alias, sizeof (str_alias), "f3");
+                else if (key[0] == 'D')
+                    snprintf (str_alias, sizeof (str_alias), "f4");
+                else if (key[0] == 'E')
+                    snprintf (str_alias, sizeof (str_alias), "f5");
+                key++;
+            }
+            else
+            {
+                /* unknown sequence */
+                key = utf8_next_char (key);
+            }
+
+            length = key - ptr_key_meta2;
+            snprintf (str_raw, sizeof (str_raw), "meta2-");
+            memcpy (str_raw + 6, ptr_key_meta2, length);
+            str_raw[6 + length] = '\0';
+
+            if (!str_alias[0])
+            {
+                /* unknown sequence: keep raw key code as-is */
+                snprintf (str_alias, sizeof (str_alias), "%s", str_raw);
+                ctrl = 0;
+                meta = 0;
+                shift = 0;
+            }
+
+            /* add modifier(s) + key (raw) */
+            if (str_raw[0])
+            {
+                for (i = 0; i < meta_initial; i++)
+                {
+                    string_dyn_concat (str_dyn_key, "meta-", -1);
+                }
+                string_dyn_concat (str_dyn_key, str_raw, -1);
+            }
+
+            /* add modifier(s) + key (alias) */
+            if (str_alias[0])
+            {
+                for (i = 0; i < meta; i++)
+                {
+                    string_dyn_concat (str_dyn_key_alias, "meta-", -1);
+                }
+                if (ctrl)
+                    string_dyn_concat (str_dyn_key_alias, "ctrl-", -1);
+                if (shift)
+                    string_dyn_concat (str_dyn_key_alias, "shift-", -1);
+                string_dyn_concat (str_dyn_key_alias, str_alias, -1);
+            }
+        }
+        else
+        {
+            /* automatically convert ctrl-[A-Z] to ctrl-[a-z] (lower case) */
+            if (ctrl && (key[0] >= 'A') && (key[0] <= 'Z'))
+            {
+                snprintf (str_raw, sizeof (str_raw),
+                          "%c", key[0] + ('a' - 'A'));
+                key++;
+            }
+            else if (key[0] == ' ')
+            {
+                snprintf (str_raw, sizeof (str_raw), "space");
+                key++;
+            }
+            else if (key[0] == ',')
+            {
+                snprintf (str_raw, sizeof (str_raw), "comma");
+                key++;
+            }
+            else
+            {
+                length = utf8_char_size (key);
+                memcpy (str_raw, key, length);
+                str_raw[length] = '\0';
+                key += length;
+            }
+
+            if (meta)
+            {
+                for (i = 0; i < meta; i++)
+                {
+                    string_dyn_concat (str_dyn_key, "meta-", -1);
+                    string_dyn_concat (str_dyn_key_alias, "meta-", -1);
+                }
+            }
+
+            if (ctrl
+                && ((strcmp (str_raw, "h") == 0)
+                    || strcmp (str_raw, "?") == 0))
+            {
+                string_dyn_concat (str_dyn_key, "ctrl-", -1);
+                string_dyn_concat (str_dyn_key, str_raw, -1);
+                string_dyn_concat (str_dyn_key_alias, "backspace", -1);
+            }
+            else if (ctrl && (strcmp (str_raw, "i") == 0))
+            {
+                string_dyn_concat (str_dyn_key, "ctrl-", -1);
+                string_dyn_concat (str_dyn_key, str_raw, -1);
+                string_dyn_concat (str_dyn_key_alias, "tab", -1);
+            }
+            else if (ctrl
+                     && ((strcmp (str_raw, "j") == 0)
+                         || (strcmp (str_raw, "m") == 0)))
+            {
+                string_dyn_concat (str_dyn_key, "ctrl-", -1);
+                string_dyn_concat (str_dyn_key, str_raw, -1);
+                string_dyn_concat (str_dyn_key_alias, "return", -1);
+            }
+            else
+            {
+                if (ctrl)
+                {
+                    string_dyn_concat (str_dyn_key, "ctrl-", -1);
+                    string_dyn_concat (str_dyn_key_alias, "ctrl-", -1);
+                }
+                string_dyn_concat (str_dyn_key, str_raw, -1);
+                string_dyn_concat (str_dyn_key_alias, str_raw, -1);
+            }
+        }
+    }
+
+    if (key_name)
+        *key_name = string_dyn_free (str_dyn_key, 0);
+    else
+        string_dyn_free (str_dyn_key, 1);
+
+    if (key_name_alias)
+        *key_name_alias = string_dyn_free (str_dyn_key_alias, 0);
+    else
+        string_dyn_free (str_dyn_key_alias, 1);
+
+    return 1;
+
+error:
+    if (str_dyn_key)
+        string_dyn_free (str_dyn_key, 1);
+    if (str_dyn_key_alias)
+        string_dyn_free (str_dyn_key_alias, 1);
+    return 0;
+}
+
+/*
+ * Converts a legacy key to the new key name (using comma separator and alias).
+ *
+ * Examples:
+ *   "ctrl-"            => NULL
+ *   "meta-"            => NULL
+ *   "ctrl-A"           => "ctrl-a"
+ *   "ctrl-a"           => "ctrl-a"
+ *   "ctrl-j"           => "return"
+ *   "ctrl-m"           => "ctrl-m"
+ *   "ctrl-cb"          => "ctrl-c,b"
+ *   "meta-space"       => "meta-space"
+ *   "meta-comma"       => "meta-c,o,m,m,a"
+ *   "meta-,"           => "meta-comma"
+ *   "meta-,x"          => "meta-comma,x"
+ *   "meta2-1;3D"       => "meta-left"
+ *   "meta-wmeta2-1;3A" => "meta-w,meta-up"
+ *   "meta-w,meta-up"   => "meta-w,comma,meta-u,p"
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+gui_key_legacy_to_alias (const char *key)
+{
+    char *key_raw, *key_name_alias;
+    int rc;
+
+    if (!key)
+        return NULL;
+
+    key_raw = gui_key_get_internal_code (key);
+    if (!key_raw)
+        return NULL;
+
+    rc = gui_key_expand (key_raw, NULL, &key_name_alias);
+
+    free (key_raw);
+
+    if (!rc)
+        return NULL;
+
+    return key_name_alias;
 }
 
 /*
@@ -682,7 +1187,7 @@ gui_key_new (struct t_gui_buffer *buffer, int context, const char *key,
         return NULL;
     }
 
-    expanded_name = gui_key_get_expanded_name (internal_code);
+    expanded_name = gui_key_expand_legacy (internal_code);
     if (!expanded_name)
     {
         free (internal_code);
@@ -906,7 +1411,7 @@ gui_key_unbind (struct t_gui_buffer *buffer, int context, const char *key)
         return 0;
     }
 
-    expanded_name = gui_key_get_expanded_name (internal_code);
+    expanded_name = gui_key_expand_legacy (internal_code);
     if (!expanded_name)
     {
         free (internal_code);
@@ -1302,34 +1807,6 @@ end:
 }
 
 /*
- * Checks if the given combo of keys is complete or not.
- * It's not complete if the end of string is in the middle of a key
- * (for example meta- without the following char/key).
- *
- * Returns:
- *   0: key is incomplete (truncated)
- *   1: key is complete
- */
-
-int
-gui_key_is_complete (const char *key)
-{
-    int length;
-
-    if (!key || !key[0])
-        return 1;
-
-    length = strlen (key);
-
-    if (((length >= 1) && (strcmp (key + length - 1, "\x01") == 0))
-        || ((length >= 2) && (strcmp (key + length - 2, "\x01[") == 0))
-        || ((length >= 3) && (strcmp (key + length - 3, "\x01[[") == 0)))
-        return 0;
-
-    return 1;
-}
-
-/*
  * Processes a new key pressed.
  *
  * Returns:
@@ -1340,11 +1817,17 @@ gui_key_is_complete (const char *key)
 int
 gui_key_pressed (const char *key_str)
 {
-    int i, insert_into_input, context, length, length_key, rc, signal_sent;
+    int i, insert_into_input, context, length, length_key, signal_sent;
+    int rc, rc_expand;
     struct t_gui_key *ptr_key;
-    char *pos, signal_name[128], **commands, *expanded_key;
+    char *pos, signal_name[128], **commands;
+    char *key_name_legacy, *key_name, *key_name_alias;
 
     signal_sent = 0;
+
+    key_name_legacy = NULL;
+    key_name = NULL;
+    key_name_alias = NULL;
 
     /* add key to buffer */
     insert_into_input = (gui_key_combo_buffer[0] == '\0');
@@ -1360,7 +1843,7 @@ gui_key_pressed (const char *key_str)
             gui_key_debug = 0;
             gui_key_combo_buffer[0] = '\0';
             gui_bar_item_update ("input_text");
-            return 0;
+            goto end_no_input;
         }
     }
 
@@ -1373,7 +1856,7 @@ gui_key_pressed (const char *key_str)
                         &gui_key_grab_end_timer_cb, NULL, NULL);
         }
         gui_key_grab_count++;
-        return 0;
+        goto end_no_input;
     }
 
     /* mouse event pending */
@@ -1394,7 +1877,7 @@ gui_key_pressed (const char *key_str)
                 gui_mouse_event_init ();
             }
         }
-        return 0;
+        goto end_no_input;
     }
 
     if (strstr (gui_key_combo_buffer, "\x01[[M"))
@@ -1402,8 +1885,13 @@ gui_key_pressed (const char *key_str)
         gui_key_combo_buffer[0] = '\0';
         if (!gui_key_debug)
             gui_mouse_event_init ();
-        return 0;
+        goto end_no_input;
     }
+
+    key_name_legacy = gui_key_expand_legacy (gui_key_combo_buffer);
+    rc_expand = gui_key_expand (gui_key_combo_buffer,
+                                &key_name,
+                                &key_name_alias);
 
     ptr_key = NULL;
 
@@ -1451,29 +1939,11 @@ gui_key_pressed (const char *key_str)
             /* exact combo found => execute command */
             if (gui_key_debug)
             {
-                expanded_key = gui_key_get_expanded_name (gui_key_combo_buffer);
                 gui_chat_printf (
                     NULL,
-                    _("debug: %s\"%s%s%s\"%s -> %s\"%s%s%s\"%s -> %s\"%s%s%s\""),
-                    /* raw code */
-                    GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                    GUI_COLOR(GUI_COLOR_CHAT),
-                    gui_key_combo_buffer,
-                    GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                    GUI_COLOR(GUI_COLOR_CHAT),
-                    /* expanded name */
-                    GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                    GUI_COLOR(GUI_COLOR_CHAT),
-                    expanded_key,
-                    GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                    GUI_COLOR(GUI_COLOR_CHAT),
-                    /* command */
-                    GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                    GUI_COLOR(GUI_COLOR_CHAT),
-                    ptr_key->command,
-                    GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
-                if (expanded_key)
-                    free (expanded_key);
+                    _("debug: \"%s\" -> %s (legacy: %s) -> %s -> \"%s\""),
+                    gui_key_combo_buffer, key_name, key_name_legacy,
+                    key_name_alias, ptr_key->command);
                 gui_key_combo_buffer[0] = '\0';
             }
             else
@@ -1499,7 +1969,7 @@ gui_key_pressed (const char *key_str)
                 }
             }
         }
-        return 0;
+        goto end_no_input;
     }
 
     if (!gui_key_debug)
@@ -1514,12 +1984,12 @@ gui_key_pressed (const char *key_str)
                                   gui_key_combo_buffer) == WEECHAT_RC_OK_EAT)
             {
                 gui_key_combo_buffer[0] = '\0';
-                return 0;
+                goto end_no_input;
             }
             if (gui_key_focus (gui_key_combo_buffer, GUI_KEY_CONTEXT_CURSOR))
             {
                 gui_key_combo_buffer[0] = '\0';
-                return 0;
+                goto end_no_input;
             }
         }
         if (!signal_sent)
@@ -1531,48 +2001,48 @@ gui_key_pressed (const char *key_str)
                                        gui_key_combo_buffer) == WEECHAT_RC_OK_EAT)
             {
                 gui_key_combo_buffer[0] = '\0';
-                return 0;
+                goto end_no_input;
             }
         }
     }
 
-    if (gui_key_is_complete (gui_key_combo_buffer))
+    if (rc_expand && key_name_alias && key_name_alias[0])
     {
+        /* key is complete */
         if (gui_key_debug)
         {
-            expanded_key = gui_key_get_expanded_name (gui_key_combo_buffer);
             gui_chat_printf (
                 NULL,
-                _("debug: %s\"%s%s%s\"%s -> %s\"%s%s%s\"%s (no key) -> %s"),
-                /* raw code */
-                GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                GUI_COLOR(GUI_COLOR_CHAT),
-                gui_key_combo_buffer,
-                GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                GUI_COLOR(GUI_COLOR_CHAT),
-                /* expanded name */
-                GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                GUI_COLOR(GUI_COLOR_CHAT),
-                expanded_key,
-                GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                GUI_COLOR(GUI_COLOR_CHAT),
-                /* insert into input */
+                _("debug: \"%s\" -> %s (legacy: %s) -> %s (no key) -> %s"),
+                gui_key_combo_buffer, key_name, key_name_legacy,
+                key_name_alias,
                 (insert_into_input) ? _("insert into input") : _("ignored"));
-            if (expanded_key)
-                free (expanded_key);
         }
         gui_key_combo_buffer[0] = '\0';
     }
 
     /* in debug mode, don't insert anything in input */
     if (gui_key_debug)
-        return 0;
+        goto end_no_input;
 
     /*
      * if this is first key and not found (even partial) => return 1
      * else return 0 (= silently discard sequence of bad keys)
      */
-    return insert_into_input;
+    rc = insert_into_input;
+    goto end;
+
+end_no_input:
+    rc = 0;
+
+end:
+    if (key_name_legacy)
+        free (key_name_legacy);
+    if (key_name)
+        free (key_name);
+    if (key_name_alias)
+        free (key_name_alias);
+    return rc;
 }
 
 /*
@@ -2101,7 +2571,7 @@ gui_key_add_to_infolist (struct t_infolist *infolist, struct t_gui_key *key)
 
     if (!infolist_new_var_string (ptr_item, "key_internal", key->key))
         return 0;
-    expanded_key = gui_key_get_expanded_name (key->key);
+    expanded_key = gui_key_expand_legacy (key->key);
     if (expanded_key)
     {
         if (!infolist_new_var_string (ptr_item, "key", expanded_key))

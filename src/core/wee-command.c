@@ -3761,7 +3761,7 @@ command_key_display (struct t_gui_key *key, struct t_gui_key *default_key)
 {
     char *expanded_name;
 
-    expanded_name = gui_key_get_expanded_name (key->key);
+    expanded_name = gui_key_expand_legacy (key->key);
 
     if (default_key)
     {
