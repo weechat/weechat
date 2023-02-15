@@ -888,6 +888,9 @@ gui_key_legacy_to_alias (const char *key)
     if (!key)
         return NULL;
 
+    if ((key[0] == '@') && strchr (key, ':'))
+        return strdup (key);
+
     key_raw = gui_key_get_internal_code (key);
     if (!key_raw)
         return NULL;

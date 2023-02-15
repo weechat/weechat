@@ -830,6 +830,8 @@ TEST(GuiKey, LegacyToAlias)
     WEE_TEST_STR(NULL, gui_key_legacy_to_alias (NULL));
     WEE_TEST_STR("", gui_key_legacy_to_alias (""));
 
+    WEE_TEST_STR("@chat:button1", gui_key_legacy_to_alias ("@chat:button1"));
+
     WEE_TEST_STR("", gui_key_legacy_to_alias ("ctrl-"));
     WEE_TEST_STR("", gui_key_legacy_to_alias ("meta-"));
     WEE_TEST_STR("", gui_key_legacy_to_alias ("meta2-"));
