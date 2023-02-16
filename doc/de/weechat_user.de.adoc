@@ -632,11 +632,12 @@ verwendet und festgelegt:
 
 [width="100%",cols="1,2m,5",options="header"]
 |===
-| Verzeichnis  | Standardwert             | Fallback-Wert
-| Konfiguration| $XDG_CONFIG_HOME/weechat | `$HOME/.config/weechat` falls `$XDG_CONFIG_HOME` nicht definiert oder leer ist.
-| Daten        | $XDG_DATA_HOME/weechat   | `$HOME/.local/share/weechat` falls `$XDG_DATA_HOME` nicht definiert oder leer ist.
-| Cache        | $XDG_CACHE_HOME/weechat  | `$HOME/.cache/weechat` falls `$XDG_CACHE_HOME` nicht definiert oder leer ist.
-| Laufzeit     | $XDG_RUNTIME_DIR/weechat | Wie beim _Cache_ Verzeichnis, falls `$XDG_RUNTIME_DIR` nicht definiert oder leer ist.
+// TRANSLATION MISSING
+| Verzeichnis   | Standardwert             | Fallback value if $XDG_XXX is not defined
+| Konfiguration | $XDG_CONFIG_HOME/weechat | `$HOME/.config/weechat`
+| Daten         | $XDG_DATA_HOME/weechat   | `$HOME/.local/share/weechat`
+| Cache         | $XDG_CACHE_HOME/weechat  | `$HOME/.cache/weechat`
+| Laufzeit      | $XDG_RUNTIME_DIR/weechat | Wie beim _Cache_ Verzeichnis
 |===
 
 Die Konfigurationsdateien werden beim ersten Ausführen von WeeChat mit Standardwerten erstellt.

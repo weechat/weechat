@@ -630,11 +630,11 @@ utilisés et déterminés ainsi :
 
 [width="100%",cols="1,2m,5",options="header"]
 |===
-| Répertoire | Valeur par défaut        | Valeur de repli
-| config     | $XDG_CONFIG_HOME/weechat | `$HOME/.config/weechat` si `$XDG_CONFIG_HOME` n'est pas défini ou vide.
-| data       | $XDG_DATA_HOME/weechat   | `$HOME/.local/share/weechat` si `$XDG_DATA_HOME` n'est pas défini ou vide.
-| cache      | $XDG_CACHE_HOME/weechat  | `$HOME/.cache/weechat` si `$XDG_CACHE_HOME` n'est pas défini ou vide.
-| runtime    | $XDG_RUNTIME_DIR/weechat | Identique au répertoire _cache_ si `$XDG_RUNTIME_DIR` n'est pas défini ou vide.
+| Répertoire | Valeur par défaut        | Valeur de repli si $XDG_XXX n'est pas définie
+| config     | $XDG_CONFIG_HOME/weechat | `$HOME/.config/weechat`
+| data       | $XDG_DATA_HOME/weechat   | `$HOME/.local/share/weechat`
+| cache      | $XDG_CACHE_HOME/weechat  | `$HOME/.cache/weechat`
+| runtime    | $XDG_RUNTIME_DIR/weechat | Identique au répertoire _cache_
 |===
 
 Les fichiers de configuration sont créés avec les valeurs par défaut la première

@@ -630,11 +630,12 @@ XDG z takim podziałem:
 
 [width="100%",cols="1,2m,5",options="header"]
 |===
-| Katalog   | Domyślna wartość         | Wartość zapasowa
-| config    | $XDG_CONFIG_HOME/weechat | `$HOME/.config/weechat` jeśli zmienna `$XDG_CONFIG_HOME` nie jest zdefiniowana albo jest pusta.
-| data      | $XDG_DATA_HOME/weechat   | `$HOME/.local/share/weechat` jeśli zmienna `$XDG_DATA_HOME` nie jest zdefiniowana albo jest pusta.
-| cache     | $XDG_CACHE_HOME/weechat  | `$HOME/.cache/weechat` jeśli zmienna `$XDG_CACHE_HOME` nie jest zdefiniowana albo jest pusta.
-| runtime   | $XDG_RUNTIME_DIR/weechat | Taki sam jak katalog _cache_ jeśli zmienna `$XDG_RUNTIME_DIR` nie jest zdefiniowana albo jest pusta.
+// TRANSLATION MISSING
+| Katalog   | Domyślna wartość         | Fallback value if $XDG_XXX is not defined
+| config    | $XDG_CONFIG_HOME/weechat | `$HOME/.config/weechat`
+| data      | $XDG_DATA_HOME/weechat   | `$HOME/.local/share/weechat`
+| cache     | $XDG_CACHE_HOME/weechat  | `$HOME/.cache/weechat`
+| runtime   | $XDG_RUNTIME_DIR/weechat | Taki sam jak katalog _cache_
 |===
 
 Pliki konfiguracyjne z domyślnymi wartościami są tworzone przy pierwszym uruchomieniu WeeChat.

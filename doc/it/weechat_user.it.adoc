@@ -697,11 +697,11 @@ and set like this:
 
 [width="100%",cols="1,2m,5",options="header"]
 |===
-| Directory | Default value            | Fallback value
-| config    | $XDG_CONFIG_HOME/weechat | `$HOME/.config/weechat` if `$XDG_CONFIG_HOME` is not defined or empty.
-| data      | $XDG_DATA_HOME/weechat   | `$HOME/.local/share/weechat` if `$XDG_DATA_HOME` is not defined or empty.
-| cache     | $XDG_CACHE_HOME/weechat  | `$HOME/.cache/weechat` if `$XDG_CACHE_HOME` is not defined or empty.
-| runtime   | $XDG_RUNTIME_DIR/weechat | Same as _cache_ directory if `$XDG_RUNTIME_DIR` is not defined or empty.
+| Directory | Default value            | Fallback value if $XDG_XXX is not defined
+| config    | $XDG_CONFIG_HOME/weechat | `$HOME/.config/weechat`
+| data      | $XDG_DATA_HOME/weechat   | `$HOME/.local/share/weechat`
+| cache     | $XDG_CACHE_HOME/weechat  | `$HOME/.cache/weechat`
+| runtime   | $XDG_RUNTIME_DIR/weechat | Same as _cache_ directory
 |===
 
 The configuration files are created with default values the first time you run WeeChat.

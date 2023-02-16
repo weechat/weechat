@@ -589,11 +589,12 @@ WeeChat подразумевано користи XDG директоријуме
 
 [width="100%", cols="1,2m,5", options="header"]
 |===
-| Директоријум | Подразумевана вредност   | Вредност у случају потребе
-| config       | $XDG_CONFIG_HOME/weechat | `$HOME/.config/weechat` ако `$XDG_CONFIG_HOME` није дефинисана или је празна.
-| data         | $XDG_DATA_HOME/weechat   | `$HOME/.local/share/weechat` ако `$XDG_DATA_HOME` није дефинисана или је празна.
-| cache        | $XDG_CACHE_HOME/weechat  | `$HOME/.cache/weechat` ако `$XDG_CACHE_HOME` није дефинисана или је празна.
-| runtime      | $XDG_RUNTIME_DIR/weechat | Исто као _cache_ директоријум ако `$XDG_RUNTIME_DIR` није дефинисана или је празна.
+// TRANSLATION MISSING
+| Директоријум | Подразумевана вредност   | Fallback value if $XDG_XXX is not defined
+| config       | $XDG_CONFIG_HOME/weechat | `$HOME/.config/weechat`
+| data         | $XDG_DATA_HOME/weechat   | `$HOME/.local/share/weechat`
+| cache        | $XDG_CACHE_HOME/weechat  | `$HOME/.cache/weechat`
+| runtime      | $XDG_RUNTIME_DIR/weechat | Исто као _cache_ директоријум
 |===
 
 Конфигурациони фајлови фајлови се креирају са подразумеваним вредностима онда када по први пут покренете програм WeeChat.
