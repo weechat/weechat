@@ -3759,14 +3759,25 @@ COMMAND_CALLBACK(item)
 void
 command_key_display (struct t_gui_key *key, struct t_gui_key *default_key)
 {
-    char *expanded_name;
+    char *expanded_name, str_key_name[1024];
+
+    str_key_name[0] = '\0';
+    if (key->key_name && (strcmp (key->key, key->key_name) != 0))
+    {
+        snprintf (str_key_name, sizeof (str_key_name),
+                  "%s -> %s%s",
+                  GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                  GUI_COLOR(GUI_COLOR_CHAT),
+                  key->key_name);
+    }
 
     expanded_name = gui_key_expand_legacy (key->key);
 
     if (default_key)
     {
-        gui_chat_printf (NULL, "  %s%s => %s%s  %s(%s%s %s%s)",
+        gui_chat_printf (NULL, "  %s%s%s => %s%s  %s(%s%s %s%s)",
                          (expanded_name) ? expanded_name : key->key,
+                         str_key_name,
                          GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
                          GUI_COLOR(GUI_COLOR_CHAT),
                          key->command,
@@ -3778,8 +3789,9 @@ command_key_display (struct t_gui_key *key, struct t_gui_key *default_key)
     }
     else
     {
-        gui_chat_printf (NULL, "  %s%s => %s%s",
+        gui_chat_printf (NULL, "  %s%s%s => %s%s",
                          (expanded_name) ? expanded_name : key->key,
+                         str_key_name,
                          GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
                          GUI_COLOR(GUI_COLOR_CHAT),
                          key->command);

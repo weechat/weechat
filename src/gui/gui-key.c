@@ -1176,7 +1176,7 @@ gui_key_new (struct t_gui_buffer *buffer, int context, const char *key,
              const char *command)
 {
     struct t_gui_key *new_key;
-    char *internal_code, *expanded_name;
+    char *internal_code, *expanded_name, *key_name;
 
     if (!key || !command)
         return NULL;
@@ -1197,11 +1197,14 @@ gui_key_new (struct t_gui_buffer *buffer, int context, const char *key,
         return NULL;
     }
 
+    key_name = gui_key_legacy_to_alias (key);
+
     new_key = malloc (sizeof (*new_key));
     if (!new_key)
         return NULL;
 
     new_key->key = internal_code;
+    new_key->key_name = key_name;
     new_key->command = strdup (command);
     gui_key_set_areas (new_key);
     gui_key_set_score (new_key);
@@ -2064,6 +2067,8 @@ gui_key_free (struct t_gui_key **keys, struct t_gui_key **last_key,
     /* free memory */
     if (key->key)
         free (key->key);
+    if (key->key_name)
+        free (key->key_name);
     for (i = 0; i < 2; i++)
     {
         if (key->area_name[i])

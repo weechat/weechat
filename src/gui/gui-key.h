@@ -54,7 +54,8 @@ enum t_gui_key_focus
 
 struct t_gui_key
 {
-    char *key;                      /* key combo (ex: a, ^W, ^W^C, meta-a)  */
+    char *key;                      /* raw key (eg: \001w, \001[[1;3D)      */
+    char *key_name;                 /* key name (eg: ctrl-w, meta-left)     */
     int area_type[2];               /* type of areas (for cursor/mouse)     */
     char *area_name[2];             /* name of areas (for cursor/mouse)     */
     char *area_key;                 /* key after area (after ":")           */
